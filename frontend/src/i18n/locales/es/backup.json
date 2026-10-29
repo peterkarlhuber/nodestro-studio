@@ -1,0 +1,38 @@
+{
+  "title": "Copia de seguridad y restauración",
+  "intro": "Una copia de seguridad contiene todos los flujos de trabajo con sus versiones, plantillas de agentes, herramientas, archivos de conocimiento, memoria, ejecuciones y ajustes en un archivo ZIP.",
+  "noKey": "Por seguridad, las claves de API de los proveedores de IA nunca se guardan en una copia. Al restaurar se conservan las claves configuradas en este equipo.",
+  "download": "Descargar copia de seguridad",
+  "restoreFromFile": "Restaurar desde archivo …",
+  "local_one": "{{count}} copia de seguridad en este equipo",
+  "local_other": "{{count}} copias de seguridad en este equipo",
+  "localText": "Antes de cada restauración, Nodestro guarda automáticamente una copia del estado anterior.",
+  "downloadLocal": "Descargar",
+  "restoreThis": "Restaurar …",
+  "restoreTitle": "Restaurar copia de seguridad",
+  "valid": "«{{name}}» es una copia de seguridad válida del {{date}}. Todos los archivos están completos e intactos.",
+  "versions": "Creada con Nodestro {{nodestro}} y la biblioteca de agentes {{library}}.",
+  "inBackup": "En la copia",
+  "current": "Actual",
+  "contents": {
+    "workflows": "Flujos de trabajo",
+    "versions": "Versiones de flujos de trabajo",
+    "templates": "Plantillas de agentes",
+    "tools": "Herramientas propias",
+    "knowledge_files": "Archivos de conocimiento",
+    "memory_spaces": "Espacios de memoria",
+    "memory_files": "Archivos de memoria",
+    "runs": "Ejecuciones",
+    "usage_entries": "Otras operaciones de IA",
+    "conversations": "Chats del asistente",
+    "input_files": "Archivos de entrada subidos"
+  },
+  "notes": {
+    "other_version": "La copia procede de otra versión de Nodestro. Se adopta al restaurar; revisa brevemente tus flujos de trabajo después."
+  },
+  "replaceWarning": "La restauración sustituye todos los datos actuales por el estado de la copia.",
+  "safetyNote": "Antes se guarda automáticamente una copia del estado actual; después la encontrarás en la lista de copias.",
+  "confirm": "Entiendo que mis datos actuales serán sustituidos.",
+  "restoreNow": "Restaurar ahora",
+  "restored": "Copia restaurada. El estado anterior está en «{{name}}». La página se recarga."
+}

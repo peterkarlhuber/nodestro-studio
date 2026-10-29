@@ -1,0 +1,85 @@
+{
+  "description": "Fonctions que les agents peuvent appeler. Les outils personnels sont vérifiés et s’exécutent dans un bac à sable.",
+  "area": "Rubrique",
+  "tabs": {
+    "library": "Bibliothèque",
+    "write": "Écrire soi-même",
+    "generate": "Créer avec l’IA"
+  },
+  "sandbox": "Bac à sable",
+  "sandboxNote": "Bac à sable pour tester et exécuter les outils personnels : {{sandbox}} (modifiable dans les réglages).",
+  "sandboxDocker": "conteneur Docker",
+  "sandboxProcess": "processus Python distinct",
+  "empty": "Aucun outil",
+  "kind": {
+    "builtin": "Intégré",
+    "custom": "Outil personnel",
+    "generated": "Créé par l’IA"
+  },
+  "kindLabel": "Type d’outil",
+  "version": "Version {{version}}",
+  "deleted": "Outil {{name}} supprimé",
+  "saved": "Outil {{name}} enregistré",
+  "tool": "Outil {{name}}",
+  "delete": "Supprimer l’outil : le retire ; les agents qui l’utilisent ne pourront redémarrer qu’après l’avoir retiré",
+  "requirement": "Exigence :",
+  "schema": "Schéma d’entrée",
+  "viewCode": "Voir le code et les tests",
+  "codeOfTool": "Code de l’outil",
+  "testsOfTool": "Tests de l’outil",
+  "try": "Essayer",
+  "tryHint": "Appelle l’outil avec cette entrée, comme le ferait un agent.",
+  "inputJson": "Entrée en JSON",
+  "run": "Exécuter",
+  "check": {
+    "passed": "Toutes les vérifications sont réussies.",
+    "passedTool": "Toutes les vérifications sont réussies – outil {{name}}.",
+    "testPassed": "réussi",
+    "sandboxOutput": "Sortie du bac à sable"
+  },
+  "write": {
+    "intro": "Écrivez une fonction Python avec des types et une docstring. Le nom, la description et le schéma d’entrée en sont déduits. Les tests sont des fonctions <code>test_*</code> qui appellent la fonction. À l’enregistrement, tout est vérifié de façon statique et les tests s’exécutent dans le bac à sable. Écrivez le code, les noms et les docstrings en anglais : les agents les lisent dans toutes les langues.",
+    "functionName": "Nom de la fonction",
+    "check": "Vérifier et tester",
+    "result": "Résultat de la vérification",
+    "notChecked": "Pas encore vérifié."
+  },
+  "jobStatus": {
+    "running": "En cours",
+    "awaiting_approval": "En attente de validation",
+    "approved": "Validé",
+    "rejected": "Refusé",
+    "failed": "Échec",
+    "awaiting_dependencies": "En attente des bibliothèques"
+  },
+  "generate": {
+    "describe": "Décrire un nouvel outil",
+    "question": "Que doit savoir faire l’outil ?",
+    "hint": "Un Coding Agent écrit le code et les tests. Les deux sont vérifiés de façon statique, les tests s’exécutent dans le bac à sable. Vous décidez ensuite si l’outil est ajouté.",
+    "placeholder": "p. ex. Calcule la mensualité d’un prêt à partir du montant, du taux annuel en pourcentage et de la durée en mois.",
+    "start": "Faire créer l’outil",
+    "job": "Demande {{requirement}}",
+    "newTool": "Nouvel outil",
+    "attempts_one": "{{count}} tentative",
+    "attempts_other": "{{count}} tentatives",
+    "reviewNote": "Vérifiez le code et les tests avant de valider l’outil. Les outils validés peuvent être utilisés par tous les agents.",
+    "approval": "Validation",
+    "proposedCode": "Code proposé",
+    "proposedTests": "Tests proposés",
+    "approve": "Valider",
+    "reject": "Refuser",
+    "viewAttempts": "Voir les tentatives",
+    "attempt": "Tentative {{number}} :",
+    "attemptCode": "Code de la tentative {{number}}",
+    "dependenciesNote": "La proposition utilise des bibliothèques tierces. Rien n’est installé ; les tests ne s’exécutent qu’après votre approbation. Vous approuvez ensuite le code séparément.",
+    "approveLibraries": "Approuver les bibliothèques",
+    "withoutLibraries": "Réécrire sans bibliothèques",
+    "usesLibraries": "Utilise les bibliothèques approuvées : {{names}}"
+  },
+  "drafts": {
+    "title_one": "{{count}} brouillon d’outil attend votre décision",
+    "title_other": "{{count}} brouillons d’outils attendent votre décision",
+    "label": "Brouillons d’outils",
+    "text": "Ces outils ont été rédigés par l’architecte de workflows. Ils ne sont pas enregistrés et n’ont pas été exécutés. Les agents qui en ont besoin ne peuvent démarrer qu’après votre approbation."
+  }
+}

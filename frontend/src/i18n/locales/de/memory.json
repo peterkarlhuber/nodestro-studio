@@ -1,0 +1,21 @@
+{
+  "description": "Dauerhafte Gedächtnisse. Agenten mit Memory „dauerhaft“ lesen und schreiben hier Dateien – über Läufe hinweg.",
+  "notesTitle": "Notizen",
+  "new": "Neues Gedächtnis",
+  "empty": "Noch kein Gedächtnis",
+  "emptyText": "Aktiviere bei einem Agenten im Editor unter „Memory“ ein dauerhaftes Gedächtnis oder lass dir vom Memory-Assistenten eines vorschlagen.",
+  "spaces": "Gedächtnisse",
+  "nameHint": "Buchstaben, Ziffern, Leerzeichen, _ . und -. Mehrere Agenten können ein Gedächtnis teilen.",
+  "namePlaceholder": "z. B. kundenwissen",
+  "cleared": "Gedächtnis {{name}} geleert",
+  "space": "Gedächtnis {{name}}",
+  "clear": "Leeren",
+  "newFilePlaceholder": "neue-datei.md",
+  "newFile": "Neue Datei",
+  "createFile": "Datei unter /memories anlegen",
+  "clearTitle": "Gedächtnis leeren?",
+  "deleteAll": "Alle Dateien löschen",
+  "clearText": "Alle Dateien in „{{name}}“ werden gelöscht. Agenten beginnen danach ohne Erinnerungen.",
+  "deleteFile": "Datei löschen",
+  "contentOf": "Inhalt von {{path}}"
+}

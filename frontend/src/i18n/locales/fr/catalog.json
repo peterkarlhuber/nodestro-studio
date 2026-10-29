@@ -1,0 +1,40 @@
+{
+  "models": {
+    "claude-opus-5-5": "Raisonnement exigeant, travail d’agent et de code",
+    "claude-sonnet-5-5": "Travail d’agent au quotidien à moindre coût",
+    "claude-haiku-5-5": "Rapide et économique : classer, extraire",
+    "claude-fable-5-1": "Le modèle le plus puissant pour les tâches les plus difficiles",
+    "claude-fable-5": "Prédécesseur de Fable 5.1",
+    "claude-opus-5": "Prédécesseur d’Opus 5.5",
+    "claude-sonnet-5": "Prédécesseur de Sonnet 5.5",
+    "claude-opus-4-8": "Génération précédente",
+    "claude-opus-4-7": "Génération précédente",
+    "claude-opus-4-6": "Génération précédente",
+    "claude-sonnet-4-6": "Génération précédente",
+    "claude-haiku-4-5": "Génération précédente",
+    "gpt-5_5": "Modèle OpenAI (exemple ; tout identifiant de modèle OpenAI peut être saisi)",
+    "gpt-6_1-sol": "Modèle OpenAI (exemple ; tout identifiant de modèle OpenAI peut être saisi)",
+    "gemini-3-pro": "Modèle Google (exemple ; tout identifiant de modèle Gemini peut être saisi)",
+    "gemini-3_8-flash": "Modèle Google (exemple ; tout identifiant de modèle Gemini peut être saisi)"
+  },
+  "serverTools": {
+    "web_search": {
+      "label": "Recherche web",
+      "description": "Cherche sur le web et cite les sources (Anthropic effectue la recherche ; 10 $US pour 1 000 recherches)."
+    },
+    "web_fetch": {
+      "label": "Récupération web",
+      "description": "Charge le contenu d’une page web ou d’un PDF à partir d’une URL."
+    },
+    "code_execution": {
+      "label": "Exécution de code",
+      "description": "Exécute du Python dans un bac à sable d’Anthropic. Pas en même temps que la recherche ou la récupération web."
+    }
+  },
+  "builtinTools": {
+    "calculator": "Calcule exactement une expression au lieu de calculer de tête. Prend en charge + - * / // % **, les parenthèses, pi, e et les fonctions sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
+    "current_datetime": "Renvoie la date, l’heure et le jour de la semaine actuels dans un fuseau horaire.",
+    "days_between": "Compte les jours calendaires d’une date à une autre.",
+    "text_statistics": "Compte les caractères, mots, phrases et paragraphes d’un texte."
+  }
+}

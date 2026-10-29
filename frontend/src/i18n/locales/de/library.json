@@ -1,0 +1,82 @@
+{
+  "title": "Beispiel-Workflows",
+  "description": "24 fertige Multi-Agenten-Workflows für typische Aufgaben aus Beruf und Alltag. Die Vorschau kostet nichts; „Als Kopie übernehmen“ legt einen eigenen Workflow an, den du frei bearbeiten kannst.",
+  "galleryTitle": "Beispiel-Workflows",
+  "galleryText": "Fertige Multi-Agenten-Workflows mit Testaufgabe zum Ausprobieren und Anpassen. Die Vorlagen selbst bleiben unverändert.",
+  "showAll": "Alle {{count}} Beispiele ansehen",
+  "categories": "Kategorien",
+  "allCategories": "Alle",
+  "searchLabel": "Beispiele durchsuchen",
+  "searchPlaceholder": "Name, Fachgebiet oder Beschreibung …",
+  "results_one": "{{count}} Beispiel",
+  "results_other": "{{count}} Beispiele",
+  "noMatch": "Kein Beispiel passt zu Suche und Kategorie.",
+  "agents_one": "{{count}} Agent",
+  "agents_other": "{{count}} Agenten",
+  "sensitive": "Fachlich prüfen",
+  "copy": "Als Kopie übernehmen",
+  "copied": "„{{name}}“ als eigene Kopie angelegt",
+  "category": {
+    "industry": "Industrie, Bau und Landwirtschaft",
+    "business": "Unternehmen und Finanzen",
+    "customers": "Vertrieb, Marketing und Kunden",
+    "knowledge": "Wissen, Forschung und Software",
+    "administration": "Recht, Personal und Verwaltung",
+    "private": "Privat und Gemeinschaft"
+  },
+  "level": {
+    "beginner": "Einsteiger",
+    "advanced": "Fortgeschritten"
+  },
+  "pattern": {
+    "sequential": "Sequenziell",
+    "parallel": "Parallel",
+    "branching": "Verzweigt"
+  },
+  "feature": {
+    "tools": "Tools",
+    "structured": "Strukturierte Ausgabe",
+    "judge": "Qualitätsprüfung",
+    "review": "Review",
+    "decision": "Entscheidung",
+    "approval": "Freigabe",
+    "form": "Formular",
+    "subworkflow": "Unterworkflow",
+    "files": "Ergebnisdateien",
+    "documents": "Dateien als Eingabe",
+    "proposals": "Wissensvorschläge",
+    "memory": "Gedächtnis"
+  },
+  "role": {
+    "research": "Recherche",
+    "analysis": "Analyse",
+    "planning": "Planung",
+    "review": "Prüfung",
+    "writing": "Text"
+  },
+  "guide": {
+    "problem": "Worum es geht",
+    "flow": "So arbeiten die Agenten zusammen",
+    "input": "Eingabe",
+    "result": "Ergebnis",
+    "adapt": "Anpassen"
+  },
+  "preview": {
+    "loading": "Beispiel wird geladen …",
+    "language": "Sprache der Kopie",
+    "graph": "Ablauf des Workflows",
+    "agents": "Agenten",
+    "guide": "Anleitung",
+    "receives": "Bekommt: {{names}}",
+    "tools": "Tools: {{tools}}",
+    "testInput": "Vorbereitete Testaufgabe",
+    "syntheticNote": "Die Testaufgabe enthält erfundene Beispieldaten. Sie steht nach dem Übernehmen im Startknoten; ersetze sie dort durch deine eigenen Daten.",
+    "sensitiveNote": "Dieses Beispiel gehört zum Bereich {{field}}. Die Agenten liefern Arbeitshilfen, keine Beratung: Prüfe jedes Ergebnis fachlich, bevor du es verwendest.",
+    "costNote": "Vorschau und Kopieren sind kostenlos und rufen kein Modell auf. Kosten entstehen erst, wenn du die Kopie ausführst; dafür braucht es nur den Zugang zu den Anbietern ihrer Modelle.",
+    "samples": "Beispieldateien",
+    "samplesNote": "Kleine erfundene Dateien zum Ausprobieren der Datei-Felder. Lade sie herunter und wähle sie beim Ausführen aus.",
+    "tests": "Testfälle",
+    "copyTests": "Testfälle als Testreihe übernehmen",
+    "copyTestsNote": "Legt eine Testreihe mit diesen Fällen an. Nichts wird ausgeführt, kein Zeitplan angelegt und keine API veröffentlicht."
+  }
+}

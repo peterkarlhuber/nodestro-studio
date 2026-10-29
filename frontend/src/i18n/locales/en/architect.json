@@ -1,0 +1,274 @@
+{
+  "title": "Workflow Architect",
+  "button": "AI architect",
+  "mode": {
+    "create": "Design a new workflow",
+    "revise": "Revise this workflow"
+  },
+  "form": {
+    "intro": "Describe what you want to achieve. The architect plans the agents, writes their prompts, connects them and checks the result. You review everything before anything is saved.",
+    "mode": "What should the architect do?",
+    "modeHint": {
+      "create": "A separate, new workflow. The open workflow stays as it is.",
+      "revise": "The architect takes the agents, settings and connections of this workflow, including unsaved changes, and proposes targeted changes as a separate draft."
+    },
+    "describe": "Your goal",
+    "instruction": "What should change?",
+    "hint": {
+      "create": "Goal, inputs, desired results and important constraints. Missing details are filled with assumptions that you see afterwards.",
+      "revise": "For example: “Add an agent before the result that critically reviews the previous analyses.”"
+    },
+    "placeholder": {
+      "create": "e.g. From a product idea, research the market and competitors in parallel, estimate the costs and write a one-page decision paper.",
+      "revise": "e.g. Add an agent before the result that critically reviews the previous analyses."
+    },
+    "unsavedIncluded": "This workflow has unsaved changes. The architect works with the current state in the editor; nothing is saved or overwritten.",
+    "generateTools": "Write missing tools as drafts",
+    "generateToolsHint": "Only if no existing tool fits. The code is checked statically and never runs before you approve it.",
+    "limit": "Cost limit of a draft: {{limit}} (<link>Settings</link>). The architect never starts a workflow run.",
+    "noLimit": "No cost limit is set for drafts (<link>Settings</link>). The architect never starts a workflow run.",
+    "safety": "The architect only proposes. Existing workflows stay unchanged until you accept the draft, and new tools need your approval.",
+    "startCreate": "Design workflow",
+    "startRevise": "Propose changes"
+  },
+  "phase": {
+    "analyze": "Analyse requirements",
+    "plan": "Plan architecture",
+    "resources": "Check resources",
+    "configure": "Configure agents",
+    "tools": "Draft tools",
+    "connect": "Create connections",
+    "validate": "Validate workflow",
+    "present": "Present draft"
+  },
+  "phaseRunning": {
+    "analyze": "Analysing the requirements …",
+    "plan": "Planning the workflow architecture …",
+    "resources": "Checking tools, templates, knowledge and memory …",
+    "configure": "Configuring the agents …",
+    "tools": "Drafting missing tools …",
+    "connect": "Connecting nodes and data flows …",
+    "validate": "Validating the workflow …",
+    "present": "Preparing the draft …"
+  },
+  "stepState": {
+    "done": "done",
+    "active": "in progress",
+    "todo": "not started",
+    "stopped": "stopped here"
+  },
+  "progress": {
+    "steps": "Steps",
+    "starting": "Starting …",
+    "graph": "Workflow preview",
+    "graphEmpty": "The agents appear here as soon as the architecture is planned.",
+    "log": "Activity",
+    "cost": "So far {{cost}}",
+    "limit": "limit {{limit}}",
+    "costLabel": "Cost of this draft",
+    "cancel": "Cancel generation"
+  },
+  "marks": {
+    "legend": "Legend",
+    "pending": "being configured",
+    "configured": "configured",
+    "added": "new",
+    "changed": "changed",
+    "kept": "unchanged",
+    "removed": "removed"
+  },
+  "kind": {
+    "added": "new",
+    "changed": "changed",
+    "removed": "removed",
+    "kept": "unchanged"
+  },
+  "field": {
+    "name": "Name",
+    "description": "Role",
+    "model": "Model",
+    "effort": "Thinking effort",
+    "system_prompt": "System prompt",
+    "task_template": "Task",
+    "tools": "Tools",
+    "server_tools": "Server tools",
+    "knowledge": "Knowledge",
+    "memory": "Memory",
+    "output": "Output format",
+    "quality": "Quality check",
+    "max_tokens": "Output limit",
+    "max_tool_rounds": "Tool rounds",
+    "other": "Other settings"
+  },
+  "memory": {
+    "run": "for one run",
+    "persistent": "persistent: {{space}}"
+  },
+  "question": {
+    "title": "A question before I go on:",
+    "hint": "Without this detail no sensible workflow can be designed. Answer it, or let the architect continue with its own assumption.",
+    "yourAnswer": "Your answer",
+    "answer": "Answer and continue",
+    "skip": "Continue with assumptions"
+  },
+  "review": {
+    "tabOverview": "Overview",
+    "tabChanges": "Changes",
+    "tabAgents_one": "{{count}} agent",
+    "tabAgents_other": "{{count}} agents",
+    "tabFlow": "Data flow",
+    "tabTools": "Tools",
+    "tabToolsCount_one": "{{count}} tool",
+    "tabToolsCount_other": "{{count}} tools",
+    "name": "Name of the new workflow",
+    "createNote": "Accepting creates a new workflow and opens it in the editor. Nothing runs automatically.",
+    "reviseNote": "Accepting applies the changes in the editor as one step you can undo. They are saved only when you save.",
+    "changedMeanwhile": "The workflow in the editor changed after the draft was started. Accepting replaces those changes; Undo brings them back.",
+    "saveFirst": "Save the current state as a version first",
+    "saveFirstHint": "Your unsaved changes stay in the version history, whatever happens to the draft.",
+    "toolsPending": "New tools wait for your approval ({{names}}). The workflow can only run once they are approved.",
+    "goal": "Goal",
+    "inputs": "Inputs",
+    "outputs": "Results",
+    "constraints": "Constraints",
+    "facts": "Structure",
+    "factsValue": "{{agents}} agents, {{connections}} connections · {{fixes}} automatic corrections, {{repairs}} AI corrections",
+    "cost": "Cost",
+    "costValue": "{{cost}} for {{requests}} AI requests",
+    "assumptions": "Assumptions",
+    "noAssumptions": "No assumptions were needed.",
+    "validation": "Validation",
+    "validOk": "The workflow passed the technical check.",
+    "validErrors_one": "{{count}} problem still blocks a run.",
+    "validErrors_other": "{{count}} problems still block a run.",
+    "notAGuarantee": "A passed check means the workflow can run technically. It is no guarantee that its results are correct: please review the prompts and test the workflow with real inputs.",
+    "notes": "Notes",
+    "receives": "Receives",
+    "knowledge": "Knowledge",
+    "memory": "Memory",
+    "draftResource": "draft",
+    "output": "Structured result",
+    "limits": "Limits",
+    "whatChanged_one": "{{count}} change",
+    "whatChanged_other": "{{count}} changes",
+    "inputsChanged": "Inputs: {{before}} → {{after}}",
+    "otherSettings": "Further settings changed.",
+    "noTools": "No new tools are needed.",
+    "toolsIntro": "The code below has not run, not even in the sandbox. Test it and approve it to make the tool available; you can also do this later under Tools.",
+    "missingTools": "These tools are only described (tool drafts were switched off or failed). Create them under Tools or remove them from the agents:",
+    "changeSummary": "{{added}} added, {{changed}} changed, {{removed}} removed · {{edgesAdded}} new and {{edgesRemoved}} removed connections",
+    "keptAgents": "Unchanged: {{names}}",
+    "discard": "Discard draft",
+    "refine": "Change description",
+    "confirmDiscard": "Discard this draft? Its tool drafts are deleted too.",
+    "keepReviewing": "Keep reviewing",
+    "libraries": "The tool drafts need Python libraries: {{names}}. Nothing was installed; you can approve them when testing the tools and in the workflow."
+  },
+  "accept": {
+    "create": "Create workflow",
+    "apply": "Apply changes",
+    "created": "“{{name}}” created"
+  },
+  "apply": {
+    "done": "Changes applied. Undo takes them back; save to keep them.",
+    "beforeNote": "Before an AI revision",
+    "versionNote": "AI revision: {{text}}"
+  },
+  "ended": {
+    "cancelled": "The generation was cancelled. Nothing was saved and no workflow was changed.",
+    "failed": "The draft could not be completed.",
+    "cost": "Cost so far: {{cost}} (included in the usage overview).",
+    "retry": "New description"
+  },
+  "tool": {
+    "statusDraft": "awaiting approval",
+    "statusApproved": "approved",
+    "requirement": "Requirement:",
+    "usedBy": "Used by: {{names}}",
+    "notRun": "Only checked statically: this code has not run yet. Testing runs the tests in the sandbox; approving tests again and registers the tool.",
+    "staticErrors": "The static check found problems:",
+    "code": "Code",
+    "tests": "Tests",
+    "testsPassed_one": "{{count}} test passed in the sandbox.",
+    "testsPassed_other": "{{count}} tests passed in the sandbox.",
+    "testsFailed_one": "{{failed}} of {{count}} test failed; the tool was not registered.",
+    "testsFailed_other": "{{failed}} of {{count}} tests failed; the tool was not registered.",
+    "test": "Test in sandbox",
+    "approve": "Approve and register",
+    "reject": "Reject",
+    "approved": "Tool {{name}} approved and available to all agents",
+    "notApproved": "Not registered: the tests did not pass.",
+    "rejected": "Tool draft {{name}} rejected",
+    "libraries": "Needs the libraries {{names}}. They are only installed after your approval."
+  },
+  "log": {
+    "analyze": {
+      "started": "Analysing goals, inputs, results and constraints.",
+      "done": "Requirements analysed: inputs {{inputs}}, results {{outputs}}.",
+      "assumptions_one": "{{count}} assumption made for an open detail.",
+      "assumptions_other": "{{count}} assumptions made for open details.",
+      "question": "An essential detail is missing: a question for you."
+    },
+    "plan": {
+      "started": "Planning agent roles, dependencies and parallel steps.",
+      "revise_started": "Comparing the instruction with the current workflow.",
+      "roles_one": "{{count}} specialised agent role defined.",
+      "roles_other": "{{count}} specialised agent roles defined.",
+      "parallel_one": "{{count}} agent works in parallel.",
+      "parallel_other": "{{count}} agents work in parallel.",
+      "revision": "Planned: {{added}} new, {{changed}} changed, {{removed}} removed agents.",
+      "no_changes": "The instruction needs no change to the workflow."
+    },
+    "resources": {
+      "tool_found": "Existing tool {{name}} found for {{agent}}.",
+      "server_tool": "{{agent}} uses {{name}}.",
+      "template_found": "Agent template {{template}} fits {{agent}}.",
+      "knowledge": "Knowledge file {{file}} assigned to {{agent}}.",
+      "memory": "{{agent}} gets the persistent memory space {{space}} (draft, created at the first run).",
+      "memory_run": "{{agent}} gets memory for one run.",
+      "tool_missing": "No existing tool provides {{name}}; a draft will be written for your review.",
+      "none": "No tools, knowledge or memory needed beyond the agents."
+    },
+    "configure": {
+      "started": "System prompt for {{name}} is being written.",
+      "done": "{{name}} configured ({{model}}).",
+      "revising": "{{name}} is being reconfigured.",
+      "changed": "{{name}} reconfigured ({{model}}).",
+      "template": "{{name}} configured from a template."
+    },
+    "tools": {
+      "none": "No new tool is needed.",
+      "listed": "Tool {{name}} is only listed as a requirement.",
+      "started": "The Coding Agent writes the tool {{name}}.",
+      "static_failed_one": "The static check found {{count}} problem in {{name}}; correcting.",
+      "static_failed_other": "The static check found {{count}} problems in {{name}}; correcting.",
+      "static_remaining_one": "Tool draft {{name}} still has {{count}} problem.",
+      "static_remaining_other": "Tool draft {{name}} still has {{count}} problems.",
+      "done": "Tool draft {{name}} written; it waits for your review and approval.",
+      "libraries": "Tool draft {{name}} needs {{packages}}; nothing is installed without your approval."
+    },
+    "connect": {
+      "input_dropped": "Invalid connection of {{name}} detected and removed.",
+      "cycle_removed": "Connection {{source}} → {{target}} would close a cycle and was removed.",
+      "edge_fixed": "Invalid connection detected and corrected.",
+      "input_added": "{{name}} gets the workflow input.",
+      "output_added": "{{name}} is connected to the result.",
+      "edges_one": "{{count}} connection and data flow configured.",
+      "edges_other": "{{count}} connections and data flows configured."
+    },
+    "validate": {
+      "fixed": "{{name}}: configuration error corrected automatically.",
+      "model_replaced": "Unknown model replaced by {{model}}.",
+      "placeholder_fixed": "Placeholder “{{placeholder}}” in {{name}} matched no input and now uses all inputs.",
+      "renamed": "{{name}} renamed to {{new}} to keep names unique.",
+      "repair": "AI correction {{attempt}} for {{name}}.",
+      "remaining_one": "{{count}} problem remains; please look at it before running.",
+      "remaining_other": "{{count}} problems remain; please look at them before running.",
+      "ok": "Workflow technically validated.",
+      "tools_pending": "The workflow can run once you have approved: {{names}}."
+    },
+    "present": {
+      "ready": "The draft is ready for your review."
+    }
+  }
+}

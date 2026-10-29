@@ -1,0 +1,136 @@
+{
+  "title": "Diagnostic du système",
+  "intro": "Vérifiez si Nodestro fonctionne entièrement sur cet ordinateur : versions, base de données, répertoires, sandbox et prérequis. Le diagnostic est gratuit et n’envoie rien sur Internet.",
+  "run": "Lancer le diagnostic",
+  "again": "Vérifier à nouveau",
+  "connection": "Tester la connexion",
+  "connectionNote": "Le test de connexion demande seulement la liste des modèles au fournisseur du modèle par défaut. Il n’utilise aucun token et ne coûte rien.",
+  "details": "Détails techniques",
+  "versions": "Versions",
+  "noSecrets": "Le diagnostic n’affiche jamais de clés API ni d’autres identifiants.",
+  "status": {
+    "ok": "OK",
+    "warning": "Avertissement",
+    "error": "Erreur"
+  },
+  "overall": {
+    "ok": "Tout est en ordre",
+    "warning": "Avec avertissements",
+    "error": "Erreurs trouvées"
+  },
+  "version": {
+    "nodestro": "Nodestro",
+    "python": "Python",
+    "sqlite": "SQLite",
+    "platform": "Système d’exploitation",
+    "orkexa": "Orkexa"
+  },
+  "checks": {
+    "python": {
+      "title": "Python",
+      "ok": "Version {{version}}."
+    },
+    "database": {
+      "title": "Base de données",
+      "ok": "Lisible, modifiable et intacte ({{size}}).",
+      "unreadable": "La base de données ne peut pas être ouverte.",
+      "damaged": "La base de données est endommagée.",
+      "no_fts": "La recherche plein texte (FTS5) manque dans cette version de SQLite.",
+      "fix": {
+        "unreadable": "Vérifiez le chemin et les droits : {{path}}. Nodestro tourne-t-il deux fois ?",
+        "damaged": "Restaurez la dernière sauvegarde (Réglages → Sauvegarde).",
+        "no_fts": "La recherche dans les connaissances trouvera moins. Installez un Python avec un SQLite complet (par ex. depuis python.org)."
+      }
+    },
+    "data_dir": {
+      "title": "Répertoire de données",
+      "ok": "Modifiable : {{path}}",
+      "not_writable": "Non modifiable : {{path}}",
+      "fix": {
+        "not_writable": "Donnez à votre utilisateur les droits d’écriture sur le dossier ou définissez NODESTRO_DATA_DIR vers un autre dossier."
+      }
+    },
+    "tools_dir": {
+      "title": "Répertoire des outils",
+      "ok": "Modifiable : {{path}}",
+      "not_writable": "Non modifiable : {{path}}",
+      "fix": {
+        "not_writable": "Sans droits d’écriture, aucun outil personnalisé ne peut être enregistré."
+      }
+    },
+    "backup_dir": {
+      "title": "Répertoire des sauvegardes",
+      "ok": "Modifiable : {{path}}",
+      "not_writable": "Non modifiable : {{path}}",
+      "fix": {
+        "not_writable": "Sans droits d’écriture, aucune sauvegarde ne peut être créée avant une restauration."
+      }
+    },
+    "disk": {
+      "title": "Espace disque",
+      "ok": "{{free}} libres.",
+      "low": "Plus que {{free}} libres.",
+      "fix": {
+        "low": "Libérez de l’espace, par exemple en supprimant d’anciennes exécutions ou sauvegardes."
+      }
+    },
+    "docker": {
+      "title": "Docker",
+      "available": "Disponible.",
+      "not_installed": "Non installé ; les outils s’exécutent dans un processus isolé.",
+      "unreachable": "La sandbox est réglée sur Docker, mais Docker est injoignable.",
+      "fix": {
+        "unreachable": "Démarrez Docker Desktop ou réglez la sandbox sur « Processus Python »."
+      }
+    },
+    "sandbox": {
+      "title": "Sandbox des outils",
+      "ok": "Un outil de test s’est exécuté en {{seconds}} s.",
+      "failed": "Un outil de test n’a pas pu être exécuté.",
+      "fix": {
+        "failed": "Les outils personnalisés ne fonctionnent pas ainsi. Vérifiez les détails et le réglage de la sandbox."
+      }
+    },
+    "pdf": {
+      "title": "Prise en charge des PDF",
+      "ok": "Les fichiers PDF peuvent être lus.",
+      "missing": "Le paquet pypdf manque.",
+      "fix": {
+        "missing": "Réinstallez les dépendances (pip install -e .) pour pouvoir charger des PDF dans les connaissances."
+      }
+    },
+    "frontend": {
+      "title": "Interface",
+      "ok": "L’interface compilée est présente.",
+      "missing": "L’interface compilée manque.",
+      "fix": {
+        "missing": "Compilez-la avec « npm run build » dans le dossier frontend, ou utilisez le serveur de développement."
+      }
+    },
+    "connection": {
+      "title": "Connexion au fournisseur d’IA",
+      "ok": "{{label}} est joignable, réponse en {{millis}} ms.",
+      "no_key": "{{label}} n’a pas de clé API, la connexion ne peut donc pas être vérifiée.",
+      "key_rejected": "{{label}} a refusé la clé API.",
+      "unreachable": "{{label}} est injoignable.",
+      "api_error": "{{label}} a répondu avec le statut {{http_status}}.",
+      "failed": "Le test de connexion a échoué.",
+      "fix": {
+        "no_key": "Saisissez d’abord la clé API.",
+        "key_rejected": "Vérifiez la clé auprès du fournisseur et saisissez-la à nouveau.",
+        "unreachable": "Vérifiez la connexion Internet, un pare-feu ou un proxy, et que le serveur tourne.",
+        "api_error": "Réessayez plus tard ; les détails sont ci-dessous.",
+        "not_configured": "Saisissez d’abord l’URL de base du serveur."
+      },
+      "not_configured": "{{label}} n’a pas encore d’URL de base, la connexion ne peut donc pas être vérifiée."
+    },
+    "providers": {
+      "title": "Fournisseurs d’IA",
+      "ok": "Configurés : {{providers}}.",
+      "missing": "{{provider}} est utilisé par le modèle par défaut ou celui de l’assistant, mais n’est pas configuré.",
+      "fix": {
+        "missing": "Saisissez son accès ci-dessus sous « Fournisseurs d’IA ». Sans lui, ces modèles ne fonctionnent pas."
+      }
+    }
+  }
+}

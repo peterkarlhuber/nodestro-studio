@@ -1,0 +1,11 @@
+{
+  "skipToContent": "Pular para o conteúdo",
+  "home": "Nodestro Studio, ir para a página inicial",
+  "theme": "Esquema de cores",
+  "dark": "Escuro",
+  "light": "Claro",
+  "mainNavigation": "Navegação principal",
+  "privateTitle": "Local e privado",
+  "privateText": "O Nodestro roda só no seu computador. Os dados só saem dele para solicitações aos provedores de IA que você configurou.",
+  "providerMissing": "Configurar provedor de IA"
+}

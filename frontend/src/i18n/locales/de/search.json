@@ -1,0 +1,18 @@
+{
+  "open": "Suchen …",
+  "title": "Suche",
+  "label": "Suchbegriff",
+  "placeholder": "Workflows, Agenten, Tools, Wissen und Dokumentation durchsuchen …",
+  "hint": "Tipp: Mit Strg+K (⌘K auf dem Mac) öffnest du die Suche von überall. Pfeiltasten wählen, Enter öffnet.",
+  "results": "Ergebnisse",
+  "empty": "Nichts gefunden für „{{query}}“.",
+  "kind": {
+    "workflow": "Workflows",
+    "agent": "Agenten in Workflows",
+    "template": "Agenten-Bibliothek",
+    "example": "Beispiel-Workflows",
+    "tool": "Tools",
+    "knowledge": "Wissen",
+    "docs": "Dokumentation"
+  }
+}

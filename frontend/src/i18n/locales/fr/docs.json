@@ -1,0 +1,76 @@
+{
+  "description": "Le manuel d’utilisation de Nodestro : concepts, chaque réglage, guides pas à pas, exemples et solutions aux erreurs fréquentes.",
+  "missingChapter": "Ce chapitre n’existe pas. Retour à la <link>vue d’ensemble</link>.",
+  "onThisPage": "Sur cette page",
+  "linkTo": "Lien vers « {{title}} »",
+  "pager": "Feuilleter les chapitres",
+  "previous": "Précédent",
+  "next": "Suivant",
+  "overview": {
+    "title": "Vue d’ensemble",
+    "intro": "Nouveau ici ? Commencez par <link>Premiers pas</link>. Vous trouverez aussi de courtes explications directement dans l’application derrière chaque icône <strong>?</strong>.",
+    "sections_one": "{{count}} section",
+    "sections_other": "{{count}} sections"
+  },
+  "search": {
+    "placeholder": "Rechercher dans la documentation …",
+    "label": "Rechercher dans la documentation",
+    "clear": "Effacer la recherche",
+    "results": "Résultats de recherche",
+    "hits_one": "{{value}} résultat pour « {{query}} »",
+    "hits_other": "{{value}} résultats pour « {{query}} »",
+    "noHits": "Aucun résultat pour « {{query}} »",
+    "tryOther": "Essayez un autre mot, p. ex. « budget », « variable », « citations » ou « sandbox »."
+  },
+  "models": {
+    "loading": "Chargement de la liste des prix …",
+    "caption": "Modèles et prix en dollars américains par million de tokens",
+    "use": "Usage",
+    "input": "Entrée",
+    "output": "Sortie",
+    "cacheWrite": "Écriture cache (5 min / 1 h)",
+    "cacheRead": "Lecture cache",
+    "note": "Prix en dollars américains par million de tokens (prix catalogue, tels que Nodestro les utilise pour ses estimations)."
+  },
+  "shortcuts": {
+    "key": "Touche",
+    "action": "Effet",
+    "mac": "Sur Mac, utilisez <kbd>⌘</kbd> au lieu de <kbd>Ctrl</kbd>.",
+    "save": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>S</kbd>",
+      "action": "Enregistrer le workflow"
+    },
+    "undo": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>Z</kbd>",
+      "action": "Annuler"
+    },
+    "redo": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Z</kbd> ou <kbd>Ctrl</kbd>+<kbd>Y</kbd>",
+      "action": "Rétablir"
+    },
+    "duplicate": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>D</kbd>",
+      "action": "Dupliquer le nœud sélectionné"
+    },
+    "delete": {
+      "keys": "<kbd>Suppr</kbd> ou <kbd>Retour arrière</kbd>",
+      "action": "Supprimer le nœud ou la connexion sélectionnés"
+    },
+    "canvas": {
+      "keys": "Molette de la souris, glisser le canevas",
+      "action": "Zoomer et déplacer le canevas"
+    },
+    "escape": {
+      "keys": "<kbd>Échap</kbd>",
+      "action": "Fermer une boîte de dialogue ou une explication"
+    },
+    "search": {
+      "keys": "<kbd>/</kbd>",
+      "action": "Dans la documentation : aller à la recherche"
+    },
+    "assistant": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>J</kbd>",
+      "action": "Ouvrir ou fermer Nodestro Assistant"
+    }
+  }
+}

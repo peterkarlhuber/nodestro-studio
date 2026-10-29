@@ -1,0 +1,21 @@
+{
+  "description": "Memorie permanenti. Gli agenti con memoria «permanente» leggono e scrivono file qui, da un’esecuzione all’altra.",
+  "notesTitle": "Appunti",
+  "new": "Nuova memoria",
+  "empty": "Ancora nessuna memoria",
+  "emptyText": "Attiva una memoria permanente per un agente nell’editor, in «Memoria», oppure lascia che te ne proponga una l’assistente di memoria.",
+  "spaces": "Memorie",
+  "nameHint": "Lettere, cifre, spazi, _ . e -. Più agenti possono condividere una memoria.",
+  "namePlaceholder": "ad es. conoscenza-clienti",
+  "cleared": "Memoria {{name}} svuotata",
+  "space": "Memoria {{name}}",
+  "clear": "Svuota",
+  "newFilePlaceholder": "nuovo-file.md",
+  "newFile": "Nuovo file",
+  "createFile": "Crea file in /memories",
+  "clearTitle": "Svuotare la memoria?",
+  "deleteAll": "Elimina tutti i file",
+  "clearText": "Tutti i file di «{{name}}» verranno eliminati. In seguito gli agenti ripartono senza ricordi.",
+  "deleteFile": "Elimina file",
+  "contentOf": "Contenuto di {{path}}"
+}

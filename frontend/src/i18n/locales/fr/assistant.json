@@ -1,0 +1,142 @@
+{
+  "title": "Assistant",
+  "toggle": "Ouvrir ou fermer Nodestro Assistant",
+  "chatCost": "Ce chat : {{cost}}",
+  "docs": "Documentation de l’assistant",
+  "newChat": "Nouveau chat",
+  "wide": "Plus large",
+  "narrow": "Plus étroit",
+  "close": "Fermer",
+  "discuss": "En parler à l’assistant",
+  "discussFile": "En parler à l’assistant (avec {{name}})",
+  "untitled": "Nouveau chat",
+  "openSettings": "Ouvrir les paramètres",
+  "welcome": {
+    "title": "Comment puis-je vous aider ?",
+    "text": "Posez-moi vos questions sur Nodestro, ou joignez un workflow, un agent, un outil ou une exécution à examiner ensemble. Je réponds à partir de la documentation et ne modifie jamais rien moi-même.",
+    "privacy": "Seul ce que vous écrivez et joignez explicitement est envoyé. Les secrets comme les clés API sont remplacés avant.",
+    "examples": {
+      "createWorkflow": "Comment créer un workflow avec deux agents en parallèle ?",
+      "knowledgeMemory": "Quelle est la différence entre connaissances et mémoire ?",
+      "judge": "Comment fonctionne le contrôle qualité avec un juge ?",
+      "testAgent": "Comment tester mon agent sans lancer tout le workflow ?",
+      "costs": "Comment réduire le coût de mes workflows ?"
+    }
+  },
+  "composer": {
+    "placeholder": "Posez une question … (Entrée envoie, Maj+Entrée pour une nouvelle ligne)",
+    "label": "Message à l’assistant",
+    "attach": "Joindre un objet",
+    "stop": "Arrêter",
+    "send": "Envoyer",
+    "hint": "L’assistant peut se tromper. Vérifiez les points importants dans la documentation liée."
+  },
+  "steps": {
+    "context": "Traitement des pièces jointes : {{detail}}",
+    "docs_search": "Recherche dans la documentation : {{detail}}",
+    "docs_read": "Lecture des sections : {{detail}}",
+    "generate": "Rédaction de la réponse …",
+    "handover": "Préparation d’un transfert …"
+  },
+  "done": {
+    "context": "Pièces jointes traitées : {{detail}}",
+    "docs_search": "Documentation consultée : {{detail}}",
+    "docs_read": "Sections lues : {{detail}}",
+    "generate": "Réponse rédigée",
+    "handover": "Transfert préparé"
+  },
+  "message": {
+    "sentWith": "Envoyé avec",
+    "showSent": "Voir ce qui a été envoyé",
+    "usage": "{{tokens}} tokens · {{cost}}",
+    "estimated": "estimé",
+    "steps_one": "{{count}} étape",
+    "steps_other": "{{count}} étapes",
+    "sources": "Sources",
+    "cancelled": "Annulé.",
+    "retry": "Réessayer"
+  },
+  "attachments": {
+    "label": "Joint",
+    "draftTag": "Brouillon",
+    "partialTag": "partiel",
+    "changed": "modifié",
+    "missing": "n’existe plus",
+    "refresh": "Actualiser le contexte",
+    "refreshed": "Contexte actualisé. Il s’applique à partir du prochain message.",
+    "remove": "Retirer {{name}}"
+  },
+  "suggest": {
+    "tag": "Suggestion",
+    "current": {
+      "workflow": "Workflow actuel",
+      "agent": "Agent actuel",
+      "tool": "Outil actuel",
+      "memory": "Espace mémoire actuel",
+      "knowledge": "Fichier de connaissances actuel",
+      "run": "Exécution actuelle"
+    },
+    "unsaved": "modifications non enregistrées",
+    "add": "Ajouter",
+    "addSaved": "Version enregistrée",
+    "addDraft": "Brouillon non enregistré",
+    "ignore": "Ignorer"
+  },
+  "kinds": {
+    "workflow": "Workflow",
+    "agent": "Agent",
+    "tool": "Outil",
+    "memory": "Mémoire",
+    "knowledge": "Connaissances",
+    "run": "Exécution"
+  },
+  "handover": {
+    "note": "Rien n’a été modifié. Vous vérifiez et lancez vous-même là-bas.",
+    "workflow_architect_revise": {
+      "title": "Révision de « {{name}} »",
+      "open": "Ouvrir dans l’architecte de workflows"
+    },
+    "workflow_architect_create": {
+      "title": "Nouveau workflow",
+      "open": "Ouvrir dans l’architecte de workflows"
+    },
+    "agent_designer": {
+      "title": "Nouvel agent pour « {{name}} »",
+      "open": "Ouvrir dans la conception d’agents"
+    },
+    "tool_builder": {
+      "title": "Nouvel outil",
+      "open": "Ouvrir dans la création d’outils"
+    }
+  },
+  "snapshot": {
+    "title": "Envoyé : {{name}}",
+    "meta": "{{kind}} · {{version}} · enregistré {{time}} · {{size}} caractères",
+    "text": "Ce sont exactement les données que l’assistant a reçues pour cet objet. Les secrets sont déjà remplacés."
+  },
+  "picker": {
+    "title": "Joindre un objet",
+    "text": "L’objet choisi accompagne chaque message à partir du prochain, jusqu’à ce que vous le retiriez.",
+    "kind": "Type",
+    "search": "Rechercher",
+    "empty": "Aucun résultat.",
+    "agentNote": "Voici les modèles d’agents. Pour joindre un agent d’un workflow, passez par l’inspecteur d’agent dans l’éditeur.",
+    "attach": "Joindre",
+    "memoryFiles": "Envoyer le contenu de ces fichiers (sinon seulement la liste des fichiers)",
+    "includeContent": "Envoyer le contenu",
+    "includeContentHint": "Sans cette autorisation, l’assistant ne reçoit que le nom, la description et le type du fichier.",
+    "agents_one": "{{count}} agent",
+    "agents_other": "{{count}} agents",
+    "files_one": "{{count}} fichier",
+    "files_other": "{{count}} fichiers"
+  },
+  "list": {
+    "title": "Historique",
+    "empty": "Pas encore de chats.",
+    "rename": "Renommer",
+    "delete": "Supprimer le chat",
+    "meta_one": "{{count}} message · {{time}} · {{cost}}",
+    "meta_other": "{{count}} messages · {{time}} · {{cost}}"
+  },
+  "noProvider": "Configurez d’abord {{provider}} (le fournisseur du modèle de l’assistant) pour envoyer des questions."
+}

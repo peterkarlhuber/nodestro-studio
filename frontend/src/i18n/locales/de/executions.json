@@ -1,0 +1,31 @@
+{
+  "description": "Jeder Lauf mit Ergebnis, Tool-Aufrufen, Fehlern, Tokens und Kosten – zum Nachvollziehen und Vergleichen.",
+  "duplicate": "„{{name}}“ ist bereits vorhanden – es wurde nichts doppelt angelegt.",
+  "imported_one": "Trace importiert",
+  "imported_other": "{{count}} Traces importiert",
+  "filterWorkflow": "Nach Workflow filtern",
+  "allWorkflows": "Alle Workflows",
+  "filterStatus": "Nach Status filtern",
+  "allStatuses": "Alle Status",
+  "filterOrigin": "Nach Herkunft filtern",
+  "origin": {
+    "all": "Alle Herkünfte",
+    "own": "Eigene Läufe",
+    "imported": "Importierte Traces"
+  },
+  "import": "Trace importieren",
+  "empty": "Keine Ausführungen",
+  "emptyText": "Starte einen Workflow im Editor; jeder Lauf erscheint hier. Exportierte Traces kannst du zum Ansehen importieren.",
+  "columns": {
+    "workflow": "Workflow",
+    "status": "Status",
+    "started": "Gestartet",
+    "duration": "Dauer",
+    "requests": "Anfragen",
+    "tokens": "Tokens",
+    "cost": "Kosten",
+    "actions": "Aktionen"
+  },
+  "importedBadge": "Importiert",
+  "delete": "Ausführung löschen"
+}

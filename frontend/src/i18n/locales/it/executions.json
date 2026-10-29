@@ -1,0 +1,31 @@
+{
+  "description": "Ogni esecuzione con risultato, chiamate agli strumenti, errori, token e costi – per ricostruire e confrontare.",
+  "duplicate": "«{{name}}» esiste già – non è stato creato nulla in doppio.",
+  "imported_one": "Traccia importata",
+  "imported_other": "{{count}} tracce importate",
+  "filterWorkflow": "Filtra per workflow",
+  "allWorkflows": "Tutti i workflow",
+  "filterStatus": "Filtra per stato",
+  "allStatuses": "Tutti gli stati",
+  "filterOrigin": "Filtra per origine",
+  "origin": {
+    "all": "Tutte le origini",
+    "own": "Esecuzioni proprie",
+    "imported": "Tracce importate"
+  },
+  "import": "Importa traccia",
+  "empty": "Nessuna esecuzione",
+  "emptyText": "Avvia un workflow nell’editor; ogni esecuzione compare qui. Puoi importare le tracce esportate per consultarle.",
+  "columns": {
+    "workflow": "Workflow",
+    "status": "Stato",
+    "started": "Avviata",
+    "duration": "Durata",
+    "requests": "Richieste",
+    "tokens": "Token",
+    "cost": "Costo",
+    "actions": "Azioni"
+  },
+  "importedBadge": "Importata",
+  "delete": "Elimina esecuzione"
+}

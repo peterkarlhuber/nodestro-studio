@@ -1,0 +1,40 @@
+{
+  "models": {
+    "claude-opus-5-5": "Ragionamento impegnativo, lavoro da agente e di programmazione",
+    "claude-sonnet-5-5": "Lavoro quotidiano da agente a costi più bassi",
+    "claude-haiku-5-5": "Veloce ed economico: classificare, estrarre",
+    "claude-fable-5-1": "Il modello più potente per i compiti più difficili",
+    "claude-fable-5": "Predecessore di Fable 5.1",
+    "claude-opus-5": "Predecessore di Opus 5.5",
+    "claude-sonnet-5": "Predecessore di Sonnet 5.5",
+    "claude-opus-4-8": "Generazione precedente",
+    "claude-opus-4-7": "Generazione precedente",
+    "claude-opus-4-6": "Generazione precedente",
+    "claude-sonnet-4-6": "Generazione precedente",
+    "claude-haiku-4-5": "Generazione precedente",
+    "gpt-5_5": "Modello OpenAI (esempio; si può inserire qualsiasi id di modello OpenAI)",
+    "gpt-6_1-sol": "Modello OpenAI (esempio; si può inserire qualsiasi id di modello OpenAI)",
+    "gemini-3-pro": "Modello Google (esempio; si può inserire qualsiasi id di modello Gemini)",
+    "gemini-3_8-flash": "Modello Google (esempio; si può inserire qualsiasi id di modello Gemini)"
+  },
+  "serverTools": {
+    "web_search": {
+      "label": "Ricerca web",
+      "description": "Cerca sul web e cita le fonti (la ricerca la esegue Anthropic; 10 USD ogni 1.000 ricerche)."
+    },
+    "web_fetch": {
+      "label": "Recupero web",
+      "description": "Carica il contenuto di una pagina web o di un PDF da un URL."
+    },
+    "code_execution": {
+      "label": "Esecuzione di codice",
+      "description": "Esegue Python in una sandbox di Anthropic. Non insieme a ricerca web/recupero web."
+    }
+  },
+  "builtinTools": {
+    "calculator": "Calcola con esattezza un’espressione aritmetica invece di fare i conti a mente. Supporta + - * / // % **, parentesi, pi, e e le funzioni sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
+    "current_datetime": "Restituisce data, ora e giorno della settimana correnti in un fuso orario.",
+    "days_between": "Conta i giorni di calendario da una data all’altra.",
+    "text_statistics": "Conta caratteri, parole, frasi e paragrafi di un testo."
+  }
+}

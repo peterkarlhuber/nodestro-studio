@@ -1,0 +1,16 @@
+{
+  "title": "Agents",
+  "description": "Reusable agents. They appear in the editor under “From the library”.",
+  "newTemplateName": "New template",
+  "emptyTemplate": "Empty template",
+  "describe": "Describe an agent",
+  "created": "“{{name}}” created",
+  "deleted": "Template deleted",
+  "emptyTitle": "No agents in the library yet",
+  "emptyText": "Describe in your own words what an agent should do, or save an agent from the editor as a template.",
+  "toolCount_one": "{{count}} tool",
+  "toolCount_other": "{{count}} tools",
+  "edit": "Edit template",
+  "delete": "Delete template",
+  "selectHint": "Choose an agent on the left to edit it."
+}

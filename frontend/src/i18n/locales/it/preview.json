@@ -1,0 +1,23 @@
+{
+  "title": "Anteprima dell’input",
+  "complete": "completa",
+  "incomplete": "mancano ancora input",
+  "fromRun": "Risultati dei predecessori dall’ultima esecuzione del {{date}}.",
+  "noRun": "Non c’è ancora un’esecuzione; i risultati mancanti dei predecessori sono segnalati.",
+  "source": {
+    "given": "Come input viene usato l’input di test indicato.",
+    "start_default": "Come input viene usato l’input predefinito del nodo iniziale.",
+    "run": "Come input viene usato l’input dell’ultima esecuzione.",
+    "empty": "Non c’è ancora un input per l’esecuzione."
+  },
+  "available": "disponibile",
+  "pending": "mancante",
+  "chars_one": "{{count}} carattere",
+  "chars_other": "{{count}} caratteri",
+  "runStatus": "nell’ultima esecuzione: {{status}}",
+  "noResult": "ancora nessun risultato",
+  "placeholder": {
+    "not_connected": "Il segnaposto “{{name}}” nomina un agente non collegato a questo. Resta vuoto.",
+    "unknown": "Il segnaposto “{{name}}” non corrisponde a nessun predecessore e resta invariato nel testo."
+  }
+}

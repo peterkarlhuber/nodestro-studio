@@ -1,0 +1,38 @@
+{
+  "title": "Backup e restauração",
+  "intro": "Um backup contém todos os fluxos de trabalho com suas versões, modelos de agentes, ferramentas, arquivos de conhecimento, memória, execuções e configurações em um arquivo ZIP.",
+  "noKey": "Por segurança, nenhuma chave de API dos provedores de IA vai para um backup. A restauração mantém as chaves configuradas neste computador.",
+  "download": "Baixar backup",
+  "restoreFromFile": "Restaurar de um arquivo …",
+  "local_one": "{{count}} backup de segurança neste computador",
+  "local_other": "{{count}} backups de segurança neste computador",
+  "localText": "Antes de cada restauração, o Nodestro salva automaticamente um backup do estado anterior.",
+  "downloadLocal": "Baixar",
+  "restoreThis": "Restaurar …",
+  "restoreTitle": "Restaurar backup",
+  "valid": "“{{name}}” é um backup válido de {{date}}. Todos os arquivos estão completos e íntegros.",
+  "versions": "Criado com Nodestro {{nodestro}} e a biblioteca de agentes {{library}}.",
+  "inBackup": "No backup",
+  "current": "Atual",
+  "contents": {
+    "workflows": "Fluxos de trabalho",
+    "versions": "Versões de fluxos de trabalho",
+    "templates": "Modelos de agentes",
+    "tools": "Ferramentas próprias",
+    "knowledge_files": "Arquivos de conhecimento",
+    "memory_spaces": "Espaços de memória",
+    "memory_files": "Arquivos de memória",
+    "runs": "Execuções",
+    "usage_entries": "Outras operações de IA",
+    "conversations": "Chats do assistente",
+    "input_files": "Arquivos de entrada enviados"
+  },
+  "notes": {
+    "other_version": "O backup vem de outra versão do Nodestro. Ele é aplicado na restauração; confira rapidamente seus fluxos de trabalho depois."
+  },
+  "replaceWarning": "A restauração substitui todos os dados atuais pelo estado do backup.",
+  "safetyNote": "Antes, um backup do estado atual é criado automaticamente; depois você o encontra na lista de backups.",
+  "confirm": "Entendo que meus dados atuais serão substituídos.",
+  "restoreNow": "Restaurar agora",
+  "restored": "Backup restaurado. O estado anterior está em “{{name}}”. A página será recarregada."
+}

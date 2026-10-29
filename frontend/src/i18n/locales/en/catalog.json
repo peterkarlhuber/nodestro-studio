@@ -1,0 +1,40 @@
+{
+  "models": {
+    "claude-opus-5-5": "Demanding reasoning, agentic and coding work",
+    "claude-sonnet-5-5": "Everyday agentic work at a lower cost",
+    "claude-haiku-5-5": "Fast and cheap: classifying, extracting",
+    "claude-fable-5-1": "The most capable model for the hardest tasks",
+    "claude-fable-5": "Predecessor of Fable 5.1",
+    "claude-opus-5": "Predecessor of Opus 5.5",
+    "claude-sonnet-5": "Predecessor of Sonnet 5.5",
+    "claude-opus-4-8": "Older generation",
+    "claude-opus-4-7": "Older generation",
+    "claude-opus-4-6": "Older generation",
+    "claude-sonnet-4-6": "Older generation",
+    "claude-haiku-4-5": "Older generation",
+    "gpt-5_5": "OpenAI model (example; any OpenAI model id can be entered)",
+    "gpt-6_1-sol": "OpenAI model (example; any OpenAI model id can be entered)",
+    "gemini-3-pro": "Google model (example; any Gemini model id can be entered)",
+    "gemini-3_8-flash": "Google model (example; any Gemini model id can be entered)"
+  },
+  "serverTools": {
+    "web_search": {
+      "label": "Web search",
+      "description": "Searches the web and cites the sources (Anthropic runs the search; $10 per 1,000 searches)."
+    },
+    "web_fetch": {
+      "label": "Web fetch",
+      "description": "Loads the content of a web page or a PDF from a URL."
+    },
+    "code_execution": {
+      "label": "Code execution",
+      "description": "Runs Python in a sandbox at Anthropic. Not together with web search/web fetch."
+    }
+  },
+  "builtinTools": {
+    "calculator": "Evaluates an arithmetic expression exactly instead of calculating in its head. Supports + - * / // % **, parentheses, pi, e and the functions sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
+    "current_datetime": "Returns the current date, time and weekday in a time zone.",
+    "days_between": "Counts the calendar days from one date to another.",
+    "text_statistics": "Counts the characters, words, sentences and paragraphs of a text."
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "title": "Backup und Wiederherstellung",
+  "intro": "Ein Backup enthält alle Workflows mit Versionen, Agenten-Vorlagen, Tools, Wissensdateien, Memory, Ausführungen und Einstellungen in einer ZIP-Datei.",
+  "noKey": "Aus Sicherheitsgründen kommen keine API-Schlüssel der KI-Anbieter in eine Sicherung. Beim Wiederherstellen bleiben die Schlüssel dieses Rechners erhalten.",
+  "download": "Backup herunterladen",
+  "restoreFromFile": "Aus Datei wiederherstellen …",
+  "local_one": "{{count}} Sicherung auf diesem Rechner",
+  "local_other": "{{count}} Sicherungen auf diesem Rechner",
+  "localText": "Vor jeder Wiederherstellung legt Nodestro automatisch eine Sicherung des vorherigen Stands an.",
+  "downloadLocal": "Herunterladen",
+  "restoreThis": "Wiederherstellen …",
+  "restoreTitle": "Backup wiederherstellen",
+  "valid": "„{{name}}“ ist ein gültiges Backup vom {{date}}. Alle Dateien sind vollständig und unbeschädigt.",
+  "versions": "Erstellt mit Nodestro {{nodestro}} und Agenten-Bibliothek {{library}}.",
+  "inBackup": "Im Backup",
+  "current": "Aktuell",
+  "contents": {
+    "workflows": "Workflows",
+    "versions": "Workflow-Versionen",
+    "templates": "Agenten-Vorlagen",
+    "tools": "Eigene Tools",
+    "knowledge_files": "Wissensdateien",
+    "memory_spaces": "Memory-Räume",
+    "memory_files": "Memory-Dateien",
+    "runs": "Ausführungen",
+    "usage_entries": "Weitere KI-Vorgänge",
+    "conversations": "Assistant-Chats",
+    "input_files": "Hochgeladene Eingabedateien"
+  },
+  "notes": {
+    "other_version": "Das Backup stammt von einer anderen Nodestro-Version. Es wird beim Wiederherstellen übernommen; prüfe danach kurz deine Workflows."
+  },
+  "replaceWarning": "Die Wiederherstellung ersetzt alle aktuellen Daten durch den Stand des Backups.",
+  "safetyNote": "Vorher wird automatisch eine Sicherung des aktuellen Stands angelegt; du findest sie danach in der Liste der Sicherungen.",
+  "confirm": "Ich habe verstanden, dass meine aktuellen Daten ersetzt werden.",
+  "restoreNow": "Jetzt wiederherstellen",
+  "restored": "Backup wiederhergestellt. Der vorherige Stand liegt in „{{name}}“. Die Seite wird neu geladen."
+}

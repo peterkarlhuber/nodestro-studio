@@ -1,0 +1,16 @@
+{
+  "title": "Agenten",
+  "description": "Wiederverwendbare Agenten. Sie erscheinen im Editor unter „Aus der Bibliothek“.",
+  "newTemplateName": "Neue Vorlage",
+  "emptyTemplate": "Leere Vorlage",
+  "describe": "Agent beschreiben",
+  "created": "„{{name}}“ angelegt",
+  "deleted": "Vorlage gelöscht",
+  "emptyTitle": "Noch keine Agenten in der Bibliothek",
+  "emptyText": "Beschreibe in eigenen Worten, was ein Agent können soll, oder speichere einen Agenten aus dem Editor als Vorlage.",
+  "toolCount_one": "{{count}} Tool",
+  "toolCount_other": "{{count}} Tools",
+  "edit": "Vorlage bearbeiten",
+  "delete": "Vorlage löschen",
+  "selectHint": "Wähle links einen Agenten, um ihn zu bearbeiten."
+}

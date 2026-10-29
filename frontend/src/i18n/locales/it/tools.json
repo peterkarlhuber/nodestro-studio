@@ -1,0 +1,85 @@
+{
+  "description": "Funzioni che gli agenti possono chiamare. Gli strumenti personali vengono verificati ed eseguiti in una sandbox.",
+  "area": "Sezione",
+  "tabs": {
+    "library": "Libreria",
+    "write": "Scrivi tu",
+    "generate": "Crea con l’IA"
+  },
+  "sandbox": "Sandbox",
+  "sandboxNote": "Sandbox per testare ed eseguire gli strumenti personali: {{sandbox}} (modificabile nelle impostazioni).",
+  "sandboxDocker": "container Docker",
+  "sandboxProcess": "processo Python separato",
+  "empty": "Nessuno strumento",
+  "kind": {
+    "builtin": "Integrato",
+    "custom": "Strumento personale",
+    "generated": "Creato dall’IA"
+  },
+  "kindLabel": "Tipo di strumento",
+  "version": "Versione {{version}}",
+  "deleted": "Strumento {{name}} eliminato",
+  "saved": "Strumento {{name}} salvato",
+  "tool": "Strumento {{name}}",
+  "delete": "Elimina strumento: lo ritira; gli agenti che lo usano potranno riavviarsi solo dopo che lo avrai rimosso",
+  "requirement": "Requisito:",
+  "schema": "Schema di input",
+  "viewCode": "Vedi codice e test",
+  "codeOfTool": "Codice dello strumento",
+  "testsOfTool": "Test dello strumento",
+  "try": "Prova",
+  "tryHint": "Chiama lo strumento con questo input, come farebbe un agente.",
+  "inputJson": "Input come JSON",
+  "run": "Esegui",
+  "check": {
+    "passed": "Tutti i controlli superati.",
+    "passedTool": "Tutti i controlli superati – strumento {{name}}.",
+    "testPassed": "superato",
+    "sandboxOutput": "Output della sandbox"
+  },
+  "write": {
+    "intro": "Scrivi una funzione Python con tipi e docstring. Da essa derivano nome, descrizione e schema di input. I test sono funzioni <code>test_*</code> che chiamano la funzione. Al salvataggio tutto viene controllato in modo statico e i test girano nella sandbox. Scrivi codice, nomi e docstring in inglese: gli agenti li leggono in ogni lingua.",
+    "functionName": "Nome della funzione",
+    "check": "Controlla e testa",
+    "result": "Esito del controllo",
+    "notChecked": "Non ancora controllato."
+  },
+  "jobStatus": {
+    "running": "In lavorazione",
+    "awaiting_approval": "In attesa di approvazione",
+    "approved": "Approvato",
+    "rejected": "Rifiutato",
+    "failed": "Non riuscito",
+    "awaiting_dependencies": "In attesa delle librerie"
+  },
+  "generate": {
+    "describe": "Descrivi un nuovo strumento",
+    "question": "Che cosa deve saper fare lo strumento?",
+    "hint": "Un Coding Agent scrive codice e test. Entrambi vengono controllati in modo statico, i test girano nella sandbox. Poi decidi tu se lo strumento viene aggiunto.",
+    "placeholder": "ad es. Calcola la rata di un prestito da importo, tasso annuo in percentuale e durata in mesi.",
+    "start": "Fai creare lo strumento",
+    "job": "Richiesta {{requirement}}",
+    "newTool": "Nuovo strumento",
+    "attempts_one": "{{count}} tentativo",
+    "attempts_other": "{{count}} tentativi",
+    "reviewNote": "Controlla codice e test prima di approvare lo strumento. Gli strumenti approvati possono essere usati da tutti gli agenti.",
+    "approval": "Approvazione",
+    "proposedCode": "Codice proposto",
+    "proposedTests": "Test proposti",
+    "approve": "Approva",
+    "reject": "Rifiuta",
+    "viewAttempts": "Vedi tentativi",
+    "attempt": "Tentativo {{number}}:",
+    "attemptCode": "Codice del tentativo {{number}}",
+    "dependenciesNote": "La proposta usa librerie di terze parti. Non è installato nulla; i test partono solo dopo la tua approvazione. Il codice lo approvi poi separatamente.",
+    "approveLibraries": "Approva librerie",
+    "withoutLibraries": "Riscrivi senza librerie",
+    "usesLibraries": "Usa le librerie approvate: {{names}}"
+  },
+  "drafts": {
+    "title_one": "{{count}} bozza di strumento attende la tua decisione",
+    "title_other": "{{count}} bozze di strumenti attendono la tua decisione",
+    "label": "Bozze di strumenti",
+    "text": "Questi strumenti sono stati scritti dall’architetto di workflow. Non sono registrati e non sono stati eseguiti. Gli agenti che ne hanno bisogno possono partire solo dopo la tua approvazione."
+  }
+}

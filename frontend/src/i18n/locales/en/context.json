@@ -1,0 +1,39 @@
+{
+  "system": "System prompt",
+  "task": "Task with inserted inputs",
+  "pending": "[result of {{name}} still missing]",
+  "pendingHint": "{{name}} has no result yet. In a run its output goes here.",
+  "runInput": "Run input",
+  "insertedFrom": "Inserted from: {{name}}",
+  "empty": "(empty)",
+  "truncated": "… (shortened)",
+  "examples": "Example messages",
+  "exampleCount_one": "{{count}} message",
+  "exampleCount_other": "{{count}} messages",
+  "role": {
+    "user": "User",
+    "assistant": "Assistant"
+  },
+  "tools": "Tools",
+  "knowledge": "Knowledge",
+  "knowledgeMode": {
+    "context": "In context",
+    "on_demand": "On demand",
+    "search": "Search"
+  },
+  "fileMissing": "Deleted file",
+  "runFiles": "Files of the run:",
+  "memory": "Memory",
+  "memoryRun": "Memory per run (starts empty)",
+  "memoryPersistent_one": "Persistent: “{{space}}” with {{count}} file",
+  "memoryPersistent_other": "Persistent: “{{space}}” with {{count}} files",
+  "output": "Output format",
+  "outputStructured": "Structured: {{name}} ({{fields}})",
+  "outputText": "Free text",
+  "quality": "Quality check",
+  "qualityOn": "On",
+  "qualityOff": "Off",
+  "requestOptions": "Request options",
+  "secretsHidden": "Credentials are never shown here.",
+  "runNote": "This is how the agent was called in this run: with the configuration of that time and the outputs of its predecessors."
+}

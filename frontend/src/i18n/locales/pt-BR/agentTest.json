@@ -1,0 +1,20 @@
+{
+  "button": "Testar agente",
+  "title": "Testar agente: {{name}}",
+  "note": "Um teste executa apenas este agente com a configuração atual. Não é uma execução do fluxo de trabalho, não aparece em “Execuções” e não altera nenhum resultado.",
+  "input": "Entrada de teste",
+  "inputHint": "É inserida na tarefa do agente como a entrada de uma execução (os marcadores dos predecessores ficam vazios).",
+  "rawHint": "É enviada ao agente sem alterações como tarefa.",
+  "placeholder": "Por exemplo, um texto curto que o agente deve processar …",
+  "raw": "Enviar a entrada diretamente como tarefa",
+  "rawDescription": "Ignora o modelo da tarefa e envia apenas a entrada de teste.",
+  "costNote": "O teste chama o provedor do modelo e pode custar dinheiro: {{model}} custa {{input}} por milhão de tokens de entrada e {{output}} por milhão de tokens de saída (– significa desconhecido). O custo aparece em “Uso”.",
+  "memoryNote": "A memória persistente é apenas lida: o teste trabalha sobre uma cópia e não altera o espaço de memória.",
+  "start": "Iniciar teste",
+  "again": "Testar novamente",
+  "result": "Resultado do teste",
+  "badge": "Teste, não é uma execução",
+  "memoryIsolated": "Cópia da memória",
+  "duration": "Duração",
+  "providerMissing": "Ainda não configurado: {{providers}}. Informe o acesso nas configurações para testar este agente."
+}

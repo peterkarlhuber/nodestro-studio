@@ -1,0 +1,82 @@
+{
+  "title": "Workflow di esempio",
+  "description": "24 workflow multi-agente pronti per attività tipiche del lavoro e della vita quotidiana. L'anteprima non costa nulla; “Copia nei miei workflow” crea un workflow tuo che puoi modificare liberamente.",
+  "galleryTitle": "Workflow di esempio",
+  "galleryText": "Workflow multi-agente pronti, con un compito di prova da provare e adattare. I modelli stessi non cambiano mai.",
+  "showAll": "Vedi tutti i {{count}} esempi",
+  "categories": "Categorie",
+  "allCategories": "Tutte",
+  "searchLabel": "Cerca esempi",
+  "searchPlaceholder": "Nome, ambito o descrizione …",
+  "results_one": "{{count}} esempio",
+  "results_other": "{{count}} esempi",
+  "noMatch": "Nessun esempio corrisponde a ricerca e categoria.",
+  "agents_one": "{{count}} agente",
+  "agents_other": "{{count}} agenti",
+  "sensitive": "Richiede verifica esperta",
+  "copy": "Copia nei miei workflow",
+  "copied": "“{{name}}” creato come copia personale",
+  "category": {
+    "industry": "Industria, edilizia e agricoltura",
+    "business": "Impresa e finanza",
+    "customers": "Vendite, marketing e clienti",
+    "knowledge": "Conoscenza, ricerca e software",
+    "administration": "Diritto, risorse umane e amministrazione",
+    "private": "Vita privata e comunità"
+  },
+  "level": {
+    "beginner": "Principiante",
+    "advanced": "Avanzato"
+  },
+  "pattern": {
+    "sequential": "Sequenziale",
+    "parallel": "Parallelo",
+    "branching": "Ramificazione"
+  },
+  "feature": {
+    "tools": "Strumenti",
+    "structured": "Output strutturato",
+    "judge": "Controllo qualità",
+    "review": "Revisione",
+    "decision": "Decisione",
+    "approval": "Approvazione",
+    "form": "Modulo",
+    "subworkflow": "Sotto-workflow",
+    "files": "File di risultato",
+    "documents": "File come input",
+    "proposals": "Proposte di conoscenza",
+    "memory": "Memoria"
+  },
+  "role": {
+    "research": "Ricerca",
+    "analysis": "Analisi",
+    "planning": "Pianificazione",
+    "review": "Verifica",
+    "writing": "Scrittura"
+  },
+  "guide": {
+    "problem": "Di cosa si tratta",
+    "flow": "Come collaborano gli agenti",
+    "input": "Input",
+    "result": "Risultato",
+    "adapt": "Come adattarlo"
+  },
+  "preview": {
+    "loading": "Caricamento dell'esempio …",
+    "language": "Lingua della copia",
+    "graph": "Flusso del workflow",
+    "agents": "Agenti",
+    "guide": "Guida",
+    "receives": "Riceve: {{names}}",
+    "tools": "Strumenti: {{tools}}",
+    "testInput": "Compito di prova preparato",
+    "syntheticNote": "Il compito di prova contiene dati di esempio inventati. Dopo la copia si trova nel nodo di avvio; sostituiscilo lì con i tuoi dati.",
+    "sensitiveNote": "Questo esempio appartiene all'ambito {{field}}. Gli agenti forniscono strumenti di lavoro, non consulenza: verifica ogni risultato con competenza prima di usarlo.",
+    "costNote": "L’anteprima e la copia sono gratuite e non chiamano alcun modello. I costi nascono solo quando esegui la copia; basta l’accesso ai provider dei suoi modelli.",
+    "samples": "File di esempio",
+    "samplesNote": "Piccoli file inventati per provare i campi file. Scaricali e selezionali quando esegui il workflow.",
+    "tests": "Casi di test",
+    "copyTests": "Aggiungere i casi di test come serie di test",
+    "copyTestsNote": "Crea una serie di test con questi casi. Non viene eseguito nulla, non viene creata alcuna pianificazione e non viene pubblicata alcuna API."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "favorite": "Favorito",
+  "makeFavorite": "Marcar “{{name}}” como favorito",
+  "unfavorite": "Remover “{{name}}” dos favoritos",
+  "editTags": "Editar tags de “{{name}}”",
+  "tagsTitle": "Tags: {{name}}",
+  "tagsText": "Tags ajudam a filtrar. Elas não alteram o conteúdo.",
+  "noTags": "Ainda sem tags.",
+  "removeTag": "Remover a tag “{{tag}}”",
+  "newTag": "Nova tag",
+  "newTagPlaceholder": "por exemplo, Cliente A, Rascunho …",
+  "addTag": "Adicionar",
+  "onlyFavorites": "Só favoritos",
+  "filterTag": "Filtrar por tag",
+  "allTags": "Todas as tags",
+  "noMatch": "Nada corresponde ao filtro."
+}

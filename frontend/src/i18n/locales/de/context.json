@@ -1,0 +1,39 @@
+{
+  "system": "System-Prompt",
+  "task": "Aufgabe mit eingesetzten Eingaben",
+  "pending": "[Ergebnis von {{name}} fehlt noch]",
+  "pendingHint": "{{name}} hat noch kein Ergebnis. Beim Lauf steht hier dessen Ausgabe.",
+  "runInput": "Eingabe des Laufs",
+  "insertedFrom": "Eingesetzt aus: {{name}}",
+  "empty": "(leer)",
+  "truncated": "… (gekürzt)",
+  "examples": "Beispiel-Nachrichten",
+  "exampleCount_one": "{{count}} Nachricht",
+  "exampleCount_other": "{{count}} Nachrichten",
+  "role": {
+    "user": "Nutzer",
+    "assistant": "Assistent"
+  },
+  "tools": "Tools",
+  "knowledge": "Wissen",
+  "knowledgeMode": {
+    "context": "Im Kontext",
+    "on_demand": "Bei Bedarf",
+    "search": "Suche"
+  },
+  "fileMissing": "Gelöschte Datei",
+  "runFiles": "Dateien des Laufs:",
+  "memory": "Memory",
+  "memoryRun": "Memory pro Lauf (startet leer)",
+  "memoryPersistent_one": "Dauerhaft: „{{space}}“ mit {{count}} Datei",
+  "memoryPersistent_other": "Dauerhaft: „{{space}}“ mit {{count}} Dateien",
+  "output": "Ausgabeformat",
+  "outputStructured": "Strukturiert: {{name}} ({{fields}})",
+  "outputText": "Freier Text",
+  "quality": "Qualitätsprüfung",
+  "qualityOn": "Aktiv",
+  "qualityOff": "Aus",
+  "requestOptions": "Request-Options",
+  "secretsHidden": "Zugangsdaten werden hier nie angezeigt.",
+  "runNote": "So wurde der Agent in diesem Lauf aufgerufen: mit der damaligen Konfiguration und den Ausgaben seiner Vorgänger."
+}

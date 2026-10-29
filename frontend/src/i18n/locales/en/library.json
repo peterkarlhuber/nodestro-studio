@@ -1,0 +1,82 @@
+{
+  "title": "Example workflows",
+  "description": "24 ready-made multi-agent workflows for typical tasks at work and at home. The preview costs nothing; “Copy to my workflows” creates your own workflow that you can edit freely.",
+  "galleryTitle": "Example workflows",
+  "galleryText": "Ready-made multi-agent workflows with a test task to try out and adapt. The templates themselves never change.",
+  "showAll": "View all {{count}} examples",
+  "categories": "Categories",
+  "allCategories": "All",
+  "searchLabel": "Search examples",
+  "searchPlaceholder": "Name, field or description …",
+  "results_one": "{{count}} example",
+  "results_other": "{{count}} examples",
+  "noMatch": "No example matches the search and category.",
+  "agents_one": "{{count}} agent",
+  "agents_other": "{{count}} agents",
+  "sensitive": "Needs expert check",
+  "copy": "Copy to my workflows",
+  "copied": "“{{name}}” created as your own copy",
+  "category": {
+    "industry": "Industry, construction and agriculture",
+    "business": "Business and finance",
+    "customers": "Sales, marketing and customers",
+    "knowledge": "Knowledge, research and software",
+    "administration": "Law, HR and administration",
+    "private": "Private life and community"
+  },
+  "level": {
+    "beginner": "Beginner",
+    "advanced": "Advanced"
+  },
+  "pattern": {
+    "sequential": "Sequential",
+    "parallel": "Parallel",
+    "branching": "Branching"
+  },
+  "feature": {
+    "tools": "Tools",
+    "structured": "Structured output",
+    "judge": "Quality check",
+    "review": "Review",
+    "decision": "Decision",
+    "approval": "Approval",
+    "form": "Form",
+    "subworkflow": "Sub-workflow",
+    "files": "Result files",
+    "documents": "Files as input",
+    "proposals": "Knowledge proposals",
+    "memory": "Memory"
+  },
+  "role": {
+    "research": "Research",
+    "analysis": "Analysis",
+    "planning": "Planning",
+    "review": "Review",
+    "writing": "Writing"
+  },
+  "guide": {
+    "problem": "What it is about",
+    "flow": "How the agents work together",
+    "input": "Input",
+    "result": "Result",
+    "adapt": "Adapting it"
+  },
+  "preview": {
+    "loading": "Loading example …",
+    "language": "Language of the copy",
+    "graph": "Flow of the workflow",
+    "agents": "Agents",
+    "guide": "Guide",
+    "receives": "Receives: {{names}}",
+    "tools": "Tools: {{tools}}",
+    "testInput": "Prepared test task",
+    "syntheticNote": "The test task contains invented sample data. After copying it is in the start node; replace it there with your own data.",
+    "sensitiveNote": "This example belongs to {{field}}. The agents produce working aids, not advice: check every result professionally before you use it.",
+    "costNote": "Previewing and copying are free and call no model. Costs only arise when you run the copy; all it needs is access to the providers of its models.",
+    "samples": "Sample files",
+    "samplesNote": "Small invented files for trying out the file fields. Download them and pick them when you run the workflow.",
+    "tests": "Test cases",
+    "copyTests": "Add the test cases as a test series",
+    "copyTestsNote": "Creates a test series with these cases. Nothing is run, no schedule is created and no API is published."
+  }
+}

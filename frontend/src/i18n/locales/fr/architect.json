@@ -1,0 +1,274 @@
+{
+  "title": "Architecte de workflows IA",
+  "button": "Architecte IA",
+  "mode": {
+    "create": "Concevoir un nouveau workflow",
+    "revise": "Retravailler ce workflow"
+  },
+  "form": {
+    "intro": "Décrivez ce que vous voulez obtenir. L’architecte planifie les agents, rédige leurs prompts, les relie et vérifie le résultat. Vous examinez tout avant que quoi que ce soit ne soit enregistré.",
+    "mode": "Que doit faire l’architecte ?",
+    "modeHint": {
+      "create": "Un nouveau workflow indépendant. Le workflow ouvert reste inchangé.",
+      "revise": "L’architecte tient compte des agents, réglages et connexions de ce workflow, y compris les modifications non enregistrées, et propose des changements ciblés dans un brouillon séparé."
+    },
+    "describe": "Votre objectif",
+    "instruction": "Que faut-il changer ?",
+    "hint": {
+      "create": "Objectif, entrées, résultats souhaités et contraintes importantes. Les détails manquants sont complétés par des hypothèses que vous verrez ensuite.",
+      "revise": "Par exemple : « Ajoutez avant le résultat un agent qui vérifie de manière critique les analyses précédentes. »"
+    },
+    "placeholder": {
+      "create": "p. ex. À partir d’une idée de produit, étudier en parallèle le marché et la concurrence, estimer les coûts et rédiger une note de décision d’une page.",
+      "revise": "p. ex. Ajoutez avant le résultat un agent qui vérifie de manière critique les analyses précédentes."
+    },
+    "unsavedIncluded": "Ce workflow a des modifications non enregistrées. L’architecte travaille avec l’état actuel de l’éditeur ; rien n’est enregistré ni écrasé.",
+    "generateTools": "Écrire les outils manquants comme brouillons",
+    "generateToolsHint": "Uniquement si aucun outil existant ne convient. Le code est vérifié statiquement et ne s’exécute jamais avant votre approbation.",
+    "limit": "Plafond de coût d’un brouillon : {{limit}} (<link>Paramètres</link>). L’architecte ne lance jamais d’exécution du workflow.",
+    "noLimit": "Aucun plafond de coût n’est défini pour les brouillons (<link>Paramètres</link>). L’architecte ne lance jamais d’exécution du workflow.",
+    "safety": "L’architecte ne fait que proposer. Les workflows existants restent inchangés jusqu’à ce que vous acceptiez le brouillon, et les nouveaux outils exigent votre approbation.",
+    "startCreate": "Concevoir le workflow",
+    "startRevise": "Proposer des changements"
+  },
+  "phase": {
+    "analyze": "Analyser les besoins",
+    "plan": "Planifier l’architecture",
+    "resources": "Vérifier les ressources",
+    "configure": "Configurer les agents",
+    "tools": "Rédiger les outils",
+    "connect": "Créer les connexions",
+    "validate": "Valider le workflow",
+    "present": "Présenter le brouillon"
+  },
+  "phaseRunning": {
+    "analyze": "Analyse des besoins …",
+    "plan": "Planification de l’architecture du workflow …",
+    "resources": "Vérification des outils, modèles, connaissances et mémoire …",
+    "configure": "Configuration des agents …",
+    "tools": "Rédaction des outils manquants …",
+    "connect": "Connexion des nœuds et des flux de données …",
+    "validate": "Validation du workflow …",
+    "present": "Préparation du brouillon …"
+  },
+  "stepState": {
+    "done": "terminé",
+    "active": "en cours",
+    "todo": "pas commencé",
+    "stopped": "arrêté ici"
+  },
+  "progress": {
+    "steps": "Étapes",
+    "starting": "Démarrage …",
+    "graph": "Aperçu du workflow",
+    "graphEmpty": "Les agents apparaissent ici dès que l’architecture est planifiée.",
+    "log": "Activité",
+    "cost": "Jusqu’ici {{cost}}",
+    "limit": "plafond {{limit}}",
+    "costLabel": "Coût de ce brouillon",
+    "cancel": "Annuler la génération"
+  },
+  "marks": {
+    "legend": "Légende",
+    "pending": "en configuration",
+    "configured": "configuré",
+    "added": "nouveau",
+    "changed": "modifié",
+    "kept": "inchangé",
+    "removed": "supprimé"
+  },
+  "kind": {
+    "added": "nouveau",
+    "changed": "modifié",
+    "removed": "supprimé",
+    "kept": "inchangé"
+  },
+  "field": {
+    "name": "Nom",
+    "description": "Rôle",
+    "model": "Modèle",
+    "effort": "Effort de réflexion",
+    "system_prompt": "Prompt système",
+    "task_template": "Tâche",
+    "tools": "Outils",
+    "server_tools": "Outils serveur",
+    "knowledge": "Connaissances",
+    "memory": "Mémoire",
+    "output": "Format de sortie",
+    "quality": "Contrôle qualité",
+    "max_tokens": "Limite de sortie",
+    "max_tool_rounds": "Tours d’outils",
+    "other": "Autres réglages"
+  },
+  "memory": {
+    "run": "pour une exécution",
+    "persistent": "persistante : {{space}}"
+  },
+  "question": {
+    "title": "Une question avant de continuer :",
+    "hint": "Sans cette précision, aucun workflow sensé ne peut être conçu. Répondez-y ou laissez l’architecte continuer avec sa propre hypothèse.",
+    "yourAnswer": "Votre réponse",
+    "answer": "Répondre et continuer",
+    "skip": "Continuer avec des hypothèses"
+  },
+  "review": {
+    "tabOverview": "Vue d’ensemble",
+    "tabChanges": "Changements",
+    "tabAgents_one": "{{count}} agent",
+    "tabAgents_other": "{{count}} agents",
+    "tabFlow": "Flux de données",
+    "tabTools": "Outils",
+    "tabToolsCount_one": "{{count}} outil",
+    "tabToolsCount_other": "{{count}} outils",
+    "name": "Nom du nouveau workflow",
+    "createNote": "En acceptant, un nouveau workflow est créé et ouvert dans l’éditeur. Rien ne s’exécute automatiquement.",
+    "reviseNote": "En acceptant, les changements sont appliqués dans l’éditeur en une seule étape annulable. Ils ne sont enregistrés que lorsque vous enregistrez.",
+    "changedMeanwhile": "Le workflow de l’éditeur a changé après le lancement du brouillon. En acceptant, ces changements sont remplacés ; Annuler les rétablit.",
+    "saveFirst": "Enregistrer d’abord l’état actuel comme version",
+    "saveFirstHint": "Vos modifications non enregistrées restent dans l’historique des versions, quoi qu’il arrive au brouillon.",
+    "toolsPending": "De nouveaux outils attendent votre approbation ({{names}}). Le workflow ne pourra s’exécuter qu’une fois ceux-ci approuvés.",
+    "goal": "Objectif",
+    "inputs": "Entrées",
+    "outputs": "Résultats",
+    "constraints": "Contraintes",
+    "facts": "Structure",
+    "factsValue": "{{agents}} agents, {{connections}} connexions · {{fixes}} corrections automatiques, {{repairs}} corrections par IA",
+    "cost": "Coût",
+    "costValue": "{{cost}} pour {{requests}} requêtes IA",
+    "assumptions": "Hypothèses",
+    "noAssumptions": "Aucune hypothèse n’a été nécessaire.",
+    "validation": "Validation",
+    "validOk": "Le workflow a passé la vérification technique.",
+    "validErrors_one": "{{count}} problème bloque encore l’exécution.",
+    "validErrors_other": "{{count}} problèmes bloquent encore l’exécution.",
+    "notAGuarantee": "Une vérification réussie signifie que le workflow peut s’exécuter techniquement. Ce n’est pas une garantie que ses résultats soient corrects : relisez les prompts et testez le workflow avec de vraies entrées.",
+    "notes": "Remarques",
+    "receives": "Reçoit",
+    "knowledge": "Connaissances",
+    "memory": "Mémoire",
+    "draftResource": "brouillon",
+    "output": "Résultat structuré",
+    "limits": "Limites",
+    "whatChanged_one": "{{count}} changement",
+    "whatChanged_other": "{{count}} changements",
+    "inputsChanged": "Entrées : {{before}} → {{after}}",
+    "otherSettings": "D’autres réglages ont changé.",
+    "noTools": "Aucun nouvel outil n’est nécessaire.",
+    "toolsIntro": "Le code ci-dessous n’a pas été exécuté, pas même dans le bac à sable. Testez-le et approuvez-le pour rendre l’outil disponible ; vous pouvez aussi le faire plus tard sous Outils.",
+    "missingTools": "Ces outils sont seulement décrits (les brouillons d’outils étaient désactivés ou ont échoué). Créez-les sous Outils ou retirez-les des agents :",
+    "changeSummary": "{{added}} ajoutés, {{changed}} modifiés, {{removed}} supprimés · {{edgesAdded}} connexions nouvelles et {{edgesRemoved}} supprimées",
+    "keptAgents": "Inchangés : {{names}}",
+    "discard": "Abandonner le brouillon",
+    "refine": "Modifier la description",
+    "confirmDiscard": "Abandonner ce brouillon ? Ses brouillons d’outils sont également supprimés.",
+    "keepReviewing": "Continuer l’examen",
+    "libraries": "Les brouillons d’outils nécessitent des bibliothèques Python : {{names}}. Rien n’a été installé ; vous pouvez les approuver en testant les outils et dans le workflow."
+  },
+  "accept": {
+    "create": "Créer le workflow",
+    "apply": "Appliquer les changements",
+    "created": "« {{name}} » créé"
+  },
+  "apply": {
+    "done": "Changements appliqués. Annuler les retire ; enregistrez pour les conserver.",
+    "beforeNote": "Avant une révision par l’IA",
+    "versionNote": "Révision par l’IA : {{text}}"
+  },
+  "ended": {
+    "cancelled": "La génération a été annulée. Rien n’a été enregistré et aucun workflow n’a été modifié.",
+    "failed": "Le brouillon n’a pas pu être terminé.",
+    "cost": "Coût jusqu’ici : {{cost}} (inclus dans l’aperçu de l’utilisation).",
+    "retry": "Nouvelle description"
+  },
+  "tool": {
+    "statusDraft": "en attente d’approbation",
+    "statusApproved": "approuvé",
+    "requirement": "Exigence :",
+    "usedBy": "Utilisé par : {{names}}",
+    "notRun": "Vérifié uniquement de manière statique : ce code n’a pas encore été exécuté. Tester lance les tests dans le bac à sable ; approuver teste à nouveau et enregistre l’outil.",
+    "staticErrors": "La vérification statique a trouvé des problèmes :",
+    "code": "Code",
+    "tests": "Tests",
+    "testsPassed_one": "{{count}} test réussi dans le bac à sable.",
+    "testsPassed_other": "{{count}} tests réussis dans le bac à sable.",
+    "testsFailed_one": "{{failed}} test sur {{count}} a échoué ; l’outil n’a pas été enregistré.",
+    "testsFailed_other": "{{failed}} tests sur {{count}} ont échoué ; l’outil n’a pas été enregistré.",
+    "test": "Tester dans le bac à sable",
+    "approve": "Approuver et enregistrer",
+    "reject": "Refuser",
+    "approved": "Outil {{name}} approuvé et disponible pour tous les agents",
+    "notApproved": "Non enregistré : les tests n’ont pas réussi.",
+    "rejected": "Brouillon d’outil {{name}} refusé",
+    "libraries": "Nécessite les bibliothèques {{names}}. Elles ne sont installées qu’après votre approbation."
+  },
+  "log": {
+    "analyze": {
+      "started": "Analyse des objectifs, entrées, résultats et contraintes.",
+      "done": "Besoins analysés : entrées {{inputs}}, résultats {{outputs}}.",
+      "assumptions_one": "{{count}} hypothèse posée pour un détail ouvert.",
+      "assumptions_other": "{{count}} hypothèses posées pour des détails ouverts.",
+      "question": "Un détail essentiel manque : une question pour vous."
+    },
+    "plan": {
+      "started": "Planification des rôles, dépendances et étapes parallèles.",
+      "revise_started": "Comparaison de la consigne avec le workflow actuel.",
+      "roles_one": "{{count}} rôle d’agent spécialisé défini.",
+      "roles_other": "{{count}} rôles d’agents spécialisés définis.",
+      "parallel_one": "{{count}} agent travaille en parallèle.",
+      "parallel_other": "{{count}} agents travaillent en parallèle.",
+      "revision": "Prévu : {{added}} agents nouveaux, {{changed}} modifiés, {{removed}} supprimés.",
+      "no_changes": "La consigne ne demande aucun changement du workflow."
+    },
+    "resources": {
+      "tool_found": "Outil existant {{name}} trouvé pour {{agent}}.",
+      "server_tool": "{{agent}} utilise {{name}}.",
+      "template_found": "Le modèle d’agent {{template}} convient à {{agent}}.",
+      "knowledge": "Fichier de connaissances {{file}} attribué à {{agent}}.",
+      "memory": "{{agent}} reçoit l’espace mémoire persistant {{space}} (brouillon, créé à la première exécution).",
+      "memory_run": "{{agent}} reçoit une mémoire pour une exécution.",
+      "tool_missing": "Aucun outil existant ne fournit {{name}} ; un brouillon sera rédigé pour votre examen.",
+      "none": "Au-delà des agents, aucun outil, connaissance ou mémoire n’est nécessaire."
+    },
+    "configure": {
+      "started": "Le prompt système de {{name}} est en cours de rédaction.",
+      "done": "{{name}} configuré ({{model}}).",
+      "revising": "{{name}} est en cours de reconfiguration.",
+      "changed": "{{name}} reconfiguré ({{model}}).",
+      "template": "{{name}} configuré à partir d’un modèle."
+    },
+    "tools": {
+      "none": "Aucun nouvel outil n’est nécessaire.",
+      "listed": "L’outil {{name}} est seulement listé comme exigence.",
+      "started": "Le Coding Agent rédige l’outil {{name}}.",
+      "static_failed_one": "La vérification statique a trouvé {{count}} problème dans {{name}} ; correction en cours.",
+      "static_failed_other": "La vérification statique a trouvé {{count}} problèmes dans {{name}} ; correction en cours.",
+      "static_remaining_one": "Le brouillon {{name}} a encore {{count}} problème.",
+      "static_remaining_other": "Le brouillon {{name}} a encore {{count}} problèmes.",
+      "done": "Brouillon d’outil {{name}} rédigé ; il attend votre examen et votre approbation.",
+      "libraries": "Le brouillon d’outil {{name}} a besoin de {{packages}} ; rien n’est installé sans votre approbation."
+    },
+    "connect": {
+      "input_dropped": "Connexion invalide de {{name}} détectée et supprimée.",
+      "cycle_removed": "La connexion {{source}} → {{target}} aurait fermé un cycle et a été supprimée.",
+      "edge_fixed": "Connexion invalide détectée et corrigée.",
+      "input_added": "{{name}} reçoit l’entrée du workflow.",
+      "output_added": "{{name}} est relié au résultat.",
+      "edges_one": "{{count}} connexion et flux de données configurés.",
+      "edges_other": "{{count}} connexions et flux de données configurés."
+    },
+    "validate": {
+      "fixed": "{{name}} : erreur de configuration corrigée automatiquement.",
+      "model_replaced": "Modèle inconnu remplacé par {{model}}.",
+      "placeholder_fixed": "L’espace réservé « {{placeholder}} » de {{name}} ne correspondait à aucune entrée et utilise maintenant toutes les entrées.",
+      "renamed": "{{name}} renommé en {{new}} pour garder des noms uniques.",
+      "repair": "Correction par IA {{attempt}} pour {{name}}.",
+      "remaining_one": "Il reste {{count}} problème ; examinez-le avant l’exécution.",
+      "remaining_other": "Il reste {{count}} problèmes ; examinez-les avant l’exécution.",
+      "ok": "Workflow validé techniquement.",
+      "tools_pending": "Le workflow pourra s’exécuter une fois que vous aurez approuvé : {{names}}."
+    },
+    "present": {
+      "ready": "Le brouillon est prêt pour votre examen."
+    }
+  }
+}

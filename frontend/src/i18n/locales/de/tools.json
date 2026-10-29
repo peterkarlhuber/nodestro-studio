@@ -1,0 +1,85 @@
+{
+  "description": "Funktionen, die Agenten aufrufen können. Eigene Tools laufen geprüft in einer Sandbox.",
+  "area": "Bereich",
+  "tabs": {
+    "library": "Bibliothek",
+    "write": "Selbst schreiben",
+    "generate": "Von KI erstellen"
+  },
+  "sandbox": "Sandbox",
+  "sandboxNote": "Sandbox für Tests und Ausführung eigener Tools: {{sandbox}} (in den Einstellungen änderbar).",
+  "sandboxDocker": "Docker-Container",
+  "sandboxProcess": "eigener Python-Prozess",
+  "empty": "Keine Tools",
+  "kind": {
+    "builtin": "Eingebaut",
+    "custom": "Eigenes Tool",
+    "generated": "Von KI erstellt"
+  },
+  "kindLabel": "Art des Tools",
+  "version": "Version {{version}}",
+  "deleted": "Tool {{name}} gelöscht",
+  "saved": "Tool {{name}} gespeichert",
+  "tool": "Tool {{name}}",
+  "delete": "Tool löschen: zieht es zurück; Agenten mit diesem Tool können erst wieder starten, wenn du es dort entfernst",
+  "requirement": "Anforderung:",
+  "schema": "Eingabeschema",
+  "viewCode": "Code und Tests ansehen",
+  "codeOfTool": "Code des Tools",
+  "testsOfTool": "Tests des Tools",
+  "try": "Ausprobieren",
+  "tryHint": "Ruft das Tool mit dieser Eingabe auf, wie es ein Agent tun würde.",
+  "inputJson": "Eingabe als JSON",
+  "run": "Ausführen",
+  "check": {
+    "passed": "Alle Prüfungen bestanden.",
+    "passedTool": "Alle Prüfungen bestanden – Tool {{name}}.",
+    "testPassed": "bestanden",
+    "sandboxOutput": "Ausgabe der Sandbox"
+  },
+  "write": {
+    "intro": "Schreibe eine Python-Funktion mit Typen und Docstring. Daraus entstehen Name, Beschreibung und Eingabeschema. Tests sind Funktionen <code>test_*</code>, die die Funktion aufrufen. Beim Speichern wird alles statisch geprüft und die Tests laufen in der Sandbox. Schreibe Code, Namen und Docstrings auf Englisch: Agenten lesen sie in jeder Sprache.",
+    "functionName": "Name der Funktion",
+    "check": "Prüfen und testen",
+    "result": "Prüfergebnis",
+    "notChecked": "Noch nicht geprüft."
+  },
+  "jobStatus": {
+    "running": "In Arbeit",
+    "awaiting_approval": "Wartet auf Freigabe",
+    "approved": "Freigegeben",
+    "rejected": "Abgelehnt",
+    "failed": "Fehlgeschlagen",
+    "awaiting_dependencies": "Wartet auf Bibliotheken"
+  },
+  "generate": {
+    "describe": "Neues Tool beschreiben",
+    "question": "Was soll das Tool können?",
+    "hint": "Ein Coding Agent schreibt Code und Tests. Beides wird statisch geprüft, die Tests laufen in der Sandbox. Danach entscheidest du, ob das Tool aufgenommen wird.",
+    "placeholder": "z. B. Berechne die Annuität eines Kredits aus Betrag, Jahreszins in Prozent und Laufzeit in Monaten.",
+    "start": "Tool erstellen lassen",
+    "job": "Auftrag {{requirement}}",
+    "newTool": "Neues Tool",
+    "attempts_one": "{{count}} Versuch",
+    "attempts_other": "{{count}} Versuche",
+    "reviewNote": "Prüfe Code und Tests, bevor du das Tool freigibst. Freigegebene Tools können alle Agenten nutzen.",
+    "approval": "Freigabe",
+    "proposedCode": "Vorgeschlagener Code",
+    "proposedTests": "Vorgeschlagene Tests",
+    "approve": "Freigeben",
+    "reject": "Ablehnen",
+    "viewAttempts": "Versuche ansehen",
+    "attempt": "Versuch {{number}}:",
+    "attemptCode": "Code Versuch {{number}}",
+    "dependenciesNote": "Der Vorschlag nutzt Bibliotheken von Drittanbietern. Nichts ist installiert; die Tests laufen erst nach deiner Freigabe. Den Code gibst du danach separat frei.",
+    "approveLibraries": "Bibliotheken freigeben",
+    "withoutLibraries": "Ohne Bibliotheken neu schreiben",
+    "usesLibraries": "Verwendet die freigegebenen Bibliotheken: {{names}}"
+  },
+  "drafts": {
+    "title_one": "{{count}} Tool-Entwurf wartet auf deine Entscheidung",
+    "title_other": "{{count}} Tool-Entwürfe warten auf deine Entscheidung",
+    "label": "Tool-Entwürfe",
+    "text": "Diese Tools hat der Workflow-Architekt geschrieben. Sie sind nicht registriert und noch nicht gelaufen. Agenten, die sie brauchen, können erst starten, wenn du sie freigibst."
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "description": "The Nodestro user manual: concepts, every setting, step-by-step guides, examples and fixes for common errors.",
+  "missingChapter": "This chapter does not exist. Back to the <link>overview</link>.",
+  "onThisPage": "On this page",
+  "linkTo": "Link to “{{title}}”",
+  "pager": "Browse chapters",
+  "previous": "Previous",
+  "next": "Next",
+  "overview": {
+    "title": "Overview",
+    "intro": "New here? Start with <link>Getting started</link>. You will also find short explanations right in the app behind every <strong>?</strong> icon.",
+    "sections_one": "{{count}} section",
+    "sections_other": "{{count}} sections"
+  },
+  "search": {
+    "placeholder": "Search the documentation …",
+    "label": "Search the documentation",
+    "clear": "Clear search",
+    "results": "Search results",
+    "hits_one": "{{value}} result for “{{query}}”",
+    "hits_other": "{{value}} results for “{{query}}”",
+    "noHits": "No results for “{{query}}”",
+    "tryOther": "Try another word, e.g. “budget”, “placeholder”, “citations” or “sandbox”."
+  },
+  "models": {
+    "loading": "Loading the price list …",
+    "caption": "Models and prices in US dollars per million tokens",
+    "use": "Use",
+    "input": "Input",
+    "output": "Output",
+    "cacheWrite": "Cache write (5 min / 1 h)",
+    "cacheRead": "Cache read",
+    "note": "Prices in US dollars per million tokens (list prices, as Nodestro uses them for estimates)."
+  },
+  "shortcuts": {
+    "key": "Key",
+    "action": "Action",
+    "mac": "On a Mac, use <kbd>⌘</kbd> instead of <kbd>Ctrl</kbd>.",
+    "save": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>S</kbd>",
+      "action": "Save the workflow"
+    },
+    "undo": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>Z</kbd>",
+      "action": "Undo"
+    },
+    "redo": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> or <kbd>Ctrl</kbd>+<kbd>Y</kbd>",
+      "action": "Redo"
+    },
+    "duplicate": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>D</kbd>",
+      "action": "Duplicate the selected node"
+    },
+    "delete": {
+      "keys": "<kbd>Delete</kbd> or <kbd>Backspace</kbd>",
+      "action": "Delete the selected node or connection"
+    },
+    "canvas": {
+      "keys": "Mouse wheel, dragging the canvas",
+      "action": "Zoom and pan the canvas"
+    },
+    "escape": {
+      "keys": "<kbd>Esc</kbd>",
+      "action": "Close a dialog or explanation"
+    },
+    "search": {
+      "keys": "<kbd>/</kbd>",
+      "action": "In the documentation: focus the search"
+    },
+    "assistant": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>J</kbd>",
+      "action": "Open or close the Nodestro Assistant"
+    }
+  }
+}

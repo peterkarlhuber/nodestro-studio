@@ -1,0 +1,46 @@
+{
+  "idle": {
+    "label": "Bereit",
+    "description": "Noch nicht ausgeführt."
+  },
+  "waiting": {
+    "label": "Wartet",
+    "description": "Wartet, bis alle Vorgänger fertig sind."
+  },
+  "queued": {
+    "label": "In Warteschlange",
+    "description": "Der Lauf ist angelegt und startet gleich."
+  },
+  "running": {
+    "label": "Läuft",
+    "description": "Wird gerade ausgeführt."
+  },
+  "succeeded": {
+    "label": "Fertig",
+    "description": "Erfolgreich abgeschlossen."
+  },
+  "failed": {
+    "label": "Fehler",
+    "description": "Fehlgeschlagen. Die Fehlermeldung steht in den Details; die Schritte danach werden blockiert."
+  },
+  "skipped": {
+    "label": "Übersprungen",
+    "description": "Nicht ausgeführt, weil dieser Zweig nicht gewählt wurde. Das ist kein Fehler."
+  },
+  "cancelled": {
+    "label": "Abgebrochen",
+    "description": "Durch Abbrechen oder einen unvollständigen Trace beendet."
+  },
+  "blocked": {
+    "label": "Blockiert",
+    "description": "Nicht ausgeführt, weil ein Vorgänger fehlgeschlagen ist oder abgebrochen wurde."
+  },
+  "awaiting_approval": {
+    "label": "Wartet auf Freigabe",
+    "description": "Eine Person muss freigeben oder ablehnen; bis dahin wartet der Lauf."
+  },
+  "paused": {
+    "label": "Pausiert",
+    "description": "Der Lauf wartet auf eine Freigabe und geht nach der Entscheidung weiter."
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "description": "Functions that agents can call. Your own tools are checked and run in a sandbox.",
+  "area": "Section",
+  "tabs": {
+    "library": "Library",
+    "write": "Write it yourself",
+    "generate": "Create with AI"
+  },
+  "sandbox": "Sandbox",
+  "sandboxNote": "Sandbox for testing and running your own tools: {{sandbox}} (can be changed in the settings).",
+  "sandboxDocker": "Docker container",
+  "sandboxProcess": "separate Python process",
+  "empty": "No tools",
+  "kind": {
+    "builtin": "Built-in",
+    "custom": "Your own tool",
+    "generated": "Created by AI"
+  },
+  "kindLabel": "Kind of tool",
+  "version": "Version {{version}}",
+  "deleted": "Tool {{name}} deleted",
+  "saved": "Tool {{name}} saved",
+  "tool": "Tool {{name}}",
+  "delete": "Delete tool: withdraws it; agents with this tool cannot start again until you remove it from them",
+  "requirement": "Requirement:",
+  "schema": "Input schema",
+  "viewCode": "View code and tests",
+  "codeOfTool": "Code of the tool",
+  "testsOfTool": "Tests of the tool",
+  "try": "Try it",
+  "tryHint": "Calls the tool with this input, as an agent would.",
+  "inputJson": "Input as JSON",
+  "run": "Run",
+  "check": {
+    "passed": "All checks passed.",
+    "passedTool": "All checks passed – tool {{name}}.",
+    "testPassed": "passed",
+    "sandboxOutput": "Sandbox output"
+  },
+  "write": {
+    "intro": "Write a Python function with types and a docstring. Name, description and input schema are derived from it. Tests are <code>test_*</code> functions that call the function. On saving, everything is checked statically and the tests run in the sandbox. Write code, names and docstrings in English: agents read them in every language.",
+    "functionName": "Function name",
+    "check": "Check and test",
+    "result": "Check result",
+    "notChecked": "Not checked yet."
+  },
+  "jobStatus": {
+    "running": "In progress",
+    "awaiting_approval": "Awaiting approval",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "failed": "Failed",
+    "awaiting_dependencies": "Waiting for libraries"
+  },
+  "generate": {
+    "describe": "Describe a new tool",
+    "question": "What should the tool be able to do?",
+    "hint": "A Coding Agent writes code and tests. Both are checked statically, the tests run in the sandbox. Then you decide whether the tool is added.",
+    "placeholder": "e.g. Calculate the annuity of a loan from amount, annual interest rate in percent and term in months.",
+    "start": "Have the tool created",
+    "job": "Job {{requirement}}",
+    "newTool": "New tool",
+    "attempts_one": "{{count}} attempt",
+    "attempts_other": "{{count}} attempts",
+    "reviewNote": "Review code and tests before approving the tool. Approved tools can be used by all agents.",
+    "approval": "Approval",
+    "proposedCode": "Proposed code",
+    "proposedTests": "Proposed tests",
+    "approve": "Approve",
+    "reject": "Reject",
+    "viewAttempts": "View attempts",
+    "attempt": "Attempt {{number}}:",
+    "attemptCode": "Code of attempt {{number}}",
+    "dependenciesNote": "The proposal uses third-party libraries. Nothing is installed; the tests only run after your approval. You approve the code separately afterwards.",
+    "approveLibraries": "Approve libraries",
+    "withoutLibraries": "Rewrite without libraries",
+    "usesLibraries": "Uses the approved libraries: {{names}}"
+  },
+  "drafts": {
+    "title_one": "{{count}} tool draft awaiting your decision",
+    "title_other": "{{count}} tool drafts awaiting your decision",
+    "label": "Tool drafts",
+    "text": "The Workflow Architect wrote these tools. They are not registered and have not run. Agents that need them cannot start until you approve them."
+  }
+}

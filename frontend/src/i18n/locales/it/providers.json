@@ -1,0 +1,15 @@
+{
+  "names": {
+    "anthropic": "Anthropic",
+    "openai": "OpenAI",
+    "gemini": "Google Gemini",
+    "compatible": "Endpoint compatibile con OpenAI",
+    "ollama": "Ollama",
+    "vllm": "vLLM"
+  },
+  "provider": "Provider",
+  "model": "Modello",
+  "notConfiguredOption": "{{provider}} (non configurato)",
+  "notConfiguredHint": "{{provider}} non è ancora configurato: inserisci l’accesso nelle impostazioni.",
+  "customModelHint": "Un id di modello tuo: viene passato al provider così com’è. Il prezzo è sconosciuto, quindi il costo appare come sconosciuto."
+}

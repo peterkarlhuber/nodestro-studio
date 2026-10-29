@@ -1,0 +1,28 @@
+{
+  "description": "Tutte le approvazioni in attesa di decisione, dalla più vecchia. Sopravvivono a un riavvio.",
+  "empty": "Nessuna approvazione aperta",
+  "emptyText": "Appena un’esecuzione raggiunge un nodo di approvazione, compare qui.",
+  "cardLabel": "Approvazione {{name}}",
+  "waitingSince": "in attesa da {{time}}",
+  "trigger": {
+    "schedule": "da una pianificazione",
+    "batch": "da una serie",
+    "benchmark": "da una serie di test",
+    "subworkflow": "da un sotto-workflow",
+    "resume": "da una continuazione",
+    "manual": "avviata manualmente",
+    "api": "dall’API pubblicata"
+  },
+  "nothingToShow": "Qui non arrivano risultati; la verifica riguarda il processo stesso.",
+  "comment": "Commento (facoltativo)",
+  "commentRequired": "Commento (obbligatorio in caso di rifiuto)",
+  "commentHint": "Gli agenti successivi possono leggere il commento.",
+  "commentFirst": "Prima motiva il rifiuto.",
+  "rejectStops": "Un rifiuto termina l’esecuzione.",
+  "rejectBranch": "In caso di rifiuto l’esecuzione prosegue sul ramo «Rifiutato».",
+  "rejectEnds": "In caso di rifiuto questo percorso termina (nessun ramo «Rifiutato» è collegato).",
+  "approve": "Approva",
+  "reject": "Rifiuta",
+  "approvedToast": "Approvato. L’esecuzione prosegue.",
+  "rejectedToast": "Rifiutato."
+}

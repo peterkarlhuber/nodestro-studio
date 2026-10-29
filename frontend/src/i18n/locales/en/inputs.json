@@ -1,0 +1,211 @@
+{
+  "chooseFiles": "Choose files",
+  "chooseFile": "Choose file",
+  "chooseFolder": "Choose folder",
+  "drop": {
+    "title": "Drop files or a folder here",
+    "titleOne": "Drop a file here",
+    "full": "The maximum number of files is reached",
+    "limits": "{{formats}} · up to {{size}} MB per file",
+    "allFormats": "All supported formats",
+    "maxFiles_one": "at most {{count}} file",
+    "maxFiles_other": "at most {{count}} files"
+  },
+  "listLabel": "Files of this field",
+  "fromKnowledge": "Add a file from knowledge …",
+  "fromKnowledgeBadge": "from knowledge",
+  "inKnowledge": "taken over into knowledge",
+  "status": {
+    "uploading": "uploading and checking …",
+    "missing": "no longer stored"
+  },
+  "showPreview": "Show what Nodestro read",
+  "showContents": "Show the archive's contents",
+  "hidePreview": "Hide preview",
+  "noText": "(no text)",
+  "previewCut": "Only the beginning is shown.",
+  "tableSummary": "{{name}}: {{count}} rows, {{columns}} columns",
+  "summary": {
+    "archive_one": "{{count}} file, {{readable}} readable",
+    "archive_other": "{{count}} files, {{readable}} readable",
+    "pages_one": "{{count}} page",
+    "pages_other": "{{count}} pages",
+    "sheets_one": "{{count}} sheet",
+    "sheets_other": "{{count}} sheets",
+    "rows_one": "{{count}} row",
+    "rows_other": "{{count}} rows",
+    "chars_one": "{{count}} character",
+    "chars_other": "{{count}} characters"
+  },
+  "archive": {
+    "label": "Contents of {{name}}",
+    "pick": "Choose a file of the archive to see what Nodestro reads from it.",
+    "nested": "archive inside the archive (not opened)",
+    "unsupported": "format not supported",
+    "reason": {
+      "unsafe_path": "unsafe path, skipped",
+      "link": "link, skipped",
+      "special": "special file, skipped",
+      "encrypted": "encrypted, skipped",
+      "duplicate": "duplicate path, skipped",
+      "too_large": "too large, skipped",
+      "ratio": "suspiciously strong compression, skipped",
+      "executable": "program file, never run or read",
+      "other": "skipped"
+    }
+  },
+  "download": "Download {{name}}",
+  "runFilesHint": "Uploaded files belong to this run only (not to knowledge). You can add knowledge files as well.",
+  "waitForUploads": "Wait until all files are uploaded.",
+  "groups": {
+    "text": "Text",
+    "data": "Data (CSV, JSON, Excel)",
+    "document": "Documents (PDF, Word)",
+    "image": "Images",
+    "archive": "ZIP archives"
+  },
+  "config": {
+    "accept": "Accepted file types",
+    "formats": "Single formats",
+    "acceptAll": "Nothing selected: all supported formats are accepted.",
+    "multiple": "Several files",
+    "multipleHint": "Off: exactly one file (the placeholder then stands for one file).",
+    "maxFiles": "Maximum number of files",
+    "maxSize": "Maximum MB per file",
+    "unlimited": "no limit",
+    "delivery": "Hand-over to agents",
+    "deliveryModes": {
+      "auto": "Automatic",
+      "inline": "Always the content",
+      "on_demand": "Overview, content on request"
+    },
+    "deliveryHint": {
+      "auto": "The content goes to the agents when it fits; large files as an overview the agent reads from in parts.",
+      "inline": "Agents get the content as long as it fits into the room for files.",
+      "on_demand": "Agents get name and structure and read the parts they need with the input_files tool."
+    }
+  },
+  "modes": {
+    "text": "as text",
+    "document": "as PDF document",
+    "image": "as image",
+    "ocr_text": "recognised text (OCR)",
+    "overview": "overview",
+    "unavailable": "not handed over"
+  },
+  "modeHints": {
+    "text": "The agent got the file's content as text.",
+    "document": "The agent got the PDF itself (text and layout).",
+    "image": "The agent saw the image itself.",
+    "ocr_text": "The agent got the text recognised in the scan, not the image.",
+    "overview": "The agent got the structure and read the content in parts with the input_files tool.",
+    "unavailable": "The file could not be handed over."
+  },
+  "adopt": {
+    "title": "Take over into knowledge",
+    "short": "To knowledge",
+    "result": "Add result to knowledge",
+    "resultFile": "Add {{name}} to knowledge",
+    "all_one": "Add {{count}} file to knowledge",
+    "all_other": "Add all {{count}} files to knowledge",
+    "intro": "Nothing is stored before you confirm. You see what would be stored, where it comes from and whether something similar exists already.",
+    "collection": "Collection",
+    "collectionOption_one": "{{name}} ({{count}} file)",
+    "collectionOption_other": "{{name}} ({{count}} files)",
+    "newCollection": "New collection …",
+    "newCollectionName": "Name of the new collection",
+    "newCollectionPlaceholder": "e.g. Contracts",
+    "description": "Description (optional)",
+    "check": "Check content",
+    "recheck": "Check again",
+    "confirm_one": "Take over {{count}} item",
+    "confirm_other": "Take over {{count}} items",
+    "checkFirst_one": "Check the item first: you see what would be stored.",
+    "checkFirst_other": "Check the {{count}} items first: you see what would be stored.",
+    "items": "Content to take over",
+    "searchable": "searchable",
+    "storedOnly": "stored only, not searchable",
+    "duplicate": "Already in knowledge as {{name}}: it is not stored twice.",
+    "similar": "Similar content exists already: {{names}}",
+    "itemTitle": "Title",
+    "kind": "Kind of content",
+    "kinds": {
+      "extracted": "extracted from sources",
+      "generated": "generated by an agent",
+      "assumption": "assumption, unchecked"
+    },
+    "content": "Content",
+    "contentHint": "You can correct the text before it is stored.",
+    "preview": "Preview",
+    "provenance": "Origin",
+    "confirmText_one": "I checked the content and want to store {{count}} item in the collection “{{collection}}”.",
+    "confirmText_other": "I checked the content and want to store {{count}} items in the collection “{{collection}}”.",
+    "changed": "You changed the content or the collection: check again before confirming.",
+    "done": "Taken over into knowledge: {{count}} · already present: {{duplicates}}",
+    "notMemory": "Knowledge is a collection of documents for all agents, separate from an agent's memory. Running workflows do not change."
+  },
+  "proposals": {
+    "title_one": "{{count}} proposal for knowledge",
+    "title_other": "{{count}} proposals for knowledge",
+    "label": "Knowledge proposals",
+    "review": "Check and take over",
+    "reviewAll_one": "Check {{count}}",
+    "reviewAll_other": "Check all {{count}}",
+    "adopted": "in knowledge",
+    "note": "Proposals are stored only after you have checked and confirmed them.",
+    "toggle": "May propose content for knowledge",
+    "toggleHint": "The agent's result (and what it marks with propose_knowledge) is offered for knowledge after the run. You decide.",
+    "collection": "Suggested collection"
+  },
+  "provenance": {
+    "title": "Origin: {{origin}}",
+    "input_file": "Uploaded file",
+    "uploaded": "Uploaded at",
+    "archive": "Archive",
+    "path": "Path in the archive",
+    "workflow": "Workflow",
+    "workflow_id": "Workflow id",
+    "run": "Run",
+    "run_at": "Time of the run",
+    "sources": "Source files",
+    "step": "Step",
+    "node": "Node",
+    "agent": "Agent",
+    "result_file": "Result file",
+    "content_kind": "Kind of content",
+    "adopted_at": "Taken over at"
+  },
+  "origins": {
+    "upload": "upload",
+    "input_file": "uploaded file of a run",
+    "result_file": "result file",
+    "agent_result": "agent result",
+    "proposal": "agent proposal"
+  },
+  "run": {
+    "title_one": "{{count}} file received",
+    "title_other": "{{count}} files received",
+    "titleShort": "Received files",
+    "extra": "Extra files",
+    "note": "Files uploaded for this run belong to the run, not to knowledge. You can take them over into knowledge explicitly.",
+    "removed": "removed (cleaned up)"
+  },
+  "storage": {
+    "title": "Uploaded input files",
+    "intro": "Files uploaded for runs, test cases and schedules. Files of queued, running or paused runs are never removed.",
+    "summary": "{{count}} files · {{size}} · {{unused}} unused · {{inUse}} in running runs",
+    "cleanUnused": "Remove unused files",
+    "olderThan": "Files of finished runs older than",
+    "days": "days",
+    "cleanOld": "Remove",
+    "cleaned": "{{count}} files removed ({{size}} freed).",
+    "safe": "Files that test cases, schedules or batches still need are kept."
+  },
+  "collections": {
+    "title": "Collections",
+    "label": "Collection",
+    "all": "All",
+    "none": "No collection",
+    "uploadTo": "Upload into collection"
+  }
+}

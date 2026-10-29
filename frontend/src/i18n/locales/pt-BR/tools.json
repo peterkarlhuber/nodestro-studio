@@ -1,0 +1,85 @@
+{
+  "description": "Funções que os agentes podem chamar. Ferramentas próprias são verificadas e executadas em uma sandbox.",
+  "area": "Seção",
+  "tabs": {
+    "library": "Biblioteca",
+    "write": "Escrever você mesmo",
+    "generate": "Criar com IA"
+  },
+  "sandbox": "Sandbox",
+  "sandboxNote": "Sandbox para testar e executar ferramentas próprias: {{sandbox}} (pode ser alterada nas configurações).",
+  "sandboxDocker": "contêiner Docker",
+  "sandboxProcess": "processo Python separado",
+  "empty": "Nenhuma ferramenta",
+  "kind": {
+    "builtin": "Integrada",
+    "custom": "Ferramenta própria",
+    "generated": "Criada por IA"
+  },
+  "kindLabel": "Tipo de ferramenta",
+  "version": "Versão {{version}}",
+  "deleted": "Ferramenta {{name}} excluída",
+  "saved": "Ferramenta {{name}} salva",
+  "tool": "Ferramenta {{name}}",
+  "delete": "Excluir ferramenta: retira a ferramenta; agentes que a usam só poderão iniciar de novo depois que você a remover deles",
+  "requirement": "Requisito:",
+  "schema": "Esquema de entrada",
+  "viewCode": "Ver código e testes",
+  "codeOfTool": "Código da ferramenta",
+  "testsOfTool": "Testes da ferramenta",
+  "try": "Experimentar",
+  "tryHint": "Chama a ferramenta com esta entrada, como um agente faria.",
+  "inputJson": "Entrada como JSON",
+  "run": "Executar",
+  "check": {
+    "passed": "Todas as verificações foram aprovadas.",
+    "passedTool": "Todas as verificações foram aprovadas – ferramenta {{name}}.",
+    "testPassed": "aprovado",
+    "sandboxOutput": "Saída da sandbox"
+  },
+  "write": {
+    "intro": "Escreva uma função Python com tipos e docstring. Dela saem o nome, a descrição e o esquema de entrada. Os testes são funções <code>test_*</code> que chamam a função. Ao salvar, tudo é verificado de forma estática e os testes rodam na sandbox. Escreva o código, os nomes e as docstrings em inglês: os agentes os leem em qualquer idioma.",
+    "functionName": "Nome da função",
+    "check": "Verificar e testar",
+    "result": "Resultado da verificação",
+    "notChecked": "Ainda não verificado."
+  },
+  "jobStatus": {
+    "running": "Em andamento",
+    "awaiting_approval": "Aguardando aprovação",
+    "approved": "Aprovada",
+    "rejected": "Recusada",
+    "failed": "Falhou",
+    "awaiting_dependencies": "Aguardando bibliotecas"
+  },
+  "generate": {
+    "describe": "Descrever uma nova ferramenta",
+    "question": "O que a ferramenta deve fazer?",
+    "hint": "Um agente de programação escreve o código e os testes. Ambos são verificados de forma estática e os testes rodam na sandbox. Depois você decide se a ferramenta será adicionada.",
+    "placeholder": "p. ex. Calcule a parcela de um empréstimo a partir do valor, da taxa de juros anual em porcentagem e do prazo em meses.",
+    "start": "Pedir a criação da ferramenta",
+    "job": "Pedido {{requirement}}",
+    "newTool": "Nova ferramenta",
+    "attempts_one": "{{count}} tentativa",
+    "attempts_other": "{{count}} tentativas",
+    "reviewNote": "Revise o código e os testes antes de aprovar a ferramenta. Ferramentas aprovadas podem ser usadas por todos os agentes.",
+    "approval": "Aprovação",
+    "proposedCode": "Código proposto",
+    "proposedTests": "Testes propostos",
+    "approve": "Aprovar",
+    "reject": "Recusar",
+    "viewAttempts": "Ver tentativas",
+    "attempt": "Tentativa {{number}}:",
+    "attemptCode": "Código da tentativa {{number}}",
+    "dependenciesNote": "A proposta usa bibliotecas de terceiros. Nada está instalado; os testes só rodam após sua aprovação. Depois você aprova o código separadamente.",
+    "approveLibraries": "Aprovar bibliotecas",
+    "withoutLibraries": "Reescrever sem bibliotecas",
+    "usesLibraries": "Usa as bibliotecas aprovadas: {{names}}"
+  },
+  "drafts": {
+    "title_one": "{{count}} rascunho de ferramenta aguarda sua decisão",
+    "title_other": "{{count}} rascunhos de ferramentas aguardam sua decisão",
+    "label": "Rascunhos de ferramentas",
+    "text": "Estas ferramentas foram escritas pelo arquiteto de fluxos. Não estão registradas e ainda não rodaram. Agentes que precisam delas só podem iniciar depois da sua aprovação."
+  }
+}

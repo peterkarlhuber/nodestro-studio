@@ -1,0 +1,274 @@
+{
+  "title": "Architetto di workflow IA",
+  "button": "Architetto IA",
+  "mode": {
+    "create": "Progettare un nuovo workflow",
+    "revise": "Rielaborare questo workflow"
+  },
+  "form": {
+    "intro": "Descrivi cosa vuoi ottenere. L’architetto pianifica gli agenti, scrive i loro prompt, li collega e verifica il risultato. Controlli tutto prima che venga salvato qualcosa.",
+    "mode": "Cosa deve fare l’architetto?",
+    "modeHint": {
+      "create": "Un nuovo workflow indipendente. Il workflow aperto resta invariato.",
+      "revise": "L’architetto considera agenti, impostazioni e collegamenti di questo workflow, anche le modifiche non salvate, e propone modifiche mirate come bozza separata."
+    },
+    "describe": "Il tuo obiettivo",
+    "instruction": "Cosa deve cambiare?",
+    "hint": {
+      "create": "Obiettivo, input, risultati desiderati e vincoli importanti. I dettagli mancanti vengono completati con ipotesi che vedrai dopo.",
+      "revise": "Per esempio: «Aggiungi prima del risultato un agente che verifichi in modo critico le analisi precedenti.»"
+    },
+    "placeholder": {
+      "create": "es. Da un’idea di prodotto, analizzare in parallelo mercato e concorrenza, stimare i costi e scrivere un documento decisionale di una pagina.",
+      "revise": "es. Aggiungi prima del risultato un agente che verifichi in modo critico le analisi precedenti."
+    },
+    "unsavedIncluded": "Questo workflow ha modifiche non salvate. L’architetto lavora con lo stato attuale dell’editor; nulla viene salvato o sovrascritto.",
+    "generateTools": "Scrivere come bozza gli strumenti mancanti",
+    "generateToolsHint": "Solo se nessuno strumento esistente è adatto. Il codice viene controllato staticamente e non viene mai eseguito prima della tua approvazione.",
+    "limit": "Limite di costo di una bozza: {{limit}} (<link>Impostazioni</link>). L’architetto non avvia mai un’esecuzione del workflow.",
+    "noLimit": "Nessun limite di costo per le bozze (<link>Impostazioni</link>). L’architetto non avvia mai un’esecuzione del workflow.",
+    "safety": "L’architetto propone soltanto. I workflow esistenti restano invariati finché non accetti la bozza, e i nuovi strumenti richiedono la tua approvazione.",
+    "startCreate": "Progetta workflow",
+    "startRevise": "Proponi modifiche"
+  },
+  "phase": {
+    "analyze": "Analizzare i requisiti",
+    "plan": "Pianificare l’architettura",
+    "resources": "Verificare le risorse",
+    "configure": "Configurare gli agenti",
+    "tools": "Scrivere gli strumenti",
+    "connect": "Creare i collegamenti",
+    "validate": "Validare il workflow",
+    "present": "Presentare la bozza"
+  },
+  "phaseRunning": {
+    "analyze": "Analisi dei requisiti …",
+    "plan": "Pianificazione dell’architettura del workflow …",
+    "resources": "Verifica di strumenti, modelli, conoscenze e memoria …",
+    "configure": "Configurazione degli agenti …",
+    "tools": "Scrittura degli strumenti mancanti …",
+    "connect": "Collegamento di nodi e flussi di dati …",
+    "validate": "Validazione del workflow …",
+    "present": "Preparazione della bozza …"
+  },
+  "stepState": {
+    "done": "fatto",
+    "active": "in corso",
+    "todo": "non iniziato",
+    "stopped": "fermato qui"
+  },
+  "progress": {
+    "steps": "Passaggi",
+    "starting": "Avvio …",
+    "graph": "Anteprima del workflow",
+    "graphEmpty": "Gli agenti compaiono qui appena l’architettura è pianificata.",
+    "log": "Attività",
+    "cost": "Finora {{cost}}",
+    "limit": "limite {{limit}}",
+    "costLabel": "Costo di questa bozza",
+    "cancel": "Annulla generazione"
+  },
+  "marks": {
+    "legend": "Legenda",
+    "pending": "in configurazione",
+    "configured": "configurato",
+    "added": "nuovo",
+    "changed": "modificato",
+    "kept": "invariato",
+    "removed": "rimosso"
+  },
+  "kind": {
+    "added": "nuovo",
+    "changed": "modificato",
+    "removed": "rimosso",
+    "kept": "invariato"
+  },
+  "field": {
+    "name": "Nome",
+    "description": "Ruolo",
+    "model": "Modello",
+    "effort": "Sforzo di ragionamento",
+    "system_prompt": "Prompt di sistema",
+    "task_template": "Compito",
+    "tools": "Strumenti",
+    "server_tools": "Strumenti del server",
+    "knowledge": "Conoscenza",
+    "memory": "Memoria",
+    "output": "Formato di output",
+    "quality": "Controllo qualità",
+    "max_tokens": "Limite di output",
+    "max_tool_rounds": "Turni di strumenti",
+    "other": "Altre impostazioni"
+  },
+  "memory": {
+    "run": "per un’esecuzione",
+    "persistent": "permanente: {{space}}"
+  },
+  "question": {
+    "title": "Una domanda prima di continuare:",
+    "hint": "Senza questa informazione non si può progettare un workflow sensato. Rispondi oppure lascia che l’architetto prosegua con una propria ipotesi.",
+    "yourAnswer": "La tua risposta",
+    "answer": "Rispondi e continua",
+    "skip": "Continua con ipotesi"
+  },
+  "review": {
+    "tabOverview": "Panoramica",
+    "tabChanges": "Modifiche",
+    "tabAgents_one": "{{count}} agente",
+    "tabAgents_other": "{{count}} agenti",
+    "tabFlow": "Flusso di dati",
+    "tabTools": "Strumenti",
+    "tabToolsCount_one": "{{count}} strumento",
+    "tabToolsCount_other": "{{count}} strumenti",
+    "name": "Nome del nuovo workflow",
+    "createNote": "Accettando viene creato un nuovo workflow che si apre nell’editor. Nulla viene eseguito automaticamente.",
+    "reviseNote": "Accettando, le modifiche vengono applicate nell’editor come un unico passaggio annullabile. Vengono salvate solo quando salvi.",
+    "changedMeanwhile": "Il workflow nell’editor è cambiato dopo l’avvio della bozza. Accettando queste modifiche vengono sostituite; Annulla le ripristina.",
+    "saveFirst": "Salvare prima lo stato attuale come versione",
+    "saveFirstHint": "Le tue modifiche non salvate restano nella cronologia delle versioni, qualunque cosa accada alla bozza.",
+    "toolsPending": "Nuovi strumenti attendono la tua approvazione ({{names}}). Il workflow potrà essere eseguito solo dopo l’approvazione.",
+    "goal": "Obiettivo",
+    "inputs": "Input",
+    "outputs": "Risultati",
+    "constraints": "Vincoli",
+    "facts": "Struttura",
+    "factsValue": "{{agents}} agenti, {{connections}} collegamenti · {{fixes}} correzioni automatiche, {{repairs}} correzioni con IA",
+    "cost": "Costo",
+    "costValue": "{{cost}} per {{requests}} richieste all’IA",
+    "assumptions": "Ipotesi",
+    "noAssumptions": "Non è stata necessaria alcuna ipotesi.",
+    "validation": "Validazione",
+    "validOk": "Il workflow ha superato il controllo tecnico.",
+    "validErrors_one": "{{count}} problema blocca ancora l’esecuzione.",
+    "validErrors_other": "{{count}} problemi bloccano ancora l’esecuzione.",
+    "notAGuarantee": "Superare il controllo significa che il workflow può essere eseguito tecnicamente. Non garantisce risultati corretti: rivedi i prompt e prova il workflow con input reali.",
+    "notes": "Note",
+    "receives": "Riceve",
+    "knowledge": "Conoscenza",
+    "memory": "Memoria",
+    "draftResource": "bozza",
+    "output": "Risultato strutturato",
+    "limits": "Limiti",
+    "whatChanged_one": "{{count}} modifica",
+    "whatChanged_other": "{{count}} modifiche",
+    "inputsChanged": "Input: {{before}} → {{after}}",
+    "otherSettings": "Sono cambiate altre impostazioni.",
+    "noTools": "Non servono nuovi strumenti.",
+    "toolsIntro": "Il codice qui sotto non è stato eseguito, nemmeno nella sandbox. Provalo e approvalo per rendere disponibile lo strumento; puoi farlo anche più tardi in Strumenti.",
+    "missingTools": "Questi strumenti sono solo descritti (le bozze erano disattivate o non sono riuscite). Creali in Strumenti o rimuovili dagli agenti:",
+    "changeSummary": "{{added}} aggiunti, {{changed}} modificati, {{removed}} rimossi · {{edgesAdded}} collegamenti nuovi e {{edgesRemoved}} rimossi",
+    "keptAgents": "Invariati: {{names}}",
+    "discard": "Scarta bozza",
+    "refine": "Modifica descrizione",
+    "confirmDiscard": "Scartare questa bozza? Vengono eliminate anche le sue bozze di strumenti.",
+    "keepReviewing": "Continua a controllare",
+    "libraries": "Le bozze di strumenti richiedono librerie Python: {{names}}. Non è stato installato nulla; puoi approvarle testando gli strumenti e nel workflow."
+  },
+  "accept": {
+    "create": "Crea workflow",
+    "apply": "Applica modifiche",
+    "created": "«{{name}}» creato"
+  },
+  "apply": {
+    "done": "Modifiche applicate. Annulla le ritira; salva per mantenerle.",
+    "beforeNote": "Prima di una revisione con IA",
+    "versionNote": "Revisione con IA: {{text}}"
+  },
+  "ended": {
+    "cancelled": "La generazione è stata annullata. Non è stato salvato nulla e nessun workflow è stato modificato.",
+    "failed": "Non è stato possibile completare la bozza.",
+    "cost": "Costo finora: {{cost}} (incluso nella panoramica dell’utilizzo).",
+    "retry": "Nuova descrizione"
+  },
+  "tool": {
+    "statusDraft": "in attesa di approvazione",
+    "statusApproved": "approvato",
+    "requirement": "Requisito:",
+    "usedBy": "Usato da: {{names}}",
+    "notRun": "Controllato solo staticamente: questo codice non è ancora stato eseguito. Provare esegue i test nella sandbox; approvare li riesegue e registra lo strumento.",
+    "staticErrors": "Il controllo statico ha trovato problemi:",
+    "code": "Codice",
+    "tests": "Test",
+    "testsPassed_one": "{{count}} test superato nella sandbox.",
+    "testsPassed_other": "{{count}} test superati nella sandbox.",
+    "testsFailed_one": "{{failed}} test su {{count}} non superato; lo strumento non è stato registrato.",
+    "testsFailed_other": "{{failed}} test su {{count}} non superati; lo strumento non è stato registrato.",
+    "test": "Prova nella sandbox",
+    "approve": "Approva e registra",
+    "reject": "Rifiuta",
+    "approved": "Strumento {{name}} approvato e disponibile per tutti gli agenti",
+    "notApproved": "Non registrato: i test non sono stati superati.",
+    "rejected": "Bozza di strumento {{name}} rifiutata",
+    "libraries": "Richiede le librerie {{names}}. Vengono installate solo dopo la tua approvazione."
+  },
+  "log": {
+    "analyze": {
+      "started": "Analisi di obiettivi, input, risultati e vincoli.",
+      "done": "Requisiti analizzati: input {{inputs}}, risultati {{outputs}}.",
+      "assumptions_one": "{{count}} ipotesi formulata per un dettaglio aperto.",
+      "assumptions_other": "{{count}} ipotesi formulate per dettagli aperti.",
+      "question": "Manca un dettaglio essenziale: una domanda per te."
+    },
+    "plan": {
+      "started": "Pianificazione di ruoli, dipendenze e passaggi paralleli.",
+      "revise_started": "Confronto dell’istruzione con il workflow attuale.",
+      "roles_one": "{{count}} ruolo di agente specializzato definito.",
+      "roles_other": "{{count}} ruoli di agenti specializzati definiti.",
+      "parallel_one": "{{count}} agente lavora in parallelo.",
+      "parallel_other": "{{count}} agenti lavorano in parallelo.",
+      "revision": "Previsto: {{added}} agenti nuovi, {{changed}} modificati, {{removed}} rimossi.",
+      "no_changes": "L’istruzione non richiede modifiche al workflow."
+    },
+    "resources": {
+      "tool_found": "Strumento esistente {{name}} trovato per {{agent}}.",
+      "server_tool": "{{agent}} usa {{name}}.",
+      "template_found": "Il modello di agente {{template}} è adatto a {{agent}}.",
+      "knowledge": "File di conoscenza {{file}} assegnato a {{agent}}.",
+      "memory": "{{agent}} riceve lo spazio di memoria permanente {{space}} (bozza, creato alla prima esecuzione).",
+      "memory_run": "{{agent}} riceve memoria per un’esecuzione.",
+      "tool_missing": "Nessuno strumento esistente offre {{name}}; verrà scritta una bozza da controllare.",
+      "none": "Oltre agli agenti non servono strumenti, conoscenze o memoria."
+    },
+    "configure": {
+      "started": "Il prompt di sistema di {{name}} è in scrittura.",
+      "done": "{{name}} configurato ({{model}}).",
+      "revising": "{{name}} viene riconfigurato.",
+      "changed": "{{name}} riconfigurato ({{model}}).",
+      "template": "{{name}} configurato da un modello."
+    },
+    "tools": {
+      "none": "Non serve alcun nuovo strumento.",
+      "listed": "Lo strumento {{name}} è solo elencato come requisito.",
+      "started": "Il Coding Agent scrive lo strumento {{name}}.",
+      "static_failed_one": "Il controllo statico ha trovato {{count}} problema in {{name}}; correzione in corso.",
+      "static_failed_other": "Il controllo statico ha trovato {{count}} problemi in {{name}}; correzione in corso.",
+      "static_remaining_one": "La bozza {{name}} ha ancora {{count}} problema.",
+      "static_remaining_other": "La bozza {{name}} ha ancora {{count}} problemi.",
+      "done": "Bozza di strumento {{name}} scritta; attende il tuo controllo e la tua approvazione.",
+      "libraries": "La bozza di strumento {{name}} richiede {{packages}}; nulla viene installato senza la tua approvazione."
+    },
+    "connect": {
+      "input_dropped": "Collegamento non valido di {{name}} rilevato e rimosso.",
+      "cycle_removed": "Il collegamento {{source}} → {{target}} avrebbe chiuso un ciclo ed è stato rimosso.",
+      "edge_fixed": "Collegamento non valido rilevato e corretto.",
+      "input_added": "{{name}} riceve l’input del workflow.",
+      "output_added": "{{name}} viene collegato al risultato.",
+      "edges_one": "{{count}} collegamento e flusso di dati configurati.",
+      "edges_other": "{{count}} collegamenti e flussi di dati configurati."
+    },
+    "validate": {
+      "fixed": "{{name}}: errore di configurazione corretto automaticamente.",
+      "model_replaced": "Modello sconosciuto sostituito da {{model}}.",
+      "placeholder_fixed": "Il segnaposto «{{placeholder}}» in {{name}} non corrispondeva ad alcun input e ora usa tutti gli input.",
+      "renamed": "{{name}} rinominato in {{new}} per mantenere i nomi univoci.",
+      "repair": "Correzione con IA {{attempt}} per {{name}}.",
+      "remaining_one": "Rimane {{count}} problema; controllalo prima di eseguire.",
+      "remaining_other": "Rimangono {{count}} problemi; controllali prima di eseguire.",
+      "ok": "Workflow validato tecnicamente.",
+      "tools_pending": "Il workflow potrà essere eseguito dopo che avrai approvato: {{names}}."
+    },
+    "present": {
+      "ready": "La bozza è pronta per il tuo controllo."
+    }
+  }
+}

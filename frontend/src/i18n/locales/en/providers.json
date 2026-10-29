@@ -1,0 +1,15 @@
+{
+  "names": {
+    "anthropic": "Anthropic",
+    "openai": "OpenAI",
+    "gemini": "Google Gemini",
+    "compatible": "OpenAI-compatible endpoint",
+    "ollama": "Ollama",
+    "vllm": "vLLM"
+  },
+  "provider": "Provider",
+  "model": "Model",
+  "notConfiguredOption": "{{provider}} (not set up)",
+  "notConfiguredHint": "{{provider}} is not set up yet: enter its access in the settings.",
+  "customModelHint": "A model id of your own: it is passed to the provider as it is. Its price is unknown, so its cost is shown as unknown."
+}

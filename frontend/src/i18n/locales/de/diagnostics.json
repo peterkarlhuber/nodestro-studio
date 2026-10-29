@@ -1,0 +1,136 @@
+{
+  "title": "Systemdiagnose",
+  "intro": "Prüft, ob Nodestro auf diesem Rechner vollständig funktioniert: Versionen, Datenbank, Verzeichnisse, Sandbox und Voraussetzungen. Die Diagnose ist kostenlos und sendet nichts ins Internet.",
+  "run": "Diagnose starten",
+  "again": "Erneut prüfen",
+  "connection": "Verbindung testen",
+  "connectionNote": "Der Verbindungstest fragt beim Anbieter des Standardmodells nur die Modellliste ab. Er verbraucht keine Tokens und kostet nichts.",
+  "details": "Technische Details",
+  "versions": "Versionen",
+  "noSecrets": "Die Diagnose zeigt nie API-Schlüssel oder andere Zugangsdaten an.",
+  "status": {
+    "ok": "In Ordnung",
+    "warning": "Warnung",
+    "error": "Fehler"
+  },
+  "overall": {
+    "ok": "Alles in Ordnung",
+    "warning": "Mit Warnungen",
+    "error": "Fehler gefunden"
+  },
+  "version": {
+    "nodestro": "Nodestro",
+    "python": "Python",
+    "sqlite": "SQLite",
+    "platform": "Betriebssystem",
+    "orkexa": "Orkexa"
+  },
+  "checks": {
+    "python": {
+      "title": "Python",
+      "ok": "Version {{version}}."
+    },
+    "database": {
+      "title": "Datenbank",
+      "ok": "Lesbar, beschreibbar und unbeschädigt ({{size}}).",
+      "unreadable": "Die Datenbank lässt sich nicht öffnen.",
+      "damaged": "Die Datenbank ist beschädigt.",
+      "no_fts": "Die Volltextsuche (FTS5) fehlt in dieser SQLite-Version.",
+      "fix": {
+        "unreadable": "Prüfe Pfad und Rechte: {{path}}. Läuft Nodestro vielleicht zweimal?",
+        "damaged": "Stelle das letzte Backup wieder her (Einstellungen → Backup).",
+        "no_fts": "Die Wissenssuche findet dann weniger. Installiere ein Python mit vollständigem SQLite (z. B. von python.org)."
+      }
+    },
+    "data_dir": {
+      "title": "Datenverzeichnis",
+      "ok": "Beschreibbar: {{path}}",
+      "not_writable": "Nicht beschreibbar: {{path}}",
+      "fix": {
+        "not_writable": "Gib deinem Benutzer Schreibrechte für den Ordner oder setze NODESTRO_DATA_DIR auf einen anderen Ordner."
+      }
+    },
+    "tools_dir": {
+      "title": "Tool-Verzeichnis",
+      "ok": "Beschreibbar: {{path}}",
+      "not_writable": "Nicht beschreibbar: {{path}}",
+      "fix": {
+        "not_writable": "Ohne Schreibrechte können keine eigenen Tools gespeichert werden."
+      }
+    },
+    "backup_dir": {
+      "title": "Backup-Verzeichnis",
+      "ok": "Beschreibbar: {{path}}",
+      "not_writable": "Nicht beschreibbar: {{path}}",
+      "fix": {
+        "not_writable": "Ohne Schreibrechte kann vor einer Wiederherstellung keine Sicherung angelegt werden."
+      }
+    },
+    "disk": {
+      "title": "Speicherplatz",
+      "ok": "{{free}} frei.",
+      "low": "Nur noch {{free}} frei.",
+      "fix": {
+        "low": "Gib Speicherplatz frei; lösche zum Beispiel alte Ausführungen oder Sicherungen."
+      }
+    },
+    "docker": {
+      "title": "Docker",
+      "available": "Verfügbar.",
+      "not_installed": "Nicht installiert; Tools laufen in einem abgeschotteten Prozess.",
+      "unreachable": "Die Sandbox steht auf Docker, aber Docker ist nicht erreichbar.",
+      "fix": {
+        "unreachable": "Starte Docker Desktop oder stelle die Sandbox auf „Python-Prozess“ um."
+      }
+    },
+    "sandbox": {
+      "title": "Tool-Sandbox",
+      "ok": "Ein Testtool lief in {{seconds}} s.",
+      "failed": "Ein Testtool ließ sich nicht ausführen.",
+      "fix": {
+        "failed": "Eigene Tools funktionieren so nicht. Prüfe die Details und die Sandbox-Einstellung."
+      }
+    },
+    "pdf": {
+      "title": "PDF-Unterstützung",
+      "ok": "PDF-Dateien können gelesen werden.",
+      "missing": "Das Paket pypdf fehlt.",
+      "fix": {
+        "missing": "Installiere die Abhängigkeiten neu (pip install -e .), damit PDFs ins Wissen geladen werden können."
+      }
+    },
+    "frontend": {
+      "title": "Oberfläche",
+      "ok": "Die gebaute Oberfläche ist vorhanden.",
+      "missing": "Die gebaute Oberfläche fehlt.",
+      "fix": {
+        "missing": "Baue sie mit „npm run build“ im Ordner frontend, oder nutze den Entwicklungsserver."
+      }
+    },
+    "connection": {
+      "title": "Verbindung zum KI-Anbieter",
+      "ok": "{{label}} ist erreichbar, Antwort in {{millis}} ms.",
+      "no_key": "{{label}} hat keinen API-Schlüssel, die Verbindung lässt sich nicht prüfen.",
+      "key_rejected": "{{label}} hat den API-Schlüssel abgelehnt.",
+      "unreachable": "{{label}} ist nicht erreichbar.",
+      "api_error": "{{label}} antwortete mit Status {{http_status}}.",
+      "failed": "Der Verbindungstest ist fehlgeschlagen.",
+      "fix": {
+        "no_key": "Trage zuerst den API-Schlüssel ein.",
+        "key_rejected": "Prüfe den Schlüssel beim Anbieter und trage ihn neu ein.",
+        "unreachable": "Prüfe Internetverbindung, Firewall oder Proxy und ob der Server läuft.",
+        "api_error": "Versuche es später erneut; Details stehen unten.",
+        "not_configured": "Trage zuerst die Basis-URL des Servers ein."
+      },
+      "not_configured": "{{label}} hat noch keine Basis-URL, die Verbindung lässt sich nicht prüfen."
+    },
+    "providers": {
+      "title": "KI-Anbieter",
+      "ok": "Eingerichtet: {{providers}}.",
+      "missing": "{{provider}} wird vom Standard- oder Assistenzmodell genutzt, ist aber nicht eingerichtet.",
+      "fix": {
+        "missing": "Trage den Zugang oben unter „KI-Anbieter“ ein. Ohne ihn laufen diese Modelle nicht."
+      }
+    }
+  }
+}

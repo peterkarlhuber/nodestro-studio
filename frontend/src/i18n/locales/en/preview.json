@@ -1,0 +1,23 @@
+{
+  "title": "Input preview",
+  "complete": "complete",
+  "incomplete": "inputs still missing",
+  "fromRun": "Results of the predecessors from the latest run of {{date}}.",
+  "noRun": "There is no run yet; missing results of predecessors are marked.",
+  "source": {
+    "given": "The given test input is used as input.",
+    "start_default": "The default input of the start node is used as input.",
+    "run": "The input of the latest run is used as input.",
+    "empty": "There is no input for the run yet."
+  },
+  "available": "available",
+  "pending": "missing",
+  "chars_one": "{{count}} character",
+  "chars_other": "{{count}} characters",
+  "runStatus": "in the latest run: {{status}}",
+  "noResult": "no result yet",
+  "placeholder": {
+    "not_connected": "The placeholder “{{name}}” names an agent that is not connected to this one. It stays empty.",
+    "unknown": "The placeholder “{{name}}” matches no predecessor and stays in the text unchanged."
+  }
+}

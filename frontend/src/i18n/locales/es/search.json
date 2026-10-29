@@ -1,0 +1,18 @@
+{
+  "open": "Buscar …",
+  "title": "Búsqueda",
+  "label": "Término de búsqueda",
+  "placeholder": "Buscar en flujos de trabajo, agentes, herramientas, conocimiento y documentación …",
+  "hint": "Consejo: Ctrl+K (⌘K en Mac) abre la búsqueda desde cualquier sitio. Las flechas seleccionan, Intro abre.",
+  "results": "Resultados",
+  "empty": "No se encontró nada para «{{query}}».",
+  "kind": {
+    "workflow": "Flujos de trabajo",
+    "agent": "Agentes en flujos de trabajo",
+    "template": "Biblioteca de agentes",
+    "example": "Workflows de ejemplo",
+    "tool": "Herramientas",
+    "knowledge": "Conocimiento",
+    "docs": "Documentación"
+  }
+}

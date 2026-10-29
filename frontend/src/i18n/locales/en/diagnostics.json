@@ -1,0 +1,136 @@
+{
+  "title": "System diagnosis",
+  "intro": "Checks whether Nodestro works completely on this computer: versions, database, directories, sandbox and requirements. The diagnosis is free and sends nothing to the internet.",
+  "run": "Run diagnosis",
+  "again": "Check again",
+  "connection": "Test connection",
+  "connectionNote": "The connection test asks the provider of the default model for its list of models. It uses no tokens and costs nothing.",
+  "details": "Technical details",
+  "versions": "Versions",
+  "noSecrets": "The diagnosis never shows API keys or other credentials.",
+  "status": {
+    "ok": "OK",
+    "warning": "Warning",
+    "error": "Error"
+  },
+  "overall": {
+    "ok": "Everything OK",
+    "warning": "With warnings",
+    "error": "Errors found"
+  },
+  "version": {
+    "nodestro": "Nodestro",
+    "python": "Python",
+    "sqlite": "SQLite",
+    "platform": "Operating system",
+    "orkexa": "Orkexa"
+  },
+  "checks": {
+    "python": {
+      "title": "Python",
+      "ok": "Version {{version}}."
+    },
+    "database": {
+      "title": "Database",
+      "ok": "Readable, writable and undamaged ({{size}}).",
+      "unreadable": "The database cannot be opened.",
+      "damaged": "The database is damaged.",
+      "no_fts": "Full-text search (FTS5) is missing in this SQLite version.",
+      "fix": {
+        "unreadable": "Check path and permissions: {{path}}. Is Nodestro perhaps running twice?",
+        "damaged": "Restore the latest backup (Settings → Backup).",
+        "no_fts": "Knowledge search then finds less. Install a Python with complete SQLite (e.g. from python.org)."
+      }
+    },
+    "data_dir": {
+      "title": "Data directory",
+      "ok": "Writable: {{path}}",
+      "not_writable": "Not writable: {{path}}",
+      "fix": {
+        "not_writable": "Give your user write permission for the folder or set NODESTRO_DATA_DIR to another folder."
+      }
+    },
+    "tools_dir": {
+      "title": "Tool directory",
+      "ok": "Writable: {{path}}",
+      "not_writable": "Not writable: {{path}}",
+      "fix": {
+        "not_writable": "Without write permission no custom tools can be saved."
+      }
+    },
+    "backup_dir": {
+      "title": "Backup directory",
+      "ok": "Writable: {{path}}",
+      "not_writable": "Not writable: {{path}}",
+      "fix": {
+        "not_writable": "Without write permission no safety backup can be made before a restore."
+      }
+    },
+    "disk": {
+      "title": "Disk space",
+      "ok": "{{free}} free.",
+      "low": "Only {{free}} free.",
+      "fix": {
+        "low": "Free up space, for example by deleting old executions or backups."
+      }
+    },
+    "docker": {
+      "title": "Docker",
+      "available": "Available.",
+      "not_installed": "Not installed; tools run in an isolated process.",
+      "unreachable": "The sandbox is set to Docker, but Docker cannot be reached.",
+      "fix": {
+        "unreachable": "Start Docker Desktop or switch the sandbox to “Python process”."
+      }
+    },
+    "sandbox": {
+      "title": "Tool sandbox",
+      "ok": "A test tool ran in {{seconds}} s.",
+      "failed": "A test tool could not be run.",
+      "fix": {
+        "failed": "Custom tools do not work like this. Check the details and the sandbox setting."
+      }
+    },
+    "pdf": {
+      "title": "PDF support",
+      "ok": "PDF files can be read.",
+      "missing": "The package pypdf is missing.",
+      "fix": {
+        "missing": "Reinstall the dependencies (pip install -e .) so PDFs can be loaded into knowledge."
+      }
+    },
+    "frontend": {
+      "title": "Interface",
+      "ok": "The built interface is present.",
+      "missing": "The built interface is missing.",
+      "fix": {
+        "missing": "Build it with “npm run build” in the frontend folder, or use the development server."
+      }
+    },
+    "connection": {
+      "title": "Connection to the AI provider",
+      "ok": "{{label}} is reachable, answer in {{millis}} ms.",
+      "no_key": "{{label}} has no API key, so the connection cannot be checked.",
+      "key_rejected": "{{label}} rejected the API key.",
+      "unreachable": "{{label}} cannot be reached.",
+      "api_error": "{{label}} answered with status {{http_status}}.",
+      "failed": "The connection test failed.",
+      "fix": {
+        "no_key": "Enter the API key first.",
+        "key_rejected": "Check the key with the provider and enter it again.",
+        "unreachable": "Check the internet connection, a firewall or a proxy, and whether the server is running.",
+        "api_error": "Try again later; details are below.",
+        "not_configured": "Enter the base URL of the server first."
+      },
+      "not_configured": "{{label}} has no base URL yet, so the connection cannot be checked."
+    },
+    "providers": {
+      "title": "AI providers",
+      "ok": "Set up: {{providers}}.",
+      "missing": "{{provider}} is used by the default or assistant model but is not set up.",
+      "fix": {
+        "missing": "Enter its access above under “AI providers”. Without it these models do not run."
+      }
+    }
+  }
+}

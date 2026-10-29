@@ -1,0 +1,211 @@
+{
+  "chooseFiles": "Escolher arquivos",
+  "chooseFile": "Escolher arquivo",
+  "chooseFolder": "Escolher pasta",
+  "drop": {
+    "title": "Arraste arquivos ou uma pasta para cá",
+    "titleOne": "Arraste um arquivo para cá",
+    "full": "O número máximo de arquivos foi atingido",
+    "limits": "{{formats}} · até {{size}} MB por arquivo",
+    "allFormats": "Todos os formatos compatíveis",
+    "maxFiles_one": "no máximo {{count}} arquivo",
+    "maxFiles_other": "no máximo {{count}} arquivos"
+  },
+  "listLabel": "Arquivos deste campo",
+  "fromKnowledge": "Adicionar um arquivo do conhecimento …",
+  "fromKnowledgeBadge": "do conhecimento",
+  "inKnowledge": "incorporado ao conhecimento",
+  "status": {
+    "uploading": "enviando e verificando …",
+    "missing": "não está mais salvo"
+  },
+  "showPreview": "Mostrar o que o Nodestro leu",
+  "showContents": "Mostrar o conteúdo do arquivo compactado",
+  "hidePreview": "Ocultar pré-visualização",
+  "noText": "(sem texto)",
+  "previewCut": "Só o início é mostrado.",
+  "tableSummary": "{{name}}: {{count}} linhas, {{columns}} colunas",
+  "summary": {
+    "archive_one": "{{count}} arquivo, {{readable}} legíveis",
+    "archive_other": "{{count}} arquivos, {{readable}} legíveis",
+    "pages_one": "{{count}} página",
+    "pages_other": "{{count}} páginas",
+    "sheets_one": "{{count}} planilha",
+    "sheets_other": "{{count}} planilhas",
+    "rows_one": "{{count}} linha",
+    "rows_other": "{{count}} linhas",
+    "chars_one": "{{count}} caractere",
+    "chars_other": "{{count}} caracteres"
+  },
+  "archive": {
+    "label": "Conteúdo de {{name}}",
+    "pick": "Escolha um arquivo do ZIP para ver o que o Nodestro lê dele.",
+    "nested": "arquivo compactado dentro do arquivo (não aberto)",
+    "unsupported": "formato não compatível",
+    "reason": {
+      "unsafe_path": "caminho inseguro, ignorado",
+      "link": "link, ignorado",
+      "special": "arquivo especial, ignorado",
+      "encrypted": "criptografado, ignorado",
+      "duplicate": "caminho duplicado, ignorado",
+      "too_large": "grande demais, ignorado",
+      "ratio": "compressão suspeitamente alta, ignorado",
+      "executable": "arquivo de programa, nunca executado nem lido",
+      "other": "ignorado"
+    }
+  },
+  "download": "Baixar {{name}}",
+  "runFilesHint": "Os arquivos enviados pertencem só a esta execução (não ao conhecimento). Você também pode adicionar arquivos do conhecimento.",
+  "waitForUploads": "Aguarde até que todos os arquivos sejam enviados.",
+  "groups": {
+    "text": "Texto",
+    "data": "Dados (CSV, JSON, Excel)",
+    "document": "Documentos (PDF, Word)",
+    "image": "Imagens",
+    "archive": "Arquivos ZIP"
+  },
+  "config": {
+    "accept": "Tipos de arquivo permitidos",
+    "formats": "Formatos individuais",
+    "acceptAll": "Nada selecionado: todos os formatos compatíveis são aceitos.",
+    "multiple": "Vários arquivos",
+    "multipleHint": "Desligado: exatamente um arquivo (o marcador representa então um arquivo).",
+    "maxFiles": "Número máximo de arquivos",
+    "maxSize": "MB máximos por arquivo",
+    "unlimited": "sem limite",
+    "delivery": "Entrega aos agentes",
+    "deliveryModes": {
+      "auto": "Automática",
+      "inline": "Sempre o conteúdo",
+      "on_demand": "Visão geral, conteúdo sob demanda"
+    },
+    "deliveryHint": {
+      "auto": "O conteúdo vai aos agentes quando cabe; arquivos grandes, como visão geral da qual o agente lê partes.",
+      "inline": "Os agentes recebem o conteúdo enquanto couber no espaço para arquivos.",
+      "on_demand": "Os agentes recebem nome e estrutura e leem as partes necessárias com a ferramenta input_files."
+    }
+  },
+  "modes": {
+    "text": "como texto",
+    "document": "como documento PDF",
+    "image": "como imagem",
+    "ocr_text": "texto reconhecido (OCR)",
+    "overview": "visão geral",
+    "unavailable": "não entregue"
+  },
+  "modeHints": {
+    "text": "O agente recebeu o conteúdo do arquivo como texto.",
+    "document": "O agente recebeu o próprio PDF (texto e layout).",
+    "image": "O agente viu a própria imagem.",
+    "ocr_text": "O agente recebeu o texto reconhecido no escaneamento, não a imagem.",
+    "overview": "O agente recebeu a estrutura e leu o conteúdo em partes com a ferramenta input_files.",
+    "unavailable": "Não foi possível entregar o arquivo."
+  },
+  "adopt": {
+    "title": "Incorporar ao conhecimento",
+    "short": "Ao conhecimento",
+    "result": "Adicionar o resultado ao conhecimento",
+    "resultFile": "Adicionar {{name}} ao conhecimento",
+    "all_one": "Adicionar {{count}} arquivo ao conhecimento",
+    "all_other": "Adicionar os {{count}} arquivos ao conhecimento",
+    "intro": "Nada é salvo antes de você confirmar. Você vê o que seria salvo, de onde vem e se já existe algo parecido.",
+    "collection": "Coleção",
+    "collectionOption_one": "{{name}} ({{count}} arquivo)",
+    "collectionOption_other": "{{name}} ({{count}} arquivos)",
+    "newCollection": "Nova coleção …",
+    "newCollectionName": "Nome da nova coleção",
+    "newCollectionPlaceholder": "ex.: Contratos",
+    "description": "Descrição (opcional)",
+    "check": "Verificar conteúdo",
+    "recheck": "Verificar de novo",
+    "confirm_one": "Incorporar {{count}} item",
+    "confirm_other": "Incorporar {{count}} itens",
+    "checkFirst_one": "Verifique o item primeiro: você verá o que seria salvo.",
+    "checkFirst_other": "Verifique os {{count}} itens primeiro: você verá o que seria salvo.",
+    "items": "Conteúdo a incorporar",
+    "searchable": "pesquisável",
+    "storedOnly": "apenas salvo, não pesquisável",
+    "duplicate": "Já está no conhecimento como {{name}}: não é salvo duas vezes.",
+    "similar": "Já existe conteúdo parecido: {{names}}",
+    "itemTitle": "Título",
+    "kind": "Tipo de conteúdo",
+    "kinds": {
+      "extracted": "extraído de fontes",
+      "generated": "gerado por um agente",
+      "assumption": "suposição, não verificada"
+    },
+    "content": "Conteúdo",
+    "contentHint": "Você pode corrigir o texto antes de salvar.",
+    "preview": "Pré-visualização",
+    "provenance": "Origem",
+    "confirmText_one": "Verifiquei o conteúdo e quero salvar {{count}} item na coleção “{{collection}}”.",
+    "confirmText_other": "Verifiquei o conteúdo e quero salvar {{count}} itens na coleção “{{collection}}”.",
+    "changed": "Você alterou o conteúdo ou a coleção: verifique de novo antes de confirmar.",
+    "done": "Incorporado ao conhecimento: {{count}} · já existentes: {{duplicates}}",
+    "notMemory": "O conhecimento é uma coleção de documentos para todos os agentes, separada da memória de um agente. Workflows em andamento não mudam."
+  },
+  "proposals": {
+    "title_one": "{{count}} proposta para o conhecimento",
+    "title_other": "{{count}} propostas para o conhecimento",
+    "label": "Propostas para o conhecimento",
+    "review": "Verificar e incorporar",
+    "reviewAll_one": "Verificar {{count}}",
+    "reviewAll_other": "Verificar todas as {{count}}",
+    "adopted": "no conhecimento",
+    "note": "As propostas só são salvas depois que você as verifica e confirma.",
+    "toggle": "Pode propor conteúdo para o conhecimento",
+    "toggleHint": "O resultado do agente (e o que ele marcar com propose_knowledge) é oferecido ao conhecimento após a execução. Você decide.",
+    "collection": "Coleção sugerida"
+  },
+  "provenance": {
+    "title": "Origem: {{origin}}",
+    "input_file": "Arquivo enviado",
+    "uploaded": "Enviado em",
+    "archive": "Arquivo compactado",
+    "path": "Caminho no arquivo compactado",
+    "workflow": "Workflow",
+    "workflow_id": "ID do workflow",
+    "run": "Execução",
+    "run_at": "Momento da execução",
+    "sources": "Arquivos de origem",
+    "step": "Etapa",
+    "node": "Nó",
+    "agent": "Agente",
+    "result_file": "Arquivo de resultado",
+    "content_kind": "Tipo de conteúdo",
+    "adopted_at": "Incorporado em"
+  },
+  "origins": {
+    "upload": "envio",
+    "input_file": "arquivo enviado de uma execução",
+    "result_file": "arquivo de resultado",
+    "agent_result": "resultado de agente",
+    "proposal": "proposta de agente"
+  },
+  "run": {
+    "title_one": "{{count}} arquivo recebido",
+    "title_other": "{{count}} arquivos recebidos",
+    "titleShort": "Arquivos recebidos",
+    "extra": "Arquivos adicionais",
+    "note": "Os arquivos enviados para esta execução pertencem a ela, não ao conhecimento. Você pode incorporá-los ao conhecimento de forma explícita.",
+    "removed": "removido (limpeza)"
+  },
+  "storage": {
+    "title": "Arquivos de entrada enviados",
+    "intro": "Arquivos enviados para execuções, casos de teste e agendamentos. Arquivos de execuções na fila, em andamento ou pausadas nunca são removidos.",
+    "summary": "{{count}} arquivos · {{size}} · {{unused}} sem uso · {{inUse}} em execuções em andamento",
+    "cleanUnused": "Remover arquivos sem uso",
+    "olderThan": "Arquivos de execuções concluídas com mais de",
+    "days": "dias",
+    "cleanOld": "Remover",
+    "cleaned": "{{count}} arquivos removidos ({{size}} liberados).",
+    "safe": "Arquivos que casos de teste, agendamentos ou lotes ainda usam são mantidos."
+  },
+  "collections": {
+    "title": "Coleções",
+    "label": "Coleção",
+    "all": "Todas",
+    "none": "Sem coleção",
+    "uploadTo": "Enviar para a coleção"
+  }
+}

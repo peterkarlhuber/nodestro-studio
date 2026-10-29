@@ -1,0 +1,62 @@
+{
+  "tokens": "{{value}} tokens",
+  "requests_one": "{{value}} requête",
+  "requests_other": "{{value}} requêtes",
+  "startedAt": "Début {{time}}",
+  "finishedAt": "Fin {{time}}",
+  "noOutputYet": "Pas encore de résultat.",
+  "promptHint": "La tâche telle qu’elle a été transmise à l’agent après remplacement des variables.",
+  "tabs": {
+    "result": "Résultat",
+    "prompt": "Tâche",
+    "tools": "Outils ({{count}})",
+    "thinking": "Réflexion",
+    "memory": "Mémoire",
+    "context": "Contexte"
+  },
+  "evaluation": {
+    "passed_one": "Contrôle qualité réussi après {{count}} tentative",
+    "passed_other": "Contrôle qualité réussi après {{count}} tentatives",
+    "failed_one": "Contrôle qualité échoué après {{count}} tentative",
+    "failed_other": "Contrôle qualité échoué après {{count}} tentatives",
+    "feedback": "Justification du juge"
+  },
+  "toolCalls": {
+    "none": "Aucun appel d’outil.",
+    "error": "Erreur",
+    "succeeded": "réussi",
+    "running": "en cours …",
+    "unfinished": "non terminé",
+    "input": "Entrée",
+    "output": "Résultat"
+  },
+  "stats": {
+    "agents": "Agents",
+    "status": "Statut",
+    "requests": "Requêtes API",
+    "tokens": "Tokens",
+    "cost": "Coût estimé"
+  },
+  "panel": {
+    "title": "Vue d’ensemble de l’exécution",
+    "notStarted": "Pas encore lancé",
+    "overall": "Résultat global",
+    "running": "Le workflow est en cours. Choisissez un agent à gauche pour le suivre en direct.",
+    "paused": "L’exécution attend une validation."
+  },
+  "detail": {
+    "timeline": "Déroulement dans le temps",
+    "notFound": "Introuvable",
+    "exportTrace": "Exporter la trace",
+    "openInEditor": "Ouvrir dans l’éditeur",
+    "importedTrace": "Trace importée",
+    "importedAt": "Importée le {{date}}",
+    "sourceId": "ID d’origine <code>{{id}}</code>",
+    "importedNote": "Cette exécution est seulement affichée : rien n’est réexécuté et aucun coût n’est engagé.",
+    "input": "Entrée",
+    "stillRunning": "Toujours en cours …",
+    "noResult": "Aucun résultat.",
+    "trace": "Déroulement",
+    "nodeDetails": "Détails {{name}}"
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "title": "Diagnóstico del sistema",
+  "intro": "Comprueba si Nodestro funciona por completo en este equipo: versiones, base de datos, directorios, sandbox y requisitos. El diagnóstico es gratuito y no envía nada a internet.",
+  "run": "Iniciar diagnóstico",
+  "again": "Comprobar de nuevo",
+  "connection": "Probar conexión",
+  "connectionNote": "La prueba de conexión solo pide la lista de modelos al proveedor del modelo predeterminado. No usa tokens y no cuesta nada.",
+  "details": "Detalles técnicos",
+  "versions": "Versiones",
+  "noSecrets": "El diagnóstico nunca muestra claves de API ni otras credenciales.",
+  "status": {
+    "ok": "Correcto",
+    "warning": "Advertencia",
+    "error": "Error"
+  },
+  "overall": {
+    "ok": "Todo correcto",
+    "warning": "Con advertencias",
+    "error": "Se encontraron errores"
+  },
+  "version": {
+    "nodestro": "Nodestro",
+    "python": "Python",
+    "sqlite": "SQLite",
+    "platform": "Sistema operativo",
+    "orkexa": "Orkexa"
+  },
+  "checks": {
+    "python": {
+      "title": "Python",
+      "ok": "Versión {{version}}."
+    },
+    "database": {
+      "title": "Base de datos",
+      "ok": "Legible, escribible e intacta ({{size}}).",
+      "unreadable": "No se puede abrir la base de datos.",
+      "damaged": "La base de datos está dañada.",
+      "no_fts": "Falta la búsqueda de texto completo (FTS5) en esta versión de SQLite.",
+      "fix": {
+        "unreadable": "Comprueba la ruta y los permisos: {{path}}. ¿Se está ejecutando Nodestro dos veces?",
+        "damaged": "Restaura la última copia de seguridad (Ajustes → Copia de seguridad).",
+        "no_fts": "La búsqueda en el conocimiento encontrará menos. Instala un Python con SQLite completo (p. ej., de python.org)."
+      }
+    },
+    "data_dir": {
+      "title": "Directorio de datos",
+      "ok": "Escribible: {{path}}",
+      "not_writable": "No escribible: {{path}}",
+      "fix": {
+        "not_writable": "Da permisos de escritura a tu usuario sobre la carpeta o define NODESTRO_DATA_DIR con otra carpeta."
+      }
+    },
+    "tools_dir": {
+      "title": "Directorio de herramientas",
+      "ok": "Escribible: {{path}}",
+      "not_writable": "No escribible: {{path}}",
+      "fix": {
+        "not_writable": "Sin permisos de escritura no se pueden guardar herramientas propias."
+      }
+    },
+    "backup_dir": {
+      "title": "Directorio de copias",
+      "ok": "Escribible: {{path}}",
+      "not_writable": "No escribible: {{path}}",
+      "fix": {
+        "not_writable": "Sin permisos de escritura no se puede crear una copia antes de restaurar."
+      }
+    },
+    "disk": {
+      "title": "Espacio en disco",
+      "ok": "{{free}} libres.",
+      "low": "Solo quedan {{free}} libres.",
+      "fix": {
+        "low": "Libera espacio, por ejemplo eliminando ejecuciones o copias antiguas."
+      }
+    },
+    "docker": {
+      "title": "Docker",
+      "available": "Disponible.",
+      "not_installed": "No instalado; las herramientas se ejecutan en un proceso aislado.",
+      "unreachable": "El sandbox está configurado en Docker, pero Docker no está accesible.",
+      "fix": {
+        "unreachable": "Inicia Docker Desktop o cambia el sandbox a «Proceso de Python»."
+      }
+    },
+    "sandbox": {
+      "title": "Sandbox de herramientas",
+      "ok": "Una herramienta de prueba se ejecutó en {{seconds}} s.",
+      "failed": "No se pudo ejecutar una herramienta de prueba.",
+      "fix": {
+        "failed": "Así no funcionan las herramientas propias. Revisa los detalles y el ajuste del sandbox."
+      }
+    },
+    "pdf": {
+      "title": "Soporte de PDF",
+      "ok": "Se pueden leer archivos PDF.",
+      "missing": "Falta el paquete pypdf.",
+      "fix": {
+        "missing": "Reinstala las dependencias (pip install -e .) para poder cargar PDF en el conocimiento."
+      }
+    },
+    "frontend": {
+      "title": "Interfaz",
+      "ok": "La interfaz compilada está presente.",
+      "missing": "Falta la interfaz compilada.",
+      "fix": {
+        "missing": "Compílala con «npm run build» en la carpeta frontend o usa el servidor de desarrollo."
+      }
+    },
+    "connection": {
+      "title": "Conexión con el proveedor de IA",
+      "ok": "{{label}} es accesible, respuesta en {{millis}} ms.",
+      "no_key": "{{label}} no tiene clave de API, así que no se puede comprobar la conexión.",
+      "key_rejected": "{{label}} rechazó la clave de API.",
+      "unreachable": "No se puede acceder a {{label}}.",
+      "api_error": "{{label}} respondió con el estado {{http_status}}.",
+      "failed": "La prueba de conexión falló.",
+      "fix": {
+        "no_key": "Introduce primero la clave de API.",
+        "key_rejected": "Comprueba la clave con el proveedor y vuelve a introducirla.",
+        "unreachable": "Comprueba la conexión a internet, el cortafuegos o el proxy, y si el servidor está en marcha.",
+        "api_error": "Vuelve a intentarlo más tarde; los detalles están abajo.",
+        "not_configured": "Introduce primero la URL base del servidor."
+      },
+      "not_configured": "{{label}} aún no tiene URL base, así que no se puede comprobar la conexión."
+    },
+    "providers": {
+      "title": "Proveedores de IA",
+      "ok": "Configurados: {{providers}}.",
+      "missing": "{{provider}} lo usa el modelo predeterminado o el del asistente, pero no está configurado.",
+      "fix": {
+        "missing": "Introduce su acceso arriba en «Proveedores de IA». Sin él estos modelos no funcionan."
+      }
+    }
+  }
+}

@@ -1,0 +1,150 @@
+name: Platform
+
+# The whole platform at the commits of platform/versions.json: pins, dependency direction, every
+# component's tests against one installation, the SDKs against the API, and the browser suites.
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pins:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Grant read access to the private repositories
+        env:
+          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+        run: |
+          if [ -z "$NODESTRO_READ" ]; then
+            echo "::error::Secret NODESTRO_READ fehlt: ein Token mit Lesezugriff auf orkexa und die nodestro-Repositories."
+            exit 1
+          fi
+          git config --global url."https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/".insteadOf "https://github.com/peterkarlhuber/"
+      - run: python scripts/check_versions.py
+
+  components:
+    needs: pins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Grant read access to the private repositories
+        env:
+          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+        run: |
+          if [ -z "$NODESTRO_READ" ]; then
+            echo "::error::Secret NODESTRO_READ fehlt: ein Token mit Lesezugriff auf orkexa und die nodestro-Repositories."
+            exit 1
+          fi
+          git config --global url."https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/".insteadOf "https://github.com/peterkarlhuber/"
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr poppler-utils
+      # The studio pins every component: this one installation is the platform under test.
+      - run: pip install -e ".[dev]" pytest-asyncio httpx
+      - run: python scripts/check_imports.py
+      - name: Check out every component at its pinned commit
+        run: python scripts/checkout_components.py "$RUNNER_TEMP/components"
+      # Each suite runs from its checkout but imports the installed (pinned) packages.
+      - name: nodestro-runtime
+        run: cd "$RUNNER_TEMP/components/nodestro-runtime" && python -m pytest -p no:cacheprovider
+      - name: nodestro-examples
+        run: cd "$RUNNER_TEMP/components/nodestro-examples" && python -m pytest -p no:cacheprovider
+      - name: nodestro-integrations
+        run: cd "$RUNNER_TEMP/components/nodestro-integrations" && python -m pytest -p no:cacheprovider
+      - name: nodestro-api
+        run: cd "$RUNNER_TEMP/components/nodestro-api" && python -m pytest -p no:cacheprovider
+      - name: nodestro-studio (with the upgrade from 0.1)
+        run: pytest
+      - name: Only the pinned packages were imported
+        run: |
+          python - <<'PY'
+          import json, importlib.metadata as m
+          pins = json.load(open("platform/versions.json"))["components"]
+          for name in ("nodestro-runtime", "nodestro-api", "nodestro-examples", "nodestro-integrations"):
+              url = json.loads(m.distribution(name).read_text("direct_url.json") or "{}")
+              commit = url.get("vcs_info", {}).get("commit_id")
+              assert commit == pins[name]["commit"], (name, commit, pins[name]["commit"])
+              print(name, m.version(name), commit)
+          PY
+
+  sdk:
+    needs: pins
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Grant read access to the private repositories
+        env:
+          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+        run: |
+          if [ -z "$NODESTRO_READ" ]; then
+            echo "::error::Secret NODESTRO_READ fehlt: ein Token mit Lesezugriff auf orkexa und die nodestro-Repositories."
+            exit 1
+          fi
+          git config --global url."https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/".insteadOf "https://github.com/peterkarlhuber/"
+      - run: pip install -e ".[dev]"
+      - run: python scripts/checkout_components.py "$RUNNER_TEMP/components" nodestro-sdk
+      # The SDK's test extra pins nodestro-api too: pip refuses if it differs from the studio's.
+      - run: pip install "$RUNNER_TEMP/components/nodestro-sdk/python[test]"
+      - name: Python SDK against the API
+        run: cd "$RUNNER_TEMP/components/nodestro-sdk/python" && python -m pytest -p no:cacheprovider
+      - name: TypeScript SDK against the API
+        run: |
+          cd "$RUNNER_TEMP/components/nodestro-sdk/typescript"
+          npm ci
+          npm run typecheck
+          NODESTRO_SDK_PYTHON=python npm test
+
+  browser:
+    needs: pins
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Grant read access to the private repositories
+        env:
+          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+        run: |
+          if [ -z "$NODESTRO_READ" ]; then
+            echo "::error::Secret NODESTRO_READ fehlt: ein Token mit Lesezugriff auf orkexa und die nodestro-Repositories."
+            exit 1
+          fi
+          git config --global url."https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/".insteadOf "https://github.com/peterkarlhuber/"
+      - run: pip install -e ".[dev]"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+          npm install --no-save playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - run: scripts/e2e.sh

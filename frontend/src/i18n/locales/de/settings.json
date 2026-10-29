@@ -1,0 +1,84 @@
+{
+  "title": "Einstellungen",
+  "description": "Gilt für diese lokale Nodestro-Installation.",
+  "saved": "Einstellungen gespeichert",
+  "language": {
+    "title": "Sprache",
+    "label": "Sprache der Oberfläche",
+    "automatic": "Automatisch (Browsersprache)",
+    "automaticHint": "Folgt der Sprache deines Browsers, gerade {{language}}. Nicht unterstützte Sprachen zeigen Englisch.",
+    "hint": "Gilt sofort und bleibt gespeichert, auch nach einem Neustart.",
+    "contentNote": "Die Sprache ändert nur die Oberfläche. Deine Agenten, Prompts, Workflows und Ergebnisse bleiben in ihrer Originalsprache. Neue Entwürfe der KI-Assistenten entstehen in dieser Sprache, solange du keine andere verlangst."
+  },
+  "models": {
+    "title": "Modelle und Budget",
+    "defaultModel": "Standardmodell für neue Agenten",
+    "assistantModel": "Modell für die Assistenten",
+    "assistantHint": "Entwirft Agenten aus deiner Beschreibung, schreibt Tools und schlägt Memory vor.",
+    "budget": "Standardbudget pro Lauf (USD)",
+    "budgetHint": "Ein Lauf bricht ab, sobald die geschätzten Kosten das Budget überschreiten. Leer = kein Limit.",
+    "architectBudget": "Kostenlimit des Workflow-Architekten (USD je Entwurf)",
+    "architectBudgetHint": "Der Architekt hält an, wenn ein Entwurf mehr kostet. Leer = kein Limit.",
+    "architectRepairs": "KI-Korrekturversuche je Entwurf",
+    "architectRepairsHint": "Wie oft der Architekt die KI bitten darf, eine Konfiguration oder einen Tool-Entwurf zu korrigieren (0 bis 5). Korrekturen ohne KI erfolgen immer.",
+    "defaultHint": "Neue Agenten starten mit diesem Anbieter und Modell."
+  },
+  "sandbox": {
+    "title": "Sandbox für eigene Tools",
+    "label": "Sandbox",
+    "text": "Eigene und von der KI erstellte Tools laufen nie im Nodestro-Prozess. Der Python-Prozess ist sofort verfügbar; Docker isoliert stärker (ohne Netzwerk, begrenzter Speicher).",
+    "subprocess": "Python-Prozess",
+    "dockerAvailable": "Docker verfügbar",
+    "dockerMissing": "Docker nicht gefunden",
+    "dockerUnreachable": "Docker ist nicht erreichbar. Tool-Tests und -Aufrufe schlagen fehl, bis Docker läuft."
+  },
+  "about": {
+    "title": "Über Nodestro",
+    "data": "Alle Daten liegen lokal in einer SQLite-Datenbank (Standard: <code>~/.nodestro</code>, änderbar mit <code>NODESTRO_DATA_DIR</code>)."
+  },
+  "ocr": {
+    "title": "Texterkennung (OCR)",
+    "text": "Erkennt Text in gescannten PDFs lokal mit Tesseract. Es werden keine Daten verschickt. Unsichere Wörter werden markiert.",
+    "label": "OCR für Scans verwenden",
+    "available": "Tesseract gefunden",
+    "missing": "Tesseract nicht installiert"
+  },
+  "providers": {
+    "title": "KI-Anbieter",
+    "intro": "Nodestro arbeitet mit mehreren Anbietern gleichzeitig. Jeder Agent nutzt den Anbieter seines Modells; nichts wechselt von selbst zu einem anderen Anbieter.",
+    "configured": "Eingerichtet",
+    "notConfigured": "Nicht eingerichtet",
+    "fromEnvironment": "Der Schlüssel kommt aus der Umgebungsvariable <code>{{variable}}</code>; ein hier gespeicherter Schlüssel wird dann nicht verwendet.",
+    "keyStored": "Ein Schlüssel ist gespeichert. Er wird nie angezeigt und nur an diesen Anbieter gesendet.",
+    "keyMissing": "Noch kein Schlüssel. Trage ihn hier ein oder setze <code>{{variables}}</code>.",
+    "apiKey": "API-Schlüssel",
+    "apiKeyOptional": "API-Schlüssel (optional)",
+    "apiKeyFor": "API-Schlüssel für {{provider}}",
+    "baseUrl": "Basis-URL",
+    "baseUrlDefault": "Für einen lokalen Server meist {{url}}. Der Anbieter gilt als eingerichtet, sobald eine Basis-URL gespeichert ist.",
+    "baseUrlHint": "Die Adresse der OpenAI-kompatiblen API, zum Beispiel https://example.com/v1.",
+    "baseUrlFor": "Basis-URL von {{provider}}",
+    "capabilities": "Was die Modelle können",
+    "capabilitiesHint": "Nodestro nimmt bei eigenen Servern nichts an: Optionen, die ein Modell nicht kann oder die unbekannt sind, werden als Fehler gemeldet statt weggelassen.",
+    "state": {
+      "unknown": "Unbekannt",
+      "supported": "Unterstützt",
+      "unsupported": "Nicht unterstützt"
+    },
+    "saveEndpoint": "Endpunkt speichern",
+    "test": "Verbindung testen",
+    "capability": {
+      "tools": "Tools",
+      "forced_tool_choice": "Erzwungene Tool-Wahl",
+      "parallel_tool_calls": "Parallele Tool-Aufrufe",
+      "strict_tool_schemas": "Strikte Tool-Schemas",
+      "structured_output": "Strukturierte Ausgabe",
+      "streaming": "Streaming",
+      "image_input": "Bilder als Eingabe",
+      "document_input": "PDF-Dokumente als Eingabe",
+      "reasoning": "Denkaufwand",
+      "caching": "Prompt-Caching",
+      "system_messages": "System-Nachrichten"
+    }
+  }
+}

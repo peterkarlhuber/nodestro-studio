@@ -1,0 +1,40 @@
+{
+  "models": {
+    "claude-opus-5-5": "Raciocínio exigente, trabalho de agentes e de programação",
+    "claude-sonnet-5-5": "Trabalho de agentes do dia a dia a um custo menor",
+    "claude-haiku-5-5": "Rápido e econômico: classificar, extrair",
+    "claude-fable-5-1": "O modelo mais capaz para as tarefas mais difíceis",
+    "claude-fable-5": "Antecessor do Fable 5.1",
+    "claude-opus-5": "Antecessor do Opus 5.5",
+    "claude-sonnet-5": "Antecessor do Sonnet 5.5",
+    "claude-opus-4-8": "Geração anterior",
+    "claude-opus-4-7": "Geração anterior",
+    "claude-opus-4-6": "Geração anterior",
+    "claude-sonnet-4-6": "Geração anterior",
+    "claude-haiku-4-5": "Geração anterior",
+    "gpt-5_5": "Modelo da OpenAI (exemplo; qualquer id de modelo da OpenAI pode ser informado)",
+    "gpt-6_1-sol": "Modelo da OpenAI (exemplo; qualquer id de modelo da OpenAI pode ser informado)",
+    "gemini-3-pro": "Modelo do Google (exemplo; qualquer id de modelo do Gemini pode ser informado)",
+    "gemini-3_8-flash": "Modelo do Google (exemplo; qualquer id de modelo do Gemini pode ser informado)"
+  },
+  "serverTools": {
+    "web_search": {
+      "label": "Pesquisa na web",
+      "description": "Pesquisa na web e cita as fontes (a Anthropic faz a pesquisa; US$ 10 a cada 1.000 pesquisas)."
+    },
+    "web_fetch": {
+      "label": "Busca na web",
+      "description": "Carrega o conteúdo de uma página da web ou de um PDF a partir de uma URL."
+    },
+    "code_execution": {
+      "label": "Execução de código",
+      "description": "Executa Python em uma sandbox da Anthropic. Não junto com pesquisa na web/busca na web."
+    }
+  },
+  "builtinTools": {
+    "calculator": "Calcula uma expressão aritmética com exatidão em vez de fazer a conta de cabeça. Aceita + - * / // % **, parênteses, pi, e e as funções sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
+    "current_datetime": "Retorna a data, a hora e o dia da semana atuais em um fuso horário.",
+    "days_between": "Conta os dias corridos de uma data a outra.",
+    "text_statistics": "Conta caracteres, palavras, frases e parágrafos de um texto."
+  }
+}

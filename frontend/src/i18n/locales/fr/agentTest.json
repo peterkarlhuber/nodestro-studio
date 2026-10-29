@@ -1,0 +1,20 @@
+{
+  "button": "Tester l’agent",
+  "title": "Tester l’agent : {{name}}",
+  "note": "Un test exécute uniquement cet agent avec sa configuration actuelle. Ce n’est pas une exécution du workflow : il n’apparaît pas dans « Exécutions » et ne modifie aucun résultat.",
+  "input": "Entrée de test",
+  "inputHint": "Insérée dans la tâche de l’agent comme l’entrée d’une exécution (les espaces réservés des prédécesseurs restent vides).",
+  "rawHint": "Envoyée telle quelle à l’agent comme tâche.",
+  "placeholder": "Par exemple un court texte que l’agent doit traiter …",
+  "raw": "Envoyer l’entrée directement comme tâche",
+  "rawDescription": "Ignore le modèle de tâche et n’envoie que l’entrée de test.",
+  "costNote": "Le test appelle le fournisseur du modèle et peut coûter de l’argent : {{model}} coûte {{input}} par million de tokens d’entrée et {{output}} par million de tokens de sortie (– signifie inconnu). Le coût apparaît sous « Utilisation ».",
+  "memoryNote": "La mémoire persistante est seulement lue : le test travaille sur une copie et ne modifie pas l’espace mémoire.",
+  "start": "Lancer le test",
+  "again": "Tester à nouveau",
+  "result": "Résultat du test",
+  "badge": "Test, pas une exécution",
+  "memoryIsolated": "Copie de la mémoire",
+  "duration": "Durée",
+  "providerMissing": "Pas encore configuré : {{providers}}. Saisissez l’accès dans les réglages pour tester cet agent."
+}

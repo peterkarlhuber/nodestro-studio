@@ -1,0 +1,39 @@
+{
+  "system": "Prompt système",
+  "task": "Tâche avec les entrées insérées",
+  "pending": "[résultat de {{name}} encore manquant]",
+  "pendingHint": "{{name}} n’a pas encore de résultat. Lors d’une exécution, sa sortie apparaît ici.",
+  "runInput": "Entrée de l’exécution",
+  "insertedFrom": "Inséré depuis : {{name}}",
+  "empty": "(vide)",
+  "truncated": "… (raccourci)",
+  "examples": "Messages d’exemple",
+  "exampleCount_one": "{{count}} message",
+  "exampleCount_other": "{{count}} messages",
+  "role": {
+    "user": "Utilisateur",
+    "assistant": "Assistant"
+  },
+  "tools": "Outils",
+  "knowledge": "Connaissances",
+  "knowledgeMode": {
+    "context": "Dans le contexte",
+    "on_demand": "À la demande",
+    "search": "Recherche"
+  },
+  "fileMissing": "Fichier supprimé",
+  "runFiles": "Fichiers de l’exécution :",
+  "memory": "Mémoire",
+  "memoryRun": "Mémoire par exécution (démarre vide)",
+  "memoryPersistent_one": "Persistante : « {{space}} » avec {{count}} fichier",
+  "memoryPersistent_other": "Persistante : « {{space}} » avec {{count}} fichiers",
+  "output": "Format de sortie",
+  "outputStructured": "Structuré : {{name}} ({{fields}})",
+  "outputText": "Texte libre",
+  "quality": "Contrôle qualité",
+  "qualityOn": "Actif",
+  "qualityOff": "Désactivé",
+  "requestOptions": "Options de requête",
+  "secretsHidden": "Les identifiants ne sont jamais affichés ici.",
+  "runNote": "Voici comment l’agent a été appelé dans cette exécution : avec la configuration de l’époque et les sorties de ses prédécesseurs."
+}

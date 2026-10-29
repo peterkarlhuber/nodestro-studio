@@ -1,0 +1,20 @@
+{
+  "button": "Testa agente",
+  "title": "Testa agente: {{name}}",
+  "note": "Un test esegue solo questo agente con la configurazione attuale. Non è un’esecuzione del workflow, non compare in “Esecuzioni” e non modifica alcun risultato.",
+  "input": "Input di test",
+  "inputHint": "Viene inserito nel compito dell’agente come l’input di un’esecuzione (i segnaposto dei predecessori restano vuoti).",
+  "rawHint": "Viene inviato all’agente senza modifiche come compito.",
+  "placeholder": "Per esempio un breve testo che l’agente deve elaborare …",
+  "raw": "Invia l’input direttamente come compito",
+  "rawDescription": "Ignora il modello del compito e invia solo l’input di test.",
+  "costNote": "Il test chiama il provider del modello e può costare denaro: {{model}} costa {{input}} per milione di token in ingresso e {{output}} per milione di token in uscita (– significa sconosciuto). Il costo compare in «Utilizzo».",
+  "memoryNote": "La memoria persistente viene solo letta: il test lavora su una copia e non modifica lo spazio di memoria.",
+  "start": "Avvia test",
+  "again": "Testa di nuovo",
+  "result": "Risultato del test",
+  "badge": "Test, non un’esecuzione",
+  "memoryIsolated": "Copia della memoria",
+  "duration": "Durata",
+  "providerMissing": "Non ancora configurato: {{providers}}. Inserisci l’accesso nelle impostazioni per testare questo agente."
+}

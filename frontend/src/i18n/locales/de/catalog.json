@@ -1,0 +1,37 @@
+{
+  "models": {
+    "claude-opus-5-5": "Anspruchsvolles Denken, Agenten- und Codearbeit",
+    "claude-sonnet-5-5": "Alltägliche Agentenarbeit zu geringeren Kosten",
+    "claude-haiku-5-5": "Schnell und günstig: Klassifizieren, Extrahieren",
+    "claude-fable-5-1": "Das stärkste Modell für die schwersten Aufgaben",
+    "claude-fable-5": "Vorgänger von Fable 5.1",
+    "claude-opus-5": "Vorgänger von Opus 5.5",
+    "claude-sonnet-5": "Vorgänger von Sonnet 5.5",
+    "claude-opus-4-8": "Ältere Generation",
+    "claude-opus-4-7": "Ältere Generation",
+    "claude-opus-4-6": "Ältere Generation",
+    "claude-sonnet-4-6": "Ältere Generation",
+    "claude-haiku-4-5": "Ältere Generation",
+    "gpt-5_5": "OpenAI-Modell (Beispiel; jede OpenAI-Modell-ID ist möglich)",
+    "gpt-6_1-sol": "OpenAI-Modell (Beispiel; jede OpenAI-Modell-ID ist möglich)",
+    "gemini-3-pro": "Google-Modell (Beispiel; jede Gemini-Modell-ID ist möglich)",
+    "gemini-3_8-flash": "Google-Modell (Beispiel; jede Gemini-Modell-ID ist möglich)"
+  },
+  "serverTools": {
+    "web_search": {
+      "label": "Websuche",
+      "description": "Sucht im Web und zitiert die Quellen (Anthropic führt die Suche aus; 10 $ pro 1.000 Suchen)."
+    },
+    "web_fetch": { "label": "Web-Abruf", "description": "Lädt den Inhalt einer Webseite oder eines PDFs über eine URL." },
+    "code_execution": {
+      "label": "Code-Ausführung",
+      "description": "Führt Python in einer Sandbox von Anthropic aus. Nicht zusammen mit Websuche/Web-Abruf."
+    }
+  },
+  "builtinTools": {
+    "calculator": "Berechnet einen Rechenausdruck exakt, statt im Kopf zu rechnen. Unterstützt + - * / // % **, Klammern, pi, e und die Funktionen sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
+    "current_datetime": "Liefert aktuelles Datum, Uhrzeit und Wochentag in einer Zeitzone.",
+    "days_between": "Zählt die Kalendertage von einem Datum zum anderen.",
+    "text_statistics": "Zählt Zeichen, Wörter, Sätze und Absätze eines Textes."
+  }
+}

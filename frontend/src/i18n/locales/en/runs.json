@@ -1,0 +1,62 @@
+{
+  "tokens": "{{value}} tokens",
+  "requests_one": "{{value}} request",
+  "requests_other": "{{value}} requests",
+  "startedAt": "Start {{time}}",
+  "finishedAt": "End {{time}}",
+  "noOutputYet": "No result yet.",
+  "promptHint": "The task as it went to the agent after the placeholders were filled in.",
+  "tabs": {
+    "result": "Result",
+    "prompt": "Task",
+    "tools": "Tools ({{count}})",
+    "thinking": "Thoughts",
+    "memory": "Memory",
+    "context": "Context"
+  },
+  "evaluation": {
+    "passed_one": "Quality check passed after {{count}} attempt",
+    "passed_other": "Quality check passed after {{count}} attempts",
+    "failed_one": "Quality check failed after {{count}} attempt",
+    "failed_other": "Quality check failed after {{count}} attempts",
+    "feedback": "The judge's reasoning"
+  },
+  "toolCalls": {
+    "none": "No tool calls.",
+    "error": "Error",
+    "succeeded": "succeeded",
+    "running": "running …",
+    "unfinished": "not finished",
+    "input": "Input",
+    "output": "Result"
+  },
+  "stats": {
+    "agents": "Agents",
+    "status": "Status",
+    "requests": "API requests",
+    "tokens": "Tokens",
+    "cost": "Estimated cost"
+  },
+  "panel": {
+    "title": "Execution overview",
+    "notStarted": "Not started yet",
+    "overall": "Overall result",
+    "running": "The workflow is running. Choose an agent on the left to watch it live.",
+    "paused": "The run waits for an approval."
+  },
+  "detail": {
+    "timeline": "Timeline",
+    "notFound": "Not found",
+    "exportTrace": "Export trace",
+    "openInEditor": "Open in editor",
+    "importedTrace": "Imported trace",
+    "importedAt": "Imported on {{date}}",
+    "sourceId": "original ID <code>{{id}}</code>",
+    "importedNote": "This run is only displayed: nothing is run again, and there are no costs.",
+    "input": "Input",
+    "stillRunning": "Still running …",
+    "noResult": "No result.",
+    "trace": "Timeline",
+    "nodeDetails": "Details {{name}}"
+  }
+}

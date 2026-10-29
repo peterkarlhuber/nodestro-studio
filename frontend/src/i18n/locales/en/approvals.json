@@ -1,0 +1,28 @@
+{
+  "description": "Every approval that waits for a decision, oldest first. They survive a restart.",
+  "empty": "No open approvals",
+  "emptyText": "As soon as a run reaches an approval node, it appears here.",
+  "cardLabel": "Approval {{name}}",
+  "waitingSince": "waiting since {{time}}",
+  "trigger": {
+    "schedule": "from a schedule",
+    "batch": "from a batch",
+    "benchmark": "from a test series",
+    "subworkflow": "from a sub-workflow",
+    "resume": "from a continuation",
+    "manual": "started manually",
+    "api": "from the published API"
+  },
+  "nothingToShow": "No results arrive here; the review is about the process itself.",
+  "comment": "Comment (optional)",
+  "commentRequired": "Comment (required when rejecting)",
+  "commentHint": "Later agents can read the comment.",
+  "commentFirst": "Give a reason for the rejection first.",
+  "rejectStops": "A rejection ends the run.",
+  "rejectBranch": "When rejected, the run continues on the “Rejected” branch.",
+  "rejectEnds": "When rejected, this path ends (no “Rejected” branch is connected).",
+  "approve": "Approve",
+  "reject": "Reject",
+  "approvedToast": "Approved. The run continues.",
+  "rejectedToast": "Rejected."
+}

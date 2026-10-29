@@ -1,0 +1,23 @@
+{
+  "title": "Prévia da entrada",
+  "complete": "completa",
+  "incomplete": "ainda faltam entradas",
+  "fromRun": "Resultados dos predecessores da última execução de {{date}}.",
+  "noRun": "Ainda não há execução; os resultados ausentes dos predecessores estão marcados.",
+  "source": {
+    "given": "A entrada de teste informada é usada como entrada.",
+    "start_default": "A entrada padrão do nó inicial é usada como entrada.",
+    "run": "A entrada da última execução é usada como entrada.",
+    "empty": "Ainda não há entrada para a execução."
+  },
+  "available": "disponível",
+  "pending": "ausente",
+  "chars_one": "{{count}} caractere",
+  "chars_other": "{{count}} caracteres",
+  "runStatus": "na última execução: {{status}}",
+  "noResult": "ainda sem resultado",
+  "placeholder": {
+    "not_connected": "O marcador “{{name}}” cita um agente que não está conectado a este. Ele fica vazio.",
+    "unknown": "O marcador “{{name}}” não corresponde a nenhum predecessor e fica inalterado no texto."
+  }
+}

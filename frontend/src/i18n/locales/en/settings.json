@@ -1,0 +1,84 @@
+{
+  "title": "Settings",
+  "description": "Applies to this local Nodestro installation.",
+  "saved": "Settings saved",
+  "language": {
+    "title": "Language",
+    "label": "Interface language",
+    "automatic": "Automatic (browser language)",
+    "automaticHint": "Follows your browser's language, currently {{language}}. Unsupported languages show English.",
+    "hint": "Takes effect at once and is remembered, even after a restart.",
+    "contentNote": "The language only changes the interface. Your agents, prompts, workflows and results stay in their original language. New drafts by the AI assistants are written in this language unless you ask for another one."
+  },
+  "models": {
+    "title": "Models and budget",
+    "defaultModel": "Default model for new agents",
+    "assistantModel": "Model for the assistants",
+    "assistantHint": "Designs agents from your description, writes tools and proposes memory.",
+    "budget": "Default budget per run (USD)",
+    "budgetHint": "A run stops as soon as the estimated costs exceed the budget. Empty = no limit.",
+    "architectBudget": "Cost limit of the Workflow Architect (USD per draft)",
+    "architectBudgetHint": "The architect stops when a draft costs more. Empty = no limit.",
+    "architectRepairs": "AI corrections per draft",
+    "architectRepairsHint": "How often the architect may ask the AI to fix a configuration or tool draft (0 to 5). Corrections without AI are always made.",
+    "defaultHint": "New agents start with this provider and model."
+  },
+  "sandbox": {
+    "title": "Sandbox for your own tools",
+    "label": "Sandbox",
+    "text": "Your own and AI-created tools never run in the Nodestro process. The Python process is available at once; Docker isolates more strongly (no network, limited memory).",
+    "subprocess": "Python process",
+    "dockerAvailable": "Docker available",
+    "dockerMissing": "Docker not found",
+    "dockerUnreachable": "Docker cannot be reached. Tool tests and calls fail until Docker is running."
+  },
+  "about": {
+    "title": "About Nodestro",
+    "data": "All data is stored locally in an SQLite database (default: <code>~/.nodestro</code>, changeable with <code>NODESTRO_DATA_DIR</code>)."
+  },
+  "ocr": {
+    "title": "Text recognition (OCR)",
+    "text": "Recognises text in scanned PDFs locally with Tesseract. No data is sent anywhere. Uncertain words are marked.",
+    "label": "Use OCR for scans",
+    "available": "Tesseract found",
+    "missing": "Tesseract not installed"
+  },
+  "providers": {
+    "title": "AI providers",
+    "intro": "Nodestro works with several providers at the same time. Each agent uses the provider of its model; nothing switches to another provider on its own.",
+    "configured": "Set up",
+    "notConfigured": "Not set up",
+    "fromEnvironment": "The key comes from the environment variable <code>{{variable}}</code>; a key stored here is not used then.",
+    "keyStored": "A key is stored. It is never shown and is sent only to this provider.",
+    "keyMissing": "No key yet. Enter it here or set <code>{{variables}}</code>.",
+    "apiKey": "API key",
+    "apiKeyOptional": "API key (optional)",
+    "apiKeyFor": "API key for {{provider}}",
+    "baseUrl": "Base URL",
+    "baseUrlDefault": "Usually {{url}} for a local server. The provider counts as set up once a base URL is saved.",
+    "baseUrlHint": "The address of the OpenAI-compatible API, for example https://example.com/v1.",
+    "baseUrlFor": "Base URL of {{provider}}",
+    "capabilities": "What the models can do",
+    "capabilitiesHint": "Nodestro assumes nothing about your own servers: options a model cannot do, or that are unknown, are reported as errors instead of being left out.",
+    "state": {
+      "unknown": "Unknown",
+      "supported": "Supported",
+      "unsupported": "Not supported"
+    },
+    "saveEndpoint": "Save endpoint",
+    "test": "Test connection",
+    "capability": {
+      "tools": "Tools",
+      "forced_tool_choice": "Forced tool choice",
+      "parallel_tool_calls": "Parallel tool calls",
+      "strict_tool_schemas": "Strict tool schemas",
+      "structured_output": "Structured output",
+      "streaming": "Streaming",
+      "image_input": "Images as input",
+      "document_input": "PDF documents as input",
+      "reasoning": "Reasoning effort",
+      "caching": "Prompt caching",
+      "system_messages": "System messages"
+    }
+  }
+}

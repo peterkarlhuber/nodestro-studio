@@ -1,0 +1,107 @@
+{
+  "docs": "Mehr zu Python-Bibliotheken",
+  "state": {
+    "none": "Keine Bibliotheken nötig",
+    "ready": "Freigegeben und installiert",
+    "approval_needed": "Freigabe nötig",
+    "install_needed": "Installation ausstehend",
+    "installing": "Wird installiert",
+    "failed": "Installation fehlgeschlagen",
+    "unresolved": "Nicht eindeutig",
+    "unsupported": "Nicht verfügbar"
+  },
+  "reason": {
+    "new": "Neu benötigt: {{names}}.",
+    "changed": "Geänderte Anforderung: {{names}}.",
+    "python": "Die Python-Version hat sich geändert; die Versionen werden neu aufgelöst.",
+    "other_installation": "Die Freigaben stammen von einem anderen Computer oder aus einem Import und gelten hier nicht."
+  },
+  "status": {
+    "new": "Neu",
+    "changed": "Änderung {{from}} → {{to}}",
+    "approved": "Freigegeben",
+    "runtime": "Laufzeit",
+    "removed": "Entfällt"
+  },
+  "plan": {
+    "summary": "{{direct}} direkte und {{indirect}} indirekte Pakete für Python {{python}}. Pakete der Laufzeit bringt Nodestro immer mit.",
+    "package": "Paket",
+    "version": "Version",
+    "kind": "Art",
+    "requiredBy": "Benötigt von",
+    "status": "Status",
+    "direct": "direkt",
+    "indirect": "indirekt",
+    "runtime": "Laufzeit",
+    "onlyWhen": "nur wenn {{marker}}",
+    "approvedElsewhere": "Bereits freigegeben in: {{names}}"
+  },
+  "dialog": {
+    "title": "Python-Bibliotheken für „{{name}}“",
+    "introWorkflow": "Diese Bibliotheken brauchen die Tools des Workflows „{{name}}“. Nodestro hat die Versionen aufgelöst, aber noch nichts installiert.",
+    "introTool": "Diese Bibliotheken braucht das Tool „{{name}}“ für seine Tests. Nodestro hat die Versionen aufgelöst, aber noch nichts installiert.",
+    "resolving": "Versionen werden aufgelöst … (lädt nur Paketinformationen)",
+    "warning": "Mit der Freigabe installiert Nodestro genau diese Versionen in eine eigene Umgebung. Bibliotheken von Drittanbietern können auf Dateien und das Netzwerk zugreifen; gib nur frei, was du kennst.",
+    "unchanged": "Alle Pakete sind bereits freigegeben; es ändert sich keine Version.",
+    "codeSeparate": "Der Code der Tools wird davon unabhängig geprüft und freigegeben.",
+    "approve": "Freigeben und installieren",
+    "confirm": "Übernehmen"
+  },
+  "install": {
+    "starting": "Installation startet …",
+    "done": "{{count}} Pakete sind installiert.",
+    "failed": "Die Installation ist fehlgeschlagen; die bisherige Umgebung bleibt unverändert.",
+    "log": "Protokoll der Installation",
+    "retry": "Erneut installieren"
+  },
+  "step": {
+    "queued": "Installation wird vorbereitet …",
+    "create": "Python-Umgebung wird angelegt …",
+    "install": "Pakete werden installiert …",
+    "verify": "Importe werden geprüft …"
+  },
+  "panel": {
+    "title": "Python-Bibliotheken",
+    "toolTitle": "Python-Bibliotheken des Tools",
+    "needed": "Benötigte Bibliotheken",
+    "notInstalled": "nicht installiert",
+    "usedBy": "für {{names}}",
+    "approvedAt": "freigegeben {{when}}",
+    "review": "Prüfen und freigeben",
+    "install": "Installieren",
+    "check": "Versionen ansehen",
+    "history": "Änderungsverlauf",
+    "unused": "Kein Tool braucht die {{count}} freigegebenen Pakete mehr. Du kannst die Umgebung in den Einstellungen unter „Python-Umgebungen“ entfernen."
+  },
+  "change": {
+    "approved": "Freigegeben",
+    "installed": "Installiert",
+    "install_failed": "Installation fehlgeschlagen",
+    "removed": "Umgebung entfernt",
+    "imported": "Importiert (Freigabe nötig)",
+    "copied": "Aus Workflow kopiert (Freigabe nötig)",
+    "cleaned": "Bereinigt"
+  },
+  "maintenance": {
+    "title": "Python-Umgebungen",
+    "intro": "Workflows mit Bibliotheken von Drittanbietern bekommen eigene Python-Umgebungen im Datenordner. Heruntergeladene Pakete liegen in einem gemeinsamen Zwischenspeicher und werden wiederverwendet.",
+    "uv": "uv {{version}} · Python {{python}}",
+    "noUv": "uv wurde nicht gefunden; Bibliotheken können nicht installiert werden.",
+    "cache": "Zwischenspeicher {{size}}",
+    "owner": "Gehört zu",
+    "ownerWorkflow": "Workflow „{{name}}“",
+    "ownerTool": "Tool-Test „{{name}}“",
+    "packages": "Pakete",
+    "size": "Größe",
+    "installed": "Installiert",
+    "actions": "Aktionen",
+    "orphaned": "verwaist",
+    "notOnDisk": "nicht installiert",
+    "remove": "Umgebung löschen (Freigaben bleiben, Neuinstallation bei Bedarf)",
+    "forget": "Verwaiste Umgebung und Definition löschen",
+    "removed": "Die Umgebung wurde entfernt.",
+    "cleanup": "Verwaiste bereinigen ({{count}})",
+    "cleaned": "{{count}} verwaiste Umgebungen entfernt, Zwischenspeicher aufgeräumt.",
+    "none": "Noch keine Python-Umgebungen."
+  }
+}
