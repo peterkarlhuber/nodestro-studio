@@ -42,10 +42,13 @@ Repository = "https://github.com/peterkarlhuber/nodestro-studio"
 [tool.hatch.metadata]
 allow-direct-references = true
 
+[tool.hatch.build]
+# The built interface is git-ignored; artifacts puts it into the sdist and the wheel anyway
+# (a wheel built from the sdist, as `python -m build` does, then still contains it).
+artifacts = ["src/nodestro_studio/static/**"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/nodestro_studio"]
-# The built interface is git-ignored; artifacts puts it into the wheel anyway.
-artifacts = ["src/nodestro_studio/static/**"]
 
 [tool.hatch.build.targets.wheel.force-include]
 # The Nodestro Assistant reads the built-in documentation (one source, see nodestro_api.docs_index).
