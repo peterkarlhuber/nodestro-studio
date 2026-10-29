@@ -423,7 +423,9 @@
     "not_json": "Le corps doit être du JSON.",
     "too_large": "La requête est trop volumineuse.",
     "multipart_invalid": "Le corps multipart ne peut pas être lu.",
-    "unknown_file_part": "Aucun champ de fichier ne s’appelle {{field}}."
+    "unknown_file_part": "Aucun champ de fichier ne s’appelle {{field}}.",
+    "host_not_allowed": "Nodestro ne répond pas sous le nom d’hôte {{host}}. Ouvrez Nodestro via localhost ou ajoutez ce nom à NODESTRO_ALLOWED_HOSTS.",
+    "origin_not_allowed": "Les modifications venant de la page web {{origin}} ne sont pas acceptées."
   },
   "publication": {
     "disabled": "Cette API est désactivée.",

@@ -15,7 +15,7 @@ def test_docs_path_serves_the_app_and_api_reference_lives_under_api(tmp_path: Pa
     static.mkdir()
     (static / "index.html").write_text("<html>Nodestro</html>")
     app = create_app(AppConfig(data_dir=tmp_path / "data", static_dir=static))
-    with TestClient(app) as client:
+    with TestClient(app, base_url="http://127.0.0.1") as client:
         assert client.get("/docs/workflows").text == "<html>Nodestro</html>"
         assert client.get("/docs").text == "<html>Nodestro</html>"
         assert client.get("/api/docs").status_code == 200

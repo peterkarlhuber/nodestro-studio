@@ -47,7 +47,7 @@ def legacy(tmp_path: Path) -> Iterator[tuple[TestClient, dict[str, Any]]]:
     app = create_app(
         AppConfig(data_dir=data), client_factory=lambda _provider: scripted, integrations=[], scheduler=False
     )
-    with TestClient(app) as client:
+    with TestClient(app, base_url="http://127.0.0.1") as client:
         yield client, facts
 
 

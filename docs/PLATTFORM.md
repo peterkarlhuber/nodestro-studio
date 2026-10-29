@@ -56,6 +56,20 @@ fehlt, die Runtime startet trotzdem. Eine Integration für einen anderen Vertrag
 `extension.contract` ab, statt sie halb zu nutzen. Das Studio installiert `nodestro-integrations` mit; die API
 funktioniert auch ohne (dann ohne OCR, wie 0.1 ohne tesseract).
 
+## Vertrauensgrenzen
+
+- **Studio-API (`/api`)**: ohne Benutzerverwaltung und ohne eigene Schlüssel, deshalb standardmäßig nur auf
+  `127.0.0.1`. Sie beantwortet nur Anfragen an `localhost`, Loopback-Adressen und die mit `--host` gewählte Adresse
+  und nimmt Änderungen nur von ihren eigenen Seiten an (`nodestro_api.local_access`); so kann keine Webseite im
+  Browser sie über DNS-Rebinding oder Cross-Site-Anfragen bedienen. `NODESTRO_ALLOWED_HOSTS` nennt weitere
+  Hostnamen, etwa hinter einem Reverse Proxy.
+- **Veröffentlichte APIs (`/api/published/...`)**: nur mit Nodestro-Schlüsseln (`ndk_...`, gespeichert als
+  SHA-256), je Schlüssel auf Berechtigungen und Veröffentlichungen beschränkt; im Netz nur über den eigenen
+  Listener, den der Benutzer ausdrücklich einschaltet.
+- **Eigene Tools und KI-generierter Code** laufen nie im Prozess des Servers: standardmäßig in einem eigenen
+  Python-Prozess mit Zeitlimit und den Rechten des Benutzers (keine Isolation), mit der Einstellung „Docker“ in einem
+  Container. Anbieter-Schlüssel erscheinen weder in Antworten noch in Exporten.
+
 ## Versionen und Pins
 
 - **Alle Komponenten haben dieselbe Version** (0.2.0). Eine Plattform-Version ist die Menge der Commits in

@@ -423,7 +423,9 @@
     "not_json": "The body must be JSON.",
     "too_large": "The request is too large.",
     "multipart_invalid": "The multipart body cannot be read.",
-    "unknown_file_part": "There is no file field called {{field}}."
+    "unknown_file_part": "There is no file field called {{field}}.",
+    "host_not_allowed": "Nodestro does not answer under the host name {{host}}. Open Nodestro via localhost or add the name to NODESTRO_ALLOWED_HOSTS.",
+    "origin_not_allowed": "Changes from the web page {{origin}} are not accepted."
   },
   "publication": {
     "disabled": "This API is switched off.",
