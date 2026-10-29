@@ -1,0 +1,38 @@
+{
+  "title": "Backup e ripristino",
+  "intro": "Un backup contiene tutti i workflow con le loro versioni, i modelli di agenti, gli strumenti, i file di conoscenza, la memoria, le esecuzioni e le impostazioni in un file ZIP.",
+  "noKey": "Per sicurezza nessuna chiave API dei provider di IA finisce in un backup. Il ripristino mantiene le chiavi configurate su questo computer.",
+  "download": "Scarica backup",
+  "restoreFromFile": "Ripristina da file …",
+  "local_one": "{{count}} backup di sicurezza su questo computer",
+  "local_other": "{{count}} backup di sicurezza su questo computer",
+  "localText": "Prima di ogni ripristino Nodestro salva automaticamente un backup dello stato precedente.",
+  "downloadLocal": "Scarica",
+  "restoreThis": "Ripristina …",
+  "restoreTitle": "Ripristina backup",
+  "valid": "“{{name}}” è un backup valido del {{date}}. Tutti i file sono completi e integri.",
+  "versions": "Creato con Nodestro {{nodestro}} e la libreria di agenti {{library}}.",
+  "inBackup": "Nel backup",
+  "current": "Attuale",
+  "contents": {
+    "workflows": "Workflow",
+    "versions": "Versioni dei workflow",
+    "templates": "Modelli di agenti",
+    "tools": "Strumenti personali",
+    "knowledge_files": "File di conoscenza",
+    "memory_spaces": "Spazi di memoria",
+    "memory_files": "File di memoria",
+    "runs": "Esecuzioni",
+    "usage_entries": "Altre operazioni di IA",
+    "conversations": "Chat dell’assistente",
+    "input_files": "File di input caricati"
+  },
+  "notes": {
+    "other_version": "Il backup proviene da un’altra versione di Nodestro. Viene applicato al ripristino; controlla brevemente i tuoi workflow dopo."
+  },
+  "replaceWarning": "Il ripristino sostituisce tutti i dati attuali con lo stato del backup.",
+  "safetyNote": "Prima viene creato automaticamente un backup dello stato attuale; lo trovi poi nell’elenco dei backup.",
+  "confirm": "Ho capito che i miei dati attuali verranno sostituiti.",
+  "restoreNow": "Ripristina ora",
+  "restored": "Backup ripristinato. Lo stato precedente è in “{{name}}”. La pagina si ricarica."
+}

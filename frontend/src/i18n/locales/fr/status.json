@@ -1,0 +1,46 @@
+{
+  "idle": {
+    "label": "Prêt",
+    "description": "Pas encore exécuté."
+  },
+  "waiting": {
+    "label": "En attente",
+    "description": "Attend que tous les prédécesseurs aient terminé."
+  },
+  "queued": {
+    "label": "En file d’attente",
+    "description": "L’exécution est créée et démarre sous peu."
+  },
+  "running": {
+    "label": "En cours",
+    "description": "En cours d’exécution."
+  },
+  "succeeded": {
+    "label": "Terminé",
+    "description": "Terminé avec succès."
+  },
+  "failed": {
+    "label": "Erreur",
+    "description": "Échec. Le message d’erreur figure dans les détails ; les étapes suivantes sont bloquées."
+  },
+  "skipped": {
+    "label": "Ignoré",
+    "description": "Non exécuté, car cette branche n’a pas été choisie. Ce n’est pas une erreur."
+  },
+  "cancelled": {
+    "label": "Annulé",
+    "description": "Terminé par une annulation ou une trace incomplète."
+  },
+  "blocked": {
+    "label": "Bloqué",
+    "description": "Non exécuté, car une étape précédente a échoué ou a été annulée."
+  },
+  "awaiting_approval": {
+    "label": "En attente de validation",
+    "description": "Une personne doit valider ou refuser ; d’ici là, l’exécution attend."
+  },
+  "paused": {
+    "label": "En pause",
+    "description": "L’exécution attend une validation et reprend après la décision."
+  }
+}

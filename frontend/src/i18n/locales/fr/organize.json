@@ -1,0 +1,17 @@
+{
+  "favorite": "Favori",
+  "makeFavorite": "Marquer « {{name}} » comme favori",
+  "unfavorite": "Retirer « {{name}} » des favoris",
+  "editTags": "Modifier les étiquettes de « {{name}} »",
+  "tagsTitle": "Étiquettes : {{name}}",
+  "tagsText": "Les étiquettes aident à filtrer. Elles ne modifient rien au contenu.",
+  "noTags": "Pas encore d’étiquettes.",
+  "removeTag": "Retirer l’étiquette « {{tag}} »",
+  "newTag": "Nouvelle étiquette",
+  "newTagPlaceholder": "par ex. Client A, Brouillon …",
+  "addTag": "Ajouter",
+  "onlyFavorites": "Favoris uniquement",
+  "filterTag": "Filtrer par étiquette",
+  "allTags": "Toutes les étiquettes",
+  "noMatch": "Rien ne correspond au filtre."
+}

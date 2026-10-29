@@ -1,0 +1,46 @@
+{
+  "idle": {
+    "label": "Pronto",
+    "description": "Ainda não executado."
+  },
+  "waiting": {
+    "label": "Aguardando",
+    "description": "Aguarda até que todos os antecessores terminem."
+  },
+  "queued": {
+    "label": "Na fila",
+    "description": "A execução foi criada e começa em instantes."
+  },
+  "running": {
+    "label": "Em execução",
+    "description": "Sendo executado agora."
+  },
+  "succeeded": {
+    "label": "Concluído",
+    "description": "Concluído com sucesso."
+  },
+  "failed": {
+    "label": "Erro",
+    "description": "Falhou. A mensagem de erro está nos detalhes; as etapas seguintes ficam bloqueadas."
+  },
+  "skipped": {
+    "label": "Ignorado",
+    "description": "Não executado porque este ramo não foi escolhido. Não é um erro."
+  },
+  "cancelled": {
+    "label": "Cancelado",
+    "description": "Encerrado por cancelamento ou por um trace incompleto."
+  },
+  "blocked": {
+    "label": "Bloqueado",
+    "description": "Não executado porque uma etapa anterior falhou ou foi cancelada."
+  },
+  "awaiting_approval": {
+    "label": "Aguardando aprovação",
+    "description": "Uma pessoa precisa aprovar ou rejeitar; até lá a execução espera."
+  },
+  "paused": {
+    "label": "Pausado",
+    "description": "A execução aguarda uma aprovação e continua após a decisão."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "description": "Every run with its result, tool calls, errors, tokens and costs – to trace and compare.",
+  "duplicate": "“{{name}}” already exists – nothing was added twice.",
+  "imported_one": "Trace imported",
+  "imported_other": "{{count}} traces imported",
+  "filterWorkflow": "Filter by workflow",
+  "allWorkflows": "All workflows",
+  "filterStatus": "Filter by status",
+  "allStatuses": "All statuses",
+  "filterOrigin": "Filter by origin",
+  "origin": {
+    "all": "All origins",
+    "own": "Own runs",
+    "imported": "Imported traces"
+  },
+  "import": "Import trace",
+  "empty": "No executions",
+  "emptyText": "Start a workflow in the editor; every run appears here. You can import exported traces to view them.",
+  "columns": {
+    "workflow": "Workflow",
+    "status": "Status",
+    "started": "Started",
+    "duration": "Duration",
+    "requests": "Requests",
+    "tokens": "Tokens",
+    "cost": "Cost",
+    "actions": "Actions"
+  },
+  "importedBadge": "Imported",
+  "delete": "Delete execution"
+}

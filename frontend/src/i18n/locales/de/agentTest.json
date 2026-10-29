@@ -1,0 +1,20 @@
+{
+  "button": "Agent testen",
+  "title": "Agent testen: {{name}}",
+  "note": "Ein Test führt nur diesen Agenten mit seiner aktuellen Konfiguration aus. Er ist kein Workflow-Lauf, erscheint nicht unter „Ausführungen“ und ändert keine Ergebnisse.",
+  "input": "Testeingabe",
+  "inputHint": "Wird wie die Eingabe eines Laufs in die Aufgabe des Agenten eingesetzt (Platzhalter für Vorgänger bleiben leer).",
+  "rawHint": "Wird unverändert als Aufgabe an den Agenten geschickt.",
+  "placeholder": "Zum Beispiel ein kurzer Text, den der Agent bearbeiten soll …",
+  "raw": "Eingabe direkt als Aufgabe senden",
+  "rawDescription": "Ignoriert die Aufgabenvorlage und schickt nur die Testeingabe.",
+  "costNote": "Der Test ruft den Anbieter des Modells auf und kann Geld kosten: {{model}} kostet {{input}} pro Million Eingabe-Tokens und {{output}} pro Million Ausgabe-Tokens (– heißt unbekannt). Die Kosten erscheinen unter „Nutzung“.",
+  "memoryNote": "Dauerhaftes Memory wird nur gelesen: Der Test arbeitet auf einer Kopie und ändert den Memory-Raum nicht.",
+  "start": "Test starten",
+  "again": "Erneut testen",
+  "result": "Testergebnis",
+  "badge": "Test, kein Workflow-Lauf",
+  "memoryIsolated": "Memory-Kopie",
+  "duration": "Dauer",
+  "providerMissing": "Noch nicht eingerichtet: {{providers}}. Trage den Zugang in den Einstellungen ein, um diesen Agenten zu testen."
+}

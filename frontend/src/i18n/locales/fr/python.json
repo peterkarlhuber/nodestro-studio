@@ -1,0 +1,107 @@
+{
+  "docs": "En savoir plus sur les bibliothèques Python",
+  "state": {
+    "none": "Aucune bibliothèque nécessaire",
+    "ready": "Approuvées et installées",
+    "approval_needed": "Approbation nécessaire",
+    "install_needed": "Installation en attente",
+    "installing": "Installation en cours",
+    "failed": "L’installation a échoué",
+    "unresolved": "Ambigu",
+    "unsupported": "Non disponible"
+  },
+  "reason": {
+    "new": "Nouvellement nécessaire : {{names}}.",
+    "changed": "Exigence modifiée : {{names}}.",
+    "python": "La version de Python a changé ; les versions sont à nouveau résolues.",
+    "other_installation": "Les approbations proviennent d’un autre ordinateur ou d’un import et ne s’appliquent pas ici."
+  },
+  "status": {
+    "new": "Nouveau",
+    "changed": "Changement {{from}} → {{to}}",
+    "approved": "Approuvé",
+    "runtime": "Exécution",
+    "removed": "Supprimé"
+  },
+  "plan": {
+    "summary": "{{direct}} paquets directs et {{indirect}} indirects pour Python {{python}}. Nodestro fournit toujours les paquets d’exécution.",
+    "package": "Paquet",
+    "version": "Version",
+    "kind": "Type",
+    "requiredBy": "Requis par",
+    "status": "Statut",
+    "direct": "direct",
+    "indirect": "indirect",
+    "runtime": "exécution",
+    "onlyWhen": "seulement si {{marker}}",
+    "approvedElsewhere": "Déjà approuvé dans : {{names}}"
+  },
+  "dialog": {
+    "title": "Bibliothèques Python pour « {{name}} »",
+    "introWorkflow": "Les outils du workflow « {{name}} » ont besoin de ces bibliothèques. Nodestro a résolu les versions mais n’a encore rien installé.",
+    "introTool": "L’outil « {{name}} » a besoin de ces bibliothèques pour ses tests. Nodestro a résolu les versions mais n’a encore rien installé.",
+    "resolving": "Résolution des versions … (télécharge uniquement les informations des paquets)",
+    "warning": "En approuvant, Nodestro installe exactement ces versions dans un environnement dédié. Les bibliothèques tierces peuvent accéder aux fichiers et au réseau ; n’approuvez que ce que vous connaissez.",
+    "unchanged": "Tous les paquets sont déjà approuvés ; aucune version ne change.",
+    "codeSeparate": "Le code des outils est vérifié et approuvé séparément.",
+    "approve": "Approuver et installer",
+    "confirm": "Appliquer"
+  },
+  "install": {
+    "starting": "Démarrage de l’installation …",
+    "done": "{{count}} paquets sont installés.",
+    "failed": "L’installation a échoué ; l’environnement précédent reste inchangé.",
+    "log": "Journal d’installation",
+    "retry": "Réinstaller"
+  },
+  "step": {
+    "queued": "Préparation de l’installation …",
+    "create": "Création de l’environnement Python …",
+    "install": "Installation des paquets …",
+    "verify": "Vérification des imports …"
+  },
+  "panel": {
+    "title": "Bibliothèques Python",
+    "toolTitle": "Bibliothèques Python de l’outil",
+    "needed": "Bibliothèques nécessaires",
+    "notInstalled": "non installée",
+    "usedBy": "pour {{names}}",
+    "approvedAt": "approuvé {{when}}",
+    "review": "Vérifier et approuver",
+    "install": "Installer",
+    "check": "Voir les versions",
+    "history": "Historique des modifications",
+    "unused": "Plus aucun outil n’a besoin des {{count}} paquets approuvés. Vous pouvez supprimer l’environnement dans Réglages, section « Environnements Python »."
+  },
+  "change": {
+    "approved": "Approuvé",
+    "installed": "Installé",
+    "install_failed": "L’installation a échoué",
+    "removed": "Environnement supprimé",
+    "imported": "Importé (approbation nécessaire)",
+    "copied": "Copié d’un workflow (approbation nécessaire)",
+    "cleaned": "Nettoyé"
+  },
+  "maintenance": {
+    "title": "Environnements Python",
+    "intro": "Les workflows avec des bibliothèques tierces reçoivent leurs propres environnements Python dans le dossier de données. Les paquets téléchargés se trouvent dans un cache partagé et sont réutilisés.",
+    "uv": "uv {{version}} · Python {{python}}",
+    "noUv": "uv est introuvable ; impossible d’installer des bibliothèques.",
+    "cache": "Cache {{size}}",
+    "owner": "Appartient à",
+    "ownerWorkflow": "Workflow « {{name}} »",
+    "ownerTool": "Test de l’outil « {{name}} »",
+    "packages": "Paquets",
+    "size": "Taille",
+    "installed": "Installé",
+    "actions": "Actions",
+    "orphaned": "orphelin",
+    "notOnDisk": "non installé",
+    "remove": "Supprimer l’environnement (les approbations restent, réinstallation si nécessaire)",
+    "forget": "Supprimer l’environnement orphelin et sa définition",
+    "removed": "L’environnement a été supprimé.",
+    "cleanup": "Nettoyer les orphelins ({{count}})",
+    "cleaned": "{{count}} environnements orphelins supprimés, cache nettoyé.",
+    "none": "Aucun environnement Python pour l’instant."
+  }
+}

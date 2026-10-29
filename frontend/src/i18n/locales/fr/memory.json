@@ -1,0 +1,21 @@
+{
+  "description": "Mémoires persistantes. Les agents à mémoire « persistante » y lisent et écrivent des fichiers, d’une exécution à l’autre.",
+  "notesTitle": "Notes",
+  "new": "Nouvelle mémoire",
+  "empty": "Pas encore de mémoire",
+  "emptyText": "Activez une mémoire persistante pour un agent dans l’éditeur, sous « Mémoire », ou laissez l’assistant mémoire vous en proposer une.",
+  "spaces": "Mémoires",
+  "nameHint": "Lettres, chiffres, espaces, _ . et -. Plusieurs agents peuvent partager une mémoire.",
+  "namePlaceholder": "p. ex. connaissances-clients",
+  "cleared": "Mémoire {{name}} vidée",
+  "space": "Mémoire {{name}}",
+  "clear": "Vider",
+  "newFilePlaceholder": "nouveau-fichier.md",
+  "newFile": "Nouveau fichier",
+  "createFile": "Créer un fichier sous /memories",
+  "clearTitle": "Vider la mémoire ?",
+  "deleteAll": "Supprimer tous les fichiers",
+  "clearText": "Tous les fichiers de « {{name}} » seront supprimés. Les agents repartent ensuite sans souvenirs.",
+  "deleteFile": "Supprimer le fichier",
+  "contentOf": "Contenu de {{path}}"
+}

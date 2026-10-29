@@ -1,0 +1,32 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Frontend
+node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+*.tsbuildinfo
+
+# Built frontend served by the backend
+src/nodestro_studio/static/*
+!src/nodestro_studio/static/.gitkeep
+
+# Local data and secrets
+.env
+.nodestro/
+*.db
+*.db-wal
+*.db-shm
+
+.DS_Store

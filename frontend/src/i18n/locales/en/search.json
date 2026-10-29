@@ -1,0 +1,18 @@
+{
+  "open": "Search …",
+  "title": "Search",
+  "label": "Search term",
+  "placeholder": "Search workflows, agents, tools, knowledge and documentation …",
+  "hint": "Tip: Ctrl+K (⌘K on a Mac) opens the search from anywhere. Arrow keys select, Enter opens.",
+  "results": "Results",
+  "empty": "Nothing found for “{{query}}”.",
+  "kind": {
+    "workflow": "Workflows",
+    "agent": "Agents in workflows",
+    "template": "Agent library",
+    "example": "Example workflows",
+    "tool": "Tools",
+    "knowledge": "Knowledge",
+    "docs": "Documentation"
+  }
+}

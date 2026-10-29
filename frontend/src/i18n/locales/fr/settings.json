@@ -1,0 +1,84 @@
+{
+  "title": "Réglages",
+  "description": "S’appliquent à cette installation locale de Nodestro.",
+  "saved": "Réglages enregistrés",
+  "language": {
+    "title": "Langue",
+    "label": "Langue de l’interface",
+    "automatic": "Automatique (langue du navigateur)",
+    "automaticHint": "Suit la langue de votre navigateur, actuellement {{language}}. Les langues non prises en charge affichent l’anglais.",
+    "hint": "S’applique immédiatement et reste mémorisé, même après un redémarrage.",
+    "contentNote": "La langue ne change que l’interface. Vos agents, prompts, workflows et résultats restent dans leur langue d’origine. Les nouveaux brouillons des assistants IA sont rédigés dans cette langue, sauf si vous en demandez une autre."
+  },
+  "models": {
+    "title": "Modèles et budget",
+    "defaultModel": "Modèle par défaut des nouveaux agents",
+    "assistantModel": "Modèle des assistants",
+    "assistantHint": "Conçoit des agents à partir de votre description, écrit des outils et propose de la mémoire.",
+    "budget": "Budget par défaut par exécution (USD)",
+    "budgetHint": "Une exécution s’arrête dès que les coûts estimés dépassent le budget. Vide = pas de limite.",
+    "architectBudget": "Plafond de coût de l’architecte (USD par brouillon)",
+    "architectBudgetHint": "L’architecte s’arrête si un brouillon coûte davantage. Vide = pas de plafond.",
+    "architectRepairs": "Corrections par IA par brouillon",
+    "architectRepairsHint": "Combien de fois l’architecte peut demander à l’IA de corriger une configuration ou un brouillon d’outil (0 à 5). Les corrections sans IA sont toujours effectuées.",
+    "defaultHint": "Les nouveaux agents démarrent avec ce fournisseur et ce modèle."
+  },
+  "sandbox": {
+    "title": "Bac à sable pour les outils personnels",
+    "label": "Bac à sable",
+    "text": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro. Le processus Python est disponible immédiatement ; Docker isole davantage (sans réseau, mémoire limitée).",
+    "subprocess": "Processus Python",
+    "dockerAvailable": "Docker disponible",
+    "dockerMissing": "Docker introuvable",
+    "dockerUnreachable": "Docker est injoignable. Les tests et appels d’outils échoueront tant que Docker ne tourne pas."
+  },
+  "about": {
+    "title": "À propos de Nodestro",
+    "data": "Toutes les données sont stockées localement dans une base SQLite (par défaut : <code>~/.nodestro</code>, modifiable avec <code>NODESTRO_DATA_DIR</code>)."
+  },
+  "ocr": {
+    "title": "Reconnaissance de texte (OCR)",
+    "text": "Reconnaît localement le texte des PDF scannés avec Tesseract. Aucune donnée n’est envoyée. Les mots incertains sont signalés.",
+    "label": "Utiliser l’OCR pour les scans",
+    "available": "Tesseract trouvé",
+    "missing": "Tesseract non installé"
+  },
+  "providers": {
+    "title": "Fournisseurs d’IA",
+    "intro": "Nodestro travaille avec plusieurs fournisseurs à la fois. Chaque agent utilise le fournisseur de son modèle ; rien ne bascule de lui-même vers un autre fournisseur.",
+    "configured": "Configuré",
+    "notConfigured": "Non configuré",
+    "fromEnvironment": "La clé provient de la variable d’environnement <code>{{variable}}</code> ; une clé enregistrée ici n’est alors pas utilisée.",
+    "keyStored": "Une clé est enregistrée. Elle n’est jamais affichée et n’est envoyée qu’à ce fournisseur.",
+    "keyMissing": "Pas encore de clé. Saisissez-la ici ou définissez <code>{{variables}}</code>.",
+    "apiKey": "Clé API",
+    "apiKeyOptional": "Clé API (facultative)",
+    "apiKeyFor": "Clé API pour {{provider}}",
+    "baseUrl": "URL de base",
+    "baseUrlDefault": "Pour un serveur local, généralement {{url}}. Le fournisseur est considéré comme configuré dès qu’une URL de base est enregistrée.",
+    "baseUrlHint": "L’adresse de l’API compatible OpenAI, par exemple https://example.com/v1.",
+    "baseUrlFor": "URL de base de {{provider}}",
+    "capabilities": "Ce que savent faire les modèles",
+    "capabilitiesHint": "Nodestro ne suppose rien sur vos propres serveurs : les options qu’un modèle ne sait pas faire, ou inconnues, sont signalées comme erreurs au lieu d’être omises.",
+    "state": {
+      "unknown": "Inconnu",
+      "supported": "Pris en charge",
+      "unsupported": "Non pris en charge"
+    },
+    "saveEndpoint": "Enregistrer le point d’accès",
+    "test": "Tester la connexion",
+    "capability": {
+      "tools": "Outils",
+      "forced_tool_choice": "Choix d’outil imposé",
+      "parallel_tool_calls": "Appels d’outils parallèles",
+      "strict_tool_schemas": "Schémas d’outils stricts",
+      "structured_output": "Sortie structurée",
+      "streaming": "Streaming",
+      "image_input": "Images en entrée",
+      "document_input": "Documents PDF en entrée",
+      "reasoning": "Effort de raisonnement",
+      "caching": "Cache des prompts",
+      "system_messages": "Messages système"
+    }
+  }
+}

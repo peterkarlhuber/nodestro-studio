@@ -1,0 +1,62 @@
+{
+  "tokens": "{{value}} token",
+  "requests_one": "{{value}} richiesta",
+  "requests_other": "{{value}} richieste",
+  "startedAt": "Inizio {{time}}",
+  "finishedAt": "Fine {{time}}",
+  "noOutputYet": "Ancora nessun risultato.",
+  "promptHint": "Il compito così come è arrivato all’agente dopo la sostituzione dei segnaposto.",
+  "tabs": {
+    "result": "Risultato",
+    "prompt": "Compito",
+    "tools": "Strumenti ({{count}})",
+    "thinking": "Ragionamento",
+    "memory": "Memoria",
+    "context": "Contesto"
+  },
+  "evaluation": {
+    "passed_one": "Controllo qualità superato dopo {{count}} tentativo",
+    "passed_other": "Controllo qualità superato dopo {{count}} tentativi",
+    "failed_one": "Controllo qualità non superato dopo {{count}} tentativo",
+    "failed_other": "Controllo qualità non superato dopo {{count}} tentativi",
+    "feedback": "Motivazione del giudice"
+  },
+  "toolCalls": {
+    "none": "Nessuna chiamata agli strumenti.",
+    "error": "Errore",
+    "succeeded": "riuscita",
+    "running": "in corso …",
+    "unfinished": "non terminata",
+    "input": "Input",
+    "output": "Risultato"
+  },
+  "stats": {
+    "agents": "Agenti",
+    "status": "Stato",
+    "requests": "Richieste API",
+    "tokens": "Token",
+    "cost": "Costo stimato"
+  },
+  "panel": {
+    "title": "Panoramica dell’esecuzione",
+    "notStarted": "Non ancora avviato",
+    "overall": "Risultato complessivo",
+    "running": "Il workflow è in esecuzione. Scegli un agente a sinistra per seguirlo in diretta.",
+    "paused": "L’esecuzione attende un’approvazione."
+  },
+  "detail": {
+    "timeline": "Andamento nel tempo",
+    "notFound": "Non trovato",
+    "exportTrace": "Esporta traccia",
+    "openInEditor": "Apri nell’editor",
+    "importedTrace": "Traccia importata",
+    "importedAt": "Importata il {{date}}",
+    "sourceId": "ID originale <code>{{id}}</code>",
+    "importedNote": "Questa esecuzione viene solo mostrata: non viene rieseguito nulla e non ci sono costi.",
+    "input": "Input",
+    "stillRunning": "Ancora in corso …",
+    "noResult": "Nessun risultato.",
+    "trace": "Andamento",
+    "nodeDetails": "Dettagli {{name}}"
+  }
+}

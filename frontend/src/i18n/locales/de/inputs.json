@@ -1,0 +1,211 @@
+{
+  "chooseFiles": "Dateien wählen",
+  "chooseFile": "Datei wählen",
+  "chooseFolder": "Ordner wählen",
+  "drop": {
+    "title": "Dateien oder einen Ordner hierher ziehen",
+    "titleOne": "Eine Datei hierher ziehen",
+    "full": "Die höchste Anzahl an Dateien ist erreicht",
+    "limits": "{{formats}} · bis {{size}} MB pro Datei",
+    "allFormats": "Alle unterstützten Formate",
+    "maxFiles_one": "höchstens {{count}} Datei",
+    "maxFiles_other": "höchstens {{count}} Dateien"
+  },
+  "listLabel": "Dateien dieses Felds",
+  "fromKnowledge": "Datei aus dem Wissen hinzufügen …",
+  "fromKnowledgeBadge": "aus dem Wissen",
+  "inKnowledge": "ins Wissen übernommen",
+  "status": {
+    "uploading": "wird hochgeladen und geprüft …",
+    "missing": "nicht mehr gespeichert"
+  },
+  "showPreview": "Zeigen, was Nodestro gelesen hat",
+  "showContents": "Inhalt des Archivs zeigen",
+  "hidePreview": "Vorschau ausblenden",
+  "noText": "(kein Text)",
+  "previewCut": "Es wird nur der Anfang gezeigt.",
+  "tableSummary": "{{name}}: {{count}} Zeilen, {{columns}} Spalten",
+  "summary": {
+    "archive_one": "{{count}} Datei, {{readable}} lesbar",
+    "archive_other": "{{count}} Dateien, {{readable}} lesbar",
+    "pages_one": "{{count}} Seite",
+    "pages_other": "{{count}} Seiten",
+    "sheets_one": "{{count}} Tabellenblatt",
+    "sheets_other": "{{count}} Tabellenblätter",
+    "rows_one": "{{count}} Zeile",
+    "rows_other": "{{count}} Zeilen",
+    "chars_one": "{{count}} Zeichen",
+    "chars_other": "{{count}} Zeichen"
+  },
+  "archive": {
+    "label": "Inhalt von {{name}}",
+    "pick": "Wähle eine Datei des Archivs, um zu sehen, was Nodestro daraus liest.",
+    "nested": "Archiv im Archiv (nicht geöffnet)",
+    "unsupported": "Format nicht unterstützt",
+    "reason": {
+      "unsafe_path": "unsicherer Pfad, übersprungen",
+      "link": "Verknüpfung, übersprungen",
+      "special": "Sonderdatei, übersprungen",
+      "encrypted": "verschlüsselt, übersprungen",
+      "duplicate": "doppelter Pfad, übersprungen",
+      "too_large": "zu groß, übersprungen",
+      "ratio": "auffällig stark komprimiert, übersprungen",
+      "executable": "Programmdatei, wird nie ausgeführt oder gelesen",
+      "other": "übersprungen"
+    }
+  },
+  "download": "{{name}} herunterladen",
+  "runFilesHint": "Hochgeladene Dateien gehören nur zu diesem Lauf (nicht zum Wissen). Du kannst auch Dateien aus dem Wissen hinzufügen.",
+  "waitForUploads": "Warte, bis alle Dateien hochgeladen sind.",
+  "groups": {
+    "text": "Text",
+    "data": "Daten (CSV, JSON, Excel)",
+    "document": "Dokumente (PDF, Word)",
+    "image": "Bilder",
+    "archive": "ZIP-Archive"
+  },
+  "config": {
+    "accept": "Erlaubte Dateitypen",
+    "formats": "Einzelne Formate",
+    "acceptAll": "Nichts gewählt: alle unterstützten Formate sind erlaubt.",
+    "multiple": "Mehrere Dateien",
+    "multipleHint": "Aus: genau eine Datei (der Platzhalter steht dann für eine Datei).",
+    "maxFiles": "Höchstens Dateien",
+    "maxSize": "Höchstens MB pro Datei",
+    "unlimited": "unbegrenzt",
+    "delivery": "Übergabe an Agenten",
+    "deliveryModes": {
+      "auto": "Automatisch",
+      "inline": "Immer den Inhalt",
+      "on_demand": "Übersicht, Inhalt bei Bedarf"
+    },
+    "deliveryHint": {
+      "auto": "Der Inhalt geht an die Agenten, wenn er passt; große Dateien als Übersicht, aus der der Agent gezielt liest.",
+      "inline": "Agenten bekommen den Inhalt, solange er in den Platz für Dateien passt.",
+      "on_demand": "Agenten bekommen Name und Aufbau und lesen benötigte Teile mit dem Tool input_files."
+    }
+  },
+  "modes": {
+    "text": "als Text",
+    "document": "als PDF-Dokument",
+    "image": "als Bild",
+    "ocr_text": "erkannter Text (OCR)",
+    "overview": "Übersicht",
+    "unavailable": "nicht übergeben"
+  },
+  "modeHints": {
+    "text": "Der Agent hat den Inhalt der Datei als Text bekommen.",
+    "document": "Der Agent hat das PDF selbst bekommen (Text und Layout).",
+    "image": "Der Agent hat das Bild selbst gesehen.",
+    "ocr_text": "Der Agent hat den im Scan erkannten Text bekommen, nicht das Bild.",
+    "overview": "Der Agent hat den Aufbau bekommen und den Inhalt mit dem Tool input_files gezielt gelesen.",
+    "unavailable": "Die Datei konnte nicht übergeben werden."
+  },
+  "adopt": {
+    "title": "Ins Wissen übernehmen",
+    "short": "Zum Wissen",
+    "result": "Ergebnis zum Wissen hinzufügen",
+    "resultFile": "{{name}} zum Wissen hinzufügen",
+    "all_one": "{{count}} Datei zum Wissen hinzufügen",
+    "all_other": "Alle {{count}} Dateien zum Wissen hinzufügen",
+    "intro": "Nichts wird gespeichert, bevor du bestätigst. Du siehst, was gespeichert würde, woher es stammt und ob es Ähnliches schon gibt.",
+    "collection": "Sammlung",
+    "collectionOption_one": "{{name}} ({{count}} Datei)",
+    "collectionOption_other": "{{name}} ({{count}} Dateien)",
+    "newCollection": "Neue Sammlung …",
+    "newCollectionName": "Name der neuen Sammlung",
+    "newCollectionPlaceholder": "z. B. Verträge",
+    "description": "Beschreibung (optional)",
+    "check": "Inhalt prüfen",
+    "recheck": "Erneut prüfen",
+    "confirm_one": "{{count}} Eintrag übernehmen",
+    "confirm_other": "{{count}} Einträge übernehmen",
+    "checkFirst_one": "Prüfe den Eintrag zuerst: Du siehst, was gespeichert würde.",
+    "checkFirst_other": "Prüfe die {{count}} Einträge zuerst: Du siehst, was gespeichert würde.",
+    "items": "Zu übernehmende Inhalte",
+    "searchable": "durchsuchbar",
+    "storedOnly": "nur gespeichert, nicht durchsuchbar",
+    "duplicate": "Schon im Wissen als {{name}}: wird nicht doppelt gespeichert.",
+    "similar": "Ähnliche Inhalte gibt es schon: {{names}}",
+    "itemTitle": "Titel",
+    "kind": "Art des Inhalts",
+    "kinds": {
+      "extracted": "aus Quellen entnommen",
+      "generated": "von einem Agenten erzeugt",
+      "assumption": "Annahme, ungeprüft"
+    },
+    "content": "Inhalt",
+    "contentHint": "Du kannst den Text vor dem Speichern korrigieren.",
+    "preview": "Vorschau",
+    "provenance": "Herkunft",
+    "confirmText_one": "Ich habe den Inhalt geprüft und möchte {{count}} Eintrag in der Sammlung „{{collection}}“ speichern.",
+    "confirmText_other": "Ich habe die Inhalte geprüft und möchte {{count}} Einträge in der Sammlung „{{collection}}“ speichern.",
+    "changed": "Du hast Inhalt oder Sammlung geändert: Prüfe erneut, bevor du bestätigst.",
+    "done": "Ins Wissen übernommen: {{count}} · schon vorhanden: {{duplicates}}",
+    "notMemory": "Wissen ist eine Dokumentensammlung für alle Agenten und getrennt vom Memory eines Agenten. Laufende Workflows ändern sich dadurch nicht."
+  },
+  "proposals": {
+    "title_one": "{{count}} Vorschlag fürs Wissen",
+    "title_other": "{{count}} Vorschläge fürs Wissen",
+    "label": "Wissens-Vorschläge",
+    "review": "Prüfen und übernehmen",
+    "reviewAll_one": "{{count}} prüfen",
+    "reviewAll_other": "Alle {{count}} prüfen",
+    "adopted": "im Wissen",
+    "note": "Vorschläge werden erst gespeichert, wenn du sie geprüft und bestätigt hast.",
+    "toggle": "Darf Inhalte fürs Wissen vorschlagen",
+    "toggleHint": "Das Ergebnis des Agenten (und was er mit propose_knowledge markiert) wird nach dem Lauf fürs Wissen angeboten. Du entscheidest.",
+    "collection": "Vorgeschlagene Sammlung"
+  },
+  "provenance": {
+    "title": "Herkunft: {{origin}}",
+    "input_file": "Hochgeladene Datei",
+    "uploaded": "Hochgeladen am",
+    "archive": "Archiv",
+    "path": "Pfad im Archiv",
+    "workflow": "Workflow",
+    "workflow_id": "Workflow-ID",
+    "run": "Lauf",
+    "run_at": "Zeitpunkt des Laufs",
+    "sources": "Quelldateien",
+    "step": "Schritt",
+    "node": "Knoten",
+    "agent": "Agent",
+    "result_file": "Ergebnisdatei",
+    "content_kind": "Art des Inhalts",
+    "adopted_at": "Übernommen am"
+  },
+  "origins": {
+    "upload": "Upload",
+    "input_file": "hochgeladene Datei eines Laufs",
+    "result_file": "Ergebnisdatei",
+    "agent_result": "Agenten-Ergebnis",
+    "proposal": "Agenten-Vorschlag"
+  },
+  "run": {
+    "title_one": "{{count}} erhaltene Datei",
+    "title_other": "{{count}} erhaltene Dateien",
+    "titleShort": "Erhaltene Dateien",
+    "extra": "Weitere Dateien",
+    "note": "Für diesen Lauf hochgeladene Dateien gehören zum Lauf, nicht zum Wissen. Du kannst sie ausdrücklich ins Wissen übernehmen.",
+    "removed": "entfernt (aufgeräumt)"
+  },
+  "storage": {
+    "title": "Hochgeladene Eingabedateien",
+    "intro": "Dateien, die für Läufe, Testfälle und Zeitpläne hochgeladen wurden. Dateien wartender, laufender oder pausierter Läufe werden nie entfernt.",
+    "summary": "{{count}} Dateien · {{size}} · {{unused}} ungenutzt · {{inUse}} in laufenden Läufen",
+    "cleanUnused": "Ungenutzte Dateien entfernen",
+    "olderThan": "Dateien abgeschlossener Läufe älter als",
+    "days": "Tage",
+    "cleanOld": "Entfernen",
+    "cleaned": "{{count}} Dateien entfernt ({{size}} frei).",
+    "safe": "Dateien, die Testfälle, Zeitpläne oder Stapel noch brauchen, bleiben erhalten."
+  },
+  "collections": {
+    "title": "Sammlungen",
+    "label": "Sammlung",
+    "all": "Alle",
+    "none": "Keine Sammlung",
+    "uploadTo": "Hochladen in Sammlung"
+  }
+}

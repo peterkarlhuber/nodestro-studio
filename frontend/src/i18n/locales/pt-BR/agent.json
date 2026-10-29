@@ -1,0 +1,245 @@
+{
+  "savedAsTemplate": "“{{name}}” agora está na biblioteca de agentes",
+  "saveAsTemplate": "Salvar como modelo na biblioteca de agentes",
+  "duplicate": "Duplicar (Ctrl+D)",
+  "delete": "Excluir agente",
+  "nameLabel": "Nome do agente",
+  "descriptionPlaceholder": "Em resumo: para que serve este agente?",
+  "descriptionLabel": "Descrição do agente",
+  "designWithAi": "Criar com IA",
+  "model": "Modelo",
+  "systemPrompt": "Prompt de sistema",
+  "systemPromptHint": "Papel, forma de trabalho e nível de qualidade do agente.",
+  "task": "Tarefa",
+  "taskHint": "<code>{{input}}</code> insere os resultados dos antecessores, <code>{{runInput}}</code> a entrada do fluxo de trabalho.",
+  "insertPlaceholder": "Inserir marcador",
+  "placeholders": "Marcadores",
+  "chooseIcon": "Escolher ícone",
+  "icons": "Ícones",
+  "iconNames": {
+    "bot": "Robô",
+    "search": "Pesquisa",
+    "calculator": "Calculadora",
+    "check": "Visto",
+    "pen": "Caneta",
+    "list": "Lista",
+    "users": "Pessoas",
+    "brain": "Cérebro",
+    "code": "Código",
+    "globe": "Globo",
+    "book": "Livro",
+    "file": "Arquivo",
+    "mail": "Carta",
+    "chat": "Balão de fala",
+    "shield": "Escudo",
+    "scale": "Balança",
+    "target": "Alvo",
+    "idea": "Lâmpada",
+    "sparkles": "Brilhos"
+  },
+  "options": {
+    "effort": {
+      "default": "Padrão do modelo",
+      "low": "Baixo – rápido e econômico",
+      "medium": "Médio – equilibrado",
+      "high": "Alto – minucioso",
+      "xhigh": "Muito alto – tarefas longas de agente",
+      "max": "Máximo – quando a qualidade é tudo"
+    },
+    "effortShort": {
+      "default": "Padrão do modelo",
+      "low": "Baixo",
+      "medium": "Médio",
+      "high": "Alto",
+      "xhigh": "Muito alto",
+      "max": "Máximo"
+    },
+    "thinking": {
+      "default": "Padrão do modelo (adaptativo)",
+      "adaptive": "Adaptativo",
+      "between_tools": "Só entre chamadas de ferramentas (Sonnet 5.5)",
+      "disabled": "Desligado"
+    },
+    "thinkingDisplay": {
+      "default": "Não mostrar",
+      "summarized": "Mostrar resumido",
+      "updates": "Mensagens de progresso",
+      "omitted": "Omitir"
+    },
+    "fieldType": {
+      "string": "Texto",
+      "number": "Número",
+      "integer": "Número inteiro",
+      "boolean": "Sim/Não",
+      "string_list": "Lista (texto)",
+      "number_list": "Lista (números)"
+    },
+    "toolChoice": {
+      "auto": "Automático",
+      "none": "Nenhuma ferramenta",
+      "any": "Forçar alguma ferramenta",
+      "tool": "Ferramenta específica"
+    },
+    "refusal": {
+      "raise": "Tratar como erro",
+      "return": "Aceitar o texto da resposta mesmo assim"
+    }
+  },
+  "tools": {
+    "title": "Ferramentas",
+    "assigned_one": "{{count}} atribuída",
+    "assigned_other": "{{count}} atribuídas",
+    "noneYet": "Ainda sem ferramentas próprias.",
+    "add": "Adicionar ferramenta",
+    "addPlaceholder": "+ Adicionar ferramenta …",
+    "kind": {
+      "builtin": "Integradas",
+      "custom": "Próprias",
+      "generated": "Geradas por IA"
+    },
+    "missingHint": "Falta uma ferramenta? Escreva-a você mesmo na <link>biblioteca de ferramentas</link> ou peça para a IA criá-la.",
+    "serverTools": "Ferramentas de servidor da Anthropic",
+    "serverToolsShort": "Ferramentas de servidor"
+  },
+  "knowledge": {
+    "title": "Conhecimento",
+    "files_one": "{{count}} arquivo",
+    "files_other": "{{count}} arquivos",
+    "modeLabel": "Como o agente recebe o conhecimento",
+    "mode": {
+      "context": "No contexto",
+      "on_demand": "Sob demanda",
+      "search": "Pesquisa"
+    },
+    "modeShort": "Modo de conhecimento",
+    "modeHint": {
+      "context": "Os arquivos estão no prompt desde o início. Bom para poucos documentos curtos.",
+      "on_demand": "O agente vê um catálogo e só carrega arquivos quando precisa deles (ferramenta “files”).",
+      "search": "O agente pesquisa no texto dos arquivos e cita os trechos encontrados (RAG, ferramenta “search”)."
+    },
+    "searchPlaceholder": "Pesquisar arquivos …",
+    "searchLabel": "Pesquisar arquivos de conhecimento",
+    "image": "Imagem",
+    "chunks_one": "{{count}} trecho",
+    "chunks_other": "{{count}} trechos",
+    "noFiles": "Ainda não há arquivos. Envie-os em <link>Conhecimento</link>.",
+    "citations": "Ativar citações",
+    "citationsHint": "As respostas apontam para os trechos dos documentos."
+  },
+  "memory": {
+    "title": "Memória",
+    "summary": {
+      "none": "desligada",
+      "run": "por execução",
+      "persistent": "permanente"
+    },
+    "modeLabel": "Tipo de memória",
+    "mode": {
+      "none": "Desligada",
+      "run": "Por execução",
+      "persistent": "Permanente"
+    },
+    "modeHint": {
+      "none": "O agente não guarda nada além da tarefa.",
+      "run": "O agente pode fazer anotações durante uma execução. Depois elas aparecem na execução.",
+      "persistent": "O agente lê e escreve anotações em um espaço de memória que dura além das execuções. Vários agentes podem compartilhar um espaço."
+    },
+    "space": "Espaço de memória",
+    "chooseSpace": "Escolher espaço …",
+    "spaceOption_one": "{{name}} ({{count}} arquivo)",
+    "spaceOption_other": "{{name}} ({{count}} arquivos)",
+    "spaceNew": "{{name}} (novo)",
+    "newSpacePlaceholder": "Novo espaço, p. ex. projeto-cliente",
+    "newSpace": "Novo espaço de memória",
+    "setUpWithAi": "Configurar com IA",
+    "viewContent": "Ver conteúdo"
+  },
+  "output": {
+    "title": "Formato de saída",
+    "summaryText": "Texto",
+    "fields_one": "{{count}} campo",
+    "fields_other": "{{count}} campos",
+    "defaultFieldDescription": "Resumo",
+    "text": "Texto (Markdown)",
+    "structured": "Estruturado (JSON)",
+    "structuredHint": "O agente entrega um objeto validado com estes campos; os sucessores o recebem como JSON.",
+    "field": "Campo {{name}}",
+    "fieldName": "Nome do campo",
+    "fieldType": "Tipo",
+    "removeField": "Remover o campo {{name}}",
+    "fieldDescriptionPlaceholder": "O que vai neste campo?",
+    "required": "Obrigatório",
+    "addField": "Adicionar campo",
+    "problems": {
+      "empty": "Informe um nome.",
+      "digit": "Somente letras, dígitos e _; não pode começar com um dígito.",
+      "duplicate": "Este nome aparece mais de uma vez."
+    }
+  },
+  "thinking": {
+    "title": "Raciocínio e esforço",
+    "effort": "Esforço (effort)",
+    "effortShort": "Esforço",
+    "effortHint": "Define o quão minucioso o modelo é – e, com isso, o consumo de tokens.",
+    "thinking": "Raciocínio",
+    "display": "Mostrar raciocínio",
+    "displayHint": "Mostra ao vivo as reflexões do modelo na execução."
+  },
+  "quality": {
+    "title": "Controle de qualidade",
+    "criteriaCount_one": "{{count}} critério",
+    "criteriaCount_other": "{{count}} critérios",
+    "off": "desligado",
+    "enable": "Pedir a um juiz que verifique o resultado",
+    "enableHint": "Um segundo modelo verifica a resposta com base nos critérios; se houver falhas, o agente a revisa.",
+    "defaultCriterion": "A resposta está correta quanto ao conteúdo e completa.",
+    "criteria": "Critérios",
+    "criterionName": "Nome do critério",
+    "removeCriterion": "Remover critério",
+    "criterionDescription": "Descrição do critério",
+    "addCriterion": "Adicionar critério",
+    "revisions": "Revisões",
+    "judgeModel": "Modelo juiz"
+  },
+  "advanced": {
+    "title": "Avançado",
+    "summary": "Limites, cache, tool choice …",
+    "maxTokens": "Máx. de tokens",
+    "maxTokensHint": "Por resposta",
+    "maxToolRounds": "Máx. de rodadas de ferramentas",
+    "parallelTools": "Ferramentas em paralelo",
+    "toolChoice": "Tool choice",
+    "forcedTool": "Ferramenta forçada",
+    "chooseTool": "Escolher ferramenta …",
+    "toolErrors": "Devolver erros de ferramentas ao modelo",
+    "toolErrorsHint": "Em vez de parar, o agente vê a mensagem de erro e pode reagir.",
+    "caching": "Cache de prompt",
+    "cachingHint": "Partes repetidas do prompt são lidas por um preço menor.",
+    "cacheTtl": "Duração do cache",
+    "minutes_one": "{{count}} minuto",
+    "minutes_other": "{{count}} minutos",
+    "hours_one": "{{count}} hora",
+    "hours_other": "{{count}} horas",
+    "refusal": "Quando o modelo recusa",
+    "refusalShort": "Em caso de recusa",
+    "fallbacks": "Modelos alternativos",
+    "fallbacksHint": "Se o modelo não responder (p. ex. por recusa), o próximo assume.",
+    "addFallback": "Adicionar modelo alternativo",
+    "addFallbackPlaceholder": "+ Adicionar modelo …",
+    "examples": "Mensagens de exemplo",
+    "examplesHint": "Alternando usuário e assistente; mostra ao modelo o formato desejado.",
+    "role": {
+      "user": "Usuário",
+      "assistant": "Assistente"
+    },
+    "removeMessage": "Remover mensagem",
+    "message": "Mensagem {{number}}",
+    "addUserMessage": "Mensagem do usuário",
+    "addAssistantMessage": "Resposta do assistente",
+    "requestOptions": "Request options (JSON)",
+    "requestOptionsHint": "Incluído em toda requisição, p. ex. betas, servidores MCP ou inference_geo.",
+    "invalidJson": "Não é um JSON válido.",
+    "objectExpected": "É esperado um objeto JSON."
+  },
+  "anthropicOnly": "Disponível apenas para modelos da Anthropic."
+}

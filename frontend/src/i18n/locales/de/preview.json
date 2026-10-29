@@ -1,0 +1,23 @@
+{
+  "title": "Eingabe-Vorschau",
+  "complete": "vollständig",
+  "incomplete": "Eingaben fehlen noch",
+  "fromRun": "Ergebnisse der Vorgänger aus dem letzten Lauf vom {{date}}.",
+  "noRun": "Es gibt noch keinen Lauf; fehlende Ergebnisse der Vorgänger sind markiert.",
+  "source": {
+    "given": "Als Eingabe dient die angegebene Testeingabe.",
+    "start_default": "Als Eingabe dient die Standardeingabe des Start-Knotens.",
+    "run": "Als Eingabe dient die Eingabe des letzten Laufs.",
+    "empty": "Es gibt noch keine Eingabe für den Lauf."
+  },
+  "available": "vorhanden",
+  "pending": "fehlt noch",
+  "chars_one": "{{count}} Zeichen",
+  "chars_other": "{{count}} Zeichen",
+  "runStatus": "im letzten Lauf: {{status}}",
+  "noResult": "noch kein Ergebnis",
+  "placeholder": {
+    "not_connected": "Der Platzhalter „{{name}}“ nennt einen Agenten, der nicht mit diesem verbunden ist. Er bleibt leer.",
+    "unknown": "Der Platzhalter „{{name}}“ passt zu keinem Vorgänger und bleibt unverändert im Text."
+  }
+}

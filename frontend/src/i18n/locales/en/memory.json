@@ -1,0 +1,21 @@
+{
+  "description": "Persistent memories. Agents with “persistent” memory read and write files here – across runs.",
+  "notesTitle": "Notes",
+  "new": "New memory",
+  "empty": "No memory yet",
+  "emptyText": "Turn on a persistent memory for an agent in the editor under “Memory”, or let the memory assistant propose one.",
+  "spaces": "Memories",
+  "nameHint": "Letters, digits, spaces, _ . and -. Several agents can share a memory.",
+  "namePlaceholder": "e.g. customer-knowledge",
+  "cleared": "Memory {{name}} cleared",
+  "space": "Memory {{name}}",
+  "clear": "Clear",
+  "newFilePlaceholder": "new-file.md",
+  "newFile": "New file",
+  "createFile": "Create file under /memories",
+  "clearTitle": "Clear memory?",
+  "deleteAll": "Delete all files",
+  "clearText": "All files in “{{name}}” will be deleted. Agents then start without memories.",
+  "deleteFile": "Delete file",
+  "contentOf": "Content of {{path}}"
+}

@@ -1,0 +1,84 @@
+{
+  "title": "Ajustes",
+  "description": "Se aplican a esta instalación local de Nodestro.",
+  "saved": "Ajustes guardados",
+  "language": {
+    "title": "Idioma",
+    "label": "Idioma de la interfaz",
+    "automatic": "Automático (idioma del navegador)",
+    "automaticHint": "Sigue el idioma de tu navegador, ahora {{language}}. Los idiomas no compatibles muestran inglés.",
+    "hint": "Se aplica al instante y se recuerda, también tras reiniciar.",
+    "contentNote": "El idioma solo cambia la interfaz. Tus agentes, prompts, flujos de trabajo y resultados se quedan en su idioma original. Los nuevos borradores de los asistentes de IA se crean en este idioma, salvo que pidas otro."
+  },
+  "models": {
+    "title": "Modelos y presupuesto",
+    "defaultModel": "Modelo predeterminado para agentes nuevos",
+    "assistantModel": "Modelo para los asistentes",
+    "assistantHint": "Diseña agentes a partir de tu descripción, escribe herramientas y propone memoria.",
+    "budget": "Presupuesto predeterminado por ejecución (USD)",
+    "budgetHint": "Una ejecución se detiene en cuanto los costes estimados superan el presupuesto. Vacío = sin límite.",
+    "architectBudget": "Límite de coste del arquitecto (USD por borrador)",
+    "architectBudgetHint": "El arquitecto se detiene si un borrador cuesta más. Vacío = sin límite.",
+    "architectRepairs": "Correcciones con IA por borrador",
+    "architectRepairsHint": "Cuántas veces puede pedir el arquitecto a la IA que corrija una configuración o un borrador de herramienta (0 a 5). Las correcciones sin IA se hacen siempre.",
+    "defaultHint": "Los agentes nuevos empiezan con este proveedor y modelo."
+  },
+  "sandbox": {
+    "title": "Sandbox para herramientas propias",
+    "label": "Sandbox",
+    "text": "Las herramientas propias y las creadas por IA nunca se ejecutan en el proceso de Nodestro. El proceso de Python está disponible al instante; Docker aísla más (sin red, memoria limitada).",
+    "subprocess": "Proceso de Python",
+    "dockerAvailable": "Docker disponible",
+    "dockerMissing": "Docker no encontrado",
+    "dockerUnreachable": "No se puede acceder a Docker. Las pruebas y llamadas de herramientas fallarán hasta que Docker esté en marcha."
+  },
+  "about": {
+    "title": "Acerca de Nodestro",
+    "data": "Todos los datos se guardan localmente en una base de datos SQLite (por defecto: <code>~/.nodestro</code>, se puede cambiar con <code>NODESTRO_DATA_DIR</code>)."
+  },
+  "ocr": {
+    "title": "Reconocimiento de texto (OCR)",
+    "text": "Reconoce texto en PDF escaneados de forma local con Tesseract. No se envía ningún dato. Las palabras dudosas se marcan.",
+    "label": "Usar OCR para escaneos",
+    "available": "Tesseract encontrado",
+    "missing": "Tesseract no instalado"
+  },
+  "providers": {
+    "title": "Proveedores de IA",
+    "intro": "Nodestro trabaja con varios proveedores a la vez. Cada agente usa el proveedor de su modelo; nada cambia por sí solo a otro proveedor.",
+    "configured": "Configurado",
+    "notConfigured": "Sin configurar",
+    "fromEnvironment": "La clave viene de la variable de entorno <code>{{variable}}</code>; una clave guardada aquí no se usa entonces.",
+    "keyStored": "Hay una clave guardada. Nunca se muestra y solo se envía a este proveedor.",
+    "keyMissing": "Aún no hay clave. Introdúcela aquí o define <code>{{variables}}</code>.",
+    "apiKey": "Clave de API",
+    "apiKeyOptional": "Clave de API (opcional)",
+    "apiKeyFor": "Clave de API para {{provider}}",
+    "baseUrl": "URL base",
+    "baseUrlDefault": "Para un servidor local suele ser {{url}}. El proveedor cuenta como configurado en cuanto se guarda una URL base.",
+    "baseUrlHint": "La dirección de la API compatible con OpenAI, por ejemplo https://example.com/v1.",
+    "baseUrlFor": "URL base de {{provider}}",
+    "capabilities": "Lo que pueden hacer los modelos",
+    "capabilitiesHint": "Nodestro no supone nada sobre tus propios servidores: las opciones que un modelo no puede hacer, o que se desconocen, se notifican como errores en lugar de omitirse.",
+    "state": {
+      "unknown": "Desconocido",
+      "supported": "Admitido",
+      "unsupported": "No admitido"
+    },
+    "saveEndpoint": "Guardar endpoint",
+    "test": "Probar conexión",
+    "capability": {
+      "tools": "Herramientas",
+      "forced_tool_choice": "Elección forzada de herramienta",
+      "parallel_tool_calls": "Llamadas paralelas a herramientas",
+      "strict_tool_schemas": "Esquemas de herramientas estrictos",
+      "structured_output": "Salida estructurada",
+      "streaming": "Streaming",
+      "image_input": "Imágenes como entrada",
+      "document_input": "Documentos PDF como entrada",
+      "reasoning": "Esfuerzo de razonamiento",
+      "caching": "Caché de prompts",
+      "system_messages": "Mensajes de sistema"
+    }
+  }
+}

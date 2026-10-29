@@ -1,0 +1,40 @@
+{
+  "models": {
+    "claude-opus-5-5": "Razonamiento exigente, trabajo de agentes y de programación",
+    "claude-sonnet-5-5": "Trabajo cotidiano de agentes a menor coste",
+    "claude-haiku-5-5": "Rápido y económico: clasificar, extraer",
+    "claude-fable-5-1": "El modelo más potente para las tareas más difíciles",
+    "claude-fable-5": "Predecesor de Fable 5.1",
+    "claude-opus-5": "Predecesor de Opus 5.5",
+    "claude-sonnet-5": "Predecesor de Sonnet 5.5",
+    "claude-opus-4-8": "Generación anterior",
+    "claude-opus-4-7": "Generación anterior",
+    "claude-opus-4-6": "Generación anterior",
+    "claude-sonnet-4-6": "Generación anterior",
+    "claude-haiku-4-5": "Generación anterior",
+    "gpt-5_5": "Modelo de OpenAI (ejemplo; se puede introducir cualquier id de modelo de OpenAI)",
+    "gpt-6_1-sol": "Modelo de OpenAI (ejemplo; se puede introducir cualquier id de modelo de OpenAI)",
+    "gemini-3-pro": "Modelo de Google (ejemplo; se puede introducir cualquier id de modelo de Gemini)",
+    "gemini-3_8-flash": "Modelo de Google (ejemplo; se puede introducir cualquier id de modelo de Gemini)"
+  },
+  "serverTools": {
+    "web_search": {
+      "label": "Búsqueda web",
+      "description": "Busca en la web y cita las fuentes (Anthropic realiza la búsqueda; 10 US$ por cada 1000 búsquedas)."
+    },
+    "web_fetch": {
+      "label": "Obtención web",
+      "description": "Carga el contenido de una página web o de un PDF a partir de una URL."
+    },
+    "code_execution": {
+      "label": "Ejecución de código",
+      "description": "Ejecuta Python en un sandbox de Anthropic. No junto con la búsqueda web ni la obtención web."
+    }
+  },
+  "builtinTools": {
+    "calculator": "Calcula una expresión aritmética con exactitud en lugar de hacerlo de cabeza. Admite + - * / // % **, paréntesis, pi, e y las funciones sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
+    "current_datetime": "Devuelve la fecha, la hora y el día de la semana actuales en una zona horaria.",
+    "days_between": "Cuenta los días naturales de una fecha a otra.",
+    "text_statistics": "Cuenta los caracteres, palabras, frases y párrafos de un texto."
+  }
+}

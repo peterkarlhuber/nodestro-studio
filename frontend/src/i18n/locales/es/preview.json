@@ -1,0 +1,23 @@
+{
+  "title": "Vista previa de la entrada",
+  "complete": "completa",
+  "incomplete": "faltan entradas",
+  "fromRun": "Resultados de los predecesores de la última ejecución del {{date}}.",
+  "noRun": "Todavía no hay ninguna ejecución; los resultados que faltan de los predecesores están marcados.",
+  "source": {
+    "given": "Se usa como entrada la entrada de prueba indicada.",
+    "start_default": "Se usa como entrada la entrada predeterminada del nodo de inicio.",
+    "run": "Se usa como entrada la entrada de la última ejecución.",
+    "empty": "Todavía no hay entrada para la ejecución."
+  },
+  "available": "disponible",
+  "pending": "falta",
+  "chars_one": "{{count}} carácter",
+  "chars_other": "{{count}} caracteres",
+  "runStatus": "en la última ejecución: {{status}}",
+  "noResult": "todavía sin resultado",
+  "placeholder": {
+    "not_connected": "El marcador «{{name}}» nombra un agente que no está conectado con este. Queda vacío.",
+    "unknown": "El marcador «{{name}}» no coincide con ningún predecesor y queda sin cambios en el texto."
+  }
+}

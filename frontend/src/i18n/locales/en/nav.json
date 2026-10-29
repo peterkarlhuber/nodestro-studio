@@ -1,0 +1,21 @@
+{
+  "groupWorkspace": "Workspace",
+  "groupObservability": "Observability",
+  "groupHelp": "Help",
+  "workflows": "Workflows",
+  "agents": "Agents",
+  "tools": "Tools",
+  "knowledge": "Knowledge",
+  "memory": "Memory",
+  "executions": "Executions",
+  "usage": "Usage",
+  "docs": "Documentation",
+  "settings": "Settings",
+  "groupAutomation": "Automation",
+  "approvals": "Approvals",
+  "batches": "Batch runs",
+  "tests": "Test series",
+  "schedules": "Schedules",
+  "waiting_one": "{{count}} waiting",
+  "waiting_other": "{{count}} waiting"
+}

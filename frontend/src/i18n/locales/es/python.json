@@ -1,0 +1,107 @@
+{
+  "docs": "Más sobre bibliotecas de Python",
+  "state": {
+    "none": "No se necesitan bibliotecas",
+    "ready": "Aprobadas e instaladas",
+    "approval_needed": "Requiere aprobación",
+    "install_needed": "Instalación pendiente",
+    "installing": "Instalando",
+    "failed": "La instalación falló",
+    "unresolved": "Ambiguo",
+    "unsupported": "No disponible"
+  },
+  "reason": {
+    "new": "Se necesita ahora: {{names}}.",
+    "changed": "Requisito modificado: {{names}}.",
+    "python": "La versión de Python ha cambiado; las versiones se resuelven de nuevo.",
+    "other_installation": "Las aprobaciones provienen de otro ordenador o de una importación y no son válidas aquí."
+  },
+  "status": {
+    "new": "Nuevo",
+    "changed": "Cambio {{from}} → {{to}}",
+    "approved": "Aprobado",
+    "runtime": "Entorno de ejecución",
+    "removed": "Se elimina"
+  },
+  "plan": {
+    "summary": "{{direct}} paquetes directos y {{indirect}} indirectos para Python {{python}}. Nodestro siempre incluye los paquetes del entorno de ejecución.",
+    "package": "Paquete",
+    "version": "Versión",
+    "kind": "Tipo",
+    "requiredBy": "Requerido por",
+    "status": "Estado",
+    "direct": "directo",
+    "indirect": "indirecto",
+    "runtime": "ejecución",
+    "onlyWhen": "solo si {{marker}}",
+    "approvedElsewhere": "Ya aprobado en: {{names}}"
+  },
+  "dialog": {
+    "title": "Bibliotecas de Python para «{{name}}»",
+    "introWorkflow": "Las herramientas del flujo de trabajo «{{name}}» necesitan estas bibliotecas. Nodestro ha resuelto las versiones, pero aún no ha instalado nada.",
+    "introTool": "La herramienta «{{name}}» necesita estas bibliotecas para sus pruebas. Nodestro ha resuelto las versiones, pero aún no ha instalado nada.",
+    "resolving": "Resolviendo versiones … (solo descarga información de paquetes)",
+    "warning": "Al aprobar, Nodestro instala exactamente estas versiones en un entorno propio. Las bibliotecas de terceros pueden acceder a archivos y a la red; aprueba solo lo que conozcas.",
+    "unchanged": "Todos los paquetes ya están aprobados; ninguna versión cambia.",
+    "codeSeparate": "El código de las herramientas se revisa y aprueba por separado.",
+    "approve": "Aprobar e instalar",
+    "confirm": "Aplicar"
+  },
+  "install": {
+    "starting": "Iniciando la instalación …",
+    "done": "{{count}} paquetes instalados.",
+    "failed": "La instalación falló; el entorno anterior no cambia.",
+    "log": "Registro de la instalación",
+    "retry": "Instalar de nuevo"
+  },
+  "step": {
+    "queued": "Preparando la instalación …",
+    "create": "Creando el entorno de Python …",
+    "install": "Instalando paquetes …",
+    "verify": "Comprobando importaciones …"
+  },
+  "panel": {
+    "title": "Bibliotecas de Python",
+    "toolTitle": "Bibliotecas de Python de la herramienta",
+    "needed": "Bibliotecas necesarias",
+    "notInstalled": "no instalada",
+    "usedBy": "para {{names}}",
+    "approvedAt": "aprobado {{when}}",
+    "review": "Revisar y aprobar",
+    "install": "Instalar",
+    "check": "Ver versiones",
+    "history": "Historial de cambios",
+    "unused": "Ninguna herramienta necesita ya los {{count}} paquetes aprobados. Puedes eliminar el entorno en Ajustes, en «Entornos de Python»."
+  },
+  "change": {
+    "approved": "Aprobado",
+    "installed": "Instalado",
+    "install_failed": "La instalación falló",
+    "removed": "Entorno eliminado",
+    "imported": "Importado (requiere aprobación)",
+    "copied": "Copiado de un flujo de trabajo (requiere aprobación)",
+    "cleaned": "Limpiado"
+  },
+  "maintenance": {
+    "title": "Entornos de Python",
+    "intro": "Los flujos de trabajo con bibliotecas de terceros tienen sus propios entornos de Python en la carpeta de datos. Los paquetes descargados están en una caché compartida y se reutilizan.",
+    "uv": "uv {{version}} · Python {{python}}",
+    "noUv": "No se encontró uv; no se pueden instalar bibliotecas.",
+    "cache": "Caché {{size}}",
+    "owner": "Pertenece a",
+    "ownerWorkflow": "Flujo de trabajo «{{name}}»",
+    "ownerTool": "Prueba de herramienta «{{name}}»",
+    "packages": "Paquetes",
+    "size": "Tamaño",
+    "installed": "Instalado",
+    "actions": "Acciones",
+    "orphaned": "huérfano",
+    "notOnDisk": "no instalado",
+    "remove": "Eliminar entorno (las aprobaciones se mantienen; se reinstala cuando haga falta)",
+    "forget": "Eliminar entorno huérfano y su definición",
+    "removed": "El entorno se ha eliminado.",
+    "cleanup": "Limpiar huérfanos ({{count}})",
+    "cleaned": "{{count}} entornos huérfanos eliminados, caché ordenada.",
+    "none": "Aún no hay entornos de Python."
+  }
+}

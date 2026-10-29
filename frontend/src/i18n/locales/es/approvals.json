@@ -1,0 +1,28 @@
+{
+  "description": "Todas las aprobaciones que esperan una decisión, la más antigua primero. Se conservan tras un reinicio.",
+  "empty": "No hay aprobaciones pendientes",
+  "emptyText": "En cuanto una ejecución llega a un nodo de aprobación, aparece aquí.",
+  "cardLabel": "Aprobación {{name}}",
+  "waitingSince": "espera desde {{time}}",
+  "trigger": {
+    "schedule": "de una programación",
+    "batch": "de un lote",
+    "benchmark": "de una serie de pruebas",
+    "subworkflow": "de un subflujo",
+    "resume": "de una continuación",
+    "manual": "iniciada manualmente",
+    "api": "desde la API publicada"
+  },
+  "nothingToShow": "No llega ningún resultado; se revisa el proceso en sí.",
+  "comment": "Comentario (opcional)",
+  "commentRequired": "Comentario (obligatorio al rechazar)",
+  "commentHint": "Los agentes posteriores pueden leer el comentario.",
+  "commentFirst": "Indica primero un motivo para el rechazo.",
+  "rejectStops": "Un rechazo termina la ejecución.",
+  "rejectBranch": "Al rechazar, se continúa por la rama «Rechazado».",
+  "rejectEnds": "Al rechazar, esta ruta termina (no hay rama «Rechazado» conectada).",
+  "approve": "Aprobar",
+  "reject": "Rechazar",
+  "approvedToast": "Aprobado. La ejecución continúa.",
+  "rejectedToast": "Rechazado."
+}

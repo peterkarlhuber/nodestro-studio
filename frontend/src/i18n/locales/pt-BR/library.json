@@ -1,0 +1,82 @@
+{
+  "title": "Workflows de exemplo",
+  "description": "24 workflows multiagente prontos para tarefas típicas do trabalho e do dia a dia. A prévia não custa nada; “Copiar para meus workflows” cria um workflow seu, que você pode editar livremente.",
+  "galleryTitle": "Workflows de exemplo",
+  "galleryText": "Workflows multiagente prontos, com uma tarefa de teste para experimentar e adaptar. Os modelos em si nunca mudam.",
+  "showAll": "Ver todos os {{count}} exemplos",
+  "categories": "Categorias",
+  "allCategories": "Todas",
+  "searchLabel": "Buscar exemplos",
+  "searchPlaceholder": "Nome, área ou descrição …",
+  "results_one": "{{count}} exemplo",
+  "results_other": "{{count}} exemplos",
+  "noMatch": "Nenhum exemplo corresponde à busca e à categoria.",
+  "agents_one": "{{count}} agente",
+  "agents_other": "{{count}} agentes",
+  "sensitive": "Exige revisão especializada",
+  "copy": "Copiar para meus workflows",
+  "copied": "“{{name}}” criado como cópia sua",
+  "category": {
+    "industry": "Indústria, construção e agricultura",
+    "business": "Empresas e finanças",
+    "customers": "Vendas, marketing e clientes",
+    "knowledge": "Conhecimento, pesquisa e software",
+    "administration": "Direito, RH e administração",
+    "private": "Vida pessoal e comunidade"
+  },
+  "level": {
+    "beginner": "Iniciante",
+    "advanced": "Avançado"
+  },
+  "pattern": {
+    "sequential": "Sequencial",
+    "parallel": "Paralelo",
+    "branching": "Ramificado"
+  },
+  "feature": {
+    "tools": "Ferramentas",
+    "structured": "Saída estruturada",
+    "judge": "Verificação de qualidade",
+    "review": "Revisão",
+    "decision": "Decisão",
+    "approval": "Aprovação",
+    "form": "Formulário",
+    "subworkflow": "Subworkflow",
+    "files": "Arquivos de resultado",
+    "documents": "Arquivos como entrada",
+    "proposals": "Propostas de conhecimento",
+    "memory": "Memória"
+  },
+  "role": {
+    "research": "Pesquisa",
+    "analysis": "Análise",
+    "planning": "Planejamento",
+    "review": "Revisão",
+    "writing": "Redação"
+  },
+  "guide": {
+    "problem": "Do que se trata",
+    "flow": "Como os agentes trabalham juntos",
+    "input": "Entrada",
+    "result": "Resultado",
+    "adapt": "Como adaptar"
+  },
+  "preview": {
+    "loading": "Carregando exemplo …",
+    "language": "Idioma da cópia",
+    "graph": "Fluxo do workflow",
+    "agents": "Agentes",
+    "guide": "Guia",
+    "receives": "Recebe: {{names}}",
+    "tools": "Ferramentas: {{tools}}",
+    "testInput": "Tarefa de teste preparada",
+    "syntheticNote": "A tarefa de teste contém dados de exemplo inventados. Depois de copiar, ela fica no nó inicial; substitua-a lá pelos seus próprios dados.",
+    "sensitiveNote": "Este exemplo pertence à área {{field}}. Os agentes entregam ferramentas de apoio, não aconselhamento: verifique cada resultado com olhar profissional antes de usá-lo.",
+    "costNote": "A prévia e a cópia são gratuitas e não chamam nenhum modelo. Só há custos quando você executa a cópia; basta ter acesso aos provedores dos modelos dela.",
+    "samples": "Arquivos de exemplo",
+    "samplesNote": "Arquivos pequenos e inventados para testar os campos de arquivo. Baixe-os e selecione-os ao executar o workflow.",
+    "tests": "Casos de teste",
+    "copyTests": "Adicionar os casos de teste como série de testes",
+    "copyTestsNote": "Cria uma série de testes com estes casos. Nada é executado, nenhum agendamento é criado e nenhuma API é publicada."
+  }
+}

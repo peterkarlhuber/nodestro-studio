@@ -1,0 +1,39 @@
+{
+  "system": "Prompt do sistema",
+  "task": "Tarefa com as entradas inseridas",
+  "pending": "[resultado de {{name}} ainda ausente]",
+  "pendingHint": "{{name}} ainda não tem resultado. Em uma execução, a saída dele entra aqui.",
+  "runInput": "Entrada da execução",
+  "insertedFrom": "Inserido de: {{name}}",
+  "empty": "(vazio)",
+  "truncated": "… (encurtado)",
+  "examples": "Mensagens de exemplo",
+  "exampleCount_one": "{{count}} mensagem",
+  "exampleCount_other": "{{count}} mensagens",
+  "role": {
+    "user": "Usuário",
+    "assistant": "Assistente"
+  },
+  "tools": "Ferramentas",
+  "knowledge": "Conhecimento",
+  "knowledgeMode": {
+    "context": "No contexto",
+    "on_demand": "Sob demanda",
+    "search": "Busca"
+  },
+  "fileMissing": "Arquivo excluído",
+  "runFiles": "Arquivos da execução:",
+  "memory": "Memória",
+  "memoryRun": "Memória por execução (começa vazia)",
+  "memoryPersistent_one": "Persistente: “{{space}}” com {{count}} arquivo",
+  "memoryPersistent_other": "Persistente: “{{space}}” com {{count}} arquivos",
+  "output": "Formato de saída",
+  "outputStructured": "Estruturado: {{name}} ({{fields}})",
+  "outputText": "Texto livre",
+  "quality": "Verificação de qualidade",
+  "qualityOn": "Ativa",
+  "qualityOff": "Desativada",
+  "requestOptions": "Opções da requisição",
+  "secretsHidden": "Credenciais nunca são exibidas aqui.",
+  "runNote": "Foi assim que o agente foi chamado nesta execução: com a configuração da época e as saídas dos predecessores."
+}

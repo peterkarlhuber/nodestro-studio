@@ -1,0 +1,142 @@
+{
+  "title": "Assistant",
+  "toggle": "Abrir ou fechar o Nodestro Assistant",
+  "chatCost": "Este chat: {{cost}}",
+  "docs": "Documentação do assistente",
+  "newChat": "Novo chat",
+  "wide": "Mais largo",
+  "narrow": "Mais estreito",
+  "close": "Fechar",
+  "discuss": "Conversar com o assistente",
+  "discussFile": "Conversar com o assistente (com {{name}})",
+  "untitled": "Novo chat",
+  "openSettings": "Ir para as configurações",
+  "welcome": {
+    "title": "Como posso ajudar?",
+    "text": "Pergunte como usar o Nodestro ou anexe um fluxo, agente, ferramenta ou execução para analisarmos juntos. Respondo com base na documentação e nunca altero nada por conta própria.",
+    "privacy": "Só é enviado o que você escreve e anexa explicitamente. Segredos como chaves de API são substituídos antes.",
+    "examples": {
+      "createWorkflow": "Como crio um fluxo com dois agentes em paralelo?",
+      "knowledgeMemory": "Qual é a diferença entre conhecimento e memória?",
+      "judge": "Como funciona a verificação de qualidade com um juiz?",
+      "testAgent": "Como testo meu agente sem iniciar o fluxo inteiro?",
+      "costs": "Como posso reduzir o custo dos meus fluxos?"
+    }
+  },
+  "composer": {
+    "placeholder": "Faça uma pergunta … (Enter envia, Shift+Enter para uma nova linha)",
+    "label": "Mensagem para o assistente",
+    "attach": "Anexar um objeto",
+    "stop": "Parar",
+    "send": "Enviar",
+    "hint": "O assistente pode errar. Confira informações importantes na documentação vinculada."
+  },
+  "steps": {
+    "context": "Processando anexos: {{detail}}",
+    "docs_search": "Pesquisando na documentação: {{detail}}",
+    "docs_read": "Lendo seções: {{detail}}",
+    "generate": "Escrevendo a resposta …",
+    "handover": "Preparando uma transferência …"
+  },
+  "done": {
+    "context": "Anexos processados: {{detail}}",
+    "docs_search": "Documentação pesquisada: {{detail}}",
+    "docs_read": "Seções lidas: {{detail}}",
+    "generate": "Resposta escrita",
+    "handover": "Transferência preparada"
+  },
+  "message": {
+    "sentWith": "Enviado com",
+    "showSent": "Ver o que foi enviado",
+    "usage": "{{tokens}} tokens · {{cost}}",
+    "estimated": "estimado",
+    "steps_one": "{{count}} etapa",
+    "steps_other": "{{count}} etapas",
+    "sources": "Fontes",
+    "cancelled": "Cancelado.",
+    "retry": "Tentar novamente"
+  },
+  "attachments": {
+    "label": "Anexado",
+    "draftTag": "Rascunho",
+    "partialTag": "parcial",
+    "changed": "alterado",
+    "missing": "não existe mais",
+    "refresh": "Atualizar contexto",
+    "refreshed": "Contexto atualizado. Ele vale a partir da próxima mensagem.",
+    "remove": "Remover {{name}}"
+  },
+  "suggest": {
+    "tag": "Sugestão",
+    "current": {
+      "workflow": "Fluxo atual",
+      "agent": "Agente atual",
+      "tool": "Ferramenta atual",
+      "memory": "Espaço de memória atual",
+      "knowledge": "Arquivo de conhecimento atual",
+      "run": "Execução atual"
+    },
+    "unsaved": "alterações não salvas",
+    "add": "Adicionar",
+    "addSaved": "Versão salva",
+    "addDraft": "Rascunho não salvo",
+    "ignore": "Ignorar"
+  },
+  "kinds": {
+    "workflow": "Fluxo",
+    "agent": "Agente",
+    "tool": "Ferramenta",
+    "memory": "Memória",
+    "knowledge": "Conhecimento",
+    "run": "Execução"
+  },
+  "handover": {
+    "note": "Nada foi alterado. Lá você revisa e inicia por conta própria.",
+    "workflow_architect_revise": {
+      "title": "Revisão de “{{name}}”",
+      "open": "Abrir no arquiteto de fluxos"
+    },
+    "workflow_architect_create": {
+      "title": "Novo fluxo",
+      "open": "Abrir no arquiteto de fluxos"
+    },
+    "agent_designer": {
+      "title": "Novo agente para “{{name}}”",
+      "open": "Abrir na criação de agentes"
+    },
+    "tool_builder": {
+      "title": "Nova ferramenta",
+      "open": "Abrir na criação de ferramentas"
+    }
+  },
+  "snapshot": {
+    "title": "Enviado: {{name}}",
+    "meta": "{{kind}} · {{version}} · registrado {{time}} · {{size}} caracteres",
+    "text": "Estes são exatamente os dados que o assistente recebeu sobre este objeto. Os segredos já foram substituídos."
+  },
+  "picker": {
+    "title": "Anexar um objeto",
+    "text": "O objeto escolhido vai para o assistente com cada mensagem a partir da próxima, até você removê-lo.",
+    "kind": "Tipo",
+    "search": "Pesquisar",
+    "empty": "Nada encontrado.",
+    "agentNote": "Aqui estão os modelos de agentes. Um agente de um fluxo é anexado no editor pelo inspetor do agente.",
+    "attach": "Anexar",
+    "memoryFiles": "Enviar o conteúdo destes arquivos (senão, só a lista de arquivos)",
+    "includeContent": "Enviar conteúdo",
+    "includeContentHint": "Sem esta permissão, o assistente recebe só o nome, a descrição e o tipo do arquivo.",
+    "agents_one": "{{count}} agente",
+    "agents_other": "{{count}} agentes",
+    "files_one": "{{count}} arquivo",
+    "files_other": "{{count}} arquivos"
+  },
+  "list": {
+    "title": "Histórico",
+    "empty": "Ainda não há chats.",
+    "rename": "Renomear",
+    "delete": "Excluir chat",
+    "meta_one": "{{count}} mensagem · {{time}} · {{cost}}",
+    "meta_other": "{{count}} mensagens · {{time}} · {{cost}}"
+  },
+  "noProvider": "Configure primeiro {{provider}} (o provedor do modelo do assistente) para enviar perguntas."
+}

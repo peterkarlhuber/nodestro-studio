@@ -1,0 +1,245 @@
+{
+  "savedAsTemplate": "„{{name}}“ ist jetzt in der Agenten-Bibliothek",
+  "saveAsTemplate": "Als Vorlage in der Agenten-Bibliothek speichern",
+  "duplicate": "Duplizieren (Strg+D)",
+  "delete": "Agent löschen",
+  "nameLabel": "Name des Agenten",
+  "descriptionPlaceholder": "Kurz: Wofür ist dieser Agent da?",
+  "descriptionLabel": "Beschreibung des Agenten",
+  "designWithAi": "Mit KI entwerfen",
+  "model": "Modell",
+  "systemPrompt": "System-Prompt",
+  "systemPromptHint": "Rolle, Vorgehen und Qualitätsanspruch des Agenten.",
+  "task": "Aufgabe",
+  "taskHint": "<code>{{input}}</code> setzt die Ergebnisse der Vorgänger ein, <code>{{runInput}}</code> die Eingabe des Workflows.",
+  "insertPlaceholder": "Platzhalter einfügen",
+  "placeholders": "Platzhalter",
+  "chooseIcon": "Symbol wählen",
+  "icons": "Symbole",
+  "iconNames": {
+    "bot": "Roboter",
+    "search": "Durchsuchen",
+    "calculator": "Rechner",
+    "check": "Häkchen",
+    "pen": "Stift",
+    "list": "Liste",
+    "users": "Personen",
+    "brain": "Gehirn",
+    "code": "Code",
+    "globe": "Globus",
+    "book": "Buch",
+    "file": "Datei",
+    "mail": "Brief",
+    "chat": "Sprechblase",
+    "shield": "Schild",
+    "scale": "Waage",
+    "target": "Zielscheibe",
+    "idea": "Glühbirne",
+    "sparkles": "Funkeln"
+  },
+  "options": {
+    "effort": {
+      "default": "Modellstandard",
+      "low": "Niedrig – schnell und günstig",
+      "medium": "Mittel – ausgewogen",
+      "high": "Hoch – gründlich",
+      "xhigh": "Sehr hoch – lange Agentenaufgaben",
+      "max": "Maximal – wenn Qualität alles ist"
+    },
+    "effortShort": {
+      "default": "Modellstandard",
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch",
+      "xhigh": "Sehr hoch",
+      "max": "Maximal"
+    },
+    "thinking": {
+      "default": "Modellstandard (adaptiv)",
+      "adaptive": "Adaptiv",
+      "between_tools": "Nur zwischen Tool-Aufrufen (Sonnet 5.5)",
+      "disabled": "Aus"
+    },
+    "thinkingDisplay": {
+      "default": "Nicht anzeigen",
+      "summarized": "Zusammengefasst anzeigen",
+      "updates": "Fortschrittsmeldungen",
+      "omitted": "Weglassen"
+    },
+    "fieldType": {
+      "string": "Text",
+      "number": "Zahl",
+      "integer": "Ganzzahl",
+      "boolean": "Ja/Nein",
+      "string_list": "Liste (Text)",
+      "number_list": "Liste (Zahlen)"
+    },
+    "toolChoice": {
+      "auto": "Automatisch",
+      "none": "Keine Tools",
+      "any": "Irgendein Tool erzwingen",
+      "tool": "Bestimmtes Tool"
+    },
+    "refusal": {
+      "raise": "Als Fehler behandeln",
+      "return": "Antworttext trotzdem übernehmen"
+    }
+  },
+  "tools": {
+    "title": "Tools",
+    "assigned_one": "{{count}} zugewiesen",
+    "assigned_other": "{{count}} zugewiesen",
+    "noneYet": "Noch keine eigenen Tools.",
+    "add": "Tool hinzufügen",
+    "addPlaceholder": "+ Tool hinzufügen …",
+    "kind": {
+      "builtin": "Eingebaut",
+      "custom": "Eigene",
+      "generated": "KI-generiert"
+    },
+    "missingHint": "Fehlt ein Tool? In der <link>Tool-Bibliothek</link> selbst schreiben oder von der KI erstellen lassen.",
+    "serverTools": "Server-Tools von Anthropic",
+    "serverToolsShort": "Server-Tools"
+  },
+  "knowledge": {
+    "title": "Wissen",
+    "files_one": "{{count}} Datei",
+    "files_other": "{{count}} Dateien",
+    "modeLabel": "Wie der Agent das Wissen bekommt",
+    "mode": {
+      "context": "Im Kontext",
+      "on_demand": "Bei Bedarf",
+      "search": "Durchsuchen"
+    },
+    "modeShort": "Wissensmodus",
+    "modeHint": {
+      "context": "Die Dateien stehen von Anfang an im Prompt. Gut für wenige, kurze Dokumente.",
+      "on_demand": "Der Agent sieht einen Katalog und lädt Dateien nur, wenn er sie braucht (Tool „files“).",
+      "search": "Der Agent durchsucht den Text der Dateien und zitiert die Fundstellen (RAG, Tool „search“)."
+    },
+    "searchPlaceholder": "Dateien suchen …",
+    "searchLabel": "Wissensdateien suchen",
+    "image": "Bild",
+    "chunks_one": "{{count}} Abschnitt",
+    "chunks_other": "{{count}} Abschnitte",
+    "noFiles": "Noch keine Dateien. Lade sie unter <link>Wissen</link> hoch.",
+    "citations": "Zitate aktivieren",
+    "citationsHint": "Antworten verweisen auf die Stellen in den Dokumenten."
+  },
+  "memory": {
+    "title": "Memory",
+    "summary": {
+      "none": "aus",
+      "run": "pro Lauf",
+      "persistent": "dauerhaft"
+    },
+    "modeLabel": "Memory-Art",
+    "mode": {
+      "none": "Aus",
+      "run": "Pro Lauf",
+      "persistent": "Dauerhaft"
+    },
+    "modeHint": {
+      "none": "Der Agent merkt sich nichts über die Aufgabe hinaus.",
+      "run": "Der Agent kann sich während eines Laufs Notizen machen. Sie erscheinen danach in der Ausführung.",
+      "persistent": "Der Agent liest und schreibt Notizen in einem Memory-Raum, der Läufe überdauert. Mehrere Agenten können einen Raum teilen."
+    },
+    "space": "Memory-Raum",
+    "chooseSpace": "Raum wählen …",
+    "spaceOption_one": "{{name}} ({{count}} Datei)",
+    "spaceOption_other": "{{name}} ({{count}} Dateien)",
+    "spaceNew": "{{name}} (neu)",
+    "newSpacePlaceholder": "Neuer Raum, z. B. Kundenprojekt",
+    "newSpace": "Neuer Memory-Raum",
+    "setUpWithAi": "Mit KI einrichten",
+    "viewContent": "Inhalt ansehen"
+  },
+  "output": {
+    "title": "Ausgabeformat",
+    "summaryText": "Text",
+    "fields_one": "{{count}} Feld",
+    "fields_other": "{{count}} Felder",
+    "defaultFieldDescription": "Zusammenfassung",
+    "text": "Text (Markdown)",
+    "structured": "Strukturiert (JSON)",
+    "structuredHint": "Der Agent liefert ein geprüftes Objekt mit diesen Feldern; Nachfolger erhalten es als JSON.",
+    "field": "Feld {{name}}",
+    "fieldName": "Feldname",
+    "fieldType": "Typ",
+    "removeField": "Feld {{name}} entfernen",
+    "fieldDescriptionPlaceholder": "Was gehört in dieses Feld?",
+    "required": "Pflicht",
+    "addField": "Feld hinzufügen",
+    "problems": {
+      "empty": "Bitte einen Namen eingeben.",
+      "digit": "Nur Buchstaben, Ziffern und _; darf nicht mit einer Ziffer beginnen.",
+      "duplicate": "Dieser Name kommt mehrfach vor."
+    }
+  },
+  "thinking": {
+    "title": "Denken und Aufwand",
+    "effort": "Aufwand (Effort)",
+    "effortShort": "Aufwand",
+    "effortHint": "Bestimmt, wie gründlich das Modell arbeitet – und damit den Tokenverbrauch.",
+    "thinking": "Thinking",
+    "display": "Gedanken anzeigen",
+    "displayHint": "Zeigt die Überlegungen des Modells live in der Ausführung."
+  },
+  "quality": {
+    "title": "Qualitätsprüfung",
+    "criteriaCount_one": "{{count}} Kriterium",
+    "criteriaCount_other": "{{count}} Kriterien",
+    "off": "aus",
+    "enable": "Ergebnis von einem Judge prüfen lassen",
+    "enableHint": "Ein zweites Modell prüft die Antwort anhand der Kriterien; bei Mängeln überarbeitet der Agent sie.",
+    "defaultCriterion": "Die Antwort ist sachlich korrekt und vollständig.",
+    "criteria": "Kriterien",
+    "criterionName": "Name des Kriteriums",
+    "removeCriterion": "Kriterium entfernen",
+    "criterionDescription": "Beschreibung des Kriteriums",
+    "addCriterion": "Kriterium hinzufügen",
+    "revisions": "Überarbeitungen",
+    "judgeModel": "Judge-Modell"
+  },
+  "advanced": {
+    "title": "Erweitert",
+    "summary": "Limits, Caching, Tool-Choice …",
+    "maxTokens": "Max. Tokens",
+    "maxTokensHint": "Pro Antwort",
+    "maxToolRounds": "Max. Tool-Runden",
+    "parallelTools": "Parallele Tools",
+    "toolChoice": "Tool-Choice",
+    "forcedTool": "Erzwungenes Tool",
+    "chooseTool": "Tool wählen …",
+    "toolErrors": "Tool-Fehler an das Modell zurückgeben",
+    "toolErrorsHint": "Statt abzubrechen, sieht der Agent die Fehlermeldung und kann reagieren.",
+    "caching": "Prompt-Caching",
+    "cachingHint": "Wiederholte Teile des Prompts werden günstiger gelesen.",
+    "cacheTtl": "Cache-Dauer",
+    "minutes_one": "{{count}} Minute",
+    "minutes_other": "{{count}} Minuten",
+    "hours_one": "{{count}} Stunde",
+    "hours_other": "{{count}} Stunden",
+    "refusal": "Bei Ablehnung durch das Modell",
+    "refusalShort": "Bei Ablehnung",
+    "fallbacks": "Ausweichmodelle",
+    "fallbacksHint": "Antwortet das Modell nicht (z. B. Ablehnung), übernimmt das nächste.",
+    "addFallback": "Ausweichmodell hinzufügen",
+    "addFallbackPlaceholder": "+ Modell hinzufügen …",
+    "examples": "Beispiel-Nachrichten",
+    "examplesHint": "Abwechselnd Nutzer und Assistent; zeigt dem Modell das gewünschte Format.",
+    "role": {
+      "user": "Nutzer",
+      "assistant": "Assistent"
+    },
+    "removeMessage": "Nachricht entfernen",
+    "message": "Nachricht {{number}}",
+    "addUserMessage": "Nutzer-Nachricht",
+    "addAssistantMessage": "Assistent-Antwort",
+    "requestOptions": "Request-Options (JSON)",
+    "requestOptionsHint": "Wird in jede Anfrage übernommen, z. B. Betas, MCP-Server oder inference_geo.",
+    "invalidJson": "Kein gültiges JSON.",
+    "objectExpected": "Ein JSON-Objekt erwartet."
+  },
+  "anthropicOnly": "Nur für Modelle von Anthropic verfügbar."
+}

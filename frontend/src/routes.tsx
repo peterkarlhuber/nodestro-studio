@@ -1,0 +1,55 @@
+import type { RouteObject } from "react-router-dom";
+
+import { AppShell } from "./layout/AppShell";
+import { AgentsPage } from "./pages/AgentsPage";
+import { ApprovalsPage } from "./pages/ApprovalsPage";
+import { BatchDetailPage, BatchesPage } from "./pages/BatchesPage";
+import { EditorPage } from "./pages/EditorPage";
+import { ExamplesPage } from "./pages/ExamplesPage";
+import { ExecutionsPage } from "./pages/ExecutionsPage";
+import { KnowledgePage } from "./pages/KnowledgePage";
+import { MemoryPage } from "./pages/MemoryPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { RunComparePage } from "./pages/RunComparePage";
+import { RunDetailPage } from "./pages/RunDetailPage";
+import { SchedulesPage } from "./pages/SchedulesPage";
+import { SettingsPage } from "./pages/SettingsPage";
+import { SuitePage, TestsPage } from "./pages/TestsPage";
+import { ToolsPage } from "./pages/ToolsPage";
+import { UsagePage } from "./pages/UsagePage";
+import { WorkflowsPage } from "./pages/WorkflowsPage";
+
+// The docs carry every chapter in every language, so they load on first visit.
+async function loadDocsPage() {
+  const { DocsPage } = await import("./pages/DocsPage");
+  return { Component: DocsPage };
+}
+
+export const routes: RouteObject[] = [
+  {
+    element: <AppShell />,
+    children: [
+      { index: true, element: <WorkflowsPage /> },
+      { path: "workflows/examples", element: <ExamplesPage /> },
+      { path: "workflows/:id", element: <EditorPage /> },
+      { path: "agents", element: <AgentsPage /> },
+      { path: "tools", element: <ToolsPage /> },
+      { path: "knowledge", element: <KnowledgePage /> },
+      { path: "memory", element: <MemoryPage /> },
+      { path: "executions", element: <ExecutionsPage /> },
+      { path: "executions/compare", element: <RunComparePage /> },
+      { path: "executions/:id", element: <RunDetailPage /> },
+      { path: "approvals", element: <ApprovalsPage /> },
+      { path: "batches", element: <BatchesPage /> },
+      { path: "batches/:id", element: <BatchDetailPage /> },
+      { path: "tests", element: <TestsPage /> },
+      { path: "tests/:id", element: <SuitePage /> },
+      { path: "schedules", element: <SchedulesPage /> },
+      { path: "usage", element: <UsagePage /> },
+      { path: "docs", lazy: loadDocsPage },
+      { path: "docs/:chapter", lazy: loadDocsPage },
+      { path: "settings", element: <SettingsPage /> },
+      { path: "*", element: <NotFoundPage /> },
+    ],
+  },
+];

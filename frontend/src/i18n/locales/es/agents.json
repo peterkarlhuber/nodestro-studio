@@ -1,0 +1,16 @@
+{
+  "title": "Agentes",
+  "description": "Agentes reutilizables. Aparecen en el editor en «De la biblioteca».",
+  "newTemplateName": "Nueva plantilla",
+  "emptyTemplate": "Plantilla vacía",
+  "describe": "Describir un agente",
+  "created": "«{{name}}» creado",
+  "deleted": "Plantilla eliminada",
+  "emptyTitle": "Todavía no hay agentes en la biblioteca",
+  "emptyText": "Describe con tus palabras lo que debe hacer un agente o guarda un agente del editor como plantilla.",
+  "toolCount_one": "{{count}} herramienta",
+  "toolCount_other": "{{count}} herramientas",
+  "edit": "Editar plantilla",
+  "delete": "Eliminar plantilla",
+  "selectHint": "Elige un agente a la izquierda para editarlo."
+}

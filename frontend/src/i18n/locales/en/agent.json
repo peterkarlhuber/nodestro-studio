@@ -1,0 +1,245 @@
+{
+  "savedAsTemplate": "“{{name}}” is now in the agent library",
+  "saveAsTemplate": "Save as a template in the agent library",
+  "duplicate": "Duplicate (Ctrl+D)",
+  "delete": "Delete agent",
+  "nameLabel": "Agent name",
+  "descriptionPlaceholder": "In short: what is this agent for?",
+  "descriptionLabel": "Agent description",
+  "designWithAi": "Design with AI",
+  "model": "Model",
+  "systemPrompt": "System prompt",
+  "systemPromptHint": "The agent's role, approach and quality standard.",
+  "task": "Task",
+  "taskHint": "<code>{{input}}</code> inserts the results of the predecessors, <code>{{runInput}}</code> the workflow's input.",
+  "insertPlaceholder": "Insert placeholder",
+  "placeholders": "Placeholders",
+  "chooseIcon": "Choose icon",
+  "icons": "Icons",
+  "iconNames": {
+    "bot": "Robot",
+    "search": "Search",
+    "calculator": "Calculator",
+    "check": "Check mark",
+    "pen": "Pen",
+    "list": "List",
+    "users": "People",
+    "brain": "Brain",
+    "code": "Code",
+    "globe": "Globe",
+    "book": "Book",
+    "file": "File",
+    "mail": "Letter",
+    "chat": "Speech bubble",
+    "shield": "Shield",
+    "scale": "Scales",
+    "target": "Target",
+    "idea": "Light bulb",
+    "sparkles": "Sparkles"
+  },
+  "options": {
+    "effort": {
+      "default": "Model default",
+      "low": "Low – fast and cheap",
+      "medium": "Medium – balanced",
+      "high": "High – thorough",
+      "xhigh": "Very high – long agentic tasks",
+      "max": "Maximum – when quality is everything"
+    },
+    "effortShort": {
+      "default": "Model default",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "xhigh": "Very high",
+      "max": "Maximum"
+    },
+    "thinking": {
+      "default": "Model default (adaptive)",
+      "adaptive": "Adaptive",
+      "between_tools": "Only between tool calls (Sonnet 5.5)",
+      "disabled": "Off"
+    },
+    "thinkingDisplay": {
+      "default": "Don't show",
+      "summarized": "Show summarized",
+      "updates": "Progress updates",
+      "omitted": "Omit"
+    },
+    "fieldType": {
+      "string": "Text",
+      "number": "Number",
+      "integer": "Integer",
+      "boolean": "Yes/No",
+      "string_list": "List (text)",
+      "number_list": "List (numbers)"
+    },
+    "toolChoice": {
+      "auto": "Automatic",
+      "none": "No tools",
+      "any": "Force any tool",
+      "tool": "Specific tool"
+    },
+    "refusal": {
+      "raise": "Treat as an error",
+      "return": "Keep the answer text anyway"
+    }
+  },
+  "tools": {
+    "title": "Tools",
+    "assigned_one": "{{count}} assigned",
+    "assigned_other": "{{count}} assigned",
+    "noneYet": "No tools of its own yet.",
+    "add": "Add tool",
+    "addPlaceholder": "+ Add tool …",
+    "kind": {
+      "builtin": "Built-in",
+      "custom": "Your own",
+      "generated": "AI-generated"
+    },
+    "missingHint": "Missing a tool? Write it yourself in the <link>tool library</link> or have the AI create it.",
+    "serverTools": "Server tools from Anthropic",
+    "serverToolsShort": "Server tools"
+  },
+  "knowledge": {
+    "title": "Knowledge",
+    "files_one": "{{count}} file",
+    "files_other": "{{count}} files",
+    "modeLabel": "How the agent gets the knowledge",
+    "mode": {
+      "context": "In context",
+      "on_demand": "On demand",
+      "search": "Search"
+    },
+    "modeShort": "Knowledge mode",
+    "modeHint": {
+      "context": "The files are in the prompt from the start. Good for a few short documents.",
+      "on_demand": "The agent sees a catalogue and loads files only when it needs them (tool “files”).",
+      "search": "The agent searches the text of the files and cites the passages it finds (RAG, tool “search”)."
+    },
+    "searchPlaceholder": "Search files …",
+    "searchLabel": "Search knowledge files",
+    "image": "Image",
+    "chunks_one": "{{count}} section",
+    "chunks_other": "{{count}} sections",
+    "noFiles": "No files yet. Upload them under <link>Knowledge</link>.",
+    "citations": "Enable citations",
+    "citationsHint": "Answers point to the passages in the documents."
+  },
+  "memory": {
+    "title": "Memory",
+    "summary": {
+      "none": "off",
+      "run": "per run",
+      "persistent": "persistent"
+    },
+    "modeLabel": "Memory type",
+    "mode": {
+      "none": "Off",
+      "run": "Per run",
+      "persistent": "Persistent"
+    },
+    "modeHint": {
+      "none": "The agent remembers nothing beyond the task.",
+      "run": "The agent can take notes during a run. They appear in the execution afterwards.",
+      "persistent": "The agent reads and writes notes in a memory space that outlasts runs. Several agents can share a space."
+    },
+    "space": "Memory space",
+    "chooseSpace": "Choose a space …",
+    "spaceOption_one": "{{name}} ({{count}} file)",
+    "spaceOption_other": "{{name}} ({{count}} files)",
+    "spaceNew": "{{name}} (new)",
+    "newSpacePlaceholder": "New space, e.g. customer project",
+    "newSpace": "New memory space",
+    "setUpWithAi": "Set up with AI",
+    "viewContent": "View content"
+  },
+  "output": {
+    "title": "Output format",
+    "summaryText": "Text",
+    "fields_one": "{{count}} field",
+    "fields_other": "{{count}} fields",
+    "defaultFieldDescription": "Summary",
+    "text": "Text (Markdown)",
+    "structured": "Structured (JSON)",
+    "structuredHint": "The agent returns a validated object with these fields; successors receive it as JSON.",
+    "field": "Field {{name}}",
+    "fieldName": "Field name",
+    "fieldType": "Type",
+    "removeField": "Remove field {{name}}",
+    "fieldDescriptionPlaceholder": "What belongs in this field?",
+    "required": "Required",
+    "addField": "Add field",
+    "problems": {
+      "empty": "Please enter a name.",
+      "digit": "Letters, digits and _ only; must not start with a digit.",
+      "duplicate": "This name is used more than once."
+    }
+  },
+  "thinking": {
+    "title": "Thinking and effort",
+    "effort": "Effort",
+    "effortShort": "Effort",
+    "effortHint": "Sets how thoroughly the model works – and with it, the token usage.",
+    "thinking": "Thinking",
+    "display": "Show thoughts",
+    "displayHint": "Shows the model's reasoning live in the execution."
+  },
+  "quality": {
+    "title": "Quality check",
+    "criteriaCount_one": "{{count}} criterion",
+    "criteriaCount_other": "{{count}} criteria",
+    "off": "off",
+    "enable": "Have a judge check the result",
+    "enableHint": "A second model checks the answer against the criteria; if it falls short, the agent revises it.",
+    "defaultCriterion": "The answer is factually correct and complete.",
+    "criteria": "Criteria",
+    "criterionName": "Criterion name",
+    "removeCriterion": "Remove criterion",
+    "criterionDescription": "Criterion description",
+    "addCriterion": "Add criterion",
+    "revisions": "Revisions",
+    "judgeModel": "Judge model"
+  },
+  "advanced": {
+    "title": "Advanced",
+    "summary": "Limits, caching, tool choice …",
+    "maxTokens": "Max. tokens",
+    "maxTokensHint": "Per answer",
+    "maxToolRounds": "Max. tool rounds",
+    "parallelTools": "Parallel tools",
+    "toolChoice": "Tool choice",
+    "forcedTool": "Forced tool",
+    "chooseTool": "Choose a tool …",
+    "toolErrors": "Return tool errors to the model",
+    "toolErrorsHint": "Instead of stopping, the agent sees the error message and can react.",
+    "caching": "Prompt caching",
+    "cachingHint": "Repeated parts of the prompt are read at a lower price.",
+    "cacheTtl": "Cache duration",
+    "minutes_one": "{{count}} minute",
+    "minutes_other": "{{count}} minutes",
+    "hours_one": "{{count}} hour",
+    "hours_other": "{{count}} hours",
+    "refusal": "When the model refuses",
+    "refusalShort": "On refusal",
+    "fallbacks": "Fallback models",
+    "fallbacksHint": "If the model does not answer (e.g. a refusal), the next one takes over.",
+    "addFallback": "Add fallback model",
+    "addFallbackPlaceholder": "+ Add model …",
+    "examples": "Example messages",
+    "examplesHint": "Alternating user and assistant; shows the model the format you want.",
+    "role": {
+      "user": "User",
+      "assistant": "Assistant"
+    },
+    "removeMessage": "Remove message",
+    "message": "Message {{number}}",
+    "addUserMessage": "User message",
+    "addAssistantMessage": "Assistant answer",
+    "requestOptions": "Request options (JSON)",
+    "requestOptionsHint": "Added to every request, e.g. betas, MCP servers or inference_geo.",
+    "invalidJson": "Not valid JSON.",
+    "objectExpected": "A JSON object is expected."
+  },
+  "anthropicOnly": "Only available for Anthropic models."
+}

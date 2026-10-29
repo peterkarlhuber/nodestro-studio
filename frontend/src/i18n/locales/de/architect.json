@@ -1,0 +1,274 @@
+{
+  "title": "KI-Workflow-Architekt",
+  "button": "KI-Architekt",
+  "mode": {
+    "create": "Neuen Workflow entwerfen",
+    "revise": "Aktuellen Workflow überarbeiten"
+  },
+  "form": {
+    "intro": "Beschreibe, was du erreichen willst. Der Architekt plant die Agenten, schreibt ihre Prompts, verbindet sie und prüft das Ergebnis. Du siehst dir alles an, bevor etwas gespeichert wird.",
+    "mode": "Was soll der Architekt tun?",
+    "modeHint": {
+      "create": "Ein eigenständiger, neuer Workflow. Der geöffnete Workflow bleibt unverändert.",
+      "revise": "Der Architekt berücksichtigt Agenten, Einstellungen und Verbindungen dieses Workflows, auch ungespeicherte Änderungen, und schlägt gezielte Änderungen als separaten Entwurf vor."
+    },
+    "describe": "Dein Vorhaben",
+    "instruction": "Was soll sich ändern?",
+    "hint": {
+      "create": "Ziel, Eingaben, gewünschte Ergebnisse und wichtige Einschränkungen. Fehlende Details ergänzt der Architekt mit Annahmen, die du danach siehst.",
+      "revise": "Zum Beispiel: „Füge vor dem Ergebnis einen Agenten hinzu, der die bisherigen Analysen kritisch überprüft.“"
+    },
+    "placeholder": {
+      "create": "z. B. Aus einer Produktidee parallel Markt und Wettbewerb recherchieren, die Kosten abschätzen und ein einseitiges Entscheidungspapier schreiben.",
+      "revise": "z. B. Füge vor dem Ergebnis einen Agenten hinzu, der die bisherigen Analysen kritisch überprüft."
+    },
+    "unsavedIncluded": "Dieser Workflow hat ungespeicherte Änderungen. Der Architekt arbeitet mit dem aktuellen Stand im Editor; nichts wird gespeichert oder überschrieben.",
+    "generateTools": "Fehlende Tools als Entwurf schreiben",
+    "generateToolsHint": "Nur wenn kein vorhandenes Tool passt. Der Code wird statisch geprüft und läuft nie, bevor du ihn freigibst.",
+    "limit": "Kostenlimit eines Entwurfs: {{limit}} (<link>Einstellungen</link>). Der Architekt startet nie eine Workflow-Ausführung.",
+    "noLimit": "Für Entwürfe ist kein Kostenlimit gesetzt (<link>Einstellungen</link>). Der Architekt startet nie eine Workflow-Ausführung.",
+    "safety": "Der Architekt schlägt nur vor. Bestehende Workflows bleiben unverändert, bis du den Entwurf übernimmst, und neue Tools brauchen deine Freigabe.",
+    "startCreate": "Workflow entwerfen",
+    "startRevise": "Änderungen vorschlagen"
+  },
+  "phase": {
+    "analyze": "Anforderungen analysieren",
+    "plan": "Architektur planen",
+    "resources": "Ressourcen prüfen",
+    "configure": "Agenten konfigurieren",
+    "tools": "Tools entwerfen",
+    "connect": "Verbindungen erstellen",
+    "validate": "Workflow validieren",
+    "present": "Entwurf präsentieren"
+  },
+  "phaseRunning": {
+    "analyze": "Anforderungen werden analysiert …",
+    "plan": "Workflow-Architektur wird geplant …",
+    "resources": "Tools, Vorlagen, Wissen und Memory werden geprüft …",
+    "configure": "Agenten werden konfiguriert …",
+    "tools": "Fehlende Tools werden entworfen …",
+    "connect": "Knoten und Datenflüsse werden verbunden …",
+    "validate": "Workflow wird validiert …",
+    "present": "Entwurf wird vorbereitet …"
+  },
+  "stepState": {
+    "done": "erledigt",
+    "active": "läuft",
+    "todo": "noch nicht begonnen",
+    "stopped": "hier angehalten"
+  },
+  "progress": {
+    "steps": "Arbeitsschritte",
+    "starting": "Wird gestartet …",
+    "graph": "Workflow-Vorschau",
+    "graphEmpty": "Die Agenten erscheinen hier, sobald die Architektur geplant ist.",
+    "log": "Aktivitäten",
+    "cost": "Bisher {{cost}}",
+    "limit": "Limit {{limit}}",
+    "costLabel": "Kosten dieses Entwurfs",
+    "cancel": "Generierung abbrechen"
+  },
+  "marks": {
+    "legend": "Legende",
+    "pending": "wird konfiguriert",
+    "configured": "konfiguriert",
+    "added": "neu",
+    "changed": "geändert",
+    "kept": "unverändert",
+    "removed": "entfernt"
+  },
+  "kind": {
+    "added": "neu",
+    "changed": "geändert",
+    "removed": "entfernt",
+    "kept": "unverändert"
+  },
+  "field": {
+    "name": "Name",
+    "description": "Rolle",
+    "model": "Modell",
+    "effort": "Denkaufwand",
+    "system_prompt": "System-Prompt",
+    "task_template": "Aufgabe",
+    "tools": "Tools",
+    "server_tools": "Server-Tools",
+    "knowledge": "Wissen",
+    "memory": "Memory",
+    "output": "Ausgabeformat",
+    "quality": "Qualitätsprüfung",
+    "max_tokens": "Ausgabelimit",
+    "max_tool_rounds": "Tool-Runden",
+    "other": "Weitere Einstellungen"
+  },
+  "memory": {
+    "run": "für einen Lauf",
+    "persistent": "dauerhaft: {{space}}"
+  },
+  "question": {
+    "title": "Eine Rückfrage, bevor es weitergeht:",
+    "hint": "Ohne diese Angabe lässt sich kein sinnvoller Workflow entwerfen. Beantworte sie, oder lass den Architekt mit einer eigenen Annahme weitermachen.",
+    "yourAnswer": "Deine Antwort",
+    "answer": "Antworten und weiter",
+    "skip": "Mit Annahmen fortfahren"
+  },
+  "review": {
+    "tabOverview": "Überblick",
+    "tabChanges": "Änderungen",
+    "tabAgents_one": "{{count}} Agent",
+    "tabAgents_other": "{{count}} Agenten",
+    "tabFlow": "Datenfluss",
+    "tabTools": "Tools",
+    "tabToolsCount_one": "{{count}} Tool",
+    "tabToolsCount_other": "{{count}} Tools",
+    "name": "Name des neuen Workflows",
+    "createNote": "Beim Übernehmen entsteht ein neuer Workflow, der im Editor geöffnet wird. Nichts wird automatisch ausgeführt.",
+    "reviseNote": "Beim Übernehmen werden die Änderungen im Editor als ein Schritt angewendet, den du rückgängig machen kannst. Gespeichert wird erst, wenn du speicherst.",
+    "changedMeanwhile": "Der Workflow im Editor wurde geändert, nachdem der Entwurf gestartet wurde. Beim Übernehmen werden diese Änderungen ersetzt; Rückgängig stellt sie wieder her.",
+    "saveFirst": "Aktuellen Stand vorher als Version speichern",
+    "saveFirstHint": "Deine ungespeicherten Änderungen bleiben im Versionsverlauf erhalten, egal was mit dem Entwurf passiert.",
+    "toolsPending": "Neue Tools warten auf deine Freigabe ({{names}}). Der Workflow kann erst laufen, wenn sie freigegeben sind.",
+    "goal": "Ziel",
+    "inputs": "Eingaben",
+    "outputs": "Ergebnisse",
+    "constraints": "Einschränkungen",
+    "facts": "Struktur",
+    "factsValue": "{{agents}} Agenten, {{connections}} Verbindungen · {{fixes}} automatische Korrekturen, {{repairs}} KI-Korrekturen",
+    "cost": "Kosten",
+    "costValue": "{{cost}} für {{requests}} KI-Anfragen",
+    "assumptions": "Annahmen",
+    "noAssumptions": "Es waren keine Annahmen nötig.",
+    "validation": "Validierung",
+    "validOk": "Der Workflow hat die technische Prüfung bestanden.",
+    "validErrors_one": "{{count}} Problem blockiert noch einen Lauf.",
+    "validErrors_other": "{{count}} Probleme blockieren noch einen Lauf.",
+    "notAGuarantee": "Eine bestandene Prüfung heißt, dass der Workflow technisch laufen kann. Sie ist keine Garantie für fachlich richtige Ergebnisse: Prüfe die Prompts und teste den Workflow mit echten Eingaben.",
+    "notes": "Hinweise",
+    "receives": "Erhält",
+    "knowledge": "Wissen",
+    "memory": "Memory",
+    "draftResource": "Entwurf",
+    "output": "Strukturiertes Ergebnis",
+    "limits": "Limits",
+    "whatChanged_one": "{{count}} Änderung",
+    "whatChanged_other": "{{count}} Änderungen",
+    "inputsChanged": "Eingänge: {{before}} → {{after}}",
+    "otherSettings": "Weitere Einstellungen wurden geändert.",
+    "noTools": "Es werden keine neuen Tools gebraucht.",
+    "toolsIntro": "Der Code unten ist noch nicht gelaufen, auch nicht in der Sandbox. Teste ihn und gib ihn frei, damit das Tool verfügbar wird; das geht auch später unter Tools.",
+    "missingTools": "Diese Tools sind nur beschrieben (Tool-Entwürfe waren ausgeschaltet oder sind gescheitert). Erstelle sie unter Tools oder entferne sie bei den Agenten:",
+    "changeSummary": "{{added}} hinzugefügt, {{changed}} geändert, {{removed}} entfernt · {{edgesAdded}} neue und {{edgesRemoved}} entfernte Verbindungen",
+    "keptAgents": "Unverändert: {{names}}",
+    "discard": "Entwurf verwerfen",
+    "refine": "Beschreibung anpassen",
+    "confirmDiscard": "Diesen Entwurf verwerfen? Seine Tool-Entwürfe werden ebenfalls gelöscht.",
+    "keepReviewing": "Weiter prüfen",
+    "libraries": "Die Tool-Entwürfe brauchen Python-Bibliotheken: {{names}}. Es wurde nichts installiert; freigeben kannst du sie beim Testen der Tools und im Workflow."
+  },
+  "accept": {
+    "create": "Workflow anlegen",
+    "apply": "Änderungen übernehmen",
+    "created": "„{{name}}“ angelegt"
+  },
+  "apply": {
+    "done": "Änderungen übernommen. Rückgängig nimmt sie zurück; speichere, um sie zu behalten.",
+    "beforeNote": "Vor einer KI-Überarbeitung",
+    "versionNote": "KI-Überarbeitung: {{text}}"
+  },
+  "ended": {
+    "cancelled": "Die Generierung wurde abgebrochen. Es wurde nichts gespeichert und kein Workflow verändert.",
+    "failed": "Der Entwurf konnte nicht fertiggestellt werden.",
+    "cost": "Bisherige Kosten: {{cost}} (in der Nutzungsübersicht enthalten).",
+    "retry": "Neue Beschreibung"
+  },
+  "tool": {
+    "statusDraft": "wartet auf Freigabe",
+    "statusApproved": "freigegeben",
+    "requirement": "Anforderung:",
+    "usedBy": "Genutzt von: {{names}}",
+    "notRun": "Nur statisch geprüft: Dieser Code ist noch nicht gelaufen. Testen führt die Tests in der Sandbox aus; Freigeben testet erneut und registriert das Tool.",
+    "staticErrors": "Die statische Prüfung hat Probleme gefunden:",
+    "code": "Code",
+    "tests": "Tests",
+    "testsPassed_one": "{{count}} Test in der Sandbox bestanden.",
+    "testsPassed_other": "{{count}} Tests in der Sandbox bestanden.",
+    "testsFailed_one": "{{failed}} von {{count}} Test fehlgeschlagen; das Tool wurde nicht registriert.",
+    "testsFailed_other": "{{failed}} von {{count}} Tests fehlgeschlagen; das Tool wurde nicht registriert.",
+    "test": "In Sandbox testen",
+    "approve": "Freigeben und registrieren",
+    "reject": "Ablehnen",
+    "approved": "Tool {{name}} freigegeben und für alle Agenten verfügbar",
+    "notApproved": "Nicht registriert: Die Tests sind nicht bestanden.",
+    "rejected": "Tool-Entwurf {{name}} abgelehnt",
+    "libraries": "Braucht die Bibliotheken {{names}}. Sie werden erst nach deiner Freigabe installiert."
+  },
+  "log": {
+    "analyze": {
+      "started": "Ziele, Eingaben, Ergebnisse und Einschränkungen werden analysiert.",
+      "done": "Anforderungen analysiert: Eingaben {{inputs}}, Ergebnisse {{outputs}}.",
+      "assumptions_one": "{{count}} Annahme für ein offenes Detail getroffen.",
+      "assumptions_other": "{{count}} Annahmen für offene Details getroffen.",
+      "question": "Ein wesentliches Detail fehlt: eine Rückfrage an dich."
+    },
+    "plan": {
+      "started": "Agentenrollen, Abhängigkeiten und parallele Schritte werden geplant.",
+      "revise_started": "Anweisung wird mit dem aktuellen Workflow abgeglichen.",
+      "roles_one": "{{count}} spezialisierte Agentenrolle festgelegt.",
+      "roles_other": "{{count}} spezialisierte Agentenrollen festgelegt.",
+      "parallel_one": "{{count}} Agent arbeitet parallel.",
+      "parallel_other": "{{count}} Agenten arbeiten parallel.",
+      "revision": "Geplant: {{added}} neue, {{changed}} geänderte, {{removed}} entfernte Agenten.",
+      "no_changes": "Die Anweisung erfordert keine Änderung am Workflow."
+    },
+    "resources": {
+      "tool_found": "Vorhandenes Tool {{name}} für {{agent}} gefunden.",
+      "server_tool": "{{agent}} nutzt {{name}}.",
+      "template_found": "Agentenvorlage {{template}} passt für {{agent}}.",
+      "knowledge": "Wissensdatei {{file}} an {{agent}} zugewiesen.",
+      "memory": "{{agent}} bekommt den dauerhaften Memory-Bereich {{space}} (Entwurf, entsteht beim ersten Lauf).",
+      "memory_run": "{{agent}} bekommt Memory für einen Lauf.",
+      "tool_missing": "Kein vorhandenes Tool bietet {{name}}; ein Entwurf wird für deine Prüfung geschrieben.",
+      "none": "Außer den Agenten werden keine Tools, kein Wissen und kein Memory gebraucht."
+    },
+    "configure": {
+      "started": "System-Prompt für {{name}} wird erstellt.",
+      "done": "{{name}} konfiguriert ({{model}}).",
+      "revising": "{{name}} wird umkonfiguriert.",
+      "changed": "{{name}} umkonfiguriert ({{model}}).",
+      "template": "{{name}} aus einer Vorlage konfiguriert."
+    },
+    "tools": {
+      "none": "Es wird kein neues Tool gebraucht.",
+      "listed": "Tool {{name}} wird nur als Anforderung aufgeführt.",
+      "started": "Der Coding Agent schreibt das Tool {{name}}.",
+      "static_failed_one": "Die statische Prüfung fand {{count}} Problem in {{name}}; wird korrigiert.",
+      "static_failed_other": "Die statische Prüfung fand {{count}} Probleme in {{name}}; wird korrigiert.",
+      "static_remaining_one": "Tool-Entwurf {{name}} hat noch {{count}} Problem.",
+      "static_remaining_other": "Tool-Entwurf {{name}} hat noch {{count}} Probleme.",
+      "done": "Tool-Entwurf {{name}} geschrieben; er wartet auf deine Prüfung und Freigabe.",
+      "libraries": "Tool-Entwurf {{name}} braucht {{packages}}; nichts wird ohne deine Freigabe installiert."
+    },
+    "connect": {
+      "input_dropped": "Ungültige Verbindung bei {{name}} erkannt und entfernt.",
+      "cycle_removed": "Verbindung {{source}} → {{target}} hätte einen Kreis geschlossen und wurde entfernt.",
+      "edge_fixed": "Ungültige Verbindung erkannt und korrigiert.",
+      "input_added": "{{name}} erhält die Workflow-Eingabe.",
+      "output_added": "{{name}} wird mit dem Ergebnis verbunden.",
+      "edges_one": "{{count}} Verbindung und Datenfluss konfiguriert.",
+      "edges_other": "{{count}} Verbindungen und Datenflüsse konfiguriert."
+    },
+    "validate": {
+      "fixed": "{{name}}: Konfigurationsfehler automatisch korrigiert.",
+      "model_replaced": "Unbekanntes Modell durch {{model}} ersetzt.",
+      "placeholder_fixed": "Platzhalter „{{placeholder}}“ in {{name}} passte zu keinem Eingang und nutzt jetzt alle Eingänge.",
+      "renamed": "{{name}} in {{new}} umbenannt, damit Namen eindeutig bleiben.",
+      "repair": "KI-Korrektur {{attempt}} für {{name}}.",
+      "remaining_one": "{{count}} Problem bleibt; bitte sieh es dir vor dem Ausführen an.",
+      "remaining_other": "{{count}} Probleme bleiben; bitte sieh sie dir vor dem Ausführen an.",
+      "ok": "Workflow technisch validiert.",
+      "tools_pending": "Der Workflow kann laufen, sobald du freigegeben hast: {{names}}."
+    },
+    "present": {
+      "ready": "Der Entwurf ist bereit zur Prüfung."
+    }
+  }
+}

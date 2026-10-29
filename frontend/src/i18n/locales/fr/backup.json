@@ -1,0 +1,38 @@
+{
+  "title": "Sauvegarde et restauration",
+  "intro": "Une sauvegarde contient tous les workflows avec leurs versions, les modèles d’agents, les outils, les fichiers de connaissances, la mémoire, les exécutions et les réglages dans un fichier ZIP.",
+  "noKey": "Par sécurité, aucune clé API des fournisseurs d’IA n’est écrite dans une sauvegarde. La restauration conserve les clés configurées sur cet ordinateur.",
+  "download": "Télécharger la sauvegarde",
+  "restoreFromFile": "Restaurer depuis un fichier …",
+  "local_one": "{{count}} sauvegarde sur cet ordinateur",
+  "local_other": "{{count}} sauvegardes sur cet ordinateur",
+  "localText": "Avant chaque restauration, Nodestro enregistre automatiquement une sauvegarde de l’état précédent.",
+  "downloadLocal": "Télécharger",
+  "restoreThis": "Restaurer …",
+  "restoreTitle": "Restaurer une sauvegarde",
+  "valid": "« {{name}} » est une sauvegarde valide du {{date}}. Tous les fichiers sont complets et intacts.",
+  "versions": "Créée avec Nodestro {{nodestro}} et la bibliothèque d’agents {{library}}.",
+  "inBackup": "Dans la sauvegarde",
+  "current": "Actuel",
+  "contents": {
+    "workflows": "Workflows",
+    "versions": "Versions de workflows",
+    "templates": "Modèles d’agents",
+    "tools": "Outils personnalisés",
+    "knowledge_files": "Fichiers de connaissances",
+    "memory_spaces": "Espaces mémoire",
+    "memory_files": "Fichiers de mémoire",
+    "runs": "Exécutions",
+    "usage_entries": "Autres opérations d’IA",
+    "conversations": "Chats de l’assistant",
+    "input_files": "Fichiers d’entrée envoyés"
+  },
+  "notes": {
+    "other_version": "La sauvegarde provient d’une autre version de Nodestro. Elle est reprise lors de la restauration ; vérifiez rapidement vos workflows ensuite."
+  },
+  "replaceWarning": "La restauration remplace toutes les données actuelles par l’état de la sauvegarde.",
+  "safetyNote": "Une sauvegarde de l’état actuel est d’abord créée automatiquement ; vous la retrouvez ensuite dans la liste des sauvegardes.",
+  "confirm": "J’ai compris que mes données actuelles seront remplacées.",
+  "restoreNow": "Restaurer maintenant",
+  "restored": "Sauvegarde restaurée. L’état précédent se trouve dans « {{name}} ». La page se recharge."
+}

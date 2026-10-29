@@ -1,0 +1,47 @@
+import {
+  BookOpen,
+  Bot,
+  Brain,
+  Calculator,
+  Check,
+  Code2,
+  FileText,
+  Globe,
+  Lightbulb,
+  List,
+  type LucideIcon,
+  Mail,
+  MessageSquare,
+  PenLine,
+  Scale,
+  Search,
+  Shield,
+  Sparkles,
+  Target,
+  Users,
+} from "lucide-react";
+
+/** Agent icons: the type of an agent is shown by symbol and title, not by colour. */
+export const AGENT_ICONS: Record<string, LucideIcon> = {
+  bot: Bot,
+  search: Search,
+  calculator: Calculator,
+  check: Check,
+  pen: PenLine,
+  list: List,
+  users: Users,
+  brain: Brain,
+  code: Code2,
+  globe: Globe,
+  book: BookOpen,
+  file: FileText,
+  mail: Mail,
+  chat: MessageSquare,
+  shield: Shield,
+  scale: Scale,
+  target: Target,
+  idea: Lightbulb,
+  sparkles: Sparkles,
+};
+
+export const agentIcon = (name: string | undefined): LucideIcon => AGENT_ICONS[name ?? ""] ?? Bot;

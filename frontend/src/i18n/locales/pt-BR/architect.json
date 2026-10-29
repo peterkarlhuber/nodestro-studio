@@ -1,0 +1,274 @@
+{
+  "title": "Arquiteto de fluxos com IA",
+  "button": "Arquiteto IA",
+  "mode": {
+    "create": "Projetar um novo fluxo",
+    "revise": "Revisar este fluxo"
+  },
+  "form": {
+    "intro": "Descreva o que você quer alcançar. O arquiteto planeja os agentes, escreve os prompts, conecta tudo e verifica o resultado. Você revisa tudo antes de qualquer coisa ser salva.",
+    "mode": "O que o arquiteto deve fazer?",
+    "modeHint": {
+      "create": "Um fluxo novo e independente. O fluxo aberto continua como está.",
+      "revise": "O arquiteto considera os agentes, configurações e conexões deste fluxo, inclusive alterações não salvas, e propõe mudanças pontuais como rascunho separado."
+    },
+    "describe": "Seu objetivo",
+    "instruction": "O que deve mudar?",
+    "hint": {
+      "create": "Objetivo, entradas, resultados desejados e restrições importantes. Detalhes ausentes são completados com suposições que você vê depois.",
+      "revise": "Por exemplo: “Adicione antes do resultado um agente que revise criticamente as análises anteriores.”"
+    },
+    "placeholder": {
+      "create": "ex.: A partir de uma ideia de produto, pesquisar em paralelo o mercado e a concorrência, estimar os custos e escrever um documento de decisão de uma página.",
+      "revise": "ex.: Adicione antes do resultado um agente que revise criticamente as análises anteriores."
+    },
+    "unsavedIncluded": "Este fluxo tem alterações não salvas. O arquiteto trabalha com o estado atual do editor; nada é salvo nem sobrescrito.",
+    "generateTools": "Escrever ferramentas ausentes como rascunho",
+    "generateToolsHint": "Só se nenhuma ferramenta existente servir. O código é verificado estaticamente e nunca roda antes da sua aprovação.",
+    "limit": "Limite de custo de um rascunho: {{limit}} (<link>Configurações</link>). O arquiteto nunca inicia uma execução do fluxo.",
+    "noLimit": "Não há limite de custo para rascunhos (<link>Configurações</link>). O arquiteto nunca inicia uma execução do fluxo.",
+    "safety": "O arquiteto só propõe. Os fluxos existentes não mudam até você aceitar o rascunho, e ferramentas novas precisam da sua aprovação.",
+    "startCreate": "Projetar fluxo",
+    "startRevise": "Propor mudanças"
+  },
+  "phase": {
+    "analyze": "Analisar requisitos",
+    "plan": "Planejar arquitetura",
+    "resources": "Verificar recursos",
+    "configure": "Configurar agentes",
+    "tools": "Rascunhar ferramentas",
+    "connect": "Criar conexões",
+    "validate": "Validar fluxo",
+    "present": "Apresentar rascunho"
+  },
+  "phaseRunning": {
+    "analyze": "Analisando os requisitos …",
+    "plan": "Planejando a arquitetura do fluxo …",
+    "resources": "Verificando ferramentas, modelos, conhecimento e memória …",
+    "configure": "Configurando os agentes …",
+    "tools": "Rascunhando ferramentas ausentes …",
+    "connect": "Conectando nós e fluxos de dados …",
+    "validate": "Validando o fluxo …",
+    "present": "Preparando o rascunho …"
+  },
+  "stepState": {
+    "done": "concluído",
+    "active": "em andamento",
+    "todo": "não iniciado",
+    "stopped": "parou aqui"
+  },
+  "progress": {
+    "steps": "Etapas",
+    "starting": "Iniciando …",
+    "graph": "Prévia do fluxo",
+    "graphEmpty": "Os agentes aparecem aqui assim que a arquitetura for planejada.",
+    "log": "Atividades",
+    "cost": "Até agora {{cost}}",
+    "limit": "limite {{limit}}",
+    "costLabel": "Custo deste rascunho",
+    "cancel": "Cancelar geração"
+  },
+  "marks": {
+    "legend": "Legenda",
+    "pending": "em configuração",
+    "configured": "configurado",
+    "added": "novo",
+    "changed": "alterado",
+    "kept": "inalterado",
+    "removed": "removido"
+  },
+  "kind": {
+    "added": "novo",
+    "changed": "alterado",
+    "removed": "removido",
+    "kept": "inalterado"
+  },
+  "field": {
+    "name": "Nome",
+    "description": "Papel",
+    "model": "Modelo",
+    "effort": "Esforço de raciocínio",
+    "system_prompt": "Prompt de sistema",
+    "task_template": "Tarefa",
+    "tools": "Ferramentas",
+    "server_tools": "Ferramentas do servidor",
+    "knowledge": "Conhecimento",
+    "memory": "Memória",
+    "output": "Formato de saída",
+    "quality": "Verificação de qualidade",
+    "max_tokens": "Limite de saída",
+    "max_tool_rounds": "Rodadas de ferramentas",
+    "other": "Outras configurações"
+  },
+  "memory": {
+    "run": "para uma execução",
+    "persistent": "permanente: {{space}}"
+  },
+  "question": {
+    "title": "Uma pergunta antes de continuar:",
+    "hint": "Sem essa informação não dá para projetar um fluxo sensato. Responda ou deixe o arquiteto continuar com uma suposição própria.",
+    "yourAnswer": "Sua resposta",
+    "answer": "Responder e continuar",
+    "skip": "Continuar com suposições"
+  },
+  "review": {
+    "tabOverview": "Visão geral",
+    "tabChanges": "Mudanças",
+    "tabAgents_one": "{{count}} agente",
+    "tabAgents_other": "{{count}} agentes",
+    "tabFlow": "Fluxo de dados",
+    "tabTools": "Ferramentas",
+    "tabToolsCount_one": "{{count}} ferramenta",
+    "tabToolsCount_other": "{{count}} ferramentas",
+    "name": "Nome do novo fluxo",
+    "createNote": "Ao aceitar, um novo fluxo é criado e aberto no editor. Nada é executado automaticamente.",
+    "reviseNote": "Ao aceitar, as mudanças são aplicadas no editor como um passo que você pode desfazer. Só são salvas quando você salvar.",
+    "changedMeanwhile": "O fluxo no editor mudou depois que o rascunho foi iniciado. Ao aceitar, essas mudanças são substituídas; Desfazer as recupera.",
+    "saveFirst": "Salvar antes o estado atual como versão",
+    "saveFirstHint": "Suas alterações não salvas ficam no histórico de versões, aconteça o que acontecer com o rascunho.",
+    "toolsPending": "Novas ferramentas aguardam sua aprovação ({{names}}). O fluxo só pode rodar depois que forem aprovadas.",
+    "goal": "Objetivo",
+    "inputs": "Entradas",
+    "outputs": "Resultados",
+    "constraints": "Restrições",
+    "facts": "Estrutura",
+    "factsValue": "{{agents}} agentes, {{connections}} conexões · {{fixes}} correções automáticas, {{repairs}} correções com IA",
+    "cost": "Custo",
+    "costValue": "{{cost}} por {{requests}} solicitações à IA",
+    "assumptions": "Suposições",
+    "noAssumptions": "Nenhuma suposição foi necessária.",
+    "validation": "Validação",
+    "validOk": "O fluxo passou na verificação técnica.",
+    "validErrors_one": "{{count}} problema ainda bloqueia a execução.",
+    "validErrors_other": "{{count}} problemas ainda bloqueiam a execução.",
+    "notAGuarantee": "Passar na verificação significa que o fluxo pode rodar tecnicamente. Não garante que os resultados estejam corretos: revise os prompts e teste o fluxo com entradas reais.",
+    "notes": "Observações",
+    "receives": "Recebe",
+    "knowledge": "Conhecimento",
+    "memory": "Memória",
+    "draftResource": "rascunho",
+    "output": "Resultado estruturado",
+    "limits": "Limites",
+    "whatChanged_one": "{{count}} mudança",
+    "whatChanged_other": "{{count}} mudanças",
+    "inputsChanged": "Entradas: {{before}} → {{after}}",
+    "otherSettings": "Outras configurações mudaram.",
+    "noTools": "Nenhuma ferramenta nova é necessária.",
+    "toolsIntro": "O código abaixo ainda não rodou, nem no sandbox. Teste e aprove para disponibilizar a ferramenta; você também pode fazer isso depois em Ferramentas.",
+    "missingTools": "Estas ferramentas estão apenas descritas (os rascunhos estavam desligados ou falharam). Crie-as em Ferramentas ou remova-as dos agentes:",
+    "changeSummary": "{{added}} adicionados, {{changed}} alterados, {{removed}} removidos · {{edgesAdded}} conexões novas e {{edgesRemoved}} removidas",
+    "keptAgents": "Inalterados: {{names}}",
+    "discard": "Descartar rascunho",
+    "refine": "Alterar descrição",
+    "confirmDiscard": "Descartar este rascunho? Os rascunhos de ferramentas também são excluídos.",
+    "keepReviewing": "Continuar revisando",
+    "libraries": "Os rascunhos de ferramentas precisam de bibliotecas Python: {{names}}. Nada foi instalado; você pode aprová-las ao testar as ferramentas e no fluxo de trabalho."
+  },
+  "accept": {
+    "create": "Criar fluxo",
+    "apply": "Aplicar mudanças",
+    "created": "“{{name}}” criado"
+  },
+  "apply": {
+    "done": "Mudanças aplicadas. Desfazer as reverte; salve para mantê-las.",
+    "beforeNote": "Antes de uma revisão com IA",
+    "versionNote": "Revisão com IA: {{text}}"
+  },
+  "ended": {
+    "cancelled": "A geração foi cancelada. Nada foi salvo e nenhum fluxo foi alterado.",
+    "failed": "Não foi possível concluir o rascunho.",
+    "cost": "Custo até agora: {{cost}} (incluído na visão de uso).",
+    "retry": "Nova descrição"
+  },
+  "tool": {
+    "statusDraft": "aguardando aprovação",
+    "statusApproved": "aprovada",
+    "requirement": "Requisito:",
+    "usedBy": "Usada por: {{names}}",
+    "notRun": "Verificado apenas estaticamente: este código ainda não rodou. Testar executa os testes no sandbox; aprovar testa de novo e registra a ferramenta.",
+    "staticErrors": "A verificação estática encontrou problemas:",
+    "code": "Código",
+    "tests": "Testes",
+    "testsPassed_one": "{{count}} teste aprovado no sandbox.",
+    "testsPassed_other": "{{count}} testes aprovados no sandbox.",
+    "testsFailed_one": "{{failed}} de {{count}} teste falhou; a ferramenta não foi registrada.",
+    "testsFailed_other": "{{failed}} de {{count}} testes falharam; a ferramenta não foi registrada.",
+    "test": "Testar no sandbox",
+    "approve": "Aprovar e registrar",
+    "reject": "Rejeitar",
+    "approved": "Ferramenta {{name}} aprovada e disponível para todos os agentes",
+    "notApproved": "Não registrada: os testes não passaram.",
+    "rejected": "Rascunho de ferramenta {{name}} rejeitado",
+    "libraries": "Precisa das bibliotecas {{names}}. Elas só são instaladas após sua aprovação."
+  },
+  "log": {
+    "analyze": {
+      "started": "Analisando objetivos, entradas, resultados e restrições.",
+      "done": "Requisitos analisados: entradas {{inputs}}, resultados {{outputs}}.",
+      "assumptions_one": "{{count}} suposição feita para um detalhe em aberto.",
+      "assumptions_other": "{{count}} suposições feitas para detalhes em aberto.",
+      "question": "Falta um detalhe essencial: uma pergunta para você."
+    },
+    "plan": {
+      "started": "Planejando papéis dos agentes, dependências e etapas paralelas.",
+      "revise_started": "Comparando a instrução com o fluxo atual.",
+      "roles_one": "{{count}} papel de agente especializado definido.",
+      "roles_other": "{{count}} papéis de agentes especializados definidos.",
+      "parallel_one": "{{count}} agente trabalha em paralelo.",
+      "parallel_other": "{{count}} agentes trabalham em paralelo.",
+      "revision": "Planejado: {{added}} agentes novos, {{changed}} alterados, {{removed}} removidos.",
+      "no_changes": "A instrução não exige mudanças no fluxo."
+    },
+    "resources": {
+      "tool_found": "Ferramenta existente {{name}} encontrada para {{agent}}.",
+      "server_tool": "{{agent}} usa {{name}}.",
+      "template_found": "O modelo de agente {{template}} serve para {{agent}}.",
+      "knowledge": "Arquivo de conhecimento {{file}} atribuído a {{agent}}.",
+      "memory": "{{agent}} recebe o espaço de memória permanente {{space}} (rascunho, criado na primeira execução).",
+      "memory_run": "{{agent}} recebe memória para uma execução.",
+      "tool_missing": "Nenhuma ferramenta existente oferece {{name}}; um rascunho será escrito para sua revisão.",
+      "none": "Além dos agentes, não são necessárias ferramentas, conhecimento ou memória."
+    },
+    "configure": {
+      "started": "O prompt de sistema de {{name}} está sendo escrito.",
+      "done": "{{name}} configurado ({{model}}).",
+      "revising": "{{name}} está sendo reconfigurado.",
+      "changed": "{{name}} reconfigurado ({{model}}).",
+      "template": "{{name}} configurado a partir de um modelo."
+    },
+    "tools": {
+      "none": "Nenhuma ferramenta nova é necessária.",
+      "listed": "A ferramenta {{name}} fica só listada como requisito.",
+      "started": "O Coding Agent escreve a ferramenta {{name}}.",
+      "static_failed_one": "A verificação estática encontrou {{count}} problema em {{name}}; corrigindo.",
+      "static_failed_other": "A verificação estática encontrou {{count}} problemas em {{name}}; corrigindo.",
+      "static_remaining_one": "O rascunho {{name}} ainda tem {{count}} problema.",
+      "static_remaining_other": "O rascunho {{name}} ainda tem {{count}} problemas.",
+      "done": "Rascunho de ferramenta {{name}} escrito; aguarda sua revisão e aprovação.",
+      "libraries": "O rascunho de ferramenta {{name}} precisa de {{packages}}; nada é instalado sem sua aprovação."
+    },
+    "connect": {
+      "input_dropped": "Conexão inválida de {{name}} detectada e removida.",
+      "cycle_removed": "A conexão {{source}} → {{target}} fecharia um ciclo e foi removida.",
+      "edge_fixed": "Conexão inválida detectada e corrigida.",
+      "input_added": "{{name}} recebe a entrada do fluxo.",
+      "output_added": "{{name}} é conectado ao resultado.",
+      "edges_one": "{{count}} conexão e fluxo de dados configurados.",
+      "edges_other": "{{count}} conexões e fluxos de dados configurados."
+    },
+    "validate": {
+      "fixed": "{{name}}: erro de configuração corrigido automaticamente.",
+      "model_replaced": "Modelo desconhecido substituído por {{model}}.",
+      "placeholder_fixed": "O marcador “{{placeholder}}” em {{name}} não correspondia a nenhuma entrada e agora usa todas.",
+      "renamed": "{{name}} renomeado para {{new}} para manter nomes únicos.",
+      "repair": "Correção com IA {{attempt}} para {{name}}.",
+      "remaining_one": "Resta {{count}} problema; veja-o antes de executar.",
+      "remaining_other": "Restam {{count}} problemas; veja-os antes de executar.",
+      "ok": "Fluxo validado tecnicamente.",
+      "tools_pending": "O fluxo poderá rodar quando você aprovar: {{names}}."
+    },
+    "present": {
+      "ready": "O rascunho está pronto para sua revisão."
+    }
+  }
+}

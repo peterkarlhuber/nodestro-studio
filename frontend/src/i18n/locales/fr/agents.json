@@ -1,0 +1,16 @@
+{
+  "title": "Agents",
+  "description": "Des agents réutilisables. Ils apparaissent dans l’éditeur sous « Depuis la bibliothèque ».",
+  "newTemplateName": "Nouveau modèle",
+  "emptyTemplate": "Modèle vide",
+  "describe": "Décrire un agent",
+  "created": "« {{name}} » créé",
+  "deleted": "Modèle supprimé",
+  "emptyTitle": "Pas encore d’agents dans la bibliothèque",
+  "emptyText": "Décrivez avec vos mots ce qu’un agent doit savoir faire, ou enregistrez un agent de l’éditeur comme modèle.",
+  "toolCount_one": "{{count}} outil",
+  "toolCount_other": "{{count}} outils",
+  "edit": "Modifier le modèle",
+  "delete": "Supprimer le modèle",
+  "selectHint": "Choisissez un agent à gauche pour le modifier."
+}

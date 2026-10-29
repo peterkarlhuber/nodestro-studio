@@ -1,0 +1,23 @@
+{
+  "title": "Aperçu de l’entrée",
+  "complete": "complet",
+  "incomplete": "entrées encore manquantes",
+  "fromRun": "Résultats des prédécesseurs issus de la dernière exécution du {{date}}.",
+  "noRun": "Il n’y a pas encore d’exécution ; les résultats manquants des prédécesseurs sont signalés.",
+  "source": {
+    "given": "L’entrée de test indiquée sert d’entrée.",
+    "start_default": "L’entrée par défaut du nœud de départ sert d’entrée.",
+    "run": "L’entrée de la dernière exécution sert d’entrée.",
+    "empty": "Il n’y a pas encore d’entrée pour l’exécution."
+  },
+  "available": "disponible",
+  "pending": "manquant",
+  "chars_one": "{{count}} caractère",
+  "chars_other": "{{count}} caractères",
+  "runStatus": "dans la dernière exécution : {{status}}",
+  "noResult": "pas encore de résultat",
+  "placeholder": {
+    "not_connected": "L’espace réservé « {{name}} » désigne un agent qui n’est pas relié à celui-ci. Il reste vide.",
+    "unknown": "L’espace réservé « {{name}} » ne correspond à aucun prédécesseur et reste tel quel dans le texte."
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "description": "Funciones que los agentes pueden llamar. Las herramientas propias se comprueban y se ejecutan en un sandbox.",
+  "area": "Sección",
+  "tabs": {
+    "library": "Biblioteca",
+    "write": "Escribirla tú",
+    "generate": "Crear con IA"
+  },
+  "sandbox": "Sandbox",
+  "sandboxNote": "Sandbox para probar y ejecutar herramientas propias: {{sandbox}} (se puede cambiar en los ajustes).",
+  "sandboxDocker": "contenedor Docker",
+  "sandboxProcess": "proceso de Python propio",
+  "empty": "No hay herramientas",
+  "kind": {
+    "builtin": "Integrada",
+    "custom": "Herramienta propia",
+    "generated": "Creada por IA"
+  },
+  "kindLabel": "Tipo de herramienta",
+  "version": "Versión {{version}}",
+  "deleted": "Herramienta {{name}} eliminada",
+  "saved": "Herramienta {{name}} guardada",
+  "tool": "Herramienta {{name}}",
+  "delete": "Eliminar herramienta: la retira; los agentes que la usan no podrán volver a iniciarse hasta que la quites de ellos",
+  "requirement": "Requisito:",
+  "schema": "Esquema de entrada",
+  "viewCode": "Ver código y pruebas",
+  "codeOfTool": "Código de la herramienta",
+  "testsOfTool": "Pruebas de la herramienta",
+  "try": "Probar",
+  "tryHint": "Llama a la herramienta con esta entrada, como lo haría un agente.",
+  "inputJson": "Entrada como JSON",
+  "run": "Ejecutar",
+  "check": {
+    "passed": "Todas las comprobaciones superadas.",
+    "passedTool": "Todas las comprobaciones superadas: herramienta {{name}}.",
+    "testPassed": "superada",
+    "sandboxOutput": "Salida del sandbox"
+  },
+  "write": {
+    "intro": "Escribe una función de Python con tipos y docstring. De ella salen el nombre, la descripción y el esquema de entrada. Las pruebas son funciones <code>test_*</code> que llaman a la función. Al guardar, todo se comprueba de forma estática y las pruebas se ejecutan en el sandbox. Escribe el código, los nombres y los docstrings en inglés: los agentes los leen en cualquier idioma.",
+    "functionName": "Nombre de la función",
+    "check": "Comprobar y probar",
+    "result": "Resultado de la comprobación",
+    "notChecked": "Todavía sin comprobar."
+  },
+  "jobStatus": {
+    "running": "En curso",
+    "awaiting_approval": "Pendiente de aprobación",
+    "approved": "Aprobada",
+    "rejected": "Rechazada",
+    "failed": "Fallida",
+    "awaiting_dependencies": "Esperando bibliotecas"
+  },
+  "generate": {
+    "describe": "Describir una herramienta nueva",
+    "question": "¿Qué debe poder hacer la herramienta?",
+    "hint": "Un agente de programación escribe el código y las pruebas. Ambos se comprueban de forma estática y las pruebas se ejecutan en el sandbox. Después decides si se incorpora la herramienta.",
+    "placeholder": "p. ej. Calcula la cuota de un préstamo a partir del importe, el interés anual en porcentaje y el plazo en meses.",
+    "start": "Encargar la herramienta",
+    "job": "Encargo {{requirement}}",
+    "newTool": "Herramienta nueva",
+    "attempts_one": "{{count}} intento",
+    "attempts_other": "{{count}} intentos",
+    "reviewNote": "Revisa el código y las pruebas antes de aprobar la herramienta. Todos los agentes pueden usar las herramientas aprobadas.",
+    "approval": "Aprobación",
+    "proposedCode": "Código propuesto",
+    "proposedTests": "Pruebas propuestas",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "viewAttempts": "Ver intentos",
+    "attempt": "Intento {{number}}:",
+    "attemptCode": "Código del intento {{number}}",
+    "dependenciesNote": "La propuesta usa bibliotecas de terceros. No hay nada instalado; las pruebas solo se ejecutan tras tu aprobación. El código lo apruebas después por separado.",
+    "approveLibraries": "Aprobar bibliotecas",
+    "withoutLibraries": "Reescribir sin bibliotecas",
+    "usesLibraries": "Usa las bibliotecas aprobadas: {{names}}"
+  },
+  "drafts": {
+    "title_one": "{{count}} borrador de herramienta espera tu decisión",
+    "title_other": "{{count}} borradores de herramientas esperan tu decisión",
+    "label": "Borradores de herramientas",
+    "text": "Estas herramientas las escribió el arquitecto de flujos. No están registradas ni se han ejecutado. Los agentes que las necesitan no pueden iniciarse hasta que las apruebes."
+  }
+}

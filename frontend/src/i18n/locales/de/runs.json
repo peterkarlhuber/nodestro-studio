@@ -1,0 +1,62 @@
+{
+  "tokens": "{{value}} Tokens",
+  "requests_one": "{{value}} Anfrage",
+  "requests_other": "{{value}} Anfragen",
+  "startedAt": "Start {{time}}",
+  "finishedAt": "Ende {{time}}",
+  "noOutputYet": "Noch kein Ergebnis.",
+  "promptHint": "Die Aufgabe, wie sie nach dem Einsetzen der Platzhalter an den Agenten ging.",
+  "tabs": {
+    "result": "Ergebnis",
+    "prompt": "Aufgabe",
+    "tools": "Tools ({{count}})",
+    "thinking": "Gedanken",
+    "memory": "Memory",
+    "context": "Kontext"
+  },
+  "evaluation": {
+    "passed_one": "Qualitätsprüfung bestanden nach {{count}} Versuch",
+    "passed_other": "Qualitätsprüfung bestanden nach {{count}} Versuchen",
+    "failed_one": "Qualitätsprüfung nicht bestanden nach {{count}} Versuch",
+    "failed_other": "Qualitätsprüfung nicht bestanden nach {{count}} Versuchen",
+    "feedback": "Begründung des Judges"
+  },
+  "toolCalls": {
+    "none": "Keine Tool-Aufrufe.",
+    "error": "Fehler",
+    "succeeded": "erfolgreich",
+    "running": "läuft …",
+    "unfinished": "nicht beendet",
+    "input": "Eingabe",
+    "output": "Ergebnis"
+  },
+  "stats": {
+    "agents": "Agenten",
+    "status": "Status",
+    "requests": "API-Anfragen",
+    "tokens": "Tokens",
+    "cost": "Geschätzte Kosten"
+  },
+  "panel": {
+    "title": "Ausführungsübersicht",
+    "notStarted": "Noch nicht gestartet",
+    "overall": "Gesamtergebnis",
+    "running": "Der Workflow läuft. Wähle links einen Agenten, um ihm live zuzusehen.",
+    "paused": "Der Lauf wartet auf eine Freigabe."
+  },
+  "detail": {
+    "timeline": "Zeitlicher Ablauf",
+    "notFound": "Nicht gefunden",
+    "exportTrace": "Trace exportieren",
+    "openInEditor": "Im Editor öffnen",
+    "importedTrace": "Importierter Trace",
+    "importedAt": "Importiert am {{date}}",
+    "sourceId": "ursprüngliche ID <code>{{id}}</code>",
+    "importedNote": "Dieser Lauf wird nur angezeigt: Nichts wird erneut ausgeführt, und es entstehen keine Kosten.",
+    "input": "Eingabe",
+    "stillRunning": "Läuft noch …",
+    "noResult": "Kein Ergebnis.",
+    "trace": "Ablauf",
+    "nodeDetails": "Details {{name}}"
+  }
+}

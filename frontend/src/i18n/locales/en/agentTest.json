@@ -1,0 +1,20 @@
+{
+  "button": "Test agent",
+  "title": "Test agent: {{name}}",
+  "note": "A test runs only this agent with its current configuration. It is not a workflow run, does not appear under “Executions” and changes no results.",
+  "input": "Test input",
+  "inputHint": "Inserted into the agent's task like the input of a run (placeholders for predecessors stay empty).",
+  "rawHint": "Sent to the agent unchanged as its task.",
+  "placeholder": "For example a short text the agent should work on …",
+  "raw": "Send the input directly as the task",
+  "rawDescription": "Ignores the task template and sends only the test input.",
+  "costNote": "The test calls the model's provider and can cost money: {{model}} costs {{input}} per million input tokens and {{output}} per million output tokens (– means unknown). The cost shows up under “Usage”.",
+  "memoryNote": "Persistent memory is only read: the test works on a copy and does not change the memory space.",
+  "start": "Start test",
+  "again": "Test again",
+  "result": "Test result",
+  "badge": "Test, not a workflow run",
+  "memoryIsolated": "Memory copy",
+  "duration": "Duration",
+  "providerMissing": "Not set up yet: {{providers}}. Enter the access in the settings to test this agent."
+}

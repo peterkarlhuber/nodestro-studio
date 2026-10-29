@@ -1,0 +1,107 @@
+{
+  "docs": "More about Python libraries",
+  "state": {
+    "none": "No libraries needed",
+    "ready": "Approved and installed",
+    "approval_needed": "Approval needed",
+    "install_needed": "Installation pending",
+    "installing": "Installing",
+    "failed": "Installation failed",
+    "unresolved": "Ambiguous",
+    "unsupported": "Not available"
+  },
+  "reason": {
+    "new": "Newly needed: {{names}}.",
+    "changed": "Changed requirement: {{names}}.",
+    "python": "The Python version has changed; versions are resolved again.",
+    "other_installation": "The approvals come from another computer or an import and do not apply here."
+  },
+  "status": {
+    "new": "New",
+    "changed": "Change {{from}} → {{to}}",
+    "approved": "Approved",
+    "runtime": "Runtime",
+    "removed": "Dropped"
+  },
+  "plan": {
+    "summary": "{{direct}} direct and {{indirect}} indirect packages for Python {{python}}. Nodestro always brings the runtime packages.",
+    "package": "Package",
+    "version": "Version",
+    "kind": "Kind",
+    "requiredBy": "Required by",
+    "status": "Status",
+    "direct": "direct",
+    "indirect": "indirect",
+    "runtime": "runtime",
+    "onlyWhen": "only when {{marker}}",
+    "approvedElsewhere": "Already approved in: {{names}}"
+  },
+  "dialog": {
+    "title": "Python libraries for “{{name}}”",
+    "introWorkflow": "The tools of the workflow “{{name}}” need these libraries. Nodestro has resolved the versions but installed nothing yet.",
+    "introTool": "The tool “{{name}}” needs these libraries for its tests. Nodestro has resolved the versions but installed nothing yet.",
+    "resolving": "Resolving versions … (downloads package information only)",
+    "warning": "On approval Nodestro installs exactly these versions into a separate environment. Third-party libraries can access files and the network; only approve what you know.",
+    "unchanged": "All packages are already approved; no version changes.",
+    "codeSeparate": "The tools' code is checked and approved separately.",
+    "approve": "Approve and install",
+    "confirm": "Apply"
+  },
+  "install": {
+    "starting": "Starting installation …",
+    "done": "{{count}} packages are installed.",
+    "failed": "The installation failed; the previous environment stays unchanged.",
+    "log": "Installation log",
+    "retry": "Install again"
+  },
+  "step": {
+    "queued": "Preparing installation …",
+    "create": "Creating Python environment …",
+    "install": "Installing packages …",
+    "verify": "Checking imports …"
+  },
+  "panel": {
+    "title": "Python libraries",
+    "toolTitle": "Python libraries of the tool",
+    "needed": "Required libraries",
+    "notInstalled": "not installed",
+    "usedBy": "for {{names}}",
+    "approvedAt": "approved {{when}}",
+    "review": "Review and approve",
+    "install": "Install",
+    "check": "View versions",
+    "history": "Change history",
+    "unused": "No tool needs the {{count}} approved packages anymore. You can remove the environment in the settings under “Python environments”."
+  },
+  "change": {
+    "approved": "Approved",
+    "installed": "Installed",
+    "install_failed": "Installation failed",
+    "removed": "Environment removed",
+    "imported": "Imported (approval needed)",
+    "copied": "Copied from workflow (approval needed)",
+    "cleaned": "Cleaned up"
+  },
+  "maintenance": {
+    "title": "Python environments",
+    "intro": "Workflows with third-party libraries get their own Python environments in the data folder. Downloaded packages live in a shared cache and are reused.",
+    "uv": "uv {{version}} · Python {{python}}",
+    "noUv": "uv was not found; libraries cannot be installed.",
+    "cache": "Cache {{size}}",
+    "owner": "Belongs to",
+    "ownerWorkflow": "Workflow “{{name}}”",
+    "ownerTool": "Tool test “{{name}}”",
+    "packages": "Packages",
+    "size": "Size",
+    "installed": "Installed",
+    "actions": "Actions",
+    "orphaned": "orphaned",
+    "notOnDisk": "not installed",
+    "remove": "Delete environment (approvals stay, reinstalled when needed)",
+    "forget": "Delete orphaned environment and definition",
+    "removed": "The environment was removed.",
+    "cleanup": "Clean up orphaned ({{count}})",
+    "cleaned": "{{count}} orphaned environments removed, cache tidied up.",
+    "none": "No Python environments yet."
+  }
+}

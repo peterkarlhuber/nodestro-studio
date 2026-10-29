@@ -1,0 +1,31 @@
+{
+  "description": "Cada execução com resultado, chamadas de ferramentas, erros, tokens e custos – para acompanhar e comparar.",
+  "duplicate": "“{{name}}” já existe – nada foi criado em duplicidade.",
+  "imported_one": "Trace importado",
+  "imported_other": "{{count}} traces importados",
+  "filterWorkflow": "Filtrar por fluxo de trabalho",
+  "allWorkflows": "Todos os fluxos de trabalho",
+  "filterStatus": "Filtrar por status",
+  "allStatuses": "Todos os status",
+  "filterOrigin": "Filtrar por origem",
+  "origin": {
+    "all": "Todas as origens",
+    "own": "Execuções próprias",
+    "imported": "Traces importados"
+  },
+  "import": "Importar trace",
+  "empty": "Nenhuma execução",
+  "emptyText": "Inicie um fluxo de trabalho no editor; cada execução aparece aqui. Você pode importar traces exportados para visualizá-los.",
+  "columns": {
+    "workflow": "Fluxo de trabalho",
+    "status": "Status",
+    "started": "Início",
+    "duration": "Duração",
+    "requests": "Requisições",
+    "tokens": "Tokens",
+    "cost": "Custo",
+    "actions": "Ações"
+  },
+  "importedBadge": "Importado",
+  "delete": "Excluir execução"
+}

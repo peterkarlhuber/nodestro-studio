@@ -1,0 +1,76 @@
+{
+  "description": "Das Benutzerhandbuch zu Nodestro: Konzepte, jede Einstellung, Schritt-für-Schritt-Anleitungen, Beispiele und Lösungen für häufige Fehler.",
+  "missingChapter": "Dieses Kapitel gibt es nicht. Zurück zur <link>Übersicht</link>.",
+  "onThisPage": "Auf dieser Seite",
+  "linkTo": "Link zu „{{title}}“",
+  "pager": "Kapitel blättern",
+  "previous": "Zurück",
+  "next": "Weiter",
+  "overview": {
+    "title": "Übersicht",
+    "intro": "Neu hier? Beginne mit <link>Erste Schritte</link>. Kurze Erklärungen findest du außerdem direkt in der Anwendung hinter jedem <strong>?</strong>-Symbol.",
+    "sections_one": "{{count}} Abschnitt",
+    "sections_other": "{{count}} Abschnitte"
+  },
+  "search": {
+    "placeholder": "Dokumentation durchsuchen …",
+    "label": "Dokumentation durchsuchen",
+    "clear": "Suche leeren",
+    "results": "Suchergebnisse",
+    "hits_one": "{{value}} Treffer für „{{query}}“",
+    "hits_other": "{{value}} Treffer für „{{query}}“",
+    "noHits": "Keine Treffer für „{{query}}“",
+    "tryOther": "Versuche ein anderes Wort, z. B. „Budget“, „Platzhalter“, „Zitate“ oder „Sandbox“."
+  },
+  "models": {
+    "loading": "Die Preisliste wird geladen …",
+    "caption": "Modelle und Preise in US-Dollar pro Million Tokens",
+    "use": "Einsatz",
+    "input": "Eingabe",
+    "output": "Ausgabe",
+    "cacheWrite": "Cache schreiben (5 min / 1 h)",
+    "cacheRead": "Cache lesen",
+    "note": "Preise in US-Dollar pro Million Tokens (Listenpreis, wie Nodestro sie für Schätzungen verwendet)."
+  },
+  "shortcuts": {
+    "key": "Taste",
+    "action": "Wirkung",
+    "mac": "Auf dem Mac gilt <kbd>⌘</kbd> statt <kbd>Strg</kbd>.",
+    "save": {
+      "keys": "<kbd>Strg</kbd>+<kbd>S</kbd>",
+      "action": "Workflow speichern"
+    },
+    "undo": {
+      "keys": "<kbd>Strg</kbd>+<kbd>Z</kbd>",
+      "action": "Rückgängig"
+    },
+    "redo": {
+      "keys": "<kbd>Strg</kbd>+<kbd>Umschalt</kbd>+<kbd>Z</kbd> oder <kbd>Strg</kbd>+<kbd>Y</kbd>",
+      "action": "Wiederholen"
+    },
+    "duplicate": {
+      "keys": "<kbd>Strg</kbd>+<kbd>D</kbd>",
+      "action": "Gewählten Knoten duplizieren"
+    },
+    "delete": {
+      "keys": "<kbd>Entf</kbd> oder <kbd>Rücktaste</kbd>",
+      "action": "Gewählten Knoten oder gewählte Verbindung löschen"
+    },
+    "canvas": {
+      "keys": "Mausrad, Ziehen der Fläche",
+      "action": "Zoomen und Verschieben der Arbeitsfläche"
+    },
+    "escape": {
+      "keys": "<kbd>Esc</kbd>",
+      "action": "Dialog oder Erklärung schließen"
+    },
+    "search": {
+      "keys": "<kbd>/</kbd>",
+      "action": "In der Dokumentation: Suche fokussieren"
+    },
+    "assistant": {
+      "keys": "<kbd>Strg</kbd>+<kbd>J</kbd>",
+      "action": "Nodestro Assistant öffnen oder schließen"
+    }
+  }
+}

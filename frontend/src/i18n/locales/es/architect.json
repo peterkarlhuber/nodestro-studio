@@ -1,0 +1,274 @@
+{
+  "title": "Arquitecto de flujos con IA",
+  "button": "Arquitecto IA",
+  "mode": {
+    "create": "Diseñar un flujo nuevo",
+    "revise": "Revisar este flujo"
+  },
+  "form": {
+    "intro": "Describe lo que quieres lograr. El arquitecto planifica los agentes, escribe sus prompts, los conecta y comprueba el resultado. Revisas todo antes de que se guarde nada.",
+    "mode": "¿Qué debe hacer el arquitecto?",
+    "modeHint": {
+      "create": "Un flujo nuevo e independiente. El flujo abierto no cambia.",
+      "revise": "El arquitecto tiene en cuenta los agentes, ajustes y conexiones de este flujo, también los cambios sin guardar, y propone cambios concretos como borrador aparte."
+    },
+    "describe": "Tu objetivo",
+    "instruction": "¿Qué debe cambiar?",
+    "hint": {
+      "create": "Objetivo, entradas, resultados deseados y restricciones importantes. Los detalles que falten se completan con suposiciones que verás después.",
+      "revise": "Por ejemplo: «Añade antes del resultado un agente que revise de forma crítica los análisis anteriores»."
+    },
+    "placeholder": {
+      "create": "p. ej. A partir de una idea de producto, investigar en paralelo el mercado y la competencia, estimar los costes y redactar un documento de decisión de una página.",
+      "revise": "p. ej. Añade antes del resultado un agente que revise de forma crítica los análisis anteriores."
+    },
+    "unsavedIncluded": "Este flujo tiene cambios sin guardar. El arquitecto trabaja con el estado actual del editor; no se guarda ni se sobrescribe nada.",
+    "generateTools": "Escribir como borrador las herramientas que falten",
+    "generateToolsHint": "Solo si ninguna herramienta existente encaja. El código se comprueba estáticamente y nunca se ejecuta antes de que lo apruebes.",
+    "limit": "Límite de coste de un borrador: {{limit}} (<link>Ajustes</link>). El arquitecto nunca inicia una ejecución del flujo.",
+    "noLimit": "No hay límite de coste para los borradores (<link>Ajustes</link>). El arquitecto nunca inicia una ejecución del flujo.",
+    "safety": "El arquitecto solo propone. Los flujos existentes no cambian hasta que aceptas el borrador, y las herramientas nuevas necesitan tu aprobación.",
+    "startCreate": "Diseñar flujo",
+    "startRevise": "Proponer cambios"
+  },
+  "phase": {
+    "analyze": "Analizar requisitos",
+    "plan": "Planificar arquitectura",
+    "resources": "Revisar recursos",
+    "configure": "Configurar agentes",
+    "tools": "Redactar herramientas",
+    "connect": "Crear conexiones",
+    "validate": "Validar flujo",
+    "present": "Presentar borrador"
+  },
+  "phaseRunning": {
+    "analyze": "Analizando los requisitos …",
+    "plan": "Planificando la arquitectura del flujo …",
+    "resources": "Revisando herramientas, plantillas, conocimiento y memoria …",
+    "configure": "Configurando los agentes …",
+    "tools": "Redactando las herramientas que faltan …",
+    "connect": "Conectando nodos y flujos de datos …",
+    "validate": "Validando el flujo …",
+    "present": "Preparando el borrador …"
+  },
+  "stepState": {
+    "done": "hecho",
+    "active": "en curso",
+    "todo": "sin empezar",
+    "stopped": "detenido aquí"
+  },
+  "progress": {
+    "steps": "Pasos",
+    "starting": "Iniciando …",
+    "graph": "Vista previa del flujo",
+    "graphEmpty": "Los agentes aparecen aquí en cuanto se planifica la arquitectura.",
+    "log": "Actividad",
+    "cost": "Hasta ahora {{cost}}",
+    "limit": "límite {{limit}}",
+    "costLabel": "Coste de este borrador",
+    "cancel": "Cancelar generación"
+  },
+  "marks": {
+    "legend": "Leyenda",
+    "pending": "en configuración",
+    "configured": "configurado",
+    "added": "nuevo",
+    "changed": "modificado",
+    "kept": "sin cambios",
+    "removed": "eliminado"
+  },
+  "kind": {
+    "added": "nuevo",
+    "changed": "modificado",
+    "removed": "eliminado",
+    "kept": "sin cambios"
+  },
+  "field": {
+    "name": "Nombre",
+    "description": "Rol",
+    "model": "Modelo",
+    "effort": "Esfuerzo de razonamiento",
+    "system_prompt": "Prompt del sistema",
+    "task_template": "Tarea",
+    "tools": "Herramientas",
+    "server_tools": "Herramientas del servidor",
+    "knowledge": "Conocimiento",
+    "memory": "Memoria",
+    "output": "Formato de salida",
+    "quality": "Control de calidad",
+    "max_tokens": "Límite de salida",
+    "max_tool_rounds": "Rondas de herramientas",
+    "other": "Otros ajustes"
+  },
+  "memory": {
+    "run": "para una ejecución",
+    "persistent": "permanente: {{space}}"
+  },
+  "question": {
+    "title": "Una pregunta antes de seguir:",
+    "hint": "Sin este dato no se puede diseñar un flujo razonable. Respóndela o deja que el arquitecto continúe con su propia suposición.",
+    "yourAnswer": "Tu respuesta",
+    "answer": "Responder y continuar",
+    "skip": "Continuar con suposiciones"
+  },
+  "review": {
+    "tabOverview": "Resumen",
+    "tabChanges": "Cambios",
+    "tabAgents_one": "{{count}} agente",
+    "tabAgents_other": "{{count}} agentes",
+    "tabFlow": "Flujo de datos",
+    "tabTools": "Herramientas",
+    "tabToolsCount_one": "{{count}} herramienta",
+    "tabToolsCount_other": "{{count}} herramientas",
+    "name": "Nombre del nuevo flujo",
+    "createNote": "Al aceptar se crea un flujo nuevo que se abre en el editor. Nada se ejecuta automáticamente.",
+    "reviseNote": "Al aceptar, los cambios se aplican en el editor como un solo paso que puedes deshacer. Solo se guardan cuando guardas.",
+    "changedMeanwhile": "El flujo del editor cambió después de iniciar el borrador. Al aceptar se sustituyen esos cambios; Deshacer los recupera.",
+    "saveFirst": "Guardar antes el estado actual como versión",
+    "saveFirstHint": "Tus cambios sin guardar quedan en el historial de versiones, pase lo que pase con el borrador.",
+    "toolsPending": "Hay herramientas nuevas esperando tu aprobación ({{names}}). El flujo solo podrá ejecutarse cuando estén aprobadas.",
+    "goal": "Objetivo",
+    "inputs": "Entradas",
+    "outputs": "Resultados",
+    "constraints": "Restricciones",
+    "facts": "Estructura",
+    "factsValue": "{{agents}} agentes, {{connections}} conexiones · {{fixes}} correcciones automáticas, {{repairs}} correcciones con IA",
+    "cost": "Coste",
+    "costValue": "{{cost}} por {{requests}} solicitudes a la IA",
+    "assumptions": "Suposiciones",
+    "noAssumptions": "No hizo falta ninguna suposición.",
+    "validation": "Validación",
+    "validOk": "El flujo superó la comprobación técnica.",
+    "validErrors_one": "{{count}} problema aún bloquea la ejecución.",
+    "validErrors_other": "{{count}} problemas aún bloquean la ejecución.",
+    "notAGuarantee": "Superar la comprobación significa que el flujo puede ejecutarse técnicamente. No garantiza que los resultados sean correctos: revisa los prompts y prueba el flujo con entradas reales.",
+    "notes": "Notas",
+    "receives": "Recibe",
+    "knowledge": "Conocimiento",
+    "memory": "Memoria",
+    "draftResource": "borrador",
+    "output": "Resultado estructurado",
+    "limits": "Límites",
+    "whatChanged_one": "{{count}} cambio",
+    "whatChanged_other": "{{count}} cambios",
+    "inputsChanged": "Entradas: {{before}} → {{after}}",
+    "otherSettings": "Cambiaron otros ajustes.",
+    "noTools": "No se necesitan herramientas nuevas.",
+    "toolsIntro": "El código de abajo no se ha ejecutado, ni siquiera en el sandbox. Pruébalo y apruébalo para que la herramienta esté disponible; también puedes hacerlo después en Herramientas.",
+    "missingTools": "Estas herramientas solo están descritas (los borradores estaban desactivados o fallaron). Créalas en Herramientas o quítalas de los agentes:",
+    "changeSummary": "{{added}} añadidos, {{changed}} modificados, {{removed}} eliminados · {{edgesAdded}} conexiones nuevas y {{edgesRemoved}} eliminadas",
+    "keptAgents": "Sin cambios: {{names}}",
+    "discard": "Descartar borrador",
+    "refine": "Cambiar descripción",
+    "confirmDiscard": "¿Descartar este borrador? También se eliminan sus borradores de herramientas.",
+    "keepReviewing": "Seguir revisando",
+    "libraries": "Los borradores de herramientas necesitan bibliotecas de Python: {{names}}. No se instaló nada; puedes aprobarlas al probar las herramientas y en el flujo de trabajo."
+  },
+  "accept": {
+    "create": "Crear flujo",
+    "apply": "Aplicar cambios",
+    "created": "«{{name}}» creado"
+  },
+  "apply": {
+    "done": "Cambios aplicados. Deshacer los revierte; guarda para conservarlos.",
+    "beforeNote": "Antes de una revisión con IA",
+    "versionNote": "Revisión con IA: {{text}}"
+  },
+  "ended": {
+    "cancelled": "Se canceló la generación. No se guardó nada ni se modificó ningún flujo.",
+    "failed": "No se pudo completar el borrador.",
+    "cost": "Coste hasta ahora: {{cost}} (incluido en el resumen de uso).",
+    "retry": "Nueva descripción"
+  },
+  "tool": {
+    "statusDraft": "pendiente de aprobación",
+    "statusApproved": "aprobada",
+    "requirement": "Requisito:",
+    "usedBy": "Usada por: {{names}}",
+    "notRun": "Solo comprobado estáticamente: este código aún no se ha ejecutado. Probar ejecuta las pruebas en el sandbox; aprobar vuelve a probar y registra la herramienta.",
+    "staticErrors": "La comprobación estática encontró problemas:",
+    "code": "Código",
+    "tests": "Pruebas",
+    "testsPassed_one": "{{count}} prueba superada en el sandbox.",
+    "testsPassed_other": "{{count}} pruebas superadas en el sandbox.",
+    "testsFailed_one": "{{failed}} de {{count}} prueba falló; la herramienta no se registró.",
+    "testsFailed_other": "{{failed}} de {{count}} pruebas fallaron; la herramienta no se registró.",
+    "test": "Probar en sandbox",
+    "approve": "Aprobar y registrar",
+    "reject": "Rechazar",
+    "approved": "Herramienta {{name}} aprobada y disponible para todos los agentes",
+    "notApproved": "No registrada: las pruebas no se superaron.",
+    "rejected": "Borrador de herramienta {{name}} rechazado",
+    "libraries": "Necesita las bibliotecas {{names}}. Solo se instalan tras tu aprobación."
+  },
+  "log": {
+    "analyze": {
+      "started": "Analizando objetivos, entradas, resultados y restricciones.",
+      "done": "Requisitos analizados: entradas {{inputs}}, resultados {{outputs}}.",
+      "assumptions_one": "{{count}} suposición para un detalle abierto.",
+      "assumptions_other": "{{count}} suposiciones para detalles abiertos.",
+      "question": "Falta un detalle esencial: una pregunta para ti."
+    },
+    "plan": {
+      "started": "Planificando roles de agentes, dependencias y pasos paralelos.",
+      "revise_started": "Comparando la instrucción con el flujo actual.",
+      "roles_one": "{{count}} rol de agente especializado definido.",
+      "roles_other": "{{count}} roles de agente especializados definidos.",
+      "parallel_one": "{{count}} agente trabaja en paralelo.",
+      "parallel_other": "{{count}} agentes trabajan en paralelo.",
+      "revision": "Planificado: {{added}} agentes nuevos, {{changed}} modificados, {{removed}} eliminados.",
+      "no_changes": "La instrucción no requiere cambios en el flujo."
+    },
+    "resources": {
+      "tool_found": "Herramienta existente {{name}} encontrada para {{agent}}.",
+      "server_tool": "{{agent}} usa {{name}}.",
+      "template_found": "La plantilla de agente {{template}} encaja con {{agent}}.",
+      "knowledge": "Archivo de conocimiento {{file}} asignado a {{agent}}.",
+      "memory": "{{agent}} recibe el espacio de memoria permanente {{space}} (borrador, se crea en la primera ejecución).",
+      "memory_run": "{{agent}} recibe memoria para una ejecución.",
+      "tool_missing": "Ninguna herramienta existente ofrece {{name}}; se escribirá un borrador para que lo revises.",
+      "none": "Aparte de los agentes no se necesitan herramientas, conocimiento ni memoria."
+    },
+    "configure": {
+      "started": "Se está escribiendo el prompt del sistema de {{name}}.",
+      "done": "{{name}} configurado ({{model}}).",
+      "revising": "{{name}} se está reconfigurando.",
+      "changed": "{{name}} reconfigurado ({{model}}).",
+      "template": "{{name}} configurado a partir de una plantilla."
+    },
+    "tools": {
+      "none": "No se necesita ninguna herramienta nueva.",
+      "listed": "La herramienta {{name}} solo se anota como requisito.",
+      "started": "El Coding Agent escribe la herramienta {{name}}.",
+      "static_failed_one": "La comprobación estática encontró {{count}} problema en {{name}}; corrigiendo.",
+      "static_failed_other": "La comprobación estática encontró {{count}} problemas en {{name}}; corrigiendo.",
+      "static_remaining_one": "El borrador {{name}} aún tiene {{count}} problema.",
+      "static_remaining_other": "El borrador {{name}} aún tiene {{count}} problemas.",
+      "done": "Borrador de herramienta {{name}} escrito; espera tu revisión y aprobación.",
+      "libraries": "El borrador de herramienta {{name}} necesita {{packages}}; no se instala nada sin tu aprobación."
+    },
+    "connect": {
+      "input_dropped": "Conexión no válida de {{name}} detectada y eliminada.",
+      "cycle_removed": "La conexión {{source}} → {{target}} cerraría un ciclo y se eliminó.",
+      "edge_fixed": "Conexión no válida detectada y corregida.",
+      "input_added": "{{name}} recibe la entrada del flujo.",
+      "output_added": "{{name}} se conecta con el resultado.",
+      "edges_one": "{{count}} conexión y flujo de datos configurados.",
+      "edges_other": "{{count}} conexiones y flujos de datos configurados."
+    },
+    "validate": {
+      "fixed": "{{name}}: error de configuración corregido automáticamente.",
+      "model_replaced": "Modelo desconocido sustituido por {{model}}.",
+      "placeholder_fixed": "El marcador «{{placeholder}}» de {{name}} no coincidía con ninguna entrada y ahora usa todas.",
+      "renamed": "{{name}} renombrado como {{new}} para que los nombres sean únicos.",
+      "repair": "Corrección con IA {{attempt}} para {{name}}.",
+      "remaining_one": "Queda {{count}} problema; revísalo antes de ejecutar.",
+      "remaining_other": "Quedan {{count}} problemas; revísalos antes de ejecutar.",
+      "ok": "Flujo validado técnicamente.",
+      "tools_pending": "El flujo podrá ejecutarse cuando hayas aprobado: {{names}}."
+    },
+    "present": {
+      "ready": "El borrador está listo para tu revisión."
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "open": "Cerca …",
+  "title": "Ricerca",
+  "label": "Termine di ricerca",
+  "placeholder": "Cerca in workflow, agenti, strumenti, conoscenza e documentazione …",
+  "hint": "Suggerimento: Ctrl+K (⌘K su Mac) apre la ricerca da qualsiasi punto. Le frecce selezionano, Invio apre.",
+  "results": "Risultati",
+  "empty": "Nessun risultato per “{{query}}”.",
+  "kind": {
+    "workflow": "Workflow",
+    "agent": "Agenti nei workflow",
+    "template": "Libreria degli agenti",
+    "example": "Workflow di esempio",
+    "tool": "Strumenti",
+    "knowledge": "Conoscenza",
+    "docs": "Documentazione"
+  }
+}

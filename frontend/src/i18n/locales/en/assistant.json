@@ -1,0 +1,142 @@
+{
+  "title": "Assistant",
+  "toggle": "Open or close the Nodestro Assistant",
+  "chatCost": "This chat: {{cost}}",
+  "docs": "Documentation for the assistant",
+  "newChat": "New chat",
+  "wide": "Wider",
+  "narrow": "Narrower",
+  "close": "Close",
+  "discuss": "Discuss with assistant",
+  "discussFile": "Discuss with assistant (with {{name}})",
+  "untitled": "New chat",
+  "openSettings": "Go to settings",
+  "welcome": {
+    "title": "How can I help?",
+    "text": "Ask me how to use Nodestro, or attach a workflow, agent, tool or run that we look at together. I answer based on the documentation and never change anything myself.",
+    "privacy": "Only what you write and explicitly attach is sent. Secrets such as API keys are replaced first.",
+    "examples": {
+      "createWorkflow": "How do I create a workflow with two parallel agents?",
+      "knowledgeMemory": "What is the difference between knowledge and memory?",
+      "judge": "How does the quality check with a judge work?",
+      "testAgent": "How do I test my agent without starting the whole workflow?",
+      "costs": "How can I reduce the cost of my workflows?"
+    }
+  },
+  "composer": {
+    "placeholder": "Ask a question … (Enter sends, Shift+Enter for a new line)",
+    "label": "Message to the assistant",
+    "attach": "Attach an object",
+    "stop": "Stop",
+    "send": "Send",
+    "hint": "The assistant can be wrong. Check important details in the linked documentation."
+  },
+  "steps": {
+    "context": "Processing attachments: {{detail}}",
+    "docs_search": "Searching the documentation: {{detail}}",
+    "docs_read": "Reading sections: {{detail}}",
+    "generate": "Writing the answer …",
+    "handover": "Preparing a handover …"
+  },
+  "done": {
+    "context": "Processed attachments: {{detail}}",
+    "docs_search": "Searched the documentation: {{detail}}",
+    "docs_read": "Read sections: {{detail}}",
+    "generate": "Wrote the answer",
+    "handover": "Prepared a handover"
+  },
+  "message": {
+    "sentWith": "Sent with",
+    "showSent": "Show what was sent",
+    "usage": "{{tokens}} tokens · {{cost}}",
+    "estimated": "estimated",
+    "steps_one": "{{count}} step",
+    "steps_other": "{{count}} steps",
+    "sources": "Sources",
+    "cancelled": "Cancelled.",
+    "retry": "Try again"
+  },
+  "attachments": {
+    "label": "Attached",
+    "draftTag": "Draft",
+    "partialTag": "partial",
+    "changed": "changed",
+    "missing": "no longer exists",
+    "refresh": "Refresh context",
+    "refreshed": "Context refreshed. It applies from the next message on.",
+    "remove": "Remove {{name}}"
+  },
+  "suggest": {
+    "tag": "Suggestion",
+    "current": {
+      "workflow": "Current workflow",
+      "agent": "Current agent",
+      "tool": "Current tool",
+      "memory": "Current memory space",
+      "knowledge": "Current knowledge file",
+      "run": "Current run"
+    },
+    "unsaved": "unsaved changes",
+    "add": "Add",
+    "addSaved": "Saved version",
+    "addDraft": "Unsaved draft",
+    "ignore": "Ignore"
+  },
+  "kinds": {
+    "workflow": "Workflow",
+    "agent": "Agent",
+    "tool": "Tool",
+    "memory": "Memory",
+    "knowledge": "Knowledge",
+    "run": "Run"
+  },
+  "handover": {
+    "note": "Nothing has been changed. You review and start it there yourself.",
+    "workflow_architect_revise": {
+      "title": "Revision of “{{name}}”",
+      "open": "Open in the Workflow Architect"
+    },
+    "workflow_architect_create": {
+      "title": "New workflow",
+      "open": "Open in the Workflow Architect"
+    },
+    "agent_designer": {
+      "title": "New agent for “{{name}}”",
+      "open": "Open in the agent designer"
+    },
+    "tool_builder": {
+      "title": "New tool",
+      "open": "Open in tool generation"
+    }
+  },
+  "snapshot": {
+    "title": "Sent: {{name}}",
+    "meta": "{{kind}} · {{version}} · recorded {{time}} · {{size}} characters",
+    "text": "Exactly this data is what the assistant received for this object. Secrets are already replaced."
+  },
+  "picker": {
+    "title": "Attach an object",
+    "text": "The chosen object goes to the assistant with every message from the next one on, until you remove it.",
+    "kind": "Kind",
+    "search": "Search",
+    "empty": "Nothing found.",
+    "agentNote": "These are the agent templates. To attach an agent from a workflow, use the agent inspector in the editor.",
+    "attach": "Attach",
+    "memoryFiles": "Include the content of these files (otherwise only the list of files)",
+    "includeContent": "Include content",
+    "includeContentHint": "Without this permission the assistant only gets the file's name, description and type.",
+    "agents_one": "{{count}} agent",
+    "agents_other": "{{count}} agents",
+    "files_one": "{{count}} file",
+    "files_other": "{{count}} files"
+  },
+  "list": {
+    "title": "History",
+    "empty": "No chats yet.",
+    "rename": "Rename",
+    "delete": "Delete chat",
+    "meta_one": "{{count}} message · {{time}} · {{cost}}",
+    "meta_other": "{{count}} messages · {{time}} · {{cost}}"
+  },
+  "noProvider": "Set up {{provider}} first (the provider of the assistant model) to send questions."
+}

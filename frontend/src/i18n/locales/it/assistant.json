@@ -1,0 +1,142 @@
+{
+  "title": "Assistant",
+  "toggle": "Aprire o chiudere Nodestro Assistant",
+  "chatCost": "Questa chat: {{cost}}",
+  "docs": "Documentazione dell’assistente",
+  "newChat": "Nuova chat",
+  "wide": "Più largo",
+  "narrow": "Più stretto",
+  "close": "Chiudi",
+  "discuss": "Parlane con l’assistente",
+  "discussFile": "Parlane con l’assistente (con {{name}})",
+  "untitled": "Nuova chat",
+  "openSettings": "Vai alle impostazioni",
+  "welcome": {
+    "title": "Come posso aiutarti?",
+    "text": "Chiedimi come usare Nodestro oppure allega un workflow, un agente, uno strumento o un’esecuzione da esaminare insieme. Rispondo in base alla documentazione e non modifico mai nulla da solo.",
+    "privacy": "Viene inviato solo ciò che scrivi e alleghi esplicitamente. I segreti come le chiavi API vengono sostituiti prima.",
+    "examples": {
+      "createWorkflow": "Come creo un workflow con due agenti in parallelo?",
+      "knowledgeMemory": "Qual è la differenza tra conoscenza e memoria?",
+      "judge": "Come funziona il controllo qualità con un giudice?",
+      "testAgent": "Come provo il mio agente senza avviare l’intero workflow?",
+      "costs": "Come posso ridurre il costo dei miei workflow?"
+    }
+  },
+  "composer": {
+    "placeholder": "Fai una domanda … (Invio invia, Maiusc+Invio per una nuova riga)",
+    "label": "Messaggio all’assistente",
+    "attach": "Allega un oggetto",
+    "stop": "Interrompi",
+    "send": "Invia",
+    "hint": "L’assistente può sbagliare. Verifica le informazioni importanti nella documentazione collegata."
+  },
+  "steps": {
+    "context": "Elaborazione degli allegati: {{detail}}",
+    "docs_search": "Ricerca nella documentazione: {{detail}}",
+    "docs_read": "Lettura delle sezioni: {{detail}}",
+    "generate": "Scrittura della risposta …",
+    "handover": "Preparazione di un passaggio …"
+  },
+  "done": {
+    "context": "Allegati elaborati: {{detail}}",
+    "docs_search": "Documentazione consultata: {{detail}}",
+    "docs_read": "Sezioni lette: {{detail}}",
+    "generate": "Risposta scritta",
+    "handover": "Passaggio preparato"
+  },
+  "message": {
+    "sentWith": "Inviato con",
+    "showSent": "Mostra cosa è stato inviato",
+    "usage": "{{tokens}} token · {{cost}}",
+    "estimated": "stimato",
+    "steps_one": "{{count}} passo",
+    "steps_other": "{{count}} passi",
+    "sources": "Fonti",
+    "cancelled": "Annullato.",
+    "retry": "Riprova"
+  },
+  "attachments": {
+    "label": "Allegati",
+    "draftTag": "Bozza",
+    "partialTag": "parziale",
+    "changed": "modificato",
+    "missing": "non esiste più",
+    "refresh": "Aggiorna contesto",
+    "refreshed": "Contesto aggiornato. Vale dal prossimo messaggio.",
+    "remove": "Rimuovi {{name}}"
+  },
+  "suggest": {
+    "tag": "Suggerimento",
+    "current": {
+      "workflow": "Workflow attuale",
+      "agent": "Agente attuale",
+      "tool": "Strumento attuale",
+      "memory": "Spazio di memoria attuale",
+      "knowledge": "File di conoscenza attuale",
+      "run": "Esecuzione attuale"
+    },
+    "unsaved": "modifiche non salvate",
+    "add": "Aggiungi",
+    "addSaved": "Versione salvata",
+    "addDraft": "Bozza non salvata",
+    "ignore": "Ignora"
+  },
+  "kinds": {
+    "workflow": "Workflow",
+    "agent": "Agente",
+    "tool": "Strumento",
+    "memory": "Memoria",
+    "knowledge": "Conoscenza",
+    "run": "Esecuzione"
+  },
+  "handover": {
+    "note": "Non è stato modificato nulla. Lì controlli e avvii tu.",
+    "workflow_architect_revise": {
+      "title": "Revisione di «{{name}}»",
+      "open": "Apri nell’architetto di workflow"
+    },
+    "workflow_architect_create": {
+      "title": "Nuovo workflow",
+      "open": "Apri nell’architetto di workflow"
+    },
+    "agent_designer": {
+      "title": "Nuovo agente per «{{name}}»",
+      "open": "Apri nella progettazione agenti"
+    },
+    "tool_builder": {
+      "title": "Nuovo strumento",
+      "open": "Apri nella creazione strumenti"
+    }
+  },
+  "snapshot": {
+    "title": "Inviato: {{name}}",
+    "meta": "{{kind}} · {{version}} · registrato {{time}} · {{size}} caratteri",
+    "text": "Sono esattamente i dati che l’assistente ha ricevuto per questo oggetto. I segreti sono già sostituiti."
+  },
+  "picker": {
+    "title": "Allega un oggetto",
+    "text": "L’oggetto scelto va all’assistente con ogni messaggio a partire dal prossimo, finché non lo rimuovi.",
+    "kind": "Tipo",
+    "search": "Cerca",
+    "empty": "Nessun risultato.",
+    "agentNote": "Qui ci sono i modelli di agente. Un agente di un workflow si allega nell’editor dall’ispettore dell’agente.",
+    "attach": "Allega",
+    "memoryFiles": "Invia il contenuto di questi file (altrimenti solo l’elenco dei file)",
+    "includeContent": "Invia contenuto",
+    "includeContentHint": "Senza questo permesso l’assistente riceve solo nome, descrizione e tipo del file.",
+    "agents_one": "{{count}} agente",
+    "agents_other": "{{count}} agenti",
+    "files_one": "{{count}} file",
+    "files_other": "{{count}} file"
+  },
+  "list": {
+    "title": "Cronologia",
+    "empty": "Ancora nessuna chat.",
+    "rename": "Rinomina",
+    "delete": "Elimina chat",
+    "meta_one": "{{count}} messaggio · {{time}} · {{cost}}",
+    "meta_other": "{{count}} messaggi · {{time}} · {{cost}}"
+  },
+  "noProvider": "Configura prima {{provider}} (il provider del modello dell’assistente) per inviare domande."
+}

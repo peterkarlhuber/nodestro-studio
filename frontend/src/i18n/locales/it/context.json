@@ -1,0 +1,39 @@
+{
+  "system": "Prompt di sistema",
+  "task": "Compito con gli input inseriti",
+  "pending": "[manca ancora il risultato di {{name}}]",
+  "pendingHint": "{{name}} non ha ancora un risultato. In un’esecuzione qui va il suo output.",
+  "runInput": "Input dell’esecuzione",
+  "insertedFrom": "Inserito da: {{name}}",
+  "empty": "(vuoto)",
+  "truncated": "… (accorciato)",
+  "examples": "Messaggi di esempio",
+  "exampleCount_one": "{{count}} messaggio",
+  "exampleCount_other": "{{count}} messaggi",
+  "role": {
+    "user": "Utente",
+    "assistant": "Assistente"
+  },
+  "tools": "Strumenti",
+  "knowledge": "Conoscenza",
+  "knowledgeMode": {
+    "context": "Nel contesto",
+    "on_demand": "Su richiesta",
+    "search": "Ricerca"
+  },
+  "fileMissing": "File eliminato",
+  "runFiles": "File dell’esecuzione:",
+  "memory": "Memoria",
+  "memoryRun": "Memoria per esecuzione (parte vuota)",
+  "memoryPersistent_one": "Persistente: “{{space}}” con {{count}} file",
+  "memoryPersistent_other": "Persistente: “{{space}}” con {{count}} file",
+  "output": "Formato di output",
+  "outputStructured": "Strutturato: {{name}} ({{fields}})",
+  "outputText": "Testo libero",
+  "quality": "Controllo qualità",
+  "qualityOn": "Attivo",
+  "qualityOff": "Disattivato",
+  "requestOptions": "Opzioni della richiesta",
+  "secretsHidden": "Le credenziali non vengono mai mostrate qui.",
+  "runNote": "Così è stato chiamato l’agente in questa esecuzione: con la configurazione di allora e gli output dei suoi predecessori."
+}

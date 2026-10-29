@@ -1,0 +1,38 @@
+{
+  "title": "Backup and restore",
+  "intro": "A backup holds all workflows with their versions, agent templates, tools, knowledge files, memory, executions and settings in one ZIP file.",
+  "noKey": "For security no API keys of the AI providers are written into a backup. Restoring keeps the keys configured on this computer.",
+  "download": "Download backup",
+  "restoreFromFile": "Restore from file …",
+  "local_one": "{{count}} safety backup on this computer",
+  "local_other": "{{count}} safety backups on this computer",
+  "localText": "Before every restore Nodestro automatically saves a backup of the previous state.",
+  "downloadLocal": "Download",
+  "restoreThis": "Restore …",
+  "restoreTitle": "Restore backup",
+  "valid": "“{{name}}” is a valid backup from {{date}}. All files are complete and undamaged.",
+  "versions": "Created with Nodestro {{nodestro}} and agent library {{library}}.",
+  "inBackup": "In backup",
+  "current": "Current",
+  "contents": {
+    "workflows": "Workflows",
+    "versions": "Workflow versions",
+    "templates": "Agent templates",
+    "tools": "Custom tools",
+    "knowledge_files": "Knowledge files",
+    "memory_spaces": "Memory spaces",
+    "memory_files": "Memory files",
+    "runs": "Executions",
+    "usage_entries": "Other AI operations",
+    "conversations": "Assistant chats",
+    "input_files": "Uploaded input files"
+  },
+  "notes": {
+    "other_version": "The backup comes from another Nodestro version. It is taken over on restore; check your workflows briefly afterwards."
+  },
+  "replaceWarning": "Restoring replaces all current data with the state of the backup.",
+  "safetyNote": "The current state is backed up automatically first; afterwards you find it in the list of safety backups.",
+  "confirm": "I understand that my current data will be replaced.",
+  "restoreNow": "Restore now",
+  "restored": "Backup restored. The previous state is in “{{name}}”. The page reloads."
+}

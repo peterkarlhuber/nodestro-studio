@@ -1,0 +1,20 @@
+{
+  "button": "Probar agente",
+  "title": "Probar agente: {{name}}",
+  "note": "Una prueba ejecuta solo este agente con su configuración actual. No es una ejecución del flujo de trabajo, no aparece en «Ejecuciones» y no cambia ningún resultado.",
+  "input": "Entrada de prueba",
+  "inputHint": "Se inserta en la tarea del agente como la entrada de una ejecución (los marcadores de los predecesores quedan vacíos).",
+  "rawHint": "Se envía al agente sin cambios como su tarea.",
+  "placeholder": "Por ejemplo, un texto breve que el agente deba procesar …",
+  "raw": "Enviar la entrada directamente como tarea",
+  "rawDescription": "Ignora la plantilla de la tarea y envía solo la entrada de prueba.",
+  "costNote": "La prueba llama al proveedor del modelo y puede costar dinero: {{model}} cuesta {{input}} por millón de tokens de entrada y {{output}} por millón de tokens de salida (– significa desconocido). El coste aparece en «Uso».",
+  "memoryNote": "La memoria persistente solo se lee: la prueba trabaja sobre una copia y no cambia el espacio de memoria.",
+  "start": "Iniciar prueba",
+  "again": "Probar de nuevo",
+  "result": "Resultado de la prueba",
+  "badge": "Prueba, no es una ejecución",
+  "memoryIsolated": "Copia de la memoria",
+  "duration": "Duración",
+  "providerMissing": "Aún sin configurar: {{providers}}. Introduce el acceso en los ajustes para probar este agente."
+}

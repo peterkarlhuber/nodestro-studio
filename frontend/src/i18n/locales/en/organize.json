@@ -1,0 +1,17 @@
+{
+  "favorite": "Favorite",
+  "makeFavorite": "Mark “{{name}}” as favorite",
+  "unfavorite": "Remove “{{name}}” from favorites",
+  "editTags": "Edit tags of “{{name}}”",
+  "tagsTitle": "Tags: {{name}}",
+  "tagsText": "Tags help with filtering. They change nothing in the content.",
+  "noTags": "No tags yet.",
+  "removeTag": "Remove tag “{{tag}}”",
+  "newTag": "New tag",
+  "newTagPlaceholder": "e.g. Client A, Draft …",
+  "addTag": "Add",
+  "onlyFavorites": "Favorites only",
+  "filterTag": "Filter by tag",
+  "allTags": "All tags",
+  "noMatch": "Nothing matches the filter."
+}

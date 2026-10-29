@@ -1,0 +1,76 @@
+{
+  "description": "El manual de usuario de Nodestro: conceptos, cada ajuste, guías paso a paso, ejemplos y soluciones a errores frecuentes.",
+  "missingChapter": "Este capítulo no existe. Volver a la <link>vista general</link>.",
+  "onThisPage": "En esta página",
+  "linkTo": "Enlace a «{{title}}»",
+  "pager": "Pasar de capítulo",
+  "previous": "Anterior",
+  "next": "Siguiente",
+  "overview": {
+    "title": "Vista general",
+    "intro": "¿Primera vez? Empieza por <link>Primeros pasos</link>. También encontrarás explicaciones breves en la propia aplicación detrás de cada icono <strong>?</strong>.",
+    "sections_one": "{{count}} sección",
+    "sections_other": "{{count}} secciones"
+  },
+  "search": {
+    "placeholder": "Buscar en la documentación …",
+    "label": "Buscar en la documentación",
+    "clear": "Borrar búsqueda",
+    "results": "Resultados de búsqueda",
+    "hits_one": "{{value}} resultado para «{{query}}»",
+    "hits_other": "{{value}} resultados para «{{query}}»",
+    "noHits": "No hay resultados para «{{query}}»",
+    "tryOther": "Prueba con otra palabra, p. ej. «presupuesto», «marcador», «citas» o «sandbox»."
+  },
+  "models": {
+    "loading": "Cargando la lista de precios …",
+    "caption": "Modelos y precios en dólares estadounidenses por millón de tokens",
+    "use": "Uso",
+    "input": "Entrada",
+    "output": "Salida",
+    "cacheWrite": "Escritura en caché (5 min / 1 h)",
+    "cacheRead": "Lectura de caché",
+    "note": "Precios en dólares estadounidenses por millón de tokens (precio de lista, como los usa Nodestro para las estimaciones)."
+  },
+  "shortcuts": {
+    "key": "Tecla",
+    "action": "Acción",
+    "mac": "En el Mac se usa <kbd>⌘</kbd> en lugar de <kbd>Ctrl</kbd>.",
+    "save": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>S</kbd>",
+      "action": "Guardar el flujo de trabajo"
+    },
+    "undo": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>Z</kbd>",
+      "action": "Deshacer"
+    },
+    "redo": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>Z</kbd> o <kbd>Ctrl</kbd>+<kbd>Y</kbd>",
+      "action": "Rehacer"
+    },
+    "duplicate": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>D</kbd>",
+      "action": "Duplicar el nodo seleccionado"
+    },
+    "delete": {
+      "keys": "<kbd>Supr</kbd> o <kbd>Retroceso</kbd>",
+      "action": "Eliminar el nodo o la conexión seleccionados"
+    },
+    "canvas": {
+      "keys": "Rueda del ratón, arrastrar el lienzo",
+      "action": "Hacer zoom y desplazar el lienzo"
+    },
+    "escape": {
+      "keys": "<kbd>Esc</kbd>",
+      "action": "Cerrar un diálogo o una explicación"
+    },
+    "search": {
+      "keys": "<kbd>/</kbd>",
+      "action": "En la documentación: ir a la búsqueda"
+    },
+    "assistant": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>J</kbd>",
+      "action": "Abrir o cerrar Nodestro Assistant"
+    }
+  }
+}

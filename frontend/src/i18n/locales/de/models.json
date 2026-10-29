@@ -1,0 +1,6 @@
+{
+  "pricePerMTok": "{{input}} / {{output}} pro Million Tokens (Eingabe / Ausgabe)",
+  "current": "Aktuell",
+  "older": "Ältere Modelle",
+  "priceUnknown": "Preis unbekannt: Kosten erscheinen als unbekannt, nie als 0"
+}

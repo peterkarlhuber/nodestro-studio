@@ -1,0 +1,84 @@
+{
+  "title": "Configurações",
+  "description": "Valem para esta instalação local do Nodestro.",
+  "saved": "Configurações salvas",
+  "language": {
+    "title": "Idioma",
+    "label": "Idioma da interface",
+    "automatic": "Automático (idioma do navegador)",
+    "automaticHint": "Segue o idioma do seu navegador, no momento {{language}}. Idiomas não suportados mostram inglês.",
+    "hint": "Vale na hora e fica salvo, mesmo depois de reiniciar.",
+    "contentNote": "O idioma muda apenas a interface. Seus agentes, prompts, fluxos de trabalho e resultados continuam no idioma original. Novos rascunhos dos assistentes de IA são criados neste idioma, a menos que você peça outro."
+  },
+  "models": {
+    "title": "Modelos e orçamento",
+    "defaultModel": "Modelo padrão para novos agentes",
+    "assistantModel": "Modelo dos assistentes",
+    "assistantHint": "Cria agentes a partir da sua descrição, escreve ferramentas e sugere memória.",
+    "budget": "Orçamento padrão por execução (USD)",
+    "budgetHint": "Uma execução para assim que os custos estimados ultrapassam o orçamento. Vazio = sem limite.",
+    "architectBudget": "Limite de custo do arquiteto (USD por rascunho)",
+    "architectBudgetHint": "O arquiteto para quando um rascunho custa mais. Vazio = sem limite.",
+    "architectRepairs": "Correções com IA por rascunho",
+    "architectRepairsHint": "Quantas vezes o arquiteto pode pedir à IA que corrija uma configuração ou rascunho de ferramenta (0 a 5). Correções sem IA sempre são feitas.",
+    "defaultHint": "Novos agentes começam com este provedor e modelo."
+  },
+  "sandbox": {
+    "title": "Sandbox para ferramentas próprias",
+    "label": "Sandbox",
+    "text": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro. O processo Python fica disponível na hora; o Docker isola mais (sem rede, memória limitada).",
+    "subprocess": "Processo Python",
+    "dockerAvailable": "Docker disponível",
+    "dockerMissing": "Docker não encontrado",
+    "dockerUnreachable": "Não foi possível acessar o Docker. Testes e chamadas de ferramentas falharão até o Docker estar em execução."
+  },
+  "about": {
+    "title": "Sobre o Nodestro",
+    "data": "Todos os dados ficam guardados localmente em um banco de dados SQLite (padrão: <code>~/.nodestro</code>, alterável com <code>NODESTRO_DATA_DIR</code>)."
+  },
+  "ocr": {
+    "title": "Reconhecimento de texto (OCR)",
+    "text": "Reconhece texto em PDFs digitalizados localmente com Tesseract. Nenhum dado é enviado. Palavras incertas são marcadas.",
+    "label": "Usar OCR para digitalizações",
+    "available": "Tesseract encontrado",
+    "missing": "Tesseract não instalado"
+  },
+  "providers": {
+    "title": "Provedores de IA",
+    "intro": "O Nodestro trabalha com vários provedores ao mesmo tempo. Cada agente usa o provedor do seu modelo; nada troca sozinho para outro provedor.",
+    "configured": "Configurado",
+    "notConfigured": "Não configurado",
+    "fromEnvironment": "A chave vem da variável de ambiente <code>{{variable}}</code>; uma chave salva aqui não é usada nesse caso.",
+    "keyStored": "Há uma chave salva. Ela nunca é exibida e só é enviada a este provedor.",
+    "keyMissing": "Ainda não há chave. Informe-a aqui ou defina <code>{{variables}}</code>.",
+    "apiKey": "Chave de API",
+    "apiKeyOptional": "Chave de API (opcional)",
+    "apiKeyFor": "Chave de API para {{provider}}",
+    "baseUrl": "URL base",
+    "baseUrlDefault": "Para um servidor local, geralmente {{url}}. O provedor conta como configurado assim que uma URL base é salva.",
+    "baseUrlHint": "O endereço da API compatível com OpenAI, por exemplo https://example.com/v1.",
+    "baseUrlFor": "URL base de {{provider}}",
+    "capabilities": "O que os modelos sabem fazer",
+    "capabilitiesHint": "O Nodestro não supõe nada sobre seus próprios servidores: opções que um modelo não suporta, ou desconhecidas, são relatadas como erros em vez de omitidas.",
+    "state": {
+      "unknown": "Desconhecido",
+      "supported": "Suportado",
+      "unsupported": "Não suportado"
+    },
+    "saveEndpoint": "Salvar endpoint",
+    "test": "Testar conexão",
+    "capability": {
+      "tools": "Ferramentas",
+      "forced_tool_choice": "Escolha de ferramenta forçada",
+      "parallel_tool_calls": "Chamadas de ferramentas em paralelo",
+      "strict_tool_schemas": "Esquemas de ferramentas estritos",
+      "structured_output": "Saída estruturada",
+      "streaming": "Streaming",
+      "image_input": "Imagens como entrada",
+      "document_input": "Documentos PDF como entrada",
+      "reasoning": "Esforço de raciocínio",
+      "caching": "Cache de prompts",
+      "system_messages": "Mensagens de sistema"
+    }
+  }
+}

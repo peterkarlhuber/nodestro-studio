@@ -1,0 +1,28 @@
+{
+  "description": "Toutes les validations qui attendent une décision, la plus ancienne en premier. Elles sont conservées après un redémarrage.",
+  "empty": "Aucune validation en attente",
+  "emptyText": "Dès qu’une exécution atteint un nœud de validation, elle apparaît ici.",
+  "cardLabel": "Validation {{name}}",
+  "waitingSince": "en attente depuis {{time}}",
+  "trigger": {
+    "schedule": "d’une planification",
+    "batch": "d’un lot",
+    "benchmark": "d’une série de tests",
+    "subworkflow": "d’un sous-workflow",
+    "resume": "d’une reprise",
+    "manual": "lancée manuellement",
+    "api": "depuis l’API publiée"
+  },
+  "nothingToShow": "Aucun résultat n’arrive ici ; la vérification porte sur le déroulement lui-même.",
+  "comment": "Commentaire (facultatif)",
+  "commentRequired": "Commentaire (obligatoire en cas de refus)",
+  "commentHint": "Les agents suivants peuvent lire le commentaire.",
+  "commentFirst": "Indiquez d’abord une raison au refus.",
+  "rejectStops": "Un refus termine l’exécution.",
+  "rejectBranch": "En cas de refus, l’exécution continue dans la branche « Refusé ».",
+  "rejectEnds": "En cas de refus, ce chemin s’arrête (aucune branche « Refusé » reliée).",
+  "approve": "Valider",
+  "reject": "Refuser",
+  "approvedToast": "Validé. L’exécution continue.",
+  "rejectedToast": "Refusé."
+}

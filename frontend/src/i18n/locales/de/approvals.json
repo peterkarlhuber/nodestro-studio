@@ -1,0 +1,28 @@
+{
+  "description": "Alle Freigaben, die auf eine Entscheidung warten, die älteste zuerst. Sie bleiben auch nach einem Neustart erhalten.",
+  "empty": "Keine offenen Freigaben",
+  "emptyText": "Sobald ein Lauf einen Freigabe-Knoten erreicht, erscheint er hier.",
+  "cardLabel": "Freigabe {{name}}",
+  "waitingSince": "wartet seit {{time}}",
+  "trigger": {
+    "schedule": "aus einem Zeitplan",
+    "batch": "aus einem Stapel",
+    "benchmark": "aus einer Testreihe",
+    "subworkflow": "aus einem Unterworkflow",
+    "resume": "aus einer Fortsetzung",
+    "manual": "manuell gestartet",
+    "api": "aus der veröffentlichten API"
+  },
+  "nothingToShow": "Es kommen keine Ergebnisse an; geprüft wird der Ablauf selbst.",
+  "comment": "Kommentar (optional)",
+  "commentRequired": "Kommentar (bei Ablehnung Pflicht)",
+  "commentHint": "Nachfolgende Agenten können den Kommentar lesen.",
+  "commentFirst": "Gib zuerst einen Grund für die Ablehnung an.",
+  "rejectStops": "Eine Ablehnung beendet den Lauf.",
+  "rejectBranch": "Bei Ablehnung geht es im Zweig „Abgelehnt“ weiter.",
+  "rejectEnds": "Bei Ablehnung endet dieser Pfad (kein Zweig „Abgelehnt“ verbunden).",
+  "approve": "Freigeben",
+  "reject": "Ablehnen",
+  "approvedToast": "Freigegeben. Der Lauf geht weiter.",
+  "rejectedToast": "Abgelehnt."
+}

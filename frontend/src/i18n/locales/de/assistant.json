@@ -1,0 +1,142 @@
+{
+  "title": "Assistant",
+  "toggle": "Nodestro Assistant öffnen oder schließen",
+  "chatCost": "Dieser Chat: {{cost}}",
+  "docs": "Dokumentation zum Assistant",
+  "newChat": "Neuer Chat",
+  "wide": "Breiter",
+  "narrow": "Schmaler",
+  "close": "Schließen",
+  "discuss": "Mit Assistant besprechen",
+  "discussFile": "Mit Assistant besprechen (mit {{name}})",
+  "untitled": "Neuer Chat",
+  "openSettings": "Zu den Einstellungen",
+  "welcome": {
+    "title": "Wie kann ich helfen?",
+    "text": "Frag mich zur Bedienung von Nodestro oder hänge einen Workflow, Agenten, ein Tool oder eine Ausführung an, die wir gemeinsam ansehen. Ich antworte auf Grundlage der Dokumentation und ändere selbst nichts.",
+    "privacy": "Gesendet wird nur, was du schreibst und ausdrücklich anhängst. Geheimnisse wie API-Schlüssel werden vorher ersetzt.",
+    "examples": {
+      "createWorkflow": "Wie erstelle ich einen Workflow mit zwei parallelen Agenten?",
+      "knowledgeMemory": "Was ist der Unterschied zwischen Wissen und Memory?",
+      "judge": "Wie funktioniert die Qualitätsprüfung mit einem Judge?",
+      "testAgent": "Wie teste ich meinen Agenten, ohne den ganzen Workflow zu starten?",
+      "costs": "Wie kann ich die Kosten meiner Workflows senken?"
+    }
+  },
+  "composer": {
+    "placeholder": "Frage stellen … (Enter sendet, Umschalt+Enter für eine neue Zeile)",
+    "label": "Nachricht an den Assistant",
+    "attach": "Objekt anhängen",
+    "stop": "Stopp",
+    "send": "Senden",
+    "hint": "Der Assistant kann sich irren. Prüfe wichtige Angaben in der verlinkten Dokumentation."
+  },
+  "steps": {
+    "context": "Anhänge werden verarbeitet: {{detail}}",
+    "docs_search": "Dokumentation wird durchsucht: {{detail}}",
+    "docs_read": "Abschnitte werden gelesen: {{detail}}",
+    "generate": "Antwort wird erstellt …",
+    "handover": "Übergabe wird vorbereitet …"
+  },
+  "done": {
+    "context": "Anhänge verarbeitet: {{detail}}",
+    "docs_search": "Dokumentation durchsucht: {{detail}}",
+    "docs_read": "Abschnitte gelesen: {{detail}}",
+    "generate": "Antwort erstellt",
+    "handover": "Übergabe vorbereitet"
+  },
+  "message": {
+    "sentWith": "Gesendet mit",
+    "showSent": "Zeigen, was gesendet wurde",
+    "usage": "{{tokens}} Tokens · {{cost}}",
+    "estimated": "geschätzt",
+    "steps_one": "{{count}} Arbeitsschritt",
+    "steps_other": "{{count}} Arbeitsschritte",
+    "sources": "Quellen",
+    "cancelled": "Abgebrochen.",
+    "retry": "Erneut versuchen"
+  },
+  "attachments": {
+    "label": "Angehängt",
+    "draftTag": "Entwurf",
+    "partialTag": "teilweise",
+    "changed": "geändert",
+    "missing": "nicht mehr vorhanden",
+    "refresh": "Kontext aktualisieren",
+    "refreshed": "Kontext aktualisiert. Er gilt ab der nächsten Nachricht.",
+    "remove": "{{name}} entfernen"
+  },
+  "suggest": {
+    "tag": "Vorschlag",
+    "current": {
+      "workflow": "Aktueller Workflow",
+      "agent": "Aktueller Agent",
+      "tool": "Aktuelles Tool",
+      "memory": "Aktueller Memory-Raum",
+      "knowledge": "Aktuelle Wissensdatei",
+      "run": "Aktuelle Ausführung"
+    },
+    "unsaved": "ungespeicherte Änderungen",
+    "add": "Hinzufügen",
+    "addSaved": "Gespeicherte Version",
+    "addDraft": "Ungespeicherten Entwurf",
+    "ignore": "Ignorieren"
+  },
+  "kinds": {
+    "workflow": "Workflow",
+    "agent": "Agent",
+    "tool": "Tool",
+    "memory": "Memory",
+    "knowledge": "Wissen",
+    "run": "Ausführung"
+  },
+  "handover": {
+    "note": "Nichts wurde geändert. Dort prüfst und startest du selbst.",
+    "workflow_architect_revise": {
+      "title": "Überarbeitung von „{{name}}“",
+      "open": "Im Workflow-Architekten öffnen"
+    },
+    "workflow_architect_create": {
+      "title": "Neuer Workflow",
+      "open": "Im Workflow-Architekten öffnen"
+    },
+    "agent_designer": {
+      "title": "Neuer Agent für „{{name}}“",
+      "open": "Im Agenten-Entwurf öffnen"
+    },
+    "tool_builder": {
+      "title": "Neues Tool",
+      "open": "In der Tool-Erstellung öffnen"
+    }
+  },
+  "snapshot": {
+    "title": "Gesendet: {{name}}",
+    "meta": "{{kind}} · {{version}} · festgehalten {{time}} · {{size}} Zeichen",
+    "text": "Genau diese Daten hat der Assistant zu diesem Objekt bekommen. Geheimnisse sind bereits ersetzt."
+  },
+  "picker": {
+    "title": "Objekt anhängen",
+    "text": "Das gewählte Objekt geht ab der nächsten Nachricht an den Assistant mit, bis du es entfernst.",
+    "kind": "Art",
+    "search": "Suchen",
+    "empty": "Nichts gefunden.",
+    "agentNote": "Hier stehen die Agenten-Vorlagen. Einen Agenten aus einem Workflow hängst du im Editor über den Agenten-Inspektor an.",
+    "attach": "Anhängen",
+    "memoryFiles": "Inhalt dieser Dateien mitsenden (sonst nur die Dateiliste)",
+    "includeContent": "Inhalt mitsenden",
+    "includeContentHint": "Ohne diese Freigabe bekommt der Assistant nur Name, Beschreibung und Typ der Datei.",
+    "agents_one": "{{count}} Agent",
+    "agents_other": "{{count}} Agenten",
+    "files_one": "{{count}} Datei",
+    "files_other": "{{count}} Dateien"
+  },
+  "list": {
+    "title": "Verlauf",
+    "empty": "Noch keine Chats.",
+    "rename": "Umbenennen",
+    "delete": "Chat löschen",
+    "meta_one": "{{count}} Nachricht · {{time}} · {{cost}}",
+    "meta_other": "{{count}} Nachrichten · {{time}} · {{cost}}"
+  },
+  "noProvider": "Richte zuerst {{provider}} ein (den Anbieter des Assistenzmodells), um Fragen zu senden."
+}

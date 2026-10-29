@@ -1,0 +1,11 @@
+{
+  "skipToContent": "Skip to content",
+  "home": "Nodestro Studio, go to the start page",
+  "theme": "Colour scheme",
+  "dark": "Dark",
+  "light": "Light",
+  "mainNavigation": "Main navigation",
+  "privateTitle": "Local & private",
+  "privateText": "Nodestro runs only on your computer. Data leaves it only for requests to the AI providers you set up.",
+  "providerMissing": "Set up AI provider"
+}

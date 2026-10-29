@@ -1,0 +1,46 @@
+{
+  "idle": {
+    "label": "Ready",
+    "description": "Not run yet."
+  },
+  "waiting": {
+    "label": "Waiting",
+    "description": "Waits until all predecessors are done."
+  },
+  "queued": {
+    "label": "Queued",
+    "description": "The run has been created and starts shortly."
+  },
+  "running": {
+    "label": "Running",
+    "description": "Being run right now."
+  },
+  "succeeded": {
+    "label": "Done",
+    "description": "Completed successfully."
+  },
+  "failed": {
+    "label": "Error",
+    "description": "Failed. The error message is in the details; the steps after it are blocked."
+  },
+  "skipped": {
+    "label": "Skipped",
+    "description": "Not run because this branch was not chosen. This is not an error."
+  },
+  "cancelled": {
+    "label": "Cancelled",
+    "description": "Ended by cancelling or by an incomplete trace."
+  },
+  "blocked": {
+    "label": "Blocked",
+    "description": "Not run because a predecessor failed or was cancelled."
+  },
+  "awaiting_approval": {
+    "label": "Awaiting approval",
+    "description": "A person has to approve or reject; the run waits until then."
+  },
+  "paused": {
+    "label": "Paused",
+    "description": "The run waits for an approval and continues after the decision."
+  }
+}
