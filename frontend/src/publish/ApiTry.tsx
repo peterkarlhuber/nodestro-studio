@@ -30,6 +30,8 @@ export function ApiTry({
   });
   const [body, setBody] = useState<string | null>(null);
   const text = body ?? (docs.data ? JSON.stringify(docs.data.examples.request, null, 2) : "");
+  // Until the example request has loaded, an empty body would be checked instead of it.
+  const waiting = body === null && docs.isLoading;
   const [result, setResult] = useState<ApiValidation | ApiRunStatus | null>(null);
   const [parseError, setParseError] = useState(false);
 
@@ -75,7 +77,13 @@ export function ApiTry({
       </Field>
       <div className="row-gap">
         <Hint id="publish.validate">
-          <Button icon={CheckCheck} busy={send.isPending && send.variables === true} onClick={() => send.mutate(true)} data-testid="api-try-validate">
+          <Button
+            icon={CheckCheck}
+            disabled={waiting}
+            busy={send.isPending && send.variables === true}
+            onClick={() => send.mutate(true)}
+            data-testid="api-try-validate"
+          >
             {t("publish.try.validate")}
           </Button>
         </Hint>
@@ -83,7 +91,7 @@ export function ApiTry({
           <Button
             variant="primary"
             icon={Play}
-            disabled={!publication.enabled}
+            disabled={!publication.enabled || waiting}
             busy={send.isPending && send.variables === false}
             onClick={() => send.mutate(false)}
             data-testid="api-try-run"

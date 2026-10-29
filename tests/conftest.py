@@ -27,7 +27,7 @@ def make_app(tmp_path: Path) -> Iterator[Callable[..., TestClient]]:
             integrations=[],
             scheduler=False,
         )
-        test_client = TestClient(app)
+        test_client = TestClient(app, base_url="http://127.0.0.1")
         test_client.__enter__()
         test_client.fake = client  # type: ignore[attr-defined]
         clients.append(test_client)
