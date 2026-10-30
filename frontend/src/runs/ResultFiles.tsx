@@ -10,7 +10,7 @@ import { keys } from "../api/hooks";
 import type { AdoptSource, ReportFormat, ResultFile, Run } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, HelpTip, IconButton, Modal, Select, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, IconButton, Modal, Select, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatBytes, formatDate } from "../lib/format";
 
@@ -77,7 +77,7 @@ export function ResultFiles({ run }: { run: Run }) {
                   label={t("inputs.adopt.resultFile", { name: file.name })}
                   onClick={() => setAdopting([{ kind: "result_file", run_id: run.id, file_id: file.id }])}
                 />
-                <IconButton icon={Trash2} label={t("flow.files.delete", { name: file.name })} onClick={() => remove.mutate(file)} />
+                <ConfirmIconButton icon={Trash2} label={t("flow.files.delete", { name: file.name })} onConfirm={() => remove.mutate(file)} />
               </span>
             )}
           </li>

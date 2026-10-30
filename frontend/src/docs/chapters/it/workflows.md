@@ -30,7 +30,9 @@ L'editor ha quattro aree:
 3. **Blocchi (palette):** *Agente* (vuoto), *Descrivi un agente* (l'IA progetta la configurazione), *Avvio*, *Risultato* e fino a otto modelli dalla libreria degli agenti. Trascina un blocco sull'area di lavoro o fai clic su di esso.
 4. **Ispettore (a destra):** senza selezione mostra le impostazioni del workflow, altrimenti la configurazione del nodo selezionato.
 
-Sotto l'area di lavoro c'è la **Panoramica dell'esecuzione** con l'ultima esecuzione di questo workflow. Si può espandere e comprimere.
+Sotto l'area di lavoro c'è la **Panoramica dell'esecuzione** con l'ultima esecuzione di questo workflow.
+
+I blocchi, l'ispettore (con il titolo *Proprietà*) e la panoramica dell'esecuzione sono pannelli. Il pulsante nell'intestazione di un pannello lo nasconde o lo mostra; un pannello nascosto lascia una barra stretta, e i blocchi restano disponibili come icone. Il divisore tra un pannello e l'area di lavoro ne cambia la dimensione: trascinalo, oppure selezionalo con *Tab* e usa i tasti freccia (con *Maiusc* a passi più grandi). Un doppio clic sul divisore ripristina la dimensione predefinita. Quando l'ispettore è nascosto, la sua barra indica il nodo selezionato; un doppio clic su un nodo ne mostra le proprietà. Nodestro ricorda la disposizione in questo browser per tutti i workflow. Non fa parte del workflow: modificarla non crea mai modifiche non salvate né un passaggio di annullamento, e un workflow in esecuzione continua a girare.
 
 ## Tipi di nodi {#knoten}
 <!-- keywords: avvio, risultato, output, agente, nodo, ingresso, uscita -->
@@ -178,7 +180,7 @@ Altri suggerimenti:
 - **Disponi automaticamente** dispone i nodi in colonne secondo la loro posizione nel flusso dei dati.
 - **Mostra tutto** regola lo zoom in modo che sia visibile l'intero workflow.
 - Se lasci l'editor con modifiche non salvate, Nodestro chiede se salvarle o scartarle.
-- Annulla ricorda fino a 80 passaggi.
+- Annulla ricorda fino a 80 passaggi. Spostare un nodo è un passaggio, così come scrivere in un campo finché non passi a un altro campo o nodo. Nome, descrizione e budget del workflow sono inclusi.
 
 - **Eliminare connessioni:** fai clic su una connessione. Viene evidenziata, e **Canc** o **Backspace** la elimina. Mentre scrivi in un campo di input, questi tasti cancellano solo testo. Anche l’eliminazione di una connessione si può annullare.
 - La barra **Blocchi** è sempre chiusa all’apertura dell’editor; una volta aperta, resta aperta finché non esci dall’editor.

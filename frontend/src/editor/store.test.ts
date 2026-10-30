@@ -252,3 +252,81 @@ describe("editor store", () => {
     expect(useEditor.getState().past).toEqual([]);
   });
 });
+
+describe("editor undo history", () => {
+  beforeEach(() => useEditor.getState().load(workflow()));
+
+  const position = (id: string) => useEditor.getState().nodes.find((node) => node.id === id)!.position;
+
+  it("undoes a whole node drag in one step, back to where it started", () => {
+    const { moveNodes } = useEditor.getState();
+    for (let step = 1; step <= 5; step += 1) moveNodes({ a: { x: 300 + step * 40, y: step * 10 } }, false);
+    moveNodes({ a: { x: 520, y: 60 } }, true);
+    expect(position("a")).toEqual({ x: 520, y: 60 });
+    expect(useEditor.getState().dirty).toBe(true);
+    expect(useEditor.getState().past).toHaveLength(1);
+    useEditor.getState().undo();
+    expect(position("a")).toEqual({ x: 300, y: 0 });
+    useEditor.getState().redo();
+    expect(position("a")).toEqual({ x: 520, y: 60 });
+  });
+
+  it("does not record a click on a node that did not move", () => {
+    useEditor.getState().moveNodes({ a: { x: 300, y: 0 } }, false);
+    useEditor.getState().moveNodes({}, true);
+    expect(useEditor.getState().past).toHaveLength(0);
+    expect(useEditor.getState().dirty).toBe(false);
+  });
+
+  it("records typing in one field as one step, and each field separately", () => {
+    const { updateAgent } = useEditor.getState();
+    for (const prompt of ["W", "Wr", "Write"]) updateAgent("a", { system_prompt: prompt });
+    updateAgent("a", { task_template: "Summarize" });
+    expect(useEditor.getState().past).toHaveLength(2);
+    useEditor.getState().undo();
+    const agent = () => useEditor.getState().nodes.find((node) => node.id === "a")!.agent!;
+    expect(agent().task_template).not.toBe("Summarize");
+    expect(agent().system_prompt).toBe("Write");
+    useEditor.getState().undo();
+    expect(agent().system_prompt).not.toBe("Write");
+  });
+
+  it("keeps typed text when an earlier step is undone and redone", () => {
+    useEditor.getState().addNode("agent", { x: 900, y: 0 });
+    useEditor.getState().updateAgent("a", { system_prompt: "Typed after adding" });
+    useEditor.getState().undo();
+    expect(useEditor.getState().nodes).toHaveLength(4);
+    useEditor.getState().redo();
+    expect(useEditor.getState().nodes.find((node) => node.id === "a")!.agent!.system_prompt).toBe("Typed after adding");
+  });
+
+  it("includes the workflow name, description and budget", () => {
+    useEditor.getState().setMeta({ name: "Renamed" });
+    useEditor.getState().setMeta({ name: "Renamed workflow" });
+    useEditor.getState().setMeta({ budget: 2 });
+    useEditor.getState().undo();
+    expect(useEditor.getState().budget).toBeNull();
+    expect(useEditor.getState().name).toBe("Renamed workflow");
+    useEditor.getState().undo();
+    expect(useEditor.getState().name).toBe("Test");
+  });
+
+  it("starts a new step after selecting another node", () => {
+    useEditor.getState().updateNode("start", { label: "In" }, { record: false });
+    useEditor.getState().select("a");
+    useEditor.getState().select("start");
+    useEditor.getState().updateNode("start", { label: "Input" }, { record: false });
+    expect(useEditor.getState().past).toHaveLength(2);
+  });
+
+  it("keeps edits made while a save was running as unsaved", () => {
+    useEditor.getState().setMeta({ name: "Saved name" });
+    const sent = useEditor.getState().toWorkflow();
+    useEditor.getState().updateAgent("a", { system_prompt: "Typed during the save" });
+    useEditor.getState().markSaved({ ...workflow(), name: "Saved name" }, sent);
+    expect(useEditor.getState().dirty).toBe(true);
+    const again = useEditor.getState().toWorkflow();
+    useEditor.getState().markSaved({ ...workflow(), name: "Saved name" }, again);
+    expect(useEditor.getState().dirty).toBe(false);
+  });
+});

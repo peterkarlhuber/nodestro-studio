@@ -21,7 +21,7 @@ export function DiscussButton({ offer, size }: { offer: ContextOffer | null; siz
   return (
     <Hint id="assistant.discuss">
       <Button icon={MessageSquare} variant="ghost" size={size} onClick={() => discussOffer(offer)} data-testid="discuss-assistant">
-        {t("assistant.discuss")}
+        <span className="title-actions__label">{t("assistant.discuss")}</span>
       </Button>
     </Hint>
   );

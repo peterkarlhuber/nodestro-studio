@@ -36,21 +36,7 @@ import {
   applyOrganize,
 } from "../components/Organize";
 import { toast } from "../components/toast";
-import {
-  Badge,
-  Button,
-  Callout,
-  EmptyState,
-  Field,
-  HelpTip,
-  Hint,
-  IconButton,
-  PageHeader,
-  Segmented,
-  Spinner,
-  TextArea,
-  TextInput,
-} from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, PageHeader, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
 import { toolDescription } from "../lib/catalog";
 import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
@@ -301,11 +287,7 @@ function ToolDetail({
           <FavoriteButton kind="tool" id={tool.name} name={tool.name} />
           <TagEditor kind="tool" id={tool.name} name={tool.name} />
           {tool.kind !== "builtin" ? (
-            <IconButton
-              icon={Trash2}
-              label={t("tools.delete")}
-              onClick={() => remove.mutate()}
-            />
+            <ConfirmIconButton icon={Trash2} label={t("tools.delete")} busy={remove.isPending} onConfirm={() => remove.mutate()} />
           ) : null}
         </div>
       </div>

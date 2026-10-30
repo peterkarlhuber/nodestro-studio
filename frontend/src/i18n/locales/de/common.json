@@ -30,5 +30,6 @@
   "dismissMessage": "Meldung schließen",
   "saved": "Gespeichert",
   "yes": "Ja",
-  "no": "Nein"
+  "no": "Nein",
+  "confirmDelete": "Wirklich löschen?"
 }

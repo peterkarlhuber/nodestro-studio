@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "../api/client";
 import type { ApiOverview, ApiScope, NetworkConfig, NewApiKey } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, Hint, IconButton, Modal, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, Field, Hint, IconButton, Modal, TextInput, Toggle } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import { apiKeys } from "./ApiDialog";
@@ -165,7 +165,7 @@ export function ApiAccess({ overview, onChanged }: { overview: ApiOverview; onCh
                   <td>{key.last_used_at ? formatDate(key.last_used_at) : t("publish.keys.never")}</td>
                   <td className="api-key-actions">
                     {key.revoked_at ? (
-                      <IconButton icon={Trash2} label={t("publish.keys.delete")} onClick={() => remove.mutate(key.id)} />
+                      <ConfirmIconButton icon={Trash2} label={t("publish.keys.delete")} onConfirm={() => remove.mutate(key.id)} />
                     ) : (
                       <>
                         <IconButton icon={RefreshCw} label={t("publish.keys.rotate")} onClick={() => rotate.mutate(key.id)} />

@@ -1074,6 +1074,8 @@ ol {
 
 .segmented {
   display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
   padding: 3px;
   gap: 2px;
   border: 1px solid var(--nd-border);
@@ -1723,10 +1725,24 @@ details[open] > summary > .section__chevron {
 
 /* ---- editor ------------------------------------------------------------------- */
 
+/*
+ * Three panels around the canvas: building blocks (left), properties (right) and the execution
+ * overview (bottom). Their sizes are CSS variables set by the editor (editor/layout.ts); min()
+ * keeps the canvas usable when the window becomes smaller than the stored sizes allow. The
+ * percentages match PANEL_SHARE in layout.ts.
+ */
 .editor {
+  --editor-palette-width: 232px;
+  --editor-inspector-width: 320px;
+  --editor-run-height: 260px;
+  --editor-rail: 44px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
+  grid-template-columns: minmax(0, 1fr) auto min(var(--editor-inspector-width), 45%);
   height: 100%;
+}
+
+.editor.editor--inspector-collapsed {
+  grid-template-columns: minmax(0, 1fr) var(--editor-rail);
 }
 
 .editor__main {
@@ -1734,12 +1750,155 @@ details[open] > summary > .section__chevron {
   flex-direction: column;
   min-width: 0;
   min-height: 0;
+  container: editor-main / inline-size;
+}
+
+.editor__workspace {
+  display: flex;
+  flex: 1;
+  min-height: 180px;
+  min-width: 0;
 }
 
 .editor__canvas {
   position: relative;
   flex: 1;
-  min-height: 240px;
+  min-width: 0;
+  min-height: 180px;
+  container: editor-canvas / inline-size;
+}
+
+/* A narrow canvas keeps its room for the graph: the overview map would cover most of it. */
+@container editor-canvas (max-width: 520px) {
+  .canvas .minimap {
+    display: none;
+  }
+}
+
+/* Panel headers share one look: a short title and the button that shows or hides the panel. */
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nd-space-2);
+  min-height: 44px;
+  padding: 6px 8px 6px 14px;
+}
+
+.panel-head__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--nd-text-muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Dividers: a thin line with a wide, invisible grip; brand coloured while hovered, focused or dragged. */
+.splitter {
+  position: relative;
+  z-index: 6;
+  flex: none;
+  background: var(--nd-border);
+  touch-action: none;
+}
+
+.splitter::before {
+  content: "";
+  position: absolute;
+}
+
+.splitter::after {
+  content: "";
+  position: absolute;
+  border-radius: 2px;
+  background: var(--nd-border-strong);
+  opacity: 0;
+  transition: opacity var(--nd-duration-fast);
+}
+
+.splitter--vertical {
+  width: 1px;
+  cursor: col-resize;
+}
+
+.splitter--vertical::before {
+  inset: 0 -5px;
+}
+
+.splitter--vertical::after {
+  top: 50%;
+  left: -2px;
+  width: 5px;
+  height: 36px;
+  transform: translateY(-50%);
+}
+
+.splitter--horizontal {
+  height: 1px;
+  cursor: row-resize;
+}
+
+.splitter--horizontal::before {
+  inset: -5px 0;
+}
+
+.splitter--horizontal::after {
+  left: 50%;
+  top: -2px;
+  width: 36px;
+  height: 5px;
+  transform: translateX(-50%);
+}
+
+.splitter:hover,
+.splitter:focus-visible,
+.is-resizing .splitter:active {
+  background: var(--nd-brand);
+}
+
+.splitter:hover::after,
+.splitter:focus-visible::after,
+.is-resizing .splitter:active::after {
+  opacity: 1;
+  background: var(--nd-brand);
+}
+
+.splitter:focus-visible {
+  outline: 2px solid var(--nd-focus);
+  outline-offset: 1px;
+}
+
+/* While a divider is dragged: no text selection, and the resize cursor everywhere. */
+body.is-resizing {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body.is-resizing--x,
+body.is-resizing--x * {
+  cursor: col-resize !important;
+}
+
+body.is-resizing--y,
+body.is-resizing--y * {
+  cursor: row-resize !important;
+}
+
+@media (pointer: coarse) {
+  .splitter--vertical::before {
+    inset: 0 -12px;
+  }
+
+  .splitter--horizontal::before {
+    inset: -12px 0;
+  }
 }
 
 .canvas {
@@ -1851,52 +2010,50 @@ details[open] > summary > .section__chevron {
 }
 
 .palette {
-  position: absolute;
-  top: 46px;
-  left: 20px;
-  z-index: 5;
-  width: 230px;
-  max-height: calc(100% - 120px);
+  flex: none;
+  width: min(var(--editor-palette-width), 35%);
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius-lg);
   background: var(--nd-panel);
-  box-shadow: var(--nd-shadow);
-  overflow: hidden;
 }
 
-.palette--closed {
-  width: auto;
+.palette.palette--collapsed {
+  width: var(--editor-rail);
+  border-right: 1px solid var(--nd-border);
 }
 
-.palette__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 10px 12px;
-  border: 0;
-  background: none;
-  color: var(--nd-text-muted);
-  font: inherit;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.palette--closed .palette__toggle svg {
-  transform: rotate(-90deg);
+.palette--collapsed .palette__head {
+  justify-content: center;
+  padding: 6px 0;
 }
 
 .palette__items {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 0 6px 8px;
+  min-height: 0;
+  padding: 0 6px 10px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.palette--collapsed .palette__items {
+  align-items: center;
+  padding: 0 4px 10px;
+}
+
+.palette--collapsed .palette__item {
+  justify-content: center;
+  width: 34px;
+  padding: 4px;
+}
+
+.palette__divider {
+  width: 24px;
+  margin: 6px auto;
+  border: 0;
+  border-top: 1px solid var(--nd-border);
 }
 
 .palette__label {
@@ -2166,11 +2323,62 @@ details[open] > summary > .section__chevron {
 
 .inspector {
   min-height: 0;
-  overflow-y: auto;
-  border-left: 1px solid var(--nd-border);
+  min-width: 0;
   background: var(--nd-panel);
   display: flex;
   flex-direction: column;
+}
+
+.inspector__panel-head {
+  justify-content: flex-start;
+  padding: 6px 14px 6px 8px;
+  border-bottom: 1px solid var(--nd-border);
+}
+
+.inspector__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.inspector.inspector--collapsed {
+  border-left: 1px solid var(--nd-border);
+}
+
+.inspector--collapsed .inspector__panel-head {
+  justify-content: center;
+  padding: 6px 0;
+}
+
+/* The collapsed inspector: a rail that names the selection; clicking it opens the panel again. */
+.inspector__rail {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 14px 0;
+  border: 0;
+  background: none;
+  color: var(--nd-text-muted);
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 620;
+  cursor: pointer;
+}
+
+.inspector__rail span {
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+}
+
+.inspector__rail:hover {
+  background: var(--nd-surface-hover);
+  color: var(--nd-text);
 }
 
 .inspector__content {
@@ -2236,6 +2444,7 @@ details[open] > summary > .section__chevron {
 .inspector__actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 4px;
 }
 
@@ -2296,55 +2505,91 @@ details[open] > summary > .section__chevron {
 /* run panel */
 
 .run-panel {
+  flex: none;
   display: flex;
   flex-direction: column;
-  max-height: 46%;
-  border-top: 1px solid var(--nd-border);
+  /* The canvas above keeps its room: at most 65 % of the editor's height (PANEL_SHARE in layout.ts). */
+  height: min(var(--editor-run-height), 65%);
+  min-height: 0;
   background: var(--nd-bg);
 }
 
+.run-panel.run-panel--closed {
+  height: auto;
+  border-top: 1px solid var(--nd-border);
+}
+
+/* Before the first run there are only the figures, so the overview takes just their height. */
+.run-panel.run-panel--idle {
+  height: auto;
+  border-top: 1px solid var(--nd-border);
+}
+
 .run-panel__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 22px;
+  flex: none;
+  padding: 6px 22px 6px 14px;
 }
 
 .run-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0;
-  border: 0;
-  background: none;
   color: var(--nd-text);
-  font: inherit;
   font-size: 12.5px;
   font-weight: 680;
-  cursor: pointer;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .run-panel__body {
   display: flex;
   flex-direction: column;
   gap: var(--nd-space-3);
+  flex: 1;
   min-height: 0;
-  padding: 0 22px 16px;
+  padding: 0 22px 14px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Inside the execution overview the figures take one compact row. */
+.stats.stats--inline {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--nd-space-2);
+}
+
+.stats--inline .stat {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  padding: 7px 12px;
+}
+
+.stats--inline .stat__value {
+  font-size: 15px;
 }
 
 .run-panel__details {
   display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
+  grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
   gap: var(--nd-space-3);
+  flex: 1;
   min-height: 0;
 }
 
+/* Steps and details scroll on their own, so long results never push the list away. */
 .run-steps {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.run-step {
+  width: 100%;
 }
 
 .run-step {
@@ -2376,6 +2621,9 @@ details[open] > summary > .section__chevron {
 
 .run-panel__focus {
   min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 12px 14px;
   border: 1px solid var(--nd-border);
   border-radius: var(--nd-radius-md);
@@ -2451,10 +2699,6 @@ details[open] > summary > .section__chevron {
     display: none;
   }
 
-  .editor {
-    grid-template-columns: minmax(0, 1fr) 280px;
-  }
-
   .stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2480,6 +2724,22 @@ details[open] > summary > .section__chevron {
 
   .topbar {
     padding: 0 16px;
+    gap: var(--nd-space-2);
+  }
+
+  /* Phones: theme and provider hint as icons, so every control of the header stays on screen. */
+  .topbar .segmented__label,
+  .topbar__badge-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .topbar__right {
+    gap: 6px;
   }
 
   .sidebar {
@@ -2498,10 +2758,43 @@ details[open] > summary > .section__chevron {
     margin: 0;
   }
 
-  .editor {
+  /* Phones: the canvas fills the screen, the properties follow below it. */
+  .editor,
+  .editor.editor--inspector-collapsed {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(480px, 1fr) auto;
+    grid-template-rows: minmax(560px, calc(100dvh - 120px)) auto;
     height: auto;
+  }
+
+  .splitter--inspector,
+  .splitter--palette {
+    display: none;
+  }
+
+  /* On phones the open building blocks lie over the canvas instead of narrowing it. */
+  .editor__workspace {
+    position: relative;
+  }
+
+  .palette:not(.palette--collapsed) {
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 8;
+    width: min(280px, 85%);
+    border-right: 1px solid var(--nd-border);
+    box-shadow: var(--nd-shadow-popover);
+  }
+
+  .inspector {
+    border-top: 1px solid var(--nd-border);
+  }
+
+  .inspector.inspector--collapsed {
+    border-left: 0;
+  }
+
+  .inspector__rail span {
+    writing-mode: horizontal-tb;
   }
 
   .titlebar,
@@ -2655,16 +2948,31 @@ details[open] > summary > .section__chevron {
   border-radius: 3px;
 }
 
-.palette__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4px;
-  padding-right: 6px;
-}
+/* A narrow editor (assistant open, small window) shows the secondary title actions as icons. */
+@container editor-main (max-width: 900px) {
+  .editor .titlebar {
+    flex-wrap: wrap;
+    padding-top: 14px;
+    padding-bottom: 12px;
+  }
 
-.palette__head .palette__toggle {
-  flex: 1;
+  .editor .title-actions {
+    gap: 2px;
+  }
+
+  .editor .title-actions .nd-button--ghost {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .editor .title-actions__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
 /* ---- documentation ----------------------------------------------------------------- */
@@ -5124,6 +5432,29 @@ kbd {
 
 .snapshot-data {
   max-height: 55vh;
+}
+
+/* With the assistant open, the navigation becomes an icon rail earlier, so the page keeps its room. */
+@media (max-width: 1440px) {
+  .app.app--assistant {
+    grid-template-columns: 64px minmax(0, 1fr) 380px;
+  }
+
+  .app.app--assistant.app--assistant-wide {
+    grid-template-columns: 64px minmax(0, 1fr) min(640px, 48vw);
+  }
+
+  .app--assistant .nav-item {
+    justify-content: center;
+    font-size: 0;
+    gap: 0;
+  }
+
+  .app--assistant .nav-group__title,
+  .app--assistant .sidebar__note,
+  .app--assistant .brand__sub {
+    display: none;
+  }
 }
 
 @media (max-width: 1100px) {

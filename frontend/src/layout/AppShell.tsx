@@ -87,7 +87,8 @@ function NavGroup({ title, items }: { title: string; items: NavItem[] }) {
     <div className="nav-group">
       <div className="nav-group__title">{title}</div>
       {items.map(({ to, label, icon: Icon, end, badge }) => (
-        <NavLink key={to} to={to} end={end} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+        // The title names the item when the navigation shows icons only (narrow windows, assistant open).
+        <NavLink key={to} to={to} end={end} title={t(`nav.${label}`)} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
           <Icon size={16} aria-hidden />
           {t(`nav.${label}`)}
           {badge ? (
@@ -147,8 +148,8 @@ export function AppShell() {
         <GlobalSearch />
         <div className="topbar__right">
           {missingKey ? (
-            <Link to="/settings" className="nd-badge nd-badge--warning">
-              <KeyRound size={11} aria-hidden /> {t("shell.providerMissing")}
+            <Link to="/settings" className="nd-badge nd-badge--warning" title={t("shell.providerMissing")}>
+              <KeyRound size={11} aria-hidden /> <span className="topbar__badge-label">{t("shell.providerMissing")}</span>
             </Link>
           ) : null}
           <Hint id="assistant.open">
@@ -184,7 +185,7 @@ export function AppShell() {
         <NavGroup title={t("nav.groupObservability")} items={OBSERVABILITY} />
         <NavGroup title={t("nav.groupHelp")} items={HELP_ITEMS} />
         <div className="sidebar__bottom">
-          <NavLink to="/settings" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+          <NavLink to="/settings" title={t("nav.settings")} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
             <Settings size={16} aria-hidden />
             {t("nav.settings")}
           </NavLink>

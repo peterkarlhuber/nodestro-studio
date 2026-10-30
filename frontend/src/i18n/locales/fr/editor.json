@@ -46,7 +46,8 @@
     "autoLayout": "Organiser automatiquement : nœuds de gauche à droite selon le flux de données",
     "undo": "Annuler (Ctrl+Z)",
     "redo": "Rétablir (Ctrl+Maj+Z)",
-    "edgeLabel": "Connexion de {{source}} vers {{target}}. Suppr la supprime."
+    "edgeLabel": "Connexion de {{source}} vers {{target}}. Suppr la supprime.",
+    "dropInvalid": "Cet élément ne peut pas être déposé sur le canevas."
   },
   "palette": {
     "title": "Blocs",
@@ -83,7 +84,8 @@
     "controlDrag": "Glissez les blocs de la palette sur le canevas ou cliquez dessus",
     "controlConnect": "Glissez du port droit au port gauche pour connecter des agents",
     "controlDelete": "<kbd>Suppr</kbd> supprime la sélection, <kbd>Ctrl</kbd>+<kbd>D</kbd> la duplique",
-    "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> annule, <kbd>Ctrl</kbd>+<kbd>S</kbd> enregistre"
+    "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> annule, <kbd>Ctrl</kbd>+<kbd>S</kbd> enregistre",
+    "controlPanels": "Faites glisser les séparateurs pour ajuster les panneaux ; un double-clic sur un nœud affiche ses propriétés"
   },
   "design": {
     "title": "Concevoir un agent avec l’IA",
@@ -159,5 +161,19 @@
     "versionN": "Version {{n}}",
     "none": "Aucun workflow choisi",
     "missing": "Workflow manquant"
+  },
+  "panels": {
+    "inspector": "Propriétés",
+    "hidePalette": "Masquer les blocs",
+    "showPalette": "Afficher les blocs",
+    "hideInspector": "Masquer les propriétés",
+    "showInspector": "Afficher les propriétés",
+    "hideRunPanel": "Masquer la vue d’ensemble de l’exécution",
+    "showRunPanel": "Afficher la vue d’ensemble de l’exécution",
+    "resizePalette": "Largeur des blocs",
+    "resizeInspector": "Largeur des propriétés",
+    "resizeRunPanel": "Hauteur de la vue d’ensemble de l’exécution",
+    "resizeHint": "Faites glisser ou utilisez les flèches pour redimensionner. Un double-clic rétablit la taille par défaut.",
+    "railSelection": "Sélection : {{name}}"
   }
 }

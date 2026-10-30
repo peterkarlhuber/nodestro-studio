@@ -30,5 +30,6 @@
   "dismissMessage": "Dismiss message",
   "saved": "Saved",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "confirmDelete": "Really delete?"
 }

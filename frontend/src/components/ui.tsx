@@ -27,6 +27,7 @@ import {
   useEffect,
   useId,
   useRef,
+  useState,
 } from "react";
 
 import { useTranslation } from "react-i18next";
@@ -80,6 +81,62 @@ export function IconButton({
         <Icon size={16} aria-hidden />
       </button>
     </Tooltip>
+  );
+}
+
+/**
+ * An icon button for an action that cannot be undone (deleting a run, a file, a key): the first
+ * click turns it into a labelled "Delete?" button, the second click acts. Escape, leaving the
+ * button or a few seconds without a click turn it back, so a stray click never deletes anything.
+ */
+export function ConfirmIconButton({
+  icon,
+  label,
+  confirmLabel,
+  onConfirm,
+  busy,
+  ...rest
+}: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> & {
+  icon: LucideIcon;
+  label: string;
+  /** The text of the second step; "Delete?" by default. */
+  confirmLabel?: string;
+  onConfirm: () => void;
+  busy?: boolean;
+}) {
+  const { t } = useTranslation();
+  const [armed, setArmed] = useState(false);
+  const confirmRef = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    if (!armed) return;
+    confirmRef.current?.focus();
+    const timer = window.setTimeout(() => setArmed(false), 5000);
+    return () => window.clearTimeout(timer);
+  }, [armed]);
+  if (!armed) return <IconButton icon={icon} label={label} onClick={() => setArmed(true)} disabled={busy} {...rest} />;
+  return (
+    <Button
+      ref={confirmRef}
+      size="sm"
+      variant="danger"
+      icon={icon}
+      busy={busy}
+      aria-label={`${label}: ${confirmLabel ?? t("common.confirmDelete")}`}
+      onClick={() => {
+        setArmed(false);
+        onConfirm();
+      }}
+      onBlur={() => setArmed(false)}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") {
+          event.stopPropagation();
+          setArmed(false);
+        }
+      }}
+      {...rest}
+    >
+      {confirmLabel ?? t("common.confirmDelete")}
+    </Button>
   );
 }
 
@@ -266,7 +323,7 @@ export function Segmented<T extends string>({
           onClick={() => onChange(item)}
         >
           {Icon ? <Icon size={13} aria-hidden /> : null}
-          {text}
+          <span className="segmented__label">{text}</span>
         </button>
       ))}
     </div>

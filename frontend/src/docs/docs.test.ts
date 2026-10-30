@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { LANGUAGES } from "../i18n";
 import { HELP_DOCS } from "../lib/help";
 import { CHAPTER_IDS, SOURCES, chaptersFor, docExists } from "./index";
-import { parseChapter, splitWidgets } from "./parse";
+import { parseChapter, plainText, splitWidgets } from "./parse";
 import { fold, searchDocs } from "./search";
 
 const CHAPTERS = chaptersFor("de");
@@ -125,5 +125,14 @@ describe("searchDocs", () => {
     expect(searchDocs(CHAPTERS, "sandbox docker").every((hit) => hit.snippet.length > 0)).toBe(true);
     expect(searchDocs(CHAPTERS, "xylophon")).toEqual([]);
     expect(searchDocs(CHAPTERS, "a")).toEqual([]);
+  });
+});
+
+describe("chapter previews", () => {
+  it("show inline Markdown as plain text", () => {
+    expect(plainText("A **decision** picks a path, `numpy` and [links](/docs/x) or *emphasis*.")).toBe(
+      "A decision picks a path, numpy and links or emphasis.",
+    );
+    expect(plainText("snake_case_names stay")).toBe("snake_case_names stay");
   });
 });

@@ -46,7 +46,8 @@
     "autoLayout": "Arrange automatically: nodes from left to right by data flow",
     "undo": "Undo (Ctrl+Z)",
     "redo": "Redo (Ctrl+Shift+Z)",
-    "edgeLabel": "Connection from {{source}} to {{target}}. Delete removes it."
+    "edgeLabel": "Connection from {{source}} to {{target}}. Delete removes it.",
+    "dropInvalid": "This item cannot be placed on the canvas."
   },
   "palette": {
     "title": "Building blocks",
@@ -83,7 +84,8 @@
     "controlDrag": "Drag building blocks from the palette onto the canvas, or click them",
     "controlConnect": "Drag from the right port to the left port to connect agents",
     "controlDelete": "<kbd>Delete</kbd> removes the selection, <kbd>Ctrl</kbd>+<kbd>D</kbd> duplicates",
-    "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes, <kbd>Ctrl</kbd>+<kbd>S</kbd> saves"
+    "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes, <kbd>Ctrl</kbd>+<kbd>S</kbd> saves",
+    "controlPanels": "Drag the dividers to resize the panels; double-click a node to show its properties"
   },
   "design": {
     "title": "Design an agent with AI",
@@ -159,5 +161,19 @@
     "versionN": "Version {{n}}",
     "none": "No workflow selected",
     "missing": "Workflow missing"
+  },
+  "panels": {
+    "inspector": "Properties",
+    "hidePalette": "Hide building blocks",
+    "showPalette": "Show building blocks",
+    "hideInspector": "Hide properties",
+    "showInspector": "Show properties",
+    "hideRunPanel": "Hide execution overview",
+    "showRunPanel": "Show execution overview",
+    "resizePalette": "Width of the building blocks",
+    "resizeInspector": "Width of the properties",
+    "resizeRunPanel": "Height of the execution overview",
+    "resizeHint": "Drag or use the arrow keys to resize. Double-click restores the default size.",
+    "railSelection": "Selected: {{name}}"
   }
 }

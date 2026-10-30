@@ -46,7 +46,8 @@
     "autoLayout": "Automatisch anordnen: Knoten von links nach rechts nach Datenfluss",
     "undo": "Rückgängig (Strg+Z)",
     "redo": "Wiederholen (Strg+Umschalt+Z)",
-    "edgeLabel": "Verbindung von {{source}} zu {{target}}. Entf löscht sie."
+    "edgeLabel": "Verbindung von {{source}} zu {{target}}. Entf löscht sie.",
+    "dropInvalid": "Dieses Element lässt sich nicht auf der Fläche ablegen."
   },
   "palette": {
     "title": "Bausteine",
@@ -83,7 +84,8 @@
     "controlDrag": "Bausteine aus der Palette auf die Fläche ziehen oder anklicken",
     "controlConnect": "Vom rechten Port zum linken Port ziehen, um Agenten zu verbinden",
     "controlDelete": "<kbd>Entf</kbd> löscht die Auswahl, <kbd>Strg</kbd>+<kbd>D</kbd> dupliziert",
-    "controlUndo": "<kbd>Strg</kbd>+<kbd>Z</kbd> rückgängig, <kbd>Strg</kbd>+<kbd>S</kbd> speichert"
+    "controlUndo": "<kbd>Strg</kbd>+<kbd>Z</kbd> rückgängig, <kbd>Strg</kbd>+<kbd>S</kbd> speichert",
+    "controlPanels": "Trennlinien ziehen, um die Bereiche anzupassen; Doppelklick auf einen Knoten zeigt seine Eigenschaften"
   },
   "design": {
     "title": "Agent mit KI entwerfen",
@@ -159,5 +161,19 @@
     "versionN": "Version {{n}}",
     "none": "Kein Workflow gewählt",
     "missing": "Workflow fehlt"
+  },
+  "panels": {
+    "inspector": "Eigenschaften",
+    "hidePalette": "Bausteine ausblenden",
+    "showPalette": "Bausteine einblenden",
+    "hideInspector": "Eigenschaften ausblenden",
+    "showInspector": "Eigenschaften einblenden",
+    "hideRunPanel": "Ausführungsübersicht ausblenden",
+    "showRunPanel": "Ausführungsübersicht einblenden",
+    "resizePalette": "Breite der Bausteine",
+    "resizeInspector": "Breite der Eigenschaften",
+    "resizeRunPanel": "Höhe der Ausführungsübersicht",
+    "resizeHint": "Ziehen oder mit den Pfeiltasten die Größe ändern. Doppelklick stellt die Standardgröße wieder her.",
+    "railSelection": "Ausgewählt: {{name}}"
   }
 }

@@ -18,7 +18,13 @@ import type {
 import i18n from "../i18n";
 import { newId, newNode } from "../lib/defaults";
 
+// Undo history: one snapshot per user action. Text fields record one step per editing session
+// (from the first key in a field until another field or another action), and a whole drag of a
+// node is one step from where it started. The name, description and budget are part of it.
 interface Snapshot {
+  name: string;
+  description: string;
+  budget: number | null;
   nodes: WorkflowNode[];
   edges: WorkflowEdge[];
   /** The version note that belongs to this state (from a taken architect draft). */
@@ -48,7 +54,8 @@ export interface EditorState {
   /** Forget the open workflow, its unsaved changes and its undo history (leaving with "Discard"). */
   reset: () => void;
   toWorkflow: () => WorkflowIn;
-  markSaved: (workflow: Workflow) => void;
+  /** After a save: ``sent`` is what was sent; edits made while the request ran stay unsaved. */
+  markSaved: (workflow: Workflow, sent?: WorkflowIn) => void;
   setMeta: (patch: Partial<Pick<EditorState, "name" | "description" | "budget">>) => void;
 
   addNode: (type: NodeType, position: { x: number; y: number }, agent?: Partial<AgentConfig>) => WorkflowNode;
@@ -105,10 +112,29 @@ function wouldCycle(edges: WorkflowEdge[], source: string, target: string): bool
 }
 
 export const useEditor = create<EditorState>((set, get) => {
-  /** Record the current graph for undo, then apply ``change``. */
-  const commit = (change: Partial<EditorState>) => {
-    const { nodes, edges, past, pendingNote } = get();
-    set({ past: [...past.slice(-HISTORY_LIMIT), { nodes, edges, pendingNote }], future: [], dirty: true, ...change });
+  const snapshot = (): Snapshot => {
+    const { name, description, budget, nodes, edges, pendingNote } = get();
+    return { name, description, budget, nodes, edges, pendingNote };
+  };
+  /** The field being typed in: further keys in it extend the same undo step. */
+  let editing: string | null = null;
+  /** The state before the node drag in progress (positions only change on screen until it ends). */
+  let dragOrigin: Snapshot | null = null;
+
+  /** Record the current state for undo, then apply ``change``. */
+  const commit = (change: Partial<EditorState>, from: Snapshot = snapshot()) => {
+    editing = null;
+    set({ past: [...get().past.slice(-HISTORY_LIMIT), from], future: [], dirty: true, ...change });
+  };
+
+  /** A change while typing: the first key in a field records an undo step, the next ones extend it. */
+  const edit = (field: string, change: Partial<EditorState>) => {
+    if (editing === field) {
+      set({ future: [], dirty: true, ...change });
+      return;
+    }
+    commit(change);
+    editing = field;
   };
 
   return {
@@ -126,7 +152,9 @@ export const useEditor = create<EditorState>((set, get) => {
     run: null,
     pendingNote: null,
 
-    load: (workflow) =>
+    load: (workflow) => {
+      editing = null;
+      dragOrigin = null;
       set({
         workflowId: workflow.id,
         name: workflow.name,
@@ -141,9 +169,12 @@ export const useEditor = create<EditorState>((set, get) => {
         future: [],
         run: null,
         pendingNote: null,
-      }),
+      });
+    },
 
-    reset: () =>
+    reset: () => {
+      editing = null;
+      dragOrigin = null;
       set({
         workflowId: null,
         name: "",
@@ -158,16 +189,24 @@ export const useEditor = create<EditorState>((set, get) => {
         future: [],
         run: null,
         pendingNote: null,
-      }),
+      });
+    },
 
     toWorkflow: () => {
       const { name, description, budget, nodes, edges } = get();
       return { name, description, budget_usd: budget, nodes, edges };
     },
 
-    markSaved: (workflow) => set({ dirty: false, workflowId: workflow.id, name: workflow.name, pendingNote: null }),
+    markSaved: (workflow, sent) => {
+      const { name, description, budget, nodes, edges } = get();
+      const unchanged =
+        !sent ||
+        (sent.nodes === nodes && sent.edges === edges && sent.name === name && sent.description === description && sent.budget_usd === budget);
+      if (unchanged) set({ dirty: false, workflowId: workflow.id, name: workflow.name, pendingNote: null });
+      else set({ workflowId: workflow.id, pendingNote: null });
+    },
 
-    setMeta: (patch) => set({ ...patch, dirty: true }),
+    setMeta: (patch) => edit(`meta:${Object.keys(patch).sort().join(",")}`, patch),
 
     addNode: (type, position, agent) => {
       const node = newNode(type, position, agent);
@@ -186,7 +225,7 @@ export const useEditor = create<EditorState>((set, get) => {
       const nodes = get().nodes.map((node) => (node.id === id ? { ...node, ...patch } : node));
       const edges = patch.condition ? withoutStaleBranches(nodes, get().edges) : get().edges;
       if (options.record) commit({ nodes, edges });
-      else set({ nodes, edges, dirty: true });
+      else edit(`node:${id}:${Object.keys(patch).sort().join(",")}`, { nodes, edges });
     },
 
     updateAgent: (id, patch) => {
@@ -196,7 +235,7 @@ export const useEditor = create<EditorState>((set, get) => {
         return { ...node, agent, label: patch.name !== undefined ? patch.name : node.label };
       });
       // Typing in the inspector should not create one undo step per key.
-      set({ nodes, dirty: true });
+      edit(`agent:${id}:${Object.keys(patch).sort().join(",")}`, { nodes });
     },
 
     replaceAgent: (id, agent) => {
@@ -206,8 +245,21 @@ export const useEditor = create<EditorState>((set, get) => {
     },
 
     moveNodes: (positions, record) => {
+      // The first move of a drag remembers the state before it; the end records that as one undo step.
+      if (!record && !dragOrigin) dragOrigin = snapshot();
       const nodes = get().nodes.map((node) => (positions[node.id] ? { ...node, position: positions[node.id] } : node));
-      if (record) commit({ nodes });
+      if (!record) {
+        set({ nodes });
+        return;
+      }
+      const origin = dragOrigin ?? snapshot();
+      dragOrigin = null;
+      const before = new Map(origin.nodes.map((node) => [node.id, node.position]));
+      const moved = nodes.some((node) => {
+        const start = before.get(node.id);
+        return start && (start.x !== node.position.x || start.y !== node.position.y);
+      });
+      if (moved) commit({ nodes }, origin);
       else set({ nodes });
     },
 
@@ -273,9 +325,15 @@ export const useEditor = create<EditorState>((set, get) => {
       });
     },
 
-    select: (id) => set({ selectedId: id, selectedEdgeId: null }),
+    select: (id) => {
+      editing = null;
+      set({ selectedId: id, selectedEdgeId: null });
+    },
 
-    selectEdge: (id) => set({ selectedEdgeId: id, selectedId: id ? null : get().selectedId }),
+    selectEdge: (id) => {
+      editing = null;
+      set({ selectedEdgeId: id, selectedId: id ? null : get().selectedId });
+    },
 
     autoLayout: () => {
       // Columns by longest path from a source; rows in insertion order.
@@ -302,18 +360,20 @@ export const useEditor = create<EditorState>((set, get) => {
     },
 
     undo: () => {
-      const { past, nodes, edges, future, pendingNote } = get();
+      const { past, future } = get();
       const previous = past.at(-1);
       if (!previous) return;
+      editing = null;
       // The version note of a taken draft goes and comes back with the draft.
-      set({ ...previous, past: past.slice(0, -1), future: [{ nodes, edges, pendingNote }, ...future], dirty: true, selectedEdgeId: null });
+      set({ ...previous, past: past.slice(0, -1), future: [snapshot(), ...future], dirty: true, selectedEdgeId: null });
     },
 
     redo: () => {
-      const { past, nodes, edges, future, pendingNote } = get();
+      const { past, future } = get();
       const next = future[0];
       if (!next) return;
-      set({ ...next, future: future.slice(1), past: [...past, { nodes, edges, pendingNote }], dirty: true, selectedEdgeId: null });
+      editing = null;
+      set({ ...next, future: future.slice(1), past: [...past, snapshot()], dirty: true, selectedEdgeId: null });
     },
 
     setRun: (run) => set({ run }),

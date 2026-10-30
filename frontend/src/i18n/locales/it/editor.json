@@ -46,7 +46,8 @@
     "autoLayout": "Disponi automaticamente: nodi da sinistra a destra secondo il flusso dei dati",
     "undo": "Annulla (Ctrl+Z)",
     "redo": "Ripeti (Ctrl+Maiusc+Z)",
-    "edgeLabel": "Connessione da {{source}} a {{target}}. Canc la elimina."
+    "edgeLabel": "Connessione da {{source}} a {{target}}. Canc la elimina.",
+    "dropInvalid": "Questo elemento non può essere posizionato sull’area di lavoro."
   },
   "palette": {
     "title": "Blocchi",
@@ -83,7 +84,8 @@
     "controlDrag": "Trascina i blocchi dalla tavolozza sull’area di lavoro o fai clic su di essi",
     "controlConnect": "Trascina dalla porta destra alla porta sinistra per collegare gli agenti",
     "controlDelete": "<kbd>Canc</kbd> elimina la selezione, <kbd>Ctrl</kbd>+<kbd>D</kbd> la duplica",
-    "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> annulla, <kbd>Ctrl</kbd>+<kbd>S</kbd> salva"
+    "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> annulla, <kbd>Ctrl</kbd>+<kbd>S</kbd> salva",
+    "controlPanels": "Trascina i divisori per regolare i pannelli; il doppio clic su un nodo ne mostra le proprietà"
   },
   "design": {
     "title": "Progetta un agente con l’IA",
@@ -159,5 +161,19 @@
     "versionN": "Versione {{n}}",
     "none": "Nessun workflow scelto",
     "missing": "Workflow mancante"
+  },
+  "panels": {
+    "inspector": "Proprietà",
+    "hidePalette": "Nascondi blocchi",
+    "showPalette": "Mostra blocchi",
+    "hideInspector": "Nascondi proprietà",
+    "showInspector": "Mostra proprietà",
+    "hideRunPanel": "Nascondi panoramica dell’esecuzione",
+    "showRunPanel": "Mostra panoramica dell’esecuzione",
+    "resizePalette": "Larghezza dei blocchi",
+    "resizeInspector": "Larghezza delle proprietà",
+    "resizeRunPanel": "Altezza della panoramica dell’esecuzione",
+    "resizeHint": "Trascina o usa i tasti freccia per ridimensionare. Il doppio clic ripristina la dimensione predefinita.",
+    "railSelection": "Selezionato: {{name}}"
   }
 }

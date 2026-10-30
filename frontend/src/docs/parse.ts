@@ -76,3 +76,11 @@ export function splitWidgets(body: string): DocPart[] {
   if (rest) parts.push({ kind: "markdown", text: rest });
   return parts;
 }
+
+/** The text of inline Markdown (emphasis, code, links) for short previews such as the chapter cards. */
+export function plainText(markdown: string): string {
+  return markdown
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/(\*\*|\*|`)(\S(?:.*?\S)?)\1/g, "$2")
+    .trim();
+}

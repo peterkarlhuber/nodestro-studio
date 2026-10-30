@@ -9,22 +9,7 @@ import { keys, useSchedules, useWorkflows } from "../api/hooks";
 import type { Activation, Schedule, ScheduleIn, ScheduleKind } from "../api/types";
 import { FormFields } from "../components/FormFields";
 import { toast } from "../components/toast";
-import {
-  Badge,
-  Button,
-  Callout,
-  EmptyState,
-  Field,
-  HelpTip,
-  IconButton,
-  Modal,
-  PageHeader,
-  Select,
-  Spinner,
-  TextArea,
-  TextInput,
-  Toggle,
-} from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, IconButton, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 
@@ -356,7 +341,7 @@ export function SchedulesPage() {
                     <td>
                       <span className="row-gap">
                         <IconButton icon={Pencil} label={t("automation.schedule.edit")} onClick={() => setEditing(schedule)} />
-                        <IconButton icon={Trash2} label={t("automation.schedule.delete")} onClick={() => remove.mutate(schedule.id)} />
+                        <ConfirmIconButton icon={Trash2} label={t("automation.schedule.delete")} onConfirm={() => remove.mutate(schedule.id)} />
                       </span>
                     </td>
                   </tr>
