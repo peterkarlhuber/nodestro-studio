@@ -5,7 +5,7 @@
 ### Platform integration (2026-10-30)
 
 - Pins: `nodestro-runtime` ad75859, `nodestro-examples` 520fa72, `nodestro-integrations` c747842, `nodestro-api`
-  de7fb25, `nodestro-sdk` b5a9d69; orkexa unchanged at cbf6df3. `make check-versions` and `make platform-local` say
+  2868b7b, `nodestro-sdk` 18e5535; orkexa unchanged at cbf6df3. `make check-versions` and `make platform-local` say
   "pins agree", and the combination was installed and tested together from these commits.
 - Example chapter (`beispiele.md`, six languages) regenerated with `make example-docs` from the examples of the pinned
   commit; it matches the patch of the examples round, and `python -m nodestro_examples.docs --check` passes.
