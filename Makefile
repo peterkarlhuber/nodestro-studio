@@ -8,7 +8,7 @@ frontend:
 
 dev:
 	@echo "API:        nodestro --reload --no-browser"
-	@echo "Oberfläche: cd frontend && npm run dev"
+	@echo "Interface:  cd frontend && npm run dev"
 
 test:
 	pytest

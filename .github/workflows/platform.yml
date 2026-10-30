@@ -28,7 +28,7 @@ jobs:
           NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
         run: |
           if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ fehlt: ein Token mit Lesezugriff auf orkexa und die nodestro-Repositories."
+            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
             exit 1
           fi
           git config --global url."https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/".insteadOf "https://github.com/peterkarlhuber/"
@@ -54,7 +54,7 @@ jobs:
           NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
         run: |
           if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ fehlt: ein Token mit Lesezugriff auf orkexa und die nodestro-Repositories."
+            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
             exit 1
           fi
           git config --global url."https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/".insteadOf "https://github.com/peterkarlhuber/"
@@ -106,7 +106,7 @@ jobs:
           NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
         run: |
           if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ fehlt: ein Token mit Lesezugriff auf orkexa und die nodestro-Repositories."
+            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
             exit 1
           fi
           git config --global url."https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/".insteadOf "https://github.com/peterkarlhuber/"
@@ -139,7 +139,7 @@ jobs:
           NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
         run: |
           if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ fehlt: ein Token mit Lesezugriff auf orkexa und die nodestro-Repositories."
+            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
             exit 1
           fi
           git config --global url."https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/".insteadOf "https://github.com/peterkarlhuber/"

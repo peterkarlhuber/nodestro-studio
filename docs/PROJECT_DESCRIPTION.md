@@ -1,51 +1,85 @@
 # Nodestro – Visual AI Agent Studio
 
-**Nodestro** (aus *Node* + *Maestro*) ist eine geplante visuelle Anwendung zum Erstellen, Konfigurieren und Verbinden von KI-Agenten. Ziel ist eine moderne, leicht bedienbare Entwicklungsumgebung, in der Nutzer ohne umfangreiche Programmierarbeit Multi-Agent-Workflows aufbauen und ausführen können.
+> This is the original project brief that Nodestro was built from (translated from German). It describes the goals at
+> the start of the project; what Nodestro does today is described in the [README](../README.md) and in
+> [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## Grundlage
+**Nodestro** (from *Node* + *Maestro*) is a planned visual application for creating, configuring and connecting AI
+agents. The goal is a modern, easy-to-use development environment in which users build and run multi-agent workflows
+without extensive programming.
 
-Nodestro soll **auf der bestehenden Python-Library `orkexa`** aufbauen, die Agenten anbieterunabhängig ausführt (Anthropic, OpenAI, Gemini sowie OpenAI-kompatible Endpunkte, Ollama und vLLM). Die Library wird der implementierenden KI separat bereitgestellt. Zunächst sind ihre tatsächlichen Klassen, Argumente, Schnittstellen und Funktionen zu untersuchen. Nodestro soll diese Möglichkeiten über eine verständliche Benutzeroberfläche zugänglich machen, statt ein eigenes Agenten-Framework neu zu schreiben.
+## Foundation
 
-## Kernidee: Agenten als Knoten
+Nodestro is to be built **on the existing Python library `orkexa`**, which runs agents independently of the provider
+(Anthropic, OpenAI, Gemini as well as OpenAI-compatible endpoints, Ollama and vLLM). The library is provided to the
+implementing AI separately. Its actual classes, arguments, interfaces and functions are to be examined first. Nodestro
+is meant to make these capabilities accessible through an understandable user interface instead of writing its own
+agent framework.
 
-Der zentrale Arbeitsbereich ist ein **grafischer Workflow-Editor**, angelehnt an das Bedienprinzip von n8n. **Ein Knoten stellt einen Agenten dar.** Agenten können hinzugefügt, positioniert, verbunden und zu einem Workflow zusammengestellt werden. Über die Verbindungen werden Aufgaben, Informationen und Ergebnisse zwischen Agenten weitergereicht.
+## Core idea: agents as nodes
 
-Workflows sollen erstellt, gespeichert, wieder geöffnet, gestartet und nachvollzogen werden können. Ein übersichtlicher Ausführungsstatus zeigt Ergebnisse, Tool-Aufrufe, Fehler sowie möglichst Tokenverbrauch und Kosten einzelner Agenten und des gesamten Workflows an.
+The central workspace is a **graphical workflow editor**, inspired by the interaction principle of n8n. **A node
+represents an agent.** Agents can be added, positioned, connected and assembled into a workflow. Tasks, information and
+results are passed between agents through the connections.
 
-## Agenten konfigurieren – manuell oder mit KI
+It should be possible to create, save, reopen, start and trace workflows. A clear execution status shows results, tool
+calls, errors and, where possible, token usage and costs of individual agents and of the whole workflow.
 
-Beim Erstellen oder Bearbeiten eines Agenten-Knotens sollen **alle in der Orkexa-Library (`Agent`) verfügbaren und sinnvoll konfigurierbaren Argumente** zugänglich sein, beispielsweise Anbieter und Modell, System-Prompt, Messages, Tools, Memory, Output-Format, Thinking/Effort, Caching, Limits und Tool-Choice. Die Oberfläche soll häufige Einstellungen einfach darstellen und fortgeschrittene Optionen bei Bedarf einblenden.
+## Configuring agents – manually or with AI
 
-Alternativ kann der Nutzer **in natürlicher Sprache beschreiben, welchen Agenten er benötigt**. Ein Hintergrundagent erstellt daraus eine passende Konfiguration, etwa Rolle, System-Prompt, Modellwahl und Tool-Zuweisungen. Die Konfiguration bleibt sichtbar, editierbar und muss nicht ungeprüft übernommen werden. Vorhandene Möglichkeiten zur dynamischen Agentenerstellung in der Library sollen dabei genutzt werden.
+When creating or editing an agent node, **all arguments of the Orkexa library's `Agent` that are available and
+reasonably configurable** should be accessible, for example provider and model, system prompt, messages, tools,
+memory, output format, thinking/effort, caching, limits and tool choice. The interface should present common settings
+simply and reveal advanced options when needed.
 
-## Tools und Memory
+Alternatively, the user can **describe in natural language which agent they need**. A background agent creates a
+suitable configuration from it, such as role, system prompt, model choice and tool assignments. The configuration
+stays visible and editable and does not have to be accepted unchecked. Existing capabilities of the library for
+creating agents dynamically should be used.
 
-Tools sollen zentral angezeigt, verwaltet, bestehenden Agenten zugeordnet und wiederverwendet werden können. Der Nutzer soll ein Tool entweder aus vorhandenen Funktionen auswählen **oder in natürlicher Sprache beschreiben**. Ein Coding Agent kann daraus eine passende Python-Funktion mit Typen, Docstring und Tests entwickeln. Generierter Code muss vor der Freigabe geprüft und sicher ausgeführt werden. Bestehende Funktionen der Library für Tool-Definitionen und dynamische Erstellung sind wiederzuverwenden.
+## Tools and memory
 
-Auch **Memory** soll direkt am Agenten verständlich konfigurierbar sein: Unterstützte Memory-Arten sollen auswählbar sein, und die Einrichtung kann bei Bedarf durch einen Hintergrundagenten unterstützt werden. Welche Informationen ein Agent speichert oder erhält, soll nachvollziehbar sein.
+Tools should be displayed and managed centrally, assigned to existing agents and reused. The user should either pick a
+tool from existing functions **or describe it in natural language**. A coding agent can then develop a suitable Python
+function with types, a docstring and tests. Generated code must be checked and executed safely before it is approved.
+Existing library functions for tool definitions and dynamic creation are to be reused.
 
-## Hintergrundwissen und Dateien
+**Memory** should also be configurable in an understandable way directly at the agent: supported memory types should
+be selectable, and a background agent can support the setup if needed. It should be traceable which information an
+agent stores or receives.
 
-Nutzer sollen **PDFs, Bilder, Textdateien und weitere unterstützte Dokumente** als Hintergrundwissen hinterlegen und einzelnen oder mehreren Agenten zuweisen können. Die vorhandenen Funktionen für Dateien, Retrieval/RAG und gegebenenfalls Memory sollen genutzt werden. Hochgeladene Inhalte sollen leicht zu finden, zu verwalten und wiederzuverwenden sein. Der konkrete Umfang richtet sich nach den tatsächlich verfügbaren Library-Schnittstellen.
+## Background knowledge and files
 
-## Gestaltung und Bedienung
+Users should be able to store **PDFs, images, text files and other supported documents** as background knowledge and
+assign them to one or several agents. The existing functions for files, retrieval/RAG and possibly memory should be
+used. Uploaded content should be easy to find, manage and reuse. The concrete scope depends on the library interfaces
+that are actually available.
 
-Die Oberfläche soll **übersichtlich, ruhig, professionell und einfach verständlich** sein. Der Workflow-Editor steht im Mittelpunkt; Agenteneinstellungen erscheinen in klar strukturierten Panels. Komplexität soll durch progressive Offenlegung reduziert werden, ohne wichtige Library-Funktionen zu verstecken.
+## Design and interaction
 
-Das beigefügte Designsystem **„Midnight Citron“** ist die visuelle Grundlage. Es enthält Light- und Dark-Mode-Farbtokens, CSS, einen Designleitfaden und HTML-/Bildvorschauen. Ziel ist eine eigenständige, zurückhaltende Gestaltung, die auch bei vielen verknüpften Agenten gut lesbar bleibt.
+The interface should be **clear, calm, professional and easy to understand**. The workflow editor is at the center;
+agent settings appear in clearly structured panels. Complexity should be reduced through progressive disclosure
+without hiding important library functions.
 
-## Umsetzung und Rahmen
+The enclosed design system **"Midnight Citron"** is the visual foundation. It contains light and dark mode color
+tokens, CSS, a design guide and HTML and image previews. The goal is a distinctive, restrained design that remains
+readable even with many connected agents.
 
-Die Anwendung soll **zunächst lokal bzw. über `localhost`** nutzbar sein. Frontend, Backend und technische Architektur sind noch nicht festgelegt und sollen passend zur vorhandenen `orkexa`-Library gewählt und begründet werden. Der Fokus liegt zunächst auf einem funktionierenden, gut bedienbaren grafischen Agenten-Workflow-Editor; spätere Erweiterungen sollen möglich bleiben.
+## Implementation and scope
 
-**Nicht Teil dieser Projektbeschreibung:** SaaS, Benutzerabonnements, Zahlungsabwicklung oder Unternehmensgründung.
+The application should **initially be usable locally, via `localhost`**. Frontend, backend and technical architecture
+are not yet fixed and should be chosen and justified to fit the existing `orkexa` library. The initial focus is a
+working, easy-to-use graphical agent workflow editor; later extensions should remain possible.
 
-### Auftrag an die implementierende KI
+**Not part of this project description:** SaaS, user subscriptions, payment processing or founding a company.
 
-1. Analysiere zuerst die bereitgestellte `orkexa`-Library und ermittle ihre tatsächlichen Fähigkeiten.
-2. Leite daraus ein bewusst schlankes Bedien- und Architekturkonzept für Nodestro ab.
-3. Nutze die vorhandene Library als technische Basis für Agenten, Tools, Memory, Dateien und Ausführung.
-4. Orientiere die Gestaltung am beigefügten Midnight-Citron-Designsystem.
-5. Priorisiere **leichte Bedienbarkeit, Übersichtlichkeit, Verständlichkeit, Testbarkeit und Wiederverwendbarkeit** statt unnötiger Komplexität.
+### Brief for the implementing AI
 
-Das Ziel ist **eine intuitive visuelle Oberfläche für die vorhandene `orkexa`-Library**, keine Neuentwicklung der zugrunde liegenden Agentenlogik.
+1. First analyze the provided `orkexa` library and determine its actual capabilities.
+2. Derive a deliberately lean interaction and architecture concept for Nodestro from it.
+3. Use the existing library as the technical basis for agents, tools, memory, files and execution.
+4. Base the design on the enclosed Midnight Citron design system.
+5. Prioritize **ease of use, clarity, comprehensibility, testability and reusability** over unnecessary complexity.
+
+The goal is **an intuitive visual interface for the existing `orkexa` library**, not a reimplementation of the
+underlying agent logic.
