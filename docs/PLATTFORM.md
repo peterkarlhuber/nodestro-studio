@@ -60,9 +60,11 @@ funktioniert auch ohne (dann ohne OCR, wie 0.1 ohne tesseract).
 
 - **Studio-API (`/api`)**: ohne Benutzerverwaltung und ohne eigene Schlüssel, deshalb standardmäßig nur auf
   `127.0.0.1`. Sie beantwortet nur Anfragen an `localhost`, Loopback-Adressen und die mit `--host` gewählte Adresse
-  und nimmt Änderungen nur von ihren eigenen Seiten an (`nodestro_api.local_access`); so kann keine Webseite im
-  Browser sie über DNS-Rebinding oder Cross-Site-Anfragen bedienen. `NODESTRO_ALLOWED_HOSTS` nennt weitere
-  Hostnamen, etwa hinter einem Reverse Proxy.
+  (bei `0.0.0.0`: jede IP-Adresse und den Namen dieses Rechners, aber keine fremden Hostnamen) und nimmt Änderungen
+  nur von ihren eigenen Seiten an (`nodestro_api.local_access`); so kann keine Webseite im Browser sie über
+  DNS-Rebinding oder Cross-Site-Anfragen bedienen. `NODESTRO_ALLOWED_HOSTS` nennt weitere Hostnamen, etwa hinter
+  einem Reverse Proxy. Diese Prüfung ersetzt keine Anmeldung: Mit `--host 0.0.0.0` erreicht jedes Gerät im Netz die
+  Studio-API.
 - **Veröffentlichte APIs (`/api/published/...`)**: nur mit Nodestro-Schlüsseln (`ndk_...`, gespeichert als
   SHA-256), je Schlüssel auf Berechtigungen und Veröffentlichungen beschränkt; im Netz nur über den eigenen
   Listener, den der Benutzer ausdrücklich einschaltet.

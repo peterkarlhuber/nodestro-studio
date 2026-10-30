@@ -106,7 +106,7 @@ Nodestro si avvia su `http://localhost:8000` e apre il browser. Opzioni del coma
 | `--host` | `NODESTRO_HOST` | Indirizzo (predefinito `127.0.0.1`, solo questo computer) |
 | `--port` | `NODESTRO_PORT` | Porta (predefinita `8000`) |
 | `--data-dir` | `NODESTRO_DATA_DIR` | Directory dei dati (predefinita `~/.nodestro`) |
-| – | `NODESTRO_ALLOWED_HOSTS` | Altri nomi host a cui Nodestro risponde, ad es. dietro un reverse proxy (separati da virgole). Gli altri nomi host e le modifiche da pagine web estranee vengono rifiutati, così nessuna pagina del browser può comandare Nodestro |
+| – | `NODESTRO_ALLOWED_HOSTS` | Altri nomi host a cui Nodestro risponde, ad es. dietro un reverse proxy (separati da virgole). Gli altri nomi host e le modifiche da pagine web estranee vengono rifiutati, così nessuna pagina del browser può comandare Nodestro. Con `--host 0.0.0.0` Nodestro risponde inoltre a ogni indirizzo IP e al nome di questo computer |
 | `--no-browser` | – | Non aprire automaticamente il browser |
 | `--reload` | – | Riavviare a ogni modifica del codice (sviluppo) |
 

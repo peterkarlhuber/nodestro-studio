@@ -106,7 +106,7 @@ Nodestro démarre sur `http://localhost:8000` et ouvre le navigateur. Options de
 | `--host` | `NODESTRO_HOST` | Adresse (par défaut `127.0.0.1`, cet ordinateur seulement) |
 | `--port` | `NODESTRO_PORT` | Port (par défaut `8000`) |
 | `--data-dir` | `NODESTRO_DATA_DIR` | Répertoire de données (par défaut `~/.nodestro`) |
-| – | `NODESTRO_ALLOWED_HOSTS` | Autres noms d’hôte auxquels Nodestro répond, p. ex. derrière un proxy inverse (séparés par des virgules). Les autres noms d’hôte et les modifications venant de pages web étrangères sont refusés, afin qu’aucune page du navigateur ne puisse piloter Nodestro |
+| – | `NODESTRO_ALLOWED_HOSTS` | Autres noms d’hôte auxquels Nodestro répond, p. ex. derrière un proxy inverse (séparés par des virgules). Les autres noms d’hôte et les modifications venant de pages web étrangères sont refusés, afin qu’aucune page du navigateur ne puisse piloter Nodestro. Avec `--host 0.0.0.0`, Nodestro répond en plus sous toute adresse IP et sous le nom de cet ordinateur |
 | `--no-browser` | – | Ne pas ouvrir le navigateur automatiquement |
 | `--reload` | – | Redémarrer à chaque modification du code (développement) |
 

@@ -2,6 +2,10 @@
 
 ## Unveröffentlicht
 
+- Sicherheit: `nodestro --host 0.0.0.0` beantwortet keine fremden Hostnamen mehr (DNS-Rebinding), sondern jede
+  IP-Adresse, den Namen dieses Rechners und `NODESTRO_ALLOWED_HOSTS` (`nodestro-api` 1ca296b); die Hilfe zu den
+  Einstellungen sagt das in allen sechs Sprachen. SDK-Pin auf 21e947b (Event-Streams des TypeScript-SDK enden mit
+  dem Aufrufer).
 - „API & Export“ → „Ausprobieren“: „Anfrage prüfen“ und „Testlauf starten“ sind gesperrt, bis die Beispielanfrage
   geladen ist. Ein früher Klick prüfte bisher einen leeren Inhalt und meldete fehlende Felder (das war auch die
   Ursache des sporadisch roten Browser-Tests `e2e/api.mjs`).
