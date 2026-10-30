@@ -10,7 +10,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const require = createRequire(import.meta.url);
-const { chromium } = require("playwright");
+// Chromium by default; E2E_BROWSER=firefox or webkit runs the same checks in another engine.
+const browserType = require("playwright")[process.env.E2E_BROWSER ?? "chromium"];
 
 const base = process.argv[2] ?? process.env.NODESTRO_URL ?? "http://127.0.0.1:8000";
 const shots = process.argv[3] ?? process.env.NODESTRO_SCREENSHOTS;
@@ -40,7 +41,7 @@ function check(condition, message) {
   }
 }
 
-const browser = await chromium.launch();
+const browser = await browserType.launch();
 
 async function open(options) {
   const context = await browser.newContext({ viewport: VIEWPORTS[0], ...options });

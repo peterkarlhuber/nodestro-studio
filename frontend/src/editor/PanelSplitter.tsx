@@ -71,6 +71,12 @@ export function PanelSplitter({ panel, controls, label, host, target, canvas }: 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const state = drag.current;
     if (!state) return;
+    // The button was released where the divider never heard of it (outside the window in Firefox):
+    // end the drag instead of resizing on a plain mouse move and swallowing the next click.
+    if (event.buttons === 0) {
+      finish(event);
+      return;
+    }
     const position = vertical ? event.clientX : event.clientY;
     // Dragging away from the panel makes it larger: right for the palette, left for the inspector, up for the overview.
     const delta = panel === "palette" ? position - state.start : state.start - position;
@@ -122,6 +128,7 @@ export function PanelSplitter({ panel, controls, label, host, target, canvas }: 
         onPointerMove={onPointerMove}
         onPointerUp={finish}
         onPointerCancel={finish}
+        onLostPointerCapture={finish}
         onDoubleClick={() => resetSize(panel)}
         onKeyDown={onKeyDown}
       />

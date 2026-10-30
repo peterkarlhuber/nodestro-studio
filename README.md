@@ -87,6 +87,10 @@ described in [docs/PLATFORM.md](docs/PLATFORM.md). Nodestro 0.1 is preserved unc
   Ollama or vLLM
 - Optionally Docker, for the more strongly isolated tool sandbox
 
+**Tested platforms:** CI and the release checks run on Linux (Python 3.10 and 3.13, Node.js 20 and 22). The browser
+tests pass in Chromium and Firefox on Linux; WebKit on Linux passes their functional checks. macOS, Windows and Safari
+are not tested; the Windows hints below are untested.
+
 ## Installation
 
 ```bash
@@ -162,7 +166,7 @@ cd frontend && npm run dev          # user interface with hot reload on :5173
 | `ruff check . && ruff format --check .` | Python style |
 | `mypy` | Types (strict) |
 | `cd frontend && npm run lint && npm run typecheck && npm test` | Frontend |
-| `make e2e` (`scripts/e2e.sh [suite ...]`) | All eight browser suites (smoke, i18n, architect, python, assistant, flow, panels, api) against Nodestro servers with simulated models and temporary data folders; needs the built user interface and Playwright |
+| `make e2e` (`scripts/e2e.sh [suite ...]`) | All eight browser suites (smoke, i18n, architect, python, assistant, flow, panels, api) against Nodestro servers with simulated models and temporary data folders; needs the built user interface and Playwright; `E2E_BROWSER=firefox` or `webkit` runs them in another engine |
 | `make check-versions` | The pins of all components against [platform/versions.json](platform/versions.json) |
 | `make check-imports` | The dependency direction of the installed packages, no claude-agent |
 
