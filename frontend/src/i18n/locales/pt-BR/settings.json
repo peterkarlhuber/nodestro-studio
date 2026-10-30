@@ -40,8 +40,8 @@
     "title": "Reconhecimento de texto (OCR)",
     "text": "Reconhece texto em PDFs digitalizados localmente com Tesseract. Nenhum dado é enviado. Palavras incertas são marcadas.",
     "label": "Usar OCR para digitalizações",
-    "available": "Tesseract encontrado",
-    "missing": "Tesseract não instalado"
+    "available": "OCR pronto: Tesseract, dados de idioma e Poppler encontrados",
+    "missing": "Indisponível: precisa do Tesseract com dados de idioma e do pdftoppm e pdfinfo (Poppler)"
   },
   "providers": {
     "title": "Provedores de IA",

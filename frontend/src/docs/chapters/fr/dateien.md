@@ -43,7 +43,7 @@ Pour les [exécutions par lots](/docs/automatisierung#stapel), Nodestro lit dire
 
 Les PDF scannés sans couche texte ne sont d’abord pas consultables par recherche. La **reconnaissance de texte locale** les rend lisibles :
 
-1. Installez **Tesseract** et **pdftoppm** (Poppler) sur votre ordinateur, par exemple avec le gestionnaire de paquets de votre système.
+1. Installez **Tesseract** avec les données de langue de vos documents (allemand, anglais, espagnol, français, italien ou portugais) ainsi que **pdftoppm** et **pdfinfo** (tous deux issus de Poppler) sur votre ordinateur, par exemple avec le gestionnaire de paquets de votre système.
 2. Dans les [Réglages](/docs/einstellungen), sous *Reconnaissance de texte (OCR)*, activez *Utiliser l’OCR pour les scans*. Le réglage indique si Tesseract a été trouvé.
 3. Les nouveaux scans sont reconnus au téléversement ; pour les fichiers existants, cliquez sur *Reconnaître le texte (OCR)* dans les Connaissances.
 

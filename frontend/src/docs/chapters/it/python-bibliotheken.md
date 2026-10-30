@@ -42,7 +42,7 @@ Sono ammessi solo il nome del pacchetto e la specifica di versione, nessun link 
 ## Approvazione {#freigabe}
 <!-- keywords: approvazione, approvare, autorizzare, versione, indiretto, transitivo, panoramica, installare -->
 
-Con **Verifica e approva** Nodestro risolve le versioni (scaricando solo le informazioni sui pacchetti) e mostra una panoramica:
+Con **Verifica e approva** Nodestro risolve le versioni (scaricando le informazioni sui pacchetti; un pacchetto senza wheel precompilato viene compilato dal codice sorgente, eseguendo il suo script di build) e mostra una panoramica:
 
 | Colonna | Significato |
 |---|---|

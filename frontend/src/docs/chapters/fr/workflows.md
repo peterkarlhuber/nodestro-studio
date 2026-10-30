@@ -88,7 +88,7 @@ Un agent ne voit que les résultats de ses prédécesseurs **directs**, pas ceux
 
 | Espace réservé | Est remplacé par |
 |---|---|
-| `{{input}}` | le résultat de l’unique prédécesseur ; avec plusieurs prédécesseurs, tous les résultats, chacun en section `## Nom` ; sans prédécesseur, l’entrée de l’exécution |
+| `{{input}}` | le résultat de l’unique prédécesseur ; avec plusieurs prédécesseurs, tous les résultats, chacun en section `## Nom` ; sans prédécesseur, l’entrée de l’exécution. Juste après un nœud de départ avec un formulaire rempli, ce ne sont que les valeurs du formulaire ; utilisez `{{run.input}}` pour les valeurs du formulaire et le texte supplémentaire |
 | `{{run.input}}` (ou `{{workflow.input}}`) | l’entrée au lancement du workflow, à n’importe quel endroit du workflow |
 | `{{Nom du prédécesseur}}` | le résultat de ce prédécesseur direct précis |
 

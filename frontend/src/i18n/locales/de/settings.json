@@ -40,8 +40,8 @@
     "title": "Texterkennung (OCR)",
     "text": "Erkennt Text in gescannten PDFs lokal mit Tesseract. Es werden keine Daten verschickt. Unsichere Wörter werden markiert.",
     "label": "OCR für Scans verwenden",
-    "available": "Tesseract gefunden",
-    "missing": "Tesseract nicht installiert"
+    "available": "OCR bereit: Tesseract, Sprachdaten und Poppler gefunden",
+    "missing": "Nicht verfügbar: braucht Tesseract mit Sprachdaten sowie pdftoppm und pdfinfo (Poppler)"
   },
   "providers": {
     "title": "KI-Anbieter",

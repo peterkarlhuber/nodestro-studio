@@ -40,7 +40,7 @@
     "title": "Python libraries for “{{name}}”",
     "introWorkflow": "The tools of the workflow “{{name}}” need these libraries. Nodestro has resolved the versions but installed nothing yet.",
     "introTool": "The tool “{{name}}” needs these libraries for its tests. Nodestro has resolved the versions but installed nothing yet.",
-    "resolving": "Resolving versions … (downloads package information only)",
+    "resolving": "Resolving versions … Package information is downloaded; a package without a prebuilt wheel is built from source, which runs its build script.",
     "warning": "On approval Nodestro installs exactly these versions into a separate environment. Third-party libraries can access files and the network; only approve what you know.",
     "unchanged": "All packages are already approved; no version changes.",
     "codeSeparate": "The tools' code is checked and approved separately.",

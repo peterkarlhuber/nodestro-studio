@@ -88,7 +88,7 @@ Un agente vede solo i risultati dei suoi predecessori **diretti**, non quelli de
 
 | Segnaposto | Viene sostituito da |
 |---|---|
-| `{{input}}` | il risultato dell'unico predecessore; con più predecessori tutti i risultati, ciascuno come sezione `## Nome`; senza predecessore l'input dell'esecuzione |
+| `{{input}}` | il risultato dell'unico predecessore; con più predecessori tutti i risultati, ciascuno come sezione `## Nome`; senza predecessore l'input dell'esecuzione. Subito dopo un nodo di avvio con modulo compilato sono solo i valori del modulo; usa `{{run.input}}` per i valori del modulo e il testo aggiuntivo |
 | `{{run.input}}` (o `{{workflow.input}}`) | l'input all'avvio del workflow, in qualsiasi punto del workflow |
 | `{{Nome del predecessore}}` | il risultato esattamente di quel predecessore diretto |
 

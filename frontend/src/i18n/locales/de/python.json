@@ -40,7 +40,7 @@
     "title": "Python-Bibliotheken für „{{name}}“",
     "introWorkflow": "Diese Bibliotheken brauchen die Tools des Workflows „{{name}}“. Nodestro hat die Versionen aufgelöst, aber noch nichts installiert.",
     "introTool": "Diese Bibliotheken braucht das Tool „{{name}}“ für seine Tests. Nodestro hat die Versionen aufgelöst, aber noch nichts installiert.",
-    "resolving": "Versionen werden aufgelöst … (lädt nur Paketinformationen)",
+    "resolving": "Versionen werden aufgelöst … Dabei werden Paketinformationen geladen; ein Paket ohne fertiges Wheel wird aus dem Quellcode gebaut, wobei sein Build-Skript läuft.",
     "warning": "Mit der Freigabe installiert Nodestro genau diese Versionen in eine eigene Umgebung. Bibliotheken von Drittanbietern können auf Dateien und das Netzwerk zugreifen; gib nur frei, was du kennst.",
     "unchanged": "Alle Pakete sind bereits freigegeben; es ändert sich keine Version.",
     "codeSeparate": "Der Code der Tools wird davon unabhängig geprüft und freigegeben.",

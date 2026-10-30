@@ -88,7 +88,7 @@ Um agente só vê os resultados de seus antecessores **diretos**, não os de nó
 
 | Marcador | É substituído por |
 |---|---|
-| `{{input}}` | o resultado do único antecessor; com vários antecessores, todos os resultados, cada um como seção `## Nome`; sem antecessor, a entrada da execução |
+| `{{input}}` | o resultado do único antecessor; com vários antecessores, todos os resultados, cada um como seção `## Nome`; sem antecessor, a entrada da execução. Logo após um nó inicial com formulário preenchido, são apenas os valores do formulário; use `{{run.input}}` para os valores do formulário e o texto adicional |
 | `{{run.input}}` (ou `{{workflow.input}}`) | a entrada ao iniciar o fluxo de trabalho, em qualquer ponto do fluxo |
 | `{{Nome do antecessor}}` | o resultado exatamente desse antecessor direto |
 

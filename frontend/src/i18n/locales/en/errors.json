@@ -95,7 +95,8 @@
     "branch_no_input": "{{node}} has no incoming connection.",
     "branch_unknown": "A connection of {{node}} starts at no branch.",
     "condition_no_rules": "The decision {{node}} has no rules.",
-    "subworkflow_missing": "{{node}} has no workflow selected."
+    "subworkflow_missing": "{{node}} has no workflow selected.",
+    "node_duplicate": "Two nodes have the same id ({{id}}). Delete one of them and add it again."
   },
   "run": {
     "failed": "The step failed.",
@@ -119,7 +120,8 @@
     "subworkflow_too_deep": "Sub-workflows are nested too deeply at {{node}}.",
     "finished": "The run has already ended.",
     "not_found": "There is no run with this id.",
-    "not_finished": "The run has not finished yet."
+    "not_finished": "The run has not finished yet.",
+    "no_event_loop": "The run could not start: it needs a running event loop."
   },
   "trace": {
     "invalid": "The trace is damaged or incomplete.",
@@ -195,7 +197,8 @@
     "subworkflow_outdated": "{{name}} uses version {{version}}; version {{latest}} is newer.",
     "subworkflow_version_missing": "{{name}}: the chosen version no longer exists.",
     "unreachable": "{{name}} cannot be reached from the start.",
-    "provider_not_configured": "{{provider}} is not set up: enter its base URL in the settings."
+    "provider_not_configured": "{{provider}} is not set up: enter its base URL in the settings.",
+    "input_form_only": "{{name}} reads the start node with {{input}}. When the form is filled in, that is only the form values, without the additional text. Use {{run_input}} to get both."
   },
   "backup": {
     "not_zip": "The file is not a Nodestro backup (no ZIP file).",
@@ -209,7 +212,9 @@
     "document_invalid": "An entry in the backup is damaged ({{collection}}).",
     "expired": "This backup is no longer waiting to be restored. Please choose it again.",
     "runs_active": "Workflows are still running. Wait until they have finished, then restore the backup.",
-    "not_confirmed": "Restoring replaces all data and must be confirmed."
+    "not_confirmed": "Restoring replaces all data and must be confirmed.",
+    "restore_running": "A backup is being restored already. Wait until it has finished.",
+    "too_large": "Unpacking the backup needs {{needed_mb}} MB, but only {{free_mb}} MB are free."
   },
   "preview": {
     "not_agent": "Only agents have an input preview."
@@ -255,7 +260,9 @@
     "plan_expired": "This overview has expired. Please open it again.",
     "plan_invalid": "There is nothing to approve in this overview.",
     "no_definition": "Nothing is approved for this environment yet.",
-    "run_active": "The workflow is running; try again after the run."
+    "run_active": "The workflow is running; try again after the run.",
+    "install_interrupted": "Nodestro stopped during the installation of the libraries. Install them again.",
+    "build_required": "{{name}} is only available as source code. Resolving it would run its build script, so Nodestro did not resolve it for the generated tool. Check the package and approve it in the tool's library dialog, or let the tool be written without it."
   },
   "condition": {
     "field_missing": "The field is missing in the result.",
@@ -324,9 +331,10 @@
   "document": {
     "not_pdf": "{{name}} is not a PDF.",
     "ocr_failed": "Text recognition of {{name}} failed.",
-    "ocr_unavailable": "OCR needs Tesseract and pdftoppm installed locally.",
+    "ocr_unavailable": "OCR is not available. It needs Tesseract with language data for German, English, Spanish, French, Italian or Portuguese, and pdftoppm and pdfinfo (Poppler), installed locally.",
     "too_large": "{{name}} unpacks to too much data.",
-    "unreadable": "{{name}} cannot be read."
+    "unreadable": "{{name}} cannot be read. The file is damaged, empty or not a valid document.",
+    "encrypted": "{{name}} is protected by a password and cannot be read. Upload a version without a password."
   },
   "batch": {
     "confirm_external": "The workflow uses own tools that may act outside Nodestro: {{tools}}. Please confirm.",
@@ -409,7 +417,8 @@
     "file_missing": "The ZIP file of this export is gone; export again.",
     "file_changed": "The ZIP file of this export was changed; export again.",
     "provider": "{{provider}}: set {{variables}} in the environment of the exported project.",
-    "base_url_withheld": "The base URL of {{provider}} contains credentials and is not exported; set {{variable}} in the exported project."
+    "base_url_withheld": "The base URL of {{provider}} contains credentials and is not exported; set {{variable}} in the exported project.",
+    "integration_tools": "Tools of installed integrations cannot be exported yet: {{tools}}."
   },
   "lan": {
     "tls_file_missing": "File not found: {{path}}",

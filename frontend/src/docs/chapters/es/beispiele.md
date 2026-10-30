@@ -198,7 +198,7 @@ Muchas pequeñas empresas conocen sus problemas, pero no el mejor orden para abo
 | **Análisis interno** | Extrae fortalezas y debilidades de los datos de la empresa. | Perfil de la empresa |
 | **Análisis del entorno** | Deriva oportunidades y amenazas del mercado y del entorno. | Perfil de la empresa |
 | **Desarrollador de estrategia** | Desarrolla estrategias según la matriz TOWS y un plan de 90 días. | Análisis interno, Análisis del entorno |
-| **Revisor crítico** | Cuestiona la estrategia y descubre puntos débiles. (salida estructurada) | Desarrollador de estrategia |
+| **Revisor crítico** | Cuestiona la estrategia y descubre puntos débiles. (salida estructurada) | Desarrollador de estrategia, Perfil de la empresa |
 
 **Entrada:** Un breve perfil de la empresa con cifras clave, oferta, fortalezas, problemas, entorno de mercado y objetivos.
 
@@ -223,7 +223,7 @@ Las cifras de los informes anuales se citan rápido, pero rara vez se recalculan
 |---|---|---|
 | **Agente de investigación** | Recopila cifras y contexto sobre los datos financieros. | Tarea |
 | **Agente de análisis** | Calcula márgenes, crecimiento y ratios de estabilidad con la calculadora. (Herramientas: `calculator`) | Agente de investigación |
-| **Agente de revisión** | Revisa el análisis y lo resume de forma estructurada. (salida estructurada) | Agente de análisis |
+| **Agente de revisión** | Revisa el análisis y lo resume de forma estructurada. (salida estructurada) | Agente de análisis, Agente de investigación |
 
 **Entrada:** Cifras financieras de una empresa de al menos dos años, por ejemplo de un informe anual o trimestral, y los efectos extraordinarios conocidos. Puedes pegar las cifras o adjuntarlas como archivo de Excel, CSV o PDF; el archivo de ejemplo contiene los indicadores de la tarea de prueba.
 
@@ -336,7 +336,7 @@ Una buena contratación empieza con un perfil claro y entrevistas justas y compa
 
 **Resultado:** Perfil del puesto, oferta de empleo y guía de entrevista con anclas de valoración, una revisión de equidad estructurada y, si hubo objeciones, una versión revisada con la lista de cambios, además como archivo de Word. La documentación debe ser aprobada por RR. HH. o por una persona experta antes de publicarse.
 
-**Cómo adaptarlo:** Sustituye las notas por tu necesidad de contratación. Puedes guardar vuestro perfil como empleador y vuestros beneficios como conocimiento y asignarlos al agente de la oferta. Los requisitos legales de tu país se añaden en el prompt de sistema del revisor de equidad.
+**Cómo adaptarlo:** Sustituye las notas por tu necesidad de contratación. Puedes guardar vuestro perfil como empleador y vuestros beneficios como conocimiento y asignarlos al agente de la oferta. Los requisitos legales de tu país se añaden en el prompt de sistema del revisor de equidad. No amplíes el flujo para filtrar, evaluar o clasificar candidaturas sin una revisión jurídica: según el Reglamento de IA de la UE, esos sistemas son IA de alto riesgo.
 
 ## 10 · Convertir una pregunta de investigación en hipótesis {#research-hypotheses}
 <!-- keywords: investigación y desarrollo, analista de la pregunta, desarrollador de hipótesis, crítico metodológico, planificador de experimentos -->
@@ -458,7 +458,7 @@ A final de mes suele quedar menos de lo esperado. El flujo recalcula un presupue
 | Agente | Tarea | Recibe |
 |---|---|---|
 | **Analista de presupuesto** | Calcula ingresos, gastos, excedente y porcentajes con la calculadora. (Herramientas: `calculator`) | Presupuesto familiar |
-| **Asesor de ahorro** | Encuentra posibilidades de ahorro concretas y estima su efecto. (Herramientas: `calculator`) | Analista de presupuesto |
+| **Asesor de ahorro** | Encuentra posibilidades de ahorro concretas y estima su efecto. (Herramientas: `calculator`) | Analista de presupuesto, Presupuesto familiar |
 | **Comprobación de realidad** | Comprueba la viabilidad de las propuestas y las resume. (salida estructurada) | Analista de presupuesto, Asesor de ahorro |
 
 **Entrada:** Ingresos, gastos fijos y variables de un hogar y un objetivo de ahorro. En lugar de teclearlo todo, puedes adjuntar movimientos bancarios o un libro de cuentas como archivo CSV o Excel; el archivo de ejemplo contiene un mes inventado.
@@ -585,7 +585,7 @@ Los retrasos en obra se acumulan y los promotores necesitan rápido una imagen c
 | **Analista de plazos** | Calcula retrasos, holguras y consecuencias con la herramienta de fechas y la calculadora. (Herramientas: `days_between`, `calculator`) | Estado del proyecto |
 | **Analista de causas** | Clasifica las causas por ámbito de responsabilidad y necesidad de documentación. | Estado del proyecto |
 | **Planificador de contramedidas** | Desarrolla medidas de aceleración con coste y efecto. | Analista de plazos, Analista de causas |
-| **Informe al promotor** | Resume de forma objetiva plazos, causas y medidas. | Analista de plazos, Planificador de contramedidas |
+| **Informe al promotor** | Resume de forma objetiva plazos, causas y medidas. | Analista de plazos, Planificador de contramedidas, Analista de causas |
 
 **Entrada:** Un resumen de plazos con hitos previstos y reales, observaciones sobre las causas, fecha del informe y condiciones contractuales, como texto o como archivos: planificación en Excel, libro de obra en PDF, fotos como imagen. Los archivos de ejemplo contienen una planificación y un extracto del libro de obra.
 
@@ -610,7 +610,7 @@ Una carta tiene que gustar a los clientes y ser rentable. El flujo desarrolla pl
 |---|---|---|
 | **Creador del concepto** | Compone platos adecuados con recetas y cantidades. | Concepto |
 | **Escandallo** | Calcula coste de materia prima y precios de venta con la calculadora. (Herramientas: `calculator`) | Creador del concepto, Concepto |
-| **Redactor de la carta** | Escribe la carta de mediodía con descripciones apetecibles. (con control de calidad) | Escandallo |
+| **Redactor de la carta** | Escribe la carta de mediodía con descripciones apetecibles. (con control de calidad) | Escandallo, Creador del concepto |
 
 **Entrada:** Tipo de local, público, número y tipo de platos, coste objetivo de materia prima, rango de precios y precios de compra. Los precios de compra puedes pegarlos o adjuntarlos como archivo CSV o Excel, como muestra el archivo de ejemplo.
 

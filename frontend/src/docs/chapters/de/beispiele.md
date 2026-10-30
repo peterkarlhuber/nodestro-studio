@@ -198,7 +198,7 @@ Viele kleine Unternehmen kennen ihre Probleme, aber nicht die beste Reihenfolge,
 | **Interne Analyse** | Arbeitet Stärken und Schwächen aus den Unternehmensdaten heraus. | Unternehmensprofil |
 | **Umfeldanalyse** | Leitet Chancen und Risiken aus Markt und Umfeld ab. | Unternehmensprofil |
 | **Strategieentwickler** | Entwickelt Strategien nach der TOWS-Matrix und einen 90-Tage-Plan. | Interne Analyse, Umfeldanalyse |
-| **Kritischer Prüfer** | Hinterfragt die Strategie und deckt Schwachstellen auf. (strukturierte Ausgabe) | Strategieentwickler |
+| **Kritischer Prüfer** | Hinterfragt die Strategie und deckt Schwachstellen auf. (strukturierte Ausgabe) | Strategieentwickler, Unternehmensprofil |
 
 **Eingabe:** Ein kurzes Unternehmensprofil mit Kennzahlen, Angebot, Stärken, Problemen, Marktumfeld und Zielen.
 
@@ -223,7 +223,7 @@ Kennzahlen aus Geschäftsberichten sind schnell zitiert, aber selten sauber nach
 |---|---|---|
 | **Recherche-Agent** | Sammelt Kennzahlen und Kontext zu den Finanzdaten. | Aufgabe |
 | **Analyse-Agent** | Berechnet Margen, Wachstum und Stabilitätskennzahlen mit dem Rechner-Tool. (Tools: `calculator`) | Recherche-Agent |
-| **Review-Agent** | Prüft die Analyse und fasst sie strukturiert zusammen. (strukturierte Ausgabe) | Analyse-Agent |
+| **Review-Agent** | Prüft die Analyse und fasst sie strukturiert zusammen. (strukturierte Ausgabe) | Analyse-Agent, Recherche-Agent |
 
 **Eingabe:** Finanzzahlen eines Unternehmens für mindestens zwei Jahre, zum Beispiel aus Geschäftsbericht oder Quartalsmitteilung, sowie bekannte Sondereffekte. Die Zahlen kannst du einfügen oder als Excel-, CSV- oder PDF-Datei anhängen; die Beispieldatei enthält die Kennzahlen der Testaufgabe.
 
@@ -336,7 +336,7 @@ Gute Einstellungen beginnen mit einem klaren Profil und fairen, vergleichbaren I
 
 **Ergebnis:** Stellenprofil, Stellenanzeige und Interviewleitfaden mit Bewertungsankern, eine strukturierte Fairness-Prüfung und bei Beanstandungen eine überarbeitete Fassung mit Änderungsliste, zusätzlich als Word-Datei. Die Unterlagen müssen vor der Veröffentlichung von HR oder einer fachkundigen Person freigegeben werden.
 
-**Anpassen:** Ersetze die Notizen durch deinen Stellenbedarf. Euer Arbeitgeberprofil und eure Benefits kannst du als Wissen hinterlegen und dem Anzeigen-Agenten zuweisen. Rechtliche Vorgaben eures Landes ergänzt du im System-Prompt des Fairness-Prüfers.
+**Anpassen:** Ersetze die Notizen durch deinen Stellenbedarf. Euer Arbeitgeberprofil und eure Benefits kannst du als Wissen hinterlegen und dem Anzeigen-Agenten zuweisen. Rechtliche Vorgaben eures Landes ergänzt du im System-Prompt des Fairness-Prüfers. Erweitere den Workflow nicht ohne rechtliche Prüfung auf das Sichten, Bewerten oder Reihen von Bewerbungen: Solche Systeme gelten nach der EU-KI-Verordnung als Hochrisiko-KI.
 
 ## 10 · Forschungsfrage in Hypothesen übersetzen {#research-hypotheses}
 <!-- keywords: forschung und entwicklung, fragestellungsanalyst, hypothesenentwickler, methodenkritiker, versuchsplaner -->
@@ -458,7 +458,7 @@ Am Monatsende ist oft weniger übrig als gedacht. Der Workflow rechnet ein Haush
 | Agent | Aufgabe | Bekommt |
 |---|---|---|
 | **Budgetanalyst** | Rechnet Einnahmen, Ausgaben, Überschuss und Anteile mit dem Rechner-Tool. (Tools: `calculator`) | Haushaltsbudget |
-| **Sparberater** | Findet konkrete Sparmöglichkeiten und schätzt ihren Effekt. (Tools: `calculator`) | Budgetanalyst |
+| **Sparberater** | Findet konkrete Sparmöglichkeiten und schätzt ihren Effekt. (Tools: `calculator`) | Budgetanalyst, Haushaltsbudget |
 | **Realitätscheck** | Prüft die Vorschläge auf Machbarkeit und fasst sie zusammen. (strukturierte Ausgabe) | Budgetanalyst, Sparberater |
 
 **Eingabe:** Einnahmen, feste und variable Ausgaben eines Haushalts sowie ein Sparziel. Statt alles abzutippen, kannst du Kontoumsätze oder ein Haushaltsbuch als CSV- oder Excel-Datei anhängen; die Beispieldatei enthält einen erfundenen Monat.
@@ -585,7 +585,7 @@ Verzögerungen auf der Baustelle summieren sich, und Bauherren brauchen schnell 
 | **Terminanalyst** | Berechnet Verzüge, Puffer und Folgen mit Datums- und Rechner-Tool. (Tools: `days_between`, `calculator`) | Projektstatus |
 | **Ursachenanalyst** | Ordnet Ursachen nach Verantwortungsbereich und Dokumentationsbedarf ein. | Projektstatus |
 | **Maßnahmenplaner** | Entwickelt Beschleunigungsmaßnahmen mit Kosten und Wirkung. | Terminanalyst, Ursachenanalyst |
-| **Bericht an den Bauherrn** | Fasst Terminlage, Ursachen und Maßnahmen sachlich zusammen. | Terminanalyst, Maßnahmenplaner |
+| **Bericht an den Bauherrn** | Fasst Terminlage, Ursachen und Maßnahmen sachlich zusammen. | Terminanalyst, Maßnahmenplaner, Ursachenanalyst |
 
 **Eingabe:** Eine Terminübersicht mit geplanten und tatsächlichen Meilensteinen, Bemerkungen zu den Ursachen, Stichtag und vertraglichen Rahmenbedingungen, als Text oder als Dateien: Terminplan als Excel, Bautagebuch als PDF, Fotos als Bild. Die Beispieldateien enthalten einen Terminplan und einen Bautagebuch-Auszug.
 
@@ -610,7 +610,7 @@ Eine Speisekarte muss Gästen schmecken und sich rechnen. Der Workflow entwickel
 |---|---|---|
 | **Konzeptentwickler** | Stellt passende Gerichte mit Rezepturen und Mengen zusammen. | Konzept |
 | **Kalkulation** | Rechnet Wareneinsatz und Verkaufspreise mit dem Rechner-Tool. (Tools: `calculator`) | Konzeptentwickler, Konzept |
-| **Kartentexter** | Schreibt die Mittagskarte mit appetitlichen Beschreibungen. (mit Qualitätsprüfung) | Kalkulation |
+| **Kartentexter** | Schreibt die Mittagskarte mit appetitlichen Beschreibungen. (mit Qualitätsprüfung) | Kalkulation, Konzeptentwickler |
 
 **Eingabe:** Betriebsart, Zielgruppe, Anzahl und Art der Gerichte, Zielwareneinsatz, Preisrahmen und Einkaufspreise. Die Einkaufspreise kannst du einfügen oder als CSV- bzw. Excel-Datei anhängen, wie die Beispieldatei zeigt.
 

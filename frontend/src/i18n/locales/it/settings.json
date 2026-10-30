@@ -40,8 +40,8 @@
     "title": "Riconoscimento del testo (OCR)",
     "text": "Riconosce localmente il testo nei PDF scansionati con Tesseract. Nessun dato viene inviato. Le parole incerte vengono segnate.",
     "label": "Usa l’OCR per le scansioni",
-    "available": "Tesseract trovato",
-    "missing": "Tesseract non installato"
+    "available": "OCR pronto: Tesseract, dati linguistici e Poppler trovati",
+    "missing": "Non disponibile: richiede Tesseract con dati linguistici e pdftoppm e pdfinfo (Poppler)"
   },
   "providers": {
     "title": "Provider di IA",

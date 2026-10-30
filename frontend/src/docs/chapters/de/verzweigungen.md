@@ -49,7 +49,7 @@ Eine **Freigabe** hält den Lauf an, bis eine Person die Ergebnisse **freigibt**
 
 - **Hinweis für die prüfende Person:** worauf sie achten soll.
 - **Angezeigte Ergebnisse:** welche Ergebnisse sie sieht; ohne Auswahl alles, was ankommt.
-- **Kommentar:** optional oder bei Ablehnung Pflicht. Spätere Agenten lesen ihn unter dem Namen der Freigabe.
+- **Kommentar:** optional oder bei Ablehnung Pflicht. Spätere Agenten lesen ihn unter dem Namen der Freigabe; Ergebnisknoten, Ergebnisdateien und Entscheidungen erhalten ihn nicht. Er bleibt bei der Freigabe im Lauf gespeichert.
 - **Bei Ablehnung:** dem Zweig **Abgelehnt** folgen oder den Lauf beenden. Ist am Zweig *Abgelehnt* nichts verbunden, endet dieser Weg einfach.
 
 Während der Lauf wartet, hat er den Status **Pausiert**, die Freigabe **Wartet auf Freigabe**. Entscheiden kannst du in der Ausführungsübersicht des Editors, in der Detailansicht des Laufs oder auf der Seite **Freigaben**. Danach läuft der Lauf an derselben Stelle weiter. Offene Freigaben überstehen einen Neustart von Nodestro.

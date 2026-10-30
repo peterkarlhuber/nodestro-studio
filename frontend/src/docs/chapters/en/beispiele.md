@@ -198,7 +198,7 @@ Many small businesses know their problems, but not the best order in which to ta
 | **Internal analysis** | Works out strengths and weaknesses from the company data. | Company profile |
 | **Environment analysis** | Derives opportunities and threats from the market and environment. | Company profile |
 | **Strategy developer** | Develops strategies following the TOWS matrix and a 90-day plan. | Internal analysis, Environment analysis |
-| **Critical reviewer** | Challenges the strategy and uncovers weak points. (structured output) | Strategy developer |
+| **Critical reviewer** | Challenges the strategy and uncovers weak points. (structured output) | Strategy developer, Company profile |
 
 **Input:** A short company profile with key figures, offering, strengths, problems, market environment and goals.
 
@@ -223,7 +223,7 @@ Figures from annual reports are quickly quoted but rarely recalculated and put i
 |---|---|---|
 | **Research Agent** | Collects figures and context for the financial data. | Task |
 | **Analysis Agent** | Calculates margins, growth and stability ratios with the calculator tool. (Tools: `calculator`) | Research Agent |
-| **Review Agent** | Reviews the analysis and summarises it in a structured way. (structured output) | Analysis Agent |
+| **Review Agent** | Reviews the analysis and summarises it in a structured way. (structured output) | Analysis Agent, Research Agent |
 
 **Input:** A company's financial figures for at least two years, for example from an annual report or quarterly statement, plus known one-off effects. You can paste the figures or attach them as an Excel, CSV or PDF file; the sample file contains the figures of the test task.
 
@@ -336,7 +336,7 @@ Good hiring starts with a clear profile and fair, comparable interviews. The wor
 
 **Result:** Job profile, job advert and interview guide with rating anchors, a structured fairness review and, if there were objections, a revised version with a list of changes, also as a Word file. The documents must be approved by HR or a qualified person before publication.
 
-**Adapting it:** Replace the notes with your hiring need. You can store your employer profile and benefits as knowledge and assign them to the advert agent. Add the legal requirements of your country to the system prompt of the fairness reviewer.
+**Adapting it:** Replace the notes with your hiring need. You can store your employer profile and benefits as knowledge and assign them to the advert agent. Add the legal requirements of your country to the system prompt of the fairness reviewer. Do not extend the workflow to screening, rating or ranking applicants without a legal review: under the EU AI Act such systems are high-risk AI.
 
 ## 10 · Turn a research question into hypotheses {#research-hypotheses}
 <!-- keywords: research and development, question analyst, hypothesis developer, methods critic, experiment planner -->
@@ -458,7 +458,7 @@ At the end of the month there is often less left than expected. The workflow rec
 | Agent | Task | Receives |
 |---|---|---|
 | **Budget analyst** | Calculates income, spending, surplus and shares with the calculator tool. (Tools: `calculator`) | Household budget |
-| **Savings adviser** | Finds concrete ways to save and estimates their effect. (Tools: `calculator`) | Budget analyst |
+| **Savings adviser** | Finds concrete ways to save and estimates their effect. (Tools: `calculator`) | Budget analyst, Household budget |
 | **Reality check** | Checks the suggestions for feasibility and summarises them. (structured output) | Budget analyst, Savings adviser |
 
 **Input:** A household's income, fixed and variable expenses and a savings goal. Instead of typing everything in, you can attach bank transactions or a household book as a CSV or Excel file; the sample file contains a fictional month.
@@ -585,7 +585,7 @@ Delays on site add up, and clients quickly need a clear picture. The workflow ca
 | **Schedule analyst** | Calculates delays, float and consequences with the date and calculator tools. (Tools: `days_between`, `calculator`) | Project status |
 | **Cause analyst** | Classifies causes by area of responsibility and documentation needs. | Project status |
 | **Countermeasure planner** | Develops acceleration measures with cost and effect. | Schedule analyst, Cause analyst |
-| **Report to the client** | Summarises schedule position, causes and measures factually. | Schedule analyst, Countermeasure planner |
+| **Report to the client** | Summarises schedule position, causes and measures factually. | Schedule analyst, Countermeasure planner, Cause analyst |
 
 **Input:** A schedule overview with planned and actual milestones, remarks on causes, report date and contractual conditions, as text or as files: schedule as Excel, site diary as PDF, photos as images. The sample files contain a schedule and an extract from the site diary.
 
@@ -610,7 +610,7 @@ A menu has to please guests and pay off. The workflow develops dishes for a targ
 |---|---|---|
 | **Concept developer** | Puts together suitable dishes with recipes and quantities. | Concept |
 | **Costing** | Calculates food cost and selling prices with the calculator tool. (Tools: `calculator`) | Concept developer, Concept |
-| **Menu writer** | Writes the lunch menu with appetising descriptions. (with quality check) | Costing |
+| **Menu writer** | Writes the lunch menu with appetising descriptions. (with quality check) | Costing, Concept developer |
 
 **Input:** Type of business, target group, number and type of dishes, target food cost, price range and purchase prices. You can paste the purchase prices or attach them as a CSV or Excel file, as the sample file shows.
 

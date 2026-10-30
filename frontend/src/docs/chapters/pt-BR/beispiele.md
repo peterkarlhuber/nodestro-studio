@@ -198,7 +198,7 @@ Muitas pequenas empresas conhecem seus problemas, mas não a melhor ordem para e
 | **Análise interna** | Identifica forças e fraquezas a partir dos dados da empresa. | Perfil da empresa |
 | **Análise do ambiente** | Deriva oportunidades e ameaças do mercado e do ambiente. | Perfil da empresa |
 | **Desenvolvedor de estratégia** | Desenvolve estratégias segundo a matriz TOWS e um plano de 90 dias. | Análise interna, Análise do ambiente |
-| **Revisor crítico** | Questiona a estratégia e revela pontos fracos. (saída estruturada) | Desenvolvedor de estratégia |
+| **Revisor crítico** | Questiona a estratégia e revela pontos fracos. (saída estruturada) | Desenvolvedor de estratégia, Perfil da empresa |
 
 **Entrada:** Um perfil curto da empresa com números-chave, oferta, pontos fortes, problemas, ambiente de mercado e metas.
 
@@ -223,7 +223,7 @@ Números de relatórios anuais são citados rapidamente, mas raramente recalcula
 |---|---|---|
 | **Agente de pesquisa** | Reúne números e contexto dos dados financeiros. | Tarefa |
 | **Agente de análise** | Calcula margens, crescimento e índices de estabilidade com a calculadora. (Ferramentas: `calculator`) | Agente de pesquisa |
-| **Agente de revisão** | Revisa a análise e a resume de forma estruturada. (saída estruturada) | Agente de análise |
+| **Agente de revisão** | Revisa a análise e a resume de forma estruturada. (saída estruturada) | Agente de análise, Agente de pesquisa |
 
 **Entrada:** Números financeiros de uma empresa de pelo menos dois anos, por exemplo do relatório anual ou trimestral, e os efeitos extraordinários conhecidos. Você pode colar os números ou anexá-los como arquivo Excel, CSV ou PDF; o arquivo de exemplo contém os indicadores da tarefa de teste.
 
@@ -336,7 +336,7 @@ Uma boa contratação começa com um perfil claro e entrevistas justas e compar�
 
 **Resultado:** Perfil da vaga, anúncio da vaga e roteiro de entrevista com âncoras de avaliação, uma revisão de imparcialidade estruturada e, se houver objeções, uma versão revisada com a lista de alterações, também como arquivo Word. Os documentos precisam ser aprovados pelo RH ou por uma pessoa qualificada antes da publicação.
 
-**Como adaptar:** Substitua as anotações pela sua necessidade de contratação. Você pode guardar seu perfil de empregador e seus benefícios como conhecimento e atribuí-los ao agente do anúncio. Acrescente as exigências legais do seu país ao prompt de sistema do revisor de imparcialidade.
+**Como adaptar:** Substitua as anotações pela sua necessidade de contratação. Você pode guardar seu perfil de empregador e seus benefícios como conhecimento e atribuí-los ao agente do anúncio. Acrescente as exigências legais do seu país ao prompt de sistema do revisor de imparcialidade. Não amplie o fluxo para triar, avaliar ou classificar candidatos sem uma análise jurídica: pelo Regulamento de IA da UE, esses sistemas são IA de alto risco.
 
 ## 10 · Transformar uma pergunta de pesquisa em hipóteses {#research-hypotheses}
 <!-- keywords: pesquisa e desenvolvimento, analista da pergunta, desenvolvedor de hipóteses, crítico metodológico, planejador de experimentos -->
@@ -458,7 +458,7 @@ No fim do mês muitas vezes sobra menos do que o esperado. O workflow recalcula 
 | Agente | Tarefa | Recebe |
 |---|---|---|
 | **Analista de orçamento** | Calcula receitas, despesas, saldo e participações com a calculadora. (Ferramentas: `calculator`) | Orçamento doméstico |
-| **Consultor de economia** | Encontra formas concretas de economizar e estima seu efeito. (Ferramentas: `calculator`) | Analista de orçamento |
+| **Consultor de economia** | Encontra formas concretas de economizar e estima seu efeito. (Ferramentas: `calculator`) | Analista de orçamento, Orçamento doméstico |
 | **Verificação de realidade** | Verifica a viabilidade das sugestões e as resume. (saída estruturada) | Analista de orçamento, Consultor de economia |
 
 **Entrada:** Receitas, despesas fixas e variáveis de uma família e uma meta de poupança. Em vez de digitar tudo, você pode anexar o extrato bancário ou um controle de gastos como arquivo CSV ou Excel; o arquivo de exemplo contém um mês fictício.
@@ -585,7 +585,7 @@ Atrasos na obra se acumulam, e os contratantes precisam rapidamente de uma visã
 | **Analista de cronograma** | Calcula atrasos, folgas e consequências com a ferramenta de datas e a calculadora. (Ferramentas: `days_between`, `calculator`) | Situação do projeto |
 | **Analista de causas** | Classifica as causas por área de responsabilidade e necessidade de documentação. | Situação do projeto |
 | **Planejador de contramedidas** | Desenvolve medidas de aceleração com custo e efeito. | Analista de cronograma, Analista de causas |
-| **Relatório ao contratante** | Resume de forma objetiva a posição do cronograma, as causas e as medidas. | Analista de cronograma, Planejador de contramedidas |
+| **Relatório ao contratante** | Resume de forma objetiva a posição do cronograma, as causas e as medidas. | Analista de cronograma, Planejador de contramedidas, Analista de causas |
 
 **Entrada:** Um cronograma com marcos planejados e reais, observações sobre as causas, data do relatório e condições contratuais, como texto ou como arquivos: cronograma em Excel, diário de obra em PDF, fotos como imagem. Os arquivos de exemplo contêm um cronograma e um trecho do diário de obra.
 
@@ -610,7 +610,7 @@ Um cardápio precisa agradar aos clientes e dar lucro. O workflow desenvolve pra
 |---|---|---|
 | **Desenvolvedor de conceito** | Monta pratos adequados com receitas e quantidades. | Conceito |
 | **Precificação** | Calcula custo de insumos e preços de venda com a calculadora. (Ferramentas: `calculator`) | Desenvolvedor de conceito, Conceito |
-| **Redator do cardápio** | Escreve o cardápio de almoço com descrições apetitosas. (com verificação de qualidade) | Precificação |
+| **Redator do cardápio** | Escreve o cardápio de almoço com descrições apetitosas. (com verificação de qualidade) | Precificação, Desenvolvedor de conceito |
 
 **Entrada:** Tipo de estabelecimento, público, número e tipo de pratos, custo de insumos alvo, faixa de preço e preços de compra. Os preços de compra você pode colar ou anexar como arquivo CSV ou Excel, como mostra o arquivo de exemplo.
 

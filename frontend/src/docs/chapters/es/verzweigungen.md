@@ -49,7 +49,7 @@ Una **aprobación** detiene la ejecución hasta que una persona **aprueba** o **
 
 - **Indicación para quien revisa:** en qué debe fijarse.
 - **Resultados mostrados:** qué resultados ve esa persona; sin selección, todo lo que llega.
-- **Comentario:** opcional u obligatorio al rechazar. Los agentes posteriores lo leen con el nombre de la aprobación.
+- **Comentario:** opcional u obligatorio al rechazar. Los agentes posteriores lo leen con el nombre de la aprobación; los nodos de resultado, los archivos de resultado y las decisiones no lo reciben. Queda guardado con la aprobación en la ejecución.
 - **Al rechazar:** seguir la rama **Rechazado** o terminar la ejecución. Si no hay nada conectado a *Rechazado*, ese camino simplemente termina.
 
 Mientras espera, la ejecución tiene el estado **En pausa** y la aprobación **Pendiente de aprobación**. Puedes decidir en el resumen de ejecución del editor, en la vista de detalle de la ejecución o en la página **Aprobaciones**. Después la ejecución continúa donde se detuvo. Las aprobaciones abiertas sobreviven a un reinicio de Nodestro.

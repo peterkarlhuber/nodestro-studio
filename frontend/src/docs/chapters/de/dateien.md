@@ -43,7 +43,7 @@ Für [Stapelläufe](/docs/automatisierung#stapel) liest Nodestro Excel-Tabellen 
 
 Gescannte PDFs ohne Textebene sind zunächst nicht durchsuchbar. Mit der **lokalen Texterkennung** lassen sie sich lesbar machen:
 
-1. Installiere **Tesseract** und **pdftoppm** (Poppler) auf deinem Rechner, zum Beispiel mit dem Paketmanager deines Systems.
+1. Installiere **Tesseract** mit den Sprachdaten deiner Dokumente (Deutsch, Englisch, Spanisch, Französisch, Italienisch oder Portugiesisch) sowie **pdftoppm** und **pdfinfo** (beide aus Poppler) auf deinem Rechner, zum Beispiel mit dem Paketmanager deines Systems.
 2. Schalte in den [Einstellungen](/docs/einstellungen) unter *Texterkennung (OCR)* die Option *OCR für Scans verwenden* ein. Die Einstellung zeigt, ob Tesseract gefunden wurde.
 3. Neue Scans werden beim Hochladen erkannt; bei vorhandenen klickst du im Wissen auf *Text erkennen (OCR)*.
 

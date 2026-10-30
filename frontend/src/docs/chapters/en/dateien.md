@@ -43,7 +43,7 @@ For [batch runs](/docs/automatisierung#stapel) Nodestro reads Excel tables direc
 
 Scanned PDFs without a text layer are not searchable at first. **Local text recognition** makes them readable:
 
-1. Install **Tesseract** and **pdftoppm** (Poppler) on your computer, for example with your system's package manager.
+1. Install **Tesseract** with the language data of your documents (German, English, Spanish, French, Italian or Portuguese) and **pdftoppm** and **pdfinfo** (both from Poppler) on your computer, for example with your system's package manager.
 2. In [Settings](/docs/einstellungen), under *Text recognition (OCR)*, switch on *Use OCR for scans*. The setting shows whether Tesseract was found.
 3. New scans are recognised on upload; for existing ones click *Recognise text (OCR)* in Knowledge.
 

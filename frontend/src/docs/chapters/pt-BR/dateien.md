@@ -43,7 +43,7 @@ Para [execuções em lote](/docs/automatisierung#stapel), o Nodestro lê tabelas
 
 PDFs digitalizados sem camada de texto não são pesquisáveis a princípio. O **reconhecimento de texto local** os torna legíveis:
 
-1. Instale o **Tesseract** e o **pdftoppm** (Poppler) no seu computador, por exemplo com o gerenciador de pacotes do seu sistema.
+1. Instale o **Tesseract** com os dados de idioma dos seus documentos (alemão, inglês, espanhol, francês, italiano ou português) e o **pdftoppm** e o **pdfinfo** (ambos do Poppler) no seu computador, por exemplo com o gerenciador de pacotes do seu sistema.
 2. Em [Configurações](/docs/einstellungen), em *Reconhecimento de texto (OCR)*, ative *Usar OCR para digitalizações*. A configuração mostra se o Tesseract foi encontrado.
 3. Novas digitalizações são reconhecidas no envio; para as existentes, clique em *Reconhecer texto (OCR)* no Conhecimento.
 

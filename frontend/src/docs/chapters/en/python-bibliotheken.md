@@ -42,7 +42,7 @@ Only a package name and version specification are allowed, no links or local pat
 ## Approval {#freigabe}
 <!-- keywords: approval, approve, permit, version, indirect, transitive, overview, install -->
 
-With **Review and approve** Nodestro resolves the versions (downloading package information only) and shows an overview:
+With **Review and approve** Nodestro resolves the versions (downloading package information; a package without a prebuilt wheel is built from source, which runs its build script) and shows an overview:
 
 | Column | Meaning |
 |---|---|

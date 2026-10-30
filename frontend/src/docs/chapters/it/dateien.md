@@ -43,7 +43,7 @@ Per le [esecuzioni in serie](/docs/automatisierung#stapel) Nodestro legge le tab
 
 I PDF scansionati senza livello di testo all'inizio non sono ricercabili. Il **riconoscimento del testo locale** li rende leggibili:
 
-1. Installa **Tesseract** e **pdftoppm** (Poppler) sul tuo computer, per esempio con il gestore di pacchetti del tuo sistema.
+1. Installa **Tesseract** con i dati linguistici dei tuoi documenti (tedesco, inglese, spagnolo, francese, italiano o portoghese) e **pdftoppm** e **pdfinfo** (entrambi di Poppler) sul tuo computer, per esempio con il gestore di pacchetti del tuo sistema.
 2. Nelle [Impostazioni](/docs/einstellungen), sotto *Riconoscimento del testo (OCR)*, attiva *Usa l'OCR per le scansioni*. L'impostazione mostra se Tesseract è stato trovato.
 3. Le nuove scansioni vengono riconosciute al caricamento; per quelle esistenti fai clic su *Riconosci testo (OCR)* nella Conoscenza.
 

@@ -95,7 +95,8 @@
     "branch_no_input": "{{node}} n’a pas de connexion entrante.",
     "branch_unknown": "Une connexion de {{node}} ne part d’aucune branche.",
     "condition_no_rules": "La décision {{node}} n’a pas de règles.",
-    "subworkflow_missing": "Aucun workflow n’est choisi pour {{node}}."
+    "subworkflow_missing": "Aucun workflow n’est choisi pour {{node}}.",
+    "node_duplicate": "Deux nœuds ont le même identifiant ({{id}}). Supprimez l’un d’eux et ajoutez-le à nouveau."
   },
   "run": {
     "failed": "L’étape a échoué.",
@@ -119,7 +120,8 @@
     "subworkflow_too_deep": "Les sous-workflows sont imbriqués trop profondément à {{node}}.",
     "finished": "L’exécution est déjà terminée.",
     "not_found": "Aucune exécution ne porte cet identifiant.",
-    "not_finished": "L’exécution n’est pas encore terminée."
+    "not_finished": "L’exécution n’est pas encore terminée.",
+    "no_event_loop": "L’exécution n’a pas pu démarrer : elle nécessite une boucle d’événements active."
   },
   "trace": {
     "invalid": "La trace est endommagée ou incomplète.",
@@ -195,7 +197,8 @@
     "subworkflow_outdated": "{{name}} utilise la version {{version}} ; la version {{latest}} est plus récente.",
     "subworkflow_version_missing": "{{name}} : la version choisie n’existe plus.",
     "unreachable": "{{name}} n’est pas accessible depuis le départ.",
-    "provider_not_configured": "{{provider}} n’est pas configuré : saisissez son URL de base dans les réglages."
+    "provider_not_configured": "{{provider}} n’est pas configuré : saisissez son URL de base dans les réglages.",
+    "input_form_only": "{{name}} lit le nœud de départ avec {{input}}. Lorsque le formulaire est rempli, ce ne sont que les valeurs du formulaire, sans le texte supplémentaire. Utilisez {{run_input}} pour recevoir les deux."
   },
   "backup": {
     "not_zip": "Le fichier n’est pas une sauvegarde Nodestro (pas de fichier ZIP).",
@@ -209,7 +212,9 @@
     "document_invalid": "Une entrée de la sauvegarde est endommagée ({{collection}}).",
     "expired": "Cette sauvegarde n’attend plus d’être restaurée. Sélectionnez-la à nouveau.",
     "runs_active": "Des workflows sont encore en cours. Attendez qu’ils soient terminés, puis restaurez la sauvegarde.",
-    "not_confirmed": "La restauration remplace toutes les données et doit être confirmée."
+    "not_confirmed": "La restauration remplace toutes les données et doit être confirmée.",
+    "restore_running": "Une sauvegarde est déjà en cours de restauration. Attendez qu’elle soit terminée.",
+    "too_large": "La décompression de la sauvegarde nécessite {{needed_mb}} Mo, mais seuls {{free_mb}} Mo sont libres."
   },
   "preview": {
     "not_agent": "Seuls les agents ont un aperçu de l’entrée."
@@ -255,7 +260,9 @@
     "plan_expired": "Cette vue d’ensemble a expiré. Veuillez la rouvrir.",
     "plan_invalid": "Il n’y a rien à approuver dans cette vue d’ensemble.",
     "no_definition": "Rien n’est encore approuvé pour cet environnement.",
-    "run_active": "Le workflow est en cours d’exécution ; réessayez après l’exécution."
+    "run_active": "Le workflow est en cours d’exécution ; réessayez après l’exécution.",
+    "install_interrupted": "Nodestro s’est arrêté pendant l’installation des bibliothèques. Installez-les à nouveau.",
+    "build_required": "{{name}} n’est disponible que sous forme de code source. Le résoudre exécuterait son script de construction ; Nodestro ne l’a donc pas résolu pour l’outil généré. Vérifiez le paquet et approuvez-le dans la boîte de dialogue des bibliothèques de l’outil, ou laissez l’outil être écrit sans lui."
   },
   "condition": {
     "field_missing": "Le champ manque dans le résultat.",
@@ -324,9 +331,10 @@
   "document": {
     "not_pdf": "{{name}} n’est pas un PDF.",
     "ocr_failed": "La reconnaissance de texte de {{name}} a échoué.",
-    "ocr_unavailable": "L’OCR nécessite Tesseract et pdftoppm installés localement.",
+    "ocr_unavailable": "L’OCR n’est pas disponible. Il nécessite Tesseract avec les données de langue pour l’allemand, l’anglais, l’espagnol, le français, l’italien ou le portugais, ainsi que pdftoppm et pdfinfo (Poppler), installés localement.",
     "too_large": "{{name}} est trop volumineux une fois décompressé.",
-    "unreadable": "{{name}} est illisible."
+    "unreadable": "{{name}} est illisible. Le fichier est endommagé, vide ou n’est pas un document valide.",
+    "encrypted": "{{name}} est protégé par un mot de passe et ne peut pas être lu. Importez une version sans mot de passe."
   },
   "batch": {
     "confirm_external": "Le workflow utilise des outils personnels qui peuvent agir hors de Nodestro : {{tools}}. Merci de confirmer.",
@@ -409,7 +417,8 @@
     "file_missing": "Le fichier ZIP de cet export a disparu ; exportez à nouveau.",
     "file_changed": "Le fichier ZIP de cet export a été modifié ; exportez à nouveau.",
     "provider": "{{provider}} : définissez {{variables}} dans l’environnement du projet exporté.",
-    "base_url_withheld": "L’URL de base de {{provider}} contient des identifiants et n’est pas exportée ; définissez {{variable}} dans le projet exporté."
+    "base_url_withheld": "L’URL de base de {{provider}} contient des identifiants et n’est pas exportée ; définissez {{variable}} dans le projet exporté.",
+    "integration_tools": "Les outils des intégrations installées ne peuvent pas encore être exportés : {{tools}}."
   },
   "lan": {
     "tls_file_missing": "Fichier introuvable : {{path}}",

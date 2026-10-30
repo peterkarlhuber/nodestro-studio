@@ -198,7 +198,7 @@ Molte piccole imprese conoscono i propri problemi, ma non l'ordine migliore per 
 | **Analisi interna** | Ricava punti di forza e debolezze dai dati aziendali. | Profilo aziendale |
 | **Analisi del contesto** | Ricava opportunità e minacce dal mercato e dal contesto. | Profilo aziendale |
 | **Sviluppatore della strategia** | Sviluppa strategie secondo la matrice TOWS e un piano a 90 giorni. | Analisi interna, Analisi del contesto |
-| **Revisore critico** | Mette alla prova la strategia e scopre i punti deboli. (output strutturato) | Sviluppatore della strategia |
+| **Revisore critico** | Mette alla prova la strategia e scopre i punti deboli. (output strutturato) | Sviluppatore della strategia, Profilo aziendale |
 
 **Input:** Un breve profilo aziendale con cifre chiave, offerta, punti di forza, problemi, contesto di mercato e obiettivi.
 
@@ -223,7 +223,7 @@ I numeri delle relazioni annuali vengono citati in fretta, ma raramente ricalcol
 |---|---|---|
 | **Agente di ricerca** | Raccoglie numeri e contesto dei dati finanziari. | Compito |
 | **Agente di analisi** | Calcola margini, crescita e indici di stabilità con la calcolatrice. (Strumenti: `calculator`) | Agente di ricerca |
-| **Agente di revisione** | Rivede l'analisi e la riassume in modo strutturato. (output strutturato) | Agente di analisi |
+| **Agente di revisione** | Rivede l'analisi e la riassume in modo strutturato. (output strutturato) | Agente di analisi, Agente di ricerca |
 
 **Input:** I dati finanziari di un'impresa per almeno due anni, per esempio dalla relazione annuale o trimestrale, e gli effetti straordinari noti. Puoi incollare i dati o allegarli come file Excel, CSV o PDF; il file di esempio contiene gli indicatori dell'attività di prova.
 
@@ -336,7 +336,7 @@ Una buona selezione inizia con un profilo chiaro e colloqui equi e confrontabili
 
 **Risultato:** Profilo della posizione, annuncio di lavoro e traccia di colloquio con ancoraggi di valutazione, una verifica dell'equità strutturata e, in caso di rilievi, una versione rivista con l'elenco delle modifiche, anche come file Word. I documenti devono essere approvati dall'HR o da una persona competente prima della pubblicazione.
 
-**Come adattarlo:** Sostituisci le note con il tuo fabbisogno di personale. Puoi salvare il tuo profilo di datore di lavoro e i benefit come conoscenza e assegnarli all'agente dell'annuncio. Aggiungi i requisiti di legge del tuo paese al prompt di sistema del revisore dell'equità.
+**Come adattarlo:** Sostituisci le note con il tuo fabbisogno di personale. Puoi salvare il tuo profilo di datore di lavoro e i benefit come conoscenza e assegnarli all'agente dell'annuncio. Aggiungi i requisiti di legge del tuo paese al prompt di sistema del revisore dell'equità. Non estendere il workflow alla selezione, valutazione o classificazione dei candidati senza una verifica legale: secondo il regolamento UE sull'IA tali sistemi sono IA ad alto rischio.
 
 ## 10 · Trasformare una domanda di ricerca in ipotesi {#research-hypotheses}
 <!-- keywords: ricerca e sviluppo, analista della domanda, sviluppatore di ipotesi, critico metodologico, pianificatore sperimentale -->
@@ -458,7 +458,7 @@ A fine mese spesso resta meno del previsto. Il workflow ricalcola un bilancio fa
 | Agente | Compito | Riceve |
 |---|---|---|
 | **Analista del bilancio** | Calcola entrate, uscite, avanzo e quote con la calcolatrice. (Strumenti: `calculator`) | Bilancio familiare |
-| **Consulente del risparmio** | Trova possibilità di risparmio concrete e ne stima l'effetto. (Strumenti: `calculator`) | Analista del bilancio |
+| **Consulente del risparmio** | Trova possibilità di risparmio concrete e ne stima l'effetto. (Strumenti: `calculator`) | Analista del bilancio, Bilancio familiare |
 | **Controllo di realtà** | Verifica la fattibilità delle proposte e le riassume. (output strutturato) | Analista del bilancio, Consulente del risparmio |
 
 **Input:** Entrate, spese fisse e variabili di una famiglia e un obiettivo di risparmio. Invece di digitare tutto, puoi allegare i movimenti del conto o un registro delle spese come file CSV o Excel; il file di esempio contiene un mese fittizio.
@@ -585,7 +585,7 @@ I ritardi in cantiere si sommano e i committenti hanno bisogno in fretta di un q
 | **Analista del cronoprogramma** | Calcola ritardi, margini e conseguenze con lo strumento delle date e la calcolatrice. (Strumenti: `days_between`, `calculator`) | Stato del progetto |
 | **Analista delle cause** | Classifica le cause per ambito di responsabilità ed esigenze di documentazione. | Stato del progetto |
 | **Pianificatore delle contromisure** | Sviluppa misure di accelerazione con costi ed effetti. | Analista del cronoprogramma, Analista delle cause |
-| **Rapporto al committente** | Riassume in modo oggettivo situazione del cronoprogramma, cause e misure. | Analista del cronoprogramma, Pianificatore delle contromisure |
+| **Rapporto al committente** | Riassume in modo oggettivo situazione del cronoprogramma, cause e misure. | Analista del cronoprogramma, Pianificatore delle contromisure, Analista delle cause |
 
 **Input:** Un cronoprogramma con traguardi previsti ed effettivi, note sulle cause, data del rapporto e condizioni contrattuali, come testo o come file: cronoprogramma in Excel, giornale dei lavori in PDF, foto come immagine. I file di esempio contengono un cronoprogramma e un estratto del giornale dei lavori.
 
@@ -610,7 +610,7 @@ Un menù deve piacere agli ospiti e rendere. Il workflow sviluppa piatti per un 
 |---|---|---|
 | **Sviluppatore del concept** | Compone piatti adatti con ricette e quantità. | Concept |
 | **Calcolo dei costi** | Calcola food cost e prezzi di vendita con la calcolatrice. (Strumenti: `calculator`) | Sviluppatore del concept, Concept |
-| **Redattore del menù** | Scrive il menù del pranzo con descrizioni invitanti. (con controllo qualità) | Calcolo dei costi |
+| **Redattore del menù** | Scrive il menù del pranzo con descrizioni invitanti. (con controllo qualità) | Calcolo dei costi, Sviluppatore del concept |
 
 **Input:** Tipo di locale, target, numero e tipo di piatti, food cost obiettivo, fascia di prezzo e prezzi d'acquisto. I prezzi d'acquisto puoi incollarli o allegarli come file CSV o Excel, come mostra il file di esempio.
 

@@ -40,7 +40,7 @@
     "title": "Bibliothèques Python pour « {{name}} »",
     "introWorkflow": "Les outils du workflow « {{name}} » ont besoin de ces bibliothèques. Nodestro a résolu les versions mais n’a encore rien installé.",
     "introTool": "L’outil « {{name}} » a besoin de ces bibliothèques pour ses tests. Nodestro a résolu les versions mais n’a encore rien installé.",
-    "resolving": "Résolution des versions … (télécharge uniquement les informations des paquets)",
+    "resolving": "Résolution des versions … Les informations des paquets sont téléchargées ; un paquet sans wheel précompilé est construit à partir du code source, ce qui exécute son script de construction.",
     "warning": "En approuvant, Nodestro installe exactement ces versions dans un environnement dédié. Les bibliothèques tierces peuvent accéder aux fichiers et au réseau ; n’approuvez que ce que vous connaissez.",
     "unchanged": "Tous les paquets sont déjà approuvés ; aucune version ne change.",
     "codeSeparate": "Le code des outils est vérifié et approuvé séparément.",

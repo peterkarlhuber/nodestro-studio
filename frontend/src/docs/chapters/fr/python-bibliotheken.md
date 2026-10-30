@@ -42,7 +42,7 @@ Seuls le nom du paquet et la spécification de version sont autorisés, pas de l
 ## Approbation {#freigabe}
 <!-- keywords: approbation, approuver, autoriser, version, indirect, transitif, vue d’ensemble, installer -->
 
-Avec **Vérifier et approuver**, Nodestro résout les versions (en téléchargeant uniquement les informations des paquets) et affiche une vue d’ensemble :
+Avec **Vérifier et approuver**, Nodestro résout les versions (en téléchargeant les informations des paquets ; un paquet sans wheel précompilé est construit à partir du code source, ce qui exécute son script de construction) et affiche une vue d’ensemble :
 
 | Colonne | Signification |
 |---|---|
