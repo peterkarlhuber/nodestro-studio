@@ -9,7 +9,7 @@ import { api } from "../api/client";
 import { useRuns, useWorkflows } from "../api/hooks";
 import type { RunStatus } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, EmptyState, Hint, IconButton, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
 import { ErrorText, ProblemText, runProblem } from "../lib/errors";
 import { formatCost, formatDate, formatDuration, formatNumber, formatTokens } from "../lib/format";
 
@@ -210,7 +210,7 @@ export function ExecutionsPage() {
                     <td className="num">{formatCost(run.usage.estimated_cost_usd)}</td>
                     <td>
                       {run.status !== "running" && run.status !== "queued" ? (
-                        <IconButton icon={Trash2} label={t("executions.delete")} onClick={() => remove.mutate(run.id)} />
+                        <ConfirmIconButton icon={Trash2} label={t("executions.delete")} onConfirm={() => remove.mutate(run.id)} />
                       ) : null}
                     </td>
                   </tr>

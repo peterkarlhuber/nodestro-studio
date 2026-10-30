@@ -30,7 +30,9 @@ L’éditeur comporte quatre zones :
 3. **Blocs (palette) :** *Agent* (vide), *Décrire un agent* (l’IA conçoit la configuration), *Départ*, *Résultat* et jusqu’à huit modèles de la bibliothèque d’agents. Faites glisser un bloc sur le canevas ou cliquez dessus.
 4. **Inspecteur (à droite) :** sans sélection, il affiche les réglages du workflow ; sinon, la configuration du nœud sélectionné.
 
-Sous le canevas se trouve la **Vue d’ensemble de l’exécution** avec la dernière exécution de ce workflow. Elle peut être dépliée et repliée.
+Sous le canevas se trouve la **Vue d’ensemble de l’exécution** avec la dernière exécution de ce workflow.
+
+Les blocs, l’inspecteur (intitulé *Propriétés*) et la vue d’ensemble de l’exécution sont des panneaux. Le bouton dans l’en-tête d’un panneau le masque ou l’affiche ; un panneau masqué laisse une barre étroite, et les blocs restent alors accessibles sous forme d’icônes. Le séparateur entre un panneau et le canevas modifie sa taille : faites-le glisser, ou sélectionnez-le avec *Tab* et utilisez les flèches (avec *Maj* par pas plus grands). Un double-clic sur le séparateur rétablit la taille par défaut. Lorsque l’inspecteur est masqué, sa barre indique le nœud sélectionné ; un double-clic sur un nœud affiche ses propriétés. Nodestro mémorise la disposition dans ce navigateur pour tous les workflows. Elle ne fait pas partie du workflow : la modifier ne crée jamais de modifications non enregistrées ni d’étape d’annulation, et un workflow en cours continue de s’exécuter.
 
 ## Types de nœuds {#knoten}
 <!-- keywords: départ, résultat, sortie, agent, nœud, entrée -->
@@ -178,7 +180,7 @@ Autres conseils :
 - **Organiser automatiquement** range les nœuds en colonnes selon leur position dans le flux de données.
 - **Tout afficher** ajuste le zoom pour que tout le workflow soit visible.
 - Si vous quittez l’éditeur avec des modifications non enregistrées, Nodestro demande s’il faut les enregistrer ou les abandonner.
-- Annuler mémorise jusqu’à 80 étapes.
+- Annuler mémorise jusqu’à 80 étapes. Déplacer un nœud compte pour une étape, tout comme la saisie dans un champ jusqu’à ce que vous passiez à un autre champ ou nœud. Le nom, la description et le budget du workflow en font partie.
 
 - **Supprimer des connexions :** cliquez sur une connexion. Elle est mise en évidence, et **Suppr** ou **Retour arrière** la supprime. Tant que vous écrivez dans un champ de saisie, ces touches n’effacent que du texte. La suppression d’une connexion peut elle aussi être annulée.
 - La barre **Blocs** est toujours repliée à l’ouverture de l’éditeur ; une fois dépliée, elle le reste jusqu’à ce que vous quittiez l’éditeur.

@@ -123,7 +123,9 @@ try {
 
   // ---- 1. the editor shows the new nodes and branches ---------------------------------------
   await page.goto(`${base}/workflows/${routed.id}`);
-  await page.getByRole("button", { name: "Bausteine", exact: true }).click();
+  if ((await page.locator(".palette__toggle").getAttribute("aria-expanded")) !== "true") {
+    await page.getByRole("button", { name: "Bausteine einblenden", exact: true }).click();
+  }
   await page.locator(".palette__label", { hasText: "Ablauf steuern" }).waitFor();
   check(await page.locator(".palette__item", { hasText: "Entscheidung" }).isVisible(), "The palette offers the decision node");
   const router = page.locator(".react-flow__node", { hasText: "Routing" });

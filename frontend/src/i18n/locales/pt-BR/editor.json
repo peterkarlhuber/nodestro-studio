@@ -46,7 +46,8 @@
     "autoLayout": "Organizar automaticamente: nós da esquerda para a direita conforme o fluxo de dados",
     "undo": "Desfazer (Ctrl+Z)",
     "redo": "Refazer (Ctrl+Shift+Z)",
-    "edgeLabel": "Conexão de {{source}} para {{target}}. Delete a remove."
+    "edgeLabel": "Conexão de {{source}} para {{target}}. Delete a remove.",
+    "dropInvalid": "Este item não pode ser colocado na área de trabalho."
   },
   "palette": {
     "title": "Blocos",
@@ -83,7 +84,8 @@
     "controlDrag": "Arraste blocos da paleta para a área de trabalho ou clique neles",
     "controlConnect": "Arraste da porta direita até a porta esquerda para conectar agentes",
     "controlDelete": "<kbd>Delete</kbd> exclui a seleção, <kbd>Ctrl</kbd>+<kbd>D</kbd> duplica",
-    "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> desfaz, <kbd>Ctrl</kbd>+<kbd>S</kbd> salva"
+    "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> desfaz, <kbd>Ctrl</kbd>+<kbd>S</kbd> salva",
+    "controlPanels": "Arraste os divisores para ajustar os painéis; clique duplo em um nó mostra suas propriedades"
   },
   "design": {
     "title": "Criar um agente com IA",
@@ -159,5 +161,19 @@
     "versionN": "Versão {{n}}",
     "none": "Nenhum workflow escolhido",
     "missing": "Workflow ausente"
+  },
+  "panels": {
+    "inspector": "Propriedades",
+    "hidePalette": "Ocultar blocos",
+    "showPalette": "Mostrar blocos",
+    "hideInspector": "Ocultar propriedades",
+    "showInspector": "Mostrar propriedades",
+    "hideRunPanel": "Ocultar visão geral da execução",
+    "showRunPanel": "Mostrar visão geral da execução",
+    "resizePalette": "Largura dos blocos",
+    "resizeInspector": "Largura das propriedades",
+    "resizeRunPanel": "Altura da visão geral da execução",
+    "resizeHint": "Arraste ou use as teclas de seta para redimensionar. Clique duplo restaura o tamanho padrão.",
+    "railSelection": "Selecionado: {{name}}"
   }
 }

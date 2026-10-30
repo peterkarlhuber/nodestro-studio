@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import { useMeta } from "../api/hooks";
 import { Callout, PageHeader } from "../components/ui";
 import { type DocChapter, chaptersFor } from "../docs";
-import { splitWidgets } from "../docs/parse";
+import { plainText, splitWidgets } from "../docs/parse";
 import { type DocHit, fold, searchDocs } from "../docs/search";
 import { currentLanguage } from "../i18n";
 import { modelDescription } from "../lib/catalog";
@@ -236,7 +236,7 @@ function Overview() {
                   <span className="muted small">{t("docs.overview.sections", { count: chapter.sections.length })}</span>
                 </div>
               </div>
-              <p className="card__text">{chapter.intro.split(". ")[0]}.</p>
+              <p className="card__text">{plainText(chapter.intro).split(". ")[0]}.</p>
             </Link>
           );
         })}
@@ -253,7 +253,9 @@ function ChapterView({ chapter }: { chapter: DocChapter }) {
   const next = chapters[index + 1];
   return (
     <article className="docs-article" aria-label={chapter.title}>
-      <p className="docs-intro">{chapter.intro}</p>
+      <div className="docs-intro">
+        <Markdown text={chapter.intro} />
+      </div>
       <nav className="docs-toc" aria-label={t("docs.onThisPage")}>
         <span className="nd-field-label">{t("docs.onThisPage")}</span>
         <ol>

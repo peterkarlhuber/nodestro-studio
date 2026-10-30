@@ -21,7 +21,7 @@ Workflows, Agenten-Vorlagen und Tools lassen sich mit dem **Stern** als Favorit 
 Über den Listen filterst du nach **Nur Favoriten** und nach einem Tag. Favoriten und Tags werden getrennt von den Objekten gespeichert: Sie ändern weder Workflows noch Agenten noch Tools und erscheinen auch in der [Suche](/docs/start#suche). Ordner gibt es bewusst nicht.
 
 ## Der Editor {#editor}
-<!-- keywords: arbeitsfläche, canvas, palette, bausteine, inspektor, ausführungsübersicht, zoom, minimap -->
+<!-- keywords: bereiche, größe ändern, trennlinie, eigenschaften, arbeitsfläche, canvas, palette, bausteine, inspektor, ausführungsübersicht, zoom, minimap -->
 
 Der Editor besteht aus vier Bereichen:
 
@@ -30,7 +30,9 @@ Der Editor besteht aus vier Bereichen:
 3. **Bausteine (Palette):** *Agent* (leer), *Agent beschreiben* (die KI entwirft die Konfiguration), *Start*, *Ergebnis* und bis zu acht Vorlagen aus der Agenten-Bibliothek. Ziehe einen Baustein auf die Fläche oder klicke ihn an.
 4. **Inspektor (rechts):** Ohne Auswahl zeigt er die Workflow-Einstellungen, sonst die Konfiguration des gewählten Knotens.
 
-Unter der Arbeitsfläche liegt die **Ausführungsübersicht** mit dem letzten Lauf dieses Workflows. Sie lässt sich ein- und ausklappen.
+Unter der Arbeitsfläche liegt die **Ausführungsübersicht** mit dem letzten Lauf dieses Workflows.
+
+Bausteine, Inspektor (Überschrift *Eigenschaften*) und Ausführungsübersicht sind Bereiche, die du anpassen kannst. Die Schaltfläche im Kopf eines Bereichs blendet ihn aus oder ein; ein ausgeblendeter Bereich lässt eine schmale Leiste stehen, und die Bausteine bleiben dann als Symbole erreichbar. Die Trennlinie zwischen Bereich und Arbeitsfläche ändert die Größe: Ziehe sie oder wähle sie mit *Tab* aus und nutze die Pfeiltasten (mit *Umschalt* in größeren Schritten). Ein Doppelklick auf die Trennlinie stellt die Standardgröße wieder her. Ist der Inspektor ausgeblendet, nennt seine Leiste den gewählten Knoten; ein Doppelklick auf einen Knoten zeigt seine Eigenschaften. Nodestro merkt sich die Aufteilung in diesem Browser für alle Workflows. Sie gehört nicht zum Workflow: Eine Änderung erzeugt nie ungespeicherte Änderungen oder einen Rückgängig-Schritt, und ein laufender Workflow läuft weiter.
 
 ## Knotenarten {#knoten}
 <!-- keywords: start, ergebnis, output, agent, knoten, eingang, ausgang -->
@@ -178,7 +180,7 @@ Weitere Hinweise:
 - **Automatisch anordnen** ordnet die Knoten in Spalten nach ihrer Position im Datenfluss.
 - **Alles anzeigen** zoomt so, dass der ganze Workflow sichtbar ist.
 - Verlässt du den Editor mit ungespeicherten Änderungen, fragt Nodestro, ob gespeichert oder verworfen werden soll.
-- Rückgängig merkt sich bis zu 80 Schritte.
+- Rückgängig merkt sich bis zu 80 Schritte. Das Verschieben eines Knotens ist ein Schritt, ebenso das Schreiben in einem Feld, bis du in ein anderes Feld oder einen anderen Knoten wechselst. Name, Beschreibung und Budget des Workflows gehören dazu.
 
 - **Verbindungen löschen:** Klicke auf eine Verbindung. Sie wird hervorgehoben, und **Entf** oder **Rücktaste** löscht sie. Solange du in einem Eingabefeld schreibst, löschen diese Tasten nur Text. Auch das Löschen einer Verbindung lässt sich rückgängig machen.
 - Die Leiste **Bausteine** ist beim Öffnen des Editors immer eingeklappt; aufgeklappt bleibt sie, bis du den Editor verlässt.

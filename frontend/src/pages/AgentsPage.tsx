@@ -21,7 +21,7 @@ import {
   applyOrganize,
 } from "../components/Organize";
 import { toast } from "../components/toast";
-import { Button, Callout, EmptyState, Hint, IconButton, PageHeader, Spinner } from "../components/ui";
+import { Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Spinner } from "../components/ui";
 import { AgentForm } from "../editor/AgentInspector";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { defaultAgent } from "../lib/defaults";
@@ -196,7 +196,7 @@ export function AgentsPage() {
                   <DiscussIcon offer={offer} />
                   <FavoriteButton kind="template" id={selected.id} name={selected.agent.name} />
                   <TagEditor kind="template" id={selected.id} name={selected.agent.name} />
-                  <IconButton icon={Trash2} label={t("agents.delete")} onClick={() => remove.mutate(selected.id)} />
+                  <ConfirmIconButton icon={Trash2} label={t("agents.delete")} busy={remove.isPending} onConfirm={() => remove.mutate(selected.id)} />
                 </>
               }
             />

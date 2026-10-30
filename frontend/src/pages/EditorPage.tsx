@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download, History, Play, Plug, Plus, RotateCcw, Save, Sparkles } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useBlocker, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
@@ -17,8 +17,10 @@ import { Button, Callout, DocLink, Hint, Modal, Spinner } from "../components/ui
 import { Canvas, type CanvasIssues } from "../editor/Canvas";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { Inspector } from "../editor/Inspector";
+import { useEditorLayout } from "../editor/layout";
 import { Palette } from "../editor/Palette";
 import { RunDialog } from "../editor/RunDialog";
+import { PANEL_VARIABLE, PanelSplitter } from "../editor/PanelSplitter";
 import { RunPanel } from "../editor/RunPanel";
 import { useEditor } from "../editor/store";
 import { useRunStream } from "../editor/useRunStream";
@@ -60,6 +62,12 @@ export function EditorPage() {
   const [discardOpen, setDiscardOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const layout = useEditorLayout();
+  const editorRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLDivElement | null>(null);
+  const paletteRef = useRef<HTMLElement | null>(null);
+  const inspectorRef = useRef<HTMLElement | null>(null);
+  const runPanelRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (workflow.data && loadedId !== workflow.data.id) useEditor.getState().load(workflow.data);
@@ -156,24 +164,35 @@ export function EditorPage() {
   }, [check.data]);
   const blocked = Boolean(check.data && !check.data.ok);
 
-  const save = useCallback(async (note?: string): Promise<string | null> => {
-    const state = useEditor.getState();
-    if (!state.workflowId) return null;
-    setSaving(true);
-    try {
-      const saved = await api.saveWorkflow(state.workflowId, state.toWorkflow(), note ?? state.pendingNote ?? undefined);
-      useEditor.getState().markSaved(saved);
-      queryClient.setQueryData(keys.workflow(saved.id), saved);
-      void queryClient.invalidateQueries({ queryKey: keys.workflows });
-      void queryClient.invalidateQueries({ queryKey: keys.versions(saved.id) });
-      return saved.id;
-    } catch (error) {
-      toast.error(error);
-      return null;
-    } finally {
-      setSaving(false);
-    }
-  }, [queryClient]);
+  // One save at a time: Ctrl+S during a running save (or a double click) sends no second request.
+  const pendingSave = useRef<Promise<string | null> | null>(null);
+  const save = useCallback(
+    (note?: string): Promise<string | null> => {
+      pendingSave.current ??= (async () => {
+        const state = useEditor.getState();
+        if (!state.workflowId) return null;
+        setSaving(true);
+        try {
+          const sent = state.toWorkflow();
+          const saved = await api.saveWorkflow(state.workflowId, sent, note ?? state.pendingNote ?? undefined);
+          useEditor.getState().markSaved(saved, sent);
+          queryClient.setQueryData(keys.workflow(saved.id), saved);
+          void queryClient.invalidateQueries({ queryKey: keys.workflows });
+          void queryClient.invalidateQueries({ queryKey: keys.versions(saved.id) });
+          return saved.id;
+        } catch (error) {
+          toast.error(error);
+          return null;
+        } finally {
+          setSaving(false);
+        }
+      })().finally(() => {
+        pendingSave.current = null;
+      });
+      return pendingSave.current;
+    },
+    [queryClient],
+  );
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -202,9 +221,11 @@ export function EditorPage() {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `${data.name.replace(/[^\w-]+/g, "_") || "workflow"}.nodestro.json`;
+    // Letters of every script stay in the file name (e.g. "Übersicht"), only separators become "_".
+    link.download = `${data.name.replace(/[^\p{L}\p{N}_-]+/gu, "_") || "workflow"}.nodestro.json`;
     link.click();
-    URL.revokeObjectURL(link.href);
+    // Some browsers read the object URL only after the click has returned.
+    window.setTimeout(() => URL.revokeObjectURL(link.href), 1000);
   };
 
   /** Take a reviewed revision: optionally save the current state first, then one undoable step. */
@@ -234,11 +255,23 @@ export function EditorPage() {
       </div>
     );
 
+  const panelSizes = {
+    [PANEL_VARIABLE.palette]: `${layout.size.palette}px`,
+    [PANEL_VARIABLE.inspector]: `${layout.size.inspector}px`,
+    [PANEL_VARIABLE.runPanel]: `${layout.size.runPanel}px`,
+  } as CSSProperties;
+  const panelClasses = [
+    "editor",
+    layout.open.palette ? "" : "editor--palette-collapsed",
+    layout.open.inspector ? "" : "editor--inspector-collapsed",
+    layout.open.runPanel ? "" : "editor--run-collapsed",
+  ].filter(Boolean);
+
   return (
-    <div className="editor">
+    <div className={panelClasses.join(" ")} ref={editorRef} style={panelSizes}>
       <div className="editor__main">
         <header className="titlebar">
-          <div>
+          <div className="titlebar__heading">
             <h1 className="titlebar__title">
               {name || t("editor.inspector.workflowTitle")}
               <DocLink to="workflows#editor" label={t("editor.page.docs")} />
@@ -252,7 +285,7 @@ export function EditorPage() {
             {dirty ? (
               <Hint id="workflow.discard">
                 <Button icon={RotateCcw} variant="ghost" onClick={() => setDiscardOpen(true)}>
-                  {t("common.discard")}
+                  <span className="title-actions__label">{t("common.discard")}</span>
                 </Button>
               </Hint>
             ) : null}
@@ -266,22 +299,22 @@ export function EditorPage() {
                 }}
                 data-testid="open-architect"
               >
-                {t("architect.button")}
+                <span className="title-actions__label">{t("architect.button")}</span>
               </Button>
             </Hint>
             <Hint id="workflow.versions">
               <Button icon={History} variant="ghost" onClick={() => setVersionsOpen(true)}>
-                {t("versions.button")}
+                <span className="title-actions__label">{t("versions.button")}</span>
               </Button>
             </Hint>
             <Hint id="publish.open">
               <Button icon={Plug} variant="ghost" onClick={() => setApiOpen(true)} data-testid="open-api">
-                {t("publish.button")}
+                <span className="title-actions__label">{t("publish.button")}</span>
               </Button>
             </Hint>
             <Hint id="workflow.export">
               <Button icon={Download} variant="ghost" onClick={() => void exportWorkflow()}>
-                {t("common.export")}
+                <span className="title-actions__label">{t("common.export")}</span>
               </Button>
             </Hint>
             <Hint id="workflow.save">
@@ -319,18 +352,52 @@ export function EditorPage() {
             </Button>
           </div>
         </header>
-        <div className="editor__canvas">
-          <Canvas issues={issues} />
+        <div className="editor__workspace">
           <Palette
+            panelRef={paletteRef}
             onDesign={() => {
               setDesignInitial("");
               setDesignOpen(true);
             }}
           />
+          {layout.open.palette ? (
+            <PanelSplitter
+              panel="palette"
+              controls="editor-palette"
+              label={t("editor.panels.resizePalette")}
+              host={editorRef}
+              target={paletteRef}
+              canvas={canvasRef}
+            />
+          ) : null}
+          <div className="editor__canvas" ref={canvasRef}>
+            <Canvas issues={issues} />
+          </div>
         </div>
-        <RunPanel />
+        {/* Before the first run the overview only shows its figures, so there is nothing to resize. */}
+        {layout.open.runPanel && run ? (
+          <PanelSplitter
+            panel="runPanel"
+            controls="editor-run-panel"
+            label={t("editor.panels.resizeRunPanel")}
+            host={editorRef}
+            target={runPanelRef}
+            canvas={canvasRef}
+          />
+        ) : null}
+        <RunPanel panelRef={runPanelRef} />
       </div>
-      <Inspector check={check.data} />
+      {layout.open.inspector ? (
+        <PanelSplitter
+          panel="inspector"
+          controls="editor-inspector"
+          label={t("editor.panels.resizeInspector")}
+          host={editorRef}
+          target={inspectorRef}
+          canvas={canvasRef}
+        />
+      ) : null}
+      <Inspector check={check.data} panelRef={inspectorRef} />
       <RunDialog open={runOpen} onClose={() => setRunOpen(false)} onStarted={onStarted} save={save} check={check.data} />
       <ApiDialog open={apiOpen} onClose={() => setApiOpen(false)} workflowId={id} dirty={dirty} save={save} />
       <VersionsDialog open={versionsOpen} onClose={() => setVersionsOpen(false)} save={save} onRestored={onRestored} />

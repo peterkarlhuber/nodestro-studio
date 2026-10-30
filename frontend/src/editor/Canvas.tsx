@@ -20,6 +20,7 @@ import type { AgentConfig, NodeType } from "../api/types";
 import { IconButton } from "../components/ui";
 import { toast } from "../components/toast";
 import { formatNumber } from "../lib/format";
+import { useEditorLayout } from "./layout";
 import { type FlowNodeData, branchLabel, isBranchTaken, nodeTypes } from "./nodes";
 import { useEditor } from "./store";
 
@@ -28,6 +29,29 @@ export const DRAG_TYPE = "application/x-nodestro-node";
 export interface DragPayload {
   type: NodeType;
   agent?: Partial<AgentConfig>;
+}
+
+const NODE_TYPES: ReadonlySet<string> = new Set<NodeType>(["start", "agent", "output", "condition", "approval", "subworkflow"]);
+
+/** The size of a new node in canvas units (see .flow-node), so a dropped node is centred on the pointer. */
+const NEW_NODE = { width: 216, height: 96 };
+
+/**
+ * Reads what was dropped on the canvas. Anything that is not a building block from the palette
+ * (other pages, other applications, broken data) gives ``null`` instead of an exception.
+ */
+export function parseDragPayload(raw: string): DragPayload | null {
+  let value: unknown;
+  try {
+    value = JSON.parse(raw);
+  } catch {
+    return null;
+  }
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const { type, agent } = value as { type?: unknown; agent?: unknown };
+  if (typeof type !== "string" || !NODE_TYPES.has(type)) return null;
+  if (agent !== undefined && (agent === null || typeof agent !== "object" || Array.isArray(agent))) return null;
+  return { type: type as NodeType, agent: type === "agent" ? (agent as Partial<AgentConfig> | undefined) : undefined };
 }
 
 export interface CanvasIssues {
@@ -155,16 +179,28 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
     [connect, t],
   );
 
+  const onDragOver = useCallback((event: DragEvent) => {
+    // Always prevent the default: a file dropped by mistake would otherwise replace the page
+    // (and lose unsaved changes). Only building blocks from the palette show a drop cursor.
+    event.preventDefault();
+    event.dataTransfer.dropEffect = event.dataTransfer.types.includes(DRAG_TYPE) ? "move" : "none";
+  }, []);
+
   const onDrop = useCallback(
     (event: DragEvent) => {
       event.preventDefault();
-      const raw = event.dataTransfer.getData(DRAG_TYPE);
-      if (!raw) return;
-      const payload = JSON.parse(raw) as DragPayload;
-      const position = flow.screenToFlowPosition({ x: event.clientX - 110, y: event.clientY - 50 });
-      addNode(payload.type, position, payload.agent);
+      if (!event.dataTransfer.types.includes(DRAG_TYPE)) return;
+      const payload = parseDragPayload(event.dataTransfer.getData(DRAG_TYPE));
+      if (!payload) {
+        toast.info(t("editor.canvas.dropInvalid"));
+        return;
+      }
+      // The pointer in canvas coordinates, then half a node back: correct at every zoom level,
+      // pan position and panel size, because the conversion happens before the offset.
+      const point = flow.screenToFlowPosition({ x: event.clientX, y: event.clientY });
+      addNode(payload.type, { x: Math.round(point.x - NEW_NODE.width / 2), y: Math.round(point.y - NEW_NODE.height / 2) }, payload.agent);
     },
-    [flow, addNode],
+    [flow, addNode, t],
   );
 
   useEffect(() => {
@@ -205,7 +241,7 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
   const agents = nodes.filter((node) => node.type === "agent").length;
 
   return (
-    <div className="canvas nd-workflow-canvas" onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>
+    <div className="canvas nd-workflow-canvas" onDragOver={onDragOver} onDrop={onDrop}>
       <div className="canvas-status" data-dirty={dirty || undefined}>
         {dirty ? t("editor.canvas.unsaved") : t("common.saved")} · {t("editor.canvas.agents", { count: agents })} ·{" "}
         {t("editor.canvas.connections", { count: edges.length })}
@@ -218,6 +254,12 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onEdgeClick={(_event, edge) => selectEdge(edge.id)}
+        // A double-click on a node shows its properties, also when the inspector is collapsed.
+        onNodeDoubleClick={(_event, node) => {
+          select(node.id);
+          useEditorLayout.getState().setOpen("inspector", true);
+        }}
+        zoomOnDoubleClick={false}
         onPaneClick={() => select(null)}
         // Deleting is handled above, so it never fires while a text field has the focus.
         deleteKeyCode={null}

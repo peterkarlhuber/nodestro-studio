@@ -114,7 +114,7 @@ try {
   check(await page.getByText("Ungespeicherte Änderungen").first().isVisible(), "Adding an agent marks the workflow dirty");
   await page.getByRole("button", { name: "Rückgängig (Strg+Z)" }).click();
 
-  check((await page.locator(".palette__toggle").getAttribute("aria-expanded")) === "false", "Building blocks start collapsed");
+  check((await page.locator(".palette__toggle").getAttribute("aria-expanded")) === "true", "Building blocks start open in a wide window");
 
   // The input preview shows the task with marked inputs, without an API call.
   await page.locator(".react-flow__node-agent").first().click();

@@ -1,4 +1,5 @@
-import { CheckCircle2, Keyboard, Trash2 } from "lucide-react";
+import { CheckCircle2, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from "lucide-react";
+import type { Ref } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 import type { WorkflowCheck } from "../api/types";
@@ -6,45 +7,65 @@ import { DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../com
 import { WorkflowDependencies } from "../python/DependencyPanel";
 import { AgentInspector } from "./AgentInspector";
 import { CheckList } from "./CheckList";
+import { useEditorLayout } from "./layout";
 import { ApprovalInspector, ConditionInspector, FormEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
 import { useEditor } from "./store";
 
-export function Inspector({ check }: { check: WorkflowCheck | undefined }) {
+export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefined; panelRef?: Ref<HTMLElement> }) {
   const { t } = useTranslation();
   const selectedId = useEditor((s) => s.selectedId);
   const node = useEditor((s) => s.nodes.find((item) => item.id === s.selectedId));
-  if (selectedId && node?.type === "agent" && node.agent) {
-    return (
-      <aside className="inspector" aria-label={t("editor.inspector.agent")}>
-        <AgentInspector key={node.id} node={node} />
-      </aside>
-    );
+  // Collapsing only hides the panel: the selection stays, and opening it again shows the same node.
+  const open = useEditorLayout((state) => state.open.inspector);
+  const { setOpen } = useEditorLayout.getState();
+  const selected = selectedId && node ? node : null;
+
+  let label = t("editor.inspector.workflow");
+  let content = <WorkflowInspector check={check} />;
+  if (selected?.type === "agent" && selected.agent) {
+    label = t("editor.inspector.agent");
+    content = <AgentInspector key={selected.id} node={selected} />;
+  } else if (selected) {
+    label = t("editor.inspector.node");
+    content =
+      selected.type === "condition" && selected.condition ? (
+        <ConditionInspector key={selected.id} node={selected} />
+      ) : selected.type === "approval" && selected.approval ? (
+        <ApprovalInspector key={selected.id} node={selected} />
+      ) : selected.type === "subworkflow" && selected.subworkflow ? (
+        <SubworkflowInspector key={selected.id} node={selected} />
+      ) : (
+        <TerminalInspector key={selected.id} nodeId={selected.id} />
+      );
   }
-  const flow =
-    node?.type === "condition" && node.condition ? (
-      <ConditionInspector key={node.id} node={node} />
-    ) : node?.type === "approval" && node.approval ? (
-      <ApprovalInspector key={node.id} node={node} />
-    ) : node?.type === "subworkflow" && node.subworkflow ? (
-      <SubworkflowInspector key={node.id} node={node} />
-    ) : null;
-  if (selectedId && flow) {
-    return (
-      <aside className="inspector" aria-label={t("editor.inspector.node")}>
-        {flow}
-      </aside>
-    );
-  }
-  if (selectedId && node) {
-    return (
-      <aside className="inspector" aria-label={t("editor.inspector.node")}>
-        <TerminalInspector nodeId={node.id} />
-      </aside>
-    );
-  }
+
   return (
-    <aside className="inspector" aria-label={t("editor.inspector.workflow")}>
-      <WorkflowInspector check={check} />
+    <aside
+      ref={panelRef}
+      id="editor-inspector"
+      className={`inspector ${open ? "" : "inspector--collapsed"}`}
+      aria-label={label}
+      data-testid="inspector"
+    >
+      <div className="panel-head inspector__panel-head">
+        <IconButton
+          icon={open ? PanelRightClose : PanelRightOpen}
+          label={open ? t("editor.panels.hideInspector") : t("editor.panels.showInspector")}
+          className="inspector__toggle"
+          aria-expanded={open}
+          aria-controls="editor-inspector"
+          onClick={() => setOpen("inspector", !open)}
+        />
+        {open ? <span className="panel-head__title">{t("editor.panels.inspector")}</span> : null}
+      </div>
+      {open ? (
+        <div className="inspector__body">{content}</div>
+      ) : (
+        // The collapsed rail still names what is selected and opens the panel on click.
+        <button type="button" className="inspector__rail" onClick={() => setOpen("inspector", true)} tabIndex={-1} aria-hidden>
+          <span>{selected ? t("editor.panels.railSelection", { name: selected.label || label }) : t("editor.panels.inspector")}</span>
+        </button>
+      )}
     </aside>
   );
 }
@@ -158,6 +179,7 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
           <li>
             <Trans i18nKey="editor.inspector.controlUndo" components={KEYS} />
           </li>
+          <li>{t("editor.inspector.controlPanels")}</li>
         </ul>
       </div>
     </div>

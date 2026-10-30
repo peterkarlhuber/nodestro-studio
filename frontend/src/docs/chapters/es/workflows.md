@@ -30,7 +30,9 @@ El editor tiene cuatro áreas:
 3. **Bloques (paleta):** *Agente* (vacío), *Describir un agente* (la IA diseña la configuración), *Inicio*, *Resultado* y hasta ocho plantillas de la biblioteca de agentes. Arrastra un bloque al lienzo o haz clic en él.
 4. **Inspector (derecha):** sin selección muestra los ajustes del flujo de trabajo; si no, la configuración del nodo seleccionado.
 
-Debajo del lienzo está el **Resumen de la ejecución** con la última ejecución de este flujo. Se puede desplegar y plegar.
+Debajo del lienzo está el **Resumen de la ejecución** con la última ejecución de este flujo.
+
+Los bloques, el inspector (con el título *Propiedades*) y el resumen de la ejecución son paneles. El botón de la cabecera de un panel lo oculta o lo muestra; un panel oculto deja una barra estrecha, y los bloques siguen disponibles como iconos. El separador entre un panel y el lienzo cambia su tamaño: arrástralo, o selecciónalo con *Tab* y usa las teclas de flecha (con *Mayús* en pasos más grandes). Un doble clic en el separador restablece el tamaño predeterminado. Mientras el inspector está oculto, su barra muestra el nodo seleccionado; un doble clic en un nodo muestra sus propiedades. Nodestro recuerda la distribución en este navegador para todos los flujos de trabajo. No forma parte del flujo: cambiarla nunca crea cambios sin guardar ni un paso de deshacer, y un flujo en ejecución sigue ejecutándose.
 
 ## Tipos de nodos {#knoten}
 <!-- keywords: inicio, resultado, salida, agente, nodo, entrada -->
@@ -178,7 +180,7 @@ Más consejos:
 - **Ordenar automáticamente** coloca los nodos en columnas según su posición en el flujo de datos.
 - **Mostrar todo** ajusta el zoom para que se vea todo el flujo.
 - Si sales del editor con cambios sin guardar, Nodestro pregunta si quieres guardarlos o descartarlos.
-- Deshacer recuerda hasta 80 pasos.
+- Deshacer recuerda hasta 80 pasos. Mover un nodo es un paso, igual que escribir en un campo hasta que cambias a otro campo o nodo. El nombre, la descripción y el presupuesto del flujo también cuentan.
 
 - **Eliminar conexiones:** Haz clic en una conexión. Se resalta, y **Supr** o **Retroceso** la elimina. Mientras escribes en un campo de entrada, estas teclas solo borran texto. Eliminar una conexión también se puede deshacer.
 - La barra **Bloques** siempre está plegada al abrir el editor; una vez desplegada, sigue abierta hasta que salgas del editor.

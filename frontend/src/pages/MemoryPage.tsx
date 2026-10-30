@@ -10,7 +10,7 @@ import { DiscussIcon } from "../assistant/DiscussButton";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { toast } from "../components/toast";
-import { Button, Callout, EmptyState, Field, HelpTip, Hint, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
+import { Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes } from "../lib/format";
 
@@ -242,7 +242,7 @@ function MemoryFileEditor({
       <div className="row-between">
         <code>{path}</code>
         <div className="row-gap">
-          <IconButton icon={Trash2} label={t("memory.deleteFile")} onClick={() => remove.mutate()} />
+          <ConfirmIconButton icon={Trash2} label={t("memory.deleteFile")} busy={remove.isPending} onConfirm={() => remove.mutate()} />
           <Button size="sm" variant="primary" icon={Save} disabled={content === file.data?.content} busy={save.isPending} onClick={() => save.mutate()}>
             {t("common.save")}
           </Button>

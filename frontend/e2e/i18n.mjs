@@ -27,6 +27,9 @@ const localeDir = join(dirname(fileURLToPath(import.meta.url)), "../src/i18n/loc
 const nav = Object.fromEntries(
   LANGUAGES.map((language) => [language, JSON.parse(readFileSync(join(localeDir, language, "nav.json"), "utf8"))]),
 );
+const editor = Object.fromEntries(
+  LANGUAGES.map((language) => [language, JSON.parse(readFileSync(join(localeDir, language, "editor.json"), "utf8"))]),
+);
 
 let failures = 0;
 function check(condition, message) {
@@ -160,6 +163,19 @@ try {
       await page.locator(".react-flow__node-agent").first().dispatchEvent("click");
       await page.locator(".inspector").waitFor();
       await page.waitForTimeout(250);
+      if (viewport === VIEWPORTS[0]) {
+        // The panel controls speak the chosen language, also for screen readers.
+        const labels = editor[language].panels;
+        const named = async (selector, name) => (await page.locator(selector).first().getAttribute("aria-label")) === name;
+        check(
+          (await named('[data-testid="splitter-inspector"]', labels.resizeInspector)) &&
+            (await named('[data-testid="splitter-palette"]', labels.resizePalette)) &&
+            (await named(".inspector__toggle", labels.hideInspector)) &&
+            (await named(".palette__toggle", labels.hidePalette)) &&
+            (await named(".run-panel__toggle", labels.hideRunPanel)),
+          `${language}: panel buttons and dividers are labelled in the language`,
+        );
+      }
       const problems = await overflow(page);
       check(problems.length === 0, `${language} ${viewport.width}px editor${problems.length ? `\n        ${problems.join("\n        ")}` : ""}`);
       if (shots && viewport === VIEWPORTS[0]) await page.screenshot({ path: join(shots, `${language}-editor.png`) });

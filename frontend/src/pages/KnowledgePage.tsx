@@ -9,7 +9,7 @@ import { useCollections, useKnowledge, useSettings } from "../api/hooks";
 import type { KnowledgeFile, SearchHit } from "../api/types";
 import { DiscussIcon } from "../assistant/DiscussButton";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, IconButton, PageHeader, Spinner, TextInput, Tooltip } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, PageHeader, Spinner, TextInput, Tooltip } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatNumber, relativeTime } from "../lib/format";
 import { helpEntry } from "../lib/help";
@@ -236,12 +236,19 @@ function KnowledgeRow({ file, onChanged, focused = false }: { file: KnowledgeFil
       </span>
       <div className="file-row__main">
         <div className="row-between">
-          <a href={api.knowledgeUrl(file.id)} target="_blank" rel="noreferrer" className="file-row__name">
+          {/* HTML and SVG would run inside Nodestro's own address when opened, so they download instead. */}
+          <a
+            href={api.knowledgeUrl(file.id)}
+            target="_blank"
+            rel="noreferrer"
+            className="file-row__name"
+            download={/html|svg|xml/.test(file.media_type) ? file.name : undefined}
+          >
             {file.name} <ExternalLink size={11} aria-hidden />
           </a>
           <span className="row-gap">
             <DiscussIcon offer={{ kind: "knowledge", refId: file.id, label: file.name }} />
-            <IconButton icon={Trash2} label={t("knowledge.deleteFile", { name: file.name })} onClick={() => remove.mutate()} />
+            <ConfirmIconButton icon={Trash2} label={t("knowledge.deleteFile", { name: file.name })} busy={remove.isPending} onConfirm={() => remove.mutate()} />
           </span>
         </div>
         <span className="muted small">

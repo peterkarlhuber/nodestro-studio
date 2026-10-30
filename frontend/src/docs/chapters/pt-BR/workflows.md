@@ -30,7 +30,9 @@ O editor tem quatro áreas:
 3. **Blocos (paleta):** *Agente* (vazio), *Descrever um agente* (a IA cria a configuração), *Início*, *Resultado* e até oito modelos da biblioteca de agentes. Arraste um bloco para a tela ou clique nele.
 4. **Inspetor (à direita):** sem seleção, mostra as configurações do fluxo de trabalho; caso contrário, a configuração do nó selecionado.
 
-Abaixo da tela fica a **Visão geral da execução** com a última execução deste fluxo. Ela pode ser expandida e recolhida.
+Abaixo da tela fica a **Visão geral da execução** com a última execução deste fluxo.
+
+Os blocos, o inspetor (com o título *Propriedades*) e a visão geral da execução são painéis. O botão no cabeçalho de um painel o oculta ou mostra; um painel oculto deixa uma barra estreita, e os blocos continuam disponíveis como ícones. O divisor entre um painel e a tela muda seu tamanho: arraste-o, ou selecione-o com *Tab* e use as teclas de seta (com *Shift* em passos maiores). Um clique duplo no divisor restaura o tamanho padrão. Enquanto o inspetor está oculto, sua barra mostra o nó selecionado; um clique duplo em um nó mostra suas propriedades. O Nodestro lembra o layout neste navegador para todos os fluxos de trabalho. Ele não faz parte do fluxo: alterá-lo nunca cria alterações não salvas nem uma etapa de desfazer, e um fluxo em execução continua rodando.
 
 ## Tipos de nós {#knoten}
 <!-- keywords: início, resultado, saída, agente, nó, entrada -->
@@ -178,7 +180,7 @@ Mais dicas:
 - **Organizar automaticamente** dispõe os nós em colunas conforme sua posição no fluxo de dados.
 - **Mostrar tudo** ajusta o zoom para que o fluxo inteiro fique visível.
 - Se você sair do editor com alterações não salvas, o Nodestro pergunta se deve salvá-las ou descartá-las.
-- Desfazer guarda até 80 etapas.
+- Desfazer guarda até 80 etapas. Mover um nó é uma etapa, assim como digitar em um campo até você mudar para outro campo ou nó. O nome, a descrição e o orçamento do fluxo também contam.
 
 - **Excluir conexões:** clique em uma conexão. Ela fica destacada, e **Delete** ou **Backspace** a remove. Enquanto você digita em um campo de entrada, essas teclas só apagam texto. Excluir uma conexão também pode ser desfeito.
 - A barra **Blocos** fica sempre recolhida ao abrir o editor; depois de expandida, continua aberta até você sair do editor.

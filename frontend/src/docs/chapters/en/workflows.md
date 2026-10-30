@@ -21,7 +21,7 @@ Workflows, agent templates and tools can be marked as favorites with the **star*
 Above the lists you filter by **Favorites only** and by a tag. Favorites and tags are stored apart from the objects: they change neither workflows nor agents nor tools, and they also show up in the [search](/docs/start#suche). There are deliberately no folders.
 
 ## The editor {#editor}
-<!-- keywords: canvas, palette, building blocks, inspector, execution overview, zoom, minimap -->
+<!-- keywords: panels, resize, divider, canvas, palette, building blocks, inspector, execution overview, zoom, minimap -->
 
 The editor has four areas:
 
@@ -30,7 +30,9 @@ The editor has four areas:
 3. **Building blocks (palette):** *Agent* (empty), *Describe an agent* (the AI drafts the configuration), *Start*, *Result* and up to eight templates from the agent library. Drag a building block onto the canvas or click it.
 4. **Inspector (right):** without a selection it shows the workflow settings, otherwise the configuration of the selected node.
 
-Below the canvas is the **Execution overview** with the last run of this workflow. It can be expanded and collapsed.
+Below the canvas is the **Execution overview** with the last run of this workflow.
+
+The building blocks, the inspector (titled *Properties*) and the execution overview are panels. The button in a panel's header hides or shows it; a hidden panel leaves a narrow bar, and the building blocks then remain available as icons. The divider between a panel and the canvas changes its size: drag it, or focus it with *Tab* and use the arrow keys (with *Shift* in larger steps). A double-click on a divider restores the default size. While the inspector is hidden, its bar names the selected node; a double-click on a node shows its properties. Nodestro remembers the layout in this browser for every workflow. It is not part of the workflow: changing it never creates unsaved changes or an undo step, and a running workflow keeps running.
 
 ## Node types {#knoten}
 <!-- keywords: start, result, output, agent, node, input, output port -->
@@ -178,7 +180,7 @@ More tips:
 - **Arrange automatically** arranges the nodes in columns according to their position in the data flow.
 - **Show everything** zooms so that the whole workflow is visible.
 - If you leave the editor with unsaved changes, Nodestro asks whether to save or discard them.
-- Undo remembers up to 80 steps.
+- Undo remembers up to 80 steps. Moving a node is one step, and so is typing in one field until you switch to another field or node. The name, description and budget of the workflow are included.
 
 - **Deleting connections:** Click a connection. It is highlighted, and **Delete** or **Backspace** removes it. While you type in an input field these keys only delete text. Deleting a connection can be undone too.
 - The **Building blocks** bar is always collapsed when the editor opens; once expanded it stays open until you leave the editor.

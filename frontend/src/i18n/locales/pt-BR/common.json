@@ -30,5 +30,6 @@
   "dismissMessage": "Fechar mensagem",
   "saved": "Salvo",
   "yes": "Sim",
-  "no": "Não"
+  "no": "Não",
+  "confirmDelete": "Excluir?"
 }
