@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+### Platform integration (2026-10-30)
+
+- Pins: `nodestro-runtime` ad75859, `nodestro-examples` 520fa72, `nodestro-integrations` c747842, `nodestro-api`
+  de7fb25, `nodestro-sdk` b5a9d69; orkexa unchanged at cbf6df3. `make check-versions` and `make platform-local` say
+  "pins agree", and the combination was installed and tested together from these commits.
+- Example chapter (`beispiele.md`, six languages) regenerated with `make example-docs` from the examples of the pinned
+  commit; it matches the patch of the examples round, and `python -m nodestro_examples.docs --check` passes.
+- Error texts in all six languages for codes that had only a generic sentence or none: `run.no_event_loop`,
+  `workflow.node_duplicate`, `deps.install_interrupted`, `deps.build_required`, `document.encrypted`,
+  `check.input_form_only`, `backup.restore_running`, `backup.too_large` and `export.integration_tools`.
+  `document.unreadable` explains why a file cannot be read.
+- OCR: the settings, the knowledge page, the error text and the documentation name every prerequisite (Tesseract with
+  language data for one of the six languages, `pdftoppm` and `pdfinfo` from Poppler); before, only Tesseract and
+  `pdftoppm` were mentioned.
+- Python libraries: the dialog and the documentation no longer claim that resolving downloads package information
+  only; a package without a wheel is built from source, which runs its build script.
+- Documentation: an approval's comment reaches later agents but not result nodes, result files or decisions;
+  `{{input}}` right after a start node with a filled-in form holds the form values only (use `{{run.input}}`).
+
 ### Workflow editor
 
 - The three panels around the canvas behave the same way: building blocks (left), properties (right, the inspector)

@@ -42,7 +42,7 @@ Erlaubt sind nur Paketname und Versionsangabe, keine Links oder lokalen Pfade.
 ## Freigabe {#freigabe}
 <!-- keywords: freigabe, freigeben, genehmigen, version, indirekt, transitive, übersicht, installieren -->
 
-Mit **Prüfen und freigeben** löst Nodestro die Versionen auf (dabei werden nur Paketinformationen geladen) und zeigt eine Übersicht:
+Mit **Prüfen und freigeben** löst Nodestro die Versionen auf (dabei werden Paketinformationen geladen; ein Paket ohne fertiges Wheel wird aus dem Quellcode gebaut, wobei sein Build-Skript läuft) und zeigt eine Übersicht:
 
 | Spalte | Bedeutung |
 |---|---|

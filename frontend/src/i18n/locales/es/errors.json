@@ -95,7 +95,8 @@
     "branch_no_input": "{{node}} no tiene conexión entrante.",
     "branch_unknown": "Una conexión de {{node}} no parte de ninguna rama.",
     "condition_no_rules": "La decisión {{node}} no tiene reglas.",
-    "subworkflow_missing": "En {{node}} no se ha elegido ningún workflow."
+    "subworkflow_missing": "En {{node}} no se ha elegido ningún workflow.",
+    "node_duplicate": "Dos nodos tienen el mismo id ({{id}}). Elimina uno de ellos y vuelve a añadirlo."
   },
   "run": {
     "failed": "El paso ha fallado.",
@@ -119,7 +120,8 @@
     "subworkflow_too_deep": "En {{node}} los subflujos están anidados a demasiada profundidad.",
     "finished": "La ejecución ya ha terminado.",
     "not_found": "No hay ninguna ejecución con este id.",
-    "not_finished": "La ejecución aún no ha terminado."
+    "not_finished": "La ejecución aún no ha terminado.",
+    "no_event_loop": "La ejecución no pudo iniciarse: necesita un bucle de eventos en marcha."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -195,7 +197,8 @@
     "subworkflow_outdated": "{{name}} usa la versión {{version}}; la versión {{latest}} es más reciente.",
     "subworkflow_version_missing": "{{name}}: la versión elegida ya no existe.",
     "unreachable": "{{name}} no se puede alcanzar desde el inicio.",
-    "provider_not_configured": "{{provider}} no está configurado: introduce su URL base en los ajustes."
+    "provider_not_configured": "{{provider}} no está configurado: introduce su URL base en los ajustes.",
+    "input_form_only": "{{name}} lee el nodo de inicio con {{input}}. Si el formulario está rellenado, solo son los valores del formulario, sin el texto adicional. Usa {{run_input}} para recibir ambos."
   },
   "backup": {
     "not_zip": "El archivo no es una copia de seguridad de Nodestro (no es un ZIP).",
@@ -209,7 +212,9 @@
     "document_invalid": "Una entrada de la copia está dañada ({{collection}}).",
     "expired": "Esta copia ya no está pendiente de restaurar. Vuelve a seleccionarla.",
     "runs_active": "Todavía hay flujos de trabajo en ejecución. Espera a que terminen y luego restaura la copia.",
-    "not_confirmed": "La restauración sustituye todos los datos y debe confirmarse."
+    "not_confirmed": "La restauración sustituye todos los datos y debe confirmarse.",
+    "restore_running": "Ya se está restaurando una copia de seguridad. Espera a que termine.",
+    "too_large": "Descomprimir la copia de seguridad necesita {{needed_mb}} MB, pero solo hay {{free_mb}} MB libres."
   },
   "preview": {
     "not_agent": "Solo los agentes tienen vista previa de la entrada."
@@ -255,7 +260,9 @@
     "plan_expired": "Este resumen ha caducado. Ábrelo de nuevo.",
     "plan_invalid": "No hay nada que aprobar en este resumen.",
     "no_definition": "Todavía no hay nada aprobado para este entorno.",
-    "run_active": "El flujo de trabajo se está ejecutando; inténtalo de nuevo después."
+    "run_active": "El flujo de trabajo se está ejecutando; inténtalo de nuevo después.",
+    "install_interrupted": "Nodestro se detuvo durante la instalación de las bibliotecas. Vuelve a instalarlas.",
+    "build_required": "{{name}} solo está disponible como código fuente. Resolverlo ejecutaría su script de compilación, por eso Nodestro no lo resolvió para la herramienta generada. Revisa el paquete y apruébalo en el diálogo de bibliotecas de la herramienta, o deja que la herramienta se escriba sin él."
   },
   "condition": {
     "field_missing": "Falta el campo en el resultado.",
@@ -324,9 +331,10 @@
   "document": {
     "not_pdf": "{{name}} no es un PDF.",
     "ocr_failed": "Falló el reconocimiento de texto de {{name}}.",
-    "ocr_unavailable": "El OCR necesita Tesseract y pdftoppm instalados localmente.",
+    "ocr_unavailable": "El OCR no está disponible. Necesita Tesseract con datos de idioma para alemán, inglés, español, francés, italiano o portugués, y pdftoppm y pdfinfo (Poppler), instalados localmente.",
     "too_large": "{{name}} ocupa demasiado al descomprimirse.",
-    "unreadable": "{{name}} no se puede leer."
+    "unreadable": "{{name}} no se puede leer. El archivo está dañado, vacío o no es un documento válido.",
+    "encrypted": "{{name}} está protegido con contraseña y no se puede leer. Sube una versión sin contraseña."
   },
   "batch": {
     "confirm_external": "El workflow usa herramientas propias que pueden actuar fuera de Nodestro: {{tools}}. Confírmalo.",
@@ -409,7 +417,8 @@
     "file_missing": "El archivo ZIP de esta exportación ya no existe; vuelve a exportar.",
     "file_changed": "El archivo ZIP de esta exportación se ha modificado; vuelve a exportar.",
     "provider": "{{provider}}: define {{variables}} en el entorno del proyecto exportado.",
-    "base_url_withheld": "La URL base de {{provider}} contiene credenciales y no se exporta; define {{variable}} en el proyecto exportado."
+    "base_url_withheld": "La URL base de {{provider}} contiene credenciales y no se exporta; define {{variable}} en el proyecto exportado.",
+    "integration_tools": "Las herramientas de integraciones instaladas aún no se pueden exportar: {{tools}}."
   },
   "lan": {
     "tls_file_missing": "Archivo no encontrado: {{path}}",

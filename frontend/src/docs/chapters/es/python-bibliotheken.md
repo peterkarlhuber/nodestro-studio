@@ -42,7 +42,7 @@ Solo se permiten el nombre del paquete y la especificación de versión, sin enl
 ## Aprobación {#freigabe}
 <!-- keywords: aprobación, aprobar, autorizar, versión, indirecto, transitivo, resumen, instalar -->
 
-Con **Revisar y aprobar** Nodestro resuelve las versiones (solo descarga información de paquetes) y muestra un resumen:
+Con **Revisar y aprobar** Nodestro resuelve las versiones (descarga información de paquetes; un paquete sin wheel precompilado se compila desde el código fuente, lo que ejecuta su script de compilación) y muestra un resumen:
 
 | Columna | Significado |
 |---|---|

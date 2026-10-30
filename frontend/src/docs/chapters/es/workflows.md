@@ -88,7 +88,7 @@ Un agente solo ve los resultados de sus predecesores **directos**, no los de nod
 
 | Marcador | Se sustituye por |
 |---|---|
-| `{{input}}` | el resultado del único predecesor; con varios predecesores, todos los resultados, cada uno como sección `## Nombre`; sin predecesor, la entrada de la ejecución |
+| `{{input}}` | el resultado del único predecesor; con varios predecesores, todos los resultados, cada uno como sección `## Nombre`; sin predecesor, la entrada de la ejecución. Justo después de un nodo de inicio con formulario rellenado, son solo los valores del formulario; usa `{{run.input}}` para los valores del formulario y el texto adicional |
 | `{{run.input}}` (o `{{workflow.input}}`) | la entrada al iniciar el flujo de trabajo, en cualquier punto del flujo |
 | `{{Nombre del predecesor}}` | el resultado exactamente de ese predecesor directo |
 

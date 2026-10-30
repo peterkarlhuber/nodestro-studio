@@ -49,7 +49,7 @@ Uma **aprovação** segura a execução até que uma pessoa **aprove** ou **reje
 
 - **Orientação para quem revisa:** no que prestar atenção.
 - **Resultados exibidos:** quais resultados a pessoa vê; sem seleção, tudo o que chega.
-- **Comentário:** opcional ou obrigatório ao rejeitar. Agentes posteriores o leem com o nome da aprovação.
+- **Comentário:** opcional ou obrigatório ao rejeitar. Agentes posteriores o leem com o nome da aprovação; nós de resultado, arquivos de resultado e decisões não o recebem. Ele fica salvo com a aprovação na execução.
 - **Ao rejeitar:** seguir a ramificação **Rejeitado** ou encerrar a execução. Se nada estiver conectado a *Rejeitado*, esse caminho simplesmente termina.
 
 Enquanto espera, a execução fica com o status **Pausado** e a aprovação **Aguardando aprovação**. Você pode decidir na visão geral da execução no editor, na visão detalhada da execução ou na página **Aprovações**. Depois, a execução continua de onde parou. Aprovações abertas sobrevivem a um reinício do Nodestro.

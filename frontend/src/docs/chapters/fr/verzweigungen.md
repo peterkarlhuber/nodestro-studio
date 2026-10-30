@@ -49,7 +49,7 @@ Une **validation** arrête l’exécution jusqu’à ce qu’une personne **vali
 
 - **Consigne pour la personne qui vérifie :** ce à quoi elle doit faire attention.
 - **Résultats affichés :** quels résultats elle voit ; sans sélection, tout ce qui arrive.
-- **Commentaire :** facultatif, ou obligatoire en cas de refus. Les agents suivants le lisent sous le nom de la validation.
+- **Commentaire :** facultatif, ou obligatoire en cas de refus. Les agents suivants le lisent sous le nom de la validation ; les nœuds de résultat, les fichiers de résultat et les décisions ne le reçoivent pas. Il reste enregistré avec la validation dans l’exécution.
 - **En cas de refus :** suivre la branche **Refusé** ou terminer l’exécution. Si rien n’est relié à *Refusé*, ce chemin s’arrête simplement.
 
 Pendant l’attente, l’exécution a le statut **En pause** et la validation **En attente de validation**. Vous pouvez décider dans la vue d’ensemble de l’exécution de l’éditeur, dans la vue détaillée de l’exécution ou sur la page **Validations**. L’exécution reprend ensuite là où elle s’était arrêtée. Les validations ouvertes survivent à un redémarrage de Nodestro.

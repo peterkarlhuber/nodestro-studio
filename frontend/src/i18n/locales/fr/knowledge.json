@@ -45,6 +45,6 @@
     "done_one": "Texte reconnu ({{count}} mot).",
     "done_other": "Texte reconnu ({{count}} mots).",
     "enableFirst": "Activez l’OCR dans les paramètres",
-    "unavailable": "L’OCR local n’est pas installé"
+    "unavailable": "OCR local non disponible (Tesseract, données de langue ou Poppler manquants)"
   }
 }

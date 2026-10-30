@@ -42,7 +42,7 @@ São permitidos apenas o nome do pacote e a especificação de versão, sem link
 ## Aprovação {#freigabe}
 <!-- keywords: aprovação, aprovar, autorizar, versão, indireto, transitivo, visão geral, instalar -->
 
-Com **Revisar e aprovar** o Nodestro resolve as versões (baixando apenas informações dos pacotes) e mostra uma visão geral:
+Com **Revisar e aprovar** o Nodestro resolve as versões (baixando informações dos pacotes; um pacote sem wheel pré-compilado é compilado a partir do código-fonte, o que executa seu script de build) e mostra uma visão geral:
 
 | Coluna | Significado |
 |---|---|

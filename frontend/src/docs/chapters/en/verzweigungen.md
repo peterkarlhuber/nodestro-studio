@@ -49,7 +49,7 @@ An **approval** holds the run until a person **approves** or **rejects** the res
 
 - **Note for the reviewer:** what to pay attention to.
 - **Results shown:** which results the reviewer sees; with nothing selected, everything that arrives.
-- **Comment:** optional, or required on rejection. Later agents read it under the name of the approval.
+- **Comment:** optional, or required on rejection. Later agents read it under the name of the approval; result nodes, result files and decisions do not receive it. It stays stored with the approval in the run.
 - **When rejected:** follow the **Rejected** branch or end the run. If nothing is connected to *Rejected*, that path simply ends.
 
 While the run waits, it has the status **Paused**, the approval **Awaiting approval**. You can decide in the editor's run overview, in the run's detail view or on the **Approvals** page. The run then continues where it stopped. Open approvals survive a restart of Nodestro.

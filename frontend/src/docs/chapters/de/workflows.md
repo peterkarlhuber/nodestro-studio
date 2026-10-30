@@ -88,7 +88,7 @@ Ein Agent sieht nur die Ergebnisse seiner **direkten** Vorgänger, nicht die von
 
 | Platzhalter | Wird ersetzt durch |
 |---|---|
-| `{{input}}` | das Ergebnis des einzigen Vorgängers; bei mehreren Vorgängern alle Ergebnisse, jeweils als Abschnitt `## Name`; ohne Vorgänger die Eingabe des Laufs |
+| `{{input}}` | das Ergebnis des einzigen Vorgängers; bei mehreren Vorgängern alle Ergebnisse, jeweils als Abschnitt `## Name`; ohne Vorgänger die Eingabe des Laufs. Direkt nach einem Startknoten mit ausgefülltem Formular sind das nur die Formularwerte; für Formularwerte und zusätzlichen Text `{{run.input}}` verwenden |
 | `{{run.input}}` (oder `{{workflow.input}}`) | die Eingabe beim Start des Workflows, an jeder Stelle des Workflows |
 | `{{Name des Vorgängers}}` | das Ergebnis genau dieses direkten Vorgängers |
 

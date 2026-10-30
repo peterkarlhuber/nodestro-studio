@@ -43,7 +43,7 @@ Para las [ejecuciones por lotes](/docs/automatisierung#stapel), Nodestro lee las
 
 Los PDF escaneados sin capa de texto no se pueden buscar al principio. El **reconocimiento de texto local** los hace legibles:
 
-1. Instala **Tesseract** y **pdftoppm** (Poppler) en tu equipo, por ejemplo con el gestor de paquetes de tu sistema.
+1. Instala **Tesseract** con los datos de idioma de tus documentos (alemán, inglés, español, francés, italiano o portugués) y **pdftoppm** y **pdfinfo** (ambos de Poppler) en tu equipo, por ejemplo con el gestor de paquetes de tu sistema.
 2. En [Ajustes](/docs/einstellungen), en *Reconocimiento de texto (OCR)*, activa *Usar OCR para escaneos*. El ajuste indica si se encontró Tesseract.
 3. Los escaneos nuevos se reconocen al subirlos; para los existentes, haz clic en *Reconocer texto (OCR)* en Conocimiento.
 

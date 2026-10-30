@@ -88,7 +88,7 @@ An agent only sees the results of its **direct** predecessors, not those of node
 
 | Placeholder | Is replaced by |
 |---|---|
-| `{{input}}` | the result of the only predecessor; with several predecessors all results, each as a section `## Name`; without a predecessor the input of the run |
+| `{{input}}` | the result of the only predecessor; with several predecessors all results, each as a section `## Name`; without a predecessor the input of the run. Right after a start node with a filled-in form this is the form values only; use `{{run.input}}` for the form values and the additional text |
 | `{{run.input}}` (or `{{workflow.input}}`) | the input when the workflow was started, anywhere in the workflow |
 | `{{Name of the predecessor}}` | the result of exactly this direct predecessor |
 

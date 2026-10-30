@@ -49,7 +49,7 @@ Un'**approvazione** ferma l'esecuzione finché una persona **approva** o **rifiu
 
 - **Nota per chi verifica:** a cosa fare attenzione.
 - **Risultati mostrati:** quali risultati vede chi verifica; senza selezione, tutto ciò che arriva.
-- **Commento:** facoltativo oppure obbligatorio in caso di rifiuto. Gli agenti successivi lo leggono con il nome dell'approvazione.
+- **Commento:** facoltativo oppure obbligatorio in caso di rifiuto. Gli agenti successivi lo leggono con il nome dell'approvazione; nodi di risultato, file di risultato e decisioni non lo ricevono. Resta salvato con l'approvazione nell'esecuzione.
 - **In caso di rifiuto:** seguire il ramo **Rifiutato** o terminare l'esecuzione. Se a *Rifiutato* non è collegato nulla, quel percorso semplicemente termina.
 
 Mentre attende, l'esecuzione ha lo stato **In pausa** e l'approvazione **In attesa di approvazione**. Puoi decidere nella panoramica dell'esecuzione dell'editor, nella vista di dettaglio dell'esecuzione o nella pagina **Approvazioni**. Poi l'esecuzione riprende dove si era fermata. Le approvazioni aperte sopravvivono a un riavvio di Nodestro.

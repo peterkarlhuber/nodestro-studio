@@ -198,7 +198,7 @@ Beaucoup de petites entreprises connaissent leurs problèmes, mais pas le meille
 | **Analyse interne** | Dégage les forces et faiblesses à partir des données de l'entreprise. | Profil de l'entreprise |
 | **Analyse de l'environnement** | Déduit opportunités et menaces du marché et de l'environnement. | Profil de l'entreprise |
 | **Développeur de stratégie** | Développe des stratégies selon la matrice TOWS et un plan à 90 jours. | Analyse interne, Analyse de l'environnement |
-| **Relecteur critique** | Remet en question la stratégie et met au jour les points faibles. (sortie structurée) | Développeur de stratégie |
+| **Relecteur critique** | Remet en question la stratégie et met au jour les points faibles. (sortie structurée) | Développeur de stratégie, Profil de l'entreprise |
 
 **Entrée:** Un court profil d'entreprise avec chiffres clés, offre, forces, problèmes, environnement de marché et objectifs.
 
@@ -223,7 +223,7 @@ Les chiffres des rapports annuels sont vite cités, mais rarement recalculés et
 |---|---|---|
 | **Agent de recherche** | Rassemble les chiffres et le contexte des données financières. | Tâche |
 | **Agent d'analyse** | Calcule marges, croissance et ratios de solidité avec la calculatrice. (Outils: `calculator`) | Agent de recherche |
-| **Agent de revue** | Vérifie l'analyse et la résume de façon structurée. (sortie structurée) | Agent d'analyse |
+| **Agent de revue** | Vérifie l'analyse et la résume de façon structurée. (sortie structurée) | Agent d'analyse, Agent de recherche |
 
 **Entrée:** Les chiffres financiers d'une entreprise sur au moins deux ans, par exemple tirés d'un rapport annuel ou trimestriel, ainsi que les effets exceptionnels connus. Vous pouvez coller les chiffres ou les joindre en fichier Excel, CSV ou PDF ; le fichier d'exemple contient les indicateurs de la tâche de test.
 
@@ -336,7 +336,7 @@ Un bon recrutement commence par un profil clair et des entretiens équitables et
 
 **Résultat:** Profil de poste, offre d'emploi et guide d'entretien avec repères d'évaluation, un contrôle d'équité structuré et, en cas d'objections, une version révisée avec la liste des modifications, aussi en fichier Word. Les documents doivent être validés par les RH ou une personne compétente avant publication.
 
-**L'adapter:** Remplacez les notes par votre besoin de recrutement. Vous pouvez enregistrer votre marque employeur et vos avantages comme connaissance et les attribuer à l'agent de l'offre. Ajoutez les exigences légales de votre pays au prompt système du contrôleur d'équité.
+**L'adapter:** Remplacez les notes par votre besoin de recrutement. Vous pouvez enregistrer votre marque employeur et vos avantages comme connaissance et les attribuer à l'agent de l'offre. Ajoutez les exigences légales de votre pays au prompt système du contrôleur d'équité. N'étendez pas le workflow au tri, à l'évaluation ou au classement de candidatures sans examen juridique : selon le règlement européen sur l'IA, de tels systèmes sont des IA à haut risque.
 
 ## 10 · Transformer une question de recherche en hypothèses {#research-hypotheses}
 <!-- keywords: recherche et développement, analyste de la question, développeur d'hypothèses, critique méthodologique, planificateur d'expériences -->
@@ -458,7 +458,7 @@ En fin de mois, il reste souvent moins que prévu. Le workflow recalcule un budg
 | Agent | Tâche | Reçoit |
 |---|---|---|
 | **Analyste budgétaire** | Calcule revenus, dépenses, excédent et parts avec la calculatrice. (Outils: `calculator`) | Budget du foyer |
-| **Conseiller en économies** | Trouve des pistes d'économies concrètes et estime leur effet. (Outils: `calculator`) | Analyste budgétaire |
+| **Conseiller en économies** | Trouve des pistes d'économies concrètes et estime leur effet. (Outils: `calculator`) | Analyste budgétaire, Budget du foyer |
 | **Contrôle de réalisme** | Vérifie la faisabilité des propositions et les résume. (sortie structurée) | Analyste budgétaire, Conseiller en économies |
 
 **Entrée:** Les revenus, les dépenses fixes et variables d'un foyer et un objectif d'épargne. Au lieu de tout saisir, vous pouvez joindre des relevés bancaires ou un cahier de comptes en fichier CSV ou Excel ; le fichier d'exemple contient un mois fictif.
@@ -585,7 +585,7 @@ Les retards de chantier s'accumulent et les maîtres d'ouvrage ont vite besoin d
 | **Analyste du planning** | Calcule retards, marges et conséquences avec l'outil de dates et la calculatrice. (Outils: `days_between`, `calculator`) | État du projet |
 | **Analyste des causes** | Classe les causes par domaine de responsabilité et besoin de documentation. | État du projet |
 | **Planificateur de contre-mesures** | Développe des mesures d'accélération avec coût et effet. | Analyste du planning, Analyste des causes |
-| **Rapport au maître d'ouvrage** | Résume de façon factuelle la situation du planning, les causes et les mesures. | Analyste du planning, Planificateur de contre-mesures |
+| **Rapport au maître d'ouvrage** | Résume de façon factuelle la situation du planning, les causes et les mesures. | Analyste du planning, Planificateur de contre-mesures, Analyste des causes |
 
 **Entrée:** Un planning avec jalons prévus et réels, remarques sur les causes, date du rapport et conditions contractuelles, en texte ou en fichiers : planning en Excel, journal de chantier en PDF, photos en image. Les fichiers d'exemple contiennent un planning et un extrait du journal de chantier.
 
@@ -610,7 +610,7 @@ Une carte doit plaire aux clients et être rentable. Le workflow développe des 
 |---|---|---|
 | **Concepteur de plats** | Assemble des plats adaptés avec recettes et quantités. | Concept |
 | **Calcul des coûts** | Calcule coût matière et prix de vente avec la calculatrice. (Outils: `calculator`) | Concepteur de plats, Concept |
-| **Rédacteur de la carte** | Rédige la carte du midi avec des descriptions appétissantes. (avec contrôle qualité) | Calcul des coûts |
+| **Rédacteur de la carte** | Rédige la carte du midi avec des descriptions appétissantes. (avec contrôle qualité) | Calcul des coûts, Concepteur de plats |
 
 **Entrée:** Type d'établissement, clientèle, nombre et type de plats, coût matière cible, fourchette de prix et prix d'achat. Vous pouvez coller les prix d'achat ou les joindre en fichier CSV ou Excel, comme le montre le fichier d'exemple.
 
