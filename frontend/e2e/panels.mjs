@@ -10,13 +10,14 @@ import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 
 const require = createRequire(import.meta.url);
-const { chromium } = require("playwright");
+// Chromium by default; E2E_BROWSER=firefox or webkit runs the same checks in another engine.
+const browserType = require("playwright")[process.env.E2E_BROWSER ?? "chromium"];
 
 const base = process.argv[2] ?? process.env.NODESTRO_URL ?? "http://127.0.0.1:8040";
 const shots = process.argv[3] ?? process.env.NODESTRO_SCREENSHOTS;
 if (shots) mkdirSync(shots, { recursive: true });
 
-const browser = await chromium.launch();
+const browser = await browserType.launch();
 const context = await browser.newContext({ viewport: { width: 1500, height: 940 }, locale: "en-US" });
 const page = await context.newPage();
 const errors = [];
@@ -224,6 +225,11 @@ try {
   await page.getByRole("button", { name: "Show execution overview" }).click();
   await drag("splitter-runPanel", 0, -3000);
   check((await box(canvas)).height >= 179, "The overview never pushes the canvas below its minimum height");
+  // Released outside the window: moving the mouse afterwards resizes nothing.
+  const released = (await box(runPanel)).height;
+  const overview = await box(runPanel);
+  await page.mouse.move(overview.x + overview.width / 2, overview.y + overview.height / 2, { steps: 5 });
+  check(Math.abs((await box(runPanel)).height - released) < 2, "A drag released outside the window ends there");
   const finished = await until(async () => {
     const current = await api(`/runs/${run.id}`);
     return current.status === "succeeded" || current.status === "failed" ? current : null;

@@ -10,7 +10,8 @@ import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 
 const require = createRequire(import.meta.url);
-const { chromium } = require("playwright");
+// Chromium by default; E2E_BROWSER=firefox or webkit runs the same checks in another engine.
+const browserType = require("playwright")[process.env.E2E_BROWSER ?? "chromium"];
 
 const base = process.argv[2] ?? process.env.NODESTRO_URL ?? "http://127.0.0.1:8020";
 const shots = process.argv[3] ?? process.env.NODESTRO_SCREENSHOTS;
@@ -41,7 +42,7 @@ def test_spread():
     assert spread([1.0, 4.0]) == 3.0
 `;
 
-const browser = await chromium.launch();
+const browser = await browserType.launch();
 const page = await browser.newPage({
   viewport: { width: 1500, height: 940 },
   locale: "de-DE",

@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Release check (2026-10-30)
+
+- Pins: `nodestro-api` 43595a7 and `nodestro-sdk` d733f02 (before: 2868b7b and 18e5535); runtime ad75859, examples
+  520fa72, integrations c747842 and orkexa cbf6df3 are unchanged. The API fixes an `assistant.busy` race after an
+  answer finished and two backup races, and refuses damaged backup archives with `400` instead of `500`.
+- Workflow editor: in Firefox, a divider drag released outside the window kept the divider captured, so the next
+  mouse move still resized the panel and the next click (e.g. on Assistant) was swallowed. The drag now ends when the
+  button is no longer pressed or the capture is lost.
+- Browser tests: `E2E_BROWSER=firefox` or `webkit` runs `scripts/e2e.sh` in another Playwright engine (Chromium stays
+  the default). The README states the tested platforms: Linux; macOS, Windows and Safari are not tested.
+
 ### Platform integration (2026-10-30)
 
 - Pins: `nodestro-runtime` ad75859, `nodestro-examples` 520fa72, `nodestro-integrations` c747842, `nodestro-api`
