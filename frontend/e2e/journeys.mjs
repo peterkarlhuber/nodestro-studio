@@ -345,6 +345,18 @@ try {
     return "test series results seen, release pre-check seen";
   });
 
+  // ---- J6b: J6's check once a result exists, read in the publish dialog (Q-1) --------------------
+  // Running the series still happens on the test page (J6); this measures checking the version before publishing.
+  await journey("J6b", "Check quality and allowed actions of a tested version in the publish dialog", async ({ click }) => {
+    await click(page.locator("a.card__main", { hasText: "Vertrag strukturieren" }).first());
+    await page.locator(".react-flow__node-agent").first().waitFor();
+    await click(page.getByRole("button", { name: "API & Export" }));
+    await page.getByText("Bereit zum Veröffentlichen", { exact: false }).waitFor();
+    const row = page.getByRole("dialog").getByTestId("test-status-row").first();
+    await row.getByText("bestanden", { exact: false }).waitFor();
+    return "test result of this version seen in the publish dialog, release pre-check seen";
+  });
+
   check(errors.length === 0, `No browser errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
 } finally {
   await browser.close();

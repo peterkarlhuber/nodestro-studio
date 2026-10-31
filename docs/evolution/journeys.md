@@ -44,6 +44,7 @@ a path longer therefore shows up in the report and in review, not as a red build
 | J4 | "My workflow fails: where is the problem and how do I fix it?" | Open a workflow whose start is blocked → the problem in the editor's list → *Problems in: Quality check* → *Add criterion* → type it | the start is enabled again |
 | J5 | "I want to set an advanced property precisely without fighting a simplified UI." | Open a workflow → select the agent → open *Advanced* → set *Max tokens* → *Save* | the value is saved and the closed summary names it |
 | J6 | "Can I trust this workflow version on quality, cost and allowed actions?" | Open the copied contract review → *Test series* → its series → *Run test series* → confirm → *Workflows* → workflow → *API & Export* | the test results and the release pre-check have been seen |
+| J6b | the same check once the version is tested, after Q-1 | Open the workflow → *API & Export* | the test result of this version and the release pre-check have been seen in the publish dialog |
 
 There is no invoice example, so J1 uses the contract review example, which reads an uploaded PDF and returns
 structured output. In J4 the blocking problem is a design-time one: a quality check without criteria. A model that
@@ -90,6 +91,32 @@ and 1 page change instead of 10 and 4, measured on the same server. J3 still tak
 Knowledge page, which keeps working, and stays at 10 actions and 4 page changes. The upload button adds one or two
 visible controls wherever the Knowledge section is open (J3 65, J5 88 instead of 64 and 86). As before, this is
 interface cost, not evidence that people find the button.
+
+## After P1 (UX-8)
+
+Measured on 2026-10-31 after UX-1 to UX-7, UX-K and Q-1, on the same kind of server as the baseline.
+
+| Journey | Actions | Dialogs | Page changes | Controls at goal | Baseline (actions / dialogs / pages / controls) |
+| --- | ---: | ---: | ---: | ---: | --- |
+| J1 PDF to structured result | 7 | 2 | 2 | 46 | 7 / 2 / 2 / 46 |
+| J2 change and start an example | 7 | 2 | 1 | 66 | 7 / 2 / 1 / 66 |
+| J3 give an agent knowledge | 10 | 0 | 4 | 65 | 10 / 0 / 4 / 64 |
+| J3b knowledge, upload in the inspector (UX-K) | 5 | 0 | 1 | 66 | new with UX-K |
+| J4 find and fix a blocking problem | 5 | 0 | 1 | 66 | 5 / 0 / 1 / 66 |
+| J5 set an advanced property | 5 | 0 | 1 | 88 | 5 / 0 / 1 / 86 |
+| J6 check quality and release state | 8 | 2 | 5 | 16 | 8 / 2 / 5 / 15 |
+| J6b check a tested version in the publish dialog (Q-1) | 2 | 1 | 1 | 16 | new with UX-8 |
+
+- **V.** The old paths are unchanged: J1 to J6 take the same actions, dialogs and page changes. They walk the
+  same scripts on purpose, so this shows that P1 did not make them longer, not that it made them shorter.
+- **V.** The shorter paths are new ways to the same goal. J3b (UX-K) gives an agent knowledge in 5 actions and 1
+  page change instead of 10 and 4. J6b (Q-1) runs after J6 and checks the version that J6 tested: the publish
+  dialog shows the test result next to the release pre-check, 2 actions and 1 page change instead of going to the
+  test series and back. Running the series still happens on the test series page, so J6 itself stays at 8 actions.
+- **V.** The cost is a few visible controls: the Knowledge upload button (J3 65, J5 88) and the test status link in
+  the publish dialog (J6 16).
+- **H.** Whether people find the upload button and read the test status in the dialog is open. Moderated task tests
+  with 3 to 5 people (D7) have not been arranged, so this step makes no usability claim.
 
 ## Deviation from the plan
 
