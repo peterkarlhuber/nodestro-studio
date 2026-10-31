@@ -182,6 +182,7 @@ project owner.
 | UX-K knowledge upload in the inspector, see [ux-k.md](ux-k.md) | done | studio #20, `ea5f61c` |
 | Q-0 judge of AI-designed agents | done | api #16 `a08c9c3`, sdk #14 `e508e6b`, studio #21 `40672c1`; coordinated with the desktop/server plan |
 | UX-5a `Section` for test cases, run comparison and approval items | done | studio #23 `070e08c`. The inline "show result/feedback" toggles in run details, tests and batches stay plain `<details>`: they reveal one value in place and are not sections. |
-| UX-5b `Section` for a tool's code, tool-generation attempts, diagnostic versions and local backups | in review | studio, this step. Inline toggles stay plain `<details>`: the sandbox output of a tool check, the provenance of a knowledge file and the details of one diagnostic check. |
-| UX-6 and later | open | — |
+| UX-5b `Section` for a tool's code, tool-generation attempts, diagnostic versions and local backups | done | studio #25 `a44ea7d`. Inline toggles stay plain `<details>`: the sandbox output of a tool check, the provenance of a knowledge file and the details of one diagnostic check. |
+| UX-6a start-form file options as a *File options* section with a one-line summary | in review | studio, this step |
+| UX-6b and later | open | — |
 

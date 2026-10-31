@@ -25,6 +25,7 @@ import {
   Field,
   HelpTip,
   IconButton,
+  Section,
   Segmented,
   Select,
   TextArea,
@@ -32,7 +33,7 @@ import {
   Toggle,
 } from "../components/ui";
 import { newField, newRule } from "../lib/defaults";
-import { DEFAULT_FIELD_MB, FORMAT_GROUPS } from "../lib/files";
+import { DEFAULT_FIELD_MB, FORMAT_GROUPS, fileFieldSummary } from "../lib/files";
 import { branchLabel } from "./nodes";
 import { useEditor } from "./store";
 
@@ -590,7 +591,11 @@ function FileFieldSettings({ field, onChange }: { field: InputField; onChange: (
     onChange({ accept: accept.includes(key) ? accept.filter((item) => item !== key) : [...accept, key] });
   const number = (value: string) => (value === "" ? null : Math.max(1, Math.round(Number(value))));
   return (
-    <div className="stack-sm file-settings">
+    <Section
+      className="file-settings"
+      title={t("inputs.config.options")}
+      summary={fileFieldSummary(t, field, formats.data?.formats ?? [])}
+    >
       <Field label={t("inputs.config.accept")} hint={accept.length ? undefined : t("inputs.config.acceptAll")} tip="inputs.formats">
         <div className="chip-row" role="group" aria-label={t("inputs.config.accept")}>
           {FORMAT_GROUPS.map((group) => (
@@ -663,7 +668,7 @@ function FileFieldSettings({ field, onChange }: { field: InputField; onChange: (
           options={(["auto", "inline", "on_demand"] as const).map((value) => ({ value, label: t(`inputs.config.deliveryModes.${value}`) }))}
         />
       </Field>
-    </div>
+    </Section>
   );
 }
 

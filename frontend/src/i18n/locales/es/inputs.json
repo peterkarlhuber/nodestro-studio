@@ -83,6 +83,15 @@
       "auto": "El contenido llega a los agentes cuando cabe; los archivos grandes, como resumen del que el agente lee por partes.",
       "inline": "Los agentes reciben el contenido mientras quepa en el espacio para archivos.",
       "on_demand": "Los agentes reciben nombre y estructura y leen las partes necesarias con la herramienta input_files."
+    },
+    "options": "Opciones de archivo",
+    "summary": {
+      "allFormats": "todos los formatos",
+      "size": "hasta {{mb}} MB",
+      "one": "un archivo",
+      "many": "varios archivos",
+      "upTo_one": "hasta {{count}} archivo",
+      "upTo_other": "hasta {{count}} archivos"
     }
   },
   "modes": {

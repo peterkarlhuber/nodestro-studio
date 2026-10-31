@@ -3,6 +3,8 @@
 // The backend decides (it checks the real content); these checks only spare the user an upload
 // that would be refused anyway and keep the messages next to the file.
 
+import type { TFunction } from "i18next";
+
 import type { ArchiveEntry, FileFormatInfo, FormatGroup, InputField } from "../api/types";
 
 export const FORMAT_GROUPS: FormatGroup[] = ["text", "data", "document", "image", "archive"];
@@ -140,4 +142,26 @@ export async function filesOfDrop(items: DataTransferItemList | null, fallback: 
   };
   for (const entry of entries) await walk(entry, "");
   return found;
+}
+
+/** The closed summary of a file field's options: formats · size · count · delivery (UX-6a). */
+export function fileFieldSummary(t: TFunction, field: InputField, formats: FileFormatInfo[]): string {
+  const accept = field.accept ?? [];
+  const named = accept.map((key) =>
+    (FORMAT_GROUPS as string[]).includes(key)
+      ? t(`inputs.groups.${key}`)
+      : (formats.find((format) => format.key === key)?.extensions[0] ?? key),
+  );
+  const count =
+    field.multiple === false
+      ? t("inputs.config.summary.one")
+      : field.max_files
+        ? t("inputs.config.summary.upTo", { count: field.max_files })
+        : t("inputs.config.summary.many");
+  return [
+    named.length ? named.join(", ") : t("inputs.config.summary.allFormats"),
+    t("inputs.config.summary.size", { mb: field.max_size_mb ?? DEFAULT_FIELD_MB }),
+    count,
+    t(`inputs.config.deliveryModes.${field.delivery ?? "auto"}`),
+  ].join(" · ");
 }

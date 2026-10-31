@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Start-form file options in one section, UX-6a (2026-10-31)
+
+- Studio only, no pin change. In the Start node's inspector, each file field's accepted formats, number of files,
+  size limit and delivery sit in a closed *File options* section (finding F8). Its summary names the current choice
+  in one line, for example "all formats · up to 20 MB · several files · Automatic"; in the narrow inspector the
+  summary gets its own line instead of being cut off. The form JSON is unchanged; the settings themselves did not
+  change. Texts and the file inputs chapter in six languages.
+
 ### Tools and settings use the shared section, UX-5b (2026-10-31)
 
 - Studio only, no pin change. A custom tool's *View code and tests*, the attempts of a generated tool, the versions

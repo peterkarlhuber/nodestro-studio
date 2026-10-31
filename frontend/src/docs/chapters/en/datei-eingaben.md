@@ -22,7 +22,7 @@ In an agent's task, `{{form.<name>}}` stands for the names of the field's files.
 ## Field settings {#feld-einstellungen}
 <!-- keywords: settings, accepted types, several files, maximum, size, mb, limit -->
 
-In the inspector of the Start node every file field has these settings:
+In the inspector of the Start node every file field has a *File options* section. Closed, it names the current choice in one line, such as “all formats · up to 20 MB · several files · Automatic”. Open, it shows these settings:
 
 | Setting | Meaning |
 |---|---|

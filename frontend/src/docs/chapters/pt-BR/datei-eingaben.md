@@ -22,7 +22,7 @@ Na tarefa de um agente, `{{form.<nome>}}` representa os nomes dos arquivos do ca
 ## Configurações do campo {#feld-einstellungen}
 <!-- keywords: configurações, tipos permitidos, vários arquivos, máximo, tamanho, mb, limite -->
 
-No inspetor do nó Início, cada campo de arquivo tem estas configurações:
+No inspetor do nó Início, cada campo de arquivo tem a seção *Opções de arquivo*. Fechada, ela resume a escolha atual em uma linha, por exemplo “todos os formatos · até 20 MB · vários arquivos · Automática”. Aberta, mostra estas configurações:
 
 | Configuração | Significado |
 |---|---|

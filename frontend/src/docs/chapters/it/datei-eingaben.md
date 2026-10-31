@@ -22,7 +22,7 @@ Nel compito di un agente, `{{form.<nome>}}` indica i nomi dei file del campo. L�
 ## Impostazioni del campo {#feld-einstellungen}
 <!-- keywords: impostazioni, tipi consentiti, più file, massimo, dimensione, mb, limite -->
 
-Nell’inspector del nodo Avvio ogni campo file ha queste impostazioni:
+Nell’inspector del nodo Avvio ogni campo file ha la sezione *Opzioni file*. Chiusa, riassume la scelta attuale in una riga, ad esempio «tutti i formati · fino a 20 MB · più file · Automatica». Aperta, mostra queste impostazioni:
 
 | Impostazione | Significato |
 |---|---|

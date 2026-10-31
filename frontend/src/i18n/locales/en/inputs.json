@@ -83,6 +83,15 @@
       "auto": "The content goes to the agents when it fits; large files as an overview the agent reads from in parts.",
       "inline": "Agents get the content as long as it fits into the room for files.",
       "on_demand": "Agents get name and structure and read the parts they need with the input_files tool."
+    },
+    "options": "File options",
+    "summary": {
+      "allFormats": "all formats",
+      "size": "up to {{mb}} MB",
+      "one": "one file",
+      "many": "several files",
+      "upTo_one": "up to {{count}} file",
+      "upTo_other": "up to {{count}} files"
     }
   },
   "modes": {

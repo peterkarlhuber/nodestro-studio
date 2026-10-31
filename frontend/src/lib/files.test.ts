@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 
 import type { ArchiveEntry, FileFormatInfo } from "../api/types";
-import { acceptAttribute, acceptedKeys, archiveTree, formatOfName, precheck, remainingSlots, suffixOf } from "./files";
+import i18n from "../i18n";
+import { acceptAttribute, acceptedKeys, archiveTree, fileFieldSummary, formatOfName, precheck, remainingSlots, suffixOf } from "./files";
 
 const FORMATS: FileFormatInfo[] = [
   { key: "txt", group: "text", extensions: [".txt"], indexable: true },
@@ -57,5 +58,29 @@ describe("file inputs", () => {
     expect(tree.map((node) => node.name)).toEqual(["docs", "z.txt"]);
     expect(tree[0].children.map((node) => node.name)).toEqual(["sub", "b.txt"]);
     expect(tree[0].children[0].children[0].entry?.path).toBe("docs/sub/a.txt");
+  });
+});
+
+describe("file field summary", () => {
+  const t = i18n.t.bind(i18n);
+  const field = { name: "belege", label: "Belege", type: "file" as const, description: "", required: true, default: null, options: [] };
+
+  it("names the defaults of a new file field", () => {
+    expect(fileFieldSummary(t, { ...field, accept: [], multiple: true, delivery: "auto" }, FORMATS)).toBe(
+      "alle Formate · bis 20 MB · mehrere Dateien · Automatisch",
+    );
+  });
+
+  it("names groups, single formats, limits and the delivery", () => {
+    expect(
+      fileFieldSummary(
+        t,
+        { ...field, accept: ["document", "png"], multiple: true, max_files: 3, max_size_mb: 10, delivery: "on_demand" },
+        FORMATS,
+      ),
+    ).toBe("Dokumente (PDF, Word), .png · bis 10 MB · bis zu 3 Dateien · Übersicht, Inhalt bei Bedarf");
+    expect(fileFieldSummary(t, { ...field, accept: ["pdf"], multiple: false, max_files: 5 }, FORMATS)).toBe(
+      ".pdf · bis 20 MB · eine Datei · Automatisch",
+    );
   });
 });
