@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { api } from "../api/client";
 import { keys } from "../api/hooks";
-import type { Run, WorkflowNode } from "../api/types";
+import type { Run } from "../api/types";
 import { DiscussButton } from "../assistant/DiscussButton";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
@@ -22,19 +22,14 @@ import { ResultFiles } from "../runs/ResultFiles";
 import { RunInputs, useRunInputs } from "../runs/RunInputs";
 import { ResumeDialog } from "../runs/ResumeDialog";
 import { RunOrigin } from "../runs/RunOrigin";
+import { RunSummaryLine } from "../runs/RunSummaryLine";
+import { stepsInOrder } from "../runs/runSummary";
 import { STATUS_TONE, formatCost, formatDate, formatDuration, formatTokens, tokenBreakdown } from "../lib/format";
-
-function ordered(run: Run): WorkflowNode[] {
-  // Agents in the order they started; those that never ran at the end.
-  const agents = run.workflow.nodes.filter((node) => node.type !== "start" && node.type !== "output");
-  const started = (node: WorkflowNode) => run.nodes[node.id]?.started_at ?? "~";
-  return [...agents].sort((a, b) => started(a).localeCompare(started(b)));
-}
 
 /** A waterfall of the agents' run times: where the time went and what ran in parallel. */
 function Trace({ run, selected, onSelect }: { run: Run; selected: string | null; onSelect: (id: string) => void }) {
   const { t } = useTranslation();
-  const nodes = ordered(run);
+  const nodes = stepsInOrder(run);
   const begin = run.started_at ? new Date(run.started_at).getTime() : Date.now();
   const end = run.finished_at ? new Date(run.finished_at).getTime() : Date.now();
   const span = Math.max(end - begin, 1);
@@ -96,7 +91,7 @@ export function RunDetailPage() {
   useContextOffer("run", offer);
   const node = useMemo(() => {
     if (!data) return null;
-    const id = selected ?? ordered(data)[0]?.id;
+    const id = selected ?? stepsInOrder(data)[0]?.id;
     return data.workflow.nodes.find((item) => item.id === id) ?? null;
   }, [data, selected]);
   const inputs = useRunInputs(data);
@@ -114,6 +109,10 @@ export function RunDetailPage() {
   const live = !imported && (data.status === "running" || data.status === "queued");
   const paused = !imported && data.status === "paused";
   const resumable = !imported && !data.parent_run_id && (data.status === "failed" || data.status === "cancelled");
+  const openStep = (nodeId: string) => {
+    setSelected(nodeId);
+    requestAnimationFrame(() => document.getElementById("run-node-details")?.scrollIntoView({ block: "start", behavior: "smooth" }));
+  };
 
   return (
     <div className="page">
@@ -166,6 +165,7 @@ export function RunDetailPage() {
           />
           <Stat label={t("runs.stats.cost")} value={formatCost(usage.estimated_cost_usd)} tip="runs.cost" />
         </div>
+        <RunSummaryLine run={data} onOpenStep={openStep} />
         {imported ? (
           <Callout tone="brand">
             <strong>
@@ -229,7 +229,7 @@ export function RunDetailPage() {
           <Trace run={data} selected={node?.id ?? null} onSelect={setSelected} />
         </section>
         {node && data.nodes[node.id] ? (
-          <section className="panel" aria-label={t("runs.detail.nodeDetails", { name: node.label })}>
+          <section id="run-node-details" className="panel" aria-label={t("runs.detail.nodeDetails", { name: node.label })}>
             <NodeRunDetails node={node} state={data.nodes[node.id]} runFiles={startFiles(data, node.id)} run={data} />
           </section>
         ) : null}

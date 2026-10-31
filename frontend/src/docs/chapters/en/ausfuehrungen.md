@@ -40,9 +40,10 @@ The list refreshes every five seconds.
 Clicking a run opens the detail view:
 
 1. **Key figures:** status with total duration, API requests, tokens (broken down into input, output, cache and thinking) and estimated costs.
-2. **Input and result** of the workflow side by side.
-3. **Timeline:** a time bar for every agent in the order they started. Each bar shows when the agent ran; bars on top of each other ran in parallel. Duration, tokens and number of tool calls are shown next to it.
-4. **Details of the selected agent:** duration, start and end time, tokens, requests and costs, any error, the result of the quality check, and the tabs:
+2. **Run summary:** how many steps succeeded and how many were skipped, which path the decisions took, how approvals were decided, which tools were called how often (with errors) and at which step the run failed, with *Go to step*. It is built only from the run's stored data, without a model call; what the run did not record shows as *not recorded*.
+3. **Input and result** of the workflow side by side.
+4. **Timeline:** a time bar for every agent in the order they started. Each bar shows when the agent ran; bars on top of each other ran in parallel. Duration, tokens and number of tool calls are shown next to it.
+5. **Details of the selected agent:** duration, start and end time, tokens, requests and costs, any error, the result of the quality check, and the tabs:
 
 | Tab | Content |
 |---|---|

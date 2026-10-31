@@ -58,5 +58,27 @@
     "noResult": "Kein Ergebnis.",
     "trace": "Ablauf",
     "nodeDetails": "Details {{name}}"
+  },
+  "summary": {
+    "title": "Kurzfassung des Laufs",
+    "steps": "Schritte",
+    "stepsDone": "{{done}} von {{total}} erfolgreich",
+    "path": "Weg",
+    "approvals": "Freigaben",
+    "approval": {
+      "approved": "freigegeben",
+      "rejected": "abgelehnt",
+      "waiting": "wartet",
+      "unknown": "nicht aufgezeichnet"
+    },
+    "tools": "Tools",
+    "noTools": "keine aufgerufen",
+    "toolErrors_one": "{{count}} Fehler",
+    "toolErrors_other": "{{count}} Fehler",
+    "failedAt": "Fehlgeschlagen bei",
+    "openStep": "Zum Schritt",
+    "notRecorded": "nicht aufgezeichnet",
+    "skipped_one": "{{count}} übersprungen (Zweig nicht gewählt)",
+    "skipped_other": "{{count}} übersprungen (Zweig nicht gewählt)"
   }
 }

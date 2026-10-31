@@ -6276,3 +6276,8 @@ kbd {
   margin-left: 22px;
   white-space: normal;
 }
+
+/* The run summary: short labels, so the values start close to them on wide pages. */
+.run-summary .form-values > div {
+  grid-template-columns: minmax(90px, 150px) 1fr;
+}

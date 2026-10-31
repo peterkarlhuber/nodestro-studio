@@ -40,9 +40,10 @@ La lista se actualiza cada cinco segundos.
 Al hacer clic en una ejecución se abre la vista de detalle:
 
 1. **Cifras clave:** estado con duración total, solicitudes a la API, tokens (desglosados en entrada, salida, caché y razonamiento) y costes estimados.
-2. **Entrada y resultado** del flujo, uno al lado del otro.
-3. **Desarrollo:** una barra de tiempo por agente, en el orden en que empezaron. Cada barra muestra cuándo se ejecutó el agente; las barras superpuestas se ejecutaron en paralelo. Al lado se indican la duración, los tokens y el número de llamadas a herramientas.
-4. **Detalles del agente seleccionado:** duración, hora de inicio y fin, tokens, solicitudes y costes, un posible error, el resultado del control de calidad y las pestañas:
+2. **Resumen de la ejecución:** cuántos pasos salieron bien y cuántos se omitieron, qué camino tomaron las decisiones, cómo se decidieron las aprobaciones, qué herramientas se llamaron y cuántas veces (con errores) y en qué paso falló la ejecución, con *Ir al paso*. Se construye solo con los datos guardados de la ejecución, sin llamar a ningún modelo; lo que la ejecución no registró aparece como *no registrado*.
+3. **Entrada y resultado** del flujo, uno al lado del otro.
+4. **Desarrollo:** una barra de tiempo por agente, en el orden en que empezaron. Cada barra muestra cuándo se ejecutó el agente; las barras superpuestas se ejecutaron en paralelo. Al lado se indican la duración, los tokens y el número de llamadas a herramientas.
+5. **Detalles del agente seleccionado:** duración, hora de inicio y fin, tokens, solicitudes y costes, un posible error, el resultado del control de calidad y las pestañas:
 
 | Pestaña | Contenido |
 |---|---|

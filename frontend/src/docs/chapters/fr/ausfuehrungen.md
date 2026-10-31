@@ -40,9 +40,10 @@ La liste se met à jour toutes les cinq secondes.
 Un clic sur une exécution ouvre la vue détaillée :
 
 1. **Chiffres clés :** statut avec durée totale, requêtes API, tokens (répartis entre entrée, sortie, cache et réflexion) et coûts estimés.
-2. **Entrée et résultat** du workflow côte à côte.
-3. **Déroulement :** une barre de temps par agent, dans l’ordre de leur démarrage. Chaque barre montre quand l’agent a tourné ; des barres superposées ont tourné en parallèle. À côté figurent la durée, les tokens et le nombre d’appels d’outils.
-4. **Détails de l’agent sélectionné :** durée, heures de début et de fin, tokens, requêtes et coûts, une éventuelle erreur, le résultat du contrôle qualité et les onglets :
+2. **Résumé de l’exécution :** combien d’étapes ont réussi et combien ont été ignorées, quel chemin les décisions ont pris, comment les validations ont été décidées, quels outils ont été appelés et combien de fois (avec les erreurs) et à quelle étape l’exécution a échoué, avec *Aller à l’étape*. Il est construit uniquement à partir des données enregistrées de l’exécution, sans appel à un modèle ; ce que l’exécution n’a pas enregistré apparaît comme *non enregistré*.
+3. **Entrée et résultat** du workflow côte à côte.
+4. **Déroulement :** une barre de temps par agent, dans l’ordre de leur démarrage. Chaque barre montre quand l’agent a tourné ; des barres superposées ont tourné en parallèle. À côté figurent la durée, les tokens et le nombre d’appels d’outils.
+5. **Détails de l’agent sélectionné :** durée, heures de début et de fin, tokens, requêtes et coûts, une éventuelle erreur, le résultat du contrôle qualité et les onglets :
 
 | Onglet | Contenu |
 |---|---|
