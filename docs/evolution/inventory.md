@@ -26,10 +26,10 @@ State values: **exists**, **partial**, **missing**, **overlaps** (with the deskt
 | T time machine | partial | trace export/import (`runtime/traces.py`), run comparison page (`/executions/compare`, `lib/compare.ts`), **fingerprint-based resume that reuses unchanged steps and re-runs changed ones with a side-effect confirmation** (`runtime/resume.py`, `runs/ResumeDialog.tsx`) — this is the draft's T-1 and most of T-3 | recorded tool responses for replay, simulator adapters, shadow mode |
 | O model optimizer | overlaps Q | test series per version; usage and cost log (`usage_log.py`, `/usage`) | a test run with a model override; it is a Q feature, not a product |
 | E explainability | partial | run tabs show prompt, context, tool calls, thinking, memory; the assistant can discuss a run (`DiscussButton`) | a deterministic one-paragraph run summary with links into the trace |
-| K knowledge intelligence | partial | `KnowledgeFile` has `created_at`, `source`, `collection`, OCR state; publishing already resolves knowledge references (`Publications._knowledge_refs`) | "used in" (F9); validity dates; conflict detection is not verifiable and not proposed |
+| K knowledge intelligence | partial | `KnowledgeFile` has `created_at`, `source`, `collection`, OCR state; publishing already resolves knowledge references (`Publications._knowledge_refs`) | "used in" (F9); validity dates; conflict detection is deferred (plan §8) |
 | C agent contracts | overlaps | structured output fields, quality criteria + judge, preflight, test-case checks | nothing that needs a separate product; see the plan |
 | A app builder | partial | published APIs, releases, API keys, standalone FastAPI export, "Try it" form in the publish dialog (`publish/ApiTry.tsx`) | a hosted end-user form page; needs auth/CSP design after PR-9/PR-12 |
-| M migration studio | missing | — | no demand evidence; not planned |
+| M migration studio | missing | — | no demand evidence; deferred (plan §8) |
 
 Facts that change the draft's risk picture:
 
