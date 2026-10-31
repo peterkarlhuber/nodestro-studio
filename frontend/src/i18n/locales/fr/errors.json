@@ -43,7 +43,8 @@
   "draft": {
     "unknown_tool": "L’outil inconnu « {{name}} » a été écarté.",
     "model_unavailable": "Le modèle « {{model}} » n’est pas disponible ; {{chosen}} a été choisi.",
-    "server_tool_provider": "L’outil serveur « {{name}} » a été écarté : il n’est disponible que pour les modèles d’Anthropic."
+    "server_tool_provider": "L’outil serveur « {{name}} » a été écarté : il n’est disponible que pour les modèles d’Anthropic.",
+    "judge_unsupported": "Le modèle par défaut « {{model}} » ne peut pas rendre le verdict structuré d’un contrôle qualité. Choisissez un autre juge avant d’activer le contrôle."
   },
   "config": {
     "library": "La configuration ne respecte pas les règles de la bibliothèque d’agents.",

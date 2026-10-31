@@ -152,7 +152,7 @@ Il risultato del controllo compare nell'esecuzione accanto all'agente: superato 
 
 **Buoni criteri** si possono verificare singolarmente: «Ogni numero proviene da un risultato di uno strumento», «Cita almeno un rischio concreto», «Al massimo 150 parole». Criteri vaghi come «scritto bene» portano a giudizi poco affidabili.
 
-**Costi:** ogni controllo e ogni revisione è una richiesta in più. I costi del giudice contano per l'agente e per il budget dell'esecuzione. Un controllo appena attivato parte con il modello predefinito delle impostazioni come **modello giudice**; puoi cambiarlo quando vuoi, e i controlli esistenti mantengono il loro modello. Il riepilogo della sezione nomina il giudice. Se il giudice è lo stesso modello dell'agente, un avviso lo segnala: un modello tende a valutare bene le proprie risposte.
+**Costi:** ogni controllo e ogni revisione è una richiesta in più. I costi del giudice contano per l'agente e per il budget dell'esecuzione. Un controllo appena attivato parte con il modello predefinito delle impostazioni come **modello giudice**; puoi cambiarlo quando vuoi, e i controlli esistenti mantengono il loro modello. Anche gli agenti progettati dall'IA (*Progetta con l’IA* e l'architetto di workflow) ricevono il modello predefinito come giudice; il controllo resta disattivato. Se quel modello non può restituire un giudizio strutturato, la bozza lo dice e non viene scelto un altro modello. Il riepilogo della sezione nomina il giudice. Se il giudice è lo stesso modello dell'agente, un avviso lo segnala: un modello tende a valutare bene le proprie risposte.
 
 ## Limiti {#limits}
 <!-- keywords: token max., max_tokens, turni di strumenti, max_tool_rounds, strumenti in parallelo, max_parallel_tools, limite -->

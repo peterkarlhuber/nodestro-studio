@@ -43,7 +43,8 @@
   "draft": {
     "unknown_tool": "Das unbekannte Tool „{{name}}“ wurde weggelassen.",
     "model_unavailable": "Das Modell „{{model}}“ ist nicht verfügbar; gewählt wurde {{chosen}}.",
-    "server_tool_provider": "Das Server-Tool „{{name}}“ wurde weggelassen: Es steht nur für Modelle von Anthropic zur Verfügung."
+    "server_tool_provider": "Das Server-Tool „{{name}}“ wurde weggelassen: Es steht nur für Modelle von Anthropic zur Verfügung.",
+    "judge_unsupported": "Das Standardmodell „{{model}}“ kann kein strukturiertes Urteil für eine Qualitätsprüfung liefern. Wähle einen anderen Judge, bevor du die Prüfung einschaltest."
   },
   "config": {
     "library": "Die Konfiguration passt nicht zu den Regeln der Agenten-Bibliothek.",

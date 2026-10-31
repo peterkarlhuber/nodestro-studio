@@ -152,7 +152,7 @@ Das Ergebnis der Prüfung steht in der Ausführung beim Agenten: bestanden oder 
 
 **Gute Kriterien** sind einzeln prüfbar: „Jede Zahl stammt aus einem Tool-Ergebnis“, „Nennt mindestens ein konkretes Risiko“, „Höchstens 150 Wörter“. Vage Kriterien wie „gut geschrieben“ führen zu unzuverlässigen Urteilen.
 
-**Kosten:** Jede Prüfung und jede Überarbeitung ist eine zusätzliche Anfrage. Die Kosten des Judges zählen zum Agenten und zum Budget des Laufs. Eine neu eingeschaltete Prüfung startet mit dem Standardmodell aus den Einstellungen als **Judge-Modell**; du kannst es jederzeit ändern, und bestehende Prüfungen behalten ihr Modell. Die Kurzfassung des Abschnitts nennt den Judge. Ist der Judge dasselbe Modell wie der Agent, weist ein Hinweis darauf hin: Ein Modell bewertet die eigenen Antworten eher wohlwollend.
+**Kosten:** Jede Prüfung und jede Überarbeitung ist eine zusätzliche Anfrage. Die Kosten des Judges zählen zum Agenten und zum Budget des Laufs. Eine neu eingeschaltete Prüfung startet mit dem Standardmodell aus den Einstellungen als **Judge-Modell**; du kannst es jederzeit ändern, und bestehende Prüfungen behalten ihr Modell. Agenten, die die KI entwirft (*Mit KI entwerfen* und der Workflow Architect), bekommen ebenso das Standardmodell als Judge; die Prüfung bleibt aus. Kann dieses Modell kein strukturiertes Urteil liefern, sagt der Entwurf das, und es wird kein anderes Modell gewählt. Die Kurzfassung des Abschnitts nennt den Judge. Ist der Judge dasselbe Modell wie der Agent, weist ein Hinweis darauf hin: Ein Modell bewertet die eigenen Antworten eher wohlwollend.
 
 ## Limits {#limits}
 <!-- keywords: max tokens, max_tokens, tool runden, max_tool_rounds, parallele tools, max_parallel_tools, limit -->

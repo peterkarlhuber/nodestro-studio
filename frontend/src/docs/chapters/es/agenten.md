@@ -152,7 +152,7 @@ El resultado del control aparece en la ejecución junto al agente: superado o no
 
 **Los buenos criterios** se pueden comprobar uno a uno: «Cada cifra procede de un resultado de herramienta», «Nombra al menos un riesgo concreto», «Como máximo 150 palabras». Los criterios vagos como «bien escrito» llevan a juicios poco fiables.
 
-**Costes:** cada control y cada revisión es una solicitud adicional. Los costes del juez cuentan para el agente y para el presupuesto de la ejecución. Un control recién activado empieza con el modelo predeterminado de los ajustes como **modelo juez**; puedes cambiarlo cuando quieras, y los controles existentes conservan su modelo. El resumen de la sección nombra al juez. Si el juez es el mismo modelo que el agente, un aviso lo indica: un modelo tiende a valorar bien sus propias respuestas.
+**Costes:** cada control y cada revisión es una solicitud adicional. Los costes del juez cuentan para el agente y para el presupuesto de la ejecución. Un control recién activado empieza con el modelo predeterminado de los ajustes como **modelo juez**; puedes cambiarlo cuando quieras, y los controles existentes conservan su modelo. Los agentes que diseña la IA (*Diseñar con IA* y el arquitecto de flujos) también reciben el modelo predeterminado como juez; el control sigue desactivado. Si ese modelo no puede devolver un veredicto estructurado, el borrador lo indica y no se elige otro modelo. El resumen de la sección nombra al juez. Si el juez es el mismo modelo que el agente, un aviso lo indica: un modelo tiende a valorar bien sus propias respuestas.
 
 ## Límites {#limits}
 <!-- keywords: máx. tokens, max_tokens, rondas de herramientas, max_tool_rounds, herramientas en paralelo, max_parallel_tools, límite -->

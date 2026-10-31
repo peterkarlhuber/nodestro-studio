@@ -223,6 +223,21 @@ describe("backend messages", () => {
     expect(problemText(t, { code: "totally.unknown" })).toBe(i18n.t("errors.unknown"));
   });
 
+  it("name the default model a designed agent cannot be judged by, in every language", async () => {
+    const note = {
+      code: "draft.judge_unsupported",
+      params: { model: "compatible:local-llm" },
+      message: "The default model compatible:local-llm cannot return the structured verdict of a quality check",
+    };
+    for (const language of ["de", "en", "es", "fr", "it", "pt-BR"] as const) {
+      await setLanguage(language, false);
+      const text = problemText(t, note);
+      expect(text).toBe(i18n.t("errors.draft.judge_unsupported", { model: "compatible:local-llm" }));
+      expect(text).toContain("compatible:local-llm");
+      if (language !== "en") expect(text).not.toBe(note.message);
+    }
+  });
+
   it("use the plural form of a counted problem", async () => {
     await setLanguage("de", false);
     expect(problemText(t, { code: "assistant.secrets_masked", params: { count: 1 } })).toBe(

@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Default model as judge of AI-designed agents, Q-0 (2026-10-31)
+
+- Pins: `nodestro-api` at `a08c9c3` (before `f119cfc`), `nodestro-sdk` at `e508e6b` (before `2ed893a`). Agents designed by
+  *Design with AI* and by the Workflow Architect now get the default model from the settings as their judge model,
+  instead of the runtime's global default judge (`anthropic:claude-opus-5-5`). A workspace on Ollama or another
+  provider therefore gains no hidden Anthropic dependency. The check stays off; the runtime's global default,
+  existing agents, stored workflows and explicitly chosen judges are unchanged. The self-judge note still shows
+  when agent and judge are the same model.
+- When the default model cannot return the structured verdict of a check, the design dialog shows the new note
+  `draft.judge_unsupported` with the model's name. No other model is chosen. Texts in six languages, and a sentence
+  in the agents chapter.
+
 ### Agent inspector: upload knowledge in place, UX-K (2026-10-31)
 
 - Studio only, no API or pin change. The agent's *Knowledge* section has an *Upload file* button. It uses the

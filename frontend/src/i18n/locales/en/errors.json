@@ -43,7 +43,8 @@
   "draft": {
     "unknown_tool": "The unknown tool “{{name}}” was left out.",
     "model_unavailable": "The model “{{model}}” is not available; {{chosen}} was chosen instead.",
-    "server_tool_provider": "The server tool “{{name}}” was left out: it is available only for Anthropic models."
+    "server_tool_provider": "The server tool “{{name}}” was left out: it is available only for Anthropic models.",
+    "judge_unsupported": "The default model “{{model}}” cannot return the structured verdict of a quality check. Choose another judge before you switch the check on."
   },
   "config": {
     "library": "The configuration does not match the rules of the agent library.",
