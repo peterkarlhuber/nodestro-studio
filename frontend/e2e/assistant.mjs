@@ -202,6 +202,8 @@ try {
   await page.getByTestId("assistant-stop").click();
   await finished(long, "cancelled");
   check(await long.getByText("Abgebrochen.").isVisible(), "A cancelled answer is marked and kept");
+  // The retry button follows the cancelled state a moment later; wait for it instead of sampling once.
+  await long.getByTestId("chat-retry").waitFor({ timeout: 5000 }).catch(() => {});
   check(await long.getByTestId("chat-retry").isVisible(), "A cancelled answer can be retried");
   const failed = await ask("Teste die Verbindung");
   await finished(failed, "failed");

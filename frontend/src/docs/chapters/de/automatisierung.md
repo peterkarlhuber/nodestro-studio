@@ -53,6 +53,13 @@ Wähle in der Liste der Testläufe zwei aus und klicke *Vergleichen*. Die Tabell
 
 So prüfst du nach jeder Änderung an Agenten, Prompts oder Tools, ob der Workflow besser geworden ist, und kannst eine ältere [Version](/docs/workflows#versionen) gegen den aktuellen Stand testen.
 
+## Modelle vergleichen {#modelle-vergleichen}
+<!-- keywords: modell vergleichen, anderes modell, günstiger, schneller, modellwahl, variante -->
+
+Ob ein günstigeres oder stärkeres Modell für einen Agenten genügt, prüfst du mit derselben Testreihe. Schalte im Startdialog **Andere Modelle testen** ein und wähle für einzelne Agenten ein anderes Modell. Die Testfälle und die KI-Bewertung bleiben gleich, der gespeicherte Workflow ändert sich nicht.
+
+Ein solcher Lauf braucht ein **Kostenlimit** unter [Grenzen](/docs/automatisierung#grenzen), weil frühere Läufe andere Modelle nutzten und nichts über die Kosten sagen. In der Liste trägt er das Zeichen **Modellvergleich** und nennt die ersetzten Modelle. Vergleiche ihn danach mit einem Lauf der gespeicherten Version. Er zählt nicht als Testergebnis dieser Version, weil er eine Variante getestet hat. Passt ein Modell, übernimmst du es im Agenten selbst.
+
 ## Zeitpläne {#zeitplaene}
 <!-- keywords: zeitplan, schedule, cron, regelmäßig, täglich, wöchentlich, monatlich, stündlich, zeitzone, verpasst -->
 

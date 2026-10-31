@@ -159,7 +159,15 @@
       "same": "Gleich",
       "changed": "Verändert"
     },
-    "ownJudge": "Eigenes Modell"
+    "ownJudge": "Eigenes Modell",
+    "compareModels": "Andere Modelle testen",
+    "compareModelsHint": "Dieselben Testfälle und dieselbe KI-Bewertung, aber einzelne Agenten mit einem anderen Modell. Der gespeicherte Workflow bleibt unverändert.",
+    "agentModel": "Modell für {{agent}}",
+    "savedModel": "Gespeichert: {{model}}",
+    "modelsChanged_one": "{{count}} Agent läuft mit einem anderen Modell.",
+    "modelsChanged_other": "{{count}} Agenten laufen mit einem anderen Modell.",
+    "needsLimit": "Ein Modellvergleich braucht ein Kostenlimit: Frühere Läufe nutzten andere Modelle und sagen nichts über die Kosten.",
+    "variant": "Modellvergleich"
   },
   "schedule": {
     "description": "Startet Workflows regelmäßig, solange Nodestro läuft. Jeder Zeitplan ist aus, bis du ihn einschaltest.",

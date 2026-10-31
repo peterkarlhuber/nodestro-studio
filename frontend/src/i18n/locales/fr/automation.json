@@ -159,7 +159,15 @@
       "same": "Identique",
       "changed": "Modifié"
     },
-    "ownJudge": "Modèle personnalisé"
+    "ownJudge": "Modèle personnalisé",
+    "compareModels": "Tester d’autres modèles",
+    "compareModelsHint": "Les mêmes cas de test et la même évaluation par IA, mais certains agents avec un autre modèle. Le workflow enregistré reste inchangé.",
+    "agentModel": "Modèle pour {{agent}}",
+    "savedModel": "Enregistré : {{model}}",
+    "modelsChanged_one": "{{count}} agent utilise un autre modèle.",
+    "modelsChanged_other": "{{count}} agents utilisent un autre modèle.",
+    "needsLimit": "Comparer des modèles exige une limite de coût : les exécutions précédentes utilisaient d’autres modèles et ne disent rien du coût.",
+    "variant": "Comparaison de modèles"
   },
   "schedule": {
     "description": "Lance des workflows régulièrement tant que Nodestro tourne. Chaque planification est désactivée jusqu’à ce que vous l’activiez.",

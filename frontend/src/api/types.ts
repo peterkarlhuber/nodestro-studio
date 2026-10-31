@@ -1642,6 +1642,8 @@ export interface BenchmarkStart {
   max_failures: number | null;
   judge: boolean;
   confirm_external: boolean;
+  /** Agent node id -> model to use instead of the saved one (comparing models, Q-2). Needs ``max_cost_usd``. */
+  models: Record<string, string>;
 }
 
 export interface CaseCheck {
@@ -1707,6 +1709,8 @@ export interface BenchmarkRun {
   status: BenchmarkStatus;
   stop_code: string | null;
   judge: boolean;
+  /** Agent node id -> model this run used instead of the saved one (Q-2); empty for the saved version. */
+  models?: Record<string, string>;
   created_at: string;
   finished_at: string | null;
   results: CaseResult[];

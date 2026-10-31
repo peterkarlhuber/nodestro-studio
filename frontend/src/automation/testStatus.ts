@@ -28,10 +28,13 @@ export function testedVersion(run: BenchmarkRun, versions: VersionSummary[]): nu
   return before.length ? Math.max(...before) : null;
 }
 
+/** A run with other models (Q-2) tested a variant, not the saved version. */
+export const isModelVariant = (run: BenchmarkRun) => Object.keys(run.models ?? {}).length > 0;
+
 export function suiteTestStatus(suite: Suite, runs: BenchmarkRun[], version: number, versions: VersionSummary[]): SuiteTestStatus {
   const running = runs.some((run) => run.status === "running" || run.status === "evaluating");
   const finished = runs
-    .filter((run) => run.suite_id === suite.id && run.status === "finished")
+    .filter((run) => run.suite_id === suite.id && run.status === "finished" && !isModelVariant(run))
     .sort((a, b) => time(b.created_at) - time(a.created_at));
   const latest = finished[0];
   if (!latest) return { suite, state: { kind: "untested" }, running };
