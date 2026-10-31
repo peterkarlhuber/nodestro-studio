@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { AgentConfig, ConfigIssue } from "../api/types";
 import { defaultAgent, setDefaultModel } from "../lib/defaults";
 import { AgentForm } from "./AgentInspector";
+import { useAgentSections } from "./sectionState";
 
 // CodeMirror needs a real layout engine; the form's request options editor is not under test here.
 vi.mock("../components/CodeEditor", () => ({ CodeEditor: () => null }));
@@ -52,6 +53,8 @@ const section = (container: HTMLElement, id: string) => container.querySelector<
 
 describe("AgentForm sections", () => {
   beforeEach(() => {
+    localStorage.clear();
+    useAgentSections.setState({ open: {} });
     window.requestAnimationFrame = (callback: FrameRequestCallback) => {
       callback(0);
       return 0;
@@ -114,5 +117,30 @@ describe("AgentForm sections", () => {
       </QueryClientProvider>,
     );
     expect(await screen.findByTestId("self-judge")).toBeInTheDocument();
+  });
+
+  it("keeps a section the user opened open on the next agent and leaves the agent unchanged", async () => {
+    stubApi([]);
+    const onChange = vi.fn();
+    const first = show(defaultAgent(), onChange);
+    expect(section(first.container, "advanced").open).toBe(false);
+    await userEvent.click(section(first.container, "advanced").querySelector(".section__title")!);
+    expect(section(first.container, "advanced").open).toBe(true);
+    first.unmount(); // the editor remounts the form for every selected node
+    const second = show({ ...defaultAgent(), name: "Other" }, onChange);
+    expect(section(second.container, "advanced").open).toBe(true);
+    expect(JSON.parse(localStorage.getItem("nodestro-agent-sections")!)).toEqual({ advanced: true });
+    expect(onChange).not.toHaveBeenCalled(); // a UI preference, never part of the agent
+  });
+
+  it("keeps a section closed that the user closed, even when its default would open it", async () => {
+    stubApi([]);
+    const agent = { ...defaultAgent(), tools: ["search"] };
+    const first = show(agent);
+    expect(section(first.container, "tools").open).toBe(true);
+    await userEvent.click(section(first.container, "tools").querySelector(".section__title")!);
+    first.unmount();
+    const second = show(agent);
+    expect(section(second.container, "tools").open).toBe(false);
   });
 });
