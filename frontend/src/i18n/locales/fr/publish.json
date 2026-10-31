@@ -248,5 +248,44 @@
     "discard": "Rejeter",
     "include": "Inclure comme docs/AI_GUIDE.md",
     "none": "Ne pas inclure"
+  },
+  "gate": {
+    "title": "Contrôle de publication",
+    "intro": "Facultatif : une nouvelle version n'est publiée qu'après avoir été testée par ses séries de tests. Sans contrôle, rien ne change.",
+    "enable": "Activer le contrôle de publication",
+    "enableHint": "S'applique à chaque nouvelle version de cette API. Les versions déjà publiées ne changent pas.",
+    "suites": "Séries de tests",
+    "suitesHint": "La dernière exécution de chaque série doit avoir testé exactement la version à publier, avec les modèles enregistrés.",
+    "passRate": "Minimum de cas réussis (%)",
+    "passRateHint": "Un cas compte si son exécution a réussi et que toutes ses vérifications sont passées.",
+    "judgeScore": "Note minimale de l'IA (%)",
+    "judgeScoreHint": "Vide : les notes de l'IA sont affichées mais pas exigées.",
+    "save": "Enregistrer le contrôle",
+    "passed": "Le contrôle de publication est satisfait.",
+    "blocked": "Le contrôle de publication bloque cette version. Les vérifications obligatoires ne peuvent pas être ignorées : teste exactement cette version.",
+    "overridable": "Tous les résultats n'atteignent pas le contrôle. Tu peux publier quand même en indiquant une justification ; elle est enregistrée avec la version.",
+    "kinds": {
+      "critical": "Vérifications obligatoires",
+      "deterministic": "Résultats des vérifications",
+      "judge": "Notes de l'IA"
+    },
+    "probabilistic": "Avis de l'IA, non garanti",
+    "probabilisticHint": "Les notes de l'IA peuvent se tromper. Elles sont séparées des vérifications fixes.",
+    "reason": "Justification de la publication",
+    "reasonHint": "Au moins {{count}} caractères. Enregistrée avec la version et dans l'historique.",
+    "publishWithReason": "Publier la version {{version}} avec justification",
+    "releasePassed": "contrôle satisfait",
+    "releaseOverridden": "publiée avec justification",
+    "items": {
+      "suite_missing": "série de tests introuvable",
+      "suite_untested": "jamais testée",
+      "suite_variant_only": "testée seulement avec d'autres modèles",
+      "suite_outdated": "la version {{version}} a été testée en dernier",
+      "suite_changed": "la série a changé depuis le test",
+      "tested": "cette version a été testée",
+      "pass_rate": "{{clean}} cas sur {{cases}} réussis ({{value}}, exigé {{threshold}})",
+      "judge_score": "note de l'IA {{value}} (exigé {{threshold}})",
+      "judge_missing": "aucune note de l'IA dans l'exécution (exigé {{threshold}})"
+    }
   }
 }

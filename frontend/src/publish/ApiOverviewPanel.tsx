@@ -1,7 +1,7 @@
 // Status of the workflow's API, publishing a saved version, published versions and rollback.
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { CheckCircle2, Power, RotateCcw, Rocket, Save, ShieldCheck, Trash2 } from "lucide-react";
+import { CheckCircle2, Power, RotateCcw, Rocket, Save, ShieldAlert, ShieldCheck, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -10,11 +10,15 @@ import { api } from "../api/client";
 import type { ApiOverview } from "../api/types";
 import { TestStatus } from "../automation/TestStatus";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, Hint, Modal, Spinner, StatusBadge, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, Field, Hint, Modal, Spinner, StatusBadge, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import type { ApiTab } from "./ApiDialog";
 import { CopyButton, Problems } from "./common";
+import { GateReportView } from "./GateReportView";
+
+/** The shortest reason the API accepts for releasing despite failed non-critical gate items. */
+const MIN_REASON = 10;
 
 export function ApiOverviewPanel({
   overview,
@@ -40,18 +44,36 @@ export function ApiOverviewPanel({
   const [offOpen, setOffOpen] = useState(false);
   const [cancelRunning, setCancelRunning] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [reason, setReason] = useState("");
 
   const check = useQuery({
     queryKey: ["api", "check", overview.workflow_id, version],
     queryFn: () => api.apiCheck(overview.workflow_id, version),
     enabled: Boolean(version) && newer,
   });
+  const gated = Boolean(publication?.gate);
+  const gate = useQuery({
+    queryKey: ["api", "gate", overview.workflow_id, version, publication?.gate],
+    queryFn: () => api.releaseGate(overview.workflow_id, version),
+    enabled: Boolean(version) && newer && gated,
+  });
+  const gateStatus = gated ? gate.data?.status : "off";
+  const needsReason = gateStatus === "overridable";
+  const reasonOk = reason.trim().length >= MIN_REASON;
+  const gateAllows = gateStatus === "off" || gateStatus === "passed" || (needsReason && reasonOk);
   const publish = useMutation({
     mutationFn: () =>
-      api.publishApi(overview.workflow_id, { version, note, slug: publication ? null : slug.trim() || null, activate }),
+      api.publishApi(overview.workflow_id, {
+        version,
+        note,
+        slug: publication ? null : slug.trim() || null,
+        activate,
+        override: needsReason ? { reason: reason.trim() } : null,
+      }),
     onSuccess: (result) => {
       toast.success(t("publish.overview.published", { number: result.release.number }));
       setNote("");
+      setReason("");
       onChanged();
     },
     onError: (error) => toast.error(error),
@@ -168,7 +190,14 @@ export function ApiOverviewPanel({
         {version && newer ? (
           <>
             <p className="small">{t("publish.overview.willPublish", { version })}</p>
-            <TestStatus workflowId={overview.workflow_id} version={version} />
+            {gated ? null : <TestStatus workflowId={overview.workflow_id} version={version} />}
+            {gated && gate.isLoading ? <Spinner /> : null}
+            {gated && gate.error ? (
+              <Callout tone="danger">
+                <ErrorText error={gate.error} />
+              </Callout>
+            ) : null}
+            {gate.data ? <GateReportView report={gate.data} /> : null}
             {check.isLoading ? <Spinner /> : null}
             {check.error ? (
               <Callout tone="danger">
@@ -204,17 +233,22 @@ export function ApiOverviewPanel({
             {publication ? (
               <Toggle checked={activate} onChange={setActivate} label={t("publish.overview.activate")} description={t("publish.overview.activateHint")} />
             ) : null}
+            {needsReason ? (
+              <Field label={t("publish.gate.reason")} hint={t("publish.gate.reasonHint", { count: MIN_REASON })} tip="publish.gateOverride">
+                <TextArea rows={2} maxLength={500} value={reason} onChange={(event) => setReason(event.target.value)} data-testid="gate-reason" />
+              </Field>
+            ) : null}
             <div>
               <Hint id="publish.publish">
                 <Button
                   variant="primary"
                   icon={Rocket}
-                  disabled={dirty || !check.data?.ok}
+                  disabled={dirty || !check.data?.ok || !gateAllows}
                   busy={publish.isPending}
                   onClick={() => publish.mutate()}
                   data-testid="api-publish"
                 >
-                  {t("publish.overview.publish", { version })}
+                  {needsReason ? t("publish.gate.publishWithReason", { version }) : t("publish.overview.publish", { version })}
                 </Button>
               </Hint>
             </div>
@@ -236,6 +270,16 @@ export function ApiOverviewPanel({
                   <span className="muted small">{t("publish.versions.fromVersion", { version: release.workflow_version })}</span>
                 ) : null}
                 <span className="muted small">{t("publish.versions.runs", { count: release.runs })}</span>
+                {release.gate === "passed" ? (
+                  <Badge tone="success" icon={ShieldCheck}>
+                    {t("publish.gate.releasePassed")}
+                  </Badge>
+                ) : null}
+                {release.gate === "overridden" ? (
+                  <Badge tone="warning" icon={ShieldAlert}>
+                    {t("publish.gate.releaseOverridden")}
+                  </Badge>
+                ) : null}
                 {release.note ? <span className="small">{release.note}</span> : null}
                 {!release.active ? (
                   <Hint id="publish.rollback">

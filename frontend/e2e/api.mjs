@@ -164,6 +164,24 @@ try {
   await until(async () => (await (await call("")).json()).version === 1, "rolled back");
   check(true, "Making version 1 active rolls back without publishing");
 
+  // ---- release gate (Q-3) ---------------------------------------------------------------------
+  await dialog.getByTestId("api-tab-settings").click();
+  const gateSettings = dialog.getByTestId("gate-settings");
+  await gateSettings.getByRole("switch").click();
+  await gateSettings.getByRole("checkbox", { name: "Angebote Regression" }).check();
+  await gateSettings.getByTestId("gate-save").click();
+  await until(async () => (await api("/publications"))[0] && (await api(`/workflows/${workflow.id}/api`)).publication.gate, "gate saved");
+  check(true, "The release gate is switched on in the API settings");
+  await api(`/workflows/${workflow.id}`, "PUT", { ...workflow, nodes: nodes("Preis, Termin und Menge prüfen."), edges });
+  await page.reload();
+  await page.getByTestId("open-api").click();
+  const gateReport = dialog.getByTestId("gate-report");
+  await gateReport.waitFor();
+  check((await gateReport.getAttribute("data-status")) === "blocked", "An untested version is blocked by the gate");
+  check(await dialog.getByTestId("api-publish").isDisabled(), "A blocked version cannot be published");
+  check((await dialog.getByTestId("gate-reason").count()) === 0, "A blocked version offers no override");
+  await shot("api-04-gate");
+
   // ---- validate in the dialog ---------------------------------------------------------------
   await dialog.getByTestId("api-tab-try").click();
   await dialog.getByTestId("api-try-validate").click();
@@ -173,7 +191,7 @@ try {
   await dialog.getByTestId("api-try-validate").click();
   await dialog.getByRole("alert").first().waitFor();
   check((await dialog.getByRole("alert").first().textContent()).includes("kunde"), "A missing field is named");
-  await shot("api-04-try");
+  await shot("api-05-try");
 
   // ---- documentation and export -------------------------------------------------------------
   await dialog.getByTestId("api-tab-docs").click();
@@ -192,7 +210,7 @@ try {
   for (const name of [...contents, "workflow/release.json", "tests/test_api.py", "README.md"])
     check(text.includes(name), `The ZIP contains ${name}`);
   check(!text.includes(token.split("_").slice(2).join("_")), "The ZIP does not contain the key");
-  await shot("api-05-export");
+  await shot("api-06-export");
 
   check(errors.length === 0, `No console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
 } finally {

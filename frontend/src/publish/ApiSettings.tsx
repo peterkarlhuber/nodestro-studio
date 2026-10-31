@@ -9,6 +9,7 @@ import { api } from "../api/client";
 import type { ApiLimits, Publication } from "../api/types";
 import { toast } from "../components/toast";
 import { Button, Callout, Field, TextArea, TextInput, Toggle } from "../components/ui";
+import { GateSettings } from "./GateSettings";
 
 type NumberLimit = Exclude<keyof ApiLimits, "sync_enabled">;
 
@@ -77,6 +78,7 @@ export function ApiSettings({ publication, onChanged }: { publication: Publicati
           {t("common.save")}
         </Button>
       </div>
+      <GateSettings publication={publication} onChanged={onChanged} />
     </div>
   );
 }

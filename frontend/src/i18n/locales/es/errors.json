@@ -577,5 +577,10 @@
     "stale_price": "El precio de {{model}} no se ha comprobado desde hace demasiado tiempo; la solicitud no se envió (modo de precios estricto).",
     "price_unknown": "No se conoce ningún precio para {{model}}; la solicitud no se envió (modo de precios estricto).",
     "price_unreliable": "El precio de {{model}} no es lo bastante fiable; la solicitud no se envió (modo de precios estricto)."
+  },
+  "gate": {
+    "blocked": "El control de publicación bloquea esta versión. Prueba exactamente esta versión con sus series de pruebas.",
+    "override_required": "El control de publicación no se cumple. Indica un motivo para publicar igualmente.",
+    "suite_unknown": "Esta serie de pruebas no pertenece a este workflow."
   }
 }

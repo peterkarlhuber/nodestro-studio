@@ -33,9 +33,22 @@ Entrambe procedono passo per passo come in Nodestro: stessi agenti, strumenti, r
 - i sotto-workflow nella versione attuale (vedi [Sotto-workflow](/docs/verzweigungen#unterworkflow)),
 - il modulo di input, da cui Nodestro genera lo schema della richiesta.
 
-Prima Nodestro verifica il workflow. Gli errori impediscono la pubblicazione; la finestra mostra gli avvisi (per esempio un limite di costo mancante o passaggi di approvazione). Le modifiche non salvate non vengono pubblicate: salva prima. Sotto compare il **risultato dei test** della versione per ogni [serie di test](/docs/automatisierung#testreihen) del workflow: *non testata*, *n su m superati* o *non aggiornato* se per ultima è stata testata un’altra versione o la serie è cambiata da allora. Il risultato è solo informativo; non impedisce la pubblicazione.
+Prima Nodestro verifica il workflow. Gli errori impediscono la pubblicazione; la finestra mostra gli avvisi (per esempio un limite di costo mancante o passaggi di approvazione). Le modifiche non salvate non vengono pubblicate: salva prima. Sotto compare il **risultato dei test** della versione per ogni [serie di test](/docs/automatisierung#testreihen) del workflow: *non testata*, *n su m superati* o *non aggiornato* se per ultima è stata testata un’altra versione o la serie è cambiata da allora. Senza [controllo di pubblicazione](#freigabe-gate) il risultato è solo informativo; non impedisce la pubblicazione.
 
 Ogni pubblicazione riceve un numero progressivo e una nota facoltativa. Le modifiche successive nell’editor non cambiano mai una versione pubblicata. Arrivano nell’API solo alla pubblicazione successiva.
+
+## Controllo di pubblicazione {#freigabe-gate}
+<!-- keywords: controllo di pubblicazione, gate, qualità, serie di test, obbligatorio, motivazione, override, pubblicare, valutazione dell'ia -->
+
+Con il **controllo di pubblicazione** pubblichi una nuova versione solo dopo che le sue [serie di test](/docs/automatisierung#testreihen) l'hanno provata. Il controllo è facoltativo e vale per singola API. Lo attivi dopo la prima pubblicazione in **Limiti → Controllo di pubblicazione**: scegli le serie di test, la quota minima di casi superati e, se vuoi, una valutazione minima dell'IA. Le versioni già pubblicate non cambiano.
+
+Prima della pubblicazione la finestra mostra il risultato in tre parti separate:
+
+- **Verifiche obbligatorie:** l'ultima esecuzione di ogni serie ha provato esattamente questa versione con i modelli salvati, e la serie non è cambiata da allora. Altrimenti il controllo blocca. Le verifiche obbligatorie non si possono saltare, né nella finestra né tramite l'API: prova la versione.
+- **Risultati delle verifiche:** la quota di casi la cui esecuzione è riuscita e ha superato tutte le verifiche.
+- **Valutazioni dell'IA:** la media della [valutazione dell'IA](/docs/automatisierung#testreihen). È segnata come *giudizio dell'IA, non garantito* e non viene mai mescolata con le verifiche fisse.
+
+Se i risultati o le valutazioni dell'IA non soddisfano il controllo, puoi pubblicare comunque indicando una **motivazione** (almeno 10 caratteri). La motivazione, chi l'ha data e quali punti mancavano vengono salvati con la versione e nella cronologia dell'API. L'elenco **Versioni** mostra *controllo soddisfatto* o *pubblicata con motivazione*. Su un server solo i ruoli owner e admin possono pubblicare e quindi dare una motivazione.
 
 ## Versioni e ripristino {#versionen}
 <!-- keywords: versione, versioni, rollback, ripristino, tornare indietro, attiva, versione attiva, immutabile, release -->

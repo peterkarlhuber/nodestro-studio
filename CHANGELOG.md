@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### Release gate, evolution plan Q-3 (2026-10-31)
+
+- **API dialog → Limits → Release gate** (opt-in per published API): choose test series, the minimum share of passed
+  cases and optionally a minimum AI rating. Without a gate publishing is unchanged; versions already published stay
+  as they are.
+- With a gate, the publish dialog shows the gate's report instead of the plain test status, in three separate
+  groups: mandatory checks, check results and AI ratings (marked as a probabilistic AI verdict). Mandatory checks
+  block and cannot be skipped. If only check results or AI ratings fail, the version can be published with a reason
+  of at least 10 characters, which the API stores with the release and in its history. The versions list marks
+  releases as *gate met* or *released with reason*.
+- Texts, help tips and the docs section `api-und-export#freigabe-gate` in six languages; the error codes
+  `gate.blocked`, `gate.override_required` and `gate.suite_unknown`.
+- Tests: `publish/Gate.test.tsx` (groups kept apart, no override for a blocked version, a reason is required and
+  sent trimmed); e2e `api` switches the gate on and checks that an untested version is blocked.
+- Pins: nodestro-api `3c0ffa2` (before `3782f19`; api #22, also fixes saving an edited test series), nodestro-sdk
+  `82e1d77` (before `6107d1c`; sdk #19), in `pyproject.toml` and `platform/versions.json`.
+
 ### Model prices and cost reconciliation, PRICING-1 P7 (2026-10-31)
 
 - Uses the api pinned by Q-2 (`3782f19`: `/api/pricing`, usage `cost_state`, prices in the model list). Orkexa resolves

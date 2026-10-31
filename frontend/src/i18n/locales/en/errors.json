@@ -577,5 +577,10 @@
     "stale_price": "The price of {{model}} has not been checked for too long; the request was not sent (strict price mode).",
     "price_unknown": "No price is known for {{model}}; the request was not sent (strict price mode).",
     "price_unreliable": "The price of {{model}} is not reliable enough; the request was not sent (strict price mode)."
+  },
+  "gate": {
+    "blocked": "The release gate blocks this version. Test exactly this version with its test series.",
+    "override_required": "The release gate is not met. Give a reason to publish anyway.",
+    "suite_unknown": "This test series does not belong to this workflow."
   }
 }

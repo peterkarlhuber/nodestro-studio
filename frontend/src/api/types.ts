@@ -1841,8 +1841,53 @@ export interface ApiLimits {
 
 export interface PublicationEvent {
   at: string;
-  kind: "published" | "activated" | "enabled" | "disabled" | "network_on" | "network_off" | "settings" | "renamed" | "exported";
+  kind:
+    | "published"
+    | "activated"
+    | "enabled"
+    | "disabled"
+    | "network_on"
+    | "network_off"
+    | "settings"
+    | "renamed"
+    | "exported"
+    | "gate_on"
+    | "gate_changed"
+    | "gate_off"
+    | "gate_override";
   details: Record<string, unknown>;
+}
+
+/** The opt-in release gate of a publication (Q-3). */
+export interface ReleaseGate {
+  /** Test series whose latest run with the saved models must have tested the published version. */
+  suite_ids: string[];
+  /** Minimum share (0..1) of cases whose run succeeded and whose checks all passed. */
+  min_pass_rate: number;
+  /** Minimum mean AI judge score (0..1); null: AI verdicts are shown but not gated. */
+  judge_min_score: number | null;
+}
+
+export type GateItemKind = "critical" | "deterministic" | "judge";
+
+export interface GateItem {
+  kind: GateItemKind;
+  code: string;
+  passed: boolean;
+  suite_id: string;
+  suite_name: string;
+  run_id: string | null;
+  value: number | null;
+  threshold: number | null;
+  probabilistic: boolean;
+  params: Record<string, unknown>;
+}
+
+export interface GateReport {
+  status: "off" | "passed" | "overridable" | "blocked";
+  workflow_version: number | null;
+  gate: ReleaseGate | null;
+  items: GateItem[];
 }
 
 export interface Publication {
@@ -1855,6 +1900,8 @@ export interface Publication {
   active_release: number | null;
   network: boolean;
   limits: ApiLimits;
+  /** null: no release gate (publishing needs no test evidence). */
+  gate?: ReleaseGate | null;
   created_at: string;
   updated_at: string;
   history: PublicationEvent[];
@@ -1882,6 +1929,8 @@ export interface ReleaseSummary {
   approvals: number;
   tools: string[];
   runs: number;
+  /** How the release gate let this release through; null: released without a gate. */
+  gate?: "passed" | "overridden" | null;
 }
 
 export interface ReleaseKnowledge {

@@ -33,9 +33,22 @@ Both run step by step as in Nodestro: the same agents, tools, branches, approval
 - the sub-workflows in their current version (see [Sub-workflows](/docs/verzweigungen#unterworkflow)),
 - the input form, from which Nodestro generates the request schema.
 
-Nodestro checks the workflow first. Errors block publishing; the dialog shows warnings (such as a missing cost limit or approval steps). Unsaved changes are not published: save first. Below it is the version's **test result** from each [test series](/docs/automatisierung#testreihen) of the workflow: *untested*, *n of m passed*, or *outdated* when another version was tested last or the test series changed since. The result is for information only; it does not block publishing.
+Nodestro checks the workflow first. Errors block publishing; the dialog shows warnings (such as a missing cost limit or approval steps). Unsaved changes are not published: save first. Below it is the version's **test result** from each [test series](/docs/automatisierung#testreihen) of the workflow: *untested*, *n of m passed*, or *outdated* when another version was tested last or the test series changed since. Without a [release gate](#freigabe-gate) the result is for information only; it does not block publishing.
 
 Each publication gets a sequential number and an optional note. Later edits in the editor never change a published version. They reach the API only when you publish again.
+
+## Release gate {#freigabe-gate}
+<!-- keywords: release gate, gate, quality, test series, mandatory, reason, override, release, ai rating -->
+
+With the **release gate** you publish a new version only after its [test series](/docs/automatisierung#testreihen) have tested it. The gate is optional and set per API. You turn it on after the first publication under **Limits → Release gate**: choose the test series, the minimum share of passed cases and, optionally, a minimum AI rating. Versions already published do not change.
+
+Before publishing, the dialog shows the result in three separate parts:
+
+- **Mandatory checks:** the latest test run of each test series tested exactly this version with the saved models, and the test series has not changed since. If not, the gate blocks. Mandatory checks cannot be skipped, neither in the dialog nor through the API: test the version.
+- **Check results:** the share of cases whose run succeeded and whose checks all passed.
+- **AI ratings:** the mean [AI rating](/docs/automatisierung#testreihen). It is marked *AI verdict, not guaranteed* and is never mixed with the fixed checks.
+
+If the check results or AI ratings do not meet the gate, you can still publish by giving a **reason** (at least 10 characters). The reason, who gave it and which items failed are stored with the version and in the API's history. The **Versions** list shows *gate met* or *released with reason*. On a server only the roles owner and admin may publish and so give a reason.
 
 ## Versions and rollback {#versionen}
 <!-- keywords: version, versions, rollback, roll back, active, active version, immutable, release -->

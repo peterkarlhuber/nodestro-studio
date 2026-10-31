@@ -248,5 +248,44 @@
     "discard": "Verwerfen",
     "include": "Als docs/AI_GUIDE.md beilegen",
     "none": "Nicht beilegen"
+  },
+  "gate": {
+    "title": "Freigabe-Gate",
+    "intro": "Optional: Eine neue Version wird nur veröffentlicht, wenn ihre Testreihen sie geprüft haben. Ohne Gate bleibt alles wie bisher.",
+    "enable": "Freigabe-Gate einschalten",
+    "enableHint": "Gilt für jede neue Version dieser API. Bereits veröffentlichte Versionen bleiben unverändert.",
+    "suites": "Testreihen",
+    "suitesHint": "Der letzte Testlauf jeder Testreihe muss genau die zu veröffentlichende Version mit den gespeicherten Modellen geprüft haben.",
+    "passRate": "Mindestens bestandene Fälle (%)",
+    "passRateHint": "Ein Fall zählt, wenn sein Lauf erfolgreich war und alle Prüfungen bestanden hat.",
+    "judgeScore": "Mindestwert der KI-Bewertung (%)",
+    "judgeScoreHint": "Leer: KI-Bewertungen werden angezeigt, aber nicht verlangt.",
+    "save": "Gate speichern",
+    "passed": "Das Freigabe-Gate ist erfüllt.",
+    "blocked": "Das Freigabe-Gate blockiert diese Version. Pflichtprüfungen lassen sich nicht übergehen: Teste genau diese Version.",
+    "overridable": "Nicht alle Ergebnisse erreichen das Gate. Du kannst trotzdem veröffentlichen, wenn du eine Begründung angibst; sie wird mit der Version gespeichert.",
+    "kinds": {
+      "critical": "Pflichtprüfungen",
+      "deterministic": "Prüfergebnisse",
+      "judge": "KI-Bewertungen"
+    },
+    "probabilistic": "KI-Urteil, nicht garantiert",
+    "probabilisticHint": "KI-Bewertungen können danebenliegen. Sie stehen getrennt von den festen Prüfungen.",
+    "reason": "Begründung für die Freigabe",
+    "reasonHint": "Mindestens {{count}} Zeichen. Wird mit der Version und im Verlauf gespeichert.",
+    "publishWithReason": "Version {{version}} mit Begründung veröffentlichen",
+    "releasePassed": "Gate erfüllt",
+    "releaseOverridden": "mit Begründung freigegeben",
+    "items": {
+      "suite_missing": "Testreihe nicht gefunden",
+      "suite_untested": "noch nie getestet",
+      "suite_variant_only": "nur mit anderen Modellen getestet",
+      "suite_outdated": "zuletzt wurde Version {{version}} getestet",
+      "suite_changed": "Testreihe seit dem Test geändert",
+      "tested": "diese Version getestet",
+      "pass_rate": "{{clean}} von {{cases}} Fällen bestanden ({{value}}, verlangt {{threshold}})",
+      "judge_score": "KI-Bewertung {{value}} (verlangt {{threshold}})",
+      "judge_missing": "keine KI-Bewertung im Testlauf (verlangt {{threshold}})"
+    }
   }
 }
