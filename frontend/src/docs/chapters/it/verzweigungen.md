@@ -89,7 +89,15 @@ Quando un agente vuole fare una chiamata del genere, l’esecuzione continua ma 
 
 Le esecuzioni che nessuno segue (pianificazioni, serie, serie di test) non possono chiedere. Lì una chiamata del genere viene negata, a meno che l’amministrazione abbia **approvato in anticipo** quella versione dello strumento proprio per quella pianificazione o serie. Gli strumenti che cancellano o distruggono e quelli dei servizi collegati non si possono mai approvare in anticipo.
 
-I workflow che esistevano già all’attivazione continuano a funzionare: le loro assegnazioni di strumenti sono marcate come **eccezioni preesistenti**, legate alla versione dello strumento con cui giravano. Una nuova versione dello strumento o una nuova assegnazione viene chiesta come al solito. Un’approvazione non toglie mai i limiti della sandbox.
+**Attivazione, in questo ordine:**
+
+1. In *Approvazioni → Regole per le chiamate di strumenti* l’amministrazione esegue **Marca le assegnazioni esistenti**. Ogni assegnazione di strumento che esiste ora in workflow, loro versioni e API pubblicate diventa un’**eccezione preesistente**, legata alla versione dello strumento con cui gira. Le API pubblicate ricevono una sola volta una nuova impronta (digest); la loro cronologia conserva la vecchia e la nuova. Il passo viene eseguito **una sola volta**: assegnazioni, workflow e versioni creati dopo sono nuovi e vengono chiesti.
+2. **Controlla l’elenco.** Un’eccezione indesiderata termina quando togli lo strumento dall’agente e salvi; se lo assegni di nuovo, viene chiesto come uno nuovo.
+3. Solo dopo l’amministrazione attiva le approvazioni (`NODESTRO_TOOL_APPROVALS=1`, poi riavviare Nodestro).
+
+Se si attiva senza il primo passo, nulla è esente: ogni assegnazione viene chiesta e le esecuzioni non presidiate negano tali chiamate. Una nuova versione dello strumento termina sempre un’eccezione. Un’approvazione non toglie mai i limiti della sandbox.
+
+**Non coperto:** gli strumenti server del fornitore (ricerca web, recupero web ed esecuzione di codice presso Anthropic) girano presso il fornitore e non si possono fermare per chiamata; disattivali nell’agente dove non devono essere usati. Nemmeno gli strumenti di esecuzione propri di Nodestro (memoria, file dell’esecuzione) vengono chiesti. Le API pubblicate non chiedono a nessuno: avranno più avanti una propria fase di approvazione.
 
 In **Approvazioni → Regole per le chiamate di strumenti** vedi se le approvazioni sono attive e quali eccezioni preesistenti ci sono. L’amministrazione vi esegue anche il passo di attivazione, concede e revoca approvazioni anticipate e legge il registro: chi ha deciso, concesso o revocato cosa, e ogni decisione rifiutata. Gli argomenti di una chiamata non compaiono mai nel registro.
 

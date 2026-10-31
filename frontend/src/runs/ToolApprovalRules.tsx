@@ -142,16 +142,23 @@ function ActivationPanel() {
           <ErrorText error={stamp.error} />
         </Callout>
       ) : null}
-      <div className="row-gap">
-        <ConfirmIconButton
-          icon={ShieldCheck}
-          label={data.legacy === null ? t("approvals.rules.stamp") : t("approvals.rules.stampAgain")}
-          confirmLabel={t("approvals.rules.stampConfirm")}
-          busy={stamp.isPending}
-          onConfirm={() => stamp.mutate()}
-        />
-        <span className="muted small">{t("approvals.rules.stampHint")}</span>
-      </div>
+      {data.legacy?.stamped_at ? (
+        <p className="muted small" data-testid="legacy-ran">
+          {t("approvals.rules.ranAt", { time: formatDate(data.legacy.stamped_at), name: data.legacy.stamped_by ?? "" })}
+        </p>
+      ) : null}
+      {data.legacy === null || !data.legacy.publications_stamped_at ? (
+        <div className="row-gap">
+          <ConfirmIconButton
+            icon={ShieldCheck}
+            label={data.legacy === null ? t("approvals.rules.stamp") : t("approvals.rules.stampFinish")}
+            confirmLabel={t("approvals.rules.stampConfirm")}
+            busy={stamp.isPending}
+            onConfirm={() => stamp.mutate()}
+          />
+          <span className="muted small">{t("approvals.rules.stampHint")}</span>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -356,6 +363,7 @@ function auditOutcome(t: ReturnType<typeof useTranslation>["t"], event: ToolAppr
     return t(`approvals.tool.status.${event.outcome}`, {
       defaultValue: event.outcome,
     });
+  if (event.kind === "legacy_stamped" && event.details.repeated) return t("approvals.rules.stampRepeated");
   if (event.kind === "legacy_stamped")
     return t("approvals.rules.stampedCount", {
       count: Number(event.details.bindings ?? 0),

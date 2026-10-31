@@ -67,7 +67,7 @@
     "enabled": "Activadas",
     "disabled": "Desactivadas",
     "enabledText": "Las llamadas a herramientas que modifican datos o actúan hacia fuera esperan la decisión de una persona.",
-    "disabledText": "Nodestro todavía no pregunta antes de las llamadas a herramientas. La administración lo activa tras la revisión de seguridad (NODESTRO_TOOL_APPROVALS=1).",
+    "disabledText": "Nodestro todavía no pregunta antes de las llamadas a herramientas. Orden: marca aquí las asignaciones existentes, revisa la lista y después la administración activa las aprobaciones tras la revisión de seguridad (NODESTRO_TOOL_APPROVALS=1).",
     "legacyTitle": "Excepciones heredadas",
     "legacyText": "Las asignaciones de herramientas que ya existían antes de la aprobación por llamada siguen funcionando sin preguntar, ligadas a la versión de la herramienta con la que se ejecutaban. Una nueva versión o una nueva asignación se pregunta como siempre. Para las herramientas de servicios conectados siempre se pregunta.",
     "legacyNotRun": "El paso de activación aún no se ha ejecutado.",
@@ -80,9 +80,8 @@
     "workflow": "Flujo de trabajo {{id}}",
     "workflowVersion": "Flujo de trabajo {{id}}, versión {{version}}",
     "stamp": "Marcar asignaciones existentes",
-    "stampAgain": "Marcar de nuevo",
     "stampConfirm": "Marcar ahora",
-    "stampHint": "Parte de la activación: marca como excepciones las asignaciones existentes de flujos de trabajo, versiones y versiones publicadas. No activa las aprobaciones y se puede repetir.",
+    "stampHint": "Hazlo antes de activar las aprobaciones y revisa después la lista. Marca las asignaciones que existen ahora en flujos de trabajo, versiones y versiones publicadas (su suma de comprobación cambia una vez) y solo se ejecuta una vez.",
     "stamped_one": "{{count}} asignación marcada como excepción.",
     "stamped_other": "{{count}} asignaciones marcadas como excepciones.",
     "stampedCount_one": "{{count}} asignación marcada",
@@ -132,6 +131,9 @@
       "pre_granted": "Aprobada de antemano",
       "pre_grant_revoked": "Aprobación previa revocada",
       "legacy_stamped": "Asignaciones existentes marcadas"
-    }
+    },
+    "ranAt": "Marcado el {{time}} por {{name}}. El paso se ejecuta una sola vez: las asignaciones posteriores se preguntan.",
+    "stampFinish": "Terminar de marcar las API publicadas",
+    "stampRepeated": "Repetido: no se marcó nada"
   }
 }

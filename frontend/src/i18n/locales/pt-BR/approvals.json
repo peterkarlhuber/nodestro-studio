@@ -67,7 +67,7 @@
     "enabled": "Ligadas",
     "disabled": "Desligadas",
     "enabledText": "Chamadas de ferramentas que alteram dados ou agem para fora aguardam a decisão de uma pessoa.",
-    "disabledText": "O Nodestro ainda não pergunta antes das chamadas de ferramentas. A administração liga isso depois da revisão de segurança (NODESTRO_TOOL_APPROVALS=1).",
+    "disabledText": "O Nodestro ainda não pergunta antes das chamadas de ferramentas. Ordem: marque aqui as atribuições existentes, confira a lista e depois a administração liga as aprovações após a revisão de segurança (NODESTRO_TOOL_APPROVALS=1).",
     "legacyTitle": "Exceções anteriores",
     "legacyText": "Atribuições de ferramentas que já existiam antes da aprovação por chamada continuam funcionando sem pergunta, vinculadas à versão da ferramenta com que rodavam. Uma nova versão ou uma nova atribuição é perguntada como de costume. Para ferramentas de serviços conectados, sempre se pergunta.",
     "legacyNotRun": "A etapa de ativação ainda não foi executada.",
@@ -80,9 +80,8 @@
     "workflow": "Workflow {{id}}",
     "workflowVersion": "Workflow {{id}}, versão {{version}}",
     "stamp": "Marcar atribuições existentes",
-    "stampAgain": "Marcar de novo",
     "stampConfirm": "Marcar agora",
-    "stampHint": "Parte da ativação: marca como exceções as atribuições existentes de workflows, versões e versões publicadas. Não liga as aprovações e pode ser repetida.",
+    "stampHint": "Faça isso antes de ligar as aprovações e depois confira a lista. Marca as atribuições que existem agora em workflows, versões e versões publicadas (o resumo delas muda uma vez) e roda uma única vez.",
     "stamped_one": "{{count}} atribuição marcada como exceção.",
     "stamped_other": "{{count}} atribuições marcadas como exceções.",
     "stampedCount_one": "{{count}} atribuição marcada",
@@ -132,6 +131,9 @@
       "pre_granted": "Aprovada antecipadamente",
       "pre_grant_revoked": "Aprovação antecipada revogada",
       "legacy_stamped": "Atribuições existentes marcadas"
-    }
+    },
+    "ranAt": "Marcado em {{time}} por {{name}}. A etapa roda uma única vez: atribuições feitas depois são perguntadas.",
+    "stampFinish": "Concluir a marcação das APIs publicadas",
+    "stampRepeated": "Repetido: nada marcado"
   }
 }

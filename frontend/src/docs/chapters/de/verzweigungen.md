@@ -89,7 +89,15 @@ Will ein Agent einen solchen Aufruf machen, läuft die Ausführung weiter, warte
 
 Ausführungen, bei denen niemand zusieht (Zeitpläne, Stapel, Testreihen), können nicht fragen. Dort wird ein solcher Aufruf verweigert, außer die Administration hat diese Tool-Version für genau diesen Zeitplan oder Stapel **vorab freigegeben**. Tools, die löschen oder zerstören, und Tools verbundener Dienste lassen sich nie vorab freigeben.
 
-Workflows, die beim Einschalten schon bestanden, funktionieren weiter: Ihre Tool-Zuweisungen sind als **Ausnahmen aus dem Altbestand** markiert, gebunden an die Tool-Version, mit der sie liefen. Eine neue Tool-Version oder eine neue Zuweisung wird wie üblich abgefragt. Eine Freigabe hebt die Grenzen der Sandbox nie auf.
+**Einschalten, in dieser Reihenfolge:**
+
+1. Unter *Freigaben → Regeln für Tool-Aufrufe* führt die Administration **Bestehende Zuweisungen markieren** aus. Jede Tool-Zuweisung, die es jetzt in Workflows, ihren Versionen und veröffentlichten APIs gibt, wird zur **Ausnahme aus dem Altbestand**, gebunden an die Tool-Version, mit der sie läuft. Veröffentlichte APIs erhalten dabei einmalig eine neue Prüfsumme (Digest); ihr Verlauf hält die alte und die neue fest. Der Schritt läuft **nur einmal**: Danach erstellte Zuweisungen, Workflows und Stände sind neu und werden abgefragt.
+2. **Die Liste prüfen.** Eine unerwünschte Ausnahme endet, wenn du das Tool beim Agenten entfernst und speicherst; weist du es wieder zu, wird es wie ein neues abgefragt.
+3. Erst danach schaltet die Administration die Freigaben ein (`NODESTRO_TOOL_APPROVALS=1`, dann Nodestro neu starten).
+
+Wird ohne den ersten Schritt eingeschaltet, ist nichts ausgenommen: Jede Zuweisung wird abgefragt, und unbeaufsichtigte Ausführungen verweigern solche Aufrufe. Eine neue Tool-Version beendet eine Ausnahme immer. Eine Freigabe hebt die Grenzen der Sandbox nie auf.
+
+**Nicht abgedeckt:** Die Server-Tools des Anbieters (Websuche, Webabruf und Codeausführung bei Anthropic) laufen beim Anbieter und lassen sich nicht pro Aufruf anhalten; schalte sie beim Agenten ab, wo sie nicht genutzt werden dürfen. Nodestros eigene Ausführungs-Tools (Gedächtnis, Dateien der Ausführung) werden ebenfalls nicht abgefragt. Veröffentlichte APIs fragen niemanden: Sie erhalten später eine eigene Freigabephase.
 
 Unter **Freigaben → Regeln für Tool-Aufrufe** siehst du, ob die Freigaben eingeschaltet sind und welche Ausnahmen aus dem Altbestand es gibt. Die Administration führt dort auch den Aktivierungsschritt aus, erteilt und widerruft Vorab-Freigaben und liest das Protokoll: wer was entschieden, erteilt oder widerrufen hat, und jede abgelehnte Entscheidung. Die Argumente eines Aufrufs erscheinen nie im Protokoll.
 

@@ -67,7 +67,7 @@
     "enabled": "Ein",
     "disabled": "Aus",
     "enabledText": "Tool-Aufrufe, die Daten ändern oder nach außen wirken, warten auf die Entscheidung einer Person.",
-    "disabledText": "Nodestro fragt vor Tool-Aufrufen noch nicht. Die Administration schaltet das nach der Sicherheitsprüfung ein (NODESTRO_TOOL_APPROVALS=1).",
+    "disabledText": "Nodestro fragt vor Tool-Aufrufen noch nicht. Reihenfolge: hier die bestehenden Zuweisungen markieren, die Liste prüfen, danach schaltet die Administration nach der Sicherheitsprüfung die Freigaben ein (NODESTRO_TOOL_APPROVALS=1).",
     "legacyTitle": "Ausnahmen aus dem Altbestand",
     "legacyText": "Tool-Zuweisungen, die es vor der Freigabe pro Aufruf schon gab, funktionieren ohne Rückfrage weiter, gebunden an die Tool-Version, mit der sie liefen. Eine neue Version oder eine neue Zuweisung wird wie üblich abgefragt. Bei Tools verbundener Dienste wird immer gefragt.",
     "legacyNotRun": "Der Aktivierungsschritt ist noch nicht gelaufen.",
@@ -80,9 +80,8 @@
     "workflow": "Workflow {{id}}",
     "workflowVersion": "Workflow {{id}}, Version {{version}}",
     "stamp": "Bestehende Zuweisungen markieren",
-    "stampAgain": "Erneut markieren",
     "stampConfirm": "Jetzt markieren",
-    "stampHint": "Teil des Einschaltens: markiert bestehende Zuweisungen von Workflows, Versionen und veröffentlichten Ständen als Ausnahmen. Schaltet die Freigaben nicht ein und kann wiederholt werden.",
+    "stampHint": "Vor dem Einschalten ausführen und danach die Liste prüfen. Markiert die jetzt bestehenden Zuweisungen in Workflows, Versionen und veröffentlichten Ständen (deren Prüfsumme ändert sich einmalig) und läuft nur einmal.",
     "stamped_one": "{{count}} Zuweisung als Ausnahme markiert.",
     "stamped_other": "{{count}} Zuweisungen als Ausnahmen markiert.",
     "stampedCount_one": "{{count}} Zuweisung markiert",
@@ -132,6 +131,9 @@
       "pre_granted": "Vorab freigegeben",
       "pre_grant_revoked": "Vorab-Freigabe widerrufen",
       "legacy_stamped": "Bestehende Zuweisungen markiert"
-    }
+    },
+    "ranAt": "Markiert am {{time}} von {{name}}. Der Schritt läuft nur einmal: Später erstellte Zuweisungen werden abgefragt.",
+    "stampFinish": "Markieren der veröffentlichten APIs abschließen",
+    "stampRepeated": "Wiederholt: nichts markiert"
   }
 }
