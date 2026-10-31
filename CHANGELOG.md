@@ -13,8 +13,8 @@
   languages; the automation chapter has a new section *Comparing models*. The flow e2e suite runs a comparison.
 - Pins (one cascade, agreed with the PRICING-1 and desktop/server threads): orkexa `76883f7` (before `cbf6df3`),
   nodestro-runtime `45e7774` (before `c6bc2e5`; model prices and the built-in Linux sandbox), nodestro-examples
-  `786c453` (before `86c58a1`), nodestro-integrations `4c5edff` (before `652c231`), nodestro-api `665f1ce` (before
-  `f55bd80`; PRICING-1 API and Q-2), nodestro-sdk `e2bc4a6` (before `ba4ef84`), in `pyproject.toml` and
+  `786c453` (before `86c58a1`), nodestro-integrations `4c5edff` (before `652c231`), nodestro-api `3782f19` (before
+  `f55bd80`; PRICING-1 API, Q-2 and the assistant live-event fix), nodestro-sdk `6107d1c` (before `ba4ef84`), in `pyproject.toml` and
   `platform/versions.json`. The `products` section is unchanged. The studio frontend for prices and the sandbox
   follows in their own pull requests.
 
