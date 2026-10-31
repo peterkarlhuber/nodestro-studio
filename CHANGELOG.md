@@ -5,11 +5,12 @@
 ### Run limits and budget reservations (Adaptive Orchestration M2, 2026-10-31)
 
 - Workflow settings: *Most steps running at the same time* (1 to 32) and *Time limit per run* (minutes, at most
-  7 days) in the inspector, saved as `limits` (runtime #45). Empty fields mean no limit. Help tip `workflow.limits`.
+  7 days) and *Most steps per run* (1 to 10,000, every loop round counts) in the inspector, saved as `limits`
+  (runtime #45, #48). Empty fields mean no limit. Help tip `workflow.limits`.
 - Run details: the cost figure shows the run's budget and, when requests ran without a known upper bound (unknown
   price, images, files or provider tools), the hint *no hard maximum* with their number (runtime #43,
   `Usage.uncapped_requests`, `Run.budget_hard_maximum`).
-- Error text ×6 for `run.time_limit`. Docs ×6: *Workflows → Budget per run* now describes reservations before each
+- Error texts ×6 for `run.time_limit` and `run.step_limit`. Docs ×6: *Workflows → Budget per run* now describes reservations before each
   request and that unknown costs never count as 0; new section *Limits per run* (`workflows#limits`), including the
   limitation that a request or tool call that is already running still finishes.
 - Needs an api with the runtime fields (pins follow in the next cascade).

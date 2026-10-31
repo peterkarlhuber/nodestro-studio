@@ -150,12 +150,13 @@ The budget limits the **estimated costs** of a run in US dollars, across all age
 Unknown costs do **not** count as 0. If the highest cost of a request cannot be determined in advance (no known price, images, files, or provider tools such as web search), it runs without an upper bound in standard mode. The run then shows the note **No hard maximum** next to its costs, with the number of such requests. In strict price mode, requests without a known price are not sent at all.
 
 ## Limits per run {#limits}
-<!-- keywords: limits, at the same time, parallel, time limit, run time, timeout, duration, run.time_limit -->
+<!-- keywords: limits, at the same time, parallel, time limit, run time, timeout, duration, run.time_limit, steps, run.step_limit -->
 
-Two optional limits apply to every run of the workflow. Empty means no limit.
+Three optional limits apply to every run of the workflow. Empty means no limit.
 
 - **Most steps running at the same time** (1 to 32): if more steps are ready, the others wait for a free slot. With 1, all steps run one after another.
 - **Time limit per run** (in minutes, at most 7 days): only active execution time counts. Waiting for an approval does not count. When the time is up, no further step starts, running agents are asked to stop, and the run fails with an error that names the time limit.
+- **Most steps per run** (1 to 10,000): every executed node counts once, start and result included, and every round of a loop counts again. If the next step would be one too many, it does not start and the run fails with an error that names the limit. This protects against loops that run more rounds than intended. A continued run counts the steps it takes over.
 
 A model request or tool call that is already running is still finished. The run can therefore exceed the time limit by the length of that call.
 

@@ -84,6 +84,8 @@
     "maxParallelHint": "De 1 a {{max}}. As demais etapas prontas aguardam uma vaga livre. Vazio = sem limite.",
     "timeLimit": "Limite de tempo por execução (minutos)",
     "timeLimitHint": "Tempo de execução ativo; a espera por aprovações não conta. Vazio = sem limite.",
+    "maxSteps": "Máximo de etapas por execução",
+    "maxStepsHint": "De 1 a {{max}}. Cada nó executado conta, também cada rodada de um loop. Vazio = sem limite.",
     "problems": "A resolver antes de iniciar:",
     "problemsLabel": "Problemas",
     "controls": "Como usar",

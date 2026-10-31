@@ -84,6 +84,8 @@
     "maxParallelHint": "1 bis {{max}}. Weitere bereite Schritte warten auf einen freien Platz. Leer = keine Grenze.",
     "timeLimit": "Zeitlimit pro Lauf (Minuten)",
     "timeLimitHint": "Aktive Laufzeit; Warten auf Freigaben zählt nicht. Leer = kein Limit.",
+    "maxSteps": "Höchstens Schritte pro Lauf",
+    "maxStepsHint": "1 bis {{max}}. Jeder ausgeführte Knoten zählt, auch jede Runde einer Schleife. Leer = keine Grenze.",
     "problems": "Vor dem Start zu klären:",
     "problemsLabel": "Probleme",
     "controls": "Bedienung",

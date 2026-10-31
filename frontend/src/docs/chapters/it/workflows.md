@@ -150,12 +150,13 @@ Il budget limita i **costi stimati** di un'esecuzione in dollari statunitensi, p
 I costi sconosciuti **non** contano come 0. Se il costo massimo di una richiesta non può essere determinato in anticipo (nessun prezzo noto, immagini, file o strumenti del provider come la ricerca web), nella modalità standard viene eseguita senza limite superiore. L'esecuzione mostra allora accanto ai costi l'avviso **Nessun massimo rigido** con il numero di tali richieste. Nella modalità prezzi rigorosa le richieste senza prezzo noto non vengono inviate affatto.
 
 ## Limiti per esecuzione {#limits}
-<!-- keywords: limiti, contemporanei, parallelo, limite di tempo, durata, timeout, run.time_limit -->
+<!-- keywords: limiti, contemporanei, parallelo, limite di tempo, durata, timeout, run.time_limit, passaggi, run.step_limit -->
 
-Due limiti facoltativi valgono per ogni esecuzione del workflow. Vuoto significa nessun limite.
+Tre limiti facoltativi valgono per ogni esecuzione del workflow. Vuoto significa nessun limite.
 
 - **Numero massimo di passaggi contemporanei** (da 1 a 32): se sono pronti più passaggi, gli altri attendono un posto libero. Con 1 tutti i passaggi vengono eseguiti uno dopo l'altro.
 - **Limite di tempo per esecuzione** (in minuti, al massimo 7 giorni): conta solo il tempo di esecuzione attivo. L'attesa di un'approvazione non conta. Allo scadere del tempo non parte nessun altro passaggio, agli agenti in corso viene chiesto di fermarsi e l'esecuzione fallisce con un errore che indica il limite di tempo.
+- **Numero massimo di passaggi per esecuzione** (da 1 a 10.000): ogni nodo eseguito conta una volta, anche inizio e risultato, e ogni giro di un ciclo conta di nuovo. Se il passaggio successivo fosse di troppo, non parte e l'esecuzione fallisce con un errore che indica il limite. Questo protegge dai cicli che fanno più giri del previsto. Un'esecuzione ripresa conta anche i passaggi che riprende.
 
 Una richiesta al modello o una chiamata a uno strumento già in corso viene comunque completata. L'esecuzione può quindi superare il limite di tempo per la durata di quella chiamata.
 

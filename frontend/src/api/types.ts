@@ -241,11 +241,14 @@ export interface WorkflowLimits {
   max_parallel: number | null;
   /** Longest active execution time of a run in seconds; waiting for approvals does not count. */
   max_duration_s: number | null;
+  /** Most node executions of a run (every loop round counts again). */
+  max_steps: number | null;
 }
 
 export const MAX_PARALLEL_LIMIT = 32;
 export const MAX_DURATION_LIMIT_S = 7 * 24 * 3600;
-export const NO_LIMITS: WorkflowLimits = { max_parallel: null, max_duration_s: null };
+export const MAX_STEPS_LIMIT = 10_000;
+export const NO_LIMITS: WorkflowLimits = { max_parallel: null, max_duration_s: null, max_steps: null };
 
 export interface WorkflowIn {
   name: string;

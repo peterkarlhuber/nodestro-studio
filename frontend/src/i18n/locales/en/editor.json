@@ -84,6 +84,8 @@
     "maxParallelHint": "1 to {{max}}. Further ready steps wait for a free slot. Empty = no limit.",
     "timeLimit": "Time limit per run (minutes)",
     "timeLimitHint": "Active run time; waiting for approvals does not count. Empty = no limit.",
+    "maxSteps": "Most steps per run",
+    "maxStepsHint": "1 to {{max}}. Every executed node counts, every loop round again. Empty = no limit.",
     "problems": "To fix before starting:",
     "problemsLabel": "Problems",
     "controls": "Controls",

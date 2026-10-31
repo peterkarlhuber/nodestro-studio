@@ -129,7 +129,8 @@
     "not_finished": "A execução ainda não terminou.",
     "no_event_loop": "A execução não pôde iniciar: ela precisa de um loop de eventos em execução.",
     "loop_exhausted": "O laço em {{node}} rodou {{max_iterations}} vezes sem atingir seu objetivo.",
-    "time_limit": "A execução atingiu seu limite de tempo de {{max_duration_s}} segundos. As etapas em andamento foram canceladas."
+    "time_limit": "A execução atingiu seu limite de tempo de {{max_duration_s}} segundos. As etapas em andamento foram canceladas.",
+    "step_limit": "A execução atingiu seu limite de {{max_steps}} etapas. Nenhuma outra etapa foi iniciada."
   },
   "trace": {
     "invalid": "O trace está danificado ou incompleto.",

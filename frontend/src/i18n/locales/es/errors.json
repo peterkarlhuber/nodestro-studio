@@ -129,7 +129,8 @@
     "not_finished": "La ejecución aún no ha terminado.",
     "no_event_loop": "La ejecución no pudo iniciarse: necesita un bucle de eventos en marcha.",
     "loop_exhausted": "El bucle en {{node}} se ejecutó {{max_iterations}} veces sin alcanzar su objetivo.",
-    "time_limit": "La ejecución alcanzó su límite de tiempo de {{max_duration_s}} segundos. Los pasos en curso se cancelaron."
+    "time_limit": "La ejecución alcanzó su límite de tiempo de {{max_duration_s}} segundos. Los pasos en curso se cancelaron.",
+    "step_limit": "La ejecución alcanzó su límite de {{max_steps}} pasos. No se iniciaron más pasos."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",

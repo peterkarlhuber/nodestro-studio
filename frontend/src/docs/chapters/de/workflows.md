@@ -150,12 +150,13 @@ Das Budget begrenzt die **geschätzten Kosten** eines Laufs in US-Dollar, über 
 Unbekannte Kosten zählen **nicht** als 0. Kann der Höchstpreis einer Anfrage nicht vorab bestimmt werden (kein bekannter Preis, Bilder, Dateien oder Werkzeuge des Anbieters wie die Websuche), läuft sie im Standardmodus ohne Obergrenze. Der Lauf zeigt dann bei den Kosten den Hinweis **Kein hartes Maximum** mit der Zahl solcher Anfragen. Im strengen Preismodus werden Anfragen ohne bekannten Preis gar nicht gesendet.
 
 ## Grenzen pro Lauf {#limits}
-<!-- keywords: grenzen, gleichzeitig, parallel, zeitlimit, laufzeit, timeout, dauer, run.time_limit -->
+<!-- keywords: grenzen, gleichzeitig, parallel, zeitlimit, laufzeit, timeout, dauer, run.time_limit, schritte, run.step_limit -->
 
-Zwei optionale Grenzen gelten für jeden Lauf des Workflows. Leer heißt: keine Grenze.
+Drei optionale Grenzen gelten für jeden Lauf des Workflows. Leer heißt: keine Grenze.
 
 - **Höchstens gleichzeitig laufende Schritte** (1 bis 32): Sind mehr Schritte bereit, warten die übrigen auf einen freien Platz. Mit 1 laufen alle Schritte nacheinander.
 - **Zeitlimit pro Lauf** (in Minuten, höchstens 7 Tage): Gezählt wird nur die aktive Ausführungszeit. Das Warten auf eine Freigabe zählt nicht mit. Ist die Zeit abgelaufen, startet kein weiterer Schritt, laufende Agenten werden zum Abbruch aufgefordert und der Lauf schlägt mit einem Fehler fehl, der das Zeitlimit nennt.
+- **Höchstens Schritte pro Lauf** (1 bis 10.000): Jeder ausgeführte Knoten zählt einmal, auch Start und Ergebnis, und jede Runde einer Schleife zählt erneut. Wäre der nächste Schritt einer zu viel, startet er nicht und der Lauf schlägt mit einem Fehler fehl, der die Grenze nennt. Das schützt vor Schleifen, die mehr Runden drehen als gedacht. Ein fortgesetzter Lauf zählt die übernommenen Schritte mit.
 
 Eine Modellanfrage oder ein Werkzeugaufruf, der gerade läuft, wird noch zu Ende geführt. Der Lauf kann das Zeitlimit deshalb um die Dauer dieses Aufrufs überschreiten.
 

@@ -150,12 +150,13 @@ O orçamento limita os **custos estimados** de uma execução em dólares americ
 Custos desconhecidos **não** contam como 0. Se o custo máximo de uma solicitação não puder ser determinado com antecedência (sem preço conhecido, imagens, arquivos ou ferramentas do provedor, como a pesquisa na web), no modo padrão ela é executada sem limite superior. A execução mostra então, ao lado dos custos, o aviso **Sem máximo rígido** com o número dessas solicitações. No modo de preço estrito, solicitações sem preço conhecido não são enviadas.
 
 ## Limites por execução {#limits}
-<!-- keywords: limites, ao mesmo tempo, paralelo, limite de tempo, duração, timeout, run.time_limit -->
+<!-- keywords: limites, ao mesmo tempo, paralelo, limite de tempo, duração, timeout, run.time_limit, etapas, run.step_limit -->
 
-Dois limites opcionais valem para cada execução do fluxo. Vazio significa sem limite.
+Três limites opcionais valem para cada execução do fluxo. Vazio significa sem limite.
 
 - **Máximo de etapas executando ao mesmo tempo** (de 1 a 32): se houver mais etapas prontas, as demais esperam por uma vaga livre. Com 1, todas as etapas são executadas uma após a outra.
 - **Limite de tempo por execução** (em minutos, no máximo 7 dias): só conta o tempo de execução ativo. A espera por uma aprovação não conta. Quando o tempo acaba, nenhuma outra etapa é iniciada, os agentes em andamento são solicitados a parar e a execução falha com um erro que indica o limite de tempo.
+- **Máximo de etapas por execução** (de 1 a 10.000): cada nó executado conta uma vez, inclusive início e resultado, e cada rodada de um loop conta de novo. Se a próxima etapa fosse uma a mais, ela não é iniciada e a execução falha com um erro que indica o limite. Isso protege contra loops que dão mais rodadas do que o previsto. Uma execução continuada também conta as etapas que reaproveita.
 
 Uma solicitação ao modelo ou uma chamada de ferramenta que já está em andamento ainda é concluída. Por isso, a execução pode ultrapassar o limite de tempo pela duração dessa chamada.
 

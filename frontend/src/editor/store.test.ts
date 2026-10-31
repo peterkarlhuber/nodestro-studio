@@ -322,11 +322,12 @@ describe("editor undo history", () => {
   });
 
   it("keeps the run limits, sends them and undoes them like the budget", () => {
-    expect(useEditor.getState().toWorkflow().limits).toEqual({ max_parallel: null, max_duration_s: null });
-    useEditor.getState().setMeta({ limits: { max_parallel: 2, max_duration_s: 600 } });
-    expect(useEditor.getState().toWorkflow().limits).toEqual({ max_parallel: 2, max_duration_s: 600 });
+    const none = { max_parallel: null, max_duration_s: null, max_steps: null };
+    expect(useEditor.getState().toWorkflow().limits).toEqual(none);
+    useEditor.getState().setMeta({ limits: { max_parallel: 2, max_duration_s: 600, max_steps: 50 } });
+    expect(useEditor.getState().toWorkflow().limits).toEqual({ max_parallel: 2, max_duration_s: 600, max_steps: 50 });
     useEditor.getState().undo();
-    expect(useEditor.getState().limits).toEqual({ max_parallel: null, max_duration_s: null });
+    expect(useEditor.getState().limits).toEqual(none);
   });
 
   it("starts a new step after selecting another node", () => {

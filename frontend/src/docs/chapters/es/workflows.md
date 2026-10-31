@@ -150,12 +150,13 @@ El presupuesto limita los **costes estimados** de una ejecución en dólares est
 Los costes desconocidos **no** cuentan como 0. Si el coste máximo de una solicitud no puede determinarse de antemano (sin precio conocido, imágenes, archivos o herramientas del proveedor como la búsqueda web), en el modo estándar se ejecuta sin límite superior. La ejecución muestra entonces junto a los costes el aviso **Sin máximo estricto** con el número de esas solicitudes. En el modo de precios estricto, las solicitudes sin precio conocido no se envían.
 
 ## Límites por ejecución {#limits}
-<!-- keywords: límites, a la vez, paralelo, límite de tiempo, duración, timeout, run.time_limit -->
+<!-- keywords: límites, a la vez, paralelo, límite de tiempo, duración, timeout, run.time_limit, pasos, run.step_limit -->
 
-Dos límites opcionales se aplican a cada ejecución del flujo. Vacío significa sin límite.
+Tres límites opcionales se aplican a cada ejecución del flujo. Vacío significa sin límite.
 
 - **Máximo de pasos ejecutándose a la vez** (de 1 a 32): si hay más pasos listos, los demás esperan a que quede un hueco libre. Con 1, todos los pasos se ejecutan uno tras otro.
 - **Límite de tiempo por ejecución** (en minutos, como máximo 7 días): solo cuenta el tiempo de ejecución activo. La espera de una aprobación no cuenta. Cuando se agota el tiempo, no se inicia ningún paso más, se pide a los agentes en curso que se detengan y la ejecución falla con un error que indica el límite de tiempo.
+- **Máximo de pasos por ejecución** (de 1 a 10 000): cada nodo ejecutado cuenta una vez, también el inicio y el resultado, y cada ronda de un bucle cuenta de nuevo. Si el siguiente paso fuera uno de más, no se inicia y la ejecución falla con un error que indica el límite. Esto protege frente a bucles que dan más rondas de lo previsto. Una ejecución continuada cuenta también los pasos que retoma.
 
 Una solicitud al modelo o una llamada a una herramienta que ya está en curso se completa. Por eso la ejecución puede superar el límite de tiempo en lo que dure esa llamada.
 

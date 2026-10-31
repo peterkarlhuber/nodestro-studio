@@ -2,7 +2,7 @@ import { CheckCircle2, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from 
 import type { Ref } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
-import { MAX_DURATION_LIMIT_S, MAX_PARALLEL_LIMIT, type WorkflowCheck } from "../api/types";
+import { MAX_DURATION_LIMIT_S, MAX_PARALLEL_LIMIT, MAX_STEPS_LIMIT, type WorkflowCheck } from "../api/types";
 import { DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../components/ui";
 import { WorkflowDependencies } from "../python/DependencyPanel";
 import { AgentInspector } from "./AgentInspector";
@@ -193,7 +193,7 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
 }
 
 
-/** The workflow's execution limits: steps at the same time and active time per run (empty: no limit). */
+/** The workflow's execution limits: steps at the same time, active time and steps per run (empty: no limit). */
 function LimitFields() {
   const { t } = useTranslation();
   const limits = useEditor((s) => s.limits);
@@ -237,6 +237,21 @@ function LimitFields() {
             setMeta({ limits: { ...limits, max_duration_s: seconds } });
           }}
           data-testid="limit-duration"
+        />
+      </Field>
+      <Field
+        label={t("editor.inspector.maxSteps")}
+        hint={t("editor.inspector.maxStepsHint", { max: MAX_STEPS_LIMIT })}
+        tip="workflow.limits"
+      >
+        <TextInput
+          type="number"
+          min={1}
+          max={MAX_STEPS_LIMIT}
+          step={1}
+          value={limits.max_steps ?? ""}
+          onChange={(e) => setMeta({ limits: { ...limits, max_steps: whole(e.target.value, 1, MAX_STEPS_LIMIT) } })}
+          data-testid="limit-steps"
         />
       </Field>
     </>

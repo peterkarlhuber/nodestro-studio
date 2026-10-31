@@ -84,6 +84,8 @@
     "maxParallelHint": "De 1 a {{max}}. Los demás pasos listos esperan un hueco libre. Vacío = sin límite.",
     "timeLimit": "Límite de tiempo por ejecución (minutos)",
     "timeLimitHint": "Tiempo de ejecución activo; la espera de aprobaciones no cuenta. Vacío = sin límite.",
+    "maxSteps": "Máximo de pasos por ejecución",
+    "maxStepsHint": "De 1 a {{max}}. Cuenta cada nodo ejecutado, también cada ronda de un bucle. Vacío = sin límite.",
     "problems": "Por resolver antes de iniciar:",
     "problemsLabel": "Problemas",
     "controls": "Manejo",

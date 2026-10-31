@@ -84,6 +84,8 @@
     "maxParallelHint": "De 1 à {{max}}. Les autres étapes prêtes attendent une place libre. Vide = aucune limite.",
     "timeLimit": "Limite de temps par exécution (minutes)",
     "timeLimitHint": "Durée d’exécution active ; l’attente des validations ne compte pas. Vide = aucune limite.",
+    "maxSteps": "Nombre maximal d’étapes par exécution",
+    "maxStepsHint": "De 1 à {{max}}. Chaque nœud exécuté compte, chaque tour de boucle aussi. Vide = aucune limite.",
     "problems": "À régler avant le démarrage :",
     "problemsLabel": "Problèmes",
     "controls": "Utilisation",

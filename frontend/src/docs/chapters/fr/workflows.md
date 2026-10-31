@@ -150,12 +150,13 @@ Le budget limite les **coûts estimés** d’une exécution en dollars américai
 Les coûts inconnus ne comptent **pas** pour 0. Si le coût maximal d’une requête ne peut pas être déterminé à l’avance (aucun prix connu, images, fichiers ou outils du fournisseur comme la recherche web), elle s’exécute sans plafond en mode standard. L’exécution affiche alors à côté des coûts la mention **Pas de maximum strict** avec le nombre de ces requêtes. En mode de prix strict, les requêtes sans prix connu ne sont pas envoyées du tout.
 
 ## Limites par exécution {#limits}
-<!-- keywords: limites, simultané, parallèle, limite de temps, durée, timeout, run.time_limit -->
+<!-- keywords: limites, simultané, parallèle, limite de temps, durée, timeout, run.time_limit, étapes, run.step_limit -->
 
-Deux limites facultatives s’appliquent à chaque exécution du workflow. Vide signifie : aucune limite.
+Trois limites facultatives s’appliquent à chaque exécution du workflow. Vide signifie : aucune limite.
 
 - **Nombre maximal d’étapes simultanées** (de 1 à 32) : si davantage d’étapes sont prêtes, les autres attendent une place libre. Avec 1, toutes les étapes s’exécutent l’une après l’autre.
 - **Limite de temps par exécution** (en minutes, 7 jours au plus) : seul le temps d’exécution actif compte. L’attente d’une approbation ne compte pas. Lorsque le temps est écoulé, aucune autre étape ne démarre, les agents en cours sont invités à s’arrêter et l’exécution échoue avec une erreur qui indique la limite de temps.
+- **Nombre maximal d’étapes par exécution** (de 1 à 10 000) : chaque nœud exécuté compte une fois, début et résultat compris, et chaque tour de boucle compte à nouveau. Si l’étape suivante était de trop, elle ne démarre pas et l’exécution échoue avec une erreur qui indique la limite. Cela protège contre les boucles qui font plus de tours que prévu. Une exécution poursuivie compte aussi les étapes qu’elle reprend.
 
 Une requête au modèle ou un appel d’outil déjà en cours est mené à son terme. L’exécution peut donc dépasser la limite de temps de la durée de cet appel.
 

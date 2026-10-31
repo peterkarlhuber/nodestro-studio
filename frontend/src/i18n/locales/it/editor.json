@@ -84,6 +84,8 @@
     "maxParallelHint": "Da 1 a {{max}}. Gli altri passaggi pronti attendono un posto libero. Vuoto = nessun limite.",
     "timeLimit": "Limite di tempo per esecuzione (minuti)",
     "timeLimitHint": "Tempo di esecuzione attivo; l’attesa delle approvazioni non conta. Vuoto = nessun limite.",
+    "maxSteps": "Numero massimo di passaggi per esecuzione",
+    "maxStepsHint": "Da 1 a {{max}}. Conta ogni nodo eseguito, anche ogni giro di un ciclo. Vuoto = nessun limite.",
     "problems": "Da risolvere prima dell’avvio:",
     "problemsLabel": "Problemi",
     "controls": "Comandi",
