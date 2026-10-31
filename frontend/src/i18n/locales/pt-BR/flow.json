@@ -253,7 +253,7 @@
       "teamFailed": "A equipe falhou",
       "reason": "Motivo",
       "task": "Tarefa",
-      "summary": "{{decisions}} decisões, {{delegations}} delegações",
+      "summary": "Decisões: {{decisions}} · delegações: {{delegations}}",
       "openTeam": "Abrir a execução da equipe",
       "matched": "escolhida por capacidade: {{tags}}"
     },

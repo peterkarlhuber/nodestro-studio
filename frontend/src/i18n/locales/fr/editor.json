@@ -217,6 +217,7 @@
     "teams_other": "{{count}} équipes",
     "noTeams": "Aucune équipe choisie",
     "decisions_one": "max. {{count}} décision",
-    "decisions_other": "max. {{count}} décisions"
+    "decisions_other": "max. {{count}} décisions",
+    "byCapability": "par capacité : {{tags}}"
   }
 }

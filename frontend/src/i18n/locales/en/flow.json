@@ -253,7 +253,7 @@
       "teamFailed": "Team failed",
       "reason": "Reason",
       "task": "Task",
-      "summary": "{{decisions}} decisions, {{delegations}} delegations",
+      "summary": "Decisions: {{decisions}} · delegations: {{delegations}}",
       "openTeam": "Open the team's run",
       "matched": "selected by capability: {{tags}}"
     },

@@ -253,7 +253,7 @@
       "teamFailed": "L’équipe a échoué",
       "reason": "Motif",
       "task": "Tâche",
-      "summary": "{{decisions}} décisions, {{delegations}} délégations",
+      "summary": "Décisions : {{decisions}} · délégations : {{delegations}}",
       "openTeam": "Ouvrir l’exécution de l’équipe",
       "matched": "choisie par capacité : {{tags}}"
     },

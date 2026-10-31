@@ -312,12 +312,17 @@ export const OrchestratorNode = memo(function OrchestratorNode({ data, selected 
   const { t } = useTranslation();
   const config = flow.node.orchestrator;
   const teams = config?.members.length ?? 0;
+  const tags = config?.select?.capabilities ?? [];
   return (
     <NodeShell {...flow} selected={selected} icon={Network} type={t("editor.nodes.orchestrator")}>
       <div className="node-divider" />
       <div className="node-row">
         <span className="node-row__description">
-          {teams ? t("editor.orchestrator.teams", { count: teams }) : t("editor.orchestrator.noTeams")}
+          {teams
+            ? t("editor.orchestrator.teams", { count: teams })
+            : tags.length
+              ? t("editor.orchestrator.byCapability", { tags: tags.join(", ") })
+              : t("editor.orchestrator.noTeams")}
         </span>
         <span className="node-type">{t("editor.orchestrator.decisions", { count: config?.max_decisions ?? 0 })}</span>
       </div>

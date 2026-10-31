@@ -253,7 +253,7 @@
       "teamFailed": "Team fehlgeschlagen",
       "reason": "Begründung",
       "task": "Aufgabe",
-      "summary": "{{decisions}} Entscheidungen, {{delegations}} Weitergaben",
+      "summary": "Entscheidungen: {{decisions}} · Weitergaben: {{delegations}}",
       "openTeam": "Lauf des Teams öffnen",
       "matched": "nach Fähigkeit gewählt: {{tags}}"
     },

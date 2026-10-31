@@ -46,7 +46,9 @@ export function OrchestratorInspector({ node }: { node: WorkflowNode }) {
         tip="flow.orchestratorTeams"
       >
         <div className="stack-sm" data-testid="orchestrator-teams">
-          {config.members.length === 0 ? <p className="field__hint">{t("flow.orchestrator.noTeams")}</p> : null}
+          {config.members.length === 0 && !config.select?.capabilities.length ? (
+            <p className="field__hint">{t("flow.orchestrator.noTeams")}</p>
+          ) : null}
           {config.members.map((member) => {
             const team = known.get(member.workflow_id);
             return (
