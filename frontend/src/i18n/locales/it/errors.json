@@ -243,7 +243,6 @@
     "unresolved": "Alcune importazioni non si possono attribuire con certezza a un pacchetto.",
     "unresolved_tool": "Strumento {{tool}}: un'importazione non si può attribuire con certezza.",
     "draft_libraries": "La bozza di strumento {{tool}} richiede {{packages}}; le librerie non sono ancora approvate.",
-    "docker_unsupported": "Gli strumenti con librerie di terze parti funzionano solo nella sandbox di processo. Cambia la sandbox nelle impostazioni.",
     "uv_missing": "uv non trovato. Reinstalla Nodestro o installa uv.",
     "not_found": "Il pacchetto «{{name}}» non esiste nell'indice dei pacchetti. Controlla il nome nell'intestazione «# /// script».",
     "no_version": "Non esiste una versione compatibile con «{{name}}{{spec}}».",
@@ -263,7 +262,11 @@
     "no_definition": "Per questo ambiente non è ancora approvato nulla.",
     "run_active": "Il workflow è in esecuzione; riprova al termine.",
     "install_interrupted": "Nodestro si è arrestato durante l’installazione delle librerie. Installale di nuovo.",
-    "build_required": "{{name}} è disponibile solo come codice sorgente. Risolverlo eseguirebbe il suo script di build, quindi Nodestro non l’ha risolto per lo strumento generato. Verifica il pacchetto e approvalo nella finestra delle librerie dello strumento, oppure fai scrivere lo strumento senza di esso."
+    "build_required": "{{name}} è disponibile solo come codice sorgente. Risolverlo eseguirebbe il suo script di build, quindi Nodestro non l’ha risolto per lo strumento generato. Verifica il pacchetto e approvalo nella finestra delle librerie dello strumento, oppure fai scrivere lo strumento senza di esso.",
+    "lock_without_hashes": "Questa approvazione proviene da una versione precedente senza checksum. Approva di nuovo le librerie per usarle nella sandbox Docker.",
+    "wheels_required": "Un pacchetto non esiste come pacchetto pronto (wheel) per Linux. Nella sandbox Docker i pacchetti non vengono compilati dal codice sorgente.",
+    "hash_mismatch": "Un pacchetto scaricato non corrisponde all’approvazione. Non è stato installato nulla.",
+    "image_failed": "Non è stato possibile creare l’immagine del container con le librerie. I dettagli tecnici indicano il motivo."
   },
   "condition": {
     "field_missing": "Il campo manca nel risultato.",
@@ -534,7 +537,8 @@
     "base_url_invalid": "URL di base non valido «{{url}}»: deve iniziare con http:// o https://.",
     "base_url_credentials": "L’URL di base non deve contenere credenziali. Inserisci la chiave nel campo «Chiave API».",
     "capability_unknown": "Capacità sconosciute: {{names}}.",
-    "not_configured": "{{provider}} non è configurato: inserisci l’URL di base nelle impostazioni."
+    "not_configured": "{{provider}} non è configurato: inserisci l’URL di base nelle impostazioni.",
+    "endpoint_not_allowed": "Questo endpoint del modello non è consentito su questo server. Chiedi all’amministrazione quali endpoint sono consentiti."
   },
   "access": {
     "login_required": "Accedi per usare questa parte di Nodestro.",
@@ -546,7 +550,7 @@
   },
   "sandbox": {
     "isolation_required": "Il codice creato dall’IA e gli strumenti di origine sconosciuta vengono eseguiti solo nella sandbox Docker; non è stato eseguito nulla. Scegli Docker nelle impostazioni.",
-    "libraries_need_isolation": "{{name}} è creato dall’IA o di origine sconosciuta e richiede librerie di terze parti. Questi strumenti non possono ancora essere eseguiti, perché le librerie sono disponibili solo senza isolamento.",
+    "libraries_need_isolation": "{{name}} è creato dall’IA o di origine sconosciuta e richiede librerie di terze parti. Questi strumenti vengono eseguiti solo nella sandbox Docker; scegli Docker nelle impostazioni.",
     "unavailable": "Qui il codice degli strumenti viene eseguito solo in container; la sandbox «Processo Python» non è disponibile."
   },
   "identity": {
@@ -556,5 +560,8 @@
     "no_tenant": "Il tuo account non ha ancora accesso a Nodestro. Chiedi a un amministratore di aggiungerti.",
     "bootstrap_invalid": "Questo link di configurazione non è valido, è già stato usato o è scaduto.",
     "not_a_member": "Il tuo account non ha accesso a questo spazio di lavoro."
+  },
+  "secrets": {
+    "unreadable": "Una chiave salvata non può più essere letta. Inseriscila di nuovo nelle impostazioni."
   }
 }

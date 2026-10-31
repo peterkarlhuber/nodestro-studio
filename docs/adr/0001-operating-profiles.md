@@ -26,9 +26,11 @@ silently fall back to desktop behavior (no authentication, subprocess sandbox, S
 3. **`server` fails fast.** Profile validation raises a `NodestroError` with code `profile.invalid` (one entry per
    problem) before any service starts when the server profile lacks authentication configuration, a
    non-SQLite database for production, a container sandbox, or a secret for sessions. Until authentication,
-   PostgreSQL, tenant isolation, persistent workers and the container sandbox are implemented and integrated (plan
-   PR-12), selecting `server` always stops with `profile.server_unavailable`, before any file or database access.
-   There is no flag that turns the checks off.
+   PostgreSQL, tenant isolation, persistent workers and the container sandbox were implemented and integrated (plan
+   PR-12), selecting `server` always stopped with `profile.server_unavailable`, before any file or database access.
+   Since PR-12 the server starts only through `nodestro-server`, which validates its settings first
+   (`ServerSettings`); any other way to select it is refused with `profile.invalid`, and
+   `profile.server_unavailable` no longer exists. There is no flag that turns the checks off.
 4. Selection: `NODESTRO_PROFILE=desktop|server` (default `desktop`) and `--profile` on `nodestro-api`. The studio's
    `nodestro` command stays a desktop command. `nodestro-server` and `nodestro-desktop` only choose a profile and
    provide infrastructure; they contain no business logic.
