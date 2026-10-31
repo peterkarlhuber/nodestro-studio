@@ -541,11 +541,20 @@
     "forbidden": "Vous ne pouvez pas faire cela (autorisation {{permission}} nécessaire).",
     "launch_required": "Ce Nodestro appartient à l’application de bureau qui l’a démarré. Ouvrez Nodestro depuis l’application.",
     "launch_used": "Le lien de démarrage a déjà été utilisé. Redémarrez l’application de bureau pour ouvrir une nouvelle fenêtre.",
-    "launch_invalid": "Le lien de démarrage n’est pas valide. Démarrez Nodestro depuis l’application de bureau."
+    "launch_invalid": "Le lien de démarrage n’est pas valide. Démarrez Nodestro depuis l’application de bureau.",
+    "cross_site": "Cette modification venait d'un autre site web et a été refusée. Utilisez Nodestro directement."
   },
   "sandbox": {
     "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent que dans le bac à sable Docker ; rien n’a été exécuté. Choisissez Docker dans les réglages.",
     "libraries_need_isolation": "{{name}} est créé par l’IA ou d’origine inconnue et a besoin de bibliothèques tierces. Ces outils ne peuvent pas encore s’exécuter, car les bibliothèques ne sont disponibles que sans isolation.",
     "unavailable": "Ici, le code des outils ne s’exécute que dans des conteneurs ; le bac à sable « Processus Python » n’est pas disponible."
+  },
+  "identity": {
+    "login_expired": "La connexion a pris trop de temps ou a déjà été utilisée. Veuillez vous reconnecter.",
+    "login_failed": "La connexion n'a pas pu aboutir. Veuillez réessayer.",
+    "provider": "Le service de connexion est injoignable ou mal configuré. Contactez votre administrateur.",
+    "no_tenant": "Votre compte n'a pas encore accès à Nodestro. Demandez à un administrateur de vous ajouter.",
+    "bootstrap_invalid": "Ce lien de configuration est invalide, déjà utilisé ou expiré.",
+    "not_a_member": "Votre compte n'a pas accès à cet espace de travail."
   }
 }

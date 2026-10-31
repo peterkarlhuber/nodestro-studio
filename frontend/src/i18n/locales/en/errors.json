@@ -541,11 +541,20 @@
     "forbidden": "You may not do this (permission {{permission}} needed).",
     "launch_required": "This Nodestro belongs to the desktop app that started it. Open Nodestro from the app.",
     "launch_used": "The launch link was already used. Restart the desktop app to open a new window.",
-    "launch_invalid": "The launch link is not valid. Start Nodestro from the desktop app."
+    "launch_invalid": "The launch link is not valid. Start Nodestro from the desktop app.",
+    "cross_site": "This change came from another website and was refused. Use Nodestro directly."
   },
   "sandbox": {
     "isolation_required": "AI-created code and tools of unknown origin run only in the Docker sandbox; nothing was run. Choose Docker in the settings.",
     "libraries_need_isolation": "{{name}} is AI-created or of unknown origin and needs third-party libraries. Such tools cannot run yet, because libraries are only available without isolation.",
     "unavailable": "Tool code runs only in containers here; the Python process sandbox is not available."
+  },
+  "identity": {
+    "login_expired": "The login took too long or was already used. Please log in again.",
+    "login_failed": "The login could not be completed. Please try again.",
+    "provider": "The login service cannot be reached or is not set up correctly. Contact your administrator.",
+    "no_tenant": "Your account has no access to Nodestro yet. Ask an administrator to add you.",
+    "bootstrap_invalid": "This setup link is invalid, already used or expired.",
+    "not_a_member": "Your account has no access to this workspace."
   }
 }
