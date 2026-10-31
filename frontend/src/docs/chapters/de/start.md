@@ -78,3 +78,15 @@ Alle Daten liegen in einer SQLite-Datenbank im Datenverzeichnis, standardmäßig
 - der Ordner `tools` mit eigenen und KI-erstellten Tools.
 
 Zum **Sichern** kopierst du das Datenverzeichnis, während Nodestro beendet ist. An den Anbieter eines Agenten gehen nur die Inhalte, die der Agent für seine Anfrage braucht: System-Prompt, Aufgabe, zugewiesenes Wissen, Memory-Inhalte, die er liest, und Tool-Ergebnisse. Die API-Schlüssel werden nie in der Oberfläche angezeigt.
+
+## Die Desktop-App {#desktop}
+<!-- keywords: desktop, app, fenster, linux, installation, startlink, tauri -->
+
+Neben dem Befehl `nodestro` gibt es Nodestro als Desktop-App (Vorschau für Linux x86_64, noch nicht signiert). Sie bringt ihr eigenes Python mit; außer WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`) muss nichts installiert sein. Entpacken Sie das Archiv und starten Sie `nodestro-desktop`.
+
+- Die App verwendet dasselbe Datenverzeichnis wie der Befehl (`~/.nodestro` oder `NODESTRO_DATA_DIR`). Es kann immer nur eines von beiden darauf zugreifen.
+- Nur das Fenster der App kann dieses Nodestro verwenden. Andere Programme auf dem Computer und Webseiten im Browser werden abgewiesen (*Dieses Nodestro gehört zur Desktop-App, die es gestartet hat*). Der Startlink des Fensters gilt nur einmal; für ein neues Fenster starten Sie die App neu.
+- Links zu anderen Websites öffnen sich im Browser.
+- Das Schließen des Fensters beendet Nodestro. Endet es unerwartet, sagt das Fenster es und nennt die Protokolldatei.
+- Ohne Docker können KI-erstellte Tools auch in der App nicht laufen (siehe [Tools](/docs/tools#vertrauen)).
+- Versionen für macOS und Windows gibt es noch nicht.

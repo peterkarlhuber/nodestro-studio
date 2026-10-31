@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Desktop launch secret, M1 PR-6 (2026-10-31)
+
+- Pins: `nodestro-api` 0f439ea and `nodestro-sdk` 1c24f55 (before: cd4b198 and b001667); merge commits.
+- With `NODESTRO_LAUNCH_SECRET` (set by the desktop app) only the app's window can use the studio API; other
+  programs and web pages get `access.launch_required`. Without the variable (the `nodestro` command) nothing changes.
+- New error texts `access.launch_required`, `access.launch_used`, `access.launch_invalid` and the documentation
+  section "The desktop app" (introduction chapter), in six languages.
+
 ### Sandbox policy and trust classes, M1 PR-4 (2026-10-31)
 
 - Pins: `nodestro-runtime` d6e75b7, `nodestro-examples` 31b5714, `nodestro-integrations` 99cdd2c, `nodestro-api`

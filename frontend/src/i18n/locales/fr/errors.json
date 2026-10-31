@@ -538,7 +538,10 @@
   },
   "access": {
     "login_required": "Connectez-vous pour utiliser cette partie de Nodestro.",
-    "forbidden": "Vous ne pouvez pas faire cela (autorisation {{permission}} nécessaire)."
+    "forbidden": "Vous ne pouvez pas faire cela (autorisation {{permission}} nécessaire).",
+    "launch_required": "Ce Nodestro appartient à l’application de bureau qui l’a démarré. Ouvrez Nodestro depuis l’application.",
+    "launch_used": "Le lien de démarrage a déjà été utilisé. Redémarrez l’application de bureau pour ouvrir une nouvelle fenêtre.",
+    "launch_invalid": "Le lien de démarrage n’est pas valide. Démarrez Nodestro depuis l’application de bureau."
   },
   "sandbox": {
     "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent que dans le bac à sable Docker ; rien n’a été exécuté. Choisissez Docker dans les réglages.",
