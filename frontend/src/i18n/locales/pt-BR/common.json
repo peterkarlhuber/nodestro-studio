@@ -31,5 +31,9 @@
   "saved": "Salvo",
   "yes": "Sim",
   "no": "Não",
-  "confirmDelete": "Excluir?"
+  "confirmDelete": "Excluir?",
+  "sectionErrors_one": "{{count}} erro",
+  "sectionErrors_other": "{{count}} erros",
+  "sectionWarnings_one": "{{count}} aviso",
+  "sectionWarnings_other": "{{count}} avisos"
 }
