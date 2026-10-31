@@ -26,11 +26,23 @@
   "sandbox": {
     "title": "Sandbox para herramientas propias",
     "label": "Sandbox",
-    "text": "Las herramientas propias y las creadas por IA nunca se ejecutan en el proceso de Nodestro. El proceso de Python está disponible al instante; Docker aísla más (sin red, memoria limitada). Las herramientas creadas por IA y las de origen desconocido solo se ejecutan con Docker; sin él quedan bloqueadas.",
+    "text": "Las herramientas propias y las creadas por IA nunca se ejecutan en el proceso de Nodestro. Las herramientas que escribes tú se ejecutan en un proceso de Python aparte. Las herramientas creadas por IA y las de origen desconocido solo se ejecutan aisladas: en Ubuntu 24.04 y Debian 13 automáticamente en el sandbox de Linux integrado (sin red, sin acceso a tus archivos ni claves); en otros sistemas, solo con Docker. Sin aislamiento quedan bloqueadas.",
     "subprocess": "Proceso de Python",
     "dockerAvailable": "Docker disponible",
     "dockerMissing": "Docker no encontrado",
-    "dockerUnreachable": "No se puede acceder a Docker. Las pruebas y llamadas de herramientas fallarán hasta que Docker esté en marcha."
+    "dockerUnreachable": "No se puede acceder a Docker. Las pruebas y llamadas de herramientas fallarán hasta que Docker esté en marcha.",
+    "builtinActive": "Sandbox de Linux integrado activo",
+    "builtinMissing": "Sandbox de Linux integrado no disponible",
+    "reason": {
+      "platform": "El sandbox integrado necesita Linux en un procesador Intel o AMD de 64 bits.",
+      "untested-system": "El sandbox integrado solo está aprobado para Ubuntu 24.04 y Debian 13; este sistema ({{system}}) no se ha probado. Usa Docker para las herramientas creadas por IA.",
+      "landlock": "Al núcleo de Linux le falta Landlock (versión 4 o posterior), que el sandbox integrado necesita. Actualiza el sistema o usa Docker.",
+      "seccomp": "Al núcleo de Linux le falta seccomp, que el sandbox integrado necesita. Usa Docker.",
+      "root": "Nodestro se ejecuta como administrador (root). Inícialo como usuario normal para usar el sandbox integrado.",
+      "paths": "Nodestro está dentro de una carpeta protegida (por ejemplo, directamente en tu carpeta personal o en la carpeta de datos). Mueve la aplicación a una carpeta propia.",
+      "verify": "La autocomprobación del sandbox integrado falló: el aislamiento no se mantuvo. Las herramientas creadas por IA siguen bloqueadas; usa Docker.",
+      "failed": "La autocomprobación del sandbox integrado no pudo ejecutarse. Las herramientas creadas por IA siguen bloqueadas; usa Docker."
+    }
   },
   "about": {
     "title": "Acerca de Nodestro",

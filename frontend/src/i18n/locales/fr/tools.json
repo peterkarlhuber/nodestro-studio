@@ -25,8 +25,9 @@
   "trustLabel": "Origine",
   "trustNote": {
     "user-authored": "Écrit par vous : s’exécute dans un processus Python séparé, sans isolation, sur cet ordinateur.",
-    "untrusted": "Créé par l’IA ou d’origine inconnue : ne s’exécute que dans le bac à sable Docker.",
-    "untrustedBlocked": "Créé par l’IA ou d’origine inconnue : ne s’exécute que dans le bac à sable Docker. Avec le bac à sable « Processus Python », les agents qui utilisent cet outil ne peuvent pas s’exécuter."
+    "untrusted": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, ici dans le bac à sable Docker.",
+    "untrustedBlocked": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, mais ni le bac à sable Linux intégré ni Docker n’est disponible. Les agents qui utilisent cet outil ne peuvent pas s’exécuter ; voir Réglages → Bac à sable.",
+    "untrustedBuiltin": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, ici dans le bac à sable Linux intégré (sans réseau, sans accès à vos fichiers ni à vos clés). Cela reste ainsi après votre validation."
   },
   "version": "Version {{version}}",
   "deleted": "Outil {{name}} supprimé",
@@ -87,12 +88,13 @@
     "approveLibraries": "Approuver les bibliothèques",
     "withoutLibraries": "Réécrire sans bibliothèques",
     "usesLibraries": "Utilise les bibliothèques approuvées : {{names}}",
-    "needsDocker": "Créer des outils avec l’IA nécessite le bac à sable Docker : les tests du code écrit par l’IA ne s’exécutent jamais sans isolation. Choisissez Docker dans les réglages."
+    "needsDocker": "Créer des outils avec l’IA nécessite une isolation : les tests du code écrit par l’IA ne s’exécutent jamais sans elle. Le bac à sable Linux intégré n’est pas disponible ici (voir Réglages → Bac à sable) ; choisissez Docker à la place."
   },
   "drafts": {
     "title_one": "{{count}} brouillon d’outil attend votre décision",
     "title_other": "{{count}} brouillons d’outils attendent votre décision",
     "label": "Brouillons d’outils",
     "text": "Ces outils ont été rédigés par l’architecte de workflows. Ils ne sont pas enregistrés et n’ont pas été exécutés. Les agents qui en ont besoin ne peuvent démarrer qu’après votre approbation."
-  }
+  },
+  "sandboxBuiltin": "processus Python distinct ; outils créés par l’IA dans le bac à sable Linux intégré"
 }

@@ -113,7 +113,7 @@
     "defaultModel": "Les nouveaux agents vides et les nouveaux workflows démarrent avec ce modèle. Pour les brouillons de l’IA, il sert de remplacement si le modèle proposé n’est pas disponible.",
     "assistantModel": "Modèle de l’architecte d’agents, du Coding Agent et de l’assistant mémoire. Un modèle puissant fait de meilleures propositions.",
     "budget": "S’applique à tous les workflows sans budget propre. Vide = pas de limite (déconseillé).",
-    "sandbox": "Processus Python : disponible tout de suite, avec limites de temps et de mémoire. Docker : en plus sans réseau et avec un système de fichiers en lecture seule.",
+    "sandbox": "Processus Python : pour les outils que vous écrivez vous-même, avec des limites de temps et de mémoire. Bac à sable Linux intégré (Ubuntu 24.04, Debian 13) : les outils créés par l’IA s’y exécutent automatiquement, sans réseau et sans accès à vos fichiers, clés ou autres programmes. Docker : un conteneur, également sans réseau et avec un système de fichiers en lecture seule.",
     "language": "La langue de l’interface. « Automatique » suit la langue du navigateur (anglais si elle n’est pas prise en charge). Le choix s’applique immédiatement et est mémorisé. Les contenus comme les agents, prompts et résultats restent tels quels.",
     "backup": "Télécharge toutes les données sauf les clés API sous forme de fichier ZIP.",
     "restore": "Vérifiez d’abord entièrement le fichier et affiche son contenu. Le remplacement n’a lieu qu’après votre confirmation ; l’état actuel est sauvegardé avant.",

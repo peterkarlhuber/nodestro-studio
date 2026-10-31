@@ -139,36 +139,38 @@ Before an AI-created tool is added, you see its code, tests and test results. Ch
 > **Note:** jobs are only kept in memory. If you stop Nodestro, the job list disappears; approved tools are kept.
 
 ## The sandbox {#sandbox}
-<!-- keywords: sandbox, docker, subprocess, python process, isolation, security, timeout -->
+<!-- keywords: sandbox, docker, subprocess, python process, isolation, security, timeout, built-in sandbox, linux sandbox, landlock, seccomp -->
 
-Your own and AI-created tools **never run in the Nodestro process**. Tests and every later call run isolated:
+Your own and AI-created tools **never run in the Nodestro process**. Tests and every later call run in a sandbox:
 
 | Sandbox | Isolation | Limits |
 |---|---|---|
-| **Python process** (default) | separate process with an empty environment in a temporary directory | 15 seconds, 1 GB memory |
+| **Python process** (default for your own tools) | separate process with an empty environment in a temporary directory; **not** a security boundary | 15 seconds, 1 GB memory |
+| **Built-in Linux sandbox** (automatic for AI-created tools on Ubuntu 24.04 and Debian 13) | no network, no access to your files, keys, the Nodestro data or other programs; no new processes; only its own temporary folder is writable | 15 seconds (60 with libraries), 1 GB memory, 64 MB temporary files |
 | **Docker** | throwaway container without network, with a read-only file system, without privileges | 20 seconds, 512 MB memory, 1 CPU |
 
-You choose the sandbox in the [settings](/docs/einstellungen#sandbox). Docker isolates more strongly but must be installed and running; otherwise tests and calls fail. If a call exceeds the time limit, it counts as an error.
+The built-in Linux sandbox needs nothing to install: it uses functions of the Linux kernel (Landlock and seccomp). Nodestro checks once at the start whether they are there and work; *Settings → Sandbox* shows the result and, if it is not available, why. It does not protect against errors in the Linux kernel itself and does not hide whether a file exists elsewhere; Docker remains available as an alternative.
 
+You choose the sandbox in the [settings](/docs/einstellungen#sandbox). Docker must be installed and running; otherwise tests and calls fail. If a call exceeds the time limit, it counts as an error and the process is stopped.
 
 ## Trust and isolation {#vertrauen}
 <!-- keywords: trust, untrusted, origin, ai-generated, docker required, isolation required, blocked, restricted, needs isolation -->
 
 Nodestro decides by the **origin of the code** where it may run:
 
-| Origin | Shown as | Sandbox *Python process* | Sandbox *Docker* |
+| Origin | Shown as | Without isolation (only *Python process*) | Built-in Linux sandbox or Docker |
 |---|---|---|---|
 | Built-in tools and integrations | *Built-in* | in the Nodestro process | in the Nodestro process |
-| Written by you under *Write it yourself* | *Written by you* | runs, without isolation on this computer | runs isolated |
+| Written by you under *Write it yourself* | *Written by you* | runs, without isolation on this computer | runs (in the *Python process*, or isolated in Docker) |
 | Created by AI (also after your approval), tool drafts of the AI architect, tools of unknown origin | *Needs isolation* | **blocked** | runs isolated |
 
-The Python process is not a security boundary: code in it runs with your rights. Therefore Nodestro never runs AI-generated code there, and neither your approval nor a setting changes that. Without Docker:
+The Python process is not a security boundary: code in it runs with your rights. Therefore Nodestro never runs AI-generated code there, and neither your approval nor a setting changes that; there is no switch to run it there anyway. Where the built-in Linux sandbox is available, Nodestro uses it automatically for such code. Without it and without Docker:
 
 - **Create with AI** does not start, and tool drafts cannot be tested or approved;
 - agents with a tool that needs isolation cannot run; the workflow check reports it before the start;
-- tools that need isolation cannot use third-party libraries yet, also with Docker.
+- tools that need isolation cannot use third-party libraries.
 
-Tools saved before this version, and all tools after restoring a backup, count as of unknown origin, also the ones you wrote yourself, because their origin was not recorded. With Docker they keep working. A new version of such a tool, or a copy of its code in a new tool, keeps that status. To use these features, install and start Docker and choose it in the [settings](/docs/einstellungen#sandbox).
+Tools saved before this version, and all tools after restoring a backup, count as of unknown origin, also the ones you wrote yourself, because their origin was not recorded. With isolation they keep working. A new version of such a tool, or a copy of its code in a new tool, keeps that status.
 
 ## Versions and deleting {#versionen}
 <!-- keywords: version, delete, revoke, update, overwrite -->

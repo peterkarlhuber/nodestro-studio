@@ -26,11 +26,23 @@
   "sandbox": {
     "title": "Sandbox für eigene Tools",
     "label": "Sandbox",
-    "text": "Eigene und von der KI erstellte Tools laufen nie im Nodestro-Prozess. Der Python-Prozess ist sofort verfügbar; Docker isoliert stärker (ohne Netzwerk, begrenzter Speicher). KI-erstellte Tools und Tools unbekannter Herkunft laufen nur mit Docker; ohne Docker sind sie gesperrt.",
+    "text": "Eigene und von der KI erstellte Tools laufen nie im Nodestro-Prozess. Selbst geschriebene Tools laufen in einem eigenen Python-Prozess. KI-erstellte Tools und Tools unbekannter Herkunft laufen nur isoliert: unter Ubuntu 24.04 und Debian 13 automatisch in der eingebauten Linux-Sandbox (kein Netzwerk, kein Zugriff auf deine Dateien oder Schlüssel), sonst nur mit Docker; ohne Isolation sind sie gesperrt.",
     "subprocess": "Python-Prozess",
     "dockerAvailable": "Docker verfügbar",
     "dockerMissing": "Docker nicht gefunden",
-    "dockerUnreachable": "Docker ist nicht erreichbar. Tool-Tests und -Aufrufe schlagen fehl, bis Docker läuft."
+    "dockerUnreachable": "Docker ist nicht erreichbar. Tool-Tests und -Aufrufe schlagen fehl, bis Docker läuft.",
+    "builtinActive": "Eingebaute Linux-Sandbox aktiv",
+    "builtinMissing": "Eingebaute Linux-Sandbox nicht verfügbar",
+    "reason": {
+      "platform": "Die eingebaute Sandbox braucht Linux auf einem 64-Bit-Prozessor von Intel oder AMD.",
+      "untested-system": "Die eingebaute Sandbox ist nur für Ubuntu 24.04 und Debian 13 freigegeben; dieses System ({{system}}) wurde nicht getestet. Verwende Docker für KI-erstellte Tools.",
+      "landlock": "Dem Linux-Kernel fehlt Landlock (Version 4 oder neuer), das die eingebaute Sandbox braucht. Aktualisiere das System oder verwende Docker.",
+      "seccomp": "Dem Linux-Kernel fehlt seccomp, das die eingebaute Sandbox braucht. Verwende Docker.",
+      "root": "Nodestro läuft als Administrator (root). Starte es als normaler Benutzer, um die eingebaute Sandbox zu nutzen.",
+      "paths": "Nodestro liegt in einem geschützten Ordner (zum Beispiel direkt im Persönlichen Ordner oder im Datenordner). Verschiebe die App in einen eigenen Ordner.",
+      "verify": "Der Selbsttest der eingebauten Sandbox ist fehlgeschlagen: Die Isolation hat nicht gehalten. KI-erstellte Tools bleiben gesperrt; verwende Docker.",
+      "failed": "Der Selbsttest der eingebauten Sandbox konnte nicht laufen. KI-erstellte Tools bleiben gesperrt; verwende Docker."
+    }
   },
   "about": {
     "title": "Über Nodestro",

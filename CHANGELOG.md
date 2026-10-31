@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Built-in Linux sandbox on the desktop (2026-10-31)
+
+- The desktop runs AI-generated tools in the built-in Linux sandbox of `nodestro-runtime` (runtime #23, `45e7774`):
+  Landlock, seccomp and resource limits, applied by the tool's own process before any tool code is read. Nothing
+  has to be installed. It counts as isolation only on the tested systems (Ubuntu 24.04 and Debian 13, x86_64,
+  normal user); anywhere else, and on the server, untrusted code still needs a container or is blocked. There is no
+  fallback to an unprotected process, and approving generated code does not change its trust class.
+- Settings show whether the built-in sandbox is active and, if not, why (unsupported or untested system, missing
+  kernel feature, running as root, failed self-test). The Tools page says where an AI-generated tool runs. Texts in
+  six languages; the help chapters *Tools*, *Settings*, *Getting started* and *AI architect* describe it. ADR-0006
+  records the built-in sandbox; the error `sandbox.isolation_required` carries a `reason`.
+
 ### Glossary, README screenshots and journeys after P1, UX-8 (2026-10-31)
 
 - New help chapter **Terms** (`begriffe`) in six languages, right after the *Introduction*: workflow, agent, tool,

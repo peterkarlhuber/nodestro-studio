@@ -43,9 +43,9 @@ Das **Standardbudget pro Lauf** (anfangs 2 USD) gilt für alle Workflows ohne ei
 ## Sandbox {#sandbox}
 <!-- keywords: sandbox wählen, docker, python prozess, docker verfügbar -->
 
-Hier wählst du, wo eigene und KI-erstellte Tools laufen: **Python-Prozess** oder **Docker**. Die Änderung wirkt sofort. Ein Hinweis zeigt, ob Docker gefunden wurde; ist Docker gewählt, aber nicht erreichbar, schlagen Tool-Tests und -Aufrufe fehl. Details stehen unter [Die Sandbox](/docs/tools#sandbox).
+Hier wählst du, wo selbst geschriebene Tools laufen: **Python-Prozess** oder **Docker**. Die Änderung gilt sofort. Hinweise zeigen, ob Docker gefunden wurde und ob die **eingebaute Linux-Sandbox** aktiv ist; ist sie es nicht, steht der Grund dabei (zum Beispiel eine nicht getestete Linux-Distribution oder eine fehlende Kernel-Funktion). Ist Docker gewählt, aber nicht erreichbar, schlagen Tool-Tests und -Aufrufe fehl. Details stehen unter [Die Sandbox](/docs/tools#sandbox).
 
-Von der KI erstellte Tools und Tools unbekannter Herkunft laufen nur mit Docker; siehe [Vertrauen und Isolation](/docs/tools#vertrauen).
+Von der KI erstellte Tools und Tools unbekannter Herkunft laufen nur isoliert: automatisch in der eingebauten Linux-Sandbox, sonst nur mit Docker; siehe [Vertrauen und Isolation](/docs/tools#vertrauen).
 
 ## Sprache {#sprache}
 <!-- keywords: sprache, language, deutsch, englisch, spanisch, französisch, portugiesisch, italienisch, browsersprache, übersetzung, lokalisierung -->

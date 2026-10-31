@@ -76,7 +76,7 @@ Una bozza di strumento non è registrata. Vedi codice e test nella verifica e in
 
 Finché uno strumento non è approvato, il controllo segnala il workflow come bloccato e non si può avviare. Le regole di sicurezza esistenti per il codice personalizzato restano invariate. Anche le assegnazioni di conoscenza e memoria sono solo proposte, che modifichi nell’editor.
 
-Le bozze di strumenti sono generate dall’IA: testarle e approvarle richiede la sandbox Docker (vedi [Fiducia e isolamento](/docs/tools#vertrauen)).
+Le bozze di strumenti sono generate dall’IA: testarle e approvarle richiede isolamento, la sandbox Linux integrata o Docker (vedi [Fiducia e isolamento](/docs/tools#vertrauen)).
 
 ## Costi e limiti {#kosten}
 <!-- keywords: costo, limite, budget, correzioni, utilizzo, prezzo, usd -->

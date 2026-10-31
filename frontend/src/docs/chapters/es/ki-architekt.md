@@ -76,7 +76,7 @@ Un borrador de herramienta no está registrado. Ves el código y las pruebas en 
 
 Mientras una herramienta no esté aprobada, la comprobación marca el flujo como bloqueado y no se puede iniciar. Las reglas de seguridad existentes para código propio siguen igual. Las asignaciones de conocimiento y memoria también son solo propuestas que cambias en el editor.
 
-Los borradores de herramientas los genera la IA: probarlos y aprobarlos necesita el sandbox de Docker (consulta [Confianza y aislamiento](/docs/tools#vertrauen)).
+Los borradores de herramientas los genera la IA: probarlos y aprobarlos necesita aislamiento, el sandbox de Linux integrado o Docker (consulta [Confianza y aislamiento](/docs/tools#vertrauen)).
 
 ## Costes y límites {#kosten}
 <!-- keywords: coste, límite, presupuesto, correcciones, uso, precio, usd -->

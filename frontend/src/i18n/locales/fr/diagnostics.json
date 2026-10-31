@@ -77,7 +77,7 @@
     "docker": {
       "title": "Docker",
       "available": "Disponible.",
-      "not_installed": "Non installé ; les outils s’exécutent dans un processus isolé.",
+      "not_installed": "Non installé. Les outils créés par l’IA nécessitent le bac à sable Linux intégré ou Docker.",
       "unreachable": "La sandbox est réglée sur Docker, mais Docker est injoignable.",
       "fix": {
         "unreachable": "Démarrez Docker Desktop ou réglez la sandbox sur « Processus Python »."

@@ -25,8 +25,9 @@
   "trustLabel": "Origine",
   "trustNote": {
     "user-authored": "Scritto da te: viene eseguito in un processo Python separato, senza isolamento, su questo computer.",
-    "untrusted": "Creato dall’IA o di origine sconosciuta: viene eseguito solo nella sandbox Docker.",
-    "untrustedBlocked": "Creato dall’IA o di origine sconosciuta: viene eseguito solo nella sandbox Docker. Con la sandbox «Processo Python», gli agenti con questo strumento non possono essere eseguiti."
+    "untrusted": "Creato dall’IA o di origine sconosciuta: viene eseguito solo isolato, qui nella sandbox Docker.",
+    "untrustedBlocked": "Creato dall’IA o di origine sconosciuta: viene eseguito solo isolato, ma non sono disponibili né la sandbox Linux integrata né Docker. Gli agenti con questo strumento non possono essere eseguiti; vedi Impostazioni → Sandbox.",
+    "untrustedBuiltin": "Creato dall’IA o di origine sconosciuta: viene eseguito solo isolato, qui nella sandbox Linux integrata (senza rete, senza accesso ai tuoi file o alle tue chiavi). Resta così anche dopo la tua approvazione."
   },
   "version": "Versione {{version}}",
   "deleted": "Strumento {{name}} eliminato",
@@ -87,12 +88,13 @@
     "approveLibraries": "Approva librerie",
     "withoutLibraries": "Riscrivi senza librerie",
     "usesLibraries": "Usa le librerie approvate: {{names}}",
-    "needsDocker": "Creare strumenti con l’IA richiede la sandbox Docker: i test del codice scritto dall’IA non vengono mai eseguiti senza isolamento. Scegli Docker nelle impostazioni."
+    "needsDocker": "Creare strumenti con l’IA richiede l’isolamento: i test del codice scritto dall’IA non vengono mai eseguiti senza. La sandbox Linux integrata qui non è disponibile (vedi Impostazioni → Sandbox); scegli invece Docker."
   },
   "drafts": {
     "title_one": "{{count}} bozza di strumento attende la tua decisione",
     "title_other": "{{count}} bozze di strumenti attendono la tua decisione",
     "label": "Bozze di strumenti",
     "text": "Questi strumenti sono stati scritti dall’architetto di workflow. Non sono registrati e non sono stati eseguiti. Gli agenti che ne hanno bisogno possono partire solo dopo la tua approvazione."
-  }
+  },
+  "sandboxBuiltin": "processo Python separato; strumenti creati dall’IA nella sandbox Linux integrata"
 }

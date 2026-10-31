@@ -550,8 +550,8 @@
     "cross_site": "This change came from another website and was refused. Use Nodestro directly."
   },
   "sandbox": {
-    "isolation_required": "AI-created code and tools of unknown origin run only in the Docker sandbox; nothing was run. Choose Docker in the settings.",
-    "libraries_need_isolation": "{{name}} is AI-created or of unknown origin and needs third-party libraries. Such tools run only in the Docker sandbox; choose Docker in the settings.",
+    "isolation_required": "AI-created code and tools of unknown origin run only isolated (built-in Linux sandbox or Docker); neither is available, so nothing was run. Settings → Sandbox shows why.",
+    "libraries_need_isolation": "{{name}} is AI-created or of unknown origin and needs third-party libraries. Such tools run only isolated (built-in Linux sandbox or Docker); neither is available here. Settings → Sandbox shows why.",
     "unavailable": "Tool code runs only in containers here; the Python process sandbox is not available."
   },
   "identity": {

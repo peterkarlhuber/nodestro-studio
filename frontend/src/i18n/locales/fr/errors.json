@@ -550,8 +550,8 @@
     "cross_site": "Cette modification venait d'un autre site web et a été refusée. Utilisez Nodestro directement."
   },
   "sandbox": {
-    "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent que dans le bac à sable Docker ; rien n’a été exécuté. Choisissez Docker dans les réglages.",
-    "libraries_need_isolation": "{{name}} est créé par l’IA ou d’origine inconnue et a besoin de bibliothèques tierces. Ces outils ne s’exécutent que dans le bac à sable Docker ; choisis Docker dans les paramètres.",
+    "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent qu’isolés (bac à sable Linux intégré ou Docker) ; aucun des deux n’est disponible, rien n’a donc été exécuté. Réglages → Bac à sable indique pourquoi.",
+    "libraries_need_isolation": "{{name}} est créé par l’IA ou d’origine inconnue et nécessite des bibliothèques tierces. Ces outils ne s’exécutent qu’isolés (bac à sable Linux intégré ou Docker) ; aucun des deux n’est disponible ici. Réglages → Bac à sable indique pourquoi.",
     "unavailable": "Ici, le code des outils ne s’exécute que dans des conteneurs ; le bac à sable « Processus Python » n’est pas disponible."
   },
   "identity": {

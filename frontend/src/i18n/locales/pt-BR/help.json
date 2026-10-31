@@ -113,7 +113,7 @@
     "defaultModel": "Novos agentes vazios e novos fluxos de trabalho começam com este modelo. Nos rascunhos da IA, ele é usado como substituto se o modelo proposto não estiver disponível.",
     "assistantModel": "Modelo do arquiteto de agentes, do agente de programação e do assistente de memória. Um modelo forte faz propostas melhores.",
     "budget": "Vale para todos os fluxos de trabalho sem orçamento próprio. Vazio = sem limite (não recomendado).",
-    "sandbox": "Processo Python: disponível na hora, com limites de tempo e de memória. Docker: além disso, sem rede e com sistema de arquivos somente leitura.",
+    "sandbox": "Processo Python: para as ferramentas que você mesmo escreve, com limites de tempo e memória. Sandbox Linux integrado (Ubuntu 24.04, Debian 13): ferramentas criadas por IA rodam lá automaticamente, sem rede e sem acesso aos seus arquivos, chaves ou outros programas. Docker: um contêiner, também sem rede e com sistema de arquivos somente leitura.",
     "language": "O idioma da interface. “Automático” segue o idioma do navegador (inglês, se ele não for suportado). A escolha vale na hora e fica salva. Conteúdos como agentes, prompts e resultados permanecem como estão.",
     "backup": "Baixa todos os dados, exceto as chaves de API, como arquivo ZIP.",
     "restore": "Primeiro verifica o arquivo por completo e mostra o conteúdo. A substituição só acontece após sua confirmação; antes, o estado atual é salvo.",

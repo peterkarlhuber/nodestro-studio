@@ -43,9 +43,9 @@ Le **budget par défaut par exécution** (au départ 2 USD) s’applique à tous
 ## Bac à sable {#sandbox}
 <!-- keywords: choisir le bac à sable, sandbox, docker, processus python, docker disponible -->
 
-Vous choisissez ici où s’exécutent les outils personnels et ceux créés par l’IA : **Processus Python** ou **Docker**. La modification s’applique immédiatement. Une remarque indique si Docker a été trouvé ; si Docker est choisi mais inaccessible, les tests et les appels d’outils échouent. Détails dans [Le bac à sable](/docs/tools#sandbox).
+Ici, vous choisissez où s’exécutent les outils que vous écrivez vous-même : **Processus Python** ou **Docker**. Le changement s’applique immédiatement. Des indications montrent si Docker a été trouvé et si le **bac à sable Linux intégré** est actif ; s’il ne l’est pas, la raison est indiquée (par exemple une distribution Linux non testée ou une fonction du noyau manquante). Si Docker est sélectionné mais injoignable, les tests et appels d’outils échouent. Les détails se trouvent sous [Le bac à sable](/docs/tools#sandbox).
 
-Les outils créés par l’IA et ceux d’origine inconnue ne s’exécutent qu’avec Docker ; voir [Confiance et isolation](/docs/tools#vertrauen).
+Les outils créés par l’IA et ceux d’origine inconnue ne s’exécutent qu’isolés : automatiquement dans le bac à sable Linux intégré, sinon uniquement avec Docker ; voir [Confiance et isolation](/docs/tools#vertrauen).
 
 ## Langue {#sprache}
 <!-- keywords: langue, language, français, anglais, allemand, espagnol, portugais, italien, langue du navigateur, traduction, localisation -->

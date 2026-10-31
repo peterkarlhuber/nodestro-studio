@@ -550,8 +550,8 @@
     "cross_site": "Diese Änderung kam von einer anderen Website und wurde abgelehnt. Nutze Nodestro direkt."
   },
   "sandbox": {
-    "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur in der Docker-Sandbox; es wurde nichts ausgeführt. Wähle Docker in den Einstellungen.",
-    "libraries_need_isolation": "{{name}} ist KI-erstellt oder unbekannter Herkunft und braucht Bibliotheken von Drittanbietern. Solche Tools laufen nur in der Docker-Sandbox; wähle Docker in den Einstellungen.",
+    "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur isoliert (eingebaute Linux-Sandbox oder Docker); beides ist nicht verfügbar, daher wurde nichts ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",
+    "libraries_need_isolation": "{{name}} ist KI-erstellt oder unbekannter Herkunft und braucht Bibliotheken von Drittanbietern. Solche Tools laufen nur isoliert (eingebaute Linux-Sandbox oder Docker); beides ist hier nicht verfügbar. Den Grund zeigt Einstellungen → Sandbox.",
     "unavailable": "Tool-Code läuft hier nur in Containern; die Sandbox „Python-Prozess“ ist nicht verfügbar."
   },
   "identity": {

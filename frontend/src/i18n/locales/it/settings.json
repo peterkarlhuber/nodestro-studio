@@ -26,11 +26,23 @@
   "sandbox": {
     "title": "Sandbox per gli strumenti personali",
     "label": "Sandbox",
-    "text": "Gli strumenti personali e quelli creati dall’IA non girano mai nel processo di Nodestro. Il processo Python è subito disponibile; Docker isola di più (senza rete, memoria limitata). Gli strumenti creati dall’IA e quelli di origine sconosciuta vengono eseguiti solo con Docker; senza Docker sono bloccati.",
+    "text": "Gli strumenti personali e quelli creati dall’IA non girano mai nel processo di Nodestro. Gli strumenti scritti da te vengono eseguiti in un processo Python separato. Gli strumenti creati dall’IA e quelli di origine sconosciuta vengono eseguiti solo isolati: su Ubuntu 24.04 e Debian 13 automaticamente nella sandbox Linux integrata (senza rete, senza accesso ai tuoi file o alle tue chiavi), altrimenti solo con Docker. Senza isolamento sono bloccati.",
     "subprocess": "Processo Python",
     "dockerAvailable": "Docker disponibile",
     "dockerMissing": "Docker non trovato",
-    "dockerUnreachable": "Docker non è raggiungibile. Test e chiamate degli strumenti non riusciranno finché Docker non è in esecuzione."
+    "dockerUnreachable": "Docker non è raggiungibile. Test e chiamate degli strumenti non riusciranno finché Docker non è in esecuzione.",
+    "builtinActive": "Sandbox Linux integrata attiva",
+    "builtinMissing": "Sandbox Linux integrata non disponibile",
+    "reason": {
+      "platform": "La sandbox integrata richiede Linux su un processore Intel o AMD a 64 bit.",
+      "untested-system": "La sandbox integrata è approvata solo per Ubuntu 24.04 e Debian 13; questo sistema ({{system}}) non è stato testato. Usa Docker per gli strumenti creati dall’IA.",
+      "landlock": "Al kernel Linux manca Landlock (versione 4 o successiva), necessario alla sandbox integrata. Aggiorna il sistema o usa Docker.",
+      "seccomp": "Al kernel Linux manca seccomp, necessario alla sandbox integrata. Usa Docker.",
+      "root": "Nodestro è in esecuzione come amministratore (root). Avvialo come utente normale per usare la sandbox integrata.",
+      "paths": "Nodestro si trova in una cartella protetta (ad esempio direttamente nella cartella home o nella cartella dei dati). Sposta l’app in una cartella propria.",
+      "verify": "L’autotest della sandbox integrata non è riuscito: l’isolamento non ha tenuto. Gli strumenti creati dall’IA restano bloccati; usa Docker.",
+      "failed": "L’autotest della sandbox integrata non è stato eseguito. Gli strumenti creati dall’IA restano bloccati; usa Docker."
+    }
   },
   "about": {
     "title": "Informazioni su Nodestro",
