@@ -38,6 +38,7 @@ import {
 import { newNode } from "../lib/defaults";
 import { ErrorText, LocalError } from "../lib/errors";
 import { relativeTime } from "../lib/format";
+import { StartChoices } from "./StartChoices";
 
 function starterGraph(): Pick<WorkflowIn, "nodes" | "edges"> {
   const start = newNode("start", { x: 0, y: 60 });
@@ -75,6 +76,12 @@ export function WorkflowsPage() {
   const shown = applyOrganize(workflows.data ?? [], "workflow", (item) => item.id, filter, organize.data);
 
   const refresh = () => queryClient.invalidateQueries({ queryKey: keys.workflows });
+
+  /** Opens the new-workflow dialog with the way to start the user picked. */
+  const openCreate = (mode: "manual" | "ai") => {
+    setCreateMode(mode);
+    setCreateOpen(true);
+  };
 
   /** "Create with AI": the description goes to the Workflow Architect, which starts at once. */
   const createWithAi = () => {
@@ -159,14 +166,13 @@ export function WorkflowsPage() {
           <EmptyState
             icon={Diamond}
             title={t("workflows.emptyTitle")}
-            action={
-              <Button variant="primary" icon={Plus} onClick={() => setCreateOpen(true)}>
-                {t("workflows.emptyAction")}
-              </Button>
-            }
+            action={<StartChoices variant="full" onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />}
           >
             {t("workflows.emptyText")}
           </EmptyState>
+        ) : null}
+        {workflows.data?.length ? (
+          <StartChoices variant="compact" onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />
         ) : null}
         {workflows.data?.length ? (
           <div className="page__filters">

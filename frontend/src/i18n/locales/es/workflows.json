@@ -7,8 +7,7 @@
   "deleted": "Flujo de trabajo eliminado",
   "imported": "«{{name}}» importado",
   "emptyTitle": "Todavía no hay flujos de trabajo",
-  "emptyAction": "Crear el primer flujo de trabajo",
-  "emptyText": "Crea un flujo de trabajo y arrastra agentes al lienzo, o copia uno de los ejemplos de abajo.",
+  "emptyText": "Elige cómo quieres empezar. También puedes ver ya los ejemplos de abajo.",
   "agentCount_one": "{{count}} agente",
   "agentCount_other": "{{count}} agentes",
   "neverRun": "Nunca ejecutado",
@@ -24,5 +23,14 @@
   "createAi": "Crear con IA",
   "createWithAi": "Diseñar con IA",
   "aiDescription": "Describe tu objetivo",
-  "aiDescriptionHint": "El arquitecto de flujos planifica los agentes, los configura y conecta y te muestra el borrador antes de guardar nada. El nombre es opcional."
+  "aiDescriptionHint": "El arquitecto de flujos planifica los agentes, los configura y conecta y te muestra el borrador antes de guardar nada. El nombre es opcional.",
+  "start": {
+    "label": "Empezar uno nuevo",
+    "ai": "Crear con IA",
+    "aiText": "Describe qué debe hacer el flujo de trabajo. El Arquitecto IA diseña agentes y flujo; revisas el borrador antes de guardarlo. Esto usa llamadas al modelo.",
+    "example": "Empezar con un ejemplo",
+    "exampleText": "Mira flujos de trabajo listos con datos de prueba sintéticos y copia uno como tuyo. Sin llamadas al modelo.",
+    "manual": "Crearlo tú mismo",
+    "manualText": "Empieza con una entrada, un agente vacío y un resultado. Arrastras más bloques al lienzo."
+  }
 }

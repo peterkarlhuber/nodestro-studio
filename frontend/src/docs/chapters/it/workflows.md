@@ -7,6 +7,8 @@ Un workflow collega agenti in una pipeline. Questo capitolo spiega come creare w
 
 La pagina **Workflow** mostra tutti i workflow come schede con il numero di agenti, l'ultima modifica e lo stato dell'ultima esecuzione.
 
+La pagina offre tre modi equivalenti per iniziare: **Crea con l’IA** apre la finestra di un nuovo workflow con l’[architetto IA](/docs/ki-architekt#neu-erstellen), **Parti da un esempio** apre la [galleria di esempi](/docs/beispiele) e **Costruiscilo da te** apre la stessa finestra per un workflow vuoto. Finché non c’è nessun workflow compaiono come grandi riquadri, poi come una riga sottile sopra l’elenco.
+
 - **Nuovo workflow:** inserisci un nome e una descrizione facoltativa. Il nuovo workflow contiene già *Avvio → Agente → Risultato*.
 - **Crea con l’IA:** nella stessa finestra descrivi cosa vuoi e l’[architetto di workflow](/docs/ki-architekt#neu-erstellen) progetta il workflow da verificare.
 - **Aprire:** fai clic sulla scheda.

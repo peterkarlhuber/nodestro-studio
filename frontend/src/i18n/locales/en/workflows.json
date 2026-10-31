@@ -7,8 +7,7 @@
   "deleted": "Workflow deleted",
   "imported": "“{{name}}” imported",
   "emptyTitle": "No workflows yet",
-  "emptyAction": "Create your first workflow",
-  "emptyText": "Create a workflow and drag agents onto the canvas, or copy one of the examples below.",
+  "emptyText": "Choose how you want to start. You can also look at the examples below right away.",
   "agentCount_one": "{{count}} agent",
   "agentCount_other": "{{count}} agents",
   "neverRun": "Never run",
@@ -24,5 +23,14 @@
   "createAi": "Create with AI",
   "createWithAi": "Design with AI",
   "aiDescription": "Describe your goal",
-  "aiDescriptionHint": "The Workflow Architect plans the agents, configures and connects them and shows you the draft before anything is saved. The name is optional."
+  "aiDescriptionHint": "The Workflow Architect plans the agents, configures and connects them and shows you the draft before anything is saved. The name is optional.",
+  "start": {
+    "label": "Start new",
+    "ai": "Create with AI",
+    "aiText": "Describe what the workflow should do. The Workflow Architect designs agents and flow; you review the draft before it is saved. This uses model calls.",
+    "example": "Start from an example",
+    "exampleText": "Look at ready-made workflows with synthetic test data and copy one as your own. No model call.",
+    "manual": "Build it yourself",
+    "manualText": "Starts with an input, an empty agent and a result. You drag further building blocks onto the canvas."
+  }
 }

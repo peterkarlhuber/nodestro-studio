@@ -7,6 +7,8 @@ Um fluxo de trabalho conecta agentes em uma sequência. Este capítulo explica c
 
 A página **Fluxos de trabalho** mostra todos os fluxos como cartões com o número de agentes, a última alteração e o status da última execução.
 
+A página oferece três formas equivalentes de começar: **Criar com IA** abre a caixa de diálogo de um novo fluxo de trabalho com o [Arquiteto IA](/docs/ki-architekt#neu-erstellen), **Começar com um exemplo** abre a [galeria de exemplos](/docs/beispiele) e **Montar você mesmo** abre a mesma caixa de diálogo para um fluxo vazio. Enquanto não houver nenhum fluxo, elas aparecem como blocos grandes; depois, como uma linha estreita acima da lista.
+
 - **Novo fluxo de trabalho:** digite um nome e uma descrição opcional. O novo fluxo já contém *Início → Agente → Resultado*.
 - **Criar com IA:** no mesmo diálogo você descreve o que quer e o [arquiteto de fluxos](/docs/ki-architekt#neu-erstellen) projeta o fluxo para você revisar.
 - **Abrir:** clique no cartão.

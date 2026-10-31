@@ -7,6 +7,8 @@ A workflow connects agents into a pipeline. This chapter explains how to create 
 
 The **Workflows** page shows all workflows as cards with the number of agents, the last change and the status of the last run.
 
+Three equal ways to start are on the page: **Create with AI** opens the new-workflow dialog with the [Workflow Architect](/docs/ki-architekt#neu-erstellen), **Start from an example** opens the [example gallery](/docs/beispiele) and **Build it yourself** opens the same dialog for an empty workflow. While there is no workflow they appear as large tiles, afterwards as a narrow row above the list.
+
 - **New workflow:** enter a name and an optional description. The new workflow already contains *Start → Agent → Result*.
 - **Create with AI:** in the same dialog, describe what you want and the [Workflow Architect](/docs/ki-architekt#neu-erstellen) designs the workflow for you to review.
 - **Open:** click the card.

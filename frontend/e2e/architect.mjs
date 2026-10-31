@@ -46,9 +46,14 @@ try {
   await page.getByRole("heading", { name: "Workflows", exact: true }).waitFor();
   const before = (await api("/api/workflows")).length;
 
-  // 1. Create with AI from the new-workflow dialog.
-  await page.getByRole("button", { name: "Neuer Workflow" }).first().click();
-  await page.getByRole("radio", { name: "Mit KI erstellen" }).click();
+  // 1. Create with AI: the first of the three ways to start on the empty page opens the dialog in AI mode.
+  const choices = page.getByRole("group", { name: "Neu beginnen" });
+  check((await choices.locator(".start-choice").count()) === 3, "The empty page offers three ways to start");
+  await choices.getByRole("button", { name: /Mit KI erstellen/ }).click();
+  check(
+    (await page.getByRole("radio", { name: "Mit KI erstellen" }).getAttribute("aria-checked")) === "true",
+    "The AI way opens the new-workflow dialog in AI mode",
+  );
   await page.getByLabel("Beschreibe dein Vorhaben").fill("Aus einem Thema einen Blogartikel mit SEO-Hinweisen schreiben.");
   await page.getByRole("button", { name: "Mit KI entwerfen" }).click();
 
@@ -159,6 +164,25 @@ try {
   check(await dialog.getByText("abgebrochen", { exact: false }).first().isVisible(), "Cancelling ends the job at once");
   check((await api("/api/workflows")).length === count, "A cancelled job saves nothing");
   await shot("architect-06-cancelled");
+
+  // 4. Build it yourself from the row above the list: a saved, runnable starter workflow.
+  await page.goto(base);
+  const row = page.getByRole("navigation", { name: "Neu beginnen" });
+  await row.getByRole("button", { name: /Selbst aufbauen/ }).click();
+  check(
+    (await page.getByRole("radio", { name: "Manuell" }).getAttribute("aria-checked")) === "true",
+    "Building it yourself opens the dialog in manual mode",
+  );
+  await page.getByLabel("Name", { exact: true }).fill("Von Hand");
+  await page.getByRole("button", { name: "Anlegen und öffnen" }).click();
+  await page.waitForURL(/\/workflows\/wf_/);
+  await page.waitForFunction(() => document.querySelectorAll(".react-flow__node").length === 3);
+  check((await api("/api/workflows")).some((item) => item.name === "Von Hand"), "The starter workflow is saved with three nodes");
+  await page.goto(base);
+  await row.getByRole("link", { name: /Mit einem Beispiel beginnen/ }).click();
+  await page.waitForURL(/\/workflows\/examples/);
+  await page.locator(".example-card").first().waitFor();
+  check(true, "The example way opens the gallery");
 
   const relevant = errors.filter((text) => !text.includes("favicon"));
   check(relevant.length === 0, `No console errors${relevant.length ? `: ${relevant.join(" | ")}` : ""}`);
