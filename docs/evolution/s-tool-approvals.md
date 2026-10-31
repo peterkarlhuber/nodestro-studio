@@ -265,7 +265,9 @@ Checked in nodestro-runtime `78d2899`, nodestro-api `5ca1c75` and orkexa `456b92
    are unattended for this purpose, so only pre-grants matter there, not waiting.
 7. **Provider tools** never reach `before_tool` (orkexa server tools); §3.5 covers them.
 
-S-1 (capabilities, shown only) has no behavior change and can start. S-2a waits for the answer on point 1.
+S-1 (capabilities, shown only) has no behavior change and can start. Point 1: the project owner chose waiting
+slots per worker (option A) with conditions; the technical concept is [s2-worker-concept.md](s2-worker-concept.md).
+S-2a starts only after that concept is reviewed.
 
 ## 9. Threat model additions (D10e)
 
