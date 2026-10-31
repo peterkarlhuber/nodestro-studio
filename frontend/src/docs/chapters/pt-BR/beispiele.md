@@ -89,7 +89,7 @@ Cada exemplo está na galeria e tem sua própria seção abaixo.
 | 5 | Análise financeira | Finanças e investimentos | 3 | sequencial |
 | 6 | Artigo de blog | Marketing e conteúdo | 4 | paralelo |
 | 7 | Preparar uma proposta sob medida | Vendas | 3 | sequencial |
-| 8 | Responder solicitações de clientes | Atendimento ao cliente | 5 | com ramificações |
+| 8 | Responder solicitações de clientes | Atendimento ao cliente | 4 | com ramificações |
 | 9 | Divulgar uma vaga e preparar entrevistas | Recursos humanos | 5 | com ramificações |
 | 10 | Transformar uma pergunta de pesquisa em hipóteses | Pesquisa e desenvolvimento | 4 | sequencial |
 | 11 | Revisão de código com testes | Desenvolvimento de software | 3 | paralelo |
@@ -285,21 +285,20 @@ Uma boa proposta responde à necessidade real do cliente, não só às palavras-
 **Como adaptar:** Anexe a sua tabela de preços atual como arquivo; assim basta a solicitação do cliente como texto. Condições de pagamento e textos padrão são acrescentados no prompt de sistema do redator da proposta.
 
 ## 8 · Responder solicitações de clientes {#customer-service}
-<!-- keywords: atendimento ao cliente, classificador, verificador de políticas, redator de respostas, desescalada, revisão -->
+<!-- keywords: atendimento ao cliente, classificador, verificador de políticas, redator de respostas, desescalada -->
 
-**Área:** Atendimento ao cliente · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Iniciante · **Elementos:** decisão, aprovação, formulário de entrada, arquivos como entrada
+**Área:** Atendimento ao cliente · **Agentes:** 4 · **Padrão:** com ramificações · **Nível:** Iniciante · **Elementos:** decisão, aprovação, formulário de entrada, arquivos como entrada
 
 No atendimento ao cliente muitas solicitações chegam ao mesmo tempo, e cada uma precisa da regra certa e do tom certo. O workflow classifica as solicitações, verifica políticas e prazos e prepara respostas para aprovação.
 
-**Como os agentes trabalham juntos:** Um classificador rápido organiza cada solicitação por assunto, urgência e humor. O verificador de políticas aplica a política de atendimento e recalcula prazos com a ferramenta de datas. O redator de respostas redige as respostas; uma verificação de qualidade garante que nada seja prometido além da política. Um nó de decisão envia os escalonamentos primeiro a um agente de desescalada. Cada rascunho aguarda aprovação; uma rejeição com retorno gera uma versão revisada.
+**Como os agentes trabalham juntos:** Um classificador rápido organiza cada solicitação por assunto, urgência e humor. O verificador de políticas aplica a política de atendimento e recalcula prazos com a ferramenta de datas. O redator de respostas redige as respostas; uma verificação de qualidade garante que nada seja prometido além da política. Um nó de decisão envia os escalonamentos primeiro a um agente de desescalada. Cada rascunho aguarda aprovação; uma rejeição com retorno devolve os rascunhos, por um laço, ao redator de respostas, que os revisa e os envia de novo para aprovação (no máximo três rodadas).
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
 | **Classificador** | Organiza cada solicitação por assunto, urgência e humor. (saída estruturada) | Solicitações |
 | **Verificador de políticas** | Aplica a política de atendimento e verifica prazos com a ferramenta de datas. (Ferramentas: `days_between`) | Classificador, Solicitações |
-| **Redator de respostas** | Redige rascunhos de resposta cordiais para aprovação. (com verificação de qualidade) | Classificador, Verificador de políticas, Desescalada |
+| **Redator de respostas** | Redige rascunhos de resposta cordiais para aprovação. (com verificação de qualidade) | Classificador, Verificador de políticas, Desescalada, Aprovar respostas |
 | **Desescalada** | Prepara como lidar com clientes irritados e o que precisa de aprovação. | Escalonar? |
-| **Revisão** | Revisa os rascunhos conforme o retorno da aprovação. | Aprovar respostas |
 
 **Entrada:** Várias solicitações de clientes com dados de pedido e entrega, a data de hoje e a sua política de atendimento, como trecho no texto ou como arquivo (PDF, Word, Markdown); o arquivo de exemplo contém uma política mais detalhada.
 

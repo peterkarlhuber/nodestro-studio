@@ -89,7 +89,7 @@ Ogni esempio si trova nella galleria e ha una propria sezione qui sotto.
 | 5 | Analisi finanziaria | Finanza e investimenti | 3 | sequenziale |
 | 6 | Articolo per il blog | Marketing e contenuti | 4 | parallelo |
 | 7 | Preparare un'offerta su misura | Vendite | 3 | sequenziale |
-| 8 | Rispondere alle richieste dei clienti | Servizio clienti | 5 | con diramazioni |
+| 8 | Rispondere alle richieste dei clienti | Servizio clienti | 4 | con diramazioni |
 | 9 | Pubblicare un annuncio e preparare i colloqui | Risorse umane | 5 | con diramazioni |
 | 10 | Trasformare una domanda di ricerca in ipotesi | Ricerca e sviluppo | 4 | sequenziale |
 | 11 | Revisione del codice con test | Sviluppo software | 3 | parallelo |
@@ -285,21 +285,20 @@ Una buona offerta risponde al bisogno reale del cliente, non solo alle sue parol
 **Come adattarlo:** Allega il tuo listino attuale come file; così basta la richiesta del cliente come testo. Condizioni di pagamento e testi standard si aggiungono nel prompt di sistema del redattore dell'offerta.
 
 ## 8 · Rispondere alle richieste dei clienti {#customer-service}
-<!-- keywords: servizio clienti, classificatore, verificatore delle regole, redattore delle risposte, de-escalation, revisione -->
+<!-- keywords: servizio clienti, classificatore, verificatore delle regole, redattore delle risposte, de-escalation -->
 
-**Ambito:** Servizio clienti · **Agenti:** 5 · **Schema:** con diramazioni · **Livello:** Principiante · **Elementi:** decisione, approvazione, modulo di input, file come input
+**Ambito:** Servizio clienti · **Agenti:** 4 · **Schema:** con diramazioni · **Livello:** Principiante · **Elementi:** decisione, approvazione, modulo di input, file come input
 
 Nel servizio clienti arrivano molte richieste insieme, e ognuna richiede la regola giusta e il tono giusto. Il workflow ordina le richieste, verifica regole e scadenze e prepara risposte da approvare.
 
-**Come collaborano gli agenti:** Un classificatore veloce ordina ogni richiesta per argomento, urgenza e stato d'animo. Il verificatore delle regole applica la policy di servizio e ricalcola le scadenze con lo strumento delle date. Il redattore delle risposte scrive le risposte; un controllo qualità verifica che non si prometta nulla oltre la policy. Un nodo decisionale invia prima le escalation a un agente di de-escalation. Ogni bozza attende un'approvazione; un rifiuto con riscontro porta a una versione rivista.
+**Come collaborano gli agenti:** Un classificatore veloce ordina ogni richiesta per argomento, urgenza e stato d'animo. Il verificatore delle regole applica la policy di servizio e ricalcola le scadenze con lo strumento delle date. Il redattore delle risposte scrive le risposte; un controllo qualità verifica che non si prometta nulla oltre la policy. Un nodo decisionale invia prima le escalation a un agente di de-escalation. Ogni bozza attende un'approvazione; un rifiuto con riscontro rimanda le bozze, tramite un ciclo, al redattore delle risposte, che le rivede e le sottopone di nuovo all'approvazione (al massimo tre giri).
 
 | Agente | Compito | Riceve |
 |---|---|---|
 | **Classificatore** | Ordina ogni richiesta per argomento, urgenza e stato d'animo. (output strutturato) | Richieste |
 | **Verificatore delle regole** | Applica la policy di servizio e verifica le scadenze con lo strumento delle date. (Strumenti: `days_between`) | Classificatore, Richieste |
-| **Redattore delle risposte** | Scrive bozze di risposta cordiali da approvare. (con controllo qualità) | Classificatore, Verificatore delle regole, De-escalation |
+| **Redattore delle risposte** | Scrive bozze di risposta cordiali da approvare. (con controllo qualità) | Classificatore, Verificatore delle regole, De-escalation, Approvare le risposte |
 | **De-escalation** | Prepara come gestire i clienti contrariati e cosa richiede un'approvazione. | Escalation? |
-| **Revisione** | Rivede le bozze secondo il riscontro dell'approvazione. | Approvare le risposte |
 
 **Input:** Più richieste di clienti con dati di ordine e consegna, la data di oggi e la vostra policy di servizio, come estratto nel testo o come file (PDF, Word, Markdown); il file di esempio contiene una policy più dettagliata.
 
