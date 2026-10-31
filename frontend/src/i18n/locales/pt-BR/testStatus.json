@@ -1,0 +1,12 @@
+{
+  "title": "Resultado dos testes da versão {{version}}",
+  "untested": "não testada",
+  "passed": "{{passed}} de {{cases}} aprovados",
+  "outdated": "desatualizado",
+  "otherVersion": "foi testada a versão {{version}}",
+  "unknownVersion": "versão testada desconhecida",
+  "suiteChanged": "série de testes alterada depois do teste",
+  "running": "Um teste está em andamento.",
+  "noSuite": "Este fluxo de trabalho não tem série de testes.",
+  "createSuite": "Criar uma série de testes"
+}

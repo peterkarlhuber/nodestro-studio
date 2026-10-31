@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { VersionSummary, Workflow } from "../api/types";
+import { TestStatus } from "../automation/TestStatus";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, IconButton, Modal, Spinner, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
@@ -124,6 +125,8 @@ export function VersionsDialog({
   const [note, setNote] = useState("");
   const [pending, setPending] = useState<VersionSummary | null>(null);
   const versions = useQuery({ queryKey: keys.versions(workflowId), queryFn: () => api.versions(workflowId), enabled: open && Boolean(workflowId) });
+  // The saved version the editor holds; its test status shows above the list (Q-1).
+  const current = open ? versions.data?.find((item) => item.current)?.number ?? null : null;
   const saveNow = useMutation({
     mutationFn: () => save(note.trim() || undefined),
     onSuccess: (id) => {
@@ -162,6 +165,7 @@ export function VersionsDialog({
           </Button>
         </div>
       </Field>
+      {current ? <TestStatus workflowId={workflowId} version={current} /> : null}
       {versions.isLoading ? <Spinner /> : null}
       {versions.error ? (
         <Callout tone="danger">

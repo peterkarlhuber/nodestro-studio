@@ -33,7 +33,7 @@ Entrambe procedono passo per passo come in Nodestro: stessi agenti, strumenti, r
 - i sotto-workflow nella versione attuale (vedi [Sotto-workflow](/docs/verzweigungen#unterworkflow)),
 - il modulo di input, da cui Nodestro genera lo schema della richiesta.
 
-Prima Nodestro verifica il workflow. Gli errori impediscono la pubblicazione; la finestra mostra gli avvisi (per esempio un limite di costo mancante o passaggi di approvazione). Le modifiche non salvate non vengono pubblicate: salva prima.
+Prima Nodestro verifica il workflow. Gli errori impediscono la pubblicazione; la finestra mostra gli avvisi (per esempio un limite di costo mancante o passaggi di approvazione). Le modifiche non salvate non vengono pubblicate: salva prima. Sotto compare il **risultato dei test** della versione per ogni [serie di test](/docs/automatisierung#testreihen) del workflow: *non testata*, *n su m superati* o *non aggiornato* se per ultima è stata testata un’altra versione o la serie è cambiata da allora. Il risultato è solo informativo; non impedisce la pubblicazione.
 
 Ogni pubblicazione riceve un numero progressivo e una nota facoltativa. Le modifiche successive nell’editor non cambiano mai una versione pubblicata. Arrivano nell’API solo alla pubblicazione successiva.
 

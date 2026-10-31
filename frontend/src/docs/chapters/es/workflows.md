@@ -204,7 +204,7 @@ Cada guardado que cambia algo se conserva como **versión** numerada con fecha y
 - **Diferencias** muestra qué cambiaría respecto al estado del editor: agentes, conexiones, nombre y ajustes.
 - **Restaurar** devuelve el flujo de trabajo a esa versión y guarda el resultado como **versión nueva**. Ninguna versión se sobrescribe ni se elimina.
 
-Las versiones son independientes de deshacer/rehacer, que solo vale dentro de una sesión en el editor. Las ejecuciones usan siempre el estado del momento de inicio. Si se elimina un flujo de trabajo, también se eliminan sus versiones.
+Las versiones son independientes de deshacer/rehacer, que solo vale dentro de una sesión en el editor. Las ejecuciones usan siempre el estado del momento de inicio. Si se elimina un flujo de trabajo, también se eliminan sus versiones. Arriba del historial aparece el **resultado de pruebas** de la versión guardada en cada serie de pruebas del flujo (como al [publicar](/docs/api-und-export#veroeffentlichen)).
 
 ## Importar y exportar {#import-export}
 <!-- keywords: exportar, importar, json, archivo, compartir, copia de seguridad, .nodestro.json -->

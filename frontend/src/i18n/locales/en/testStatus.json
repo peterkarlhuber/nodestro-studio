@@ -1,0 +1,12 @@
+{
+  "title": "Test result for version {{version}}",
+  "untested": "untested",
+  "passed": "{{passed}} of {{cases}} passed",
+  "outdated": "outdated",
+  "otherVersion": "version {{version}} was tested",
+  "unknownVersion": "tested version unknown",
+  "suiteChanged": "test series changed since the test",
+  "running": "A test run is in progress.",
+  "noSuite": "This workflow has no test series.",
+  "createSuite": "Create a test series"
+}

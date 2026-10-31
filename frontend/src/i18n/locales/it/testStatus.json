@@ -1,0 +1,12 @@
+{
+  "title": "Risultato dei test per la versione {{version}}",
+  "untested": "non testata",
+  "passed": "{{passed}} su {{cases}} superati",
+  "outdated": "non aggiornato",
+  "otherVersion": "è stata testata la versione {{version}}",
+  "unknownVersion": "versione testata sconosciuta",
+  "suiteChanged": "serie di test modificata dopo il test",
+  "running": "È in corso un test.",
+  "noSuite": "Questo workflow non ha una serie di test.",
+  "createSuite": "Crea una serie di test"
+}

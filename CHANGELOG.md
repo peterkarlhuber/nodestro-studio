@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Test status when publishing, Q-1 (2026-10-31)
+
+- Studio only, no pin change. The publish dialog shows, for the version about to be published, the latest result
+  of each test series of the workflow: *untested*, *n of m passed*, or *outdated* when the latest finished run tested
+  another version or the test series changed after it. The versions dialog shows the same for the saved version.
+  A test run started on the "current state" counts for the version saved last before it started. The result only
+  informs; it does not block publishing. Built from the existing `/api/benchmarks` routes (`automation/testStatus.ts`).
+- Texts in six languages (`testStatus`); the publishing and versions sections of the help describe it. The api e2e
+  suite checks the dialog without and with a test series.
+
 ### "Used in" for knowledge files, tools and memory spaces, UX-7 (2026-10-31)
 
 - The Knowledge page (under each file), a tool's details and a memory space show **Used in**: the saved workflows

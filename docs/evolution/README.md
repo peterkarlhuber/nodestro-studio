@@ -186,5 +186,6 @@ project owner.
 | UX-6a start-form file options as a *File options* section with a one-line summary | done | studio #26 `c629a3c` |
 | UX-6b run summary above the run details: steps, path through decisions, approvals, tools, failed step with a jump | done | studio #27 `5801cb6` |
 | UX-7 "used in" for knowledge files, tools and memory spaces, with a delete dialog that names the users | in review | api #17 `f55bd80`, sdk #15 `ba4ef84`, studio (this step) |
+| Q-1 test status in the publish dialog and the versions dialog | in review | studio (this step) |
 | UX-8 and later | open | — |
 

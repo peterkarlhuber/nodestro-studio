@@ -204,7 +204,7 @@ Ogni salvataggio che modifica qualcosa viene conservato come **versione** numera
 - **Differenze** mostra cosa cambierebbe rispetto allo stato nell’editor: agenti, connessioni, nome e impostazioni.
 - **Ripristina** riporta il workflow a quella versione e salva il risultato come **nuova versione**. Nessuna versione viene sovrascritta o eliminata.
 
-Le versioni sono indipendenti da annulla/ripeti, che vale solo all’interno di una sessione nell’editor. Le esecuzioni usano sempre lo stato al momento dell’avvio. Se un workflow viene eliminato, vengono eliminate anche le sue versioni.
+Le versioni sono indipendenti da annulla/ripeti, che vale solo all’interno di una sessione nell’editor. Le esecuzioni usano sempre lo stato al momento dell’avvio. Se un workflow viene eliminato, vengono eliminate anche le sue versioni. In cima alla cronologia compare il **risultato dei test** della versione salvata per ogni serie di test del workflow (come durante la [pubblicazione](/docs/api-und-export#veroeffentlichen)).
 
 ## Importare ed esportare {#import-export}
 <!-- keywords: esportare, importare, json, file, condividere, backup, .nodestro.json -->

@@ -1,0 +1,12 @@
+{
+  "title": "Resultado de pruebas de la versión {{version}}",
+  "untested": "sin probar",
+  "passed": "{{passed}} de {{cases}} superados",
+  "outdated": "desactualizado",
+  "otherVersion": "se probó la versión {{version}}",
+  "unknownVersion": "versión probada desconocida",
+  "suiteChanged": "la serie de pruebas cambió después de la prueba",
+  "running": "Hay una ejecución de prueba en curso.",
+  "noSuite": "Este flujo de trabajo no tiene serie de pruebas.",
+  "createSuite": "Crear una serie de pruebas"
+}
