@@ -108,6 +108,15 @@ The orchestration plan gives sub-agents and orchestrated steps a set of granted 
 - A grant never turns `ask` into `allow`. Only a person can do that, per call or as a start grant.
 - AO-3's default autonomy ("side-effect or critical actions need approval, read-only allowed within limits") is
   exactly `auto` on every binding of an orchestrated agent.
+- Grants are a plain set of tool names (MCP tools by their name `mcp__<slug>__<tool>`). Count and cost limits are not
+  part of grants; they belong to the budget and limit model (AO-12 reservations, `orkexa.flow` limits).
+- Grants are derived again from the stored orchestration scope at every call, also after delegation and resume, and
+  never cached in the agent. A `tool.not_granted` denial records the scope that refused it (node id or orchestrator
+  invocation id), so the trace shows who narrowed the set.
+- When the orchestrator selects or parametrizes an agent (AO-5), bindings may only get stricter (`never` → `auto` →
+  `always`); a value that loosens is refused. Created agents (the admin-locked stage) start with `auto` everywhere.
+- Unattended orchestrated runs deny `ask` calls at once like any other unattended run; there is no orchestrator
+  exception. Waiting counts toward a flow's `max_duration_s`.
 
 ### 3.4 MCP (WP-5)
 
@@ -173,5 +182,6 @@ Pins move bottom-up once per step, coordinated with the other threads as usual.
 - MCP thread: answered 2026-10-31 (agrees with the model and D10a–e; points 1–7 are folded into §3.1, §3.2, §3.4 and
   §4). Until S-2a lands, MCP codes against a `ToolCapability`-shaped `McpService.capability(tool)` and keeps non-read
   MCP tools refused.
-- Orchestration thread: is `grants` per call context enough for M2 governance, or do grants need to carry limits
-  (count, cost) per tool? Should the waiting in `before_tool` move into the flow kernel later as a checkpoint?
+- Orchestration thread: answered 2026-10-31 (agrees with §3–§5 and D10a–e). Grants stay a name set, with limits in
+  AO-12; additions folded into §3.3. A kernel checkpoint replaces waiting in `before_tool` only after M4 (it needs a
+  stored agent conversation).
