@@ -58,7 +58,9 @@ Changing a statement creates a new tool version, so releases and test results ke
 Each tool binding of an agent gets `ask: "auto" | "always" | "never"`:
 
 - `auto` (default for new bindings): ask when `access` is not `read`.
-- `always`: ask for every call; `never`: never ask (allowed for `destructive` only with a recorded reason, like D6a).
+- `always`: ask for every call.
+- `never`: never ask. Allowed for `write` + `external` only with a recorded reason (like D6a), and not allowed at
+  all for `destructive` + `external`.
 
 ### 3.2 Runtime semantics
 
@@ -72,8 +74,12 @@ decide(capability, binding, run context, grants) -> allow | deny(code, reason) |
 - **deny**: the reason goes back to the model as the tool's error result (orkexa behavior), with a stable code
   (`tool.denied_by_policy`, `tool.not_granted`, `tool.approval_rejected`, `tool.approval_timeout`,
   `tool.approval_unattended`). The run continues; the trace shows the denial.
-- **ask**: the node gets a pending `ToolApprovalRequest` (call id, tool, capability, input with credentials
-  redacted for display, requested at, deadline). The run shows as *waiting for approval*, and the agent's thread
+- **ask**: the node gets a pending `ToolApprovalRequest` (call id, tool, capability, `definition_hash` (MCP; `None`
+  for other tools), the arguments that will be sent, requested at, deadline). The card shows the exact arguments:
+  only credential-like values are redacted, each redaction is marked, and nothing is truncated silently (for MCP
+  the arguments are the exfiltration channel, threat model T2/T6). An approval binds to these arguments and to the
+  definition hash; if the definition changed before execution, the call is refused (`mcp.tool_changed`), never
+  re-used. The run shows as *waiting for approval*, and the agent's thread
   **waits in `before_tool`** for the decision. Approve runs the call; reject denies it with the person's comment.
   The decision is recorded on the `ToolCallRecord` (who, when, comment) and in the run history.
 - **Deadline**: default 15 minutes, configurable per workflow up to 24 hours. When it passes, the call is denied
@@ -82,7 +88,10 @@ decide(capability, binding, run context, grants) -> allow | deny(code, reason) |
   decision is not reused, because the model may ask for a different call.
 - **Unattended runs** (schedule, batch, test series, published API without a person): `ask` cannot be answered, so
   the call is denied at once (`tool.approval_unattended`) unless the start confirmation granted the tool for this
-  start. That extends today's `confirm_external` from "all own tools" to a per-tool grant.
+  start. That extends today's `confirm_external` from "all own tools" to a per-tool grant. Start grants never cover
+  MCP tools, and until the MCP security acceptance (ADR-0007 D-7) MCP tools are denied in unattended runs, read
+  tools included (`CallContext.mcp_unattended`, default `false`).
+- **Timeouts**: a tool's own call timeout (for example MCP's) starts after the approval, not when it was asked.
 - **Published APIs**: a key with the `approve` scope can decide, like approval nodes today.
 
 Why waiting in `before_tool` and not pausing the run: a pause between tool calls cannot be continued after a restart
@@ -102,7 +111,11 @@ The orchestration plan gives sub-agents and orchestrated steps a set of granted 
 
 ### 3.4 MCP (WP-5)
 
-MCP tools supply their `ToolCapability` from the administrator's classification and pass through the same `decide`.
+MCP tools supply their `ToolCapability` from the administrator's classification (`access` read, write or
+destructive; `reach` always `external`; `source` `admin`; unclassified = `write` + `external`) and pass through the
+same `decide`. Before `decide`, the MCP adapter keeps its own preconditions: the server is enabled, the tool is
+approved, and the approved definition hash equals the one the server lists right before the call. These are refusals
+with `mcp.*` codes, not approvals.
 The MVP's "read-only tools only" rule (ADR-0007 D-2) becomes the policy "MCP tools with `access` ≠ `read` are denied
 until WP-5". After WP-5 they can be used with `ask`. No MCP-specific approval path exists.
 
@@ -113,7 +126,8 @@ A new module `nodestro_runtime/tool_policy.py` (pure functions plus one waiter):
 ```python
 class ToolCapability(BaseModel): access, reach, source
 class ToolBinding(BaseModel): name, ask = "auto"            # per agent tool
-class CallContext(BaseModel): run_id, node_id, trigger, attended, grants: set[str] | None, start_grants: set[str]
+class CallContext(BaseModel): run_id, node_id, trigger, attended, grants: set[str] | None, start_grants: set[str],
+                              mcp_unattended: bool = False
 class GateDecision(BaseModel): action: "allow" | "deny" | "ask", code: str | None, reason: str | None
 
 def capability_of(tool: ToolInfo | ServerTool, *, isolation) -> ToolCapability
@@ -156,7 +170,8 @@ Pins move bottom-up once per step, coordinated with the other threads as usual.
 
 ## 7. Questions for the review
 
-- MCP thread: does WP-5 need anything beyond `ToolCapability` from the admin classification and `decide`? Are
-  MCP `destructiveHint` tools allowed at all after WP-5, or only with `always`?
+- MCP thread: answered 2026-10-31 (agrees with the model and D10a–e; points 1–7 are folded into §3.1, §3.2, §3.4 and
+  §4). Until S-2a lands, MCP codes against a `ToolCapability`-shaped `McpService.capability(tool)` and keeps non-read
+  MCP tools refused.
 - Orchestration thread: is `grants` per call context enough for M2 governance, or do grants need to carry limits
   (count, cost) per tool? Should the waiting in `before_tool` move into the flow kernel later as a checkpoint?
