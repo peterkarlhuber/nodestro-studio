@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Tools and settings use the shared section, UX-5b (2026-10-31)
+
+- Studio only, no pin change. A custom tool's *View code and tests*, the attempts of a generated tool, the versions
+  of the diagnosis and the list of local backups are now `Section`s, with the same chevron and title as the rest of
+  the studio (finding F5). Before, the code section imitated `Section` without its chevron and the others were small
+  unstyled disclosures. Content and order are unchanged; all four start closed as before.
+- Left as plain `<details>` on purpose: the sandbox output of a tool check, the provenance of a knowledge file and
+  the details of one diagnostic check. They reveal one value in place and are not sections.
+
 ### Releases, M6 (2026-10-31)
 
 - Docs and metadata only, no pin change. New `docs/desktop-server/RELEASES.md` covers:
