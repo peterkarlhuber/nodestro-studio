@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Pins: runtime d2cb987 (2026-10-31)
+
+- One cascade, agreed with the PRICING-1 thread: nodestro-runtime `d2cb987` (before `45e7774`; strict price-mode
+  refusals get their own error codes), nodestro-examples `1c2f1e4` (before `786c453`), nodestro-integrations
+  `9221d46` (before `4c5edff`), nodestro-api `1c34474` (before `3c0ffa2`), nodestro-sdk `5974075` (before `82e1d77`),
+  in `pyproject.toml` and `platform/versions.json`. The `products` section is unchanged. No studio code changes.
+
 ### Release gate, evolution plan Q-3 (2026-10-31)
 
 - **API dialog → Limits → Release gate** (opt-in per published API): choose test series, the minimum share of passed
