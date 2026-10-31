@@ -1,7 +1,8 @@
 # ADR-0007: MCP client for external tools
 
-- Status: Proposed (draft, MCP-0 work package WP-0, 2026-10-31). Decisions D-1 to D-8 were approved by Peter on
-  2026-10-31; this record writes them down. It becomes Accepted when WP-1 is approved.
+- Status: Accepted (2026-10-31). Decisions D-1 to D-8 were approved by Peter on 2026-10-31; this record writes them
+  down. Accepting it accepts the architecture; the technical security acceptance of the implementation is a separate
+  later step (see the [threat model](../mcp/threat-model.md)).
 - Repositories: nodestro-runtime (client, tool adapter, execution, policies), nodestro-api and nodestro-sdk
   (management interface), nodestro-studio (user interface), nodestro-desktop and nodestro-server (secure storage,
   operation, isolation). orkexa: unchanged.
@@ -64,8 +65,8 @@ Facts from the code (runtime `d2cb987`, orkexa `76883f7`):
    sandbox, no host execution when isolation is missing, no switch that marks a server as trusted.
 7. **D-7 Unattended use.** Read-only, approved MCP tools may run in schedules once the MVP security acceptance has
    passed. Published APIs get MCP support only with WP-9 (frozen tool definitions in release bundles).
-8. **D-8 Nodestro as an MCP server** for published workflows is a strategic goal (WP-11), not approved for
-   implementation.
+8. **D-8 Nodestro as an MCP server** for published workflows (WP-11) is approved for implementation, switched off by
+   default; an administrator must enable it deliberately.
 9. **Protocol versions.** The client uses the official Python SDK (`mcp` 2.x) and its automatic negotiation
    (`Client(mode="auto")`: `server/discover` probe at 2026-07-28, fallback to the `initialize` handshake). Own
    dual-era code is written only if the SDK version in use is shown to lack something needed (validated in WP-0:
@@ -79,13 +80,17 @@ Facts from the code (runtime `d2cb987`, orkexa `76883f7`):
 - The runtime gains a dependency on `mcp` (MIT); in the platform environment it adds 8 packages (`jsonschema`,
   `sse-starlette`, `mcp-types`, ...). The desktop bundle and license inventory must be updated in WP-1.
 - The SDK's default HTTP client follows redirects only within the endpoint's origin, but it does not check resolved
-  addresses: WP-1 passes its own HTTP client with an address check (private, loopback, link-local and metadata
-  addresses refused) and Nodestro's own timeouts (SDK default read timeout: 300 s).
+  addresses: WP-1 passes its own HTTP client whose connection step resolves the name, checks each address and connects
+  only to a checked address (no gap between resolution and connect; IPv4 and IPv6; TLS still verifies the host name;
+  environment proxies ignored), with Nodestro's own timeouts (SDK default read timeout: 300 s). Details: threat model,
+  T7 in detail.
 - `ToolInfo.kind` gains the value `mcp` (additive API change; SDK clients with a fixed enumeration must accept it).
 - Per-call approval (needed for tools that change data) is one mechanism for all tool kinds, shared with the
   Evolution plan's S-1/S-2 and the orchestration plan's grants, enforced in the runtime's `before_tool`.
-- Work packages WP-1 to WP-11 and WP-O need separate approval.
+- Work packages WP-1 to WP-11 were approved on 2026-10-31 as one implementation assignment; release, production
+  deployment and activation outside development configurations are not part of it.
 
 ## Revision history
 
 - 2026-10-31: draft (WP-0).
+- 2026-10-31: accepted; threat model T2 and T7 made precise.
