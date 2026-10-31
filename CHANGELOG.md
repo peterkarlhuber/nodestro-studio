@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Pins: flow kernel, loop connections, MCP provenance (2026-10-31)
+
+- One cascade for Adaptive Orchestration M1 (the engine on the `orkexa.flow` kernel and loop connections with
+  mandatory limits) and the MCP tool provenance (runtime #28): orkexa `456b92f` (before `76883f7`, via the runtime),
+  nodestro-runtime `b6b757b` (before `78d2899`), nodestro-examples `8a5862e` (before `6c88aa7`),
+  nodestro-integrations `3afd7e4` (before `f204d39`), nodestro-api `262fb4d` (before `5ca1c75`), nodestro-sdk
+  `25fff6d` (before `635fcff`). No studio change yet: the editor support for loops follows separately.
+
 ### Test case from a failed run (evolution plan Q-4, 2026-10-31)
 
 - The details of a failed run offer *Add as test case*. The dialog shows the test case the server proposes
