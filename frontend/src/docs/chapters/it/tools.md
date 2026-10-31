@@ -172,6 +172,24 @@ Il processo Python non è una barriera di sicurezza: il codice al suo interno gi
 
 Gli strumenti salvati prima di questa versione, e tutti gli strumenti dopo il ripristino di un backup, sono considerati di origine sconosciuta, anche quelli scritti da te, perché la loro origine non è stata registrata. Con l’isolamento continuano a funzionare. Una nuova versione di uno strumento simile, o una copia del suo codice in un nuovo strumento, mantiene questo stato.
 
+## Servizi collegati {#verbundene-dienste}
+<!-- keywords: mcp, model context protocol, servizio esterno, servizi collegati, server, token, approvazione, modificato -->
+
+Con il **Model Context Protocol (MCP)** colleghi servizi esterni, per esempio una ricerca di documenti o un sistema di ticket. I loro strumenti sono disponibili agli agenti come qualsiasi altro strumento, ma solo dopo il tuo esame. Li trovi in *Strumenti → Servizi collegati*.
+
+1. **Collegare un servizio:** nome e indirizzo dell'endpoint MCP (solo `https`), se serve un token di accesso. Sul desktop puoi consentire `http://127.0.0.1` per un server che sviluppi su questo computer.
+2. **Provare la connessione:** Nodestro negozia la versione del protocollo e recupera gli strumenti del servizio. Ogni strumento parte come **Nuovo**.
+3. **Esaminare e classificare:** vedi descrizione, parametri e indicazioni del servizio. È **testo estraneo**: Nodestro lo mostra, ma non lo tratta mai come un'istruzione. Classifica lo strumento: **Sola lettura**, **Modifica dati** o **Elimina o distrugge**. L'indicazione del servizio è solo un suggerimento; in caso di dubbio vale «Modifica dati».
+4. **Approvare:** solo allora gli agenti vedono lo strumento, come `mcp__<servizio>__<strumento>`. Lo assegni a un agente come qualsiasi altro strumento.
+
+Per ora si possono usare solo gli strumenti che classifichi come **sola lettura**; quelli che modificano dati restano bloccati finché non esiste l'approvazione per chiamata. Anche uno strumento di lettura riceve tutto ciò che l'agente gli invia: collega solo servizi a cui affidi questi dati.
+
+**Modifiche:** Nodestro conserva un'impronta di ogni definizione approvata e la verifica prima di ogni chiamata. Se il servizio modifica uno strumento, questo viene **bloccato**; le esecuzioni che lo usano falliscono con un messaggio chiaro. Vedi la modifica affiancata (approvato finora, offerto ora) e la approvi o la rifiuti.
+
+**I token di accesso** vengono salvati cifrati: sul desktop con una chiave del portachiavi del sistema operativo, sul server con la chiave del server, separatamente per ogni tenant. Senza un archivio sicuro delle chiavi, un token vale solo fino alla chiusura dell'app. I token non compaiono mai in workflow, esportazioni o registri.
+
+**Limiti:** Nodestro non si collega mai a indirizzi interni, locali o di metadati, verifica ogni indirizzo risolto nel momento in cui si collega e ignora le impostazioni proxy dell'ambiente. Su un server l'operatore consente gli indirizzi con `NODESTRO_MCP_ENDPOINTS`. Pianificazioni, lotti e API pubblicate usano strumenti dei servizi solo se l'operatore lo attiva espressamente. Nodestro non conosce il costo dei servizi esterni; appare come **sconosciuto**, mai come zero.
+
 ## Versioni ed eliminazione {#versionen}
 <!-- keywords: versione, eliminare, ritirare, revoke, aggiornare, sovrascrivere -->
 

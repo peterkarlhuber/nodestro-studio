@@ -28,7 +28,9 @@
     "running": "en curso …",
     "unfinished": "sin terminar",
     "input": "Entrada",
-    "output": "Resultado"
+    "output": "Resultado",
+    "mcp": "Servicio externo {{server}} · {{name}} · definición {{hash}}. Los argumentos se enviaron a este servicio; la respuesta es texto ajeno.",
+    "externalCostUnknown": "Coste del servicio: desconocido (no incluido en el coste de la ejecución)."
   },
   "stats": {
     "agents": "Agentes",

@@ -4,7 +4,8 @@
   "tabs": {
     "library": "Bibliothèque",
     "write": "Écrire soi-même",
-    "generate": "Créer avec l’IA"
+    "generate": "Créer avec l’IA",
+    "services": "Services connectés"
   },
   "sandbox": "Bac à sable",
   "sandboxNote": "Bac à sable pour tester et exécuter les outils personnels : {{sandbox}} (modifiable dans les réglages).",
@@ -14,7 +15,8 @@
   "kind": {
     "builtin": "Intégré",
     "custom": "Outil personnel",
-    "generated": "Créé par l’IA"
+    "generated": "Créé par l’IA",
+    "mcp": "Service externe"
   },
   "kindLabel": "Type d’outil",
   "trust": {
@@ -27,7 +29,8 @@
     "user-authored": "Écrit par vous : s’exécute dans un processus Python séparé, sans isolation, sur cet ordinateur.",
     "untrusted": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, ici dans le bac à sable Docker.",
     "untrustedBlocked": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, mais ni le bac à sable Linux intégré ni Docker n’est disponible. Les agents qui utilisent cet outil ne peuvent pas s’exécuter ; voir Réglages → Bac à sable.",
-    "untrustedBuiltin": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, ici dans le bac à sable Linux intégré (sans réseau, sans accès à vos fichiers ni à vos clés). Cela reste ainsi après votre validation."
+    "untrustedBuiltin": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, ici dans le bac à sable Linux intégré (sans réseau, sans accès à vos fichiers ni à vos clés). Cela reste ainsi après votre validation.",
+    "mcp": "Cet outil appartient au service connecté {{server}} (là-bas : {{name}}). Un appel envoie ses arguments à ce service ; la réponse est un texte étranger, jamais une instruction."
   },
   "version": "Version {{version}}",
   "deleted": "Outil {{name}} supprimé",
@@ -96,5 +99,129 @@
     "label": "Brouillons d’outils",
     "text": "Ces outils ont été rédigés par l’architecte de workflows. Ils ne sont pas enregistrés et n’ont pas été exécutés. Les agents qui en ont besoin ne peuvent démarrer qu’après votre approbation."
   },
-  "sandboxBuiltin": "processus Python distinct ; outils créés par l’IA dans le bac à sable Linux intégré"
+  "sandboxBuiltin": "processus Python distinct ; outils créés par l’IA dans le bac à sable Linux intégré",
+  "services": {
+    "title": "Services connectés",
+    "intro": "Connecte des services externes via le Model Context Protocol (MCP). Un agent ne voit un outil qu'après que tu l'as examiné et approuvé.",
+    "add": "Connecter un service",
+    "addTitle": "Connecter un service",
+    "editTitle": "Modifier {{name}}",
+    "empty": "Aucun service connecté pour l'instant",
+    "emptyText": "Connecte un serveur MCP par son adresse. Teste ensuite la connexion et approuve ses outils un par un.",
+    "counts": "{{approved}} outils approuvés sur {{total}} · {{pending}} en attente d'examen",
+    "unavailable": "MCP n'est pas disponible dans cette installation (Python 3.11 ou plus récent requis). Les services peuvent être configurés, mais pas joints.",
+    "endpointList": "L'opérateur n'autorise que ces adresses : {{list}}",
+    "endpointListEmpty": "L'opérateur n'a autorisé aucune adresse pour MCP (NODESTRO_MCP_ENDPOINTS). Aucun service ne peut être connecté ici.",
+    "noVault": "Aucun coffre de clés sécurisé : les jetons d'accès ne sont pas enregistrés, seulement gardés en mémoire jusqu'à la fermeture de l'application.",
+    "readOnlyMvp": "Pour l'instant, seuls les outils que tu classes « lecture seule » sont utilisables.",
+    "writeEnabled": "Les outils qui modifient des données nécessitent une approbation à chaque appel.",
+    "unattendedOff": "Les planifications, les lots et les API publiées n'utilisent pas les outils des services.",
+    "unattendedOn": "L'opérateur a activé l'utilisation dans les exécutions sans personne.",
+    "disabled": "Désactivé",
+    "error": "Erreur",
+    "pending_one": "{{count}} en attente",
+    "pending_other": "{{count}} en attente",
+    "unchecked": "Non testé",
+    "connected": "Connecté",
+    "discovered_one": "Connexion correcte : {{count}} outil trouvé.",
+    "discovered_other": "Connexion correcte : {{count}} outils trouvés.",
+    "removed": "{{name}} a été supprimé.",
+    "saved": "{{name}} a été enregistré.",
+    "server": "Service {{name}}",
+    "protocol": "protocole {{version}}",
+    "checked": "vérifié {{when}}",
+    "auth": {
+      "none": "Sans connexion",
+      "bearer": "Jeton d'accès",
+      "oauth": "OAuth"
+    },
+    "storage": {
+      "none": "aucun jeton",
+      "vault": "jeton enregistré chiffré",
+      "session": "jeton pour cette session uniquement"
+    },
+    "loopbackOn": "serveur de développement local autorisé",
+    "edit": "Modifier",
+    "remove": "Supprimer le service",
+    "removeConfirm": "Supprimer ?",
+    "test": "Tester la connexion",
+    "enabled": "Activé",
+    "noTools": "Le service ne propose aucun outil.",
+    "waiting_one": "{{count}} outil attend ton examen",
+    "waiting_other": "{{count}} outils attendent ton examen",
+    "tools": "Outils du service",
+    "status": {
+      "new": "Nouveau",
+      "changed": "Modifié",
+      "approved": "Approuvé",
+      "rejected": "Refusé",
+      "removed": "Plus proposé"
+    },
+    "access": {
+      "read": "Lecture seule",
+      "write": "Modifie des données",
+      "destructive": "Supprime ou détruit"
+    },
+    "accessHint": {
+      "read": "Lecture seule : l'outil ne modifie rien chez le service ni ailleurs. Il reçoit tout de même les arguments envoyés par l'agent.",
+      "write": "Modifie des données : crée, modifie ou envoie quelque chose. En cas de doute, c'est la bonne classification.",
+      "destructive": "Supprime ou détruit : peut effacer des données définitivement."
+    },
+    "close": "Fermer",
+    "review": "Examiner",
+    "usable": "Les agents peuvent l'utiliser sous le nom {{name}}.",
+    "approvedToast": "{{name}} est approuvé.",
+    "rejectedToast": "{{name}} est refusé.",
+    "changedText": "Le service a modifié cet outil. Il est bloqué jusqu'à ce que tu examines la modification ; les exécutions qui l'utilisent échouent.",
+    "field": {
+      "title": "Titre",
+      "description": "Description",
+      "input_schema": "Paramètres",
+      "output_schema": "Sortie",
+      "annotations": "Indications du service"
+    },
+    "before": "Approuvé jusqu'ici",
+    "after": "Proposé maintenant",
+    "description": "Description du service",
+    "foreignText": "Texte étranger venant du service : il est affiché, mais jamais traité comme une instruction.",
+    "noDescription": "Aucune description.",
+    "schema": "Paramètres et indications",
+    "classify": "Classification",
+    "suggested": "Le service indique : {{access}}. C'est un indice, pas une garantie.",
+    "writeBlocked": "Les outils qui modifient des données restent bloqués jusqu'à ce que l'approbation par appel soit disponible.",
+    "argumentsNote": "Le service voit tout ce que l'agent lui envoie. Ne connecte que des services auxquels tu confies ces données.",
+    "approve": "Approuver",
+    "acceptChange": "Approuver la modification",
+    "reject": "Refuser",
+    "approvedBy": "Approuvé par {{who}} le {{when}}",
+    "hash": "Empreinte de la définition :",
+    "name": "Nom",
+    "url": "Adresse",
+    "urlHint": "L'adresse du point de terminaison MCP, p. ex. https://mcp.example.com/mcp. https uniquement.",
+    "authLabel": "Connexion",
+    "token": "Jeton d'accès",
+    "tokenVault": "Enregistré chiffré et jamais réaffiché.",
+    "tokenSession": "Aucun coffre de clés sécurisé : le jeton ne vaut que jusqu'à la fermeture de l'application.",
+    "tokenKept": "Enregistré – laisse vide pour le conserver",
+    "tokenRemove": "Supprimer le jeton enregistré",
+    "loopback": "Autoriser un serveur de développement local",
+    "loopbackHint": "Autorise http sur cet ordinateur (127.0.0.1) pour un serveur que tu développes toi-même.",
+    "timeout": "Délai par appel (secondes)",
+    "events": "Journal",
+    "noEvents": "Aucune entrée pour l'instant.",
+    "event": {
+      "server_added": "Service connecté",
+      "server_changed": "Service modifié",
+      "server_removed": "Service supprimé",
+      "token_changed": "Jeton modifié",
+      "tools_discovered": "Outils récupérés",
+      "tool_approved": "Outil approuvé",
+      "tool_rejected": "Outil refusé",
+      "tool_changed": "Outil modifié par le service",
+      "tool_removed": "Outil plus proposé",
+      "call_refused": "Appel refusé",
+      "oauth_connected": "OAuth connecté",
+      "oauth_disconnected": "OAuth déconnecté"
+    }
+  }
 }

@@ -79,7 +79,8 @@
     "generate": "Um agente de programação escreve a função e os testes (até três tentativas). Só depois da sua aprovação a ferramenta fica disponível para todos os agentes. Custa tokens de API.",
     "approve": "Ferramentas aprovadas podem ser usadas por todos os agentes. Antes, verifique se o código e os testes fazem o que você espera. Sem decisão, um pedido é recusado após uma hora.",
     "sandbox": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro, mas isoladas, com limites de tempo e de memória.",
-    "drafts": "Ferramentas escritas pelo arquiteto de fluxos. Teste e aprove aqui, ou rejeite."
+    "drafts": "Ferramentas escritas pelo arquiteto de fluxos. Teste e aprove aqui, ou rejeite.",
+    "services": "Serviços externos via MCP: você conecta um servidor, testa a conexão e aprova cada ferramenta depois de revisá-la. Se o serviço alterar uma ferramenta, ela fica bloqueada até você revisar a alteração."
   },
   "knowledge": {
     "upload": "PDFs, imagens (PNG, JPEG, GIF, WebP) e formatos de texto. Imagens de até 5 MB, documentos de até 20 MB. Textos e PDFs são indexados para a pesquisa.",

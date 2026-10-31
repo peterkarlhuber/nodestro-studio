@@ -599,5 +599,32 @@
   "testcase": {
     "run_not_failed": "Seule une exécution échouée peut devenir un cas de test.",
     "run_unsupported": "Les exécutions importées et celles de sous-workflows ne peuvent pas devenir un cas de test."
+  },
+  "mcp": {
+    "address_refused": "L'adresse {{host}} n'est pas autorisée (adresse interne, locale ou de métadonnées).",
+    "cancelled": "L'appel au service a été annulé.",
+    "closed": "La connexion au service a été fermée.",
+    "definition_moved": "L'outil a changé depuis ton examen. Examine-le à nouveau.",
+    "dns_failed": "Le nom {{host}} n'a pas pu être résolu.",
+    "endpoint_not_allowed": "Cette adresse ne figure pas sur la liste de l'opérateur.",
+    "endpoints_invalid": "La liste d'adresses de l'opérateur (NODESTRO_MCP_ENDPOINTS) n'est pas valide.",
+    "http_error": "Le service a répondu avec HTTP {{status}}.",
+    "https_required": "Les services ne sont joints qu'en https (http uniquement pour un serveur de développement local sur cet ordinateur).",
+    "protocol_error": "Le service n'a pas répondu comme un serveur MCP.",
+    "server_disabled": "Le service est désactivé.",
+    "server_not_found": "Ce service n'existe plus.",
+    "timeout": "Le service n'a pas répondu à temps.",
+    "tool_changed": "Le service a modifié l'outil ; il est bloqué jusqu'à ce qu'un administrateur examine la modification.",
+    "tool_not_approved": "L'outil n'est pas encore approuvé.",
+    "tool_not_found": "Le service ne propose pas cet outil.",
+    "tool_removed": "Le service ne propose plus cet outil.",
+    "unattended_not_enabled": "Les exécutions sans personne ne peuvent pas utiliser les outils des services.",
+    "unauthorized": "Le service a refusé la connexion. Vérifie le jeton d'accès.",
+    "unavailable": "MCP n'est pas disponible dans cette installation.",
+    "unreachable": "Le service est injoignable.",
+    "url_credentials": "L'adresse ne doit contenir ni nom d'utilisateur ni mot de passe.",
+    "url_invalid": "L'adresse n'est pas valide.",
+    "vault_unavailable": "Il n'existe aucun stockage sécurisé pour les jetons d'accès.",
+    "write_not_supported": "Les outils qui modifient des données sont encore bloqués (l'approbation par appel manque)."
   }
 }

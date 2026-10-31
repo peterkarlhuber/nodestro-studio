@@ -599,5 +599,32 @@
   "testcase": {
     "run_not_failed": "Solo una ejecución fallida puede añadirse como caso de prueba.",
     "run_unsupported": "Las ejecuciones importadas y las de subflujos no pueden añadirse como caso de prueba."
+  },
+  "mcp": {
+    "address_refused": "La dirección {{host}} no está permitida (dirección interna, local o de metadatos).",
+    "cancelled": "Se canceló la llamada al servicio.",
+    "closed": "Se cerró la conexión con el servicio.",
+    "definition_moved": "La herramienta ha cambiado desde tu revisión. Revísala de nuevo.",
+    "dns_failed": "No se pudo resolver el nombre {{host}}.",
+    "endpoint_not_allowed": "Esta dirección no está en la lista del operador.",
+    "endpoints_invalid": "La lista de direcciones del operador (NODESTRO_MCP_ENDPOINTS) no es válida.",
+    "http_error": "El servicio respondió con HTTP {{status}}.",
+    "https_required": "Los servicios solo se alcanzan por https (http solo para un servidor de desarrollo local en este equipo).",
+    "protocol_error": "El servicio no respondió como un servidor MCP.",
+    "server_disabled": "El servicio está desactivado.",
+    "server_not_found": "Este servicio ya no existe.",
+    "timeout": "El servicio no respondió a tiempo.",
+    "tool_changed": "El servicio modificó la herramienta; queda bloqueada hasta que un administrador revise el cambio.",
+    "tool_not_approved": "La herramienta aún no está aprobada.",
+    "tool_not_found": "El servicio no ofrece esta herramienta.",
+    "tool_removed": "El servicio ya no ofrece esta herramienta.",
+    "unattended_not_enabled": "Las ejecuciones sin una persona no pueden usar herramientas de servicios.",
+    "unauthorized": "El servicio rechazó el inicio de sesión. Comprueba el token de acceso.",
+    "unavailable": "MCP no está disponible en esta instalación.",
+    "unreachable": "No se puede alcanzar el servicio.",
+    "url_credentials": "La dirección no puede contener usuario ni contraseña.",
+    "url_invalid": "La dirección no es válida.",
+    "vault_unavailable": "No hay un almacén seguro para tokens de acceso.",
+    "write_not_supported": "Las herramientas que modifican datos siguen bloqueadas (falta la aprobación por llamada)."
   }
 }

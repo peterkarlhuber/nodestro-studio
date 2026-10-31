@@ -599,5 +599,32 @@
   "testcase": {
     "run_not_failed": "Only a failed run can be added as a test case.",
     "run_unsupported": "Imported runs and runs of sub-workflows cannot be added as a test case."
+  },
+  "mcp": {
+    "address_refused": "The address {{host}} is not allowed (internal, local or metadata address).",
+    "cancelled": "The call to the service was cancelled.",
+    "closed": "The connection to the service was closed.",
+    "definition_moved": "The tool has changed since your review. Review it again.",
+    "dns_failed": "The name {{host}} could not be resolved.",
+    "endpoint_not_allowed": "This address is not on the operator's list.",
+    "endpoints_invalid": "The operator's address list (NODESTRO_MCP_ENDPOINTS) is invalid.",
+    "http_error": "The service answered with HTTP {{status}}.",
+    "https_required": "Services are reached over https only (http only for a local development server on this computer).",
+    "protocol_error": "The service did not answer like an MCP server.",
+    "server_disabled": "The service is switched off.",
+    "server_not_found": "This service no longer exists.",
+    "timeout": "The service did not answer in time.",
+    "tool_changed": "The service changed the tool; it is blocked until an administrator reviews the change.",
+    "tool_not_approved": "The tool is not approved yet.",
+    "tool_not_found": "The service does not offer this tool.",
+    "tool_removed": "The service no longer offers this tool.",
+    "unattended_not_enabled": "Runs without a person may not use service tools.",
+    "unauthorized": "The service refused the sign-in. Check the access token.",
+    "unavailable": "MCP is not available in this installation.",
+    "unreachable": "The service cannot be reached.",
+    "url_credentials": "The address must not contain a user name or password.",
+    "url_invalid": "The address is invalid.",
+    "vault_unavailable": "There is no secure store for access tokens.",
+    "write_not_supported": "Tools that change data are still blocked (approval per call is missing)."
   }
 }
