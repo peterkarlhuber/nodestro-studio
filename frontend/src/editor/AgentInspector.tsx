@@ -15,7 +15,7 @@ import {
   FlaskConical,
 } from "lucide-react";
 import type { TFunction } from "i18next";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -47,6 +47,7 @@ import {
   Hint,
   IconButton,
   Section,
+  type SectionStatus,
   Segmented,
   Select,
   TextArea,
@@ -62,6 +63,14 @@ import { providerOf, sameModel } from "../lib/providers";
 import { ProblemText } from "../lib/errors";
 import { helpEntry } from "../lib/help";
 import { fieldNameProblem } from "../lib/validation";
+import {
+  type AgentSectionId,
+  advancedSummary,
+  knowledgeSummary,
+  sectionStatus,
+  thinkingSummary,
+  unroutedIssues,
+} from "./agentSummaries";
 import { useEditor } from "./store";
 
 // Option values are what the library expects; labels come from agent.options.* in the language files.
@@ -69,6 +78,18 @@ const EFFORTS = ["", "low", "medium", "high", "xhigh", "max"] as const;
 const THINKING = ["", "adaptive", "between_tools", "disabled"] as const;
 const THINKING_DISPLAY = ["", "summarized", "updates", "omitted"] as const;
 const FIELD_TYPES: OutputFieldType[] = ["string", "number", "integer", "boolean", "string_list", "number_list"];
+
+/** The sections in the order of the form, with their titles (for the problem links at the top). */
+const SECTION_ORDER: AgentSectionId[] = ["tools", "knowledge", "memory", "output", "thinking", "quality", "advanced"];
+const SECTION_TITLE: Record<AgentSectionId, string> = {
+  tools: "agent.tools.title",
+  knowledge: "agent.knowledge.title",
+  memory: "agent.memory.title",
+  output: "agent.output.title",
+  thinking: "agent.thinking.title",
+  quality: "agent.quality.title",
+  advanced: "agent.advanced.title",
+};
 
 /** Select options from option values; "" is the model default. */
 function options(t: TFunction, group: string, values: readonly string[]) {
@@ -201,10 +222,32 @@ export function AgentForm({
   const [testOpen, setTestOpen] = useState(false);
   const update = onChange;
 
-  const general = issues.filter((issue) => !issue.field && issue.level === "error");
+  const general = [...issues.filter((issue) => !issue.field && issue.level === "error"), ...unroutedIssues(issues)];
+  const root = useRef<HTMLDivElement>(null);
+  // Undefined: the section keeps its own state; set once the user toggles it or a problem link opens it.
+  const [openSections, setOpenSections] = useState<Partial<Record<AgentSectionId, boolean>>>({});
+  const ui = (id: AgentSectionId): SectionUi => ({
+    id,
+    open: openSections[id],
+    onToggle: (open) => setOpenSections((current) => ({ ...current, [id]: open })),
+    status: sectionStatus(issues, id),
+  });
+  const withProblems = SECTION_ORDER.filter((id) => {
+    const status = sectionStatus(issues, id);
+    return Boolean(status.errors || status.warnings);
+  });
+  const showSection = (id: AgentSectionId) => {
+    setOpenSections((current) => ({ ...current, [id]: true }));
+    // After React has opened it: bring it into view and put the focus on its first control.
+    window.requestAnimationFrame(() => {
+      const section = root.current?.querySelector<HTMLElement>(`[data-section="${id}"]`);
+      section?.scrollIntoView?.({ block: "nearest" });
+      section?.querySelector<HTMLElement>(".section__body input, .section__body select, .section__body textarea, .section__body button")?.focus();
+    });
+  };
 
   return (
-    <div className="inspector__content">
+    <div className="inspector__content" ref={root}>
       <div className="inspector__head">
         <IconPicker value={agent.icon} onChange={(icon) => update({ icon })} />
         <div className="inspector__title">
@@ -239,10 +282,30 @@ export function AgentForm({
       </div>
 
       {general.map((issue) => (
-        <Callout key={issue.message} tone="danger">
+        <Callout key={issue.message} tone={issue.level === "warning" ? "warning" : "danger"}>
           <ProblemText item={issue} />
         </Callout>
       ))}
+
+      {withProblems.length ? (
+        <div className="section-problems" role="group" aria-label={t("agent.summary.problemsIn")}>
+          <span className="muted small">{t("agent.summary.problemsIn")}</span>
+          {withProblems.map((id) => {
+            const status = sectionStatus(issues, id);
+            return (
+              <button key={id} type="button" className="chip chip--button" onClick={() => showSection(id)}>
+                {t(SECTION_TITLE[id])}:{" "}
+                {[
+                  status.errors ? t("common.sectionErrors", { count: status.errors }) : "",
+                  status.warnings ? t("common.sectionWarnings", { count: status.warnings }) : "",
+                ]
+                  .filter(Boolean)
+                  .join(", ")}
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
 
       <Field
         label={t("agent.model")}
@@ -301,13 +364,13 @@ export function AgentForm({
 
       {preview}
 
-      <ToolsSection agent={agent} update={update} issues={issues} />
-      <KnowledgeSection agent={agent} update={update} issues={issues} />
-      <MemorySection agent={agent} update={update} onAssistant={() => setMemoryOpen(true)} />
-      <OutputSection agent={agent} update={update} />
-      <ThinkingSection agent={agent} update={update} />
-      <QualitySection agent={agent} update={update} issues={issues} />
-      <AdvancedSection agent={agent} update={update} modelOptions={modelOptions} />
+      <ToolsSection agent={agent} update={update} issues={issues} ui={ui("tools")} />
+      <KnowledgeSection agent={agent} update={update} issues={issues} ui={ui("knowledge")} />
+      <MemorySection agent={agent} update={update} onAssistant={() => setMemoryOpen(true)} ui={ui("memory")} />
+      <OutputSection agent={agent} update={update} ui={ui("output")} />
+      <ThinkingSection agent={agent} update={update} ui={ui("thinking")} />
+      <QualitySection agent={agent} update={update} issues={issues} ui={ui("quality")} />
+      <AdvancedSection agent={agent} update={update} modelOptions={modelOptions} ui={ui("advanced")} />
 
       {issues
         .filter((issue) => issue.level === "info")
@@ -373,10 +436,19 @@ function IconPicker({ value, onChange }: { value: string; onChange: (value: stri
   );
 }
 
+/** What a section of the form needs to be opened from outside and to show its problems while closed. */
+interface SectionUi {
+  id: AgentSectionId;
+  open: boolean | undefined;
+  onToggle: (open: boolean) => void;
+  status: SectionStatus;
+}
+
 interface SectionProps {
   agent: AgentConfig;
   update: (patch: Partial<AgentConfig>) => void;
   issues?: ConfigIssue[];
+  ui: SectionUi;
 }
 
 /** Options only Anthropic offers: for another provider a note instead, unless a value is set (to reset it). */
@@ -386,7 +458,7 @@ function AnthropicOnly({ agent, set, children }: { agent: AgentConfig; set: bool
   return <p className="field__hint">{t("agent.anthropicOnly")}</p>;
 }
 
-function ToolsSection({ agent, update, issues = [] }: SectionProps) {
+function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
   const { t } = useTranslation();
   const tools = useTools();
   const meta = useMeta();
@@ -394,6 +466,7 @@ function ToolsSection({ agent, update, issues = [] }: SectionProps) {
   const count = agent.tools.length + agent.server_tools.length;
   return (
     <Section
+      {...ui}
       title={t("agent.tools.title")}
       icon={Wrench}
       tip="agent.tools"
@@ -452,7 +525,7 @@ function ToolsSection({ agent, update, issues = [] }: SectionProps) {
   );
 }
 
-function KnowledgeSection({ agent, update, issues = [] }: SectionProps) {
+function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
   const { t } = useTranslation();
   const [query, setQuery] = useState("");
   const knowledge = useKnowledge();
@@ -466,10 +539,11 @@ function KnowledgeSection({ agent, update, issues = [] }: SectionProps) {
   const setProposals = (patch: Partial<KnowledgeProposalConfig>) => update({ knowledge_proposals: { ...proposals, ...patch } });
   return (
     <Section
+      {...ui}
       title={t("agent.knowledge.title")}
       icon={BookOpen}
       tip="agent.knowledge"
-      summary={assigned.length ? t("agent.knowledge.files", { count: assigned.length }) : t("common.none")}
+      summary={knowledgeSummary(t, agent, assigned.length)}
       // From the configuration, not the loaded file list: the default applies once, when the section mounts.
       defaultOpen={agent.knowledge.file_ids.length > 0}
     >
@@ -563,7 +637,7 @@ function KnowledgeSection({ agent, update, issues = [] }: SectionProps) {
   );
 }
 
-function MemorySection({ agent, update, onAssistant }: SectionProps & { onAssistant: () => void }) {
+function MemorySection({ agent, update, onAssistant, ui }: SectionProps & { onAssistant: () => void }) {
   const { t } = useTranslation();
   const spaces = useMemorySpaces();
   const [newSpace, setNewSpace] = useState("");
@@ -571,7 +645,7 @@ function MemorySection({ agent, update, onAssistant }: SectionProps & { onAssist
   const label =
     agent.memory.mode === "persistent" && agent.memory.space ? agent.memory.space : t(`agent.memory.summary.${agent.memory.mode}`);
   return (
-    <Section title={t("agent.memory.title")} icon={Brain} tip="agent.memory" summary={label} defaultOpen={agent.memory.mode !== "none"}>
+    <Section {...ui} title={t("agent.memory.title")} icon={Brain} tip="agent.memory" summary={label} defaultOpen={agent.memory.mode !== "none"}>
       <Segmented
         label={t("agent.memory.modeLabel")}
         value={agent.memory.mode}
@@ -638,7 +712,7 @@ function MemorySection({ agent, update, onAssistant }: SectionProps & { onAssist
   );
 }
 
-function OutputSection({ agent, update }: SectionProps) {
+function OutputSection({ agent, update, ui }: SectionProps) {
   const { t } = useTranslation();
   const output = agent.output;
   const setOutput = (patch: Partial<AgentConfig["output"]>) => update({ output: { ...output, ...patch } });
@@ -647,6 +721,7 @@ function OutputSection({ agent, update }: SectionProps) {
   const names = output.fields.map((field) => field.name);
   return (
     <Section
+      {...ui}
       title={t("agent.output.title")}
       icon={FileJson}
       tip="agent.output"
@@ -766,13 +841,14 @@ function OutputSection({ agent, update }: SectionProps) {
   );
 }
 
-function ThinkingSection({ agent, update }: SectionProps) {
+function ThinkingSection({ agent, update, ui }: SectionProps) {
   const { t } = useTranslation();
   return (
     <Section
+      {...ui}
       title={t("agent.thinking.title")}
       icon={Gauge}
-      summary={t(`agent.options.effortShort.${agent.effort ?? "default"}`)}
+      summary={thinkingSummary(t, agent)}
     >
       <Field label={t("agent.thinking.effort")} tip="agent.effort" hint={t("agent.thinking.effortHint")}>
         <Select
@@ -806,12 +882,13 @@ function ThinkingSection({ agent, update }: SectionProps) {
   );
 }
 
-function QualitySection({ agent, update, issues = [] }: SectionProps) {
+function QualitySection({ agent, update, issues = [], ui }: SectionProps) {
   const { t } = useTranslation();
   const quality = agent.quality;
   const setQuality = (patch: Partial<AgentConfig["quality"]>) => update({ quality: { ...quality, ...patch } });
   return (
     <Section
+      {...ui}
       title={t("agent.quality.title")}
       icon={ShieldCheck}
       tip="agent.quality"
@@ -903,13 +980,14 @@ function AdvancedSection({
   agent,
   update,
   modelOptions,
+  ui,
 }: SectionProps & { modelOptions: { value: string; label: string; group?: string }[] }) {
   const { t } = useTranslation();
   const [optionsText, setOptionsText] = useState(() => JSON.stringify(agent.request_options, null, 2));
   const [optionsError, setOptionsError] = useState<{ key: string; detail?: string } | null>(null);
   const tools = [...agent.tools, ...agent.server_tools, ...(agent.memory.mode !== "none" ? ["memory"] : [])];
   return (
-    <Section title={t("agent.advanced.title")} icon={SlidersHorizontal} summary={t("agent.advanced.summary")}>
+    <Section {...ui} title={t("agent.advanced.title")} icon={SlidersHorizontal} summary={advancedSummary(t, agent)}>
       <div className="grid-2">
         <Field label={t("agent.advanced.maxTokens")} hint={t("agent.advanced.maxTokensHint")} tip="agent.maxTokens">
           <TextInput

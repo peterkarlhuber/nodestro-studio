@@ -1213,6 +1213,13 @@ details[open] > summary > .section__chevron {
   color: var(--nd-warning);
 }
 
+.section-problems {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
 .section__body {
   display: flex;
   flex-direction: column;

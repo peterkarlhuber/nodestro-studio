@@ -241,5 +241,24 @@
     "invalidJson": "Kein gültiges JSON.",
     "objectExpected": "Ein JSON-Objekt erwartet."
   },
-  "anthropicOnly": "Nur für Modelle von Anthropic verfügbar."
+  "anthropicOnly": "Nur für Modelle von Anthropic verfügbar.",
+  "summary": {
+    "problemsIn": "Probleme in",
+    "more": "+{{count}}",
+    "citations": "Zitate",
+    "proposals": "Vorschläge",
+    "defaults": "Standard",
+    "fallbacks_one": "{{count}} Ersatzmodell",
+    "fallbacks_other": "{{count}} Ersatzmodelle",
+    "forcedTool": "immer {{name}}",
+    "toolChoice": "Tools: {{choice}}",
+    "limits": "eigene Grenzen",
+    "noCaching": "kein Caching",
+    "cacheHour": "Cache 1 Std.",
+    "stopOnToolErrors": "stoppt bei Tool-Fehlern",
+    "refusalReturned": "Ablehnungen zurückgeben",
+    "examples_one": "{{count}} Beispielnachricht",
+    "examples_other": "{{count}} Beispielnachrichten",
+    "requestOptions": "Anfrageoptionen"
+  }
 }
