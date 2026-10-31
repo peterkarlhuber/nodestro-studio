@@ -577,5 +577,10 @@
     "stale_price": "O preço de {{model}} não é conferido há tempo demais; a solicitação não foi enviada (modo de preços rigoroso).",
     "price_unknown": "Nenhum preço é conhecido para {{model}}; a solicitação não foi enviada (modo de preços rigoroso).",
     "price_unreliable": "O preço de {{model}} não é confiável o suficiente; a solicitação não foi enviada (modo de preços rigoroso)."
+  },
+  "gate": {
+    "blocked": "O controle de publicação bloqueia esta versão. Teste exatamente esta versão com suas séries de testes.",
+    "override_required": "O controle de publicação não foi atendido. Informe um motivo para publicar mesmo assim.",
+    "suite_unknown": "Esta série de testes não pertence a este workflow."
   }
 }

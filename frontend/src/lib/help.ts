@@ -43,6 +43,8 @@ export const HELP_DOCS = {
   "publish.note": "api-und-export#veroeffentlichen",
   "publish.slug": "api-und-export#endpunkte",
   "publish.rollback": "api-und-export#versionen",
+  "publish.gate": "api-und-export#freigabe-gate",
+  "publish.gateOverride": "api-und-export#freigabe-gate",
   "publish.disable": "api-und-export#abschalten",
   "publish.keyName": "api-und-export#schluessel",
   "publish.scopes": "api-und-export#schluessel",

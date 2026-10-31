@@ -92,8 +92,10 @@ import type {
   NetworkConfig,
   NetworkStatus,
   NewApiKey,
+  GateReport,
   Publication,
   PublicationListItem,
+  ReleaseGate,
   ReleaseSummary,
   AdoptCheck,
   AdoptOutcome,
@@ -484,8 +486,21 @@ export const api = {
   apiOverview: (workflowId: string) => request<ApiOverview>("GET", `/workflows/${workflowId}/api`),
   apiCheck: (workflowId: string, version?: number | null) =>
     request<ApiCheck>("POST", `/workflows/${workflowId}/api/check`, { version: version ?? null }),
-  publishApi: (workflowId: string, body: { version?: number | null; note?: string; slug?: string | null; activate?: boolean }) =>
-    request<{ publication: Publication; release: ReleaseSummary }>("POST", `/workflows/${workflowId}/api/publish`, body),
+  publishApi: (
+    workflowId: string,
+    body: {
+      version?: number | null;
+      note?: string;
+      slug?: string | null;
+      activate?: boolean;
+      /** Release although non-critical gate items failed; the reason is recorded with the release. */
+      override?: { reason: string } | null;
+    },
+  ) => request<{ publication: Publication; release: ReleaseSummary }>("POST", `/workflows/${workflowId}/api/publish`, body),
+  releaseGate: (workflowId: string, version?: number | null, gate?: ReleaseGate | null) =>
+    request<GateReport>("POST", `/workflows/${workflowId}/api/gate`, { version: version ?? null, gate: gate ?? null }),
+  setReleaseGate: (publicationId: string, gate: ReleaseGate | null) =>
+    request<Publication>("PUT", `/publications/${publicationId}/gate`, { gate }),
   publications: () => request<PublicationListItem[]>("GET", "/publications"),
   updatePublication: (
     id: string,

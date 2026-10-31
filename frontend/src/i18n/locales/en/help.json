@@ -228,7 +228,9 @@
     "testRun": "Starts a real run of the published version through the API's own path; it is billed like any run.",
     "sync": "Lets clients wait for the result in one request (?wait=<seconds>), up to the time limit.",
     "library": "How the exported project gets Orkexa: from its Git repository, or as included source code (MIT license).",
-    "export": "Generates the project as a ZIP: runtime, workflow version, tests, examples and README. Nothing is sent anywhere."
+    "export": "Generates the project as a ZIP: runtime, workflow version, tests, examples and README. Nothing is sent anywhere.",
+    "gate": "Requires a current test result before every new version. Mandatory checks always block; weaker results can be released with a reason.",
+    "gateOverride": "The reason is stored with the version and in the API's history. Mandatory checks can never be skipped."
   },
   "inputs": {
     "field": "Files for this run: upload, drop or choose from knowledge. They are checked and stored for the run only, not in knowledge.",

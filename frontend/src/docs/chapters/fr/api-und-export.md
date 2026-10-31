@@ -33,9 +33,22 @@ Les deux s’exécutent étape par étape comme dans Nodestro : mêmes agents, o
 - les sous-workflows dans leur version actuelle (voir [Sous-workflows](/docs/verzweigungen#unterworkflow)),
 - le formulaire de saisie, à partir duquel Nodestro génère le schéma de la requête.
 
-Nodestro vérifie d’abord le workflow. Les erreurs empêchent la publication ; la boîte de dialogue affiche les avertissements (par exemple une limite de coût absente ou des étapes de validation). Les modifications non enregistrées ne sont pas publiées : enregistrez d’abord. En dessous figure le **résultat des tests** de la version pour chaque [série de tests](/docs/automatisierung#testreihen) du workflow : *non testée*, *n sur m réussis* ou *périmé* si une autre version a été testée en dernier ou si la série a changé depuis. Le résultat est informatif ; il n’empêche pas la publication.
+Nodestro vérifie d’abord le workflow. Les erreurs empêchent la publication ; la boîte de dialogue affiche les avertissements (par exemple une limite de coût absente ou des étapes de validation). Les modifications non enregistrées ne sont pas publiées : enregistrez d’abord. En dessous figure le **résultat des tests** de la version pour chaque [série de tests](/docs/automatisierung#testreihen) du workflow : *non testée*, *n sur m réussis* ou *périmé* si une autre version a été testée en dernier ou si la série a changé depuis. Sans [contrôle de publication](#freigabe-gate), le résultat est informatif ; il n’empêche pas la publication.
 
 Chaque publication reçoit un numéro séquentiel et une note facultative. Les modifications ultérieures dans l’éditeur ne changent jamais une version publiée. Elles n’arrivent dans l’API qu’à la publication suivante.
+
+## Contrôle de publication {#freigabe-gate}
+<!-- keywords: contrôle de publication, gate, qualité, série de tests, obligatoire, justification, override, publier, note de l'ia -->
+
+Avec le **contrôle de publication**, tu ne publies une nouvelle version qu’après que ses [séries de tests](/docs/automatisierung#testreihen) l’ont testée. Le contrôle est facultatif et se règle par API. Tu l’actives après la première publication dans **Limites → Contrôle de publication** : choisis les séries de tests, la part minimale de cas réussis et, en option, une note minimale de l’IA. Les versions déjà publiées ne changent pas.
+
+Avant la publication, la boîte de dialogue montre le résultat en trois parties séparées :
+
+- **Vérifications obligatoires :** la dernière exécution de chaque série a testé exactement cette version avec les modèles enregistrés, et la série n’a pas changé depuis. Sinon, le contrôle bloque. Les vérifications obligatoires ne peuvent pas être ignorées, ni dans la boîte de dialogue ni par l’API : teste la version.
+- **Résultats des vérifications :** la part des cas dont l’exécution a réussi et dont toutes les vérifications sont passées.
+- **Notes de l’IA :** la moyenne de la [note de l’IA](/docs/automatisierung#testreihen). Elle est marquée *avis de l’IA, non garanti* et n’est jamais mélangée aux vérifications fixes.
+
+Si les résultats ou les notes de l’IA n’atteignent pas le contrôle, tu peux publier quand même en indiquant une **justification** (au moins 10 caractères). La justification, son auteur et les points manquants sont enregistrés avec la version et dans l’historique de l’API. La liste **Versions** affiche *contrôle satisfait* ou *publiée avec justification*. Sur un serveur, seuls les rôles owner et admin peuvent publier et donc donner une justification.
 
 ## Versions et retour arrière {#versionen}
 <!-- keywords: version, versions, rollback, retour arrière, revenir, active, version active, immuable, release -->

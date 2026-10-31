@@ -33,9 +33,22 @@ Ambos se ejecutan paso a paso como en Nodestro: los mismos agentes, herramientas
 - los subflujos en su versión actual (consulta [Subflujos](/docs/verzweigungen#unterworkflow)),
 - el formulario de entrada, a partir del cual Nodestro genera el esquema de la solicitud.
 
-Antes, Nodestro comprueba el flujo. Los errores impiden publicar; el diálogo muestra las advertencias (por ejemplo, un límite de coste ausente o pasos de aprobación). Los cambios sin guardar no se publican: guarda primero. Debajo aparece el **resultado de pruebas** de la versión en cada [serie de pruebas](/docs/automatisierung#testreihen) del flujo: *sin probar*, *n de m superados* o *desactualizado* si la última prueba fue de otra versión o la serie cambió desde entonces. El resultado es solo informativo; no impide publicar.
+Antes, Nodestro comprueba el flujo. Los errores impiden publicar; el diálogo muestra las advertencias (por ejemplo, un límite de coste ausente o pasos de aprobación). Los cambios sin guardar no se publican: guarda primero. Debajo aparece el **resultado de pruebas** de la versión en cada [serie de pruebas](/docs/automatisierung#testreihen) del flujo: *sin probar*, *n de m superados* o *desactualizado* si la última prueba fue de otra versión o la serie cambió desde entonces. Sin [control de publicación](#freigabe-gate), el resultado es solo informativo; no impide publicar.
 
 Cada publicación recibe un número consecutivo y una nota opcional. Los cambios posteriores en el editor nunca modifican una versión publicada. Llegan a la API solo cuando vuelves a publicar.
+
+## Control de publicación {#freigabe-gate}
+<!-- keywords: control de publicación, gate, calidad, serie de pruebas, obligatorio, motivo, override, publicar, valoración de la ia -->
+
+Con el **control de publicación** publicas una nueva versión solo después de que sus [series de pruebas](/docs/automatisierung#testreihen) la hayan probado. El control es opcional y se define por API. Lo activas tras la primera publicación en **Límites → Control de publicación**: elige las series de pruebas, el mínimo de casos superados y, opcionalmente, una valoración mínima de la IA. Las versiones ya publicadas no cambian.
+
+Antes de publicar, el diálogo muestra el resultado en tres partes separadas:
+
+- **Comprobaciones obligatorias:** la última ejecución de cada serie probó exactamente esta versión con los modelos guardados, y la serie no ha cambiado desde entonces. Si no, el control bloquea. Las comprobaciones obligatorias no se pueden omitir, ni en el diálogo ni por la API: prueba la versión.
+- **Resultados de las comprobaciones:** la proporción de casos cuya ejecución tuvo éxito y superó todas sus comprobaciones.
+- **Valoraciones de la IA:** la media de la [valoración de la IA](/docs/automatisierung#testreihen). Se marca como *juicio de IA, no garantizado* y nunca se mezcla con las comprobaciones fijas.
+
+Si los resultados o las valoraciones de la IA no cumplen el control, puedes publicar igualmente indicando un **motivo** (al menos 10 caracteres). El motivo, quién lo dio y qué puntos fallaron se guardan con la versión y en el historial de la API. La lista **Versiones** muestra *control cumplido* o *publicada con motivo*. En un servidor solo los roles owner y admin pueden publicar y, por tanto, indicar un motivo.
 
 ## Versiones y reversión {#versionen}
 <!-- keywords: versión, versiones, rollback, revertir, volver atrás, activa, versión activa, inmutable, release -->

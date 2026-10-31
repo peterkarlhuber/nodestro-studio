@@ -248,5 +248,44 @@
     "discard": "Discard",
     "include": "Include as docs/AI_GUIDE.md",
     "none": "Do not include"
+  },
+  "gate": {
+    "title": "Release gate",
+    "intro": "Optional: a new version is published only after its test series have tested it. Without a gate nothing changes.",
+    "enable": "Turn on the release gate",
+    "enableHint": "Applies to every new version of this API. Versions already published stay as they are.",
+    "suites": "Test series",
+    "suitesHint": "The latest test run of each series must have tested exactly the version to publish, with the saved models.",
+    "passRate": "Minimum passed cases (%)",
+    "passRateHint": "A case counts when its run succeeded and all its checks passed.",
+    "judgeScore": "Minimum AI rating (%)",
+    "judgeScoreHint": "Empty: AI ratings are shown but not required.",
+    "save": "Save gate",
+    "passed": "The release gate is met.",
+    "blocked": "The release gate blocks this version. Mandatory checks cannot be skipped: test exactly this version.",
+    "overridable": "Not every result meets the gate. You can still publish if you give a reason; it is stored with the version.",
+    "kinds": {
+      "critical": "Mandatory checks",
+      "deterministic": "Check results",
+      "judge": "AI ratings"
+    },
+    "probabilistic": "AI verdict, not guaranteed",
+    "probabilisticHint": "AI ratings can be wrong. They are kept separate from the fixed checks.",
+    "reason": "Reason for releasing",
+    "reasonHint": "At least {{count}} characters. Stored with the version and in the history.",
+    "publishWithReason": "Publish version {{version}} with reason",
+    "releasePassed": "gate met",
+    "releaseOverridden": "released with reason",
+    "items": {
+      "suite_missing": "test series not found",
+      "suite_untested": "never tested",
+      "suite_variant_only": "only tested with other models",
+      "suite_outdated": "version {{version}} was tested last",
+      "suite_changed": "test series changed since the test",
+      "tested": "this version was tested",
+      "pass_rate": "{{clean}} of {{cases}} cases passed ({{value}}, required {{threshold}})",
+      "judge_score": "AI rating {{value}} (required {{threshold}})",
+      "judge_missing": "no AI rating in the test run (required {{threshold}})"
+    }
   }
 }

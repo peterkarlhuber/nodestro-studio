@@ -6346,6 +6346,34 @@ ul.test-status__list > li.test-status__row {
   overflow-wrap: anywhere;
 }
 
+/* Release gate report of a version to publish (Q-3). */
+.gate-report__group {
+  display: grid;
+  gap: 4px;
+}
+.gate-report__list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ul.gate-report__list > li.gate-report__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 0;
+  border: 0;
+  overflow-wrap: anywhere;
+}
+.gate-report__ok {
+  color: var(--nd-success);
+}
+.gate-report__fail {
+  color: var(--nd-danger);
+}
+
 /* Settings → Model prices (PRICING-1) */
 .pricing__status {
   display: flex;

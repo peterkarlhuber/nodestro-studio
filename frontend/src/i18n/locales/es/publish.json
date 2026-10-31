@@ -248,5 +248,44 @@
     "discard": "Descartar",
     "include": "Incluir como docs/AI_GUIDE.md",
     "none": "No incluir"
+  },
+  "gate": {
+    "title": "Control de publicación",
+    "intro": "Opcional: una nueva versión solo se publica cuando sus series de pruebas la han probado. Sin control, todo sigue igual.",
+    "enable": "Activar el control de publicación",
+    "enableHint": "Se aplica a cada nueva versión de esta API. Las versiones ya publicadas no cambian.",
+    "suites": "Series de pruebas",
+    "suitesHint": "La última ejecución de cada serie debe haber probado exactamente la versión que se publica, con los modelos guardados.",
+    "passRate": "Mínimo de casos superados (%)",
+    "passRateHint": "Un caso cuenta si su ejecución tuvo éxito y superó todas sus comprobaciones.",
+    "judgeScore": "Valoración mínima de la IA (%)",
+    "judgeScoreHint": "Vacío: las valoraciones de la IA se muestran, pero no se exigen.",
+    "save": "Guardar control",
+    "passed": "El control de publicación se cumple.",
+    "blocked": "El control de publicación bloquea esta versión. Las comprobaciones obligatorias no se pueden omitir: prueba exactamente esta versión.",
+    "overridable": "No todos los resultados cumplen el control. Puedes publicar igualmente si indicas un motivo; se guarda con la versión.",
+    "kinds": {
+      "critical": "Comprobaciones obligatorias",
+      "deterministic": "Resultados de las comprobaciones",
+      "judge": "Valoraciones de la IA"
+    },
+    "probabilistic": "Juicio de IA, no garantizado",
+    "probabilisticHint": "Las valoraciones de la IA pueden equivocarse. Se muestran aparte de las comprobaciones fijas.",
+    "reason": "Motivo de la publicación",
+    "reasonHint": "Al menos {{count}} caracteres. Se guarda con la versión y en el historial.",
+    "publishWithReason": "Publicar la versión {{version}} con motivo",
+    "releasePassed": "control cumplido",
+    "releaseOverridden": "publicada con motivo",
+    "items": {
+      "suite_missing": "serie de pruebas no encontrada",
+      "suite_untested": "nunca probada",
+      "suite_variant_only": "solo probada con otros modelos",
+      "suite_outdated": "se probó por última vez la versión {{version}}",
+      "suite_changed": "la serie cambió después de la prueba",
+      "tested": "esta versión fue probada",
+      "pass_rate": "{{clean}} de {{cases}} casos superados ({{value}}, exigido {{threshold}})",
+      "judge_score": "valoración de la IA {{value}} (exigido {{threshold}})",
+      "judge_missing": "sin valoración de la IA en la ejecución (exigido {{threshold}})"
+    }
   }
 }

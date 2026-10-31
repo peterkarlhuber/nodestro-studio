@@ -228,7 +228,9 @@
     "testRun": "Lance une vraie exécution de la version publiée par le chemin de l’API ; elle est facturée comme toute exécution.",
     "sync": "Permet aux clients d’attendre le résultat dans une seule requête (?wait=<seconds>), dans la limite de temps.",
     "library": "Comment le projet exporté obtient Orkexa : depuis son dépôt Git, ou sous forme de code source inclus (licence MIT).",
-    "export": "Génère le projet en ZIP : runtime, version du workflow, tests, exemples et README. Rien n’est envoyé nulle part."
+    "export": "Génère le projet en ZIP : runtime, version du workflow, tests, exemples et README. Rien n’est envoyé nulle part.",
+    "gate": "Exige un résultat de test à jour avant chaque nouvelle version. Les vérifications obligatoires bloquent toujours ; les résultats plus faibles peuvent être publiés avec une justification.",
+    "gateOverride": "La justification est enregistrée avec la version et dans l'historique de l'API. Les vérifications obligatoires ne peuvent jamais être ignorées."
   },
   "inputs": {
     "field": "Fichiers pour cette exécution : envoyez-les, déposez-les ou choisissez-les dans les connaissances. Ils sont vérifiés et enregistrés pour l’exécution seulement, pas dans les connaissances.",
