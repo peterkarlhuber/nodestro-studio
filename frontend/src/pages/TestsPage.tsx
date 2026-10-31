@@ -8,7 +8,9 @@ import { api } from "../api/client";
 import { keys, useSettings, useSuites, useWorkflows } from "../api/hooks";
 import type { BenchmarkRun, CaseChange, CaseResult, Suite, SuiteIn, TestCase, Workflow } from "../api/types";
 import { BenchmarkStartDialog } from "../automation/BenchmarkStartDialog";
+import { modelChanges } from "../automation/models";
 import { BATCH_TONE } from "../automation/status";
+import { isModelVariant } from "../automation/testStatus";
 import { FormFields } from "../components/FormFields";
 import { ModelPicker } from "../components/ModelPicker";
 import { Output } from "../components/Markdown";
@@ -332,12 +334,14 @@ const CHANGE_TONE: Record<CaseChange, "success" | "danger" | "idle" | "warning">
   changed: "warning",
 };
 
-function Comparison({ a, b, onClose }: { a: string; b: string; onClose: () => void }) {
+function Comparison({ a, b, workflow, onClose }: { a: string; b: string; workflow: Workflow | undefined; onClose: () => void }) {
   const { t } = useTranslation();
   const comparison = useQuery({ queryKey: ["benchmark-compare", a, b], queryFn: () => api.compareBenchmarkRuns(a, b) });
   const data = comparison.data;
-  const label = (run: BenchmarkRun) =>
-    `${formatDate(run.created_at)}${run.workflow_version ? ` · ${t("editor.subworkflow.versionN", { n: run.workflow_version })}` : ""}`;
+  const label = (run: BenchmarkRun) => {
+    const models = modelChanges(run, workflow);
+    return `${formatDate(run.created_at)}${run.workflow_version ? ` · ${t("editor.subworkflow.versionN", { n: run.workflow_version })}` : ""}${models ? ` · ${models}` : ""}`;
+  };
   return (
     <Modal title={t("automation.benchmark.compareTitle")} open onClose={onClose} wide>
       {comparison.isLoading ? <Spinner /> : null}
@@ -529,6 +533,12 @@ export function SuitePage() {
                       {run.workflow_version ? (
                         <span className="muted small"> · {t("editor.subworkflow.versionN", { n: run.workflow_version })}</span>
                       ) : null}
+                      {isModelVariant(run) ? (
+                        <div className="small" data-testid="benchmark-run-models">
+                          <Badge tone="running">{t("automation.benchmark.variant")}</Badge>{" "}
+                          <span className="muted">{modelChanges(run, workflow.data)}</span>
+                        </div>
+                      ) : null}
                     </td>
                     <td>
                       <Badge tone={BATCH_TONE[run.status]}>{t(`automation.benchmarkStatus.${run.status}`)}</Badge>
@@ -552,7 +562,9 @@ export function SuitePage() {
       {suite.data ? (
         <BenchmarkStartDialog suite={suite.data} open={starting} onClose={() => setStarting(false)} onStarted={(run) => setShown(run.id)} />
       ) : null}
-      {comparing && picked.length === 2 ? <Comparison a={picked[0]} b={picked[1]} onClose={() => setComparing(false)} /> : null}
+      {comparing && picked.length === 2 ? (
+        <Comparison a={picked[0]} b={picked[1]} workflow={workflow.data} onClose={() => setComparing(false)} />
+      ) : null}
     </div>
   );
 }

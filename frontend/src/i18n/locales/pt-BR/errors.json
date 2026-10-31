@@ -364,7 +364,9 @@
     "delete_running": "Cancele a execução de teste antes de excluí-la.",
     "no_cases": "A série de testes não tem casos de teste.",
     "interrupted": "O Nodestro foi encerrado durante a série de testes.",
-    "judge_failed": "A avaliação por IA falhou."
+    "judge_failed": "A avaliação por IA falhou.",
+    "model_cost_cap": "Comparar modelos exige um limite de custo.",
+    "model_node_unknown": "O workflow não tem nenhum agente {{node}}."
   },
   "schedule": {
     "api_key_missing": "{{provider}} não está configurado; as execuções vão falhar até que esteja.",

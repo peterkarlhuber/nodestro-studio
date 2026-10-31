@@ -177,7 +177,9 @@ try {
   await page.getByTestId("search-open").waitFor();
   await page.keyboard.press("Control+k");
   await page.getByRole("combobox", { name: "Suchbegriff" }).fill("Speisekarte");
-  await page.getByTestId("search-hit").first().waitFor();
+  // Help hits come from the browser, examples from the server: wait for the example group before Enter,
+  // otherwise the first hit can still be the help section about the example.
+  await page.locator(".global-search__heading", { hasText: "Beispiel-Workflows" }).waitFor();
   await page.keyboard.press("Enter");
   await page.waitForURL(/\/workflows\/examples\?template=restaurant-menu/);
   await page.getByTestId("example-preview").waitFor();

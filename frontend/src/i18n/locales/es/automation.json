@@ -159,7 +159,15 @@
       "same": "Igual",
       "changed": "Cambiado"
     },
-    "ownJudge": "Modelo propio"
+    "ownJudge": "Modelo propio",
+    "compareModels": "Probar otros modelos",
+    "compareModelsHint": "Los mismos casos de prueba y la misma evaluación por IA, pero algunos agentes con otro modelo. El flujo guardado no cambia.",
+    "agentModel": "Modelo para {{agent}}",
+    "savedModel": "Guardado: {{model}}",
+    "modelsChanged_one": "{{count}} agente usa otro modelo.",
+    "modelsChanged_other": "{{count}} agentes usan otro modelo.",
+    "needsLimit": "Comparar modelos requiere un límite de coste: las ejecuciones anteriores usaron otros modelos y no dicen nada del coste.",
+    "variant": "Comparación de modelos"
   },
   "schedule": {
     "description": "Inicia workflows con regularidad mientras Nodestro está en marcha. Cada programación está desactivada hasta que la actives.",

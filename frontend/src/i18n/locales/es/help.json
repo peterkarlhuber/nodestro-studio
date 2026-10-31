@@ -206,6 +206,7 @@
     "benchmarkChecks": "Las reglas comprueban el resultado sin IA, p. ej. «categoria es igual a reclamación».",
     "benchmarkJudge": "Una IA evalúa el resultado según tus criterios. Su veredicto se marca como evaluación por IA y cuesta aparte.",
     "benchmarkCompare": "Elige dos ejecuciones de prueba para ver caso por caso qué mejoró o empeoró.",
+    "benchmarkModels": "Prueba los mismos casos con otros modelos para algunos agentes y compara después las dos ejecuciones. El flujo en sí no cambia.",
     "schedule": "Inicia un workflow con regularidad mientras Nodestro está en marcha.",
     "scheduleMissed": "Si Nodestro estaba apagado a la hora: omitir o recuperarlo una vez en el siguiente arranque.",
     "scheduleTimeZone": "Las horas valen en esta zona horaria, incluido el horario de verano.",

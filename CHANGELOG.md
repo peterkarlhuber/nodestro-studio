@@ -4,7 +4,7 @@
 
 ### Model prices and cost reconciliation, PRICING-1 P7 (2026-10-31)
 
-- Needs api `0589a5a` or newer (`/api/pricing`, usage `cost_state`, prices in the model list). Orkexa resolves
+- Uses the api pinned by Q-2 (`3782f19`: `/api/pricing`, usage `cost_state`, prices in the model list). Orkexa resolves
   prices and calculates every cost; the studio only shows and edits the price catalog.
 - New **Settings → Model prices**: staleness of the price list (warning after 48 hours, *out of date* after 7 days),
   last error, *Check prices now*, the price mode (*Standard* warns, *Strict* refuses requests without a reliable
@@ -21,9 +21,25 @@
   listed below the tables. Days whose cost is a lower bound get a striped bar.
 - The **model picker** and model selects flag unknown, stale, individual and pending prices. Error texts for the
   strict price mode's refusals (`pricing.price_unknown`, `pricing.price_unreliable`, `pricing.stale_price`; the first
-  two come with runtime #24).
+  two come with runtime #24, `d2cb987`, which the pins pick up in the next cascade).
 - Help chapter *Usage and costs* in six languages: new sections *Model prices*, *Price mode* and *Comparing with
   provider bills*; the outdated sentence "Nodestro knows prices only for Anthropic models" is gone.
+
+### Comparing models in a test series, Q-2 (2026-10-31)
+
+- The start dialog of a test series has **Test other models**: choose another model for single agents and run the
+  same cases with the same AI judge. Only models that differ from the saved ones are sent; such a run needs a cost
+  limit, since earlier runs cannot estimate it. The saved workflow does not change. The runs list marks the run as
+  *Model comparison* and names the replaced models; the existing comparison shows them next to the date. The test
+  status of a version (Q-1) ignores these runs, since they tested a variant.
+- Built on nodestro-api #20 (`BenchmarkStart.models`, `BenchmarkRun.models`). Texts, error codes and help in six
+  languages; the automation chapter has a new section *Comparing models*. The flow e2e suite runs a comparison.
+- Pins (one cascade, agreed with the PRICING-1 and desktop/server threads): orkexa `76883f7` (before `cbf6df3`),
+  nodestro-runtime `45e7774` (before `c6bc2e5`; model prices and the built-in Linux sandbox), nodestro-examples
+  `786c453` (before `86c58a1`), nodestro-integrations `4c5edff` (before `652c231`), nodestro-api `3782f19` (before
+  `f55bd80`; PRICING-1 API, Q-2 and the assistant live-event fix), nodestro-sdk `6107d1c` (before `ba4ef84`), in `pyproject.toml` and
+  `platform/versions.json`. The `products` section is unchanged. The studio frontend for prices and the sandbox
+  follows in their own pull requests.
 
 ### Glossary, README screenshots and journeys after P1, UX-8 (2026-10-31)
 

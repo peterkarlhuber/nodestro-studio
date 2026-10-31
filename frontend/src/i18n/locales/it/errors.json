@@ -364,7 +364,9 @@
     "delete_running": "Annulla l’esecuzione di test prima di eliminarla.",
     "no_cases": "La serie di test non ha casi di test.",
     "interrupted": "Nodestro si è fermato mentre la serie di test era in corso.",
-    "judge_failed": "La valutazione IA non è riuscita."
+    "judge_failed": "La valutazione IA non è riuscita.",
+    "model_cost_cap": "Il confronto tra modelli richiede un limite di costo.",
+    "model_node_unknown": "Il workflow non ha nessun agente {{node}}."
   },
   "schedule": {
     "api_key_missing": "{{provider}} non è configurato; le esecuzioni falliranno finché non lo sarà.",

@@ -207,6 +207,7 @@ export const HELP_DOCS = {
   "automation.benchmarkChecks": "automatisierung#testreihen",
   "automation.benchmarkJudge": "automatisierung#ki-bewertung",
   "automation.benchmarkCompare": "automatisierung#testreihen-vergleichen",
+  "automation.benchmarkModels": "automatisierung#modelle-vergleichen",
   "automation.schedule": "automatisierung#zeitplaene",
   "automation.scheduleMissed": "automatisierung#zeitplaene",
   "automation.scheduleTimeZone": "automatisierung#zeitplaene",

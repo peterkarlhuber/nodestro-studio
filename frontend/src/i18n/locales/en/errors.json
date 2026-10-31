@@ -364,7 +364,9 @@
     "delete_running": "Cancel the test run before deleting it.",
     "no_cases": "The test series has no test cases.",
     "interrupted": "Nodestro stopped while the test series was running.",
-    "judge_failed": "The AI rating failed."
+    "judge_failed": "The AI rating failed.",
+    "model_cost_cap": "Comparing models needs a cost limit.",
+    "model_node_unknown": "The workflow has no agent {{node}}."
   },
   "schedule": {
     "api_key_missing": "{{provider}} is not set up; runs will fail until it is.",

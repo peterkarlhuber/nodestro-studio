@@ -364,7 +364,9 @@
     "delete_running": "Cancela la ejecución de prueba antes de eliminarla.",
     "no_cases": "La serie de pruebas no tiene casos de prueba.",
     "interrupted": "Nodestro se cerró mientras se ejecutaba la serie de pruebas.",
-    "judge_failed": "La evaluación por IA falló."
+    "judge_failed": "La evaluación por IA falló.",
+    "model_cost_cap": "Comparar modelos requiere un límite de coste.",
+    "model_node_unknown": "El flujo no tiene ningún agente {{node}}."
   },
   "schedule": {
     "api_key_missing": "{{provider}} no está configurado; las ejecuciones fallarán hasta que lo esté.",

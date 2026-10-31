@@ -364,7 +364,9 @@
     "delete_running": "Brich den Testlauf ab, bevor du ihn löschst.",
     "no_cases": "Die Testreihe hat keine Testfälle.",
     "interrupted": "Nodestro wurde beendet, während die Testreihe lief.",
-    "judge_failed": "Die KI-Bewertung ist fehlgeschlagen."
+    "judge_failed": "Die KI-Bewertung ist fehlgeschlagen.",
+    "model_cost_cap": "Ein Modellvergleich braucht ein Kostenlimit.",
+    "model_node_unknown": "Der Workflow hat keinen Agenten {{node}}."
   },
   "schedule": {
     "api_key_missing": "{{provider}} ist nicht eingerichtet; Läufe schlagen fehl, bis das geschehen ist.",
