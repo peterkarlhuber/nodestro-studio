@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Server storage and logins, M3 PR-7 to PR-9 (2026-10-31)
+
+- Pins: `nodestro-runtime` 8eea1ea, `nodestro-examples` 9b018da, `nodestro-integrations` abc4dbc, `nodestro-api`
+  c0e61bd and `nodestro-sdk` 7203183 (before: d6e75b7, 31b5714, 99cdd2c, 0f439ea and 1c24f55); merge commits.
+- The runtime and API can now keep a tenant's data in PostgreSQL and log people in with OpenID Connect (server
+  profile, still refused until PR-12). The studio you start with `nodestro` or the desktop app is unchanged.
+- When the API answers `access.login_required`, the studio sends the browser to the login page once and comes back
+  to the same page afterwards.
+- New error texts `access.cross_site` and `identity.login_expired`, `identity.login_failed`, `identity.provider`,
+  `identity.no_tenant`, `identity.bootstrap_invalid`, `identity.not_a_member`, in six languages; the German launch
+  texts now use "du" like the rest of the interface.
+
 ### Desktop launch secret, M1 PR-6 (2026-10-31)
 
 - Pins: `nodestro-api` 0f439ea and `nodestro-sdk` 1c24f55 (before: cd4b198 and b001667); merge commits.
