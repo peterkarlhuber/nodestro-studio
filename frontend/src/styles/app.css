@@ -131,6 +131,12 @@ ol {
   flex-wrap: wrap;
 }
 
+/* Long status badges in a row (sandbox, OCR) wrap instead of widening the page on narrow screens. */
+.row-gap .nd-badge {
+  white-space: normal;
+  max-width: 100%;
+}
+
 .row-between {
   display: flex;
   align-items: flex-start;
