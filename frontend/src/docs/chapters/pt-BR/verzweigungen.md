@@ -91,6 +91,8 @@ Execuções que ninguém acompanha (agendamentos, lotes, séries de testes) não
 
 Workflows que já existiam quando isso foi ligado continuam funcionando: suas atribuições de ferramentas ficam marcadas como **exceções anteriores**, vinculadas à versão da ferramenta com que rodavam. Uma nova versão da ferramenta ou uma nova atribuição é perguntada como de costume. Uma aprovação nunca remove os limites do sandbox.
 
+Em **Aprovações → Regras para chamadas de ferramentas** você vê se as aprovações estão ligadas e quais exceções anteriores existem. A administração também executa ali a etapa de ativação, concede e revoga aprovações antecipadas e consulta o registro: quem decidiu, concedeu ou revogou o quê, e cada decisão recusada. Os argumentos de uma chamada nunca aparecem no registro.
+
 Nos detalhes da execução, cada chamada de ferramenta mostra o que as regras fizeram: permitida, aprovada ou rejeitada (por quem e quando), sem decisão a tempo ou recusada sem pergunta, com o motivo.
 
 ## Subworkflows {#unterworkflow}

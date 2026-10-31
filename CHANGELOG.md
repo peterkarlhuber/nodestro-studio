@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Rules for tool calls: exceptions, approvals in advance, audit trail (Evolution S-2d, 2026-10-31)
+
+- New section **Approvals > Rules for tool calls** (`runs/ToolApprovalRules.tsx`):
+  - whether per-call approvals are on;
+  - the exceptions from before (legacy bindings: workflow, version or published release, step, tool, bound version)
+    and the activation step that marks them (two-step button, admin; it does not switch approvals on);
+  - approvals in advance: list with state (active, revoked, expired, outdated by a new tool version), revoke
+    (two-step), and a form that grants one changing tool version for one schedule, batch or test series with an
+    optional expiry. Reading-only, destructive and MCP tools are not offered (the server refuses them as well);
+  - the audit trail (decisions, refused decisions with their reason, grants, revocations, activation steps).
+- Texts in the six languages and a paragraph in the help section *Branches > Approving tool calls*.
+- Nothing is switched on; no pin changes.
+
 ### Per-call tool approvals in the interface (Evolution S-2c, 2026-10-31)
 
 - A tool call that waits for a person (per-call approvals, decision D10) shows a card in the run, at its step and on

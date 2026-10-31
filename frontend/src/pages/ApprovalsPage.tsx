@@ -6,6 +6,7 @@ import { Callout, EmptyState, PageHeader, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { ApprovalForm } from "../runs/ApprovalCard";
 import { ToolApprovalForm } from "../runs/ToolApprovalCard";
+import { ToolApprovalRules } from "../runs/ToolApprovalRules";
 
 /** Every approval waiting for a person, oldest first; they survive restarts of Nodestro. Tool calls that wait for a
  * decision (per-call approvals) come first: they have a deadline. */
@@ -37,6 +38,7 @@ export function ApprovalsPage() {
             <ApprovalForm key={`${item.run_id}:${item.node_id}`} approval={item} showContext />
           ))}
         </div>
+        <ToolApprovalRules />
       </div>
     </div>
   );

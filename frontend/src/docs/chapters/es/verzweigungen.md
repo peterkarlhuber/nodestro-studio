@@ -91,6 +91,8 @@ Las ejecuciones que nadie supervisa (programaciones, lotes, series de pruebas) n
 
 Los flujos de trabajo que ya existían al activarlo siguen funcionando: sus asignaciones de herramientas quedan marcadas como **excepciones heredadas**, ligadas a la versión de la herramienta con la que se ejecutaban. Una nueva versión de la herramienta o una nueva asignación se pregunta como siempre. Una aprobación nunca levanta los límites del sandbox.
 
+En **Aprobaciones → Reglas para llamadas a herramientas** ves si las aprobaciones están activadas y qué excepciones heredadas existen. La administración también ejecuta allí el paso de activación, concede y revoca aprobaciones previas y consulta el registro: quién decidió, concedió o revocó qué, y cada decisión rechazada. Los argumentos de una llamada nunca aparecen en el registro.
+
 En los detalles de la ejecución, cada llamada a herramienta muestra qué hicieron las reglas: permitida, aprobada o rechazada (por quién y cuándo), sin decisión a tiempo o denegada sin preguntar, con el motivo.
 
 ## Subflujos {#unterworkflow}

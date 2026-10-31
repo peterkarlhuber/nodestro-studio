@@ -91,6 +91,8 @@ Runs nobody watches (schedules, batches, test series) cannot ask. There such a c
 
 Workflows that already existed when approvals were switched on keep working: their tool assignments are marked as **exceptions from before**, bound to the tool version they ran with. A new tool version or a new assignment is asked about as usual. An approval never lifts the sandbox's limits.
 
+Under **Approvals → Rules for tool calls** you see whether approvals are on and which exceptions from before exist. Administrators also run the activation step there, grant and revoke approvals in advance, and read the audit trail: who decided, granted or revoked what, and every refused decision. The arguments of a call never appear in the audit trail.
+
 In the run's details, each tool call shows what the rules did: allowed, approved or rejected (by whom and when), no decision in time, or refused without a question, with the reason.
 
 ## Sub-workflows {#unterworkflow}
