@@ -175,6 +175,7 @@ project owner.
 | UX-2 problems and summaries in the agent inspector | done | studio #14 (merge commit `dd656c1`) |
 | UX-2b judge model transparency | done | studio #15 (merge commit `b0bf671`) |
 | UX-3 open sections remembered | done | studio #16 (merge commit `25a7b7f`) |
-| UX-J journey baseline, see [journeys.md](journeys.md) | in review | studio, this step (taken after UX-3, see journeys.md) |
-| UX-4 and later | open | — |
+| UX-J journey baseline, see [journeys.md](journeys.md) | done | studio #17 (merge commit `a65efee`; taken after UX-3, see journeys.md) |
+| UX-4 three ways to start | in review | studio, this step |
+| UX-5a and later | open | — |
 

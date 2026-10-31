@@ -7,6 +7,8 @@ Un workflow relie des agents pour former une chaîne. Ce chapitre explique comme
 
 La page **Workflows** affiche tous les workflows sous forme de cartes avec le nombre d’agents, la dernière modification et le statut de la dernière exécution.
 
+La page propose trois façons équivalentes de commencer : **Créer avec l’IA** ouvre la boîte de dialogue d’un nouveau workflow avec l’[architecte IA](/docs/ki-architekt#neu-erstellen), **Partir d’un exemple** ouvre la [galerie d’exemples](/docs/beispiele) et **Le construire vous-même** ouvre la même boîte de dialogue pour un workflow vide. Tant qu’il n’y a aucun workflow, elles apparaissent sous forme de grandes tuiles, ensuite comme une ligne étroite au-dessus de la liste.
+
 - **Nouveau workflow :** saisissez un nom et une description facultative. Le nouveau workflow contient déjà *Départ → Agent → Résultat*.
 - **Créer avec l’IA :** dans la même boîte de dialogue, décrivez votre projet et l’[architecte de workflows](/docs/ki-architekt#neu-erstellen) conçoit le workflow pour que vous le vérifiiez.
 - **Ouvrir :** cliquez sur la carte.

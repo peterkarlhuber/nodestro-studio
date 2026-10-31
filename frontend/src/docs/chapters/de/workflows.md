@@ -7,6 +7,8 @@ Ein Workflow verbindet Agenten zu einer Pipeline. Dieses Kapitel erklärt, wie d
 
 Die Seite **Workflows** zeigt alle Workflows als Karten mit Anzahl der Agenten, letzter Änderung und dem Status des letzten Laufs.
 
+Drei gleichwertige Wege zum Start stehen auf der Seite: **Mit KI erstellen** öffnet den Dialog für einen neuen Workflow mit dem [Workflow-Architekten](/docs/ki-architekt#neu-erstellen), **Mit einem Beispiel beginnen** öffnet die [Beispiel-Galerie](/docs/beispiele) und **Selbst aufbauen** öffnet denselben Dialog für einen leeren Workflow. Solange es keinen Workflow gibt, erscheinen sie als große Kacheln, danach als schmale Zeile über der Liste.
+
 - **Neuer Workflow:** Name und optionale Beschreibung eingeben. Der neue Workflow enthält bereits *Start → Agent → Ergebnis*.
 - **Mit KI erstellen:** Im selben Dialog beschreibst du dein Vorhaben, und der [Workflow-Architekt](/docs/ki-architekt#neu-erstellen) entwirft den Workflow zur Prüfung.
 - **Öffnen:** Karte anklicken.

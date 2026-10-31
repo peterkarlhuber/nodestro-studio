@@ -7,8 +7,7 @@
   "deleted": "Workflow gelöscht",
   "imported": "„{{name}}“ importiert",
   "emptyTitle": "Noch keine Workflows",
-  "emptyAction": "Ersten Workflow anlegen",
-  "emptyText": "Lege einen Workflow an und ziehe Agenten auf die Arbeitsfläche, oder übernimm unten eines der Beispiele.",
+  "emptyText": "Wähle, wie du beginnen möchtest. Die Beispiele unten kannst du auch direkt ansehen.",
   "agentCount_one": "{{count}} Agent",
   "agentCount_other": "{{count}} Agenten",
   "neverRun": "Noch nie ausgeführt",
@@ -24,5 +23,14 @@
   "createAi": "Mit KI erstellen",
   "createWithAi": "Mit KI entwerfen",
   "aiDescription": "Beschreibe dein Vorhaben",
-  "aiDescriptionHint": "Der KI-Workflow-Architekt plant die Agenten, konfiguriert und verbindet sie und zeigt dir den Entwurf, bevor etwas gespeichert wird. Der Name ist optional."
+  "aiDescriptionHint": "Der KI-Workflow-Architekt plant die Agenten, konfiguriert und verbindet sie und zeigt dir den Entwurf, bevor etwas gespeichert wird. Der Name ist optional.",
+  "start": {
+    "label": "Neu beginnen",
+    "ai": "Mit KI erstellen",
+    "aiText": "Beschreibe, was der Workflow tun soll. Der KI-Architekt entwirft Agenten und Ablauf; du prüfst den Entwurf, bevor er gespeichert wird. Das kostet Modellaufrufe.",
+    "example": "Mit einem Beispiel beginnen",
+    "exampleText": "Fertige Workflows mit synthetischen Testdaten ansehen und als eigene Kopie übernehmen. Ohne Modellaufruf.",
+    "manual": "Selbst aufbauen",
+    "manualText": "Startet mit Eingabe, einem leeren Agenten und Ergebnis. Weitere Bausteine ziehst du auf die Arbeitsfläche."
+  }
 }

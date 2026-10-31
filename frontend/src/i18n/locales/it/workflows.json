@@ -7,8 +7,7 @@
   "deleted": "Workflow eliminato",
   "imported": "«{{name}}» importato",
   "emptyTitle": "Ancora nessun workflow",
-  "emptyAction": "Crea il primo workflow",
-  "emptyText": "Crea un workflow e trascina gli agenti sull’area di lavoro, oppure copia uno degli esempi qui sotto.",
+  "emptyText": "Scegli come vuoi iniziare. Puoi anche guardare subito gli esempi qui sotto.",
   "agentCount_one": "{{count}} agente",
   "agentCount_other": "{{count}} agenti",
   "neverRun": "Mai eseguito",
@@ -24,5 +23,14 @@
   "createAi": "Crea con l’IA",
   "createWithAi": "Progetta con l’IA",
   "aiDescription": "Descrivi il tuo obiettivo",
-  "aiDescriptionHint": "L’architetto di workflow pianifica gli agenti, li configura e li collega e ti mostra la bozza prima di salvare qualcosa. Il nome è facoltativo."
+  "aiDescriptionHint": "L’architetto di workflow pianifica gli agenti, li configura e li collega e ti mostra la bozza prima di salvare qualcosa. Il nome è facoltativo.",
+  "start": {
+    "label": "Inizia da capo",
+    "ai": "Crea con l’IA",
+    "aiText": "Descrivi cosa deve fare il workflow. L’architetto IA progetta agenti e flusso; controlli la bozza prima che venga salvata. Usa chiamate al modello.",
+    "example": "Parti da un esempio",
+    "exampleText": "Guarda workflow pronti con dati di test sintetici e copiane uno come tuo. Senza chiamate al modello.",
+    "manual": "Costruiscilo da te",
+    "manualText": "Inizia con un input, un agente vuoto e un risultato. Trascini altri blocchi sull’area di lavoro."
+  }
 }
