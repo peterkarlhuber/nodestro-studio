@@ -19,7 +19,8 @@
     "runBudget": "Il budget del workflow o, se vuoto, il budget predefinito delle impostazioni.",
     "discard": "Scarta tutte le modifiche non salvate, inclusi annulla/ripeti, e carica l’ultimo stato salvato.",
     "versions": "Ogni salvataggio è una versione con data. Le versioni precedenti si possono vedere e ripristinare senza perderne nessuna.",
-    "organize": "I preferiti compaiono per primi; i tag aiutano a filtrare."
+    "organize": "I preferiti compaiono per primi; i tag aiutano a filtrare.",
+    "loop": "Un ciclo torna da un ramo di una decisione o di un’approvazione a un passo precedente. I passi intermedi vengono ripetuti finché il ramo non viene più scelto o si raggiunge il limite."
   },
   "agent": {
     "design": "Dalla tua descrizione, l’architetto di agenti progetta ruolo, prompt di sistema, modello, impegno e strumenti. Controlli la proposta prima che venga applicata.",

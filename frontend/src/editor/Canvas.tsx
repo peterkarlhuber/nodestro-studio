@@ -114,13 +114,16 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
           flowing || touchesSelection ? "edge--active" : "",
           selected ? "edge--selected" : "",
           problem ? `edge--${problem}` : "",
+          edge.loop ? "edge--loop" : "",
         ].filter(Boolean);
+        const branch = from && edge.source_handle ? branchLabel(from, edge.source_handle, t) : undefined;
+        const loop = edge.loop ? t("editor.loop.edgeLabel", { max: edge.loop.max_iterations }) : undefined;
         return {
           id: edge.id,
           source: edge.source,
           target: edge.target,
           sourceHandle: edge.source_handle ?? undefined,
-          label: from && edge.source_handle ? branchLabel(from, edge.source_handle, t) : undefined,
+          label: [branch, loop].filter(Boolean).join(" · ") || undefined,
           selected,
           className: classes.join(" ") || undefined,
           animated: target === "running" && source === "succeeded",

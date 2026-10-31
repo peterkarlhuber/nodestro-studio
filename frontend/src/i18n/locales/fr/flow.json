@@ -208,7 +208,8 @@
       "was_waiting": "N’a pas été atteinte.",
       "was_running": "Ne s’est pas terminée.",
       "was_awaiting_approval": "Attendait une validation.",
-      "was_idle": "N’a pas été atteinte."
+      "was_idle": "N’a pas été atteinte.",
+      "in_loop": "Fait partie d’une boucle : toute la boucle est réexécutée."
     },
     "calledTools": "Avait déjà appelé des outils : {{tools}}",
     "saved": "économise {{cost}}",

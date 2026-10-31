@@ -19,7 +19,8 @@
     "runBudget": "O orçamento do fluxo de trabalho ou, se estiver vazio, o orçamento padrão das configurações.",
     "discard": "Descarta todas as alterações não salvas, inclusive desfazer/refazer, e carrega o último estado salvo.",
     "versions": "Cada salvamento é uma versão com data. Versões antigas podem ser vistas e restauradas sem perder nenhuma.",
-    "organize": "Favoritos aparecem primeiro; tags ajudam a filtrar."
+    "organize": "Favoritos aparecem primeiro; tags ajudam a filtrar.",
+    "loop": "Um laço volta de uma ramificação de uma decisão ou aprovação para uma etapa anterior. As etapas intermediárias rodam de novo até a ramificação deixar de ser escolhida ou o limite ser atingido."
   },
   "agent": {
     "design": "A partir da sua descrição, o arquiteto de agentes define papel, prompt de sistema, modelo, esforço e ferramentas. Você revisa a proposta antes de aplicá-la.",

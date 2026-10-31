@@ -208,7 +208,8 @@
       "was_waiting": "Non è stato raggiunto.",
       "was_running": "Non è terminato.",
       "was_awaiting_approval": "Attendeva un’approvazione.",
-      "was_idle": "Non è stato raggiunto."
+      "was_idle": "Non è stato raggiunto.",
+      "in_loop": "Fa parte di un ciclo: l’intero ciclo viene rieseguito."
     },
     "calledTools": "Aveva già chiamato strumenti: {{tools}}",
     "saved": "risparmia {{cost}}",

@@ -62,7 +62,7 @@ Nodestro prevents invalid connections and explains why:
 - A node cannot be connected to itself.
 - The start node has no input, the result node has no output.
 - The same connection can only exist once.
-- **No cycles:** data always flows in one direction. A connection that leads back to a predecessor is rejected.
+- **Cycles only as loops:** data flows in one direction. A connection back to a predecessor is only possible from a branch of a decision or approval and then becomes a [loop](/docs/verzweigungen#schleifen) with a limit; any other is rejected.
 
 To delete a connection, select it and press **Delete** or **Backspace**. During a run, connections light up while data flows through them.
 
@@ -239,7 +239,7 @@ Workflow export and trace export are different things: a workflow describes the 
 ## Limitations {#grenzen}
 <!-- keywords: limits, limitations, loops, conditions, if, loop, branching -->
 
-- **No loops:** a workflow is a directed graph without cycles. Every node runs at most once per run. Conditions are built with [decisions](/docs/verzweigungen#entscheidung); nodes on branches that were not chosen are skipped.
+- **Loops only with a limit:** a workflow is a directed graph; steps repeat only through [loops](/docs/verzweigungen#schleifen) of at most 20 rounds. Outside loops, every node runs at most once per run. Conditions are built with [decisions](/docs/verzweigungen#entscheidung); nodes on branches that were not chosen are skipped.
 - **Continue instead of repeat:** a failed or cancelled run can be [continued](/docs/verzweigungen#fortsetzen); this creates a new, linked run.
 - **One run at a time per workflow in the editor:** while a run is active, *Start workflow* is disabled. To start many runs at once, use a [batch run](/docs/automatisierung#stapel).
 - **State at start time:** changes during a run only take effect in the next run.

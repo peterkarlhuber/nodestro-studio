@@ -19,7 +19,8 @@
     "runBudget": "Le budget du workflow ou, s’il est vide, le budget par défaut des réglages.",
     "discard": "Abandonne toutes les modifications non enregistrées, y compris annuler/rétablir, et charge le dernier état enregistré.",
     "versions": "Chaque enregistrement est une version datée. Les anciennes versions peuvent être consultées et restaurées sans en perdre aucune.",
-    "organize": "Les favoris s’affichent en premier ; les étiquettes aident à filtrer."
+    "organize": "Les favoris s’affichent en premier ; les étiquettes aident à filtrer.",
+    "loop": "Une boucle revient d’une branche d’une décision ou d’une validation vers une étape antérieure. Les étapes intermédiaires sont répétées jusqu’à ce que la branche ne soit plus choisie ou que la limite soit atteinte."
   },
   "agent": {
     "design": "À partir de votre description, l’architecte d’agents conçoit rôle, prompt système, modèle, effort et outils. Vous vérifiez la proposition avant qu’elle soit appliquée.",

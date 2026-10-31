@@ -42,6 +42,19 @@ Por isso, unir ramificações não exige nenhuma configuração: um agente atrá
 
 Decisões e aprovações repassam os dados: um agente atrás delas recebe os resultados que chegaram ali, com os nomes dos agentes que os produziram.
 
+## Laços {#schleifen}
+<!-- keywords: laço, loop, repetir, rodada, iteração, laço de qualidade, revisar, feedback, limite -->
+
+Um **laço** roda etapas de novo até um resultado servir, por exemplo *Rascunho → Revisão → Decisão*: se a revisão não passar, a execução volta ao rascunho.
+
+- **Criar:** arraste uma conexão de uma **ramificação** de uma decisão ou aprovação de volta para uma etapa anterior. O Nodestro a cria como laço (tracejada, com “↻ máx. 3×”) e a abre no inspetor. Não é possível voltar a partir de um agente: cada rodada termina com uma decisão ou aprovação.
+- **Limite:** *Máximo de rodadas* (de 2 a 20) inclui a primeira execução. Cada rodada consome tokens de novo; o [orçamento](/docs/workflows#budget) vale para a execução inteira.
+- **Quando o limite for atingido:** a execução termina como falha (“O laço … rodou … vezes sem atingir seu objetivo”) ou segue as outras ramificações da decisão. Se nenhum for seguido, as etapas seguintes são ignoradas.
+- **Marcadores:** na tarefa de uma etapa do laço, `{{iteration}}` é a rodada (a partir de 1), `{{previous}}` o próprio resultado da rodada anterior e `{{feedback}}` o que voltou pelo laço (por exemplo, a justificativa da revisão ou o comentário de uma aprovação rejeitada). Na primeira rodada, ambos valem “-”.
+- **Aprovações em laços:** uma aprovação rejeitada pode voltar para uma revisão pela ramificação *Rejeitado*; a rodada seguinte espera de novo uma decisão.
+
+Durante uma execução, cada etapa mostra sua **rodada**; nos detalhes, você escolhe entre os resultados de todas as rodadas. Laços podem ficar um dentro do outro, mas não se sobrepor. Ao [continuar](#fortsetzen) uma execução com falha, um laço sempre roda de novo por inteiro.
+
 ## Aprovações {#freigabe}
 <!-- keywords: aprovação, liberação, human in the loop, revisar, rejeitar, comentário, pausa -->
 

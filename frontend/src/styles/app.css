@@ -2062,6 +2062,11 @@ body.is-resizing--y * {
   filter: drop-shadow(0 0 4px color-mix(in srgb, var(--nd-brand) 70%, transparent));
 }
 
+/* A loop connection leads back: dashed, so it never reads as a normal step forward. */
+.canvas .react-flow__edge.edge--loop:not(.edge--error) .react-flow__edge-path {
+  stroke-dasharray: 8 5;
+}
+
 .canvas .react-flow__edge.edge--error .react-flow__edge-path {
   stroke: var(--nd-danger);
   stroke-dasharray: 6 4;
@@ -6417,4 +6422,32 @@ ul.gate-report__list > li.gate-report__item {
   align-items: baseline;
   border-bottom: 1px solid var(--nd-border);
   padding-bottom: var(--nd-space-2);
+}
+
+/* Loop rounds: the round of a node on the canvas and the round picker in its details. */
+.flow-node__round {
+  color: var(--nd-text-muted);
+  font-size: 10px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.node-rounds__picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.node-rounds__picker .chip {
+  border: 1px solid transparent;
+  background: var(--nd-surface-hover);
+  color: var(--nd-text-muted);
+  cursor: pointer;
+}
+
+.node-rounds__picker .chip--active {
+  border-color: color-mix(in srgb, var(--nd-brand) 50%, transparent);
+  background: var(--nd-brand-soft);
+  color: var(--nd-brand);
 }

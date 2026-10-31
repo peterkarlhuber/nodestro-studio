@@ -97,7 +97,12 @@
     "branch_unknown": "Une connexion de {{node}} ne part d’aucune branche.",
     "condition_no_rules": "La décision {{node}} n’a pas de règles.",
     "subworkflow_missing": "Aucun workflow n’est choisi pour {{node}}.",
-    "node_duplicate": "Deux nœuds ont le même identifiant ({{id}}). Supprimez l’un d’eux et ajoutez-le à nouveau."
+    "node_duplicate": "Deux nœuds ont le même identifiant ({{id}}). Supprimez l’un d’eux et ajoutez-le à nouveau.",
+    "loop_unguarded": "Une boucle doit partir d’une branche d’une décision ou d’une validation.",
+    "loop_target": "Une boucle doit revenir vers une étape antérieure.",
+    "loop_overlap": "Deux boucles se chevauchent ; les boucles ne peuvent qu’être imbriquées.",
+    "loop_shared": "Une étape de la boucle est reliée à une étape extérieure d’une manière que la boucle ne peut pas répéter.",
+    "loop_invalid": "Cette boucle n’est pas valide."
   },
   "run": {
     "failed": "L’étape a échoué.",
@@ -122,7 +127,8 @@
     "finished": "L’exécution est déjà terminée.",
     "not_found": "Aucune exécution ne porte cet identifiant.",
     "not_finished": "L’exécution n’est pas encore terminée.",
-    "no_event_loop": "L’exécution n’a pas pu démarrer : elle nécessite une boucle d’événements active."
+    "no_event_loop": "L’exécution n’a pas pu démarrer : elle nécessite une boucle d’événements active.",
+    "loop_exhausted": "La boucle à {{node}} a tourné {{max_iterations}} fois sans atteindre son objectif."
   },
   "trace": {
     "invalid": "La trace est endommagée ou incomplète.",

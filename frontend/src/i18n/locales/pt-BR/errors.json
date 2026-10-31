@@ -97,7 +97,12 @@
     "branch_unknown": "Uma conexão de {{node}} não parte de nenhum ramo.",
     "condition_no_rules": "A decisão {{node}} não tem regras.",
     "subworkflow_missing": "Nenhum workflow foi escolhido em {{node}}.",
-    "node_duplicate": "Dois nós têm o mesmo id ({{id}}). Exclua um deles e adicione-o novamente."
+    "node_duplicate": "Dois nós têm o mesmo id ({{id}}). Exclua um deles e adicione-o novamente.",
+    "loop_unguarded": "Um laço precisa sair de uma ramificação de uma decisão ou aprovação.",
+    "loop_target": "Um laço precisa voltar para uma etapa anterior.",
+    "loop_overlap": "Dois laços se sobrepõem; laços só podem ficar um dentro do outro.",
+    "loop_shared": "Uma etapa do laço está ligada a uma etapa de fora de um jeito que o laço não consegue repetir.",
+    "loop_invalid": "Este laço não é válido."
   },
   "run": {
     "failed": "A etapa falhou.",
@@ -122,7 +127,8 @@
     "finished": "A execução já terminou.",
     "not_found": "Não há execução com este id.",
     "not_finished": "A execução ainda não terminou.",
-    "no_event_loop": "A execução não pôde iniciar: ela precisa de um loop de eventos em execução."
+    "no_event_loop": "A execução não pôde iniciar: ela precisa de um loop de eventos em execução.",
+    "loop_exhausted": "O laço em {{node}} rodou {{max_iterations}} vezes sem atingir seu objetivo."
   },
   "trace": {
     "invalid": "O trace está danificado ou incompleto.",

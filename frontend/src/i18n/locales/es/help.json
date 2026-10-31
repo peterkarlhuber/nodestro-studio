@@ -19,7 +19,8 @@
     "runBudget": "El presupuesto del flujo de trabajo o, si está vacío, el presupuesto predeterminado de los ajustes.",
     "discard": "Descarta todos los cambios sin guardar, incluido deshacer/rehacer, y carga el último estado guardado.",
     "versions": "Cada guardado es una versión con fecha. Las versiones anteriores se pueden ver y restaurar sin perder ninguna.",
-    "organize": "Los favoritos aparecen primero; las etiquetas ayudan a filtrar."
+    "organize": "Los favoritos aparecen primero; las etiquetas ayudan a filtrar.",
+    "loop": "Un bucle vuelve desde una rama de una decisión o aprobación a un paso anterior. Los pasos intermedios se repiten hasta que la rama deja de elegirse o se alcanza el límite."
   },
   "agent": {
     "design": "A partir de tu descripción, el arquitecto de agentes diseña rol, prompt de sistema, modelo, esfuerzo y herramientas. Revisas la propuesta antes de aplicarla.",

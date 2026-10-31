@@ -42,6 +42,19 @@ Réunir des branches ne demande donc aucun réglage : un agent placé derrière 
 
 Les décisions et les validations laissent passer les données : un agent placé derrière elles reçoit les résultats qui y sont arrivés, sous le nom des agents qui les ont produits.
 
+## Boucles {#schleifen}
+<!-- keywords: boucle, loop, répéter, tour, itération, boucle qualité, réviser, retour, limite -->
+
+Une **boucle** réexécute des étapes jusqu’à ce qu’un résultat convienne, par exemple *Brouillon → Relecture → Décision* : si la relecture échoue, l’exécution revient au brouillon.
+
+- **Créer une boucle :** tirez une connexion depuis une **branche** d’une décision ou d’une validation vers une étape antérieure. Nodestro la crée comme boucle (en pointillés, avec « ↻ max. 3× ») et l’ouvre dans l’inspecteur. Revenir depuis un agent n’est pas possible : chaque tour se termine par une décision ou une validation.
+- **Limite :** *Nombre maximal de tours* (de 2 à 20) inclut la première exécution. Chaque tour consomme à nouveau des tokens ; le [budget](/docs/workflows#budget) vaut pour toute l’exécution.
+- **Quand la limite est atteinte :** l’exécution se termine en échec (« La boucle … a tourné … fois sans atteindre son objectif ») ou suit les autres branches de la décision. Si aucune n’est suivie, les étapes suivantes sont ignorées.
+- **Espaces réservés :** dans la tâche d’une étape de la boucle, `{{iteration}}` est le tour (à partir de 1), `{{previous}}` son propre résultat du tour précédent et `{{feedback}}` ce qui est revenu par la boucle (par exemple la justification de la relecture ou le commentaire d’une validation refusée). Au premier tour, les deux valent « - ».
+- **Validations dans une boucle :** une validation refusée peut revenir vers une révision par sa branche *Refusé* ; le tour suivant attend alors de nouveau une décision.
+
+Pendant une exécution, chaque étape affiche son **tour** ; dans les détails, vous choisissez parmi les résultats de tous les tours. Les boucles peuvent être imbriquées, mais pas se chevaucher. Lorsqu’une exécution en échec est [reprise](#fortsetzen), une boucle est toujours entièrement réexécutée.
+
 ## Validations {#freigabe}
 <!-- keywords: validation, approbation, human in the loop, vérifier, refuser, commentaire, pause -->
 

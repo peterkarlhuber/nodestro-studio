@@ -20,6 +20,23 @@ function modelLabel(models: { id: string; label: string }[] | undefined, id: str
   return findModel(models, id)?.label ?? id;
 }
 
+/** The loop round of a node that runs again ("Round 2"), shown from the second round on. */
+export function roundOf(state: NodeRun | undefined): number | null {
+  const last = state?.iteration?.at(-1);
+  return last ? last + 1 : null;
+}
+
+function Round({ state }: { state?: NodeRun }) {
+  const { t } = useTranslation();
+  const round = roundOf(state);
+  if (round === null) return null;
+  return (
+    <span className="flow-node__round" data-testid="node-round">
+      {t("editor.loop.round", { n: round })}
+    </span>
+  );
+}
+
 function Footer({ state }: { state?: NodeRun }) {
   const { t } = useTranslation();
   if (!state || state.status === "waiting" || !state.usage?.requests) return null;
@@ -63,6 +80,7 @@ export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) 
       <div className="node-divider" />
       <div className="node-row">
         <span className="node-row__description">{agent.description || t("editor.nodes.agent")}</span>
+        <Round state={state} />
         <StatusBadge status={status} />
       </div>
       <div className="node-tools">
@@ -104,7 +122,7 @@ export const StartNode = memo(function StartNode({ data, selected }: NodeProps) 
       </div>
       {state && state.status !== "waiting" ? (
         <div className="node-row">
-          <span />
+          <Round state={state} />
           <StatusBadge status={state.status} />
         </div>
       ) : null}
@@ -136,7 +154,7 @@ export const OutputNode = memo(function OutputNode({ data, selected }: NodeProps
       ) : null}
       {state && state.status !== "waiting" ? (
         <div className="node-row">
-          <span />
+          <Round state={state} />
           <StatusBadge status={state.status} />
         </div>
       ) : null}
@@ -177,6 +195,7 @@ function NodeShell({
           <div className="node-title">{node.label}</div>
           <div className="node-type">{type}</div>
         </div>
+        <Round state={state} />
         {state && state.status !== "waiting" ? <StatusBadge status={state.status} /> : null}
       </div>
       {children}
