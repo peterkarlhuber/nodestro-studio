@@ -77,7 +77,7 @@
     "docker": {
       "title": "Docker",
       "available": "Disponibile.",
-      "not_installed": "Non installato; gli strumenti girano in un processo isolato.",
+      "not_installed": "Non installato. Gli strumenti creati dall’IA richiedono la sandbox Linux integrata o Docker.",
       "unreachable": "La sandbox è impostata su Docker, ma Docker non è raggiungibile.",
       "fix": {
         "unreachable": "Avvia Docker Desktop oppure imposta la sandbox su “Processo Python”."

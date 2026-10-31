@@ -26,11 +26,23 @@
   "sandbox": {
     "title": "Sandbox para ferramentas próprias",
     "label": "Sandbox",
-    "text": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro. O processo Python fica disponível na hora; o Docker isola mais (sem rede, memória limitada). Ferramentas criadas por IA e de origem desconhecida só rodam com Docker; sem ele, ficam bloqueadas.",
+    "text": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro. As ferramentas que você mesmo escreve rodam em um processo Python separado. Ferramentas criadas por IA e de origem desconhecida só rodam isoladas: no Ubuntu 24.04 e no Debian 13, automaticamente no sandbox Linux integrado (sem rede, sem acesso aos seus arquivos ou chaves); em outros sistemas, só com Docker. Sem isolamento, ficam bloqueadas.",
     "subprocess": "Processo Python",
     "dockerAvailable": "Docker disponível",
     "dockerMissing": "Docker não encontrado",
-    "dockerUnreachable": "Não foi possível acessar o Docker. Testes e chamadas de ferramentas falharão até o Docker estar em execução."
+    "dockerUnreachable": "Não foi possível acessar o Docker. Testes e chamadas de ferramentas falharão até o Docker estar em execução.",
+    "builtinActive": "Sandbox Linux integrado ativo",
+    "builtinMissing": "Sandbox Linux integrado indisponível",
+    "reason": {
+      "platform": "O sandbox integrado precisa de Linux em um processador Intel ou AMD de 64 bits.",
+      "untested-system": "O sandbox integrado só está aprovado para Ubuntu 24.04 e Debian 13; este sistema ({{system}}) não foi testado. Use Docker para ferramentas criadas por IA.",
+      "landlock": "O kernel Linux não tem Landlock (versão 4 ou mais recente), de que o sandbox integrado precisa. Atualize o sistema ou use Docker.",
+      "seccomp": "O kernel Linux não tem seccomp, de que o sandbox integrado precisa. Use Docker.",
+      "root": "O Nodestro está rodando como administrador (root). Inicie-o como usuário normal para usar o sandbox integrado.",
+      "paths": "O Nodestro está dentro de uma pasta protegida (por exemplo, diretamente na sua pasta pessoal ou na pasta de dados). Mova o aplicativo para uma pasta própria.",
+      "verify": "O autoteste do sandbox integrado falhou: o isolamento não se manteve. Ferramentas criadas por IA continuam bloqueadas; use Docker.",
+      "failed": "O autoteste do sandbox integrado não pôde rodar. Ferramentas criadas por IA continuam bloqueadas; use Docker."
+    }
   },
   "about": {
     "title": "Sobre o Nodestro",

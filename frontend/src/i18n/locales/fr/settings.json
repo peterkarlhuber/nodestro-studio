@@ -26,11 +26,23 @@
   "sandbox": {
     "title": "Bac à sable pour les outils personnels",
     "label": "Bac à sable",
-    "text": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro. Le processus Python est disponible immédiatement ; Docker isole davantage (sans réseau, mémoire limitée). Les outils créés par l’IA et ceux d’origine inconnue ne s’exécutent qu’avec Docker ; sans Docker, ils sont bloqués.",
+    "text": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro. Les outils que vous écrivez vous-même s’exécutent dans un processus Python séparé. Les outils créés par l’IA et ceux d’origine inconnue ne s’exécutent qu’isolés : sous Ubuntu 24.04 et Debian 13, automatiquement dans le bac à sable Linux intégré (sans réseau, sans accès à vos fichiers ni à vos clés) ; ailleurs, uniquement avec Docker. Sans isolation, ils sont bloqués.",
     "subprocess": "Processus Python",
     "dockerAvailable": "Docker disponible",
     "dockerMissing": "Docker introuvable",
-    "dockerUnreachable": "Docker est injoignable. Les tests et appels d’outils échoueront tant que Docker ne tourne pas."
+    "dockerUnreachable": "Docker est injoignable. Les tests et appels d’outils échoueront tant que Docker ne tourne pas.",
+    "builtinActive": "Bac à sable Linux intégré actif",
+    "builtinMissing": "Bac à sable Linux intégré indisponible",
+    "reason": {
+      "platform": "Le bac à sable intégré nécessite Linux sur un processeur Intel ou AMD 64 bits.",
+      "untested-system": "Le bac à sable intégré n’est validé que pour Ubuntu 24.04 et Debian 13 ; ce système ({{system}}) n’a pas été testé. Utilisez Docker pour les outils créés par l’IA.",
+      "landlock": "Le noyau Linux ne dispose pas de Landlock (version 4 ou plus récente), nécessaire au bac à sable intégré. Mettez le système à jour ou utilisez Docker.",
+      "seccomp": "Le noyau Linux ne dispose pas de seccomp, nécessaire au bac à sable intégré. Utilisez Docker.",
+      "root": "Nodestro s’exécute en tant qu’administrateur (root). Lancez-le en tant qu’utilisateur normal pour utiliser le bac à sable intégré.",
+      "paths": "Nodestro se trouve dans un dossier protégé (par exemple directement dans votre dossier personnel ou dans le dossier de données). Déplacez l’application dans son propre dossier.",
+      "verify": "L’autotest du bac à sable intégré a échoué : l’isolation n’a pas tenu. Les outils créés par l’IA restent bloqués ; utilisez Docker.",
+      "failed": "L’autotest du bac à sable intégré n’a pas pu s’exécuter. Les outils créés par l’IA restent bloqués ; utilisez Docker."
+    }
   },
   "about": {
     "title": "À propos de Nodestro",

@@ -25,8 +25,9 @@
   "trustLabel": "Origen",
   "trustNote": {
     "user-authored": "Escrita por ti: se ejecuta en un proceso de Python aparte, sin aislamiento, en este equipo.",
-    "untrusted": "Creada por IA o de origen desconocido: solo se ejecuta en el sandbox de Docker.",
-    "untrustedBlocked": "Creada por IA o de origen desconocido: solo se ejecuta en el sandbox de Docker. Con el sandbox «Proceso de Python», los agentes con esta herramienta no pueden ejecutarse."
+    "untrusted": "Creada por IA o de origen desconocido: solo se ejecuta aislada, aquí en el sandbox de Docker.",
+    "untrustedBlocked": "Creada por IA o de origen desconocido: solo se ejecuta aislada, pero no hay sandbox de Linux integrado ni Docker disponibles. Los agentes con esta herramienta no pueden ejecutarse; consulta Ajustes → Sandbox.",
+    "untrustedBuiltin": "Creada por IA o de origen desconocido: solo se ejecuta aislada, aquí en el sandbox de Linux integrado (sin red, sin acceso a tus archivos ni claves). Esto no cambia tras tu aprobación."
   },
   "version": "Versión {{version}}",
   "deleted": "Herramienta {{name}} eliminada",
@@ -87,12 +88,13 @@
     "approveLibraries": "Aprobar bibliotecas",
     "withoutLibraries": "Reescribir sin bibliotecas",
     "usesLibraries": "Usa las bibliotecas aprobadas: {{names}}",
-    "needsDocker": "Crear herramientas con IA necesita el sandbox de Docker: las pruebas del código escrito por IA nunca se ejecutan sin aislamiento. Elige Docker en los ajustes."
+    "needsDocker": "Crear herramientas con IA necesita aislamiento: las pruebas del código escrito por IA nunca se ejecutan sin él. El sandbox de Linux integrado no está disponible aquí (consulta Ajustes → Sandbox); elige Docker en su lugar."
   },
   "drafts": {
     "title_one": "{{count}} borrador de herramienta espera tu decisión",
     "title_other": "{{count}} borradores de herramientas esperan tu decisión",
     "label": "Borradores de herramientas",
     "text": "Estas herramientas las escribió el arquitecto de flujos. No están registradas ni se han ejecutado. Los agentes que las necesitan no pueden iniciarse hasta que las apruebes."
-  }
+  },
+  "sandboxBuiltin": "proceso de Python propio; herramientas creadas por IA en el sandbox de Linux integrado"
 }

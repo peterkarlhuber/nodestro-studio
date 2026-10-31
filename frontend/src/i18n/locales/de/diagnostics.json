@@ -77,7 +77,7 @@
     "docker": {
       "title": "Docker",
       "available": "Verfügbar.",
-      "not_installed": "Nicht installiert; Tools laufen in einem abgeschotteten Prozess.",
+      "not_installed": "Nicht installiert. KI-erstellte Tools brauchen die eingebaute Linux-Sandbox oder Docker.",
       "unreachable": "Die Sandbox steht auf Docker, aber Docker ist nicht erreichbar.",
       "fix": {
         "unreachable": "Starte Docker Desktop oder stelle die Sandbox auf „Python-Prozess“ um."

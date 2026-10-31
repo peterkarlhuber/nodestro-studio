@@ -141,34 +141,36 @@ Bevor ein KI-erstelltes Tool aufgenommen wird, siehst du Code, Tests und Testerg
 ## Die Sandbox {#sandbox}
 <!-- keywords: sandbox, docker, subprocess, python prozess, isolation, sicherheit, timeout -->
 
-Eigene und KI-erstellte Tools laufen **nie im Nodestro-Prozess**. Tests und jeder spätere Aufruf laufen isoliert:
+Eigene und von der KI erstellte Tools laufen **nie im Nodestro-Prozess**. Tests und jeder spätere Aufruf laufen in einer Sandbox:
 
-| Sandbox | Isolation | Limits |
+| Sandbox | Isolation | Grenzen |
 |---|---|---|
-| **Python-Prozess** (Standard) | eigener Prozess mit leerer Umgebung in einem temporären Verzeichnis | 15 Sekunden, 1 GB Speicher |
+| **Python-Prozess** (Standard für eigene Tools) | eigener Prozess mit leerer Umgebung in einem temporären Ordner; **keine** Sicherheitsgrenze | 15 Sekunden, 1 GB Speicher |
+| **Eingebaute Linux-Sandbox** (automatisch für KI-erstellte Tools unter Ubuntu 24.04 und Debian 13) | kein Netzwerk, kein Zugriff auf deine Dateien, Schlüssel, die Nodestro-Daten oder andere Programme; keine neuen Prozesse; beschreibbar ist nur ein eigener temporärer Ordner | 15 Sekunden (60 mit Bibliotheken), 1 GB Speicher, 64 MB temporäre Dateien |
 | **Docker** | Wegwerf-Container ohne Netzwerk, mit schreibgeschütztem Dateisystem, ohne Rechte | 20 Sekunden, 512 MB Speicher, 1 CPU |
 
-Die Sandbox wählst du in den [Einstellungen](/docs/einstellungen#sandbox). Docker isoliert stärker, muss aber installiert und gestartet sein; sonst schlagen Tests und Aufrufe fehl. Überschreitet ein Aufruf das Zeitlimit, gilt er als Fehler.
+Die eingebaute Linux-Sandbox braucht keine Installation: Sie nutzt Funktionen des Linux-Kernels (Landlock und seccomp). Nodestro prüft einmal beim Start, ob sie vorhanden sind und wirken; *Einstellungen → Sandbox* zeigt das Ergebnis und, falls sie nicht verfügbar ist, den Grund. Sie schützt nicht vor Fehlern im Linux-Kernel selbst und verbirgt nicht, ob eine Datei anderswo existiert; Docker bleibt als Alternative verfügbar.
 
+Die Sandbox wählst du in den [Einstellungen](/docs/einstellungen#sandbox). Docker muss installiert sein und laufen, sonst schlagen Tests und Aufrufe fehl. Überschreitet ein Aufruf das Zeitlimit, gilt er als Fehler und der Prozess wird beendet.
 
 ## Vertrauen und Isolation {#vertrauen}
 <!-- keywords: vertrauen, nicht vertrauenswürdig, herkunft, ki-generiert, docker nötig, isolation nötig, gesperrt, eingeschränkt, braucht isolation -->
 
 Nodestro entscheidet nach der **Herkunft des Codes**, wo er laufen darf:
 
-| Herkunft | Angezeigt als | Sandbox *Python-Prozess* | Sandbox *Docker* |
+| Herkunft | Angezeigt als | Ohne Isolation (nur *Python-Prozess*) | Eingebaute Linux-Sandbox oder Docker |
 |---|---|---|---|
 | Eingebaute Tools und Integrationen | *Eingebaut* | im Nodestro-Prozess | im Nodestro-Prozess |
-| Von dir unter *Selbst schreiben* geschrieben | *Von dir geschrieben* | läuft, ohne Isolation auf diesem Rechner | läuft isoliert |
+| Von dir unter *Selbst schreiben* geschrieben | *Von dir geschrieben* | läuft, ohne Isolation auf diesem Rechner | läuft (im *Python-Prozess* oder isoliert in Docker) |
 | Von der KI erstellt (auch nach deiner Freigabe), Tool-Entwürfe des KI-Architekten, Tools unbekannter Herkunft | *Braucht Isolation* | **gesperrt** | läuft isoliert |
 
-Der Python-Prozess ist keine Sicherheitsgrenze: Code darin läuft mit deinen Rechten. Deshalb führt Nodestro KI-generierten Code dort nie aus, und weder deine Freigabe noch eine Einstellung ändert das. Ohne Docker gilt:
+Der Python-Prozess ist keine Sicherheitsgrenze: Code darin läuft mit deinen Rechten. Deshalb führt Nodestro KI-generierten Code dort nie aus, und weder deine Freigabe noch eine Einstellung ändert das; es gibt keinen Schalter, der es trotzdem erlaubt. Wo die eingebaute Linux-Sandbox verfügbar ist, nutzt Nodestro sie für solchen Code automatisch. Ohne sie und ohne Docker:
 
-- **Von KI erstellen** startet nicht, und Tool-Entwürfe lassen sich weder testen noch freigeben;
-- Agenten mit einem Tool, das Isolation braucht, können nicht laufen; die Workflow-Prüfung meldet das vor dem Start;
-- Tools, die Isolation brauchen, können noch keine Bibliotheken von Drittanbietern nutzen, auch nicht mit Docker.
+- startet **Mit KI erstellen** nicht, und Tool-Entwürfe lassen sich weder testen noch freigeben;
+- können Agenten mit einem Tool, das Isolation braucht, nicht laufen; die Workflow-Prüfung meldet das vor dem Start;
+- können Tools, die Isolation brauchen, keine Bibliotheken von Drittanbietern nutzen.
 
-Tools, die vor dieser Version gespeichert wurden, und alle Tools nach dem Wiederherstellen eines Backups gelten als unbekannter Herkunft, auch selbst geschriebene, weil ihre Herkunft nicht festgehalten wurde. Mit Docker funktionieren sie weiter. Eine neue Version eines solchen Tools oder eine Kopie seines Codes in einem neuen Tool behält diesen Status. Um diese Funktionen zu nutzen, installiere und starte Docker und wähle es in den [Einstellungen](/docs/einstellungen#sandbox).
+Tools, die vor dieser Version gespeichert wurden, und alle Tools nach dem Wiederherstellen einer Sicherung gelten als unbekannter Herkunft, auch selbst geschriebene, weil ihre Herkunft nicht festgehalten wurde. Mit Isolation funktionieren sie weiter. Eine neue Version eines solchen Tools oder eine Kopie seines Codes in einem neuen Tool behält diesen Status.
 
 ## Versionen und Löschen {#versionen}
 <!-- keywords: version, löschen, zurückziehen, revoke, aktualisieren, überschreiben -->

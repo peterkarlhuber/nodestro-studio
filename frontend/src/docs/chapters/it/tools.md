@@ -141,34 +141,36 @@ Prima che uno strumento creato dall'IA venga aggiunto, vedi codice, test e risul
 ## La sandbox {#sandbox}
 <!-- keywords: sandbox, docker, subprocess, processo python, isolamento, sicurezza, timeout -->
 
-Gli strumenti personali e creati dall'IA **non vengono mai eseguiti nel processo di Nodestro**. I test e ogni chiamata successiva vengono eseguiti in isolamento:
+Gli strumenti personali e quelli creati dall’IA **non vengono mai eseguiti nel processo di Nodestro**. I test e ogni chiamata successiva vengono eseguiti in una sandbox:
 
 | Sandbox | Isolamento | Limiti |
 |---|---|---|
-| **Processo Python** (predefinito) | processo separato con ambiente vuoto in una directory temporanea | 15 secondi, 1 GB di memoria |
-| **Docker** | container usa e getta senza rete, con file system in sola lettura, senza privilegi | 20 secondi, 512 MB di memoria, 1 CPU |
+| **Processo Python** (predefinito per i tuoi strumenti) | processo separato con un ambiente vuoto in una cartella temporanea; **non** è una barriera di sicurezza | 15 secondi, 1 GB di memoria |
+| **Sandbox Linux integrata** (automatica per gli strumenti creati dall’IA su Ubuntu 24.04 e Debian 13) | senza rete, senza accesso ai tuoi file, alle chiavi, ai dati di Nodestro o ad altri programmi; nessun nuovo processo; è scrivibile solo la propria cartella temporanea | 15 secondi (60 con librerie), 1 GB di memoria, 64 MB di file temporanei |
+| **Docker** | container usa e getta senza rete, con file system di sola lettura, senza privilegi | 20 secondi, 512 MB di memoria, 1 CPU |
 
-La sandbox si sceglie nelle [impostazioni](/docs/einstellungen#sandbox). Docker isola di più, ma deve essere installato e avviato; altrimenti test e chiamate falliscono. Se una chiamata supera il limite di tempo, conta come errore.
+La sandbox Linux integrata non richiede installazioni: usa funzioni del kernel Linux (Landlock e seccomp). Nodestro verifica una volta all’avvio che siano presenti e funzionino; *Impostazioni → Sandbox* mostra il risultato e, se non è disponibile, il motivo. Non protegge da errori del kernel Linux stesso e non nasconde se un file esiste altrove; Docker resta disponibile come alternativa.
 
+La sandbox si sceglie nelle [impostazioni](/docs/einstellungen#sandbox). Docker deve essere installato e in esecuzione; altrimenti test e chiamate falliscono. Se una chiamata supera il limite di tempo, conta come errore e il processo viene terminato.
 
 ## Fiducia e isolamento {#vertrauen}
 <!-- keywords: fiducia, non attendibile, origine, generato dall’ia, docker necessario, isolamento necessario, bloccato, limitato, richiede isolamento -->
 
 Nodestro decide in base all’**origine del codice** dove può essere eseguito:
 
-| Origine | Mostrato come | Sandbox *Processo Python* | Sandbox *Docker* |
+| Origine | Mostrato come | Senza isolamento (solo *Processo Python*) | Sandbox Linux integrata o Docker |
 |---|---|---|---|
 | Strumenti integrati e integrazioni | *Integrato* | nel processo di Nodestro | nel processo di Nodestro |
-| Scritto da te in *Scrivi tu* | *Scritto da te* | viene eseguito, senza isolamento su questo computer | viene eseguito isolato |
+| Scritto da te in *Scrivi tu* | *Scritto da te* | viene eseguito, senza isolamento su questo computer | viene eseguito (nel *Processo Python* o isolato in Docker) |
 | Creato dall’IA (anche dopo la tua approvazione), bozze di strumenti dell’architetto IA, strumenti di origine sconosciuta | *Richiede isolamento* | **bloccato** | viene eseguito isolato |
 
-Il processo Python non è una barriera di sicurezza: il codice al suo interno ha i tuoi permessi. Per questo Nodestro non vi esegue mai codice generato dall’IA, e né la tua approvazione né un’impostazione lo cambiano. Senza Docker:
+Il processo Python non è una barriera di sicurezza: il codice al suo interno gira con i tuoi permessi. Per questo Nodestro non vi esegue mai codice generato dall’IA, e né la tua approvazione né un’impostazione lo cambiano; non esiste alcun interruttore che lo consenta comunque. Dove la sandbox Linux integrata è disponibile, Nodestro la usa automaticamente per questo codice. Senza di essa e senza Docker:
 
-- **Crea con l’IA** non parte, e le bozze di strumenti non si possono né testare né approvare;
+- **Crea con l’IA** non si avvia, e le bozze di strumenti non si possono né testare né approvare;
 - gli agenti con uno strumento che richiede isolamento non possono essere eseguiti; il controllo del workflow lo segnala prima dell’avvio;
-- gli strumenti che richiedono isolamento non possono ancora usare librerie di terze parti, nemmeno con Docker.
+- gli strumenti che richiedono isolamento non possono usare librerie di terze parti.
 
-Gli strumenti salvati prima di questa versione, e tutti gli strumenti dopo il ripristino di un backup, sono considerati di origine sconosciuta, anche quelli scritti da te, perché la loro origine non è stata registrata. Con Docker continuano a funzionare. Una nuova versione di uno strumento così, o una copia del suo codice in un nuovo strumento, mantiene questo stato. Per usare queste funzioni, installa e avvia Docker e sceglilo nelle [impostazioni](/docs/einstellungen#sandbox).
+Gli strumenti salvati prima di questa versione, e tutti gli strumenti dopo il ripristino di un backup, sono considerati di origine sconosciuta, anche quelli scritti da te, perché la loro origine non è stata registrata. Con l’isolamento continuano a funzionare. Una nuova versione di uno strumento simile, o una copia del suo codice in un nuovo strumento, mantiene questo stato.
 
 ## Versioni ed eliminazione {#versionen}
 <!-- keywords: versione, eliminare, ritirare, revoke, aggiornare, sovrascrivere -->

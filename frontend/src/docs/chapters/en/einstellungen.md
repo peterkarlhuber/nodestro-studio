@@ -41,11 +41,11 @@ Save changes with **Save** in the *Models and budget* section.
 The **Default budget per run** (initially 2 USD) applies to all workflows without a budget of their own. Empty means no limit. How the budget works is explained under [Budget per run](/docs/workflows#budget).
 
 ## Sandbox {#sandbox}
-<!-- keywords: choose sandbox, docker, python process, docker available -->
+<!-- keywords: choose sandbox, docker, python process, docker available, built-in sandbox, linux sandbox -->
 
-Here you choose where your own and AI-created tools run: **Python process** or **Docker**. The change takes effect immediately. A note shows whether Docker was found; if Docker is selected but not reachable, tool tests and calls fail. Details are under [The sandbox](/docs/tools#sandbox).
+Here you choose where tools you wrote yourself run: **Python process** or **Docker**. The change takes effect immediately. Notes show whether Docker was found and whether the **built-in Linux sandbox** is active; if it is not, the reason is shown (for example an untested Linux distribution or a missing kernel function). If Docker is selected but not reachable, tool tests and calls fail. Details are under [The sandbox](/docs/tools#sandbox).
 
-Tools created by AI and tools of unknown origin run only with Docker; see [Trust and isolation](/docs/tools#vertrauen).
+Tools created by AI and tools of unknown origin run only isolated: automatically in the built-in Linux sandbox, otherwise only with Docker; see [Trust and isolation](/docs/tools#vertrauen).
 
 ## Language {#sprache}
 <!-- keywords: language, english, german, spanish, french, portuguese, italian, browser language, translation, localization -->

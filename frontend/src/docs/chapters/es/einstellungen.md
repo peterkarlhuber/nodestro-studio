@@ -43,9 +43,9 @@ El **presupuesto predeterminado por ejecución** (al principio 2 USD) se aplica 
 ## Sandbox {#sandbox}
 <!-- keywords: elegir sandbox, docker, proceso de python, docker disponible -->
 
-Aquí eliges dónde se ejecutan las herramientas propias y las creadas por IA: **Proceso de Python** o **Docker**. El cambio se aplica de inmediato. Un aviso indica si se ha encontrado Docker; si eliges Docker y no está accesible, las pruebas y las llamadas a herramientas fallan. Los detalles están en [El sandbox](/docs/tools#sandbox).
+Aquí eliges dónde se ejecutan las herramientas que escribes tú: **Proceso de Python** o **Docker**. El cambio se aplica de inmediato. Los avisos muestran si se encontró Docker y si el **sandbox de Linux integrado** está activo; si no lo está, se indica el motivo (por ejemplo, una distribución de Linux no probada o una función del núcleo que falta). Si Docker está seleccionado pero no es accesible, las pruebas y llamadas de herramientas fallan. Los detalles están en [El sandbox](/docs/tools#sandbox).
 
-Las herramientas creadas por IA y las de origen desconocido solo se ejecutan con Docker; consulta [Confianza y aislamiento](/docs/tools#vertrauen).
+Las herramientas creadas por IA y las de origen desconocido solo se ejecutan aisladas: automáticamente en el sandbox de Linux integrado y, si no, solo con Docker; consulta [Confianza y aislamiento](/docs/tools#vertrauen).
 
 ## Idioma {#sprache}
 <!-- keywords: idioma, language, español, inglés, alemán, francés, portugués, italiano, idioma del navegador, traducción, localización -->
