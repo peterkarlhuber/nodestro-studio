@@ -91,6 +91,8 @@ Le esecuzioni che nessuno segue (pianificazioni, serie, serie di test) non posso
 
 I workflow che esistevano già all’attivazione continuano a funzionare: le loro assegnazioni di strumenti sono marcate come **eccezioni preesistenti**, legate alla versione dello strumento con cui giravano. Una nuova versione dello strumento o una nuova assegnazione viene chiesta come al solito. Un’approvazione non toglie mai i limiti della sandbox.
 
+In **Approvazioni → Regole per le chiamate di strumenti** vedi se le approvazioni sono attive e quali eccezioni preesistenti ci sono. L’amministrazione vi esegue anche il passo di attivazione, concede e revoca approvazioni anticipate e legge il registro: chi ha deciso, concesso o revocato cosa, e ogni decisione rifiutata. Gli argomenti di una chiamata non compaiono mai nel registro.
+
 Nei dettagli dell’esecuzione, ogni chiamata di strumento mostra cosa hanno fatto le regole: consentita, approvata o rifiutata (da chi e quando), nessuna decisione in tempo o negata senza domanda, con il motivo.
 
 ## Sotto-workflow {#unterworkflow}

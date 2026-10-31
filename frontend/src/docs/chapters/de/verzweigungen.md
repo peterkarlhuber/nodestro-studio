@@ -91,6 +91,8 @@ Ausführungen, bei denen niemand zusieht (Zeitpläne, Stapel, Testreihen), könn
 
 Workflows, die beim Einschalten schon bestanden, funktionieren weiter: Ihre Tool-Zuweisungen sind als **Ausnahmen aus dem Altbestand** markiert, gebunden an die Tool-Version, mit der sie liefen. Eine neue Tool-Version oder eine neue Zuweisung wird wie üblich abgefragt. Eine Freigabe hebt die Grenzen der Sandbox nie auf.
 
+Unter **Freigaben → Regeln für Tool-Aufrufe** siehst du, ob die Freigaben eingeschaltet sind und welche Ausnahmen aus dem Altbestand es gibt. Die Administration führt dort auch den Aktivierungsschritt aus, erteilt und widerruft Vorab-Freigaben und liest das Protokoll: wer was entschieden, erteilt oder widerrufen hat, und jede abgelehnte Entscheidung. Die Argumente eines Aufrufs erscheinen nie im Protokoll.
+
 In den Details der Ausführung zeigt jeder Tool-Aufruf, was die Regeln getan haben: erlaubt, freigegeben oder abgelehnt (von wem und wann), keine Entscheidung rechtzeitig oder ohne Rückfrage verweigert, mit Grund.
 
 ## Unterworkflows {#unterworkflow}

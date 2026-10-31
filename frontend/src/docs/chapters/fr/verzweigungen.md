@@ -91,6 +91,8 @@ Les exécutions que personne ne surveille (planifications, lots, séries de test
 
 Les workflows qui existaient déjà lors de l’activation continuent de fonctionner : leurs attributions d’outils sont marquées comme **exceptions héritées**, liées à la version d’outil avec laquelle ils tournaient. Une nouvelle version d’outil ou une nouvelle attribution est soumise à la question comme d’habitude. Une validation ne lève jamais les limites du bac à sable.
 
+Sous **Validations → Règles des appels d’outils**, vous voyez si les validations sont activées et quelles exceptions héritées existent. L’administration y exécute aussi l’étape d’activation, accorde et révoque des validations anticipées et consulte le journal : qui a décidé, accordé ou révoqué quoi, et chaque décision refusée. Les arguments d’un appel n’apparaissent jamais dans le journal.
+
 Dans les détails de l’exécution, chaque appel d’outil montre ce qu’ont fait les règles : autorisé, validé ou refusé (par qui et quand), pas de décision à temps ou refusé sans question, avec la raison.
 
 ## Sous-workflows {#unterworkflow}
