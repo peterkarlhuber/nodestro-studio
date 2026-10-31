@@ -5,7 +5,7 @@ Un agente è un modello di IA con un ruolo, un compito e strumenti facoltativi. 
 ## Nozioni di base {#grundlagen}
 <!-- keywords: nome, descrizione, simbolo, icona, ispettore, struttura -->
 
-Seleziona un agente sull'area di lavoro; l'ispettore ne mostra la configurazione. Le impostazioni più usate sono in alto, quelle meno frequenti in sezioni espandibili (*Strumenti*, *Conoscenza*, *Memoria*, *Formato di output*, *Ragionamento e impegno*, *Controllo qualità*, *Avanzate*). Accanto al titolo di ogni sezione c'è un riepilogo, per esempio «2 assegnati».
+Seleziona un agente sull'area di lavoro; l'ispettore ne mostra la configurazione. Le impostazioni più usate sono in alto, quelle meno frequenti in sezioni espandibili (*Strumenti*, *Conoscenza*, *Memoria*, *Formato di output*, *Ragionamento e impegno*, *Controllo qualità*, *Avanzate*). Accanto al titolo di ogni sezione c'è un riepilogo, per esempio «2 assegnati». Il riepilogo nomina ogni impostazione diversa da quella di un nuovo agente, per esempio «1 modello di riserva · nessuna cache» in *Avanzate*. I problemi restano visibili anche a sezione chiusa: il titolo mostra «1 errore» o «2 avvisi», e i link sotto *Problemi in*, in alto, aprono la sezione e la raggiungono. Una sezione resta aperta o chiusa come l'hai lasciata.
 
 - **Icona:** fai clic sull'icona in alto a sinistra per sceglierne un'altra. Serve solo per orientarsi.
 - **Nome:** compare sull'area di lavoro ed è anche il segnaposto `{{Nome}}` per i successori.

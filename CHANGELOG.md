@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Agent inspector: problems and changed settings visible while collapsed, UX-2 (2026-10-31)
+
+- Studio only, no pin change. Problems of the agent check are shown on their section while it is closed ("1 error",
+  "2 warnings"); a line *Problems in* at the top lists those sections and opens and focuses the one you pick. Before,
+  for example, a quality check without criteria was reported only inside the closed *Quality check* section.
+- Problems of a field no section knows are shown at the top instead of not at all.
+- Summaries name what differs from a new agent: *Advanced* lists fallback models, tool choice, own limits, caching,
+  tool-error and refusal handling, example messages and request options (or "defaults"); *Thinking and effort* adds
+  thinking mode and display; *Knowledge* adds citations and knowledge proposals. Texts and the agents chapter in six
+  languages. No configuration value or stored agent changes.
+
 ### Collapsible sections keep their state, UX-1 (2026-10-31)
 
 - Studio only, no pin change. A collapsible section (agent inspector, provider settings) no longer opens or closes

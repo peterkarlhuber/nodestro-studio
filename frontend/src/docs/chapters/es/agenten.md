@@ -5,7 +5,7 @@ Un agente es un modelo de IA con un rol, una tarea y herramientas opcionales. El
 ## Fundamentos {#grundlagen}
 <!-- keywords: nombre, descripción, símbolo, icono, inspector, estructura -->
 
-Selecciona un agente en el lienzo; el inspector muestra su configuración. Los ajustes frecuentes están arriba y los menos usados, en secciones desplegables (*Herramientas*, *Conocimiento*, *Memoria*, *Formato de salida*, *Razonamiento y esfuerzo*, *Control de calidad*, *Avanzado*). Junto al título de cada sección aparece un resumen, por ejemplo «2 asignadas».
+Selecciona un agente en el lienzo; el inspector muestra su configuración. Los ajustes frecuentes están arriba y los menos usados, en secciones desplegables (*Herramientas*, *Conocimiento*, *Memoria*, *Formato de salida*, *Razonamiento y esfuerzo*, *Control de calidad*, *Avanzado*). Junto al título de cada sección aparece un resumen, por ejemplo «2 asignadas». El resumen nombra cada ajuste que difiere de un agente nuevo, por ejemplo «1 modelo de respaldo · sin caché» en *Avanzado*. Los problemas siguen visibles aunque una sección esté cerrada: su título muestra «1 error» o «2 advertencias», y los enlaces de *Problemas en*, arriba, abren la sección y saltan a ella. Una sección queda abierta o cerrada tal como la dejaste.
 
 - **Icono:** haz clic en el icono de arriba a la izquierda para elegir otro. Solo sirve para orientarse.
 - **Nombre:** aparece en el lienzo y es también el marcador `{{Nombre}}` para los sucesores.

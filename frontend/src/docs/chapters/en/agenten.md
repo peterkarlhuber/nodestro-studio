@@ -5,7 +5,7 @@ An agent is an AI model with a role, a task and optional tools. The model can co
 ## Basics {#grundlagen}
 <!-- keywords: name, description, symbol, icon, inspector, structure -->
 
-Select an agent on the canvas; the inspector shows its configuration. Common settings are at the top, less frequent ones in collapsible sections (*Tools*, *Knowledge*, *Memory*, *Output format*, *Thinking and effort*, *Quality check*, *Advanced*). Each section title has a short summary next to it, for example "2 assigned".
+Select an agent on the canvas; the inspector shows its configuration. Common settings are at the top, less frequent ones in collapsible sections (*Tools*, *Knowledge*, *Memory*, *Output format*, *Thinking and effort*, *Quality check*, *Advanced*). Each section title has a short summary next to it, for example "2 assigned". The summary names every setting that differs from a new agent, for example "1 fallback model · no caching" under *Advanced*. Problems stay visible while a section is closed: its title shows "1 error" or "2 warnings", and the links under *Problems in* at the top open the section and jump to it. A section stays open or closed as you left it.
 
 - **Icon:** click the icon at the top left to choose another one. It is only there for orientation.
 - **Name:** appears on the canvas and is also the placeholder `{{Name}}` for successors.

@@ -241,5 +241,24 @@
     "invalidJson": "Not valid JSON.",
     "objectExpected": "A JSON object is expected."
   },
-  "anthropicOnly": "Only available for Anthropic models."
+  "anthropicOnly": "Only available for Anthropic models.",
+  "summary": {
+    "problemsIn": "Problems in",
+    "more": "+{{count}}",
+    "citations": "citations",
+    "proposals": "proposals",
+    "defaults": "defaults",
+    "fallbacks_one": "{{count}} fallback model",
+    "fallbacks_other": "{{count}} fallback models",
+    "forcedTool": "always {{name}}",
+    "toolChoice": "tools: {{choice}}",
+    "limits": "own limits",
+    "noCaching": "no caching",
+    "cacheHour": "1 h cache",
+    "stopOnToolErrors": "stops on tool errors",
+    "refusalReturned": "refusals returned",
+    "examples_one": "{{count}} example message",
+    "examples_other": "{{count}} example messages",
+    "requestOptions": "request options"
+  }
 }
