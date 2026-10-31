@@ -89,7 +89,7 @@ Jedes Beispiel steht in der Galerie und hat unten einen eigenen Abschnitt.
 | 5 | Finanzanalyse | Finanzen und Investments | 3 | sequenziell |
 | 6 | Blogartikel | Marketing und Content | 4 | parallel |
 | 7 | Individuelles Angebot vorbereiten | Vertrieb | 3 | sequenziell |
-| 8 | Kundenanfragen beantworten | Kundenservice | 5 | verzweigt |
+| 8 | Kundenanfragen beantworten | Kundenservice | 4 | verzweigt |
 | 9 | Stelle ausschreiben und Interviews vorbereiten | Personalwesen | 5 | verzweigt |
 | 10 | Forschungsfrage in Hypothesen übersetzen | Forschung und Entwicklung | 4 | sequenziell |
 | 11 | Code-Review mit Tests | Softwareentwicklung | 3 | parallel |
@@ -285,21 +285,20 @@ Ein gutes Angebot beantwortet den tatsächlichen Bedarf des Kunden, nicht nur se
 **Anpassen:** Hänge deine aktuelle Preisliste als Datei an, dann genügt als Text die Kundenanfrage. Zahlungsbedingungen und Textbausteine ergänzt du im System-Prompt des Angebotsautors.
 
 ## 8 · Kundenanfragen beantworten {#customer-service}
-<!-- keywords: kundenservice, klassifizierer, richtlinienprüfer, antwortverfasser, deeskalation, überarbeitung -->
+<!-- keywords: kundenservice, klassifizierer, richtlinienprüfer, antwortverfasser, deeskalation -->
 
-**Bereich:** Kundenservice · **Agenten:** 5 · **Muster:** verzweigt · **Niveau:** Einsteiger · **Bausteine:** Entscheidung, Freigabe, Eingabeformular, Dateien als Eingabe
+**Bereich:** Kundenservice · **Agenten:** 4 · **Muster:** verzweigt · **Niveau:** Einsteiger · **Bausteine:** Entscheidung, Freigabe, Eingabeformular, Dateien als Eingabe
 
 Im Kundenservice kommen viele Anfragen gleichzeitig an, und jede braucht die richtige Regel und den richtigen Ton. Der Workflow sortiert die Anfragen, prüft Richtlinien und Fristen und bereitet Antworten zur Freigabe vor.
 
-**So arbeiten die Agenten zusammen:** Ein schneller Klassifizierer ordnet jede Anfrage nach Thema, Dringlichkeit und Stimmung. Der Richtlinienprüfer wendet die Servicerichtlinien an und rechnet Fristen mit dem Datums-Tool nach. Der Antwortverfasser schreibt die Entwürfe; eine Qualitätsprüfung kontrolliert, dass nichts über die Richtlinien hinaus zugesagt wird. Ein Entscheidungsknoten schickt Eskalationen zuerst an einen Deeskalations-Agenten. Jeder Entwurf wartet auf eine Freigabe; eine Ablehnung mit Rückmeldung führt zu einer überarbeiteten Fassung.
+**So arbeiten die Agenten zusammen:** Ein schneller Klassifizierer ordnet jede Anfrage nach Thema, Dringlichkeit und Stimmung. Der Richtlinienprüfer wendet die Servicerichtlinien an und rechnet Fristen mit dem Datums-Tool nach. Der Antwortverfasser schreibt die Entwürfe; eine Qualitätsprüfung kontrolliert, dass nichts über die Richtlinien hinaus zugesagt wird. Ein Entscheidungsknoten schickt Eskalationen zuerst an einen Deeskalations-Agenten. Jeder Entwurf wartet auf eine Freigabe; eine Ablehnung mit Rückmeldung schickt die Entwürfe über eine Schleife zurück an den Antwortschreiber, der sie überarbeitet und erneut zur Freigabe vorlegt (höchstens drei Runden).
 
 | Agent | Aufgabe | Bekommt |
 |---|---|---|
 | **Klassifizierer** | Ordnet jede Anfrage nach Thema, Dringlichkeit und Stimmung ein. (strukturierte Ausgabe) | Anfragen |
 | **Richtlinienprüfer** | Wendet die Servicerichtlinien an und prüft Fristen mit dem Datums-Tool. (Tools: `days_between`) | Klassifizierer, Anfragen |
-| **Antwortverfasser** | Schreibt freundliche Antwortentwürfe zur Freigabe. (mit Qualitätsprüfung) | Klassifizierer, Richtlinienprüfer, Deeskalation |
+| **Antwortverfasser** | Schreibt freundliche Antwortentwürfe zur Freigabe. (mit Qualitätsprüfung) | Klassifizierer, Richtlinienprüfer, Deeskalation, Antworten freigeben |
 | **Deeskalation** | Bereitet den Umgang mit verärgerten Kunden vor und klärt, was eine Freigabe braucht. | Eskalation? |
-| **Überarbeitung** | Überarbeitet die Entwürfe nach der Rückmeldung der Freigabe. | Antworten freigeben |
 
 **Eingabe:** Mehrere Kundenanfragen mit Bestell- und Lieferdaten, das heutige Datum und eure Servicerichtlinien, als Auszug im Text oder als Datei (PDF, Word, Markdown); die Beispieldatei enthält ausführlichere Richtlinien.
 

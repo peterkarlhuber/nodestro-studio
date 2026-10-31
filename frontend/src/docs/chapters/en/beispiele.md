@@ -89,7 +89,7 @@ Every example is in the gallery and has its own section below.
 | 5 | Financial analysis | Finance and investments | 3 | sequential |
 | 6 | Blog article | Marketing and content | 4 | parallel |
 | 7 | Prepare a tailored offer | Sales | 3 | sequential |
-| 8 | Answer customer enquiries | Customer service | 5 | branching |
+| 8 | Answer customer enquiries | Customer service | 4 | branching |
 | 9 | Advertise a job and prepare interviews | Human resources | 5 | branching |
 | 10 | Turn a research question into hypotheses | Research and development | 4 | sequential |
 | 11 | Code review with tests | Software development | 3 | parallel |
@@ -285,21 +285,20 @@ A good offer answers the customer's actual need, not just their keywords. The wo
 **Adapting it:** Attach your current price list as a file; then the customer request is enough as text. Add payment terms and standard wording in the system prompt of the offer writer.
 
 ## 8 · Answer customer enquiries {#customer-service}
-<!-- keywords: customer service, classifier, policy checker, reply writer, de-escalation, revision -->
+<!-- keywords: customer service, classifier, policy checker, reply writer, de-escalation -->
 
-**Field:** Customer service · **Agents:** 5 · **Pattern:** branching · **Level:** Beginner · **Building blocks:** decision, approval, input form, files as input
+**Field:** Customer service · **Agents:** 4 · **Pattern:** branching · **Level:** Beginner · **Building blocks:** decision, approval, input form, files as input
 
 In customer service many enquiries arrive at once, and each needs the right rule and the right tone. The workflow sorts the enquiries, checks policies and deadlines and prepares replies for approval.
 
-**How the agents work together:** A fast classifier sorts each enquiry by topic, urgency and mood. The policy checker applies the service policy and recalculates deadlines with the date tool. The reply writer drafts the replies; a quality check makes sure nothing is promised beyond the policy. A decision node sends escalations to a de-escalation agent first. Every draft waits for approval; a rejection with feedback leads to a revised version.
+**How the agents work together:** A fast classifier sorts each enquiry by topic, urgency and mood. The policy checker applies the service policy and recalculates deadlines with the date tool. The reply writer drafts the replies; a quality check makes sure nothing is promised beyond the policy. A decision node sends escalations to a de-escalation agent first. Every draft waits for approval; a rejection with feedback sends the drafts back to the reply writer through a loop, who revises them and submits them for approval again (at most three rounds).
 
 | Agent | Task | Receives |
 |---|---|---|
 | **Classifier** | Sorts each enquiry by topic, urgency and mood. (structured output) | Enquiries |
 | **Policy checker** | Applies the service policy and checks deadlines with the date tool. (Tools: `days_between`) | Classifier, Enquiries |
-| **Reply writer** | Writes friendly draft replies for approval. (with quality check) | Classifier, Policy checker, De-escalation |
+| **Reply writer** | Writes friendly draft replies for approval. (with quality check) | Classifier, Policy checker, De-escalation, Approve replies |
 | **De-escalation** | Prepares how to handle upset customers and what needs approval. | Escalation? |
-| **Revision** | Revises the drafts according to the reviewer's feedback. | Approve replies |
 
 **Input:** Several customer enquiries with order and delivery data, today's date and your service policy, as an extract in the text or as a file (PDF, Word, Markdown); the sample file contains a more detailed policy.
 

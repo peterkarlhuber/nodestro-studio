@@ -89,7 +89,7 @@ Chaque exemple se trouve dans la galerie et a sa propre section ci-dessous.
 | 5 | Analyse financière | Finance et investissement | 3 | séquentiel |
 | 6 | Article de blog | Marketing et contenu | 4 | parallèle |
 | 7 | Préparer une offre personnalisée | Vente | 3 | séquentiel |
-| 8 | Répondre aux demandes clients | Service client | 5 | avec branches |
+| 8 | Répondre aux demandes clients | Service client | 4 | avec branches |
 | 9 | Publier une offre d'emploi et préparer les entretiens | Ressources humaines | 5 | avec branches |
 | 10 | Transformer une question de recherche en hypothèses | Recherche et développement | 4 | séquentiel |
 | 11 | Revue de code avec tests | Développement logiciel | 3 | parallèle |
@@ -285,21 +285,20 @@ Une bonne offre répond au besoin réel du client, pas seulement à ses mots-cl�
 **L'adapter:** Joignez votre liste de prix actuelle en fichier ; la demande du client suffit alors comme texte. Ajoutez les conditions de paiement et les formulations types dans le prompt système du rédacteur d'offre.
 
 ## 8 · Répondre aux demandes clients {#customer-service}
-<!-- keywords: service client, classificateur, vérificateur des règles, rédacteur des réponses, désescalade, révision -->
+<!-- keywords: service client, classificateur, vérificateur des règles, rédacteur des réponses, désescalade -->
 
-**Domaine:** Service client · **Agents:** 5 · **Schéma:** avec branches · **Niveau:** Débutant · **Éléments:** décision, validation, formulaire de saisie, fichiers en entrée
+**Domaine:** Service client · **Agents:** 4 · **Schéma:** avec branches · **Niveau:** Débutant · **Éléments:** décision, validation, formulaire de saisie, fichiers en entrée
 
 Au service client, de nombreuses demandes arrivent en même temps, et chacune exige la bonne règle et le bon ton. Le workflow trie les demandes, vérifie règles et délais et prépare des réponses à valider.
 
-**Comment les agents collaborent:** Un classificateur rapide classe chaque demande par thème, urgence et humeur. Le vérificateur des règles applique la politique de service et recalcule les délais avec l'outil de dates. Le rédacteur des réponses rédige les projets ; une vérification qualité contrôle que rien n'est promis au-delà de la politique. Un nœud de décision envoie d'abord les escalades à un agent de désescalade. Chaque brouillon attend une validation ; un refus avec retour mène à une version révisée.
+**Comment les agents collaborent:** Un classificateur rapide classe chaque demande par thème, urgence et humeur. Le vérificateur des règles applique la politique de service et recalcule les délais avec l'outil de dates. Le rédacteur des réponses rédige les projets ; une vérification qualité contrôle que rien n'est promis au-delà de la politique. Un nœud de décision envoie d'abord les escalades à un agent de désescalade. Chaque brouillon attend une validation ; un refus avec retour renvoie les brouillons par une boucle au rédacteur de réponses, qui les révise et les soumet de nouveau à validation (trois tours au plus).
 
 | Agent | Tâche | Reçoit |
 |---|---|---|
 | **Classificateur** | Classe chaque demande par thème, urgence et humeur. (sortie structurée) | Demandes |
 | **Vérificateur des règles** | Applique la politique de service et vérifie les délais avec l'outil de dates. (Outils: `days_between`) | Classificateur, Demandes |
-| **Rédacteur des réponses** | Rédige des projets de réponse aimables à valider. (avec contrôle qualité) | Classificateur, Vérificateur des règles, Désescalade |
+| **Rédacteur des réponses** | Rédige des projets de réponse aimables à valider. (avec contrôle qualité) | Classificateur, Vérificateur des règles, Désescalade, Valider les réponses |
 | **Désescalade** | Prépare la réponse aux clients mécontents et ce qui nécessite une validation. | Escalade ? |
-| **Révision** | Révise les brouillons selon le retour de la validation. | Valider les réponses |
 
 **Entrée:** Plusieurs demandes de clients avec données de commande et de livraison, la date du jour et votre politique de service, en extrait dans le texte ou en fichier (PDF, Word, Markdown) ; le fichier d'exemple contient une politique plus détaillée.
 
