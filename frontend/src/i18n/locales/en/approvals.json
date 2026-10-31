@@ -24,5 +24,42 @@
   "approve": "Approve",
   "reject": "Reject",
   "approvedToast": "Approved. The run continues.",
-  "rejectedToast": "Rejected."
+  "rejectedToast": "Rejected.",
+  "tool": {
+    "title": "Tool call: {{name}}",
+    "cardLabel": "Tool call {{name}}",
+    "inRun": "Run, step {{node}}",
+    "help": "Approval per tool call",
+    "access": {
+      "read": "Reads only",
+      "write": "Changes data",
+      "destructive": "Deletes or destroys"
+    },
+    "reach": {
+      "internal": "Stays in Nodestro",
+      "external": "Reaches outside"
+    },
+    "capabilityUnknown": "Not classified: treated as changing and external",
+    "arguments": "Arguments, exactly as they will be sent",
+    "timeLeft": "Time left to decide: {{time}}",
+    "expired": "Time is up; the call counts as rejected.",
+    "commentHint": "The agent reads the comment; it is recorded with the decision.",
+    "rejectHint": "When rejected, the call is not made and the agent learns that it was refused. Without a decision, the call counts as rejected.",
+    "approve": "Allow this call",
+    "approvedToast": "Allowed. The run continues.",
+    "rejectedToast": "Rejected. The call is not made.",
+    "runWaiting": "This run waits for your decision on a tool call.",
+    "status": {
+      "allowed": "Allowed by the rules",
+      "pending": "Waiting for a decision",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "expired": "No decision in time (rejected)",
+      "cancelled": "Cancelled",
+      "denied": "Refused without a question"
+    },
+    "preGranted": "approved in advance",
+    "decidedBy": "by {{name}}, {{time}}",
+    "comment": "comment: {{comment}}"
+  }
 }

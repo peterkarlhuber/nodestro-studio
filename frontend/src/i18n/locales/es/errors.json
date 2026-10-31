@@ -153,7 +153,21 @@
     "no_tests": "No se ha ejecutado ninguna prueba. Escribe al menos una función test_*.",
     "builtin_delete": "Las herramientas integradas no se pueden eliminar.",
     "requirement_missing": "Describe qué debe poder hacer la herramienta.",
-    "input_not_json": "La entrada no es un JSON válido."
+    "input_not_json": "La entrada no es un JSON válido.",
+    "approval_stale": "La llamada cambió desde que se mostró. Revisa la versión actual y vuelve a decidir.",
+    "approval_expired": "El tiempo para esta decisión se agotó; la llamada contó como rechazada.",
+    "approval_decided": "Alguien ya decidió sobre esta llamada.",
+    "approval_not_found": "Esta solicitud de aprobación ya no existe.",
+    "approval_rejected": "La llamada fue rechazada, por eso la herramienta no se ejecutó.",
+    "approval_timeout": "Nadie decidió a tiempo, por eso la llamada contó como rechazada.",
+    "approval_unattended": "La herramienta necesita la aprobación de una persona para cada llamada, y en esta ejecución nadie puede responder (por ejemplo, una programación o un lote). Apruébala de antemano para esa programación o lote, o inicia la ejecución a mano.",
+    "approval_capacity": "Ahora mismo hay demasiadas ejecuciones esperando una aprobación, por eso esta llamada no se realizó.",
+    "not_granted": "La herramienta «{{tool}}» no está asignada a este agente.",
+    "pre_grant_mcp": "Las herramientas de servicios conectados no se pueden aprobar de antemano.",
+    "pre_grant_destructive": "Las herramientas que borran o destruyen no se pueden aprobar de antemano.",
+    "pre_grant_version": "Solo se puede aprobar de antemano una versión concreta de la herramienta.",
+    "pre_grant_expiry": "La fecha de caducidad está en el pasado.",
+    "pre_grant_not_found": "Esta aprobación previa no existe."
   },
   "job": {
     "writing": "El agente de programación está escribiendo código y pruebas …",

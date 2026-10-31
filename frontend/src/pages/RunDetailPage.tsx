@@ -19,6 +19,7 @@ import { liveUsage } from "../editor/store";
 import { TraceExportDialog, sanitizeSummary } from "../editor/TraceExportDialog";
 import { ErrorText, ProblemText, runProblem } from "../lib/errors";
 import { RunApprovals } from "../runs/ApprovalCard";
+import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { ResultFiles } from "../runs/ResultFiles";
 import { RunInputs, useRunInputs } from "../runs/RunInputs";
 import { ResumeDialog } from "../runs/ResumeDialog";
@@ -198,6 +199,7 @@ export function RunDetailPage() {
         ) : null}
         <RunOrigin run={data} />
         {paused ? <RunApprovals run={data} /> : null}
+        {data.status === "running" ? <RunToolApprovals run={data} /> : null}
         {data.sanitized ? (
           <Callout tone="info">
             <ShieldCheck size={13} aria-hidden /> {t("export.importedSanitized", { summary: sanitizeSummary(t, data.sanitized) })}

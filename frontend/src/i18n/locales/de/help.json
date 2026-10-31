@@ -77,7 +77,8 @@
     "approve": "Freigegebene Tools können alle Agenten nutzen. Prüfe vorher, ob Code und Tests tun, was du erwartest. Ohne Entscheidung wird ein Auftrag nach einer Stunde abgelehnt.",
     "sandbox": "Eigene und KI-erstellte Tools laufen nie im Nodestro-Prozess, sondern isoliert mit Zeit- und Speicherlimit.",
     "drafts": "Vom Workflow-Architekten geschriebene Tools. Teste und gib sie hier frei oder lehne sie ab.",
-    "services": "Externe Dienste über MCP: Du verbindest einen Server, testest die Verbindung und gibst jedes Tool nach Prüfung einzeln frei. Ändert der Dienst ein Tool, wird es gesperrt, bis du die Änderung prüfst."
+    "services": "Externe Dienste über MCP: Du verbindest einen Server, testest die Verbindung und gibst jedes Tool nach Prüfung einzeln frei. Ändert der Dienst ein Tool, wird es gesperrt, bis du die Änderung prüfst.",
+    "callApproval": "Eine Person entscheidet über jeden Aufruf dieses Tools, mit den genauen Argumenten. Ohne Entscheidung innerhalb der Frist gilt der Aufruf als abgelehnt."
   },
   "knowledge": {
     "upload": "PDFs, Bilder (PNG, JPEG, GIF, WebP) und Textformate. Bilder bis 5 MB, Dokumente bis 20 MB. Texte und PDFs werden für die Suche indexiert.",

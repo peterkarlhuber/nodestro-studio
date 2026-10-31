@@ -153,7 +153,21 @@
     "no_tests": "Nenhum teste foi executado. Escreva pelo menos uma função test_*.",
     "builtin_delete": "Ferramentas integradas não podem ser excluídas.",
     "requirement_missing": "Descreva o que a ferramenta deve fazer.",
-    "input_not_json": "A entrada não é um JSON válido."
+    "input_not_json": "A entrada não é um JSON válido.",
+    "approval_stale": "A chamada mudou desde que foi mostrada. Confira a versão atual e decida de novo.",
+    "approval_expired": "O tempo para esta decisão acabou; a chamada contou como rejeitada.",
+    "approval_decided": "Alguém já decidiu sobre esta chamada.",
+    "approval_not_found": "Esta solicitação de aprovação não existe mais.",
+    "approval_rejected": "A chamada foi rejeitada, por isso a ferramenta não foi executada.",
+    "approval_timeout": "Ninguém decidiu a tempo, por isso a chamada contou como rejeitada.",
+    "approval_unattended": "A ferramenta precisa da aprovação de uma pessoa para cada chamada, e nesta execução ninguém pode responder (por exemplo, um agendamento ou um lote). Aprove-a antecipadamente para esse agendamento ou lote, ou inicie a execução manualmente.",
+    "approval_capacity": "Há execuções demais aguardando uma aprovação agora, por isso esta chamada não aconteceu.",
+    "not_granted": "A ferramenta “{{tool}}” não está atribuída a este agente.",
+    "pre_grant_mcp": "Ferramentas de serviços conectados não podem ser aprovadas antecipadamente.",
+    "pre_grant_destructive": "Ferramentas que excluem ou destroem não podem ser aprovadas antecipadamente.",
+    "pre_grant_version": "Só é possível aprovar antecipadamente uma versão específica da ferramenta.",
+    "pre_grant_expiry": "A data de expiração está no passado.",
+    "pre_grant_not_found": "Esta aprovação antecipada não existe."
   },
   "job": {
     "writing": "O agente de programação está escrevendo código e testes …",

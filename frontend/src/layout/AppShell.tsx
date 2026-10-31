@@ -22,7 +22,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
-import { useApprovals, useSettings } from "../api/hooks";
+import { useApprovals, useSettings, useToolApprovals } from "../api/hooks";
 import { AssistantPanel } from "../assistant/AssistantPanel";
 import { useAssistant } from "../assistant/store";
 import { Toaster } from "../components/toast";
@@ -107,6 +107,8 @@ export function AppShell() {
   const [theme, setTheme] = useTheme();
   const settings = useSettings();
   const approvals = useApprovals();
+  const toolApprovals = useToolApprovals();
+  const waiting = (approvals.data?.length ?? 0) + (toolApprovals.data?.filter((item) => item.status === "pending").length ?? 0);
   // New agents use the default model: without its provider nothing runs.
   const missingKey = missingProviders(settings.data, [settings.data?.default_model]).length > 0;
   const defaultModel = settings.data?.default_model;
@@ -180,7 +182,7 @@ export function AppShell() {
         <NavGroup title={t("nav.groupWorkspace")} items={WORKSPACE} />
         <NavGroup
           title={t("nav.groupAutomation")}
-          items={AUTOMATION.map((item) => (item.label === "approvals" ? { ...item, badge: approvals.data?.length } : item))}
+          items={AUTOMATION.map((item) => (item.label === "approvals" ? { ...item, badge: waiting || undefined } : item))}
         />
         <NavGroup title={t("nav.groupObservability")} items={OBSERVABILITY} />
         <NavGroup title={t("nav.groupHelp")} items={HELP_ITEMS} />

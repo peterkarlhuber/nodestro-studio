@@ -153,7 +153,21 @@
     "no_tests": "Aucun test n’a été exécuté. Écrivez au moins une fonction test_*.",
     "builtin_delete": "Les outils intégrés ne peuvent pas être supprimés.",
     "requirement_missing": "Veuillez décrire ce que l’outil doit savoir faire.",
-    "input_not_json": "L’entrée n’est pas un JSON valide."
+    "input_not_json": "L’entrée n’est pas un JSON valide.",
+    "approval_stale": "L’appel a changé depuis son affichage. Vérifiez la version actuelle et décidez à nouveau.",
+    "approval_expired": "Le délai de cette décision est écoulé ; l’appel a compté comme refusé.",
+    "approval_decided": "Quelqu’un a déjà décidé de cet appel.",
+    "approval_not_found": "Cette demande de validation n’existe plus.",
+    "approval_rejected": "L’appel a été refusé, l’outil n’a donc pas été exécuté.",
+    "approval_timeout": "Personne n’a décidé à temps, l’appel a donc compté comme refusé.",
+    "approval_unattended": "L’outil exige la validation d’une personne pour chaque appel, et personne ne peut répondre dans cette exécution (par exemple une planification ou un lot). Validez-le à l’avance pour cette planification ou ce lot, ou lancez l’exécution à la main.",
+    "approval_capacity": "Trop d’exécutions attendent une validation en ce moment, cet appel n’a donc pas eu lieu.",
+    "not_granted": "L’outil « {{tool}} » n’est pas attribué à cet agent.",
+    "pre_grant_mcp": "Les outils des services connectés ne peuvent pas être validés à l’avance.",
+    "pre_grant_destructive": "Les outils qui suppriment ou détruisent ne peuvent pas être validés à l’avance.",
+    "pre_grant_version": "Seule une version précise d’un outil peut être validée à l’avance.",
+    "pre_grant_expiry": "La date d’expiration est dans le passé.",
+    "pre_grant_not_found": "Cette validation anticipée n’existe pas."
   },
   "job": {
     "writing": "Le Coding Agent écrit le code et les tests …",

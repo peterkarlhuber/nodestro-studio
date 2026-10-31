@@ -74,6 +74,25 @@ Die Seite **Freigaben** (Navigation, Gruppe *Automatisierung*) listet alle offen
 
 Jede Karte zeigt den Hinweis, die zu prüfenden Ergebnisse, ein Kommentarfeld und die Knöpfe *Freigeben* und *Ablehnen*. Freigaben in Unterworkflows erscheinen hier ebenfalls, mit dem Pfad zum übergeordneten Lauf.
 
+## Tool-Aufrufe freigeben {#tool-freigabe}
+<!-- keywords: tool-freigabe, tool-aufruf, pro aufruf, argumente, frist, vorab-freigabe, unbeaufsichtigt, altbestand -->
+
+Neben Freigabeknoten kann Nodestro auch vor **einzelnen Tool-Aufrufen** eines Agenten fragen. Das ist für Tools gedacht, die Daten ändern oder nach außen wirken, zum Beispiel eine E-Mail senden oder in ein Ticketsystem schreiben. Die Administration schaltet das nach der Sicherheitsprüfung ein; bis dahin ändert sich nichts.
+
+Will ein Agent einen solchen Aufruf machen, läuft die Ausführung weiter, wartet aber an diesem Aufruf. Die Karte erscheint in der Ausführung, beim Schritt und auf der Seite **Freigaben**. Sie zeigt das Tool, was es darf (*liest nur*, *ändert Daten*, *löscht oder zerstört*; *bleibt in Nodestro* oder *wirkt nach außen*), die **Argumente genau so, wie sie gesendet werden**, und die verbleibende Zeit.
+
+- **Diesen Aufruf erlauben** lässt genau diesen Aufruf durch. Eine Entscheidung gilt nur für die Argumente und die Tool-Version, die du gesehen hast: Hat sich eines davon geändert, lehnt Nodestro die Entscheidung ab und zeigt den aktuellen Aufruf.
+- **Ablehnen** verhindert den Aufruf; der Agent erfährt, dass er abgelehnt wurde, und kann ohne ihn weitermachen.
+- **Ohne Entscheidung** innerhalb der Frist (standardmäßig 15 Minuten) gilt der Aufruf als abgelehnt, auch nach einem Neustart. Eine abgelehnte oder abgelaufene Entscheidung wird nie wiederverwendet.
+- Ein **nicht eingestuftes** Tool gilt als ändernd und nach außen wirkend.
+- Bei Tools **verbundener Dienste**, die Daten ändern, wird bei jedem Aufruf gefragt.
+
+Ausführungen, bei denen niemand zusieht (Zeitpläne, Stapel, Testreihen), können nicht fragen. Dort wird ein solcher Aufruf verweigert, außer die Administration hat diese Tool-Version für genau diesen Zeitplan oder Stapel **vorab freigegeben**. Tools, die löschen oder zerstören, und Tools verbundener Dienste lassen sich nie vorab freigeben.
+
+Workflows, die beim Einschalten schon bestanden, funktionieren weiter: Ihre Tool-Zuweisungen sind als **Ausnahmen aus dem Altbestand** markiert, gebunden an die Tool-Version, mit der sie liefen. Eine neue Tool-Version oder eine neue Zuweisung wird wie üblich abgefragt. Eine Freigabe hebt die Grenzen der Sandbox nie auf.
+
+In den Details der Ausführung zeigt jeder Tool-Aufruf, was die Regeln getan haben: erlaubt, freigegeben oder abgelehnt (von wem und wann), keine Entscheidung rechtzeitig oder ohne Rückfrage verweigert, mit Grund.
+
 ## Unterworkflows {#unterworkflow}
 <!-- keywords: unterworkflow, subworkflow, verschachteln, wiederverwenden, baustein, version, kindlauf -->
 

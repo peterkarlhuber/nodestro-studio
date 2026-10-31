@@ -153,7 +153,21 @@
     "no_tests": "No tests were run. Write at least one test_* function.",
     "builtin_delete": "Built-in tools cannot be deleted.",
     "requirement_missing": "Please describe what the tool should do.",
-    "input_not_json": "The input is not valid JSON."
+    "input_not_json": "The input is not valid JSON.",
+    "approval_stale": "The call changed since it was shown. Check the current version and decide again.",
+    "approval_expired": "The time for this decision ran out; the call counted as rejected.",
+    "approval_decided": "Someone already decided on this call.",
+    "approval_not_found": "This approval request no longer exists.",
+    "approval_rejected": "The call was rejected, so the tool did not run.",
+    "approval_timeout": "Nobody decided in time, so the call counted as rejected.",
+    "approval_unattended": "The tool needs a person's approval for each call, and nobody can answer in this run (for example a schedule or batch). Approve it in advance for this schedule or batch, or start the run by hand.",
+    "approval_capacity": "Too many runs are waiting for an approval right now, so this call was not made.",
+    "not_granted": "The tool “{{tool}}” was not granted to this agent.",
+    "pre_grant_mcp": "Tools of connected services cannot be approved in advance.",
+    "pre_grant_destructive": "Tools that delete or destroy cannot be approved in advance.",
+    "pre_grant_version": "Only a specific tool version can be approved in advance.",
+    "pre_grant_expiry": "The expiry date lies in the past.",
+    "pre_grant_not_found": "This advance approval does not exist."
   },
   "job": {
     "writing": "The Coding Agent is writing code and tests …",
