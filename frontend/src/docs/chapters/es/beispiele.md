@@ -89,7 +89,7 @@ Cada ejemplo está en la galería y tiene su propia sección más abajo.
 | 5 | Análisis financiero | Finanzas e inversiones | 3 | secuencial |
 | 6 | Artículo de blog | Marketing y contenidos | 4 | paralelo |
 | 7 | Preparar una oferta a medida | Ventas | 3 | secuencial |
-| 8 | Responder consultas de clientes | Atención al cliente | 5 | con ramas |
+| 8 | Responder consultas de clientes | Atención al cliente | 4 | con ramas |
 | 9 | Publicar una vacante y preparar entrevistas | Recursos humanos | 5 | con ramas |
 | 10 | Convertir una pregunta de investigación en hipótesis | Investigación y desarrollo | 4 | secuencial |
 | 11 | Revisión de código con pruebas | Desarrollo de software | 3 | paralelo |
@@ -285,21 +285,20 @@ Una buena oferta responde a la necesidad real del cliente, no solo a sus palabra
 **Cómo adaptarlo:** Adjunta tu lista de precios actual como archivo; así basta con la solicitud del cliente como texto. Las condiciones de pago y los textos estándar se añaden en el prompt de sistema del redactor de ofertas.
 
 ## 8 · Responder consultas de clientes {#customer-service}
-<!-- keywords: atención al cliente, clasificador, revisor de políticas, redactor de respuestas, desescalada, revisión -->
+<!-- keywords: atención al cliente, clasificador, revisor de políticas, redactor de respuestas, desescalada -->
 
-**Ámbito:** Atención al cliente · **Agentes:** 5 · **Patrón:** con ramas · **Nivel:** Principiante · **Elementos:** decisión, aprobación, formulario de entrada, archivos como entrada
+**Ámbito:** Atención al cliente · **Agentes:** 4 · **Patrón:** con ramas · **Nivel:** Principiante · **Elementos:** decisión, aprobación, formulario de entrada, archivos como entrada
 
 En atención al cliente llegan muchas consultas a la vez y cada una necesita la regla y el tono adecuados. El flujo ordena las consultas, comprueba políticas y plazos y prepara respuestas para su aprobación.
 
-**Cómo colaboran los agentes:** Un clasificador rápido ordena cada consulta por tema, urgencia y estado de ánimo. El revisor de políticas aplica la política de servicio y recalcula los plazos con la herramienta de fechas. El redactor de respuestas escribe los borradores; una revisión de calidad comprueba que no se prometa nada que vaya más allá de la política. Un nodo de decisión envía primero los escalados a un agente de desescalada. Cada borrador espera una aprobación; un rechazo con comentarios da lugar a una versión revisada.
+**Cómo colaboran los agentes:** Un clasificador rápido ordena cada consulta por tema, urgencia y estado de ánimo. El revisor de políticas aplica la política de servicio y recalcula los plazos con la herramienta de fechas. El redactor de respuestas escribe los borradores; una revisión de calidad comprueba que no se prometa nada que vaya más allá de la política. Un nodo de decisión envía primero los escalados a un agente de desescalada. Cada borrador espera una aprobación; un rechazo con comentarios devuelve los borradores mediante un bucle al redactor de respuestas, que los revisa y los presenta de nuevo para su aprobación (como máximo tres rondas).
 
 | Agente | Tarea | Recibe |
 |---|---|---|
 | **Clasificador** | Ordena cada consulta por tema, urgencia y estado de ánimo. (salida estructurada) | Consultas |
 | **Revisor de políticas** | Aplica la política de servicio y comprueba plazos con la herramienta de fechas. (Herramientas: `days_between`) | Clasificador, Consultas |
-| **Redactor de respuestas** | Escribe borradores de respuesta amables para su aprobación. (con control de calidad) | Clasificador, Revisor de políticas, Desescalada |
+| **Redactor de respuestas** | Escribe borradores de respuesta amables para su aprobación. (con control de calidad) | Clasificador, Revisor de políticas, Desescalada, Aprobar respuestas |
 | **Desescalada** | Prepara cómo tratar a clientes molestos y qué necesita aprobación. | ¿Escalado? |
-| **Revisión** | Revisa los borradores según los comentarios de la aprobación. | Aprobar respuestas |
 
 **Entrada:** Varias consultas de clientes con datos de pedido y entrega, la fecha de hoy y vuestra política de servicio, como extracto en el texto o como archivo (PDF, Word, Markdown); el archivo de ejemplo contiene una política más detallada.
 

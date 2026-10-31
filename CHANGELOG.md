@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Platform pins: runtime 0aee6a9, api ac9d706, sdk 8cc4c8f (Evolution S-2b, 2026-10-31)
+
+- Pins `nodestro-api` `ac9d706` (before `a06ccea`), `nodestro-runtime` `0aee6a9` (before `8597544`),
+  `nodestro-examples` `9597421` (before `cf151e6`), `nodestro-integrations` `2d18a20` (before `226b75f`),
+  `nodestro-sdk` `8cc4c8f` (before `8fcb94d`) and orkexa `b85133d` (before `456b92f`, via the runtime). This brings
+  the per-call tool approval API (S-2b, off unless `NODESTRO_TOOL_APPROVALS=1`), the MCP write gate and OAuth runtime,
+  budget reservations and run, time and step limits; the studio interface for approvals follows in S-2c.
+- The examples chapter (`make example-docs`, six languages) follows the customer-service approval loop (four agents).
+
 ### Connected MCP services, pins: api a06ccea, sdk 8fcb94d (ADR-0007 WP-4, 2026-10-31)
 
 - New tab **Tools > Verbundene Dienste**: connect remote MCP servers (name, address, token write-only; a local
