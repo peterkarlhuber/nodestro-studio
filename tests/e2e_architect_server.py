@@ -62,8 +62,8 @@ def stand_in_for_docker() -> None:
 
     real = workspace.make_sandbox
 
-    def make_sandbox(kind: str, policy: Any = None) -> Any:
-        return ContainerDouble() if kind == "docker" else real(kind, policy)
+    def make_sandbox(kind: str, policy: Any = None, container: Any = None) -> Any:
+        return ContainerDouble() if kind == "docker" else real(kind, policy, container)
 
     workspace.make_sandbox = make_sandbox  # type: ignore[assignment]
 
