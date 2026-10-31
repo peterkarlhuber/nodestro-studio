@@ -159,6 +159,10 @@ packaging and deployment only. Nothing of this is implemented yet. The current-s
 architecture and the pull request plan are in [desktop-server/README.md](desktop-server/README.md), the decisions in
 [adr/](adr/README.md).
 
+The product evolution plan (progressive complexity first, then quality checks before publishing) is a reviewed
+proposal in [evolution/README.md](evolution/README.md); it is sequenced around the desktop/server plan and changes
+none of its decisions.
+
 ## Export
 
 Exporting a workflow as a standalone FastAPI project works as in 0.1, with the choice between Orkexa from Git (pinned

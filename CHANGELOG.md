@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Product evolution plan, P0 (2026-10-31)
+
+- Docs only: `docs/evolution/README.md` (reviewed plan, open decisions, pull request plan) and
+  `docs/evolution/inventory.md` (verified inventory, UX findings F1–F11). No code, no pin change.
+
 ### Desktop launch secret, M1 PR-6 (2026-10-31)
 
 - Pins: `nodestro-api` 0f439ea and `nodestro-sdk` 1c24f55 (before: cd4b198 and b001667); merge commits.
