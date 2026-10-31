@@ -76,7 +76,7 @@ Un brouillon d’outil n’est pas enregistré. Vous voyez le code et les tests 
 
 Tant qu’un outil n’est pas approuvé, la vérification signale le workflow comme bloqué et il ne peut pas démarrer. Les règles de sécurité existantes pour le code personnalisé s’appliquent sans changement. Les affectations de connaissances et de mémoire ne sont elles aussi que des propositions, que vous modifiez dans l’éditeur.
 
-Les brouillons d’outils sont générés par l’IA : les tester et les approuver nécessite le bac à sable Docker (voir [Confiance et isolation](/docs/tools#vertrauen)).
+Les brouillons d’outils sont générés par l’IA : les tester et les approuver nécessite une isolation, le bac à sable Linux intégré ou Docker (voir [Confiance et isolation](/docs/tools#vertrauen)).
 
 ## Coûts et limites {#kosten}
 <!-- keywords: coût, plafond, budget, corrections, utilisation, prix, usd -->

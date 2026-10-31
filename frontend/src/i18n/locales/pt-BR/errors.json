@@ -552,8 +552,8 @@
     "cross_site": "Esta alteração veio de outro site e foi recusada. Use o Nodestro diretamente."
   },
   "sandbox": {
-    "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados no sandbox Docker; nada foi executado. Escolha Docker nas configurações.",
-    "libraries_need_isolation": "{{name}} foi criada por IA ou tem origem desconhecida e precisa de bibliotecas de terceiros. Essas ferramentas só rodam no sandbox do Docker; escolha Docker nas configurações.",
+    "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados isolados (sandbox Linux integrado ou Docker); nenhum dos dois está disponível, então nada foi executado. Configurações → Sandbox mostra o motivo.",
+    "libraries_need_isolation": "{{name}} foi criada por IA ou é de origem desconhecida e precisa de bibliotecas de terceiros. Essas ferramentas só são executadas isoladas (sandbox Linux integrado ou Docker); nenhum dos dois está disponível aqui. Configurações → Sandbox mostra o motivo.",
     "unavailable": "Aqui o código das ferramentas só é executado em contêineres; o sandbox \"Processo Python\" não está disponível."
   },
   "identity": {

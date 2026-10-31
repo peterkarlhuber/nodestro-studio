@@ -141,34 +141,36 @@ Antes que uma ferramenta criada por IA seja incluída, você vê o código, os t
 ## A sandbox {#sandbox}
 <!-- keywords: sandbox, docker, subprocess, processo python, isolamento, segurança, tempo limite -->
 
-Ferramentas próprias e criadas por IA **nunca rodam no processo do Nodestro**. Os testes e cada chamada posterior rodam isolados:
+Ferramentas próprias e criadas por IA **nunca rodam no processo do Nodestro**. Os testes e cada chamada posterior rodam em um sandbox:
 
 | Sandbox | Isolamento | Limites |
 |---|---|---|
-| **Processo Python** (padrão) | processo separado com ambiente vazio em um diretório temporário | 15 segundos, 1 GB de memória |
+| **Processo Python** (padrão para suas ferramentas) | processo separado com ambiente vazio em uma pasta temporária; **não** é uma barreira de segurança | 15 segundos, 1 GB de memória |
+| **Sandbox Linux integrado** (automático para ferramentas criadas por IA no Ubuntu 24.04 e no Debian 13) | sem rede, sem acesso aos seus arquivos, chaves, aos dados do Nodestro ou a outros programas; sem novos processos; só a própria pasta temporária aceita gravação | 15 segundos (60 com bibliotecas), 1 GB de memória, 64 MB de arquivos temporários |
 | **Docker** | contêiner descartável sem rede, com sistema de arquivos somente leitura, sem privilégios | 20 segundos, 512 MB de memória, 1 CPU |
 
-A sandbox é escolhida nas [configurações](/docs/einstellungen#sandbox). O Docker isola mais, mas precisa estar instalado e em execução; caso contrário, testes e chamadas falham. Se uma chamada ultrapassar o tempo limite, ela conta como erro.
+O sandbox Linux integrado não precisa de instalação: ele usa funções do kernel Linux (Landlock e seccomp). O Nodestro verifica uma vez na inicialização se elas existem e funcionam; *Configurações → Sandbox* mostra o resultado e, se não estiver disponível, o motivo. Ele não protege contra erros no próprio kernel Linux e não esconde se um arquivo existe em outro lugar; o Docker continua disponível como alternativa.
 
+Você escolhe o sandbox nas [configurações](/docs/einstellungen#sandbox). O Docker precisa estar instalado e em execução; caso contrário, testes e chamadas falham. Se uma chamada passar do limite de tempo, ela conta como erro e o processo é encerrado.
 
 ## Confiança e isolamento {#vertrauen}
 <!-- keywords: confiança, não confiável, origem, gerado por ia, docker necessário, isolamento necessário, bloqueado, restrito, precisa de isolamento -->
 
 O Nodestro decide pela **origem do código** onde ele pode rodar:
 
-| Origem | Exibido como | Sandbox *Processo Python* | Sandbox *Docker* |
+| Origem | Mostrada como | Sem isolamento (só *Processo Python*) | Sandbox Linux integrado ou Docker |
 |---|---|---|---|
 | Ferramentas integradas e integrações | *Integrada* | no processo do Nodestro | no processo do Nodestro |
-| Escrita por você em *Escrever você mesmo* | *Escrita por você* | roda, sem isolamento neste computador | roda isolada |
+| Escrita por você em *Escrever você mesmo* | *Escrita por você* | roda, sem isolamento neste computador | roda (no *Processo Python* ou isolada no Docker) |
 | Criada por IA (também depois da sua aprovação), rascunhos de ferramentas do arquiteto de IA, ferramentas de origem desconhecida | *Precisa de isolamento* | **bloqueada** | roda isolada |
 
-O processo Python não é uma barreira de segurança: o código nele roda com as suas permissões. Por isso o Nodestro nunca executa código gerado por IA ali, e nem a sua aprovação nem uma configuração mudam isso. Sem Docker:
+O processo Python não é uma barreira de segurança: o código nele roda com as suas permissões. Por isso o Nodestro nunca executa ali código gerado por IA, e nem a sua aprovação nem uma configuração mudam isso; não existe nenhuma chave que permita mesmo assim. Onde o sandbox Linux integrado está disponível, o Nodestro o usa automaticamente para esse código. Sem ele e sem Docker:
 
 - **Criar com IA** não inicia, e rascunhos de ferramentas não podem ser testados nem aprovados;
 - agentes com uma ferramenta que precisa de isolamento não podem rodar; a verificação do workflow avisa antes do início;
-- ferramentas que precisam de isolamento ainda não podem usar bibliotecas de terceiros, nem com Docker.
+- ferramentas que precisam de isolamento não podem usar bibliotecas de terceiros.
 
-Ferramentas salvas antes desta versão, e todas as ferramentas depois de restaurar um backup, contam como de origem desconhecida, também as que você mesmo escreveu, porque a origem delas não foi registrada. Com Docker elas continuam funcionando. Uma nova versão de uma ferramenta assim, ou uma cópia do código dela em uma ferramenta nova, mantém esse status. Para usar essas funções, instale e inicie o Docker e escolha-o nas [configurações](/docs/einstellungen#sandbox).
+Ferramentas salvas antes desta versão, e todas as ferramentas depois de restaurar um backup, contam como de origem desconhecida, inclusive as escritas por você, porque a origem não foi registrada. Com isolamento, continuam funcionando. Uma nova versão dessa ferramenta, ou uma cópia do código dela em uma ferramenta nova, mantém esse status.
 
 ## Versões e exclusão {#versionen}
 <!-- keywords: versão, excluir, retirar, revoke, atualizar, sobrescrever -->

@@ -113,7 +113,7 @@
     "defaultModel": "Mit diesem Modell starten neue, leere Agenten und neue Workflows. Beim KI-Entwurf dient es als Ersatz, falls das vorgeschlagene Modell nicht verfügbar ist.",
     "assistantModel": "Modell für Agent-Architekt, Coding Agent und Memory-Assistent. Ein starkes Modell liefert bessere Vorschläge.",
     "budget": "Gilt für alle Workflows ohne eigenes Budget. Leer = kein Limit (nicht empfohlen).",
-    "sandbox": "Python-Prozess: sofort verfügbar, mit Zeit- und Speicherlimit. Docker: zusätzlich ohne Netzwerk und mit schreibgeschütztem Dateisystem.",
+    "sandbox": "Python-Prozess: für selbst geschriebene Tools, mit Zeit- und Speicherlimits. Eingebaute Linux-Sandbox (Ubuntu 24.04, Debian 13): KI-erstellte Tools laufen dort automatisch, ohne Netzwerk und ohne Zugriff auf deine Dateien, Schlüssel oder andere Programme. Docker: ein Container, ebenfalls ohne Netzwerk und mit schreibgeschütztem Dateisystem.",
     "language": "Die Sprache der Oberfläche. „Automatisch“ folgt der Sprache des Browsers (Englisch, wenn sie nicht unterstützt wird). Die Wahl gilt sofort und bleibt gespeichert. Inhalte wie Agenten, Prompts und Ergebnisse bleiben, wie sie sind.",
     "backup": "Lädt alle Daten außer den API-Schlüsseln als ZIP-Datei herunter.",
     "restore": "Prüft die Datei zuerst vollständig und zeigt ihren Inhalt. Ersetzt wird erst nach deiner Bestätigung; vorher wird der aktuelle Stand gesichert.",

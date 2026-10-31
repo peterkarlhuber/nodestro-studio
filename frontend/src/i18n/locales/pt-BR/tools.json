@@ -25,8 +25,9 @@
   "trustLabel": "Origem",
   "trustNote": {
     "user-authored": "Escrita por você: é executada em um processo Python separado, sem isolamento, neste computador.",
-    "untrusted": "Criada por IA ou de origem desconhecida: só é executada no sandbox Docker.",
-    "untrustedBlocked": "Criada por IA ou de origem desconhecida: só é executada no sandbox Docker. Com o sandbox \"Processo Python\", agentes com esta ferramenta não podem ser executados."
+    "untrusted": "Criada por IA ou de origem desconhecida: só é executada isolada, aqui no sandbox Docker.",
+    "untrustedBlocked": "Criada por IA ou de origem desconhecida: só é executada isolada, mas nem o sandbox Linux integrado nem o Docker estão disponíveis. Agentes com esta ferramenta não podem ser executados; veja Configurações → Sandbox.",
+    "untrustedBuiltin": "Criada por IA ou de origem desconhecida: só é executada isolada, aqui no sandbox Linux integrado (sem rede, sem acesso aos seus arquivos ou chaves). Isso continua assim depois da sua aprovação."
   },
   "version": "Versão {{version}}",
   "deleted": "Ferramenta {{name}} excluída",
@@ -87,12 +88,13 @@
     "approveLibraries": "Aprovar bibliotecas",
     "withoutLibraries": "Reescrever sem bibliotecas",
     "usesLibraries": "Usa as bibliotecas aprovadas: {{names}}",
-    "needsDocker": "Criar ferramentas com IA precisa do sandbox Docker: os testes de código escrito por IA nunca são executados sem isolamento. Escolha Docker nas configurações."
+    "needsDocker": "Criar ferramentas com IA precisa de isolamento: os testes de código escrito por IA nunca são executados sem ele. O sandbox Linux integrado não está disponível aqui (veja Configurações → Sandbox); escolha o Docker no lugar."
   },
   "drafts": {
     "title_one": "{{count}} rascunho de ferramenta aguarda sua decisão",
     "title_other": "{{count}} rascunhos de ferramentas aguardam sua decisão",
     "label": "Rascunhos de ferramentas",
     "text": "Estas ferramentas foram escritas pelo arquiteto de fluxos. Não estão registradas e ainda não rodaram. Agentes que precisam delas só podem iniciar depois da sua aprovação."
-  }
+  },
+  "sandboxBuiltin": "processo Python separado; ferramentas criadas por IA no sandbox Linux integrado"
 }

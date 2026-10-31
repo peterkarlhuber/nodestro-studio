@@ -25,8 +25,9 @@
   "trustLabel": "Origin",
   "trustNote": {
     "user-authored": "Written by you: runs in a separate Python process without isolation on this computer.",
-    "untrusted": "AI-created or of unknown origin: runs only in the Docker sandbox.",
-    "untrustedBlocked": "AI-created or of unknown origin: runs only in the Docker sandbox. With the Python process sandbox, agents with this tool cannot run."
+    "untrusted": "AI-created or of unknown origin: runs only isolated, here in the Docker sandbox.",
+    "untrustedBlocked": "AI-created or of unknown origin: runs only isolated, but neither the built-in Linux sandbox nor Docker is available. Agents with this tool cannot run; see Settings → Sandbox.",
+    "untrustedBuiltin": "AI-created or of unknown origin: runs only isolated, here in the built-in Linux sandbox (no network, no access to your files or keys). This stays so after your approval."
   },
   "version": "Version {{version}}",
   "deleted": "Tool {{name}} deleted",
@@ -87,12 +88,13 @@
     "approveLibraries": "Approve libraries",
     "withoutLibraries": "Rewrite without libraries",
     "usesLibraries": "Uses the approved libraries: {{names}}",
-    "needsDocker": "Creating tools with AI needs the Docker sandbox: the tests of AI-written code never run without isolation. Choose Docker in the settings."
+    "needsDocker": "Creating tools with AI needs isolation: the tests of AI-written code never run without it. The built-in Linux sandbox is not available here (see Settings → Sandbox); choose Docker instead."
   },
   "drafts": {
     "title_one": "{{count}} tool draft awaiting your decision",
     "title_other": "{{count}} tool drafts awaiting your decision",
     "label": "Tool drafts",
     "text": "The Workflow Architect wrote these tools. They are not registered and have not run. Agents that need them cannot start until you approve them."
-  }
+  },
+  "sandboxBuiltin": "separate Python process; AI-created tools in the built-in Linux sandbox"
 }

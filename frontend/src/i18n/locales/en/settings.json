@@ -26,11 +26,23 @@
   "sandbox": {
     "title": "Sandbox for your own tools",
     "label": "Sandbox",
-    "text": "Your own and AI-created tools never run in the Nodestro process. The Python process is available at once; Docker isolates more strongly (no network, limited memory). AI-created tools and tools of unknown origin run only with Docker; without it they are blocked.",
+    "text": "Your own and AI-created tools never run in the Nodestro process. Tools you wrote yourself run in a separate Python process. AI-created tools and tools of unknown origin run only isolated: on Ubuntu 24.04 and Debian 13 automatically in the built-in Linux sandbox (no network, no access to your files or keys), otherwise only with Docker; without isolation they are blocked.",
     "subprocess": "Python process",
     "dockerAvailable": "Docker available",
     "dockerMissing": "Docker not found",
-    "dockerUnreachable": "Docker cannot be reached. Tool tests and calls fail until Docker is running."
+    "dockerUnreachable": "Docker cannot be reached. Tool tests and calls fail until Docker is running.",
+    "builtinActive": "Built-in Linux sandbox active",
+    "builtinMissing": "Built-in Linux sandbox not available",
+    "reason": {
+      "platform": "The built-in sandbox needs Linux on a 64-bit Intel or AMD processor.",
+      "untested-system": "The built-in sandbox is approved only for Ubuntu 24.04 and Debian 13; this system ({{system}}) has not been tested. Use Docker for AI-created tools.",
+      "landlock": "The Linux kernel lacks Landlock (version 4 or newer), which the built-in sandbox needs. Update the system or use Docker.",
+      "seccomp": "The Linux kernel lacks seccomp, which the built-in sandbox needs. Use Docker.",
+      "root": "Nodestro runs as the administrator (root). Start it as a normal user to use the built-in sandbox.",
+      "paths": "Nodestro is installed inside a protected folder (for example directly in your home folder or the data folder). Move the app to its own folder.",
+      "verify": "The self-test of the built-in sandbox failed: the isolation did not hold. AI-created tools stay blocked; use Docker.",
+      "failed": "The self-test of the built-in sandbox could not run. AI-created tools stay blocked; use Docker."
+    }
   },
   "about": {
     "title": "About Nodestro",

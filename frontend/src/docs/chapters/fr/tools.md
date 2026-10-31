@@ -141,34 +141,36 @@ Avant qu’un outil créé par l’IA soit ajouté, vous voyez son code, ses tes
 ## Le bac à sable {#sandbox}
 <!-- keywords: bac à sable, sandbox, docker, subprocess, processus python, isolation, sécurité, délai -->
 
-Les outils personnels et créés par l’IA ne s’exécutent **jamais dans le processus Nodestro**. Les tests et chaque appel ultérieur s’exécutent de façon isolée :
+Les outils personnels et ceux créés par l’IA ne s’exécutent **jamais dans le processus Nodestro**. Les tests et chaque appel ultérieur s’exécutent dans un bac à sable :
 
 | Bac à sable | Isolation | Limites |
 |---|---|---|
-| **Processus Python** (par défaut) | processus distinct avec un environnement vide dans un répertoire temporaire | 15 secondes, 1 Go de mémoire |
-| **Docker** | conteneur jetable sans réseau, avec système de fichiers en lecture seule, sans privilèges | 20 secondes, 512 Mo de mémoire, 1 CPU |
+| **Processus Python** (par défaut pour vos outils) | processus séparé avec un environnement vide dans un dossier temporaire ; **pas** une barrière de sécurité | 15 secondes, 1 Go de mémoire |
+| **Bac à sable Linux intégré** (automatique pour les outils créés par l’IA sous Ubuntu 24.04 et Debian 13) | sans réseau, sans accès à vos fichiers, vos clés, les données de Nodestro ou d’autres programmes ; aucun nouveau processus ; seul son propre dossier temporaire est accessible en écriture | 15 secondes (60 avec bibliothèques), 1 Go de mémoire, 64 Mo de fichiers temporaires |
+| **Docker** | conteneur jetable sans réseau, avec un système de fichiers en lecture seule, sans privilèges | 20 secondes, 512 Mo de mémoire, 1 CPU |
 
-Le bac à sable se choisit dans les [réglages](/docs/einstellungen#sandbox). Docker isole mieux, mais doit être installé et démarré ; sinon, les tests et les appels échouent. Si un appel dépasse le délai, il compte comme une erreur.
+Le bac à sable Linux intégré ne nécessite aucune installation : il utilise des fonctions du noyau Linux (Landlock et seccomp). Nodestro vérifie une fois au démarrage qu’elles sont présentes et efficaces ; *Réglages → Bac à sable* affiche le résultat et, s’il n’est pas disponible, la raison. Il ne protège pas contre les erreurs du noyau Linux lui-même et ne cache pas l’existence d’un fichier ailleurs ; Docker reste disponible comme alternative.
 
+Vous choisissez le bac à sable dans les [réglages](/docs/einstellungen#sandbox). Docker doit être installé et en cours d’exécution ; sinon, les tests et les appels échouent. Si un appel dépasse la limite de temps, il compte comme une erreur et le processus est arrêté.
 
 ## Confiance et isolation {#vertrauen}
 <!-- keywords: confiance, non fiable, origine, généré par l’ia, docker requis, isolation requise, bloqué, restreint, nécessite une isolation -->
 
 Nodestro décide selon l’**origine du code** où il peut s’exécuter :
 
-| Origine | Affiché comme | Bac à sable *Processus Python* | Bac à sable *Docker* |
+| Origine | Affiché comme | Sans isolation (uniquement *Processus Python*) | Bac à sable Linux intégré ou Docker |
 |---|---|---|---|
 | Outils intégrés et intégrations | *Intégré* | dans le processus Nodestro | dans le processus Nodestro |
-| Écrit par vous dans *Écrire soi-même* | *Écrit par vous* | s’exécute, sans isolation sur cet ordinateur | s’exécute isolé |
-| Créé par l’IA (même après votre approbation), brouillons d’outils de l’architecte IA, outils d’origine inconnue | *Nécessite une isolation* | **bloqué** | s’exécute isolé |
+| Écrit par vous dans *Écrire soi-même* | *Écrit par vous* | s’exécute, sans isolation sur cet ordinateur | s’exécute (dans le *Processus Python* ou isolé dans Docker) |
+| Créé par l’IA (même après votre validation), brouillons d’outils de l’architecte IA, outils d’origine inconnue | *Nécessite une isolation* | **bloqué** | s’exécute isolé |
 
-Le processus Python n’est pas une barrière de sécurité : le code qui s’y exécute a vos droits. Nodestro n’y exécute donc jamais de code généré par l’IA, et ni votre approbation ni un réglage n’y changent rien. Sans Docker :
+Le processus Python n’est pas une barrière de sécurité : le code qu’il exécute a vos droits. Nodestro n’y exécute donc jamais de code généré par l’IA, et ni votre validation ni un réglage n’y changent rien ; aucun interrupteur ne le permet malgré tout. Là où le bac à sable Linux intégré est disponible, Nodestro l’utilise automatiquement pour ce code. Sans lui et sans Docker :
 
 - **Créer avec l’IA** ne démarre pas, et les brouillons d’outils ne peuvent être ni testés ni approuvés ;
 - les agents dotés d’un outil qui nécessite une isolation ne peuvent pas s’exécuter ; la vérification du workflow le signale avant le démarrage ;
-- les outils qui nécessitent une isolation ne peuvent pas encore utiliser de bibliothèques tierces, même avec Docker.
+- les outils qui nécessitent une isolation ne peuvent pas utiliser de bibliothèques tierces.
 
-Les outils enregistrés avant cette version, et tous les outils après la restauration d’une sauvegarde, sont considérés d’origine inconnue, y compris ceux que vous avez écrits vous-même, car leur origine n’a pas été enregistrée. Avec Docker, ils continuent de fonctionner. Une nouvelle version d’un tel outil, ou une copie de son code dans un nouvel outil, garde ce statut. Pour utiliser ces fonctions, installez et démarrez Docker, puis choisissez-le dans les [réglages](/docs/einstellungen#sandbox).
+Les outils enregistrés avant cette version, et tous les outils après la restauration d’une sauvegarde, sont considérés d’origine inconnue, y compris ceux que vous avez écrits, car leur origine n’a pas été enregistrée. Avec une isolation, ils continuent de fonctionner. Une nouvelle version d’un tel outil, ou une copie de son code dans un nouvel outil, conserve ce statut.
 
 ## Versions et suppression {#versionen}
 <!-- keywords: version, supprimer, retirer, revoke, mettre à jour, écraser -->

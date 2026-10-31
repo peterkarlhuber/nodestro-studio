@@ -76,7 +76,7 @@ Ein Tool-Entwurf ist nicht registriert. Du siehst Code und Tests in der Prüfung
 
 Solange ein Tool nicht freigegeben ist, meldet die Prüfung den Workflow als blockiert, und er lässt sich nicht starten. Die bestehenden Sicherheitsregeln für eigenen Code gelten unverändert. Wissens- und Memory-Zuordnungen sind ebenfalls nur Vorschläge, die du im Editor änderst.
 
-Tool-Entwürfe sind KI-generiert: Testen und Freigeben braucht die Docker-Sandbox (siehe [Vertrauen und Isolation](/docs/tools#vertrauen)).
+Tool-Entwürfe sind KI-generiert: Testen und Freigeben braucht Isolation, die eingebaute Linux-Sandbox oder Docker (siehe [Vertrauen und Isolation](/docs/tools#vertrauen)).
 
 ## Kosten und Limits {#kosten}
 <!-- keywords: kosten, limit, budget, korrekturen, nutzung, preis, usd -->

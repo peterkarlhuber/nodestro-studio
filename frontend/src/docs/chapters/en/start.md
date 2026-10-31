@@ -88,5 +88,5 @@ Besides the `nodestro` command, Nodestro is available as a desktop app (preview 
 - Only the app's own window can use this Nodestro. Other programs on the computer and web pages in your browser are refused (*This Nodestro belongs to the desktop app that started it*). The window's launch link works once; to open a new window, restart the app.
 - Links to other websites open in your browser.
 - Closing the window stops Nodestro. If it stops unexpectedly, the window says so and names the log file.
-- Without Docker, AI-created tools cannot run in the app either (see [Tools](/docs/tools#vertrauen)).
+- AI-created tools run isolated in the built-in Linux sandbox; nothing has to be installed for it (see [Tools](/docs/tools#sandbox)). If *Settings → Sandbox* says it is not available, they run only with Docker.
 - macOS and Windows versions do not exist yet.

@@ -24,6 +24,7 @@ import { DiscussIcon } from "../assistant/DiscussButton";
 import { useTakeHandover } from "../assistant/handover";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
+import { isolationAvailable } from "../api/types";
 import type { CheckResult, ToolInfo, ToolJob, ToolSource } from "../api/types";
 import { CodeEditor } from "../components/CodeEditor";
 import {
@@ -95,7 +96,9 @@ export function ToolsPage() {
               sandbox:
                 settings.data.sandbox === "docker"
                   ? t("tools.sandboxDocker")
-                  : t("tools.sandboxProcess"),
+                  : settings.data.builtin_sandbox?.available
+                    ? t("tools.sandboxBuiltin")
+                    : t("tools.sandboxProcess"),
             })}
           </p>
         ) : null}
@@ -218,11 +221,17 @@ function TrustNote({ tool }: { tool: ToolInfo }) {
         {t("tools.trustNote.user-authored")}
       </p>
     );
-  const blocked = settings.data !== undefined && settings.data.sandbox !== "docker";
+  const blocked = settings.data !== undefined && !isolationAvailable(settings.data);
   return (
     <div data-testid="tool-trust">
       <Callout tone={blocked ? "warning" : "info"}>
-        {t(blocked ? "tools.trustNote.untrustedBlocked" : "tools.trustNote.untrusted")}
+        {t(
+          blocked
+            ? "tools.trustNote.untrustedBlocked"
+            : settings.data?.sandbox === "docker"
+              ? "tools.trustNote.untrusted"
+              : "tools.trustNote.untrustedBuiltin",
+        )}
       </Callout>
     </div>
   );
@@ -563,7 +572,7 @@ function GenerateTool() {
   const queryClient = useQueryClient();
   const settings = useSettings();
   // ADR-0006: the tests of AI-written code never run without isolation (the API refuses the job).
-  const needsDocker = settings.data !== undefined && settings.data.sandbox !== "docker";
+  const needsDocker = settings.data !== undefined && !isolationAvailable(settings.data);
   const [requirement, setRequirement] = useState("");
   // A tool proposed in the assistant only fills in the requirement; the user starts the job.
   useTakeHandover(

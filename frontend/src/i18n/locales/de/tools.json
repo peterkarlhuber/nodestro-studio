@@ -25,8 +25,9 @@
   "trustLabel": "Herkunft",
   "trustNote": {
     "user-authored": "Von dir geschrieben: läuft in einem eigenen Python-Prozess ohne Isolation auf diesem Rechner.",
-    "untrusted": "KI-erstellt oder unbekannter Herkunft: läuft nur in der Docker-Sandbox.",
-    "untrustedBlocked": "KI-erstellt oder unbekannter Herkunft: läuft nur in der Docker-Sandbox. Mit der Sandbox „Python-Prozess“ können Agenten mit diesem Tool nicht laufen."
+    "untrusted": "KI-erstellt oder unbekannter Herkunft: läuft nur isoliert, hier in der Docker-Sandbox.",
+    "untrustedBlocked": "KI-erstellt oder unbekannter Herkunft: läuft nur isoliert, aber weder die eingebaute Linux-Sandbox noch Docker ist verfügbar. Agenten mit diesem Tool können nicht laufen; siehe Einstellungen → Sandbox.",
+    "untrustedBuiltin": "KI-erstellt oder unbekannter Herkunft: läuft nur isoliert, hier in der eingebauten Linux-Sandbox (kein Netzwerk, kein Zugriff auf deine Dateien oder Schlüssel). Das bleibt auch nach deiner Freigabe so."
   },
   "version": "Version {{version}}",
   "deleted": "Tool {{name}} gelöscht",
@@ -87,12 +88,13 @@
     "approveLibraries": "Bibliotheken freigeben",
     "withoutLibraries": "Ohne Bibliotheken neu schreiben",
     "usesLibraries": "Verwendet die freigegebenen Bibliotheken: {{names}}",
-    "needsDocker": "Tools mit KI zu erstellen braucht die Docker-Sandbox: Die Tests von KI-geschriebenem Code laufen nie ohne Isolation. Wähle Docker in den Einstellungen."
+    "needsDocker": "Tools mit KI zu erstellen braucht Isolation: Die Tests von KI-geschriebenem Code laufen nie ohne. Die eingebaute Linux-Sandbox ist hier nicht verfügbar (siehe Einstellungen → Sandbox); wähle stattdessen Docker."
   },
   "drafts": {
     "title_one": "{{count}} Tool-Entwurf wartet auf deine Entscheidung",
     "title_other": "{{count}} Tool-Entwürfe warten auf deine Entscheidung",
     "label": "Tool-Entwürfe",
     "text": "Diese Tools hat der Workflow-Architekt geschrieben. Sie sind nicht registriert und noch nicht gelaufen. Agenten, die sie brauchen, können erst starten, wenn du sie freigibst."
-  }
+  },
+  "sandboxBuiltin": "eigener Python-Prozess; KI-erstellte Tools in der eingebauten Linux-Sandbox"
 }

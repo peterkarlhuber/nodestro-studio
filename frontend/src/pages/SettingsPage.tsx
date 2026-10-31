@@ -194,7 +194,25 @@ export function SettingsPage() {
             <Badge tone={form.docker_available ? "success" : "idle"}>
               {form.docker_available ? t("settings.sandbox.dockerAvailable") : t("settings.sandbox.dockerMissing")}
             </Badge>
+            {form.builtin_sandbox ? (
+              <span data-testid="builtin-sandbox">
+                <Badge tone={form.builtin_sandbox.available ? "success" : "idle"}>
+                  {form.builtin_sandbox.available
+                    ? t("settings.sandbox.builtinActive")
+                    : t("settings.sandbox.builtinMissing")}
+                </Badge>
+              </span>
+            ) : null}
           </div>
+          {form.builtin_sandbox && !form.builtin_sandbox.available && form.builtin_sandbox.reason !== "server" ? (
+            <p className="muted small" data-testid="builtin-sandbox-reason">
+              {t(`settings.sandbox.reason.${form.builtin_sandbox.reason}`, {
+                defaultValue: t("settings.sandbox.reason.failed"),
+                system: form.builtin_sandbox.system,
+              })}{" "}
+              {form.builtin_sandbox.detail ? <code>{form.builtin_sandbox.detail}</code> : null}
+            </p>
+          ) : null}
           {form.sandbox === "docker" && !form.docker_available ? (
             <Callout tone="warning">{t("settings.sandbox.dockerUnreachable")}</Callout>
           ) : null}

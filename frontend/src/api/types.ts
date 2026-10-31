@@ -529,6 +529,22 @@ export type SettingsUpdate = Partial<Omit<Settings, "providers" | "default_provi
   providers?: Partial<Record<ProviderId, ProviderSettingsIn>>;
 };
 
+/** Whether the built-in Linux sandbox isolates AI-created code on this computer. */
+export interface BuiltinSandboxStatus {
+  available: boolean;
+  /** Why not: platform, untested-system, landlock, seccomp, root, paths, verify, failed or server; "" if available. */
+  reason: string;
+  /** Technical detail in English, for support. */
+  detail: string;
+  /** The Linux distribution, e.g. "ubuntu 24.04". */
+  system: string;
+}
+
+/** Whether AI-created code can run here: in Docker or in the built-in Linux sandbox. */
+export function isolationAvailable(settings: Pick<Settings, "sandbox" | "builtin_sandbox">): boolean {
+  return settings.sandbox === "docker" || settings.builtin_sandbox?.available === true;
+}
+
 export interface Settings {
   /** Every AI provider with its configuration state. */
   providers: ProviderStatus[];
@@ -539,6 +555,8 @@ export interface Settings {
   default_budget_usd: number | null;
   sandbox: "subprocess" | "docker";
   docker_available: boolean;
+  /** The built-in Linux sandbox: with it, AI-created code runs isolated without Docker (desktop only). */
+  builtin_sandbox?: BuiltinSandboxStatus;
   /** The interface language the user picked; null follows the browser. */
   language: string | null;
   /** Cost limit of one Workflow Architect job in USD; null: no limit. */

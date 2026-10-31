@@ -43,9 +43,9 @@ Il **budget predefinito per esecuzione** (inizialmente 2 USD) vale per tutti i w
 ## Sandbox {#sandbox}
 <!-- keywords: scegliere la sandbox, docker, processo python, docker disponibile -->
 
-Qui scegli dove vengono eseguiti gli strumenti personali e quelli creati dall'IA: **Processo Python** o **Docker**. La modifica vale subito. Un avviso indica se Docker è stato trovato; se scegli Docker ma non è raggiungibile, test e chiamate agli strumenti falliscono. Dettagli in [La sandbox](/docs/tools#sandbox).
+Qui scegli dove vengono eseguiti gli strumenti scritti da te: **Processo Python** o **Docker**. La modifica ha effetto subito. Le indicazioni mostrano se Docker è stato trovato e se la **sandbox Linux integrata** è attiva; se non lo è, viene indicato il motivo (ad esempio una distribuzione Linux non testata o una funzione del kernel mancante). Se Docker è selezionato ma non raggiungibile, i test e le chiamate degli strumenti falliscono. I dettagli sono in [La sandbox](/docs/tools#sandbox).
 
-Gli strumenti creati dall’IA e quelli di origine sconosciuta vengono eseguiti solo con Docker; vedi [Fiducia e isolamento](/docs/tools#vertrauen).
+Gli strumenti creati dall’IA e quelli di origine sconosciuta vengono eseguiti solo isolati: automaticamente nella sandbox Linux integrata, altrimenti solo con Docker; vedi [Fiducia e isolamento](/docs/tools#vertrauen).
 
 ## Lingua {#sprache}
 <!-- keywords: lingua, language, italiano, inglese, tedesco, spagnolo, francese, portoghese, lingua del browser, traduzione, localizzazione -->
