@@ -122,6 +122,15 @@ describe("ui", () => {
       expect(onToggle).toHaveBeenCalledTimes(1); // changes made by the parent are not reported back
     });
 
+    it("adds a page's own classes next to its own", () => {
+      const { container } = render(
+        <Section title="Fall 1" className="panel case-editor">
+          x
+        </Section>,
+      );
+      expect(details(container)).toHaveClass("section", "panel", "case-editor");
+    });
+
     it("shows problems as text and icon while closed", () => {
       const { container } = render(
         <Section title="Quality" summary="0 Kriterien" status={{ errors: 1, warnings: 2 }}>

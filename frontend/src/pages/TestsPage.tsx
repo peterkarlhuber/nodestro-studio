@@ -23,6 +23,7 @@ import {
   IconButton,
   Modal,
   PageHeader,
+  Section,
   Select,
   Spinner,
   Stat,
@@ -169,13 +170,12 @@ function CaseEditor({
   const fields = workflow?.nodes.find((node) => node.type === "start")?.start?.fields ?? [];
   const set = (patch: Partial<TestCase>) => onChange({ ...value, ...patch });
   return (
-    <details className="panel case-editor" open={index === 0}>
-      <summary className="row-between">
-        <strong>{value.name || t("automation.benchmark.caseN", { n: index + 1 })}</strong>
-        <span className="muted small">
-          {t("automation.benchmark.caseSummary", { checks: value.checks.length, judge: value.judge_criteria.trim() ? "✓" : "–" })}
-        </span>
-      </summary>
+    <Section
+      className="panel case-editor"
+      title={value.name || t("automation.benchmark.caseN", { n: index + 1 })}
+      summary={t("automation.benchmark.caseSummary", { checks: value.checks.length, judge: value.judge_criteria.trim() ? "✓" : "–" })}
+      defaultOpen={index === 0}
+    >
       <div className="stack-sm">
         <div className="row-between">
           <Field label={t("automation.columns.name")}>
@@ -222,7 +222,7 @@ function CaseEditor({
           <TextArea rows={3} value={value.expected} onChange={(e) => set({ expected: e.target.value })} />
         </Field>
       </div>
-    </details>
+    </Section>
   );
 }
 

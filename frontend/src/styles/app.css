@@ -5672,11 +5672,6 @@ kbd {
   white-space: pre-wrap;
 }
 
-.approval-card__item summary {
-  cursor: pointer;
-  font-weight: 600;
-}
-
 .approval-comment {
   margin: 6px 0 0;
   padding-left: 10px;
@@ -5803,11 +5798,6 @@ kbd {
 .weekday-picker legend {
   width: 100%;
   margin-bottom: 4px;
-}
-
-.case-editor > summary {
-  cursor: pointer;
-  list-style: none;
 }
 
 /* ---- API & Export dialog ------------------------------------------------------------- */
@@ -6263,4 +6253,13 @@ kbd {
 .proposal-list details {
   flex: 1;
   min-width: 0;
+}
+
+/* A test case is a Section inside a panel: the panel already gives the space around it. */
+.case-editor.section > summary {
+  padding-top: 0;
+}
+
+.case-editor.section > .section__body {
+  padding-bottom: 0;
 }

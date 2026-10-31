@@ -180,6 +180,7 @@ project owner.
 | UX-J journey baseline, see [journeys.md](journeys.md) | done | studio #17 (merge commit `a65efee`; taken after UX-3, see journeys.md) |
 | UX-4 three ways to start | done | studio #18 (merge commit `e07ec52`) |
 | UX-K knowledge upload in the inspector, see [ux-k.md](ux-k.md) | done | studio #20, `ea5f61c` |
-| Q-0 judge of AI-designed agents | in review | api #16 `a08c9c3`, sdk #14 `e508e6b`, studio pins and texts (this step); coordinated with the desktop/server plan |
-| UX-5a and later | open | — |
+| Q-0 judge of AI-designed agents | done | api #16 `a08c9c3`, sdk #14 `e508e6b`, studio #21 `40672c1`; coordinated with the desktop/server plan |
+| UX-5a `Section` for test cases, run comparison and approval items | in review | studio, this step. The inline "show result/feedback" toggles in run details, tests and batches stay plain `<details>`: they reveal one value in place and are not sections. |
+| UX-5b and later | open | — |
 
