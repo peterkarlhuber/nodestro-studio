@@ -159,7 +159,15 @@
       "same": "Same",
       "changed": "Changed"
     },
-    "ownJudge": "Own model"
+    "ownJudge": "Own model",
+    "compareModels": "Test other models",
+    "compareModelsHint": "The same test cases and the same AI judge, but single agents with another model. The saved workflow stays unchanged.",
+    "agentModel": "Model for {{agent}}",
+    "savedModel": "Saved: {{model}}",
+    "modelsChanged_one": "{{count}} agent runs with another model.",
+    "modelsChanged_other": "{{count}} agents run with another model.",
+    "needsLimit": "Comparing models needs a cost limit: earlier runs used other models and say nothing about the cost.",
+    "variant": "Model comparison"
   },
   "schedule": {
     "description": "Starts workflows regularly while Nodestro runs. Every schedule is off until you switch it on.",

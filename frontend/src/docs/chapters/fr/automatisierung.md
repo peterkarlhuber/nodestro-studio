@@ -53,6 +53,13 @@ Choisissez deux exécutions dans la liste des exécutions de test et cliquez sur
 
 Vous vérifiez ainsi après chaque modification d’agents, de prompts ou d’outils si le workflow s’est amélioré, et vous pouvez tester une [version](/docs/workflows#versionen) antérieure par rapport à l’état actuel.
 
+## Comparer des modèles {#modelle-vergleichen}
+<!-- keywords: comparer des modèles, autre modèle, moins cher, plus rapide, choix du modèle, variante -->
+
+Pour savoir si un modèle moins cher ou plus puissant suffit pour un agent, utilisez la même série de tests. Dans la boîte de dialogue de démarrage, activez **Tester d’autres modèles** et choisissez un autre modèle pour certains agents. Les cas de test et l’évaluation par IA restent les mêmes, et le workflow enregistré ne change pas.
+
+Une telle exécution exige une **limite de coût** sous [Limites](/docs/automatisierung#grenzen), car les exécutions précédentes utilisaient d’autres modèles et ne disent rien du coût. Dans la liste, elle porte la mention **Comparaison de modèles** et nomme les modèles remplacés. Comparez-la ensuite avec une exécution de la version enregistrée. Elle ne compte pas comme résultat de test de cette version, car elle a testé une variante. Si un modèle convient, définissez-le dans l’agent lui-même.
+
 ## Planifications {#zeitplaene}
 <!-- keywords: planification, schedule, cron, régulier, quotidien, hebdomadaire, mensuel, toutes les heures, fuseau horaire, manqué -->
 

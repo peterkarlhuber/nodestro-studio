@@ -203,6 +203,7 @@
     "benchmarkChecks": "Regeln prüfen das Ergebnis ohne KI, z. B. „kategorie ist gleich Reklamation“.",
     "benchmarkJudge": "Eine KI bewertet das Ergebnis nach deinen Kriterien. Das Urteil ist als KI-Bewertung markiert und kostet extra.",
     "benchmarkCompare": "Wähle zwei Testläufe, um Fall für Fall zu sehen, was besser oder schlechter wurde.",
+    "benchmarkModels": "Teste dieselben Fälle mit anderen Modellen für einzelne Agenten. Vergleiche danach beide Testläufe. Der Workflow selbst ändert sich nicht.",
     "schedule": "Startet einen Workflow regelmäßig, solange Nodestro läuft.",
     "scheduleMissed": "War Nodestro zum Termin aus: auslassen oder beim nächsten Start einmal nachholen.",
     "scheduleTimeZone": "Termine gelten in dieser Zeitzone, inklusive Sommer- und Winterzeit.",
