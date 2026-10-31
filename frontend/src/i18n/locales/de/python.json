@@ -14,7 +14,8 @@
     "new": "Neu benötigt: {{names}}.",
     "changed": "Geänderte Anforderung: {{names}}.",
     "python": "Die Python-Version hat sich geändert; die Versionen werden neu aufgelöst.",
-    "other_installation": "Die Freigaben stammen von einem anderen Computer oder aus einem Import und gelten hier nicht."
+    "other_installation": "Die Freigaben stammen von einem anderen Computer oder aus einem Import und gelten hier nicht.",
+    "hashes": "Die Freigabe stammt aus einer älteren Version ohne Prüfsummen; für die Docker-Sandbox muss sie neu erteilt werden."
   },
   "status": {
     "new": "Neu",

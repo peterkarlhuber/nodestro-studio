@@ -8,7 +8,8 @@ Rules that apply to every step (see README, "Non-negotiable rules", and ADR-0006
 - Merge commits only (no squash, no rebase). Full-SHA pins in the order runtime → examples + integrations → api →
   sdk → studio (`pyproject.toml` and `platform/versions.json`); a final pin never points at an unmerged commit.
 - Technical content in English; user-facing texts and docs in de, en, es, fr, it, pt-BR.
-- The server profile stays refused (`profile.server_unavailable`) until PR-12.
+- The server profile starts only through `nodestro-server` with complete settings (PR-12); anything else is refused
+  with `profile.invalid`.
 - Untrusted code (all AI-generated code, unknown provenance, also after approval) never runs without isolation;
   there is no subprocess fallback.
 - Test results are reported as passed, failed or not run; untested operating systems and missing signing
@@ -30,10 +31,10 @@ Last update: 2026-10-31.
 | PR-7 | PostgreSQL document store and migrations | done | runtime #8 (`d4e4b27`: `storage_postgres`, migration `0001`, contract tests on both backends, PostgreSQL service in CI) |
 | PR-8 | PostgreSQL knowledge, FTS, memory; desktop-to-server import | done | runtime #9 (`36600f3`: `postgres_tables`, migration `0002`, `postgres_import`) |
 | PR-9 | Identity and tenants (OIDC) | done | runtime #10 (`8eea1ea`: tenant workspaces, `identity_store`, migration `0003`); api #12 (`c0e61bd`: OIDC login, sessions, roles, `install` permission); pins: examples #8 (`9b018da`), integrations #8 (`abc4dbc`), sdk #11 (`7203183`), studio (this PR: pins, login redirect, texts) |
-| PR-10 | Persistent jobs and workers | in progress (next) | runtime #11 (job queue, workers, reaper, run events, scheduler lock); API entry points follow |
-| PR-11 | Container sandbox with libraries | open | — |
-| PR-12 | Server integration and deployment (lifts `profile.server_unavailable`) | open | — |
-| PR-13 | Built-in sandbox prototype | open | — |
+| PR-10 | Persistent jobs and workers | done | runtime #11 (`136f0cf`: job queue, reaper, run events, scheduler lock), runtime #12 (`3a052d1`: remote run events); pins: examples #9 (`e591c48`), integrations #9 (`77bbff4`); api #13 (`3a895e7`: `ServerWorker`) |
+| PR-11 | Container sandbox with libraries | done | runtime #13 (`4104176`: image per approved lock with hashes, wheels only, `--pull never`); pins: examples #10 (`43e02f6`), integrations #10 (`13160d1`); api #14 (`817c8c4`); sdk #12 (`7f0b0df`); studio (this PR: texts) |
+| PR-12 | Server integration and deployment | in progress | runtime #14 (`640ed68`: `ServerSettings`, encrypted tenant secrets, container calls without bind mounts), runtime #15 (`51f0a6c`: model endpoint allowlist), runtime #16 (`c6bc2e5`: a run is stored as running as soon as a worker starts it); pins: examples #11 (`f13227c`), #12 (`86c58a1`), integrations #11 (`268c3ed`), #12 (`652c231`); api #15 (`f119cfc`: `nodestro-server` command, backups, HTTPS-only identity providers); sdk #13 (`2ed893a`); studio (this PR: pins, texts); nodestro-server #1 (image, compose, runbook, end-to-end tests; pins this studio) |
+| PR-13 | Built-in sandbox prototype | open (next after PR-12) | — |
 | M6 | Release pipelines, manifests, signing, OS support matrix | open | — |
 
 ## Notes per step
@@ -96,17 +97,54 @@ Last update: 2026-10-31.
 - Roles: owner/admin (read, edit, run, admin), editor (read, edit, run), operator (read, run), viewer (read). The
   new `install` permission (diagnostics, backup, API network settings) belongs to no tenant role: those routes stay
   with the operator of the server.
-- `create_tenant_app` is test-only until PR-12; the server profile is still refused at startup.
+- `create_tenant_app` is the studio API of a server; `nodestro-server api` builds it (PR-12).
 
-### PR-10 (in progress)
+### PR-10
 
 - Runtime: migration `0004` (`nodestro_jobs`, `nodestro_run_events`, `nodestro_schedule_firings`), `jobs.py`.
   Claims use `FOR UPDATE SKIP LOCKED` with a lease; a run whose worker died is marked `run.interrupted` by the reaper
   and never executed again by itself. Only runs use the queue so far; batches, test series, assistant drafts and
   environment installations still run in the process that started them (documented follow-up).
-- Next: API worker and scheduler entry points, event streams read from `nodestro_run_events`.
+- API: `ServerWorker` executes queued runs, reaps expired leases and fires schedules under a leader lock; the API
+  process reads run events from `nodestro_run_events`.
+
+### PR-11
+
+- Libraries of untrusted tools run in a container image built per approved lock: every package pinned with its
+  hashes (`uv pip install --require-hashes`), wheels only (no build scripts), downloads only in the build stage; the
+  running container has no network, a read-only root, all capabilities dropped and runs as `nobody`. Images are
+  never pulled when a tool runs (`--pull never`). An older approval without hashes must be approved again
+  (`deps.lock_without_hashes`).
+
+### PR-12
+
+- `ServerSettings.from_env` (runtime) validates the whole configuration first and lists every problem at once
+  (`profile.invalid`); https everywhere except loopback development. Secrets may come from `…_FILE`.
+- Tenant provider keys are encrypted at rest (AES-256-GCM, a key per tenant derived with HKDF from
+  `NODESTRO_SECRET_KEY`, tenant and field bound as associated data); the server's own environment keys are never
+  used for tenants. No key rotation yet.
+- Tool containers get their files through stdin, so the sandbox daemon can be remote (Docker-in-Docker with TLS
+  in the development stack, a dedicated VM in production). API and worker refuse to start without it.
+- Tenants reach only the model endpoints in `NODESTRO_MODEL_ENDPOINTS` besides the providers' public APIs
+  (`provider.endpoint_not_allowed`), so the server cannot be used to probe its own network.
+- The OpenID Connect client accepts `http://` only for a loopback development provider (found by the end-to-end
+  tests).
+- The server requires PostgreSQL 17: backups are written with the image's `pg_dump` 17, whose dumps cannot be
+  restored into older servers. Restores use the image's `pg_restore` (`scripts/restore.sh`).
+- The end-to-end tests found that a run executed by a worker stayed `queued` for other processes until it ended
+  (fixed in runtime #16).
+- Local end-to-end run against the real stack (PostgreSQL 17, Dex, Docker-in-Docker, model stub, one API and one
+  worker process): 15 passed. The CI run of the same tests is recorded on the nodestro-server PR.
+- nodestro-server: image (pinned studio commit, BuildKit secrets, checksum-verified docker CLI, user 10001),
+  development stack (PostgreSQL, Dex, Docker-in-Docker, model stub; Linux only), runbook, and end-to-end tests of
+  every acceptance criterion in CI.
 
 ## Limitations known so far
 
 - Tested on Linux (CI and local) only. macOS and Windows are not tested.
 - No code-signing or notarization certificates are available; no signed build exists.
+- The development stack of nodestro-server (Dex, model stub, Docker-in-Docker with host networking) runs on Linux
+  only and is not a production setup; base images are referenced by tag, not by digest.
+- Tenant secrets cannot be re-encrypted with a new `NODESTRO_SECRET_KEY` yet (no key rotation).
+- Only runs use the job queue; batches, test series, assistant drafts and environment installations still run in the
+  process that started them.

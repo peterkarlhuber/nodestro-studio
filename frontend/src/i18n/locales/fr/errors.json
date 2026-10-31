@@ -243,7 +243,6 @@
     "unresolved": "Certains imports ne peuvent pas être attribués clairement à un paquet.",
     "unresolved_tool": "Outil {{tool}} : un import ne peut pas être attribué clairement.",
     "draft_libraries": "Le brouillon d’outil {{tool}} a besoin de {{packages}} ; les bibliothèques ne sont pas encore approuvées.",
-    "docker_unsupported": "Les outils avec des bibliothèques tierces ne fonctionnent que dans le sandbox de processus. Changez le sandbox dans les réglages.",
     "uv_missing": "uv est introuvable. Réinstallez Nodestro ou installez uv.",
     "not_found": "Le paquet « {{name}} » n’existe pas dans l’index des paquets. Vérifiez le nom dans l’en-tête « # /// script ».",
     "no_version": "Aucune version ne correspond à « {{name}}{{spec}} ».",
@@ -263,7 +262,11 @@
     "no_definition": "Rien n’est encore approuvé pour cet environnement.",
     "run_active": "Le workflow est en cours d’exécution ; réessayez après l’exécution.",
     "install_interrupted": "Nodestro s’est arrêté pendant l’installation des bibliothèques. Installez-les à nouveau.",
-    "build_required": "{{name}} n’est disponible que sous forme de code source. Le résoudre exécuterait son script de construction ; Nodestro ne l’a donc pas résolu pour l’outil généré. Vérifiez le paquet et approuvez-le dans la boîte de dialogue des bibliothèques de l’outil, ou laissez l’outil être écrit sans lui."
+    "build_required": "{{name}} n’est disponible que sous forme de code source. Le résoudre exécuterait son script de construction ; Nodestro ne l’a donc pas résolu pour l’outil généré. Vérifiez le paquet et approuvez-le dans la boîte de dialogue des bibliothèques de l’outil, ou laissez l’outil être écrit sans lui.",
+    "lock_without_hashes": "Cette approbation provient d’une ancienne version sans sommes de contrôle. Approuve de nouveau les bibliothèques pour les utiliser dans le bac à sable Docker.",
+    "wheels_required": "Un paquet n’existe pas sous forme de paquet prêt à l’emploi (wheel) pour Linux. Dans le bac à sable Docker, les paquets ne sont pas compilés depuis les sources.",
+    "hash_mismatch": "Un paquet téléchargé ne correspond pas à l’approbation. Rien n’a été installé.",
+    "image_failed": "L’image de conteneur avec les bibliothèques n’a pas pu être construite. Les détails techniques en indiquent la raison."
   },
   "condition": {
     "field_missing": "Le champ manque dans le résultat.",
@@ -534,7 +537,8 @@
     "base_url_invalid": "URL de base invalide « {{url}} » : elle doit commencer par http:// ou https://.",
     "base_url_credentials": "L’URL de base ne doit pas contenir d’identifiants. Saisissez la clé dans le champ « Clé API ».",
     "capability_unknown": "Capacités inconnues : {{names}}.",
-    "not_configured": "{{provider}} n’est pas configuré : saisissez son URL de base dans les réglages."
+    "not_configured": "{{provider}} n’est pas configuré : saisissez son URL de base dans les réglages.",
+    "endpoint_not_allowed": "Ce point de terminaison de modèle n’est pas autorisé sur ce serveur. Demande à ton administration quels points de terminaison sont autorisés."
   },
   "access": {
     "login_required": "Connectez-vous pour utiliser cette partie de Nodestro.",
@@ -546,7 +550,7 @@
   },
   "sandbox": {
     "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent que dans le bac à sable Docker ; rien n’a été exécuté. Choisissez Docker dans les réglages.",
-    "libraries_need_isolation": "{{name}} est créé par l’IA ou d’origine inconnue et a besoin de bibliothèques tierces. Ces outils ne peuvent pas encore s’exécuter, car les bibliothèques ne sont disponibles que sans isolation.",
+    "libraries_need_isolation": "{{name}} est créé par l’IA ou d’origine inconnue et a besoin de bibliothèques tierces. Ces outils ne s’exécutent que dans le bac à sable Docker ; choisis Docker dans les paramètres.",
     "unavailable": "Ici, le code des outils ne s’exécute que dans des conteneurs ; le bac à sable « Processus Python » n’est pas disponible."
   },
   "identity": {
@@ -556,5 +560,8 @@
     "no_tenant": "Votre compte n'a pas encore accès à Nodestro. Demandez à un administrateur de vous ajouter.",
     "bootstrap_invalid": "Ce lien de configuration est invalide, déjà utilisé ou expiré.",
     "not_a_member": "Votre compte n'a pas accès à cet espace de travail."
+  },
+  "secrets": {
+    "unreadable": "Une clé enregistrée ne peut plus être lue. Saisis-la de nouveau dans les paramètres."
   }
 }

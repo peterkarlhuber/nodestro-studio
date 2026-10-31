@@ -243,7 +243,6 @@
     "unresolved": "Algunas importaciones no se pueden asignar claramente a un paquete.",
     "unresolved_tool": "Herramienta {{tool}}: una importación no se puede asignar claramente.",
     "draft_libraries": "El borrador de herramienta {{tool}} necesita {{packages}}; las bibliotecas aún no están aprobadas.",
-    "docker_unsupported": "Las herramientas con bibliotecas de terceros solo se ejecutan en el sandbox de procesos. Cambia el sandbox en los ajustes.",
     "uv_missing": "No se encontró uv. Reinstala Nodestro o instala uv.",
     "not_found": "El paquete «{{name}}» no existe en el índice de paquetes. Revisa el nombre en la cabecera «# /// script».",
     "no_version": "No hay ninguna versión compatible con «{{name}}{{spec}}».",
@@ -263,7 +262,11 @@
     "no_definition": "Todavía no hay nada aprobado para este entorno.",
     "run_active": "El flujo de trabajo se está ejecutando; inténtalo de nuevo después.",
     "install_interrupted": "Nodestro se detuvo durante la instalación de las bibliotecas. Vuelve a instalarlas.",
-    "build_required": "{{name}} solo está disponible como código fuente. Resolverlo ejecutaría su script de compilación, por eso Nodestro no lo resolvió para la herramienta generada. Revisa el paquete y apruébalo en el diálogo de bibliotecas de la herramienta, o deja que la herramienta se escriba sin él."
+    "build_required": "{{name}} solo está disponible como código fuente. Resolverlo ejecutaría su script de compilación, por eso Nodestro no lo resolvió para la herramienta generada. Revisa el paquete y apruébalo en el diálogo de bibliotecas de la herramienta, o deja que la herramienta se escriba sin él.",
+    "lock_without_hashes": "Esta aprobación procede de una versión anterior sin sumas de comprobación. Aprueba de nuevo las bibliotecas para usarlas en el sandbox de Docker.",
+    "wheels_required": "Un paquete no tiene un paquete listo (wheel) para Linux. En el sandbox de Docker, los paquetes no se compilan desde el código fuente.",
+    "hash_mismatch": "Un paquete descargado no coincide con la aprobación. No se instaló nada.",
+    "image_failed": "No se pudo crear la imagen de contenedor con las bibliotecas. Los detalles técnicos indican el motivo."
   },
   "condition": {
     "field_missing": "Falta el campo en el resultado.",
@@ -534,7 +537,8 @@
     "base_url_invalid": "URL base no válida «{{url}}»: debe empezar por http:// o https://.",
     "base_url_credentials": "La URL base no puede contener credenciales. Introduce la clave en el campo «Clave de API».",
     "capability_unknown": "Capacidades desconocidas: {{names}}.",
-    "not_configured": "{{provider}} no está configurado: introduce su URL base en los ajustes."
+    "not_configured": "{{provider}} no está configurado: introduce su URL base en los ajustes.",
+    "endpoint_not_allowed": "Este endpoint de modelo no está permitido en este servidor. Pregunta a tu administración qué endpoints están permitidos."
   },
   "access": {
     "login_required": "Inicia sesión para usar esta parte de Nodestro.",
@@ -546,7 +550,7 @@
   },
   "sandbox": {
     "isolation_required": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan en el sandbox de Docker; no se ejecutó nada. Elige Docker en los ajustes.",
-    "libraries_need_isolation": "{{name}} está creada por IA o es de origen desconocido y necesita bibliotecas de terceros. Estas herramientas aún no pueden ejecutarse, porque las bibliotecas solo están disponibles sin aislamiento.",
+    "libraries_need_isolation": "{{name}} está creada por IA o es de origen desconocido y necesita bibliotecas de terceros. Estas herramientas solo se ejecutan en el sandbox de Docker; elige Docker en la configuración.",
     "unavailable": "Aquí el código de las herramientas solo se ejecuta en contenedores; el sandbox «Proceso de Python» no está disponible."
   },
   "identity": {
@@ -556,5 +560,8 @@
     "no_tenant": "Tu cuenta todavía no tiene acceso a Nodestro. Pide a un administrador que te añada.",
     "bootstrap_invalid": "Este enlace de configuración no es válido, ya se usó o caducó.",
     "not_a_member": "Tu cuenta no tiene acceso a este espacio de trabajo."
+  },
+  "secrets": {
+    "unreadable": "Una clave guardada ya no se puede leer. Vuelve a introducirla en la configuración."
   }
 }
