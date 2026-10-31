@@ -121,7 +121,10 @@
     "connection": "Pide la lista de modelos al proveedor del modelo predeterminado. No usa tokens.",
     "architectBudget": "Coste estimado máximo de un borrador del arquitecto. El arquitecto se detiene al alcanzarlo.",
     "architectRepairs": "Limita las solicitudes adicionales a la IA para correcciones. Las correcciones obvias se hacen sin IA.",
-    "providers": "Accesos a los proveedores de IA: claves de API (nunca se muestran; las variables de entorno tienen prioridad), URL base de tus propios servidores y lo que pueden hacer sus modelos. Cada agente usa el proveedor de su modelo; nada cambia a otro proveedor."
+    "providers": "Accesos a los proveedores de IA: claves de API (nunca se muestran; las variables de entorno tienen prioridad), URL base de tus propios servidores y lo que pueden hacer sus modelos. Cada agente usa el proveedor de su modelo; nada cambia a otro proveedor.",
+    "prices": "De dónde vienen los precios, con qué frecuencia se comprueban y cómo funcionan los precios individuales y las revisiones.",
+    "priceMode": "Estándar avisa de precios desconocidos o antiguos; Estricto rechaza esas solicitudes antes de que cuesten nada.",
+    "reconciliation": "Compara las estimaciones con las facturas de los proveedores. Necesita una clave de administrador de la API de facturación; no se cambia nada."
   },
   "search": {
     "global": "Busca en flujos de trabajo, agentes, herramientas, conocimiento y documentación (Ctrl+K)."

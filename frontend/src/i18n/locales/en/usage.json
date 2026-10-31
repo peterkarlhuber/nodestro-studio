@@ -51,5 +51,19 @@
     "repair": "Correction",
     "tool": "Tool draft",
     "reply": "Answer"
+  },
+  "cost": {
+    "atLeast": "at least {{value}}",
+    "staleMark": "(stale price)",
+    "lowerBound": "Lower bound: some costs are unknown",
+    "partialNotice_one": "{{count}} request could not be priced. The total only contains the known costs and is a lower bound.",
+    "partialNotice_other": "{{count}} requests could not be priced. The total only contains the known costs and is a lower bound.",
+    "unknownNotice_one": "The cost of {{count}} request is unknown: no price is known for its model.",
+    "unknownNotice_other": "The cost of {{count}} requests is unknown: no price is known for their models.",
+    "prices": "Model prices",
+    "staleNotice_one": "{{count}} request was priced with a price that had not been checked for a while.",
+    "staleNotice_other": "{{count}} requests were priced with prices that had not been checked for a while.",
+    "basis": "Calculated with price versions {{versions}} from {{sources}}",
+    "quality": "lowest price quality: {{quality}}"
   }
 }

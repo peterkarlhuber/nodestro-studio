@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
-import { formatPrice } from "../lib/format";
+import { modelPriceHint } from "../lib/pricing";
 
 import { api } from "./client";
 
@@ -85,13 +85,7 @@ export function useModelOptions(provider?: string) {
     .map((model) => ({
       value: model.id,
       label: model.label,
-      hint:
-        model.input_usd_per_mtok === null || model.output_usd_per_mtok === null
-          ? t("models.priceUnknown")
-          : t("models.pricePerMTok", {
-              input: formatPrice(model.input_usd_per_mtok),
-              output: formatPrice(model.output_usd_per_mtok),
-            }),
+      hint: modelPriceHint(t, model),
       group: model.recommended ? t("models.current") : t("models.older"),
     }));
 }

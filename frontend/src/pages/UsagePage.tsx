@@ -6,7 +6,8 @@ import { useUsage } from "../api/hooks";
 import type { UsageBucket, UsageEntry } from "../api/types";
 import { Callout, EmptyState, HelpTip, PageHeader, Segmented, Spinner, Stat } from "../components/ui";
 import { ErrorText } from "../lib/errors";
-import { formatCost, formatDate, formatDay, formatNumber, formatTokens } from "../lib/format";
+import { formatDate, formatDay, formatNumber, formatTokens } from "../lib/format";
+import { bucketCost, bucketState, usageCost } from "../lib/pricing";
 
 function Bars({ buckets, label }: { buckets: UsageBucket[]; label: string }) {
   const { t } = useTranslation();
@@ -14,8 +15,11 @@ function Bars({ buckets, label }: { buckets: UsageBucket[]; label: string }) {
   return (
     <div className="bars" role="img" aria-label={label}>
       {buckets.map((bucket) => (
-        <div key={bucket.key} className="bars__col" title={t("usage.barTitle", { day: formatDay(bucket.label), cost: formatCost(bucket.estimated_cost_usd), count: bucket.runs, runs: formatNumber(bucket.runs) })}>
-          <div className="bars__bar" style={{ height: `${(bucket.estimated_cost_usd / max) * 100}%` }} />
+        <div key={bucket.key} className="bars__col" title={t("usage.barTitle", { day: formatDay(bucket.label), cost: bucketCost(t, bucket), count: bucket.runs, runs: formatNumber(bucket.runs) })}>
+          <div
+            className={`bars__bar${bucketState(bucket) === "partial" ? " bars__bar--partial" : ""}`}
+            style={{ height: `${(bucket.estimated_cost_usd / max) * 100}%` }}
+          />
           <span className="bars__label">{formatDay(bucket.label)}</span>
         </div>
       ))}
@@ -67,9 +71,10 @@ function BucketTable({
                 <td>{labelOf(bucket)}</td>
                 <td className="num">{formatNumber(bucket.runs + bucket.operations)}</td>
                 <td className="num">{formatTokens(bucket.total_tokens)}</td>
-                <td className="num">
-                  {formatCost(bucket.estimated_cost_usd)}
+                <td className="num" data-cost-state={bucketState(bucket)}>
+                  {bucketCost(t, bucket)}
                   {bucket.unpriced ? <span className="muted small"> {t("usage.unpriced")}</span> : null}
+                  {bucket.stale_price_requests ? <span className="muted small"> {t("usage.cost.staleMark")}</span> : null}
                 </td>
                 <td>
                   <div className="share">
@@ -82,6 +87,38 @@ function BucketTable({
         </table>
       ) : null}
     </section>
+  );
+}
+
+/** Why the total is incomplete or less reliable: unpriced requests, and prices that were not checked for long. */
+function CostNotices({ total }: { total: UsageBucket }) {
+  const { t } = useTranslation();
+  const state = bucketState(total);
+  const stale = total.stale_price_requests ?? 0;
+  return (
+    <>
+      {state === "partial" || state === "unknown" ? (
+        <Callout tone="warning">
+          {t(state === "partial" ? "usage.cost.partialNotice" : "usage.cost.unknownNotice", { count: total.unpriced })}{" "}
+          <HelpTip id="settings.prices" label={t("usage.cost.prices")} />
+        </Callout>
+      ) : null}
+      {stale ? <Callout tone="info">{t("usage.cost.staleNotice", { count: stale })}</Callout> : null}
+    </>
+  );
+}
+
+/** Which price versions and sources the costs of the period were calculated with. */
+function PriceBasis({ total }: { total: UsageBucket }) {
+  const { t } = useTranslation();
+  const versions = total.pricing_versions ?? [];
+  const sources = total.pricing_sources ?? [];
+  if (!versions.length && !sources.length) return null;
+  return (
+    <p className="muted small" data-testid="usage-price-basis">
+      {t("usage.cost.basis", { versions: versions.join(", ") || "–", sources: sources.join(", ") || "–" })}
+      {total.pricing_quality ? ` · ${t("usage.cost.quality", { quality: t(`pricing.quality.${total.pricing_quality}`, { defaultValue: total.pricing_quality }) })}` : null}
+    </p>
   );
 }
 
@@ -115,7 +152,7 @@ function RecentOperations({ entries }: { entries: UsageEntry[] }) {
                 </td>
                 <td>{entry.model}</td>
                 <td className="num">{formatTokens(entry.usage.total_tokens)}</td>
-                <td className="num">{formatCost(entry.usage.estimated_cost_usd)}</td>
+                <td className="num">{usageCost(t, entry.usage)}</td>
               </tr>
             ))}
           </tbody>
@@ -171,8 +208,14 @@ export function UsagePage() {
                 value={formatTokens(data.total.total_tokens)}
                 hint={`${t("usage.breakdown.input", { value: formatTokens(data.total.input_tokens) })} · ${t("usage.breakdown.output", { value: formatTokens(data.total.output_tokens) })}`}
               />
-              <Stat label={t("runs.stats.cost")} value={formatCost(data.total.estimated_cost_usd)} tip="runs.cost" />
+              <Stat
+                label={t("runs.stats.cost")}
+                value={bucketCost(t, data.total)}
+                tip="runs.cost"
+                hint={bucketState(data.total) === "partial" ? t("usage.cost.lowerBound") : undefined}
+              />
             </div>
+            <CostNotices total={data.total} />
             <section className="panel stack" aria-label={t("usage.perDay")}>
               <h2 className="panel__title">{t("usage.perDay")}</h2>
               <Bars buckets={data.by_day} label={t("usage.perDay")} />
@@ -196,6 +239,7 @@ export function UsagePage() {
               countLabel={t("usage.count")}
             />
             <RecentOperations entries={data.recent} />
+            <PriceBasis total={data.total} />
           </>
         ) : null}
       </div>

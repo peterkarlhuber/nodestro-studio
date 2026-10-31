@@ -121,7 +121,10 @@
     "connection": "Asks the provider of the default model for its list of models. Uses no tokens.",
     "architectBudget": "Maximum estimated cost of one Workflow Architect draft. The architect stops when it is reached.",
     "architectRepairs": "Limits the extra AI requests for corrections. Obvious fixes are made without AI.",
-    "providers": "Access to the AI providers: API keys (never shown; environment variables take precedence), base URLs of your own servers and what their models can do. Every agent uses the provider of its model; nothing switches to another provider."
+    "providers": "Access to the AI providers: API keys (never shown; environment variables take precedence), base URLs of your own servers and what their models can do. Every agent uses the provider of its model; nothing switches to another provider.",
+    "prices": "Where the prices come from, how often they are checked, and how individual prices and reviews work.",
+    "priceMode": "Standard warns about unknown and stale prices; Strict refuses such requests before they cost anything.",
+    "reconciliation": "Compares the estimates with the providers' bills. Needs an admin key of the billing API; nothing is changed."
   },
   "search": {
     "global": "Searches workflows, agents, tools, knowledge and documentation (Ctrl+K)."

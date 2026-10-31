@@ -51,5 +51,19 @@
     "repair": "Correção",
     "tool": "Rascunho de ferramenta",
     "reply": "Resposta"
+  },
+  "cost": {
+    "atLeast": "pelo menos {{value}}",
+    "staleMark": "(preço antigo)",
+    "lowerBound": "Limite inferior: alguns custos são desconhecidos",
+    "partialNotice_one": "Não foi possível precificar {{count}} solicitação. O total contém só os custos conhecidos e é um limite inferior.",
+    "partialNotice_other": "Não foi possível precificar {{count}} solicitações. O total contém só os custos conhecidos e é um limite inferior.",
+    "unknownNotice_one": "O custo de {{count}} solicitação é desconhecido: não há preço conhecido para o modelo dela.",
+    "unknownNotice_other": "O custo de {{count}} solicitações é desconhecido: não há preço conhecido para os modelos delas.",
+    "prices": "Preços dos modelos",
+    "staleNotice_one": "{{count}} solicitação foi calculada com um preço que não era conferido havia algum tempo.",
+    "staleNotice_other": "{{count}} solicitações foram calculadas com preços que não eram conferidos havia algum tempo.",
+    "basis": "Calculado com as versões de preço {{versions}} de {{sources}}",
+    "quality": "menor qualidade de preço: {{quality}}"
   }
 }

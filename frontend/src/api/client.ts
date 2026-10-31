@@ -138,7 +138,7 @@ export function startLogin(location: Pick<Location, "pathname" | "search" | "has
   location.assign(`/api/auth/login?return_to=${encodeURIComponent(back)}`);
 }
 
-async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
+export async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
   // The interface language: the backend names new copies and the first examples in it.
   const headers: Record<string, string> = { "Accept-Language": currentLanguage() };
   const init: RequestInit = { method, headers };

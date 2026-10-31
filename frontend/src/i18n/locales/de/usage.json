@@ -51,5 +51,19 @@
     "repair": "Korrektur",
     "tool": "Tool-Entwurf",
     "reply": "Antwort"
+  },
+  "cost": {
+    "atLeast": "mindestens {{value}}",
+    "staleMark": "(veralteter Preis)",
+    "lowerBound": "Untergrenze: Einige Kosten sind unbekannt",
+    "partialNotice_one": "{{count}} Anfrage konnte nicht bepreist werden. Die Summe enthält nur die bekannten Kosten und ist eine Untergrenze.",
+    "partialNotice_other": "{{count}} Anfragen konnten nicht bepreist werden. Die Summe enthält nur die bekannten Kosten und ist eine Untergrenze.",
+    "unknownNotice_one": "Die Kosten von {{count}} Anfrage sind unbekannt: Für ihr Modell ist kein Preis bekannt.",
+    "unknownNotice_other": "Die Kosten von {{count}} Anfragen sind unbekannt: Für ihre Modelle ist kein Preis bekannt.",
+    "prices": "Modellpreise",
+    "staleNotice_one": "{{count}} Anfrage wurde mit einem Preis berechnet, der länger nicht geprüft wurde.",
+    "staleNotice_other": "{{count}} Anfragen wurden mit Preisen berechnet, die länger nicht geprüft wurden.",
+    "basis": "Berechnet mit den Preisversionen {{versions}} aus {{sources}}",
+    "quality": "niedrigste Preisqualität: {{quality}}"
   }
 }

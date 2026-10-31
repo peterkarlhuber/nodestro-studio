@@ -1,0 +1,159 @@
+{
+  "title": "Prix des modèles",
+  "intro": "Nodestro estime les coûts avec ces prix en dollars US par million de tokens. Orkexa calcule chaque coût ; les prix sont régulièrement vérifiés auprès de leurs sources, les changements importants attendent votre validation, et les prix individuels (par exemple des prix contractuels) priment sur les prix de référence.",
+  "tableTitle_one": "{{count}} prix",
+  "tableTitle_other": "{{count}} prix",
+  "overrides_one": "{{count}} prix individuel",
+  "overrides_other": "{{count}} prix individuels",
+  "filter": "Filtrer les modèles",
+  "unit": "Dollars US par million de tokens. « – » : inconnu ; le coût de cette partie reste alors inconnu et n’est jamais compté comme 0.",
+  "referencePrice": "Prix de référence : {{input}} / {{output}}",
+  "lastChecked": "Dernière vérification : {{date}}",
+  "version": "Version {{version}}",
+  "staleWarning": "Les prix n’ont pas été vérifiés depuis plus de {{hours}} heures. Les coûts sont toujours estimés, mais peuvent être obsolètes.",
+  "staleCritical": "Les prix n’ont pas été vérifiés depuis plus de {{days}} jours. Considérez les coûts avec prudence ; en mode strict, les requêtes avec ces prix sont refusées.",
+  "lastError": "La dernière vérification a échoué ; les derniers prix valides restent utilisés :",
+  "readOnly": "Les prix de référence de ce serveur sont gérés par son exploitant. Vous pouvez définir des prix individuels pour cet espace de travail.",
+  "staleness": {
+    "ok": "À jour",
+    "warning": "Pas vérifié depuis un moment",
+    "critical": "Obsolète"
+  },
+  "status": {
+    "current": "Actuel",
+    "stale": "Ancien",
+    "unknown": "Inconnu",
+    "pending_review": "En attente de validation",
+    "custom": "Individuel"
+  },
+  "quality": {
+    "verified": "Vérifié",
+    "contract": "Contrat",
+    "unverified": "Non vérifié",
+    "estimated": "Estimé"
+  },
+  "fields": {
+    "input_usd_per_mtok": "Entrée",
+    "output_usd_per_mtok": "Sortie",
+    "cache_read_usd_per_mtok": "Lecture du cache",
+    "cache_write_5m_usd_per_mtok": "Écriture du cache (5 min)",
+    "cache_write_1h_usd_per_mtok": "Écriture du cache (1 h)"
+  },
+  "columns": {
+    "cacheWrite": "Écriture du cache (5 min / 1 h)",
+    "status": "Statut",
+    "quality": "Qualité",
+    "source": "Source",
+    "checked": "Vérifié le",
+    "actions": "Actions"
+  },
+  "change": {
+    "added": "nouveau modèle",
+    "removed": "supprimé"
+  },
+  "sync": {
+    "run": "Vérifier les prix maintenant",
+    "skipped": "Une autre vérification est déjà en cours.",
+    "failed": "Certaines sources n’ont pas pu être vérifiées : {{sources}}. Les derniers prix valides restent utilisés.",
+    "review_one": "{{count}} changement attend votre validation.",
+    "review_other": "{{count}} changements attendent votre validation.",
+    "done_one": "Prix vérifiés : {{count}} changement.",
+    "done_other": "Prix vérifiés : {{count}} changements.",
+    "automatic": "Vérifiés automatiquement toutes les {{hours}} heures.",
+    "manual": "La vérification automatique est désactivée ; les prix ne changent que lorsque vous les vérifiez."
+  },
+  "mode": {
+    "label": "Mode de prix",
+    "standard": "Standard",
+    "strict": "Strict",
+    "standardHint": "Les prix inconnus ou anciens ne font qu’avertir : la requête s’exécute et son coût apparaît comme inconnu ou partiel.",
+    "strictHint": "Les requêtes vers un modèle sans prix connu, ou avec un prix obsolète, sont refusées avant d’être envoyées."
+  },
+  "reviews": {
+    "intro_one": "{{count}} liste de prix attend votre validation : certains prix ont changé de plus que le seuil sans confirmation d’une source officielle.",
+    "intro_other": "{{count}} listes de prix attendent votre validation : certains prix ont changé de plus que le seuil sans confirmation d’une source officielle.",
+    "title": "Liste de prix {{version}}",
+    "approve": "Appliquer",
+    "reject": "Refuser",
+    "approved": "Les nouveaux prix sont utilisés.",
+    "rejected": "Le changement a été refusé ; les prix précédents restent utilisés."
+  },
+  "override": {
+    "saved": "Prix individuel enregistré.",
+    "editTitle": "Prix de {{model}}",
+    "newTitle": "Prix individuel",
+    "intro": "Un prix individuel, par exemple un prix contractuel ou une correction, ne s’applique qu’ici et prime sur le prix de référence. L’historique conserve chaque changement.",
+    "optional": "facultatif",
+    "unit": "En dollars US par million de tokens, avec un point comme séparateur décimal (par exemple 2.5).",
+    "sourceUrl": "Lien vers la source",
+    "note": "Note",
+    "add": "Ajouter un prix individuel",
+    "edit": "Modifier le prix de {{model}}",
+    "remove": "Revenir au prix de référence de {{model}}",
+    "removeConfirm": "Réinitialiser ?",
+    "removed": "Le prix de référence s’applique de nouveau."
+  },
+  "history": {
+    "title": "Historique des changements",
+    "empty": "Aucun changement pour l’instant.",
+    "reference": "Référence",
+    "changes_one": "{{count}} changement",
+    "changes_other": "{{count}} changements",
+    "kinds": {
+      "activated": "Nouveaux prix utilisés",
+      "unchanged": "Vérifié, inchangé",
+      "rejected": "Liste de prix écartée",
+      "review_requested": "Validation demandée",
+      "review_approved": "Validation appliquée",
+      "review_rejected": "Validation refusée",
+      "override_set": "Prix individuel défini",
+      "override_removed": "Prix individuel supprimé"
+    }
+  },
+  "reconciliation": {
+    "title": "Comparer avec les factures des fournisseurs",
+    "intro": "Facultatif : compare les estimations de Nodestro avec ce qu’OpenAI et Anthropic ont facturé, par jour et par modèle. Il faut une clé d’administration de l’API de facturation du fournisseur ; rien n’est modifié, et un avertissement apparaît quand l’écart dépasse les deux seuils.",
+    "providerFailed": "La facture de {{provider}} n’a pas pu être lue :",
+    "warnings_one": "{{count}} jour ou modèle s’écarte.",
+    "warnings_other": "{{count}} jours ou modèles s’écartent.",
+    "noWarnings": "Aucun écart notable.",
+    "thresholds": "Seuils : plus de {{percent}} % et plus de {{amount}}.",
+    "show": "Lignes",
+    "showDays": "Totaux journaliers et écarts",
+    "showAll": "Toutes les lignes",
+    "day": "Jour",
+    "estimated": "Estimé",
+    "billed": "Facturé",
+    "difference": "Écart",
+    "dayTotal": "Total du jour",
+    "status": {
+      "ok": "Concorde",
+      "warning": "S’écarte",
+      "incomplete": "Estimation incomplète",
+      "pending": "Facture pas encore définitive",
+      "not_comparable": "Non comparable",
+      "unattributed": "Non attribué"
+    },
+    "start": "Du",
+    "end": "Au",
+    "percent": "Seuil en %",
+    "amount": "Seuil en dollars US",
+    "onceKeys": "Clés d’administration pour cette comparaison uniquement",
+    "onceKeysHint": "Ces clés servent uniquement à cette comparaison et ne sont pas enregistrées.",
+    "run": "Comparer"
+  },
+  "billing": {
+    "saved": "La clé d’administration est enregistrée chiffrée.",
+    "origin": {
+      "stored": "Clé enregistrée",
+      "environment": "Clé de l’environnement",
+      "none": "Aucune clé"
+    },
+    "storeLabel": "Clé d’administration de {{provider}}",
+    "placeholder": "Clé d’administration",
+    "store": "Enregistrer chiffrée",
+    "remove": "Supprimer la clé d’administration de {{provider}}",
+    "desktop": "L’application de bureau n’enregistre pas de clés d’administration. Définissez NODESTRO_OPENAI_ADMIN_KEY ou NODESTRO_ANTHROPIC_ADMIN_KEY, ou saisissez une clé pour une comparaison ci-dessous."
+  },
+  "showAll": "Afficher les {{count}}"
+}

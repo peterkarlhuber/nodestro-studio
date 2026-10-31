@@ -121,7 +121,10 @@
     "connection": "Fragt beim Anbieter des Standardmodells die Modellliste ab. Verbraucht keine Tokens.",
     "architectBudget": "Höchste geschätzte Kosten eines Entwurfs des Workflow-Architekten. Der Architekt hält an, wenn sie erreicht sind.",
     "architectRepairs": "Begrenzt die zusätzlichen KI-Anfragen für Korrekturen. Offensichtliche Korrekturen erfolgen ohne KI.",
-    "providers": "Zugänge zu den KI-Anbietern: API-Schlüssel (nie angezeigt; Umgebungsvariablen haben Vorrang), Basis-URLs eigener Server und was deren Modelle können. Jeder Agent nutzt den Anbieter seines Modells; nichts wechselt zu einem anderen Anbieter."
+    "providers": "Zugänge zu den KI-Anbietern: API-Schlüssel (nie angezeigt; Umgebungsvariablen haben Vorrang), Basis-URLs eigener Server und was deren Modelle können. Jeder Agent nutzt den Anbieter seines Modells; nichts wechselt zu einem anderen Anbieter.",
+    "prices": "Woher die Preise kommen, wie oft sie geprüft werden und wie individuelle Preise und Prüfungen funktionieren.",
+    "priceMode": "Standard warnt bei unbekannten und veralteten Preisen; Streng lehnt solche Anfragen ab, bevor sie etwas kosten.",
+    "reconciliation": "Vergleicht die Schätzungen mit den Abrechnungen der Anbieter. Braucht einen Admin-Schlüssel der Abrechnungs-API; es wird nichts verändert."
   },
   "search": {
     "global": "Durchsucht Workflows, Agenten, Tools, Wissen und Dokumentation (Strg+K)."
