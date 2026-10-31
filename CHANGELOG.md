@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+### Model prices and cost reconciliation, PRICING-1 P7 (2026-10-31)
+
+- Needs api `0589a5a` or newer (`/api/pricing`, usage `cost_state`, prices in the model list). Orkexa resolves
+  prices and calculates every cost; the studio only shows and edits the price catalog.
+- New **Settings → Model prices**: staleness of the price list (warning after 48 hours, *out of date* after 7 days),
+  last error, *Check prices now*, the price mode (*Standard* warns, *Strict* refuses requests without a reliable
+  price), every price with status (current, stale, unknown, waiting for review, individual), quality, source and
+  check date, individual prices (contract prices, corrections) with a way back to the reference price, reviews of
+  changes above the threshold (apply or reject) and the change history. A server's reference prices are read-only
+  for workspaces.
+- New **Settings → Compare with provider bills**: compares the estimates with the OpenAI and Anthropic billing APIs
+  per day and model, with adjustable thresholds (default: more than 5 % and more than 1 USD). The desktop never
+  stores admin keys (environment variables or a one-off key that is cleared after the request); a server stores
+  them encrypted.
+- **Usage**: a partly priced cost reads "at least …" and an unpriced one "–", never 0; a notice counts the unpriced
+  and the stale-priced requests; the price versions, sources and lowest quality the costs were calculated with are
+  listed below the tables. Days whose cost is a lower bound get a striped bar.
+- The **model picker** and model selects flag unknown, stale, individual and pending prices.
+- Help chapter *Usage and costs* in six languages: new sections *Model prices*, *Price mode* and *Comparing with
+  provider bills*; the outdated sentence "Nodestro knows prices only for Anthropic models" is gone.
+
 ### Glossary, README screenshots and journeys after P1, UX-8 (2026-10-31)
 
 - New help chapter **Terms** (`begriffe`) in six languages, right after the *Introduction*: workflow, agent, tool,

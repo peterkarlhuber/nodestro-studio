@@ -564,5 +564,14 @@
   },
   "secrets": {
     "unreadable": "Una chiave salvata non può più essere letta. Inseriscila di nuovo nelle impostazioni."
+  },
+  "pricing": {
+    "reference_read_only": "I prezzi di riferimento di questo server sono gestiti dal suo gestore.",
+    "billing_key_not_storable": "Questa installazione non salva chiavi di amministrazione. Impostale nell’ambiente o inseriscile per un confronto.",
+    "reconciliation_period": "Scegli un periodo da 1 a 92 giorni.",
+    "billing_key_missing": "Non è impostata alcuna chiave di amministrazione per l’API di fatturazione di un fornitore.",
+    "invalid_price": "Il prezzo non è valido.",
+    "review_not_found": "Questa revisione non è più aperta.",
+    "stale_price": "Il prezzo di {{model}} non viene verificato da troppo tempo; la richiesta non è stata inviata (modalità prezzi rigorosa)."
   }
 }

@@ -264,7 +264,19 @@ export interface Usage {
   thinking_tokens: number;
   web_search_requests: number;
   total_tokens: number;
+  /** The complete cost; null when part of it is unknown (see known_cost_usd), never 0 for "unknown". */
   estimated_cost_usd: number | null;
+  /** The known part of the cost: a lower bound when cost_complete is false (missing in usage recorded before PRICING-1). */
+  known_cost_usd?: number | null;
+  /** Whether every request was fully priced; null for usage recorded before price references existed. */
+  cost_complete?: boolean | null;
+  unpriced_requests?: number;
+  /** Requests priced with a price that had not been checked for longer than the warning threshold. */
+  stale_price_requests?: number;
+  missing_cost_components?: string[];
+  pricing_versions?: string[];
+  pricing_sources?: string[];
+  pricing_quality?: string | null;
 }
 
 export interface ToolCallRecord {
@@ -487,6 +499,12 @@ export interface ModelInfo {
   cache_write_1h_usd_per_mtok: number | null;
   cache_read_usd_per_mtok: number | null;
   recommended: boolean;
+  /** current, stale, pending_review, custom (an individual price) or unknown (no price). */
+  price_status?: "current" | "stale" | "unknown" | "pending_review" | "custom";
+  /** Orkexa's quality of the price: verified, contract, unverified or estimated. */
+  price_quality?: string | null;
+  price_source?: string | null;
+  price_version?: string | null;
 }
 
 export interface ServerToolInfo {
@@ -530,6 +548,8 @@ export interface Settings {
   /** Recognize text in scanned PDFs locally (needs Tesseract). */
   ocr_enabled?: boolean;
   ocr_available?: boolean;
+  /** standard warns about unknown and stale prices; strict refuses requests without a reliable price. */
+  price_mode?: "standard" | "strict";
 }
 
 /** A message from the backend: a code with parameters for the interface, plus the technical text. */
@@ -696,7 +716,16 @@ export interface UsageBucket {
   total_tokens: number;
   input_tokens: number;
   output_tokens: number;
+  /** The sum of the known costs: a lower bound when cost_state is partial. */
   estimated_cost_usd: number;
+  known_cost_usd?: number;
+  /** known: every request priced; partial: some costs missing (lower bound); unknown: none priced; none: no requests. */
+  cost_state?: "known" | "partial" | "unknown" | "none";
+  stale_price_requests?: number;
+  missing_cost_components?: string[];
+  pricing_versions?: string[];
+  pricing_sources?: string[];
+  pricing_quality?: string | null;
 }
 
 export type UsageSource =

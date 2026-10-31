@@ -773,6 +773,15 @@ ol {
   border-radius: 4px 4px 0 0;
 }
 
+/* A day whose cost is only partly known: the bar is a lower bound. */
+.bars__bar--partial {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--nd-brand) 0 4px,
+    color-mix(in srgb, var(--nd-brand) 45%, transparent) 4px 8px
+  );
+}
+
 .bars__label {
   color: var(--nd-text-muted);
   font-size: 10px;
@@ -6329,4 +6338,49 @@ ul.test-status__list > li.test-status__row {
   padding: 0;
   border: 0;
   overflow-wrap: anywhere;
+}
+
+/* Settings → Model prices (PRICING-1) */
+.pricing__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nd-space-2);
+}
+
+.pricing__table td,
+.pricing__table th {
+  white-space: nowrap;
+}
+
+.pricing__table td.pricing__model {
+  white-space: normal;
+  min-width: 160px;
+}
+
+.pricing__rates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--nd-space-3);
+}
+
+.pricing__change--review {
+  color: var(--nd-warning);
+}
+
+.pricing__history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--nd-space-2);
+}
+
+.pricing__history li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nd-space-2);
+  align-items: baseline;
+  border-bottom: 1px solid var(--nd-border);
+  padding-bottom: var(--nd-space-2);
 }

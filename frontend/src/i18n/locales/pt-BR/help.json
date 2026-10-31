@@ -121,7 +121,10 @@
     "connection": "Pede a lista de modelos ao provedor do modelo padrão. Não usa tokens.",
     "architectBudget": "Custo estimado máximo de um rascunho do arquiteto. O arquiteto para quando é atingido.",
     "architectRepairs": "Limita as solicitações extras à IA para correções. Correções óbvias são feitas sem IA.",
-    "providers": "Acessos aos provedores de IA: chaves de API (nunca exibidas; variáveis de ambiente têm prioridade), URLs base dos seus próprios servidores e o que os modelos deles sabem fazer. Cada agente usa o provedor do seu modelo; nada troca para outro provedor."
+    "providers": "Acessos aos provedores de IA: chaves de API (nunca exibidas; variáveis de ambiente têm prioridade), URLs base dos seus próprios servidores e o que os modelos deles sabem fazer. Cada agente usa o provedor do seu modelo; nada troca para outro provedor.",
+    "prices": "De onde vêm os preços, com que frequência são conferidos e como funcionam os preços individuais e as revisões.",
+    "priceMode": "Padrão avisa sobre preços desconhecidos ou antigos; Rigoroso recusa essas solicitações antes que custem algo.",
+    "reconciliation": "Compara as estimativas com as faturas dos provedores. Precisa de uma chave de administrador da API de faturamento; nada é alterado."
   },
   "search": {
     "global": "Busca em fluxos de trabalho, agentes, ferramentas, conhecimento e documentação (Ctrl+K)."

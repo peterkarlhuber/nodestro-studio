@@ -121,7 +121,10 @@
     "connection": "Chiede l’elenco dei modelli al provider del modello predefinito. Non usa token.",
     "architectBudget": "Costo stimato massimo di una bozza dell’architetto. L’architetto si ferma quando viene raggiunto.",
     "architectRepairs": "Limita le richieste aggiuntive all’IA per le correzioni. Le correzioni ovvie avvengono senza IA.",
-    "providers": "Accessi ai provider di IA: chiavi API (mai mostrate; le variabili d’ambiente hanno la precedenza), URL di base dei tuoi server e cosa sanno fare i loro modelli. Ogni agente usa il provider del suo modello; nulla passa a un altro provider."
+    "providers": "Accessi ai provider di IA: chiavi API (mai mostrate; le variabili d’ambiente hanno la precedenza), URL di base dei tuoi server e cosa sanno fare i loro modelli. Ogni agente usa il provider del suo modello; nulla passa a un altro provider.",
+    "prices": "Da dove vengono i prezzi, ogni quanto vengono verificati e come funzionano prezzi individuali e revisioni.",
+    "priceMode": "Standard avvisa per prezzi sconosciuti o vecchi; Rigorosa rifiuta queste richieste prima che costino qualcosa.",
+    "reconciliation": "Confronta le stime con le fatture dei fornitori. Serve una chiave di amministrazione dell’API di fatturazione; non viene modificato nulla."
   },
   "search": {
     "global": "Cerca in workflow, agenti, strumenti, conoscenza e documentazione (Ctrl+K)."

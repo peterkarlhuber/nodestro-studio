@@ -121,7 +121,10 @@
     "connection": "Demande la liste des modèles au fournisseur du modèle par défaut. N’utilise aucun token.",
     "architectBudget": "Coût estimé maximal d’un brouillon de l’architecte. L’architecte s’arrête lorsqu’il est atteint.",
     "architectRepairs": "Limite les requêtes IA supplémentaires pour les corrections. Les corrections évidentes se font sans IA.",
-    "providers": "Accès aux fournisseurs d’IA : clés API (jamais affichées ; les variables d’environnement sont prioritaires), URL de base de vos propres serveurs et ce que leurs modèles savent faire. Chaque agent utilise le fournisseur de son modèle ; rien ne bascule vers un autre fournisseur."
+    "providers": "Accès aux fournisseurs d’IA : clés API (jamais affichées ; les variables d’environnement sont prioritaires), URL de base de vos propres serveurs et ce que leurs modèles savent faire. Chaque agent utilise le fournisseur de son modèle ; rien ne bascule vers un autre fournisseur.",
+    "prices": "D’où viennent les prix, à quelle fréquence ils sont vérifiés, et comment fonctionnent les prix individuels et les validations.",
+    "priceMode": "Standard avertit pour les prix inconnus ou anciens ; Strict refuse ces requêtes avant qu’elles ne coûtent quoi que ce soit.",
+    "reconciliation": "Compare les estimations avec les factures des fournisseurs. Nécessite une clé d’administration de l’API de facturation ; rien n’est modifié."
   },
   "search": {
     "global": "Recherche dans les workflows, agents, outils, connaissances et la documentation (Ctrl+K)."

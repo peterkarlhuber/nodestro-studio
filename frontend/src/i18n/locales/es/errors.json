@@ -564,5 +564,14 @@
   },
   "secrets": {
     "unreadable": "Una clave guardada ya no se puede leer. Vuelve a introducirla en la configuración."
+  },
+  "pricing": {
+    "reference_read_only": "Los precios de referencia de este servidor los gestiona su operador.",
+    "billing_key_not_storable": "Esta instalación no guarda claves de administrador. Defínelas en el entorno o introdúcelas para una comparación.",
+    "reconciliation_period": "Elige un periodo de 1 a 92 días.",
+    "billing_key_missing": "No hay ninguna clave de administrador definida para la API de facturación de un proveedor.",
+    "invalid_price": "El precio no es válido.",
+    "review_not_found": "Esta revisión ya no está abierta.",
+    "stale_price": "El precio de {{model}} no se ha comprobado desde hace demasiado tiempo; la solicitud no se envió (modo de precios estricto)."
   }
 }

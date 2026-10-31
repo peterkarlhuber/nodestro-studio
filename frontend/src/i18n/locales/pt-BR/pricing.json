@@ -1,0 +1,158 @@
+{
+  "title": "Preços dos modelos",
+  "intro": "O Nodestro estima os custos com estes preços em dólares americanos por milhão de tokens. O Orkexa calcula cada custo; os preços são conferidos regularmente com suas fontes, mudanças grandes aguardam sua revisão e preços individuais (por exemplo, preços de contrato) têm prioridade sobre os preços de referência.",
+  "tableTitle_one": "{{count}} preço",
+  "tableTitle_other": "{{count}} preços",
+  "overrides_one": "{{count}} preço individual",
+  "overrides_other": "{{count}} preços individuais",
+  "filter": "Filtrar modelos",
+  "unit": "Dólares americanos por milhão de tokens. “–”: desconhecido; o custo dessa parte fica desconhecido e nunca é contado como 0.",
+  "referencePrice": "Preço de referência: {{input}} / {{output}}",
+  "lastChecked": "Última conferência: {{date}}",
+  "version": "Versão {{version}}",
+  "staleWarning": "Os preços não são conferidos há mais de {{hours}} horas. Os custos continuam sendo estimados, mas podem estar desatualizados.",
+  "staleCritical": "Os preços não são conferidos há mais de {{days}} dias. Trate os custos com cautela; no modo rigoroso, solicitações com esses preços são recusadas.",
+  "lastError": "A última conferência falhou; os últimos preços válidos continuam em uso:",
+  "readOnly": "Os preços de referência deste servidor são gerenciados pelo operador. Você pode definir preços individuais para este espaço de trabalho.",
+  "staleness": {
+    "ok": "Atualizados",
+    "warning": "Sem conferência há algum tempo",
+    "critical": "Desatualizados"
+  },
+  "status": {
+    "current": "Atual",
+    "stale": "Antigo",
+    "unknown": "Desconhecido",
+    "pending_review": "Aguardando revisão",
+    "custom": "Individual"
+  },
+  "quality": {
+    "verified": "Verificado",
+    "contract": "Contrato",
+    "unverified": "Não verificado",
+    "estimated": "Estimado"
+  },
+  "fields": {
+    "input_usd_per_mtok": "Entrada",
+    "output_usd_per_mtok": "Saída",
+    "cache_read_usd_per_mtok": "Leitura do cache",
+    "cache_write_5m_usd_per_mtok": "Gravação no cache (5 min)",
+    "cache_write_1h_usd_per_mtok": "Gravação no cache (1 h)"
+  },
+  "columns": {
+    "cacheWrite": "Gravação no cache (5 min / 1 h)",
+    "status": "Status",
+    "quality": "Qualidade",
+    "source": "Fonte",
+    "checked": "Conferido",
+    "actions": "Ações"
+  },
+  "change": {
+    "added": "modelo novo",
+    "removed": "removido"
+  },
+  "sync": {
+    "run": "Conferir preços agora",
+    "skipped": "Outra conferência já está em andamento.",
+    "failed": "Algumas fontes não puderam ser conferidas: {{sources}}. Os últimos preços válidos continuam em uso.",
+    "review_one": "{{count}} mudança aguarda sua revisão.",
+    "review_other": "{{count}} mudanças aguardam sua revisão.",
+    "done_one": "Preços conferidos: {{count}} mudança.",
+    "done_other": "Preços conferidos: {{count}} mudanças.",
+    "automatic": "Conferidos automaticamente a cada {{hours}} horas.",
+    "manual": "A conferência automática está desligada; os preços só mudam quando você os confere."
+  },
+  "mode": {
+    "label": "Modo de preços",
+    "standard": "Padrão",
+    "strict": "Rigoroso",
+    "standardHint": "Preços desconhecidos ou antigos apenas avisam: a solicitação é executada e seu custo aparece como desconhecido ou parcial.",
+    "strictHint": "Solicitações a um modelo sem preço conhecido, ou com um preço desatualizado, são recusadas antes de serem enviadas."
+  },
+  "reviews": {
+    "intro_one": "{{count}} tabela de preços aguarda sua revisão: alguns preços mudaram mais que o limite sem confirmação de uma fonte oficial.",
+    "intro_other": "{{count}} tabelas de preços aguardam sua revisão: alguns preços mudaram mais que o limite sem confirmação de uma fonte oficial.",
+    "title": "Tabela de preços {{version}}",
+    "approve": "Aplicar",
+    "reject": "Recusar",
+    "approved": "Os novos preços estão em uso.",
+    "rejected": "A mudança foi recusada; os preços anteriores continuam em uso."
+  },
+  "override": {
+    "saved": "Preço individual salvo.",
+    "editTitle": "Preço de {{model}}",
+    "newTitle": "Preço individual",
+    "intro": "Um preço individual, por exemplo um preço de contrato ou uma correção, vale só aqui e tem prioridade sobre o preço de referência. O histórico guarda cada mudança.",
+    "optional": "opcional",
+    "unit": "Em dólares americanos por milhão de tokens, com ponto como separador decimal (por exemplo 2.5).",
+    "sourceUrl": "Link para a fonte",
+    "note": "Observação",
+    "add": "Adicionar preço individual",
+    "edit": "Editar o preço de {{model}}",
+    "remove": "Voltar ao preço de referência de {{model}}",
+    "removeConfirm": "Redefinir?",
+    "removed": "O preço de referência vale novamente."
+  },
+  "history": {
+    "title": "Histórico de mudanças",
+    "empty": "Nenhuma mudança ainda.",
+    "reference": "Referência",
+    "changes_one": "{{count}} mudança",
+    "changes_other": "{{count}} mudanças",
+    "kinds": {
+      "activated": "Novos preços em uso",
+      "unchanged": "Conferido, sem mudanças",
+      "rejected": "Tabela de preços descartada",
+      "review_requested": "Revisão solicitada",
+      "review_approved": "Revisão aplicada",
+      "review_rejected": "Revisão recusada",
+      "override_set": "Preço individual definido",
+      "override_removed": "Preço individual removido"
+    }
+  },
+  "reconciliation": {
+    "title": "Comparar com as faturas dos provedores",
+    "intro": "Opcional: compara as estimativas do Nodestro com o que a OpenAI e a Anthropic faturaram, por dia e modelo. É preciso uma chave de administrador da API de faturamento do provedor; apenas lê os dados e avisa quando a diferença passa dos dois limites.",
+    "providerFailed": "Não foi possível ler a fatura de {{provider}}:",
+    "warnings_one": "{{count}} dia ou modelo diverge.",
+    "warnings_other": "{{count}} dias ou modelos divergem.",
+    "noWarnings": "Nenhuma divergência relevante.",
+    "thresholds": "Limites: mais de {{percent}} % e mais de {{amount}}.",
+    "show": "Linhas",
+    "showDays": "Totais diários e divergências",
+    "showAll": "Todas as linhas",
+    "day": "Dia",
+    "estimated": "Estimado",
+    "billed": "Faturado",
+    "difference": "Diferença",
+    "dayTotal": "Total do dia",
+    "status": {
+      "ok": "Confere",
+      "warning": "Diverge",
+      "incomplete": "Estimativa incompleta",
+      "pending": "Fatura ainda não definitiva",
+      "not_comparable": "Não comparável",
+      "unattributed": "Não atribuído"
+    },
+    "start": "De",
+    "end": "Até",
+    "percent": "Limite em %",
+    "amount": "Limite em dólares americanos",
+    "onceKeys": "Chaves de administrador só para esta comparação",
+    "onceKeysHint": "Essas chaves são usadas só nesta comparação e não são salvas.",
+    "run": "Comparar"
+  },
+  "billing": {
+    "saved": "A chave de administrador foi salva criptografada.",
+    "origin": {
+      "stored": "Chave salva",
+      "environment": "Chave do ambiente",
+      "none": "Sem chave"
+    },
+    "storeLabel": "Chave de administrador de {{provider}}",
+    "placeholder": "Chave de administrador",
+    "store": "Salvar criptografada",
+    "remove": "Remover a chave de administrador de {{provider}}",
+    "desktop": "O app para desktop não salva chaves de administrador. Defina NODESTRO_OPENAI_ADMIN_KEY ou NODESTRO_ANTHROPIC_ADMIN_KEY, ou informe abaixo uma chave para uma comparação."
+  }
+}

@@ -564,5 +564,14 @@
   },
   "secrets": {
     "unreadable": "Une clé enregistrée ne peut plus être lue. Saisis-la de nouveau dans les paramètres."
+  },
+  "pricing": {
+    "reference_read_only": "Les prix de référence de ce serveur sont gérés par son exploitant.",
+    "billing_key_not_storable": "Cette installation n’enregistre pas de clés d’administration. Définissez-les dans l’environnement ou saisissez-les pour une comparaison.",
+    "reconciliation_period": "Choisissez une période de 1 à 92 jours.",
+    "billing_key_missing": "Aucune clé d’administration n’est définie pour l’API de facturation d’un fournisseur.",
+    "invalid_price": "Le prix n’est pas valide.",
+    "review_not_found": "Cette validation n’est plus ouverte.",
+    "stale_price": "Le prix de {{model}} n’a pas été vérifié depuis trop longtemps ; la requête n’a pas été envoyée (mode de prix strict)."
   }
 }

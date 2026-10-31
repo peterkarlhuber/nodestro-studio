@@ -1,0 +1,158 @@
+{
+  "title": "Model prices",
+  "intro": "Nodestro estimates costs with these prices in US dollars per million tokens. Orkexa calculates every cost; the prices are checked against their sources regularly, large changes wait for your review, and individual prices (for example contract prices) win over the reference prices.",
+  "tableTitle_one": "{{count}} price",
+  "tableTitle_other": "{{count}} prices",
+  "overrides_one": "{{count}} individual price",
+  "overrides_other": "{{count}} individual prices",
+  "filter": "Filter models",
+  "unit": "US dollars per million tokens. “–”: not known; the cost of that part then stays unknown and is never counted as 0.",
+  "referencePrice": "Reference price: {{input}} / {{output}}",
+  "lastChecked": "Last checked: {{date}}",
+  "version": "Version {{version}}",
+  "staleWarning": "The prices have not been checked for more than {{hours}} hours. Costs are still estimated, but may be out of date.",
+  "staleCritical": "The prices have not been checked for more than {{days}} days. Treat the costs with caution; in strict mode, requests with these prices are refused.",
+  "lastError": "The last check failed; the last valid prices stay in use:",
+  "readOnly": "The reference prices of this server are managed by its operator. You can set individual prices for this workspace.",
+  "staleness": {
+    "ok": "Up to date",
+    "warning": "Not checked for a while",
+    "critical": "Out of date"
+  },
+  "status": {
+    "current": "Current",
+    "stale": "Stale",
+    "unknown": "Unknown",
+    "pending_review": "Waiting for review",
+    "custom": "Individual"
+  },
+  "quality": {
+    "verified": "Verified",
+    "contract": "Contract",
+    "unverified": "Unverified",
+    "estimated": "Estimated"
+  },
+  "fields": {
+    "input_usd_per_mtok": "Input",
+    "output_usd_per_mtok": "Output",
+    "cache_read_usd_per_mtok": "Cache read",
+    "cache_write_5m_usd_per_mtok": "Cache write (5 min)",
+    "cache_write_1h_usd_per_mtok": "Cache write (1 h)"
+  },
+  "columns": {
+    "cacheWrite": "Cache write (5 min / 1 h)",
+    "status": "Status",
+    "quality": "Quality",
+    "source": "Source",
+    "checked": "Checked",
+    "actions": "Actions"
+  },
+  "change": {
+    "added": "new model",
+    "removed": "removed"
+  },
+  "sync": {
+    "run": "Check prices now",
+    "skipped": "Another check is already running.",
+    "failed": "Some sources could not be checked: {{sources}}. The last valid prices stay in use.",
+    "review_one": "{{count}} change waits for your review.",
+    "review_other": "{{count}} changes wait for your review.",
+    "done_one": "Prices checked: {{count}} change.",
+    "done_other": "Prices checked: {{count}} changes.",
+    "automatic": "Checked automatically every {{hours}} hours.",
+    "manual": "Automatic checks are off; prices only change when you check them."
+  },
+  "mode": {
+    "label": "Price mode",
+    "standard": "Standard",
+    "strict": "Strict",
+    "standardHint": "Unknown and stale prices only warn: the request runs, and its cost is shown as unknown or partial.",
+    "strictHint": "Requests to a model without a known price, or with a price that is out of date, are refused before they are sent."
+  },
+  "reviews": {
+    "intro_one": "{{count}} price list waits for your review: some prices changed by more than the threshold without confirmation from an official source.",
+    "intro_other": "{{count}} price lists wait for your review: some prices changed by more than the threshold without confirmation from an official source.",
+    "title": "Price list {{version}}",
+    "approve": "Apply",
+    "reject": "Reject",
+    "approved": "The new prices are in use.",
+    "rejected": "The change was rejected; the previous prices stay in use."
+  },
+  "override": {
+    "saved": "Individual price saved.",
+    "editTitle": "Price of {{model}}",
+    "newTitle": "Individual price",
+    "intro": "An individual price, for example a contract price or a correction, applies only here and wins over the reference price. The history keeps every change.",
+    "optional": "optional",
+    "unit": "In US dollars per million tokens, with a dot as decimal separator (for example 2.5).",
+    "sourceUrl": "Link to the source",
+    "note": "Note",
+    "add": "Add individual price",
+    "edit": "Edit price of {{model}}",
+    "remove": "Back to the reference price of {{model}}",
+    "removeConfirm": "Reset?",
+    "removed": "The reference price applies again."
+  },
+  "history": {
+    "title": "Change history",
+    "empty": "No changes yet.",
+    "reference": "Reference",
+    "changes_one": "{{count}} change",
+    "changes_other": "{{count}} changes",
+    "kinds": {
+      "activated": "New prices in use",
+      "unchanged": "Checked, unchanged",
+      "rejected": "Price list refused",
+      "review_requested": "Review requested",
+      "review_approved": "Review applied",
+      "review_rejected": "Review rejected",
+      "override_set": "Individual price set",
+      "override_removed": "Individual price removed"
+    }
+  },
+  "reconciliation": {
+    "title": "Compare with provider bills",
+    "intro": "Optional: compares Nodestro's estimates with what OpenAI and Anthropic billed, per day and model. It needs an admin key of the provider's billing API, only reads, and warns when the gap is above both thresholds.",
+    "providerFailed": "The bill of {{provider}} could not be read:",
+    "warnings_one": "{{count}} day or model deviates.",
+    "warnings_other": "{{count}} days or models deviate.",
+    "noWarnings": "No relevant deviations.",
+    "thresholds": "Thresholds: more than {{percent}} % and more than {{amount}}.",
+    "show": "Rows",
+    "showDays": "Day totals and deviations",
+    "showAll": "All rows",
+    "day": "Day",
+    "estimated": "Estimated",
+    "billed": "Billed",
+    "difference": "Difference",
+    "dayTotal": "Day total",
+    "status": {
+      "ok": "Matches",
+      "warning": "Deviates",
+      "incomplete": "Estimate incomplete",
+      "pending": "Bill not final yet",
+      "not_comparable": "Not comparable",
+      "unattributed": "Not assigned"
+    },
+    "start": "From",
+    "end": "To",
+    "percent": "Threshold in %",
+    "amount": "Threshold in US dollars",
+    "onceKeys": "Admin keys for this comparison only",
+    "onceKeysHint": "These keys are used for this one comparison and are not stored.",
+    "run": "Compare"
+  },
+  "billing": {
+    "saved": "The admin key is stored encrypted.",
+    "origin": {
+      "stored": "Key stored",
+      "environment": "Key from the environment",
+      "none": "No key"
+    },
+    "storeLabel": "Admin key of {{provider}}",
+    "placeholder": "Admin key",
+    "store": "Store encrypted",
+    "remove": "Remove the admin key of {{provider}}",
+    "desktop": "The desktop app does not store admin keys. Set NODESTRO_OPENAI_ADMIN_KEY or NODESTRO_ANTHROPIC_ADMIN_KEY, or enter a key for one comparison below."
+  }
+}

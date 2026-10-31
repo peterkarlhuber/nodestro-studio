@@ -31,7 +31,14 @@ export function useModelHint(model: string): string | undefined {
   const status = settings.data?.providers.find((item) => item.id === provider);
   if (status && !status.configured) return t("providers.notConfiguredHint", { provider: providerLabel(t, provider) });
   const info = findModel(meta.data?.models, model);
-  if (info) return modelDescription(t, info);
+  if (info) {
+    const description = modelDescription(t, info);
+    // A price that is missing, old, waiting for a review or set by hand changes what the costs mean.
+    const status = info.price_status;
+    if (status === "unknown" || status === "stale" || status === "pending_review" || status === "custom")
+      return `${description} · ${t(`models.priceStatus.${status}`)}`;
+    return description;
+  }
   return model.trim() ? t("providers.customModelHint") : undefined;
 }
 

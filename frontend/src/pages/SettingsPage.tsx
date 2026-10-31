@@ -13,6 +13,7 @@ import { LANGUAGES, LANGUAGE_NAMES, type Language, currentLanguage, setLanguage,
 import { ErrorText } from "../lib/errors";
 import { PythonMaintenance } from "../python/PythonMaintenance";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
+import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
 import { ProviderSettings } from "./SettingsProviders";
 
 const AUTOMATIC = "auto";
@@ -169,6 +170,10 @@ export function SettingsPage() {
             </Button>
           </div>
         </section>
+
+        <PricingPanel settings={form} onMode={(price_mode) => save.mutate({ price_mode })} />
+
+        <ReconciliationPanel />
 
         <section className="panel stack" aria-labelledby="settings-sandbox">
           <h2 className="panel__title" id="settings-sandbox">

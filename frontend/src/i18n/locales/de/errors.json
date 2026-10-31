@@ -564,5 +564,14 @@
   },
   "secrets": {
     "unreadable": "Ein gespeicherter Schlüssel kann nicht mehr gelesen werden. Trag ihn in den Einstellungen bitte neu ein."
+  },
+  "pricing": {
+    "reference_read_only": "Die Referenzpreise dieses Servers verwaltet sein Betreiber.",
+    "billing_key_not_storable": "Diese Installation speichert keine Admin-Schlüssel. Setze sie in der Umgebung oder gib sie für einen Abgleich ein.",
+    "reconciliation_period": "Wähle einen Zeitraum von 1 bis 92 Tagen.",
+    "billing_key_missing": "Für keine Abrechnungs-API eines Anbieters ist ein Admin-Schlüssel gesetzt.",
+    "invalid_price": "Der Preis ist ungültig.",
+    "review_not_found": "Diese Prüfung ist nicht mehr offen.",
+    "stale_price": "Der Preis von {{model}} wurde zu lange nicht geprüft; die Anfrage wurde nicht gesendet (strenger Preismodus)."
   }
 }

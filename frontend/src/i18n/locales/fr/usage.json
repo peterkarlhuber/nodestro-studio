@@ -51,5 +51,19 @@
     "repair": "Correction",
     "tool": "Brouillon d’outil",
     "reply": "Réponse"
+  },
+  "cost": {
+    "atLeast": "au moins {{value}}",
+    "staleMark": "(prix ancien)",
+    "lowerBound": "Borne inférieure : certains coûts sont inconnus",
+    "partialNotice_one": "{{count}} requête n’a pas pu être tarifée. Le total ne contient que les coûts connus et constitue une borne inférieure.",
+    "partialNotice_other": "{{count}} requêtes n’ont pas pu être tarifées. Le total ne contient que les coûts connus et constitue une borne inférieure.",
+    "unknownNotice_one": "Le coût de {{count}} requête est inconnu : aucun prix n’est connu pour son modèle.",
+    "unknownNotice_other": "Le coût de {{count}} requêtes est inconnu : aucun prix n’est connu pour leurs modèles.",
+    "prices": "Prix des modèles",
+    "staleNotice_one": "{{count}} requête a été calculée avec un prix qui n’avait pas été vérifié depuis un moment.",
+    "staleNotice_other": "{{count}} requêtes ont été calculées avec des prix qui n’avaient pas été vérifiés depuis un moment.",
+    "basis": "Calculé avec les versions de prix {{versions}} issues de {{sources}}",
+    "quality": "qualité de prix la plus basse : {{quality}}"
   }
 }

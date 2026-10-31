@@ -564,5 +564,14 @@
   },
   "secrets": {
     "unreadable": "A stored key can no longer be read. Please enter it again in the settings."
+  },
+  "pricing": {
+    "reference_read_only": "The reference prices of this server are managed by its operator.",
+    "billing_key_not_storable": "This installation does not store admin keys. Set them in the environment or enter them for one comparison.",
+    "reconciliation_period": "Choose a period of 1 to 92 days.",
+    "billing_key_missing": "No admin key for a provider's billing API is set.",
+    "invalid_price": "The price is not valid.",
+    "review_not_found": "This review is no longer open.",
+    "stale_price": "The price of {{model}} has not been checked for too long; the request was not sent (strict price mode)."
   }
 }

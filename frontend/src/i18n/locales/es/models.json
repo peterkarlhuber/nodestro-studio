@@ -2,5 +2,11 @@
   "pricePerMTok": "{{input}} / {{output}} por millón de tokens (entrada / salida)",
   "current": "Actuales",
   "older": "Modelos anteriores",
-  "priceUnknown": "Precio desconocido: los costes aparecen como desconocidos, nunca como 0"
+  "priceUnknown": "Precio desconocido: los costes aparecen como desconocidos, nunca como 0",
+  "priceStatus": {
+    "unknown": "precio desconocido",
+    "stale": "precio sin comprobar desde hace tiempo",
+    "pending_review": "un cambio de precio espera revisión",
+    "custom": "precio individual"
+  }
 }
