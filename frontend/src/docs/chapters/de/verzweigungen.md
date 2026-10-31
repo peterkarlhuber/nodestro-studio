@@ -108,6 +108,7 @@ Ein Team lässt sich für sich allein prüfen: Lege für den Workflow eine [Test
 Ein **Orchestrator** lässt ein KI-Modell entscheiden, welches Team welche Teilaufgabe bekommt. Es trifft eine Entscheidung nach der anderen: eine Aufgabe an ein Team **weitergeben** oder mit einer Antwort **abschließen**. Die Antwort ist das Ergebnis des Knotens.
 
 - **Teams:** die gespeicherten Workflows, aus denen das Modell wählen darf (höchstens 20). Das Modell sieht von jedem Team nur Name, Beschreibung, Fähigkeiten und Ausgabevertrag.
+- **Teams nach Fähigkeit:** statt jedes Team einzeln zu wählen, nennst du Fähigkeiten (höchstens 10). Beim Start eines Laufs kommen gespeicherte Teams mit einer passenden Fähigkeit dazu (höchstens *Höchstens so viele Teams*), zuerst die mit den meisten passenden Stichworten, dann nach Name. Teams mit Fehlern oder Freigabeschritten bleiben draußen. Die Auswahl gilt fest für diesen Lauf (und für eine veröffentlichte Version); die Details des Laufs zeigen, welche Stichworte jedes Team getroffen hat. Es wird nichts bewertet oder geschätzt.
 - **Aufgabe** und **Anweisungen:** was erledigt werden soll und, optional, wie geplant wird.
 - **Höchstens Entscheidungen** (1 bis 50, Standard 8) und **Höchstens pro Team:** Ohne Antwort nach der letzten Entscheidung schlägt der Schritt fehl.
 

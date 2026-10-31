@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { useWorkflows } from "../api/hooks";
-import type { NodeRun, OrchestrationRecord, OrchestrationStep } from "../api/types";
+import type { NodeRun, OrchestrationRecord, OrchestrationStep, WorkflowNode } from "../api/types";
 import { Output } from "../components/Markdown";
 import { Badge } from "../components/ui";
 import { problemText } from "../lib/errors";
@@ -72,7 +72,26 @@ function StepView({ step, team, child }: { step: OrchestrationStep; team: string
   );
 }
 
-export function OrchestrationView({ state }: { state: NodeRun }) {
+/** The pool of the run (from its snapshot): each team, and the tags it matched when selected by capability. */
+function PoolView({ node, names }: { node: WorkflowNode; names: Map<string, string> }) {
+  const { t } = useTranslation();
+  const members = node.orchestrator?.members ?? [];
+  if (!members.length) return null;
+  return (
+    <ul className="small" data-testid="orchestration-pool">
+      {members.map((member) => (
+        <li key={member.workflow_id}>
+          {names.get(member.workflow_id) ?? member.workflow_id}
+          {member.matched?.length ? (
+            <span className="muted"> · {t("flow.orchestrator.run.matched", { tags: member.matched.join(", ") })}</span>
+          ) : null}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function OrchestrationView({ node, state }: { node: WorkflowNode; state: NodeRun }) {
   const { t } = useTranslation();
   const workflows = useWorkflows();
   const record = state.orchestration;
@@ -85,6 +104,7 @@ export function OrchestrationView({ state }: { state: NodeRun }) {
       <span className="nd-field-label">
         {t("flow.orchestrator.run.summary", { decisions: record.steps.length, delegations: delegations.length })}
       </span>
+      <PoolView node={node} names={names} />
       <ol className="stack-sm">
         {record.steps.map((step) => (
           <StepView

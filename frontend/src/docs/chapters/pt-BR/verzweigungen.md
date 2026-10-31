@@ -108,6 +108,7 @@ Uma equipe pode ser testada sozinha: crie uma [série de testes](/docs/automatis
 Um **orquestrador** deixa um modelo de IA decidir qual equipe recebe qual parte da tarefa. Ele toma uma decisão após a outra: **delegar** uma tarefa a uma equipe ou **concluir** com uma resposta. A resposta é o resultado do nó.
 
 - **Equipes:** os workflows salvos entre os quais o modelo pode escolher (no máximo 20). De cada equipe, o modelo vê apenas nome, descrição, capacidades e contrato de saída.
+- **Equipes por capacidade:** em vez de escolher cada equipe, você cita capacidades (no máximo 10). Quando uma execução começa, equipes salvas com uma capacidade correspondente entram no grupo (até *No máximo tantas equipes*): primeiro as com mais tags correspondentes, depois pelo nome. Equipes com erros ou etapas de aprovação ficam de fora. A seleção fica fixa para essa execução (e para uma versão publicada); os detalhes mostram quais tags cada equipe atendeu. Nada é pontuado nem estimado.
 - **Tarefa** e **Instruções:** o que deve ser feito e, opcionalmente, como planejar.
 - **Máximo de decisões** (de 1 a 50, padrão 8) e **Máximo por equipe:** sem resposta após a última decisão, a etapa falha.
 

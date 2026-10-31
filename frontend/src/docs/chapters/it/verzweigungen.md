@@ -108,6 +108,7 @@ Un team si può verificare da solo: crea una [serie di test](/docs/automatisieru
 Un **orchestratore** lascia decidere a un modello di IA quale team riceve quale parte del compito. Prende una decisione dopo l’altra: **delegare** un compito a un team oppure **concludere** con una risposta. La risposta è il risultato del nodo.
 
 - **Team:** i workflow salvati tra cui il modello può scegliere (al massimo 20). Di ogni team il modello vede solo nome, descrizione, capacità e contratto di output.
+- **Team per capacità:** invece di scegliere ogni team, indichi delle capacità (al massimo 10). All’avvio di un’esecuzione i team salvati con una capacità corrispondente entrano nel gruppo (fino a *Al massimo tanti team*): prima quelli con più tag corrispondenti, poi per nome. I team con errori o passaggi di approvazione restano fuori. La selezione resta fissa per quell’esecuzione (e per una versione pubblicata); i dettagli mostrano quali tag ha trovato ogni team. Non si assegnano punteggi né stime.
 - **Compito** e **Istruzioni:** cosa va fatto e, facoltativamente, come pianificarlo.
 - **Numero massimo di decisioni** (da 1 a 50, predefinito 8) e **Massimo per team:** senza risposta dopo l’ultima decisione, il passaggio fallisce.
 

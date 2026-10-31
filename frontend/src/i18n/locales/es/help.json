@@ -196,7 +196,8 @@
     "resumeSideEffects": "Los pasos que se repiten habían llamado a herramientas. Una segunda llamada puede provocar algo dos veces.",
     "orchestrator": "Un modelo de IA planifica la tarea y delega partes de ella a equipos de su grupo, una decisión tras otra. Cada decisión queda registrada con su motivo.",
     "orchestratorTeams": "Los equipos son workflows guardados. El modelo solo ve su nombre, descripción, capacidades y contrato de salida. No puede añadir equipos.",
-    "orchestratorLimits": "Los límites evitan que un orquestador dé vueltas: se detiene tras el número máximo de decisiones, y además se aplican el presupuesto y los límites del workflow."
+    "orchestratorLimits": "Los límites evitan que un orquestador dé vueltas: se detiene tras el número máximo de decisiones, y además se aplican el presupuesto y los límites del workflow.",
+    "orchestratorSelect": "En lugar de nombrar cada equipo, nombras capacidades. Al iniciar una ejecución, los equipos guardados que las comparten se añaden al grupo y quedan fijos para esa ejecución; los detalles muestran qué etiquetas coincidieron en cada equipo. No se puntúa nada: primero más etiquetas coincidentes, luego el nombre."
   },
   "files": {
     "output": "Formatos en los que el nodo de resultado guarda su resultado al final de la ejecución: Markdown, JSON, CSV, HTML o PDF.",

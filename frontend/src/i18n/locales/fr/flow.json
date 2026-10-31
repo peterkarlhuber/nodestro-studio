@@ -254,7 +254,15 @@
       "reason": "Motif",
       "task": "Tâche",
       "summary": "{{decisions}} décisions, {{delegations}} délégations",
-      "openTeam": "Ouvrir l’exécution de l’équipe"
-    }
+      "openTeam": "Ouvrir l’exécution de l’équipe",
+      "matched": "choisie par capacité : {{tags}}"
+    },
+    "select": "Équipes par capacité",
+    "selectHint": "Les équipes enregistrées ayant l’une de ces capacités rejoignent le groupe au démarrage d’une exécution (10 étiquettes au maximum). La meilleure correspondance d’abord ; les équipes avec des erreurs ou des étapes de validation sont écartées.",
+    "selectPlaceholder": "p. ex. recherche, puis Entrée",
+    "maxTeams": "Au maximum autant d’équipes",
+    "selectPreview_one": "Correspondent actuellement : {{teams}} (en prend {{count}})",
+    "selectPreview_other": "Correspondent actuellement : {{teams}} (en prend jusqu’à {{count}})",
+    "selectNone": "Aucune équipe enregistrée n’a encore l’une de ces capacités."
   }
 }

@@ -139,7 +139,8 @@
     "step_limit": "L’exécution a atteint sa limite de {{max_steps}} étapes. Aucune autre étape n’a été lancée.",
     "output_contract": "Le résultat ne respecte pas le contrat de sortie du workflow : {{fields}}.",
     "orchestration_limit": "{{node}} a pris {{max_decisions}} décisions sans conclure.",
-    "orchestrator_member_missing": "Une équipe de {{node}} n’existe plus."
+    "orchestrator_member_missing": "Une équipe de {{node}} n’existe plus.",
+    "orchestrator_no_match": "Aucune équipe enregistrée de {{node}} n’a l’une des capacités {{capabilities}}."
   },
   "trace": {
     "invalid": "La trace est endommagée ou incomplète.",
@@ -223,7 +224,10 @@
     "orchestrator_cycle": "{{name}} : l’équipe {{workflow}} rappellerait ce workflow.",
     "orchestrator_member_invalid_one": "{{name}} : l’équipe {{workflow}} contient {{count}} erreur.",
     "orchestrator_member_invalid_other": "{{name}} : l’équipe {{workflow}} contient {{count}} erreurs.",
-    "orchestrator_member_approval": "{{name}} : l’équipe {{workflow}} s’arrête pour des validations. Dans un orchestrateur, elle est annulée à ce moment-là."
+    "orchestrator_member_approval": "{{name}} : l’équipe {{workflow}} s’arrête pour des validations. Dans un orchestrateur, elle est annulée à ce moment-là.",
+    "orchestrator_selected_one": "{{name}} choisit {{count}} équipe par capacité : {{teams}}.",
+    "orchestrator_selected_other": "{{name}} choisit {{count}} équipes par capacité : {{teams}}.",
+    "orchestrator_no_match": "{{name}} : aucune équipe enregistrée n’a l’une des capacités {{capabilities}}."
   },
   "backup": {
     "not_zip": "Le fichier n’est pas une sauvegarde Nodestro (pas de fichier ZIP).",

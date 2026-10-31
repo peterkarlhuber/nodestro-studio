@@ -254,7 +254,15 @@
       "reason": "Motivo",
       "task": "Compito",
       "summary": "{{decisions}} decisioni, {{delegations}} deleghe",
-      "openTeam": "Apri l’esecuzione del team"
-    }
+      "openTeam": "Apri l’esecuzione del team",
+      "matched": "scelto per capacità: {{tags}}"
+    },
+    "select": "Team per capacità",
+    "selectHint": "I team salvati con una di queste capacità entrano nel gruppo all’avvio di un’esecuzione (al massimo 10 tag). Prima la corrispondenza migliore; i team con errori o passaggi di approvazione restano fuori.",
+    "selectPlaceholder": "ad es. ricerca, poi Invio",
+    "maxTeams": "Al massimo tanti team",
+    "selectPreview_one": "Corrispondono ora: {{teams}} (ne prende {{count}})",
+    "selectPreview_other": "Corrispondono ora: {{teams}} (ne prende fino a {{count}})",
+    "selectNone": "Nessun team salvato ha ancora una di queste capacità."
   }
 }

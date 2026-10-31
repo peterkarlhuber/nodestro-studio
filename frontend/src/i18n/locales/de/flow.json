@@ -254,7 +254,15 @@
       "reason": "Begründung",
       "task": "Aufgabe",
       "summary": "{{decisions}} Entscheidungen, {{delegations}} Weitergaben",
-      "openTeam": "Lauf des Teams öffnen"
-    }
+      "openTeam": "Lauf des Teams öffnen",
+      "matched": "nach Fähigkeit gewählt: {{tags}}"
+    },
+    "select": "Teams nach Fähigkeit",
+    "selectHint": "Gespeicherte Teams mit einer dieser Fähigkeiten kommen beim Start eines Laufs in den Pool (höchstens 10 Stichworte). Die beste Übereinstimmung zuerst; Teams mit Fehlern oder Freigabeschritten bleiben draußen.",
+    "selectPlaceholder": "z. B. recherche, dann Enter",
+    "maxTeams": "Höchstens so viele Teams",
+    "selectPreview_one": "Passen gerade: {{teams}} (nimmt {{count}})",
+    "selectPreview_other": "Passen gerade: {{teams}} (nimmt bis zu {{count}})",
+    "selectNone": "Noch hat kein gespeichertes Team eine dieser Fähigkeiten."
   }
 }

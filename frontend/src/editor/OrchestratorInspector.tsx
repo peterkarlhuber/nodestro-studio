@@ -1,13 +1,15 @@
 // Inspector of an orchestrator node: the pool of teams, the task, the model and the limits.
 
+import { Trash2 } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
-import { Trash2 } from "lucide-react";
 
 import { useWorkflows } from "../api/hooks";
-import { MAX_DECISIONS, MAX_POOL, type OrchestratorConfig, type WorkflowNode } from "../api/types";
+import { MAX_DECISIONS, MAX_POOL, MAX_SELECT_CAPABILITIES, type OrchestratorConfig, type WorkflowNode } from "../api/types";
 import { ModelPicker } from "../components/ModelPicker";
 import { Callout, Chip, Field, IconButton, Select, TextArea, TextInput } from "../components/ui";
+import { addCapabilities } from "../lib/capabilities";
 import { childLink, parseTrail } from "../lib/trail";
 import { Header, LabelField } from "./FlowInspectors";
 import { useEditor } from "./store";
@@ -88,6 +90,7 @@ export function OrchestratorInspector({ node }: { node: WorkflowNode }) {
           ) : null}
         </div>
       </Field>
+      <SelectField config={config} set={set} />
       <Field label={t("flow.orchestrator.task")} hint={t("flow.orchestrator.taskHint", { input: "{{input}}" })}>
         <TextArea rows={3} value={config.task_template} onChange={(e) => set({ task_template: e.target.value }, false)} />
       </Field>
@@ -130,5 +133,86 @@ export function OrchestratorInspector({ node }: { node: WorkflowNode }) {
       </Field>
       <Callout tone="info">{t("flow.orchestrator.safety")}</Callout>
     </div>
+  );
+}
+
+/** Teams by capability (AO M5): matching saved workflows join the pool when a run starts. */
+function SelectField({
+  config,
+  set,
+}: {
+  config: OrchestratorConfig;
+  set: (patch: Partial<OrchestratorConfig>, record?: boolean) => void;
+}) {
+  const { t } = useTranslation();
+  const workflows = useWorkflows();
+  const [typed, setTyped] = useState("");
+  const select = config.select ?? null;
+  const tags = select?.capabilities ?? [];
+  const maxTeams = select?.max_teams ?? 5;
+  const update = (capabilities: string[], max_teams = maxTeams) =>
+    set({ select: capabilities.length ? { capabilities, max_teams } : null });
+  const take = () => {
+    if (!typed.trim()) return;
+    update(addCapabilities(tags, typed, MAX_SELECT_CAPABILITIES));
+    setTyped("");
+  };
+  const wanted = new Set(tags.map((tag) => tag.toLowerCase()));
+  const chosen = new Set(config.members.map((member) => member.workflow_id));
+  const matching = (workflows.data ?? []).filter(
+    (item) => !chosen.has(item.id) && (item.capabilities ?? []).some((tag) => wanted.has(tag.toLowerCase())),
+  );
+  return (
+    <Field label={t("flow.orchestrator.select")} hint={t("flow.orchestrator.selectHint")} tip="flow.orchestratorSelect">
+      <div className="stack-sm" data-testid="orchestrator-select">
+        {tags.length ? (
+          <div className="chip-row">
+            {tags.map((tag) => (
+              <Chip key={tag} onRemove={() => update(tags.filter((item) => item !== tag))}>
+                {tag}
+              </Chip>
+            ))}
+          </div>
+        ) : null}
+        <TextInput
+          value={typed}
+          placeholder={t("flow.orchestrator.selectPlaceholder")}
+          disabled={tags.length >= MAX_SELECT_CAPABILITIES}
+          onChange={(e) => setTyped(e.target.value)}
+          onBlur={take}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === ",") {
+              e.preventDefault();
+              take();
+            }
+          }}
+          data-testid="orchestrator-select-input"
+        />
+        {tags.length ? (
+          <>
+            <label className="mapping-row">
+              <span>{t("flow.orchestrator.maxTeams")}</span>
+              <TextInput
+                type="number"
+                min={1}
+                max={MAX_POOL}
+                step={1}
+                value={maxTeams}
+                onChange={(e) => update(tags, wholeNumber(e.target.value, 1, MAX_POOL) ?? 1)}
+                data-testid="orchestrator-max-teams"
+              />
+            </label>
+            <p className="field__hint" data-testid="orchestrator-select-preview">
+              {matching.length
+                ? t("flow.orchestrator.selectPreview", {
+                    count: Math.min(matching.length, maxTeams),
+                    teams: matching.map((item) => item.name).join(", "),
+                  })
+                : t("flow.orchestrator.selectNone")}
+            </p>
+          </>
+        ) : null}
+      </div>
+    </Field>
   );
 }

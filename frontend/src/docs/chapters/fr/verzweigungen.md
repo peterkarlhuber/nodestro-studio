@@ -108,6 +108,7 @@ Une équipe peut être testée seule : créez une [série de tests](/docs/automa
 Un **orchestrateur** laisse un modèle d’IA décider quelle équipe reçoit quelle partie de la tâche. Il prend une décision après l’autre : **déléguer** une tâche à une équipe ou **conclure** par une réponse. La réponse est le résultat du nœud.
 
 - **Équipes :** les workflows enregistrés parmi lesquels le modèle peut choisir (20 au maximum). De chaque équipe, le modèle ne voit que le nom, la description, les capacités et le contrat de sortie.
+- **Équipes par capacité :** au lieu de choisir chaque équipe, vous nommez des capacités (10 au maximum). Au démarrage d’une exécution, les équipes enregistrées ayant une capacité correspondante rejoignent le groupe (jusqu’à *Au maximum autant d’équipes*) : d’abord celles qui ont le plus d’étiquettes correspondantes, puis par nom. Les équipes avec des erreurs ou des étapes de validation sont écartées. La sélection reste fixe pour cette exécution (et pour une version publiée) ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté ni estimé.
 - **Tâche** et **Instructions :** ce qu’il faut accomplir et, si besoin, comment le planifier.
 - **Nombre maximal de décisions** (de 1 à 50, 8 par défaut) et **Maximum par équipe :** sans réponse après la dernière décision, l’étape échoue.
 

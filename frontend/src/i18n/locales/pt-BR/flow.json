@@ -254,7 +254,15 @@
       "reason": "Motivo",
       "task": "Tarefa",
       "summary": "{{decisions}} decisões, {{delegations}} delegações",
-      "openTeam": "Abrir a execução da equipe"
-    }
+      "openTeam": "Abrir a execução da equipe",
+      "matched": "escolhida por capacidade: {{tags}}"
+    },
+    "select": "Equipes por capacidade",
+    "selectHint": "Equipes salvas com uma destas capacidades entram no grupo quando uma execução começa (no máximo 10 tags). A melhor correspondência primeiro; equipes com erros ou etapas de aprovação ficam de fora.",
+    "selectPlaceholder": "ex.: pesquisa e Enter",
+    "maxTeams": "No máximo tantas equipes",
+    "selectPreview_one": "Correspondem agora: {{teams}} (usa {{count}})",
+    "selectPreview_other": "Correspondem agora: {{teams}} (usa até {{count}})",
+    "selectNone": "Nenhuma equipe salva tem ainda uma destas capacidades."
   }
 }

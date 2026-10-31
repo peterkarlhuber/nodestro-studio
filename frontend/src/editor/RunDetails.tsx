@@ -133,7 +133,7 @@ export function FlowNodeDetails({ run, node, state }: { run?: Run; node: Workflo
       {node.type === "approval" && state.status === "awaiting_approval" && run ? (
         <ApprovalCard runId={run.id} nodeId={node.id} />
       ) : null}
-      {node.type === "orchestrator" ? <OrchestrationView state={state} /> : null}
+      {node.type === "orchestrator" ? <OrchestrationView node={node} state={state} /> : null}
       {node.type === "subworkflow" && state.child_run_id ? (
         <p>
           <Link to={`/executions/${state.child_run_id}`}>

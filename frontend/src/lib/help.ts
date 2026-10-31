@@ -200,6 +200,7 @@ export const HELP_DOCS = {
   "flow.orchestrator": "verzweigungen#orchestrator",
   "flow.orchestratorTeams": "verzweigungen#orchestrator",
   "flow.orchestratorLimits": "verzweigungen#orchestrator",
+  "flow.orchestratorSelect": "verzweigungen#orchestrator",
   "flow.form": "verzweigungen#eingabeformular",
   "flow.formField": "verzweigungen#eingabeformular",
   "flow.resume": "verzweigungen#fortsetzen",

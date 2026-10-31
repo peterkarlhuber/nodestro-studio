@@ -8,6 +8,8 @@
   pool and finishes with an answer. The inspector edits the teams (with their capabilities and output contract),
   the task, the instructions, the model and the limits (maximum decisions, maximum per team) and says what the
   orchestrator may not do (no tools, nothing created, no permissions of its own).
+- Teams by capability (runtime M5, `select`): the inspector edits the capabilities and the maximum number of
+  teams and previews which saved teams match now; the run details show the pool with the tags each team matched.
 - Run details show every decision with its reason, task, verdict (refusals in the interface language), the team's
   result and a link to the team's run.
 - Texts in six languages: `flow.orchestrator.*`, `errors.orchestration.*`, `workflow.orchestrator_*`,

@@ -196,7 +196,8 @@
     "resumeSideEffects": "Steps that run again had called tools. A second call may trigger something twice.",
     "orchestrator": "An AI model plans the task and delegates parts of it to teams of its pool, one decision at a time. Every decision is recorded with its reason.",
     "orchestratorTeams": "Teams are saved workflows. The model only sees their name, description, capabilities and output contract. It cannot add teams.",
-    "orchestratorLimits": "The limits keep an orchestrator from running in circles: it stops after the maximum number of decisions, and the workflow's budget and limits apply as well."
+    "orchestratorLimits": "The limits keep an orchestrator from running in circles: it stops after the maximum number of decisions, and the workflow's budget and limits apply as well.",
+    "orchestratorSelect": "Instead of naming every team, name capabilities. When a run starts, saved teams that share them are added to the pool and fixed for that run; the run's details show which tags each team matched. Nothing is scored: more matching tags come first, then the name."
   },
   "files": {
     "output": "Formats in which the result node stores its result at the end of the run: Markdown, JSON, CSV, HTML or PDF.",

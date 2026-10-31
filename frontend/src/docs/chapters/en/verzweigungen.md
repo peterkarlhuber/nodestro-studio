@@ -108,6 +108,7 @@ A team can be tested on its own: create a [test series](/docs/automatisierung#te
 An **orchestrator** lets an AI model decide which team gets which part of the task. It makes one decision after another: **delegate** a task to a team, or **finish** with an answer. The answer is the node's result.
 
 - **Teams:** the saved workflows the model may choose from (at most 20). Of each team, the model only sees its name, description, capabilities and output contract.
+- **Teams by capability:** instead of picking every team, name capabilities (at most 10). When a run starts, saved teams with a matching capability join the pool (up to *At most this many teams*): those with the most matching tags first, then by name. Teams with errors or approval steps are left out. The selection is fixed for that run (and for a published version); the run details show which tags each team matched. Nothing is scored or estimated.
 - **Task** and **Instructions:** what should get done and, optionally, how to plan it.
 - **Maximum decisions** (1 to 50, default 8) and **Maximum per team:** without an answer after the last decision, the step fails.
 

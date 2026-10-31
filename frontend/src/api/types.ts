@@ -196,6 +196,17 @@ export interface SubworkflowConfig {
 export interface OrchestratorMember {
   workflow_id: string;
   version: number | null;
+  /** In a run's snapshot: the capabilities this team matched when the selection added it. */
+  matched?: string[];
+}
+
+export const MAX_SELECT_CAPABILITIES = 10;
+
+/** Teams added by capability when a run starts (fixed in the run's snapshot, ``done``). */
+export interface OrchestratorSelect {
+  capabilities: string[];
+  max_teams: number;
+  done?: boolean;
 }
 
 export const MAX_POOL = 20;
@@ -210,6 +221,8 @@ export interface OrchestratorConfig {
   max_decisions: number;
   /** How often one team may be chosen; null: as often as decisions allow. */
   max_per_member: number | null;
+  /** Add teams by capability; null: only ``members``. */
+  select?: OrchestratorSelect | null;
 }
 
 /** One decision of an orchestrator, as ``orkexa.orchestration`` records it. */

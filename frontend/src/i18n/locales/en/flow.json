@@ -254,7 +254,15 @@
       "reason": "Reason",
       "task": "Task",
       "summary": "{{decisions}} decisions, {{delegations}} delegations",
-      "openTeam": "Open the team's run"
-    }
+      "openTeam": "Open the team's run",
+      "matched": "selected by capability: {{tags}}"
+    },
+    "select": "Teams by capability",
+    "selectHint": "Saved teams with one of these capabilities join the pool when a run starts (at most 10 tags). Best match first; teams with errors or approval steps are left out.",
+    "selectPlaceholder": "e.g. research, then Enter",
+    "maxTeams": "At most this many teams",
+    "selectPreview_one": "Currently matching: {{teams}} (takes {{count}})",
+    "selectPreview_other": "Currently matching: {{teams}} (takes up to {{count}})",
+    "selectNone": "No saved team has one of these capabilities yet."
   }
 }

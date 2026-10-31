@@ -254,7 +254,15 @@
       "reason": "Motivo",
       "task": "Tarea",
       "summary": "{{decisions}} decisiones, {{delegations}} delegaciones",
-      "openTeam": "Abrir la ejecución del equipo"
-    }
+      "openTeam": "Abrir la ejecución del equipo",
+      "matched": "elegido por capacidad: {{tags}}"
+    },
+    "select": "Equipos por capacidad",
+    "selectHint": "Los equipos guardados con una de estas capacidades entran en el grupo al iniciar una ejecución (como máximo 10 etiquetas). Primero la mejor coincidencia; los equipos con errores o pasos de aprobación quedan fuera.",
+    "selectPlaceholder": "p. ej. investigación y Enter",
+    "maxTeams": "Como máximo tantos equipos",
+    "selectPreview_one": "Coinciden ahora: {{teams}} (toma {{count}})",
+    "selectPreview_other": "Coinciden ahora: {{teams}} (toma hasta {{count}})",
+    "selectNone": "Todavía ningún equipo guardado tiene una de estas capacidades."
   }
 }
