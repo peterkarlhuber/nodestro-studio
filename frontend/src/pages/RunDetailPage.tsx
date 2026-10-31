@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Download, FileDown, History, Pencil, ShieldCheck, Square } from "lucide-react";
+import { Download, FileDown, FlaskConical, History, Pencil, ShieldCheck, Square } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
@@ -8,6 +8,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { Run } from "../api/types";
 import { DiscussButton } from "../assistant/DiscussButton";
+import { TestCaseFromRunDialog } from "../automation/TestCaseFromRunDialog";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { Output } from "../components/Markdown";
@@ -86,6 +87,7 @@ export function RunDetailPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [exportOpen, setExportOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
+  const [caseOpen, setCaseOpen] = useState(false);
   const data = run.data;
   const offer: ContextOffer | null = data ? { kind: "run", refId: data.id, label: `${data.workflow_name} · ${formatDate(data.created_at)}` } : null;
   useContextOffer("run", offer);
@@ -109,6 +111,8 @@ export function RunDetailPage() {
   const live = !imported && (data.status === "running" || data.status === "queued");
   const paused = !imported && data.status === "paused";
   const resumable = !imported && !data.parent_run_id && (data.status === "failed" || data.status === "cancelled");
+  // Q-4: a failed run started here can become a test case (redacted, added only after confirmation).
+  const proposable = !imported && !data.parent_run_id && data.status === "failed";
   const openStep = (nodeId: string) => {
     setSelected(nodeId);
     requestAnimationFrame(() => document.getElementById("run-node-details")?.scrollIntoView({ block: "start", behavior: "smooth" }));
@@ -130,6 +134,13 @@ export function RunDetailPage() {
               <Hint id="flow.resume">
                 <Button variant="primary" icon={History} onClick={() => setResumeOpen(true)}>
                   {t("flow.resume.button")}
+                </Button>
+              </Hint>
+            ) : null}
+            {proposable ? (
+              <Hint id="automation.caseFromRun">
+                <Button icon={FlaskConical} onClick={() => setCaseOpen(true)} data-testid="case-from-run-open">
+                  {t("automation.benchmark.fromRun.button")}
                 </Button>
               </Hint>
             ) : null}
@@ -236,6 +247,7 @@ export function RunDetailPage() {
         <ResultFiles run={data} />
       </div>
       <TraceExportDialog open={exportOpen} onClose={() => setExportOpen(false)} run={data} />
+      {proposable && caseOpen ? <TestCaseFromRunDialog run={data} open={caseOpen} onClose={() => setCaseOpen(false)} /> : null}
       {resumable ? <ResumeDialog runId={data.id} open={resumeOpen} onClose={() => setResumeOpen(false)} /> : null}
     </div>
   );

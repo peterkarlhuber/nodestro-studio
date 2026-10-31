@@ -207,6 +207,7 @@ export const HELP_DOCS = {
   "automation.concurrency": "automatisierung#grenzen",
   "automation.benchmark": "automatisierung#testreihen",
   "automation.benchmarkChecks": "automatisierung#testreihen",
+  "automation.caseFromRun": "automatisierung#testfall-aus-lauf",
   "automation.benchmarkJudge": "automatisierung#ki-bewertung",
   "automation.benchmarkCompare": "automatisierung#testreihen-vergleichen",
   "automation.benchmarkModels": "automatisierung#modelle-vergleichen",

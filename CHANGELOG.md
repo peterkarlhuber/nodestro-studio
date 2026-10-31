@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Test case from a failed run (evolution plan Q-4, 2026-10-31)
+
+- The details of a failed run offer *Add as test case*. The dialog shows the test case the server proposes
+  (`POST /api/runs/{id}/test-case`, api #24): the run's form values, free text and files, with credentials always
+  and personal data by default replaced, plus what was replaced, missing files and values that no longer fit the form.
+- Nothing is stored until the person picks a test series of the workflow (or a new one) and confirms. The series is
+  read again just before the case is appended. The run stays unchanged.
+- In the test series the case shows its origin (date, replacements, link to the run). Hand-written cases are unchanged.
+- Docs ×6: *Automation → Test case from a failed run* (`automatisierung#testfall-aus-lauf`), help tip
+  `automation.caseFromRun`, error texts `testcase.*`. Browser test: the flow suite fails a run and adds it as a case.
+
 ### Pins: Nodestro Local Docker, runtime 78d2899 (2026-10-31)
 
 - One cascade for Nodestro Local Docker (the `local-container` profile, the sandbox gateway, access-key sessions with

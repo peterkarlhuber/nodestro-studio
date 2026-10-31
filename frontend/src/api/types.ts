@@ -1648,6 +1648,27 @@ export interface TestCase {
   checks: ConditionRule[];
   judge_criteria: string;
   expected: string;
+  /** Set for a case proposed from a failed run (Q-4); absent or null for cases written by hand. */
+  origin?: CaseOrigin | null;
+}
+
+export interface CaseOrigin {
+  run_id: string;
+  run_status: string;
+  run_at: string;
+  workflow_version: number | null;
+  error_code: string | null;
+  personal_data: boolean;
+  replaced: Record<string, number>;
+  proposed_at: string;
+}
+
+/** A redacted test case from a failed run; nothing is stored until it is saved into a series. */
+export interface CaseProposal {
+  workflow_id: string;
+  case: TestCase;
+  missing_files: string[];
+  problems: { field: string; code: string; message: string; params?: Record<string, unknown> }[];
 }
 
 export interface SuiteIn {

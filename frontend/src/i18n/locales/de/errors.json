@@ -582,5 +582,9 @@
     "blocked": "Das Freigabe-Gate blockiert diese Version. Teste genau diese Version mit ihren Testreihen.",
     "override_required": "Das Freigabe-Gate ist nicht erfüllt. Gib eine Begründung an, um trotzdem zu veröffentlichen.",
     "suite_unknown": "Diese Testreihe gehört nicht zu diesem Workflow."
+  },
+  "testcase": {
+    "run_not_failed": "Nur ein fehlgeschlagener Lauf kann als Testfall übernommen werden.",
+    "run_unsupported": "Importierte Läufe und Läufe von Unter-Workflows können nicht als Testfall übernommen werden."
   }
 }

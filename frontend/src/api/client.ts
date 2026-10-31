@@ -77,6 +77,7 @@ import type {
   ScheduleState,
   Suite,
   SuiteIn,
+  CaseProposal,
   ApiCheck,
   ApiDocs,
   ApiGuide,
@@ -421,6 +422,8 @@ export const api = {
   suite: (id: string) => request<Suite>("GET", `/benchmarks/${id}`),
   createSuite: (body: SuiteIn) => request<Suite>("POST", "/benchmarks", body),
   updateSuite: (id: string, body: SuiteIn) => request<Suite>("PUT", `/benchmarks/${id}`, body),
+  proposeTestCase: (runId: string, personalData = true) =>
+    request<CaseProposal>("POST", `/runs/${runId}/test-case`, { personal_data: personalData }),
   deleteSuite: (id: string) => request<void>("DELETE", `/benchmarks/${id}`),
   planBenchmark: (id: string, body: BenchmarkStart) => request<BenchmarkPlan>("POST", `/benchmarks/${id}/plan`, body),
   startBenchmark: (id: string, body: BenchmarkStart) =>

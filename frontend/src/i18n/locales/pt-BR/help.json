@@ -211,7 +211,8 @@
     "scheduleMissed": "Se o Nodestro estava desligado no horário: pular ou recuperar uma vez no próximo início.",
     "scheduleTimeZone": "Os horários valem neste fuso horário, incluindo o horário de verão.",
     "estimate": "Estimativa a partir das últimas execuções bem-sucedidas deste workflow. O máximo vem do orçamento por execução.",
-    "external": "Ferramentas próprias podem, p. ex., enviar mensagens. Com muitas execuções, isso acontece com a mesma frequência."
+    "external": "Ferramentas próprias podem, p. ex., enviar mensagens. Com muitas execuções, isso acontece com a mesma frequência.",
+    "caseFromRun": "Transforma a entrada desta execução com falha em um caso de teste, com credenciais e dados pessoais substituídos. Nada é salvo antes da sua confirmação."
   },
   "publish": {
     "open": "Publique este fluxo de trabalho como API neste computador, gerencie chaves e acesso pela rede, ou exporte-o como projeto FastAPI independente.",

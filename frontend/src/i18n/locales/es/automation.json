@@ -167,7 +167,31 @@
     "modelsChanged_one": "{{count}} agente usa otro modelo.",
     "modelsChanged_other": "{{count}} agentes usan otro modelo.",
     "needsLimit": "Comparar modelos requiere un límite de coste: las ejecuciones anteriores usaron otros modelos y no dicen nada del coste.",
-    "variant": "Comparación de modelos"
+    "variant": "Comparación de modelos",
+    "fromRun": {
+      "button": "Añadir como caso de prueba",
+      "title": "Caso de prueba a partir de esta ejecución",
+      "intro": "Nodestro propone un caso de prueba con la entrada de esta ejecución. No se guarda nada hasta que lo añadas a una serie de pruebas.",
+      "replaced": "Sustituido: {{summary}}.",
+      "preview": "Entrada propuesta",
+      "files_one": "{{count}} archivo se usa tal como está guardado (sin anonimizar).",
+      "files_other": "{{count}} archivos se usan tal como están guardados (sin anonimizar).",
+      "missingFiles_one": "{{count}} archivo de la ejecución ya no existe; falta en el caso de prueba.",
+      "missingFiles_other": "{{count}} archivos de la ejecución ya no existen; faltan en el caso de prueba.",
+      "problems": "Ya no encaja con el formulario actual: {{fields}}. Corrígelo en la serie de pruebas después de añadirlo.",
+      "checksLater": "Las reglas de comprobación y los criterios de la evaluación por IA los añades después en la serie de pruebas.",
+      "caseName": "Nombre del caso de prueba",
+      "suite": "Serie de pruebas",
+      "newSuite": "Nueva serie de pruebas",
+      "suiteName": "Nombre de la nueva serie de pruebas",
+      "add": "Añadir a la serie de pruebas",
+      "added": "Caso de prueba añadido a «{{suite}}».",
+      "defaultName": "Error del {{date}}",
+      "defaultSuite": "{{name}}: casos de error",
+      "origin": "De una ejecución fallida del {{date}}",
+      "originRun": "Abrir ejecución",
+      "originReplaced": "sustituido: {{summary}}"
+    }
   },
   "schedule": {
     "description": "Inicia workflows con regularidad mientras Nodestro está en marcha. Cada programación está desactivada hasta que la actives.",

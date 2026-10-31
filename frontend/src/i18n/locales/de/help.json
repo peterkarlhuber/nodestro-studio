@@ -211,7 +211,8 @@
     "scheduleMissed": "War Nodestro zum Termin aus: auslassen oder beim nächsten Start einmal nachholen.",
     "scheduleTimeZone": "Termine gelten in dieser Zeitzone, inklusive Sommer- und Winterzeit.",
     "estimate": "Schätzung aus den letzten erfolgreichen Läufen dieses Workflows. Der Höchstwert folgt aus dem Budget pro Lauf.",
-    "external": "Eigene Tools können z. B. Nachrichten senden. Bei vielen Läufen geschieht das entsprechend oft."
+    "external": "Eigene Tools können z. B. Nachrichten senden. Bei vielen Läufen geschieht das entsprechend oft.",
+    "caseFromRun": "Macht aus der Eingabe dieses fehlgeschlagenen Laufs einen Testfall, mit ersetzten Zugangsdaten und personenbezogenen Daten. Gespeichert wird erst nach deiner Bestätigung."
   },
   "publish": {
     "open": "Veröffentliche diesen Workflow als API auf diesem Computer, verwalte Schlüssel und Netzwerkzugriff oder exportiere ihn als eigenständiges FastAPI-Projekt.",

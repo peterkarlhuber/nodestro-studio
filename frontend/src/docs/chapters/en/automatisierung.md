@@ -39,6 +39,18 @@ A **test series** belongs to a workflow and holds fixed **test cases**: an input
 
 A test series has at most 200 cases. Invalid cases (such as a required field without a value) are reported before the start and skipped.
 
+## Test case from a failed run {#testfall-aus-lauf}
+<!-- keywords: test case from run, failure as test, regression, failed, add, redacted -->
+
+When a run has failed, click **Add as test case** in its details. Nodestro proposes a test case with the same input: form values, free text and files.
+
+- API keys, tokens and passwords are always replaced by placeholders such as `[API_KEY_1]`, and personal data (e-mail addresses, phone numbers, IBANs …) too while the switch is on. Detection is pattern-based and does not find everything; check the preview.
+- Files are used as they are stored, not copied and not redacted. Deleted files are left out and named, as are values that no longer fit the current form.
+- Nothing is saved until you pick a test series (or create a new one) and click **Add to test series**. The run itself stays unchanged.
+- The case keeps its **origin** (run, error, what was replaced) and shows it in the test series. You add checks and criteria there.
+
+When a new case changes a test series that a [release gate](/docs/api-und-export#freigabe-gate) uses, the series must run again before the next release.
+
 ## AI rating {#ki-bewertung}
 <!-- keywords: ai rating, judge, llm as judge, criteria, rating, score -->
 

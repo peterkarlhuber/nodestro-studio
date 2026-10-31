@@ -167,7 +167,31 @@
     "modelsChanged_one": "{{count}} agente usa un altro modello.",
     "modelsChanged_other": "{{count}} agenti usano un altro modello.",
     "needsLimit": "Il confronto tra modelli richiede un limite di costo: le esecuzioni precedenti usavano altri modelli e non dicono nulla sul costo.",
-    "variant": "Confronto modelli"
+    "variant": "Confronto modelli",
+    "fromRun": {
+      "button": "Aggiungi come caso di test",
+      "title": "Caso di test da questa esecuzione",
+      "intro": "Nodestro propone un caso di test con l'input di questa esecuzione. Non viene salvato nulla finché non lo aggiungi a una serie di test.",
+      "replaced": "Sostituito: {{summary}}.",
+      "preview": "Input proposto",
+      "files_one": "{{count}} file viene usato come è salvato (non oscurato).",
+      "files_other": "{{count}} file vengono usati come sono salvati (non oscurati).",
+      "missingFiles_one": "{{count}} file dell'esecuzione non esiste più; manca nel caso di test.",
+      "missingFiles_other": "{{count}} file dell'esecuzione non esistono più; mancano nel caso di test.",
+      "problems": "Non corrisponde più al modulo attuale: {{fields}}. Correggilo nella serie di test dopo l'aggiunta.",
+      "checksLater": "Regole di controllo e criteri per la valutazione IA li aggiungi poi nella serie di test.",
+      "caseName": "Nome del caso di test",
+      "suite": "Serie di test",
+      "newSuite": "Nuova serie di test",
+      "suiteName": "Nome della nuova serie di test",
+      "add": "Aggiungi alla serie di test",
+      "added": "Caso di test aggiunto a «{{suite}}».",
+      "defaultName": "Errore del {{date}}",
+      "defaultSuite": "{{name}}: casi di errore",
+      "origin": "Da un'esecuzione fallita del {{date}}",
+      "originRun": "Apri esecuzione",
+      "originReplaced": "sostituito: {{summary}}"
+    }
   },
   "schedule": {
     "description": "Avvia workflow regolarmente mentre Nodestro è in funzione. Ogni pianificazione resta spenta finché non la attivi.",

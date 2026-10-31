@@ -190,5 +190,6 @@ project owner.
 | UX-8 glossary chapter, README screenshots, journeys after P1, see [journeys.md](journeys.md#after-p1-ux-8) | done | studio #31 `d03a849`. Moderated task tests (D7) not arranged; no usability claim. |
 | Q-2 model comparison in a test series (other models for single agents, cost limit required, variant runs marked and not counted as the version's test status) | done | api #20 `665f1ce` + #21 `3782f19` (assistant live-event fix), sdk #17 `e2bc4a6` + #18 `6107d1c`, studio #32 `b553d39`. The pin bump also carries runtime `45e7774` (built-in Linux sandbox) and the PRICING-1 API work, agreed with those threads. |
 | Q-3 opt-in release gate per publication (critical items block and cannot be overridden; failed check results or AI ratings need a recorded reason, D6a) | done | api #22 `3c0ffa2` (also fixes saving an edited test series), sdk #19 `82e1d77`, studio #35 `cfe97db` |
-| Q-4 and later | open | — |
+| Q-4 test case from a failed run (redacted, with origin, added only after confirmation) | done | api #24 `176453e`, studio (this PR); also studio #38 `9428012` (two e2e races on master) |
+| Q-5 and later | open | — |
 

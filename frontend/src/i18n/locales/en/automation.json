@@ -167,7 +167,31 @@
     "modelsChanged_one": "{{count}} agent runs with another model.",
     "modelsChanged_other": "{{count}} agents run with another model.",
     "needsLimit": "Comparing models needs a cost limit: earlier runs used other models and say nothing about the cost.",
-    "variant": "Model comparison"
+    "variant": "Model comparison",
+    "fromRun": {
+      "button": "Add as test case",
+      "title": "Test case from this run",
+      "intro": "Nodestro proposes a test case with this run's input. Nothing is saved until you add it to a test series.",
+      "replaced": "Replaced: {{summary}}.",
+      "preview": "Proposed input",
+      "files_one": "{{count}} file is used as it is stored (not redacted).",
+      "files_other": "{{count}} files are used as they are stored (not redacted).",
+      "missingFiles_one": "{{count}} file of the run no longer exists; it is missing from the test case.",
+      "missingFiles_other": "{{count}} files of the run no longer exist; they are missing from the test case.",
+      "problems": "No longer fits the current form: {{fields}}. Correct it in the test series after adding.",
+      "checksLater": "You add checks and criteria for the AI rating afterwards in the test series.",
+      "caseName": "Test case name",
+      "suite": "Test series",
+      "newSuite": "New test series",
+      "suiteName": "Name of the new test series",
+      "add": "Add to test series",
+      "added": "Test case added to “{{suite}}”.",
+      "defaultName": "Failure of {{date}}",
+      "defaultSuite": "{{name}}: failures",
+      "origin": "From a failed run of {{date}}",
+      "originRun": "Open run",
+      "originReplaced": "replaced: {{summary}}"
+    }
   },
   "schedule": {
     "description": "Starts workflows regularly while Nodestro runs. Every schedule is off until you switch it on.",

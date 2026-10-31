@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Columns2, FlaskConical, Play, Plus, Save, Trash2 } from "lucide-react";
+import { Columns2, FlaskConical, History, Play, Plus, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { api } from "../api/client";
 import { keys, useSettings, useSuites, useWorkflows } from "../api/hooks";
-import type { BenchmarkRun, CaseChange, CaseResult, Suite, SuiteIn, TestCase, Workflow } from "../api/types";
+import type { BenchmarkRun, CaseChange, CaseResult, SanitizeReport, Suite, SuiteIn, TestCase, Workflow } from "../api/types";
 import { BenchmarkStartDialog } from "../automation/BenchmarkStartDialog";
 import { modelChanges } from "../automation/models";
 import { BATCH_TONE } from "../automation/status";
@@ -33,6 +33,7 @@ import {
   TextInput,
 } from "../components/ui";
 import { RuleEditor, outputFieldsOf } from "../editor/FlowInspectors";
+import { sanitizeSummary } from "../editor/TraceExportDialog";
 import { newId, newRule } from "../lib/defaults";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatCost, formatDate, formatNumber, sumCosts } from "../lib/format";
@@ -185,6 +186,16 @@ function CaseEditor({
           </Field>
           <IconButton icon={Trash2} label={t("automation.benchmark.removeCase")} onClick={onRemove} />
         </div>
+        {value.origin ? (
+          <p className="muted small" data-testid="case-origin">
+            <History size={13} aria-hidden /> {t("automation.benchmark.fromRun.origin", { date: formatDate(value.origin.run_at) })}
+            {Object.keys(value.origin.replaced).length
+              ? ` · ${t("automation.benchmark.fromRun.originReplaced", { summary: sanitizeSummary(t, { replaced: value.origin.replaced } as SanitizeReport) })}`
+              : ""}
+            {" · "}
+            <Link to={`/executions/${value.origin.run_id}`}>{t("automation.benchmark.fromRun.originRun")}</Link>
+          </p>
+        ) : null}
         {fields.length ? <FormFields fields={fields} values={value.values} origin="test" onChange={(values) => set({ values })} /> : null}
         <Field label={fields.length ? t("flow.form.extraInput") : t("editor.run.input")}>
           <TextArea rows={3} value={value.input} onChange={(e) => set({ input: e.target.value })} />

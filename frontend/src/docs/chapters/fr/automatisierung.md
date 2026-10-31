@@ -39,6 +39,18 @@ Une **série de tests** appartient à un workflow et contient des **cas de test*
 
 Une série de tests compte au plus 200 cas. Les cas invalides (par exemple un champ obligatoire sans valeur) sont signalés avant le lancement et ignorés.
 
+## Cas de test à partir d'une exécution échouée {#testfall-aus-lauf}
+<!-- keywords: cas de test depuis exécution, erreur comme test, régression, échouée, ajouter, anonymisé -->
+
+Quand une exécution a échoué, clique sur **Ajouter comme cas de test** dans ses détails. Nodestro propose un cas de test avec la même entrée : valeurs du formulaire, texte libre et fichiers.
+
+- Les clés d'API, jetons et mots de passe sont toujours remplacés par des marqueurs comme `[API_KEY_1]`, et les données personnelles (adresses e-mail, numéros de téléphone, IBAN …) aussi tant que l'interrupteur est activé. La détection repose sur des motifs et ne trouve pas tout ; vérifie l'aperçu.
+- Les fichiers sont utilisés tels qu'ils sont enregistrés, ni copiés ni anonymisés. Les fichiers supprimés sont omis et signalés, comme les valeurs qui ne correspondent plus au formulaire actuel.
+- Rien n'est enregistré tant que tu n'as pas choisi une série de tests (ou créé une nouvelle) et cliqué sur **Ajouter à la série de tests**. L'exécution reste inchangée.
+- Le cas garde son **origine** (exécution, erreur, ce qui a été remplacé) et l'affiche dans la série de tests. Tu y ajoutes les règles de contrôle et les critères.
+
+Si un nouveau cas modifie une série de tests utilisée par une [contrôle de publication](/docs/api-und-export#freigabe-gate), la série doit être relancée avant la prochaine publication.
+
 ## Évaluation IA {#ki-bewertung}
 <!-- keywords: évaluation ia, juge, llm as judge, critères, évaluation, note, score -->
 
