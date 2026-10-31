@@ -33,7 +33,7 @@ Ambos se ejecutan paso a paso como en Nodestro: los mismos agentes, herramientas
 - los subflujos en su versión actual (consulta [Subflujos](/docs/verzweigungen#unterworkflow)),
 - el formulario de entrada, a partir del cual Nodestro genera el esquema de la solicitud.
 
-Antes, Nodestro comprueba el flujo. Los errores impiden publicar; el diálogo muestra las advertencias (por ejemplo, un límite de coste ausente o pasos de aprobación). Los cambios sin guardar no se publican: guarda primero.
+Antes, Nodestro comprueba el flujo. Los errores impiden publicar; el diálogo muestra las advertencias (por ejemplo, un límite de coste ausente o pasos de aprobación). Los cambios sin guardar no se publican: guarda primero. Debajo aparece el **resultado de pruebas** de la versión en cada [serie de pruebas](/docs/automatisierung#testreihen) del flujo: *sin probar*, *n de m superados* o *desactualizado* si la última prueba fue de otra versión o la serie cambió desde entonces. El resultado es solo informativo; no impide publicar.
 
 Cada publicación recibe un número consecutivo y una nota opcional. Los cambios posteriores en el editor nunca modifican una versión publicada. Llegan a la API solo cuando vuelves a publicar.
 

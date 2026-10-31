@@ -86,6 +86,8 @@ try {
   check(await dialog.getByTestId("api-tab-try").isDisabled(), "Tabs other than the overview wait for a first version");
   await dialog.getByTestId("api-check-summary").waitFor();
   check((await dialog.getByTestId("api-check-summary").textContent()).includes("Bereit"), "The check before publishing passes");
+  await dialog.getByTestId("test-status").getByText("Für diesen Workflow gibt es keine Testreihe.").waitFor();
+  check(true, "The publish dialog says the workflow has no test series (Q-1)");
   await shot("api-01-publish");
   await dialog.getByTestId("api-publish").click();
   await dialog.getByTestId("api-status").waitFor();
@@ -141,9 +143,19 @@ try {
 
   // ---- a second version and rollback ------------------------------------------------------------
   await api(`/workflows/${workflow.id}`, "PUT", { ...workflow, nodes: nodes("Preis und Termin prüfen."), edges });
+  await api("/benchmarks", "POST", {
+    name: "Angebote Regression",
+    description: "",
+    workflow_id: workflow.id,
+    judge_model: null,
+    cases: [{ id: "c1", name: "ACME", input: "", values: { kunde: "ACME", menge: 10 }, file_ids: [], checks: [], judge_criteria: "", expected: "" }],
+  });
   await page.goto(`${base}/workflows/${workflow.id}`);
   await page.getByTestId("open-api").click();
   await dialog.getByTestId("api-check-summary").waitFor();
+  const testRow = dialog.getByTestId("test-status-row");
+  await testRow.waitFor();
+  check((await testRow.textContent()).includes("Angebote Regression") && (await testRow.textContent()).includes("ungetestet"), "The publish dialog shows the untested series of the new version (Q-1)");
   await dialog.getByTestId("api-publish").click();
   await until(async () => (await dialog.getByTestId("api-versions").textContent()).includes("v2"), "version 2 listed");
   await until(async () => (await (await call("")).json()).version === 2, "version 2 active");

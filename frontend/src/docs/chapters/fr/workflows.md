@@ -204,7 +204,7 @@ Chaque enregistrement qui modifie quelque chose est conservé comme **version** 
 - **Différences** montre ce qui changerait par rapport à l’état dans l’éditeur : agents, connexions, nom et réglages.
 - **Restaurer** ramène le workflow à cette version et enregistre le résultat comme **nouvelle version**. Aucune version n’est écrasée ni supprimée.
 
-Les versions sont indépendantes d’annuler/rétablir, qui ne vaut que pendant une session dans l’éditeur. Les exécutions utilisent toujours l’état au moment du lancement. Si un workflow est supprimé, ses versions le sont aussi.
+Les versions sont indépendantes d’annuler/rétablir, qui ne vaut que pendant une session dans l’éditeur. Les exécutions utilisent toujours l’état au moment du lancement. Si un workflow est supprimé, ses versions le sont aussi. En haut de l’historique figure le **résultat des tests** de la version enregistrée pour chaque série de tests du workflow (comme lors de la [publication](/docs/api-und-export#veroeffentlichen)).
 
 ## Importer et exporter {#import-export}
 <!-- keywords: exporter, importer, json, fichier, partager, sauvegarde, .nodestro.json -->

@@ -33,7 +33,7 @@ Os dois rodam passo a passo como no Nodestro: os mesmos agentes, ferramentas, ra
 - os subfluxos na versão atual (veja [Subfluxos](/docs/verzweigungen#unterworkflow)),
 - o formulário de entrada, a partir do qual o Nodestro gera o esquema da requisição.
 
-Antes, o Nodestro verifica o fluxo. Erros impedem a publicação; a caixa de diálogo mostra os avisos (por exemplo, falta de limite de custo ou etapas de aprovação). Alterações não salvas não são publicadas: salve primeiro.
+Antes, o Nodestro verifica o fluxo. Erros impedem a publicação; a caixa de diálogo mostra os avisos (por exemplo, falta de limite de custo ou etapas de aprovação). Alterações não salvas não são publicadas: salve primeiro. Abaixo aparece o **resultado dos testes** da versão em cada [série de testes](/docs/automatisierung#testreihen) do fluxo: *não testada*, *n de m aprovados* ou *desatualizado* quando outra versão foi testada por último ou a série mudou desde então. O resultado é apenas informativo; não impede a publicação.
 
 Cada publicação recebe um número sequencial e uma nota opcional. Alterações posteriores no editor nunca mudam uma versão publicada. Elas só chegam à API quando você publica de novo.
 

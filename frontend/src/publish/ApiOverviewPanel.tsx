@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import type { ApiOverview } from "../api/types";
+import { TestStatus } from "../automation/TestStatus";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, Hint, Modal, Spinner, StatusBadge, TextInput, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
@@ -167,6 +168,7 @@ export function ApiOverviewPanel({
         {version && newer ? (
           <>
             <p className="small">{t("publish.overview.willPublish", { version })}</p>
+            <TestStatus workflowId={overview.workflow_id} version={version} />
             {check.isLoading ? <Spinner /> : null}
             {check.error ? (
               <Callout tone="danger">

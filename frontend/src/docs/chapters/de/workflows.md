@@ -204,7 +204,7 @@ Jedes Speichern, das etwas ändert, wird als nummerierte **Version** mit Datum u
 - **Unterschiede** zeigt, was sich gegenüber dem Stand im Editor ändern würde: Agenten, Verbindungen, Name und Einstellungen.
 - **Wiederherstellen** setzt den Workflow auf diese Version zurück und speichert das Ergebnis als **neue Version**. Keine Version wird überschrieben oder gelöscht.
 
-Versionen sind unabhängig von Rückgängig/Wiederholen, das nur innerhalb einer Sitzung im Editor gilt. Läufe verwenden immer den Stand zum Startzeitpunkt. Wird ein Workflow gelöscht, werden auch seine Versionen gelöscht.
+Versionen sind unabhängig von Rückgängig/Wiederholen, das nur innerhalb einer Sitzung im Editor gilt. Läufe verwenden immer den Stand zum Startzeitpunkt. Wird ein Workflow gelöscht, werden auch seine Versionen gelöscht. Oben im Verlauf steht das **Testergebnis** der gespeicherten Version aus jeder Testreihe des Workflows (wie beim [Veröffentlichen](/docs/api-und-export#veroeffentlichen)).
 
 ## Import und Export {#import-export}
 <!-- keywords: export, import, json, datei, teilen, backup, .nodestro.json -->

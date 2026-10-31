@@ -204,7 +204,7 @@ Every save that changes something is kept as a numbered **version** with date an
 - **Differences** shows what would change compared with the state in the editor: agents, connections, name and settings.
 - **Restore** sets the workflow back to that version and saves the result as a **new version**. No version is overwritten or deleted.
 
-Versions are independent of undo/redo, which only applies within one session in the editor. Runs always use the state at their start. When a workflow is deleted, its versions are deleted too.
+Versions are independent of undo/redo, which only applies within one session in the editor. Runs always use the state at their start. When a workflow is deleted, its versions are deleted too. At the top of the history is the **test result** of the saved version from each test series of the workflow (as when [publishing](/docs/api-und-export#veroeffentlichen)).
 
 ## Import and export {#import-export}
 <!-- keywords: export, import, json, file, share, backup, .nodestro.json -->

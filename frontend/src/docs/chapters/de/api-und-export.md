@@ -33,7 +33,7 @@ Beide Wege laufen Schritt für Schritt wie in Nodestro: dieselben Agenten, Tools
 - den Unterworkflows in ihrer aktuellen Fassung (siehe [Unterworkflows](/docs/verzweigungen#unterworkflow)),
 - dem Eingabeformular, aus dem Nodestro das Schema der Anfrage erzeugt.
 
-Vorher prüft Nodestro den Workflow. Fehler verhindern das Veröffentlichen, Warnungen (etwa fehlende Kostengrenze oder Freigabeschritte) zeigt der Dialog an. Ungespeicherte Änderungen werden nicht veröffentlicht: Speichere zuerst.
+Vorher prüft Nodestro den Workflow. Fehler verhindern das Veröffentlichen, Warnungen (etwa fehlende Kostengrenze oder Freigabeschritte) zeigt der Dialog an. Ungespeicherte Änderungen werden nicht veröffentlicht: Speichere zuerst. Darunter steht das **Testergebnis** der Version aus jeder [Testreihe](/docs/automatisierung#testreihen) des Workflows: *ungetestet*, *n von m bestanden* oder *veraltet*, wenn zuletzt eine andere Version getestet wurde oder sich die Testreihe seitdem geändert hat. Das Ergebnis informiert nur; es verhindert das Veröffentlichen nicht.
 
 Jede Veröffentlichung bekommt eine fortlaufende Nummer und optional eine Notiz. Spätere Änderungen im Editor ändern eine veröffentlichte Version nie. Sie gelangen erst mit dem nächsten Veröffentlichen in die API.
 

@@ -33,7 +33,7 @@ Les deux s’exécutent étape par étape comme dans Nodestro : mêmes agents, o
 - les sous-workflows dans leur version actuelle (voir [Sous-workflows](/docs/verzweigungen#unterworkflow)),
 - le formulaire de saisie, à partir duquel Nodestro génère le schéma de la requête.
 
-Nodestro vérifie d’abord le workflow. Les erreurs empêchent la publication ; la boîte de dialogue affiche les avertissements (par exemple une limite de coût absente ou des étapes de validation). Les modifications non enregistrées ne sont pas publiées : enregistrez d’abord.
+Nodestro vérifie d’abord le workflow. Les erreurs empêchent la publication ; la boîte de dialogue affiche les avertissements (par exemple une limite de coût absente ou des étapes de validation). Les modifications non enregistrées ne sont pas publiées : enregistrez d’abord. En dessous figure le **résultat des tests** de la version pour chaque [série de tests](/docs/automatisierung#testreihen) du workflow : *non testée*, *n sur m réussis* ou *périmé* si une autre version a été testée en dernier ou si la série a changé depuis. Le résultat est informatif ; il n’empêche pas la publication.
 
 Chaque publication reçoit un numéro séquentiel et une note facultative. Les modifications ultérieures dans l’éditeur ne changent jamais une version publiée. Elles n’arrivent dans l’API qu’à la publication suivante.
 

@@ -33,7 +33,7 @@ Both run step by step as in Nodestro: the same agents, tools, branches, approval
 - the sub-workflows in their current version (see [Sub-workflows](/docs/verzweigungen#unterworkflow)),
 - the input form, from which Nodestro generates the request schema.
 
-Nodestro checks the workflow first. Errors block publishing; the dialog shows warnings (such as a missing cost limit or approval steps). Unsaved changes are not published: save first.
+Nodestro checks the workflow first. Errors block publishing; the dialog shows warnings (such as a missing cost limit or approval steps). Unsaved changes are not published: save first. Below it is the version's **test result** from each [test series](/docs/automatisierung#testreihen) of the workflow: *untested*, *n of m passed*, or *outdated* when another version was tested last or the test series changed since. The result is for information only; it does not block publishing.
 
 Each publication gets a sequential number and an optional note. Later edits in the editor never change a published version. They reach the API only when you publish again.
 

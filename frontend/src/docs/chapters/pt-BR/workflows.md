@@ -204,7 +204,7 @@ Cada salvamento que altera algo é guardado como **versão** numerada com data e
 - **Diferenças** mostra o que mudaria em relação ao estado no editor: agentes, conexões, nome e configurações.
 - **Restaurar** volta o fluxo de trabalho para essa versão e salva o resultado como **nova versão**. Nenhuma versão é sobrescrita ou excluída.
 
-As versões são independentes de desfazer/refazer, que vale apenas dentro de uma sessão no editor. As execuções usam sempre o estado do momento do início. Quando um fluxo de trabalho é excluído, suas versões também são.
+As versões são independentes de desfazer/refazer, que vale apenas dentro de uma sessão no editor. As execuções usam sempre o estado do momento do início. Quando um fluxo de trabalho é excluído, suas versões também são. No topo do histórico aparece o **resultado dos testes** da versão salva em cada série de testes do fluxo (como ao [publicar](/docs/api-und-export#veroeffentlichen)).
 
 ## Importar e exportar {#import-export}
 <!-- keywords: exportar, importar, json, arquivo, compartilhar, backup, .nodestro.json -->

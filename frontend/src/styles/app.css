@@ -6312,3 +6312,21 @@ ul.used-by__list > li {
   padding-left: 18px;
   list-style: disc;
 }
+
+/* Test status of a saved version (Q-1). */
+.test-status__list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ul.test-status__list > li.test-status__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 0;
+  border: 0;
+  overflow-wrap: anywhere;
+}
