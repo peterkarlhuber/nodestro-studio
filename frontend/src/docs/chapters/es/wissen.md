@@ -20,6 +20,8 @@ Haz clic en **Subir archivos** o arrastra archivos a la zona de carga; se pueden
 
 Si vuelves a subir **exactamente el mismo archivo**, no se crea un duplicado: el identificador se obtiene del contenido, y el nombre y la descripción se actualizan.
 
+También puedes subir archivos directamente en la sección *Conocimiento* de un agente; llegan aquí, sin colección, y quedan asignados a ese agente al instante ([Agentes](/docs/agenten#wissen)).
+
 ## Formatos y límites {#formate}
 <!-- keywords: formatos, pdf, imagen, png, jpg, jpeg, gif, webp, txt, markdown, csv, json, yaml, html, xml, tamaño, límite, mb -->
 

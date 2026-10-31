@@ -70,6 +70,8 @@ Na seção **Conhecimento** você atribui arquivos enviados e escolhe **como** o
 
 **Ativar citações** faz as respostas remeterem aos trechos exatos. Detalhes e recomendações estão no capítulo [Conhecimento](/docs/wissen#modi).
 
+**Enviar arquivo**, na mesma seção, envia um ou mais arquivos direto para [Conhecimento](/docs/wissen#hochladen) e os atribui a este agente. O arquivo fica salvo permanentemente em Conhecimento na hora e também pode ser usado por outros agentes; a atribuição é uma alteração normal do agente e é salva com o fluxo de trabalho. *Desfazer* ou *Descartar* removem só a atribuição, não o arquivo. Arquivos que você passa ao iniciar uma execução não são arquivos de conhecimento: pertencem só àquela execução.
+
 ## Memória {#memory}
 <!-- keywords: memória, memory, anotações, por execução, permanente, espaço -->
 

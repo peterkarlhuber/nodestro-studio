@@ -122,9 +122,14 @@
     "image": "Bild",
     "chunks_one": "{{count}} Abschnitt",
     "chunks_other": "{{count}} Abschnitte",
-    "noFiles": "Noch keine Dateien. Lade sie unter <a>Wissen</a> hoch.",
+    "noFiles": "Noch keine Dateien im Wissen. Lade eine hier oder unter <a>Wissen</a> hoch.",
     "citations": "Zitate aktivieren",
-    "citationsHint": "Antworten verweisen auf die Stellen in den Dokumenten."
+    "citationsHint": "Antworten verweisen auf die Stellen in den Dokumenten.",
+    "upload": "Datei hochladen",
+    "uploadHint": "Wird dauerhaft im Wissen gespeichert und diesem Agenten zugewiesen; die Zuweisung wird mit dem Workflow gespeichert.",
+    "uploadedOne": "„{{name}}“ ins Wissen hochgeladen und zugewiesen",
+    "uploaded_one": "{{count}} Datei ins Wissen hochgeladen und zugewiesen",
+    "uploaded_other": "{{count}} Dateien ins Wissen hochgeladen und zugewiesen"
   },
   "memory": {
     "title": "Memory",

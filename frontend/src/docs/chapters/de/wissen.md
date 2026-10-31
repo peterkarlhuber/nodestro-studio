@@ -20,6 +20,8 @@ Klicke **Dateien hochladen** oder ziehe Dateien in die Ablagefläche; mehrere au
 
 Lädst du **genau dieselbe Datei** erneut hoch, entsteht kein Duplikat: Die Kennung ergibt sich aus dem Inhalt, und Name und Beschreibung werden aktualisiert.
 
+Du kannst Dateien auch direkt im Abschnitt *Wissen* eines Agenten hochladen; sie landen hier, ohne Sammlung, und sind dem Agenten gleich zugewiesen ([Agenten](/docs/agenten#wissen)).
+
 ## Formate und Grenzen {#formate}
 <!-- keywords: formate, pdf, bild, png, jpg, jpeg, gif, webp, txt, markdown, csv, json, yaml, html, xml, größe, limit, mb -->
 

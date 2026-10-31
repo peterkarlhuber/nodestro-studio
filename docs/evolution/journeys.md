@@ -40,6 +40,7 @@ a path longer therefore shows up in the report and in review, not as a red build
 | J1 | "I want a structured evaluation of an invoice/PDF." | Start page → *All 24 examples* → search "Vertrag" → preview *Contract review* → copy → *Start workflow* → choose a PDF → *Start* | the run succeeds; its result is in the execution overview |
 | J2 | "I want to take an example, understand it, change it and start it." | Featured *Blog article* → preview → copy → select the first agent → extend the system prompt → *Save* → *Start workflow* → *Start* | the changed prompt is saved and the run succeeds |
 | J3 | "I want to give an agent knowledge without learning technical concepts first." | Open a workflow → select the agent → open *Knowledge* → link *Knowledge* → upload a file → back to *Workflows* → workflow → agent → *Knowledge* → tick the file → *Save* | the file is assigned and saved |
+| J3b | the same task, after UX-K | Open a workflow → select the agent → open *Knowledge* → *Upload file* → *Save* | the file is stored in Knowledge, assigned and saved |
 | J4 | "My workflow fails: where is the problem and how do I fix it?" | Open a workflow whose start is blocked → the problem in the editor's list → *Problems in: Quality check* → *Add criterion* → type it | the start is enabled again |
 | J5 | "I want to set an advanced property precisely without fighting a simplified UI." | Open a workflow → select the agent → open *Advanced* → set *Max tokens* → *Save* | the value is saved and the closed summary names it |
 | J6 | "Can I trust this workflow version on quality, cost and allowed actions?" | Open the copied contract review → *Test series* → its series → *Run test series* → confirm → *Workflows* → workflow → *API & Export* | the test results and the release pre-check have been seen |
@@ -55,6 +56,7 @@ answers everything cannot make a run fail.
 | J1 PDF to structured result | 7 | 2 | 2 | 46 |
 | J2 change and start an example | 7 | 2 | 1 | 66 |
 | J3 give an agent knowledge | 10 | 0 | 4 | 64 |
+| J3b give an agent knowledge, upload in the inspector (UX-K) | 5 | 0 | 1 | 66 |
 | J4 find and fix a blocking problem | 5 | 0 | 1 | 66 |
 | J5 set an advanced property | 5 | 0 | 1 | 86 |
 | J6 check quality and release state | 8 | 2 | 5 | 15 |
@@ -80,6 +82,14 @@ Two runs on the same machine, one with fresh data and one with existing data, ga
   is open.
 - **V.** J4 takes 5 actions thanks to the problem list and the *Problems in* link (UX-2). This baseline was taken
   after UX-2, so it does not show the earlier state.
+
+## After UX-K
+
+J3b walks J3's task through the upload in the agent's *Knowledge* section (UX-K, [ux-k.md](ux-k.md)): 5 actions
+and 1 page change instead of 10 and 4, measured on the same server. J3 still takes its old path through the
+Knowledge page, which keeps working, and stays at 10 actions and 4 page changes. The upload button adds one or two
+visible controls wherever the Knowledge section is open (J3 65, J5 88 instead of 64 and 86). As before, this is
+interface cost, not evidence that people find the button.
 
 ## Deviation from the plan
 

@@ -70,6 +70,8 @@ Im Abschnitt **Wissen** weist du hochgeladene Dateien zu und wählst, **wie** de
 
 **Zitate aktivieren** lässt Antworten auf die genauen Fundstellen verweisen. Details und Empfehlungen stehen im Kapitel [Wissen](/docs/wissen#modi).
 
+**Datei hochladen** im selben Abschnitt lädt eine oder mehrere Dateien direkt ins [Wissen](/docs/wissen#hochladen) und weist sie diesem Agenten zu. Die Datei ist sofort dauerhaft im Wissen gespeichert und kann auch von anderen Agenten genutzt werden; die Zuweisung ist eine normale Änderung des Agenten und wird mit dem Workflow gespeichert. *Rückgängig* oder *Verwerfen* entfernen nur die Zuweisung, nicht die Datei. Dateien, die du beim Start eines Laufs mitgibst, sind dagegen keine Wissensdateien: Sie gehören nur zu diesem Lauf.
+
 ## Memory {#memory}
 <!-- keywords: memory, gedächtnis, notizen, pro lauf, dauerhaft, raum -->
 

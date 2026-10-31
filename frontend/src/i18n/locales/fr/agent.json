@@ -122,9 +122,14 @@
     "image": "Image",
     "chunks_one": "{{count}} extrait",
     "chunks_other": "{{count}} extraits",
-    "noFiles": "Pas encore de fichiers. Importez-les dans <a>Connaissances</a>.",
+    "noFiles": "Pas encore de fichiers dans Connaissances. Importez-en un ici ou dans <a>Connaissances</a>.",
     "citations": "Activer les citations",
-    "citationsHint": "Les réponses renvoient aux passages des documents."
+    "citationsHint": "Les réponses renvoient aux passages des documents.",
+    "upload": "Importer un fichier",
+    "uploadHint": "Enregistré durablement dans Connaissances et attribué à cet agent ; l’attribution est enregistrée avec le workflow.",
+    "uploadedOne": "« {{name}} » importé dans Connaissances et attribué",
+    "uploaded_one": "{{count}} fichier importé dans Connaissances et attribué",
+    "uploaded_other": "{{count}} fichiers importés dans Connaissances et attribués"
   },
   "memory": {
     "title": "Mémoire",

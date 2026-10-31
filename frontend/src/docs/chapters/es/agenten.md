@@ -70,6 +70,8 @@ En la sección **Conocimiento** asignas archivos subidos y eliges **cómo** los 
 
 **Activar citas** hace que las respuestas remitan a los pasajes exactos. Los detalles y recomendaciones están en el capítulo [Conocimiento](/docs/wissen#modi).
 
+**Subir archivo**, en la misma sección, sube uno o varios archivos directamente a [Conocimiento](/docs/wissen#hochladen) y los asigna a este agente. El archivo queda guardado de forma permanente en Conocimiento al instante y otros agentes también pueden usarlo; la asignación es un cambio normal del agente y se guarda con el flujo de trabajo. *Deshacer* o *Descartar* solo quitan la asignación, no el archivo. Los archivos que entregas al iniciar una ejecución no son archivos de conocimiento: pertenecen solo a esa ejecución.
+
 ## Memoria {#memory}
 <!-- keywords: memoria, memory, notas, por ejecución, permanente, espacio -->
 

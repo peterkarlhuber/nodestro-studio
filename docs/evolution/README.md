@@ -88,12 +88,14 @@ Phase P1 is studio-only and needs no pin change.
 | **UX-5a/b** | Replace raw `<details>` with `Section` where the semantics match: (a) runs, tests, batches, approvals, compare; (b) tools, knowledge, settings (after PR-11/PR-12) (F5). | Visual check per page in both themes; no content moved; e2e suites green. |
 | **UX-6** | Start-form file field options in an "Options" section with a summary (F8); run detail gets a deterministic summary line (status, path through decisions, approvals, tools used, failing step with jump) above the tabs. | Form JSON unchanged; summary built only from stored run data (no model call); missing data shown as missing. |
 | **UX-7** | "Used in" for knowledge files, tools and memory spaces (F9): one read-only API route, OpenAPI, SDK regeneration, studio lists and a delete warning. Cross-repo, after PR-12. | Tenant-scoped and permission-declared route; contract tests on SQLite and PostgreSQL; delete dialog names the users; no behavior change for deletion itself. |
+| **UX-K** | Upload knowledge from the agent inspector (requested 2026-10-31 after journey J3): the existing `POST /knowledge` stores the file permanently in Knowledge, and the assignment is an ordinary unsaved change of the agent. No second store and no API change. Concept, alternatives and acceptance criteria in [ux-k.md](ux-k.md). | Journey J3b next to J3; a refused upload assigns nothing; the storage note distinguishes agent knowledge from run input files; six languages. |
 | **UX-8** | Glossary chapter (agent, tool, knowledge, memory, run, release) in six languages; screenshots refreshed; journey results after P1 next to the UX-J baseline; moderated task tests with 3–5 people if they can be arranged (D7). | Docs tests green; no usability claim without moderated tests. |
 
 ### P2 — quality (absorbs optimizer and contracts)
 
 | PR | Content | Depends on |
 | --- | --- | --- |
+| Q-0 | Agents designed by the Agent Architect (*Design with AI*) and the Workflow Architect get the configured default model as their quality judge, set in the API creation logic; the runtime's global default stays. Existing agents, stored workflows and explicit judge models are never changed; the self-judge note stays; local providers (Ollama) get no Anthropic dependency; a model that cannot do the structured judge verdict is reported, never silently swapped (decided by the project owner 2026-10-31). | api (+ pins), coordinated with the desktop/server plan |
 | Q-1 | Publish dialog and editor show the latest test-series result for the version being published: untested / passed n of m / outdated (suite or workflow changed since). Studio only. | UX-1 |
 | Q-2 | Test-series run with a model override per agent (same cases, same judge), compared with the existing case comparison; costs capped and confirmed before start. Replaces the optimizer's O-1/O-2. | PR-12, D5 |
 | Q-3 | Opt-in release gate per publication. Deterministic checks and AI-judge verdicts are reported separately; judge verdicts are labeled probabilistic. Mandatory (critical) deterministic checks block and cannot be bypassed from the UI or API. Whether and how anything else can be overridden is decided separately before Q-3 is built (D6a). Existing releases unchanged. | Q-1, D6, D6a |
@@ -176,6 +178,8 @@ project owner.
 | UX-2b judge model transparency | done | studio #15 (merge commit `b0bf671`) |
 | UX-3 open sections remembered | done | studio #16 (merge commit `25a7b7f`) |
 | UX-J journey baseline, see [journeys.md](journeys.md) | done | studio #17 (merge commit `a65efee`; taken after UX-3, see journeys.md) |
-| UX-4 three ways to start | in review | studio, this step |
+| UX-4 three ways to start | done | studio #18 (merge commit `e07ec52`) |
+| UX-K knowledge upload in the inspector, see [ux-k.md](ux-k.md) | in review | studio, this step |
+| Q-0 judge of AI-designed agents | planned | api; coordinated with the desktop/server plan |
 | UX-5a and later | open | — |
 

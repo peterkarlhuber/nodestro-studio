@@ -20,6 +20,8 @@ Clique em **Enviar arquivos** ou arraste arquivos para a área de envio; é poss
 
 Se você enviar **exatamente o mesmo arquivo** de novo, não é criada uma duplicata: o identificador vem do conteúdo, e o nome e a descrição são atualizados.
 
+Você também pode enviar arquivos direto na seção *Conhecimento* de um agente; eles chegam aqui, sem coleção, e ficam atribuídos a esse agente na hora ([Agentes](/docs/agenten#wissen)).
+
 ## Formatos e limites {#formate}
 <!-- keywords: formatos, pdf, imagem, png, jpg, jpeg, gif, webp, txt, markdown, csv, json, yaml, html, xml, tamanho, limite, mb -->
 

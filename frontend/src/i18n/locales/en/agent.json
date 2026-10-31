@@ -122,9 +122,14 @@
     "image": "Image",
     "chunks_one": "{{count}} section",
     "chunks_other": "{{count}} sections",
-    "noFiles": "No files yet. Upload them under <a>Knowledge</a>.",
+    "noFiles": "No files in Knowledge yet. Upload one here or under <a>Knowledge</a>.",
     "citations": "Enable citations",
-    "citationsHint": "Answers point to the passages in the documents."
+    "citationsHint": "Answers point to the passages in the documents.",
+    "upload": "Upload file",
+    "uploadHint": "Saved permanently in Knowledge and assigned to this agent; the assignment is saved with the workflow.",
+    "uploadedOne": "“{{name}}” uploaded to Knowledge and assigned",
+    "uploaded_one": "{{count}} file uploaded to Knowledge and assigned",
+    "uploaded_other": "{{count}} files uploaded to Knowledge and assigned"
   },
   "memory": {
     "title": "Memory",

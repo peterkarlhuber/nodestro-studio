@@ -20,6 +20,8 @@ Click **Upload files** or drag files onto the drop area; several at once are pos
 
 If you upload **exactly the same file** again, no duplicate is created: the identifier is derived from the content, and the name and description are updated.
 
+You can also upload files directly in an agent's *Knowledge* section; they land here, without a collection, and are assigned to that agent at once ([Agents](/docs/agenten#wissen)).
+
 ## Formats and limits {#formate}
 <!-- keywords: formats, pdf, image, png, jpg, jpeg, gif, webp, txt, markdown, csv, json, yaml, html, xml, size, limit, mb -->
 

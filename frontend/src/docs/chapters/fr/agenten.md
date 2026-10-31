@@ -70,6 +70,8 @@ Dans la section **Connaissances**, vous attribuez des fichiers importés et choi
 
 **Activer les citations** fait renvoyer les réponses aux passages exacts. Détails et recommandations dans le chapitre [Connaissances](/docs/wissen#modi).
 
+**Importer un fichier**, dans la même section, importe un ou plusieurs fichiers directement dans [Connaissances](/docs/wissen#hochladen) et les attribue à cet agent. Le fichier est aussitôt enregistré durablement dans Connaissances et peut aussi servir à d’autres agents ; l’attribution est une modification ordinaire de l’agent et est enregistrée avec le workflow. *Annuler* ou *Abandonner* ne retirent que l’attribution, pas le fichier. Les fichiers fournis au démarrage d’une exécution ne sont pas des fichiers de connaissances : ils n’appartiennent qu’à cette exécution.
+
 ## Mémoire {#memory}
 <!-- keywords: mémoire, memory, notes, par exécution, persistante, espace -->
 
