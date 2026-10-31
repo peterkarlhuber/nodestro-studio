@@ -17,6 +17,15 @@
 - The image, development stack, runbook and end-to-end tests live in the new `nodestro-server` repository, which
   pins this studio commit.
 
+### Workflows page: three equal ways to start, UX-4 (2026-10-31)
+
+- Studio only, no pin change. The empty Workflows page offers three tiles: *Create with AI* (the new-workflow
+  dialog in AI mode, then the Workflow Architect), *Start from an example* (the gallery) and *Build it yourself*
+  (the same dialog, manual mode). Before, the AI way was a segmented control inside the *New workflow* dialog and
+  the empty state had a single button (finding F6, decision D3). With workflows present, the three ways are one
+  narrow row above the list. *Import*, *New workflow*, `/workflows/examples` and deep links are unchanged; nothing
+  is created without the dialog. Texts and the workflows chapter in six languages.
+
 ### Journey baseline, UX-J (2026-10-31)
 
 - New browser suite `journeys` (`frontend/e2e/journeys.mjs`, `tests/e2e_journey_server.py`): the six user tasks

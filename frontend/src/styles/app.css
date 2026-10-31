@@ -1475,6 +1475,72 @@ details[open] > summary > .section__chevron {
   font-size: 15px;
 }
 
+/* The three ways to start a workflow (pages/StartChoices.tsx): tiles in the empty state, one row above the list. */
+.empty:has(> .start-choices) {
+  max-width: 760px;
+}
+
+.start-choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--nd-space-3);
+  width: 100%;
+  margin-top: var(--nd-space-2);
+}
+
+.start-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: var(--nd-surface);
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-lg);
+  color: var(--nd-text-muted);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color var(--nd-duration-fast), background var(--nd-duration-fast);
+}
+
+.start-choice:hover {
+  border-color: var(--nd-border-strong);
+}
+
+.start-choice:focus-visible {
+  outline: 2px solid var(--nd-brand);
+  outline-offset: 2px;
+}
+
+.start-choice__icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--nd-radius-md);
+  background: var(--nd-brand-soft);
+  color: var(--nd-brand);
+}
+
+.start-choice__title {
+  color: var(--nd-text);
+  font-weight: 600;
+}
+
+.start-choice__text {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.start-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nd-space-2);
+  margin-bottom: var(--nd-space-3);
+}
+
 .empty__icon {
   display: grid;
   place-items: center;

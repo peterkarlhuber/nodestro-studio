@@ -7,6 +7,8 @@ Un flujo de trabajo conecta agentes para formar una cadena. Este capítulo expli
 
 La página **Flujos de trabajo** muestra todos los flujos como tarjetas con el número de agentes, el último cambio y el estado de la última ejecución.
 
+La página ofrece tres formas equivalentes de empezar: **Crear con IA** abre el diálogo de un nuevo flujo de trabajo con el [Arquitecto IA](/docs/ki-architekt#neu-erstellen), **Empezar con un ejemplo** abre la [galería de ejemplos](/docs/beispiele) y **Crearlo tú mismo** abre el mismo diálogo para un flujo vacío. Mientras no haya ningún flujo aparecen como mosaicos grandes; después, como una fila estrecha sobre la lista.
+
 - **Nuevo flujo de trabajo:** escribe un nombre y una descripción opcional. El nuevo flujo ya contiene *Inicio → Agente → Resultado*.
 - **Crear con IA:** en el mismo diálogo describes lo que quieres y el [arquitecto de flujos](/docs/ki-architekt#neu-erstellen) diseña el flujo para que lo revises.
 - **Abrir:** haz clic en la tarjeta.

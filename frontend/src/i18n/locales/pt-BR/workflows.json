@@ -7,8 +7,7 @@
   "deleted": "Fluxo de trabalho excluído",
   "imported": "“{{name}}” importado",
   "emptyTitle": "Ainda não há fluxos de trabalho",
-  "emptyAction": "Criar o primeiro fluxo de trabalho",
-  "emptyText": "Crie um fluxo de trabalho e arraste agentes para a área de trabalho, ou copie um dos exemplos abaixo.",
+  "emptyText": "Escolha como quer começar. Você também pode ver os exemplos abaixo agora mesmo.",
   "agentCount_one": "{{count}} agente",
   "agentCount_other": "{{count}} agentes",
   "neverRun": "Nunca executado",
@@ -24,5 +23,14 @@
   "createAi": "Criar com IA",
   "createWithAi": "Projetar com IA",
   "aiDescription": "Descreva seu objetivo",
-  "aiDescriptionHint": "O arquiteto de fluxos planeja os agentes, configura e conecta tudo e mostra o rascunho antes de salvar qualquer coisa. O nome é opcional."
+  "aiDescriptionHint": "O arquiteto de fluxos planeja os agentes, configura e conecta tudo e mostra o rascunho antes de salvar qualquer coisa. O nome é opcional.",
+  "start": {
+    "label": "Começar um novo",
+    "ai": "Criar com IA",
+    "aiText": "Descreva o que o fluxo de trabalho deve fazer. O Arquiteto IA projeta agentes e fluxo; você revisa o rascunho antes de ele ser salvo. Isso usa chamadas ao modelo.",
+    "example": "Começar com um exemplo",
+    "exampleText": "Veja fluxos de trabalho prontos com dados de teste sintéticos e copie um como seu. Sem chamada ao modelo.",
+    "manual": "Montar você mesmo",
+    "manualText": "Começa com uma entrada, um agente vazio e um resultado. Você arrasta outros blocos para a área de trabalho."
+  }
 }

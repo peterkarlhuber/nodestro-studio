@@ -7,8 +7,7 @@
   "deleted": "Workflow supprimé",
   "imported": "« {{name}} » importé",
   "emptyTitle": "Pas encore de workflows",
-  "emptyAction": "Créer un premier workflow",
-  "emptyText": "Créez un workflow et glissez des agents sur le canevas, ou copiez l’un des exemples ci-dessous.",
+  "emptyText": "Choisissez comment commencer. Vous pouvez aussi consulter tout de suite les exemples ci-dessous.",
   "agentCount_one": "{{count}} agent",
   "agentCount_other": "{{count}} agents",
   "neverRun": "Jamais exécuté",
@@ -24,5 +23,14 @@
   "createAi": "Créer avec l’IA",
   "createWithAi": "Concevoir avec l’IA",
   "aiDescription": "Décrivez votre objectif",
-  "aiDescriptionHint": "L’architecte de workflows planifie les agents, les configure et les relie, puis vous montre le brouillon avant tout enregistrement. Le nom est facultatif."
+  "aiDescriptionHint": "L’architecte de workflows planifie les agents, les configure et les relie, puis vous montre le brouillon avant tout enregistrement. Le nom est facultatif.",
+  "start": {
+    "label": "Nouveau départ",
+    "ai": "Créer avec l’IA",
+    "aiText": "Décrivez ce que le workflow doit faire. L’architecte IA conçoit les agents et le déroulement ; vous vérifiez le brouillon avant qu’il soit enregistré. Cela utilise des appels au modèle.",
+    "example": "Partir d’un exemple",
+    "exampleText": "Parcourez des workflows prêts à l’emploi avec des données de test synthétiques et copiez-en un pour vous. Sans appel au modèle.",
+    "manual": "Le construire vous-même",
+    "manualText": "Commence avec une entrée, un agent vide et un résultat. Vous glissez d’autres blocs sur le canevas."
+  }
 }
