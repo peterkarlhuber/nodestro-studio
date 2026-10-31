@@ -13,6 +13,16 @@
 - Docs ×6: *Automation → Test case from a failed run* (`automatisierung#testfall-aus-lauf`), help tip
   `automation.caseFromRun`, error texts `testcase.*`. Browser test: the flow suite fails a run and adds it as a case.
 
+### Pins: Nodestro Local Docker, runtime 78d2899 (2026-10-31)
+
+- One cascade for Nodestro Local Docker (the `local-container` profile, the sandbox gateway, access-key sessions with
+  strict host and origin checks), which also carries the MCP runtime work (runtime #25) and the test case proposal
+  API (api #24, evolution plan Q-4): nodestro-runtime `78d2899` (before `d2cb987`), nodestro-examples `6c88aa7`
+  (before `1c2f1e4`), nodestro-integrations `f204d39` (before `9221d46`), nodestro-api `5ca1c75` (before
+  `1c34474`), nodestro-sdk `635fcff` (before `5974075`), in `pyproject.toml` and `platform/versions.json`. orkexa
+  and the `products` section are unchanged. No studio code changes: the settings page already hides the built-in
+  sandbox notice where tool code runs only in containers.
+
 ### Pins: runtime d2cb987 (2026-10-31)
 
 - One cascade, agreed with the PRICING-1 thread: nodestro-runtime `d2cb987` (before `45e7774`; strict price-mode
