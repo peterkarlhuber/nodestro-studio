@@ -331,28 +331,78 @@ export function Segmented<T extends string>({
 }
 
 /** A collapsible group for progressive disclosure. */
+/** Problems inside a section, shown in its summary line so they stay visible while it is closed. */
+export interface SectionStatus {
+  errors?: number;
+  warnings?: number;
+}
+
+/**
+ * A collapsible group (`<details>`). `defaultOpen` sets the state once, when the section mounts; after that the
+ * section stays as the user left it, also when the computed default changes (for example after removing the last
+ * item). Pass `open` and `onToggle` to control it from outside. Opening or closing never changes any data.
+ */
 export function Section({
   title,
   summary,
   children,
   defaultOpen = false,
+  open,
+  onToggle,
+  status,
   icon: Icon,
   tip,
+  id,
 }: {
   title: string;
   summary?: ReactNode;
   children: ReactNode;
   defaultOpen?: boolean;
+  /** Controlled open state; leave it out for a section that keeps its own state. */
+  open?: boolean;
+  onToggle?: (open: boolean) => void;
+  status?: SectionStatus;
   icon?: LucideIcon;
   tip?: HelpId;
+  /** A stable name of the section, e.g. for remembering its state. */
+  id?: string;
 }) {
+  const { t } = useTranslation();
+  const [ownOpen, setOwnOpen] = useState(defaultOpen);
+  const isOpen = open ?? ownOpen;
+  const errors = status?.errors ?? 0;
+  const warnings = status?.warnings ?? 0;
   return (
-    <details className="section" open={defaultOpen}>
+    <details
+      className="section"
+      open={isOpen}
+      data-section={id}
+      onToggle={(event) => {
+        const now = event.currentTarget.open;
+        if (now === isOpen) return; // the event of a change React made itself
+        if (open === undefined) setOwnOpen(now);
+        onToggle?.(now);
+      }}
+    >
       <summary>
         <ChevronRight size={14} className="section__chevron" aria-hidden />
         {Icon ? <Icon size={15} aria-hidden className="section__icon" /> : null}
         <span className="section__title">{title}</span>
         {tip ? <HelpTip id={tip} label={title} /> : null}
+        {errors || warnings ? (
+          <span className="section__status">
+            {errors ? (
+              <span className="section__status-item section__status-item--error">
+                <XCircle size={12} aria-hidden /> {t("common.sectionErrors", { count: errors })}
+              </span>
+            ) : null}
+            {warnings ? (
+              <span className="section__status-item section__status-item--warning">
+                <AlertTriangle size={12} aria-hidden /> {t("common.sectionWarnings", { count: warnings })}
+              </span>
+            ) : null}
+          </span>
+        ) : null}
         {summary ? <span className="section__summary">{summary}</span> : null}
       </summary>
       <div className="section__body">{children}</div>

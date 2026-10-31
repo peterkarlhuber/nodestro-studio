@@ -470,7 +470,8 @@ function KnowledgeSection({ agent, update, issues = [] }: SectionProps) {
       icon={BookOpen}
       tip="agent.knowledge"
       summary={assigned.length ? t("agent.knowledge.files", { count: assigned.length }) : t("common.none")}
-      defaultOpen={assigned.length > 0}
+      // From the configuration, not the loaded file list: the default applies once, when the section mounts.
+      defaultOpen={agent.knowledge.file_ids.length > 0}
     >
       <div className="row-gap">
         <Segmented

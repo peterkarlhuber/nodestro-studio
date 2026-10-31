@@ -31,5 +31,9 @@
   "saved": "Gespeichert",
   "yes": "Ja",
   "no": "Nein",
-  "confirmDelete": "Wirklich löschen?"
+  "confirmDelete": "Wirklich löschen?",
+  "sectionErrors_one": "{{count}} Fehler",
+  "sectionErrors_other": "{{count}} Fehler",
+  "sectionWarnings_one": "{{count}} Warnung",
+  "sectionWarnings_other": "{{count}} Warnungen"
 }

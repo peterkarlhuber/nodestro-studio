@@ -31,5 +31,9 @@
   "saved": "Saved",
   "yes": "Yes",
   "no": "No",
-  "confirmDelete": "Really delete?"
+  "confirmDelete": "Really delete?",
+  "sectionErrors_one": "{{count}} error",
+  "sectionErrors_other": "{{count}} errors",
+  "sectionWarnings_one": "{{count}} warning",
+  "sectionWarnings_other": "{{count}} warnings"
 }

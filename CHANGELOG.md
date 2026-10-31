@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Collapsible sections keep their state, UX-1 (2026-10-31)
+
+- Studio only, no pin change. A collapsible section (agent inspector, provider settings) no longer opens or closes
+  by itself when its content changes: choosing memory "Off" or removing the last tool or knowledge file used to
+  collapse the section you were working in. The state you choose stays until you change it.
+- Changed behavior: adding the first tool, knowledge file or memory no longer opens the section by itself (you are
+  already in the open section when you add one there). Sections still start open for an agent that has tools,
+  knowledge or memory.
+- Sections can now show problems in their title line (errors and warnings with icon and text), visible while
+  closed; the agent inspector uses this in the next step (UX-2). New texts in six languages.
+
 ### Product evolution plan, P0 (2026-10-31)
 
 - Docs only: `docs/evolution/README.md` (reviewed plan accepted with the owner's decisions D1–D8,

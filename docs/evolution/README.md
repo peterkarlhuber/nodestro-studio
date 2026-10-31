@@ -166,3 +166,11 @@ project owner.
 | Migration studio (M) | move automations from other tools | — | deferred | repeated real requests naming a source tool and version | record such requests; check the source tools' export formats when they come |
 | Positioning "Build · Prove · Control" | a clear product promise | internal only | discovery | competitor and demand check done | — |
 
+## 9. Implementation status
+
+| Step | State | Pull request |
+| --- | --- | --- |
+| EVO-0 plan and inventory | done | studio #12 (merge commit `d546080`) |
+| UX-1 `Section` keeps its state, `status` prop | in review | studio, this step |
+| UX-J and later | open | — |
+

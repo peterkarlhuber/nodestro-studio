@@ -31,5 +31,9 @@
   "saved": "Salvato",
   "yes": "Sì",
   "no": "No",
-  "confirmDelete": "Eliminare?"
+  "confirmDelete": "Eliminare?",
+  "sectionErrors_one": "{{count}} errore",
+  "sectionErrors_other": "{{count}} errori",
+  "sectionWarnings_one": "{{count}} avviso",
+  "sectionWarnings_other": "{{count}} avvisi"
 }
