@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Desktop and server plan, M0 (2026-10-31)
+
+- Documentation only, no behavior change: `docs/desktop-server/` describes the current architecture as an inventory
+  (SQLite and FTS5 access, process-only state, the data-directory lock, endpoints and trust boundaries, code
+  execution) and the plan for Nodestro Desktop and Nodestro Server with twelve pull requests, risks and the test
+  baseline. `docs/adr/` records the six proposed decisions: operating profiles, storage backends, identity and
+  tenants, jobs and workers, desktop packaging, sandbox policy. `docs/PLATFORM.md` links to both.
+
 ### Release check (2026-10-30)
 
 - Pins: `nodestro-api` 43595a7 and `nodestro-sdk` d733f02 (before: 2868b7b and 18e5535); runtime ad75859, examples
