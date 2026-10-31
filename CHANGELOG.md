@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+### Connected MCP services, pins: api a06ccea, sdk 8fcb94d (ADR-0007 WP-4, 2026-10-31)
+
+- New tab **Tools > Verbundene Dienste**: connect remote MCP servers (name, address, token write-only; a local
+  development server over loopback `http` only with explicit consent, and only where the backend allows it), test the
+  connection (negotiated protocol version), review each discovered tool before any agent sees it: its description is
+  shown as *foreign text*, the default classification is "changes data" whatever the service claims (its annotation
+  is shown as a hint), and a changed definition shows a field-by-field diff and must be approved again. Approvals
+  carry the reviewed definition hash. Tools that change data stay blocked until per-call approval is active. Notes
+  explain token storage (keychain or memory only), the operator's endpoint list and unattended runs; an audit list
+  shows the changes.
+- Approved MCP tools appear in the library with their own trust note and can be test-run. Run details show each MCP
+  call's provenance (service, tool, definition hash) and "cost of the service: unknown", never zero.
+- Help chapter *Tools > Verbundene Dienste* and all texts in the six languages; light and dark theme; phone width.
+- Pins: `nodestro-api` `a06ccea` (before `43a61cd`, the `/api/mcp` routes of api #28) and `nodestro-sdk` `8fcb94d`
+  (before `d9ff57c`, the MCP client methods of sdk #24); runtime, examples and integrations unchanged.
+- New browser suite `mcp` (`npm run e2e:mcp`, part of `scripts/e2e.sh`) against a local MCP test server with an
+  injected instruction in a tool description and a scripted model: connect with consent, review, approve read-only,
+  the write tool stays blocked, library test call, a run with provenance and unknown cost, dark mode, phone width.
+
 ### Loops in the editor (Adaptive Orchestration M1-7, 2026-10-31)
 
 - A connection dragged from a branch of a decision or approval back to an earlier step becomes a **loop** (runtime
