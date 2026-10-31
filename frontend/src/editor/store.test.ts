@@ -340,3 +340,72 @@ describe("editor undo history", () => {
     expect(useEditor.getState().dirty).toBe(false);
   });
 });
+
+describe("loop connections", () => {
+  beforeEach(() => useEditor.getState().load(workflow()));
+
+  it("turns a connection back from a branch into a loop with a limit", () => {
+    const decision = useEditor.getState().addNode("condition", { x: 900, y: 0 });
+    useEditor.getState().connect("b", decision.id);
+    expect(useEditor.getState().connect(decision.id, "a", "default")).toBe("editor.connect.loopCreated");
+    const loop = useEditor.getState().edges.find((edge) => edge.source === decision.id)!;
+    expect(loop).toMatchObject({ target: "a", source_handle: "default", loop: { max_iterations: 3, on_exhausted: "fail" } });
+    // The new loop is selected, so its limit can be set at once.
+    expect(useEditor.getState().selectedEdgeId).toBe(loop.id);
+    expect(useEditor.getState().setEdgeLoop(loop.id, { max_iterations: 5, on_exhausted: "continue" })).toBeNull();
+    expect(useEditor.getState().edges.find((edge) => edge.id === loop.id)?.loop).toEqual({ max_iterations: 5, on_exhausted: "continue" });
+    // It leads back, so it cannot become a normal connection.
+    expect(useEditor.getState().setEdgeLoop(loop.id, null)).toBe("editor.connect.loopNeeded");
+    // A loop is not a dependency: a further step after the decision is still possible.
+    expect(useEditor.getState().connect(decision.id, "start", "default")).toBe("editor.connect.toStart");
+    useEditor.getState().undo();
+    expect(useEditor.getState().edges.find((edge) => edge.id === loop.id)?.loop?.max_iterations).toBe(3);
+  });
+
+  it("keeps every round of a node that runs again", () => {
+    const wf = workflow();
+    const waiting = {
+      status: "waiting" as const,
+      prompt: null,
+      output: null,
+      text: "",
+      thinking: "",
+      error: null,
+      tool_calls: [],
+      usage: liveUsage(null),
+      evaluation: null,
+      memory: null,
+      started_at: null,
+      finished_at: null,
+    };
+    useEditor.getState().setRun({
+      id: "run_3",
+      workflow_id: wf.id,
+      workflow_name: wf.name,
+      workflow: wf,
+      input: "x",
+      file_ids: [],
+      status: "running",
+      error: null,
+      output: null,
+      nodes: { a: waiting },
+      usage: liveUsage(null),
+      created_at: "2026-01-01T00:00:00Z",
+      started_at: "2026-01-01T00:00:00Z",
+      finished_at: null,
+    });
+    const at = "2026-01-01T00:00:01Z";
+    const apply = (type: string, data: Record<string, unknown>) =>
+      useEditor.getState().applyEvent({ seq: 1, run_id: "run_3", type, node_id: "a", data, at });
+    const usage = { ...liveUsage(null), requests: 1, total_tokens: 10, estimated_cost_usd: 0.01 };
+    apply("node_started", { prompt: "first", iteration: [0] });
+    apply("usage", { usage, iteration: [0] });
+    apply("node_finished", { status: "succeeded", output: "draft 1", iteration: [0] });
+    apply("node_started", { prompt: "second", iteration: [1] });
+    const node = useEditor.getState().run!.nodes.a;
+    expect(node).toMatchObject({ status: "running", prompt: "second", output: null, iteration: [1] });
+    expect(node.earlier?.map((round) => [round.output, round.iteration])).toEqual([["draft 1", [0]]]);
+    // The run's totals include the earlier rounds.
+    expect(liveUsage(useEditor.getState().run).total_tokens).toBe(10);
+  });
+});

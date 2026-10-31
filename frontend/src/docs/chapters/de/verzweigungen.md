@@ -42,6 +42,19 @@ Zusammenführen braucht deshalb keine Einstellung: Ein Agent hinter beiden Zweig
 
 Entscheidungen und Freigaben reichen die Daten durch: Ein Agent dahinter erhält die Ergebnisse, die bei ihnen ankamen, unter den Namen der Agenten, die sie erzeugt haben.
 
+## Schleifen {#schleifen}
+<!-- keywords: schleife, loop, wiederholen, runde, iteration, qualitätsschleife, überarbeiten, feedback, limit -->
+
+Eine **Schleife** lässt Schritte erneut laufen, bis ein Ergebnis passt, zum Beispiel *Entwurf → Prüfung → Entscheidung*: Ist die Prüfung nicht bestanden, geht es zurück zum Entwurf.
+
+- **Anlegen:** Ziehe eine Verbindung von einem **Zweig** einer Entscheidung oder Freigabe zurück zu einem früheren Schritt. Nodestro legt sie als Schleife an (gestrichelt, mit „↻ max. 3×“) und öffnet sie im Inspektor. Von einem Agenten aus ist keine Verbindung zurück möglich: Jede Runde endet mit einer Entscheidung oder Freigabe.
+- **Limit:** *Höchstens Runden* (2 bis 20) zählt den ersten Durchlauf mit. Jede Runde kostet erneut Tokens; das [Budget](/docs/workflows#budget) gilt für den ganzen Lauf.
+- **Wenn das Limit erreicht ist:** Der Lauf endet als fehlgeschlagen („Die Schleife lief … mal, ohne ihr Ziel zu erreichen“), oder er folgt den anderen Zweigen der Entscheidung. Folgt keiner, werden die Schritte dahinter übersprungen.
+- **Platzhalter:** In der Aufgabe eines Schritts in der Schleife ist `{{iteration}}` die Runde (ab 1), `{{previous}}` sein eigenes Ergebnis der Runde davor und `{{feedback}}`, was über die Schleife zurückkam (etwa die Begründung der Prüfung oder der Kommentar einer abgelehnten Freigabe). In der ersten Runde stehen beide für „-“.
+- **Freigaben in Schleifen:** Eine abgelehnte Freigabe kann über ihren Zweig *Abgelehnt* zurück zur Überarbeitung führen; die nächste Runde wartet dann wieder auf eine Entscheidung.
+
+Im Lauf zeigt jeder Schritt seine **Runde**; in den Details wählst du zwischen den Ergebnissen aller Runden. Schleifen dürfen ineinander liegen, sich aber nicht überschneiden. Wird ein fehlgeschlagener Lauf [fortgesetzt](#fortsetzen), läuft eine Schleife immer ganz neu.
+
 ## Freigaben {#freigabe}
 <!-- keywords: freigabe, genehmigung, approval, human in the loop, prüfen, ablehnen, kommentar, pause -->
 

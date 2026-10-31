@@ -208,7 +208,8 @@
       "was_waiting": "Was not reached.",
       "was_running": "Did not finish.",
       "was_awaiting_approval": "Was waiting for an approval.",
-      "was_idle": "Was not reached."
+      "was_idle": "Was not reached.",
+      "in_loop": "Part of a loop: the whole loop runs again."
     },
     "calledTools": "Had already called tools: {{tools}}",
     "saved": "saves {{cost}}",

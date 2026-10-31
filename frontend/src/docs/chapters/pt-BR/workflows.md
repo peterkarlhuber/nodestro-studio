@@ -62,7 +62,7 @@ O Nodestro impede conexões inválidas e explica o motivo:
 - Um nó não pode ser conectado a si mesmo.
 - O nó de início não tem entrada e o nó de resultado não tem saída.
 - A mesma conexão só pode existir uma vez.
-- **Sem ciclos:** os dados sempre seguem em uma direção. Uma conexão que volta para um antecessor é recusada.
+- **Ciclos só como laço:** os dados seguem em uma direção. Uma conexão de volta para um antecessor só é possível a partir de uma ramificação de uma decisão ou aprovação e vira um [laço](/docs/verzweigungen#schleifen) com limite; qualquer outra é recusada.
 
 Para excluir uma conexão, selecione-a e pressione **Delete** ou **Backspace**. Durante uma execução, as conexões por onde os dados estão passando se acendem.
 
@@ -239,7 +239,7 @@ Exportar um fluxo e exportar um trace são coisas diferentes: um fluxo descreve 
 ## Limitações {#grenzen}
 <!-- keywords: limites, limitações, laços, condições, if, loop, ramificação -->
 
-- **Sem laços:** um fluxo de trabalho é um grafo direcionado sem ciclos. Cada nó roda no máximo uma vez por execução. Condições são montadas com [decisões](/docs/verzweigungen#entscheidung); nós em ramificações não escolhidas são ignorados.
+- **Laços só com limite:** um fluxo de trabalho é um grafo direcionado; etapas só se repetem por meio de [laços](/docs/verzweigungen#schleifen) de no máximo 20 rodadas. Fora de laços, cada nó roda no máximo uma vez por execução. Condições são montadas com [decisões](/docs/verzweigungen#entscheidung); nós em ramificações não escolhidas são ignorados.
 - **Continuar em vez de repetir:** uma execução com falha ou cancelada pode ser [continuada](/docs/verzweigungen#fortsetzen); isso cria uma nova execução vinculada.
 - **Uma execução por vez por fluxo no editor:** enquanto houver uma execução ativa, *Iniciar fluxo de trabalho* fica bloqueado. Para iniciar muitas execuções de uma vez, use uma [execução em lote](/docs/automatisierung#stapel).
 - **Estado no momento do início:** alterações durante uma execução só valem na próxima.

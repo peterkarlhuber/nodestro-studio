@@ -97,7 +97,12 @@
     "branch_unknown": "Un collegamento di {{node}} non parte da alcun ramo.",
     "condition_no_rules": "La decisione {{node}} non ha regole.",
     "subworkflow_missing": "{{node}} non ha un workflow scelto.",
-    "node_duplicate": "Due nodi hanno lo stesso id ({{id}}). Eliminane uno e aggiungilo di nuovo."
+    "node_duplicate": "Due nodi hanno lo stesso id ({{id}}). Eliminane uno e aggiungilo di nuovo.",
+    "loop_unguarded": "Un ciclo deve partire da un ramo di una decisione o di un’approvazione.",
+    "loop_target": "Un ciclo deve tornare a un passo precedente.",
+    "loop_overlap": "Due cicli si sovrappongono; i cicli possono solo essere annidati.",
+    "loop_shared": "Un passo del ciclo è collegato a un passo esterno in un modo che il ciclo non può ripetere.",
+    "loop_invalid": "Questo ciclo non è valido."
   },
   "run": {
     "failed": "Il passaggio non è riuscito.",
@@ -122,7 +127,8 @@
     "finished": "L’esecuzione è già terminata.",
     "not_found": "Non esiste alcuna esecuzione con questo id.",
     "not_finished": "L’esecuzione non è ancora terminata.",
-    "no_event_loop": "L’esecuzione non è potuta partire: richiede un event loop attivo."
+    "no_event_loop": "L’esecuzione non è potuta partire: richiede un event loop attivo.",
+    "loop_exhausted": "Il ciclo in {{node}} è stato eseguito {{max_iterations}} volte senza raggiungere il suo obiettivo."
   },
   "trace": {
     "invalid": "La traccia è danneggiata o incompleta.",

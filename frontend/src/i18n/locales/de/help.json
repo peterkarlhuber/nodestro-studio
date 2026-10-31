@@ -19,7 +19,8 @@
     "runBudget": "Budget des Workflows oder, falls leer, das Standardbudget aus den Einstellungen.",
     "discard": "Verwirft alle ungespeicherten Änderungen einschließlich Rückgängig/Wiederholen und lädt den zuletzt gespeicherten Stand.",
     "versions": "Jedes Speichern ist eine Version mit Datum. Ältere Versionen lassen sich ansehen und wiederherstellen, ohne dass eine verloren geht.",
-    "organize": "Favoriten stehen oben; Tags helfen beim Filtern."
+    "organize": "Favoriten stehen oben; Tags helfen beim Filtern.",
+    "loop": "Eine Schleife führt von einem Zweig einer Entscheidung oder Freigabe zurück zu einem früheren Schritt. Die Schritte dazwischen laufen erneut, bis der Zweig nicht mehr gewählt wird oder das Limit erreicht ist."
   },
   "agent": {
     "design": "Der Agent-Architekt entwirft aus deiner Beschreibung Rolle, System-Prompt, Modell, Aufwand und Tools. Du prüfst den Vorschlag, bevor er übernommen wird.",

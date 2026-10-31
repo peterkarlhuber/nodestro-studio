@@ -97,7 +97,12 @@
     "branch_unknown": "Una conexión de {{node}} no parte de ninguna rama.",
     "condition_no_rules": "La decisión {{node}} no tiene reglas.",
     "subworkflow_missing": "En {{node}} no se ha elegido ningún workflow.",
-    "node_duplicate": "Dos nodos tienen el mismo id ({{id}}). Elimina uno de ellos y vuelve a añadirlo."
+    "node_duplicate": "Dos nodos tienen el mismo id ({{id}}). Elimina uno de ellos y vuelve a añadirlo.",
+    "loop_unguarded": "Un bucle debe salir de una rama de una decisión o aprobación.",
+    "loop_target": "Un bucle debe volver a un paso anterior.",
+    "loop_overlap": "Dos bucles se solapan; los bucles solo pueden estar uno dentro de otro.",
+    "loop_shared": "Un paso del bucle está conectado con un paso exterior de forma que el bucle no puede repetirlo.",
+    "loop_invalid": "Este bucle no es válido."
   },
   "run": {
     "failed": "El paso ha fallado.",
@@ -122,7 +127,8 @@
     "finished": "La ejecución ya ha terminado.",
     "not_found": "No hay ninguna ejecución con este id.",
     "not_finished": "La ejecución aún no ha terminado.",
-    "no_event_loop": "La ejecución no pudo iniciarse: necesita un bucle de eventos en marcha."
+    "no_event_loop": "La ejecución no pudo iniciarse: necesita un bucle de eventos en marcha.",
+    "loop_exhausted": "El bucle en {{node}} se ejecutó {{max_iterations}} veces sin alcanzar su objetivo."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",

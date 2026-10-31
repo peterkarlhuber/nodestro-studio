@@ -62,7 +62,7 @@ Nodestro empêche les connexions non valides et en donne la raison :
 - Un nœud ne peut pas être relié à lui-même.
 - Le nœud de départ n’a pas d’entrée, le nœud de résultat pas de sortie.
 - Une même connexion ne peut exister qu’une fois.
-- **Pas de cycles :** les données circulent toujours dans un seul sens. Une connexion qui revient vers un prédécesseur est refusée.
+- **Cycles uniquement en boucle :** les données circulent dans un seul sens. Une connexion qui revient vers un prédécesseur n’est possible que depuis une branche d’une décision ou d’une validation ; elle devient alors une [boucle](/docs/verzweigungen#schleifen) avec une limite. Toute autre est refusée.
 
 Pour supprimer une connexion, sélectionnez-la et appuyez sur **Suppr** ou **Retour arrière**. Pendant une exécution, les connexions par lesquelles circulent des données s’illuminent.
 
@@ -239,7 +239,7 @@ Exporter un workflow et exporter une trace sont deux choses différentes : un wo
 ## Limites {#grenzen}
 <!-- keywords: limites, restrictions, boucles, conditions, if, loop, branchement -->
 
-- **Pas de boucles :** un workflow est un graphe orienté sans cycles. Chaque nœud s’exécute au plus une fois par exécution. Les conditions se construisent avec des [décisions](/docs/verzweigungen#entscheidung) ; les nœuds des branches non choisies sont ignorés.
+- **Boucles uniquement avec limite :** un workflow est un graphe orienté ; des étapes ne se répètent qu’au moyen de [boucles](/docs/verzweigungen#schleifen) de 20 tours au plus. Hors des boucles, chaque nœud s’exécute au plus une fois par exécution. Les conditions se construisent avec des [décisions](/docs/verzweigungen#entscheidung) ; les nœuds des branches non choisies sont ignorés.
 - **Reprendre plutôt que répéter :** une exécution échouée ou annulée peut être [reprise](/docs/verzweigungen#fortsetzen) ; une nouvelle exécution liée est alors créée.
 - **Une exécution à la fois par workflow dans l’éditeur :** tant qu’une exécution est active, *Lancer le workflow* est désactivé. Pour lancer de nombreuses exécutions à la fois, utilisez une [exécution par lots](/docs/automatisierung#stapel).
 - **État au moment du lancement :** les modifications pendant une exécution ne prennent effet qu’à l’exécution suivante.

@@ -6,8 +6,10 @@
     "fromOutput": "Le nœud de résultat n’a pas de sortie",
     "toStart": "Le nœud de départ n’a pas d’entrée",
     "exists": "Cette connexion existe déjà",
-    "cycle": "Cette connexion créerait une boucle",
-    "pickBranch": "Tirez la connexion depuis une branche de la décision ou de la validation."
+    "cycle": "Cette connexion créerait une boucle. Pour répéter des étapes, revenez depuis une branche d’une décision ou d’une validation.",
+    "pickBranch": "Tirez la connexion depuis une branche de la décision ou de la validation.",
+    "loopCreated": "Boucle créée : les étapes sont répétées, 3 fois au plus. Réglez la limite dans l’inspecteur.",
+    "loopNeeded": "Cette connexion revient en arrière et doit rester une boucle."
   },
   "nodes": {
     "agent": "Agent",
@@ -85,7 +87,8 @@
     "controlConnect": "Glissez du port droit au port gauche pour connecter des agents",
     "controlDelete": "<kbd>Suppr</kbd> supprime la sélection, <kbd>Ctrl</kbd>+<kbd>D</kbd> la duplique",
     "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> annule, <kbd>Ctrl</kbd>+<kbd>S</kbd> enregistre",
-    "controlPanels": "Faites glisser les séparateurs pour ajuster les panneaux ; un double-clic sur un nœud affiche ses propriétés"
+    "controlPanels": "Faites glisser les séparateurs pour ajuster les panneaux ; un double-clic sur un nœud affiche ses propriétés",
+    "connection": "Connexion"
   },
   "design": {
     "title": "Concevoir un agent avec l’IA",
@@ -175,5 +178,25 @@
     "resizeRunPanel": "Hauteur de la vue d’ensemble de l’exécution",
     "resizeHint": "Faites glisser ou utilisez les flèches pour redimensionner. Un double-clic rétablit la taille par défaut.",
     "railSelection": "Sélection : {{name}}"
+  },
+  "connection": {
+    "title": "Connexion",
+    "path": "De {{source}} vers {{target}}",
+    "delete": "Supprimer la connexion"
+  },
+  "loop": {
+    "title": "Boucle",
+    "edgeLabel": "↻ max. {{max}}×",
+    "text": "En suivant cette branche, les étapes de la cible jusqu’ici sont exécutées à nouveau. La première exécution compte comme tour 1.",
+    "maxIterations": "Nombre maximal de tours",
+    "maxIterationsHint": "De 2 à {{max}}. Chaque tour consomme à nouveau des tokens.",
+    "onExhausted": "Quand la limite est atteinte",
+    "fail": "Arrêter l’exécution en échec",
+    "continue": "Suivre les autres branches",
+    "placeholders": "Dans la tâche d’une étape de la boucle, {{iteration}} est le tour, {{previous}} son propre résultat du tour précédent et {{feedback}} ce qui est revenu par la boucle.",
+    "docs": "Boucles",
+    "make": "En faire une boucle",
+    "round": "Tour {{n}}",
+    "rounds": "Tours"
   }
 }

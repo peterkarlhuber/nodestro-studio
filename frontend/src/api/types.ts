@@ -223,7 +223,17 @@ export interface WorkflowEdge {
   target: string;
   /** The branch of a decision or approval node this connection leaves from. */
   source_handle?: string | null;
+  /** Makes the connection a loop back to an earlier step (only from a branch). */
+  loop?: EdgeLoop | null;
 }
+
+/** Limits of a loop connection: the steps from its target to its source run at most ``max_iterations`` times. */
+export interface EdgeLoop {
+  max_iterations: number;
+  on_exhausted: "fail" | "continue";
+}
+
+export const MAX_LOOP_ITERATIONS = 20;
 
 export interface WorkflowIn {
   name: string;
@@ -349,6 +359,10 @@ export interface NodeRun {
   files?: ProvidedFile[];
   /** Content the agent proposed for knowledge (stored only after confirmation). */
   proposals?: KnowledgeProposal[];
+  /** The loop round of this result (0 = first run), one entry per loop around the node. */
+  iteration?: number[];
+  /** The results of earlier loop rounds, oldest first. */
+  earlier?: NodeRun[];
 }
 
 export type DeliveryMode = "text" | "document" | "image" | "ocr_text" | "overview" | "unavailable";

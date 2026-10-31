@@ -146,18 +146,43 @@ export function FlowNodeDetails({ run, node, state }: { run?: Run; node: Workflo
   );
 }
 
-export function NodeRunDetails({
-  node,
-  state,
-  runFiles = [],
-  run,
-}: {
+interface NodeRunDetailsProps {
   node: WorkflowNode;
   state: NodeRun;
   /** Files given at the start of the run (agents fed by the start node see them). */
   runFiles?: string[];
   run?: Run;
-}) {
+}
+
+/** The details of a node's result; a node inside a loop offers each of its rounds. */
+export function NodeRunDetails(props: NodeRunDetailsProps) {
+  const { t } = useTranslation();
+  const rounds = [...(props.state.earlier ?? []), props.state];
+  const [picked, setPicked] = useState<number | null>(null);
+  if (rounds.length < 2) return <NodeRoundDetails {...props} />;
+  const index = picked !== null && picked < rounds.length ? picked : rounds.length - 1;
+  return (
+    <div className="node-rounds">
+      <div className="node-rounds__picker" role="group" aria-label={t("editor.loop.rounds")}>
+        {rounds.map((round, position) => (
+          <button
+            key={position}
+            type="button"
+            className={`chip ${position === index ? "chip--active" : ""}`}
+            aria-pressed={position === index}
+            onClick={() => setPicked(position)}
+            data-testid="round-pick"
+          >
+            {t("editor.loop.round", { n: (round.iteration?.at(-1) ?? position) + 1 })}
+          </button>
+        ))}
+      </div>
+      <NodeRoundDetails key={index} {...props} state={rounds[index]} />
+    </div>
+  );
+}
+
+function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsProps) {
   const { t } = useTranslation();
   const [tab, setTab] = useState<RunTab>("result");
   const tabs: { id: RunTab; label: string }[] = [

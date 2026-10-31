@@ -42,6 +42,19 @@ Joining therefore needs no setting: an agent behind both branches of a decision 
 
 Decisions and approvals pass data through: an agent behind them receives the results that arrived there, under the names of the agents that produced them.
 
+## Loops {#schleifen}
+<!-- keywords: loop, repeat, round, iteration, quality loop, revise, feedback, limit -->
+
+A **loop** runs steps again until a result fits, for example *Draft → Review → Decision*: if the review fails, the run goes back to the draft.
+
+- **Creating one:** drag a connection from a **branch** of a decision or approval back to an earlier step. Nodestro creates it as a loop (dashed, with "↻ max. 3×") and opens it in the inspector. A connection back from an agent is not possible: every round ends with a decision or approval.
+- **Limit:** *Maximum rounds* (2 to 20) includes the first run. Every round costs tokens again; the [budget](/docs/workflows#budget) applies to the whole run.
+- **When the limit is reached:** the run ends as failed ("The loop … ran … times without reaching its goal"), or it follows the decision's other branches. If none is followed, the steps behind it are skipped.
+- **Placeholders:** in the task of a step in the loop, `{{iteration}}` is the round (from 1), `{{previous}}` its own result of the round before and `{{feedback}}` what came back over the loop (for example the reviewer's reasoning or the comment of a rejected approval). In the first round both read "-".
+- **Approvals in loops:** a rejected approval can lead back to a revision over its *Rejected* branch; the next round then waits for a decision again.
+
+During a run every step shows its **round**; in the details you pick between the results of all rounds. Loops may be nested but must not overlap. When a failed run is [continued](#fortsetzen), a loop always runs again completely.
+
 ## Approvals {#freigabe}
 <!-- keywords: approval, sign-off, human in the loop, review, reject, comment, pause -->
 

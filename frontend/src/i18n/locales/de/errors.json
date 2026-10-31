@@ -97,7 +97,12 @@
     "branch_unknown": "Eine Verbindung von {{node}} beginnt an keinem Zweig.",
     "condition_no_rules": "Die Entscheidung {{node}} hat keine Regeln.",
     "subworkflow_missing": "Bei {{node}} ist kein Workflow gewählt.",
-    "node_duplicate": "Zwei Knoten haben dieselbe ID ({{id}}). Lösche einen davon und füge ihn neu hinzu."
+    "node_duplicate": "Zwei Knoten haben dieselbe ID ({{id}}). Lösche einen davon und füge ihn neu hinzu.",
+    "loop_unguarded": "Eine Schleife muss von einem Zweig einer Entscheidung oder Freigabe ausgehen.",
+    "loop_target": "Eine Schleife muss zu einem früheren Schritt zurückführen.",
+    "loop_overlap": "Zwei Schleifen überschneiden sich; Schleifen dürfen nur ineinander liegen.",
+    "loop_shared": "Ein Schritt der Schleife ist so mit einem Schritt außerhalb verbunden, dass die Schleife ihn nicht wiederholen kann.",
+    "loop_invalid": "Diese Schleife ist ungültig."
   },
   "run": {
     "failed": "Der Schritt ist fehlgeschlagen.",
@@ -122,7 +127,8 @@
     "finished": "Der Lauf ist bereits beendet.",
     "not_found": "Es gibt keinen Lauf mit dieser ID.",
     "not_finished": "Der Lauf ist noch nicht beendet.",
-    "no_event_loop": "Der Lauf konnte nicht starten: Er braucht eine laufende Event-Loop."
+    "no_event_loop": "Der Lauf konnte nicht starten: Er braucht eine laufende Event-Loop.",
+    "loop_exhausted": "Die Schleife bei {{node}} lief {{max_iterations}}-mal, ohne ihr Ziel zu erreichen."
   },
   "trace": {
     "invalid": "Der Trace ist beschädigt oder unvollständig.",

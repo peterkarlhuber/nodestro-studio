@@ -7,6 +7,7 @@ import { DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../com
 import { WorkflowDependencies } from "../python/DependencyPanel";
 import { AgentInspector } from "./AgentInspector";
 import { CheckList } from "./CheckList";
+import { ConnectionInspector } from "./ConnectionInspector";
 import { useEditorLayout } from "./layout";
 import { ApprovalInspector, ConditionInspector, FormEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
 import { useEditor } from "./store";
@@ -19,10 +20,14 @@ export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefine
   const open = useEditorLayout((state) => state.open.inspector);
   const { setOpen } = useEditorLayout.getState();
   const selected = selectedId && node ? node : null;
+  const edgeId = useEditor((s) => (s.selectedEdgeId && s.edges.some((edge) => edge.id === s.selectedEdgeId) ? s.selectedEdgeId : null));
 
   let label = t("editor.inspector.workflow");
   let content = <WorkflowInspector check={check} />;
-  if (selected?.type === "agent" && selected.agent) {
+  if (!selected && edgeId) {
+    label = t("editor.inspector.connection");
+    content = <ConnectionInspector key={edgeId} edgeId={edgeId} />;
+  } else if (selected?.type === "agent" && selected.agent) {
     label = t("editor.inspector.agent");
     content = <AgentInspector key={selected.id} node={selected} />;
   } else if (selected) {

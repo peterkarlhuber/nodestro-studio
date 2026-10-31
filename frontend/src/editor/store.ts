@@ -4,6 +4,7 @@ import { create } from "zustand";
 
 import type {
   AgentConfig,
+  EdgeLoop,
   NodeRun,
   NodeType,
   Run,
@@ -67,9 +68,11 @@ export interface EditorState {
   applyDraft: (draft: Pick<WorkflowIn, "nodes" | "edges">, note: string) => void;
   removeNodes: (ids: string[]) => void;
   duplicateNode: (id: string) => void;
-  /** Connects two nodes; returns the translation key of the reason if that is not possible. */
+  /** Connects two nodes; returns the translation key of the reason if that is not possible, or of the note that a loop was created. */
   connect: (source: string, target: string, handle?: string | null) => string | null;
   removeEdges: (ids: string[]) => void;
+  /** Changes the limits of a loop connection (``null`` makes it a normal connection, if that closes no cycle). */
+  setEdgeLoop: (id: string, loop: EdgeLoop | null) => string | null;
   select: (id: string | null) => void;
   selectEdge: (id: string | null) => void;
   autoLayout: () => void;
@@ -97,8 +100,9 @@ function withoutStaleBranches(nodes: WorkflowNode[], edges: WorkflowEdge[]): Wor
   });
 }
 
-function wouldCycle(edges: WorkflowEdge[], source: string, target: string): boolean {
+export function wouldCycle(edges: WorkflowEdge[], source: string, target: string): boolean {
   // A new edge source -> target closes a cycle if source is reachable from target.
+  // Loop connections lead back on purpose and are not followed.
   const stack = [target];
   const seen = new Set<string>();
   while (stack.length) {
@@ -106,10 +110,13 @@ function wouldCycle(edges: WorkflowEdge[], source: string, target: string): bool
     if (current === source) return true;
     if (seen.has(current)) continue;
     seen.add(current);
-    for (const edge of edges) if (edge.source === current) stack.push(edge.target);
+    for (const edge of edges) if (edge.source === current && !edge.loop) stack.push(edge.target);
   }
   return false;
 }
+
+/** The limits a new loop connection starts with (the runtime requires a limit). */
+export const DEFAULT_LOOP: EdgeLoop = { max_iterations: 3, on_exhausted: "fail" };
 
 export const useEditor = create<EditorState>((set, get) => {
   const snapshot = (): Snapshot => {
@@ -308,10 +315,26 @@ export const useEditor = create<EditorState>((set, get) => {
       const sourceHandle = handles ? (handle && handles.includes(handle) ? handle : null) : null;
       if (handles && !sourceHandle) return "editor.connect.pickBranch";
       if (edges.some((edge) => edge.source === source && edge.target === target)) return "editor.connect.exists";
-      if (wouldCycle(edges, source, target)) return "editor.connect.cycle";
+      const back = wouldCycle(edges, source, target);
+      // Leading back is only possible from a branch: a decision or an approval ends each round.
+      if (back && !sourceHandle) return "editor.connect.cycle";
       const edge: WorkflowEdge = { id: newId("edge"), source, target };
       if (sourceHandle) edge.source_handle = sourceHandle;
-      commit({ edges: [...edges, edge] });
+      if (back) edge.loop = { ...DEFAULT_LOOP };
+      commit({ edges: [...edges, edge], ...(back ? { selectedEdgeId: edge.id, selectedId: null } : {}) });
+      return back ? "editor.connect.loopCreated" : null;
+    },
+
+    setEdgeLoop: (id, loop) => {
+      const { edges } = get();
+      const edge = edges.find((item) => item.id === id);
+      if (!edge) return "editor.connect.notFound";
+      const others = edges.filter((item) => item.id !== id);
+      if (!loop && wouldCycle(others, edge.source, edge.target)) return "editor.connect.loopNeeded";
+      const changed: WorkflowEdge = { ...edge };
+      if (loop) changed.loop = loop;
+      else delete changed.loop;
+      commit({ edges: edges.map((item) => (item.id === id ? changed : item)) });
       return null;
     },
 
@@ -383,8 +406,15 @@ export const useEditor = create<EditorState>((set, get) => {
       if (!run || run.id !== event.run_id) return;
       const nodes = { ...run.nodes };
       const id = event.node_id;
-      const node: NodeRun | undefined = id ? { ...nodes[id] } : undefined;
+      let node: NodeRun | undefined = id ? { ...nodes[id] } : undefined;
       const data = event.data;
+      const iteration = Array.isArray(data.iteration) ? (data.iteration as number[]) : undefined;
+      if (node && iteration && node.iteration && iteration.join(".") !== node.iteration.join(".")) {
+        // A loop runs the node again: keep the previous round and start a fresh one.
+        node = nextRound(node, iteration);
+      } else if (node && iteration) {
+        node.iteration = iteration;
+      }
       const next: Run = { ...run, nodes };
       switch (event.type) {
         case "run_started":
@@ -486,23 +516,53 @@ export const useEditor = create<EditorState>((set, get) => {
   };
 });
 
+const ZERO_USAGE: Usage = {
+  requests: 0,
+  input_tokens: 0,
+  output_tokens: 0,
+  cache_read_input_tokens: 0,
+  cache_creation_input_tokens: 0,
+  thinking_tokens: 0,
+  web_search_requests: 0,
+  total_tokens: 0,
+  estimated_cost_usd: 0,
+};
+
+/** A fresh result of ``node`` for another loop round; the current one moves to ``earlier``. */
+export function nextRound(node: NodeRun, iteration: number[]): NodeRun {
+  const { earlier = [], ...current } = node;
+  return {
+    status: "waiting",
+    prompt: null,
+    output: null,
+    text: "",
+    thinking: "",
+    error: null,
+    error_code: null,
+    error_params: {},
+    tool_calls: [],
+    usage: { ...ZERO_USAGE },
+    evaluation: null,
+    memory: null,
+    started_at: null,
+    finished_at: null,
+    iteration,
+    earlier: [...earlier, current],
+  };
+}
+
+/** The node's usage over all its loop rounds. */
+function roundsUsage(node: NodeRun): Usage[] {
+  return [...(node.earlier ?? []).map((item) => item.usage), node.usage];
+}
+
 /** Totals of a run so far, also while it is running. */
 export function liveUsage(run: Run | null): Usage {
-  const zero: Usage = {
-    requests: 0,
-    input_tokens: 0,
-    output_tokens: 0,
-    cache_read_input_tokens: 0,
-    cache_creation_input_tokens: 0,
-    thinking_tokens: 0,
-    web_search_requests: 0,
-    total_tokens: 0,
-    estimated_cost_usd: 0,
-  };
+  const zero = { ...ZERO_USAGE };
   if (!run) return zero;
   if (run.finished_at && run.usage.requests) return run.usage;
-  return Object.values(run.nodes).reduce<Usage>((sum, node) => {
-    const usage = node.usage ?? zero;
+  return Object.values(run.nodes).flatMap(roundsUsage).reduce<Usage>((sum, found) => {
+    const usage = found ?? zero;
     return {
       requests: sum.requests + usage.requests,
       input_tokens: sum.input_tokens + usage.input_tokens,
