@@ -185,7 +185,7 @@ project owner.
 | UX-5b `Section` for a tool's code, tool-generation attempts, diagnostic versions and local backups | done | studio #25 `a44ea7d`. Inline toggles stay plain `<details>`: the sandbox output of a tool check, the provenance of a knowledge file and the details of one diagnostic check. |
 | UX-6a start-form file options as a *File options* section with a one-line summary | done | studio #26 `c629a3c` |
 | UX-6b run summary above the run details: steps, path through decisions, approvals, tools, failed step with a jump | done | studio #27 `5801cb6` |
-| UX-7 "used in" for knowledge files, tools and memory spaces, with a delete dialog that names the users | in review | api #17 `f55bd80`, sdk #15 `ba4ef84`, studio (this step) |
+| UX-7 "used in" for knowledge files, tools and memory spaces, with a delete dialog that names the users | done | api #17 `f55bd80`, sdk #15 `ba4ef84`, studio #28 `f70af24` |
 | Q-1 test status in the publish dialog and the versions dialog | in review | studio (this step) |
 | UX-8 and later | open | — |
 
