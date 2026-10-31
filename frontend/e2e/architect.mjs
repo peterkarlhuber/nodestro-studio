@@ -48,6 +48,8 @@ try {
 
   // 1. Create with AI: the first of the three ways to start on the empty page opens the dialog in AI mode.
   const choices = page.getByRole("group", { name: "Neu beginnen" });
+  // The three ways appear once the (empty) list has loaded.
+  await choices.locator(".start-choice").nth(2).waitFor();
   check((await choices.locator(".start-choice").count()) === 3, "The empty page offers three ways to start");
   await choices.getByRole("button", { name: /Mit KI erstellen/ }).click();
   check(
