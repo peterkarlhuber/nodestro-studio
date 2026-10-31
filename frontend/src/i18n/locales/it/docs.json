@@ -1,6 +1,6 @@
 {
   "description": "Il manuale utente di Nodestro: concetti, ogni impostazione, guide passo passo, esempi e soluzioni agli errori più comuni.",
-  "missingChapter": "Questo capitolo non esiste. Torna alla <link>panoramica</link>.",
+  "missingChapter": "Questo capitolo non esiste. Torna alla <a>panoramica</a>.",
   "onThisPage": "In questa pagina",
   "linkTo": "Link a «{{title}}»",
   "pager": "Sfoglia i capitoli",
@@ -8,7 +8,7 @@
   "next": "Successivo",
   "overview": {
     "title": "Panoramica",
-    "intro": "Nuovo qui? Inizia da <link>Primi passi</link>. Trovi anche brevi spiegazioni direttamente nell’applicazione dietro ogni icona <strong>?</strong>.",
+    "intro": "Nuovo qui? Inizia da <a>Primi passi</a>. Trovi anche brevi spiegazioni direttamente nell’applicazione dietro ogni icona <strong>?</strong>.",
     "sections_one": "{{count}} sezione",
     "sections_other": "{{count}} sezioni"
   },

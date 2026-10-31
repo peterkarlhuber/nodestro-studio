@@ -25,8 +25,8 @@
     "unsavedIncluded": "Questo workflow ha modifiche non salvate. L’architetto lavora con lo stato attuale dell’editor; nulla viene salvato o sovrascritto.",
     "generateTools": "Scrivere come bozza gli strumenti mancanti",
     "generateToolsHint": "Solo se nessuno strumento esistente è adatto. Il codice viene controllato staticamente e non viene mai eseguito prima della tua approvazione.",
-    "limit": "Limite di costo di una bozza: {{limit}} (<link>Impostazioni</link>). L’architetto non avvia mai un’esecuzione del workflow.",
-    "noLimit": "Nessun limite di costo per le bozze (<link>Impostazioni</link>). L’architetto non avvia mai un’esecuzione del workflow.",
+    "limit": "Limite di costo di una bozza: {{limit}} (<a>Impostazioni</a>). L’architetto non avvia mai un’esecuzione del workflow.",
+    "noLimit": "Nessun limite di costo per le bozze (<a>Impostazioni</a>). L’architetto non avvia mai un’esecuzione del workflow.",
     "safety": "L’architetto propone soltanto. I workflow esistenti restano invariati finché non accetti la bozza, e i nuovi strumenti richiedono la tua approvazione.",
     "startCreate": "Progetta workflow",
     "startRevise": "Proponi modifiche"

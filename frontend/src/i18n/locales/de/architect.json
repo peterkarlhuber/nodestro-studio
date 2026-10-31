@@ -25,8 +25,8 @@
     "unsavedIncluded": "Dieser Workflow hat ungespeicherte Änderungen. Der Architekt arbeitet mit dem aktuellen Stand im Editor; nichts wird gespeichert oder überschrieben.",
     "generateTools": "Fehlende Tools als Entwurf schreiben",
     "generateToolsHint": "Nur wenn kein vorhandenes Tool passt. Der Code wird statisch geprüft und läuft nie, bevor du ihn freigibst.",
-    "limit": "Kostenlimit eines Entwurfs: {{limit}} (<link>Einstellungen</link>). Der Architekt startet nie eine Workflow-Ausführung.",
-    "noLimit": "Für Entwürfe ist kein Kostenlimit gesetzt (<link>Einstellungen</link>). Der Architekt startet nie eine Workflow-Ausführung.",
+    "limit": "Kostenlimit eines Entwurfs: {{limit}} (<a>Einstellungen</a>). Der Architekt startet nie eine Workflow-Ausführung.",
+    "noLimit": "Für Entwürfe ist kein Kostenlimit gesetzt (<a>Einstellungen</a>). Der Architekt startet nie eine Workflow-Ausführung.",
     "safety": "Der Architekt schlägt nur vor. Bestehende Workflows bleiben unverändert, bis du den Entwurf übernimmst, und neue Tools brauchen deine Freigabe.",
     "startCreate": "Workflow entwerfen",
     "startRevise": "Änderungen vorschlagen"

@@ -25,8 +25,8 @@
     "unsavedIncluded": "This workflow has unsaved changes. The architect works with the current state in the editor; nothing is saved or overwritten.",
     "generateTools": "Write missing tools as drafts",
     "generateToolsHint": "Only if no existing tool fits. The code is checked statically and never runs before you approve it.",
-    "limit": "Cost limit of a draft: {{limit}} (<link>Settings</link>). The architect never starts a workflow run.",
-    "noLimit": "No cost limit is set for drafts (<link>Settings</link>). The architect never starts a workflow run.",
+    "limit": "Cost limit of a draft: {{limit}} (<a>Settings</a>). The architect never starts a workflow run.",
+    "noLimit": "No cost limit is set for drafts (<a>Settings</a>). The architect never starts a workflow run.",
     "safety": "The architect only proposes. Existing workflows stay unchanged until you accept the draft, and new tools need your approval.",
     "startCreate": "Design workflow",
     "startRevise": "Propose changes"

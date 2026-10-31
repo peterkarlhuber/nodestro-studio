@@ -97,7 +97,7 @@
       "custom": "Propias",
       "generated": "Generadas por IA"
     },
-    "missingHint": "¿Falta una herramienta? Escríbela tú en la <link>biblioteca de herramientas</link> o pide a la IA que la cree.",
+    "missingHint": "¿Falta una herramienta? Escríbela tú en la <a>biblioteca de herramientas</a> o pide a la IA que la cree.",
     "serverTools": "Herramientas de servidor de Anthropic",
     "serverToolsShort": "Herramientas de servidor"
   },
@@ -122,7 +122,7 @@
     "image": "Imagen",
     "chunks_one": "{{count}} fragmento",
     "chunks_other": "{{count}} fragmentos",
-    "noFiles": "Todavía no hay archivos. Súbelos en <link>Conocimiento</link>.",
+    "noFiles": "Todavía no hay archivos. Súbelos en <a>Conocimiento</a>.",
     "citations": "Activar citas",
     "citationsHint": "Las respuestas remiten a los pasajes de los documentos."
   },

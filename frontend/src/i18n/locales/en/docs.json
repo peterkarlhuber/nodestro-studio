@@ -1,6 +1,6 @@
 {
   "description": "The Nodestro user manual: concepts, every setting, step-by-step guides, examples and fixes for common errors.",
-  "missingChapter": "This chapter does not exist. Back to the <link>overview</link>.",
+  "missingChapter": "This chapter does not exist. Back to the <a>overview</a>.",
   "onThisPage": "On this page",
   "linkTo": "Link to “{{title}}”",
   "pager": "Browse chapters",
@@ -8,7 +8,7 @@
   "next": "Next",
   "overview": {
     "title": "Overview",
-    "intro": "New here? Start with <link>Getting started</link>. You will also find short explanations right in the app behind every <strong>?</strong> icon.",
+    "intro": "New here? Start with <a>Getting started</a>. You will also find short explanations right in the app behind every <strong>?</strong> icon.",
     "sections_one": "{{count}} section",
     "sections_other": "{{count}} sections"
   },

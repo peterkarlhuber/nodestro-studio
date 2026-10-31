@@ -97,7 +97,7 @@
       "custom": "Próprias",
       "generated": "Geradas por IA"
     },
-    "missingHint": "Falta uma ferramenta? Escreva-a você mesmo na <link>biblioteca de ferramentas</link> ou peça para a IA criá-la.",
+    "missingHint": "Falta uma ferramenta? Escreva-a você mesmo na <a>biblioteca de ferramentas</a> ou peça para a IA criá-la.",
     "serverTools": "Ferramentas de servidor da Anthropic",
     "serverToolsShort": "Ferramentas de servidor"
   },
@@ -122,7 +122,7 @@
     "image": "Imagem",
     "chunks_one": "{{count}} trecho",
     "chunks_other": "{{count}} trechos",
-    "noFiles": "Ainda não há arquivos. Envie-os em <link>Conhecimento</link>.",
+    "noFiles": "Ainda não há arquivos. Envie-os em <a>Conhecimento</a>.",
     "citations": "Ativar citações",
     "citationsHint": "As respostas apontam para os trechos dos documentos."
   },

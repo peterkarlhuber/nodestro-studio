@@ -109,7 +109,7 @@ message if it is missing. The secret never appears in code, logs or artifacts. `
 | integrations | additionally real OCR with tesseract and poppler |
 | api | additionally the OpenAPI contract and the export (the exported workflow passes its own tests) |
 | sdk | Python: ruff, mypy, pytest against a real Nodestro server with simulated models, contract and generated types up to date, client installable without the API; TypeScript: typecheck, vitest against the same server, build and `npm pack` |
-| studio | Backend (Python 3.10/3.13), frontend (lint, typecheck, vitest, build), all eight browser suites |
+| studio | Backend (Python 3.10/3.13), frontend (lint, typecheck, vitest, build), all nine browser suites |
 | studio, `platform.yml` | Platform pipeline, see below |
 
 No test calls a paid provider. All model responses come from scripts (`nodestro_runtime.testing.ScriptedClient`). The
@@ -126,7 +126,7 @@ only network exception is the explicitly marked test that installs a real packag
    dependency direction. Then the test suites of the runtime, examples, integrations and API run at the pinned commit
    against exactly this installation, as do the studio's tests including the upgrade test.
 3. **SDK:** the Python and TypeScript SDKs at the pinned commit against the installed API.
-4. **Browser:** the user interface is built and all eight browser suites run against the installed platform.
+4. **Browser:** the user interface is built and all nine browser suites run against the installed platform.
 
 ## Upgrading from Nodestro 0.1
 

@@ -139,7 +139,7 @@ export function DesignAgentDialog({
                   <strong>{tool.name}</strong> ({tool.requirement}){" "}
                 </span>
               ))}
-              <Trans i18nKey="editor.design.missingToolsHint" components={{ link: <Link to="/tools" /> }} />
+              <Trans i18nKey="editor.design.missingToolsHint" components={{ a: <Link to="/tools" /> }} />
             </Callout>
           ) : null}
           {draft.notes.map((note, index) => (

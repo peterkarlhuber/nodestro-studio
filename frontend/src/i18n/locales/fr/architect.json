@@ -25,8 +25,8 @@
     "unsavedIncluded": "Ce workflow a des modifications non enregistrées. L’architecte travaille avec l’état actuel de l’éditeur ; rien n’est enregistré ni écrasé.",
     "generateTools": "Écrire les outils manquants comme brouillons",
     "generateToolsHint": "Uniquement si aucun outil existant ne convient. Le code est vérifié statiquement et ne s’exécute jamais avant votre approbation.",
-    "limit": "Plafond de coût d’un brouillon : {{limit}} (<link>Paramètres</link>). L’architecte ne lance jamais d’exécution du workflow.",
-    "noLimit": "Aucun plafond de coût n’est défini pour les brouillons (<link>Paramètres</link>). L’architecte ne lance jamais d’exécution du workflow.",
+    "limit": "Plafond de coût d’un brouillon : {{limit}} (<a>Paramètres</a>). L’architecte ne lance jamais d’exécution du workflow.",
+    "noLimit": "Aucun plafond de coût n’est défini pour les brouillons (<a>Paramètres</a>). L’architecte ne lance jamais d’exécution du workflow.",
     "safety": "L’architecte ne fait que proposer. Les workflows existants restent inchangés jusqu’à ce que vous acceptiez le brouillon, et les nouveaux outils exigent votre approbation.",
     "startCreate": "Concevoir le workflow",
     "startRevise": "Proposer des changements"

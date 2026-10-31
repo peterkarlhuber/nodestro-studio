@@ -143,4 +143,12 @@ describe("AgentForm sections", () => {
     const second = show(agent);
     expect(section(second.container, "tools").open).toBe(false);
   });
+
+  it("links to the knowledge page when no file exists yet", async () => {
+    stubApi([]);
+    const { container } = show(defaultAgent());
+    await userEvent.click(section(container, "knowledge").querySelector(".section__title")!);
+    const link = await screen.findByRole("link", { name: "Wissen" });
+    expect(link).toHaveAttribute("href", "/knowledge");
+  });
 });

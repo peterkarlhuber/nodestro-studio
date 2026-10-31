@@ -1,6 +1,6 @@
 {
   "description": "El manual de usuario de Nodestro: conceptos, cada ajuste, guías paso a paso, ejemplos y soluciones a errores frecuentes.",
-  "missingChapter": "Este capítulo no existe. Volver a la <link>vista general</link>.",
+  "missingChapter": "Este capítulo no existe. Volver a la <a>vista general</a>.",
   "onThisPage": "En esta página",
   "linkTo": "Enlace a «{{title}}»",
   "pager": "Pasar de capítulo",
@@ -8,7 +8,7 @@
   "next": "Siguiente",
   "overview": {
     "title": "Vista general",
-    "intro": "¿Primera vez? Empieza por <link>Primeros pasos</link>. También encontrarás explicaciones breves en la propia aplicación detrás de cada icono <strong>?</strong>.",
+    "intro": "¿Primera vez? Empieza por <a>Primeros pasos</a>. También encontrarás explicaciones breves en la propia aplicación detrás de cada icono <strong>?</strong>.",
     "sections_one": "{{count}} sección",
     "sections_other": "{{count}} secciones"
   },

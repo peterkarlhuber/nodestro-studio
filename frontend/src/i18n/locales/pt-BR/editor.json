@@ -100,7 +100,7 @@
     "limits": "Limites",
     "limitsValue": "{{tokens}} tokens · {{rounds}} rodadas de ferramentas",
     "missingTools": "O arquiteto precisaria também destas ferramentas:",
-    "missingToolsHint": "Você pode pedir à IA que as crie na <link>biblioteca de ferramentas</link>."
+    "missingToolsHint": "Você pode pedir à IA que as crie na <a>biblioteca de ferramentas</a>."
   },
   "memoryAssistant": {
     "title": "Configurar a memória com IA",

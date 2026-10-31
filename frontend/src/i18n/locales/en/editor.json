@@ -100,7 +100,7 @@
     "limits": "Limits",
     "limitsValue": "{{tokens}} tokens · {{rounds}} tool rounds",
     "missingTools": "The Architect would also need these tools:",
-    "missingToolsHint": "You can have the AI create them in the <link>tool library</link>."
+    "missingToolsHint": "You can have the AI create them in the <a>tool library</a>."
   },
   "memoryAssistant": {
     "title": "Set up memory with AI",

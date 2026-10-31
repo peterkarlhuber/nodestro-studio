@@ -97,7 +97,7 @@
       "custom": "Personali",
       "generated": "Generati dall’IA"
     },
-    "missingHint": "Manca uno strumento? Scrivilo tu nella <link>libreria degli strumenti</link> o fallo creare all’IA.",
+    "missingHint": "Manca uno strumento? Scrivilo tu nella <a>libreria degli strumenti</a> o fallo creare all’IA.",
     "serverTools": "Strumenti server di Anthropic",
     "serverToolsShort": "Strumenti server"
   },
@@ -122,7 +122,7 @@
     "image": "Immagine",
     "chunks_one": "{{count}} sezione",
     "chunks_other": "{{count}} sezioni",
-    "noFiles": "Ancora nessun file. Caricali in <link>Conoscenza</link>.",
+    "noFiles": "Ancora nessun file. Caricali in <a>Conoscenza</a>.",
     "citations": "Attiva le citazioni",
     "citationsHint": "Le risposte rimandano ai passaggi dei documenti."
   },
