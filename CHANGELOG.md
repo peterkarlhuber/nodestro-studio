@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Platform pins: runtime 40e04b4, api e8eacd4, sdk 38082cc (Adaptive Orchestration M3–M5, 2026-10-31)
+
+- Pins `nodestro-runtime` `40e04b4` (output contracts, capabilities, orchestrator node, pool selection, stdio MCP
+  servers), `nodestro-examples` `df458e8`, `nodestro-integrations` `2c01744`, `nodestro-api` `e8eacd4` and, in
+  `platform/versions.json`, `nodestro-sdk` `38082cc` and `orkexa` `b91d0b7` (the orchestration protocol, ADR 0010).
+  The products section (frozen release candidate) is unchanged.
+- The editor work below (limits, teams, orchestrator, selection by capability) runs against these pins; checked in
+  the browser with an orchestrator run that selected its team by capability.
+
 ### Orchestrator node (Adaptive Orchestration M4, 2026-10-31)
 
 - New node *Orchestrator* in the palette (runtime M4): an AI model delegates the task step by step to teams of its
@@ -42,7 +51,6 @@
 - Error texts ×6 for `run.time_limit` and `run.step_limit`. Docs ×6: *Workflows → Budget per run* now describes reservations before each
   request and that unknown costs never count as 0; new section *Limits per run* (`workflows#limits`), including the
   limitation that a request or tool call that is already running still finishes.
-- Needs an api with the runtime fields (pins follow in the next cascade).
 
 ### Per-call tool approvals in the interface (Evolution S-2c, 2026-10-31)
 
