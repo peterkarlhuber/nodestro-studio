@@ -97,7 +97,7 @@
       "custom": "Your own",
       "generated": "AI-generated"
     },
-    "missingHint": "Missing a tool? Write it yourself in the <link>tool library</link> or have the AI create it.",
+    "missingHint": "Missing a tool? Write it yourself in the <a>tool library</a> or have the AI create it.",
     "serverTools": "Server tools from Anthropic",
     "serverToolsShort": "Server tools"
   },
@@ -122,7 +122,7 @@
     "image": "Image",
     "chunks_one": "{{count}} section",
     "chunks_other": "{{count}} sections",
-    "noFiles": "No files yet. Upload them under <link>Knowledge</link>.",
+    "noFiles": "No files yet. Upload them under <a>Knowledge</a>.",
     "citations": "Enable citations",
     "citationsHint": "Answers point to the passages in the documents."
   },

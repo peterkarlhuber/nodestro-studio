@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|flow|panels|api ...]   (default: all)
+# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|flow|panels|api|journeys ...]   (default: all)
+# The journeys suite writes its report to $JOURNEY_REPORT when set.
 # Needs: the studio installed (pip install -e .), the frontend built (make frontend) and Playwright.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -42,13 +43,15 @@ run() {  # run SUITE
       (cd frontend && npm run "e2e:$1") ;;
     api) start api 8050 python tests/e2e_api_server.py --data-dir "$work/api" --port 8050
       (cd frontend && npm run e2e:api) ;;
+    journeys) start journeys 8060 python tests/e2e_journey_server.py --data-dir "$work/journeys" --port 8060
+      (cd frontend && npm run e2e:journeys) ;;
     *) echo "unknown suite $1" >&2; return 2 ;;
   esac
 }
 
 # The smoke test goes first: it expects an empty start page and copies examples from the gallery.
 suites=("$@")
-[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant flow panels api)
+[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant flow panels api journeys)
 for suite in "${suites[@]}"; do
   echo "== e2e: $suite"
   run "$suite"

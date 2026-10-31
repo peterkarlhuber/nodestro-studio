@@ -1,6 +1,6 @@
 {
   "description": "Le manuel d’utilisation de Nodestro : concepts, chaque réglage, guides pas à pas, exemples et solutions aux erreurs fréquentes.",
-  "missingChapter": "Ce chapitre n’existe pas. Retour à la <link>vue d’ensemble</link>.",
+  "missingChapter": "Ce chapitre n’existe pas. Retour à la <a>vue d’ensemble</a>.",
   "onThisPage": "Sur cette page",
   "linkTo": "Lien vers « {{title}} »",
   "pager": "Feuilleter les chapitres",
@@ -8,7 +8,7 @@
   "next": "Suivant",
   "overview": {
     "title": "Vue d’ensemble",
-    "intro": "Nouveau ici ? Commencez par <link>Premiers pas</link>. Vous trouverez aussi de courtes explications directement dans l’application derrière chaque icône <strong>?</strong>.",
+    "intro": "Nouveau ici ? Commencez par <a>Premiers pas</a>. Vous trouverez aussi de courtes explications directement dans l’application derrière chaque icône <strong>?</strong>.",
     "sections_one": "{{count}} section",
     "sections_other": "{{count}} sections"
   },

@@ -97,7 +97,7 @@
       "custom": "Personnels",
       "generated": "Générés par l’IA"
     },
-    "missingHint": "Il manque un outil ? Écrivez-le vous-même dans la <link>bibliothèque d’outils</link> ou faites-le créer par l’IA.",
+    "missingHint": "Il manque un outil ? Écrivez-le vous-même dans la <a>bibliothèque d’outils</a> ou faites-le créer par l’IA.",
     "serverTools": "Outils serveur d’Anthropic",
     "serverToolsShort": "Outils serveur"
   },
@@ -122,7 +122,7 @@
     "image": "Image",
     "chunks_one": "{{count}} extrait",
     "chunks_other": "{{count}} extraits",
-    "noFiles": "Pas encore de fichiers. Importez-les dans <link>Connaissances</link>.",
+    "noFiles": "Pas encore de fichiers. Importez-les dans <a>Connaissances</a>.",
     "citations": "Activer les citations",
     "citationsHint": "Les réponses renvoient aux passages des documents."
   },

@@ -219,7 +219,7 @@ function Overview() {
       <Callout tone="brand">
         <Trans
           i18nKey="docs.overview.intro"
-          components={{ link: <Link to="/docs/start#erste-schritte" />, strong: <strong /> }}
+          components={{ a: <Link to="/docs/start#erste-schritte" />, strong: <strong /> }}
         />
       </Callout>
       <div className="card-grid docs-cards">
@@ -349,7 +349,7 @@ export function DocsPage() {
         <PageHeader title={t("nav.docs")} />
         <div className="page__body">
           <Callout tone="warning">
-            <Trans i18nKey="docs.missingChapter" components={{ link: <Link to="/docs" /> }} />
+            <Trans i18nKey="docs.missingChapter" components={{ a: <Link to="/docs" /> }} />
           </Callout>
         </div>
       </div>

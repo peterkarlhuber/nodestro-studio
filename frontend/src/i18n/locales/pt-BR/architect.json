@@ -25,8 +25,8 @@
     "unsavedIncluded": "Este fluxo tem alterações não salvas. O arquiteto trabalha com o estado atual do editor; nada é salvo nem sobrescrito.",
     "generateTools": "Escrever ferramentas ausentes como rascunho",
     "generateToolsHint": "Só se nenhuma ferramenta existente servir. O código é verificado estaticamente e nunca roda antes da sua aprovação.",
-    "limit": "Limite de custo de um rascunho: {{limit}} (<link>Configurações</link>). O arquiteto nunca inicia uma execução do fluxo.",
-    "noLimit": "Não há limite de custo para rascunhos (<link>Configurações</link>). O arquiteto nunca inicia uma execução do fluxo.",
+    "limit": "Limite de custo de um rascunho: {{limit}} (<a>Configurações</a>). O arquiteto nunca inicia uma execução do fluxo.",
+    "noLimit": "Não há limite de custo para rascunhos (<a>Configurações</a>). O arquiteto nunca inicia uma execução do fluxo.",
     "safety": "O arquiteto só propõe. Os fluxos existentes não mudam até você aceitar o rascunho, e ferramentas novas precisam da sua aprovação.",
     "startCreate": "Projetar fluxo",
     "startRevise": "Propor mudanças"

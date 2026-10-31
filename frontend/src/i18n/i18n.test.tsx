@@ -78,6 +78,17 @@ describe("language files", () => {
     }
   });
 
+  it.each(LANGUAGES)("%s names no void HTML element as markup", (language) => {
+    // <Trans> treats these as empty elements: <link>Knowledge</link> renders an empty link and the word next to it.
+    const VOID = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
+    for (const [key, text] of keysOf(language)) {
+      for (const tag of tags(text)) {
+        const name = tag.replace(/[</>\s]/g, "");
+        expect(VOID.has(name), `${language}: ${key} uses <${name}>`).toBe(false);
+      }
+    }
+  });
+
   it("has a help text for every tooltip", () => {
     for (const id of HELP_IDS) expect(reference.has(`help.${id}`), id).toBe(true);
   });

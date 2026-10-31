@@ -139,3 +139,12 @@ jobs:
           npm install --no-save playwright@1.63.0
           npx playwright install --with-deps chromium
       - run: scripts/e2e.sh
+        env:
+          JOURNEY_REPORT: ${{ runner.temp }}/journeys
+      # Interface cost of the six user tasks (UX-J); a report, not a gate.
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: journeys
+          path: ${{ runner.temp }}/journeys/
+          if-no-files-found: ignore
