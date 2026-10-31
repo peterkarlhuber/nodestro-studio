@@ -4,7 +4,8 @@
   "tabs": {
     "library": "Library",
     "write": "Write it yourself",
-    "generate": "Create with AI"
+    "generate": "Create with AI",
+    "services": "Connected services"
   },
   "sandbox": "Sandbox",
   "sandboxNote": "Sandbox for testing and running your own tools: {{sandbox}} (can be changed in the settings).",
@@ -14,7 +15,8 @@
   "kind": {
     "builtin": "Built-in",
     "custom": "Your own tool",
-    "generated": "Created by AI"
+    "generated": "Created by AI",
+    "mcp": "External service"
   },
   "kindLabel": "Kind of tool",
   "trust": {
@@ -27,7 +29,8 @@
     "user-authored": "Written by you: runs in a separate Python process without isolation on this computer.",
     "untrusted": "AI-created or of unknown origin: runs only isolated, here in the Docker sandbox.",
     "untrustedBlocked": "AI-created or of unknown origin: runs only isolated, but neither the built-in Linux sandbox nor Docker is available. Agents with this tool cannot run; see Settings → Sandbox.",
-    "untrustedBuiltin": "AI-created or of unknown origin: runs only isolated, here in the built-in Linux sandbox (no network, no access to your files or keys). This stays so after your approval."
+    "untrustedBuiltin": "AI-created or of unknown origin: runs only isolated, here in the built-in Linux sandbox (no network, no access to your files or keys). This stays so after your approval.",
+    "mcp": "This tool belongs to the connected service {{server}} (there: {{name}}). A call sends its arguments to that service; the answer is foreign text, never an instruction."
   },
   "version": "Version {{version}}",
   "deleted": "Tool {{name}} deleted",
@@ -96,5 +99,129 @@
     "label": "Tool drafts",
     "text": "The Workflow Architect wrote these tools. They are not registered and have not run. Agents that need them cannot start until you approve them."
   },
-  "sandboxBuiltin": "separate Python process; AI-created tools in the built-in Linux sandbox"
+  "sandboxBuiltin": "separate Python process; AI-created tools in the built-in Linux sandbox",
+  "services": {
+    "title": "Connected services",
+    "intro": "Connect external services through the Model Context Protocol (MCP). An agent sees a tool only after you have reviewed and approved it.",
+    "add": "Connect service",
+    "addTitle": "Connect service",
+    "editTitle": "Edit {{name}}",
+    "empty": "No service connected yet",
+    "emptyText": "Connect an MCP server by its address. Then test the connection and approve its tools one by one.",
+    "counts": "{{approved}} of {{total}} tools approved · {{pending}} waiting for review",
+    "unavailable": "MCP is not available in this installation (needs Python 3.11 or later). Services can be set up but not reached.",
+    "endpointList": "The operator allows only these addresses: {{list}}",
+    "endpointListEmpty": "The operator has not allowed any addresses for MCP (NODESTRO_MCP_ENDPOINTS). Services cannot be connected here.",
+    "noVault": "No secure key store available: access tokens are not saved, only kept in memory until the app closes.",
+    "readOnlyMvp": "For now only tools you classify as \"read only\" can be used.",
+    "writeEnabled": "Tools that change data need an approval for each call.",
+    "unattendedOff": "Schedules, batches and published APIs do not use service tools.",
+    "unattendedOn": "The operator has enabled use in runs without a person.",
+    "disabled": "Off",
+    "error": "Error",
+    "pending_one": "{{count}} waiting",
+    "pending_other": "{{count}} waiting",
+    "unchecked": "Not tested",
+    "connected": "Connected",
+    "discovered_one": "Connection OK: {{count}} tool found.",
+    "discovered_other": "Connection OK: {{count}} tools found.",
+    "removed": "{{name}} was removed.",
+    "saved": "{{name}} was saved.",
+    "server": "Service {{name}}",
+    "protocol": "protocol {{version}}",
+    "checked": "checked {{when}}",
+    "auth": {
+      "none": "No sign-in",
+      "bearer": "Access token",
+      "oauth": "OAuth"
+    },
+    "storage": {
+      "none": "no token",
+      "vault": "token stored encrypted",
+      "session": "token for this session only"
+    },
+    "loopbackOn": "local development server allowed",
+    "edit": "Edit",
+    "remove": "Remove service",
+    "removeConfirm": "Remove?",
+    "test": "Test connection",
+    "enabled": "On",
+    "noTools": "The service offers no tools.",
+    "waiting_one": "{{count}} tool waits for your review",
+    "waiting_other": "{{count}} tools wait for your review",
+    "tools": "Tools of the service",
+    "status": {
+      "new": "New",
+      "changed": "Changed",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "removed": "No longer offered"
+    },
+    "access": {
+      "read": "Read only",
+      "write": "Changes data",
+      "destructive": "Deletes or destroys"
+    },
+    "accessHint": {
+      "read": "Read only: the tool changes nothing at the service or elsewhere. A reading tool still receives the arguments the agent sends.",
+      "write": "Changes data: creates, changes or sends something. When in doubt, this is the right classification.",
+      "destructive": "Deletes or destroys: can remove data for good."
+    },
+    "close": "Close",
+    "review": "Review",
+    "usable": "Agents can use it as {{name}}.",
+    "approvedToast": "{{name}} is approved.",
+    "rejectedToast": "{{name}} is rejected.",
+    "changedText": "The service changed this tool. It is blocked until you review the change; runs that use it fail.",
+    "field": {
+      "title": "Title",
+      "description": "Description",
+      "input_schema": "Parameters",
+      "output_schema": "Output",
+      "annotations": "Service's statements"
+    },
+    "before": "Approved so far",
+    "after": "Offered now",
+    "description": "The service's description",
+    "foreignText": "Foreign text from the service: it is shown, but never treated as an instruction.",
+    "noDescription": "No description.",
+    "schema": "Parameters and statements",
+    "classify": "Classification",
+    "suggested": "The service states: {{access}}. This is a hint, not a guarantee.",
+    "writeBlocked": "Tools that change data stay blocked until approval per call is available.",
+    "argumentsNote": "The service sees everything the agent sends it. Connect only services you trust with that data.",
+    "approve": "Approve",
+    "acceptChange": "Approve change",
+    "reject": "Reject",
+    "approvedBy": "Approved by {{who}} on {{when}}",
+    "hash": "Definition fingerprint:",
+    "name": "Name",
+    "url": "Address",
+    "urlHint": "The address of the MCP endpoint, e.g. https://mcp.example.com/mcp. https only.",
+    "authLabel": "Sign-in",
+    "token": "Access token",
+    "tokenVault": "Stored encrypted and never shown again.",
+    "tokenSession": "No secure key store: the token is kept only until the app closes.",
+    "tokenKept": "Stored – leave empty to keep it",
+    "tokenRemove": "Remove the stored token",
+    "loopback": "Allow a local development server",
+    "loopbackHint": "Allows http on this computer (127.0.0.1) for a server you develop yourself.",
+    "timeout": "Time limit per call (seconds)",
+    "events": "Log",
+    "noEvents": "No entries yet.",
+    "event": {
+      "server_added": "Service connected",
+      "server_changed": "Service changed",
+      "server_removed": "Service removed",
+      "token_changed": "Token changed",
+      "tools_discovered": "Tools listed",
+      "tool_approved": "Tool approved",
+      "tool_rejected": "Tool rejected",
+      "tool_changed": "Tool changed by the service",
+      "tool_removed": "Tool no longer offered",
+      "call_refused": "Call refused",
+      "oauth_connected": "OAuth connected",
+      "oauth_disconnected": "OAuth disconnected"
+    }
+  }
 }

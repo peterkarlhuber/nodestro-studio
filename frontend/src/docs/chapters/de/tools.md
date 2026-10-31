@@ -172,6 +172,24 @@ Der Python-Prozess ist keine Sicherheitsgrenze: Code darin läuft mit deinen Rec
 
 Tools, die vor dieser Version gespeichert wurden, und alle Tools nach dem Wiederherstellen einer Sicherung gelten als unbekannter Herkunft, auch selbst geschriebene, weil ihre Herkunft nicht festgehalten wurde. Mit Isolation funktionieren sie weiter. Eine neue Version eines solchen Tools oder eine Kopie seines Codes in einem neuen Tool behält diesen Status.
 
+## Verbundene Dienste {#verbundene-dienste}
+<!-- keywords: mcp, model context protocol, externer dienst, verbundene dienste, server, token, freigabe, geändert -->
+
+Über das **Model Context Protocol (MCP)** verbindest du externe Dienste, zum Beispiel eine Dokumentensuche oder ein Ticketsystem. Ihre Tools stehen Agenten wie jedes andere Tool zur Verfügung, aber erst nach deiner Prüfung. Du findest sie unter *Tools → Verbundene Dienste*.
+
+1. **Dienst verbinden:** Name und Adresse des MCP-Endpunkts (nur `https`), bei Bedarf ein Zugangstoken. Auf dem Desktop kannst du für einen selbst entwickelten Server auf diesem Computer `http://127.0.0.1` erlauben.
+2. **Verbindung testen:** Nodestro handelt die Protokollversion aus und ruft die Tools des Dienstes ab. Jedes Tool beginnt als **Neu**.
+3. **Prüfen und einstufen:** Du siehst Beschreibung, Parameter und Angaben des Dienstes. Das ist **fremder Text**: Nodestro zeigt ihn an, behandelt ihn aber nie als Anweisung. Stufe das Tool ein: **Nur lesend**, **Ändert Daten** oder **Löscht oder zerstört**. Die Angabe des Dienstes ist nur ein Hinweis; im Zweifel gilt „Ändert Daten“.
+4. **Freigeben:** Erst dann sehen Agenten das Tool, als `mcp__<dienst>__<tool>`. Du weist es einem Agenten zu wie jedes andere Tool.
+
+Derzeit sind nur Tools nutzbar, die du als **nur lesend** einstufst; Tools, die Daten ändern, bleiben gesperrt, bis es die Freigabe pro Aufruf gibt. Auch ein lesendes Tool erhält alles, was der Agent ihm sendet: Verbinde nur Dienste, denen du diese Daten anvertraust.
+
+**Änderungen:** Nodestro merkt sich einen Fingerabdruck jeder freigegebenen Definition und prüft ihn vor jedem Aufruf. Ändert der Dienst ein Tool, wird es **gesperrt**; Läufe, die es verwenden, schlagen mit einer klaren Meldung fehl. Du siehst die Änderung als Gegenüberstellung (bisher freigegeben, jetzt angeboten) und gibst sie frei oder lehnst sie ab.
+
+**Zugangstokens** werden verschlüsselt gespeichert: auf dem Desktop mit einem Schlüssel aus dem Schlüsselbund des Betriebssystems, auf dem Server mit dem Serverschlüssel, getrennt je Mandant. Ohne sicheren Schlüsselspeicher gilt ein Token nur bis zum Schließen der App. Tokens erscheinen nie in Workflows, Exporten oder Protokollen.
+
+**Grenzen:** Nodestro verbindet sich nie mit internen, lokalen oder Metadaten-Adressen, prüft jede aufgelöste Adresse direkt beim Verbinden und ignoriert Proxy-Einstellungen der Umgebung. Auf einem Server erlaubt der Betreiber die Adressen mit `NODESTRO_MCP_ENDPOINTS`. Zeitpläne, Stapel und veröffentlichte APIs verwenden Dienst-Tools erst, wenn der Betreiber das ausdrücklich einschaltet. Kosten externer Dienste kennt Nodestro nicht; sie erscheinen als **unbekannt**, nie als null.
+
 ## Versionen und Löschen {#versionen}
 <!-- keywords: version, löschen, zurückziehen, revoke, aktualisieren, überschreiben -->
 

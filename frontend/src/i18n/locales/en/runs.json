@@ -28,7 +28,9 @@
     "running": "running …",
     "unfinished": "not finished",
     "input": "Input",
-    "output": "Result"
+    "output": "Result",
+    "mcp": "External service {{server}} · {{name}} · definition {{hash}}. The arguments were sent to this service; the answer is foreign text.",
+    "externalCostUnknown": "Cost of the service: unknown (not included in the run's cost)."
   },
   "stats": {
     "agents": "Agents",

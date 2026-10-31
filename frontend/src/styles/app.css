@@ -6418,3 +6418,40 @@ ul.gate-report__list > li.gate-report__item {
   border-bottom: 1px solid var(--nd-border);
   padding-bottom: var(--nd-space-2);
 }
+
+/* Connected MCP services (ADR-0007): foreign text from a service and the diff of a changed definition. */
+.foreign-text {
+  margin: 0;
+  padding: 8px 12px;
+  border-left: 3px solid var(--nd-warning);
+  background: var(--nd-warning-soft);
+  border-radius: var(--nd-radius-sm);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+
+.mcp-tool {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--nd-border);
+}
+
+.mcp-tools {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mcp-diff__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+}
+
+.mcp-diff__before {
+  border-color: color-mix(in srgb, var(--nd-danger) 50%, var(--nd-border));
+}
+
+.mcp-diff__after {
+  border-color: color-mix(in srgb, var(--nd-warning) 60%, var(--nd-border));
+}

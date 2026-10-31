@@ -586,5 +586,32 @@
   "testcase": {
     "run_not_failed": "Solo un'esecuzione fallita può diventare un caso di test.",
     "run_unsupported": "Le esecuzioni importate e quelle dei sotto-workflow non possono diventare un caso di test."
+  },
+  "mcp": {
+    "address_refused": "L'indirizzo {{host}} non è consentito (indirizzo interno, locale o di metadati).",
+    "cancelled": "La chiamata al servizio è stata annullata.",
+    "closed": "La connessione al servizio è stata chiusa.",
+    "definition_moved": "Lo strumento è cambiato dal tuo esame. Esaminalo di nuovo.",
+    "dns_failed": "Impossibile risolvere il nome {{host}}.",
+    "endpoint_not_allowed": "Questo indirizzo non è nell'elenco dell'operatore.",
+    "endpoints_invalid": "L'elenco di indirizzi dell'operatore (NODESTRO_MCP_ENDPOINTS) non è valido.",
+    "http_error": "Il servizio ha risposto con HTTP {{status}}.",
+    "https_required": "I servizi si raggiungono solo via https (http solo per un server di sviluppo locale su questo computer).",
+    "protocol_error": "Il servizio non ha risposto come un server MCP.",
+    "server_disabled": "Il servizio è disattivato.",
+    "server_not_found": "Questo servizio non esiste più.",
+    "timeout": "Il servizio non ha risposto in tempo.",
+    "tool_changed": "Il servizio ha modificato lo strumento; resta bloccato finché un amministratore non esamina la modifica.",
+    "tool_not_approved": "Lo strumento non è ancora approvato.",
+    "tool_not_found": "Il servizio non offre questo strumento.",
+    "tool_removed": "Il servizio non offre più questo strumento.",
+    "unattended_not_enabled": "Le esecuzioni senza una persona non possono usare strumenti dei servizi.",
+    "unauthorized": "Il servizio ha rifiutato l'accesso. Controlla il token di accesso.",
+    "unavailable": "MCP non è disponibile in questa installazione.",
+    "unreachable": "Il servizio non è raggiungibile.",
+    "url_credentials": "L'indirizzo non può contenere nome utente o password.",
+    "url_invalid": "L'indirizzo non è valido.",
+    "vault_unavailable": "Non esiste un archivio sicuro per i token di accesso.",
+    "write_not_supported": "Gli strumenti che modificano dati sono ancora bloccati (manca l'approvazione per chiamata)."
   }
 }

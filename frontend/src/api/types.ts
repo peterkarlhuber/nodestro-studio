@@ -287,6 +287,17 @@ export interface ToolCallRecord {
   is_error: boolean;
   started_at: string;
   finished_at: string | null;
+  /** Where the tool came from; for MCP tools: service, qualified name, definition hash, access, external cost. */
+  provenance?: {
+    source?: string;
+    server_id?: string;
+    server_name?: string;
+    qualified_name?: string;
+    definition_hash?: string | null;
+    access?: string;
+    /** Always "unknown" for external services: Nodestro cannot know what they charge. */
+    external_cost?: string;
+  };
 }
 
 export interface EvaluationRecord {
@@ -600,7 +611,8 @@ export interface WorkflowCheck {
 
 export interface ToolInfo {
   name: string;
-  kind: "builtin" | "custom" | "generated";
+  /** mcp: a tool of a connected MCP service (ADR-0007), approved by an administrator. */
+  kind: "builtin" | "custom" | "generated" | "mcp";
   /** ADR-0006: who wrote the code; ``untrusted`` runs only in an isolating sandbox (Docker). */
   trust: "trusted" | "user-authored" | "untrusted";
   description: string;
@@ -611,6 +623,13 @@ export interface ToolInfo {
   code: string | null;
   tests: string | null;
   requirement: string | null;
+  /** MCP tools only: the service, the tool's own name there and the approved definition's hash. */
+  server_id?: string | null;
+  server_name?: string | null;
+  mcp_name?: string | null;
+  definition_hash?: string | null;
+  /** The shared capability statement: access read/write/destructive, reach internal/external, source. */
+  capability?: { access: string; reach: string; source: string } | null;
 }
 
 export interface TestResult {

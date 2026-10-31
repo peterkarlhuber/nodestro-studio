@@ -172,6 +172,24 @@ The Python process is not a security boundary: code in it runs with your rights.
 
 Tools saved before this version, and all tools after restoring a backup, count as of unknown origin, also the ones you wrote yourself, because their origin was not recorded. With isolation they keep working. A new version of such a tool, or a copy of its code in a new tool, keeps that status.
 
+## Connected services {#verbundene-dienste}
+<!-- keywords: mcp, model context protocol, external service, connected services, server, token, approval, changed -->
+
+With the **Model Context Protocol (MCP)** you connect external services, for example a document search or a ticket system. Their tools are available to agents like any other tool, but only after your review. You find them under *Tools → Connected services*.
+
+1. **Connect a service:** name and address of the MCP endpoint (`https` only), an access token if needed. On the desktop you can allow `http://127.0.0.1` for a server you develop on this computer.
+2. **Test the connection:** Nodestro negotiates the protocol version and lists the service's tools. Every tool starts as **New**.
+3. **Review and classify:** you see the service's description, parameters and statements. This is **foreign text**: Nodestro shows it but never treats it as an instruction. Classify the tool: **Read only**, **Changes data** or **Deletes or destroys**. The service's statement is only a hint; when in doubt, "Changes data" applies.
+4. **Approve:** only then do agents see the tool, as `mcp__<service>__<tool>`. You assign it to an agent like any other tool.
+
+For now only tools you classify as **read only** can be used; tools that change data stay blocked until approval per call exists. A reading tool still receives everything the agent sends it: connect only services you trust with that data.
+
+**Changes:** Nodestro keeps a fingerprint of every approved definition and checks it before every call. When the service changes a tool, it is **blocked**; runs that use it fail with a clear message. You see the change side by side (approved so far, offered now) and approve or reject it.
+
+**Access tokens** are stored encrypted: on the desktop with a key from the operating system's keychain, on the server with the server key, separately per tenant. Without a secure key store a token is kept only until the app closes. Tokens never appear in workflows, exports or logs.
+
+**Limits:** Nodestro never connects to internal, local or metadata addresses, checks every resolved address at the moment it connects and ignores proxy settings of the environment. On a server the operator allows addresses with `NODESTRO_MCP_ENDPOINTS`. Schedules, batches and published APIs use service tools only when the operator explicitly enables it. Nodestro does not know what external services cost; their cost shows as **unknown**, never as zero.
+
 ## Versions and deleting {#versionen}
 <!-- keywords: version, delete, revoke, update, overwrite -->
 

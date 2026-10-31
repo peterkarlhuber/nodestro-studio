@@ -172,6 +172,24 @@ El proceso de Python no es una barrera de seguridad: el código que contiene se 
 
 Las herramientas guardadas antes de esta versión, y todas las herramientas tras restaurar una copia de seguridad, se consideran de origen desconocido, también las que escribiste tú, porque su origen no se registró. Con aislamiento siguen funcionando. Una nueva versión de esa herramienta, o una copia de su código en una herramienta nueva, conserva ese estado.
 
+## Servicios conectados {#verbundene-dienste}
+<!-- keywords: mcp, model context protocol, servicio externo, servicios conectados, servidor, token, aprobación, modificada -->
+
+Con el **Model Context Protocol (MCP)** conectas servicios externos, por ejemplo una búsqueda de documentos o un sistema de tickets. Sus herramientas están disponibles para los agentes como cualquier otra, pero solo después de tu revisión. Las encuentras en *Herramientas → Servicios conectados*.
+
+1. **Conectar un servicio:** nombre y dirección del endpoint MCP (solo `https`) y, si hace falta, un token de acceso. En el escritorio puedes permitir `http://127.0.0.1` para un servidor que desarrollas en este equipo.
+2. **Probar la conexión:** Nodestro negocia la versión del protocolo y consulta las herramientas del servicio. Cada herramienta empieza como **Nueva**.
+3. **Revisar y clasificar:** ves la descripción, los parámetros y las indicaciones del servicio. Es **texto ajeno**: Nodestro lo muestra, pero nunca lo trata como una instrucción. Clasifica la herramienta: **Solo lectura**, **Modifica datos** o **Borra o destruye**. La indicación del servicio es solo una pista; en caso de duda, vale «Modifica datos».
+4. **Aprobar:** solo entonces los agentes ven la herramienta, como `mcp__<servicio>__<herramienta>`. La asignas a un agente como cualquier otra.
+
+Por ahora solo se pueden usar las herramientas que clasifiques como **solo lectura**; las que modifican datos siguen bloqueadas hasta que exista la aprobación por llamada. Una herramienta de lectura recibe igualmente todo lo que el agente le envía: conecta solo servicios a los que confíes esos datos.
+
+**Cambios:** Nodestro guarda una huella de cada definición aprobada y la comprueba antes de cada llamada. Si el servicio modifica una herramienta, queda **bloqueada**; las ejecuciones que la usan fallan con un mensaje claro. Ves el cambio lado a lado (aprobado hasta ahora, ofrecido ahora) y lo apruebas o rechazas.
+
+**Los tokens de acceso** se guardan cifrados: en el escritorio con una clave del llavero del sistema operativo, en el servidor con la clave del servidor, por separado para cada inquilino. Sin un almacén de claves seguro, un token solo vale hasta cerrar la aplicación. Los tokens nunca aparecen en flujos de trabajo, exportaciones ni registros.
+
+**Límites:** Nodestro nunca se conecta a direcciones internas, locales o de metadatos, comprueba cada dirección resuelta en el momento de conectar e ignora la configuración de proxy del entorno. En un servidor, el operador permite las direcciones con `NODESTRO_MCP_ENDPOINTS`. Las planificaciones, los lotes y las API publicadas solo usan herramientas de servicios si el operador lo activa expresamente. Nodestro no conoce el coste de los servicios externos; aparece como **desconocido**, nunca como cero.
+
 ## Versiones y eliminación {#versionen}
 <!-- keywords: versión, eliminar, retirar, revoke, actualizar, sobrescribir -->
 

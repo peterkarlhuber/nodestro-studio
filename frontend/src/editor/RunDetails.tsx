@@ -359,6 +359,16 @@ function ToolCalls({ state }: { state: NodeRun }) {
             <div className="tool-calls__body">
               <span className="nd-field-label">{t("runs.toolCalls.input")}</span>
               <pre className="code-block">{JSON.stringify(call.input, null, 2)}</pre>
+              {call.provenance?.source === "mcp" ? (
+                <p className="muted small" data-testid="tool-provenance">
+                  {t("runs.toolCalls.mcp", {
+                    server: call.provenance.server_name ?? "",
+                    name: call.provenance.qualified_name ?? call.name,
+                    hash: (call.provenance.definition_hash ?? "").slice(0, 12),
+                  })}{" "}
+                  {call.provenance.external_cost === "unknown" ? t("runs.toolCalls.externalCostUnknown") : null}
+                </p>
+              ) : null}
               <span className="nd-field-label">{t("runs.toolCalls.output")}</span>
               <pre className={`code-block ${call.is_error ? "code-block--error" : ""}`}>{call.output ?? "…"}</pre>
             </div>
