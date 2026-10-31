@@ -154,5 +154,6 @@
     "store": "Guardar cifrada",
     "remove": "Eliminar la clave de administrador de {{provider}}",
     "desktop": "La aplicación de escritorio no guarda claves de administrador. Define NODESTRO_OPENAI_ADMIN_KEY o NODESTRO_ANTHROPIC_ADMIN_KEY, o introduce abajo una clave para una comparación."
-  }
+  },
+  "showAll": "Mostrar los {{count}}"
 }

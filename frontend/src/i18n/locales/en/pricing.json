@@ -154,5 +154,6 @@
     "store": "Store encrypted",
     "remove": "Remove the admin key of {{provider}}",
     "desktop": "The desktop app does not store admin keys. Set NODESTRO_OPENAI_ADMIN_KEY or NODESTRO_ANTHROPIC_ADMIN_KEY, or enter a key for one comparison below."
-  }
+  },
+  "showAll": "Show all {{count}}"
 }

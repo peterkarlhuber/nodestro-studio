@@ -154,5 +154,6 @@
     "store": "Salvar criptografada",
     "remove": "Remover a chave de administrador de {{provider}}",
     "desktop": "O app para desktop não salva chaves de administrador. Defina NODESTRO_OPENAI_ADMIN_KEY ou NODESTRO_ANTHROPIC_ADMIN_KEY, ou informe abaixo uma chave para uma comparação."
-  }
+  },
+  "showAll": "Mostrar todos os {{count}}"
 }

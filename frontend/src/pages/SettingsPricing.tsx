@@ -3,7 +3,7 @@
 // the providers' bills. Orkexa calculates every cost; this page only shows and edits the price catalog.
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CheckCircle2, Coins, History, Pencil, Plus, Receipt, RefreshCw, Search, Trash2, Undo2, XCircle } from "lucide-react";
+import { CheckCircle2, Coins, History, Pencil, Plus, Receipt, RefreshCw, Trash2, Undo2, XCircle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -56,6 +56,9 @@ const RATE_FIELDS = [
   "cache_write_1h_usd_per_mtok",
 ] as const;
 type RateField = (typeof RATE_FIELDS)[number];
+
+/** Prices shown before "show all": a catalog synced from LiteLLM has a few hundred. */
+const PAGE = 25;
 
 const rate = (value: string | null | undefined) => formatPrice(rateValue(value));
 
@@ -331,6 +334,7 @@ function PriceTable({ entries }: { entries: PriceEntry[] }) {
   const { t } = useTranslation();
   const invalidate = useInvalidatePricing();
   const [filter, setFilter] = useState("");
+  const [limit, setLimit] = useState(PAGE);
   const [editing, setEditing] = useState<PriceEntry | "new" | null>(null);
   const remove = useMutation({
     mutationFn: (entry: PriceEntry) => pricingApi.removeOverride(entry.provider, entry.model),
@@ -352,9 +356,11 @@ function PriceTable({ entries }: { entries: PriceEntry[] }) {
           value={filter}
           aria-label={t("pricing.filter")}
           placeholder={t("pricing.filter")}
-          onChange={(event) => setFilter(event.target.value)}
+          onChange={(event) => {
+            setFilter(event.target.value);
+            setLimit(PAGE);
+          }}
         />
-        <Search size={15} aria-hidden className="muted" />
         <Button icon={Plus} onClick={() => setEditing("new")}>
           {t("pricing.override.add")}
         </Button>
@@ -378,7 +384,7 @@ function PriceTable({ entries }: { entries: PriceEntry[] }) {
             </tr>
           </thead>
           <tbody>
-            {shown.map((entry) => (
+            {shown.slice(0, limit).map((entry) => (
               <tr key={`${entry.provider}:${entry.model}`} data-status={entry.status}>
                 <td className="pricing__model">
                   <code>
@@ -431,6 +437,13 @@ function PriceTable({ entries }: { entries: PriceEntry[] }) {
           </tbody>
         </table>
       </div>
+      {shown.length > limit ? (
+        <div>
+          <Button size="sm" onClick={() => setLimit(shown.length)}>
+            {t("pricing.showAll", { count: shown.length })}
+          </Button>
+        </div>
+      ) : null}
       <p className="muted small">{t("pricing.unit")}</p>
       {editing ? <OverrideDialog entry={editing} onClose={() => setEditing(null)} /> : null}
     </div>

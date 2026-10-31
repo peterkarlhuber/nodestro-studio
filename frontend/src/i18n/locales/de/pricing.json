@@ -154,5 +154,6 @@
     "store": "Verschlüsselt speichern",
     "remove": "Admin-Schlüssel von {{provider}} entfernen",
     "desktop": "Die Desktop-App speichert keine Admin-Schlüssel. Setze NODESTRO_OPENAI_ADMIN_KEY oder NODESTRO_ANTHROPIC_ADMIN_KEY, oder gib unten einen Schlüssel für einen Abgleich ein."
-  }
+  },
+  "showAll": "Alle {{count}} anzeigen"
 }
