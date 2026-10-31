@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Product evolution plan, P0 (2026-10-31)
+
+- Docs only: `docs/evolution/README.md` (reviewed plan accepted with the owner's decisions D1–D8,
+  pull request plan, deferred innovation backlog with re-entry criteria) and
+  `docs/evolution/inventory.md` (verified inventory, UX findings F1–F11). No code, no pin change.
+
 ### Server storage and logins, M3 PR-7 to PR-9 (2026-10-31)
 
 - Pins: `nodestro-runtime` 8eea1ea, `nodestro-examples` 9b018da, `nodestro-integrations` abc4dbc, `nodestro-api`
