@@ -199,7 +199,9 @@
     "criterionDescription": "Criterion description",
     "addCriterion": "Add criterion",
     "revisions": "Revisions",
-    "judgeModel": "Judge model"
+    "judgeModel": "Judge model",
+    "judgeCost": "Each check is an extra paid request to {{provider}}, also for every revision.",
+    "selfJudge": "The judge is the same model as the agent. A model tends to rate its own answers favorably; a different model checks more independently."
   },
   "advanced": {
     "title": "Advanced",
@@ -259,6 +261,7 @@
     "refusalReturned": "refusals returned",
     "examples_one": "{{count}} example message",
     "examples_other": "{{count}} example messages",
-    "requestOptions": "request options"
+    "requestOptions": "request options",
+    "judge": "judge: {{model}}"
   }
 }

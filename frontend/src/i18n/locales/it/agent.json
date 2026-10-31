@@ -199,7 +199,9 @@
     "criterionDescription": "Descrizione del criterio",
     "addCriterion": "Aggiungi criterio",
     "revisions": "Revisioni",
-    "judgeModel": "Modello giudice"
+    "judgeModel": "Modello giudice",
+    "judgeCost": "Ogni controllo è una richiesta a pagamento in più a {{provider}}, anche a ogni revisione.",
+    "selfJudge": "Il giudice è lo stesso modello dell'agente. Un modello tende a valutare bene le proprie risposte; un altro modello controlla in modo più indipendente."
   },
   "advanced": {
     "title": "Avanzate",
@@ -259,6 +261,7 @@
     "refusalReturned": "rifiuti restituiti",
     "examples_one": "{{count}} messaggio di esempio",
     "examples_other": "{{count}} messaggi di esempio",
-    "requestOptions": "opzioni di richiesta"
+    "requestOptions": "opzioni di richiesta",
+    "judge": "giudice: {{model}}"
   }
 }
