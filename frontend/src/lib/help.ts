@@ -110,6 +110,7 @@ export const HELP_DOCS = {
   "tools.approve": "tools#freigabe",
   "tools.sandbox": "tools#sandbox",
   "tools.services": "tools#verbundene-dienste",
+  "tools.callApproval": "verzweigungen#tool-freigabe",
   "knowledge.upload": "wissen#formate",
   "knowledge.description": "wissen#verwalten",
   "knowledge.chunks": "wissen#indexierung",

@@ -44,6 +44,24 @@
   limitation that a request or tool call that is already running still finishes.
 - Needs an api with the runtime fields (pins follow in the next cascade).
 
+### Per-call tool approvals in the interface (Evolution S-2c, 2026-10-31)
+
+- A tool call that waits for a person (per-call approvals, decision D10) shows a card in the run, at its step and on
+  the **Approvals** page: the tool, its capability (reads only / changes data / deletes or destroys; stays in Nodestro
+  / reaches outside; *not classified* is shown and treated as changing and external), the arguments exactly as they
+  will be sent, a live countdown to the deadline, an optional comment for the agent and *Allow this call* / *Reject*.
+  The decision carries the arguments hash that was shown, so a decision about a changed call or tool version is
+  refused (409 `tool.approval_stale`) and the list reloads; expired cards cannot be decided. The navigation badge
+  counts open tool calls too.
+- Run details show what the rules did with each recorded call: approved or rejected (by whom, when, comment), no
+  decision in time, refused without a question (with the reason, e.g. `tool.approval_unattended`) or allowed by a
+  pre-grant.
+- Texts for the approval states and the new problem codes (`tool.approval_*`, `tool.not_granted`,
+  `tool.pre_grant_*`), a help tip and the help section *Branches > Approving tool calls* in the six languages.
+- Nothing is switched on: the cards only appear when the backend runs with `NODESTRO_TOOL_APPROVALS=1`, which stays
+  off until the security acceptance. No pin changes. The legacy-exemption overview, pre-grant administration and the
+  audit view follow in S-2d.
+
 ### Platform pins: runtime 0aee6a9, api ac9d706, sdk 8cc4c8f (Evolution S-2b, 2026-10-31)
 
 - Pins `nodestro-api` `ac9d706` (before `a06ccea`), `nodestro-runtime` `0aee6a9` (before `8597544`),

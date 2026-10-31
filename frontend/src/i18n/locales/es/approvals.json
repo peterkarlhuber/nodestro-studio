@@ -24,5 +24,42 @@
   "approve": "Aprobar",
   "reject": "Rechazar",
   "approvedToast": "Aprobado. La ejecución continúa.",
-  "rejectedToast": "Rechazado."
+  "rejectedToast": "Rechazado.",
+  "tool": {
+    "title": "Llamada a herramienta: {{name}}",
+    "cardLabel": "Llamada a herramienta {{name}}",
+    "inRun": "Ejecución, paso {{node}}",
+    "help": "Aprobación por llamada a herramienta",
+    "access": {
+      "read": "Solo lee",
+      "write": "Modifica datos",
+      "destructive": "Borra o destruye"
+    },
+    "reach": {
+      "internal": "Se queda en Nodestro",
+      "external": "Actúa hacia fuera"
+    },
+    "capabilityUnknown": "Sin clasificar: se trata como modificadora y externa",
+    "arguments": "Argumentos, exactamente como se enviarán",
+    "timeLeft": "Tiempo para decidir: {{time}}",
+    "expired": "Se acabó el tiempo; la llamada cuenta como rechazada.",
+    "commentHint": "El agente lee el comentario; se guarda con la decisión.",
+    "rejectHint": "Si se rechaza, la llamada no se realiza y el agente sabe que fue rechazada. Sin decisión, la llamada cuenta como rechazada.",
+    "approve": "Permitir esta llamada",
+    "approvedToast": "Permitida. La ejecución continúa.",
+    "rejectedToast": "Rechazada. La llamada no se realiza.",
+    "runWaiting": "Esta ejecución espera tu decisión sobre una llamada a herramienta.",
+    "status": {
+      "allowed": "Permitida por las reglas",
+      "pending": "Esperando una decisión",
+      "approved": "Aprobada",
+      "rejected": "Rechazada",
+      "expired": "Sin decisión a tiempo (rechazada)",
+      "cancelled": "Cancelada",
+      "denied": "Denegada sin preguntar"
+    },
+    "preGranted": "aprobada de antemano",
+    "decidedBy": "por {{name}}, {{time}}",
+    "comment": "comentario: {{comment}}"
+  }
 }

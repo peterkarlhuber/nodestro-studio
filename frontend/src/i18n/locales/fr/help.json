@@ -80,7 +80,8 @@
     "approve": "Les outils validés peuvent être utilisés par tous les agents. Vérifiez d’abord que le code et les tests font ce que vous attendez. Sans décision, une demande est refusée au bout d’une heure.",
     "sandbox": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro, mais de façon isolée, avec des limites de temps et de mémoire.",
     "drafts": "Outils rédigés par l’architecte de workflows. Testez-les et approuvez-les ici, ou refusez-les.",
-    "services": "Services externes via MCP : tu connectes un serveur, testes la connexion et approuves chaque outil après l'avoir examiné. Si le service modifie un outil, celui-ci est bloqué jusqu'à ce que tu examines la modification."
+    "services": "Services externes via MCP : tu connectes un serveur, testes la connexion et approuves chaque outil après l'avoir examiné. Si le service modifie un outil, celui-ci est bloqué jusqu'à ce que tu examines la modification.",
+    "callApproval": "Une personne décide de chaque appel de cet outil, avec les arguments exacts. Sans décision dans le délai, l’appel compte comme refusé."
   },
   "knowledge": {
     "upload": "PDF, images (PNG, JPEG, GIF, WebP) et formats texte. Images jusqu’à 5 Mo, documents jusqu’à 20 Mo. Les textes et les PDF sont indexés pour la recherche.",

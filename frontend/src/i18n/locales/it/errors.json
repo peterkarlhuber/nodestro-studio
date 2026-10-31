@@ -165,7 +165,21 @@
     "no_tests": "Non è stato eseguito alcun test. Scrivi almeno una funzione test_*.",
     "builtin_delete": "Gli strumenti integrati non si possono eliminare.",
     "requirement_missing": "Descrivi che cosa deve saper fare lo strumento.",
-    "input_not_json": "L’input non è un JSON valido."
+    "input_not_json": "L’input non è un JSON valido.",
+    "approval_stale": "La chiamata è cambiata da quando è stata mostrata. Controlla la versione attuale e decidi di nuovo.",
+    "approval_expired": "Il tempo per questa decisione è scaduto; la chiamata è stata considerata rifiutata.",
+    "approval_decided": "Qualcuno ha già deciso su questa chiamata.",
+    "approval_not_found": "Questa richiesta di approvazione non esiste più.",
+    "approval_rejected": "La chiamata è stata rifiutata, quindi lo strumento non è stato eseguito.",
+    "approval_timeout": "Nessuno ha deciso in tempo, quindi la chiamata è stata considerata rifiutata.",
+    "approval_unattended": "Lo strumento richiede l’approvazione di una persona per ogni chiamata, e in questa esecuzione nessuno può rispondere (ad esempio una pianificazione o un lotto). Approvalo in anticipo per quella pianificazione o quel lotto, oppure avvia l’esecuzione a mano.",
+    "approval_capacity": "In questo momento troppe esecuzioni attendono un’approvazione, quindi questa chiamata non è avvenuta.",
+    "not_granted": "Lo strumento «{{tool}}» non è assegnato a questo agente.",
+    "pre_grant_mcp": "Gli strumenti dei servizi collegati non possono essere approvati in anticipo.",
+    "pre_grant_destructive": "Gli strumenti che cancellano o distruggono non possono essere approvati in anticipo.",
+    "pre_grant_version": "Si può approvare in anticipo solo una versione precisa dello strumento.",
+    "pre_grant_expiry": "La data di scadenza è nel passato.",
+    "pre_grant_not_found": "Questa approvazione anticipata non esiste."
   },
   "job": {
     "writing": "Il Coding Agent sta scrivendo codice e test …",

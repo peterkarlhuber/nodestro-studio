@@ -80,7 +80,8 @@
     "approve": "Las herramientas aprobadas pueden usarlas todos los agentes. Comprueba antes que el código y las pruebas hacen lo que esperas. Sin decisión, un encargo se rechaza al cabo de una hora.",
     "sandbox": "Las herramientas propias y las creadas por IA nunca se ejecutan en el proceso de Nodestro, sino aisladas, con límites de tiempo y de memoria.",
     "drafts": "Herramientas escritas por el arquitecto de flujos. Pruébalas y apruébalas aquí, o recházalas.",
-    "services": "Servicios externos mediante MCP: conectas un servidor, pruebas la conexión y apruebas cada herramienta tras revisarla. Si el servicio modifica una herramienta, queda bloqueada hasta que revises el cambio."
+    "services": "Servicios externos mediante MCP: conectas un servidor, pruebas la conexión y apruebas cada herramienta tras revisarla. Si el servicio modifica una herramienta, queda bloqueada hasta que revises el cambio.",
+    "callApproval": "Una persona decide sobre cada llamada a esta herramienta, con los argumentos exactos. Sin decisión dentro del plazo, la llamada cuenta como rechazada."
   },
   "knowledge": {
     "upload": "PDF, imágenes (PNG, JPEG, GIF, WebP) y formatos de texto. Imágenes de hasta 5 MB, documentos de hasta 20 MB. Los textos y los PDF se indexan para la búsqueda.",

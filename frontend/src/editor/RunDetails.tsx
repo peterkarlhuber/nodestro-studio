@@ -9,6 +9,7 @@ import { AdoptDialog } from "../components/AdoptDialog";
 import { Output } from "../components/Markdown";
 import { Badge, Button, Callout, HelpTip, StatusBadge, Tooltip } from "../components/ui";
 import { ApprovalCard } from "../runs/ApprovalCard";
+import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCard";
 import { ProblemText, runProblem } from "../lib/errors";
 import { formatCost, formatDuration, formatTime, formatNumber, formatTokens, tokenBreakdown } from "../lib/format";
 import { type AgentContext, ContextView } from "./ContextView";
@@ -134,6 +135,7 @@ export function FlowNodeDetails({ run, node, state }: { run?: Run; node: Workflo
         <ApprovalCard runId={run.id} nodeId={node.id} />
       ) : null}
       {node.type === "orchestrator" ? <OrchestrationView node={node} state={state} /> : null}
+      {state.status === "running" && run ? <NodeToolApprovals runId={run.id} nodeId={node.id} /> : null}
       {node.type === "subworkflow" && state.child_run_id ? (
         <p>
           <Link to={`/executions/${state.child_run_id}`}>
@@ -396,6 +398,7 @@ function ToolCalls({ state }: { state: NodeRun }) {
                   {call.provenance.external_cost === "unknown" ? t("runs.toolCalls.externalCostUnknown") : null}
                 </p>
               ) : null}
+              {call.approval ? <ToolCallApprovalNote approval={call.approval} /> : null}
               <span className="nd-field-label">{t("runs.toolCalls.output")}</span>
               <pre className={`code-block ${call.is_error ? "code-block--error" : ""}`}>{call.output ?? "…"}</pre>
             </div>

@@ -74,6 +74,25 @@ The **Approvals** page (navigation, group *Automation*) lists every open approva
 
 Each card shows the note, the results to review, a comment box and the buttons *Approve* and *Reject*. Approvals inside sub-workflows appear here too, with the path to the parent run.
 
+## Approving tool calls {#tool-freigabe}
+<!-- keywords: tool approval, tool call, per call, arguments, deadline, pre-grant, unattended, legacy exemption -->
+
+Besides approval nodes, Nodestro can ask before **single tool calls** of an agent. This is meant for tools that change data or reach outside, for example sending an e-mail or writing to a ticket system. The administrator switches it on after the security review; until then nothing changes.
+
+When an agent wants to make such a call, the run keeps running but waits at this call. The card appears in the run, at the step, and on the **Approvals** page. It shows the tool, what it may do (*reads only*, *changes data*, *deletes or destroys*; *stays in Nodestro* or *reaches outside*), the **arguments exactly as they will be sent**, and the time left.
+
+- **Allow this call** lets exactly this call through. A decision applies only to the arguments and the tool version you saw: if either changed, Nodestro refuses the decision and shows the current call.
+- **Reject** prevents the call; the agent learns that it was refused and can continue without it.
+- **Without a decision** within the time limit (15 minutes by default) the call counts as rejected, also after a restart. A rejected or expired decision is never used again.
+- A tool that is **not classified** counts as changing data and reaching outside.
+- Tools of **connected services** that change data are asked about at every call.
+
+Runs nobody watches (schedules, batches, test series) cannot ask. There such a call is refused unless an administrator approved this tool version **in advance** for exactly that schedule or batch. Tools that delete or destroy and tools of connected services can never be approved in advance.
+
+Workflows that already existed when approvals were switched on keep working: their tool assignments are marked as **exceptions from before**, bound to the tool version they ran with. A new tool version or a new assignment is asked about as usual. An approval never lifts the sandbox's limits.
+
+In the run's details, each tool call shows what the rules did: allowed, approved or rejected (by whom and when), no decision in time, or refused without a question, with the reason.
+
 ## Sub-workflows {#unterworkflow}
 <!-- keywords: sub-workflow, subworkflow, nesting, reuse, building block, version, child run -->
 

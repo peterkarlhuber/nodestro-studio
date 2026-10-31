@@ -24,5 +24,42 @@
   "approve": "Freigeben",
   "reject": "Ablehnen",
   "approvedToast": "Freigegeben. Der Lauf geht weiter.",
-  "rejectedToast": "Abgelehnt."
+  "rejectedToast": "Abgelehnt.",
+  "tool": {
+    "title": "Tool-Aufruf: {{name}}",
+    "cardLabel": "Tool-Aufruf {{name}}",
+    "inRun": "Ausführung, Schritt {{node}}",
+    "help": "Freigabe pro Tool-Aufruf",
+    "access": {
+      "read": "Liest nur",
+      "write": "Ändert Daten",
+      "destructive": "Löscht oder zerstört"
+    },
+    "reach": {
+      "internal": "Bleibt in Nodestro",
+      "external": "Wirkt nach außen"
+    },
+    "capabilityUnknown": "Nicht eingestuft: gilt als ändernd und nach außen wirkend",
+    "arguments": "Argumente, genau so, wie sie gesendet werden",
+    "timeLeft": "Zeit für die Entscheidung: {{time}}",
+    "expired": "Die Zeit ist abgelaufen; der Aufruf gilt als abgelehnt.",
+    "commentHint": "Der Agent liest den Kommentar; er wird mit der Entscheidung gespeichert.",
+    "rejectHint": "Bei Ablehnung findet der Aufruf nicht statt, und der Agent erfährt, dass er abgelehnt wurde. Ohne Entscheidung gilt der Aufruf als abgelehnt.",
+    "approve": "Diesen Aufruf erlauben",
+    "approvedToast": "Erlaubt. Die Ausführung läuft weiter.",
+    "rejectedToast": "Abgelehnt. Der Aufruf findet nicht statt.",
+    "runWaiting": "Diese Ausführung wartet auf deine Entscheidung zu einem Tool-Aufruf.",
+    "status": {
+      "allowed": "Von den Regeln erlaubt",
+      "pending": "Wartet auf Entscheidung",
+      "approved": "Freigegeben",
+      "rejected": "Abgelehnt",
+      "expired": "Keine Entscheidung rechtzeitig (abgelehnt)",
+      "cancelled": "Abgebrochen",
+      "denied": "Ohne Rückfrage verweigert"
+    },
+    "preGranted": "vorab freigegeben",
+    "decidedBy": "von {{name}}, {{time}}",
+    "comment": "Kommentar: {{comment}}"
+  }
 }

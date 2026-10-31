@@ -74,6 +74,25 @@ La page **Validations** (navigation, groupe *Automatisation*) liste toutes les v
 
 Chaque carte montre la consigne, les résultats à vérifier, un champ de commentaire et les boutons *Valider* et *Refuser*. Les validations à l’intérieur de sous-workflows apparaissent aussi ici, avec le chemin vers l’exécution parente.
 
+## Valider les appels d’outils {#tool-freigabe}
+<!-- keywords: validation d’outil, appel d’outil, par appel, arguments, délai, validation anticipée, sans surveillance, exception héritée -->
+
+En plus des nœuds de validation, Nodestro peut demander avant **des appels d’outils isolés** d’un agent. C’est prévu pour les outils qui modifient des données ou agissent vers l’extérieur, par exemple envoyer un e-mail ou écrire dans un système de tickets. L’administration l’active après la revue de sécurité ; d’ici là, rien ne change.
+
+Quand un agent veut faire un tel appel, l’exécution continue mais attend à cet appel. La carte apparaît dans l’exécution, à l’étape et sur la page **Validations**. Elle montre l’outil, ce qu’il peut faire (*lecture seule*, *modifie des données*, *supprime ou détruit* ; *reste dans Nodestro* ou *agit vers l’extérieur*), les **arguments exactement tels qu’ils seront envoyés** et le temps restant.
+
+- **Autoriser cet appel** laisse passer exactement cet appel. Une décision ne vaut que pour les arguments et la version d’outil que vous avez vus : si l’un d’eux a changé, Nodestro refuse la décision et affiche l’appel actuel.
+- **Refuser** empêche l’appel ; l’agent apprend qu’il a été refusé et peut continuer sans lui.
+- **Sans décision** dans le délai (15 minutes par défaut), l’appel compte comme refusé, y compris après un redémarrage. Une décision refusée ou expirée n’est jamais réutilisée.
+- Un outil **non classé** compte comme modifiant et externe.
+- Pour les outils des **services connectés** qui modifient des données, la question est posée à chaque appel.
+
+Les exécutions que personne ne surveille (planifications, lots, séries de tests) ne peuvent pas demander. Un tel appel y est refusé, sauf si l’administration a **validé à l’avance** cette version de l’outil pour exactement cette planification ou ce lot. Les outils qui suppriment ou détruisent et ceux des services connectés ne peuvent jamais être validés à l’avance.
+
+Les workflows qui existaient déjà lors de l’activation continuent de fonctionner : leurs attributions d’outils sont marquées comme **exceptions héritées**, liées à la version d’outil avec laquelle ils tournaient. Une nouvelle version d’outil ou une nouvelle attribution est soumise à la question comme d’habitude. Une validation ne lève jamais les limites du bac à sable.
+
+Dans les détails de l’exécution, chaque appel d’outil montre ce qu’ont fait les règles : autorisé, validé ou refusé (par qui et quand), pas de décision à temps ou refusé sans question, avec la raison.
+
 ## Sous-workflows {#unterworkflow}
 <!-- keywords: sous-workflow, subworkflow, imbriquer, réutiliser, brique, version, exécution enfant -->
 

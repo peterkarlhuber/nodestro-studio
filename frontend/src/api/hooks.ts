@@ -29,6 +29,7 @@ export const keys = {
   conversation: (id: string) => ["assistant", "conversation", id] as const,
   example: (id: string, language: string) => ["example", id, language] as const,
   approvals: ["approvals"] as const,
+  toolApprovals: ["tool-approvals"] as const,
   resultFiles: (runId: string) => ["result-files", runId] as const,
   batches: ["batches"] as const,
   batch: (id: string) => ["batch", id] as const,
@@ -67,6 +68,10 @@ export const useExample = (id: string | null, language: string) =>
 /** Approvals waiting for a person; polled so the navigation badge stays current. */
 export const useApprovals = () =>
   useQuery({ queryKey: keys.approvals, queryFn: api.approvals, refetchInterval: 5000 });
+
+/** Tool calls waiting for a person (per-call approvals); polled like the approvals. Empty while approvals are off. */
+export const useToolApprovals = () =>
+  useQuery({ queryKey: keys.toolApprovals, queryFn: api.toolApprovals, refetchInterval: 5000, retry: false });
 export const useBatches = () => useQuery({ queryKey: keys.batches, queryFn: api.batches, refetchInterval: 4000 });
 export const useSuites = () => useQuery({ queryKey: keys.suites, queryFn: () => api.suites() });
 export const useSchedules = () => useQuery({ queryKey: keys.schedules, queryFn: api.schedules, refetchInterval: 15000 });

@@ -24,5 +24,42 @@
   "approve": "Valider",
   "reject": "Refuser",
   "approvedToast": "Validé. L’exécution continue.",
-  "rejectedToast": "Refusé."
+  "rejectedToast": "Refusé.",
+  "tool": {
+    "title": "Appel d’outil : {{name}}",
+    "cardLabel": "Appel d’outil {{name}}",
+    "inRun": "Exécution, étape {{node}}",
+    "help": "Validation par appel d’outil",
+    "access": {
+      "read": "Lecture seule",
+      "write": "Modifie des données",
+      "destructive": "Supprime ou détruit"
+    },
+    "reach": {
+      "internal": "Reste dans Nodestro",
+      "external": "Agit vers l’extérieur"
+    },
+    "capabilityUnknown": "Non classé : traité comme modifiant et externe",
+    "arguments": "Arguments, exactement tels qu’ils seront envoyés",
+    "timeLeft": "Temps restant pour décider : {{time}}",
+    "expired": "Le temps est écoulé ; l’appel compte comme refusé.",
+    "commentHint": "L’agent lit le commentaire ; il est enregistré avec la décision.",
+    "rejectHint": "En cas de refus, l’appel n’a pas lieu et l’agent apprend qu’il a été refusé. Sans décision, l’appel compte comme refusé.",
+    "approve": "Autoriser cet appel",
+    "approvedToast": "Autorisé. L’exécution continue.",
+    "rejectedToast": "Refusé. L’appel n’a pas lieu.",
+    "runWaiting": "Cette exécution attend votre décision sur un appel d’outil.",
+    "status": {
+      "allowed": "Autorisé par les règles",
+      "pending": "En attente d’une décision",
+      "approved": "Validé",
+      "rejected": "Refusé",
+      "expired": "Pas de décision à temps (refusé)",
+      "cancelled": "Annulé",
+      "denied": "Refusé sans question"
+    },
+    "preGranted": "validé à l’avance",
+    "decidedBy": "par {{name}}, {{time}}",
+    "comment": "commentaire : {{comment}}"
+  }
 }

@@ -80,7 +80,8 @@
     "approve": "Approved tools can be used by all agents. Check beforehand that code and tests do what you expect. Without a decision, a job is rejected after one hour.",
     "sandbox": "Your own and AI-created tools never run in the Nodestro process, but isolated with time and memory limits.",
     "drafts": "Tools written by the Workflow Architect. Test and approve them here, or reject them.",
-    "services": "External services through MCP: you connect a server, test the connection and approve each tool after reviewing it. When the service changes a tool, it is blocked until you review the change."
+    "services": "External services through MCP: you connect a server, test the connection and approve each tool after reviewing it. When the service changes a tool, it is blocked until you review the change.",
+    "callApproval": "A person decides about each call of this tool, with the exact arguments. Without a decision within the time limit, the call counts as rejected."
   },
   "knowledge": {
     "upload": "PDFs, images (PNG, JPEG, GIF, WebP) and text formats. Images up to 5 MB, documents up to 20 MB. Texts and PDFs are indexed for search.",

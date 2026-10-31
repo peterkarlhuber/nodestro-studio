@@ -10,6 +10,7 @@ import { Button, Callout, Hint, IconButton, Stat, StatusBadge } from "../compone
 import { ProblemText, runProblem } from "../lib/errors";
 import { formatCost, formatTokens, tokenBreakdown } from "../lib/format";
 import { RunApprovals } from "../runs/ApprovalCard";
+import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { useEditorLayout } from "./layout";
 import { NodeRunDetails, startFiles } from "./RunDetails";
 import { liveUsage, useEditor } from "./store";
@@ -126,6 +127,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                       </Callout>
                     ) : null}
                     {paused ? <RunApprovals run={run} /> : null}
+                    {run.status === "running" ? <RunToolApprovals run={run} /> : null}
                     {live ? <p className="muted">{t("runs.panel.running")}</p> : paused ? null : <Output value={run.output} />}
                   </div>
                 )}

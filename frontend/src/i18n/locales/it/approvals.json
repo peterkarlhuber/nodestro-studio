@@ -24,5 +24,42 @@
   "approve": "Approva",
   "reject": "Rifiuta",
   "approvedToast": "Approvato. L’esecuzione prosegue.",
-  "rejectedToast": "Rifiutato."
+  "rejectedToast": "Rifiutato.",
+  "tool": {
+    "title": "Chiamata di strumento: {{name}}",
+    "cardLabel": "Chiamata di strumento {{name}}",
+    "inRun": "Esecuzione, passo {{node}}",
+    "help": "Approvazione per chiamata di strumento",
+    "access": {
+      "read": "Solo lettura",
+      "write": "Modifica dati",
+      "destructive": "Cancella o distrugge"
+    },
+    "reach": {
+      "internal": "Resta in Nodestro",
+      "external": "Agisce verso l’esterno"
+    },
+    "capabilityUnknown": "Non classificato: trattato come modificante ed esterno",
+    "arguments": "Argomenti, esattamente come verranno inviati",
+    "timeLeft": "Tempo per decidere: {{time}}",
+    "expired": "Il tempo è scaduto; la chiamata conta come rifiutata.",
+    "commentHint": "L’agente legge il commento; viene salvato con la decisione.",
+    "rejectHint": "Se rifiutata, la chiamata non avviene e l’agente sa che è stata rifiutata. Senza decisione, la chiamata conta come rifiutata.",
+    "approve": "Consenti questa chiamata",
+    "approvedToast": "Consentita. L’esecuzione continua.",
+    "rejectedToast": "Rifiutata. La chiamata non avviene.",
+    "runWaiting": "Questa esecuzione attende la tua decisione su una chiamata di strumento.",
+    "status": {
+      "allowed": "Consentita dalle regole",
+      "pending": "In attesa di decisione",
+      "approved": "Approvata",
+      "rejected": "Rifiutata",
+      "expired": "Nessuna decisione in tempo (rifiutata)",
+      "cancelled": "Annullata",
+      "denied": "Negata senza domanda"
+    },
+    "preGranted": "approvata in anticipo",
+    "decidedBy": "da {{name}}, {{time}}",
+    "comment": "commento: {{comment}}"
+  }
 }

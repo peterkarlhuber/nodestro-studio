@@ -74,6 +74,25 @@ La página **Aprobaciones** (navegación, grupo *Automatización*) lista todas l
 
 Cada tarjeta muestra la indicación, los resultados que revisar, un campo de comentario y los botones *Aprobar* y *Rechazar*. Las aprobaciones dentro de subflujos también aparecen aquí, con la ruta hasta la ejecución principal.
 
+## Aprobar llamadas a herramientas {#tool-freigabe}
+<!-- keywords: aprobación de herramienta, llamada a herramienta, por llamada, argumentos, plazo, aprobación previa, desatendida, excepción heredada -->
+
+Además de los nodos de aprobación, Nodestro puede preguntar antes de **llamadas sueltas a herramientas** de un agente. Está pensado para herramientas que modifican datos o actúan hacia fuera, por ejemplo enviar un correo o escribir en un sistema de tickets. La administración lo activa tras la revisión de seguridad; hasta entonces no cambia nada.
+
+Cuando un agente quiere hacer una llamada así, la ejecución sigue en marcha pero espera en esa llamada. La tarjeta aparece en la ejecución, en el paso y en la página **Aprobaciones**. Muestra la herramienta, lo que puede hacer (*solo lee*, *modifica datos*, *borra o destruye*; *se queda en Nodestro* o *actúa hacia fuera*), los **argumentos exactamente como se enviarán** y el tiempo restante.
+
+- **Permitir esta llamada** deja pasar exactamente esta llamada. Una decisión solo vale para los argumentos y la versión de la herramienta que viste: si alguno cambió, Nodestro rechaza la decisión y muestra la llamada actual.
+- **Rechazar** impide la llamada; el agente sabe que fue rechazada y puede seguir sin ella.
+- **Sin decisión** dentro del plazo (15 minutos por defecto), la llamada cuenta como rechazada, también tras un reinicio. Una decisión rechazada o caducada nunca se reutiliza.
+- Una herramienta **sin clasificar** cuenta como modificadora y externa.
+- Para las herramientas de **servicios conectados** que modifican datos se pregunta en cada llamada.
+
+Las ejecuciones que nadie supervisa (programaciones, lotes, series de pruebas) no pueden preguntar. Allí esa llamada se deniega, salvo que la administración haya **aprobado de antemano** esa versión de la herramienta para esa programación o lote concretos. Las herramientas que borran o destruyen y las de servicios conectados nunca se pueden aprobar de antemano.
+
+Los flujos de trabajo que ya existían al activarlo siguen funcionando: sus asignaciones de herramientas quedan marcadas como **excepciones heredadas**, ligadas a la versión de la herramienta con la que se ejecutaban. Una nueva versión de la herramienta o una nueva asignación se pregunta como siempre. Una aprobación nunca levanta los límites del sandbox.
+
+En los detalles de la ejecución, cada llamada a herramienta muestra qué hicieron las reglas: permitida, aprobada o rechazada (por quién y cuándo), sin decisión a tiempo o denegada sin preguntar, con el motivo.
+
 ## Subflujos {#unterworkflow}
 <!-- keywords: subflujo, sub-workflow, anidar, reutilizar, bloque, versión, ejecución hija -->
 
