@@ -40,5 +40,16 @@
       "version": "0.2.0",
       "pyproject": "python/pyproject.toml"
     }
+  },
+  "products": {
+    "comment": "Released products and the studio commit each one builds from (their studio.json); updated when a product's studio.json moves.",
+    "nodestro-desktop": {
+      "commit": "26612f9b4f13bf36e9945fa05f95fe8b5df9efe3",
+      "studio": "6b73625a0c82744d09ba3a0ff369b68edb61187d"
+    },
+    "nodestro-server": {
+      "commit": "2d512c3d0bb1df0073bae0ae81a2ad577921708e",
+      "studio": "6b73625a0c82744d09ba3a0ff369b68edb61187d"
+    }
   }
 }

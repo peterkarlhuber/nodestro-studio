@@ -33,8 +33,8 @@ Last update: 2026-10-31.
 | PR-9 | Identity and tenants (OIDC) | done | runtime #10 (`8eea1ea`: tenant workspaces, `identity_store`, migration `0003`); api #12 (`c0e61bd`: OIDC login, sessions, roles, `install` permission); pins: examples #8 (`9b018da`), integrations #8 (`abc4dbc`), sdk #11 (`7203183`), studio (this PR: pins, login redirect, texts) |
 | PR-10 | Persistent jobs and workers | done | runtime #11 (`136f0cf`: job queue, reaper, run events, scheduler lock), runtime #12 (`3a052d1`: remote run events); pins: examples #9 (`e591c48`), integrations #9 (`77bbff4`); api #13 (`3a895e7`: `ServerWorker`) |
 | PR-11 | Container sandbox with libraries | done | runtime #13 (`4104176`: image per approved lock with hashes, wheels only, `--pull never`); pins: examples #10 (`43e02f6`), integrations #10 (`13160d1`); api #14 (`817c8c4`); sdk #12 (`7f0b0df`); studio (this PR: texts) |
-| PR-12 | Server integration and deployment | in progress | runtime #14 (`640ed68`: `ServerSettings`, encrypted tenant secrets, container calls without bind mounts), runtime #15 (`51f0a6c`: model endpoint allowlist), runtime #16 (`c6bc2e5`: a run is stored as running as soon as a worker starts it); pins: examples #11 (`f13227c`), #12 (`86c58a1`), integrations #11 (`268c3ed`), #12 (`652c231`); api #15 (`f119cfc`: `nodestro-server` command, backups, HTTPS-only identity providers); sdk #13 (`2ed893a`); studio (this PR: pins, texts); nodestro-server #1 (image, compose, runbook, end-to-end tests; pins this studio) |
-| PR-13 | Built-in sandbox prototype | open (next after PR-12) | — |
+| PR-12 | Server integration and deployment | done | runtime #14 (`640ed68`: `ServerSettings`, encrypted tenant secrets, container calls without bind mounts), runtime #15 (`51f0a6c`: model endpoint allowlist), runtime #16 (`c6bc2e5`: a run is stored as running as soon as a worker starts it); pins: examples #11 (`f13227c`), #12 (`86c58a1`), integrations #11 (`268c3ed`), #12 (`652c231`); api #15 (`f119cfc`: `nodestro-server` command, backups, HTTPS-only identity providers); sdk #13 (`2ed893a`); studio #19 (`6b73625`: pins, texts); nodestro-server #1 (`2d512c3`: image, compose, runbook, end-to-end tests); nodestro-desktop #3 (`26612f9`: backend from studio `6b73625`) |
+| PR-13 | Built-in sandbox prototype | done (prototype, not isolating) | runtime #17 (`f3931e8`: `builtin_sandbox`, bubblewrap + seccomp, acceptance tests in CI); report: [sandbox-prototype-report.md](sandbox-prototype-report.md); no pin change (nothing uses it) |
 | M6 | Release pipelines, manifests, signing, OS support matrix | open | — |
 
 ## Notes per step
@@ -133,11 +133,20 @@ Last update: 2026-10-31.
   restored into older servers. Restores use the image's `pg_restore` (`scripts/restore.sh`).
 - The end-to-end tests found that a run executed by a worker stayed `queued` for other processes until it ended
   (fixed in runtime #16).
-- Local end-to-end run against the real stack (PostgreSQL 17, Dex, Docker-in-Docker, model stub, one API and one
-  worker process): 15 passed. The CI run of the same tests is recorded on the nodestro-server PR.
+- End-to-end tests against the real stack (PostgreSQL 17, Dex, Docker-in-Docker, model stub, one API and one worker
+  process): 15 passed locally and 15 passed in the CI of nodestro-server #1, with the image built from the final pins.
 - nodestro-server: image (pinned studio commit, BuildKit secrets, checksum-verified docker CLI, user 10001),
   development stack (PostgreSQL, Dex, Docker-in-Docker, model stub; Linux only), runbook, and end-to-end tests of
   every acceptance criterion in CI.
+
+### PR-13
+
+- Linux x86-64 candidate: `BubblewrapSandbox` (namespaces, a root file system with only the interpreter, an empty
+  environment, a seccomp filter). Every security probe of ADR-0006 passes in CI and locally; the compatibility checks
+  with the examples' generated tools, a compiled library from a lock file, and the desktop bundle on a clean machine
+  are not run yet, so `isolation_of` keeps returning `"none"`. Details and the remaining steps are in the report.
+- No candidate for macOS, Windows or aarch64; nothing was run on those systems.
+- The platform pins stay at runtime `c6bc2e5`; the next pin bump picks the prototype up.
 
 ## Limitations known so far
 
