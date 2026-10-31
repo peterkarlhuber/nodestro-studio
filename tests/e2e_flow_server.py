@@ -3,7 +3,7 @@
 Usage: python tests/e2e_flow_server.py --data-dir DIR [--port 8040]
 
 Agents answer from a script chosen by a keyword in their system prompt: the classifier
-always says ``complaint``, the other agents write a short text. Every answer comes after a
+always says ``complaint``, the other agents write a short text, and ``BROKEN`` agents fail. Every answer comes after a
 short pause, so the browser can watch runs, batches and test series progress. Nothing calls
 the API and no key is needed.
 """
@@ -44,8 +44,14 @@ ANSWERS = {
 }
 
 
+def broken(_request: dict[str, Any]) -> Any:
+    """An answer cut off at the token limit: the run fails (for "test case from a failed run")."""
+    return text("…", stop_reason="max_tokens")
+
+
 def script() -> dict[str, list[Any]]:
-    return {key: [slow(value) for _ in range(REPEAT)] for key, value in ANSWERS.items()}
+    answers = {key: [slow(value) for _ in range(REPEAT)] for key, value in ANSWERS.items()}
+    return {**answers, "BROKEN": [broken] * REPEAT}
 
 
 def main() -> None:

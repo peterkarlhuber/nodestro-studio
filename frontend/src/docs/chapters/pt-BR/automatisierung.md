@@ -39,6 +39,18 @@ Uma **série de testes** pertence a um fluxo de trabalho e contém **casos de te
 
 Uma série de testes tem no máximo 200 casos. Casos inválidos (como um campo obrigatório sem valor) são informados antes do início e ignorados.
 
+## Caso de teste a partir de uma execução com falha {#testfall-aus-lauf}
+<!-- keywords: caso de teste a partir de execução, erro como teste, regressão, falhou, adicionar, anonimizado -->
+
+Quando uma execução falhou, clique em **Adicionar como caso de teste** nos detalhes dela. O Nodestro propõe um caso de teste com a mesma entrada: valores do formulário, texto livre e arquivos.
+
+- Chaves de API, tokens e senhas são sempre substituídos por marcadores como `[API_KEY_1]`, e dados pessoais (endereços de e-mail, telefones, IBANs …) também enquanto a opção estiver ligada. A detecção usa padrões e não encontra tudo; confira a prévia.
+- Os arquivos são usados como estão salvos, sem cópia e sem anonimização. Arquivos excluídos ficam de fora e são indicados, assim como valores que não cabem mais no formulário atual.
+- Nada é salvo até você escolher uma série de testes (ou criar uma nova) e clicar em **Adicionar à série de testes**. A execução em si não muda.
+- O caso guarda sua **origem** (execução, erro, o que foi substituído) e a mostra na série de testes. Lá você adiciona regras de verificação e critérios.
+
+Se um caso novo mudar uma série de testes usada por um [controle de publicação](/docs/api-und-export#freigabe-gate), a série precisa rodar de novo antes da próxima publicação.
+
 ## Avaliação por IA {#ki-bewertung}
 <!-- keywords: avaliação por ia, juiz, llm as judge, critérios, avaliação, nota, pontuação -->
 

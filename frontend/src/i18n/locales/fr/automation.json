@@ -167,7 +167,31 @@
     "modelsChanged_one": "{{count}} agent utilise un autre modèle.",
     "modelsChanged_other": "{{count}} agents utilisent un autre modèle.",
     "needsLimit": "Comparer des modèles exige une limite de coût : les exécutions précédentes utilisaient d’autres modèles et ne disent rien du coût.",
-    "variant": "Comparaison de modèles"
+    "variant": "Comparaison de modèles",
+    "fromRun": {
+      "button": "Ajouter comme cas de test",
+      "title": "Cas de test à partir de cette exécution",
+      "intro": "Nodestro propose un cas de test avec l'entrée de cette exécution. Rien n'est enregistré tant que tu ne l'ajoutes pas à une série de tests.",
+      "replaced": "Remplacé : {{summary}}.",
+      "preview": "Entrée proposée",
+      "files_one": "{{count}} fichier est utilisé tel qu'il est enregistré (non anonymisé).",
+      "files_other": "{{count}} fichiers sont utilisés tels qu'ils sont enregistrés (non anonymisés).",
+      "missingFiles_one": "{{count}} fichier de l'exécution n'existe plus ; il manque dans le cas de test.",
+      "missingFiles_other": "{{count}} fichiers de l'exécution n'existent plus ; ils manquent dans le cas de test.",
+      "problems": "Ne correspond plus au formulaire actuel : {{fields}}. Corrige-le dans la série de tests après l'ajout.",
+      "checksLater": "Tu ajoutes ensuite les règles de contrôle et les critères de l'évaluation IA dans la série de tests.",
+      "caseName": "Nom du cas de test",
+      "suite": "Série de tests",
+      "newSuite": "Nouvelle série de tests",
+      "suiteName": "Nom de la nouvelle série de tests",
+      "add": "Ajouter à la série de tests",
+      "added": "Cas de test ajouté à « {{suite}} ».",
+      "defaultName": "Échec du {{date}}",
+      "defaultSuite": "{{name}} : cas d'échec",
+      "origin": "Issu d'une exécution échouée du {{date}}",
+      "originRun": "Ouvrir l'exécution",
+      "originReplaced": "remplacé : {{summary}}"
+    }
   },
   "schedule": {
     "description": "Lance des workflows régulièrement tant que Nodestro tourne. Chaque planification est désactivée jusqu’à ce que vous l’activiez.",

@@ -211,7 +211,8 @@
     "scheduleMissed": "When Nodestro was off at the time: skip it, or catch up once at the next start.",
     "scheduleTimeZone": "Times apply in this time zone, including daylight saving time.",
     "estimate": "Estimated from the latest successful runs of this workflow. The maximum follows from the budget per run.",
-    "external": "Own tools may e.g. send messages. With many runs this happens just as often."
+    "external": "Own tools may e.g. send messages. With many runs this happens just as often.",
+    "caseFromRun": "Turns this failed run's input into a test case, with credentials and personal data replaced. Nothing is saved until you confirm."
   },
   "publish": {
     "open": "Publish this workflow as an API on this computer, manage keys and network access, or export it as a standalone FastAPI project.",

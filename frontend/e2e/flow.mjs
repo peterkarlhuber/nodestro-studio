@@ -214,6 +214,32 @@ try {
   check(full.nodes.classify.reused_from === second.id, "The classifier result was taken over, not computed again");
   await api(`/runs/${continued.id}/cancel`, "POST");
 
+  // ---- 5b. a failed run becomes a redacted test case (Q-4) -----------------------------------
+  const broken = await api("/workflows", "POST", {
+    name: "Defekt",
+    nodes: place([start, agent("broken", "Defekt", "BROKEN answers."), { id: "out", type: "output" }]),
+    edges: [edge("start", "broken"), edge("broken", "out")],
+  });
+  const failedRun = await api(`/workflows/${broken.id}/runs`, "POST", {
+    input: "",
+    file_ids: [],
+    values: { kunde: "anna@example.com", anliegen: "Schlüssel sk-ant-api03-abcdefghijklmnopqrstuvwxyz" },
+  });
+  await until(async () => (await api(`/runs/${failedRun.id}`)).status === "failed", "broken run failed");
+  await page.goto(`${base}/executions/${failedRun.id}`);
+  await page.getByTestId("case-from-run-open").click();
+  const proposal = page.getByTestId("case-from-run");
+  await proposal.getByText("[EMAIL_1]").waitFor();
+  const proposed = await proposal.getByTestId("case-from-run-values").textContent();
+  check(!proposed.includes("anna@example.com") && !proposed.includes("sk-ant-"), "The proposed test case hides personal data and keys");
+  check((await api(`/benchmarks?workflow_id=${broken.id}`)).length === 0, "Nothing is saved before confirming");
+  await shot("flow-03b-case-from-run");
+  await page.getByTestId("case-from-run-add").click();
+  await page.waitForURL(/\/tests\/suite_/);
+  await page.getByTestId("case-origin").waitFor();
+  const stored = await api(`/benchmarks?workflow_id=${broken.id}`);
+  check(stored.length === 1 && stored[0].cases[0].origin.run_id === failedRun.id, "The case is added to a new series and keeps its origin");
+
   // ---- 6. a batch run over a table ----------------------------------------------------------
   await page.goto(`${base}/batches`);
   await page.getByRole("button", { name: "Neuer Stapellauf" }).first().click();

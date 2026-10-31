@@ -39,6 +39,18 @@ Eine **Testreihe** gehört zu einem Workflow und enthält feste **Testfälle**: 
 
 Eine Testreihe hat höchstens 200 Fälle. Ungültige Fälle (etwa ein Pflichtfeld ohne Wert) werden vor dem Start gemeldet und übersprungen.
 
+## Testfall aus einem fehlgeschlagenen Lauf {#testfall-aus-lauf}
+<!-- keywords: testfall aus lauf, fehler als test, regression, fehlgeschlagen, übernehmen, geschwärzt -->
+
+Ist ein Lauf fehlgeschlagen, klicke in seinen Details auf **Als Testfall übernehmen**. Nodestro schlägt einen Testfall mit derselben Eingabe vor: Formularwerte, freier Text und Dateien.
+
+- API-Schlüssel, Tokens und Passwörter werden immer durch Platzhalter wie `[API_KEY_1]` ersetzt, personenbezogene Daten (E-Mail-Adressen, Telefonnummern, IBANs …) ebenfalls, solange der Schalter an ist. Die Erkennung arbeitet mit Mustern und findet nicht alles; sieh dir die Vorschau an.
+- Dateien werden verwendet, wie sie gespeichert sind, nicht kopiert und nicht geschwärzt. Gelöschte Dateien fallen weg und werden genannt, ebenso Werte, die nicht mehr zum aktuellen Formular passen.
+- Gespeichert wird erst, wenn du eine Testreihe wählst (oder eine neue anlegst) und **Zur Testreihe hinzufügen** klickst. Der Lauf selbst bleibt unverändert.
+- Der Fall merkt sich seine **Herkunft** (Lauf, Fehler, was ersetzt wurde) und zeigt sie in der Testreihe. Prüfregeln und Kriterien ergänzt du dort.
+
+Ändert ein neuer Fall eine Testreihe, die ein [Freigabe-Gate](/docs/api-und-export#freigabe-gate) nutzt, muss sie vor der nächsten Veröffentlichung erneut laufen.
+
 ## KI-Bewertung {#ki-bewertung}
 <!-- keywords: ki bewertung, judge, llm as judge, kriterien, bewertung, note, punktzahl -->
 

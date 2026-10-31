@@ -167,7 +167,31 @@
     "modelsChanged_one": "{{count}} Agent läuft mit einem anderen Modell.",
     "modelsChanged_other": "{{count}} Agenten laufen mit einem anderen Modell.",
     "needsLimit": "Ein Modellvergleich braucht ein Kostenlimit: Frühere Läufe nutzten andere Modelle und sagen nichts über die Kosten.",
-    "variant": "Modellvergleich"
+    "variant": "Modellvergleich",
+    "fromRun": {
+      "button": "Als Testfall übernehmen",
+      "title": "Testfall aus diesem Lauf",
+      "intro": "Nodestro schlägt einen Testfall mit der Eingabe dieses Laufs vor. Gespeichert wird erst, wenn du ihn zu einer Testreihe hinzufügst.",
+      "replaced": "Ersetzt: {{summary}}.",
+      "preview": "Vorgeschlagene Eingabe",
+      "files_one": "{{count}} Datei wird verwendet, wie sie gespeichert ist (nicht geschwärzt).",
+      "files_other": "{{count}} Dateien werden verwendet, wie sie gespeichert sind (nicht geschwärzt).",
+      "missingFiles_one": "{{count}} Datei des Laufs gibt es nicht mehr; sie fehlt im Testfall.",
+      "missingFiles_other": "{{count}} Dateien des Laufs gibt es nicht mehr; sie fehlen im Testfall.",
+      "problems": "Passt nicht mehr zum aktuellen Formular: {{fields}}. Korrigiere das nach dem Hinzufügen in der Testreihe.",
+      "checksLater": "Prüfregeln und Kriterien für die KI-Bewertung ergänzt du danach in der Testreihe.",
+      "caseName": "Name des Testfalls",
+      "suite": "Testreihe",
+      "newSuite": "Neue Testreihe",
+      "suiteName": "Name der neuen Testreihe",
+      "add": "Zur Testreihe hinzufügen",
+      "added": "Testfall zu „{{suite}}“ hinzugefügt.",
+      "defaultName": "Fehler vom {{date}}",
+      "defaultSuite": "{{name}}: Fehlerfälle",
+      "origin": "Aus einem fehlgeschlagenen Lauf vom {{date}}",
+      "originRun": "Lauf öffnen",
+      "originReplaced": "ersetzt: {{summary}}"
+    }
   },
   "schedule": {
     "description": "Startet Workflows regelmäßig, solange Nodestro läuft. Jeder Zeitplan ist aus, bis du ihn einschaltest.",

@@ -211,7 +211,8 @@
     "scheduleMissed": "Se Nodestro era spento all’orario: saltalo o recuperalo una volta al prossimo avvio.",
     "scheduleTimeZone": "Gli orari valgono in questo fuso orario, ora legale compresa.",
     "estimate": "Stimato dalle ultime esecuzioni riuscite di questo workflow. Il massimo deriva dal budget per esecuzione.",
-    "external": "Gli strumenti propri possono ad es. inviare messaggi. Con molte esecuzioni succede altrettante volte."
+    "external": "Gli strumenti propri possono ad es. inviare messaggi. Con molte esecuzioni succede altrettante volte.",
+    "caseFromRun": "Trasforma l'input di questa esecuzione fallita in un caso di test, con credenziali e dati personali sostituiti. Non viene salvato nulla prima della tua conferma."
   },
   "publish": {
     "open": "Pubblica questo workflow come API su questo computer, gestisci chiavi e accesso in rete, oppure esportalo come progetto FastAPI autonomo.",

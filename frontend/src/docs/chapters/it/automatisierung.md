@@ -39,6 +39,18 @@ Una **serie di test** appartiene a un workflow e contiene **casi di test** fissi
 
 Una serie di test ha al massimo 200 casi. I casi non validi (per esempio un campo obbligatorio senza valore) vengono segnalati prima dell'avvio e saltati.
 
+## Caso di test da un'esecuzione fallita {#testfall-aus-lauf}
+<!-- keywords: caso di test da esecuzione, errore come test, regressione, fallita, aggiungere, oscurato -->
+
+Se un'esecuzione è fallita, fai clic su **Aggiungi come caso di test** nei suoi dettagli. Nodestro propone un caso di test con lo stesso input: valori del modulo, testo libero e file.
+
+- Chiavi API, token e password vengono sempre sostituiti da segnaposto come `[API_KEY_1]`, e anche i dati personali (indirizzi e-mail, numeri di telefono, IBAN …) finché l'interruttore è attivo. Il riconoscimento si basa su schemi e non trova tutto; controlla l'anteprima.
+- I file vengono usati come sono salvati, senza copiarli né oscurarli. I file eliminati vengono omessi e indicati, così come i valori che non corrispondono più al modulo attuale.
+- Non viene salvato nulla finché non scegli una serie di test (o ne crei una nuova) e fai clic su **Aggiungi alla serie di test**. L'esecuzione resta invariata.
+- Il caso conserva la sua **origine** (esecuzione, errore, cosa è stato sostituito) e la mostra nella serie di test. Lì aggiungi regole di controllo e criteri.
+
+Se un nuovo caso modifica una serie di test usata da un [controllo di pubblicazione](/docs/api-und-export#freigabe-gate), la serie deve essere eseguita di nuovo prima del prossimo rilascio.
+
 ## Valutazione IA {#ki-bewertung}
 <!-- keywords: valutazione ia, giudice, llm as judge, criteri, valutazione, voto, punteggio -->
 

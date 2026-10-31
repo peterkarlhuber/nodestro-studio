@@ -167,7 +167,31 @@
     "modelsChanged_one": "{{count}} agente usa outro modelo.",
     "modelsChanged_other": "{{count}} agentes usam outro modelo.",
     "needsLimit": "Comparar modelos exige um limite de custo: as execuções anteriores usaram outros modelos e não dizem nada sobre o custo.",
-    "variant": "Comparação de modelos"
+    "variant": "Comparação de modelos",
+    "fromRun": {
+      "button": "Adicionar como caso de teste",
+      "title": "Caso de teste a partir desta execução",
+      "intro": "O Nodestro propõe um caso de teste com a entrada desta execução. Nada é salvo até você adicioná-lo a uma série de testes.",
+      "replaced": "Substituído: {{summary}}.",
+      "preview": "Entrada proposta",
+      "files_one": "{{count}} arquivo é usado como está salvo (sem anonimização).",
+      "files_other": "{{count}} arquivos são usados como estão salvos (sem anonimização).",
+      "missingFiles_one": "{{count}} arquivo da execução não existe mais; ele falta no caso de teste.",
+      "missingFiles_other": "{{count}} arquivos da execução não existem mais; eles faltam no caso de teste.",
+      "problems": "Não cabe mais no formulário atual: {{fields}}. Corrija isso na série de testes depois de adicionar.",
+      "checksLater": "Regras de verificação e critérios da avaliação por IA você adiciona depois na série de testes.",
+      "caseName": "Nome do caso de teste",
+      "suite": "Série de testes",
+      "newSuite": "Nova série de testes",
+      "suiteName": "Nome da nova série de testes",
+      "add": "Adicionar à série de testes",
+      "added": "Caso de teste adicionado a “{{suite}}”.",
+      "defaultName": "Falha de {{date}}",
+      "defaultSuite": "{{name}}: casos de falha",
+      "origin": "De uma execução com falha de {{date}}",
+      "originRun": "Abrir execução",
+      "originReplaced": "substituído: {{summary}}"
+    }
   },
   "schedule": {
     "description": "Inicia workflows regularmente enquanto o Nodestro está rodando. Todo agendamento fica desligado até você ligá-lo.",

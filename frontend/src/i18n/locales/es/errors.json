@@ -582,5 +582,9 @@
     "blocked": "El control de publicación bloquea esta versión. Prueba exactamente esta versión con sus series de pruebas.",
     "override_required": "El control de publicación no se cumple. Indica un motivo para publicar igualmente.",
     "suite_unknown": "Esta serie de pruebas no pertenece a este workflow."
+  },
+  "testcase": {
+    "run_not_failed": "Solo una ejecución fallida puede añadirse como caso de prueba.",
+    "run_unsupported": "Las ejecuciones importadas y las de subflujos no pueden añadirse como caso de prueba."
   }
 }

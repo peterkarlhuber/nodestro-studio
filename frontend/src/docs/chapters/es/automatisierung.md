@@ -39,6 +39,18 @@ Una **serie de pruebas** pertenece a un flujo de trabajo y contiene **casos de p
 
 Una serie de pruebas tiene como máximo 200 casos. Los casos no válidos (por ejemplo, un campo obligatorio sin valor) se notifican antes de iniciar y se omiten.
 
+## Caso de prueba a partir de una ejecución fallida {#testfall-aus-lauf}
+<!-- keywords: caso de prueba desde ejecución, error como prueba, regresión, fallida, añadir, anonimizado -->
+
+Si una ejecución ha fallado, haz clic en **Añadir como caso de prueba** en sus detalles. Nodestro propone un caso de prueba con la misma entrada: valores del formulario, texto libre y archivos.
+
+- Las claves de API, los tokens y las contraseñas se sustituyen siempre por marcadores como `[API_KEY_1]`, y los datos personales (direcciones de correo, teléfonos, IBAN …) también mientras el interruptor esté activado. La detección se basa en patrones y no lo encuentra todo; revisa la vista previa.
+- Los archivos se usan tal como están guardados, sin copiarlos ni anonimizarlos. Los archivos eliminados se omiten y se indican, igual que los valores que ya no encajan con el formulario actual.
+- No se guarda nada hasta que eliges una serie de pruebas (o creas una nueva) y haces clic en **Añadir a la serie de pruebas**. La ejecución no cambia.
+- El caso conserva su **origen** (ejecución, error, qué se sustituyó) y lo muestra en la serie de pruebas. Allí añades reglas de comprobación y criterios.
+
+Si un caso nuevo cambia una serie de pruebas que usa una [control de publicación](/docs/api-und-export#freigabe-gate), la serie debe ejecutarse de nuevo antes de la próxima publicación.
+
 ## Evaluación por IA {#ki-bewertung}
 <!-- keywords: evaluación por ia, juez, llm as judge, criterios, evaluación, puntuación -->
 
