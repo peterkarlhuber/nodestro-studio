@@ -367,6 +367,36 @@ export interface LegacyToolBinding {
   bound_version: number;
 }
 
+/** An administrator's advance approval of one tool version for one schedule, batch or test series. */
+export interface ToolPreGrant {
+  id: string;
+  tool: string;
+  version: number | null;
+  scope: "schedule" | "batch" | "benchmark";
+  scope_id: string;
+  granted_by: string;
+  granted_at: string;
+  expires_at: string | null;
+  revoked_at: string | null;
+  revoked_by: string | null;
+}
+
+/** One entry of the approval audit trail (never the arguments, only their hash). */
+export interface ToolApprovalEvent {
+  id: string;
+  at: string;
+  kind: "decided" | "decision_refused" | "pre_granted" | "pre_grant_revoked" | "legacy_stamped";
+  actor: string;
+  tool: string | null;
+  run_id: string | null;
+  request_id: string | null;
+  pre_grant_id: string | null;
+  /** approved / rejected for decisions; the problem code for refused ones. */
+  outcome: string | null;
+  arguments_hash: string | null;
+  details: Record<string, unknown>;
+}
+
 /** Whether per-call approvals are on, and what the activation step stamped as legacy exemptions. */
 export interface ToolApprovalsState {
   enabled: boolean;

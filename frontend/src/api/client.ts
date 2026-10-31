@@ -111,6 +111,8 @@ import type {
   UploadResult,
   ToolApprovalRequest,
   ToolApprovalsState,
+  ToolApprovalEvent,
+  ToolPreGrant,
 } from "./types";
 import { currentLanguage } from "../i18n";
 
@@ -293,6 +295,17 @@ export const api = {
       comment,
     }),
   toolApprovalsState: () => request<ToolApprovalsState>("GET", "/tool-approvals/legacy"),
+  /** The activation step: marks existing tool assignments as legacy exemptions. It does not switch approvals on. */
+  stampLegacyToolBindings: () => request<ToolApprovalsState>("POST", "/tool-approvals/legacy"),
+  toolApprovalAudit: (limit = 200) => request<ToolApprovalEvent[]>("GET", `/tool-approvals/audit?limit=${limit}`),
+  toolPreGrants: () => request<ToolPreGrant[]>("GET", "/tool-pre-grants"),
+  createToolPreGrant: (body: { tool: string; scope: ToolPreGrant["scope"]; scope_id: string; expires_at: string | null }) =>
+    request<ToolPreGrant>("POST", "/tool-pre-grants", body),
+  revokeToolPreGrant: (grant: Pick<ToolPreGrant, "scope" | "scope_id" | "id">) =>
+    request<ToolPreGrant>(
+      "DELETE",
+      `/tool-pre-grants/${grant.scope}/${encodeURIComponent(grant.scope_id)}/${encodeURIComponent(grant.id)}`,
+    ),
   resultFiles: (runId: string) => request<ResultFile[]>("GET", `/runs/${runId}/files`),
   createResultFile: (runId: string, body: FileRequest) => request<ResultFile>("POST", `/runs/${runId}/files`, body),
   deleteResultFile: (runId: string, fileId: string) => request<void>("DELETE", `/runs/${runId}/files/${fileId}`),
