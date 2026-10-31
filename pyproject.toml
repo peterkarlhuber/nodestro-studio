@@ -15,7 +15,7 @@ authors = [{ name = "Peter Karlhuber" }]
 dependencies = [
     # The platform: every component at the exact commit this studio release was tested with
     # (platform/versions.json; `make check-versions` verifies they agree).
-    "nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@a08c9c3757a5e076c5ed8aeb65c382f0624c3918",
+    "nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@f55bd80b38a263e3d7132b8e3bd5ab587c768f68",
     "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@c6bc2e5bb6cecd35d32dbf0922ca44f6dedeeb8b",
     "nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@86c58a15f9405b0a9bc47d1cbeb0a936dabb2ec9",
     "nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@652c231a9d8018f24704646640c42c29469a7a4a",

@@ -119,13 +119,13 @@ decision by the project owner.
 | D6 | Gates separate deterministic checks from probabilistic AI verdicts. Critical mandatory checks have no uncontrolled override. |
 | D7 | Moderated tests with 3–5 people are wanted where practical; automated journey tests are built regardless (UX-J). No unproven usability claims without real user tests. |
 | D8 | Independent frontend work first; larger API and runtime changes are coordinated with the desktop/server thread. |
+| D9 | "Used in" (UX-7) ships as a read-only API route, `GET /api/used-by`, not computed in the studio (decided 2026-10-31). |
 
 Still open, to be decided before the step that needs it:
 
 | # | Question | Needed before |
 | --- | --- | --- |
 | D6a | Override concept for non-critical gate failures: none, or a recorded owner note with reason; who may give it on the server (roles from ADR-0003). | Q-3 |
-| D9 | Whether the "used in" route (UX-7) ships in the API or is computed in the studio from existing lists. | UX-7 |
 | D10 | Per-tool capability statement and "ask before calling" (S-1/S-2): runtime semantics, defaults for existing tools. | S-1 |
 
 ## 6. Assumptions
@@ -185,6 +185,6 @@ project owner.
 | UX-5b `Section` for a tool's code, tool-generation attempts, diagnostic versions and local backups | done | studio #25 `a44ea7d`. Inline toggles stay plain `<details>`: the sandbox output of a tool check, the provenance of a knowledge file and the details of one diagnostic check. |
 | UX-6a start-form file options as a *File options* section with a one-line summary | done | studio #26 `c629a3c` |
 | UX-6b run summary above the run details: steps, path through decisions, approvals, tools, failed step with a jump | done | studio #27 `5801cb6` |
-| UX-7 "used in" for knowledge files, tools and memory spaces, with a delete dialog that names the users | in review | api #17, then sdk and studio (this step) |
+| UX-7 "used in" for knowledge files, tools and memory spaces, with a delete dialog that names the users | in review | api #17 `f55bd80`, sdk #15 `ba4ef84`, studio (this step) |
 | UX-8 and later | open | — |
 
