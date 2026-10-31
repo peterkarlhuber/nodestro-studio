@@ -19,7 +19,9 @@
 - **Usage**: a partly priced cost reads "at least …" and an unpriced one "–", never 0; a notice counts the unpriced
   and the stale-priced requests; the price versions, sources and lowest quality the costs were calculated with are
   listed below the tables. Days whose cost is a lower bound get a striped bar.
-- The **model picker** and model selects flag unknown, stale, individual and pending prices.
+- The **model picker** and model selects flag unknown, stale, individual and pending prices. Error texts for the
+  strict price mode's refusals (`pricing.price_unknown`, `pricing.price_unreliable`, `pricing.stale_price`; the first
+  two come with runtime #24).
 - Help chapter *Usage and costs* in six languages: new sections *Model prices*, *Price mode* and *Comparing with
   provider bills*; the outdated sentence "Nodestro knows prices only for Anthropic models" is gone.
 

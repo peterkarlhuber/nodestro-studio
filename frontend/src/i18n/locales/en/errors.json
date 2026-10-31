@@ -572,6 +572,8 @@
     "billing_key_missing": "No admin key for a provider's billing API is set.",
     "invalid_price": "The price is not valid.",
     "review_not_found": "This review is no longer open.",
-    "stale_price": "The price of {{model}} has not been checked for too long; the request was not sent (strict price mode)."
+    "stale_price": "The price of {{model}} has not been checked for too long; the request was not sent (strict price mode).",
+    "price_unknown": "No price is known for {{model}}; the request was not sent (strict price mode).",
+    "price_unreliable": "The price of {{model}} is not reliable enough; the request was not sent (strict price mode)."
   }
 }

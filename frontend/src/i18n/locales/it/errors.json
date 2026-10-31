@@ -572,6 +572,8 @@
     "billing_key_missing": "Non è impostata alcuna chiave di amministrazione per l’API di fatturazione di un fornitore.",
     "invalid_price": "Il prezzo non è valido.",
     "review_not_found": "Questa revisione non è più aperta.",
-    "stale_price": "Il prezzo di {{model}} non viene verificato da troppo tempo; la richiesta non è stata inviata (modalità prezzi rigorosa)."
+    "stale_price": "Il prezzo di {{model}} non viene verificato da troppo tempo; la richiesta non è stata inviata (modalità prezzi rigorosa).",
+    "price_unknown": "Per {{model}} non è noto alcun prezzo; la richiesta non è stata inviata (modalità prezzi rigorosa).",
+    "price_unreliable": "Il prezzo di {{model}} non è abbastanza affidabile; la richiesta non è stata inviata (modalità prezzi rigorosa)."
   }
 }

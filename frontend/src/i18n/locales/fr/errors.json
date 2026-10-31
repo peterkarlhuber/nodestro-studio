@@ -572,6 +572,8 @@
     "billing_key_missing": "Aucune clé d’administration n’est définie pour l’API de facturation d’un fournisseur.",
     "invalid_price": "Le prix n’est pas valide.",
     "review_not_found": "Cette validation n’est plus ouverte.",
-    "stale_price": "Le prix de {{model}} n’a pas été vérifié depuis trop longtemps ; la requête n’a pas été envoyée (mode de prix strict)."
+    "stale_price": "Le prix de {{model}} n’a pas été vérifié depuis trop longtemps ; la requête n’a pas été envoyée (mode de prix strict).",
+    "price_unknown": "Aucun prix n’est connu pour {{model}} ; la requête n’a pas été envoyée (mode de prix strict).",
+    "price_unreliable": "Le prix de {{model}} n’est pas assez fiable ; la requête n’a pas été envoyée (mode de prix strict)."
   }
 }
