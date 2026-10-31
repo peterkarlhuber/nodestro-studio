@@ -25,8 +25,9 @@ silently fall back to desktop behavior (no authentication, subprocess sandbox, S
    `nodestro-api`, `Workspace(...)` and every existing environment variable keep working unchanged.
 3. **`server` fails fast.** Profile validation raises a `NodestroError` with code `profile.invalid` (one entry per
    problem) before any service starts when the server profile lacks authentication configuration, a
-   non-SQLite database for production, a container sandbox, or a secret for sessions. Until the server pieces exist
-   (M3 to M5), selecting `server` outside the explicit development mode stops with `profile.server_unavailable`.
+   non-SQLite database for production, a container sandbox, or a secret for sessions. Until authentication,
+   PostgreSQL, tenant isolation, persistent workers and the container sandbox are implemented and integrated (plan
+   PR-12), selecting `server` always stops with `profile.server_unavailable`, before any file or database access.
    There is no flag that turns the checks off.
 4. Selection: `NODESTRO_PROFILE=desktop|server` (default `desktop`) and `--profile` on `nodestro-api`. The studio's
    `nodestro` command stays a desktop command. `nodestro-server` and `nodestro-desktop` only choose a profile and

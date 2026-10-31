@@ -52,7 +52,7 @@ copy of the frontend.
         nodestro-studio (frontend build, docs)   ─►  nodestro-api  ─►  nodestro-runtime  ─►  orkexa @ cbf6df3
                                                         │                    │
                           profile seams (ADR-0001):  identity · storage · job execution · sandbox policy
-                          desktop:                   local     · SQLite  · inline        · Docker or consent
+                          desktop:                   local     · SQLite  · inline        · Docker or blocked
                           server:                    OIDC      · Postgres· queue+workers · containers only
 ```
 
@@ -64,7 +64,7 @@ What changes inside the existing packages is limited to four seams, each with ex
 | Storage | `DocumentStore` protocol; Orkexa `FileStore`/`Index`/`MemoryBackend` | current SQLite classes | `PostgresStore`, `PostgresFileStore`, `PostgresIndex`, `PostgresMemory` in the runtime | [0002](../adr/0002-storage-backends.md) |
 | Identity | `Principal` dependency + route permission registry | implicit local owner | OIDC sessions, roles, tenants | [0003](../adr/0003-identity-and-tenants.md) |
 | Jobs | `JobExecution` (`inline` / `queue`) around `RunManager` | in-process tasks | PostgreSQL queue, leases, event table, advisory-lock scheduler | [0004](../adr/0004-jobs-workers-scheduler.md) |
-| Sandbox | `SandboxPolicy` | Docker optional, consent for untrusted code | containers only | [0006](../adr/0006-sandbox-policy.md) |
+| Sandbox | `SandboxPolicy` | Docker optional; untrusted code blocked without isolation | containers only | [0006](../adr/0006-sandbox-policy.md) |
 
 Packaging of the desktop is [ADR-0005](../adr/0005-desktop-packaging.md).
 
@@ -81,44 +81,56 @@ Packaging of the desktop is [ADR-0005](../adr/0005-desktop-packaging.md).
 | `orkexa` | `cbf6df3` | none planned; only if the sandbox image hook (ADR-0006, point 5) cannot be done by subclassing |
 | `nodestro-examples`, `nodestro-integrations` | unchanged | none (pins bump only) |
 
-## Implementation plan: twelve pull requests
+## Implementation plan: thirteen pull requests
 
 Each PR is one repository unless stated, merged with a merge commit, followed by a pin bump bottom-up. "Profile"
 says which product's behavior can change; "desktop: none" means the desktop behaves byte-for-byte as before and the
 full existing suites prove it.
 
+Two rules shape the order of the server track (revised 2026-10-31 after review):
+
+- **No PR relies on a server capability that does not exist yet.** Each server PR is tested through in-process tests
+  with an explicit test composition (for example a PostgreSQL service container in CI), never by starting the server
+  profile.
+- **The server profile cannot be started until PR-12.** Until then `RuntimeProfile.validate()` refuses it with
+  `profile.server_unavailable`. PR-12 lifts that refusal only together with the end-to-end acceptance tests, so a
+  complete, working server deployment exists only when authentication, PostgreSQL, tenant isolation, persistent
+  workers and the secure sandbox are implemented *and* integrated.
+
+This changes the masterplan's milestone order on one point: storage on PostgreSQL (M4) comes before identity and
+tenants (M3), because sessions and tenant isolation are stored in and enforced by the PostgreSQL schema; testing
+cross-tenant access on SQLite would test a backend the server never uses.
+
 | # | Milestone | Repo(s) | Pull request | Depends on | Profile impact | Acceptance tests |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | M1 | runtime | **Operating profile**: `RuntimeProfile` (desktop default, server fail-fast with `profile.invalid` / `profile.server_unavailable`), `Workspace(profile=...)`, docs | — | desktop: none | all runtime tests; new: default profile equals today's behavior, `NODESTRO_PROFILE` parsing, every invalid server configuration refused with its code, no server profile reachable without explicit selection |
-| 2 | M1 | api (+ studio pins) | **Profile in the API and route permissions**: `AppConfig.profile`, `--profile`, startup guard (server profile never starts without auth config), permission declared on every `/api` route, local principal granted everything | 1 | desktop: none | all api tests, OpenAPI snapshot unchanged; new: route-enumeration test (no route without permission), server profile refuses `0.0.0.0` without auth, studio + upgrade test green |
+| 1 | M1 | runtime | **Operating profile**: `RuntimeProfile` (desktop default, server refused with `profile.invalid` / `profile.server_unavailable` before any file or database access), `Workspace(profile=...)`, docs | — | desktop: none | all runtime tests; new: default profile equals today's behavior, `NODESTRO_PROFILE` parsing, invalid environment values, data directory conflicts, server profile refused without side effects |
+| 2 | M1 | api (+ studio pins) | **Profile in the API and route permissions**: `AppConfig.profile`, `--profile`, permission declared on every `/api` route, local principal granted everything | 1 | desktop: none | all api tests, OpenAPI snapshot unchanged; new: route-enumeration test (no route without permission), `--profile server` refused at startup with `profile.server_unavailable`; studio + upgrade test green |
 | 3 | M1 | runtime, api | **Storage seams**: `DocumentStore` protocol, no private `_connection` use outside storage classes, `PRAGMA user_version` with pre-migration backup hook, contract test suite (SQLite only) | 1 | desktop: none | contract suite on SQLite; 0.1 upgrade test; backup/restore tests; diagnostics unchanged |
-| 4 | M1 | runtime, api, studio | **Sandbox policy**: `SandboxPolicy`, server profile has no subprocess sandbox, consent step for untrusted generated code on the desktop (ADR-0006 point 4, decided 2026-10-31), settings text in six languages | 1 | desktop: one extra confirmation in tool generation without Docker | policy matrix tests; generation job executes nothing before consent; e2e `python` and `architect` suites updated |
+| 4 | M1 | runtime, api, studio | **Sandbox policy** (ADR-0006): trust classes, `SandboxPolicy`, untrusted code blocked without isolation (no subprocess fallback, no dialog override), provenance for tools, preflight check, settings and documentation in six languages | 1 | desktop: **behavior change**, documented: without Docker, AI tool generation tests, AI-generated tools and draft tests are blocked | policy matrix tests; no code path runs untrusted code in a subprocess; preflight blocks before the run; e2e `python` and `architect` suites updated for both "Docker" and "no isolation"; changelog lists every affected feature |
 | 5 | M2 | desktop | **Packaging spike and decision**: prototype with the candidates, measured table, ADR-0005 updated with the decision | 2 | — | spike report with measurements on Linux; no release |
-| 6 | M2 | desktop, studio | **Desktop MVP for Linux x86_64**: bundled CPython + wheels from `versions.json` at a studio SHA, loopback backend with launch secret, health check, graceful shutdown, CI build and clean-machine smoke test; `versions.json` gains `nodestro-desktop` | 5 | desktop app new; CLI unchanged | CI: build, install in a clean container/VM without Python/Node, open UI, run a scripted workflow, quit leaves no process |
-| 7 | M3 | api, runtime, studio | **Identity and tenants**: `Principal`, OIDC login, server sessions, roles, tenant-scoped services, CSP/`nosniff` for served file content, login redirect in the frontend | 2, 3 | server only | 401 for anonymous; cross-tenant 404 for every resource class incl. streams, files, uploads; role matrix; desktop suites unchanged |
-| 8 | M3 | server | **Development deployment**: compose with api, PostgreSQL, a test OIDC provider; bound to localhost; no default passwords; runbook | 7 | server only | `docker compose up` smoke test in CI, login with the test provider, anonymous request refused |
-| 9 | M4 | runtime | **PostgreSQL document store and migrations**: `PostgresStore`, migration runner, tenant columns | 3 | server only | contract suite on SQLite and PostgreSQL (CI service container); migration from empty; concurrent writers |
-| 10 | M4 | runtime, api | **PostgreSQL knowledge, FTS and memory**, file areas on a shared volume, `pg_dump`-based backup docs, desktop-to-server import | 9 | server only | knowledge/memory contract suites on both backends; search top-k parity on the example corpus; import of a 0.2 data directory |
-| 11 | M5 | runtime, api, server | **Persistent jobs**: queue, leases, heartbeat, cancellation, event table + `NOTIFY`, scheduler leader lock, worker and scheduler entry points | 9 | server only | kill-worker test (interrupted, never duplicated), SSE resume across API restart, two schedulers fire once, tenant isolation of jobs |
-| 12 | M5 | runtime (orkexa only after review), server | **Container sandbox with libraries**: per-lock images, `deps.docker_unsupported` resolved, sandbox health check | 4, 11 | Docker users on desktop gain libraries; server | tool with a library runs in a container without network; missing runtime/image → `sandbox.unavailable`, never subprocess |
+| 6 | M2 | desktop, studio | **Desktop MVP for Linux x86_64**: bundled CPython + wheels from `versions.json` at a studio SHA, loopback backend with launch secret, health check, graceful shutdown, CI build and clean-machine smoke test; `versions.json` gains `nodestro-desktop`; restricted features without isolation documented | 4, 5 | desktop app new; CLI unchanged | CI: build, install in a clean container/VM without Python/Node, open UI, run a scripted workflow, quit leaves no process; isolation-dependent features show the documented restriction |
+| 7 | M4 | runtime | **PostgreSQL document store and migrations**: `PostgresStore`, migration runner, `tenant_id` on every table, optional extra `postgres` | 3 | server only (not startable) | contract suite on SQLite and PostgreSQL (CI service container); migration from empty; concurrent writers; every query filtered by tenant |
+| 8 | M4 | runtime, api | **PostgreSQL knowledge, FTS and memory**, file areas, backup design (`pg_dump` + volume), desktop-to-server import | 7 | server only (not startable) | knowledge/memory contract suites on both backends; search top-k parity on the example corpus; import of a 0.2 data directory; tenant filter on files |
+| 9 | M3 | api, runtime, studio | **Identity and tenants**: `Principal`, OIDC login, sessions in PostgreSQL, roles, tenant-scoped services, CSP/`nosniff` for served file content, login redirect and 401 handling in the frontend | 2, 7, 8 | server only (not startable); desktop: none | in-process tests on PostgreSQL with a stub OIDC provider: 401 for anonymous; cross-tenant 404 for every resource class incl. streams, files, uploads, exports; role matrix; desktop suites unchanged |
+| 10 | M5 | runtime, api | **Persistent jobs and workers**: queue, leases, heartbeat, cancellation, event table + `NOTIFY`, scheduler leader lock, every background job kind on the queue, `worker` and `scheduler` entry points | 7, 9 | server only (not startable); desktop: none | kill-worker test (interrupted, never duplicated), SSE resume across API restart, two schedulers fire once, tenant isolation of jobs, all with PostgreSQL in CI |
+| 11 | M5 | runtime (orkexa only after review) | **Container sandbox with libraries**: per-lock images, `deps.docker_unsupported` resolved, sandbox health check, execution only on workers | 4, 10 | desktop with Docker gains libraries; server (not startable) | tool with a library runs in a container without network; missing runtime/image → `sandbox.unavailable`, never subprocess; Docker tests in CI |
+| 12 | M5/M6 | runtime, api, server, studio | **Server integration and deployment**: lift `profile.server_unavailable` (validation now requires auth, PostgreSQL, queue, container sandbox, secrets), `nodestro-server` images and a localhost-bound development deployment, operator runbook, `versions.json` gains `nodestro-server` | 8, 9, 10, 11 | server startable for the first time | end-to-end in CI against the deployment: login via test OIDC provider, anonymous refused, cross-tenant refused, worker killed mid-run, untrusted tool runs only in a container, backup and restore with `pg_dump`; incomplete configuration refused with `profile.invalid` |
+| 13 | M6 | desktop, runtime | **Built-in sandbox prototype** (ADR-0006 point 7): candidates per OS, security and compatibility test suite, report; a candidate becomes "isolating" in the policy only for the OS where every test passed | 4, 6 | desktop: none until a candidate passes; then restricted features return on that OS | the security and compatibility tests listed in ADR-0006, run on each claimed OS in CI or on a clean VM |
 
 M6 (release integration: manifests, signed builds, license inventory, update and rollback docs, OS support matrix)
-follows after PR-12 and is planned when PR-6 and PR-8 have shown what the release pipeline needs.
+is planned once PR-6 and PR-12 have shown what the release pipelines need.
 
-### First code pull request (proposal)
+### First code pull request
 
-**PR-1, `nodestro-runtime`: typed operating profile.**
+**PR-1, `nodestro-runtime`: typed operating profile.** Approved by Peter on 2026-10-31.
 
 - New `src/nodestro_runtime/profile.py`: `ProfileKind = Literal["desktop", "server"]`, frozen dataclass
-  `RuntimeProfile` (kind, data_dir, database URL, sandbox mode, job execution, identity mode, lock flag),
-  `RuntimeProfile.desktop(data_dir)`, `RuntimeProfile.from_env(environ)` (reads `NODESTRO_PROFILE`,
-  `NODESTRO_DATA_DIR`), `validate()` returning all problems at once.
+  `RuntimeProfile`, `RuntimeProfile.desktop(data_dir)`, `RuntimeProfile.from_env(environ)` (reads `NODESTRO_PROFILE`,
+  `NODESTRO_DATA_DIR`), `validate()` reporting every problem at once.
 - `Workspace.__init__(..., profile: RuntimeProfile | None = None)`: `None` builds the desktop profile from
-  `data_dir`, so every existing caller is unaffected; a server profile raises `profile.server_unavailable` until
-  PR-7/9/11 exist.
-- `tests/test_profile.py`; README section; CHANGELOG entry. No API, OpenAPI, studio or data change.
-- Why first: it is the smallest change that every later PR builds on, it is fully testable in isolation, and it
-  cannot change desktop behavior.
+  `data_dir`, so every existing caller is unaffected; a server profile raises `profile.server_unavailable` before any
+  file or database access, until PR-12.
+- Tests, README section, CHANGELOG entry. No API, OpenAPI, studio, data or execution change.
 
 ## Risks
 
@@ -132,7 +144,8 @@ follows after PR-12 and is planned when PR-6 and PR-8 have shown what the releas
 | Code signing and notarization need certificates | high | medium | unsigned test builds labeled as such until Peter provides certificates |
 | Web view differences (Safari/WebKit on macOS, WebView2 on Windows) | medium | medium | the WebKit e2e run already exists; per-OS smoke tests before any support claim |
 | Docker images for tool libraries get large or stale | medium | low | cache keyed by lock hash, cleanup command, size limits |
-| Consent step for generated code annoys desktop users | low | low | once per job; Docker users never see it |
+| Desktop MVP without Docker cannot use AI-generated tools | certain until PR-13 | medium | documented restriction; Docker as an option; built-in sandbox prototype (PR-13) |
+| Existing tools have no provenance and become `untrusted` in PR-4 | high | medium | decide in PR-4 how hand-written tools are recognized; re-saving in the editor restores them |
 | Provider keys in clear text in desktop SQLite | existing | medium | unchanged on desktop (compatibility); server encrypts; OS keychain as a later option |
 | Private repositories in CI of the new repos | certain | low | same `NODESTRO_READ` secret pattern; never echo it |
 

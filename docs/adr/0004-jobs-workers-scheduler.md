@@ -35,8 +35,8 @@ interrupting runs. See [inventory, section 2](../desktop-server/inventory.md#2-s
    (`pg_try_advisory_lock`) held for the session; the others stand by. Firing a slot is idempotent per
    `(schedule_id, slot)`.
 8. **Other background work** (batches, benchmarks, architect, assistant, tool generation, Python installs) moves to the
-   same queue as separate job kinds in M5. Until then the server profile runs them in the API process and documents
-   that a restart interrupts them, as it does on the desktop today.
+   same queue as separate job kinds in the same PR (plan PR-10). The server profile cannot start before that (it is
+   refused until PR-12), so there is no interim server mode with in-process background work.
 9. **Entry points:** `nodestro-api worker` and `nodestro-api scheduler` (same package, same composition, profile
    `server`). No second application.
 
