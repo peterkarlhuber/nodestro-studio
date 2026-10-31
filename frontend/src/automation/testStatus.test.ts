@@ -57,6 +57,12 @@ describe("test status of a version", () => {
     expect(status.state).toMatchObject({ kind: "outdated", reason: "version", testedVersion: 1 });
   });
 
+  it("ignores runs that compared other models", () => {
+    const runs = [run("2026-10-31T10:00:00+00:00", 2), run("2026-10-31T11:00:00+00:00", 2, { models: { worker: "anthropic:claude-haiku-4-5" } })];
+    expect(suiteTestStatus(SUITE, runs, 2, versions).state).toMatchObject({ kind: "tested", run: { id: "bench_2026-10-31T10:00:00+00:00" } });
+    expect(suiteTestStatus(SUITE, runs.slice(1), 2, versions).state).toEqual({ kind: "untested" });
+  });
+
   it("ignores stopped and cancelled runs", () => {
     const runs = [run("2026-10-31T10:00:00+00:00", 2), run("2026-10-31T11:00:00+00:00", 1, { status: "cancelled" })];
     expect(suiteTestStatus(SUITE, runs, 2, versions).state).toMatchObject({ kind: "tested" });

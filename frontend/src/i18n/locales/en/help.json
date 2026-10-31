@@ -203,6 +203,7 @@
     "benchmarkChecks": "Rules check the result without AI, e.g. “category equals complaint”.",
     "benchmarkJudge": "An AI rates the result by your criteria. Its verdict is marked as an AI rating and costs extra.",
     "benchmarkCompare": "Pick two test runs to see case by case what got better or worse.",
+    "benchmarkModels": "Test the same cases with other models for single agents, then compare the two test runs. The workflow itself does not change.",
     "schedule": "Starts a workflow regularly while Nodestro runs.",
     "scheduleMissed": "When Nodestro was off at the time: skip it, or catch up once at the next start.",
     "scheduleTimeZone": "Times apply in this time zone, including daylight saving time.",

@@ -53,6 +53,13 @@ Scegli due esecuzioni nell'elenco delle esecuzioni di test e fai clic su *Confro
 
 Così verifichi dopo ogni modifica ad agenti, prompt o strumenti se il workflow è migliorato, e puoi provare una [versione](/docs/workflows#versionen) precedente rispetto allo stato attuale.
 
+## Confrontare modelli {#modelle-vergleichen}
+<!-- keywords: confrontare modelli, altro modello, più economico, più veloce, scelta del modello, variante -->
+
+Se un modello più economico o più potente basta per un agente, lo verifichi con la stessa serie di test. Nella finestra di avvio attiva **Prova altri modelli** e scegli un altro modello per alcuni agenti. I casi di test e la valutazione IA restano uguali, e il workflow salvato non cambia.
+
+Un'esecuzione così richiede un **limite di costo** in [Limiti](/docs/automatisierung#grenzen), perché le esecuzioni precedenti usavano altri modelli e non dicono nulla sul costo. Nell'elenco porta l'etichetta **Confronto modelli** e indica i modelli sostituiti. Poi confrontala con un'esecuzione della versione salvata. Non conta come risultato di test di quella versione, perché ha provato una variante. Se un modello va bene, impostalo nell'agente stesso.
+
 ## Pianificazioni {#zeitplaene}
 <!-- keywords: pianificazione, schedule, cron, regolare, giornaliero, settimanale, mensile, orario, fuso orario, mancato -->
 

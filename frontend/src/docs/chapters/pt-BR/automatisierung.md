@@ -53,6 +53,13 @@ Escolha duas execuções na lista de execuções de teste e clique em *Comparar*
 
 Assim você verifica, depois de cada mudança em agentes, prompts ou ferramentas, se o fluxo melhorou, e pode testar uma [versão](/docs/workflows#versionen) anterior contra o estado atual.
 
+## Comparar modelos {#modelle-vergleichen}
+<!-- keywords: comparar modelos, outro modelo, mais barato, mais rápido, escolha de modelo, variante -->
+
+Se um modelo mais barato ou mais forte basta para um agente, você verifica com a mesma série de testes. Na caixa de início, ative **Testar outros modelos** e escolha outro modelo para alguns agentes. Os casos de teste e a avaliação por IA continuam iguais, e o workflow salvo não muda.
+
+Uma execução assim precisa de um **limite de custo** em [Limites](/docs/automatisierung#grenzen), porque as execuções anteriores usaram outros modelos e não dizem nada sobre o custo. Na lista ela leva o rótulo **Comparação de modelos** e cita os modelos substituídos. Depois compare-a com uma execução da versão salva. Ela não conta como resultado de teste dessa versão, porque testou uma variante. Se um modelo servir, defina-o no próprio agente.
+
 ## Agendamentos {#zeitplaene}
 <!-- keywords: agendamento, schedule, cron, regular, diário, semanal, mensal, a cada hora, fuso horário, perdido -->
 

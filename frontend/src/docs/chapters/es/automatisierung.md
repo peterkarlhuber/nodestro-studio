@@ -53,6 +53,13 @@ Elige dos ejecuciones en la lista de ejecuciones de prueba y pulsa *Comparar*. L
 
 Así compruebas después de cada cambio en agentes, prompts o herramientas si el flujo ha mejorado, y puedes probar una [versión](/docs/workflows#versionen) anterior frente al estado actual.
 
+## Comparar modelos {#modelle-vergleichen}
+<!-- keywords: comparar modelos, otro modelo, más barato, más rápido, elección de modelo, variante -->
+
+Si un modelo más barato o más potente basta para un agente, lo compruebas con la misma serie de pruebas. En el diálogo de inicio, activa **Probar otros modelos** y elige otro modelo para algunos agentes. Los casos de prueba y la evaluación por IA no cambian, y el flujo guardado tampoco.
+
+Una ejecución así necesita un **límite de coste** en [Límites](/docs/automatisierung#grenzen), porque las ejecuciones anteriores usaron otros modelos y no dicen nada del coste. En la lista lleva la etiqueta **Comparación de modelos** y nombra los modelos sustituidos. Después compárala con una ejecución de la versión guardada. No cuenta como resultado de prueba de esa versión, porque probó una variante. Si un modelo encaja, ponlo en el propio agente.
+
 ## Programaciones {#zeitplaene}
 <!-- keywords: programación, schedule, cron, periódico, diario, semanal, mensual, cada hora, zona horaria, perdido -->
 

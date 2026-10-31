@@ -159,7 +159,15 @@
       "same": "Uguale",
       "changed": "Cambiato"
     },
-    "ownJudge": "Modello proprio"
+    "ownJudge": "Modello proprio",
+    "compareModels": "Prova altri modelli",
+    "compareModelsHint": "Gli stessi casi di test e la stessa valutazione IA, ma alcuni agenti con un altro modello. Il workflow salvato resta invariato.",
+    "agentModel": "Modello per {{agent}}",
+    "savedModel": "Salvato: {{model}}",
+    "modelsChanged_one": "{{count}} agente usa un altro modello.",
+    "modelsChanged_other": "{{count}} agenti usano un altro modello.",
+    "needsLimit": "Il confronto tra modelli richiede un limite di costo: le esecuzioni precedenti usavano altri modelli e non dicono nulla sul costo.",
+    "variant": "Confronto modelli"
   },
   "schedule": {
     "description": "Avvia workflow regolarmente mentre Nodestro è in funzione. Ogni pianificazione resta spenta finché non la attivi.",

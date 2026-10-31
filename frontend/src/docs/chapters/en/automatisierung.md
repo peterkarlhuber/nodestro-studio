@@ -53,6 +53,13 @@ Pick two runs in the list of test runs and click *Compare*. The table shows the 
 
 This is how you check after every change to agents, prompts or tools whether the workflow got better, and how you test an older [version](/docs/workflows#versionen) against the current state.
 
+## Comparing models {#modelle-vergleichen}
+<!-- keywords: compare models, other model, cheaper, faster, model choice, variant -->
+
+Whether a cheaper or stronger model is good enough for an agent, you check with the same test series. In the start dialog, switch on **Test other models** and choose another model for single agents. The test cases and the AI judge stay the same, and the saved workflow does not change.
+
+Such a run needs a **cost limit** under [Limits](/docs/automatisierung#grenzen), because earlier runs used other models and say nothing about the cost. In the list it carries the label **Model comparison** and names the replaced models. Then compare it with a run of the saved version. It does not count as the test result of that version, because it tested a variant. If a model fits, set it in the agent itself.
+
 ## Schedules {#zeitplaene}
 <!-- keywords: schedule, cron, regular, daily, weekly, monthly, hourly, time zone, missed -->
 

@@ -364,7 +364,9 @@
     "delete_running": "Annulez l’exécution de test avant de la supprimer.",
     "no_cases": "La série de tests n’a aucun cas de test.",
     "interrupted": "Nodestro s’est arrêté pendant la série de tests.",
-    "judge_failed": "L’évaluation IA a échoué."
+    "judge_failed": "L’évaluation IA a échoué.",
+    "model_cost_cap": "Comparer des modèles exige une limite de coût.",
+    "model_node_unknown": "Le workflow n’a pas d’agent {{node}}."
   },
   "schedule": {
     "api_key_missing": "{{provider}} n’est pas configuré ; les exécutions échoueront tant qu’il ne l’est pas.",
