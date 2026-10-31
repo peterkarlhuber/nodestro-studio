@@ -208,7 +208,8 @@
       "was_waiting": "No llegó su turno.",
       "was_running": "No terminó.",
       "was_awaiting_approval": "Esperaba una aprobación.",
-      "was_idle": "No llegó su turno."
+      "was_idle": "No llegó su turno.",
+      "in_loop": "Forma parte de un bucle: todo el bucle se repite."
     },
     "calledTools": "Ya había llamado a herramientas: {{tools}}",
     "saved": "ahorra {{cost}}",

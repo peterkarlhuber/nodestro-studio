@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Loops in the editor (Adaptive Orchestration M1-7, 2026-10-31)
+
+- A connection dragged from a branch of a decision or approval back to an earlier step becomes a **loop** (runtime
+  #29): dashed on the canvas with its limit ("↻ max. 3×"), selected at once, with its settings in the new connection
+  inspector: *Maximum rounds* (2 to 20, default 3) and what happens at the limit (stop the run as failed, or follow the
+  other branches). Any other connection back is still refused, now with a hint how to repeat steps. A loop cannot be
+  turned back into a normal connection.
+- Runs: a node inside a loop shows its round ("Round 2") on the canvas; its details offer the results of every round.
+  Live events archive the previous round, and the run's live totals include all rounds.
+- Error texts ×6 for `workflow.loop_unguarded`, `workflow.loop_target`, `workflow.loop_overlap`,
+  `workflow.loop_shared`, `workflow.loop_invalid` and `run.loop_exhausted`; the continue dialog explains
+  `resume.in_loop`. Docs ×6: *Branches → Loops* (`verzweigungen#schleifen`, help tip `workflow.loop`, with the
+  placeholders `{{iteration}}`, `{{previous}}` and `{{feedback}}`); *Workflows* no longer says that loops are impossible.
+
 ### Pins: sandbox gateway security fixes (2026-10-31)
 
 - A cascade for the security fixes to the sandbox gateway of Nodestro Local Docker: runtime #33 strictly parses

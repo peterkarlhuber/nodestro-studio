@@ -6,8 +6,10 @@
     "fromOutput": "Il nodo risultato non ha un’uscita",
     "toStart": "Il nodo di avvio non ha un ingresso",
     "exists": "Questo collegamento esiste già",
-    "cycle": "Questo collegamento creerebbe un ciclo",
-    "pickBranch": "Trascina il collegamento da un ramo della decisione o dell’approvazione."
+    "cycle": "Questo collegamento creerebbe un ciclo. Per ripetere dei passi, torna indietro da un ramo di una decisione o di un’approvazione.",
+    "pickBranch": "Trascina il collegamento da un ramo della decisione o dell’approvazione.",
+    "loopCreated": "Ciclo creato: i passi vengono ripetuti, al massimo 3 volte. Imposta il limite nell’ispettore.",
+    "loopNeeded": "Questo collegamento torna indietro e deve restare un ciclo."
   },
   "nodes": {
     "agent": "Agente",
@@ -85,7 +87,8 @@
     "controlConnect": "Trascina dalla porta destra alla porta sinistra per collegare gli agenti",
     "controlDelete": "<kbd>Canc</kbd> elimina la selezione, <kbd>Ctrl</kbd>+<kbd>D</kbd> la duplica",
     "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> annulla, <kbd>Ctrl</kbd>+<kbd>S</kbd> salva",
-    "controlPanels": "Trascina i divisori per regolare i pannelli; il doppio clic su un nodo ne mostra le proprietà"
+    "controlPanels": "Trascina i divisori per regolare i pannelli; il doppio clic su un nodo ne mostra le proprietà",
+    "connection": "Collegamento"
   },
   "design": {
     "title": "Progetta un agente con l’IA",
@@ -175,5 +178,25 @@
     "resizeRunPanel": "Altezza della panoramica dell’esecuzione",
     "resizeHint": "Trascina o usa i tasti freccia per ridimensionare. Il doppio clic ripristina la dimensione predefinita.",
     "railSelection": "Selezionato: {{name}}"
+  },
+  "connection": {
+    "title": "Collegamento",
+    "path": "Da {{source}} a {{target}}",
+    "delete": "Elimina collegamento"
+  },
+  "loop": {
+    "title": "Ciclo",
+    "edgeLabel": "↻ max. {{max}}×",
+    "text": "Seguendo questo ramo, i passi dalla destinazione fino a qui vengono eseguiti di nuovo. La prima esecuzione conta come giro 1.",
+    "maxIterations": "Giri al massimo",
+    "maxIterationsHint": "Da 2 a {{max}}. Ogni giro consuma di nuovo token.",
+    "onExhausted": "Quando il limite è raggiunto",
+    "fail": "Terminare l’esecuzione come non riuscita",
+    "continue": "Seguire gli altri rami",
+    "placeholders": "Nel compito di un passo del ciclo, {{iteration}} è il giro, {{previous}} il suo risultato del giro precedente e {{feedback}} ciò che è tornato attraverso il ciclo.",
+    "docs": "Cicli",
+    "make": "Rendi un ciclo",
+    "round": "Giro {{n}}",
+    "rounds": "Giri"
   }
 }

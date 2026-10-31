@@ -42,6 +42,19 @@ Unire i rami quindi non richiede impostazioni: un agente dietro entrambi i rami 
 
 Decisioni e approvazioni lasciano passare i dati: un agente dietro di esse riceve i risultati arrivati lì, con il nome degli agenti che li hanno prodotti.
 
+## Cicli {#schleifen}
+<!-- keywords: ciclo, loop, ripetere, giro, iterazione, ciclo di qualità, rivedere, feedback, limite -->
+
+Un **ciclo** riesegue dei passi finché un risultato va bene, per esempio *Bozza → Revisione → Decisione*: se la revisione non è superata, l’esecuzione torna alla bozza.
+
+- **Crearlo:** trascina un collegamento da un **ramo** di una decisione o di un’approvazione verso un passo precedente. Nodestro lo crea come ciclo (tratteggiato, con «↻ max. 3×») e lo apre nell’ispettore. Non si può tornare indietro da un agente: ogni giro termina con una decisione o un’approvazione.
+- **Limite:** *Giri al massimo* (da 2 a 20) include la prima esecuzione. Ogni giro consuma di nuovo token; il [budget](/docs/workflows#budget) vale per l’intera esecuzione.
+- **Quando il limite è raggiunto:** l’esecuzione termina come non riuscita («Il ciclo … è stato eseguito … volte senza raggiungere il suo obiettivo») oppure segue gli altri rami della decisione. Se nessuno viene seguito, i passi successivi vengono saltati.
+- **Segnaposto:** nel compito di un passo del ciclo, `{{iteration}}` è il giro (da 1), `{{previous}}` il suo risultato del giro precedente e `{{feedback}}` ciò che è tornato attraverso il ciclo (per esempio la motivazione della revisione o il commento di un’approvazione rifiutata). Al primo giro entrambi valgono «-».
+- **Approvazioni nei cicli:** un’approvazione rifiutata può tornare a una revisione tramite il ramo *Rifiutato*; il giro successivo attende di nuovo una decisione.
+
+Durante un’esecuzione ogni passo mostra il suo **giro**; nei dettagli scegli tra i risultati di tutti i giri. I cicli possono essere annidati ma non sovrapporsi. Quando un’esecuzione non riuscita viene [ripresa](#fortsetzen), un ciclo viene sempre rieseguito per intero.
+
 ## Approvazioni {#freigabe}
 <!-- keywords: approvazione, via libera, human in the loop, verificare, rifiutare, commento, pausa -->
 

@@ -62,7 +62,7 @@ Nodestro verhindert ungültige Verbindungen und erklärt den Grund:
 - Ein Knoten kann nicht mit sich selbst verbunden werden.
 - Der Start-Knoten hat keinen Eingang, der Ergebnis-Knoten keinen Ausgang.
 - Dieselbe Verbindung kann es nur einmal geben.
-- **Keine Kreise:** Daten fließen immer in eine Richtung. Eine Verbindung, die zurück zu einem Vorgänger führt, wird abgelehnt.
+- **Kreise nur als Schleife:** Daten fließen in eine Richtung. Eine Verbindung zurück zu einem Vorgänger ist nur von einem Zweig einer Entscheidung oder Freigabe aus möglich und wird dann zur [Schleife](/docs/verzweigungen#schleifen) mit Limit; jede andere wird abgelehnt.
 
 Zum Löschen wählst du die Verbindung an und drückst **Entf** oder **Rücktaste**. Während eines Laufs leuchten Verbindungen auf, über die gerade Daten fließen.
 
@@ -239,7 +239,7 @@ Workflow-Export und Trace-Export sind verschiedene Dinge: Ein Workflow beschreib
 ## Einschränkungen {#grenzen}
 <!-- keywords: grenzen, einschränkungen, schleifen, bedingungen, if, loop, verzweigung -->
 
-- **Keine Schleifen:** Ein Workflow ist ein gerichteter Graph ohne Kreise. Jeder Knoten läuft höchstens einmal pro Lauf. Bedingungen bildest du mit [Entscheidungen](/docs/verzweigungen#entscheidung); Knoten auf nicht gewählten Zweigen werden übersprungen.
+- **Schleifen nur mit Limit:** Ein Workflow ist ein gerichteter Graph; Wiederholungen gibt es nur über [Schleifen](/docs/verzweigungen#schleifen) mit höchstens 20 Runden. Ohne Schleife läuft jeder Knoten höchstens einmal pro Lauf. Bedingungen bildest du mit [Entscheidungen](/docs/verzweigungen#entscheidung); Knoten auf nicht gewählten Zweigen werden übersprungen.
 - **Fortsetzen statt wiederholen:** Ein fehlgeschlagener oder abgebrochener Lauf lässt sich [fortsetzen](/docs/verzweigungen#fortsetzen); dabei entsteht ein neuer, verknüpfter Lauf.
 - **Ein Lauf zur Zeit pro Workflow im Editor:** Solange ein Lauf aktiv ist, ist *Workflow starten* gesperrt. Mehrere Läufe gleichzeitig startest du mit einem [Stapellauf](/docs/automatisierung#stapel).
 - **Stand zum Startzeitpunkt:** Änderungen während eines Laufs wirken erst beim nächsten Lauf.

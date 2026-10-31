@@ -97,7 +97,12 @@
     "branch_unknown": "A connection of {{node}} starts at no branch.",
     "condition_no_rules": "The decision {{node}} has no rules.",
     "subworkflow_missing": "{{node}} has no workflow selected.",
-    "node_duplicate": "Two nodes have the same id ({{id}}). Delete one of them and add it again."
+    "node_duplicate": "Two nodes have the same id ({{id}}). Delete one of them and add it again.",
+    "loop_unguarded": "A loop must leave from a branch of a decision or approval.",
+    "loop_target": "A loop must lead back to an earlier step.",
+    "loop_overlap": "Two loops overlap; loops may only be nested inside each other.",
+    "loop_shared": "A step of a loop is connected to a step outside it in a way the loop cannot repeat.",
+    "loop_invalid": "This loop is not valid."
   },
   "run": {
     "failed": "The step failed.",
@@ -122,7 +127,8 @@
     "finished": "The run has already ended.",
     "not_found": "There is no run with this id.",
     "not_finished": "The run has not finished yet.",
-    "no_event_loop": "The run could not start: it needs a running event loop."
+    "no_event_loop": "The run could not start: it needs a running event loop.",
+    "loop_exhausted": "The loop at {{node}} ran {{max_iterations}} times without reaching its goal."
   },
   "trace": {
     "invalid": "The trace is damaged or incomplete.",

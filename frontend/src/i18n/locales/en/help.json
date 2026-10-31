@@ -19,7 +19,8 @@
     "runBudget": "The workflow's budget or, if empty, the default budget from the settings.",
     "discard": "Discards all unsaved changes including undo/redo and loads the last saved state.",
     "versions": "Every save is a version with a date. Older versions can be viewed and restored without losing any.",
-    "organize": "Favorites come first; tags help with filtering."
+    "organize": "Favorites come first; tags help with filtering.",
+    "loop": "A loop connection leads from a branch of a decision or approval back to an earlier step. The steps in between run again until the branch is no longer taken or the limit is reached."
   },
   "agent": {
     "design": "From your description, the Agent Architect designs role, system prompt, model, effort and tools. You review the proposal before it is applied.",

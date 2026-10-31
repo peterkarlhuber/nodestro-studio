@@ -42,6 +42,19 @@ Por eso unir ramas no requiere ninguna configuración: un agente situado detrás
 
 Las decisiones y las aprobaciones dejan pasar los datos: un agente detrás de ellas recibe los resultados que llegaron allí, con los nombres de los agentes que los produjeron.
 
+## Bucles {#schleifen}
+<!-- keywords: bucle, loop, repetir, ronda, iteración, bucle de calidad, revisar, feedback, límite -->
+
+Un **bucle** vuelve a ejecutar pasos hasta que un resultado encaja, por ejemplo *Borrador → Revisión → Decisión*: si la revisión no se supera, la ejecución vuelve al borrador.
+
+- **Crearlo:** arrastra una conexión desde una **rama** de una decisión o aprobación hacia un paso anterior. Nodestro la crea como bucle (discontinua, con «↻ máx. 3×») y la abre en el inspector. No es posible volver desde un agente: cada ronda termina con una decisión o aprobación.
+- **Límite:** *Rondas como máximo* (de 2 a 20) incluye la primera ejecución. Cada ronda vuelve a consumir tokens; el [presupuesto](/docs/workflows#budget) se aplica a toda la ejecución.
+- **Al alcanzar el límite:** la ejecución termina como fallida («El bucle … se ejecutó … veces sin alcanzar su objetivo») o sigue las otras ramas de la decisión. Si no se sigue ninguna, los pasos posteriores se omiten.
+- **Marcadores:** en la tarea de un paso del bucle, `{{iteration}}` es la ronda (desde 1), `{{previous}}` su propio resultado de la ronda anterior y `{{feedback}}` lo que volvió por el bucle (por ejemplo, la justificación de la revisión o el comentario de una aprobación rechazada). En la primera ronda ambos valen «-».
+- **Aprobaciones en bucles:** una aprobación rechazada puede volver a una revisión por su rama *Rechazado*; la siguiente ronda vuelve a esperar una decisión.
+
+Durante una ejecución, cada paso muestra su **ronda**; en los detalles eliges entre los resultados de todas las rondas. Los bucles pueden anidarse, pero no solaparse. Al [continuar](#fortsetzen) una ejecución fallida, un bucle siempre se repite por completo.
+
 ## Aprobaciones {#freigabe}
 <!-- keywords: aprobación, visto bueno, human in the loop, revisar, rechazar, comentario, pausa -->
 

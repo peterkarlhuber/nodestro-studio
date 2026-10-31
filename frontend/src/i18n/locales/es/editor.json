@@ -6,8 +6,10 @@
     "fromOutput": "El nodo de resultado no tiene salida",
     "toStart": "El nodo de inicio no tiene entrada",
     "exists": "Esta conexión ya existe",
-    "cycle": "Esta conexión crearía un ciclo",
-    "pickBranch": "Arrastra la conexión desde una rama de la decisión o de la aprobación."
+    "cycle": "Esta conexión crearía un ciclo. Para repetir pasos, vuelve desde una rama de una decisión o aprobación.",
+    "pickBranch": "Arrastra la conexión desde una rama de la decisión o de la aprobación.",
+    "loopCreated": "Bucle creado: los pasos se repiten, como máximo 3 veces. Ajusta el límite en el inspector.",
+    "loopNeeded": "Esta conexión vuelve atrás y debe seguir siendo un bucle."
   },
   "nodes": {
     "agent": "Agente",
@@ -85,7 +87,8 @@
     "controlConnect": "Arrastra del puerto derecho al puerto izquierdo para conectar agentes",
     "controlDelete": "<kbd>Supr</kbd> elimina la selección, <kbd>Ctrl</kbd>+<kbd>D</kbd> la duplica",
     "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> deshace, <kbd>Ctrl</kbd>+<kbd>S</kbd> guarda",
-    "controlPanels": "Arrastra los separadores para ajustar los paneles; doble clic en un nodo muestra sus propiedades"
+    "controlPanels": "Arrastra los separadores para ajustar los paneles; doble clic en un nodo muestra sus propiedades",
+    "connection": "Conexión"
   },
   "design": {
     "title": "Diseñar un agente con IA",
@@ -175,5 +178,25 @@
     "resizeRunPanel": "Altura del resumen de la ejecución",
     "resizeHint": "Arrastra o usa las teclas de flecha para cambiar el tamaño. Doble clic restablece el tamaño predeterminado.",
     "railSelection": "Seleccionado: {{name}}"
+  },
+  "connection": {
+    "title": "Conexión",
+    "path": "De {{source}} a {{target}}",
+    "delete": "Eliminar conexión"
+  },
+  "loop": {
+    "title": "Bucle",
+    "edgeLabel": "↻ máx. {{max}}×",
+    "text": "Al seguir esta rama, los pasos desde el destino hasta aquí se ejecutan de nuevo. La primera ejecución cuenta como ronda 1.",
+    "maxIterations": "Rondas como máximo",
+    "maxIterationsHint": "De 2 a {{max}}. Cada ronda vuelve a consumir tokens.",
+    "onExhausted": "Al alcanzar el límite",
+    "fail": "Terminar la ejecución como fallida",
+    "continue": "Seguir las otras ramas",
+    "placeholders": "En la tarea de un paso del bucle, {{iteration}} es la ronda, {{previous}} su propio resultado de la ronda anterior y {{feedback}} lo que volvió por el bucle.",
+    "docs": "Bucles",
+    "make": "Convertir en bucle",
+    "round": "Ronda {{n}}",
+    "rounds": "Rondas"
   }
 }

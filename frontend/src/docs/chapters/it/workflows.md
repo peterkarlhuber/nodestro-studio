@@ -62,7 +62,7 @@ Nodestro impedisce i collegamenti non validi e ne spiega il motivo:
 - Un nodo non può essere collegato a se stesso.
 - Il nodo di avvio non ha ingresso, il nodo di risultato non ha uscita.
 - Lo stesso collegamento può esistere una sola volta.
-- **Nessun ciclo:** i dati scorrono sempre in una direzione. Un collegamento che torna a un predecessore viene rifiutato.
+- **Cicli solo come ciclo con limite:** i dati scorrono in una direzione. Un collegamento che torna a un predecessore è possibile solo da un ramo di una decisione o di un’approvazione e diventa allora un [ciclo](/docs/verzweigungen#schleifen) con limite; ogni altro viene rifiutato.
 
 Per eliminare un collegamento, selezionalo e premi **Canc** o **Backspace**. Durante un'esecuzione si illuminano i collegamenti in cui stanno passando dati.
 
@@ -239,7 +239,7 @@ Esportare un workflow ed esportare una traccia sono cose diverse: un workflow de
 ## Limitazioni {#grenzen}
 <!-- keywords: limiti, limitazioni, cicli, condizioni, if, loop, ramificazione -->
 
-- **Niente cicli:** un workflow è un grafo orientato senza cicli. Ogni nodo viene eseguito al massimo una volta per esecuzione. Le condizioni si costruiscono con le [decisioni](/docs/verzweigungen#entscheidung); i nodi sui rami non scelti vengono saltati.
+- **Cicli solo con limite:** un workflow è un grafo orientato; i passi si ripetono solo tramite [cicli](/docs/verzweigungen#schleifen) di al massimo 20 giri. Fuori dai cicli, ogni nodo viene eseguito al massimo una volta per esecuzione. Le condizioni si costruiscono con le [decisioni](/docs/verzweigungen#entscheidung); i nodi sui rami non scelti vengono saltati.
 - **Continuare invece di ripetere:** un'esecuzione non riuscita o annullata può essere [continuata](/docs/verzweigungen#fortsetzen); si crea così una nuova esecuzione collegata.
 - **Un'esecuzione alla volta per workflow nell'editor:** finché un'esecuzione è attiva, *Avvia workflow* è bloccato. Per avviare molte esecuzioni insieme usa un'[esecuzione in serie](/docs/automatisierung#stapel).
 - **Stato al momento dell'avvio:** le modifiche durante un'esecuzione valgono solo dall'esecuzione successiva.

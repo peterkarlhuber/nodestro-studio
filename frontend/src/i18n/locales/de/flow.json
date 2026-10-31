@@ -208,7 +208,8 @@
       "was_waiting": "Kam nicht an die Reihe.",
       "was_running": "Wurde nicht fertig.",
       "was_awaiting_approval": "Wartete auf eine Freigabe.",
-      "was_idle": "Kam nicht an die Reihe."
+      "was_idle": "Kam nicht an die Reihe.",
+      "in_loop": "Teil einer Schleife: Die ganze Schleife läuft neu."
     },
     "calledTools": "Hatte schon Tools aufgerufen: {{tools}}",
     "saved": "spart {{cost}}",

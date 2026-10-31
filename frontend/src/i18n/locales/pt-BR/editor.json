@@ -6,8 +6,10 @@
     "fromOutput": "O nó de resultado não tem saída",
     "toStart": "O nó de início não tem entrada",
     "exists": "Esta conexão já existe",
-    "cycle": "Esta conexão criaria um ciclo",
-    "pickBranch": "Arraste a conexão a partir de um ramo da decisão ou da aprovação."
+    "cycle": "Esta conexão criaria um ciclo. Para repetir etapas, volte a partir de uma ramificação de uma decisão ou aprovação.",
+    "pickBranch": "Arraste a conexão a partir de um ramo da decisão ou da aprovação.",
+    "loopCreated": "Laço criado: as etapas rodam de novo, no máximo 3 vezes. Ajuste o limite no inspetor.",
+    "loopNeeded": "Esta conexão volta atrás e precisa continuar sendo um laço."
   },
   "nodes": {
     "agent": "Agente",
@@ -85,7 +87,8 @@
     "controlConnect": "Arraste da porta direita até a porta esquerda para conectar agentes",
     "controlDelete": "<kbd>Delete</kbd> exclui a seleção, <kbd>Ctrl</kbd>+<kbd>D</kbd> duplica",
     "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> desfaz, <kbd>Ctrl</kbd>+<kbd>S</kbd> salva",
-    "controlPanels": "Arraste os divisores para ajustar os painéis; clique duplo em um nó mostra suas propriedades"
+    "controlPanels": "Arraste os divisores para ajustar os painéis; clique duplo em um nó mostra suas propriedades",
+    "connection": "Conexão"
   },
   "design": {
     "title": "Criar um agente com IA",
@@ -175,5 +178,25 @@
     "resizeRunPanel": "Altura da visão geral da execução",
     "resizeHint": "Arraste ou use as teclas de seta para redimensionar. Clique duplo restaura o tamanho padrão.",
     "railSelection": "Selecionado: {{name}}"
+  },
+  "connection": {
+    "title": "Conexão",
+    "path": "De {{source}} para {{target}}",
+    "delete": "Excluir conexão"
+  },
+  "loop": {
+    "title": "Laço",
+    "edgeLabel": "↻ máx. {{max}}×",
+    "text": "Ao seguir esta ramificação, as etapas do destino até aqui rodam de novo. A primeira execução conta como rodada 1.",
+    "maxIterations": "Máximo de rodadas",
+    "maxIterationsHint": "De 2 a {{max}}. Cada rodada consome tokens de novo.",
+    "onExhausted": "Quando o limite for atingido",
+    "fail": "Encerrar a execução como falha",
+    "continue": "Seguir as outras ramificações",
+    "placeholders": "Na tarefa de uma etapa do laço, {{iteration}} é a rodada, {{previous}} o próprio resultado da rodada anterior e {{feedback}} o que voltou pelo laço.",
+    "docs": "Laços",
+    "make": "Transformar em laço",
+    "round": "Rodada {{n}}",
+    "rounds": "Rodadas"
   }
 }

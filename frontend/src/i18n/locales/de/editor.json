@@ -6,8 +6,10 @@
     "fromOutput": "Der Ausgabe-Knoten hat keinen Ausgang",
     "toStart": "Der Start-Knoten hat keinen Eingang",
     "exists": "Diese Verbindung gibt es schon",
-    "cycle": "Diese Verbindung würde einen Kreis bilden",
-    "pickBranch": "Ziehe die Verbindung von einem Zweig der Entscheidung oder Freigabe."
+    "cycle": "Diese Verbindung würde einen Kreis bilden. Um Schritte zu wiederholen, führe von einem Zweig einer Entscheidung oder Freigabe zurück.",
+    "pickBranch": "Ziehe die Verbindung von einem Zweig der Entscheidung oder Freigabe.",
+    "loopCreated": "Schleife angelegt: Die Schritte laufen erneut, höchstens 3-mal. Das Limit stellst du im Inspektor ein.",
+    "loopNeeded": "Diese Verbindung führt zurück und muss eine Schleife bleiben."
   },
   "nodes": {
     "agent": "Agent",
@@ -85,7 +87,8 @@
     "controlConnect": "Vom rechten Port zum linken Port ziehen, um Agenten zu verbinden",
     "controlDelete": "<kbd>Entf</kbd> löscht die Auswahl, <kbd>Strg</kbd>+<kbd>D</kbd> dupliziert",
     "controlUndo": "<kbd>Strg</kbd>+<kbd>Z</kbd> rückgängig, <kbd>Strg</kbd>+<kbd>S</kbd> speichert",
-    "controlPanels": "Trennlinien ziehen, um die Bereiche anzupassen; Doppelklick auf einen Knoten zeigt seine Eigenschaften"
+    "controlPanels": "Trennlinien ziehen, um die Bereiche anzupassen; Doppelklick auf einen Knoten zeigt seine Eigenschaften",
+    "connection": "Verbindung"
   },
   "design": {
     "title": "Agent mit KI entwerfen",
@@ -175,5 +178,25 @@
     "resizeRunPanel": "Höhe der Ausführungsübersicht",
     "resizeHint": "Ziehen oder mit den Pfeiltasten die Größe ändern. Doppelklick stellt die Standardgröße wieder her.",
     "railSelection": "Ausgewählt: {{name}}"
+  },
+  "connection": {
+    "title": "Verbindung",
+    "path": "Von {{source}} nach {{target}}",
+    "delete": "Verbindung löschen"
+  },
+  "loop": {
+    "title": "Schleife",
+    "edgeLabel": "↻ max. {{max}}×",
+    "text": "Folgt der Lauf diesem Zweig, laufen die Schritte vom Ziel bis hierher erneut. Der erste Durchlauf zählt als Runde 1.",
+    "maxIterations": "Höchstens Runden",
+    "maxIterationsHint": "2 bis {{max}}. Jede Runde kostet erneut Tokens.",
+    "onExhausted": "Wenn das Limit erreicht ist",
+    "fail": "Lauf als fehlgeschlagen beenden",
+    "continue": "Den anderen Zweigen folgen",
+    "placeholders": "In der Aufgabe eines Schritts in der Schleife ist {{iteration}} die Runde, {{previous}} sein eigenes Ergebnis der Runde davor und {{feedback}}, was über die Schleife zurückkam.",
+    "docs": "Schleifen",
+    "make": "Zur Schleife machen",
+    "round": "Runde {{n}}",
+    "rounds": "Runden"
   }
 }

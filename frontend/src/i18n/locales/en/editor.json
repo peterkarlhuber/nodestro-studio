@@ -6,8 +6,10 @@
     "fromOutput": "The result node has no output",
     "toStart": "The start node has no input",
     "exists": "This connection already exists",
-    "cycle": "This connection would create a cycle",
-    "pickBranch": "Drag the connection from a branch of the decision or approval."
+    "cycle": "This connection would create a cycle. To repeat steps, lead back from a branch of a decision or approval.",
+    "pickBranch": "Drag the connection from a branch of the decision or approval.",
+    "loopCreated": "Loop created: the steps run again, at most 3 times. Set the limit in the inspector.",
+    "loopNeeded": "This connection leads back and must stay a loop."
   },
   "nodes": {
     "agent": "Agent",
@@ -85,7 +87,8 @@
     "controlConnect": "Drag from the right port to the left port to connect agents",
     "controlDelete": "<kbd>Delete</kbd> removes the selection, <kbd>Ctrl</kbd>+<kbd>D</kbd> duplicates",
     "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes, <kbd>Ctrl</kbd>+<kbd>S</kbd> saves",
-    "controlPanels": "Drag the dividers to resize the panels; double-click a node to show its properties"
+    "controlPanels": "Drag the dividers to resize the panels; double-click a node to show its properties",
+    "connection": "Connection"
   },
   "design": {
     "title": "Design an agent with AI",
@@ -175,5 +178,25 @@
     "resizeRunPanel": "Height of the execution overview",
     "resizeHint": "Drag or use the arrow keys to resize. Double-click restores the default size.",
     "railSelection": "Selected: {{name}}"
+  },
+  "connection": {
+    "title": "Connection",
+    "path": "From {{source}} to {{target}}",
+    "delete": "Delete connection"
+  },
+  "loop": {
+    "title": "Loop",
+    "edgeLabel": "↻ max. {{max}}×",
+    "text": "Following this branch runs the steps from the target to here again. The first run counts as round 1.",
+    "maxIterations": "Maximum rounds",
+    "maxIterationsHint": "2 to {{max}}. Every round costs tokens again.",
+    "onExhausted": "When the limit is reached",
+    "fail": "Stop the run as failed",
+    "continue": "Follow the other branches",
+    "placeholders": "In the task of a step in the loop, {{iteration}} is the round, {{previous}} its own result of the round before and {{feedback}} what came back over the loop.",
+    "docs": "Loops",
+    "make": "Make it a loop",
+    "round": "Round {{n}}",
+    "rounds": "Rounds"
   }
 }

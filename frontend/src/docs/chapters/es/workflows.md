@@ -62,7 +62,7 @@ Nodestro impide las conexiones no válidas y explica el motivo:
 - Un nodo no se puede conectar consigo mismo.
 - El nodo de inicio no tiene entrada y el nodo de resultado no tiene salida.
 - La misma conexión solo puede existir una vez.
-- **Sin ciclos:** los datos siempre fluyen en una dirección. Se rechaza una conexión que vuelva a un predecesor.
+- **Ciclos solo como bucles:** los datos fluyen en una dirección. Una conexión de vuelta a un predecesor solo es posible desde una rama de una decisión o aprobación y entonces se convierte en un [bucle](/docs/verzweigungen#schleifen) con límite; cualquier otra se rechaza.
 
 Para eliminar una conexión, selecciónala y pulsa **Supr** o **Retroceso**. Durante una ejecución se iluminan las conexiones por las que fluyen datos en ese momento.
 
@@ -239,7 +239,7 @@ Exportar un flujo y exportar una traza son cosas distintas: un flujo describe el
 ## Limitaciones {#grenzen}
 <!-- keywords: límites, limitaciones, bucles, condiciones, if, loop, ramificación -->
 
-- **Sin bucles:** un flujo de trabajo es un grafo dirigido sin ciclos. Cada nodo se ejecuta como máximo una vez por ejecución. Las condiciones se construyen con [decisiones](/docs/verzweigungen#entscheidung); los nodos de las ramas no elegidas se omiten.
+- **Bucles solo con límite:** un flujo de trabajo es un grafo dirigido; los pasos solo se repiten mediante [bucles](/docs/verzweigungen#schleifen) de 20 rondas como máximo. Fuera de los bucles, cada nodo se ejecuta como máximo una vez por ejecución. Las condiciones se construyen con [decisiones](/docs/verzweigungen#entscheidung); los nodos de las ramas no elegidas se omiten.
 - **Continuar en lugar de repetir:** una ejecución fallida o cancelada se puede [continuar](/docs/verzweigungen#fortsetzen); se crea una ejecución nueva y vinculada.
 - **Una ejecución a la vez por flujo en el editor:** mientras haya una ejecución activa, *Iniciar flujo de trabajo* está bloqueado. Para iniciar muchas ejecuciones a la vez, usa una [ejecución por lotes](/docs/automatisierung#stapel).
 - **Estado en el momento del inicio:** los cambios durante una ejecución solo surten efecto en la siguiente.
