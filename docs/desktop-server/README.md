@@ -139,6 +139,9 @@ is planned once PR-6 and PR-12 have shown what the release pipelines need.
 | 1 | nodestro-runtime #5 (operating profile) | `8ea9a5c` |
 | 2 | nodestro-api #7 (profile, route permissions, studio API on loopback only) | `b794ebe` |
 | 2 pins | nodestro-examples #5, nodestro-integrations #5 (runtime `8ea9a5c`), nodestro-sdk #7 (api `b794ebe`) | `f90d3a1`, `81d88ce`, `f450f2c` |
+| 3 | nodestro-runtime #6 (storage seams), nodestro-api #8 (backup and restore through the storage methods) | `e90c205`, `d8ed049` |
+| 3 pins | nodestro-examples #6, nodestro-integrations #6, nodestro-sdk #8 | `649ef70`, `e96d91f`, `7aee149` |
+| 4 | nodestro-runtime #7 (sandbox policy, in progress; api and studio follow) | `d6e75b7` |
 
 PR-2 changed one behavior on purpose (security before compatibility): the studio API refuses non-loopback
 `--host` values and non-loopback `NODESTRO_ALLOWED_HOSTS`, and requests with proxy headers, because it has no login.

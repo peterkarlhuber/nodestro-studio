@@ -207,6 +207,7 @@
     "unexpected_file": "O backup contém um arquivo inesperado ({{name}}).",
     "manifest_invalid": "A descrição do backup (manifest.json) é inválida.",
     "format_newer": "O backup vem de uma versão mais nova do Nodestro (formato {{version}}). Atualize o Nodestro primeiro.",
+    "schema_too_new": "O banco de dados do backup vem de uma versão mais recente do Nodestro (esquema {{found}}; esta versão lê até {{supported}}). Atualize o Nodestro primeiro.",
     "checksum": "{{name}} está danificado (a soma de verificação não confere).",
     "database_invalid": "O banco de dados do backup está danificado ou vazio.",
     "document_invalid": "Uma entrada do backup está danificada ({{collection}}).",

@@ -207,6 +207,7 @@
     "unexpected_file": "La copia contiene un archivo inesperado ({{name}}).",
     "manifest_invalid": "La descripción de la copia (manifest.json) no es válida.",
     "format_newer": "La copia procede de una versión más reciente de Nodestro (formato {{version}}). Actualiza Nodestro primero.",
+    "schema_too_new": "La base de datos de la copia procede de una versión más reciente de Nodestro (esquema {{found}}; esta versión lee hasta {{supported}}). Actualiza Nodestro primero.",
     "checksum": "{{name}} está dañado (la suma de comprobación no coincide).",
     "database_invalid": "La base de datos de la copia está dañada o vacía.",
     "document_invalid": "Una entrada de la copia está dañada ({{collection}}).",

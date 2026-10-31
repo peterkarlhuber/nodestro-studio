@@ -207,6 +207,7 @@
     "unexpected_file": "Das Backup enthält eine unerwartete Datei ({{name}}).",
     "manifest_invalid": "Die Beschreibung des Backups (manifest.json) ist ungültig.",
     "format_newer": "Das Backup stammt aus einer neueren Nodestro-Version (Format {{version}}). Aktualisiere Nodestro zuerst.",
+    "schema_too_new": "Die Datenbank im Backup stammt aus einer neueren Nodestro-Version (Schema {{found}}, diese Version liest bis {{supported}}). Aktualisiere Nodestro zuerst.",
     "checksum": "{{name}} ist beschädigt (Prüfsumme stimmt nicht).",
     "database_invalid": "Die Datenbank im Backup ist beschädigt oder leer.",
     "document_invalid": "Ein Eintrag im Backup ist beschädigt ({{collection}}).",
