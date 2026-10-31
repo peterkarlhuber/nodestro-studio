@@ -103,7 +103,8 @@ try {
   await page.locator(".page__body > .card-grid > .card").first().waitFor();
   check((await page.locator(".page__body > .card-grid > .card").count()) === 2, "Copied examples appear among the own workflows");
 
-  await page.getByText("Finanzanalyse").first().click();
+  await page.locator(".page__body > .card-grid > .card", { hasText: "Finanzanalyse" }).first().click();
+  await page.waitForURL(/\/workflows\/wf_/);
   await page.locator(".react-flow__node").first().waitFor();
   await page.locator(".react-flow__node-agent").first().click();
   await page.getByLabel("Name des Agenten").waitFor();
@@ -263,7 +264,9 @@ try {
 
   await page.goto(base);
   await page.getByRole("radio", { name: "Hell" }).click();
-  await page.getByText("Finanzanalyse").first().click();
+  // Click the own workflow's card once the list has loaded, not an example of the same name.
+  await page.locator(".page__body > .card-grid > .card", { hasText: "Finanzanalyse" }).first().click();
+  await page.waitForURL(/\/workflows\/wf_/);
   await page.locator(".react-flow__node").first().waitFor();
   await shot("12-editor-light");
   await page.getByRole("radio", { name: "Dunkel" }).click();
