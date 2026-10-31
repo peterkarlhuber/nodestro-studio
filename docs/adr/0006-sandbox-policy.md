@@ -1,6 +1,6 @@
 # ADR-0006: Sandbox policy for untrusted code
 
-- Status: Proposed (M0, 2026-10-31); point 4 needs Peter's decision (see "Open decision")
+- Status: Proposed (M0, 2026-10-31); point 4 decided by Peter on 2026-10-31 (see "Decision on point 4")
 - Repositories: nodestro-runtime (policy, environments), nodestro-api (settings, endpoints), orkexa (only if an image
   hook is missing after review), nodestro-server (container runtime)
 
@@ -25,7 +25,7 @@ the configured sandbox, before a person has seen the code.
    profile; a missing container runtime or image fails the job with `sandbox.unavailable` and is visible in health
    checks. Containers keep Orkexa's flags (no network, read-only, no capabilities, nobody user, limits) and run on
    worker nodes, never in the API process.
-4. **Desktop profile (proposed, needs decision):** Docker remains optional.
+4. **Desktop profile:** Docker remains optional.
    - With Docker available and selected: as on the server.
    - Without Docker: `user-approved` code keeps running in the subprocess sandbox as today, clearly labeled "runs
      without isolation on this computer" (existing data and workflows keep working).
@@ -40,12 +40,12 @@ the configured sandbox, before a person has seen the code.
 6. **Native OS sandboxes** (bubblewrap, macOS sandbox profiles, Windows AppContainer) are not claimed as secure until
    implemented and tested per OS; until then they are not offered.
 
-## Open decision
+## Decision on point 4
 
-Point 4 changes the desktop behavior of tool generation without Docker (one extra confirmation before generated tests
-run). Recommended, because it is the only way to satisfy "no automatic execution of untrusted code without a secure
-sandbox" on machines without Docker. Alternative: keep today's automatic tests for the desktop and apply the rule to
-the server profile only.
+Peter chose the consent step on 2026-10-31: without Docker, AI-generated code and its tests run on the desktop only
+after the user confirmed them for that job. The alternative (keep today's automatic tests on the desktop and apply the
+rule to the server profile only) was rejected because it would leave untrusted code running unisolated on machines
+without Docker.
 
 ## Consequences
 
