@@ -252,6 +252,29 @@ try {
   check(true, "The test series reports one passed and one failed case");
   await shot("flow-05-tests");
 
+  // ---- 7b. the same series with another model for one agent (Q-2) -----------------------------
+  const savedShort = await api(`/workflows/${short.id}`);
+  const agentNode = savedShort.nodes.find((node) => node.type === "agent");
+  await page.getByRole("button", { name: "Testreihe ausführen" }).click();
+  const startDialog = page.getByRole("dialog");
+  await startDialog.getByRole("switch", { name: /Andere Modelle testen/ }).click();
+  const modelInput = startDialog.getByRole("combobox", { name: `Modell für ${agentNode.label || agentNode.agent.name}` });
+  await modelInput.fill("claude-haiku-4-5");
+  await startDialog.getByTestId("benchmark-needs-limit").waitFor();
+  check(await startDialog.getByRole("button", { name: "2 Testfälle ausführen" }).isDisabled(), "Comparing models needs a cost limit");
+  await startDialog.locator(".field", { hasText: "Kostengrenze" }).locator("input").fill("1");
+  await startDialog.getByRole("button", { name: "2 Testfälle ausführen" }).click();
+  const variantRow = page.getByTestId("benchmark-run-models").first();
+  await variantRow.waitFor({ timeout: 30000 });
+  check((await variantRow.textContent()).includes("anthropic:claude-haiku-4-5"), "The runs list names the replaced model");
+  const variantRun = await until(
+    async () => (await api(`/benchmarks/${suite.id}/runs`)).find((run) => Object.keys(run.models ?? {}).length && run.status === "finished"),
+    "model comparison finished",
+    30000,
+  );
+  check(variantRun.models[agentNode.id] === "anthropic:claude-haiku-4-5", "The run used the chosen model");
+  check((await api(`/workflows/${short.id}`)).nodes.find((node) => node.id === agentNode.id).agent.model === agentNode.agent.model, "The saved workflow keeps its model");
+
   // ---- 8. a schedule stays off until it passes its check ------------------------------------
   // Without a budget per run a schedule must not switch on.
   await api("/settings", "PUT", { default_budget_usd: null });

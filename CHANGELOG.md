@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+### Comparing models in a test series, Q-2 (2026-10-31)
+
+- The start dialog of a test series has **Test other models**: choose another model for single agents and run the
+  same cases with the same AI judge. Only models that differ from the saved ones are sent; such a run needs a cost
+  limit, since earlier runs cannot estimate it. The saved workflow does not change. The runs list marks the run as
+  *Model comparison* and names the replaced models; the existing comparison shows them next to the date. The test
+  status of a version (Q-1) ignores these runs, since they tested a variant.
+- Built on nodestro-api #20 (`BenchmarkStart.models`, `BenchmarkRun.models`). Texts, error codes and help in six
+  languages; the automation chapter has a new section *Comparing models*. The flow e2e suite runs a comparison.
+- Pins (one cascade, agreed with the PRICING-1 and desktop/server threads): orkexa `76883f7` (before `cbf6df3`),
+  nodestro-runtime `45e7774` (before `c6bc2e5`; model prices and the built-in Linux sandbox), nodestro-examples
+  `786c453` (before `86c58a1`), nodestro-integrations `4c5edff` (before `652c231`), nodestro-api `665f1ce` (before
+  `f55bd80`; PRICING-1 API and Q-2), nodestro-sdk `e2bc4a6` (before `ba4ef84`), in `pyproject.toml` and
+  `platform/versions.json`. The `products` section is unchanged. The studio frontend for prices and the sandbox
+  follows in their own pull requests.
+
 ### Glossary, README screenshots and journeys after P1, UX-8 (2026-10-31)
 
 - New help chapter **Terms** (`begriffe`) in six languages, right after the *Introduction*: workflow, agent, tool,

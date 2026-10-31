@@ -188,5 +188,6 @@ project owner.
 | UX-7 "used in" for knowledge files, tools and memory spaces, with a delete dialog that names the users | done | api #17 `f55bd80`, sdk #15 `ba4ef84`, studio #28 `f70af24` |
 | Q-1 test status in the publish dialog and the versions dialog | done | studio #29 `b13ac55`. Load errors of the series, the versions or the runs say so with *Reload* instead of *untested*. |
 | UX-8 glossary chapter, README screenshots, journeys after P1, see [journeys.md](journeys.md#after-p1-ux-8) | done | studio #31 `d03a849`. Moderated task tests (D7) not arranged; no usability claim. |
-| Q-2 and later | open | — |
+| Q-2 model comparison in a test series (other models for single agents, cost limit required, variant runs marked and not counted as the version's test status) | in review | api #20 `665f1ce`, sdk #17 `e2bc4a6`, studio (this step). The pin bump also carries runtime `45e7774` (built-in Linux sandbox) and the PRICING-1 API work, agreed with those threads. |
+| Q-3 and later | open | — |
 
