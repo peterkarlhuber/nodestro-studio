@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Storage seams, M1 PR-3 (2026-10-31)
+
+- Pins: `nodestro-runtime` e90c205, `nodestro-examples` 649ef70, `nodestro-integrations` e96d91f, `nodestro-api`
+  d8ed049 and `nodestro-sdk` 7aee149 (before: 8ea9a5c, f90d3a1, 81d88ce, b794ebe and f450f2c); orkexa unchanged.
+  All are merge commits on master.
+- The runtime reaches SQLite only through its storage classes and records a database schema version; a future
+  migration first writes a backup to `<data_dir>/backups/`. Existing data directories are not changed.
+- Restoring a backup whose database comes from a newer Nodestro version is refused with a message in six languages
+  (`backup.schema_too_new`).
+- `docs/desktop-server/IMPLEMENTATION_STATUS.md`: the state of the desktop and server plan, updated after every step.
+
 ### Operating profile and route permissions, M1 PR-1 and PR-2 (2026-10-31)
 
 - Pins: `nodestro-runtime` 8ea9a5c, `nodestro-examples` f90d3a1, `nodestro-integrations` 81d88ce, `nodestro-api`

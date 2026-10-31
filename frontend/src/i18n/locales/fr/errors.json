@@ -207,6 +207,7 @@
     "unexpected_file": "La sauvegarde contient un fichier inattendu ({{name}}).",
     "manifest_invalid": "La description de la sauvegarde (manifest.json) n’est pas valide.",
     "format_newer": "La sauvegarde provient d’une version plus récente de Nodestro (format {{version}}). Mettez d’abord Nodestro à jour.",
+    "schema_too_new": "La base de données de la sauvegarde provient d’une version plus récente de Nodestro (schéma {{found}}, cette version lit jusqu’à {{supported}}). Mettez d’abord Nodestro à jour.",
     "checksum": "{{name}} est endommagé (la somme de contrôle ne correspond pas).",
     "database_invalid": "La base de données de la sauvegarde est endommagée ou vide.",
     "document_invalid": "Une entrée de la sauvegarde est endommagée ({{collection}}).",
