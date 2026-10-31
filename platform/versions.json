@@ -44,12 +44,12 @@
   "products": {
     "comment": "Released products and the studio commit each one builds from (their studio.json); updated when a product's studio.json moves.",
     "nodestro-desktop": {
-      "commit": "26612f9b4f13bf36e9945fa05f95fe8b5df9efe3",
-      "studio": "6b73625a0c82744d09ba3a0ff369b68edb61187d"
+      "commit": "3ee764a657b2b9e775ff4e04b10bcc5c0be20a40",
+      "studio": "5a1cf56e7fe67359260705097e9537a1ad345218"
     },
     "nodestro-server": {
-      "commit": "2d512c3d0bb1df0073bae0ae81a2ad577921708e",
-      "studio": "6b73625a0c82744d09ba3a0ff369b68edb61187d"
+      "commit": "e8a48996e6558bd7cac7081402a2e419d6b318f3",
+      "studio": "5a1cf56e7fe67359260705097e9537a1ad345218"
     }
   }
 }

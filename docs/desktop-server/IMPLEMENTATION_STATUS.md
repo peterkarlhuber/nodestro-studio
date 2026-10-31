@@ -35,7 +35,7 @@ Last update: 2026-10-31.
 | PR-11 | Container sandbox with libraries | done | runtime #13 (`4104176`: image per approved lock with hashes, wheels only, `--pull never`); pins: examples #10 (`43e02f6`), integrations #10 (`13160d1`); api #14 (`817c8c4`); sdk #12 (`7f0b0df`); studio (this PR: texts) |
 | PR-12 | Server integration and deployment | done | runtime #14 (`640ed68`: `ServerSettings`, encrypted tenant secrets, container calls without bind mounts), runtime #15 (`51f0a6c`: model endpoint allowlist), runtime #16 (`c6bc2e5`: a run is stored as running as soon as a worker starts it); pins: examples #11 (`f13227c`), #12 (`86c58a1`), integrations #11 (`268c3ed`), #12 (`652c231`); api #15 (`f119cfc`: `nodestro-server` command, backups, HTTPS-only identity providers); sdk #13 (`2ed893a`); studio #19 (`6b73625`: pins, texts); nodestro-server #1 (`2d512c3`: image, compose, runbook, end-to-end tests); nodestro-desktop #3 (`26612f9`: backend from studio `6b73625`) |
 | PR-13 | Built-in sandbox prototype | done (prototype, not isolating) | runtime #17 (`f3931e8`: `builtin_sandbox`, bubblewrap + seccomp, acceptance tests in CI); report: [sandbox-prototype-report.md](sandbox-prototype-report.md); no pin change (nothing uses it) |
-| M6 | Release pipelines, manifests, signing, OS support matrix | open | — |
+| M6 | Release pipelines, manifests, signing, OS support matrix | done (pipelines; no release made, nothing signed) | nodestro-desktop #4 (`3ee764a`) and nodestro-server #2 (`e8a4899`): release workflows with draft releases, `release_manifest.py` (pins, checksums, digests, license inventory, signing state); both build from studio `5a1cf56`; [RELEASES.md](RELEASES.md): steps, signing, OS support matrix, update and rollback |
 
 ## Notes per step
 
@@ -147,6 +147,15 @@ Last update: 2026-10-31.
   are not run yet, so `isolation_of` keeps returning `"none"`. Details and the remaining steps are in the report.
 - No candidate for macOS, Windows or aarch64; nothing was run on those systems.
 - The platform pins stay at runtime `c6bc2e5`; the next pin bump picks the prototype up.
+
+### M6
+
+- A tag `v*` on a product starts its release workflow; the result is always a **draft** release that a person
+  publishes. The server pushes its image only after every acceptance test passed against it.
+- CI writes the release manifest on every change as a dry run. Desktop (CI): 620 packages, none without a license.
+  Server (CI): 218 packages, none without a license; acceptance tests 15 of 15 against studio `5a1cf56`.
+- Not done: no tag has been pushed, so no release, image push or draft release has run yet; no signing (no
+  certificates or keys); no macOS, Windows or arm64 builds.
 
 ## Limitations known so far
 
