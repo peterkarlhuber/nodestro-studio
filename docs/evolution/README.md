@@ -179,7 +179,7 @@ project owner.
 | UX-3 open sections remembered | done | studio #16 (merge commit `25a7b7f`) |
 | UX-J journey baseline, see [journeys.md](journeys.md) | done | studio #17 (merge commit `a65efee`; taken after UX-3, see journeys.md) |
 | UX-4 three ways to start | done | studio #18 (merge commit `e07ec52`) |
-| UX-K knowledge upload in the inspector, see [ux-k.md](ux-k.md) | in review | studio, this step |
-| Q-0 judge of AI-designed agents | planned | api; coordinated with the desktop/server plan |
+| UX-K knowledge upload in the inspector, see [ux-k.md](ux-k.md) | done | studio #20, `ea5f61c` |
+| Q-0 judge of AI-designed agents | in review | api #16 `a08c9c3`, sdk #14 `e508e6b`, studio pins and texts (this step); coordinated with the desktop/server plan |
 | UX-5a and later | open | — |
 

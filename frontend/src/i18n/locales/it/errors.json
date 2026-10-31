@@ -43,7 +43,8 @@
   "draft": {
     "unknown_tool": "Lo strumento sconosciuto «{{name}}» è stato tralasciato.",
     "model_unavailable": "Il modello «{{model}}» non è disponibile; è stato scelto {{chosen}}.",
-    "server_tool_provider": "Lo strumento server «{{name}}» è stato tralasciato: è disponibile solo per i modelli di Anthropic."
+    "server_tool_provider": "Lo strumento server «{{name}}» è stato tralasciato: è disponibile solo per i modelli di Anthropic.",
+    "judge_unsupported": "Il modello predefinito «{{model}}» non può restituire il giudizio strutturato di un controllo di qualità. Scegli un altro giudice prima di attivare il controllo."
   },
   "config": {
     "library": "La configurazione non rispetta le regole della libreria degli agenti.",

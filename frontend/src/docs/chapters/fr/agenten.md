@@ -152,7 +152,7 @@ Le résultat du contrôle figure dans l’exécution à côté de l’agent : r�
 
 **De bons critères** se vérifient un par un : « Chaque chiffre provient d’un résultat d’outil », « Cite au moins un risque concret », « 150 mots maximum ». Des critères vagues comme « bien écrit » donnent des jugements peu fiables.
 
-**Coûts :** chaque contrôle et chaque révision est une requête supplémentaire. Les coûts du juge comptent pour l’agent et pour le budget de l’exécution. Un contrôle nouvellement activé commence avec le modèle par défaut des réglages comme **modèle juge** ; vous pouvez le changer à tout moment, et les contrôles existants gardent leur modèle. Le résumé de la section nomme le juge. Si le juge est le même modèle que l’agent, une remarque le signale : un modèle a tendance à bien noter ses propres réponses.
+**Coûts :** chaque contrôle et chaque révision est une requête supplémentaire. Les coûts du juge comptent pour l’agent et pour le budget de l’exécution. Un contrôle nouvellement activé commence avec le modèle par défaut des réglages comme **modèle juge** ; vous pouvez le changer à tout moment, et les contrôles existants gardent leur modèle. Les agents conçus par l’IA (*Concevoir avec l’IA* et l’architecte de workflows) reçoivent aussi le modèle par défaut comme juge ; le contrôle reste désactivé. Si ce modèle ne peut pas rendre de verdict structuré, le brouillon le signale, et aucun autre modèle n’est choisi. Le résumé de la section nomme le juge. Si le juge est le même modèle que l’agent, une remarque le signale : un modèle a tendance à bien noter ses propres réponses.
 
 ## Limites {#limits}
 <!-- keywords: tokens max., max_tokens, tours d’outils, max_tool_rounds, outils en parallèle, max_parallel_tools, limite -->

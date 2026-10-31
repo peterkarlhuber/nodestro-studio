@@ -43,7 +43,8 @@
   "draft": {
     "unknown_tool": "A ferramenta desconhecida “{{name}}” foi deixada de fora.",
     "model_unavailable": "O modelo “{{model}}” não está disponível; foi escolhido {{chosen}}.",
-    "server_tool_provider": "A ferramenta de servidor “{{name}}” foi deixada de fora: ela só está disponível para modelos da Anthropic."
+    "server_tool_provider": "A ferramenta de servidor “{{name}}” foi deixada de fora: ela só está disponível para modelos da Anthropic.",
+    "judge_unsupported": "O modelo padrão “{{model}}” não consegue devolver o veredito estruturado de uma verificação de qualidade. Escolha outro juiz antes de ativar a verificação."
   },
   "config": {
     "library": "A configuração não segue as regras da biblioteca de agentes.",

@@ -43,7 +43,8 @@
   "draft": {
     "unknown_tool": "Se ha omitido la herramienta desconocida «{{name}}».",
     "model_unavailable": "El modelo «{{model}}» no está disponible; se ha elegido {{chosen}}.",
-    "server_tool_provider": "Se ha omitido la herramienta de servidor «{{name}}»: solo está disponible para modelos de Anthropic."
+    "server_tool_provider": "Se ha omitido la herramienta de servidor «{{name}}»: solo está disponible para modelos de Anthropic.",
+    "judge_unsupported": "El modelo predeterminado «{{model}}» no puede devolver el veredicto estructurado de un control de calidad. Elige otro juez antes de activar el control."
   },
   "config": {
     "library": "La configuración no cumple las reglas de la biblioteca de agentes.",
