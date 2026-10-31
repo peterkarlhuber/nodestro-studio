@@ -8,5 +8,8 @@
   "suiteChanged": "série de testes alterada depois do teste",
   "running": "Um teste está em andamento.",
   "noSuite": "Este fluxo de trabalho não tem série de testes.",
-  "createSuite": "Criar uma série de testes"
+  "createSuite": "Criar uma série de testes",
+  "loadFailed": "Não foi possível carregar os resultados dos testes da versão {{version}}.",
+  "runsFailed": "testes não carregados",
+  "retry": "Recarregar"
 }

@@ -8,7 +8,8 @@
   of each test series of the workflow: *untested*, *n of m passed*, or *outdated* when the latest finished run tested
   another version or the test series changed after it. The versions dialog shows the same for the saved version.
   A test run started on the "current state" counts for the version saved last before it started. The result only
-  informs; it does not block publishing. Built from the existing `/api/benchmarks` routes (`automation/testStatus.ts`).
+  informs; it does not block publishing. If the test series, the versions or the runs of a series cannot be loaded, it says so with
+  *Reload* instead of showing *untested* or *no test series*. Built from the existing `/api/benchmarks` routes (`automation/testStatus.ts`).
 - Texts in six languages (`testStatus`); the publishing and versions sections of the help describe it. The api e2e
   suite checks the dialog without and with a test series.
 

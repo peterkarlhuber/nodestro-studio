@@ -8,5 +8,8 @@
   "suiteChanged": "la serie de pruebas cambió después de la prueba",
   "running": "Hay una ejecución de prueba en curso.",
   "noSuite": "Este flujo de trabajo no tiene serie de pruebas.",
-  "createSuite": "Crear una serie de pruebas"
+  "createSuite": "Crear una serie de pruebas",
+  "loadFailed": "No se pudieron cargar los resultados de pruebas de la versión {{version}}.",
+  "runsFailed": "ejecuciones de prueba no cargadas",
+  "retry": "Volver a cargar"
 }

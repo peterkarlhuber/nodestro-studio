@@ -8,5 +8,8 @@
   "suiteChanged": "test series changed since the test",
   "running": "A test run is in progress.",
   "noSuite": "This workflow has no test series.",
-  "createSuite": "Create a test series"
+  "createSuite": "Create a test series",
+  "loadFailed": "The test results for version {{version}} could not be loaded.",
+  "runsFailed": "test runs not loaded",
+  "retry": "Reload"
 }

@@ -8,5 +8,8 @@
   "suiteChanged": "série de tests modifiée depuis le test",
   "running": "Un test est en cours.",
   "noSuite": "Ce workflow n’a pas de série de tests.",
-  "createSuite": "Créer une série de tests"
+  "createSuite": "Créer une série de tests",
+  "loadFailed": "Les résultats des tests de la version {{version}} n’ont pas pu être chargés.",
+  "runsFailed": "tests non chargés",
+  "retry": "Recharger"
 }

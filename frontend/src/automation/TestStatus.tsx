@@ -1,15 +1,29 @@
 // The latest test-series result for one saved version (Q-1): untested, passed n of m, or outdated with the reason.
 
 import { useQueries, useQuery } from "@tanstack/react-query";
-import { FlaskConical } from "lucide-react";
+import { FlaskConical, RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import { keys, useSuites } from "../api/hooks";
-import { Badge, Spinner } from "../components/ui";
+import { Badge, Button, Callout, Spinner } from "../components/ui";
 import { relativeTime } from "../lib/format";
 import { type SuiteTestStatus, suiteTestStatus } from "./testStatus";
+
+/** A suite whose test runs could not be loaded: says so instead of guessing "untested". */
+function FailedRow({ name, onRetry }: { name: string; onRetry: () => void }) {
+  const { t } = useTranslation();
+  return (
+    <li className="test-status__row" data-testid="test-status-row">
+      <span>{name}</span>
+      <Badge tone="danger">{t("testStatus.runsFailed")}</Badge>
+      <Button size="sm" variant="ghost" icon={RotateCcw} onClick={onRetry}>
+        {t("testStatus.retry")}
+      </Button>
+    </li>
+  );
+}
 
 function StatusRow({ status }: { status: SuiteTestStatus }) {
   const { t } = useTranslation();
@@ -49,7 +63,28 @@ export function TestStatus({ workflowId, version }: { workflowId: string; versio
     queries: own.map((suite) => ({ queryKey: keys.benchmarkRuns(suite.id), queryFn: () => api.benchmarkRuns(suite.id) })),
   });
   if (suites.isLoading || versions.isLoading || runs.some((item) => item.isLoading)) return <Spinner />;
-  if (!suites.data || !versions.data) return null;
+  // Without the series or the versions nothing can be said: an error, never "no test series" or "untested".
+  if (!suites.data || !versions.data) {
+    return (
+      <div className="test-status" data-testid="test-status">
+        <Callout tone="danger">
+          <span data-testid="test-status-error">{t("testStatus.loadFailed", { version })}</span>{" "}
+          <Button
+            size="sm"
+            variant="ghost"
+            icon={RotateCcw}
+            onClick={() => {
+              if (!suites.data) void suites.refetch();
+              if (!versions.data) void versions.refetch();
+            }}
+          >
+            {t("testStatus.retry")}
+          </Button>
+        </Callout>
+      </div>
+    );
+  }
+  const knownVersions = versions.data;
   return (
     <div className="test-status stack-sm" data-testid="test-status">
       <p className="small">
@@ -57,9 +92,20 @@ export function TestStatus({ workflowId, version }: { workflowId: string; versio
       </p>
       {own.length ? (
         <ul className="test-status__list">
-          {own.map((suite, index) => (
-            <StatusRow key={suite.id} status={suiteTestStatus(suite, runs[index]?.data ?? [], version, versions.data)} />
-          ))}
+          {own.map((suite, index) => {
+            const result = runs[index];
+            // A failed request is not "no finished run": that suite says it could not be loaded.
+            if (!result?.data) {
+              return (
+                <FailedRow
+                  key={suite.id}
+                  name={suite.name || t("automation.benchmark.unnamed")}
+                  onRetry={() => void result?.refetch()}
+                />
+              );
+            }
+            return <StatusRow key={suite.id} status={suiteTestStatus(suite, result.data, version, knownVersions)} />;
+          })}
         </ul>
       ) : (
         <p className="muted small">
