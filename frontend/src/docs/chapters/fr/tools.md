@@ -150,6 +150,26 @@ Les outils personnels et créés par l’IA ne s’exécutent **jamais dans le p
 
 Le bac à sable se choisit dans les [réglages](/docs/einstellungen#sandbox). Docker isole mieux, mais doit être installé et démarré ; sinon, les tests et les appels échouent. Si un appel dépasse le délai, il compte comme une erreur.
 
+
+## Confiance et isolation {#vertrauen}
+<!-- keywords: confiance, non fiable, origine, généré par l’ia, docker requis, isolation requise, bloqué, restreint, nécessite une isolation -->
+
+Nodestro décide selon l’**origine du code** où il peut s’exécuter :
+
+| Origine | Affiché comme | Bac à sable *Processus Python* | Bac à sable *Docker* |
+|---|---|---|---|
+| Outils intégrés et intégrations | *Intégré* | dans le processus Nodestro | dans le processus Nodestro |
+| Écrit par vous dans *Écrire soi-même* | *Écrit par vous* | s’exécute, sans isolation sur cet ordinateur | s’exécute isolé |
+| Créé par l’IA (même après votre approbation), brouillons d’outils de l’architecte IA, outils d’origine inconnue | *Nécessite une isolation* | **bloqué** | s’exécute isolé |
+
+Le processus Python n’est pas une barrière de sécurité : le code qui s’y exécute a vos droits. Nodestro n’y exécute donc jamais de code généré par l’IA, et ni votre approbation ni un réglage n’y changent rien. Sans Docker :
+
+- **Créer avec l’IA** ne démarre pas, et les brouillons d’outils ne peuvent être ni testés ni approuvés ;
+- les agents dotés d’un outil qui nécessite une isolation ne peuvent pas s’exécuter ; la vérification du workflow le signale avant le démarrage ;
+- les outils qui nécessitent une isolation ne peuvent pas encore utiliser de bibliothèques tierces, même avec Docker.
+
+Les outils enregistrés avant cette version, et tous les outils après la restauration d’une sauvegarde, sont considérés d’origine inconnue, y compris ceux que vous avez écrits vous-même, car leur origine n’a pas été enregistrée. Avec Docker, ils continuent de fonctionner. Une nouvelle version d’un tel outil, ou une copie de son code dans un nouvel outil, garde ce statut. Pour utiliser ces fonctions, installez et démarrez Docker, puis choisissez-le dans les [réglages](/docs/einstellungen#sandbox).
+
 ## Versions et suppression {#versionen}
 <!-- keywords: version, supprimer, retirer, revoke, mettre à jour, écraser -->
 

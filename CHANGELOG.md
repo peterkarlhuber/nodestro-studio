@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Sandbox policy and trust classes, M1 PR-4 (2026-10-31)
+
+- Pins: `nodestro-runtime` d6e75b7, `nodestro-examples` 31b5714, `nodestro-integrations` 99cdd2c, `nodestro-api`
+  cd4b198 and `nodestro-sdk` b001667 (before: e90c205, 649ef70, e96d91f, d8ed049 and 7aee149). All are merge commits.
+- **Security, changed behavior (ADR-0006):** AI-created code and tools of unknown origin run only in the Docker
+  sandbox; your approval or a setting does not change that. Without Docker, *Create with AI* is disabled with an
+  explanation, tool drafts cannot be tested or approved, and agents with such tools are blocked by the workflow
+  check. Tools saved before this version and all tools after a restore count as of unknown origin.
+- Tools show their origin (*Built-in*, *Written by you*, *Needs isolation*) and where they may run; new error texts
+  `sandbox.isolation_required`, `sandbox.libraries_need_isolation`, `sandbox.unavailable`; settings, export note and
+  the documentation chapter "Trust and isolation" (tools), plus notes in settings and AI architect, in six languages.
+- Browser tests: the architect suite checks that a draft is refused without isolation and registered with Docker
+  (a test-only container double stands in for Docker); the python suite checks the origin note and that generating
+  needs Docker. ADR-0006 is marked accepted with implementation notes.
+
 ### Storage seams, M1 PR-3 (2026-10-31)
 
 - Pins: `nodestro-runtime` e90c205, `nodestro-examples` 649ef70, `nodestro-integrations` e96d91f, `nodestro-api`

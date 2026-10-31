@@ -76,6 +76,8 @@ A tool draft is not registered. You see code and tests in the review and under *
 
 As long as a tool is not approved, the check reports the workflow as blocked, and it cannot be started. The existing security rules for custom code apply unchanged. Knowledge and memory assignments are also only proposals that you change in the editor.
 
+Tool drafts are AI-generated: testing and approving them needs the Docker sandbox (see [Trust and isolation](/docs/tools#vertrauen)).
+
 ## Cost and limits {#kosten}
 <!-- keywords: cost, limit, budget, corrections, usage, price, usd -->
 

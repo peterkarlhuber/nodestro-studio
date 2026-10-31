@@ -17,6 +17,17 @@
     "generated": "Created by AI"
   },
   "kindLabel": "Kind of tool",
+  "trust": {
+    "trusted": "Built-in",
+    "user-authored": "Written by you",
+    "untrusted": "Needs isolation"
+  },
+  "trustLabel": "Origin",
+  "trustNote": {
+    "user-authored": "Written by you: runs in a separate Python process without isolation on this computer.",
+    "untrusted": "AI-created or of unknown origin: runs only in the Docker sandbox.",
+    "untrustedBlocked": "AI-created or of unknown origin: runs only in the Docker sandbox. With the Python process sandbox, agents with this tool cannot run."
+  },
   "version": "Version {{version}}",
   "deleted": "Tool {{name}} deleted",
   "saved": "Tool {{name}} saved",
@@ -74,7 +85,8 @@
     "dependenciesNote": "The proposal uses third-party libraries. Nothing is installed; the tests only run after your approval. You approve the code separately afterwards.",
     "approveLibraries": "Approve libraries",
     "withoutLibraries": "Rewrite without libraries",
-    "usesLibraries": "Uses the approved libraries: {{names}}"
+    "usesLibraries": "Uses the approved libraries: {{names}}",
+    "needsDocker": "Creating tools with AI needs the Docker sandbox: the tests of AI-written code never run without isolation. Choose Docker in the settings."
   },
   "drafts": {
     "title_one": "{{count}} tool draft awaiting your decision",

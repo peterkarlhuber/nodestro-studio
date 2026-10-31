@@ -54,11 +54,26 @@ def script() -> dict[str, list[Any]]:
     return {key: [slow(values[0], DELAY) for _ in range(REPEAT)] for key, values in answers.items()}
 
 
+def stand_in_for_docker() -> None:
+    """The sandbox setting ``docker`` gives a container double (tests only, not isolated): the browser test
+    checks that drafts are refused without isolation and work once Docker is chosen, on machines without Docker."""
+    from nodestro_runtime.testing import ContainerDouble
+    import nodestro_runtime.workspace as workspace
+
+    real = workspace.make_sandbox
+
+    def make_sandbox(kind: str, policy: Any = None) -> Any:
+        return ContainerDouble() if kind == "docker" else real(kind, policy)
+
+    workspace.make_sandbox = make_sandbox  # type: ignore[assignment]
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-dir", required=True)
     parser.add_argument("--port", type=int, default=8010)
     args = parser.parse_args()
+    stand_in_for_docker()
     client = ScriptedClient(script())
     config = studio_config(Path(args.data_dir))
     app = create_app(config, client_factory=lambda _provider: client)

@@ -26,7 +26,7 @@
   "sandbox": {
     "title": "Sandbox für eigene Tools",
     "label": "Sandbox",
-    "text": "Eigene und von der KI erstellte Tools laufen nie im Nodestro-Prozess. Der Python-Prozess ist sofort verfügbar; Docker isoliert stärker (ohne Netzwerk, begrenzter Speicher).",
+    "text": "Eigene und von der KI erstellte Tools laufen nie im Nodestro-Prozess. Der Python-Prozess ist sofort verfügbar; Docker isoliert stärker (ohne Netzwerk, begrenzter Speicher). KI-erstellte Tools und Tools unbekannter Herkunft laufen nur mit Docker; ohne Docker sind sie gesperrt.",
     "subprocess": "Python-Prozess",
     "dockerAvailable": "Docker verfügbar",
     "dockerMissing": "Docker nicht gefunden",

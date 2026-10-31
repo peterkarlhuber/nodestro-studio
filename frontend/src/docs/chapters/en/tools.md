@@ -150,6 +150,26 @@ Your own and AI-created tools **never run in the Nodestro process**. Tests and e
 
 You choose the sandbox in the [settings](/docs/einstellungen#sandbox). Docker isolates more strongly but must be installed and running; otherwise tests and calls fail. If a call exceeds the time limit, it counts as an error.
 
+
+## Trust and isolation {#vertrauen}
+<!-- keywords: trust, untrusted, origin, ai-generated, docker required, isolation required, blocked, restricted, needs isolation -->
+
+Nodestro decides by the **origin of the code** where it may run:
+
+| Origin | Shown as | Sandbox *Python process* | Sandbox *Docker* |
+|---|---|---|---|
+| Built-in tools and integrations | *Built-in* | in the Nodestro process | in the Nodestro process |
+| Written by you under *Write it yourself* | *Written by you* | runs, without isolation on this computer | runs isolated |
+| Created by AI (also after your approval), tool drafts of the AI architect, tools of unknown origin | *Needs isolation* | **blocked** | runs isolated |
+
+The Python process is not a security boundary: code in it runs with your rights. Therefore Nodestro never runs AI-generated code there, and neither your approval nor a setting changes that. Without Docker:
+
+- **Create with AI** does not start, and tool drafts cannot be tested or approved;
+- agents with a tool that needs isolation cannot run; the workflow check reports it before the start;
+- tools that need isolation cannot use third-party libraries yet, also with Docker.
+
+Tools saved before this version, and all tools after restoring a backup, count as of unknown origin, also the ones you wrote yourself, because their origin was not recorded. With Docker they keep working. A new version of such a tool, or a copy of its code in a new tool, keeps that status. To use these features, install and start Docker and choose it in the [settings](/docs/einstellungen#sandbox).
+
 ## Versions and deleting {#versionen}
 <!-- keywords: version, delete, revoke, update, overwrite -->
 

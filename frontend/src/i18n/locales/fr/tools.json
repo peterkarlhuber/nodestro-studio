@@ -17,6 +17,17 @@
     "generated": "Créé par l’IA"
   },
   "kindLabel": "Type d’outil",
+  "trust": {
+    "trusted": "Intégré",
+    "user-authored": "Écrit par vous",
+    "untrusted": "Nécessite une isolation"
+  },
+  "trustLabel": "Origine",
+  "trustNote": {
+    "user-authored": "Écrit par vous : s’exécute dans un processus Python séparé, sans isolation, sur cet ordinateur.",
+    "untrusted": "Créé par l’IA ou d’origine inconnue : ne s’exécute que dans le bac à sable Docker.",
+    "untrustedBlocked": "Créé par l’IA ou d’origine inconnue : ne s’exécute que dans le bac à sable Docker. Avec le bac à sable « Processus Python », les agents qui utilisent cet outil ne peuvent pas s’exécuter."
+  },
   "version": "Version {{version}}",
   "deleted": "Outil {{name}} supprimé",
   "saved": "Outil {{name}} enregistré",
@@ -74,7 +85,8 @@
     "dependenciesNote": "La proposition utilise des bibliothèques tierces. Rien n’est installé ; les tests ne s’exécutent qu’après votre approbation. Vous approuvez ensuite le code séparément.",
     "approveLibraries": "Approuver les bibliothèques",
     "withoutLibraries": "Réécrire sans bibliothèques",
-    "usesLibraries": "Utilise les bibliothèques approuvées : {{names}}"
+    "usesLibraries": "Utilise les bibliothèques approuvées : {{names}}",
+    "needsDocker": "Créer des outils avec l’IA nécessite le bac à sable Docker : les tests du code écrit par l’IA ne s’exécutent jamais sans isolation. Choisissez Docker dans les réglages."
   },
   "drafts": {
     "title_one": "{{count}} brouillon d’outil attend votre décision",

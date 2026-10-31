@@ -45,6 +45,8 @@ Le **budget par défaut par exécution** (au départ 2 USD) s’applique à tous
 
 Vous choisissez ici où s’exécutent les outils personnels et ceux créés par l’IA : **Processus Python** ou **Docker**. La modification s’applique immédiatement. Une remarque indique si Docker a été trouvé ; si Docker est choisi mais inaccessible, les tests et les appels d’outils échouent. Détails dans [Le bac à sable](/docs/tools#sandbox).
 
+Les outils créés par l’IA et ceux d’origine inconnue ne s’exécutent qu’avec Docker ; voir [Confiance et isolation](/docs/tools#vertrauen).
+
 ## Langue {#sprache}
 <!-- keywords: langue, language, français, anglais, allemand, espagnol, portugais, italien, langue du navigateur, traduction, localisation -->
 

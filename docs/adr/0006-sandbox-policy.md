@@ -1,6 +1,7 @@
 # ADR-0006: Sandbox policy for untrusted code
 
-- Status: Proposed (M0, 2026-10-31); revised the same day after Peter's review (see "Revision history")
+- Status: Accepted; implemented in M1 PR-4 (2026-10-31): nodestro-runtime #7, nodestro-api #9 and the studio PR
+  that pins them. Revised the same day after Peter's review (see "Revision history")
 - Repositories: nodestro-runtime (policy, environments), nodestro-api (settings, endpoints), orkexa (only if an image
   hook is missing after review), nodestro-desktop (bundled native sandbox, later), nodestro-server (container runtime)
 
@@ -85,6 +86,22 @@ Compatibility, required to pass on every OS the prototype claims:
   a generation job); if not, they stay `untrusted` until the person re-saves them in the editor.
 - Desktop users with Docker keep every feature.
 
+## Implementation notes (PR-4)
+
+- Existing tools: provenance cannot be derived reliably from existing data, so every tool stored before PR-4, also
+  a hand-written one, stays `untrusted`. Decided under Peter's autonomy grant and his rule "unknown tool origin
+  counts as untrusted". Re-saving does not change it: the class belongs to all versions under a tool name, and a
+  new editor tool whose code equals a stored untrusted tool, a pending draft or a job attempt is `untrusted` too.
+  Pasting code that came from elsewhere into a new tool cannot be detected; the documentation says that code
+  written in the editor counts as the person's own.
+- A restore clears the provenance records (a backup can come from anywhere).
+- Releases record `tool_trust`; the studio's API decides with the studio's records, exported projects use the
+  recorded classes and `TOOL_SANDBOX=subprocess|docker`.
+- Untrusted code with libraries is refused (`sandbox.libraries_need_isolation`) until PR-11 brings container images
+  per lock file; tool jobs ask for a standard-library version and never resolve libraries.
+- Not done in PR-4: a `sandbox.unavailable` preflight when Docker is selected but not running (Orkexa's
+  `DockerSandbox` still fails closed at call time; the diagnostics page reports it).
+
 ## Consequences
 
 - Required tests (PR-4): policy matrix (profile × trust class × isolation available); no subprocess sandbox
@@ -96,6 +113,8 @@ Compatibility, required to pass on every OS the prototype claims:
   need isolation.
 
 ## Revision history
+
+- 2026-10-31, accepted and implemented in PR-4 (see "Implementation notes").
 
 - 2026-10-31, first draft: proposed a per-job confirmation before running untrusted code without Docker.
 - 2026-10-31, revision after Peter's review: a confirmation dialog is not a security measure. Untrusted code without

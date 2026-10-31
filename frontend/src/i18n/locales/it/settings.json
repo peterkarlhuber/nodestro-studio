@@ -26,7 +26,7 @@
   "sandbox": {
     "title": "Sandbox per gli strumenti personali",
     "label": "Sandbox",
-    "text": "Gli strumenti personali e quelli creati dall’IA non girano mai nel processo di Nodestro. Il processo Python è subito disponibile; Docker isola di più (senza rete, memoria limitata).",
+    "text": "Gli strumenti personali e quelli creati dall’IA non girano mai nel processo di Nodestro. Il processo Python è subito disponibile; Docker isola di più (senza rete, memoria limitata). Gli strumenti creati dall’IA e quelli di origine sconosciuta vengono eseguiti solo con Docker; senza Docker sono bloccati.",
     "subprocess": "Processo Python",
     "dockerAvailable": "Docker disponibile",
     "dockerMissing": "Docker non trovato",

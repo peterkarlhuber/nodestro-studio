@@ -411,7 +411,7 @@
     "bundled_library": "The source code of Orkexa is copied into the project (MIT license included).",
     "runtime_differs": "This version was published with {{published}}; the export contains the current runtime {{current}}.",
     "tool_libraries": "The approved tool libraries are installed with the project: {{packages}}.",
-    "sandbox_process": "The export runs tools in a separate process (the Docker sandbox is a setting of this installation).",
+    "sandbox_process": "The export runs only tools you wrote yourself in a separate process; AI-created tools need TOOL_SANDBOX=docker (see the README of the export).",
     "approvals": "Approvals in the export are decided through its API (permission approve); Nodestro does not see the export's runs.",
     "server_tools": "Server tools ({{tools}}) are called through the Anthropic API.",
     "guide_not_accepted": "Review and accept the AI guide first.",
@@ -539,5 +539,10 @@
   "access": {
     "login_required": "Log in to use this part of Nodestro.",
     "forbidden": "You may not do this (permission {{permission}} needed)."
+  },
+  "sandbox": {
+    "isolation_required": "AI-created code and tools of unknown origin run only in the Docker sandbox; nothing was run. Choose Docker in the settings.",
+    "libraries_need_isolation": "{{name}} is AI-created or of unknown origin and needs third-party libraries. Such tools cannot run yet, because libraries are only available without isolation.",
+    "unavailable": "Tool code runs only in containers here; the Python process sandbox is not available."
   }
 }

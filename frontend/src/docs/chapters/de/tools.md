@@ -150,6 +150,26 @@ Eigene und KI-erstellte Tools laufen **nie im Nodestro-Prozess**. Tests und jede
 
 Die Sandbox wählst du in den [Einstellungen](/docs/einstellungen#sandbox). Docker isoliert stärker, muss aber installiert und gestartet sein; sonst schlagen Tests und Aufrufe fehl. Überschreitet ein Aufruf das Zeitlimit, gilt er als Fehler.
 
+
+## Vertrauen und Isolation {#vertrauen}
+<!-- keywords: vertrauen, nicht vertrauenswürdig, herkunft, ki-generiert, docker nötig, isolation nötig, gesperrt, eingeschränkt, braucht isolation -->
+
+Nodestro entscheidet nach der **Herkunft des Codes**, wo er laufen darf:
+
+| Herkunft | Angezeigt als | Sandbox *Python-Prozess* | Sandbox *Docker* |
+|---|---|---|---|
+| Eingebaute Tools und Integrationen | *Eingebaut* | im Nodestro-Prozess | im Nodestro-Prozess |
+| Von dir unter *Selbst schreiben* geschrieben | *Von dir geschrieben* | läuft, ohne Isolation auf diesem Rechner | läuft isoliert |
+| Von der KI erstellt (auch nach deiner Freigabe), Tool-Entwürfe des KI-Architekten, Tools unbekannter Herkunft | *Braucht Isolation* | **gesperrt** | läuft isoliert |
+
+Der Python-Prozess ist keine Sicherheitsgrenze: Code darin läuft mit deinen Rechten. Deshalb führt Nodestro KI-generierten Code dort nie aus, und weder deine Freigabe noch eine Einstellung ändert das. Ohne Docker gilt:
+
+- **Von KI erstellen** startet nicht, und Tool-Entwürfe lassen sich weder testen noch freigeben;
+- Agenten mit einem Tool, das Isolation braucht, können nicht laufen; die Workflow-Prüfung meldet das vor dem Start;
+- Tools, die Isolation brauchen, können noch keine Bibliotheken von Drittanbietern nutzen, auch nicht mit Docker.
+
+Tools, die vor dieser Version gespeichert wurden, und alle Tools nach dem Wiederherstellen eines Backups gelten als unbekannter Herkunft, auch selbst geschriebene, weil ihre Herkunft nicht festgehalten wurde. Mit Docker funktionieren sie weiter. Eine neue Version eines solchen Tools oder eine Kopie seines Codes in einem neuen Tool behält diesen Status. Um diese Funktionen zu nutzen, installiere und starte Docker und wähle es in den [Einstellungen](/docs/einstellungen#sandbox).
+
 ## Versionen und Löschen {#versionen}
 <!-- keywords: version, löschen, zurückziehen, revoke, aktualisieren, überschreiben -->
 
