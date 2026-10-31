@@ -353,6 +353,7 @@ export function Section({
   icon: Icon,
   tip,
   id,
+  className,
 }: {
   title: string;
   summary?: ReactNode;
@@ -366,6 +367,8 @@ export function Section({
   tip?: HelpId;
   /** A stable name of the section, e.g. for remembering its state. */
   id?: string;
+  /** Extra classes next to `section`, e.g. for a page's own frame. */
+  className?: string;
 }) {
   const { t } = useTranslation();
   const [ownOpen, setOwnOpen] = useState(defaultOpen);
@@ -374,7 +377,7 @@ export function Section({
   const warnings = status?.warnings ?? 0;
   return (
     <details
-      className="section"
+      className={className ? `section ${className}` : "section"}
       open={isOpen}
       data-section={id}
       onToggle={(event) => {

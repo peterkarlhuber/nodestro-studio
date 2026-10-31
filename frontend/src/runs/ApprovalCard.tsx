@@ -11,7 +11,7 @@ import { api } from "../api/client";
 import { keys, useApprovals } from "../api/hooks";
 import type { PendingApproval, Run } from "../api/types";
 import { Output } from "../components/Markdown";
-import { Button, Callout, Field, HelpTip, TextArea } from "../components/ui";
+import { Button, Callout, Field, HelpTip, Section, TextArea } from "../components/ui";
 import { toast } from "../components/toast";
 import { useEditor } from "../editor/store";
 import { ErrorText } from "../lib/errors";
@@ -70,10 +70,9 @@ export function ApprovalForm({ approval, showContext = false }: { approval: Pend
       {approval.items.length ? (
         <div className="stack-sm">
           {approval.items.map((item) => (
-            <details key={item.node_id} className="approval-card__item" open={approval.items.length === 1}>
-              <summary>{item.label}</summary>
+            <Section key={item.node_id} title={item.label} className="approval-card__item" defaultOpen={approval.items.length === 1}>
               <Output value={item.value} />
-            </details>
+            </Section>
           ))}
         </div>
       ) : (

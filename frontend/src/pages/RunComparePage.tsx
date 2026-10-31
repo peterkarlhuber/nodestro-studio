@@ -11,7 +11,7 @@ import { api } from "../api/client";
 import { useMeta } from "../api/hooks";
 import type { Run } from "../api/types";
 import { TextDiff } from "../components/TextDiff";
-import { Badge, Callout, EmptyState, PageHeader, Spinner, StatusBadge } from "../components/ui";
+import { Badge, Callout, EmptyState, PageHeader, Section, Spinner, StatusBadge } from "../components/ui";
 import { compareRuns, type AgentPair, type AgentSide, type RunTotals } from "../lib/compare";
 import { ErrorText, ProblemText, runProblem } from "../lib/errors";
 import { formatCost, formatDate, formatNumber, formatTokens } from "../lib/format";
@@ -129,40 +129,39 @@ function AgentRow({ pair, modelLabel }: { pair: AgentPair; modelLabel: (id: stri
   const { t } = useTranslation();
   const differs = pair.differs.size > 0;
   return (
-    <details className={`section compare-agent ${differs ? "compare-agent--differs" : ""}`} open={differs && pair.differs.has("output")}>
-      <summary>
-        <span className="section__title">{pair.label}</span>
-        <span className="section__summary">
-          {differs ? (
-            [...pair.differs].map((aspect) => (
-              <Badge key={aspect} tone="warning">
-                {t(`compare.aspect.${aspect}`)}
-              </Badge>
-            ))
-          ) : (
-            <Badge tone="success">{t("compare.same")}</Badge>
-          )}
-        </span>
-      </summary>
-      <div className="section__body stack-sm">
-        <div className="compare__columns">
-          <SideSummary side={pair.a} modelLabel={modelLabel} />
-          <SideSummary side={pair.b} modelLabel={modelLabel} />
-        </div>
-        {pair.a && pair.b ? (
-          <>
-            <span className="nd-field-label">{t("compare.agentOutput")}</span>
-            <TextDiff a={pair.a.output} b={pair.b.output} />
-            {pair.a.state?.evaluation?.feedback || pair.b.state?.evaluation?.feedback ? (
-              <>
-                <span className="nd-field-label">{t("compare.evaluationFeedback")}</span>
-                <TextDiff a={pair.a.state?.evaluation?.feedback ?? ""} b={pair.b.state?.evaluation?.feedback ?? ""} />
-              </>
-            ) : null}
-          </>
-        ) : null}
+    <Section
+      title={pair.label}
+      className={differs ? "compare-agent compare-agent--differs" : "compare-agent"}
+      defaultOpen={differs && pair.differs.has("output")}
+      summary={
+        differs ? (
+          [...pair.differs].map((aspect) => (
+            <Badge key={aspect} tone="warning">
+              {t(`compare.aspect.${aspect}`)}
+            </Badge>
+          ))
+        ) : (
+          <Badge tone="success">{t("compare.same")}</Badge>
+        )
+      }
+    >
+      <div className="compare__columns">
+        <SideSummary side={pair.a} modelLabel={modelLabel} />
+        <SideSummary side={pair.b} modelLabel={modelLabel} />
       </div>
-    </details>
+      {pair.a && pair.b ? (
+        <>
+          <span className="nd-field-label">{t("compare.agentOutput")}</span>
+          <TextDiff a={pair.a.output} b={pair.b.output} />
+          {pair.a.state?.evaluation?.feedback || pair.b.state?.evaluation?.feedback ? (
+            <>
+              <span className="nd-field-label">{t("compare.evaluationFeedback")}</span>
+              <TextDiff a={pair.a.state?.evaluation?.feedback ?? ""} b={pair.b.state?.evaluation?.feedback ?? ""} />
+            </>
+          ) : null}
+        </>
+      ) : null}
+    </Section>
   );
 }
 

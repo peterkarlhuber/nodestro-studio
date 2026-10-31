@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Test cases, run comparison and approval items use the shared section, UX-5a (2026-10-31)
+
+- Studio only, no pin change. The test-case editor of a test series, the agents of the run comparison and the
+  items of an approval are now `Section`s (finding F5): the same chevron, title and summary as the agent inspector,
+  and an open state that belongs to the person. Before, their `open` followed the data: an approval that gained an
+  item while open closed the item being read, and removing the first test case forced the next one open. Content
+  and order are unchanged. `Section` takes an extra `className`.
+- Left as plain `<details>` on purpose: the "show result" and "feedback" toggles in run details, test results and
+  batch rows, the tool-call list and the adoptable inputs. They reveal one value in place and are not sections.
+
 ### Default model as judge of AI-designed agents, Q-0 (2026-10-31)
 
 - Pins: `nodestro-api` at `a08c9c3` (before `f119cfc`), `nodestro-sdk` at `e508e6b` (before `2ed893a`). Agents designed by
