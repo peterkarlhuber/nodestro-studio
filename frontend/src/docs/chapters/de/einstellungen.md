@@ -103,16 +103,17 @@ Nodestro startet unter `http://localhost:8000` und öffnet den Browser. Optionen
 
 | Option | Umgebungsvariable | Bedeutung |
 |---|---|---|
-| `--host` | `NODESTRO_HOST` | Adresse (Standard `127.0.0.1`, nur dieser Rechner) |
+| `--host` | `NODESTRO_HOST` | Adresse (Standard `127.0.0.1`). Nur Adressen dieses Rechners (`127.0.0.1`, `::1`, `localhost`) sind erlaubt, weil Nodestro noch keine Anmeldung hat |
 | `--port` | `NODESTRO_PORT` | Port (Standard `8000`) |
 | `--data-dir` | `NODESTRO_DATA_DIR` | Datenverzeichnis (Standard `~/.nodestro`) |
-| – | `NODESTRO_ALLOWED_HOSTS` | Weitere Hostnamen, unter denen Nodestro antwortet, z. B. hinter einem Reverse Proxy (kommagetrennt). Andere Hostnamen und Änderungen von fremden Webseiten werden abgewiesen, damit keine Webseite im Browser Nodestro bedienen kann. Mit `--host 0.0.0.0` antwortet Nodestro zusätzlich unter jeder IP-Adresse und dem Namen dieses Rechners |
+| `--profile` | `NODESTRO_PROFILE` | Betriebsprofil (Standard `desktop`). `server` kann noch nicht gestartet werden |
+| – | `NODESTRO_ALLOWED_HOSTS` | Weitere Namen dieses Rechners, unter denen Nodestro antwortet (kommagetrennt, z. B. `studio.localhost`). Andere Hostnamen, Änderungen von fremden Webseiten und von einem Proxy weitergeleitete Anfragen werden abgewiesen, damit keine Webseite im Browser Nodestro bedienen kann |
 | `--no-browser` | – | Browser nicht automatisch öffnen |
 | `--reload` | – | Bei Codeänderungen neu starten (Entwicklung) |
 
 Beenden mit **Strg+C**. Laufende Läufe werden dabei abgebrochen.
 
-> **Sicherheit:** Nodestro hat keine Benutzerverwaltung. Mache es nicht über `--host 0.0.0.0` in fremden Netzen erreichbar, denn wer die Oberfläche erreicht, kann mit deinen API-Schlüsseln Läufe starten.
+> **Sicherheit:** Nodestro hat noch keine Benutzerverwaltung und antwortet deshalb nur diesem Rechner. `--host 0.0.0.0`, andere Netzwerkadressen oder Netzwerknamen in `NODESTRO_ALLOWED_HOSTS` brechen den Start ab, und Nodestro lässt sich nicht hinter einen Reverse Proxy stellen. Damit andere Geräte einen Workflow nutzen können, veröffentliche ihn als API: Veröffentlichte APIs nutzen API-Schlüssel und haben einen eigenen Netzwerkzugang (siehe *API und Export*).
 
 ## Tastenkürzel {#tastenkuerzel}
 <!-- keywords: tastenkürzel, shortcuts, tastatur, keyboard, barrierefreiheit -->

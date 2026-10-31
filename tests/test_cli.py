@@ -39,5 +39,27 @@ def test_help_lists_every_option(capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit):
         cli.main(["--help"])
     shown = capsys.readouterr().out
-    for option in ("--host", "--port", "--data-dir", "--no-browser", "--reload"):
+    for option in ("--host", "--port", "--data-dir", "--profile", "--no-browser", "--reload"):
         assert option in shown
+
+
+@pytest.mark.parametrize(
+    ("argv", "reason"),
+    [(["--host", "0.0.0.0"], "no login"), (["--profile", "server"], "server profile")],
+    ids=["network", "server"],
+)
+def test_the_studio_is_not_started_on_the_network_or_as_a_server(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, argv: list[str], reason: str
+) -> None:
+    """Accepted as options since 0.1, refused at start since nodestro-api b794ebe (no login yet)."""
+    import uvicorn
+
+    started: list[Any] = []
+    monkeypatch.setattr(uvicorn, "run", lambda *args, **kwargs: started.append(args))
+    monkeypatch.setenv("NODESTRO_HOST", "127.0.0.1")
+    monkeypatch.setenv("NODESTRO_DATA_DIR", "")
+    monkeypatch.setenv("NODESTRO_PROFILE", "")
+    monkeypatch.chdir(tmp_path)
+    with pytest.raises(SystemExit, match=reason):
+        cli.main(["--data-dir", str(tmp_path / "d"), "--no-browser", *argv])
+    assert started == []

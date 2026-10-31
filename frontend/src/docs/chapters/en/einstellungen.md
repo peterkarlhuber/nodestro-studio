@@ -103,16 +103,17 @@ Nodestro starts at `http://localhost:8000` and opens the browser. Options of the
 
 | Option | Environment variable | Meaning |
 |---|---|---|
-| `--host` | `NODESTRO_HOST` | Address (default `127.0.0.1`, this computer only) |
+| `--host` | `NODESTRO_HOST` | Address (default `127.0.0.1`). Only addresses of this computer (`127.0.0.1`, `::1`, `localhost`) are accepted, because Nodestro has no login yet |
 | `--port` | `NODESTRO_PORT` | Port (default `8000`) |
 | `--data-dir` | `NODESTRO_DATA_DIR` | Data directory (default `~/.nodestro`) |
-| – | `NODESTRO_ALLOWED_HOSTS` | Further host names Nodestro answers under, e.g. behind a reverse proxy (comma-separated). Other host names and changes from foreign web pages are refused, so no web page in the browser can operate Nodestro. With `--host 0.0.0.0` Nodestro also answers under every IP address and this computer's name |
+| `--profile` | `NODESTRO_PROFILE` | Operating profile (default `desktop`). `server` cannot be started yet |
+| – | `NODESTRO_ALLOWED_HOSTS` | Further names of this computer Nodestro answers under (comma-separated, e.g. `studio.localhost`). Other host names, changes from foreign web pages and requests forwarded by a proxy are refused, so no web page in the browser can operate Nodestro |
 | `--no-browser` | – | Do not open the browser automatically |
 | `--reload` | – | Restart on code changes (development) |
 
 Stop with **Ctrl+C**. Running runs are cancelled.
 
-> **Security:** Nodestro has no user management. Do not make it reachable via `--host 0.0.0.0` on untrusted networks, because anyone who can reach the interface can start runs with your API keys.
+> **Security:** Nodestro has no user management yet, so it only answers this computer. `--host 0.0.0.0`, other network addresses or network names in `NODESTRO_ALLOWED_HOSTS` stop the start, and Nodestro cannot be put behind a reverse proxy. To let other devices use a workflow, publish it as an API: published APIs use API keys and have their own network access (see *API and export*).
 
 ## Keyboard shortcuts {#tastenkuerzel}
 <!-- keywords: keyboard shortcuts, shortcuts, keyboard, accessibility -->

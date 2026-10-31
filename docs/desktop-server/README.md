@@ -132,6 +132,19 @@ is planned once PR-6 and PR-12 have shown what the release pipelines need.
   file or database access, until PR-12.
 - Tests, README section, CHANGELOG entry. No API, OpenAPI, studio, data or execution change.
 
+### Progress
+
+| PR | Repository and pull request | Merge commit |
+| --- | --- | --- |
+| 1 | nodestro-runtime #5 (operating profile) | `8ea9a5c` |
+| 2 | nodestro-api #7 (profile, route permissions, studio API on loopback only) | `b794ebe` |
+| 2 pins | nodestro-examples #5, nodestro-integrations #5 (runtime `8ea9a5c`), nodestro-sdk #7 (api `b794ebe`) | `f90d3a1`, `81d88ce`, `f450f2c` |
+
+PR-2 changed one behavior on purpose (security before compatibility): the studio API refuses non-loopback
+`--host` values and non-loopback `NODESTRO_ALLOWED_HOSTS`, and requests with proxy headers, because it has no login.
+Published workflow APIs and their network listener are unchanged. The section "M0 state" above describes the
+repositories before PR-1.
+
 ## Risks
 
 | Risk | Likelihood | Impact | Mitigation |
