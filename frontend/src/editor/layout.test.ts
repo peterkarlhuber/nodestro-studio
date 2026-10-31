@@ -57,6 +57,16 @@ describe("palette drops", () => {
     }
   });
 
+  it("takes a team only for a sub-workflow node and adds it with that workflow", () => {
+    const team = { workflow_id: "wf_team", name: "Research team" };
+    expect(parseDragPayload(JSON.stringify({ type: "subworkflow", team }))).toEqual({ type: "subworkflow", team });
+    expect(parseDragPayload(JSON.stringify({ type: "agent", team }))?.team).toBeUndefined();
+    expect(parseDragPayload(JSON.stringify({ type: "subworkflow", team: { workflow_id: 1 } }))?.team).toBeUndefined();
+    const node = useEditor.getState().addNode("subworkflow", { x: 0, y: 0 }, undefined, team);
+    expect(node.label).toBe("Research team");
+    expect(node.subworkflow?.workflow_id).toBe("wf_team");
+  });
+
   it("drops agent settings sent along with a node that is not an agent", () => {
     expect(parseDragPayload('{"type":"start","agent":{"name":"x"}}')).toEqual({ type: "start", agent: undefined });
   });

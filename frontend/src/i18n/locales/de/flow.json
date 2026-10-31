@@ -73,7 +73,10 @@
     "inputHint": "Was der Unterworkflow als Eingabe bekommt. {{input}} ist das, was hier ankommt.",
     "values": "Werte für sein Eingabeformular",
     "valuesHint": "Text oder Platzhalter wie {{formExample}} oder {{agentExample}}.",
-    "costs": "Kosten und Tokens des Unterworkflows zählen einmal, im Lauf dieses Workflows."
+    "costs": "Kosten und Tokens des Unterworkflows zählen einmal, im Lauf dieses Workflows.",
+    "delivers": "Liefert: {{fields}}.",
+    "noContract": "Kein Ausgabevertrag: Das Ergebnis kommt so an, wie der Workflow es erzeugt.",
+    "open": "Workflow öffnen (oder Doppelklick auf den Knoten)"
   },
   "form": {
     "title": "Eingabeformular",

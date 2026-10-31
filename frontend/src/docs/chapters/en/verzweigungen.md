@@ -98,6 +98,8 @@ In a parent workflow, a workflow with an output contract delivers an object with
 
 The check before starting warns when an agent before the result answers in plain text (then only a JSON answer helps) or when no agent delivers a required field. Invalid or repeated field names prevent a start.
 
+Workflows with an output contract or capabilities appear in the palette under **Teams** and can be added directly as a sub-workflow. The inspector of a sub-workflow shows what the team delivers. A **double-click** on the node opens the team in the editor; the breadcrumbs at the top lead back to the parent workflow.
+
 ## Input forms {#eingabeformular}
 <!-- keywords: form, input form, fields, type, required, default, choice, date, number -->
 

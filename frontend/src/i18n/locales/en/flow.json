@@ -73,7 +73,10 @@
     "inputHint": "What the sub-workflow gets as its input. {{input}} is what arrives here.",
     "values": "Values for its input form",
     "valuesHint": "Text or placeholders such as {{formExample}} or {{agentExample}}.",
-    "costs": "The sub-workflow's cost and tokens count once, in the run of this workflow."
+    "costs": "The sub-workflow's cost and tokens count once, in the run of this workflow.",
+    "delivers": "Delivers: {{fields}}.",
+    "noContract": "No output contract: the result arrives as the workflow produces it.",
+    "open": "Open workflow (or double-click the node)"
   },
   "form": {
     "title": "Input form",

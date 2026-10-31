@@ -279,6 +279,9 @@ export interface WorkflowSummary {
   agents: number;
   updated_at: string;
   last_run_status: RunStatus | null;
+  /** Capability tags and output contract field names (teams); missing from older servers. */
+  capabilities?: string[];
+  contract?: string[];
 }
 
 export interface AgentTemplate {

@@ -1,8 +1,9 @@
-import { Bot, Flag, GitBranch, Hand, PanelLeftClose, PanelLeftOpen, Play, Sparkles, Workflow } from "lucide-react";
+import type { TFunction } from "i18next";
+import { Bot, Flag, GitBranch, Hand, PanelLeftClose, PanelLeftOpen, Play, Sparkles, Users, Workflow } from "lucide-react";
 import { type DragEvent, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useTemplates } from "../api/hooks";
+import { useTemplates, useWorkflows } from "../api/hooks";
 import type { AgentConfig, NodeType } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { HelpTip, Tooltip } from "../components/Tooltip";
@@ -11,6 +12,14 @@ import { helpEntry } from "../lib/help";
 import { DRAG_TYPE, type DragPayload } from "./Canvas";
 import { useEditorLayout } from "./layout";
 import { useEditor } from "./store";
+
+/** What a team can do and delivers, in one line. */
+function teamHint(t: TFunction, capabilities: string[], contract: string[]): string {
+  const parts = [];
+  if (capabilities.length) parts.push(capabilities.join(", "));
+  if (contract.length) parts.push(t("editor.palette.teamDelivers", { fields: contract.join(", ") }));
+  return parts.join(" · ");
+}
 
 function place(): { x: number; y: number } {
   const nodes = useEditor.getState().nodes;
@@ -48,7 +57,7 @@ function Item({
         draggable
         aria-label={compact ? label : undefined}
         onDragStart={onDragStart}
-        onClick={() => useEditor.getState().addNode(payload.type, place(), payload.agent)}
+        onClick={() => useEditor.getState().addNode(payload.type, place(), payload.agent, payload.team)}
       >
         <span className="palette__icon">
           <Icon size={14} aria-hidden />
@@ -71,6 +80,11 @@ export function Palette({ onDesign, panelRef }: { onDesign: () => void; panelRef
   const compact = !open;
   const design = helpEntry(t, "workflow.paletteDesign");
   const templates = useTemplates();
+  const workflowId = useEditor((s) => s.workflowId);
+  // Teams: other workflows that promise a result (output contract) or name their capabilities.
+  const teams = (useWorkflows().data ?? []).filter(
+    (item) => item.id !== workflowId && ((item.contract?.length ?? 0) > 0 || (item.capabilities?.length ?? 0) > 0),
+  );
   const add = (type: NodeType, agent?: Partial<AgentConfig>) => ({ type, agent });
   return (
     <aside
@@ -128,7 +142,24 @@ export function Palette({ onDesign, panelRef }: { onDesign: () => void; panelRef
           hint={t("editor.palette.subworkflowHint")}
           payload={add("subworkflow")}
         />
-        {/* The library needs names to be recognisable, so the collapsed palette leaves it out. */}
+        {/* Teams and the library need names to be recognisable, so the collapsed palette leaves them out. */}
+        {!compact && teams.length ? (
+          <div className="palette__label">
+            {t("editor.palette.teams")} <HelpTip id="workflow.contract" label={t("editor.palette.teams")} />
+          </div>
+        ) : null}
+        {compact
+          ? null
+          : teams.slice(0, 8).map((team) => (
+              <Item
+                key={team.id}
+                compact={false}
+                icon={Users}
+                label={team.name}
+                hint={teamHint(t, team.capabilities ?? [], team.contract ?? [])}
+                payload={{ type: "subworkflow", team: { workflow_id: team.id, name: team.name } }}
+              />
+            ))}
         {!compact && templates.data?.length ? <div className="palette__label">{t("editor.palette.library")}</div> : null}
         {compact
           ? null

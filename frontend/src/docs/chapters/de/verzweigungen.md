@@ -98,6 +98,8 @@ Ein Workflow mit Ausgabevertrag liefert im übergeordneten Workflow ein Objekt m
 
 Die Prüfung vor dem Start warnt, wenn ein Agent vor dem Ergebnis als Text antwortet (dann hilft nur eine JSON-Antwort) oder wenn kein Agent ein Pflichtfeld liefert. Ungültige oder doppelte Feldnamen verhindern den Start.
 
+Workflows mit Ausgabevertrag oder Fähigkeiten erscheinen in der Palette unter **Teams** und lassen sich direkt als Unterworkflow einsetzen. Im Inspektor eines Unterworkflows steht, was das Team liefert. Ein **Doppelklick** auf den Knoten öffnet das Team im Editor; die Brotkrumen oben führen zurück zum übergeordneten Workflow.
+
 ## Eingabeformulare {#eingabeformular}
 <!-- keywords: formular, eingabeformular, felder, typ, pflichtfeld, standardwert, auswahl, datum, zahl, form -->
 

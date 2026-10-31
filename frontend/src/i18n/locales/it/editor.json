@@ -63,7 +63,9 @@
     "flow": "Controllare il flusso",
     "conditionHint": "Ramifica secondo regole, senza richiesta all’IA",
     "approvalHint": "Si ferma per una verifica umana",
-    "subworkflowHint": "Esegue un altro workflow come un unico passaggio"
+    "subworkflowHint": "Esegue un altro workflow come un unico passaggio",
+    "teams": "Team",
+    "teamDelivers": "consegna {{fields}}"
   },
   "inspector": {
     "agent": "Configura agente",

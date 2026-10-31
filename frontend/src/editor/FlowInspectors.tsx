@@ -4,6 +4,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { api } from "../api/client";
 import { keys, useInputFormats, useWorkflows } from "../api/hooks";
@@ -23,6 +24,7 @@ import type {
 import {
   Button,
   Callout,
+  Chip,
   Field,
   HelpTip,
   IconButton,
@@ -35,6 +37,7 @@ import {
 } from "../components/ui";
 import { newField, newRule } from "../lib/defaults";
 import { DEFAULT_FIELD_MB, FORMAT_GROUPS, fileFieldSummary } from "../lib/files";
+import { childLink, parseTrail } from "../lib/trail";
 import { branchLabel } from "./nodes";
 import { OutputFieldsEditor } from "./OutputFieldsEditor";
 import { useEditor } from "./store";
@@ -376,6 +379,7 @@ export function SubworkflowInspector({ node }: { node: WorkflowNode }) {
   const workflowId = useEditor((s) => s.workflowId);
   const { updateNode } = useEditor.getState();
   const workflows = useWorkflows();
+  const [searchParams] = useSearchParams();
   const config = node.subworkflow as SubworkflowConfig;
   const set = (patch: Partial<SubworkflowConfig>, record = true) =>
     updateNode(node.id, { subworkflow: { ...config, ...patch } }, { record });
@@ -405,6 +409,14 @@ export function SubworkflowInspector({ node }: { node: WorkflowNode }) {
           options={options}
         />
       </Field>
+      {config.workflow_id && workflowId ? (
+        <TeamSummary
+          contract={target.data?.nodes.find((item) => item.type === "output")?.output?.contract ?? []}
+          capabilities={target.data?.capabilities ?? []}
+          link={childLink(parseTrail(searchParams.get("trail"), workflowId), workflowId, config.workflow_id)}
+          loaded={Boolean(target.data)}
+        />
+      ) : null}
       {config.workflow_id ? (
         <Field label={t("flow.subworkflow.version")} hint={t("flow.subworkflow.versionHint")} tip="flow.subworkflowVersion">
           <Select
@@ -758,5 +770,43 @@ export function OutputContractEditor({ node }: { node: WorkflowNode }) {
         </Button>
       )}
     </section>
+  );
+}
+
+/** What a team delivers (its output contract) and can do, with a link into it. */
+function TeamSummary({
+  contract,
+  capabilities,
+  link,
+  loaded,
+}: {
+  contract: OutputField[];
+  capabilities: string[];
+  link: string;
+  loaded: boolean;
+}) {
+  const { t } = useTranslation();
+  return (
+    <div className="stack-sm" data-testid="team-summary">
+      {loaded ? (
+        <p className="field__hint">
+          {contract.length
+            ? t("flow.subworkflow.delivers", {
+                fields: contract.map((field) => `${field.name} (${t(`agent.options.fieldType.${field.type}`)})`).join(", "),
+              })
+            : t("flow.subworkflow.noContract")}
+        </p>
+      ) : null}
+      {capabilities.length ? (
+        <div className="chip-row">
+          {capabilities.map((tag) => (
+            <Chip key={tag}>{tag}</Chip>
+          ))}
+        </div>
+      ) : null}
+      <Link to={link} className="small" data-testid="open-team">
+        {t("flow.subworkflow.open")}
+      </Link>
+    </div>
   );
 }

@@ -63,7 +63,9 @@
     "flow": "Ablauf steuern",
     "conditionHint": "Verzweigt nach Regeln, ohne KI-Anfrage",
     "approvalHint": "Pausiert für eine menschliche Prüfung",
-    "subworkflowHint": "Führt einen anderen Workflow als Schritt aus"
+    "subworkflowHint": "Führt einen anderen Workflow als Schritt aus",
+    "teams": "Teams",
+    "teamDelivers": "liefert {{fields}}"
   },
   "inspector": {
     "agent": "Agent konfigurieren",

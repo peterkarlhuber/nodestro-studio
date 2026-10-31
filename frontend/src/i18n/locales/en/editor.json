@@ -63,7 +63,9 @@
     "flow": "Control the flow",
     "conditionHint": "Branches by rules, no AI request",
     "approvalHint": "Pauses for a human review",
-    "subworkflowHint": "Runs another workflow as one step"
+    "subworkflowHint": "Runs another workflow as one step",
+    "teams": "Teams",
+    "teamDelivers": "delivers {{fields}}"
   },
   "inspector": {
     "agent": "Configure agent",

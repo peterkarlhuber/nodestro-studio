@@ -63,7 +63,9 @@
     "flow": "Controlar o fluxo",
     "conditionHint": "Ramifica por regras, sem solicitação à IA",
     "approvalHint": "Pausa para uma revisão humana",
-    "subworkflowHint": "Executa outro workflow como uma etapa"
+    "subworkflowHint": "Executa outro workflow como uma etapa",
+    "teams": "Equipes",
+    "teamDelivers": "entrega {{fields}}"
   },
   "inspector": {
     "agent": "Configurar agente",

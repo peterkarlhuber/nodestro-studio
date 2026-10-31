@@ -6,6 +6,10 @@
 
 - Result node: new *Output contract* (runtime #49) with the same field editor as an agent's structured output (now
   the shared `OutputFieldsEditor`). The result files editor keeps the contract when it changes files.
+- Teams in the editor: the palette lists workflows with an output contract or capabilities under *Teams*
+  (`WorkflowSummary.capabilities`/`contract`, api) and adds them as a preset sub-workflow node. A double-click on a
+  sub-workflow node opens that workflow; the breadcrumbs keep the way back (`?trail=`). The sub-workflow inspector
+  shows what the team delivers and can do.
 - Workflow settings: *Capabilities as a team*, short tags (at most 20, 40 characters each) saved as
   `capabilities`; part of undo and of the unsaved-changes check.
 - Error and check texts ×6 for `run.output_contract`, `workflow.contract_field_name`,

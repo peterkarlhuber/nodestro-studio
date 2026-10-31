@@ -73,7 +73,10 @@
     "inputHint": "Cosa riceve il sotto-workflow come input. {{input}} è ciò che arriva qui.",
     "values": "Valori per il suo modulo di input",
     "valuesHint": "Testo o segnaposto come {{formExample}} o {{agentExample}}.",
-    "costs": "Costi e token del sotto-workflow contano una sola volta, nell’esecuzione di questo workflow."
+    "costs": "Costi e token del sotto-workflow contano una sola volta, nell’esecuzione di questo workflow.",
+    "delivers": "Consegna: {{fields}}.",
+    "noContract": "Nessun contratto di output: il risultato arriva come lo produce il workflow.",
+    "open": "Apri workflow (o doppio clic sul nodo)"
   },
   "form": {
     "title": "Modulo di input",

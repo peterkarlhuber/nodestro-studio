@@ -63,7 +63,9 @@
     "flow": "Piloter le déroulement",
     "conditionHint": "Bifurque selon des règles, sans requête IA",
     "approvalHint": "S’arrête pour une vérification humaine",
-    "subworkflowHint": "Exécute un autre workflow comme une étape"
+    "subworkflowHint": "Exécute un autre workflow comme une étape",
+    "teams": "Équipes",
+    "teamDelivers": "livre {{fields}}"
   },
   "inspector": {
     "agent": "Configurer l’agent",

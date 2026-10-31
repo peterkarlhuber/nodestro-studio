@@ -98,6 +98,8 @@ En un flujo superior, un flujo con contrato de salida entrega un objeto con exac
 
 La comprobación antes de iniciar avisa cuando un agente antes del resultado responde en texto (entonces solo sirve una respuesta JSON) o cuando ningún agente entrega un campo obligatorio. Los nombres de campo no válidos o repetidos impiden iniciar.
 
+Los flujos con contrato de salida o capacidades aparecen en la paleta en **Equipos** y se pueden añadir directamente como subflujo. El inspector de un subflujo muestra lo que entrega el equipo. Un **doble clic** en el nodo abre el equipo en el editor; las migas de pan de arriba llevan de vuelta al flujo superior.
+
 ## Formularios de entrada {#eingabeformular}
 <!-- keywords: formulario, formulario de entrada, campos, tipo, obligatorio, valor predeterminado, opción, fecha, número -->
 

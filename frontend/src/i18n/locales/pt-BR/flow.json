@@ -73,7 +73,10 @@
     "inputHint": "O que o subworkflow recebe como entrada. {{input}} é o que chega aqui.",
     "values": "Valores para o formulário de entrada dele",
     "valuesHint": "Texto ou marcadores como {{formExample}} ou {{agentExample}}.",
-    "costs": "Custo e tokens do subworkflow contam uma única vez, na execução deste workflow."
+    "costs": "Custo e tokens do subworkflow contam uma única vez, na execução deste workflow.",
+    "delivers": "Entrega: {{fields}}.",
+    "noContract": "Sem contrato de saída: o resultado chega como o fluxo o produz.",
+    "open": "Abrir fluxo (ou clique duplo no nó)"
   },
   "form": {
     "title": "Formulário de entrada",

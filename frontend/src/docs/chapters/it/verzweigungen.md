@@ -98,6 +98,8 @@ In un workflow superiore, un workflow con contratto di output consegna un oggett
 
 La verifica prima dell'avvio avvisa quando un agente prima del risultato risponde in testo (allora serve solo una risposta JSON) o quando nessun agente fornisce un campo obbligatorio. Nomi di campo non validi o ripetuti impediscono l'avvio.
 
+I workflow con contratto di output o capacità compaiono nella palette sotto **Team** e si possono inserire direttamente come sotto-workflow. L'ispettore di un sotto-workflow mostra cosa consegna il team. Un **doppio clic** sul nodo apre il team nell'editor; il percorso di navigazione in alto riporta al workflow superiore.
+
 ## Moduli di input {#eingabeformular}
 <!-- keywords: modulo, modulo di input, campi, tipo, obbligatorio, valore predefinito, scelta, data, numero, form -->
 

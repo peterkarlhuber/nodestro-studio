@@ -73,7 +73,10 @@
     "inputHint": "Ce que le sous-workflow reçoit en entrée. {{input}} est ce qui arrive ici.",
     "values": "Valeurs pour son formulaire d’entrée",
     "valuesHint": "Texte ou espaces réservés comme {{formExample}} ou {{agentExample}}.",
-    "costs": "Le coût et les tokens du sous-workflow comptent une seule fois, dans l’exécution de ce workflow."
+    "costs": "Le coût et les tokens du sous-workflow comptent une seule fois, dans l’exécution de ce workflow.",
+    "delivers": "Livre : {{fields}}.",
+    "noContract": "Pas de contrat de sortie : le résultat arrive tel que le workflow le produit.",
+    "open": "Ouvrir le workflow (ou double-clic sur le nœud)"
   },
   "form": {
     "title": "Formulaire d’entrée",

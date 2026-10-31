@@ -63,7 +63,9 @@
     "flow": "Controlar el flujo",
     "conditionHint": "Bifurca según reglas, sin solicitud a la IA",
     "approvalHint": "Se detiene para una revisión humana",
-    "subworkflowHint": "Ejecuta otro workflow como un paso"
+    "subworkflowHint": "Ejecuta otro workflow como un paso",
+    "teams": "Equipos",
+    "teamDelivers": "entrega {{fields}}"
   },
   "inspector": {
     "agent": "Configurar agente",

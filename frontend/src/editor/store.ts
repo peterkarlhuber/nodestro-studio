@@ -36,6 +36,12 @@ interface Snapshot {
   pendingNote: string | null;
 }
 
+/** A workflow offered as a team in the palette. */
+export interface TeamPreset {
+  workflow_id: string;
+  name: string;
+}
+
 const HISTORY_LIMIT = 80;
 
 export interface EditorState {
@@ -65,7 +71,13 @@ export interface EditorState {
   markSaved: (workflow: Workflow, sent?: WorkflowIn) => void;
   setMeta: (patch: Partial<Pick<EditorState, "name" | "description" | "budget" | "limits" | "capabilities">>) => void;
 
-  addNode: (type: NodeType, position: { x: number; y: number }, agent?: Partial<AgentConfig>) => WorkflowNode;
+  /** Adds a node; `team` presets a sub-workflow node with that workflow (a team from the palette). */
+  addNode: (
+    type: NodeType,
+    position: { x: number; y: number },
+    agent?: Partial<AgentConfig>,
+    team?: TeamPreset,
+  ) => WorkflowNode;
   updateNode: (id: string, patch: Partial<WorkflowNode>, options?: { record?: boolean }) => void;
   updateAgent: (id: string, patch: Partial<AgentConfig>) => void;
   replaceAgent: (id: string, agent: AgentConfig) => void;
@@ -233,8 +245,12 @@ export const useEditor = create<EditorState>((set, get) => {
 
     setMeta: (patch) => edit(`meta:${Object.keys(patch).sort().join(",")}`, patch),
 
-    addNode: (type, position, agent) => {
+    addNode: (type, position, agent, team) => {
       const node = newNode(type, position, agent);
+      if (type === "subworkflow" && team && node.subworkflow) {
+        node.label = team.name;
+        node.subworkflow = { ...node.subworkflow, workflow_id: team.workflow_id };
+      }
       if (type === "agent") {
         const names = new Set(get().nodes.map((item) => item.label));
         let label = node.label;

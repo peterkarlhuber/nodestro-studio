@@ -73,7 +73,10 @@
     "inputHint": "Lo que recibe el subflujo como entrada. {{input}} es lo que llega aquí.",
     "values": "Valores para su formulario de entrada",
     "valuesHint": "Texto o marcadores como {{formExample}} o {{agentExample}}.",
-    "costs": "El coste y los tokens del subflujo cuentan una sola vez, en la ejecución de este workflow."
+    "costs": "El coste y los tokens del subflujo cuentan una sola vez, en la ejecución de este workflow.",
+    "delivers": "Entrega: {{fields}}.",
+    "noContract": "Sin contrato de salida: el resultado llega tal como lo produce el flujo.",
+    "open": "Abrir flujo (o doble clic en el nodo)"
   },
   "form": {
     "title": "Formulario de entrada",

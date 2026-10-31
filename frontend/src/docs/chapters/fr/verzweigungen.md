@@ -98,6 +98,8 @@ Dans un workflow parent, un workflow doté d’un contrat de sortie livre un obj
 
 La vérification avant le lancement avertit lorsqu’un agent avant le résultat répond en texte (seule une réponse JSON aide alors) ou lorsqu’aucun agent ne fournit un champ obligatoire. Des noms de champ invalides ou répétés empêchent le lancement.
 
+Les workflows dotés d’un contrat de sortie ou de capacités apparaissent dans la palette sous **Équipes** et s’ajoutent directement comme sous-workflow. L’inspecteur d’un sous-workflow indique ce que livre l’équipe. Un **double-clic** sur le nœud ouvre l’équipe dans l’éditeur ; le fil d’Ariane en haut ramène au workflow parent.
+
 ## Formulaires d’entrée {#eingabeformular}
 <!-- keywords: formulaire, formulaire d’entrée, champs, type, obligatoire, valeur par défaut, choix, date, nombre -->
 
