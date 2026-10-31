@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Agent inspector: open sections remembered, UX-3 (2026-10-31)
+
+- Studio only, no pin change. The agent form remembers which sections you opened or closed, per section and in this
+  browser (`localStorage`, key `nodestro-agent-sections`, like the editor layout). Before, every node switch reset all
+  sections, so tuning *Advanced* on three agents meant opening it three times. A section you never toggled keeps its
+  default. The preference never enters the workflow, the undo history or an export (decision D2).
+
 ### Quality check: judge model chosen visibly, UX-2b (2026-10-31)
 
 - Studio only, no pin change. A quality check switched on for the first time starts with the default model from the

@@ -72,6 +72,7 @@ import {
   thinkingSummary,
   unroutedIssues,
 } from "./agentSummaries";
+import { useAgentSections } from "./sectionState";
 import { useEditor } from "./store";
 
 // Option values are what the library expects; labels come from agent.options.* in the language files.
@@ -225,12 +226,14 @@ export function AgentForm({
 
   const general = [...issues.filter((issue) => !issue.field && issue.level === "error"), ...unroutedIssues(issues)];
   const root = useRef<HTMLDivElement>(null);
-  // Undefined: the section keeps its own state; set once the user toggles it or a problem link opens it.
-  const [openSections, setOpenSections] = useState<Partial<Record<AgentSectionId, boolean>>>({});
+  // Undefined: the section keeps its own default; remembered (per section, in this browser) once the user toggles it
+  // or a problem link opens it.
+  const openSections = useAgentSections((state) => state.open);
+  const setSectionOpen = useAgentSections((state) => state.setOpen);
   const ui = (id: AgentSectionId): SectionUi => ({
     id,
     open: openSections[id],
-    onToggle: (open) => setOpenSections((current) => ({ ...current, [id]: open })),
+    onToggle: (open) => setSectionOpen(id, open),
     status: sectionStatus(issues, id),
   });
   const withProblems = SECTION_ORDER.filter((id) => {
@@ -238,7 +241,7 @@ export function AgentForm({
     return Boolean(status.errors || status.warnings);
   });
   const showSection = (id: AgentSectionId) => {
-    setOpenSections((current) => ({ ...current, [id]: true }));
+    setSectionOpen(id, true);
     // After React has opened it: bring it into view and put the focus on its first control.
     window.requestAnimationFrame(() => {
       const section = root.current?.querySelector<HTMLElement>(`[data-section="${id}"]`);
