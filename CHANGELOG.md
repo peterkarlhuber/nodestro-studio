@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Plan status: PR-12 and PR-13 done (2026-10-31)
+
+- Docs and metadata only, no pin change. `docs/desktop-server/IMPLEMENTATION_STATUS.md` marks PR-12 done
+  (nodestro-server #1 and desktop #3 build from studio `6b73625`; server end-to-end tests 15 of 15 in CI) and records
+  PR-13.
+- New `docs/desktop-server/sandbox-prototype-report.md`: the Linux bubblewrap candidate (runtime #17, `f3931e8`)
+  passes every security probe of ADR-0006 but stays non-isolating until the remaining compatibility checks pass. It
+  lists what is missing for macOS, Windows and aarch64.
+- `platform/versions.json` gains `products`: the desktop and server commits and the studio commit each one builds from.
+
 ### Default model as judge of AI-designed agents, Q-0 (2026-10-31)
 
 - Pins: `nodestro-api` at `a08c9c3` (before `f119cfc`), `nodestro-sdk` at `e508e6b` (before `2ed893a`). Agents designed by
