@@ -15,23 +15,26 @@ import {
 import { LayoutGrid, Maximize, Minus, Plus, Redo2, Undo2 } from "lucide-react";
 import { type DragEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import type { AgentConfig, NodeType } from "../api/types";
 import { IconButton } from "../components/ui";
 import { toast } from "../components/toast";
 import { formatNumber } from "../lib/format";
+import { childLink, parseTrail } from "../lib/trail";
 import { useEditorLayout } from "./layout";
 import { type FlowNodeData, branchLabel, isBranchTaken, nodeTypes } from "./nodes";
-import { useEditor } from "./store";
+import { type TeamPreset, useEditor } from "./store";
 
 export const DRAG_TYPE = "application/x-nodestro-node";
 
 export interface DragPayload {
   type: NodeType;
   agent?: Partial<AgentConfig>;
+  team?: TeamPreset;
 }
 
-const NODE_TYPES: ReadonlySet<string> = new Set<NodeType>(["start", "agent", "output", "condition", "approval", "subworkflow"]);
+const NODE_TYPES: ReadonlySet<string> = new Set<NodeType>(["start", "agent", "output", "condition", "approval", "subworkflow", "orchestrator"]);
 
 /** The size of a new node in canvas units (see .flow-node), so a dropped node is centred on the pointer. */
 const NEW_NODE = { width: 216, height: 96 };
@@ -48,10 +51,21 @@ export function parseDragPayload(raw: string): DragPayload | null {
     return null;
   }
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-  const { type, agent } = value as { type?: unknown; agent?: unknown };
+  const { type, agent, team } = value as { type?: unknown; agent?: unknown; team?: unknown };
   if (typeof type !== "string" || !NODE_TYPES.has(type)) return null;
   if (agent !== undefined && (agent === null || typeof agent !== "object" || Array.isArray(agent))) return null;
-  return { type: type as NodeType, agent: type === "agent" ? (agent as Partial<AgentConfig> | undefined) : undefined };
+  const preset = team as { workflow_id?: unknown; name?: unknown } | undefined;
+  const validTeam =
+    type === "subworkflow" &&
+    preset !== undefined &&
+    preset !== null &&
+    typeof preset.workflow_id === "string" &&
+    typeof preset.name === "string";
+  return {
+    type: type as NodeType,
+    agent: type === "agent" ? (agent as Partial<AgentConfig> | undefined) : undefined,
+    team: validTeam ? { workflow_id: preset.workflow_id as string, name: preset.name as string } : undefined,
+  };
 }
 
 export interface CanvasIssues {
@@ -72,6 +86,8 @@ export function typingIn(target: EventTarget | null): boolean {
 
 function CanvasInner({ issues }: { issues: CanvasIssues }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const nodes = useEditor((s) => s.nodes);
   const edges = useEditor((s) => s.edges);
   const selectedId = useEditor((s) => s.selectedId);
@@ -201,7 +217,12 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
       // The pointer in canvas coordinates, then half a node back: correct at every zoom level,
       // pan position and panel size, because the conversion happens before the offset.
       const point = flow.screenToFlowPosition({ x: event.clientX, y: event.clientY });
-      addNode(payload.type, { x: Math.round(point.x - NEW_NODE.width / 2), y: Math.round(point.y - NEW_NODE.height / 2) }, payload.agent);
+      addNode(
+        payload.type,
+        { x: Math.round(point.x - NEW_NODE.width / 2), y: Math.round(point.y - NEW_NODE.height / 2) },
+        payload.agent,
+        payload.team,
+      );
     },
     [flow, addNode, t],
   );
@@ -258,7 +279,14 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         onConnect={onConnect}
         onEdgeClick={(_event, edge) => selectEdge(edge.id)}
         // A double-click on a node shows its properties, also when the inspector is collapsed.
+        // On a sub-workflow (a team) it opens that workflow, with the way back in the breadcrumbs.
         onNodeDoubleClick={(_event, node) => {
+          const state = useEditor.getState();
+          const target = state.nodes.find((item) => item.id === node.id)?.subworkflow?.workflow_id;
+          if (target && state.workflowId && target !== state.workflowId) {
+            navigate(childLink(parseTrail(searchParams.get("trail"), state.workflowId), state.workflowId, target));
+            return;
+          }
           select(node.id);
           useEditorLayout.getState().setOpen("inspector", true);
         }}

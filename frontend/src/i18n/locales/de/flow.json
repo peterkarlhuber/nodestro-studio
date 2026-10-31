@@ -73,7 +73,10 @@
     "inputHint": "Was der Unterworkflow als Eingabe bekommt. {{input}} ist das, was hier ankommt.",
     "values": "Werte für sein Eingabeformular",
     "valuesHint": "Text oder Platzhalter wie {{formExample}} oder {{agentExample}}.",
-    "costs": "Kosten und Tokens des Unterworkflows zählen einmal, im Lauf dieses Workflows."
+    "costs": "Kosten und Tokens des Unterworkflows zählen einmal, im Lauf dieses Workflows.",
+    "delivers": "Liefert: {{fields}}.",
+    "noContract": "Kein Ausgabevertrag: Das Ergebnis kommt so an, wie der Workflow es erzeugt.",
+    "open": "Workflow öffnen (oder Doppelklick auf den Knoten)"
   },
   "form": {
     "title": "Eingabeformular",
@@ -146,6 +149,12 @@
     "download": "{{name}} herunterladen",
     "delete": "{{name}} löschen"
   },
+  "contract": {
+    "title": "Ausgabevertrag",
+    "hint": "Diese Felder verspricht der Workflow als Ergebnis. Am Ende wird geprüft, ob das Ergebnis sie enthält; andere Felder werden weggelassen. Ein übergeordneter Workflow kann sich darauf verlassen.",
+    "none": "Ohne Vertrag gibt der Workflow sein Ergebnis unverändert weiter. Mit einem Vertrag liefert er als Team ein geprüftes Objekt mit festen Feldern.",
+    "add": "Vertrag anlegen"
+  },
   "run": {
     "branches": "Gewählte Zweige: {{names}}",
     "fallback": "Sonst-Zweig, weil:",
@@ -217,5 +226,43 @@
     "confirmHint": "Diese Schritte hatten bereits Tools aufgerufen. Prüfe, ob ein zweiter Aufruf etwas doppelt auslöst (z. B. eine Nachricht).",
     "continue": "Fortsetzen",
     "restart": "Komplett neu starten"
+  },
+  "orchestrator": {
+    "text": "Ein KI-Modell entscheidet Schritt für Schritt, welches Team welche Aufgabe bekommt, und schließt mit einer Antwort ab.",
+    "teams": "Teams",
+    "teamsHint": "Die Workflows, aus denen das Modell wählen darf (höchstens {{max}}). Fähigkeiten und Ausgabeverträge helfen bei der Wahl.",
+    "noTeams": "Noch keine Teams. Füge mindestens eins hinzu.",
+    "addTeam": "Team hinzufügen…",
+    "removeTeam": "{{name}} entfernen",
+    "delivers": "Liefert: {{fields}}",
+    "task": "Aufgabe",
+    "taskHint": "Was der Orchestrator erledigen soll; {{input}} ist die Eingabe dieses Schritts.",
+    "instructions": "Anweisungen",
+    "instructionsHint": "Optional: wie geplant werden soll, etwa welches Team zuerst gefragt wird oder wann die Aufgabe erledigt ist.",
+    "model": "Modell",
+    "maxDecisions": "Höchstens Entscheidungen",
+    "maxDecisionsHint": "Jede Weitergabe und die Schlussantwort sind je eine Entscheidung (1 bis {{max}}). Ohne Antwort bis dahin schlägt der Schritt fehl.",
+    "maxPerTeam": "Höchstens pro Team",
+    "maxPerTeamHint": "Wie oft ein Team gewählt werden darf. Leer: keine eigene Grenze.",
+    "safety": "Der Orchestrator wählt nur unter diesen Teams. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes Team läuft als eigener verknüpfter Lauf mit seinem Anteil am Budget, seinen Grenzen und seinen Freigaben. Teams, die für eine Freigabe anhalten, werden noch nicht unterstützt.",
+    "run": {
+      "delegated": "An {{team}} weitergegeben",
+      "finished": "Mit einer Antwort abgeschlossen",
+      "invalid": "Keine gültige Entscheidung",
+      "refused": "Abgelehnt",
+      "teamFailed": "Team fehlgeschlagen",
+      "reason": "Begründung",
+      "task": "Aufgabe",
+      "summary": "Entscheidungen: {{decisions}} · Weitergaben: {{delegations}}",
+      "openTeam": "Lauf des Teams öffnen",
+      "matched": "nach Fähigkeit gewählt: {{tags}}"
+    },
+    "select": "Teams nach Fähigkeit",
+    "selectHint": "Gespeicherte Teams mit einer dieser Fähigkeiten kommen beim Start eines Laufs in den Pool (höchstens 10 Stichworte). Die beste Übereinstimmung zuerst; Teams mit Fehlern oder Freigabeschritten bleiben draußen.",
+    "selectPlaceholder": "z. B. recherche, dann Enter",
+    "maxTeams": "Höchstens so viele Teams",
+    "selectPreview_one": "Passen gerade: {{teams}} (nimmt {{count}})",
+    "selectPreview_other": "Passen gerade: {{teams}} (nimmt bis zu {{count}})",
+    "selectNone": "Noch hat kein gespeichertes Team eine dieser Fähigkeiten."
   }
 }

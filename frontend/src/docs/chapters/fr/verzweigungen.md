@@ -103,9 +103,39 @@ Un **sous-workflow** exécute un autre workflow enregistré comme une seule éta
 - **Version :** *Dernière version* utilise l’état actuel ; une version fixe ne change pas si l’autre workflow est modifié plus tard. La vérification signale quand une version plus récente existe.
 - **Entrée :** ce que le sous-workflow reçoit comme entrée ; `{{input}}` est ce qui arrive ici.
 - **Valeurs pour son formulaire d’entrée :** du texte ou des espaces réservés comme `{{form.client}}` ou `{{Analyse}}`. La vérification signale les champs obligatoires sans valeur.
-- Le sous-workflow s’exécute comme une **exécution propre et liée** ; un lien dans les détails y mène. Coûts et tokens comptent une seule fois, dans le budget de l’exécution parente.
+- Le sous-workflow s’exécute comme une **exécution propre et liée** ; un lien dans les détails y mène. Coûts et tokens comptent une seule fois, dans le budget de l’exécution parente. Si le sous-workflow a son propre budget, cette limite plus stricte s’applique aussi.
 - Un workflow ne doit pas s’appeler lui-même, même indirectement ; plus de cinq niveaux ne sont pas autorisés.
 - Si le sous-workflow attend une validation, l’exécution parente attend avec lui.
+
+## Équipes {#teams}
+<!-- keywords: équipe, contrat de sortie, contrat, capacités, résultat structuré, run.output_contract -->
+
+Une **équipe** est un workflow qui promet un résultat fixe lorsqu’il s’exécute comme sous-workflow. Deux réglages font d’un workflow une équipe :
+
+- **Contrat de sortie** sur le nœud de résultat : les champs (nom, type, obligatoire) que livre le workflow, comme pour le résultat structuré d’un agent. À la fin d’une exécution, le résultat est vérifié. Il doit être un objet (ou le texte JSON d’un objet) contenant chaque champ obligatoire dans le bon type. Les autres champs sont omis. Si le résultat ne convient pas, le nœud de résultat échoue et l’exécution avec lui ; un workflow parent ne reçoit jamais de résultat non vérifié.
+- **Capacités en tant qu’équipe** dans les réglages du workflow : des mots-clés courts sur ce que sait faire le workflow (20 au plus). Ils suivent le workflow (versions, export) et aident plus tard à trouver une équipe adaptée. Ils n’accordent aucun droit.
+
+Dans un workflow parent, un workflow doté d’un contrat de sortie livre un objet avec exactement ces champs. Une décision qui suit peut donc tester un champ directement, par exemple `score` supérieur ou égal à 5.
+
+La vérification avant le lancement avertit lorsqu’un agent avant le résultat répond en texte (seule une réponse JSON aide alors) ou lorsqu’aucun agent ne fournit un champ obligatoire. Des noms de champ invalides ou répétés empêchent le lancement.
+
+Les workflows dotés d’un contrat de sortie ou de capacités apparaissent dans la palette sous **Équipes** et s’ajoutent directement comme sous-workflow. L’inspecteur d’un sous-workflow indique ce que livre l’équipe. Un **double-clic** sur le nœud ouvre l’équipe dans l’éditeur ; le fil d’Ariane en haut ramène au workflow parent.
+
+Une équipe peut être testée seule : créez une [série de tests](/docs/automatisierung#testreihen) pour le workflow. Ses contrôles peuvent utiliser les champs du contrat de sortie, par exemple `score` supérieur ou égal à 5.
+
+## Orchestrateur {#orchestrator}
+<!-- keywords: orchestrateur, orchestration, déléguer, groupe, équipes, décisions, run.orchestration_limit -->
+
+Un **orchestrateur** laisse un modèle d’IA décider quelle équipe reçoit quelle partie de la tâche. Il prend une décision après l’autre : **déléguer** une tâche à une équipe ou **conclure** par une réponse. La réponse est le résultat du nœud.
+
+- **Équipes :** les workflows enregistrés parmi lesquels le modèle peut choisir (20 au maximum). De chaque équipe, le modèle ne voit que le nom, la description, les capacités et le contrat de sortie.
+- **Équipes par capacité :** au lieu de choisir chaque équipe, vous nommez des capacités (10 au maximum). Au démarrage d’une exécution, les équipes enregistrées ayant une capacité correspondante rejoignent le groupe (jusqu’à *Au maximum autant d’équipes*) : d’abord celles qui ont le plus d’étiquettes correspondantes, puis par nom. Les équipes avec des erreurs ou des étapes de validation sont écartées. La sélection reste fixe pour cette exécution (et pour une version publiée) ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté ni estimé.
+- **Tâche** et **Instructions :** ce qu’il faut accomplir et, si besoin, comment le planifier.
+- **Nombre maximal de décisions** (de 1 à 50, 8 par défaut) et **Maximum par équipe :** sans réponse après la dernière décision, l’étape échoue.
+
+L’orchestrateur ne fait que choisir. Il n’a pas d’outils, ne crée ni agents, ni outils, ni équipes et n’a aucune autorisation propre. Chaque équipe choisie s’exécute dans sa **propre exécution liée**, avec sa part du budget, ses limites et ses validations d’outils. Les décisions non autorisées (une équipe inconnue, la même tâche une nouvelle fois, une équipe épuisée) sont refusées et montrées au modèle ; elles comptent quand même comme une décision.
+
+Les détails de l’exécution listent chaque décision avec son motif, sa tâche, son résultat et un lien vers l’exécution de l’équipe. Les équipes qui s’arrêtent pour une validation ne sont pas encore prises en charge dans un orchestrateur : elles sont annulées à ce moment-là, et la vérification avant le démarrage le signale. Une équipe ne peut pas rappeler le workflow de l’orchestrateur.
 
 ## Formulaires d’entrée {#eingabeformular}
 <!-- keywords: formulaire, formulaire d’entrée, champs, type, obligatoire, valeur par défaut, choix, date, nombre -->

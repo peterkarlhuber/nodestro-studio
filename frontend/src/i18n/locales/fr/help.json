@@ -1,6 +1,9 @@
 {
   "workflow": {
-    "budget": "Montant maximal en dollars américains pour une exécution. Si les coûts estimés le dépassent, l’exécution s’arrête à la requête suivante. Vide = budget par défaut des réglages.",
+    "budget": "Montant maximal en dollars américains pour une exécution. Chaque requête réserve à l’avance son coût maximal possible, de sorte que des étapes parallèles ne peuvent pas dépasser ensemble le budget. Vide = budget par défaut des paramètres.",
+    "limits": "Limite le nombre d’étapes d’une exécution qui travaillent en même temps, la durée de travail actif d’une exécution et le nombre total d’étapes. À la limite de temps, les étapes en cours sont annulées ; une requête déjà envoyée va à son terme.",
+    "contract": "Les champs que le workflow promet comme résultat. Si le résultat ne convient pas, l’exécution échoue au lieu de transmettre quelque chose de non vérifié.",
+    "capabilities": "Mots-clés sur ce que le workflow sait faire en équipe. Ils aident à trouver une équipe adaptée et n’accordent aucun droit.",
     "problems": "Ces points empêchent le démarrage. Ils sont revérifiés à chaque modification.",
     "import": "Charge un fichier de workflow exporté (.nodestro.json) comme nouvelle copie. Les workflows existants restent inchangés.",
     "export": "Enregistre le workflow avec tous les réglages des agents dans un fichier JSON. Les fichiers de connaissances, la mémoire et les outils personnels ne sont pas inclus.",
@@ -191,7 +194,11 @@
     "form": "Champs demandés et vérifiés au démarrage. Les agents les lisent avec {{formName}}.",
     "formField": "Le nom technique sert dans l’espace réservé : lettres, chiffres et _ uniquement.",
     "resume": "Reprend une exécution en échec : les résultats valides sont repris, le reste est relancé.",
-    "resumeSideEffects": "Les étapes relancées avaient appelé des outils. Un second appel peut déclencher quelque chose en double."
+    "resumeSideEffects": "Les étapes relancées avaient appelé des outils. Un second appel peut déclencher quelque chose en double.",
+    "orchestrator": "Un modèle d’IA planifie la tâche et en délègue des parties aux équipes de son groupe, une décision après l’autre. Chaque décision est consignée avec son motif.",
+    "orchestratorTeams": "Les équipes sont des workflows enregistrés. Le modèle ne voit que leur nom, leur description, leurs capacités et leur contrat de sortie. Il ne peut pas ajouter d’équipes.",
+    "orchestratorLimits": "Les limites empêchent un orchestrateur de tourner en rond : il s’arrête après le nombre maximal de décisions, et le budget et les limites du workflow s’appliquent en plus.",
+    "orchestratorSelect": "Au lieu de nommer chaque équipe, vous nommez des capacités. Au démarrage d’une exécution, les équipes enregistrées qui les partagent rejoignent le groupe et restent fixes pour cette exécution ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté : d’abord le plus d’étiquettes correspondantes, puis le nom."
   },
   "files": {
     "output": "Formats dans lesquels le nœud de résultat enregistre son résultat en fin d’exécution : Markdown, JSON, CSV, HTML ou PDF.",

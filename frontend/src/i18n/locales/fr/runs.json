@@ -82,5 +82,11 @@
     "notRecorded": "non enregistré",
     "skipped_one": "{{count}} ignorée (branche non choisie)",
     "skipped_other": "{{count}} ignorées (branche non choisie)"
+  },
+  "budget": {
+    "limit": "Budget {{limit}}",
+    "noHardMaximum": "pas de maximum strict",
+    "noHardMaximumHint_one": "{{count}} requête n’a pas pu être plafonnée à l’avance (pas de prix, outils intégrés, images ou trop grande pour le reste du budget). Le budget n’était donc pas un maximum strict.",
+    "noHardMaximumHint_other": "{{count}} requêtes n’ont pas pu être plafonnées à l’avance (pas de prix, outils intégrés, images ou trop grandes pour le reste du budget). Le budget n’était donc pas un maximum strict."
   }
 }

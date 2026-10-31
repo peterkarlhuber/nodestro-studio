@@ -82,5 +82,11 @@
     "notRecorded": "nicht aufgezeichnet",
     "skipped_one": "{{count}} übersprungen (Zweig nicht gewählt)",
     "skipped_other": "{{count}} übersprungen (Zweig nicht gewählt)"
+  },
+  "budget": {
+    "limit": "Budget {{limit}}",
+    "noHardMaximum": "kein hartes Maximum",
+    "noHardMaximumHint_one": "{{count}} Anfrage konnte vorab nicht begrenzt werden (kein Preis, eingebaute Werkzeuge, Bilder oder zu groß für den Rest des Budgets). Das Budget war deshalb kein hartes Maximum.",
+    "noHardMaximumHint_other": "{{count}} Anfragen konnten vorab nicht begrenzt werden (kein Preis, eingebaute Werkzeuge, Bilder oder zu groß für den Rest des Budgets). Das Budget war deshalb kein hartes Maximum."
   }
 }

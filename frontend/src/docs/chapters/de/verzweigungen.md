@@ -103,9 +103,39 @@ Ein **Unterworkflow** führt einen anderen gespeicherten Workflow als einen Schr
 - **Version:** *Neueste Version* nimmt den aktuellen Stand; eine feste Version ändert sich nicht, wenn der andere Workflow später bearbeitet wird. Die Prüfung meldet, wenn es eine neuere Version gibt.
 - **Eingabe:** was der Unterworkflow als Eingabe erhält; `{{input}}` ist das, was hier ankommt.
 - **Werte für sein Eingabeformular:** Text oder Platzhalter wie `{{form.kunde}}` oder `{{Analyse}}`. Pflichtfelder ohne Wert meldet die Prüfung.
-- Der Unterworkflow läuft als **eigener, verknüpfter Lauf**; in den Details führt ein Link dorthin. Kosten und Tokens zählen einmal, im Budget des übergeordneten Laufs.
+- Der Unterworkflow läuft als **eigener, verknüpfter Lauf**; in den Details führt ein Link dorthin. Kosten und Tokens zählen einmal, im Budget des übergeordneten Laufs. Hat der Unterworkflow ein eigenes Budget, gilt zusätzlich diese engere Grenze.
 - Ein Workflow darf sich nicht selbst aufrufen, auch nicht über Umwege; mehr als fünf Ebenen sind nicht erlaubt.
 - Wartet der Unterworkflow auf eine Freigabe, wartet der übergeordnete Lauf mit.
+
+## Teams {#teams}
+<!-- keywords: team, ausgabevertrag, vertrag, fähigkeiten, capabilities, strukturiertes ergebnis, run.output_contract -->
+
+Ein **Team** ist ein Workflow, der als Unterworkflow ein festes Ergebnis verspricht. Zwei Einstellungen machen einen Workflow zum Team:
+
+- **Ausgabevertrag** am Ergebnis-Knoten: die Felder (Name, Typ, Pflicht), die der Workflow liefert, wie beim strukturierten Ergebnis eines Agenten. Am Ende eines Laufs wird das Ergebnis geprüft. Es muss ein Objekt sein (oder JSON-Text eines Objekts), das jedes Pflichtfeld im richtigen Typ enthält. Andere Felder werden weggelassen. Passt das Ergebnis nicht, schlägt der Ergebnis-Knoten fehl und mit ihm der Lauf; ein übergeordneter Workflow bekommt nie ein ungeprüftes Ergebnis.
+- **Fähigkeiten als Team** in den Workflow-Einstellungen: kurze Stichworte, was der Workflow kann (höchstens 20). Sie wandern mit dem Workflow (Versionen, Export) und helfen später, ein passendes Team zu finden. Sie vergeben keine Rechte.
+
+Ein Workflow mit Ausgabevertrag liefert im übergeordneten Workflow ein Objekt mit genau diesen Feldern. Eine Entscheidung danach kann deshalb direkt auf ein Feld prüfen, etwa `score` größer oder gleich 5.
+
+Die Prüfung vor dem Start warnt, wenn ein Agent vor dem Ergebnis als Text antwortet (dann hilft nur eine JSON-Antwort) oder wenn kein Agent ein Pflichtfeld liefert. Ungültige oder doppelte Feldnamen verhindern den Start.
+
+Workflows mit Ausgabevertrag oder Fähigkeiten erscheinen in der Palette unter **Teams** und lassen sich direkt als Unterworkflow einsetzen. Im Inspektor eines Unterworkflows steht, was das Team liefert. Ein **Doppelklick** auf den Knoten öffnet das Team im Editor; die Brotkrumen oben führen zurück zum übergeordneten Workflow.
+
+Ein Team lässt sich für sich allein prüfen: Lege für den Workflow eine [Testreihe](/docs/automatisierung#testreihen) an. Ihre Prüfungen können die Felder des Ausgabevertrags verwenden, etwa `score` größer oder gleich 5.
+
+## Orchestrator {#orchestrator}
+<!-- keywords: orchestrator, orchestrierung, delegieren, pool, teams, entscheidungen, run.orchestration_limit -->
+
+Ein **Orchestrator** lässt ein KI-Modell entscheiden, welches Team welche Teilaufgabe bekommt. Es trifft eine Entscheidung nach der anderen: eine Aufgabe an ein Team **weitergeben** oder mit einer Antwort **abschließen**. Die Antwort ist das Ergebnis des Knotens.
+
+- **Teams:** die gespeicherten Workflows, aus denen das Modell wählen darf (höchstens 20). Das Modell sieht von jedem Team nur Name, Beschreibung, Fähigkeiten und Ausgabevertrag.
+- **Teams nach Fähigkeit:** statt jedes Team einzeln zu wählen, nennst du Fähigkeiten (höchstens 10). Beim Start eines Laufs kommen gespeicherte Teams mit einer passenden Fähigkeit dazu (höchstens *Höchstens so viele Teams*), zuerst die mit den meisten passenden Stichworten, dann nach Name. Teams mit Fehlern oder Freigabeschritten bleiben draußen. Die Auswahl gilt fest für diesen Lauf (und für eine veröffentlichte Version); die Details des Laufs zeigen, welche Stichworte jedes Team getroffen hat. Es wird nichts bewertet oder geschätzt.
+- **Aufgabe** und **Anweisungen:** was erledigt werden soll und, optional, wie geplant wird.
+- **Höchstens Entscheidungen** (1 bis 50, Standard 8) und **Höchstens pro Team:** Ohne Antwort nach der letzten Entscheidung schlägt der Schritt fehl.
+
+Der Orchestrator wählt nur aus. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes gewählte Team läuft als **eigener, verknüpfter Lauf** mit seinem Anteil am Budget, seinen Grenzen und seinen Freigaben für Werkzeuge. Entscheidungen, die nicht erlaubt sind (ein unbekanntes Team, dieselbe Aufgabe noch einmal, ein ausgeschöpftes Team), werden abgelehnt und dem Modell gezeigt; sie zählen trotzdem als Entscheidung.
+
+In den Details des Laufs steht jede Entscheidung mit Begründung, Aufgabe, Ergebnis und einem Link zum Lauf des Teams. Teams, die für eine Freigabe anhalten, werden in einem Orchestrator noch nicht unterstützt: Sie werden an dieser Stelle abgebrochen, und die Prüfung vor dem Start warnt davor. Ein Team darf den Workflow des Orchestrators nicht wieder aufrufen.
 
 ## Eingabeformulare {#eingabeformular}
 <!-- keywords: formular, eingabeformular, felder, typ, pflichtfeld, standardwert, auswahl, datum, zahl, form -->

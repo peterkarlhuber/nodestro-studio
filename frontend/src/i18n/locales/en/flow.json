@@ -73,7 +73,10 @@
     "inputHint": "What the sub-workflow gets as its input. {{input}} is what arrives here.",
     "values": "Values for its input form",
     "valuesHint": "Text or placeholders such as {{formExample}} or {{agentExample}}.",
-    "costs": "The sub-workflow's cost and tokens count once, in the run of this workflow."
+    "costs": "The sub-workflow's cost and tokens count once, in the run of this workflow.",
+    "delivers": "Delivers: {{fields}}.",
+    "noContract": "No output contract: the result arrives as the workflow produces it.",
+    "open": "Open workflow (or double-click the node)"
   },
   "form": {
     "title": "Input form",
@@ -146,6 +149,12 @@
     "download": "Download {{name}}",
     "delete": "Delete {{name}}"
   },
+  "contract": {
+    "title": "Output contract",
+    "hint": "The workflow promises these fields as its result. At the end, the result is checked for them; other fields are left out. A parent workflow can rely on them.",
+    "none": "Without a contract, the workflow passes its result on unchanged. With a contract, it delivers a checked object with fixed fields as a team.",
+    "add": "Add contract"
+  },
   "run": {
     "branches": "Chosen branches: {{names}}",
     "fallback": "Otherwise branch, because:",
@@ -217,5 +226,43 @@
     "confirmHint": "These steps had already called tools. Check whether a second call triggers something twice (e.g. a message).",
     "continue": "Continue",
     "restart": "Start completely anew"
+  },
+  "orchestrator": {
+    "text": "An AI model decides step by step which team gets which task, and finishes with an answer.",
+    "teams": "Teams",
+    "teamsHint": "The workflows the model may choose from (at most {{max}}). Capabilities and output contracts help it choose.",
+    "noTeams": "No teams yet. Add at least one.",
+    "addTeam": "Add a team…",
+    "removeTeam": "Remove {{name}}",
+    "delivers": "Delivers: {{fields}}",
+    "task": "Task",
+    "taskHint": "What the orchestrator should get done; {{input}} is the input of this step.",
+    "instructions": "Instructions",
+    "instructionsHint": "Optional: how to plan, for example which team to ask first or when the task is done.",
+    "model": "Model",
+    "maxDecisions": "Maximum decisions",
+    "maxDecisionsHint": "Each delegation and the final answer is one decision (1 to {{max}}). Without an answer by then, the step fails.",
+    "maxPerTeam": "Maximum per team",
+    "maxPerTeamHint": "How often one team may be chosen. Empty: no separate limit.",
+    "safety": "The orchestrator only chooses among these teams. It has no tools, creates no agents, tools or teams, and has no permissions of its own. Each team runs as its own linked run with its share of the budget, its limits and its approvals. Teams that stop for an approval are not supported yet.",
+    "run": {
+      "delegated": "Delegated to {{team}}",
+      "finished": "Finished with an answer",
+      "invalid": "No valid decision",
+      "refused": "Refused",
+      "teamFailed": "Team failed",
+      "reason": "Reason",
+      "task": "Task",
+      "summary": "Decisions: {{decisions}} · delegations: {{delegations}}",
+      "openTeam": "Open the team's run",
+      "matched": "selected by capability: {{tags}}"
+    },
+    "select": "Teams by capability",
+    "selectHint": "Saved teams with one of these capabilities join the pool when a run starts (at most 10 tags). Best match first; teams with errors or approval steps are left out.",
+    "selectPlaceholder": "e.g. research, then Enter",
+    "maxTeams": "At most this many teams",
+    "selectPreview_one": "Currently matching: {{teams}} (takes {{count}})",
+    "selectPreview_other": "Currently matching: {{teams}} (takes up to {{count}})",
+    "selectNone": "No saved team has one of these capabilities yet."
   }
 }

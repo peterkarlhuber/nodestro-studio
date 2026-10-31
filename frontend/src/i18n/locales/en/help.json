@@ -1,6 +1,9 @@
 {
   "workflow": {
-    "budget": "Maximum amount in US dollars for one run. Once the estimated costs exceed it, the run stops at the next request. Empty = default budget from the settings.",
+    "budget": "Maximum amount in US dollars for one run. Every request reserves its highest possible cost in advance, so parallel steps cannot exceed the budget together. Empty = default budget from the settings.",
+    "limits": "Limits how many steps of a run work at the same time, how long a run may actively work and how many steps it runs in total. At the time limit, running steps are cancelled; a request already sent still finishes.",
+    "contract": "The fields the workflow promises as its result. If the result does not fit, the run fails instead of passing on something unchecked.",
+    "capabilities": "Tags for what the workflow can do as a team. They help to find a fitting team and grant no permissions.",
     "problems": "These points prevent the start. They are checked again after every change.",
     "import": "Loads an exported workflow file (.nodestro.json) as a new copy. Existing workflows stay unchanged.",
     "export": "Saves the workflow with all agent settings as a JSON file. Knowledge files, memory and your own tools are not included.",
@@ -191,7 +194,11 @@
     "form": "Fields asked for and checked at the start. Agents read them with {{formName}}.",
     "formField": "The technical name is used in the placeholder: letters, digits and _ only.",
     "resume": "Continues a failed run: valid results are taken over, the rest runs again.",
-    "resumeSideEffects": "Steps that run again had called tools. A second call may trigger something twice."
+    "resumeSideEffects": "Steps that run again had called tools. A second call may trigger something twice.",
+    "orchestrator": "An AI model plans the task and delegates parts of it to teams of its pool, one decision at a time. Every decision is recorded with its reason.",
+    "orchestratorTeams": "Teams are saved workflows. The model only sees their name, description, capabilities and output contract. It cannot add teams.",
+    "orchestratorLimits": "The limits keep an orchestrator from running in circles: it stops after the maximum number of decisions, and the workflow's budget and limits apply as well.",
+    "orchestratorSelect": "Instead of naming every team, name capabilities. When a run starts, saved teams that share them are added to the pool and fixed for that run; the run's details show which tags each team matched. Nothing is scored: more matching tags come first, then the name."
   },
   "files": {
     "output": "Formats in which the result node stores its result at the end of the run: Markdown, JSON, CSV, HTML or PDF.",

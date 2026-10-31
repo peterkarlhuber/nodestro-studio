@@ -73,7 +73,10 @@
     "inputHint": "O que o subworkflow recebe como entrada. {{input}} é o que chega aqui.",
     "values": "Valores para o formulário de entrada dele",
     "valuesHint": "Texto ou marcadores como {{formExample}} ou {{agentExample}}.",
-    "costs": "Custo e tokens do subworkflow contam uma única vez, na execução deste workflow."
+    "costs": "Custo e tokens do subworkflow contam uma única vez, na execução deste workflow.",
+    "delivers": "Entrega: {{fields}}.",
+    "noContract": "Sem contrato de saída: o resultado chega como o fluxo o produz.",
+    "open": "Abrir fluxo (ou clique duplo no nó)"
   },
   "form": {
     "title": "Formulário de entrada",
@@ -146,6 +149,12 @@
     "download": "Baixar {{name}}",
     "delete": "Excluir {{name}}"
   },
+  "contract": {
+    "title": "Contrato de saída",
+    "hint": "O fluxo promete estes campos como resultado. No fim, verifica-se se o resultado os contém; os outros campos são omitidos. Um fluxo superior pode confiar neles.",
+    "none": "Sem contrato, o fluxo repassa o resultado sem alterações. Com um contrato, ele entrega como equipe um objeto verificado com campos fixos.",
+    "add": "Criar contrato"
+  },
   "run": {
     "branches": "Ramos escolhidos: {{names}}",
     "fallback": "Ramo “senão”, porque:",
@@ -217,5 +226,43 @@
     "confirmHint": "Essas etapas já tinham chamado ferramentas. Verifique se uma segunda chamada dispara algo em dobro (p. ex. uma mensagem).",
     "continue": "Continuar",
     "restart": "Recomeçar do zero"
+  },
+  "orchestrator": {
+    "text": "Um modelo de IA decide passo a passo qual equipe recebe qual tarefa e conclui com uma resposta.",
+    "teams": "Equipes",
+    "teamsHint": "Os workflows entre os quais o modelo pode escolher (no máximo {{max}}). Capacidades e contratos de saída ajudam na escolha.",
+    "noTeams": "Ainda não há equipes. Adicione pelo menos uma.",
+    "addTeam": "Adicionar uma equipe…",
+    "removeTeam": "Remover {{name}}",
+    "delivers": "Entrega: {{fields}}",
+    "task": "Tarefa",
+    "taskHint": "O que o orquestrador deve resolver; {{input}} é a entrada desta etapa.",
+    "instructions": "Instruções",
+    "instructionsHint": "Opcional: como planejar, por exemplo qual equipe consultar primeiro ou quando a tarefa está concluída.",
+    "model": "Modelo",
+    "maxDecisions": "Máximo de decisões",
+    "maxDecisionsHint": "Cada delegação e a resposta final contam como uma decisão (de 1 a {{max}}). Sem resposta até lá, a etapa falha.",
+    "maxPerTeam": "Máximo por equipe",
+    "maxPerTeamHint": "Quantas vezes a mesma equipe pode ser escolhida. Vazio: sem limite próprio.",
+    "safety": "O orquestrador só escolhe entre estas equipes. Ele não tem ferramentas, não cria agentes, ferramentas nem equipes e não tem permissões próprias. Cada equipe roda como uma execução vinculada própria, com sua parte do orçamento, seus limites e suas aprovações. Equipes que param para uma aprovação ainda não são compatíveis.",
+    "run": {
+      "delegated": "Delegado a {{team}}",
+      "finished": "Concluído com uma resposta",
+      "invalid": "Nenhuma decisão válida",
+      "refused": "Recusada",
+      "teamFailed": "A equipe falhou",
+      "reason": "Motivo",
+      "task": "Tarefa",
+      "summary": "Decisões: {{decisions}} · delegações: {{delegations}}",
+      "openTeam": "Abrir a execução da equipe",
+      "matched": "escolhida por capacidade: {{tags}}"
+    },
+    "select": "Equipes por capacidade",
+    "selectHint": "Equipes salvas com uma destas capacidades entram no grupo quando uma execução começa (no máximo 10 tags). A melhor correspondência primeiro; equipes com erros ou etapas de aprovação ficam de fora.",
+    "selectPlaceholder": "ex.: pesquisa e Enter",
+    "maxTeams": "No máximo tantas equipes",
+    "selectPreview_one": "Correspondem agora: {{teams}} (usa {{count}})",
+    "selectPreview_other": "Correspondem agora: {{teams}} (usa até {{count}})",
+    "selectNone": "Nenhuma equipe salva tem ainda uma destas capacidades."
   }
 }

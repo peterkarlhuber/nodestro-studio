@@ -97,12 +97,18 @@
     "branch_unknown": "A connection of {{node}} starts at no branch.",
     "condition_no_rules": "The decision {{node}} has no rules.",
     "subworkflow_missing": "{{node}} has no workflow selected.",
+    "contract_field_name": "{{node}}: the field name {{field}} in the output contract is invalid (letters, digits and _ only).",
+    "contract_field_duplicate": "{{node}}: the output contract names the field {{field}} twice.",
     "node_duplicate": "Two nodes have the same id ({{id}}). Delete one of them and add it again.",
     "loop_unguarded": "A loop must leave from a branch of a decision or approval.",
     "loop_target": "A loop must lead back to an earlier step.",
     "loop_overlap": "Two loops overlap; loops may only be nested inside each other.",
     "loop_shared": "A step of a loop is connected to a step outside it in a way the loop cannot repeat.",
-    "loop_invalid": "This loop is not valid."
+    "loop_invalid": "This loop is not valid.",
+    "orchestrator_no_members": "{{node}} has no teams to choose from.",
+    "orchestrator_member_duplicate": "{{node}} names a team twice.",
+    "orchestrator_self": "{{node}} would choose its own workflow as a team.",
+    "orchestrator_limits": "{{node}} allows one team more often than it may decide at all."
   },
   "run": {
     "failed": "The step failed.",
@@ -128,7 +134,13 @@
     "not_found": "There is no run with this id.",
     "not_finished": "The run has not finished yet.",
     "no_event_loop": "The run could not start: it needs a running event loop.",
-    "loop_exhausted": "The loop at {{node}} ran {{max_iterations}} times without reaching its goal."
+    "loop_exhausted": "The loop at {{node}} ran {{max_iterations}} times without reaching its goal.",
+    "time_limit": "The run reached its time limit of {{max_duration_s}} seconds. Running steps were cancelled.",
+    "step_limit": "The run reached its limit of {{max_steps}} steps. No further steps were started.",
+    "output_contract": "The result does not fulfil the workflow's output contract: {{fields}}.",
+    "orchestration_limit": "{{node}} made {{max_decisions}} decisions without finishing.",
+    "orchestrator_member_missing": "A team of {{node}} no longer exists.",
+    "orchestrator_no_match": "No saved team of {{node}} has one of the capabilities {{capabilities}}."
   },
   "trace": {
     "invalid": "The trace is damaged or incomplete.",
@@ -217,9 +229,19 @@
     "subworkflow_missing": "{{name}}: the chosen workflow no longer exists.",
     "subworkflow_outdated": "{{name}} uses version {{version}}; version {{latest}} is newer.",
     "subworkflow_version_missing": "{{name}}: the chosen version no longer exists.",
+    "contract_text_source": "{{name}} answers in plain text; the output contract can then only be met by a JSON answer. Set the agent's output format to “Structured”.",
+    "contract_field_missing": "No agent before the result delivers {{fields}}; the output contract cannot be met this way.",
     "unreachable": "{{name}} cannot be reached from the start.",
     "provider_not_configured": "{{provider}} is not set up: enter its base URL in the settings.",
-    "input_form_only": "{{name}} reads the start node with {{input}}. When the form is filled in, that is only the form values, without the additional text. Use {{run_input}} to get both."
+    "input_form_only": "{{name}} reads the start node with {{input}}. When the form is filled in, that is only the form values, without the additional text. Use {{run_input}} to get both.",
+    "orchestrator_member_missing": "{{name}}: a chosen team no longer exists.",
+    "orchestrator_cycle": "{{name}}: the team {{workflow}} would call this workflow again.",
+    "orchestrator_member_invalid_one": "{{name}}: the team {{workflow}} has {{count}} error.",
+    "orchestrator_member_invalid_other": "{{name}}: the team {{workflow}} has {{count}} errors.",
+    "orchestrator_member_approval": "{{name}}: the team {{workflow}} stops for approvals. Inside an orchestrator it is cancelled at that point.",
+    "orchestrator_selected_one": "{{name}} selects {{count}} team by capability: {{teams}}.",
+    "orchestrator_selected_other": "{{name}} selects {{count}} teams by capability: {{teams}}.",
+    "orchestrator_no_match": "{{name}}: no saved team has one of the capabilities {{capabilities}}."
   },
   "backup": {
     "not_zip": "The file is not a Nodestro backup (no ZIP file).",
@@ -633,5 +655,17 @@
     "url_invalid": "The address is invalid.",
     "vault_unavailable": "There is no secure store for access tokens.",
     "write_not_supported": "Tools that change data are still blocked (approval per call is missing)."
+  },
+  "orchestration": {
+    "unknown_member": "This team is not in the pool.",
+    "member_limit": "This team was already chosen as often as allowed.",
+    "repeated": "This team already got exactly this task.",
+    "decision_limit": "No decisions are left.",
+    "empty_task": "The task for the team was empty.",
+    "task_too_long": "The task for the team was too long.",
+    "empty_answer": "The final answer was empty.",
+    "answer_too_long": "The final answer was too long.",
+    "finished": "The orchestration had already finished.",
+    "invalid_decision": "The answer was not a valid decision."
   }
 }

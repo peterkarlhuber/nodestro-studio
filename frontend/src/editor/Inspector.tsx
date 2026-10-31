@@ -1,15 +1,23 @@
 import { CheckCircle2, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from "lucide-react";
-import type { Ref } from "react";
+import { type Ref, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
-import type { WorkflowCheck } from "../api/types";
-import { DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../components/ui";
+import {
+  MAX_CAPABILITIES,
+  MAX_DURATION_LIMIT_S,
+  MAX_PARALLEL_LIMIT,
+  MAX_STEPS_LIMIT,
+  type WorkflowCheck,
+} from "../api/types";
+import { Chip, DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../components/ui";
 import { WorkflowDependencies } from "../python/DependencyPanel";
 import { AgentInspector } from "./AgentInspector";
 import { CheckList } from "./CheckList";
 import { ConnectionInspector } from "./ConnectionInspector";
+import { addCapabilities } from "../lib/capabilities";
 import { useEditorLayout } from "./layout";
-import { ApprovalInspector, ConditionInspector, FormEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
+import { OrchestratorInspector } from "./OrchestratorInspector";
+import { ApprovalInspector, ConditionInspector, FormEditor, OutputContractEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
 import { useEditor } from "./store";
 
 export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefined; panelRef?: Ref<HTMLElement> }) {
@@ -39,6 +47,8 @@ export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefine
         <ApprovalInspector key={selected.id} node={selected} />
       ) : selected.type === "subworkflow" && selected.subworkflow ? (
         <SubworkflowInspector key={selected.id} node={selected} />
+      ) : selected.type === "orchestrator" && selected.orchestrator ? (
+        <OrchestratorInspector key={selected.id} node={selected} />
       ) : (
         <TerminalInspector key={selected.id} nodeId={selected.id} />
       );
@@ -112,7 +122,14 @@ function TerminalInspector({ nodeId }: { nodeId: string }) {
           />
         </Field>
       ) : null}
-      {isStart ? <FormEditor node={node} /> : <OutputFilesEditor node={node} />}
+      {isStart ? (
+        <FormEditor node={node} />
+      ) : (
+        <>
+          <OutputContractEditor node={node} />
+          <OutputFilesEditor node={node} />
+        </>
+      )}
     </div>
   );
 }
@@ -148,6 +165,8 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
           onChange={(e) => setMeta({ budget: e.target.value === "" ? null : Number(e.target.value) })}
         />
       </Field>
+      <LimitFields />
+      <CapabilityField />
       {workflowId ? <WorkflowDependencies workflowId={workflowId} workflow={toWorkflow()} /> : null}
       {check ? (
         <section className="check-panel" aria-label={t("editor.inspector.problemsLabel")}>
@@ -188,5 +207,117 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
         </ul>
       </div>
     </div>
+  );
+}
+
+
+/** The workflow's execution limits: steps at the same time, active time and steps per run (empty: no limit). */
+function LimitFields() {
+  const { t } = useTranslation();
+  const limits = useEditor((s) => s.limits);
+  const { setMeta } = useEditor.getState();
+  const whole = (value: string, low: number, high: number): number | null => {
+    if (value === "") return null;
+    const number = Math.round(Number(value));
+    return Number.isFinite(number) ? Math.min(high, Math.max(low, number)) : null;
+  };
+  const minutes = limits.max_duration_s === null ? "" : Math.round((limits.max_duration_s / 60) * 100) / 100;
+  return (
+    <>
+      <Field
+        label={t("editor.inspector.maxParallel")}
+        hint={t("editor.inspector.maxParallelHint", { max: MAX_PARALLEL_LIMIT })}
+        tip="workflow.limits"
+      >
+        <TextInput
+          type="number"
+          min={1}
+          max={MAX_PARALLEL_LIMIT}
+          step={1}
+          value={limits.max_parallel ?? ""}
+          onChange={(e) => setMeta({ limits: { ...limits, max_parallel: whole(e.target.value, 1, MAX_PARALLEL_LIMIT) } })}
+          data-testid="limit-parallel"
+        />
+      </Field>
+      <Field label={t("editor.inspector.timeLimit")} hint={t("editor.inspector.timeLimitHint")} tip="workflow.limits">
+        <TextInput
+          type="number"
+          min={0.1}
+          max={MAX_DURATION_LIMIT_S / 60}
+          step={1}
+          value={minutes}
+          onChange={(e) => {
+            const value = e.target.value === "" ? null : Number(e.target.value);
+            const seconds =
+              value === null || !Number.isFinite(value) || value <= 0
+                ? null
+                : Math.min(MAX_DURATION_LIMIT_S, Math.round(value * 60));
+            setMeta({ limits: { ...limits, max_duration_s: seconds } });
+          }}
+          data-testid="limit-duration"
+        />
+      </Field>
+      <Field
+        label={t("editor.inspector.maxSteps")}
+        hint={t("editor.inspector.maxStepsHint", { max: MAX_STEPS_LIMIT })}
+        tip="workflow.limits"
+      >
+        <TextInput
+          type="number"
+          min={1}
+          max={MAX_STEPS_LIMIT}
+          step={1}
+          value={limits.max_steps ?? ""}
+          onChange={(e) => setMeta({ limits: { ...limits, max_steps: whole(e.target.value, 1, MAX_STEPS_LIMIT) } })}
+          data-testid="limit-steps"
+        />
+      </Field>
+    </>
+  );
+}
+
+/** What the workflow can do as a team: short tags that help to find it later (they grant nothing). */
+function CapabilityField() {
+  const { t } = useTranslation();
+  const capabilities = useEditor((s) => s.capabilities);
+  const { setMeta } = useEditor.getState();
+  const [typed, setTyped] = useState("");
+  const take = () => {
+    if (!typed.trim()) return;
+    setMeta({ capabilities: addCapabilities(capabilities, typed) });
+    setTyped("");
+  };
+  return (
+    <Field
+      label={t("editor.inspector.capabilities")}
+      hint={t("editor.inspector.capabilitiesHint", { max: MAX_CAPABILITIES })}
+      tip="workflow.capabilities"
+    >
+      <div className="stack-sm">
+        {capabilities.length ? (
+          <div className="chip-row" data-testid="capabilities">
+            {capabilities.map((tag) => (
+              <Chip key={tag} onRemove={() => setMeta({ capabilities: capabilities.filter((item) => item !== tag) })}>
+                {tag}
+              </Chip>
+            ))}
+          </div>
+        ) : null}
+        <TextInput
+          value={typed}
+          placeholder={t("editor.inspector.capabilitiesPlaceholder")}
+          disabled={capabilities.length >= MAX_CAPABILITIES}
+          onChange={(e) => setTyped(e.target.value)}
+          onBlur={take}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === ",") {
+              e.preventDefault();
+              take();
+            }
+          }}
+          data-testid="capability-input"
+        />
+      </div>
+    </Field>
   );
 }

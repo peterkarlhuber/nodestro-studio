@@ -103,9 +103,39 @@ Un **subflujo** ejecuta otro flujo de trabajo guardado como un solo paso. Su res
 - **Versión:** *Versión más reciente* usa el estado actual; una versión fija no cambia aunque el otro flujo se edite más tarde. La comprobación avisa cuando existe una versión más nueva.
 - **Entrada:** lo que recibe el subflujo como entrada; `{{input}}` es lo que llega aquí.
 - **Valores para su formulario de entrada:** texto o marcadores como `{{form.cliente}}` o `{{Análisis}}`. La comprobación avisa de campos obligatorios sin valor.
-- El subflujo se ejecuta como **ejecución propia y vinculada**; un enlace en los detalles lleva a ella. Costes y tokens cuentan una sola vez, en el presupuesto de la ejecución principal.
+- El subflujo se ejecuta como **ejecución propia y vinculada**; un enlace en los detalles lleva a ella. Costes y tokens cuentan una sola vez, en el presupuesto de la ejecución principal. Si el subflujo tiene presupuesto propio, se aplica además ese límite más estrecho.
 - Un flujo no puede llamarse a sí mismo, tampoco de forma indirecta; no se permiten más de cinco niveles.
 - Si el subflujo espera una aprobación, la ejecución principal espera con él.
+
+## Equipos {#teams}
+<!-- keywords: equipo, contrato de salida, contrato, capacidades, resultado estructurado, run.output_contract -->
+
+Un **equipo** es un flujo que, ejecutado como subflujo, promete un resultado fijo. Dos ajustes convierten un flujo en equipo:
+
+- **Contrato de salida** en el nodo de resultado: los campos (nombre, tipo, obligatorio) que entrega el flujo, como en el resultado estructurado de un agente. Al final de una ejecución se comprueba el resultado. Debe ser un objeto (o texto JSON de uno) con cada campo obligatorio en el tipo correcto. Los demás campos se omiten. Si el resultado no encaja, el nodo de resultado falla y con él la ejecución; un flujo superior nunca recibe un resultado sin comprobar.
+- **Capacidades como equipo** en los ajustes del flujo: etiquetas breves de lo que sabe hacer el flujo (como máximo 20). Viajan con el flujo (versiones, exportación) y más adelante ayudan a encontrar un equipo adecuado. No conceden permisos.
+
+En un flujo superior, un flujo con contrato de salida entrega un objeto con exactamente esos campos. Por eso una decisión posterior puede comprobar un campo directamente, por ejemplo `score` mayor o igual que 5.
+
+La comprobación antes de iniciar avisa cuando un agente antes del resultado responde en texto (entonces solo sirve una respuesta JSON) o cuando ningún agente entrega un campo obligatorio. Los nombres de campo no válidos o repetidos impiden iniciar.
+
+Los flujos con contrato de salida o capacidades aparecen en la paleta en **Equipos** y se pueden añadir directamente como subflujo. El inspector de un subflujo muestra lo que entrega el equipo. Un **doble clic** en el nodo abre el equipo en el editor; las migas de pan de arriba llevan de vuelta al flujo superior.
+
+Un equipo puede probarse por sí solo: crea una [serie de pruebas](/docs/automatisierung#testreihen) para el flujo. Sus comprobaciones pueden usar los campos del contrato de salida, por ejemplo `score` mayor o igual que 5.
+
+## Orquestador {#orchestrator}
+<!-- keywords: orquestador, orquestación, delegar, grupo, equipos, decisiones, run.orchestration_limit -->
+
+Un **orquestador** deja que un modelo de IA decida qué equipo recibe qué parte de la tarea. Toma una decisión tras otra: **delegar** una tarea a un equipo o **terminar** con una respuesta. La respuesta es el resultado del nodo.
+
+- **Equipos:** los workflows guardados entre los que el modelo puede elegir (como máximo 20). De cada equipo, el modelo solo ve su nombre, descripción, capacidades y contrato de salida.
+- **Equipos por capacidad:** en lugar de elegir cada equipo, nombras capacidades (como máximo 10). Al iniciar una ejecución, los equipos guardados con una capacidad coincidente entran en el grupo (hasta *Como máximo tantos equipos*): primero los que tienen más etiquetas coincidentes, luego por nombre. Los equipos con errores o pasos de aprobación quedan fuera. La selección queda fija para esa ejecución (y para una versión publicada); los detalles muestran qué etiquetas coincidieron en cada equipo. No se puntúa ni se estima nada.
+- **Tarea** e **Instrucciones:** lo que hay que resolver y, opcionalmente, cómo planificarlo.
+- **Máximo de decisiones** (de 1 a 50, por defecto 8) y **Máximo por equipo:** si no hay respuesta tras la última decisión, el paso falla.
+
+El orquestador solo elige. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo elegido se ejecuta como una **ejecución vinculada propia**, con su parte del presupuesto, sus límites y sus aprobaciones de herramientas. Las decisiones no permitidas (un equipo desconocido, la misma tarea otra vez, un equipo agotado) se rechazan y se muestran al modelo; aun así cuentan como decisión.
+
+Los detalles de la ejecución muestran cada decisión con su motivo, tarea, resultado y un enlace a la ejecución del equipo. Los equipos que se detienen para una aprobación aún no son compatibles dentro de un orquestador: se cancelan en ese punto, y la comprobación previa al inicio lo advierte. Un equipo no puede volver a llamar al workflow del orquestador.
 
 ## Formularios de entrada {#eingabeformular}
 <!-- keywords: formulario, formulario de entrada, campos, tipo, obligatorio, valor predeterminado, opción, fecha, número -->

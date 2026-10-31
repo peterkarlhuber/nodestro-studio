@@ -14,6 +14,7 @@ import { ProblemText, runProblem } from "../lib/errors";
 import { formatCost, formatDuration, formatTime, formatNumber, formatTokens, tokenBreakdown } from "../lib/format";
 import { type AgentContext, ContextView } from "./ContextView";
 import { branchLabel } from "./nodes";
+import { OrchestrationView } from "./OrchestrationView";
 
 type RunTab = "result" | "prompt" | "context" | "tools" | "thinking" | "memory";
 
@@ -133,6 +134,7 @@ export function FlowNodeDetails({ run, node, state }: { run?: Run; node: Workflo
       {node.type === "approval" && state.status === "awaiting_approval" && run ? (
         <ApprovalCard runId={run.id} nodeId={node.id} />
       ) : null}
+      {node.type === "orchestrator" ? <OrchestrationView node={node} state={state} /> : null}
       {state.status === "running" && run ? <NodeToolApprovals runId={run.id} nodeId={node.id} /> : null}
       {node.type === "subworkflow" && state.child_run_id ? (
         <p>

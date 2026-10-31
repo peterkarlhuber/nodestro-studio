@@ -1,6 +1,9 @@
 {
   "workflow": {
-    "budget": "Importe máximo en dólares estadounidenses para una ejecución. Si los costes estimados lo superan, la ejecución se detiene en la siguiente solicitud. Vacío = presupuesto predeterminado de los ajustes.",
+    "budget": "Importe máximo en dólares estadounidenses para una ejecución. Cada solicitud reserva de antemano su coste máximo posible, de modo que los pasos paralelos no pueden superar juntos el presupuesto. Vacío = presupuesto predeterminado de los ajustes.",
+    "limits": "Limita cuántos pasos de una ejecución trabajan a la vez, cuánto tiempo puede trabajar activamente una ejecución y cuántos pasos ejecuta en total. Al alcanzar el límite de tiempo se cancelan los pasos en curso; una solicitud ya enviada se completa.",
+    "contract": "Los campos que el flujo promete como resultado. Si el resultado no encaja, la ejecución falla en lugar de transmitir algo sin comprobar.",
+    "capabilities": "Etiquetas de lo que el flujo puede hacer como equipo. Ayudan a encontrar un equipo adecuado y no conceden permisos.",
     "problems": "Estos puntos impiden el inicio. Se vuelven a comprobar con cada cambio.",
     "import": "Carga un archivo de flujo de trabajo exportado (.nodestro.json) como copia nueva. Los flujos de trabajo existentes no cambian.",
     "export": "Guarda el flujo de trabajo con todos los ajustes de los agentes como archivo JSON. No incluye los archivos de conocimiento, la memoria ni las herramientas propias.",
@@ -191,7 +194,11 @@
     "form": "Campos que se piden y comprueban al iniciar. Los agentes los leen con {{formName}}.",
     "formField": "El nombre técnico se usa en el marcador: solo letras, cifras y _.",
     "resume": "Continúa una ejecución fallida: se reutilizan los resultados válidos y se repite el resto.",
-    "resumeSideEffects": "Los pasos que se repiten habían llamado a herramientas. Una segunda llamada puede provocar algo dos veces."
+    "resumeSideEffects": "Los pasos que se repiten habían llamado a herramientas. Una segunda llamada puede provocar algo dos veces.",
+    "orchestrator": "Un modelo de IA planifica la tarea y delega partes de ella a equipos de su grupo, una decisión tras otra. Cada decisión queda registrada con su motivo.",
+    "orchestratorTeams": "Los equipos son workflows guardados. El modelo solo ve su nombre, descripción, capacidades y contrato de salida. No puede añadir equipos.",
+    "orchestratorLimits": "Los límites evitan que un orquestador dé vueltas: se detiene tras el número máximo de decisiones, y además se aplican el presupuesto y los límites del workflow.",
+    "orchestratorSelect": "En lugar de nombrar cada equipo, nombras capacidades. Al iniciar una ejecución, los equipos guardados que las comparten se añaden al grupo y quedan fijos para esa ejecución; los detalles muestran qué etiquetas coincidieron en cada equipo. No se puntúa nada: primero más etiquetas coincidentes, luego el nombre."
   },
   "files": {
     "output": "Formatos en los que el nodo de resultado guarda su resultado al final de la ejecución: Markdown, JSON, CSV, HTML o PDF.",

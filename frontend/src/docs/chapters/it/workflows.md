@@ -134,18 +134,31 @@ I rami paralleli riducono la durata, ma costano tanti token quanti agenti esegui
 ## Impostazioni del workflow {#einstellungen}
 <!-- keywords: nome, descrizione, ispettore, impostazioni del workflow -->
 
-Fai clic su un punto vuoto dell'area di lavoro per vedere nell'ispettore le impostazioni del workflow: **Nome**, **Descrizione** e **Budget per esecuzione**. Sotto compaiono i problemi che impediscono l'avvio e una breve panoramica dei comandi.
+Fai clic su un punto vuoto dell'area di lavoro per vedere nell'ispettore le impostazioni del workflow: **Nome**, **Descrizione**, **Budget per esecuzione** e i **limiti** per i passaggi contemporanei e per la durata. Sotto compaiono i problemi che impediscono l'avvio e una breve panoramica dei comandi.
 
 ## Budget per esecuzione {#budget}
-<!-- keywords: budget, limite di costo, limite, usd, dollaro, interruzione, budgetexceedederror -->
+<!-- keywords: budget, limite di costo, limite, usd, dollaro, interruzione, budgetexceedederror, prenotazione, nessun massimo rigido -->
 
 Il budget limita i **costi stimati** di un'esecuzione in dollari statunitensi, per tutti gli agenti e i controlli qualità.
 
 - Se il workflow non ha un budget proprio, vale il **budget predefinito** delle impostazioni (inizialmente 2 USD).
 - Se anche lì non c'è nulla, l'esecuzione è illimitata.
-- Dopo ogni risposta dell'API i costi vengono sommati. Se il budget viene superato, l'agente in corso si interrompe (errore `BudgetExceededError`) e non vengono inviate altre richieste.
+- **Prima** di ogni richiesta viene prenotato il suo costo massimo possibile (dimensione dell'input e output massimo che può produrre, alla tariffa più cara). Dopo la risposta, la prenotazione viene sostituita dal costo reale. Gli agenti in esecuzione contemporanea non possono quindi superare insieme il budget: se il resto non basta, una richiesta attende che un'altra sia terminata.
+- Se il budget non basta nemmeno senza altre richieste, la richiesta non viene inviata e l'agente si interrompe (errore `BudgetExceededError`).
+- Se una singola richiesta è più grande dell'intero budget, viene eseguita da sola nella modalità prezzi standard; nella modalità rigorosa viene rifiutata.
 
-Poiché i costi si contano solo dopo una risposta, una singola richiesta può superare leggermente il budget. Le richieste senza prezzo noto contano come 0.
+I costi sconosciuti **non** contano come 0. Se il costo massimo di una richiesta non può essere determinato in anticipo (nessun prezzo noto, immagini, file o strumenti del provider come la ricerca web), nella modalità standard viene eseguita senza limite superiore. L'esecuzione mostra allora accanto ai costi l'avviso **Nessun massimo rigido** con il numero di tali richieste. Nella modalità prezzi rigorosa le richieste senza prezzo noto non vengono inviate affatto.
+
+## Limiti per esecuzione {#limits}
+<!-- keywords: limiti, contemporanei, parallelo, limite di tempo, durata, timeout, run.time_limit, passaggi, run.step_limit -->
+
+Tre limiti facoltativi valgono per ogni esecuzione del workflow. Vuoto significa nessun limite.
+
+- **Numero massimo di passaggi contemporanei** (da 1 a 32): se sono pronti più passaggi, gli altri attendono un posto libero. Con 1 tutti i passaggi vengono eseguiti uno dopo l'altro.
+- **Limite di tempo per esecuzione** (in minuti, al massimo 7 giorni): conta solo il tempo di esecuzione attivo. L'attesa di un'approvazione non conta. Allo scadere del tempo non parte nessun altro passaggio, agli agenti in corso viene chiesto di fermarsi e l'esecuzione fallisce con un errore che indica il limite di tempo.
+- **Numero massimo di passaggi per esecuzione** (da 1 a 10.000): ogni nodo eseguito conta una volta, anche inizio e risultato, e ogni giro di un ciclo conta di nuovo. Se il passaggio successivo fosse di troppo, non parte e l'esecuzione fallisce con un errore che indica il limite. Questo protegge dai cicli che fanno più giri del previsto. Un'esecuzione ripresa conta anche i passaggi che riprende.
+
+Una richiesta al modello o una chiamata a uno strumento già in corso viene comunque completata. L'esecuzione può quindi superare il limite di tempo per la durata di quella chiamata.
 
 ## Verifica prima dell'avvio {#pruefung}
 <!-- keywords: verifica, validazione, problemi, avvio bloccato, errore, avviso -->

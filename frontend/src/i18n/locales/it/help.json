@@ -1,6 +1,9 @@
 {
   "workflow": {
-    "budget": "Importo massimo in dollari USA per un’esecuzione. Se i costi stimati lo superano, l’esecuzione si interrompe alla richiesta successiva. Vuoto = budget predefinito delle impostazioni.",
+    "budget": "Importo massimo in dollari USA per un’esecuzione. Ogni richiesta riserva in anticipo il suo costo massimo possibile, così i passaggi paralleli non possono superare insieme il budget. Vuoto = budget predefinito delle impostazioni.",
+    "limits": "Limita quanti passaggi di un'esecuzione lavorano contemporaneamente, per quanto tempo un'esecuzione può lavorare attivamente e quanti passaggi esegue in totale. Al limite di tempo i passaggi in corso vengono annullati; una richiesta già inviata viene completata.",
+    "contract": "I campi che il workflow promette come risultato. Se il risultato non corrisponde, l'esecuzione fallisce invece di passare qualcosa di non verificato.",
+    "capabilities": "Parole chiave su cosa sa fare il workflow come team. Aiutano a trovare un team adatto e non concedono permessi.",
     "problems": "Questi punti impediscono l’avvio. Vengono ricontrollati a ogni modifica.",
     "import": "Carica un file di workflow esportato (.nodestro.json) come nuova copia. I workflow esistenti restano invariati.",
     "export": "Salva il workflow con tutte le impostazioni degli agenti come file JSON. File di conoscenza, memoria e strumenti personali non sono inclusi.",
@@ -191,7 +194,11 @@
     "form": "Campi richiesti e controllati all’avvio. Gli agenti li leggono con {{formName}}.",
     "formField": "Il nome tecnico si usa nel segnaposto: solo lettere, cifre e _.",
     "resume": "Continua un’esecuzione non riuscita: i risultati validi vengono ripresi, il resto viene rieseguito.",
-    "resumeSideEffects": "I passaggi rieseguiti avevano chiamato strumenti. Una seconda chiamata può far scattare qualcosa due volte."
+    "resumeSideEffects": "I passaggi rieseguiti avevano chiamato strumenti. Una seconda chiamata può far scattare qualcosa due volte.",
+    "orchestrator": "Un modello di IA pianifica il compito e ne delega parti ai team del suo gruppo, una decisione dopo l’altra. Ogni decisione viene registrata con il suo motivo.",
+    "orchestratorTeams": "I team sono workflow salvati. Il modello vede solo nome, descrizione, capacità e contratto di output. Non può aggiungere team.",
+    "orchestratorLimits": "I limiti impediscono a un orchestratore di girare a vuoto: si ferma dopo il numero massimo di decisioni, e valgono in più il budget e i limiti del workflow.",
+    "orchestratorSelect": "Invece di indicare ogni team, indichi delle capacità. All’avvio di un’esecuzione i team salvati che le condividono entrano nel gruppo e restano fissi per quell’esecuzione; i dettagli mostrano quali tag ha trovato ogni team. Non si assegnano punteggi: prima più tag corrispondenti, poi il nome."
   },
   "files": {
     "output": "Formati in cui il nodo di risultato salva il suo risultato alla fine dell’esecuzione: Markdown, JSON, CSV, HTML o PDF.",

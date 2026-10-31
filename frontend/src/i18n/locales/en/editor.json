@@ -33,7 +33,8 @@
     "condition": "Decision",
     "approval": "Approval",
     "subworkflow": "Sub-workflow",
-    "branchPort": "Output of branch {{name}}"
+    "branchPort": "Output of branch {{name}}",
+    "orchestrator": "Orchestrator"
   },
   "canvas": {
     "unsaved": "Unsaved changes",
@@ -63,7 +64,10 @@
     "flow": "Control the flow",
     "conditionHint": "Branches by rules, no AI request",
     "approvalHint": "Pauses for a human review",
-    "subworkflowHint": "Runs another workflow as one step"
+    "subworkflowHint": "Runs another workflow as one step",
+    "teams": "Teams",
+    "teamDelivers": "delivers {{fields}}",
+    "orchestratorHint": "An AI model delegates the task to teams"
   },
   "inspector": {
     "agent": "Configure agent",
@@ -80,6 +84,15 @@
     "selectNode": "Select a node to configure it.",
     "budget": "Budget per run (USD)",
     "budgetHint": "Leave empty to use the default budget from the settings.",
+    "maxParallel": "Most steps running at the same time",
+    "maxParallelHint": "1 to {{max}}. Further ready steps wait for a free slot. Empty = no limit.",
+    "timeLimit": "Time limit per run (minutes)",
+    "timeLimitHint": "Active run time; waiting for approvals does not count. Empty = no limit.",
+    "maxSteps": "Most steps per run",
+    "maxStepsHint": "1 to {{max}}. Every executed node counts, every loop round again. Empty = no limit.",
+    "capabilities": "Capabilities as a team",
+    "capabilitiesHint": "Short tags for what this workflow can do as a team, e.g. “research”. A comma or Enter adds one, at most {{max}}. They grant no permissions.",
+    "capabilitiesPlaceholder": "e.g. research, translation",
     "problems": "To fix before starting:",
     "problemsLabel": "Problems",
     "controls": "Controls",
@@ -198,5 +211,13 @@
     "make": "Make it a loop",
     "round": "Round {{n}}",
     "rounds": "Rounds"
+  },
+  "orchestrator": {
+    "teams_one": "{{count}} team",
+    "teams_other": "{{count}} teams",
+    "noTeams": "No teams chosen",
+    "decisions_one": "max. {{count}} decision",
+    "decisions_other": "max. {{count}} decisions",
+    "byCapability": "by capability: {{tags}}"
   }
 }

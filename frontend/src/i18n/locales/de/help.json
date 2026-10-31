@@ -1,6 +1,9 @@
 {
   "workflow": {
-    "budget": "Höchstbetrag in US-Dollar für einen Lauf. Sind die geschätzten Kosten überschritten, bricht der Lauf bei der nächsten Anfrage ab. Leer = Standardbudget aus den Einstellungen.",
+    "budget": "Höchstbetrag in US-Dollar für einen Lauf. Jede Anfrage reserviert vorab ihre höchstmöglichen Kosten, sodass parallele Schritte das Budget nicht gemeinsam überschreiten. Leer = Standardbudget aus den Einstellungen.",
+    "limits": "Begrenzt, wie viele Schritte eines Laufs gleichzeitig arbeiten, wie lange ein Lauf aktiv arbeiten darf und wie viele Schritte er insgesamt ausführt. Beim Zeitlimit werden laufende Schritte abgebrochen; eine bereits gesendete Anfrage läuft noch zu Ende.",
+    "contract": "Die Felder, die der Workflow als Ergebnis verspricht. Passt das Ergebnis nicht, schlägt der Lauf fehl, statt etwas Ungeprüftes weiterzugeben.",
+    "capabilities": "Stichworte, was der Workflow als Team kann. Sie helfen, ein passendes Team zu finden, und vergeben keine Rechte.",
     "problems": "Diese Punkte verhindern den Start. Sie werden bei jeder Änderung neu geprüft.",
     "import": "Lädt eine exportierte Workflow-Datei (.nodestro.json) als neue Kopie. Vorhandene Workflows bleiben unverändert.",
     "export": "Speichert den Workflow mit allen Agenten-Einstellungen als JSON-Datei. Wissensdateien, Memory und eigene Tools sind nicht enthalten.",
@@ -191,7 +194,11 @@
     "form": "Felder, die beim Start abgefragt und geprüft werden. Agenten lesen sie mit {{formName}}.",
     "formField": "Der technische Name wird im Platzhalter verwendet: nur Buchstaben, Ziffern und _.",
     "resume": "Setzt einen fehlgeschlagenen Lauf fort: Gültige Ergebnisse werden übernommen, der Rest läuft neu.",
-    "resumeSideEffects": "Schritte, die neu laufen, hatten Tools aufgerufen. Ein zweiter Aufruf kann etwas doppelt auslösen."
+    "resumeSideEffects": "Schritte, die neu laufen, hatten Tools aufgerufen. Ein zweiter Aufruf kann etwas doppelt auslösen.",
+    "orchestrator": "Ein KI-Modell plant die Aufgabe und gibt Teile davon an Teams seines Pools weiter, eine Entscheidung nach der anderen. Jede Entscheidung wird mit ihrer Begründung festgehalten.",
+    "orchestratorTeams": "Teams sind gespeicherte Workflows. Das Modell sieht nur Name, Beschreibung, Fähigkeiten und Ausgabevertrag. Es kann keine Teams hinzufügen.",
+    "orchestratorLimits": "Die Grenzen verhindern, dass ein Orchestrator im Kreis läuft: Er stoppt nach der höchsten Zahl an Entscheidungen, und Budget und Grenzen des Workflows gelten zusätzlich.",
+    "orchestratorSelect": "Statt jedes Team zu nennen, nennst du Fähigkeiten. Beim Start eines Laufs kommen gespeicherte Teams mit passenden Fähigkeiten in den Pool und bleiben für diesen Lauf fest; die Details des Laufs zeigen, welche Stichworte jedes Team getroffen hat. Es wird nichts bewertet: mehr passende Stichworte kommen zuerst, dann der Name."
   },
   "files": {
     "output": "Formate, in denen der Ergebnis-Knoten sein Ergebnis am Ende des Laufs speichert: Markdown, JSON, CSV, HTML oder PDF.",

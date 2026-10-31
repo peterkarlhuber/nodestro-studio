@@ -321,6 +321,23 @@ describe("editor undo history", () => {
     expect(useEditor.getState().name).toBe("Test");
   });
 
+  it("keeps the run limits, sends them and undoes them like the budget", () => {
+    const none = { max_parallel: null, max_duration_s: null, max_steps: null };
+    expect(useEditor.getState().toWorkflow().limits).toEqual(none);
+    useEditor.getState().setMeta({ limits: { max_parallel: 2, max_duration_s: 600, max_steps: 50 } });
+    expect(useEditor.getState().toWorkflow().limits).toEqual({ max_parallel: 2, max_duration_s: 600, max_steps: 50 });
+    useEditor.getState().undo();
+    expect(useEditor.getState().limits).toEqual(none);
+  });
+
+  it("sends the capabilities and undoes them", () => {
+    expect(useEditor.getState().toWorkflow().capabilities).toEqual([]);
+    useEditor.getState().setMeta({ capabilities: ["research"] });
+    expect(useEditor.getState().toWorkflow().capabilities).toEqual(["research"]);
+    useEditor.getState().undo();
+    expect(useEditor.getState().capabilities).toEqual([]);
+  });
+
   it("starts a new step after selecting another node", () => {
     useEditor.getState().updateNode("start", { label: "In" }, { record: false });
     useEditor.getState().select("a");

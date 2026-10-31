@@ -19,6 +19,9 @@ export function docPath(ref: string): string {
 
 export const HELP_DOCS = {
   "workflow.budget": "workflows#budget",
+  "workflow.limits": "workflows#limits",
+  "workflow.contract": "verzweigungen#teams",
+  "workflow.capabilities": "verzweigungen#teams",
   "workflow.loop": "verzweigungen#schleifen",
   "workflow.problems": "workflows#pruefung",
   "workflow.import": "workflows#import-export",
@@ -195,6 +198,10 @@ export const HELP_DOCS = {
   "flow.subworkflow": "verzweigungen#unterworkflow",
   "flow.subworkflowVersion": "verzweigungen#unterworkflow",
   "flow.subworkflowValues": "verzweigungen#unterworkflow",
+  "flow.orchestrator": "verzweigungen#orchestrator",
+  "flow.orchestratorTeams": "verzweigungen#orchestrator",
+  "flow.orchestratorLimits": "verzweigungen#orchestrator",
+  "flow.orchestratorSelect": "verzweigungen#orchestrator",
   "flow.form": "verzweigungen#eingabeformular",
   "flow.formField": "verzweigungen#eingabeformular",
   "flow.resume": "verzweigungen#fortsetzen",

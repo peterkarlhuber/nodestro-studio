@@ -33,7 +33,8 @@
     "condition": "Decisione",
     "approval": "Approvazione",
     "subworkflow": "Sotto-workflow",
-    "branchPort": "Uscita del ramo {{name}}"
+    "branchPort": "Uscita del ramo {{name}}",
+    "orchestrator": "Orchestratore"
   },
   "canvas": {
     "unsaved": "Modifiche non salvate",
@@ -63,7 +64,10 @@
     "flow": "Controllare il flusso",
     "conditionHint": "Ramifica secondo regole, senza richiesta all’IA",
     "approvalHint": "Si ferma per una verifica umana",
-    "subworkflowHint": "Esegue un altro workflow come un unico passaggio"
+    "subworkflowHint": "Esegue un altro workflow come un unico passaggio",
+    "teams": "Team",
+    "teamDelivers": "consegna {{fields}}",
+    "orchestratorHint": "Un modello di IA distribuisce il compito ai team"
   },
   "inspector": {
     "agent": "Configura agente",
@@ -80,6 +84,15 @@
     "selectNode": "Seleziona un nodo per configurarlo.",
     "budget": "Budget per esecuzione (USD)",
     "budgetHint": "Lascia vuoto per usare il budget predefinito delle impostazioni.",
+    "maxParallel": "Numero massimo di passaggi contemporanei",
+    "maxParallelHint": "Da 1 a {{max}}. Gli altri passaggi pronti attendono un posto libero. Vuoto = nessun limite.",
+    "timeLimit": "Limite di tempo per esecuzione (minuti)",
+    "timeLimitHint": "Tempo di esecuzione attivo; l’attesa delle approvazioni non conta. Vuoto = nessun limite.",
+    "maxSteps": "Numero massimo di passaggi per esecuzione",
+    "maxStepsHint": "Da 1 a {{max}}. Conta ogni nodo eseguito, anche ogni giro di un ciclo. Vuoto = nessun limite.",
+    "capabilities": "Capacità come team",
+    "capabilitiesHint": "Brevi parole chiave su cosa sa fare questo workflow come team, ad es. «ricerca». Una virgola o Invio ne aggiunge una, al massimo {{max}}. Non concedono permessi.",
+    "capabilitiesPlaceholder": "ad es. ricerca, traduzione",
     "problems": "Da risolvere prima dell’avvio:",
     "problemsLabel": "Problemi",
     "controls": "Comandi",
@@ -198,5 +211,13 @@
     "make": "Rendi un ciclo",
     "round": "Giro {{n}}",
     "rounds": "Giri"
+  },
+  "orchestrator": {
+    "teams_one": "{{count}} team",
+    "teams_other": "{{count}} team",
+    "noTeams": "Nessun team scelto",
+    "decisions_one": "max. {{count}} decisione",
+    "decisions_other": "max. {{count}} decisioni",
+    "byCapability": "per capacità: {{tags}}"
   }
 }

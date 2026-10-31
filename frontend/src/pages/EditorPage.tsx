@@ -10,7 +10,7 @@ import { DiscussButton } from "../assistant/DiscussButton";
 import { useTakeHandover } from "../assistant/handover";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
-import { keys } from "../api/hooks";
+import { keys, useWorkflows } from "../api/hooks";
 import type { ArchitectJob, Run, Workflow } from "../api/types";
 import { toast } from "../components/toast";
 import { Button, Callout, DocLink, Hint, Modal, Spinner } from "../components/ui";
@@ -26,6 +26,7 @@ import { useEditor } from "../editor/store";
 import { useRunStream } from "../editor/useRunStream";
 import { VersionsDialog } from "../editor/VersionsDialog";
 import { ErrorText, problemText } from "../lib/errors";
+import { crumbLink, parseTrail } from "../lib/trail";
 import { ApiDialog } from "../publish/ApiDialog";
 import { findings } from "../editor/CheckList";
 
@@ -79,6 +80,9 @@ export function EditorPage() {
 
   // ?node=<id> (from the global search) selects that node once the workflow is loaded.
   const focusNode = searchParams.get("node");
+  // The workflows above this one when it was opened from a team node (outermost first).
+  const trail = parseTrail(searchParams.get("trail"), id);
+  const workflows = useWorkflows();
   useEffect(() => {
     if (!focusNode || loadedId !== id) return;
     if (useEditor.getState().nodes.some((node) => node.id === focusNode)) useEditor.getState().select(focusNode);
@@ -277,7 +281,16 @@ export function EditorPage() {
               <DocLink to="workflows#editor" label={t("editor.page.docs")} />
             </h1>
             <div className="breadcrumbs">
-              <Link to="/">{t("nav.workflows")}</Link> / <span>{name}</span> / {t("editor.page.breadcrumb")}
+              <Link to="/">{t("nav.workflows")}</Link> /{" "}
+              {trail.map((parent, index) => (
+                <span key={parent}>
+                  <Link to={crumbLink(trail, index)} data-testid="breadcrumb-parent">
+                    {workflows.data?.find((item) => item.id === parent)?.name ?? parent}
+                  </Link>{" "}
+                  /{" "}
+                </span>
+              ))}
+              <span>{name}</span> / {t("editor.page.breadcrumb")}
             </div>
           </div>
           <div className="title-actions">

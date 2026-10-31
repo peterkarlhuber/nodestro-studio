@@ -82,5 +82,11 @@
     "notRecorded": "not recorded",
     "skipped_one": "{{count}} skipped (branch not taken)",
     "skipped_other": "{{count}} skipped (branch not taken)"
+  },
+  "budget": {
+    "limit": "Budget {{limit}}",
+    "noHardMaximum": "no hard maximum",
+    "noHardMaximumHint_one": "{{count}} request could not be capped in advance (no price, built-in tools, images, or too large for the rest of the budget). So the budget was not a hard maximum.",
+    "noHardMaximumHint_other": "{{count}} requests could not be capped in advance (no price, built-in tools, images, or too large for the rest of the budget). So the budget was not a hard maximum."
   }
 }

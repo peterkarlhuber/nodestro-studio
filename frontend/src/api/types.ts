@@ -3,7 +3,7 @@
 export type Effort = "low" | "medium" | "high" | "xhigh" | "max";
 export type ThinkingMode = "adaptive" | "between_tools" | "disabled";
 export type ThinkingDisplay = "summarized" | "omitted" | "updates";
-export type NodeType = "start" | "agent" | "output" | "condition" | "approval" | "subworkflow";
+export type NodeType = "start" | "agent" | "output" | "condition" | "approval" | "subworkflow" | "orchestrator";
 /** ``paused``: the run waits for a person at an approval node. */
 export type RunStatus = "queued" | "running" | "paused" | "succeeded" | "failed" | "cancelled";
 /** ``skipped``: its branch was not chosen (no error); ``blocked``: a predecessor failed or was cancelled. */
@@ -192,6 +192,68 @@ export interface SubworkflowConfig {
   values: Record<string, string>;
 }
 
+/** A team an orchestrator may delegate to; ``version`` null: the latest saved version. */
+export interface OrchestratorMember {
+  workflow_id: string;
+  version: number | null;
+  /** In a run's snapshot: the capabilities this team matched when the selection added it. */
+  matched?: string[];
+}
+
+export const MAX_SELECT_CAPABILITIES = 10;
+
+/** Teams added by capability when a run starts (fixed in the run's snapshot, ``done``). */
+export interface OrchestratorSelect {
+  capabilities: string[];
+  max_teams: number;
+  done?: boolean;
+}
+
+export const MAX_POOL = 20;
+export const MAX_DECISIONS = 50;
+
+/** An AI model that delegates the task step by step to teams of its pool (it has no tools of its own). */
+export interface OrchestratorConfig {
+  members: OrchestratorMember[];
+  task_template: string;
+  instructions: string;
+  model: string;
+  max_decisions: number;
+  /** How often one team may be chosen; null: as often as decisions allow. */
+  max_per_member: number | null;
+  /** Add teams by capability; null: only ``members``. */
+  select?: OrchestratorSelect | null;
+}
+
+/** One decision of an orchestrator, as ``orkexa.orchestration`` records it. */
+export interface OrchestrationDecision {
+  action: "delegate" | "finish";
+  member?: string;
+  task?: string;
+  answer?: string;
+  reason?: string;
+}
+
+export interface OrchestrationStep {
+  index: number;
+  /** Null when the model's answer was not a valid decision (see ``raw``). */
+  decision: OrchestrationDecision | null;
+  /** ``code`` null: accepted. */
+  verdict: { code: string | null; message: string };
+  result: string | null;
+  error: string | null;
+  raw: string | null;
+}
+
+export interface OrchestrationRecord {
+  version: number;
+  task: string;
+  steps: OrchestrationStep[];
+  outcome: "finished" | "stopped" | null;
+  answer: string | null;
+  stop_code: string | null;
+}
+
 export type ReportFormat = "md" | "json" | "csv" | "html" | "pdf" | "docx" | "xlsx";
 
 export interface ResultFileSpec {
@@ -202,6 +264,8 @@ export interface ResultFileSpec {
 
 export interface OutputNodeConfig {
   files: ResultFileSpec[];
+  /** The fields the workflow promises to deliver (output contract of a team); empty: no contract. */
+  contract?: OutputField[];
 }
 
 export interface WorkflowNode {
@@ -214,6 +278,7 @@ export interface WorkflowNode {
   condition?: ConditionConfig | null;
   approval?: ApprovalConfig | null;
   subworkflow?: SubworkflowConfig | null;
+  orchestrator?: OrchestratorConfig | null;
   output?: OutputNodeConfig | null;
 }
 
@@ -235,12 +300,33 @@ export interface EdgeLoop {
 
 export const MAX_LOOP_ITERATIONS = 20;
 
+/** Execution limits of a workflow's runs; null: no limit of this kind. */
+export interface WorkflowLimits {
+  /** Most steps of a run executing at the same time (1 to MAX_PARALLEL_LIMIT). */
+  max_parallel: number | null;
+  /** Longest active execution time of a run in seconds; waiting for approvals does not count. */
+  max_duration_s: number | null;
+  /** Most node executions of a run (every loop round counts again). */
+  max_steps: number | null;
+}
+
+export const MAX_PARALLEL_LIMIT = 32;
+export const MAX_DURATION_LIMIT_S = 7 * 24 * 3600;
+export const MAX_STEPS_LIMIT = 10_000;
+export const MAX_CAPABILITIES = 20;
+export const MAX_CAPABILITY_LENGTH = 40;
+export const NO_LIMITS: WorkflowLimits = { max_parallel: null, max_duration_s: null, max_steps: null };
+
 export interface WorkflowIn {
   name: string;
   description: string;
   nodes: WorkflowNode[];
   edges: WorkflowEdge[];
   budget_usd: number | null;
+  /** Missing in workflows of earlier versions (no limits). */
+  limits?: WorkflowLimits;
+  /** What the workflow can do as a team (up to MAX_CAPABILITIES short tags); they grant nothing. */
+  capabilities?: string[];
 }
 
 export interface Workflow extends WorkflowIn {
@@ -256,6 +342,9 @@ export interface WorkflowSummary {
   agents: number;
   updated_at: string;
   last_run_status: RunStatus | null;
+  /** Capability tags and output contract field names (teams); missing from older servers. */
+  capabilities?: string[];
+  contract?: string[];
 }
 
 export interface AgentTemplate {
@@ -287,6 +376,8 @@ export interface Usage {
   pricing_versions?: string[];
   pricing_sources?: string[];
   pricing_quality?: string | null;
+  /** Requests a budget admitted without capping their cost (no price, native tools, images, or too large). */
+  uncapped_requests?: number;
 }
 
 export interface ToolCallRecord {
@@ -446,6 +537,10 @@ export interface NodeRun {
   approval?: ApprovalRecord | null;
   child_run_id?: string | null;
   child_version?: number | null;
+  /** Orchestrator: every decision with its verdict and the team's result, as it happened. */
+  orchestration?: OrchestrationRecord | null;
+  /** Orchestrator: the runs of the teams it delegated to, in order. */
+  child_run_ids?: string[];
   /** Taken over from this earlier run when a failed run was continued. */
   reused_from?: string | null;
   /** The files the agent received, and how. */
@@ -512,6 +607,12 @@ export interface Run extends RunOrigin {
   output: unknown;
   nodes: Record<string, NodeRun>;
   usage: Usage;
+  /** The budget the run started with (null: no limit, or a run of an earlier version). */
+  budget_usd?: number | null;
+  /** Whether the budget capped every request in advance; null without a budget. */
+  budget_hard_maximum?: boolean | null;
+  /** Active execution time in seconds (waiting for approvals not included). */
+  active_seconds?: number;
   created_at: string;
   started_at: string | null;
   finished_at: string | null;

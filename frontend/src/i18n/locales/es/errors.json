@@ -97,12 +97,18 @@
     "branch_unknown": "Una conexión de {{node}} no parte de ninguna rama.",
     "condition_no_rules": "La decisión {{node}} no tiene reglas.",
     "subworkflow_missing": "En {{node}} no se ha elegido ningún workflow.",
+    "contract_field_name": "{{node}}: el nombre de campo {{field}} del contrato de salida no es válido (solo letras, cifras y _).",
+    "contract_field_duplicate": "{{node}}: el contrato de salida nombra dos veces el campo {{field}}.",
     "node_duplicate": "Dos nodos tienen el mismo id ({{id}}). Elimina uno de ellos y vuelve a añadirlo.",
     "loop_unguarded": "Un bucle debe salir de una rama de una decisión o aprobación.",
     "loop_target": "Un bucle debe volver a un paso anterior.",
     "loop_overlap": "Dos bucles se solapan; los bucles solo pueden estar uno dentro de otro.",
     "loop_shared": "Un paso del bucle está conectado con un paso exterior de forma que el bucle no puede repetirlo.",
-    "loop_invalid": "Este bucle no es válido."
+    "loop_invalid": "Este bucle no es válido.",
+    "orchestrator_no_members": "{{node}} no tiene equipos entre los que elegir.",
+    "orchestrator_member_duplicate": "{{node}} nombra un equipo dos veces.",
+    "orchestrator_self": "{{node}} elegiría su propio workflow como equipo.",
+    "orchestrator_limits": "{{node}} permite a un equipo más usos que decisiones en total."
   },
   "run": {
     "failed": "El paso ha fallado.",
@@ -128,7 +134,13 @@
     "not_found": "No hay ninguna ejecución con este id.",
     "not_finished": "La ejecución aún no ha terminado.",
     "no_event_loop": "La ejecución no pudo iniciarse: necesita un bucle de eventos en marcha.",
-    "loop_exhausted": "El bucle en {{node}} se ejecutó {{max_iterations}} veces sin alcanzar su objetivo."
+    "loop_exhausted": "El bucle en {{node}} se ejecutó {{max_iterations}} veces sin alcanzar su objetivo.",
+    "time_limit": "La ejecución alcanzó su límite de tiempo de {{max_duration_s}} segundos. Los pasos en curso se cancelaron.",
+    "step_limit": "La ejecución alcanzó su límite de {{max_steps}} pasos. No se iniciaron más pasos.",
+    "output_contract": "El resultado no cumple el contrato de salida del flujo: {{fields}}.",
+    "orchestration_limit": "{{node}} tomó {{max_decisions}} decisiones sin terminar.",
+    "orchestrator_member_missing": "Un equipo de {{node}} ya no existe.",
+    "orchestrator_no_match": "Ningún equipo guardado de {{node}} tiene una de las capacidades {{capabilities}}."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -217,9 +229,19 @@
     "subworkflow_missing": "{{name}}: el workflow elegido ya no existe.",
     "subworkflow_outdated": "{{name}} usa la versión {{version}}; la versión {{latest}} es más reciente.",
     "subworkflow_version_missing": "{{name}}: la versión elegida ya no existe.",
+    "contract_text_source": "{{name}} responde en texto; entonces el contrato de salida solo se cumple con una respuesta JSON. Configura el formato de salida del agente como «Estructurado».",
+    "contract_field_missing": "Ningún agente antes del resultado entrega {{fields}}; así no se cumple el contrato de salida.",
     "unreachable": "{{name}} no se puede alcanzar desde el inicio.",
     "provider_not_configured": "{{provider}} no está configurado: introduce su URL base en los ajustes.",
-    "input_form_only": "{{name}} lee el nodo de inicio con {{input}}. Si el formulario está rellenado, solo son los valores del formulario, sin el texto adicional. Usa {{run_input}} para recibir ambos."
+    "input_form_only": "{{name}} lee el nodo de inicio con {{input}}. Si el formulario está rellenado, solo son los valores del formulario, sin el texto adicional. Usa {{run_input}} para recibir ambos.",
+    "orchestrator_member_missing": "{{name}}: un equipo elegido ya no existe.",
+    "orchestrator_cycle": "{{name}}: el equipo {{workflow}} volvería a llamar a este workflow.",
+    "orchestrator_member_invalid_one": "{{name}}: el equipo {{workflow}} tiene {{count}} error.",
+    "orchestrator_member_invalid_other": "{{name}}: el equipo {{workflow}} tiene {{count}} errores.",
+    "orchestrator_member_approval": "{{name}}: el equipo {{workflow}} se detiene para aprobaciones. Dentro de un orquestador se cancela en ese punto.",
+    "orchestrator_selected_one": "{{name}} elige {{count}} equipo por capacidad: {{teams}}.",
+    "orchestrator_selected_other": "{{name}} elige {{count}} equipos por capacidad: {{teams}}.",
+    "orchestrator_no_match": "{{name}}: ningún equipo guardado tiene una de las capacidades {{capabilities}}."
   },
   "backup": {
     "not_zip": "El archivo no es una copia de seguridad de Nodestro (no es un ZIP).",
@@ -633,5 +655,17 @@
     "url_invalid": "La dirección no es válida.",
     "vault_unavailable": "No hay un almacén seguro para tokens de acceso.",
     "write_not_supported": "Las herramientas que modifican datos siguen bloqueadas (falta la aprobación por llamada)."
+  },
+  "orchestration": {
+    "unknown_member": "Este equipo no está en el grupo.",
+    "member_limit": "Este equipo ya se eligió tantas veces como se permite.",
+    "repeated": "Este equipo ya recibió exactamente esta tarea.",
+    "decision_limit": "No quedan decisiones.",
+    "empty_task": "La tarea para el equipo estaba vacía.",
+    "task_too_long": "La tarea para el equipo era demasiado larga.",
+    "empty_answer": "La respuesta final estaba vacía.",
+    "answer_too_long": "La respuesta final era demasiado larga.",
+    "finished": "La orquestación ya había terminado.",
+    "invalid_decision": "La respuesta no era una decisión válida."
   }
 }

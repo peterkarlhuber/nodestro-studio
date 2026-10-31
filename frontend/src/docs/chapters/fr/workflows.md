@@ -134,18 +134,31 @@ Les branches parallèles raccourcissent la durée, mais coûtent autant de token
 ## Réglages du workflow {#einstellungen}
 <!-- keywords: nom, description, inspecteur, réglages du workflow -->
 
-Cliquez sur un endroit vide du canevas pour voir les réglages du workflow dans l’inspecteur : **Nom**, **Description** et **Budget par exécution**. En dessous figurent les problèmes qui empêchent le lancement et un bref aperçu des commandes.
+Cliquez sur un endroit vide du canevas pour voir les réglages du workflow dans l’inspecteur : **Nom**, **Description**, **Budget par exécution** et les **limites** d’étapes simultanées et de durée. En dessous figurent les problèmes qui empêchent le lancement et un bref aperçu des commandes.
 
 ## Budget par exécution {#budget}
-<!-- keywords: budget, limite de coût, limite, usd, dollar, arrêt, budgetexceedederror -->
+<!-- keywords: budget, limite de coût, limite, usd, dollar, arrêt, budgetexceedederror, réservation, pas de maximum strict -->
 
 Le budget limite les **coûts estimés** d’une exécution en dollars américains, pour l’ensemble des agents et des contrôles qualité.
 
 - Si le workflow n’a pas de budget propre, le **budget par défaut** des réglages s’applique (au départ 2 USD).
 - S’il n’y en a pas non plus, l’exécution est illimitée.
-- Après chaque réponse de l’API, les coûts sont additionnés. Si le budget est dépassé, l’agent en cours s’arrête (erreur `BudgetExceededError`) et aucune autre requête n’est envoyée.
+- **Avant** chaque requête, son coût maximal possible est réservé (taille de l’entrée et sortie maximale qu’elle peut produire, au tarif le plus élevé). Après la réponse, la réservation est remplacée par le coût réel. Des agents qui tournent en même temps ne peuvent donc pas dépasser le budget ensemble : si le reste ne suffit pas, une requête attend qu’une autre soit terminée.
+- Si le budget ne suffit pas même sans autres requêtes, la requête n’est pas envoyée et l’agent s’arrête (erreur `BudgetExceededError`).
+- Si une seule requête dépasse le budget entier, elle s’exécute seule en mode de prix standard ; en mode strict, elle est refusée.
 
-Comme les coûts ne sont comptés qu’après une réponse, une seule requête peut légèrement dépasser le budget. Les requêtes sans prix connu comptent pour 0.
+Les coûts inconnus ne comptent **pas** pour 0. Si le coût maximal d’une requête ne peut pas être déterminé à l’avance (aucun prix connu, images, fichiers ou outils du fournisseur comme la recherche web), elle s’exécute sans plafond en mode standard. L’exécution affiche alors à côté des coûts la mention **Pas de maximum strict** avec le nombre de ces requêtes. En mode de prix strict, les requêtes sans prix connu ne sont pas envoyées du tout.
+
+## Limites par exécution {#limits}
+<!-- keywords: limites, simultané, parallèle, limite de temps, durée, timeout, run.time_limit, étapes, run.step_limit -->
+
+Trois limites facultatives s’appliquent à chaque exécution du workflow. Vide signifie : aucune limite.
+
+- **Nombre maximal d’étapes simultanées** (de 1 à 32) : si davantage d’étapes sont prêtes, les autres attendent une place libre. Avec 1, toutes les étapes s’exécutent l’une après l’autre.
+- **Limite de temps par exécution** (en minutes, 7 jours au plus) : seul le temps d’exécution actif compte. L’attente d’une approbation ne compte pas. Lorsque le temps est écoulé, aucune autre étape ne démarre, les agents en cours sont invités à s’arrêter et l’exécution échoue avec une erreur qui indique la limite de temps.
+- **Nombre maximal d’étapes par exécution** (de 1 à 10 000) : chaque nœud exécuté compte une fois, début et résultat compris, et chaque tour de boucle compte à nouveau. Si l’étape suivante était de trop, elle ne démarre pas et l’exécution échoue avec une erreur qui indique la limite. Cela protège contre les boucles qui font plus de tours que prévu. Une exécution poursuivie compte aussi les étapes qu’elle reprend.
+
+Une requête au modèle ou un appel d’outil déjà en cours est mené à son terme. L’exécution peut donc dépasser la limite de temps de la durée de cet appel.
 
 ## Vérification avant le lancement {#pruefung}
 <!-- keywords: vérification, validation, problèmes, lancement bloqué, erreur, avertissement, remarque -->

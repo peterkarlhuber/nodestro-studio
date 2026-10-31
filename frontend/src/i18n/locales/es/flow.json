@@ -73,7 +73,10 @@
     "inputHint": "Lo que recibe el subflujo como entrada. {{input}} es lo que llega aquí.",
     "values": "Valores para su formulario de entrada",
     "valuesHint": "Texto o marcadores como {{formExample}} o {{agentExample}}.",
-    "costs": "El coste y los tokens del subflujo cuentan una sola vez, en la ejecución de este workflow."
+    "costs": "El coste y los tokens del subflujo cuentan una sola vez, en la ejecución de este workflow.",
+    "delivers": "Entrega: {{fields}}.",
+    "noContract": "Sin contrato de salida: el resultado llega tal como lo produce el flujo.",
+    "open": "Abrir flujo (o doble clic en el nodo)"
   },
   "form": {
     "title": "Formulario de entrada",
@@ -146,6 +149,12 @@
     "download": "Descargar {{name}}",
     "delete": "Eliminar {{name}}"
   },
+  "contract": {
+    "title": "Contrato de salida",
+    "hint": "El flujo promete estos campos como resultado. Al final se comprueba que el resultado los contiene; los demás campos se omiten. Un flujo superior puede confiar en ellos.",
+    "none": "Sin contrato, el flujo transmite su resultado sin cambios. Con un contrato, entrega como equipo un objeto comprobado con campos fijos.",
+    "add": "Crear contrato"
+  },
   "run": {
     "branches": "Ramas elegidas: {{names}}",
     "fallback": "Rama «si no», porque:",
@@ -217,5 +226,43 @@
     "confirmHint": "Estos pasos ya habían llamado a herramientas. Comprueba si una segunda llamada provoca algo dos veces (p. ej. un mensaje).",
     "continue": "Continuar",
     "restart": "Empezar de cero"
+  },
+  "orchestrator": {
+    "text": "Un modelo de IA decide paso a paso qué equipo recibe qué tarea y termina con una respuesta.",
+    "teams": "Equipos",
+    "teamsHint": "Los workflows entre los que el modelo puede elegir (como máximo {{max}}). Las capacidades y los contratos de salida le ayudan a elegir.",
+    "noTeams": "Todavía no hay equipos. Añade al menos uno.",
+    "addTeam": "Añadir un equipo…",
+    "removeTeam": "Quitar {{name}}",
+    "delivers": "Entrega: {{fields}}",
+    "task": "Tarea",
+    "taskHint": "Lo que el orquestador debe resolver; {{input}} es la entrada de este paso.",
+    "instructions": "Instrucciones",
+    "instructionsHint": "Opcional: cómo planificar, por ejemplo a qué equipo preguntar primero o cuándo está resuelta la tarea.",
+    "model": "Modelo",
+    "maxDecisions": "Máximo de decisiones",
+    "maxDecisionsHint": "Cada delegación y la respuesta final cuentan como una decisión (de 1 a {{max}}). Si para entonces no hay respuesta, el paso falla.",
+    "maxPerTeam": "Máximo por equipo",
+    "maxPerTeamHint": "Cuántas veces se puede elegir un mismo equipo. Vacío: sin límite propio.",
+    "safety": "El orquestador solo elige entre estos equipos. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo se ejecuta como una ejecución vinculada propia, con su parte del presupuesto, sus límites y sus aprobaciones. Los equipos que se detienen para una aprobación aún no son compatibles.",
+    "run": {
+      "delegated": "Delegado a {{team}}",
+      "finished": "Terminado con una respuesta",
+      "invalid": "Ninguna decisión válida",
+      "refused": "Rechazada",
+      "teamFailed": "El equipo falló",
+      "reason": "Motivo",
+      "task": "Tarea",
+      "summary": "Decisiones: {{decisions}} · delegaciones: {{delegations}}",
+      "openTeam": "Abrir la ejecución del equipo",
+      "matched": "elegido por capacidad: {{tags}}"
+    },
+    "select": "Equipos por capacidad",
+    "selectHint": "Los equipos guardados con una de estas capacidades entran en el grupo al iniciar una ejecución (como máximo 10 etiquetas). Primero la mejor coincidencia; los equipos con errores o pasos de aprobación quedan fuera.",
+    "selectPlaceholder": "p. ej. investigación y Enter",
+    "maxTeams": "Como máximo tantos equipos",
+    "selectPreview_one": "Coinciden ahora: {{teams}} (toma {{count}})",
+    "selectPreview_other": "Coinciden ahora: {{teams}} (toma hasta {{count}})",
+    "selectNone": "Todavía ningún equipo guardado tiene una de estas capacidades."
   }
 }

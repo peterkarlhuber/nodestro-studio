@@ -103,9 +103,39 @@ Un **sotto-workflow** esegue un altro workflow salvato come un unico passaggio. 
 - **Versione:** *Ultima versione* usa lo stato attuale; una versione fissa non cambia se l'altro workflow viene modificato in seguito. Il controllo segnala quando esiste una versione più recente.
 - **Input:** cosa riceve il sotto-workflow come input; `{{input}}` è ciò che arriva qui.
 - **Valori per il suo modulo di input:** testo o segnaposto come `{{form.cliente}}` o `{{Analisi}}`. Il controllo segnala i campi obbligatori senza valore.
-- Il sotto-workflow gira come **esecuzione propria e collegata**; un link nei dettagli porta lì. Costi e token contano una sola volta, nel budget dell'esecuzione principale.
+- Il sotto-workflow gira come **esecuzione propria e collegata**; un link nei dettagli porta lì. Costi e token contano una sola volta, nel budget dell'esecuzione principale. Se il sotto-workflow ha un budget proprio, vale anche questo limite più stretto.
 - Un workflow non può chiamare sé stesso, nemmeno indirettamente; non sono ammessi più di cinque livelli.
 - Se il sotto-workflow attende un'approvazione, anche l'esecuzione principale attende.
+
+## Team {#teams}
+<!-- keywords: team, contratto di output, contratto, capacità, risultato strutturato, run.output_contract -->
+
+Un **team** è un workflow che, eseguito come sotto-workflow, promette un risultato fisso. Due impostazioni rendono un workflow un team:
+
+- **Contratto di output** sul nodo del risultato: i campi (nome, tipo, obbligatorio) che il workflow consegna, come nel risultato strutturato di un agente. Alla fine di un'esecuzione il risultato viene verificato. Deve essere un oggetto (o testo JSON di un oggetto) con ogni campo obbligatorio nel tipo giusto. Gli altri campi vengono omessi. Se il risultato non corrisponde, il nodo del risultato fallisce e con esso l'esecuzione; un workflow superiore non riceve mai un risultato non verificato.
+- **Capacità come team** nelle impostazioni del workflow: brevi parole chiave su cosa sa fare il workflow (al massimo 20). Viaggiano con il workflow (versioni, esportazione) e in seguito aiutano a trovare un team adatto. Non concedono permessi.
+
+In un workflow superiore, un workflow con contratto di output consegna un oggetto con esattamente questi campi. Una decisione successiva può quindi verificare direttamente un campo, ad esempio `score` maggiore o uguale a 5.
+
+La verifica prima dell'avvio avvisa quando un agente prima del risultato risponde in testo (allora serve solo una risposta JSON) o quando nessun agente fornisce un campo obbligatorio. Nomi di campo non validi o ripetuti impediscono l'avvio.
+
+I workflow con contratto di output o capacità compaiono nella palette sotto **Team** e si possono inserire direttamente come sotto-workflow. L'ispettore di un sotto-workflow mostra cosa consegna il team. Un **doppio clic** sul nodo apre il team nell'editor; il percorso di navigazione in alto riporta al workflow superiore.
+
+Un team si può verificare da solo: crea una [serie di test](/docs/automatisierung#testreihen) per il workflow. I suoi controlli possono usare i campi del contratto di output, ad esempio `score` maggiore o uguale a 5.
+
+## Orchestratore {#orchestrator}
+<!-- keywords: orchestratore, orchestrazione, delegare, gruppo, team, decisioni, run.orchestration_limit -->
+
+Un **orchestratore** lascia decidere a un modello di IA quale team riceve quale parte del compito. Prende una decisione dopo l’altra: **delegare** un compito a un team oppure **concludere** con una risposta. La risposta è il risultato del nodo.
+
+- **Team:** i workflow salvati tra cui il modello può scegliere (al massimo 20). Di ogni team il modello vede solo nome, descrizione, capacità e contratto di output.
+- **Team per capacità:** invece di scegliere ogni team, indichi delle capacità (al massimo 10). All’avvio di un’esecuzione i team salvati con una capacità corrispondente entrano nel gruppo (fino a *Al massimo tanti team*): prima quelli con più tag corrispondenti, poi per nome. I team con errori o passaggi di approvazione restano fuori. La selezione resta fissa per quell’esecuzione (e per una versione pubblicata); i dettagli mostrano quali tag ha trovato ogni team. Non si assegnano punteggi né stime.
+- **Compito** e **Istruzioni:** cosa va fatto e, facoltativamente, come pianificarlo.
+- **Numero massimo di decisioni** (da 1 a 50, predefinito 8) e **Massimo per team:** senza risposta dopo l’ultima decisione, il passaggio fallisce.
+
+L’orchestratore sceglie soltanto. Non ha strumenti, non crea agenti, strumenti o team e non ha autorizzazioni proprie. Ogni team scelto viene eseguito come **esecuzione collegata a sé**, con la sua quota di budget, i suoi limiti e le sue approvazioni degli strumenti. Le decisioni non consentite (un team sconosciuto, lo stesso compito di nuovo, un team esaurito) vengono rifiutate e mostrate al modello; contano comunque come decisione.
+
+I dettagli dell’esecuzione elencano ogni decisione con motivo, compito, risultato e un link all’esecuzione del team. I team che si fermano per un’approvazione non sono ancora supportati in un orchestratore: vengono annullati in quel punto, e il controllo prima dell’avvio lo segnala. Un team non può richiamare il workflow dell’orchestratore.
 
 ## Moduli di input {#eingabeformular}
 <!-- keywords: modulo, modulo di input, campi, tipo, obbligatorio, valore predefinito, scelta, data, numero, form -->

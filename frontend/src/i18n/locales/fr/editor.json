@@ -33,7 +33,8 @@
     "condition": "Décision",
     "approval": "Validation",
     "subworkflow": "Sous-workflow",
-    "branchPort": "Sortie de la branche {{name}}"
+    "branchPort": "Sortie de la branche {{name}}",
+    "orchestrator": "Orchestrateur"
   },
   "canvas": {
     "unsaved": "Modifications non enregistrées",
@@ -63,7 +64,10 @@
     "flow": "Piloter le déroulement",
     "conditionHint": "Bifurque selon des règles, sans requête IA",
     "approvalHint": "S’arrête pour une vérification humaine",
-    "subworkflowHint": "Exécute un autre workflow comme une étape"
+    "subworkflowHint": "Exécute un autre workflow comme une étape",
+    "teams": "Équipes",
+    "teamDelivers": "livre {{fields}}",
+    "orchestratorHint": "Un modèle d’IA répartit la tâche entre des équipes"
   },
   "inspector": {
     "agent": "Configurer l’agent",
@@ -80,6 +84,15 @@
     "selectNode": "Sélectionnez un nœud pour le configurer.",
     "budget": "Budget par exécution (USD)",
     "budgetHint": "Laisser vide pour utiliser le budget par défaut des réglages.",
+    "maxParallel": "Nombre maximal d’étapes simultanées",
+    "maxParallelHint": "De 1 à {{max}}. Les autres étapes prêtes attendent une place libre. Vide = aucune limite.",
+    "timeLimit": "Limite de temps par exécution (minutes)",
+    "timeLimitHint": "Durée d’exécution active ; l’attente des validations ne compte pas. Vide = aucune limite.",
+    "maxSteps": "Nombre maximal d’étapes par exécution",
+    "maxStepsHint": "De 1 à {{max}}. Chaque nœud exécuté compte, chaque tour de boucle aussi. Vide = aucune limite.",
+    "capabilities": "Capacités en tant qu’équipe",
+    "capabilitiesHint": "Mots-clés courts sur ce que ce workflow sait faire en équipe, p. ex. « recherche ». Une virgule ou Entrée en ajoute un, {{max}} au plus. Ils n’accordent aucun droit.",
+    "capabilitiesPlaceholder": "p. ex. recherche, traduction",
     "problems": "À régler avant le démarrage :",
     "problemsLabel": "Problèmes",
     "controls": "Utilisation",
@@ -198,5 +211,13 @@
     "make": "En faire une boucle",
     "round": "Tour {{n}}",
     "rounds": "Tours"
+  },
+  "orchestrator": {
+    "teams_one": "{{count}} équipe",
+    "teams_other": "{{count}} équipes",
+    "noTeams": "Aucune équipe choisie",
+    "decisions_one": "max. {{count}} décision",
+    "decisions_other": "max. {{count}} décisions",
+    "byCapability": "par capacité : {{tags}}"
   }
 }

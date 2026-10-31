@@ -33,7 +33,8 @@
     "condition": "Decisão",
     "approval": "Aprovação",
     "subworkflow": "Subworkflow",
-    "branchPort": "Saída do ramo {{name}}"
+    "branchPort": "Saída do ramo {{name}}",
+    "orchestrator": "Orquestrador"
   },
   "canvas": {
     "unsaved": "Alterações não salvas",
@@ -63,7 +64,10 @@
     "flow": "Controlar o fluxo",
     "conditionHint": "Ramifica por regras, sem solicitação à IA",
     "approvalHint": "Pausa para uma revisão humana",
-    "subworkflowHint": "Executa outro workflow como uma etapa"
+    "subworkflowHint": "Executa outro workflow como uma etapa",
+    "teams": "Equipes",
+    "teamDelivers": "entrega {{fields}}",
+    "orchestratorHint": "Um modelo de IA distribui a tarefa entre equipes"
   },
   "inspector": {
     "agent": "Configurar agente",
@@ -80,6 +84,15 @@
     "selectNode": "Selecione um nó para configurá-lo.",
     "budget": "Orçamento por execução (USD)",
     "budgetHint": "Deixe vazio para usar o orçamento padrão das configurações.",
+    "maxParallel": "Máximo de etapas executando ao mesmo tempo",
+    "maxParallelHint": "De 1 a {{max}}. As demais etapas prontas aguardam uma vaga livre. Vazio = sem limite.",
+    "timeLimit": "Limite de tempo por execução (minutos)",
+    "timeLimitHint": "Tempo de execução ativo; a espera por aprovações não conta. Vazio = sem limite.",
+    "maxSteps": "Máximo de etapas por execução",
+    "maxStepsHint": "De 1 a {{max}}. Cada nó executado conta, também cada rodada de um loop. Vazio = sem limite.",
+    "capabilities": "Capacidades como equipe",
+    "capabilitiesHint": "Palavras-chave curtas sobre o que este fluxo faz como equipe, por exemplo “pesquisa”. Vírgula ou Enter adiciona uma, no máximo {{max}}. Elas não concedem permissões.",
+    "capabilitiesPlaceholder": "por exemplo pesquisa, tradução",
     "problems": "A resolver antes de iniciar:",
     "problemsLabel": "Problemas",
     "controls": "Como usar",
@@ -198,5 +211,13 @@
     "make": "Transformar em laço",
     "round": "Rodada {{n}}",
     "rounds": "Rodadas"
+  },
+  "orchestrator": {
+    "teams_one": "{{count}} equipe",
+    "teams_other": "{{count}} equipes",
+    "noTeams": "Nenhuma equipe escolhida",
+    "decisions_one": "máx. {{count}} decisão",
+    "decisions_other": "máx. {{count}} decisões",
+    "byCapability": "por capacidade: {{tags}}"
   }
 }

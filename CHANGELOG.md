@@ -2,6 +2,56 @@
 
 ## Unreleased
 
+### Platform pins: runtime 40e04b4, api e8eacd4, sdk 38082cc (Adaptive Orchestration M3–M5, 2026-10-31)
+
+- Pins `nodestro-runtime` `40e04b4` (output contracts, capabilities, orchestrator node, pool selection, stdio MCP
+  servers), `nodestro-examples` `df458e8`, `nodestro-integrations` `2c01744`, `nodestro-api` `e8eacd4` and, in
+  `platform/versions.json`, `nodestro-sdk` `38082cc` and `orkexa` `b91d0b7` (the orchestration protocol, ADR 0010).
+  The products section (frozen release candidate) is unchanged.
+- The editor work below (limits, teams, orchestrator, selection by capability) runs against these pins; checked in
+  the browser with an orchestrator run that selected its team by capability.
+
+### Orchestrator node (Adaptive Orchestration M4, 2026-10-31)
+
+- New node *Orchestrator* in the palette (runtime M4): an AI model delegates the task step by step to teams of its
+  pool and finishes with an answer. The inspector edits the teams (with their capabilities and output contract),
+  the task, the instructions, the model and the limits (maximum decisions, maximum per team) and says what the
+  orchestrator may not do (no tools, nothing created, no permissions of its own).
+- Teams by capability (runtime M5, `select`): the inspector edits the capabilities and the maximum number of
+  teams and previews which saved teams match now; the run details show the pool with the tags each team matched.
+- Run details show every decision with its reason, task, verdict (refusals in the interface language), the team's
+  result and a link to the team's run.
+- Texts in six languages: `flow.orchestrator.*`, `errors.orchestration.*`, `workflow.orchestrator_*`,
+  `check.orchestrator_*`, `run.orchestration_limit`, `run.orchestrator_member_missing`; docs section
+  `verzweigungen#orchestrator` in six languages.
+
+### Teams: output contracts and capabilities (Adaptive Orchestration M3, 2026-10-31)
+
+- Result node: new *Output contract* (runtime #49) with the same field editor as an agent's structured output (now
+  the shared `OutputFieldsEditor`). The result files editor keeps the contract when it changes files.
+- Teams in the editor: the palette lists workflows with an output contract or capabilities under *Teams*
+  (`WorkflowSummary.capabilities`/`contract`, api) and adds them as a preset sub-workflow node. A double-click on a
+  sub-workflow node opens that workflow; the breadcrumbs keep the way back (`?trail=`). The sub-workflow inspector
+  shows what the team delivers and can do.
+- Workflow settings: *Capabilities as a team*, short tags (at most 20, 40 characters each) saved as
+  `capabilities`; part of undo and of the unsaved-changes check.
+- Error and check texts ×6 for `run.output_contract`, `workflow.contract_field_name`,
+  `workflow.contract_field_duplicate`, `check.contract_text_source` and `check.contract_field_missing`; help tips
+  `workflow.contract` and `workflow.capabilities`. Docs ×6: new section *Branches → Teams* (`verzweigungen#teams`);
+  the sub-workflow section now says that a sub-workflow's own budget applies as well.
+
+### Run limits and budget reservations (Adaptive Orchestration M2, 2026-10-31)
+
+- Workflow settings: *Most steps running at the same time* (1 to 32) and *Time limit per run* (minutes, at most
+  7 days) and *Most steps per run* (1 to 10,000, every loop round counts) in the inspector, saved as `limits`
+  (runtime #45, #48). Empty fields mean no limit. Help tip `workflow.limits`.
+- Run details: the cost figure shows the run's budget and, when requests ran without a known upper bound (unknown
+  price, images, files or provider tools), the hint *no hard maximum* with their number (runtime #43,
+  `Usage.uncapped_requests`, `Run.budget_hard_maximum`).
+- Error texts ×6 for `run.time_limit` and `run.step_limit`. Docs ×6: *Workflows → Budget per run* now describes reservations before each
+  request and that unknown costs never count as 0; new section *Limits per run* (`workflows#limits`), including the
+  limitation that a request or tool call that is already running still finishes.
+
 ### Rules for tool calls: exceptions, approvals in advance, audit trail (Evolution S-2d, 2026-10-31)
 
 - New section **Approvals > Rules for tool calls** (`runs/ToolApprovalRules.tsx`):

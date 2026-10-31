@@ -103,9 +103,39 @@ Um **subworkflow** executa outro fluxo de trabalho salvo como uma única etapa. 
 - **Versão:** *Versão mais recente* usa o estado atual; uma versão fixa não muda quando o outro fluxo é editado depois. A verificação avisa quando existe uma versão mais nova.
 - **Entrada:** o que o subworkflow recebe como entrada; `{{input}}` é o que chega aqui.
 - **Valores para o formulário de entrada dele:** texto ou marcadores como `{{form.cliente}}` ou `{{Análise}}`. A verificação avisa sobre campos obrigatórios sem valor.
-- O subworkflow roda como uma **execução própria e vinculada**; um link nos detalhes leva até ela. Custos e tokens contam uma única vez, no orçamento da execução principal.
+- O subworkflow roda como uma **execução própria e vinculada**; um link nos detalhes leva até ela. Custos e tokens contam uma única vez, no orçamento da execução principal. Se o subworkflow tiver orçamento próprio, esse limite mais estreito também vale.
 - Um fluxo não pode chamar a si mesmo, nem indiretamente; mais de cinco níveis não são permitidos.
 - Se o subworkflow espera uma aprovação, a execução principal espera junto.
+
+## Equipes {#teams}
+<!-- keywords: equipe, contrato de saída, contrato, capacidades, resultado estruturado, run.output_contract -->
+
+Uma **equipe** é um fluxo que, executado como subworkflow, promete um resultado fixo. Duas configurações tornam um fluxo uma equipe:
+
+- **Contrato de saída** no nó de resultado: os campos (nome, tipo, obrigatório) que o fluxo entrega, como no resultado estruturado de um agente. No fim de uma execução, o resultado é verificado. Ele deve ser um objeto (ou texto JSON de um objeto) com cada campo obrigatório no tipo certo. Os outros campos são omitidos. Se o resultado não se encaixar, o nó de resultado falha e a execução com ele; um fluxo superior nunca recebe um resultado não verificado.
+- **Capacidades como equipe** nas configurações do fluxo: palavras-chave curtas sobre o que o fluxo faz (no máximo 20). Elas acompanham o fluxo (versões, exportação) e depois ajudam a encontrar uma equipe adequada. Não concedem permissões.
+
+Em um fluxo superior, um fluxo com contrato de saída entrega um objeto com exatamente esses campos. Por isso, uma decisão depois dele pode verificar um campo diretamente, por exemplo `score` maior ou igual a 5.
+
+A verificação antes de iniciar avisa quando um agente antes do resultado responde em texto (então só uma resposta JSON ajuda) ou quando nenhum agente entrega um campo obrigatório. Nomes de campo inválidos ou repetidos impedem o início.
+
+Fluxos com contrato de saída ou capacidades aparecem na paleta em **Equipes** e podem ser adicionados diretamente como subworkflow. O inspetor de um subworkflow mostra o que a equipe entrega. Um **clique duplo** no nó abre a equipe no editor; a trilha de navegação no topo leva de volta ao fluxo superior.
+
+Uma equipe pode ser testada sozinha: crie uma [série de testes](/docs/automatisierung#testreihen) para o fluxo. Suas verificações podem usar os campos do contrato de saída, por exemplo `score` maior ou igual a 5.
+
+## Orquestrador {#orchestrator}
+<!-- keywords: orquestrador, orquestração, delegar, grupo, equipes, decisões, run.orchestration_limit -->
+
+Um **orquestrador** deixa um modelo de IA decidir qual equipe recebe qual parte da tarefa. Ele toma uma decisão após a outra: **delegar** uma tarefa a uma equipe ou **concluir** com uma resposta. A resposta é o resultado do nó.
+
+- **Equipes:** os workflows salvos entre os quais o modelo pode escolher (no máximo 20). De cada equipe, o modelo vê apenas nome, descrição, capacidades e contrato de saída.
+- **Equipes por capacidade:** em vez de escolher cada equipe, você cita capacidades (no máximo 10). Quando uma execução começa, equipes salvas com uma capacidade correspondente entram no grupo (até *No máximo tantas equipes*): primeiro as com mais tags correspondentes, depois pelo nome. Equipes com erros ou etapas de aprovação ficam de fora. A seleção fica fixa para essa execução (e para uma versão publicada); os detalhes mostram quais tags cada equipe atendeu. Nada é pontuado nem estimado.
+- **Tarefa** e **Instruções:** o que deve ser feito e, opcionalmente, como planejar.
+- **Máximo de decisões** (de 1 a 50, padrão 8) e **Máximo por equipe:** sem resposta após a última decisão, a etapa falha.
+
+O orquestrador apenas escolhe. Ele não tem ferramentas, não cria agentes, ferramentas nem equipes e não tem permissões próprias. Cada equipe escolhida roda como uma **execução vinculada própria**, com sua parte do orçamento, seus limites e suas aprovações de ferramentas. Decisões não permitidas (uma equipe desconhecida, a mesma tarefa de novo, uma equipe esgotada) são recusadas e mostradas ao modelo; mesmo assim contam como decisão.
+
+Os detalhes da execução listam cada decisão com motivo, tarefa, resultado e um link para a execução da equipe. Equipes que param para uma aprovação ainda não são compatíveis dentro de um orquestrador: elas são canceladas nesse ponto, e a verificação antes do início avisa sobre isso. Uma equipe não pode chamar de novo o workflow do orquestrador.
 
 ## Formulários de entrada {#eingabeformular}
 <!-- keywords: formulário, formulário de entrada, campos, tipo, obrigatório, valor padrão, opção, data, número -->

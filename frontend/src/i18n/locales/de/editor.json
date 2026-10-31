@@ -33,7 +33,8 @@
     "condition": "Entscheidung",
     "approval": "Freigabe",
     "subworkflow": "Unterworkflow",
-    "branchPort": "Ausgang des Zweigs {{name}}"
+    "branchPort": "Ausgang des Zweigs {{name}}",
+    "orchestrator": "Orchestrator"
   },
   "canvas": {
     "unsaved": "Ungespeicherte Änderungen",
@@ -63,7 +64,10 @@
     "flow": "Ablauf steuern",
     "conditionHint": "Verzweigt nach Regeln, ohne KI-Anfrage",
     "approvalHint": "Pausiert für eine menschliche Prüfung",
-    "subworkflowHint": "Führt einen anderen Workflow als Schritt aus"
+    "subworkflowHint": "Führt einen anderen Workflow als Schritt aus",
+    "teams": "Teams",
+    "teamDelivers": "liefert {{fields}}",
+    "orchestratorHint": "Ein KI-Modell verteilt die Aufgabe an Teams"
   },
   "inspector": {
     "agent": "Agent konfigurieren",
@@ -80,6 +84,15 @@
     "selectNode": "Wähle einen Knoten, um ihn zu konfigurieren.",
     "budget": "Budget pro Lauf (USD)",
     "budgetHint": "Leer lassen für das Standardbudget aus den Einstellungen.",
+    "maxParallel": "Höchstens gleichzeitig laufende Schritte",
+    "maxParallelHint": "1 bis {{max}}. Weitere bereite Schritte warten auf einen freien Platz. Leer = keine Grenze.",
+    "timeLimit": "Zeitlimit pro Lauf (Minuten)",
+    "timeLimitHint": "Aktive Laufzeit; Warten auf Freigaben zählt nicht. Leer = kein Limit.",
+    "maxSteps": "Höchstens Schritte pro Lauf",
+    "maxStepsHint": "1 bis {{max}}. Jeder ausgeführte Knoten zählt, auch jede Runde einer Schleife. Leer = keine Grenze.",
+    "capabilities": "Fähigkeiten als Team",
+    "capabilitiesHint": "Kurze Stichworte, was dieser Workflow als Team kann, z. B. „Recherche“. Komma oder Enter fügt hinzu, höchstens {{max}}. Sie vergeben keine Rechte.",
+    "capabilitiesPlaceholder": "z. B. Recherche, Übersetzung",
     "problems": "Vor dem Start zu klären:",
     "problemsLabel": "Probleme",
     "controls": "Bedienung",
@@ -198,5 +211,13 @@
     "make": "Zur Schleife machen",
     "round": "Runde {{n}}",
     "rounds": "Runden"
+  },
+  "orchestrator": {
+    "teams_one": "{{count}} Team",
+    "teams_other": "{{count}} Teams",
+    "noTeams": "Keine Teams gewählt",
+    "decisions_one": "max. {{count}} Entscheidung",
+    "decisions_other": "max. {{count}} Entscheidungen",
+    "byCapability": "nach Fähigkeit: {{tags}}"
   }
 }

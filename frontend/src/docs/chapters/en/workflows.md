@@ -134,18 +134,31 @@ Parallel branches shorten the run time but cost as many tokens as agents run one
 ## Workflow settings {#einstellungen}
 <!-- keywords: name, description, inspector, workflow settings -->
 
-Click an empty spot on the canvas to see the workflow settings in the inspector: **Name**, **Description** and **Budget per run**. Below them are the problems that prevent a start and a short overview of the controls.
+Click an empty spot on the canvas to see the workflow settings in the inspector: **Name**, **Description**, **Budget per run** and the **limits** for steps running at the same time and for the run time. Below them are the problems that prevent a start and a short overview of the controls.
 
 ## Budget per run {#budget}
-<!-- keywords: budget, cost limit, limit, usd, dollar, abort, budgetexceedederror -->
+<!-- keywords: budget, cost limit, limit, usd, dollar, abort, budgetexceedederror, reservation, no hard maximum -->
 
 The budget limits the **estimated costs** of a run in US dollars, across all agents and quality checks.
 
 - If the workflow has no budget of its own, the **default budget** from the settings applies (initially 2 USD).
 - If nothing is set there either, the run is unlimited.
-- After every API response, the costs are added up. If the budget is exceeded, the running agent stops (error `BudgetExceededError`) and no further requests are made.
+- **Before** every request, its highest possible cost is reserved (input size and the most output it may produce, at the most expensive rate). After the response, the reservation is replaced by the real cost. Agents running at the same time therefore cannot exceed the budget together: if the rest is not enough, a request waits until another one is finished.
+- If the budget is not enough even without other requests, the request is not sent and the agent stops (error `BudgetExceededError`).
+- If a single request is larger than the whole budget, it runs alone in the standard price mode; in strict price mode it is refused.
 
-Because costs are only counted after a response, a single request can exceed the budget slightly. Requests without a known price count as 0.
+Unknown costs do **not** count as 0. If the highest cost of a request cannot be determined in advance (no known price, images, files, or provider tools such as web search), it runs without an upper bound in standard mode. The run then shows the note **No hard maximum** next to its costs, with the number of such requests. In strict price mode, requests without a known price are not sent at all.
+
+## Limits per run {#limits}
+<!-- keywords: limits, at the same time, parallel, time limit, run time, timeout, duration, run.time_limit, steps, run.step_limit -->
+
+Three optional limits apply to every run of the workflow. Empty means no limit.
+
+- **Most steps running at the same time** (1 to 32): if more steps are ready, the others wait for a free slot. With 1, all steps run one after another.
+- **Time limit per run** (in minutes, at most 7 days): only active execution time counts. Waiting for an approval does not count. When the time is up, no further step starts, running agents are asked to stop, and the run fails with an error that names the time limit.
+- **Most steps per run** (1 to 10,000): every executed node counts once, start and result included, and every round of a loop counts again. If the next step would be one too many, it does not start and the run fails with an error that names the limit. This protects against loops that run more rounds than intended. A continued run counts the steps it takes over.
+
+A model request or tool call that is already running is still finished. The run can therefore exceed the time limit by the length of that call.
 
 ## Check before starting {#pruefung}
 <!-- keywords: check, validation, problems, start blocked, error, warning, note -->
