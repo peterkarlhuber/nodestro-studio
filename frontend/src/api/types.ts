@@ -235,12 +235,26 @@ export interface EdgeLoop {
 
 export const MAX_LOOP_ITERATIONS = 20;
 
+/** Execution limits of a workflow's runs; null: no limit of this kind. */
+export interface WorkflowLimits {
+  /** Most steps of a run executing at the same time (1 to MAX_PARALLEL_LIMIT). */
+  max_parallel: number | null;
+  /** Longest active execution time of a run in seconds; waiting for approvals does not count. */
+  max_duration_s: number | null;
+}
+
+export const MAX_PARALLEL_LIMIT = 32;
+export const MAX_DURATION_LIMIT_S = 7 * 24 * 3600;
+export const NO_LIMITS: WorkflowLimits = { max_parallel: null, max_duration_s: null };
+
 export interface WorkflowIn {
   name: string;
   description: string;
   nodes: WorkflowNode[];
   edges: WorkflowEdge[];
   budget_usd: number | null;
+  /** Missing in workflows of earlier versions (no limits). */
+  limits?: WorkflowLimits;
 }
 
 export interface Workflow extends WorkflowIn {
@@ -287,6 +301,8 @@ export interface Usage {
   pricing_versions?: string[];
   pricing_sources?: string[];
   pricing_quality?: string | null;
+  /** Requests a budget admitted without capping their cost (no price, native tools, images, or too large). */
+  uncapped_requests?: number;
 }
 
 export interface ToolCallRecord {
@@ -408,6 +424,12 @@ export interface Run extends RunOrigin {
   output: unknown;
   nodes: Record<string, NodeRun>;
   usage: Usage;
+  /** The budget the run started with (null: no limit, or a run of an earlier version). */
+  budget_usd?: number | null;
+  /** Whether the budget capped every request in advance; null without a budget. */
+  budget_hard_maximum?: boolean | null;
+  /** Active execution time in seconds (waiting for approvals not included). */
+  active_seconds?: number;
   created_at: string;
   started_at: string | null;
   finished_at: string | null;

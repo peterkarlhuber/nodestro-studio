@@ -1,6 +1,7 @@
 {
   "workflow": {
-    "budget": "Höchstbetrag in US-Dollar für einen Lauf. Sind die geschätzten Kosten überschritten, bricht der Lauf bei der nächsten Anfrage ab. Leer = Standardbudget aus den Einstellungen.",
+    "budget": "Höchstbetrag in US-Dollar für einen Lauf. Jede Anfrage reserviert vorab ihre höchstmöglichen Kosten, sodass parallele Schritte das Budget nicht gemeinsam überschreiten. Leer = Standardbudget aus den Einstellungen.",
+    "limits": "Begrenzt, wie viele Schritte eines Laufs gleichzeitig arbeiten und wie lange ein Lauf aktiv arbeiten darf. Beim Zeitlimit werden laufende Schritte abgebrochen; eine bereits gesendete Anfrage läuft noch zu Ende.",
     "problems": "Diese Punkte verhindern den Start. Sie werden bei jeder Änderung neu geprüft.",
     "import": "Lädt eine exportierte Workflow-Datei (.nodestro.json) als neue Kopie. Vorhandene Workflows bleiben unverändert.",
     "export": "Speichert den Workflow mit allen Agenten-Einstellungen als JSON-Datei. Wissensdateien, Memory und eigene Tools sind nicht enthalten.",

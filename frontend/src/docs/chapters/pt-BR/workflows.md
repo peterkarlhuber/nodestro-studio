@@ -134,18 +134,30 @@ Ramos paralelos encurtam o tempo de execução, mas custam a mesma quantidade de
 ## Configurações do fluxo de trabalho {#einstellungen}
 <!-- keywords: nome, descrição, inspetor, configurações do fluxo de trabalho -->
 
-Clique em um ponto vazio da tela para ver no inspetor as configurações do fluxo de trabalho: **Nome**, **Descrição** e **Orçamento por execução**. Abaixo aparecem os problemas que impedem o início e um resumo rápido dos controles.
+Clique em um ponto vazio da tela para ver no inspetor as configurações do fluxo de trabalho: **Nome**, **Descrição**, **Orçamento por execução** e os **limites** de etapas simultâneas e de duração. Abaixo aparecem os problemas que impedem o início e um resumo rápido dos controles.
 
 ## Orçamento por execução {#budget}
-<!-- keywords: orçamento, budget, limite de custo, limite, usd, dólar, interrupção, budgetexceedederror -->
+<!-- keywords: orçamento, budget, limite de custo, limite, usd, dólar, interrupção, budgetexceedederror, reserva, sem máximo rígido -->
 
 O orçamento limita os **custos estimados** de uma execução em dólares americanos, somando todos os agentes e controles de qualidade.
 
 - Se o fluxo não tiver orçamento próprio, vale o **orçamento padrão** das configurações (inicialmente 2 USD).
 - Se também não houver nada lá, a execução não tem limite.
-- Após cada resposta da API, os custos são somados. Se o orçamento for ultrapassado, o agente em andamento para (erro `BudgetExceededError`) e nenhuma outra solicitação é feita.
+- **Antes** de cada solicitação, seu custo máximo possível é reservado (tamanho da entrada e a saída máxima que ela pode gerar, na tarifa mais cara). Depois da resposta, a reserva é substituída pelo custo real. Assim, agentes executando ao mesmo tempo não conseguem ultrapassar o orçamento juntos: se o restante não bastar, uma solicitação espera até que outra termine.
+- Se o orçamento não bastar nem sem outras solicitações, a solicitação não é enviada e o agente para (erro `BudgetExceededError`).
+- Se uma única solicitação for maior que o orçamento inteiro, ela é executada sozinha no modo de preço padrão; no modo estrito, é recusada.
 
-Como os custos só são contados depois de uma resposta, uma única solicitação pode ultrapassar um pouco o orçamento. Solicitações sem preço conhecido contam como 0.
+Custos desconhecidos **não** contam como 0. Se o custo máximo de uma solicitação não puder ser determinado com antecedência (sem preço conhecido, imagens, arquivos ou ferramentas do provedor, como a pesquisa na web), no modo padrão ela é executada sem limite superior. A execução mostra então, ao lado dos custos, o aviso **Sem máximo rígido** com o número dessas solicitações. No modo de preço estrito, solicitações sem preço conhecido não são enviadas.
+
+## Limites por execução {#limits}
+<!-- keywords: limites, ao mesmo tempo, paralelo, limite de tempo, duração, timeout, run.time_limit -->
+
+Dois limites opcionais valem para cada execução do fluxo. Vazio significa sem limite.
+
+- **Máximo de etapas executando ao mesmo tempo** (de 1 a 32): se houver mais etapas prontas, as demais esperam por uma vaga livre. Com 1, todas as etapas são executadas uma após a outra.
+- **Limite de tempo por execução** (em minutos, no máximo 7 dias): só conta o tempo de execução ativo. A espera por uma aprovação não conta. Quando o tempo acaba, nenhuma outra etapa é iniciada, os agentes em andamento são solicitados a parar e a execução falha com um erro que indica o limite de tempo.
+
+Uma solicitação ao modelo ou uma chamada de ferramenta que já está em andamento ainda é concluída. Por isso, a execução pode ultrapassar o limite de tempo pela duração dessa chamada.
 
 ## Verificação antes de iniciar {#pruefung}
 <!-- keywords: verificação, validação, problemas, início bloqueado, erro, aviso -->

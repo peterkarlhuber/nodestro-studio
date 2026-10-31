@@ -128,7 +128,8 @@
     "not_found": "There is no run with this id.",
     "not_finished": "The run has not finished yet.",
     "no_event_loop": "The run could not start: it needs a running event loop.",
-    "loop_exhausted": "The loop at {{node}} ran {{max_iterations}} times without reaching its goal."
+    "loop_exhausted": "The loop at {{node}} ran {{max_iterations}} times without reaching its goal.",
+    "time_limit": "The run reached its time limit of {{max_duration_s}} seconds. Running steps were cancelled."
   },
   "trace": {
     "invalid": "The trace is damaged or incomplete.",

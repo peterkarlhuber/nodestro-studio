@@ -2,7 +2,7 @@ import { CheckCircle2, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from 
 import type { Ref } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
-import type { WorkflowCheck } from "../api/types";
+import { MAX_DURATION_LIMIT_S, MAX_PARALLEL_LIMIT, type WorkflowCheck } from "../api/types";
 import { DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../components/ui";
 import { WorkflowDependencies } from "../python/DependencyPanel";
 import { AgentInspector } from "./AgentInspector";
@@ -148,6 +148,7 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
           onChange={(e) => setMeta({ budget: e.target.value === "" ? null : Number(e.target.value) })}
         />
       </Field>
+      <LimitFields />
       {workflowId ? <WorkflowDependencies workflowId={workflowId} workflow={toWorkflow()} /> : null}
       {check ? (
         <section className="check-panel" aria-label={t("editor.inspector.problemsLabel")}>
@@ -188,5 +189,56 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
         </ul>
       </div>
     </div>
+  );
+}
+
+
+/** The workflow's execution limits: steps at the same time and active time per run (empty: no limit). */
+function LimitFields() {
+  const { t } = useTranslation();
+  const limits = useEditor((s) => s.limits);
+  const { setMeta } = useEditor.getState();
+  const whole = (value: string, low: number, high: number): number | null => {
+    if (value === "") return null;
+    const number = Math.round(Number(value));
+    return Number.isFinite(number) ? Math.min(high, Math.max(low, number)) : null;
+  };
+  const minutes = limits.max_duration_s === null ? "" : Math.round((limits.max_duration_s / 60) * 100) / 100;
+  return (
+    <>
+      <Field
+        label={t("editor.inspector.maxParallel")}
+        hint={t("editor.inspector.maxParallelHint", { max: MAX_PARALLEL_LIMIT })}
+        tip="workflow.limits"
+      >
+        <TextInput
+          type="number"
+          min={1}
+          max={MAX_PARALLEL_LIMIT}
+          step={1}
+          value={limits.max_parallel ?? ""}
+          onChange={(e) => setMeta({ limits: { ...limits, max_parallel: whole(e.target.value, 1, MAX_PARALLEL_LIMIT) } })}
+          data-testid="limit-parallel"
+        />
+      </Field>
+      <Field label={t("editor.inspector.timeLimit")} hint={t("editor.inspector.timeLimitHint")} tip="workflow.limits">
+        <TextInput
+          type="number"
+          min={0.1}
+          max={MAX_DURATION_LIMIT_S / 60}
+          step={1}
+          value={minutes}
+          onChange={(e) => {
+            const value = e.target.value === "" ? null : Number(e.target.value);
+            const seconds =
+              value === null || !Number.isFinite(value) || value <= 0
+                ? null
+                : Math.min(MAX_DURATION_LIMIT_S, Math.round(value * 60));
+            setMeta({ limits: { ...limits, max_duration_s: seconds } });
+          }}
+          data-testid="limit-duration"
+        />
+      </Field>
+    </>
   );
 }

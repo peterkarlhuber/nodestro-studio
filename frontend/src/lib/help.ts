@@ -19,6 +19,7 @@ export function docPath(ref: string): string {
 
 export const HELP_DOCS = {
   "workflow.budget": "workflows#budget",
+  "workflow.limits": "workflows#limits",
   "workflow.loop": "verzweigungen#schleifen",
   "workflow.problems": "workflows#pruefung",
   "workflow.import": "workflows#import-export",

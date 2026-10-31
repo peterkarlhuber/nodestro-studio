@@ -1,6 +1,7 @@
 {
   "workflow": {
-    "budget": "Valor máximo em dólares americanos para uma execução. Se os custos estimados ultrapassarem esse valor, a execução para na próxima requisição. Vazio = orçamento padrão das configurações.",
+    "budget": "Valor máximo em dólares americanos para uma execução. Cada solicitação reserva com antecedência seu custo máximo possível, de modo que etapas paralelas não podem ultrapassar o orçamento juntas. Vazio = orçamento padrão das configurações.",
+    "limits": "Limita quantas etapas de uma execução trabalham ao mesmo tempo e por quanto tempo uma execução pode trabalhar ativamente. No limite de tempo, as etapas em andamento são canceladas; uma solicitação já enviada ainda termina.",
     "problems": "Estes pontos impedem o início. Eles são verificados de novo a cada alteração.",
     "import": "Carrega um arquivo de fluxo de trabalho exportado (.nodestro.json) como uma nova cópia. Os fluxos de trabalho existentes não mudam.",
     "export": "Salva o fluxo de trabalho com todas as configurações dos agentes como arquivo JSON. Arquivos de conhecimento, memória e ferramentas próprias não são incluídos.",

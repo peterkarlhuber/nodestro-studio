@@ -128,7 +128,8 @@
     "not_found": "Aucune exécution ne porte cet identifiant.",
     "not_finished": "L’exécution n’est pas encore terminée.",
     "no_event_loop": "L’exécution n’a pas pu démarrer : elle nécessite une boucle d’événements active.",
-    "loop_exhausted": "La boucle à {{node}} a tourné {{max_iterations}} fois sans atteindre son objectif."
+    "loop_exhausted": "La boucle à {{node}} a tourné {{max_iterations}} fois sans atteindre son objectif.",
+    "time_limit": "L’exécution a atteint sa limite de temps de {{max_duration_s}} secondes. Les étapes en cours ont été annulées."
   },
   "trace": {
     "invalid": "La trace est endommagée ou incomplète.",

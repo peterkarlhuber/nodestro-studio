@@ -134,18 +134,30 @@ Las ramas paralelas acortan el tiempo de ejecución, pero cuestan los mismos tok
 ## Ajustes del flujo de trabajo {#einstellungen}
 <!-- keywords: nombre, descripción, inspector, ajustes del flujo de trabajo -->
 
-Haz clic en un punto vacío del lienzo para ver en el inspector los ajustes del flujo de trabajo: **Nombre**, **Descripción** y **Presupuesto por ejecución**. Debajo aparecen los problemas que impiden iniciar y un breve resumen del manejo.
+Haz clic en un punto vacío del lienzo para ver en el inspector los ajustes del flujo de trabajo: **Nombre**, **Descripción**, **Presupuesto por ejecución** y los **límites** de pasos simultáneos y de duración. Debajo aparecen los problemas que impiden iniciar y un breve resumen del manejo.
 
 ## Presupuesto por ejecución {#budget}
-<!-- keywords: presupuesto, budget, límite de coste, límite, usd, dólar, cancelación, budgetexceedederror -->
+<!-- keywords: presupuesto, budget, límite de coste, límite, usd, dólar, cancelación, budgetexceedederror, reserva, sin máximo estricto -->
 
 El presupuesto limita los **costes estimados** de una ejecución en dólares estadounidenses, sumando todos los agentes y controles de calidad.
 
 - Si el flujo no tiene presupuesto propio, se aplica el **presupuesto predeterminado** de los ajustes (al principio 2 USD).
 - Si tampoco hay nada ahí, la ejecución no tiene límite.
-- Después de cada respuesta de la API se suman los costes. Si se supera el presupuesto, el agente en curso se detiene (error `BudgetExceededError`) y no se hacen más solicitudes.
+- **Antes** de cada solicitud se reserva su coste máximo posible (tamaño de la entrada y la salida máxima que puede generar, a la tarifa más cara). Tras la respuesta, la reserva se sustituye por el coste real. Así, los agentes que se ejecutan a la vez no pueden superar juntos el presupuesto: si lo que queda no basta, una solicitud espera a que termine otra.
+- Si el presupuesto no basta ni siquiera sin otras solicitudes, la solicitud no se envía y el agente se detiene (error `BudgetExceededError`).
+- Si una sola solicitud es mayor que todo el presupuesto, se ejecuta sola en el modo de precios estándar; en el modo estricto se rechaza.
 
-Como los costes se cuentan después de cada respuesta, una sola solicitud puede superar ligeramente el presupuesto. Las solicitudes sin precio conocido cuentan como 0.
+Los costes desconocidos **no** cuentan como 0. Si el coste máximo de una solicitud no puede determinarse de antemano (sin precio conocido, imágenes, archivos o herramientas del proveedor como la búsqueda web), en el modo estándar se ejecuta sin límite superior. La ejecución muestra entonces junto a los costes el aviso **Sin máximo estricto** con el número de esas solicitudes. En el modo de precios estricto, las solicitudes sin precio conocido no se envían.
+
+## Límites por ejecución {#limits}
+<!-- keywords: límites, a la vez, paralelo, límite de tiempo, duración, timeout, run.time_limit -->
+
+Dos límites opcionales se aplican a cada ejecución del flujo. Vacío significa sin límite.
+
+- **Máximo de pasos ejecutándose a la vez** (de 1 a 32): si hay más pasos listos, los demás esperan a que quede un hueco libre. Con 1, todos los pasos se ejecutan uno tras otro.
+- **Límite de tiempo por ejecución** (en minutos, como máximo 7 días): solo cuenta el tiempo de ejecución activo. La espera de una aprobación no cuenta. Cuando se agota el tiempo, no se inicia ningún paso más, se pide a los agentes en curso que se detengan y la ejecución falla con un error que indica el límite de tiempo.
+
+Una solicitud al modelo o una llamada a una herramienta que ya está en curso se completa. Por eso la ejecución puede superar el límite de tiempo en lo que dure esa llamada.
 
 ## Comprobación antes de iniciar {#pruefung}
 <!-- keywords: comprobación, validación, problemas, inicio bloqueado, error, advertencia, aviso -->

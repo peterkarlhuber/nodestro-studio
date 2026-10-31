@@ -134,18 +134,30 @@ Parallele Zweige verkürzen die Laufzeit, kosten aber gleich viele Tokens wie na
 ## Workflow-Einstellungen {#einstellungen}
 <!-- keywords: name, beschreibung, inspektor, workflow einstellungen -->
 
-Klicke auf eine leere Stelle der Arbeitsfläche, um im Inspektor die Einstellungen des Workflows zu sehen: **Name**, **Beschreibung** und **Budget pro Lauf**. Darunter stehen die Probleme, die einen Start verhindern, und eine Kurzübersicht der Bedienung.
+Klicke auf eine leere Stelle der Arbeitsfläche, um im Inspektor die Einstellungen des Workflows zu sehen: **Name**, **Beschreibung**, **Budget pro Lauf** und die **Grenzen** für gleichzeitig laufende Schritte und die Laufzeit. Darunter stehen die Probleme, die einen Start verhindern, und eine Kurzübersicht der Bedienung.
 
 ## Budget pro Lauf {#budget}
-<!-- keywords: budget, kostenlimit, limit, usd, dollar, abbruch, budgetexceedederror -->
+<!-- keywords: budget, kostenlimit, limit, usd, dollar, abbruch, budgetexceedederror, reservierung, kein hartes maximum -->
 
 Das Budget begrenzt die **geschätzten Kosten** eines Laufs in US-Dollar, über alle Agenten und Qualitätsprüfungen hinweg.
 
 - Ist im Workflow kein Budget eingetragen, gilt das **Standardbudget** aus den Einstellungen (anfangs 2 USD).
 - Ist auch dort nichts eingetragen, ist der Lauf unbegrenzt.
-- Nach jeder Antwort der API werden die Kosten addiert. Ist das Budget überschritten, bricht der laufende Agent ab (Fehler `BudgetExceededError`), und weitere Anfragen werden nicht mehr gestellt.
+- **Vor** jeder Anfrage wird ihr höchstmöglicher Preis reserviert (Eingabegröße und höchstens erzeugte Ausgabe zum teuersten Tarif). Nach der Antwort wird die Reservierung durch die tatsächlichen Kosten ersetzt. Gleichzeitig laufende Agenten können das Budget so zusammen nicht überschreiten: Reicht der Rest nicht, wartet eine Anfrage, bis eine andere fertig ist.
+- Reicht das Budget auch ohne andere Anfragen nicht, wird die Anfrage nicht gesendet und der Agent bricht ab (Fehler `BudgetExceededError`).
+- Ist eine einzelne Anfrage größer als das ganze Budget, läuft sie im Standard-Preismodus allein; im strengen Preismodus wird sie abgelehnt.
 
-Weil erst nach einer Antwort gezählt wird, kann eine einzelne Anfrage das Budget leicht überschreiten. Anfragen ohne bekannten Preis zählen mit 0.
+Unbekannte Kosten zählen **nicht** als 0. Kann der Höchstpreis einer Anfrage nicht vorab bestimmt werden (kein bekannter Preis, Bilder, Dateien oder Werkzeuge des Anbieters wie die Websuche), läuft sie im Standardmodus ohne Obergrenze. Der Lauf zeigt dann bei den Kosten den Hinweis **Kein hartes Maximum** mit der Zahl solcher Anfragen. Im strengen Preismodus werden Anfragen ohne bekannten Preis gar nicht gesendet.
+
+## Grenzen pro Lauf {#limits}
+<!-- keywords: grenzen, gleichzeitig, parallel, zeitlimit, laufzeit, timeout, dauer, run.time_limit -->
+
+Zwei optionale Grenzen gelten für jeden Lauf des Workflows. Leer heißt: keine Grenze.
+
+- **Höchstens gleichzeitig laufende Schritte** (1 bis 32): Sind mehr Schritte bereit, warten die übrigen auf einen freien Platz. Mit 1 laufen alle Schritte nacheinander.
+- **Zeitlimit pro Lauf** (in Minuten, höchstens 7 Tage): Gezählt wird nur die aktive Ausführungszeit. Das Warten auf eine Freigabe zählt nicht mit. Ist die Zeit abgelaufen, startet kein weiterer Schritt, laufende Agenten werden zum Abbruch aufgefordert und der Lauf schlägt mit einem Fehler fehl, der das Zeitlimit nennt.
+
+Eine Modellanfrage oder ein Werkzeugaufruf, der gerade läuft, wird noch zu Ende geführt. Der Lauf kann das Zeitlimit deshalb um die Dauer dieses Aufrufs überschreiten.
 
 ## Prüfung vor dem Start {#pruefung}
 <!-- keywords: prüfung, validierung, probleme, start gesperrt, fehler, warnung, hinweis -->

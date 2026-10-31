@@ -128,7 +128,8 @@
     "not_found": "Não há execução com este id.",
     "not_finished": "A execução ainda não terminou.",
     "no_event_loop": "A execução não pôde iniciar: ela precisa de um loop de eventos em execução.",
-    "loop_exhausted": "O laço em {{node}} rodou {{max_iterations}} vezes sem atingir seu objetivo."
+    "loop_exhausted": "O laço em {{node}} rodou {{max_iterations}} vezes sem atingir seu objetivo.",
+    "time_limit": "A execução atingiu seu limite de tempo de {{max_duration_s}} segundos. As etapas em andamento foram canceladas."
   },
   "trace": {
     "invalid": "O trace está danificado ou incompleto.",

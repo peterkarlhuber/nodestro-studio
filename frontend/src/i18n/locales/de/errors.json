@@ -128,7 +128,8 @@
     "not_found": "Es gibt keinen Lauf mit dieser ID.",
     "not_finished": "Der Lauf ist noch nicht beendet.",
     "no_event_loop": "Der Lauf konnte nicht starten: Er braucht eine laufende Event-Loop.",
-    "loop_exhausted": "Die Schleife bei {{node}} lief {{max_iterations}}-mal, ohne ihr Ziel zu erreichen."
+    "loop_exhausted": "Die Schleife bei {{node}} lief {{max_iterations}}-mal, ohne ihr Ziel zu erreichen.",
+    "time_limit": "Der Lauf hat sein Zeitlimit von {{max_duration_s}} Sekunden erreicht. Laufende Schritte wurden abgebrochen."
   },
   "trace": {
     "invalid": "Der Trace ist beschädigt oder unvollständig.",

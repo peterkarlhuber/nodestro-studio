@@ -128,7 +128,8 @@
     "not_found": "Non esiste alcuna esecuzione con questo id.",
     "not_finished": "L’esecuzione non è ancora terminata.",
     "no_event_loop": "L’esecuzione non è potuta partire: richiede un event loop attivo.",
-    "loop_exhausted": "Il ciclo in {{node}} è stato eseguito {{max_iterations}} volte senza raggiungere il suo obiettivo."
+    "loop_exhausted": "Il ciclo in {{node}} è stato eseguito {{max_iterations}} volte senza raggiungere il suo obiettivo.",
+    "time_limit": "L’esecuzione ha raggiunto il limite di tempo di {{max_duration_s}} secondi. I passaggi in corso sono stati annullati."
   },
   "trace": {
     "invalid": "La traccia è danneggiata o incompleta.",

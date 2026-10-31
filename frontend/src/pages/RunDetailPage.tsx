@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Download, FileDown, FlaskConical, History, Pencil, ShieldCheck, Square } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import { Link, useParams } from "react-router-dom";
 
 import { api } from "../api/client";
@@ -12,6 +13,7 @@ import { TestCaseFromRunDialog } from "../automation/TestCaseFromRunDialog";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { Output } from "../components/Markdown";
+import { Tooltip } from "../components/Tooltip";
 import { toast } from "../components/toast";
 import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
 import { NodeRunDetails, startFiles } from "../editor/RunDetails";
@@ -174,7 +176,12 @@ export function RunDetailPage() {
             value={formatTokens(usage.total_tokens)}
             hint={tokenBreakdown(usage)}
           />
-          <Stat label={t("runs.stats.cost")} value={formatCost(usage.estimated_cost_usd)} tip="runs.cost" />
+          <Stat
+            label={t("runs.stats.cost")}
+            value={formatCost(usage.estimated_cost_usd)}
+            tip="runs.cost"
+            hint={budgetHint(data, t)}
+          />
         </div>
         <RunSummaryLine run={data} onOpenStep={openStep} />
         {imported ? (
@@ -250,5 +257,23 @@ export function RunDetailPage() {
       {proposable && caseOpen ? <TestCaseFromRunDialog run={data} open={caseOpen} onClose={() => setCaseOpen(false)} /> : null}
       {resumable ? <ResumeDialog runId={data.id} open={resumeOpen} onClose={() => setResumeOpen(false)} /> : null}
     </div>
+  );
+}
+
+
+/** The budget of a run and whether it was a hard maximum (AO-12); nothing for runs without a budget. */
+function budgetHint(run: Run, t: TFunction): ReactNode {
+  if (run.budget_usd === null || run.budget_usd === undefined) return null;
+  const limit = t("runs.budget.limit", { limit: formatCost(run.budget_usd) });
+  if (run.budget_hard_maximum !== false) return limit;
+  return (
+    <span className="budget-hint" data-testid="budget-no-hard-maximum">
+      {limit} ·{" "}
+      <Tooltip content={t("runs.budget.noHardMaximumHint", { count: run.usage.uncapped_requests ?? 0 })}>
+        <span className="has-tip text-warning" tabIndex={0}>
+          {t("runs.budget.noHardMaximum")}
+        </span>
+      </Tooltip>
+    </span>
   );
 }

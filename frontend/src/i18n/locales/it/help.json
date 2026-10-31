@@ -1,6 +1,7 @@
 {
   "workflow": {
-    "budget": "Importo massimo in dollari USA per un’esecuzione. Se i costi stimati lo superano, l’esecuzione si interrompe alla richiesta successiva. Vuoto = budget predefinito delle impostazioni.",
+    "budget": "Importo massimo in dollari USA per un’esecuzione. Ogni richiesta riserva in anticipo il suo costo massimo possibile, così i passaggi paralleli non possono superare insieme il budget. Vuoto = budget predefinito delle impostazioni.",
+    "limits": "Limita quanti passaggi di un’esecuzione lavorano contemporaneamente e per quanto tempo un’esecuzione può lavorare attivamente. Al limite di tempo i passaggi in corso vengono annullati; una richiesta già inviata termina comunque.",
     "problems": "Questi punti impediscono l’avvio. Vengono ricontrollati a ogni modifica.",
     "import": "Carica un file di workflow esportato (.nodestro.json) come nuova copia. I workflow esistenti restano invariati.",
     "export": "Salva il workflow con tutte le impostazioni degli agenti come file JSON. File di conoscenza, memoria e strumenti personali non sono inclusi.",

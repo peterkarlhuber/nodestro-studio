@@ -80,5 +80,11 @@
     "notRecorded": "non registrato",
     "skipped_one": "{{count}} saltato (ramo non scelto)",
     "skipped_other": "{{count}} saltati (ramo non scelto)"
+  },
+  "budget": {
+    "limit": "Budget {{limit}}",
+    "noHardMaximum": "nessun massimo rigido",
+    "noHardMaximumHint_one": "{{count}} richiesta non ha potuto essere limitata in anticipo (nessun prezzo, strumenti integrati, immagini o troppo grande per il resto del budget). Il budget non era quindi un massimo rigido.",
+    "noHardMaximumHint_other": "{{count}} richieste non hanno potuto essere limitate in anticipo (nessun prezzo, strumenti integrati, immagini o troppo grandi per il resto del budget). Il budget non era quindi un massimo rigido."
   }
 }
