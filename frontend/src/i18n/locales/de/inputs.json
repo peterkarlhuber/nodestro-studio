@@ -83,6 +83,15 @@
       "auto": "Der Inhalt geht an die Agenten, wenn er passt; große Dateien als Übersicht, aus der der Agent gezielt liest.",
       "inline": "Agenten bekommen den Inhalt, solange er in den Platz für Dateien passt.",
       "on_demand": "Agenten bekommen Name und Aufbau und lesen benötigte Teile mit dem Tool input_files."
+    },
+    "options": "Dateioptionen",
+    "summary": {
+      "allFormats": "alle Formate",
+      "size": "bis {{mb}} MB",
+      "one": "eine Datei",
+      "many": "mehrere Dateien",
+      "upTo_one": "bis zu {{count}} Datei",
+      "upTo_other": "bis zu {{count}} Dateien"
     }
   },
   "modes": {

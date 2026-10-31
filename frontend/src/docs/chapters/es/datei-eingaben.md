@@ -22,7 +22,7 @@ En la tarea de un agente, `{{form.<nombre>}}` representa los nombres de los arch
 ## Ajustes del campo {#feld-einstellungen}
 <!-- keywords: ajustes, tipos permitidos, varios archivos, máximo, tamaño, mb, límite -->
 
-En el inspector del nodo Inicio, cada campo de archivo tiene estos ajustes:
+En el inspector del nodo Inicio, cada campo de archivo tiene la sección *Opciones de archivo*. Cerrada, resume la elección actual en una línea, por ejemplo «todos los formatos · hasta 20 MB · varios archivos · Automática». Abierta, muestra estos ajustes:
 
 | Ajuste | Significado |
 |---|---|

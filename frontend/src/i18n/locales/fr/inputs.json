@@ -83,6 +83,15 @@
       "auto": "Le contenu va aux agents s’il tient ; les gros fichiers, sous forme d’aperçu dont l’agent lit des parties.",
       "inline": "Les agents reçoivent le contenu tant qu’il tient dans l’espace réservé aux fichiers.",
       "on_demand": "Les agents reçoivent le nom et la structure et lisent les parties utiles avec l’outil input_files."
+    },
+    "options": "Options de fichier",
+    "summary": {
+      "allFormats": "tous les formats",
+      "size": "jusqu’à {{mb}} Mo",
+      "one": "un fichier",
+      "many": "plusieurs fichiers",
+      "upTo_one": "jusqu’à {{count}} fichier",
+      "upTo_other": "jusqu’à {{count}} fichiers"
     }
   },
   "modes": {

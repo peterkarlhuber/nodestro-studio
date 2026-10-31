@@ -22,7 +22,7 @@ Im Aufgabentext eines Agenten steht `{{form.<name>}}` für die Namen der Dateien
 ## Feldeinstellungen {#feld-einstellungen}
 <!-- keywords: einstellungen, erlaubte typen, mehrere dateien, höchstzahl, größe, mb, limit -->
 
-Im Inspector des Start-Knotens hat jedes Datei-Feld diese Einstellungen:
+Im Inspector des Start-Knotens hat jedes Datei-Feld den Abschnitt *Dateioptionen*. Geschlossen nennt er die aktuelle Wahl in einer Zeile, etwa „alle Formate · bis 20 MB · mehrere Dateien · Automatisch“. Geöffnet zeigt er diese Einstellungen:
 
 | Einstellung | Bedeutung |
 |---|---|

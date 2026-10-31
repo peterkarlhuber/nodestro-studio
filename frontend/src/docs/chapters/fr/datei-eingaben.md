@@ -22,7 +22,7 @@ Dans la tâche d’un agent, `{{form.<nom>}}` représente les noms des fichiers 
 ## Réglages du champ {#feld-einstellungen}
 <!-- keywords: réglages, types acceptés, plusieurs fichiers, maximum, taille, mo, limite -->
 
-Dans l’inspecteur du nœud Départ, chaque champ de fichier a ces réglages :
+Dans l’inspecteur du nœud Départ, chaque champ de fichier a une section *Options de fichier*. Fermée, elle résume le choix actuel en une ligne, par exemple « tous les formats · jusqu’à 20 Mo · plusieurs fichiers · Automatique ». Ouverte, elle montre ces réglages :
 
 | Réglage | Signification |
 |---|---|

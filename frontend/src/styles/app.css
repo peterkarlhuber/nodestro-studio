@@ -6163,7 +6163,7 @@ kbd {
 }
 
 .file-settings {
-  padding: 10px;
+  padding: 0 10px;
   border: 1px solid var(--nd-border);
   border-radius: var(--nd-radius-sm);
   background: var(--nd-panel);
@@ -6262,4 +6262,17 @@ kbd {
 
 .case-editor.section > .section__body {
   padding-bottom: 0;
+}
+
+/* The file options sit in the narrow inspector: their summary is the point, so it gets its own line. */
+.file-settings.section > summary {
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+
+.file-settings .section__summary {
+  flex-basis: 100%;
+  max-width: none;
+  margin-left: 22px;
+  white-space: normal;
 }

@@ -83,6 +83,15 @@
       "auto": "Il contenuto va agli agenti se ci sta; i file grandi come panoramica da cui l’agente legge a parti.",
       "inline": "Gli agenti ricevono il contenuto finché rientra nello spazio per i file.",
       "on_demand": "Gli agenti ricevono nome e struttura e leggono le parti necessarie con lo strumento input_files."
+    },
+    "options": "Opzioni file",
+    "summary": {
+      "allFormats": "tutti i formati",
+      "size": "fino a {{mb}} MB",
+      "one": "un file",
+      "many": "più file",
+      "upTo_one": "fino a {{count}} file",
+      "upTo_other": "fino a {{count}} file"
     }
   },
   "modes": {
