@@ -539,13 +539,22 @@
   "access": {
     "login_required": "Melde dich an, um diesen Teil von Nodestro zu nutzen.",
     "forbidden": "Das darfst du nicht (Berechtigung {{permission}} nötig).",
-    "launch_required": "Dieses Nodestro gehört zur Desktop-App, die es gestartet hat. Öffnen Sie Nodestro über die App.",
-    "launch_used": "Der Startlink wurde bereits verwendet. Starten Sie die Desktop-App neu, um ein neues Fenster zu öffnen.",
-    "launch_invalid": "Der Startlink ist ungültig. Starten Sie Nodestro über die Desktop-App."
+    "launch_required": "Dieses Nodestro gehört zur Desktop-App, die es gestartet hat. Öffne Nodestro über die App.",
+    "launch_used": "Der Startlink wurde bereits verwendet. Starte die Desktop-App neu, um ein neues Fenster zu öffnen.",
+    "launch_invalid": "Der Startlink ist ungültig. Starte Nodestro über die Desktop-App.",
+    "cross_site": "Diese Änderung kam von einer anderen Website und wurde abgelehnt. Nutze Nodestro direkt."
   },
   "sandbox": {
     "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur in der Docker-Sandbox; es wurde nichts ausgeführt. Wähle Docker in den Einstellungen.",
     "libraries_need_isolation": "{{name}} ist KI-erstellt oder unbekannter Herkunft und braucht Bibliotheken von Drittanbietern. Solche Tools können noch nicht laufen, weil Bibliotheken nur ohne Isolation verfügbar sind.",
     "unavailable": "Tool-Code läuft hier nur in Containern; die Sandbox „Python-Prozess“ ist nicht verfügbar."
+  },
+  "identity": {
+    "login_expired": "Die Anmeldung hat zu lange gedauert oder wurde schon verwendet. Melde dich bitte erneut an.",
+    "login_failed": "Die Anmeldung konnte nicht abgeschlossen werden. Versuche es bitte noch einmal.",
+    "provider": "Der Anmeldedienst ist nicht erreichbar oder nicht richtig eingerichtet. Wende dich an deine Administration.",
+    "no_tenant": "Dein Konto hat noch keinen Zugang zu Nodestro. Bitte eine Administratorin oder einen Administrator, dich hinzuzufügen.",
+    "bootstrap_invalid": "Dieser Einrichtungslink ist ungültig, schon verwendet oder abgelaufen.",
+    "not_a_member": "Dein Konto hat keinen Zugang zu diesem Arbeitsbereich."
   }
 }

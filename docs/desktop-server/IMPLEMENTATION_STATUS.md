@@ -26,11 +26,11 @@ Last update: 2026-10-31.
 | PR-3 | Storage seams: `DocumentStore`, `sqlite_tables`, schema version with pre-migration backup, contract tests | done | runtime #6 (`e90c205`); api #8 (`d8ed049`, backup/restore via public storage methods, `backup.schema_too_new`); pins: examples #6 (`649ef70`), integrations #6 (`e96d91f`), sdk #8 (`7aee149`), studio #8 (`d9ee2d6`) |
 | PR-4 | Sandbox policy and trust classes (ADR-0006) | done | runtime #7 (`d6e75b7`); api #9 (`cd4b198`); pins: examples #7 (`31b5714`), integrations #7 (`99cdd2c`), sdk #9 (`b001667`), studio #9 (`54d25a8`: pins, origin display, texts and docs in six languages) |
 | PR-5 | Desktop packaging spike and decision | done | nodestro-desktop #1 (`b759e67`: spike, measurements, first CI); ADR-0005 accepted: Tauri 2 |
-| PR-6 | Desktop MVP for Linux x86_64 | in progress | api #10 + #11 (`0f439ea`: launch secret); sdk #10 (`1c24f55`); studio (this PR: pins, texts, docs); nodestro-desktop PR (app, packaging, clean-container smoke test) follows with the studio merge commit |
-| PR-7 | PostgreSQL document store and migrations | open | — |
-| PR-8 | PostgreSQL knowledge, FTS, memory; desktop-to-server import | open | — |
-| PR-9 | Identity and tenants (OIDC) | open | — |
-| PR-10 | Persistent jobs and workers | open | — |
+| PR-6 | Desktop MVP for Linux x86_64 | done | api #10 + #11 (`0f439ea`: launch secret); sdk #10 (`1c24f55`); studio #10 (`9257c64`); nodestro-desktop #2 (`80932c3`: app, packaging, clean-container smoke test) |
+| PR-7 | PostgreSQL document store and migrations | done | runtime #8 (`d4e4b27`: `storage_postgres`, migration `0001`, contract tests on both backends, PostgreSQL service in CI) |
+| PR-8 | PostgreSQL knowledge, FTS, memory; desktop-to-server import | done | runtime #9 (`36600f3`: `postgres_tables`, migration `0002`, `postgres_import`) |
+| PR-9 | Identity and tenants (OIDC) | done | runtime #10 (`8eea1ea`: tenant workspaces, `identity_store`, migration `0003`); api #12 (`c0e61bd`: OIDC login, sessions, roles, `install` permission); pins: examples #8 (`9b018da`), integrations #8 (`abc4dbc`), sdk #11 (`7203183`), studio (this PR: pins, login redirect, texts) |
+| PR-10 | Persistent jobs and workers | in progress (next) | runtime #11 (job queue, workers, reaper, run events, scheduler lock); API entry points follow |
 | PR-11 | Container sandbox with libraries | open | — |
 | PR-12 | Server integration and deployment (lifts `profile.server_unavailable`) | open | — |
 | PR-13 | Built-in sandbox prototype | open | — |
@@ -73,6 +73,38 @@ Last update: 2026-10-31.
   interpreter with `-m`, never the script.
 - Residual risk (documented): a process of the same OS user can read the backend's initial environment; the secret is
   useless after the window used it.
+
+### PR-7 and PR-8
+
+- `PostgresDatabase` holds one connection per process; migrations are forward-only SQL files under
+  `nodestro_runtime/migrations/postgres`, applied under an advisory lock that is taken before `CREATE SCHEMA`
+  (concurrent starts raced otherwise). A database with data needs a backup hook first (`storage.backup_required`).
+- PostgreSQL `jsonb` and `text` cannot hold U+0000: documents with it keep their exact JSON in a `raw` column;
+  indexed text keeps U+FFFD; memory files with U+0000 are refused.
+- Search on PostgreSQL: `tsvector('simple')` over lower-case words without diacritics, prefix matching, ranked
+  with `ts_rank` (BM25 on SQLite). A shared parity corpus checks that both backends find the same files.
+- The desktop import drops tool provenance: imported tools are untrusted on the server.
+
+### PR-9
+
+- `Workspace(data_dir, storage=WorkspaceStorage(...))` is a tenant's workspace; it always uses the server sandbox
+  policy (containers only), whatever a stored or imported setting says.
+- OIDC with PKCE (S256), a hashed one-time state and a nonce; only asymmetric ID token algorithms; session cookie
+  `__Host-nodestro-session` (HttpOnly, Secure, SameSite=Lax); cross-site writes are refused
+  (`access.cross_site`); return paths are local only. Session tokens, login states and bootstrap tokens are stored
+  as SHA-256 hashes. No default user, no passwords; a one-time bootstrap token binds a tenant's first owner.
+- Roles: owner/admin (read, edit, run, admin), editor (read, edit, run), operator (read, run), viewer (read). The
+  new `install` permission (diagnostics, backup, API network settings) belongs to no tenant role: those routes stay
+  with the operator of the server.
+- `create_tenant_app` is test-only until PR-12; the server profile is still refused at startup.
+
+### PR-10 (in progress)
+
+- Runtime: migration `0004` (`nodestro_jobs`, `nodestro_run_events`, `nodestro_schedule_firings`), `jobs.py`.
+  Claims use `FOR UPDATE SKIP LOCKED` with a lease; a run whose worker died is marked `run.interrupted` by the reaper
+  and never executed again by itself. Only runs use the queue so far; batches, test series, assistant drafts and
+  environment installations still run in the process that started them (documented follow-up).
+- Next: API worker and scheduler entry points, event streams read from `nodestro_run_events`.
 
 ## Limitations known so far
 

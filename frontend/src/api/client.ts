@@ -122,6 +122,20 @@ export class ApiError extends Error {
   }
 }
 
+let loginStarted = false;
+
+/**
+ * A server answers ``access.login_required`` when the session ended: the browser goes to the login of the
+ * identity provider and comes back to the current page. The desktop never answers it (its only principal is the
+ * local owner), and the desktop app's own refusals (``access.launch_*``) never lead to a login page.
+ */
+export function startLogin(location: Pick<Location, "pathname" | "search" | "hash" | "assign"> = window.location): void {
+  if (loginStarted) return;
+  loginStarted = true;
+  const back = `${location.pathname}${location.search}${location.hash}`;
+  location.assign(`/api/auth/login?return_to=${encodeURIComponent(back)}`);
+}
+
 async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
   // The interface language: the backend names new copies and the first examples in it.
   const headers: Record<string, string> = { "Accept-Language": currentLanguage() };
@@ -154,6 +168,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
     } catch {
       // not JSON
     }
+    if (response.status === 401 && code === "access.login_required") startLogin();
     throw new ApiError(message, response.status, code, params);
   }
   if (response.status === 204) return undefined as T;

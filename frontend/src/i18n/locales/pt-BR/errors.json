@@ -541,11 +541,20 @@
     "forbidden": "Você não pode fazer isso (é necessária a permissão {{permission}}).",
     "launch_required": "Este Nodestro pertence ao aplicativo de desktop que o iniciou. Abra o Nodestro pelo aplicativo.",
     "launch_used": "O link de início já foi usado. Reinicie o aplicativo de desktop para abrir uma nova janela.",
-    "launch_invalid": "O link de início não é válido. Inicie o Nodestro pelo aplicativo de desktop."
+    "launch_invalid": "O link de início não é válido. Inicie o Nodestro pelo aplicativo de desktop.",
+    "cross_site": "Esta alteração veio de outro site e foi recusada. Use o Nodestro diretamente."
   },
   "sandbox": {
     "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados no sandbox Docker; nada foi executado. Escolha Docker nas configurações.",
     "libraries_need_isolation": "{{name}} foi criada por IA ou tem origem desconhecida e precisa de bibliotecas de terceiros. Essas ferramentas ainda não podem ser executadas, porque as bibliotecas só estão disponíveis sem isolamento.",
     "unavailable": "Aqui o código das ferramentas só é executado em contêineres; o sandbox \"Processo Python\" não está disponível."
+  },
+  "identity": {
+    "login_expired": "O login demorou demais ou já foi usado. Faça login novamente.",
+    "login_failed": "Não foi possível concluir o login. Tente novamente.",
+    "provider": "O serviço de login não está acessível ou não está configurado corretamente. Fale com o administrador.",
+    "no_tenant": "Sua conta ainda não tem acesso ao Nodestro. Peça a um administrador para adicionar você.",
+    "bootstrap_invalid": "Este link de configuração é inválido, já foi usado ou expirou.",
+    "not_a_member": "Sua conta não tem acesso a este espaço de trabalho."
   }
 }
