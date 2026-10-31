@@ -538,7 +538,10 @@
   },
   "access": {
     "login_required": "Inicia sesión para usar esta parte de Nodestro.",
-    "forbidden": "No puedes hacer esto (se necesita el permiso {{permission}})."
+    "forbidden": "No puedes hacer esto (se necesita el permiso {{permission}}).",
+    "launch_required": "Este Nodestro pertenece a la aplicación de escritorio que lo inició. Abra Nodestro desde la aplicación.",
+    "launch_used": "El enlace de inicio ya se usó. Reinicie la aplicación de escritorio para abrir una ventana nueva.",
+    "launch_invalid": "El enlace de inicio no es válido. Inicie Nodestro desde la aplicación de escritorio."
   },
   "sandbox": {
     "isolation_required": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan en el sandbox de Docker; no se ejecutó nada. Elige Docker en los ajustes.",

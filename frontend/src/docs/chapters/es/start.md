@@ -78,3 +78,15 @@ Todos los datos se guardan en una base de datos SQLite en el directorio de datos
 - la carpeta `tools` con las herramientas propias y las creadas por la IA.
 
 Para hacer una **copia de seguridad**, copia el directorio de datos con Nodestro detenido. Al proveedor de un agente solo se envía lo que el agente necesita para su solicitud: prompt de sistema, tarea, conocimiento asignado, contenido de memoria que lee y resultados de herramientas. Las claves de API nunca se muestran en la interfaz.
+
+## La aplicación de escritorio {#desktop}
+<!-- keywords: escritorio, aplicación, ventana, linux, instalación, enlace de inicio, tauri -->
+
+Además del comando `nodestro`, Nodestro está disponible como aplicación de escritorio (versión preliminar para Linux x86_64, aún sin firmar). Incluye su propio Python, así que solo necesita WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`). Descomprima el archivo e inicie `nodestro-desktop`.
+
+- La aplicación usa el mismo directorio de datos que el comando (`~/.nodestro` o `NODESTRO_DATA_DIR`). Solo uno de los dos puede usarlo a la vez.
+- Solo la ventana de la aplicación puede usar este Nodestro. Otros programas del equipo y las páginas web del navegador se rechazan (*Este Nodestro pertenece a la aplicación de escritorio que lo inició*). El enlace de inicio de la ventana funciona una sola vez; para abrir una ventana nueva, reinicie la aplicación.
+- Los enlaces a otros sitios web se abren en el navegador.
+- Al cerrar la ventana, Nodestro se detiene. Si se detiene de forma inesperada, la ventana lo indica y muestra el archivo de registro.
+- Sin Docker, las herramientas creadas por IA tampoco se ejecutan en la aplicación (consulte [Herramientas](/docs/tools#vertrauen)).
+- Aún no existen versiones para macOS y Windows.

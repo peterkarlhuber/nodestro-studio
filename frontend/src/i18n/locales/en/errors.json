@@ -538,7 +538,10 @@
   },
   "access": {
     "login_required": "Log in to use this part of Nodestro.",
-    "forbidden": "You may not do this (permission {{permission}} needed)."
+    "forbidden": "You may not do this (permission {{permission}} needed).",
+    "launch_required": "This Nodestro belongs to the desktop app that started it. Open Nodestro from the app.",
+    "launch_used": "The launch link was already used. Restart the desktop app to open a new window.",
+    "launch_invalid": "The launch link is not valid. Start Nodestro from the desktop app."
   },
   "sandbox": {
     "isolation_required": "AI-created code and tools of unknown origin run only in the Docker sandbox; nothing was run. Choose Docker in the settings.",

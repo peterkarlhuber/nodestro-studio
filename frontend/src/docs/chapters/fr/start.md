@@ -78,3 +78,15 @@ Toutes les données sont stockées dans une base SQLite dans le répertoire de d
 - le dossier `tools` avec vos outils et ceux créés par l’IA.
 
 Pour **sauvegarder**, copiez le répertoire de données pendant que Nodestro est arrêté. Seul le contenu dont un agent a besoin pour sa requête est envoyé à son fournisseur : prompt système, tâche, connaissances attribuées, contenu de mémoire qu’il lit et résultats d’outils. Les clés API ne sont jamais affichées dans l’interface.
+
+## L’application de bureau {#desktop}
+<!-- keywords: bureau, application, fenêtre, linux, installation, lien de démarrage, tauri -->
+
+En plus de la commande `nodestro`, Nodestro existe en application de bureau (préversion pour Linux x86_64, pas encore signée). Elle apporte son propre Python ; seul WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`) doit être installé. Décompressez l’archive et lancez `nodestro-desktop`.
+
+- L’application utilise le même répertoire de données que la commande (`~/.nodestro` ou `NODESTRO_DATA_DIR`). Un seul des deux peut l’utiliser à la fois.
+- Seule la fenêtre de l’application peut utiliser ce Nodestro. Les autres programmes de l’ordinateur et les pages web du navigateur sont refusés (*Ce Nodestro appartient à l’application de bureau qui l’a démarré*). Le lien de démarrage de la fenêtre ne fonctionne qu’une fois ; pour ouvrir une nouvelle fenêtre, redémarrez l’application.
+- Les liens vers d’autres sites s’ouvrent dans le navigateur.
+- Fermer la fenêtre arrête Nodestro. S’il s’arrête de manière inattendue, la fenêtre l’indique et nomme le fichier journal.
+- Sans Docker, les outils créés par l’IA ne s’exécutent pas non plus dans l’application (voir [Outils](/docs/tools#vertrauen)).
+- Les versions pour macOS et Windows n’existent pas encore.

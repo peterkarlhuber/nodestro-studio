@@ -78,3 +78,15 @@ All data is stored in a SQLite database in the data directory, `~/.nodestro` by 
 - the `tools` folder with your own and AI-created tools.
 
 To **back up**, copy the data directory while Nodestro is stopped. Only the content an agent needs for its request is sent to its provider: system prompt, task, assigned knowledge, memory content it reads, and tool results. The API keys are never shown in the interface.
+
+## The desktop app {#desktop}
+<!-- keywords: desktop, app, window, linux, install, launch link, tauri -->
+
+Besides the `nodestro` command, Nodestro is available as a desktop app (preview for Linux x86_64, not yet signed). It brings its own Python, so nothing else needs to be installed except WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`). Unpack the archive and start `nodestro-desktop`.
+
+- The app uses the same data directory as the command (`~/.nodestro` or `NODESTRO_DATA_DIR`). Only one of them can use it at a time.
+- Only the app's own window can use this Nodestro. Other programs on the computer and web pages in your browser are refused (*This Nodestro belongs to the desktop app that started it*). The window's launch link works once; to open a new window, restart the app.
+- Links to other websites open in your browser.
+- Closing the window stops Nodestro. If it stops unexpectedly, the window says so and names the log file.
+- Without Docker, AI-created tools cannot run in the app either (see [Tools](/docs/tools#vertrauen)).
+- macOS and Windows versions do not exist yet.

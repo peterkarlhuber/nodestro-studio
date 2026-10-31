@@ -538,7 +538,10 @@
   },
   "access": {
     "login_required": "Melde dich an, um diesen Teil von Nodestro zu nutzen.",
-    "forbidden": "Das darfst du nicht (Berechtigung {{permission}} nötig)."
+    "forbidden": "Das darfst du nicht (Berechtigung {{permission}} nötig).",
+    "launch_required": "Dieses Nodestro gehört zur Desktop-App, die es gestartet hat. Öffnen Sie Nodestro über die App.",
+    "launch_used": "Der Startlink wurde bereits verwendet. Starten Sie die Desktop-App neu, um ein neues Fenster zu öffnen.",
+    "launch_invalid": "Der Startlink ist ungültig. Starten Sie Nodestro über die Desktop-App."
   },
   "sandbox": {
     "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur in der Docker-Sandbox; es wurde nichts ausgeführt. Wähle Docker in den Einstellungen.",

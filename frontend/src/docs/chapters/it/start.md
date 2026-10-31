@@ -78,3 +78,15 @@ Tutti i dati sono salvati in un database SQLite nella directory dei dati, per im
 - la cartella `tools` con gli strumenti tuoi e quelli creati dall'IA.
 
 Per fare un **backup**, copia la directory dei dati mentre Nodestro è chiuso. Al provider di un agente va solo il contenuto che l’agente serve per la sua richiesta: prompt di sistema, compito, conoscenze assegnate, contenuti di memoria che legge e risultati degli strumenti. Le chiavi API non vengono mai mostrate nell’interfaccia.
+
+## L’app desktop {#desktop}
+<!-- keywords: desktop, app, finestra, linux, installazione, link di avvio, tauri -->
+
+Oltre al comando `nodestro`, Nodestro è disponibile come app desktop (anteprima per Linux x86_64, non ancora firmata). Include il proprio Python: oltre a WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`) non serve installare nulla. Estrarre l’archivio e avviare `nodestro-desktop`.
+
+- L’app usa la stessa directory dei dati del comando (`~/.nodestro` o `NODESTRO_DATA_DIR`). Solo uno dei due può usarla alla volta.
+- Solo la finestra dell’app può usare questo Nodestro. Gli altri programmi del computer e le pagine web nel browser vengono rifiutati (*Questo Nodestro appartiene all’app desktop che lo ha avviato*). Il link di avvio della finestra vale una sola volta; per aprire una nuova finestra, riavviare l’app.
+- I link ad altri siti si aprono nel browser.
+- Chiudendo la finestra Nodestro si arresta. Se si arresta in modo imprevisto, la finestra lo segnala e indica il file di log.
+- Senza Docker, gli strumenti creati dall’IA non vengono eseguiti nemmeno nell’app (vedere [Strumenti](/docs/tools#vertrauen)).
+- Le versioni per macOS e Windows non esistono ancora.
