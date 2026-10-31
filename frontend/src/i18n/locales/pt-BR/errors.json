@@ -97,6 +97,8 @@
     "branch_unknown": "Uma conexão de {{node}} não parte de nenhum ramo.",
     "condition_no_rules": "A decisão {{node}} não tem regras.",
     "subworkflow_missing": "Nenhum workflow foi escolhido em {{node}}.",
+    "contract_field_name": "{{node}}: o nome de campo {{field}} no contrato de saída é inválido (apenas letras, dígitos e _).",
+    "contract_field_duplicate": "{{node}}: o contrato de saída nomeia o campo {{field}} duas vezes.",
     "node_duplicate": "Dois nós têm o mesmo id ({{id}}). Exclua um deles e adicione-o novamente.",
     "loop_unguarded": "Um laço precisa sair de uma ramificação de uma decisão ou aprovação.",
     "loop_target": "Um laço precisa voltar para uma etapa anterior.",
@@ -130,7 +132,8 @@
     "no_event_loop": "A execução não pôde iniciar: ela precisa de um loop de eventos em execução.",
     "loop_exhausted": "O laço em {{node}} rodou {{max_iterations}} vezes sem atingir seu objetivo.",
     "time_limit": "A execução atingiu seu limite de tempo de {{max_duration_s}} segundos. As etapas em andamento foram canceladas.",
-    "step_limit": "A execução atingiu seu limite de {{max_steps}} etapas. Nenhuma outra etapa foi iniciada."
+    "step_limit": "A execução atingiu seu limite de {{max_steps}} etapas. Nenhuma outra etapa foi iniciada.",
+    "output_contract": "O resultado não cumpre o contrato de saída do fluxo: {{fields}}."
   },
   "trace": {
     "invalid": "O trace está danificado ou incompleto.",
@@ -205,6 +208,8 @@
     "subworkflow_missing": "{{name}}: o workflow escolhido não existe mais.",
     "subworkflow_outdated": "{{name}} usa a versão {{version}}; a versão {{latest}} é mais nova.",
     "subworkflow_version_missing": "{{name}}: a versão escolhida não existe mais.",
+    "contract_text_source": "{{name}} responde em texto; então o contrato de saída só pode ser cumprido com uma resposta JSON. Defina o formato de saída do agente como “Estruturado”.",
+    "contract_field_missing": "Nenhum agente antes do resultado entrega {{fields}}; assim o contrato de saída não pode ser cumprido.",
     "unreachable": "{{name}} não pode ser alcançado a partir do início.",
     "provider_not_configured": "{{provider}} não está configurado: informe a URL base nas configurações.",
     "input_form_only": "{{name}} lê o nó inicial com {{input}}. Com o formulário preenchido, são apenas os valores do formulário, sem o texto adicional. Use {{run_input}} para receber os dois."

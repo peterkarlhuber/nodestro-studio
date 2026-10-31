@@ -97,6 +97,8 @@
     "branch_unknown": "Una conexión de {{node}} no parte de ninguna rama.",
     "condition_no_rules": "La decisión {{node}} no tiene reglas.",
     "subworkflow_missing": "En {{node}} no se ha elegido ningún workflow.",
+    "contract_field_name": "{{node}}: el nombre de campo {{field}} del contrato de salida no es válido (solo letras, cifras y _).",
+    "contract_field_duplicate": "{{node}}: el contrato de salida nombra dos veces el campo {{field}}.",
     "node_duplicate": "Dos nodos tienen el mismo id ({{id}}). Elimina uno de ellos y vuelve a añadirlo.",
     "loop_unguarded": "Un bucle debe salir de una rama de una decisión o aprobación.",
     "loop_target": "Un bucle debe volver a un paso anterior.",
@@ -130,7 +132,8 @@
     "no_event_loop": "La ejecución no pudo iniciarse: necesita un bucle de eventos en marcha.",
     "loop_exhausted": "El bucle en {{node}} se ejecutó {{max_iterations}} veces sin alcanzar su objetivo.",
     "time_limit": "La ejecución alcanzó su límite de tiempo de {{max_duration_s}} segundos. Los pasos en curso se cancelaron.",
-    "step_limit": "La ejecución alcanzó su límite de {{max_steps}} pasos. No se iniciaron más pasos."
+    "step_limit": "La ejecución alcanzó su límite de {{max_steps}} pasos. No se iniciaron más pasos.",
+    "output_contract": "El resultado no cumple el contrato de salida del flujo: {{fields}}."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -205,6 +208,8 @@
     "subworkflow_missing": "{{name}}: el workflow elegido ya no existe.",
     "subworkflow_outdated": "{{name}} usa la versión {{version}}; la versión {{latest}} es más reciente.",
     "subworkflow_version_missing": "{{name}}: la versión elegida ya no existe.",
+    "contract_text_source": "{{name}} responde en texto; entonces el contrato de salida solo se cumple con una respuesta JSON. Configura el formato de salida del agente como «Estructurado».",
+    "contract_field_missing": "Ningún agente antes del resultado entrega {{fields}}; así no se cumple el contrato de salida.",
     "unreachable": "{{name}} no se puede alcanzar desde el inicio.",
     "provider_not_configured": "{{provider}} no está configurado: introduce su URL base en los ajustes.",
     "input_form_only": "{{name}} lee el nodo de inicio con {{input}}. Si el formulario está rellenado, solo son los valores del formulario, sin el texto adicional. Usa {{run_input}} para recibir ambos."

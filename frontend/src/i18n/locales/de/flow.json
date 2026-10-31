@@ -146,6 +146,12 @@
     "download": "{{name}} herunterladen",
     "delete": "{{name}} löschen"
   },
+  "contract": {
+    "title": "Ausgabevertrag",
+    "hint": "Diese Felder verspricht der Workflow als Ergebnis. Am Ende wird geprüft, ob das Ergebnis sie enthält; andere Felder werden weggelassen. Ein übergeordneter Workflow kann sich darauf verlassen.",
+    "none": "Ohne Vertrag gibt der Workflow sein Ergebnis unverändert weiter. Mit einem Vertrag liefert er als Team ein geprüftes Objekt mit festen Feldern.",
+    "add": "Vertrag anlegen"
+  },
   "run": {
     "branches": "Gewählte Zweige: {{names}}",
     "fallback": "Sonst-Zweig, weil:",

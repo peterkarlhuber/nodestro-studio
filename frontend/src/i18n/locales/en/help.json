@@ -1,7 +1,9 @@
 {
   "workflow": {
     "budget": "Maximum amount in US dollars for one run. Every request reserves its highest possible cost in advance, so parallel steps cannot exceed the budget together. Empty = default budget from the settings.",
-    "limits": "Limits how many steps of a run work at the same time and how long a run may actively work. At the time limit, running steps are cancelled; a request already sent still finishes.",
+    "limits": "Limits how many steps of a run work at the same time, how long a run may actively work and how many steps it runs in total. At the time limit, running steps are cancelled; a request already sent still finishes.",
+    "contract": "The fields the workflow promises as its result. If the result does not fit, the run fails instead of passing on something unchecked.",
+    "capabilities": "Tags for what the workflow can do as a team. They help to find a fitting team and grant no permissions.",
     "problems": "These points prevent the start. They are checked again after every change.",
     "import": "Loads an exported workflow file (.nodestro.json) as a new copy. Existing workflows stay unchanged.",
     "export": "Saves the workflow with all agent settings as a JSON file. Knowledge files, memory and your own tools are not included.",

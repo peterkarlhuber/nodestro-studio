@@ -1,7 +1,9 @@
 {
   "workflow": {
     "budget": "Importo massimo in dollari USA per un’esecuzione. Ogni richiesta riserva in anticipo il suo costo massimo possibile, così i passaggi paralleli non possono superare insieme il budget. Vuoto = budget predefinito delle impostazioni.",
-    "limits": "Limita quanti passaggi di un’esecuzione lavorano contemporaneamente e per quanto tempo un’esecuzione può lavorare attivamente. Al limite di tempo i passaggi in corso vengono annullati; una richiesta già inviata termina comunque.",
+    "limits": "Limita quanti passaggi di un'esecuzione lavorano contemporaneamente, per quanto tempo un'esecuzione può lavorare attivamente e quanti passaggi esegue in totale. Al limite di tempo i passaggi in corso vengono annullati; una richiesta già inviata viene completata.",
+    "contract": "I campi che il workflow promette come risultato. Se il risultato non corrisponde, l'esecuzione fallisce invece di passare qualcosa di non verificato.",
+    "capabilities": "Parole chiave su cosa sa fare il workflow come team. Aiutano a trovare un team adatto e non concedono permessi.",
     "problems": "Questi punti impediscono l’avvio. Vengono ricontrollati a ogni modifica.",
     "import": "Carica un file di workflow esportato (.nodestro.json) come nuova copia. I workflow esistenti restano invariati.",
     "export": "Salva il workflow con tutte le impostazioni degli agenti come file JSON. File di conoscenza, memoria e strumenti personali non sono inclusi.",

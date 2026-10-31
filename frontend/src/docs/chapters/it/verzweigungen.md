@@ -82,9 +82,21 @@ Un **sotto-workflow** esegue un altro workflow salvato come un unico passaggio. 
 - **Versione:** *Ultima versione* usa lo stato attuale; una versione fissa non cambia se l'altro workflow viene modificato in seguito. Il controllo segnala quando esiste una versione più recente.
 - **Input:** cosa riceve il sotto-workflow come input; `{{input}}` è ciò che arriva qui.
 - **Valori per il suo modulo di input:** testo o segnaposto come `{{form.cliente}}` o `{{Analisi}}`. Il controllo segnala i campi obbligatori senza valore.
-- Il sotto-workflow gira come **esecuzione propria e collegata**; un link nei dettagli porta lì. Costi e token contano una sola volta, nel budget dell'esecuzione principale.
+- Il sotto-workflow gira come **esecuzione propria e collegata**; un link nei dettagli porta lì. Costi e token contano una sola volta, nel budget dell'esecuzione principale. Se il sotto-workflow ha un budget proprio, vale anche questo limite più stretto.
 - Un workflow non può chiamare sé stesso, nemmeno indirettamente; non sono ammessi più di cinque livelli.
 - Se il sotto-workflow attende un'approvazione, anche l'esecuzione principale attende.
+
+## Team {#teams}
+<!-- keywords: team, contratto di output, contratto, capacità, risultato strutturato, run.output_contract -->
+
+Un **team** è un workflow che, eseguito come sotto-workflow, promette un risultato fisso. Due impostazioni rendono un workflow un team:
+
+- **Contratto di output** sul nodo del risultato: i campi (nome, tipo, obbligatorio) che il workflow consegna, come nel risultato strutturato di un agente. Alla fine di un'esecuzione il risultato viene verificato. Deve essere un oggetto (o testo JSON di un oggetto) con ogni campo obbligatorio nel tipo giusto. Gli altri campi vengono omessi. Se il risultato non corrisponde, il nodo del risultato fallisce e con esso l'esecuzione; un workflow superiore non riceve mai un risultato non verificato.
+- **Capacità come team** nelle impostazioni del workflow: brevi parole chiave su cosa sa fare il workflow (al massimo 20). Viaggiano con il workflow (versioni, esportazione) e in seguito aiutano a trovare un team adatto. Non concedono permessi.
+
+In un workflow superiore, un workflow con contratto di output consegna un oggetto con esattamente questi campi. Una decisione successiva può quindi verificare direttamente un campo, ad esempio `score` maggiore o uguale a 5.
+
+La verifica prima dell'avvio avvisa quando un agente prima del risultato risponde in testo (allora serve solo una risposta JSON) o quando nessun agente fornisce un campo obbligatorio. Nomi di campo non validi o ripetuti impediscono l'avvio.
 
 ## Moduli di input {#eingabeformular}
 <!-- keywords: modulo, modulo di input, campi, tipo, obbligatorio, valore predefinito, scelta, data, numero, form -->

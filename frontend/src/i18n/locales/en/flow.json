@@ -146,6 +146,12 @@
     "download": "Download {{name}}",
     "delete": "Delete {{name}}"
   },
+  "contract": {
+    "title": "Output contract",
+    "hint": "The workflow promises these fields as its result. At the end, the result is checked for them; other fields are left out. A parent workflow can rely on them.",
+    "none": "Without a contract, the workflow passes its result on unchanged. With a contract, it delivers a checked object with fixed fields as a team.",
+    "add": "Add contract"
+  },
   "run": {
     "branches": "Chosen branches: {{names}}",
     "fallback": "Otherwise branch, because:",

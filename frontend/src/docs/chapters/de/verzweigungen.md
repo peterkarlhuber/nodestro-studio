@@ -82,9 +82,21 @@ Ein **Unterworkflow** führt einen anderen gespeicherten Workflow als einen Schr
 - **Version:** *Neueste Version* nimmt den aktuellen Stand; eine feste Version ändert sich nicht, wenn der andere Workflow später bearbeitet wird. Die Prüfung meldet, wenn es eine neuere Version gibt.
 - **Eingabe:** was der Unterworkflow als Eingabe erhält; `{{input}}` ist das, was hier ankommt.
 - **Werte für sein Eingabeformular:** Text oder Platzhalter wie `{{form.kunde}}` oder `{{Analyse}}`. Pflichtfelder ohne Wert meldet die Prüfung.
-- Der Unterworkflow läuft als **eigener, verknüpfter Lauf**; in den Details führt ein Link dorthin. Kosten und Tokens zählen einmal, im Budget des übergeordneten Laufs.
+- Der Unterworkflow läuft als **eigener, verknüpfter Lauf**; in den Details führt ein Link dorthin. Kosten und Tokens zählen einmal, im Budget des übergeordneten Laufs. Hat der Unterworkflow ein eigenes Budget, gilt zusätzlich diese engere Grenze.
 - Ein Workflow darf sich nicht selbst aufrufen, auch nicht über Umwege; mehr als fünf Ebenen sind nicht erlaubt.
 - Wartet der Unterworkflow auf eine Freigabe, wartet der übergeordnete Lauf mit.
+
+## Teams {#teams}
+<!-- keywords: team, ausgabevertrag, vertrag, fähigkeiten, capabilities, strukturiertes ergebnis, run.output_contract -->
+
+Ein **Team** ist ein Workflow, der als Unterworkflow ein festes Ergebnis verspricht. Zwei Einstellungen machen einen Workflow zum Team:
+
+- **Ausgabevertrag** am Ergebnis-Knoten: die Felder (Name, Typ, Pflicht), die der Workflow liefert, wie beim strukturierten Ergebnis eines Agenten. Am Ende eines Laufs wird das Ergebnis geprüft. Es muss ein Objekt sein (oder JSON-Text eines Objekts), das jedes Pflichtfeld im richtigen Typ enthält. Andere Felder werden weggelassen. Passt das Ergebnis nicht, schlägt der Ergebnis-Knoten fehl und mit ihm der Lauf; ein übergeordneter Workflow bekommt nie ein ungeprüftes Ergebnis.
+- **Fähigkeiten als Team** in den Workflow-Einstellungen: kurze Stichworte, was der Workflow kann (höchstens 20). Sie wandern mit dem Workflow (Versionen, Export) und helfen später, ein passendes Team zu finden. Sie vergeben keine Rechte.
+
+Ein Workflow mit Ausgabevertrag liefert im übergeordneten Workflow ein Objekt mit genau diesen Feldern. Eine Entscheidung danach kann deshalb direkt auf ein Feld prüfen, etwa `score` größer oder gleich 5.
+
+Die Prüfung vor dem Start warnt, wenn ein Agent vor dem Ergebnis als Text antwortet (dann hilft nur eine JSON-Antwort) oder wenn kein Agent ein Pflichtfeld liefert. Ungültige oder doppelte Feldnamen verhindern den Start.
 
 ## Eingabeformulare {#eingabeformular}
 <!-- keywords: formular, eingabeformular, felder, typ, pflichtfeld, standardwert, auswahl, datum, zahl, form -->

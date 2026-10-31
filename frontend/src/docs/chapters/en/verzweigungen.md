@@ -82,9 +82,21 @@ A **sub-workflow** runs another saved workflow as one step. Its result arrives l
 - **Version:** *Latest version* uses the current state; a fixed version does not change when the other workflow is edited later. The check reports when a newer version exists.
 - **Input:** what the sub-workflow receives as input; `{{input}}` is what arrives here.
 - **Values for its input form:** text or placeholders such as `{{form.customer}}` or `{{Analysis}}`. The check reports required fields without a value.
-- The sub-workflow runs as its **own, linked run**; a link in the details leads there. Cost and tokens count once, in the budget of the parent run.
+- The sub-workflow runs as its **own, linked run**; a link in the details leads there. Cost and tokens count once, in the budget of the parent run. If the sub-workflow has a budget of its own, that tighter limit applies as well.
 - A workflow must not call itself, not even indirectly; more than five levels are not allowed.
 - If the sub-workflow waits for an approval, the parent run waits with it.
+
+## Teams {#teams}
+<!-- keywords: team, output contract, contract, capabilities, structured result, run.output_contract -->
+
+A **team** is a workflow that promises a fixed result when it runs as a sub-workflow. Two settings make a workflow a team:
+
+- **Output contract** on the result node: the fields (name, type, required) the workflow delivers, as in an agent's structured result. At the end of a run, the result is checked. It must be an object (or JSON text of one) with every required field in the right type. Other fields are left out. If the result does not fit, the result node fails and the run with it; a parent workflow never receives an unchecked result.
+- **Capabilities as a team** in the workflow settings: short tags for what the workflow can do (at most 20). They travel with the workflow (versions, export) and later help to find a fitting team. They grant no permissions.
+
+In a parent workflow, a workflow with an output contract delivers an object with exactly these fields. A decision after it can therefore check a field directly, for example `score` greater than or equal to 5.
+
+The check before starting warns when an agent before the result answers in plain text (then only a JSON answer helps) or when no agent delivers a required field. Invalid or repeated field names prevent a start.
 
 ## Input forms {#eingabeformular}
 <!-- keywords: form, input form, fields, type, required, default, choice, date, number -->

@@ -82,9 +82,21 @@ Un **subflujo** ejecuta otro flujo de trabajo guardado como un solo paso. Su res
 - **Versión:** *Versión más reciente* usa el estado actual; una versión fija no cambia aunque el otro flujo se edite más tarde. La comprobación avisa cuando existe una versión más nueva.
 - **Entrada:** lo que recibe el subflujo como entrada; `{{input}}` es lo que llega aquí.
 - **Valores para su formulario de entrada:** texto o marcadores como `{{form.cliente}}` o `{{Análisis}}`. La comprobación avisa de campos obligatorios sin valor.
-- El subflujo se ejecuta como **ejecución propia y vinculada**; un enlace en los detalles lleva a ella. Costes y tokens cuentan una sola vez, en el presupuesto de la ejecución principal.
+- El subflujo se ejecuta como **ejecución propia y vinculada**; un enlace en los detalles lleva a ella. Costes y tokens cuentan una sola vez, en el presupuesto de la ejecución principal. Si el subflujo tiene presupuesto propio, se aplica además ese límite más estrecho.
 - Un flujo no puede llamarse a sí mismo, tampoco de forma indirecta; no se permiten más de cinco niveles.
 - Si el subflujo espera una aprobación, la ejecución principal espera con él.
+
+## Equipos {#teams}
+<!-- keywords: equipo, contrato de salida, contrato, capacidades, resultado estructurado, run.output_contract -->
+
+Un **equipo** es un flujo que, ejecutado como subflujo, promete un resultado fijo. Dos ajustes convierten un flujo en equipo:
+
+- **Contrato de salida** en el nodo de resultado: los campos (nombre, tipo, obligatorio) que entrega el flujo, como en el resultado estructurado de un agente. Al final de una ejecución se comprueba el resultado. Debe ser un objeto (o texto JSON de uno) con cada campo obligatorio en el tipo correcto. Los demás campos se omiten. Si el resultado no encaja, el nodo de resultado falla y con él la ejecución; un flujo superior nunca recibe un resultado sin comprobar.
+- **Capacidades como equipo** en los ajustes del flujo: etiquetas breves de lo que sabe hacer el flujo (como máximo 20). Viajan con el flujo (versiones, exportación) y más adelante ayudan a encontrar un equipo adecuado. No conceden permisos.
+
+En un flujo superior, un flujo con contrato de salida entrega un objeto con exactamente esos campos. Por eso una decisión posterior puede comprobar un campo directamente, por ejemplo `score` mayor o igual que 5.
+
+La comprobación antes de iniciar avisa cuando un agente antes del resultado responde en texto (entonces solo sirve una respuesta JSON) o cuando ningún agente entrega un campo obligatorio. Los nombres de campo no válidos o repetidos impiden iniciar.
 
 ## Formularios de entrada {#eingabeformular}
 <!-- keywords: formulario, formulario de entrada, campos, tipo, obligatorio, valor predeterminado, opción, fecha, número -->

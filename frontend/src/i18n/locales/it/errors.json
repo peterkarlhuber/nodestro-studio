@@ -97,6 +97,8 @@
     "branch_unknown": "Un collegamento di {{node}} non parte da alcun ramo.",
     "condition_no_rules": "La decisione {{node}} non ha regole.",
     "subworkflow_missing": "{{node}} non ha un workflow scelto.",
+    "contract_field_name": "{{node}}: il nome di campo {{field}} nel contratto di output non è valido (solo lettere, cifre e _).",
+    "contract_field_duplicate": "{{node}}: il contratto di output nomina due volte il campo {{field}}.",
     "node_duplicate": "Due nodi hanno lo stesso id ({{id}}). Eliminane uno e aggiungilo di nuovo.",
     "loop_unguarded": "Un ciclo deve partire da un ramo di una decisione o di un’approvazione.",
     "loop_target": "Un ciclo deve tornare a un passo precedente.",
@@ -130,7 +132,8 @@
     "no_event_loop": "L’esecuzione non è potuta partire: richiede un event loop attivo.",
     "loop_exhausted": "Il ciclo in {{node}} è stato eseguito {{max_iterations}} volte senza raggiungere il suo obiettivo.",
     "time_limit": "L’esecuzione ha raggiunto il limite di tempo di {{max_duration_s}} secondi. I passaggi in corso sono stati annullati.",
-    "step_limit": "L’esecuzione ha raggiunto il limite di {{max_steps}} passaggi. Non sono stati avviati altri passaggi."
+    "step_limit": "L’esecuzione ha raggiunto il limite di {{max_steps}} passaggi. Non sono stati avviati altri passaggi.",
+    "output_contract": "Il risultato non rispetta il contratto di output del workflow: {{fields}}."
   },
   "trace": {
     "invalid": "La traccia è danneggiata o incompleta.",
@@ -205,6 +208,8 @@
     "subworkflow_missing": "{{name}}: il workflow scelto non esiste più.",
     "subworkflow_outdated": "{{name}} usa la versione {{version}}; la versione {{latest}} è più recente.",
     "subworkflow_version_missing": "{{name}}: la versione scelta non esiste più.",
+    "contract_text_source": "{{name}} risponde in testo; il contratto di output può allora essere rispettato solo con una risposta JSON. Imposta il formato di output dell'agente su «Strutturato».",
+    "contract_field_missing": "Nessun agente prima del risultato fornisce {{fields}}; così il contratto di output non può essere rispettato.",
     "unreachable": "{{name}} non è raggiungibile dall’inizio.",
     "provider_not_configured": "{{provider}} non è configurato: inserisci l’URL di base nelle impostazioni.",
     "input_form_only": "{{name}} legge il nodo di avvio con {{input}}. Se il modulo è compilato, sono solo i valori del modulo, senza il testo aggiuntivo. Usa {{run_input}} per ricevere entrambi."

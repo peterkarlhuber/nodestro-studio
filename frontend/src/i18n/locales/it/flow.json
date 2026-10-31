@@ -146,6 +146,12 @@
     "download": "Scarica {{name}}",
     "delete": "Elimina {{name}}"
   },
+  "contract": {
+    "title": "Contratto di output",
+    "hint": "Il workflow promette questi campi come risultato. Alla fine si verifica che il risultato li contenga; gli altri campi vengono omessi. Un workflow superiore può farvi affidamento.",
+    "none": "Senza contratto, il workflow passa il risultato invariato. Con un contratto, consegna come team un oggetto verificato con campi fissi.",
+    "add": "Crea contratto"
+  },
   "run": {
     "branches": "Rami scelti: {{names}}",
     "fallback": "Ramo «altrimenti», perché:",

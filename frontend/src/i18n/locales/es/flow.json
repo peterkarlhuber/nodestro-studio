@@ -146,6 +146,12 @@
     "download": "Descargar {{name}}",
     "delete": "Eliminar {{name}}"
   },
+  "contract": {
+    "title": "Contrato de salida",
+    "hint": "El flujo promete estos campos como resultado. Al final se comprueba que el resultado los contiene; los demás campos se omiten. Un flujo superior puede confiar en ellos.",
+    "none": "Sin contrato, el flujo transmite su resultado sin cambios. Con un contrato, entrega como equipo un objeto comprobado con campos fijos.",
+    "add": "Crear contrato"
+  },
   "run": {
     "branches": "Ramas elegidas: {{names}}",
     "fallback": "Rama «si no», porque:",

@@ -1,7 +1,9 @@
 {
   "workflow": {
     "budget": "Montant maximal en dollars américains pour une exécution. Chaque requête réserve à l’avance son coût maximal possible, de sorte que des étapes parallèles ne peuvent pas dépasser ensemble le budget. Vide = budget par défaut des paramètres.",
-    "limits": "Limite le nombre d’étapes d’une exécution qui travaillent en même temps et la durée pendant laquelle une exécution peut travailler activement. À la limite de temps, les étapes en cours sont annulées ; une requête déjà envoyée se termine quand même.",
+    "limits": "Limite le nombre d’étapes d’une exécution qui travaillent en même temps, la durée de travail actif d’une exécution et le nombre total d’étapes. À la limite de temps, les étapes en cours sont annulées ; une requête déjà envoyée va à son terme.",
+    "contract": "Les champs que le workflow promet comme résultat. Si le résultat ne convient pas, l’exécution échoue au lieu de transmettre quelque chose de non vérifié.",
+    "capabilities": "Mots-clés sur ce que le workflow sait faire en équipe. Ils aident à trouver une équipe adaptée et n’accordent aucun droit.",
     "problems": "Ces points empêchent le démarrage. Ils sont revérifiés à chaque modification.",
     "import": "Charge un fichier de workflow exporté (.nodestro.json) comme nouvelle copie. Les workflows existants restent inchangés.",
     "export": "Enregistre le workflow avec tous les réglages des agents dans un fichier JSON. Les fichiers de connaissances, la mémoire et les outils personnels ne sont pas inclus.",

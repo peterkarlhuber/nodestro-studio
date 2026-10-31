@@ -330,6 +330,14 @@ describe("editor undo history", () => {
     expect(useEditor.getState().limits).toEqual(none);
   });
 
+  it("sends the capabilities and undoes them", () => {
+    expect(useEditor.getState().toWorkflow().capabilities).toEqual([]);
+    useEditor.getState().setMeta({ capabilities: ["research"] });
+    expect(useEditor.getState().toWorkflow().capabilities).toEqual(["research"]);
+    useEditor.getState().undo();
+    expect(useEditor.getState().capabilities).toEqual([]);
+  });
+
   it("starts a new step after selecting another node", () => {
     useEditor.getState().updateNode("start", { label: "In" }, { record: false });
     useEditor.getState().select("a");

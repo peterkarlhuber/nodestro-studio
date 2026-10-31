@@ -146,6 +146,12 @@
     "download": "Télécharger {{name}}",
     "delete": "Supprimer {{name}}"
   },
+  "contract": {
+    "title": "Contrat de sortie",
+    "hint": "Le workflow promet ces champs comme résultat. À la fin, le résultat est vérifié ; les autres champs sont omis. Un workflow parent peut s’y fier.",
+    "none": "Sans contrat, le workflow transmet son résultat tel quel. Avec un contrat, il livre en équipe un objet vérifié aux champs fixes.",
+    "add": "Créer un contrat"
+  },
   "run": {
     "branches": "Branches choisies : {{names}}",
     "fallback": "Branche « sinon », car :",

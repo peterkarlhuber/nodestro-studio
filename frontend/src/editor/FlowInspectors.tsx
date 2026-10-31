@@ -14,6 +14,7 @@ import type {
   ConditionRule,
   InputField,
   InputFieldType,
+  OutputField,
   ReportFormat,
   ResultFileSpec,
   SubworkflowConfig,
@@ -35,6 +36,7 @@ import {
 import { newField, newRule } from "../lib/defaults";
 import { DEFAULT_FIELD_MB, FORMAT_GROUPS, fileFieldSummary } from "../lib/files";
 import { branchLabel } from "./nodes";
+import { OutputFieldsEditor } from "./OutputFieldsEditor";
 import { useEditor } from "./store";
 
 export const OPERATORS: ConditionOperator[] = [
@@ -677,7 +679,7 @@ export function OutputFilesEditor({ node }: { node: WorkflowNode }) {
   const { t } = useTranslation();
   const { updateNode } = useEditor.getState();
   const files = node.output?.files ?? [];
-  const setFiles = (next: ResultFileSpec[], record = true) => updateNode(node.id, { output: { files: next } }, { record });
+  const setFiles = (next: ResultFileSpec[], record = true) => updateNode(node.id, { output: { ...node.output, files: next } }, { record });
   const setFile = (index: number, patch: Partial<ResultFileSpec>, record = true) =>
     setFiles(
       files.map((file, i) => (i === index ? { ...file, ...patch } : file)),
@@ -723,6 +725,38 @@ export function OutputFilesEditor({ node }: { node: WorkflowNode }) {
       <Button icon={Plus} size="sm" onClick={() => setFiles([...files, { format: "md", name: "", sanitize: false }])}>
         {t("flow.files.add")}
       </Button>
+    </section>
+  );
+}
+
+/** The output contract of a result node: the fields the workflow promises to deliver as a team. */
+export function OutputContractEditor({ node }: { node: WorkflowNode }) {
+  const { t } = useTranslation();
+  const { updateNode } = useEditor.getState();
+  const contract = node.output?.contract ?? [];
+  const setContract = (next: OutputField[]) =>
+    updateNode(node.id, { output: { files: node.output?.files ?? [], ...node.output, contract: next } });
+  return (
+    <section className="stack-sm" aria-label={t("flow.contract.title")} data-testid="output-contract">
+      <div className="field__head">
+        <span className="field__label nd-field-label">
+          {t("flow.contract.title")} <HelpTip id="workflow.contract" label={t("flow.contract.title")} />
+        </span>
+      </div>
+      <p className="field__hint">{contract.length ? t("flow.contract.hint") : t("flow.contract.none")}</p>
+      {contract.length ? (
+        <OutputFieldsEditor fields={contract} onChange={setContract} idPrefix="contract-field" />
+      ) : (
+        <Button
+          icon={Plus}
+          size="sm"
+          onClick={() =>
+            setContract([{ name: "summary", type: "string", description: t("agent.output.defaultFieldDescription"), required: true }])
+          }
+        >
+          {t("flow.contract.add")}
+        </Button>
+      )}
     </section>
   );
 }

@@ -82,9 +82,21 @@ Un **sous-workflow** exécute un autre workflow enregistré comme une seule éta
 - **Version :** *Dernière version* utilise l’état actuel ; une version fixe ne change pas si l’autre workflow est modifié plus tard. La vérification signale quand une version plus récente existe.
 - **Entrée :** ce que le sous-workflow reçoit comme entrée ; `{{input}}` est ce qui arrive ici.
 - **Valeurs pour son formulaire d’entrée :** du texte ou des espaces réservés comme `{{form.client}}` ou `{{Analyse}}`. La vérification signale les champs obligatoires sans valeur.
-- Le sous-workflow s’exécute comme une **exécution propre et liée** ; un lien dans les détails y mène. Coûts et tokens comptent une seule fois, dans le budget de l’exécution parente.
+- Le sous-workflow s’exécute comme une **exécution propre et liée** ; un lien dans les détails y mène. Coûts et tokens comptent une seule fois, dans le budget de l’exécution parente. Si le sous-workflow a son propre budget, cette limite plus stricte s’applique aussi.
 - Un workflow ne doit pas s’appeler lui-même, même indirectement ; plus de cinq niveaux ne sont pas autorisés.
 - Si le sous-workflow attend une validation, l’exécution parente attend avec lui.
+
+## Équipes {#teams}
+<!-- keywords: équipe, contrat de sortie, contrat, capacités, résultat structuré, run.output_contract -->
+
+Une **équipe** est un workflow qui promet un résultat fixe lorsqu’il s’exécute comme sous-workflow. Deux réglages font d’un workflow une équipe :
+
+- **Contrat de sortie** sur le nœud de résultat : les champs (nom, type, obligatoire) que livre le workflow, comme pour le résultat structuré d’un agent. À la fin d’une exécution, le résultat est vérifié. Il doit être un objet (ou le texte JSON d’un objet) contenant chaque champ obligatoire dans le bon type. Les autres champs sont omis. Si le résultat ne convient pas, le nœud de résultat échoue et l’exécution avec lui ; un workflow parent ne reçoit jamais de résultat non vérifié.
+- **Capacités en tant qu’équipe** dans les réglages du workflow : des mots-clés courts sur ce que sait faire le workflow (20 au plus). Ils suivent le workflow (versions, export) et aident plus tard à trouver une équipe adaptée. Ils n’accordent aucun droit.
+
+Dans un workflow parent, un workflow doté d’un contrat de sortie livre un objet avec exactement ces champs. Une décision qui suit peut donc tester un champ directement, par exemple `score` supérieur ou égal à 5.
+
+La vérification avant le lancement avertit lorsqu’un agent avant le résultat répond en texte (seule une réponse JSON aide alors) ou lorsqu’aucun agent ne fournit un champ obligatoire. Des noms de champ invalides ou répétés empêchent le lancement.
 
 ## Formulaires d’entrée {#eingabeformular}
 <!-- keywords: formulaire, formulaire d’entrée, champs, type, obligatoire, valeur par défaut, choix, date, nombre -->

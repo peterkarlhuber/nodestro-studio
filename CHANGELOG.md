@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Teams: output contracts and capabilities (Adaptive Orchestration M3, 2026-10-31)
+
+- Result node: new *Output contract* (runtime #49) with the same field editor as an agent's structured output (now
+  the shared `OutputFieldsEditor`). The result files editor keeps the contract when it changes files.
+- Workflow settings: *Capabilities as a team*, short tags (at most 20, 40 characters each) saved as
+  `capabilities`; part of undo and of the unsaved-changes check.
+- Error and check texts ×6 for `run.output_contract`, `workflow.contract_field_name`,
+  `workflow.contract_field_duplicate`, `check.contract_text_source` and `check.contract_field_missing`; help tips
+  `workflow.contract` and `workflow.capabilities`. Docs ×6: new section *Branches → Teams* (`verzweigungen#teams`);
+  the sub-workflow section now says that a sub-workflow's own budget applies as well.
+
 ### Run limits and budget reservations (Adaptive Orchestration M2, 2026-10-31)
 
 - Workflow settings: *Most steps running at the same time* (1 to 32) and *Time limit per run* (minutes, at most

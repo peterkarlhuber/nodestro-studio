@@ -97,6 +97,8 @@
     "branch_unknown": "Eine Verbindung von {{node}} beginnt an keinem Zweig.",
     "condition_no_rules": "Die Entscheidung {{node}} hat keine Regeln.",
     "subworkflow_missing": "Bei {{node}} ist kein Workflow gewählt.",
+    "contract_field_name": "{{node}}: Der Feldname {{field}} im Ausgabevertrag ist ungültig (nur Buchstaben, Ziffern und _).",
+    "contract_field_duplicate": "{{node}}: Der Ausgabevertrag nennt das Feld {{field}} doppelt.",
     "node_duplicate": "Zwei Knoten haben dieselbe ID ({{id}}). Lösche einen davon und füge ihn neu hinzu.",
     "loop_unguarded": "Eine Schleife muss von einem Zweig einer Entscheidung oder Freigabe ausgehen.",
     "loop_target": "Eine Schleife muss zu einem früheren Schritt zurückführen.",
@@ -130,7 +132,8 @@
     "no_event_loop": "Der Lauf konnte nicht starten: Er braucht eine laufende Event-Loop.",
     "loop_exhausted": "Die Schleife bei {{node}} lief {{max_iterations}}-mal, ohne ihr Ziel zu erreichen.",
     "time_limit": "Der Lauf hat sein Zeitlimit von {{max_duration_s}} Sekunden erreicht. Laufende Schritte wurden abgebrochen.",
-    "step_limit": "Der Lauf hat seine Grenze von {{max_steps}} Schritten erreicht. Weitere Schritte wurden nicht gestartet."
+    "step_limit": "Der Lauf hat seine Grenze von {{max_steps}} Schritten erreicht. Weitere Schritte wurden nicht gestartet.",
+    "output_contract": "Das Ergebnis erfüllt den Ausgabevertrag des Workflows nicht: {{fields}}."
   },
   "trace": {
     "invalid": "Der Trace ist beschädigt oder unvollständig.",
@@ -205,6 +208,8 @@
     "subworkflow_missing": "{{name}}: Der gewählte Workflow existiert nicht mehr.",
     "subworkflow_outdated": "{{name}} nutzt Version {{version}}; Version {{latest}} ist neuer.",
     "subworkflow_version_missing": "{{name}}: Die gewählte Version gibt es nicht mehr.",
+    "contract_text_source": "{{name}} antwortet als Text; der Ausgabevertrag ist dann nur mit einer JSON-Antwort erfüllbar. Stelle das Ausgabeformat des Agenten auf „Strukturiert“.",
+    "contract_field_missing": "Kein Agent vor dem Ergebnis liefert {{fields}}; der Ausgabevertrag wird so nicht erfüllt.",
     "unreachable": "{{name}} ist vom Start aus nicht erreichbar.",
     "provider_not_configured": "{{provider}} ist nicht eingerichtet: Trage die Basis-URL in den Einstellungen ein.",
     "input_form_only": "{{name}} liest den Startknoten mit {{input}}. Ist das Formular ausgefüllt, sind das nur die Formularwerte, ohne den zusätzlichen Text. Mit {{run_input}} kommt beides an."

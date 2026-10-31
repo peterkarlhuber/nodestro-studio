@@ -97,6 +97,8 @@
     "branch_unknown": "Une connexion de {{node}} ne part d’aucune branche.",
     "condition_no_rules": "La décision {{node}} n’a pas de règles.",
     "subworkflow_missing": "Aucun workflow n’est choisi pour {{node}}.",
+    "contract_field_name": "{{node}} : le nom de champ {{field}} du contrat de sortie n’est pas valide (lettres, chiffres et _ uniquement).",
+    "contract_field_duplicate": "{{node}} : le contrat de sortie nomme deux fois le champ {{field}}.",
     "node_duplicate": "Deux nœuds ont le même identifiant ({{id}}). Supprimez l’un d’eux et ajoutez-le à nouveau.",
     "loop_unguarded": "Une boucle doit partir d’une branche d’une décision ou d’une validation.",
     "loop_target": "Une boucle doit revenir vers une étape antérieure.",
@@ -130,7 +132,8 @@
     "no_event_loop": "L’exécution n’a pas pu démarrer : elle nécessite une boucle d’événements active.",
     "loop_exhausted": "La boucle à {{node}} a tourné {{max_iterations}} fois sans atteindre son objectif.",
     "time_limit": "L’exécution a atteint sa limite de temps de {{max_duration_s}} secondes. Les étapes en cours ont été annulées.",
-    "step_limit": "L’exécution a atteint sa limite de {{max_steps}} étapes. Aucune autre étape n’a été lancée."
+    "step_limit": "L’exécution a atteint sa limite de {{max_steps}} étapes. Aucune autre étape n’a été lancée.",
+    "output_contract": "Le résultat ne respecte pas le contrat de sortie du workflow : {{fields}}."
   },
   "trace": {
     "invalid": "La trace est endommagée ou incomplète.",
@@ -205,6 +208,8 @@
     "subworkflow_missing": "{{name}} : le workflow choisi n’existe plus.",
     "subworkflow_outdated": "{{name}} utilise la version {{version}} ; la version {{latest}} est plus récente.",
     "subworkflow_version_missing": "{{name}} : la version choisie n’existe plus.",
+    "contract_text_source": "{{name}} répond en texte ; le contrat de sortie ne peut alors être respecté que par une réponse JSON. Réglez le format de sortie de l’agent sur « Structuré ».",
+    "contract_field_missing": "Aucun agent avant le résultat ne fournit {{fields}} ; le contrat de sortie ne peut pas être respecté ainsi.",
     "unreachable": "{{name}} n’est pas accessible depuis le départ.",
     "provider_not_configured": "{{provider}} n’est pas configuré : saisissez son URL de base dans les réglages.",
     "input_form_only": "{{name}} lit le nœud de départ avec {{input}}. Lorsque le formulaire est rempli, ce ne sont que les valeurs du formulaire, sans le texte supplémentaire. Utilisez {{run_input}} pour recevoir les deux."

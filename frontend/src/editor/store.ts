@@ -23,12 +23,13 @@ import { newId, newNode } from "../lib/defaults";
 
 // Undo history: one snapshot per user action. Text fields record one step per editing session
 // (from the first key in a field until another field or another action), and a whole drag of a
-// node is one step from where it started. The name, description, budget and limits are part of it.
+// node is one step from where it started. The name, description, budget, limits and capabilities are part of it.
 interface Snapshot {
   name: string;
   description: string;
   budget: number | null;
   limits: WorkflowLimits;
+  capabilities: string[];
   nodes: WorkflowNode[];
   edges: WorkflowEdge[];
   /** The version note that belongs to this state (from a taken architect draft). */
@@ -43,6 +44,7 @@ export interface EditorState {
   description: string;
   budget: number | null;
   limits: WorkflowLimits;
+  capabilities: string[];
   nodes: WorkflowNode[];
   edges: WorkflowEdge[];
   selectedId: string | null;
@@ -61,7 +63,7 @@ export interface EditorState {
   toWorkflow: () => WorkflowIn;
   /** After a save: ``sent`` is what was sent; edits made while the request ran stay unsaved. */
   markSaved: (workflow: Workflow, sent?: WorkflowIn) => void;
-  setMeta: (patch: Partial<Pick<EditorState, "name" | "description" | "budget" | "limits">>) => void;
+  setMeta: (patch: Partial<Pick<EditorState, "name" | "description" | "budget" | "limits" | "capabilities">>) => void;
 
   addNode: (type: NodeType, position: { x: number; y: number }, agent?: Partial<AgentConfig>) => WorkflowNode;
   updateNode: (id: string, patch: Partial<WorkflowNode>, options?: { record?: boolean }) => void;
@@ -124,8 +126,8 @@ export const DEFAULT_LOOP: EdgeLoop = { max_iterations: 3, on_exhausted: "fail" 
 
 export const useEditor = create<EditorState>((set, get) => {
   const snapshot = (): Snapshot => {
-    const { name, description, budget, limits, nodes, edges, pendingNote } = get();
-    return { name, description, budget, limits, nodes, edges, pendingNote };
+    const { name, description, budget, limits, capabilities, nodes, edges, pendingNote } = get();
+    return { name, description, budget, limits, capabilities, nodes, edges, pendingNote };
   };
   /** The field being typed in: further keys in it extend the same undo step. */
   let editing: string | null = null;
@@ -154,6 +156,7 @@ export const useEditor = create<EditorState>((set, get) => {
     description: "",
     budget: null,
     limits: NO_LIMITS,
+    capabilities: [],
     nodes: [],
     edges: [],
     selectedId: null,
@@ -173,6 +176,7 @@ export const useEditor = create<EditorState>((set, get) => {
         description: workflow.description,
         budget: workflow.budget_usd,
         limits: { ...NO_LIMITS, ...workflow.limits },
+        capabilities: workflow.capabilities ?? [],
         nodes: workflow.nodes,
         edges: workflow.edges,
         selectedId: null,
@@ -194,6 +198,7 @@ export const useEditor = create<EditorState>((set, get) => {
         description: "",
         budget: null,
         limits: NO_LIMITS,
+        capabilities: [],
         nodes: [],
         edges: [],
         selectedId: null,
@@ -207,12 +212,12 @@ export const useEditor = create<EditorState>((set, get) => {
     },
 
     toWorkflow: () => {
-      const { name, description, budget, limits, nodes, edges } = get();
-      return { name, description, budget_usd: budget, limits, nodes, edges };
+      const { name, description, budget, limits, capabilities, nodes, edges } = get();
+      return { name, description, budget_usd: budget, limits, capabilities, nodes, edges };
     },
 
     markSaved: (workflow, sent) => {
-      const { name, description, budget, limits, nodes, edges } = get();
+      const { name, description, budget, limits, capabilities, nodes, edges } = get();
       const unchanged =
         !sent ||
         (sent.nodes === nodes &&
@@ -220,7 +225,8 @@ export const useEditor = create<EditorState>((set, get) => {
           sent.name === name &&
           sent.description === description &&
           sent.budget_usd === budget &&
-          sent.limits === limits);
+          sent.limits === limits &&
+          sent.capabilities === capabilities);
       if (unchanged) set({ dirty: false, workflowId: workflow.id, name: workflow.name, pendingNote: null });
       else set({ workflowId: workflow.id, pendingNote: null });
     },

@@ -1,7 +1,9 @@
 {
   "workflow": {
     "budget": "Importe máximo en dólares estadounidenses para una ejecución. Cada solicitud reserva de antemano su coste máximo posible, de modo que los pasos paralelos no pueden superar juntos el presupuesto. Vacío = presupuesto predeterminado de los ajustes.",
-    "limits": "Limita cuántos pasos de una ejecución trabajan a la vez y cuánto tiempo puede trabajar activamente una ejecución. Al llegar al límite de tiempo se cancelan los pasos en curso; una solicitud ya enviada termina igualmente.",
+    "limits": "Limita cuántos pasos de una ejecución trabajan a la vez, cuánto tiempo puede trabajar activamente una ejecución y cuántos pasos ejecuta en total. Al alcanzar el límite de tiempo se cancelan los pasos en curso; una solicitud ya enviada se completa.",
+    "contract": "Los campos que el flujo promete como resultado. Si el resultado no encaja, la ejecución falla en lugar de transmitir algo sin comprobar.",
+    "capabilities": "Etiquetas de lo que el flujo puede hacer como equipo. Ayudan a encontrar un equipo adecuado y no conceden permisos.",
     "problems": "Estos puntos impiden el inicio. Se vuelven a comprobar con cada cambio.",
     "import": "Carga un archivo de flujo de trabajo exportado (.nodestro.json) como copia nueva. Los flujos de trabajo existentes no cambian.",
     "export": "Guarda el flujo de trabajo con todos los ajustes de los agentes como archivo JSON. No incluye los archivos de conocimiento, la memoria ni las herramientas propias.",

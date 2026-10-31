@@ -28,8 +28,6 @@ import type {
   ContentKind,
   KnowledgeFile,
   KnowledgeProposalConfig,
-  OutputField,
-  OutputFieldType,
   Workflow,
   WorkflowNode,
 } from "../api/types";
@@ -38,7 +36,7 @@ import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { CodeEditor } from "../components/CodeEditor";
 import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
-import { HelpTip, Tooltip } from "../components/Tooltip";
+import { HelpTip } from "../components/Tooltip";
 import { AGENT_ICONS } from "../components/icons";
 import { toast } from "../components/toast";
 import {
@@ -60,13 +58,12 @@ import { AgentTestDialog } from "./AgentTestDialog";
 import { DesignAgentDialog } from "./DesignAgentDialog";
 import { InputPreview } from "./InputPreview";
 import { MemoryAssistantDialog } from "./MemoryAssistantDialog";
+import { OutputFieldsEditor } from "./OutputFieldsEditor";
 import { serverToolDescription, serverToolLabel, toolDescription } from "../lib/catalog";
 import { getDefaultModel } from "../lib/defaults";
 import { providerOf, sameModel, splitModel } from "../lib/providers";
 import { ProblemText } from "../lib/errors";
-import { helpEntry } from "../lib/help";
 import { KNOWLEDGE_ACCEPT } from "../lib/knowledge";
-import { fieldNameProblem } from "../lib/validation";
 import {
   type AgentSectionId,
   advancedSummary,
@@ -82,7 +79,6 @@ import { useEditor } from "./store";
 const EFFORTS = ["", "low", "medium", "high", "xhigh", "max"] as const;
 const THINKING = ["", "adaptive", "between_tools", "disabled"] as const;
 const THINKING_DISPLAY = ["", "summarized", "updates", "omitted"] as const;
-const FIELD_TYPES: OutputFieldType[] = ["string", "number", "integer", "boolean", "string_list", "number_list"];
 
 /** The sections in the order of the form, with their titles (for the problem links at the top). */
 const SECTION_ORDER: AgentSectionId[] = ["tools", "knowledge", "memory", "output", "thinking", "quality", "advanced"];
@@ -764,9 +760,6 @@ function OutputSection({ agent, update, ui }: SectionProps) {
   const { t } = useTranslation();
   const output = agent.output;
   const setOutput = (patch: Partial<AgentConfig["output"]>) => update({ output: { ...output, ...patch } });
-  const setField = (index: number, patch: Partial<OutputField>) =>
-    setOutput({ fields: output.fields.map((field, i) => (i === index ? { ...field, ...patch } : field)) });
-  const names = output.fields.map((field) => field.name);
   return (
     <Section
       {...ui}
@@ -794,95 +787,7 @@ function OutputSection({ agent, update, ui }: SectionProps) {
       {output.mode === "structured" ? (
         <>
           <p className="field__hint">{t("agent.output.structuredHint")}</p>
-          <div className="fields-editor">
-            {output.fields.map((field, index) => {
-              const problemKey = fieldNameProblem(field.name, names);
-              const problem = problemKey ? t(problemKey) : null;
-              const id = `output-field-${index}`;
-              return (
-                <div
-                  className="output-field"
-                  key={index}
-                  role="group"
-                  aria-label={t("agent.output.field", { name: field.name || index + 1 })}
-                >
-                  <div className="output-field__name">
-                    <span className="output-field__label">
-                      <label htmlFor={`${id}-name`}>{t("agent.output.fieldName")}</label>
-                      {index === 0 ? <HelpTip id="agent.outputFieldName" label={t("agent.output.fieldName")} /> : null}
-                    </span>
-                    <TextInput
-                      id={`${id}-name`}
-                      value={field.name}
-                      placeholder="field_name"
-                      spellCheck={false}
-                      autoComplete="off"
-                      aria-invalid={problem ? true : undefined}
-                      aria-describedby={problem ? `${id}-problem` : undefined}
-                      onChange={(e) => setField(index, { name: e.target.value.replace(/[^A-Za-z0-9_]/g, "_") })}
-                    />
-                    {problem ? (
-                      <span id={`${id}-problem`} className="output-field__error">
-                        {problem}
-                      </span>
-                    ) : null}
-                  </div>
-                  <div className="output-field__type">
-                    <span className="output-field__label">
-                      <label htmlFor={`${id}-type`}>{t("agent.output.fieldType")}</label>
-                      {index === 0 ? <HelpTip id="agent.outputFieldType" label={t("agent.output.fieldType")} /> : null}
-                    </span>
-                    <Select
-                      id={`${id}-type`}
-                      value={field.type}
-                      options={options(t, "fieldType", FIELD_TYPES)}
-                      onChange={(type) => setField(index, { type: type as OutputFieldType })}
-                    />
-                  </div>
-                  <div className="output-field__remove">
-                    <IconButton
-                      icon={Trash2}
-                      label={t("agent.output.removeField", { name: field.name || index + 1 })}
-                      onClick={() => setOutput({ fields: output.fields.filter((_, i) => i !== index) })}
-                    />
-                  </div>
-                  <div className="output-field__description">
-                    <span className="output-field__label">
-                      <label htmlFor={`${id}-description`}>{t("common.description")}</label>
-                      {index === 0 ? <HelpTip id="agent.outputFieldDescription" label={t("common.description")} /> : null}
-                    </span>
-                    <TextInput
-                      id={`${id}-description`}
-                      value={field.description}
-                      placeholder={t("agent.output.fieldDescriptionPlaceholder")}
-                      onChange={(e) => setField(index, { description: e.target.value })}
-                    />
-                  </div>
-                  <Tooltip content={helpEntry(t, "agent.outputFieldRequired").text}>
-                    <label className="checkbox output-field__required">
-                      <input
-                        type="checkbox"
-                        checked={field.required}
-                        onChange={(e) => setField(index, { required: e.target.checked })}
-                      />
-                      {t("agent.output.required")}
-                    </label>
-                  </Tooltip>
-                </div>
-              );
-            })}
-          </div>
-          <Button
-            size="sm"
-            icon={Plus}
-            onClick={() =>
-              setOutput({
-                fields: [...output.fields, { name: `field_${output.fields.length + 1}`, type: "string", description: "", required: true }],
-              })
-            }
-          >
-            {t("agent.output.addField")}
-          </Button>
+          <OutputFieldsEditor fields={output.fields} onChange={(fields) => setOutput({ fields })} idPrefix="output-field" />
         </>
       ) : null}
     </Section>

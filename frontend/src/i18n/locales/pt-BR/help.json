@@ -1,7 +1,9 @@
 {
   "workflow": {
     "budget": "Valor máximo em dólares americanos para uma execução. Cada solicitação reserva com antecedência seu custo máximo possível, de modo que etapas paralelas não podem ultrapassar o orçamento juntas. Vazio = orçamento padrão das configurações.",
-    "limits": "Limita quantas etapas de uma execução trabalham ao mesmo tempo e por quanto tempo uma execução pode trabalhar ativamente. No limite de tempo, as etapas em andamento são canceladas; uma solicitação já enviada ainda termina.",
+    "limits": "Limita quantas etapas de uma execução trabalham ao mesmo tempo, por quanto tempo uma execução pode trabalhar ativamente e quantas etapas executa no total. No limite de tempo, as etapas em andamento são canceladas; uma solicitação já enviada ainda é concluída.",
+    "contract": "Os campos que o fluxo promete como resultado. Se o resultado não se encaixar, a execução falha em vez de repassar algo não verificado.",
+    "capabilities": "Palavras-chave sobre o que o fluxo faz como equipe. Ajudam a encontrar uma equipe adequada e não concedem permissões.",
     "problems": "Estes pontos impedem o início. Eles são verificados de novo a cada alteração.",
     "import": "Carrega um arquivo de fluxo de trabalho exportado (.nodestro.json) como uma nova cópia. Os fluxos de trabalho existentes não mudam.",
     "export": "Salva o fluxo de trabalho com todas as configurações dos agentes como arquivo JSON. Arquivos de conhecimento, memória e ferramentas próprias não são incluídos.",

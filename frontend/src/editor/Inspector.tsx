@@ -1,15 +1,22 @@
 import { CheckCircle2, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from "lucide-react";
-import type { Ref } from "react";
+import { type Ref, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
-import { MAX_DURATION_LIMIT_S, MAX_PARALLEL_LIMIT, MAX_STEPS_LIMIT, type WorkflowCheck } from "../api/types";
-import { DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../components/ui";
+import {
+  MAX_CAPABILITIES,
+  MAX_DURATION_LIMIT_S,
+  MAX_PARALLEL_LIMIT,
+  MAX_STEPS_LIMIT,
+  type WorkflowCheck,
+} from "../api/types";
+import { Chip, DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../components/ui";
 import { WorkflowDependencies } from "../python/DependencyPanel";
 import { AgentInspector } from "./AgentInspector";
 import { CheckList } from "./CheckList";
 import { ConnectionInspector } from "./ConnectionInspector";
+import { addCapabilities } from "../lib/capabilities";
 import { useEditorLayout } from "./layout";
-import { ApprovalInspector, ConditionInspector, FormEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
+import { ApprovalInspector, ConditionInspector, FormEditor, OutputContractEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
 import { useEditor } from "./store";
 
 export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefined; panelRef?: Ref<HTMLElement> }) {
@@ -112,7 +119,14 @@ function TerminalInspector({ nodeId }: { nodeId: string }) {
           />
         </Field>
       ) : null}
-      {isStart ? <FormEditor node={node} /> : <OutputFilesEditor node={node} />}
+      {isStart ? (
+        <FormEditor node={node} />
+      ) : (
+        <>
+          <OutputContractEditor node={node} />
+          <OutputFilesEditor node={node} />
+        </>
+      )}
     </div>
   );
 }
@@ -149,6 +163,7 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
         />
       </Field>
       <LimitFields />
+      <CapabilityField />
       {workflowId ? <WorkflowDependencies workflowId={workflowId} workflow={toWorkflow()} /> : null}
       {check ? (
         <section className="check-panel" aria-label={t("editor.inspector.problemsLabel")}>
@@ -255,5 +270,51 @@ function LimitFields() {
         />
       </Field>
     </>
+  );
+}
+
+/** What the workflow can do as a team: short tags that help to find it later (they grant nothing). */
+function CapabilityField() {
+  const { t } = useTranslation();
+  const capabilities = useEditor((s) => s.capabilities);
+  const { setMeta } = useEditor.getState();
+  const [typed, setTyped] = useState("");
+  const take = () => {
+    if (!typed.trim()) return;
+    setMeta({ capabilities: addCapabilities(capabilities, typed) });
+    setTyped("");
+  };
+  return (
+    <Field
+      label={t("editor.inspector.capabilities")}
+      hint={t("editor.inspector.capabilitiesHint", { max: MAX_CAPABILITIES })}
+      tip="workflow.capabilities"
+    >
+      <div className="stack-sm">
+        {capabilities.length ? (
+          <div className="chip-row" data-testid="capabilities">
+            {capabilities.map((tag) => (
+              <Chip key={tag} onRemove={() => setMeta({ capabilities: capabilities.filter((item) => item !== tag) })}>
+                {tag}
+              </Chip>
+            ))}
+          </div>
+        ) : null}
+        <TextInput
+          value={typed}
+          placeholder={t("editor.inspector.capabilitiesPlaceholder")}
+          disabled={capabilities.length >= MAX_CAPABILITIES}
+          onChange={(e) => setTyped(e.target.value)}
+          onBlur={take}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === ",") {
+              e.preventDefault();
+              take();
+            }
+          }}
+          data-testid="capability-input"
+        />
+      </div>
+    </Field>
   );
 }

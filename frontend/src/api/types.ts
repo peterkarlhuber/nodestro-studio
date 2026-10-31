@@ -202,6 +202,8 @@ export interface ResultFileSpec {
 
 export interface OutputNodeConfig {
   files: ResultFileSpec[];
+  /** The fields the workflow promises to deliver (output contract of a team); empty: no contract. */
+  contract?: OutputField[];
 }
 
 export interface WorkflowNode {
@@ -248,6 +250,8 @@ export interface WorkflowLimits {
 export const MAX_PARALLEL_LIMIT = 32;
 export const MAX_DURATION_LIMIT_S = 7 * 24 * 3600;
 export const MAX_STEPS_LIMIT = 10_000;
+export const MAX_CAPABILITIES = 20;
+export const MAX_CAPABILITY_LENGTH = 40;
 export const NO_LIMITS: WorkflowLimits = { max_parallel: null, max_duration_s: null, max_steps: null };
 
 export interface WorkflowIn {
@@ -258,6 +262,8 @@ export interface WorkflowIn {
   budget_usd: number | null;
   /** Missing in workflows of earlier versions (no limits). */
   limits?: WorkflowLimits;
+  /** What the workflow can do as a team (up to MAX_CAPABILITIES short tags); they grant nothing. */
+  capabilities?: string[];
 }
 
 export interface Workflow extends WorkflowIn {
