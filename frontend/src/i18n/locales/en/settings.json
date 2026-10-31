@@ -26,7 +26,7 @@
   "sandbox": {
     "title": "Sandbox for your own tools",
     "label": "Sandbox",
-    "text": "Your own and AI-created tools never run in the Nodestro process. The Python process is available at once; Docker isolates more strongly (no network, limited memory).",
+    "text": "Your own and AI-created tools never run in the Nodestro process. The Python process is available at once; Docker isolates more strongly (no network, limited memory). AI-created tools and tools of unknown origin run only with Docker; without it they are blocked.",
     "subprocess": "Python process",
     "dockerAvailable": "Docker available",
     "dockerMissing": "Docker not found",

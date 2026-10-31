@@ -45,6 +45,8 @@ The **Default budget per run** (initially 2 USD) applies to all workflows withou
 
 Here you choose where your own and AI-created tools run: **Python process** or **Docker**. The change takes effect immediately. A note shows whether Docker was found; if Docker is selected but not reachable, tool tests and calls fail. Details are under [The sandbox](/docs/tools#sandbox).
 
+Tools created by AI and tools of unknown origin run only with Docker; see [Trust and isolation](/docs/tools#vertrauen).
+
 ## Language {#sprache}
 <!-- keywords: language, english, german, spanish, french, portuguese, italian, browser language, translation, localization -->
 

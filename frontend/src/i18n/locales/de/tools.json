@@ -17,6 +17,17 @@
     "generated": "Von KI erstellt"
   },
   "kindLabel": "Art des Tools",
+  "trust": {
+    "trusted": "Eingebaut",
+    "user-authored": "Von dir geschrieben",
+    "untrusted": "Braucht Isolation"
+  },
+  "trustLabel": "Herkunft",
+  "trustNote": {
+    "user-authored": "Von dir geschrieben: läuft in einem eigenen Python-Prozess ohne Isolation auf diesem Rechner.",
+    "untrusted": "KI-erstellt oder unbekannter Herkunft: läuft nur in der Docker-Sandbox.",
+    "untrustedBlocked": "KI-erstellt oder unbekannter Herkunft: läuft nur in der Docker-Sandbox. Mit der Sandbox „Python-Prozess“ können Agenten mit diesem Tool nicht laufen."
+  },
   "version": "Version {{version}}",
   "deleted": "Tool {{name}} gelöscht",
   "saved": "Tool {{name}} gespeichert",
@@ -74,7 +85,8 @@
     "dependenciesNote": "Der Vorschlag nutzt Bibliotheken von Drittanbietern. Nichts ist installiert; die Tests laufen erst nach deiner Freigabe. Den Code gibst du danach separat frei.",
     "approveLibraries": "Bibliotheken freigeben",
     "withoutLibraries": "Ohne Bibliotheken neu schreiben",
-    "usesLibraries": "Verwendet die freigegebenen Bibliotheken: {{names}}"
+    "usesLibraries": "Verwendet die freigegebenen Bibliotheken: {{names}}",
+    "needsDocker": "Tools mit KI zu erstellen braucht die Docker-Sandbox: Die Tests von KI-geschriebenem Code laufen nie ohne Isolation. Wähle Docker in den Einstellungen."
   },
   "drafts": {
     "title_one": "{{count}} Tool-Entwurf wartet auf deine Entscheidung",

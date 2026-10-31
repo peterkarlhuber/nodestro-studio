@@ -206,6 +206,27 @@ function Library() {
   );
 }
 
+/** Where this tool's code may run (ADR-0006): the policy is shown, not only enforced. */
+function TrustNote({ tool }: { tool: ToolInfo }) {
+  const { t } = useTranslation();
+  const settings = useSettings();
+  if (tool.trust === "trusted") return null;
+  if (tool.trust === "user-authored")
+    return (
+      <p className="muted small" data-testid="tool-trust">
+        {t("tools.trustNote.user-authored")}
+      </p>
+    );
+  const blocked = settings.data !== undefined && settings.data.sandbox !== "docker";
+  return (
+    <div data-testid="tool-trust">
+      <Callout tone={blocked ? "warning" : "info"}>
+        {t(blocked ? "tools.trustNote.untrustedBlocked" : "tools.trustNote.untrusted")}
+      </Callout>
+    </div>
+  );
+}
+
 function exampleInput(schema: Record<string, unknown> | null): string {
   const properties = (schema?.properties ?? {}) as Record<
     string,
@@ -277,6 +298,9 @@ function ToolDetail({
             <HelpTip id="tools.kind" label={t("tools.kindLabel")} />{" "}
             {t(`tools.kind.${tool.kind}`)}
             {tool.kind !== "builtin"
+              ? ` · ${t("tools.trustLabel")}: ${t(`tools.trust.${tool.trust}`)}`
+              : ""}
+            {tool.kind !== "builtin"
               ? ` · ${t("tools.version", { version: tool.version })}`
               : ""}
             {tool.created_at ? ` · ${relativeTime(tool.created_at)}` : ""}
@@ -293,6 +317,7 @@ function ToolDetail({
       </div>
       <TagChips kind="tool" id={tool.name} />
       <p>{toolDescription(t, tool)}</p>
+      <TrustNote tool={tool} />
       {tool.requirement ? (
         <Callout tone="brand">
           <strong>{t("tools.requirement")}</strong> {tool.requirement}
@@ -528,6 +553,9 @@ const JOB_TONE: Record<
 function GenerateTool() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const settings = useSettings();
+  // ADR-0006: the tests of AI-written code never run without isolation (the API refuses the job).
+  const needsDocker = settings.data !== undefined && settings.data.sandbox !== "docker";
   const [requirement, setRequirement] = useState("");
   // A tool proposed in the assistant only fills in the requirement; the user starts the job.
   useTakeHandover(
@@ -578,6 +606,11 @@ function GenerateTool() {
         className="panel stack"
         aria-label={t("tools.generate.describe")}
       >
+        {needsDocker ? (
+          <div data-testid="generate-needs-docker">
+            <Callout tone="warning">{t("tools.generate.needsDocker")}</Callout>
+          </div>
+        ) : null}
         <Field
           label={t("tools.generate.question")}
           htmlFor="tool-requirement"
@@ -597,7 +630,7 @@ function GenerateTool() {
             variant="primary"
             icon={Sparkles}
             busy={start.isPending}
-            disabled={requirement.trim().length < 10}
+            disabled={needsDocker || requirement.trim().length < 10}
             onClick={() => start.mutate()}
           >
             {t("tools.generate.start")}

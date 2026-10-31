@@ -26,7 +26,7 @@
   "sandbox": {
     "title": "Bac à sable pour les outils personnels",
     "label": "Bac à sable",
-    "text": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro. Le processus Python est disponible immédiatement ; Docker isole davantage (sans réseau, mémoire limitée).",
+    "text": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro. Le processus Python est disponible immédiatement ; Docker isole davantage (sans réseau, mémoire limitée). Les outils créés par l’IA et ceux d’origine inconnue ne s’exécutent qu’avec Docker ; sans Docker, ils sont bloqués.",
     "subprocess": "Processus Python",
     "dockerAvailable": "Docker disponible",
     "dockerMissing": "Docker introuvable",

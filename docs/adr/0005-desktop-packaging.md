@@ -1,6 +1,7 @@
 # ADR-0005: Desktop packaging without separate installations
 
-- Status: Proposed (M0, 2026-10-31); the host technology is decided by the M2 spike and recorded in an update of this ADR
+- Status: Accepted (2026-10-31): host shell Tauri 2, decided by the packaging spike (plan PR-5, nodestro-desktop
+  `spike/README.md`, measured on Linux x86_64 only)
 - Repositories: nodestro-desktop (host, bundling, installers, releases), nodestro-studio (wheel, versions)
 
 ## Context
@@ -53,3 +54,27 @@ React build that the studio wheel already contains (`nodestro_studio/static`).
   branches.
 - macOS notarization and Windows signing need certificates owned by Peter; without them, builds are labeled
   unsigned test builds.
+
+## Spike result and decision (PR-5, 2026-10-31)
+
+Measured on Linux x86_64 (Ubuntu 24.04, Xvfb); macOS and Windows not measured. Details and scripts:
+`nodestro-desktop/spike/`.
+
+| | Tauri 2 | Electron 38 | pywebview |
+| --- | --- | --- | --- |
+| Shell size | 4.3 MB binary + system WebKitGTK | 286 MB (Chromium) | 557 MB with Qt (PyQt6: GPL/commercial) |
+| Launch to window, incl. backend | 1.8 to 1.9 s | 1.8 to 3.0 s | not measured |
+| Clean quit (backend exit 0, no process left) | yes | yes | not measured |
+
+The backend bundle is the same for every shell: CPython 3.13 from python-build-standalone (via `uv python
+install`) with all components, 295 MB on disk, 82 MB compressed, 1.2 to 1.8 s to a healthy `/api/health`.
+
+**Decision: Tauri 2.** The backend is a separate process anyway; Tauri adds almost nothing to the download, manages
+the child process explicitly and has a signing updater. Electron is the fallback for an OS whose system web view
+fails the studio's browser suites. Consequences found by the spike:
+
+- The desktop build builds the studio interface from the studio commit (Node.js at build time only) or uses the wheel
+  of the studio CI's `package` job; `pip install git+...` alone has no interface.
+- Linux depends on the system WebKitGTK 4.1 (`.deb` dependency); an AppImage would have to bundle it.
+- Shells stop the backend with SIGINT (uvicorn exits 0 after the application shutdown), with a kill after 10 s.
+

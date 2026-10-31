@@ -83,11 +83,24 @@ try {
   check(await tool.getByText("noch nicht gelaufen", { exact: false }).isVisible(), "The tool draft has not run");
   check(!(await api("/api/tools")).some((item) => item.name === "keyword_density"), "The tool draft is not registered");
   await shot("architect-03-tool");
+  // ADR-0006: AI-written code never runs without isolation, also not after approval.
+  await tool.getByRole("button", { name: "Freigeben und registrieren" }).click();
+  await tool.getByText("laufen nur in der Docker-Sandbox", { exact: false }).first().waitFor({ timeout: 30000 });
+  check(
+    !(await api("/api/tools")).some((item) => item.name === "keyword_density"),
+    "Without Docker, approving a draft runs nothing and registers nothing",
+  );
+  // The test server stands in for Docker with a container double (tests/e2e_architect_server.py).
+  await api("/api/settings", { method: "PUT", data: { sandbox: "docker" } });
   await tool.getByRole("button", { name: "Freigeben und registrieren" }).click();
   await tool.getByText("freigegeben", { exact: true }).waitFor({ timeout: 30000 });
   check(
     (await api("/api/tools")).some((item) => item.name === "keyword_density"),
     "Approving tests and registers the tool",
+  );
+  check(
+    (await api("/api/tools/keyword_density")).trust === "untrusted",
+    "An approved AI-written tool stays untrusted",
   );
 
   await dialog.getByRole("tab", { name: "Überblick" }).click();

@@ -150,6 +150,26 @@ Gli strumenti personali e creati dall'IA **non vengono mai eseguiti nel processo
 
 La sandbox si sceglie nelle [impostazioni](/docs/einstellungen#sandbox). Docker isola di più, ma deve essere installato e avviato; altrimenti test e chiamate falliscono. Se una chiamata supera il limite di tempo, conta come errore.
 
+
+## Fiducia e isolamento {#vertrauen}
+<!-- keywords: fiducia, non attendibile, origine, generato dall’ia, docker necessario, isolamento necessario, bloccato, limitato, richiede isolamento -->
+
+Nodestro decide in base all’**origine del codice** dove può essere eseguito:
+
+| Origine | Mostrato come | Sandbox *Processo Python* | Sandbox *Docker* |
+|---|---|---|---|
+| Strumenti integrati e integrazioni | *Integrato* | nel processo di Nodestro | nel processo di Nodestro |
+| Scritto da te in *Scrivi tu* | *Scritto da te* | viene eseguito, senza isolamento su questo computer | viene eseguito isolato |
+| Creato dall’IA (anche dopo la tua approvazione), bozze di strumenti dell’architetto IA, strumenti di origine sconosciuta | *Richiede isolamento* | **bloccato** | viene eseguito isolato |
+
+Il processo Python non è una barriera di sicurezza: il codice al suo interno ha i tuoi permessi. Per questo Nodestro non vi esegue mai codice generato dall’IA, e né la tua approvazione né un’impostazione lo cambiano. Senza Docker:
+
+- **Crea con l’IA** non parte, e le bozze di strumenti non si possono né testare né approvare;
+- gli agenti con uno strumento che richiede isolamento non possono essere eseguiti; il controllo del workflow lo segnala prima dell’avvio;
+- gli strumenti che richiedono isolamento non possono ancora usare librerie di terze parti, nemmeno con Docker.
+
+Gli strumenti salvati prima di questa versione, e tutti gli strumenti dopo il ripristino di un backup, sono considerati di origine sconosciuta, anche quelli scritti da te, perché la loro origine non è stata registrata. Con Docker continuano a funzionare. Una nuova versione di uno strumento così, o una copia del suo codice in un nuovo strumento, mantiene questo stato. Per usare queste funzioni, installa e avvia Docker e sceglilo nelle [impostazioni](/docs/einstellungen#sandbox).
+
 ## Versioni ed eliminazione {#versionen}
 <!-- keywords: versione, eliminare, ritirare, revoke, aggiornare, sovrascrivere -->
 

@@ -76,6 +76,8 @@ Um rascunho de ferramenta não está registrado. Você vê o código e os testes
 
 Enquanto uma ferramenta não for aprovada, a verificação marca o fluxo como bloqueado e ele não pode ser iniciado. As regras de segurança existentes para código próprio continuam valendo. As atribuições de conhecimento e memória também são apenas propostas, que você altera no editor.
 
+Rascunhos de ferramentas são gerados por IA: testá-los e aprová-los precisa do sandbox Docker (veja [Confiança e isolamento](/docs/tools#vertrauen)).
+
 ## Custos e limites {#kosten}
 <!-- keywords: custo, limite, orçamento, correções, uso, preço, usd -->
 

@@ -45,6 +45,8 @@ El **presupuesto predeterminado por ejecución** (al principio 2 USD) se aplica 
 
 Aquí eliges dónde se ejecutan las herramientas propias y las creadas por IA: **Proceso de Python** o **Docker**. El cambio se aplica de inmediato. Un aviso indica si se ha encontrado Docker; si eliges Docker y no está accesible, las pruebas y las llamadas a herramientas fallan. Los detalles están en [El sandbox](/docs/tools#sandbox).
 
+Las herramientas creadas por IA y las de origen desconocido solo se ejecutan con Docker; consulta [Confianza y aislamiento](/docs/tools#vertrauen).
+
 ## Idioma {#sprache}
 <!-- keywords: idioma, language, español, inglés, alemán, francés, portugués, italiano, idioma del navegador, traducción, localización -->
 

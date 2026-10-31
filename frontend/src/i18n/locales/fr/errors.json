@@ -411,7 +411,7 @@
     "bundled_library": "Le code source d’Orkexa est copié dans le projet (licence MIT incluse).",
     "runtime_differs": "Cette version a été publiée avec {{published}} ; l’export contient le runtime actuel {{current}}.",
     "tool_libraries": "Les bibliothèques d’outils approuvées sont installées avec le projet : {{packages}}.",
-    "sandbox_process": "L’export exécute les outils dans un processus séparé (le bac à sable Docker est un réglage de cette installation).",
+    "sandbox_process": "L’export n’exécute dans un processus séparé que les outils que vous avez écrits vous-même ; les outils créés par l’IA nécessitent TOOL_SANDBOX=docker (voir le README de l’export).",
     "approvals": "Les validations de l’export se décident via son API (autorisation approve) ; Nodestro ne voit pas les exécutions de l’export.",
     "server_tools": "Les outils serveur ({{tools}}) sont appelés via l’API Anthropic.",
     "guide_not_accepted": "Relisez et acceptez d’abord le guide IA.",
@@ -539,5 +539,10 @@
   "access": {
     "login_required": "Connectez-vous pour utiliser cette partie de Nodestro.",
     "forbidden": "Vous ne pouvez pas faire cela (autorisation {{permission}} nécessaire)."
+  },
+  "sandbox": {
+    "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent que dans le bac à sable Docker ; rien n’a été exécuté. Choisissez Docker dans les réglages.",
+    "libraries_need_isolation": "{{name}} est créé par l’IA ou d’origine inconnue et a besoin de bibliothèques tierces. Ces outils ne peuvent pas encore s’exécuter, car les bibliothèques ne sont disponibles que sans isolation.",
+    "unavailable": "Ici, le code des outils ne s’exécute que dans des conteneurs ; le bac à sable « Processus Python » n’est pas disponible."
   }
 }

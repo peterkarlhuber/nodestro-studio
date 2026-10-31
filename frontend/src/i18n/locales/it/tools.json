@@ -17,6 +17,17 @@
     "generated": "Creato dall’IA"
   },
   "kindLabel": "Tipo di strumento",
+  "trust": {
+    "trusted": "Integrato",
+    "user-authored": "Scritto da te",
+    "untrusted": "Richiede isolamento"
+  },
+  "trustLabel": "Origine",
+  "trustNote": {
+    "user-authored": "Scritto da te: viene eseguito in un processo Python separato, senza isolamento, su questo computer.",
+    "untrusted": "Creato dall’IA o di origine sconosciuta: viene eseguito solo nella sandbox Docker.",
+    "untrustedBlocked": "Creato dall’IA o di origine sconosciuta: viene eseguito solo nella sandbox Docker. Con la sandbox «Processo Python», gli agenti con questo strumento non possono essere eseguiti."
+  },
   "version": "Versione {{version}}",
   "deleted": "Strumento {{name}} eliminato",
   "saved": "Strumento {{name}} salvato",
@@ -74,7 +85,8 @@
     "dependenciesNote": "La proposta usa librerie di terze parti. Non è installato nulla; i test partono solo dopo la tua approvazione. Il codice lo approvi poi separatamente.",
     "approveLibraries": "Approva librerie",
     "withoutLibraries": "Riscrivi senza librerie",
-    "usesLibraries": "Usa le librerie approvate: {{names}}"
+    "usesLibraries": "Usa le librerie approvate: {{names}}",
+    "needsDocker": "Creare strumenti con l’IA richiede la sandbox Docker: i test del codice scritto dall’IA non vengono mai eseguiti senza isolamento. Scegli Docker nelle impostazioni."
   },
   "drafts": {
     "title_one": "{{count}} bozza di strumento attende la tua decisione",

@@ -563,6 +563,8 @@ export interface WorkflowCheck {
 export interface ToolInfo {
   name: string;
   kind: "builtin" | "custom" | "generated";
+  /** ADR-0006: who wrote the code; ``untrusted`` runs only in an isolating sandbox (Docker). */
+  trust: "trusted" | "user-authored" | "untrusted";
   description: string;
   input_schema: Record<string, unknown> | null;
   version: number;

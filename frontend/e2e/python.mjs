@@ -174,6 +174,19 @@ try {
   await shot("python-06-change");
   await page.getByRole("button", { name: "Abbrechen" }).click();
 
+  // ADR-0006: the tool shows where its code may run; generating tools needs Docker.
+  check((await api("/api/tools/spread")).trust === "user-authored", "A tool written in the editor is user-authored");
+  await page.getByRole("radio", { name: "Bibliothek" }).click();
+  await page.getByRole("button", { name: /spread/ }).first().click();
+  await page.getByTestId("tool-trust").getByText("Von dir geschrieben", { exact: false }).waitFor();
+  check(true, "The tool detail shows its origin");
+  await page.getByRole("radio", { name: "Von KI erstellen" }).click();
+  await page.getByTestId("generate-needs-docker").waitFor();
+  check(
+    await page.getByRole("button", { name: "Tool erstellen lassen" }).isDisabled(),
+    "Without Docker, generating a tool cannot start",
+  );
+
   // 4. Export carries the definition, not the files.
   const exported = await api(`/api/python/workflows/${workflowId}/export`);
   check(exported.packages.some((item) => item.key === "tinystats" && item.version === "2.0.0"), "The export carries the versions");

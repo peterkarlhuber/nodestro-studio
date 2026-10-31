@@ -26,7 +26,7 @@
   "sandbox": {
     "title": "Sandbox para ferramentas próprias",
     "label": "Sandbox",
-    "text": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro. O processo Python fica disponível na hora; o Docker isola mais (sem rede, memória limitada).",
+    "text": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro. O processo Python fica disponível na hora; o Docker isola mais (sem rede, memória limitada). Ferramentas criadas por IA e de origem desconhecida só rodam com Docker; sem ele, ficam bloqueadas.",
     "subprocess": "Processo Python",
     "dockerAvailable": "Docker disponível",
     "dockerMissing": "Docker não encontrado",

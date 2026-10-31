@@ -150,6 +150,26 @@ Las herramientas propias y las creadas por IA **nunca se ejecutan en el proceso 
 
 El sandbox se elige en los [ajustes](/docs/einstellungen#sandbox). Docker aísla más, pero debe estar instalado y en marcha; si no, las pruebas y las llamadas fallan. Si una llamada supera el tiempo límite, cuenta como error.
 
+
+## Confianza y aislamiento {#vertrauen}
+<!-- keywords: confianza, no confiable, origen, generado por ia, docker necesario, aislamiento necesario, bloqueado, restringido, necesita aislamiento -->
+
+Nodestro decide según el **origen del código** dónde puede ejecutarse:
+
+| Origen | Se muestra como | Sandbox *Proceso de Python* | Sandbox *Docker* |
+|---|---|---|---|
+| Herramientas integradas e integraciones | *Integrada* | en el proceso de Nodestro | en el proceso de Nodestro |
+| Escrita por ti en *Escribirla tú* | *Escrita por ti* | se ejecuta, sin aislamiento en este equipo | se ejecuta aislada |
+| Creada por IA (también después de tu aprobación), borradores del arquitecto IA, herramientas de origen desconocido | *Necesita aislamiento* | **bloqueada** | se ejecuta aislada |
+
+El proceso de Python no es una barrera de seguridad: el código que corre en él tiene tus permisos. Por eso Nodestro nunca ejecuta allí código generado por IA, y ni tu aprobación ni un ajuste lo cambian. Sin Docker:
+
+- **Crear con IA** no se inicia, y los borradores de herramientas no se pueden probar ni aprobar;
+- los agentes con una herramienta que necesita aislamiento no pueden ejecutarse; la comprobación del workflow lo indica antes de empezar;
+- las herramientas que necesitan aislamiento todavía no pueden usar bibliotecas de terceros, tampoco con Docker.
+
+Las herramientas guardadas antes de esta versión, y todas las herramientas tras restaurar una copia de seguridad, se consideran de origen desconocido, también las que escribiste tú, porque su origen no quedó registrado. Con Docker siguen funcionando. Una nueva versión de una herramienta así, o una copia de su código en una herramienta nueva, conserva ese estado. Para usar estas funciones, instala e inicia Docker y elígelo en los [ajustes](/docs/einstellungen#sandbox).
+
 ## Versiones y eliminación {#versionen}
 <!-- keywords: versión, eliminar, retirar, revoke, actualizar, sobrescribir -->
 
