@@ -16,6 +16,7 @@ import {
   FileUp,
   GitBranch,
   LayoutTemplate,
+  Library,
   LifeBuoy,
   type LucideIcon,
   MessageSquare,
@@ -37,6 +38,7 @@ export interface DocChapter extends ParsedChapter {
 
 export const CHAPTER_IDS: [string, LucideIcon][] = [
   ["start", Compass],
+  ["begriffe", Library],
   ["workflows", Diamond],
   ["verzweigungen", GitBranch],
   ["ki-architekt", Sparkles],

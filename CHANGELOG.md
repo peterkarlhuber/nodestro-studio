@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Glossary, README screenshots and journeys after P1, UX-8 (2026-10-31)
+
+- New help chapter **Terms** (`begriffe`) in six languages, right after the *Introduction*: workflow, agent, tool,
+  knowledge, input file, memory, run, version, publication, test series and approval, each with a link to the
+  chapter that says more. Knowledge versus input file and version versus publication are told apart explicitly.
+- The README screenshots (`docs/screenshots`: editor dark and light, run, tools) are retaken in English with the
+  current interface by `frontend/e2e/readme.mjs` against `tests/e2e_flow_server.py`. The assistant screenshot is
+  unchanged.
+- Journeys: new J6b checks a tested version in the publish dialog (Q-1), 2 actions and 1 page change. The results
+  after P1 stand next to the baseline in `docs/evolution/journeys.md`; J1 to J6 are unchanged. No usability claim:
+  moderated task tests (D7) have not been arranged.
+
 ### Release candidate v0.2.0-preview.1 (2026-10-31)
 
 - Docs only, no pin change. `docs/desktop-server/release-checklist.md`: the steps of every release. `RELEASES.md`:
