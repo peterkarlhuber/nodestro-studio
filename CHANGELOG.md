@@ -11,6 +11,18 @@
 - Left as plain `<details>` on purpose: the sandbox output of a tool check, the provenance of a knowledge file and
   the details of one diagnostic check. They reveal one value in place and are not sections.
 
+### Releases, M6 (2026-10-31)
+
+- Docs and metadata only, no pin change. New `docs/desktop-server/RELEASES.md` covers:
+  - the release steps;
+  - the release manifest;
+  - signing: nothing is signed, and the doc lists what each platform would need;
+  - the supported-platform matrix (Linux x86_64 desktop preview, Linux amd64 server preview, everything else not
+    built or not tested);
+  - update and rollback.
+- `platform/versions.json` `products`: desktop `3ee764a` and server `e8a4899`, both built from studio `5a1cf56`.
+- `IMPLEMENTATION_STATUS.md` records M6.
+
 ### Test cases, run comparison and approval items use the shared section, UX-5a (2026-10-31)
 
 - Studio only, no pin change. The test-case editor of a test series, the agents of the run comparison and the
