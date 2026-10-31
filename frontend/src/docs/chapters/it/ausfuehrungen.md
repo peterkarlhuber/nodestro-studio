@@ -40,9 +40,10 @@ L'elenco si aggiorna ogni cinque secondi.
 Un clic su un'esecuzione apre la vista di dettaglio:
 
 1. **Dati principali:** stato con durata totale, richieste API, token (suddivisi in input, output, cache e ragionamento) e costi stimati.
-2. **Input e risultato** del workflow affiancati.
-3. **Andamento:** una barra temporale per ogni agente, nell'ordine di avvio. Ogni barra mostra quando l'agente è stato eseguito; le barre sovrapposte sono state eseguite in parallelo. Accanto ci sono durata, token e numero di chiamate agli strumenti.
-4. **Dettagli dell'agente selezionato:** durata, ora di inizio e fine, token, richieste e costi, un eventuale errore, l'esito del controllo qualità e le schede:
+2. **Riepilogo dell'esecuzione:** quanti passi sono riusciti e quanti sono stati saltati, quale percorso hanno preso le decisioni, come sono state decise le approvazioni, quali strumenti sono stati chiamati e quante volte (con gli errori) e a quale passo l'esecuzione non è riuscita, con *Vai al passo*. Si basa solo sui dati salvati dell'esecuzione, senza chiamare un modello; ciò che l'esecuzione non ha registrato compare come *non registrato*.
+3. **Input e risultato** del workflow affiancati.
+4. **Andamento:** una barra temporale per ogni agente, nell'ordine di avvio. Ogni barra mostra quando l'agente è stato eseguito; le barre sovrapposte sono state eseguite in parallelo. Accanto ci sono durata, token e numero di chiamate agli strumenti.
+5. **Dettagli dell'agente selezionato:** durata, ora di inizio e fine, token, richieste e costi, un eventuale errore, l'esito del controllo qualità e le schede:
 
 | Scheda | Contenuto |
 |---|---|

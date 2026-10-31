@@ -40,9 +40,10 @@ A lista é atualizada a cada cinco segundos.
 Um clique em uma execução abre a visualização detalhada:
 
 1. **Números principais:** status com duração total, requisições à API, tokens (divididos em entrada, saída, cache e raciocínio) e custos estimados.
-2. **Entrada e resultado** do fluxo lado a lado.
-3. **Linha do tempo:** uma barra de tempo por agente, na ordem em que começaram. Cada barra mostra quando o agente rodou; barras sobrepostas rodaram em paralelo. Ao lado aparecem a duração, os tokens e o número de chamadas de ferramentas.
-4. **Detalhes do agente selecionado:** duração, horário de início e fim, tokens, requisições e custos, um eventual erro, o resultado do controle de qualidade e as abas:
+2. **Resumo da execução:** quantas etapas deram certo e quantas foram ignoradas, que caminho as decisões tomaram, como as aprovações foram decididas, quais ferramentas foram chamadas e quantas vezes (com erros) e em qual etapa a execução falhou, com *Ir para a etapa*. Ele é montado só com os dados salvos da execução, sem chamar nenhum modelo; o que a execução não registrou aparece como *não registrado*.
+3. **Entrada e resultado** do fluxo lado a lado.
+4. **Linha do tempo:** uma barra de tempo por agente, na ordem em que começaram. Cada barra mostra quando o agente rodou; barras sobrepostas rodaram em paralelo. Ao lado aparecem a duração, os tokens e o número de chamadas de ferramentas.
+5. **Detalhes do agente selecionado:** duração, horário de início e fim, tokens, requisições e custos, um eventual erro, o resultado do controle de qualidade e as abas:
 
 | Aba | Conteúdo |
 |---|---|

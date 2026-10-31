@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Run summary on the run page, UX-6b (2026-10-31)
+
+- Studio only, no pin change. The run page shows a short summary under the key figures: how many steps succeeded and
+  how many were skipped, the path the decisions took, how approvals were decided, which tools were called how often
+  (with errors) and the step where the run failed, with *Go to step* to open its details. It is built only from the
+  stored run (`runs/runSummary.ts`), without a model call; a decision or approval whose outcome the run did not record
+  shows as "not recorded". Texts and the runs chapter in six languages.
+
 ### Start-form file options in one section, UX-6a (2026-10-31)
 
 - Studio only, no pin change. In the Start node's inspector, each file field's accepted formats, number of files,

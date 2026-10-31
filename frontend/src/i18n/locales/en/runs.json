@@ -58,5 +58,27 @@
     "noResult": "No result.",
     "trace": "Timeline",
     "nodeDetails": "Details {{name}}"
+  },
+  "summary": {
+    "title": "Run summary",
+    "steps": "Steps",
+    "stepsDone": "{{done}} of {{total}} succeeded",
+    "path": "Path",
+    "approvals": "Approvals",
+    "approval": {
+      "approved": "approved",
+      "rejected": "rejected",
+      "waiting": "waiting",
+      "unknown": "not recorded"
+    },
+    "tools": "Tools",
+    "noTools": "none called",
+    "toolErrors_one": "{{count}} error",
+    "toolErrors_other": "{{count}} errors",
+    "failedAt": "Failed at",
+    "openStep": "Go to step",
+    "notRecorded": "not recorded",
+    "skipped_one": "{{count}} skipped (branch not taken)",
+    "skipped_other": "{{count}} skipped (branch not taken)"
   }
 }

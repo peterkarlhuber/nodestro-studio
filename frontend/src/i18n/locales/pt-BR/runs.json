@@ -58,5 +58,27 @@
     "noResult": "Sem resultado.",
     "trace": "Andamento",
     "nodeDetails": "Detalhes de {{name}}"
+  },
+  "summary": {
+    "title": "Resumo da execução",
+    "steps": "Etapas",
+    "stepsDone": "{{done}} de {{total}} concluídas com sucesso",
+    "path": "Caminho",
+    "approvals": "Aprovações",
+    "approval": {
+      "approved": "aprovada",
+      "rejected": "rejeitada",
+      "waiting": "aguardando",
+      "unknown": "não registrada"
+    },
+    "tools": "Ferramentas",
+    "noTools": "nenhuma chamada",
+    "toolErrors_one": "{{count}} erro",
+    "toolErrors_other": "{{count}} erros",
+    "failedAt": "Falhou em",
+    "openStep": "Ir para a etapa",
+    "notRecorded": "não registrado",
+    "skipped_one": "{{count}} ignorada (ramo não escolhido)",
+    "skipped_other": "{{count}} ignoradas (ramo não escolhido)"
   }
 }

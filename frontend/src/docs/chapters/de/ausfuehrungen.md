@@ -40,9 +40,10 @@ Die Liste aktualisiert sich alle fünf Sekunden.
 Ein Klick auf einen Lauf öffnet die Detailansicht:
 
 1. **Kennzahlen:** Status mit Gesamtdauer, API-Anfragen, Tokens (aufgeschlüsselt in Eingabe, Ausgabe, Cache und Denken) und geschätzte Kosten.
-2. **Eingabe und Ergebnis** des Workflows nebeneinander.
-3. **Ablauf:** ein Zeitstrahl aller Agenten in der Reihenfolge ihres Starts. Jeder Balken zeigt, wann der Agent lief; übereinanderliegende Balken liefen parallel. Daneben stehen Dauer, Tokens und Zahl der Tool-Aufrufe.
-4. **Details des gewählten Agenten:** Dauer, Start- und Endzeit, Tokens, Anfragen und Kosten, ein eventueller Fehler, das Ergebnis der Qualitätsprüfung und die Tabs:
+2. **Kurzfassung:** wie viele Schritte erfolgreich waren und wie viele übersprungen wurden, welchen Weg die Entscheidungen genommen haben, wie Freigaben entschieden wurden, welche Tools wie oft aufgerufen wurden (mit Fehlern) und bei welchem Schritt der Lauf fehlschlug, mit *Zum Schritt*. Sie entsteht nur aus den gespeicherten Daten des Laufs, ohne Modellaufruf; was der Lauf nicht aufgezeichnet hat, steht als *nicht aufgezeichnet* da.
+3. **Eingabe und Ergebnis** des Workflows nebeneinander.
+4. **Ablauf:** ein Zeitstrahl aller Agenten in der Reihenfolge ihres Starts. Jeder Balken zeigt, wann der Agent lief; übereinanderliegende Balken liefen parallel. Daneben stehen Dauer, Tokens und Zahl der Tool-Aufrufe.
+5. **Details des gewählten Agenten:** Dauer, Start- und Endzeit, Tokens, Anfragen und Kosten, ein eventueller Fehler, das Ergebnis der Qualitätsprüfung und die Tabs:
 
 | Tab | Inhalt |
 |---|---|
