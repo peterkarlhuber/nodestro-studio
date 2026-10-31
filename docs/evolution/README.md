@@ -172,6 +172,7 @@ project owner.
 | --- | --- | --- |
 | EVO-0 plan and inventory | done | studio #12 (merge commit `d546080`) |
 | UX-1 `Section` keeps its state, `status` prop | done | studio #13 (merge commit `84a8bd1`) |
-| UX-2 problems and summaries in the agent inspector | in review | studio, this step |
-| UX-J, UX-2b and later | open | — |
+| UX-2 problems and summaries in the agent inspector | done | studio #14 (merge commit `dd656c1`) |
+| UX-2b judge model transparency | in review | studio, this step |
+| UX-J and later | open | — |
 

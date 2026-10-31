@@ -199,7 +199,9 @@
     "criterionDescription": "Beschreibung des Kriteriums",
     "addCriterion": "Kriterium hinzufügen",
     "revisions": "Überarbeitungen",
-    "judgeModel": "Judge-Modell"
+    "judgeModel": "Judge-Modell",
+    "judgeCost": "Jede Prüfung ist eine zusätzliche kostenpflichtige Anfrage an {{provider}}, auch bei jeder Überarbeitung.",
+    "selfJudge": "Der Judge ist dasselbe Modell wie der Agent. Ein Modell bewertet die eigenen Antworten eher wohlwollend; ein anderes Modell prüft unabhängiger."
   },
   "advanced": {
     "title": "Erweitert",
@@ -259,6 +261,7 @@
     "refusalReturned": "Ablehnungen zurückgeben",
     "examples_one": "{{count}} Beispielnachricht",
     "examples_other": "{{count}} Beispielnachrichten",
-    "requestOptions": "Anfrageoptionen"
+    "requestOptions": "Anfrageoptionen",
+    "judge": "Judge: {{model}}"
   }
 }

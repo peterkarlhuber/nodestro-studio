@@ -150,7 +150,7 @@ The result of the check is shown in the execution next to the agent: passed or n
 
 **Good criteria** can be checked individually: "Every figure comes from a tool result", "Names at least one concrete risk", "At most 150 words". Vague criteria such as "well written" lead to unreliable verdicts.
 
-**Costs:** every check and every revision is an additional request. The judge's costs count towards the agent and the run's budget. Opus 5.5 is preset as the **judge model**.
+**Costs:** every check and every revision is an additional request. The judge's costs count towards the agent and the run's budget. A newly enabled check starts with the default model from the settings as the **judge model**; you can change it at any time, and existing checks keep their model. The section summary names the judge. When the judge is the same model as the agent, a note says so: a model tends to rate its own answers favorably.
 
 ## Limits {#limits}
 <!-- keywords: max tokens, max_tokens, tool rounds, max_tool_rounds, parallel tools, max_parallel_tools, limit -->

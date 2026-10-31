@@ -35,7 +35,7 @@ import { DiscussIcon } from "../assistant/DiscussButton";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { CodeEditor } from "../components/CodeEditor";
-import { ModelPicker, useModelHint } from "../components/ModelPicker";
+import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
 import { HelpTip, Tooltip } from "../components/Tooltip";
 import { AGENT_ICONS } from "../components/icons";
 import { toast } from "../components/toast";
@@ -59,7 +59,8 @@ import { DesignAgentDialog } from "./DesignAgentDialog";
 import { InputPreview } from "./InputPreview";
 import { MemoryAssistantDialog } from "./MemoryAssistantDialog";
 import { serverToolDescription, serverToolLabel, toolDescription } from "../lib/catalog";
-import { providerOf, sameModel } from "../lib/providers";
+import { getDefaultModel } from "../lib/defaults";
+import { providerOf, sameModel, splitModel } from "../lib/providers";
 import { ProblemText } from "../lib/errors";
 import { helpEntry } from "../lib/help";
 import { fieldNameProblem } from "../lib/validation";
@@ -886,27 +887,36 @@ function QualitySection({ agent, update, issues = [], ui }: SectionProps) {
   const { t } = useTranslation();
   const quality = agent.quality;
   const setQuality = (patch: Partial<AgentConfig["quality"]>) => update({ quality: { ...quality, ...patch } });
+  const judgeHint = useModelHint(quality.judge_model);
+  const selfJudge = sameModel(quality.judge_model, agent.model);
   return (
     <Section
       {...ui}
       title={t("agent.quality.title")}
       icon={ShieldCheck}
       tip="agent.quality"
-      summary={quality.enabled ? t("agent.quality.criteriaCount", { count: quality.criteria.length }) : t("agent.quality.off")}
+      summary={
+        quality.enabled
+          ? `${t("agent.quality.criteriaCount", { count: quality.criteria.length })} · ${t("agent.summary.judge", { model: splitModel(quality.judge_model).id })}`
+          : t("agent.quality.off")
+      }
     >
       <Toggle
         label={t("agent.quality.enable")}
         description={t("agent.quality.enableHint")}
         checked={quality.enabled}
-        onChange={(enabled) =>
+        onChange={(enabled) => {
+          // A check set up for the first time starts with the default model from the settings, so it adds no
+          // provider the user did not choose. A configured check keeps its judge.
+          const fresh = enabled && !quality.criteria.length;
           setQuality({
             enabled,
-            criteria:
-              enabled && !quality.criteria.length
-                ? [{ name: "correct", description: t("agent.quality.defaultCriterion"), required: true }]
-                : quality.criteria,
-          })
-        }
+            criteria: fresh
+              ? [{ name: "correct", description: t("agent.quality.defaultCriterion"), required: true }]
+              : quality.criteria,
+            judge_model: fresh ? getDefaultModel() : quality.judge_model,
+          });
+        }}
       />
       {quality.enabled ? (
         <>
@@ -962,13 +972,27 @@ function QualitySection({ agent, update, issues = [], ui }: SectionProps) {
               onChange={(e) => setQuality({ max_revisions: Number(e.target.value) })}
             />
           </Field>
-          <Field label={t("agent.quality.judgeModel")} tip="agent.judgeModel">
+          <Field
+            label={t("agent.quality.judgeModel")}
+            tip="agent.judgeModel"
+            hint={
+              <>
+                {judgeHint ? <>{judgeHint} </> : null}
+                {t("agent.quality.judgeCost", { provider: providerLabel(t, providerOf(quality.judge_model)) })}
+              </>
+            }
+          >
             <ModelPicker
               label={t("agent.quality.judgeModel")}
               value={quality.judge_model}
               onChange={(judge_model) => setQuality({ judge_model })}
             />
           </Field>
+          {selfJudge ? (
+            <Callout tone="warning">
+              <span data-testid="self-judge">{t("agent.quality.selfJudge")}</span>
+            </Callout>
+          ) : null}
           <FieldErrors issues={issues} field="quality" />
         </>
       ) : null}

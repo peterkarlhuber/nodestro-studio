@@ -5,7 +5,7 @@ import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { AgentConfig, ConfigIssue } from "../api/types";
-import { defaultAgent } from "../lib/defaults";
+import { defaultAgent, setDefaultModel } from "../lib/defaults";
 import { AgentForm } from "./AgentInspector";
 
 // CodeMirror needs a real layout engine; the form's request options editor is not under test here.
@@ -37,12 +37,12 @@ function stubApi(issues: ConfigIssue[]) {
   );
 }
 
-function show(agent: AgentConfig) {
+function show(agent: AgentConfig, onChange: (patch: Partial<AgentConfig>) => void = () => undefined) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
     <QueryClientProvider client={client}>
       <MemoryRouter>
-        <AgentForm agent={agent} onChange={() => undefined} onReplace={() => undefined} />
+        <AgentForm agent={agent} onChange={onChange} onReplace={() => undefined} />
       </MemoryRouter>
     </QueryClientProvider>,
   );
@@ -77,5 +77,42 @@ describe("AgentForm sections", () => {
     const { container } = show(defaultAgent());
     await waitFor(() => expect(section(container, "advanced").querySelector("summary")).toHaveTextContent("Standard"));
     expect(container.querySelector(".section-problems")).toBeNull();
+  });
+
+  it("starts a new quality check with the default model from the settings", async () => {
+    stubApi([]);
+    setDefaultModel("ollama:llama3.3");
+    try {
+      const onChange = vi.fn();
+      const agent = { ...defaultAgent(), model: "ollama:llama3.3", quality: { enabled: false, criteria: [], max_revisions: 1, judge_model: "claude-opus-5-5" } };
+      const { container } = show(agent, onChange);
+      await userEvent.click(section(container, "quality").querySelector(".section__title")!);
+      await userEvent.click(screen.getByRole("switch", { name: /von einem Judge prüfen/ }));
+      const patch = onChange.mock.calls.at(-1)![0] as Partial<AgentConfig>;
+      expect(patch.quality?.judge_model).toBe("ollama:llama3.3"); // no Anthropic model the user did not choose
+      expect(patch.quality?.enabled).toBe(true);
+    } finally {
+      setDefaultModel("claude-sonnet-5-5");
+    }
+  });
+
+  it("keeps the judge of a configured check and warns when it is the agent's own model", async () => {
+    stubApi([]);
+    const onChange = vi.fn();
+    const criteria = [{ name: "correct", description: "ok", required: true }];
+    const agent = { ...defaultAgent(), model: "claude-sonnet-5-5", quality: { enabled: false, criteria, max_revisions: 1, judge_model: "claude-sonnet-5-5" } };
+    const { container, rerender } = show(agent, onChange);
+    await userEvent.click(section(container, "quality").querySelector(".section__title")!);
+    await userEvent.click(screen.getByRole("switch", { name: /von einem Judge prüfen/ }));
+    const patch = onChange.mock.calls.at(-1)![0] as Partial<AgentConfig>;
+    expect(patch.quality?.judge_model).toBe("claude-sonnet-5-5");
+    rerender(
+      <QueryClientProvider client={new QueryClient()}>
+        <MemoryRouter>
+          <AgentForm agent={{ ...agent, quality: { ...agent.quality, enabled: true } }} onChange={onChange} onReplace={() => undefined} />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+    expect(await screen.findByTestId("self-judge")).toBeInTheDocument();
   });
 });

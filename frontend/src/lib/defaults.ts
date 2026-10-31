@@ -8,6 +8,11 @@ export function setDefaultModel(model: string): void {
   defaultModel = model;
 }
 
+/** The default model for new agents from the settings; also the judge of a newly enabled quality check. */
+export function getDefaultModel(): string {
+  return defaultModel;
+}
+
 export function defaultAgent(overrides: Partial<AgentConfig> = {}): AgentConfig {
   return {
     name: i18n.t("editor.nodes.newAgent"),
@@ -22,7 +27,7 @@ export function defaultAgent(overrides: Partial<AgentConfig> = {}): AgentConfig 
     knowledge: { file_ids: [], mode: "on_demand", citations: false },
     memory: { mode: "none", space: null },
     output: { mode: "text", name: "Result", fields: [] },
-    quality: { enabled: false, criteria: [], max_revisions: 1, judge_model: "claude-opus-5-5" },
+    quality: { enabled: false, criteria: [], max_revisions: 1, judge_model: defaultModel },
     effort: "medium",
     thinking: null,
     thinking_display: null,

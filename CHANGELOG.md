@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Quality check: judge model chosen visibly, UX-2b (2026-10-31)
+
+- Studio only, no pin change. A quality check switched on for the first time starts with the default model from the
+  settings as its judge instead of the fixed `claude-opus-5-5`, so it adds no provider or cost the user did not
+  choose (decision D4). New agents carry that model too. Existing checks and stored agents keep their judge.
+- The section summary names the judge; the judge field says which provider is paid for each check and revision and
+  whether that provider is set up; a note appears when the judge is the agent's own model (self-evaluation).
+- Not changed: agents designed by the AI (Workflow Architect, *Design with AI*) still get the runtime's default judge
+  (`anthropic:claude-opus-5-5`); changing that is a runtime default and is planned separately.
+
 ### Agent inspector: problems and changed settings visible while collapsed, UX-2 (2026-10-31)
 
 - Studio only, no pin change. Problems of the agent check are shown on their section while it is closed ("1 error",

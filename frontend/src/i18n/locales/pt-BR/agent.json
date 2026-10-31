@@ -199,7 +199,9 @@
     "criterionDescription": "Descrição do critério",
     "addCriterion": "Adicionar critério",
     "revisions": "Revisões",
-    "judgeModel": "Modelo juiz"
+    "judgeModel": "Modelo juiz",
+    "judgeCost": "Cada verificação é uma requisição paga extra a {{provider}}, também a cada revisão.",
+    "selfJudge": "O juiz é o mesmo modelo do agente. Um modelo tende a avaliar bem as próprias respostas; outro modelo verifica de forma mais independente."
   },
   "advanced": {
     "title": "Avançado",
@@ -259,6 +261,7 @@
     "refusalReturned": "recusas devolvidas",
     "examples_one": "{{count}} mensagem de exemplo",
     "examples_other": "{{count}} mensagens de exemplo",
-    "requestOptions": "opções de requisição"
+    "requestOptions": "opções de requisição",
+    "judge": "juiz: {{model}}"
   }
 }

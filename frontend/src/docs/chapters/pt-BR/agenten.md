@@ -150,7 +150,7 @@ O resultado do controle aparece na execução junto ao agente: aprovado ou não,
 
 **Bons critérios** podem ser verificados um a um: "Cada número vem de um resultado de ferramenta", "Cita pelo menos um risco concreto", "No máximo 150 palavras". Critérios vagos como "bem escrito" levam a avaliações pouco confiáveis.
 
-**Custos:** cada verificação e cada revisão é uma solicitação extra. Os custos do juiz contam para o agente e para o orçamento da execução. O Opus 5.5 vem pré-selecionado como **modelo juiz**.
+**Custos:** cada verificação e cada revisão é uma solicitação extra. Os custos do juiz contam para o agente e para o orçamento da execução. Uma verificação recém-ativada começa com o modelo padrão das configurações como **modelo juiz**; você pode mudá-lo quando quiser, e as verificações existentes mantêm o modelo delas. O resumo da seção cita o juiz. Se o juiz for o mesmo modelo do agente, um aviso indica isso: um modelo tende a avaliar bem as próprias respostas.
 
 ## Limites {#limits}
 <!-- keywords: máx. de tokens, max_tokens, rodadas de ferramentas, max_tool_rounds, ferramentas em paralelo, max_parallel_tools, limite -->
