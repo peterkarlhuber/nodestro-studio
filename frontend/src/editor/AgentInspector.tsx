@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   BookOpen,
   Brain,
@@ -10,6 +10,7 @@ import {
   SlidersHorizontal,
   Sparkles,
   Trash2,
+  Upload,
   Wrench,
   FileJson,
   FlaskConical,
@@ -25,6 +26,7 @@ import type {
   AgentConfig,
   ConfigIssue,
   ContentKind,
+  KnowledgeFile,
   KnowledgeProposalConfig,
   OutputField,
   OutputFieldType,
@@ -63,6 +65,7 @@ import { getDefaultModel } from "../lib/defaults";
 import { providerOf, sameModel, splitModel } from "../lib/providers";
 import { ProblemText } from "../lib/errors";
 import { helpEntry } from "../lib/help";
+import { KNOWLEDGE_ACCEPT } from "../lib/knowledge";
 import { fieldNameProblem } from "../lib/validation";
 import {
   type AgentSectionId,
@@ -539,6 +542,28 @@ function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
     (file) => !agent.knowledge.file_ids.includes(file.id) && file.name.toLowerCase().includes(query.toLowerCase()),
   );
   const setKnowledge = (patch: Partial<AgentConfig["knowledge"]>) => update({ knowledge: { ...agent.knowledge, ...patch } });
+  // Upload from here (UX-K): the same endpoint as the Knowledge page. The file is stored in Knowledge at once; the
+  // assignment is an ordinary, unsaved change of the agent, so undo and discard remove it and leave the file.
+  const queryClient = useQueryClient();
+  const picker = useRef<HTMLInputElement>(null);
+  const current = useRef(agent.knowledge);
+  current.current = agent.knowledge;
+  const upload = useMutation({
+    mutationFn: (list: File[]) => api.uploadKnowledge(list, ""),
+    onSuccess: (added) => {
+      queryClient.setQueryData<KnowledgeFile[]>(keys.knowledge(), (old) => [...(old ?? []), ...added]);
+      void queryClient.invalidateQueries({ queryKey: ["knowledge"] });
+      void queryClient.invalidateQueries({ queryKey: ["knowledge-collections"] });
+      const ids = added.map((file) => file.id).filter((id) => !current.current.file_ids.includes(id));
+      update({ knowledge: { ...current.current, file_ids: [...current.current.file_ids, ...ids] } });
+      toast.success(
+        added.length === 1
+          ? t("agent.knowledge.uploadedOne", { name: added[0].name })
+          : t("agent.knowledge.uploaded", { count: added.length }),
+      );
+    },
+    onError: toast.error,
+  });
   const proposals: KnowledgeProposalConfig = agent.knowledge_proposals ?? { enabled: false, collection: "", content_kind: "generated" };
   const setProposals = (patch: Partial<KnowledgeProposalConfig>) => update({ knowledge_proposals: { ...proposals, ...patch } });
   return (
@@ -575,6 +600,25 @@ function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
             {file.name}
           </Chip>
         ))}
+      </div>
+      <div className="knowledge-upload">
+        <input
+          ref={picker}
+          type="file"
+          multiple
+          hidden
+          accept={KNOWLEDGE_ACCEPT}
+          data-testid="agent-knowledge-file"
+          onChange={(event) => {
+            const list = [...(event.target.files ?? [])];
+            event.target.value = "";
+            if (list.length) upload.mutate(list);
+          }}
+        />
+        <Button size="sm" icon={Upload} busy={upload.isPending} onClick={() => picker.current?.click()}>
+          {t("agent.knowledge.upload")}
+        </Button>
+        <span className="field__hint">{t("agent.knowledge.uploadHint")}</span>
       </div>
       {files.length ? (
         <>

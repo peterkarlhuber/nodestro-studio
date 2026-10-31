@@ -70,6 +70,8 @@ Nella sezione **Conoscenza** assegni i file caricati e scegli **come** l'agente 
 
 **Attiva le citazioni** fa sì che le risposte rimandino ai passaggi esatti. Dettagli e consigli nel capitolo [Conoscenza](/docs/wissen#modi).
 
+**Carica file**, nella stessa sezione, carica uno o più file direttamente in [Conoscenza](/docs/wissen#hochladen) e li assegna a questo agente. Il file viene salvato subito in modo permanente in Conoscenza e può essere usato anche da altri agenti; l’assegnazione è una normale modifica dell’agente e viene salvata con il workflow. *Annulla* o *Scarta* rimuovono solo l’assegnazione, non il file. I file che passi all’avvio di un’esecuzione non sono file di conoscenza: appartengono solo a quell’esecuzione.
+
 ## Memoria {#memory}
 <!-- keywords: memoria, memory, note, per esecuzione, permanente, spazio -->
 

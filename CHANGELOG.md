@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Agent inspector: upload knowledge in place, UX-K (2026-10-31)
+
+- Studio only, no API or pin change. The agent's *Knowledge* section has an *Upload file* button. It uses the
+  existing `POST /api/knowledge`, so the file is stored permanently in Knowledge, the same library as the Knowledge
+  page, and is assigned to the agent as an ordinary unsaved change: *Undo* and *Discard* remove the assignment, not
+  the file. A refused upload assigns nothing (the server keeps nothing either). A note in the section says where the
+  file is stored; run input files keep their "only for this run" wording. The accepted formats are shared with the
+  Knowledge page (`lib/knowledge.ts`). Journey J3b measures the new path: 5 actions and 1 page change instead of
+  10 and 4. Concept in `docs/evolution/ux-k.md`; texts and the agents and knowledge chapters in six languages.
+
 ### Workflows page: three equal ways to start, UX-4 (2026-10-31)
 
 - Studio only, no pin change. The empty Workflows page offers three tiles: *Create with AI* (the new-workflow

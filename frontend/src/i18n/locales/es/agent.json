@@ -122,9 +122,14 @@
     "image": "Imagen",
     "chunks_one": "{{count}} fragmento",
     "chunks_other": "{{count}} fragmentos",
-    "noFiles": "Todavía no hay archivos. Súbelos en <a>Conocimiento</a>.",
+    "noFiles": "Todavía no hay archivos en Conocimiento. Sube uno aquí o en <a>Conocimiento</a>.",
     "citations": "Activar citas",
-    "citationsHint": "Las respuestas remiten a los pasajes de los documentos."
+    "citationsHint": "Las respuestas remiten a los pasajes de los documentos.",
+    "upload": "Subir archivo",
+    "uploadHint": "Se guarda de forma permanente en Conocimiento y se asigna a este agente; la asignación se guarda con el flujo de trabajo.",
+    "uploadedOne": "«{{name}}» subido a Conocimiento y asignado",
+    "uploaded_one": "{{count}} archivo subido a Conocimiento y asignado",
+    "uploaded_other": "{{count}} archivos subidos a Conocimiento y asignados"
   },
   "memory": {
     "title": "Memoria",

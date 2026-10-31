@@ -234,6 +234,34 @@ try {
     return "file uploaded and assigned to the agent, saved";
   });
 
+  // ---- J3b the same task, uploading from the agent's Knowledge section (UX-K) ----------------
+  const second = await api("/workflows", "POST", {
+    name: "Supportfragen beantworten",
+    nodes: [
+      { id: "start", type: "start", position: { x: 0, y: 0 } },
+      { id: "answer", type: "agent", label: "Support", position: { x: 300, y: 0 }, agent: { name: "Support", system_prompt: "Beantworte Supportfragen." } },
+      { id: "out", type: "output", position: { x: 600, y: 0 } },
+    ],
+    edges: [
+      { id: "a", source: "start", target: "answer" },
+      { id: "b", source: "answer", target: "out" },
+    ],
+  });
+  await journey("J3b", "Give an agent knowledge, uploading in the inspector", async ({ click, upload }) => {
+    await click(page.locator("a.card__main", { hasText: "Supportfragen beantworten" }).first());
+    await click(page.locator(".react-flow__node-agent").first());
+    await click(page.locator('[data-section="knowledge"] .section__title'));
+    await upload(page.getByTestId("agent-knowledge-file"), { name: "faq.md", mimeType: "text/markdown", buffer: Buffer.from("# FAQ\n\nVersand dauert zwei Tage.\n") });
+    await page.locator('[data-section="knowledge"] .chip', { hasText: "faq.md" }).waitFor();
+    await click(page.getByRole("button", { name: "Speichern", exact: true }));
+    await until(async () => {
+      const workflow = await api(`/workflows/${second.id}`);
+      return workflow.nodes.find((item) => item.id === "answer").agent.knowledge.file_ids.length === 1;
+    }, "uploaded file assigned and saved");
+    check((await api("/knowledge")).some((file) => file.name === "faq.md"), "J3b the file is stored in Knowledge");
+    return "file uploaded in the inspector, stored in Knowledge, assigned and saved";
+  });
+
   // ---- J4 "My workflow does not start: where is the problem and how do I fix it?" -------------
   // A design-time problem (quality check without criteria) blocks the start; the run itself cannot fail with a
   // model that answers everything.

@@ -258,6 +258,16 @@ describe("editor undo history", () => {
 
   const position = (id: string) => useEditor.getState().nodes.find((node) => node.id === id)!.position;
 
+  it("undoes a knowledge assignment as one step and marks the workflow as changed (UX-K)", () => {
+    const knowledge = () => useEditor.getState().nodes.find((node) => node.id === "a")!.agent!.knowledge;
+    const before = knowledge();
+    useEditor.getState().updateAgent("a", { knowledge: { ...before, file_ids: ["kf_1"] } });
+    expect(knowledge().file_ids).toEqual(["kf_1"]);
+    expect(useEditor.getState().dirty).toBe(true);
+    useEditor.getState().undo();
+    expect(knowledge().file_ids).toEqual([]);
+  });
+
   it("undoes a whole node drag in one step, back to where it started", () => {
     const { moveNodes } = useEditor.getState();
     for (let step = 1; step <= 5; step += 1) moveNodes({ a: { x: 300 + step * 40, y: step * 10 } }, false);

@@ -13,10 +13,10 @@ import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, 
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatNumber, relativeTime } from "../lib/format";
 import { helpEntry } from "../lib/help";
+import { KNOWLEDGE_ACCEPT } from "../lib/knowledge";
 
 const NONE = "\u0000none";
 
-const ACCEPT = ".pdf,.docx,.xlsx,.txt,.md,.markdown,.csv,.json,.html,.xml,.yaml,.yml,.png,.jpg,.jpeg,.gif,.webp";
 
 export function KnowledgePage() {
   const { t } = useTranslation();
@@ -83,7 +83,7 @@ export function KnowledgePage() {
           type="file"
           multiple
           hidden
-          accept={ACCEPT}
+          accept={KNOWLEDGE_ACCEPT}
           onChange={(event) => {
             const list = [...(event.target.files ?? [])];
             event.target.value = "";

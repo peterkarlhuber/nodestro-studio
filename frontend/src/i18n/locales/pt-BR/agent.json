@@ -122,9 +122,14 @@
     "image": "Imagem",
     "chunks_one": "{{count}} trecho",
     "chunks_other": "{{count}} trechos",
-    "noFiles": "Ainda não há arquivos. Envie-os em <a>Conhecimento</a>.",
+    "noFiles": "Ainda não há arquivos em Conhecimento. Envie um aqui ou em <a>Conhecimento</a>.",
     "citations": "Ativar citações",
-    "citationsHint": "As respostas apontam para os trechos dos documentos."
+    "citationsHint": "As respostas apontam para os trechos dos documentos.",
+    "upload": "Enviar arquivo",
+    "uploadHint": "Fica salvo permanentemente em Conhecimento e atribuído a este agente; a atribuição é salva com o fluxo de trabalho.",
+    "uploadedOne": "“{{name}}” enviado para Conhecimento e atribuído",
+    "uploaded_one": "{{count}} arquivo enviado para Conhecimento e atribuído",
+    "uploaded_other": "{{count}} arquivos enviados para Conhecimento e atribuídos"
   },
   "memory": {
     "title": "Memória",

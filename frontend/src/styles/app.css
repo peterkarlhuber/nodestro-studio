@@ -1475,6 +1475,19 @@ details[open] > summary > .section__chevron {
   font-size: 15px;
 }
 
+/* Upload from the agent's Knowledge section (UX-K): button and the note on where the file is stored. */
+.knowledge-upload {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nd-space-2);
+}
+
+.knowledge-upload .field__hint {
+  flex: 1 1 220px;
+  margin: 0;
+}
+
 /* The three ways to start a workflow (pages/StartChoices.tsx): tiles in the empty state, one row above the list. */
 .empty:has(> .start-choices) {
   max-width: 760px;

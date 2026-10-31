@@ -151,4 +151,57 @@ describe("AgentForm sections", () => {
     const link = await screen.findByRole("link", { name: "Wissen" });
     expect(link).toHaveAttribute("href", "/knowledge");
   });
+
+  describe("upload from the knowledge section", () => {
+    const FILE = { id: "kf_1", name: "preise.md", kind: "text", chunks: 1 };
+
+    /** Like stubApi, but POST /knowledge answers with `upload` (a status and a body). */
+    function stubUpload(upload: { status: number; body: unknown }) {
+      const calls: string[] = [];
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(async (url: string, init?: RequestInit) => {
+          const path = url.replace(/\?.*$/, "");
+          const method = init?.method ?? "GET";
+          calls.push(`${method} ${path}`);
+          const answer = (status: number, body: unknown) =>
+            new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
+          if (method === "POST" && path.endsWith("/knowledge")) return answer(upload.status, upload.body);
+          if (path.endsWith("/agents/validate")) return answer(200, []);
+          if (path.endsWith("/meta")) return answer(200, { providers: [], capabilities: [], models: [] });
+          if (path.endsWith("/settings")) return answer(200, { providers: [], default_model: "claude-sonnet-5-5", assistant_model: "claude-opus-5-5" });
+          return answer(200, []);
+        }),
+      );
+      return calls;
+    }
+
+    const choose = async (container: HTMLElement) => {
+      await userEvent.click(section(container, "knowledge").querySelector(".section__title")!);
+      const input = screen.getByTestId("agent-knowledge-file") as HTMLInputElement;
+      await userEvent.upload(input, new File(["# Preise"], "preise.md", { type: "text/markdown" }));
+    };
+
+    it("stores the file in Knowledge and assigns it as an unsaved change", async () => {
+      const calls = stubUpload({ status: 201, body: [FILE] });
+      const onChange = vi.fn();
+      const { container } = show(defaultAgent(), onChange);
+      expect(await screen.findByText(/dauerhaft im Wissen gespeichert/)).toBeInTheDocument();
+      await choose(container);
+      await waitFor(() => expect(onChange).toHaveBeenCalled());
+      const patch = onChange.mock.calls.at(-1)![0] as Partial<AgentConfig>;
+      expect(patch.knowledge?.file_ids).toEqual(["kf_1"]);
+      expect(calls).toContain("POST /api/knowledge");
+    });
+
+    it("assigns nothing when the upload is refused", async () => {
+      const calls = stubUpload({ status: 400, body: { detail: { code: "knowledge.unsupported", message: "Unsupported file", params: {} } } });
+      const onChange = vi.fn();
+      const { container } = show(defaultAgent(), onChange);
+      await choose(container);
+      await waitFor(() => expect(calls).toContain("POST /api/knowledge"));
+      await waitFor(() => expect(screen.getByRole("button", { name: "Datei hochladen" })).not.toBeDisabled());
+      expect(onChange).not.toHaveBeenCalled();
+    });
+  });
 });

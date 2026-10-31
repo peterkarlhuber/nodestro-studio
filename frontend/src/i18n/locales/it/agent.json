@@ -122,9 +122,14 @@
     "image": "Immagine",
     "chunks_one": "{{count}} sezione",
     "chunks_other": "{{count}} sezioni",
-    "noFiles": "Ancora nessun file. Caricali in <a>Conoscenza</a>.",
+    "noFiles": "Ancora nessun file in Conoscenza. Caricane uno qui o in <a>Conoscenza</a>.",
     "citations": "Attiva le citazioni",
-    "citationsHint": "Le risposte rimandano ai passaggi dei documenti."
+    "citationsHint": "Le risposte rimandano ai passaggi dei documenti.",
+    "upload": "Carica file",
+    "uploadHint": "Salvato in modo permanente in Conoscenza e assegnato a questo agente; l’assegnazione viene salvata con il workflow.",
+    "uploadedOne": "«{{name}}» caricato in Conoscenza e assegnato",
+    "uploaded_one": "{{count}} file caricato in Conoscenza e assegnato",
+    "uploaded_other": "{{count}} file caricati in Conoscenza e assegnati"
   },
   "memory": {
     "title": "Memoria",

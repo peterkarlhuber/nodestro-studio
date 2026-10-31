@@ -20,6 +20,8 @@ Cliquez sur **Importer des fichiers** ou faites glisser des fichiers dans la zon
 
 Si vous importez à nouveau **exactement le même fichier**, aucun doublon n’est créé : l’identifiant dépend du contenu, et le nom et la description sont mis à jour.
 
+Vous pouvez aussi importer des fichiers directement dans la section *Connaissances* d’un agent ; ils arrivent ici, sans collection, et sont aussitôt attribués à cet agent ([Agents](/docs/agenten#wissen)).
+
 ## Formats et limites {#formate}
 <!-- keywords: formats, pdf, image, png, jpg, jpeg, gif, webp, txt, markdown, csv, json, yaml, html, xml, taille, limite, mo -->
 

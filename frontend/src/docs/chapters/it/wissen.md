@@ -20,6 +20,8 @@ Fai clic su **Carica file** o trascina i file nell'area di rilascio; puoi carica
 
 Se carichi di nuovo **esattamente lo stesso file**, non si crea un duplicato: l'identificativo deriva dal contenuto, e nome e descrizione vengono aggiornati.
 
+Puoi anche caricare file direttamente nella sezione *Conoscenza* di un agente; arrivano qui, senza raccolta, e sono subito assegnati a quell’agente ([Agenti](/docs/agenten#wissen)).
+
 ## Formati e limiti {#formate}
 <!-- keywords: formati, pdf, immagine, png, jpg, jpeg, gif, webp, txt, markdown, csv, json, yaml, html, xml, dimensione, limite, mb -->
 

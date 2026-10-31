@@ -70,6 +70,8 @@ In the **Knowledge** section you assign uploaded files and choose **how** the ag
 
 **Enable citations** makes answers refer to the exact passages. Details and recommendations are in the [Knowledge](/docs/wissen#modi) chapter.
 
+**Upload file** in the same section uploads one or more files straight into [Knowledge](/docs/wissen#hochladen) and assigns them to this agent. The file is stored permanently in Knowledge at once and can be used by other agents too; the assignment is an ordinary change of the agent and is saved with the workflow. *Undo* or *Discard* remove only the assignment, not the file. Files you give a run in the start dialog are not knowledge files: they belong to that run only.
+
 ## Memory {#memory}
 <!-- keywords: memory, notes, per run, persistent, space -->
 
