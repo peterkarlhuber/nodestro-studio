@@ -16,6 +16,19 @@
   `resume.in_loop`. Docs ×6: *Branches → Loops* (`verzweigungen#schleifen`, help tip `workflow.loop`, with the
   placeholders `{{iteration}}`, `{{previous}}` and `{{feedback}}`); *Workflows* no longer says that loops are impossible.
 
+### Pins: sandbox gateway security fixes (2026-10-31)
+
+- A cascade for the security fixes to the sandbox gateway of Nodestro Local Docker: runtime #33 strictly parses
+  request heads, which fixes request smuggling to the Docker daemon, and runtime #37 refuses sandboxes when the
+  daemon cannot enforce resource limits. The new pins:
+  - nodestro-runtime `8597544` (before `b6b757b`; it also carries the tool approval groundwork, off by default);
+  - nodestro-examples `cf151e6` (before `8a5862e`);
+  - nodestro-integrations `226b75f` (before `3afd7e4`);
+  - nodestro-api `43a61cd` (before `262fb4d`; OpenAPI regenerated);
+  - nodestro-sdk `d9ff57c` (before `25fff6d`).
+
+  orkexa stays at `456b92f`. No studio change.
+
 ### Pins: flow kernel, loop connections, MCP provenance (2026-10-31)
 
 - One cascade for Adaptive Orchestration M1 (the engine on the `orkexa.flow` kernel and loop connections with
