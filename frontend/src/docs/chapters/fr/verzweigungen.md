@@ -100,6 +100,8 @@ La vérification avant le lancement avertit lorsqu’un agent avant le résultat
 
 Les workflows dotés d’un contrat de sortie ou de capacités apparaissent dans la palette sous **Équipes** et s’ajoutent directement comme sous-workflow. L’inspecteur d’un sous-workflow indique ce que livre l’équipe. Un **double-clic** sur le nœud ouvre l’équipe dans l’éditeur ; le fil d’Ariane en haut ramène au workflow parent.
 
+Une équipe peut être testée seule : créez une [série de tests](/docs/automatisierung#testreihen) pour le workflow. Ses contrôles peuvent utiliser les champs du contrat de sortie, par exemple `score` supérieur ou égal à 5.
+
 ## Formulaires d’entrée {#eingabeformular}
 <!-- keywords: formulaire, formulaire d’entrée, champs, type, obligatoire, valeur par défaut, choix, date, nombre -->
 

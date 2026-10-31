@@ -100,6 +100,8 @@ The check before starting warns when an agent before the result answers in plain
 
 Workflows with an output contract or capabilities appear in the palette under **Teams** and can be added directly as a sub-workflow. The inspector of a sub-workflow shows what the team delivers. A **double-click** on the node opens the team in the editor; the breadcrumbs at the top lead back to the parent workflow.
 
+A team can be tested on its own: create a [test series](/docs/automatisierung#testreihen) for the workflow. Its checks can use the fields of the output contract, for example `score` greater than or equal to 5.
+
 ## Input forms {#eingabeformular}
 <!-- keywords: form, input form, fields, type, required, default, choice, date, number -->
 

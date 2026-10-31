@@ -100,6 +100,8 @@ La verifica prima dell'avvio avvisa quando un agente prima del risultato rispond
 
 I workflow con contratto di output o capacità compaiono nella palette sotto **Team** e si possono inserire direttamente come sotto-workflow. L'ispettore di un sotto-workflow mostra cosa consegna il team. Un **doppio clic** sul nodo apre il team nell'editor; il percorso di navigazione in alto riporta al workflow superiore.
 
+Un team si può verificare da solo: crea una [serie di test](/docs/automatisierung#testreihen) per il workflow. I suoi controlli possono usare i campi del contratto di output, ad esempio `score` maggiore o uguale a 5.
+
 ## Moduli di input {#eingabeformular}
 <!-- keywords: modulo, modulo di input, campi, tipo, obbligatorio, valore predefinito, scelta, data, numero, form -->
 
