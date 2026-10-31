@@ -67,6 +67,8 @@ import type {
   BenchmarkPlan,
   BenchmarkRun,
   BenchmarkStart,
+  ModelChoice,
+  ModelPolicy,
   FileRequest,
   ParsedRows,
   PendingApproval,
@@ -458,6 +460,17 @@ export const api = {
   benchmarkRun: (id: string) => request<BenchmarkRun>("GET", `/benchmark-runs/${id}`),
   cancelBenchmarkRun: (id: string) => request<BenchmarkRun>("POST", `/benchmark-runs/${id}/cancel`),
   deleteBenchmarkRun: (id: string) => request<void>("DELETE", `/benchmark-runs/${id}`),
+  /** The model one agent should use by a policy and the measured test runs (AO M6); nothing changes. */
+  modelChoice: (suiteId: string, nodeId: string, policy: ModelPolicy) =>
+    request<ModelChoice>(
+      "GET",
+      `/benchmarks/${suiteId}/model-choice${q({
+        node_id: nodeId,
+        objective: policy.objective,
+        min_pass_rate: policy.min_pass_rate === null ? undefined : String(policy.min_pass_rate),
+        no_new_failures: String(policy.no_new_failures),
+      })}`,
+    ),
   compareBenchmarkRuns: (a: string, b: string) =>
     request<BenchmarkComparison>("GET", `/benchmark-runs/compare${q({ a, b })}`),
 

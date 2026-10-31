@@ -250,5 +250,65 @@
       "weekly": "ogni settimana il {{days}} alle {{at}} ({{zone}})",
       "monthly": "ogni mese il giorno {{day}} alle {{at}} ({{zone}})"
     }
+  },
+  "modelChoice": {
+    "title": "Scelta del modello in base alle misure",
+    "intro": "Quale modello debba usare un agente si ricava qui solo da esecuzioni di test concluse di questa serie: quella della versione salvata e i confronti tra modelli. Nulla cambia da solo.",
+    "agent": "Agente",
+    "objective": "Obiettivo",
+    "objectives": {
+      "cost": "Costo più basso",
+      "duration": "Durata più breve",
+      "quality": "Tasso di superamento più alto"
+    },
+    "minPassRate": "Tasso minimo di superamento (%)",
+    "minPassRateHint": "Vuoto: almeno buono quanto il modello attuale nella sua esecuzione misurata.",
+    "minPassRateDefault": "come il modello attuale",
+    "minPassRateInvalid": "Un numero da 0 a 100.",
+    "noNewFailures": "Non deve perdere un caso superato dal modello attuale",
+    "outcome": {
+      "switch": "Secondo questa regola {{model}} è più adatto di {{current}} (almeno {{rate}} superati).",
+      "keep": "{{current}} resta: nessun modello misurato è migliore secondo questa regola.",
+      "no_baseline": "Il modello attuale {{current}} non è ancora stato misurato con questa serie. Esegui la versione salvata o indica un tasso minimo di superamento.",
+      "no_measurement": "Ancora nessuna misura adatta. Esegui un test e un confronto tra modelli; fino ad allora resta {{current}}."
+    },
+    "apply": "Usa {{model}}",
+    "applied": "Modello applicato; il workflow è stato salvato come nuova versione.",
+    "versionNote": "Modello dalla serie di test: {{model}}",
+    "current": "attuale",
+    "recommended": "Consigliato",
+    "measuredAt": "Misurato {{date}} · {{passed}} su {{cases}} superati",
+    "columns": {
+      "model": "Modello",
+      "passRate": "Superati",
+      "costPerCase": "Costo per caso",
+      "duration": "Tempo per caso",
+      "aiScore": "Valutazione IA",
+      "status": "Esito"
+    },
+    "warnings": {
+      "few_cases": "Meno di 10 casi di test: la misura è scarsa.",
+      "ai_judged": "La valutazione IA è un giudizio dell’IA; conta solo attraverso il superamento dei casi."
+    },
+    "skippedIntro": "Non usate:",
+    "skipped": {
+      "older_record_one": "{{count}} esecuzione vecchia senza dati sui modelli",
+      "older_record_other": "{{count}} esecuzioni vecchie senza dati sui modelli",
+      "workflow_changed_one": "{{count}} esecuzione di un altro stato del workflow",
+      "workflow_changed_other": "{{count}} esecuzioni di un altro stato del workflow",
+      "cases_changed_one": "{{count}} esecuzione con altri casi di test",
+      "cases_changed_other": "{{count}} esecuzioni con altri casi di test",
+      "other_agents_differ_one": "{{count}} esecuzione con altri modelli in altri agenti",
+      "other_agents_differ_other": "{{count}} esecuzioni con altri modelli in altri agenti",
+      "incomplete_one": "{{count}} esecuzione incompleta",
+      "incomplete_other": "{{count}} esecuzioni incomplete"
+    },
+    "excluded": {
+      "unavailable": "Provider non configurato",
+      "pass_rate_low": "Tasso di superamento troppo basso",
+      "new_failures": "Perde {{cases}} casi superati dal modello attuale",
+      "cost_unknown": "Costo sconosciuto (mai contato come 0)",
+      "duration_unknown": "Durata sconosciuta"
+    }
   }
 }

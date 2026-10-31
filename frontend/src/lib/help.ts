@@ -220,6 +220,7 @@ export const HELP_DOCS = {
   "automation.caseFromRun": "automatisierung#testfall-aus-lauf",
   "automation.benchmarkJudge": "automatisierung#ki-bewertung",
   "automation.benchmarkCompare": "automatisierung#testreihen-vergleichen",
+  "automation.modelChoice": "automatisierung#modellwahl-nach-messwerten",
   "automation.benchmarkModels": "automatisierung#modelle-vergleichen",
   "automation.schedule": "automatisierung#zeitplaene",
   "automation.scheduleMissed": "automatisierung#zeitplaene",

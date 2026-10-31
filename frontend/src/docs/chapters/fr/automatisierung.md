@@ -72,6 +72,20 @@ Pour savoir si un modèle moins cher ou plus puissant suffit pour un agent, util
 
 Une telle exécution exige une **limite de coût** sous [Limites](/docs/automatisierung#grenzen), car les exécutions précédentes utilisaient d’autres modèles et ne disent rien du coût. Dans la liste, elle porte la mention **Comparaison de modèles** et nomme les modèles remplacés. Comparez-la ensuite avec une exécution de la version enregistrée. Elle ne compte pas comme résultat de test de cette version, car elle a testé une variante. Si un modèle convient, définissez-le dans l’agent lui-même.
 
+## Choix du modèle par les mesures {#modellwahl-nach-messwerten}
+<!-- keywords: choix du modèle, recommandation, modèle le moins cher, politique, mesures, taux de réussite, appliquer le modèle -->
+
+Sous les exécutions de test d’une série, **Choix du modèle par les mesures** indique quel modèle un agent devrait utiliser selon votre règle. Nodestro n’évalue rien de lui-même : seul compte ce que les exécutions terminées ont mesuré.
+
+- **Objectif :** coût le plus bas, durée la plus courte ou taux de réussite le plus élevé. En cas d’égalité, le taux de réussite le plus élevé l’emporte, puis le nom du modèle.
+- **Taux de réussite minimal :** vide signifie qu’un autre modèle doit réussir au moins autant de cas que le modèle actuel dans son exécution mesurée.
+- **Ne perdre aucun cas :** activé, un modèle est écarté s’il échoue à un cas que le modèle actuel a réussi.
+- **Un coût inconnu** ne compte jamais comme 0. Un modèle sans coût connu ne peut pas gagner avec l’objectif *coût le plus bas*.
+
+Seule compte comme mesure l’exécution terminée la plus récente par modèle avec le même état du workflow (hors modèles ; positions et noms ne comptent pas), les mêmes cas et la même note IA, les mêmes modèles dans tous les autres agents et un résultat pour chaque cas. Si un prompt ou un cas change, relancez les tests. La liste indique quelles exécutions n’ont pas été utilisées et pourquoi. Sans mesure adaptée, le modèle actuel reste.
+
+*Utiliser* place le modèle recommandé dans l’agent et enregistre le workflow comme nouvelle [version](/docs/workflows#versionen). Rien ne change avant. La note IA est affichée, mais elle ne compte qu’à travers la réussite des cas.
+
 ## Planifications {#zeitplaene}
 <!-- keywords: planification, schedule, cron, régulier, quotidien, hebdomadaire, mensuel, toutes les heures, fuseau horaire, manqué -->
 

@@ -72,6 +72,20 @@ Si un modelo más barato o más potente basta para un agente, lo compruebas con 
 
 Una ejecución así necesita un **límite de coste** en [Límites](/docs/automatisierung#grenzen), porque las ejecuciones anteriores usaron otros modelos y no dicen nada del coste. En la lista lleva la etiqueta **Comparación de modelos** y nombra los modelos sustituidos. Después compárala con una ejecución de la versión guardada. No cuenta como resultado de prueba de esa versión, porque probó una variante. Si un modelo encaja, ponlo en el propio agente.
 
+## Elección de modelo por mediciones {#modellwahl-nach-messwerten}
+<!-- keywords: elección de modelo, recomendación, modelo más barato, política, mediciones, tasa de aprobados, aplicar modelo -->
+
+Debajo de las ejecuciones de prueba de una serie, **Elección de modelo por mediciones** muestra qué modelo debería usar un agente según tu regla. Nodestro no valora nada por sí mismo: solo cuenta lo que midieron las ejecuciones terminadas.
+
+- **Objetivo:** menor coste, menor duración o mayor tasa de aprobados. En caso de empate decide la tasa de aprobados más alta y luego el nombre del modelo.
+- **Tasa mínima de aprobados:** vacía significa que otro modelo debe aprobar al menos tantos casos como el modelo actual en su ejecución medida.
+- **No perder ningún caso:** activado, queda fuera un modelo que suspende un caso que el modelo actual aprobó.
+- **Los costes desconocidos** nunca cuentan como 0. Un modelo sin costes conocidos no puede ganar con el objetivo *menor coste*.
+
+Solo cuenta como medición la ejecución terminada más reciente por modelo con el mismo estado del workflow (salvo los modelos; posiciones y nombres no cuentan), los mismos casos y la misma valoración IA, los mismos modelos en todos los demás agentes y un resultado para cada caso. Si cambia un prompt o un caso, vuelve a ejecutar las pruebas. La lista indica qué ejecuciones no se usaron y por qué. Sin una medición adecuada se mantiene el modelo actual.
+
+*Usar* pone el modelo recomendado en el agente y guarda el workflow como nueva [versión](/docs/workflows#versionen). Antes no cambia nada. La valoración IA se muestra, pero solo cuenta a través de si los casos se aprueban.
+
 ## Programaciones {#zeitplaene}
 <!-- keywords: programación, schedule, cron, periódico, diario, semanal, mensual, cada hora, zona horaria, perdido -->
 

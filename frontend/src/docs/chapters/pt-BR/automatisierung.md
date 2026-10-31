@@ -72,6 +72,20 @@ Se um modelo mais barato ou mais forte basta para um agente, você verifica com 
 
 Uma execução assim precisa de um **limite de custo** em [Limites](/docs/automatisierung#grenzen), porque as execuções anteriores usaram outros modelos e não dizem nada sobre o custo. Na lista ela leva o rótulo **Comparação de modelos** e cita os modelos substituídos. Depois compare-a com uma execução da versão salva. Ela não conta como resultado de teste dessa versão, porque testou uma variante. Se um modelo servir, defina-o no próprio agente.
 
+## Escolha de modelo por medições {#modellwahl-nach-messwerten}
+<!-- keywords: escolha de modelo, recomendação, modelo mais barato, política, medições, taxa de aprovação, aplicar modelo -->
+
+Abaixo das execuções de teste de uma série, **Escolha de modelo por medições** mostra qual modelo um agente deveria usar pela sua regra. O Nodestro não avalia nada sozinho: só conta o que as execuções concluídas mediram.
+
+- **Objetivo:** menor custo, menor duração ou maior taxa de aprovação. Em caso de empate vence a maior taxa de aprovação e depois o nome do modelo.
+- **Taxa mínima de aprovação:** vazia significa que outro modelo precisa aprovar pelo menos tantos casos quanto o modelo atual na execução medida.
+- **Não perder nenhum caso:** ligado, sai um modelo que reprova um caso que o modelo atual aprovou.
+- **Custos desconhecidos** nunca contam como 0. Um modelo sem custos conhecidos não pode vencer com o objetivo *menor custo*.
+
+Conta como medição apenas a execução concluída mais recente por modelo com o mesmo estado do workflow (exceto os modelos; posições e nomes não contam), os mesmos casos e a mesma avaliação de IA, os mesmos modelos em todos os outros agentes e um resultado para cada caso. Se um prompt ou um caso mudar, execute os testes de novo. A lista informa quais execuções não foram usadas e por quê. Sem medição adequada, o modelo atual continua.
+
+*Usar* coloca o modelo recomendado no agente e salva o workflow como nova [versão](/docs/workflows#versionen). Antes disso nada muda. A avaliação de IA é exibida, mas só conta por meio da aprovação dos casos.
+
 ## Agendamentos {#zeitplaene}
 <!-- keywords: agendamento, schedule, cron, regular, diário, semanal, mensal, a cada hora, fuso horário, perdido -->
 

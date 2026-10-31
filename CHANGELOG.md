@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Model choice from measurements (Adaptive Orchestration M6a)
+
+- A test series page shows **Model choice from measurements** below its runs: for one agent, the goal (lowest cost,
+  shortest run time, highest pass rate), the minimum pass rate and "must not lose a case" make up the policy, and the
+  table shows each measured model's pass rate, cost and time per case, the AI rating (shown, not used), and why a
+  model is left out. Only finished test runs of the same workflow state, cases and other models count; unknown costs
+  never count as 0. *Use* saves the agent with the recommended model as a new workflow version; nothing changes
+  before that. Help and docs (`automatisierung#modellwahl-nach-messwerten`) in all six languages.
+- Needs `nodestro-api` with `GET /api/benchmarks/{suite_id}/model-choice` (api #33); the pin follows.
+
 ### Platform pins: runtime 40e04b4, api e8eacd4, sdk 38082cc (Adaptive Orchestration M3–M5, 2026-10-31)
 
 - Pins `nodestro-runtime` `40e04b4` (output contracts, capabilities, orchestrator node, pool selection, stdio MCP

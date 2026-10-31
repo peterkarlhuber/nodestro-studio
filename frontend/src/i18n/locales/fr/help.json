@@ -222,7 +222,8 @@
     "scheduleTimeZone": "Les horaires valent dans ce fuseau horaire, heure d’été comprise.",
     "estimate": "Estimation d’après les dernières exécutions réussies de ce workflow. Le maximum découle du budget par exécution.",
     "external": "Des outils personnels peuvent p. ex. envoyer des messages. Avec de nombreuses exécutions, cela arrive aussi souvent.",
-    "caseFromRun": "Transforme l'entrée de cette exécution échouée en cas de test, avec identifiants et données personnelles remplacés. Rien n'est enregistré avant ta confirmation."
+    "caseFromRun": "Transforme l'entrée de cette exécution échouée en cas de test, avec identifiants et données personnelles remplacés. Rien n'est enregistré avant ta confirmation.",
+    "modelChoice": "La recommandation n’utilise que des exécutions de test mesurées de la même série, avec le même état du workflow (hors modèles) et les mêmes cas. Vous choisissez l’objectif et le taux minimal ; un coût inconnu ne compte jamais comme 0. Seul *Utiliser* modifie l’agent et enregistre une nouvelle version."
   },
   "publish": {
     "open": "Publiez ce workflow comme API sur cet ordinateur, gérez les clés et l’accès réseau, ou exportez-le comme projet FastAPI autonome.",

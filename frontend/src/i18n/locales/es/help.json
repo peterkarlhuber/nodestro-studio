@@ -222,7 +222,8 @@
     "scheduleTimeZone": "Las horas valen en esta zona horaria, incluido el horario de verano.",
     "estimate": "Estimación a partir de las últimas ejecuciones correctas de este workflow. El máximo resulta del presupuesto por ejecución.",
     "external": "Las herramientas propias pueden, p. ej., enviar mensajes. Con muchas ejecuciones, eso ocurre igual de a menudo.",
-    "caseFromRun": "Convierte la entrada de esta ejecución fallida en un caso de prueba, con credenciales y datos personales sustituidos. No se guarda nada hasta que confirmes."
+    "caseFromRun": "Convierte la entrada de esta ejecución fallida en un caso de prueba, con credenciales y datos personales sustituidos. No se guarda nada hasta que confirmes.",
+    "modelChoice": "La recomendación usa solo ejecuciones de prueba medidas de la misma serie, con el mismo estado del workflow (salvo los modelos) y los mismos casos. Tú eliges el objetivo y la tasa mínima; los costes desconocidos nunca cuentan como 0. Solo *Usar* cambia el agente y guarda una nueva versión."
   },
   "publish": {
     "open": "Publica este flujo de trabajo como API en este ordenador, gestiona claves y acceso en red, o expórtalo como proyecto FastAPI independiente.",

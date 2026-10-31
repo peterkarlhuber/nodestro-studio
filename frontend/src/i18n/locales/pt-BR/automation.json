@@ -250,5 +250,65 @@
       "weekly": "semanalmente {{days}} às {{at}} ({{zone}})",
       "monthly": "mensalmente no dia {{day}} às {{at}} ({{zone}})"
     }
+  },
+  "modelChoice": {
+    "title": "Escolha de modelo por medições",
+    "intro": "Qual modelo um agente deve usar vem aqui apenas de execuções de teste concluídas desta série: a da versão salva e as comparações de modelos. Nada muda sozinho.",
+    "agent": "Agente",
+    "objective": "Objetivo",
+    "objectives": {
+      "cost": "Menor custo",
+      "duration": "Menor duração",
+      "quality": "Maior taxa de aprovação"
+    },
+    "minPassRate": "Taxa mínima de aprovação (%)",
+    "minPassRateHint": "Vazio: pelo menos tão bom quanto o modelo atual na execução medida.",
+    "minPassRateDefault": "como o modelo atual",
+    "minPassRateInvalid": "Um número de 0 a 100.",
+    "noNewFailures": "Não pode perder um caso que o modelo atual aprovou",
+    "outcome": {
+      "switch": "Por esta regra, {{model}} se encaixa melhor que {{current}} (pelo menos {{rate}} aprovados).",
+      "keep": "{{current}} continua: nenhum modelo medido é melhor por esta regra.",
+      "no_baseline": "O modelo atual {{current}} ainda não foi medido com esta série. Execute a versão salva ou informe uma taxa mínima de aprovação.",
+      "no_measurement": "Ainda não há medição adequada. Execute um teste e uma comparação de modelos; até lá, {{current}} continua."
+    },
+    "apply": "Usar {{model}}",
+    "applied": "Modelo aplicado; o workflow foi salvo como nova versão.",
+    "versionNote": "Modelo pela série de testes: {{model}}",
+    "current": "atual",
+    "recommended": "Recomendado",
+    "measuredAt": "Medido {{date}} · {{passed}} de {{cases}} aprovados",
+    "columns": {
+      "model": "Modelo",
+      "passRate": "Aprovados",
+      "costPerCase": "Custo por caso",
+      "duration": "Tempo por caso",
+      "aiScore": "Avaliação de IA",
+      "status": "Avaliação"
+    },
+    "warnings": {
+      "few_cases": "Menos de 10 casos de teste: a medição é escassa.",
+      "ai_judged": "A avaliação de IA é uma estimativa da IA; só conta por meio da aprovação dos casos."
+    },
+    "skippedIntro": "Não usadas:",
+    "skipped": {
+      "older_record_one": "{{count}} execução antiga sem dados de modelos",
+      "older_record_other": "{{count}} execuções antigas sem dados de modelos",
+      "workflow_changed_one": "{{count}} execução de outro estado do workflow",
+      "workflow_changed_other": "{{count}} execuções de outro estado do workflow",
+      "cases_changed_one": "{{count}} execução com outros casos de teste",
+      "cases_changed_other": "{{count}} execuções com outros casos de teste",
+      "other_agents_differ_one": "{{count}} execução com outros modelos em outros agentes",
+      "other_agents_differ_other": "{{count}} execuções com outros modelos em outros agentes",
+      "incomplete_one": "{{count}} execução incompleta",
+      "incomplete_other": "{{count}} execuções incompletas"
+    },
+    "excluded": {
+      "unavailable": "Provedor não configurado",
+      "pass_rate_low": "Taxa de aprovação baixa demais",
+      "new_failures": "Perde {{cases}} casos que o modelo atual aprovou",
+      "cost_unknown": "Custo desconhecido (nunca conta como 0)",
+      "duration_unknown": "Duração desconhecida"
+    }
   }
 }
