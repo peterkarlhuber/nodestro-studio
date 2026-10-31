@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Release candidate v0.2.0-preview.1 (2026-10-31)
+
+- Docs only, no pin change. `docs/desktop-server/release-checklist.md`: the steps of every release. `RELEASES.md`:
+  candidate, publish and release as three separate steps started by a person, the results of candidate
+  `v0.2.0-preview.1` (built from studio `78710ce`, not published), the tested Linux systems (glibc 2.39 or newer).
+  `platform/versions.json` `products`: desktop `67122b7` and server `5bc7b82` with `candidate: v0.2.0-preview.1`.
+
 ### "Used in" for knowledge files, tools and memory spaces, UX-7 (2026-10-31)
 
 - The Knowledge page (under each file), a tool's details and a memory space show **Used in**: the saved workflows
