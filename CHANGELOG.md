@@ -2,12 +2,20 @@
 
 ## Unreleased
 
-### Fix: empty links in six hints (2026-10-31)
+### Journey baseline, UX-J (2026-10-31)
+
+- New browser suite `journeys` (`frontend/e2e/journeys.mjs`, `tests/e2e_journey_server.py`): the six user tasks
+  of the evolution plan, walked through against a studio whose model answers every request (no key). It counts
+  actions, dialogs, page changes and visible controls until each goal and writes a report to `$JOURNEY_REPORT`;
+  CI uploads it as the `journeys` artifact. The counts are reported, not asserted. Baseline, method and limits
+  in `docs/evolution/journeys.md`; it measures interface cost, not usability.
+
+### Fix: empty links in translated hints (2026-10-31)
 
 - Studio only. Seven translated hints marked their link as `<link>…</link>`. `<Trans>` treats `link` as a void
   HTML element, so it rendered an empty, invisible link followed by the plain word: "No files yet. Upload them under
   *Knowledge*" in the agent's Knowledge section, the missing-tools hints in the Tools section and in *Design with
-  AI*, the Architect's cost limit hint and three documentation links led nowhere. The markup is now `<a>…</a>`; a
+  AI*, the Architect's two cost limit hints and two documentation links led nowhere. The markup is now `<a>…</a>`; a
   language-file test rejects void element names as markup. Found by the journey baseline (UX-J).
 
 ### Agent inspector: open sections remembered, UX-3 (2026-10-31)
