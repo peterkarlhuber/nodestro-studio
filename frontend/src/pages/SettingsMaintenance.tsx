@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "../api/client";
 import type { BackupContents, BackupInfo, DiagnosticCheck, DiagnosticStatus } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, HelpTip, Hint, Modal, Spinner } from "../components/ui";
+import { Badge, Button, Callout, HelpTip, Hint, Modal, Section, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate, formatNumber } from "../lib/format";
 
@@ -103,8 +103,7 @@ export function DiagnosticsPanel() {
               <CheckRow key={`${check.id}`} check={check} />
             ))}
           </ul>
-          <details className="small">
-            <summary>{t("diagnostics.versions")}</summary>
+          <Section title={t("diagnostics.versions")}>
             <dl className="key-values">
               {Object.entries(data.versions).map(([name, version]) => (
                 <div key={name}>
@@ -115,7 +114,7 @@ export function DiagnosticsPanel() {
                 </div>
               ))}
             </dl>
-          </details>
+          </Section>
           <p className="muted small">{t("diagnostics.noSecrets")}</p>
         </>
       ) : null}
@@ -210,8 +209,7 @@ export function BackupPanel() {
         </Hint>
       </div>
       {local.data?.length ? (
-        <details className="small">
-          <summary>{t("backup.local", { count: local.data.length })}</summary>
+        <Section title={t("backup.local", { count: local.data.length })}>
           <p className="muted">{t("backup.localText")}</p>
           <ul className="backup-list">
             {local.data.map((item) => (
@@ -229,7 +227,7 @@ export function BackupPanel() {
               </li>
             ))}
           </ul>
-        </details>
+        </Section>
       ) : null}
       <Modal
         title={t("backup.restoreTitle")}

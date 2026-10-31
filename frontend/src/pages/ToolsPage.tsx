@@ -36,7 +36,7 @@ import {
   applyOrganize,
 } from "../components/Organize";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, PageHeader, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
+import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
 import { toolDescription } from "../lib/catalog";
 import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
@@ -336,25 +336,20 @@ function ToolDetail({
         />
       ) : null}
       {tool.code ? (
-        <details className="section">
-          <summary>
-            <span className="section__title">{t("tools.viewCode")}</span>
-          </summary>
-          <div className="section__body">
+        <Section title={t("tools.viewCode")}>
+          <CodeEditor
+            value={tool.code}
+            readOnly
+            ariaLabel={t("tools.codeOfTool")}
+          />
+          {tool.tests ? (
             <CodeEditor
-              value={tool.code}
+              value={tool.tests}
               readOnly
-              ariaLabel={t("tools.codeOfTool")}
+              ariaLabel={t("tools.testsOfTool")}
             />
-            {tool.tests ? (
-              <CodeEditor
-                value={tool.tests}
-                readOnly
-                ariaLabel={t("tools.testsOfTool")}
-              />
-            ) : null}
-          </div>
-        </details>
+          ) : null}
+        </Section>
       ) : null}
       <Field label={t("tools.try")} hint={t("tools.tryHint")} tip="tools.try">
         <CodeEditor
@@ -789,10 +784,7 @@ function GenerateTool() {
               </div>
             ) : null}
             {job.attempts.length && job.status !== "awaiting_approval" ? (
-              <details>
-                <summary className="small">
-                  {t("tools.generate.viewAttempts")}
-                </summary>
+              <Section title={t("tools.generate.viewAttempts")}>
                 {job.attempts.map((attempt) => (
                   <div key={attempt.number} className="stack-sm">
                     <span className="nd-field-label">
@@ -808,7 +800,7 @@ function GenerateTool() {
                     />
                   </div>
                 ))}
-              </details>
+              </Section>
             ) : null}
           </article>
         );
