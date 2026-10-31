@@ -42,14 +42,16 @@
     }
   },
   "products": {
-    "comment": "Released products and the studio commit each one builds from (their studio.json); updated when a product's studio.json moves.",
+    "comment": "Released products and the studio commit each one builds from (their studio.json); updated when a product's studio.json moves. `candidate` is a built and checked release candidate that is not published.",
     "nodestro-desktop": {
-      "commit": "3ee764a657b2b9e775ff4e04b10bcc5c0be20a40",
-      "studio": "5a1cf56e7fe67359260705097e9537a1ad345218"
+      "commit": "67122b7426dc273115a4936819c1a39f88a1f5d7",
+      "studio": "78710ce6ec59477096978e1622676e8fa0e0fbe9",
+      "candidate": "v0.2.0-preview.1"
     },
     "nodestro-server": {
-      "commit": "e8a48996e6558bd7cac7081402a2e419d6b318f3",
-      "studio": "5a1cf56e7fe67359260705097e9537a1ad345218"
+      "commit": "5bc7b821c6307dd24806ba3848f1656e4444227b",
+      "studio": "78710ce6ec59477096978e1622676e8fa0e0fbe9",
+      "candidate": "v0.2.0-preview.1"
     }
   }
 }

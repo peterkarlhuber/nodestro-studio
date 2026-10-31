@@ -13,6 +13,12 @@
 - Journeys: new J6b checks a tested version in the publish dialog (Q-1), 2 actions and 1 page change. The results
   after P1 stand next to the baseline in `docs/evolution/journeys.md`; J1 to J6 are unchanged. No usability claim:
   moderated task tests (D7) have not been arranged.
+### Release candidate v0.2.0-preview.1 (2026-10-31)
+
+- Docs only, no pin change. `docs/desktop-server/release-checklist.md`: the steps of every release. `RELEASES.md`:
+  candidate, publish and release as three separate steps started by a person, the results of candidate
+  `v0.2.0-preview.1` (built from studio `78710ce`, not published), the tested Linux systems (glibc 2.39 or newer).
+  `platform/versions.json` `products`: desktop `67122b7` and server `5bc7b82` with `candidate: v0.2.0-preview.1`.
 
 ### Test status when publishing, Q-1 (2026-10-31)
 

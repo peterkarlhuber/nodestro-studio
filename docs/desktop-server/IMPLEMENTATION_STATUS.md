@@ -36,6 +36,7 @@ Last update: 2026-10-31.
 | PR-12 | Server integration and deployment | done | runtime #14 (`640ed68`: `ServerSettings`, encrypted tenant secrets, container calls without bind mounts), runtime #15 (`51f0a6c`: model endpoint allowlist), runtime #16 (`c6bc2e5`: a run is stored as running as soon as a worker starts it); pins: examples #11 (`f13227c`), #12 (`86c58a1`), integrations #11 (`268c3ed`), #12 (`652c231`); api #15 (`f119cfc`: `nodestro-server` command, backups, HTTPS-only identity providers); sdk #13 (`2ed893a`); studio #19 (`6b73625`: pins, texts); nodestro-server #1 (`2d512c3`: image, compose, runbook, end-to-end tests); nodestro-desktop #3 (`26612f9`: backend from studio `6b73625`) |
 | PR-13 | Built-in sandbox prototype | done (prototype, not isolating) | runtime #17 (`f3931e8`: `builtin_sandbox`, bubblewrap + seccomp, acceptance tests in CI); report: [sandbox-prototype-report.md](sandbox-prototype-report.md); no pin change (nothing uses it) |
 | M6 | Release pipelines, manifests, signing, OS support matrix | done (pipelines; no release made, nothing signed) | nodestro-desktop #4 (`3ee764a`) and nodestro-server #2 (`e8a4899`): release workflows with draft releases, `release_manifest.py` (pins, checksums, digests, license inventory, signing state); both build from studio `5a1cf56`; [RELEASES.md](RELEASES.md): steps, signing, OS support matrix, update and rollback |
+| RC | Release candidate `v0.2.0-preview.1` (Linux x86_64 desktop, linux/amd64 server) | built and checked, **not published** | nodestro-server #3 (`b34505e`) and #4 (`5bc7b82`), nodestro-desktop #5 (`67122b7`): candidate build without publishing, separate `publish.yml` with confirmation, secret scan, license texts, preview labels; candidate runs 41212112554 (desktop) and 41212693919 (server), both from studio `78710ce`; [RELEASES.md](RELEASES.md#release-candidate-v020-preview1), [release-checklist.md](release-checklist.md) |
 
 ## Notes per step
 
@@ -156,6 +157,15 @@ Last update: 2026-10-31.
   Server (CI): 218 packages, none without a license; acceptance tests 15 of 15 against studio `5a1cf56`.
 - Not done: no tag has been pushed, so no release, image push or draft release has run yet; no signing (no
   certificates or keys); no macOS, Windows or arm64 builds.
+
+### RC v0.2.0-preview.1
+
+- Before: a tag `v*` let the server workflow push the image to ghcr.io with no further approval. Now nothing
+  publishes without a person: `release.yml` only builds and checks; `publish.yml` needs the run ID and the
+  confirmation `publish <version>` and creates draft pre-releases; publishing a draft creates the tag.
+- Found while checking: the artifacts had no license texts for the Rust crates and npm packages (fixed), and the
+  desktop shell needs glibc 2.39 (Ubuntu 24.04, Debian 13; Ubuntu 22.04 does not start; documented).
+- Not done, by decision: no tag, no release, no image push. Not available: signing, macOS, Windows, arm64.
 
 ## Limitations known so far
 
