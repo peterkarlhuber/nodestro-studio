@@ -14,7 +14,8 @@
     "new": "Newly needed: {{names}}.",
     "changed": "Changed requirement: {{names}}.",
     "python": "The Python version has changed; versions are resolved again.",
-    "other_installation": "The approvals come from another computer or an import and do not apply here."
+    "other_installation": "The approvals come from another computer or an import and do not apply here.",
+    "hashes": "The approval comes from an older version without checksums; it must be given again for the Docker sandbox."
   },
   "status": {
     "new": "New",

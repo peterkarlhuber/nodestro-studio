@@ -14,7 +14,8 @@
     "new": "Nouvellement nécessaire : {{names}}.",
     "changed": "Exigence modifiée : {{names}}.",
     "python": "La version de Python a changé ; les versions sont à nouveau résolues.",
-    "other_installation": "Les approbations proviennent d’un autre ordinateur ou d’un import et ne s’appliquent pas ici."
+    "other_installation": "Les approbations proviennent d’un autre ordinateur ou d’un import et ne s’appliquent pas ici.",
+    "hashes": "L’approbation provient d’une ancienne version sans sommes de contrôle ; elle doit être redonnée pour le bac à sable Docker."
   },
   "status": {
     "new": "Nouveau",

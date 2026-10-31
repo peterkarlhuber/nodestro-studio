@@ -243,7 +243,6 @@
     "unresolved": "Algumas importações não podem ser atribuídas claramente a um pacote.",
     "unresolved_tool": "Ferramenta {{tool}}: uma importação não pode ser atribuída claramente.",
     "draft_libraries": "O rascunho de ferramenta {{tool}} precisa de {{packages}}; as bibliotecas ainda não foram aprovadas.",
-    "docker_unsupported": "Ferramentas com bibliotecas de terceiros só rodam no sandbox de processos. Altere o sandbox nas configurações.",
     "uv_missing": "O uv não foi encontrado. Reinstale o Nodestro ou instale o uv.",
     "not_found": "O pacote “{{name}}” não existe no índice de pacotes. Verifique o nome no cabeçalho “# /// script”.",
     "no_version": "Não há versão compatível com “{{name}}{{spec}}”.",
@@ -263,7 +262,11 @@
     "no_definition": "Nada foi aprovado ainda para este ambiente.",
     "run_active": "O fluxo de trabalho está em execução; tente novamente depois.",
     "install_interrupted": "O Nodestro foi encerrado durante a instalação das bibliotecas. Instale-as novamente.",
-    "build_required": "{{name}} só está disponível como código-fonte. Resolvê-lo executaria seu script de build, por isso o Nodestro não o resolveu para a ferramenta gerada. Verifique o pacote e aprove-o na janela de bibliotecas da ferramenta, ou deixe a ferramenta ser escrita sem ele."
+    "build_required": "{{name}} só está disponível como código-fonte. Resolvê-lo executaria seu script de build, por isso o Nodestro não o resolveu para a ferramenta gerada. Verifique o pacote e aprove-o na janela de bibliotecas da ferramenta, ou deixe a ferramenta ser escrita sem ele.",
+    "lock_without_hashes": "Esta aprovação vem de uma versão anterior sem somas de verificação. Aprove as bibliotecas novamente para usá-las no sandbox do Docker.",
+    "wheels_required": "Um pacote não tem um pacote pronto (wheel) para Linux. No sandbox do Docker, os pacotes não são compilados a partir do código-fonte.",
+    "hash_mismatch": "Um pacote baixado não corresponde à aprovação. Nada foi instalado.",
+    "image_failed": "Não foi possível criar a imagem de contêiner com as bibliotecas. Os detalhes técnicos indicam o motivo."
   },
   "condition": {
     "field_missing": "O campo está ausente no resultado.",
@@ -534,7 +537,8 @@
     "base_url_invalid": "URL base inválida “{{url}}”: ela precisa começar com http:// ou https://.",
     "base_url_credentials": "A URL base não pode conter credenciais. Informe a chave no campo “Chave de API”.",
     "capability_unknown": "Capacidades desconhecidas: {{names}}.",
-    "not_configured": "{{provider}} não está configurado: informe a URL base nas configurações."
+    "not_configured": "{{provider}} não está configurado: informe a URL base nas configurações.",
+    "endpoint_not_allowed": "Este endpoint de modelo não é permitido neste servidor. Pergunte à administração quais endpoints são permitidos."
   },
   "access": {
     "login_required": "Faça login para usar esta parte do Nodestro.",
@@ -546,7 +550,7 @@
   },
   "sandbox": {
     "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados no sandbox Docker; nada foi executado. Escolha Docker nas configurações.",
-    "libraries_need_isolation": "{{name}} foi criada por IA ou tem origem desconhecida e precisa de bibliotecas de terceiros. Essas ferramentas ainda não podem ser executadas, porque as bibliotecas só estão disponíveis sem isolamento.",
+    "libraries_need_isolation": "{{name}} foi criada por IA ou tem origem desconhecida e precisa de bibliotecas de terceiros. Essas ferramentas só rodam no sandbox do Docker; escolha Docker nas configurações.",
     "unavailable": "Aqui o código das ferramentas só é executado em contêineres; o sandbox \"Processo Python\" não está disponível."
   },
   "identity": {
@@ -556,5 +560,8 @@
     "no_tenant": "Sua conta ainda não tem acesso ao Nodestro. Peça a um administrador para adicionar você.",
     "bootstrap_invalid": "Este link de configuração é inválido, já foi usado ou expirou.",
     "not_a_member": "Sua conta não tem acesso a este espaço de trabalho."
+  },
+  "secrets": {
+    "unreadable": "Uma chave salva não pode mais ser lida. Informe-a novamente nas configurações."
   }
 }

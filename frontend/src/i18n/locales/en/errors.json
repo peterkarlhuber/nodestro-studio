@@ -243,7 +243,6 @@
     "unresolved": "Some imports cannot be clearly assigned to a package.",
     "unresolved_tool": "Tool {{tool}}: an import cannot be clearly assigned.",
     "draft_libraries": "Tool draft {{tool}} needs {{packages}}; the libraries are not approved yet.",
-    "docker_unsupported": "Tools with third-party libraries only run in the process sandbox. Switch the sandbox in the settings.",
     "uv_missing": "uv was not found. Reinstall Nodestro or install uv.",
     "not_found": "The package “{{name}}” does not exist in the package index. Check the name in the “# /// script” header.",
     "no_version": "There is no matching version for “{{name}}{{spec}}”.",
@@ -263,7 +262,11 @@
     "no_definition": "Nothing is approved for this environment yet.",
     "run_active": "The workflow is running; try again after the run.",
     "install_interrupted": "Nodestro stopped during the installation of the libraries. Install them again.",
-    "build_required": "{{name}} is only available as source code. Resolving it would run its build script, so Nodestro did not resolve it for the generated tool. Check the package and approve it in the tool's library dialog, or let the tool be written without it."
+    "build_required": "{{name}} is only available as source code. Resolving it would run its build script, so Nodestro did not resolve it for the generated tool. Check the package and approve it in the tool's library dialog, or let the tool be written without it.",
+    "lock_without_hashes": "This approval comes from an older version without checksums. Approve the libraries again to use them in the Docker sandbox.",
+    "wheels_required": "A package has no ready-made package (wheel) for Linux. In the Docker sandbox, packages are not built from source.",
+    "hash_mismatch": "A downloaded package does not match the approval. Nothing was installed.",
+    "image_failed": "The container image with the libraries could not be built. The technical details name the reason."
   },
   "condition": {
     "field_missing": "The field is missing in the result.",
@@ -534,7 +537,8 @@
     "base_url_invalid": "Invalid base URL “{{url}}”: it must start with http:// or https://.",
     "base_url_credentials": "The base URL must not contain credentials. Enter the key in the “API key” field.",
     "capability_unknown": "Unknown capabilities: {{names}}.",
-    "not_configured": "{{provider}} is not set up: enter its base URL in the settings."
+    "not_configured": "{{provider}} is not set up: enter its base URL in the settings.",
+    "endpoint_not_allowed": "This model endpoint is not allowed on this server. Ask your administrator which endpoints are allowed."
   },
   "access": {
     "login_required": "Log in to use this part of Nodestro.",
@@ -546,7 +550,7 @@
   },
   "sandbox": {
     "isolation_required": "AI-created code and tools of unknown origin run only in the Docker sandbox; nothing was run. Choose Docker in the settings.",
-    "libraries_need_isolation": "{{name}} is AI-created or of unknown origin and needs third-party libraries. Such tools cannot run yet, because libraries are only available without isolation.",
+    "libraries_need_isolation": "{{name}} is AI-created or of unknown origin and needs third-party libraries. Such tools run only in the Docker sandbox; choose Docker in the settings.",
     "unavailable": "Tool code runs only in containers here; the Python process sandbox is not available."
   },
   "identity": {
@@ -556,5 +560,8 @@
     "no_tenant": "Your account has no access to Nodestro yet. Ask an administrator to add you.",
     "bootstrap_invalid": "This setup link is invalid, already used or expired.",
     "not_a_member": "Your account has no access to this workspace."
+  },
+  "secrets": {
+    "unreadable": "A stored key can no longer be read. Please enter it again in the settings."
   }
 }

@@ -243,7 +243,6 @@
     "unresolved": "Einige Importe lassen sich nicht eindeutig einem Paket zuordnen.",
     "unresolved_tool": "Tool {{tool}}: ein Import lässt sich nicht eindeutig zuordnen.",
     "draft_libraries": "Tool-Entwurf {{tool}} braucht {{packages}}; die Bibliotheken sind noch nicht freigegeben.",
-    "docker_unsupported": "Tools mit Bibliotheken von Drittanbietern laufen nur in der Prozess-Sandbox. Stelle die Sandbox in den Einstellungen um.",
     "uv_missing": "uv wurde nicht gefunden. Installiere Nodestro neu oder installiere uv.",
     "not_found": "Das Paket „{{name}}“ gibt es im Paketverzeichnis nicht. Prüfe den Namen im Kopf „# /// script“.",
     "no_version": "Für „{{name}}{{spec}}“ gibt es keine passende Version.",
@@ -263,7 +262,11 @@
     "no_definition": "Für diese Umgebung ist noch nichts freigegeben.",
     "run_active": "Der Workflow läuft gerade; versuche es nach dem Lauf erneut.",
     "install_interrupted": "Nodestro wurde während der Installation der Bibliotheken beendet. Installiere sie erneut.",
-    "build_required": "{{name}} gibt es nur als Quellcode. Beim Auflösen liefe sein Build-Skript, deshalb hat Nodestro es für das erzeugte Tool nicht aufgelöst. Prüfe das Paket und gib es im Bibliotheken-Dialog des Tools frei, oder lass das Tool ohne es schreiben."
+    "build_required": "{{name}} gibt es nur als Quellcode. Beim Auflösen liefe sein Build-Skript, deshalb hat Nodestro es für das erzeugte Tool nicht aufgelöst. Prüfe das Paket und gib es im Bibliotheken-Dialog des Tools frei, oder lass das Tool ohne es schreiben.",
+    "lock_without_hashes": "Diese Freigabe stammt aus einer älteren Version ohne Prüfsummen. Gib die Bibliotheken erneut frei, um sie in der Docker-Sandbox zu nutzen.",
+    "wheels_required": "Ein Paket gibt es nicht als fertiges Paket (Wheel) für Linux. In der Docker-Sandbox werden Pakete nicht aus dem Quellcode gebaut.",
+    "hash_mismatch": "Ein heruntergeladenes Paket stimmt nicht mit der Freigabe überein. Es wurde nichts installiert.",
+    "image_failed": "Das Container-Image mit den Bibliotheken konnte nicht gebaut werden. Die technischen Details nennen den Grund."
   },
   "condition": {
     "field_missing": "Das Feld fehlt im Ergebnis.",
@@ -534,7 +537,8 @@
     "base_url_invalid": "Ungültige Basis-URL „{{url}}“: Sie muss mit http:// oder https:// beginnen.",
     "base_url_credentials": "Die Basis-URL darf keine Zugangsdaten enthalten. Trage den Schlüssel im Feld „API-Schlüssel“ ein.",
     "capability_unknown": "Unbekannte Fähigkeiten: {{names}}.",
-    "not_configured": "{{provider}} ist nicht eingerichtet: Trage die Basis-URL in den Einstellungen ein."
+    "not_configured": "{{provider}} ist nicht eingerichtet: Trage die Basis-URL in den Einstellungen ein.",
+    "endpoint_not_allowed": "Dieser Modell-Endpunkt ist auf diesem Server nicht freigegeben. Frag die Administration, welche Endpunkte erlaubt sind."
   },
   "access": {
     "login_required": "Melde dich an, um diesen Teil von Nodestro zu nutzen.",
@@ -546,7 +550,7 @@
   },
   "sandbox": {
     "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur in der Docker-Sandbox; es wurde nichts ausgeführt. Wähle Docker in den Einstellungen.",
-    "libraries_need_isolation": "{{name}} ist KI-erstellt oder unbekannter Herkunft und braucht Bibliotheken von Drittanbietern. Solche Tools können noch nicht laufen, weil Bibliotheken nur ohne Isolation verfügbar sind.",
+    "libraries_need_isolation": "{{name}} ist KI-erstellt oder unbekannter Herkunft und braucht Bibliotheken von Drittanbietern. Solche Tools laufen nur in der Docker-Sandbox; wähle Docker in den Einstellungen.",
     "unavailable": "Tool-Code läuft hier nur in Containern; die Sandbox „Python-Prozess“ ist nicht verfügbar."
   },
   "identity": {
@@ -556,5 +560,8 @@
     "no_tenant": "Dein Konto hat noch keinen Zugang zu Nodestro. Bitte eine Administratorin oder einen Administrator, dich hinzuzufügen.",
     "bootstrap_invalid": "Dieser Einrichtungslink ist ungültig, schon verwendet oder abgelaufen.",
     "not_a_member": "Dein Konto hat keinen Zugang zu diesem Arbeitsbereich."
+  },
+  "secrets": {
+    "unreadable": "Ein gespeicherter Schlüssel kann nicht mehr gelesen werden. Trag ihn in den Einstellungen bitte neu ein."
   }
 }

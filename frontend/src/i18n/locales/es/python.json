@@ -14,7 +14,8 @@
     "new": "Se necesita ahora: {{names}}.",
     "changed": "Requisito modificado: {{names}}.",
     "python": "La versión de Python ha cambiado; las versiones se resuelven de nuevo.",
-    "other_installation": "Las aprobaciones provienen de otro ordenador o de una importación y no son válidas aquí."
+    "other_installation": "Las aprobaciones provienen de otro ordenador o de una importación y no son válidas aquí.",
+    "hashes": "La aprobación procede de una versión anterior sin sumas de comprobación; debe darse de nuevo para el sandbox de Docker."
   },
   "status": {
     "new": "Nuevo",

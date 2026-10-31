@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Server deployment, PR-12 (2026-10-31)
+
+- Pins: `nodestro-runtime` at `c6bc2e5` (before `8eea1ea`), `nodestro-examples` at `86c58a1` (before `9b018da`),
+  `nodestro-integrations` at `652c231` (before `abc4dbc`), `nodestro-api` at `f119cfc` (before `c0e61bd`),
+  `nodestro-sdk` at `2ed893a` (before `7203183`). They bring persistent jobs and workers (PR-10), tools with libraries
+  in the container sandbox (PR-11) and the `nodestro-server` command with settings validation, encrypted tenant
+  secrets and the model endpoint allowlist (PR-12).
+- Texts in six languages for the new error codes: locks without hashes, wheels only, hash mismatch, image build
+  failed, model endpoint not allowed, unreadable secrets; `deps.docker_unsupported` is gone because libraries now
+  run in the container sandbox.
+- `docs/desktop-server/IMPLEMENTATION_STATUS.md` records PR-10 to PR-12; ADR-0001 no longer describes the server
+  profile as unavailable.
+- The image, development stack, runbook and end-to-end tests live in the new `nodestro-server` repository, which
+  pins this studio commit.
+
 ### Workflows page: three equal ways to start, UX-4 (2026-10-31)
 
 - Studio only, no pin change. The empty Workflows page offers three tiles: *Create with AI* (the new-workflow
