@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next";
-import { Bot, Flag, GitBranch, Hand, PanelLeftClose, PanelLeftOpen, Play, Sparkles, Users, Workflow } from "lucide-react";
+import { Bot, Flag, GitBranch, Hand, Network, PanelLeftClose, PanelLeftOpen, Play, Sparkles, Users, Workflow } from "lucide-react";
 import { type DragEvent, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -141,6 +141,13 @@ export function Palette({ onDesign, panelRef }: { onDesign: () => void; panelRef
           label={t("editor.nodes.subworkflow")}
           hint={t("editor.palette.subworkflowHint")}
           payload={add("subworkflow")}
+        />
+        <Item
+          compact={compact}
+          icon={Network}
+          label={t("editor.nodes.orchestrator")}
+          hint={t("editor.palette.orchestratorHint")}
+          payload={add("orchestrator")}
         />
         {/* Teams and the library need names to be recognisable, so the collapsed palette leaves them out. */}
         {!compact && teams.length ? (

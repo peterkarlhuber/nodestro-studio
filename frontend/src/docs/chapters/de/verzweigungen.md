@@ -102,6 +102,19 @@ Workflows mit Ausgabevertrag oder Fähigkeiten erscheinen in der Palette unter *
 
 Ein Team lässt sich für sich allein prüfen: Lege für den Workflow eine [Testreihe](/docs/automatisierung#testreihen) an. Ihre Prüfungen können die Felder des Ausgabevertrags verwenden, etwa `score` größer oder gleich 5.
 
+## Orchestrator {#orchestrator}
+<!-- keywords: orchestrator, orchestrierung, delegieren, pool, teams, entscheidungen, run.orchestration_limit -->
+
+Ein **Orchestrator** lässt ein KI-Modell entscheiden, welches Team welche Teilaufgabe bekommt. Es trifft eine Entscheidung nach der anderen: eine Aufgabe an ein Team **weitergeben** oder mit einer Antwort **abschließen**. Die Antwort ist das Ergebnis des Knotens.
+
+- **Teams:** die gespeicherten Workflows, aus denen das Modell wählen darf (höchstens 20). Das Modell sieht von jedem Team nur Name, Beschreibung, Fähigkeiten und Ausgabevertrag.
+- **Aufgabe** und **Anweisungen:** was erledigt werden soll und, optional, wie geplant wird.
+- **Höchstens Entscheidungen** (1 bis 50, Standard 8) und **Höchstens pro Team:** Ohne Antwort nach der letzten Entscheidung schlägt der Schritt fehl.
+
+Der Orchestrator wählt nur aus. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes gewählte Team läuft als **eigener, verknüpfter Lauf** mit seinem Anteil am Budget, seinen Grenzen und seinen Freigaben für Werkzeuge. Entscheidungen, die nicht erlaubt sind (ein unbekanntes Team, dieselbe Aufgabe noch einmal, ein ausgeschöpftes Team), werden abgelehnt und dem Modell gezeigt; sie zählen trotzdem als Entscheidung.
+
+In den Details des Laufs steht jede Entscheidung mit Begründung, Aufgabe, Ergebnis und einem Link zum Lauf des Teams. Teams, die für eine Freigabe anhalten, werden in einem Orchestrator noch nicht unterstützt: Sie werden an dieser Stelle abgebrochen, und die Prüfung vor dem Start warnt davor. Ein Team darf den Workflow des Orchestrators nicht wieder aufrufen.
+
 ## Eingabeformulare {#eingabeformular}
 <!-- keywords: formular, eingabeformular, felder, typ, pflichtfeld, standardwert, auswahl, datum, zahl, form -->
 

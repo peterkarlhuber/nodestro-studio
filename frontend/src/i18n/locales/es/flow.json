@@ -226,5 +226,35 @@
     "confirmHint": "Estos pasos ya habían llamado a herramientas. Comprueba si una segunda llamada provoca algo dos veces (p. ej. un mensaje).",
     "continue": "Continuar",
     "restart": "Empezar de cero"
+  },
+  "orchestrator": {
+    "text": "Un modelo de IA decide paso a paso qué equipo recibe qué tarea y termina con una respuesta.",
+    "teams": "Equipos",
+    "teamsHint": "Los workflows entre los que el modelo puede elegir (como máximo {{max}}). Las capacidades y los contratos de salida le ayudan a elegir.",
+    "noTeams": "Todavía no hay equipos. Añade al menos uno.",
+    "addTeam": "Añadir un equipo…",
+    "removeTeam": "Quitar {{name}}",
+    "delivers": "Entrega: {{fields}}",
+    "task": "Tarea",
+    "taskHint": "Lo que el orquestador debe resolver; {{input}} es la entrada de este paso.",
+    "instructions": "Instrucciones",
+    "instructionsHint": "Opcional: cómo planificar, por ejemplo a qué equipo preguntar primero o cuándo está resuelta la tarea.",
+    "model": "Modelo",
+    "maxDecisions": "Máximo de decisiones",
+    "maxDecisionsHint": "Cada delegación y la respuesta final cuentan como una decisión (de 1 a {{max}}). Si para entonces no hay respuesta, el paso falla.",
+    "maxPerTeam": "Máximo por equipo",
+    "maxPerTeamHint": "Cuántas veces se puede elegir un mismo equipo. Vacío: sin límite propio.",
+    "safety": "El orquestador solo elige entre estos equipos. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo se ejecuta como una ejecución vinculada propia, con su parte del presupuesto, sus límites y sus aprobaciones. Los equipos que se detienen para una aprobación aún no son compatibles.",
+    "run": {
+      "delegated": "Delegado a {{team}}",
+      "finished": "Terminado con una respuesta",
+      "invalid": "Ninguna decisión válida",
+      "refused": "Rechazada",
+      "teamFailed": "El equipo falló",
+      "reason": "Motivo",
+      "task": "Tarea",
+      "summary": "{{decisions}} decisiones, {{delegations}} delegaciones",
+      "openTeam": "Abrir la ejecución del equipo"
+    }
   }
 }

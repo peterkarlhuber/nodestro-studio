@@ -16,6 +16,7 @@ import { CheckList } from "./CheckList";
 import { ConnectionInspector } from "./ConnectionInspector";
 import { addCapabilities } from "../lib/capabilities";
 import { useEditorLayout } from "./layout";
+import { OrchestratorInspector } from "./OrchestratorInspector";
 import { ApprovalInspector, ConditionInspector, FormEditor, OutputContractEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
 import { useEditor } from "./store";
 
@@ -46,6 +47,8 @@ export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefine
         <ApprovalInspector key={selected.id} node={selected} />
       ) : selected.type === "subworkflow" && selected.subworkflow ? (
         <SubworkflowInspector key={selected.id} node={selected} />
+      ) : selected.type === "orchestrator" && selected.orchestrator ? (
+        <OrchestratorInspector key={selected.id} node={selected} />
       ) : (
         <TerminalInspector key={selected.id} nodeId={selected.id} />
       );

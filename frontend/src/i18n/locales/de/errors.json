@@ -104,7 +104,11 @@
     "loop_target": "Eine Schleife muss zu einem früheren Schritt zurückführen.",
     "loop_overlap": "Zwei Schleifen überschneiden sich; Schleifen dürfen nur ineinander liegen.",
     "loop_shared": "Ein Schritt der Schleife ist so mit einem Schritt außerhalb verbunden, dass die Schleife ihn nicht wiederholen kann.",
-    "loop_invalid": "Diese Schleife ist ungültig."
+    "loop_invalid": "Diese Schleife ist ungültig.",
+    "orchestrator_no_members": "{{node}} hat keine Teams zur Auswahl.",
+    "orchestrator_member_duplicate": "{{node}} nennt ein Team doppelt.",
+    "orchestrator_self": "{{node}} würde den eigenen Workflow als Team wählen.",
+    "orchestrator_limits": "{{node}} erlaubt einem Team mehr Einsätze als Entscheidungen insgesamt."
   },
   "run": {
     "failed": "Der Schritt ist fehlgeschlagen.",
@@ -133,7 +137,9 @@
     "loop_exhausted": "Die Schleife bei {{node}} lief {{max_iterations}}-mal, ohne ihr Ziel zu erreichen.",
     "time_limit": "Der Lauf hat sein Zeitlimit von {{max_duration_s}} Sekunden erreicht. Laufende Schritte wurden abgebrochen.",
     "step_limit": "Der Lauf hat seine Grenze von {{max_steps}} Schritten erreicht. Weitere Schritte wurden nicht gestartet.",
-    "output_contract": "Das Ergebnis erfüllt den Ausgabevertrag des Workflows nicht: {{fields}}."
+    "output_contract": "Das Ergebnis erfüllt den Ausgabevertrag des Workflows nicht: {{fields}}.",
+    "orchestration_limit": "{{node}} hat {{max_decisions}} Entscheidungen getroffen, ohne abzuschließen.",
+    "orchestrator_member_missing": "Ein Team von {{node}} existiert nicht mehr."
   },
   "trace": {
     "invalid": "Der Trace ist beschädigt oder unvollständig.",
@@ -212,7 +218,12 @@
     "contract_field_missing": "Kein Agent vor dem Ergebnis liefert {{fields}}; der Ausgabevertrag wird so nicht erfüllt.",
     "unreachable": "{{name}} ist vom Start aus nicht erreichbar.",
     "provider_not_configured": "{{provider}} ist nicht eingerichtet: Trage die Basis-URL in den Einstellungen ein.",
-    "input_form_only": "{{name}} liest den Startknoten mit {{input}}. Ist das Formular ausgefüllt, sind das nur die Formularwerte, ohne den zusätzlichen Text. Mit {{run_input}} kommt beides an."
+    "input_form_only": "{{name}} liest den Startknoten mit {{input}}. Ist das Formular ausgefüllt, sind das nur die Formularwerte, ohne den zusätzlichen Text. Mit {{run_input}} kommt beides an.",
+    "orchestrator_member_missing": "{{name}}: Ein gewähltes Team existiert nicht mehr.",
+    "orchestrator_cycle": "{{name}}: Das Team {{workflow}} würde diesen Workflow erneut aufrufen.",
+    "orchestrator_member_invalid_one": "{{name}}: Das Team {{workflow}} hat {{count}} Fehler.",
+    "orchestrator_member_invalid_other": "{{name}}: Das Team {{workflow}} hat {{count}} Fehler.",
+    "orchestrator_member_approval": "{{name}}: Das Team {{workflow}} hält für Freigaben an. In einem Orchestrator wird es an dieser Stelle abgebrochen."
   },
   "backup": {
     "not_zip": "Die Datei ist kein Nodestro-Backup (keine ZIP-Datei).",
@@ -626,5 +637,17 @@
     "url_invalid": "Die Adresse ist ungültig.",
     "vault_unavailable": "Es gibt keinen sicheren Speicher für Zugangstokens.",
     "write_not_supported": "Tools, die Daten ändern, sind noch gesperrt (Freigabe pro Aufruf fehlt)."
+  },
+  "orchestration": {
+    "unknown_member": "Dieses Team ist nicht im Pool.",
+    "member_limit": "Dieses Team wurde schon so oft gewählt wie erlaubt.",
+    "repeated": "Dieses Team hat genau diese Aufgabe schon bekommen.",
+    "decision_limit": "Es sind keine Entscheidungen mehr übrig.",
+    "empty_task": "Die Aufgabe für das Team war leer.",
+    "task_too_long": "Die Aufgabe für das Team war zu lang.",
+    "empty_answer": "Die Schlussantwort war leer.",
+    "answer_too_long": "Die Schlussantwort war zu lang.",
+    "finished": "Die Orchestrierung war bereits abgeschlossen.",
+    "invalid_decision": "Die Antwort war keine gültige Entscheidung."
   }
 }

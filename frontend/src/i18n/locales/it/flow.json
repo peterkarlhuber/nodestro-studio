@@ -226,5 +226,35 @@
     "confirmHint": "Questi passaggi avevano già chiamato strumenti. Verifica se una seconda chiamata fa scattare qualcosa due volte (ad es. un messaggio).",
     "continue": "Continua",
     "restart": "Ricomincia da capo"
+  },
+  "orchestrator": {
+    "text": "Un modello di IA decide passo dopo passo quale team riceve quale compito e conclude con una risposta.",
+    "teams": "Team",
+    "teamsHint": "I workflow tra cui il modello può scegliere (al massimo {{max}}). Capacità e contratti di output lo aiutano a scegliere.",
+    "noTeams": "Ancora nessun team. Aggiungine almeno uno.",
+    "addTeam": "Aggiungi un team…",
+    "removeTeam": "Rimuovi {{name}}",
+    "delivers": "Fornisce: {{fields}}",
+    "task": "Compito",
+    "taskHint": "Cosa deve portare a termine l’orchestratore; {{input}} è l’input di questo passaggio.",
+    "instructions": "Istruzioni",
+    "instructionsHint": "Facoltativo: come pianificare, ad esempio quale team interpellare per primo o quando il compito è concluso.",
+    "model": "Modello",
+    "maxDecisions": "Numero massimo di decisioni",
+    "maxDecisionsHint": "Ogni delega e la risposta finale valgono una decisione ciascuna (da 1 a {{max}}). Senza risposta entro allora, il passaggio fallisce.",
+    "maxPerTeam": "Massimo per team",
+    "maxPerTeamHint": "Quante volte si può scegliere lo stesso team. Vuoto: nessun limite proprio.",
+    "safety": "L’orchestratore sceglie solo tra questi team. Non ha strumenti, non crea agenti, strumenti o team e non ha autorizzazioni proprie. Ogni team viene eseguito come esecuzione collegata a sé, con la sua quota di budget, i suoi limiti e le sue approvazioni. I team che si fermano per un’approvazione non sono ancora supportati.",
+    "run": {
+      "delegated": "Delegato a {{team}}",
+      "finished": "Concluso con una risposta",
+      "invalid": "Nessuna decisione valida",
+      "refused": "Rifiutata",
+      "teamFailed": "Il team non è riuscito",
+      "reason": "Motivo",
+      "task": "Compito",
+      "summary": "{{decisions}} decisioni, {{delegations}} deleghe",
+      "openTeam": "Apri l’esecuzione del team"
+    }
   }
 }

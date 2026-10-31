@@ -33,7 +33,8 @@
     "condition": "Decision",
     "approval": "Approval",
     "subworkflow": "Sub-workflow",
-    "branchPort": "Output of branch {{name}}"
+    "branchPort": "Output of branch {{name}}",
+    "orchestrator": "Orchestrator"
   },
   "canvas": {
     "unsaved": "Unsaved changes",
@@ -65,7 +66,8 @@
     "approvalHint": "Pauses for a human review",
     "subworkflowHint": "Runs another workflow as one step",
     "teams": "Teams",
-    "teamDelivers": "delivers {{fields}}"
+    "teamDelivers": "delivers {{fields}}",
+    "orchestratorHint": "An AI model delegates the task to teams"
   },
   "inspector": {
     "agent": "Configure agent",
@@ -209,5 +211,12 @@
     "make": "Make it a loop",
     "round": "Round {{n}}",
     "rounds": "Rounds"
+  },
+  "orchestrator": {
+    "teams_one": "{{count}} team",
+    "teams_other": "{{count}} teams",
+    "noTeams": "No teams chosen",
+    "decisions_one": "max. {{count}} decision",
+    "decisions_other": "max. {{count}} decisions"
   }
 }

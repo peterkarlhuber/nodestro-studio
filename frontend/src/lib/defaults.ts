@@ -109,5 +109,19 @@ export function newNode(type: NodeType, position = { x: 0, y: 0 }, agent?: Parti
       subworkflow: { workflow_id: "", version: null, input_template: "{{input}}", values: {} },
     };
   }
+  if (type === "orchestrator") {
+    return {
+      ...base,
+      label: i18n.t("editor.nodes.orchestrator"),
+      orchestrator: {
+        members: [],
+        task_template: "{{input}}",
+        instructions: "",
+        model: defaultModel,
+        max_decisions: 8,
+        max_per_member: null,
+      },
+    };
+  }
   return { ...base, label: i18n.t("editor.nodes.output"), output: { files: [] } };
 }

@@ -102,6 +102,19 @@ Les workflows dotés d’un contrat de sortie ou de capacités apparaissent dans
 
 Une équipe peut être testée seule : créez une [série de tests](/docs/automatisierung#testreihen) pour le workflow. Ses contrôles peuvent utiliser les champs du contrat de sortie, par exemple `score` supérieur ou égal à 5.
 
+## Orchestrateur {#orchestrator}
+<!-- keywords: orchestrateur, orchestration, déléguer, groupe, équipes, décisions, run.orchestration_limit -->
+
+Un **orchestrateur** laisse un modèle d’IA décider quelle équipe reçoit quelle partie de la tâche. Il prend une décision après l’autre : **déléguer** une tâche à une équipe ou **conclure** par une réponse. La réponse est le résultat du nœud.
+
+- **Équipes :** les workflows enregistrés parmi lesquels le modèle peut choisir (20 au maximum). De chaque équipe, le modèle ne voit que le nom, la description, les capacités et le contrat de sortie.
+- **Tâche** et **Instructions :** ce qu’il faut accomplir et, si besoin, comment le planifier.
+- **Nombre maximal de décisions** (de 1 à 50, 8 par défaut) et **Maximum par équipe :** sans réponse après la dernière décision, l’étape échoue.
+
+L’orchestrateur ne fait que choisir. Il n’a pas d’outils, ne crée ni agents, ni outils, ni équipes et n’a aucune autorisation propre. Chaque équipe choisie s’exécute dans sa **propre exécution liée**, avec sa part du budget, ses limites et ses validations d’outils. Les décisions non autorisées (une équipe inconnue, la même tâche une nouvelle fois, une équipe épuisée) sont refusées et montrées au modèle ; elles comptent quand même comme une décision.
+
+Les détails de l’exécution listent chaque décision avec son motif, sa tâche, son résultat et un lien vers l’exécution de l’équipe. Les équipes qui s’arrêtent pour une validation ne sont pas encore prises en charge dans un orchestrateur : elles sont annulées à ce moment-là, et la vérification avant le démarrage le signale. Une équipe ne peut pas rappeler le workflow de l’orchestrateur.
+
 ## Formulaires d’entrée {#eingabeformular}
 <!-- keywords: formulaire, formulaire d’entrée, champs, type, obligatoire, valeur par défaut, choix, date, nombre -->
 

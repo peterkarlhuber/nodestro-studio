@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Orchestrator node (Adaptive Orchestration M4, 2026-10-31)
+
+- New node *Orchestrator* in the palette (runtime M4): an AI model delegates the task step by step to teams of its
+  pool and finishes with an answer. The inspector edits the teams (with their capabilities and output contract),
+  the task, the instructions, the model and the limits (maximum decisions, maximum per team) and says what the
+  orchestrator may not do (no tools, nothing created, no permissions of its own).
+- Run details show every decision with its reason, task, verdict (refusals in the interface language), the team's
+  result and a link to the team's run.
+- Texts in six languages: `flow.orchestrator.*`, `errors.orchestration.*`, `workflow.orchestrator_*`,
+  `check.orchestrator_*`, `run.orchestration_limit`, `run.orchestrator_member_missing`; docs section
+  `verzweigungen#orchestrator` in six languages.
+
 ### Teams: output contracts and capabilities (Adaptive Orchestration M3, 2026-10-31)
 
 - Result node: new *Output contract* (runtime #49) with the same field editor as an agent's structured output (now

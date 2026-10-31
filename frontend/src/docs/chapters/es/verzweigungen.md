@@ -102,6 +102,19 @@ Los flujos con contrato de salida o capacidades aparecen en la paleta en **Equip
 
 Un equipo puede probarse por sí solo: crea una [serie de pruebas](/docs/automatisierung#testreihen) para el flujo. Sus comprobaciones pueden usar los campos del contrato de salida, por ejemplo `score` mayor o igual que 5.
 
+## Orquestador {#orchestrator}
+<!-- keywords: orquestador, orquestación, delegar, grupo, equipos, decisiones, run.orchestration_limit -->
+
+Un **orquestador** deja que un modelo de IA decida qué equipo recibe qué parte de la tarea. Toma una decisión tras otra: **delegar** una tarea a un equipo o **terminar** con una respuesta. La respuesta es el resultado del nodo.
+
+- **Equipos:** los workflows guardados entre los que el modelo puede elegir (como máximo 20). De cada equipo, el modelo solo ve su nombre, descripción, capacidades y contrato de salida.
+- **Tarea** e **Instrucciones:** lo que hay que resolver y, opcionalmente, cómo planificarlo.
+- **Máximo de decisiones** (de 1 a 50, por defecto 8) y **Máximo por equipo:** si no hay respuesta tras la última decisión, el paso falla.
+
+El orquestador solo elige. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo elegido se ejecuta como una **ejecución vinculada propia**, con su parte del presupuesto, sus límites y sus aprobaciones de herramientas. Las decisiones no permitidas (un equipo desconocido, la misma tarea otra vez, un equipo agotado) se rechazan y se muestran al modelo; aun así cuentan como decisión.
+
+Los detalles de la ejecución muestran cada decisión con su motivo, tarea, resultado y un enlace a la ejecución del equipo. Los equipos que se detienen para una aprobación aún no son compatibles dentro de un orquestador: se cancelan en ese punto, y la comprobación previa al inicio lo advierte. Un equipo no puede volver a llamar al workflow del orquestador.
+
 ## Formularios de entrada {#eingabeformular}
 <!-- keywords: formulario, formulario de entrada, campos, tipo, obligatorio, valor predeterminado, opción, fecha, número -->
 

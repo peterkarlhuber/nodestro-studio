@@ -226,5 +226,35 @@
     "confirmHint": "Diese Schritte hatten bereits Tools aufgerufen. Prüfe, ob ein zweiter Aufruf etwas doppelt auslöst (z. B. eine Nachricht).",
     "continue": "Fortsetzen",
     "restart": "Komplett neu starten"
+  },
+  "orchestrator": {
+    "text": "Ein KI-Modell entscheidet Schritt für Schritt, welches Team welche Aufgabe bekommt, und schließt mit einer Antwort ab.",
+    "teams": "Teams",
+    "teamsHint": "Die Workflows, aus denen das Modell wählen darf (höchstens {{max}}). Fähigkeiten und Ausgabeverträge helfen bei der Wahl.",
+    "noTeams": "Noch keine Teams. Füge mindestens eins hinzu.",
+    "addTeam": "Team hinzufügen…",
+    "removeTeam": "{{name}} entfernen",
+    "delivers": "Liefert: {{fields}}",
+    "task": "Aufgabe",
+    "taskHint": "Was der Orchestrator erledigen soll; {{input}} ist die Eingabe dieses Schritts.",
+    "instructions": "Anweisungen",
+    "instructionsHint": "Optional: wie geplant werden soll, etwa welches Team zuerst gefragt wird oder wann die Aufgabe erledigt ist.",
+    "model": "Modell",
+    "maxDecisions": "Höchstens Entscheidungen",
+    "maxDecisionsHint": "Jede Weitergabe und die Schlussantwort sind je eine Entscheidung (1 bis {{max}}). Ohne Antwort bis dahin schlägt der Schritt fehl.",
+    "maxPerTeam": "Höchstens pro Team",
+    "maxPerTeamHint": "Wie oft ein Team gewählt werden darf. Leer: keine eigene Grenze.",
+    "safety": "Der Orchestrator wählt nur unter diesen Teams. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes Team läuft als eigener verknüpfter Lauf mit seinem Anteil am Budget, seinen Grenzen und seinen Freigaben. Teams, die für eine Freigabe anhalten, werden noch nicht unterstützt.",
+    "run": {
+      "delegated": "An {{team}} weitergegeben",
+      "finished": "Mit einer Antwort abgeschlossen",
+      "invalid": "Keine gültige Entscheidung",
+      "refused": "Abgelehnt",
+      "teamFailed": "Team fehlgeschlagen",
+      "reason": "Begründung",
+      "task": "Aufgabe",
+      "summary": "{{decisions}} Entscheidungen, {{delegations}} Weitergaben",
+      "openTeam": "Lauf des Teams öffnen"
+    }
   }
 }

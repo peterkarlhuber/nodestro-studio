@@ -102,6 +102,19 @@ Workflows with an output contract or capabilities appear in the palette under **
 
 A team can be tested on its own: create a [test series](/docs/automatisierung#testreihen) for the workflow. Its checks can use the fields of the output contract, for example `score` greater than or equal to 5.
 
+## Orchestrator {#orchestrator}
+<!-- keywords: orchestrator, orchestration, delegate, pool, teams, decisions, run.orchestration_limit -->
+
+An **orchestrator** lets an AI model decide which team gets which part of the task. It makes one decision after another: **delegate** a task to a team, or **finish** with an answer. The answer is the node's result.
+
+- **Teams:** the saved workflows the model may choose from (at most 20). Of each team, the model only sees its name, description, capabilities and output contract.
+- **Task** and **Instructions:** what should get done and, optionally, how to plan it.
+- **Maximum decisions** (1 to 50, default 8) and **Maximum per team:** without an answer after the last decision, the step fails.
+
+The orchestrator only chooses. It has no tools, creates no agents, tools or teams, and has no permissions of its own. Every chosen team runs as its **own linked run** with its share of the budget, its limits and its tool approvals. Decisions that are not allowed (an unknown team, the same task again, a team that was used up) are refused and shown to the model; they still count as a decision.
+
+The run details list every decision with its reason, task, result and a link to the team's run. Teams that stop for an approval are not supported inside an orchestrator yet: they are cancelled at that point, and the check before the start warns about it. A team may not call the orchestrator's workflow again.
+
 ## Input forms {#eingabeformular}
 <!-- keywords: form, input form, fields, type, required, default, choice, date, number -->
 

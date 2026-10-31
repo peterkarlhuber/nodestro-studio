@@ -102,6 +102,19 @@ Fluxos com contrato de saída ou capacidades aparecem na paleta em **Equipes** e
 
 Uma equipe pode ser testada sozinha: crie uma [série de testes](/docs/automatisierung#testreihen) para o fluxo. Suas verificações podem usar os campos do contrato de saída, por exemplo `score` maior ou igual a 5.
 
+## Orquestrador {#orchestrator}
+<!-- keywords: orquestrador, orquestração, delegar, grupo, equipes, decisões, run.orchestration_limit -->
+
+Um **orquestrador** deixa um modelo de IA decidir qual equipe recebe qual parte da tarefa. Ele toma uma decisão após a outra: **delegar** uma tarefa a uma equipe ou **concluir** com uma resposta. A resposta é o resultado do nó.
+
+- **Equipes:** os workflows salvos entre os quais o modelo pode escolher (no máximo 20). De cada equipe, o modelo vê apenas nome, descrição, capacidades e contrato de saída.
+- **Tarefa** e **Instruções:** o que deve ser feito e, opcionalmente, como planejar.
+- **Máximo de decisões** (de 1 a 50, padrão 8) e **Máximo por equipe:** sem resposta após a última decisão, a etapa falha.
+
+O orquestrador apenas escolhe. Ele não tem ferramentas, não cria agentes, ferramentas nem equipes e não tem permissões próprias. Cada equipe escolhida roda como uma **execução vinculada própria**, com sua parte do orçamento, seus limites e suas aprovações de ferramentas. Decisões não permitidas (uma equipe desconhecida, a mesma tarefa de novo, uma equipe esgotada) são recusadas e mostradas ao modelo; mesmo assim contam como decisão.
+
+Os detalhes da execução listam cada decisão com motivo, tarefa, resultado e um link para a execução da equipe. Equipes que param para uma aprovação ainda não são compatíveis dentro de um orquestrador: elas são canceladas nesse ponto, e a verificação antes do início avisa sobre isso. Uma equipe não pode chamar de novo o workflow do orquestrador.
+
 ## Formulários de entrada {#eingabeformular}
 <!-- keywords: formulário, formulário de entrada, campos, tipo, obrigatório, valor padrão, opção, data, número -->
 

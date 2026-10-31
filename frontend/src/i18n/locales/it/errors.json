@@ -104,7 +104,11 @@
     "loop_target": "Un ciclo deve tornare a un passo precedente.",
     "loop_overlap": "Due cicli si sovrappongono; i cicli possono solo essere annidati.",
     "loop_shared": "Un passo del ciclo è collegato a un passo esterno in un modo che il ciclo non può ripetere.",
-    "loop_invalid": "Questo ciclo non è valido."
+    "loop_invalid": "Questo ciclo non è valido.",
+    "orchestrator_no_members": "{{node}} non ha team tra cui scegliere.",
+    "orchestrator_member_duplicate": "{{node}} indica un team due volte.",
+    "orchestrator_self": "{{node}} sceglierebbe il proprio workflow come team.",
+    "orchestrator_limits": "{{node}} consente a un team più impieghi delle decisioni totali."
   },
   "run": {
     "failed": "Il passaggio non è riuscito.",
@@ -133,7 +137,9 @@
     "loop_exhausted": "Il ciclo in {{node}} è stato eseguito {{max_iterations}} volte senza raggiungere il suo obiettivo.",
     "time_limit": "L’esecuzione ha raggiunto il limite di tempo di {{max_duration_s}} secondi. I passaggi in corso sono stati annullati.",
     "step_limit": "L’esecuzione ha raggiunto il limite di {{max_steps}} passaggi. Non sono stati avviati altri passaggi.",
-    "output_contract": "Il risultato non rispetta il contratto di output del workflow: {{fields}}."
+    "output_contract": "Il risultato non rispetta il contratto di output del workflow: {{fields}}.",
+    "orchestration_limit": "{{node}} ha preso {{max_decisions}} decisioni senza concludere.",
+    "orchestrator_member_missing": "Un team di {{node}} non esiste più."
   },
   "trace": {
     "invalid": "La traccia è danneggiata o incompleta.",
@@ -212,7 +218,12 @@
     "contract_field_missing": "Nessun agente prima del risultato fornisce {{fields}}; così il contratto di output non può essere rispettato.",
     "unreachable": "{{name}} non è raggiungibile dall’inizio.",
     "provider_not_configured": "{{provider}} non è configurato: inserisci l’URL di base nelle impostazioni.",
-    "input_form_only": "{{name}} legge il nodo di avvio con {{input}}. Se il modulo è compilato, sono solo i valori del modulo, senza il testo aggiuntivo. Usa {{run_input}} per ricevere entrambi."
+    "input_form_only": "{{name}} legge il nodo di avvio con {{input}}. Se il modulo è compilato, sono solo i valori del modulo, senza il testo aggiuntivo. Usa {{run_input}} per ricevere entrambi.",
+    "orchestrator_member_missing": "{{name}}: un team scelto non esiste più.",
+    "orchestrator_cycle": "{{name}}: il team {{workflow}} richiamerebbe questo workflow.",
+    "orchestrator_member_invalid_one": "{{name}}: il team {{workflow}} ha {{count}} errore.",
+    "orchestrator_member_invalid_other": "{{name}}: il team {{workflow}} ha {{count}} errori.",
+    "orchestrator_member_approval": "{{name}}: il team {{workflow}} si ferma per le approvazioni. In un orchestratore viene annullato in quel punto."
   },
   "backup": {
     "not_zip": "Il file non è un backup di Nodestro (non è un file ZIP).",
@@ -626,5 +637,17 @@
     "url_invalid": "L'indirizzo non è valido.",
     "vault_unavailable": "Non esiste un archivio sicuro per i token di accesso.",
     "write_not_supported": "Gli strumenti che modificano dati sono ancora bloccati (manca l'approvazione per chiamata)."
+  },
+  "orchestration": {
+    "unknown_member": "Questo team non fa parte del gruppo.",
+    "member_limit": "Questo team è già stato scelto tutte le volte consentite.",
+    "repeated": "Questo team ha già ricevuto esattamente questo compito.",
+    "decision_limit": "Non restano decisioni.",
+    "empty_task": "Il compito per il team era vuoto.",
+    "task_too_long": "Il compito per il team era troppo lungo.",
+    "empty_answer": "La risposta finale era vuota.",
+    "answer_too_long": "La risposta finale era troppo lunga.",
+    "finished": "L’orchestrazione era già conclusa.",
+    "invalid_decision": "La risposta non era una decisione valida."
   }
 }

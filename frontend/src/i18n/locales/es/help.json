@@ -193,7 +193,10 @@
     "form": "Campos que se piden y comprueban al iniciar. Los agentes los leen con {{formName}}.",
     "formField": "El nombre técnico se usa en el marcador: solo letras, cifras y _.",
     "resume": "Continúa una ejecución fallida: se reutilizan los resultados válidos y se repite el resto.",
-    "resumeSideEffects": "Los pasos que se repiten habían llamado a herramientas. Una segunda llamada puede provocar algo dos veces."
+    "resumeSideEffects": "Los pasos que se repiten habían llamado a herramientas. Una segunda llamada puede provocar algo dos veces.",
+    "orchestrator": "Un modelo de IA planifica la tarea y delega partes de ella a equipos de su grupo, una decisión tras otra. Cada decisión queda registrada con su motivo.",
+    "orchestratorTeams": "Los equipos son workflows guardados. El modelo solo ve su nombre, descripción, capacidades y contrato de salida. No puede añadir equipos.",
+    "orchestratorLimits": "Los límites evitan que un orquestador dé vueltas: se detiene tras el número máximo de decisiones, y además se aplican el presupuesto y los límites del workflow."
   },
   "files": {
     "output": "Formatos en los que el nodo de resultado guarda su resultado al final de la ejecución: Markdown, JSON, CSV, HTML o PDF.",

@@ -195,7 +195,7 @@ export function outputFieldsOf(node: WorkflowNode | undefined): string[] {
   return [];
 }
 
-function Header({ node, title, tip, text }: { node: WorkflowNode; title: string; tip: Parameters<typeof HelpTip>[0]["id"]; text: string }) {
+export function Header({ node, title, tip, text }: { node: WorkflowNode; title: string; tip: Parameters<typeof HelpTip>[0]["id"]; text: string }) {
   const { t } = useTranslation();
   const { removeNodes } = useEditor.getState();
   return (
@@ -211,7 +211,7 @@ function Header({ node, title, tip, text }: { node: WorkflowNode; title: string;
   );
 }
 
-function LabelField({ node }: { node: WorkflowNode }) {
+export function LabelField({ node }: { node: WorkflowNode }) {
   const { t } = useTranslation();
   const { updateNode } = useEditor.getState();
   return (

@@ -1,5 +1,5 @@
 import { Handle, type NodeProps, Position } from "@xyflow/react";
-import { FileText, Flag, GitBranch, Hand, Play, ShieldCheck, Workflow } from "lucide-react";
+import { FileText, Flag, GitBranch, Hand, Network, Play, ShieldCheck, Workflow } from "lucide-react";
 import { type ReactNode, memo } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -307,6 +307,24 @@ export const SubworkflowNode = memo(function SubworkflowNode({ data, selected }:
   );
 });
 
+export const OrchestratorNode = memo(function OrchestratorNode({ data, selected }: NodeProps) {
+  const flow = data as FlowNodeData;
+  const { t } = useTranslation();
+  const config = flow.node.orchestrator;
+  const teams = config?.members.length ?? 0;
+  return (
+    <NodeShell {...flow} selected={selected} icon={Network} type={t("editor.nodes.orchestrator")}>
+      <div className="node-divider" />
+      <div className="node-row">
+        <span className="node-row__description">
+          {teams ? t("editor.orchestrator.teams", { count: teams }) : t("editor.orchestrator.noTeams")}
+        </span>
+        <span className="node-type">{t("editor.orchestrator.decisions", { count: config?.max_decisions ?? 0 })}</span>
+      </div>
+    </NodeShell>
+  );
+});
+
 export const nodeTypes = {
   agent: AgentNode,
   start: StartNode,
@@ -314,4 +332,5 @@ export const nodeTypes = {
   condition: ConditionNode,
   approval: ApprovalNode,
   subworkflow: SubworkflowNode,
+  orchestrator: OrchestratorNode,
 };

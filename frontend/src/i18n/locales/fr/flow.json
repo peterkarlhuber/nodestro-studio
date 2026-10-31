@@ -226,5 +226,35 @@
     "confirmHint": "Ces étapes avaient déjà appelé des outils. Vérifiez qu’un second appel ne déclenche rien en double (p. ex. un message).",
     "continue": "Reprendre",
     "restart": "Tout relancer"
+  },
+  "orchestrator": {
+    "text": "Un modèle d’IA décide étape par étape quelle équipe reçoit quelle tâche, puis conclut par une réponse.",
+    "teams": "Équipes",
+    "teamsHint": "Les workflows parmi lesquels le modèle peut choisir ({{max}} au maximum). Les capacités et les contrats de sortie l’aident à choisir.",
+    "noTeams": "Pas encore d’équipe. Ajoutez-en au moins une.",
+    "addTeam": "Ajouter une équipe…",
+    "removeTeam": "Retirer {{name}}",
+    "delivers": "Fournit : {{fields}}",
+    "task": "Tâche",
+    "taskHint": "Ce que l’orchestrateur doit accomplir ; {{input}} est l’entrée de cette étape.",
+    "instructions": "Instructions",
+    "instructionsHint": "Facultatif : comment planifier, par exemple quelle équipe solliciter en premier ou quand la tâche est terminée.",
+    "model": "Modèle",
+    "maxDecisions": "Nombre maximal de décisions",
+    "maxDecisionsHint": "Chaque délégation et la réponse finale comptent chacune pour une décision (de 1 à {{max}}). Sans réponse d’ici là, l’étape échoue.",
+    "maxPerTeam": "Maximum par équipe",
+    "maxPerTeamHint": "Combien de fois une même équipe peut être choisie. Vide : pas de limite propre.",
+    "safety": "L’orchestrateur choisit uniquement parmi ces équipes. Il n’a pas d’outils, ne crée ni agents, ni outils, ni équipes et n’a aucune autorisation propre. Chaque équipe s’exécute dans sa propre exécution liée, avec sa part du budget, ses limites et ses validations. Les équipes qui s’arrêtent pour une validation ne sont pas encore prises en charge.",
+    "run": {
+      "delegated": "Délégué à {{team}}",
+      "finished": "Terminé avec une réponse",
+      "invalid": "Aucune décision valide",
+      "refused": "Refusée",
+      "teamFailed": "L’équipe a échoué",
+      "reason": "Motif",
+      "task": "Tâche",
+      "summary": "{{decisions}} décisions, {{delegations}} délégations",
+      "openTeam": "Ouvrir l’exécution de l’équipe"
+    }
   }
 }

@@ -102,6 +102,19 @@ I workflow con contratto di output o capacità compaiono nella palette sotto **T
 
 Un team si può verificare da solo: crea una [serie di test](/docs/automatisierung#testreihen) per il workflow. I suoi controlli possono usare i campi del contratto di output, ad esempio `score` maggiore o uguale a 5.
 
+## Orchestratore {#orchestrator}
+<!-- keywords: orchestratore, orchestrazione, delegare, gruppo, team, decisioni, run.orchestration_limit -->
+
+Un **orchestratore** lascia decidere a un modello di IA quale team riceve quale parte del compito. Prende una decisione dopo l’altra: **delegare** un compito a un team oppure **concludere** con una risposta. La risposta è il risultato del nodo.
+
+- **Team:** i workflow salvati tra cui il modello può scegliere (al massimo 20). Di ogni team il modello vede solo nome, descrizione, capacità e contratto di output.
+- **Compito** e **Istruzioni:** cosa va fatto e, facoltativamente, come pianificarlo.
+- **Numero massimo di decisioni** (da 1 a 50, predefinito 8) e **Massimo per team:** senza risposta dopo l’ultima decisione, il passaggio fallisce.
+
+L’orchestratore sceglie soltanto. Non ha strumenti, non crea agenti, strumenti o team e non ha autorizzazioni proprie. Ogni team scelto viene eseguito come **esecuzione collegata a sé**, con la sua quota di budget, i suoi limiti e le sue approvazioni degli strumenti. Le decisioni non consentite (un team sconosciuto, lo stesso compito di nuovo, un team esaurito) vengono rifiutate e mostrate al modello; contano comunque come decisione.
+
+I dettagli dell’esecuzione elencano ogni decisione con motivo, compito, risultato e un link all’esecuzione del team. I team che si fermano per un’approvazione non sono ancora supportati in un orchestratore: vengono annullati in quel punto, e il controllo prima dell’avvio lo segnala. Un team non può richiamare il workflow dell’orchestratore.
+
 ## Moduli di input {#eingabeformular}
 <!-- keywords: modulo, modulo di input, campi, tipo, obbligatorio, valore predefinito, scelta, data, numero, form -->
 

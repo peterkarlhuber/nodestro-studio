@@ -33,7 +33,8 @@
     "condition": "Decisión",
     "approval": "Aprobación",
     "subworkflow": "Subflujo",
-    "branchPort": "Salida de la rama {{name}}"
+    "branchPort": "Salida de la rama {{name}}",
+    "orchestrator": "Orquestador"
   },
   "canvas": {
     "unsaved": "Cambios sin guardar",
@@ -65,7 +66,8 @@
     "approvalHint": "Se detiene para una revisión humana",
     "subworkflowHint": "Ejecuta otro workflow como un paso",
     "teams": "Equipos",
-    "teamDelivers": "entrega {{fields}}"
+    "teamDelivers": "entrega {{fields}}",
+    "orchestratorHint": "Un modelo de IA reparte la tarea entre equipos"
   },
   "inspector": {
     "agent": "Configurar agente",
@@ -209,5 +211,12 @@
     "make": "Convertir en bucle",
     "round": "Ronda {{n}}",
     "rounds": "Rondas"
+  },
+  "orchestrator": {
+    "teams_one": "{{count}} equipo",
+    "teams_other": "{{count}} equipos",
+    "noTeams": "Ningún equipo elegido",
+    "decisions_one": "máx. {{count}} decisión",
+    "decisions_other": "máx. {{count}} decisiones"
   }
 }

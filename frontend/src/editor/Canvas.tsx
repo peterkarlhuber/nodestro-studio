@@ -34,7 +34,7 @@ export interface DragPayload {
   team?: TeamPreset;
 }
 
-const NODE_TYPES: ReadonlySet<string> = new Set<NodeType>(["start", "agent", "output", "condition", "approval", "subworkflow"]);
+const NODE_TYPES: ReadonlySet<string> = new Set<NodeType>(["start", "agent", "output", "condition", "approval", "subworkflow", "orchestrator"]);
 
 /** The size of a new node in canvas units (see .flow-node), so a dropped node is centred on the pointer. */
 const NEW_NODE = { width: 216, height: 96 };

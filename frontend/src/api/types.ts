@@ -3,7 +3,7 @@
 export type Effort = "low" | "medium" | "high" | "xhigh" | "max";
 export type ThinkingMode = "adaptive" | "between_tools" | "disabled";
 export type ThinkingDisplay = "summarized" | "omitted" | "updates";
-export type NodeType = "start" | "agent" | "output" | "condition" | "approval" | "subworkflow";
+export type NodeType = "start" | "agent" | "output" | "condition" | "approval" | "subworkflow" | "orchestrator";
 /** ``paused``: the run waits for a person at an approval node. */
 export type RunStatus = "queued" | "running" | "paused" | "succeeded" | "failed" | "cancelled";
 /** ``skipped``: its branch was not chosen (no error); ``blocked``: a predecessor failed or was cancelled. */
@@ -192,6 +192,55 @@ export interface SubworkflowConfig {
   values: Record<string, string>;
 }
 
+/** A team an orchestrator may delegate to; ``version`` null: the latest saved version. */
+export interface OrchestratorMember {
+  workflow_id: string;
+  version: number | null;
+}
+
+export const MAX_POOL = 20;
+export const MAX_DECISIONS = 50;
+
+/** An AI model that delegates the task step by step to teams of its pool (it has no tools of its own). */
+export interface OrchestratorConfig {
+  members: OrchestratorMember[];
+  task_template: string;
+  instructions: string;
+  model: string;
+  max_decisions: number;
+  /** How often one team may be chosen; null: as often as decisions allow. */
+  max_per_member: number | null;
+}
+
+/** One decision of an orchestrator, as ``orkexa.orchestration`` records it. */
+export interface OrchestrationDecision {
+  action: "delegate" | "finish";
+  member?: string;
+  task?: string;
+  answer?: string;
+  reason?: string;
+}
+
+export interface OrchestrationStep {
+  index: number;
+  /** Null when the model's answer was not a valid decision (see ``raw``). */
+  decision: OrchestrationDecision | null;
+  /** ``code`` null: accepted. */
+  verdict: { code: string | null; message: string };
+  result: string | null;
+  error: string | null;
+  raw: string | null;
+}
+
+export interface OrchestrationRecord {
+  version: number;
+  task: string;
+  steps: OrchestrationStep[];
+  outcome: "finished" | "stopped" | null;
+  answer: string | null;
+  stop_code: string | null;
+}
+
 export type ReportFormat = "md" | "json" | "csv" | "html" | "pdf" | "docx" | "xlsx";
 
 export interface ResultFileSpec {
@@ -216,6 +265,7 @@ export interface WorkflowNode {
   condition?: ConditionConfig | null;
   approval?: ApprovalConfig | null;
   subworkflow?: SubworkflowConfig | null;
+  orchestrator?: OrchestratorConfig | null;
   output?: OutputNodeConfig | null;
 }
 
@@ -381,6 +431,10 @@ export interface NodeRun {
   approval?: ApprovalRecord | null;
   child_run_id?: string | null;
   child_version?: number | null;
+  /** Orchestrator: every decision with its verdict and the team's result, as it happened. */
+  orchestration?: OrchestrationRecord | null;
+  /** Orchestrator: the runs of the teams it delegated to, in order. */
+  child_run_ids?: string[];
   /** Taken over from this earlier run when a failed run was continued. */
   reused_from?: string | null;
   /** The files the agent received, and how. */

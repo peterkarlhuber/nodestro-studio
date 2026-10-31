@@ -193,7 +193,10 @@
     "form": "Felder, die beim Start abgefragt und geprüft werden. Agenten lesen sie mit {{formName}}.",
     "formField": "Der technische Name wird im Platzhalter verwendet: nur Buchstaben, Ziffern und _.",
     "resume": "Setzt einen fehlgeschlagenen Lauf fort: Gültige Ergebnisse werden übernommen, der Rest läuft neu.",
-    "resumeSideEffects": "Schritte, die neu laufen, hatten Tools aufgerufen. Ein zweiter Aufruf kann etwas doppelt auslösen."
+    "resumeSideEffects": "Schritte, die neu laufen, hatten Tools aufgerufen. Ein zweiter Aufruf kann etwas doppelt auslösen.",
+    "orchestrator": "Ein KI-Modell plant die Aufgabe und gibt Teile davon an Teams seines Pools weiter, eine Entscheidung nach der anderen. Jede Entscheidung wird mit ihrer Begründung festgehalten.",
+    "orchestratorTeams": "Teams sind gespeicherte Workflows. Das Modell sieht nur Name, Beschreibung, Fähigkeiten und Ausgabevertrag. Es kann keine Teams hinzufügen.",
+    "orchestratorLimits": "Die Grenzen verhindern, dass ein Orchestrator im Kreis läuft: Er stoppt nach der höchsten Zahl an Entscheidungen, und Budget und Grenzen des Workflows gelten zusätzlich."
   },
   "files": {
     "output": "Formate, in denen der Ergebnis-Knoten sein Ergebnis am Ende des Laufs speichert: Markdown, JSON, CSV, HTML oder PDF.",
