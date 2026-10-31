@@ -1,0 +1,15 @@
+{
+  "title": "Testergebnis für Version {{version}}",
+  "untested": "ungetestet",
+  "passed": "{{passed}} von {{cases}} bestanden",
+  "outdated": "veraltet",
+  "otherVersion": "getestet wurde Version {{version}}",
+  "unknownVersion": "getestete Version unbekannt",
+  "suiteChanged": "Testreihe seit dem Test geändert",
+  "running": "Ein Testlauf läuft gerade.",
+  "noSuite": "Für diesen Workflow gibt es keine Testreihe.",
+  "createSuite": "Testreihe anlegen",
+  "loadFailed": "Die Testergebnisse für Version {{version}} konnten nicht geladen werden.",
+  "runsFailed": "Testläufe nicht geladen",
+  "retry": "Erneut laden"
+}
