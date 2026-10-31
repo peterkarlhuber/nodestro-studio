@@ -94,7 +94,7 @@ Inhalte aus Läufen (hochgeladene Dateien, Ergebnisdateien, Ergebnisse und Vorsc
 <!-- keywords: beschreibung bearbeiten, löschen, verwalten, entfernen -->
 
 - **Beschreibung:** direkt bei der Datei eintragen; sie wird beim Verlassen des Feldes gespeichert. Gute Beschreibungen nennen Inhalt, Zeitraum und Zweck, z. B. „Geschäftsbericht 2025 mit Bilanz und Risikobericht“.
-- **Löschen:** Papierkorb-Symbol. Die Datei und ihr Index werden entfernt. Agenten, denen sie zugewiesen war, laufen weiter und erhalten sie einfach nicht mehr.
+- **Löschen:** Papierkorb-Symbol. Die Datei und ihr Index werden entfernt. Agenten, denen sie zugewiesen war, laufen weiter und erhalten sie einfach nicht mehr. **Verwendet in** unter dem Dateinamen nennt die Workflows, Agenten der Bibliothek und veröffentlichten APIs, die die Datei nutzen. Ist sie in Verwendung, zählt der Löschdialog diese Stellen vor dem Löschen auf.
 
 ## Tipps und häufige Fehler {#tipps}
 <!-- keywords: tipps, fehler, agent findet nichts, zu teuer, kontext zu groß -->

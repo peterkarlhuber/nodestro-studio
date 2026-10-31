@@ -42,7 +42,7 @@ The **Memory** page shows all spaces with the number and size of their files. Ch
 - **View and edit a file:** choose the file, change the text, **Save**.
 - **Create a file:** enter a path (for example `customers/preferences.md`); it is created under `/memories`.
 - **Delete a file:** bin symbol next to the path.
-- **Clear a space:** permanently deletes all files of the space after confirmation.
+- **Clear a space:** permanently deletes all files of the space after confirmation. Above the files, **Used in** shows which agents and published APIs use the space; the confirmation names them too.
 
 This way you can check, correct or prefill memory at any time. In the inspector, **View content** leads straight to the agent's space.
 

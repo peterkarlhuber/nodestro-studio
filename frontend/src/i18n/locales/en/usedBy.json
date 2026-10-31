@@ -1,0 +1,15 @@
+{
+  "label": "Used in:",
+  "none": "Not used anywhere.",
+  "agent": "{{workflow}} / {{agent}}",
+  "start": "{{workflow}} / Start (file for every run)",
+  "template": "Agent library: {{name}}",
+  "publication": "Published API {{name}} (v{{release}})",
+  "warning_one": "Used in {{count}} place:",
+  "warning_other": "Used in {{count}} places:",
+  "effect": {
+    "knowledge": "These agents keep running but no longer get the file; the workflow check points it out. Saved workflows and agents are not changed.",
+    "tool": "These agents cannot start again until you remove the tool from them or create it again. Saved workflows and agents are not changed."
+  },
+  "deleteAnyway": "Delete anyway"
+}

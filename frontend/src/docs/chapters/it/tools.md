@@ -175,7 +175,7 @@ Gli strumenti salvati prima di questa versione, e tutti gli strumenti dopo il ri
 
 Se salvi uno strumento personale con un nome già esistente, viene creata una **nuova versione** e la precedente viene ritirata. Gli agenti usano sempre la versione attuale. La libreria mostra il numero di versione.
 
-**Elimina** ritira uno strumento. Gli agenti a cui è assegnato segnalano poi «Strumenti sconosciuti» e non possono partire finché non rimuovi lì lo strumento o non lo ricrei. Gli strumenti integrati non si possono eliminare.
+**Elimina** ritira uno strumento. Gli agenti a cui è assegnato segnalano poi «Strumenti sconosciuti» e non possono partire finché non rimuovi lì lo strumento o non lo ricrei. Gli strumenti integrati non si possono eliminare. Sotto la descrizione, **Usato in** mostra quali workflow e agenti della libreria usano lo strumento; la finestra di eliminazione li indica prima di eliminarlo. Le API pubblicate non compaiono di proposito: contengono una propria copia dello strumento.
 
 ## Capire gli errori degli strumenti {#fehler}
 <!-- keywords: errori degli strumenti, non riuscito, timeout, errore della sandbox, input non valido -->

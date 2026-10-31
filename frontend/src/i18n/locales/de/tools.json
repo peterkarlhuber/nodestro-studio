@@ -33,6 +33,7 @@
   "saved": "Tool {{name}} gespeichert",
   "tool": "Tool {{name}}",
   "delete": "Tool löschen: zieht es zurück; Agenten mit diesem Tool können erst wieder starten, wenn du es dort entfernst",
+  "deleteTitle": "Tool „{{name}}“ löschen?",
   "requirement": "Anforderung:",
   "schema": "Eingabeschema",
   "viewCode": "Code und Tests ansehen",

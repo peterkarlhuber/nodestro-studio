@@ -42,7 +42,7 @@ La page **Mémoire** affiche tous les espaces avec le nombre et la taille de leu
 - **Voir et modifier un fichier :** choisissez le fichier, modifiez le texte, **Enregistrer**.
 - **Créer un fichier :** saisissez un chemin (par exemple `clients/preferences.md`) ; il est créé sous `/memories`.
 - **Supprimer un fichier :** symbole de corbeille à côté du chemin.
-- **Vider un espace :** supprime définitivement tous les fichiers de l’espace après confirmation.
+- **Vider un espace :** supprime définitivement tous les fichiers de l’espace après confirmation. Au-dessus des fichiers, **Utilisé dans** indique quels agents et API publiées utilisent l’espace ; la confirmation les cite aussi.
 
 Vous pouvez ainsi vérifier, corriger ou préremplir la mémoire à tout moment. Dans l’inspecteur, **Voir le contenu** mène directement à l’espace de l’agent.
 

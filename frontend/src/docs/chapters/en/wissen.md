@@ -94,7 +94,7 @@ Content from runs (uploaded files, result files, results and agent proposals) on
 <!-- keywords: edit description, delete, manage, remove -->
 
 - **Description:** enter it right next to the file; it is saved when you leave the field. Good descriptions name content, period and purpose, for example "Annual report 2025 with balance sheet and risk report".
-- **Delete:** bin symbol. The file and its index are removed. Agents it was assigned to keep running and simply no longer receive it.
+- **Delete:** bin symbol. The file and its index are removed. Agents it was assigned to keep running and simply no longer receive it. **Used in** below the file name names the workflows, library agents and published APIs that use the file. When it is in use, the delete dialog lists these places before deleting.
 
 ## Tips and common mistakes {#tipps}
 <!-- keywords: tips, mistakes, agent finds nothing, too expensive, context too large -->

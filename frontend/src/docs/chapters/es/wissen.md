@@ -94,7 +94,7 @@ El contenido de ejecuciones (archivos subidos, archivos de resultado, resultados
 <!-- keywords: editar descripción, eliminar, gestionar, quitar -->
 
 - **Descripción:** escríbela junto al archivo; se guarda al salir del campo. Las buenas descripciones indican contenido, periodo y finalidad, por ejemplo «Informe anual 2025 con balance e informe de riesgos».
-- **Eliminar:** símbolo de la papelera. Se eliminan el archivo y su índice. Los agentes que lo tenían asignado siguen funcionando y simplemente dejan de recibirlo.
+- **Eliminar:** símbolo de la papelera. Se eliminan el archivo y su índice. Los agentes que lo tenían asignado siguen funcionando y simplemente dejan de recibirlo. **Se usa en**, debajo del nombre del archivo, nombra los flujos de trabajo, agentes de la biblioteca y API publicadas que usan el archivo. Si está en uso, el diálogo de eliminación enumera esos lugares antes de eliminarlo.
 
 ## Consejos y errores frecuentes {#tipps}
 <!-- keywords: consejos, errores, el agente no encuentra nada, demasiado caro, contexto demasiado grande -->

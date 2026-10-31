@@ -36,7 +36,8 @@ import {
   applyOrganize,
 } from "../components/Organize";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
+import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
+import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
 import { toolDescription } from "../lib/catalog";
 import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
@@ -255,6 +256,8 @@ function ToolDetail({
 }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const usedBy = useUsedBy("tool");
+  const users = usedBy.usersOf(tool.name);
   const [input, setInput] = useState(() => exampleInput(tool.input_schema));
   const [result, setResult] = useState<{
     output: string;
@@ -279,6 +282,7 @@ function ToolDetail({
     mutationFn: () => api.deleteTool(tool.name),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: keys.tools });
+      void queryClient.invalidateQueries({ queryKey: keys.usedBy("tool") });
       toast.success(t("tools.deleted", { name: tool.name }));
       onDeleted();
     },
@@ -311,12 +315,21 @@ function ToolDetail({
           <FavoriteButton kind="tool" id={tool.name} name={tool.name} />
           <TagEditor kind="tool" id={tool.name} name={tool.name} />
           {tool.kind !== "builtin" ? (
-            <ConfirmIconButton icon={Trash2} label={t("tools.delete")} busy={remove.isPending} onConfirm={() => remove.mutate()} />
+            <DeleteUsed
+              kind="tool"
+              icon={Trash2}
+              label={t("tools.delete")}
+              title={t("tools.deleteTitle", { name: tool.name })}
+              users={users}
+              busy={remove.isPending}
+              onConfirm={() => remove.mutate()}
+            />
           ) : null}
         </div>
       </div>
       <TagChips kind="tool" id={tool.name} />
       <p>{toolDescription(t, tool)}</p>
+      <UsedByList users={users} loaded={usedBy.loaded} />
       <TrustNote tool={tool} />
       {tool.requirement ? (
         <Callout tone="brand">

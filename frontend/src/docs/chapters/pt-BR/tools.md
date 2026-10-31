@@ -175,7 +175,7 @@ Ferramentas salvas antes desta versão, e todas as ferramentas depois de restaur
 
 Se você salvar uma ferramenta própria com um nome que já existe, é criada uma **nova versão** e a anterior é retirada. Os agentes sempre usam a versão atual. A biblioteca mostra o número da versão.
 
-**Excluir** retira uma ferramenta. Os agentes que a têm atribuída passam a informar "Ferramentas desconhecidas" e não podem iniciar até que você remova a ferramenta deles ou a crie de novo. Ferramentas integradas não podem ser excluídas.
+**Excluir** retira uma ferramenta. Os agentes que a têm atribuída passam a informar "Ferramentas desconhecidas" e não podem iniciar até que você remova a ferramenta deles ou a crie de novo. Ferramentas integradas não podem ser excluídas. Abaixo da descrição, **Usado em** mostra quais fluxos de trabalho e agentes da biblioteca usam a ferramenta; a caixa de exclusão os nomeia antes de excluir. APIs publicadas ficam de fora de propósito: elas contêm sua própria cópia da ferramenta.
 
 ## Entender erros de ferramentas {#fehler}
 <!-- keywords: erros de ferramentas, falhou, tempo esgotado, erro da sandbox, entrada inválida -->

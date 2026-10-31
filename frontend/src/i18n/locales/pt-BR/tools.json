@@ -33,6 +33,7 @@
   "saved": "Ferramenta {{name}} salva",
   "tool": "Ferramenta {{name}}",
   "delete": "Excluir ferramenta: retira a ferramenta; agentes que a usam só poderão iniciar de novo depois que você a remover deles",
+  "deleteTitle": "Excluir a ferramenta “{{name}}”?",
   "requirement": "Requisito:",
   "schema": "Esquema de entrada",
   "viewCode": "Ver código e testes",

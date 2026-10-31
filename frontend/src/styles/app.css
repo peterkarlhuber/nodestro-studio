@@ -6281,3 +6281,34 @@ kbd {
 .run-summary .form-values > div {
   grid-template-columns: minmax(90px, 150px) 1fr;
 }
+
+/* "Used in" (UX-7): the users of a knowledge file, tool or memory space. */
+.used-by {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: baseline;
+  margin: 0;
+}
+.used-by__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+/* ul.… outranks list styles of the surrounding page (the Knowledge page's .file-list li). */
+ul.used-by__list > li {
+  display: list-item;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  overflow-wrap: anywhere;
+}
+.used-by__list--block {
+  flex-direction: column;
+  padding-left: 18px;
+  list-style: disc;
+}

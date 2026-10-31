@@ -33,6 +33,7 @@
   "saved": "Tool {{name}} saved",
   "tool": "Tool {{name}}",
   "delete": "Delete tool: withdraws it; agents with this tool cannot start again until you remove it from them",
+  "deleteTitle": "Delete the tool “{{name}}”?",
   "requirement": "Requirement:",
   "schema": "Input schema",
   "viewCode": "View code and tests",

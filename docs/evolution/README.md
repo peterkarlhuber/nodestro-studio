@@ -184,6 +184,7 @@ project owner.
 | UX-5a `Section` for test cases, run comparison and approval items | done | studio #23 `070e08c`. The inline "show result/feedback" toggles in run details, tests and batches stay plain `<details>`: they reveal one value in place and are not sections. |
 | UX-5b `Section` for a tool's code, tool-generation attempts, diagnostic versions and local backups | done | studio #25 `a44ea7d`. Inline toggles stay plain `<details>`: the sandbox output of a tool check, the provenance of a knowledge file and the details of one diagnostic check. |
 | UX-6a start-form file options as a *File options* section with a one-line summary | done | studio #26 `c629a3c` |
-| UX-6b run summary above the run details: steps, path through decisions, approvals, tools, failed step with a jump | in review | studio, this step |
-| UX-7 and later | open | — |
+| UX-6b run summary above the run details: steps, path through decisions, approvals, tools, failed step with a jump | done | studio #27 `5801cb6` |
+| UX-7 "used in" for knowledge files, tools and memory spaces, with a delete dialog that names the users | in review | api #17, then sdk and studio (this step) |
+| UX-8 and later | open | — |
 

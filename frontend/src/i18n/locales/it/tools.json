@@ -33,6 +33,7 @@
   "saved": "Strumento {{name}} salvato",
   "tool": "Strumento {{name}}",
   "delete": "Elimina strumento: lo ritira; gli agenti che lo usano potranno riavviarsi solo dopo che lo avrai rimosso",
+  "deleteTitle": "Eliminare lo strumento «{{name}}»?",
   "requirement": "Requisito:",
   "schema": "Schema di input",
   "viewCode": "Vedi codice e test",

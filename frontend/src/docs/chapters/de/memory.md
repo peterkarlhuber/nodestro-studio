@@ -42,7 +42,7 @@ Die Seite **Memory** zeigt alle Räume mit Anzahl und Größe der Dateien. Wähl
 - **Datei ansehen und bearbeiten:** Datei wählen, Text ändern, **Speichern**.
 - **Datei anlegen:** Pfad eingeben (z. B. `kunden/vorlieben.md`); er wird unter `/memories` angelegt.
 - **Datei löschen:** Papierkorb-Symbol neben dem Pfad.
-- **Raum leeren:** löscht alle Dateien des Raums nach Rückfrage endgültig.
+- **Raum leeren:** löscht alle Dateien des Raums nach Rückfrage endgültig. Über den Dateien zeigt **Verwendet in**, welche Agenten und veröffentlichten APIs den Raum nutzen; die Rückfrage nennt sie ebenfalls.
 
 Du kannst Memory so jederzeit prüfen, korrigieren oder vorbefüllen. Im Inspektor führt **Inhalt ansehen** direkt zum Raum des Agenten.
 
