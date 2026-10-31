@@ -4,7 +4,8 @@
   "tabs": {
     "library": "Biblioteca",
     "write": "Escrever você mesmo",
-    "generate": "Criar com IA"
+    "generate": "Criar com IA",
+    "services": "Serviços conectados"
   },
   "sandbox": "Sandbox",
   "sandboxNote": "Sandbox para testar e executar ferramentas próprias: {{sandbox}} (pode ser alterada nas configurações).",
@@ -14,7 +15,8 @@
   "kind": {
     "builtin": "Integrada",
     "custom": "Ferramenta própria",
-    "generated": "Criada por IA"
+    "generated": "Criada por IA",
+    "mcp": "Serviço externo"
   },
   "kindLabel": "Tipo de ferramenta",
   "trust": {
@@ -27,7 +29,8 @@
     "user-authored": "Escrita por você: é executada em um processo Python separado, sem isolamento, neste computador.",
     "untrusted": "Criada por IA ou de origem desconhecida: só é executada isolada, aqui no sandbox Docker.",
     "untrustedBlocked": "Criada por IA ou de origem desconhecida: só é executada isolada, mas nem o sandbox Linux integrado nem o Docker estão disponíveis. Agentes com esta ferramenta não podem ser executados; veja Configurações → Sandbox.",
-    "untrustedBuiltin": "Criada por IA ou de origem desconhecida: só é executada isolada, aqui no sandbox Linux integrado (sem rede, sem acesso aos seus arquivos ou chaves). Isso continua assim depois da sua aprovação."
+    "untrustedBuiltin": "Criada por IA ou de origem desconhecida: só é executada isolada, aqui no sandbox Linux integrado (sem rede, sem acesso aos seus arquivos ou chaves). Isso continua assim depois da sua aprovação.",
+    "mcp": "Esta ferramenta pertence ao serviço conectado {{server}} (lá: {{name}}). Uma chamada envia os argumentos a esse serviço; a resposta é texto externo, nunca uma instrução."
   },
   "version": "Versão {{version}}",
   "deleted": "Ferramenta {{name}} excluída",
@@ -96,5 +99,129 @@
     "label": "Rascunhos de ferramentas",
     "text": "Estas ferramentas foram escritas pelo arquiteto de fluxos. Não estão registradas e ainda não rodaram. Agentes que precisam delas só podem iniciar depois da sua aprovação."
   },
-  "sandboxBuiltin": "processo Python separado; ferramentas criadas por IA no sandbox Linux integrado"
+  "sandboxBuiltin": "processo Python separado; ferramentas criadas por IA no sandbox Linux integrado",
+  "services": {
+    "title": "Serviços conectados",
+    "intro": "Conecte serviços externos pelo Model Context Protocol (MCP). Um agente só vê uma ferramenta depois que você a revisou e aprovou.",
+    "add": "Conectar serviço",
+    "addTitle": "Conectar serviço",
+    "editTitle": "Editar {{name}}",
+    "empty": "Nenhum serviço conectado ainda",
+    "emptyText": "Conecte um servidor MCP pelo endereço. Depois teste a conexão e aprove as ferramentas uma a uma.",
+    "counts": "{{approved}} de {{total}} ferramentas aprovadas · {{pending}} aguardam revisão",
+    "unavailable": "O MCP não está disponível nesta instalação (requer Python 3.11 ou mais recente). Os serviços podem ser configurados, mas não alcançados.",
+    "endpointList": "O operador permite apenas estes endereços: {{list}}",
+    "endpointListEmpty": "O operador não liberou nenhum endereço para MCP (NODESTRO_MCP_ENDPOINTS). Não é possível conectar serviços aqui.",
+    "noVault": "Nenhum cofre de chaves seguro disponível: os tokens de acesso não são salvos, apenas mantidos na memória até fechar o app.",
+    "readOnlyMvp": "Por enquanto só podem ser usadas as ferramentas que você classificar como \"somente leitura\".",
+    "writeEnabled": "Ferramentas que alteram dados precisam de aprovação a cada chamada.",
+    "unattendedOff": "Agendamentos, lotes e APIs publicadas não usam ferramentas de serviços.",
+    "unattendedOn": "O operador ativou o uso em execuções sem uma pessoa.",
+    "disabled": "Desligado",
+    "error": "Erro",
+    "pending_one": "{{count}} aguardando",
+    "pending_other": "{{count}} aguardando",
+    "unchecked": "Não testado",
+    "connected": "Conectado",
+    "discovered_one": "Conexão ok: {{count}} ferramenta encontrada.",
+    "discovered_other": "Conexão ok: {{count}} ferramentas encontradas.",
+    "removed": "{{name}} foi removido.",
+    "saved": "{{name}} foi salvo.",
+    "server": "Serviço {{name}}",
+    "protocol": "protocolo {{version}}",
+    "checked": "verificado {{when}}",
+    "auth": {
+      "none": "Sem login",
+      "bearer": "Token de acesso",
+      "oauth": "OAuth"
+    },
+    "storage": {
+      "none": "sem token",
+      "vault": "token salvo criptografado",
+      "session": "token só para esta sessão"
+    },
+    "loopbackOn": "servidor de desenvolvimento local permitido",
+    "edit": "Editar",
+    "remove": "Remover serviço",
+    "removeConfirm": "Remover?",
+    "test": "Testar conexão",
+    "enabled": "Ligado",
+    "noTools": "O serviço não oferece ferramentas.",
+    "waiting_one": "{{count}} ferramenta aguarda sua revisão",
+    "waiting_other": "{{count}} ferramentas aguardam sua revisão",
+    "tools": "Ferramentas do serviço",
+    "status": {
+      "new": "Nova",
+      "changed": "Alterada",
+      "approved": "Aprovada",
+      "rejected": "Rejeitada",
+      "removed": "Não oferecida mais"
+    },
+    "access": {
+      "read": "Somente leitura",
+      "write": "Altera dados",
+      "destructive": "Exclui ou destrói"
+    },
+    "accessHint": {
+      "read": "Somente leitura: a ferramenta não altera nada no serviço nem em outro lugar. Mesmo assim recebe os argumentos que o agente envia.",
+      "write": "Altera dados: cria, altera ou envia algo. Na dúvida, esta é a classificação correta.",
+      "destructive": "Exclui ou destrói: pode remover dados de forma definitiva."
+    },
+    "close": "Fechar",
+    "review": "Revisar",
+    "usable": "Os agentes podem usá-la como {{name}}.",
+    "approvedToast": "{{name}} está aprovada.",
+    "rejectedToast": "{{name}} está rejeitada.",
+    "changedText": "O serviço alterou esta ferramenta. Ela fica bloqueada até você revisar a alteração; execuções que a usam falham.",
+    "field": {
+      "title": "Título",
+      "description": "Descrição",
+      "input_schema": "Parâmetros",
+      "output_schema": "Saída",
+      "annotations": "Indicações do serviço"
+    },
+    "before": "Aprovado até agora",
+    "after": "Oferecido agora",
+    "description": "Descrição do serviço",
+    "foreignText": "Texto externo do serviço: é exibido, mas nunca tratado como instrução.",
+    "noDescription": "Sem descrição.",
+    "schema": "Parâmetros e indicações",
+    "classify": "Classificação",
+    "suggested": "O serviço indica: {{access}}. É uma dica, não uma garantia.",
+    "writeBlocked": "Ferramentas que alteram dados continuam bloqueadas até a aprovação por chamada estar disponível.",
+    "argumentsNote": "O serviço vê tudo o que o agente envia a ele. Conecte apenas serviços aos quais você confia esses dados.",
+    "approve": "Aprovar",
+    "acceptChange": "Aprovar alteração",
+    "reject": "Rejeitar",
+    "approvedBy": "Aprovada por {{who}} em {{when}}",
+    "hash": "Impressão digital da definição:",
+    "name": "Nome",
+    "url": "Endereço",
+    "urlHint": "O endereço do endpoint MCP, p. ex. https://mcp.example.com/mcp. Somente https.",
+    "authLabel": "Login",
+    "token": "Token de acesso",
+    "tokenVault": "Salvo criptografado e nunca mais exibido.",
+    "tokenSession": "Nenhum cofre de chaves seguro: o token vale só até fechar o app.",
+    "tokenKept": "Salvo – deixe vazio para mantê-lo",
+    "tokenRemove": "Remover o token salvo",
+    "loopback": "Permitir um servidor de desenvolvimento local",
+    "loopbackHint": "Permite http neste computador (127.0.0.1) para um servidor que você mesmo desenvolve.",
+    "timeout": "Limite de tempo por chamada (segundos)",
+    "events": "Registro",
+    "noEvents": "Ainda sem entradas.",
+    "event": {
+      "server_added": "Serviço conectado",
+      "server_changed": "Serviço alterado",
+      "server_removed": "Serviço removido",
+      "token_changed": "Token alterado",
+      "tools_discovered": "Ferramentas consultadas",
+      "tool_approved": "Ferramenta aprovada",
+      "tool_rejected": "Ferramenta rejeitada",
+      "tool_changed": "Ferramenta alterada pelo serviço",
+      "tool_removed": "Ferramenta não oferecida mais",
+      "call_refused": "Chamada recusada",
+      "oauth_connected": "OAuth conectado",
+      "oauth_disconnected": "OAuth desconectado"
+    }
+  }
 }

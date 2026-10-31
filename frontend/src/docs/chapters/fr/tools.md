@@ -172,6 +172,24 @@ Le processus Python n’est pas une barrière de sécurité : le code qu’il ex
 
 Les outils enregistrés avant cette version, et tous les outils après la restauration d’une sauvegarde, sont considérés d’origine inconnue, y compris ceux que vous avez écrits, car leur origine n’a pas été enregistrée. Avec une isolation, ils continuent de fonctionner. Une nouvelle version d’un tel outil, ou une copie de son code dans un nouvel outil, conserve ce statut.
 
+## Services connectés {#verbundene-dienste}
+<!-- keywords: mcp, model context protocol, service externe, services connectés, serveur, jeton, validation, modifié -->
+
+Avec le **Model Context Protocol (MCP)**, tu connectes des services externes, par exemple une recherche de documents ou un système de tickets. Leurs outils sont disponibles pour les agents comme n'importe quel autre outil, mais seulement après ton examen. Tu les trouves sous *Outils → Services connectés*.
+
+1. **Connecter un service :** nom et adresse du point de terminaison MCP (`https` uniquement), un jeton d'accès si nécessaire. Sur le bureau, tu peux autoriser `http://127.0.0.1` pour un serveur que tu développes sur cet ordinateur.
+2. **Tester la connexion :** Nodestro négocie la version du protocole et récupère les outils du service. Chaque outil commence comme **Nouveau**.
+3. **Examiner et classer :** tu vois la description, les paramètres et les indications du service. C'est un **texte étranger** : Nodestro l'affiche, mais ne le traite jamais comme une instruction. Classe l'outil : **Lecture seule**, **Modifie des données** ou **Supprime ou détruit**. L'indication du service n'est qu'un indice ; en cas de doute, « Modifie des données » s'applique.
+4. **Approuver :** ce n'est qu'alors que les agents voient l'outil, sous le nom `mcp__<service>__<outil>`. Tu l'attribues à un agent comme n'importe quel autre outil.
+
+Pour l'instant, seuls les outils que tu classes **lecture seule** sont utilisables ; ceux qui modifient des données restent bloqués jusqu'à ce que l'approbation par appel existe. Un outil de lecture reçoit tout de même tout ce que l'agent lui envoie : ne connecte que des services auxquels tu confies ces données.
+
+**Modifications :** Nodestro conserve une empreinte de chaque définition approuvée et la vérifie avant chaque appel. Si le service modifie un outil, celui-ci est **bloqué** ; les exécutions qui l'utilisent échouent avec un message clair. Tu vois la modification côte à côte (approuvé jusqu'ici, proposé maintenant) et tu l'approuves ou la refuses.
+
+**Les jetons d'accès** sont enregistrés chiffrés : sur le bureau avec une clé du trousseau du système d'exploitation, sur le serveur avec la clé du serveur, séparément pour chaque locataire. Sans coffre de clés sécurisé, un jeton ne vaut que jusqu'à la fermeture de l'application. Les jetons n'apparaissent jamais dans les workflows, les exports ou les journaux.
+
+**Limites :** Nodestro ne se connecte jamais à des adresses internes, locales ou de métadonnées, vérifie chaque adresse résolue au moment de la connexion et ignore les réglages de proxy de l'environnement. Sur un serveur, l'opérateur autorise les adresses avec `NODESTRO_MCP_ENDPOINTS`. Les planifications, les lots et les API publiées n'utilisent les outils des services que si l'opérateur l'active expressément. Nodestro ne connaît pas le coût des services externes ; il apparaît comme **inconnu**, jamais comme zéro.
+
 ## Versions et suppression {#versionen}
 <!-- keywords: version, supprimer, retirer, revoke, mettre à jour, écraser -->
 

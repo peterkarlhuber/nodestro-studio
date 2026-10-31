@@ -592,5 +592,32 @@
   "testcase": {
     "run_not_failed": "Só uma execução com falha pode virar caso de teste.",
     "run_unsupported": "Execuções importadas e de subworkflows não podem virar caso de teste."
+  },
+  "mcp": {
+    "address_refused": "O endereço {{host}} não é permitido (endereço interno, local ou de metadados).",
+    "cancelled": "A chamada ao serviço foi cancelada.",
+    "closed": "A conexão com o serviço foi encerrada.",
+    "definition_moved": "A ferramenta mudou desde a sua revisão. Revise-a novamente.",
+    "dns_failed": "Não foi possível resolver o nome {{host}}.",
+    "endpoint_not_allowed": "Este endereço não está na lista do operador.",
+    "endpoints_invalid": "A lista de endereços do operador (NODESTRO_MCP_ENDPOINTS) é inválida.",
+    "http_error": "O serviço respondeu com HTTP {{status}}.",
+    "https_required": "Os serviços só são acessados por https (http apenas para um servidor de desenvolvimento local neste computador).",
+    "protocol_error": "O serviço não respondeu como um servidor MCP.",
+    "server_disabled": "O serviço está desligado.",
+    "server_not_found": "Este serviço não existe mais.",
+    "timeout": "O serviço não respondeu a tempo.",
+    "tool_changed": "O serviço alterou a ferramenta; ela fica bloqueada até um administrador revisar a alteração.",
+    "tool_not_approved": "A ferramenta ainda não foi aprovada.",
+    "tool_not_found": "O serviço não oferece esta ferramenta.",
+    "tool_removed": "O serviço não oferece mais esta ferramenta.",
+    "unattended_not_enabled": "Execuções sem uma pessoa não podem usar ferramentas de serviços.",
+    "unauthorized": "O serviço recusou o login. Verifique o token de acesso.",
+    "unavailable": "O MCP não está disponível nesta instalação.",
+    "unreachable": "O serviço não pode ser alcançado.",
+    "url_credentials": "O endereço não pode conter nome de usuário nem senha.",
+    "url_invalid": "O endereço é inválido.",
+    "vault_unavailable": "Não há armazenamento seguro para tokens de acesso.",
+    "write_not_supported": "Ferramentas que alteram dados ainda estão bloqueadas (falta a aprovação por chamada)."
   }
 }

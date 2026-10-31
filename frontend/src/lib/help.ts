@@ -106,6 +106,7 @@ export const HELP_DOCS = {
   "tools.generate": "tools#ki-erstellen",
   "tools.approve": "tools#freigabe",
   "tools.sandbox": "tools#sandbox",
+  "tools.services": "tools#verbundene-dienste",
   "knowledge.upload": "wissen#formate",
   "knowledge.description": "wissen#verwalten",
   "knowledge.chunks": "wissen#indexierung",

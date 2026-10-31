@@ -4,7 +4,8 @@
   "tabs": {
     "library": "Bibliothek",
     "write": "Selbst schreiben",
-    "generate": "Von KI erstellen"
+    "generate": "Von KI erstellen",
+    "services": "Verbundene Dienste"
   },
   "sandbox": "Sandbox",
   "sandboxNote": "Sandbox für Tests und Ausführung eigener Tools: {{sandbox}} (in den Einstellungen änderbar).",
@@ -14,7 +15,8 @@
   "kind": {
     "builtin": "Eingebaut",
     "custom": "Eigenes Tool",
-    "generated": "Von KI erstellt"
+    "generated": "Von KI erstellt",
+    "mcp": "Externer Dienst"
   },
   "kindLabel": "Art des Tools",
   "trust": {
@@ -27,7 +29,8 @@
     "user-authored": "Von dir geschrieben: läuft in einem eigenen Python-Prozess ohne Isolation auf diesem Rechner.",
     "untrusted": "KI-erstellt oder unbekannter Herkunft: läuft nur isoliert, hier in der Docker-Sandbox.",
     "untrustedBlocked": "KI-erstellt oder unbekannter Herkunft: läuft nur isoliert, aber weder die eingebaute Linux-Sandbox noch Docker ist verfügbar. Agenten mit diesem Tool können nicht laufen; siehe Einstellungen → Sandbox.",
-    "untrustedBuiltin": "KI-erstellt oder unbekannter Herkunft: läuft nur isoliert, hier in der eingebauten Linux-Sandbox (kein Netzwerk, kein Zugriff auf deine Dateien oder Schlüssel). Das bleibt auch nach deiner Freigabe so."
+    "untrustedBuiltin": "KI-erstellt oder unbekannter Herkunft: läuft nur isoliert, hier in der eingebauten Linux-Sandbox (kein Netzwerk, kein Zugriff auf deine Dateien oder Schlüssel). Das bleibt auch nach deiner Freigabe so.",
+    "mcp": "Dieses Tool gehört zum verbundenen Dienst {{server}} (dort: {{name}}). Ein Aufruf sendet die Argumente an diesen Dienst; die Antwort ist fremder Text, keine Anweisung."
   },
   "version": "Version {{version}}",
   "deleted": "Tool {{name}} gelöscht",
@@ -96,5 +99,129 @@
     "label": "Tool-Entwürfe",
     "text": "Diese Tools hat der Workflow-Architekt geschrieben. Sie sind nicht registriert und noch nicht gelaufen. Agenten, die sie brauchen, können erst starten, wenn du sie freigibst."
   },
-  "sandboxBuiltin": "eigener Python-Prozess; KI-erstellte Tools in der eingebauten Linux-Sandbox"
+  "sandboxBuiltin": "eigener Python-Prozess; KI-erstellte Tools in der eingebauten Linux-Sandbox",
+  "services": {
+    "title": "Verbundene Dienste",
+    "intro": "Verbinde externe Dienste über das Model Context Protocol (MCP). Ein Agent sieht ein Tool erst, wenn du es geprüft und freigegeben hast.",
+    "add": "Dienst verbinden",
+    "addTitle": "Dienst verbinden",
+    "editTitle": "{{name}} bearbeiten",
+    "empty": "Noch kein Dienst verbunden",
+    "emptyText": "Verbinde einen MCP-Server über seine Adresse. Danach testest du die Verbindung und gibst seine Tools einzeln frei.",
+    "counts": "{{approved}} von {{total}} Tools freigegeben · {{pending}} warten auf Prüfung",
+    "unavailable": "MCP ist in dieser Installation nicht verfügbar (benötigt Python 3.11 oder neuer). Dienste lassen sich einrichten, aber nicht erreichen.",
+    "endpointList": "Der Betreiber erlaubt nur diese Adressen: {{list}}",
+    "endpointListEmpty": "Der Betreiber hat keine Adressen für MCP freigegeben (NODESTRO_MCP_ENDPOINTS). Dienste können hier nicht verbunden werden.",
+    "noVault": "Kein sicherer Schlüsselspeicher verfügbar: Zugangstokens werden nicht gespeichert, sondern nur bis zum Schließen der App im Speicher gehalten.",
+    "readOnlyMvp": "Nutzbar sind derzeit nur Tools, die du als „nur lesend“ einstufst.",
+    "writeEnabled": "Tools, die Daten ändern, brauchen eine Freigabe pro Aufruf.",
+    "unattendedOff": "Zeitpläne, Stapel und veröffentlichte APIs verwenden keine Dienst-Tools.",
+    "unattendedOn": "Der Betreiber hat die Nutzung in Läufen ohne Person eingeschaltet.",
+    "disabled": "Ausgeschaltet",
+    "error": "Fehler",
+    "pending_one": "{{count}} wartet",
+    "pending_other": "{{count}} warten",
+    "unchecked": "Nicht getestet",
+    "connected": "Verbunden",
+    "discovered_one": "Verbindung in Ordnung: {{count}} Tool gefunden.",
+    "discovered_other": "Verbindung in Ordnung: {{count}} Tools gefunden.",
+    "removed": "{{name}} wurde entfernt.",
+    "saved": "{{name}} wurde gespeichert.",
+    "server": "Dienst {{name}}",
+    "protocol": "Protokoll {{version}}",
+    "checked": "geprüft {{when}}",
+    "auth": {
+      "none": "Ohne Anmeldung",
+      "bearer": "Zugangstoken",
+      "oauth": "OAuth"
+    },
+    "storage": {
+      "none": "kein Token",
+      "vault": "Token verschlüsselt gespeichert",
+      "session": "Token nur für diese Sitzung"
+    },
+    "loopbackOn": "lokaler Entwicklungsserver erlaubt",
+    "edit": "Bearbeiten",
+    "remove": "Dienst entfernen",
+    "removeConfirm": "Entfernen?",
+    "test": "Verbindung testen",
+    "enabled": "Eingeschaltet",
+    "noTools": "Der Dienst bietet keine Tools an.",
+    "waiting_one": "{{count}} Tool wartet auf deine Prüfung",
+    "waiting_other": "{{count}} Tools warten auf deine Prüfung",
+    "tools": "Tools des Dienstes",
+    "status": {
+      "new": "Neu",
+      "changed": "Geändert",
+      "approved": "Freigegeben",
+      "rejected": "Abgelehnt",
+      "removed": "Nicht mehr angeboten"
+    },
+    "access": {
+      "read": "Nur lesend",
+      "write": "Ändert Daten",
+      "destructive": "Löscht oder zerstört"
+    },
+    "accessHint": {
+      "read": "Nur lesend: das Tool ändert nichts beim Dienst oder anderswo. Auch ein lesendes Tool erhält die Argumente, die der Agent sendet.",
+      "write": "Ändert Daten: legt an, ändert oder versendet etwas. Im Zweifel ist dies die richtige Einstufung.",
+      "destructive": "Löscht oder zerstört: kann Daten unwiderruflich entfernen."
+    },
+    "close": "Schließen",
+    "review": "Prüfen",
+    "usable": "Agenten können es als {{name}} verwenden.",
+    "approvedToast": "{{name}} ist freigegeben.",
+    "rejectedToast": "{{name}} ist abgelehnt.",
+    "changedText": "Der Dienst hat dieses Tool geändert. Bis du die Änderung prüfst, ist es gesperrt; Läufe, die es verwenden, schlagen fehl.",
+    "field": {
+      "title": "Titel",
+      "description": "Beschreibung",
+      "input_schema": "Parameter",
+      "output_schema": "Ausgabe",
+      "annotations": "Angaben des Dienstes"
+    },
+    "before": "Bisher freigegeben",
+    "after": "Jetzt angeboten",
+    "description": "Beschreibung des Dienstes",
+    "foreignText": "Fremder Text vom Dienst: Er wird angezeigt, aber nie als Anweisung behandelt.",
+    "noDescription": "Keine Beschreibung.",
+    "schema": "Parameter und Angaben",
+    "classify": "Einstufung",
+    "suggested": "Der Dienst gibt an: {{access}}. Das ist ein Hinweis, keine Garantie.",
+    "writeBlocked": "Tools, die Daten ändern, bleiben gesperrt, bis die Freigabe pro Aufruf verfügbar ist.",
+    "argumentsNote": "Der Dienst sieht alles, was der Agent ihm sendet. Verbinde nur Dienste, denen du diese Daten anvertraust.",
+    "approve": "Freigeben",
+    "acceptChange": "Änderung freigeben",
+    "reject": "Ablehnen",
+    "approvedBy": "Freigegeben von {{who}} am {{when}}",
+    "hash": "Fingerabdruck der Definition:",
+    "name": "Name",
+    "url": "Adresse",
+    "urlHint": "Die Adresse des MCP-Endpunkts, z. B. https://mcp.example.com/mcp. Nur https.",
+    "authLabel": "Anmeldung",
+    "token": "Zugangstoken",
+    "tokenVault": "Wird verschlüsselt gespeichert und nie wieder angezeigt.",
+    "tokenSession": "Kein sicherer Schlüsselspeicher: Das Token gilt nur bis zum Schließen der App.",
+    "tokenKept": "Gespeichert – leer lassen, um es zu behalten",
+    "tokenRemove": "Gespeichertes Token entfernen",
+    "loopback": "Lokalen Entwicklungsserver erlauben",
+    "loopbackHint": "Erlaubt http auf diesem Computer (127.0.0.1) für einen Server, den du selbst entwickelst.",
+    "timeout": "Zeitlimit pro Aufruf (Sekunden)",
+    "events": "Protokoll",
+    "noEvents": "Noch keine Einträge.",
+    "event": {
+      "server_added": "Dienst verbunden",
+      "server_changed": "Dienst geändert",
+      "server_removed": "Dienst entfernt",
+      "token_changed": "Token geändert",
+      "tools_discovered": "Tools abgerufen",
+      "tool_approved": "Tool freigegeben",
+      "tool_rejected": "Tool abgelehnt",
+      "tool_changed": "Tool vom Dienst geändert",
+      "tool_removed": "Tool nicht mehr angeboten",
+      "call_refused": "Aufruf verweigert",
+      "oauth_connected": "OAuth verbunden",
+      "oauth_disconnected": "OAuth getrennt"
+    }
+  }
 }

@@ -592,5 +592,32 @@
   "testcase": {
     "run_not_failed": "Nur ein fehlgeschlagener Lauf kann als Testfall übernommen werden.",
     "run_unsupported": "Importierte Läufe und Läufe von Unter-Workflows können nicht als Testfall übernommen werden."
+  },
+  "mcp": {
+    "address_refused": "Die Adresse {{host}} ist nicht erlaubt (interne, lokale oder Metadaten-Adresse).",
+    "cancelled": "Der Aufruf des Dienstes wurde abgebrochen.",
+    "closed": "Die Verbindung zum Dienst wurde beendet.",
+    "definition_moved": "Das Tool hat sich seit deiner Prüfung geändert. Prüfe es erneut.",
+    "dns_failed": "Der Name {{host}} konnte nicht aufgelöst werden.",
+    "endpoint_not_allowed": "Diese Adresse steht nicht auf der Liste des Betreibers.",
+    "endpoints_invalid": "Die Adressliste des Betreibers (NODESTRO_MCP_ENDPOINTS) ist ungültig.",
+    "http_error": "Der Dienst antwortete mit HTTP {{status}}.",
+    "https_required": "Dienste werden nur über https erreicht (http nur für einen lokalen Entwicklungsserver auf diesem Computer).",
+    "protocol_error": "Der Dienst antwortete nicht wie ein MCP-Server.",
+    "server_disabled": "Der Dienst ist ausgeschaltet.",
+    "server_not_found": "Diesen Dienst gibt es nicht mehr.",
+    "timeout": "Der Dienst hat nicht rechtzeitig geantwortet.",
+    "tool_changed": "Der Dienst hat das Tool geändert; es ist gesperrt, bis ein Administrator die Änderung prüft.",
+    "tool_not_approved": "Das Tool ist noch nicht freigegeben.",
+    "tool_not_found": "Dieses Tool bietet der Dienst nicht an.",
+    "tool_removed": "Der Dienst bietet dieses Tool nicht mehr an.",
+    "unattended_not_enabled": "Läufe ohne Person dürfen keine Dienst-Tools verwenden.",
+    "unauthorized": "Der Dienst hat die Anmeldung abgelehnt. Prüfe das Zugangstoken.",
+    "unavailable": "MCP ist in dieser Installation nicht verfügbar.",
+    "unreachable": "Der Dienst ist nicht erreichbar.",
+    "url_credentials": "Die Adresse darf keinen Benutzernamen und kein Passwort enthalten.",
+    "url_invalid": "Die Adresse ist ungültig.",
+    "vault_unavailable": "Es gibt keinen sicheren Speicher für Zugangstokens.",
+    "write_not_supported": "Tools, die Daten ändern, sind noch gesperrt (Freigabe pro Aufruf fehlt)."
   }
 }

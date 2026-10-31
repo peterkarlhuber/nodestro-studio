@@ -18,6 +18,7 @@
     "e2e:flow": "node e2e/flow.mjs",
     "e2e:panels": "node e2e/panels.mjs",
     "e2e:api": "node e2e/api.mjs",
+    "e2e:mcp": "node e2e/mcp.mjs",
     "e2e:journeys": "node e2e/journeys.mjs"
   },
   "dependencies": {

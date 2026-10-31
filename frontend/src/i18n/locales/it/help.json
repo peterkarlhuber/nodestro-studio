@@ -76,7 +76,8 @@
     "generate": "Un Coding Agent scrive la funzione e i test (fino a tre tentativi). Solo dopo la tua approvazione lo strumento è disponibile per tutti gli agenti. Costa token di API.",
     "approve": "Gli strumenti approvati possono essere usati da tutti gli agenti. Controlla prima che codice e test facciano quello che ti aspetti. Senza decisione, una richiesta viene rifiutata dopo un’ora.",
     "sandbox": "Gli strumenti personali e quelli creati dall’IA non girano mai nel processo di Nodestro, ma isolati, con limiti di tempo e di memoria.",
-    "drafts": "Strumenti scritti dall’architetto di workflow. Provali e approvali qui, oppure rifiutali."
+    "drafts": "Strumenti scritti dall’architetto di workflow. Provali e approvali qui, oppure rifiutali.",
+    "services": "Servizi esterni tramite MCP: colleghi un server, provi la connessione e approvi ogni strumento dopo averlo esaminato. Se il servizio modifica uno strumento, questo resta bloccato finché non esamini la modifica."
   },
   "knowledge": {
     "upload": "PDF, immagini (PNG, JPEG, GIF, WebP) e formati di testo. Immagini fino a 5 MB, documenti fino a 20 MB. Testi e PDF vengono indicizzati per la ricerca.",

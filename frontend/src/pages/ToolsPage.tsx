@@ -5,6 +5,7 @@ import {
   Code2,
   FlaskConical,
   Play,
+  PlugZap,
   Save,
   ShieldCheck,
   Sparkles,
@@ -44,8 +45,9 @@ import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
 import { ErrorText, LocalError, ProblemText, problemText } from "../lib/errors";
 import { formatCost, relativeTime } from "../lib/format";
+import { ServicesTab } from "./ToolsServices";
 
-type Tab = "library" | "write" | "generate";
+type Tab = "library" | "services" | "write" | "generate";
 
 export function ToolsPage() {
   const { t } = useTranslation();
@@ -71,6 +73,7 @@ export function ToolsPage() {
                 label: t("tools.tabs.library"),
                 icon: Wrench,
               },
+              { value: "services", label: t("tools.tabs.services"), icon: PlugZap },
               { value: "write", label: t("tools.tabs.write"), icon: Code2 },
               {
                 value: "generate",
@@ -84,6 +87,7 @@ export function ToolsPage() {
       <div className="page__body">
         <PendingDrafts />
         {tab === "library" ? <Library /> : null}
+        {tab === "services" ? <ServicesTab /> : null}
         {tab === "write" ? (
           <WriteTool onSaved={() => setTab("library")} />
         ) : null}
@@ -184,7 +188,7 @@ function Library() {
                     tone={
                       item.kind === "builtin"
                         ? "idle"
-                        : item.kind === "generated"
+                        : item.kind === "generated" || item.kind === "mcp"
                           ? "running"
                           : "success"
                     }
@@ -215,6 +219,14 @@ function TrustNote({ tool }: { tool: ToolInfo }) {
   const { t } = useTranslation();
   const settings = useSettings();
   if (tool.trust === "trusted") return null;
+  if (tool.kind === "mcp")
+    return (
+      <div data-testid="tool-trust">
+        <Callout tone="info">
+          {t("tools.trustNote.mcp", { server: tool.server_name ?? "", name: tool.mcp_name ?? tool.name })}
+        </Callout>
+      </div>
+    );
   if (tool.trust === "user-authored")
     return (
       <p className="muted small" data-testid="tool-trust">
@@ -310,12 +322,13 @@ function ToolDetail({
           <p className="muted small">
             <HelpTip id="tools.kind" label={t("tools.kindLabel")} />{" "}
             {t(`tools.kind.${tool.kind}`)}
-            {tool.kind !== "builtin"
+            {tool.kind !== "builtin" && tool.kind !== "mcp"
               ? ` · ${t("tools.trustLabel")}: ${t(`tools.trust.${tool.trust}`)}`
               : ""}
-            {tool.kind !== "builtin"
+            {tool.kind !== "builtin" && tool.kind !== "mcp"
               ? ` · ${t("tools.version", { version: tool.version })}`
               : ""}
+            {tool.kind === "mcp" && tool.server_name ? ` · ${tool.server_name}` : ""}
             {tool.created_at ? ` · ${relativeTime(tool.created_at)}` : ""}
           </p>
         </div>
@@ -323,7 +336,7 @@ function ToolDetail({
           <DiscussIcon offer={offer} />
           <FavoriteButton kind="tool" id={tool.name} name={tool.name} />
           <TagEditor kind="tool" id={tool.name} name={tool.name} />
-          {tool.kind !== "builtin" ? (
+          {tool.kind !== "builtin" && tool.kind !== "mcp" ? (
             <DeleteUsed
               kind="tool"
               icon={Trash2}
