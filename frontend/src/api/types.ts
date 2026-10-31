@@ -308,6 +308,69 @@ export interface ToolCallRecord {
     /** Always "unknown" for external services: Nodestro cannot know what they charge. */
     external_cost?: string;
   };
+  /** What the per-call approval rules did with this call; absent when no rule applied (approvals off). */
+  approval?: ToolCallApproval | null;
+}
+
+/** The shared capability statement of a tool: access read/write/destructive, reach internal/external, source. */
+export interface ToolCapabilityStatement {
+  access: string;
+  reach: string;
+  source: string;
+}
+
+/** The verdict of the per-call approval rules for one recorded tool call. */
+export interface ToolCallApproval {
+  status: "allowed" | "pending" | "approved" | "rejected" | "expired" | "cancelled" | "denied";
+  request_id?: string | null;
+  /** The denial's code, e.g. tool.not_granted or tool.approval_unattended. */
+  code?: string | null;
+  deadline?: string | null;
+  decided_by?: string | null;
+  decided_at?: string | null;
+  comment?: string | null;
+  /** The pre-grant that allowed an unattended call. */
+  pre_grant_id?: string | null;
+  capability?: Partial<ToolCapabilityStatement>;
+}
+
+/** A question about one tool call that waits for a person (or was answered). */
+export interface ToolApprovalRequest {
+  id: string;
+  run_id: string;
+  node_id: string;
+  iteration: number[];
+  call_id: string;
+  tool: string;
+  /** The arguments exactly as they will be sent. */
+  input: Record<string, unknown>;
+  capability: ToolCapabilityStatement;
+  version: number | null;
+  definition_hash: string | null;
+  /** A decision must name this hash, so it only applies to the call that was shown. */
+  arguments_hash: string;
+  status: "pending" | "approved" | "rejected" | "expired" | "cancelled";
+  requested_at: string;
+  deadline: string;
+  decided_by: string | null;
+  decided_at: string | null;
+  comment: string | null;
+  closed_because: string | null;
+}
+
+export interface LegacyToolBinding {
+  workflow_id: string | null;
+  workflow_version: number | null;
+  release: string | null;
+  node_id: string;
+  tool: string;
+  bound_version: number;
+}
+
+/** Whether per-call approvals are on, and what the activation step stamped as legacy exemptions. */
+export interface ToolApprovalsState {
+  enabled: boolean;
+  legacy: { bindings: LegacyToolBinding[]; workflows: number; versions: number } | null;
 }
 
 export interface EvaluationRecord {
@@ -643,7 +706,7 @@ export interface ToolInfo {
   mcp_name?: string | null;
   definition_hash?: string | null;
   /** The shared capability statement: access read/write/destructive, reach internal/external, source. */
-  capability?: { access: string; reach: string; source: string } | null;
+  capability?: ToolCapabilityStatement | null;
 }
 
 export interface TestResult {

@@ -74,6 +74,25 @@ La pagina **Approvazioni** (navigazione, gruppo *Automazione*) elenca tutte le a
 
 Ogni scheda mostra la nota, i risultati da verificare, un campo per il commento e i pulsanti *Approva* e *Rifiuta*. Anche le approvazioni dentro i sotto-workflow compaiono qui, con il percorso fino all'esecuzione principale.
 
+## Approvare le chiamate di strumenti {#tool-freigabe}
+<!-- keywords: approvazione strumento, chiamata di strumento, per chiamata, argomenti, scadenza, approvazione anticipata, non presidiata, eccezione preesistente -->
+
+Oltre ai nodi di approvazione, Nodestro può chiedere prima di **singole chiamate di strumenti** di un agente. È pensato per strumenti che modificano dati o agiscono verso l’esterno, ad esempio inviare un’e-mail o scrivere in un sistema di ticket. L’amministrazione lo attiva dopo la verifica di sicurezza; fino ad allora non cambia nulla.
+
+Quando un agente vuole fare una chiamata del genere, l’esecuzione continua ma attende su quella chiamata. La scheda compare nell’esecuzione, nel passo e nella pagina **Approvazioni**. Mostra lo strumento, cosa può fare (*solo lettura*, *modifica dati*, *cancella o distrugge*; *resta in Nodestro* o *agisce verso l’esterno*), gli **argomenti esattamente come verranno inviati** e il tempo rimasto.
+
+- **Consenti questa chiamata** lascia passare esattamente questa chiamata. Una decisione vale solo per gli argomenti e la versione dello strumento che hai visto: se uno dei due è cambiato, Nodestro rifiuta la decisione e mostra la chiamata attuale.
+- **Rifiuta** impedisce la chiamata; l’agente sa che è stata rifiutata e può continuare senza.
+- **Senza decisione** entro il termine (15 minuti di default) la chiamata conta come rifiutata, anche dopo un riavvio. Una decisione rifiutata o scaduta non viene mai riutilizzata.
+- Uno strumento **non classificato** conta come modificante ed esterno.
+- Per gli strumenti dei **servizi collegati** che modificano dati si chiede a ogni chiamata.
+
+Le esecuzioni che nessuno segue (pianificazioni, serie, serie di test) non possono chiedere. Lì una chiamata del genere viene negata, a meno che l’amministrazione abbia **approvato in anticipo** quella versione dello strumento proprio per quella pianificazione o serie. Gli strumenti che cancellano o distruggono e quelli dei servizi collegati non si possono mai approvare in anticipo.
+
+I workflow che esistevano già all’attivazione continuano a funzionare: le loro assegnazioni di strumenti sono marcate come **eccezioni preesistenti**, legate alla versione dello strumento con cui giravano. Una nuova versione dello strumento o una nuova assegnazione viene chiesta come al solito. Un’approvazione non toglie mai i limiti della sandbox.
+
+Nei dettagli dell’esecuzione, ogni chiamata di strumento mostra cosa hanno fatto le regole: consentita, approvata o rifiutata (da chi e quando), nessuna decisione in tempo o negata senza domanda, con il motivo.
+
 ## Sotto-workflow {#unterworkflow}
 <!-- keywords: sotto-workflow, subworkflow, annidare, riutilizzare, blocco, versione, esecuzione figlia -->
 

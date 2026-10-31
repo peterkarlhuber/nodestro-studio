@@ -77,7 +77,8 @@
     "approve": "Gli strumenti approvati possono essere usati da tutti gli agenti. Controlla prima che codice e test facciano quello che ti aspetti. Senza decisione, una richiesta viene rifiutata dopo un’ora.",
     "sandbox": "Gli strumenti personali e quelli creati dall’IA non girano mai nel processo di Nodestro, ma isolati, con limiti di tempo e di memoria.",
     "drafts": "Strumenti scritti dall’architetto di workflow. Provali e approvali qui, oppure rifiutali.",
-    "services": "Servizi esterni tramite MCP: colleghi un server, provi la connessione e approvi ogni strumento dopo averlo esaminato. Se il servizio modifica uno strumento, questo resta bloccato finché non esamini la modifica."
+    "services": "Servizi esterni tramite MCP: colleghi un server, provi la connessione e approvi ogni strumento dopo averlo esaminato. Se il servizio modifica uno strumento, questo resta bloccato finché non esamini la modifica.",
+    "callApproval": "Una persona decide su ogni chiamata di questo strumento, con gli argomenti esatti. Senza decisione entro il termine, la chiamata conta come rifiutata."
   },
   "knowledge": {
     "upload": "PDF, immagini (PNG, JPEG, GIF, WebP) e formati di testo. Immagini fino a 5 MB, documenti fino a 20 MB. Testi e PDF vengono indicizzati per la ricerca.",

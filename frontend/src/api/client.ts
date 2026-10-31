@@ -109,6 +109,8 @@ import type {
   InputStorage,
   RunInput,
   UploadResult,
+  ToolApprovalRequest,
+  ToolApprovalsState,
 } from "./types";
 import { currentLanguage } from "../i18n";
 
@@ -280,6 +282,17 @@ export const api = {
   approvals: () => request<PendingApproval[]>("GET", "/approvals"),
   decideApproval: (runId: string, nodeId: string, decision: "approved" | "rejected", comment: string) =>
     request<Run>("POST", `/runs/${runId}/approvals/${encodeURIComponent(nodeId)}`, { decision, comment }),
+  /** Tool calls waiting for a person, of every run, oldest first. */
+  toolApprovals: () => request<ToolApprovalRequest[]>("GET", "/tool-approvals"),
+  runToolApprovals: (runId: string) => request<ToolApprovalRequest[]>("GET", `/runs/${runId}/tool-approvals`),
+  /** ``argumentsHash`` is the hash of the call as it was shown; a changed call is refused (409). */
+  decideToolApproval: (runId: string, requestId: string, decision: "approved" | "rejected", argumentsHash: string, comment: string) =>
+    request<ToolApprovalRequest>("POST", `/runs/${runId}/tool-approvals/${encodeURIComponent(requestId)}`, {
+      decision,
+      arguments_hash: argumentsHash,
+      comment,
+    }),
+  toolApprovalsState: () => request<ToolApprovalsState>("GET", "/tool-approvals/legacy"),
   resultFiles: (runId: string) => request<ResultFile[]>("GET", `/runs/${runId}/files`),
   createResultFile: (runId: string, body: FileRequest) => request<ResultFile>("POST", `/runs/${runId}/files`, body),
   deleteResultFile: (runId: string, fileId: string) => request<void>("DELETE", `/runs/${runId}/files/${fileId}`),

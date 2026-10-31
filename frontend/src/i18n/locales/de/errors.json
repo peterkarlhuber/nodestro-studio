@@ -153,7 +153,21 @@
     "no_tests": "Es wurden keine Tests ausgeführt. Schreibe mindestens eine Funktion test_*.",
     "builtin_delete": "Eingebaute Tools können nicht gelöscht werden.",
     "requirement_missing": "Bitte beschreibe, was das Tool können soll.",
-    "input_not_json": "Die Eingabe ist kein gültiges JSON."
+    "input_not_json": "Die Eingabe ist kein gültiges JSON.",
+    "approval_stale": "Der Aufruf hat sich seit der Anzeige geändert. Prüfe den aktuellen Stand und entscheide neu.",
+    "approval_expired": "Die Zeit für diese Entscheidung ist abgelaufen; der Aufruf galt als abgelehnt.",
+    "approval_decided": "Über diesen Aufruf wurde bereits entschieden.",
+    "approval_not_found": "Diese Freigabeanfrage gibt es nicht mehr.",
+    "approval_rejected": "Der Aufruf wurde abgelehnt, das Tool lief deshalb nicht.",
+    "approval_timeout": "Niemand hat rechtzeitig entschieden, deshalb galt der Aufruf als abgelehnt.",
+    "approval_unattended": "Das Tool braucht für jeden Aufruf die Freigabe einer Person, und in dieser Ausführung kann niemand antworten (zum Beispiel bei einem Zeitplan oder Stapel). Gib es für diesen Zeitplan oder Stapel vorab frei, oder starte die Ausführung von Hand.",
+    "approval_capacity": "Gerade warten zu viele Ausführungen auf eine Freigabe, deshalb fand dieser Aufruf nicht statt.",
+    "not_granted": "Das Tool „{{tool}}“ ist diesem Agenten nicht zugewiesen.",
+    "pre_grant_mcp": "Tools verbundener Dienste können nicht vorab freigegeben werden.",
+    "pre_grant_destructive": "Tools, die löschen oder zerstören, können nicht vorab freigegeben werden.",
+    "pre_grant_version": "Vorab freigeben lässt sich nur eine bestimmte Tool-Version.",
+    "pre_grant_expiry": "Das Ablaufdatum liegt in der Vergangenheit.",
+    "pre_grant_not_found": "Diese Vorab-Freigabe gibt es nicht."
   },
   "job": {
     "writing": "Der Coding Agent schreibt Code und Tests …",

@@ -74,6 +74,25 @@ A página **Aprovações** (navegação, grupo *Automação*) lista todas as apr
 
 Cada cartão mostra a orientação, os resultados a revisar, um campo de comentário e os botões *Aprovar* e *Rejeitar*. Aprovações dentro de subworkflows também aparecem aqui, com o caminho até a execução principal.
 
+## Aprovar chamadas de ferramentas {#tool-freigabe}
+<!-- keywords: aprovação de ferramenta, chamada de ferramenta, por chamada, argumentos, prazo, aprovação antecipada, sem supervisão, exceção anterior -->
+
+Além dos nós de aprovação, o Nodestro pode perguntar antes de **chamadas individuais de ferramentas** de um agente. Isso é pensado para ferramentas que alteram dados ou agem para fora, por exemplo enviar um e-mail ou escrever em um sistema de tickets. A administração liga isso depois da revisão de segurança; até lá nada muda.
+
+Quando um agente quer fazer uma chamada assim, a execução continua rodando, mas espera nessa chamada. O cartão aparece na execução, na etapa e na página **Aprovações**. Ele mostra a ferramenta, o que ela pode fazer (*só lê*, *altera dados*, *exclui ou destrói*; *fica no Nodestro* ou *age para fora*), os **argumentos exatamente como serão enviados** e o tempo restante.
+
+- **Permitir esta chamada** deixa passar exatamente esta chamada. Uma decisão vale apenas para os argumentos e a versão da ferramenta que você viu: se algum deles mudou, o Nodestro recusa a decisão e mostra a chamada atual.
+- **Rejeitar** impede a chamada; o agente fica sabendo que foi recusada e pode continuar sem ela.
+- **Sem decisão** dentro do prazo (15 minutos por padrão), a chamada conta como rejeitada, também depois de um reinício. Uma decisão rejeitada ou expirada nunca é reutilizada.
+- Uma ferramenta **não classificada** conta como alteradora e externa.
+- Para ferramentas de **serviços conectados** que alteram dados, a pergunta é feita a cada chamada.
+
+Execuções que ninguém acompanha (agendamentos, lotes, séries de testes) não podem perguntar. Nelas, uma chamada assim é recusada, a menos que a administração tenha **aprovado antecipadamente** essa versão da ferramenta para exatamente esse agendamento ou lote. Ferramentas que excluem ou destroem e ferramentas de serviços conectados nunca podem ser aprovadas antecipadamente.
+
+Workflows que já existiam quando isso foi ligado continuam funcionando: suas atribuições de ferramentas ficam marcadas como **exceções anteriores**, vinculadas à versão da ferramenta com que rodavam. Uma nova versão da ferramenta ou uma nova atribuição é perguntada como de costume. Uma aprovação nunca remove os limites do sandbox.
+
+Nos detalhes da execução, cada chamada de ferramenta mostra o que as regras fizeram: permitida, aprovada ou rejeitada (por quem e quando), sem decisão a tempo ou recusada sem pergunta, com o motivo.
+
 ## Subworkflows {#unterworkflow}
 <!-- keywords: subworkflow, sub-workflow, aninhar, reutilizar, bloco, versão, execução filha -->
 
