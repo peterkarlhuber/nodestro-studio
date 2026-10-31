@@ -103,16 +103,17 @@ O Nodestro inicia em `http://localhost:8000` e abre o navegador. Opções do com
 
 | Opção | Variável de ambiente | Significado |
 |---|---|---|
-| `--host` | `NODESTRO_HOST` | Endereço (padrão `127.0.0.1`, só este computador) |
+| `--host` | `NODESTRO_HOST` | Endereço (padrão `127.0.0.1`). Só são aceitos endereços deste computador (`127.0.0.1`, `::1`, `localhost`), porque o Nodestro ainda não tem login |
 | `--port` | `NODESTRO_PORT` | Porta (padrão `8000`) |
 | `--data-dir` | `NODESTRO_DATA_DIR` | Diretório de dados (padrão `~/.nodestro`) |
-| – | `NODESTRO_ALLOWED_HOSTS` | Outros nomes de host aos quais o Nodestro responde, por ex. atrás de um proxy reverso (separados por vírgula). Outros nomes de host e alterações vindas de páginas web alheias são recusados, para que nenhuma página no navegador possa operar o Nodestro. Com `--host 0.0.0.0` o Nodestro responde também em qualquer endereço IP e pelo nome deste computador |
+| `--profile` | `NODESTRO_PROFILE` | Perfil de operação (padrão `desktop`). `server` ainda não pode ser iniciado |
+| – | `NODESTRO_ALLOWED_HOSTS` | Outros nomes deste computador aos quais o Nodestro responde (separados por vírgula, por ex. `studio.localhost`). Outros nomes de host, alterações vindas de páginas web alheias e solicitações encaminhadas por um proxy são recusados, para que nenhuma página no navegador possa operar o Nodestro |
 | `--no-browser` | – | Não abrir o navegador automaticamente |
 | `--reload` | – | Reiniciar quando o código mudar (desenvolvimento) |
 
 Para encerrar, use **Ctrl+C**. Execuções em andamento são canceladas.
 
-> **Segurança:** o Nodestro não tem gerenciamento de usuários. Não o deixe acessível com `--host 0.0.0.0` em redes de terceiros, porque quem alcançar a interface pode iniciar execuções com suas chaves de API.
+> **Segurança:** o Nodestro ainda não tem gerenciamento de usuários, por isso responde só a este computador. `--host 0.0.0.0`, outros endereços de rede ou nomes de rede em `NODESTRO_ALLOWED_HOSTS` interrompem a inicialização, e o Nodestro não pode ficar atrás de um proxy reverso. Para que outros dispositivos usem um workflow, publique-o como API: as APIs publicadas usam chaves de API e têm seu próprio acesso à rede (veja *API e exportação*).
 
 ## Atalhos de teclado {#tastenkuerzel}
 <!-- keywords: atalhos de teclado, shortcuts, teclado, keyboard, acessibilidade -->

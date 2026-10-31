@@ -434,7 +434,8 @@
     "multipart_invalid": "Le corps multipart ne peut pas être lu.",
     "unknown_file_part": "Aucun champ de fichier ne s’appelle {{field}}.",
     "host_not_allowed": "Nodestro ne répond pas sous le nom d’hôte {{host}}. Ouvrez Nodestro via localhost ou ajoutez ce nom à NODESTRO_ALLOWED_HOSTS.",
-    "origin_not_allowed": "Les modifications venant de la page web {{origin}} ne sont pas acceptées."
+    "origin_not_allowed": "Les modifications venant de la page web {{origin}} ne sont pas acceptées.",
+    "forwarded_not_allowed": "Les requêtes transmises par un proxy ne sont pas acceptées : Nodestro ne répond qu’à cet ordinateur."
   },
   "publication": {
     "disabled": "Cette API est désactivée.",
@@ -533,5 +534,9 @@
     "base_url_credentials": "L’URL de base ne doit pas contenir d’identifiants. Saisissez la clé dans le champ « Clé API ».",
     "capability_unknown": "Capacités inconnues : {{names}}.",
     "not_configured": "{{provider}} n’est pas configuré : saisissez son URL de base dans les réglages."
+  },
+  "access": {
+    "login_required": "Connectez-vous pour utiliser cette partie de Nodestro.",
+    "forbidden": "Vous ne pouvez pas faire cela (autorisation {{permission}} nécessaire)."
   }
 }

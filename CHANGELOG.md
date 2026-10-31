@@ -2,6 +2,29 @@
 
 ## Unreleased
 
+### Operating profile and route permissions, M1 PR-1 and PR-2 (2026-10-31)
+
+- Pins: `nodestro-runtime` 8ea9a5c, `nodestro-examples` f90d3a1, `nodestro-integrations` 81d88ce, `nodestro-api`
+  b794ebe and `nodestro-sdk` f450f2c (before: ad75859, 520fa72, c747842, 43595a7 and d733f02); orkexa unchanged at
+  cbf6df3. All are merge commits on master.
+- `nodestro --profile desktop|server` (`NODESTRO_PROFILE`): `desktop` is the default and today's behavior; `server`
+  stops the start with a sentence that names what it still needs.
+- **Security, changed behavior:** the studio has no login yet, so it only answers this computer. `--host 0.0.0.0`,
+  `::` or another network address and network names or `*` in `NODESTRO_ALLOWED_HOSTS` now stop the start; requests
+  forwarded by a reverse proxy are refused (`request.forwarded_not_allowed`). Published workflow APIs keep their
+  separate network access. The settings chapter (six languages) says so; the error texts for
+  `request.forwarded_not_allowed`, `access.login_required` and `access.forbidden` exist in all six languages.
+- Every studio API route declares a permission (read, edit, run, admin); on the desktop the local owner holds all of
+  them, so nothing changes in the interface. An empty `NODESTRO_DATA_DIR` now means `~/.nodestro`.
+
+### Desktop and server plan, M0 (2026-10-31)
+
+- Documentation only, no behavior change: `docs/desktop-server/` describes the current architecture as an inventory
+  (SQLite and FTS5 access, process-only state, the data-directory lock, endpoints and trust boundaries, code
+  execution) and the plan for Nodestro Desktop and Nodestro Server with thirteen pull requests, risks and the test
+  baseline. `docs/adr/` records the six proposed decisions: operating profiles, storage backends, identity and
+  tenants, jobs and workers, desktop packaging, sandbox policy. `docs/PLATFORM.md` links to both.
+
 ### Release check (2026-10-30)
 
 - Pins: `nodestro-api` 43595a7 and `nodestro-sdk` d733f02 (before: 2868b7b and 18e5535); runtime ad75859, examples

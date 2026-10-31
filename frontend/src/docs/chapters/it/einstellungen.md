@@ -103,16 +103,17 @@ Nodestro si avvia su `http://localhost:8000` e apre il browser. Opzioni del coma
 
 | Opzione | Variabile d'ambiente | Significato |
 |---|---|---|
-| `--host` | `NODESTRO_HOST` | Indirizzo (predefinito `127.0.0.1`, solo questo computer) |
+| `--host` | `NODESTRO_HOST` | Indirizzo (predefinito `127.0.0.1`). Sono accettati solo indirizzi di questo computer (`127.0.0.1`, `::1`, `localhost`), perché Nodestro non ha ancora un accesso con login |
 | `--port` | `NODESTRO_PORT` | Porta (predefinita `8000`) |
 | `--data-dir` | `NODESTRO_DATA_DIR` | Directory dei dati (predefinita `~/.nodestro`) |
-| – | `NODESTRO_ALLOWED_HOSTS` | Altri nomi host a cui Nodestro risponde, ad es. dietro un reverse proxy (separati da virgole). Gli altri nomi host e le modifiche da pagine web estranee vengono rifiutati, così nessuna pagina del browser può comandare Nodestro. Con `--host 0.0.0.0` Nodestro risponde inoltre a ogni indirizzo IP e al nome di questo computer |
+| `--profile` | `NODESTRO_PROFILE` | Profilo operativo (predefinito `desktop`). `server` non può ancora essere avviato |
+| – | `NODESTRO_ALLOWED_HOSTS` | Altri nomi di questo computer a cui Nodestro risponde (separati da virgole, ad es. `studio.localhost`). Gli altri nomi host, le modifiche da pagine web estranee e le richieste inoltrate da un proxy vengono rifiutati, così nessuna pagina del browser può comandare Nodestro |
 | `--no-browser` | – | Non aprire automaticamente il browser |
 | `--reload` | – | Riavviare a ogni modifica del codice (sviluppo) |
 
 Si chiude con **Ctrl+C**. Le esecuzioni in corso vengono annullate.
 
-> **Sicurezza:** Nodestro non ha una gestione degli utenti. Non renderlo raggiungibile con `--host 0.0.0.0` su reti estranee, perché chi raggiunge l’interfaccia può avviare esecuzioni con le tue chiavi API.
+> **Sicurezza:** Nodestro non ha ancora una gestione degli utenti, quindi risponde solo a questo computer. `--host 0.0.0.0`, altri indirizzi di rete o nomi di rete in `NODESTRO_ALLOWED_HOSTS` interrompono l’avvio, e Nodestro non può essere messo dietro un reverse proxy. Per far usare un workflow ad altri dispositivi, pubblicalo come API: le API pubblicate usano chiavi API e hanno un proprio accesso di rete (vedi *API ed esportazione*).
 
 ## Scorciatoie da tastiera {#tastenkuerzel}
 <!-- keywords: scorciatoie da tastiera, shortcuts, tastiera, keyboard, accessibilità -->

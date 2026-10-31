@@ -150,6 +150,15 @@ checks exactly that.
 The only new option: to run the API without the user interface, install `nodestro-api` and start `nodestro-api` with
 the same options (without `--no-browser`).
 
+## Desktop and server (planned)
+
+Nodestro is planned to ship as two products on this one platform: an installable desktop application
+(`nodestro-desktop`, SQLite, no separate installations) and a multi-user server (`nodestro-server`, PostgreSQL,
+authentication, isolated workers). Both will use the same runtime, API and studio; the two new repositories hold
+packaging and deployment only. Nothing of this is implemented yet. The current-state inventory, the target
+architecture and the pull request plan are in [desktop-server/README.md](desktop-server/README.md), the decisions in
+[adr/](adr/README.md).
+
 ## Export
 
 Exporting a workflow as a standalone FastAPI project works as in 0.1, with the choice between Orkexa from Git (pinned

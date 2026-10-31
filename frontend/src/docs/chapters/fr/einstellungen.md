@@ -103,16 +103,17 @@ Nodestro démarre sur `http://localhost:8000` et ouvre le navigateur. Options de
 
 | Option | Variable d’environnement | Signification |
 |---|---|---|
-| `--host` | `NODESTRO_HOST` | Adresse (par défaut `127.0.0.1`, cet ordinateur seulement) |
+| `--host` | `NODESTRO_HOST` | Adresse (par défaut `127.0.0.1`). Seules les adresses de cet ordinateur (`127.0.0.1`, `::1`, `localhost`) sont acceptées, car Nodestro n’a pas encore de connexion |
 | `--port` | `NODESTRO_PORT` | Port (par défaut `8000`) |
 | `--data-dir` | `NODESTRO_DATA_DIR` | Répertoire de données (par défaut `~/.nodestro`) |
-| – | `NODESTRO_ALLOWED_HOSTS` | Autres noms d’hôte auxquels Nodestro répond, p. ex. derrière un proxy inverse (séparés par des virgules). Les autres noms d’hôte et les modifications venant de pages web étrangères sont refusés, afin qu’aucune page du navigateur ne puisse piloter Nodestro. Avec `--host 0.0.0.0`, Nodestro répond en plus sous toute adresse IP et sous le nom de cet ordinateur |
+| `--profile` | `NODESTRO_PROFILE` | Profil de fonctionnement (par défaut `desktop`). `server` ne peut pas encore être démarré |
+| – | `NODESTRO_ALLOWED_HOSTS` | Autres noms de cet ordinateur auxquels Nodestro répond (séparés par des virgules, p. ex. `studio.localhost`). Les autres noms d’hôte, les modifications venant de pages web étrangères et les requêtes transmises par un proxy sont refusés, afin qu’aucune page du navigateur ne puisse piloter Nodestro |
 | `--no-browser` | – | Ne pas ouvrir le navigateur automatiquement |
 | `--reload` | – | Redémarrer à chaque modification du code (développement) |
 
 Arrêt avec **Ctrl+C**. Les exécutions en cours sont annulées.
 
-> **Sécurité :** Nodestro n’a pas de gestion des utilisateurs. Ne le rendez pas accessible via `--host 0.0.0.0` sur des réseaux non fiables, car quiconque atteint l’interface peut lancer des exécutions avec vos clés API.
+> **Sécurité :** Nodestro n’a pas encore de gestion des utilisateurs, il ne répond donc qu’à cet ordinateur. `--host 0.0.0.0`, d’autres adresses réseau ou des noms réseau dans `NODESTRO_ALLOWED_HOSTS` arrêtent le démarrage, et Nodestro ne peut pas être placé derrière un proxy inverse. Pour que d’autres appareils utilisent un workflow, publiez-le comme API : les API publiées utilisent des clés API et ont leur propre accès réseau (voir *API et export*).
 
 ## Raccourcis clavier {#tastenkuerzel}
 <!-- keywords: raccourcis clavier, shortcuts, clavier, keyboard, accessibilité -->

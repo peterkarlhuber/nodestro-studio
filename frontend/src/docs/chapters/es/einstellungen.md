@@ -103,16 +103,17 @@ Nodestro se inicia en `http://localhost:8000` y abre el navegador. Opciones del 
 
 | Opción | Variable de entorno | Significado |
 |---|---|---|
-| `--host` | `NODESTRO_HOST` | Dirección (por defecto `127.0.0.1`, solo este ordenador) |
+| `--host` | `NODESTRO_HOST` | Dirección (por defecto `127.0.0.1`). Solo se aceptan direcciones de este equipo (`127.0.0.1`, `::1`, `localhost`), porque Nodestro aún no tiene inicio de sesión |
 | `--port` | `NODESTRO_PORT` | Puerto (por defecto `8000`) |
 | `--data-dir` | `NODESTRO_DATA_DIR` | Directorio de datos (por defecto `~/.nodestro`) |
-| – | `NODESTRO_ALLOWED_HOSTS` | Otros nombres de host a los que responde Nodestro, p. ej. detrás de un proxy inverso (separados por comas). Se rechazan otros nombres de host y los cambios desde páginas web ajenas, para que ninguna página del navegador pueda manejar Nodestro. Con `--host 0.0.0.0` Nodestro responde además en cualquier dirección IP y con el nombre de este equipo |
+| `--profile` | `NODESTRO_PROFILE` | Perfil de funcionamiento (por defecto `desktop`). `server` aún no se puede iniciar |
+| – | `NODESTRO_ALLOWED_HOSTS` | Otros nombres de este equipo a los que responde Nodestro (separados por comas, p. ej. `studio.localhost`). Se rechazan otros nombres de host, los cambios desde páginas web ajenas y las solicitudes reenviadas por un proxy, para que ninguna página del navegador pueda manejar Nodestro |
 | `--no-browser` | – | No abrir el navegador automáticamente |
 | `--reload` | – | Reiniciar al cambiar el código (desarrollo) |
 
 Se detiene con **Ctrl+C**. Las ejecuciones en curso se cancelan.
 
-> **Seguridad:** Nodestro no tiene gestión de usuarios. No lo hagas accesible con `--host 0.0.0.0` en redes ajenas, porque quien llegue a la interfaz puede iniciar ejecuciones con tus claves de API.
+> **Seguridad:** Nodestro aún no tiene gestión de usuarios, por eso solo responde a este equipo. `--host 0.0.0.0`, otras direcciones de red o nombres de red en `NODESTRO_ALLOWED_HOSTS` detienen el inicio, y Nodestro no puede ponerse detrás de un proxy inverso. Para que otros dispositivos usen un workflow, publícalo como API: las API publicadas usan claves de API y tienen su propio acceso de red (ver *API y exportación*).
 
 ## Atajos de teclado {#tastenkuerzel}
 <!-- keywords: atajos de teclado, shortcuts, teclado, keyboard, accesibilidad -->
