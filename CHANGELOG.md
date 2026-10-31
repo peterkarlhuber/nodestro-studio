@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Fix: empty links in six hints (2026-10-31)
+
+- Studio only. Seven translated hints marked their link as `<link>…</link>`. `<Trans>` treats `link` as a void
+  HTML element, so it rendered an empty, invisible link followed by the plain word: "No files yet. Upload them under
+  *Knowledge*" in the agent's Knowledge section, the missing-tools hints in the Tools section and in *Design with
+  AI*, the Architect's cost limit hint and three documentation links led nowhere. The markup is now `<a>…</a>`; a
+  language-file test rejects void element names as markup. Found by the journey baseline (UX-J).
+
 ### Agent inspector: open sections remembered, UX-3 (2026-10-31)
 
 - Studio only, no pin change. The agent form remembers which sections you opened or closed, per section and in this

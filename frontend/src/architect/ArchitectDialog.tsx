@@ -57,7 +57,7 @@ export function ArchitectOptions({
         <Trans
           i18nKey={limit === null || limit === undefined ? "architect.form.noLimit" : "architect.form.limit"}
           values={{ limit: formatCost(limit ?? 0) }}
-          components={{ link: <Link to="/settings" /> }}
+          components={{ a: <Link to="/settings" /> }}
         />
       </p>
     </div>

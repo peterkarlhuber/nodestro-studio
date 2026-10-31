@@ -100,7 +100,7 @@
     "limits": "Limits",
     "limitsValue": "{{tokens}} Tokens · {{rounds}} Tool-Runden",
     "missingTools": "Der Architekt würde zusätzlich diese Tools brauchen:",
-    "missingToolsHint": "Du kannst sie in der <link>Tool-Bibliothek</link> von der KI erstellen lassen."
+    "missingToolsHint": "Du kannst sie in der <a>Tool-Bibliothek</a> von der KI erstellen lassen."
   },
   "memoryAssistant": {
     "title": "Memory mit KI einrichten",

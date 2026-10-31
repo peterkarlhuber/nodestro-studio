@@ -25,8 +25,8 @@
     "unsavedIncluded": "Este flujo tiene cambios sin guardar. El arquitecto trabaja con el estado actual del editor; no se guarda ni se sobrescribe nada.",
     "generateTools": "Escribir como borrador las herramientas que falten",
     "generateToolsHint": "Solo si ninguna herramienta existente encaja. El código se comprueba estáticamente y nunca se ejecuta antes de que lo apruebes.",
-    "limit": "Límite de coste de un borrador: {{limit}} (<link>Ajustes</link>). El arquitecto nunca inicia una ejecución del flujo.",
-    "noLimit": "No hay límite de coste para los borradores (<link>Ajustes</link>). El arquitecto nunca inicia una ejecución del flujo.",
+    "limit": "Límite de coste de un borrador: {{limit}} (<a>Ajustes</a>). El arquitecto nunca inicia una ejecución del flujo.",
+    "noLimit": "No hay límite de coste para los borradores (<a>Ajustes</a>). El arquitecto nunca inicia una ejecución del flujo.",
     "safety": "El arquitecto solo propone. Los flujos existentes no cambian hasta que aceptas el borrador, y las herramientas nuevas necesitan tu aprobación.",
     "startCreate": "Diseñar flujo",
     "startRevise": "Proponer cambios"

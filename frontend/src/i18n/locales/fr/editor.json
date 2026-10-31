@@ -100,7 +100,7 @@
     "limits": "Limites",
     "limitsValue": "{{tokens}} tokens · {{rounds}} tours d’outils",
     "missingTools": "L’architecte aurait aussi besoin de ces outils :",
-    "missingToolsHint": "Vous pouvez les faire créer par l’IA dans la <link>bibliothèque d’outils</link>."
+    "missingToolsHint": "Vous pouvez les faire créer par l’IA dans la <a>bibliothèque d’outils</a>."
   },
   "memoryAssistant": {
     "title": "Configurer la mémoire avec l’IA",

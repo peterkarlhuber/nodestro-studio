@@ -97,7 +97,7 @@
       "custom": "Eigene",
       "generated": "KI-generiert"
     },
-    "missingHint": "Fehlt ein Tool? In der <link>Tool-Bibliothek</link> selbst schreiben oder von der KI erstellen lassen.",
+    "missingHint": "Fehlt ein Tool? In der <a>Tool-Bibliothek</a> selbst schreiben oder von der KI erstellen lassen.",
     "serverTools": "Server-Tools von Anthropic",
     "serverToolsShort": "Server-Tools"
   },
@@ -122,7 +122,7 @@
     "image": "Bild",
     "chunks_one": "{{count}} Abschnitt",
     "chunks_other": "{{count}} Abschnitte",
-    "noFiles": "Noch keine Dateien. Lade sie unter <link>Wissen</link> hoch.",
+    "noFiles": "Noch keine Dateien. Lade sie unter <a>Wissen</a> hoch.",
     "citations": "Zitate aktivieren",
     "citationsHint": "Antworten verweisen auf die Stellen in den Dokumenten."
   },

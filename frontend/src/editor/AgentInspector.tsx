@@ -498,7 +498,7 @@ function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
         onChange={(name) => name && update({ tools: [...agent.tools, name] })}
       />
       <p className="field__hint">
-        <Trans i18nKey="agent.tools.missingHint" components={{ link: <Link to="/tools" /> }} />
+        <Trans i18nKey="agent.tools.missingHint" components={{ a: <Link to="/tools" /> }} />
       </p>
       <div className="stack-sm">
         <span className="field__label">
@@ -597,7 +597,7 @@ function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
         </>
       ) : (
         <p className="field__hint">
-          <Trans i18nKey="agent.knowledge.noFiles" components={{ link: <Link to="/knowledge" /> }} />
+          <Trans i18nKey="agent.knowledge.noFiles" components={{ a: <Link to="/knowledge" /> }} />
         </p>
       )}
       <Toggle

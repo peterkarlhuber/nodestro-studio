@@ -1,6 +1,6 @@
 {
   "description": "Das Benutzerhandbuch zu Nodestro: Konzepte, jede Einstellung, Schritt-für-Schritt-Anleitungen, Beispiele und Lösungen für häufige Fehler.",
-  "missingChapter": "Dieses Kapitel gibt es nicht. Zurück zur <link>Übersicht</link>.",
+  "missingChapter": "Dieses Kapitel gibt es nicht. Zurück zur <a>Übersicht</a>.",
   "onThisPage": "Auf dieser Seite",
   "linkTo": "Link zu „{{title}}“",
   "pager": "Kapitel blättern",
@@ -8,7 +8,7 @@
   "next": "Weiter",
   "overview": {
     "title": "Übersicht",
-    "intro": "Neu hier? Beginne mit <link>Erste Schritte</link>. Kurze Erklärungen findest du außerdem direkt in der Anwendung hinter jedem <strong>?</strong>-Symbol.",
+    "intro": "Neu hier? Beginne mit <a>Erste Schritte</a>. Kurze Erklärungen findest du außerdem direkt in der Anwendung hinter jedem <strong>?</strong>-Symbol.",
     "sections_one": "{{count}} Abschnitt",
     "sections_other": "{{count}} Abschnitte"
   },
