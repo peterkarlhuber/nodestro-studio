@@ -94,7 +94,7 @@ Le contenu des exécutions (fichiers envoyés, fichiers de résultat, résultats
 <!-- keywords: modifier la description, supprimer, gérer, retirer -->
 
 - **Description :** saisissez-la directement à côté du fichier ; elle est enregistrée quand vous quittez le champ. Une bonne description indique le contenu, la période et l’objectif, par exemple « Rapport annuel 2025 avec bilan et rapport sur les risques ».
-- **Supprimer :** symbole de corbeille. Le fichier et son index sont supprimés. Les agents auxquels il était attribué continuent de fonctionner et ne le reçoivent simplement plus.
+- **Supprimer :** symbole de corbeille. Le fichier et son index sont supprimés. Les agents auxquels il était attribué continuent de fonctionner et ne le reçoivent simplement plus. **Utilisé dans**, sous le nom du fichier, cite les workflows, agents de la bibliothèque et API publiées qui utilisent le fichier. S’il est utilisé, la boîte de dialogue de suppression énumère ces endroits avant la suppression.
 
 ## Conseils et erreurs fréquentes {#tipps}
 <!-- keywords: conseils, erreurs, l’agent ne trouve rien, trop cher, contexte trop grand -->

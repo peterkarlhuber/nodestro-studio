@@ -175,7 +175,7 @@ Tools saved before this version, and all tools after restoring a backup, count a
 
 If you save your own tool under a name that already exists, a **new version** is created; the previous one is revoked. Agents always use the current version. The library shows the version number.
 
-**Delete** revokes a tool. Agents it is assigned to then report "Unknown tools" and cannot start until you remove the tool there or create it again. Built-in tools cannot be deleted.
+**Delete** revokes a tool. Agents it is assigned to then report "Unknown tools" and cannot start until you remove the tool there or create it again. Built-in tools cannot be deleted. Below the description, **Used in** shows which workflows and library agents use the tool; the delete dialog names them before deleting. Published APIs are left out on purpose: they contain their own copy of the tool.
 
 ## Understanding tool errors {#fehler}
 <!-- keywords: tool errors, failed, timeout, sandbox error, invalid input -->

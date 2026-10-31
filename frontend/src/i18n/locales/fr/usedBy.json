@@ -1,0 +1,15 @@
+{
+  "label": "Utilisé dans :",
+  "none": "Utilisé nulle part.",
+  "agent": "{{workflow}} / {{agent}}",
+  "start": "{{workflow}} / Départ (fichier pour chaque exécution)",
+  "template": "Bibliothèque d’agents : {{name}}",
+  "publication": "API publiée {{name}} (v{{release}})",
+  "warning_one": "Utilisé à {{count}} endroit :",
+  "warning_other": "Utilisé à {{count}} endroits :",
+  "effect": {
+    "knowledge": "Ces agents continuent de fonctionner mais ne reçoivent plus le fichier ; la vérification du workflow le signale. Les workflows et agents enregistrés ne sont pas modifiés.",
+    "tool": "Ces agents ne pourront redémarrer qu’après avoir retiré l’outil ou l’avoir recréé. Les workflows et agents enregistrés ne sont pas modifiés."
+  },
+  "deleteAnyway": "Supprimer quand même"
+}

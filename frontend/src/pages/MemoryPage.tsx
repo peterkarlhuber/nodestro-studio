@@ -10,6 +10,7 @@ import { DiscussIcon } from "../assistant/DiscussButton";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { toast } from "../components/toast";
+import { UsedByList, UsedByWarning, useUsedBy } from "../components/UsedBy";
 import { Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes } from "../lib/format";
@@ -107,6 +108,8 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
   const [path, setPath] = useState<string | null>(null);
   const [newPath, setNewPath] = useState("");
   const [confirmClear, setConfirmClear] = useState(false);
+  const usedBy = useUsedBy("memory");
+  const users = usedBy.usersOf(space);
   const current = path ?? files.data?.[0]?.path ?? null;
   // Suggested: only the list of files. "Discuss" also shares the file the user has open.
   const offer: ContextOffer = { kind: "memory", refId: space, label: space };
@@ -155,6 +158,7 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
         </Hint>
         </span>
       </div>
+      <UsedByList users={users} loaded={usedBy.loaded} />
       <div className="memory-files">
         <div className="stack-sm">
           {files.data?.map((file) => (
@@ -196,7 +200,10 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
           </>
         }
       >
-        <p>{t("memory.clearText", { name: space })}</p>
+        <div className="stack-sm">
+          <p>{t("memory.clearText", { name: space })}</p>
+          <UsedByWarning users={users} />
+        </div>
       </Modal>
     </section>
   );

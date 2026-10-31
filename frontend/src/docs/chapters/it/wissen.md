@@ -94,7 +94,7 @@ I contenuti delle esecuzioni (file caricati, file di risultato, risultati e prop
 <!-- keywords: modificare descrizione, eliminare, gestire, rimuovere -->
 
 - **Descrizione:** inseriscila direttamente accanto al file; viene salvata quando esci dal campo. Una buona descrizione indica contenuto, periodo e scopo, per esempio «Relazione annuale 2025 con bilancio e relazione sui rischi».
-- **Eliminare:** simbolo del cestino. Il file e il suo indice vengono rimossi. Gli agenti a cui era assegnato continuano a funzionare e semplicemente non lo ricevono più.
+- **Eliminare:** simbolo del cestino. Il file e il suo indice vengono rimossi. Gli agenti a cui era assegnato continuano a funzionare e semplicemente non lo ricevono più. **Usato in**, sotto il nome del file, indica i workflow, gli agenti della libreria e le API pubblicate che usano il file. Se è in uso, la finestra di eliminazione elenca questi punti prima di eliminarlo.
 
 ## Consigli ed errori frequenti {#tipps}
 <!-- keywords: consigli, errori, l'agente non trova nulla, troppo costoso, contesto troppo grande -->

@@ -42,7 +42,7 @@ A página **Memória** mostra todos os espaços com o número e o tamanho dos ar
 - **Ver e editar um arquivo:** escolha o arquivo, altere o texto e clique em **Salvar**.
 - **Criar um arquivo:** digite um caminho (por exemplo `clientes/preferencias.md`); ele é criado em `/memories`.
 - **Excluir um arquivo:** símbolo da lixeira ao lado do caminho.
-- **Esvaziar um espaço:** exclui definitivamente todos os arquivos do espaço após confirmação.
+- **Esvaziar um espaço:** exclui definitivamente todos os arquivos do espaço após confirmação. Acima dos arquivos, **Usado em** mostra quais agentes e APIs publicadas usam o espaço; a confirmação também os nomeia.
 
 Assim você pode verificar, corrigir ou preencher a memória a qualquer momento. No inspetor, **Ver conteúdo** leva direto ao espaço do agente.
 

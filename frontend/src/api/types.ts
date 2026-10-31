@@ -1848,6 +1848,30 @@ export interface ReleaseMemory {
   used_by: string[];
 }
 
+/** What a reference list is about (GET /api/used-by, UX-7). */
+export type ReferenceKind = "knowledge" | "tool" | "memory";
+
+/** One place that uses a knowledge file, a tool or a memory space. */
+export interface ReferenceUser {
+  kind: "workflow" | "template" | "publication";
+  /** The workflow, library agent or publication. */
+  id: string;
+  name: string;
+  node_id: string | null;
+  node_label: string | null;
+  /** "start": the start node gives the file to every run. */
+  role: "agent" | "start";
+  /** The active release (publications only). */
+  release: number | null;
+  /** The published workflow (publications only). */
+  workflow_id: string | null;
+}
+
+export interface Reference {
+  ref: string;
+  users: ReferenceUser[];
+}
+
 export interface ApiCheck {
   ok: boolean;
   workflow_version: number | null;

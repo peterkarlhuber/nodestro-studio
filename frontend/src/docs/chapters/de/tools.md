@@ -175,7 +175,7 @@ Tools, die vor dieser Version gespeichert wurden, und alle Tools nach dem Wieder
 
 Speicherst du ein eigenes Tool mit einem Namen, den es schon gibt, entsteht eine **neue Version**; die bisherige wird zurückgezogen. Agenten nutzen immer die aktuelle Version. Die Bibliothek zeigt die Versionsnummer.
 
-**Löschen** zieht ein Tool zurück. Agenten, denen es zugewiesen ist, melden danach „Unbekannte Tools“ und können nicht starten, bis du das Tool dort entfernst oder neu anlegst. Eingebaute Tools lassen sich nicht löschen.
+**Löschen** zieht ein Tool zurück. Agenten, denen es zugewiesen ist, melden danach „Unbekannte Tools“ und können nicht starten, bis du das Tool dort entfernst oder neu anlegst. Eingebaute Tools lassen sich nicht löschen. Unter der Beschreibung zeigt **Verwendet in**, welche Workflows und Agenten der Bibliothek das Tool nutzen; der Löschdialog nennt sie vor dem Löschen. Veröffentlichte APIs fehlen dort mit Absicht: Sie enthalten ihre eigene Kopie des Tools.
 
 ## Tool-Fehler verstehen {#fehler}
 <!-- keywords: tool fehler, fehlgeschlagen, timeout, sandbox fehler, ungültige eingabe -->

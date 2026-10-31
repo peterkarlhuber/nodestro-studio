@@ -33,6 +33,7 @@
   "saved": "Herramienta {{name}} guardada",
   "tool": "Herramienta {{name}}",
   "delete": "Eliminar herramienta: la retira; los agentes que la usan no podrán volver a iniciarse hasta que la quites de ellos",
+  "deleteTitle": "¿Eliminar la herramienta «{{name}}»?",
   "requirement": "Requisito:",
   "schema": "Esquema de entrada",
   "viewCode": "Ver código y pruebas",

@@ -33,6 +33,7 @@
   "saved": "Outil {{name}} enregistré",
   "tool": "Outil {{name}}",
   "delete": "Supprimer l’outil : le retire ; les agents qui l’utilisent ne pourront redémarrer qu’après l’avoir retiré",
+  "deleteTitle": "Supprimer l’outil « {{name}} » ?",
   "requirement": "Exigence :",
   "schema": "Schéma d’entrée",
   "viewCode": "Voir le code et les tests",

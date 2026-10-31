@@ -262,6 +262,21 @@ try {
     return "file uploaded in the inspector, stored in Knowledge, assigned and saved";
   });
 
+  // ---- "Used in" (UX-7), outside the journeys so their counts stay comparable ------------------
+  await page.goto(base + "/knowledge");
+  const faqRow = page.locator(".file-row", { hasText: "faq.md" });
+  await faqRow.locator(".used-by a", { hasText: "Supportfragen beantworten / Support" }).waitFor();
+  check(true, "Knowledge names the agent that uses a file");
+  await faqRow.getByRole("button", { name: "faq.md löschen" }).click();
+  const deleteDialog = page.getByRole("dialog");
+  await deleteDialog.getByText("Wird an 1 Stelle verwendet:").waitFor();
+  check((await deleteDialog.textContent()).includes("Supportfragen beantworten / Support"), "The delete dialog names the users");
+  await deleteDialog.getByRole("button", { name: "Abbrechen" }).click();
+  check((await api("/knowledge")).some((file) => file.name === "faq.md"), "Cancelling keeps the file");
+  await faqRow.locator(".used-by a").first().click();
+  await page.waitForURL(/\/workflows\/.+\?node=answer/);
+  check(true, "A user link opens the workflow at the agent");
+
   // ---- J4 "My workflow does not start: where is the problem and how do I fix it?" -------------
   // A design-time problem (quality check without criteria) blocks the start; the run itself cannot fail with a
   // model that answers everything.

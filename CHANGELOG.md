@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### "Used in" for knowledge files, tools and memory spaces, UX-7 (2026-10-31)
+
+- The Knowledge page (under each file), a tool's details and a memory space show **Used in**: the saved workflows
+  (agent or start node), library agents and published APIs that use the object, each as a link. The data comes from
+  the new read-only API route `GET /api/used-by` (nodestro-api #17; decision D9: an API route), which needs the `read` permission and covers only
+  the request's tenant.
+- Pins: nodestro-api `f55bd80` (before `a08c9c3`) and nodestro-sdk `ba4ef84` (before `e508e6b`), in `pyproject.toml`
+  and `platform/versions.json`. The `products` section is unchanged.
+- Deleting a used knowledge file or tool opens a dialog that names the users and what deleting does to them; an
+  unused object keeps the two-step delete button. Clearing a memory space names its users in the confirmation.
+  Deleting itself is unchanged.
+- Texts in six languages; the Knowledge, Tools and Memory chapters describe it. The journeys suite checks the list,
+  the dialog and the link outside the timed journeys, so their counts stay comparable.
+
 ### Run summary on the run page, UX-6b (2026-10-31)
 
 - Studio only, no pin change. The run page shows a short summary under the key figures: how many steps succeeded and

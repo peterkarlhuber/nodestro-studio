@@ -94,7 +94,7 @@ Conteúdo de execuções (arquivos enviados, arquivos de resultado, resultados e
 <!-- keywords: editar descrição, excluir, gerenciar, remover -->
 
 - **Descrição:** digite direto ao lado do arquivo; ela é salva quando você sai do campo. Boas descrições indicam conteúdo, período e finalidade, por exemplo "Relatório anual 2025 com balanço e relatório de riscos".
-- **Excluir:** símbolo da lixeira. O arquivo e o índice dele são removidos. Agentes que o tinham atribuído continuam funcionando e simplesmente deixam de recebê-lo.
+- **Excluir:** símbolo da lixeira. O arquivo e o índice dele são removidos. Agentes que o tinham atribuído continuam funcionando e simplesmente deixam de recebê-lo. **Usado em**, abaixo do nome do arquivo, mostra os fluxos de trabalho, agentes da biblioteca e APIs publicadas que usam o arquivo. Se ele estiver em uso, a caixa de exclusão lista esses lugares antes de excluir.
 
 ## Dicas e erros comuns {#tipps}
 <!-- keywords: dicas, erros, agente não encontra nada, caro demais, contexto grande demais -->

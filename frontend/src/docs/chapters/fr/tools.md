@@ -175,7 +175,7 @@ Les outils enregistrés avant cette version, et tous les outils après la restau
 
 Si vous enregistrez un outil personnel sous un nom qui existe déjà, une **nouvelle version** est créée ; la précédente est retirée. Les agents utilisent toujours la version actuelle. La bibliothèque affiche le numéro de version.
 
-**Supprimer** retire un outil. Les agents auxquels il est attribué signalent alors « Outils inconnus » et ne peuvent pas démarrer tant que vous ne l’avez pas retiré de leur configuration ou recréé. Les outils intégrés ne peuvent pas être supprimés.
+**Supprimer** retire un outil. Les agents auxquels il est attribué signalent alors « Outils inconnus » et ne peuvent pas démarrer tant que vous ne l’avez pas retiré de leur configuration ou recréé. Les outils intégrés ne peuvent pas être supprimés. Sous la description, **Utilisé dans** indique quels workflows et agents de la bibliothèque utilisent l’outil ; la boîte de dialogue de suppression les cite avant la suppression. Les API publiées n’y figurent pas, volontairement : elles contiennent leur propre copie de l’outil.
 
 ## Comprendre les erreurs d’outils {#fehler}
 <!-- keywords: erreurs d’outils, échec, délai dépassé, erreur du bac à sable, entrée non valide -->

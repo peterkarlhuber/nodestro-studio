@@ -6,10 +6,11 @@ import { useSearchParams } from "react-router-dom";
 
 import { api } from "../api/client";
 import { useCollections, useKnowledge, useSettings } from "../api/hooks";
-import type { KnowledgeFile, SearchHit } from "../api/types";
+import type { KnowledgeFile, ReferenceUser, SearchHit } from "../api/types";
 import { DiscussIcon } from "../assistant/DiscussButton";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, PageHeader, Spinner, TextInput, Tooltip } from "../components/ui";
+import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
+import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, PageHeader, Spinner, TextInput, Tooltip } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatNumber, relativeTime } from "../lib/format";
 import { helpEntry } from "../lib/help";
@@ -24,6 +25,7 @@ export function KnowledgePage() {
   const [filter, setFilter] = useState("");
   const files = useKnowledge(filter.trim() || undefined);
   const collections = useCollections();
+  const usedBy = useUsedBy("knowledge");
   // "" all files, NONE files without a collection, otherwise the collection's name.
   const [collection, setCollection] = useState("");
   const [target, setTarget] = useState("");
@@ -44,6 +46,7 @@ export function KnowledgePage() {
 
   const refresh = () => {
     void queryClient.invalidateQueries({ queryKey: ["knowledge-collections"] });
+    void queryClient.invalidateQueries({ queryKey: ["used-by", "knowledge"] });
     return queryClient.invalidateQueries({ queryKey: ["knowledge"] });
   };
   const upload = useMutation({
@@ -167,7 +170,14 @@ export function KnowledgePage() {
             ) : null}
             <ul className="file-list">
               {shown.map((file) => (
-                <KnowledgeRow key={file.id} file={file} onChanged={refresh} focused={file.id === focused} />
+                <KnowledgeRow
+                  key={file.id}
+                  file={file}
+                  onChanged={refresh}
+                  focused={file.id === focused}
+                  users={usedBy.usersOf(file.id)}
+                  usersLoaded={usedBy.loaded}
+                />
               ))}
             </ul>
           </section>
@@ -210,7 +220,19 @@ export function KnowledgePage() {
   );
 }
 
-function KnowledgeRow({ file, onChanged, focused = false }: { file: KnowledgeFile; onChanged: () => void; focused?: boolean }) {
+function KnowledgeRow({
+  file,
+  onChanged,
+  focused = false,
+  users,
+  usersLoaded,
+}: {
+  file: KnowledgeFile;
+  onChanged: () => void;
+  focused?: boolean;
+  users: ReferenceUser[];
+  usersLoaded: boolean;
+}) {
   const { t } = useTranslation();
   const chunksHelp = helpEntry(t, "knowledge.chunks");
   const [description, setDescription] = useState(file.description);
@@ -248,7 +270,15 @@ function KnowledgeRow({ file, onChanged, focused = false }: { file: KnowledgeFil
           </a>
           <span className="row-gap">
             <DiscussIcon offer={{ kind: "knowledge", refId: file.id, label: file.name }} />
-            <ConfirmIconButton icon={Trash2} label={t("knowledge.deleteFile", { name: file.name })} busy={remove.isPending} onConfirm={() => remove.mutate()} />
+            <DeleteUsed
+              kind="knowledge"
+              icon={Trash2}
+              label={t("knowledge.deleteFile", { name: file.name })}
+              title={t("knowledge.deleteFile", { name: file.name })}
+              users={users}
+              busy={remove.isPending}
+              onConfirm={() => remove.mutate()}
+            />
           </span>
         </div>
         <span className="muted small">
@@ -271,6 +301,7 @@ function KnowledgeRow({ file, onChanged, focused = false }: { file: KnowledgeFil
             </>
           ) : null}
         </span>
+        <UsedByList users={users} loaded={usersLoaded} />
         {file.provenance && Object.keys(file.provenance).length ? (
           <details className="small">
             <summary>{t("inputs.provenance.title", { origin: t(`inputs.origins.${file.origin ?? "upload"}`, { defaultValue: file.origin }) })}</summary>

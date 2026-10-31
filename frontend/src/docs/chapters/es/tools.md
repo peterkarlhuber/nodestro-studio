@@ -175,7 +175,7 @@ Las herramientas guardadas antes de esta versión, y todas las herramientas tras
 
 Si guardas una herramienta propia con un nombre que ya existe, se crea una **versión nueva** y la anterior se retira. Los agentes usan siempre la versión actual. La biblioteca muestra el número de versión.
 
-**Eliminar** retira una herramienta. Los agentes que la tienen asignada indican entonces «Herramientas desconocidas» y no pueden iniciarse hasta que quites allí la herramienta o la vuelvas a crear. Las herramientas integradas no se pueden eliminar.
+**Eliminar** retira una herramienta. Los agentes que la tienen asignada indican entonces «Herramientas desconocidas» y no pueden iniciarse hasta que quites allí la herramienta o la vuelvas a crear. Las herramientas integradas no se pueden eliminar. Debajo de la descripción, **Se usa en** muestra qué flujos de trabajo y agentes de la biblioteca usan la herramienta; el diálogo de eliminación los nombra antes de eliminarla. Las API publicadas no aparecen a propósito: contienen su propia copia de la herramienta.
 
 ## Entender los errores de herramientas {#fehler}
 <!-- keywords: errores de herramientas, fallida, tiempo agotado, error del sandbox, entrada no válida -->

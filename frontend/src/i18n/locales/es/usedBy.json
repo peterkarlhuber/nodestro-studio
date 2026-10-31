@@ -1,0 +1,15 @@
+{
+  "label": "Se usa en:",
+  "none": "No se usa en ningún sitio.",
+  "agent": "{{workflow}} / {{agent}}",
+  "start": "{{workflow}} / Inicio (archivo para cada ejecución)",
+  "template": "Biblioteca de agentes: {{name}}",
+  "publication": "API publicada {{name}} (v{{release}})",
+  "warning_one": "Se usa en {{count}} lugar:",
+  "warning_other": "Se usa en {{count}} lugares:",
+  "effect": {
+    "knowledge": "Estos agentes siguen funcionando, pero ya no reciben el archivo; la comprobación del flujo de trabajo lo indica. Los flujos de trabajo y agentes guardados no cambian.",
+    "tool": "Estos agentes no podrán volver a iniciarse hasta que quites la herramienta de ellos o la vuelvas a crear. Los flujos de trabajo y agentes guardados no cambian."
+  },
+  "deleteAnyway": "Eliminar de todos modos"
+}

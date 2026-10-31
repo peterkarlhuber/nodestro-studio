@@ -42,7 +42,7 @@ La pagina **Memoria** mostra tutti gli spazi con numero e dimensione dei file. S
 - **Vedere e modificare un file:** scegli il file, modifica il testo, **Salva**.
 - **Creare un file:** inserisci un percorso (per esempio `clienti/preferenze.md`); viene creato in `/memories`.
 - **Eliminare un file:** simbolo del cestino accanto al percorso.
-- **Svuotare uno spazio:** elimina definitivamente tutti i file dello spazio dopo conferma.
+- **Svuotare uno spazio:** elimina definitivamente tutti i file dello spazio dopo conferma. Sopra i file, **Usato in** mostra quali agenti e API pubblicate usano lo spazio; anche la conferma li indica.
 
 Così puoi verificare, correggere o precompilare la memoria in qualsiasi momento. Nell'ispettore, **Vedi contenuto** porta direttamente allo spazio dell'agente.
 

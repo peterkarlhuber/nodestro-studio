@@ -40,6 +40,7 @@ export const keys = {
   inputStorage: ["input-storage"] as const,
   runInputs: (runId: string) => ["run-inputs", runId] as const,
   collections: ["knowledge-collections"] as const,
+  usedBy: (kind: string) => ["used-by", kind] as const,
 };
 
 export const useMeta = () => useQuery({ queryKey: keys.meta, queryFn: api.meta, staleTime: Infinity });
