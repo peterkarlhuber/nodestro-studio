@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Release candidate v0.2.0-preview.1 (2026-10-31)
+
+- Docs only, no pin change. `docs/desktop-server/release-checklist.md`: the steps of every release. `RELEASES.md`:
+  candidate, publish and release as three separate steps started by a person, the results of candidate
+  `v0.2.0-preview.1` (built from studio `78710ce`, not published), the tested Linux systems (glibc 2.39 or newer).
+  `platform/versions.json` `products`: desktop `67122b7` and server `5bc7b82` with `candidate: v0.2.0-preview.1`.
+
 ### Test status when publishing, Q-1 (2026-10-31)
 
 - Studio only, no pin change. The publish dialog shows, for the version about to be published, the latest result
