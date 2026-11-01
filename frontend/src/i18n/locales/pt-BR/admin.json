@@ -1,0 +1,124 @@
+{
+  "roles": {
+    "owner": "Proprietário",
+    "admin": "Administrador",
+    "editor": "Editor",
+    "operator": "Operador",
+    "viewer": "Observador",
+    "none": "Sem função"
+  },
+  "permissions": {
+    "read": "Ler",
+    "edit": "Editar",
+    "run": "Executar",
+    "admin": "Administrar",
+    "install": "Gerenciar a instalação"
+  },
+  "denied": "Sua função ({{role}}) não permite isso: é preciso a permissão “{{permission}}”. Peça a um administrador do seu servidor Nodestro.",
+  "readOnly": {
+    "look": "Você entrou como {{role}}: pode ver tudo, mas não alterar nem executar nada.",
+    "run": "Você entrou como {{role}}: pode ver tudo e iniciar execuções, mas não alterar nada."
+  },
+  "user": {
+    "menu": "Conectado como {{name}}",
+    "title": "Sua conta",
+    "role": "Função: {{role}} · espaço de trabalho {{tenant}}",
+    "permissions": "Permissões: {{list}}",
+    "switch": "Trocar de espaço de trabalho",
+    "logout": "Sair",
+    "members": "Membros e funções são gerenciados pelo operador do servidor com a linha de comando nodestro-server (veja o manual de operação).",
+    "signInAgain": "Entrar novamente"
+  },
+  "server": {
+    "title": "O servidor da sua organização",
+    "text": "O Nodestro roda em um servidor da sua organização. Seus dados ficam nesse servidor e vão apenas para os provedores de IA que o seu operador permite."
+  },
+  "settings": {
+    "serverDescription": "Vale para o seu espaço de trabalho {{tenant}} neste servidor Nodestro.",
+    "serverData": "Seus dados ficam armazenados no servidor Nodestro da sua organização. Backups e a instalação ficam a cargo do operador dele."
+  },
+  "run": {
+    "withProblems": "Concluída com problemas",
+    "toolProblemsTitle": "Chamadas de ferramentas sem resultado",
+    "toolProblemsText_one": "{{count}} chamada de ferramenta não deu certo. Verifique se o resultado depende dela:",
+    "toolProblemsText_many": "{{count}} chamadas de ferramentas não deram certo. Verifique se o resultado depende delas:",
+    "toolProblemsText_other": "{{count}} chamadas de ferramentas não deram certo. Verifique se o resultado depende delas:",
+    "toolProblem": {
+      "rejected": "recusada por uma pessoa, então a ferramenta não foi executada",
+      "expired": "ninguém decidiu a tempo, então a chamada contou como recusada",
+      "denied": "não permitida pelas regras de aprovação",
+      "cancelled": "a chamada foi cancelada",
+      "coded": "a chamada falhou",
+      "error": "a ferramenta informou um erro"
+    },
+    "notFinished": "Não concluído",
+    "interrupted": "O Nodestro parou enquanto esta execução estava em andamento.",
+    "shutdown": "O Nodestro foi parado (por exemplo, o app foi fechado ou o servidor reiniciado) enquanto esta execução estava em andamento; ninguém a cancelou.",
+    "unfinished_one": "A execução terminou antes que {{count}} etapa fosse concluída: {{steps}}. Ela nunca recebeu um resultado.",
+    "unfinished_many": "A execução terminou antes que {{count}} etapas fossem concluídas: {{steps}}. Elas nunca receberam um resultado.",
+    "unfinished_other": "A execução terminou antes que {{count}} etapas fossem concluídas: {{steps}}. Elas nunca receberam um resultado.",
+    "resumeHint": "Continue a execução para concluí-las; as etapas concluídas são aproveitadas."
+  },
+  "approval": {
+    "inWorkflow": "{{workflow}} · etapa {{step}}"
+  },
+  "mcp": {
+    "downgrade": "O serviço informa que esta ferramenta “{{stated}}”. Você a classifica como “{{chosen}}”, o que é menos rigoroso: por exemplo, ela poderia ser aprovada com antecedência e seria tratada como uma ferramenta menos perigosa.",
+    "downgradeConfirm": "Verifiquei a ferramenta: a classificação menos rigorosa está correta",
+    "https_required": "Os serviços são acessados apenas por https. http só é possível para um servidor de desenvolvimento neste computador (127.0.0.1 ou localhost).",
+    "loopback_toggle": "http só é possível para um servidor de desenvolvimento neste computador: ative “{{toggle}}” abaixo."
+  },
+  "import": {
+    "not_object": "Este arquivo não é um workflow do Nodestro: ele não contém nenhum objeto de workflow. Exporte um workflow no editor (Exportar) e importe esse arquivo.",
+    "no_nodes": "Este arquivo não é um workflow do Nodestro: ele não tem etapas (\"nodes\"). Exporte um workflow no editor (Exportar) e importe esse arquivo.",
+    "node_invalid": "Este arquivo não é um workflow válido do Nodestro: a etapa {{index}} não tem id ou tipo.",
+    "edges_invalid": "Este arquivo não é um workflow válido do Nodestro: suas conexões (\"edges\") não são uma lista.",
+    "edge_invalid": "Este arquivo não é um workflow válido do Nodestro: a conexão {{index}} não tem início ou fim."
+  },
+  "conflict": {
+    "title": "Alterado em outro lugar",
+    "text": "Este workflow foi salvo em outro lugar às {{time}} (em outra aba ou por outra pessoa) depois que você o abriu. Salvar agora substituiria essa alteração.",
+    "reloadHint": "Carregar a versão salva: suas alterações não salvas aqui são descartadas.",
+    "copyHint": "Manter a minha como cópia: o seu estado vira um novo workflow e o salvo fica como está.",
+    "overwriteHint": "Salvar a minha mesmo assim: o seu estado substitui a outra alteração.",
+    "versions": "Nada se perde para sempre: cada salvamento fica em Versões, onde você pode compará-lo e restaurá-lo.",
+    "keepEditing": "Continuar editando",
+    "reload": "Carregar versão salva",
+    "copy": "Manter a minha como cópia",
+    "overwrite": "Salvar a minha mesmo assim",
+    "copyName": "{{name}} (minha cópia)",
+    "copied": "Salvo como o novo workflow “{{name}}”.",
+    "reloaded": "A versão salva foi carregada."
+  },
+  "compat": {
+    "effortText": "Endpoints compatíveis com a OpenAI (por exemplo Ollama ou vLLM) não aceitam uma configuração de esforço do Nodestro. Defina o esforço deste agente como “Padrão do modelo”.",
+    "effortOff": "Definir esforço como padrão do modelo"
+  },
+  "rules": {
+    "off": "As aprovações por chamada de ferramenta não estão ativadas nesta instalação: as ferramentas rodam sem perguntar antes.",
+    "offDocs": "Como funcionam as aprovações por chamada",
+    "preparation": "Preparação para administradores",
+    "legacyNotRunOn": "A etapa de ativação ainda não foi executada: atribuições anteriores são perguntadas como as novas.",
+    "stampHintOn": "Marca como exceções as atribuições que existem agora em workflows, versões e releases publicadas, para que continuem funcionando sem perguntas. Revise a lista depois; a etapa é executada apenas uma vez."
+  },
+  "request": {
+    "title": "A solicitação não corresponde à entrada da API:",
+    "body": "Solicitação",
+    "kind": {
+      "missing": "obrigatório",
+      "number": "deve ser um número",
+      "boolean": "deve ser true ou false",
+      "text": "deve ser um texto",
+      "date": "deve ser uma data",
+      "extra": "não faz parte da entrada",
+      "choice": "não é um dos valores permitidos",
+      "list": "deve ser uma lista",
+      "invalid": "não é válido"
+    }
+  },
+  "sdk": {
+    "python": "SDK Python",
+    "typescript": "SDK TypeScript",
+    "intro": "Os clientes oficiais iniciam execuções com uma chave de idempotência (uma nova tentativa nunca inicia uma segunda execução), tentam de novo após erros de conexão e informam erros tipados. Instale-os a partir de"
+  }
+}

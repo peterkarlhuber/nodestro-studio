@@ -1,0 +1,122 @@
+{
+  "roles": {
+    "owner": "Owner",
+    "admin": "Administrator",
+    "editor": "Editor",
+    "operator": "Operator",
+    "viewer": "Viewer",
+    "none": "No role"
+  },
+  "permissions": {
+    "read": "Read",
+    "edit": "Edit",
+    "run": "Run",
+    "admin": "Administer",
+    "install": "Manage the installation"
+  },
+  "denied": "Your role ({{role}}) cannot do this: it needs the permission “{{permission}}”. Ask an administrator of your Nodestro server.",
+  "readOnly": {
+    "look": "You are signed in as {{role}}: you can look at everything, but not change or run anything.",
+    "run": "You are signed in as {{role}}: you can look at everything and start runs, but not change anything."
+  },
+  "user": {
+    "menu": "Signed in as {{name}}",
+    "title": "Your account",
+    "role": "Role: {{role}} · workspace {{tenant}}",
+    "permissions": "Permissions: {{list}}",
+    "switch": "Switch workspace",
+    "logout": "Sign out",
+    "members": "Members and roles are managed by the server's operator with the nodestro-server command line (see the operator runbook).",
+    "signInAgain": "Sign in again"
+  },
+  "server": {
+    "title": "Your organization's server",
+    "text": "Nodestro runs on a server of your organization. Your data stays on that server and goes only to the AI providers your operator allows."
+  },
+  "settings": {
+    "serverDescription": "Applies to your workspace {{tenant}} on this Nodestro server.",
+    "serverData": "Your data is stored on the Nodestro server of your organization. Backups and the installation are looked after by its operator."
+  },
+  "run": {
+    "withProblems": "Finished with problems",
+    "toolProblemsTitle": "Tool calls without a result",
+    "toolProblemsText_one": "{{count}} tool call did not succeed. Check whether the result relies on it:",
+    "toolProblemsText_other": "{{count}} tool calls did not succeed. Check whether the result relies on them:",
+    "toolProblem": {
+      "rejected": "rejected by a person, so the tool did not run",
+      "expired": "nobody decided in time, so the call counted as rejected",
+      "denied": "not allowed by the approval rules",
+      "cancelled": "the call was cancelled",
+      "coded": "the call failed",
+      "error": "the tool reported an error"
+    },
+    "notFinished": "Not finished",
+    "interrupted": "Nodestro stopped while this run was running.",
+    "shutdown": "Nodestro was stopped (for example the app was quit or the server restarted) while this run was running; it was not cancelled by anyone.",
+    "unfinished_one": "The run ended while {{count}} step had not finished: {{steps}}. It never got a result.",
+    "unfinished_other": "The run ended while {{count}} steps had not finished: {{steps}}. They never got a result.",
+    "resumeHint": "Continue the run to finish them; steps that finished are taken over."
+  },
+  "approval": {
+    "inWorkflow": "{{workflow}} · step {{step}}"
+  },
+  "mcp": {
+    "downgrade": "The service states that this tool is “{{stated}}”. You classify it as “{{chosen}}”, which is less strict: for example, it could then be approved in advance and would be asked about like a less dangerous tool.",
+    "downgradeConfirm": "I checked the tool: the less strict classification is right",
+    "https_required": "Services are reached over https only. http is possible only for a development server on this computer (127.0.0.1 or localhost).",
+    "loopback_toggle": "http is possible only for a development server on this computer: switch on “{{toggle}}” below."
+  },
+  "import": {
+    "not_object": "This file is not a Nodestro workflow: it contains no workflow object. Export a workflow in the editor (Export) and import that file.",
+    "no_nodes": "This file is not a Nodestro workflow: it has no steps (\"nodes\"). Export a workflow in the editor (Export) and import that file.",
+    "node_invalid": "This file is not a valid Nodestro workflow: step {{index}} has no id or type.",
+    "edges_invalid": "This file is not a valid Nodestro workflow: its connections (\"edges\") are not a list.",
+    "edge_invalid": "This file is not a valid Nodestro workflow: connection {{index}} has no start or end."
+  },
+  "conflict": {
+    "title": "Changed somewhere else",
+    "text": "This workflow was saved somewhere else at {{time}} (in another tab or by someone else) after you opened it. Saving now would replace that change.",
+    "reloadHint": "Load the saved version: your unsaved changes here are dropped.",
+    "copyHint": "Keep mine as a copy: your state becomes a new workflow, the saved one stays as it is.",
+    "overwriteHint": "Save mine anyway: your state replaces the other change.",
+    "versions": "Nothing is lost for good either way: every save is kept under Versions, where you can compare and restore it.",
+    "keepEditing": "Keep editing",
+    "reload": "Load saved version",
+    "copy": "Keep mine as a copy",
+    "overwrite": "Save mine anyway",
+    "copyName": "{{name}} (my copy)",
+    "copied": "Saved as the new workflow “{{name}}”.",
+    "reloaded": "The saved version is loaded."
+  },
+  "compat": {
+    "effortText": "OpenAI-compatible endpoints (for example Ollama or vLLM) do not accept an effort setting from Nodestro. Set this agent's effort to “Model default”.",
+    "effortOff": "Set effort to model default"
+  },
+  "rules": {
+    "off": "Approvals per tool call are not switched on in this installation: tools run without asking first.",
+    "offDocs": "How approvals per call work",
+    "preparation": "Preparation for administrators",
+    "legacyNotRunOn": "The activation step has not run yet: assignments from before are asked about like new ones.",
+    "stampHintOn": "Marks the assignments that exist now in workflows, versions and published releases as exceptions, so they keep working without a question. Review the list afterwards; it runs only once."
+  },
+  "request": {
+    "title": "The request does not fit the API's input:",
+    "body": "Request",
+    "kind": {
+      "missing": "required",
+      "number": "must be a number",
+      "boolean": "must be true or false",
+      "text": "must be text",
+      "date": "must be a date",
+      "extra": "is not part of the input",
+      "choice": "is not one of the allowed values",
+      "list": "must be a list",
+      "invalid": "is not valid"
+    }
+  },
+  "sdk": {
+    "python": "Python SDK",
+    "typescript": "TypeScript SDK",
+    "intro": "The official clients start runs with an idempotency key (a retry never starts a second run), retry on connection errors and report typed errors. Install them from"
+  }
+}

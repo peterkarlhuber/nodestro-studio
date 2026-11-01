@@ -1,0 +1,124 @@
+{
+  "roles": {
+    "owner": "Propriétaire",
+    "admin": "Administrateur",
+    "editor": "Éditeur",
+    "operator": "Opérateur",
+    "viewer": "Lecteur",
+    "none": "Aucun rôle"
+  },
+  "permissions": {
+    "read": "Lire",
+    "edit": "Modifier",
+    "run": "Exécuter",
+    "admin": "Administrer",
+    "install": "Gérer l’installation"
+  },
+  "denied": "Votre rôle ({{role}}) ne permet pas cette action : il faut l’autorisation « {{permission}} ». Adressez-vous à un administrateur de votre serveur Nodestro.",
+  "readOnly": {
+    "look": "Vous êtes connecté en tant que {{role}} : vous pouvez tout consulter, mais rien modifier ni exécuter.",
+    "run": "Vous êtes connecté en tant que {{role}} : vous pouvez tout consulter et lancer des exécutions, mais rien modifier."
+  },
+  "user": {
+    "menu": "Connecté en tant que {{name}}",
+    "title": "Votre compte",
+    "role": "Rôle : {{role}} · espace de travail {{tenant}}",
+    "permissions": "Autorisations : {{list}}",
+    "switch": "Changer d’espace de travail",
+    "logout": "Se déconnecter",
+    "members": "Les membres et les rôles sont gérés par l’exploitant du serveur avec la ligne de commande nodestro-server (voir le manuel d’exploitation).",
+    "signInAgain": "Se reconnecter"
+  },
+  "server": {
+    "title": "Le serveur de votre organisation",
+    "text": "Nodestro fonctionne sur un serveur de votre organisation. Vos données restent sur ce serveur et ne vont qu’aux fournisseurs d’IA que votre exploitant autorise."
+  },
+  "settings": {
+    "serverDescription": "S’applique à votre espace de travail {{tenant}} sur ce serveur Nodestro.",
+    "serverData": "Vos données sont stockées sur le serveur Nodestro de votre organisation. Les sauvegardes et l’installation sont gérées par son exploitant."
+  },
+  "run": {
+    "withProblems": "Terminée avec des problèmes",
+    "toolProblemsTitle": "Appels d’outils sans résultat",
+    "toolProblemsText_one": "{{count}} appel d’outil n’a pas réussi. Vérifiez si le résultat en dépend :",
+    "toolProblemsText_many": "{{count}} appels d’outils n’ont pas réussi. Vérifiez si le résultat en dépend :",
+    "toolProblemsText_other": "{{count}} appels d’outils n’ont pas réussi. Vérifiez si le résultat en dépend :",
+    "toolProblem": {
+      "rejected": "refusé par une personne, l’outil ne s’est donc pas exécuté",
+      "expired": "personne n’a décidé à temps, l’appel a donc compté comme refusé",
+      "denied": "non autorisé par les règles d’approbation",
+      "cancelled": "l’appel a été annulé",
+      "coded": "l’appel a échoué",
+      "error": "l’outil a signalé une erreur"
+    },
+    "notFinished": "Non terminé",
+    "interrupted": "Nodestro s’est arrêté pendant cette exécution.",
+    "shutdown": "Nodestro a été arrêté (par exemple l’application fermée ou le serveur redémarré) pendant cette exécution ; personne ne l’a annulée.",
+    "unfinished_one": "L’exécution s’est terminée avant que {{count}} étape soit finie : {{steps}}. Elle n’a jamais obtenu de résultat.",
+    "unfinished_many": "L’exécution s’est terminée avant que {{count}} étapes soient finies : {{steps}}. Elles n’ont jamais obtenu de résultat.",
+    "unfinished_other": "L’exécution s’est terminée avant que {{count}} étapes soient finies : {{steps}}. Elles n’ont jamais obtenu de résultat.",
+    "resumeHint": "Reprenez l’exécution pour les terminer ; les étapes terminées sont reprises."
+  },
+  "approval": {
+    "inWorkflow": "{{workflow}} · étape {{step}}"
+  },
+  "mcp": {
+    "downgrade": "Le service indique que cet outil « {{stated}} ». Vous le classez comme « {{chosen}} », ce qui est moins strict : il pourrait par exemple être approuvé à l’avance et serait traité comme un outil moins dangereux.",
+    "downgradeConfirm": "J’ai vérifié l’outil : la classification moins stricte est correcte",
+    "https_required": "Les services ne sont joints qu’en https. http n’est possible que pour un serveur de développement sur cet ordinateur (127.0.0.1 ou localhost).",
+    "loopback_toggle": "http n’est possible que pour un serveur de développement sur cet ordinateur : activez « {{toggle}} » ci-dessous."
+  },
+  "import": {
+    "not_object": "Ce fichier n’est pas un workflow Nodestro : il ne contient aucun objet workflow. Exportez un workflow dans l’éditeur (Exporter) et importez ce fichier.",
+    "no_nodes": "Ce fichier n’est pas un workflow Nodestro : il n’a aucune étape (\"nodes\"). Exportez un workflow dans l’éditeur (Exporter) et importez ce fichier.",
+    "node_invalid": "Ce fichier n’est pas un workflow Nodestro valide : l’étape {{index}} n’a pas d’identifiant ou de type.",
+    "edges_invalid": "Ce fichier n’est pas un workflow Nodestro valide : ses connexions (\"edges\") ne sont pas une liste.",
+    "edge_invalid": "Ce fichier n’est pas un workflow Nodestro valide : la connexion {{index}} n’a pas de début ou de fin."
+  },
+  "conflict": {
+    "title": "Modifié ailleurs",
+    "text": "Ce workflow a été enregistré ailleurs à {{time}} (dans un autre onglet ou par quelqu’un d’autre) après que vous l’avez ouvert. Enregistrer maintenant remplacerait cette modification.",
+    "reloadHint": "Charger la version enregistrée : vos modifications non enregistrées ici sont abandonnées.",
+    "copyHint": "Garder la mienne comme copie : votre état devient un nouveau workflow, celui enregistré reste tel quel.",
+    "overwriteHint": "Enregistrer la mienne quand même : votre état remplace l’autre modification.",
+    "versions": "Rien n’est perdu définitivement : chaque enregistrement est conservé sous Versions, où vous pouvez le comparer et le restaurer.",
+    "keepEditing": "Continuer à modifier",
+    "reload": "Charger la version enregistrée",
+    "copy": "Garder la mienne comme copie",
+    "overwrite": "Enregistrer la mienne quand même",
+    "copyName": "{{name}} (ma copie)",
+    "copied": "Enregistré comme nouveau workflow « {{name}} ».",
+    "reloaded": "La version enregistrée est chargée."
+  },
+  "compat": {
+    "effortText": "Les endpoints compatibles OpenAI (par exemple Ollama ou vLLM) n’acceptent pas de réglage d’effort de Nodestro. Réglez l’effort de cet agent sur « Valeur du modèle ».",
+    "effortOff": "Régler l’effort sur la valeur du modèle"
+  },
+  "rules": {
+    "off": "Les approbations par appel d’outil ne sont pas activées dans cette installation : les outils s’exécutent sans demander d’abord.",
+    "offDocs": "Fonctionnement des approbations par appel",
+    "preparation": "Préparation pour les administrateurs",
+    "legacyNotRunOn": "L’étape d’activation n’a pas encore été exécutée : les affectations antérieures sont soumises à approbation comme les nouvelles.",
+    "stampHintOn": "Marque comme exceptions les affectations qui existent maintenant dans les workflows, les versions et les releases publiées, pour qu’elles continuent de fonctionner sans question. Vérifiez ensuite la liste ; l’étape ne s’exécute qu’une fois."
+  },
+  "request": {
+    "title": "La requête ne correspond pas à l’entrée de l’API :",
+    "body": "Requête",
+    "kind": {
+      "missing": "obligatoire",
+      "number": "doit être un nombre",
+      "boolean": "doit être true ou false",
+      "text": "doit être un texte",
+      "date": "doit être une date",
+      "extra": "ne fait pas partie de l’entrée",
+      "choice": "n’est pas une des valeurs autorisées",
+      "list": "doit être une liste",
+      "invalid": "n’est pas valide"
+    }
+  },
+  "sdk": {
+    "python": "SDK Python",
+    "typescript": "SDK TypeScript",
+    "intro": "Les clients officiels lancent les exécutions avec une clé d’idempotence (une nouvelle tentative ne lance jamais une deuxième exécution), réessaient après les erreurs de connexion et signalent des erreurs typées. Installez-les depuis"
+  }
+}

@@ -1,10 +1,10 @@
 import type { RouteObject } from "react-router-dom";
 
+import { currentLanguage } from "./i18n";
 import { AppShell } from "./layout/AppShell";
 import { AgentsPage } from "./pages/AgentsPage";
 import { ApprovalsPage } from "./pages/ApprovalsPage";
 import { BatchDetailPage, BatchesPage } from "./pages/BatchesPage";
-import { EditorPage } from "./pages/EditorPage";
 import { ExamplesPage } from "./pages/ExamplesPage";
 import { ExecutionsPage } from "./pages/ExecutionsPage";
 import { KnowledgePage } from "./pages/KnowledgePage";
@@ -20,10 +20,21 @@ import { UsagePage } from "./pages/UsagePage";
 import { WorkflowsPage } from "./pages/WorkflowsPage";
 import { studioLoader } from "./welcome/firstVisit";
 
-// The docs carry every chapter in every language, so they load on first visit.
+// The docs load on first visit, together with the chapters of the current language only
+// (so the page shows complete; other languages load when the user switches).
 async function loadDocsPage() {
-  const { DocsPage } = await import("./pages/DocsPage");
+  const [{ DocsPage }] = await Promise.all([
+    import("./pages/DocsPage"),
+    import("./docs").then(({ loadChapters }) => loadChapters(currentLanguage())),
+  ]);
   return { Component: DocsPage };
+}
+
+// The editor carries the canvas (@xyflow/react) and the code editor, so it loads on first visit.
+// The router keeps the current page until the code is there, so nothing blinks in between.
+async function loadEditorPage() {
+  const { EditorPage } = await import("./pages/EditorPage");
+  return { Component: EditorPage };
 }
 
 // The welcome page is a page of its own outside the Studio frame; its code loads on first visit.
@@ -42,7 +53,7 @@ export const routes: RouteObject[] = [
     children: [
       { index: true, element: <WorkflowsPage /> },
       { path: "workflows/examples", element: <ExamplesPage /> },
-      { path: "workflows/:id", element: <EditorPage /> },
+      { path: "workflows/:id", lazy: loadEditorPage },
       { path: "agents", element: <AgentsPage /> },
       { path: "tools", element: <ToolsPage /> },
       { path: "knowledge", element: <KnowledgePage /> },

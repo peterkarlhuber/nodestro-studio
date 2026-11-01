@@ -2,7 +2,7 @@
 // will be sent, the time left, an optional comment, and approve or reject. Nothing is approved automatically;
 // a question nobody answers in time counts as rejected, and a decision about a changed call is refused.
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, ShieldQuestion, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -30,6 +30,19 @@ export function formatCountdown(seconds: number): string {
   const safe = Math.max(0, seconds);
   const minutes = Math.floor(safe / 60);
   return `${minutes}:${String(safe % 60).padStart(2, "0")}`;
+}
+
+/**
+ * Where the call waits, by name: the workflow and the step's label from the run (AD-11). The approval list carries
+ * only ids (backend item: workflow name, node label and path); until the run has loaded, the step id stands in.
+ */
+export function ToolApprovalContext({ request }: { request: Pick<ToolApprovalRequest, "run_id" | "node_id"> }) {
+  const { t } = useTranslation();
+  const run = useQuery({ queryKey: keys.run(request.run_id), queryFn: () => api.run(request.run_id), staleTime: 60_000, retry: false });
+  const node = run.data?.workflow.nodes.find((item) => item.id === request.node_id);
+  const step = node?.label || node?.agent?.name || request.node_id;
+  if (!run.data) return <>{t("approvals.tool.inRun", { node: step })}</>;
+  return <span data-testid="tool-approval-context">{t("admin.approval.inWorkflow", { workflow: run.data.workflow_name, step })}</span>;
 }
 
 /** Codes of a decision that came too late or about another call: the list is reloaded to show what is current. */
@@ -66,7 +79,9 @@ export function ToolApprovalForm({ request, showContext = false }: { request: To
           <div className="muted small">
             {showContext ? (
               <>
-                <Link to={`/executions/${request.run_id}`}>{t("approvals.tool.inRun", { node: request.node_id })}</Link>
+                <Link to={`/executions/${request.run_id}`}>
+                  <ToolApprovalContext request={request} />
+                </Link>
                 {" · "}
               </>
             ) : null}

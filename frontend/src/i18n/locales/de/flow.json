@@ -218,6 +218,7 @@
       "was_blocked": "Lief wegen eines Fehlers davor nicht.",
       "was_waiting": "Kam nicht an die Reihe.",
       "was_running": "Wurde nicht fertig.",
+      "was_interrupted": "Wurde unterbrochen: Nodestro wurde beendet, während er lief.",
       "was_awaiting_approval": "Wartete auf eine Freigabe.",
       "was_idle": "Kam nicht an die Reihe.",
       "in_loop": "Teil einer Schleife: Die ganze Schleife läuft neu."

@@ -1,3 +1,4 @@
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, BookMarked, Hash, Search, X } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -6,11 +7,12 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
 import { useMeta } from "../api/hooks";
-import { Callout, PageHeader } from "../components/ui";
-import { type DocChapter, chaptersFor } from "../docs";
+import { Callout, PageHeader, Spinner } from "../components/ui";
+import { ErrorText } from "../lib/errors";
+import { type DocChapter, cachedChapters, loadChapters } from "../docs";
 import { plainText, splitWidgets } from "../docs/parse";
 import { type DocHit, fold, searchDocs } from "../docs/search";
-import { currentLanguage } from "../i18n";
+import { currentLanguage, isLanguage } from "../i18n";
 import { modelDescription } from "../lib/catalog";
 import { formatNumber, formatPrice } from "../lib/format";
 
@@ -41,11 +43,29 @@ function Markdown({ text }: { text: string }) {
   );
 }
 
-/** The chapters in the interface language; re-renders when the language changes. */
-function useChapters(): DocChapter[] {
+/**
+ * The chapters in the interface language; re-renders when the language changes. The route loads
+ * the current language before the page shows; after a language switch the previous chapters stay
+ * until the new ones are there, so the page never goes blank.
+ */
+function useChapterQuery() {
   const { i18n } = useTranslation();
-  return useMemo(() => chaptersFor(currentLanguage()), [i18n.language]); // eslint-disable-line react-hooks/exhaustive-deps
+  const language = isLanguage(i18n.language) ? i18n.language : currentLanguage();
+  return useQuery({
+    queryKey: ["docs-chapters", language],
+    queryFn: () => loadChapters(language),
+    initialData: () => cachedChapters(language),
+    placeholderData: keepPreviousData,
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
 }
+
+function useChapters(): DocChapter[] {
+  return useChapterQuery().data ?? NO_CHAPTERS;
+}
+
+const NO_CHAPTERS: DocChapter[] = [];
 
 function ModelTable() {
   const { t } = useTranslation();
@@ -309,7 +329,8 @@ export function DocsPage() {
   const { chapter: chapterId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const chapters = useChapters();
+  const loaded = useChapterQuery();
+  const chapters = loaded.data ?? NO_CHAPTERS;
   const chapter = useMemo(() => chapters.find((item) => item.id === chapterId), [chapters, chapterId]);
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -342,6 +363,24 @@ export function DocsPage() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  if (!loaded.data) {
+    // Only seen when the chapters are not preloaded by the route (or their download failed).
+    return (
+      <div className="page">
+        <PageHeader title={t("nav.docs")} />
+        <div className="page__body">
+          {loaded.error ? (
+            <Callout tone="danger">
+              <ErrorText error={loaded.error} />
+            </Callout>
+          ) : (
+            <Spinner />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   if (chapterId && !chapter) {
     return (

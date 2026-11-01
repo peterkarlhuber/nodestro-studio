@@ -218,6 +218,7 @@
       "was_blocked": "N’a pas tourné à cause d’une erreur en amont.",
       "was_waiting": "N’a pas été atteinte.",
       "was_running": "Ne s’est pas terminée.",
+      "was_interrupted": "A été interrompue : Nodestro s’est arrêté pendant son exécution.",
       "was_awaiting_approval": "Attendait une validation.",
       "was_idle": "N’a pas été atteinte.",
       "in_loop": "Fait partie d’une boucle : toute la boucle est réexécutée."

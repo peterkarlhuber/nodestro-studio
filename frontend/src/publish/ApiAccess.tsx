@@ -5,6 +5,7 @@ import { Ban, KeyRound, PlugZap, RefreshCw, ShieldAlert, Trash2, Wifi } from "lu
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useAccess } from "../api/access";
 import { api } from "../api/client";
 import type { ApiOverview, ApiScope, NetworkConfig, NewApiKey } from "../api/types";
 import { toast } from "../components/toast";
@@ -44,6 +45,8 @@ export function ApiAccess({ overview, onChanged }: { overview: ApiOverview; onCh
   const [scopes, setScopes] = useState<ApiScope[]>(["run", "read"]);
   const [created, setCreated] = useState<NewApiKey | null>(null);
   const network = overview.network;
+  const access = useAccess();
+  const install = access.profile !== "unknown" && access.can("install");
   const [config, setConfig] = useState<NetworkConfig>({
     enabled: network.enabled,
     host: network.host,
@@ -187,7 +190,8 @@ export function ApiAccess({ overview, onChanged }: { overview: ApiOverview; onCh
         ) : null}
       </section>
 
-      <section className="stack-sm">
+      {/* Network access is part of the installation (permission "install"): not offered to server tenants (AD-04). */}
+      {install ? <section className="stack-sm">
         <h3 className="api-heading">
           <Wifi size={15} aria-hidden /> {t("publish.network.title")}
         </h3>
@@ -222,7 +226,7 @@ export function ApiAccess({ overview, onChanged }: { overview: ApiOverview; onCh
             tip="publish.networkShare"
           />
         ) : null}
-      </section>
+      </section> : null}
 
       {publication ? (
         <section className="stack-sm" data-testid="api-mcp-tool">

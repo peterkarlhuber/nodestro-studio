@@ -218,6 +218,7 @@
       "was_blocked": "Não rodou por causa de um erro antes dela.",
       "was_waiting": "Não chegou a vez dela.",
       "was_running": "Não terminou.",
+      "was_interrupted": "Foi interrompida: o Nodestro parou enquanto ela rodava.",
       "was_awaiting_approval": "Aguardava uma aprovação.",
       "was_idle": "Não chegou a vez dela.",
       "in_loop": "Faz parte de um laço: o laço inteiro roda de novo."

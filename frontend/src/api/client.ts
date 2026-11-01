@@ -148,9 +148,19 @@ export function startLogin(location: Pick<Location, "pathname" | "search" | "has
   location.assign(`/api/auth/login?return_to=${encodeURIComponent(back)}`);
 }
 
-export async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
+export async function request<T>(method: string, path: string, body?: unknown, extraHeaders?: Record<string, string>): Promise<T> {
+  return (await requestWithHeaders<T>(method, path, body, extraHeaders)).data;
+}
+
+/** Like ``request``, with the response headers (for paging headers such as ``X-Has-More``). */
+export async function requestWithHeaders<T>(
+  method: string,
+  path: string,
+  body?: unknown,
+  extraHeaders?: Record<string, string>,
+): Promise<{ data: T; headers: Headers }> {
   // The interface language: the backend names new copies and the first examples in it.
-  const headers: Record<string, string> = { "Accept-Language": currentLanguage() };
+  const headers: Record<string, string> = { "Accept-Language": currentLanguage(), ...extraHeaders };
   const init: RequestInit = { method, headers };
   if (body instanceof FormData || body instanceof Blob) {
     init.body = body;
@@ -183,8 +193,14 @@ export async function request<T>(method: string, path: string, body?: unknown): 
     if (response.status === 401 && code === "access.login_required") startLogin();
     throw new ApiError(message, response.status, code, params);
   }
-  if (response.status === 204) return undefined as T;
-  return (await response.json()) as T;
+  if (response.status === 204) return { data: undefined as T, headers: response.headers };
+  return { data: (await response.json()) as T, headers: response.headers };
+}
+
+export interface RunPage {
+  runs: RunSummary[];
+  hasMore: boolean | null;
+  nextBefore: string | null;
 }
 
 const q = (params: Record<string, string | undefined>) => {
@@ -247,8 +263,9 @@ export const api = {
   importWorkflow: (body: WorkflowIn & { python?: ExportedDependencies | null }) =>
     request<Workflow>("POST", "/workflows/import", body),
   /** Saves the workflow; a changed workflow becomes a new version, ``note`` describes it. */
-  saveWorkflow: (id: string, body: WorkflowIn, note?: string) =>
-    request<Workflow>("PUT", `/workflows/${id}${q({ note })}`, body),
+  /** ``revision``: the ``updated_at`` the edit started from; a newer server copy answers 409 workflow.conflict. */
+  saveWorkflow: (id: string, body: WorkflowIn, note?: string, revision?: string) =>
+    request<Workflow>("PUT", `/workflows/${id}${q({ note })}`, body, revision ? { "If-Match": `"${revision}"` } : undefined),
   deleteWorkflow: (id: string) => request<void>("DELETE", `/workflows/${id}`),
   duplicateWorkflow: (id: string) => request<Workflow>("POST", `/workflows/${id}/duplicate`),
   examples: (language: string) => request<ExampleSummary[]>("GET", `/library${q({ language })}`),
@@ -271,15 +288,32 @@ export const api = {
 
   startRun: (workflowId: string, input: string, fileIds: string[] = [], values: Record<string, unknown> = {}) =>
     request<Run>("POST", `/workflows/${workflowId}/runs`, { input, file_ids: fileIds, values }),
-  runs: (workflowId?: string, options: { triggerRef?: string; includeChildren?: boolean } = {}) =>
+  runs: (workflowId?: string, options: { triggerRef?: string; includeChildren?: boolean; limit?: number } = {}) =>
     request<RunSummary[]>(
       "GET",
       `/runs${q({
         workflow_id: workflowId,
+        limit: options.limit === undefined ? undefined : String(options.limit),
         trigger_ref: options.triggerRef,
         include_children: options.includeChildren ? "true" : undefined,
       })}`,
     ),
+  /**
+   * One page of the run list, newest first. ``hasMore`` is null when the server sends no paging
+   * headers (servers before run list paging); then only the newest ``limit`` runs can be listed.
+   */
+  runsPage: async (workflowId: string | undefined, options: { limit: number; before?: string }): Promise<RunPage> => {
+    const { data, headers } = await requestWithHeaders<RunSummary[]>(
+      "GET",
+      `/runs${q({ workflow_id: workflowId, limit: String(options.limit), before: options.before })}`,
+    );
+    const more = headers.get("X-Has-More");
+    return {
+      runs: data,
+      hasMore: more === null ? null : more.trim().toLowerCase() === "true",
+      nextBefore: headers.get("X-Next-Before") || null,
+    };
+  },
   resumePlan: (id: string) => request<ResumePlan>("GET", `/runs/${id}/resume`),
   resumeRun: (id: string, mode: "continue" | "restart", confirmSideEffects: boolean) =>
     request<Run>("POST", `/runs/${id}/resume`, { mode, confirm_side_effects: confirmSideEffects }),

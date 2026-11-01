@@ -14,7 +14,7 @@ import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { Output, outputFieldsOf } from "../components/Markdown";
 import { Tooltip } from "../components/Tooltip";
-import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
+import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat } from "../components/ui";
 import { NodeRunDetails, startFiles } from "../editor/RunDetails";
 import { liveUsage, runWaitsForToolApproval, waitsForToolApproval } from "../editor/store";
 import { TraceExportDialog, sanitizeSummary } from "../editor/TraceExportDialog";
@@ -27,6 +27,7 @@ import { WaitingForYouBadge } from "../runs/WaitingForYouBadge";
 import { RunInputs, useRunInputs } from "../runs/RunInputs";
 import { ResumeDialog } from "../runs/ResumeDialog";
 import { RunOrigin } from "../runs/RunOrigin";
+import { InterruptedNotice, RunOutcome, StepStatus, ToolProblemsNotice } from "../runs/RunProblems";
 import { RunSummaryLine } from "../runs/RunSummaryLine";
 import { initialStep, stepsInOrder } from "../runs/runSummary";
 import { STATUS_TONE, formatCost, formatDate, formatDuration, formatTokens, tokenBreakdown } from "../lib/format";
@@ -69,7 +70,7 @@ function Trace({ run, selected, onSelect }: { run: Run; selected: string | null;
                   <span className={`trace__bar trace__bar--${tone}`} style={{ left: `${left}%`, width: `${width}%` }} />
                 ) : null}
               </span>
-              {waitsForToolApproval(state) ? <WaitingForYouBadge /> : state ? <StatusBadge status={state.status} /> : null}
+              {waitsForToolApproval(state) ? <WaitingForYouBadge /> : state ? <StepStatus run={run} state={state} /> : null}
             </button>
           </li>
         );
@@ -163,7 +164,7 @@ export function RunDetailPage() {
         <div className="stats">
           <Stat
             label={t("runs.stats.status")}
-            value={runWaitsForToolApproval(data) ? <WaitingForYouBadge /> : <StatusBadge status={data.status} />} hint={formatDuration(data.started_at ?? data.created_at, data.finished_at)} />
+            value={runWaitsForToolApproval(data) ? <WaitingForYouBadge /> : <RunOutcome run={data} />} hint={formatDuration(data.started_at ?? data.created_at, data.finished_at)} />
           <Stat label={t("runs.stats.requests")} value={usage.requests} tip="runs.requests" />
           <Stat
             label={t("runs.stats.tokens")}
@@ -179,6 +180,7 @@ export function RunDetailPage() {
           />
         </div>
         <RunSummaryLine run={data} onOpenStep={openStep} />
+        <ToolProblemsNotice run={data} onOpenStep={openStep} />
         {imported ? (
           <Callout tone="brand">
             <strong>
@@ -207,6 +209,8 @@ export function RunDetailPage() {
           </Callout>
         ) : null}
         <RunProblem run={data} />
+        {/* The title bar already offers Continue; the notice explains why it is there. */}
+        {imported ? null : <InterruptedNotice run={data} />}
         <div className="two-column">
           <section className="panel stack" aria-label={t("runs.detail.input")}>
             <h2 className="panel__title">{t("runs.detail.input")}</h2>

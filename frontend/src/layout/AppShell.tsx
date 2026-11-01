@@ -23,10 +23,12 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
+import { useAccess } from "../api/access";
 import { useApprovals, useSettings, useToolApprovals } from "../api/hooks";
 import logoSmall from "../assets/brand/nodestro-logo-64.png";
 import { AssistantPanel } from "../assistant/AssistantPanel";
 import { useAssistant } from "../assistant/store";
+import { LoginProblemNotice, ReadOnlyNotice, UserMenu } from "../components/Access";
 import { Toaster } from "../components/toast";
 import { Hint, Segmented } from "../components/ui";
 import { isLanguage, setLanguage, storedLanguage } from "../i18n";
@@ -101,6 +103,7 @@ export function AppShell() {
   const { t } = useTranslation();
   const [theme, setTheme] = useTheme();
   const settings = useSettings();
+  const access = useAccess();
   const approvals = useApprovals();
   const toolApprovals = useToolApprovals();
   const waiting = (approvals.data?.length ?? 0) + (toolApprovals.data?.filter((item) => item.status === "pending").length ?? 0);
@@ -166,6 +169,7 @@ export function AppShell() {
               <span className="assistant-toggle__label">{t("assistant.title")}</span>
             </button>
           </Hint>
+          <UserMenu />
           <Segmented
             label={t("shell.theme")}
             value={theme}
@@ -190,13 +194,23 @@ export function AppShell() {
             <Settings size={16} aria-hidden />
             {t("nav.settings")}
           </NavLink>
-          <div className="sidebar__note">
-            <strong>{t("shell.privateTitle")}</strong>
-            <span>{t("shell.privateText")}</span>
-          </div>
+          {/* "Runs only on your computer" is true for the desktop app only; a server says where the data is instead. */}
+          {access.profile === "desktop" ? (
+            <div className="sidebar__note">
+              <strong>{t("shell.privateTitle")}</strong>
+              <span>{t("shell.privateText")}</span>
+            </div>
+          ) : access.profile === "server" ? (
+            <div className="sidebar__note" data-testid="server-note">
+              <strong>{t("admin.server.title")}</strong>
+              <span>{t("admin.server.text")}</span>
+            </div>
+          ) : null}
         </div>
       </nav>
       <main id="main" className="content">
+        <LoginProblemNotice />
+        <ReadOnlyNotice />
         <Outlet />
       </main>
       {assistantOpen ? <AssistantPanel /> : null}

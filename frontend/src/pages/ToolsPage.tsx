@@ -45,6 +45,7 @@ import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
 import { ErrorText, LocalError, ProblemText, problemText } from "../lib/errors";
 import { formatCost, relativeTime } from "../lib/format";
+import { ToolOutputProblem } from "../runs/ToolOutputProblem";
 import { ServicesTab } from "./ToolsServices";
 
 type Tab = "library" | "services" | "write" | "generate";
@@ -56,6 +57,9 @@ export function ToolsPage() {
   const setTab = (value: Tab) =>
     setParams(value === "library" ? {} : { tab: value }, { replace: true });
   const settings = useSettings();
+  // The sandbox note is about Nodestro's own tools; a connected service runs elsewhere (AD-12).
+  const [shownKind, setShownKind] = useState<string | null>(null);
+  const sandboxNote = tab !== "services" && !(tab === "library" && shownKind === "mcp");
   return (
     <div className="page">
       <PageHeader
@@ -86,13 +90,13 @@ export function ToolsPage() {
       />
       <div className="page__body">
         <PendingDrafts />
-        {tab === "library" ? <Library /> : null}
+        {tab === "library" ? <Library onShownKind={setShownKind} /> : null}
         {tab === "services" ? <ServicesTab /> : null}
         {tab === "write" ? (
           <WriteTool onSaved={() => setTab("library")} />
         ) : null}
         {tab === "generate" ? <GenerateTool /> : null}
-        {settings.data ? (
+        {settings.data && sandboxNote ? (
           <p className="muted small page__note">
             <HelpTip id="tools.sandbox" label={t("tools.sandbox")} />{" "}
             <ShieldCheck size={12} aria-hidden />{" "}
@@ -130,7 +134,7 @@ function PendingDrafts() {
   );
 }
 
-function Library() {
+function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void }) {
   const { t } = useTranslation();
   const tools = useTools();
   const organize = useOrganize();
@@ -156,6 +160,8 @@ function Library() {
   );
   const tool =
     tools.data?.find((item) => item.name === selected) ?? shown[0] ?? null;
+  const shownKind = tool?.kind ?? null;
+  useEffect(() => onShownKind?.(shownKind), [shownKind, onShownKind]);
   if (tools.isLoading) return <Spinner />;
   if (tools.error)
     return (
@@ -400,6 +406,7 @@ function ToolDetail({
           {t("tools.run")}
         </Button>
       </div>
+      {result?.is_error ? <ToolOutputProblem output={result.output} /> : null}
       {result ? (
         <pre
           className={`code-block ${result.is_error ? "code-block--error" : ""}`}

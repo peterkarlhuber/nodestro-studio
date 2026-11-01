@@ -4,12 +4,13 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { Output, outputFieldsOf } from "../components/Markdown";
-import { IconButton, Stat, StatusBadge } from "../components/ui";
+import { IconButton, Stat } from "../components/ui";
 import { formatCost, formatTokens, tokenBreakdown } from "../lib/format";
 import { RunApprovals } from "../runs/ApprovalCard";
 import { CancelRunButton } from "../runs/CancelRunButton";
 import { RunProblem } from "../runs/RunProblem";
 import { WaitingForYouBadge } from "../runs/WaitingForYouBadge";
+import { InterruptedNotice, RunOutcome, StepStatus, ToolProblemsNotice } from "../runs/RunProblems";
 import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { useEditorLayout } from "./layout";
 import { NodeRunDetails, startFiles } from "./RunDetails";
@@ -59,7 +60,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
             waitingForYou ? (
               <WaitingForYouBadge />
             ) : (
-              <StatusBadge status={run.status} label={live ? t("status.running.label") : undefined} />
+              <RunOutcome run={run} label={live ? t("status.running.label") : undefined} />
             )
           ) : (
             <span className="muted small">{t("runs.panel.notStarted")}</span>
@@ -101,7 +102,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                           onClick={() => setFocus(node.id)}
                         >
                           <span>{node.label}</span>
-                          {waitsForToolApproval(state) ? <WaitingForYouBadge /> : state ? <StatusBadge status={state.status} /> : null}
+                          {waitsForToolApproval(state) ? <WaitingForYouBadge /> : state ? <StepStatus run={run} state={state} /> : null}
                         </button>
                       </li>
                     );
@@ -126,6 +127,8 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                 ) : (
                   <div className="node-run">
                     <RunProblem run={run} />
+                    <InterruptedNotice run={run} />
+                    <ToolProblemsNotice run={run} onOpenStep={setFocus} />
                     {paused ? <RunApprovals run={run} /> : null}
                     {run.status === "running" || run.status === "paused" ? <RunToolApprovals run={run} /> : null}
                     {live ? (

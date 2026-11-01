@@ -194,13 +194,25 @@ try {
   await dialog.getByTestId("api-try-body").fill('{"values": {"menge": 3}}');
   await dialog.getByTestId("api-try-validate").click();
   await dialog.getByRole("alert").first().waitFor();
-  check((await dialog.getByRole("alert").first().textContent()).includes("kunde"), "A missing field is named");
+  const refusal = await dialog.getByRole("alert").first().textContent();
+  check(/kunde/i.test(refusal) && refusal.includes("fehlt"), "A missing field is named, with what is wrong");
+  check(!/\.(int|float)\b/.test(refusal), "No technical union branches in the field problems");
+  await dialog.getByTestId("api-try-body").fill('{"values": {"kunde": "ACME", "menge": "viele"}}');
+  await dialog.getByTestId("api-try-validate").click();
+  await dialog.getByTestId("request-problems").getByText("muss eine Zahl sein", { exact: false }).waitFor();
+  const numberRefusal = await dialog.getByTestId("request-problems").textContent();
+  check(/Menge/.test(numberRefusal) && !/\.(int|float)\b/.test(numberRefusal), "A number field is reported once, by its label (AD-15)");
   await shot("api-05-try");
 
   // ---- documentation and export -------------------------------------------------------------
   await dialog.getByTestId("api-tab-docs").click();
   await dialog.getByText("/runs/{run_id}/approve", { exact: false }).first().waitFor();
   check(true, "The documentation lists the endpoints");
+  await dialog.getByRole("radio", { name: "Python-SDK" }).click();
+  const sdk = await dialog.getByTestId("api-sdk").textContent();
+  check(sdk.includes("PublishedWorkflow(") && sdk.includes("wait_for_result"), "The documentation offers the Python SDK (AD-16)");
+  await dialog.getByRole("radio", { name: "TypeScript-SDK" }).click();
+  check((await dialog.getByTestId("api-sdk").textContent()).includes("waitForResult"), "The documentation offers the TypeScript SDK");
   await dialog.getByTestId("api-tab-export").click();
   await dialog.getByTestId("api-export-create").click();
   await dialog.getByTestId("api-exports").waitFor();

@@ -26,10 +26,11 @@ import { toast } from "../components/toast";
 import { formatNumber } from "../lib/format";
 import { childLink, parseTrail } from "../lib/trail";
 import { useEditorLayout } from "./layout";
-import { type FlowNodeData, branchLabel, isBranchTaken, nodeTypes } from "./nodes";
+import { type FlowNodeData, nodeTypes } from "./nodes";
 import { type TeamPreset, connectionProblem, useEditor } from "./store";
 import { removeWithUndo } from "./actions";
 import { NEW_NODE, openingViewport, registerCanvasView } from "./viewport";
+import { branchLabel, isBranchTaken } from "./branches";
 
 export const DRAG_TYPE = "application/x-nodestro-node";
 

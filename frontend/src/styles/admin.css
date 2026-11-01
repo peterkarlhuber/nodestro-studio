@@ -1,0 +1,107 @@
+/* Server profile and trust details (AD work package): the signed-in user, read-only roles, run outcomes. */
+
+.user-menu {
+  position: relative;
+}
+
+.user-menu > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-sm);
+  background: var(--nd-surface);
+  color: var(--nd-text);
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.user-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.user-menu__name {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu__panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(300px, calc(100vw - 32px));
+  padding: 12px;
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-md);
+  background: var(--nd-surface-raised);
+  box-shadow: var(--nd-shadow-popover);
+}
+
+.user-menu__panel p {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .user-menu__name,
+  .user-menu__role {
+    display: none;
+  }
+}
+
+.read-only-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--nd-border);
+  background: var(--nd-warning-soft);
+  color: var(--nd-text);
+  font-size: 12px;
+}
+
+.read-only-notice > svg {
+  color: var(--nd-warning);
+}
+
+.permission-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.run-outcome {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.tool-problems {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+
+.tool-problems li + li {
+  margin-top: 4px;
+}
+
+.field-problem {
+  color: var(--nd-danger);
+  font-size: 11px;
+}
+
+/* A footer with many choices (e.g. the save conflict) wraps instead of cutting a button off. */
+.modal__foot {
+  flex-wrap: wrap;
+}

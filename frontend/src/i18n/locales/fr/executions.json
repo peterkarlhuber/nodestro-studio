@@ -27,5 +27,10 @@
     "actions": "Actions"
   },
   "importedBadge": "Importée",
-  "delete": "Supprimer l’exécution"
+  "delete": "Supprimer l’exécution",
+  "limited_one": "Affichage de l’exécution la plus récente.",
+  "limited_other": "Affichage des {{count}} exécutions les plus récentes.",
+  "limitedFilters": "Les filtres par statut et par origine ne cherchent que dans ces exécutions.",
+  "loadOlder": "Charger les exécutions plus anciennes",
+  "limitReached": "Les exécutions plus anciennes restent enregistrées mais ne sont pas listées ici ; choisissez un workflow dans le filtre pour y accéder."
 }

@@ -95,6 +95,12 @@ async function openRules() {
   await userEvent.click(screen.getByText("Regeln für Tool-Aufrufe"));
 }
 
+/** The rules with approvals off: open the folded preparation too. */
+async function openPreparation() {
+  await openRules();
+  await userEvent.click(await screen.findByText("Vorbereitung für Administratoren"));
+}
+
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
@@ -122,7 +128,11 @@ describe("ToolApprovalRules", () => {
     serve();
     render(wrap(<ToolApprovalRules />));
     await openRules();
-    expect(await screen.findByText("Aus")).toBeInTheDocument();
+    // While approvals are off, one sentence; the preparation is folded away (AD-14).
+    const off = await screen.findByTestId("tool-approvals-off");
+    expect(within(off).getByText(/nicht eingeschaltet/)).toBeInTheDocument();
+    expect(screen.getAllByText("Aus").length).toBeGreaterThan(0);
+    await userEvent.click(screen.getByText("Vorbereitung für Administratoren"));
     expect(screen.getByTestId("legacy-not-run")).toBeInTheDocument();
     const grants = await screen.findByTestId("pre-grants");
     expect(within(grants).getByText("mailer")).toBeInTheDocument();
@@ -130,6 +140,28 @@ describe("ToolApprovalRules", () => {
     const audit = await screen.findByTestId("tool-approval-audit");
     expect(within(audit).getByText("Entscheidung abgelehnt")).toBeInTheDocument();
     expect(within(audit).getByText(/hat sich seit der Anzeige geändert/)).toBeInTheDocument();
+  });
+
+  it("phrases the activation step for approvals that are already on", async () => {
+    serve((_method, url) => (url === "/api/tool-approvals/legacy" ? { enabled: true, legacy: null } : undefined));
+    render(wrap(<ToolApprovalRules />));
+    await openRules();
+    expect(await screen.findByTestId("legacy-not-run")).toHaveTextContent(/wie neue nachgefragt/);
+  });
+
+  it("hides granting and the audit trail from a server role without admin", async () => {
+    serve((_method, url) =>
+      url === "/api/auth/me"
+        ? { user_id: "u", tenant_id: "acme", role: "viewer", permissions: ["read"], tenants: { acme: "viewer" } }
+        : url === "/api/tool-approvals/legacy"
+          ? { enabled: true, legacy: null }
+          : undefined,
+    );
+    render(wrap(<ToolApprovalRules />));
+    await openRules();
+    expect(await screen.findByTestId("permission-note-admin")).toHaveTextContent(/Betrachter/);
+    expect(screen.queryByTestId("pre-grants")).toBeNull();
+    expect(screen.queryByRole("button", { name: "Bestehende Zuweisungen markieren" })).toBeNull();
   });
 
   it("lists the exceptions from before once the activation step ran", async () => {
@@ -159,7 +191,8 @@ describe("ToolApprovalRules", () => {
     const table = await screen.findByTestId("legacy-bindings");
     expect(within(table).getByText("Workflow wf_1")).toBeInTheDocument();
     expect(within(table).getByText("writer")).toBeInTheDocument();
-    expect(screen.getByText("Ein")).toBeInTheDocument();
+    expect(screen.getAllByText("Ein").length).toBeGreaterThan(0);
+    expect(screen.queryByTestId("tool-approvals-off")).toBeNull();
   });
 
   it("revokes a grant after a second click", async () => {
@@ -167,7 +200,7 @@ describe("ToolApprovalRules", () => {
       method === "DELETE" ? { ...GRANT, revoked_at: "2026-10-31T12:00:00Z", revoked_by: "local" } : undefined,
     );
     render(wrap(<ToolApprovalRules />));
-    await openRules();
+    await openPreparation();
     const grants = await screen.findByTestId("pre-grants");
     await userEvent.click(within(grants).getByRole("button", { name: "Widerrufen" }));
     await userEvent.click(within(grants).getByRole("button", { name: /Widerrufen\?/ }));
@@ -182,7 +215,7 @@ describe("ToolApprovalRules", () => {
   it("grants one tool in advance for one schedule", async () => {
     const fetch = serve((method, url) => (method === "POST" && url === "/api/tool-pre-grants" ? GRANT : undefined));
     render(wrap(<ToolApprovalRules />));
-    await openRules();
+    await openPreparation();
     const form = await screen.findByRole("form", {
       name: "Neue Vorab-Freigabe",
     });
