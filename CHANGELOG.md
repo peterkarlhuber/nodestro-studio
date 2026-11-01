@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Security fix: stale tools in server workers (S-2 pilot finding F1, 2026-11-01)
+
+- Every process of an installation (the API and each server worker) now sees tool changes and deletions made by
+  another process at its next lookup. A running step refuses a tool whose version changed or was deleted after the
+  step started ("the tool was changed or deleted after this step started"), also after an approval or advance
+  approval for the old version; start the run again to use the current version. No UI change.
+- Pins: `nodestro-runtime` `6ac4ae3` (before `081705d`), `nodestro-examples` `1da29b7` (before `b5aa4db`),
+  `nodestro-integrations` `5cfdd3a` (before `4ae9fdd`), `nodestro-api` `ebd99b3` (before `ee67eac`); in
+  `platform/versions.json` also `nodestro-sdk` `683df5e` (before `db7fd37`).
+
 ### Orchestrators: dynamic teams and approvals inside teams (AO M6b)
 
 - Run details of an orchestrator: which orchestrator works with which model, decisions used of the limit, the
