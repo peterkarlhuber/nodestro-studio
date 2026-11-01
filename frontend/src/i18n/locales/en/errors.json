@@ -116,7 +116,10 @@
     "orchestrator_no_members": "{{node}} has no teams to choose from.",
     "orchestrator_member_duplicate": "{{node}} names a team twice.",
     "orchestrator_self": "{{node}} would choose its own workflow as a team.",
-    "orchestrator_limits": "{{node}} allows one team more often than it may decide at all."
+    "orchestrator_limits": "{{node}} allows one team more often than it may decide at all.",
+    "revision_invalid": "The save named an unknown version of the workflow. Reload the page and save again.",
+    "conflict": "The workflow “{{name}}” was changed since you opened it. Reload it to see the latest version.",
+    "runs_active": "Runs of this workflow are still going. Delete it once they have finished or were cancelled."
   },
   "run": {
     "failed": "The step failed.",
@@ -169,7 +172,11 @@
     "api_error_invalid": "{{provider}} rejected the request as invalid.",
     "api_error_status": "{{provider}} rejected the request (status {{status}}).",
     "already_queued": "This run is already waiting or running, so it was not started a second time. Wait until it ends, or follow it on the Runs page.",
-    "not_executable": "This run cannot be started: only a waiting or paused run can run, and this one is already running or has ended. Open it on the Runs page to see its state."
+    "not_executable": "This run cannot be started: only a waiting or paused run can run, and this one is already running or has ended. Open it on the Runs page to see its state.",
+    "provider_auth": "{{provider}} did not accept the API key: it is missing, wrong, expired or lacks permission.",
+    "provider_unreachable": "{{provider}} could not be reached.",
+    "provider_rate_limited": "{{provider}} reported too many requests or tokens in a short time (rate limit).",
+    "provider_overloaded": "{{provider}} is overloaded right now."
   },
   "trace": {
     "invalid": "The trace is damaged or incomplete.",
@@ -501,7 +508,7 @@
     "memory_included": "Memory {{space}}: its current content becomes the starting memory.",
     "memory_empty": "Memory {{space}} starts empty in the export.",
     "distribution_unconfirmed": "Confirm that you may pass on the source code of Orkexa, or choose the Git reference.",
-    "private_repository": "Installing the export needs read access to the repository peterkarlhuber/orkexa while it is private.",
+    "private_repository": "Installing the export needs read access to the repository peterkarlhuber/orkexa while it is private. Without that access, choose “Include source”.",
     "bundled_library": "The source code of Orkexa is copied into the project (MIT license included).",
     "runtime_differs": "This version was published with {{published}}; the export contains the current runtime {{current}}.",
     "tool_libraries": "The approved tool libraries are installed with the project: {{packages}}.",
@@ -785,8 +792,18 @@
       "budget_exceeded": "Raise the budget in the workflow settings, or continue the run with a new budget.",
       "time_limit": "Raise the time limit under \"Limits\" in the workflow settings if the run needs more time.",
       "step_limit": "Raise the step limit under \"Limits\" in the workflow settings, or check for loops.",
-      "orchestration_limit": "Raise \"Maximum decisions\" on the orchestrator, or say in its instructions when the task is done."
+      "orchestration_limit": "Raise \"Maximum decisions\" on the orchestrator, or say in its instructions when the task is done.",
+      "provider_auth": "Check the key under Settings → AI providers and test the connection there.",
+      "provider_unreachable": "Check the internet connection, firewall or proxy, then continue the run.",
+      "provider_rate_limited": "Wait a moment and continue the run. Fewer runs at the same time or a higher limit with the provider help for good.",
+      "provider_overloaded": "This is not caused by your workflow. Wait a few minutes, then continue the run."
     }
   },
-  "setupProvider": "Set up AI provider"
+  "setupProvider": "Set up AI provider",
+  "runs": {
+    "cursor_invalid": "This part of the run list cannot be found. Go back to the start of the list."
+  },
+  "model_choice": {
+    "node_unknown": "The workflow has no agent “{{node}}” any more. Reload the page."
+  }
 }

@@ -26,6 +26,8 @@ function LanguagePicker() {
   const queryClient = useQueryClient();
   const admin = useAccess().can("admin");
   const [choice, setChoice] = useState<string>(() => storedLanguage() ?? AUTOMATIC);
+  // Every language but English is fetched on first use; the picker waits for it.
+  const [loading, setLoading] = useState(false);
   const remember = useMutation({
     mutationFn: (language: Language | null) => api.saveSettings({ language }),
     onSuccess: (data) => queryClient.setQueryData(keys.settings, data),
@@ -33,8 +35,18 @@ function LanguagePicker() {
   });
   const change = async (value: string) => {
     const language = value === AUTOMATIC ? null : (value as Language);
+    const previous = choice;
     setChoice(value);
-    await setLanguage(language);
+    setLoading(true);
+    try {
+      await setLanguage(language);
+    } catch (error) {
+      setChoice(previous);
+      toast.errorAbout(t("settings.language.loadFailed"), error);
+      return;
+    } finally {
+      setLoading(false);
+    }
     // Without the right to change the settings the choice stays in this browser only (no refused request).
     if (admin) remember.mutate(language);
   };
@@ -47,11 +59,19 @@ function LanguagePicker() {
       <Field
         label={t("settings.language.label")}
         htmlFor="settings-language-select"
-        hint={choice === AUTOMATIC ? t("settings.language.automaticHint", { language: LANGUAGE_NAMES[currentLanguage()] }) : t("settings.language.hint")}
+        hint={
+          loading
+            ? t("settings.language.loading")
+            : choice === AUTOMATIC
+              ? t("settings.language.automaticHint", { language: LANGUAGE_NAMES[currentLanguage()] })
+              : t("settings.language.hint")
+        }
       >
         <Select
           id="settings-language-select"
           value={choice}
+          disabled={loading}
+          aria-busy={loading || undefined}
           onChange={(value) => void change(value)}
           options={[
             { value: AUTOMATIC, label: t("settings.language.automatic") },
@@ -120,7 +140,8 @@ export function SettingsPage() {
 
         <section className="panel stack" aria-labelledby="settings-models">
           <h2 className="panel__title" id="settings-models">
-            <Cpu size={15} aria-hidden /> {t("settings.models.title")}
+            <Cpu size={15} aria-hidden /> {t("settings.models.title")}{" "}
+            <HelpTip id="settings.defaultModel" label={t("settings.models.title")} />
           </h2>
           {settings.data ? <DefaultModelNotice settings={settings.data} /> : null}
           <Field label={t("settings.models.defaultModel")} tip="settings.defaultModel" hint={defaultHint ?? t("settings.models.defaultHint")}>

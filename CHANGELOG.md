@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+### UX initiative: usability, accessibility, performance and docs of the studio (2026-11-01)
+
+Studio #61, #63, #69, #70, #72, #73 and this change; frontend, e2e and in-app docs only. No security mechanism was
+removed or weakened, and no feature flag default changed (per-call tool approvals stay off; MCP stays the accepted
+read-only pilot).
+
+- Navigation in four groups (Build, Run & review, Automate & test, Help); page titles name the page; "Runs".
+- First steps: start choices on the workflow page, a "model needed" notice with the way to the settings, a Continue
+  area, a teams section, a gallery with levels, "Start here" and "What you need", and a welcome page.
+- Editor: disabled controls say why (with the fix one click away), multi-select with undo, an orchestrator inspector
+  in four areas, a "waiting for you" badge, keyboard connections in the inspector, a save conflict dialog
+  (`If-Match`, 409 `workflow.conflict`) and a clear refusal of files that are not workflow exports.
+- Runs: the failure is explained at the step that failed (provider failure codes `run.provider_*` first), a
+  "Finished with problems" chip when tool calls did not succeed, "Not finished" steps with the way to continue,
+  structured output with the JSON one click away, an orchestrator view per decision with its team runs, adaptive
+  refresh and "Load older runs" (`before` paging).
+- Server mode: the profile from `meta.profile`, a user menu with role, permissions, workspace switch and sign-out,
+  a read-only notice, controls hidden or explained by permission; desktop-only privacy wording.
+- Accessibility (WCAG 2.2 AA work, automated checks): dialog focus, labelled fields, keyboard connections,
+  contrast tokens of the light theme, underlined links, a phone navigation, 24 px targets, reduced motion; axe:
+  critical violations on the scanned views 18 → 0. A new browser suite `a11y` (axe-core 4.11.0) runs in
+  `scripts/e2e.sh`.
+- Performance: per-language chunks for the interface texts and the docs, lazy editor, CodeMirror, Markdown and
+  canvases; main chunk 2.36 MB → 0.91 MB raw (726 → 259 kB gzip).
+- Texts: all six languages complete and checked by a quality test (plurals, untranslated texts, terminology in
+  `docs/i18n/terminology.md`); clearer error sentences; in-app docs updated in all six languages, including server
+  sign-in, roles and the members commands.
+
 ### Pins: PostgreSQL read performance (2026-11-01)
 
 - Pins `nodestro-runtime` `d141b8f` (before: `6eacec1`), `nodestro-api` `db6a696` (before: `7997bb4`),

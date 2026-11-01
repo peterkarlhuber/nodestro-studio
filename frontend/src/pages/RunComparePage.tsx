@@ -235,7 +235,9 @@ export function RunComparePage() {
               <table className="table compare" data-testid="compare-table">
                 <thead>
                   <tr>
-                    <th />
+                    <th>
+                      <span className="sr-only">{t("compare.rowHeader")}</span>
+                    </th>
                     <th>
                       <RunHead run={runA.data} letter="A" />
                     </th>

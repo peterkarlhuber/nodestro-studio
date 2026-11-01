@@ -64,6 +64,6 @@
     "staleNotice_one": "{{count}} request was priced with a price that had not been checked for a while.",
     "staleNotice_other": "{{count}} requests were priced with prices that had not been checked for a while.",
     "basis": "Calculated with price versions {{versions}} from {{sources}}",
-    "quality": "lowest price quality: {{quality}}"
+    "quality": "price reliability: {{quality}} (the weakest price used)"
   }
 }

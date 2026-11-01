@@ -116,7 +116,10 @@
     "orchestrator_no_members": "{{node}} non ha team tra cui scegliere.",
     "orchestrator_member_duplicate": "{{node}} indica un team due volte.",
     "orchestrator_self": "{{node}} sceglierebbe il proprio workflow come team.",
-    "orchestrator_limits": "{{node}} consente a un team più impieghi delle decisioni totali."
+    "orchestrator_limits": "{{node}} consente a un team più impieghi delle decisioni totali.",
+    "revision_invalid": "Il salvataggio indicava una versione sconosciuta del workflow. Ricarica la pagina e salva di nuovo.",
+    "conflict": "Il workflow «{{name}}» è stato modificato da quando l'hai aperto. Ricaricalo per vedere la versione più recente.",
+    "runs_active": "Alcune esecuzioni di questo workflow sono ancora in corso. Eliminalo quando saranno terminate o annullate."
   },
   "run": {
     "failed": "Il passaggio non è riuscito.",
@@ -169,7 +172,11 @@
     "api_error_invalid": "{{provider}} ha rifiutato la richiesta come non valida.",
     "api_error_status": "{{provider}} ha rifiutato la richiesta (stato {{status}}).",
     "already_queued": "Questa esecuzione è già in attesa o in corso, quindi non è stata avviata una seconda volta. Aspetta che finisca o seguila nella pagina Esecuzioni.",
-    "not_executable": "Questa esecuzione non può essere avviata: può partire solo un’esecuzione in attesa o in pausa, e questa è già in corso o è terminata. Aprila nella pagina Esecuzioni per vederne lo stato."
+    "not_executable": "Questa esecuzione non può essere avviata: può partire solo un’esecuzione in attesa o in pausa, e questa è già in corso o è terminata. Aprila nella pagina Esecuzioni per vederne lo stato.",
+    "provider_auth": "{{provider}} non ha accettato la chiave API: manca, è errata, è scaduta o non ha i permessi necessari.",
+    "provider_unreachable": "{{provider}} non è raggiungibile.",
+    "provider_rate_limited": "{{provider}} ha segnalato troppe richieste o troppi token in poco tempo (limite di frequenza).",
+    "provider_overloaded": "{{provider}} è sovraccarico in questo momento."
   },
   "trace": {
     "invalid": "La traccia è danneggiata o incompleta.",
@@ -501,7 +508,7 @@
     "memory_included": "Memoria {{space}}: il contenuto attuale diventa la memoria iniziale.",
     "memory_empty": "La memoria {{space}} parte vuota nell’esportazione.",
     "distribution_unconfirmed": "Conferma di poter cedere il codice sorgente di Orkexa, oppure scegli il riferimento Git.",
-    "private_repository": "Per installare l’esportazione serve l’accesso in lettura al repository peterkarlhuber/orkexa finché è privato.",
+    "private_repository": "Per installare l’esportazione serve l’accesso in lettura al repository peterkarlhuber/orkexa finché è privato. Senza questo accesso, scegli «Includi il codice sorgente».",
     "bundled_library": "Il codice sorgente di Orkexa viene copiato nel progetto (licenza MIT inclusa).",
     "runtime_differs": "Questa versione è stata pubblicata con {{published}}; l’esportazione contiene il runtime attuale {{current}}.",
     "tool_libraries": "Le librerie approvate degli strumenti vengono installate con il progetto: {{packages}}.",
@@ -785,8 +792,18 @@
       "budget_exceeded": "Aumenta il budget nelle impostazioni del workflow, oppure continua l'esecuzione con un nuovo budget.",
       "time_limit": "Aumenta il limite di tempo in «Limiti» nelle impostazioni del workflow se l'esecuzione ha bisogno di più tempo.",
       "step_limit": "Aumenta il limite di passaggi in «Limiti» nelle impostazioni del workflow, oppure controlla i cicli.",
-      "orchestration_limit": "Aumenta «Numero massimo di decisioni» sull'orchestratore, oppure indica nelle sue istruzioni quando il compito è concluso."
+      "orchestration_limit": "Aumenta «Numero massimo di decisioni» sull'orchestratore, oppure indica nelle sue istruzioni quando il compito è concluso.",
+      "provider_auth": "Controlla la chiave in Impostazioni → Provider di IA e prova lì la connessione.",
+      "provider_unreachable": "Controlla la connessione a internet, il firewall o il proxy, poi continua l'esecuzione.",
+      "provider_rate_limited": "Aspetta un momento e continua l'esecuzione. Meno esecuzioni contemporanee o un limite più alto presso il provider risolvono a lungo termine.",
+      "provider_overloaded": "Non dipende dal tuo workflow. Aspetta qualche minuto, poi continua l'esecuzione."
     }
   },
-  "setupProvider": "Configura provider di IA"
+  "setupProvider": "Configura provider di IA",
+  "runs": {
+    "cursor_invalid": "Questa parte dell'elenco delle esecuzioni non è stata trovata. Torna all'inizio dell'elenco."
+  },
+  "model_choice": {
+    "node_unknown": "Il workflow non ha più nessun agente «{{node}}». Ricarica la pagina."
+  }
 }

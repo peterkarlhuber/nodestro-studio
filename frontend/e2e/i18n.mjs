@@ -103,6 +103,39 @@ try {
     await context.close();
   }
 
+  // No flash of English: every language but English is a chunk of its own, and the first render waits for it.
+  // The chunk is held back for a moment so that a render before it arrives would be seen.
+  for (const [locale, stored, expected] of [
+    ["de-DE", null, "de"],
+    ["en-US", "fr", "fr"],
+  ]) {
+    const { context, page, errors } = await open({ locale });
+    if (stored) await page.addInitScript((value) => localStorage.setItem("nodestro-language", value), stored);
+    await page.addInitScript(() => {
+      window.__navTexts = [];
+      new MutationObserver(() => {
+        const text = document.querySelector('.sidebar a[href="/settings"]')?.textContent?.trim();
+        if (text && window.__navTexts.at(-1) !== text) window.__navTexts.push(text);
+      }).observe(document, { subtree: true, childList: true, characterData: true });
+    });
+    const chunks = [];
+    await page.route(/\/assets\/(de|es|fr|it|pt-BR)-[\w-]+\.js$/, async (route) => {
+      chunks.push(new URL(route.request().url()).pathname);
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      await route.continue();
+    });
+    await page.goto(base + "/");
+    await page.locator('.sidebar a[href="/settings"]', { hasText: nav[expected].settings }).waitFor({ timeout: 10000 });
+    const seen = await page.evaluate(() => window.__navTexts);
+    check(
+      seen.length > 0 && seen.every((text) => text === nav[expected].settings),
+      `${stored ? `stored ${stored}` : `browser ${locale}`}: the first render is already in ${expected} (seen: ${seen.join(", ")})`,
+    );
+    check(chunks.length === 1 && chunks[0].includes(`/${expected}-`), `only the ${expected} texts are fetched (${chunks.join(", ")})`);
+    check(errors.length === 0, `no console errors while loading ${expected}${errors.length ? `: ${errors.join(" | ")}` : ""}`);
+    await context.close();
+  }
+
   // Switching: immediate, stored, and without any request besides saving the setting.
   {
     const { context, page, errors } = await open({ locale: "de-DE" });

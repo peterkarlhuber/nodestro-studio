@@ -154,7 +154,8 @@ export function AppShell() {
   }, [defaultModel]);
   useEffect(() => {
     // A language chosen in another browser applies here too, unless this browser has its own choice.
-    if (isLanguage(savedLanguage) && !storedLanguage()) void setLanguage(savedLanguage);
+    // A failed fetch of its texts keeps the current language; the settings page can try again.
+    if (isLanguage(savedLanguage) && !storedLanguage()) setLanguage(savedLanguage).catch(() => undefined);
   }, [savedLanguage]);
   const assistantOpen = useAssistant((state) => state.open);
   const assistantWide = useAssistant((state) => state.wide);

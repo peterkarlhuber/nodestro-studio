@@ -64,6 +64,6 @@
     "staleNotice_one": "{{count}} Anfrage wurde mit einem Preis berechnet, der länger nicht geprüft wurde.",
     "staleNotice_other": "{{count}} Anfragen wurden mit Preisen berechnet, die länger nicht geprüft wurden.",
     "basis": "Berechnet mit den Preisversionen {{versions}} aus {{sources}}",
-    "quality": "niedrigste Preisqualität: {{quality}}"
+    "quality": "Preisverlässlichkeit: {{quality}} (schwächster verwendeter Preis)"
   }
 }

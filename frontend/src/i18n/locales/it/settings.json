@@ -8,6 +8,8 @@
     "automatic": "Automatica (lingua del browser)",
     "automaticHint": "Segue la lingua del tuo browser, attualmente {{language}}. Le lingue non supportate mostrano l’inglese.",
     "hint": "Vale subito e viene ricordata, anche dopo un riavvio.",
+    "loading": "Caricamento della lingua …",
+    "loadFailed": "Impossibile caricare la lingua",
     "contentNote": "La lingua cambia solo l’interfaccia. I tuoi agenti, prompt, workflow e risultati restano nella lingua originale. Le nuove bozze degli assistenti IA vengono scritte in questa lingua, a meno che tu non ne chieda un’altra."
   },
   "models": {

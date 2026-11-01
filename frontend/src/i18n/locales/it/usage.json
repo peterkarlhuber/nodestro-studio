@@ -64,6 +64,6 @@
     "staleNotice_one": "{{count}} richiesta è stata calcolata con un prezzo non verificato da un po’.",
     "staleNotice_other": "{{count}} richieste sono state calcolate con prezzi non verificati da un po’.",
     "basis": "Calcolato con le versioni di prezzo {{versions}} da {{sources}}",
-    "quality": "qualità di prezzo più bassa: {{quality}}"
+    "quality": "affidabilità dei prezzi: {{quality}} (il prezzo meno sicuro usato)"
   }
 }

@@ -1,6 +1,6 @@
 {
   "title": "Model prices",
-  "intro": "Nodestro estimates costs with these prices in US dollars per million tokens. Orkexa calculates every cost; the prices are checked against their sources regularly, large changes wait for your review, and individual prices (for example contract prices) win over the reference prices.",
+  "intro": "Nodestro estimates costs with these prices in US dollars per million tokens. Orkexa, the AI library inside Nodestro, calculates every cost; the prices are checked against their sources regularly, large changes wait for your review, and individual prices (for example contract prices) win over the reference prices.",
   "tableTitle_one": "{{count}} price",
   "tableTitle_other": "{{count}} prices",
   "overrides_one": "{{count}} individual price",

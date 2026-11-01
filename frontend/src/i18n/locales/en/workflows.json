@@ -52,5 +52,6 @@
     "text": "Workflows an orchestrator can delegate to (they declare capabilities or an output contract). Copies of orchestrated examples bring their teams along.",
     "badge": "Team",
     "badgeHint": "An orchestrator can delegate work to this workflow"
-  }
+  },
+  "changedJustNow": "changed just now"
 }

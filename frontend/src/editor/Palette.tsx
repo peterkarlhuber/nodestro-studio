@@ -177,34 +177,37 @@ export function Palette({ onDesign, panelRef }: { onDesign: () => void; panelRef
             ))}
         {!compact && teams.length ? (
           // Teams can be many (every copied adaptive example brings some): a closable group with a search.
-          <details className="palette__group" open={teams.length <= TEAM_SEARCH_FROM} data-testid="palette-teams">
-            <summary className="palette__label palette__label--toggle">
-              {t("editor.palette.teamsCount", { count: teams.length })}{" "}
+          // The help button stands next to the summary, not inside it (a button in a button, AX-09).
+          <div className="palette__group-frame">
+            <span className="palette__group-tip">
               <HelpTip id="workflow.contract" label={t("editor.palette.teams")} />
-            </summary>
-            {teams.length > TEAM_SEARCH_FROM ? (
-              <TextInput
-                type="search"
-                className="palette__search"
-                value={teamQuery}
-                placeholder={t("editor.palette.searchTeams")}
-                aria-label={t("editor.palette.searchTeams")}
-                onChange={(event) => setTeamQuery(event.target.value)}
-                data-testid="palette-team-search"
-              />
-            ) : null}
-            {shownTeams.map((team) => (
-              <Item
-                key={team.id}
-                compact={false}
-                icon={Users}
-                label={team.name}
-                hint={teamHint(t, team.capabilities ?? [], team.contract ?? [])}
-                payload={{ type: "subworkflow", team: { workflow_id: team.id, name: team.name } }}
-              />
-            ))}
-            {!shownTeams.length ? <p className="palette__empty">{t("editor.palette.noTeamMatch")}</p> : null}
-          </details>
+            </span>
+            <details className="palette__group" open={teams.length <= TEAM_SEARCH_FROM} data-testid="palette-teams">
+              <summary className="palette__label palette__label--toggle">{t("editor.palette.teamsCount", { count: teams.length })}</summary>
+              {teams.length > TEAM_SEARCH_FROM ? (
+                <TextInput
+                  type="search"
+                  className="palette__search"
+                  value={teamQuery}
+                  placeholder={t("editor.palette.searchTeams")}
+                  aria-label={t("editor.palette.searchTeams")}
+                  onChange={(event) => setTeamQuery(event.target.value)}
+                  data-testid="palette-team-search"
+                />
+              ) : null}
+              {shownTeams.map((team) => (
+                <Item
+                  key={team.id}
+                  compact={false}
+                  icon={Users}
+                  label={team.name}
+                  hint={teamHint(t, team.capabilities ?? [], team.contract ?? [])}
+                  payload={{ type: "subworkflow", team: { workflow_id: team.id, name: team.name } }}
+                />
+              ))}
+              {!shownTeams.length ? <p className="palette__empty">{t("editor.palette.noTeamMatch")}</p> : null}
+            </details>
+          </div>
         ) : null}
       </div>
     </aside>

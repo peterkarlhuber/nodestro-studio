@@ -1,56 +1,49 @@
-// The decisions of an orchestrator in a run: who works, why, what came back, how the team changed,
-// who is waiting for an approval, and what it cost. Only the structured record is shown (no model reasoning).
+// The decisions of an orchestrator in a run, round by round (ED-26): what it decided and why, the team runs each
+// decision started (status, duration, cost, a link to each), how the team changed, who waits for a person, the
+// limits it used and what it cost. Only the structured record is shown (no model reasoning).
 
-import { ExternalLink, Save } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { ExternalLink, Network, Save } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
 import { api } from "../api/client";
-import { useWorkflows } from "../api/hooks";
+import { keys, useWorkflows } from "../api/hooks";
 import type {
   NodeRun,
-  OrchestrationDecision,
   OrchestrationOutcome,
   OrchestrationOutcomeStatus,
   OrchestrationRecord,
   OrchestrationStep,
   OrchestratorConfig,
   Run,
+  RunStatus,
   Workflow,
   WorkflowIn,
   WorkflowNode,
 } from "../api/types";
 import { Output } from "../components/Markdown";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, HelpTip } from "../components/ui";
+import { Badge, Button, Callout, HelpTip, Stat, StatusBadge } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
-import { formatCost, type Tone } from "../lib/format";
+import { formatCost, formatDuration, type Tone } from "../lib/format";
 import { useModelName } from "../components/ModelPicker";
+import {
+  accepted,
+  assignmentsOf,
+  limitUse,
+  nestedRunCount,
+  roundsOf,
+  STATE_KEY,
+  teamRunCounts,
+  teamRunsOf,
+  type TeamRun,
+} from "./orchestrationModel";
+
+export { assignmentsOf, childRuns } from "./orchestrationModel";
 
 const DELEGATING = new Set(["delegate", "parallel"]);
-
-/** The teams of a decision, in order (one for ``delegate``, several for ``parallel``). */
-export function assignmentsOf(decision: OrchestrationDecision | null | undefined) {
-  if (!decision) return [];
-  if (decision.action === "parallel") return decision.assignments ?? [];
-  if (decision.action === "delegate") return [{ member: decision.member ?? "", task: decision.task ?? "", values: decision.values }];
-  return [];
-}
-
-/** The team run of every accepted delegation: from the outcome (version 2), else in order (version 1 records). */
-export function childRuns(record: OrchestrationRecord, childRunIds: string[]): Map<number, string> {
-  const result = new Map<number, string>();
-  let next = 0;
-  for (const step of record.steps) {
-    if (step.decision?.action !== "delegate" || step.verdict.code !== null) continue;
-    const ref = step.outcomes?.[0]?.ref;
-    if (ref) result.set(step.index, ref);
-    else if (next < childRunIds.length) result.set(step.index, childRunIds[next]);
-    next += 1;
-  }
-  return result;
-}
 
 export interface TeamChange {
   index: number;
@@ -106,14 +99,23 @@ function OutcomeBadge({ outcome }: { outcome: OrchestrationOutcome }) {
   );
 }
 
-function TeamLink({ runId }: { runId: string | null | undefined }) {
-  const { t } = useTranslation();
-  if (!runId) return null;
-  return (
-    <Link to={`/executions/${runId}`} className="small">
-      {t("flow.orchestrator.run.openTeam")} <ExternalLink size={11} aria-hidden />
-    </Link>
-  );
+/** A team's run, kept current while it has not ended (the parent's record only knows it once it ends). */
+function useTeamRun(ref: string | null, enabled: boolean) {
+  return useQuery({
+    queryKey: keys.run(ref ?? ""),
+    queryFn: () => api.run(ref ?? ""),
+    enabled: enabled && Boolean(ref),
+    retry: false,
+    refetchInterval: (query) => {
+      const status = query.state.data?.status;
+      return status === "running" || status === "queued" ? 2000 : status === "paused" ? 5000 : false;
+    },
+  });
+}
+
+function activeTime(run: Run): string {
+  if (typeof run.active_seconds === "number") return formatDuration(new Date(0).toISOString(), new Date(run.active_seconds * 1000).toISOString());
+  return formatDuration(run.started_at, run.finished_at);
 }
 
 function Values({ values }: { values: Record<string, unknown> | undefined }) {
@@ -128,79 +130,93 @@ function Values({ values }: { values: Record<string, unknown> | undefined }) {
   );
 }
 
-function Assignments({
-  decision,
-  outcomes,
-  names,
-}: {
-  decision: OrchestrationDecision;
-  outcomes: OrchestrationOutcome[];
-  names: Map<string, string>;
-}) {
+/** One team run: the team, its status, time and cost, the task it got, what came back, and a link to its run. */
+function TeamRunRow({ entry, names, live }: { entry: TeamRun; names: Map<string, string>; live: boolean }) {
   const { t } = useTranslation();
+  const child = useTeamRun(entry.ref, live).data;
+  const outcome = entry.outcome;
+  const name = names.get(entry.member) || child?.workflow_name || entry.member || t("orchestration.run.teamRun");
+  const nested = child ? nestedRunCount(child) : 0;
   return (
-    <ul className="stack-sm" data-testid="orchestration-assignments">
-      {assignmentsOf(decision).map((item, slot) => {
-        const outcome = outcomes[slot];
-        return (
-          <li key={`${item.member}-${slot}`} className="stack-sm">
-            <div>
-              <strong>{names.get(item.member) ?? item.member}</strong> {outcome ? <OutcomeBadge outcome={outcome} /> : null}
-            </div>
-            <p className="small">
-              <span className="muted">{t("flow.orchestrator.run.task")}:</span> {item.task}
-            </p>
-            <Values values={item.values} />
-            {outcome?.status === "succeeded" && outcome.result ? <Output value={outcome.result} /> : null}
-            {outcome && outcome.status !== "succeeded" && outcome.status !== "waiting" && outcome.error ? (
-              <p className="small muted">{outcome.error}</p>
-            ) : null}
-            <TeamLink runId={outcome?.ref} />
-          </li>
-        );
-      })}
+    <li className="orch-team-run" data-testid="orchestration-team-run" data-ref={entry.ref ?? ""}>
+      <div className="row-gap">
+        <strong>{name}</strong>
+        {outcome ? (
+          <OutcomeBadge outcome={outcome} />
+        ) : (
+          <StatusBadge status={(child?.status ?? "running") as RunStatus} />
+        )}
+        {child ? (
+          <span className="muted small" data-testid="orchestration-team-run-meta">
+            {t("orchestration.run.active", { value: activeTime(child) })} · {formatCost(child.usage.estimated_cost_usd)}
+          </span>
+        ) : null}
+        {nested ? (
+          <Badge tone="idle" icon={Network}>
+            <span data-testid="orchestration-nested">{t("orchestration.run.nested", { count: nested })}</span>
+          </Badge>
+        ) : null}
+      </div>
+      {entry.task ? (
+        <p className="small">
+          <span className="muted">{t("flow.orchestrator.run.task")}:</span> {entry.task}
+        </p>
+      ) : null}
+      <Values values={entry.values} />
+      {outcome?.status === "succeeded" && outcome.result ? <Output value={outcome.result} /> : null}
+      {outcome && outcome.status !== "succeeded" && outcome.status !== "waiting" && outcome.error ? (
+        <p className="small muted">{outcome.error}</p>
+      ) : null}
+      {entry.ref && live ? (
+        <Link to={`/executions/${entry.ref}`} className="small">
+          {t("flow.orchestrator.run.openTeam")} <ExternalLink size={11} aria-hidden />
+        </Link>
+      ) : null}
+    </li>
+  );
+}
+
+function TeamRuns({ entries, names, live }: { entries: TeamRun[]; names: Map<string, string>; live: boolean }) {
+  if (!entries.length) return null;
+  return (
+    <ul className="orch-team-runs" data-testid="orchestration-assignments">
+      {entries.map((entry) => (
+        <TeamRunRow key={`${entry.round}-${entry.slot}-${entry.ref ?? ""}`} entry={entry} names={names} live={live} />
+      ))}
     </ul>
   );
+}
+
+function stepTitle(t: ReturnType<typeof useTranslation>["t"], step: OrchestrationStep, nameOf: (id: string | undefined) => string) {
+  const decision = step.decision;
+  if (decision?.action === "delegate") return t("flow.orchestrator.run.delegated", { team: nameOf(decision.member) });
+  if (decision?.action === "parallel") return t("flow.orchestrator.run.parallel", { count: decision.assignments?.length ?? 0 });
+  if (decision?.action === "staff") return t("flow.orchestrator.run.staffed");
+  if (decision?.action === "finish") return t("flow.orchestrator.run.finished");
+  return t("flow.orchestrator.run.invalid");
 }
 
 function StepView({
   step,
   names,
-  child,
+  runs,
+  live,
 }: {
   step: OrchestrationStep;
   names: Map<string, string>;
-  child: string | undefined;
+  runs: TeamRun[];
+  live: boolean;
 }) {
   const { t } = useTranslation();
   const decision = step.decision;
   const refused = step.verdict.code !== null;
-  const outcomes = step.outcomes ?? [];
   const nameOf = (id: string | undefined) => (id ? (names.get(id) ?? id) : "?");
-  const title =
-    decision?.action === "delegate"
-      ? t("flow.orchestrator.run.delegated", { team: nameOf(decision.member) })
-      : decision?.action === "parallel"
-        ? t("flow.orchestrator.run.parallel", { count: decision.assignments?.length ?? 0 })
-        : decision?.action === "staff"
-          ? t("flow.orchestrator.run.staffed")
-          : decision?.action === "finish"
-            ? t("flow.orchestrator.run.finished")
-            : t("flow.orchestrator.run.invalid");
-  const v1Failed = !outcomes.length && step.error;
   return (
-    <li className="stack-sm" data-testid="orchestration-step">
-      <div>
-        <strong>
-          {step.index + 1}. {title}
-        </strong>{" "}
-        {refused ? (
-          <Badge tone="warning">{t("flow.orchestrator.run.invalidNotRun")}</Badge>
-        ) : v1Failed ? (
-          <Badge tone="danger">{t("flow.orchestrator.run.teamFailed")}</Badge>
-        ) : decision?.action === "delegate" && outcomes[0] ? (
-          <OutcomeBadge outcome={outcomes[0]} />
-        ) : null}
+    <li className="orch-round stack-sm" data-testid="orchestration-step" data-action={decision?.action ?? "invalid"}>
+      <div className="row-gap">
+        <span className="orch-round__n">{t("orchestration.run.decisionN", { n: step.index + 1 })}</span>
+        <strong>{stepTitle(t, step, nameOf)}</strong>
+        {refused ? <Badge tone="warning">{t("flow.orchestrator.run.invalidNotRun")}</Badge> : null}
       </div>
       {decision?.reason ? (
         <p className="small">
@@ -216,24 +232,45 @@ function StepView({
             : null}
         </p>
       ) : null}
-      {decision?.action === "delegate" && decision.task ? (
-        <p className="small">
-          <span className="muted">{t("flow.orchestrator.run.task")}:</span> {decision.task}
-        </p>
-      ) : null}
-      {decision?.action === "delegate" ? <Values values={decision.values} /> : null}
-      {decision?.action === "parallel" && !refused ? (
-        <Assignments decision={decision} outcomes={outcomes} names={names} />
-      ) : null}
+      {refused && DELEGATING.has(decision?.action ?? "")
+        ? assignmentsOf(decision).map((item, slot) => (
+            <p className="small" key={slot}>
+              <span className="muted">{t("flow.orchestrator.run.task")}:</span> {nameOf(item.member)}: {item.task}
+            </p>
+          ))
+        : null}
+      {!refused ? <TeamRuns entries={runs} names={names} live={live} /> : null}
       {refused ? (
         <p className="small" data-testid="orchestration-refusal">
           {problemText(t, { code: step.verdict.code, message: step.verdict.message })}
         </p>
       ) : null}
       {step.raw ? <pre className="small">{step.raw}</pre> : null}
-      {decision?.action === "delegate" && step.error ? <p className="small muted">{step.error}</p> : null}
-      {decision?.action === "delegate" && step.result ? <Output value={step.result} /> : null}
-      {decision?.action === "delegate" ? <TeamLink runId={child} /> : null}
+    </li>
+  );
+}
+
+/** Refused answers in a row: they started nothing, so they are folded into one entry with a way out. */
+function RefusedGroup({ steps, names }: { steps: OrchestrationStep[]; names: Map<string, string> }) {
+  const { t } = useTranslation();
+  return (
+    <li className="orch-round stack-sm" data-testid="orchestration-refused-group">
+      <details>
+        <summary>
+          <span className="orch-round__n">
+            {t("orchestration.run.decisionRange", { from: steps[0].index + 1, to: steps[steps.length - 1].index + 1 })}
+          </span>{" "}
+          <strong>{t("orchestration.run.refusedGroup", { count: steps.length })}</strong>
+        </summary>
+        <ol className="stack-sm orch-rounds">
+          {steps.map((step) => (
+            <StepView key={step.index} step={step} names={names} runs={[]} live={false} />
+          ))}
+        </ol>
+      </details>
+      <p className="small muted" data-testid="orchestration-refused-hint">
+        {t("orchestration.run.refusedHint")} <HelpTip id="flow.orchestrator" label={t("orchestration.run.refusedHelp")} />
+      </p>
     </li>
   );
 }
@@ -244,17 +281,20 @@ function PoolView({ node, names }: { node: WorkflowNode; names: Map<string, stri
   const members = node.orchestrator?.members ?? [];
   if (!members.length) return null;
   return (
-    <ul className="small" data-testid="orchestration-pool">
-      {members.map((member) => (
-        <li key={member.workflow_id}>
-          {names.get(member.workflow_id) ?? member.workflow_id}
-          {member.version ? <span className="muted"> · v{member.version}</span> : null}
-          {member.matched?.length ? (
-            <span className="muted"> · {t("flow.orchestrator.run.matched", { tags: member.matched.join(", ") })}</span>
-          ) : null}
-        </li>
-      ))}
-    </ul>
+    <div className="stack-sm">
+      <span className="nd-field-label">{t("orchestration.run.pool", { count: members.length })}</span>
+      <ul className="small" data-testid="orchestration-pool">
+        {members.map((member) => (
+          <li key={member.workflow_id}>
+            {names.get(member.workflow_id) ?? member.workflow_id}
+            {member.version ? <span className="muted"> · v{member.version}</span> : null}
+            {member.matched?.length ? (
+              <span className="muted"> · {t("flow.orchestrator.run.matched", { tags: member.matched.join(", ") })}</span>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -278,7 +318,7 @@ function TeamTimeline({ record, names }: { record: OrchestrationRecord; names: M
   );
 }
 
-function PendingView({ record, names }: { record: OrchestrationRecord; names: Map<string, string> }) {
+function PendingView({ record, runs, names, live }: { record: OrchestrationRecord; runs: TeamRun[]; names: Map<string, string>; live: boolean }) {
   const { t } = useTranslation();
   const pending = record.pending;
   if (!pending) return null;
@@ -286,9 +326,16 @@ function PendingView({ record, names }: { record: OrchestrationRecord; names: Ma
   return (
     <Callout tone="warning">
       <div className="stack-sm" data-testid="orchestration-pending">
-        <strong>{t("flow.orchestrator.run.waitingTitle", { count: waiting.length })}</strong>
+        <strong>
+          {t("orchestration.run.decisionN", { n: pending.index + 1 })} · {t("flow.orchestrator.run.waitingTitle", { count: waiting.length })}
+        </strong>
+        {pending.decision.reason ? (
+          <p className="small">
+            <span className="muted">{t("flow.orchestrator.run.reason")}:</span> {pending.decision.reason}
+          </p>
+        ) : null}
         <p className="small">{t("flow.orchestrator.run.waitingText")}</p>
-        <Assignments decision={pending.decision} outcomes={pending.outcomes} names={names} />
+        <TeamRuns entries={runs.filter((entry) => entry.pending)} names={names} live={live} />
       </div>
     </Callout>
   );
@@ -363,23 +410,52 @@ function SaveTemplate({ run, node, record, names }: { run: Run; node: WorkflowNo
   );
 }
 
-function Limits({ node, record, state }: { node: WorkflowNode; record: OrchestrationRecord; state: NodeRun }) {
+
+/** The limits used against the allowed ones, the team runs by how they ended, and the cost. */
+function Overview({ node, record, state, runs, names }: { node: WorkflowNode; record: OrchestrationRecord; state: NodeRun; runs: TeamRun[]; names: Map<string, string> }) {
   const { t } = useTranslation();
   const config = node.orchestrator as OrchestratorConfig | undefined;
   if (!config) return null;
+  const use = limitUse(config, record);
   const decisionCost = state.decision_usage?.estimated_cost_usd;
   const totalCost = state.usage?.estimated_cost_usd;
-  const parts = [
-    t("flow.orchestrator.run.decisionsUsed", { used: record.steps.length, max: config.max_decisions }),
-    (config.max_parallel ?? 1) > 1 ? t("flow.orchestrator.run.parallelLimit", { max: config.max_parallel }) : null,
+  const cost = (value: number | null | undefined) =>
+    value === null || value === undefined ? t("flow.orchestrator.run.costUnknown") : formatCost(value);
+  const limits = [
+    use.maxParallel > 1 ? t("flow.orchestrator.run.parallelLimit", { max: use.maxParallel }) : null,
     config.staffing ? t("flow.orchestrator.run.teamLimit", { max: config.max_team ?? 5 }) : null,
-    t("flow.orchestrator.run.costDecisions", { cost: decisionCost === null || decisionCost === undefined ? t("flow.orchestrator.run.costUnknown") : formatCost(decisionCost) }),
-    t("flow.orchestrator.run.costTotal", { cost: totalCost === null || totalCost === undefined ? t("flow.orchestrator.run.costUnknown") : formatCost(totalCost) }),
+    use.maxPerMember !== null
+      ? t("orchestration.run.perTeam", {
+          max: use.maxPerMember,
+          count: use.busiest?.count ?? 0,
+          team: use.busiest ? (names.get(use.busiest.member) ?? use.busiest.member) : "–",
+        })
+      : null,
   ].filter(Boolean);
+  const counts = teamRunCounts(runs);
   return (
-    <p className="small muted" data-testid="orchestration-limits">
-      {parts.join(" · ")}
-    </p>
+    <div className="stats stats--inline" data-testid="orchestration-limits">
+      <Stat
+        label={t("orchestration.run.decisions")}
+        tip="flow.orchestratorLimits"
+        value={t("orchestration.run.usedOf", { used: use.decisions, max: use.maxDecisions })}
+        hint={limits.length ? limits.join(" · ") : undefined}
+      />
+      <Stat
+        label={t("orchestration.run.teamRuns")}
+        value={<span data-testid="orchestration-team-run-count">{runs.length}</span>}
+        hint={
+          counts.length
+            ? counts.map(([key, count]) => t("orchestration.run.stateCount", { state: t(STATE_KEY[key]), count })).join(" · ")
+            : t("orchestration.run.noTeamRuns")
+        }
+      />
+      <Stat
+        label={t("orchestration.run.cost")}
+        value={cost(totalCost)}
+        hint={t("flow.orchestrator.run.costDecisions", { cost: cost(decisionCost) })}
+      />
+    </div>
   );
 }
 
@@ -390,25 +466,48 @@ export function OrchestrationView({ node, state, run }: { node: WorkflowNode; st
   const record = state.orchestration;
   if (!record) return null;
   const names = new Map((workflows.data ?? []).map((item) => [item.id, item.name]));
-  const children = childRuns(record, state.child_run_ids ?? []);
-  const delegations = record.steps.filter((step) => DELEGATING.has(step.decision?.action ?? "") && step.verdict.code === null);
+  // Imported traces keep only the parent run: their team runs cannot be opened.
+  const live = !run?.imported_at;
+  const runs = teamRunsOf(record, state.child_run_ids ?? []);
+  const byRound = (index: number) => runs.filter((entry) => entry.round === index && !entry.pending);
+  const current = runs.filter((entry) => entry.round === record.steps.length && !entry.pending && !entry.outcome);
   const model = node.orchestrator?.model;
   return (
-    <div className="stack-sm" data-testid="orchestration">
+    <div className="stack-sm orchestration" data-testid="orchestration">
       <span className="nd-field-label">
         {t("flow.orchestrator.run.who", { name: node.label || t("editor.nodes.orchestrator"), model: model ? modelLabel(model) : "–" })}
       </span>
-      <span className="small">
-        {t("flow.orchestrator.run.summary", { decisions: record.steps.length, delegations: delegations.length })}
-      </span>
-      <Limits node={node} record={record} state={state} />
+      <Overview node={node} record={record} state={state} runs={runs} names={names} />
+      {record.outcome === "stopped" && record.stop_code ? (
+        <Callout tone="warning">
+          <span data-testid="orchestration-stopped">
+            {t("orchestration.run.stopped", { reason: problemText(t, { code: record.stop_code, message: "" }) })}
+          </span>
+        </Callout>
+      ) : null}
+      <PendingView record={record} runs={runs} names={names} live={live} />
       <PoolView node={node} names={names} />
       <TeamTimeline record={record} names={names} />
-      <PendingView record={record} names={names} />
-      <ol className="stack-sm">
-        {record.steps.map((step) => (
-          <StepView key={step.index} step={step} names={names} child={children.get(step.index)} />
-        ))}
+      <span className="nd-field-label">
+        {t("orchestration.run.rounds")} <HelpTip id="flow.orchestrator" label={t("orchestration.run.rounds")} />
+      </span>
+      <ol className="stack-sm orch-rounds" data-testid="orchestration-rounds">
+        {roundsOf(record.steps).map((round) =>
+          round.kind === "step" ? (
+            <StepView key={round.step.index} step={round.step} names={names} runs={accepted(round.step) ? byRound(round.step.index) : []} live={live} />
+          ) : (
+            <RefusedGroup key={round.steps[0].index} steps={round.steps} names={names} />
+          ),
+        )}
+        {current.length ? (
+          <li className="orch-round stack-sm" data-testid="orchestration-current">
+            <div className="row-gap">
+              <span className="orch-round__n">{t("orchestration.run.decisionN", { n: record.steps.length + 1 })}</span>
+              <strong>{t("orchestration.run.current", { count: current.length })}</strong>
+            </div>
+            <TeamRuns entries={current} names={names} live={live} />
+          </li>
+        ) : null}
       </ol>
       {run ? <SaveTemplate run={run} node={node} record={record} names={names} /> : null}
     </div>

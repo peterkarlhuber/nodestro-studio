@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it } from "vitest";
@@ -61,5 +61,15 @@ describe("ApprovalForm", () => {
     expect(sections(container)[0].open).toBe(true);
     rerender(wrap(<ApprovalForm approval={approval([DRAFT, SUMMARY])} />));
     expect(sections(container).map((item) => item.open)).toEqual([true, false]);
+  });
+
+  it("says next to the reject button that a reason is needed first (TX-10)", () => {
+    render(wrap(<ApprovalForm approval={{ ...approval([DRAFT]), allow_comment: true, require_comment_on_reject: true }} />));
+    const reject = screen.getByRole("button", { name: "Ablehnen" });
+    expect(reject).toHaveAttribute("aria-disabled", "true");
+    expect(screen.getByTestId("disabled-reason")).toHaveTextContent("Gib zuerst einen Grund für die Ablehnung an.");
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "Zahlen fehlen" } });
+    expect(screen.queryByTestId("disabled-reason")).toBeNull();
+    expect(screen.getByRole("button", { name: "Ablehnen" })).not.toHaveAttribute("aria-disabled");
   });
 });

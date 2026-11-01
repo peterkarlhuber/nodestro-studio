@@ -5,17 +5,48 @@ import type { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
+import { useQuery } from "@tanstack/react-query";
+
+import { api } from "../api/client";
+import { keys } from "../api/hooks";
 import type { Run } from "../api/types";
 import { Callout } from "../components/ui";
+import { teamRunsOf } from "../editor/orchestrationModel";
+
+/** The orchestrator step of the parent run that started this run as a team, and in which decision. */
+export function teamRunOrigin(parent: Run | undefined, runId: string): { label: string; decision: number } | null {
+  if (!parent) return null;
+  for (const node of parent.workflow.nodes) {
+    const state = parent.nodes[node.id];
+    if (node.type !== "orchestrator" || !state?.orchestration) continue;
+    const entry = teamRunsOf(state.orchestration, state.child_run_ids ?? []).find((item) => item.ref === runId);
+    if (entry) return { label: node.label || node.id, decision: entry.round + 1 };
+    if (state.child_run_ids?.includes(runId)) return { label: node.label || node.id, decision: 0 };
+  }
+  return null;
+}
 
 export function RunOrigin({ run }: { run: Run }) {
   const { t } = useTranslation();
   const trigger = run.trigger ?? "manual";
   const parts: ReactElement[] = [];
+  // A team run of an orchestrator says so, with the decision that started it (nested teams link up level by level).
+  const parent = useQuery({
+    queryKey: keys.run(run.parent_run_id ?? ""),
+    queryFn: () => api.run(run.parent_run_id ?? ""),
+    enabled: Boolean(run.parent_run_id) && !run.imported_at,
+    retry: false,
+  });
+  const team = teamRunOrigin(parent.data, run.id);
   if (run.parent_run_id)
     parts.push(
-      <span key="parent">
-        <Workflow size={13} aria-hidden /> {t("flow.origin.subworkflow")}{" "}
+      <span key="parent" data-testid="run-origin-parent">
+        <Workflow size={13} aria-hidden />{" "}
+        {team
+          ? team.decision
+            ? t("orchestration.origin.teamRun", { name: team.label, n: team.decision })
+            : t("orchestration.origin.teamRunPlain")
+          : t("flow.origin.subworkflow")}{" "}
         <Link to={`/executions/${run.parent_run_id}`}>{t("flow.origin.openParent")}</Link>
       </span>,
     );

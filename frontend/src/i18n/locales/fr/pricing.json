@@ -1,6 +1,6 @@
 {
   "title": "Prix des modèles",
-  "intro": "Nodestro estime les coûts avec ces prix en dollars US par million de tokens. Orkexa calcule chaque coût ; les prix sont régulièrement vérifiés auprès de leurs sources, les changements importants attendent votre validation, et les prix individuels (par exemple des prix contractuels) priment sur les prix de référence.",
+  "intro": "Nodestro estime les coûts avec ces prix en dollars US par million de tokens. Orkexa, la bibliothèque d’IA intégrée à Nodestro, calcule chaque coût ; les prix sont régulièrement vérifiés auprès de leurs sources, les changements importants attendent votre validation, et les prix individuels (par exemple des prix contractuels) priment sur les prix de référence.",
   "tableTitle_one": "{{count}} prix",
   "tableTitle_other": "{{count}} prix",
   "overrides_one": "{{count}} prix individuel",

@@ -2,6 +2,7 @@
   "button": "Compare ({{count}}/2)",
   "pickColumn": "Select for comparison",
   "pick": "Select {{name}} from {{date}} for comparison",
+  "rowHeader": "Compared value",
   "title": "Compare runs",
   "description": "Two stored runs side by side: result, agents, models, tools, tokens, cost and evaluations.",
   "swap": "Swap A and B",

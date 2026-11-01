@@ -9,7 +9,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { NodeRun, Run, RunEvent, WorkflowNode } from "../api/types";
 import { Output, fieldLabel } from "../components/Markdown";
 import { liveUsage, runWaitsForToolApproval, useEditor, waitsForToolApproval } from "../editor/store";
-import i18n from "../i18n";
+import i18n, { LANGUAGES, loadLanguage } from "../i18n";
 import { problemCode, problemHint, problemText } from "../lib/errors";
 import { belongsTo } from "./ApprovalCard";
 import { CancelRunButton } from "./CancelRunButton";
@@ -85,6 +85,52 @@ describe("failure reasons (ED-05, AD-01)", () => {
     expect(problemText(t, provider(400))).toContain("Status 400");
   });
 
+  it("takes the runtime's own provider codes first and keeps reading older runs", () => {
+    const coded = (code: string, params: Record<string, unknown> = { provider: "anthropic", status: 429 }) => ({
+      code,
+      params,
+      message: "RateLimitError: rate_limit_error",
+    });
+    expect(problemCode(coded("run.provider_rate_limited"))).toBe("run.provider_rate_limited");
+    expect(problemText(t, coded("run.provider_rate_limited"))).toBe(
+      "Anthropic hat zu viele Anfragen oder Tokens in kurzer Zeit gemeldet (Rate-Limit).",
+    );
+    expect(problemHint(t, coded("run.provider_rate_limited"))).toContain("setze den Lauf fort");
+    expect(problemText(t, coded("run.provider_auth", { provider: "openai", status: 401 }))).toContain("OpenAI hat den API-Schlüssel nicht akzeptiert");
+    expect(problemHint(t, coded("run.provider_overloaded", { provider: "anthropic", status: 529 }))).toContain("ein paar Minuten");
+    // No answer at all: no status, and a provider without a name reads as the provider in general.
+    expect(problemText(t, coded("run.provider_unreachable", {}))).toBe("Der KI-Anbieter war nicht erreichbar.");
+    // An older run with the generic code is still read from its status.
+    expect(problemCode(coded("run.api_error"))).toBe("run.api_error_rate_limit");
+  });
+
+  it("links a refused key to the settings, from the runtime's code too", () => {
+    const agent = { name: "Kaputt", model: "openai:gpt-x" } as WorkflowNode["agent"];
+    const failed = run(
+      [node("a", "agent", "Kaputt", { agent })],
+      { a: state("failed", "2026-11-01T10:00:00Z", { error: "AuthenticationError: bad key", error_code: "run.provider_auth", error_params: { status: 401, provider: "openai" } }) },
+      { error: "Failed: Kaputt", error_code: "run.nodes_failed", error_params: { nodes: "Kaputt" } },
+    );
+    render(wrap(<RunProblem run={failed} />));
+    const banner = screen.getByTestId("run-failure");
+    expect(banner).toHaveTextContent("OpenAI hat den API-Schlüssel nicht akzeptiert");
+    expect(banner).toHaveTextContent("Modell: openai:gpt-x");
+    expect(screen.getByTestId("problem-hint")).toHaveTextContent("Einstellungen → KI-Anbieter");
+    expect(screen.getByRole("link", { name: /Einstellungen öffnen/ })).toHaveAttribute("href", "/settings");
+  });
+
+  it("gives retry advice, not a settings link, when the provider is busy", () => {
+    const failed = run(
+      [node("a", "agent", "Kaputt", { agent: { name: "Kaputt", model: "anthropic:claude-x" } as WorkflowNode["agent"] })],
+      { a: state("failed", "2026-11-01T10:00:00Z", { error: "ProviderServerError: overloaded", error_code: "run.provider_overloaded", error_params: { status: 529, provider: "anthropic" } }) },
+      { error: "Failed: Kaputt", error_code: "run.nodes_failed", error_params: { nodes: "Kaputt" } },
+    );
+    render(wrap(<RunProblem run={failed} />));
+    expect(screen.getByTestId("run-failure")).toHaveTextContent("Anthropic ist gerade überlastet.");
+    expect(screen.getByTestId("problem-hint")).toHaveTextContent("setze den Lauf dann fort");
+    expect(screen.queryByRole("link", { name: /Einstellungen öffnen/ })).toBeNull();
+  });
+
   it("has every new text and hint in all six languages", async () => {
     const codes = [
       "run.agent.IncompleteResponseError",
@@ -93,11 +139,18 @@ describe("failure reasons (ED-05, AD-01)", () => {
       "run.api_error_auth",
       "run.api_error_rate_limit",
       "run.api_error_connection",
+      "run.provider_auth",
+      "run.provider_unreachable",
+      "run.provider_rate_limited",
+      "run.provider_overloaded",
     ];
-    for (const language of ["de", "en", "es", "fr", "it", "pt-BR"]) {
+    for (const language of LANGUAGES) {
+      await loadLanguage(language);
       for (const code of codes) {
-        expect(i18n.exists(`errors.${code}`, { lng: language }), `${language} ${code}`).toBe(true);
-        expect(i18n.exists(`errors.hints.${code}`, { lng: language }), `${language} hint ${code}`).toBe(true);
+        // Asked of the language itself: English, the fallback, must not answer for it.
+        const own = { lng: language, fallbackLng: false as const };
+        expect(i18n.exists(`errors.${code}`, own), `${language} ${code}`).toBe(true);
+        expect(i18n.exists(`errors.hints.${code}`, own), `${language} hint ${code}`).toBe(true);
       }
     }
   });

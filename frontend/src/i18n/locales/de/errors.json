@@ -116,7 +116,10 @@
     "orchestrator_no_members": "{{node}} hat keine Teams zur Auswahl.",
     "orchestrator_member_duplicate": "{{node}} nennt ein Team doppelt.",
     "orchestrator_self": "{{node}} würde den eigenen Workflow als Team wählen.",
-    "orchestrator_limits": "{{node}} erlaubt einem Team mehr Einsätze als Entscheidungen insgesamt."
+    "orchestrator_limits": "{{node}} erlaubt einem Team mehr Einsätze als Entscheidungen insgesamt.",
+    "revision_invalid": "Beim Speichern wurde eine unbekannte Version des Workflows genannt. Lade die Seite neu und speichere noch einmal.",
+    "conflict": "Der Workflow „{{name}}“ wurde geändert, seit du ihn geöffnet hast. Lade ihn neu, um den neuesten Stand zu sehen.",
+    "runs_active": "Läufe dieses Workflows sind noch nicht beendet. Lösche ihn, wenn sie fertig sind oder abgebrochen wurden."
   },
   "run": {
     "failed": "Der Schritt ist fehlgeschlagen.",
@@ -169,7 +172,11 @@
     "api_error_invalid": "{{provider}} hat die Anfrage als ungültig abgelehnt.",
     "api_error_status": "{{provider}} hat die Anfrage abgelehnt (Status {{status}}).",
     "already_queued": "Dieser Lauf wartet bereits oder läuft gerade, deshalb wurde er nicht ein zweites Mal gestartet. Warte, bis er endet, oder verfolge ihn unter Ausführungen.",
-    "not_executable": "Dieser Lauf kann nicht gestartet werden: Nur ein wartender oder pausierter Lauf kann laufen, und dieser läuft schon oder ist beendet. Öffne ihn unter Ausführungen, um seinen Stand zu sehen."
+    "not_executable": "Dieser Lauf kann nicht gestartet werden: Nur ein wartender oder pausierter Lauf kann laufen, und dieser läuft schon oder ist beendet. Öffne ihn unter Ausführungen, um seinen Stand zu sehen.",
+    "provider_auth": "{{provider}} hat den API-Schlüssel nicht akzeptiert: Er fehlt, ist falsch, abgelaufen oder hat nicht die nötige Berechtigung.",
+    "provider_unreachable": "{{provider}} war nicht erreichbar.",
+    "provider_rate_limited": "{{provider}} hat zu viele Anfragen oder Tokens in kurzer Zeit gemeldet (Rate-Limit).",
+    "provider_overloaded": "{{provider}} ist gerade überlastet."
   },
   "trace": {
     "invalid": "Der Trace ist beschädigt oder unvollständig.",
@@ -501,7 +508,7 @@
     "memory_included": "Memory {{space}}: der aktuelle Inhalt wird zum Startinhalt.",
     "memory_empty": "Memory {{space}} startet im Export leer.",
     "distribution_unconfirmed": "Bestätige, dass du den Quellcode von Orkexa weitergeben darfst, oder wähle die Git-Referenz.",
-    "private_repository": "Zum Installieren des Exports ist Lesezugriff auf das Repository peterkarlhuber/orkexa nötig, solange es privat ist.",
+    "private_repository": "Zum Installieren des Exports ist Lesezugriff auf das Repository peterkarlhuber/orkexa nötig, solange es privat ist. Ohne diesen Zugriff wähle „Quellcode beilegen“.",
     "bundled_library": "Der Quellcode von Orkexa wird ins Projekt kopiert (MIT-Lizenz liegt bei).",
     "runtime_differs": "Diese Version wurde mit {{published}} veröffentlicht; der Export enthält die aktuelle Runtime {{current}}.",
     "tool_libraries": "Die freigegebenen Tool-Bibliotheken werden mit dem Projekt installiert: {{packages}}.",
@@ -785,8 +792,18 @@
       "budget_exceeded": "Erhöhe das Budget in den Workflow-Einstellungen oder setze den Lauf mit einem neuen Budget fort.",
       "time_limit": "Erhöhe das Zeitlimit in den Workflow-Einstellungen unter „Grenzen“, wenn der Lauf mehr Zeit braucht.",
       "step_limit": "Erhöhe die Schrittgrenze in den Workflow-Einstellungen unter „Grenzen“ oder prüfe Schleifen.",
-      "orchestration_limit": "Erhöhe beim Orchestrator „Höchstens Entscheidungen“ oder beschreibe in den Anweisungen, wann die Aufgabe erledigt ist."
+      "orchestration_limit": "Erhöhe beim Orchestrator „Höchstens Entscheidungen“ oder beschreibe in den Anweisungen, wann die Aufgabe erledigt ist.",
+      "provider_auth": "Prüfe den Schlüssel unter Einstellungen → KI-Anbieter und teste dort die Verbindung.",
+      "provider_unreachable": "Prüfe Internetverbindung, Firewall oder Proxy und setze den Lauf dann fort.",
+      "provider_rate_limited": "Warte einen Moment und setze den Lauf fort. Weniger gleichzeitige Läufe oder ein höheres Limit beim Anbieter helfen dauerhaft.",
+      "provider_overloaded": "Das liegt nicht an deinem Workflow. Warte ein paar Minuten und setze den Lauf dann fort."
     }
   },
-  "setupProvider": "KI-Anbieter einrichten"
+  "setupProvider": "KI-Anbieter einrichten",
+  "runs": {
+    "cursor_invalid": "Dieser Teil der Liste der Läufe wurde nicht gefunden. Geh zurück an den Anfang der Liste."
+  },
+  "model_choice": {
+    "node_unknown": "Der Workflow hat keinen Agenten „{{node}}“ mehr. Lade die Seite neu."
+  }
 }

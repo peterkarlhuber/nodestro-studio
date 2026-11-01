@@ -6,7 +6,7 @@
   "fullText": "La traccia completa contiene tutto ciò che l’esecuzione ha salvato: input, prompt, output, chiamate agli strumenti, memoria e configurazione.",
   "fullWarning": "Condividila solo se non contiene nulla di riservato.",
   "sanitizedText": "La traccia ripulita sostituisce i punti sensibili con segnaposto come [EMAIL_1]. Valori uguali ricevono lo stesso segnaposto, così il flusso resta comprensibile.",
-  "alwaysSecrets": "Sempre rimossi: chiavi API, token, password e chiavi private.",
+  "alwaysSecrets": "Sempre sostituiti quando riconosciuti: chiavi API, token, password e chiavi private.",
   "personalData": "Sostituisci i dati personali",
   "personalDataText": "Indirizzi e-mail, numeri di telefono, IBAN, numeri di carta e indirizzi IP.",
   "contents": "Rimuovi i contenuti",

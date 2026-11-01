@@ -48,10 +48,6 @@ const shots = process.argv[3] ?? process.env.NODESTRO_SCREENSHOTS;
 if (shots) mkdirSync(shots, { recursive: true });
 
 const FAILING = new Set(["serious", "critical"]);
-// Known and tracked, reported but not failing: a help button inside a collapsible section's <summary> (Section's
-// `tip`) is a nested control (audit AX-09); moving it out of the summary needs a design decision.
-const KNOWN = [{ rules: ["nested-interactive", "target-size"], target: /summary|\.help-tip/ }];
-const known = (v) => KNOWN.some((item) => item.rules.includes(v.id) && v.targets.every((target) => item.target.test(target)));
 const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 let failures = 0;
 
@@ -92,11 +88,10 @@ async function scan(page, label) {
       impact: v.impact,
       nodes: v.nodes.length,
       sample: v.nodes[0]?.target.join(" ") ?? "",
-      targets: v.nodes.map((node) => node.target.join(" ")),
     }));
   }, TAGS);
-  const bad = violations.filter((v) => FAILING.has(v.impact) && !known(v));
-  const other = violations.filter((v) => !FAILING.has(v.impact) || known(v));
+  const bad = violations.filter((v) => FAILING.has(v.impact));
+  const other = violations.filter((v) => !FAILING.has(v.impact));
   for (const v of bad) console.log(`     ${v.impact} ${v.id} ×${v.nodes} e.g. ${v.sample}`);
   if (other.length) console.log(`info ${label}: ${other.map((v) => `${v.id}(${v.impact}×${v.nodes})`).join(" ")}`);
   check(bad.length === 0, `axe: no serious or critical violations on ${label}`);
@@ -131,8 +126,10 @@ try {
   if (!(await api("GET", "/runs?limit=1")).length) {
     await api("POST", `/workflows/${wf}/runs`, { input: "Accessibility check", file_ids: [], values: {} }).catch(() => null);
   }
+  // The agent inspector: its sections carry help buttons next to their summaries (AX-09).
+  const agentNode = (await api("GET", `/workflows/${wf}`)).nodes.find((node) => node.type === "agent");
   const routes = [
-    "/", "/workflows/examples", `/workflows/${wf}`, "/agents", "/tools", "/knowledge", "/memory", "/executions",
+    "/", "/workflows/examples", `/workflows/${wf}`, ...(agentNode ? [`/workflows/${wf}?node=${agentNode.id}`] : []), "/agents", "/tools", "/knowledge", "/memory", "/executions",
     "/approvals", "/batches", "/tests", "/schedules", "/usage", "/docs/start", "/settings", "/welcome",
   ];
 

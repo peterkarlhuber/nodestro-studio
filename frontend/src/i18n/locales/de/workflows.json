@@ -52,5 +52,6 @@
     "text": "Workflows, an die ein Orchestrator Arbeit abgeben kann (sie haben Fähigkeiten oder einen Ausgabevertrag). Kopien orchestrierter Beispiele bringen ihre Teams mit.",
     "badge": "Team",
     "badgeHint": "Ein Orchestrator kann Arbeit an diesen Workflow abgeben"
-  }
+  },
+  "changedJustNow": "gerade eben geändert"
 }

@@ -52,5 +52,6 @@
     "text": "Fluxos de trabalho para os quais um orquestrador pode delegar (eles declaram capacidades ou um contrato de saída). Cópias de exemplos orquestrados trazem suas equipes.",
     "badge": "Equipe",
     "badgeHint": "Um orquestrador pode delegar trabalho a este fluxo de trabalho"
-  }
+  },
+  "changedJustNow": "alterado agora há pouco"
 }

@@ -5,11 +5,14 @@ import { useTranslation } from "react-i18next";
 
 import type { Run } from "../api/types";
 import { Button } from "../components/ui";
+import { STATE_KEY, orchestrationsOf, teamRunCounts } from "../editor/orchestrationModel";
 import { summarizeRun } from "./runSummary";
 
 export function RunSummaryLine({ run, onOpenStep }: { run: Run; onOpenStep: (nodeId: string) => void }) {
   const { t } = useTranslation();
   const summary = summarizeRun(run);
+  // ED-26: an orchestrator's work happens in team runs of their own; their tools are not counted here.
+  const orchestrations = orchestrationsOf(run);
   if (!summary.total) return null;
   return (
     <section className="panel run-summary" aria-label={t("runs.summary.title")}>
@@ -37,6 +40,22 @@ export function RunSummaryLine({ run, onOpenStep }: { run: Run; onOpenStep: (nod
             <dd>
               {summary.approvals
                 .map((step) => `${step.label}: ${t(`runs.summary.approval.${step.decision ?? "waiting"}`)}`)
+                .join(" · ")}
+            </dd>
+          </div>
+        ) : null}
+        {orchestrations.length ? (
+          <div data-testid="run-summary-teams">
+            <dt>{t("orchestration.summary.title")}</dt>
+            <dd>
+              {orchestrations
+                .map((item) => {
+                  const counts = teamRunCounts(item.runs)
+                    .map(([state, count]) => t("orchestration.run.stateCount", { state: t(STATE_KEY[state]), count }))
+                    .join(", ");
+                  const runs = t("orchestration.summary.runs", { count: item.runs.length });
+                  return `${item.label}: ${t("orchestration.summary.decisions", { count: item.record.steps.length })}, ${runs}${counts ? ` (${counts})` : ""}`;
+                })
                 .join(" · ")}
             </dd>
           </div>
