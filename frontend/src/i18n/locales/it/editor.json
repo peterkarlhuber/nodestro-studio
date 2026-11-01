@@ -36,6 +36,10 @@
     "branchPort": "Uscita del ramo {{name}}",
     "orchestrator": "Orchestratore"
   },
+  "defaults": {
+    "systemPrompt": "Sei un assistente utile.",
+    "outputName": "Risultato"
+  },
   "canvas": {
     "unsaved": "Modifiche non salvate",
     "agents_one": "{{count}} agente",
@@ -114,7 +118,7 @@
     "cost": "Costo della bozza: {{cost}}.",
     "role": "Ruolo",
     "limits": "Limiti",
-    "limitsValue": "{{tokens}} token · {{rounds}} turni di strumenti",
+    "limitsValue": "Token max.: {{tokens}} · turni di strumenti: {{rounds}}",
     "missingTools": "L’architetto avrebbe bisogno anche di questi strumenti:",
     "missingToolsHint": "Puoi farli creare all’IA nella <a>libreria degli strumenti</a>."
   },

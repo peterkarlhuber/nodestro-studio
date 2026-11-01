@@ -44,7 +44,8 @@
     "notStarted": "Ainda não iniciado",
     "overall": "Resultado geral",
     "running": "O fluxo de trabalho está em execução. Escolha um agente à esquerda para acompanhá-lo ao vivo.",
-    "paused": "A execução aguarda uma aprovação."
+    "paused": "A execução aguarda uma aprovação.",
+    "waitingForTool": "Uma chamada de ferramenta aguarda sua decisão. Até lá, a execução não continua."
   },
   "detail": {
     "timeline": "Linha do tempo",
@@ -88,5 +89,25 @@
     "noHardMaximum": "sem máximo rígido",
     "noHardMaximumHint_one": "{{count}} solicitação não pôde ser limitada com antecedência (sem preço, ferramentas integradas, imagens ou grande demais para o restante do orçamento). Por isso o orçamento não foi um máximo rígido.",
     "noHardMaximumHint_other": "{{count}} solicitações não puderam ser limitadas com antecedência (sem preço, ferramentas integradas, imagens ou grandes demais para o restante do orçamento). Por isso o orçamento não foi um máximo rígido."
+  },
+  "output": {
+    "showJson": "Mostrar como JSON"
+  },
+  "failure": {
+    "atStep": "Falhou em {{name}}",
+    "more_one": "Mais uma etapa falhou.",
+    "more_other": "Mais {{count}} etapas falharam.",
+    "model": "Modelo: {{model}}",
+    "openSettings": "Abrir Configurações",
+    "openAdvanced": "Abrir \"Avançado\" de {{name}}"
+  },
+  "cancelRun": {
+    "button": "Cancelar execução",
+    "confirm": "Cancelar mesmo?",
+    "done": "A execução está sendo cancelada."
+  },
+  "waitingForYou": {
+    "label": "Aguarda você",
+    "description": "Uma chamada de ferramenta aguarda sua aprovação. A execução continua assim que você decidir."
   }
 }

@@ -196,7 +196,7 @@
     "button": "Continue",
     "title": "Continue run",
     "intro": "A new, linked run takes over the results that are still valid and runs the rest again. The failed run stays as it was.",
-    "summary": "{{reused}} steps are taken over, {{rerun}} run again. Saved: about {{saved}}.",
+    "summary": "Steps taken over: {{reused}} · run again: {{rerun}}. Saved: about {{saved}}.",
     "steps": "Steps",
     "step": "Step",
     "action": "Action",
@@ -286,7 +286,8 @@
         "rejected": "Rejected",
         "cancelled": "Cancelled",
         "expired": "Expired"
-      }
+      },
+      "invalidNotRun": "Invalid, not carried out"
     },
     "select": "Teams by capability",
     "selectHint": "Saved teams with one of these capabilities join the pool when a run starts (at most 10 tags). Best match first; teams with errors are left out.",

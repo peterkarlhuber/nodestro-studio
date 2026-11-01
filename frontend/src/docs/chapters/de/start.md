@@ -50,11 +50,12 @@ So erstellst du in wenigen Minuten deinen ersten Workflow:
 ## Die Oberfläche {#oberflaeche}
 <!-- keywords: navigation, seitenleiste, menü, theme, dunkel, hell, layout -->
 
-Die **Seitenleiste** links gliedert Nodestro in drei Bereiche:
+Die **Seitenleiste** links folgt dem Arbeitsablauf: erstellen, ausführen und prüfen, dann automatisieren.
 
-- **Workspace:** *Workflows* (deine Abläufe), *Agenten* (wiederverwendbare Vorlagen), *Tools*, *Wissen* und *Memory*.
-- **Observability:** *Ausführungen* (alle Läufe im Detail) und *Nutzung* (Tokens und Kosten über die Zeit).
-- **Hilfe:** diese *Dokumentation*.
+- **Erstellen:** *Workflows* (deine Abläufe), *Agenten* (wiederverwendbare Vorlagen), *Tools*, *Wissen* und *Memory*.
+- **Ausführen & prüfen:** *Ausführungen* (alle Läufe im Detail), *Freigaben* (Entscheidungen, auf die Läufe warten) und *Nutzung* (Tokens und Kosten über die Zeit).
+- **Automatisieren & testen:** *Testreihen*, *Stapelläufe* und *Zeitpläne*.
+- **Hilfe:** diese *Dokumentation* und die *Willkommen*-Seite.
 
 Unten findest du die *Einstellungen*. Oben rechts wechselst du zwischen dunklem und hellem Farbschema; die Wahl wird im Browser gespeichert. Ist der Anbieter des Standardmodells nicht eingerichtet, erscheint dort ein Hinweis, der direkt zu den Einstellungen führt.
 

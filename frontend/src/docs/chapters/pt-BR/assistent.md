@@ -5,7 +5,7 @@ O Nodestro Assistant é um chat que ajuda você em qualquer parte do Nodestro. E
 ## Visão geral {#ueberblick}
 <!-- keywords: assistant, assistente, chat, abrir, painel, barra lateral, atalho, ctrl j, largo, ajuda -->
 
-Abra o assistente com **Assistant** no canto superior direito do cabeçalho ou com **Ctrl+J** (macOS: **⌘J**). Ele aparece como um painel à direita; o mesmo botão ou **Fechar** o oculta novamente. **Mais largo** dá mais espaço ao chat; em telas pequenas ele fica sobre a página.
+Abra o assistente com o botão **Assistente** no canto superior direito do cabeçalho ou com **Ctrl+J** (macOS: **⌘J**). Ele aparece como um painel à direita; o mesmo botão ou **Fechar** o oculta novamente. **Mais largo** dá mais espaço ao chat; em telas pequenas ele fica sobre a página.
 
 O chat continua como está enquanto você navega entre páginas, e também depois de recarregar. As respostas aparecem ao vivo; Markdown com listas, tabelas e blocos de código é formatado. Enquanto uma resposta é escrita, você vê o que o assistente está fazendo de fato: pesquisando na documentação, lendo seções, processando anexos, escrevendo a resposta ou preparando uma transferência.
 

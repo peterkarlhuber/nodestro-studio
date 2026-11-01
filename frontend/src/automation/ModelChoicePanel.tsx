@@ -188,7 +188,7 @@ function MeasurementRow({ item, recommended }: { item: ModelMeasurement; recomme
         {recommended ? <Badge tone="success">{t("automation.modelChoice.recommended")}</Badge> : null}
         {item.excluded.map((code) => (
           <div key={code} className="small muted">
-            {t(`automation.modelChoice.excluded.${code.replace("model.", "")}`, { cases: item.new_failures.length })}
+            {t(`automation.modelChoice.excluded.${code.replace("model.", "")}`, { count: item.new_failures.length })}
           </div>
         ))}
       </td>

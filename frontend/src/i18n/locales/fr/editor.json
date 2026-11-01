@@ -36,6 +36,10 @@
     "branchPort": "Sortie de la branche {{name}}",
     "orchestrator": "Orchestrateur"
   },
+  "defaults": {
+    "systemPrompt": "Tu es un assistant serviable.",
+    "outputName": "Résultat"
+  },
   "canvas": {
     "unsaved": "Modifications non enregistrées",
     "agents_one": "{{count}} agent",
@@ -114,7 +118,7 @@
     "cost": "Coût du brouillon : {{cost}}.",
     "role": "Rôle",
     "limits": "Limites",
-    "limitsValue": "{{tokens}} tokens · {{rounds}} tours d’outils",
+    "limitsValue": "Tokens max. : {{tokens}} · tours d’outils : {{rounds}}",
     "missingTools": "L’architecte aurait aussi besoin de ces outils :",
     "missingToolsHint": "Vous pouvez les faire créer par l’IA dans la <a>bibliothèque d’outils</a>."
   },

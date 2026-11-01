@@ -230,7 +230,7 @@ Em **Exportação**, **Gerar ZIP** cria um projeto independente a partir de uma 
 
 Se as ferramentas precisam de bibliotecas Python, a exportação usa exatamente as versões aprovadas (veja [Aprovação de bibliotecas](/docs/python-bibliotheken#freigabe)). Antes de gerar, a caixa de diálogo mostra cada arquivo e cada aviso. A exportação nunca contém chaves de API, configurações nem outros fluxos. A mesma versão com as mesmas opções gera o mesmo arquivo ZIP, byte a byte.
 
-No projeto exportado, `python -m app.keys new` cria chaves para seus clientes. O acesso aos provedores de IA é definido como variáveis de ambiente, como `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` ou `GEMINI_API_KEY`; o README e o `.env.example` citam exatamente as variáveis de que a versão do workflow precisa. URLs base de servidores próprios também são exportadas, a menos que contenham credenciais; nesse caso você mesmo as define (por exemplo `OLLAMA_BASE_URL`).
+No projeto exportado, `python -m app.keys new` cria chaves para seus clientes. O acesso aos provedores de IA é definido como variáveis de ambiente, como `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` ou `GEMINI_API_KEY`; o README e o `.env.example` citam exatamente as variáveis de que a versão do fluxo de trabalho precisa. URLs base de servidores próprios também são exportadas, a menos que contenham credenciais; nesse caso você mesmo as define (por exemplo `OLLAMA_BASE_URL`).
 
 ## A biblioteca Orkexa {#orkexa}
 <!-- keywords: orkexa, biblioteca, repositório, licença, mit, vendor, incluir, git, acesso -->

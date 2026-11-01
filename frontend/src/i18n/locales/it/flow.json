@@ -196,7 +196,7 @@
     "button": "Continua",
     "title": "Continua l’esecuzione",
     "intro": "Una nuova esecuzione collegata riprende i risultati ancora validi ed esegue di nuovo il resto. L’esecuzione non riuscita resta com’è.",
-    "summary": "{{reused}} passaggi vengono ripresi, {{rerun}} rieseguiti. Risparmio: circa {{saved}}.",
+    "summary": "Passaggi ripresi: {{reused}} · rieseguiti: {{rerun}}. Risparmio: circa {{saved}}.",
     "steps": "Passaggi",
     "step": "Passaggio",
     "action": "Azione",
@@ -286,7 +286,8 @@
         "rejected": "Rifiutato",
         "cancelled": "Annullato",
         "expired": "Scaduto"
-      }
+      },
+      "invalidNotRun": "Non valida, non eseguita"
     },
     "select": "Team per capacità",
     "selectHint": "I team salvati con una di queste capacità entrano nel pool all'avvio di un'esecuzione (al massimo 10 parole chiave). Prima la corrispondenza migliore; i team con errori restano fuori.",

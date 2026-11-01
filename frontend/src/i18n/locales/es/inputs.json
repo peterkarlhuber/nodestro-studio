@@ -24,7 +24,8 @@
   "hidePreview": "Ocultar vista previa",
   "noText": "(sin texto)",
   "previewCut": "Solo se muestra el principio.",
-  "tableSummary": "{{name}}: {{count}} filas, {{columns}} columnas",
+  "tableSummary_one": "{{name}}: {{count}} fila, columnas: {{columns}}",
+  "tableSummary_other": "{{name}}: {{count}} filas, columnas: {{columns}}",
   "summary": {
     "archive_one": "{{count}} archivo, {{readable}} legibles",
     "archive_other": "{{count}} archivos, {{readable}} legibles",
@@ -151,7 +152,7 @@
     "confirmText_other": "He comprobado el contenido y quiero guardar {{count}} elementos en la colección «{{collection}}».",
     "changed": "Cambiaste el contenido o la colección: comprueba de nuevo antes de confirmar.",
     "done": "Incorporado al conocimiento: {{count}} · ya existentes: {{duplicates}}",
-    "notMemory": "El conocimiento es una colección de documentos para todos los agentes, separada de la memoria de un agente. Los workflows en curso no cambian."
+    "notMemory": "El conocimiento es una colección de documentos para todos los agentes, separada de la memoria de un agente. Los flujos de trabajo en curso no cambian."
   },
   "proposals": {
     "title_one": "{{count}} propuesta para el conocimiento",
@@ -172,8 +173,8 @@
     "uploaded": "Subido el",
     "archive": "Archivo comprimido",
     "path": "Ruta en el archivo comprimido",
-    "workflow": "Workflow",
-    "workflow_id": "ID del workflow",
+    "workflow": "Flujo de trabajo",
+    "workflow_id": "ID del flujo de trabajo",
     "run": "Ejecución",
     "run_at": "Momento de la ejecución",
     "sources": "Archivos de origen",
@@ -202,12 +203,13 @@
   "storage": {
     "title": "Archivos de entrada subidos",
     "intro": "Archivos subidos para ejecuciones, casos de prueba y programaciones. Los archivos de ejecuciones en cola, en curso o en pausa nunca se eliminan.",
-    "summary": "{{count}} archivos · {{size}} · {{unused}} sin usar · {{inUse}} en ejecuciones en curso",
+    "summary": "Archivos: {{files}} · {{size}} · sin usar: {{unused}} · en ejecuciones en curso: {{inUse}}",
     "cleanUnused": "Eliminar archivos sin usar",
     "olderThan": "Archivos de ejecuciones terminadas con más de",
     "days": "días",
     "cleanOld": "Eliminar",
-    "cleaned": "{{count}} archivos eliminados ({{size}} liberados).",
+    "cleaned_one": "{{count}} archivo eliminado ({{size}} liberados).",
+    "cleaned_other": "{{count}} archivos eliminados ({{size}} liberados).",
     "safe": "Se conservan los archivos que aún necesitan casos de prueba, programaciones o lotes."
   },
   "collections": {

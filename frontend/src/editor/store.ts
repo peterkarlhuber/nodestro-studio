@@ -10,6 +10,7 @@ import {
   type NodeType,
   type Run,
   type RunEvent,
+  type ToolCallApproval,
   type ToolCallRecord,
   type Usage,
   type Workflow,
@@ -60,6 +61,11 @@ export interface EditorState {
   past: Snapshot[];
   future: Snapshot[];
   run: Run | null;
+  /**
+   * Counts the requests to read the editor's run again at once (e.g. after someone decided one of its approvals);
+   * ``useFollowRun`` reacts to it. It never changes the run by itself.
+   */
+  runNudge: number;
   /** The version note of the next save, e.g. after taking a revision of the Workflow Architect. */
   pendingNote: string | null;
 
@@ -98,6 +104,8 @@ export interface EditorState {
   redo: () => void;
 
   setRun: (run: Run | null) => void;
+  /** Ask for a fresh copy of the editor's run from the server (see ``runNudge``). */
+  nudgeRun: () => void;
   applyEvent: (event: RunEvent) => void;
 }
 
@@ -177,6 +185,7 @@ export const useEditor = create<EditorState>((set, get) => {
     past: [],
     future: [],
     run: null,
+    runNudge: 0,
     pendingNote: null,
 
     load: (workflow) => {
@@ -434,6 +443,7 @@ export const useEditor = create<EditorState>((set, get) => {
     },
 
     setRun: (run) => set({ run }),
+    nudgeRun: () => set({ runNudge: get().runNudge + 1 }),
 
     applyEvent: (event) => {
       const run = get().run;
@@ -469,16 +479,66 @@ export const useEditor = create<EditorState>((set, get) => {
           break;
         case "tool_started":
           if (node) {
+            // A call that waited for an approval is already listed (tool_approval_requested): it is the same call.
+            const known = (node.tool_calls ?? []).find((call) => call.id === String(data.id));
             const call: ToolCallRecord = {
+              ...known,
               id: String(data.id),
               name: String(data.name),
-              input: (data.input as Record<string, unknown>) ?? {},
+              input: (data.input as Record<string, unknown>) ?? known?.input ?? {},
               output: null,
               is_error: false,
-              started_at: event.at,
+              started_at: known?.started_at ?? event.at,
               finished_at: null,
             };
-            node.tool_calls = [...(node.tool_calls ?? []), call];
+            node.tool_calls = known
+              ? (node.tool_calls ?? []).map((item) => (item.id === call.id ? call : item))
+              : [...(node.tool_calls ?? []), call];
+          }
+          break;
+        case "tool_approval_requested":
+          if (node) {
+            // The call waits for a person. The event carries no arguments (only their hash); the approval card
+            // reads them from the request itself.
+            const known = (node.tool_calls ?? []).find((call) => call.id === String(data.id));
+            const approval: ToolCallApproval = {
+              ...known?.approval,
+              status: "pending",
+              request_id: (data.request_id as string) ?? null,
+              deadline: (data.deadline as string) ?? null,
+            };
+            node.tool_calls = known
+              ? (node.tool_calls ?? []).map((item) => (item.id === known.id ? { ...item, approval } : item))
+              : [
+                  ...(node.tool_calls ?? []),
+                  {
+                    id: String(data.id),
+                    name: String(data.name ?? ""),
+                    input: {},
+                    output: null,
+                    is_error: false,
+                    started_at: event.at,
+                    finished_at: null,
+                    approval,
+                  },
+                ];
+          }
+          break;
+        case "tool_approval_decided":
+          if (node) {
+            node.tool_calls = (node.tool_calls ?? []).map((call) =>
+              call.id === String(data.id)
+                ? {
+                    ...call,
+                    approval: {
+                      ...call.approval,
+                      status: data.status as ToolCallApproval["status"],
+                      decided_by: (data.decided_by as string) ?? null,
+                      decided_at: event.at,
+                    },
+                  }
+                : call,
+            );
           }
           break;
         case "tool_finished":
@@ -594,7 +654,9 @@ function roundsUsage(node: NodeRun): Usage[] {
 export function liveUsage(run: Run | null): Usage {
   const zero = { ...ZERO_USAGE };
   if (!run) return zero;
-  if (run.finished_at && run.usage.requests) return run.usage;
+  // A run that is not executing (finished or paused) has its totals from the server, including the usage of
+  // teams and sub-workflows that the events of this run do not carry.
+  if ((run.finished_at || run.status === "paused") && run.usage?.requests) return run.usage;
   return Object.values(run.nodes).flatMap(roundsUsage).reduce<Usage>((sum, found) => {
     const usage = found ?? zero;
     return {
@@ -612,4 +674,15 @@ export function liveUsage(run: Run | null): Usage {
           : sum.estimated_cost_usd + usage.estimated_cost_usd,
     };
   }, zero);
+}
+
+/** Whether a step waits for a person to decide one of its tool calls (the step itself still counts as running). */
+export function waitsForToolApproval(state: NodeRun | undefined | null): boolean {
+  return state?.status === "running" && (state.tool_calls ?? []).some((call) => call.approval?.status === "pending");
+}
+
+/** Whether a running run waits for a person to decide a tool call. */
+export function runWaitsForToolApproval(run: Run | null | undefined): boolean {
+  if (!run || (run.status !== "running" && run.status !== "queued")) return false;
+  return Object.values(run.nodes).some((state) => waitsForToolApproval(state));
 }

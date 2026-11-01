@@ -16,7 +16,8 @@
   "file": {
     "not_json": "El archivo no es un JSON válido.",
     "not_found": "Este archivo de resultado no existe.",
-    "too_large": "El archivo supera el tamaño permitido ({{limit_mb}} MB)."
+    "too_large": "El archivo supera el tamaño permitido ({{limit_mb}} MB).",
+    "not_base64": "{{name}}: el contenido del archivo no es Base64 válido, así que no se pudo leer. Codifica el archivo en Base64 en content_base64 y envía la solicitud de nuevo."
   },
   "assistant": {
     "description_missing": "Describe el agente que necesitas.",
@@ -86,7 +87,8 @@
     "model_invalid": "Nombre de modelo no válido «{{model}}».",
     "model_missing": "Elige un modelo.",
     "model_provider_missing": "El modelo «{{model}}» no tiene proveedor; escríbelo como proveedor:modelo, por ejemplo ollama:{{model}}.",
-    "provider_mismatch": "Este acceso pertenece a otro proveedor y no puede ejecutar un modelo de {{provider}}."
+    "provider_mismatch": "Este acceso pertenece a otro proveedor y no puede ejecutar un modelo de {{provider}}.",
+    "invalid": "El ajuste {{name}} debe ser un número positivo, por eso Nodestro no lo aplicó. Corrige el valor y vuelve a iniciar Nodestro."
   },
   "workflow": {
     "edge_dangling": "Una conexión apunta a un nodo que no existe.",
@@ -101,7 +103,7 @@
     "branch_no_input": "{{node}} no tiene conexión entrante.",
     "branch_unknown": "Una conexión de {{node}} no parte de ninguna rama.",
     "condition_no_rules": "La decisión {{node}} no tiene reglas.",
-    "subworkflow_missing": "En {{node}} no se ha elegido ningún workflow.",
+    "subworkflow_missing": "En {{node}} no se ha elegido ningún flujo de trabajo.",
     "contract_field_name": "{{node}}: el nombre de campo {{field}} del contrato de salida no es válido (solo letras, cifras y _).",
     "contract_field_duplicate": "{{node}}: el contrato de salida nombra dos veces el campo {{field}}.",
     "node_duplicate": "Dos nodos tienen el mismo id ({{id}}). Elimina uno de ellos y vuelve a añadirlo.",
@@ -112,7 +114,7 @@
     "loop_invalid": "Este bucle no es válido.",
     "orchestrator_no_members": "{{node}} no tiene equipos entre los que elegir.",
     "orchestrator_member_duplicate": "{{node}} nombra un equipo dos veces.",
-    "orchestrator_self": "{{node}} elegiría su propio workflow como equipo.",
+    "orchestrator_self": "{{node}} elegiría su propio flujo de trabajo como equipo.",
     "orchestrator_limits": "{{node}} permite a un equipo más usos que decisiones en total."
   },
   "run": {
@@ -132,8 +134,8 @@
     "interrupted": "Nodestro se cerró mientras se ejecutaba.",
     "not_paused": "Solo puede continuar una ejecución en pausa.",
     "subworkflow_failed": "El subflujo {{name}} falló.",
-    "subworkflow_missing": "El workflow de {{node}} ya no existe.",
-    "subworkflow_recursive": "{{node}} llamaría a un workflow que ya está en marcha.",
+    "subworkflow_missing": "El flujo de trabajo de {{node}} ya no existe.",
+    "subworkflow_recursive": "{{node}} llamaría a un flujo de trabajo que ya está en marcha.",
     "subworkflow_too_deep": "En {{node}} los subflujos están anidados a demasiada profundidad.",
     "finished": "La ejecución ya ha terminado.",
     "not_found": "No hay ninguna ejecución con este id.",
@@ -146,7 +148,27 @@
     "orchestration_limit": "{{node}} tomó {{max_decisions}} decisiones sin terminar.",
     "orchestrator_member_missing": "Un equipo de {{node}} ya no existe.",
     "orchestrator_no_match": "Ningún equipo guardado de {{node}} tiene una de las capacidades {{capabilities}}.",
-    "orchestration_team_missing": "Falta la ejecución en espera de un equipo; el equipo no se volvió a iniciar."
+    "orchestration_team_missing": "Falta la ejecución en espera de un equipo; el equipo no se volvió a iniciar.",
+    "someProvider": "El proveedor de IA",
+    "agent": {
+      "IncompleteResponseError": "La respuesta del modelo se cortó en su límite de tokens (máx. de tokens: {{max_tokens}}).",
+      "OutputLimitReached": "La respuesta del modelo se cortó en su límite de tokens.",
+      "ContextWindowExceeded": "La conversación es más grande que la ventana de contexto del modelo.",
+      "RefusalError": "El modelo rechazó la solicitud.",
+      "MaxToolRoundsError": "El agente llamó a herramientas más veces de lo que permite su límite de rondas.",
+      "StructuredOutputError": "El modelo no devolvió un resultado con el formato de salida requerido.",
+      "UnexpectedResponseError": "La respuesta del modelo no fue la esperada.",
+      "EvaluationFailedError": "El resultado no superó el control de calidad.",
+      "ToolExecutionError": "Una herramienta del agente se detuvo con un error."
+    },
+    "api_error_auth": "{{provider}} rechazó la clave de API.",
+    "api_error_rate_limit": "{{provider}} informó de demasiadas solicitudes en poco tiempo (límite de frecuencia).",
+    "api_error_server": "{{provider}} está sobrecargado o tiene problemas en este momento.",
+    "api_error_connection": "No se pudo contactar con {{provider}}.",
+    "api_error_invalid": "{{provider}} rechazó la solicitud por no ser válida.",
+    "api_error_status": "{{provider}} rechazó la solicitud (estado {{status}}).",
+    "already_queued": "Esta ejecución ya está en espera o en curso, por eso no se inició una segunda vez. Espera a que termine o síguela en la página Ejecuciones.",
+    "not_executable": "Esta ejecución no se puede iniciar: solo puede ejecutarse una ejecución en espera o en pausa, y esta ya está en curso o ha terminado. Ábrela en la página Ejecuciones para ver su estado."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -187,8 +209,8 @@
     "pre_grant_expiry": "La fecha de caducidad está en el pasado.",
     "pre_grant_not_found": "Esta aprobación previa no existe.",
     "unattended_pre_grant_missing": "{{node}} ({{workflow}}): las llamadas a {{tool}} necesitan la aprobación de una persona y en estas ejecuciones nadie puede responder, así que se rechazarían. Aprueba {{tool}} por adelantado para esta programación en la página Aprobaciones, o inicia el flujo de trabajo a mano.",
-    "unattended_pre_grant_outdated": "{{node}} ({{workflow}}): la aprobación anticipada de {{tool}} ya no vale (una nueva versión de la herramienta, o caducó), así que sus llamadas se rechazarían. Vuelve a aprobar la versión actual en la página Aprobaciones.",
-    "unattended_not_started": "{{node}} ({{workflow}}): las llamadas a {{tool}} necesitan la aprobación de una persona y se rechazarían. Una aprobación anticipada solo puede nombrar una programación guardada o un lote o serie de pruebas ya iniciado, así que las llamadas anteriores a que apruebes {{tool}} en la página Aprobaciones se rechazan. Guarda primero la programación; un lote o una serie de pruebas mejor inícialos a mano si cada llamada importa.",
+    "unattended_pre_grant_outdated": "{{node}} ({{workflow}}): la aprobación previa de {{tool}} ya no vale (una nueva versión de la herramienta, o caducó), así que sus llamadas se rechazarían. Vuelve a aprobar la versión actual en la página Aprobaciones.",
+    "unattended_not_started": "{{node}} ({{workflow}}): las llamadas a {{tool}} necesitan la aprobación de una persona y se rechazarían. Una aprobación previa solo puede nombrar una programación guardada o un lote o serie de pruebas ya iniciado, así que las llamadas anteriores a que apruebes {{tool}} en la página Aprobaciones se rechazan. Guarda primero la programación; un lote o una serie de pruebas mejor inícialos a mano si cada llamada importa.",
     "unattended_api": "{{node}} ({{workflow}}): las llamadas a {{tool}} necesitan la aprobación de una persona. Las API publicadas aún no tienen un paso de aprobación propio, así que cada una de estas llamadas se rechazaría. Quita la herramienta del flujo de trabajo publicado o usa una herramienta que solo lea.",
     "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} puede borrar, pagar o enviar algo que no se puede deshacer. Esas llamadas nunca se aprueban por adelantado y se rechazarían en ejecuciones sin supervisión. Inicia el flujo de trabajo a mano para que una persona apruebe cada llamada.",
     "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} es una herramienta de un servicio MCP conectado. Sus llamadas no pueden ejecutarse sin una persona atenta y se rechazarían. Inicia el flujo de trabajo a mano.",
@@ -197,7 +219,9 @@
     "checkpoint_stale": "El agente cambió mientras esperaba una aprobación. La llamada en espera no se realizó.",
     "checkpoint_expired": "La llamada a la herramienta en espera ya no puede continuar (caducó o se desactivó el ajuste). No se realizó.",
     "approval_missing": "La solicitud de aprobación de esta llamada ya no existe; la llamada no se realizó.",
-    "approval_not_in_test": "Esta llamada necesitaría la aprobación de una persona; las pruebas no preguntan, así que no se realizó."
+    "approval_not_in_test": "Esta llamada necesitaría la aprobación de una persona; las pruebas no preguntan, así que no se realizó.",
+    "frozen": "Esta herramienta pertenece a una versión publicada de la API y no se puede modificar, para que la versión siga funcionando exactamente como se publicó. Cambia la herramienta en el flujo de trabajo y publica una nueva versión.",
+    "denied_by_policy": "Las reglas de llamadas a herramientas rechazaron esta llamada sin preguntar a nadie, así que la herramienta no se ejecutó. Revisa las reglas en la página Aprobaciones o dale al agente una herramienta que solo lea."
   },
   "job": {
     "writing": "El agente de programación está escribiendo código y pruebas …",
@@ -242,9 +266,9 @@
     "subworkflow_cycle": "{{name}} se llamaría a sí mismo (directamente o a través de otros subflujos).",
     "subworkflow_field_unknown": "{{name}}: el subflujo no tiene el campo {{field}}.",
     "subworkflow_field_unmapped": "{{name}}: el campo obligatorio {{field}} no recibe ningún valor.",
-    "subworkflow_invalid_one": "{{name}}: el workflow {{workflow}} tiene {{count}} error.",
-    "subworkflow_invalid_other": "{{name}}: el workflow {{workflow}} tiene {{count}} errores.",
-    "subworkflow_missing": "{{name}}: el workflow elegido ya no existe.",
+    "subworkflow_invalid_one": "{{name}}: el flujo de trabajo {{workflow}} tiene {{count}} error.",
+    "subworkflow_invalid_other": "{{name}}: el flujo de trabajo {{workflow}} tiene {{count}} errores.",
+    "subworkflow_missing": "{{name}}: el flujo de trabajo elegido ya no existe.",
     "subworkflow_outdated": "{{name}} usa la versión {{version}}; la versión {{latest}} es más reciente.",
     "subworkflow_version_missing": "{{name}}: la versión elegida ya no existe.",
     "contract_text_source": "{{name}} responde en texto; entonces el contrato de salida solo se cumple con una respuesta JSON. Configura el formato de salida del agente como «Estructurado».",
@@ -253,7 +277,7 @@
     "provider_not_configured": "{{provider}} no está configurado: introduce su URL base en los ajustes.",
     "input_form_only": "{{name}} lee el nodo de inicio con {{input}}. Si el formulario está rellenado, solo son los valores del formulario, sin el texto adicional. Usa {{run_input}} para recibir ambos.",
     "orchestrator_member_missing": "{{name}}: un equipo elegido ya no existe.",
-    "orchestrator_cycle": "{{name}}: el equipo {{workflow}} volvería a llamar a este workflow.",
+    "orchestrator_cycle": "{{name}}: el equipo {{workflow}} volvería a llamar a este flujo de trabajo.",
     "orchestrator_member_invalid_one": "{{name}}: el equipo {{workflow}} tiene {{count}} error.",
     "orchestrator_member_invalid_other": "{{name}}: el equipo {{workflow}} tiene {{count}} errores.",
     "orchestrator_member_approval": "{{name}}: el equipo {{workflow}} se detiene para aprobaciones. El orquestador espera entonces también.",
@@ -374,8 +398,8 @@
     "imported": "Un trace importado no se puede continuar.",
     "child": "Continúa la ejecución a la que pertenece este subflujo.",
     "not_failed": "Solo se pueden continuar ejecuciones fallidas o canceladas.",
-    "workflow_deleted": "El workflow de esta ejecución ya no existe.",
-    "workflow_changed": "El workflow ha cambiado desde esta ejecución; los pasos modificados y todo lo posterior se repiten.",
+    "workflow_deleted": "El flujo de trabajo de esta ejecución ya no existe.",
+    "workflow_changed": "El flujo de trabajo ha cambiado desde esta ejecución; los pasos modificados y todo lo posterior se repiten.",
     "agent_invalid": "Un agente no está configurado por completo.",
     "files_missing_one": "{{count}} archivo de esta ejecución ya no existe.",
     "files_missing_other": "{{count}} archivos de esta ejecución ya no existen.",
@@ -402,7 +426,7 @@
     "encrypted": "{{name}} está protegido con contraseña y no se puede leer. Sube una versión sin contraseña."
   },
   "batch": {
-    "confirm_external": "El workflow usa herramientas propias que pueden actuar fuera de Nodestro: {{tools}}. Confírmalo.",
+    "confirm_external": "El flujo de trabajo usa herramientas propias que pueden actuar fuera de Nodestro: {{tools}}. Confírmalo.",
     "delete_running": "Cancela el lote antes de eliminarlo.",
     "empty": "El lote no tiene filas.",
     "file_empty": "El archivo no contiene filas.",
@@ -435,12 +459,12 @@
     "confirm_external": "Las herramientas propias pueden actuar fuera de Nodestro: {{tools}}. Confírmalo.",
     "date_invalid": "«{{value}}» no es una fecha (AAAA-MM-DD).",
     "in_past": "El momento está en el pasado.",
-    "input_empty": "La programación no tiene entrada para el workflow.",
+    "input_empty": "La programación no tiene entrada para el flujo de trabajo.",
     "no_budget": "Las programaciones necesitan un presupuesto por ejecución (ajustes).",
     "no_weekdays": "Elige al menos un día de la semana.",
     "time_invalid": "«{{value}}» no es una hora (HH:MM).",
     "time_zone": "Zona horaria desconocida {{zone}}.",
-    "workflow_missing": "El workflow ya no existe.",
+    "workflow_missing": "El flujo de trabajo ya no existe.",
     "input_files_kept_one": "El archivo subido se conserva para esta programación y lo usa cada ejecución.",
     "input_files_kept_other": "Los {{count}} archivos subidos se conservan para esta programación y los usa cada ejecución."
   },
@@ -465,7 +489,7 @@
     "memory_shared": "La memoria persistente ({{spaces}}) la comparten Nodestro y cada ejecución de la API.",
     "no_budget": "Las ejecuciones no tienen límite de coste; fija un presupuesto para el flujo o un presupuesto diario para la API.",
     "subworkflow_unsaved": "{{name}}: el subflujo no tiene ninguna versión guardada.",
-    "mcp_tool_unusable": "Una herramienta de servicio de este workflow no se puede usar ahora; no se puede publicar.",
+    "mcp_tool_unusable": "Una herramienta de servicio de este flujo de trabajo no se puede usar ahora; no se puede publicar.",
     "mcp_tools": "Las herramientas de servicio quedan congeladas en esta versión; un cambio posterior en el servicio la detiene hasta que se publique de nuevo.",
     "mcp_unattended_off": "Las ejecuciones de la API usan herramientas de servicio solo si el operador permite el uso desatendido (NODESTRO_MCP_UNATTENDED)."
   },
@@ -496,7 +520,8 @@
     "tls_incomplete": "TLS necesita un certificado y su clave.",
     "port_unavailable": "No se puede usar el puerto {{port}} (otro programa lo usa o no está permitido).",
     "start_failed": "No se pudo iniciar el acceso en red.",
-    "not_enabled": "Las API publicadas solo responden a este ordenador."
+    "not_enabled": "Las API publicadas solo responden a este ordenador.",
+    "unavailable": "Aquí no se puede activar el acceso de red: Nodestro Local Docker ofrece su puerto solo en este ordenador. Las API publicadas siguen funcionando en este ordenador; para usarlas desde otros dispositivos, ejecuta Nodestro en un servidor."
   },
   "request": {
     "invalid": "La solicitud no se ajusta a la entrada de la API: {{fields}}.",
@@ -613,7 +638,8 @@
     "launch_required": "Este Nodestro pertenece a la aplicación de escritorio que lo inició. Abra Nodestro desde la aplicación.",
     "launch_used": "El enlace de inicio ya se usó. Reinicie la aplicación de escritorio para abrir una ventana nueva.",
     "launch_invalid": "El enlace de inicio no es válido. Inicie Nodestro desde la aplicación de escritorio.",
-    "cross_site": "Este cambio venía de otro sitio web y se rechazó. Usa Nodestro directamente."
+    "cross_site": "Este cambio venía de otro sitio web y se rechazó. Usa Nodestro directamente.",
+    "network_needs_login": "Nodestro Studio solo se ofrece en este ordenador porque no tiene inicio de sesión propio. Inícialo sin dirección de red ni nombres de host adicionales; para ofrecer flujos de trabajo en la red, activa el acceso de red de las API publicadas."
   },
   "sandbox": {
     "isolation_required": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan aislados (sandbox de Linux integrado o Docker); ninguno está disponible, así que no se ejecutó nada. Ajustes → Sandbox muestra el motivo.",
@@ -626,7 +652,14 @@
     "provider": "No se puede acceder al servicio de inicio de sesión o no está bien configurado. Contacta con tu administrador.",
     "no_tenant": "Tu cuenta todavía no tiene acceso a Nodestro. Pide a un administrador que te añada.",
     "bootstrap_invalid": "Este enlace de configuración no es válido, ya se usó o caducó.",
-    "not_a_member": "Tu cuenta no tiene acceso a este espacio de trabajo."
+    "not_a_member": "Tu cuenta no tiene acceso a este espacio de trabajo.",
+    "last_owner": "Un espacio de trabajo necesita al menos un propietario, por eso se rechazó el cambio. Haz primero propietario a otro miembro.",
+    "role": "«{{role}}» no es un rol conocido, así que no se cambió nada. Elige uno de los roles ofrecidos.",
+    "subject_missing": "El servicio de inicio de sesión no indicó quién eres, por eso se rechazó el inicio de sesión. Inténtalo de nuevo; si vuelve a pasar, pide a tu administración que revise la configuración.",
+    "tenant_exists": "Ya existe un espacio de trabajo con el id {{tenant}}, así que no se creó otro. Elige otro id.",
+    "tenant_has_owner": "El espacio de trabajo {{tenant}} ya tiene propietario, por eso este enlace de configuración no puede añadir otro. Pide al propietario que te añada.",
+    "tenant_id": "{{tenant}} no se puede usar como id de un espacio de trabajo: no es válido o está reservado. Elige otro id.",
+    "tenant_unknown": "No existe el espacio de trabajo {{tenant}}. Comprueba el id o pide acceso a tu administración."
   },
   "secrets": {
     "unreadable": "Una clave guardada ya no se puede leer. Vuelve a introducirla en la configuración."
@@ -645,7 +678,7 @@
   "gate": {
     "blocked": "El control de publicación bloquea esta versión. Prueba exactamente esta versión con sus series de pruebas.",
     "override_required": "El control de publicación no se cumple. Indica un motivo para publicar igualmente.",
-    "suite_unknown": "Esta serie de pruebas no pertenece a este workflow."
+    "suite_unknown": "Esta serie de pruebas no pertenece a este flujo de trabajo."
   },
   "testcase": {
     "run_not_failed": "Solo una ejecución fallida puede añadirse como caso de prueba.",
@@ -728,5 +761,30 @@
   },
   "mcp_server": {
     "disabled": "El servidor MCP de Nodestro está desactivado."
+  },
+  "hints": {
+    "run": {
+      "agent": {
+        "IncompleteResponseError": "Aumenta «Máx. tokens» en «Avanzado» de este agente o pide una respuesta más corta en su tarea.",
+        "OutputLimitReached": "Aumenta «Máx. tokens» en «Avanzado» de este agente o pide una respuesta más corta en su tarea.",
+        "ContextWindowExceeded": "Acorta la entrada o el conocimiento del agente, o elige un modelo con una ventana de contexto mayor.",
+        "RefusalError": "Revisa la tarea y la entrada y describe el trabajo con más claridad. Algunos contenidos el modelo los rechaza siempre.",
+        "MaxToolRoundsError": "Aumenta «Máx. rondas de herramientas» en «Avanzado» de este agente o indica en su tarea cuándo ha terminado.",
+        "StructuredOutputError": "Revisa los campos en «Formato de salida»; pocos campos bien descritos ayudan. A menudo basta con continuar la ejecución.",
+        "UnexpectedResponseError": "Continúa la ejecución. Si vuelve a ocurrir, los detalles técnicos ayudan al soporte del proveedor.",
+        "EvaluationFailedError": "Lee la justificación del control en el paso y ajusta la tarea o los criterios.",
+        "ToolExecutionError": "Los detalles técnicos indican la herramienta y su error. Revisa la herramienta en «Herramientas»."
+      },
+      "api_error_auth": "Revisa la clave en Ajustes → Proveedores de IA y prueba allí la conexión.",
+      "api_error_rate_limit": "Espera un momento y continúa la ejecución. Menos ejecuciones simultáneas o un límite mayor con el proveedor lo solucionan a largo plazo.",
+      "api_error_server": "No se debe a tu flujo de trabajo. Continúa la ejecución dentro de unos minutos.",
+      "api_error_connection": "Revisa la conexión a internet, el cortafuegos o el proxy y luego continúa la ejecución.",
+      "api_error_invalid": "Revisa el modelo y los ajustes del agente; los detalles técnicos muestran la respuesta del proveedor.",
+      "api_error_status": "Revisa el modelo y los ajustes del agente; los detalles técnicos muestran la respuesta del proveedor.",
+      "budget_exceeded": "Aumenta el presupuesto en los ajustes del flujo de trabajo o continúa la ejecución con un nuevo presupuesto.",
+      "time_limit": "Aumenta el límite de tiempo en «Límites» de los ajustes del flujo de trabajo si la ejecución necesita más tiempo.",
+      "step_limit": "Aumenta el límite de pasos en «Límites» de los ajustes del flujo de trabajo o revisa los bucles.",
+      "orchestration_limit": "Aumenta «Máximo de decisiones» en el orquestador o indica en sus instrucciones cuándo está terminada la tarea."
+    }
   }
 }

@@ -64,16 +64,16 @@
     "never": "Las aprobaciones abiertas se conservan tras un reinicio. Programaciones, lotes y series de pruebas también esperan una decisión."
   },
   "subworkflow": {
-    "text": "Ejecuta otro workflow guardado como un paso. Se ejecuta como una ejecución propia y vinculada.",
-    "workflow": "Workflow",
-    "pick": "Elegir workflow",
+    "text": "Ejecuta otro flujo de trabajo guardado como un paso. Se ejecuta como una ejecución propia y vinculada.",
+    "workflow": "Flujo de trabajo",
+    "pick": "Elegir flujo de trabajo",
     "version": "Versión",
-    "versionHint": "Una versión fija no cambia aunque el workflow se edite más tarde.",
+    "versionHint": "Una versión fija no cambia aunque el flujo de trabajo se edite más tarde.",
     "input": "Entrada",
     "inputHint": "Lo que recibe el subflujo como entrada. {{input}} es lo que llega aquí.",
     "values": "Valores para su formulario de entrada",
     "valuesHint": "Texto o marcadores como {{formExample}} o {{agentExample}}.",
-    "costs": "El coste y los tokens del subflujo cuentan una sola vez, en la ejecución de este workflow.",
+    "costs": "El coste y los tokens del subflujo cuentan una sola vez, en la ejecución de este flujo de trabajo.",
     "delivers": "Entrega: {{fields}}.",
     "noContract": "Sin contrato de salida: el resultado llega tal como lo produce el flujo.",
     "open": "Abrir flujo (o doble clic en el nodo)"
@@ -106,7 +106,7 @@
     "remove": "Quitar campo",
     "choose": "Elige una opción",
     "noFiles": "Todavía no hay archivos en Conocimiento",
-    "runIntro": "Rellena el formulario de entrada del workflow.",
+    "runIntro": "Rellena el formulario de entrada del flujo de trabajo.",
     "extraInput": "Entrada adicional (opcional)",
     "extraInputHint": "Se añade a la entrada después de los valores del formulario.",
     "requiredLabel": "Obligatorio u opcional",
@@ -127,7 +127,7 @@
       "pdf": "PDF (.pdf)"
     },
     "name": "Nombre de archivo",
-    "namePlaceholder": "Nombre del workflow",
+    "namePlaceholder": "Nombre del flujo de trabajo",
     "sanitize": "Depurar (sustituir credenciales y datos personales)",
     "add": "Añadir archivo",
     "remove": "Quitar archivo",
@@ -196,7 +196,7 @@
     "button": "Continuar",
     "title": "Continuar la ejecución",
     "intro": "Una ejecución nueva y vinculada reutiliza los resultados que siguen siendo válidos y repite el resto. La ejecución fallida no cambia.",
-    "summary": "Se reutilizan {{reused}} pasos y {{rerun}} se repiten. Ahorro: unos {{saved}}.",
+    "summary": "Pasos reutilizados: {{reused}} · se repiten: {{rerun}}. Ahorro: unos {{saved}}.",
     "steps": "Pasos",
     "step": "Paso",
     "action": "Acción",
@@ -207,7 +207,7 @@
       "run": "Ejecutar"
     },
     "reasons": {
-      "new_node": "Nuevo en el workflow.",
+      "new_node": "Nuevo en el flujo de trabajo.",
       "changed": "El paso se ha modificado.",
       "upstream_changed": "Un paso anterior se repite.",
       "no_fingerprint": "La ejecución anterior no tiene huella de este paso.",
@@ -230,7 +230,7 @@
   "orchestrator": {
     "text": "Un modelo de IA decide paso a paso qué equipo recibe qué tarea y termina con una respuesta.",
     "teams": "Equipos",
-    "teamsHint": "Los workflows entre los que el modelo puede elegir (como máximo {{max}}). Las capacidades y los contratos de salida le ayudan a elegir.",
+    "teamsHint": "Los flujos de trabajo entre los que el modelo puede elegir (como máximo {{max}}). Las capacidades y los contratos de salida le ayudan a elegir.",
     "noTeams": "Todavía no hay equipos. Añade al menos uno.",
     "addTeam": "Añadir un equipo…",
     "removeTeam": "Quitar {{name}}",
@@ -286,7 +286,8 @@
         "rejected": "Rechazado",
         "cancelled": "Cancelado",
         "expired": "Caducado"
-      }
+      },
+      "invalidNotRun": "No válida, no ejecutada"
     },
     "select": "Equipos por capacidad",
     "selectHint": "Los equipos guardados con una de estas capacidades entran en el pool al iniciar una ejecución (como máximo 10 etiquetas). Primero la mejor coincidencia; los equipos con errores quedan fuera.",

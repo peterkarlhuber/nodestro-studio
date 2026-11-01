@@ -1,11 +1,11 @@
-# Workflows de exemplo
+# Fluxos de trabalho de exemplo
 
-O Nodestro traz 24 workflows multiagente prontos, um para cada área de aplicação típica. Cada exemplo contém agentes com prompts de sistema, as conexões, uma tarefa de teste preparada com dados inventados e um resultado claramente descrito. Este capítulo explica a galeria, como copiar e adaptar, e descreve cada exemplo separadamente.
+O Nodestro traz 24 fluxos de trabalho multiagente prontos, um para cada área de aplicação típica. Cada exemplo contém agentes com prompts de sistema, as conexões, uma tarefa de teste preparada com dados inventados e um resultado claramente descrito. Este capítulo explica a galeria, como copiar e adaptar, e descreve cada exemplo separadamente.
 
 ## A galeria {#galerie}
 <!-- keywords: exemplos, modelos, galeria, biblioteca, destaques, categorias, página inicial -->
 
-A galeria fica na página **Workflows**, abaixo dos seus próprios workflows e claramente separada deles. Ela mostra alguns exemplos em destaque e as seis categorias. **Ver todos os 24 exemplos** abre a galeria completa, também dentro da área de workflows.
+A galeria fica na página **Fluxos de trabalho**, abaixo dos seus próprios fluxos de trabalho e claramente separada deles. Ela mostra alguns exemplos em destaque e as seis categorias. **Ver todos os 24 exemplos** abre a galeria completa, também dentro da área de fluxos de trabalho.
 
 Na galeria completa você busca por nome, área e descrição e filtra por categoria. Cada cartão mostra a área, o nome, a descrição, o número de agentes, o nível e o padrão. Exemplos de áreas sensíveis têm o selo **Exige revisão especializada**. A [busca](/docs/start#suche) também encontra exemplos.
 
@@ -14,11 +14,11 @@ Na galeria completa você busca por nome, área e descrição e filtra por categ
 
 Um clique em um cartão abre a **prévia**: o fluxo como diagrama, cada agente com sua função, modelo, ferramentas e os resultados que recebe, o guia e a tarefa de teste. A prévia não salva nada e não chama nenhum modelo.
 
-**Copiar para meus workflows** cria um workflow seu e o abre no editor. A cópia é independente: você pode mudar tudo, e o modelo continua sempre inalterado. Se você copiar um exemplo duas vezes, terá dois workflows separados. A cópia começa com a versão 1 no [histórico de versões](/docs/workflows#versionen).
+**Copiar para meus fluxos de trabalho** cria um fluxo de trabalho seu e o abre no editor. A cópia é independente: você pode mudar tudo, e o modelo continua sempre inalterado. Se você copiar um exemplo duas vezes, terá dois fluxos de trabalho separados. A cópia começa com a versão 1 no [histórico de versões](/docs/workflows#versionen).
 
 Se **Adicionar os casos de teste como série de testes** estiver marcado (padrão), a cópia recebe também uma [série de testes](/docs/automatisierung#testreihen) com os casos de teste preparados; os arquivos de exemplo necessários são salvos como arquivos de entrada da cópia. Copiar nunca inicia uma execução, nunca cria um [agendamento](/docs/automatisierung#zeitplaene) e nunca publica uma [API](/docs/api-und-export#veroeffentlichen); isso você decide depois.
 
-Os exemplos nunca são criados automaticamente; só o que você copia aparece entre seus workflows. Só há custos quando você executa uma cópia. Os exemplos usam modelos da Anthropic; basta esse [provedor configurado](/docs/einstellungen#anbieter), e você pode trocar os modelos de uma cópia para outro provedor a qualquer momento. Nenhum exemplo precisa de outros serviços, contas ou fontes de dados pagas.
+Os exemplos nunca são criados automaticamente; só o que você copia aparece entre seus fluxos de trabalho. Só há custos quando você executa uma cópia. Os exemplos usam modelos da Anthropic; basta esse [provedor configurado](/docs/einstellungen#anbieter), e você pode trocar os modelos de uma cópia para outro provedor a qualquer momento. Nenhum exemplo precisa de outros serviços, contas ou fontes de dados pagas.
 
 ## Idiomas {#sprachen}
 <!-- keywords: idioma, tradução, alemão, inglês, cópia, prompts -->
@@ -38,7 +38,7 @@ Os exemplos usam apenas os agentes de que a tarefa precisa, geralmente três ou 
 - **Revisão:** um agente revisor confere o trabalho dos outros e muitas vezes entrega uma saída estruturada com campos fixos.
 - **Verificação de qualidade:** em alguns agentes, uma [verificação de qualidade](/docs/agenten#qualitaet) integrada avalia o resultado segundo critérios fixos e o faz revisar, se necessário.
 
-Os cartões da galeria também mostram quais blocos um exemplo usa: decisão, aprovação, formulário de entrada, subworkflow, arquivos de resultado, arquivos como entrada, propostas de conhecimento ou memória.
+Os cartões da galeria também mostram quais blocos um exemplo usa: decisão, aprovação, formulário de entrada, subfluxo, arquivos de resultado, arquivos como entrada, propostas de conhecimento ou memória.
 
 As funções na prévia descrevem o que um agente faz: pesquisa, análise, planejamento, revisão ou redação. Os cálculos usam as ferramentas integradas, como a calculadora e o cálculo de datas; elas não custam nada a mais.
 

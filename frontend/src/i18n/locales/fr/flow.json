@@ -196,7 +196,7 @@
     "button": "Reprendre",
     "title": "Reprendre l’exécution",
     "intro": "Une nouvelle exécution liée reprend les résultats encore valides et relance le reste. L’exécution en échec reste inchangée.",
-    "summary": "{{reused}} étapes sont reprises, {{rerun}} sont relancées. Économie : environ {{saved}}.",
+    "summary": "Étapes reprises : {{reused}} · relancées : {{rerun}}. Économie : environ {{saved}}.",
     "steps": "Étapes",
     "step": "Étape",
     "action": "Action",
@@ -286,7 +286,8 @@
         "rejected": "Refusé",
         "cancelled": "Annulé",
         "expired": "Expiré"
-      }
+      },
+      "invalidNotRun": "Invalide, non exécutée"
     },
     "select": "Équipes par capacité",
     "selectHint": "Les équipes enregistrées ayant l'une de ces capacités rejoignent le pool au démarrage d'une exécution (10 mots-clés au plus). La meilleure correspondance d'abord ; les équipes avec des erreurs sont exclues.",

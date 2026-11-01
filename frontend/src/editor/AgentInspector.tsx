@@ -547,7 +547,11 @@ function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
   const upload = useMutation({
     mutationFn: (list: File[]) => api.uploadKnowledge(list, ""),
     onSuccess: (added) => {
-      queryClient.setQueryData<KnowledgeFile[]>(keys.knowledge(), (old) => [...(old ?? []), ...added]);
+      // File ids are content hashes: uploading bytes that are already stored returns the existing file, so merge by id.
+      queryClient.setQueryData<KnowledgeFile[]>(keys.knowledge(), (old) => [
+        ...(old ?? []).filter((file) => !added.some((item) => item.id === file.id)),
+        ...added,
+      ]);
       void queryClient.invalidateQueries({ queryKey: ["knowledge"] });
       void queryClient.invalidateQueries({ queryKey: ["knowledge-collections"] });
       const ids = added.map((file) => file.id).filter((id) => !current.current.file_ids.includes(id));

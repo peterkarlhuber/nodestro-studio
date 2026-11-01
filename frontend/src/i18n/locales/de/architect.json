@@ -132,7 +132,7 @@
     "outputs": "Ergebnisse",
     "constraints": "Einschränkungen",
     "facts": "Struktur",
-    "factsValue": "{{agents}} Agenten, {{connections}} Verbindungen · {{fixes}} automatische Korrekturen, {{repairs}} KI-Korrekturen",
+    "factsValue": "Agenten: {{agents}} · Verbindungen: {{connections}} · automatische Korrekturen: {{fixes}} · KI-Korrekturen: {{repairs}}",
     "cost": "Kosten",
     "costValue": "{{cost}} für {{requests}} KI-Anfragen",
     "assumptions": "Annahmen",

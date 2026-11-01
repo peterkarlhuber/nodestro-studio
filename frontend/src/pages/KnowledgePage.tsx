@@ -368,7 +368,7 @@ function DocumentInfo({ file, onChanged }: { file: KnowledgeFile; onChanged: () 
             <span tabIndex={0}>
               <Badge tone={file.ocr === "done" ? (file.ocr_uncertain ? "warning" : "success") : "warning"}>
                 {file.ocr === "done"
-                  ? t("knowledge.ocr.recognised", { words: file.ocr_words ?? 0, uncertain: file.ocr_uncertain ?? 0 })
+                  ? t("knowledge.ocr.recognised", { count: file.ocr_words ?? 0, uncertain: file.ocr_uncertain ?? 0 })
                   : file.ocr === "failed"
                     ? t("knowledge.ocr.failed")
                     : t("knowledge.ocr.scan")}

@@ -9,14 +9,15 @@
   "library": "La bibliothèque d’agents a refusé la configuration.",
   "examples": {
     "integration_unavailable": "Le serveur MCP choisi ne peut pas assurer cette connexion : il doit proposer chaque outil dont l'exemple a besoin, approuvé en lecture seule. Rien n'a été copié.",
-    "integration_unknown": "L'exemple n'a pas de connexion « {{integration}} ». Recharge la page et réessaie.",
-    "tests_need_offline": "Les séries de tests s'exécutent sans personne et ne peuvent pas utiliser d'outils MCP. Copie l'exemple en mode hors ligne pour reprendre ses cas de test."
+    "integration_unknown": "L'exemple n'a pas de connexion « {{integration}} ». Rechargez la page et réessayez.",
+    "tests_need_offline": "Les séries de tests s'exécutent sans personne et ne peuvent pas utiliser d'outils MCP. Copiez l'exemple en mode hors ligne pour reprendre ses cas de test."
   },
   "agentFailed": "L’agent s’est arrêté sur une erreur ({{type}}).",
   "file": {
     "not_json": "Le fichier n’est pas un JSON valide.",
     "not_found": "Ce fichier de résultat n’existe pas.",
-    "too_large": "Le fichier dépasse la taille autorisée ({{limit_mb}} Mo)."
+    "too_large": "Le fichier dépasse la taille autorisée ({{limit_mb}} Mo).",
+    "not_base64": "{{name}} : le contenu du fichier n’est pas du Base64 valide ; le fichier n’a donc pas pu être lu. Encodez le fichier en Base64 dans content_base64 et renvoyez la requête."
   },
   "assistant": {
     "description_missing": "Veuillez décrire l’agent dont vous avez besoin.",
@@ -86,7 +87,8 @@
     "model_invalid": "Nom de modèle invalide « {{model}} ».",
     "model_missing": "Choisissez un modèle.",
     "model_provider_missing": "Le modèle « {{model}} » n’a pas de fournisseur ; écrivez-le sous la forme fournisseur:modèle, par exemple ollama:{{model}}.",
-    "provider_mismatch": "Cet accès appartient à un autre fournisseur et ne peut pas exécuter un modèle de {{provider}}."
+    "provider_mismatch": "Cet accès appartient à un autre fournisseur et ne peut pas exécuter un modèle de {{provider}}.",
+    "invalid": "Le réglage {{name}} doit être un nombre positif ; Nodestro ne l’a donc pas appliqué. Corrigez la valeur et redémarrez Nodestro."
   },
   "workflow": {
     "edge_dangling": "Une connexion pointe vers un nœud qui n’existe pas.",
@@ -146,7 +148,27 @@
     "orchestration_limit": "{{node}} a pris {{max_decisions}} décisions sans conclure.",
     "orchestrator_member_missing": "Une équipe de {{node}} n’existe plus.",
     "orchestrator_no_match": "Aucune équipe enregistrée de {{node}} n’a l’une des capacités {{capabilities}}.",
-    "orchestration_team_missing": "L'exécution en attente d'une équipe est introuvable ; l'équipe n'a pas été relancée."
+    "orchestration_team_missing": "L'exécution en attente d'une équipe est introuvable ; l'équipe n'a pas été relancée.",
+    "someProvider": "Le fournisseur d'IA",
+    "agent": {
+      "IncompleteResponseError": "La réponse du modèle a été coupée à sa limite de tokens (tokens max. : {{max_tokens}}).",
+      "OutputLimitReached": "La réponse du modèle a été coupée à sa limite de tokens.",
+      "ContextWindowExceeded": "La conversation dépasse la fenêtre de contexte du modèle.",
+      "RefusalError": "Le modèle a refusé la demande.",
+      "MaxToolRoundsError": "L'agent a appelé des outils plus souvent que sa limite de tours ne le permet.",
+      "StructuredOutputError": "Le modèle n'a pas renvoyé de résultat au format de sortie demandé.",
+      "UnexpectedResponseError": "La réponse du modèle ne correspondait pas à ce qui était attendu.",
+      "EvaluationFailedError": "Le résultat n'a pas passé le contrôle qualité.",
+      "ToolExecutionError": "Un outil de l'agent s'est arrêté avec une erreur."
+    },
+    "api_error_auth": "{{provider}} a refusé la clé API.",
+    "api_error_rate_limit": "{{provider}} a signalé trop de requêtes en peu de temps (limite de débit).",
+    "api_error_server": "{{provider}} est surchargé ou rencontre des problèmes en ce moment.",
+    "api_error_connection": "{{provider}} n'a pas pu être joint.",
+    "api_error_invalid": "{{provider}} a refusé la requête comme invalide.",
+    "api_error_status": "{{provider}} a refusé la requête (statut {{status}}).",
+    "already_queued": "Cette exécution est déjà en attente ou en cours ; elle n’a donc pas été lancée une seconde fois. Attendez qu’elle se termine ou suivez-la sur la page Exécutions.",
+    "not_executable": "Cette exécution ne peut pas être lancée : seule une exécution en attente ou en pause peut s’exécuter, et celle-ci est déjà en cours ou terminée. Ouvrez-la sur la page Exécutions pour voir son état."
   },
   "trace": {
     "invalid": "La trace est endommagée ou incomplète.",
@@ -186,18 +208,20 @@
     "pre_grant_version": "Seule une version précise d’un outil peut être validée à l’avance.",
     "pre_grant_expiry": "La date d’expiration est dans le passé.",
     "pre_grant_not_found": "Cette validation anticipée n’existe pas.",
-    "unattended_pre_grant_missing": "{{node}} ({{workflow}}) : les appels de {{tool}} demandent l'approbation d'une personne, et personne ne peut répondre dans ces exécutions : ils seraient refusés. Approuvez {{tool}} à l'avance pour cette planification sur la page Approbations, ou lancez le workflow à la main.",
-    "unattended_pre_grant_outdated": "{{node}} ({{workflow}}) : l'approbation anticipée de {{tool}} ne compte plus (nouvelle version de l'outil, ou expirée) : ses appels seraient refusés. Approuvez à nouveau la version actuelle sur la page Approbations.",
-    "unattended_not_started": "{{node}} ({{workflow}}) : les appels de {{tool}} demandent l'approbation d'une personne et seraient refusés. Une approbation anticipée ne peut viser qu'une planification enregistrée ou un lot ou une série de tests déjà lancés : les appels faits avant que vous approuviez {{tool}} sur la page Approbations sont refusés. Enregistrez d'abord la planification ; lancez plutôt un lot ou une série de tests à la main si chaque appel compte.",
-    "unattended_api": "{{node}} ({{workflow}}) : les appels de {{tool}} demandent l'approbation d'une personne. Les API publiées n'ont pas encore d'étape d'approbation propre : chacun de ces appels serait refusé. Retirez l'outil du workflow publié, ou utilisez un outil qui ne fait que lire.",
-    "unattended_destructive": "{{node}} ({{workflow}}) : {{tool}} peut supprimer, payer ou envoyer quelque chose d'irréversible. De tels appels ne sont jamais approuvés à l'avance et seraient refusés dans des exécutions sans surveillance. Lancez le workflow à la main pour qu'une personne approuve chaque appel.",
+    "unattended_pre_grant_missing": "{{node}} ({{workflow}}) : les appels de {{tool}} demandent la validation d'une personne, et personne ne peut répondre dans ces exécutions : ils seraient refusés. Validez {{tool}} à l'avance pour cette planification sur la page Validations, ou lancez le workflow à la main.",
+    "unattended_pre_grant_outdated": "{{node}} ({{workflow}}) : la validation anticipée de {{tool}} ne compte plus (nouvelle version de l'outil, ou expirée) : ses appels seraient refusés. Validez à nouveau la version actuelle sur la page Validations.",
+    "unattended_not_started": "{{node}} ({{workflow}}) : les appels de {{tool}} demandent la validation d'une personne et seraient refusés. Une validation anticipée ne peut viser qu'une planification enregistrée ou un lot ou une série de tests déjà lancés : les appels faits avant que vous validiez {{tool}} sur la page Validations sont refusés. Enregistrez d'abord la planification ; lancez plutôt un lot ou une série de tests à la main si chaque appel compte.",
+    "unattended_api": "{{node}} ({{workflow}}) : les appels de {{tool}} demandent la validation d'une personne. Les API publiées n'ont pas encore d'étape de validation propre : chacun de ces appels serait refusé. Retirez l'outil du workflow publié, ou utilisez un outil qui ne fait que lire.",
+    "unattended_destructive": "{{node}} ({{workflow}}) : {{tool}} peut supprimer, payer ou envoyer quelque chose d'irréversible. De tels appels ne sont jamais validés à l'avance et seraient refusés dans des exécutions sans surveillance. Lancez le workflow à la main pour qu'une personne valide chaque appel.",
     "unattended_mcp": "{{node}} ({{workflow}}) : {{tool}} est un outil d'un service MCP connecté. Ses appels ne peuvent pas s'exécuter sans qu'une personne surveille et seraient refusés. Lancez le workflow à la main.",
     "unattended_denied": "{{node}} ({{workflow}}) : les appels de {{tool}} seraient refusés dans ces exécutions.",
     "result_lost": "L’appel a peut-être déjà été effectué, mais son résultat a été perdu. Il n’est pas refait.",
-    "checkpoint_stale": "L’agent a été modifié pendant qu’il attendait une approbation. L’appel en attente n’a pas été effectué.",
+    "checkpoint_stale": "L’agent a été modifié pendant qu’il attendait une validation. L’appel en attente n’a pas été effectué.",
     "checkpoint_expired": "L’appel d’outil en attente ne peut plus reprendre (expiré ou réglage désactivé). Il n’a pas été effectué.",
-    "approval_missing": "La demande d’approbation de cet appel n’existe plus ; l’appel n’a pas été effectué.",
-    "approval_not_in_test": "Cet appel nécessiterait l'approbation d'une personne ; les tests ne demandent pas, il n'a donc pas été effectué."
+    "approval_missing": "La demande de validation de cet appel n’existe plus ; l’appel n’a pas été effectué.",
+    "approval_not_in_test": "Cet appel nécessiterait la validation d'une personne ; les tests ne demandent pas, il n'a donc pas été effectué.",
+    "frozen": "Cet outil fait partie d’une version publiée de l’API et ne peut pas être modifié, afin que la version continue de fonctionner exactement comme elle a été publiée. Modifiez l’outil dans le workflow et publiez une nouvelle version.",
+    "denied_by_policy": "Les règles des appels d’outils ont refusé cet appel sans demander à personne ; l’outil ne s’est donc pas exécuté. Vérifiez les règles sur la page Validations ou donnez à l’agent un outil qui ne fait que lire."
   },
   "job": {
     "writing": "Le Coding Agent écrit le code et les tests …",
@@ -324,7 +348,7 @@
     "run_active": "Le workflow est en cours d’exécution ; réessayez après l’exécution.",
     "install_interrupted": "Nodestro s’est arrêté pendant l’installation des bibliothèques. Installez-les à nouveau.",
     "build_required": "{{name}} n’est disponible que sous forme de code source. Le résoudre exécuterait son script de construction ; Nodestro ne l’a donc pas résolu pour l’outil généré. Vérifiez le paquet et approuvez-le dans la boîte de dialogue des bibliothèques de l’outil, ou laissez l’outil être écrit sans lui.",
-    "lock_without_hashes": "Cette approbation provient d’une ancienne version sans sommes de contrôle. Approuve de nouveau les bibliothèques pour les utiliser dans le bac à sable Docker.",
+    "lock_without_hashes": "Cette approbation provient d’une ancienne version sans sommes de contrôle. Approuvez de nouveau les bibliothèques pour les utiliser dans le bac à sable Docker.",
     "wheels_required": "Un paquet n’existe pas sous forme de paquet prêt à l’emploi (wheel) pour Linux. Dans le bac à sable Docker, les paquets ne sont pas compilés depuis les sources.",
     "hash_mismatch": "Un paquet téléchargé ne correspond pas à l’approbation. Rien n’a été installé.",
     "image_failed": "L’image de conteneur avec les bibliothèques n’a pas pu être construite. Les détails techniques en indiquent la raison."
@@ -496,7 +520,8 @@
     "tls_incomplete": "TLS nécessite un certificat et sa clé.",
     "port_unavailable": "Le port {{port}} ne peut pas être utilisé (un autre programme l’utilise ou il n’est pas autorisé).",
     "start_failed": "L’accès réseau n’a pas pu démarrer.",
-    "not_enabled": "Les API publiées ne répondent qu’à cet ordinateur."
+    "not_enabled": "Les API publiées ne répondent qu’à cet ordinateur.",
+    "unavailable": "L’accès réseau ne peut pas être activé ici : Nodestro Local Docker ne propose son port que sur cet ordinateur. Les API publiées continuent de fonctionner sur cet ordinateur ; pour les joindre depuis d’autres appareils, exécutez Nodestro sur un serveur."
   },
   "request": {
     "invalid": "La requête ne correspond pas à l’entrée de l’API : {{fields}}.",
@@ -605,7 +630,7 @@
     "base_url_credentials": "L’URL de base ne doit pas contenir d’identifiants. Saisissez la clé dans le champ « Clé API ».",
     "capability_unknown": "Capacités inconnues : {{names}}.",
     "not_configured": "{{provider}} n’est pas configuré : saisissez son URL de base dans les réglages.",
-    "endpoint_not_allowed": "Ce point de terminaison de modèle n’est pas autorisé sur ce serveur. Demande à ton administration quels points de terminaison sont autorisés."
+    "endpoint_not_allowed": "Ce point de terminaison de modèle n’est pas autorisé sur ce serveur. Demandez à votre administration quels points de terminaison sont autorisés."
   },
   "access": {
     "login_required": "Connectez-vous pour utiliser cette partie de Nodestro.",
@@ -613,7 +638,8 @@
     "launch_required": "Ce Nodestro appartient à l’application de bureau qui l’a démarré. Ouvrez Nodestro depuis l’application.",
     "launch_used": "Le lien de démarrage a déjà été utilisé. Redémarrez l’application de bureau pour ouvrir une nouvelle fenêtre.",
     "launch_invalid": "Le lien de démarrage n’est pas valide. Démarrez Nodestro depuis l’application de bureau.",
-    "cross_site": "Cette modification venait d'un autre site web et a été refusée. Utilisez Nodestro directement."
+    "cross_site": "Cette modification venait d'un autre site web et a été refusée. Utilisez Nodestro directement.",
+    "network_needs_login": "Nodestro Studio n’est proposé que sur cet ordinateur, car il n’a pas de connexion propre. Démarrez-le sans adresse réseau ni noms d’hôte supplémentaires ; pour proposer des workflows sur le réseau, activez l’accès réseau des API publiées."
   },
   "sandbox": {
     "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent qu’isolés (bac à sable Linux intégré ou Docker) ; aucun des deux n’est disponible, rien n’a donc été exécuté. Réglages → Bac à sable indique pourquoi.",
@@ -626,10 +652,17 @@
     "provider": "Le service de connexion est injoignable ou mal configuré. Contactez votre administrateur.",
     "no_tenant": "Votre compte n'a pas encore accès à Nodestro. Demandez à un administrateur de vous ajouter.",
     "bootstrap_invalid": "Ce lien de configuration est invalide, déjà utilisé ou expiré.",
-    "not_a_member": "Votre compte n'a pas accès à cet espace de travail."
+    "not_a_member": "Votre compte n'a pas accès à cet espace de travail.",
+    "last_owner": "Un espace de travail a besoin d’au moins un propriétaire ; la modification a donc été refusée. Nommez d’abord un autre membre propriétaire.",
+    "role": "« {{role}} » n’est pas un rôle connu ; rien n’a donc été modifié. Choisissez l’un des rôles proposés.",
+    "subject_missing": "Le service de connexion n’a pas indiqué qui vous êtes ; la connexion a donc été refusée. Réessayez ; si cela se reproduit, demandez à votre administration de vérifier la configuration de la connexion.",
+    "tenant_exists": "Un espace de travail avec l’identifiant {{tenant}} existe déjà ; aucun second n’a donc été créé. Choisissez un autre identifiant.",
+    "tenant_has_owner": "L’espace de travail {{tenant}} a déjà un propriétaire ; ce lien de configuration ne peut donc pas en ajouter un autre. Demandez au propriétaire de vous ajouter.",
+    "tenant_id": "{{tenant}} ne peut pas servir d’identifiant d’espace de travail : il est invalide ou réservé. Choisissez un autre identifiant.",
+    "tenant_unknown": "L’espace de travail {{tenant}} n’existe pas. Vérifiez l’identifiant ou demandez l’accès à votre administration."
   },
   "secrets": {
-    "unreadable": "Une clé enregistrée ne peut plus être lue. Saisis-la de nouveau dans les paramètres."
+    "unreadable": "Une clé enregistrée ne peut plus être lue. Saisissez-la de nouveau dans les paramètres."
   },
   "pricing": {
     "reference_read_only": "Les prix de référence de ce serveur sont gérés par son exploitant.",
@@ -643,8 +676,8 @@
     "price_unreliable": "Le prix de {{model}} n’est pas assez fiable ; la requête n’a pas été envoyée (mode de prix strict)."
   },
   "gate": {
-    "blocked": "Le contrôle de publication bloque cette version. Teste exactement cette version avec ses séries de tests.",
-    "override_required": "Le contrôle de publication n'est pas satisfait. Indique une justification pour publier quand même.",
+    "blocked": "Le contrôle de publication bloque cette version. Testez exactement cette version avec ses séries de tests.",
+    "override_required": "Le contrôle de publication n'est pas satisfait. Indiquez une justification pour publier quand même.",
     "suite_unknown": "Cette série de tests n'appartient pas à ce workflow."
   },
   "testcase": {
@@ -655,7 +688,7 @@
     "address_refused": "L'adresse {{host}} n'est pas autorisée (adresse interne, locale ou de métadonnées).",
     "cancelled": "L'appel au service a été annulé.",
     "closed": "La connexion au service a été fermée.",
-    "definition_moved": "L'outil a changé depuis ton examen. Examine-le à nouveau.",
+    "definition_moved": "L'outil a changé depuis votre examen. Examinez-le à nouveau.",
     "dns_failed": "Le nom {{host}} n'a pas pu être résolu.",
     "endpoint_not_allowed": "Cette adresse ne figure pas sur la liste de l'opérateur.",
     "endpoints_invalid": "La liste d'adresses de l'opérateur (NODESTRO_MCP_ENDPOINTS) n'est pas valide.",
@@ -670,7 +703,7 @@
     "tool_not_found": "Le service ne propose pas cet outil.",
     "tool_removed": "Le service ne propose plus cet outil.",
     "unattended_not_enabled": "Les exécutions sans personne ne peuvent pas utiliser les outils des services.",
-    "unauthorized": "Le service a refusé la connexion. Vérifie le jeton d'accès.",
+    "unauthorized": "Le service a refusé la connexion. Vérifiez le jeton d'accès.",
     "unavailable": "MCP n'est pas disponible dans cette installation.",
     "unreachable": "Le service est injoignable.",
     "url_credentials": "L'adresse ne doit contenir ni nom d'utilisateur ni mot de passe.",
@@ -728,5 +761,30 @@
   },
   "mcp_server": {
     "disabled": "Le serveur MCP de Nodestro est désactivé."
+  },
+  "hints": {
+    "run": {
+      "agent": {
+        "IncompleteResponseError": "Augmentez « Tokens max. » dans « Avancé » de cet agent, ou demandez une réponse plus courte dans sa tâche.",
+        "OutputLimitReached": "Augmentez « Tokens max. » dans « Avancé » de cet agent, ou demandez une réponse plus courte dans sa tâche.",
+        "ContextWindowExceeded": "Raccourcissez l'entrée ou les connaissances de l'agent, ou choisissez un modèle avec une fenêtre de contexte plus grande.",
+        "RefusalError": "Vérifiez la tâche et l'entrée et décrivez le travail plus clairement. Certains contenus sont toujours refusés par le modèle.",
+        "MaxToolRoundsError": "Augmentez « Tours d’outils max. » dans « Avancé » de cet agent, ou indiquez dans sa tâche quand il a terminé.",
+        "StructuredOutputError": "Vérifiez les champs sous « Format de sortie » ; peu de champs bien décrits aident. Souvent, reprendre l'exécution suffit.",
+        "UnexpectedResponseError": "Reprenez l'exécution. Si cela se reproduit, les détails techniques aideront le support du fournisseur.",
+        "EvaluationFailedError": "Lisez la justification du contrôle à l'étape et ajustez la tâche ou les critères.",
+        "ToolExecutionError": "Les détails techniques nomment l'outil et son erreur. Vérifiez l'outil sous « Outils »."
+      },
+      "api_error_auth": "Vérifiez la clé sous Réglages → Fournisseurs d’IA et testez-y la connexion.",
+      "api_error_rate_limit": "Attendez un instant et reprenez l'exécution. Moins d'exécutions simultanées ou une limite plus élevée chez le fournisseur règlent le problème durablement.",
+      "api_error_server": "Votre workflow n'est pas en cause. Reprenez l'exécution dans quelques minutes.",
+      "api_error_connection": "Vérifiez la connexion Internet, le pare-feu ou le proxy, puis reprenez l'exécution.",
+      "api_error_invalid": "Vérifiez le modèle et les paramètres de l'agent ; les détails techniques montrent la réponse du fournisseur.",
+      "api_error_status": "Vérifiez le modèle et les paramètres de l'agent ; les détails techniques montrent la réponse du fournisseur.",
+      "budget_exceeded": "Augmentez le budget dans les paramètres du workflow, ou reprenez l'exécution avec un nouveau budget.",
+      "time_limit": "Augmentez la limite de temps sous « Limites » dans les paramètres du workflow si l'exécution a besoin de plus de temps.",
+      "step_limit": "Augmentez la limite d'étapes sous « Limites » dans les paramètres du workflow, ou vérifiez les boucles.",
+      "orchestration_limit": "Augmentez « Nombre maximal de décisions » sur l'orchestrateur, ou indiquez dans ses instructions quand la tâche est terminée."
+    }
   }
 }

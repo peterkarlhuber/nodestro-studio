@@ -24,7 +24,8 @@
   "hidePreview": "Hide preview",
   "noText": "(no text)",
   "previewCut": "Only the beginning is shown.",
-  "tableSummary": "{{name}}: {{count}} rows, {{columns}} columns",
+  "tableSummary_one": "{{name}}: {{count}} row, columns: {{columns}}",
+  "tableSummary_other": "{{name}}: {{count}} rows, columns: {{columns}}",
   "summary": {
     "archive_one": "{{count}} file, {{readable}} readable",
     "archive_other": "{{count}} files, {{readable}} readable",
@@ -202,12 +203,13 @@
   "storage": {
     "title": "Uploaded input files",
     "intro": "Files uploaded for runs, test cases and schedules. Files of queued, running or paused runs are never removed.",
-    "summary": "{{count}} files · {{size}} · {{unused}} unused · {{inUse}} in running runs",
+    "summary": "Files: {{files}} · {{size}} · unused: {{unused}} · in running runs: {{inUse}}",
     "cleanUnused": "Remove unused files",
     "olderThan": "Files of finished runs older than",
     "days": "days",
     "cleanOld": "Remove",
-    "cleaned": "{{count}} files removed ({{size}} freed).",
+    "cleaned_one": "{{count}} file removed ({{size}} freed).",
+    "cleaned_other": "{{count}} files removed ({{size}} freed).",
     "safe": "Files that test cases, schedules or batches still need are kept."
   },
   "collections": {

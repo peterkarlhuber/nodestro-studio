@@ -82,9 +82,9 @@ Debajo de las ejecuciones de prueba de una serie, **Elección de modelo por medi
 - **No perder ningún caso:** activado, queda fuera un modelo que suspende un caso que el modelo actual aprobó.
 - **Los costes desconocidos** nunca cuentan como 0. Un modelo sin costes conocidos no puede ganar con el objetivo *menor coste*.
 
-Solo cuenta como medición la ejecución terminada más reciente por modelo con el mismo estado del workflow (salvo los modelos; posiciones y nombres no cuentan), los mismos casos y la misma valoración IA, los mismos modelos en todos los demás agentes y un resultado para cada caso. Si cambia un prompt o un caso, vuelve a ejecutar las pruebas. La lista indica qué ejecuciones no se usaron y por qué. Sin una medición adecuada se mantiene el modelo actual.
+Solo cuenta como medición la ejecución terminada más reciente por modelo con el mismo estado del flujo de trabajo (salvo los modelos; posiciones y nombres no cuentan), los mismos casos y la misma valoración IA, los mismos modelos en todos los demás agentes y un resultado para cada caso. Si cambia un prompt o un caso, vuelve a ejecutar las pruebas. La lista indica qué ejecuciones no se usaron y por qué. Sin una medición adecuada se mantiene el modelo actual.
 
-*Usar* pone el modelo recomendado en el agente y guarda el workflow como nueva [versión](/docs/workflows#versionen). Antes no cambia nada. La valoración IA se muestra, pero solo cuenta a través de si los casos se aprueban.
+*Usar* pone el modelo recomendado en el agente y guarda el flujo de trabajo como nueva [versión](/docs/workflows#versionen). Antes no cambia nada. La valoración IA se muestra, pero solo cuenta a través de si los casos se aprueban.
 
 ## Programaciones {#zeitplaene}
 <!-- keywords: programación, schedule, cron, periódico, diario, semanal, mensual, cada hora, zona horaria, perdido -->

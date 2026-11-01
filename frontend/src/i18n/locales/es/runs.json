@@ -44,7 +44,8 @@
     "notStarted": "Aún no iniciado",
     "overall": "Resultado global",
     "running": "El flujo de trabajo se está ejecutando. Elige un agente a la izquierda para seguirlo en directo.",
-    "paused": "La ejecución espera una aprobación."
+    "paused": "La ejecución espera una aprobación.",
+    "waitingForTool": "Una llamada a una herramienta espera tu decisión. Hasta entonces, la ejecución no continúa."
   },
   "detail": {
     "timeline": "Desarrollo temporal",
@@ -58,7 +59,7 @@
     "input": "Entrada",
     "stillRunning": "Todavía en curso …",
     "noResult": "Sin resultado.",
-    "trace": "Desarrollo",
+    "trace": "Cronología",
     "nodeDetails": "Detalles de {{name}}"
   },
   "summary": {
@@ -88,5 +89,25 @@
     "noHardMaximum": "sin máximo estricto",
     "noHardMaximumHint_one": "{{count}} solicitud no se pudo limitar de antemano (sin precio, herramientas integradas, imágenes o demasiado grande para el resto del presupuesto). Por eso el presupuesto no fue un máximo estricto.",
     "noHardMaximumHint_other": "{{count}} solicitudes no se pudieron limitar de antemano (sin precio, herramientas integradas, imágenes o demasiado grandes para el resto del presupuesto). Por eso el presupuesto no fue un máximo estricto."
+  },
+  "output": {
+    "showJson": "Mostrar como JSON"
+  },
+  "failure": {
+    "atStep": "Falló en {{name}}",
+    "more_one": "Falló otro paso más.",
+    "more_other": "Fallaron {{count}} pasos más.",
+    "model": "Modelo: {{model}}",
+    "openSettings": "Abrir Ajustes",
+    "openAdvanced": "Abrir «Avanzado» de {{name}}"
+  },
+  "cancelRun": {
+    "button": "Cancelar ejecución",
+    "confirm": "¿Cancelar de verdad?",
+    "done": "La ejecución se está cancelando."
+  },
+  "waitingForYou": {
+    "label": "Te espera",
+    "description": "Una llamada a una herramienta espera tu aprobación. La ejecución continúa en cuanto decidas."
   }
 }

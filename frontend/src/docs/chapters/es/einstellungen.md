@@ -115,7 +115,7 @@ Nodestro se inicia en `http://localhost:8000` y abre el navegador. Opciones del 
 
 Se detiene con **Ctrl+C**. Las ejecuciones en curso se cancelan.
 
-> **Seguridad:** Nodestro aún no tiene gestión de usuarios, por eso solo responde a este equipo. `--host 0.0.0.0`, otras direcciones de red o nombres de red en `NODESTRO_ALLOWED_HOSTS` detienen el inicio, y Nodestro no puede ponerse detrás de un proxy inverso. Para que otros dispositivos usen un workflow, publícalo como API: las API publicadas usan claves de API y tienen su propio acceso de red (ver *API y exportación*).
+> **Seguridad:** Nodestro aún no tiene gestión de usuarios, por eso solo responde a este equipo. `--host 0.0.0.0`, otras direcciones de red o nombres de red en `NODESTRO_ALLOWED_HOSTS` detienen el inicio, y Nodestro no puede ponerse detrás de un proxy inverso. Para que otros dispositivos usen un flujo de trabajo, publícalo como API: las API publicadas usan claves de API y tienen su propio acceso de red (ver *API y exportación*).
 
 ## Atajos de teclado {#tastenkuerzel}
 <!-- keywords: atajos de teclado, shortcuts, teclado, keyboard, accesibilidad -->

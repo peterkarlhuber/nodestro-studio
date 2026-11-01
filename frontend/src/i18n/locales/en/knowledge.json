@@ -39,7 +39,8 @@
   },
   "ocr": {
     "scan": "Scan without a text layer",
-    "recognised": "Text recognised: {{words}} words, {{uncertain}} uncertain",
+    "recognised_one": "Text recognised: {{count}} word, uncertain: {{uncertain}}",
+    "recognised_other": "Text recognised: {{count}} words, uncertain: {{uncertain}}",
     "failed": "Text recognition failed",
     "run": "Recognise text (OCR)",
     "done_one": "Text recognised ({{count}} word).",

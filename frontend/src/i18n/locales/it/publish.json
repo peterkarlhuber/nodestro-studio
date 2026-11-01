@@ -52,7 +52,9 @@
     "deleteText": "Tutte le sue versioni pubblicate vengono rimosse; le chiavi perdono l’accesso. Le esecuzioni restano nella cronologia. Il workflow non viene modificato."
   },
   "check": {
-    "ok": "Pronta per la pubblicazione ({{warnings}} avvisi).",
+    "ok_one": "Pronta per la pubblicazione ({{count}} avviso).",
+    "ok_other": "Pronta per la pubblicazione ({{count}} avvisi).",
+    "ready": "Pronta per la pubblicazione.",
     "blocked_one": "{{count}} problema impedisce la pubblicazione.",
     "blocked_other": "{{count}} problemi impediscono la pubblicazione.",
     "approvals_one": "{{count}} passaggio di approvazione: le esecuzioni vi attendono una decisione.",
@@ -272,7 +274,8 @@
     "probabilistic": "Giudizio dell'IA, non garantito",
     "probabilisticHint": "Le valutazioni dell'IA possono sbagliare. Sono separate dalle verifiche fisse.",
     "reason": "Motivazione della pubblicazione",
-    "reasonHint": "Almeno {{count}} caratteri. Salvata con la versione e nella cronologia.",
+    "reasonHint_one": "Almeno {{count}} carattere. Salvata con la versione e nella cronologia.",
+    "reasonHint_other": "Almeno {{count}} caratteri. Salvata con la versione e nella cronologia.",
     "publishWithReason": "Pubblica la versione {{version}} con motivazione",
     "releasePassed": "controllo soddisfatto",
     "releaseOverridden": "pubblicata con motivazione",
@@ -283,7 +286,7 @@
       "suite_outdated": "l'ultima versione provata è la {{version}}",
       "suite_changed": "la serie è cambiata dopo il test",
       "tested": "questa versione è stata provata",
-      "pass_rate": "{{clean}} casi su {{cases}} superati ({{value}}, richiesto {{threshold}})",
+      "pass_rate": "Casi superati: {{clean}} su {{cases}} ({{value}}, richiesto {{threshold}})",
       "judge_score": "valutazione dell'IA {{value}} (richiesto {{threshold}})",
       "judge_missing": "nessuna valutazione dell'IA nell'esecuzione (richiesto {{threshold}})"
     }

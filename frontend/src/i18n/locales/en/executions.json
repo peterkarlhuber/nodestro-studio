@@ -14,7 +14,7 @@
     "imported": "Imported traces"
   },
   "import": "Import trace",
-  "empty": "No executions",
+  "empty": "No runs",
   "emptyText": "Start a workflow in the editor; every run appears here. You can import exported traces to view them.",
   "columns": {
     "workflow": "Workflow",
@@ -27,5 +27,5 @@
     "actions": "Actions"
   },
   "importedBadge": "Imported",
-  "delete": "Delete execution"
+  "delete": "Delete run"
 }

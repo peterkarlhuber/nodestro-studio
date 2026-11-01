@@ -39,7 +39,8 @@
   },
   "ocr": {
     "scan": "Scan sans couche de texte",
-    "recognised": "Texte reconnu : {{words}} mots, {{uncertain}} incertains",
+    "recognised_one": "Texte reconnu : {{count}} mot, incertains : {{uncertain}}",
+    "recognised_other": "Texte reconnu : {{count}} mots, incertains : {{uncertain}}",
     "failed": "La reconnaissance de texte a échoué",
     "run": "Reconnaître le texte (OCR)",
     "done_one": "Texte reconnu ({{count}} mot).",

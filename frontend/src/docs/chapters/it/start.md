@@ -50,11 +50,12 @@ Crea il tuo primo workflow in pochi minuti:
 ## L'interfaccia {#oberflaeche}
 <!-- keywords: navigazione, barra laterale, menu, tema, scuro, chiaro, layout -->
 
-La **barra laterale** a sinistra divide Nodestro in tre aree:
+La **barra laterale** a sinistra segue il tuo modo di lavorare: creare, eseguire e verificare, poi automatizzare.
 
-- **Spazio di lavoro:** *Workflow* (i tuoi processi), *Agenti* (modelli riutilizzabili), *Strumenti*, *Conoscenza* e *Memoria*.
-- **Osservabilità:** *Esecuzioni* (tutte le esecuzioni in dettaglio) e *Utilizzo* (token e costi nel tempo).
-- **Aiuto:** questa *Documentazione*.
+- **Crea:** *Workflow* (i tuoi processi), *Agenti* (modelli riutilizzabili), *Strumenti*, *Conoscenza* e *Memoria*.
+- **Esegui e verifica:** *Esecuzioni* (tutte le esecuzioni in dettaglio), *Approvazioni* (decisioni che le esecuzioni attendono) e *Utilizzo* (token e costi nel tempo).
+- **Automatizza e testa:** *Serie di test*, *Esecuzioni in serie* e *Pianificazioni*.
+- **Aiuto:** questa *Documentazione* e la pagina *Benvenuto*.
 
 In basso trovi le *Impostazioni*. In alto a destra passi dallo schema di colori scuro a quello chiaro; la scelta viene salvata nel browser. Se il provider del modello predefinito non è configurato, lì compare un avviso che porta direttamente alle impostazioni.
 

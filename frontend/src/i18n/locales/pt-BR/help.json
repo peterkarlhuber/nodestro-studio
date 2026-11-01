@@ -138,14 +138,14 @@
     "global": "Busca em fluxos de trabalho, agentes, ferramentas, conhecimento e documentação (Ctrl+K)."
   },
   "library": {
-    "copy": "Cria um workflow seu e independente no idioma escolhido e o abre no editor. O modelo continua inalterado e nenhum modelo de IA é chamado.",
+    "copy": "Cria um fluxo de trabalho seu e independente no idioma escolhido e o abre no editor. O modelo continua inalterado e nenhum modelo de IA é chamado.",
     "language": "O idioma em que nomes, prompts e tarefa de teste da cópia são criados. O padrão é o idioma da interface; uma cópia salva não muda depois com ele.",
     "sensitive": "Finanças, direito, RH ou administração: os agentes apontam incertezas, mas não substituem aconselhamento profissional. Uma pessoa qualificada precisa verificar os resultados.",
     "synthetic": "Todos os dados de teste são inventados e marcados como sintéticos. Substitua-os pelos seus próprios dados no nó inicial.",
     "sequential": "Os agentes trabalham um após o outro; cada um se baseia no resultado do anterior.",
     "parallel": "Vários agentes trabalham ao mesmo tempo na mesma entrada; outro agente reúne os resultados.",
-    "branching": "O workflow se ramifica por regras ou após uma aprovação; nem todo agente roda sempre.",
-    "adaptive": "Um orquestrador decide durante a execução quais equipes trabalham na tarefa e reúne os resultados. Cada equipe é um workflow próprio."
+    "branching": "O fluxo de trabalho se ramifica por regras ou após uma aprovação; nem todo agente roda sempre.",
+    "adaptive": "Um orquestrador decide durante a execução quais equipes trabalham na tarefa e reúne os resultados. Cada equipe é um fluxo de trabalho próprio."
   },
   "architect": {
     "open": "Deixe o arquiteto projetar um fluxo novo ou revisar este a partir de uma descrição. Você revisa o rascunho antes de qualquer mudança.",
@@ -191,19 +191,19 @@
     "approvalShow": "Quem revisa vê estes resultados. Sem seleção: tudo o que chega aqui.",
     "approvalReject": "Ao rejeitar, a execução segue o ramo “Rejeitado” ou termina como cancelada.",
     "approvals": "Todas as execuções que aguardam uma decisão humana.",
-    "subworkflow": "Executa outro workflow como uma etapa. O resultado dele chega aqui como o de um agente.",
-    "subworkflowVersion": "Uma versão fixa protege contra mudanças posteriores no subworkflow.",
-    "subworkflowValues": "Valores para o formulário de entrada do subworkflow; marcadores são permitidos.",
+    "subworkflow": "Executa outro fluxo de trabalho como uma etapa. O resultado dele chega aqui como o de um agente.",
+    "subworkflowVersion": "Uma versão fixa protege contra mudanças posteriores no subfluxo.",
+    "subworkflowValues": "Valores para o formulário de entrada do subfluxo; marcadores são permitidos.",
     "form": "Campos pedidos e verificados no início. Os agentes os leem com {{formName}}.",
     "formField": "O nome técnico é usado no marcador: só letras, dígitos e _.",
     "resume": "Continua uma execução com falha: resultados válidos são reaproveitados, o resto roda de novo.",
     "resumeSideEffects": "Etapas que rodam de novo tinham chamado ferramentas. Uma segunda chamada pode disparar algo em dobro.",
     "orchestrator": "Um modelo de IA planeja a tarefa e delega partes dela às equipes do seu grupo, uma decisão após a outra. Cada decisão é registrada com seu motivo.",
-    "orchestratorTeams": "Equipes são workflows salvos. O modelo vê apenas nome, descrição, capacidades e contrato de saída. Ele não pode adicionar equipes.",
-    "orchestratorLimits": "Os limites evitam que um orquestrador fique andando em círculos: ele para após o número máximo de decisões, e o orçamento e os limites do workflow também valem.",
+    "orchestratorTeams": "Equipes são fluxos de trabalho salvos. O modelo vê apenas nome, descrição, capacidades e contrato de saída. Ele não pode adicionar equipes.",
+    "orchestratorLimits": "Os limites evitam que um orquestrador fique andando em círculos: ele para após o número máximo de decisões, e o orçamento e os limites do fluxo de trabalho também valem.",
     "orchestratorSelect": "Em vez de citar cada equipe, você cita capacidades. Quando uma execução começa, as equipes salvas que as compartilham entram no grupo e ficam fixas para essa execução; os detalhes mostram quais tags cada equipe atendeu. Nada é pontuado: primeiro mais tags correspondentes, depois o nome.",
     "orchestratorDynamic": "O orquestrador pode passar trabalho a várias equipes ao mesmo tempo, montar e alterar sua equipe a partir do pool durante a execução e preencher o formulário inicial das equipes. O pool fica fixo para a execução; nunca surgem novas equipes, agentes ou ferramentas.",
-    "orchestratorTemplate": "Uma equipe existe só durante a execução. Este botão a transforma em um novo workflow próprio: o mesmo orquestrador com exatamente as equipes que trabalharam, em suas versões. Você pode editá-lo depois; só quem pode editar workflows pode alterá-lo."
+    "orchestratorTemplate": "Uma equipe existe só durante a execução. Este botão a transforma em um novo fluxo de trabalho próprio: o mesmo orquestrador com exatamente as equipes que trabalharam, em suas versões. Você pode editá-lo depois; só quem pode editar fluxos de trabalho pode alterá-lo."
   },
   "files": {
     "output": "Formatos em que o nó de resultado salva o resultado no fim da execução: Markdown, JSON, CSV, HTML ou PDF.",
@@ -213,22 +213,22 @@
     "ocr": "PDFs digitalizados sem camada de texto podem ser reconhecidos localmente com Tesseract. Palavras incertas são marcadas."
   },
   "automation": {
-    "batch": "Um workflow sobre muitas entradas. Cada linha vira uma execução própria.",
+    "batch": "Um fluxo de trabalho sobre muitas entradas. Cada linha vira uma execução própria.",
     "batchMapping": "Associe cada coluna a um campo do formulário de entrada ou à entrada livre.",
     "batchLimits": "Os limites param o lote antes que fique caro demais ou falhe demais.",
     "concurrency": "Mais execuções em paralelo são mais rápidas, mas podem esbarrar nos limites de taxa da API.",
-    "benchmark": "Casos de teste fixos que tornam mensuráveis as mudanças no workflow.",
+    "benchmark": "Casos de teste fixos que tornam mensuráveis as mudanças no fluxo de trabalho.",
     "benchmarkChecks": "Regras verificam o resultado sem IA, p. ex. “categoria é igual a reclamação”.",
     "benchmarkJudge": "Uma IA avalia o resultado pelos seus critérios. O veredito é marcado como avaliação por IA e custa à parte.",
     "benchmarkCompare": "Escolha duas execuções de teste para ver caso a caso o que melhorou ou piorou.",
-    "benchmarkModels": "Teste os mesmos casos com outros modelos para alguns agentes e depois compare as duas execuções. O workflow em si não muda.",
-    "schedule": "Inicia um workflow regularmente enquanto o Nodestro está rodando.",
+    "benchmarkModels": "Teste os mesmos casos com outros modelos para alguns agentes e depois compare as duas execuções. O fluxo de trabalho em si não muda.",
+    "schedule": "Inicia um fluxo de trabalho regularmente enquanto o Nodestro está rodando.",
     "scheduleMissed": "Se o Nodestro estava desligado no horário: pular ou recuperar uma vez no próximo início.",
     "scheduleTimeZone": "Os horários valem neste fuso horário, incluindo o horário de verão.",
-    "estimate": "Estimativa a partir das últimas execuções bem-sucedidas deste workflow. O máximo vem do orçamento por execução.",
+    "estimate": "Estimativa a partir das últimas execuções bem-sucedidas deste fluxo de trabalho. O máximo vem do orçamento por execução.",
     "external": "Ferramentas próprias podem, p. ex., enviar mensagens. Com muitas execuções, isso acontece com a mesma frequência.",
     "caseFromRun": "Transforma a entrada desta execução com falha em um caso de teste, com credenciais e dados pessoais substituídos. Nada é salvo antes da sua confirmação.",
-    "modelChoice": "A recomendação usa apenas execuções de teste medidas da mesma série, com o mesmo estado do workflow (exceto os modelos) e os mesmos casos. Você escolhe o objetivo e a taxa mínima; custos desconhecidos nunca contam como 0. Só *Usar* altera o agente e salva uma nova versão."
+    "modelChoice": "A recomendação usa apenas execuções de teste medidas da mesma série, com o mesmo estado do fluxo de trabalho (exceto os modelos) e os mesmos casos. Você escolhe o objetivo e a taxa mínima; custos desconhecidos nunca contam como 0. Só *Usar* altera o agente e salva uma nova versão."
   },
   "publish": {
     "open": "Publique este fluxo de trabalho como API neste computador, gerencie chaves e acesso pela rede, ou exporte-o como projeto FastAPI independente.",

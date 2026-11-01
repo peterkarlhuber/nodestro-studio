@@ -51,7 +51,8 @@
   },
   "install": {
     "starting": "Iniciando a instalação …",
-    "done": "{{count}} pacotes instalados.",
+    "done_one": "{{count}} pacote instalado.",
+    "done_other": "{{count}} pacotes instalados.",
     "failed": "A instalação falhou; o ambiente anterior permanece inalterado.",
     "log": "Registro da instalação",
     "retry": "Instalar novamente"
@@ -73,7 +74,8 @@
     "install": "Instalar",
     "check": "Ver versões",
     "history": "Histórico de alterações",
-    "unused": "Nenhuma ferramenta precisa mais dos {{count}} pacotes aprovados. Você pode remover o ambiente em Configurações, em “Ambientes Python”.",
+    "unused_one": "Nenhuma ferramenta precisa mais do pacote aprovado. Você pode remover o ambiente em Configurações, em “Ambientes Python”.",
+    "unused_other": "Nenhuma ferramenta precisa mais dos {{count}} pacotes aprovados. Você pode remover o ambiente em Configurações, em “Ambientes Python”.",
     "mcpTitle": "Pacotes do servidor local"
   },
   "change": {
@@ -104,7 +106,8 @@
     "forget": "Excluir ambiente órfão e sua definição",
     "removed": "O ambiente foi removido.",
     "cleanup": "Limpar órfãos ({{count}})",
-    "cleaned": "{{count}} ambientes órfãos removidos, cache organizado.",
+    "cleaned_one": "{{count}} ambiente órfão removido, cache organizado.",
+    "cleaned_other": "{{count}} ambientes órfãos removidos, cache organizado.",
     "none": "Ainda não há ambientes Python.",
     "ownerMcp": "Servidor MCP local {{name}}"
   }

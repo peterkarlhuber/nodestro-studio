@@ -36,6 +36,10 @@
     "branchPort": "Ausgang des Zweigs {{name}}",
     "orchestrator": "Orchestrator"
   },
+  "defaults": {
+    "systemPrompt": "Du bist ein hilfreicher Assistent.",
+    "outputName": "Ergebnis"
+  },
   "canvas": {
     "unsaved": "Ungespeicherte Änderungen",
     "agents_one": "{{count}} Agent",
@@ -114,7 +118,7 @@
     "cost": "Kosten des Entwurfs: {{cost}}.",
     "role": "Rolle",
     "limits": "Limits",
-    "limitsValue": "{{tokens}} Tokens · {{rounds}} Tool-Runden",
+    "limitsValue": "Max. Tokens: {{tokens}} · Tool-Runden: {{rounds}}",
     "missingTools": "Der Architekt würde zusätzlich diese Tools brauchen:",
     "missingToolsHint": "Du kannst sie in der <a>Tool-Bibliothek</a> von der KI erstellen lassen."
   },

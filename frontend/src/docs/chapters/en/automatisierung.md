@@ -96,4 +96,4 @@ A **schedule** starts a workflow once or regularly, with fixed inputs (form valu
 - **Next starts:** the dialog shows the next dates before you save.
 - **Off until switched on:** a new schedule is off. When you switch it on, Nodestro checks everything a run needs: the workflow, the inputs, a [budget per run](/docs/einstellungen#budget) and the confirmation of own tools. If it does not pass, it stays off and the reason is shown.
 
-Schedules only run while Nodestro runs. Times that passed while Nodestro was off count as **missed**: *Skip* ignores them, *Catch up once* starts a single run at the next start, however many were missed. Runs from schedules carry the origin *Schedule* in [Executions](/docs/ausfuehrungen#liste).
+Schedules only run while Nodestro runs. Times that passed while Nodestro was off count as **missed**: *Skip* ignores them, *Catch up once* starts a single run at the next start, however many were missed. Runs from schedules carry the origin *Schedule* in [Runs](/docs/ausfuehrungen#liste).

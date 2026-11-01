@@ -102,18 +102,18 @@
   "sandboxBuiltin": "processus Python distinct ; outils créés par l’IA dans le bac à sable Linux intégré",
   "services": {
     "title": "Services connectés",
-    "intro": "Connecte des services externes via le Model Context Protocol (MCP). Un agent ne voit un outil qu'après que tu l'as examiné et approuvé.",
+    "intro": "Connectez des services externes via le Model Context Protocol (MCP). Un agent ne voit un outil qu'après que vous l'avez examiné et approuvé.",
     "add": "Connecter un service",
     "addTitle": "Connecter un service",
     "editTitle": "Modifier {{name}}",
     "empty": "Aucun service connecté pour l'instant",
-    "emptyText": "Connecte un serveur MCP par son adresse. Teste ensuite la connexion et approuve ses outils un par un.",
-    "counts": "{{approved}} outils approuvés sur {{total}} · {{pending}} en attente d'examen",
+    "emptyText": "Connectez un serveur MCP par son adresse. Testez ensuite la connexion et approuvez ses outils un par un.",
+    "counts": "Outils approuvés : {{approved}} sur {{total}} · en attente d'examen : {{pending}}",
     "unavailable": "MCP n'est pas disponible dans cette installation (Python 3.11 ou plus récent requis). Les services peuvent être configurés, mais pas joints.",
     "endpointList": "L'opérateur n'autorise que ces adresses : {{list}}",
     "endpointListEmpty": "L'opérateur n'a autorisé aucune adresse pour MCP (NODESTRO_MCP_ENDPOINTS). Aucun service ne peut être connecté ici.",
     "noVault": "Aucun coffre de clés sécurisé : les jetons d'accès ne sont pas enregistrés, seulement gardés en mémoire jusqu'à la fermeture de l'application.",
-    "readOnlyMvp": "Pour l'instant, seuls les outils que tu classes « lecture seule » sont utilisables.",
+    "readOnlyMvp": "Pour l'instant, seuls les outils que vous classez « lecture seule » sont utilisables.",
     "writeEnabled": "Les outils qui modifient des données nécessitent une approbation à chaque appel.",
     "unattendedOff": "Les planifications, les lots et les API publiées n'utilisent pas les outils des services.",
     "unattendedOn": "L'opérateur a activé l'utilisation dans les exécutions sans personne.",
@@ -147,8 +147,8 @@
     "test": "Tester la connexion",
     "enabled": "Activé",
     "noTools": "Le service ne propose aucun outil.",
-    "waiting_one": "{{count}} outil attend ton examen",
-    "waiting_other": "{{count}} outils attendent ton examen",
+    "waiting_one": "{{count}} outil attend votre examen",
+    "waiting_other": "{{count}} outils attendent votre examen",
     "tools": "Outils du service",
     "status": {
       "new": "Nouveau",
@@ -172,7 +172,7 @@
     "usable": "Les agents peuvent l'utiliser sous le nom {{name}}.",
     "approvedToast": "{{name}} est approuvé.",
     "rejectedToast": "{{name}} est refusé.",
-    "changedText": "Le service a modifié cet outil. Il est bloqué jusqu'à ce que tu examines la modification ; les exécutions qui l'utilisent échouent.",
+    "changedText": "Le service a modifié cet outil. Il est bloqué jusqu'à ce que vous examiniez la modification ; les exécutions qui l'utilisent échouent.",
     "field": {
       "title": "Titre",
       "description": "Description",
@@ -189,7 +189,7 @@
     "classify": "Classification",
     "suggested": "Le service indique : {{access}}. C'est un indice, pas une garantie.",
     "writeBlocked": "Les outils qui modifient des données restent bloqués jusqu'à ce que l'approbation par appel soit disponible.",
-    "argumentsNote": "Le service voit tout ce que l'agent lui envoie. Ne connecte que des services auxquels tu confies ces données.",
+    "argumentsNote": "Le service voit tout ce que l'agent lui envoie. Ne connectez que des services auxquels vous confiez ces données.",
     "approve": "Approuver",
     "acceptChange": "Approuver la modification",
     "reject": "Refuser",
@@ -202,10 +202,10 @@
     "token": "Jeton d'accès",
     "tokenVault": "Enregistré chiffré et jamais réaffiché.",
     "tokenSession": "Aucun coffre de clés sécurisé : le jeton ne vaut que jusqu'à la fermeture de l'application.",
-    "tokenKept": "Enregistré – laisse vide pour le conserver",
+    "tokenKept": "Enregistré – laissez vide pour le conserver",
     "tokenRemove": "Supprimer le jeton enregistré",
     "loopback": "Autoriser un serveur de développement local",
-    "loopbackHint": "Autorise http sur cet ordinateur (127.0.0.1) pour un serveur que tu développes toi-même.",
+    "loopbackHint": "Autorise http sur cet ordinateur (127.0.0.1) pour un serveur que vous développez vous-même.",
     "timeout": "Délai par appel (secondes)",
     "events": "Journal",
     "noEvents": "Aucune entrée pour l'instant.",
@@ -272,6 +272,6 @@
       "none": "Aucun appel depuis le démarrage."
     },
     "resourceTool": "Documents du service",
-    "resourceToolText": "Cet outil lit uniquement les documents que le service répertorie ; les autres adresses sont exclues. Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que tu examines la nouvelle liste. Les contenus sont des données externes, comme tout résultat d'un service."
+    "resourceToolText": "Cet outil lit uniquement les documents que le service répertorie ; les autres adresses sont exclues. Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que vous examiniez la nouvelle liste. Les contenus sont des données externes, comme tout résultat d'un service."
   }
 }

@@ -194,7 +194,7 @@ function StepView({
           {step.index + 1}. {title}
         </strong>{" "}
         {refused ? (
-          <Badge tone="warning">{t("flow.orchestrator.run.refused")}</Badge>
+          <Badge tone="warning">{t("flow.orchestrator.run.invalidNotRun")}</Badge>
         ) : v1Failed ? (
           <Badge tone="danger">{t("flow.orchestrator.run.teamFailed")}</Badge>
         ) : decision?.action === "delegate" && outcomes[0] ? (

@@ -208,12 +208,14 @@ export function ApiOverviewPanel({
               <>
                 <p className="small" data-testid="api-check-summary">
                   {check.data.ok
-                    ? t("publish.check.ok", { warnings: check.data.warnings })
+                    ? check.data.warnings
+                      ? t("publish.check.ok", { count: check.data.warnings })
+                      : t("publish.check.ready")
                     : t("publish.check.blocked", { count: check.data.errors })}
                 </p>
                 <Problems problems={check.data.problems} agents={check.data.agents} />
                 <ul className="api-facts small muted">
-                  <li>{t("publish.check.approvals", { count: check.data.approvals })}</li>
+                  {check.data.approvals ? <li>{t("publish.check.approvals", { count: check.data.approvals })}</li> : null}
                   {check.data.subworkflows.length ? <li>{t("publish.check.subworkflows", { names: check.data.subworkflows.join(", ") })}</li> : null}
                   {check.data.tools.length ? <li>{t("publish.check.tools", { names: check.data.tools.join(", ") })}</li> : null}
                   {check.data.libraries.length ? <li>{t("publish.check.libraries", { names: check.data.libraries.join(", ") })}</li> : null}

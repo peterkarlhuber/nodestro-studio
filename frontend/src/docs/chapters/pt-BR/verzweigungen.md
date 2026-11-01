@@ -1,6 +1,6 @@
 # Ramificações e aprovações
 
-Um fluxo de trabalho pode ser mais do que uma cadeia fixa de agentes: uma **decisão** escolhe um caminho por regras fixas, uma **aprovação** segura a execução até que uma pessoa aprove ou rejeite, e um **subworkflow** executa outro fluxo como uma única etapa. Além disso, há **formulários de entrada** para entradas estruturadas e a opção de **continuar** execuções que falharam. Tudo roda no mesmo motor que qualquer outro fluxo de trabalho.
+Um fluxo de trabalho pode ser mais do que uma cadeia fixa de agentes: uma **decisão** escolhe um caminho por regras fixas, uma **aprovação** segura a execução até que uma pessoa aprove ou rejeite, e um **subfluxo** executa outro fluxo como uma única etapa. Além disso, há **formulários de entrada** para entradas estruturadas e a opção de **continuar** execuções que falharam. Tudo roda no mesmo motor que qualquer outro fluxo de trabalho.
 
 ## Decisões {#entscheidung}
 <!-- keywords: decisão, ramificação, condição, if, roteador, desvio, regra, roteamento -->
@@ -72,7 +72,7 @@ Enquanto espera, a execução fica com o status **Pausado** e a aprovação **Ag
 
 A página **Aprovações** (navegação, grupo *Automação*) lista todas as aprovações abertas, da mais antiga para a mais nova, com fluxo de trabalho, origem (manual, agendamento, lote, série de testes) e tempo de espera. O número ao lado do item de menu mostra quantas estão esperando.
 
-Cada cartão mostra a orientação, os resultados a revisar, um campo de comentário e os botões *Aprovar* e *Rejeitar*. Aprovações dentro de subworkflows também aparecem aqui, com o caminho até a execução principal.
+Cada cartão mostra a orientação, os resultados a revisar, um campo de comentário e os botões *Aprovar* e *Rejeitar*. Aprovações dentro de subfluxos também aparecem aqui, com o caminho até a execução principal.
 
 ## Aprovar chamadas de ferramentas {#tool-freigabe}
 <!-- keywords: aprovação de ferramenta, chamada de ferramenta, por chamada, argumentos, prazo, aprovação antecipada, sem supervisão, exceção anterior -->
@@ -93,7 +93,7 @@ Execuções que ninguém acompanha (agendamentos, lotes, séries de testes) não
 
 **Ativação, nesta ordem:**
 
-1. Em *Aprovações → Regras para chamadas de ferramentas*, a administração executa **Marcar atribuições existentes**. Cada atribuição de ferramenta que existe agora em workflows, suas versões e APIs publicadas vira uma **exceção anterior**, vinculada à versão da ferramenta com que roda. APIs publicadas recebem uma única vez um novo resumo (digest); o histórico delas guarda o antigo e o novo. A etapa roda **uma única vez**: atribuições, workflows e versões criados depois são novos e são perguntados.
+1. Em *Aprovações → Regras para chamadas de ferramentas*, a administração executa **Marcar atribuições existentes**. Cada atribuição de ferramenta que existe agora em fluxos de trabalho, suas versões e APIs publicadas vira uma **exceção anterior**, vinculada à versão da ferramenta com que roda. APIs publicadas recebem uma única vez um novo resumo (digest); o histórico delas guarda o antigo e o novo. A etapa roda **uma única vez**: atribuições, fluxos de trabalho e versões criados depois são novos e são perguntados.
 2. **Confira a lista.** Uma exceção indesejada termina quando você remove a ferramenta do agente e salva; se você a atribuir de novo, ela é perguntada como uma nova.
 3. Só então a administração liga as aprovações (`NODESTRO_TOOL_APPROVALS=1` e reiniciar o Nodestro).
 
@@ -108,19 +108,19 @@ Nos detalhes da execução, cada chamada de ferramenta mostra o que as regras fi
 ## Subworkflows {#unterworkflow}
 <!-- keywords: subworkflow, sub-workflow, aninhar, reutilizar, bloco, versão, execução filha -->
 
-Um **subworkflow** executa outro fluxo de trabalho salvo como uma única etapa. O resultado chega como o de um agente.
+Um **subfluxo** executa outro fluxo de trabalho salvo como uma única etapa. O resultado chega como o de um agente.
 
 - **Versão:** *Versão mais recente* usa o estado atual; uma versão fixa não muda quando o outro fluxo é editado depois. A verificação avisa quando existe uma versão mais nova.
-- **Entrada:** o que o subworkflow recebe como entrada; `{{input}}` é o que chega aqui.
+- **Entrada:** o que o subfluxo recebe como entrada; `{{input}}` é o que chega aqui.
 - **Valores para o formulário de entrada dele:** texto ou marcadores como `{{form.cliente}}` ou `{{Análise}}`. A verificação avisa sobre campos obrigatórios sem valor.
-- O subworkflow roda como uma **execução própria e vinculada**; um link nos detalhes leva até ela. Custos e tokens contam uma única vez, no orçamento da execução principal. Se o subworkflow tiver orçamento próprio, esse limite mais estreito também vale.
+- O subfluxo roda como uma **execução própria e vinculada**; um link nos detalhes leva até ela. Custos e tokens contam uma única vez, no orçamento da execução principal. Se o subfluxo tiver orçamento próprio, esse limite mais estreito também vale.
 - Um fluxo não pode chamar a si mesmo, nem indiretamente; mais de cinco níveis não são permitidos.
-- Se o subworkflow espera uma aprovação, a execução principal espera junto.
+- Se o subfluxo espera uma aprovação, a execução principal espera junto.
 
 ## Equipes {#teams}
 <!-- keywords: equipe, contrato de saída, contrato, capacidades, resultado estruturado, run.output_contract -->
 
-Uma **equipe** é um fluxo que, executado como subworkflow, promete um resultado fixo. Duas configurações tornam um fluxo uma equipe:
+Uma **equipe** é um fluxo que, executado como subfluxo, promete um resultado fixo. Duas configurações tornam um fluxo uma equipe:
 
 - **Contrato de saída** no nó de resultado: os campos (nome, tipo, obrigatório) que o fluxo entrega, como no resultado estruturado de um agente. No fim de uma execução, o resultado é verificado. Ele deve ser um objeto (ou texto JSON de um objeto) com cada campo obrigatório no tipo certo. Os outros campos são omitidos. Se o resultado não se encaixar, o nó de resultado falha e a execução com ele; um fluxo superior nunca recebe um resultado não verificado.
 - **Capacidades como equipe** nas configurações do fluxo: palavras-chave curtas sobre o que o fluxo faz (no máximo 20). Elas acompanham o fluxo (versões, exportação) e depois ajudam a encontrar uma equipe adequada. Não concedem permissões.
@@ -129,7 +129,7 @@ Em um fluxo superior, um fluxo com contrato de saída entrega um objeto com exat
 
 A verificação antes de iniciar avisa quando um agente antes do resultado responde em texto (então só uma resposta JSON ajuda) ou quando nenhum agente entrega um campo obrigatório. Nomes de campo inválidos ou repetidos impedem o início.
 
-Fluxos com contrato de saída ou capacidades aparecem na paleta em **Equipes** e podem ser adicionados diretamente como subworkflow. O inspetor de um subworkflow mostra o que a equipe entrega. Um **clique duplo** no nó abre a equipe no editor; a trilha de navegação no topo leva de volta ao fluxo superior.
+Fluxos com contrato de saída ou capacidades aparecem na paleta em **Equipes** e podem ser adicionados diretamente como subfluxo. O inspetor de um subfluxo mostra o que a equipe entrega. Um **clique duplo** no nó abre a equipe no editor; a trilha de navegação no topo leva de volta ao fluxo superior.
 
 Uma equipe pode ser testada sozinha: crie uma [série de testes](/docs/automatisierung#testreihen) para o fluxo. Suas verificações podem usar os campos do contrato de saída, por exemplo `score` maior ou igual a 5.
 
@@ -138,14 +138,14 @@ Uma equipe pode ser testada sozinha: crie uma [série de testes](/docs/automatis
 
 Um **orquestrador** deixa um modelo de IA decidir qual equipe recebe qual parte da tarefa. Ele toma uma decisão após a outra: **delegar** uma tarefa a uma equipe ou **concluir** com uma resposta. A resposta é o resultado do nó.
 
-- **Equipes:** os workflows salvos entre os quais o modelo pode escolher (no máximo 20). De cada equipe, o modelo vê apenas nome, descrição, capacidades e contrato de saída.
+- **Equipes:** os fluxos de trabalho salvos entre os quais o modelo pode escolher (no máximo 20). De cada equipe, o modelo vê apenas nome, descrição, capacidades e contrato de saída.
 - **Equipes por capacidade:** em vez de escolher cada equipe, você cita capacidades (no máximo 10). Quando uma execução começa, equipes salvas com uma capacidade correspondente entram no grupo (até *No máximo tantas equipes*): primeiro as com mais tags correspondentes, depois pelo nome. Equipes com erros ficam de fora; equipes com etapas de aprovação são incluídas. A seleção fica fixa para essa execução (e para uma versão publicada); os detalhes mostram quais tags cada equipe atendeu. Nada é pontuado nem estimado.
 - **Tarefa** e **Instruções:** o que deve ser feito e, opcionalmente, como planejar.
 - **Máximo de decisões** (de 1 a 50, padrão 8) e **Máximo por equipe:** sem resposta após a última decisão, a etapa falha.
 
 O orquestrador apenas escolhe. Ele não tem ferramentas, não cria agentes, ferramentas nem equipes e não tem permissões próprias. Cada equipe escolhida roda como uma **execução vinculada própria**, com sua parte do orçamento, seus limites e suas aprovações de ferramentas. Decisões não permitidas (uma equipe desconhecida, a mesma tarefa de novo, uma equipe esgotada) são recusadas e mostradas ao modelo; mesmo assim contam como decisão.
 
-Os detalhes da execução listam cada decisão com motivo, tarefa, resultado e um link para a execução da equipe. Quando uma equipe para para uma **aprovação** (também em um subworkflow ou abaixo de outro orquestrador), o orquestrador aguarda junto: a execução fica *pausada* e aparece em **Aprovações**. Após a decisão, a mesma execução da equipe continua, também depois de uma reinicialização, e o modelo não é consultado de novo sobre essa delegação. Se uma rejeição encerra a execução da equipe (*Ao rejeitar: encerrar a execução*), esta execução também termina; nenhuma outra equipe pode contornar a rejeição. Cancelar uma execução em espera também cancela suas equipes em espera. Uma equipe não pode chamar de novo o workflow do orquestrador.
+Os detalhes da execução listam cada decisão com motivo, tarefa, resultado e um link para a execução da equipe. Quando uma equipe para para uma **aprovação** (também em um subfluxo ou abaixo de outro orquestrador), o orquestrador aguarda junto: a execução fica *pausada* e aparece em **Aprovações**. Após a decisão, a mesma execução da equipe continua, também depois de uma reinicialização, e o modelo não é consultado de novo sobre essa delegação. Se uma rejeição encerra a execução da equipe (*Ao rejeitar: encerrar a execução*), esta execução também termina; nenhuma outra equipe pode contornar a rejeição. Cancelar uma execução em espera também cancela suas equipes em espera. Uma equipe não pode chamar de novo o fluxo de trabalho do orquestrador.
 
 ## Equipes dinâmicas {#dynamische-teams}
 <!-- keywords: equipe dinâmica, montar equipe, paralelo, ao mesmo tempo, parâmetros, formulário inicial, modelo, composição da equipe, staffing -->
@@ -160,7 +160,7 @@ O pool fica fixo no início da execução, nas versões daquele momento. Nunca s
 
 **O que os detalhes da execução mostram:** qual orquestrador trabalha com qual modelo, quantas decisões foram usadas, o custo das decisões e o total (custos desconhecidos aparecem como *não totalmente conhecido*, nunca como 0), o pool com versões, a **equipe ao longo do tempo**, as equipes em espera e cada decisão com motivo, tarefa, valores e o resultado de cada equipe: *Concluído*, *Aguardando aprovação*, *Falhou*, *Rejeitado*, *Cancelado* ou *Expirado*. Só as decisões registradas são mostradas, nenhum raciocínio do modelo.
 
-**Salvar a composição da equipe como modelo:** uma equipe existe só durante a execução. Depois do fim, este botão salva um **novo workflow** com o mesmo orquestrador, seu formulário inicial, seus limites e exatamente as equipes que trabalharam, nas versões da execução. Nada é salvo sem este clique.
+**Salvar a composição da equipe como modelo:** uma equipe existe só durante a execução. Depois do fim, este botão salva um **novo fluxo de trabalho** com o mesmo orquestrador, seu formulário inicial, seus limites e exatamente as equipes que trabalharam, nas versões da execução. Nada é salvo sem este clique.
 
 ## Formulários de entrada {#eingabeformular}
 <!-- keywords: formulário, formulário de entrada, campos, tipo, obrigatório, valor padrão, opção, data, número -->
@@ -191,4 +191,4 @@ Uma execução que falhou ou foi cancelada pode ser **continuada** (botão *Cont
 - Decisões de aprovação de etapas reaproveitadas continuam valendo e são marcadas como reaproveitadas; ninguém é consultado duas vezes.
 - Se etapas que rodam de novo já tinham chamado **ferramentas próprias** que podem agir fora do Nodestro (como enviar uma mensagem), você precisa confirmar isso explicitamente.
 
-Se nada puder ser reaproveitado com segurança, o Nodestro oferece um reinício completo. Traces importados e execuções isoladas de subworkflows não podem ser continuados; continue a execução principal.
+Se nada puder ser reaproveitado com segurança, o Nodestro oferece um reinício completo. Traces importados e execuções isoladas de subfluxos não podem ser continuados; continue a execução principal.

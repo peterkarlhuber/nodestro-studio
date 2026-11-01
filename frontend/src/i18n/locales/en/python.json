@@ -51,7 +51,8 @@
   },
   "install": {
     "starting": "Starting installation …",
-    "done": "{{count}} packages are installed.",
+    "done_one": "{{count}} package is installed.",
+    "done_other": "{{count}} packages are installed.",
     "failed": "The installation failed; the previous environment stays unchanged.",
     "log": "Installation log",
     "retry": "Install again"
@@ -73,7 +74,8 @@
     "install": "Install",
     "check": "View versions",
     "history": "Change history",
-    "unused": "No tool needs the {{count}} approved packages anymore. You can remove the environment in the settings under “Python environments”.",
+    "unused_one": "No tool needs the approved package anymore. You can remove the environment in the settings under “Python environments”.",
+    "unused_other": "No tool needs the {{count}} approved packages anymore. You can remove the environment in the settings under “Python environments”.",
     "mcpTitle": "Packages of the local server"
   },
   "change": {
@@ -104,7 +106,8 @@
     "forget": "Delete orphaned environment and definition",
     "removed": "The environment was removed.",
     "cleanup": "Clean up orphaned ({{count}})",
-    "cleaned": "{{count}} orphaned environments removed, cache tidied up.",
+    "cleaned_one": "{{count}} orphaned environment removed, cache tidied up.",
+    "cleaned_other": "{{count}} orphaned environments removed, cache tidied up.",
     "none": "No Python environments yet.",
     "ownerMcp": "Local MCP server {{name}}"
   }

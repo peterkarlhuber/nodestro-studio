@@ -196,7 +196,7 @@
     "button": "Fortsetzen",
     "title": "Lauf fortsetzen",
     "intro": "Ein neuer, verknüpfter Lauf übernimmt die noch gültigen Ergebnisse und führt den Rest erneut aus. Der fehlgeschlagene Lauf bleibt unverändert.",
-    "summary": "{{reused}} Schritte werden übernommen, {{rerun}} laufen neu. Gespart: etwa {{saved}}.",
+    "summary": "Übernommene Schritte: {{reused}} · laufen neu: {{rerun}}. Gespart: etwa {{saved}}.",
     "steps": "Schritte",
     "step": "Schritt",
     "action": "Aktion",
@@ -286,7 +286,8 @@
         "rejected": "Abgelehnt",
         "cancelled": "Abgebrochen",
         "expired": "Abgelaufen"
-      }
+      },
+      "invalidNotRun": "Ungültig, nicht ausgeführt"
     },
     "select": "Teams nach Fähigkeit",
     "selectHint": "Gespeicherte Teams mit einer dieser Fähigkeiten kommen beim Start eines Laufs in den Pool (höchstens 10 Stichworte). Die beste Übereinstimmung zuerst; Teams mit Fehlern bleiben draußen.",

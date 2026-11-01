@@ -44,7 +44,8 @@
     "notStarted": "Non ancora avviato",
     "overall": "Risultato complessivo",
     "running": "Il workflow è in esecuzione. Scegli un agente a sinistra per seguirlo in diretta.",
-    "paused": "L’esecuzione attende un’approvazione."
+    "paused": "L’esecuzione attende un’approvazione.",
+    "waitingForTool": "Una chiamata a uno strumento attende la tua decisione. Fino ad allora l'esecuzione non prosegue."
   },
   "detail": {
     "timeline": "Andamento nel tempo",
@@ -88,5 +89,25 @@
     "noHardMaximum": "nessun massimo rigido",
     "noHardMaximumHint_one": "{{count}} richiesta non ha potuto essere limitata in anticipo (nessun prezzo, strumenti integrati, immagini o troppo grande per il resto del budget). Il budget non era quindi un massimo rigido.",
     "noHardMaximumHint_other": "{{count}} richieste non hanno potuto essere limitate in anticipo (nessun prezzo, strumenti integrati, immagini o troppo grandi per il resto del budget). Il budget non era quindi un massimo rigido."
+  },
+  "output": {
+    "showJson": "Mostra come JSON"
+  },
+  "failure": {
+    "atStep": "Non riuscita in {{name}}",
+    "more_one": "Un altro passaggio non è riuscito.",
+    "more_other": "Altri {{count}} passaggi non sono riusciti.",
+    "model": "Modello: {{model}}",
+    "openSettings": "Apri Impostazioni",
+    "openAdvanced": "Apri «Avanzate» di {{name}}"
+  },
+  "cancelRun": {
+    "button": "Annulla esecuzione",
+    "confirm": "Annullare davvero?",
+    "done": "L'esecuzione viene annullata."
+  },
+  "waitingForYou": {
+    "label": "Ti aspetta",
+    "description": "Una chiamata a uno strumento attende la tua approvazione. L'esecuzione prosegue appena decidi."
   }
 }

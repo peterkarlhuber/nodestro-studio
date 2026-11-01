@@ -24,7 +24,8 @@
   "hidePreview": "Nascondi anteprima",
   "noText": "(nessun testo)",
   "previewCut": "Viene mostrato solo l’inizio.",
-  "tableSummary": "{{name}}: {{count}} righe, {{columns}} colonne",
+  "tableSummary_one": "{{name}}: {{count}} riga, colonne: {{columns}}",
+  "tableSummary_other": "{{name}}: {{count}} righe, colonne: {{columns}}",
   "summary": {
     "archive_one": "{{count}} file, {{readable}} leggibili",
     "archive_other": "{{count}} file, {{readable}} leggibili",
@@ -202,12 +203,13 @@
   "storage": {
     "title": "File di input caricati",
     "intro": "File caricati per esecuzioni, casi di test e pianificazioni. I file di esecuzioni in coda, in corso o in pausa non vengono mai rimossi.",
-    "summary": "{{count}} file · {{size}} · {{unused}} inutilizzati · {{inUse}} in esecuzioni in corso",
+    "summary": "File: {{files}} · {{size}} · inutilizzati: {{unused}} · in esecuzioni in corso: {{inUse}}",
     "cleanUnused": "Rimuovi i file inutilizzati",
     "olderThan": "File di esecuzioni concluse più vecchi di",
     "days": "giorni",
     "cleanOld": "Rimuovi",
-    "cleaned": "{{count}} file rimossi ({{size}} liberati).",
+    "cleaned_one": "{{count}} file rimosso ({{size}} liberati).",
+    "cleaned_other": "{{count}} file rimossi ({{size}} liberati).",
     "safe": "I file ancora usati da casi di test, pianificazioni o lotti vengono conservati."
   },
   "collections": {

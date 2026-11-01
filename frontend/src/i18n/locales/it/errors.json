@@ -16,7 +16,8 @@
   "file": {
     "not_json": "Il file non è un JSON valido.",
     "not_found": "Questo file di risultato non esiste.",
-    "too_large": "Il file supera la dimensione consentita ({{limit_mb}} MB)."
+    "too_large": "Il file supera la dimensione consentita ({{limit_mb}} MB).",
+    "not_base64": "{{name}}: il contenuto del file non è Base64 valido, quindi il file non è stato letto. Codifica il file in Base64 in content_base64 e invia di nuovo la richiesta."
   },
   "assistant": {
     "description_missing": "Descrivi l’agente di cui hai bisogno.",
@@ -86,7 +87,8 @@
     "model_invalid": "Nome di modello non valido «{{model}}».",
     "model_missing": "Scegli un modello.",
     "model_provider_missing": "Il modello «{{model}}» non ha un provider; scrivilo come provider:modello, per esempio ollama:{{model}}.",
-    "provider_mismatch": "Questo accesso appartiene a un altro provider e non può eseguire un modello di {{provider}}."
+    "provider_mismatch": "Questo accesso appartiene a un altro provider e non può eseguire un modello di {{provider}}.",
+    "invalid": "L’impostazione {{name}} deve essere un numero positivo, quindi Nodestro non l’ha applicata. Correggi il valore e riavvia Nodestro."
   },
   "workflow": {
     "edge_dangling": "Un collegamento punta a un nodo che non esiste.",
@@ -146,7 +148,27 @@
     "orchestration_limit": "{{node}} ha preso {{max_decisions}} decisioni senza concludere.",
     "orchestrator_member_missing": "Un team di {{node}} non esiste più.",
     "orchestrator_no_match": "Nessun team salvato di {{node}} ha una delle capacità {{capabilities}}.",
-    "orchestration_team_missing": "Manca l'esecuzione in attesa di un team; il team non è stato riavviato."
+    "orchestration_team_missing": "Manca l'esecuzione in attesa di un team; il team non è stato riavviato.",
+    "someProvider": "Il provider di IA",
+    "agent": {
+      "IncompleteResponseError": "La risposta del modello è stata troncata al suo limite di token (token max: {{max_tokens}}).",
+      "OutputLimitReached": "La risposta del modello è stata troncata al suo limite di token.",
+      "ContextWindowExceeded": "La conversazione supera la finestra di contesto del modello.",
+      "RefusalError": "Il modello ha rifiutato la richiesta.",
+      "MaxToolRoundsError": "L'agente ha chiamato gli strumenti più spesso di quanto consenta il suo limite di round.",
+      "StructuredOutputError": "Il modello non ha restituito un risultato nel formato di output richiesto.",
+      "UnexpectedResponseError": "La risposta del modello non era quella prevista.",
+      "EvaluationFailedError": "Il risultato non ha superato il controllo di qualità.",
+      "ToolExecutionError": "Uno strumento dell'agente si è interrotto con un errore."
+    },
+    "api_error_auth": "{{provider}} ha rifiutato la chiave API.",
+    "api_error_rate_limit": "{{provider}} ha segnalato troppe richieste in poco tempo (limite di frequenza).",
+    "api_error_server": "{{provider}} è sovraccarico o ha problemi in questo momento.",
+    "api_error_connection": "{{provider}} non è raggiungibile.",
+    "api_error_invalid": "{{provider}} ha rifiutato la richiesta come non valida.",
+    "api_error_status": "{{provider}} ha rifiutato la richiesta (stato {{status}}).",
+    "already_queued": "Questa esecuzione è già in attesa o in corso, quindi non è stata avviata una seconda volta. Aspetta che finisca o seguila nella pagina Esecuzioni.",
+    "not_executable": "Questa esecuzione non può essere avviata: può partire solo un’esecuzione in attesa o in pausa, e questa è già in corso o è terminata. Aprila nella pagina Esecuzioni per vederne lo stato."
   },
   "trace": {
     "invalid": "La traccia è danneggiata o incompleta.",
@@ -197,7 +219,9 @@
     "checkpoint_stale": "L’agente è stato modificato mentre attendeva un’approvazione. La chiamata in attesa non è stata eseguita.",
     "checkpoint_expired": "La chiamata allo strumento in attesa non può più continuare (scaduta o impostazione disattivata). Non è stata eseguita.",
     "approval_missing": "La richiesta di approvazione per questa chiamata non esiste più; la chiamata non è stata eseguita.",
-    "approval_not_in_test": "Questa chiamata richiederebbe l'approvazione di una persona; i test non chiedono, quindi non è stata eseguita."
+    "approval_not_in_test": "Questa chiamata richiederebbe l'approvazione di una persona; i test non chiedono, quindi non è stata eseguita.",
+    "frozen": "Questo strumento fa parte di una versione pubblicata dell’API e non può essere modificato, così la versione continua a funzionare esattamente come è stata pubblicata. Modifica lo strumento nel workflow e pubblica una nuova versione.",
+    "denied_by_policy": "Le regole per le chiamate agli strumenti hanno rifiutato questa chiamata senza chiedere a nessuno, quindi lo strumento non è stato eseguito. Controlla le regole nella pagina Approvazioni o dai all’agente uno strumento che legge soltanto."
   },
   "job": {
     "writing": "Il Coding Agent sta scrivendo codice e test …",
@@ -496,7 +520,8 @@
     "tls_incomplete": "TLS richiede un certificato e la relativa chiave.",
     "port_unavailable": "La porta {{port}} non può essere usata (è occupata da un altro programma o non è consentita).",
     "start_failed": "Non è stato possibile avviare l’accesso in rete.",
-    "not_enabled": "Le API pubblicate rispondono solo a questo computer."
+    "not_enabled": "Le API pubblicate rispondono solo a questo computer.",
+    "unavailable": "Qui l’accesso di rete non si può attivare: Nodestro Local Docker offre la sua porta solo su questo computer. Le API pubblicate continuano a funzionare su questo computer; per raggiungerle da altri dispositivi, esegui Nodestro su un server."
   },
   "request": {
     "invalid": "La richiesta non corrisponde all’input dell’API: {{fields}}.",
@@ -613,7 +638,8 @@
     "launch_required": "Questo Nodestro appartiene all’app desktop che lo ha avviato. Aprire Nodestro dall’app.",
     "launch_used": "Il link di avvio è già stato usato. Riavviare l’app desktop per aprire una nuova finestra.",
     "launch_invalid": "Il link di avvio non è valido. Avviare Nodestro dall’app desktop.",
-    "cross_site": "Questa modifica proveniva da un altro sito web ed è stata rifiutata. Usa Nodestro direttamente."
+    "cross_site": "Questa modifica proveniva da un altro sito web ed è stata rifiutata. Usa Nodestro direttamente.",
+    "network_needs_login": "Nodestro Studio è offerto solo su questo computer, perché non ha un accesso proprio. Avvialo senza indirizzo di rete né nomi host aggiuntivi; per offrire workflow in rete, attiva l’accesso di rete per le API pubblicate."
   },
   "sandbox": {
     "isolation_required": "Il codice creato dall’IA e gli strumenti di origine sconosciuta vengono eseguiti solo isolati (sandbox Linux integrata o Docker); nessuna delle due è disponibile, quindi non è stato eseguito nulla. Impostazioni → Sandbox mostra il motivo.",
@@ -626,7 +652,14 @@
     "provider": "Il servizio di accesso non è raggiungibile o non è configurato correttamente. Contatta l'amministratore.",
     "no_tenant": "Il tuo account non ha ancora accesso a Nodestro. Chiedi a un amministratore di aggiungerti.",
     "bootstrap_invalid": "Questo link di configurazione non è valido, è già stato usato o è scaduto.",
-    "not_a_member": "Il tuo account non ha accesso a questo spazio di lavoro."
+    "not_a_member": "Il tuo account non ha accesso a questo spazio di lavoro.",
+    "last_owner": "Uno spazio di lavoro ha bisogno di almeno un proprietario, quindi la modifica è stata rifiutata. Rendi prima proprietario un altro membro.",
+    "role": "«{{role}}» non è un ruolo noto, quindi non è stato cambiato nulla. Scegli uno dei ruoli proposti.",
+    "subject_missing": "Il servizio di accesso non ha indicato chi sei, quindi l’accesso è stato rifiutato. Riprova; se succede ancora, chiedi all’amministrazione di controllare la configurazione dell’accesso.",
+    "tenant_exists": "Esiste già uno spazio di lavoro con l’id {{tenant}}, quindi non ne è stato creato un secondo. Scegli un altro id.",
+    "tenant_has_owner": "Lo spazio di lavoro {{tenant}} ha già un proprietario, quindi questo link di configurazione non può aggiungerne un altro. Chiedi al proprietario di aggiungerti.",
+    "tenant_id": "{{tenant}} non può essere usato come id di uno spazio di lavoro: non è valido o è riservato. Scegli un altro id.",
+    "tenant_unknown": "Lo spazio di lavoro {{tenant}} non esiste. Controlla l’id o chiedi l’accesso all’amministrazione."
   },
   "secrets": {
     "unreadable": "Una chiave salvata non può più essere letta. Inseriscila di nuovo nelle impostazioni."
@@ -728,5 +761,30 @@
   },
   "mcp_server": {
     "disabled": "Il server MCP di Nodestro è disattivato."
+  },
+  "hints": {
+    "run": {
+      "agent": {
+        "IncompleteResponseError": "Aumenta «Token max.» in «Avanzate» di questo agente, oppure chiedi una risposta più breve nel suo compito.",
+        "OutputLimitReached": "Aumenta «Token max.» in «Avanzate» di questo agente, oppure chiedi una risposta più breve nel suo compito.",
+        "ContextWindowExceeded": "Accorcia l'input o la conoscenza dell'agente, oppure scegli un modello con una finestra di contesto più ampia.",
+        "RefusalError": "Controlla il compito e l'input e descrivi il lavoro in modo più chiaro. Alcuni contenuti il modello li rifiuta sempre.",
+        "MaxToolRoundsError": "Aumenta «Turni di strumenti max.» in «Avanzate» di questo agente, oppure indica nel suo compito quando ha finito.",
+        "StructuredOutputError": "Controlla i campi in «Formato di output»; pochi campi ben descritti aiutano. Spesso basta continuare l'esecuzione.",
+        "UnexpectedResponseError": "Continua l'esecuzione. Se succede di nuovo, i dettagli tecnici aiutano l'assistenza del provider.",
+        "EvaluationFailedError": "Leggi la motivazione del controllo nel passaggio e adatta il compito o i criteri.",
+        "ToolExecutionError": "I dettagli tecnici indicano lo strumento e il suo errore. Controlla lo strumento in «Strumenti»."
+      },
+      "api_error_auth": "Controlla la chiave in Impostazioni → Provider di IA e prova lì la connessione.",
+      "api_error_rate_limit": "Aspetta un momento e continua l'esecuzione. Meno esecuzioni contemporanee o un limite più alto presso il provider risolvono a lungo termine.",
+      "api_error_server": "Non dipende dal tuo workflow. Continua l'esecuzione tra qualche minuto.",
+      "api_error_connection": "Controlla la connessione a internet, il firewall o il proxy, poi continua l'esecuzione.",
+      "api_error_invalid": "Controlla il modello e le impostazioni dell'agente; i dettagli tecnici mostrano la risposta del provider.",
+      "api_error_status": "Controlla il modello e le impostazioni dell'agente; i dettagli tecnici mostrano la risposta del provider.",
+      "budget_exceeded": "Aumenta il budget nelle impostazioni del workflow, oppure continua l'esecuzione con un nuovo budget.",
+      "time_limit": "Aumenta il limite di tempo in «Limiti» nelle impostazioni del workflow se l'esecuzione ha bisogno di più tempo.",
+      "step_limit": "Aumenta il limite di passaggi in «Limiti» nelle impostazioni del workflow, oppure controlla i cicli.",
+      "orchestration_limit": "Aumenta «Numero massimo di decisioni» sull'orchestratore, oppure indica nelle sue istruzioni quando il compito è concluso."
+    }
   }
 }

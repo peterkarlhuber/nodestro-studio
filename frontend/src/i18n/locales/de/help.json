@@ -246,7 +246,7 @@
     "sync": "Clients können in einer Anfrage auf das Ergebnis warten (?wait=<seconds>), bis zum Zeitlimit.",
     "library": "Wie das exportierte Projekt Orkexa bekommt: aus dem Git-Repository oder als beigelegter Quellcode (MIT-Lizenz).",
     "export": "Erzeugt das Projekt als ZIP: Runtime, Workflow-Version, Tests, Beispiele und README. Nichts wird irgendwohin gesendet.",
-    "gate": "Verlangt vor jeder neuen Version ein aktuelles Testergebnis. Pflichtprüfungen blockieren immer; schwächere Ergebnisse lassen sich mit Begründung freigeben.",
+    "gate": "Verlangt vor jeder neuen Version ein aktuelles Testergebnis. Pflichtprüfungen blockieren immer; bei schwächeren Ergebnissen kannst du mit Begründung trotzdem veröffentlichen.",
     "gateOverride": "Die Begründung wird mit der Version und im Verlauf der API gespeichert. Pflichtprüfungen lassen sich nie übergehen.",
     "mcpTool": "Lässt MCP-Clients auf diesem Computer diese API als Tool starten. Standardmäßig aus; auch der Betreiber muss es einschalten."
   },
