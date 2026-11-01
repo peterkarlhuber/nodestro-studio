@@ -190,6 +190,28 @@ Pour l'instant, seuls les outils que tu classes **lecture seule** sont utilisabl
 
 **Limites :** Nodestro ne se connecte jamais à des adresses internes, locales ou de métadonnées, vérifie chaque adresse résolue au moment de la connexion et ignore les réglages de proxy de l'environnement. Sur un serveur, l'opérateur autorise les adresses avec `NODESTRO_MCP_ENDPOINTS`. Les planifications, les lots et les API publiées n'utilisent les outils des services que si l'opérateur l'active expressément. Nodestro ne connaît pas le coût des services externes ; il apparaît comme **inconnu**, jamais comme zéro.
 
+**Fonctionnement :** sous *Fonctionnement*, les administrateurs voient combien d'appels de service sont en cours, les limites de l'exploitant et, par service, les appels, les échecs et la durée du dernier appel. Un service qui échoue plusieurs fois de suite est brièvement mis en pause.
+
+## Se connecter à un service {#mcp-anmeldung}
+<!-- keywords: mcp, oauth, connexion, login, autorisation, accès, renouveler -->
+
+Certains services n'utilisent pas de jeton fixe mais une **connexion (OAuth)**. Choisissez *OAuth* comme connexion lorsque vous ajoutez le service, puis enregistrez. Cliquez ensuite sur **Se connecter** : Nodestro ouvre la page de connexion du service, vous y confirmez l'accès et revenez à *Outils → Services connectés*. Testez la connexion pour charger les outils.
+
+- Nodestro conserve l'accès chiffré comme un jeton et le renouvelle lui-même. Vous voyez où vous êtes connecté, avec quelles autorisations et quand l'accès se renouvelle ; l'accès lui-même n'est jamais affiché.
+- **Se déconnecter** supprime l'accès enregistré. Lorsque le service demande une nouvelle connexion, les exécutions qui l'utilisent échouent avec un message clair jusqu'à ce que vous vous reconnectiez.
+- Sur un serveur, l'exploitant configure l'adresse publique de Nodestro ; le retour de la connexion ne va que là.
+
+## Serveurs locaux {#lokale-dienste}
+<!-- keywords: mcp, stdio, serveur local, pypi, conteneur, docker, paquets -->
+
+En plus des services distants, vous pouvez exécuter un **serveur MCP local** de PyPI, par exemple un service d'heure ou de calcul. Choisissez *Serveur local* comme type, indiquez les paquets (un par ligne) et le module démarré avec `python -m`.
+
+1. **Vérifier les paquets :** Nodestro résout les versions exactes avec leurs empreintes. Vous les voyez et les approuvez, comme pour les bibliothèques d'un outil. Rien n'est installé avant.
+2. **Installation :** les paquets vont dans une image de conteneur distincte.
+3. **Tester la connexion :** le serveur démarre dans un conteneur isolé et liste ses outils. À partir de là, la vérification et l'approbation sont les mêmes que pour les services distants.
+
+Le conteneur n'a **pas de réseau**, aucun accès à vos fichiers, clés ou autres processus, ainsi qu'une mémoire et des processus limités. C'est pourquoi les serveurs locaux ne sont disponibles que si le bac à sable Docker est utilisé ; les serveurs qui ont besoin d'Internet ou de Node.js ne peuvent pas être exécutés ainsi. Un serveur local ne reçoit ni jeton ni connexion.
+
 ## Versions et suppression {#versionen}
 <!-- keywords: version, supprimer, retirer, revoke, mettre à jour, écraser -->
 

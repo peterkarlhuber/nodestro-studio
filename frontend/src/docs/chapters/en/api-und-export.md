@@ -146,6 +146,15 @@ By default published APIs only answer this computer. Other devices get `403` wit
 
 This port only serves the published APIs, never the Nodestro interface, its settings or other workflows. If the port is taken, the dialog says so and Nodestro keeps running normally. After restoring a backup, network access is off again.
 
+## As an MCP tool {#mcp-server}
+<!-- keywords: mcp server, mcp tool, ai assistant, claude, client, tool -->
+
+A published API can also be offered as a **tool for MCP clients** on this computer, for example an AI assistant. This is off by default and needs two switches: the operator starts Nodestro with `NODESTRO_MCP_SERVER=1`, and you switch on **Offer as an MCP tool** under *Access*.
+
+- The client connects to `/api/published/_mcp` on this computer and sends an API key as a Bearer token. It sees the offered APIs of that key as tools, named after the API; the key needs the permission to start runs.
+- Every tool call is an **ordinary run** of the published API: same version, limits, budgets, approvals and history. When synchronous waiting is enabled, the answer contains the result; otherwise, or when a run stops at an approval, it names the run so you can follow it in Nodestro or through the API.
+- Clients on other computers cannot use it, also not through network access.
+
 ## Security {#sicherheit}
 <!-- keywords: security, tls, https, encryption, internet, reverse proxy, certificate, backup, secrets -->
 

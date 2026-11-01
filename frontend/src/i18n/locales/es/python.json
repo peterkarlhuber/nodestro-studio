@@ -46,7 +46,8 @@
     "unchanged": "Todos los paquetes ya están aprobados; ninguna versión cambia.",
     "codeSeparate": "El código de las herramientas se revisa y aprueba por separado.",
     "approve": "Aprobar e instalar",
-    "confirm": "Aplicar"
+    "confirm": "Aplicar",
+    "introMcp": "El servidor MCP local {{name}} necesita estos paquetes. Se instalan en la imagen de su contenedor."
   },
   "install": {
     "starting": "Iniciando la instalación …",
@@ -72,7 +73,8 @@
     "install": "Instalar",
     "check": "Ver versiones",
     "history": "Historial de cambios",
-    "unused": "Ninguna herramienta necesita ya los {{count}} paquetes aprobados. Puedes eliminar el entorno en Ajustes, en «Entornos de Python»."
+    "unused": "Ninguna herramienta necesita ya los {{count}} paquetes aprobados. Puedes eliminar el entorno en Ajustes, en «Entornos de Python».",
+    "mcpTitle": "Paquetes del servidor local"
   },
   "change": {
     "approved": "Aprobado",
@@ -103,6 +105,7 @@
     "removed": "El entorno se ha eliminado.",
     "cleanup": "Limpiar huérfanos ({{count}})",
     "cleaned": "{{count}} entornos huérfanos eliminados, caché ordenada.",
-    "none": "Aún no hay entornos de Python."
+    "none": "Aún no hay entornos de Python.",
+    "ownerMcp": "Servidor MCP local {{name}}"
   }
 }

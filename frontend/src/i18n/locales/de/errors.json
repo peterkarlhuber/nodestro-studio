@@ -446,7 +446,10 @@
     "knowledge_live_other": "{{count}} Wissensdateien werden so verwendet, wie sie zur Laufzeit sind (nicht eingefroren).",
     "memory_shared": "Dauerhaftes Memory ({{spaces}}) teilen sich Nodestro und jeder API-Lauf.",
     "no_budget": "Läufe haben kein Kostenlimit; setze ein Budget für den Workflow oder ein Tagesbudget für die API.",
-    "subworkflow_unsaved": "{{name}}: der Sub-Workflow hat keine gespeicherte Version."
+    "subworkflow_unsaved": "{{name}}: der Sub-Workflow hat keine gespeicherte Version.",
+    "mcp_tool_unusable": "Ein Dienst-Tool dieses Workflows ist gerade nicht nutzbar; er kann nicht veröffentlicht werden.",
+    "mcp_tools": "Die Dienst-Tools werden in dieser Version eingefroren; eine spätere Änderung beim Dienst stoppt sie, bis sie neu veröffentlicht wird.",
+    "mcp_unattended_off": "API-Läufe verwenden Dienst-Tools erst, wenn der Betreiber unbeaufsichtigte Nutzung erlaubt (NODESTRO_MCP_UNATTENDED)."
   },
   "export": {
     "knowledge_missing": "{{name}} existiert nicht mehr.",
@@ -467,7 +470,8 @@
     "file_changed": "Die ZIP-Datei dieses Exports wurde verändert; exportiere erneut.",
     "provider": "{{provider}}: Setze {{variables}} in der Umgebung des exportierten Projekts.",
     "base_url_withheld": "Die Basis-URL von {{provider}} enthält Zugangsdaten und wird nicht exportiert; setze {{variable}} im exportierten Projekt.",
-    "integration_tools": "Tools installierter Integrationen lassen sich noch nicht exportieren: {{tools}}."
+    "integration_tools": "Tools installierter Integrationen lassen sich noch nicht exportieren: {{tools}}.",
+    "mcp_tools": "Versionen mit Dienst-Tools lassen sich nicht exportieren: Das exportierte Projekt hat keine Verbindung zu den Diensten."
   },
   "lan": {
     "tls_file_missing": "Datei nicht gefunden: {{path}}",
@@ -654,7 +658,27 @@
     "url_credentials": "Die Adresse darf keinen Benutzernamen und kein Passwort enthalten.",
     "url_invalid": "Die Adresse ist ungültig.",
     "vault_unavailable": "Es gibt keinen sicheren Speicher für Zugangstokens.",
-    "write_not_supported": "Tools, die Daten ändern, sind noch gesperrt (Freigabe pro Aufruf fehlt)."
+    "write_not_supported": "Tools, die Daten ändern, sind noch gesperrt (Freigabe pro Aufruf fehlt).",
+    "cooling_down": "{{server}} ist mehrmals hintereinander fehlgeschlagen; Aufrufe pausieren kurz.",
+    "environment_not_ready": "Die Pakete von {{server}} sind noch nicht freigegeben und installiert.",
+    "limits_invalid": "{{variable}} ist keine gültige Grenze.",
+    "oauth_denied": "Die Anmeldung wurde beim Dienst abgelehnt.",
+    "oauth_expired": "Die Anmeldung hat zu lange gedauert. Starte sie erneut.",
+    "oauth_failed": "Die Anmeldung ist nicht gelungen.",
+    "oauth_not_configured": "Der Dienst beschreibt keine Anmeldung.",
+    "oauth_not_required": "Dieser Dienst verwendet kein OAuth.",
+    "oauth_reauthorize": "{{server}} verlangt eine neue Anmeldung.",
+    "oauth_redirect_invalid": "Die Rücksprungadresse für die Anmeldung ist nicht eingerichtet (öffentliche Adresse des Servers).",
+    "oauth_registration_unsupported": "Der Dienst erlaubt Nodestro nicht, sich für die Anmeldung zu registrieren.",
+    "oauth_state_invalid": "Die Anmeldung gehört zu keiner Anfrage von hier. Starte sie erneut.",
+    "oauth_token_input": "Dieser Dienst erhält seinen Zugang über die Anmeldung, nicht über ein eingefügtes Token.",
+    "overloaded": "Alle Plätze für Dienstaufrufe blieben belegt; versuche es gleich noch einmal.",
+    "rate_limited": "{{server}} hat in der letzten Minute zu viele Aufrufe erhalten.",
+    "release_tool_changed": "Ein Dienst-Tool dieser veröffentlichten Version hat sich geändert; veröffentliche die API erneut.",
+    "stdio_failed": "{{server}} konnte nicht gestartet werden oder hat die Verbindung beendet.",
+    "stdio_invalid": "Die Einstellungen des lokalen Servers sind ungültig (Pakete, Modul, kein Token und keine Anmeldung).",
+    "too_many_servers": "Es können keine weiteren Dienste verbunden werden (höchstens {{limit}}).",
+    "tool_not_in_release": "Dieses Tool gehört nicht zur veröffentlichten Version."
   },
   "orchestration": {
     "unknown_member": "Dieses Team ist nicht im Pool.",
@@ -667,5 +691,8 @@
     "answer_too_long": "Die Schlussantwort war zu lang.",
     "finished": "Die Orchestrierung war bereits abgeschlossen.",
     "invalid_decision": "Die Antwort war keine gültige Entscheidung."
+  },
+  "mcp_server": {
+    "disabled": "Der MCP-Server von Nodestro ist ausgeschaltet."
   }
 }

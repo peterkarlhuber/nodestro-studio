@@ -221,7 +221,55 @@
       "tool_removed": "Outil plus proposé",
       "call_refused": "Appel refusé",
       "oauth_connected": "OAuth connecté",
-      "oauth_disconnected": "OAuth déconnecté"
+      "oauth_disconnected": "OAuth déconnecté",
+      "oauth_started": "connexion commencée",
+      "oauth_failed": "échec de la connexion"
+    },
+    "stdioUnavailable": "Les serveurs locaux nécessitent le bac à sable Docker ; il n'est pas disponible ici.",
+    "local": "Serveur local (conteneur)",
+    "transport": "Type",
+    "transportHint": {
+      "http": "Un service distant à une adresse https.",
+      "stdio": "Un serveur MCP Python de PyPI, démarré dans un conteneur isolé sans réseau ni accès à vos fichiers."
+    },
+    "transports": {
+      "http": "Service distant",
+      "stdio": "Serveur local"
+    },
+    "requirements": "Paquets",
+    "requirementsHint": "Une exigence PyPI par ligne. Vous vérifiez et approuvez les versions exactes avant le démarrage du serveur.",
+    "module": "Module",
+    "moduleHint": "Démarré avec python -m et ce nom de module.",
+    "args": "Arguments",
+    "argsHint": "Facultatif, un par ligne.",
+    "localNote": "Un serveur local s'exécute dans son propre conteneur : pas de réseau, aucun accès à vos fichiers ni à vos clés, mémoire et processus limités. Les serveurs qui ont besoin d'Internet ou de Node.js ne peuvent pas être utilisés ainsi.",
+    "oauth": {
+      "connected": "Connecté. Testez la connexion pour charger les outils.",
+      "failed": "La connexion a échoué ({{code}}).",
+      "signedOut": "Déconnecté de {{name}}.",
+      "signIn": "Se connecter",
+      "signOut": "Se déconnecter",
+      "signedIn": "Connecté",
+      "notSignedIn": "Non connecté",
+      "issuer": "chez {{issuer}}",
+      "scope": "autorisations : {{scope}}",
+      "expires": "l'accès se renouvelle {{when}}",
+      "pending": "connexion commencée",
+      "hint": "Après l'enregistrement, connectez-vous au service ; Nodestro conserve l'accès chiffré et le renouvelle lui-même."
+    },
+    "stats": {
+      "title": "Fonctionnement",
+      "active_one": "{{count}} appel en cours.",
+      "active_other": "{{count}} appels en cours.",
+      "limits": "Limites : {{parallel}} appels simultanés, {{perMinute}} appels par minute et par service, {{servers}} services au maximum.",
+      "server": "Service",
+      "calls": "Appels",
+      "failures": "Échecs",
+      "duration": "Dernier appel",
+      "state": "État",
+      "paused": "en pause pour {{seconds}} s",
+      "ok": "OK",
+      "none": "Aucun appel depuis le démarrage."
     }
   }
 }

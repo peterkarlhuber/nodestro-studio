@@ -81,7 +81,9 @@
     "sandbox": "Gli strumenti personali e quelli creati dall’IA non girano mai nel processo di Nodestro, ma isolati, con limiti di tempo e di memoria.",
     "drafts": "Strumenti scritti dall’architetto di workflow. Provali e approvali qui, oppure rifiutali.",
     "services": "Servizi esterni tramite MCP: colleghi un server, provi la connessione e approvi ogni strumento dopo averlo esaminato. Se il servizio modifica uno strumento, questo resta bloccato finché non esamini la modifica.",
-    "callApproval": "Una persona decide su ogni chiamata di questo strumento, con gli argomenti esatti. Senza decisione entro il termine, la chiamata conta come rifiutata."
+    "callApproval": "Una persona decide su ogni chiamata di questo strumento, con gli argomenti esatti. Senza decisione entro il termine, la chiamata conta come rifiutata.",
+    "servicesLocal": "Un server MCP locale gira in un container isolato. I suoi pacchetti vengono controllati e approvati come le librerie di uno strumento.",
+    "servicesOAuth": "Alcuni servizi richiedono un accesso. Nodestro apre la loro pagina di accesso e conserva l'accesso cifrato."
   },
   "knowledge": {
     "upload": "PDF, immagini (PNG, JPEG, GIF, WebP) e formati di testo. Immagini fino a 5 MB, documenti fino a 20 MB. Testi e PDF vengono indicizzati per la ricerca.",
@@ -241,7 +243,8 @@
     "library": "Come il progetto esportato ottiene Orkexa: dal suo repository Git o come codice sorgente incluso (licenza MIT).",
     "export": "Genera il progetto come ZIP: runtime, versione del workflow, test, esempi e README. Non viene inviato nulla da nessuna parte.",
     "gate": "Richiede un risultato di test aggiornato prima di ogni nuova versione. Le verifiche obbligatorie bloccano sempre; i risultati più deboli si possono pubblicare con una motivazione.",
-    "gateOverride": "La motivazione viene salvata con la versione e nella cronologia dell'API. Le verifiche obbligatorie non si possono mai saltare."
+    "gateOverride": "La motivazione viene salvata con la versione e nella cronologia dell'API. Le verifiche obbligatorie non si possono mai saltare.",
+    "mcpTool": "Permette ai client MCP di questo computer di avviare questa API come strumento. Disattivato per impostazione predefinita; anche il gestore deve attivarlo."
   },
   "inputs": {
     "field": "File per questa esecuzione: caricali, trascinali o sceglili dalla conoscenza. Vengono verificati e salvati solo per l’esecuzione, non nella conoscenza.",

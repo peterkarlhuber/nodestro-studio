@@ -46,7 +46,8 @@
     "unchanged": "Alle Pakete sind bereits freigegeben; es ändert sich keine Version.",
     "codeSeparate": "Der Code der Tools wird davon unabhängig geprüft und freigegeben.",
     "approve": "Freigeben und installieren",
-    "confirm": "Übernehmen"
+    "confirm": "Übernehmen",
+    "introMcp": "Der lokale MCP-Server {{name}} braucht diese Pakete. Sie werden in sein Container-Image installiert."
   },
   "install": {
     "starting": "Installation startet …",
@@ -72,7 +73,8 @@
     "install": "Installieren",
     "check": "Versionen ansehen",
     "history": "Änderungsverlauf",
-    "unused": "Kein Tool braucht die {{count}} freigegebenen Pakete mehr. Du kannst die Umgebung in den Einstellungen unter „Python-Umgebungen“ entfernen."
+    "unused": "Kein Tool braucht die {{count}} freigegebenen Pakete mehr. Du kannst die Umgebung in den Einstellungen unter „Python-Umgebungen“ entfernen.",
+    "mcpTitle": "Pakete des lokalen Servers"
   },
   "change": {
     "approved": "Freigegeben",
@@ -103,6 +105,7 @@
     "removed": "Die Umgebung wurde entfernt.",
     "cleanup": "Verwaiste bereinigen ({{count}})",
     "cleaned": "{{count}} verwaiste Umgebungen entfernt, Zwischenspeicher aufgeräumt.",
-    "none": "Noch keine Python-Umgebungen."
+    "none": "Noch keine Python-Umgebungen.",
+    "ownerMcp": "Lokaler MCP-Server {{name}}"
   }
 }

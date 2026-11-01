@@ -221,7 +221,55 @@
       "tool_removed": "Herramienta ya no ofrecida",
       "call_refused": "Llamada rechazada",
       "oauth_connected": "OAuth conectado",
-      "oauth_disconnected": "OAuth desconectado"
+      "oauth_disconnected": "OAuth desconectado",
+      "oauth_started": "inicio de sesión comenzado",
+      "oauth_failed": "inicio de sesión fallido"
+    },
+    "stdioUnavailable": "Los servidores locales necesitan el sandbox de Docker; aquí no está disponible.",
+    "local": "Servidor local (contenedor)",
+    "transport": "Tipo",
+    "transportHint": {
+      "http": "Un servicio remoto en una dirección https.",
+      "stdio": "Un servidor MCP de Python de PyPI, iniciado en un contenedor aislado sin red ni acceso a tus archivos."
+    },
+    "transports": {
+      "http": "Servicio remoto",
+      "stdio": "Servidor local"
+    },
+    "requirements": "Paquetes",
+    "requirementsHint": "Un requisito de PyPI por línea. Revisas y apruebas las versiones exactas antes de que el servidor se inicie.",
+    "module": "Módulo",
+    "moduleHint": "Se inicia con python -m y este nombre de módulo.",
+    "args": "Argumentos",
+    "argsHint": "Opcional, uno por línea.",
+    "localNote": "Un servidor local se ejecuta en su propio contenedor: sin red, sin acceso a tus archivos ni claves, con memoria y procesos limitados. Los servidores que necesitan Internet o Node.js no se pueden usar así.",
+    "oauth": {
+      "connected": "Sesión iniciada. Prueba la conexión para cargar las herramientas.",
+      "failed": "El inicio de sesión no tuvo éxito ({{code}}).",
+      "signedOut": "Sesión cerrada en {{name}}.",
+      "signIn": "Iniciar sesión",
+      "signOut": "Cerrar sesión",
+      "signedIn": "Sesión iniciada",
+      "notSignedIn": "Sin sesión",
+      "issuer": "en {{issuer}}",
+      "scope": "permisos: {{scope}}",
+      "expires": "el acceso se renueva {{when}}",
+      "pending": "inicio de sesión comenzado",
+      "hint": "Después de guardar, inicia sesión en el servicio; Nodestro guarda el acceso cifrado y lo renueva por sí mismo."
+    },
+    "stats": {
+      "title": "Funcionamiento",
+      "active_one": "{{count}} llamada en curso.",
+      "active_other": "{{count}} llamadas en curso.",
+      "limits": "Límites: {{parallel}} llamadas a la vez, {{perMinute}} llamadas por minuto y servicio, como máximo {{servers}} servicios.",
+      "server": "Servicio",
+      "calls": "Llamadas",
+      "failures": "Fallos",
+      "duration": "Última llamada",
+      "state": "Estado",
+      "paused": "en pausa durante {{seconds}} s",
+      "ok": "Correcto",
+      "none": "Ninguna llamada desde el inicio."
     }
   }
 }

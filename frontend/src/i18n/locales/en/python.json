@@ -46,7 +46,8 @@
     "unchanged": "All packages are already approved; no version changes.",
     "codeSeparate": "The tools' code is checked and approved separately.",
     "approve": "Approve and install",
-    "confirm": "Apply"
+    "confirm": "Apply",
+    "introMcp": "The local MCP server {{name}} needs these packages. They are installed into its container image."
   },
   "install": {
     "starting": "Starting installation …",
@@ -72,7 +73,8 @@
     "install": "Install",
     "check": "View versions",
     "history": "Change history",
-    "unused": "No tool needs the {{count}} approved packages anymore. You can remove the environment in the settings under “Python environments”."
+    "unused": "No tool needs the {{count}} approved packages anymore. You can remove the environment in the settings under “Python environments”.",
+    "mcpTitle": "Packages of the local server"
   },
   "change": {
     "approved": "Approved",
@@ -103,6 +105,7 @@
     "removed": "The environment was removed.",
     "cleanup": "Clean up orphaned ({{count}})",
     "cleaned": "{{count}} orphaned environments removed, cache tidied up.",
-    "none": "No Python environments yet."
+    "none": "No Python environments yet.",
+    "ownerMcp": "Local MCP server {{name}}"
   }
 }

@@ -190,6 +190,28 @@ Derzeit sind nur Tools nutzbar, die du als **nur lesend** einstufst; Tools, die 
 
 **Grenzen:** Nodestro verbindet sich nie mit internen, lokalen oder Metadaten-Adressen, prüft jede aufgelöste Adresse direkt beim Verbinden und ignoriert Proxy-Einstellungen der Umgebung. Auf einem Server erlaubt der Betreiber die Adressen mit `NODESTRO_MCP_ENDPOINTS`. Zeitpläne, Stapel und veröffentlichte APIs verwenden Dienst-Tools erst, wenn der Betreiber das ausdrücklich einschaltet. Kosten externer Dienste kennt Nodestro nicht; sie erscheinen als **unbekannt**, nie als null.
 
+**Betrieb:** Unter *Betrieb* sehen Administratoren, wie viele Dienstaufrufe gerade laufen, die Grenzen des Betreibers und je Dienst Aufrufe, Fehler und die Dauer des letzten Aufrufs. Ein Dienst, der mehrmals hintereinander fehlschlägt, wird kurz pausiert.
+
+## Bei einem Dienst anmelden {#mcp-anmeldung}
+<!-- keywords: mcp, oauth, anmelden, login, autorisierung, zugang, erneuern -->
+
+Manche Dienste verwenden kein festes Token, sondern eine **Anmeldung (OAuth)**. Wähle beim Verbinden *OAuth* als Anmeldung und speichere. Klicke dann auf **Anmelden**: Nodestro öffnet die Anmeldeseite des Dienstes, du bestätigst dort den Zugang und kehrst zu *Tools → Verbundene Dienste* zurück. Teste die Verbindung, um die Tools abzurufen.
+
+- Nodestro speichert den Zugang verschlüsselt wie ein Token und erneuert ihn selbst. Du siehst, wo du angemeldet bist, mit welchen Berechtigungen und wann sich der Zugang erneuert; den Zugang selbst zeigt Nodestro nie an.
+- **Abmelden** entfernt den gespeicherten Zugang. Verlangt der Dienst eine neue Anmeldung, schlagen Läufe, die ihn verwenden, mit einer klaren Meldung fehl, bis du dich wieder anmeldest.
+- Auf einem Server richtet der Betreiber die öffentliche Adresse von Nodestro ein; der Rücksprung von der Anmeldung geht nur dorthin.
+
+## Lokale Server {#lokale-dienste}
+<!-- keywords: mcp, stdio, lokaler server, pypi, container, docker, pakete -->
+
+Neben entfernten Diensten kannst du einen **lokalen MCP-Server** von PyPI betreiben, zum Beispiel einen Zeit- oder Rechendienst. Wähle als Art *Lokaler Server*, trage die Pakete (eines pro Zeile) und das Modul ein, das mit `python -m` gestartet wird.
+
+1. **Pakete prüfen:** Nodestro löst die genauen Versionen mit Prüfsummen auf. Du siehst sie und gibst sie frei, wie bei den Bibliotheken eines Tools. Vorher wird nichts installiert.
+2. **Installation:** Die Pakete kommen in ein eigenes Container-Image.
+3. **Verbindung testen:** Der Server startet in einem isolierten Container und meldet seine Tools. Ab hier sind Prüfung und Freigabe dieselben wie bei entfernten Diensten.
+
+Der Container hat **kein Netzwerk**, keinen Zugriff auf deine Dateien, Schlüssel oder andere Prozesse sowie begrenzten Speicher und begrenzte Prozesse. Deshalb gibt es lokale Server nur, wenn die Docker-Sandbox verwendet wird; Server, die das Internet oder Node.js brauchen, lassen sich so nicht betreiben. Ein lokaler Server erhält kein Token und keine Anmeldung.
+
 ## Versionen und Löschen {#versionen}
 <!-- keywords: version, löschen, zurückziehen, revoke, aktualisieren, überschreiben -->
 

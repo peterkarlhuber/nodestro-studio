@@ -81,7 +81,9 @@
     "sandbox": "Your own and AI-created tools never run in the Nodestro process, but isolated with time and memory limits.",
     "drafts": "Tools written by the Workflow Architect. Test and approve them here, or reject them.",
     "services": "External services through MCP: you connect a server, test the connection and approve each tool after reviewing it. When the service changes a tool, it is blocked until you review the change.",
-    "callApproval": "A person decides about each call of this tool, with the exact arguments. Without a decision within the time limit, the call counts as rejected."
+    "callApproval": "A person decides about each call of this tool, with the exact arguments. Without a decision within the time limit, the call counts as rejected.",
+    "servicesLocal": "A local MCP server runs in an isolated container. Its packages are reviewed and approved like a tool's libraries.",
+    "servicesOAuth": "Some services require a sign-in. Nodestro opens their sign-in page and keeps the access encrypted."
   },
   "knowledge": {
     "upload": "PDFs, images (PNG, JPEG, GIF, WebP) and text formats. Images up to 5 MB, documents up to 20 MB. Texts and PDFs are indexed for search.",
@@ -241,7 +243,8 @@
     "library": "How the exported project gets Orkexa: from its Git repository, or as included source code (MIT license).",
     "export": "Generates the project as a ZIP: runtime, workflow version, tests, examples and README. Nothing is sent anywhere.",
     "gate": "Requires a current test result before every new version. Mandatory checks always block; weaker results can be released with a reason.",
-    "gateOverride": "The reason is stored with the version and in the API's history. Mandatory checks can never be skipped."
+    "gateOverride": "The reason is stored with the version and in the API's history. Mandatory checks can never be skipped.",
+    "mcpTool": "Lets MCP clients on this computer start this API as a tool. Off by default; the operator must also switch it on."
   },
   "inputs": {
     "field": "Files for this run: upload, drop or choose from knowledge. They are checked and stored for the run only, not in knowledge.",

@@ -533,7 +533,7 @@ export const api = {
   publications: () => request<PublicationListItem[]>("GET", "/publications"),
   updatePublication: (
     id: string,
-    body: { slug?: string; description?: string; limits?: ApiLimits; network?: boolean },
+    body: { slug?: string; description?: string; limits?: ApiLimits; network?: boolean; mcp_tool?: boolean },
   ) => request<Publication>("PATCH", `/publications/${id}`, body),
   setPublicationEnabled: (id: string, enabled: boolean, cancelRunning = false) =>
     request<{ publication: Publication; cancelled: number }>("POST", `/publications/${id}/enabled`, {

@@ -81,7 +81,9 @@
     "sandbox": "Eigene und KI-erstellte Tools laufen nie im Nodestro-Prozess, sondern isoliert mit Zeit- und Speicherlimit.",
     "drafts": "Vom Workflow-Architekten geschriebene Tools. Teste und gib sie hier frei oder lehne sie ab.",
     "services": "Externe Dienste über MCP: Du verbindest einen Server, testest die Verbindung und gibst jedes Tool nach Prüfung einzeln frei. Ändert der Dienst ein Tool, wird es gesperrt, bis du die Änderung prüfst.",
-    "callApproval": "Eine Person entscheidet über jeden Aufruf dieses Tools, mit den genauen Argumenten. Ohne Entscheidung innerhalb der Frist gilt der Aufruf als abgelehnt."
+    "callApproval": "Eine Person entscheidet über jeden Aufruf dieses Tools, mit den genauen Argumenten. Ohne Entscheidung innerhalb der Frist gilt der Aufruf als abgelehnt.",
+    "servicesLocal": "Ein lokaler MCP-Server läuft in einem isolierten Container. Seine Pakete werden geprüft und freigegeben wie die Bibliotheken eines Tools.",
+    "servicesOAuth": "Manche Dienste verlangen eine Anmeldung. Nodestro öffnet ihre Anmeldeseite und bewahrt den Zugang verschlüsselt auf."
   },
   "knowledge": {
     "upload": "PDFs, Bilder (PNG, JPEG, GIF, WebP) und Textformate. Bilder bis 5 MB, Dokumente bis 20 MB. Texte und PDFs werden für die Suche indexiert.",
@@ -241,7 +243,8 @@
     "library": "Wie das exportierte Projekt Orkexa bekommt: aus dem Git-Repository oder als beigelegter Quellcode (MIT-Lizenz).",
     "export": "Erzeugt das Projekt als ZIP: Runtime, Workflow-Version, Tests, Beispiele und README. Nichts wird irgendwohin gesendet.",
     "gate": "Verlangt vor jeder neuen Version ein aktuelles Testergebnis. Pflichtprüfungen blockieren immer; schwächere Ergebnisse lassen sich mit Begründung freigeben.",
-    "gateOverride": "Die Begründung wird mit der Version und im Verlauf der API gespeichert. Pflichtprüfungen lassen sich nie übergehen."
+    "gateOverride": "Die Begründung wird mit der Version und im Verlauf der API gespeichert. Pflichtprüfungen lassen sich nie übergehen.",
+    "mcpTool": "Lässt MCP-Clients auf diesem Computer diese API als Tool starten. Standardmäßig aus; auch der Betreiber muss es einschalten."
   },
   "inputs": {
     "field": "Dateien für diesen Lauf: hochladen, ziehen oder aus dem Wissen wählen. Sie werden geprüft und nur für den Lauf gespeichert, nicht im Wissen.",

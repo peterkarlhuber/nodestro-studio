@@ -446,7 +446,10 @@
     "knowledge_live_other": "{{count}} arquivos de conhecimento são usados como estiverem no momento da execução (não congelados).",
     "memory_shared": "A memória persistente ({{spaces}}) é compartilhada pelo Nodestro e por toda execução da API.",
     "no_budget": "As execuções não têm limite de custo; defina um orçamento para o fluxo ou um orçamento diário para a API.",
-    "subworkflow_unsaved": "{{name}}: o subfluxo não tem versão salva."
+    "subworkflow_unsaved": "{{name}}: o subfluxo não tem versão salva.",
+    "mcp_tool_unusable": "Uma ferramenta de serviço deste workflow não pode ser usada agora; ele não pode ser publicado.",
+    "mcp_tools": "As ferramentas de serviço ficam congeladas nesta versão; uma mudança posterior no serviço a interrompe até que seja publicada de novo.",
+    "mcp_unattended_off": "Execuções da API só usam ferramentas de serviço quando o operador permite o uso sem supervisão (NODESTRO_MCP_UNATTENDED)."
   },
   "export": {
     "knowledge_missing": "{{name}} não existe mais.",
@@ -467,7 +470,8 @@
     "file_changed": "O arquivo ZIP desta exportação foi alterado; exporte novamente.",
     "provider": "{{provider}}: defina {{variables}} no ambiente do projeto exportado.",
     "base_url_withheld": "A URL base de {{provider}} contém credenciais e não é exportada; defina {{variable}} no projeto exportado.",
-    "integration_tools": "As ferramentas de integrações instaladas ainda não podem ser exportadas: {{tools}}."
+    "integration_tools": "As ferramentas de integrações instaladas ainda não podem ser exportadas: {{tools}}.",
+    "mcp_tools": "Versões com ferramentas de serviço não podem ser exportadas: o projeto exportado não tem conexão com os serviços."
   },
   "lan": {
     "tls_file_missing": "Arquivo não encontrado: {{path}}",
@@ -654,7 +658,27 @@
     "url_credentials": "O endereço não pode conter nome de usuário nem senha.",
     "url_invalid": "O endereço é inválido.",
     "vault_unavailable": "Não há armazenamento seguro para tokens de acesso.",
-    "write_not_supported": "Ferramentas que alteram dados ainda estão bloqueadas (falta a aprovação por chamada)."
+    "write_not_supported": "Ferramentas que alteram dados ainda estão bloqueadas (falta a aprovação por chamada).",
+    "cooling_down": "{{server}} falhou várias vezes seguidas; as chamadas fazem uma breve pausa.",
+    "environment_not_ready": "Os pacotes de {{server}} ainda não foram aprovados e instalados.",
+    "limits_invalid": "{{variable}} não é um limite válido.",
+    "oauth_denied": "O login foi recusado no serviço.",
+    "oauth_expired": "O login demorou demais. Comece de novo.",
+    "oauth_failed": "O login não deu certo.",
+    "oauth_not_configured": "O serviço não descreve nenhum login.",
+    "oauth_not_required": "Este serviço não usa OAuth.",
+    "oauth_reauthorize": "{{server}} pede um novo login.",
+    "oauth_redirect_invalid": "O endereço de retorno do login não está configurado (endereço público do servidor).",
+    "oauth_registration_unsupported": "O serviço não permite que o Nodestro se registre para o login.",
+    "oauth_state_invalid": "O login não pertence a nenhum pedido feito daqui. Comece de novo.",
+    "oauth_token_input": "Este serviço recebe o acesso pelo login, não por um token colado.",
+    "overloaded": "Todas as vagas para chamadas de serviço continuaram ocupadas; tente de novo em instantes.",
+    "rate_limited": "{{server}} recebeu chamadas demais no último minuto.",
+    "release_tool_changed": "Uma ferramenta de serviço desta versão publicada mudou; publique a API de novo.",
+    "stdio_failed": "{{server}} não pôde ser iniciado ou encerrou a conexão.",
+    "stdio_invalid": "As configurações do servidor local são inválidas (pacotes, módulo, sem token e sem login).",
+    "too_many_servers": "Não é possível conectar mais serviços (no máximo {{limit}}).",
+    "tool_not_in_release": "Esta ferramenta não faz parte da versão publicada."
   },
   "orchestration": {
     "unknown_member": "Esta equipe não está no grupo.",
@@ -667,5 +691,8 @@
     "answer_too_long": "A resposta final era longa demais.",
     "finished": "A orquestração já tinha sido concluída.",
     "invalid_decision": "A resposta não era uma decisão válida."
+  },
+  "mcp_server": {
+    "disabled": "O servidor MCP do Nodestro está desligado."
   }
 }

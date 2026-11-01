@@ -81,7 +81,9 @@
     "sandbox": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro, mais de façon isolée, avec des limites de temps et de mémoire.",
     "drafts": "Outils rédigés par l’architecte de workflows. Testez-les et approuvez-les ici, ou refusez-les.",
     "services": "Services externes via MCP : tu connectes un serveur, testes la connexion et approuves chaque outil après l'avoir examiné. Si le service modifie un outil, celui-ci est bloqué jusqu'à ce que tu examines la modification.",
-    "callApproval": "Une personne décide de chaque appel de cet outil, avec les arguments exacts. Sans décision dans le délai, l’appel compte comme refusé."
+    "callApproval": "Une personne décide de chaque appel de cet outil, avec les arguments exacts. Sans décision dans le délai, l’appel compte comme refusé.",
+    "servicesLocal": "Un serveur MCP local s'exécute dans un conteneur isolé. Ses paquets sont vérifiés et approuvés comme les bibliothèques d'un outil.",
+    "servicesOAuth": "Certains services exigent une connexion. Nodestro ouvre leur page de connexion et conserve l'accès chiffré."
   },
   "knowledge": {
     "upload": "PDF, images (PNG, JPEG, GIF, WebP) et formats texte. Images jusqu’à 5 Mo, documents jusqu’à 20 Mo. Les textes et les PDF sont indexés pour la recherche.",
@@ -241,7 +243,8 @@
     "library": "Comment le projet exporté obtient Orkexa : depuis son dépôt Git, ou sous forme de code source inclus (licence MIT).",
     "export": "Génère le projet en ZIP : runtime, version du workflow, tests, exemples et README. Rien n’est envoyé nulle part.",
     "gate": "Exige un résultat de test à jour avant chaque nouvelle version. Les vérifications obligatoires bloquent toujours ; les résultats plus faibles peuvent être publiés avec une justification.",
-    "gateOverride": "La justification est enregistrée avec la version et dans l'historique de l'API. Les vérifications obligatoires ne peuvent jamais être ignorées."
+    "gateOverride": "La justification est enregistrée avec la version et dans l'historique de l'API. Les vérifications obligatoires ne peuvent jamais être ignorées.",
+    "mcpTool": "Permet aux clients MCP de cet ordinateur de lancer cette API comme un outil. Désactivé par défaut ; l'exploitant doit aussi l'activer."
   },
   "inputs": {
     "field": "Fichiers pour cette exécution : envoyez-les, déposez-les ou choisissez-les dans les connaissances. Ils sont vérifiés et enregistrés pour l’exécution seulement, pas dans les connaissances.",

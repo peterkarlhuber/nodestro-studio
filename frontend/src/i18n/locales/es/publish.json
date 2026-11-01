@@ -287,5 +287,12 @@
       "judge_score": "valoración de la IA {{value}} (exigido {{threshold}})",
       "judge_missing": "sin valoración de la IA en la ejecución (exigido {{threshold}})"
     }
+  },
+  "mcpTool": {
+    "title": "Como herramienta MCP",
+    "intro": "Los clientes MCP de este equipo, por ejemplo un asistente de IA, pueden llamar a esta API como herramienta. Cada llamada es una ejecución normal con la clave de API del cliente: mismos límites, presupuestos, aprobaciones e historial.",
+    "offer": "Ofrecer como herramienta MCP",
+    "offerHint": "Solo tiene efecto si el operador inicia Nodestro con NODESTRO_MCP_SERVER=1. El cliente necesita una clave de API con permiso para iniciar ejecuciones.",
+    "howToUse": "Introduce esta dirección en el cliente MCP y envía la clave de API como token Bearer; la herramienta se llama {{name}}."
   }
 }

@@ -3,9 +3,10 @@
 // rule; this page shows the state and edits the configuration. Texts from a service are shown as foreign text.
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Ban, CheckCircle2, History, Pencil, PlugZap, Plus, RefreshCw, ShieldAlert, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Activity, Ban, CheckCircle2, History, LogIn, LogOut, Pencil, PlugZap, Plus, RefreshCw, ShieldAlert, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 
 import { keys } from "../api/hooks";
 import {
@@ -14,12 +15,14 @@ import {
   type McpServerIn,
   type McpStatus,
   type McpTool,
+  type McpTransport,
   definitionChanges,
   mcpApi,
   mcpKeys,
   needsDecision,
   useMcpEvents,
   useMcpServers,
+  useMcpStats,
   useMcpStatus,
   useMcpTools,
 } from "../api/mcp";
@@ -38,11 +41,13 @@ import {
   Segmented,
   Select,
   Spinner,
+  TextArea,
   TextInput,
   Toggle,
 } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { type Tone, formatDate, relativeTime } from "../lib/format";
+import { McpServerDependencies } from "../python/DependencyPanel";
 
 const ACCESS: McpAccess[] = ["read", "write", "destructive"];
 const STATUS_TONE: Record<McpTool["status"], Tone> = {
@@ -59,6 +64,7 @@ export function ServicesTab() {
   const servers = useMcpServers();
   const [selected, setSelected] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
+  useOAuthReturn();
   if (servers.isLoading || status.isLoading) return <Spinner />;
   if (servers.error) return <Callout tone="danger"><ErrorText error={servers.error} /></Callout>;
   const list = servers.data ?? [];
@@ -113,6 +119,7 @@ export function ServicesTab() {
           ) : null}
         </div>
       )}
+      <StatsSection servers={list} />
       <EventsSection />
       {adding && status.data ? (
         <ServerForm
@@ -126,6 +133,25 @@ export function ServicesTab() {
       ) : null}
     </div>
   );
+}
+
+/** The browser's return from an OAuth sign-in: /tools?tab=services&oauth=connected or &oauth_error=<code>. */
+function useOAuthReturn() {
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const [params, setParams] = useSearchParams();
+  const connected = params.get("oauth");
+  const failed = params.get("oauth_error");
+  useEffect(() => {
+    if (!connected && !failed) return;
+    if (connected === "connected") toast.success(t("tools.services.oauth.connected"));
+    if (failed) toast.error(new Error(t(`errors.${failed}`, { defaultValue: t("tools.services.oauth.failed", { code: failed }) })));
+    void queryClient.invalidateQueries({ queryKey: mcpKeys.all });
+    const next = new URLSearchParams(params);
+    next.delete("oauth");
+    next.delete("oauth_error");
+    setParams(next, { replace: true });
+  }, [connected, failed, params, setParams, queryClient, t]);
 }
 
 /** What this installation allows: SDK, token storage, the operator's endpoint list, unattended use. */
@@ -144,6 +170,7 @@ function StatusNotes({ status }: { status: McpStatus }) {
         )
       ) : null}
       {!status.token_vault ? <Callout tone="info">{t("tools.services.noVault")}</Callout> : null}
+      {!status.stdio_possible ? <p className="muted small">{t("tools.services.stdioUnavailable")}</p> : null}
       <p className="muted small">
         {t(status.write_tools_enabled ? "tools.services.writeEnabled" : "tools.services.readOnlyMvp")}{" "}
         {t(status.unattended_enabled ? "tools.services.unattendedOn" : "tools.services.unattendedOff")}
@@ -162,9 +189,11 @@ function ServerBadge({ server }: { server: McpServer }) {
 }
 
 function serverInput(server: McpServer, change: Partial<McpServerIn> = {}): McpServerIn {
+  const where: Partial<McpServerIn> =
+    server.transport === "stdio" ? { transport: "stdio", stdio: server.stdio } : { transport: "http", url: server.url };
   return {
     name: server.name,
-    url: server.url,
+    ...where,
     enabled: server.enabled,
     allow_loopback: server.allow_loopback,
     auth: server.auth,
@@ -206,6 +235,23 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
     onSuccess: () => refresh(server.id),
     onError: toast.error,
   });
+  const signIn = useMutation({
+    mutationFn: () => mcpApi.oauthStart(server.id),
+    // The authorization server's page; it returns to /tools?tab=services (handled by useOAuthReturn).
+    onSuccess: (result) => window.location.assign(result.authorization_url),
+    onError: (error) => {
+      refresh(server.id);
+      toast.error(error);
+    },
+  });
+  const signOut = useMutation({
+    mutationFn: () => mcpApi.oauthSignOut(server.id),
+    onSuccess: () => {
+      refresh(server.id);
+      toast.success(t("tools.services.oauth.signedOut", { name: server.name }));
+    },
+    onError: toast.error,
+  });
   const remove = useMutation({
     mutationFn: () => mcpApi.remove(server.id),
     onSuccess: () => {
@@ -231,10 +277,11 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
             {server.last_checked_at ? ` · ${t("tools.services.checked", { when: relativeTime(server.last_checked_at) })}` : ""}
           </p>
           <p className="muted small">
-            {t(`tools.services.auth.${server.auth}`)}
+            {server.transport === "stdio" ? t("tools.services.local") : t(`tools.services.auth.${server.auth}`)}
             {server.token_set ? ` · ${t(`tools.services.storage.${server.token_storage}`)}` : ""}
             {server.allow_loopback ? ` · ${t("tools.services.loopbackOn")}` : ""}
           </p>
+          {server.auth === "oauth" ? <OAuthSummary server={server} /> : null}
         </div>
         <div className="row-gap">
           <IconButton icon={Pencil} label={t("tools.services.edit")} onClick={() => setEditing(true)} />
@@ -252,7 +299,19 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
           <ProblemText item={{ code: server.last_error_code, params: server.last_error_params }} />
         </Callout>
       ) : null}
+      {server.transport === "stdio" ? <McpServerDependencies serverId={server.id} name={server.name} /> : null}
       <div className="row-gap">
+        {server.auth === "oauth" ? (
+          server.token_set ? (
+            <Button variant="ghost" icon={LogOut} busy={signOut.isPending} onClick={() => signOut.mutate()}>
+              {t("tools.services.oauth.signOut")}
+            </Button>
+          ) : (
+            <Button icon={LogIn} busy={signIn.isPending} onClick={() => signIn.mutate()} disabled={!status.available}>
+              {t("tools.services.oauth.signIn")}
+            </Button>
+          )
+        ) : null}
         <Button icon={RefreshCw} busy={discover.isPending} onClick={() => discover.mutate()} disabled={!status.available}>
           {t("tools.services.test")}
         </Button>
@@ -288,6 +347,26 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
         <ServerForm status={status} server={server} onClose={() => setEditing(false)} onSaved={() => setEditing(false)} />
       ) : null}
     </section>
+  );
+}
+
+/** What the sign-in left behind (issuer, scope, expiry); the credentials themselves stay sealed in the runtime. */
+function OAuthSummary({ server }: { server: McpServer }) {
+  const { t } = useTranslation();
+  const text = (key: string) => (typeof server.oauth[key] === "string" ? (server.oauth[key] as string) : null);
+  const issuer = text("issuer");
+  const scope = text("scope");
+  const expires = text("expires_at");
+  const pending = text("pending_until");
+  return (
+    <p className="muted small" data-testid="mcp-oauth">
+      {server.token_set ? t("tools.services.oauth.signedIn") : t("tools.services.oauth.notSignedIn")}
+      {issuer ? ` · ${t("tools.services.oauth.issuer", { issuer })}` : ""}
+      {scope ? ` · ${t("tools.services.oauth.scope", { scope })}` : ""}
+      {expires ? ` · ${t("tools.services.oauth.expires", { when: relativeTime(expires) })}` : ""}
+      {pending && !server.token_set ? ` · ${t("tools.services.oauth.pending")}` : ""}{" "}
+      <HelpTip id="tools.servicesOAuth" label={t("tools.services.auth.oauth")} />
+    </p>
   );
 }
 
@@ -430,23 +509,34 @@ function ServerForm({
   const { t } = useTranslation();
   const refresh = useRefresh();
   const [name, setName] = useState(server?.name ?? "");
-  const [url, setUrl] = useState(server?.url ?? "https://");
-  const [auth, setAuth] = useState<"none" | "bearer">(server?.auth === "bearer" ? "bearer" : "none");
+  const [transport, setTransport] = useState<McpTransport>(server?.transport ?? "http");
+  const [url, setUrl] = useState(server?.transport === "stdio" ? "https://" : (server?.url ?? "https://"));
+  const [module, setModule] = useState(server?.stdio?.module ?? "");
+  const [requirements, setRequirements] = useState((server?.stdio?.requirements ?? []).join("\n"));
+  const [args, setArgs] = useState((server?.stdio?.args ?? []).join("\n"));
+  const [auth, setAuth] = useState<"none" | "bearer" | "oauth">(server?.auth ?? "none");
   const [token, setToken] = useState("");
   const [dropToken, setDropToken] = useState(false);
   const [loopback, setLoopback] = useState(server?.allow_loopback ?? false);
   const [timeout, setTimeoutSeconds] = useState(String(server?.timeout_seconds ?? 60));
   const save = useMutation({
     mutationFn: () => {
+      const lines = (text: string) => text.split("\n").map((line) => line.trim()).filter(Boolean);
+      const local = transport === "stdio";
       const body: McpServerIn = {
         ...(server ? serverInput(server) : {}),
         name: name.trim(),
-        url: url.trim(),
-        auth,
-        allow_loopback: status.loopback_possible && loopback,
+        transport,
+        url: local ? undefined : url.trim(),
+        stdio: local
+          ? { ...(server?.stdio ?? {}), module: module.trim(), requirements: lines(requirements), args: lines(args) }
+          : null,
+        // A local server takes no token and no sign-in (mcp.stdio_invalid).
+        auth: local ? "none" : auth,
+        allow_loopback: !local && status.loopback_possible && loopback,
         timeout_seconds: Number(timeout) || 60,
       };
-      if (auth === "none") body.token = server?.token_set ? "" : undefined;
+      if (local || auth === "none" || auth === "oauth") body.token = auth !== "oauth" && server?.token_set ? "" : undefined;
       else if (dropToken) body.token = "";
       else if (token) body.token = token;
       return server ? mcpApi.update(server.id, body) : mcpApi.add(body);
@@ -468,7 +558,11 @@ function ServerForm({
           <Button variant="ghost" onClick={onClose}>
             {t("common.cancel")}
           </Button>
-          <Button busy={save.isPending} disabled={!name.trim() || !url.trim()} onClick={() => save.mutate()}>
+          <Button
+            busy={save.isPending}
+            disabled={!name.trim() || (transport === "stdio" ? !module.trim() || !requirements.trim() : !url.trim())}
+            onClick={() => save.mutate()}
+          >
             {t("common.save")}
           </Button>
         </>
@@ -478,21 +572,58 @@ function ServerForm({
         <Field label={t("tools.services.name")} htmlFor="mcp-name">
           <TextInput id="mcp-name" value={name} onChange={(event) => setName(event.target.value)} maxLength={80} />
         </Field>
-        <Field label={t("tools.services.url")} htmlFor="mcp-url" hint={t("tools.services.urlHint")}>
-          <TextInput id="mcp-url" value={url} onChange={(event) => setUrl(event.target.value)} inputMode="url" />
-        </Field>
-        <Field label={t("tools.services.authLabel")} htmlFor="mcp-auth">
-          <Select
-            id="mcp-auth"
-            value={auth}
-            onChange={(value) => setAuth(value as "none" | "bearer")}
-            options={[
-              { value: "none", label: t("tools.services.auth.none") },
-              { value: "bearer", label: t("tools.services.auth.bearer") },
-            ]}
-          />
-        </Field>
-        {auth === "bearer" ? (
+        {status.stdio_possible || server?.transport === "stdio" ? (
+          <Field label={t("tools.services.transport")} hint={t(`tools.services.transportHint.${transport}`)}>
+            <Segmented<McpTransport>
+              label={t("tools.services.transport")}
+              value={transport}
+              onChange={setTransport}
+              options={[
+                { value: "http", label: t("tools.services.transports.http") },
+                { value: "stdio", label: t("tools.services.transports.stdio") },
+              ]}
+            />
+          </Field>
+        ) : null}
+        {transport === "stdio" ? (
+          <>
+            <Field label={t("tools.services.requirements")} htmlFor="mcp-requirements" hint={t("tools.services.requirementsHint")}>
+              <TextArea
+                id="mcp-requirements"
+                rows={3}
+                value={requirements}
+                onChange={(event) => setRequirements(event.target.value)}
+                placeholder="mcp-server-time"
+              />
+            </Field>
+            <Field label={t("tools.services.module")} htmlFor="mcp-module" hint={t("tools.services.moduleHint")}>
+              <TextInput id="mcp-module" value={module} onChange={(event) => setModule(event.target.value)} placeholder="mcp_server_time" />
+            </Field>
+            <Field label={t("tools.services.args")} htmlFor="mcp-args" hint={t("tools.services.argsHint")}>
+              <TextArea id="mcp-args" rows={2} value={args} onChange={(event) => setArgs(event.target.value)} />
+            </Field>
+            <Callout tone="info">{t("tools.services.localNote")}</Callout>
+          </>
+        ) : (
+          <>
+            <Field label={t("tools.services.url")} htmlFor="mcp-url" hint={t("tools.services.urlHint")}>
+              <TextInput id="mcp-url" value={url} onChange={(event) => setUrl(event.target.value)} inputMode="url" />
+            </Field>
+            <Field label={t("tools.services.authLabel")} htmlFor="mcp-auth" hint={auth === "oauth" ? t("tools.services.oauth.hint") : undefined}>
+              <Select
+                id="mcp-auth"
+                value={auth}
+                onChange={(value) => setAuth(value as "none" | "bearer" | "oauth")}
+                options={[
+                  { value: "none", label: t("tools.services.auth.none") },
+                  { value: "bearer", label: t("tools.services.auth.bearer") },
+                  { value: "oauth", label: t("tools.services.auth.oauth") },
+                ]}
+              />
+            </Field>
+          </>
+        )}
+        {transport === "http" && auth === "bearer" ? (
           <Field
             label={t("tools.services.token")}
             htmlFor="mcp-token"
@@ -509,10 +640,10 @@ function ServerForm({
             />
           </Field>
         ) : null}
-        {auth === "bearer" && server?.token_set ? (
+        {transport === "http" && auth === "bearer" && server?.token_set ? (
           <Toggle checked={dropToken} onChange={setDropToken} label={t("tools.services.tokenRemove")} />
         ) : null}
-        {status.loopback_possible ? (
+        {transport === "http" && status.loopback_possible ? (
           <Toggle
             checked={loopback}
             onChange={setLoopback}
@@ -532,6 +663,68 @@ function ServerForm({
         </Field>
       </div>
     </Modal>
+  );
+}
+
+/** Calls in flight, the operator's limits and each server's health since the start (WP-7; administrators). */
+function StatsSection({ servers }: { servers: McpServer[] }) {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const stats = useMcpStats(open);
+  const names = new Map(servers.map((item) => [item.id, item.name]));
+  return (
+    <Section title={t("tools.services.stats.title")} icon={Activity} open={open} onToggle={setOpen}>
+      {stats.isLoading ? <Spinner /> : null}
+      {stats.error ? <ErrorText error={stats.error} /> : null}
+      {stats.data ? (
+        <div className="stack-sm small" data-testid="mcp-stats">
+          <p className="muted">
+            {t("tools.services.stats.active", { count: stats.data.active_calls })}{" "}
+            {t("tools.services.stats.limits", {
+              parallel: stats.data.limits.max_parallel ?? "–",
+              perMinute: stats.data.limits.calls_per_minute ?? "–",
+              servers: stats.data.limits.max_servers ?? "–",
+            })}
+          </p>
+          {Object.keys(stats.data.servers).length ? (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>{t("tools.services.stats.server")}</th>
+                  <th>{t("tools.services.stats.calls")}</th>
+                  <th>{t("tools.services.stats.failures")}</th>
+                  <th>{t("tools.services.stats.duration")}</th>
+                  <th>{t("tools.services.stats.state")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(stats.data.servers).map(([id, health]) => (
+                  <tr key={id}>
+                    <td>{names.get(id) ?? id}</td>
+                    <td>{health.calls}</td>
+                    <td>{health.failures}</td>
+                    <td>{health.last_duration_ms === null ? "–" : `${health.last_duration_ms} ms`}</td>
+                    <td>
+                      {health.cooling_down_seconds > 0 ? (
+                        <Badge tone="danger">{t("tools.services.stats.paused", { seconds: Math.ceil(health.cooling_down_seconds) })}</Badge>
+                      ) : health.last_error_code ? (
+                        <Badge tone="warning">
+                          <ProblemText item={{ code: health.last_error_code, params: {} }} compact />
+                        </Badge>
+                      ) : (
+                        <Badge tone="success">{t("tools.services.stats.ok")}</Badge>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="muted">{t("tools.services.stats.none")}</p>
+          )}
+        </div>
+      ) : null}
+    </Section>
   );
 }
 

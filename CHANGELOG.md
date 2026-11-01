@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### MCP: sign-in, local servers, operation, Nodestro as an MCP tool (ADR-0007 WP-6/7/8/11)
+
+- *Tools → Connected services*: OAuth as a sign-in kind with **Sign in** / **Sign out** (the browser returns to
+  `/tools?tab=services&oauth=connected` or `&oauth_error=<code>`), and a summary of issuer, permissions and renewal
+  (never the credentials).
+- Local servers (only with the Docker sandbox, `stdio_possible`): packages and module instead of an address; the
+  packages are planned hash-pinned and approved in the same dialog as a tool's libraries (scope `mcp:<id>`), then
+  installed into the server's own container image.
+- *Operation* section: calls in flight, the operator's limits and each service's calls, failures, last duration and
+  pause (`GET /api/mcp/stats`).
+- API page, *Access*: **Offer as an MCP tool** (`Publication.mcp_tool`); it takes effect only with the operator's
+  `NODESTRO_MCP_SERVER=1`, and the page names the endpoint `/api/published/_mcp`.
+- Texts for the new error codes (`mcp.oauth_*`, `mcp.stdio_*`, `mcp.environment_not_ready`, `mcp.cooling_down`,
+  `mcp.rate_limited`, `mcp.overloaded`, `mcp.release_tool_changed`, `api.mcp_*`, `export.mcp_tools`,
+  `mcp_server.disabled`) and help sections *Tools > Signing in to a service*, *Tools > Local servers* and
+  *API and export > As an MCP tool*, in six languages.
+
 ### Tool approvals: security acceptance (S-2, 2026-10-31)
 
 - New browser suite `approvals` (`npm run e2e:approvals`, part of `scripts/e2e.sh`) against an isolated instance with

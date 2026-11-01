@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
+import { mcpApi } from "../api/mcp";
 import type { DependencyPlan, DependencyScope, DependencyState, DependencyStatus, WorkflowIn } from "../api/types";
 import { toast } from "../components/toast";
 import { Badge, Button, HelpTip } from "../components/ui";
@@ -203,6 +204,27 @@ export function ToolDependencies({
         loadPlan={() => api.toolDependencyPlan(name, code, tests)}
         onDone={onDone}
       />
+    </section>
+  );
+}
+
+/** A local MCP server's packages (WP-8): planned hash-pinned, approved like a tool's, installed into its container. */
+export function McpServerDependencies({ serverId, name }: { serverId: string; name: string }) {
+  const { t } = useTranslation();
+  const status = useQuery({
+    queryKey: ["dependencies", "mcp", serverId],
+    queryFn: () => mcpApi.environment(serverId),
+    refetchInterval: (query) => (query.state.data?.state === "installing" ? 1500 : false),
+  });
+  const data = status.data;
+  if (status.error) return <ProblemText item={{ code: "deps.unavailable", message: String(status.error) }} compact />;
+  if (!data) return null;
+  return (
+    <section className="dep-panel stack-sm" aria-labelledby={`mcp-deps-${serverId}`} data-testid="mcp-dependencies">
+      <h3 className="check-panel__title" id={`mcp-deps-${serverId}`}>
+        <Package size={13} aria-hidden /> {t("python.panel.mcpTitle")} <HelpTip id="tools.servicesLocal" label={t("python.panel.mcpTitle")} />
+      </h3>
+      <StatusBody status={data} kind="mcp" refName={serverId} label={name} loadPlan={() => mcpApi.environmentPlan(serverId)} />
     </section>
   );
 }

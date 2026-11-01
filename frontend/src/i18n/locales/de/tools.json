@@ -221,7 +221,55 @@
       "tool_removed": "Tool nicht mehr angeboten",
       "call_refused": "Aufruf verweigert",
       "oauth_connected": "OAuth verbunden",
-      "oauth_disconnected": "OAuth getrennt"
+      "oauth_disconnected": "OAuth getrennt",
+      "oauth_started": "Anmeldung begonnen",
+      "oauth_failed": "Anmeldung fehlgeschlagen"
+    },
+    "stdioUnavailable": "Lokale Server brauchen die Docker-Sandbox; sie ist hier nicht verfügbar.",
+    "local": "Lokaler Server (Container)",
+    "transport": "Art",
+    "transportHint": {
+      "http": "Ein entfernter Dienst unter einer https-Adresse.",
+      "stdio": "Ein Python-MCP-Server von PyPI, gestartet in einem isolierten Container ohne Netzwerk und ohne Zugriff auf deine Dateien."
+    },
+    "transports": {
+      "http": "Entfernter Dienst",
+      "stdio": "Lokaler Server"
+    },
+    "requirements": "Pakete",
+    "requirementsHint": "Eine PyPI-Anforderung pro Zeile. Du prüfst und gibst die genauen Versionen frei, bevor der Server startet.",
+    "module": "Modul",
+    "moduleHint": "Wird mit python -m und diesem Modulnamen gestartet.",
+    "args": "Argumente",
+    "argsHint": "Optional, eines pro Zeile.",
+    "localNote": "Ein lokaler Server läuft in einem eigenen Container: kein Netzwerk, kein Zugriff auf deine Dateien oder Schlüssel, begrenzter Speicher und begrenzte Prozesse. Server, die das Internet oder Node.js brauchen, lassen sich so nicht nutzen.",
+    "oauth": {
+      "connected": "Angemeldet. Teste die Verbindung, um die Tools abzurufen.",
+      "failed": "Die Anmeldung ist nicht gelungen ({{code}}).",
+      "signedOut": "Von {{name}} abgemeldet.",
+      "signIn": "Anmelden",
+      "signOut": "Abmelden",
+      "signedIn": "Angemeldet",
+      "notSignedIn": "Nicht angemeldet",
+      "issuer": "bei {{issuer}}",
+      "scope": "Berechtigungen: {{scope}}",
+      "expires": "Zugang erneuert sich {{when}}",
+      "pending": "Anmeldung begonnen",
+      "hint": "Melde dich nach dem Speichern beim Dienst an; Nodestro speichert den Zugang verschlüsselt und erneuert ihn selbst."
+    },
+    "stats": {
+      "title": "Betrieb",
+      "active_one": "{{count}} Aufruf läuft.",
+      "active_other": "{{count}} Aufrufe laufen.",
+      "limits": "Grenzen: {{parallel}} Aufrufe gleichzeitig, {{perMinute}} Aufrufe pro Minute und Dienst, höchstens {{servers}} Dienste.",
+      "server": "Dienst",
+      "calls": "Aufrufe",
+      "failures": "Fehler",
+      "duration": "Letzter Aufruf",
+      "state": "Zustand",
+      "paused": "pausiert für {{seconds}} s",
+      "ok": "In Ordnung",
+      "none": "Seit dem Start keine Aufrufe."
     }
   }
 }
