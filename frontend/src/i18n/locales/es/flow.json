@@ -112,7 +112,9 @@
     "requiredLabel": "Obligatorio u opcional",
     "optional": "Opcional",
     "requiredHint": "La ejecución solo empieza cuando el campo está relleno.",
-    "optionalHint": "Puede quedar vacío: los agentes ven entonces que no se indicó nada (las decisiones pueden comprobar «está vacío»)."
+    "optionalHint": "Puede quedar vacío: los agentes ven entonces que no se indicó nada (las decisiones pueden comprobar «está vacío»).",
+    "prefilledInput": "Tarea (ejemplo precargado)",
+    "prefilledInputHint": "Un ejemplo de la plantilla para que la primera ejecución funcione enseguida. Sustitúyelo por tu propia solicitud."
   },
   "files": {
     "title": "Archivos de resultado",
@@ -229,7 +231,7 @@
   },
   "orchestrator": {
     "text": "Un modelo de IA decide paso a paso qué equipo recibe qué tarea y termina con una respuesta.",
-    "teams": "Equipos",
+    "teams": "Pool de equipos",
     "teamsHint": "Los flujos de trabajo entre los que el modelo puede elegir (como máximo {{max}}). Las capacidades y los contratos de salida le ayudan a elegir.",
     "noTeams": "Todavía no hay equipos. Añade al menos uno.",
     "addTeam": "Añadir un equipo…",
@@ -242,7 +244,7 @@
     "model": "Modelo",
     "maxDecisions": "Máximo de decisiones",
     "maxDecisionsHint": "Cada delegación y la respuesta final cuentan como una decisión (de 1 a {{max}}). Si para entonces no hay respuesta, el paso falla.",
-    "maxPerTeam": "Máximo por equipo",
+    "maxPerTeam": "Usos máximos por equipo",
     "maxPerTeamHint": "Cuántas veces se puede elegir un mismo equipo. Vacío: sin límite propio.",
     "safety": "El orquestador solo elige entre estos equipos. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo se ejecuta como una ejecución vinculada propia con su parte del presupuesto, sus límites y sus aprobaciones. Si un equipo espera una aprobación, el orquestador también espera.",
     "run": {
@@ -258,11 +260,11 @@
       "matched": "elegido por capacidad: {{tags}}",
       "parallel_one": "Delegado a {{count}} equipo a la vez",
       "parallel_other": "Delegado a {{count}} equipos a la vez",
-      "staffed": "Equipo cambiado",
+      "staffed": "Alineación cambiada",
       "added": "incorporados: {{teams}}",
       "removed": "retirados: {{teams}}",
       "values": "Valores",
-      "teamOverTime": "Equipo a lo largo del tiempo",
+      "teamOverTime": "Alineación activa a lo largo del tiempo",
       "afterStep": "Tras la decisión {{n}}",
       "emptyTeam": "nadie",
       "waitingTitle_one": "Esperando aprobación: {{count}} equipo",
@@ -271,7 +273,7 @@
       "who": "{{name}} · modelo {{model}}",
       "decisionsUsed": "Decisiones {{used}} de {{max}}",
       "parallelLimit": "hasta {{max}} equipos a la vez",
-      "teamLimit": "equipo como máximo {{max}}",
+      "teamLimit": "alineación como máximo {{max}}",
       "costDecisions": "Coste de las decisiones {{cost}}",
       "costTotal": "total con equipos {{cost}}",
       "costUnknown": "no se conoce del todo",
@@ -299,8 +301,27 @@
     "dynamic": "Equipos dinámicos",
     "dynamicHint": "Todo desactivado significa: un equipo tras otro de todo el pool, solo con una tarea.",
     "maxParallel": "Equipos a la vez",
-    "staffing": "Formar el equipo por sí mismo: el orquestador incorpora equipos del pool y los vuelve a retirar",
-    "maxTeam": "Como máximo en el equipo",
-    "allowValues": "Rellenar el formulario de inicio de los equipos (sin archivos; se comprueba como un inicio manual)"
+    "staffing": "Formar la alineación activa por sí mismo: el orquestador incorpora equipos del pool a su alineación y los vuelve a retirar",
+    "maxTeam": "Como máximo en la alineación activa",
+    "allowValues": "Rellenar el formulario de inicio de los equipos (sin archivos; se comprueba como un inicio manual)",
+    "members": "Workflows elegidos",
+    "assignment": "Encargo",
+    "limits": "Límites",
+    "lineup": "Alineación activa",
+    "summary": {
+      "members_one": "{{count}} equipo",
+      "members_other": "{{count}} equipos",
+      "byCapability": "por capacidad: {{tags}}",
+      "noTeams": "aún sin equipos",
+      "decisions_one": "como máximo {{count}} decisión",
+      "decisions_other": "como máximo {{count}} decisiones",
+      "perTeam_one": "cada equipo como máximo {{count}} vez",
+      "perTeam_other": "cada equipo como máximo {{count}} veces",
+      "parallel_one": "{{count}} equipo a la vez",
+      "parallel_other": "hasta {{count}} equipos a la vez",
+      "lineup": "forma su alineación activa por sí mismo (como máximo {{count}})",
+      "lineupOff": "elige de todo el pool",
+      "how": "Así trabaja este orquestador: {{pool}} · {{limits}} · {{lineup}}."
+    }
   }
 }

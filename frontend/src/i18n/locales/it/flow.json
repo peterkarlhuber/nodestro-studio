@@ -112,7 +112,9 @@
     "requiredLabel": "Obbligatorio o facoltativo",
     "optional": "Facoltativo",
     "requiredHint": "L’esecuzione parte solo quando il campo è compilato.",
-    "optionalHint": "Può restare vuoto: gli agenti vedono allora che non è stato indicato nulla (le decisioni possono verificare «è vuoto»)."
+    "optionalHint": "Può restare vuoto: gli agenti vedono allora che non è stato indicato nulla (le decisioni possono verificare «è vuoto»).",
+    "prefilledInput": "Compito (esempio precompilato)",
+    "prefilledInputHint": "Un esempio dal modello, così la prima esecuzione funziona subito. Sostituiscilo con la tua richiesta."
   },
   "files": {
     "title": "File di risultato",
@@ -229,7 +231,7 @@
   },
   "orchestrator": {
     "text": "Un modello di IA decide passo dopo passo quale team riceve quale compito e conclude con una risposta.",
-    "teams": "Team",
+    "teams": "Pool di team",
     "teamsHint": "I workflow tra cui il modello può scegliere (al massimo {{max}}). Capacità e contratti di output lo aiutano a scegliere.",
     "noTeams": "Ancora nessun team. Aggiungine almeno uno.",
     "addTeam": "Aggiungi un team…",
@@ -242,7 +244,7 @@
     "model": "Modello",
     "maxDecisions": "Numero massimo di decisioni",
     "maxDecisionsHint": "Ogni delega e la risposta finale valgono una decisione ciascuna (da 1 a {{max}}). Senza risposta entro allora, il passaggio fallisce.",
-    "maxPerTeam": "Massimo per team",
+    "maxPerTeam": "Utilizzi massimi per team",
     "maxPerTeamHint": "Quante volte si può scegliere lo stesso team. Vuoto: nessun limite proprio.",
     "safety": "L'orchestratore sceglie solo tra questi team. Non ha strumenti, non crea agenti, strumenti o team e non ha permessi propri. Ogni team viene eseguito come un'esecuzione collegata propria con la sua parte di budget, i suoi limiti e le sue approvazioni. Se un team attende un'approvazione, anche l'orchestratore attende.",
     "run": {
@@ -258,11 +260,11 @@
       "matched": "scelto per capacità: {{tags}}",
       "parallel_one": "Delegato a {{count}} team contemporaneamente",
       "parallel_other": "Delegato a {{count}} team contemporaneamente",
-      "staffed": "Team modificato",
+      "staffed": "Formazione modificata",
       "added": "aggiunti: {{teams}}",
       "removed": "congedati: {{teams}}",
       "values": "Valori",
-      "teamOverTime": "Team nel tempo",
+      "teamOverTime": "Formazione attiva nel tempo",
       "afterStep": "Dopo la decisione {{n}}",
       "emptyTeam": "nessuno",
       "waitingTitle_one": "In attesa di approvazione: {{count}} team",
@@ -271,7 +273,7 @@
       "who": "{{name}} · modello {{model}}",
       "decisionsUsed": "Decisioni {{used}} di {{max}}",
       "parallelLimit": "fino a {{max}} team insieme",
-      "teamLimit": "team al massimo {{max}}",
+      "teamLimit": "formazione al massimo {{max}}",
       "costDecisions": "Costo delle decisioni {{cost}}",
       "costTotal": "totale con i team {{cost}}",
       "costUnknown": "non del tutto noto",
@@ -299,8 +301,27 @@
     "dynamic": "Team dinamici",
     "dynamicHint": "Tutto disattivato significa: un team dopo l'altro da tutto il pool, solo con un compito.",
     "maxParallel": "Team contemporaneamente",
-    "staffing": "Comporre il team da sé: l'orchestratore prende team dal pool e li congeda di nuovo",
-    "maxTeam": "Al massimo nel team",
-    "allowValues": "Compilare il modulo di avvio dei team (senza file; verificato come un avvio manuale)"
+    "staffing": "Comporre da sé la formazione attiva: l’orchestratore prende team dal pool nella sua formazione e li congeda di nuovo",
+    "maxTeam": "Al massimo nella formazione attiva",
+    "allowValues": "Compilare il modulo di avvio dei team (senza file; verificato come un avvio manuale)",
+    "members": "Workflow scelti",
+    "assignment": "Incarico",
+    "limits": "Limiti",
+    "lineup": "Formazione attiva",
+    "summary": {
+      "members_one": "{{count}} team",
+      "members_other": "{{count}} team",
+      "byCapability": "per capacità: {{tags}}",
+      "noTeams": "ancora nessun team",
+      "decisions_one": "al massimo {{count}} decisione",
+      "decisions_other": "al massimo {{count}} decisioni",
+      "perTeam_one": "ogni team al massimo {{count}} volta",
+      "perTeam_other": "ogni team al massimo {{count}} volte",
+      "parallel_one": "{{count}} team alla volta",
+      "parallel_other": "fino a {{count}} team alla volta",
+      "lineup": "compone da sé la formazione attiva (al massimo {{count}})",
+      "lineupOff": "sceglie dall’intero pool",
+      "how": "Come lavora questo orchestratore: {{pool}} · {{limits}} · {{lineup}}."
+    }
   }
 }

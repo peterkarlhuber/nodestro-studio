@@ -7,5 +7,6 @@
   "mainNavigation": "Hauptnavigation",
   "privateTitle": "Lokal & privat",
   "privateText": "Nodestro läuft nur auf deinem Rechner. Daten verlassen ihn nur für Anfragen an die KI-Anbieter, die du eingerichtet hast.",
-  "providerMissing": "KI-Anbieter einrichten"
+  "providerMissing": "KI-Anbieter einrichten",
+  "defaultProviderMissing": "Standardmodell braucht {{provider}}"
 }

@@ -122,5 +122,27 @@
     "notReadOnly": "No aprobada como de solo lectura: {{tools}}",
     "noServers": "Aún no hay ningún servidor MCP configurado, por lo que la copia se ejecuta en modo sin conexión.",
     "setUp": "Configurar servicios conectados"
+  },
+  "startHere": "Empieza aquí",
+  "galleryCount_one": "{{count}} ejemplo",
+  "galleryCount_other": "{{count}} ejemplos",
+  "searchPlaceholderFeatures": "Nombre, ámbito, bloque o nivel …",
+  "levelLabel": "Nivel",
+  "allLevels": "Todos los niveles",
+  "needs": {
+    "title": "Qué necesitas",
+    "models": "Proveedor de IA: {{provider}} · modelos: {{models}}.",
+    "modelsAdapted": "Proveedor de IA: {{provider}}. La copia usa tus modelos predeterminados en lugar de los del ejemplo: {{models}}.",
+    "providerMissing": "Aún no configurado.",
+    "setUp": "Configurar",
+    "providerReady": "Configurado.",
+    "approval": "Una ejecución se detiene para tu aprobación antes de continuar.",
+    "knowledge_one": "Crea {{count}} archivo de conocimiento en tu base de conocimiento.",
+    "knowledge_other": "Crea {{count}} archivos de conocimiento en tu base de conocimiento.",
+    "samples_one": "{{count}} archivo de ejemplo para probar los campos de archivo (ver abajo).",
+    "samples_other": "{{count}} archivos de ejemplo para probar los campos de archivo (ver abajo).",
+    "files": "Usa tus propios archivos como entrada.",
+    "connection": "Conexión opcional (MCP): {{names}}. Sin ella, la copia se ejecuta sin conexión con datos de ejemplo.",
+    "noConnection": "No necesita conexión con otros servicios."
   }
 }

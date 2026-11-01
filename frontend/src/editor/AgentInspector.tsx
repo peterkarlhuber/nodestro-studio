@@ -73,6 +73,7 @@ import {
   unroutedIssues,
 } from "./agentSummaries";
 import { useAgentSections } from "./sectionState";
+import { removeWithUndo } from "./actions";
 import { useEditor } from "./store";
 
 // Option values are what the library expects; labels come from agent.options.* in the language files.
@@ -132,7 +133,7 @@ function FieldErrors({ issues, field }: { issues: ConfigIssue[]; field: string }
 
 export function AgentInspector({ node }: { node: WorkflowNode }) {
   const { t } = useTranslation();
-  const { updateAgent, replaceAgent, removeNodes, duplicateNode } = useEditor.getState();
+  const { updateAgent, replaceAgent, duplicateNode } = useEditor.getState();
   const nodes = useEditor((s) => s.nodes);
   const edges = useEditor((s) => s.edges);
   const upstream = useMemo(
@@ -185,7 +186,7 @@ export function AgentInspector({ node }: { node: WorkflowNode }) {
           <DiscussIcon offer={offer} />
           <IconButton icon={Save} label={t("agent.saveAsTemplate")} onClick={saveTemplate} />
           <IconButton icon={Copy} label={t("agent.duplicate")} onClick={() => duplicateNode(node.id)} />
-          <IconButton icon={Trash2} label={t("agent.delete")} onClick={() => removeNodes([node.id])} />
+          <IconButton icon={Trash2} label={t("agent.delete")} onClick={() => removeWithUndo([node.id])} />
         </>
       }
     />

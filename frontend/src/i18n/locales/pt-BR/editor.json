@@ -34,7 +34,10 @@
     "approval": "Aprovação",
     "subworkflow": "Subworkflow",
     "branchPort": "Saída do ramo {{name}}",
-    "orchestrator": "Orquestrador"
+    "orchestrator": "Orquestrador",
+    "warnings_one": "{{count}} aviso",
+    "warnings_other": "{{count}} avisos",
+    "warningsTip": "O workflow pode iniciar, mas provavelmente algo aqui não se encaixa. Selecione o nó para ver os avisos."
   },
   "defaults": {
     "systemPrompt": "Você é um assistente prestativo.",
@@ -54,7 +57,10 @@
     "undo": "Desfazer (Ctrl+Z)",
     "redo": "Refazer (Ctrl+Shift+Z)",
     "edgeLabel": "Conexão de {{source}} para {{target}}. Delete a remove.",
-    "dropInvalid": "Este item não pode ser colocado na área de trabalho."
+    "dropInvalid": "Este item não pode ser colocado na área de trabalho.",
+    "removedOne": "“{{name}}” removido.",
+    "removedMany_one": "{{count}} nó removido.",
+    "removedMany_other": "{{count}} nós removidos."
   },
   "palette": {
     "title": "Blocos",
@@ -71,7 +77,12 @@
     "subworkflowHint": "Executa outro fluxo de trabalho como uma etapa",
     "teams": "Equipes",
     "teamDelivers": "entrega {{fields}}",
-    "orchestratorHint": "Um modelo de IA distribui a tarefa entre equipes"
+    "orchestratorHint": "Um modelo de IA distribui a tarefa entre equipes",
+    "teamCapabilities": "Capacidades: {{tags}}",
+    "teamsCount_one": "Equipes ({{count}})",
+    "teamsCount_other": "Equipes ({{count}})",
+    "searchTeams": "Buscar equipes",
+    "noTeamMatch": "Nenhuma equipe corresponde à busca."
   },
   "inspector": {
     "agent": "Configurar agente",
@@ -105,7 +116,16 @@
     "controlDelete": "<kbd>Delete</kbd> exclui a seleção, <kbd>Ctrl</kbd>+<kbd>D</kbd> duplica",
     "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> desfaz, <kbd>Ctrl</kbd>+<kbd>S</kbd> salva",
     "controlPanels": "Arraste os divisores para ajustar os painéis; clique duplo em um nó mostra suas propriedades",
-    "connection": "Conexão"
+    "connection": "Conexão",
+    "selection": "Seleção",
+    "selectedCount_one": "{{count}} nó selecionado",
+    "selectedCount_other": "{{count}} nós selecionados",
+    "duplicateAll": "Duplicar todos",
+    "deleteAll_one": "Excluir {{count}} nó",
+    "deleteAll_other": "Excluir {{count}} nós",
+    "clearSelection": "Limpar seleção",
+    "selectionHint": "Shift ou Ctrl e clique adiciona nós; Shift e arrastar na tela seleciona com uma caixa. Arrastar move todos, Delete remove todos, Ctrl+D duplica todos.",
+    "nodeProblems": "Problemas deste nó"
   },
   "design": {
     "title": "Criar um agente com IA",
@@ -143,7 +163,9 @@
     "budgetText": "Orçamento desta execução: {{budget}}. A execução para assim que ele for ultrapassado.",
     "unlimited": "ilimitado",
     "providerMissing": "Ainda não configurado: {{providers}}. Agentes com esses modelos não podem rodar.",
-    "openSettings": "Abrir configurações"
+    "openSettings": "Abrir configurações",
+    "fixFirst": "Primeiro corrija os problemas acima.",
+    "moreFiles": "Anexar mais arquivos (opcional)"
   },
   "page": {
     "started": "Fluxo de trabalho iniciado",
@@ -153,7 +175,12 @@
     "saveAndContinue": "Salvar e continuar",
     "unsavedText": "O fluxo de trabalho tem alterações que ainda não foram salvas.",
     "discardTitle": "Descartar alterações?",
-    "discardText": "Todas as alterações não salvas e o histórico de desfazer/refazer são descartados. O editor carrega o último estado salvo."
+    "discardText": "Todas as alterações não salvas e o histórico de desfazer/refazer são descartados. O editor carrega o último estado salvo.",
+    "startBlockedMany_one": "{{count}} problema impede o início: {{first}}",
+    "startBlockedMany_other": "{{count}} problemas impedem o início. Primeiro: {{first}}",
+    "showProblem": "Mostrar",
+    "moreActions": "Mais ações",
+    "exportFile": "Exportar como arquivo"
   },
   "check": {
     "title": "Verificação",

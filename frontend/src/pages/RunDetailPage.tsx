@@ -18,7 +18,6 @@ import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat, StatusBadge 
 import { NodeRunDetails, startFiles } from "../editor/RunDetails";
 import { liveUsage, runWaitsForToolApproval, waitsForToolApproval } from "../editor/store";
 import { TraceExportDialog, sanitizeSummary } from "../editor/TraceExportDialog";
-import { ErrorText } from "../lib/errors";
 import { RunApprovals } from "../runs/ApprovalCard";
 import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { ResultFiles } from "../runs/ResultFiles";
@@ -31,6 +30,7 @@ import { RunOrigin } from "../runs/RunOrigin";
 import { RunSummaryLine } from "../runs/RunSummaryLine";
 import { initialStep, stepsInOrder } from "../runs/runSummary";
 import { STATUS_TONE, formatCost, formatDate, formatDuration, formatTokens, tokenBreakdown } from "../lib/format";
+import { NotFoundState } from "../components/NotFoundState";
 
 /** A waterfall of the agents' run times: where the time went and what ran in parallel. */
 function Trace({ run, selected, onSelect }: { run: Run; selected: string | null; onSelect: (id: string) => void }) {
@@ -105,12 +105,7 @@ export function RunDetailPage() {
   const fileNames = new Map((inputs.data ?? []).map((item) => [item.id, item.name ?? item.id]));
 
   if (run.isLoading) return <Spinner />;
-  if (run.error || !data)
-    return (
-      <div className="page">
-        <Callout tone="danger">{run.error ? <ErrorText error={run.error} /> : t("runs.detail.notFound")}</Callout>
-      </div>
-    );
+  if (run.error || !data) return <NotFoundState kind="run" error={run.error} />;
   const usage = liveUsage(data);
   const imported = Boolean(data.imported_at);
   const live = !imported && (data.status === "running" || data.status === "queued");

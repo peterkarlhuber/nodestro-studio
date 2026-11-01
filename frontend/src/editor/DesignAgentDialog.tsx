@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import type { AgentConfig, AgentDraft } from "../api/types";
+import { useModelName } from "../components/ModelPicker";
 import { Button, Callout, Chip, Field, Modal, TextArea } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatCost, formatNumber } from "../lib/format";
@@ -26,6 +27,7 @@ export function DesignAgentDialog({
   existing?: string[];
 }) {
   const { t } = useTranslation();
+  const modelLabel = useModelName();
   const [description, setDescription] = useState(initial);
   const [draft, setDraft] = useState<AgentDraft | null>(null);
   useEffect(() => {
@@ -110,7 +112,7 @@ export function DesignAgentDialog({
             <dd>{config.description}</dd>
             <dt>{t("agent.model")}</dt>
             <dd>
-              <code>{config.model}</code> · {t("agent.thinking.effortShort")}{" "}
+              {modelLabel(config.model)} · {t("agent.thinking.effortShort")}{" "}
               {t(`agent.options.effortShort.${config.effort ?? "default"}`)}
             </dd>
             <dt>{t("agent.tools.title")}</dt>

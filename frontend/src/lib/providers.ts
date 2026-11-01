@@ -51,3 +51,40 @@ export function providerNames(items: { label: string }[]): string {
 export function findModel<T extends { id: string }>(models: T[] | undefined, model: string): T | undefined {
   return models?.find((item) => sameModel(item.id, model));
 }
+
+/** Whether at least one AI provider is set up (a key, an endpoint or a local server). */
+export function anyProviderConfigured(settings: Settings | undefined): boolean {
+  return Boolean(settings?.providers.some((item) => item.configured));
+}
+
+/**
+ * The catalog model new agents should use when ``provider`` is the one that is set up: its first recommended model,
+ * else its first model. Undefined for providers without catalog models (compatible endpoints, Ollama, vLLM), where
+ * only the person knows which model the server offers.
+ */
+export function suggestedModel<T extends { id: string; provider: string; recommended: boolean }>(
+  models: T[] | undefined,
+  provider: ProviderId,
+): T | undefined {
+  const own = (models ?? []).filter((item) => item.provider === provider);
+  return own.find((item) => item.recommended) ?? own[0];
+}
+
+/**
+ * When the default model's provider is not set up but another provider is: the configured provider with a catalog
+ * model that new agents could use instead (``preferred`` first). Null when nothing needs to change or nothing fits.
+ */
+export function defaultModelSwitch<T extends { id: string; provider: string; recommended: boolean }>(
+  settings: Settings | undefined,
+  models: T[] | undefined,
+  preferred?: ProviderId,
+): { provider: ProviderStatus; model: T } | null {
+  if (!settings || !missingProviders(settings, [settings.default_model]).length) return null;
+  const configured = settings.providers.filter((item) => item.configured);
+  const ordered = preferred ? [...configured.filter((item) => item.id === preferred), ...configured.filter((item) => item.id !== preferred)] : configured;
+  for (const provider of ordered) {
+    const model = suggestedModel(models, provider.id);
+    if (model) return { provider, model };
+  }
+  return null;
+}

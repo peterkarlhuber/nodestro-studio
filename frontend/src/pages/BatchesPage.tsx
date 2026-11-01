@@ -16,6 +16,7 @@ import { Badge, Button, Callout, EmptyState, IconButton, PageHeader, Spinner, St
 import { progress } from "../lib/batch";
 import { ErrorText, ProblemText, problemText } from "../lib/errors";
 import { formatCost, formatDate, formatTokens } from "../lib/format";
+import { NotFoundState } from "../components/NotFoundState";
 
 export function BatchesPage() {
   const { t } = useTranslation();
@@ -135,12 +136,7 @@ export function BatchDetailPage() {
     onError: toast.error,
   });
   if (batch.isLoading) return <Spinner />;
-  if (batch.error || !batch.data)
-    return (
-      <div className="page">
-        <Callout tone="danger">{batch.error ? <ErrorText error={batch.error} /> : null}</Callout>
-      </div>
-    );
+  if (batch.error || !batch.data) return <NotFoundState kind="batch" error={batch.error} />;
   const data = batch.data;
   const active = data.status === "running" || data.status === "paused";
   return (

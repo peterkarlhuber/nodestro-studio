@@ -1,5 +1,28 @@
 {
   "title": "Page not found",
   "action": "Go to workflows",
-  "text": "This address does not exist in Nodestro."
+  "text": "This address does not exist in Nodestro.",
+  "object": {
+    "workflow": {
+      "title": "Workflow not found",
+      "text": "This workflow does not exist, or it was deleted.",
+      "back": "Back to workflows"
+    },
+    "run": {
+      "title": "Run not found",
+      "text": "This run does not exist, or it was deleted.",
+      "back": "Back to executions"
+    },
+    "batch": {
+      "title": "Batch run not found",
+      "text": "This batch run does not exist, or it was deleted.",
+      "back": "Back to batch runs"
+    },
+    "suite": {
+      "title": "Test series not found",
+      "text": "This test series does not exist, or it was deleted.",
+      "back": "Back to test series"
+    },
+    "failedTitle": "Could not load this page"
+  }
 }

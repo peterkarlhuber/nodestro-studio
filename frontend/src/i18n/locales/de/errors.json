@@ -786,5 +786,6 @@
       "step_limit": "Erhöhe die Schrittgrenze in den Workflow-Einstellungen unter „Grenzen“ oder prüfe Schleifen.",
       "orchestration_limit": "Erhöhe beim Orchestrator „Höchstens Entscheidungen“ oder beschreibe in den Anweisungen, wann die Aufgabe erledigt ist."
     }
-  }
+  },
+  "setupProvider": "KI-Anbieter einrichten"
 }

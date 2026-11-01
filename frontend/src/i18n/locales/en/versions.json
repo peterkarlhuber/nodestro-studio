@@ -30,5 +30,8 @@
   "restoreTitle": "Restore version {{number}}?",
   "restoreText": "The workflow is set back to version {{number}} and saved as a new version. All earlier versions are kept.",
   "restoreDirty": "Unsaved changes in the editor get lost. Save them as a version first if you want to keep them.",
-  "restored": "Version {{number}} restored"
+  "restored": "Version {{number}} restored",
+  "beforeRestoreNote": "Before restoring version {{number}}",
+  "saveAndRestore": "Save first, then restore",
+  "restoreDiscard": "Restore without saving"
 }

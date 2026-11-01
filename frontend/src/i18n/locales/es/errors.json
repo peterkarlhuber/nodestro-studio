@@ -786,5 +786,6 @@
       "step_limit": "Aumenta el límite de pasos en «Límites» de los ajustes del flujo de trabajo o revisa los bucles.",
       "orchestration_limit": "Aumenta «Máximo de decisiones» en el orquestador o indica en sus instrucciones cuándo está terminada la tarea."
     }
-  }
+  },
+  "setupProvider": "Configurar proveedor de IA"
 }

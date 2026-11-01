@@ -786,5 +786,6 @@
       "step_limit": "Aumenta il limite di passaggi in «Limiti» nelle impostazioni del workflow, oppure controlla i cicli.",
       "orchestration_limit": "Aumenta «Numero massimo di decisioni» sull'orchestratore, oppure indica nelle sue istruzioni quando il compito è concluso."
     }
-  }
+  },
+  "setupProvider": "Configura provider di IA"
 }

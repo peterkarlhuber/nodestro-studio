@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Bot, Plus, Save, Sparkles, Trash2, Undo2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useBlocker, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
@@ -21,17 +21,20 @@ import {
   applyOrganize,
 } from "../components/Organize";
 import { toast } from "../components/toast";
+import { UnsavedChangesModal } from "../components/UnsavedChanges";
 import { Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Spinner } from "../components/ui";
 import { AgentForm } from "../editor/AgentInspector";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { defaultAgent } from "../lib/defaults";
 import { ErrorText } from "../lib/errors";
 import { relativeTime } from "../lib/format";
+import { useModelName } from "../components/ModelPicker";
 
 /** The agent library: reusable agent configurations that appear in the editor's palette. */
 export function AgentsPage() {
   const { t } = useTranslation();
   const templates = useTemplates();
+  const modelLabel = useModelName();
   const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [draft, setDraft] = useState<AgentConfig | null>(null);
@@ -42,14 +45,32 @@ export function AgentsPage() {
   // ?template=<id> (from the global search) opens that template.
   const [params, setParams] = useSearchParams();
   const wanted = params.get("template");
-  useEffect(() => {
-    if (!wanted) return;
-    setSelectedId(wanted);
-    setFilter(NO_FILTER);
-    setParams({}, { replace: true });
-  }, [wanted, setParams]);
   const selected = templates.data?.find((item) => item.id === selectedId) ?? null;
   const dirty = Boolean(selected && draft && JSON.stringify(selected.agent) !== JSON.stringify(draft));
+  // Opening another template while this one has unsaved edits asks first (like leaving the workflow editor).
+  // ``undefined``: nothing waits; ``null``: close the form.
+  const [pendingId, setPendingId] = useState<string | null | undefined>(undefined);
+  const dirtyRef = useRef(dirty);
+  dirtyRef.current = dirty;
+  const choose = (id: string | null) => {
+    if (id !== selectedId && dirtyRef.current) setPendingId(id);
+    else setSelectedId(id);
+  };
+  useEffect(() => {
+    if (!wanted) return;
+    choose(wanted);
+    setFilter(NO_FILTER);
+    setParams({}, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wanted, setParams]);
+  const blocker = useBlocker(({ currentLocation, nextLocation }) => dirty && currentLocation.pathname !== nextLocation.pathname);
+  useEffect(() => {
+    const onUnload = (event: BeforeUnloadEvent) => {
+      if (dirtyRef.current) event.preventDefault();
+    };
+    window.addEventListener("beforeunload", onUnload);
+    return () => window.removeEventListener("beforeunload", onUnload);
+  }, []);
 
   // Templates are offered in their saved state; unsaved form changes are marked, never sent.
   const offer: ContextOffer | null = selected ? { kind: "agent", refId: selected.id, label: selected.agent.name, dirty } : null;
@@ -66,7 +87,7 @@ export function AgentsPage() {
   const create = useMutation({
     mutationFn: api.createTemplate,
     onSuccess: (template: AgentTemplate) => {
-      void refresh().then(() => setSelectedId(template.id));
+      void refresh().then(() => choose(template.id));
       toast.success(t("agents.created", { name: template.agent.name }));
     },
     onError: toast.error,
@@ -149,7 +170,7 @@ export function AgentsPage() {
                   <button
                     type="button"
                     className="card__main card--button"
-                    onClick={() => setSelectedId(template.id)}
+                    onClick={() => choose(template.id)}
                     aria-pressed={template.id === selectedId}
                   >
                     <div className="card__head">
@@ -159,7 +180,7 @@ export function AgentsPage() {
                       <div>
                         <h3>{template.agent.name}</h3>
                         <span className="muted small">
-                          {template.agent.model} ·{" "}
+                          {modelLabel(template.agent.model)} ·{" "}
                           {t("agents.toolCount", {
                             count: template.agent.tools.length + template.agent.server_tools.length,
                           })}
@@ -222,6 +243,36 @@ export function AgentsPage() {
           </div>
         )}
       </aside>
+      <UnsavedChangesModal
+        open={pendingId !== undefined || blocker.state === "blocked"}
+        text={t("agents.unsavedText", { name: selected?.agent.name ?? "" })}
+        saving={save.isPending}
+        onStay={() => {
+          setPendingId(undefined);
+          blocker.reset?.();
+        }}
+        onDiscard={() => {
+          if (selected) setDraft(structuredClone(selected.agent));
+          dirtyRef.current = false;
+          if (pendingId !== undefined) setSelectedId(pendingId);
+          setPendingId(undefined);
+          blocker.proceed?.();
+        }}
+        onSave={() => {
+          if (!selected || !draft) return;
+          save.mutate(
+            { id: selected.id, agent: draft },
+            {
+              onSuccess: () => {
+                dirtyRef.current = false;
+                if (pendingId !== undefined) setSelectedId(pendingId);
+                setPendingId(undefined);
+                blocker.proceed?.();
+              },
+            },
+          );
+        }}
+      />
       <DesignAgentDialog
         open={designOpen}
         onClose={() => setDesignOpen(false)}

@@ -14,7 +14,9 @@
     "lede": "Nodestro connects AI models, tools and knowledge into agent workflows that you build visually, run under your control and follow step by step.",
     "diagram": "Diagram: models, knowledge and tools come together in Nodestro and become connected agents, approvals and traceable runs.",
     "local": "Runs locally on your computer",
-    "providers": "Works with"
+    "providers": "Works with",
+    "modelNeeded": "To run workflows, Nodestro needs a connection to an AI model: an API key or a local model server.",
+    "modelNeededLink": "Set it up in Settings"
   },
   "nodes": {
     "models": {

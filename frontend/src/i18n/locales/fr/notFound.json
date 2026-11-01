@@ -1,5 +1,28 @@
 {
   "title": "Page introuvable",
   "action": "Vers les workflows",
-  "text": "Cette adresse n’existe pas dans Nodestro."
+  "text": "Cette adresse n’existe pas dans Nodestro.",
+  "object": {
+    "workflow": {
+      "title": "Workflow introuvable",
+      "text": "Ce workflow n’existe pas ou a été supprimé.",
+      "back": "Retour aux workflows"
+    },
+    "run": {
+      "title": "Exécution introuvable",
+      "text": "Cette exécution n’existe pas ou a été supprimée.",
+      "back": "Retour aux exécutions"
+    },
+    "batch": {
+      "title": "Exécution par lots introuvable",
+      "text": "Cette exécution par lots n’existe pas ou a été supprimée.",
+      "back": "Retour aux exécutions par lots"
+    },
+    "suite": {
+      "title": "Série de tests introuvable",
+      "text": "Cette série de tests n’existe pas ou a été supprimée.",
+      "back": "Retour aux séries de tests"
+    },
+    "failedTitle": "Impossible de charger cette page"
+  }
 }

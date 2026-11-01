@@ -1,4 +1,4 @@
-import { ShieldAlert } from "lucide-react";
+import { Flag, ShieldAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { ExampleFeature, ExampleSummary } from "../api/types";
@@ -20,7 +20,16 @@ const FLOW_FEATURES: ExampleFeature[] = [
 ];
 
 /** A gallery card; clicking it opens the preview (which costs nothing). */
-export function ExampleCard({ example, onOpen }: { example: ExampleSummary; onOpen: (id: string) => void }) {
+export function ExampleCard({
+  example,
+  onOpen,
+  startHere = false,
+}: {
+  example: ExampleSummary;
+  onOpen: (id: string) => void;
+  /** The easiest example, recommended as the first one to try. */
+  startHere?: boolean;
+}) {
   const { t } = useTranslation();
   const Icon = CATEGORY_ICONS[example.category];
   const PatternIcon = PATTERN_ICONS[example.pattern];
@@ -36,6 +45,11 @@ export function ExampleCard({ example, onOpen }: { example: ExampleSummary; onOp
             <span className="example-card__field">{example.field}</span>
             <h3>{example.name}</h3>
           </div>
+          {startHere ? (
+            <Badge tone="success" icon={Flag}>
+              <span data-testid="start-here">{t("library.startHere")}</span>
+            </Badge>
+          ) : null}
         </div>
         <p className="card__text">{example.description}</p>
         {shown.length ? (
