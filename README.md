@@ -180,6 +180,7 @@ The CI on GitHub needs the repository secret `NODESTRO_READ`, a token with read 
 The architecture is described in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), the platform in
 [docs/PLATFORM.md](docs/PLATFORM.md), the original idea in [docs/PROJECT_DESCRIPTION.md](docs/PROJECT_DESCRIPTION.md)
 and the design in [docs/design/DESIGN_SYSTEM.md](docs/design/DESIGN_SYSTEM.md).
+Open work (known bugs, follow-ups, technical debt) is listed in [docs/TODO.md](docs/TODO.md).
 
 ## License
 
