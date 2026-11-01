@@ -209,7 +209,8 @@ export function RunDetailPage() {
           </Callout>
         ) : null}
         <RunProblem run={data} />
-        {imported ? null : <InterruptedNotice run={data} onResume={resumable ? () => setResumeOpen(true) : undefined} />}
+        {/* The title bar already offers Continue; the notice explains why it is there. */}
+        {imported ? null : <InterruptedNotice run={data} />}
         <div className="two-column">
           <section className="panel stack" aria-label={t("runs.detail.input")}>
             <h2 className="panel__title">{t("runs.detail.input")}</h2>
