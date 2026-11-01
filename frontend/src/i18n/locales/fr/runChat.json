@@ -12,6 +12,7 @@
   "messages": "Conversation avec le chef d’équipe",
   "empty": "Pas encore de messages.",
   "someone": "Quelqu’un",
+  "you": "Vous",
   "targets": {
     "label": "Chef d’équipe",
     "depth": "Équipe imbriquée, niveau {{level}}"
@@ -33,10 +34,11 @@
     "queued": "En attente de la prochaine décision",
     "queuedWorking_one": "{{count}} équipe travaille ; la consigne sera prise en compte à la prochaine décision",
     "queuedWorking_other": "{{count}} équipes travaillent ; la consigne sera prise en compte à la prochaine décision",
-    "delivered": "En cours de prise en compte dans la décision {{n}}",
-    "deliveredPlain": "En cours de prise en compte dans la décision actuelle",
-    "considered": "Prise en compte dans la décision {{n}}",
-    "consideredPlain": "Prise en compte dans une décision",
+    "delivered": "Transmise au chef d’équipe pour la décision {{n}}",
+    "deliveredPlain": "Transmise au chef d’équipe pour la décision en cours",
+    "considered": "Intégrée à la décision {{n}}",
+    "consideredPlain": "Intégrée à une décision",
+    "consideredHint": "Intégrée signifie : le chef d’équipe connaissait la consigne lors de cette décision. La décision montre s’il la suit.",
     "rejected": "Non acceptée",
     "expired": "N’est plus prise en compte",
     "pending": "Réponse en cours…",

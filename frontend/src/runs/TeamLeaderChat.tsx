@@ -60,7 +60,7 @@ function TargetPicker({ targets, selected, onSelect }: { targets: ChatTarget[]; 
               <TargetStatus status={target.status} />
             </span>
             <span className="muted small lrc-target__path">
-              {[...target.path, target.workflow_name].filter(Boolean).join(" › ")}
+              {(target.path.length ? target.path : [target.workflow_name]).filter(Boolean).join(" › ")}
             </span>
             {target.depth > 0 ? <span className="muted small">{t("runChat.targets.depth", { level: target.depth })}</span> : null}
           </button>
@@ -126,6 +126,11 @@ function MessageStatusLine({ message, teams }: { message: RunMessage; teams: Tea
         </span>
       ) : null}
       {status.code ? <span className="small lrc-reason">{problemText(t, { code: status.code })}</span> : null}
+      {message.kind === "instruction" && message.status === "considered" ? (
+        <span className="muted small lrc-considered-hint" data-testid="lrc-considered-hint">
+          {t("runChat.status.consideredHint")}
+        </span>
+      ) : null}
     </div>
   );
 }
@@ -134,7 +139,7 @@ function Author({ message }: { message: RunMessage }) {
   const { t } = useTranslation();
   return (
     <span className="muted small lrc-message__meta">
-      {t(`runChat.kind.${message.kind}`)} · {message.author_name || message.author || t("runChat.someone")} · {formatTime(message.created_at)}
+      {t(`runChat.kind.${message.kind}`)} · {message.author_name || (message.author === "local" ? t("runChat.you") : message.author) || t("runChat.someone")} · {formatTime(message.created_at)}
     </span>
   );
 }

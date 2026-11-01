@@ -12,6 +12,7 @@
   "messages": "Conversation with the team leader",
   "empty": "No messages yet.",
   "someone": "Someone",
+  "you": "You",
   "targets": {
     "label": "Team leader",
     "depth": "Nested team, level {{level}}"
@@ -33,10 +34,11 @@
     "queued": "Waiting for the next decision",
     "queuedWorking_one": "{{count}} team is working; the instruction is considered at the next decision",
     "queuedWorking_other": "{{count}} teams are working; the instruction is considered at the next decision",
-    "delivered": "Being considered in decision {{n}}",
-    "deliveredPlain": "Being considered in the current decision",
+    "delivered": "With the team leader for decision {{n}}",
+    "deliveredPlain": "With the team leader for the current decision",
     "considered": "Included in decision {{n}}",
     "consideredPlain": "Included in a decision",
+    "consideredHint": "Included means the team leader had the instruction when it made this decision. Whether it follows it shows in the decision.",
     "rejected": "Not accepted",
     "expired": "No longer considered",
     "pending": "Answering…",

@@ -12,6 +12,7 @@
   "messages": "Gespräch mit der Teamleitung",
   "empty": "Noch keine Nachrichten.",
   "someone": "Jemand",
+  "you": "Du",
   "targets": {
     "label": "Teamleitung",
     "depth": "Verschachteltes Team, Ebene {{level}}"
@@ -33,10 +34,11 @@
     "queued": "Wartet auf die nächste Entscheidung",
     "queuedWorking_one": "{{count}} Team arbeitet; die Anweisung wird bei der nächsten Entscheidung berücksichtigt",
     "queuedWorking_other": "{{count}} Teams arbeiten; die Anweisung wird bei der nächsten Entscheidung berücksichtigt",
-    "delivered": "Wird in Entscheidung {{n}} berücksichtigt",
-    "deliveredPlain": "Wird in der laufenden Entscheidung berücksichtigt",
-    "considered": "In Entscheidung {{n}} berücksichtigt",
-    "consideredPlain": "In einer Entscheidung berücksichtigt",
+    "delivered": "Liegt der Teamleitung in Entscheidung {{n}} vor",
+    "deliveredPlain": "Liegt der Teamleitung für die laufende Entscheidung vor",
+    "considered": "In Entscheidung {{n}} einbezogen",
+    "consideredPlain": "In eine Entscheidung einbezogen",
+    "consideredHint": "Einbezogen heißt: Die Teamleitung kannte die Anweisung bei dieser Entscheidung. Ob sie ihr folgt, zeigt die Entscheidung.",
     "rejected": "Nicht angenommen",
     "expired": "Nicht mehr berücksichtigt",
     "pending": "Wird beantwortet…",

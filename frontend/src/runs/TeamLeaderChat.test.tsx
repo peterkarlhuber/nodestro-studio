@@ -225,7 +225,8 @@ describe("TeamLeaderChat", () => {
     const targets = await screen.findAllByTestId("lrc-target");
     expect(targets).toHaveLength(2);
     expect(targets[1]).toHaveTextContent("Verschachteltes Team, Ebene 1");
-    expect(targets[1]).toHaveTextContent("Bericht › Recherche › Bericht");
+    expect(targets[1]).toHaveTextContent("Bericht › Recherche");
+    expect(targets[1]).not.toHaveTextContent("Recherche › Bericht");
     expect(screen.queryByText("Nur Quellen ab 2020")).toBeNull();
     await user.click(targets[1]);
     expect(targets[1]).toHaveAttribute("aria-checked", "true");
@@ -259,7 +260,7 @@ describe("TeamLeaderChat", () => {
     expect(screen.getByTestId("lrc-mode-question")).toBeDisabled();
     expect(screen.getByTestId("lrc-send")).toBeDisabled();
     const [considered, expired, failed] = screen.getAllByTestId("lrc-message");
-    expect(within(considered).getByTestId("lrc-status")).toHaveTextContent("In Entscheidung 3 berücksichtigt");
+    expect(within(considered).getByTestId("lrc-status")).toHaveTextContent("In Entscheidung 3 einbezogen");
     expect(considered).toHaveTextContent("Entscheidung: delegiert (legal)");
     expect(considered.textContent).not.toMatch(/erledigt/i);
     expect(expired).toHaveTextContent("Der Lauf endete, bevor die Anweisung berücksichtigt wurde.");

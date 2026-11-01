@@ -12,6 +12,7 @@
   "messages": "Conversa com o líder da equipe",
   "empty": "Ainda não há mensagens.",
   "someone": "Alguém",
+  "you": "Você",
   "targets": {
     "label": "Líder da equipe",
     "depth": "Equipe aninhada, nível {{level}}"
@@ -33,10 +34,11 @@
     "queued": "Aguardando a próxima decisão",
     "queuedWorking_one": "{{count}} equipe está trabalhando; a instrução será considerada na próxima decisão",
     "queuedWorking_other": "{{count}} equipes estão trabalhando; a instrução será considerada na próxima decisão",
-    "delivered": "Sendo considerada na decisão {{n}}",
-    "deliveredPlain": "Sendo considerada na decisão atual",
-    "considered": "Considerada na decisão {{n}}",
-    "consideredPlain": "Considerada em uma decisão",
+    "delivered": "Com o líder da equipe para a decisão {{n}}",
+    "deliveredPlain": "Com o líder da equipe para a decisão atual",
+    "considered": "Incluída na decisão {{n}}",
+    "consideredPlain": "Incluída em uma decisão",
+    "consideredHint": "Incluída significa: o líder da equipe conhecia a instrução ao tomar esta decisão. Se ele a segue, a decisão mostra.",
     "rejected": "Não aceita",
     "expired": "Não será mais considerada",
     "pending": "Respondendo…",

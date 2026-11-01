@@ -113,7 +113,7 @@ You choose explicitly what you write:
 - **Ask a question:** an AI model answers it from the current state of the run. A question never changes the run. The answer is marked *Chat answer, not a decision* and names the state it is based on.
 - **Give an instruction:** the team leader takes it into account at its **next decision**. A decision already being made and teams already working are not interrupted or changed; running specialists notice nothing until the next decision is made.
 
-Each instruction shows where it stands: *Waiting for the next decision* (with how many teams are working now), *Being considered in decision N*, *Included in decision N* with what was decided, or *No longer considered* with the reason. "Included" means the team leader read the instruction and took it into its decision; whether and how it follows it, it decides itself within its limits. Enter sends, Shift+Enter starts a new line.
+Each instruction shows where it stands: *Waiting for the next decision* (with how many teams are working now), *With the team leader for decision N*, *Included in decision N* with what was decided, or *No longer considered* with the reason. "Included" means the team leader had the instruction when it made this decision; whether and how it follows it, it decides itself within its limits. Enter sends, Shift+Enter starts a new line.
 
 **Costs:** answers to questions have their own **chat budget** per run, separate from the run's budget. Their costs appear on the [Usage](/docs/nutzung#statistik) page under **Live run chat**, not in the run's costs. In the strict [price mode](/docs/nutzung#preismodus) questions to models without a known price are refused. Instructions cost nothing extra; they become part of the next decision.
 

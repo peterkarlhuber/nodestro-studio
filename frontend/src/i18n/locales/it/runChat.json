@@ -12,6 +12,7 @@
   "messages": "Conversazione con il responsabile del team",
   "empty": "Ancora nessun messaggio.",
   "someone": "Qualcuno",
+  "you": "Tu",
   "targets": {
     "label": "Responsabile del team",
     "depth": "Team annidato, livello {{level}}"
@@ -33,10 +34,11 @@
     "queued": "In attesa della prossima decisione",
     "queuedWorking_one": "{{count}} team sta lavorando; l’istruzione verrà considerata alla prossima decisione",
     "queuedWorking_other": "{{count}} team stanno lavorando; l’istruzione verrà considerata alla prossima decisione",
-    "delivered": "In considerazione nella decisione {{n}}",
-    "deliveredPlain": "In considerazione nella decisione in corso",
-    "considered": "Considerata nella decisione {{n}}",
-    "consideredPlain": "Considerata in una decisione",
+    "delivered": "Presso il responsabile del team per la decisione {{n}}",
+    "deliveredPlain": "Presso il responsabile del team per la decisione in corso",
+    "considered": "Inclusa nella decisione {{n}}",
+    "consideredPlain": "Inclusa in una decisione",
+    "consideredHint": "Inclusa significa: il responsabile del team conosceva l’istruzione in questa decisione. Se la segue, lo mostra la decisione.",
     "rejected": "Non accettata",
     "expired": "Non più considerata",
     "pending": "Risposta in corso…",
