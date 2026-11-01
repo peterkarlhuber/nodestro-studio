@@ -717,38 +717,40 @@ function StatsSection({ servers }: { servers: McpServer[] }) {
             })}
           </p>
           {Object.keys(stats.data.servers).length ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>{t("tools.services.stats.server")}</th>
-                  <th>{t("tools.services.stats.calls")}</th>
-                  <th>{t("tools.services.stats.failures")}</th>
-                  <th>{t("tools.services.stats.duration")}</th>
-                  <th>{t("tools.services.stats.state")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(stats.data.servers).map(([id, health]) => (
-                  <tr key={id}>
-                    <td>{names.get(id) ?? id}</td>
-                    <td>{health.calls}</td>
-                    <td>{health.failures}</td>
-                    <td>{health.last_duration_ms === null ? "–" : `${health.last_duration_ms} ms`}</td>
-                    <td>
-                      {health.cooling_down_seconds > 0 ? (
-                        <Badge tone="danger">{t("tools.services.stats.paused", { seconds: Math.ceil(health.cooling_down_seconds) })}</Badge>
-                      ) : health.last_error_code ? (
-                        <Badge tone="warning">
-                          <ProblemText item={{ code: health.last_error_code, params: {} }} compact />
-                        </Badge>
-                      ) : (
-                        <Badge tone="success">{t("tools.services.stats.ok")}</Badge>
-                      )}
-                    </td>
+            <div className="table-wrap">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>{t("tools.services.stats.server")}</th>
+                    <th>{t("tools.services.stats.calls")}</th>
+                    <th>{t("tools.services.stats.failures")}</th>
+                    <th>{t("tools.services.stats.duration")}</th>
+                    <th>{t("tools.services.stats.state")}</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {Object.entries(stats.data.servers).map(([id, health]) => (
+                    <tr key={id}>
+                      <td>{names.get(id) ?? id}</td>
+                      <td>{health.calls}</td>
+                      <td>{health.failures}</td>
+                      <td>{health.last_duration_ms === null ? "–" : `${health.last_duration_ms} ms`}</td>
+                      <td>
+                        {health.cooling_down_seconds > 0 ? (
+                          <Badge tone="danger">{t("tools.services.stats.paused", { seconds: Math.ceil(health.cooling_down_seconds) })}</Badge>
+                        ) : health.last_error_code ? (
+                          <Badge tone="warning">
+                            <ProblemText item={{ code: health.last_error_code, params: {} }} compact />
+                          </Badge>
+                        ) : (
+                          <Badge tone="success">{t("tools.services.stats.ok")}</Badge>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <p className="muted">{t("tools.services.stats.none")}</p>
           )}

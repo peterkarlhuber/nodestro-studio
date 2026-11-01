@@ -43,6 +43,7 @@
   installed into the server's own container image.
 - *Operation* section: calls in flight, the operator's limits and each service's calls, failures, last duration and
   pause (`GET /api/mcp/stats`).
+  The table scrolls inside its frame on narrow screens instead of being cut off.
 - API page, *Access*: **Offer as an MCP tool** (`Publication.mcp_tool`); it takes effect only with the operator's
   `NODESTRO_MCP_SERVER=1`, and the page names the endpoint `/api/published/_mcp`.
 - Texts for the new error codes (`mcp.oauth_*`, `mcp.stdio_*`, `mcp.environment_not_ready`, `mcp.cooling_down`,
