@@ -158,6 +158,7 @@ export const HELP_DOCS = {
   "library.sequential": "beispiele#muster",
   "library.parallel": "beispiele#muster",
   "library.branching": "beispiele#muster",
+  "library.adaptive": "beispiele#muster",
   "architect.open": "ki-architekt#ueberblick",
   "architect.create": "ki-architekt#neu-erstellen",
   "architect.generateTools": "ki-architekt#tools-freigeben",

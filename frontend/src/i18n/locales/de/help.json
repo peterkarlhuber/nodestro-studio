@@ -144,7 +144,8 @@
     "synthetic": "Alle Testdaten sind erfunden und als synthetisch markiert. Ersetze sie im Startknoten durch eigene Daten.",
     "sequential": "Die Agenten arbeiten nacheinander; jeder baut auf dem Ergebnis seines Vorgängers auf.",
     "parallel": "Mehrere Agenten arbeiten gleichzeitig an derselben Eingabe; ein weiterer Agent führt ihre Ergebnisse zusammen.",
-    "branching": "Der Workflow verzweigt nach Regeln oder nach einer Freigabe; nicht jeder Agent läuft immer."
+    "branching": "Der Workflow verzweigt nach Regeln oder nach einer Freigabe; nicht jeder Agent läuft immer.",
+    "adaptive": "Ein Orchestrator entscheidet während der Ausführung, welche Teams an der Aufgabe arbeiten, und führt ihre Ergebnisse zusammen. Jedes Team ist ein eigener Workflow."
   },
   "architect": {
     "open": "Lass den KI-Workflow-Architekten aus einer Beschreibung einen neuen Workflow entwerfen oder diesen überarbeiten. Du prüfst den Entwurf, bevor sich etwas ändert.",

@@ -13,6 +13,8 @@
   "noMatch": "Nenhum exemplo corresponde à busca e à categoria.",
   "agents_one": "{{count}} agente",
   "agents_other": "{{count}} agentes",
+  "teams_one": "{{count}} equipe",
+  "teams_other": "{{count}} equipes",
   "sensitive": "Exige revisão especializada",
   "copy": "Copiar para meus workflows",
   "copied": "“{{name}}” criado como cópia sua",
@@ -31,7 +33,8 @@
   "pattern": {
     "sequential": "Sequencial",
     "parallel": "Paralelo",
-    "branching": "Ramificado"
+    "branching": "Ramificado",
+    "adaptive": "Adaptativo"
   },
   "feature": {
     "tools": "Ferramentas",
@@ -45,7 +48,13 @@
     "files": "Arquivos de resultado",
     "documents": "Arquivos como entrada",
     "proposals": "Propostas de conhecimento",
-    "memory": "Memória"
+    "memory": "Memória",
+    "orchestrator": "Orquestrador",
+    "knowledge": "Conhecimento",
+    "integration": "Conexão opcional",
+    "loop": "Loop",
+    "budget": "Orçamento",
+    "contract": "Contrato de resultado"
   },
   "role": {
     "research": "Pesquisa",
@@ -59,7 +68,9 @@
     "flow": "Como os agentes trabalham juntos",
     "input": "Entrada",
     "result": "Resultado",
-    "adapt": "Como adaptar"
+    "adapt": "Como adaptar",
+    "control": "Quem decide o quê",
+    "why": "Por que esta arquitetura"
   },
   "preview": {
     "loading": "Carregando exemplo …",
@@ -77,6 +88,38 @@
     "samplesNote": "Arquivos pequenos e inventados para testar os campos de arquivo. Baixe-os e selecione-os ao executar o workflow.",
     "tests": "Casos de teste",
     "copyTests": "Adicionar os casos de teste como série de testes",
-    "copyTestsNote": "Cria uma série de testes com estes casos. Nada é executado, nenhum agendamento é criado e nenhuma API é publicada."
+    "copyTestsNote": "Cria uma série de testes com estes casos. Nada é executado, nenhum agendamento é criado e nenhuma API é publicada.",
+    "features": "Componentes",
+    "budget": "Orçamento por execução: {{amount}}",
+    "orchestratorNote": "Não trabalha na tarefa diretamente: decide durante a execução quais equipes trabalham nela e reúne os resultados.",
+    "searches": "Pesquisa em: {{names}}",
+    "connection": "Com conexão: {{names}}",
+    "teams": "Equipes",
+    "teamsNote": "O orquestrador escolhe durante a execução as equipes adequadas à tarefa. Ao copiar o exemplo, cada equipe vira um workflow próprio que você pode editar.",
+    "teamApproval": "Para para uma aprovação",
+    "capabilities": "Capacidades",
+    "teamAgents": "Agentes: {{names}}",
+    "teamParameters": "Configurações que o orquestrador pode preencher: {{names}}",
+    "teamContract": "Entrega: {{names}}",
+    "knowledge": "Arquivos de conhecimento",
+    "knowledgeNote": "São criados na sua base de conhecimento ao copiar. Os documentos são inventados; os agentes pesquisam neles e citam as fontes.",
+    "copyTestsConnected": "Não é possível com uma conexão: séries de testes rodam sem uma pessoa, e ferramentas MCP não são permitidas nelas. Escolha o modo offline para adotar os casos de teste."
+  },
+  "connect": {
+    "title_one": "Conexão opcional",
+    "title_other": "Conexões opcionais",
+    "intro": "O exemplo funciona sem conexão: a cópia roda então em um modo offline claramente identificado, com os dados de exemplo. Com uma conexão, os agentes leem dados por meio de ferramentas somente leitura aprovadas de um servidor MCP.",
+    "optional": "Conexão opcional",
+    "tools": "Ferramentas necessárias (aprovadas como somente leitura): {{tools}}",
+    "setup": "Como configurar",
+    "offline": "Sem conexão",
+    "choice": "Conexão para a cópia",
+    "offlineMode": "Modo offline (dados de exemplo)",
+    "server": "Servidor MCP: {{name}}",
+    "checked": "Ao copiar, o Nodestro verifica se este servidor oferece cada ferramenta aprovada como somente leitura. Se não, nada é copiado.",
+    "missing": "Ausente ou não aprovada: {{tools}}",
+    "notReadOnly": "Não aprovada como somente leitura: {{tools}}",
+    "noServers": "Ainda não há nenhum servidor MCP configurado, por isso a cópia roda no modo offline.",
+    "setUp": "Configurar serviços conectados"
   }
 }

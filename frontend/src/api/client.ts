@@ -33,6 +33,7 @@ import type {
   ExportedDependencies,
   PythonEnvironment,
   PythonStatus,
+  ExampleCopyRequest,
   ExampleDetail,
   ExampleSummary,
   KnowledgeFile,
@@ -253,8 +254,7 @@ export const api = {
   examples: (language: string) => request<ExampleSummary[]>("GET", `/library${q({ language })}`),
   example: (id: string, language: string) => request<ExampleDetail>("GET", `/library/${id}${q({ language })}`),
   /** An independent, editable copy of an example; the example itself never changes. */
-  copyExample: (id: string, language: string, tests: boolean) =>
-    request<Workflow>("POST", `/library/${id}/copy`, { language, tests }),
+  copyExample: (id: string, body: ExampleCopyRequest) => request<Workflow>("POST", `/library/${id}/copy`, body),
   exampleSampleUrl: (id: string, sampleId: string, language: string) =>
     `/api/library/${id}/samples/${sampleId}?language=${encodeURIComponent(language)}`,
   /** ``workflowId`` names the stored workflow (for its Python environment). */

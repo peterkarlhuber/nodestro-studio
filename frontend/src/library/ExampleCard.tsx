@@ -1,18 +1,29 @@
-import { GitBranch, GitFork, ShieldAlert, Workflow } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { ExampleFeature, ExampleSummary } from "../api/types";
 import { Badge, Hint } from "../components/ui";
-import { CATEGORY_ICONS } from "./examples";
+import { CATEGORY_ICONS, PATTERN_ICONS } from "./examples";
 
 /** Features worth a badge on the card (the building blocks beyond plain agents). */
-const FLOW_FEATURES: ExampleFeature[] = ["decision", "approval", "form", "subworkflow", "files", "documents"];
+const FLOW_FEATURES: ExampleFeature[] = [
+  "orchestrator",
+  "decision",
+  "approval",
+  "loop",
+  "form",
+  "subworkflow",
+  "knowledge",
+  "integration",
+  "files",
+  "documents",
+];
 
 /** A gallery card; clicking it opens the preview (which costs nothing). */
 export function ExampleCard({ example, onOpen }: { example: ExampleSummary; onOpen: (id: string) => void }) {
   const { t } = useTranslation();
   const Icon = CATEGORY_ICONS[example.category];
-  const PatternIcon = example.pattern === "parallel" ? GitFork : example.pattern === "branching" ? GitBranch : Workflow;
+  const PatternIcon = PATTERN_ICONS[example.pattern];
   const shown = example.features.filter((feature) => FLOW_FEATURES.includes(feature));
   return (
     <article className="card card--link example-card" data-testid={`example-${example.id}`}>
@@ -39,7 +50,8 @@ export function ExampleCard({ example, onOpen }: { example: ExampleSummary; onOp
       </button>
       <footer className="card__foot example-card__foot">
         <span className="muted small">
-          {t("library.agents", { count: example.agents })} · {t(`library.level.${example.level}`)}
+          {t("library.agents", { count: example.agents })}
+          {example.teams ? <> · {t("library.teams", { count: example.teams })}</> : null} · {t(`library.level.${example.level}`)}
         </span>
         <div className="row-gap">
           <Hint id={`library.${example.pattern}`}>

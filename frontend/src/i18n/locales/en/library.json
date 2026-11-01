@@ -13,6 +13,8 @@
   "noMatch": "No example matches the search and category.",
   "agents_one": "{{count}} agent",
   "agents_other": "{{count}} agents",
+  "teams_one": "{{count}} team",
+  "teams_other": "{{count}} teams",
   "sensitive": "Needs expert check",
   "copy": "Copy to my workflows",
   "copied": "“{{name}}” created as your own copy",
@@ -31,7 +33,8 @@
   "pattern": {
     "sequential": "Sequential",
     "parallel": "Parallel",
-    "branching": "Branching"
+    "branching": "Branching",
+    "adaptive": "Adaptive"
   },
   "feature": {
     "tools": "Tools",
@@ -45,7 +48,13 @@
     "files": "Result files",
     "documents": "Files as input",
     "proposals": "Knowledge proposals",
-    "memory": "Memory"
+    "memory": "Memory",
+    "orchestrator": "Orchestrator",
+    "knowledge": "Knowledge",
+    "integration": "Optional connection",
+    "loop": "Loop",
+    "budget": "Budget",
+    "contract": "Output contract"
   },
   "role": {
     "research": "Research",
@@ -59,7 +68,9 @@
     "flow": "How the agents work together",
     "input": "Input",
     "result": "Result",
-    "adapt": "Adapting it"
+    "adapt": "Adapting it",
+    "control": "Who decides what",
+    "why": "Why this architecture"
   },
   "preview": {
     "loading": "Loading example …",
@@ -77,6 +88,38 @@
     "samplesNote": "Small invented files for trying out the file fields. Download them and pick them when you run the workflow.",
     "tests": "Test cases",
     "copyTests": "Add the test cases as a test series",
-    "copyTestsNote": "Creates a test series with these cases. Nothing is run, no schedule is created and no API is published."
+    "copyTestsNote": "Creates a test series with these cases. Nothing is run, no schedule is created and no API is published.",
+    "features": "Building blocks",
+    "budget": "Budget per run: {{amount}}",
+    "orchestratorNote": "Does not work on the task itself: it decides at run time which teams work on it and combines their results.",
+    "searches": "Searches: {{names}}",
+    "connection": "With a connection: {{names}}",
+    "teams": "Teams",
+    "teamsNote": "The orchestrator picks the teams that fit the task while it runs. When you copy the example, every team becomes a workflow of its own that you can edit.",
+    "teamApproval": "Stops for an approval",
+    "capabilities": "Capabilities",
+    "teamAgents": "Agents: {{names}}",
+    "teamParameters": "Settings the orchestrator can fill in: {{names}}",
+    "teamContract": "Delivers: {{names}}",
+    "knowledge": "Knowledge files",
+    "knowledgeNote": "Created in your knowledge base when you copy. The documents are invented; the agents search them and name their sources.",
+    "copyTestsConnected": "Not possible with a connection: test series run without a person, and MCP tools are not allowed there. Choose offline mode to take over the test cases."
+  },
+  "connect": {
+    "title_one": "Optional connection",
+    "title_other": "Optional connections",
+    "intro": "The example works without a connection: the copy then runs in a clearly labelled offline mode with the sample data. With a connection, agents read data through approved read-only tools of an MCP server.",
+    "optional": "Optional connection",
+    "tools": "Tools it needs (approved as read-only): {{tools}}",
+    "setup": "How to set it up",
+    "offline": "Without a connection",
+    "choice": "Connection for the copy",
+    "offlineMode": "Offline mode (sample data)",
+    "server": "MCP server: {{name}}",
+    "checked": "When you copy, Nodestro checks that this server offers every tool approved as read-only. If not, nothing is copied.",
+    "missing": "Missing or not approved: {{tools}}",
+    "notReadOnly": "Not approved as read-only: {{tools}}",
+    "noServers": "No MCP server is set up yet, so the copy runs in offline mode.",
+    "setUp": "Set up connected services"
   }
 }

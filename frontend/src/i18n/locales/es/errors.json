@@ -7,6 +7,11 @@
   "not_found": "No se ha encontrado «{{name}}». Puede que se haya eliminado entretanto.",
   "api_key_missing": "No hay clave de API para {{provider}}. Introdúcela en los ajustes o define su variable de entorno.",
   "library": "La biblioteca de agentes ha rechazado la configuración.",
+  "examples": {
+    "integration_unavailable": "El servidor MCP elegido no puede atender esta conexión: debe ofrecer cada herramienta que necesita el ejemplo, aprobada como de solo lectura. No se ha copiado nada.",
+    "integration_unknown": "El ejemplo no tiene la conexión «{{integration}}». Recarga la página e inténtalo de nuevo.",
+    "tests_need_offline": "Las series de pruebas se ejecutan sin una persona y no pueden usar herramientas MCP. Copia el ejemplo en modo sin conexión para adoptar sus casos de prueba."
+  },
   "agentFailed": "El agente se ha detenido con un error ({{type}}).",
   "file": {
     "not_json": "El archivo no es un JSON válido.",

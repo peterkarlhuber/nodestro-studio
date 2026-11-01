@@ -13,6 +13,8 @@
   "noMatch": "Kein Beispiel passt zu Suche und Kategorie.",
   "agents_one": "{{count}} Agent",
   "agents_other": "{{count}} Agenten",
+  "teams_one": "{{count}} Team",
+  "teams_other": "{{count}} Teams",
   "sensitive": "Fachlich prüfen",
   "copy": "Als Kopie übernehmen",
   "copied": "„{{name}}“ als eigene Kopie angelegt",
@@ -31,7 +33,8 @@
   "pattern": {
     "sequential": "Sequenziell",
     "parallel": "Parallel",
-    "branching": "Verzweigt"
+    "branching": "Verzweigt",
+    "adaptive": "Adaptiv"
   },
   "feature": {
     "tools": "Tools",
@@ -45,7 +48,13 @@
     "files": "Ergebnisdateien",
     "documents": "Dateien als Eingabe",
     "proposals": "Wissensvorschläge",
-    "memory": "Gedächtnis"
+    "memory": "Gedächtnis",
+    "orchestrator": "Orchestrator",
+    "knowledge": "Wissen",
+    "integration": "Optionale Verbindung",
+    "loop": "Schleife",
+    "budget": "Budget",
+    "contract": "Ergebnisvertrag"
   },
   "role": {
     "research": "Recherche",
@@ -59,7 +68,9 @@
     "flow": "So arbeiten die Agenten zusammen",
     "input": "Eingabe",
     "result": "Ergebnis",
-    "adapt": "Anpassen"
+    "adapt": "Anpassen",
+    "control": "Wer entscheidet was",
+    "why": "Warum diese Architektur"
   },
   "preview": {
     "loading": "Beispiel wird geladen …",
@@ -77,6 +88,38 @@
     "samplesNote": "Kleine erfundene Dateien zum Ausprobieren der Datei-Felder. Lade sie herunter und wähle sie beim Ausführen aus.",
     "tests": "Testfälle",
     "copyTests": "Testfälle als Testreihe übernehmen",
-    "copyTestsNote": "Legt eine Testreihe mit diesen Fällen an. Nichts wird ausgeführt, kein Zeitplan angelegt und keine API veröffentlicht."
+    "copyTestsNote": "Legt eine Testreihe mit diesen Fällen an. Nichts wird ausgeführt, kein Zeitplan angelegt und keine API veröffentlicht.",
+    "features": "Bausteine",
+    "budget": "Budget pro Ausführung: {{amount}}",
+    "orchestratorNote": "Bearbeitet die Aufgabe nicht selbst: Er entscheidet während der Ausführung, welche Teams daran arbeiten, und führt ihre Ergebnisse zusammen.",
+    "searches": "Durchsucht: {{names}}",
+    "connection": "Mit Verbindung: {{names}}",
+    "teams": "Teams",
+    "teamsNote": "Der Orchestrator wählt während der Ausführung die Teams, die zur Aufgabe passen. Wenn du das Beispiel übernimmst, wird jedes Team ein eigener Workflow, den du bearbeiten kannst.",
+    "teamApproval": "Hält für eine Freigabe an",
+    "capabilities": "Fähigkeiten",
+    "teamAgents": "Agenten: {{names}}",
+    "teamParameters": "Einstellungen, die der Orchestrator ausfüllen kann: {{names}}",
+    "teamContract": "Liefert: {{names}}",
+    "knowledge": "Wissensdateien",
+    "knowledgeNote": "Werden beim Übernehmen in deiner Wissensbasis angelegt. Die Dokumente sind erfunden; die Agenten durchsuchen sie und nennen ihre Quellen.",
+    "copyTestsConnected": "Mit Verbindung nicht möglich: Testreihen laufen ohne Person, und MCP-Tools sind dort nicht erlaubt. Wähle den Offline-Modus, um die Testfälle zu übernehmen."
+  },
+  "connect": {
+    "title_one": "Optionale Verbindung",
+    "title_other": "Optionale Verbindungen",
+    "intro": "Das Beispiel funktioniert ohne Verbindung: Die Kopie läuft dann in einem deutlich gekennzeichneten Offline-Modus mit den Beispieldaten. Mit Verbindung lesen Agenten Daten über freigegebene, nur lesende Tools eines MCP-Servers.",
+    "optional": "Optionale Verbindung",
+    "tools": "Benötigte Tools (als nur lesend freigegeben): {{tools}}",
+    "setup": "So richtest du sie ein",
+    "offline": "Ohne Verbindung",
+    "choice": "Verbindung für die Kopie",
+    "offlineMode": "Offline-Modus (Beispieldaten)",
+    "server": "MCP-Server: {{name}}",
+    "checked": "Beim Übernehmen prüft Nodestro, ob dieser Server jedes Tool als nur lesend freigegeben anbietet. Wenn nicht, wird nichts kopiert.",
+    "missing": "Fehlt oder nicht freigegeben: {{tools}}",
+    "notReadOnly": "Nicht als nur lesend freigegeben: {{tools}}",
+    "noServers": "Es ist noch kein MCP-Server eingerichtet, daher läuft die Kopie im Offline-Modus.",
+    "setUp": "Verbundene Dienste einrichten"
   }
 }

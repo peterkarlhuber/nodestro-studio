@@ -87,24 +87,24 @@ Cada exemplo está na galeria e tem sua própria seção abaixo.
 | 3 | Comparar propostas de fornecedores | Logística e compras | 3 | paralelo |
 | 4 | Estratégia SWOT para uma pequena empresa | Empresas e PMEs | 4 | paralelo |
 | 5 | Análise financeira | Finanças e investimentos | 3 | sequencial |
-| 6 | Artigo de blog | Marketing e conteúdo | 4 | paralelo |
+| 6 | Artigo de blog | Marketing e conteúdo | 3 | sequencial |
 | 7 | Preparar uma proposta sob medida | Vendas | 3 | sequencial |
 | 8 | Responder solicitações de clientes | Atendimento ao cliente | 4 | com ramificações |
 | 9 | Divulgar uma vaga e preparar entrevistas | Recursos humanos | 5 | com ramificações |
-| 10 | Transformar uma pergunta de pesquisa em hipóteses | Pesquisa e desenvolvimento | 4 | sequencial |
+| 10 | Transformar uma pergunta de pesquisa em hipóteses | Pesquisa e desenvolvimento | 3 | adaptativo (orquestração) |
 | 11 | Revisão de código com testes | Desenvolvimento de software | 3 | paralelo |
 | 12 | Estruturar um contrato e encontrar pontos de verificação | Direito e administração | 5 | com ramificações |
 | 13 | Criar um plano de estudos pessoal | Educação e formação | 4 | paralelo |
 | 14 | Verificar o orçamento doméstico e economizar | Pessoas físicas – finanças | 3 | sequencial |
 | 15 | Planejar uma viagem pessoal | Pessoas físicas – viagens | 4 | com ramificações |
-| 16 | Avaliar uma ideia de negócio | Autônomos e empreendedores | 4 | paralelo |
+| 16 | Avaliar uma ideia de negócio | Autônomos e empreendedores | 2 | adaptativo (orquestração) |
 | 17 | Desenvolver uma estratégia para redes sociais | Influenciadores e criadores de conteúdo | 3 | sequencial |
 | 18 | Comparar ofertas de imóveis | Imóveis | 3 | paralelo |
-| 19 | Analisar atrasos de obra | Construção civil | 4 | paralelo |
+| 19 | Analisar atrasos de obra | Construção civil | 3 | adaptativo (orquestração) |
 | 20 | Desenvolver e precificar um cardápio | Gastronomia | 3 | sequencial |
 | 21 | Planejamento de culturas de uma propriedade | Agricultura | 3 | sequencial |
 | 22 | Planejar a festa de uma associação | Associações e clubes | 4 | paralelo |
-| 23 | Desenvolver uma campanha de doações | Organizações sem fins lucrativos | 3 | paralelo |
+| 23 | Desenvolver uma campanha de doações | Organizações sem fins lucrativos | 3 | com ramificações |
 | 24 | Responder a uma solicitação de cidadão | Instituições públicas | 3 | sequencial |
 
 ## 1 · Analisar paradas de máquina {#production-downtime}
@@ -130,43 +130,53 @@ Paradas custam tempo de produção, mas em registros longos os padrões passam d
 
 **Resultado:** Uma tabela priorizada com ações imediatas, verificações e ações permanentes, cada uma com efeito esperado, esforço, função responsável e indicador, além da análise dos dados com a participação das paradas e os três próximos passos mais importantes. A execução também salva tudo em Markdown e em um arquivo Excel com as tabelas.
 
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o analista de paradas confere cada número com a calculadora. Uma verificação de qualidade avalia o plano de ações por três critérios (ligação com as constatações, priorização, responsáveis e indicadores) e faz o planejador de ações revisá-lo uma vez se não os cumprir. Uma condição compara a participação das paradas com a meta de 3 %: acima dela, roda o subfluxo de garantia da qualidade (avaliação de riscos com um FMEA simplificado e plano de verificação); caso contrário, ele é pulado. A execução mostra qual ramo foi seguido. Nenhuma etapa espera por uma pessoa: as causas são hipóteses a verificar no chão de fábrica, e as ações são propostas para a gerência de produção responsável.
+
+**Por que esta arquitetura:** A avaliação quantitativa e a busca de causas olham o mesmo registro por ângulos diferentes e não dependem uma da outra; por isso rodam em paralelo, e só o planejador de ações as reúne. A garantia da qualidade só roda quando a meta não é atingida, porque só então são esperadas ações mais amplas cujos riscos precisam ser controlados; dentro da meta, ela só custaria tempo e dinheiro. Ela é um subfluxo para que o mesmo módulo possa ser reutilizado e testado separadamente. Não é preciso um orquestrador, porque todo registro de paradas precisa das mesmas etapas.
+
 **Como adaptar:** Coloque uma exportação do seu MES ou da sua planilha no campo de arquivo; registros longos também funcionam, porque os agentes leem arquivos grandes de forma direcionada. Para uma análise semanal, você pode agendar a cópia. No prompt de sistema do planejador de ações, você pode acrescentar a sua metodologia, por exemplo os pilares do TPM ou um esquema de avaliação fixo.
 
 ## 2 · Tratar uma reclamação com 8D {#quality-8d}
 <!-- keywords: gestão da qualidade, descrição do problema d1–d3, análise de causas d4, planejamento de ações d5–d7, relatório 8d, contenção de emergência -->
 
-**Área:** Gestão da qualidade · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, aprovação, formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento
+**Área:** Gestão da qualidade · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, aprovação, formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento, arquivos de conhecimento
 
-Reclamações exigem contenção rápida e uma análise de causa sólida. O método 8D define os passos; o workflow os percorre de forma estruturada e os documenta de maneira consistente.
+Reclamações exigem contenção rápida e uma análise de causa sólida. O método 8D define os passos; o workflow os percorre de forma estruturada e os documenta de maneira consistente. Ele também verifica se o defeito já ocorreu antes: uma causa que volta significa que uma ação corretiva anterior não funcionou, e isso precisa constar no relatório.
 
-**Como os agentes trabalham juntos:** Uma cadeia sequencial: o primeiro agente descreve o problema e as ações de contenção (D1 a D3), o segundo busca as causas de ocorrência e de não detecção (D4), o terceiro planeja ações corretivas e preventivas (D5 a D7). O agente de relatório reúne tudo em um relatório 8D estruturado. Um nó de decisão verifica a gravidade: em casos críticos, um agente adicional planeja a contenção de emergência das próximas 24 horas. Antes de o relatório ir para o cliente, uma pessoa o libera.
+**Como os agentes trabalham juntos:** Uma cadeia sequencial: o primeiro agente descreve o problema e as ações de contenção (D1 a D3). O segundo pesquisa casos comparáveis nos relatórios 8D anteriores da empresa e busca as causas de ocorrência e de não detecção (D4), indicando se uma causa é recorrente ou nova. O terceiro planeja ações corretivas e preventivas (D5 a D7). O agente de relatório reúne tudo em um relatório 8D estruturado. Um nó de decisão verifica a gravidade: em casos críticos, um agente adicional planeja a contenção de emergência das próximas 24 horas. Antes de o relatório ir para o cliente, uma pessoa o libera.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
 | **Descrição do problema D1–D3** | Descreve a equipe, o problema (é/não é) e as ações de contenção. (saída estruturada) | Reclamação |
-| **Análise de causas D4** | Busca as causas de ocorrência e de não detecção com os 5 porquês. | Descrição do problema D1–D3, Reclamação |
+| **Análise de causas D4** | Pesquisa relatórios 8D anteriores e busca com 5 porquês as causas de ocorrência e de não detecção. | Descrição do problema D1–D3, Reclamação |
 | **Planejamento de ações D5–D7** | Planeja ações corretivas, sua verificação e a prevenção. | Análise de causas D4 |
 | **Relatório 8D** | Reúne todas as etapas em um relatório 8D estruturado. (saída estruturada) | Descrição do problema D1–D3, Análise de causas D4, Planejamento de ações D5–D7, Contenção de emergência |
 | **Contenção de emergência** | Planeja a contenção das próximas 24 horas em casos críticos. | Gravidade |
 
-**Entrada:** A reclamação do cliente com peça, lote, defeito e taxa de defeitos, além das informações internas conhecidas sobre produção, material e inspeção. Você também pode anexar a carta de reclamação, dados de medição e fotos do defeito como arquivos; os arquivos de exemplo contêm uma carta de reclamação fictícia (PDF) e medições (Excel).
+**Entrada:** A reclamação do cliente com peça, lote, defeito e taxa de defeitos, além das informações internas conhecidas sobre produção, material e inspeção. Você também pode anexar a carta de reclamação, dados de medição e fotos do defeito como arquivos; os arquivos de exemplo contêm uma carta de reclamação fictícia (PDF) e medições (Excel). Os relatórios 8D anteriores vêm da coleção de conhecimento; um arquivo fictício com quatro relatórios encerrados está incluído.
 
 **Arquivos de exemplo:** `Reclamacao_G-220_lote_24-117.pdf`, `Medicoes_ganchos.xlsx`
 
 **Casos de teste:** Reclamação no texto; Carta de reclamação e medições como arquivos
 
-**Resultado:** Um relatório 8D estruturado com um campo para cada disciplina D1 a D8 e uma lista de pontos em aberto que a equipe ainda precisa esclarecer. Após a liberação, a execução salva o relatório em PDF e como arquivo Word editável. O agente de relatório também propõe aprendizados para o conhecimento; só é salvo o que você adotar explicitamente.
+**Resultado:** Um relatório 8D estruturado com um campo para cada disciplina D1 a D8 e uma lista de pontos em aberto que a equipe ainda precisa esclarecer; a análise de causas cita os relatórios anteriores em que se apoia. Após a liberação, a execução salva o relatório em PDF e como arquivo Word editável. Assim se fecha o ciclo de aprendizado: o agente de relatório propõe o relatório 8D concluído para o conhecimento, uma pessoa decide se ele é salvo, e os relatórios salvos vão para a mesma coleção dos relatórios anteriores, de modo que a análise de causas os encontra em casos futuros.
 
-**Como adaptar:** Substitua os dados de teste pela sua reclamação e anexe diretamente registros de inspeção, desenhos ou fotos. Se você usa um formulário próprio, ajuste os campos do agente de relatório em "Formato de saída". Aprendizados adotados de reclamações anteriores podem ser atribuídos como conhecimento à análise de causas.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o nó de decisão só acrescenta a contenção de emergência quando a descrição do problema classifica o caso como crítico; a análise de causas decide quais relatórios anteriores são relevantes e os cita, de modo que cada referência pode ser conferida. Não há loops; cada etapa roda uma vez. Uma pessoa decide duas vezes: antes de os arquivos serem criados, alguém libera o relatório 8D (rejeitá-lo encerra a execução sem arquivos), e uma pessoa decide se o relatório concluído é salvo como conhecimento. Até a liberação, o relatório continua sendo um rascunho.
+
+**Por que esta arquitetura:** O 8D define uma ordem fixa em que cada disciplina se apoia na anterior; por isso uma cadeia sequencial combina melhor do que um orquestrador, e só a contenção de emergência depende do caso e é uma ramificação. Os relatórios anteriores são conhecimento pesquisável em vez de texto no prompt: o arquivo cresce a cada caso salvo, a pesquisa traz apenas os trechos relevantes e as citações mostram de onde vem uma causa recorrente. Um loop de revisão foi deixado de fora de propósito, porque a liberação por uma pessoa no final revisa o relatório inteiro de qualquer forma.
+
+**Arquivos de conhecimento (sintéticos, criados ao copiar):** Relatorios_8D_anteriores_Plastiform: Arquivo fictício com quatro relatórios 8D encerrados do fornecedor de carcaças plásticas Plastiform Ltda.; um deles é um caso comparável.
+
+**Como adaptar:** Substitua os dados de teste pela sua reclamação e anexe diretamente registros de inspeção, desenhos ou fotos. Substitua os relatórios anteriores fictícios da coleção de conhecimento pelos seus próprios relatórios 8D encerrados (Markdown, PDF ou Word); títulos claros com peça, defeito e causa em cada relatório tornam a pesquisa mais precisa. Se você usa um formulário próprio, ajuste os campos do agente de relatório em "Formato de saída".
 
 ## 3 · Comparar propostas de fornecedores {#supplier-comparison}
 <!-- keywords: logística e compras, analista de custos, analista de riscos, recomendação de compra -->
 
-**Área:** Logística e compras · **Agentes:** 3 · **Padrão:** paralelo · **Nível:** Avançado · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada
+**Área:** Logística e compras · **Agentes:** 3 · **Padrão:** paralelo · **Nível:** Avançado · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada, conexão MCP opcional
 
-O menor preço unitário raramente é a proposta mais barata. O workflow compara propostas por custo total e risco de fornecimento e justifica uma recomendação para compras.
+O menor preço unitário raramente é a proposta mais barata, e as promessas de um fornecedor não são o seu histórico. O workflow compara propostas por custo total e risco de fornecimento, verifica o histórico dos fornecedores quando ele existe e justifica uma recomendação para compras.
 
-**Como os agentes trabalham juntos:** O analista de custos e o analista de riscos trabalham em paralelo. Um calcula o custo total de propriedade por proposta com a calculadora, o outro avalia prazo de entrega, dependências e qualidade. A recomendação de compra pondera os dois e entrega um resultado estruturado.
+**Como os agentes trabalham juntos:** O analista de custos e o analista de riscos trabalham em paralelo. Um calcula o custo total de propriedade por proposta com a calculadora, o outro avalia prazo de entrega, dependências, capacidade e qualidade. Se a sua cópia estiver conectada ao ERP, o analista de riscos lê a avaliação de cada fornecedor, apenas para leitura, com list_suppliers e supplier_scorecard; sem conexão, usa uma exportação do ERP anexada ou só as propostas e diz qual histórico falta. A recomendação de compra pondera os dois e entrega um resultado estruturado.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
@@ -174,15 +184,25 @@ O menor preço unitário raramente é a proposta mais barata. O workflow compara
 | **Analista de riscos** | Avalia riscos de prazo, dependência, capacidade e qualidade. | Propostas |
 | **Recomendação de compra** | Pondera custos e riscos e recomenda um fornecedor. (saída estruturada) | Analista de custos, Analista de riscos |
 
-**Entrada:** Várias propostas com preço, frete, prazo de entrega, quantidade mínima, condições de pagamento e dados de qualidade, além dos seus custos internos. Você pode escrever as propostas no texto ou anexá-las como arquivos, inclusive misturando PDF, Word e Excel; os três arquivos de exemplo mostram exatamente isso.
+**Entrada:** Várias propostas com preço, frete, prazo de entrega, quantidade mínima, condições de pagamento e dados de qualidade, além dos seus custos internos. Você pode escrever as propostas no texto ou anexá-las como arquivos, inclusive misturando PDF, Word e Excel; os três arquivos de exemplo mostram exatamente isso. Opcionalmente, anexe uma exportação do ERP com a avaliação de fornecedores (Excel ou CSV); na exportação de exemplo falta de propósito o fornecedor da proposta B, que é novo e ainda não tem histórico.
 
-**Arquivos de exemplo:** `Proposta_A_Exemplo_Precisao.pdf`, `Proposta_B_Exemplo_Componentes.docx`, `Proposta_C_Amostra_Pecas_Metalicas.xlsx`
+**Arquivos de exemplo:** `Proposta_A_Exemplo_Precisao.pdf`, `Proposta_B_Exemplo_Componentes.docx`, `Proposta_C_Amostra_Pecas_Metalicas.xlsx`, `ERP_avaliacao_fornecedores.xlsx`
 
-**Casos de teste:** Três propostas no texto; Três propostas em PDF, Word e Excel
+**Casos de teste:** Três propostas no texto; Três propostas em PDF, Word e Excel; Três propostas como arquivos mais exportação do ERP
 
-**Resultado:** Uma recomendação estruturada com classificação, justificativas, riscos, pontos de negociação e premissas usadas. A execução também a salva como relatório em PDF e como arquivo Excel com uma planilha por lista.
+**Resultado:** Uma recomendação estruturada com classificação, justificativas, riscos, pontos de negociação e premissas usadas. A avaliação de riscos informa, para cada fornecedor, de onde vem o seu histórico: do ERP, da exportação anexada ou só da proposta. A execução também salva a recomendação como relatório em PDF e como arquivo Excel com uma planilha por lista.
 
-**Como adaptar:** Anexe as suas propostas como arquivos e informe a demanda e os custos no texto. Se você tem pesos fixos (por exemplo 50 % custo, 30 % risco, 20 % qualidade), acrescente-os no prompt de sistema da recomendação de compra. Contratos-quadro ou avaliações de fornecedores podem ser salvos como conhecimento e atribuídos ao analista de riscos.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: as duas análises e a ponderação rodam sem pausa; a calculadora faz as contas, e a execução registra cada etapa e cada chamada de ferramenta. A conexão com o ERP é opcional e só lê: a cópia recebe as ferramentas list_suppliers e supplier_scorecard somente se você a conectar a um servidor MCP cujas ferramentas um administrador aprovou como somente leitura; caso contrário, ela roda em um modo offline claramente identificado e nunca finge ter dados do ERP. Execuções sem uma pessoa presente (agendamentos, séries de testes, processamento em lote) não podem usar ferramentas MCP, a menos que um administrador permita expressamente o MCP sem supervisão; por isso, use uma cópia conectada de forma interativa. Nenhuma etapa aguarda aprovação: a recomendação é um rascunho, e a decisão de compra continua sendo sua.
+
+**Por que esta arquitetura:** Custo e risco são questões independentes, por isso dois especialistas trabalham em paralelo e um terceiro pondera os resultados; é mais rápido e mais fácil de conferir do que um único agente para tudo. O histórico dos fornecedores vem por uma integração porque está no ERP e muda o tempo todo; um arquivo de conhecimento ficaria desatualizado, e o modo offline com uma exportação mantém o exemplo utilizável sem conexão. Não há laço nem etapa de aprovação porque o resultado é uma recomendação, não uma ação.
+
+**Conexão opcional: ERP (avaliação de fornecedores)** (Ferramentas: `list_suppliers`, `supplier_scorecard`). Acesso somente leitura via MCP aos dados de fornecedores do seu ERP: list_suppliers lista os fornecedores, supplier_scorecard retorna a avaliação de um fornecedor dos últimos 12 meses (pontualidade, qualidade em ppm, reclamações, relatórios 8D abertos, última auditoria). O analista de riscos a usa para confrontar as propostas com o histórico registrado.
+
+**Configuração:** Um administrador adiciona o servidor MCP do ERP da sua empresa em Ferramentas → Serviços conectados e aprova as duas ferramentas list_suppliers e supplier_scorecard como somente leitura. Ao copiar o exemplo, você escolhe esse servidor como conexão; sem conexão, a cópia roda no modo offline. Para testar sem ERP, execute `python -m nodestro_examples.demo_mcp --language pt-BR` no computador com o aplicativo desktop do Nodestro, adicione http://127.0.0.1:8765/mcp em Ferramentas → Serviços conectados com o consentimento para um servidor de desenvolvimento local, aprove as ferramentas dele como somente leitura e escolha-o ao copiar. O servidor de demonstração só lê e fornece os dados sintéticos da exportação de exemplo, nunca dados reais de empresa. Execuções sem uma pessoa presente (agendamentos, séries de testes, processamento em lote) não podem usar ferramentas MCP, a menos que um administrador permita expressamente o MCP sem supervisão.
+
+**Sem conexão:** Modo offline: nenhum ERP está conectado. O analista de riscos usa somente uma exportação do ERP anexada ou as propostas e aponta o histórico de fornecedores que falta; ele não consulta nada.
+
+**Como adaptar:** Anexe as suas propostas como arquivos e informe a demanda e os custos no texto. Para usar o histórico real dos fornecedores, peça a configuração da integração com o ERP e escolha o servidor ao copiar o exemplo; caso contrário, anexe uma exportação da avaliação de fornecedores. Se você tem pesos fixos (por exemplo 50 % custo, 30 % risco, 20 % qualidade), acrescente-os no prompt de sistema da recomendação de compra. Contratos-quadro podem ser salvos como conhecimento e atribuídos ao analista de riscos.
 
 ## 4 · Estratégia SWOT para uma pequena empresa {#sme-swot}
 <!-- keywords: empresas e pmes, análise interna, análise do ambiente, desenvolvedor de estratégia, revisor crítico -->
@@ -205,6 +225,10 @@ Muitas pequenas empresas conhecem seus problemas, mas não a melhor ordem para e
 **Casos de teste:** Marcenaria com sucessão não definida
 
 **Resultado:** Uma matriz SWOT com estratégias derivadas e um plano de 90 dias, além de uma revisão crítica estruturada com parecer, pontos fracos, informações ausentes e próximos passos.
+
+**O que é decidido automaticamente e quando uma pessoa intervém:** Tudo roda automaticamente e nenhuma etapa espera por uma pessoa. O revisor crítico recebe a estratégia e o perfil original da empresa e devolve um parecer estruturado com pontos sólidos, pontos fracos, informações que faltam e próximos passos; ele não devolve a estratégia para revisão, de modo que a sua crítica fica visível no resultado. A análise do ambiente não pesquisa na web: trabalha com o perfil e com conhecimento geral do setor e marca o que precisa ser verificado localmente. A estratégia e o plano de 90 dias são um rascunho para a sua própria decisão.
+
+**Por que esta arquitetura:** Forças e fraquezas vêm de dentro da empresa, oportunidades e ameaças vêm do mercado; as duas análises não dependem uma da outra e por isso rodam em paralelo. A estratégia precisa de ambas e vem depois como etapa fixa. O revisor é um agente separado que também vê o perfil original, então confronta a estratégia com os fatos, e não só com o próprio raciocínio dela. Um ciclo de revisão foi deixado de fora de propósito: uma estratégia não deve ser polida até o revisor concordar, porque contradições em aberto são informação valiosa para quem decide.
 
 **Como adaptar:** Descreva sua empresa no mesmo estilo. Quanto mais precisos os números e as metas, mais concreta a estratégia. Você pode carregar estudos setoriais ou pesquisas com clientes como conhecimento e atribuí-los à análise do ambiente.
 
@@ -233,22 +257,25 @@ Números de relatórios anuais são citados rapidamente, mas raramente recalcula
 
 **Resultado:** Uma revisão estruturada com resumo, principais indicadores, erros ou riscos encontrados, limites da análise e a indicação se a análise é considerada correta, também em PDF e como arquivo Excel. O agente de pesquisa propõe os números extraídos para o conhecimento; só é adotado o que você confirmar. O resultado não é recomendação de investimento.
 
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o agente de pesquisa extrai os números, o agente de análise calcula cada indicador com a calculadora e o agente de revisão confere cálculos e lógica com base nos números extraídos. O seu parecer sim/não diz se a análise é considerada correta; esse parecer não interrompe a execução nem dispara um novo cálculo, de modo que os erros encontrados continuam visíveis no resultado. Sobre o conhecimento decide uma pessoa: os números extraídos só são adotados se você os confirmar. O resultado não é recomendação de investimento; antes de decisões, alguém responsável pelos números deve conferi-lo.
+
+**Por que esta arquitetura:** Cada etapa precisa do resultado da anterior: sem números limpos não há indicadores corretos, e sem indicadores não há o que revisar. Por isso uma cadeia estrita funciona melhor do que trabalho em paralelo ou um orquestrador. Calcular com a calculadora em vez do modelo de linguagem e ter a revisão feita por um agente separado evitam indicadores que parecem plausíveis, mas estão errados. A revisão também recebe os números extraídos e pode, assim, rastrear cada indicador até a sua fonte.
+
 **Como adaptar:** Anexe diretamente o relatório anual ou a sua tabela de indicadores. Outros indicadores, como alavancagem ou fluxo de caixa livre, são acrescentados no prompt de sistema do agente de análise. Para muitas empresas em sequência, use o processamento em lote com uma linha por empresa.
 
 ## 6 · Artigo de blog {#blog-article}
-<!-- keywords: marketing e conteúdo, público, estrutura, redator, revisão -->
+<!-- keywords: marketing e conteúdo, briefing, redator, revisão -->
 
-**Área:** Marketing e conteúdo · **Agentes:** 4 · **Padrão:** paralelo · **Nível:** Iniciante · **Elementos:** arquivos de resultado
+**Área:** Marketing e conteúdo · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Iniciante · **Elementos:** arquivos de resultado
 
-Bons artigos nascem de um público claro e de uma estrutura bem pensada. O workflow divide o trabalho como uma redação e verifica o resultado antes da publicação.
+Bons artigos nascem de um briefing claro: quem vai ler, de qual ângulo e com quais mensagens-chave. O workflow trabalha como uma pequena redação e verifica o resultado antes da publicação.
 
-**Como os agentes trabalham juntos:** Público e estrutura são criados em paralelo com um modelo rápido. O redator transforma os dois no artigo; uma verificação de qualidade integrada garante que ele siga a estrutura e responda às perguntas dos leitores. A revisão verifica extensão e legibilidade com a ferramenta de estatísticas de texto e marca afirmações não verificadas.
+**Como os agentes trabalham juntos:** Um modelo rápido cria um briefing estruturado com público, abordagem, estrutura e mensagens-chave. O redator transforma o briefing no artigo; uma verificação de qualidade integrada garante que ele siga a estrutura e responda às perguntas dos leitores e, caso contrário, o devolve uma vez para revisão. Uma revisão rápida verifica extensão e legibilidade com a ferramenta de estatísticas de texto e marca afirmações não verificadas.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
-| **Público** | Descreve os leitores, suas perguntas e o que já sabem. | Tema |
-| **Estrutura** | Cria o título e a estrutura. | Tema |
-| **Redator** | Escreve o artigo a partir da estrutura e do público. (com verificação de qualidade) | Público, Estrutura |
+| **Briefing** | Define público, abordagem, estrutura e mensagens-chave em um briefing estruturado. (saída estruturada) | Tema |
+| **Redator** | Escreve o artigo a partir do briefing. (com verificação de qualidade) | Briefing |
 | **Revisão** | Verifica extensão e legibilidade e entrega a versão final. (Ferramentas: `text_statistics`) | Redator |
 
 **Entrada:** Um tema em uma frase. Opcionalmente, acrescente o público, o tom ou a extensão desejada diretamente na entrada.
@@ -257,22 +284,26 @@ Bons artigos nascem de um público claro e de uma estrutura bem pensada. O workf
 
 **Resultado:** Um artigo pronto em Markdown com títulos, uma meta descrição e breves notas de revisão com a contagem de palavras e indicações de afirmações que devem ser comprovadas antes da publicação. A execução também salva o resultado como arquivo Markdown e HTML, que você pode levar para o seu CMS.
 
-**Como adaptar:** Mude o tema na entrada. Você pode carregar seu guia de estilo como conhecimento e atribuí-lo ao redator e à revisão. Defina a extensão desejada no prompt de sistema do redator.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: briefing, artigo e revisão rodam um após o outro; nenhuma etapa espera por uma pessoa. Uma verificação de qualidade separada avalia o artigo por dois critérios (segue a estrutura, responde às perguntas dos leitores) e, se um deles não for atendido, faz o redator revisá-lo uma vez. A revisão não muda o conteúdo; ela marca as afirmações que precisam de fonte. O artigo é um rascunho: você decide se e onde ele será publicado.
+
+**Por que esta arquitetura:** Um único briefing estruturado substitui dois planejadores em paralelo cujos resultados o redator precisava conciliar: antes, a estrutura era criada sem conhecer o público. Agora público, abordagem, estrutura e mensagens-chave vêm da mesma ideia e chegam ao redator como campos bem separados. O redator tem uma verificação de qualidade com revisão automática porque é ali que surge a maioria das falhas. Como exemplo para iniciantes, o workflow continua sendo de propósito uma cadeia curta, sem ramificações, loops ou aprovações, para que cada etapa possa ser acompanhada na execução.
+
+**Como adaptar:** Mude o tema na entrada. Você pode carregar seu guia de estilo como conhecimento e atribuí-lo ao redator e à revisão. Defina a extensão desejada no prompt de sistema do redator e o número de seções ou de mensagens-chave no prompt de sistema do briefing.
 
 ## 7 · Preparar uma proposta sob medida {#sales-offer}
 <!-- keywords: vendas, analista de necessidades, consultor de soluções, redator da proposta -->
 
-**Área:** Vendas · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Avançado · **Elementos:** aprovação, formulário de entrada, arquivos de resultado, arquivos como entrada
+**Área:** Vendas · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Avançado · **Elementos:** aprovação, ciclo de revisão, formulário de entrada, arquivos de resultado, arquivos como entrada
 
-Uma boa proposta responde à necessidade real do cliente, não só às palavras-chave dele. O workflow esclarece a necessidade, calcula uma solução adequada e redige uma proposta completa.
+Uma boa proposta responde à necessidade real do cliente, não só às palavras-chave dele. O workflow esclarece a necessidade, calcula uma solução adequada e redige uma proposta completa que uma pessoa aprova.
 
-**Como os agentes trabalham juntos:** O analista de necessidades separa requisitos explícitos e implícitos e reúne perguntas em aberto. O consultor de soluções monta itens da tabela de preços e calcula com a calculadora, incluindo uma variante dentro do orçamento. O redator da proposta redige a proposta; uma verificação de qualidade integrada confere completude e preços. Um formulário de entrada recebe os dados principais (cliente, prazo, orçamento, montagem no fim de semana); antes do envio, uma pessoa aprova a proposta.
+**Como os agentes trabalham juntos:** O analista de necessidades separa requisitos explícitos e implícitos e reúne perguntas em aberto. O consultor de soluções monta itens da tabela de preços e calcula com a calculadora, incluindo uma variante dentro do orçamento. O redator da proposta redige a proposta; uma verificação de qualidade integrada confere completude e preços. Um formulário de entrada recebe os dados principais (cliente, prazo, orçamento, montagem no fim de semana). Depois uma pessoa aprova o rascunho; uma rejeição com comentário o devolve por um loop ao redator da proposta, que o revisa e o apresenta de novo.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
 | **Analista de necessidades** | Identifica requisitos explícitos e implícitos. | Solicitação do cliente |
 | **Consultor de soluções** | Monta itens adequados e calcula com a calculadora. (Ferramentas: `calculator`) | Analista de necessidades, Solicitação do cliente |
-| **Redator da proposta** | Redige o rascunho da proposta para o cliente. (com verificação de qualidade) | Analista de necessidades, Consultor de soluções |
+| **Redator da proposta** | Redige o rascunho da proposta para o cliente. (com verificação de qualidade; Ferramentas: `calculator`) | Analista de necessidades, Consultor de soluções |
 
 **Entrada:** A solicitação do cliente e a sua tabela de preços com descontos e condições. O formulário recebe os dados principais; a tabela de preços você pode escrever no texto ou anexar como arquivo Excel, CSV ou PDF, como mostra o arquivo de exemplo.
 
@@ -280,46 +311,60 @@ Uma boa proposta responde à necessidade real do cliente, não só às palavras-
 
 **Casos de teste:** Solicitação e tabela de preços no texto; Tabela de preços como arquivo Excel
 
-**Resultado:** Um rascunho de proposta com carta de apresentação, tabela de itens, totais, variantes, premissas e perguntas em aberto. Só depois da sua aprovação a execução salva a proposta em PDF e como arquivo Word editável.
+**Resultado:** Um rascunho de proposta com carta de apresentação, tabela de itens, totais, variantes, premissas e perguntas em aberto. Só depois da sua aprovação a execução salva a proposta em PDF e como arquivo Word editável; o envio ao cliente continua sendo com você.
+
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: análise de necessidades, cálculo e rascunho rodam sem espera; uma verificação de qualidade separada avalia a proposta por três critérios (todos os requisitos tratados, preços de acordo com o cálculo, pontos em aberto indicados) e, se necessário, faz revisá-la uma vez. Depois uma pessoa decide: a aprovação gera os arquivos; a rejeição exige um comentário e devolve a proposta ao redator junto com o rascunho anterior. O loop permite no máximo três rodadas de revisão; depois disso, a execução termina com falha. A análise de necessidades e o cálculo do consultor de soluções não são repetidos; se o comentário mudar quantidades, descontos ou itens de entrega, o redator da proposta recalcula os totais afetados com a calculadora. O workflow nunca envia nada ao cliente.
+
+**Por que esta arquitetura:** Toda solicitação precisa das mesmas etapas na mesma ordem, por isso uma cadeia fixa funciona melhor do que um orquestrador. Os preços são calculados com a calculadora em uma etapa própria, de modo que o redator pega dali os preços de tabela em vez de inventá-los. O loop na aprovação existe porque as rejeições costumam ser pequenas correções, como uma formulação, uma observação sobre desconto ou uma pergunta em aberto que faltou; revisar com o comentário é mais rápido do que recomeçar. Ele volta de propósito só ao redator da proposta, que recalcula com a calculadora quantidades ou descontos alterados, mas não acrescenta novos preços de tabela; assim a base conferida da solução se mantém.
 
 **Como adaptar:** Anexe a sua tabela de preços atual como arquivo; assim basta a solicitação do cliente como texto. Condições de pagamento e textos padrão são acrescentados no prompt de sistema do redator da proposta.
 
 ## 8 · Responder solicitações de clientes {#customer-service}
 <!-- keywords: atendimento ao cliente, classificador, verificador de políticas, redator de respostas, desescalada -->
 
-**Área:** Atendimento ao cliente · **Agentes:** 4 · **Padrão:** com ramificações · **Nível:** Iniciante · **Elementos:** decisão, aprovação, formulário de entrada, arquivos como entrada
+**Área:** Atendimento ao cliente · **Agentes:** 4 · **Padrão:** com ramificações · **Nível:** Iniciante · **Elementos:** decisão, aprovação, ciclo de revisão, formulário de entrada, arquivos como entrada, conexão MCP opcional
 
-No atendimento ao cliente muitas solicitações chegam ao mesmo tempo, e cada uma precisa da regra certa e do tom certo. O workflow classifica as solicitações, verifica políticas e prazos e prepara respostas para aprovação.
+No atendimento ao cliente muitas solicitações chegam ao mesmo tempo, e cada uma precisa da regra certa, dos dados de pedido certos e do tom certo. O workflow classifica as solicitações, verifica políticas e prazos com base nos dados do pedido e prepara respostas para aprovação.
 
-**Como os agentes trabalham juntos:** Um classificador rápido organiza cada solicitação por assunto, urgência e humor. O verificador de políticas aplica a política de atendimento e recalcula prazos com a ferramenta de datas. O redator de respostas redige as respostas; uma verificação de qualidade garante que nada seja prometido além da política. Um nó de decisão envia os escalonamentos primeiro a um agente de desescalada. Cada rascunho aguarda aprovação; uma rejeição com retorno devolve os rascunhos, por um laço, ao redator de respostas, que os revisa e os envia de novo para aprovação (no máximo três rodadas).
+**Como os agentes trabalham juntos:** Um classificador rápido organiza cada solicitação por assunto, urgência e humor. O verificador de políticas aplica a política de atendimento e recalcula prazos com a ferramenta de datas; se a sua cópia estiver conectada à loja, ele consulta cada pedido, somente para leitura, com get_order, caso contrário usa os dados de pedido das solicitações ou uma exportação de pedidos anexada. O redator de respostas redige as respostas; uma verificação de qualidade garante que nada seja prometido além da política. Um nó de decisão envia os escalonamentos primeiro a um agente de desescalada. Cada rascunho aguarda aprovação; uma rejeição com comentário devolve os rascunhos, por um laço, ao redator de respostas, que os revisa e os envia de novo para aprovação (no máximo três rodadas).
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
 | **Classificador** | Organiza cada solicitação por assunto, urgência e humor. (saída estruturada) | Solicitações |
 | **Verificador de políticas** | Aplica a política de atendimento e verifica prazos com a ferramenta de datas. (Ferramentas: `days_between`) | Classificador, Solicitações |
-| **Redator de respostas** | Redige rascunhos de resposta cordiais para aprovação. (com verificação de qualidade) | Classificador, Verificador de políticas, Desescalada, Aprovar respostas |
+| **Redator de respostas** | Redige rascunhos de resposta cordiais para aprovação. (com verificação de qualidade) | Classificador, Verificador de políticas, Desescalada |
 | **Desescalada** | Prepara como lidar com clientes irritados e o que precisa de aprovação. | Escalonar? |
 
-**Entrada:** Várias solicitações de clientes com dados de pedido e entrega, a data de hoje e a sua política de atendimento, como trecho no texto ou como arquivo (PDF, Word, Markdown); o arquivo de exemplo contém uma política mais detalhada.
+**Entrada:** Várias solicitações de clientes com números de pedido, a data de hoje e a sua política de atendimento, como trecho no texto ou como arquivo (PDF, Word, Markdown); o arquivo de exemplo contém uma política mais detalhada. As datas de pedido e entrega vêm das solicitações, de uma exportação de pedidos da sua loja anexada (JSON, CSV ou Excel) ou, com conexão, diretamente da loja; a exportação de exemplo contém os três pedidos das solicitações de exemplo.
 
-**Arquivos de exemplo:** `Politica_atendimento_Cozinha_Amostra.pdf`
+**Arquivos de exemplo:** `Politica_atendimento_Cozinha_Amostra.pdf`, `Pedidos_loja_Cozinha_Amostra.json`
 
-**Casos de teste:** Quatro solicitações, uma delas irritada; Uma pergunta gentil sobre um produto; Política como arquivo PDF
+**Casos de teste:** Quatro solicitações, uma delas irritada; Uma pergunta gentil sobre um produto; Política como arquivo PDF; Só números de pedido, exportação de pedidos anexada
 
-**Resultado:** Para cada solicitação, uma classificação, a regra aplicável com verificação de prazo e um rascunho de resposta que uma pessoa aprova antes do envio.
+**Resultado:** Para cada solicitação, uma classificação, a regra aplicável com verificação de prazo e um rascunho de resposta que uma pessoa aprova antes do envio. A verificação de políticas informa de onde vêm os dados do pedido (loja, exportação ou solicitação) e quais faltam.
 
-**Como adaptar:** Anexe a sua política completa e as perguntas frequentes como arquivo, ou carregue-as como conhecimento e atribua-as ao verificador de políticas se valerem de forma permanente. O tom da sua marca (você ou senhor/senhora, despedida) é definido no prompt de sistema do redator de respostas. Para muitas solicitações de uma vez, use o processamento em lote.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: a classificação, a decisão de escalonamento (para a desescalada quando pelo menos um cliente está irritado ou pede mais do que a política permite), a verificação de políticas e os rascunhos; a ferramenta de datas calcula os prazos, uma verificação de qualidade testa os rascunhos com três critérios (conforme a política, tom, sem promessas) e cada etapa é registrada. Uma pessoa aprova cada rascunho antes de qualquer envio: uma rejeição exige um comentário e devolve os rascunhos ao redator de respostas; se continuarem rejeitados depois de no máximo três rodadas, a execução termina como falha. As respostas continuam sendo rascunhos; nada é enviado automaticamente. A conexão com a loja é opcional e só lê: a cópia recebe get_order somente se você a conectar a um servidor MCP cuja ferramenta um administrador aprovou como somente leitura; caso contrário, ela roda em um modo offline claramente identificado. Execuções sem uma pessoa presente (agendamentos, séries de testes, processamento em lote) não podem usar ferramentas MCP, a menos que um administrador permita expressamente o MCP sem supervisão.
+
+**Por que esta arquitetura:** As etapas dependem umas das outras (classificar, verificar, redigir), então basta uma cadeia fixa com um desvio para escalonamentos; um orquestrador traria custo sem benefício, e para classificar basta um modelo rápido. Os dados de pedido vêm por uma integração porque estão na loja e mudam a cada hora; o modo offline com uma exportação mantém o exemplo utilizável sem conexão. A aprovação com laço de revisão permanece porque as respostas vão para clientes: a última palavra é de uma pessoa.
+
+**Conexão opcional: Loja online (pedidos)** (Ferramentas: `get_order`). Consulta de pedidos somente leitura na sua loja via MCP: get_order retorna as datas de pedido e entrega, o status, os itens e a última nota da transportadora de um pedido. O verificador de políticas a usa para conferir prazos com dados reais do pedido em vez do que os clientes dizem.
+
+**Configuração:** Um administrador adiciona o servidor MCP da sua loja em Ferramentas → Serviços conectados e aprova a ferramenta get_order como somente leitura. Ao copiar o exemplo, você escolhe esse servidor como conexão; sem conexão, a cópia roda no modo offline. Para testar sem loja, execute `python -m nodestro_examples.demo_mcp --language pt-BR` no computador com o aplicativo desktop do Nodestro, adicione http://127.0.0.1:8765/mcp em Ferramentas → Serviços conectados com o consentimento para um servidor de desenvolvimento local, aprove as ferramentas dele como somente leitura e escolha-o ao copiar. O servidor de demonstração só lê e fornece os pedidos sintéticos da exportação de exemplo, nunca dados reais de clientes. Execuções sem uma pessoa presente (agendamentos, séries de testes, processamento em lote) não podem usar ferramentas MCP, a menos que um administrador permita expressamente o MCP sem supervisão.
+
+**Sem conexão:** Modo offline: nenhuma loja está conectada. O verificador de políticas usa somente os dados de pedido das solicitações ou de uma exportação de pedidos anexada e aponta os que faltam; ele não consulta nada.
+
+**Como adaptar:** Anexe a sua política completa e as perguntas frequentes como arquivo, ou carregue-as como conhecimento e atribua-as ao verificador de políticas se valerem de forma permanente. Para verificar pedidos ao vivo, peça a configuração da integração com a loja e escolha o servidor ao copiar o exemplo. O tom da sua marca (você ou senhor/senhora, despedida) é definido no prompt de sistema do redator de respostas. O processamento em lote atende muitas solicitações de uma vez, mas execuções sem uma pessoa presente não podem usar a conexão com a loja; por isso, anexe uma exportação de pedidos aos lotes.
 
 ## 9 · Divulgar uma vaga e preparar entrevistas {#hr-recruiting}
 <!-- keywords: recursos humanos, perfil da vaga, anúncio da vaga, roteiro de entrevista, revisor de imparcialidade, revisão -->
 
-**Área:** Recursos humanos · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, arquivos de resultado
+**Área:** Recursos humanos · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, aprovação, arquivos de resultado
 
-Uma boa contratação começa com um perfil claro e entrevistas justas e comparáveis. O workflow transforma anotações soltas em perfil da vaga, anúncio e roteiro de entrevista e verifica a imparcialidade de tudo.
+Uma boa contratação começa com um perfil claro e entrevistas justas e comparáveis. O workflow transforma anotações soltas em perfil da vaga, anúncio e roteiro de entrevista, verifica a imparcialidade de tudo e deixa a aprovação com uma pessoa.
 
 > Exige revisão especializada: os resultados são ferramentas de apoio e precisam ser verificados por uma pessoa qualificada.
 
-**Como os agentes trabalham juntos:** O agente de perfil organiza atividades e requisitos. A partir disso, o anúncio da vaga e o roteiro de entrevista são criados em paralelo. O revisor de imparcialidade verifica os dois em busca de formulações discriminatórias ou não permitidas, por exemplo sobre idade ou língua materna, e indica o que uma pessoa precisa verificar. Se ele tiver objeções, um nó de decisão encaminha os documentos para uma revisão que aplica as sugestões; caso contrário, ficam as primeiras versões.
+**Como os agentes trabalham juntos:** O agente de perfil organiza atividades e requisitos. A partir disso, o anúncio da vaga e o roteiro de entrevista são criados em paralelo. O revisor de imparcialidade verifica os dois em busca de formulações discriminatórias ou não permitidas, por exemplo sobre idade ou língua materna, e indica o que uma pessoa precisa verificar. Se ele tiver objeções, um nó de decisão encaminha os documentos para uma revisão que aplica as sugestões; caso contrário, ficam as primeiras versões. Por fim, o gestor da vaga ou o RH analisa anúncio, roteiro, revisão de imparcialidade e, se houver, a versão revisada, e aprova os documentos.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
@@ -333,35 +378,51 @@ Uma boa contratação começa com um perfil claro e entrevistas justas e compar�
 
 **Casos de teste:** Anotações com desejos problemáticos
 
-**Resultado:** Perfil da vaga, anúncio da vaga e roteiro de entrevista com âncoras de avaliação, uma revisão de imparcialidade estruturada e, se houver objeções, uma versão revisada com a lista de alterações, também como arquivo Word. Os documentos precisam ser aprovados pelo RH ou por uma pessoa qualificada antes da publicação.
+**Resultado:** Perfil da vaga, anúncio da vaga e roteiro de entrevista com âncoras de avaliação, uma revisão de imparcialidade estruturada e, se houver objeções, uma versão revisada com a lista de alterações. A execução só cria o arquivo Word depois da aprovação.
+
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o revisor de imparcialidade entrega um parecer estruturado; se os documentos não puderem ser usados sem alterações, um nó de decisão os envia para a revisão; caso contrário, eles seguem direto para a aprovação. O ramo escolhido fica visível na execução. A decisão final fica com uma pessoa: o gestor da vaga ou o RH verifica todos os documentos na aprovação; uma rejeição exige um comentário e encerra a execução, e só uma aprovação cria o arquivo Word. O workflow apenas produz documentos: ele nunca vê, avalia ou classifica candidatos reais.
+
+**Por que esta arquitetura:** Anúncio e roteiro dependem apenas do perfil, por isso são criados em paralelo e verificados juntos, o que mantém requisitos e formulações coerentes. A revisão de imparcialidade funciona como um filtro automático: a revisão só custa uma etapa a mais quando há objeções. De propósito não há um loop de verificação e revisão, porque questões de imparcialidade e jurídicas não devem ser dadas como resolvidas só porque os modelos concordam entre si; quem aprova vê a verificação, a versão revisada e os pontos em aberto lado a lado. A triagem de candidatos fica de fora de propósito, pois seria IA de alto risco pelo Regulamento de IA da UE.
 
 **Como adaptar:** Substitua as anotações pela sua necessidade de contratação. Você pode guardar seu perfil de empregador e seus benefícios como conhecimento e atribuí-los ao agente do anúncio. Acrescente as exigências legais do seu país ao prompt de sistema do revisor de imparcialidade. Não amplie o fluxo para triar, avaliar ou classificar candidatos sem uma análise jurídica: pelo Regulamento de IA da UE, esses sistemas são IA de alto risco.
 
 ## 10 · Transformar uma pergunta de pesquisa em hipóteses {#research-hypotheses}
-<!-- keywords: pesquisa e desenvolvimento, analista da pergunta, desenvolvedor de hipóteses, crítico metodológico, planejador de experimentos -->
+<!-- keywords: pesquisa e desenvolvimento, analista da pergunta, coordenação de pesquisa, planejador do estudo -->
 
-**Área:** Pesquisa e desenvolvimento · **Agentes:** 4 · **Padrão:** sequencial · **Nível:** Avançado · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento
+**Área:** Pesquisa e desenvolvimento · **Agentes:** 3 · **Padrão:** adaptativo (orquestração) · **Nível:** Avançado · **Elementos:** orquestrador com equipes, formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento, orçamento e limites
 
-Uma boa pesquisa começa com uma pergunta precisa e testável. O workflow decompõe uma pergunta de pesquisa, formula hipóteses, submete-as a uma crítica metodológica e deriva um plano de experimentos realista.
+Boa pesquisa começa com uma pergunta precisa e testável e com os métodos certos. Um ensaio de materiais precisa de uma análise de poder, um estudo com entrevistas precisa de um plano de amostragem e de um termo de consentimento, e muitas perguntas precisam de ambos. O fluxo de trabalho analisa a pergunta e deixa uma coordenação de pesquisa envolver exatamente as equipes de métodos de que a pergunta precisa.
 
-**Como os agentes trabalham juntos:** Uma cadeia sequencial com retorno: o analista esclarece variáveis e premissas, o agente de hipóteses formula hipóteses testáveis com hipóteses nulas, o crítico metodológico as confronta com os dados preliminares usando a calculadora e aponta fatores de confusão. O planejador de experimentos usa hipóteses e crítica em conjunto.
+**Como os agentes trabalham juntos:** O analista da pergunta a estrutura e resume os dados anexados, porque as equipes trabalham sem os arquivos. A coordenação de pesquisa, um orquestrador, sempre começa com a equipe de hipóteses e então decide: desfechos mensuráveis vão para a equipe de estatística, cujo desenho de estudo e nível de significância ela define como parâmetros; experiências e motivos vão para a equipe de métodos qualitativos; pessoas ou dados pessoais trazem a equipe de ética e proteção de dados. Se uma equipe considera uma hipótese não testável, a coordenação a devolve uma vez à equipe de hipóteses. O planejador do estudo transforma tudo em um plano.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
 | **Analista da pergunta** | Esclarece objetivo, variáveis, restrições e lacunas de conhecimento. | Pergunta de pesquisa |
-| **Desenvolvedor de hipóteses** | Formula hipóteses testáveis com previsões e hipóteses nulas. | Analista da pergunta |
-| **Crítico metodológico** | Verifica testabilidade das hipóteses, fatores de confusão e dados disponíveis. (Ferramentas: `calculator`) | Desenvolvedor de hipóteses, Pergunta de pesquisa |
-| **Planejador de experimentos** | Deriva um plano de experimentos das hipóteses e da crítica. | Desenvolvedor de hipóteses, Crítico metodológico |
+| **Coordenação de pesquisa** | Decide de quais equipes de métodos a pergunta precisa e define os parâmetros da equipe de estatística. (Orquestrador) | Analista da pergunta |
+| **Planejador do estudo** | Deriva o plano de estudo da análise e dos resultados das equipes de métodos. | Analista da pergunta, Coordenação de pesquisa |
 
-**Entrada:** Uma pergunta de pesquisa com objetivo, dados de ensaios preliminares e restrições como material, tempo e equipamentos. Você pode anexar dados de medição e documentos como arquivos; o arquivo de exemplo contém os valores do ensaio preliminar por chapa.
+**Equipes que o orquestrador pode acionar:**
+
+| Equipe | Tarefa | Capacidades |
+|---|---|---|
+| **Equipe de hipóteses** | Transforma uma pergunta de pesquisa analisada em hipóteses testáveis com hipóteses nulas e previsões mensuráveis; revisa-as após uma crítica metodológica. | hypotheses, operationalisation |
+| **Equipe de estatística** | Confronta hipóteses quantitativas com os dados, avalia dados preliminares com a calculadora e estima o tamanho da amostra para um desenho, um nível de significância e um poder dados. (Parâmetros: Desenho do estudo, Nível de significância α, Poder desejado) | statistics, power analysis, quantitative methods |
+| **Equipe de métodos qualitativos** | Planeja entrevistas, observações ou grupos focais para perguntas sobre experiências, motivos e comportamentos: amostra, roteiro e análise. | qualitative methods, interviews, observation |
+| **Equipe de ética e proteção de dados** | Verifica estudos com pessoas ou dados pessoais: consentimento, minimização de dados, anonimização, participação da representação dos trabalhadores e parecer ético. | research ethics, data protection, informed consent |
+
+**Entrada:** Uma pergunta de pesquisa com seu objetivo, dados existentes de ensaios preliminares e restrições como material, tempo e equipamentos. Você pode anexar dados de medição e documentos como arquivos; o arquivo de exemplo contém as notas do ensaio preliminar por painel.
 
 **Arquivos de exemplo:** `Ensaio_preliminar_PL-7.csv`
 
-**Casos de teste:** Pergunta e ensaio preliminar no texto; Dados do ensaio preliminar em CSV
+**Casos de teste:** Pergunta e ensaio preliminar no texto; Dados do ensaio preliminar em CSV; Estudo com entrevistas sem medições
 
-**Resultado:** Um plano de experimentos com hipóteses, fatores e níveis, tamanho da amostra, método de medição, análise e critérios de interrupção, além dos riscos em aberto, também como arquivo Word. O planejador de experimentos propõe o plano para o conhecimento; você decide se ele é salvo.
+**Resultado:** Um plano de estudo com hipóteses, desenho, tamanho da amostra, método de medição ou de entrevista, análise, critérios de parada e riscos em aberto, também como arquivo Word. A visão de orquestração da execução mostra quais equipes de métodos participaram, com quais parâmetros, e quais ficaram de fora e por quê. O planejador propõe o plano para o conhecimento; você decide se ele é salvo.
 
-**Como adaptar:** Substitua a pergunta e o ensaio preliminar pelos seus e anexe os dados de medição diretamente. A literatura de que você precisa com frequência pode ser carregada como conhecimento no modo "Pesquisa" e atribuída ao analista da pergunta, para que ele trabalhe com citações. Acrescente as suas diretrizes estatísticas no crítico metodológico.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: a coordenação decide quais equipes de métodos trabalham e preenche o formulário da equipe de estatística (desenho, nível de significância, poder); cada decisão fica registrada com seu motivo. Limites: no máximo 7 decisões, cada equipe no máximo duas vezes, um orçamento de 4 USD por execução. Nenhuma etapa espera por uma pessoa; o plano é um rascunho para a pessoa pesquisadora responsável.
+
+**Por que esta arquitetura:** Uma cadeia fixa sempre executaria uma crítica estatística, mesmo em um estudo com entrevistas em que não há nada a calcular, e só incluiria a ética se alguém se lembrasse. A coordenação escolhe por pergunta e passa à equipe de estatística parâmetros estruturados em vez de texto livre, de modo que a análise de poder calcula com um desenho definido. A análise e o plano final continuam sendo etapas fixas: todo estudo precisa deles.
+
+**Como adaptar:** Substitua a pergunta e o ensaio preliminar pelos seus e anexe diretamente os dados de medição. Acrescente suas diretrizes estatísticas ao agente da equipe de estatística. Se sua área precisar de outra equipe de métodos, por exemplo uma equipe de laboratório, salve-a como fluxo de trabalho com descrição clara e adicione-a às equipes da coordenação.
 
 ## 11 · Revisão de código com testes {#code-review}
 <!-- keywords: desenvolvimento de software, analista de bugs, revisor de segurança, correção e testes -->
@@ -386,45 +447,55 @@ Um segundo olhar encontra bugs antes que cheguem à produção. O workflow verif
 
 **Resultado:** Uma lista de achados ordenada por gravidade, o código corrigido e testes pytest que cobrem cada achado, também como arquivo Markdown. Os testes não são executados automaticamente; rode-os localmente.
 
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: uma verificação de qualidade feita por um segundo modelo confere a resposta de Correção e testes com três critérios (cada achado tratado, um teste para cada achado corrigido, código completo sem marcadores); se um critério falhar, o agente revisa a resposta uma vez, e o resultado da verificação fica registrado com a execução. A verificação avalia o texto, não executa o código. Nenhuma etapa espera por uma pessoa, não há orçamento próprio (vale o orçamento padrão do seu workspace) e arquivos compactados enviados são apenas lidos, nunca executados. O código corrigido e os testes são uma proposta: revise-os e rode os testes localmente antes de adotar qualquer coisa.
+
+**Por que esta arquitetura:** Bugs e problemas de segurança são dois olhares independentes sobre o mesmo código, por isso o analista de bugs e o revisor de segurança trabalham em paralelo e nenhum espera pelo outro; o agente de correção recebe também o código original para unir as constatações e remover duplicatas. A verificação de qualidade com uma revisão existe porque, ao juntar duas revisões, o erro típico é esquecer um achado ou um teste. Um coordenador não foi usado de propósito, porque toda revisão precisa dos dois olhares; executar código ou testes no workflow também ficou de fora, para que código desconhecido nunca rode na plataforma.
+
 **Como adaptar:** Anexe o seu projeto como ZIP ou cole o código e informe a linguagem e o framework. Para outras linguagens, ajuste o framework de testes no agente de correção, por exemplo Jest ou JUnit. As suas diretrizes de código podem ser salvas como conhecimento. Pela API do workflow, a revisão também pode ser disparada a partir de um pipeline de CI.
 
 ## 12 · Estruturar um contrato e encontrar pontos de verificação {#contract-review}
 <!-- keywords: direito e administração, estruturador do contrato, explicador de cláusulas, analista de pontos de verificação, visão geral do contrato, cláusulas críticas -->
 
-**Área:** Direito e administração · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento
+**Área:** Direito e administração · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento, arquivos de conhecimento
 
-Contratos são longos, e cláusulas importantes se escondem nos detalhes. O workflow estrutura um contrato, explica-o em linguagem simples e reúne pontos que uma pessoa qualificada deveria verificar. Ele não substitui aconselhamento jurídico.
+Contratos são longos, e cláusulas importantes se escondem nos detalhes. Se uma cláusula é aceitável depende também dos padrões próprios da empresa. O workflow estrutura um contrato, explica-o em linguagem simples e o confronta com o manual de negociação contratual (playbook) do cliente, para que uma pessoa qualificada veja logo onde ele se desvia. Ele não substitui aconselhamento jurídico.
 
 > Exige revisão especializada: os resultados são ferramentas de apoio e precisam ser verificados por uma pessoa qualificada.
 
-**Como os agentes trabalham juntos:** O estruturador levanta partes, vigência, serviços e prazos. Com base nisso, o explicador de cláusulas (linguagem simples) e o analista de pontos de verificação (regras incomuns ou unilaterais) trabalham em paralelo; os dois leem o contrato por conta própria, como texto ou como arquivo enviado. Se o analista encontrar cláusulas críticas, um nó de decisão acrescenta uma análise aprofundada dessas cláusulas. O agente de relatório reúne tudo em uma visão geral estruturada com perguntas para a assessoria jurídica.
+**Como os agentes trabalham juntos:** O estruturador levanta partes, vigência, serviços e prazos. Com base nisso, o explicador de cláusulas (linguagem simples) e o analista de pontos de verificação trabalham em paralelo; os dois leem o contrato por conta própria, como texto ou como arquivo enviado. O analista pesquisa cada cláusula no playbook da empresa, cita a seção do playbook e classifica a cláusula como padrão, posição alternativa, desvio ou linha vermelha. Se encontrar uma linha vermelha ou outra cláusula crítica, um nó de decisão acrescenta uma análise aprofundada dessas cláusulas. O agente de relatório reúne tudo em uma visão geral estruturada com perguntas para a assessoria jurídica.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
 | **Estruturador do contrato** | Registra partes, objeto, vigência, preços e prazos. | Texto do contrato |
 | **Explicador de cláusulas** | Explica cada cláusula em linguagem simples. | Estruturador do contrato, Texto do contrato |
-| **Analista de pontos de verificação** | Encontra disposições incomuns, desequilibradas ou ausentes. (saída estruturada) | Estruturador do contrato, Texto do contrato |
+| **Analista de pontos de verificação** | Confronta cada cláusula com o playbook do cliente e encontra disposições incomuns, desequilibradas ou ausentes. (saída estruturada) | Estruturador do contrato, Texto do contrato |
 | **Visão geral do contrato** | Reúne explicações e pontos de verificação em uma visão geral estruturada. (saída estruturada) | Explicador de cláusulas, Analista de pontos de verificação, Cláusulas críticas |
 | **Cláusulas críticas** | Examina a fundo as cláusulas críticas e prepara perguntas para a negociação. | Cláusulas críticas? |
 
-**Entrada:** O contrato como arquivo (PDF, Word, Markdown ou texto) no campo "Contrato como arquivo" ou como texto, de preferência com a numeração das cláusulas. Você envia o arquivo diretamente ao iniciar; não precisa de uma coleção de conhecimento para isso. O arquivo de exemplo contém o contrato fictício da tarefa de teste.
+**Entrada:** O contrato como arquivo (PDF, Word, Markdown ou texto) no campo "Contrato como arquivo" ou como texto, de preferência com a numeração das cláusulas. Você envia o arquivo diretamente ao iniciar; o contrato não vai para a coleção de conhecimento. O playbook vem da coleção de conhecimento; o playbook fictício da Comércio Amostra Ltda. está incluído. O arquivo de exemplo contém o contrato fictício da tarefa de teste.
 
 **Arquivos de exemplo:** `Contrato_servico_software_exemplo.docx`
 
 **Casos de teste:** Contrato no texto, com cláusulas críticas; Contrato como arquivo Word, sem texto; Contrato de manutenção equilibrado
 
-**Resultado:** Uma visão geral estruturada com resumo, dados principais, cláusulas explicadas, pontos de verificação e perguntas para um advogado ou uma advogada, também em PDF e como arquivo Word editável. O estruturador propõe os dados principais do contrato para o conhecimento, por exemplo para um cadastro de contratos; só é salvo o que você confirmar.
+**Resultado:** Uma visão geral estruturada com resumo, dados principais, cláusulas explicadas, pontos de verificação e perguntas para um advogado ou uma advogada, também em PDF e como arquivo Word editável. Cada ponto de verificação indica a seção do playbook com que foi comparado, e os temas sobre os quais o playbook não diz nada são marcados como tal. O estruturador propõe os dados principais do contrato para o conhecimento, por exemplo para um cadastro de contratos; só é salvo o que você confirmar. O resultado é uma ferramenta de trabalho, não aconselhamento jurídico.
 
-**Como adaptar:** Envie o seu contrato como arquivo ao iniciar ou cole-o. Os seus próprios critérios, como requisitos mínimos de responsabilidade ou proteção de dados, são acrescentados no prompt de sistema do analista de pontos de verificação. Contratos-modelo para comparação podem ser salvos como conhecimento e atribuídos a esse analista.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o analista de pontos de verificação classifica cada cláusula com base no playbook e conta as críticas; toda linha vermelha conta como crítica. Se o número for maior que zero, o nó de decisão acrescenta a análise aprofundada das cláusulas críticas; caso contrário, ela é pulada. Nenhuma etapa espera por uma pessoa, e o workflow não envia nada. A visão geral e as perguntas são a base para a análise por um advogado ou uma advogada; o que é negociado, decidem as pessoas envolvidas.
+
+**Por que esta arquitetura:** Explicar e verificar não dependem um do outro e, por isso, rodam em paralelo sobre a estrutura. O playbook é conhecimento pesquisável em vez de texto no prompt: o jurídico o mantém em um só lugar, a pesquisa traz apenas a seção relevante e a citação torna cada classificação rastreável. A análise aprofundada é uma ramificação porque só compensa o custo quando uma linha vermelha é ultrapassada. Não se usou um orquestrador, porque todo contrato precisa das mesmas etapas.
+
+**Arquivos de conhecimento (sintéticos, criados ao copiar):** Playbook_contratos_Comercio_Amostra: Manual de negociação contratual fictício da Comércio Amostra Ltda. para contratos de software e nuvem: posição padrão, alternativa e linha vermelha por tema.
+
+**Como adaptar:** Envie o seu contrato como arquivo ao iniciar ou cole-o. Substitua o playbook fictício da coleção de conhecimento pelo seu, de preferência com a mesma estrutura por tema: posição padrão, posição alternativa aceitável e linha vermelha. Temas importantes para você, como seguros ou direitos de auditoria, basta acrescentá-los ao playbook; o analista os encontra pela pesquisa.
 
 ## 13 · Criar um plano de estudos pessoal {#learning-plan}
 <!-- keywords: educação e formação, diagnóstico de aprendizagem, planejador de estudos, tutor, autor do quiz -->
 
-**Área:** Educação e formação · **Agentes:** 4 · **Padrão:** paralelo · **Nível:** Iniciante · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada
+**Área:** Educação e formação · **Agentes:** 4 · **Padrão:** paralelo · **Nível:** Iniciante · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada, memória
 
 Aprender funciona melhor com um plano que começa de onde você está. O workflow cria um plano de estudos pessoal, explica os primeiros temas e verifica a compreensão com um quiz.
 
-**Como os agentes trabalham juntos:** O diagnóstico de aprendizagem determina o ponto de partida e as lacunas, e o planejador de estudos cria com isso um plano semanal. Com base nele, o tutor (conteúdos da semana escolhida, apoiados no seu material do curso se você quiser) e o autor do quiz (verificação de conhecimentos com gabarito) trabalham em paralelo. O resultado contém as três partes.
+**Como os agentes trabalham juntos:** O diagnóstico de aprendizagem determina o ponto de partida e as lacunas, e o planejador de estudos cria com isso um plano semanal. Com base nele, o tutor (conteúdos da semana escolhida, apoiados no seu material do curso se você quiser) e o autor do quiz (verificação de conhecimentos com gabarito) trabalham em paralelo. O resultado contém as três partes. O diagnóstico e o planejador compartilham uma memória: primeiro leem o progresso das semanas anteriores e no final o atualizam, de modo que cada semana se apoia na anterior.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
@@ -433,13 +504,17 @@ Aprender funciona melhor com um plano que começa de onde você está. O workflo
 | **Tutor** | Explica o conteúdo da primeira semana com exemplos e exercícios. | Planejador de estudos, Objetivo de aprendizagem |
 | **Autor do quiz** | Cria uma verificação de conhecimentos com respostas para a primeira semana. | Planejador de estudos |
 
-**Entrada:** Quem está aprendendo, o objetivo, o tempo disponível, os conhecimentos prévios e o estilo de aprendizagem preferido. No formulário você escolhe a semana a ser elaborada e pode anexar material próprio; o arquivo de exemplo é um guia curto sobre tabelas dinâmicas.
+**Entrada:** Quem está aprendendo, o objetivo, o tempo disponível, os conhecimentos prévios e o estilo de aprendizagem preferido. No formulário você escolhe a semana a ser elaborada e pode anexar material próprio; o arquivo de exemplo é um guia curto sobre tabelas dinâmicas. A partir da segunda semana, acrescente uma nota curta sobre como foi a última semana (resultado do quiz, o que foi difícil); o nível, os objetivos, os temas concluídos e as dificuldades das semanas anteriores ficam na memória.
 
 **Arquivos de exemplo:** `Guia_rapido_tabelas_dinamicas.docx`
 
 **Casos de teste:** Semana 1 sem material; Semana 2 com material do curso
 
 **Resultado:** Um plano de estudos de quatro semanas com objetivos por semana, explicações claras com exercícios para a semana escolhida e um quiz com gabarito e explicações, também em PDF para imprimir.
+
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: no início de cada execução, o diagnóstico de aprendizagem e o planejador de estudos leem a memória "learning-progress" e a atualizam no final. Ela guarda o nível, os objetivos, os temas concluídos, as dificuldades e o plano resumido, mas nenhum dado pessoal sensível. A memória pertence à sua cópia e se mantém entre execuções; no editor do workflow você vê e apaga as entradas na memória de qualquer um dos dois agentes, por exemplo para corrigir uma entrada errada ou recomeçar com outra pessoa. Na primeira semana a memória está vazia e o workflow trabalha apenas com a sua descrição. Nenhuma etapa espera por uma pessoa: plano, explicações e quiz são sugestões que você adapta ao seu próprio ritmo.
+
+**Por que esta arquitetura:** Aprender leva semanas, mas cada execução começa do zero. Sem memória, você teria de descrever o seu progresso toda semana, e o plano seria refeito do início em vez de se apoiar na semana anterior. A memória guarda exatamente esse estado que muda; o material do curso que não muda pertence ao conhecimento. Só o diagnóstico e o planejador lembram, porque decidem o que vem a seguir; o tutor e o autor do quiz trabalham em paralelo na semana escolhida do plano e não precisam de histórico próprio.
 
 **Como adaptar:** Descreva o seu próprio objetivo; funciona para quase qualquer tema. Para as semanas seguintes, inicie o workflow de novo e mude a semana no formulário. Material que você usa sempre pode ser carregado como conhecimento e atribuído ao tutor.
 
@@ -468,6 +543,10 @@ No fim do mês muitas vezes sobra menos do que o esperado. O workflow recalcula 
 
 **Resultado:** Uma verificação estruturada do orçamento com o saldo mensal atual, potencial de economia, medidas, primeiros passos rápidos e observações, também como arquivo Excel. Não substitui aconselhamento financeiro ou de endividamento.
 
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o analista de orçamento e o consultor de economia calculam cada total com a calculadora, e a verificação de realidade devolve campos fixos (saldo mensal, potencial de economia, medidas, primeiros passos, observações) que vão para o arquivo Excel. O exemplo está marcado como sensível: cada agente é instruído a apontar o que uma pessoa qualificada deve verificar e a não soar mais seguro do que os dados permitem. Não há etapa de aprovação nem revisão automática; não há orçamento próprio (vale o orçamento padrão do seu workspace). Nada é transferido, cancelado ou contratado: o resultado é um apoio para as suas próprias decisões, não aconselhamento financeiro ou de endividamento.
+
+**Por que esta arquitetura:** Cada etapa se apoia na anterior: a economia só pode ser estimada quando o orçamento é conhecido, e só pode ser verificada quando os dois existem, por isso basta uma cadeia fixa. A calculadora faz com que os números sejam calculados em vez de chutados, e os campos estruturados tornam saldo e potencial comparáveis entre execuções. Em vez de um loop há uma verificação de realidade própria e enxuta, porque o papel dela é descartar ideias irrealistas, não polir o texto. Não foram usados de propósito uma conexão bancária nem uma memória, para que os dados pessoais da conta só sejam entregues como arquivo para esta execução e não fiquem guardados entre execuções.
+
 **Como adaptar:** Anexe o seu próprio extrato ou informe os seus números; prioridades pessoais, como "o carro fica", vão no texto. Extratos bancários contêm dados pessoais: eles ficam com você e só são passados ao modelo para esta execução.
 
 ## 15 · Planejar uma viagem pessoal {#travel-plan}
@@ -492,31 +571,47 @@ Uma boa viagem combina com os interesses, o orçamento e as limitações de todo
 
 **Resultado:** Um plano de viagem com roteiro diário, tabela de orçamento e checklist, também em PDF para levar. Preços e horários são estimativas com base em conhecimento geral e precisam ser verificados antes da reserva, porque o workflow não usa dados em tempo real.
 
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o nó de decisão lê o campo do formulário "Viagem ao exterior" e só executa o agente Documentos de viagem quando ele está marcado; o planejador de orçamento conta as noites com a ferramenta de datas e soma os custos com a calculadora. Uma verificação de qualidade feita por um segundo modelo confere o plano do planejador de organização com três critérios (dentro do orçamento, todas as restrições respeitadas, dados não verificados marcados); se um falhar, o plano é revisado uma vez e o resultado da verificação fica registrado com a execução. Nenhuma etapa espera por uma pessoa e não há orçamento próprio (vale o orçamento padrão do seu workspace). Nada é reservado: preços, horários e regras de entrada são estimativas que você confere antes de reservar.
+
+**Por que esta arquitetura:** Roteiro, orçamento e organização se apoiam uns nos outros e por isso formam uma cadeia; só a lista de documentos depende de uma pergunta de sim ou não, que um nó de decisão responde a partir do formulário, assim um fim de semana no próprio país não paga por uma lista de passaportes. Noites e totais vêm de ferramentas, porque erros de datas e de contas são a fraqueza típica dos modelos de linguagem. Uma busca na web em tempo real ficou de fora de propósito: os resultados mudam de um dia para o outro, as execuções não seriam reproduzíveis, o exemplo dependeria de uma ferramenta de servidor paga e não poderia ser repassado como está; em vez disso, cada preço está marcado como estimativa, e você mesmo pode adicionar a busca na web.
+
 **Como adaptar:** Insira seus desejos de viagem. Se quiser preços e horários atuais, você pode adicionar a ferramenta de servidor "busca na web" ao planejador de roteiro; ela tem custo extra por busca.
 
 ## 16 · Avaliar uma ideia de negócio {#business-idea}
-<!-- keywords: autônomos e empreendedores, analista de mercado, calculista de rentabilidade, analista de riscos, júri de investidores -->
+<!-- keywords: autônomos e empreendedores, mentora de empreendedorismo, júri de investidores -->
 
-**Área:** Autônomos e empreendedores · **Agentes:** 4 · **Padrão:** paralelo · **Nível:** Avançado · **Elementos:** arquivos de resultado
+**Área:** Autônomos e empreendedores · **Agentes:** 2 · **Padrão:** adaptativo (orquestração) · **Nível:** Avançado · **Elementos:** orquestrador com equipes, arquivos de resultado, orçamento e limites
 
-Antes de abrir um negócio vale a pena olhar com sobriedade para o mercado, os números e os riscos. O workflow faz três especialistas examinarem a ideia ao mesmo tempo e um júri chegar a um parecer fundamentado.
+Antes de abrir um negócio, vale olhar com sobriedade para mercado, números e riscos. Mas nem toda ideia precisa dos mesmos especialistas: um serviço de conserto de bicicletas não precisa de uma especialista em licenças, uma startup de bebidas precisa. O fluxo de trabalho deixa uma mentora de empreendedorismo montar as equipes de especialistas certas e um júri de investidores chegar a um veredito fundamentado.
 
-**Como os agentes trabalham juntos:** Três agentes trabalham em paralelo: o analista de mercado estima públicos-alvo e concorrência, o calculista de rentabilidade determina o ponto de equilíbrio e cenários com a calculadora, o analista de riscos busca pontos fracos. O júri de investidores pondera tudo e entrega um parecer estruturado com nota.
+**Como os agentes trabalham juntos:** A mentora de empreendedorismo é um orquestrador: ela lê a ideia e decide quais das cinco equipes de especialistas envolver. Mercado, rentabilidade e riscos trabalham em paralelo em toda ideia; regulação e operações entram apenas quando a ideia exige. Se os resultados se contradizem, a mentora faz a uma equipe uma pergunta de acompanhamento específica. Em seguida, o júri de investidores pondera todos os relatórios e dá um veredito estruturado com uma nota.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
-| **Analista de mercado** | Estima públicos-alvo, demanda e concorrência. | Ideia de negócio |
-| **Calculista de rentabilidade** | Calcula margem de contribuição, ponto de equilíbrio e cenários com a calculadora. (Ferramentas: `calculator`) | Ideia de negócio |
-| **Analista de riscos** | Busca pontos fracos e riscos da ideia. | Ideia de negócio |
-| **Júri de investidores** | Pondera mercado, números e riscos e chega a um parecer. (saída estruturada) | Analista de mercado, Calculista de rentabilidade, Analista de riscos |
+| **Mentora de empreendedorismo** | Decide de quais equipes de especialistas a ideia precisa, faz com que trabalhem em paralelo e faz perguntas de acompanhamento. (Orquestrador) | Ideia de negócio |
+| **Júri de investidores** | Pondera mercado, números e riscos e chega a um parecer. (saída estruturada) | Ideia de negócio, Mentora de empreendedorismo |
+
+**Equipes que o orquestrador pode acionar:**
+
+| Equipe | Tarefa | Capacidades |
+|---|---|---|
+| **Equipe de mercado** | Estima públicos-alvo, demanda, disposição a pagar e concorrência de uma ideia de negócio. | market analysis, target groups, competition |
+| **Equipe de rentabilidade** | Calcula margem de contribuição, ponto de equilíbrio, retorno e cenários de uma ideia de negócio com a calculadora. | profitability, break-even, financial planning |
+| **Equipe de riscos** | Busca os pontos fracos de uma ideia de negócio e formas baratas de testá-los antes de abrir a empresa. | risk analysis, validation experiments |
+| **Equipe de regulação** | Identifica licenças, registros, rotulagem, higiene, seguros e obrigações de proteção de dados que uma ideia de negócio envolve. | regulation, permits, licences, data protection |
+| **Equipe de operações** | Verifica se uma ideia de negócio pode ser executada como descrito: processos, capacidade, equipamentos, fornecedores e logística. | operations, technology, logistics, suppliers |
 
 **Entrada:** Uma descrição da ideia com oferta, públicos-alvo, preços, custos, capacidade e concorrentes conhecidos.
 
-**Casos de teste:** Serviço móvel de conserto de bicicletas
+**Casos de teste:** Serviço móvel de conserto de bicicletas; Fábrica de kombucha (alimento regulado)
 
-**Resultado:** Um veredito estruturado (seguir, ajustar ou descartar) com pontuação, pontos fortes, riscos, premissas a testar e próximos passos concretos para validar a ideia, também como relatório em PDF.
+**Resultado:** Um veredito estruturado (seguir em frente, adaptar ou descartar) com nota, pontos fortes, riscos, premissas a testar e próximos passos concretos, também como relatório em PDF. Na execução, a visão de orquestração mostra quais equipes a mentora escolheu, por quê, com qual tarefa e o que cada equipe entregou.
 
-**Como adaptar:** Descreva sua ideia com seus números. Quanto mais honestas as premissas, mais útil o parecer. Carregue seus próprios dados de mercado ou resultados de pesquisas como conhecimento e atribua-os ao analista de mercado.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: a mentora decide quais equipes trabalham, em que ordem e com qual tarefa; cada decisão fica registrada com seu motivo. Limites mantêm isso sob controle: no máximo 6 decisões, cada equipe no máximo duas vezes, no máximo 3 equipes ao mesmo tempo e um orçamento de 3 USD por execução. Nenhuma etapa espera por uma pessoa; o veredito é a base para a sua própria decisão.
+
+**Por que esta arquitetura:** Um fluxo de trabalho fixo rodaria sempre as cinco equipes e pagaria uma análise de licenças de que um serviço de bicicletas não precisa, ou as deixaria de fora quando importam. A mentora faz exatamente essa escolha, de forma rastreável e dentro de limites. O júri continua sendo uma etapa fixa, porque um veredito estruturado e comparável não deve depender de como a mentora dividiu o trabalho.
+
+**Como adaptar:** Descreva sua ideia com seus próprios números. Para incluir outro especialista, por exemplo para questões tributárias, salve um fluxo de trabalho com descrição clara e capacidades e adicione-o às equipes da mentora; ela decide sozinha quando ele é necessário. Seus próprios dados de mercado podem ser enviados como conhecimento e atribuídos ao analista de mercado da equipe de mercado.
 
 ## 17 · Desenvolver uma estratégia para redes sociais {#creator-strategy}
 <!-- keywords: influenciadores e criadores de conteúdo, agente de estratégia, desenvolvedor de ideias, planejador de conteúdo -->
@@ -540,6 +635,10 @@ Publicar com regularidade exige uma direção clara e um plano que caiba no seu 
 **Casos de teste:** Perfil no texto; Perfil com exportação de estatísticas
 
 **Resultado:** Um calendário editorial de quatro semanas com data, plataforma, formato, ideia, gancho e chamada para ação, precedido de um breve resumo da estratégia, também como arquivo Excel para continuar planejando.
+
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o desenvolvedor de ideias lê a memória "creator-ideas" antes de começar e, ao fim de cada execução, salva ele mesmo ali os títulos provisórios das novas ideias, sem etapa de confirmação; você pode ver ou limpar a memória em Memória. Uma verificação de qualidade feita por um segundo modelo confere o calendário do planejador de conteúdo com três critérios (frequência compatível com o tempo disponível, pilares equilibrados, metas apoiadas); se um falhar, o calendário é revisado uma vez e o resultado da verificação fica registrado com a execução. Nenhuma etapa espera por uma pessoa e não há orçamento próprio (vale o orçamento padrão do seu workspace). Nada é publicado: o plano é um rascunho que você ajusta e posta por conta própria.
+
+**Por que esta arquitetura:** Estratégia, ideias e calendário se apoiam estritamente uns nos outros, por isso basta uma cadeia de três agentes; o planejador de conteúdo recebe também a estratégia diretamente para medir o mix pelos pilares. Só o desenvolvedor de ideias tem memória, porque ideias repetidas são o verdadeiro problema de execuções mensais, enquanto a estratégia deve surgir sempre dos números atuais. Não foram usadas de propósito uma busca na web por tendências em tempo real nem uma conexão com as plataformas: resultados de tendências mudam todo dia e tornariam as execuções nem reproduzíveis nem portáveis, e um rascunho de plano não deve ser postado automaticamente; a estratégia se baseia, em vez disso, nas suas próprias estatísticas.
 
 **Como adaptar:** Informe o seu perfil e os seus números ou anexe capturas de tela das suas estatísticas. O estilo da sua marca e os temas proibidos são acrescentados no prompt de sistema do desenvolvedor de ideias. A memória "creator-ideas" fica em Memória; limpe-a se quiser recomeçar. Para um plano mensal, você pode agendar a cópia.
 
@@ -568,33 +667,49 @@ Em imóveis, números e localização decidem juntos. O workflow recalcula renta
 
 **Resultado:** Uma comparação estruturada com indicadores, oferta preferida, oportunidades, riscos e pontos a verificar antes de uma decisão, também em PDF. Não substitui aconselhamento financeiro, tributário ou jurídico nem uma visita.
 
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: as duas análises rodam em paralelo em toda execução, e o calculista de rentabilidade calcula cada indicador com a calculadora, de modo que cada cálculo pode ser acompanhado na execução. Nenhuma etapa espera por uma pessoa e nenhum controle de qualidade revisa o resultado; você pode anexar no máximo 8 arquivos. Como decisões imobiliárias são sensíveis, todos os agentes são instruídos a apontar os pontos que uma pessoa qualificada precisa verificar e a não transmitir mais certeza do que os dados permitem. Não há orçamento próprio, então vale o orçamento padrão do seu espaço de trabalho; a comparação é um apoio para a sua própria decisão, não uma recomendação de compra.
+
+**Por que esta arquitetura:** Rentabilidade e localização são perguntas independentes, por isso rodam em paralelo, e só a avaliação as pondera entre si; a estrutura fixa (comparação, oferta preferida, riscos, verificações) torna as ofertas comparáveis de uma execução para outra. Um orquestrador não acrescentaria nada, porque toda comparação precisa das duas análises. De propósito não há busca na web ao vivo por preços anunciados ou níveis de aluguel: os resultados mudariam a cada execução e não seriam rastreáveis, enquanto seus anúncios, atas e um índice de aluguéis salvo mantêm a base fixa e verificável.
+
 **Como adaptar:** Informe as suas ofertas e dados de financiamento e anexe diretamente anúncios, atas de assembleia ou plantas. Um índice de aluguéis de que você precisa com frequência pode ser salvo como conhecimento e atribuído ao analista de imóvel e localização.
 
 ## 19 · Analisar atrasos de obra {#construction-delay}
-<!-- keywords: construção civil, analista de cronograma, analista de causas, planejador de contramedidas, relatório ao contratante -->
+<!-- keywords: construção civil, analista de cronograma, coordenação de obra, relatório ao contratante -->
 
-**Área:** Construção civil · **Agentes:** 4 · **Padrão:** paralelo · **Nível:** Avançado · **Elementos:** aprovação, formulário de entrada, arquivos de resultado, arquivos como entrada
+**Área:** Construção civil · **Agentes:** 3 · **Padrão:** adaptativo (orquestração) · **Nível:** Avançado · **Elementos:** orquestrador com equipes, aprovação, formulário de entrada, arquivos de resultado, arquivos como entrada, contrato de saída, orçamento e limites
 
-Atrasos na obra se acumulam, e os contratantes precisam rapidamente de uma visão clara. O workflow calcula desvios, classifica causas, desenvolve contramedidas e redige um relatório de situação.
+Atrasos na obra têm causas diferentes, e cada causa precisa de outro conhecimento: geada precisa ser documentada, um fornecedor atrasado exige uma notificação de impedimento à parte certa, uma alteração de projeto determinada pelo contratante pode justificar uma prorrogação de prazo, e a falta de pessoal exige um plano de aceleração. O fluxo de trabalho calcula os desvios e deixa uma coordenação de obra envolver exatamente as equipes especializadas de que a situação precisa.
 
-**Como os agentes trabalham juntos:** O analista de cronograma e o analista de causas trabalham em paralelo. Um calcula atrasos e folgas com as ferramentas de datas e calculadora, o outro organiza as causas por área de responsabilidade e necessidade de documentação; os dois também analisam cronogramas, diários de obra e fotos anexados. O planejador de contramedidas desenvolve opções de aceleração e o agente de relatório resume tudo para o contratante. Antes que o relatório saia da equipe do projeto, uma pessoa o libera.
+**Como os agentes trabalham juntos:** O analista de cronograma calcula com a ferramenta de datas o atraso de cada marco e lista as causas supostas. A coordenação de obra, um orquestrador, primeiro monta uma equipe de no máximo três a partir das quatro equipes especializadas e depois distribui tarefas: a equipe de obra para clima, solo e alterações de projeto, a equipe de suprimentos para fornecedores e subempreiteiros, a equipe de pleitos para notificações de impedimento e prorrogações de prazo, a equipe de recuperação para medidas de aceleração com custo. Equipes independentes trabalham em paralelo. A equipe de pleitos para por uma pessoa: seu rascunho de notificação só é usado depois que a gerência de obra responsável o visar. O agente de relatório redige o relatório de status e, antes que ele chegue ao contratante, uma pessoa o libera.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
-| **Analista de cronograma** | Calcula atrasos, folgas e consequências com a ferramenta de datas e a calculadora. (Ferramentas: `days_between`, `calculator`) | Situação do projeto |
-| **Analista de causas** | Classifica as causas por área de responsabilidade e necessidade de documentação. | Situação do projeto |
-| **Planejador de contramedidas** | Desenvolve medidas de aceleração com custo e efeito. | Analista de cronograma, Analista de causas |
-| **Relatório ao contratante** | Resume de forma objetiva a posição do cronograma, as causas e as medidas. | Analista de cronograma, Planejador de contramedidas, Analista de causas |
+| **Analista de cronograma** | Calcula os atrasos e o caminho crítico com as ferramentas de datas e de cálculo. (saída estruturada; Ferramentas: `days_between`, `calculator`) | Situação do projeto |
+| **Coordenação de obra** | Monta as equipes especializadas de que o atraso precisa e distribui suas tarefas. (Orquestrador) | Analista de cronograma |
+| **Relatório ao contratante** | Resume de forma objetiva para o contratante o cronograma, as causas, os pleitos e as medidas. | Analista de cronograma, Coordenação de obra |
 
-**Entrada:** Um cronograma com marcos planejados e reais, observações sobre as causas, data do relatório e condições contratuais, como texto ou como arquivos: cronograma em Excel, diário de obra em PDF, fotos como imagem. Os arquivos de exemplo contêm um cronograma e um trecho do diário de obra.
+**Equipes que o orquestrador pode acionar:**
+
+| Equipe | Tarefa | Capacidades |
+|---|---|---|
+| **Equipe de obra e projeto** | Examina causas técnicas de atrasos de obra: clima, solo, alterações de projeto e sequência dos serviços; atribui dias de atraso com evidências. | technical causes, design changes, ground conditions, weather |
+| **Equipe de suprimentos** | Examina atrasos causados por fornecedores, entregas de material e efetivo de subempreiteiros; atribui dias de atraso com evidências. | supply chain, subcontractors, material delivery |
+| **Equipe de pleitos** | Redige notificações de impedimento e avalia pleitos de prorrogação de prazo para atrasos fora da esfera da construtora; uma gerência de obra visa o rascunho. (para por uma liberação) | contract, claims, notice of obstruction |
+| **Equipe de recuperação** | Desenvolve medidas de aceleração para uma obra atrasada com dias recuperados, custo adicional e nova previsão de conclusão. | recovery planning, acceleration, cost estimate |
+
+**Entrada:** Uma visão geral do cronograma com marcos planejados e reais, observações sobre as causas, data do relatório e condições contratuais, como texto ou como arquivos: cronograma em Excel, diário de obra em PDF, fotos como imagens. Os arquivos de exemplo contêm um cronograma e um trecho do diário de obra.
 
 **Arquivos de exemplo:** `Cronograma_creche_Sol_Nascente.xlsx`, `Diario_de_obra_trecho_abril_maio.pdf`
 
 **Casos de teste:** Cronograma no texto; Cronograma e diário de obra como arquivos
 
-**Resultado:** Um relatório de status objetivo com situação do cronograma, causas, contramedidas, decisões necessárias e riscos. Após a liberação, a execução o salva em PDF e como arquivo Word editável. Questões sobre multas e prorrogação de prazo ficam sujeitas a análise técnica e jurídica.
+**Resultado:** Um relatório de status objetivo com situação do cronograma, causas e esferas de responsabilidade, notificações e pleitos de prorrogação, medidas de recuperação com custo, decisões necessárias e riscos; após a liberação, em PDF e em um arquivo Word editável. A visão de orquestração mostra quais equipes a coordenação montou, o que cada uma entregou como dados estruturados e por quê. Questões sobre multas contratuais e prorrogações de prazo continuam sujeitas a revisão técnica e jurídica.
 
-**Como adaptar:** Exporte o seu cronograma do software de projetos em Excel e anexe o diário de obra e as fotos. Para um relatório periódico, você pode agendar a cópia; a liberação fica então esperando por você.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: a coordenação escolhe no máximo três equipes, faz no máximo duas trabalharem ao mesmo tempo e dá a cada equipe no máximo duas tarefas; cada decisão de composição e de tarefa é registrada com o motivo. Uma pessoa decide duas vezes: a gerência de obra visa o rascunho da notificação de impedimento dentro da equipe de pleitos (rejeitá-lo encerra a execução), e uma pessoa libera o relatório de status antes que arquivos sejam criados. Limites: no máximo 8 decisões da coordenação, 50 passos, 40 minutos e 4 USD por execução.
+
+**Por que esta arquitetura:** Uma cadeia fixa tratava todo atraso da mesma forma: um analista de causas, um planejador de medidas, fosse o problema geada ou uma notificação ausente. Com a coordenação, um atraso puramente climático não custa uma análise de pleitos, enquanto uma alteração de projeto determinada pelo contratante traz a equipe de pleitos com o seu visto. As equipes devolvem resultados estruturados (dias, responsabilidade, evidências), de modo que o relatório pode somá-los em vez de reformular texto. O cálculo do cronograma, o relatório e a liberação final continuam sendo passos fixos, porque todo relatório precisa deles.
+
+**Como adaptar:** Exporte o seu cronograma do software de projetos em Excel e anexe o diário de obra e as fotos. Adapte a equipe de pleitos ao seu tipo de contrato (por exemplo FIDIC ou condições próprias) e informe na equipe de recuperação as taxas de custo da sua empresa. Se você precisar de outra especialidade, como instalações prediais, salve-a como fluxo de trabalho com uma descrição clara e adicione-a às equipes da coordenação.
 
 ## 20 · Desenvolver e precificar um cardápio {#restaurant-menu}
 <!-- keywords: gastronomia, desenvolvedor de conceito, precificação, redator do cardápio -->
@@ -618,6 +733,10 @@ Um cardápio precisa agradar aos clientes e dar lucro. O workflow desenvolve pra
 **Casos de teste:** Cardápio de almoço com preços no texto; Preços de compra em CSV
 
 **Resultado:** Uma tabela de precificação com custo de insumos e preço por prato e um cardápio de almoço pronto com descrições curtas, também como arquivo Word para diagramar e como arquivo Excel com as tabelas de precificação. Alergênicos e aditivos precisam ser verificados e sinalizados com base nas receitas reais.
+
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: as três etapas rodam sempre na mesma ordem; a precificação calcula com a calculadora e recebe seus preços de compra direto da entrada, no máximo um arquivo CSV ou Excel de até 5 MB. Um controle de qualidade avalia o cardápio por três critérios (público, preços conforme a precificação, aviso sobre alergênicos); se um falhar, o redator do cardápio o revisa uma vez, e o resultado do controle fica registrado na execução com sua justificativa (se ainda falhar, o fluxo continua e o controle conta como não aprovado). Nenhuma etapa espera por uma pessoa e não há orçamento próprio, então vale o orçamento padrão do seu espaço de trabalho. Cardápio e precificação são rascunhos: você confere preços, porções e a indicação de alergênicos antes de imprimir.
+
+**Por que esta arquitetura:** Cada etapa se apoia na anterior: sem pratos não há precificação e sem preços não há cardápio, por isso uma cadeia fixa é o formato certo; a precificação também recebe a lista de preços diretamente, para não depender de o desenvolvedor de conceito repetir números. O controle de qualidade fica no cardápio porque é ali que os preços podem se afastar da precificação. De propósito não se usa um orquestrador, porque as etapas são sempre as mesmas, nem uma busca na web ao vivo por preços de atacado, que variariam a cada execução e não bateriam com o seu fornecedor; sua própria lista de preços torna a precificação reproduzível.
 
 **Como adaptar:** Anexe a sua lista atual de preços de compra e descreva o seu público. As suas fichas técnicas podem ser carregadas como conhecimento e atribuídas à precificação; regras da casa, como tamanho das porções, vão no desenvolvedor de conceito. Para a troca a cada duas semanas, você pode agendar a cópia.
 
@@ -644,6 +763,10 @@ O planejamento de culturas precisa considerar ao mesmo tempo rotação, solos, c
 
 **Resultado:** Um plano de culturas por talhão com margem bruta, uma verificação das regras, riscos e perguntas em aberto, também como arquivo Excel. Exigências legais, por exemplo sobre adubação ou condições de incentivos, precisam ser verificadas com base nas regras locais vigentes.
 
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: as três etapas rodam sempre na mesma ordem; o cálculo de margem bruta calcula cada talhão e o total com a calculadora, de modo que os números podem ser acompanhados na execução. Não há revisão automática: a verificação de plausibilidade não altera o plano, mas lista verificações de regras, riscos e perguntas em aberto em um resultado estruturado com a margem bruta total como número. Nenhuma etapa espera por uma pessoa; você pode anexar até 3 arquivos de 10 MB cada, e não há orçamento próprio, então vale o orçamento padrão do seu espaço de trabalho. O plano é um rascunho que você confere com as regras locais vigentes antes de comprar sementes ou pedir subsídios.
+
+**Por que esta arquitetura:** Primeiro vem a escolha das culturas, as margens brutas dependem dela e a verificação precisa das duas, por isso uma cadeia fixa é o formato certo; a verificação de plausibilidade também recebe a rotação diretamente para compará-la com as suas regras. De propósito há uma etapa de verificação própria que aponta violações abertamente, em vez de um ciclo de qualidade que reescreveria o plano sem avisar, porque desvios na rotação são escolhas que cabem a você. Sem busca na web ao vivo por preços ou exigências e sem orquestrador: preços e regras encontrados online mudam diariamente e variam por região, suas próprias premissas mantêm o cálculo reproduzível e as etapas são as mesmas para toda propriedade.
+
 **Como adaptar:** Anexe o seu cadastro de talhões e os seus dados de cálculo em Excel e informe as suas regras de planejamento. Análises de solo de que você precisa todo ano podem ser carregadas como conhecimento e atribuídas ao planejador de rotação.
 
 ## 22 · Planejar a festa de uma associação {#club-event}
@@ -668,16 +791,20 @@ Festas de associações são organizadas por voluntários no tempo livre. O work
 
 **Resultado:** Um documento para a diretoria com cronograma até a festa, tarefas e responsáveis, escala de turnos, orçamento com superávit ou déficit, plano de comunicação e propostas de deliberação, também como arquivo Word para enviar à diretoria.
 
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: cronograma e orçamento são feitos em paralelo; o planejador de cronograma conta regressivamente a partir da data da festa com a ferramenta de datas e o planejador de orçamento calcula com a calculadora. Uma verificação de qualidade avalia o documento para a diretoria quanto a completude, responsabilidades e coerência com o orçamento; se um critério falhar, o documento é revisado uma vez, e o resultado da verificação fica registrado na execução com sua justificativa (se ainda falhar, o fluxo continua e a verificação conta como não aprovada). Nenhuma etapa espera por uma pessoa e nada é enviado; não há orçamento próprio, então vale o orçamento padrão do seu espaço de trabalho. O documento é um rascunho, e a diretoria decide sobre as propostas de deliberação.
+
+**Por que esta arquitetura:** Cronograma e orçamento não dependem um do outro e rodam em paralelo, enquanto o planejador de comunicação precisa do cronograma e por isso vem depois; o documento para a diretoria reúne tudo. De propósito não há etapa de aprovação no fluxo, porque a aprovação de verdade é a própria reunião da diretoria, nem integração com e-mail ou agenda, porque os voluntários enviam os convites eles mesmos depois que a diretoria decide. Um orquestrador não acrescentaria nada, já que toda festa precisa das mesmas quatro partes.
+
 **Como adaptar:** Insira as informações-chave da sua festa. Licenças e exigências variam conforme o município; acrescente as exigências conhecidas na entrada. Logotipos e modelos de cartaz podem ser guardados como conhecimento.
 
 ## 23 · Desenvolver uma campanha de doações {#nonprofit-campaign}
 <!-- keywords: organizações sem fins lucrativos, desenvolvedor da campanha, analista de impacto, revisor de credibilidade -->
 
-**Área:** Organizações sem fins lucrativos · **Agentes:** 3 · **Padrão:** paralelo · **Nível:** Avançado · **Elementos:** arquivos de resultado, propostas de conhecimento
+**Área:** Organizações sem fins lucrativos · **Agentes:** 3 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, ciclo de revisão, arquivos de resultado, propostas de conhecimento
 
 Campanhas de doação precisam de uma história tocante, mas também de afirmações honestas sobre impacto. O workflow desenvolve uma campanha, avalia o possível impacto e verifica se as promessas são críveis e eticamente corretas.
 
-**Como os agentes trabalham juntos:** O desenvolvedor da campanha e o analista de impacto trabalham em paralelo: um concebe mensagem, públicos e ações, o outro constrói um modelo de impacto com indicadores e calcula o custo por criança com a calculadora. O revisor de credibilidade verifica os dois; o resultado contém as três partes.
+**Como os agentes trabalham juntos:** O desenvolvedor da campanha e o analista de impacto trabalham em paralelo: um concebe mensagem, públicos e ações, o outro constrói um modelo de impacto com indicadores e calcula o custo por criança com a calculadora. O revisor de credibilidade verifica os dois. Se ele considerar a campanha não crível, uma condição a devolve ao desenvolvedor da campanha junto com as observações da revisão; a campanha revisada é verificada de novo, no máximo duas vezes. O resultado contém as três partes.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
@@ -691,33 +818,43 @@ Campanhas de doação precisam de uma história tocante, mas também de afirmaç
 
 **Resultado:** Um conceito de campanha com cronograma e rascunhos de textos, um modelo de impacto com indicadores e uma revisão estruturada de afirmações exageradas, observações éticas e um plano de medição de impacto, também como arquivo Word. O analista de impacto propõe o seu modelo de impacto para o conhecimento, por exemplo para futuros pedidos de financiamento; só é salvo o que você confirmar.
 
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o parecer sim/não do revisor de credibilidade sobre a credibilidade decide se a campanha volta para revisão; a execução mostra qual ramo foi seguido. O desenvolvedor da campanha revisa no máximo duas vezes, cada vez com as observações da revisão e o seu rascunho anterior. Se depois disso a campanha ainda não for considerada crível, a execução segue mesmo assim para o resultado, e as observações da revisão mostram o que continua em aberto. Nenhuma etapa espera por uma pessoa: textos e números são rascunhos que a sua organização confere antes de publicar, principalmente as afirmações sobre impacto e as fotos de crianças. Modelos de impacto propostos só são salvos como conhecimento se você os confirmar.
+
+**Por que esta arquitetura:** Problemas de credibilidade são mais bem corrigidos por quem escreveu o texto; por isso a revisão volta ao desenvolvedor da campanha em vez de apenas listar problemas. O ciclo é limitado a duas rodadas: uma campanha que ainda exagera depois disso precisa de evidências melhores da organização, não de mais reformulações. O modelo de impacto fica fora do ciclo porque se baseia nos dados do projeto, não nos textos da campanha. Não há etapa de aprovação, porque a campanha continua sendo um rascunho e é publicada de qualquer forma fora do workflow.
+
 **Como adaptar:** Descreva seu projeto e seus resultados da forma mais honesta possível. Carregue relatórios anuais ou avaliações como conhecimento e atribua-os ao analista de impacto.
 
 ## 24 · Responder a uma solicitação de cidadão {#citizen-inquiry}
 <!-- keywords: instituições públicas, análise de assuntos, preparação das informações, rascunho de resposta -->
 
-**Área:** Instituições públicas · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Iniciante · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento
+**Área:** Instituições públicas · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Iniciante · **Elementos:** aprovação, ciclo de revisão, formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento, arquivos de conhecimento
 
-Solicitações de cidadãos muitas vezes contêm vários assuntos e precisam ser respondidas de forma correta, clara e sem compromissos precipitados. O workflow decompõe a solicitação, encontra as regras relevantes nas informações fornecidas e prepara uma resposta.
+Solicitações de cidadãos muitas vezes contêm vários assuntos e precisam ser respondidas de forma correta, clara e sem compromissos precipitados. O workflow decompõe a solicitação, encontra as regras relevantes do município, prepara uma resposta e deixa a decisão de enviá-la com o servidor responsável.
 
 > Exige revisão especializada: os resultados são ferramentas de apoio e precisam ser verificados por uma pessoa qualificada.
 
-**Como os agentes trabalham juntos:** Uma cadeia de três agentes: a análise de assuntos separa os assuntos e atribui responsabilidades, a preparação das informações busca as regras relevantes apenas no trecho fornecido e o rascunho de resposta redige uma resposta acessível ao cidadão. Uma verificação de qualidade garante que apenas regras documentadas sejam citadas e que nenhum compromisso vinculante seja assumido.
+**Como os agentes trabalham juntos:** Uma cadeia de três agentes e uma aprovação: a análise de assuntos separa os assuntos e atribui responsabilidades. A preparação das informações pesquisa as regras salvas do município e os documentos da solicitação, cita os trechos usados e informa quando nenhuma regra cobre um assunto. O rascunho de resposta redige uma resposta acessível ao cidadão; uma verificação de qualidade garante que apenas regras documentadas sejam citadas e que nenhum compromisso vinculante seja assumido. Depois, o servidor responsável confere a resposta; uma rejeição com comentário a devolve ao rascunho de resposta para revisão.
 
 | Agente | Tarefa | Recebe |
 |---|---|---|
 | **Análise de assuntos** | Separa os assuntos e atribui responsabilidades e urgência. | Solicitação do cidadão |
-| **Preparação das informações** | Busca as regras relevantes apenas nas informações fornecidas. | Análise de assuntos, Solicitação do cidadão |
+| **Preparação das informações** | Pesquisa as regras do município e cita os trechos relevantes para cada assunto. | Análise de assuntos, Solicitação do cidadão |
 | **Rascunho de resposta** | Redige uma resposta objetiva e acessível para aprovação. (com verificação de qualidade) | Análise de assuntos, Preparação das informações |
 
-**Entrada:** A solicitação da cidadã ou do cidadão e as informações internas, regras e responsabilidades relevantes, como trecho no texto ou como arquivos. Você também pode anexar fotos da solicitação. O arquivo de exemplo é um folheto informativo fictício da prefeitura.
+**Entrada:** A solicitação da cidadã ou do cidadão, opcionalmente com informações internas sobre o caso, como texto ou como arquivos. Você também pode anexar fotos da solicitação. As regras do município vêm da coleção de conhecimento; um conjunto fictício de regras de Cidade Exemplo está incluído. O arquivo de exemplo é um folheto informativo fictício da prefeitura.
 
 **Arquivos de exemplo:** `Folheto_anexos_e_iluminacao.pdf`
 
 **Casos de teste:** Depósito de jardim e poste de luz; Regras como arquivo de folheto
 
-**Resultado:** Um rascunho de resposta em linguagem simples com responsabilidades, próximos passos e observações para quem vai tratar o caso, também como arquivo Word para o seu papel timbrado. A preparação das informações propõe as regras encontradas, com a referência, para o conhecimento, para que solicitações futuras possam usá-las; só é salvo o que você confirmar. O rascunho precisa ser verificado e aprovado tecnicamente antes do envio.
+**Resultado:** Um rascunho de resposta em linguagem simples com responsabilidades, próximos passos e observações para o servidor responsável; após a aprovação, também como arquivo Word para o seu papel timbrado. O arquivo Word é higienizado: dados pessoais, como nomes, endereços, telefones e e-mails, e credenciais são substituídos por marcadores, então você insere os dados do destinatário a partir do processo. A preparação das informações propõe as regras encontradas, com a referência, para o conhecimento; só é salvo o que você confirmar.
 
-**Como adaptar:** Anexe os seus regulamentos e folhetos ou carregue-os de forma permanente como conhecimento (modo "Pesquisa" com citações) e atribua-os à preparação das informações. Papel timbrado e despedida vão no prompt de sistema do rascunho de resposta. Para muitas solicitações de uma vez, use o processamento em lote.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: a análise de assuntos, a pesquisa de regras com citações e a verificação de qualidade do rascunho (somente regras documentadas, linguagem simples, nenhum compromisso vinculante). Uma pessoa decide: o servidor responsável confere cada resposta antes do envio. Uma rejeição exige um comentário e devolve o rascunho com esse retorno ao rascunho de resposta; após no máximo 2 revisões, uma nova rejeição faz a execução falhar sem arquivo. O workflow não envia nada sozinho; mesmo aprovada, a resposta é um rascunho que o servidor responsável envia pelos canais habituais.
+
+**Por que esta arquitetura:** Toda solicitação precisa das mesmas etapas, então uma cadeia fixa basta, e um orquestrador só aumentaria o custo. As regras são conhecimento pesquisável em vez de texto colado em cada solicitação: a preparação das informações encontra os trechos relevantes, cita-os e percebe quando nada se aplica. A aprovação com loop de revisão existe porque uma resposta ao cidadão tem efeito fora da administração e quem trata o caso o conhece melhor. Uma conexão com o sistema de e-mail foi deixada de fora de propósito, para que o envio continue sendo uma decisão humana.
+
+**Arquivos de conhecimento (sintéticos, criados ao copiar):** Regras_municipio_Cidade_Exemplo: Regras fictícias do município de Cidade Exemplo sobre anexos, o plano de zoneamento nº 17, iluminação pública, resíduos volumosos, árvores e o atendimento de solicitações.
+
+**Como adaptar:** Substitua as regras fictícias da coleção de conhecimento pelos seus regulamentos, folhetos e listas de responsabilidades; títulos e números claros tornam as citações precisas. Papel timbrado e despedida vão no prompt de sistema do rascunho de resposta. Para muitas solicitações de uma vez, use o processamento em lote.
 
 <!-- examples:end -->

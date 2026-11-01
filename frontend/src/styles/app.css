@@ -4280,6 +4280,52 @@ kbd {
   margin: 2px 0 0;
 }
 
+.example-preview__icon-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.example-teams {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--nd-space-3);
+}
+
+.example-teams__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-sm);
+}
+
+.example-integration {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-2);
+  padding: 12px;
+  border: 1px dashed var(--nd-border);
+  border-radius: var(--nd-radius-md);
+  background: var(--nd-panel);
+}
+
+.example-integration h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.example-integration__label {
+  font-size: 11px;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--nd-text-muted);
+}
+
 .example-input {
   max-height: 260px;
   overflow: auto;

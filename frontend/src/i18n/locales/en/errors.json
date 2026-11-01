@@ -7,6 +7,11 @@
   "not_found": "“{{name}}” was not found. Perhaps it has been deleted in the meantime.",
   "api_key_missing": "No API key for {{provider}}. Enter it in the settings or set its environment variable.",
   "library": "The agent library rejected the configuration.",
+  "examples": {
+    "integration_unavailable": "The chosen MCP server cannot serve this connection: it must offer every tool the example needs, approved as read-only. Nothing was copied.",
+    "integration_unknown": "The example has no connection “{{integration}}”. Reload the page and try again.",
+    "tests_need_offline": "Test series run without a person and cannot use MCP tools. Copy the example in offline mode to take over its test cases."
+  },
   "agentFailed": "The agent stopped with an error ({{type}}).",
   "file": {
     "not_json": "The file is not valid JSON.",
