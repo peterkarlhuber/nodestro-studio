@@ -135,6 +135,7 @@
     "hint": "Descreva a tarefa, as entradas, o resultado desejado e o nível de qualidade. O arquiteto de agentes propõe papel, prompt de sistema, modelo, esforço e ferramentas.",
     "placeholder": "p. ex. Um agente que classifica as solicitações de clientes por urgência e redige uma resposta educada.",
     "review": "Revise a proposta. Ela só é gravada no nó ao clicar em “Aplicar” e continua editável depois.",
+    "costNote": "A proposta usa o seu provedor de IA e custa um valor pequeno. Você vê o custo exato junto com a proposta e em Uso.",
     "cost": "Custo do rascunho: {{cost}}.",
     "role": "Papel",
     "limits": "Limites",

@@ -6,7 +6,7 @@
   "fullText": "Der vollständige Trace enthält alles, was der Lauf gespeichert hat: Eingabe, Prompts, Ausgaben, Tool-Aufrufe, Memory und Konfiguration.",
   "fullWarning": "Gib ihn nur weiter, wenn darin nichts Vertrauliches steht.",
   "sanitizedText": "Der bereinigte Trace ersetzt sensible Stellen durch Platzhalter wie [EMAIL_1]. Gleiche Werte bekommen denselben Platzhalter, so bleibt der Ablauf nachvollziehbar.",
-  "alwaysSecrets": "Immer entfernt: API-Schlüssel, Tokens, Passwörter und private Schlüssel.",
+  "alwaysSecrets": "Immer ersetzt, wenn erkannt: API-Schlüssel, Tokens, Passwörter und private Schlüssel.",
   "personalData": "Personenbezogene Daten ersetzen",
   "personalDataText": "E-Mail-Adressen, Telefonnummern, IBANs, Kartennummern und IP-Adressen.",
   "contents": "Inhalte entfernen",

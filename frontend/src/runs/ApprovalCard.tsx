@@ -11,7 +11,7 @@ import { api } from "../api/client";
 import { keys, useApprovals } from "../api/hooks";
 import type { PendingApproval, Run } from "../api/types";
 import { Output, outputFieldsOf } from "../components/Markdown";
-import { Button, Callout, Field, HelpTip, Section, TextArea } from "../components/ui";
+import { Button, Callout, DisabledReason, Field, HelpTip, Section, TextArea } from "../components/ui";
 import { toast } from "../components/toast";
 import { useEditor } from "../editor/store";
 import { ErrorText } from "../lib/errors";
@@ -114,16 +114,18 @@ export function ApprovalForm({ approval, showContext = false }: { approval: Pend
         <Button variant="primary" icon={Check} busy={decide.isPending && decide.variables === "approved"} disabled={decide.isPending} onClick={() => decide.mutate("approved")}>
           {t("approvals.approve")}
         </Button>
-        <Button
-          variant="danger"
-          icon={X}
-          busy={decide.isPending && decide.variables === "rejected"}
-          disabled={decide.isPending || commentMissing}
-          title={commentMissing ? t("approvals.commentFirst") : undefined}
-          onClick={() => decide.mutate("rejected")}
-        >
-          {t("approvals.reject")}
-        </Button>
+        {/* TX-10: the reason sits next to the button, not only in a native tooltip touch and keyboard users never see. */}
+        <DisabledReason reason={commentMissing ? t("approvals.commentFirst") : undefined} placement="below">
+          <Button
+            variant="danger"
+            icon={X}
+            busy={decide.isPending && decide.variables === "rejected"}
+            disabled={decide.isPending}
+            onClick={() => decide.mutate("rejected")}
+          >
+            {t("approvals.reject")}
+          </Button>
+        </DisabledReason>
       </div>
     </section>
   );

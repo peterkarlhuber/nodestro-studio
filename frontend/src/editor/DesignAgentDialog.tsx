@@ -93,6 +93,9 @@ export function DesignAgentDialog({
               onChange={(e) => setDescription(e.target.value)}
             />
           </Field>
+          <p className="muted small" data-testid="design-cost-note">
+            {t("editor.design.costNote")}
+          </p>
           {design.error ? (
             <Callout tone="danger">
               <ErrorText error={design.error} />

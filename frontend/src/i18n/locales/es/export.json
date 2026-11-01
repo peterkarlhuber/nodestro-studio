@@ -6,7 +6,7 @@
   "fullText": "La traza completa contiene todo lo que guardó la ejecución: entrada, prompts, salidas, llamadas a herramientas, memoria y configuración.",
   "fullWarning": "Compártela solo si no contiene nada confidencial.",
   "sanitizedText": "La traza depurada sustituye las partes sensibles por marcadores como [EMAIL_1]. Los valores iguales reciben el mismo marcador, así el flujo sigue siendo comprensible.",
-  "alwaysSecrets": "Siempre se eliminan: claves de API, tokens, contraseñas y claves privadas.",
+  "alwaysSecrets": "Siempre se reemplazan cuando se reconocen: claves de API, tokens, contraseñas y claves privadas.",
   "personalData": "Sustituir datos personales",
   "personalDataText": "Direcciones de correo, números de teléfono, IBAN, números de tarjeta y direcciones IP.",
   "contents": "Eliminar contenidos",

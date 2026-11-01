@@ -2,6 +2,7 @@
   "button": "Comparar ({{count}}/2)",
   "pickColumn": "Selecionar para comparação",
   "pick": "Selecionar {{name}} de {{date}} para comparação",
+  "rowHeader": "Valor comparado",
   "title": "Comparar execuções",
   "description": "Duas execuções salvas lado a lado: resultado, agentes, modelos, ferramentas, tokens, custo e avaliações.",
   "swap": "Trocar A e B",

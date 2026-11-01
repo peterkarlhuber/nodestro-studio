@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { useUsage } from "../api/hooks";
 import type { UsageBucket, UsageEntry } from "../api/types";
+import { useModelName } from "../components/ModelPicker";
 import { Callout, EmptyState, HelpTip, PageHeader, Segmented, Spinner, Stat } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDate, formatDay, formatNumber, formatTokens } from "../lib/format";
@@ -125,6 +126,7 @@ function PriceBasis({ total }: { total: UsageBucket }) {
 /** The latest AI operations outside workflow runs: agent tests, assistants, tool generation. */
 function RecentOperations({ entries }: { entries: UsageEntry[] }) {
   const { t, i18n } = useTranslation();
+  const modelLabel = useModelName();
   if (!entries.length) return null;
   return (
     <section className="panel stack" aria-label={t("usage.recent")}>
@@ -150,7 +152,7 @@ function RecentOperations({ entries }: { entries: UsageEntry[] }) {
                   {entry.detail && i18n.exists(`usage.detail.${entry.detail}`) ? <strong>{t(`usage.detail.${entry.detail}`)} · </strong> : null}
                   {entry.label}
                 </td>
-                <td>{entry.model}</td>
+                <td title={entry.model || undefined}>{entry.model ? modelLabel(entry.model) : "–"}</td>
                 <td className="num">{formatTokens(entry.usage.total_tokens)}</td>
                 <td className="num">{usageCost(t, entry.usage)}</td>
               </tr>
@@ -167,6 +169,8 @@ export function UsagePage() {
   const [days, setDays] = useState<"7" | "30" | "90">("30");
   const usage = useUsage(Number(days));
   const data = usage.data;
+  // AD-17: models by their display name, like the editor (the id stays in the hover text of recent operations).
+  const modelLabel = useModelName();
   return (
     <div className="page">
       <PageHeader
@@ -226,6 +230,7 @@ export function UsagePage() {
                 title={t("usage.byModel")}
                 first={t("agent.model")}
                 buckets={data.by_model}
+                labelOf={(bucket) => modelLabel(bucket.label)}
                 tip="usage.byModel"
                 countLabel={t("usage.uses")}
               />

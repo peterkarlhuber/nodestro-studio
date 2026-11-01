@@ -87,9 +87,10 @@ export function formatDuration(start: string | null | undefined, end: string | n
 }
 
 export function formatBytes(size: number): string {
-  const unit = (value: number, name: string, digits: number) =>
-    formatNumber(value, { style: "unit", unit: name, unitDisplay: "short", maximumFractionDigits: digits, minimumFractionDigits: digits });
-  if (size < 1024) return unit(size, "byte", 0);
+  const unit = (value: number, name: string, digits: number, display: "short" | "long" = "short") =>
+    formatNumber(value, { style: "unit", unit: name, unitDisplay: display, maximumFractionDigits: digits, minimumFractionDigits: digits });
+  // Bytes spelled out: the short form has no plural in English ("0 byte", AD-17).
+  if (size < 1024) return unit(size, "byte", 0, "long");
   if (size < 1024 * 1024) return unit(size / 1024, "kilobyte", 1);
   return unit(size / 1024 / 1024, "megabyte", 1);
 }
@@ -101,6 +102,15 @@ export function relativeTime(value: string): string {
   if (seconds < 3600) return rtf.format(-Math.round(seconds / 60), "minute");
   if (seconds < 86400) return rtf.format(-Math.round(seconds / 3600), "hour");
   return rtf.format(-Math.round(seconds / 86400), "day");
+}
+
+/**
+ * "changed …" for a card: "changed just now" under a minute (TX-14; the relative format alone reads "changed now",
+ * de "geändert jetzt"), otherwise "changed 5 minutes ago".
+ */
+export function changedText(t: (key: string, options?: Record<string, unknown>) => string, value: string): string {
+  const seconds = (Date.now() - new Date(value).getTime()) / 1000;
+  return seconds < 60 ? t("workflows.changedJustNow") : t("common.changed", { time: relativeTime(value) });
 }
 
 export type Tone = "success" | "running" | "warning" | "danger" | "idle";

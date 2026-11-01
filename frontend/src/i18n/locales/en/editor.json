@@ -135,6 +135,7 @@
     "hint": "Describe the task, inputs, desired result and quality standard. The Agent Architect proposes role, system prompt, model, effort and tools.",
     "placeholder": "e.g. An agent that rates incoming customer requests by urgency and drafts a polite reply.",
     "review": "Review the proposal. It is written into the node only when you click “Apply”, and stays editable afterwards.",
+    "costNote": "Creating the proposal uses your AI provider and costs a small amount. You see the exact cost with the proposal and under Usage.",
     "cost": "Cost of the draft: {{cost}}.",
     "role": "Role",
     "limits": "Limits",

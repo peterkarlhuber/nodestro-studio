@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import i18n, { type Language } from "../i18n";
 import {
+  changedText,
   formatBytes,
   formatCost,
   formatDate,
@@ -69,6 +70,8 @@ describe("format", () => {
   it("formats sizes and durations", async () => {
     await inLanguage("en");
     expect(formatBytes(2048)).toBe("2.0 kB");
+    expect(formatBytes(0)).toBe("0 bytes");
+    expect(formatBytes(1)).toBe("1 byte");
     expect(formatDuration("2026-01-01T00:00:00Z", "2026-01-01T00:00:02.500Z")).toBe("2.5 s");
     expect(formatDuration("2026-01-01T00:00:00Z", "2026-01-01T00:01:05Z")).toBe("1 min 5 s");
     await inLanguage("de");
@@ -76,6 +79,13 @@ describe("format", () => {
     expect(formatDuration("2026-01-01T00:00:00Z", "2026-01-01T00:00:02.500Z")).toBe("2,5 s");
     await inLanguage("fr");
     expect(normalize(formatBytes(2048))).toBe("2,0 ko");
+  });
+
+  it("says a card was changed just now instead of \"changed now\" (TX-14)", async () => {
+    await inLanguage("de");
+    const t = (key: string, options?: Record<string, unknown>) => i18n.t(key, options);
+    expect(changedText(t, new Date().toISOString())).toBe("gerade eben geändert");
+    expect(changedText(t, new Date(Date.now() - 5 * 60_000).toISOString())).toBe("geändert vor 5 Minuten");
   });
 
   it("explains token totals in the interface language", async () => {

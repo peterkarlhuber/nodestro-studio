@@ -120,7 +120,8 @@ export function SettingsPage() {
 
         <section className="panel stack" aria-labelledby="settings-models">
           <h2 className="panel__title" id="settings-models">
-            <Cpu size={15} aria-hidden /> {t("settings.models.title")}
+            <Cpu size={15} aria-hidden /> {t("settings.models.title")}{" "}
+            <HelpTip id="settings.defaultModel" label={t("settings.models.title")} />
           </h2>
           {settings.data ? <DefaultModelNotice settings={settings.data} /> : null}
           <Field label={t("settings.models.defaultModel")} tip="settings.defaultModel" hint={defaultHint ?? t("settings.models.defaultHint")}>

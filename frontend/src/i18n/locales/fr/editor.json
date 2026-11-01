@@ -135,6 +135,7 @@
     "hint": "Décrivez la tâche, les entrées, le résultat souhaité et le niveau d’exigence. L’architecte d’agents propose rôle, prompt système, modèle, effort et outils.",
     "placeholder": "p. ex. Un agent qui classe les demandes clients par urgence et rédige une réponse courtoise.",
     "review": "Vérifiez la proposition. Elle n’est écrite dans le nœud qu’avec « Appliquer » et reste modifiable ensuite.",
+    "costNote": "La proposition utilise votre fournisseur d’IA et coûte un petit montant. Vous voyez le coût exact avec la proposition et dans Utilisation.",
     "cost": "Coût du brouillon : {{cost}}.",
     "role": "Rôle",
     "limits": "Limites",

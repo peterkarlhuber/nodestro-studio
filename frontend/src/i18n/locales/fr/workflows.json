@@ -52,5 +52,6 @@
     "text": "Workflows auxquels un orchestrateur peut déléguer (ils déclarent des capacités ou un contrat de sortie). Les copies d’exemples orchestrés apportent leurs équipes.",
     "badge": "Équipe",
     "badgeHint": "Un orchestrateur peut déléguer du travail à ce workflow"
-  }
+  },
+  "changedJustNow": "modifié à l’instant"
 }

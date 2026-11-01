@@ -6,7 +6,7 @@
   "fullText": "O trace completo contém tudo o que a execução salvou: entrada, prompts, saídas, chamadas de ferramentas, memória e configuração.",
   "fullWarning": "Compartilhe-o apenas se não contiver nada confidencial.",
   "sanitizedText": "O trace higienizado substitui trechos sensíveis por marcadores como [EMAIL_1]. Valores iguais recebem o mesmo marcador, assim o fluxo continua compreensível.",
-  "alwaysSecrets": "Sempre removidos: chaves de API, tokens, senhas e chaves privadas.",
+  "alwaysSecrets": "Sempre substituídos quando reconhecidos: chaves de API, tokens, senhas e chaves privadas.",
   "personalData": "Substituir dados pessoais",
   "personalDataText": "Endereços de e-mail, telefones, IBANs, números de cartão e endereços IP.",
   "contents": "Remover conteúdos",
