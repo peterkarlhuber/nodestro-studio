@@ -5,6 +5,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { request } from "./client";
+import type { DependencyPlan, DependencyStatus } from "./types";
 
 export type McpAuth = "none" | "bearer" | "oauth";
 /** none: no token; vault: sealed with the keychain or server key; session: kept in memory until the app closes. */
@@ -13,6 +14,16 @@ export type McpTokenStorage = "none" | "vault" | "session";
 export type McpToolStatus = "new" | "approved" | "rejected" | "changed" | "removed";
 /** The administrator's classification; a missing or unknown statement counts as "changes data". */
 export type McpAccess = "read" | "write" | "destructive";
+/** http: a remote server (Streamable HTTP); stdio: a local Python server in the Docker sandbox's container (WP-8). */
+export type McpTransport = "http" | "stdio";
+
+/** A local server: hash-pinned PyPI packages and the module started with ``python -m`` (no network, no host files). */
+export interface McpStdioCommand {
+  requirements: string[];
+  module: string;
+  args?: string[];
+  memory_mb?: number;
+}
 
 export interface McpStatus {
   available: boolean;
@@ -21,13 +32,22 @@ export interface McpStatus {
   loopback_possible: boolean;
   unattended_enabled: boolean;
   write_tools_enabled: boolean;
+  /** Local stdio servers are possible: the Docker sandbox runs tools here. */
+  stdio_possible: boolean;
 }
 
 export interface McpServer {
   id: string;
   slug: string;
   name: string;
+  /** For a local server: ``stdio:<module>``. */
   url: string;
+  transport: McpTransport;
+  stdio: McpStdioCommand | null;
+  /** A local server's package environment (python.state.*); empty for remote servers. */
+  environment_state: string;
+  /** OAuth summary (issuer, scope, expires_at, pending_until); never tokens. */
+  oauth: Record<string, unknown>;
   enabled: boolean;
   allow_loopback: boolean;
   auth: McpAuth;
@@ -51,7 +71,9 @@ export interface McpServer {
 
 export interface McpServerIn {
   name: string;
-  url: string;
+  url?: string;
+  transport?: McpTransport;
+  stdio?: McpStdioCommand | null;
   enabled?: boolean;
   allow_loopback?: boolean;
   auth?: McpAuth;
@@ -117,6 +139,22 @@ export interface McpEvent {
   details: Record<string, unknown>;
 }
 
+/** Operational state for administrators (WP-7). */
+export interface McpServerHealth {
+  calls: number;
+  failures: number;
+  consecutive_failures: number;
+  cooling_down_seconds: number;
+  last_duration_ms: number | null;
+  last_error_code: string | null;
+}
+
+export interface McpStats {
+  active_calls: number;
+  limits: Record<string, number>;
+  servers: Record<string, McpServerHealth>;
+}
+
 const server = (id: string) => `/mcp/servers/${encodeURIComponent(id)}`;
 
 export const mcpApi = {
@@ -130,6 +168,12 @@ export const mcpApi = {
   decide: (id: string, tool: string, body: McpDecision) =>
     request<McpTool>("POST", `${server(id)}/tools/${encodeURIComponent(tool)}/decision`, body),
   events: (limit = 100) => request<McpEvent[]>("GET", `/mcp/events?limit=${limit}`),
+  stats: () => request<McpStats>("GET", "/mcp/stats"),
+  /** OAuth sign-in (WP-6): the browser opens the returned URL and comes back to /tools?tab=services. */
+  oauthStart: (id: string) => request<{ authorization_url: string }>("POST", `${server(id)}/oauth/start`),
+  oauthSignOut: (id: string) => request<McpServer>("POST", `${server(id)}/oauth/sign-out`),
+  environment: (id: string) => request<DependencyStatus>("GET", `${server(id)}/environment`),
+  environmentPlan: (id: string) => request<DependencyPlan>("POST", `${server(id)}/environment/plan`),
 };
 
 export const mcpKeys = {
@@ -138,15 +182,22 @@ export const mcpKeys = {
   servers: ["mcp", "servers"] as const,
   tools: (id: string) => ["mcp", "tools", id] as const,
   events: ["mcp", "events"] as const,
+  stats: ["mcp", "stats"] as const,
+  environment: (id: string) => ["mcp", "environment", id] as const,
 };
 
 export const useMcpStatus = () => useQuery({ queryKey: mcpKeys.status, queryFn: mcpApi.status });
 export const useMcpServers = () => useQuery({ queryKey: mcpKeys.servers, queryFn: mcpApi.servers });
 export const useMcpTools = (id: string) => useQuery({ queryKey: mcpKeys.tools(id), queryFn: () => mcpApi.tools(id) });
+export const useMcpStats = (enabled: boolean) =>
+  useQuery({ queryKey: mcpKeys.stats, queryFn: mcpApi.stats, enabled, refetchInterval: enabled ? 10_000 : false });
 export const useMcpEvents = (enabled: boolean) =>
   useQuery({ queryKey: mcpKeys.events, queryFn: () => mcpApi.events(), enabled });
 
 /** Tools waiting for the administrator: new or changed definitions. */
+/** The tool that reads a server's listed resources (WP-10); `/` cannot occur in a server's own tool names. */
+export const RESOURCE_TOOL = "resources/read";
+
 export const needsDecision = (tool: McpTool) => tool.status === "new" || tool.status === "changed";
 
 export interface DefinitionChange {

@@ -190,6 +190,38 @@ Por ahora solo se pueden usar las herramientas que clasifiques como **solo lectu
 
 **Límites:** Nodestro nunca se conecta a direcciones internas, locales o de metadatos, comprueba cada dirección resuelta en el momento de conectar e ignora la configuración de proxy del entorno. En un servidor, el operador permite las direcciones con `NODESTRO_MCP_ENDPOINTS`. Las planificaciones, los lotes y las API publicadas solo usan herramientas de servicios si el operador lo activa expresamente. Nodestro no conoce el coste de los servicios externos; aparece como **desconocido**, nunca como cero.
 
+**Funcionamiento:** en *Funcionamiento* los administradores ven cuántas llamadas a servicios están en curso, los límites del operador y, por servicio, las llamadas, los fallos y la duración de la última llamada. Un servicio que falla varias veces seguidas se pausa brevemente.
+
+## Iniciar sesión en un servicio {#mcp-anmeldung}
+<!-- keywords: mcp, oauth, iniciar sesión, login, autorización, acceso, renovar -->
+
+Algunos servicios no usan un token fijo, sino un **inicio de sesión (OAuth)**. Elige *OAuth* como inicio de sesión al conectar el servicio y guarda. Después haz clic en **Iniciar sesión**: Nodestro abre la página de inicio de sesión del servicio, confirmas allí el acceso y vuelves a *Herramientas → Servicios conectados*. Prueba la conexión para cargar las herramientas.
+
+- Nodestro guarda el acceso cifrado como un token y lo renueva por sí mismo. Ves dónde has iniciado sesión, con qué permisos y cuándo se renueva el acceso; el acceso en sí nunca se muestra.
+- **Cerrar sesión** elimina el acceso guardado. Cuando el servicio pide un nuevo inicio de sesión, las ejecuciones que lo usan fallan con un mensaje claro hasta que vuelvas a iniciar sesión.
+- En un servidor, el operador configura la dirección pública de Nodestro; el regreso del inicio de sesión solo va allí.
+
+## Documentos de un servicio {#mcp-dokumente}
+<!-- keywords: mcp, resources, recursos, documentos, contexto, leer -->
+
+Si un servicio ofrece **documentos** (recursos MCP), al probar la conexión aparece una herramienta más, `resources/read`, con la indicación *Documentos del servicio*. La revisas como cualquier otra herramienta: su descripción enumera los documentos que un agente puede leer.
+
+- Solo se pueden leer los documentos enumerados; los patrones de direcciones y otras direcciones quedan excluidos.
+- Si el servicio cambia su lista, la herramienta queda bloqueada hasta que revises la nueva lista.
+- Los contenidos son datos externos, como cualquier resultado de un servicio. Nodestro no pasa contenido binario, como imágenes, al modelo.
+- Nodestro no permite que un servicio te haga preguntas, haga sus propias llamadas al modelo ni acceda a tus carpetas.
+
+## Servidores locales {#lokale-dienste}
+<!-- keywords: mcp, stdio, servidor local, pypi, contenedor, docker, paquetes -->
+
+Además de servicios remotos, puedes ejecutar un **servidor MCP local** de PyPI, por ejemplo un servicio de hora o de cálculo. Elige *Servidor local* como tipo, indica los paquetes (uno por línea) y el módulo que se inicia con `python -m`.
+
+1. **Revisar los paquetes:** Nodestro resuelve las versiones exactas con sus hashes. Las ves y las apruebas, como con las bibliotecas de una herramienta. Antes no se instala nada.
+2. **Instalación:** los paquetes van a una imagen de contenedor propia.
+3. **Probar la conexión:** el servidor se inicia en un contenedor aislado y muestra sus herramientas. A partir de aquí, la revisión y la aprobación son las mismas que para los servicios remotos.
+
+El contenedor **no tiene red**, ni acceso a tus archivos, claves u otros procesos, y tiene memoria y procesos limitados. Por eso los servidores locales solo están disponibles cuando se usa el sandbox de Docker; los servidores que necesitan Internet o Node.js no se pueden ejecutar así. Un servidor local no recibe token ni inicio de sesión.
+
 ## Versiones y eliminación {#versionen}
 <!-- keywords: versión, eliminar, retirar, revoke, actualizar, sobrescribir -->
 

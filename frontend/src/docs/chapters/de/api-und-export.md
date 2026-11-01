@@ -146,6 +146,15 @@ Standardmäßig antworten veröffentlichte APIs nur diesem Computer. Andere Ger�
 
 Über diesen Port ist nur die veröffentlichte API erreichbar, nie die Oberfläche von Nodestro, seine Einstellungen oder andere Workflows. Ist der Port belegt, zeigt der Dialog das an und Nodestro läuft normal weiter. Nach dem Wiederherstellen eines Backups ist der Netzwerkzugriff wieder aus.
 
+## Als MCP-Tool {#mcp-server}
+<!-- keywords: mcp-server, mcp-tool, ki-assistent, claude, client, tool -->
+
+Eine veröffentlichte API kann auch als **Tool für MCP-Clients** auf diesem Computer angeboten werden, zum Beispiel für einen KI-Assistenten. Das ist standardmäßig aus und braucht zwei Schalter: Der Betreiber startet Nodestro mit `NODESTRO_MCP_SERVER=1`, und du schaltest unter *Zugriff* **Als MCP-Tool anbieten** ein.
+
+- Der Client verbindet sich auf diesem Computer mit `/api/published/_mcp` und sendet einen API-Schlüssel als Bearer-Token. Er sieht die angebotenen APIs dieses Schlüssels als Tools, benannt nach der API; der Schlüssel braucht die Berechtigung, Läufe zu starten.
+- Jeder Tool-Aufruf ist ein **normaler Lauf** der veröffentlichten API: dieselbe Version, dieselben Grenzen, Budgets, Freigaben und derselbe Verlauf. Ist synchrones Warten eingeschaltet, enthält die Antwort das Ergebnis; sonst, oder wenn ein Lauf an einer Freigabe hält, nennt sie den Lauf, damit du ihn in Nodestro oder über die API verfolgen kannst.
+- Clients auf anderen Computern können es nicht nutzen, auch nicht über den Netzwerkzugriff.
+
 ## Sicherheit {#sicherheit}
 <!-- keywords: sicherheit, tls, https, verschlüsselung, internet, reverse proxy, zertifikat, backup, geheimnisse -->
 

@@ -453,7 +453,10 @@
     "knowledge_live_other": "{{count}} fichiers de connaissances sont utilisés tels qu’ils sont au moment de l’exécution (non figés).",
     "memory_shared": "La mémoire persistante ({{spaces}}) est partagée par Nodestro et chaque exécution API.",
     "no_budget": "Les exécutions n’ont pas de limite de coût ; définissez un budget pour le workflow ou un budget journalier pour l’API.",
-    "subworkflow_unsaved": "{{name}} : le sous-workflow n’a pas de version enregistrée."
+    "subworkflow_unsaved": "{{name}} : le sous-workflow n’a pas de version enregistrée.",
+    "mcp_tool_unusable": "Un outil de service de ce workflow n'est pas utilisable actuellement ; il ne peut pas être publié.",
+    "mcp_tools": "Les outils de service sont figés dans cette version ; une modification ultérieure du service l'arrête jusqu'à une nouvelle publication.",
+    "mcp_unattended_off": "Les exécutions d'API n'utilisent les outils de service que si l'exploitant autorise l'utilisation sans surveillance (NODESTRO_MCP_UNATTENDED)."
   },
   "export": {
     "knowledge_missing": "{{name}} n’existe plus.",
@@ -474,7 +477,8 @@
     "file_changed": "Le fichier ZIP de cet export a été modifié ; exportez à nouveau.",
     "provider": "{{provider}} : définissez {{variables}} dans l’environnement du projet exporté.",
     "base_url_withheld": "L’URL de base de {{provider}} contient des identifiants et n’est pas exportée ; définissez {{variable}} dans le projet exporté.",
-    "integration_tools": "Les outils des intégrations installées ne peuvent pas encore être exportés : {{tools}}."
+    "integration_tools": "Les outils des intégrations installées ne peuvent pas encore être exportés : {{tools}}.",
+    "mcp_tools": "Les versions avec des outils de service ne peuvent pas être exportées : le projet exporté n'a aucune connexion aux services."
   },
   "lan": {
     "tls_file_missing": "Fichier introuvable : {{path}}",
@@ -661,7 +665,27 @@
     "url_credentials": "L'adresse ne doit contenir ni nom d'utilisateur ni mot de passe.",
     "url_invalid": "L'adresse n'est pas valide.",
     "vault_unavailable": "Il n'existe aucun stockage sécurisé pour les jetons d'accès.",
-    "write_not_supported": "Les outils qui modifient des données sont encore bloqués (l'approbation par appel manque)."
+    "write_not_supported": "Les outils qui modifient des données sont encore bloqués (l'approbation par appel manque).",
+    "cooling_down": "{{server}} a échoué plusieurs fois de suite ; les appels sont brièvement suspendus.",
+    "environment_not_ready": "Les paquets de {{server}} ne sont pas encore approuvés et installés.",
+    "limits_invalid": "{{variable}} n'est pas une limite valide.",
+    "oauth_denied": "La connexion a été refusée par le service.",
+    "oauth_expired": "La connexion a pris trop de temps. Recommencez.",
+    "oauth_failed": "La connexion a échoué.",
+    "oauth_not_configured": "Le service ne décrit aucune connexion.",
+    "oauth_not_required": "Ce service n'utilise pas OAuth.",
+    "oauth_reauthorize": "{{server}} demande une nouvelle connexion.",
+    "oauth_redirect_invalid": "L'adresse de retour de la connexion n'est pas configurée (adresse publique du serveur).",
+    "oauth_registration_unsupported": "Le service ne permet pas à Nodestro de s'enregistrer pour la connexion.",
+    "oauth_state_invalid": "La connexion ne correspond à aucune demande d'ici. Recommencez.",
+    "oauth_token_input": "Ce service obtient son accès par la connexion, pas par un jeton collé.",
+    "overloaded": "Tous les emplacements d'appel de service sont restés occupés ; réessayez dans un instant.",
+    "rate_limited": "{{server}} a reçu trop d'appels au cours de la dernière minute.",
+    "release_tool_changed": "Un outil de service de cette version publiée a changé ; publiez à nouveau l'API.",
+    "stdio_failed": "{{server}} n'a pas pu démarrer ou a mis fin à la connexion.",
+    "stdio_invalid": "Les paramètres du serveur local ne sont pas valides (paquets, module, ni jeton ni connexion).",
+    "too_many_servers": "Impossible de connecter d'autres services ({{limit}} au maximum).",
+    "tool_not_in_release": "Cet outil ne fait pas partie de la version publiée."
   },
   "orchestration": {
     "unknown_member": "Cette équipe ne fait pas partie du groupe.",
@@ -674,5 +698,8 @@
     "answer_too_long": "La réponse finale était trop longue.",
     "finished": "L’orchestration était déjà terminée.",
     "invalid_decision": "La réponse n’était pas une décision valide."
+  },
+  "mcp_server": {
+    "disabled": "Le serveur MCP de Nodestro est désactivé."
   }
 }

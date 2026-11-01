@@ -287,5 +287,12 @@
       "judge_score": "AI rating {{value}} (required {{threshold}})",
       "judge_missing": "no AI rating in the test run (required {{threshold}})"
     }
+  },
+  "mcpTool": {
+    "title": "As an MCP tool",
+    "intro": "MCP clients on this computer, for example an AI assistant, can call this API as a tool. Every call is an ordinary run with the client's API key: same limits, budgets, approvals and history.",
+    "offer": "Offer as an MCP tool",
+    "offerHint": "Takes effect only when the operator starts Nodestro with NODESTRO_MCP_SERVER=1. The client needs an API key with the permission to start runs.",
+    "howToUse": "Enter this address in the MCP client and send the API key as a Bearer token; the tool is called {{name}}."
   }
 }

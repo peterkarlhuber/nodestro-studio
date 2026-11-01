@@ -1,7 +1,7 @@
 // Who may call the API (keys with permissions) and from where (this computer, or the network).
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Ban, KeyRound, RefreshCw, ShieldAlert, Trash2, Wifi } from "lucide-react";
+import { Ban, KeyRound, PlugZap, RefreshCw, ShieldAlert, Trash2, Wifi } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -95,6 +95,11 @@ export function ApiAccess({ overview, onChanged }: { overview: ApiOverview; onCh
   });
   const share = useMutation({
     mutationFn: (value: boolean) => api.updatePublication(publication!.id, { network: value }),
+    onSuccess: onChanged,
+    onError: (error) => toast.error(error),
+  });
+  const offer = useMutation({
+    mutationFn: (value: boolean) => api.updatePublication(publication!.id, { mcp_tool: value }),
     onSuccess: onChanged,
     onError: (error) => toast.error(error),
   });
@@ -218,6 +223,29 @@ export function ApiAccess({ overview, onChanged }: { overview: ApiOverview; onCh
           />
         ) : null}
       </section>
+
+      {publication ? (
+        <section className="stack-sm" data-testid="api-mcp-tool">
+          <h3 className="api-heading">
+            <PlugZap size={15} aria-hidden /> {t("publish.mcpTool.title")}
+          </h3>
+          <p className="muted small">{t("publish.mcpTool.intro")}</p>
+          <Toggle
+            checked={publication.mcp_tool ?? false}
+            onChange={(value) => offer.mutate(value)}
+            disabled={offer.isPending}
+            label={t("publish.mcpTool.offer")}
+            description={t("publish.mcpTool.offerHint")}
+            tip="publish.mcpTool"
+          />
+          {publication.mcp_tool ? (
+            <>
+              <code className="small">{`${window.location.origin}/api/published/_mcp`}</code>
+              <p className="muted small">{t("publish.mcpTool.howToUse", { name: publication.slug })}</p>
+            </>
+          ) : null}
+        </section>
+      ) : null}
 
       <ShownOnce created={created} onClose={() => setCreated(null)} />
       <Modal

@@ -146,6 +146,15 @@ Por padrão, as APIs publicadas só respondem a este computador. Outros disposit
 
 Essa porta só atende as APIs publicadas, nunca a interface do Nodestro, suas configurações ou outros fluxos. Se a porta estiver ocupada, a caixa de diálogo avisa e o Nodestro continua funcionando normalmente. Depois de restaurar um backup, o acesso pela rede fica desligado de novo.
 
+## Como ferramenta MCP {#mcp-server}
+<!-- keywords: servidor mcp, ferramenta mcp, assistente de ia, claude, cliente, ferramenta -->
+
+Uma API publicada também pode ser oferecida como **ferramenta para clientes MCP** neste computador, por exemplo um assistente de IA. Isso vem desligado e precisa de duas chaves: o operador inicia o Nodestro com `NODESTRO_MCP_SERVER=1` e você liga **Oferecer como ferramenta MCP** em *Acesso*.
+
+- O cliente se conecta a `/api/published/_mcp` neste computador e envia uma chave de API como token Bearer. Ele vê as APIs oferecidas dessa chave como ferramentas, com o nome da API; a chave precisa de permissão para iniciar execuções.
+- Cada chamada da ferramenta é uma **execução normal** da API publicada: mesma versão, mesmos limites, orçamentos, aprovações e histórico. Se a espera síncrona estiver ligada, a resposta traz o resultado; caso contrário, ou se uma execução parar em uma aprovação, ela informa a execução para você acompanhá-la no Nodestro ou pela API.
+- Clientes em outros computadores não podem usá-la, nem pelo acesso de rede.
+
 ## Segurança {#sicherheit}
 <!-- keywords: segurança, tls, https, criptografia, internet, proxy reverso, reverse proxy, certificado, backup, segredos -->
 

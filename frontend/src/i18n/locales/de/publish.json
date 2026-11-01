@@ -287,5 +287,12 @@
       "judge_score": "KI-Bewertung {{value}} (verlangt {{threshold}})",
       "judge_missing": "keine KI-Bewertung im Testlauf (verlangt {{threshold}})"
     }
+  },
+  "mcpTool": {
+    "title": "Als MCP-Tool",
+    "intro": "MCP-Clients auf diesem Computer, zum Beispiel ein KI-Assistent, können diese API als Tool aufrufen. Jeder Aufruf ist ein normaler Lauf mit dem API-Schlüssel des Clients: dieselben Grenzen, Budgets, Freigaben und derselbe Verlauf.",
+    "offer": "Als MCP-Tool anbieten",
+    "offerHint": "Wirkt erst, wenn der Betreiber Nodestro mit NODESTRO_MCP_SERVER=1 startet. Der Client braucht einen API-Schlüssel mit der Berechtigung, Läufe zu starten.",
+    "howToUse": "Trage diese Adresse im MCP-Client ein und sende den API-Schlüssel als Bearer-Token; das Tool heißt {{name}}."
   }
 }

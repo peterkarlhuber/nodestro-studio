@@ -81,7 +81,9 @@
     "sandbox": "Las herramientas propias y las creadas por IA nunca se ejecutan en el proceso de Nodestro, sino aisladas, con límites de tiempo y de memoria.",
     "drafts": "Herramientas escritas por el arquitecto de flujos. Pruébalas y apruébalas aquí, o recházalas.",
     "services": "Servicios externos mediante MCP: conectas un servidor, pruebas la conexión y apruebas cada herramienta tras revisarla. Si el servicio modifica una herramienta, queda bloqueada hasta que revises el cambio.",
-    "callApproval": "Una persona decide sobre cada llamada a esta herramienta, con los argumentos exactos. Sin decisión dentro del plazo, la llamada cuenta como rechazada."
+    "callApproval": "Una persona decide sobre cada llamada a esta herramienta, con los argumentos exactos. Sin decisión dentro del plazo, la llamada cuenta como rechazada.",
+    "servicesLocal": "Un servidor MCP local se ejecuta en un contenedor aislado. Sus paquetes se revisan y aprueban como las bibliotecas de una herramienta.",
+    "servicesOAuth": "Algunos servicios exigen iniciar sesión. Nodestro abre su página de inicio de sesión y guarda el acceso cifrado."
   },
   "knowledge": {
     "upload": "PDF, imágenes (PNG, JPEG, GIF, WebP) y formatos de texto. Imágenes de hasta 5 MB, documentos de hasta 20 MB. Los textos y los PDF se indexan para la búsqueda.",
@@ -242,7 +244,8 @@
     "library": "Cómo obtiene Orkexa el proyecto exportado: desde su repositorio Git o como código fuente incluido (licencia MIT).",
     "export": "Genera el proyecto como ZIP: runtime, versión del flujo, pruebas, ejemplos y README. No se envía nada a ningún sitio.",
     "gate": "Exige un resultado de pruebas actual antes de cada nueva versión. Las comprobaciones obligatorias siempre bloquean; los resultados más débiles se pueden publicar con un motivo.",
-    "gateOverride": "El motivo se guarda con la versión y en el historial de la API. Las comprobaciones obligatorias nunca se pueden omitir."
+    "gateOverride": "El motivo se guarda con la versión y en el historial de la API. Las comprobaciones obligatorias nunca se pueden omitir.",
+    "mcpTool": "Permite que los clientes MCP de este equipo inicien esta API como herramienta. Desactivado por defecto; el operador también debe activarlo."
   },
   "inputs": {
     "field": "Archivos para esta ejecución: súbelos, arrástralos o elígelos de conocimiento. Se comprueban y se guardan solo para la ejecución, no en el conocimiento.",

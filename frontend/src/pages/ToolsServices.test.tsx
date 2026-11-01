@@ -1,9 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { definitionChanges } from "../api/mcp";
+import { useToasts } from "../components/toast";
 
 import { ServicesTab } from "./ToolsServices";
 
@@ -14,6 +16,7 @@ const STATUS = {
   loopback_possible: true,
   unattended_enabled: false,
   write_tools_enabled: false,
+  stdio_possible: false,
 };
 
 const SERVER = {
@@ -21,6 +24,10 @@ const SERVER = {
   slug: "docs",
   name: "Docs",
   url: "https://docs.example.com/mcp",
+  transport: "http",
+  stdio: null,
+  environment_state: "",
+  oauth: {},
   enabled: true,
   allow_loopback: false,
   auth: "bearer",
@@ -96,7 +103,9 @@ function serve(route: Route) {
 }
 
 const routes =
-  (overrides: { status?: unknown; servers?: unknown; tools?: unknown } = {}): Route =>
+  (
+    overrides: { status?: unknown; servers?: unknown; tools?: unknown; stats?: unknown; environment?: unknown } = {},
+  ): Route =>
   (method, url, body) => {
     if (url === "/api/mcp/status") return overrides.status ?? STATUS;
     if (url === "/api/mcp/servers" && method === "GET") return overrides.servers ?? [SERVER];
@@ -105,11 +114,18 @@ const routes =
     if (url === "/api/mcp/servers/mcp_1/tools/search/decision") return { ...TOOL, status: "approved" };
     if (url.startsWith("/api/mcp/events")) return [];
     if (url === "/api/tools") return [];
+    if (url === "/api/mcp/stats") return overrides.stats ?? { active_calls: 0, limits: {}, servers: {} };
+    if (url === "/api/mcp/servers/mcp_1/oauth/start") return { authorization_url: "https://auth.example.com/authorize?x=1" };
+    if (url === "/api/mcp/servers/mcp_1/environment") return overrides.environment;
     throw new Error(`unexpected ${method} ${url}`);
   };
 
-const renderWith = (node: React.ReactNode) =>
-  render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>{node}</QueryClientProvider>);
+const renderWith = (node: React.ReactNode, path = "/tools?tab=services") =>
+  render(
+    <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+      <MemoryRouter initialEntries={[path]}>{node}</MemoryRouter>
+    </QueryClientProvider>,
+  );
 
 afterEach(() => {
   cleanup();
@@ -137,6 +153,31 @@ describe("ServicesTab", () => {
           body: JSON.stringify({ approve: true, access: "read", expected_hash: "a".repeat(64) }),
         }),
       ),
+    );
+  });
+
+  it("explains the resource reader and sends its name encoded", async () => {
+    const reader = {
+      ...TOOL,
+      name: "resources/read",
+      tool_name: "mcp__docs__resources_read_1a2b3c4d",
+      definition: {
+        ...definition("Read one of the documents (resources) this MCP service offers. Available:\n- docs://travel"),
+        name: "resources/read",
+        title: "Read resources",
+      },
+    };
+    const fetch = serve((method, url, body) =>
+      url === "/api/mcp/servers/mcp_1/tools/resources%2Fread/decision" ? { ...reader, status: "approved" } : routes({ tools: [reader] })(method, url, body),
+    );
+    renderWith(<ServicesTab />);
+    const review = await screen.findByTestId("mcp-review-resources/read");
+    expect(within(review).getByText(/liest nur die Dokumente, die der Dienst auflistet/)).toBeInTheDocument();
+    expect(within(review).getByText(/docs:\/\/travel/).closest("blockquote")).toHaveClass("foreign-text");
+    await userEvent.click(within(review).getByRole("radio", { name: "Nur lesend" }));
+    await userEvent.click(within(review).getByRole("button", { name: "Freigeben" }));
+    await waitFor(() =>
+      expect(fetch).toHaveBeenCalledWith("/api/mcp/servers/mcp_1/tools/resources%2Fread/decision", expect.objectContaining({ method: "POST" })),
     );
   });
 
@@ -172,6 +213,79 @@ describe("ServicesTab", () => {
     renderWith(<ServicesTab />);
     expect(await screen.findByText(/keine Adressen für MCP freigegeben/)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Dienst verbinden" })).toBeDisabled();
+  });
+});
+
+describe("ServicesTab: sign-in, local servers, operation", () => {
+  it("starts an OAuth sign-in and leaves the page for the authorization server", async () => {
+    const assign = vi.fn();
+    vi.stubGlobal("location", { ...window.location, assign, origin: "http://127.0.0.1" });
+    const fetch = serve(routes({ servers: [{ ...SERVER, auth: "oauth", token_set: false, oauth: { issuer: "https://auth.example.com" } }], tools: [] }));
+    renderWith(<ServicesTab />);
+    expect(await screen.findByTestId("mcp-oauth")).toHaveTextContent(/Nicht angemeldet.*auth\.example\.com/);
+    await userEvent.click(screen.getByRole("button", { name: "Anmelden" }));
+    await waitFor(() => expect(assign).toHaveBeenCalledWith("https://auth.example.com/authorize?x=1"));
+    expect(fetch).toHaveBeenCalledWith("/api/mcp/servers/mcp_1/oauth/start", expect.objectContaining({ method: "POST" }));
+  });
+
+  it("offers local servers only with the container sandbox and sends packages and module", async () => {
+    serve(routes({ servers: [] }));
+    renderWith(<ServicesTab />);
+    await userEvent.click(await screen.findByRole("button", { name: "Dienst verbinden" }));
+    expect(screen.queryByRole("radio", { name: "Lokaler Server" })).not.toBeInTheDocument();
+    cleanup();
+    const fetch = serve(routes({ servers: [], status: { ...STATUS, stdio_possible: true } }));
+    renderWith(<ServicesTab />);
+    await userEvent.click(await screen.findByRole("button", { name: "Dienst verbinden" }));
+    await userEvent.click(screen.getByRole("radio", { name: "Lokaler Server" }));
+    expect(screen.queryByLabelText("Adresse")).not.toBeInTheDocument();
+    await userEvent.type(screen.getByLabelText("Name"), "Time");
+    await userEvent.type(screen.getByLabelText("Pakete"), "mcp-server-time");
+    await userEvent.type(screen.getByLabelText("Modul"), "mcp_server_time");
+    await userEvent.click(screen.getByRole("button", { name: "Speichern" }));
+    await waitFor(() => {
+      const call = fetch.mock.calls.find(([path, init]) => path === "/api/mcp/servers" && init?.method === "POST");
+      expect(call).toBeDefined();
+      const sent = JSON.parse(String(call![1]!.body));
+      expect(sent).toMatchObject({
+        name: "Time",
+        transport: "stdio",
+        auth: "none",
+        allow_loopback: false,
+        stdio: { module: "mcp_server_time", requirements: ["mcp-server-time"], args: [] },
+      });
+      expect(sent.url).toBeUndefined();
+    });
+  });
+
+  it("shows a local server's packages for approval", async () => {
+    const local = { ...SERVER, transport: "stdio", url: "stdio:mcp_server_time", auth: "none", token_set: false, environment_state: "approval_needed" };
+    const environment = {
+      scope: "mcp:mcp_1", kind: "mcp", ref: "mcp_1", label: "Time", state: "approval_needed", reasons: ["new"], pending: ["mcp-server-time"],
+      needed: [{ key: "mcp-server-time", name: "mcp-server-time", spec: "", required_by: ["mcp_server_time"] }],
+      packages: [], issues: [], history: [], problem: null, approved_at: null, python_version: "3.13", current_python: "3.13",
+      install: { status: "none", step: null, error: null, log: [], lock_sha: null, started_at: null, finished_at: null },
+    };
+    serve(routes({ servers: [local], tools: [], environment }));
+    renderWith(<ServicesTab />);
+    const panel = await screen.findByTestId("mcp-dependencies");
+    expect(within(panel).getByText("mcp-server-time")).toBeInTheDocument();
+    expect(within(panel).getByTestId("review-dependencies")).toBeInTheDocument();
+  });
+
+  it("reports the return from a sign-in and shows the operation of the services", async () => {
+    serve(routes({ stats: { active_calls: 1, limits: { max_parallel: 8, calls_per_minute: 120, max_servers: 25 }, servers: { mcp_1: { calls: 3, failures: 1, consecutive_failures: 0, cooling_down_seconds: 0, last_duration_ms: 42, last_error_code: null } } } }));
+    renderWith(<ServicesTab />, "/tools?tab=services&oauth=connected");
+    await waitFor(() =>
+      expect(useToasts.getState().toasts.map((item) => item.message)).toContain(
+        "Angemeldet. Teste die Verbindung, um die Tools abzurufen.",
+      ),
+    );
+    await userEvent.click(await screen.findByText("Betrieb"));
+    const stats = await screen.findByTestId("mcp-stats");
+    expect(within(stats).getByText(/1 Aufruf läuft/)).toBeInTheDocument();
+    expect(within(stats).getByText("42 ms")).toBeInTheDocument();
+    expect(within(stats).getByText("Docs")).toBeInTheDocument();
   });
 });
 

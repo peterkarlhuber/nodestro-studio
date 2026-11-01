@@ -221,7 +221,57 @@
       "tool_removed": "Tool no longer offered",
       "call_refused": "Call refused",
       "oauth_connected": "OAuth connected",
-      "oauth_disconnected": "OAuth disconnected"
-    }
+      "oauth_disconnected": "OAuth disconnected",
+      "oauth_started": "sign-in started",
+      "oauth_failed": "sign-in failed"
+    },
+    "stdioUnavailable": "Local servers need the Docker sandbox; it is not available here.",
+    "local": "Local server (container)",
+    "transport": "Kind",
+    "transportHint": {
+      "http": "A remote service at an https address.",
+      "stdio": "A Python MCP server from PyPI, started in an isolated container without network or access to your files."
+    },
+    "transports": {
+      "http": "Remote service",
+      "stdio": "Local server"
+    },
+    "requirements": "Packages",
+    "requirementsHint": "One PyPI requirement per line. You review and approve the exact versions before the server starts.",
+    "module": "Module",
+    "moduleHint": "Started with python -m and this module name.",
+    "args": "Arguments",
+    "argsHint": "Optional, one per line.",
+    "localNote": "A local server runs in its own container: no network, no access to your files or keys, limited memory and processes. Servers that need the internet or Node.js cannot be used this way.",
+    "oauth": {
+      "connected": "Signed in. Test the connection to load the tools.",
+      "failed": "The sign-in did not succeed ({{code}}).",
+      "signedOut": "Signed out of {{name}}.",
+      "signIn": "Sign in",
+      "signOut": "Sign out",
+      "signedIn": "Signed in",
+      "notSignedIn": "Not signed in",
+      "issuer": "at {{issuer}}",
+      "scope": "permissions: {{scope}}",
+      "expires": "access renews {{when}}",
+      "pending": "sign-in started",
+      "hint": "After saving, sign in at the service; Nodestro stores the access encrypted and renews it itself."
+    },
+    "stats": {
+      "title": "Operation",
+      "active_one": "{{count}} call is running.",
+      "active_other": "{{count}} calls are running.",
+      "limits": "Limits: {{parallel}} calls at once, {{perMinute}} calls per minute and service, at most {{servers}} services.",
+      "server": "Service",
+      "calls": "Calls",
+      "failures": "Failures",
+      "duration": "Last call",
+      "state": "State",
+      "paused": "paused for {{seconds}} s",
+      "ok": "OK",
+      "none": "No calls since the start."
+    },
+    "resourceTool": "The service's documents",
+    "resourceToolText": "This tool reads only the documents the service lists; other addresses are excluded. If the service changes its list, the tool is blocked until you have reviewed the new list. Contents are external data like every result of a service."
   }
 }

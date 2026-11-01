@@ -221,7 +221,57 @@
       "tool_removed": "Strumento non più offerto",
       "call_refused": "Chiamata rifiutata",
       "oauth_connected": "OAuth collegato",
-      "oauth_disconnected": "OAuth scollegato"
-    }
+      "oauth_disconnected": "OAuth scollegato",
+      "oauth_started": "accesso avviato",
+      "oauth_failed": "accesso non riuscito"
+    },
+    "stdioUnavailable": "I server locali richiedono la sandbox Docker; qui non è disponibile.",
+    "local": "Server locale (container)",
+    "transport": "Tipo",
+    "transportHint": {
+      "http": "Un servizio remoto a un indirizzo https.",
+      "stdio": "Un server MCP Python da PyPI, avviato in un container isolato senza rete né accesso ai tuoi file."
+    },
+    "transports": {
+      "http": "Servizio remoto",
+      "stdio": "Server locale"
+    },
+    "requirements": "Pacchetti",
+    "requirementsHint": "Un requisito PyPI per riga. Controlli e approvi le versioni esatte prima che il server si avvii.",
+    "module": "Modulo",
+    "moduleHint": "Avviato con python -m e questo nome di modulo.",
+    "args": "Argomenti",
+    "argsHint": "Facoltativo, uno per riga.",
+    "localNote": "Un server locale gira nel proprio container: niente rete, nessun accesso ai tuoi file o alle tue chiavi, memoria e processi limitati. I server che richiedono Internet o Node.js non si possono usare così.",
+    "oauth": {
+      "connected": "Accesso effettuato. Prova la connessione per caricare gli strumenti.",
+      "failed": "L'accesso non è riuscito ({{code}}).",
+      "signedOut": "Disconnesso da {{name}}.",
+      "signIn": "Accedi",
+      "signOut": "Esci",
+      "signedIn": "Accesso effettuato",
+      "notSignedIn": "Accesso non effettuato",
+      "issuer": "presso {{issuer}}",
+      "scope": "autorizzazioni: {{scope}}",
+      "expires": "l'accesso si rinnova {{when}}",
+      "pending": "accesso avviato",
+      "hint": "Dopo il salvataggio accedi al servizio; Nodestro conserva l'accesso cifrato e lo rinnova da solo."
+    },
+    "stats": {
+      "title": "Funzionamento",
+      "active_one": "{{count}} chiamata in corso.",
+      "active_other": "{{count}} chiamate in corso.",
+      "limits": "Limiti: {{parallel}} chiamate contemporanee, {{perMinute}} chiamate al minuto per servizio, al massimo {{servers}} servizi.",
+      "server": "Servizio",
+      "calls": "Chiamate",
+      "failures": "Errori",
+      "duration": "Ultima chiamata",
+      "state": "Stato",
+      "paused": "in pausa per {{seconds}} s",
+      "ok": "OK",
+      "none": "Nessuna chiamata dall'avvio."
+    },
+    "resourceTool": "Documenti del servizio",
+    "resourceToolText": "Questo strumento legge solo i documenti elencati dal servizio; gli altri indirizzi sono esclusi. Se il servizio cambia l'elenco, lo strumento resta bloccato finché non esamini il nuovo elenco. I contenuti sono dati esterni, come ogni risultato di un servizio."
   }
 }

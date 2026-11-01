@@ -160,7 +160,7 @@ export function DependencyDialog({
         ) : (
           <>
             <p className="small">
-              <Package size={14} aria-hidden /> {t(kind === "workflow" ? "python.dialog.introWorkflow" : "python.dialog.introTool", { name: label })}{" "}
+              <Package size={14} aria-hidden /> {t(kind === "workflow" ? "python.dialog.introWorkflow" : kind === "mcp" ? "python.dialog.introMcp" : "python.dialog.introTool", { name: label })}{" "}
               <DocLink to="python-bibliotheken#freigabe" label={t("python.docs")} />
             </p>
             {plan.isLoading ? <Spinner label={t("python.dialog.resolving")} /> : null}

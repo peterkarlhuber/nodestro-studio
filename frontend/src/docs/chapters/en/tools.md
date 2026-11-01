@@ -190,6 +190,38 @@ For now only tools you classify as **read only** can be used; tools that change 
 
 **Limits:** Nodestro never connects to internal, local or metadata addresses, checks every resolved address at the moment it connects and ignores proxy settings of the environment. On a server the operator allows addresses with `NODESTRO_MCP_ENDPOINTS`. Schedules, batches and published APIs use service tools only when the operator explicitly enables it. Nodestro does not know what external services cost; their cost shows as **unknown**, never as zero.
 
+**Operation:** under *Operation* administrators see how many service calls are running, the operator's limits and, per service, calls, failures and the duration of the last call. A service that fails several times in a row is paused briefly.
+
+## Signing in to a service {#mcp-anmeldung}
+<!-- keywords: mcp, oauth, sign in, login, authorization, access, renew -->
+
+Some services do not use a fixed token but a **sign-in (OAuth)**. Choose *OAuth* as the sign-in when you connect the service and save. Then click **Sign in**: Nodestro opens the service's sign-in page, you confirm the access there and return to *Tools → Connected services*. Test the connection to load the tools.
+
+- Nodestro stores the access encrypted like a token and renews it itself. You see where you are signed in, with which permissions and when the access renews; the access itself is never shown.
+- **Sign out** removes the stored access. When the service asks for a new sign-in, runs that use it fail with a clear message until you sign in again.
+- On a server the operator sets up the public address of Nodestro; the return from the sign-in goes only there.
+
+## A service's documents {#mcp-dokumente}
+<!-- keywords: mcp, resources, documents, context, read -->
+
+If a service offers **documents** (MCP resources), testing the connection shows one more tool, `resources/read`, marked *The service's documents*. You review it like any other tool: its description lists the documents an agent may read.
+
+- Only the listed documents can be read; address patterns and other addresses are excluded.
+- If the service changes its list, the tool is blocked until you have reviewed the new list.
+- Contents are external data like every result of a service. Nodestro does not pass binary content such as images to the model.
+- Nodestro does not let a service ask you questions, make its own model calls or access your folders.
+
+## Local servers {#lokale-dienste}
+<!-- keywords: mcp, stdio, local server, pypi, container, docker, packages -->
+
+Besides remote services you can run a **local MCP server** from PyPI, for example a time or calculation service. Choose *Local server* as the kind, list the packages (one per line) and the module that is started with `python -m`.
+
+1. **Review the packages:** Nodestro resolves the exact versions with hashes. You see them and approve them, as for the libraries of a tool. Nothing is installed before that.
+2. **Installation:** the packages go into a separate container image.
+3. **Test the connection:** the server starts in an isolated container and lists its tools. From here on, review and approval are the same as for remote services.
+
+The container has **no network**, no access to your files, keys or other processes, and limited memory and processes. That is why local servers are only available when the Docker sandbox is used; servers that need the internet or Node.js cannot be run this way. A local server takes no token and no sign-in.
+
 ## Versions and deleting {#versionen}
 <!-- keywords: version, delete, revoke, update, overwrite -->
 
