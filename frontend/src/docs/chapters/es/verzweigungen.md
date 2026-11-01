@@ -139,13 +139,28 @@ Un equipo puede probarse por sí solo: crea una [serie de pruebas](/docs/automat
 Un **orquestador** deja que un modelo de IA decida qué equipo recibe qué parte de la tarea. Toma una decisión tras otra: **delegar** una tarea a un equipo o **terminar** con una respuesta. La respuesta es el resultado del nodo.
 
 - **Equipos:** los workflows guardados entre los que el modelo puede elegir (como máximo 20). De cada equipo, el modelo solo ve su nombre, descripción, capacidades y contrato de salida.
-- **Equipos por capacidad:** en lugar de elegir cada equipo, nombras capacidades (como máximo 10). Al iniciar una ejecución, los equipos guardados con una capacidad coincidente entran en el grupo (hasta *Como máximo tantos equipos*): primero los que tienen más etiquetas coincidentes, luego por nombre. Los equipos con errores o pasos de aprobación quedan fuera. La selección queda fija para esa ejecución (y para una versión publicada); los detalles muestran qué etiquetas coincidieron en cada equipo. No se puntúa ni se estima nada.
+- **Equipos por capacidad:** en lugar de elegir cada equipo, nombras capacidades (como máximo 10). Al iniciar una ejecución, los equipos guardados con una capacidad coincidente entran en el grupo (hasta *Como máximo tantos equipos*): primero los que tienen más etiquetas coincidentes, luego por nombre. Los equipos con errores quedan fuera; los equipos con pasos de aprobación se incluyen. La selección queda fija para esa ejecución (y para una versión publicada); los detalles muestran qué etiquetas coincidieron en cada equipo. No se puntúa ni se estima nada.
 - **Tarea** e **Instrucciones:** lo que hay que resolver y, opcionalmente, cómo planificarlo.
 - **Máximo de decisiones** (de 1 a 50, por defecto 8) y **Máximo por equipo:** si no hay respuesta tras la última decisión, el paso falla.
 
 El orquestador solo elige. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo elegido se ejecuta como una **ejecución vinculada propia**, con su parte del presupuesto, sus límites y sus aprobaciones de herramientas. Las decisiones no permitidas (un equipo desconocido, la misma tarea otra vez, un equipo agotado) se rechazan y se muestran al modelo; aun así cuentan como decisión.
 
-Los detalles de la ejecución muestran cada decisión con su motivo, tarea, resultado y un enlace a la ejecución del equipo. Los equipos que se detienen para una aprobación aún no son compatibles dentro de un orquestador: se cancelan en ese punto, y la comprobación previa al inicio lo advierte. Un equipo no puede volver a llamar al workflow del orquestador.
+Los detalles de la ejecución muestran cada decisión con su motivo, tarea, resultado y un enlace a la ejecución del equipo. Cuando un equipo se detiene para una **aprobación** (también en un subworkflow o bajo otro orquestador), el orquestador espera con él: la ejecución queda *en pausa* y aparece en **Aprobaciones**. Tras la decisión continúa la misma ejecución del equipo, también después de un reinicio, y no se vuelve a preguntar al modelo por esa delegación. Si un rechazo termina la ejecución del equipo (*Al rechazar: terminar la ejecución*), también termina esta ejecución; ningún otro equipo puede eludir el rechazo. Al cancelar una ejecución en espera se cancelan también sus equipos en espera. Un equipo no puede volver a llamar al workflow del orquestador.
+
+## Equipos dinámicos {#dynamische-teams}
+<!-- keywords: equipo dinámico, formar equipo, paralelo, a la vez, parámetros, formulario de inicio, plantilla, composición del equipo, staffing -->
+
+En el área **Equipos dinámicos** de un orquestador el modelo tiene más margen, siempre dentro del pool y de los límites. Todo empieza desactivado.
+
+- **Equipos a la vez** (1 a 5): una decisión puede encargar trabajo a varios equipos distintos a la vez, para partes que no dependen entre sí. Cada equipo obtiene su propio resultado.
+- **Formar el equipo por sí mismo:** el orquestador incorpora equipos del pool a su equipo y los vuelve a retirar cuando los resultados intermedios lo sugieren. Solo los equipos del equipo reciben trabajo; *Como máximo en el equipo* limita su tamaño. El mismo equipo puede trabajar varias veces (hasta *Como máximo por equipo*).
+- **Rellenar el formulario de inicio de los equipos:** el orquestador puede fijar los campos del formulario de entrada de un equipo (nunca archivos). Los valores se comprueban como en un inicio manual; un campo desconocido o un valor no válido se rechaza y se muestra al modelo.
+
+El pool queda fijo al iniciar la ejecución, en las versiones de ese momento. Nunca aparecen equipos, agentes ni herramientas nuevos, y las aprobaciones, el presupuesto y los límites de cada equipo se aplican sin cambios.
+
+**Qué muestran los detalles de la ejecución:** qué orquestador trabaja con qué modelo, cuántas decisiones se han usado, el coste de las decisiones y el total (los costes desconocidos se muestran como *no se conoce del todo*, nunca como 0), el pool con versiones, el **equipo a lo largo del tiempo**, los equipos en espera y cada decisión con su motivo, tarea, valores y el resultado de cada equipo: *Correcto*, *Esperando aprobación*, *Fallido*, *Rechazado*, *Cancelado* o *Caducado*. Solo se muestran las decisiones registradas, ningún razonamiento del modelo.
+
+**Guardar la composición del equipo como plantilla:** un equipo solo existe durante la ejecución. Al terminar, este botón guarda un **flujo de trabajo nuevo** con el mismo orquestador, su formulario de inicio, sus límites y exactamente los equipos que trabajaron, en las versiones de la ejecución. Nada se guarda sin este clic.
 
 ## Formularios de entrada {#eingabeformular}
 <!-- keywords: formulario, formulario de entrada, campos, tipo, obligatorio, valor predeterminado, opción, fecha, número -->

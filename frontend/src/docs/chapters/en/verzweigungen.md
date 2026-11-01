@@ -139,13 +139,28 @@ A team can be tested on its own: create a [test series](/docs/automatisierung#te
 An **orchestrator** lets an AI model decide which team gets which part of the task. It makes one decision after another: **delegate** a task to a team, or **finish** with an answer. The answer is the node's result.
 
 - **Teams:** the saved workflows the model may choose from (at most 20). Of each team, the model only sees its name, description, capabilities and output contract.
-- **Teams by capability:** instead of picking every team, name capabilities (at most 10). When a run starts, saved teams with a matching capability join the pool (up to *At most this many teams*): those with the most matching tags first, then by name. Teams with errors or approval steps are left out. The selection is fixed for that run (and for a published version); the run details show which tags each team matched. Nothing is scored or estimated.
+- **Teams by capability:** instead of picking every team, name capabilities (at most 10). When a run starts, saved teams with a matching capability join the pool (up to *At most this many teams*): those with the most matching tags first, then by name. Teams with errors are left out; teams with approval steps are included. The selection is fixed for that run (and for a published version); the run details show which tags each team matched. Nothing is scored or estimated.
 - **Task** and **Instructions:** what should get done and, optionally, how to plan it.
 - **Maximum decisions** (1 to 50, default 8) and **Maximum per team:** without an answer after the last decision, the step fails.
 
 The orchestrator only chooses. It has no tools, creates no agents, tools or teams, and has no permissions of its own. Every chosen team runs as its **own linked run** with its share of the budget, its limits and its tool approvals. Decisions that are not allowed (an unknown team, the same task again, a team that was used up) are refused and shown to the model; they still count as a decision.
 
-The run details list every decision with its reason, task, result and a link to the team's run. Teams that stop for an approval are not supported inside an orchestrator yet: they are cancelled at that point, and the check before the start warns about it. A team may not call the orchestrator's workflow again.
+The run details list every decision with its reason, task, result and a link to the team's run. When a team stops for an **approval** (also in a sub-workflow or below another orchestrator), the orchestrator waits with it: the run is *paused* and shows up under **Approvals**. After the decision the same team run continues, also after a restart, and the model is not asked again about that delegation. When a rejection ends the team's run (*On rejection: end the run*), this run ends too; no other team can get around the rejection. Cancelling a waiting run also cancels its waiting teams. A team may not call the orchestrator's workflow again.
+
+## Dynamic teams {#dynamische-teams}
+<!-- keywords: dynamic team, assemble team, parallel, at the same time, parameters, start form, template, team composition, staffing -->
+
+In the **Dynamic teams** area of an orchestrator the model gets more room, always inside the pool and the limits. Everything starts switched off.
+
+- **Teams at the same time** (1 to 5): one decision may give work to several different teams at once, for parts that do not depend on each other. Each team gets its own result.
+- **Assemble the team itself:** the orchestrator takes teams from the pool into its team and lets them go again when intermediate results call for it. Only teams in the team get work; *At most in the team* limits its size. The same team may work several times (up to *At most per team*).
+- **Fill in the teams' start forms:** the orchestrator may set the fields of a team's input form (never files). The values are checked like a manual start; an unknown field or an invalid value is refused and shown to the model.
+
+The pool is fixed when the run starts, in the versions of that moment. New teams, agents or tools never appear, and each team's approvals, budget and limits apply unchanged.
+
+**What the run details show:** which orchestrator works with which model, how many decisions are used, the cost of the decisions and in total (unknown costs are shown as *not fully known*, never as 0), the pool with versions, the **team over time**, waiting teams and every decision with its reason, task, values and each team's outcome: *Succeeded*, *Waiting for approval*, *Failed*, *Rejected*, *Cancelled* or *Expired*. Only the recorded decisions are shown, no reasoning of the model.
+
+**Save team composition as a template:** a team exists only during the run. After the end, this button saves a **new workflow** with the same orchestrator, its start form, its limits and exactly the teams that worked, in the versions of the run. Nothing is saved without this click.
 
 ## Input forms {#eingabeformular}
 <!-- keywords: form, input form, fields, type, required, default, choice, date, number -->

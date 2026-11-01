@@ -200,7 +200,9 @@
     "orchestrator": "Un modèle d’IA planifie la tâche et en délègue des parties aux équipes de son groupe, une décision après l’autre. Chaque décision est consignée avec son motif.",
     "orchestratorTeams": "Les équipes sont des workflows enregistrés. Le modèle ne voit que leur nom, leur description, leurs capacités et leur contrat de sortie. Il ne peut pas ajouter d’équipes.",
     "orchestratorLimits": "Les limites empêchent un orchestrateur de tourner en rond : il s’arrête après le nombre maximal de décisions, et le budget et les limites du workflow s’appliquent en plus.",
-    "orchestratorSelect": "Au lieu de nommer chaque équipe, vous nommez des capacités. Au démarrage d’une exécution, les équipes enregistrées qui les partagent rejoignent le groupe et restent fixes pour cette exécution ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté : d’abord le plus d’étiquettes correspondantes, puis le nom."
+    "orchestratorSelect": "Au lieu de nommer chaque équipe, vous nommez des capacités. Au démarrage d’une exécution, les équipes enregistrées qui les partagent rejoignent le groupe et restent fixes pour cette exécution ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté : d’abord le plus d’étiquettes correspondantes, puis le nom.",
+    "orchestratorDynamic": "L'orchestrateur peut confier du travail à plusieurs équipes à la fois, composer et modifier son équipe à partir du pool pendant l'exécution et remplir le formulaire de démarrage des équipes. Le pool reste fixe pour l'exécution ; aucune nouvelle équipe, aucun agent ou outil n'apparaît.",
+    "orchestratorTemplate": "Une équipe n'existe que pendant l'exécution. Ce bouton en fait un nouveau workflow à part entière : le même orchestrateur avec exactement les équipes qui ont travaillé, dans leurs versions. Vous pouvez ensuite le modifier ; seules les personnes autorisées à modifier des workflows peuvent le changer."
   },
   "files": {
     "output": "Formats dans lesquels le nœud de résultat enregistre son résultat en fin d’exécution : Markdown, JSON, CSV, HTML ou PDF.",

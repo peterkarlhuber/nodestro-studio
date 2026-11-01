@@ -140,7 +140,8 @@
     "output_contract": "El resultado no cumple el contrato de salida del flujo: {{fields}}.",
     "orchestration_limit": "{{node}} tomó {{max_decisions}} decisiones sin terminar.",
     "orchestrator_member_missing": "Un equipo de {{node}} ya no existe.",
-    "orchestrator_no_match": "Ningún equipo guardado de {{node}} tiene una de las capacidades {{capabilities}}."
+    "orchestrator_no_match": "Ningún equipo guardado de {{node}} tiene una de las capacidades {{capabilities}}.",
+    "orchestration_team_missing": "Falta la ejecución en espera de un equipo; el equipo no se volvió a iniciar."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -245,7 +246,7 @@
     "orchestrator_cycle": "{{name}}: el equipo {{workflow}} volvería a llamar a este workflow.",
     "orchestrator_member_invalid_one": "{{name}}: el equipo {{workflow}} tiene {{count}} error.",
     "orchestrator_member_invalid_other": "{{name}}: el equipo {{workflow}} tiene {{count}} errores.",
-    "orchestrator_member_approval": "{{name}}: el equipo {{workflow}} se detiene para aprobaciones. Dentro de un orquestador se cancela en ese punto.",
+    "orchestrator_member_approval": "{{name}}: el equipo {{workflow}} se detiene para aprobaciones. El orquestador espera entonces también.",
     "orchestrator_selected_one": "{{name}} elige {{count}} equipo por capacidad: {{teams}}.",
     "orchestrator_selected_other": "{{name}} elige {{count}} equipos por capacidad: {{teams}}.",
     "orchestrator_no_match": "{{name}}: ningún equipo guardado tiene una de las capacidades {{capabilities}}."
@@ -697,7 +698,18 @@
     "empty_answer": "La respuesta final estaba vacía.",
     "answer_too_long": "La respuesta final era demasiado larga.",
     "finished": "La orquestación ya había terminado.",
-    "invalid_decision": "La respuesta no era una decisión válida."
+    "invalid_decision": "La respuesta no era una decisión válida.",
+    "paused": "Un equipo sigue esperando; continúa primero.",
+    "not_in_team": "Este equipo no está en el equipo propio del orquestador.",
+    "unknown_parameter": "Este equipo no tiene ese parámetro.",
+    "invalid_value": "Un valor no corresponde al parámetro del equipo.",
+    "parallel_disabled": "Este orquestador delega en un solo equipo a la vez.",
+    "parallel_limit": "Demasiados equipos a la vez.",
+    "parallel_duplicate": "Un equipo apareció dos veces en la misma decisión.",
+    "staffing_disabled": "Este orquestador trabaja con todo el pool.",
+    "empty_staffing": "El cambio de equipo no incorporó ni retiró a nadie.",
+    "already_in_team": "Este equipo ya está en el equipo.",
+    "team_limit": "El equipo habría sido demasiado grande."
   },
   "mcp_server": {
     "disabled": "El servidor MCP de Nodestro está desactivado."

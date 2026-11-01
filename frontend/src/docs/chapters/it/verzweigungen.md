@@ -139,13 +139,28 @@ Un team si può verificare da solo: crea una [serie di test](/docs/automatisieru
 Un **orchestratore** lascia decidere a un modello di IA quale team riceve quale parte del compito. Prende una decisione dopo l’altra: **delegare** un compito a un team oppure **concludere** con una risposta. La risposta è il risultato del nodo.
 
 - **Team:** i workflow salvati tra cui il modello può scegliere (al massimo 20). Di ogni team il modello vede solo nome, descrizione, capacità e contratto di output.
-- **Team per capacità:** invece di scegliere ogni team, indichi delle capacità (al massimo 10). All’avvio di un’esecuzione i team salvati con una capacità corrispondente entrano nel gruppo (fino a *Al massimo tanti team*): prima quelli con più tag corrispondenti, poi per nome. I team con errori o passaggi di approvazione restano fuori. La selezione resta fissa per quell’esecuzione (e per una versione pubblicata); i dettagli mostrano quali tag ha trovato ogni team. Non si assegnano punteggi né stime.
+- **Team per capacità:** invece di scegliere ogni team, indichi delle capacità (al massimo 10). All’avvio di un’esecuzione i team salvati con una capacità corrispondente entrano nel gruppo (fino a *Al massimo tanti team*): prima quelli con più tag corrispondenti, poi per nome. I team con errori restano fuori; i team con passaggi di approvazione sono inclusi. La selezione resta fissa per quell’esecuzione (e per una versione pubblicata); i dettagli mostrano quali tag ha trovato ogni team. Non si assegnano punteggi né stime.
 - **Compito** e **Istruzioni:** cosa va fatto e, facoltativamente, come pianificarlo.
 - **Numero massimo di decisioni** (da 1 a 50, predefinito 8) e **Massimo per team:** senza risposta dopo l’ultima decisione, il passaggio fallisce.
 
 L’orchestratore sceglie soltanto. Non ha strumenti, non crea agenti, strumenti o team e non ha autorizzazioni proprie. Ogni team scelto viene eseguito come **esecuzione collegata a sé**, con la sua quota di budget, i suoi limiti e le sue approvazioni degli strumenti. Le decisioni non consentite (un team sconosciuto, lo stesso compito di nuovo, un team esaurito) vengono rifiutate e mostrate al modello; contano comunque come decisione.
 
-I dettagli dell’esecuzione elencano ogni decisione con motivo, compito, risultato e un link all’esecuzione del team. I team che si fermano per un’approvazione non sono ancora supportati in un orchestratore: vengono annullati in quel punto, e il controllo prima dell’avvio lo segnala. Un team non può richiamare il workflow dell’orchestratore.
+I dettagli dell’esecuzione elencano ogni decisione con motivo, compito, risultato e un link all’esecuzione del team. Quando un team si ferma per un’**approvazione** (anche in un sotto-workflow o sotto un altro orchestratore), l’orchestratore attende con lui: l’esecuzione è *in pausa* e compare in **Approvazioni**. Dopo la decisione continua la stessa esecuzione del team, anche dopo un riavvio, e il modello non viene interpellato di nuovo per quella delega. Se un rifiuto termina l’esecuzione del team (*In caso di rifiuto: termina l’esecuzione*), termina anche questa esecuzione; nessun altro team può aggirare il rifiuto. Annullare un’esecuzione in attesa annulla anche i suoi team in attesa. Un team non può richiamare il workflow dell’orchestratore.
+
+## Team dinamici {#dynamische-teams}
+<!-- keywords: team dinamico, comporre il team, parallelo, contemporaneamente, parametri, modulo di avvio, modello, composizione del team, staffing -->
+
+Nell’area **Team dinamici** di un orchestratore il modello ha più margine, sempre all’interno del pool e dei limiti. All’inizio tutto è disattivato.
+
+- **Team contemporaneamente** (da 1 a 5): una decisione può affidare lavoro a più team diversi insieme, per parti che non dipendono l’una dall’altra. Ogni team ottiene il proprio risultato.
+- **Comporre il team da sé:** l’orchestratore prende team dal pool nel suo team e li congeda di nuovo quando i risultati intermedi lo suggeriscono. Ricevono lavoro solo i team nel team; *Al massimo nel team* ne limita la dimensione. Lo stesso team può lavorare più volte (fino a *Al massimo per team*).
+- **Compilare il modulo di avvio dei team:** l’orchestratore può impostare i campi del modulo di input di un team (mai file). I valori vengono verificati come in un avvio manuale; un campo sconosciuto o un valore non valido viene rifiutato e mostrato al modello.
+
+Il pool è fissato all’avvio dell’esecuzione, nelle versioni di quel momento. Non nascono mai nuovi team, agenti o strumenti, e approvazioni, budget e limiti di ogni team valgono invariati.
+
+**Cosa mostrano i dettagli dell’esecuzione:** quale orchestratore lavora con quale modello, quante decisioni sono state usate, il costo delle decisioni e quello totale (i costi sconosciuti appaiono come *non del tutto noto*, mai come 0), il pool con le versioni, il **team nel tempo**, i team in attesa e ogni decisione con motivo, compito, valori e l’esito di ogni team: *Riuscito*, *In attesa di approvazione*, *Non riuscito*, *Rifiutato*, *Annullato* o *Scaduto*. Vengono mostrate solo le decisioni registrate, nessun ragionamento del modello.
+
+**Salva la composizione del team come modello:** un team esiste solo durante l’esecuzione. Al termine, questo pulsante salva un **nuovo workflow** con lo stesso orchestratore, il suo modulo di avvio, i suoi limiti ed esattamente i team che hanno lavorato, nelle versioni dell’esecuzione. Senza questo clic non viene salvato nulla.
 
 ## Moduli di input {#eingabeformular}
 <!-- keywords: modulo, modulo di input, campi, tipo, obbligatorio, valore predefinito, scelta, data, numero, form -->

@@ -6,7 +6,14 @@ import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
 
 import { useWorkflows } from "../api/hooks";
-import { MAX_DECISIONS, MAX_POOL, MAX_SELECT_CAPABILITIES, type OrchestratorConfig, type WorkflowNode } from "../api/types";
+import {
+  MAX_DECISIONS,
+  MAX_PARALLEL_TEAMS,
+  MAX_POOL,
+  MAX_SELECT_CAPABILITIES,
+  type OrchestratorConfig,
+  type WorkflowNode,
+} from "../api/types";
 import { ModelPicker } from "../components/ModelPicker";
 import { Callout, Chip, Field, IconButton, Select, TextArea, TextInput } from "../components/ui";
 import { addCapabilities } from "../lib/capabilities";
@@ -133,8 +140,71 @@ export function OrchestratorInspector({ node }: { node: WorkflowNode }) {
           data-testid="orchestrator-per-team"
         />
       </Field>
+      <DynamicField config={config} set={set} />
       <Callout tone="info">{t("flow.orchestrator.safety")}</Callout>
     </div>
+  );
+}
+
+/** Dynamic teams (AO M6b): parallel teams, a team the orchestrator assembles itself, team form values. */
+function DynamicField({
+  config,
+  set,
+}: {
+  config: OrchestratorConfig;
+  set: (patch: Partial<OrchestratorConfig>, record?: boolean) => void;
+}) {
+  const { t } = useTranslation();
+  const staffing = config.staffing ?? false;
+  return (
+    <Field label={t("flow.orchestrator.dynamic")} hint={t("flow.orchestrator.dynamicHint")} tip="flow.orchestratorDynamic">
+      <div className="stack-sm" data-testid="orchestrator-dynamic">
+        <label className="mapping-row">
+          <span>{t("flow.orchestrator.maxParallel")}</span>
+          <TextInput
+            type="number"
+            min={1}
+            max={MAX_PARALLEL_TEAMS}
+            step={1}
+            value={config.max_parallel ?? 1}
+            onChange={(e) => set({ max_parallel: wholeNumber(e.target.value, 1, MAX_PARALLEL_TEAMS) ?? 1 })}
+            data-testid="orchestrator-parallel"
+          />
+        </label>
+        <label className="checkbox">
+          <input
+            type="checkbox"
+            checked={staffing}
+            onChange={(e) => set({ staffing: e.target.checked, max_team: config.max_team ?? 5 })}
+            data-testid="orchestrator-staffing"
+          />
+          {t("flow.orchestrator.staffing")}
+        </label>
+        {staffing ? (
+          <label className="mapping-row">
+            <span>{t("flow.orchestrator.maxTeam")}</span>
+            <TextInput
+              type="number"
+              min={1}
+              max={MAX_POOL}
+              step={1}
+              value={config.max_team ?? 5}
+              onChange={(e) => set({ max_team: wholeNumber(e.target.value, 1, MAX_POOL) ?? 1 })}
+              data-testid="orchestrator-max-team"
+            />
+          </label>
+        ) : null}
+        <label className="checkbox">
+          <input
+            type="checkbox"
+            checked={config.allow_values ?? false}
+            onChange={(e) => set({ allow_values: e.target.checked })}
+            data-testid="orchestrator-values"
+          />
+          {t("flow.orchestrator.allowValues")}
+        </label>
+      </div>
+    </Field>
   );
 }
 

@@ -200,7 +200,9 @@
     "orchestrator": "Un modello di IA pianifica il compito e ne delega parti ai team del suo gruppo, una decisione dopo l’altra. Ogni decisione viene registrata con il suo motivo.",
     "orchestratorTeams": "I team sono workflow salvati. Il modello vede solo nome, descrizione, capacità e contratto di output. Non può aggiungere team.",
     "orchestratorLimits": "I limiti impediscono a un orchestratore di girare a vuoto: si ferma dopo il numero massimo di decisioni, e valgono in più il budget e i limiti del workflow.",
-    "orchestratorSelect": "Invece di indicare ogni team, indichi delle capacità. All’avvio di un’esecuzione i team salvati che le condividono entrano nel gruppo e restano fissi per quell’esecuzione; i dettagli mostrano quali tag ha trovato ogni team. Non si assegnano punteggi: prima più tag corrispondenti, poi il nome."
+    "orchestratorSelect": "Invece di indicare ogni team, indichi delle capacità. All’avvio di un’esecuzione i team salvati che le condividono entrano nel gruppo e restano fissi per quell’esecuzione; i dettagli mostrano quali tag ha trovato ogni team. Non si assegnano punteggi: prima più tag corrispondenti, poi il nome.",
+    "orchestratorDynamic": "L'orchestratore può affidare lavoro a più team insieme, comporre e modificare il suo team dal pool durante l'esecuzione e compilare il modulo di avvio dei team. Il pool resta fisso per l'esecuzione; non nascono mai nuovi team, agenti o strumenti.",
+    "orchestratorTemplate": "Un team esiste solo durante l'esecuzione. Questo pulsante lo trasforma in un nuovo workflow a sé: lo stesso orchestratore con esattamente i team che hanno lavorato, nelle loro versioni. Puoi modificarlo in seguito; può cambiarlo solo chi può modificare i workflow."
   },
   "files": {
     "output": "Formati in cui il nodo di risultato salva il suo risultato alla fine dell’esecuzione: Markdown, JSON, CSV, HTML o PDF.",

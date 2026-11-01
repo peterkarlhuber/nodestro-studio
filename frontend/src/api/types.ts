@@ -211,6 +211,8 @@ export interface OrchestratorSelect {
 
 export const MAX_POOL = 20;
 export const MAX_DECISIONS = 50;
+/** Most teams one orchestrator decision may start at the same time. */
+export const MAX_PARALLEL_TEAMS = 5;
 
 /** An AI model that delegates the task step by step to teams of its pool (it has no tools of its own). */
 export interface OrchestratorConfig {
@@ -223,15 +225,45 @@ export interface OrchestratorConfig {
   max_per_member: number | null;
   /** Add teams by capability; null: only ``members``. */
   select?: OrchestratorSelect | null;
+  /** Teams one decision may start at the same time (1: one at a time). */
+  max_parallel?: number;
+  /** The orchestrator assembles its own team from the pool while it runs. */
+  staffing?: boolean;
+  /** The largest team at any time (with ``staffing``). */
+  max_team?: number;
+  /** The orchestrator may fill the teams' start form fields (never files). */
+  allow_values?: boolean;
 }
 
-/** One decision of an orchestrator, as ``orkexa.orchestration`` records it. */
+/** One team's part of a parallel decision. */
+export interface OrchestrationAssignment {
+  member: string;
+  task: string;
+  values?: Record<string, unknown>;
+}
+
+/** One decision of an orchestrator, as ``orkexa.orchestration`` records it (protocol version 2). */
 export interface OrchestrationDecision {
-  action: "delegate" | "finish";
+  action: "delegate" | "parallel" | "staff" | "finish";
   member?: string;
   task?: string;
+  values?: Record<string, unknown>;
+  assignments?: OrchestrationAssignment[];
+  add?: string[];
+  remove?: string[];
   answer?: string;
   reason?: string;
+}
+
+export type OrchestrationOutcomeStatus = "succeeded" | "failed" | "rejected" | "cancelled" | "expired" | "waiting";
+
+/** How one delegated team ended (or that it still waits); ``ref`` is the team's run. */
+export interface OrchestrationOutcome {
+  member: string;
+  status: OrchestrationOutcomeStatus;
+  result?: string | null;
+  error?: string | null;
+  ref?: string | null;
 }
 
 export interface OrchestrationStep {
@@ -243,6 +275,15 @@ export interface OrchestrationStep {
   result: string | null;
   error: string | null;
   raw: string | null;
+  /** One per delegated team (version 2; empty in older records). */
+  outcomes?: OrchestrationOutcome[];
+}
+
+/** A delegation whose teams have not all ended: the orchestrator waits (e.g. for an approval). */
+export interface OrchestrationPending {
+  index: number;
+  decision: OrchestrationDecision;
+  outcomes: OrchestrationOutcome[];
 }
 
 export interface OrchestrationRecord {
@@ -252,6 +293,7 @@ export interface OrchestrationRecord {
   outcome: "finished" | "stopped" | null;
   answer: string | null;
   stop_code: string | null;
+  pending?: OrchestrationPending | null;
 }
 
 export type ReportFormat = "md" | "json" | "csv" | "html" | "pdf" | "docx" | "xlsx";
@@ -550,6 +592,8 @@ export interface NodeRun {
   orchestration?: OrchestrationRecord | null;
   /** Orchestrator: the runs of the teams it delegated to, in order. */
   child_run_ids?: string[];
+  /** Orchestrator: the cost of its own decisions (the teams' cost is part of ``usage``). */
+  decision_usage?: Usage | null;
   /** Taken over from this earlier run when a failed run was continued. */
   reused_from?: string | null;
   /** The files the agent received, and how. */
