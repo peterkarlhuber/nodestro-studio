@@ -52,7 +52,7 @@ Créez votre premier workflow en quelques minutes :
 
 La **barre latérale** à gauche suit votre façon de travailler : créer, exécuter et vérifier, puis automatiser.
 
-- **Créer :** *Workflows* (vos processus), *Agents* (modèles réutilisables), *Outils*, *Connaissances* et *Mémoire*.
+- **Créer :** *Workflows* (vos processus), *Bibliothèque d’agents* (modèles réutilisables), *Outils*, *Connaissances* et *Mémoire*.
 - **Exécuter et vérifier :** *Exécutions* (toutes les exécutions en détail), *Validations* (décisions qu’attendent les exécutions) et *Utilisation* (tokens et coûts dans le temps).
 - **Automatiser et tester :** *Séries de tests*, *Exécutions par lots* et *Planifications*.
 - **Aide :** cette *Documentation* et la page *Bienvenue*.

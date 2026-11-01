@@ -3,7 +3,7 @@
   "groupRun": "Ejecutar y revisar",
   "groupHelp": "Ayuda",
   "workflows": "Flujos de trabajo",
-  "agents": "Agentes",
+  "agents": "Biblioteca de agentes",
   "tools": "Herramientas",
   "knowledge": "Conocimiento",
   "memory": "Memoria",

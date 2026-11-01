@@ -10,7 +10,7 @@ Ein **Workflow** ist ein Ablauf aus Knoten: ein Start, Agenten, Entscheidungen, 
 ## Agent {#agent}
 <!-- keywords: agent, ki, modell, system prompt, aufgabe, bibliothek -->
 
-Ein **Agent** ist ein Schritt, in dem ein KI-Modell eine Aufgabe erledigt: mit Systemprompt, Aufgabe und optional Tools, Wissen und Memory. Agenten aus der **Agenten-Bibliothek** sind Vorlagen; im Workflow arbeitet jeweils eine eigene Kopie. Mehr unter [Agenten](/docs/agenten#grundlagen).
+Ein **Agent** ist ein Schritt, in dem ein KI-Modell eine Aufgabe erledigt: mit Systemprompt, Aufgabe und optional Tools, Wissen und Memory. Agenten aus der **Agentenbibliothek** sind Vorlagen; im Workflow arbeitet jeweils eine eigene Kopie. Mehr unter [Agenten](/docs/agenten#grundlagen).
 
 ## Tool {#tool}
 <!-- keywords: tool, werkzeug, funktion, sandbox -->

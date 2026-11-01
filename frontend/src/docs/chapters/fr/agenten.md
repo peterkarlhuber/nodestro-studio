@@ -236,12 +236,12 @@ S’il manque des capacités à l’architecte, il indique les **outils manquant
 
 La proposition est rédigée dans la langue de l’interface, sauf si votre description demande une autre langue. Les noms de champs et autres identifiants techniques restent en anglais.
 
-Accessible via **Concevoir avec l’IA** dans l’inspecteur, **Décrire un agent** dans la palette ou sur la page *Agents*.
+Accessible via **Concevoir avec l’IA** dans l’inspecteur, **Décrire un agent** dans la palette ou sur la page *Bibliothèque d’agents*.
 
 ## Bibliothèque d’agents {#bibliothek}
 <!-- keywords: bibliothèque, modèle, template, réutiliser, page agents -->
 
-Sur la page **Agents**, vous gérez des modèles d’agents réutilisables :
+Sur la page **Bibliothèque d’agents**, vous gérez des modèles d’agents réutilisables :
 
 - **Modèle vide** ou **Décrire un agent** crée un nouveau modèle.
 - Dans l’éditeur, le symbole d’enregistrement de l’inspecteur enregistre un agent comme modèle.

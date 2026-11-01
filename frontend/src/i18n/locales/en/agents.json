@@ -1,5 +1,5 @@
 {
-  "title": "Agents",
+  "title": "Agent library",
   "description": "Reusable agents. They appear in the editor under “From the library”.",
   "newTemplateName": "New template",
   "emptyTemplate": "Empty template",

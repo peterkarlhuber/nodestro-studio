@@ -88,7 +88,7 @@
       "text": "Agentes como nodos, conexiones como flujo de datos, con ramificaciones y subflujos."
     },
     "agents": {
-      "title": "Agentes",
+      "title": "Biblioteca de agentes",
       "text": "Modelo, instrucciones, herramientas, memoria y formato de salida: se configuran una vez y se reutilizan en todas partes."
     },
     "tools": {

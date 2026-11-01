@@ -12,7 +12,7 @@
     "save": "Speichert alle Änderungen (Strg+S). Vor jedem Start wird automatisch gespeichert.",
     "addAgent": "Fügt rechts neben dem letzten Knoten einen leeren Agenten hinzu.",
     "autoLayout": "Ordnet alle Knoten von links nach rechts in der Reihenfolge ihres Datenflusses an.",
-    "palette": "Bausteine auf die Arbeitsfläche ziehen oder anklicken. Vorlagen aus der Agenten-Bibliothek erscheinen darunter.",
+    "palette": "Bausteine auf die Arbeitsfläche ziehen oder anklicken. Vorlagen aus der Agentenbibliothek erscheinen darunter.",
     "paletteDesign": "Beschreibe in eigenen Worten, was ein Agent tun soll. Der Agent-Architekt schlägt eine vollständige Konfiguration vor; das kostet eine Anfrage an den KI-Anbieter.",
     "startNode": "Die Eingabe beim Start fließt an alle Agenten, die mit dem Start verbunden sind. Ein Workflow braucht keinen Start-Knoten; Agenten ohne Vorgänger erhalten die Eingabe ebenfalls.",
     "defaultInput": "Dieser Text steht beim Starten bereits im Eingabefeld und kann dort geändert werden.",
@@ -27,7 +27,7 @@
   },
   "agent": {
     "design": "Der Agent-Architekt entwirft aus deiner Beschreibung Rolle, System-Prompt, Modell, Aufwand und Tools. Du prüfst den Vorschlag, bevor er übernommen wird.",
-    "saveTemplate": "Speichert eine Kopie dieser Konfiguration in der Agenten-Bibliothek. Sie erscheint dann in der Palette jedes Workflows.",
+    "saveTemplate": "Speichert eine Kopie dieser Konfiguration in der Agentenbibliothek. Sie erscheint dann in der Palette jedes Workflows.",
     "model": "Anbieter und Modell dieses Agenten. Wähle ein Modell aus der Liste oder tippe eine beliebige Modell-ID des Anbieters ein. Größere Modelle denken gründlicher, kosten aber mehr pro Token.",
     "systemPrompt": "Dauerhafte Anweisungen an den Agenten: Rolle, Vorgehen, Stil und Qualitätsanspruch. Gilt für jede Aufgabe dieses Agenten.",
     "task": "Die konkrete Aufgabe pro Lauf. {{input}} setzt die Ergebnisse der Vorgänger ein, {{runInput}} die Eingabe des Workflows, {{agentName}} das Ergebnis eines bestimmten Vorgängers.",

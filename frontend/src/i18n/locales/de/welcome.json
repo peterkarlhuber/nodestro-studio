@@ -88,7 +88,7 @@
       "text": "Agenten als Knoten, Verbindungen als Datenfluss – mit Verzweigungen und Sub-Workflows."
     },
     "agents": {
-      "title": "Agenten",
+      "title": "Agentenbibliothek",
       "text": "Modell, Anweisungen, Werkzeuge, Memory und Ausgabeformat: einmal eingerichtet, überall wiederverwendbar."
     },
     "tools": {

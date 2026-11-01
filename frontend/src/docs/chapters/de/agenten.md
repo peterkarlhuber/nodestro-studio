@@ -236,12 +236,12 @@ Fehlen dem Architekten Fähigkeiten, nennt er **fehlende Tools** mit einer Besch
 
 Der Entwurf entsteht in der Sprache der Oberfläche, solange deine Beschreibung keine andere Sprache verlangt. Feldnamen und andere technische Bezeichner bleiben Englisch.
 
-Aufrufbar über **Mit KI entwerfen** im Inspektor, **Agent beschreiben** in der Palette oder auf der Seite *Agenten*.
+Aufrufbar über **Mit KI entwerfen** im Inspektor, **Agent beschreiben** in der Palette oder auf der Seite *Agentenbibliothek*.
 
-## Agenten-Bibliothek {#bibliothek}
+## Agentenbibliothek {#bibliothek}
 <!-- keywords: bibliothek, vorlage, template, wiederverwenden, agenten seite -->
 
-Auf der Seite **Agenten** verwaltest du wiederverwendbare Agenten-Vorlagen:
+Auf der Seite **Agentenbibliothek** verwaltest du wiederverwendbare Agenten-Vorlagen:
 
 - **Leere Vorlage** oder **Agent beschreiben** legt eine neue Vorlage an.
 - Im Editor speichert das Speichern-Symbol im Inspektor einen Agenten als Vorlage.
@@ -253,7 +253,7 @@ Ein Agent aus einer Vorlage ist eine **Kopie**: Spätere Änderungen an der Vorl
 ## Agent testen {#agent-testen}
 <!-- keywords: testen, test, ausprobieren, agent testen, probelauf, einzeln ausführen -->
 
-**Agent testen** im Inspektor (im Editor und in der Agenten-Bibliothek) führt nur diesen einen Agenten mit seiner **aktuellen, auch ungespeicherten Konfiguration** aus:
+**Agent testen** im Inspektor (im Editor und in der Agentenbibliothek) führt nur diesen einen Agenten mit seiner **aktuellen, auch ungespeicherten Konfiguration** aus:
 
 1. Gib eine **Testeingabe** ein. Sie wird wie die Eingabe eines Laufs in die Aufgabe eingesetzt; Platzhalter für Vorgänger bleiben leer. Mit *Eingabe direkt als Aufgabe senden* geht nur dein Text an den Agenten.
 2. **Test starten** zeigt die Antwort, alle Tool-Aufrufe, Fehler, Tokens, Kosten, Dauer und gegebenenfalls die Qualitätsprüfung.
