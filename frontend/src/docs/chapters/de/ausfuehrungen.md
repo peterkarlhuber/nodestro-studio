@@ -103,6 +103,26 @@ Ein fehlgeschlagener oder abgebrochener Lauf lässt sich [fortsetzen](/docs/verz
 
 **Lauf abbrechen** (in der Ausführungsübersicht oder der Detailansicht) fragt zur Sicherheit noch einmal: Ein zweiter Klick auf **Wirklich abbrechen?** innerhalb von fünf Sekunden stoppt den Lauf; **Esc** oder ein Klick daneben lässt ihn weiterlaufen. Das gilt auch für einen pausierten Lauf. Laufende Agenten halten beim nächsten Schritt an (nächster Textabschnitt, nächste Anfrage oder nächster Tool-Aufruf); noch nicht gestartete Agenten werden nicht mehr ausgeführt. Bis dahin verbrauchte Tokens werden berechnet und angezeigt.
 
+## Mit der Teamleitung sprechen {#teamleitung}
+<!-- keywords: teamleitung, orchestrator, live-chat, frage stellen, anweisung geben, steuern, live-steuerung, live_steering, chat-budget, run_chat -->
+
+Hat ein Lauf einen **Orchestrator** (auch in einem verschachtelten Teamlauf), zeigt die Detailansicht neben **Überblick** den Reiter **Teamleitung**. Freigaben und der Status des Laufs bleiben darüber sichtbar. Gibt es mehrere Teamleitungen, wählst du eine aus; jede zeigt ihren Workflow, die Ebene und ihren Status. Darunter steht, was sie gerade tut: Entscheidungen (verbraucht von höchstens), ihre Teams mit Status und die Spezialisten, die gerade arbeiten.
+
+Du wählst ausdrücklich, was du schreibst:
+
+- **Frage stellen:** Ein KI-Modell beantwortet die Frage aus dem aktuellen Stand des Laufs. Eine Frage ändert den Lauf nie. Die Antwort ist als *Chat-Antwort, keine Entscheidung* markiert und nennt den Stand, auf dem sie beruht.
+- **Anweisung geben:** Die Teamleitung berücksichtigt die Anweisung bei ihrer **nächsten Entscheidung**. Eine Entscheidung, die schon läuft, und Teams, die schon arbeiten, werden nicht unterbrochen oder geändert; laufende Spezialisten merken davon nichts, bis die nächste Entscheidung fällt.
+
+Jede Anweisung zeigt ihren Stand: *Wartet auf die nächste Entscheidung* (mit dem Hinweis, wie viele Teams gerade arbeiten), *Liegt der Teamleitung in Entscheidung N vor*, *In Entscheidung N einbezogen* mit dem, was entschieden wurde, oder *Nicht mehr berücksichtigt* mit dem Grund. „Einbezogen“ heißt: Die Teamleitung kannte die Anweisung bei dieser Entscheidung; ob und wie sie sie umsetzt, entscheidet sie im Rahmen ihrer Grenzen selbst. Enter sendet, Umschalt+Enter beginnt eine neue Zeile.
+
+**Kosten:** Antworten auf Fragen haben ein eigenes **Chat-Budget** je Lauf, getrennt vom Budget des Laufs. Die Kosten erscheinen auf der Seite [Nutzung](/docs/nutzung#statistik) unter **Live-Chat im Lauf**, nicht in den Kosten des Laufs. Im strengen [Preismodus](/docs/nutzung#preismodus) werden Fragen an Modelle ohne bekannten Preis abgelehnt. Anweisungen kosten nichts extra; sie werden Teil der nächsten Entscheidung.
+
+**Berechtigungen und Grenzen:** Zum Lesen genügt die Berechtigung *Lesen*, zum Senden brauchst du *Ausführen*. Eine Nachricht hat höchstens 2000 Zeichen; je Lauf und Teamleitung gibt es eine Höchstzahl an Nachrichten, Anweisungen und Fragen sowie eine Grenze für Fragen pro Minute. Die Zeile unter dem Eingabefeld zeigt das übrige Chat-Budget und die übrigen Fragen.
+
+**Pausieren, Neustart, Fortsetzen:** Wartet ein Team auf eine Freigabe, bleiben Anweisungen offen und gelten für die nächste Entscheidung, sobald es weitergeht. Fällt eine Entscheidung durch einen Neustart des Servers aus, wird die Anweisung der nächsten Entscheidung erneut mitgegeben. Endet der Lauf oder die Teamleitung, werden offene Anweisungen als *Nicht mehr berücksichtigt* markiert und beim Fortsetzen nicht übernommen. Nach dem Ende ist das Gespräch nur noch lesbar.
+
+**Unbeaufsichtigte Läufe:** Im Inspektor des Orchestrators legt **Live-Steuerung** fest, wer Anweisungen geben darf: *Läufe, die eine Person gestartet hat* (Standard), *Immer* (auch Zeitplan, API, Stapellauf und Testreihe) oder *Aus*. Fragen betrifft das nicht. Mehr zum Orchestrator steht unter [Orchestrator](/docs/verzweigungen#orchestrator).
+
 ## Trace exportieren {#trace-export}
 <!-- keywords: trace exportieren, export, json, run json, teilen, archivieren, bereinigen, anonymisieren, datenschutz, personenbezogene daten -->
 

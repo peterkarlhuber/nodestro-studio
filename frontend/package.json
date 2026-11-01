@@ -21,6 +21,7 @@
     "e2e:mcp": "node e2e/mcp.mjs",
     "e2e:approvals": "node e2e/approvals.mjs",
     "e2e:orchestration": "node e2e/orchestration.mjs",
+    "e2e:runchat": "node e2e/runChat.mjs",
     "e2e:journeys": "node e2e/journeys.mjs",
     "e2e:welcome": "node e2e/welcome.mjs",
     "e2e:a11y": "node e2e/a11y.mjs"

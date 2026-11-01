@@ -30,6 +30,34 @@ read-only pilot).
   `docs/i18n/terminology.md`); clearer error sentences; in-app docs updated in all six languages, including server
   sign-in, roles and the members commands.
 
+### Live run chat and steering (2026-11-01)
+
+LRC-1, studio part (the API, SDK and runtime parts are separate pull requests in their repositories).
+
+- Run page: runs with an orchestrator (also in nested team runs) get the tabs **Overview** (the page as before)
+  and **Team leader**; approvals, tool approvals, status and summary stay above the tabs. A picker lists only the
+  team leaders the API reports (label, workflow path, level, status) with their decisions, teams and working
+  specialists.
+- Two explicit modes: **Ask a question** (a read-only AI answer, marked "chat answer, not a decision", with the time
+  of its snapshot) and **Give an instruction** (taken into account at the next decision; running teams are not
+  interrupted). Instructions show queued / delivered / considered (with what the decision did) / rejected /
+  expired with the reason; the wording never says "done".
+- Live updates over `GET /api/runs/{id}/chat/events` (`snapshot`, `message`, `targets`, `end`), polling when
+  EventSource is missing; sends carry one `client_id` per composed message, so retries are idempotent. The
+  composer is closed with a reason for ended runs, missing `run` permission and team leaders without steering.
+- Workflow editor: the orchestrator setting **Live steering** (`live_steering`: `attended` default, `always`,
+  `off`). Usage page: the source `run_chat` ("Live run chat"). Texts and error sentences for all `run_chat.*`
+  codes in six languages; the manual section "Talking to the team leader" (`ausfuehrungen#teamleitung`).
+- The picker shows a decision whose teams still work as made, with the note "Decision n is being carried out"
+  (`ChatTarget.deciding`); messages of the desktop's own person show "You".
+- Browser suite `runchat` (`scripts/e2e.sh runchat`, port 8110): parallel and nested teams against the real backend
+  with a scripted model, keyboard use, light and dark, phone width.
+- Pins `nodestro-runtime` `a42b672` (before: `ac96c6f`; runtime #67 and its fix #68), `nodestro-api` `fb7f438`
+  (before: `4e2c8cd`), `nodestro-examples` `ebe899a` (before: `dcad0d1`), `nodestro-integrations` `204c95c` (before:
+  `570d5c7`) and, in `platform/versions.json`, `nodestro-sdk` `dbbc7e5` (before: `3ca06b3`): the runtime, API and SDK
+  parts of LRC-1 on top of Amazon Bedrock. Re-pinned to the merge commits when those pull requests merge.
+- Technical record: [ADR-0008](docs/adr/0008-live-run-chat.md).
+
 ### Amazon Bedrock (AWS) in the studio (2026-11-01)
 
 Frontend, in-app docs and branch pins; no AWS secret is ever entered or shown.

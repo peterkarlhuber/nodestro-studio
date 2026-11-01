@@ -847,5 +847,27 @@
   },
   "model_choice": {
     "node_unknown": "El flujo de trabajo ya no tiene ningún agente «{{node}}». Recarga la página."
+  },
+  "run_chat": {
+    "empty_message": "El mensaje está vacío. Escribe primero una pregunta o una instrucción.",
+    "message_too_long": "El mensaje es demasiado largo. Acórtalo y envíalo de nuevo.",
+    "invalid_client_id": "No se pudo enviar el mensaje con este identificador. Envíalo de nuevo.",
+    "client_id_reused": "Este identificador de mensaje ya se usó para otro texto. Envía el mensaje de nuevo.",
+    "unknown_target": "Este líder de equipo no existe (ya) en esta ejecución.",
+    "run_not_active": "La ejecución ya no está activa; la conversación solo se puede leer.",
+    "imported_run": "Las ejecuciones importadas son de solo lectura.",
+    "not_an_orchestrator": "Este paso no es un líder de equipo (orquestador).",
+    "steering_off": "La dirección en vivo está desactivada para este líder de equipo en el flujo de trabajo.",
+    "steering_unattended": "Nadie inició esta ejecución a mano. Para dar instrucciones en estas ejecuciones, pon la dirección en vivo en Siempre en el flujo de trabajo.",
+    "orchestrator_finished": "El líder de equipo ya ha terminado.",
+    "too_many_messages": "Esta ejecución ha alcanzado su límite de mensajes.",
+    "too_many_instructions": "Este líder de equipo ha alcanzado su límite de instrucciones.",
+    "too_many_questions": "Esta ejecución ha alcanzado su límite de preguntas.",
+    "busy": "Todavía se están respondiendo preguntas anteriores. Espera sus respuestas antes de volver a preguntar.",
+    "rate_limited": "Demasiadas preguntas en poco tiempo. Inténtalo de nuevo en un minuto.",
+    "budget_exhausted": "El presupuesto del chat de esta ejecución se ha agotado.",
+    "run_ended": "La ejecución terminó antes de que se tuviera en cuenta la instrucción.",
+    "answer_interrupted": "La respuesta se interrumpió. Haz la pregunta de nuevo.",
+    "answer_failed": "No se pudo escribir ninguna respuesta. Inténtalo más tarde."
   }
 }

@@ -1,0 +1,97 @@
+{
+  "tab": {
+    "label": "Visões da execução",
+    "overview": "Visão geral",
+    "teamLeader": "Líder da equipe"
+  },
+  "intro": "Faça perguntas ao líder da equipe (o orquestrador) sobre a execução ou dê a ele uma instrução para a próxima decisão.",
+  "docs": "Como funciona a conversa com o líder da equipe",
+  "noTargets": "Esta execução não tem um líder da equipe com quem conversar.",
+  "noTarget": "Escolha primeiro um líder da equipe.",
+  "ended": "A execução terminou; você ainda pode ler a conversa.",
+  "messages": "Conversa com o líder da equipe",
+  "empty": "Ainda não há mensagens.",
+  "someone": "Alguém",
+  "you": "Você",
+  "targets": {
+    "label": "Líder da equipe",
+    "depth": "Equipe aninhada, nível {{level}}"
+  },
+  "activity": {
+    "title": "Atividade atual",
+    "decisions": "Decisões: {{used}} de {{max}}",
+    "deciding": "A decisão {{n}} está em execução",
+    "working_one": "{{count}} equipe está trabalhando agora",
+    "working_other": "{{count}} equipes estão trabalhando agora",
+    "noneWorking": "Nenhuma equipe está trabalhando agora",
+    "specialists": "Trabalhando: {{names}}"
+  },
+  "kind": {
+    "question": "Pergunta",
+    "instruction": "Instrução",
+    "answer": "Resposta"
+  },
+  "status": {
+    "queued": "Aguardando a próxima decisão",
+    "queuedWorking_one": "{{count}} equipe está trabalhando; a instrução será considerada na próxima decisão",
+    "queuedWorking_other": "{{count}} equipes estão trabalhando; a instrução será considerada na próxima decisão",
+    "delivered": "Com o líder da equipe para a decisão {{n}}",
+    "deliveredPlain": "Com o líder da equipe para a decisão atual",
+    "considered": "Incluída na decisão {{n}}",
+    "consideredPlain": "Incluída em uma decisão",
+    "consideredHint": "Incluída significa: o líder da equipe conhecia a instrução ao tomar esta decisão. Se ele a segue, a decisão mostra.",
+    "rejected": "Não aceita",
+    "expired": "Não será mais considerada",
+    "pending": "Respondendo…",
+    "answered": "Respondida",
+    "failed": "Sem resposta"
+  },
+  "decision": {
+    "withTeams": "Decisão: {{action}} ({{teams}})",
+    "only": "Decisão: {{action}}",
+    "invalid": "A decisão era inválida e não foi executada",
+    "action": {
+      "delegate": "delegada",
+      "parallel": "delegada a várias equipes ao mesmo tempo",
+      "staff": "escalação alterada",
+      "finish": "concluída com uma resposta",
+      "other": "outro passo"
+    }
+  },
+  "answer": {
+    "label": "Resposta do chat, não uma decisão",
+    "snapshot": "estado às {{time}}"
+  },
+  "mode": {
+    "question": "Fazer uma pergunta",
+    "instruction": "Dar uma instrução",
+    "questionHint": "Uma pergunta nunca muda a execução. Um modelo de IA responde a partir do estado atual; isso usa o orçamento do chat.",
+    "instructionHint": "O líder da equipe considera a instrução na próxima decisão. Equipes que já estão trabalhando não são interrompidas nem alteradas."
+  },
+  "composer": {
+    "mode": "Tipo de mensagem",
+    "questionLabel": "Sua pergunta",
+    "instructionLabel": "Sua instrução",
+    "keys": "Enter envia, Shift+Enter começa uma nova linha.",
+    "count": "Caracteres: {{used}} de {{max}}",
+    "sendQuestion": "Perguntar",
+    "sendInstruction": "Enviar instrução",
+    "sending": "Enviando…",
+    "noInstructions": "Instruções não são possíveis aqui: {{reason}}"
+  },
+  "meta": {
+    "budget": "Orçamento do chat restante: {{value}}",
+    "questions": "Perguntas restantes: {{value}}",
+    "unknown": "desconhecido",
+    "model": "respostas de {{model}}"
+  },
+  "editor": {
+    "label": "Direção ao vivo",
+    "hint": "Quem pode dar instruções a este líder da equipe enquanto uma execução está ativa. Perguntas sobre a execução não são afetadas.",
+    "options": {
+      "attended": "Execuções iniciadas por uma pessoa (padrão)",
+      "always": "Sempre, também execuções sem supervisão (agendamento, API, execução em lote, série de testes)",
+      "off": "Desativada: nenhuma instrução durante uma execução"
+    }
+  }
+}

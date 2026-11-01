@@ -847,5 +847,27 @@
   },
   "model_choice": {
     "node_unknown": "Le workflow n’a plus d’agent « {{node}} ». Rechargez la page."
+  },
+  "run_chat": {
+    "empty_message": "Le message est vide. Écrivez d’abord une question ou une consigne.",
+    "message_too_long": "Le message est trop long. Raccourcissez-le et envoyez-le à nouveau.",
+    "invalid_client_id": "Le message n’a pas pu être envoyé avec cet identifiant. Envoyez-le à nouveau.",
+    "client_id_reused": "Cet identifiant de message a déjà servi pour un autre texte. Envoyez le message à nouveau.",
+    "unknown_target": "Ce chef d’équipe n’existe pas (plus) dans cette exécution.",
+    "run_not_active": "L’exécution n’est plus active ; la conversation peut seulement être lue.",
+    "imported_run": "Les exécutions importées sont en lecture seule.",
+    "not_an_orchestrator": "Cette étape n’est pas un chef d’équipe (orchestrateur).",
+    "steering_off": "Le pilotage en direct est désactivé pour ce chef d’équipe dans le workflow.",
+    "steering_unattended": "Personne n’a lancé cette exécution à la main. Pour donner des consignes dans ces exécutions, réglez le pilotage en direct sur Toujours dans le workflow.",
+    "orchestrator_finished": "Le chef d’équipe a déjà terminé.",
+    "too_many_messages": "Cette exécution a atteint sa limite de messages.",
+    "too_many_instructions": "Ce chef d’équipe a atteint sa limite de consignes.",
+    "too_many_questions": "Cette exécution a atteint sa limite de questions.",
+    "busy": "Des questions précédentes sont encore en cours de réponse. Attendez leurs réponses avant de poser une nouvelle question.",
+    "rate_limited": "Trop de questions en peu de temps. Réessayez dans une minute.",
+    "budget_exhausted": "Le budget du chat de cette exécution est épuisé.",
+    "run_ended": "L’exécution s’est terminée avant que la consigne soit prise en compte.",
+    "answer_interrupted": "La réponse a été interrompue. Posez la question à nouveau.",
+    "answer_failed": "Aucune réponse n’a pu être rédigée. Réessayez plus tard."
   }
 }

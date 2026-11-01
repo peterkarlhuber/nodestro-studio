@@ -235,6 +235,12 @@ result is lost.
 7. A failed run can be resumed (`nodestro_runtime.resume`): a new linked run takes over results with an unchanged
    fingerprint at no cost and runs the rest again.
 
+While a run with an orchestrator executes, people can talk to its team leader (`nodestro_runtime.run_chat`,
+`/api/runs/{id}/chat`): questions are answered by a separate read-only model call from the stored run state, and
+instructions are stored and handed to the orchestrator at its next decision (the `decide` callback), never by
+interrupting a running team. Delivery is saved with the run's fence, so a worker without its lease delivers
+nothing (ADR-0008).
+
 Batch runs (`nodestro_api.batches`), test series (`nodestro_api.benchmarks`) and schedules
 (`nodestro_api.schedules`) start ordinary runs through `nodestro_runtime.launcher.launch` with their own `trigger`.
 There is only one engine; budget, approvals and usage apply to every run in the same way, and no costs are counted

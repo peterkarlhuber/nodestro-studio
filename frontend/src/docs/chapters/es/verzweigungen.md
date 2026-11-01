@@ -152,6 +152,8 @@ El orquestador solo elige. No tiene herramientas, no crea agentes, herramientas 
 
 Los detalles de la ejecución muestran cada decisión con su motivo, tarea, resultado y un enlace a la ejecución del equipo. Cuando un equipo se detiene para una **aprobación** (también en un subflujo o bajo otro orquestador), el orquestador espera con él: la ejecución queda *en pausa* y aparece en **Aprobaciones**. Tras la decisión continúa la misma ejecución del equipo, también después de un reinicio, y no se vuelve a preguntar al modelo por esa delegación. Si un rechazo termina la ejecución del equipo (*Al rechazar: terminar la ejecución*), también termina esta ejecución; ningún otro equipo puede eludir el rechazo. Al cancelar una ejecución en espera se cancelan también sus equipos en espera. Un equipo no puede volver a llamar al flujo de trabajo del orquestador.
 
+**Durante la ejecución** puedes hacer preguntas al líder de equipo y darle instrucciones para su próxima decisión, en la pestaña **Líder de equipo** de la vista de detalle; consulta [Hablar con el líder de equipo](/docs/ausfuehrungen#teamleitung). **Dirección en vivo**, en el área *Límites*, fija quién puede dar instrucciones.
+
 ## Equipos dinámicos {#dynamische-teams}
 <!-- keywords: equipo dinámico, formar equipo, paralelo, a la vez, parámetros, formulario de inicio, plantilla, composición del equipo, staffing -->
 

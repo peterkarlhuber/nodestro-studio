@@ -14,6 +14,7 @@ Status values: **Proposed** (under review in a pull request), **Accepted**, **Su
 | [0005](0005-desktop-packaging.md) | Desktop packaging without separate installations | Accepted (Tauri 2, PR-5) |
 | [0006](0006-sandbox-policy.md) | Sandbox policy for untrusted code | Accepted; implemented in PR-4 |
 | [0007](0007-mcp-client.md) | MCP client for external tools | Accepted |
+| [0008](0008-live-run-chat.md) | Live run chat and steering of orchestrators | Proposed (LRC-1) |
 
 The plan these records belong to, with the current-state inventory and the pull request sequence, is in
 [`docs/desktop-server/`](../desktop-server/README.md).

@@ -103,6 +103,26 @@ Un'esecuzione non riuscita o annullata può essere [continuata](/docs/verzweigun
 
 **Annulla esecuzione** (nella panoramica dell'esecuzione o nella vista di dettaglio) chiede conferma per sicurezza: un secondo clic su **Annullare davvero?** entro cinque secondi ferma l’esecuzione; **Esc** o un clic altrove la lascia proseguire. Vale anche per un’esecuzione in pausa. Gli agenti in corso si fermano al passo successivo (prossimo blocco di testo, prossima richiesta o prossima chiamata a uno strumento); gli agenti non ancora avviati non vengono più eseguiti. I token consumati fino a quel momento vengono addebitati e mostrati.
 
+## Parlare con il responsabile del team {#teamleitung}
+<!-- keywords: responsabile del team, orchestratore, chat dal vivo, fai una domanda, dai un'istruzione, guidare, guida in diretta, live_steering, budget della chat, run_chat -->
+
+Se un’esecuzione ha un **orchestratore** (anche in un’esecuzione di team annidata), la vista di dettaglio mostra la scheda **Responsabile del team** accanto a **Panoramica**. Le approvazioni e lo stato dell’esecuzione restano visibili sopra. Con più responsabili ne scegli uno; ognuno mostra il suo workflow, il livello e lo stato. Sotto vedi cosa sta facendo: decisioni (usate sul massimo), i suoi team con lo stato e gli specialisti al lavoro in questo momento.
+
+Scegli esplicitamente cosa scrivi:
+
+- **Fai una domanda:** un modello di IA risponde dallo stato attuale dell’esecuzione. Una domanda non cambia mai l’esecuzione. La risposta è marcata *Risposta della chat, non una decisione* e indica lo stato su cui si basa.
+- **Dai un’istruzione:** il responsabile del team la considera alla sua **prossima decisione**. Una decisione già in corso e i team che lavorano già non vengono interrotti né modificati; gli specialisti al lavoro non notano nulla fino alla prossima decisione.
+
+Ogni istruzione mostra il suo stato: *In attesa della prossima decisione* (con quanti team lavorano ora), *Presso il responsabile del team per la decisione N*, *Inclusa nella decisione N* con ciò che è stato deciso, oppure *Non più considerata* con il motivo. «Inclusa» significa che il responsabile del team conosceva l’istruzione in questa decisione; se e come seguirla lo decide da solo entro i suoi limiti. Invio invia, Maiusc+Invio inizia una nuova riga.
+
+**Costi:** le risposte alle domande hanno un proprio **budget della chat** per esecuzione, separato dal budget dell’esecuzione. I costi compaiono nella pagina [Utilizzo](/docs/nutzung#statistik) sotto **Chat dal vivo delle esecuzioni**, non nei costi dell’esecuzione. Con la [modalità prezzi](/docs/nutzung#preismodus) rigorosa le domande a modelli senza prezzo noto vengono rifiutate. Le istruzioni non costano nulla in più; diventano parte della prossima decisione.
+
+**Permessi e limiti:** per leggere basta il permesso *Leggere*, per inviare serve *Eseguire*. Un messaggio ha al massimo 2000 caratteri; per esecuzione e responsabile esiste un numero massimo di messaggi, istruzioni e domande e un limite di domande al minuto. La riga sotto il campo di testo mostra il budget della chat e le domande rimaste.
+
+**Pausa, riavvio, ripresa:** mentre un team attende un’approvazione, le istruzioni restano aperte e valgono per la prossima decisione quando l’esecuzione riprende. Se un riavvio del server fa perdere una decisione, l’istruzione viene consegnata di nuovo alla decisione successiva. Quando l’esecuzione o il responsabile del team terminano, le istruzioni aperte vengono marcate *Non più considerata* e non vengono riprese quando continui l’esecuzione. Dopo la fine la conversazione si può solo leggere.
+
+**Esecuzioni non presidiate:** nell’inspector dell’orchestratore, **Guida in diretta** stabilisce chi può dare istruzioni: *Esecuzioni avviate da una persona* (predefinito), *Sempre* (anche pianificazione, API, esecuzione in serie e serie di test) oppure *Disattivata*. Le domande non ne sono toccate. Altro sull’orchestratore in [Orchestratore](/docs/verzweigungen#orchestrator).
+
 ## Esportare una traccia {#trace-export}
 <!-- keywords: esportare traccia, esporta, json, run json, condividere, archiviare, ripulire, anonimizzare, privacy, dati personali -->
 

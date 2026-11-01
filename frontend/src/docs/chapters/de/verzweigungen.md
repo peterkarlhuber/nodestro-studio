@@ -152,6 +152,8 @@ Der Orchestrator wählt nur aus. Er hat keine Werkzeuge, erstellt keine Agenten,
 
 In den Details des Laufs steht jede Entscheidung mit Begründung, Aufgabe, Ergebnis und einem Link zum Lauf des Teams. Hält ein Team für eine **Freigabe** an (auch in einem Unter-Workflow oder unter einem weiteren Orchestrator), wartet der Orchestrator mit: Der Lauf ist *pausiert* und erscheint unter **Freigaben**. Nach der Entscheidung läuft derselbe Lauf des Teams weiter, auch nach einem Neustart, und das Modell wird zu dieser Weitergabe nicht noch einmal gefragt. Beendet eine Ablehnung den Lauf des Teams (*Bei Ablehnung: Lauf beenden*), endet auch dieser Lauf; kein anderes Team kann die Ablehnung umgehen. Wird ein wartender Lauf abgebrochen, werden seine wartenden Teams mit abgebrochen. Ein Team darf den Workflow des Orchestrators nicht wieder aufrufen.
 
+**Während des Laufs** kannst du der Teamleitung Fragen stellen und Anweisungen für ihre nächste Entscheidung geben, im Reiter **Teamleitung** der Detailansicht; siehe [Mit der Teamleitung sprechen](/docs/ausfuehrungen#teamleitung). Wer Anweisungen geben darf, legt **Live-Steuerung** im Bereich *Grenzen* fest.
+
 ## Dynamische Teams {#dynamische-teams}
 <!-- keywords: dynamisches team, team zusammenstellen, parallel, gleichzeitig, parameter, startformular, vorlage, teamzusammenstellung, staffing -->
 
