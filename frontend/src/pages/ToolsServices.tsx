@@ -64,7 +64,7 @@ export function ServicesTab() {
   const servers = useMcpServers();
   const [selected, setSelected] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
-  useOAuthReturn();
+  useOAuthReturn(setSelected);
   if (servers.isLoading || status.isLoading) return <Spinner />;
   if (servers.error) return <Callout tone="danger"><ErrorText error={servers.error} /></Callout>;
   const list = servers.data ?? [];
@@ -135,8 +135,29 @@ export function ServicesTab() {
   );
 }
 
+/** The server whose sign-in left the page, so the return shows it again (this tab only). */
+const OAUTH_SERVER_KEY = "nodestro.mcp.oauthServer";
+
+function rememberOAuthServer(id: string) {
+  try {
+    sessionStorage.setItem(OAUTH_SERVER_KEY, id);
+  } catch {
+    // Without storage the return shows the first service.
+  }
+}
+
+function takeOAuthServer(): string | null {
+  try {
+    const id = sessionStorage.getItem(OAUTH_SERVER_KEY);
+    sessionStorage.removeItem(OAUTH_SERVER_KEY);
+    return id;
+  } catch {
+    return null;
+  }
+}
+
 /** The browser's return from an OAuth sign-in: /tools?tab=services&oauth=connected or &oauth_error=<code>. */
-function useOAuthReturn() {
+function useOAuthReturn(select: (id: string) => void) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [params, setParams] = useSearchParams();
@@ -147,11 +168,13 @@ function useOAuthReturn() {
     if (connected === "connected") toast.success(t("tools.services.oauth.connected"));
     if (failed) toast.error(new Error(t(`errors.${failed}`, { defaultValue: t("tools.services.oauth.failed", { code: failed }) })));
     void queryClient.invalidateQueries({ queryKey: mcpKeys.all });
+    const server = takeOAuthServer();
+    if (server) select(server);
     const next = new URLSearchParams(params);
     next.delete("oauth");
     next.delete("oauth_error");
     setParams(next, { replace: true });
-  }, [connected, failed, params, setParams, queryClient, t]);
+  }, [connected, failed, params, setParams, queryClient, t, select]);
 }
 
 /** What this installation allows: SDK, token storage, the operator's endpoint list, unattended use. */
@@ -238,7 +261,10 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
   const signIn = useMutation({
     mutationFn: () => mcpApi.oauthStart(server.id),
     // The authorization server's page; it returns to /tools?tab=services (handled by useOAuthReturn).
-    onSuccess: (result) => window.location.assign(result.authorization_url),
+    onSuccess: (result) => {
+      rememberOAuthServer(server.id);
+      window.location.assign(result.authorization_url);
+    },
     onError: (error) => {
       refresh(server.id);
       toast.error(error);
