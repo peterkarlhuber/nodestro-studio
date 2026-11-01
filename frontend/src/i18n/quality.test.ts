@@ -195,6 +195,7 @@ describe("backend codes", () => {
     "provider.aws_verification_failed", "check.bedrock_not_configured", "check.bedrock_not_available",
     "check.bedrock_settings_invalid", "check.model_unpriced", "pricing.region_required", "pricing.invalid_region",
     "pricing.reconciliation_not_supported", "config.reserved_request_options", "run.provider_auth_aws",
+    "export.region_missing", "export.aws_profile_not_exported", "export.aws_role_not_exported", "provider.model_invalid",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

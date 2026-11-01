@@ -68,6 +68,8 @@
     "regionsHint": "Amazon Bedrock prices apply per region. List the regions these rates apply to, separated by commas. A region not listed has an unknown cost, never 0.",
     "regionsInvalid": "List at least one AWS region, with names like eu-central-1.",
     "regionsList": "Regions: {{regions}}",
-    "noRegions": "No region listed: costs stay unknown"
+    "noRegions": "No region listed: costs stay unknown",
+    "regional": "Priced per AWS region",
+    "notReconciled": "{{provider}} was not compared with a bill (estimated: {{amount}})."
   }
 }

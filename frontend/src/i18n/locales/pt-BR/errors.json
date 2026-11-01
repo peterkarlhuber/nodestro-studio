@@ -525,7 +525,11 @@
     "provider": "{{provider}}: defina {{variables}} no ambiente do projeto exportado.",
     "base_url_withheld": "A URL base de {{provider}} contém credenciais e não é exportada; defina {{variable}} no projeto exportado.",
     "integration_tools": "As ferramentas de integrações instaladas ainda não podem ser exportadas: {{tools}}.",
-    "mcp_tools": "Versões com ferramentas de serviço não podem ser exportadas: o projeto exportado não tem conexão com os serviços."
+    "mcp_tools": "Versões com ferramentas de serviço não podem ser exportadas: o projeto exportado não tem conexão com os serviços.",
+    "region_missing": "{{provider}} não tem região da AWS nas configurações; escolha uma antes de exportar.",
+    "aws_profile_not_exported": "{{provider}}: o perfil da AWS não é exportado. O projeto entra com as credenciais padrão da AWS da máquina em que roda (defina AWS_PROFILE lá se precisar).",
+    "aws_role_not_exported": "{{provider}}: a função da AWS do servidor não é exportada. Configure credenciais da AWS (por exemplo, uma função do IAM) na máquina em que o projeto roda.",
+    "provider_aws": "{{provider}}: o projeto entra com as credenciais padrão da AWS da máquina em que roda (ambiente, perfil da AWS ou função do IAM); {{variables}} substitui a região exportada. O ZIP não contém credenciais da AWS."
   },
   "lan": {
     "tls_file_missing": "Arquivo não encontrado: {{path}}",
@@ -666,7 +670,8 @@
     "aws_model_not_found": "O Amazon Bedrock não conhece este modelo ou perfil de inferência nesta região, ou ele não está habilitado para a conta.",
     "aws_rate_limited": "A AWS informou solicitações demais. Tente de novo mais tarde.",
     "aws_unreachable": "Não foi possível acessar o Amazon Bedrock nesta região (rede, proxy ou nome da região).",
-    "aws_verification_failed": "A verificação de conexão com a AWS falhou."
+    "aws_verification_failed": "A verificação de conexão com a AWS falhou.",
+    "model_invalid": "Este modelo não pertence a {{provider}}; verifique só um ID de modelo do Bedrock, um perfil de inferência ou um ARN."
   },
   "access": {
     "login_required": "Faça login para usar esta parte do Nodestro.",

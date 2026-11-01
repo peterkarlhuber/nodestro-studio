@@ -525,7 +525,11 @@
     "provider": "{{provider}}: define {{variables}} en el entorno del proyecto exportado.",
     "base_url_withheld": "La URL base de {{provider}} contiene credenciales y no se exporta; define {{variable}} en el proyecto exportado.",
     "integration_tools": "Las herramientas de integraciones instaladas aún no se pueden exportar: {{tools}}.",
-    "mcp_tools": "Las versiones con herramientas de servicio no se pueden exportar: el proyecto exportado no tiene conexión con los servicios."
+    "mcp_tools": "Las versiones con herramientas de servicio no se pueden exportar: el proyecto exportado no tiene conexión con los servicios.",
+    "region_missing": "{{provider}} no tiene región de AWS en los ajustes; elige una antes de exportar.",
+    "aws_profile_not_exported": "{{provider}}: el perfil de AWS no se exporta. El proyecto inicia sesión con las credenciales predeterminadas de AWS del equipo en el que se ejecuta (define allí AWS_PROFILE si hace falta).",
+    "aws_role_not_exported": "{{provider}}: el rol de AWS del servidor no se exporta. Configura credenciales de AWS (por ejemplo, un rol de IAM) en el equipo en el que se ejecuta el proyecto.",
+    "provider_aws": "{{provider}}: el proyecto inicia sesión con las credenciales predeterminadas de AWS del equipo en el que se ejecuta (entorno, perfil de AWS o rol de IAM); {{variables}} sustituye la región exportada. El ZIP no contiene credenciales de AWS."
   },
   "lan": {
     "tls_file_missing": "Archivo no encontrado: {{path}}",
@@ -666,7 +670,8 @@
     "aws_model_not_found": "Amazon Bedrock no conoce este modelo o perfil de inferencia en esta región, o no está habilitado para la cuenta.",
     "aws_rate_limited": "AWS informó de demasiadas solicitudes. Vuelve a intentarlo más tarde.",
     "aws_unreachable": "No se pudo acceder a Amazon Bedrock en esta región (red, proxy o nombre de región).",
-    "aws_verification_failed": "La comprobación de conexión con AWS falló."
+    "aws_verification_failed": "La comprobación de conexión con AWS falló.",
+    "model_invalid": "Este modelo no pertenece a {{provider}}; comprueba solo un ID de modelo de Bedrock, un perfil de inferencia o un ARN."
   },
   "access": {
     "login_required": "Inicia sesión para usar esta parte de Nodestro.",

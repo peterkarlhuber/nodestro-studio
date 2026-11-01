@@ -33,8 +33,9 @@ export interface PriceEntry {
   overridden: boolean;
   reference: PriceEntry | null;
   /**
-   * Assumed API shape (Bedrock design §5): the AWS regions an ``aws_region`` tariff covers (Amazon Bedrock prices
-   * apply per region; a region not listed has an unknown cost, never 0). Null or missing for other providers.
+   * Not in the API yet (nodestro-api 355e0a2 lists only the tariff dimensions in ``tariffs``, e.g. "aws_region"):
+   * the AWS regions an ``aws_region`` tariff covers. Shown when present; otherwise the table says the price is
+   * regional without naming the regions.
    */
   regions?: string[] | null;
 }
@@ -124,8 +125,8 @@ export interface OverrideIn {
   source_url?: string | null;
   note?: string | null;
   /**
-   * Assumed API shape: Amazon Bedrock only, required there (pricing.region_required): the AWS regions these rates
-   * apply to; the API stores them as the price's ``aws_region`` tariff (pricing.invalid_region for a bad name).
+   * Amazon Bedrock only, required there (pricing.region_required): the AWS regions these rates apply to (at most 40);
+   * the API stores them as the price's ``aws_region`` tariff (pricing.invalid_region for a bad name).
    */
   aws_regions?: string[] | null;
 }
@@ -162,7 +163,19 @@ export interface ReconciliationRow {
   note: string | null;
 }
 
+/** A provider with estimated costs in the period that was not compared with a bill (e.g. Amazon Bedrock). */
+export interface UnreconciledProvider {
+  provider: string;
+  code: "pricing.reconciliation_not_supported" | "pricing.reconciliation_not_configured" | string;
+  estimated_usd: string;
+  requests: number;
+  unpriced_requests: number;
+  note: string;
+}
+
 export interface ReconciliationReport {
+  /** Providers not compared with a bill (never presented as matching it); missing from older backends. */
+  not_reconciled?: UnreconciledProvider[];
   created_at: string;
   start: string;
   end: string;

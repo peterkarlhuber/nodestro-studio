@@ -157,12 +157,14 @@ export function BedrockCard({ info, status, settings }: { info: ProviderInfo; st
 
         <div className="stack-sm" data-testid="bedrock-status" data-state={state}>
           <p className="small">
-            <Badge tone={STATE_TONE[state]}>{t(`bedrock.state.${state}`)}</Badge> {t(`bedrock.stateText.${state}`)}
+            <Badge tone={STATE_TONE[state]}>{t(`bedrock.state.${state}`)}</Badge>{" "}
+            {available || state !== "not_configured" ? t(`bedrock.stateText.${state}`) : null}
             {status.verification?.checked_at ? (
               <span className="muted"> {t("bedrock.verify.checkedAt", { time: formatDate(status.verification.checked_at) })}</span>
             ) : null}
           </p>
-          {code && (state === "failed" || state === "not_configured") && code !== "provider.not_configured" ? (
+          {/* "Not set up" and "no role on this server" are said by the form itself. */}
+          {code && (state === "failed" || state === "not_configured") && code !== "provider.not_configured" && code !== "provider.bedrock_not_available" ? (
             <Callout tone={state === "failed" ? "danger" : "warning"}>
               <span data-testid="bedrock-status-code" data-code={code}>
                 <ProblemText item={{ code, params: { provider: info.id, region: status.region ?? "" } }} />

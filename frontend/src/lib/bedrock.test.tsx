@@ -87,6 +87,13 @@ describe("Bedrock problems", () => {
     expect(text).toContain(i18n.t("errors.provider.region_not_allowed", { region: "us-east-1" }));
   });
 
+  it("tells an export of Bedrock that AWS credentials stay on the target machine", () => {
+    const item = { code: "export.provider", params: { provider: "bedrock", variables: "AWS_REGION / AWS_DEFAULT_REGION" } };
+    expect(problemCode(item)).toBe("export.provider_aws");
+    expect(problemText(i18n.t, item)).toContain("AWS_REGION / AWS_DEFAULT_REGION");
+    expect(problemCode({ code: "export.provider", params: { provider: "openai" } })).toBe("export.provider");
+  });
+
   it("has a sentence for the residency violation of a run", () => {
     expect(problemText(i18n.t, { code: "provider.data_residency_violation", params: { provider: "bedrock" } })).toBe(
       i18n.t("errors.provider.data_residency_violation"),

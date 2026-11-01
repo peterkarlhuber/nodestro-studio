@@ -525,7 +525,11 @@
     "provider": "{{provider}}: imposta {{variables}} nell’ambiente del progetto esportato.",
     "base_url_withheld": "L’URL di base di {{provider}} contiene credenziali e non viene esportato; imposta {{variable}} nel progetto esportato.",
     "integration_tools": "Gli strumenti delle integrazioni installate non possono ancora essere esportati: {{tools}}.",
-    "mcp_tools": "Le versioni con strumenti di servizio non si possono esportare: il progetto esportato non ha alcuna connessione ai servizi."
+    "mcp_tools": "Le versioni con strumenti di servizio non si possono esportare: il progetto esportato non ha alcuna connessione ai servizi.",
+    "region_missing": "{{provider}} non ha una regione AWS nelle impostazioni; scegline una prima di esportare.",
+    "aws_profile_not_exported": "{{provider}}: il profilo AWS non viene esportato. Il progetto accede con le credenziali AWS predefinite della macchina su cui gira (imposta lì AWS_PROFILE se serve).",
+    "aws_role_not_exported": "{{provider}}: il ruolo AWS del server non viene esportato. Configura le credenziali AWS (per esempio un ruolo IAM) sulla macchina su cui gira il progetto.",
+    "provider_aws": "{{provider}}: il progetto accede con le credenziali AWS predefinite della macchina su cui gira (ambiente, profilo AWS o ruolo IAM); {{variables}} sostituisce la regione esportata. Lo ZIP non contiene credenziali AWS."
   },
   "lan": {
     "tls_file_missing": "File non trovato: {{path}}",
@@ -666,7 +670,8 @@
     "aws_model_not_found": "Amazon Bedrock non conosce questo modello o profilo di inferenza in questa regione, oppure non è abilitato per l’account.",
     "aws_rate_limited": "AWS ha segnalato troppe richieste. Riprova più tardi.",
     "aws_unreachable": "Amazon Bedrock non è raggiungibile in questa regione (rete, proxy o nome della regione).",
-    "aws_verification_failed": "La verifica della connessione con AWS non è riuscita."
+    "aws_verification_failed": "La verifica della connessione con AWS non è riuscita.",
+    "model_invalid": "Questo modello non appartiene a {{provider}}; verifica solo un ID di modello Bedrock, un profilo di inferenza o un ARN."
   },
   "access": {
     "login_required": "Accedi per usare questa parte di Nodestro.",

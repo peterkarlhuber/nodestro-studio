@@ -49,8 +49,11 @@ step). No API key field for Bedrock, no AWS secret is ever entered or shown.
   credentials/permissions/reachability, verification), `check.bedrock_*`, `pricing.region_required`,
   `pricing.invalid_region` and `pricing.reconciliation_not_supported` codes; a refused AWS sign-in is not called an
   API key problem; run failures show the full model id.
-- Model prices: Bedrock prices list the AWS regions they apply to (shown in the table, required in the override
-  dialog); the model hint names the priced regions.
+- Model prices: Bedrock overrides name the AWS regions they apply to (`aws_regions`, required in the override
+  dialog); the table marks regional prices and the model hint names the priced regions. The bill comparison lists
+  providers it did not compare (`not_reconciled`, e.g. Bedrock) with their estimate.
+- Export check: sentences for `export.region_missing`, `export.aws_profile_not_exported`,
+  `export.aws_role_not_exported` and the AWS wording of `export.provider` for Bedrock.
 - Docs (six languages): a Bedrock section in the settings chapter (sign-in on desktop and server, region, models and
   inference profiles, EU residency and its limits, minimal IAM permissions, regional prices, supported features,
   AWS credentials and tool sandboxes, troubleshooting by message), model ids in the agents chapter, the export

@@ -525,7 +525,11 @@
     "provider": "{{provider}}: set {{variables}} in the environment of the exported project.",
     "base_url_withheld": "The base URL of {{provider}} contains credentials and is not exported; set {{variable}} in the exported project.",
     "integration_tools": "Tools of installed integrations cannot be exported yet: {{tools}}.",
-    "mcp_tools": "Versions with service tools cannot be exported: the exported project has no connection to the services."
+    "mcp_tools": "Versions with service tools cannot be exported: the exported project has no connection to the services.",
+    "region_missing": "{{provider}} has no AWS region in the settings; choose one before exporting.",
+    "aws_profile_not_exported": "{{provider}}: the AWS profile is not exported. The project signs in with the AWS default credentials of the machine it runs on (set AWS_PROFILE there if needed).",
+    "aws_role_not_exported": "{{provider}}: the server's AWS role is not exported. Set up AWS credentials (for example an IAM role) on the machine the project runs on.",
+    "provider_aws": "{{provider}}: the project signs in with the AWS default credentials of the machine it runs on (environment, AWS profile or IAM role); setting {{variables}} there replaces the exported region. No AWS credentials are in the ZIP."
   },
   "lan": {
     "tls_file_missing": "File not found: {{path}}",
@@ -666,7 +670,8 @@
     "aws_model_not_found": "Amazon Bedrock does not know this model or inference profile in this region, or it is not enabled for the account.",
     "aws_rate_limited": "AWS reported too many requests. Try again later.",
     "aws_unreachable": "Amazon Bedrock could not be reached in this region (network, proxy or region name).",
-    "aws_verification_failed": "The connection check with AWS failed."
+    "aws_verification_failed": "The connection check with AWS failed.",
+    "model_invalid": "This model does not belong to {{provider}}; check only a Bedrock model id, inference profile or ARN."
   },
   "access": {
     "login_required": "Log in to use this part of Nodestro.",

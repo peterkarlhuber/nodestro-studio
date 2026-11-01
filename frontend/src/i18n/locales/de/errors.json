@@ -525,7 +525,11 @@
     "provider": "{{provider}}: Setze {{variables}} in der Umgebung des exportierten Projekts.",
     "base_url_withheld": "Die Basis-URL von {{provider}} enthält Zugangsdaten und wird nicht exportiert; setze {{variable}} im exportierten Projekt.",
     "integration_tools": "Tools installierter Integrationen lassen sich noch nicht exportieren: {{tools}}.",
-    "mcp_tools": "Versionen mit Dienst-Tools lassen sich nicht exportieren: Das exportierte Projekt hat keine Verbindung zu den Diensten."
+    "mcp_tools": "Versionen mit Dienst-Tools lassen sich nicht exportieren: Das exportierte Projekt hat keine Verbindung zu den Diensten.",
+    "region_missing": "{{provider}} hat in den Einstellungen keine AWS-Region; wähle eine, bevor du exportierst.",
+    "aws_profile_not_exported": "{{provider}}: Das AWS-Profil wird nicht exportiert. Das Projekt meldet sich mit den AWS-Standard-Zugangsdaten des Rechners an, auf dem es läuft (setze dort bei Bedarf AWS_PROFILE).",
+    "aws_role_not_exported": "{{provider}}: Die AWS-Rolle des Servers wird nicht exportiert. Richte AWS-Zugangsdaten (etwa eine IAM-Rolle) auf dem Rechner ein, auf dem das Projekt läuft.",
+    "provider_aws": "{{provider}}: Das Projekt meldet sich mit den AWS-Standard-Zugangsdaten des Rechners an, auf dem es läuft (Umgebung, AWS-Profil oder IAM-Rolle); {{variables}} überschreibt die exportierte Region. Im ZIP sind keine AWS-Zugangsdaten."
   },
   "lan": {
     "tls_file_missing": "Datei nicht gefunden: {{path}}",
@@ -666,7 +670,8 @@
     "aws_model_not_found": "Amazon Bedrock kennt dieses Modell oder Inferenzprofil in dieser Region nicht, oder es ist für das Konto nicht aktiviert.",
     "aws_rate_limited": "AWS hat zu viele Anfragen gemeldet. Versuche es später erneut.",
     "aws_unreachable": "Amazon Bedrock war in dieser Region nicht erreichbar (Netzwerk, Proxy oder Regionsname).",
-    "aws_verification_failed": "Die Verbindungsprüfung mit AWS ist fehlgeschlagen."
+    "aws_verification_failed": "Die Verbindungsprüfung mit AWS ist fehlgeschlagen.",
+    "model_invalid": "Dieses Modell gehört nicht zu {{provider}}; prüfe nur eine Bedrock-Modell-ID, ein Inferenzprofil oder einen ARN."
   },
   "access": {
     "login_required": "Melde dich an, um diesen Teil von Nodestro zu nutzen.",

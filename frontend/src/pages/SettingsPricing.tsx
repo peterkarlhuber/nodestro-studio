@@ -44,7 +44,7 @@ import {
   Spinner,
   TextInput,
 } from "../components/ui";
-import { ErrorText } from "../lib/errors";
+import { ErrorText, ProblemText } from "../lib/errors";
 import { formatCost, formatDate, formatNumber, formatPrice } from "../lib/format";
 import { PRICE_STATUS_TONE, STALENESS_TONE } from "../lib/pricing";
 
@@ -419,7 +419,9 @@ function PriceTable({ entries }: { entries: PriceEntry[] }) {
                     <div className="muted small" data-testid="price-regions">
                       {entry.regions?.length
                         ? t("bedrock.pricing.regionsList", { regions: entry.regions.join(", ") })
-                        : t("bedrock.pricing.noRegions")}
+                        : entry.tariffs.includes("aws_region")
+                          ? t("bedrock.pricing.regional")
+                          : t("bedrock.pricing.noRegions")}
                     </div>
                   ) : null}
                   {entry.overridden && entry.reference ? (
@@ -587,6 +589,17 @@ function ReconciliationResult({ report }: { report: ReconciliationReport }) {
           </Callout>
         ),
       )}
+      {(report.not_reconciled ?? []).map((item) => (
+        <Callout key={item.provider} tone="info">
+          <span data-testid="not-reconciled" data-provider={item.provider}>
+            {t("bedrock.pricing.notReconciled", {
+              provider: t(`providers.names.${item.provider}`, { defaultValue: item.provider }),
+              amount: amount(item.estimated_usd),
+            })}{" "}
+            <ProblemText item={{ code: item.code, params: { provider: item.provider }, message: item.note }} compact />
+          </span>
+        </Callout>
+      ))}
       <Callout tone={report.warnings ? "warning" : "info"}>
         {report.warnings ? t("pricing.reconciliation.warnings", { count: report.warnings }) : t("pricing.reconciliation.noWarnings")}{" "}
         {t("pricing.reconciliation.thresholds", {

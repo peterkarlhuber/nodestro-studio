@@ -525,7 +525,11 @@
     "provider": "{{provider}} : définissez {{variables}} dans l’environnement du projet exporté.",
     "base_url_withheld": "L’URL de base de {{provider}} contient des identifiants et n’est pas exportée ; définissez {{variable}} dans le projet exporté.",
     "integration_tools": "Les outils des intégrations installées ne peuvent pas encore être exportés : {{tools}}.",
-    "mcp_tools": "Les versions avec des outils de service ne peuvent pas être exportées : le projet exporté n'a aucune connexion aux services."
+    "mcp_tools": "Les versions avec des outils de service ne peuvent pas être exportées : le projet exporté n'a aucune connexion aux services.",
+    "region_missing": "{{provider}} n’a pas de région AWS dans les réglages ; choisissez-en une avant d’exporter.",
+    "aws_profile_not_exported": "{{provider}} : le profil AWS n’est pas exporté. Le projet se connecte avec les identifiants AWS par défaut de la machine sur laquelle il s’exécute (définissez-y AWS_PROFILE si nécessaire).",
+    "aws_role_not_exported": "{{provider}} : le rôle AWS du serveur n’est pas exporté. Configurez des identifiants AWS (par exemple un rôle IAM) sur la machine où s’exécute le projet.",
+    "provider_aws": "{{provider}} : le projet se connecte avec les identifiants AWS par défaut de la machine sur laquelle il s’exécute (environnement, profil AWS ou rôle IAM) ; {{variables}} remplace la région exportée. Le ZIP ne contient aucun identifiant AWS."
   },
   "lan": {
     "tls_file_missing": "Fichier introuvable : {{path}}",
@@ -666,7 +670,8 @@
     "aws_model_not_found": "Amazon Bedrock ne connaît pas ce modèle ou ce profil d’inférence dans cette région, ou il n’est pas activé pour le compte.",
     "aws_rate_limited": "AWS a signalé trop de requêtes. Réessayez plus tard.",
     "aws_unreachable": "Amazon Bedrock n’a pas pu être joint dans cette région (réseau, proxy ou nom de région).",
-    "aws_verification_failed": "La vérification de la connexion avec AWS a échoué."
+    "aws_verification_failed": "La vérification de la connexion avec AWS a échoué.",
+    "model_invalid": "Ce modèle n’appartient pas à {{provider}} ; vérifiez uniquement un identifiant de modèle Bedrock, un profil d’inférence ou un ARN."
   },
   "access": {
     "login_required": "Connectez-vous pour utiliser cette partie de Nodestro.",
