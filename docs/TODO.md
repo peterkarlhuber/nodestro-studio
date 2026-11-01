@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 3 |
-| P3 Low | 19 |
+| P3 Low | 21 |
 | P4 Optional | 8 |
 
 **Release blockers:** None for this repository.
@@ -158,14 +158,32 @@ None known.
   "unknown" although the API route can answer.
 - **Next step:** Query the route from the model picker for free-text ids; keep the current fallback.
 
+### ST-031 · Offline (sample data) badge on example copies (AD-18)
+
+- **Priority:** P3 Low · **Status:** Blocked · **Refs:** UX audit AD-18, nodestro-examples #39
+- **What:** Copies of examples whose optional connection is missing run on sample data, but only the copy chooser
+  (`frontend/src/library/ExampleSections.tsx`) says so; the editor and run headers show no badge.
+- **Next step:** Show a badge in the workflow and run header once nodestro-examples EX-003 has chosen the marker.
+- **Depends on:** nodestro-examples EX-003 (marker), possibly a workflow field in nodestro-runtime/nodestro-api.
+
+### ST-032 · Technical field names in the team hint and result labels (ED-17)
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** UX audit ED-17
+- **What:** The palette team hint (`frontend/src/editor/Palette.tsx`, `teamHint()`) lists output fields by id, and
+  `fieldLabel()` in `components/Markdown.tsx` falls back to the English field id when a description exceeds 60
+  characters (10 to 17 example fields per language).
+- **Next step:** Show localized descriptions or labels instead of ids; agree the label source with nodestro-examples EX-002.
+- **Depends on:** nodestro-examples EX-002 (possible `label` on the runtime's `OutputField`).
+
 ## Tests and quality assurance
 
 ### ST-012 · Dependabot pull requests cannot run the full CI
 
 - **Priority:** P3 Low · **Status:** Open · **Refs:** #85
-- **What:** Dependabot runs do not get `NODESTRO_READ`, so backend, pins, package and browser jobs fail before
-  testing; only the frontend job is meaningful.
-- **Next step:** Add a read-only token as a Dependabot secret (owner action), or re-run such PRs from a maintainer branch.
+- **What:** CI exits when the `NODESTRO_READ` secret is missing, so on Dependabot runs the backend, pins, package and
+  browser jobs fail before testing; only the frontend job is meaningful. All component repositories are public now.
+- **Next step:** Install the git dependencies anonymously and make the token optional, as in the other repositories
+  (backend audit D-08 residual); a Dependabot secret (owner action) is only the fallback.
 
 ### ST-017 · Pending dependency updates (Dependabot)
 
@@ -293,7 +311,8 @@ None known.
 | ST-014 | nodestro-api | Budget usage in usage data (AD-20) | Studio needs the field first |
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |
 | ST-028 | nodestro-runtime, nodestro-api | Dependency locking (D-05) | One shared decision |
-| — | nodestro-examples | ED-17 English capability tags and field labels; AD-18 sample-mode marker | Change lives in examples |
+| ST-031, ST-032 | nodestro-examples | EX-003 (AD-18 marker), EX-001/EX-002 (ED-17) | Examples provide the marker and texts; studio shows them |
+| ST-012 | all component repositories | `NODESTRO_READ` CI change (api #50, sdk #47, runtime #75, server #25, desktop #17) | Same change everywhere |
 | — | nodestro-runtime, nodestro-api | X-01 decision response still `paused`; X-03 error code list | Change lives in runtime/api; studio already adapted |
 
 Generated example chapters (`frontend/src/docs/chapters/*/beispiele.md`, between the `examples` markers) come from
@@ -308,4 +327,4 @@ nodestro-examples; fix their content there.
 - Accepted risks stay listed with their reason until the risk is removed or re-evaluated.
 - Re-review the whole file before each release and update the "Last full review" line.
 - Security issues that are not yet fixed are described only in general terms here. Report details privately
-  (see SECURITY.md or GitHub private vulnerability reporting), never in this file or in public issues.
+  (GitHub private vulnerability reporting), never in this file or in public issues.
