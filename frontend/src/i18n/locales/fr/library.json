@@ -95,15 +95,15 @@
     "searches": "Recherche dans : {{names}}",
     "connection": "Avec connexion : {{names}}",
     "teams": "Équipes",
-    "teamsNote": "L'orchestrateur choisit pendant l'exécution les équipes adaptées à la tâche. Quand tu copies l'exemple, chaque équipe devient un workflow à part entière que tu peux modifier.",
+    "teamsNote": "L'orchestrateur choisit pendant l'exécution les équipes adaptées à la tâche. Quand vous copiez l'exemple, chaque équipe devient un workflow à part entière que vous pouvez modifier.",
     "teamApproval": "S'arrête pour une validation",
     "capabilities": "Compétences",
     "teamAgents": "Agents : {{names}}",
     "teamParameters": "Réglages que l'orchestrateur peut remplir : {{names}}",
     "teamContract": "Fournit : {{names}}",
     "knowledge": "Fichiers de connaissances",
-    "knowledgeNote": "Créés dans ta base de connaissances lors de la copie. Les documents sont inventés ; les agents y cherchent et citent leurs sources.",
-    "copyTestsConnected": "Impossible avec une connexion : les séries de tests s'exécutent sans personne et les outils MCP n'y sont pas autorisés. Choisis le mode hors ligne pour reprendre les cas de test."
+    "knowledgeNote": "Créés dans votre base de connaissances lors de la copie. Les documents sont inventés ; les agents y cherchent et citent leurs sources.",
+    "copyTestsConnected": "Impossible avec une connexion : les séries de tests s'exécutent sans personne et les outils MCP n'y sont pas autorisés. Choisissez le mode hors ligne pour reprendre les cas de test."
   },
   "connect": {
     "title_one": "Connexion facultative",

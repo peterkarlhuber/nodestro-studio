@@ -263,7 +263,7 @@
     "save": "Enregistrer le contrôle",
     "passed": "Le contrôle de publication est satisfait.",
     "blocked": "Le contrôle de publication bloque cette version. Les vérifications obligatoires ne peuvent pas être ignorées : teste exactement cette version.",
-    "overridable": "Tous les résultats n'atteignent pas le contrôle. Tu peux publier quand même en indiquant une justification ; elle est enregistrée avec la version.",
+    "overridable": "Tous les résultats n'atteignent pas le contrôle. Vous pouvez publier quand même en indiquant une justification ; elle est enregistrée avec la version.",
     "kinds": {
       "critical": "Vérifications obligatoires",
       "deterministic": "Résultats des vérifications",

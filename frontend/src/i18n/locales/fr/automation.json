@@ -171,15 +171,15 @@
     "fromRun": {
       "button": "Ajouter comme cas de test",
       "title": "Cas de test à partir de cette exécution",
-      "intro": "Nodestro propose un cas de test avec l'entrée de cette exécution. Rien n'est enregistré tant que tu ne l'ajoutes pas à une série de tests.",
+      "intro": "Nodestro propose un cas de test avec l'entrée de cette exécution. Rien n'est enregistré tant que vous ne l'ajoutez pas à une série de tests.",
       "replaced": "Remplacé : {{summary}}.",
       "preview": "Entrée proposée",
       "files_one": "{{count}} fichier est utilisé tel qu'il est enregistré (non anonymisé).",
       "files_other": "{{count}} fichiers sont utilisés tels qu'ils sont enregistrés (non anonymisés).",
       "missingFiles_one": "{{count}} fichier de l'exécution n'existe plus ; il manque dans le cas de test.",
       "missingFiles_other": "{{count}} fichiers de l'exécution n'existent plus ; ils manquent dans le cas de test.",
-      "problems": "Ne correspond plus au formulaire actuel : {{fields}}. Corrige-le dans la série de tests après l'ajout.",
-      "checksLater": "Tu ajoutes ensuite les règles de contrôle et les critères de l'évaluation IA dans la série de tests.",
+      "problems": "Ne correspond plus au formulaire actuel : {{fields}}. Corrigez-le dans la série de tests après l'ajout.",
+      "checksLater": "Vous ajoutez ensuite les règles de contrôle et les critères de l'évaluation IA dans la série de tests.",
       "caseName": "Nom du cas de test",
       "suite": "Série de tests",
       "newSuite": "Nouvelle série de tests",
@@ -254,8 +254,8 @@
   },
   "toolWarnings": {
     "title": "Appels d'outils qui seraient refusés",
-    "hint": "Rien n'est approuvé automatiquement. Une personne administratrice donne les approbations anticipées sur la page Approbations.",
-    "open": "Ouvrir Approbations"
+    "hint": "Rien n'est validé automatiquement. Une personne administratrice donne les validations anticipées sur la page Validations.",
+    "open": "Ouvrir Validations"
   },
   "modelChoice": {
     "title": "Choix du modèle par les mesures",
