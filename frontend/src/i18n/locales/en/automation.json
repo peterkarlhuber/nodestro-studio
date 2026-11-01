@@ -256,5 +256,65 @@
     "title": "Tool calls that would be refused",
     "hint": "Nothing is approved automatically. An administrator gives advance approvals on the Approvals page.",
     "open": "Open Approvals"
+  },
+  "modelChoice": {
+    "title": "Model choice from measurements",
+    "intro": "Which model an agent should use is taken here only from finished test runs of this series: the run of the saved version and the model comparisons. Nothing changes on its own.",
+    "agent": "Agent",
+    "objective": "Goal",
+    "objectives": {
+      "cost": "Lowest cost",
+      "duration": "Shortest run time",
+      "quality": "Highest pass rate"
+    },
+    "minPassRate": "Minimum pass rate (%)",
+    "minPassRateHint": "Empty: at least as good as the current model in its measured run.",
+    "minPassRateDefault": "as current model",
+    "minPassRateInvalid": "A number from 0 to 100.",
+    "noNewFailures": "Must not lose a case the current model passed",
+    "outcome": {
+      "switch": "By this rule, {{model}} fits better than {{current}} (at least {{rate}} passed).",
+      "keep": "{{current}} stays: no measured model is better by this rule.",
+      "no_baseline": "The current model {{current}} has not been measured with this series yet. Run the saved version or enter a minimum pass rate.",
+      "no_measurement": "No matching measurement yet. Run a test and a model comparison; until then {{current}} stays."
+    },
+    "apply": "Use {{model}}",
+    "applied": "Model applied; the workflow was saved as a new version.",
+    "versionNote": "Model from test series: {{model}}",
+    "current": "current",
+    "recommended": "Recommended",
+    "measuredAt": "Measured {{date}} · {{passed}} of {{cases}} passed",
+    "columns": {
+      "model": "Model",
+      "passRate": "Passed",
+      "costPerCase": "Cost per case",
+      "duration": "Time per case",
+      "aiScore": "AI rating",
+      "status": "Assessment"
+    },
+    "warnings": {
+      "few_cases": "Fewer than 10 test cases: the measurement is thin.",
+      "ai_judged": "The AI rating is an AI judgement; it only counts through whether cases passed."
+    },
+    "skippedIntro": "Not used:",
+    "skipped": {
+      "older_record_one": "{{count}} older run without model records",
+      "older_record_other": "{{count}} older runs without model records",
+      "workflow_changed_one": "{{count}} run of another workflow state",
+      "workflow_changed_other": "{{count}} runs of another workflow state",
+      "cases_changed_one": "{{count}} run with other test cases",
+      "cases_changed_other": "{{count}} runs with other test cases",
+      "other_agents_differ_one": "{{count}} run with other models in other agents",
+      "other_agents_differ_other": "{{count}} runs with other models in other agents",
+      "incomplete_one": "{{count}} incomplete run",
+      "incomplete_other": "{{count}} incomplete runs"
+    },
+    "excluded": {
+      "unavailable": "Provider not set up",
+      "pass_rate_low": "Pass rate too low",
+      "new_failures": "Loses {{cases}} cases the current model passed",
+      "cost_unknown": "Cost unknown (never counted as 0)",
+      "duration_unknown": "Run time unknown"
+    }
   }
 }

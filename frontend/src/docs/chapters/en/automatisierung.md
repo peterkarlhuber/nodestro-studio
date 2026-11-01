@@ -72,6 +72,20 @@ Whether a cheaper or stronger model is good enough for an agent, you check with 
 
 Such a run needs a **cost limit** under [Limits](/docs/automatisierung#grenzen), because earlier runs used other models and say nothing about the cost. In the list it carries the label **Model comparison** and names the replaced models. Then compare it with a run of the saved version. It does not count as the test result of that version, because it tested a variant. If a model fits, set it in the agent itself.
 
+## Model choice from measurements {#modellwahl-nach-messwerten}
+<!-- keywords: model choice, recommendation, cheapest model, policy, measurements, pass rate, apply model -->
+
+Below the test runs of a series, **Model choice from measurements** shows which model an agent should use by your rule. Nodestro rates nothing on its own: only what finished test runs measured counts.
+
+- **Goal:** lowest cost, shortest run time or highest pass rate. Ties go to the higher pass rate, then the model name.
+- **Minimum pass rate:** empty means another model must pass at least as many cases as the current model did in its measured run.
+- **Must not lose a case:** when on, a model drops out if it fails a case the current model passed.
+- **Unknown costs** never count as 0. A model without known costs cannot win the goal *lowest cost*.
+
+A measurement is only the newest finished run per model with the same workflow state (apart from the models; positions and names do not count), the same test cases and AI rating, the same models in every other agent, and a result for every case. When a prompt or a test case changes, run the tests again. The list names which runs were not used and why. Without a matching measurement the current model stays.
+
+*Use* sets the recommended model in the agent and saves the workflow as a new [version](/docs/workflows#versionen). Nothing changes before that. The AI rating is shown, but it only counts through whether cases passed.
+
 ## Schedules {#zeitplaene}
 <!-- keywords: schedule, cron, regular, daily, weekly, monthly, hourly, time zone, missed -->
 

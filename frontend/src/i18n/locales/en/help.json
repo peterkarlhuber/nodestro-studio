@@ -222,7 +222,8 @@
     "scheduleTimeZone": "Times apply in this time zone, including daylight saving time.",
     "estimate": "Estimated from the latest successful runs of this workflow. The maximum follows from the budget per run.",
     "external": "Own tools may e.g. send messages. With many runs this happens just as often.",
-    "caseFromRun": "Turns this failed run's input into a test case, with credentials and personal data replaced. Nothing is saved until you confirm."
+    "caseFromRun": "Turns this failed run's input into a test case, with credentials and personal data replaced. Nothing is saved until you confirm.",
+    "modelChoice": "The recommendation uses only measured test runs of the same series, with the same workflow state (apart from the models) and the same test cases. You choose the goal and the minimum pass rate; unknown costs never count as 0. Only *Use* changes the agent and saves a new version."
   },
   "publish": {
     "open": "Publish this workflow as an API on this computer, manage keys and network access, or export it as a standalone FastAPI project.",

@@ -72,6 +72,20 @@ Se un modello più economico o più potente basta per un agente, lo verifichi co
 
 Un'esecuzione così richiede un **limite di costo** in [Limiti](/docs/automatisierung#grenzen), perché le esecuzioni precedenti usavano altri modelli e non dicono nulla sul costo. Nell'elenco porta l'etichetta **Confronto modelli** e indica i modelli sostituiti. Poi confrontala con un'esecuzione della versione salvata. Non conta come risultato di test di quella versione, perché ha provato una variante. Se un modello va bene, impostalo nell'agente stesso.
 
+## Scelta del modello in base alle misure {#modellwahl-nach-messwerten}
+<!-- keywords: scelta del modello, raccomandazione, modello più economico, policy, misure, tasso di superamento, applicare modello -->
+
+Sotto le esecuzioni di test di una serie, **Scelta del modello in base alle misure** mostra quale modello dovrebbe usare un agente secondo la tua regola. Nodestro non valuta nulla da solo: conta solo ciò che hanno misurato le esecuzioni concluse.
+
+- **Obiettivo:** costo più basso, durata più breve o tasso di superamento più alto. A parità decide il tasso di superamento più alto, poi il nome del modello.
+- **Tasso minimo di superamento:** vuoto significa che un altro modello deve superare almeno tanti casi quanti il modello attuale nella sua esecuzione misurata.
+- **Non perdere nessun caso:** se attivo, esce un modello che non supera un caso superato dal modello attuale.
+- **I costi sconosciuti** non contano mai come 0. Un modello senza costi noti non può vincere con l’obiettivo *costo più basso*.
+
+Conta come misura solo l’esecuzione conclusa più recente per modello con lo stesso stato del workflow (modelli esclusi; posizioni e nomi non contano), gli stessi casi e la stessa valutazione IA, gli stessi modelli in tutti gli altri agenti e un risultato per ogni caso. Se cambia un prompt o un caso, esegui di nuovo i test. L’elenco indica quali esecuzioni non sono state usate e perché. Senza una misura adatta resta il modello attuale.
+
+*Usa* imposta il modello consigliato nell’agente e salva il workflow come nuova [versione](/docs/workflows#versionen). Prima non cambia nulla. La valutazione IA viene mostrata, ma conta solo attraverso il superamento dei casi.
+
 ## Pianificazioni {#zeitplaene}
 <!-- keywords: pianificazione, schedule, cron, regolare, giornaliero, settimanale, mensile, orario, fuso orario, mancato -->
 
