@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Pins: PostgreSQL read performance (2026-11-01)
+
+- Pins `nodestro-runtime` `d141b8f` (before: `6eacec1`), `nodestro-api` `db6a696` (before: `7997bb4`),
+  `nodestro-examples` `660e9a9` (before: `1ead26c`), `nodestro-integrations` `07dc1fd` (before: `c221485`) and, in
+  `platform/versions.json`, `nodestro-sdk` `4a97cef` (before: `74c42d6`). Backend audit C-14 follow-up: the
+  PostgreSQL store checks pooled connections only after they sat idle, retries reads on a lost connection, writes
+  single statements in autocommit, and migration 0006 makes its find indexes partial (a lookup by id no longer risks
+  a scan of the collection). The desktop's SQLite store is unchanged.
+
 ### Example guide terminology; pins (2026-11-01)
 
 - Pins `nodestro-examples` `1ead26c` (before: `e370567`), `nodestro-api` `7997bb4` (before: `e16202d`) and, in
