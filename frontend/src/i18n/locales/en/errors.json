@@ -151,7 +151,7 @@
     "orchestration_team_missing": "The waiting run of a team is missing; the team was not started again.",
     "someProvider": "The AI provider",
     "agent": {
-      "IncompleteResponseError": "The model's answer was cut off at the limit of {{max_tokens}} tokens.",
+      "IncompleteResponseError": "The model's answer was cut off at its token limit (max tokens: {{max_tokens}}).",
       "OutputLimitReached": "The model's answer was cut off at its token limit.",
       "ContextWindowExceeded": "The conversation is larger than the model's context window.",
       "RefusalError": "The model declined the request.",

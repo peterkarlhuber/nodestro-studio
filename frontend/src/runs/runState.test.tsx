@@ -65,7 +65,7 @@ describe("failure reasons (ED-05, AD-01)", () => {
       params: { type: "IncompleteResponseError" },
       message: "IncompleteResponseError: b: incomplete response (stop_reason='max_tokens', max_tokens=8000).",
     };
-    expect(problemText(t, item)).toContain("8.000 Tokens");
+    expect(problemText(t, item)).toContain("max. Tokens: 8.000");
     expect(problemHint(t, item)).toContain("Max. Tokens");
     const context = { ...item, message: "IncompleteResponseError: (stop_reason='model_context_window_exceeded', max_tokens=8000)" };
     expect(problemCode(context)).toBe("run.agent.ContextWindowExceeded");

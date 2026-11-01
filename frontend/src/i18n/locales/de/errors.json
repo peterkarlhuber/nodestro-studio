@@ -151,7 +151,7 @@
     "orchestration_team_missing": "Der wartende Lauf eines Teams fehlt; das Team wurde nicht neu gestartet.",
     "someProvider": "Der KI-Anbieter",
     "agent": {
-      "IncompleteResponseError": "Die Antwort des Modells wurde an der Grenze von {{max_tokens}} Tokens abgeschnitten.",
+      "IncompleteResponseError": "Die Antwort des Modells wurde an seiner Token-Grenze abgeschnitten (max. Tokens: {{max_tokens}}).",
       "OutputLimitReached": "Die Antwort des Modells wurde an seiner Token-Grenze abgeschnitten.",
       "ContextWindowExceeded": "Der Gesprächsverlauf ist größer als das Kontextfenster des Modells.",
       "RefusalError": "Das Modell hat die Anfrage abgelehnt.",

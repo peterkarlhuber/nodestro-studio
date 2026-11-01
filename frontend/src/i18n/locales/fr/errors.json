@@ -151,7 +151,7 @@
     "orchestration_team_missing": "L'exécution en attente d'une équipe est introuvable ; l'équipe n'a pas été relancée.",
     "someProvider": "Le fournisseur d'IA",
     "agent": {
-      "IncompleteResponseError": "La réponse du modèle a été coupée à la limite de {{max_tokens}} tokens.",
+      "IncompleteResponseError": "La réponse du modèle a été coupée à sa limite de tokens (tokens max. : {{max_tokens}}).",
       "OutputLimitReached": "La réponse du modèle a été coupée à sa limite de tokens.",
       "ContextWindowExceeded": "La conversation dépasse la fenêtre de contexte du modèle.",
       "RefusalError": "Le modèle a refusé la demande.",

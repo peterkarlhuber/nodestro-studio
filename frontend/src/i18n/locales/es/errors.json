@@ -151,7 +151,7 @@
     "orchestration_team_missing": "Falta la ejecución en espera de un equipo; el equipo no se volvió a iniciar.",
     "someProvider": "El proveedor de IA",
     "agent": {
-      "IncompleteResponseError": "La respuesta del modelo se cortó en el límite de {{max_tokens}} tokens.",
+      "IncompleteResponseError": "La respuesta del modelo se cortó en su límite de tokens (máx. de tokens: {{max_tokens}}).",
       "OutputLimitReached": "La respuesta del modelo se cortó en su límite de tokens.",
       "ContextWindowExceeded": "La conversación es más grande que la ventana de contexto del modelo.",
       "RefusalError": "El modelo rechazó la solicitud.",

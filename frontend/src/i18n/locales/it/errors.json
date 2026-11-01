@@ -151,7 +151,7 @@
     "orchestration_team_missing": "Manca l'esecuzione in attesa di un team; il team non è stato riavviato.",
     "someProvider": "Il provider di IA",
     "agent": {
-      "IncompleteResponseError": "La risposta del modello è stata troncata al limite di {{max_tokens}} token.",
+      "IncompleteResponseError": "La risposta del modello è stata troncata al suo limite di token (token max: {{max_tokens}}).",
       "OutputLimitReached": "La risposta del modello è stata troncata al suo limite di token.",
       "ContextWindowExceeded": "La conversazione supera la finestra di contesto del modello.",
       "RefusalError": "Il modello ha rifiutato la richiesta.",
