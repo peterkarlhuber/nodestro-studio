@@ -17,7 +17,7 @@
     "created": "{{source}} collegato a {{target}}."
   },
   "flow": {
-    "node": "Premi Invio o Spazio per selezionare questo passo e vederne le proprietà. Le frecce lo spostano, Canc lo rimuove, Esc annulla. Per collegare i passi usa Collegamenti nel pannello delle proprietà.",
+    "node": "Premi Invio o Spazio per selezionare questo passo e vederne le proprietà. Le frecce lo spostano, Canc lo rimuove, Esc annulla. Per collegare questo passo premi C (oppure usa Collegamenti nel pannello delle proprietà).",
     "edge": "Premi Invio o Spazio per selezionare questo collegamento. Canc lo rimuove, Esc annulla.",
     "moved": "Passo spostato verso {{direction}}. Nuova posizione: x {{x}}, y {{y}}",
     "direction": {

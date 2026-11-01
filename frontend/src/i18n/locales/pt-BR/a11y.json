@@ -17,7 +17,7 @@
     "created": "{{source}} conectado a {{target}}."
   },
   "flow": {
-    "node": "Pressione Enter ou Espaço para selecionar esta etapa e ver as propriedades. As setas a movem, Delete a remove e Esc cancela. Para conectar etapas, use Conexões no painel de propriedades.",
+    "node": "Pressione Enter ou Espaço para selecionar esta etapa e ver as propriedades. As setas a movem, Delete a remove e Esc cancela. Para conectar esta etapa, pressione C (ou use Conexões no painel de propriedades).",
     "edge": "Pressione Enter ou Espaço para selecionar esta conexão. Delete a remove e Esc cancela.",
     "moved": "Etapa movida para {{direction}}. Nova posição: x {{x}}, y {{y}}",
     "direction": {

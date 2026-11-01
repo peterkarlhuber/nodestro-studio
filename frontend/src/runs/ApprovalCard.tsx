@@ -69,7 +69,18 @@ export function ApprovalForm({ approval, showContext = false }: { approval: Pend
         ? t("approvals.rejectBranch")
         : t("approvals.rejectEnds");
   return (
-    <section className="approval-card" aria-label={t("approvals.cardLabel", { name: approval.label })}>
+    // An article, not a region landmark: the approvals page lists many of them, possibly with equal names (AX-09).
+    // The name carries where each one waits, so they can be told apart.
+    <article
+      className="approval-card"
+      aria-label={t("approvals.cardLabel", {
+        name: showContext
+          ? [approval.label, approval.path.join(" › ") || approval.workflow_name, approval.waiting_since ? formatDate(approval.waiting_since) : ""]
+              .filter(Boolean)
+              .join(" · ")
+          : approval.label,
+      })}
+    >
       <header className="approval-card__head">
         <Hand size={15} aria-hidden />
         <div>
@@ -127,7 +138,7 @@ export function ApprovalForm({ approval, showContext = false }: { approval: Pend
           </Button>
         </DisabledReason>
       </div>
-    </section>
+    </article>
   );
 }
 

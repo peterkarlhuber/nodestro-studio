@@ -34,6 +34,7 @@
   },
   "stats": {
     "agents": "Agents",
+    "teams": "Teams",
     "status": "Status",
     "requests": "API requests",
     "tokens": "Tokens",

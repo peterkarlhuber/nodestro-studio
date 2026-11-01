@@ -218,3 +218,18 @@ describe("context suggestions", () => {
     expect(missing.querySelector("[data-testid=attachment-refresh]")).toBeNull();
   });
 });
+
+describe("the panel takes the focus only when the user opens it (AX-11)", () => {
+  it("counts openings, not closings or an open state from the last visit", () => {
+    useAssistant.setState({ open: false, focusRequest: 0 });
+    useAssistant.getState().toggle();
+    expect(useAssistant.getState().focusRequest).toBe(1);
+    useAssistant.getState().setOpen(true);
+    expect(useAssistant.getState().focusRequest).toBe(1);
+    useAssistant.getState().toggle();
+    expect(useAssistant.getState()).toMatchObject({ open: false, focusRequest: 1 });
+    useAssistant.getState().setOpen(true);
+    expect(useAssistant.getState().focusRequest).toBe(2);
+    useAssistant.getState().setOpen(false);
+  });
+});

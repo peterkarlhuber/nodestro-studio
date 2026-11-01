@@ -117,7 +117,7 @@ O idioma afeta apenas a **interface**: menus, avisos, mensagens de erro, esta do
 ## Aparência {#darstellung}
 <!-- keywords: tema, escuro, claro, modo escuro, modo claro, esquema de cores, design, midnight citron -->
 
-No canto superior direito você alterna entre **Escuro** e **Claro**. A escolha fica salva no navegador. As duas variantes seguem o sistema de design *Midnight Citron*. Em telas estreitas, a barra lateral vira uma barra de ícones.
+No canto superior direito você alterna entre **Escuro** e **Claro**. A escolha fica salva no navegador. As duas variantes seguem o sistema de design *Midnight Citron*. Em telas estreitas, a barra lateral fica oculta: o botão de menu no canto superior esquerdo (**Mostrar todas as páginas**) a abre como painel, e **Esc** a fecha de novo.
 
 ## Backup e restauração {#backup}
 <!-- keywords: backup, cópia de segurança, restaurar, exportar, zip, mudança, salvaguarda -->

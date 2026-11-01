@@ -101,7 +101,8 @@ export function RunDetailPage() {
     queryFn: () => api.run(id),
     refetchInterval: (query) => {
       const status = query.state.data?.status;
-      return status === "running" || status === "queued" ? 1000 : status === "paused" ? 4000 : false;
+      // A paused run waits for a person; a decision in this tab reads it again at once (ApprovalCard).
+      return status === "running" || status === "queued" ? 1000 : status === "paused" ? 15_000 : false;
     },
   });
   const [selected, setSelected] = useState<string | null>(null);

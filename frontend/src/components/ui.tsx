@@ -785,12 +785,13 @@ export function Modal({
       }}
       aria-label={title}
     >
-      <header className="modal__head">
+      {/* Plain divs: a <header>/<footer> in a dialog would count as the page's banner or contentinfo landmark (F5). */}
+      <div className="modal__head">
         <h2>{title}</h2>
         <IconButton icon={X} label={t("common.close")} onClick={onClose} />
-      </header>
+      </div>
       <div className="modal__body">{children}</div>
-      {footer ? <footer className="modal__foot">{footer}</footer> : null}
+      {footer ? <div className="modal__foot">{footer}</div> : null}
     </dialog>
   );
 }
@@ -800,18 +801,23 @@ export function EmptyState({
   title,
   children,
   action,
+  level = 2,
 }: {
   icon: LucideIcon;
   title: string;
   children?: ReactNode;
   action?: ReactNode;
+  /** h2 by default: an empty state usually sits right under the page title (heading order, AX-08); h1 when it is
+   *  the whole page (not found). */
+  level?: 1 | 2;
 }) {
+  const Heading = level === 1 ? "h1" : "h2";
   return (
     <div className="empty">
       <div className="empty__icon">
         <Icon size={22} aria-hidden />
       </div>
-      <h3>{title}</h3>
+      <Heading>{title}</Heading>
       {children ? <p>{children}</p> : null}
       {action}
     </div>

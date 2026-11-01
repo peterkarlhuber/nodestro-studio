@@ -8,7 +8,7 @@ import type { ExampleDetail, ExampleSummary } from "../api/types";
 import i18n from "../i18n";
 import { ExamplesPage } from "../pages/ExamplesPage";
 import { copiedModel } from "./ExampleNeeds";
-import { easiestFirst, filterExamples, startHere } from "./examples";
+import { byLevel, easiestFirst, filterExamples, startHere, startHereFirst } from "./examples";
 
 // The read-only canvas needs a real layout.
 vi.mock("@xyflow/react", async (original) => ({
@@ -78,6 +78,13 @@ describe("gallery search and order", () => {
     ]);
     expect(startHere(ALL)).toBe("blog-article");
     expect(startHere([])).toBeNull();
+  });
+
+  it("begins the full gallery with the Start here example (F9)", () => {
+    const shown = startHereFirst(byLevel(ALL), startHere(ALL));
+    expect(shown[0].id).toBe("blog-article");
+    expect(shown).toHaveLength(ALL.length);
+    expect(startHereFirst(ALL, null)).toEqual(ALL);
   });
 });
 

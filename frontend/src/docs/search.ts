@@ -25,7 +25,9 @@ export function plain(markdown: string): string {
     .replace(/<!--[\s\S]*?-->/g, " ")
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    .replace(/[`*_>#|]/g, " ")
+    // ">" only marks a quote at the start of a line; inside text it stays ("Bearer <key>").
+    .replace(/^[ \t]*>/gm, " ")
+    .replace(/[`*_#|]/g, " ")
     .replace(/-{3,}/g, " ")
     .replace(/\s+/g, " ")
     .trim();

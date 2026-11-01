@@ -113,7 +113,7 @@ function ModelTable() {
 }
 
 /** Keyboard shortcuts: the keys and the action come from docs.shortcuts.<id> in the language files. */
-const SHORTCUTS = ["save", "undo", "redo", "duplicate", "delete", "canvas", "escape", "search", "assistant"] as const;
+const SHORTCUTS = ["save", "undo", "redo", "duplicate", "delete", "connect", "canvas", "escape", "search", "assistant"] as const;
 
 const KEYS = { kbd: <kbd /> };
 
@@ -252,7 +252,7 @@ function Overview() {
                   <Icon size={16} aria-hidden />
                 </span>
                 <div>
-                  <h3>{chapter.title}</h3>
+                  <h2>{chapter.title}</h2>
                   <span className="muted small">{t("docs.overview.sections", { count: chapter.sections.length })}</span>
                 </div>
               </div>
@@ -442,7 +442,7 @@ export function DocsPage() {
               </kbd>
             )}
           </form>
-          <ol className="docs-nav__chapters">
+          <ol className={searching ? "docs-nav__chapters docs-nav__chapters--searching" : "docs-nav__chapters"}>
             <li>
               <Link to="/docs" className={`docs-nav__chapter ${!chapter ? "active" : ""}`} aria-current={!chapter ? "page" : undefined}>
                 <BookMarked size={14} aria-hidden /> {t("docs.overview.title")}

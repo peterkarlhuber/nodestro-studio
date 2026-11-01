@@ -152,6 +152,29 @@ describe("AgentForm sections", () => {
     expect(link).toHaveAttribute("href", "/knowledge");
   });
 
+  it("keeps a long file name in its own element next to the chunk count", async () => {
+    const name = "Contract_playbook_Sample_Trading_with_a_very_long_name.md";
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        const path = url.replace(/\?.*$/, "");
+        const body = path.endsWith("/knowledge")
+          ? [{ id: "kf_1", name, kind: "text", chunks: 4 }]
+          : path.endsWith("/meta")
+            ? { providers: [], capabilities: [], models: [] }
+            : path.endsWith("/settings")
+              ? { providers: [], default_model: "claude-sonnet-5-5", assistant_model: "claude-opus-5-5" }
+              : [];
+        return new Response(JSON.stringify(body), { status: 200, headers: { "Content-Type": "application/json" } });
+      }),
+    );
+    const { container } = show(defaultAgent());
+    await userEvent.click(section(container, "knowledge").querySelector(".section__title")!);
+    const label = await screen.findByText(name);
+    expect(label).toHaveClass("pick-list__name");
+    expect(label.closest("button")!.querySelector("small")).toHaveTextContent("4");
+  });
+
   describe("upload from the knowledge section", () => {
     const FILE = { id: "kf_1", name: "preise.md", kind: "text", chunks: 1 };
 

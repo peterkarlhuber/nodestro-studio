@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { api } from "../api/client";
 import type { NodeRun, OrchestrationRecord, Run, WorkflowNode } from "../api/types";
+import { setLanguage } from "../i18n";
 import { OrchestrationView } from "./OrchestrationView";
 
 const ok = { code: null, message: "" };
@@ -53,6 +54,26 @@ afterEach(() => {
 const PARALLEL = { action: "parallel" as const, assignments: [{ member: "wf_r", task: "Fakten" }, { member: "wf_d", task: "Entwurf schreiben" }], reason: "Beides ist unabhängig" };
 
 describe("the run view of an orchestrator", () => {
+  it("puts the label colon inside the translation (French spaces it, F10)", async () => {
+    vi.spyOn(api, "run").mockResolvedValue(child("run_r", "Recherche", "paused"));
+    const record = {
+      version: 2,
+      task: "t",
+      steps: [],
+      outcome: null,
+      answer: null,
+      stop_code: null,
+      pending: { index: 0, decision: PARALLEL, outcomes: [{ member: "wf_r", status: "waiting", ref: "run_r" }] },
+    } as unknown as OrchestrationRecord;
+    await setLanguage("fr", false);
+    try {
+      show(state(record, ["run_r"]));
+      expect(await screen.findByTestId("orchestration-pending")).toHaveTextContent("Motif : Beides ist unabhängig");
+    } finally {
+      await setLanguage("de", false);
+    }
+  });
+
   it("shows a paused run: the waiting decision, both team runs with status, time and cost, and the limits", async () => {
     const runs: Record<string, Run> = {
       run_r: child("run_r", "Recherche", "succeeded"),
@@ -79,7 +100,7 @@ describe("the run view of an orchestrator", () => {
     show(state(record, ["run_r", "run_d"]));
     const pending = await screen.findByTestId("orchestration-pending");
     expect(pending).toHaveTextContent("Entscheidung 2 · Wartet auf Freigabe: 1 Team");
-    expect(pending).toHaveTextContent("Beides ist unabhängig");
+    expect(pending).toHaveTextContent("Begründung: Beides ist unabhängig");
     const rows = within(pending).getAllByTestId("orchestration-team-run");
     expect(rows.map((row) => row.dataset.ref)).toEqual(["run_r", "run_d"]);
     await waitFor(() => expect(within(pending).getAllByTestId("orchestration-team-run-meta")).toHaveLength(2));

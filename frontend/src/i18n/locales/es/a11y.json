@@ -17,7 +17,7 @@
     "created": "{{source}} conectado con {{target}}."
   },
   "flow": {
-    "node": "Pulsa Intro o Espacio para seleccionar este paso y ver sus propiedades. Las flechas lo mueven, Supr lo elimina y Escape cancela. Para conectar pasos, usa Conexiones en el panel de propiedades.",
+    "node": "Pulsa Intro o Espacio para seleccionar este paso y ver sus propiedades. Las flechas lo mueven, Supr lo elimina y Escape cancela. Para conectar este paso, pulsa C (o usa Conexiones en el panel de propiedades).",
     "edge": "Pulsa Intro o Espacio para seleccionar esta conexión. Supr la elimina y Escape cancela.",
     "moved": "Paso movido hacia {{direction}}. Nueva posición: x {{x}}, y {{y}}",
     "direction": {

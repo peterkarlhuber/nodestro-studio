@@ -6,7 +6,7 @@ import { countsByNode, startBlock } from "./CheckList";
 import { poolStatus } from "./OrchestratorInspector";
 import { filterTeams, teamHint } from "./Palette";
 import { connectionProblem, useEditor } from "./store";
-import { READABLE_ZOOM, inView, openingViewport, placeNewNode } from "./viewport";
+import { OPENING_MAX_ZOOM, READABLE_ZOOM, inView, openingViewport, placeNewNode } from "./viewport";
 import i18n from "../i18n";
 
 function workflow(): Workflow {
@@ -126,12 +126,47 @@ describe("new nodes in view (ED-11) and the opening zoom (ED-09)", () => {
     expect(inView({ x: 1050, y: 0 }, visible)).toBe(false);
   });
 
-  it("keeps a readable fitted view and otherwise opens at the readable zoom from the start node", () => {
-    const fitted = { x: 10, y: 20, zoom: 0.8 };
-    expect(openingViewport(fitted, nodes, { width: 700, height: 600 })).toBe(fitted);
-    const small = openingViewport({ x: 0, y: 0, zoom: 0.29 }, nodes, { width: 700, height: 600 });
-    expect(small.zoom).toBe(READABLE_ZOOM);
-    expect(small.x).toBe(48);
+  // Five nodes in a row, 320 apart (like the "Blog article" example).
+  const row = ["start", "agent", "agent", "agent", "output"].map((type, index) => ({
+    type,
+    position: { x: index * 320, y: 0 },
+    width: 216,
+    height: 96,
+  }));
+
+  it("fits the whole graph into the part of the pane no control covers (F2)", () => {
+    const pane = { width: 1000, height: 600 };
+    const insets = { top: 40, right: 0, bottom: 70, left: 0 };
+    const view = openingViewport(row, pane, insets, { width: 180, height: 130 });
+    expect(view.fits).toBe(true);
+    expect(view.zoom).toBeGreaterThanOrEqual(READABLE_ZOOM);
+    expect(view.zoom).toBeLessThanOrEqual(OPENING_MAX_ZOOM);
+    // Every node lies inside the free area and clear of the minimap or below it.
+    for (const node of row) {
+      const left = view.x + node.position.x * view.zoom;
+      const top = view.y + node.position.y * view.zoom;
+      expect(left).toBeGreaterThanOrEqual(0);
+      expect(left + node.width * view.zoom).toBeLessThanOrEqual(pane.width);
+      expect(top).toBeGreaterThanOrEqual(insets.top);
+      expect(top + node.height * view.zoom).toBeLessThanOrEqual(pane.height - insets.bottom);
+      const underMinimap = left + node.width * view.zoom > pane.width - 180 && top < 130;
+      expect(underMinimap).toBe(false);
+    }
+  });
+
+  it("never blows a small graph up beyond the maximum zoom", () => {
+    const view = openingViewport(row.slice(0, 2), { width: 1400, height: 900 });
+    expect(view.zoom).toBe(OPENING_MAX_ZOOM);
+    expect(view.fits).toBe(true);
+  });
+
+  it("opens a graph too large to read at the readable zoom from the start node", () => {
+    const wide = [...row, ...row.map((node) => ({ ...node, type: "agent", position: { x: node.position.x + 1600, y: 0 } }))];
+    const view = openingViewport(wide, { width: 700, height: 600 }, { top: 40, right: 0, bottom: 70, left: 0 });
+    expect(view.fits).toBe(false);
+    expect(view.zoom).toBe(READABLE_ZOOM);
+    expect(view.x).toBe(16);
+    expect(openingViewport([], { width: 700, height: 600 }).fits).toBe(true);
   });
 });
 

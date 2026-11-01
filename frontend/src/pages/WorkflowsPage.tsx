@@ -173,7 +173,7 @@ export function WorkflowsPage() {
             <Diamond size={16} aria-hidden />
           </span>
           <div>
-            <h3>{workflow.name}</h3>
+            <h2>{workflow.name}</h2>
             <span className="muted small">
               {t("workflows.agentCount", { count: workflow.agents })} ·{" "}
               {changedText(t, workflow.updated_at)}

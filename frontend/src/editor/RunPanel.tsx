@@ -28,6 +28,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
   useEffect(() => setFocus(null), [selectedId]);
   const usage = liveUsage(run);
   const agents = nodes.filter((node) => node.type === "agent");
+  const teams = nodes.reduce((sum, node) => sum + (node.type === "orchestrator" ? (node.orchestrator?.members.length ?? 0) : 0), 0);
   const shownId = (focus && run?.nodes[focus] ? focus : null) ?? (selectedId && run?.nodes[selectedId] ? selectedId : null);
   const shown = shownId ? run?.workflow.nodes.find((node) => node.id === shownId) ?? nodes.find((n) => n.id === shownId) : null;
   const live = run && (run.status === "running" || run.status === "queued");
@@ -76,7 +77,12 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
       {open ? (
         <div className="run-panel__body">
           <div className="stats stats--inline">
-            <Stat label={t("runs.stats.agents")} value={agents.length} />
+            {/* An orchestrated workflow has no agents of its own: it shows the teams of its pool instead (F10). */}
+            {!agents.length && teams ? (
+              <Stat label={t("runs.stats.teams")} value={teams} />
+            ) : (
+              <Stat label={t("runs.stats.agents")} value={agents.length} />
+            )}
             <Stat label={t("runs.stats.requests")} value={usage.requests} tip="runs.requests" />
             <Stat
               label={t("runs.stats.tokens")}

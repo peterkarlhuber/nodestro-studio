@@ -60,7 +60,9 @@
     "dropInvalid": "Este item não pode ser colocado na área de trabalho.",
     "removedOne": "“{{name}}” removido.",
     "removedMany_one": "{{count}} nó removido.",
-    "removedMany_other": "{{count}} nós removidos."
+    "removedMany_other": "{{count}} nós removidos.",
+    "partlyHidden": "Parte do workflow está fora da visualização.",
+    "showAll": "Mostrar tudo"
   },
   "palette": {
     "title": "Blocos",
