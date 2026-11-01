@@ -1394,7 +1394,7 @@ export interface ToolDraftDecision {
 
 // ---- Python dependencies --------------------------------------------------------------
 
-export type DependencyScope = "workflow" | "tool";
+export type DependencyScope = "workflow" | "tool" | "mcp";
 export type DependencyState =
   | "none"
   | "ready"
@@ -2207,6 +2207,8 @@ export interface Publication {
   enabled: boolean;
   active_release: number | null;
   network: boolean;
+  /** Offered as a tool of Nodestro's MCP server (also needs the operator's NODESTRO_MCP_SERVER=1). */
+  mcp_tool?: boolean;
   limits: ApiLimits;
   /** null: no release gate (publishing needs no test evidence). */
   gate?: ReleaseGate | null;

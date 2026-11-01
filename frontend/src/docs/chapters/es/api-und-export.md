@@ -146,6 +146,15 @@ Por defecto, las API publicadas solo responden a este ordenador. Los demás disp
 
 Este puerto solo sirve las API publicadas, nunca la interfaz de Nodestro, sus ajustes ni otros flujos. Si el puerto está ocupado, el diálogo lo indica y Nodestro sigue funcionando con normalidad. Tras restaurar una copia de seguridad, el acceso de red vuelve a estar desactivado.
 
+## Como herramienta MCP {#mcp-server}
+<!-- keywords: servidor mcp, herramienta mcp, asistente de ia, claude, cliente, herramienta -->
+
+Una API publicada también se puede ofrecer como **herramienta para clientes MCP** de este equipo, por ejemplo un asistente de IA. Está desactivado por defecto y necesita dos interruptores: el operador inicia Nodestro con `NODESTRO_MCP_SERVER=1` y tú activas **Ofrecer como herramienta MCP** en *Acceso*.
+
+- El cliente se conecta a `/api/published/_mcp` en este equipo y envía una clave de API como token Bearer. Ve las API ofrecidas de esa clave como herramientas, con el nombre de la API; la clave necesita permiso para iniciar ejecuciones.
+- Cada llamada a la herramienta es una **ejecución normal** de la API publicada: misma versión, mismos límites, presupuestos, aprobaciones e historial. Si la espera síncrona está activada, la respuesta contiene el resultado; si no, o si una ejecución se detiene en una aprobación, indica la ejecución para que puedas seguirla en Nodestro o mediante la API.
+- Los clientes de otros equipos no pueden usarla, tampoco mediante el acceso de red.
+
 ## Seguridad {#sicherheit}
 <!-- keywords: seguridad, tls, https, cifrado, internet, proxy inverso, reverse proxy, certificado, copia de seguridad, secretos -->
 

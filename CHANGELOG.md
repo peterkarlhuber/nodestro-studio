@@ -2,6 +2,30 @@
 
 ## Unreleased
 
+### MCP: sign-in, local servers, operation, Nodestro as an MCP tool (ADR-0007 WP-6/7/8/11)
+
+- *Tools → Connected services*: OAuth as a sign-in kind with **Sign in** / **Sign out** (the browser returns to
+  `/tools?tab=services&oauth=connected` or `&oauth_error=<code>`), and a summary of issuer, permissions and renewal
+  (never the credentials).
+- Local servers (only with the Docker sandbox, `stdio_possible`): packages and module instead of an address; the
+  packages are planned hash-pinned and approved in the same dialog as a tool's libraries (scope `mcp:<id>`), then
+  installed into the server's own container image.
+- *Operation* section: calls in flight, the operator's limits and each service's calls, failures, last duration and
+  pause (`GET /api/mcp/stats`).
+- API page, *Access*: **Offer as an MCP tool** (`Publication.mcp_tool`); it takes effect only with the operator's
+  `NODESTRO_MCP_SERVER=1`, and the page names the endpoint `/api/published/_mcp`.
+- Texts for the new error codes (`mcp.oauth_*`, `mcp.stdio_*`, `mcp.environment_not_ready`, `mcp.cooling_down`,
+  `mcp.rate_limited`, `mcp.overloaded`, `mcp.release_tool_changed`, `api.mcp_*`, `export.mcp_tools`,
+  `mcp_server.disabled`) and help sections *Tools > Signing in to a service*, *Tools > Local servers* and
+  *API and export > As an MCP tool*, in six languages.
+- A service's documents (WP-10): the tool `resources/read` that reads a service's listed resources is marked
+  *The service's documents* in the tool list and explained in its review; help section *Tools > A service's documents*
+  in six languages. Browser suite `mcp`: sign-in at a loopback authorization server, sign-out, the operation view and
+  offering a published API as an MCP tool.
+- Platform pins: `nodestro-runtime` `1bc3924` (MCP resources), `nodestro-api` `2948bb3`, `nodestro-examples`
+  `6658599`, `nodestro-integrations` `86bfed0` and, in `platform/versions.json`, `nodestro-sdk` `b45c9d7` (MCP sign-in,
+  local server environment, statistics and publication update calls).
+
 ### Tool approvals: warnings before unattended starts (S-2, R1, 2026-11-01)
 
 - Schedule dialog, switching a schedule on, batch and test series start, and the API publication check show the tool

@@ -453,7 +453,10 @@
     "knowledge_live_other": "{{count}} knowledge files are used as they are at run time (not frozen).",
     "memory_shared": "Persistent memory ({{spaces}}) is shared by Nodestro and every API run.",
     "no_budget": "Runs have no cost limit; set a budget for the workflow or a daily budget for the API.",
-    "subworkflow_unsaved": "{{name}}: the sub-workflow has no saved version."
+    "subworkflow_unsaved": "{{name}}: the sub-workflow has no saved version.",
+    "mcp_tool_unusable": "A service tool of this workflow cannot be used right now; it cannot be published.",
+    "mcp_tools": "The service tools are frozen in this version; a later change at the service stops it until it is published again.",
+    "mcp_unattended_off": "API runs use service tools only when the operator allows unattended use (NODESTRO_MCP_UNATTENDED)."
   },
   "export": {
     "knowledge_missing": "{{name}} no longer exists.",
@@ -474,7 +477,8 @@
     "file_changed": "The ZIP file of this export was changed; export again.",
     "provider": "{{provider}}: set {{variables}} in the environment of the exported project.",
     "base_url_withheld": "The base URL of {{provider}} contains credentials and is not exported; set {{variable}} in the exported project.",
-    "integration_tools": "Tools of installed integrations cannot be exported yet: {{tools}}."
+    "integration_tools": "Tools of installed integrations cannot be exported yet: {{tools}}.",
+    "mcp_tools": "Versions with service tools cannot be exported: the exported project has no connection to the services."
   },
   "lan": {
     "tls_file_missing": "File not found: {{path}}",
@@ -661,7 +665,27 @@
     "url_credentials": "The address must not contain a user name or password.",
     "url_invalid": "The address is invalid.",
     "vault_unavailable": "There is no secure store for access tokens.",
-    "write_not_supported": "Tools that change data are still blocked (approval per call is missing)."
+    "write_not_supported": "Tools that change data are still blocked (approval per call is missing).",
+    "cooling_down": "{{server}} failed several times in a row; calls pause briefly.",
+    "environment_not_ready": "The packages of {{server}} are not approved and installed yet.",
+    "limits_invalid": "{{variable}} is not a valid limit.",
+    "oauth_denied": "The sign-in was declined at the service.",
+    "oauth_expired": "The sign-in took too long. Start it again.",
+    "oauth_failed": "The sign-in did not succeed.",
+    "oauth_not_configured": "The service does not describe a sign-in.",
+    "oauth_not_required": "This service does not use OAuth.",
+    "oauth_reauthorize": "{{server}} asks for a new sign-in.",
+    "oauth_redirect_invalid": "The return address for the sign-in is not set up (public address of the server).",
+    "oauth_registration_unsupported": "The service does not allow Nodestro to register for the sign-in.",
+    "oauth_state_invalid": "The sign-in does not belong to a request from here. Start it again.",
+    "oauth_token_input": "This service gets its access from the sign-in, not from a pasted token.",
+    "overloaded": "All service call slots stayed busy; try again shortly.",
+    "rate_limited": "{{server}} received too many calls in the last minute.",
+    "release_tool_changed": "A service tool of this published version changed; publish the API again.",
+    "stdio_failed": "{{server}} could not be started or ended the connection.",
+    "stdio_invalid": "The local server's settings are invalid (packages, module, no token or sign-in).",
+    "too_many_servers": "No more services can be connected (at most {{limit}}).",
+    "tool_not_in_release": "This tool is not part of the published version."
   },
   "orchestration": {
     "unknown_member": "This team is not in the pool.",
@@ -674,5 +698,8 @@
     "answer_too_long": "The final answer was too long.",
     "finished": "The orchestration had already finished.",
     "invalid_decision": "The answer was not a valid decision."
+  },
+  "mcp_server": {
+    "disabled": "Nodestro's MCP server is switched off."
   }
 }

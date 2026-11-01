@@ -16,6 +16,7 @@ import { useDependencyRefresh } from "./DependencyDialog";
 function owner(t: (key: string, values?: Record<string, unknown>) => string, env: EnvironmentInfo): string {
   if (env.kind === "workflow") return t("python.maintenance.ownerWorkflow", { name: env.label || env.ref });
   if (env.kind === "tool") return t("python.maintenance.ownerTool", { name: env.ref });
+  if (env.kind === "mcp") return t("python.maintenance.ownerMcp", { name: env.label || env.ref });
   return env.scope;
 }
 

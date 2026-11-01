@@ -221,7 +221,57 @@
       "tool_removed": "Ferramenta não oferecida mais",
       "call_refused": "Chamada recusada",
       "oauth_connected": "OAuth conectado",
-      "oauth_disconnected": "OAuth desconectado"
-    }
+      "oauth_disconnected": "OAuth desconectado",
+      "oauth_started": "login iniciado",
+      "oauth_failed": "login falhou"
+    },
+    "stdioUnavailable": "Servidores locais precisam do sandbox Docker; ele não está disponível aqui.",
+    "local": "Servidor local (contêiner)",
+    "transport": "Tipo",
+    "transportHint": {
+      "http": "Um serviço remoto em um endereço https.",
+      "stdio": "Um servidor MCP Python do PyPI, iniciado em um contêiner isolado sem rede e sem acesso aos seus arquivos."
+    },
+    "transports": {
+      "http": "Serviço remoto",
+      "stdio": "Servidor local"
+    },
+    "requirements": "Pacotes",
+    "requirementsHint": "Um requisito do PyPI por linha. Você revisa e aprova as versões exatas antes de o servidor iniciar.",
+    "module": "Módulo",
+    "moduleHint": "Iniciado com python -m e este nome de módulo.",
+    "args": "Argumentos",
+    "argsHint": "Opcional, um por linha.",
+    "localNote": "Um servidor local roda no próprio contêiner: sem rede, sem acesso aos seus arquivos ou chaves, com memória e processos limitados. Servidores que precisam da internet ou do Node.js não podem ser usados assim.",
+    "oauth": {
+      "connected": "Login feito. Teste a conexão para carregar as ferramentas.",
+      "failed": "O login não deu certo ({{code}}).",
+      "signedOut": "Sessão encerrada em {{name}}.",
+      "signIn": "Fazer login",
+      "signOut": "Sair",
+      "signedIn": "Login feito",
+      "notSignedIn": "Sem login",
+      "issuer": "em {{issuer}}",
+      "scope": "permissões: {{scope}}",
+      "expires": "o acesso se renova {{when}}",
+      "pending": "login iniciado",
+      "hint": "Depois de salvar, faça login no serviço; o Nodestro guarda o acesso criptografado e o renova sozinho."
+    },
+    "stats": {
+      "title": "Operação",
+      "active_one": "{{count}} chamada em andamento.",
+      "active_other": "{{count}} chamadas em andamento.",
+      "limits": "Limites: {{parallel}} chamadas ao mesmo tempo, {{perMinute}} chamadas por minuto e serviço, no máximo {{servers}} serviços.",
+      "server": "Serviço",
+      "calls": "Chamadas",
+      "failures": "Falhas",
+      "duration": "Última chamada",
+      "state": "Estado",
+      "paused": "pausado por {{seconds}} s",
+      "ok": "OK",
+      "none": "Nenhuma chamada desde o início."
+    },
+    "resourceTool": "Documentos do serviço",
+    "resourceToolText": "Esta ferramenta lê apenas os documentos que o serviço lista; outros endereços ficam excluídos. Se o serviço mudar a lista, a ferramenta fica bloqueada até você revisar a nova lista. Os conteúdos são dados externos, como qualquer resultado de um serviço."
   }
 }

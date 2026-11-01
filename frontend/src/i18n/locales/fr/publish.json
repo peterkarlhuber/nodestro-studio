@@ -287,5 +287,12 @@
       "judge_score": "note de l'IA {{value}} (exigé {{threshold}})",
       "judge_missing": "aucune note de l'IA dans l'exécution (exigé {{threshold}})"
     }
+  },
+  "mcpTool": {
+    "title": "En tant qu'outil MCP",
+    "intro": "Les clients MCP de cet ordinateur, par exemple un assistant IA, peuvent appeler cette API comme un outil. Chaque appel est une exécution normale avec la clé d'API du client : mêmes limites, budgets, approbations et historique.",
+    "offer": "Proposer comme outil MCP",
+    "offerHint": "Ne prend effet que si l'exploitant démarre Nodestro avec NODESTRO_MCP_SERVER=1. Le client a besoin d'une clé d'API autorisée à lancer des exécutions.",
+    "howToUse": "Saisissez cette adresse dans le client MCP et envoyez la clé d'API comme jeton Bearer ; l'outil s'appelle {{name}}."
   }
 }
