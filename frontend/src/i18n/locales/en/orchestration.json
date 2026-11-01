@@ -1,0 +1,41 @@
+{
+  "run": {
+    "teamRun": "Team run",
+    "active": "active {{value}}",
+    "nested_one": "works with {{count}} run of its own",
+    "nested_other": "works with {{count}} runs of its own",
+    "decisionN": "Decision {{n}}",
+    "decisionRange": "Decisions {{from}}–{{to}}",
+    "refusedGroup_one": "{{count}} answer refused, nothing started",
+    "refusedGroup_other": "{{count}} answers in a row refused, nothing started",
+    "refusedHint": "The model answered several times in a row without a valid decision. It usually helps to choose a more capable model, write clearer instructions for the orchestrator, or allow more decisions.",
+    "refusedHelp": "How the orchestrator decides",
+    "pool_one": "Pool: {{count}} team",
+    "pool_other": "Pool: {{count}} teams",
+    "state": {
+      "running": "Running"
+    },
+    "perTeam": "one team at most {{max}} times (most often: {{team}}, {{count}}×)",
+    "decisions": "Decisions",
+    "usedOf": "{{used}} of {{max}}",
+    "teamRuns": "Team runs",
+    "stateCount": "{{state}}: {{count}}",
+    "noTeamRuns": "none yet",
+    "cost": "Cost incl. teams",
+    "stopped": "The orchestrator stopped: {{reason}}",
+    "rounds": "Decisions in order",
+    "current_one": "{{count}} team is working right now",
+    "current_other": "{{count}} teams are working right now"
+  },
+  "summary": {
+    "title": "Teams",
+    "decisions_one": "{{count}} decision",
+    "decisions_other": "{{count}} decisions",
+    "runs_one": "{{count}} team run",
+    "runs_other": "{{count}} team runs"
+  },
+  "origin": {
+    "teamRun": "Team run of {{name}} (decision {{n}}).",
+    "teamRunPlain": "Team run of an orchestrator."
+  }
+}
