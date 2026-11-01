@@ -64,16 +64,16 @@
     "never": "Aprovações pendentes são mantidas após um reinício. Agendamentos, lotes e séries de testes também aguardam uma decisão."
   },
   "subworkflow": {
-    "text": "Executa outro workflow salvo como uma etapa. Ele roda como uma execução própria e vinculada.",
-    "workflow": "Workflow",
-    "pick": "Escolher workflow",
+    "text": "Executa outro fluxo de trabalho salvo como uma etapa. Ele roda como uma execução própria e vinculada.",
+    "workflow": "Fluxo de trabalho",
+    "pick": "Escolher fluxo de trabalho",
     "version": "Versão",
-    "versionHint": "Uma versão fixa não muda se o workflow for editado depois.",
+    "versionHint": "Uma versão fixa não muda se o fluxo de trabalho for editado depois.",
     "input": "Entrada",
-    "inputHint": "O que o subworkflow recebe como entrada. {{input}} é o que chega aqui.",
+    "inputHint": "O que o subfluxo recebe como entrada. {{input}} é o que chega aqui.",
     "values": "Valores para o formulário de entrada dele",
     "valuesHint": "Texto ou marcadores como {{formExample}} ou {{agentExample}}.",
-    "costs": "Custo e tokens do subworkflow contam uma única vez, na execução deste workflow.",
+    "costs": "Custo e tokens do subfluxo contam uma única vez, na execução deste fluxo de trabalho.",
     "delivers": "Entrega: {{fields}}.",
     "noContract": "Sem contrato de saída: o resultado chega como o fluxo o produz.",
     "open": "Abrir fluxo (ou clique duplo no nó)"
@@ -106,7 +106,7 @@
     "remove": "Remover campo",
     "choose": "Selecione",
     "noFiles": "Ainda não há arquivos em Conhecimento",
-    "runIntro": "Preencha o formulário de entrada do workflow.",
+    "runIntro": "Preencha o formulário de entrada do fluxo de trabalho.",
     "extraInput": "Entrada adicional (opcional)",
     "extraInputHint": "É acrescentada à entrada depois dos valores do formulário.",
     "requiredLabel": "Obrigatório ou opcional",
@@ -127,7 +127,7 @@
       "pdf": "PDF (.pdf)"
     },
     "name": "Nome do arquivo",
-    "namePlaceholder": "Nome do workflow",
+    "namePlaceholder": "Nome do fluxo de trabalho",
     "sanitize": "Higienizar (substituir credenciais e dados pessoais)",
     "add": "Adicionar arquivo",
     "remove": "Remover arquivo",
@@ -166,12 +166,12 @@
     "rejected": "Rejeitado",
     "decidedBy": "decidido localmente",
     "decisionReused": "reaproveitado da execução anterior",
-    "childRun": "Abrir a execução do subworkflow",
+    "childRun": "Abrir a execução do subfluxo",
     "reused": "Este resultado foi reaproveitado da execução anterior e não foi recalculado.",
     "openEarlier": "Abrir a execução anterior"
   },
   "origin": {
-    "subworkflow": "Execução de um subworkflow.",
+    "subworkflow": "Execução de um subfluxo.",
     "openParent": "Abrir a execução principal",
     "resumed": "Continuação de uma execução com falha.",
     "openEarlier": "Abrir a execução anterior",
@@ -196,7 +196,7 @@
     "button": "Continuar",
     "title": "Continuar a execução",
     "intro": "Uma nova execução vinculada reaproveita os resultados ainda válidos e executa o resto de novo. A execução com falha permanece como estava.",
-    "summary": "{{reused}} etapas são reaproveitadas, {{rerun}} rodam de novo. Economia: cerca de {{saved}}.",
+    "summary": "Etapas reaproveitadas: {{reused}} · rodam de novo: {{rerun}}. Economia: cerca de {{saved}}.",
     "steps": "Etapas",
     "step": "Etapa",
     "action": "Ação",
@@ -207,7 +207,7 @@
       "run": "Executar"
     },
     "reasons": {
-      "new_node": "Nova no workflow.",
+      "new_node": "Nova no fluxo de trabalho.",
       "changed": "A etapa foi alterada.",
       "upstream_changed": "Uma etapa anterior roda de novo.",
       "no_fingerprint": "A execução anterior não tem impressão desta etapa.",
@@ -230,7 +230,7 @@
   "orchestrator": {
     "text": "Um modelo de IA decide passo a passo qual equipe recebe qual tarefa e conclui com uma resposta.",
     "teams": "Equipes",
-    "teamsHint": "Os workflows entre os quais o modelo pode escolher (no máximo {{max}}). Capacidades e contratos de saída ajudam na escolha.",
+    "teamsHint": "Os fluxos de trabalho entre os quais o modelo pode escolher (no máximo {{max}}). Capacidades e contratos de saída ajudam na escolha.",
     "noTeams": "Ainda não há equipes. Adicione pelo menos uma.",
     "addTeam": "Adicionar uma equipe…",
     "removeTeam": "Remover {{name}}",
@@ -276,7 +276,7 @@
       "costTotal": "total com equipes {{cost}}",
       "costUnknown": "não totalmente conhecido",
       "saveTemplate": "Salvar a composição da equipe como modelo",
-      "templateText": "Salva um novo workflow com este orquestrador e as equipes que trabalharam ({{teams}}), nas versões desta execução. Nada é salvo sem este clique.",
+      "templateText": "Salva um novo fluxo de trabalho com este orquestrador e as equipes que trabalharam ({{teams}}), nas versões desta execução. Nada é salvo sem este clique.",
       "templateName": "{{name}} – equipe",
       "templateSaved": "{{name}} salvo",
       "outcome": {

@@ -175,16 +175,16 @@ Les outils enregistrés avant cette version, et tous les outils après la restau
 ## Services connectés {#verbundene-dienste}
 <!-- keywords: mcp, model context protocol, service externe, services connectés, serveur, jeton, validation, modifié -->
 
-Avec le **Model Context Protocol (MCP)**, tu connectes des services externes, par exemple une recherche de documents ou un système de tickets. Leurs outils sont disponibles pour les agents comme n'importe quel autre outil, mais seulement après ton examen. Tu les trouves sous *Outils → Services connectés*.
+Avec le **Model Context Protocol (MCP)**, vous connectez des services externes, par exemple une recherche de documents ou un système de tickets. Leurs outils sont disponibles pour les agents comme n'importe quel autre outil, mais seulement après votre examen. Vous les trouvez sous *Outils → Services connectés*.
 
-1. **Connecter un service :** nom et adresse du point de terminaison MCP (`https` uniquement), un jeton d'accès si nécessaire. Sur le bureau, tu peux autoriser `http://127.0.0.1` pour un serveur que tu développes sur cet ordinateur.
+1. **Connecter un service :** nom et adresse du point de terminaison MCP (`https` uniquement), un jeton d'accès si nécessaire. Sur le bureau, vous pouvez autoriser `http://127.0.0.1` pour un serveur que vous développez sur cet ordinateur.
 2. **Tester la connexion :** Nodestro négocie la version du protocole et récupère les outils du service. Chaque outil commence comme **Nouveau**.
-3. **Examiner et classer :** tu vois la description, les paramètres et les indications du service. C'est un **texte étranger** : Nodestro l'affiche, mais ne le traite jamais comme une instruction. Classe l'outil : **Lecture seule**, **Modifie des données** ou **Supprime ou détruit**. L'indication du service n'est qu'un indice ; en cas de doute, « Modifie des données » s'applique.
-4. **Approuver :** ce n'est qu'alors que les agents voient l'outil, sous le nom `mcp__<service>__<outil>`. Tu l'attribues à un agent comme n'importe quel autre outil.
+3. **Examiner et classer :** vous voyez la description, les paramètres et les indications du service. C'est un **texte étranger** : Nodestro l'affiche, mais ne le traite jamais comme une instruction. Classez l'outil : **Lecture seule**, **Modifie des données** ou **Supprime ou détruit**. L'indication du service n'est qu'un indice ; en cas de doute, « Modifie des données » s'applique.
+4. **Approuver :** ce n'est qu'alors que les agents voient l'outil, sous le nom `mcp__<service>__<outil>`. Vous l'attribuez à un agent comme n'importe quel autre outil.
 
-Pour l'instant, seuls les outils que tu classes **lecture seule** sont utilisables ; ceux qui modifient des données restent bloqués jusqu'à ce que l'approbation par appel existe. Un outil de lecture reçoit tout de même tout ce que l'agent lui envoie : ne connecte que des services auxquels tu confies ces données.
+Pour l'instant, seuls les outils que vous classez **lecture seule** sont utilisables ; ceux qui modifient des données restent bloqués jusqu'à ce que l'approbation par appel existe. Un outil de lecture reçoit tout de même tout ce que l'agent lui envoie : ne connectez que des services auxquels vous confiez ces données.
 
-**Modifications :** Nodestro conserve une empreinte de chaque définition approuvée et la vérifie avant chaque appel. Si le service modifie un outil, celui-ci est **bloqué** ; les exécutions qui l'utilisent échouent avec un message clair. Tu vois la modification côte à côte (approuvé jusqu'ici, proposé maintenant) et tu l'approuves ou la refuses.
+**Modifications :** Nodestro conserve une empreinte de chaque définition approuvée et la vérifie avant chaque appel. Si le service modifie un outil, celui-ci est **bloqué** ; les exécutions qui l'utilisent échouent avec un message clair. Vous voyez la modification côte à côte (approuvé jusqu'ici, proposé maintenant) et vous l'approuvez ou la refusez.
 
 **Les jetons d'accès** sont enregistrés chiffrés : sur le bureau avec une clé du trousseau du système d'exploitation, sur le serveur avec la clé du serveur, séparément pour chaque locataire. Sans coffre de clés sécurisé, un jeton ne vaut que jusqu'à la fermeture de l'application. Les jetons n'apparaissent jamais dans les workflows, les exports ou les journaux.
 
@@ -204,12 +204,12 @@ Certains services n'utilisent pas de jeton fixe mais une **connexion (OAuth)**. 
 ## Documents d'un service {#mcp-dokumente}
 <!-- keywords: mcp, resources, ressources, documents, contexte, lire -->
 
-Si un service propose des **documents** (ressources MCP), le test de la connexion affiche un outil supplémentaire, `resources/read`, avec la mention *Documents du service*. Tu l'examines comme tout autre outil : sa description liste les documents qu'un agent peut lire.
+Si un service propose des **documents** (ressources MCP), le test de la connexion affiche un outil supplémentaire, `resources/read`, avec la mention *Documents du service*. Vous l'examinez comme tout autre outil : sa description liste les documents qu'un agent peut lire.
 
 - Seuls les documents listés peuvent être lus ; les modèles d'adresse et les autres adresses sont exclus.
-- Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que tu examines la nouvelle liste.
+- Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que vous examiniez la nouvelle liste.
 - Les contenus sont des données externes, comme tout résultat d'un service. Nodestro ne transmet pas au modèle les contenus binaires comme les images.
-- Nodestro ne permet pas à un service de te poser des questions, de faire ses propres appels de modèle ni d'accéder à tes dossiers.
+- Nodestro ne permet pas à un service de vous poser des questions, de faire ses propres appels de modèle ni d'accéder à vos dossiers.
 
 ## Serveurs locaux {#lokale-dienste}
 <!-- keywords: mcp, stdio, serveur local, pypi, conteneur, docker, paquets -->

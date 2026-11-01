@@ -14,7 +14,7 @@ Typical uses:
 - **Structured evaluation:** an agent returns a validated JSON object with fixed fields that other programs can process.
 - **Quality-assured texts:** a judge checks the result against criteria and has the agent improve it.
 
-Nodestro runs locally on your computer. Workflows, executions, knowledge and memory are stored in a SQLite database. Data leaves your computer only for requests to the AI providers you set up.
+Nodestro runs locally on your computer. Workflows, runs, knowledge and memory are stored in a SQLite database. Data leaves your computer only for requests to the AI providers you set up.
 
 ## Basic concepts {#begriffe}
 <!-- keywords: glossary, concepts, node, run, execution, trace, token -->
@@ -50,11 +50,12 @@ Create your first workflow in a few minutes:
 ## The interface {#oberflaeche}
 <!-- keywords: navigation, sidebar, menu, theme, dark, light, layout -->
 
-The **sidebar** on the left organizes Nodestro into three areas:
+The **sidebar** on the left follows the way you work: build, run and review, then automate.
 
-- **Workspace:** *Workflows* (your processes), *Agents* (reusable templates), *Tools*, *Knowledge* and *Memory*.
-- **Observability:** *Executions* (all runs in detail) and *Usage* (tokens and costs over time).
-- **Help:** this *Documentation*.
+- **Build:** *Workflows* (your processes), *Agents* (reusable templates), *Tools*, *Knowledge* and *Memory*.
+- **Run & review:** *Runs* (all runs in detail), *Approvals* (decisions runs wait for) and *Usage* (tokens and costs over time).
+- **Automate & test:** *Test series*, *Batch runs* and *Schedules*.
+- **Help:** this *Documentation* and the *Welcome* page.
 
 *Settings* are at the bottom. At the top right you switch between the dark and light colour scheme; your choice is saved in the browser. If the provider of the default model is not set up, a notice appears there that leads straight to the settings.
 
@@ -74,7 +75,7 @@ Use the arrow keys to pick a hit; **Enter** opens it where it belongs: an agent 
 
 All data is stored in a SQLite database in the data directory, `~/.nodestro` by default (changeable with `--data-dir` or the environment variable `NODESTRO_DATA_DIR`). It contains:
 
-- `nodestro.db` with workflows, agent templates, executions, settings, knowledge files, search index and memory spaces,
+- `nodestro.db` with workflows, agent templates, runs, settings, knowledge files, search index and memory spaces,
 - the `tools` folder with your own and AI-created tools.
 
 To **back up**, copy the data directory while Nodestro is stopped. Only the content an agent needs for its request is sent to its provider: system prompt, task, assigned knowledge, memory content it reads, and tool results. The API keys are never shown in the interface.

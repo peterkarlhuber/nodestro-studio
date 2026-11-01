@@ -24,7 +24,8 @@
   "hidePreview": "Masquer l’aperçu",
   "noText": "(pas de texte)",
   "previewCut": "Seul le début est affiché.",
-  "tableSummary": "{{name}} : {{count}} lignes, {{columns}} colonnes",
+  "tableSummary_one": "{{name}} : {{count}} ligne, colonnes : {{columns}}",
+  "tableSummary_other": "{{name}} : {{count}} lignes, colonnes : {{columns}}",
   "summary": {
     "archive_one": "{{count}} fichier, {{readable}} lisibles",
     "archive_other": "{{count}} fichiers, {{readable}} lisibles",
@@ -202,12 +203,13 @@
   "storage": {
     "title": "Fichiers d’entrée envoyés",
     "intro": "Fichiers envoyés pour des exécutions, des cas de test et des planifications. Les fichiers des exécutions en attente, en cours ou en pause ne sont jamais supprimés.",
-    "summary": "{{count}} fichiers · {{size}} · {{unused}} inutilisés · {{inUse}} dans des exécutions en cours",
+    "summary": "Fichiers : {{files}} · {{size}} · inutilisés : {{unused}} · dans des exécutions en cours : {{inUse}}",
     "cleanUnused": "Supprimer les fichiers inutilisés",
     "olderThan": "Fichiers d’exécutions terminées de plus de",
     "days": "jours",
     "cleanOld": "Supprimer",
-    "cleaned": "{{count}} fichiers supprimés ({{size}} libérés).",
+    "cleaned_one": "{{count}} fichier supprimé ({{size}} libérés).",
+    "cleaned_other": "{{count}} fichiers supprimés ({{size}} libérés).",
     "safe": "Les fichiers encore utilisés par des cas de test, des planifications ou des lots sont conservés."
   },
   "collections": {

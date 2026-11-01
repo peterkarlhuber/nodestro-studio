@@ -24,9 +24,9 @@
   },
   "estimate": {
     "title": "Costi stimati",
-    "total_one": "{{runs}} esecuzioni, circa {{total}} ({{perRun}} per esecuzione, da {{count}} esecuzione precedente).",
-    "total_other": "{{runs}} esecuzioni, circa {{total}} ({{perRun}} per esecuzione, da {{count}} esecuzioni precedenti).",
-    "unknown": "{{runs}} esecuzioni. Ancora nessuna stima, perché non c’è un’esecuzione riuscita.",
+    "total_one": "Esecuzioni: {{runs}}, circa {{total}} ({{perRun}} per esecuzione, da {{count}} esecuzione precedente).",
+    "total_other": "Esecuzioni: {{runs}}, circa {{total}} ({{perRun}} per esecuzione, da {{count}} esecuzioni precedenti).",
+    "unknown": "Esecuzioni: {{runs}}. Ancora nessuna stima, perché non c’è un’esecuzione riuscita.",
     "max": "Al massimo {{max}} (budget per esecuzione × numero di esecuzioni).",
     "approvals_one": "Il workflow ha {{count}} passaggio di approvazione. Ogni esecuzione vi attende una decisione.",
     "approvals_other": "Il workflow ha {{count}} passaggi di approvazione. Ogni esecuzione vi attende una decisione."
@@ -109,7 +109,7 @@
     "casesTitle_other": "{{count}} casi di test",
     "case": "Caso di test",
     "caseN": "Caso di test {{n}}",
-    "caseSummary": "{{checks}} controlli · valutazione IA {{judge}}",
+    "caseSummary": "Controlli: {{checks}} · valutazione IA {{judge}}",
     "addCase": "Aggiungi caso di test",
     "removeCase": "Rimuovi caso di test",
     "checks": "Regole di controllo",
@@ -312,7 +312,8 @@
     "excluded": {
       "unavailable": "Provider non configurato",
       "pass_rate_low": "Tasso di superamento troppo basso",
-      "new_failures": "Perde {{cases}} casi superati dal modello attuale",
+      "new_failures_one": "Perde {{count}} caso superato dal modello attuale",
+      "new_failures_other": "Perde {{count}} casi superati dal modello attuale",
       "cost_unknown": "Costo sconosciuto (mai contato come 0)",
       "duration_unknown": "Durata sconosciuta"
     }

@@ -52,7 +52,9 @@
     "deleteText": "All published versions of it are removed; keys lose access to it. Its runs stay in the history. The workflow itself is not changed."
   },
   "check": {
-    "ok": "Ready to publish ({{warnings}} warnings).",
+    "ok_one": "Ready to publish ({{count}} warning).",
+    "ok_other": "Ready to publish ({{count}} warnings).",
+    "ready": "Ready to publish.",
     "blocked_one": "{{count}} problem blocks publishing.",
     "blocked_other": "{{count}} problems block publishing.",
     "approvals_one": "{{count}} approval step: runs wait there for a decision.",
@@ -272,7 +274,8 @@
     "probabilistic": "AI verdict, not guaranteed",
     "probabilisticHint": "AI ratings can be wrong. They are kept separate from the fixed checks.",
     "reason": "Reason for releasing",
-    "reasonHint": "At least {{count}} characters. Stored with the version and in the history.",
+    "reasonHint_one": "At least {{count}} character. Stored with the version and in the history.",
+    "reasonHint_other": "At least {{count}} characters. Stored with the version and in the history.",
     "publishWithReason": "Publish version {{version}} with reason",
     "releasePassed": "gate met",
     "releaseOverridden": "released with reason",
@@ -283,7 +286,7 @@
       "suite_outdated": "version {{version}} was tested last",
       "suite_changed": "test series changed since the test",
       "tested": "this version was tested",
-      "pass_rate": "{{clean}} of {{cases}} cases passed ({{value}}, required {{threshold}})",
+      "pass_rate": "Cases passed: {{clean}} of {{cases}} ({{value}}, required {{threshold}})",
       "judge_score": "AI rating {{value}} (required {{threshold}})",
       "judge_missing": "no AI rating in the test run (required {{threshold}})"
     }

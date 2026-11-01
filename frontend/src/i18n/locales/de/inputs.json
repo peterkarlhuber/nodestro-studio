@@ -24,7 +24,8 @@
   "hidePreview": "Vorschau ausblenden",
   "noText": "(kein Text)",
   "previewCut": "Es wird nur der Anfang gezeigt.",
-  "tableSummary": "{{name}}: {{count}} Zeilen, {{columns}} Spalten",
+  "tableSummary_one": "{{name}}: {{count}} Zeile, Spalten: {{columns}}",
+  "tableSummary_other": "{{name}}: {{count}} Zeilen, Spalten: {{columns}}",
   "summary": {
     "archive_one": "{{count}} Datei, {{readable}} lesbar",
     "archive_other": "{{count}} Dateien, {{readable}} lesbar",
@@ -202,12 +203,13 @@
   "storage": {
     "title": "Hochgeladene Eingabedateien",
     "intro": "Dateien, die für Läufe, Testfälle und Zeitpläne hochgeladen wurden. Dateien wartender, laufender oder pausierter Läufe werden nie entfernt.",
-    "summary": "{{count}} Dateien · {{size}} · {{unused}} ungenutzt · {{inUse}} in laufenden Läufen",
+    "summary": "Dateien: {{files}} · {{size}} · ungenutzt: {{unused}} · in laufenden Läufen: {{inUse}}",
     "cleanUnused": "Ungenutzte Dateien entfernen",
     "olderThan": "Dateien abgeschlossener Läufe älter als",
     "days": "Tage",
     "cleanOld": "Entfernen",
-    "cleaned": "{{count}} Dateien entfernt ({{size}} frei).",
+    "cleaned_one": "{{count}} Datei entfernt ({{size}} frei).",
+    "cleaned_other": "{{count}} Dateien entfernt ({{size}} frei).",
     "safe": "Dateien, die Testfälle, Zeitpläne oder Stapel noch brauchen, bleiben erhalten."
   },
   "collections": {

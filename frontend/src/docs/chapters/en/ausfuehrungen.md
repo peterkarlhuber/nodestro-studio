@@ -1,16 +1,16 @@
-# Executions
+# Runs
 
 Every run of a workflow is recorded in full: input, results, tasks, tool calls, thoughts, memory, errors, times, tokens and costs. This chapter explains the views, the statuses, exporting and importing traces and how to interpret errors.
 
 ## Overview {#ueberblick}
-<!-- keywords: executions, runs, history, log, trace -->
+<!-- keywords: runs, executions, history, log, trace -->
 
 You see runs in two places:
 
 - **In the editor**, in the *Execution overview* below the canvas: the latest run of this workflow, live while it is running.
-- On the **Executions** page: all runs of all workflows, with a detail view.
+- On the **Runs** page: all runs of all workflows, with a detail view.
 
-Executions are kept even if you change or delete the workflow; every run stores the workflow as it was at the start.
+Runs are kept even if you change or delete the workflow; every run stores the workflow as it was at the start.
 
 ## Watching live {#live}
 <!-- keywords: live, streaming, watch, execution overview, progress, real time -->
@@ -23,13 +23,13 @@ During a run, the **Execution overview** shows:
 
 On the canvas, every agent shows its status, and after the run also tokens and costs. Connections through which data has flowed are highlighted.
 
-## The list of executions {#liste}
+## The list of runs {#liste}
 <!-- keywords: list, filter, status filter, workflow filter, delete, origin -->
 
-The **Executions** page lists the runs, newest first, with workflow, status, start time, duration, requests, tokens and costs. The input or the error message is shown below the workflow name.
+The **Runs** page lists the runs, newest first, with workflow, status, start time, duration, requests, tokens and costs. The input or the error message is shown below the workflow name.
 
 - **Filters:** by workflow, by status and by origin (*Own runs* or *Imported traces*).
-- **Delete:** bin symbol; running executions cannot be deleted.
+- **Delete:** bin symbol; running runs cannot be deleted.
 - **Import trace:** see [Importing traces](/docs/ausfuehrungen#trace-import).
 
 The list refreshes every five seconds.
@@ -102,14 +102,14 @@ Tool results are shortened to 20,000 characters per call.
 ## Importing traces {#trace-import}
 <!-- keywords: import trace, import, json, open, view, duplicate, restore -->
 
-**Import trace** on the *Executions* page opens exported trace files again, several at once and also on another computer.
+**Import trace** on the *Runs* page opens exported trace files again, several at once and also on another computer.
 
 This is how the import works:
 
 - The trace appears as an execution of its own marked **Imported** and opens in the usual detail view: results, agents, tool calls, inputs and outputs, errors, timestamps, quality checks, tokens and costs, as far as the trace contains them.
 - **Nothing is run.** There is no request to an AI provider and no cost.
 - Imported traces are **stored permanently** and, like any execution, can be opened again, filtered, exported and deleted.
-- **Existing executions are never overwritten:** every import gets a new ID; the original ID is shown in the detail view.
+- **Existing runs are never overwritten:** every import gets a new ID; the original ID is shown in the detail view.
 - **Duplicates:** if the same run already exists (the original or an earlier import of the same file), Nodestro does not create a copy but opens the existing execution and tells you so.
 - **Incomplete traces:** if a run was exported while it was still running, it appears as *Cancelled* with a note.
 - **Usage:** imported runs do not count towards the usage statistics, because their costs did not arise in this installation.
@@ -120,7 +120,7 @@ This is how the import works:
 ## Comparing runs {#vergleich}
 <!-- keywords: compare, comparison, difference, diff, side by side, two runs -->
 
-Tick two runs in the list of executions with the box at the start of the row and click **Compare**. The comparison view puts both side by side:
+Tick two runs in the list of runs with the box at the start of the row and click **Compare**. The comparison view puts both side by side:
 
 - **Key figures:** status, duration, requests, input and output tokens, cost, tool calls and failed agents. Rows that differ are highlighted, with the difference from A to B.
 - **Final result:** as a line comparison (only in A, only in B) or side by side.

@@ -39,7 +39,8 @@
   },
   "ocr": {
     "scan": "Scan ohne Textebene",
-    "recognised": "Text erkannt: {{words}} Wörter, {{uncertain}} unsicher",
+    "recognised_one": "Text erkannt: {{count}} Wort, davon unsicher: {{uncertain}}",
+    "recognised_other": "Text erkannt: {{count}} Wörter, davon unsicher: {{uncertain}}",
     "failed": "Texterkennung fehlgeschlagen",
     "run": "Text erkennen (OCR)",
     "done_one": "Text erkannt ({{count}} Wort).",

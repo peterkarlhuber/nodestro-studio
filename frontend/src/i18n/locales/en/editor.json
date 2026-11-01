@@ -36,6 +36,10 @@
     "branchPort": "Output of branch {{name}}",
     "orchestrator": "Orchestrator"
   },
+  "defaults": {
+    "systemPrompt": "You are a helpful assistant.",
+    "outputName": "Result"
+  },
   "canvas": {
     "unsaved": "Unsaved changes",
     "agents_one": "{{count}} agent",
@@ -114,7 +118,7 @@
     "cost": "Cost of the draft: {{cost}}.",
     "role": "Role",
     "limits": "Limits",
-    "limitsValue": "{{tokens}} tokens · {{rounds}} tool rounds",
+    "limitsValue": "Max. tokens: {{tokens}} · tool rounds: {{rounds}}",
     "missingTools": "The Architect would also need these tools:",
     "missingToolsHint": "You can have the AI create them in the <a>tool library</a>."
   },
@@ -184,11 +188,11 @@
     "showPalette": "Show building blocks",
     "hideInspector": "Hide properties",
     "showInspector": "Show properties",
-    "hideRunPanel": "Hide execution overview",
-    "showRunPanel": "Show execution overview",
+    "hideRunPanel": "Hide run overview",
+    "showRunPanel": "Show run overview",
     "resizePalette": "Width of the building blocks",
     "resizeInspector": "Width of the properties",
-    "resizeRunPanel": "Height of the execution overview",
+    "resizeRunPanel": "Height of the run overview",
     "resizeHint": "Drag or use the arrow keys to resize. Double-click restores the default size.",
     "railSelection": "Selected: {{name}}"
   },

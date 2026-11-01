@@ -11,7 +11,7 @@
   "docs": "Documentación",
   "hero": {
     "eyebrow": "El estudio visual para agentes de IA",
-    "lede": "Nodestro conecta modelos de IA, herramientas y conocimiento en workflows de agentes que diseñas visualmente, ejecutas con control y sigues paso a paso.",
+    "lede": "Nodestro conecta modelos de IA, herramientas y conocimiento en flujos de trabajo de agentes que diseñas visualmente, ejecutas con control y sigues paso a paso.",
     "diagram": "Esquema: modelos, conocimiento y herramientas confluyen en Nodestro y se convierten en agentes conectados, aprobaciones y ejecuciones trazables.",
     "local": "Se ejecuta en local, en tu equipo",
     "providers": "Compatible con"
@@ -31,7 +31,7 @@
     },
     "agents": {
       "title": "Agentes",
-      "detail": "Conectados en workflows"
+      "detail": "Conectados en flujos de trabajo"
     },
     "approvals": {
       "title": "Aprobaciones",
@@ -45,14 +45,14 @@
   "how": {
     "kicker": "Así trabaja Nodestro",
     "title": "De la idea a una ejecución que puedes seguir.",
-    "intro": "Un workflow es una cadena de agentes. Cada uno aporta su modelo, sus herramientas y su conocimiento, y pasa su resultado al siguiente.",
+    "intro": "Un flujo de trabajo es una cadena de agentes. Cada uno aporta su modelo, sus herramientas y su conocimiento, y pasa su resultado al siguiente.",
     "design": {
       "title": "Diseñar",
-      "text": "Coloca y conecta agentes en el editor, o describe el workflow con tus palabras y deja que el arquitecto lo esboce."
+      "text": "Coloca y conecta agentes en el editor, o describe el flujo de trabajo con tus palabras y deja que el arquitecto lo esboce."
     },
     "run": {
       "title": "Ejecutar",
-      "text": "Un clic inicia el workflow. Donde tú lo decidas, espera tu aprobación antes de continuar."
+      "text": "Un clic inicia el flujo de trabajo. Donde tú lo decidas, espera tu aprobación antes de continuar."
     },
     "trace": {
       "title": "Rastrear",
@@ -79,11 +79,11 @@
   },
   "capabilities": {
     "kicker": "En el Studio",
-    "title": "Todo lo que necesitan los workflows de agentes. En un solo lugar.",
+    "title": "Todo lo que necesitan los flujos de trabajo de agentes. En un solo lugar.",
     "open": "Abrir",
     "workflows": {
       "title": "Editor visual",
-      "text": "Agentes como nodos, conexiones como flujo de datos, con ramificaciones y sub-workflows."
+      "text": "Agentes como nodos, conexiones como flujo de datos, con ramificaciones y subflujos."
     },
     "agents": {
       "title": "Agentes",
@@ -103,7 +103,7 @@
     },
     "automation": {
       "title": "Automatización",
-      "text": "Ejecuciones por lotes, series de pruebas y programaciones ejecutan workflows de forma repetida y verificable."
+      "text": "Ejecuciones por lotes, series de pruebas y programaciones ejecutan flujos de trabajo de forma repetida y verificable."
     }
   },
   "principles": {
@@ -117,12 +117,12 @@
     },
     "integration": {
       "title": "Abierto a la integración",
-      "text": "Inicia cualquier workflow desde tus propias aplicaciones a través de la API y el SDK."
+      "text": "Inicia cualquier flujo de trabajo desde tus propias aplicaciones a través de la API y el SDK."
     }
   },
   "closing": {
-    "title": "Tu primer workflow está a pocos clics.",
-    "text": "Empieza con un ejemplo de la galería o con un workflow vacío.",
+    "title": "Tu primer flujo de trabajo está a pocos clics.",
+    "text": "Empieza con un ejemplo de la galería o con un flujo de trabajo vacío.",
     "examples": "Ver ejemplos"
   },
   "footer": {

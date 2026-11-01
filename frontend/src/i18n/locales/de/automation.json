@@ -24,9 +24,9 @@
   },
   "estimate": {
     "title": "Geschätzte Kosten",
-    "total_one": "{{runs}} Läufe, etwa {{total}} ({{perRun}} pro Lauf, aus {{count}} früheren Lauf).",
-    "total_other": "{{runs}} Läufe, etwa {{total}} ({{perRun}} pro Lauf, aus {{count}} früheren Läufen).",
-    "unknown": "{{runs}} Läufe. Noch keine Schätzung möglich, weil es keinen erfolgreichen Lauf gibt.",
+    "total_one": "Läufe: {{runs}}, etwa {{total}} ({{perRun}} pro Lauf, aus {{count}} früheren Lauf).",
+    "total_other": "Läufe: {{runs}}, etwa {{total}} ({{perRun}} pro Lauf, aus {{count}} früheren Läufen).",
+    "unknown": "Läufe: {{runs}}. Noch keine Schätzung möglich, weil es keinen erfolgreichen Lauf gibt.",
     "max": "Höchstens {{max}} (Budget pro Lauf × Anzahl).",
     "approvals_one": "Der Workflow hat {{count}} Freigabe-Schritt. Jeder Lauf wartet dort auf eine Entscheidung.",
     "approvals_other": "Der Workflow hat {{count}} Freigabe-Schritte. Jeder Lauf wartet dort auf eine Entscheidung."
@@ -109,7 +109,7 @@
     "casesTitle_other": "{{count}} Testfälle",
     "case": "Testfall",
     "caseN": "Testfall {{n}}",
-    "caseSummary": "{{checks}} Prüfungen · KI-Bewertung {{judge}}",
+    "caseSummary": "Prüfungen: {{checks}} · KI-Bewertung {{judge}}",
     "addCase": "Testfall hinzufügen",
     "removeCase": "Testfall entfernen",
     "checks": "Prüfregeln",
@@ -312,7 +312,8 @@
     "excluded": {
       "unavailable": "Anbieter nicht eingerichtet",
       "pass_rate_low": "Bestehensquote zu niedrig",
-      "new_failures": "Verliert {{cases}} Fälle, die das jetzige Modell bestand",
+      "new_failures_one": "Verliert {{count}} Fall, den das jetzige Modell bestand",
+      "new_failures_other": "Verliert {{count}} Fälle, die das jetzige Modell bestand",
       "cost_unknown": "Kosten unbekannt (zählen nie als 0)",
       "duration_unknown": "Laufzeit unbekannt"
     }

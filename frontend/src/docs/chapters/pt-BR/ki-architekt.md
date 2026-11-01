@@ -94,5 +94,5 @@ Em *Configurações*, junto aos [modelos](/docs/einstellungen#modelle), você de
 <!-- keywords: limites, restrições, máximo, agentes, laços -->
 
 - Um rascunho tem no máximo dez agentes; ciclos no fluxo são removidos.
-- Valem as mesmas [restrições](/docs/workflows#grenzen) de qualquer fluxo: sem laços. O arquiteto não planeja subworkflows; adicione-os você mesmo se precisar.
+- Valem as mesmas [restrições](/docs/workflows#grenzen) de qualquer fluxo: sem laços. O arquiteto não planeja subfluxos; adicione-os você mesmo se precisar.
 - O arquiteto só conhece o que está na sua descrição, no fluxo e na biblioteca. A correção do conteúdo você mesmo precisa verificar.

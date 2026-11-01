@@ -48,7 +48,7 @@ Os blocos, o inspetor (com o título *Propriedades*) e a visão geral da execuç
 | **Subworkflow** | Executa outro fluxo de trabalho salvo como uma única etapa. | quantas quiser | quantas quiser |
 | **Resultado** | Reúne os resultados dos agentes conectados como saída do fluxo de trabalho, se quiser também como arquivos. | quantas quiser | nenhuma |
 
-Os nós de início e de resultado são opcionais: agentes sem antecessor recebem automaticamente a entrada da execução e, sem nó de resultado, a saída dos últimos agentes vale como resultado (veja [O resultado de uma execução](/docs/ausfuehrungen#ergebnis)). Decisão, aprovação e subworkflow ficam na paleta, em *Controlar o fluxo*; veja [Ramificações e aprovações](/docs/verzweigungen).
+Os nós de início e de resultado são opcionais: agentes sem antecessor recebem automaticamente a entrada da execução e, sem nó de resultado, a saída dos últimos agentes vale como resultado (veja [O resultado de uma execução](/docs/ausfuehrungen#ergebnis)). Decisão, aprovação e subfluxo ficam na paleta, em *Controlar o fluxo*; veja [Ramificações e aprovações](/docs/verzweigungen).
 
 Cada nó tem um nome único. Se você criar um segundo agente com o mesmo nome, o Nodestro acrescenta um número ("Agente 2"). O nome de um agente também é o seu marcador nas tarefas.
 
@@ -183,7 +183,7 @@ Enquanto houver **erros**, **Iniciar fluxo de trabalho** fica bloqueado; passe o
 - **Anexar arquivos (opcional):** arquivos de conhecimento colocados diretamente no contexto dos primeiros agentes, só nesta execução (veja [Anexar arquivos ao iniciar](/docs/wissen#start-dateien)).
 - **Orçamento:** a caixa de diálogo mostra qual orçamento vale.
 
-Com **Iniciar**, o Nodestro salva o workflow e começa a execução. A execução usa o estado do workflow no momento do início; mudanças posteriores só valem na próxima execução. Se o provedor de um modelo não estiver configurado, o diálogo avisa.
+Com **Iniciar**, o Nodestro salva o fluxo de trabalho e começa a execução. A execução usa o estado do fluxo de trabalho no momento do início; mudanças posteriores só valem na próxima execução. Se o provedor de um modelo não estiver configurado, o diálogo avisa.
 
 ## Controles e atalhos de teclado {#bedienung}
 <!-- keywords: atalhos de teclado, shortcuts, ctrl+s, ctrl+z, desfazer, refazer, delete, duplicar, organizar automaticamente -->

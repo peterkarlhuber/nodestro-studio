@@ -36,6 +36,10 @@
     "branchPort": "Salida de la rama {{name}}",
     "orchestrator": "Orquestador"
   },
+  "defaults": {
+    "systemPrompt": "Eres un asistente útil.",
+    "outputName": "Resultado"
+  },
   "canvas": {
     "unsaved": "Cambios sin guardar",
     "agents_one": "{{count}} agente",
@@ -64,7 +68,7 @@
     "flow": "Controlar el flujo",
     "conditionHint": "Bifurca según reglas, sin solicitud a la IA",
     "approvalHint": "Se detiene para una revisión humana",
-    "subworkflowHint": "Ejecuta otro workflow como un paso",
+    "subworkflowHint": "Ejecuta otro flujo de trabajo como un paso",
     "teams": "Equipos",
     "teamDelivers": "entrega {{fields}}",
     "orchestratorHint": "Un modelo de IA reparte la tarea entre equipos"
@@ -114,7 +118,7 @@
     "cost": "Coste del borrador: {{cost}}.",
     "role": "Rol",
     "limits": "Límites",
-    "limitsValue": "{{tokens}} tokens · {{rounds}} rondas de herramientas",
+    "limitsValue": "Máx. tokens: {{tokens}} · rondas de herramientas: {{rounds}}",
     "missingTools": "El arquitecto necesitaría además estas herramientas:",
     "missingToolsHint": "Puedes pedir a la IA que las cree en la <a>biblioteca de herramientas</a>."
   },
@@ -175,8 +179,8 @@
   "subworkflow": {
     "latest": "Versión más reciente",
     "versionN": "Versión {{n}}",
-    "none": "Ningún workflow elegido",
-    "missing": "Falta el workflow"
+    "none": "Ningún flujo de trabajo elegido",
+    "missing": "Falta el flujo de trabajo"
   },
   "panels": {
     "inspector": "Propiedades",

@@ -146,7 +146,7 @@
     },
     "modeHint": {
       "none": "The agent remembers nothing beyond the task.",
-      "run": "The agent can take notes during a run. They appear in the execution afterwards.",
+      "run": "The agent can take notes during a run. They appear in the run afterwards.",
       "persistent": "The agent reads and writes notes in a memory space that outlasts runs. Several agents can share a space."
     },
     "space": "Memory space",
@@ -188,7 +188,7 @@
     "effortHint": "Sets how thoroughly the model works – and with it, the token usage.",
     "thinking": "Thinking",
     "display": "Show thoughts",
-    "displayHint": "Shows the model's reasoning live in the execution."
+    "displayHint": "Shows the model's reasoning live in the run."
   },
   "quality": {
     "title": "Quality check",

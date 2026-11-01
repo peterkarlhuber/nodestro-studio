@@ -24,9 +24,9 @@
   },
   "estimate": {
     "title": "Coût estimé",
-    "total_one": "{{runs}} exécutions, environ {{total}} ({{perRun}} par exécution, d’après {{count}} exécution précédente).",
-    "total_other": "{{runs}} exécutions, environ {{total}} ({{perRun}} par exécution, d’après {{count}} exécutions précédentes).",
-    "unknown": "{{runs}} exécutions. Pas encore d’estimation, faute d’exécution réussie.",
+    "total_one": "Exécutions : {{runs}}, environ {{total}} ({{perRun}} par exécution, d’après {{count}} exécution précédente).",
+    "total_other": "Exécutions : {{runs}}, environ {{total}} ({{perRun}} par exécution, d’après {{count}} exécutions précédentes).",
+    "unknown": "Exécutions : {{runs}}. Pas encore d’estimation, faute d’exécution réussie.",
     "max": "Au maximum {{max}} (budget par exécution × nombre).",
     "approvals_one": "Le workflow comporte {{count}} étape de validation. Chaque exécution y attend une décision.",
     "approvals_other": "Le workflow comporte {{count}} étapes de validation. Chaque exécution y attend une décision."
@@ -109,7 +109,7 @@
     "casesTitle_other": "{{count}} cas de test",
     "case": "Cas de test",
     "caseN": "Cas de test {{n}}",
-    "caseSummary": "{{checks}} vérifications · évaluation IA {{judge}}",
+    "caseSummary": "Vérifications : {{checks}} · évaluation IA {{judge}}",
     "addCase": "Ajouter un cas de test",
     "removeCase": "Supprimer le cas de test",
     "checks": "Règles de vérification",
@@ -171,15 +171,15 @@
     "fromRun": {
       "button": "Ajouter comme cas de test",
       "title": "Cas de test à partir de cette exécution",
-      "intro": "Nodestro propose un cas de test avec l'entrée de cette exécution. Rien n'est enregistré tant que tu ne l'ajoutes pas à une série de tests.",
+      "intro": "Nodestro propose un cas de test avec l'entrée de cette exécution. Rien n'est enregistré tant que vous ne l'ajoutez pas à une série de tests.",
       "replaced": "Remplacé : {{summary}}.",
       "preview": "Entrée proposée",
       "files_one": "{{count}} fichier est utilisé tel qu'il est enregistré (non anonymisé).",
       "files_other": "{{count}} fichiers sont utilisés tels qu'ils sont enregistrés (non anonymisés).",
       "missingFiles_one": "{{count}} fichier de l'exécution n'existe plus ; il manque dans le cas de test.",
       "missingFiles_other": "{{count}} fichiers de l'exécution n'existent plus ; ils manquent dans le cas de test.",
-      "problems": "Ne correspond plus au formulaire actuel : {{fields}}. Corrige-le dans la série de tests après l'ajout.",
-      "checksLater": "Tu ajoutes ensuite les règles de contrôle et les critères de l'évaluation IA dans la série de tests.",
+      "problems": "Ne correspond plus au formulaire actuel : {{fields}}. Corrigez-le dans la série de tests après l'ajout.",
+      "checksLater": "Vous ajoutez ensuite les règles de contrôle et les critères de l'évaluation IA dans la série de tests.",
       "caseName": "Nom du cas de test",
       "suite": "Série de tests",
       "newSuite": "Nouvelle série de tests",
@@ -254,8 +254,8 @@
   },
   "toolWarnings": {
     "title": "Appels d'outils qui seraient refusés",
-    "hint": "Rien n'est approuvé automatiquement. Une personne administratrice donne les approbations anticipées sur la page Approbations.",
-    "open": "Ouvrir Approbations"
+    "hint": "Rien n'est validé automatiquement. Une personne administratrice donne les validations anticipées sur la page Validations.",
+    "open": "Ouvrir Validations"
   },
   "modelChoice": {
     "title": "Choix du modèle par les mesures",
@@ -312,7 +312,8 @@
     "excluded": {
       "unavailable": "Fournisseur non configuré",
       "pass_rate_low": "Taux de réussite trop bas",
-      "new_failures": "Perd {{cases}} cas que le modèle actuel a réussis",
+      "new_failures_one": "Perd {{count}} cas que le modèle actuel a réussi",
+      "new_failures_other": "Perd {{count}} cas que le modèle actuel a réussis",
       "cost_unknown": "Coût inconnu (jamais compté comme 0)",
       "duration_unknown": "Durée inconnue"
     }

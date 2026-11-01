@@ -24,9 +24,9 @@
   },
   "estimate": {
     "title": "Estimated cost",
-    "total_one": "{{runs}} runs, about {{total}} ({{perRun}} per run, from {{count}} earlier run).",
-    "total_other": "{{runs}} runs, about {{total}} ({{perRun}} per run, from {{count}} earlier runs).",
-    "unknown": "{{runs}} runs. No estimate yet, because there is no successful run.",
+    "total_one": "Runs: {{runs}}, about {{total}} ({{perRun}} per run, from {{count}} earlier run).",
+    "total_other": "Runs: {{runs}}, about {{total}} ({{perRun}} per run, from {{count}} earlier runs).",
+    "unknown": "Runs: {{runs}}. No estimate yet, because there is no successful run.",
     "max": "At most {{max}} (budget per run × number of runs).",
     "approvals_one": "The workflow has {{count}} approval step. Every run waits there for a decision.",
     "approvals_other": "The workflow has {{count}} approval steps. Every run waits there for a decision."
@@ -109,7 +109,7 @@
     "casesTitle_other": "{{count}} test cases",
     "case": "Test case",
     "caseN": "Test case {{n}}",
-    "caseSummary": "{{checks}} checks · AI rating {{judge}}",
+    "caseSummary": "Checks: {{checks}} · AI rating {{judge}}",
     "addCase": "Add test case",
     "removeCase": "Remove test case",
     "checks": "Check rules",
@@ -312,7 +312,8 @@
     "excluded": {
       "unavailable": "Provider not set up",
       "pass_rate_low": "Pass rate too low",
-      "new_failures": "Loses {{cases}} cases the current model passed",
+      "new_failures_one": "Loses {{count}} case the current model passed",
+      "new_failures_other": "Loses {{count}} cases the current model passed",
       "cost_unknown": "Cost unknown (never counted as 0)",
       "duration_unknown": "Run time unknown"
     }

@@ -17,6 +17,27 @@ for (const [path, messages] of Object.entries(files)) {
   (bundles[language] ??= {})[area] = messages;
 }
 
+/**
+ * French, Spanish, Italian and Portuguese have a plural category "many" (1,000,000, 2,000,000 …). i18next looks
+ * for "…_many" and, when it is missing, falls back to the English text instead of the same language's "…_other".
+ * The language files keep only "_one"/"_other"; "_many" is derived here from "_other" unless a file names it.
+ */
+export function addManyForms(messages: Messages): Messages {
+  for (const [key, value] of Object.entries(messages)) {
+    if (value && typeof value === "object") addManyForms(value as Messages);
+    else if (key.endsWith("_other")) {
+      const many = `${key.slice(0, -"_other".length)}_many`;
+      if (!(many in messages)) messages[many] = value;
+    }
+  }
+  return messages;
+}
+
+for (const [language, areas] of Object.entries(bundles)) {
+  if (!new Intl.PluralRules(language).resolvedOptions().pluralCategories.includes("many")) continue;
+  for (const messages of Object.values(areas)) addManyForms(messages);
+}
+
 export const resources: Resource = Object.fromEntries(
   Object.entries(bundles).map(([language, areas]) => [language, { translation: areas as ResourceLanguage }]),
 );

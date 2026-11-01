@@ -7,7 +7,7 @@
     "problems": "These points prevent the start. They are checked again after every change.",
     "import": "Loads an exported workflow file (.nodestro.json) as a new copy. Existing workflows stay unchanged.",
     "export": "Saves the workflow with all agent settings as a JSON file. Knowledge files, memory and your own tools are not included.",
-    "duplicate": "Creates a copy of the workflow; executions are not copied.",
+    "duplicate": "Creates a copy of the workflow; runs are not copied.",
     "start": "Saves the workflow and opens the start dialog. Locked while problems are open or a run is active.",
     "save": "Saves all changes (Ctrl+S). The workflow is also saved automatically before every start.",
     "addAgent": "Adds an empty agent to the right of the last node.",
@@ -47,7 +47,7 @@
     "outputFieldRequired": "Required fields must always be filled. Optional fields may be missing (null).",
     "effort": "How thoroughly the model works. Higher effort means more thinking, more tokens and higher costs, but often better results.",
     "thinking": "Adaptive: the model thinks when it helps. “Only between tool calls” exists only for Sonnet 5.5 up to effort “High”. Not all models support “Off”.",
-    "thinkingDisplay": "Whether and how the model's reasoning appears in the execution. Cannot be combined with thinking “Off” or “Only between tool calls”.",
+    "thinkingDisplay": "Whether and how the model's reasoning appears in the run. Cannot be combined with thinking “Off” or “Only between tool calls”.",
     "quality": "A second model (judge) checks the result against your criteria. If it fails, the agent revises its answer. Every check costs additional tokens.",
     "qualityCriterion": "A criterion with name and description. The judge rates each criterion separately as passed/failed with a reason.",
     "qualityRevisions": "How many times at most the agent may revise after a failed check (0–5).",
@@ -99,7 +99,7 @@
     "newFile": "Creates an empty file under /memories, e.g. customers/preferences.md. Agents find it on the next run."
   },
   "runs": {
-    "importTrace": "Opens an exported trace file (run_….json) for viewing. Nothing is run, there are no costs, and existing executions stay unchanged.",
+    "importTrace": "Opens an exported trace file (run_….json) for viewing. Nothing is run, there are no costs, and existing runs stay unchanged.",
     "exportTrace": "Saves the complete run as JSON: workflow, input, results, tool calls, errors, times, tokens and costs.",
     "imported": "This run was imported from a trace file. It is only displayed and does not count towards the usage of this installation.",
     "cancel": "Cancels the run. Running agents stop at the next step; tokens already used are charged.",

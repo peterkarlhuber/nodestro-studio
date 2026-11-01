@@ -50,11 +50,12 @@ Créez votre premier workflow en quelques minutes :
 ## L’interface {#oberflaeche}
 <!-- keywords: navigation, barre latérale, menu, thème, sombre, clair, mise en page -->
 
-La **barre latérale** à gauche divise Nodestro en trois zones :
+La **barre latérale** à gauche suit votre façon de travailler : créer, exécuter et vérifier, puis automatiser.
 
-- **Espace de travail :** *Workflows* (vos processus), *Agents* (modèles réutilisables), *Outils*, *Connaissances* et *Mémoire*.
-- **Observabilité :** *Exécutions* (toutes les exécutions en détail) et *Utilisation* (tokens et coûts dans le temps).
-- **Aide :** cette *Documentation*.
+- **Créer :** *Workflows* (vos processus), *Agents* (modèles réutilisables), *Outils*, *Connaissances* et *Mémoire*.
+- **Exécuter et vérifier :** *Exécutions* (toutes les exécutions en détail), *Validations* (décisions qu’attendent les exécutions) et *Utilisation* (tokens et coûts dans le temps).
+- **Automatiser et tester :** *Séries de tests*, *Exécutions par lots* et *Planifications*.
+- **Aide :** cette *Documentation* et la page *Bienvenue*.
 
 Les *Réglages* se trouvent en bas. En haut à droite, vous basculez entre le thème sombre et le thème clair ; le choix est enregistré dans le navigateur. Si le fournisseur du modèle par défaut n’est pas configuré, un avis y apparaît et mène directement aux réglages.
 

@@ -52,7 +52,9 @@
     "deleteText": "Alle veröffentlichten Versionen werden entfernt; Schlüssel verlieren den Zugriff. Die Läufe bleiben im Verlauf. Der Workflow selbst bleibt unverändert."
   },
   "check": {
-    "ok": "Bereit zum Veröffentlichen ({{warnings}} Warnungen).",
+    "ok_one": "Bereit zum Veröffentlichen ({{count}} Warnung).",
+    "ok_other": "Bereit zum Veröffentlichen ({{count}} Warnungen).",
+    "ready": "Bereit zum Veröffentlichen.",
     "blocked_one": "{{count}} Problem verhindert das Veröffentlichen.",
     "blocked_other": "{{count}} Probleme verhindern das Veröffentlichen.",
     "approvals_one": "{{count}} Freigabeschritt: Läufe warten dort auf eine Entscheidung.",
@@ -250,9 +252,9 @@
     "none": "Nicht beilegen"
   },
   "gate": {
-    "title": "Freigabe-Gate",
-    "intro": "Optional: Eine neue Version wird nur veröffentlicht, wenn ihre Testreihen sie geprüft haben. Ohne Gate bleibt alles wie bisher.",
-    "enable": "Freigabe-Gate einschalten",
+    "title": "Veröffentlichungsprüfung",
+    "intro": "Optional: Eine neue Version wird nur veröffentlicht, wenn ihre Testreihen sie geprüft haben. Ohne Veröffentlichungsprüfung bleibt alles wie bisher.",
+    "enable": "Veröffentlichungsprüfung einschalten",
     "enableHint": "Gilt für jede neue Version dieser API. Bereits veröffentlichte Versionen bleiben unverändert.",
     "suites": "Testreihen",
     "suitesHint": "Der letzte Testlauf jeder Testreihe muss genau die zu veröffentlichende Version mit den gespeicherten Modellen geprüft haben.",
@@ -260,10 +262,10 @@
     "passRateHint": "Ein Fall zählt, wenn sein Lauf erfolgreich war und alle Prüfungen bestanden hat.",
     "judgeScore": "Mindestwert der KI-Bewertung (%)",
     "judgeScoreHint": "Leer: KI-Bewertungen werden angezeigt, aber nicht verlangt.",
-    "save": "Gate speichern",
-    "passed": "Das Freigabe-Gate ist erfüllt.",
-    "blocked": "Das Freigabe-Gate blockiert diese Version. Pflichtprüfungen lassen sich nicht übergehen: Teste genau diese Version.",
-    "overridable": "Nicht alle Ergebnisse erreichen das Gate. Du kannst trotzdem veröffentlichen, wenn du eine Begründung angibst; sie wird mit der Version gespeichert.",
+    "save": "Prüfregeln speichern",
+    "passed": "Die Veröffentlichungsprüfung ist bestanden.",
+    "blocked": "Die Veröffentlichungsprüfung blockiert diese Version. Pflichtprüfungen lassen sich nicht übergehen: Teste genau diese Version.",
+    "overridable": "Nicht alle Ergebnisse erreichen die Schwellen der Veröffentlichungsprüfung. Du kannst trotzdem veröffentlichen, wenn du eine Begründung angibst; sie wird mit der Version gespeichert.",
     "kinds": {
       "critical": "Pflichtprüfungen",
       "deterministic": "Prüfergebnisse",
@@ -271,11 +273,12 @@
     },
     "probabilistic": "KI-Urteil, nicht garantiert",
     "probabilisticHint": "KI-Bewertungen können danebenliegen. Sie stehen getrennt von den festen Prüfungen.",
-    "reason": "Begründung für die Freigabe",
-    "reasonHint": "Mindestens {{count}} Zeichen. Wird mit der Version und im Verlauf gespeichert.",
+    "reason": "Begründung für die Veröffentlichung",
+    "reasonHint_one": "Mindestens {{count}} Zeichen. Wird mit der Version und im Verlauf gespeichert.",
+    "reasonHint_other": "Mindestens {{count}} Zeichen. Wird mit der Version und im Verlauf gespeichert.",
     "publishWithReason": "Version {{version}} mit Begründung veröffentlichen",
-    "releasePassed": "Gate erfüllt",
-    "releaseOverridden": "mit Begründung freigegeben",
+    "releasePassed": "Prüfung bestanden",
+    "releaseOverridden": "mit Begründung veröffentlicht",
     "items": {
       "suite_missing": "Testreihe nicht gefunden",
       "suite_untested": "noch nie getestet",
@@ -283,7 +286,7 @@
       "suite_outdated": "zuletzt wurde Version {{version}} getestet",
       "suite_changed": "Testreihe seit dem Test geändert",
       "tested": "diese Version getestet",
-      "pass_rate": "{{clean}} von {{cases}} Fällen bestanden ({{value}}, verlangt {{threshold}})",
+      "pass_rate": "Bestandene Fälle: {{clean}} von {{cases}} ({{value}}, verlangt {{threshold}})",
       "judge_score": "KI-Bewertung {{value}} (verlangt {{threshold}})",
       "judge_missing": "keine KI-Bewertung im Testlauf (verlangt {{threshold}})"
     }

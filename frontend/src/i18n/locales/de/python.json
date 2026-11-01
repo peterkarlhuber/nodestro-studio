@@ -51,7 +51,8 @@
   },
   "install": {
     "starting": "Installation startet …",
-    "done": "{{count}} Pakete sind installiert.",
+    "done_one": "{{count}} Paket ist installiert.",
+    "done_other": "{{count}} Pakete sind installiert.",
     "failed": "Die Installation ist fehlgeschlagen; die bisherige Umgebung bleibt unverändert.",
     "log": "Protokoll der Installation",
     "retry": "Erneut installieren"
@@ -73,7 +74,8 @@
     "install": "Installieren",
     "check": "Versionen ansehen",
     "history": "Änderungsverlauf",
-    "unused": "Kein Tool braucht die {{count}} freigegebenen Pakete mehr. Du kannst die Umgebung in den Einstellungen unter „Python-Umgebungen“ entfernen.",
+    "unused_one": "Kein Tool braucht das freigegebene Paket mehr. Du kannst die Umgebung in den Einstellungen unter „Python-Umgebungen“ entfernen.",
+    "unused_other": "Kein Tool braucht die {{count}} freigegebenen Pakete mehr. Du kannst die Umgebung in den Einstellungen unter „Python-Umgebungen“ entfernen.",
     "mcpTitle": "Pakete des lokalen Servers"
   },
   "change": {
@@ -104,7 +106,8 @@
     "forget": "Verwaiste Umgebung und Definition löschen",
     "removed": "Die Umgebung wurde entfernt.",
     "cleanup": "Verwaiste bereinigen ({{count}})",
-    "cleaned": "{{count}} verwaiste Umgebungen entfernt, Zwischenspeicher aufgeräumt.",
+    "cleaned_one": "{{count}} verwaiste Umgebung entfernt, Zwischenspeicher aufgeräumt.",
+    "cleaned_other": "{{count}} verwaiste Umgebungen entfernt, Zwischenspeicher aufgeräumt.",
     "none": "Noch keine Python-Umgebungen.",
     "ownerMcp": "Lokaler MCP-Server {{name}}"
   }

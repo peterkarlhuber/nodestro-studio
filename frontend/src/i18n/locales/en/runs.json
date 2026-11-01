@@ -40,7 +40,7 @@
     "cost": "Estimated cost"
   },
   "panel": {
-    "title": "Execution overview",
+    "title": "Run overview",
     "notStarted": "Not started yet",
     "overall": "Overall result",
     "running": "The workflow is running. Choose an agent on the left to watch it live.",

@@ -51,7 +51,8 @@
   },
   "install": {
     "starting": "Démarrage de l’installation …",
-    "done": "{{count}} paquets sont installés.",
+    "done_one": "{{count}} paquet est installé.",
+    "done_other": "{{count}} paquets sont installés.",
     "failed": "L’installation a échoué ; l’environnement précédent reste inchangé.",
     "log": "Journal d’installation",
     "retry": "Réinstaller"
@@ -73,7 +74,8 @@
     "install": "Installer",
     "check": "Voir les versions",
     "history": "Historique des modifications",
-    "unused": "Plus aucun outil n’a besoin des {{count}} paquets approuvés. Vous pouvez supprimer l’environnement dans Réglages, section « Environnements Python ».",
+    "unused_one": "Plus aucun outil n’a besoin du paquet approuvé. Vous pouvez supprimer l’environnement dans Réglages, section « Environnements Python ».",
+    "unused_other": "Plus aucun outil n’a besoin des {{count}} paquets approuvés. Vous pouvez supprimer l’environnement dans Réglages, section « Environnements Python ».",
     "mcpTitle": "Paquets du serveur local"
   },
   "change": {
@@ -104,7 +106,8 @@
     "forget": "Supprimer l’environnement orphelin et sa définition",
     "removed": "L’environnement a été supprimé.",
     "cleanup": "Nettoyer les orphelins ({{count}})",
-    "cleaned": "{{count}} environnements orphelins supprimés, cache nettoyé.",
+    "cleaned_one": "{{count}} environnement orphelin supprimé, cache nettoyé.",
+    "cleaned_other": "{{count}} environnements orphelins supprimés, cache nettoyé.",
     "none": "Aucun environnement Python pour l’instant.",
     "ownerMcp": "Serveur MCP local {{name}}"
   }

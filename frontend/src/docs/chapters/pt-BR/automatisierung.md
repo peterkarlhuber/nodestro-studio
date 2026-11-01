@@ -68,7 +68,7 @@ Assim você verifica, depois de cada mudança em agentes, prompts ou ferramentas
 ## Comparar modelos {#modelle-vergleichen}
 <!-- keywords: comparar modelos, outro modelo, mais barato, mais rápido, escolha de modelo, variante -->
 
-Se um modelo mais barato ou mais forte basta para um agente, você verifica com a mesma série de testes. Na caixa de início, ative **Testar outros modelos** e escolha outro modelo para alguns agentes. Os casos de teste e a avaliação por IA continuam iguais, e o workflow salvo não muda.
+Se um modelo mais barato ou mais forte basta para um agente, você verifica com a mesma série de testes. Na caixa de início, ative **Testar outros modelos** e escolha outro modelo para alguns agentes. Os casos de teste e a avaliação por IA continuam iguais, e o fluxo de trabalho salvo não muda.
 
 Uma execução assim precisa de um **limite de custo** em [Limites](/docs/automatisierung#grenzen), porque as execuções anteriores usaram outros modelos e não dizem nada sobre o custo. Na lista ela leva o rótulo **Comparação de modelos** e cita os modelos substituídos. Depois compare-a com uma execução da versão salva. Ela não conta como resultado de teste dessa versão, porque testou uma variante. Se um modelo servir, defina-o no próprio agente.
 
@@ -82,9 +82,9 @@ Abaixo das execuções de teste de uma série, **Escolha de modelo por mediçõe
 - **Não perder nenhum caso:** ligado, sai um modelo que reprova um caso que o modelo atual aprovou.
 - **Custos desconhecidos** nunca contam como 0. Um modelo sem custos conhecidos não pode vencer com o objetivo *menor custo*.
 
-Conta como medição apenas a execução concluída mais recente por modelo com o mesmo estado do workflow (exceto os modelos; posições e nomes não contam), os mesmos casos e a mesma avaliação de IA, os mesmos modelos em todos os outros agentes e um resultado para cada caso. Se um prompt ou um caso mudar, execute os testes de novo. A lista informa quais execuções não foram usadas e por quê. Sem medição adequada, o modelo atual continua.
+Conta como medição apenas a execução concluída mais recente por modelo com o mesmo estado do fluxo de trabalho (exceto os modelos; posições e nomes não contam), os mesmos casos e a mesma avaliação de IA, os mesmos modelos em todos os outros agentes e um resultado para cada caso. Se um prompt ou um caso mudar, execute os testes de novo. A lista informa quais execuções não foram usadas e por quê. Sem medição adequada, o modelo atual continua.
 
-*Usar* coloca o modelo recomendado no agente e salva o workflow como nova [versão](/docs/workflows#versionen). Antes disso nada muda. A avaliação de IA é exibida, mas só conta por meio da aprovação dos casos.
+*Usar* coloca o modelo recomendado no agente e salva o fluxo de trabalho como nova [versão](/docs/workflows#versionen). Antes disso nada muda. A avaliação de IA é exibida, mas só conta por meio da aprovação dos casos.
 
 ## Agendamentos {#zeitplaene}
 <!-- keywords: agendamento, schedule, cron, regular, diário, semanal, mensal, a cada hora, fuso horário, perdido -->

@@ -108,7 +108,7 @@
     "editTitle": "{{name}} bearbeiten",
     "empty": "Noch kein Dienst verbunden",
     "emptyText": "Verbinde einen MCP-Server über seine Adresse. Danach testest du die Verbindung und gibst seine Tools einzeln frei.",
-    "counts": "{{approved}} von {{total}} Tools freigegeben · {{pending}} warten auf Prüfung",
+    "counts": "Freigegebene Tools: {{approved}} von {{total}} · warten auf Prüfung: {{pending}}",
     "unavailable": "MCP ist in dieser Installation nicht verfügbar (benötigt Python 3.11 oder neuer). Dienste lassen sich einrichten, aber nicht erreichen.",
     "endpointList": "Der Betreiber erlaubt nur diese Adressen: {{list}}",
     "endpointListEmpty": "Der Betreiber hat keine Adressen für MCP freigegeben (NODESTRO_MCP_ENDPOINTS). Dienste können hier nicht verbunden werden.",

@@ -132,7 +132,7 @@
     "outputs": "Resultados",
     "constraints": "Restrições",
     "facts": "Estrutura",
-    "factsValue": "{{agents}} agentes, {{connections}} conexões · {{fixes}} correções automáticas, {{repairs}} correções com IA",
+    "factsValue": "Agentes: {{agents}} · conexões: {{connections}} · correções automáticas: {{fixes}} · correções com IA: {{repairs}}",
     "cost": "Custo",
     "costValue": "{{cost}} por {{requests}} solicitações à IA",
     "assumptions": "Suposições",

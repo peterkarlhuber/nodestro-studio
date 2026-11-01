@@ -28,7 +28,7 @@ Uma chave de versões anteriores (na época só para a Anthropic) vira automatic
 ## Modelo dos assistentes e modelo padrão {#modelle}
 <!-- keywords: modelo padrão, modelo dos assistentes, default model, novos agentes -->
 
-- **Modelo padrão para novos agentes:** novos agentes vazios começam com este provedor e modelo (pela paleta, por *Adicionar agente*, em novos workflows e como modelo vazio). Nos rascunhos por IA, ele serve de substituto caso o arquiteto sugira um modelo não permitido. Agentes existentes não mudam.
+- **Modelo padrão para novos agentes:** novos agentes vazios começam com este provedor e modelo (pela paleta, por *Adicionar agente*, em novos fluxos de trabalho e como modelo vazio). Nos rascunhos por IA, ele serve de substituto caso o arquiteto sugira um modelo não permitido. Agentes existentes não mudam.
 - **Modelo dos assistentes:** este modelo cria agentes a partir da sua descrição, escreve ferramentas como agente de código, sugere estruturas de memória e responde suas perguntas como [Nodestro Assistant](/docs/assistent). Um modelo forte (padrão: Claude Opus 5.5 da Anthropic) gera sugestões melhores. Os rascunhos por IA só sugerem modelos de provedores configurados.
 
 Os dois campos são compostos por **provedor** e **modelo**. Escolha o modelo da lista ou digite qualquer id de modelo do provedor, por exemplo `gpt-5.5` na OpenAI ou `llama3.1:8b` no Ollama. Ele é salvo como `provedor:modelo` (por exemplo `openai:gpt-5.5`); valores antigos sem provedor, como `claude-sonnet-5-5`, contam como modelos da Anthropic.
@@ -115,7 +115,7 @@ O Nodestro inicia em `http://localhost:8000` e abre o navegador. Opções do com
 
 Para encerrar, use **Ctrl+C**. Execuções em andamento são canceladas.
 
-> **Segurança:** o Nodestro ainda não tem gerenciamento de usuários, por isso responde só a este computador. `--host 0.0.0.0`, outros endereços de rede ou nomes de rede em `NODESTRO_ALLOWED_HOSTS` interrompem a inicialização, e o Nodestro não pode ficar atrás de um proxy reverso. Para que outros dispositivos usem um workflow, publique-o como API: as APIs publicadas usam chaves de API e têm seu próprio acesso à rede (veja *API e exportação*).
+> **Segurança:** o Nodestro ainda não tem gerenciamento de usuários, por isso responde só a este computador. `--host 0.0.0.0`, outros endereços de rede ou nomes de rede em `NODESTRO_ALLOWED_HOSTS` interrompem a inicialização, e o Nodestro não pode ficar atrás de um proxy reverso. Para que outros dispositivos usem um fluxo de trabalho, publique-o como API: as APIs publicadas usam chaves de API e têm seu próprio acesso à rede (veja *API e exportação*).
 
 ## Atalhos de teclado {#tastenkuerzel}
 <!-- keywords: atalhos de teclado, shortcuts, teclado, keyboard, acessibilidade -->

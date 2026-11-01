@@ -18,7 +18,13 @@ const shots = process.argv[3] ?? process.env.NODESTRO_SCREENSHOTS;
 if (shots) mkdirSync(shots, { recursive: true });
 
 const LANGUAGES = ["de", "en", "es", "fr", "pt-BR", "it"];
-const PAGES = ["/", "/workflows/examples", "/workflows/examples?template=financial-analysis", "/agents", "/tools", "/tools?tab=write", "/knowledge", "/memory", "/executions", "/usage", "/docs", "/settings"];
+const PAGES = [
+  "/", "/workflows/examples", "/workflows/examples?template=financial-analysis", "/agents", "/tools", "/tools?tab=write", "/knowledge",
+  "/memory", "/executions", "/approvals", "/batches", "/tests", "/schedules", "/usage", "/docs", "/settings",
+];
+// Pages named in the navigation: the browser tab names them too ("Approvals · Nodestro Studio").
+const TITLED = { "/agents": "agents", "/tools": "tools", "/knowledge": "knowledge", "/memory": "memory", "/executions": "executions",
+  "/approvals": "approvals", "/batches": "batches", "/tests": "tests", "/schedules": "schedules", "/usage": "usage", "/settings": "settings" };
 const VIEWPORTS = [
   { width: 1500, height: 940 },
   { width: 1100, height: 800 },
@@ -27,6 +33,9 @@ const VIEWPORTS = [
 const localeDir = join(dirname(fileURLToPath(import.meta.url)), "../src/i18n/locales");
 const nav = Object.fromEntries(
   LANGUAGES.map((language) => [language, JSON.parse(readFileSync(join(localeDir, language, "nav.json"), "utf8"))]),
+);
+const errors_ = Object.fromEntries(
+  LANGUAGES.map((language) => [language, JSON.parse(readFileSync(join(localeDir, language, "errors.json"), "utf8"))]),
 );
 const editor = Object.fromEntries(
   LANGUAGES.map((language) => [language, JSON.parse(readFileSync(join(localeDir, language, "editor.json"), "utf8"))]),
@@ -138,6 +147,28 @@ try {
     body: JSON.stringify({ language: "de" }),
   });
   check(copy.status === 201, "An example can be copied without an API key");
+  const copied = copy.status === 201 ? await copy.json() : null;
+
+  // A run detail page needs a run: import a small trace of the copied workflow (nothing runs, nothing is billed).
+  let runPath = null;
+  if (copied) {
+    const trace = {
+      id: "run_e2e_i18n",
+      workflow_id: copied.id,
+      workflow_name: copied.name,
+      workflow: copied,
+      nodes: {},
+      status: "failed",
+      error: "This run is already queued or executing",
+      error_code: "run.already_queued",
+      created_at: "2026-01-05T10:00:00Z",
+      started_at: "2026-01-05T10:00:01Z",
+      finished_at: "2026-01-05T10:00:03Z",
+    };
+    const imported = await fetch(`${base}/api/runs/import`, { method: "POST", body: JSON.stringify(trace) });
+    check(imported.ok, "A trace can be imported for the run detail page");
+    if (imported.ok) runPath = `/executions/${(await imported.json()).run.id}`;
+  }
 
   // Long texts: every page in every language, at two window widths.
   for (const language of LANGUAGES) {
@@ -145,13 +176,22 @@ try {
     await page.addInitScript((value) => localStorage.setItem("nodestro-language", value), language);
     for (const viewport of VIEWPORTS) {
       await page.setViewportSize(viewport);
-      for (const path of PAGES) {
+      for (const path of runPath ? [...PAGES, runPath] : PAGES) {
         await page.goto(base + path);
         await page.locator(".sidebar").waitFor();
         await page.locator("main h1, .page h1, h1").first().waitFor();
         await page.waitForTimeout(250);
         const problems = await overflow(page);
         check(problems.length === 0, `${language} ${viewport.width}px ${path}${problems.length ? `\n        ${problems.join("\n        ")}` : ""}`);
+        if (viewport === VIEWPORTS[0] && TITLED[path]) {
+          const title = await page.title();
+          check(title === `${nav[language][TITLED[path]]} · Nodestro Studio`, `${language} ${path}: the browser tab says "${title}"`);
+        }
+        if (viewport === VIEWPORTS[0] && path === runPath) {
+          // The coded error of the run reads in the language, not as the generic "step failed" sentence.
+          const sentence = errors_[language].run.already_queued;
+          check(await page.getByText(sentence, { exact: false }).first().isVisible(), `${language}: the run's error has its own sentence`);
+        }
         if (shots && viewport === VIEWPORTS[0]) {
           await page.screenshot({ path: join(shots, `${language}-${path.replace(/[/?=]+/g, "_") || "_"}.png`) });
         }

@@ -1,6 +1,6 @@
 {
-  "workflow": "Workflow",
-  "pickWorkflow": "Escolher workflow",
+  "workflow": "Fluxo de trabalho",
+  "pickWorkflow": "Escolher fluxo de trabalho",
   "openRun": "Abrir execução",
   "showResult": "Mostrar resultado",
   "columns": {
@@ -24,15 +24,15 @@
   },
   "estimate": {
     "title": "Custo estimado",
-    "total_one": "{{runs}} execuções, cerca de {{total}} ({{perRun}} por execução, com base em {{count}} execução anterior).",
-    "total_other": "{{runs}} execuções, cerca de {{total}} ({{perRun}} por execução, com base em {{count}} execuções anteriores).",
-    "unknown": "{{runs}} execuções. Ainda não há estimativa porque não existe execução bem-sucedida.",
+    "total_one": "Execuções: {{runs}}, cerca de {{total}} ({{perRun}} por execução, com base em {{count}} execução anterior).",
+    "total_other": "Execuções: {{runs}}, cerca de {{total}} ({{perRun}} por execução, com base em {{count}} execuções anteriores).",
+    "unknown": "Execuções: {{runs}}. Ainda não há estimativa porque não existe execução bem-sucedida.",
     "max": "No máximo {{max}} (orçamento por execução × quantidade).",
-    "approvals_one": "O workflow tem {{count}} etapa de aprovação. Cada execução aguarda ali uma decisão.",
-    "approvals_other": "O workflow tem {{count}} etapas de aprovação. Cada execução aguarda ali uma decisão."
+    "approvals_one": "O fluxo de trabalho tem {{count}} etapa de aprovação. Cada execução aguarda ali uma decisão.",
+    "approvals_other": "O fluxo de trabalho tem {{count}} etapas de aprovação. Cada execução aguarda ali uma decisão."
   },
   "external": {
-    "text": "O workflow usa ferramentas próprias que podem agir fora do Nodestro: {{tools}}.",
+    "text": "O fluxo de trabalho usa ferramentas próprias que podem agir fora do Nodestro: {{tools}}.",
     "confirm": "Confirmo que essas ferramentas podem ser chamadas repetidamente"
   },
   "batchStatus": {
@@ -62,7 +62,7 @@
     "skipped": "Ignorado"
   },
   "batch": {
-    "description": "Um workflow sobre muitas entradas: linhas de CSV, Excel (XLSX) ou JSON, com limites de custo e de falhas.",
+    "description": "Um fluxo de trabalho sobre muitas entradas: linhas de CSV, Excel (XLSX) ou JSON, com limites de custo e de falhas.",
     "new": "Nova execução em lote",
     "intro": "Envie uma tabela, associe as colunas ao formulário de entrada e confira o custo antes de qualquer início.",
     "name": "Nome (opcional)",
@@ -98,10 +98,10 @@
     "pausedItems_other": "{{count}} execuções aguardam uma aprovação e não ocupam vaga."
   },
   "benchmark": {
-    "description": "Casos de teste fixos para um workflow: regras verificam os resultados e, opcionalmente, uma IA os avalia. Assim você compara versões.",
+    "description": "Casos de teste fixos para um fluxo de trabalho: regras verificam os resultados e, opcionalmente, uma IA os avalia. Assim você compara versões.",
     "new": "Nova série de testes",
     "empty": "Ainda não há séries de testes",
-    "emptyText": "Crie casos de teste com entradas e propriedades esperadas e verifique após cada mudança se o workflow melhorou ou piorou.",
+    "emptyText": "Crie casos de teste com entradas e propriedades esperadas e verifique após cada mudança se o fluxo de trabalho melhorou ou piorou.",
     "unnamed": "Série de testes sem nome",
     "delete": "Excluir série de testes",
     "cases": "Casos de teste",
@@ -109,7 +109,7 @@
     "casesTitle_other": "{{count}} casos de teste",
     "case": "Caso de teste",
     "caseN": "Caso de teste {{n}}",
-    "caseSummary": "{{checks}} verificações · avaliação por IA {{judge}}",
+    "caseSummary": "Verificações: {{checks}} · avaliação por IA {{judge}}",
     "addCase": "Adicionar caso de teste",
     "removeCase": "Remover caso de teste",
     "checks": "Regras de verificação",
@@ -131,7 +131,7 @@
     "startTitle": "Executar a série de testes “{{name}}”",
     "start_one": "Executar {{count}} caso de teste",
     "start_other": "Executar {{count}} casos de teste",
-    "version": "Versão do workflow",
+    "version": "Versão do fluxo de trabalho",
     "versionHint": "Assim você testa uma versão antiga contra a atual.",
     "currentVersion": "Estado atual",
     "judge": "Avaliação por IA",
@@ -161,7 +161,7 @@
     },
     "ownJudge": "Modelo próprio",
     "compareModels": "Testar outros modelos",
-    "compareModelsHint": "Os mesmos casos de teste e a mesma avaliação por IA, mas alguns agentes com outro modelo. O workflow salvo não muda.",
+    "compareModelsHint": "Os mesmos casos de teste e a mesma avaliação por IA, mas alguns agentes com outro modelo. O fluxo de trabalho salvo não muda.",
     "agentModel": "Modelo para {{agent}}",
     "savedModel": "Salvo: {{model}}",
     "modelsChanged_one": "{{count}} agente usa outro modelo.",
@@ -194,11 +194,11 @@
     }
   },
   "schedule": {
-    "description": "Inicia workflows regularmente enquanto o Nodestro está rodando. Todo agendamento fica desligado até você ligá-lo.",
+    "description": "Inicia fluxos de trabalho regularmente enquanto o Nodestro está rodando. Todo agendamento fica desligado até você ligá-lo.",
     "new": "Novo agendamento",
     "edit": "Editar agendamento",
     "delete": "Excluir agendamento",
-    "intro": "Quando e com o que o workflow começa. Ao ligar, tudo é verificado (orçamento, entradas, ferramentas).",
+    "intro": "Quando e com o que o fluxo de trabalho começa. Ao ligar, tudo é verificado (orçamento, entradas, ferramentas).",
     "kind": "Ritmo",
     "kinds": {
       "once": "Uma vez",
@@ -233,7 +233,7 @@
     "saved": "Agendamento salvo.",
     "savedOff": "Salvo. A verificação falhou, por isso o agendamento está desligado.",
     "empty": "Ainda não há agendamentos",
-    "emptyText": "Um agendamento inicia um workflow, p. ex., toda segunda às 8h com entradas fixas.",
+    "emptyText": "Um agendamento inicia um fluxo de trabalho, p. ex., toda segunda às 8h com entradas fixas.",
     "active": "Ativo",
     "toggle": "Ligar ou desligar o agendamento {{name}}",
     "rhythmColumn": "Ritmo",
@@ -279,7 +279,7 @@
       "no_measurement": "Ainda não há medição adequada. Execute um teste e uma comparação de modelos; até lá, {{current}} continua."
     },
     "apply": "Usar {{model}}",
-    "applied": "Modelo aplicado; o workflow foi salvo como nova versão.",
+    "applied": "Modelo aplicado; o fluxo de trabalho foi salvo como nova versão.",
     "versionNote": "Modelo pela série de testes: {{model}}",
     "current": "atual",
     "recommended": "Recomendado",
@@ -300,8 +300,8 @@
     "skipped": {
       "older_record_one": "{{count}} execução antiga sem dados de modelos",
       "older_record_other": "{{count}} execuções antigas sem dados de modelos",
-      "workflow_changed_one": "{{count}} execução de outro estado do workflow",
-      "workflow_changed_other": "{{count}} execuções de outro estado do workflow",
+      "workflow_changed_one": "{{count}} execução de outro estado do fluxo de trabalho",
+      "workflow_changed_other": "{{count}} execuções de outro estado do fluxo de trabalho",
       "cases_changed_one": "{{count}} execução com outros casos de teste",
       "cases_changed_other": "{{count}} execuções com outros casos de teste",
       "other_agents_differ_one": "{{count}} execução com outros modelos em outros agentes",
@@ -312,7 +312,8 @@
     "excluded": {
       "unavailable": "Provedor não configurado",
       "pass_rate_low": "Taxa de aprovação baixa demais",
-      "new_failures": "Perde {{cases}} casos que o modelo atual aprovou",
+      "new_failures_one": "Perde {{count}} caso que o modelo atual aprovou",
+      "new_failures_other": "Perde {{count}} casos que o modelo atual aprovou",
       "cost_unknown": "Custo desconhecido (nunca conta como 0)",
       "duration_unknown": "Duração desconhecida"
     }

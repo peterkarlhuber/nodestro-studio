@@ -33,22 +33,22 @@ Beide Wege laufen Schritt für Schritt wie in Nodestro: dieselben Agenten, Tools
 - den Unterworkflows in ihrer aktuellen Fassung (siehe [Unterworkflows](/docs/verzweigungen#unterworkflow)),
 - dem Eingabeformular, aus dem Nodestro das Schema der Anfrage erzeugt.
 
-Vorher prüft Nodestro den Workflow. Fehler verhindern das Veröffentlichen, Warnungen (etwa fehlende Kostengrenze oder Freigabeschritte) zeigt der Dialog an. Ungespeicherte Änderungen werden nicht veröffentlicht: Speichere zuerst. Darunter steht das **Testergebnis** der Version aus jeder [Testreihe](/docs/automatisierung#testreihen) des Workflows: *ungetestet*, *n von m bestanden* oder *veraltet*, wenn zuletzt eine andere Version getestet wurde oder sich die Testreihe seitdem geändert hat. Ohne [Freigabe-Gate](#freigabe-gate) informiert das Ergebnis nur; es verhindert das Veröffentlichen nicht.
+Vorher prüft Nodestro den Workflow. Fehler verhindern das Veröffentlichen, Warnungen (etwa fehlende Kostengrenze oder Freigabeschritte) zeigt der Dialog an. Ungespeicherte Änderungen werden nicht veröffentlicht: Speichere zuerst. Darunter steht das **Testergebnis** der Version aus jeder [Testreihe](/docs/automatisierung#testreihen) des Workflows: *ungetestet*, *n von m bestanden* oder *veraltet*, wenn zuletzt eine andere Version getestet wurde oder sich die Testreihe seitdem geändert hat. Ohne [Veröffentlichungsprüfung](#freigabe-gate) informiert das Ergebnis nur; es verhindert das Veröffentlichen nicht.
 
 Jede Veröffentlichung bekommt eine fortlaufende Nummer und optional eine Notiz. Spätere Änderungen im Editor ändern eine veröffentlichte Version nie. Sie gelangen erst mit dem nächsten Veröffentlichen in die API.
 
-## Freigabe-Gate {#freigabe-gate}
-<!-- keywords: freigabe-gate, gate, release gate, qualität, testreihe, pflicht, begründung, override, freigeben, ki-bewertung -->
+## Veröffentlichungsprüfung {#freigabe-gate}
+<!-- keywords: veröffentlichungsprüfung, freigabe-gate, gate, release gate, qualität, testreihe, pflicht, begründung, override, freigeben, ki-bewertung -->
 
-Mit dem **Freigabe-Gate** veröffentlichst du eine neue Version nur, wenn ihre [Testreihen](/docs/automatisierung#testreihen) sie geprüft haben. Das Gate ist freiwillig und gilt je API. Du schaltest es nach dem ersten Veröffentlichen unter **Limits → Freigabe-Gate** ein: Wähle die Testreihen, den Mindestanteil bestandener Fälle und optional einen Mindestwert der KI-Bewertung. Bereits veröffentlichte Versionen ändern sich nicht.
+Mit der **Veröffentlichungsprüfung** veröffentlichst du eine neue Version nur, wenn ihre [Testreihen](/docs/automatisierung#testreihen) sie geprüft haben. Sie ist freiwillig und gilt je API. Du schaltest sie nach dem ersten Veröffentlichen unter **Limits → Veröffentlichungsprüfung** ein: Wähle die Testreihen, den Mindestanteil bestandener Fälle und optional einen Mindestwert der KI-Bewertung. Bereits veröffentlichte Versionen ändern sich nicht.
 
 Vor dem Veröffentlichen zeigt der Dialog das Ergebnis in drei getrennten Teilen:
 
-- **Pflichtprüfungen:** Der letzte Testlauf jeder Testreihe hat genau diese Version mit den gespeicherten Modellen geprüft, und die Testreihe hat sich seitdem nicht geändert. Fehlt das, blockiert das Gate. Pflichtprüfungen lassen sich weder im Dialog noch über die API übergehen: Teste die Version.
+- **Pflichtprüfungen:** Der letzte Testlauf jeder Testreihe hat genau diese Version mit den gespeicherten Modellen geprüft, und die Testreihe hat sich seitdem nicht geändert. Fehlt das, blockiert die Prüfung. Pflichtprüfungen lassen sich weder im Dialog noch über die API übergehen: Teste die Version.
 - **Prüfergebnisse:** der Anteil der Fälle, deren Lauf erfolgreich war und deren Prüfungen alle bestanden haben.
 - **KI-Bewertungen:** der Mittelwert der [KI-Bewertung](/docs/automatisierung#testreihen). Er ist als *KI-Urteil, nicht garantiert* markiert und wird nie mit den festen Prüfungen verrechnet.
 
-Erreichen Prüfergebnisse oder KI-Bewertungen das Gate nicht, kannst du trotzdem veröffentlichen, wenn du eine **Begründung** angibst (mindestens 10 Zeichen). Die Begründung, wer sie gegeben hat und welche Punkte fehlten, werden mit der Version und im Verlauf der API gespeichert. Die Liste **Versionen** zeigt *Gate erfüllt* oder *mit Begründung freigegeben*. Auf einem Server dürfen nur die Rollen Owner und Admin veröffentlichen und damit eine Begründung abgeben.
+Erreichen Prüfergebnisse oder KI-Bewertungen die Schwellen nicht, kannst du trotzdem veröffentlichen, wenn du eine **Begründung** angibst (mindestens 10 Zeichen). Die Begründung, wer sie gegeben hat und welche Punkte fehlten, werden mit der Version und im Verlauf der API gespeichert. Die Liste **Versionen** zeigt *Prüfung bestanden* oder *mit Begründung veröffentlicht*. Auf einem Server dürfen nur die Rollen Owner und Admin veröffentlichen und damit eine Begründung abgeben.
 
 ## Versionen und Zurückrollen {#versionen}
 <!-- keywords: version, versionen, rollback, zurückrollen, aktiv, aktive version, unveränderlich, release -->

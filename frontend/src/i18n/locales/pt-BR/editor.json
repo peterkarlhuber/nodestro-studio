@@ -36,6 +36,10 @@
     "branchPort": "Saída do ramo {{name}}",
     "orchestrator": "Orquestrador"
   },
+  "defaults": {
+    "systemPrompt": "Você é um assistente prestativo.",
+    "outputName": "Resultado"
+  },
   "canvas": {
     "unsaved": "Alterações não salvas",
     "agents_one": "{{count}} agente",
@@ -64,7 +68,7 @@
     "flow": "Controlar o fluxo",
     "conditionHint": "Ramifica por regras, sem solicitação à IA",
     "approvalHint": "Pausa para uma revisão humana",
-    "subworkflowHint": "Executa outro workflow como uma etapa",
+    "subworkflowHint": "Executa outro fluxo de trabalho como uma etapa",
     "teams": "Equipes",
     "teamDelivers": "entrega {{fields}}",
     "orchestratorHint": "Um modelo de IA distribui a tarefa entre equipes"
@@ -114,7 +118,7 @@
     "cost": "Custo do rascunho: {{cost}}.",
     "role": "Papel",
     "limits": "Limites",
-    "limitsValue": "{{tokens}} tokens · {{rounds}} rodadas de ferramentas",
+    "limitsValue": "Máx. de tokens: {{tokens}} · rodadas de ferramentas: {{rounds}}",
     "missingTools": "O arquiteto precisaria também destas ferramentas:",
     "missingToolsHint": "Você pode pedir à IA que as crie na <a>biblioteca de ferramentas</a>."
   },
@@ -175,8 +179,8 @@
   "subworkflow": {
     "latest": "Versão mais recente",
     "versionN": "Versão {{n}}",
-    "none": "Nenhum workflow escolhido",
-    "missing": "Workflow ausente"
+    "none": "Nenhum fluxo de trabalho escolhido",
+    "missing": "Fluxo de trabalho ausente"
   },
   "panels": {
     "inspector": "Propriedades",

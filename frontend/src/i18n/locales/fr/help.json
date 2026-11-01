@@ -80,7 +80,7 @@
     "approve": "Les outils validés peuvent être utilisés par tous les agents. Vérifiez d’abord que le code et les tests font ce que vous attendez. Sans décision, une demande est refusée au bout d’une heure.",
     "sandbox": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro, mais de façon isolée, avec des limites de temps et de mémoire.",
     "drafts": "Outils rédigés par l’architecte de workflows. Testez-les et approuvez-les ici, ou refusez-les.",
-    "services": "Services externes via MCP : tu connectes un serveur, testes la connexion et approuves chaque outil après l'avoir examiné. Si le service modifie un outil, celui-ci est bloqué jusqu'à ce que tu examines la modification.",
+    "services": "Services externes via MCP : vous connectez un serveur, testez la connexion et approuvez chaque outil après l'avoir examiné. Si le service modifie un outil, celui-ci est bloqué jusqu'à ce que vous examiniez la modification.",
     "callApproval": "Une personne décide de chaque appel de cet outil, avec les arguments exacts. Sans décision dans le délai, l’appel compte comme refusé.",
     "servicesLocal": "Un serveur MCP local s'exécute dans un conteneur isolé. Ses paquets sont vérifiés et approuvés comme les bibliothèques d'un outil.",
     "servicesOAuth": "Certains services exigent une connexion. Nodestro ouvre leur page de connexion et conserve l'accès chiffré."
@@ -227,7 +227,7 @@
     "scheduleTimeZone": "Les horaires valent dans ce fuseau horaire, heure d’été comprise.",
     "estimate": "Estimation d’après les dernières exécutions réussies de ce workflow. Le maximum découle du budget par exécution.",
     "external": "Des outils personnels peuvent p. ex. envoyer des messages. Avec de nombreuses exécutions, cela arrive aussi souvent.",
-    "caseFromRun": "Transforme l'entrée de cette exécution échouée en cas de test, avec identifiants et données personnelles remplacés. Rien n'est enregistré avant ta confirmation.",
+    "caseFromRun": "Transforme l'entrée de cette exécution échouée en cas de test, avec identifiants et données personnelles remplacés. Rien n'est enregistré avant votre confirmation.",
     "modelChoice": "La recommandation n’utilise que des exécutions de test mesurées de la même série, avec le même état du workflow (hors modèles) et les mêmes cas. Vous choisissez l’objectif et le taux minimal ; un coût inconnu ne compte jamais comme 0. Seul *Utiliser* modifie l’agent et enregistre une nouvelle version."
   },
   "publish": {

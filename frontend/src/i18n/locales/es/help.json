@@ -138,14 +138,14 @@
     "global": "Busca en flujos de trabajo, agentes, herramientas, conocimiento y documentación (Ctrl+K)."
   },
   "library": {
-    "copy": "Crea un workflow propio e independiente en el idioma elegido y lo abre en el editor. La plantilla no cambia y no se llama a ningún modelo.",
+    "copy": "Crea un flujo de trabajo propio e independiente en el idioma elegido y lo abre en el editor. La plantilla no cambia y no se llama a ningún modelo.",
     "language": "El idioma en que se crean los nombres, los prompts y la tarea de prueba de la copia. Por defecto es el idioma de la interfaz; una copia guardada no cambia después con él.",
     "sensitive": "Finanzas, derecho, RR. HH. o administración: los agentes señalan las incertidumbres, pero no sustituyen el asesoramiento profesional. Una persona cualificada debe revisar los resultados.",
     "synthetic": "Todos los datos de prueba son inventados y están marcados como sintéticos. Sustitúyelos por tus propios datos en el nodo de inicio.",
     "sequential": "Los agentes trabajan uno tras otro; cada uno se basa en el resultado del anterior.",
     "parallel": "Varios agentes trabajan a la vez sobre la misma entrada; otro agente reúne sus resultados.",
-    "branching": "El workflow se ramifica según reglas o tras una aprobación; no todos los agentes se ejecutan siempre.",
-    "adaptive": "Un orquestador decide durante la ejecución qué equipos trabajan en la tarea y reúne sus resultados. Cada equipo es un workflow propio."
+    "branching": "El flujo de trabajo se ramifica según reglas o tras una aprobación; no todos los agentes se ejecutan siempre.",
+    "adaptive": "Un orquestador decide durante la ejecución qué equipos trabajan en la tarea y reúne sus resultados. Cada equipo es un flujo de trabajo propio."
   },
   "architect": {
     "open": "Deja que el arquitecto diseñe un flujo nuevo o revise este a partir de una descripción. Revisas el borrador antes de que cambie nada.",
@@ -191,7 +191,7 @@
     "approvalShow": "Quien revisa ve estos resultados. Sin selección: todo lo que llega aquí.",
     "approvalReject": "Al rechazar, la ejecución sigue la rama «Rechazado» o termina como cancelada.",
     "approvals": "Todas las ejecuciones que esperan una decisión humana.",
-    "subworkflow": "Ejecuta otro workflow como un paso. Su resultado llega aquí como el de un agente.",
+    "subworkflow": "Ejecuta otro flujo de trabajo como un paso. Su resultado llega aquí como el de un agente.",
     "subworkflowVersion": "Una versión fija protege de cambios posteriores en el subflujo.",
     "subworkflowValues": "Valores para el formulario de entrada del subflujo; se permiten marcadores.",
     "form": "Campos que se piden y comprueban al iniciar. Los agentes los leen con {{formName}}.",
@@ -199,8 +199,8 @@
     "resume": "Continúa una ejecución fallida: se reutilizan los resultados válidos y se repite el resto.",
     "resumeSideEffects": "Los pasos que se repiten habían llamado a herramientas. Una segunda llamada puede provocar algo dos veces.",
     "orchestrator": "Un modelo de IA planifica la tarea y delega partes de ella a equipos de su grupo, una decisión tras otra. Cada decisión queda registrada con su motivo.",
-    "orchestratorTeams": "Los equipos son workflows guardados. El modelo solo ve su nombre, descripción, capacidades y contrato de salida. No puede añadir equipos.",
-    "orchestratorLimits": "Los límites evitan que un orquestador dé vueltas: se detiene tras el número máximo de decisiones, y además se aplican el presupuesto y los límites del workflow.",
+    "orchestratorTeams": "Los equipos son flujos de trabajo guardados. El modelo solo ve su nombre, descripción, capacidades y contrato de salida. No puede añadir equipos.",
+    "orchestratorLimits": "Los límites evitan que un orquestador dé vueltas: se detiene tras el número máximo de decisiones, y además se aplican el presupuesto y los límites del flujo de trabajo.",
     "orchestratorSelect": "En lugar de nombrar cada equipo, nombras capacidades. Al iniciar una ejecución, los equipos guardados que las comparten se añaden al grupo y quedan fijos para esa ejecución; los detalles muestran qué etiquetas coincidieron en cada equipo. No se puntúa nada: primero más etiquetas coincidentes, luego el nombre.",
     "orchestratorDynamic": "El orquestador puede encargar trabajo a varios equipos a la vez, formar y cambiar su equipo a partir del pool durante la ejecución y rellenar el formulario de inicio de los equipos. El pool queda fijo para la ejecución; nunca aparecen equipos, agentes ni herramientas nuevos.",
     "orchestratorTemplate": "Un equipo solo existe durante la ejecución. Este botón lo convierte en un flujo de trabajo nuevo y propio: el mismo orquestador con exactamente los equipos que trabajaron, en sus versiones. Después puedes editarlo; solo puede cambiarlo quien pueda editar flujos de trabajo."
@@ -213,22 +213,22 @@
     "ocr": "Los PDF escaneados sin capa de texto se pueden reconocer localmente con Tesseract. Las palabras dudosas se marcan."
   },
   "automation": {
-    "batch": "Un workflow sobre muchas entradas. Cada fila se convierte en una ejecución propia.",
+    "batch": "Un flujo de trabajo sobre muchas entradas. Cada fila se convierte en una ejecución propia.",
     "batchMapping": "Asigna cada columna a un campo del formulario de entrada o a la entrada libre.",
     "batchLimits": "Los límites detienen el lote antes de que resulte demasiado caro o falle demasiado.",
     "concurrency": "Más ejecuciones en paralelo son más rápidas, pero pueden chocar con los límites de la API.",
-    "benchmark": "Casos de prueba fijos con los que los cambios en el workflow se vuelven medibles.",
+    "benchmark": "Casos de prueba fijos con los que los cambios en el flujo de trabajo se vuelven medibles.",
     "benchmarkChecks": "Las reglas comprueban el resultado sin IA, p. ej. «categoria es igual a reclamación».",
     "benchmarkJudge": "Una IA evalúa el resultado según tus criterios. Su veredicto se marca como evaluación por IA y cuesta aparte.",
     "benchmarkCompare": "Elige dos ejecuciones de prueba para ver caso por caso qué mejoró o empeoró.",
     "benchmarkModels": "Prueba los mismos casos con otros modelos para algunos agentes y compara después las dos ejecuciones. El flujo en sí no cambia.",
-    "schedule": "Inicia un workflow con regularidad mientras Nodestro está en marcha.",
+    "schedule": "Inicia un flujo de trabajo con regularidad mientras Nodestro está en marcha.",
     "scheduleMissed": "Si Nodestro estaba apagado a la hora: omitir o recuperarlo una vez en el siguiente arranque.",
     "scheduleTimeZone": "Las horas valen en esta zona horaria, incluido el horario de verano.",
-    "estimate": "Estimación a partir de las últimas ejecuciones correctas de este workflow. El máximo resulta del presupuesto por ejecución.",
+    "estimate": "Estimación a partir de las últimas ejecuciones correctas de este flujo de trabajo. El máximo resulta del presupuesto por ejecución.",
     "external": "Las herramientas propias pueden, p. ej., enviar mensajes. Con muchas ejecuciones, eso ocurre igual de a menudo.",
     "caseFromRun": "Convierte la entrada de esta ejecución fallida en un caso de prueba, con credenciales y datos personales sustituidos. No se guarda nada hasta que confirmes.",
-    "modelChoice": "La recomendación usa solo ejecuciones de prueba medidas de la misma serie, con el mismo estado del workflow (salvo los modelos) y los mismos casos. Tú eliges el objetivo y la tasa mínima; los costes desconocidos nunca cuentan como 0. Solo *Usar* cambia el agente y guarda una nueva versión."
+    "modelChoice": "La recomendación usa solo ejecuciones de prueba medidas de la misma serie, con el mismo estado del flujo de trabajo (salvo los modelos) y los mismos casos. Tú eliges el objetivo y la tasa mínima; los costes desconocidos nunca cuentan como 0. Solo *Usar* cambia el agente y guarda una nueva versión."
   },
   "publish": {
     "open": "Publica este flujo de trabajo como API en este ordenador, gestiona claves y acceso en red, o expórtalo como proyecto FastAPI independiente.",

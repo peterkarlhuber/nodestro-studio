@@ -73,7 +73,7 @@ A aba **Contexto** mostra o que o agente recebeu nesta execução: prompt do sis
 | **Pausado** | A execução espera uma aprovação e continua depois da decisão. |
 | **Cancelado** | Interrompido com *Cancelar*, rejeitado, ou um trace exportado antes de estar completo. |
 
-Uma execução com falha ou cancelada pode ser [continuada](/docs/verzweigungen#fortsetzen). Execuções de agendamentos, lotes, séries de testes e subworkflows mostram sua origem na lista e nos detalhes.
+Uma execução com falha ou cancelada pode ser [continuada](/docs/verzweigungen#fortsetzen). Execuções de agendamentos, lotes, séries de testes e subfluxos mostram sua origem na lista e nos detalhes.
 
 ## O resultado de uma execução {#ergebnis}
 <!-- keywords: resultado, output, resultado geral, saída do fluxo, destino -->

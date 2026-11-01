@@ -45,16 +45,17 @@ Así creas tu primer flujo de trabajo en pocos minutos:
 5. **Observa.** En el *Resumen de la ejecución*, debajo del lienzo, ves en directo lo que escribe el agente, qué herramientas llama, cuántos tokens consume y cuánto cuesta.
 6. **Revisa.** Con **Detalles** llegas a la ejecución completa con su cronología.
 
-> **Consejo:** Debajo de tus workflows encontrarás la galería con 24 [workflows de ejemplo](/docs/beispiele) para tareas típicas, por ejemplo **Análisis financiero** y **Artículo de blog**. La vista previa es gratuita; los ejemplos copiados son copias propias que puedes cambiar libremente.
+> **Consejo:** Debajo de tus flujos de trabajo encontrarás la galería con 24 [workflows de ejemplo](/docs/beispiele) para tareas típicas, por ejemplo **Análisis financiero** y **Artículo de blog**. La vista previa es gratuita; los ejemplos copiados son copias propias que puedes cambiar libremente.
 
 ## La interfaz {#oberflaeche}
 <!-- keywords: navegación, barra lateral, menú, tema, oscuro, claro, diseño -->
 
-La **barra lateral** de la izquierda divide Nodestro en tres áreas:
+La **barra lateral** de la izquierda sigue tu forma de trabajar: crear, ejecutar y revisar, y después automatizar.
 
-- **Espacio de trabajo:** *Flujos de trabajo* (tus procesos), *Agentes* (plantillas reutilizables), *Herramientas*, *Conocimiento* y *Memoria*.
-- **Observabilidad:** *Ejecuciones* (todas las ejecuciones en detalle) y *Uso* (tokens y costes a lo largo del tiempo).
-- **Ayuda:** esta *Documentación*.
+- **Crear:** *Flujos de trabajo* (tus procesos), *Agentes* (plantillas reutilizables), *Herramientas*, *Conocimiento* y *Memoria*.
+- **Ejecutar y revisar:** *Ejecuciones* (todas las ejecuciones en detalle), *Aprobaciones* (decisiones que esperan las ejecuciones) y *Uso* (tokens y costes a lo largo del tiempo).
+- **Automatizar y probar:** *Series de pruebas*, *Ejecuciones por lotes* y *Programaciones*.
+- **Ayuda:** esta *Documentación* y la página de *Bienvenida*.
 
 Abajo están los *Ajustes*. Arriba a la derecha cambias entre el esquema de color oscuro y claro; la elección se guarda en el navegador. Si el proveedor del modelo predeterminado no está configurado, ahí aparece un aviso que lleva directamente a los ajustes.
 

@@ -687,6 +687,8 @@ ol {
 /* ---- tables and charts -------------------------------------------------------- */
 
 .table-wrap {
+  /* The containing block for visually hidden labels, so they scroll with the table instead of widening the page. */
+  position: relative;
   overflow-x: auto;
   border: 1px solid var(--nd-border);
   border-radius: var(--nd-radius-lg);
