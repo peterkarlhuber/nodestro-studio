@@ -463,7 +463,12 @@ export const api = {
 
   // Schedules.
   timeZones: () => request<string[]>("GET", "/schedules/time-zones"),
-  previewSchedule: (body: ScheduleIn) => request<Activation>("POST", "/schedules/preview", body),
+  previewSchedule: (body: ScheduleIn, scheduleId?: string) =>
+    request<Activation>(
+      "POST",
+      scheduleId ? `/schedules/preview?schedule_id=${encodeURIComponent(scheduleId)}` : "/schedules/preview",
+      body,
+    ),
   schedules: () => request<Schedule[]>("GET", "/schedules"),
   createSchedule: (body: ScheduleIn) => request<Schedule>("POST", "/schedules", body),
   updateSchedule: (id: string, body: ScheduleIn) => request<Schedule>("PUT", `/schedules/${id}`, body),

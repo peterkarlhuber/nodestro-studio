@@ -249,6 +249,12 @@
       "daily": "daily at {{at}} ({{zone}})",
       "weekly": "weekly on {{days}} at {{at}} ({{zone}})",
       "monthly": "monthly on day {{day}} at {{at}} ({{zone}})"
-    }
+    },
+    "enabledWithWarnings": "The schedule is on, but some tool calls would be refused"
+  },
+  "toolWarnings": {
+    "title": "Tool calls that would be refused",
+    "hint": "Nothing is approved automatically. An administrator gives advance approvals on the Approvals page.",
+    "open": "Open Approvals"
   }
 }

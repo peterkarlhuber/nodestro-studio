@@ -249,6 +249,12 @@
       "daily": "a diario a las {{at}} ({{zone}})",
       "weekly": "cada semana {{days}} a las {{at}} ({{zone}})",
       "monthly": "cada mes el día {{day}} a las {{at}} ({{zone}})"
-    }
+    },
+    "enabledWithWarnings": "La programación está activa, pero algunas llamadas a herramientas se rechazarían"
+  },
+  "toolWarnings": {
+    "title": "Llamadas a herramientas que se rechazarían",
+    "hint": "Nada se aprueba automáticamente. Las aprobaciones anticipadas las da una persona administradora en la página Aprobaciones.",
+    "open": "Abrir Aprobaciones"
   }
 }

@@ -2,10 +2,45 @@
 // confirmation for tools that reach outside Nodestro.
 
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
-import type { CostEstimate } from "../api/types";
+import type { CostEstimate, Problem } from "../api/types";
 import { Callout, Field, HelpTip, TextInput, Toggle } from "../components/ui";
+import { ProblemText } from "../lib/errors";
 import { formatCost } from "../lib/format";
+
+/** Whether a finding is a warning about a tool call the per-call approval rules would refuse (R1). */
+export function isToolWarning(item: Problem): boolean {
+  return item.code.startsWith("tool.unattended_");
+}
+
+/**
+ * Tool calls the per-call approval rules would refuse in unattended runs (schedules, batches, test series, published
+ * APIs), found before the start. Each line names the tool, why and how to fix it; nothing is granted from here.
+ */
+export function ToolWarnings({ items }: { items: Problem[] }) {
+  const { t } = useTranslation();
+  if (!items.length) return null;
+  return (
+    <Callout tone="warning">
+      <div className="stack-sm" data-testid="tool-warnings">
+        <strong>
+          {t("automation.toolWarnings.title")} <HelpTip id="tools.callApproval" label={t("automation.toolWarnings.title")} />
+        </strong>
+        <ul className="small">
+          {items.map((item, index) => (
+            <li key={`${item.code}-${index}`} data-code={item.code}>
+              <ProblemText item={item} />
+            </li>
+          ))}
+        </ul>
+        <div className="small">
+          {t("automation.toolWarnings.hint")} <Link to="/approvals">{t("automation.toolWarnings.open")}</Link>
+        </div>
+      </div>
+    </Callout>
+  );
+}
 
 export interface Limits {
   concurrency: number;
@@ -52,12 +87,14 @@ export function EstimateView({
   estimate,
   externalTools,
   approvals,
+  toolWarnings = [],
   confirmed,
   onConfirm,
 }: {
   estimate: CostEstimate;
   externalTools: string[];
   approvals: number;
+  toolWarnings?: Problem[];
   confirmed: boolean;
   onConfirm: (value: boolean) => void;
 }) {
@@ -83,6 +120,7 @@ export function EstimateView({
         ) : null}
       </Callout>
       {approvals ? <Callout tone="warning">{t("automation.estimate.approvals", { count: approvals })}</Callout> : null}
+      <ToolWarnings items={toolWarnings} />
       {externalTools.length ? (
         <Callout tone="warning">
           <div>{t("automation.external.text", { tools: externalTools.join(", ") })}</div>

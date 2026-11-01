@@ -12,6 +12,7 @@ import { toast } from "../components/toast";
 import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, IconButton, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
+import { ToolWarnings, isToolWarning } from "../automation/shared";
 
 const KINDS: ScheduleKind[] = ["once", "hourly", "daily", "weekly", "monthly"];
 
@@ -68,7 +69,8 @@ function ActivationView({ activation }: { activation: Activation }) {
           <ProblemText item={problem} />
         </Callout>
       ))}
-      {activation.notes.map((note, index) => (
+      <ToolWarnings items={activation.notes.filter(isToolWarning)} />
+      {activation.notes.filter((note) => !isToolWarning(note)).map((note, index) => (
         <Callout key={`n${index}`} tone="warning">
           <ProblemText item={note} />
         </Callout>
@@ -100,8 +102,8 @@ function ScheduleDialog({ schedule, onClose }: { schedule: Schedule | null; onCl
     enabled: Boolean(draft.workflow_id),
   });
   const preview = useQuery({
-    queryKey: ["schedule-preview", draft],
-    queryFn: () => api.previewSchedule(draft),
+    queryKey: ["schedule-preview", schedule?.id ?? null, draft],
+    queryFn: () => api.previewSchedule(draft, schedule?.id),
     enabled: Boolean(draft.workflow_id),
   });
   const fields = workflow.data?.nodes.find((node) => node.type === "start")?.start?.fields ?? [];
@@ -254,7 +256,9 @@ export function SchedulesPage() {
     mutationFn: (schedule: Schedule) => (schedule.enabled ? api.disableSchedule(schedule.id) : api.enableSchedule(schedule.id)),
     onSuccess: (state) => {
       void queryClient.invalidateQueries({ queryKey: keys.schedules });
-      if (state.activation && !state.activation.ok) setRefused({ name: state.schedule.name, activation: state.activation });
+      // Refused, or switched on although some tool calls would be refused: show why either way.
+      if (state.activation && (!state.activation.ok || state.activation.notes.some(isToolWarning)))
+        setRefused({ name: state.schedule.name, activation: state.activation });
     },
     onError: toast.error,
   });
@@ -352,7 +356,11 @@ export function SchedulesPage() {
         ) : null}
       </div>
       {editing ? <ScheduleDialog schedule={editing === "new" ? null : editing} onClose={() => setEditing(null)} /> : null}
-      <Modal title={t("automation.schedule.refused")} open={refused !== null} onClose={() => setRefused(null)}>
+      <Modal
+        title={refused?.activation.ok ? t("automation.schedule.enabledWithWarnings") : t("automation.schedule.refused")}
+        open={refused !== null}
+        onClose={() => setRefused(null)}
+      >
         {refused ? <ActivationView activation={refused.activation} /> : null}
       </Modal>
     </div>

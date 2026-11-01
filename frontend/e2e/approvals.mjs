@@ -228,6 +228,59 @@ try {
   });
   await finished(fifth.run.id);
 
+  // ---- warnings before unattended starts (R1) ----------------------------------------------------------------
+  // `newer` is not exempt: a schedule, a batch and a published API would refuse its calls, and say so beforehand.
+  const schedule = await api("/schedules", "POST", {
+    name: "Täglicher Versand",
+    workflow_id: newer.id,
+    kind: "daily",
+    at: "08:00",
+    input: "Angebot senden",
+  });
+  await page.goto(`${base}/schedules`);
+  await page.getByRole("button", { name: "Zeitplan bearbeiten" }).first().click();
+  const scheduleWarnings = page.getByRole("dialog").getByTestId("tool-warnings");
+  await scheduleWarnings.waitFor();
+  const scheduleText = await scheduleWarnings.textContent();
+  check(
+    scheduleText.includes("Versand (Neuer Versand): Aufrufe von send_message") && scheduleText.includes("für diesen Zeitplan vorab frei"),
+    "The schedule dialog names the agent and tool whose calls would be refused, and how to fix it",
+  );
+  check((await scheduleWarnings.getByRole("link", { name: "Freigaben öffnen" }).count()) === 1, "The warning links to the Approvals page");
+  await shot("approvals-06-schedule-warning");
+  await page.keyboard.press("Escape");
+  const scheduledRun = await api(`/workflows/${newer.id}/runs`, "POST", { input: "x" });
+  // (a manual run is attended: it still asks, as before)
+  const grantsBefore = (await api("/tool-pre-grants")).length;
+  await api("/tool-pre-grants", "POST", { tool: "send_message", scope: "schedule", scope_id: schedule.id });
+  const granted = await api(`/schedules/preview?schedule_id=${schedule.id}`, "POST", {
+    workflow_id: newer.id,
+    kind: "daily",
+    at: "08:00",
+    input: "Angebot senden",
+  });
+  check(!granted.notes.some((item) => item.code.startsWith("tool.unattended_")), "An advance approval for the schedule ends its warning");
+  check((await api("/tool-pre-grants")).length === grantsBefore + 1, "Only the explicit advance approval exists; the warnings granted nothing");
+  const pendingManual = await until(async () => (await api(`/runs/${scheduledRun.id}/tool-approvals`)).find((item) => item.status === "pending"), "the manual run asks");
+  await api(`/runs/${scheduledRun.id}/tool-approvals/${pendingManual.id}`, "POST", {
+    decision: "rejected",
+    arguments_hash: pendingManual.arguments_hash,
+    comment: "",
+  });
+  await finished(scheduledRun.id);
+
+  const batchPlan = await api("/batches/plan", "POST", { workflow_id: newer.id, rows: [{ input: "x" }], confirm_external: true });
+  check(batchPlan.tool_warnings.map((item) => item.code).join() === "tool.unattended_not_started", "A batch is warned before its start");
+
+  await page.goto(`${base}/workflows/${newer.id}`);
+  await page.getByTestId("open-api").click();
+  const apiDialog = page.getByTestId("api-dialog");
+  await apiDialog.getByTestId("api-check-summary").waitFor();
+  await apiDialog.getByText("Veröffentlichte APIs haben noch keinen eigenen Freigabeschritt", { exact: false }).waitFor();
+  check(true, "The publication check warns that a published API would refuse the tool's calls");
+  await shot("approvals-07-publish-warning");
+  await page.keyboard.press("Escape");
+
   // ---- dark mode and a phone ------------------------------------------------------------------------------
   const sixth = await start(newer);
   await page.emulateMedia({ colorScheme: "dark" });
