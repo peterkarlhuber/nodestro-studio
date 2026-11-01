@@ -36,12 +36,12 @@ CODE = '''def send_message(to: str, body: str) -> str:
     return f"sent to {to} ({len(body)} characters)"
 '''
 
-TESTS = '''from tool import send_message
+TESTS = """from tool import send_message
 
 
 def test_send_message():
     assert send_message("a@example.org", "hi") == "sent to a@example.org (2 characters)"
-'''
+"""
 
 
 def script() -> dict[str, list[Any]]:
