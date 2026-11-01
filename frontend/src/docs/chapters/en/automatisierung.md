@@ -1,6 +1,6 @@
 # Automation
 
-Under *Automation* in the navigation, workflows run without clicking *Start*: **batch runs** handle many inputs at once, **test series** measure a workflow's quality and **schedules** start workflows regularly. Every single run is an ordinary run with trace, budget and usage; approvals wait for a person as always.
+Under *Automate & test* in the navigation, workflows run without clicking *Start*: **batch runs** handle many inputs at once, **test series** measure a workflow's quality and **schedules** start workflows regularly. Every single run is an ordinary run with trace, budget and usage; approvals wait for a person as always.
 
 ## Batch runs {#stapel}
 <!-- keywords: batch, many inputs, csv, excel, xlsx, json, table, columns, mapping, export -->

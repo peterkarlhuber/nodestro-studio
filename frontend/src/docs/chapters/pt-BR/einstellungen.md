@@ -5,7 +5,7 @@ Este capítulo descreve todas as configurações, a instalação e a inicializa�
 ## Provedores de IA {#anbieter}
 <!-- keywords: chave de api, provedor, anthropic, openai, gemini, ollama, vllm, compatível com openai, url base, variável de ambiente, .env, capacidades -->
 
-O Nodestro executa os agentes com a biblioteca Orkexa e trabalha com vários **provedores de IA** ao mesmo tempo: **Anthropic**, **OpenAI**, **Google Gemini** e seus próprios servidores por meio de um **endpoint compatível com OpenAI**, **Ollama** ou **vLLM**. Cada agente usa o provedor do seu modelo. Se esse provedor não estiver configurado, a execução não começa; o Nodestro nunca troca em silêncio para outro provedor. Se faltar o provedor do modelo padrão, aparece “Configurar provedor de IA” no canto superior direito.
+O Nodestro executa os agentes com a biblioteca Orkexa e trabalha com vários **provedores de IA** ao mesmo tempo: **Anthropic**, **OpenAI**, **Google Gemini** e seus próprios servidores por meio de um **endpoint compatível com OpenAI**, **Ollama** ou **vLLM**. Cada agente usa o provedor do seu modelo. Se esse provedor não estiver configurado, a execução não começa; o Nodestro nunca troca em silêncio para outro provedor. Se faltar o provedor do modelo padrão, aparece “Configurar provedor de IA” no canto superior direito, ou “O modelo padrão precisa de …” se outro provedor já estiver configurado.
 
 Em *Configurações → Provedores de IA* cada provedor tem sua própria seção:
 
@@ -13,6 +13,7 @@ Em *Configurações → Provedores de IA* cada provedor tem sua própria seção
 - **Endpoint compatível com OpenAI, Ollama, vLLM:** informe a **URL base** do servidor (por exemplo `http://localhost:11434/v1` para o Ollama) e clique em **Salvar endpoint**; a chave de API é opcional. O provedor só conta como configurado quando há uma URL base salva.
 - **O que os modelos sabem fazer:** para seus próprios servidores você informa se os modelos suportam ferramentas, saída estruturada, imagens, documentos PDF, esforço de raciocínio e outras capacidades. O Nodestro não supõe nada: uma opção que um modelo não suporta, ou cujo suporte é desconhecido, é relatada como erro pela verificação em vez de ser omitida.
 - **Testar conexão** só pede ao provedor a lista de modelos; não custa nada.
+- **Primeiro provedor:** se você salvar uma chave enquanto o provedor do modelo padrão ainda não estiver configurado, novos agentes passam a usar um modelo desse provedor; uma mensagem diz qual. Só as configurações mudam: fluxos de trabalho existentes mantêm seus modelos.
 
 Você também pode definir as chaves como **variáveis de ambiente**, antes de iniciar ou em um arquivo **`.env`** na pasta em que você inicia o `nodestro`. Variáveis de ambiente têm **prioridade** sobre chaves salvas:
 
@@ -28,10 +29,12 @@ Uma chave de versões anteriores (na época só para a Anthropic) vira automatic
 ## Modelo dos assistentes e modelo padrão {#modelle}
 <!-- keywords: modelo padrão, modelo dos assistentes, default model, novos agentes -->
 
-- **Modelo padrão para novos agentes:** novos agentes vazios começam com este provedor e modelo (pela paleta, por *Adicionar agente*, em novos fluxos de trabalho e como modelo vazio). Nos rascunhos por IA, ele serve de substituto caso o arquiteto sugira um modelo não permitido. Agentes existentes não mudam.
+- **Modelo padrão para novos agentes:** novos agentes vazios começam com este provedor e modelo (pela paleta, em novos fluxos de trabalho e como modelo vazio). Nos rascunhos por IA, ele serve de substituto caso o arquiteto sugira um modelo não permitido. Agentes existentes não mudam.
 - **Modelo dos assistentes:** este modelo cria agentes a partir da sua descrição, escreve ferramentas como agente de código, sugere estruturas de memória e responde suas perguntas como [Nodestro Assistant](/docs/assistent). Um modelo forte (padrão: Claude Opus 5.5 da Anthropic) gera sugestões melhores. Os rascunhos por IA só sugerem modelos de provedores configurados.
 
 Os dois campos são compostos por **provedor** e **modelo**. Escolha o modelo da lista ou digite qualquer id de modelo do provedor, por exemplo `gpt-5.5` na OpenAI ou `llama3.1:8b` no Ollama. Ele é salvo como `provedor:modelo` (por exemplo `openai:gpt-5.5`); valores antigos sem provedor, como `claude-sonnet-5-5`, contam como modelos da Anthropic.
+
+Se o modelo padrão pertence a um provedor não configurado enquanto outro está configurado, um aviso acima da escolha do modelo explica que novos agentes e cópias de exemplos não podem rodar com ele e sugere o modelo correspondente do provedor configurado (*Usar …*). Fluxos de trabalho existentes mantêm seus modelos de qualquer forma.
 
 Salve as alterações com **Salvar** na seção *Modelos e orçamento*.
 
@@ -116,6 +119,37 @@ O Nodestro inicia em `http://localhost:8000` e abre o navegador. Opções do com
 Para encerrar, use **Ctrl+C**. Execuções em andamento são canceladas.
 
 > **Segurança:** o Nodestro ainda não tem gerenciamento de usuários, por isso responde só a este computador. `--host 0.0.0.0`, outros endereços de rede ou nomes de rede em `NODESTRO_ALLOWED_HOSTS` interrompem a inicialização, e o Nodestro não pode ficar atrás de um proxy reverso. Para que outros dispositivos usem um fluxo de trabalho, publique-o como API: as APIs publicadas usam chaves de API e têm seu próprio acesso à rede (veja *API e exportação*).
+
+## Nodestro em um servidor {#server}
+<!-- keywords: servidor, entrar, login, sair, função, funções, papel, permissão, permissões, espaço de trabalho, tenant, somente leitura, membros, nodestro-server, sessão expirada -->
+
+O Nodestro Studio também pode rodar em um **servidor Nodestro** da sua organização. Nesse caso você entra pelo serviço de login da sua organização, e seus dados ficam salvos nesse servidor em vez de no seu computador. O aplicativo de desktop e o comando `nodestro` não têm login nem funções; nada desta seção vale para eles.
+
+**Entrar e sair.** Quando você abre o Nodestro, o servidor leva você ao login e depois de volta. No canto superior direito aparecem seu nome e sua função. Um clique abre sua conta: nome, função, **espaço de trabalho**, suas permissões e **Sair**. Quando sua sessão expira, a próxima ação leva você de novo ao login e depois à mesma página. Se um login falhar (por exemplo porque demorou demais), um aviso no topo da página explica o que aconteceu, com **Entrar novamente**.
+
+**Espaços de trabalho.** Fluxos de trabalho, execuções, conhecimento e configurações pertencem a um espaço de trabalho. Se você for membro de vários, troque na sua conta com **Trocar de espaço de trabalho**; o Nodestro então carrega a página inicial do outro espaço. As configurações valem para o seu espaço de trabalho atual nesse servidor.
+
+**Funções e permissões.** Cada função tem permissões fixas:
+
+| Função | Permissões |
+|---|---|
+| **Proprietário** | Ler, Editar, Executar, Administrar |
+| **Administrador** | Ler, Editar, Executar, Administrar |
+| **Editor** | Ler, Editar, Executar |
+| **Operador** | Ler, Executar |
+| **Observador** | Ler |
+
+- **Ler:** ver tudo, inclusive execuções e a documentação.
+- **Editar:** criar e alterar fluxos de trabalho, modelos de agentes, conhecimento e memória.
+- **Executar:** iniciar fluxos de trabalho, cancelar e continuar execuções, decidir aprovações.
+- **Administrar:** configurações, provedores de IA, serviços conectados, regras para chamadas de ferramentas, publicação de APIs e chaves de API.
+- **Gerenciar a instalação** não pertence a nenhuma função: backup, diagnóstico do sistema e acesso de rede das APIs publicadas não aparecem em um servidor; quem cuida disso é o operador do servidor.
+
+**O Nodestro mostra antes o que sua função não permite.** Esses controles ficam ocultos ou bloqueados, com o motivo ao lado, por exemplo *Sua função (Observador) não permite isso: é preciso a permissão “Editar”. Peça a um administrador do seu servidor Nodestro.* Como **Observador** ou **Operador**, um aviso no topo de cada página diz que você pode ver tudo, mas não alterar nada (e, como observador, também não executar). O servidor verifica cada requisição por conta própria mesmo assim.
+
+**Membros e funções** são gerenciados pelo operador do servidor com a linha de comando `nodestro-server` (veja o manual de operação do servidor); o Nodestro Studio não tem uma página para isso. Se o login informar que sua conta ainda não tem acesso, peça a um administrador para adicionar você.
+
+**Dados.** No fim da barra lateral aparece **O servidor da sua organização** em vez de *Local e privado*: seus dados ficam nesse servidor e só vão para os provedores de IA que o operador permite. Backups e instalação ficam a cargo do operador. Frases como “roda só no seu computador” valem apenas para o aplicativo de desktop e para o comando `nodestro`.
 
 ## Atalhos de teclado {#tastenkuerzel}
 <!-- keywords: atalhos de teclado, shortcuts, teclado, keyboard, acessibilidade -->

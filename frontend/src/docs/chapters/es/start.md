@@ -38,10 +38,10 @@ Nodestro se ejecuta localmente en tu equipo. Los flujos, ejecuciones, conocimien
 
 Así creas tu primer flujo de trabajo en pocos minutos:
 
-1. **Configura un proveedor de IA.** Abre *Ajustes → Proveedores de IA* e introduce la clave de API de un proveedor, por ejemplo Anthropic (o define antes de arrancar una variable de entorno como `ANTHROPIC_API_KEY`). Si usas otro proveedor, cambia allí también el modelo predeterminado. Sin un proveedor configurado puedes editarlo todo, pero no ejecutar nada.
+1. **Configura un proveedor de IA.** Abre *Ajustes → Proveedores de IA* e introduce la clave de API de un proveedor, por ejemplo Anthropic (o define antes de arrancar una variable de entorno como `ANTHROPIC_API_KEY`). Si usas otro proveedor, cambia allí también el modelo predeterminado. Sin un proveedor configurado puedes editarlo todo, pero no ejecutar nada; la página *Flujos de trabajo* lo indica arriba del todo y lleva a los ajustes. Copiar un ejemplo funciona también sin él.
 2. **Crea un flujo de trabajo.** En *Flujos de trabajo*, haz clic en **Nuevo flujo de trabajo**, escribe un nombre y confirma con **Crear y abrir**. El editor se abre con tres nodos ya conectados: *Inicio*, *Nuevo agente* y *Resultado*.
 3. **Configura el agente.** Haz clic en el agente. A la derecha aparece el inspector. Ponle un nombre al agente y escribe un prompt de sistema, por ejemplo: «Eres un corrector experimentado. Mejora la ortografía y el estilo sin cambiar el contenido.»
-4. **Inicia.** Haz clic en **Iniciar flujo de trabajo**, escribe un texto y confirma con **Iniciar**. Nodestro guarda el flujo automáticamente.
+4. **Inicia.** Haz clic en **Iniciar flujo de trabajo**, escribe un texto y confirma con **Iniciar**. Nodestro guarda el flujo automáticamente. Si el botón está bloqueado, el motivo aparece justo al lado, con un enlace a la solución.
 5. **Observa.** En el *Resumen de la ejecución*, debajo del lienzo, ves en directo lo que escribe el agente, qué herramientas llama, cuántos tokens consume y cuánto cuesta.
 6. **Revisa.** Con **Detalles** llegas a la ejecución completa con su cronología.
 
@@ -57,7 +57,7 @@ La **barra lateral** de la izquierda sigue tu forma de trabajar: crear, ejecutar
 - **Automatizar y probar:** *Series de pruebas*, *Ejecuciones por lotes* y *Programaciones*.
 - **Ayuda:** esta *Documentación* y la página de *Bienvenida*.
 
-Abajo están los *Ajustes*. Arriba a la derecha cambias entre el esquema de color oscuro y claro; la elección se guarda en el navegador. Si el proveedor del modelo predeterminado no está configurado, ahí aparece un aviso que lleva directamente a los ajustes.
+Abajo están los *Ajustes* y, debajo, dónde se ejecuta Nodestro: en la aplicación de escritorio y con el comando `nodestro` pone **Local y privado**; en un servidor, **El servidor de tu organización** (consulta [Nodestro en un servidor](/docs/einstellungen#server)). Arriba a la derecha cambias entre el esquema de color oscuro y claro; la elección se guarda en el navegador. Si el proveedor del modelo predeterminado no está configurado, ahí aparece un aviso (*Configurar proveedor de IA* o, si ya hay otro proveedor configurado, *El modelo predeterminado necesita …*) que lleva directamente a los ajustes. En un servidor, arriba a la derecha aparece además tu cuenta.
 
 **Ayuda justo donde la necesitas:** junto a muchos controles hay un pequeño símbolo **?**. Pasa el ratón por encima, enfócalo con la tecla Tab o tócalo en dispositivos táctiles: aparece una breve explicación, a menudo con un enlace a la sección correspondiente de esta documentación. El símbolo del libro junto a los títulos de página abre el capítulo correspondiente. Con **Esc** cierras la explicación.
 
@@ -78,7 +78,7 @@ Todos los datos se guardan en una base de datos SQLite en el directorio de datos
 - `nodestro.db` con flujos de trabajo, plantillas de agentes, ejecuciones, ajustes, archivos de conocimiento, índice de búsqueda y espacios de memoria,
 - la carpeta `tools` con las herramientas propias y las creadas por la IA.
 
-Para hacer una **copia de seguridad**, copia el directorio de datos con Nodestro detenido. Al proveedor de un agente solo se envía lo que el agente necesita para su solicitud: prompt de sistema, tarea, conocimiento asignado, contenido de memoria que lee y resultados de herramientas. Las claves de API nunca se muestran en la interfaz.
+Para hacer una **copia de seguridad**, copia el directorio de datos con Nodestro detenido. Al proveedor de un agente solo se envía lo que el agente necesita para su solicitud: prompt de sistema, tarea, conocimiento asignado, contenido de memoria que lee y resultados de herramientas. Las claves de API nunca se muestran en la interfaz. Si trabajas con Nodestro en un servidor, los datos se guardan allí (consulta [Nodestro en un servidor](/docs/einstellungen#server)).
 
 ## La aplicación de escritorio {#desktop}
 <!-- keywords: escritorio, aplicación, ventana, linux, instalación, enlace de inicio, tauri -->

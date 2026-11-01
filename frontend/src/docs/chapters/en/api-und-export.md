@@ -12,7 +12,7 @@ Open a workflow in the editor and click **API & Export**. The dialog has six are
 | **Overview** | Status, addresses, publishing, versions and the latest API runs |
 | **Keys & access** | API keys and the optional access from the network |
 | **Try it** | Check a request or start a real test run |
-| **Documentation** | Endpoints, curl and Python examples, OpenAPI description |
+| **Documentation** | Endpoints, examples for curl, Python and the official SDKs, OpenAPI description |
 | **Limits** | Name in the URL, description and limits |
 | **Export** | The standalone FastAPI project as a ZIP |
 
@@ -91,6 +91,8 @@ You set the name in the URL (e.g. `check-invoices`) when publishing and change i
 | `GET /openapi.json` | OpenAPI description of this API only | – |
 
 The complete schemas are under **Documentation**, where **Download OpenAPI description** also gives you the OpenAPI file.
+
+The examples come as **curl**, **Python**, **Python SDK** and **TypeScript SDK**, plus the possible **Answers**. The official clients from `nodestro-sdk` start runs with an idempotency key (a retry never starts a second run), retry on connection errors and report typed errors. The examples already contain the address, the name and a fitting request of this API; how to install the client is noted at the top of each example.
 
 ## Requests and responses {#aufrufen}
 <!-- keywords: request, body, json, input, values, form, schema, files, base64, response, 202, run_id, idempotency -->
@@ -204,7 +206,7 @@ Every error has the same shape so that programs can evaluate it:
 
 **Try it** holds an example request that you can adjust:
 
-- **Check request** validates the body exactly like the API, shows the input the workflow would get, and starts nothing. It costs nothing.
+- **Check request** validates the body exactly like the API, shows the input the workflow would get, and starts nothing. It costs nothing. If the request does not fit (also for a test run), Nodestro lists each field once with its label and the problem, for example *Quantity: must be a number*, *required* or *is not part of the input*.
 - **Start test run** starts a real run of the published version through the same path as the API. It is billed like any run and appears under Runs as a test run from Nodestro.
 
 For regression tests of a new version, use [test series](/docs/automatisierung#testreihen): they run with the saved version before you publish.

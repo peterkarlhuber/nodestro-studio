@@ -38,10 +38,10 @@ Nodestro fonctionne localement sur votre ordinateur. Workflows, exécutions, con
 
 Créez votre premier workflow en quelques minutes :
 
-1. **Configurer un fournisseur d’IA.** Ouvrez *Réglages → Fournisseurs d’IA* et saisissez la clé API d’un fournisseur, par exemple Anthropic (ou définissez avant le démarrage une variable d’environnement comme `ANTHROPIC_API_KEY`). Si vous utilisez un autre fournisseur, changez-y aussi le modèle par défaut. Sans fournisseur configuré, vous pouvez tout modifier mais rien exécuter.
+1. **Configurer un fournisseur d’IA.** Ouvrez *Réglages → Fournisseurs d’IA* et saisissez la clé API d’un fournisseur, par exemple Anthropic (ou définissez avant le démarrage une variable d’environnement comme `ANTHROPIC_API_KEY`). Si vous utilisez un autre fournisseur, changez-y aussi le modèle par défaut. Sans fournisseur configuré, vous pouvez tout modifier mais rien exécuter ; la page *Workflows* le signale tout en haut et mène aux réglages. Copier un exemple fonctionne aussi sans fournisseur.
 2. **Créez un workflow.** Dans *Workflows*, cliquez sur **Nouveau workflow**, saisissez un nom et confirmez avec **Créer et ouvrir**. L’éditeur s’ouvre avec trois nœuds déjà reliés : *Départ*, *Nouvel agent* et *Résultat*.
 3. **Configurez l’agent.** Cliquez sur l’agent. L’inspecteur apparaît à droite. Donnez un nom à l’agent et écrivez un prompt système, par exemple « Tu es un correcteur expérimenté. Améliore l’orthographe et le style sans modifier le contenu. »
-4. **Lancez.** Cliquez sur **Lancer le workflow**, saisissez un texte et confirmez avec **Lancer**. Nodestro enregistre le workflow automatiquement.
+4. **Lancez.** Cliquez sur **Lancer le workflow**, saisissez un texte et confirmez avec **Lancer**. Nodestro enregistre le workflow automatiquement. Si le bouton est bloqué, la raison s’affiche juste à côté, avec un lien vers la solution.
 5. **Observez.** La *Vue d’ensemble de l’exécution* sous le canevas montre en direct ce que l’agent écrit, quels outils il appelle, combien de tokens il consomme et ce que cela coûte.
 6. **Analysez.** **Détails** vous mène à l’exécution complète avec sa chronologie.
 
@@ -57,7 +57,7 @@ La **barre latérale** à gauche suit votre façon de travailler : créer, exéc
 - **Automatiser et tester :** *Séries de tests*, *Exécutions par lots* et *Planifications*.
 - **Aide :** cette *Documentation* et la page *Bienvenue*.
 
-Les *Réglages* se trouvent en bas. En haut à droite, vous basculez entre le thème sombre et le thème clair ; le choix est enregistré dans le navigateur. Si le fournisseur du modèle par défaut n’est pas configuré, un avis y apparaît et mène directement aux réglages.
+Les *Réglages* se trouvent en bas, et en dessous l’endroit où Nodestro s’exécute : dans l’application de bureau et avec la commande `nodestro`, il est indiqué **Local et privé** ; sur un serveur, **Le serveur de votre organisation** (voir [Nodestro sur un serveur](/docs/einstellungen#server)). En haut à droite, vous basculez entre le thème sombre et le thème clair ; le choix est enregistré dans le navigateur. Si le fournisseur du modèle par défaut n’est pas configuré, un avis y apparaît (*Configurer un fournisseur d’IA* ou, si un autre fournisseur est déjà configuré, *Le modèle par défaut requiert …*) et mène directement aux réglages. Sur un serveur, votre compte s’affiche aussi en haut à droite.
 
 **De l’aide là où vous en avez besoin :** de nombreux contrôles ont un petit symbole **?**. Survolez-le, donnez-lui le focus avec la touche Tab ou touchez-le sur un écran tactile : une courte explication apparaît, souvent avec un lien vers la section correspondante de cette documentation. Le symbole du livre à côté des titres de page ouvre le chapitre correspondant. **Échap** referme l’explication.
 
@@ -78,7 +78,7 @@ Toutes les données sont stockées dans une base SQLite dans le répertoire de d
 - `nodestro.db` avec workflows, modèles d’agents, exécutions, réglages, fichiers de connaissances, index de recherche et espaces mémoire,
 - le dossier `tools` avec vos outils et ceux créés par l’IA.
 
-Pour **sauvegarder**, copiez le répertoire de données pendant que Nodestro est arrêté. Seul le contenu dont un agent a besoin pour sa requête est envoyé à son fournisseur : prompt système, tâche, connaissances attribuées, contenu de mémoire qu’il lit et résultats d’outils. Les clés API ne sont jamais affichées dans l’interface.
+Pour **sauvegarder**, copiez le répertoire de données pendant que Nodestro est arrêté. Seul le contenu dont un agent a besoin pour sa requête est envoyé à son fournisseur : prompt système, tâche, connaissances attribuées, contenu de mémoire qu’il lit et résultats d’outils. Les clés API ne sont jamais affichées dans l’interface. Si vous travaillez avec Nodestro sur un serveur, les données sont stockées sur ce serveur (voir [Nodestro sur un serveur](/docs/einstellungen#server)).
 
 ## L’application de bureau {#desktop}
 <!-- keywords: bureau, application, fenêtre, linux, installation, lien de démarrage, tauri -->

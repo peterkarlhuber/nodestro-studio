@@ -5,7 +5,7 @@ Ce chapitre décrit tous les réglages, l’installation et le démarrage de Nod
 ## Fournisseurs d’IA {#anbieter}
 <!-- keywords: clé api, fournisseur, anthropic, openai, gemini, ollama, vllm, compatible openai, url de base, variable d’environnement, .env, capacités -->
 
-Nodestro exécute les agents avec la bibliothèque Orkexa et travaille avec plusieurs **fournisseurs d’IA** à la fois : **Anthropic**, **OpenAI**, **Google Gemini** et vos propres serveurs via un **point d’accès compatible OpenAI**, **Ollama** ou **vLLM**. Chaque agent utilise le fournisseur de son modèle. Si ce fournisseur n’est pas configuré, l’exécution ne démarre pas ; Nodestro ne bascule jamais en silence vers un autre fournisseur. S’il manque le fournisseur du modèle par défaut, « Configurer un fournisseur d’IA » apparaît en haut à droite.
+Nodestro exécute les agents avec la bibliothèque Orkexa et travaille avec plusieurs **fournisseurs d’IA** à la fois : **Anthropic**, **OpenAI**, **Google Gemini** et vos propres serveurs via un **point d’accès compatible OpenAI**, **Ollama** ou **vLLM**. Chaque agent utilise le fournisseur de son modèle. Si ce fournisseur n’est pas configuré, l’exécution ne démarre pas ; Nodestro ne bascule jamais en silence vers un autre fournisseur. S’il manque le fournisseur du modèle par défaut, « Configurer un fournisseur d’IA » apparaît en haut à droite, ou « Le modèle par défaut requiert … » si un autre fournisseur est déjà configuré.
 
 Sous *Réglages → Fournisseurs d’IA*, chaque fournisseur a sa propre section :
 
@@ -13,6 +13,7 @@ Sous *Réglages → Fournisseurs d’IA*, chaque fournisseur a sa propre section
 - **Point d’accès compatible OpenAI, Ollama, vLLM :** saisissez l’**URL de base** du serveur (par exemple `http://localhost:11434/v1` pour Ollama) puis **Enregistrer le point d’accès** ; une clé API est facultative. Le fournisseur n’est considéré comme configuré qu’une fois une URL de base enregistrée.
 - **Ce que savent faire les modèles :** pour vos propres serveurs, vous indiquez si leurs modèles gèrent les outils, la sortie structurée, les images, les documents PDF, l’effort de raisonnement et d’autres capacités. Nodestro ne suppose rien : une option qu’un modèle ne sait pas faire, ou dont la prise en charge est inconnue, est signalée comme erreur par la vérification au lieu d’être omise.
 - **Tester la connexion** demande seulement au fournisseur sa liste de modèles ; cela ne coûte rien.
+- **Premier fournisseur :** si vous enregistrez une clé alors que le fournisseur du modèle par défaut n’est pas encore configuré, les nouveaux agents utilisent désormais un modèle de ce fournisseur ; un message indique lequel. Seuls les réglages changent : les workflows existants gardent leurs modèles.
 
 Vous pouvez aussi définir les clés comme **variables d’environnement**, avant le démarrage ou dans un fichier **`.env`** du dossier depuis lequel vous lancez `nodestro`. Les variables d’environnement sont **prioritaires** sur les clés enregistrées :
 
@@ -28,10 +29,12 @@ Une clé des versions précédentes (alors uniquement pour Anthropic) devient au
 ## Modèle des assistants et modèle par défaut {#modelle}
 <!-- keywords: modèle par défaut, modèle des assistants, default model, nouveaux agents -->
 
-- **Modèle par défaut des nouveaux agents :** les nouveaux agents vides démarrent avec ce fournisseur et ce modèle (depuis la palette, via *Ajouter un agent*, dans les nouveaux workflows et comme modèle vide). Dans les brouillons par IA, il sert de remplacement si l’architecte propose un modèle non autorisé. Les agents existants ne changent pas.
+- **Modèle par défaut des nouveaux agents :** les nouveaux agents vides démarrent avec ce fournisseur et ce modèle (depuis la palette, dans les nouveaux workflows et comme modèle vide). Dans les brouillons par IA, il sert de remplacement si l’architecte propose un modèle non autorisé. Les agents existants ne changent pas.
 - **Modèle des assistants :** ce modèle conçoit des agents à partir de votre description, écrit des outils en tant qu’agent de code, propose des structures de mémoire et répond à vos questions en tant que [Nodestro Assistant](/docs/assistent). Un modèle puissant (par défaut : Claude Opus 5.5 d’Anthropic) donne de meilleures propositions. Les brouillons par IA ne proposent que des modèles de fournisseurs configurés.
 
 Les deux champs se composent d’un **fournisseur** et d’un **modèle**. Choisissez le modèle dans la liste ou saisissez n’importe quel identifiant de modèle du fournisseur, par exemple `gpt-5.5` chez OpenAI ou `llama3.1:8b` chez Ollama. Il est enregistré sous la forme `fournisseur:modèle` (par exemple `openai:gpt-5.5`) ; les anciennes valeurs sans fournisseur comme `claude-sonnet-5-5` comptent comme modèles d’Anthropic.
+
+Si le modèle par défaut appartient à un fournisseur non configuré alors qu’un autre l’est, un avis au-dessus du choix du modèle indique que les nouveaux agents et les copies d’exemples ne peuvent pas s’exécuter avec lui et propose le modèle correspondant du fournisseur configuré (*Utiliser …*). Les workflows existants gardent leurs modèles dans tous les cas.
 
 Enregistrez les modifications avec **Enregistrer** dans la section *Modèles et budget*.
 
@@ -116,6 +119,37 @@ Nodestro démarre sur `http://localhost:8000` et ouvre le navigateur. Options de
 Arrêt avec **Ctrl+C**. Les exécutions en cours sont annulées.
 
 > **Sécurité :** Nodestro n’a pas encore de gestion des utilisateurs, il ne répond donc qu’à cet ordinateur. `--host 0.0.0.0`, d’autres adresses réseau ou des noms réseau dans `NODESTRO_ALLOWED_HOSTS` arrêtent le démarrage, et Nodestro ne peut pas être placé derrière un proxy inverse. Pour que d’autres appareils utilisent un workflow, publiez-le comme API : les API publiées utilisent des clés API et ont leur propre accès réseau (voir *API et export*).
+
+## Nodestro sur un serveur {#server}
+<!-- keywords: serveur, se connecter, connexion, se déconnecter, rôle, rôles, autorisation, autorisations, espace de travail, tenant, lecture seule, membres, nodestro-server, session expirée -->
+
+Nodestro Studio peut aussi fonctionner sur un **serveur Nodestro** de votre organisation. Vous vous connectez alors via le service de connexion de votre organisation, et vos données sont stockées sur ce serveur plutôt que sur votre ordinateur. L’application de bureau et la commande `nodestro` n’ont ni connexion ni rôles ; rien dans cette section ne s’y applique.
+
+**Se connecter et se déconnecter.** Lorsque vous ouvrez Nodestro, le serveur vous mène à la connexion, puis vous ramène. Votre nom et votre rôle s’affichent en haut à droite. Un clic ouvre votre compte : nom, rôle, **espace de travail**, vos autorisations et **Se déconnecter**. Lorsque votre session prend fin, l’action suivante vous ramène à la connexion, puis à la même page. Si une connexion échoue (par exemple parce qu’elle a pris trop de temps), un avis en haut de la page explique ce qui s’est passé, avec **Se reconnecter**.
+
+**Espaces de travail.** Les workflows, les exécutions, les connaissances et les réglages appartiennent à un espace de travail. Si vous êtes membre de plusieurs espaces, changez dans votre compte avec **Changer d’espace de travail** ; Nodestro charge alors la page d’accueil de l’autre espace. Les réglages s’appliquent à votre espace de travail actuel sur ce serveur.
+
+**Rôles et autorisations.** Chaque rôle comporte des autorisations fixes :
+
+| Rôle | Autorisations |
+|---|---|
+| **Propriétaire** | Lire, Modifier, Exécuter, Administrer |
+| **Administrateur** | Lire, Modifier, Exécuter, Administrer |
+| **Éditeur** | Lire, Modifier, Exécuter |
+| **Opérateur** | Lire, Exécuter |
+| **Lecteur** | Lire |
+
+- **Lire :** tout consulter, y compris les exécutions et la documentation.
+- **Modifier :** créer et modifier des workflows, des modèles d’agents, des connaissances et la mémoire.
+- **Exécuter :** lancer des workflows, annuler et reprendre des exécutions, décider des validations.
+- **Administrer :** réglages, fournisseurs d’IA, services connectés, règles des appels d’outils, publication d’API et clés API.
+- **Gérer l’installation** n’appartient à aucun rôle : la sauvegarde, le diagnostic système et l’accès réseau des API publiées n’apparaissent pas sur un serveur ; c’est l’exploitant qui s’en charge.
+
+**Nodestro montre à l’avance ce que votre rôle ne permet pas.** Ces commandes sont masquées ou bloquées, avec la raison à côté, par exemple *Votre rôle (Lecteur) ne permet pas cette action : il faut l’autorisation « Modifier ». Adressez-vous à un administrateur de votre serveur Nodestro.* En tant que **Lecteur** ou **Opérateur**, un avis en haut de chaque page indique que vous pouvez tout consulter, mais rien modifier (et, en tant que lecteur, rien exécuter). Le serveur vérifie quand même chaque requête lui-même.
+
+**Les membres et les rôles** sont gérés par l’exploitant du serveur avec la ligne de commande `nodestro-server` (voir le manuel d’exploitation du serveur) ; Nodestro Studio n’a pas de page pour cela. Si la connexion indique que votre compte n’a pas encore d’accès, demandez à un administrateur de vous ajouter.
+
+**Données.** En bas de la barre latérale, **Le serveur de votre organisation** remplace *Local et privé* : vos données restent sur ce serveur et ne vont qu’aux fournisseurs d’IA autorisés par votre exploitant. Les sauvegardes et l’installation sont prises en charge par l’exploitant. Des phrases comme « s’exécute uniquement sur votre ordinateur » ne valent que pour l’application de bureau et la commande `nodestro`.
 
 ## Raccourcis clavier {#tastenkuerzel}
 <!-- keywords: raccourcis clavier, shortcuts, clavier, keyboard, accessibilité -->

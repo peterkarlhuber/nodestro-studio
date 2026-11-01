@@ -1,6 +1,6 @@
 # Automatización
 
-En *Automatización*, en la navegación, los flujos de trabajo se ejecutan sin pulsar *Iniciar*: las **ejecuciones por lotes** procesan muchas entradas a la vez, las **series de pruebas** miden la calidad de un flujo y las **programaciones** inician flujos con regularidad. Cada ejecución individual es una ejecución normal con traza, presupuesto y uso; las aprobaciones esperan a una persona como siempre.
+En *Automatizar y probar*, en la navegación, los flujos de trabajo se ejecutan sin pulsar *Iniciar*: las **ejecuciones por lotes** procesan muchas entradas a la vez, las **series de pruebas** miden la calidad de un flujo y las **programaciones** inician flujos con regularidad. Cada ejecución individual es una ejecución normal con traza, presupuesto y uso; las aprobaciones esperan a una persona como siempre.
 
 ## Ejecuciones por lotes {#stapel}
 <!-- keywords: lote, batch, muchas entradas, csv, excel, xlsx, json, tabla, columnas, asignación, exportar -->
