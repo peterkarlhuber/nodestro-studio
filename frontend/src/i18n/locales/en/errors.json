@@ -786,5 +786,6 @@
       "step_limit": "Raise the step limit under \"Limits\" in the workflow settings, or check for loops.",
       "orchestration_limit": "Raise \"Maximum decisions\" on the orchestrator, or say in its instructions when the task is done."
     }
-  }
+  },
+  "setupProvider": "Set up AI provider"
 }

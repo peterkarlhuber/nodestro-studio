@@ -8,6 +8,7 @@
 
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
+import { Link, useInRouterContext } from "react-router-dom";
 
 import { ApiError } from "../api/client";
 import i18n from "../i18n";
@@ -223,4 +224,30 @@ export function ErrorText({ error, compact }: { error: unknown; compact?: boolea
 /** Coded message of a run or node: its error with code, or the legacy text. */
 export function runProblem(target: { error: string | null; error_code?: string | null; error_params?: Record<string, unknown> }): Coded {
   return { code: target.error_code ?? null, params: target.error_params ?? {}, message: target.error };
+}
+
+/** Problems a person solves in Settings → AI providers (a missing key or endpoint), with or without an area prefix. */
+export function needsProviderSetup(item: Coded | null | undefined): boolean {
+  const code = item?.code ?? "";
+  return /(^|\.)(api_key_missing|provider_not_configured)$/.test(code) || /(^|\.)provider\.not_configured$/.test(code);
+}
+
+/** "Set up AI provider" after such a problem; nothing for other problems. */
+export function ProviderSetupLink({ item }: { item: Coded | null | undefined }) {
+  const { t } = useTranslation();
+  const routed = useInRouterContext();
+  if (!needsProviderSetup(item)) return null;
+  const label = t("errors.setupProvider");
+  return (
+    <>
+      {" "}
+      {routed ? (
+        <Link to="/settings" data-testid="provider-setup-link">
+          {label}
+        </Link>
+      ) : (
+        <a href="/settings">{label}</a>
+      )}
+    </>
+  );
 }

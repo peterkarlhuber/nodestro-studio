@@ -7,5 +7,6 @@
   "mainNavigation": "Navigation principale",
   "privateTitle": "Local et privé",
   "privateText": "Nodestro ne fonctionne que sur votre ordinateur. Les données n’en sortent que pour les requêtes aux fournisseurs d’IA que vous avez configurés.",
-  "providerMissing": "Configurer un fournisseur d’IA"
+  "providerMissing": "Configurer un fournisseur d’IA",
+  "defaultProviderMissing": "Le modèle par défaut requiert {{provider}}"
 }

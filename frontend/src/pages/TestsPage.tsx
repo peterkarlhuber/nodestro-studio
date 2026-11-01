@@ -38,6 +38,7 @@ import { sanitizeSummary } from "../editor/TraceExportDialog";
 import { newId, newRule } from "../lib/defaults";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatCost, formatDate, formatNumber, sumCosts } from "../lib/format";
+import { NotFoundState } from "../components/NotFoundState";
 
 function newCase(name: string): TestCase {
   return { id: newId("case"), name, input: "", values: {}, file_ids: [], checks: [], judge_criteria: "", expected: "" };
@@ -432,6 +433,7 @@ export function SuitePage() {
       toast.success(t("automation.benchmark.saved"));
     },
   });
+  if (suite.error) return <NotFoundState kind="suite" error={suite.error} />;
   if (suite.isLoading || !draft) return <Spinner />;
   const dirty = JSON.stringify(draft) !== JSON.stringify(suite.data);
   const shownRun = runs.data?.find((run) => run.id === (shown ?? runs.data?.[0]?.id));

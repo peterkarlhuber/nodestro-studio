@@ -13,7 +13,7 @@ import { useContextOffer } from "../assistant/useContextOffer";
 import { keys, useWorkflows } from "../api/hooks";
 import type { ArchitectJob, Run, Workflow } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, DocLink, Hint, Modal, Spinner } from "../components/ui";
+import { Button, DocLink, Hint, Modal, Spinner } from "../components/ui";
 import { Canvas, type CanvasIssues } from "../editor/Canvas";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { Inspector } from "../editor/Inspector";
@@ -27,11 +27,12 @@ import { useFollowRun } from "../editor/useRunStream";
 import type { AgentSectionId } from "../editor/agentSummaries";
 import { AGENT_SECTIONS, useAgentSections } from "../editor/sectionState";
 import { VersionsDialog } from "../editor/VersionsDialog";
-import { ErrorText, problemText } from "../lib/errors";
+import { problemText } from "../lib/errors";
 import { useDocumentTitle } from "../lib/documentTitle";
 import { crumbLink, parseTrail } from "../lib/trail";
 import { ApiDialog } from "../publish/ApiDialog";
 import { findings } from "../editor/CheckList";
+import { NotFoundState } from "../components/NotFoundState";
 
 function useDebouncedGraph() {
   const nodes = useEditor((s) => s.nodes);
@@ -260,14 +261,7 @@ export function EditorPage() {
   };
 
   if (workflow.isLoading) return <Spinner />;
-  if (workflow.error)
-    return (
-      <div className="page">
-        <Callout tone="danger">
-          <ErrorText error={workflow.error} />
-        </Callout>
-      </div>
-    );
+  if (workflow.error) return <NotFoundState kind="workflow" error={workflow.error} />;
 
   const panelSizes = {
     [PANEL_VARIABLE.palette]: `${layout.size.palette}px`,

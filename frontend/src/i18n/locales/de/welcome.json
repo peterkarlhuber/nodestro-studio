@@ -14,7 +14,9 @@
     "lede": "Nodestro verbindet KI-Modelle, Werkzeuge und Wissen zu Agenten-Workflows, die du visuell baust, kontrolliert ausführst und Schritt für Schritt nachvollziehst.",
     "diagram": "Schaubild: Modelle, Wissen und Werkzeuge fließen in Nodestro zusammen und werden zu verbundenen Agenten, Freigaben und nachvollziehbaren Ausführungen.",
     "local": "Läuft lokal auf deinem Rechner",
-    "providers": "Funktioniert mit"
+    "providers": "Funktioniert mit",
+    "modelNeeded": "Damit Workflows laufen, braucht Nodestro eine Verbindung zu einem KI-Modell: einen API-Schlüssel oder einen lokalen Modellserver.",
+    "modelNeededLink": "In den Einstellungen einrichten"
   },
   "nodes": {
     "models": {

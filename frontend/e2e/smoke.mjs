@@ -40,6 +40,12 @@ try {
   await gallery.locator(".card").first().waitFor();
   check((await gallery.locator(".card").count()) >= 4, "Workflow page shows featured examples below the own workflows");
   check((await page.locator(".page__body > .card-grid > .card").count()) === 0, "No example is installed automatically");
+  await page.getByTestId("model-needed").waitFor();
+  check(
+    (await page.getByTestId("model-needed").getByRole("link").getAttribute("href")) === "/settings",
+    "Without a provider the empty state says that a model is needed and links to the settings",
+  );
+  check((await gallery.getByTestId("start-here").count()) === 1, "One featured example is marked as the place to start");
   await shot("01-workflows");
 
   await gallery.getByRole("link", { name: /Alle 24 Beispiele/ }).click();
@@ -49,6 +55,11 @@ try {
   await page.getByRole("searchbox", { name: "Beispiele durchsuchen" }).fill("8D");
   await page.waitForFunction(() => document.querySelectorAll(".example-card").length === 1);
   check(true, "Gallery search narrows the examples");
+  await page.waitForURL(/[?&]q=8D/);
+  check(true, "The search is kept in the address, so Back returns to it");
+  await page.getByRole("searchbox", { name: "Beispiele durchsuchen" }).fill("Freigabe");
+  await page.waitForFunction(() => document.querySelectorAll(".example-card").length >= 3);
+  check(true, "The search finds examples by their building blocks (Freigabe)");
   await page.getByRole("searchbox", { name: "Beispiele durchsuchen" }).fill("");
   await page.getByRole("radio", { name: "Recht, Personal und Verwaltung" }).click();
   await page.waitForFunction(() => document.querySelectorAll(".example-card").length === 3);
@@ -94,6 +105,14 @@ try {
   const copiedRuns = await (await page.request.get(`${base}/api/runs?workflow_id=${copiedId}`)).json();
   check(copiedRuns.length === 0, "Copying starts no run");
   await shot("02-editor");
+
+  // Missing objects end in a page with a way back, not in a spinner.
+  await page.goto(base + "/tests/s_missing");
+  await page.getByRole("heading", { name: "Testreihe nicht gefunden" }).waitFor();
+  check((await page.getByRole("link", { name: /Zurück zu den Testreihen/ }).getAttribute("href")) === "/tests", "A missing test series says so and leads back");
+  await page.goto(base + "/workflows/wf_missing");
+  await page.getByRole("heading", { name: "Workflow nicht gefunden" }).waitFor();
+  check(true, "A missing workflow says so and leads back");
 
   // A second example, for the lists below.
   await page.goto(base + "/workflows/examples?template=blog-article");

@@ -21,7 +21,11 @@
     "architectBudgetHint": "El arquitecto se detiene si un borrador cuesta más. Vacío = sin límite.",
     "architectRepairs": "Correcciones con IA por borrador",
     "architectRepairsHint": "Cuántas veces puede pedir el arquitecto a la IA que corrija una configuración o un borrador de herramienta (0 a 5). Las correcciones sin IA se hacen siempre.",
-    "defaultHint": "Los agentes nuevos empiezan con este proveedor y modelo."
+    "defaultHint": "Los agentes nuevos empiezan con este proveedor y modelo.",
+    "defaultProviderMissing": "El modelo predeterminado pertenece a {{provider}}, que no está configurado.",
+    "defaultSwitchHint": "Los agentes nuevos y las copias de ejemplos no pueden ejecutarse con él. Los flujos de trabajo existentes conservan sus modelos en cualquier caso.",
+    "defaultPickHint": "Elige abajo un modelo de {{providers}} como modelo predeterminado.",
+    "defaultSwitch": "Usar {{model}} ({{provider}})"
   },
   "sandbox": {
     "title": "Sandbox para herramientas propias",
@@ -91,6 +95,7 @@
       "reasoning": "Esfuerzo de razonamiento",
       "caching": "Caché de prompts",
       "system_messages": "Mensajes de sistema"
-    }
+    },
+    "defaultFollowed": "Los agentes nuevos usan ahora {{model}} ({{provider}}). Los flujos de trabajo existentes conservan sus modelos; puedes cambiarlo en Modelos."
   }
 }

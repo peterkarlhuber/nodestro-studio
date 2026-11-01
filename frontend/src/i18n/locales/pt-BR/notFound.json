@@ -1,5 +1,28 @@
 {
   "title": "Página não encontrada",
   "action": "Ir para os fluxos de trabalho",
-  "text": "Este endereço não existe no Nodestro."
+  "text": "Este endereço não existe no Nodestro.",
+  "object": {
+    "workflow": {
+      "title": "Fluxo de trabalho não encontrado",
+      "text": "Este fluxo de trabalho não existe ou foi excluído.",
+      "back": "Voltar aos fluxos de trabalho"
+    },
+    "run": {
+      "title": "Execução não encontrada",
+      "text": "Esta execução não existe ou foi excluída.",
+      "back": "Voltar às execuções"
+    },
+    "batch": {
+      "title": "Execução em lote não encontrada",
+      "text": "Esta execução em lote não existe ou foi excluída.",
+      "back": "Voltar às execuções em lote"
+    },
+    "suite": {
+      "title": "Série de testes não encontrada",
+      "text": "Esta série de testes não existe ou foi excluída.",
+      "back": "Voltar às séries de testes"
+    },
+    "failedTitle": "Não foi possível carregar esta página"
+  }
 }

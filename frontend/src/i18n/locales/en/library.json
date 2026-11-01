@@ -122,5 +122,27 @@
     "notReadOnly": "Not approved as read-only: {{tools}}",
     "noServers": "No MCP server is set up yet, so the copy runs in offline mode.",
     "setUp": "Set up connected services"
+  },
+  "startHere": "Start here",
+  "galleryCount_one": "{{count}} example",
+  "galleryCount_other": "{{count}} examples",
+  "searchPlaceholderFeatures": "Name, field, building block or level …",
+  "levelLabel": "Level",
+  "allLevels": "All levels",
+  "needs": {
+    "title": "What you need",
+    "models": "AI provider: {{provider}} · models: {{models}}.",
+    "modelsAdapted": "AI provider: {{provider}}. The copy uses your default models instead of the example’s: {{models}}.",
+    "providerMissing": "Not set up yet.",
+    "setUp": "Set up",
+    "providerReady": "Set up.",
+    "approval": "A run pauses for your approval before it continues.",
+    "knowledge_one": "Creates {{count}} knowledge file in your knowledge base.",
+    "knowledge_other": "Creates {{count}} knowledge files in your knowledge base.",
+    "samples_one": "{{count}} sample file to try the file fields (see below).",
+    "samples_other": "{{count}} sample files to try the file fields (see below).",
+    "files": "Takes your own files as input.",
+    "connection": "Optional connection (MCP): {{names}}. Without it, the copy runs offline with sample data.",
+    "noConnection": "No connection to other services needed."
   }
 }

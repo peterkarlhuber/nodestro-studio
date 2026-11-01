@@ -31,6 +31,26 @@
     "example": "Começar com um exemplo",
     "exampleText": "Veja fluxos de trabalho prontos com dados de teste sintéticos e copie um como seu. Sem chamada ao modelo.",
     "manual": "Montar você mesmo",
-    "manualText": "Começa com uma entrada, um agente vazio e um resultado. Você arrasta outros blocos para a área de trabalho."
+    "manualText": "Começa com uma entrada, um agente vazio e um resultado. Você arrasta outros blocos para a área de trabalho.",
+    "aiNeedsModel": "Precisa de uma conexão com um modelo de IA",
+    "modelNeeded": "Para executar fluxos de trabalho, conecte primeiro um modelo de IA: uma chave de API (por exemplo Anthropic, OpenAI ou Gemini) ou um servidor de modelos local como o Ollama. Copiar um exemplo funciona sem isso.",
+    "aiModelNeeded": "Criar com IA precisa de uma conexão com um modelo de IA: o Arquiteto de fluxos projeta o fluxo de trabalho com seu modelo padrão, que ainda não está configurado.",
+    "modelNeededLink": "Configurar nas configurações"
+  },
+  "continue": {
+    "title": "Continuar",
+    "waiting_one": "{{count}} aprovação aguarda você",
+    "waiting_other": "{{count}} aprovações aguardam você",
+    "runs": "Execuções recentes",
+    "allRuns": "Todas as execuções",
+    "edited": "Editados recentemente"
+  },
+  "teams": {
+    "title": "Equipes",
+    "count_one": "{{count}} equipe",
+    "count_other": "{{count}} equipes",
+    "text": "Fluxos de trabalho para os quais um orquestrador pode delegar (eles declaram capacidades ou um contrato de saída). Cópias de exemplos orquestrados trazem suas equipes.",
+    "badge": "Equipe",
+    "badgeHint": "Um orquestrador pode delegar trabalho a este fluxo de trabalho"
   }
 }

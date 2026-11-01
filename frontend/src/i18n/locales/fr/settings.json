@@ -21,7 +21,11 @@
     "architectBudgetHint": "L’architecte s’arrête si un brouillon coûte davantage. Vide = pas de plafond.",
     "architectRepairs": "Corrections par IA par brouillon",
     "architectRepairsHint": "Combien de fois l’architecte peut demander à l’IA de corriger une configuration ou un brouillon d’outil (0 à 5). Les corrections sans IA sont toujours effectuées.",
-    "defaultHint": "Les nouveaux agents démarrent avec ce fournisseur et ce modèle."
+    "defaultHint": "Les nouveaux agents démarrent avec ce fournisseur et ce modèle.",
+    "defaultProviderMissing": "Le modèle par défaut appartient à {{provider}}, qui n’est pas configuré.",
+    "defaultSwitchHint": "Les nouveaux agents et les copies d’exemples ne peuvent pas s’exécuter avec lui. Les workflows existants gardent leurs modèles dans tous les cas.",
+    "defaultPickHint": "Choisissez ci-dessous un modèle de {{providers}} comme modèle par défaut.",
+    "defaultSwitch": "Utiliser {{model}} ({{provider}})"
   },
   "sandbox": {
     "title": "Bac à sable pour les outils personnels",
@@ -91,6 +95,7 @@
       "reasoning": "Effort de raisonnement",
       "caching": "Cache des prompts",
       "system_messages": "Messages système"
-    }
+    },
+    "defaultFollowed": "Les nouveaux agents utilisent désormais {{model}} ({{provider}}). Les workflows existants gardent leurs modèles ; vous pouvez modifier ce choix sous Modèles."
   }
 }

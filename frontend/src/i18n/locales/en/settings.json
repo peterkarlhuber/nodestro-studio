@@ -21,7 +21,11 @@
     "architectBudgetHint": "The architect stops when a draft costs more. Empty = no limit.",
     "architectRepairs": "AI corrections per draft",
     "architectRepairsHint": "How often the architect may ask the AI to fix a configuration or tool draft (0 to 5). Corrections without AI are always made.",
-    "defaultHint": "New agents start with this provider and model."
+    "defaultHint": "New agents start with this provider and model.",
+    "defaultProviderMissing": "The default model belongs to {{provider}}, which is not set up.",
+    "defaultSwitchHint": "New agents and example copies cannot run with it. Existing workflows keep their models either way.",
+    "defaultPickHint": "Pick a model of {{providers}} as the default model below.",
+    "defaultSwitch": "Use {{model}} ({{provider}})"
   },
   "sandbox": {
     "title": "Sandbox for your own tools",
@@ -91,6 +95,7 @@
       "reasoning": "Reasoning effort",
       "caching": "Prompt caching",
       "system_messages": "System messages"
-    }
+    },
+    "defaultFollowed": "New agents now use {{model}} ({{provider}}). Existing workflows keep their models; you can change this under Models."
   }
 }

@@ -21,7 +21,11 @@
     "architectBudgetHint": "O arquiteto para quando um rascunho custa mais. Vazio = sem limite.",
     "architectRepairs": "Correções com IA por rascunho",
     "architectRepairsHint": "Quantas vezes o arquiteto pode pedir à IA que corrija uma configuração ou rascunho de ferramenta (0 a 5). Correções sem IA sempre são feitas.",
-    "defaultHint": "Novos agentes começam com este provedor e modelo."
+    "defaultHint": "Novos agentes começam com este provedor e modelo.",
+    "defaultProviderMissing": "O modelo padrão pertence a {{provider}}, que não está configurado.",
+    "defaultSwitchHint": "Novos agentes e cópias de exemplos não podem ser executados com ele. Os fluxos de trabalho existentes mantêm seus modelos de qualquer forma.",
+    "defaultPickHint": "Escolha abaixo um modelo de {{providers}} como modelo padrão.",
+    "defaultSwitch": "Usar {{model}} ({{provider}})"
   },
   "sandbox": {
     "title": "Sandbox para ferramentas próprias",
@@ -91,6 +95,7 @@
       "reasoning": "Esforço de raciocínio",
       "caching": "Cache de prompts",
       "system_messages": "Mensagens de sistema"
-    }
+    },
+    "defaultFollowed": "Novos agentes agora usam {{model}} ({{provider}}). Os fluxos de trabalho existentes mantêm seus modelos; você pode mudar isso em Modelos."
   }
 }

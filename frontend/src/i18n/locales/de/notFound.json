@@ -1,5 +1,28 @@
 {
   "title": "Seite nicht gefunden",
   "action": "Zu den Workflows",
-  "text": "Diese Adresse gibt es in Nodestro nicht."
+  "text": "Diese Adresse gibt es in Nodestro nicht.",
+  "object": {
+    "workflow": {
+      "title": "Workflow nicht gefunden",
+      "text": "Diesen Workflow gibt es nicht, oder er wurde gelöscht.",
+      "back": "Zurück zu den Workflows"
+    },
+    "run": {
+      "title": "Ausführung nicht gefunden",
+      "text": "Diese Ausführung gibt es nicht, oder sie wurde gelöscht.",
+      "back": "Zurück zu den Ausführungen"
+    },
+    "batch": {
+      "title": "Stapellauf nicht gefunden",
+      "text": "Diesen Stapellauf gibt es nicht, oder er wurde gelöscht.",
+      "back": "Zurück zu den Stapelläufen"
+    },
+    "suite": {
+      "title": "Testreihe nicht gefunden",
+      "text": "Diese Testreihe gibt es nicht, oder sie wurde gelöscht.",
+      "back": "Zurück zu den Testreihen"
+    },
+    "failedTitle": "Diese Seite ließ sich nicht laden"
+  }
 }
