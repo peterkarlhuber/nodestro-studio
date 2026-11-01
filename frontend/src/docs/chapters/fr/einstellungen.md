@@ -117,7 +117,7 @@ La langue ne concerne que l’**interface** : menus, remarques, messages d’err
 ## Apparence {#darstellung}
 <!-- keywords: thème, sombre, clair, mode sombre, mode clair, couleurs, design, midnight citron -->
 
-En haut à droite, vous passez de **Sombre** à **Clair**. Le choix est enregistré dans le navigateur. Les deux variantes suivent le système de design *Midnight Citron*. Sur les écrans étroits, la barre latérale devient une barre d’icônes.
+En haut à droite, vous passez de **Sombre** à **Clair**. Le choix est enregistré dans le navigateur. Les deux variantes suivent le système de design *Midnight Citron*. Sur les écrans étroits, la barre latérale est masquée : le bouton de menu en haut à gauche (**Afficher toutes les pages**) l’ouvre en panneau, et **Échap** la referme.
 
 ## Sauvegarde et restauration {#backup}
 <!-- keywords: sauvegarde, backup, restaurer, export, zip, déménagement, copie de sécurité -->

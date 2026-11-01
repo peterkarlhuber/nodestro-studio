@@ -10,7 +10,7 @@ export function NotFoundPage() {
   useDocumentTitle(t("notFound.title"));
   return (
     <div className="page">
-      <EmptyState icon={Compass} title={t("notFound.title")} action={<Link to="/">{t("notFound.action")}</Link>}>
+      <EmptyState level={1} icon={Compass} title={t("notFound.title")} action={<Link to="/">{t("notFound.action")}</Link>}>
         {t("notFound.text")}
       </EmptyState>
     </div>

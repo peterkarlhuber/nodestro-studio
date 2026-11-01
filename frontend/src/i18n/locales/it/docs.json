@@ -56,6 +56,10 @@
       "keys": "<kbd>Canc</kbd> o <kbd>Backspace</kbd>",
       "action": "Elimina il nodo o il collegamento selezionato"
     },
+    "connect": {
+      "keys": "<kbd>C</kbd>",
+      "action": "Nodo selezionato nell’area di lavoro: vai a «Collega a» nelle proprietà"
+    },
     "canvas": {
       "keys": "Rotellina del mouse, trascinamento dell’area",
       "action": "Zoom e spostamento dell’area di lavoro"

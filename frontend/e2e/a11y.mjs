@@ -1,8 +1,9 @@
 // Accessibility check against a running Nodestro (default http://127.0.0.1:8000), e.g. a plain `nodestro --data-dir …`.
 // Usage: node e2e/a11y.mjs [baseUrl] [screenshotDir]
 //
-// Runs axe-core (WCAG 2.0–2.2 A/AA rules) over the main routes in the dark and the light theme and fails on any
-// serious or critical violation; moderate and minor ones are listed. It then checks what axe cannot see: dialog
+// Runs axe-core (WCAG 2.0–2.2 A/AA and best-practice rules) over the main routes in the dark and the light theme,
+// at phone width and in the open search dialog, and fails on any serious or critical violation and on heading
+// order and landmark problems; other moderate and minor ones are listed. It then checks what axe cannot see: dialog
 // focus (initial focus, focus return, Ctrl+K typing), connecting steps with the keyboard, the canvas colour mode,
 // the phone navigation and that the executions table never scrolls the whole page.
 //
@@ -48,7 +49,9 @@ const shots = process.argv[3] ?? process.env.NODESTRO_SCREENSHOTS;
 if (shots) mkdirSync(shots, { recursive: true });
 
 const FAILING = new Set(["serious", "critical"]);
-const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
+// Best-practice rules run too; of them, these fail the check although axe rates them moderate (AX-08, F5).
+const FAILING_RULES = new Set(["heading-order", "page-has-heading-one", "landmark-banner-is-top-level", "landmark-unique"]);
+const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 let failures = 0;
 
 function check(condition, message) {
@@ -90,11 +93,12 @@ async function scan(page, label) {
       sample: v.nodes[0]?.target.join(" ") ?? "",
     }));
   }, TAGS);
-  const bad = violations.filter((v) => FAILING.has(v.impact));
-  const other = violations.filter((v) => !FAILING.has(v.impact));
+  const failing = (v) => FAILING.has(v.impact) || FAILING_RULES.has(v.id);
+  const bad = violations.filter(failing);
+  const other = violations.filter((v) => !failing(v));
   for (const v of bad) console.log(`     ${v.impact} ${v.id} ×${v.nodes} e.g. ${v.sample}`);
   if (other.length) console.log(`info ${label}: ${other.map((v) => `${v.id}(${v.impact}×${v.nodes})`).join(" ")}`);
-  check(bad.length === 0, `axe: no serious or critical violations on ${label}`);
+  check(bad.length === 0, `axe: no serious or critical violations (nor heading order, landmark) on ${label}`);
 }
 
 async function context(browser, { theme = "dark", language = "en", width = 1440, height = 900, ...rest } = {}) {
@@ -182,6 +186,11 @@ try {
     await page.getByRole("dialog").waitFor();
     await page.keyboard.type("job");
     check((await page.getByRole("dialog").getByRole("combobox").first().inputValue()) === "job", "Ctrl+K: typing goes into the search field");
+    // With results (the documentation always has some): the grouped listbox (F5).
+    await page.getByRole("dialog").getByRole("combobox").first().fill("workflow");
+    await page.getByRole("dialog").getByRole("option").first().waitFor({ timeout: 10000 });
+    await scan(page, "the open search dialog with results");
+    await page.getByRole("dialog").getByRole("combobox").first().fill("job");
     // The first Escape clears the search term, the second closes the dialog.
     await page.keyboard.press("Escape");
     if (await page.getByRole("dialog").count()) await page.keyboard.press("Escape");
@@ -197,6 +206,14 @@ try {
     await page.keyboard.press("Enter");
     const panel = page.getByTestId("node-connections");
     await panel.waitFor();
+    // C jumps from the selected step to "Connect to" (AX-12) instead of dozens of Tabs.
+    await node.focus();
+    await page.keyboard.press("c");
+    await page.waitForFunction(() => /^connect-(target|branch)$/.test(document.activeElement?.getAttribute("data-testid") ?? ""), null, { timeout: 3000 }).catch(() => {});
+    check(
+      /^connect-(target|branch)$/.test((await page.evaluate(() => document.activeElement?.getAttribute("data-testid"))) ?? ""),
+      "C on a selected step moves the focus to Connections in the inspector",
+    );
     const target = panel.getByTestId("connect-target");
     const options = await target.locator("option").evaluateAll((items) => items.map((item) => item.value).filter(Boolean));
     if (options.length) {
@@ -212,10 +229,32 @@ try {
     await ctx.close();
   }
 
+  // The Assistant panel takes the focus when opened, Escape closes it and returns the focus (AX-11).
+  {
+    const ctx = await context(browser);
+    const page = await ctx.newPage();
+    await open(page, "/");
+    const toggle = page.getByTestId("assistant-toggle");
+    await toggle.focus();
+    await page.keyboard.press("Enter");
+    await page.getByTestId("assistant-panel").waitFor();
+    await page.waitForTimeout(200);
+    check(await page.evaluate(() => Boolean(document.activeElement?.closest(".assistant-panel"))), "Opening the Assistant moves the focus into its panel");
+    await page.keyboard.press("Escape");
+    await page.getByTestId("assistant-panel").waitFor({ state: "detached" });
+    check(await toggle.evaluate((element) => element === document.activeElement), "Escape closes the Assistant and returns the focus to its button");
+    await ctx.close();
+  }
+
   // Phones: the navigation opens from a menu button, and the executions table stays inside the page.
   {
     const ctx = await context(browser, { theme: "light", width: 390, height: 844, hasTouch: true, isMobile: true });
     const page = await ctx.newPage();
+    // At phone width the header hides labels (the search button keeps its name, F4).
+    for (const route of ["/", "/executions", "/approvals", "/docs/start", `/workflows/${wf}`]) {
+      await open(page, route);
+      await scan(page, `${route} (390 px)`);
+    }
     await open(page, "/executions");
     const toggle = page.getByTestId("nav-toggle");
     check(await toggle.isVisible(), "Phones show a menu button for the navigation");

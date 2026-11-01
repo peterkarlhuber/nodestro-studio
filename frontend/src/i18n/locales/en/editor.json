@@ -60,7 +60,9 @@
     "dropInvalid": "This item cannot be placed on the canvas.",
     "removedOne": "Removed “{{name}}”.",
     "removedMany_one": "Removed {{count}} node.",
-    "removedMany_other": "Removed {{count}} nodes."
+    "removedMany_other": "Removed {{count}} nodes.",
+    "partlyHidden": "Part of the workflow is outside the view.",
+    "showAll": "Show all"
   },
   "palette": {
     "title": "Building blocks",

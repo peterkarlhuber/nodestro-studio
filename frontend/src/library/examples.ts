@@ -158,6 +158,12 @@ export function byLevel<T extends ExampleSummary>(examples: T[]): T[] {
   return [...examples].sort((a, b) => LEVELS.indexOf(a.level) - LEVELS.indexOf(b.level) || a.number - b.number);
 }
 
+/** The list with the "Start here" example moved to the front, so the gallery begins with it (F9). */
+export function startHereFirst<T extends ExampleSummary>(examples: T[], first: string | null): T[] {
+  const index = first ? examples.findIndex((item) => item.id === first) : -1;
+  return index > 0 ? [examples[index], ...examples.slice(0, index), ...examples.slice(index + 1)] : examples;
+}
+
 /** The example a newcomer should try first ("Start here"): the easiest one. */
 export function startHere(examples: ExampleSummary[]): string | null {
   return easiestFirst(examples)[0]?.id ?? null;

@@ -290,7 +290,8 @@
         "cancelled": "Annulé",
         "expired": "Expiré"
       },
-      "invalidNotRun": "Invalide, non exécutée"
+      "invalidNotRun": "Invalide, non exécutée",
+      "labelled": "{{label}} :"
     },
     "select": "Équipes par capacité",
     "selectHint": "Les équipes enregistrées ayant l'une de ces capacités rejoignent le pool au démarrage d'une exécution (10 mots-clés au plus). La meilleure correspondance d'abord ; les équipes avec des erreurs sont exclues.",

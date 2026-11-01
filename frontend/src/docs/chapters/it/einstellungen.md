@@ -117,7 +117,7 @@ La lingua riguarda solo l'**interfaccia**: menu, avvisi, messaggi di errore, que
 ## Aspetto {#darstellung}
 <!-- keywords: tema, scuro, chiaro, modalità scura, modalità chiara, schema di colori, design, midnight citron -->
 
-In alto a destra passi da **Scuro** a **Chiaro**. La scelta viene salvata nel browser. Entrambe le varianti seguono il design system *Midnight Citron*. Sugli schermi stretti la barra laterale diventa una barra di icone.
+In alto a destra passi da **Scuro** a **Chiaro**. La scelta viene salvata nel browser. Entrambe le varianti seguono il design system *Midnight Citron*. Sugli schermi stretti la barra laterale è nascosta: il pulsante del menu in alto a sinistra (**Mostra tutte le pagine**) la apre come pannello ed **Esc** la richiude.
 
 ## Backup e ripristino {#backup}
 <!-- keywords: backup, copia di sicurezza, ripristinare, esportare, zip, trasloco, salvataggio dati -->

@@ -8,7 +8,7 @@ import { Callout, EmptyState, PageHeader, Segmented, Select, Spinner, TextInput 
 import { currentLanguage } from "../i18n";
 import { ExampleCard } from "../library/ExampleCard";
 import { ExamplePreview } from "../library/ExamplePreview";
-import { CATEGORIES, LEVELS, byLevel, type ExampleLabels, filterExamples, isCategory, isLevel, startHere } from "../library/examples";
+import { CATEGORIES, LEVELS, byLevel, type ExampleLabels, filterExamples, isCategory, isLevel, startHere, startHereFirst } from "../library/examples";
 import { usePreviewParam } from "../library/previewParam";
 import { ErrorText } from "../lib/errors";
 
@@ -47,7 +47,10 @@ export function ExamplesPage() {
   };
   const all = examples.data ?? [];
   const first = startHere(all);
-  const shown = byLevel(filterExamples(all, query, category === "all" ? null : category, labels, level === "all" ? null : level));
+  const shown = startHereFirst(
+    byLevel(filterExamples(all, query, category === "all" ? null : category, labels, level === "all" ? null : level)),
+    first,
+  );
 
   return (
     <div className="page">
@@ -107,7 +110,7 @@ export function ExamplesPage() {
         ) : (
           <div className="card-grid">
             {shown.map((example) => (
-              <ExampleCard key={example.id} example={example} onOpen={preview.show} startHere={example.id === first} />
+              <ExampleCard key={example.id} example={example} onOpen={preview.show} startHere={example.id === first} headingLevel={2} />
             ))}
           </div>
         )}

@@ -4,7 +4,7 @@ import { LANGUAGES, type Language } from "../i18n";
 import { HELP_DOCS } from "../lib/help";
 import { CHAPTER_IDS, type DocChapter, type Sources, docExists, loadChapters, loadSources } from "./index";
 import { parseChapter, plainText, splitWidgets } from "./parse";
-import { fold, searchDocs } from "./search";
+import { fold, plain, searchDocs } from "./search";
 
 const SOURCES = Object.fromEntries(await Promise.all(LANGUAGES.map(async (language) => [language, await loadSources(language)]))) as Record<
   Language,
@@ -157,5 +157,11 @@ describe("chapter previews", () => {
       "A decision picks a path, numpy and links or emphasis.",
     );
     expect(plainText("snake_case_names stay")).toBe("snake_case_names stay");
+  });
+});
+
+describe("search snippets", () => {
+  it("keeps angle brackets inside text and drops quote markers", () => {
+    expect(plain("> A quote\nSend `Authorization: Bearer <key>` with it.")).toBe("A quote Send Authorization: Bearer <key> with it.");
   });
 });

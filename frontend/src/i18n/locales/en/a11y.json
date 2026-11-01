@@ -17,7 +17,7 @@
     "created": "Connected {{source}} to {{target}}."
   },
   "flow": {
-    "node": "Press Enter or Space to select this step and show its properties. The arrow keys move it, Delete removes it, Escape cancels. To connect steps, use Connections in the properties panel.",
+    "node": "Press Enter or Space to select this step and show its properties. The arrow keys move it, Delete removes it, Escape cancels. To connect this step, press C (or use Connections in the properties panel).",
     "edge": "Press Enter or Space to select this connection. Delete removes it, Escape cancels.",
     "moved": "Moved the step {{direction}}. New position: x {{x}}, y {{y}}",
     "direction": {

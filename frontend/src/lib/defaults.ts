@@ -1,5 +1,6 @@
-import type { AgentConfig, ConditionRule, InputField, NodeType, WorkflowNode } from "../api/types";
+import type { AgentConfig, ConditionRule, InputField, NodeType, ProviderId, WorkflowNode } from "../api/types";
 import i18n from "../i18n";
+import { providerOf } from "./providers";
 
 let defaultModel = "claude-sonnet-5-5";
 
@@ -11,6 +12,18 @@ export function setDefaultModel(model: string): void {
 /** The default model for new agents from the settings; also the judge of a newly enabled quality check. */
 export function getDefaultModel(): string {
   return defaultModel;
+}
+
+/**
+ * Providers that refuse an effort setting: OpenAI-compatible endpoints (Ollama, vLLM, ...) never receive one from
+ * Nodestro, so an agent with an effort fails at the start (AD-09, F12). New agents on them start with the model
+ * default (null), which sends none.
+ */
+const NO_EFFORT: ReadonlySet<ProviderId> = new Set<ProviderId>(["compatible", "ollama", "vllm"]);
+
+/** The effort a new agent on ``model`` starts with. */
+export function defaultEffort(model: string): AgentConfig["effort"] {
+  return NO_EFFORT.has(providerOf(model)) ? null : "medium";
 }
 
 /**
@@ -32,7 +45,7 @@ export function defaultAgent(overrides: Partial<AgentConfig> = {}): AgentConfig 
     memory: { mode: "none", space: null },
     output: { mode: "text", name: i18n.t("editor.defaults.outputName"), fields: [] },
     quality: { enabled: false, criteria: [], max_revisions: 1, judge_model: defaultModel },
-    effort: "medium",
+    effort: defaultEffort(overrides.model ?? defaultModel),
     thinking: null,
     thinking_display: null,
     tool_choice: { type: "auto", name: null },

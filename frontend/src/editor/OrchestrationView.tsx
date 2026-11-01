@@ -108,7 +108,7 @@ function useTeamRun(ref: string | null, enabled: boolean) {
     retry: false,
     refetchInterval: (query) => {
       const status = query.state.data?.status;
-      return status === "running" || status === "queued" ? 2000 : status === "paused" ? 5000 : false;
+      return status === "running" || status === "queued" ? 2000 : status === "paused" ? 15_000 : false;
     },
   });
 }
@@ -124,7 +124,7 @@ function Values({ values }: { values: Record<string, unknown> | undefined }) {
   if (!entries.length) return null;
   return (
     <p className="small" data-testid="orchestration-values">
-      <span className="muted">{t("flow.orchestrator.run.values")}:</span>{" "}
+      <span className="muted">{t("flow.orchestrator.run.labelled", { label: t("flow.orchestrator.run.values") })}</span>{" "}
       {entries.map(([key, value]) => `${key} = ${typeof value === "string" ? value : JSON.stringify(value)}`).join(" · ")}
     </p>
   );
@@ -159,7 +159,7 @@ function TeamRunRow({ entry, names, live }: { entry: TeamRun; names: Map<string,
       </div>
       {entry.task ? (
         <p className="small">
-          <span className="muted">{t("flow.orchestrator.run.task")}:</span> {entry.task}
+          <span className="muted">{t("flow.orchestrator.run.labelled", { label: t("flow.orchestrator.run.task") })}</span> {entry.task}
         </p>
       ) : null}
       <Values values={entry.values} />
@@ -220,7 +220,7 @@ function StepView({
       </div>
       {decision?.reason ? (
         <p className="small">
-          <span className="muted">{t("flow.orchestrator.run.reason")}:</span> {decision.reason}
+          <span className="muted">{t("flow.orchestrator.run.labelled", { label: t("flow.orchestrator.run.reason") })}</span> {decision.reason}
         </p>
       ) : null}
       {decision?.action === "staff" ? (
@@ -235,7 +235,7 @@ function StepView({
       {refused && DELEGATING.has(decision?.action ?? "")
         ? assignmentsOf(decision).map((item, slot) => (
             <p className="small" key={slot}>
-              <span className="muted">{t("flow.orchestrator.run.task")}:</span> {nameOf(item.member)}: {item.task}
+              <span className="muted">{t("flow.orchestrator.run.labelled", { label: t("flow.orchestrator.run.task") })}</span> {t("flow.orchestrator.run.labelled", { label: nameOf(item.member) })} {item.task}
             </p>
           ))
         : null}
@@ -309,7 +309,7 @@ function TeamTimeline({ record, names }: { record: OrchestrationRecord; names: M
       <ol className="small">
         {changes.map((change) => (
           <li key={change.index}>
-            {t("flow.orchestrator.run.afterStep", { n: change.index + 1 })}:{" "}
+            {t("flow.orchestrator.run.labelled", { label: t("flow.orchestrator.run.afterStep", { n: change.index + 1 }) })}{" "}
             {change.team.length ? change.team.map(nameOf).join(", ") : t("flow.orchestrator.run.emptyTeam")}
           </li>
         ))}
@@ -331,7 +331,7 @@ function PendingView({ record, runs, names, live }: { record: OrchestrationRecor
         </strong>
         {pending.decision.reason ? (
           <p className="small">
-            <span className="muted">{t("flow.orchestrator.run.reason")}:</span> {pending.decision.reason}
+            <span className="muted">{t("flow.orchestrator.run.labelled", { label: t("flow.orchestrator.run.reason") })}</span> {pending.decision.reason}
           </p>
         ) : null}
         <p className="small">{t("flow.orchestrator.run.waitingText")}</p>

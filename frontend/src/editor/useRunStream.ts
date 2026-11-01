@@ -9,9 +9,20 @@ import { useEditor } from "./store";
 /** Events after which the open tool approvals change: the list (and its card) is read again at once. */
 const TOOL_APPROVAL_EVENTS = new Set(["tool_approval_requested", "tool_approval_decided"]);
 
-/** How often a paused run is read again, and how often right after someone decided one of its approvals. */
+/**
+ * How often a paused run is read again, and how often right after someone decided one of its approvals. A paused
+ * run waits for a person, which can take hours: while nothing changes, the pause between reads doubles up to
+ * ``PAUSED_POLL_MAX_MS`` (F3). Deciding in this tab reads it quickly again at once.
+ */
 export const PAUSED_POLL_MS = 3000;
+export const PAUSED_POLL_MAX_MS = 30_000;
 export const NUDGED_POLL_MS = 500;
+
+/** The pause before the next read of a paused run, after ``unchanged`` reads in a row that changed nothing. */
+export function pausedPollDelay(unchanged: number, quick: boolean): number {
+  if (quick) return NUDGED_POLL_MS;
+  return Math.min(PAUSED_POLL_MAX_MS, PAUSED_POLL_MS * 2 ** Math.max(0, Math.min(unchanged, 10)));
+}
 /** How long the quick reading lasts after a decision. */
 export const NUDGE_WINDOW_MS = 10_000;
 
@@ -86,13 +97,20 @@ export function useFollowRun(run: Pick<Run, "id" | "status"> | null) {
     let timer: ReturnType<typeof setTimeout> | undefined;
     const nudgedAt = nudge ? Date.now() : 0;
     let last = "";
+    let unchanged = 0;
+    let reading = false;
     const read = async () => {
+      timer = undefined;
+      // A hidden tab reads nothing; it reads at once when it is shown again.
+      if (document.hidden || reading) return;
+      reading = true;
       try {
         const fresh = await api.run(id);
         if (stopped) return;
         // An unchanged copy is not set again, so the canvas does not render for nothing.
         const text = JSON.stringify(fresh);
         if (text !== last && useEditor.getState().run?.id === fresh.id) useEditor.getState().setRun(fresh);
+        unchanged = text === last ? unchanged + 1 : 0;
         last = text;
         if (fresh.status !== "paused") {
           // It goes on (the stream follows) or it ended (its run lists change).
@@ -102,14 +120,24 @@ export function useFollowRun(run: Pick<Run, "id" | "status"> | null) {
         }
       } catch {
         // A failed read is tried again with the next one.
+      } finally {
+        reading = false;
       }
       if (stopped) return;
-      const quick = nudgedAt && Date.now() - nudgedAt < NUDGE_WINDOW_MS;
-      timer = setTimeout(() => void read(), quick ? NUDGED_POLL_MS : PAUSED_POLL_MS);
+      const quick = Boolean(nudgedAt) && Date.now() - nudgedAt < NUDGE_WINDOW_MS;
+      timer = setTimeout(() => void read(), pausedPollDelay(unchanged, quick));
     };
+    const onVisible = () => {
+      if (document.hidden || stopped) return;
+      if (timer) clearTimeout(timer);
+      unchanged = 0;
+      void read();
+    };
+    document.addEventListener("visibilitychange", onVisible);
     void read();
     return () => {
       stopped = true;
+      document.removeEventListener("visibilitychange", onVisible);
       if (timer) clearTimeout(timer);
     };
   }, [id, status, nudge, queryClient]);

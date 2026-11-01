@@ -369,11 +369,31 @@ export function AssistantPanel() {
   const view = useAssistant((state) => state.view);
   const conversationId = useAssistant((state) => state.conversationId);
   const conversation = useConversation(conversationId);
-  const close = () => useAssistant.getState().setOpen(false);
+  const panel = useRef<HTMLElement | null>(null);
+  const focusRequest = useAssistant((state) => state.focusRequest);
+  // AX-11: opened by the user, the panel takes the focus (the message field, or its first control); closed with
+  // Escape or its close button, the focus goes back to the Assistant button in the header.
+  useEffect(() => {
+    if (!focusRequest) return;
+    const element = panel.current;
+    const target =
+      element?.querySelector<HTMLElement>("[data-testid=assistant-input]") ?? element?.querySelector<HTMLElement>("button, [href], input, textarea");
+    target?.focus();
+  }, [focusRequest]);
+  const close = () => {
+    useAssistant.getState().setOpen(false);
+    document.querySelector<HTMLElement>("[data-testid=assistant-toggle]")?.focus();
+  };
+  const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    // A dialog or a menu inside the panel closes first; it handles its own Escape.
+    if (event.key !== "Escape" || event.defaultPrevented || (event.target as HTMLElement).closest("dialog, [role=menu], [role=listbox]")) return;
+    event.preventDefault();
+    close();
+  };
   const title = conversation.data?.title || t("assistant.title");
   const cost = conversation.data?.usage.estimated_cost_usd;
   return (
-    <aside className="assistant-panel" aria-label={t("assistant.title")} data-testid="assistant-panel">
+    <aside ref={panel} className="assistant-panel" aria-label={t("assistant.title")} data-testid="assistant-panel" onKeyDown={onKeyDown}>
       <header className="assistant-panel__head">
         <div className="assistant-panel__title">
           <Sparkles size={15} aria-hidden />
