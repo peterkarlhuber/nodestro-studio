@@ -176,7 +176,8 @@
     "provider_auth": "{{provider}} no aceptó la clave de API: falta, es incorrecta, ha caducado o no tiene los permisos necesarios.",
     "provider_unreachable": "No se pudo contactar con {{provider}}.",
     "provider_rate_limited": "{{provider}} informó de demasiadas solicitudes o tokens en poco tiempo (límite de frecuencia).",
-    "provider_overloaded": "{{provider}} está sobrecargado en este momento."
+    "provider_overloaded": "{{provider}} está sobrecargado en este momento.",
+    "provider_auth_aws": "AWS no aceptó el inicio de sesión para Amazon Bedrock: faltan las credenciales o han caducado, o al rol de IAM le falta un permiso."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -291,7 +292,10 @@
     "orchestrator_member_approval": "{{name}}: el equipo {{workflow}} se detiene para aprobaciones. El orquestador espera entonces también.",
     "orchestrator_selected_one": "{{name}} elige {{count}} equipo por capacidad: {{teams}}.",
     "orchestrator_selected_other": "{{name}} elige {{count}} equipos por capacidad: {{teams}}.",
-    "orchestrator_no_match": "{{name}}: ningún equipo guardado tiene una de las capacidades {{capabilities}}."
+    "orchestrator_no_match": "{{name}}: ningún equipo guardado tiene una de las capacidades {{capabilities}}.",
+    "bedrock_not_configured": "Amazon Bedrock no está configurado: elige en los ajustes una región de AWS y cómo inicia sesión Nodestro en AWS.",
+    "bedrock_not_available": "Amazon Bedrock no está disponible aquí. En un servidor, pide a tu operador que asigne un rol de AWS a este espacio de trabajo.",
+    "bedrock_settings_invalid": "Amazon Bedrock no se puede usar con sus ajustes: {{reason}}"
   },
   "backup": {
     "not_zip": "El archivo no es una copia de seguridad de Nodestro (no es un ZIP).",
@@ -638,7 +642,31 @@
     "base_url_credentials": "La URL base no puede contener credenciales. Introduce la clave en el campo «Clave de API».",
     "capability_unknown": "Capacidades desconocidas: {{names}}.",
     "not_configured": "{{provider}} no está configurado: introduce su URL base en los ajustes.",
-    "endpoint_not_allowed": "Este endpoint de modelo no está permitido en este servidor. Pregunta a tu administración qué endpoints están permitidos."
+    "endpoint_not_allowed": "Este endpoint de modelo no está permitido en este servidor. Pregunta a tu administración qué endpoints están permitidos.",
+    "bedrock_not_configured": "Amazon Bedrock no está configurado: elige en los ajustes una región de AWS y cómo inicia sesión Nodestro en AWS.",
+    "region_missing": "No hay ninguna región de AWS definida para Amazon Bedrock. Elígela en los ajustes o define AWS_REGION donde se ejecuta un proyecto exportado.",
+    "region_invalid": "«{{region}}» no es un nombre de región de AWS. Usa un nombre como eu-central-1.",
+    "region_not_allowed": "La región de AWS «{{region}}» no está permitida en este servidor. Pregunta a tu operador qué regiones están permitidas.",
+    "auth_invalid": "Método de inicio de sesión de AWS desconocido.",
+    "auth_not_allowed": "Este método de inicio de sesión de AWS no está disponible aquí.",
+    "profile_name_invalid": "Nombre de perfil de AWS no válido: usa solo letras, cifras y _ . + = , @ - (como máximo 64 caracteres).",
+    "data_residency_invalid": "Residencia de datos desconocida; solo se ofrece «solo en la UE».",
+    "data_residency_forced": "Tu operador exige la residencia de datos solo en la UE; no se puede desactivar.",
+    "data_residency_region": "La residencia de datos solo en la UE permite solo regiones de la UE; no permitidas: {{region}}.",
+    "data_residency_violation": "La solicitud no se envió: podría incumplir la residencia de datos solo en la UE (una región fuera de la UE, un perfil de inferencia global o un destino que no se pudo comprobar).",
+    "field_not_supported": "{{provider}} no usa el ajuste «{{field}}».",
+    "bedrock_not_available": "Amazon Bedrock no está disponible aquí. En un servidor, pide a tu operador que asigne un rol de AWS a este espacio de trabajo.",
+    "verify_not_supported": "Este proveedor no tiene una comprobación de conexión de este tipo.",
+    "verify_rate_limited": "La conexión se acaba de comprobar. Vuelve a intentarlo en unos segundos.",
+    "aws_credentials_missing": "No se encontraron credenciales de AWS. Inicia sesión con AWS SSO, configura el perfil de AWS o revisa el entorno.",
+    "aws_credentials_invalid": "AWS no aceptó las credenciales: son incorrectas o han caducado.",
+    "aws_access_denied": "AWS denegó el acceso: al rol o usuario de IAM le falta un permiso para Amazon Bedrock.",
+    "aws_profile_not_found": "El perfil de AWS de los ajustes de Bedrock no existe en la configuración de AWS de este equipo.",
+    "aws_region_invalid": "La región de AWS no es válida, o Amazon Bedrock no se ofrece allí.",
+    "aws_model_not_found": "Amazon Bedrock no conoce este modelo o perfil de inferencia en esta región, o no está habilitado para la cuenta.",
+    "aws_rate_limited": "AWS informó de demasiadas solicitudes. Vuelve a intentarlo más tarde.",
+    "aws_unreachable": "No se pudo acceder a Amazon Bedrock en esta región (red, proxy o nombre de región).",
+    "aws_verification_failed": "La comprobación de conexión con AWS falló."
   },
   "access": {
     "login_required": "Inicia sesión para usar esta parte de Nodestro.",
@@ -681,7 +709,10 @@
     "review_not_found": "Esta revisión ya no está abierta.",
     "stale_price": "El precio de {{model}} no se ha comprobado desde hace demasiado tiempo; la solicitud no se envió (modo de precios estricto).",
     "price_unknown": "No se conoce ningún precio para {{model}}; la solicitud no se envió (modo de precios estricto).",
-    "price_unreliable": "El precio de {{model}} no es lo bastante fiable; la solicitud no se envió (modo de precios estricto)."
+    "price_unreliable": "El precio de {{model}} no es lo bastante fiable; la solicitud no se envió (modo de precios estricto).",
+    "region_required": "Un precio de Amazon Bedrock debe indicar las regiones de AWS a las que se aplica.",
+    "invalid_region": "Una de las regiones no es un nombre de región de AWS.",
+    "reconciliation_not_supported": "{{provider}} no tiene una API de facturación con la que Nodestro pueda comparar; compara tú mismo estos costes con tu factura."
   },
   "gate": {
     "blocked": "El control de publicación bloquea esta versión. Prueba exactamente esta versión con sus series de pruebas.",
@@ -796,7 +827,13 @@
       "provider_auth": "Revisa la clave en Ajustes → Proveedores de IA y prueba allí la conexión.",
       "provider_unreachable": "Revisa la conexión a internet, el cortafuegos o el proxy y luego continúa la ejecución.",
       "provider_rate_limited": "Espera un momento y continúa la ejecución. Menos ejecuciones simultáneas o un límite mayor con el proveedor lo solucionan a largo plazo.",
-      "provider_overloaded": "No se debe a tu flujo de trabajo. Espera unos minutos y luego continúa la ejecución."
+      "provider_overloaded": "No se debe a tu flujo de trabajo. Espera unos minutos y luego continúa la ejecución.",
+      "provider_auth_aws": "Revisa el inicio de sesión y los permisos en Ajustes → Proveedores de IA → Amazon Bedrock con «Comprobar conexión»."
+    },
+    "provider": {
+      "aws_access_denied": "Concede bedrock:InvokeModel y bedrock:InvokeModelWithResponseStream sobre el modelo o el perfil de inferencia (con «solo en la UE» también bedrock:GetInferenceProfile) y habilita el modelo en la consola de AWS.",
+      "aws_credentials_missing": "En este equipo: inicia sesión con «aws sso login» o revisa el perfil y luego usa «Comprobar conexión» en Ajustes → Proveedores de IA.",
+      "data_residency_violation": "Usa una región de la UE y un perfil de inferencia de la UE (eu.…) o un ID de modelo de esa región; los perfiles globales siempre se rechazan."
     }
   },
   "setupProvider": "Configurar proveedor de IA",

@@ -176,7 +176,8 @@
     "provider_auth": "{{provider}} did not accept the API key: it is missing, wrong, expired or lacks permission.",
     "provider_unreachable": "{{provider}} could not be reached.",
     "provider_rate_limited": "{{provider}} reported too many requests or tokens in a short time (rate limit).",
-    "provider_overloaded": "{{provider}} is overloaded right now."
+    "provider_overloaded": "{{provider}} is overloaded right now.",
+    "provider_auth_aws": "AWS did not accept the sign-in for Amazon Bedrock: credentials are missing or expired, or the IAM role lacks a permission."
   },
   "trace": {
     "invalid": "The trace is damaged or incomplete.",
@@ -291,7 +292,10 @@
     "orchestrator_member_approval": "{{name}}: the team {{workflow}} pauses for approvals. The orchestrator then waits too.",
     "orchestrator_selected_one": "{{name}} selects {{count}} team by capability: {{teams}}.",
     "orchestrator_selected_other": "{{name}} selects {{count}} teams by capability: {{teams}}.",
-    "orchestrator_no_match": "{{name}}: no saved team has one of the capabilities {{capabilities}}."
+    "orchestrator_no_match": "{{name}}: no saved team has one of the capabilities {{capabilities}}.",
+    "bedrock_not_configured": "Amazon Bedrock is not set up: choose an AWS region and how Nodestro signs in to AWS in the settings.",
+    "bedrock_not_available": "Amazon Bedrock is not available here. On a server, ask your operator to assign an AWS role to this workspace.",
+    "bedrock_settings_invalid": "Amazon Bedrock cannot be used with its settings: {{reason}}"
   },
   "backup": {
     "not_zip": "The file is not a Nodestro backup (no ZIP file).",
@@ -638,7 +642,31 @@
     "base_url_credentials": "The base URL must not contain credentials. Enter the key in the “API key” field.",
     "capability_unknown": "Unknown capabilities: {{names}}.",
     "not_configured": "{{provider}} is not set up: enter its base URL in the settings.",
-    "endpoint_not_allowed": "This model endpoint is not allowed on this server. Ask your administrator which endpoints are allowed."
+    "endpoint_not_allowed": "This model endpoint is not allowed on this server. Ask your administrator which endpoints are allowed.",
+    "bedrock_not_configured": "Amazon Bedrock is not set up: choose an AWS region and how Nodestro signs in to AWS in the settings.",
+    "region_missing": "No AWS region is set for Amazon Bedrock. Choose one in the settings, or set AWS_REGION where an exported project runs.",
+    "region_invalid": "“{{region}}” is not an AWS region name. Use a name like eu-central-1.",
+    "region_not_allowed": "The AWS region “{{region}}” is not allowed on this server. Ask your operator which regions are allowed.",
+    "auth_invalid": "Unknown sign-in method for AWS.",
+    "auth_not_allowed": "This sign-in method for AWS is not available here.",
+    "profile_name_invalid": "Invalid AWS profile name: use letters, digits and _ . + = , @ - only (at most 64 characters).",
+    "data_residency_invalid": "Unknown data residency; only EU-only is offered.",
+    "data_residency_forced": "Your operator requires EU-only data residency; it cannot be turned off.",
+    "data_residency_region": "EU-only data residency allows EU regions only; not allowed: {{region}}.",
+    "data_residency_violation": "The request was not sent: it could break the EU-only data residency (a region outside the EU, a global inference profile, or a destination that could not be checked).",
+    "field_not_supported": "{{provider}} does not use the setting “{{field}}”.",
+    "bedrock_not_available": "Amazon Bedrock is not available here. On a server, ask your operator to assign an AWS role to this workspace.",
+    "verify_not_supported": "This provider has no connection check of this kind.",
+    "verify_rate_limited": "The connection was checked a moment ago. Try again in a few seconds.",
+    "aws_credentials_missing": "No AWS credentials were found. Sign in with AWS SSO, set up the AWS profile, or check the environment.",
+    "aws_credentials_invalid": "AWS did not accept the credentials: they are wrong or have expired.",
+    "aws_access_denied": "AWS refused access: the IAM role or user lacks a permission for Amazon Bedrock.",
+    "aws_profile_not_found": "The AWS profile of the Bedrock settings does not exist in the AWS configuration of this computer.",
+    "aws_region_invalid": "The AWS region is not valid, or Amazon Bedrock is not offered there.",
+    "aws_model_not_found": "Amazon Bedrock does not know this model or inference profile in this region, or it is not enabled for the account.",
+    "aws_rate_limited": "AWS reported too many requests. Try again later.",
+    "aws_unreachable": "Amazon Bedrock could not be reached in this region (network, proxy or region name).",
+    "aws_verification_failed": "The connection check with AWS failed."
   },
   "access": {
     "login_required": "Log in to use this part of Nodestro.",
@@ -681,7 +709,10 @@
     "review_not_found": "This review is no longer open.",
     "stale_price": "The price of {{model}} has not been checked for too long; the request was not sent (strict price mode).",
     "price_unknown": "No price is known for {{model}}; the request was not sent (strict price mode).",
-    "price_unreliable": "The price of {{model}} is not reliable enough; the request was not sent (strict price mode)."
+    "price_unreliable": "The price of {{model}} is not reliable enough; the request was not sent (strict price mode).",
+    "region_required": "An Amazon Bedrock price must list the AWS regions it applies to.",
+    "invalid_region": "One of the regions is not an AWS region name.",
+    "reconciliation_not_supported": "{{provider}} has no billing API Nodestro can compare with; compare these costs with your bill yourself."
   },
   "gate": {
     "blocked": "The release gate blocks this version. Test exactly this version with its test series.",
@@ -796,7 +827,13 @@
       "provider_auth": "Check the key under Settings → AI providers and test the connection there.",
       "provider_unreachable": "Check the internet connection, firewall or proxy, then continue the run.",
       "provider_rate_limited": "Wait a moment and continue the run. Fewer runs at the same time or a higher limit with the provider help for good.",
-      "provider_overloaded": "This is not caused by your workflow. Wait a few minutes, then continue the run."
+      "provider_overloaded": "This is not caused by your workflow. Wait a few minutes, then continue the run.",
+      "provider_auth_aws": "Check the sign-in and permissions under Settings → AI providers → Amazon Bedrock with “Check connection”."
+    },
+    "provider": {
+      "aws_access_denied": "Grant bedrock:InvokeModel and bedrock:InvokeModelWithResponseStream on the model or inference profile (with EU-only also bedrock:GetInferenceProfile), and enable the model in the AWS console.",
+      "aws_credentials_missing": "On this computer: sign in with “aws sso login” or check the profile, then use “Check connection” under Settings → AI providers.",
+      "data_residency_violation": "Use an EU region and an EU inference profile (eu.…) or a model id of that region; global profiles are always refused."
     }
   },
   "setupProvider": "Set up AI provider",

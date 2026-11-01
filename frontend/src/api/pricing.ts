@@ -32,6 +32,11 @@ export interface PriceEntry {
   version: string | null;
   overridden: boolean;
   reference: PriceEntry | null;
+  /**
+   * Assumed API shape (Bedrock design §5): the AWS regions an ``aws_region`` tariff covers (Amazon Bedrock prices
+   * apply per region; a region not listed has an unknown cost, never 0). Null or missing for other providers.
+   */
+  regions?: string[] | null;
 }
 
 export interface PricingOverview {
@@ -118,9 +123,22 @@ export interface OverrideIn {
   source?: string;
   source_url?: string | null;
   note?: string | null;
+  /**
+   * Assumed API shape: Amazon Bedrock only, required there (pricing.region_required): the AWS regions these rates
+   * apply to; the API stores them as the price's ``aws_region`` tariff (pricing.invalid_region for a bad name).
+   */
+  aws_regions?: string[] | null;
 }
 
 export type BillingProvider = "openai" | "anthropic";
+
+/** Providers whose prices apply per AWS region (an ``aws_region`` tariff). */
+export const REGIONAL_PRICE_PROVIDERS = new Set(["bedrock"]);
+
+/** The region names of a comma or space separated text, without repeats. */
+export function parseRegions(text: string): string[] {
+  return [...new Set(text.split(/[\s,;]+/).map((item) => item.trim().toLowerCase()).filter(Boolean))];
+}
 
 export interface ReconciliationRequest {
   start: string;

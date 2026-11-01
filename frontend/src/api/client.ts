@@ -44,6 +44,8 @@ import type {
   MemorySpaceInfo,
   Meta,
   ProviderId,
+  ProviderStatus,
+  ProviderVerifyIn,
   ProviderSettingsIn,
   Run,
   RunSummary,
@@ -256,6 +258,9 @@ export const api = {
   /** Changes one provider's key, endpoint or declared capabilities. */
   saveProvider: (provider: ProviderId, change: ProviderSettingsIn) =>
     request<Settings>("PUT", "/settings", { providers: { [provider]: change } }),
+  /** Bedrock's explicit connection check (STS identity and a free control-plane read; no model is invoked). */
+  verifyProvider: (provider: ProviderId, body: ProviderVerifyIn = {}) =>
+    request<ProviderStatus>("POST", `/settings/providers/${provider}/verify`, body),
 
   workflows: () => request<WorkflowSummary[]>("GET", "/workflows"),
   workflow: (id: string) => request<Workflow>("GET", `/workflows/${id}`),

@@ -77,6 +77,11 @@ function interpolationParams(t: TFunction, params: Record<string, unknown> | nul
       result[key] = t("errors.run.someProvider");
       continue;
     }
+    if (key === "reason" && typeof value === "string" && /^provider\.[a-z_]+$/.test(value)) {
+      // Pre-checks of Amazon Bedrock name the provider problem behind them ("check.bedrock_settings_invalid").
+      result[key] = problemText(t, { code: value, params: { ...params, reason: undefined } });
+      continue;
+    }
     if (key === "permission" && typeof value === "string" && value) {
       // Permissions come as ids ("edit"); the sentence names them (AD-04).
       result[key] = t(`admin.permissions.${value}`, { defaultValue: value });
@@ -113,6 +118,7 @@ function resolved(item: Coded): { code: string | null; params: Record<string, un
  */
 export const PROVIDER_FAILURES = new Set([
   "run.provider_auth",
+  "run.provider_auth_aws",
   "run.provider_unreachable",
   "run.provider_rate_limited",
   "run.provider_overloaded",
@@ -132,6 +138,10 @@ export function refineProblem(
   message: string,
 ): { code: string | null; params: Record<string, unknown> } {
   // The sentences name the provider; without one they speak of the provider in general.
+  // Amazon Bedrock has no API key: a refused sign-in is about AWS credentials and IAM permissions.
+  if (code === "run.provider_auth" && params.provider === "bedrock") return { code: "run.provider_auth_aws", params };
+  // Its "not set up" means no region or sign-in method, not a missing base URL.
+  if (code === "provider.not_configured" && params.provider === "bedrock") return { code: "provider.bedrock_not_configured", params };
   if (code && PROVIDER_FAILURES.has(code)) return { code, params: { ...params, provider: params.provider ?? "" } };
   if (code === "run.api_error") {
     params = { ...params, provider: params.provider ?? "" };
@@ -246,15 +256,44 @@ export function runProblem(target: { error: string | null; error_code?: string |
   return { code: target.error_code ?? null, params: target.error_params ?? {}, message: target.error };
 }
 
-/** A refused API key, from the runtime's own code or read from an older run's provider error. */
+/**
+ * AWS sign-in problems of Amazon Bedrock (no key involved): missing or refused credentials, a profile that does not
+ * exist, missing permissions, a residency the settings forbid. Solved under Settings → AI providers.
+ */
+export const AWS_PROVIDER_PROBLEMS = new Set([
+  "provider.aws_credentials_missing",
+  "provider.aws_credentials_invalid",
+  "provider.aws_access_denied",
+  "provider.aws_profile_not_found",
+  "provider.aws_region_invalid",
+  "provider.aws_model_not_found",
+  "provider.aws_unreachable",
+  "provider.aws_rate_limited",
+  "provider.aws_verification_failed",
+  "provider.data_residency_violation",
+  "provider.data_residency_region",
+]);
+
+/** A refused API key or AWS sign-in, from the runtime's own code or read from an older run's provider error. */
 export function isProviderAuth(code: string | null | undefined): boolean {
-  return code === "run.provider_auth" || code === "run.api_error_auth";
+  return (
+    code === "run.provider_auth" ||
+    code === "run.provider_auth_aws" ||
+    code === "run.api_error_auth" ||
+    code === "provider.aws_credentials_missing" ||
+    code === "provider.aws_credentials_invalid" ||
+    code === "provider.aws_access_denied" ||
+    code === "provider.aws_profile_not_found"
+  );
 }
 
 /** Problems a person solves in Settings → AI providers (a missing key or endpoint), with or without an area prefix. */
 export function needsProviderSetup(item: Coded | null | undefined): boolean {
   const code = item?.code ?? "";
-  return /(^|\.)(api_key_missing|provider_not_configured)$/.test(code) || /(^|\.)provider\.not_configured$/.test(code);
+  return (
+    /(^|\.)(api_key_missing|provider_not_configured|bedrock_not_configured|bedrock_settings_invalid)$/.test(code) ||
+    /(^|\.)provider\.(not_configured|region_missing|region_invalid|region_not_allowed|aws_credentials_missing|aws_profile_not_found)$/.test(code)
+  );
 }
 
 /** "Set up AI provider" after such a problem; nothing for other problems. */

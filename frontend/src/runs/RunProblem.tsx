@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import type { Run } from "../api/types";
 import { Callout } from "../components/ui";
-import { PROVIDER_FAILURES, ProblemText, isProviderAuth, problemCode, runProblem } from "../lib/errors";
+import { AWS_PROVIDER_PROBLEMS, PROVIDER_FAILURES, ProblemText, isProviderAuth, problemCode, runProblem } from "../lib/errors";
 import { failedSteps } from "./runSummary";
 
 /** Codes of a failed agent whose fix is a setting under "Advanced" of that agent. */
@@ -26,6 +26,8 @@ const PROVIDER = new Set([
   "run.api_error_connection",
   "run.api_error_invalid",
   "run.api_error_status",
+  // Amazon Bedrock: the full model id (inference profile, ARN) tells which AWS resource was asked.
+  ...AWS_PROVIDER_PROBLEMS,
 ]);
 
 /** The run-level codes that only point at the steps that failed. */

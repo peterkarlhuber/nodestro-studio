@@ -46,6 +46,17 @@ export function useModelHint(model: string): string | undefined {
   const status = settings.data?.providers.find((item) => item.id === provider);
   if (status && !status.configured) return t("providers.notConfiguredHint", { provider: providerLabel(t, provider) });
   const info = findModel(meta.data?.models, model);
+  if (provider === "bedrock") {
+    // Catalog entries are suggestions: whether a model is enabled for the AWS account and region shows only when it
+    // is used (or checked). Any model id, inference profile id or ARN can be typed; it is kept exactly as typed.
+    if (info) {
+      const parts = [modelDescription(t, info), t("bedrock.model.suggestedHint")];
+      if (info.price_regions?.length) parts.push(t("bedrock.model.priceRegions", { regions: info.price_regions.join(", ") }));
+      if (info.price_status === "unknown") parts.push(t("models.priceStatus.unknown"));
+      return parts.join(" · ");
+    }
+    return model.trim() && splitModel(model).id ? t("bedrock.model.customHint") : t("bedrock.model.emptyHint");
+  }
   if (info) {
     const description = modelDescription(t, info);
     // A price that is missing, old, waiting for a review or set by hand changes what the costs mean.
@@ -107,7 +118,7 @@ export function ModelPicker({
           .filter((model) => model.provider === provider)
           .map((model) => (
             <option key={model.id} value={model.model}>
-              {model.label}
+              {provider === "bedrock" ? t("bedrock.model.suggestedOption", { model: model.label }) : model.label}
             </option>
           ))}
       </datalist>

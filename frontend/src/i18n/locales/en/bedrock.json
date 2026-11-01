@@ -1,0 +1,73 @@
+{
+  "intro": "Runs Claude, Amazon Nova and other models through your AWS account, in the AWS region you choose. Costs appear on your AWS bill.",
+  "notApiKey": "Amazon Bedrock needs no API key, and there is no key field here. Nodestro signs in with AWS credentials: on this computer your AWS default credentials or a named AWS profile, on a server a role your operator assigns. An IAM role or profile is not a key: Nodestro never stores AWS access keys.",
+  "state": {
+    "not_configured": "Not set up",
+    "configured": "Set up",
+    "verified": "Connection checked",
+    "failed": "Check failed"
+  },
+  "stateText": {
+    "not_configured": "Choose a region and how Nodestro signs in to AWS.",
+    "configured": "Region and sign-in are set. Whether AWS accepts them shows at the first run, or now with “Check connection”.",
+    "verified": "AWS accepted the sign-in and Amazon Bedrock answered in this region.",
+    "failed": "The last check failed. The reason and what to do are below."
+  },
+  "auth": {
+    "label": "Sign-in to AWS",
+    "default_chain": "AWS default credentials",
+    "default_chainHint": "The credentials AWS tools find on this computer: environment variables, AWS SSO (IAM Identity Center), the default profile or an instance role.",
+    "profile": "AWS profile",
+    "profileHint": "A named profile from your AWS configuration (~/.aws/config). Only the name is stored; the credentials stay in your AWS configuration.",
+    "operator_role": "Role assigned by the operator",
+    "operatorHint": "Your operator gave this workspace its own AWS role. You cannot see or change it.",
+    "notAvailable": "Amazon Bedrock is not available on this server for this workspace. Ask your operator to assign an AWS role to it."
+  },
+  "profile": {
+    "label": "Profile name",
+    "hint": "For example the name after [profile …] in ~/.aws/config.",
+    "invalid": "Use letters, digits and _ . + = , @ - only (at most 64 characters)."
+  },
+  "region": {
+    "label": "AWS region",
+    "for": "AWS region of {{provider}}",
+    "hint": "The region Nodestro sends requests to and AWS bills, for example eu-central-1 (Frankfurt). The model must be enabled there.",
+    "invalid": "This is not an AWS region name. Use a name like eu-central-1.",
+    "notAllowed": "Your operator allows these regions only: {{regions}}.",
+    "notEu": "With EU-only data residency only EU regions can be chosen: {{regions}}."
+  },
+  "residency": {
+    "label": "EU-only data residency",
+    "hint": "Before the first request Nodestro checks that the region and every region the model or inference profile can route to are in the EU, and sends nothing otherwise. Global inference profiles are refused.",
+    "forced": "Your operator requires EU-only data residency for every workspace; it cannot be turned off here.",
+    "limits": "This checks the configuration Nodestro sends requests with. It does not guarantee that AWS processes everything in the EU: invocation logging, abuse detection and your AWS account's other settings are outside Nodestro. London and Zurich are in Europe, not in the EU."
+  },
+  "save": "Save Bedrock settings",
+  "verify": {
+    "button": "Check connection",
+    "hint": "The check signs in to AWS and asks Amazon Bedrock for a list of models. No model is invoked, so it costs nothing.",
+    "done": "AWS accepted the sign-in; Amazon Bedrock is reachable.",
+    "checkedAt": "Last check: {{time}}."
+  },
+  "model": {
+    "suggestedOption": "{{model}} (suggested)",
+    "suggestedHint": "Suggested model: it is available only if it is enabled for your AWS account in this region",
+    "customHint": "Your own model id, inference profile id or ARN: it is passed to Amazon Bedrock exactly as typed. Its capabilities and price are unknown, so options that depend on them are turned off and costs show as unknown.",
+    "emptyHint": "Pick a suggested model or type a model id, an inference profile id (eu.…) or an ARN.",
+    "priceRegions": "prices for {{regions}}"
+  },
+  "agent": {
+    "anthropicOnly": "Only available for Anthropic models; Claude models on Amazon Bedrock do not offer it either.",
+    "capability": {
+      "unsupported": "{{capability}}: this model on Amazon Bedrock does not support it.",
+      "unknown": "{{capability}}: unknown for this model on Amazon Bedrock, so it is turned off. Pick a suggested model to use it."
+    }
+  },
+  "pricing": {
+    "regions": "AWS regions",
+    "regionsHint": "Amazon Bedrock prices apply per region. List the regions these rates apply to, separated by commas. A region not listed has an unknown cost, never 0.",
+    "regionsInvalid": "List at least one AWS region, with names like eu-central-1.",
+    "regionsList": "Regions: {{regions}}",
+    "noRegions": "No region listed: costs stay unknown"
+  }
+}
