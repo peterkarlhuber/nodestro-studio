@@ -1,0 +1,38 @@
+{
+  "connect": {
+    "title": "Verbindungen",
+    "summary": "{{incoming}} ein · {{outgoing}} aus",
+    "to": "Zu {{name}}",
+    "from": "Von {{name}}",
+    "show": "Auswählen",
+    "showLabel": "Verbindung auswählen: {{name}}",
+    "removeLabel": "Verbindung entfernen: {{name}}",
+    "listLabel": "Verbindungen dieses Schritts",
+    "none": "Dieser Schritt hat noch keine Verbindungen.",
+    "branch": "Zweig",
+    "target": "Verbinden mit",
+    "pick": "Schritt wählen …",
+    "noTargets": "Auf diesen Schritt kann kein anderer folgen.",
+    "create": "Verbinden",
+    "created": "{{source}} mit {{target}} verbunden."
+  },
+  "flow": {
+    "node": "Drücke Enter oder Leertaste, um diesen Schritt auszuwählen und seine Eigenschaften zu sehen. Die Pfeiltasten verschieben ihn, Entf entfernt ihn, Escape bricht ab. Schritte verbindest du unter „Verbindungen“ im Eigenschaftenbereich.",
+    "edge": "Drücke Enter oder Leertaste, um diese Verbindung auszuwählen. Entf entfernt sie, Escape bricht ab.",
+    "moved": "Schritt nach {{direction}} verschoben. Neue Position: x {{x}}, y {{y}}",
+    "direction": {
+      "up": "oben",
+      "down": "unten",
+      "left": "links",
+      "right": "rechts"
+    },
+    "controls": "Steuerung der Arbeitsfläche",
+    "interactive": "Arbeitsfläche sperren oder entsperren",
+    "handle": "Anschluss"
+  },
+  "nav": {
+    "menu": "Menü",
+    "open": "Alle Seiten zeigen",
+    "close": "Seitenliste ausblenden"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "connect": {
+    "title": "Collegamenti",
+    "summary": "{{incoming}} in entrata · {{outgoing}} in uscita",
+    "to": "A {{name}}",
+    "from": "Da {{name}}",
+    "show": "Seleziona",
+    "showLabel": "Seleziona collegamento: {{name}}",
+    "removeLabel": "Rimuovi collegamento: {{name}}",
+    "listLabel": "Collegamenti di questo passo",
+    "none": "Questo passo non ha ancora collegamenti.",
+    "branch": "Ramo",
+    "target": "Collega a",
+    "pick": "Scegli un passo …",
+    "noTargets": "Nessun altro passo può seguire questo.",
+    "create": "Collega",
+    "created": "{{source}} collegato a {{target}}."
+  },
+  "flow": {
+    "node": "Premi Invio o Spazio per selezionare questo passo e vederne le proprietà. Le frecce lo spostano, Canc lo rimuove, Esc annulla. Per collegare i passi usa Collegamenti nel pannello delle proprietà.",
+    "edge": "Premi Invio o Spazio per selezionare questo collegamento. Canc lo rimuove, Esc annulla.",
+    "moved": "Passo spostato verso {{direction}}. Nuova posizione: x {{x}}, y {{y}}",
+    "direction": {
+      "up": "l’alto",
+      "down": "il basso",
+      "left": "sinistra",
+      "right": "destra"
+    },
+    "controls": "Comandi dell’area di lavoro",
+    "interactive": "Blocca o sblocca l’area di lavoro",
+    "handle": "Porta"
+  },
+  "nav": {
+    "menu": "Menu",
+    "open": "Mostra tutte le pagine",
+    "close": "Nascondi l’elenco delle pagine"
+  }
+}

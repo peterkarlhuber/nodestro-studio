@@ -24,9 +24,12 @@ import type { AgentConfig, NodeType } from "../api/types";
 import { IconButton } from "../components/ui";
 import { toast } from "../components/toast";
 import { formatNumber } from "../lib/format";
+import { useAppTheme } from "../lib/theme";
 import { childLink, parseTrail } from "../lib/trail";
+import { useFlowAriaLabels } from "./flowA11y";
 import { useEditorLayout } from "./layout";
 import { type FlowNodeData, nodeTypes } from "./nodes";
+import { nodeName } from "./NodeConnections";
 import { type TeamPreset, connectionProblem, useEditor } from "./store";
 import { removeWithUndo } from "./actions";
 import { NEW_NODE, openingViewport, registerCanvasView } from "./viewport";
@@ -113,6 +116,8 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
   const { zoom } = useViewport();
   /** When the last node selection came in (see onEdgesChange). */
   const nodeSelection = useRef(0);
+  const theme = useAppTheme();
+  const ariaLabelConfig = useFlowAriaLabels();
   // Measured node sizes: the store keeps the workflow, React Flow needs the sizes (minimap, fit view).
   const [sizes, setSizes] = useState<Record<string, { width: number; height: number }>>({});
 
@@ -124,6 +129,10 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         position: node.position,
         selected: selectedIds.includes(node.id),
         measured: sizes[node.id],
+        // Screen readers announce the step by name and kind ("Writer (Agent)"), with its run status if any.
+        ariaLabel: [nodeName(node, t), run?.nodes[node.id] ? t(`status.${run.nodes[node.id].status}.label`) : ""]
+          .filter(Boolean)
+          .join(", "),
         data: {
           node,
           state: run?.nodes[node.id],
@@ -132,7 +141,7 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
           blocked: issues.blocked ?? false,
         } satisfies FlowNodeData,
       })),
-    [nodes, selectedIds, run, issues, sizes],
+    [nodes, selectedIds, run, issues, sizes, t],
   );
 
   const flowEdges: Edge[] = useMemo(
@@ -165,6 +174,9 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
           className: classes.join(" ") || undefined,
           animated: target === "running" && source === "succeeded",
           interactionWidth: 24,
+          // Out of the Tab order, so Tab reaches the steps first (React Flow renders connections before them);
+          // the inspector of a step lists its connections and selects them from the keyboard.
+          domAttributes: { tabIndex: -1 },
           ariaLabel: t("editor.canvas.edgeLabel", {
             source: nodes.find((node) => node.id === edge.source)?.label ?? "",
             target: nodes.find((node) => node.id === edge.target)?.label ?? "",
@@ -391,7 +403,8 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         minZoom={0.2}
         maxZoom={2}
         proOptions={{ hideAttribution: true }}
-        colorMode="system"
+        colorMode={theme}
+        ariaLabelConfig={ariaLabelConfig}
         defaultEdgeOptions={{ type: "default" }}
       >
         <Background variant={BackgroundVariant.Dots} gap={22} size={1} color="var(--nd-grid)" />

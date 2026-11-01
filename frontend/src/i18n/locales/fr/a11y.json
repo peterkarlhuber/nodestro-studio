@@ -1,0 +1,38 @@
+{
+  "connect": {
+    "title": "Connexions",
+    "summary": "{{incoming}} entrantes · {{outgoing}} sortantes",
+    "to": "Vers {{name}}",
+    "from": "Depuis {{name}}",
+    "show": "Sélectionner",
+    "showLabel": "Sélectionner la connexion : {{name}}",
+    "removeLabel": "Supprimer la connexion : {{name}}",
+    "listLabel": "Connexions de cette étape",
+    "none": "Cette étape n’a pas encore de connexion.",
+    "branch": "Branche",
+    "target": "Connecter à",
+    "pick": "Choisissez une étape …",
+    "noTargets": "Aucune autre étape ne peut suivre celle-ci.",
+    "create": "Connecter",
+    "created": "{{source}} connecté à {{target}}."
+  },
+  "flow": {
+    "node": "Appuyez sur Entrée ou Espace pour sélectionner cette étape et afficher ses propriétés. Les flèches la déplacent, Suppr la supprime, Échap annule. Pour connecter des étapes, utilisez Connexions dans le panneau des propriétés.",
+    "edge": "Appuyez sur Entrée ou Espace pour sélectionner cette connexion. Suppr la supprime, Échap annule.",
+    "moved": "Étape déplacée vers {{direction}}. Nouvelle position : x {{x}}, y {{y}}",
+    "direction": {
+      "up": "le haut",
+      "down": "le bas",
+      "left": "la gauche",
+      "right": "la droite"
+    },
+    "controls": "Commandes du canevas",
+    "interactive": "Verrouiller ou déverrouiller le canevas",
+    "handle": "Port"
+  },
+  "nav": {
+    "menu": "Menu",
+    "open": "Afficher toutes les pages",
+    "close": "Masquer la liste des pages"
+  }
+}

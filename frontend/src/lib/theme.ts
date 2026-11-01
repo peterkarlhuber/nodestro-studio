@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 
 export type Theme = "dark" | "light";
 
@@ -18,4 +18,15 @@ export function useTheme(): [Theme, (theme: Theme) => void] {
   }, [theme]);
   const setTheme = useCallback((value: Theme) => setThemeState(value), []);
   return [theme, setTheme];
+}
+
+function subscribe(onChange: () => void): () => void {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  return () => observer.disconnect();
+}
+
+/** The app theme as set by the theme switch (not the OS setting), e.g. for the canvas colour mode. */
+export function useAppTheme(): Theme {
+  return useSyncExternalStore(subscribe, current, () => "dark");
 }

@@ -26,13 +26,14 @@ light mode is an equivalent working view.
 | Border | `#3B4640` | `#D4DDD2` | Separators and outlines |
 | Primary text | `#F1F3ED` | `#1A251F` | Main content |
 | Muted text | `#ADBAB1` | `#56685E` | Secondary information |
+| Subtle text | `#94A39A` | `#5F6E64` | Hints, placeholders, tertiary labels |
 | Brand accent | `#BED372` | `#546B25` | Call to action, selected agents, active paths |
 | Brand soft | `#303923` | `#EBF1D6` | Navigation selection, tool chips |
 | Success | `#73D7AE` | `#126A50` | Finished successfully |
 | Running | `#8CBDDE` | `#246B97` | Currently running |
 | Warning | `#ECC179` | `#905614` | Needs attention |
 | Danger | `#F1958B` | `#B43E3A` | Error, cancelled execution |
-| Idle | `#AFBBB4` | `#63756A` | Waiting, not started yet |
+| Idle | `#AFBBB4` | `#5C6B61` | Waiting, not started yet |
 
 All color values and additional hover, pressed and focus tokens are in `nodestro-midnight-citron.css` and
 `nodestro-theme-tokens.json`.
@@ -89,7 +90,25 @@ All color values and additional hover, pressed and focus tokens are in `nodestro
 - Border radius: 7px (controls), 11px (panels), 15px (nodes), 20px (larger areas).
 - Spacing: 4 / 8 / 12 / 16 / 24 / 32 px.
 - Focus: a visible 2px ring via `--nd-focus`; not just a color change.
-- Motion: short, 130–220ms; respect `prefers-reduced-motion`.
+- Motion: short, 130–220ms; respect `prefers-reduced-motion`, also in script animations (`lib/motion.ts`).
+
+## Accessibility rules (WCAG 2.2 AA)
+
+- **Contrast:** every text token pair reaches at least 4.5:1 in both themes, also on raised, canvas and brand-soft
+  backgrounds and in 10–11px badges. Check new tokens before adding them.
+- **Links:** links inside running text (paragraphs, lists, callouts, docs) are underlined, so they do not depend on
+  color alone. Navigation, tabs and buttons are not underlined.
+- **Forms:** a `Field` links its label and hint to the TextInput, TextArea or Select inside it; other controls need
+  `htmlFor` and an `id`, or their own `aria-label`.
+- **Dialogs:** a dialog focuses its `autoFocus` field or the element marked `data-autofocus` (Cancel in a destructive
+  confirmation), and gives the focus back to the element that opened it when it closes.
+- **Destructive actions:** use a confirmation dialog for things that cannot be recovered and affect more than one
+  item or other workflows (deleting a workflow, clearing memory, deleting an API). Use the inline two-step button
+  (`ConfirmIconButton`, "Delete?") for a single, cheap item in a list (a run, a file, a key). Both return the focus
+  to the trigger on Escape.
+- **Keyboard:** everything that can be done with the pointer has a keyboard path; on the canvas, steps are connected
+  through *Connections* in the inspector.
+- **Touch:** interactive targets are at least 24×24px, and 44px high under `pointer: coarse` where space allows.
 
 ## Usage in the frontend
 

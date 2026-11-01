@@ -137,13 +137,16 @@ export function RunDialog({
           <p className="field__hint">
             {t("flow.form.runIntro")} <HelpTip id="flow.form" label={t("flow.form.title")} />
           </p>
-          <FormFields
-            fields={fields}
-            values={values}
-            onChange={setValues}
-            errors={fieldErrors(run.error)}
-            onPendingChange={(name, count) => setPending((current) => ({ ...current, [name]: count }))}
-          />
+          {/* The first form field gets the focus when the dialog opens. */}
+          <div data-autofocus>
+            <FormFields
+              fields={fields}
+              values={values}
+              onChange={setValues}
+              errors={fieldErrors(run.error)}
+              onPendingChange={(name, count) => setPending((current) => ({ ...current, [name]: count }))}
+            />
+          </div>
           <Field
             label={prefilled ? t("flow.form.prefilledInput") : t("flow.form.extraInput")}
             hint={prefilled ? t("flow.form.prefilledInputHint") : t("flow.form.extraInputHint")}

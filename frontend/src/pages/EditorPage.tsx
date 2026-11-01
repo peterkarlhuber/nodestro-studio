@@ -507,7 +507,7 @@ export function EditorPage() {
         onClose={() => setDiscardOpen(false)}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setDiscardOpen(false)}>
+            <Button variant="ghost" data-autofocus onClick={() => setDiscardOpen(false)}>
               {t("common.cancel")}
             </Button>
             <Button
