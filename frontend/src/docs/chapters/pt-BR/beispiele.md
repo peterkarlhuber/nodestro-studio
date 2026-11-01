@@ -112,7 +112,7 @@ Cada exemplo está na galeria e tem sua própria seção abaixo.
 
 **Área:** Produção e indústria · **Agentes:** 3 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, formulário de entrada, subfluxo, arquivos de resultado, arquivos como entrada
 
-Paradas custam tempo de produção, mas em registros longos os padrões passam despercebidos facilmente. O fluxo de trabalho transforma um registro de paradas em uma lista de medidas justificada e priorizada.
+Paradas custam tempo de produção, mas em registros longos os padrões passam despercebidos facilmente. O workflow transforma um registro de paradas em uma lista de medidas justificada e priorizada.
 
 **Como os agentes trabalham juntos:** Dois agentes trabalham em paralelo: o analista de paradas calcula totais, participações e um ranking de Pareto com a calculadora, enquanto o analista de causas desenvolve hipóteses pelos 6M. O planejador de ações reúne os dois, e uma verificação de qualidade integrada garante que cada medida esteja justificada. Se a participação das paradas ficar acima da meta de 3 %, um nó de decisão inicia um subfluxo de qualidade que avalia os riscos das medidas e planeja como garanti-las.
 
@@ -141,7 +141,7 @@ Paradas custam tempo de produção, mas em registros longos os padrões passam d
 
 **Área:** Gestão da qualidade · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, aprovação, formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento, arquivos de conhecimento
 
-Reclamações exigem contenção rápida e uma análise de causa sólida. O método 8D define os passos; o fluxo de trabalho os percorre de forma estruturada e os documenta de maneira consistente. Ele também verifica se o defeito já ocorreu antes: uma causa que volta significa que uma ação corretiva anterior não funcionou, e isso precisa constar no relatório.
+Reclamações exigem contenção rápida e uma análise de causa sólida. O método 8D define os passos; o workflow os percorre de forma estruturada e os documenta de maneira consistente. Ele também verifica se o defeito já ocorreu antes: uma causa que volta significa que uma ação corretiva anterior não funcionou, e isso precisa constar no relatório.
 
 **Como os agentes trabalham juntos:** Uma cadeia sequencial: o primeiro agente descreve o problema e as ações de contenção (D1 a D3). O segundo pesquisa casos comparáveis nos relatórios 8D anteriores da empresa e busca as causas de ocorrência e de não detecção (D4), indicando se uma causa é recorrente ou nova. O terceiro planeja ações corretivas e preventivas (D5 a D7). O agente de relatório reúne tudo em um relatório 8D estruturado. Um nó de decisão verifica a gravidade: em casos críticos, um agente adicional planeja a contenção de emergência das próximas 24 horas. Antes de o relatório ir para o cliente, uma pessoa o libera.
 
@@ -174,7 +174,7 @@ Reclamações exigem contenção rápida e uma análise de causa sólida. O mét
 
 **Área:** Logística e compras · **Agentes:** 3 · **Padrão:** paralelo · **Nível:** Avançado · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada, conexão MCP opcional
 
-O menor preço unitário raramente é a proposta mais barata, e as promessas de um fornecedor não são o seu histórico. O fluxo de trabalho compara propostas por custo total e risco de fornecimento, verifica o histórico dos fornecedores quando ele existe e justifica uma recomendação para compras.
+O menor preço unitário raramente é a proposta mais barata, e as promessas de um fornecedor não são o seu histórico. O workflow compara propostas por custo total e risco de fornecimento, verifica o histórico dos fornecedores quando ele existe e justifica uma recomendação para compras.
 
 **Como os agentes trabalham juntos:** O analista de custos e o analista de riscos trabalham em paralelo. Um calcula o custo total de propriedade por proposta com a calculadora, o outro avalia prazo de entrega, dependências, capacidade e qualidade. Se a sua cópia estiver conectada ao ERP, o analista de riscos lê a avaliação de cada fornecedor, apenas para leitura, com list_suppliers e supplier_scorecard; sem conexão, usa uma exportação do ERP anexada ou só as propostas e diz qual histórico falta. A recomendação de compra pondera os dois e entrega um resultado estruturado.
 
@@ -209,7 +209,7 @@ O menor preço unitário raramente é a proposta mais barata, e as promessas de 
 
 **Área:** Empresas e PMEs · **Agentes:** 4 · **Padrão:** paralelo · **Nível:** Avançado · **Elementos:** arquivos de resultado
 
-Muitas pequenas empresas conhecem seus problemas, mas não a melhor ordem para enfrentá-los. O fluxo de trabalho cria uma análise SWOT, deriva estratégias dela e as submete a um revisor crítico.
+Muitas pequenas empresas conhecem seus problemas, mas não a melhor ordem para enfrentá-los. O workflow cria uma análise SWOT, deriva estratégias dela e as submete a um revisor crítico.
 
 **Como os agentes trabalham juntos:** A análise interna (forças, fraquezas) e a análise do ambiente (oportunidades, ameaças) rodam em paralelo. O desenvolvedor de estratégia combina as duas em estratégias segundo a matriz TOWS e um plano de 90 dias. O revisor crítico busca pontos fracos e informações ausentes; o resultado contém estratégia e revisão. No final, o resultado é salvo com a execução como arquivo Markdown e PDF.
 
@@ -237,7 +237,7 @@ Muitas pequenas empresas conhecem seus problemas, mas não a melhor ordem para e
 
 **Área:** Finanças e investimentos · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Iniciante · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento
 
-Números de relatórios anuais são citados rapidamente, mas raramente recalculados e colocados em contexto. O fluxo de trabalho extrai os números, calcula margens e crescimento com exatidão e faz revisar o resultado criticamente.
+Números de relatórios anuais são citados rapidamente, mas raramente recalculados e colocados em contexto. O workflow extrai os números, calcula margens e crescimento com exatidão e faz revisar o resultado criticamente.
 
 > Exige revisão especializada: os resultados são ferramentas de apoio e precisam ser verificados por uma pessoa qualificada.
 
@@ -268,7 +268,7 @@ Números de relatórios anuais são citados rapidamente, mas raramente recalcula
 
 **Área:** Marketing e conteúdo · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Iniciante · **Elementos:** arquivos de resultado
 
-Bons artigos nascem de um briefing claro: quem vai ler, de qual ângulo e com quais mensagens-chave. O fluxo de trabalho trabalha como uma pequena redação e verifica o resultado antes da publicação.
+Bons artigos nascem de um briefing claro: quem vai ler, de qual ângulo e com quais mensagens-chave. O workflow trabalha como uma pequena redação e verifica o resultado antes da publicação.
 
 **Como os agentes trabalham juntos:** Um modelo rápido cria um briefing estruturado com público, abordagem, estrutura e mensagens-chave. O redator transforma o briefing no artigo; uma verificação de qualidade integrada garante que ele siga a estrutura e responda às perguntas dos leitores e, caso contrário, o devolve uma vez para revisão. Uma revisão rápida verifica extensão e legibilidade com a ferramenta de estatísticas de texto e marca afirmações não verificadas.
 
@@ -286,7 +286,7 @@ Bons artigos nascem de um briefing claro: quem vai ler, de qual ângulo e com qu
 
 **O que é decidido automaticamente e quando uma pessoa intervém:** Automático: briefing, artigo e revisão rodam um após o outro; nenhuma etapa espera por uma pessoa. Uma verificação de qualidade separada avalia o artigo por dois critérios (segue a estrutura, responde às perguntas dos leitores) e, se um deles não for atendido, faz o redator revisá-lo uma vez. A revisão não muda o conteúdo; ela marca as afirmações que precisam de fonte. O artigo é um rascunho: você decide se e onde ele será publicado.
 
-**Por que esta arquitetura:** Um único briefing estruturado substitui dois planejadores em paralelo cujos resultados o redator precisava conciliar: antes, a estrutura era criada sem conhecer o público. Agora público, abordagem, estrutura e mensagens-chave vêm da mesma ideia e chegam ao redator como campos bem separados. O redator tem uma verificação de qualidade com revisão automática porque é ali que surge a maioria das falhas. Como exemplo para iniciantes, o fluxo de trabalho continua sendo de propósito uma cadeia curta, sem ramificações, loops ou aprovações, para que cada etapa possa ser acompanhada na execução.
+**Por que esta arquitetura:** Um único briefing estruturado substitui dois planejadores em paralelo cujos resultados o redator precisava conciliar: antes, a estrutura era criada sem conhecer o público. Agora público, abordagem, estrutura e mensagens-chave vêm da mesma ideia e chegam ao redator como campos bem separados. O redator tem uma verificação de qualidade com revisão automática porque é ali que surge a maioria das falhas. Como exemplo para iniciantes, o workflow continua sendo de propósito uma cadeia curta, sem ramificações, loops ou aprovações, para que cada etapa possa ser acompanhada na execução.
 
 **Como adaptar:** Mude o tema na entrada. Você pode carregar seu guia de estilo como conhecimento e atribuí-lo ao redator e à revisão. Defina a extensão desejada no prompt de sistema do redator e o número de seções ou de mensagens-chave no prompt de sistema do briefing.
 
@@ -295,7 +295,7 @@ Bons artigos nascem de um briefing claro: quem vai ler, de qual ângulo e com qu
 
 **Área:** Vendas · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Avançado · **Elementos:** aprovação, ciclo de revisão, formulário de entrada, arquivos de resultado, arquivos como entrada
 
-Uma boa proposta responde à necessidade real do cliente, não só às palavras-chave dele. O fluxo de trabalho esclarece a necessidade, calcula uma solução adequada e redige uma proposta completa que uma pessoa aprova.
+Uma boa proposta responde à necessidade real do cliente, não só às palavras-chave dele. O workflow esclarece a necessidade, calcula uma solução adequada e redige uma proposta completa que uma pessoa aprova.
 
 **Como os agentes trabalham juntos:** O analista de necessidades separa requisitos explícitos e implícitos e reúne perguntas em aberto. O consultor de soluções monta itens da tabela de preços e calcula com a calculadora, incluindo uma variante dentro do orçamento. O redator da proposta redige a proposta; uma verificação de qualidade integrada confere completude e preços. Um formulário de entrada recebe os dados principais (cliente, prazo, orçamento, montagem no fim de semana). Depois uma pessoa aprova o rascunho; uma rejeição com comentário o devolve por um loop ao redator da proposta, que o revisa e o apresenta de novo.
 
@@ -313,7 +313,7 @@ Uma boa proposta responde à necessidade real do cliente, não só às palavras-
 
 **Resultado:** Um rascunho de proposta com carta de apresentação, tabela de itens, totais, variantes, premissas e perguntas em aberto. Só depois da sua aprovação a execução salva a proposta em PDF e como arquivo Word editável; o envio ao cliente continua sendo com você.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: análise de necessidades, cálculo e rascunho rodam sem espera; uma verificação de qualidade separada avalia a proposta por três critérios (todos os requisitos tratados, preços de acordo com o cálculo, pontos em aberto indicados) e, se necessário, faz revisá-la uma vez. Depois uma pessoa decide: a aprovação gera os arquivos; a rejeição exige um comentário e devolve a proposta ao redator junto com o rascunho anterior. O loop permite no máximo três rodadas de revisão; depois disso, a execução termina com falha. A análise de necessidades e o cálculo do consultor de soluções não são repetidos; se o comentário mudar quantidades, descontos ou itens de entrega, o redator da proposta recalcula os totais afetados com a calculadora. O fluxo de trabalho nunca envia nada ao cliente.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: análise de necessidades, cálculo e rascunho rodam sem espera; uma verificação de qualidade separada avalia a proposta por três critérios (todos os requisitos tratados, preços de acordo com o cálculo, pontos em aberto indicados) e, se necessário, faz revisá-la uma vez. Depois uma pessoa decide: a aprovação gera os arquivos; a rejeição exige um comentário e devolve a proposta ao redator junto com o rascunho anterior. O loop permite no máximo três rodadas de revisão; depois disso, a execução termina com falha. A análise de necessidades e o cálculo do consultor de soluções não são repetidos; se o comentário mudar quantidades, descontos ou itens de entrega, o redator da proposta recalcula os totais afetados com a calculadora. O workflow nunca envia nada ao cliente.
 
 **Por que esta arquitetura:** Toda solicitação precisa das mesmas etapas na mesma ordem, por isso uma cadeia fixa funciona melhor do que um orquestrador. Os preços são calculados com a calculadora em uma etapa própria, de modo que o redator pega dali os preços de tabela em vez de inventá-los. O loop na aprovação existe porque as rejeições costumam ser pequenas correções, como uma formulação, uma observação sobre desconto ou uma pergunta em aberto que faltou; revisar com o comentário é mais rápido do que recomeçar. Ele volta de propósito só ao redator da proposta, que recalcula com a calculadora quantidades ou descontos alterados, mas não acrescenta novos preços de tabela; assim a base conferida da solução se mantém.
 
@@ -324,7 +324,7 @@ Uma boa proposta responde à necessidade real do cliente, não só às palavras-
 
 **Área:** Atendimento ao cliente · **Agentes:** 4 · **Padrão:** com ramificações · **Nível:** Iniciante · **Elementos:** decisão, aprovação, ciclo de revisão, formulário de entrada, arquivos como entrada, conexão MCP opcional
 
-No atendimento ao cliente muitas solicitações chegam ao mesmo tempo, e cada uma precisa da regra certa, dos dados de pedido certos e do tom certo. O fluxo de trabalho classifica as solicitações, verifica políticas e prazos com base nos dados do pedido e prepara respostas para aprovação.
+No atendimento ao cliente muitas solicitações chegam ao mesmo tempo, e cada uma precisa da regra certa, dos dados de pedido certos e do tom certo. O workflow classifica as solicitações, verifica políticas e prazos com base nos dados do pedido e prepara respostas para aprovação.
 
 **Como os agentes trabalham juntos:** Um classificador rápido organiza cada solicitação por assunto, urgência e humor. O verificador de políticas aplica a política de atendimento e recalcula prazos com a ferramenta de datas; se a sua cópia estiver conectada à loja, ele consulta cada pedido, somente para leitura, com get_order, caso contrário usa os dados de pedido das solicitações ou uma exportação de pedidos anexada. O redator de respostas redige as respostas; uma verificação de qualidade garante que nada seja prometido além da política. Um nó de decisão envia os escalonamentos primeiro a um agente de desescalada. Cada rascunho aguarda aprovação; uma rejeição com comentário devolve os rascunhos, por um laço, ao redator de respostas, que os revisa e os envia de novo para aprovação (no máximo três rodadas).
 
@@ -360,7 +360,7 @@ No atendimento ao cliente muitas solicitações chegam ao mesmo tempo, e cada um
 
 **Área:** Recursos humanos · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, aprovação, arquivos de resultado
 
-Uma boa contratação começa com um perfil claro e entrevistas justas e comparáveis. O fluxo de trabalho transforma anotações soltas em perfil da vaga, anúncio e roteiro de entrevista, verifica a imparcialidade de tudo e deixa a aprovação com uma pessoa.
+Uma boa contratação começa com um perfil claro e entrevistas justas e comparáveis. O workflow transforma anotações soltas em perfil da vaga, anúncio e roteiro de entrevista, verifica a imparcialidade de tudo e deixa a aprovação com uma pessoa.
 
 > Exige revisão especializada: os resultados são ferramentas de apoio e precisam ser verificados por uma pessoa qualificada.
 
@@ -380,7 +380,7 @@ Uma boa contratação começa com um perfil claro e entrevistas justas e compar�
 
 **Resultado:** Perfil da vaga, anúncio da vaga e roteiro de entrevista com âncoras de avaliação, uma revisão de imparcialidade estruturada e, se houver objeções, uma versão revisada com a lista de alterações. A execução só cria o arquivo Word depois da aprovação.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o revisor de imparcialidade entrega um parecer estruturado; se os documentos não puderem ser usados sem alterações, um nó de decisão os envia para a revisão; caso contrário, eles seguem direto para a aprovação. O ramo escolhido fica visível na execução. A decisão final fica com uma pessoa: o gestor da vaga ou o RH verifica todos os documentos na aprovação; uma rejeição exige um comentário e encerra a execução, e só uma aprovação cria o arquivo Word. O fluxo de trabalho apenas produz documentos: ele nunca vê, avalia ou classifica candidatos reais.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o revisor de imparcialidade entrega um parecer estruturado; se os documentos não puderem ser usados sem alterações, um nó de decisão os envia para a revisão; caso contrário, eles seguem direto para a aprovação. O ramo escolhido fica visível na execução. A decisão final fica com uma pessoa: o gestor da vaga ou o RH verifica todos os documentos na aprovação; uma rejeição exige um comentário e encerra a execução, e só uma aprovação cria o arquivo Word. O workflow apenas produz documentos: ele nunca vê, avalia ou classifica candidatos reais.
 
 **Por que esta arquitetura:** Anúncio e roteiro dependem apenas do perfil, por isso são criados em paralelo e verificados juntos, o que mantém requisitos e formulações coerentes. A revisão de imparcialidade funciona como um filtro automático: a revisão só custa uma etapa a mais quando há objeções. De propósito não há um loop de verificação e revisão, porque questões de imparcialidade e jurídicas não devem ser dadas como resolvidas só porque os modelos concordam entre si; quem aprova vê a verificação, a versão revisada e os pontos em aberto lado a lado. A triagem de candidatos fica de fora de propósito, pois seria IA de alto risco pelo Regulamento de IA da UE.
 
@@ -429,7 +429,7 @@ Boa pesquisa começa com uma pergunta precisa e testável e com os métodos cert
 
 **Área:** Desenvolvimento de software · **Agentes:** 3 · **Padrão:** paralelo · **Nível:** Avançado · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada
 
-Um segundo olhar encontra bugs antes que cheguem à produção. O fluxo de trabalho verifica o código ao mesmo tempo quanto a erros de lógica e problemas de segurança e entrega uma versão melhorada com testes.
+Um segundo olhar encontra bugs antes que cheguem à produção. O workflow verifica o código ao mesmo tempo quanto a erros de lógica e problemas de segurança e entrega uma versão melhorada com testes.
 
 **Como os agentes trabalham juntos:** O analista de bugs e o revisor de segurança trabalham em paralelo no mesmo código. O agente de melhoria reúne as constatações e escreve código corrigido e testes pytest; uma verificação de qualidade integrada garante que cada constatação seja tratada e coberta por testes.
 
@@ -447,18 +447,18 @@ Um segundo olhar encontra bugs antes que cheguem à produção. O fluxo de traba
 
 **Resultado:** Uma lista de achados ordenada por gravidade, o código corrigido e testes pytest que cobrem cada achado, também como arquivo Markdown. Os testes não são executados automaticamente; rode-os localmente.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: uma verificação de qualidade feita por um segundo modelo confere a resposta de Correção e testes com três critérios (cada achado tratado, um teste para cada achado corrigido, código completo sem marcadores); se um critério falhar, o agente revisa a resposta uma vez, e o resultado da verificação fica registrado com a execução. A verificação avalia o texto, não executa o código. Nenhuma etapa espera por uma pessoa, não há orçamento próprio (vale o orçamento padrão do seu espaço de trabalho) e arquivos compactados enviados são apenas lidos, nunca executados. O código corrigido e os testes são uma proposta: revise-os e rode os testes localmente antes de adotar qualquer coisa.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: uma verificação de qualidade feita por um segundo modelo confere a resposta de Correção e testes com três critérios (cada achado tratado, um teste para cada achado corrigido, código completo sem marcadores); se um critério falhar, o agente revisa a resposta uma vez, e o resultado da verificação fica registrado com a execução. A verificação avalia o texto, não executa o código. Nenhuma etapa espera por uma pessoa, não há orçamento próprio (vale o orçamento padrão do seu workspace) e arquivos compactados enviados são apenas lidos, nunca executados. O código corrigido e os testes são uma proposta: revise-os e rode os testes localmente antes de adotar qualquer coisa.
 
-**Por que esta arquitetura:** Bugs e problemas de segurança são dois olhares independentes sobre o mesmo código, por isso o analista de bugs e o revisor de segurança trabalham em paralelo e nenhum espera pelo outro; o agente de correção recebe também o código original para unir as constatações e remover duplicatas. A verificação de qualidade com uma revisão existe porque, ao juntar duas revisões, o erro típico é esquecer um achado ou um teste. Um coordenador não foi usado de propósito, porque toda revisão precisa dos dois olhares; executar código ou testes no fluxo de trabalho também ficou de fora, para que código desconhecido nunca rode na plataforma.
+**Por que esta arquitetura:** Bugs e problemas de segurança são dois olhares independentes sobre o mesmo código, por isso o analista de bugs e o revisor de segurança trabalham em paralelo e nenhum espera pelo outro; o agente de correção recebe também o código original para unir as constatações e remover duplicatas. A verificação de qualidade com uma revisão existe porque, ao juntar duas revisões, o erro típico é esquecer um achado ou um teste. Um coordenador não foi usado de propósito, porque toda revisão precisa dos dois olhares; executar código ou testes no workflow também ficou de fora, para que código desconhecido nunca rode na plataforma.
 
-**Como adaptar:** Anexe o seu projeto como ZIP ou cole o código e informe a linguagem e o framework. Para outras linguagens, ajuste o framework de testes no agente de correção, por exemplo Jest ou JUnit. As suas diretrizes de código podem ser salvas como conhecimento. Pela API do fluxo de trabalho, a revisão também pode ser disparada a partir de um pipeline de CI.
+**Como adaptar:** Anexe o seu projeto como ZIP ou cole o código e informe a linguagem e o framework. Para outras linguagens, ajuste o framework de testes no agente de correção, por exemplo Jest ou JUnit. As suas diretrizes de código podem ser salvas como conhecimento. Pela API do workflow, a revisão também pode ser disparada a partir de um pipeline de CI.
 
 ## 12 · Estruturar um contrato e encontrar pontos de verificação {#contract-review}
 <!-- keywords: direito e administração, estruturador do contrato, explicador de cláusulas, analista de pontos de verificação, visão geral do contrato, cláusulas críticas -->
 
 **Área:** Direito e administração · **Agentes:** 5 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento, arquivos de conhecimento
 
-Contratos são longos, e cláusulas importantes se escondem nos detalhes. Se uma cláusula é aceitável depende também dos padrões próprios da empresa. O fluxo de trabalho estrutura um contrato, explica-o em linguagem simples e o confronta com o manual de negociação contratual (playbook) do cliente, para que uma pessoa qualificada veja logo onde ele se desvia. Ele não substitui aconselhamento jurídico.
+Contratos são longos, e cláusulas importantes se escondem nos detalhes. Se uma cláusula é aceitável depende também dos padrões próprios da empresa. O workflow estrutura um contrato, explica-o em linguagem simples e o confronta com o manual de negociação contratual (playbook) do cliente, para que uma pessoa qualificada veja logo onde ele se desvia. Ele não substitui aconselhamento jurídico.
 
 > Exige revisão especializada: os resultados são ferramentas de apoio e precisam ser verificados por uma pessoa qualificada.
 
@@ -480,7 +480,7 @@ Contratos são longos, e cláusulas importantes se escondem nos detalhes. Se uma
 
 **Resultado:** Uma visão geral estruturada com resumo, dados principais, cláusulas explicadas, pontos de verificação e perguntas para um advogado ou uma advogada, também em PDF e como arquivo Word editável. Cada ponto de verificação indica a seção do playbook com que foi comparado, e os temas sobre os quais o playbook não diz nada são marcados como tal. O estruturador propõe os dados principais do contrato para o conhecimento, por exemplo para um cadastro de contratos; só é salvo o que você confirmar. O resultado é uma ferramenta de trabalho, não aconselhamento jurídico.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o analista de pontos de verificação classifica cada cláusula com base no playbook e conta as críticas; toda linha vermelha conta como crítica. Se o número for maior que zero, o nó de decisão acrescenta a análise aprofundada das cláusulas críticas; caso contrário, ela é pulada. Nenhuma etapa espera por uma pessoa, e o fluxo de trabalho não envia nada. A visão geral e as perguntas são a base para a análise por um advogado ou uma advogada; o que é negociado, decidem as pessoas envolvidas.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o analista de pontos de verificação classifica cada cláusula com base no playbook e conta as críticas; toda linha vermelha conta como crítica. Se o número for maior que zero, o nó de decisão acrescenta a análise aprofundada das cláusulas críticas; caso contrário, ela é pulada. Nenhuma etapa espera por uma pessoa, e o workflow não envia nada. A visão geral e as perguntas são a base para a análise por um advogado ou uma advogada; o que é negociado, decidem as pessoas envolvidas.
 
 **Por que esta arquitetura:** Explicar e verificar não dependem um do outro e, por isso, rodam em paralelo sobre a estrutura. O playbook é conhecimento pesquisável em vez de texto no prompt: o jurídico o mantém em um só lugar, a pesquisa traz apenas a seção relevante e a citação torna cada classificação rastreável. A análise aprofundada é uma ramificação porque só compensa o custo quando uma linha vermelha é ultrapassada. Não se usou um orquestrador, porque todo contrato precisa das mesmas etapas.
 
@@ -493,7 +493,7 @@ Contratos são longos, e cláusulas importantes se escondem nos detalhes. Se uma
 
 **Área:** Educação e formação · **Agentes:** 4 · **Padrão:** paralelo · **Nível:** Iniciante · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada, memória
 
-Aprender funciona melhor com um plano que começa de onde você está. O fluxo de trabalho cria um plano de estudos pessoal, explica os primeiros temas e verifica a compreensão com um quiz.
+Aprender funciona melhor com um plano que começa de onde você está. O workflow cria um plano de estudos pessoal, explica os primeiros temas e verifica a compreensão com um quiz.
 
 **Como os agentes trabalham juntos:** O diagnóstico de aprendizagem determina o ponto de partida e as lacunas, e o planejador de estudos cria com isso um plano semanal. Com base nele, o tutor (conteúdos da semana escolhida, apoiados no seu material do curso se você quiser) e o autor do quiz (verificação de conhecimentos com gabarito) trabalham em paralelo. O resultado contém as três partes. O diagnóstico e o planejador compartilham uma memória: primeiro leem o progresso das semanas anteriores e no final o atualizam, de modo que cada semana se apoia na anterior.
 
@@ -512,18 +512,18 @@ Aprender funciona melhor com um plano que começa de onde você está. O fluxo d
 
 **Resultado:** Um plano de estudos de quatro semanas com objetivos por semana, explicações claras com exercícios para a semana escolhida e um quiz com gabarito e explicações, também em PDF para imprimir.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: no início de cada execução, o diagnóstico de aprendizagem e o planejador de estudos leem a memória "learning-progress" e a atualizam no final. Ela guarda o nível, os objetivos, os temas concluídos, as dificuldades e o plano resumido, mas nenhum dado pessoal sensível. A memória pertence à sua cópia e se mantém entre execuções; no editor do fluxo de trabalho você vê e apaga as entradas na memória de qualquer um dos dois agentes, por exemplo para corrigir uma entrada errada ou recomeçar com outra pessoa. Na primeira semana a memória está vazia e o fluxo de trabalho trabalha apenas com a sua descrição. Nenhuma etapa espera por uma pessoa: plano, explicações e quiz são sugestões que você adapta ao seu próprio ritmo.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: no início de cada execução, o diagnóstico de aprendizagem e o planejador de estudos leem a memória "learning-progress" e a atualizam no final. Ela guarda o nível, os objetivos, os temas concluídos, as dificuldades e o plano resumido, mas nenhum dado pessoal sensível. A memória pertence à sua cópia e se mantém entre execuções; no editor do workflow você vê e apaga as entradas na memória de qualquer um dos dois agentes, por exemplo para corrigir uma entrada errada ou recomeçar com outra pessoa. Na primeira semana a memória está vazia e o workflow trabalha apenas com a sua descrição. Nenhuma etapa espera por uma pessoa: plano, explicações e quiz são sugestões que você adapta ao seu próprio ritmo.
 
 **Por que esta arquitetura:** Aprender leva semanas, mas cada execução começa do zero. Sem memória, você teria de descrever o seu progresso toda semana, e o plano seria refeito do início em vez de se apoiar na semana anterior. A memória guarda exatamente esse estado que muda; o material do curso que não muda pertence ao conhecimento. Só o diagnóstico e o planejador lembram, porque decidem o que vem a seguir; o tutor e o autor do quiz trabalham em paralelo na semana escolhida do plano e não precisam de histórico próprio.
 
-**Como adaptar:** Descreva o seu próprio objetivo; funciona para quase qualquer tema. Para as semanas seguintes, inicie o fluxo de trabalho de novo e mude a semana no formulário. Material que você usa sempre pode ser carregado como conhecimento e atribuído ao tutor.
+**Como adaptar:** Descreva o seu próprio objetivo; funciona para quase qualquer tema. Para as semanas seguintes, inicie o workflow de novo e mude a semana no formulário. Material que você usa sempre pode ser carregado como conhecimento e atribuído ao tutor.
 
 ## 14 · Verificar o orçamento doméstico e economizar {#household-budget}
 <!-- keywords: pessoas físicas – finanças, analista de orçamento, consultor de economia, verificação de realidade -->
 
 **Área:** Pessoas físicas – finanças · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Iniciante · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada
 
-No fim do mês muitas vezes sobra menos do que o esperado. O fluxo de trabalho recalcula um orçamento doméstico, encontra potenciais de economia e verifica se as sugestões são realistas no dia a dia.
+No fim do mês muitas vezes sobra menos do que o esperado. O workflow recalcula um orçamento doméstico, encontra potenciais de economia e verifica se as sugestões são realistas no dia a dia.
 
 > Exige revisão especializada: os resultados são ferramentas de apoio e precisam ser verificados por uma pessoa qualificada.
 
@@ -543,7 +543,7 @@ No fim do mês muitas vezes sobra menos do que o esperado. O fluxo de trabalho r
 
 **Resultado:** Uma verificação estruturada do orçamento com o saldo mensal atual, potencial de economia, medidas, primeiros passos rápidos e observações, também como arquivo Excel. Não substitui aconselhamento financeiro ou de endividamento.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o analista de orçamento e o consultor de economia calculam cada total com a calculadora, e a verificação de realidade devolve campos fixos (saldo mensal, potencial de economia, medidas, primeiros passos, observações) que vão para o arquivo Excel. O exemplo está marcado como sensível: cada agente é instruído a apontar o que uma pessoa qualificada deve verificar e a não soar mais seguro do que os dados permitem. Não há etapa de aprovação nem revisão automática; não há orçamento próprio (vale o orçamento padrão do seu espaço de trabalho). Nada é transferido, cancelado ou contratado: o resultado é um apoio para as suas próprias decisões, não aconselhamento financeiro ou de endividamento.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o analista de orçamento e o consultor de economia calculam cada total com a calculadora, e a verificação de realidade devolve campos fixos (saldo mensal, potencial de economia, medidas, primeiros passos, observações) que vão para o arquivo Excel. O exemplo está marcado como sensível: cada agente é instruído a apontar o que uma pessoa qualificada deve verificar e a não soar mais seguro do que os dados permitem. Não há etapa de aprovação nem revisão automática; não há orçamento próprio (vale o orçamento padrão do seu workspace). Nada é transferido, cancelado ou contratado: o resultado é um apoio para as suas próprias decisões, não aconselhamento financeiro ou de endividamento.
 
 **Por que esta arquitetura:** Cada etapa se apoia na anterior: a economia só pode ser estimada quando o orçamento é conhecido, e só pode ser verificada quando os dois existem, por isso basta uma cadeia fixa. A calculadora faz com que os números sejam calculados em vez de chutados, e os campos estruturados tornam saldo e potencial comparáveis entre execuções. Em vez de um loop há uma verificação de realidade própria e enxuta, porque o papel dela é descartar ideias irrealistas, não polir o texto. Não foram usados de propósito uma conexão bancária nem uma memória, para que os dados pessoais da conta só sejam entregues como arquivo para esta execução e não fiquem guardados entre execuções.
 
@@ -554,7 +554,7 @@ No fim do mês muitas vezes sobra menos do que o esperado. O fluxo de trabalho r
 
 **Área:** Pessoas físicas – viagens · **Agentes:** 4 · **Padrão:** com ramificações · **Nível:** Iniciante · **Elementos:** decisão, formulário de entrada, arquivos de resultado
 
-Uma boa viagem combina com os interesses, o orçamento e as limitações de todos os viajantes. O fluxo de trabalho planeja um roteiro, recalcula o orçamento e cria uma checklist para a organização.
+Uma boa viagem combina com os interesses, o orçamento e as limitações de todos os viajantes. O workflow planeja um roteiro, recalcula o orçamento e cria uma checklist para a organização.
 
 **Como os agentes trabalham juntos:** O planejador de roteiro monta um plano dia a dia conforme interesses e restrições. O planejador de orçamento calcula noites e custos com a calculadora e a ferramenta de datas. O planejador de organização reúne tudo em um plano de viagem com checklist; uma verificação de qualidade confere orçamento e restrições. Um formulário de entrada recebe destino, datas, viajantes e orçamento. Para viagens ao exterior, um nó de decisão acrescenta uma lista de documentos e regras de entrada.
 
@@ -569,9 +569,9 @@ Uma boa viagem combina com os interesses, o orçamento e as limitações de todo
 
 **Casos de teste:** Viagem em família para Lisboa (exterior); Fim de semana no próprio país
 
-**Resultado:** Um plano de viagem com roteiro diário, tabela de orçamento e checklist, também em PDF para levar. Preços e horários são estimativas com base em conhecimento geral e precisam ser verificados antes da reserva, porque o fluxo de trabalho não usa dados em tempo real.
+**Resultado:** Um plano de viagem com roteiro diário, tabela de orçamento e checklist, também em PDF para levar. Preços e horários são estimativas com base em conhecimento geral e precisam ser verificados antes da reserva, porque o workflow não usa dados em tempo real.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o nó de decisão lê o campo do formulário "Viagem ao exterior" e só executa o agente Documentos de viagem quando ele está marcado; o planejador de orçamento conta as noites com a ferramenta de datas e soma os custos com a calculadora. Uma verificação de qualidade feita por um segundo modelo confere o plano do planejador de organização com três critérios (dentro do orçamento, todas as restrições respeitadas, dados não verificados marcados); se um falhar, o plano é revisado uma vez e o resultado da verificação fica registrado com a execução. Nenhuma etapa espera por uma pessoa e não há orçamento próprio (vale o orçamento padrão do seu espaço de trabalho). Nada é reservado: preços, horários e regras de entrada são estimativas que você confere antes de reservar.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o nó de decisão lê o campo do formulário "Viagem ao exterior" e só executa o agente Documentos de viagem quando ele está marcado; o planejador de orçamento conta as noites com a ferramenta de datas e soma os custos com a calculadora. Uma verificação de qualidade feita por um segundo modelo confere o plano do planejador de organização com três critérios (dentro do orçamento, todas as restrições respeitadas, dados não verificados marcados); se um falhar, o plano é revisado uma vez e o resultado da verificação fica registrado com a execução. Nenhuma etapa espera por uma pessoa e não há orçamento próprio (vale o orçamento padrão do seu workspace). Nada é reservado: preços, horários e regras de entrada são estimativas que você confere antes de reservar.
 
 **Por que esta arquitetura:** Roteiro, orçamento e organização se apoiam uns nos outros e por isso formam uma cadeia; só a lista de documentos depende de uma pergunta de sim ou não, que um nó de decisão responde a partir do formulário, assim um fim de semana no próprio país não paga por uma lista de passaportes. Noites e totais vêm de ferramentas, porque erros de datas e de contas são a fraqueza típica dos modelos de linguagem. Uma busca na web em tempo real ficou de fora de propósito: os resultados mudam de um dia para o outro, as execuções não seriam reproduzíveis, o exemplo dependeria de uma ferramenta de servidor paga e não poderia ser repassado como está; em vez disso, cada preço está marcado como estimativa, e você mesmo pode adicionar a busca na web.
 
@@ -618,7 +618,7 @@ Antes de abrir um negócio, vale olhar com sobriedade para mercado, números e r
 
 **Área:** Influenciadores e criadores de conteúdo · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Iniciante · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada, memória
 
-Publicar com regularidade exige uma direção clara e um plano que caiba no seu tempo disponível. O fluxo de trabalho deriva uma estratégia das métricas, reúne ideias adequadas e planeja a publicação.
+Publicar com regularidade exige uma direção clara e um plano que caiba no seu tempo disponível. O workflow deriva uma estratégia das métricas, reúne ideias adequadas e planeja a publicação.
 
 **Como os agentes trabalham juntos:** Uma cadeia de três agentes: o agente de estratégia define posicionamento, pilares de conteúdo e metas e analisa para isso as estatísticas anexadas, o desenvolvedor de ideias formula ideias concretas de posts com gancho e o planejador de conteúdo as distribui em quatro semanas. O desenvolvedor de ideias guarda as suas sugestões em uma memória para que execuções posteriores não repitam ideias. Um controle de qualidade verifica se a frequência e o mix são realistas.
 
@@ -636,7 +636,7 @@ Publicar com regularidade exige uma direção clara e um plano que caiba no seu 
 
 **Resultado:** Um calendário editorial de quatro semanas com data, plataforma, formato, ideia, gancho e chamada para ação, precedido de um breve resumo da estratégia, também como arquivo Excel para continuar planejando.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o desenvolvedor de ideias lê a memória "creator-ideas" antes de começar e, ao fim de cada execução, salva ele mesmo ali os títulos provisórios das novas ideias, sem etapa de confirmação; você pode ver ou limpar a memória em Memória. Uma verificação de qualidade feita por um segundo modelo confere o calendário do planejador de conteúdo com três critérios (frequência compatível com o tempo disponível, pilares equilibrados, metas apoiadas); se um falhar, o calendário é revisado uma vez e o resultado da verificação fica registrado com a execução. Nenhuma etapa espera por uma pessoa e não há orçamento próprio (vale o orçamento padrão do seu espaço de trabalho). Nada é publicado: o plano é um rascunho que você ajusta e posta por conta própria.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o desenvolvedor de ideias lê a memória "creator-ideas" antes de começar e, ao fim de cada execução, salva ele mesmo ali os títulos provisórios das novas ideias, sem etapa de confirmação; você pode ver ou limpar a memória em Memória. Uma verificação de qualidade feita por um segundo modelo confere o calendário do planejador de conteúdo com três critérios (frequência compatível com o tempo disponível, pilares equilibrados, metas apoiadas); se um falhar, o calendário é revisado uma vez e o resultado da verificação fica registrado com a execução. Nenhuma etapa espera por uma pessoa e não há orçamento próprio (vale o orçamento padrão do seu workspace). Nada é publicado: o plano é um rascunho que você ajusta e posta por conta própria.
 
 **Por que esta arquitetura:** Estratégia, ideias e calendário se apoiam estritamente uns nos outros, por isso basta uma cadeia de três agentes; o planejador de conteúdo recebe também a estratégia diretamente para medir o mix pelos pilares. Só o desenvolvedor de ideias tem memória, porque ideias repetidas são o verdadeiro problema de execuções mensais, enquanto a estratégia deve surgir sempre dos números atuais. Não foram usadas de propósito uma busca na web por tendências em tempo real nem uma conexão com as plataformas: resultados de tendências mudam todo dia e tornariam as execuções nem reproduzíveis nem portáveis, e um rascunho de plano não deve ser postado automaticamente; a estratégia se baseia, em vez disso, nas suas próprias estatísticas.
 
@@ -647,7 +647,7 @@ Publicar com regularidade exige uma direção clara e um plano que caiba no seu 
 
 **Área:** Imóveis · **Agentes:** 3 · **Padrão:** paralelo · **Nível:** Avançado · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada
 
-Em imóveis, números e localização decidem juntos. O fluxo de trabalho recalcula rentabilidade e fluxo de caixa, analisa o imóvel e sua localização e confronta oportunidades e riscos.
+Em imóveis, números e localização decidem juntos. O workflow recalcula rentabilidade e fluxo de caixa, analisa o imóvel e sua localização e confronta oportunidades e riscos.
 
 > Exige revisão especializada: os resultados são ferramentas de apoio e precisam ser verificados por uma pessoa qualificada.
 
@@ -716,7 +716,7 @@ Atrasos na obra têm causas diferentes, e cada causa precisa de outro conhecimen
 
 **Área:** Gastronomia · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Iniciante · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada
 
-Um cardápio precisa agradar aos clientes e dar lucro. O fluxo de trabalho desenvolve pratos para um público, calcula o custo de insumos e os preços e escreve textos de cardápio apetitosos.
+Um cardápio precisa agradar aos clientes e dar lucro. O workflow desenvolve pratos para um público, calcula o custo de insumos e os preços e escreve textos de cardápio apetitosos.
 
 **Como os agentes trabalham juntos:** Uma cadeia de três agentes: o desenvolvedor de conceito monta pratos com receitas, a precificação calcula o custo de insumos e os preços de venda com a calculadora, e o redator do cardápio escreve o cardápio. Um controle de qualidade verifica público, preços e o aviso sobre alergênicos. O resultado contém a precificação e o cardápio.
 
@@ -745,7 +745,7 @@ Um cardápio precisa agradar aos clientes e dar lucro. O fluxo de trabalho desen
 
 **Área:** Agricultura · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Avançado · **Elementos:** formulário de entrada, arquivos de resultado, arquivos como entrada
 
-O planejamento de culturas precisa considerar ao mesmo tempo rotação, solos, contratos e rentabilidade. O fluxo de trabalho propõe uma rotação, calcula margens brutas e verifica o plano segundo suas próprias regras.
+O planejamento de culturas precisa considerar ao mesmo tempo rotação, solos, contratos e rentabilidade. O workflow propõe uma rotação, calcula margens brutas e verifica o plano segundo suas próprias regras.
 
 **Como os agentes trabalham juntos:** Uma cadeia de três agentes: o planejador de rotação atribui uma cultura a cada talhão, o cálculo de margem bruta calcula cada talhão e o total com a calculadora e a verificação de plausibilidade confere regras e riscos e entrega um resultado estruturado.
 
@@ -774,7 +774,7 @@ O planejamento de culturas precisa considerar ao mesmo tempo rotação, solos, c
 
 **Área:** Associações e clubes · **Agentes:** 4 · **Padrão:** paralelo · **Nível:** Iniciante · **Elementos:** arquivos de resultado
 
-Festas de associações são organizadas por voluntários no tempo livre. O fluxo de trabalho cria cronograma, tarefas, orçamento e comunicação e resume tudo em um documento para a reunião da diretoria.
+Festas de associações são organizadas por voluntários no tempo livre. O workflow cria cronograma, tarefas, orçamento e comunicação e resume tudo em um documento para a reunião da diretoria.
 
 **Como os agentes trabalham juntos:** O planejador de cronograma e o planejador de orçamento trabalham em paralelo; um conta regressivamente a partir da festa com a ferramenta de datas, o outro calcula o orçamento com a calculadora. O planejador de comunicação prepara convites e posts alinhados ao cronograma. O documento para a diretoria reúne tudo; uma verificação de qualidade confere completude e responsabilidades.
 
@@ -802,7 +802,7 @@ Festas de associações são organizadas por voluntários no tempo livre. O flux
 
 **Área:** Organizações sem fins lucrativos · **Agentes:** 3 · **Padrão:** com ramificações · **Nível:** Avançado · **Elementos:** decisão, ciclo de revisão, arquivos de resultado, propostas de conhecimento
 
-Campanhas de doação precisam de uma história tocante, mas também de afirmações honestas sobre impacto. O fluxo de trabalho desenvolve uma campanha, avalia o possível impacto e verifica se as promessas são críveis e eticamente corretas.
+Campanhas de doação precisam de uma história tocante, mas também de afirmações honestas sobre impacto. O workflow desenvolve uma campanha, avalia o possível impacto e verifica se as promessas são críveis e eticamente corretas.
 
 **Como os agentes trabalham juntos:** O desenvolvedor da campanha e o analista de impacto trabalham em paralelo: um concebe mensagem, públicos e ações, o outro constrói um modelo de impacto com indicadores e calcula o custo por criança com a calculadora. O revisor de credibilidade verifica os dois. Se ele considerar a campanha não crível, uma condição a devolve ao desenvolvedor da campanha junto com as observações da revisão; a campanha revisada é verificada de novo, no máximo duas vezes. O resultado contém as três partes.
 
@@ -820,7 +820,7 @@ Campanhas de doação precisam de uma história tocante, mas também de afirmaç
 
 **O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o parecer sim/não do revisor de credibilidade sobre a credibilidade decide se a campanha volta para revisão; a execução mostra qual ramo foi seguido. O desenvolvedor da campanha revisa no máximo duas vezes, cada vez com as observações da revisão e o seu rascunho anterior. Se depois disso a campanha ainda não for considerada crível, a execução segue mesmo assim para o resultado, e as observações da revisão mostram o que continua em aberto. Nenhuma etapa espera por uma pessoa: textos e números são rascunhos que a sua organização confere antes de publicar, principalmente as afirmações sobre impacto e as fotos de crianças. Modelos de impacto propostos só são salvos como conhecimento se você os confirmar.
 
-**Por que esta arquitetura:** Problemas de credibilidade são mais bem corrigidos por quem escreveu o texto; por isso a revisão volta ao desenvolvedor da campanha em vez de apenas listar problemas. O ciclo é limitado a duas rodadas: uma campanha que ainda exagera depois disso precisa de evidências melhores da organização, não de mais reformulações. O modelo de impacto fica fora do ciclo porque se baseia nos dados do projeto, não nos textos da campanha. Não há etapa de aprovação, porque a campanha continua sendo um rascunho e é publicada de qualquer forma fora do fluxo de trabalho.
+**Por que esta arquitetura:** Problemas de credibilidade são mais bem corrigidos por quem escreveu o texto; por isso a revisão volta ao desenvolvedor da campanha em vez de apenas listar problemas. O ciclo é limitado a duas rodadas: uma campanha que ainda exagera depois disso precisa de evidências melhores da organização, não de mais reformulações. O modelo de impacto fica fora do ciclo porque se baseia nos dados do projeto, não nos textos da campanha. Não há etapa de aprovação, porque a campanha continua sendo um rascunho e é publicada de qualquer forma fora do workflow.
 
 **Como adaptar:** Descreva seu projeto e seus resultados da forma mais honesta possível. Carregue relatórios anuais ou avaliações como conhecimento e atribua-os ao analista de impacto.
 
@@ -829,7 +829,7 @@ Campanhas de doação precisam de uma história tocante, mas também de afirmaç
 
 **Área:** Instituições públicas · **Agentes:** 3 · **Padrão:** sequencial · **Nível:** Iniciante · **Elementos:** aprovação, ciclo de revisão, formulário de entrada, arquivos de resultado, arquivos como entrada, propostas de conhecimento, arquivos de conhecimento
 
-Solicitações de cidadãos muitas vezes contêm vários assuntos e precisam ser respondidas de forma correta, clara e sem compromissos precipitados. O fluxo de trabalho decompõe a solicitação, encontra as regras relevantes do município, prepara uma resposta e deixa a decisão de enviá-la com o servidor responsável.
+Solicitações de cidadãos muitas vezes contêm vários assuntos e precisam ser respondidas de forma correta, clara e sem compromissos precipitados. O workflow decompõe a solicitação, encontra as regras relevantes do município, prepara uma resposta e deixa a decisão de enviá-la com o servidor responsável.
 
 > Exige revisão especializada: os resultados são ferramentas de apoio e precisam ser verificados por uma pessoa qualificada.
 
@@ -849,7 +849,7 @@ Solicitações de cidadãos muitas vezes contêm vários assuntos e precisam ser
 
 **Resultado:** Um rascunho de resposta em linguagem simples com responsabilidades, próximos passos e observações para o servidor responsável; após a aprovação, também como arquivo Word para o seu papel timbrado. O arquivo Word é higienizado: dados pessoais, como nomes, endereços, telefones e e-mails, e credenciais são substituídos por marcadores, então você insere os dados do destinatário a partir do processo. A preparação das informações propõe as regras encontradas, com a referência, para o conhecimento; só é salvo o que você confirmar.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: a análise de assuntos, a pesquisa de regras com citações e a verificação de qualidade do rascunho (somente regras documentadas, linguagem simples, nenhum compromisso vinculante). Uma pessoa decide: o servidor responsável confere cada resposta antes do envio. Uma rejeição exige um comentário e devolve o rascunho com esse retorno ao rascunho de resposta; após no máximo 2 revisões, uma nova rejeição faz a execução falhar sem arquivo. O fluxo de trabalho não envia nada sozinho; mesmo aprovada, a resposta é um rascunho que o servidor responsável envia pelos canais habituais.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: a análise de assuntos, a pesquisa de regras com citações e a verificação de qualidade do rascunho (somente regras documentadas, linguagem simples, nenhum compromisso vinculante). Uma pessoa decide: o servidor responsável confere cada resposta antes do envio. Uma rejeição exige um comentário e devolve o rascunho com esse retorno ao rascunho de resposta; após no máximo 2 revisões, uma nova rejeição faz a execução falhar sem arquivo. O workflow não envia nada sozinho; mesmo aprovada, a resposta é um rascunho que o servidor responsável envia pelos canais habituais.
 
 **Por que esta arquitetura:** Toda solicitação precisa das mesmas etapas, então uma cadeia fixa basta, e um orquestrador só aumentaria o custo. As regras são conhecimento pesquisável em vez de texto colado em cada solicitação: a preparação das informações encontra os trechos relevantes, cita-os e percebe quando nada se aplica. A aprovação com loop de revisão existe porque uma resposta ao cidadão tem efeito fora da administração e quem trata o caso o conhece melhor. Uma conexão com o sistema de e-mail foi deixada de fora de propósito, para que o envio continue sendo uma decisão humana.
 
