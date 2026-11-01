@@ -15,7 +15,7 @@ import { useContextOffer } from "../assistant/useContextOffer";
 import { Output } from "../components/Markdown";
 import { Tooltip } from "../components/Tooltip";
 import { toast } from "../components/toast";
-import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
+import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat } from "../components/ui";
 import { NodeRunDetails, startFiles } from "../editor/RunDetails";
 import { liveUsage } from "../editor/store";
 import { TraceExportDialog, sanitizeSummary } from "../editor/TraceExportDialog";
@@ -26,6 +26,7 @@ import { ResultFiles } from "../runs/ResultFiles";
 import { RunInputs, useRunInputs } from "../runs/RunInputs";
 import { ResumeDialog } from "../runs/ResumeDialog";
 import { RunOrigin } from "../runs/RunOrigin";
+import { InterruptedNotice, RunOutcome, StepStatus, ToolProblemsNotice } from "../runs/RunProblems";
 import { RunSummaryLine } from "../runs/RunSummaryLine";
 import { stepsInOrder } from "../runs/runSummary";
 import { STATUS_TONE, formatCost, formatDate, formatDuration, formatTokens, tokenBreakdown } from "../lib/format";
@@ -67,7 +68,7 @@ function Trace({ run, selected, onSelect }: { run: Run; selected: string | null;
                   <span className={`trace__bar trace__bar--${tone}`} style={{ left: `${left}%`, width: `${width}%` }} />
                 ) : null}
               </span>
-              {state ? <StatusBadge status={state.status} /> : null}
+              {state ? <StepStatus run={run} state={state} /> : null}
             </button>
           </li>
         );
@@ -169,7 +170,7 @@ export function RunDetailPage() {
       />
       <div className="page__body stack">
         <div className="stats">
-          <Stat label={t("runs.stats.status")} value={<StatusBadge status={data.status} />} hint={formatDuration(data.started_at ?? data.created_at, data.finished_at)} />
+          <Stat label={t("runs.stats.status")} value={<RunOutcome run={data} />} hint={formatDuration(data.started_at ?? data.created_at, data.finished_at)} />
           <Stat label={t("runs.stats.requests")} value={usage.requests} tip="runs.requests" />
           <Stat
             label={t("runs.stats.tokens")}
@@ -185,6 +186,7 @@ export function RunDetailPage() {
           />
         </div>
         <RunSummaryLine run={data} onOpenStep={openStep} />
+        <ToolProblemsNotice run={data} onOpenStep={openStep} />
         {imported ? (
           <Callout tone="brand">
             <strong>
@@ -217,6 +219,7 @@ export function RunDetailPage() {
             <ProblemText item={runProblem(data)} />
           </Callout>
         ) : null}
+        {imported ? null : <InterruptedNotice run={data} onResume={resumable ? () => setResumeOpen(true) : undefined} />}
         <div className="two-column">
           <section className="panel stack" aria-label={t("runs.detail.input")}>
             <h2 className="panel__title">{t("runs.detail.input")}</h2>

@@ -4,6 +4,7 @@ import { AlertTriangle, Info, XCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import type { CheckIssue, ConfigIssue, WorkflowCheck } from "../api/types";
+import { Button } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { useEditor } from "./store";
 
@@ -59,6 +60,7 @@ export function CheckList({ check, levels = ["error", "warning", "info"] }: { ch
             </span>
           </>
         );
+        const fix = finding.nodeId && needsEffortOff(finding.item) ? finding.nodeId : null;
         return (
           <li key={finding.key} data-level={finding.level}>
             {target ? (
@@ -73,9 +75,40 @@ export function CheckList({ check, levels = ["error", "warning", "info"] }: { ch
             ) : (
               <span className="check-list__item">{content}</span>
             )}
+            {fix ? <EffortFix nodeId={fix} /> : null}
           </li>
         );
       })}
     </ul>
+  );
+}
+
+/**
+ * An OpenAI-compatible endpoint (Ollama, vLLM, ...) cannot receive the effort setting: the agent library refuses
+ * it with a technical message about CompatibleOptions, which no setting of Nodestro offers (AD-09). The way out the
+ * studio has is the agent's own effort: back to the model default, which sends none.
+ */
+export function needsEffortOff(item: { code?: string | null; message?: string | null }): boolean {
+  return Boolean(item.message && /send_reasoning_effort/.test(item.message));
+}
+
+function EffortFix({ nodeId }: { nodeId: string }) {
+  const { t } = useTranslation();
+  const effort = useEditor((s) => s.nodes.find((node) => node.id === nodeId)?.agent?.effort ?? null);
+  return (
+    <div className="check-list__fix small" data-testid="effort-fix">
+      <span className="muted">{t("admin.compat.effortText")}</span>{" "}
+      {effort !== null ? (
+        <Button
+          size="sm"
+          onClick={() => {
+            useEditor.getState().updateAgent(nodeId, { effort: null });
+            useEditor.getState().select(nodeId);
+          }}
+        >
+          {t("admin.compat.effortOff")}
+        </Button>
+      ) : null}
+    </div>
   );
 }

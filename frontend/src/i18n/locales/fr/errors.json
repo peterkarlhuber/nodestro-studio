@@ -90,6 +90,7 @@
   },
   "workflow": {
     "edge_dangling": "Une connexion pointe vers un nœud qui n’existe pas.",
+    "import_invalid": "Ce fichier n’est pas un export de workflow Nodestro : il n’a aucune étape (\"nodes\").",
     "self_loop": "Un nœud ne peut pas être connecté à lui-même.",
     "cycle": "Le workflow contient une boucle ; les connexions doivent aller dans un seul sens.",
     "no_agents": "Le workflow n’a pas encore d’agent.",

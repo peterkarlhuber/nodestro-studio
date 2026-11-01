@@ -4,7 +4,10 @@ import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState }
 import { useTranslation } from "react-i18next";
 import { Link, useBlocker, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
-import { api } from "../api/client";
+import { useAccess } from "../api/access";
+import { ApiError, api } from "../api/client";
+import { deniedReason } from "../components/Access";
+import { type ConflictChoice, SaveConflictDialog, changedOnServer } from "../editor/SaveConflictDialog";
 import { type ArchitectStart, ArchitectDialog } from "../architect/ArchitectDialog";
 import { DiscussButton } from "../assistant/DiscussButton";
 import { useTakeHandover } from "../assistant/handover";
@@ -69,9 +72,29 @@ export function EditorPage() {
   const paletteRef = useRef<HTMLElement | null>(null);
   const inspectorRef = useRef<HTMLElement | null>(null);
   const runPanelRef = useRef<HTMLElement | null>(null);
+  const access = useAccess();
+  const editDenied = deniedReason(t, access, "edit");
+  const runDenied = deniedReason(t, access, "run");
+  const editDeniedRef = useRef(editDenied);
+  editDeniedRef.current = editDenied;
+  // The server copy this editor started from (AD-07): a save first checks that nobody changed it meanwhile.
+  const baseRef = useRef<Workflow | null>(null);
+  const [conflict, setConflict] = useState<Workflow | null>(null);
+  const conflictAnswer = useRef<((choice: ConflictChoice) => void) | null>(null);
+  const askConflict = useCallback(
+    (current: Workflow) =>
+      new Promise<ConflictChoice>((resolve) => {
+        conflictAnswer.current = resolve;
+        setConflict(current);
+      }),
+    [],
+  );
 
   useEffect(() => {
-    if (workflow.data && loadedId !== workflow.data.id) useEditor.getState().load(workflow.data);
+    if (workflow.data && loadedId !== workflow.data.id) {
+      useEditor.getState().load(workflow.data);
+      baseRef.current = workflow.data;
+    }
   }, [workflow.data, loadedId]);
 
   // Leaving the editor drops everything unsaved, including the undo/redo history, so reopening
@@ -119,12 +142,14 @@ export function EditorPage() {
     queryClient.removeQueries({ queryKey: keys.workflow(id) });
     const saved = await queryClient.fetchQuery({ queryKey: keys.workflow(id), queryFn: () => api.workflow(id) });
     useEditor.getState().load(saved);
+    baseRef.current = saved;
   };
 
   const onRestored = (restored: Workflow) => {
     queryClient.setQueryData(keys.workflow(restored.id), restored);
     void queryClient.invalidateQueries({ queryKey: keys.workflows });
     useEditor.getState().load(restored);
+    baseRef.current = restored;
   };
 
   // Show the latest run of this workflow; follow it live if it is still running.
@@ -175,11 +200,54 @@ export function EditorPage() {
       pendingSave.current ??= (async () => {
         const state = useEditor.getState();
         if (!state.workflowId) return null;
+        if (editDeniedRef.current) {
+          // A role without "edit" runs the saved version as it is; changes cannot be saved (AD-04).
+          if (!state.dirty) return state.workflowId;
+          toast.info(editDeniedRef.current);
+          return null;
+        }
         setSaving(true);
         try {
+          // Another tab or person saved meanwhile (AD-07)? The user decides; only "overwrite" saves here.
+          const settle = async (current: Workflow): Promise<boolean> => {
+            const choice = await askConflict(current);
+            if (choice === "reload") {
+              queryClient.setQueryData(keys.workflow(current.id), current);
+              useEditor.getState().load(current);
+              baseRef.current = current;
+              toast.info(t("admin.conflict.reloaded"));
+            }
+            if (choice === "copy") {
+              const mine = useEditor.getState().toWorkflow();
+              const copy = await api.createWorkflow({ ...mine, name: t("admin.conflict.copyName", { name: mine.name }) });
+              void queryClient.invalidateQueries({ queryKey: keys.workflows });
+              useEditor.getState().reset();
+              toast.success(t("admin.conflict.copied", { name: copy.name }));
+              navigate(`/workflows/${copy.id}`);
+            }
+            return choice === "overwrite";
+          };
+          let overwrite = false;
+          // The server copy is compared first, so a backend without the revision check warns as well.
+          const current = await api.workflow(state.workflowId).catch(() => null);
+          if (current && changedOnServer(baseRef.current, current)) {
+            if (!(await settle(current))) return null;
+            overwrite = true;
+          }
           const sent = state.toWorkflow();
-          const saved = await api.saveWorkflow(state.workflowId, sent, note ?? state.pendingNote ?? undefined);
+          const savedNote = note ?? state.pendingNote ?? undefined;
+          let saved: Workflow;
+          try {
+            // If-Match with the revision the edit started from: the server refuses a stale save with 409.
+            saved = await api.saveWorkflow(state.workflowId, sent, savedNote, overwrite ? undefined : baseRef.current?.updated_at);
+          } catch (error) {
+            if (!(error instanceof ApiError && error.status === 409 && error.code === "workflow.conflict")) throw error;
+            const latest = await api.workflow(state.workflowId);
+            if (!(await settle(latest))) return null;
+            saved = await api.saveWorkflow(state.workflowId, sent, savedNote);
+          }
           useEditor.getState().markSaved(saved, sent);
+          baseRef.current = saved;
           queryClient.setQueryData(keys.workflow(saved.id), saved);
           void queryClient.invalidateQueries({ queryKey: keys.workflows });
           void queryClient.invalidateQueries({ queryKey: keys.versions(saved.id) });
@@ -195,13 +263,17 @@ export function EditorPage() {
       });
       return pendingSave.current;
     },
-    [queryClient],
+    [queryClient, askConflict, navigate, t],
   );
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
+        if (editDeniedRef.current) {
+          toast.info(editDeniedRef.current);
+          return;
+        }
         void save().then((saved) => saved && toast.success(t("common.saved")));
       }
     };
@@ -216,7 +288,10 @@ export function EditorPage() {
     };
   }, [save, t]);
 
-  const blocker = useBlocker(({ currentLocation, nextLocation }) => dirty && currentLocation.pathname !== nextLocation.pathname);
+  // The store's state at the moment of navigating (a save conflict resolved as a copy resets it right before).
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => useEditor.getState().dirty && currentLocation.pathname !== nextLocation.pathname,
+  );
 
   const exportWorkflow = async () => {
     // The Python libraries travel with the workflow (exact versions, never the approvals).
@@ -302,19 +377,21 @@ export function EditorPage() {
                 </Button>
               </Hint>
             ) : null}
-            <Hint id="architect.open">
-              <Button
-                icon={Sparkles}
-                variant="ghost"
-                onClick={() => {
-                  setArchitectStart(undefined);
-                  setArchitectOpen(true);
-                }}
-                data-testid="open-architect"
-              >
-                <span className="title-actions__label">{t("architect.button")}</span>
-              </Button>
-            </Hint>
+            {editDenied ? null : (
+              <Hint id="architect.open">
+                <Button
+                  icon={Sparkles}
+                  variant="ghost"
+                  onClick={() => {
+                    setArchitectStart(undefined);
+                    setArchitectOpen(true);
+                  }}
+                  data-testid="open-architect"
+                >
+                  <span className="title-actions__label">{t("architect.button")}</span>
+                </Button>
+              </Hint>
+            )}
             <Hint id="workflow.versions">
               <Button icon={History} variant="ghost" onClick={() => setVersionsOpen(true)}>
                 <span className="title-actions__label">{t("versions.button")}</span>
@@ -331,28 +408,32 @@ export function EditorPage() {
               </Button>
             </Hint>
             <Hint id="workflow.save">
-              <Button icon={Save} busy={saving} disabled={!dirty} onClick={() => void save().then((ok) => ok && toast.success(t("common.saved")))}>
+              <Button icon={Save} busy={saving} disabled={!dirty || Boolean(editDenied)} title={editDenied ?? undefined} onClick={() => void save().then((ok) => ok && toast.success(t("common.saved")))}>
                 {t("common.save")}
               </Button>
             </Hint>
-            <Hint id="workflow.addAgent">
-              <Button
-                icon={Plus}
-                onClick={() => {
-                  const nodes = useEditor.getState().nodes;
-                  const x = nodes.length ? Math.max(...nodes.map((n) => n.position.x)) + 320 : 0;
-                  useEditor.getState().addNode("agent", { x, y: 0 });
-                }}
-              >
-                {t("editor.page.addAgent")}
-              </Button>
-            </Hint>
+            {editDenied ? null : (
+              <Hint id="workflow.addAgent">
+                <Button
+                  icon={Plus}
+                  onClick={() => {
+                    const nodes = useEditor.getState().nodes;
+                    const x = nodes.length ? Math.max(...nodes.map((n) => n.position.x)) + 320 : 0;
+                    useEditor.getState().addNode("agent", { x, y: 0 });
+                  }}
+                >
+                  {t("editor.page.addAgent")}
+                </Button>
+              </Hint>
+            )}
             <Button
               variant="primary"
               icon={Play}
-              disabled={Boolean(liveRunId) || blocked}
+              disabled={Boolean(liveRunId) || blocked || Boolean(runDenied)}
               title={
-                blocked
+                runDenied
+                  ? runDenied
+                  : blocked
                   ? findings(check.data)
                       .filter((finding) => finding.level === "error")
                       .map((finding) => problemText(t, finding.item))
@@ -438,6 +519,14 @@ export function EditorPage() {
       >
         <p>{t("editor.page.discardText")}</p>
       </Modal>
+      <SaveConflictDialog
+        current={conflict}
+        onChoose={(choice) => {
+          setConflict(null);
+          conflictAnswer.current?.(choice);
+          conflictAnswer.current = null;
+        }}
+      />
       <ArchitectDialog
         open={architectOpen}
         onClose={() => setArchitectOpen(false)}

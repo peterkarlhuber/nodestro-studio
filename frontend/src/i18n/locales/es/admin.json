@@ -1,0 +1,124 @@
+{
+  "roles": {
+    "owner": "Propietario",
+    "admin": "Administrador",
+    "editor": "Editor",
+    "operator": "Operador",
+    "viewer": "Observador",
+    "none": "Sin rol"
+  },
+  "permissions": {
+    "read": "Leer",
+    "edit": "Editar",
+    "run": "Ejecutar",
+    "admin": "Administrar",
+    "install": "Gestionar la instalación"
+  },
+  "denied": "Tu rol ({{role}}) no puede hacer esto: necesita el permiso «{{permission}}». Pide ayuda a un administrador de tu servidor Nodestro.",
+  "readOnly": {
+    "look": "Has iniciado sesión como {{role}}: puedes ver todo, pero no cambiar ni ejecutar nada.",
+    "run": "Has iniciado sesión como {{role}}: puedes ver todo e iniciar ejecuciones, pero no cambiar nada."
+  },
+  "user": {
+    "menu": "Sesión iniciada como {{name}}",
+    "title": "Tu cuenta",
+    "role": "Rol: {{role}} · espacio de trabajo {{tenant}}",
+    "permissions": "Permisos: {{list}}",
+    "switch": "Cambiar de espacio de trabajo",
+    "logout": "Cerrar sesión",
+    "members": "Los miembros y los roles los gestiona el operador del servidor con la línea de comandos nodestro-server (consulta el manual de operación).",
+    "signInAgain": "Volver a iniciar sesión"
+  },
+  "server": {
+    "title": "El servidor de tu organización",
+    "text": "Nodestro se ejecuta en un servidor de tu organización. Tus datos se quedan en ese servidor y solo van a los proveedores de IA que tu operador permite."
+  },
+  "settings": {
+    "serverDescription": "Se aplica a tu espacio de trabajo {{tenant}} en este servidor Nodestro.",
+    "serverData": "Tus datos se guardan en el servidor Nodestro de tu organización. De las copias de seguridad y la instalación se encarga su operador."
+  },
+  "run": {
+    "withProblems": "Terminada con problemas",
+    "toolProblemsTitle": "Llamadas a herramientas sin resultado",
+    "toolProblemsText_one": "{{count}} llamada a una herramienta no tuvo éxito. Comprueba si el resultado depende de ella:",
+    "toolProblemsText_many": "{{count}} llamadas a herramientas no tuvieron éxito. Comprueba si el resultado depende de ellas:",
+    "toolProblemsText_other": "{{count}} llamadas a herramientas no tuvieron éxito. Comprueba si el resultado depende de ellas:",
+    "toolProblem": {
+      "rejected": "rechazada por una persona, así que la herramienta no se ejecutó",
+      "expired": "nadie decidió a tiempo, así que la llamada contó como rechazada",
+      "denied": "no permitida por las reglas de aprobación",
+      "cancelled": "la llamada se canceló",
+      "coded": "la llamada falló",
+      "error": "la herramienta informó de un error"
+    },
+    "notFinished": "Sin terminar",
+    "interrupted": "Nodestro se detuvo mientras esta ejecución estaba en curso.",
+    "shutdown": "Nodestro se detuvo (por ejemplo, se cerró la app o se reinició el servidor) mientras esta ejecución estaba en curso; nadie la canceló.",
+    "unfinished_one": "La ejecución terminó antes de que {{count}} paso acabara: {{steps}}. Nunca obtuvo un resultado.",
+    "unfinished_many": "La ejecución terminó antes de que {{count}} pasos acabaran: {{steps}}. Nunca obtuvieron un resultado.",
+    "unfinished_other": "La ejecución terminó antes de que {{count}} pasos acabaran: {{steps}}. Nunca obtuvieron un resultado.",
+    "resumeHint": "Continúa la ejecución para terminarlos; los pasos terminados se reutilizan."
+  },
+  "approval": {
+    "inWorkflow": "{{workflow}} · paso {{step}}"
+  },
+  "mcp": {
+    "downgrade": "El servicio indica que esta herramienta «{{stated}}». Tú la clasificas como «{{chosen}}», que es menos estricto: por ejemplo, podría aprobarse por adelantado y se trataría como una herramienta menos peligrosa.",
+    "downgradeConfirm": "He revisado la herramienta: la clasificación menos estricta es correcta",
+    "https_required": "Los servicios solo se alcanzan por https. http solo es posible para un servidor de desarrollo en este ordenador (127.0.0.1 o localhost).",
+    "loopback_toggle": "http solo es posible para un servidor de desarrollo en este ordenador: activa «{{toggle}}» abajo."
+  },
+  "import": {
+    "not_object": "Este archivo no es un workflow de Nodestro: no contiene ningún objeto de workflow. Exporta un workflow en el editor (Exportar) e importa ese archivo.",
+    "no_nodes": "Este archivo no es un workflow de Nodestro: no tiene pasos (\"nodes\"). Exporta un workflow en el editor (Exportar) e importa ese archivo.",
+    "node_invalid": "Este archivo no es un workflow de Nodestro válido: el paso {{index}} no tiene id o tipo.",
+    "edges_invalid": "Este archivo no es un workflow de Nodestro válido: sus conexiones (\"edges\") no son una lista.",
+    "edge_invalid": "Este archivo no es un workflow de Nodestro válido: la conexión {{index}} no tiene inicio o fin."
+  },
+  "conflict": {
+    "title": "Cambiado en otro lugar",
+    "text": "Este workflow se guardó en otro lugar a las {{time}} (en otra pestaña o por otra persona) después de que lo abrieras. Si guardas ahora, sustituirás ese cambio.",
+    "reloadHint": "Cargar la versión guardada: tus cambios sin guardar aquí se descartan.",
+    "copyHint": "Conservar el mío como copia: tu estado se convierte en un workflow nuevo y el guardado se queda como está.",
+    "overwriteHint": "Guardar el mío de todos modos: tu estado sustituye al otro cambio.",
+    "versions": "En ningún caso se pierde nada para siempre: cada guardado se conserva en Versiones, donde puedes compararlo y restaurarlo.",
+    "keepEditing": "Seguir editando",
+    "reload": "Cargar versión guardada",
+    "copy": "Conservar el mío como copia",
+    "overwrite": "Guardar el mío de todos modos",
+    "copyName": "{{name}} (mi copia)",
+    "copied": "Guardado como el workflow nuevo «{{name}}».",
+    "reloaded": "Se ha cargado la versión guardada."
+  },
+  "compat": {
+    "effortText": "Los endpoints compatibles con OpenAI (por ejemplo Ollama o vLLM) no aceptan un ajuste de esfuerzo de Nodestro. Pon el esfuerzo de este agente en «Valor del modelo».",
+    "effortOff": "Poner el esfuerzo en el valor del modelo"
+  },
+  "rules": {
+    "off": "Las aprobaciones por llamada a herramienta no están activadas en esta instalación: las herramientas se ejecutan sin preguntar antes.",
+    "offDocs": "Cómo funcionan las aprobaciones por llamada",
+    "preparation": "Preparación para administradores",
+    "legacyNotRunOn": "El paso de activación aún no se ha ejecutado: las asignaciones de antes se consultan como las nuevas.",
+    "stampHintOn": "Marca como excepciones las asignaciones que existen ahora en workflows, versiones y releases publicadas, para que sigan funcionando sin preguntar. Revisa la lista después; solo se ejecuta una vez."
+  },
+  "request": {
+    "title": "La solicitud no encaja con la entrada de la API:",
+    "body": "Solicitud",
+    "kind": {
+      "missing": "obligatorio",
+      "number": "debe ser un número",
+      "boolean": "debe ser true o false",
+      "text": "debe ser un texto",
+      "date": "debe ser una fecha",
+      "extra": "no forma parte de la entrada",
+      "choice": "no es uno de los valores permitidos",
+      "list": "debe ser una lista",
+      "invalid": "no es válido"
+    }
+  },
+  "sdk": {
+    "python": "SDK de Python",
+    "typescript": "SDK de TypeScript",
+    "intro": "Los clientes oficiales inician ejecuciones con una clave de idempotencia (un reintento nunca inicia una segunda ejecución), reintentan tras errores de conexión e informan de errores tipados. Instálalos desde"
+  }
+}

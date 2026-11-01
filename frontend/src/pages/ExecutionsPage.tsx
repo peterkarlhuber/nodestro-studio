@@ -9,6 +9,7 @@ import { api } from "../api/client";
 import { useRuns, useWorkflows } from "../api/hooks";
 import type { RunStatus } from "../api/types";
 import { toast } from "../components/toast";
+import { ListProblemsChip } from "../runs/RunProblems";
 import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
 import { ErrorText, ProblemText, runProblem } from "../lib/errors";
 import { formatCost, formatDate, formatDuration, formatNumber, formatTokens } from "../lib/format";
@@ -202,6 +203,7 @@ export function ExecutionsPage() {
                     </td>
                     <td>
                       <StatusBadge status={run.status} />
+                      <ListProblemsChip run={run} />
                     </td>
                     <td>{formatDate(run.created_at)}</td>
                     <td>{run.finished_at ? formatDuration(run.created_at, run.finished_at) : "–"}</td>

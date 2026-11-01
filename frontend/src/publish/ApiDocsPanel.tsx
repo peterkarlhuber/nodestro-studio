@@ -11,8 +11,9 @@ import type { Publication } from "../api/types";
 import { Button, Callout, Section, Segmented, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { CodeBlock, downloadJson } from "./common";
+import { SDK_REPOSITORY, baseUrlFrom, pythonSdk, typescriptSdk } from "./sdkSnippets";
 
-type Example = "curl" | "python" | "responses";
+type Example = "curl" | "python" | "sdk-python" | "sdk-typescript" | "responses";
 
 export function ApiDocsPanel({ publication }: { publication: Publication }) {
   const { t } = useTranslation();
@@ -70,6 +71,8 @@ export function ApiDocsPanel({ publication }: { publication: Publication }) {
         options={[
           { value: "curl", label: "curl" },
           { value: "python", label: "Python" },
+          { value: "sdk-python", label: t("admin.sdk.python") },
+          { value: "sdk-typescript", label: t("admin.sdk.typescript") },
           { value: "responses", label: t("publish.docs.responses") },
         ]}
       />
@@ -82,6 +85,23 @@ export function ApiDocsPanel({ publication }: { publication: Publication }) {
           ))
         : null}
       {example === "python" ? <CodeBlock text={examples.python} /> : null}
+      {example === "sdk-python" || example === "sdk-typescript" ? (
+        <div className="stack-sm" data-testid="api-sdk">
+          <p className="muted small">
+            {t("admin.sdk.intro")}{" "}
+            <a href={SDK_REPOSITORY} target="_blank" rel="noreferrer">
+              nodestro-sdk
+            </a>
+          </p>
+          <CodeBlock
+            text={(example === "sdk-python" ? pythonSdk : typescriptSdk)(
+              baseUrlFrom(examples.curl, window.location.origin),
+              publication.slug,
+              examples.request,
+            )}
+          />
+        </div>
+      ) : null}
       {example === "responses"
         ? Object.entries(examples.responses).map(([name, value]) => (
             <div key={name} className="stack-sm">

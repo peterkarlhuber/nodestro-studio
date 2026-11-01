@@ -90,6 +90,7 @@
   },
   "workflow": {
     "edge_dangling": "Eine Verbindung zeigt auf einen Knoten, den es nicht gibt.",
+    "import_invalid": "Diese Datei ist kein Nodestro-Workflow-Export: Sie hat keine Schritte („nodes“).",
     "self_loop": "Ein Knoten kann nicht mit sich selbst verbunden werden.",
     "cycle": "Der Workflow enthält einen Kreis; Verbindungen müssen in eine Richtung laufen.",
     "no_agents": "Der Workflow hat noch keinen Agenten.",

@@ -90,6 +90,7 @@
   },
   "workflow": {
     "edge_dangling": "Uma conexão aponta para um nó que não existe.",
+    "import_invalid": "Este arquivo não é uma exportação de workflow do Nodestro: ele não tem etapas (\"nodes\").",
     "self_loop": "Um nó não pode ser conectado a si mesmo.",
     "cycle": "O fluxo de trabalho contém um ciclo; as conexões devem seguir em um só sentido.",
     "no_agents": "O fluxo de trabalho ainda não tem nenhum agente.",

@@ -134,3 +134,15 @@ describe("formatCountdown", () => {
     expect(formatCountdown(-3)).toBe("0:00");
   });
 });
+
+describe("ToolApprovalForm context (AD-11)", () => {
+  it("names the workflow and the step's label instead of the node id once the run is loaded", async () => {
+    serve((url) =>
+      url === "/api/runs/run_1"
+        ? json({ id: "run_1", workflow_name: "Angebot versenden", workflow: { nodes: [{ id: "writer", type: "agent", label: "Texter" }], edges: [] } })
+        : json([]),
+    );
+    render(wrap(<ToolApprovalForm request={request()} showContext />));
+    expect(await screen.findByTestId("tool-approval-context")).toHaveTextContent("Angebot versenden · Schritt Texter");
+  });
+});

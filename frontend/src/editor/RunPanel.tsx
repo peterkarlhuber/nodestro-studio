@@ -6,10 +6,11 @@ import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import { Output } from "../components/Markdown";
 import { toast } from "../components/toast";
-import { Button, Callout, Hint, IconButton, Stat, StatusBadge } from "../components/ui";
+import { Button, Callout, Hint, IconButton, Stat } from "../components/ui";
 import { ProblemText, runProblem } from "../lib/errors";
 import { formatCost, formatTokens, tokenBreakdown } from "../lib/format";
 import { RunApprovals } from "../runs/ApprovalCard";
+import { InterruptedNotice, RunOutcome, StepStatus, ToolProblemsNotice } from "../runs/RunProblems";
 import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { useEditorLayout } from "./layout";
 import { NodeRunDetails, startFiles } from "./RunDetails";
@@ -53,7 +54,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
           <h2 className="panel-head__title run-title">{t("runs.panel.title")}</h2>
         </div>
         <div className="row-gap">
-          {run ? <StatusBadge status={run.status} label={live ? t("status.running.label") : undefined} /> : <span className="muted small">{t("runs.panel.notStarted")}</span>}
+          {run ? <RunOutcome run={run} label={live ? t("status.running.label") : undefined} /> : <span className="muted small">{t("runs.panel.notStarted")}</span>}
           {live || paused ? (
             <Hint id="runs.cancel">
               <Button size="sm" icon={Square} onClick={() => api.cancelRun(run.id).catch(toast.error)}>
@@ -97,7 +98,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                           onClick={() => setFocus(node.id)}
                         >
                           <span>{node.label}</span>
-                          {state ? <StatusBadge status={state.status} /> : null}
+                          {state ? <StepStatus run={run} state={state} /> : null}
                         </button>
                       </li>
                     );
@@ -126,6 +127,8 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                         <ProblemText item={runProblem(run)} />
                       </Callout>
                     ) : null}
+                    <InterruptedNotice run={run} />
+                    <ToolProblemsNotice run={run} onOpenStep={setFocus} />
                     {paused ? <RunApprovals run={run} /> : null}
                     {run.status === "running" || run.status === "paused" ? <RunToolApprovals run={run} /> : null}
                     {live ? <p className="muted">{t("runs.panel.running")}</p> : paused ? null : <Output value={run.output} />}

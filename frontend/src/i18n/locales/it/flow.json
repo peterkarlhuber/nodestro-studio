@@ -216,6 +216,7 @@
       "was_blocked": "Non eseguito a causa di un errore precedente.",
       "was_waiting": "Non è stato raggiunto.",
       "was_running": "Non è terminato.",
+      "was_interrupted": "È stato interrotto: Nodestro si è fermato mentre era in corso.",
       "was_awaiting_approval": "Attendeva un’approvazione.",
       "was_idle": "Non è stato raggiunto.",
       "in_loop": "Fa parte di un ciclo: l’intero ciclo viene rieseguito."

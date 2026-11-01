@@ -90,6 +90,7 @@
   },
   "workflow": {
     "edge_dangling": "A connection points to a node that does not exist.",
+    "import_invalid": "This file is not a Nodestro workflow export: it has no steps (\"nodes\").",
     "self_loop": "A node cannot be connected to itself.",
     "cycle": "The workflow contains a cycle; connections must run in one direction.",
     "no_agents": "The workflow has no agent yet.",

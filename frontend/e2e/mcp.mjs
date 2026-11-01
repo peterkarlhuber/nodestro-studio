@@ -66,10 +66,10 @@ try {
   await services.getByRole("button", { name: "Dienst verbinden" }).click();
   await page.getByLabel("Name").fill("Docs");
   await page.getByLabel("Adresse").fill(mcpUrl);
-  await page.getByRole("button", { name: "Speichern" }).click();
-  await page.getByText("Dienste werden nur über https erreicht").first().waitFor();
-  check(true, "A plain http address is refused without the local development server consent");
-  await page.getByText("Lokalen Entwicklungsserver erlauben").click();
+  // The form explains the refusal under the address before anything is sent (AD-13), and does not save.
+  await page.getByTestId("mcp-url-problem").getByText("Lokalen Entwicklungsserver erlauben", { exact: false }).waitFor();
+  check(await page.getByRole("button", { name: "Speichern" }).isDisabled(), "A plain http address is refused without the local development server consent");
+  await page.getByText("Lokalen Entwicklungsserver erlauben", { exact: true }).click();
   await page.getByRole("button", { name: "Speichern" }).click();
   await services.getByRole("button", { name: /Docs/ }).waitFor();
   check(true, "The local development server is connected after explicit consent");
@@ -155,7 +155,7 @@ try {
   await page.getByLabel("Name").fill("Wiki");
   await page.getByLabel("Adresse").fill(oauthMcpUrl);
   await page.getByLabel("Anmeldung").selectOption("oauth");
-  await page.getByText("Lokalen Entwicklungsserver erlauben").click();
+  await page.getByText("Lokalen Entwicklungsserver erlauben", { exact: true }).click();
   await page.getByRole("button", { name: "Speichern" }).click();
   await servicesAgain.getByRole("button", { name: /Wiki/ }).click();
   await servicesAgain.getByTestId("mcp-oauth").getByText("Nicht angemeldet").waitFor();

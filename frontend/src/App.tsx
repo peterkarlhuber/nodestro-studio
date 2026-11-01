@@ -1,10 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+import { retryQuery } from "./api/retry";
 import { routes } from "./routes";
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { retry: 1, staleTime: 5_000 } },
+  defaultOptions: { queries: { retry: retryQuery, staleTime: 5_000 } },
 });
 
 const router = createBrowserRouter(routes);

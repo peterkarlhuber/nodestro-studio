@@ -3,7 +3,9 @@ import { Container, Cpu, Languages, Save, ScanText } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
+import { useAccess } from "../api/access";
 import { api } from "../api/client";
+import { PermissionNote } from "../components/Access";
 import { keys, useMeta, useSettings } from "../api/hooks";
 import type { Settings } from "../api/types";
 import { ModelPicker, useModelHint } from "../components/ModelPicker";
@@ -22,6 +24,7 @@ const AUTOMATIC = "auto";
 function LanguagePicker() {
   const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
+  const admin = useAccess().can("admin");
   const [choice, setChoice] = useState<string>(() => storedLanguage() ?? AUTOMATIC);
   const remember = useMutation({
     mutationFn: (language: Language | null) => api.saveSettings({ language }),
@@ -32,7 +35,8 @@ function LanguagePicker() {
     const language = value === AUTOMATIC ? null : (value as Language);
     setChoice(value);
     await setLanguage(language);
-    remember.mutate(language);
+    // Without the right to change the settings the choice stays in this browser only (no refused request).
+    if (admin) remember.mutate(language);
   };
   return (
     <section className="panel stack" aria-labelledby="settings-language">
@@ -66,6 +70,11 @@ export function SettingsPage() {
   const { t } = useTranslation();
   const settings = useSettings();
   const meta = useMeta();
+  const access = useAccess();
+  const admin = access.can("admin");
+  // Install-only panels (backup, diagnostics) only once it is known the principal holds "install" (AD-04).
+  const install = access.profile !== "unknown" && access.can("install");
+  const server = access.profile === "server";
   const queryClient = useQueryClient();
   const [form, setForm] = useState<Settings | null>(null);
   const defaultHint = useModelHint(form?.default_model ?? "");
@@ -95,7 +104,13 @@ export function SettingsPage() {
 
   return (
     <div className="page">
-      <PageHeader title={t("settings.title")} doc="einstellungen" description={t("settings.description")} />
+      <PageHeader
+        title={t("settings.title")}
+        doc="einstellungen"
+        description={
+          server ? t("admin.settings.serverDescription", { tenant: access.me?.tenant_id ?? "" }) : t("settings.description")
+        }
+      />
       <div className="page__body settings">
         <ProviderSettings settings={form} />
 
@@ -151,10 +166,12 @@ export function SettingsPage() {
               onChange={(e) => setForm({ ...form, architect_max_repairs: Math.min(5, Math.max(0, Math.round(Number(e.target.value) || 0))) })}
             />
           </Field>
+          <PermissionNote permission="admin" access={access} />
           <div>
             <Button
               variant="primary"
               icon={Save}
+              disabled={!admin}
               busy={save.isPending}
               onClick={() =>
                 save.mutate({
@@ -173,7 +190,7 @@ export function SettingsPage() {
 
         <PricingPanel settings={form} onMode={(price_mode) => save.mutate({ price_mode })} />
 
-        <ReconciliationPanel />
+        {admin ? <ReconciliationPanel /> : null}
 
         <section className="panel stack" aria-labelledby="settings-sandbox">
           <h2 className="panel__title" id="settings-sandbox">
@@ -185,6 +202,7 @@ export function SettingsPage() {
             <Segmented
               label={t("settings.sandbox.label")}
               value={form.sandbox}
+              disabled={!admin}
               onChange={(sandbox) => save.mutate({ sandbox })}
               options={[
                 { value: "subprocess", label: t("settings.sandbox.subprocess") },
@@ -226,7 +244,7 @@ export function SettingsPage() {
           <div className="row-gap">
             <Toggle
               checked={Boolean(form.ocr_enabled)}
-              disabled={!form.ocr_available}
+              disabled={!admin || !form.ocr_available}
               onChange={(ocr_enabled) => save.mutate({ ocr_enabled })}
               label={t("settings.ocr.label")}
             />
@@ -236,13 +254,13 @@ export function SettingsPage() {
           </div>
         </section>
 
-        <BackupPanel />
+        {install ? <BackupPanel /> : null}
 
         <InputStoragePanel />
 
         <PythonMaintenance />
 
-        <DiagnosticsPanel />
+        {install ? <DiagnosticsPanel /> : null}
 
         <section className="panel stack" aria-label={t("settings.about.title")}>
           <h2 className="panel__title">{t("settings.about.title")}</h2>
@@ -250,7 +268,7 @@ export function SettingsPage() {
             Nodestro {meta.data?.version ?? ""} · Orkexa {meta.data?.library_version ?? ""}
           </p>
           <p className="muted small">
-            <Trans i18nKey="settings.about.data" components={{ code: <code /> }} />
+            {server ? t("admin.settings.serverData") : <Trans i18nKey="settings.about.data" components={{ code: <code /> }} />}
           </p>
         </section>
       </div>

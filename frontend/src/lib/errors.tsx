@@ -71,6 +71,11 @@ function interpolationParams(t: TFunction, params: Record<string, unknown> | nul
       result[key] = t(`providers.names.${value}`, { defaultValue: value });
       continue;
     }
+    if (key === "permission" && typeof value === "string" && value) {
+      // Permissions come as ids ("edit"); the sentence names them (AD-04).
+      result[key] = t(`admin.permissions.${value}`, { defaultValue: value });
+      continue;
+    }
     result[key] = Array.isArray(value)
       ? value.map((item) => (item && typeof item === "object" ? nestedText(t, item as Coded & { field?: string }) : String(item))).join("; ")
       : value;

@@ -1,0 +1,122 @@
+{
+  "roles": {
+    "owner": "Eigentümer",
+    "admin": "Administrator",
+    "editor": "Bearbeiter",
+    "operator": "Ausführender",
+    "viewer": "Betrachter",
+    "none": "Keine Rolle"
+  },
+  "permissions": {
+    "read": "Lesen",
+    "edit": "Bearbeiten",
+    "run": "Ausführen",
+    "admin": "Verwalten",
+    "install": "Installation verwalten"
+  },
+  "denied": "Deine Rolle ({{role}}) darf das nicht: Dafür braucht es die Berechtigung „{{permission}}“. Frag einen Administrator deines Nodestro-Servers.",
+  "readOnly": {
+    "look": "Du bist als {{role}} angemeldet: Du kannst dir alles ansehen, aber nichts ändern oder ausführen.",
+    "run": "Du bist als {{role}} angemeldet: Du kannst dir alles ansehen und Ausführungen starten, aber nichts ändern."
+  },
+  "user": {
+    "menu": "Angemeldet als {{name}}",
+    "title": "Dein Konto",
+    "role": "Rolle: {{role}} · Arbeitsbereich {{tenant}}",
+    "permissions": "Berechtigungen: {{list}}",
+    "switch": "Arbeitsbereich wechseln",
+    "logout": "Abmelden",
+    "members": "Mitglieder und Rollen verwaltet der Betreiber des Servers mit der Kommandozeile nodestro-server (siehe Betriebshandbuch).",
+    "signInAgain": "Erneut anmelden"
+  },
+  "server": {
+    "title": "Server deiner Organisation",
+    "text": "Nodestro läuft auf einem Server deiner Organisation. Deine Daten bleiben auf diesem Server und gehen nur an die KI-Anbieter, die dein Betreiber erlaubt."
+  },
+  "settings": {
+    "serverDescription": "Gilt für deinen Arbeitsbereich {{tenant}} auf diesem Nodestro-Server.",
+    "serverData": "Deine Daten liegen auf dem Nodestro-Server deiner Organisation. Um Sicherungen und die Installation kümmert sich dessen Betreiber."
+  },
+  "run": {
+    "withProblems": "Mit Problemen beendet",
+    "toolProblemsTitle": "Tool-Aufrufe ohne Ergebnis",
+    "toolProblemsText_one": "{{count}} Tool-Aufruf war nicht erfolgreich. Prüfe, ob das Ergebnis darauf beruht:",
+    "toolProblemsText_other": "{{count}} Tool-Aufrufe waren nicht erfolgreich. Prüfe, ob das Ergebnis darauf beruht:",
+    "toolProblem": {
+      "rejected": "von einer Person abgelehnt, das Tool lief nicht",
+      "expired": "niemand hat rechtzeitig entschieden, der Aufruf galt als abgelehnt",
+      "denied": "von den Freigaberegeln nicht erlaubt",
+      "cancelled": "der Aufruf wurde abgebrochen",
+      "coded": "der Aufruf ist fehlgeschlagen",
+      "error": "das Tool hat einen Fehler gemeldet"
+    },
+    "notFinished": "Nicht beendet",
+    "interrupted": "Nodestro wurde beendet, während diese Ausführung lief.",
+    "shutdown": "Nodestro wurde beendet (zum Beispiel die App geschlossen oder der Server neu gestartet), während diese Ausführung lief; niemand hat sie abgebrochen.",
+    "unfinished_one": "Die Ausführung endete, bevor {{count}} Schritt fertig war: {{steps}}. Er hat nie ein Ergebnis bekommen.",
+    "unfinished_other": "Die Ausführung endete, bevor {{count}} Schritte fertig waren: {{steps}}. Sie haben nie ein Ergebnis bekommen.",
+    "resumeHint": "Setz die Ausführung fort, um sie abzuschließen; fertige Schritte werden übernommen."
+  },
+  "approval": {
+    "inWorkflow": "{{workflow}} · Schritt {{step}}"
+  },
+  "mcp": {
+    "downgrade": "Der Dienst gibt an, dass dieses Tool „{{stated}}“ ist. Du stufst es als „{{chosen}}“ ein, also weniger streng: Es könnte dann zum Beispiel vorab freigegeben werden und würde wie ein ungefährlicheres Tool behandelt.",
+    "downgradeConfirm": "Ich habe das Tool geprüft: Die weniger strenge Einstufung stimmt",
+    "https_required": "Dienste werden nur über https erreicht. http geht nur für einen Entwicklungsserver auf diesem Computer (127.0.0.1 oder localhost).",
+    "loopback_toggle": "http geht nur für einen Entwicklungsserver auf diesem Computer: Schalte unten „{{toggle}}“ ein."
+  },
+  "import": {
+    "not_object": "Diese Datei ist kein Nodestro-Workflow: Sie enthält kein Workflow-Objekt. Exportiere einen Workflow im Editor (Exportieren) und importiere diese Datei.",
+    "no_nodes": "Diese Datei ist kein Nodestro-Workflow: Sie hat keine Schritte („nodes“). Exportiere einen Workflow im Editor (Exportieren) und importiere diese Datei.",
+    "node_invalid": "Diese Datei ist kein gültiger Nodestro-Workflow: Schritt {{index}} hat keine ID oder keinen Typ.",
+    "edges_invalid": "Diese Datei ist kein gültiger Nodestro-Workflow: Ihre Verbindungen („edges“) sind keine Liste.",
+    "edge_invalid": "Diese Datei ist kein gültiger Nodestro-Workflow: Verbindung {{index}} hat keinen Anfang oder kein Ende."
+  },
+  "conflict": {
+    "title": "Anderswo geändert",
+    "text": "Dieser Workflow wurde um {{time}} anderswo gespeichert (in einem anderen Tab oder von jemand anderem), nachdem du ihn geöffnet hast. Wenn du jetzt speicherst, ersetzt du diese Änderung.",
+    "reloadHint": "Gespeicherte Version laden: Deine ungespeicherten Änderungen hier gehen verloren.",
+    "copyHint": "Meine als Kopie behalten: Dein Stand wird ein neuer Workflow, der gespeicherte bleibt, wie er ist.",
+    "overwriteHint": "Meine trotzdem speichern: Dein Stand ersetzt die andere Änderung.",
+    "versions": "Endgültig verloren geht dabei nichts: Jedes Speichern bleibt unter Versionen erhalten, wo du es vergleichen und wiederherstellen kannst.",
+    "keepEditing": "Weiter bearbeiten",
+    "reload": "Gespeicherte Version laden",
+    "copy": "Meine als Kopie behalten",
+    "overwrite": "Meine trotzdem speichern",
+    "copyName": "{{name}} (meine Kopie)",
+    "copied": "Als neuer Workflow „{{name}}“ gespeichert.",
+    "reloaded": "Die gespeicherte Version ist geladen."
+  },
+  "compat": {
+    "effortText": "OpenAI-kompatible Endpunkte (zum Beispiel Ollama oder vLLM) nehmen keine Aufwand-Einstellung von Nodestro an. Stell den Aufwand dieses Agenten auf „Modellstandard“.",
+    "effortOff": "Aufwand auf Modellstandard setzen"
+  },
+  "rules": {
+    "off": "Freigaben pro Tool-Aufruf sind in dieser Installation nicht eingeschaltet: Tools laufen ohne vorherige Nachfrage.",
+    "offDocs": "So funktionieren Freigaben pro Aufruf",
+    "preparation": "Vorbereitung für Administratoren",
+    "legacyNotRunOn": "Der Aktivierungsschritt ist noch nicht gelaufen: Zuordnungen von vorher werden wie neue nachgefragt.",
+    "stampHintOn": "Markiert die jetzt bestehenden Zuordnungen in Workflows, Versionen und veröffentlichten Releases als Ausnahmen, damit sie ohne Nachfrage weiterlaufen. Prüf danach die Liste; der Schritt läuft nur einmal."
+  },
+  "request": {
+    "title": "Die Anfrage passt nicht zur Eingabe der API:",
+    "body": "Anfrage",
+    "kind": {
+      "missing": "fehlt",
+      "number": "muss eine Zahl sein",
+      "boolean": "muss true oder false sein",
+      "text": "muss ein Text sein",
+      "date": "muss ein Datum sein",
+      "extra": "gehört nicht zur Eingabe",
+      "choice": "ist keiner der erlaubten Werte",
+      "list": "muss eine Liste sein",
+      "invalid": "ist ungültig"
+    }
+  },
+  "sdk": {
+    "python": "Python-SDK",
+    "typescript": "TypeScript-SDK",
+    "intro": "Die offiziellen Clients starten Ausführungen mit einem Idempotenzschlüssel (eine Wiederholung startet nie eine zweite Ausführung), wiederholen nach Verbindungsfehlern und melden typisierte Fehler. Installiere sie aus"
+  }
+}
