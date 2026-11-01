@@ -191,7 +191,8 @@
     "result_lost": "La chiamata potrebbe essere già stata eseguita, ma il suo risultato è andato perso. Non viene ripetuta.",
     "checkpoint_stale": "L’agente è stato modificato mentre attendeva un’approvazione. La chiamata in attesa non è stata eseguita.",
     "checkpoint_expired": "La chiamata allo strumento in attesa non può più continuare (scaduta o impostazione disattivata). Non è stata eseguita.",
-    "approval_missing": "La richiesta di approvazione per questa chiamata non esiste più; la chiamata non è stata eseguita."
+    "approval_missing": "La richiesta di approvazione per questa chiamata non esiste più; la chiamata non è stata eseguita.",
+    "approval_not_in_test": "Questa chiamata richiederebbe l'approvazione di una persona; i test non chiedono, quindi non è stata eseguita."
   },
   "job": {
     "writing": "Il Coding Agent sta scrivendo codice e test …",
@@ -670,7 +671,7 @@
     "url_credentials": "L'indirizzo non può contenere nome utente o password.",
     "url_invalid": "L'indirizzo non è valido.",
     "vault_unavailable": "Non esiste un archivio sicuro per i token di accesso.",
-    "write_not_supported": "Gli strumenti che modificano dati sono ancora bloccati (manca l'approvazione per chiamata).",
+    "write_not_supported": "Gli strumenti che modificano dati vengono eseguiti solo nelle esecuzioni di workflow che chiedono a una persona prima di ogni chiamata, non nei test né nel pannello degli strumenti.",
     "cooling_down": "{{server}} ha fallito più volte di seguito; le chiamate vengono sospese brevemente.",
     "environment_not_ready": "I pacchetti di {{server}} non sono ancora approvati e installati.",
     "limits_invalid": "{{variable}} non è un limite valido.",
@@ -690,7 +691,12 @@
     "stdio_failed": "{{server}} non si è potuto avviare o ha chiuso la connessione.",
     "stdio_invalid": "Le impostazioni del server locale non sono valide (pacchetti, modulo, né token né accesso).",
     "too_many_servers": "Non si possono collegare altri servizi (al massimo {{limit}}).",
-    "tool_not_in_release": "Questo strumento non fa parte della versione pubblicata."
+    "tool_not_in_release": "Questo strumento non fa parte della versione pubblicata.",
+    "url_secret": "L'indirizzo contiene qualcosa che sembra una chiave o un token ({{where}}). Inserisci l'indirizzo senza quella parte e metti il token di accesso nel campo del token.",
+    "url_secret_removed": "L'indirizzo salvato conteneva una chiave; è stata rimossa e il servizio è stato disattivato. Inserisci il token di accesso nel campo del token e riattiva il servizio.",
+    "loopback_not_local": "L'accesso locale può essere consentito solo per un indirizzo su questo computer.",
+    "hash_required": "L'approvazione deve indicare la versione dello strumento che hai controllato. Ricarica lo strumento e approvalo di nuovo.",
+    "response_too_large": "Il servizio ha inviato una risposta più grande del consentito; non è stata letta."
   },
   "orchestration": {
     "unknown_member": "Questo team non fa parte del gruppo.",

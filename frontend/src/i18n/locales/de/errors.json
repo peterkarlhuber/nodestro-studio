@@ -191,7 +191,8 @@
     "result_lost": "Der Aufruf wurde möglicherweise schon ausgeführt, sein Ergebnis ging aber verloren. Er wird nicht noch einmal ausgeführt.",
     "checkpoint_stale": "Der Agent wurde geändert, während er auf eine Freigabe wartete. Der wartende Aufruf wurde nicht ausgeführt.",
     "checkpoint_expired": "Der wartende Tool-Aufruf kann nicht mehr fortgesetzt werden (abgelaufen oder die Einstellung wurde ausgeschaltet). Er wurde nicht ausgeführt.",
-    "approval_missing": "Die Freigabeanfrage zu diesem Aufruf gibt es nicht mehr; er wurde nicht ausgeführt."
+    "approval_missing": "Die Freigabeanfrage zu diesem Aufruf gibt es nicht mehr; er wurde nicht ausgeführt.",
+    "approval_not_in_test": "Dieser Aufruf bräuchte die Freigabe einer Person; Tests fragen nicht, deshalb wurde er nicht ausgeführt."
   },
   "job": {
     "writing": "Der Coding Agent schreibt Code und Tests …",
@@ -670,7 +671,7 @@
     "url_credentials": "Die Adresse darf keinen Benutzernamen und kein Passwort enthalten.",
     "url_invalid": "Die Adresse ist ungültig.",
     "vault_unavailable": "Es gibt keinen sicheren Speicher für Zugangstokens.",
-    "write_not_supported": "Tools, die Daten ändern, sind noch gesperrt (Freigabe pro Aufruf fehlt).",
+    "write_not_supported": "Tools, die Daten ändern, laufen nur in Workflow-Läufen, die vor jedem Aufruf eine Person fragen, nicht in Tests oder im Tool-Panel.",
     "cooling_down": "{{server}} ist mehrmals hintereinander fehlgeschlagen; Aufrufe pausieren kurz.",
     "environment_not_ready": "Die Pakete von {{server}} sind noch nicht freigegeben und installiert.",
     "limits_invalid": "{{variable}} ist keine gültige Grenze.",
@@ -690,7 +691,12 @@
     "stdio_failed": "{{server}} konnte nicht gestartet werden oder hat die Verbindung beendet.",
     "stdio_invalid": "Die Einstellungen des lokalen Servers sind ungültig (Pakete, Modul, kein Token und keine Anmeldung).",
     "too_many_servers": "Es können keine weiteren Dienste verbunden werden (höchstens {{limit}}).",
-    "tool_not_in_release": "Dieses Tool gehört nicht zur veröffentlichten Version."
+    "tool_not_in_release": "Dieses Tool gehört nicht zur veröffentlichten Version.",
+    "url_secret": "Die Adresse enthält etwas, das wie ein Schlüssel oder Token aussieht ({{where}}). Gib die Adresse ohne diesen Teil ein und trage das Zugriffstoken im Token-Feld ein.",
+    "url_secret_removed": "Die gespeicherte Adresse enthielt einen Schlüssel; er wurde entfernt und der Dienst ausgeschaltet. Trage das Zugriffstoken im Token-Feld ein und schalte den Dienst wieder ein.",
+    "loopback_not_local": "Lokaler Zugriff kann nur für eine Adresse auf diesem Computer erlaubt werden.",
+    "hash_required": "Die Freigabe muss den geprüften Stand des Tools nennen. Lade das Tool neu und gib es erneut frei.",
+    "response_too_large": "Der Dienst hat eine größere Antwort geschickt als erlaubt; sie wurde nicht gelesen."
   },
   "orchestration": {
     "unknown_member": "Dieses Team ist nicht im Pool.",

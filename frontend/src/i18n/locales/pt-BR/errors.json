@@ -191,7 +191,8 @@
     "result_lost": "A chamada pode já ter sido feita, mas o resultado se perdeu. Ela não é feita de novo.",
     "checkpoint_stale": "O agente mudou enquanto esperava uma aprovação. A chamada em espera não foi feita.",
     "checkpoint_expired": "A chamada de ferramenta em espera não pode mais continuar (expirou ou a configuração foi desligada). Ela não foi feita.",
-    "approval_missing": "A solicitação de aprovação desta chamada não existe mais; a chamada não foi feita."
+    "approval_missing": "A solicitação de aprovação desta chamada não existe mais; a chamada não foi feita.",
+    "approval_not_in_test": "Esta chamada precisaria da aprovação de uma pessoa; os testes não perguntam, então ela não foi feita."
   },
   "job": {
     "writing": "O agente de programação está escrevendo código e testes …",
@@ -670,7 +671,7 @@
     "url_credentials": "O endereço não pode conter nome de usuário nem senha.",
     "url_invalid": "O endereço é inválido.",
     "vault_unavailable": "Não há armazenamento seguro para tokens de acesso.",
-    "write_not_supported": "Ferramentas que alteram dados ainda estão bloqueadas (falta a aprovação por chamada).",
+    "write_not_supported": "Ferramentas que alteram dados só rodam em execuções de workflow que perguntam a uma pessoa antes de cada chamada, não em testes nem no painel de ferramentas.",
     "cooling_down": "{{server}} falhou várias vezes seguidas; as chamadas fazem uma breve pausa.",
     "environment_not_ready": "Os pacotes de {{server}} ainda não foram aprovados e instalados.",
     "limits_invalid": "{{variable}} não é um limite válido.",
@@ -690,7 +691,12 @@
     "stdio_failed": "{{server}} não pôde ser iniciado ou encerrou a conexão.",
     "stdio_invalid": "As configurações do servidor local são inválidas (pacotes, módulo, sem token e sem login).",
     "too_many_servers": "Não é possível conectar mais serviços (no máximo {{limit}}).",
-    "tool_not_in_release": "Esta ferramenta não faz parte da versão publicada."
+    "tool_not_in_release": "Esta ferramenta não faz parte da versão publicada.",
+    "url_secret": "O endereço contém algo que parece uma chave ou um token ({{where}}). Informe o endereço sem essa parte e coloque o token de acesso no campo de token.",
+    "url_secret_removed": "O endereço salvo continha uma chave; ela foi removida e o serviço foi desativado. Informe o token de acesso no campo de token e ative o serviço novamente.",
+    "loopback_not_local": "O acesso local só pode ser permitido para um endereço neste computador.",
+    "hash_required": "A aprovação precisa indicar a versão revisada da ferramenta. Recarregue a ferramenta e aprove de novo.",
+    "response_too_large": "O serviço enviou uma resposta maior do que o permitido; ela não foi lida."
   },
   "orchestration": {
     "unknown_member": "Esta equipe não está no grupo.",

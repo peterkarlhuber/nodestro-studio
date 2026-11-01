@@ -191,7 +191,8 @@
     "result_lost": "The call may already have been made, but its result was lost. It is not made again.",
     "checkpoint_stale": "The agent changed while it waited for an approval. The waiting call was not made.",
     "checkpoint_expired": "The waiting tool call can no longer continue (it expired or the setting was switched off). It was not made.",
-    "approval_missing": "The approval request for this call is gone; the call was not made."
+    "approval_missing": "The approval request for this call is gone; the call was not made.",
+    "approval_not_in_test": "This call would need a person's approval; tests do not ask, so it was not made."
   },
   "job": {
     "writing": "The Coding Agent is writing code and tests …",
@@ -670,7 +671,7 @@
     "url_credentials": "The address must not contain a user name or password.",
     "url_invalid": "The address is invalid.",
     "vault_unavailable": "There is no secure store for access tokens.",
-    "write_not_supported": "Tools that change data are still blocked (approval per call is missing).",
+    "write_not_supported": "Tools that change data run only in workflow runs that ask a person before each call, not in tests or the tool panel.",
     "cooling_down": "{{server}} failed several times in a row; calls pause briefly.",
     "environment_not_ready": "The packages of {{server}} are not approved and installed yet.",
     "limits_invalid": "{{variable}} is not a valid limit.",
@@ -690,7 +691,12 @@
     "stdio_failed": "{{server}} could not be started or ended the connection.",
     "stdio_invalid": "The local server's settings are invalid (packages, module, no token or sign-in).",
     "too_many_servers": "No more services can be connected (at most {{limit}}).",
-    "tool_not_in_release": "This tool is not part of the published version."
+    "tool_not_in_release": "This tool is not part of the published version.",
+    "url_secret": "The address contains something that looks like a key or token ({{where}}). Enter the address without it and put the access token in the token field.",
+    "url_secret_removed": "The stored address contained a key; it was removed and the service was switched off. Enter the access token in the token field and switch the service on again.",
+    "loopback_not_local": "Local access can only be allowed for an address on this computer.",
+    "hash_required": "The approval must name the reviewed version of the tool. Reload the tool and approve again.",
+    "response_too_large": "The service sent a larger answer than allowed; it was not read."
   },
   "orchestration": {
     "unknown_member": "This team is not in the pool.",

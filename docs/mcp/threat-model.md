@@ -35,10 +35,10 @@ release condition for the MVP.
 | T5 | Name collision or shadowing across servers | server-scoped names `mcp__<slug>__<tool>`; never the server's self-reported name | WP-1 (MVP) | two test servers with the same tool name |
 | T6 | Data exfiltration through arguments (private data + untrusted content + external channel) | arguments recorded in the run; studio explains "the service sees what the agent sends"; inspector warns when an agent combines MCP tools with knowledge or input files; MVP limits MCP to read-only tools, but a read call still sends arguments, which stays a documented residual risk | WP-2, WP-4 (MVP) | UI review; run record contains the arguments |
 | T7 | SSRF: the server address, a DNS answer (incl. rebinding or a later change), a redirect or a proxy setting leads into the internal network or to a non-approved target | The address is checked on the IP the socket actually connects to, inside the connection step (no gap between resolution and connect), for IPv4 and IPv6; TLS keeps verifying the configured host name; environment proxies are ignored; operator egress allow-list. See [T7 in detail](#t7-in-detail) | WP-1 (MVP) | see T7 in detail |
-| T8 | Token theft or leakage | desktop: encrypted, key in the OS keychain; no keychain → no persistent tokens (D-3); server: `SecretBox`, tenant-bound; tokens never in workflow JSON, exports, traces, logs, API responses (`key=set` only); redaction list extended | WP-1 (MVP) | search for the token value in database dump, logs, export, trace export, API responses |
+| T8 | Token theft or leakage | desktop: encrypted, key in the OS keychain; no keychain → no persistent tokens (D-3); server: `SecretBox`, tenant-bound; tokens never in workflow JSON, exports, traces, logs, API responses (`key=set` only); redaction list extended; server addresses with credentials (query, token-like path segment, fragment) are refused (`mcp.url_secret`), stored ones are cleaned at start and their server switched off (`mcp.url_secret_removed`), audit events and errors hold redacted addresses only (review M-1) | WP-1 (MVP); review M-1 | runtime `tests/test_mcp_secret_search.py`: the token value searched in logs, the run trace, every data file (SQLite with `-wal`/`-shm`) and every PostgreSQL table; `tests/test_mcp_review_fixes.py` (addresses) |
 | T9 | Token sent to the wrong server | tokens bound to the configured origin; never forward Nodestro or provider keys; OAuth later: RFC 8707 `resource`, issuer-bound credentials, RFC 9207 `iss` check | WP-1 (MVP); WP-6 | test: redirect to another origin carries no token |
-| T10 | Cross-tenant access | configuration, tokens, snapshots and connections per tenant; one connection hub per tenant and process; tenant-scoped routes with permissions (`admin` to manage, `edit` to assign, `run` to execute, `read` to list) | WP-1, WP-3 (MVP) | server e2e: another tenant sees no servers, tools or tokens and cannot call them |
-| T11 | Denial of service and cost: slow or huge responses, endless tool loops | per-call timeout (default 60 s, not the SDK's 300 s), cancel with the run, output limit (default 20,000 characters), parallel calls per server limited, `max_tool_rounds` unchanged | WP-1 (MVP) | hanging test server, oversized response, cancel during a call |
+| T10 | Cross-tenant access | configuration, tokens, snapshots and connections per tenant; one connection hub per tenant and process; tenant-scoped routes with permissions (`admin` to manage, `edit` to assign, `run` to execute, `read` to list); the agent test needs `edit` for any configuration that is not exactly a saved one, the tool panel needs `edit`, a destructive MCP call is decided only with `admin` (review H-1, M-3) | WP-1, WP-3 (MVP); review | server e2e: another tenant sees no servers, tools or tokens and cannot call them; api `tests/test_mcp_review_api.py` (run-only role, combined attacks) |
+| T11 | Denial of service and cost: slow or huge responses, endless tool loops | per-call timeout (default 60 s, not the SDK's 300 s), cancel with the run, output limit (default 20,000 characters), parallel calls per server limited, `max_tool_rounds` unchanged; every HTTP answer (tool calls, discovery, OAuth) is limited to 8 MiB while it is read: a larger declared length is refused before the body, a longer stream stops at the limit (`mcp.response_too_large`), compressed answers are neither asked for nor accepted (review M-2) | WP-1 (MVP); review M-2 | hanging test server, oversized response, cancel during a call; runtime `tests/test_mcp_response_limit.py` (declared, endless, gzip, end to end through the SDK) |
 | T12 | Unattended runs act without a person | MVP tools are read-only; schedules may use them only after the MVP security acceptance (D-7); published APIs only with WP-9 | WP-2 (MVP), WP-9 | schedule run with a non-approved or changed tool fails |
 | T13 | AI-generated workflows add MCP tools or options | T1 refuses provider MCP options; generated `AgentConfig.tools` can only name approved MCP tools, and only an editor's save assigns them | WP-0, WP-2 | Architect output with forbidden options is cleaned (existing automatic fix for `config.reserved_request_options`) |
 | T14 | Missing audit trail | `ToolCallRecord` gains source, server, qualified tool, definition hash, duration and policy decision (additive fields); administration events (server added, token changed, tool approved, definition changed) per tenant without secrets | WP-2 (MVP) | records present after a run; old runs still load |
@@ -87,9 +87,10 @@ the MCP client makes):
    `metadata.google.internal`, `metadata.azure.com`.
 4. **Redirects.** Followed only within the endpoint's origin (the SDK already enforces this); each redirected request
    opens its connection through the same check.
-5. **Proxies.** Environment proxy variables (`HTTP(S)_PROXY`, `ALL_PROXY`) are ignored by the MCP client. An operator can
-   set one explicit proxy for MCP; then the destination address cannot be checked locally, so the egress allow-list
-   becomes mandatory and the proxy must enforce it too (documented, shown in the server status).
+5. **Proxies.** Environment proxy variables (`HTTP(S)_PROXY`, `ALL_PROXY`) are ignored by the MCP client. There is no
+   MCP proxy setting (review L-1: an earlier version of this document described an explicit operator proxy that was
+   never built). Should one be added, the destination address cannot be checked locally, so the egress allow-list
+   must become mandatory and the proxy must enforce it too; that needs its own decision.
 6. **TLS.** `https` only. Certificates are verified against the configured host name (SNI and verification use the name,
    the socket uses the checked address). Connecting by IP never weakens verification.
 7. **Egress allow-list.** Server profile: `NODESTRO_MCP_ENDPOINTS` lists the allowed origins (empty = no MCP); an entry
@@ -100,6 +101,34 @@ the MCP client makes):
    to a private address; environment proxy variables set; a certificate for another host name; an origin not on the
    allow-list.
 
+## Independent review 2026-11-01: findings and fixes
+
+The independent review of the frozen MCP state did not accept it (one high, four medium, eight low findings). The
+correction round changed the following; the re-review by another independent reviewer is outstanding.
+
+- **H-1 per-call approval bypassed outside runs.** The process-wide switch (`NODESTRO_TOOL_APPROVALS=1`) opened MCP
+  tools that change data for every caller, including the agent test and the tool panel, which never ask. Now the
+  switch alone opens nothing: a caller must state that it asks before every call (`gated`), and only the run engine
+  does. The agent test applies the same tool rules as a run and refuses a call the rules would ask about
+  (`tool.approval_not_in_test`); the tool panel runs MCP read tools only. Testing a free agent configuration needs
+  `edit`; a run-only user can test only an exactly saved configuration (its tools are an authorized assignment).
+  The Assistant and the Workflow Architect execute no tools; published APIs and releases run through the engine.
+- **M-1** see T8. **M-2** see T11.
+- **M-3 destructive calls approved with `run`.** Deciding about a destructive MCP call needs `admin`; write calls keep
+  `run` (D10). Evaluated, not built: a separate approver role and a four-eyes rule (the decider must differ from the
+  run's starter). Both fit the shared D10 mechanism later; the desktop has a single person, so a four-eyes rule would
+  block every destructive call there. Residual risk: on a server an administrator can start and approve the same
+  destructive call.
+- **M-4 desktop.** The first pilot is limited to an isolated server test instance. MCP on the desktop is not released:
+  the desktop's backend pin has to be aligned with the MCP state, and a full desktop end-to-end test (keychain token
+  storage, D-3) is a separate prerequisite.
+- **L-1** proxy statement corrected (T7 item 5). **L-2** loopback consent only for loopback addresses
+  (`mcp.loopback_not_local`). **L-3** approving a tool needs the reviewed definition hash (`mcp.hash_required`).
+  **L-4** a per-call approval no longer covers a definition an administrator approved while the call waited
+  (`tool.approval_stale`). **L-5** the external-data marker around results carries a per-call random nonce, so a
+  result cannot fake its end. **L-6** slugs of removed servers are never given to a new server. **L-7** a tool status
+  change is dropped when the definition was approved again meanwhile. **L-8** see T8 (proof).
+
 ## Residual risks accepted for the MVP
 
 - A connected service learns what agents send it (T6). The administrator connects it knowingly; the studio says so.
@@ -108,6 +137,9 @@ the MCP client makes):
   treat results as data; people see the call in the run.
 - Annotation-based suggestions can be wrong; the administrator's classification decides, and the default is
   "changes data".
+- Services that accept credentials only in the address (query parameter) cannot be connected; their key must be sent
+  as a bearer token or through OAuth.
+- An administrator can start and approve the same destructive call (no four-eyes rule, see M-3 above).
 
 ## Architecture acceptance and security acceptance
 

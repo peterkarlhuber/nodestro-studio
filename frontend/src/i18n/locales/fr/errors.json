@@ -191,7 +191,8 @@
     "result_lost": "L’appel a peut-être déjà été effectué, mais son résultat a été perdu. Il n’est pas refait.",
     "checkpoint_stale": "L’agent a été modifié pendant qu’il attendait une approbation. L’appel en attente n’a pas été effectué.",
     "checkpoint_expired": "L’appel d’outil en attente ne peut plus reprendre (expiré ou réglage désactivé). Il n’a pas été effectué.",
-    "approval_missing": "La demande d’approbation de cet appel n’existe plus ; l’appel n’a pas été effectué."
+    "approval_missing": "La demande d’approbation de cet appel n’existe plus ; l’appel n’a pas été effectué.",
+    "approval_not_in_test": "Cet appel nécessiterait l'approbation d'une personne ; les tests ne demandent pas, il n'a donc pas été effectué."
   },
   "job": {
     "writing": "Le Coding Agent écrit le code et les tests …",
@@ -670,7 +671,7 @@
     "url_credentials": "L'adresse ne doit contenir ni nom d'utilisateur ni mot de passe.",
     "url_invalid": "L'adresse n'est pas valide.",
     "vault_unavailable": "Il n'existe aucun stockage sécurisé pour les jetons d'accès.",
-    "write_not_supported": "Les outils qui modifient des données sont encore bloqués (l'approbation par appel manque).",
+    "write_not_supported": "Les outils qui modifient des données ne s'exécutent que dans les exécutions de workflow qui demandent l'accord d'une personne avant chaque appel, pas dans les tests ni dans le panneau d'outils.",
     "cooling_down": "{{server}} a échoué plusieurs fois de suite ; les appels sont brièvement suspendus.",
     "environment_not_ready": "Les paquets de {{server}} ne sont pas encore approuvés et installés.",
     "limits_invalid": "{{variable}} n'est pas une limite valide.",
@@ -690,7 +691,12 @@
     "stdio_failed": "{{server}} n'a pas pu démarrer ou a mis fin à la connexion.",
     "stdio_invalid": "Les paramètres du serveur local ne sont pas valides (paquets, module, ni jeton ni connexion).",
     "too_many_servers": "Impossible de connecter d'autres services ({{limit}} au maximum).",
-    "tool_not_in_release": "Cet outil ne fait pas partie de la version publiée."
+    "tool_not_in_release": "Cet outil ne fait pas partie de la version publiée.",
+    "url_secret": "L'adresse contient quelque chose qui ressemble à une clé ou à un jeton ({{where}}). Saisissez l'adresse sans cette partie et indiquez le jeton d'accès dans le champ prévu.",
+    "url_secret_removed": "L'adresse enregistrée contenait une clé ; elle a été retirée et le service a été désactivé. Saisissez le jeton d'accès dans le champ prévu et réactivez le service.",
+    "loopback_not_local": "L'accès local ne peut être autorisé que pour une adresse de cet ordinateur.",
+    "hash_required": "L'approbation doit indiquer la version examinée de l'outil. Rechargez l'outil et approuvez-le à nouveau.",
+    "response_too_large": "Le service a envoyé une réponse plus grande que permis ; elle n'a pas été lue."
   },
   "orchestration": {
     "unknown_member": "Cette équipe ne fait pas partie du groupe.",
