@@ -475,20 +475,23 @@ export function Segmented<T extends string>({
   options,
   onChange,
   label,
+  disabled,
 }: {
   value: T;
   options: { value: T; label: string; icon?: LucideIcon }[];
   onChange: (value: T) => void;
   label: string;
+  disabled?: boolean;
 }) {
   return (
-    <div className="segmented" role="radiogroup" aria-label={label}>
+    <div className="segmented" role="radiogroup" aria-label={label} aria-disabled={disabled || undefined}>
       {options.map(({ value: item, label: text, icon: Icon }) => (
         <button
           key={item}
           type="button"
           role="radio"
           aria-checked={value === item}
+          disabled={disabled}
           className={value === item ? "selected" : undefined}
           onClick={() => onChange(item)}
         >

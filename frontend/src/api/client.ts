@@ -148,14 +148,19 @@ export function startLogin(location: Pick<Location, "pathname" | "search" | "has
   location.assign(`/api/auth/login?return_to=${encodeURIComponent(back)}`);
 }
 
-export async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
-  return (await requestWithHeaders<T>(method, path, body)).data;
+export async function request<T>(method: string, path: string, body?: unknown, extraHeaders?: Record<string, string>): Promise<T> {
+  return (await requestWithHeaders<T>(method, path, body, extraHeaders)).data;
 }
 
 /** Like ``request``, with the response headers (for paging headers such as ``X-Has-More``). */
-export async function requestWithHeaders<T>(method: string, path: string, body?: unknown): Promise<{ data: T; headers: Headers }> {
+export async function requestWithHeaders<T>(
+  method: string,
+  path: string,
+  body?: unknown,
+  extraHeaders?: Record<string, string>,
+): Promise<{ data: T; headers: Headers }> {
   // The interface language: the backend names new copies and the first examples in it.
-  const headers: Record<string, string> = { "Accept-Language": currentLanguage() };
+  const headers: Record<string, string> = { "Accept-Language": currentLanguage(), ...extraHeaders };
   const init: RequestInit = { method, headers };
   if (body instanceof FormData || body instanceof Blob) {
     init.body = body;
@@ -258,8 +263,9 @@ export const api = {
   importWorkflow: (body: WorkflowIn & { python?: ExportedDependencies | null }) =>
     request<Workflow>("POST", "/workflows/import", body),
   /** Saves the workflow; a changed workflow becomes a new version, ``note`` describes it. */
-  saveWorkflow: (id: string, body: WorkflowIn, note?: string) =>
-    request<Workflow>("PUT", `/workflows/${id}${q({ note })}`, body),
+  /** ``revision``: the ``updated_at`` the edit started from; a newer server copy answers 409 workflow.conflict. */
+  saveWorkflow: (id: string, body: WorkflowIn, note?: string, revision?: string) =>
+    request<Workflow>("PUT", `/workflows/${id}${q({ note })}`, body, revision ? { "If-Match": `"${revision}"` } : undefined),
   deleteWorkflow: (id: string) => request<void>("DELETE", `/workflows/${id}`),
   duplicateWorkflow: (id: string) => request<Workflow>("POST", `/workflows/${id}/duplicate`),
   examples: (language: string) => request<ExampleSummary[]>("GET", `/library${q({ language })}`),

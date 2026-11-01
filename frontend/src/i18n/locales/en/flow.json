@@ -218,6 +218,7 @@
       "was_blocked": "Did not run because of an error before it.",
       "was_waiting": "Was not reached.",
       "was_running": "Did not finish.",
+      "was_interrupted": "Was interrupted: Nodestro stopped while it ran.",
       "was_awaiting_approval": "Was waiting for an approval.",
       "was_idle": "Was not reached.",
       "in_loop": "Part of a loop: the whole loop runs again."

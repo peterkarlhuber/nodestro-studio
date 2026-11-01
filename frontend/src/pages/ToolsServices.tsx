@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 
+import { useAccess } from "../api/access";
 import { keys } from "../api/hooks";
+import { PermissionNote } from "../components/Access";
 import {
   type McpAccess,
   RESOURCE_TOOL,
@@ -46,11 +48,47 @@ import {
   TextInput,
   Toggle,
 } from "../components/ui";
-import { ErrorText, ProblemText } from "../lib/errors";
+import { ErrorText, ProblemText, codedError } from "../lib/errors";
 import { type Tone, formatDate, relativeTime } from "../lib/format";
 import { McpServerDependencies } from "../python/DependencyPanel";
 
 const ACCESS: McpAccess[] = ["read", "write", "destructive"];
+
+/** The class a new tool starts with: what the service states, but at least "changes data" (AD-06). */
+export function initialAccess(suggested: McpAccess | null | undefined): McpAccess {
+  return suggested === "destructive" ? "destructive" : "write";
+}
+
+/** Whether the chosen class is less than the service states (only then a confirmation is needed). */
+export function isDowngrade(chosen: McpAccess, suggested: McpAccess | null | undefined): boolean {
+  if (!suggested || !ACCESS.includes(suggested)) return false;
+  return ACCESS.indexOf(chosen) < ACCESS.indexOf(suggested);
+}
+
+/** An address the API refuses before it is sent (AD-13): http only for a local development server. */
+export function urlProblem(
+  url: string,
+  loopbackPossible: boolean,
+  loopbackOn: boolean,
+): "https_required" | "loopback_toggle" | null {
+  const value = url.trim().toLowerCase();
+  if (!value.startsWith("http://")) return null;
+  const host = value.slice(7).split(/[/:?#]/, 1)[0];
+  const local = host === "127.0.0.1" || host === "localhost" || host === "[::1]";
+  if (!local || !loopbackPossible) return "https_required";
+  return loopbackOn ? null : "loopback_toggle";
+}
+/** API codes about the address: shown under the address field. */
+const URL_CODES = new Set([
+  "mcp.https_required",
+  "mcp.address_refused",
+  "mcp.dns_failed",
+  "mcp.endpoint_not_allowed",
+  "mcp.url_credentials",
+  "mcp.url_invalid",
+  "mcp.loopback_not_local",
+]);
+
 const STATUS_TONE: Record<McpTool["status"], Tone> = {
   new: "warning",
   changed: "danger",
@@ -65,6 +103,7 @@ export function ServicesTab() {
   const servers = useMcpServers();
   const [selected, setSelected] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
+  const admin = useAccess().can("admin");
   useOAuthReturn(setSelected);
   if (servers.isLoading || status.isLoading) return <Spinner />;
   if (servers.error) return <Callout tone="danger"><ErrorText error={servers.error} /></Callout>;
@@ -76,9 +115,10 @@ export function ServicesTab() {
         {t("tools.services.intro")} <HelpTip id="tools.services" label={t("tools.services.title")} />
       </p>
       {status.data ? <StatusNotes status={status.data} /> : null}
+      <PermissionNote permission="admin" />
       <div className="row-between">
         <h2 className="panel__title">{t("tools.services.title")}</h2>
-        <Button icon={Plus} onClick={() => setAdding(true)} disabled={status.data?.endpoint_list?.length === 0}>
+        <Button icon={Plus} onClick={() => setAdding(true)} disabled={!admin || status.data?.endpoint_list?.length === 0}>
           {t("tools.services.add")}
         </Button>
       </div>
@@ -242,6 +282,7 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
   const { t } = useTranslation();
   const refresh = useRefresh();
   const tools = useMcpTools(server.id);
+  const admin = useAccess().can("admin");
   const [editing, setEditing] = useState(false);
   const discover = useMutation({
     mutationFn: () => mcpApi.discover(server.id),
@@ -311,14 +352,18 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
           {server.auth === "oauth" ? <OAuthSummary server={server} /> : null}
         </div>
         <div className="row-gap">
-          <IconButton icon={Pencil} label={t("tools.services.edit")} onClick={() => setEditing(true)} />
-          <ConfirmIconButton
-            icon={Trash2}
-            label={t("tools.services.remove")}
-            confirmLabel={t("tools.services.removeConfirm")}
-            busy={remove.isPending}
-            onConfirm={() => remove.mutate()}
-          />
+          {admin ? (
+            <>
+              <IconButton icon={Pencil} label={t("tools.services.edit")} onClick={() => setEditing(true)} />
+              <ConfirmIconButton
+                icon={Trash2}
+                label={t("tools.services.remove")}
+                confirmLabel={t("tools.services.removeConfirm")}
+                busy={remove.isPending}
+                onConfirm={() => remove.mutate()}
+              />
+            </>
+          ) : null}
         </div>
       </div>
       {server.last_error_code ? (
@@ -339,13 +384,13 @@ function ServerDetail({ server, status, onRemoved }: { server: McpServer; status
             </Button>
           )
         ) : null}
-        <Button icon={RefreshCw} busy={discover.isPending} onClick={() => discover.mutate()} disabled={!status.available}>
+        <Button icon={RefreshCw} busy={discover.isPending} onClick={() => discover.mutate()} disabled={!admin || !status.available}>
           {t("tools.services.test")}
         </Button>
         <Toggle
           checked={server.enabled}
           onChange={(value) => toggle.mutate(value)}
-          disabled={toggle.isPending}
+          disabled={!admin || toggle.isPending}
           label={t("tools.services.enabled")}
         />
       </div>
@@ -431,7 +476,11 @@ function ToolRow({ tool, status }: { tool: McpTool; status: McpStatus }) {
 function ToolReview({ tool, status, embedded }: { tool: McpTool; status: McpStatus; embedded?: boolean }) {
   const { t } = useTranslation();
   const refresh = useRefresh();
-  const [access, setAccess] = useState<McpAccess>(tool.status === "approved" ? tool.access : "write");
+  const admin = useAccess().can("admin");
+  // Never less than the service states (AD-06): a lower class is an explicit, confirmed choice.
+  const [access, setAccess] = useState<McpAccess>(tool.status === "approved" ? tool.access : initialAccess(tool.suggested_access));
+  const [downgradeConfirmed, setDowngradeConfirmed] = useState(false);
+  const downgrade = isDowngrade(access, tool.suggested_access);
   const changes = tool.status === "changed" ? definitionChanges(tool.approved_definition, tool.definition) : [];
   const decide = useMutation({
     mutationFn: (approve: boolean) =>
@@ -492,27 +541,47 @@ function ToolReview({ tool, status, embedded }: { tool: McpTool; status: McpStat
         <Segmented<McpAccess>
           label={t("tools.services.classify")}
           value={access}
-          onChange={setAccess}
+          onChange={(value) => {
+            setAccess(value);
+            setDowngradeConfirmed(false);
+          }}
           options={ACCESS.map((value) => ({ value, label: t(`tools.services.access.${value}`) }))}
         />
       </Field>
       <p className="muted small">{t(`tools.services.accessHint.${access}`)}</p>
+      {downgrade ? (
+        <div data-testid="mcp-downgrade">
+          <Callout tone="warning">
+            {t("admin.mcp.downgrade", {
+              stated: t(`tools.services.access.${tool.suggested_access}`),
+              chosen: t(`tools.services.access.${access}`),
+            })}
+            <Toggle checked={downgradeConfirmed} onChange={setDowngradeConfirmed} label={t("admin.mcp.downgradeConfirm")} />
+          </Callout>
+        </div>
+      ) : null}
       {access !== "read" && !status.write_tools_enabled ? (
         <Callout tone="warning">{t("tools.services.writeBlocked")}</Callout>
       ) : null}
       <p className="muted small">{t("tools.services.argumentsNote")}</p>
       <div className="row-gap">
         {tool.status !== "removed" ? (
-          <Button icon={CheckCircle2} busy={decide.isPending && decide.variables === true} onClick={() => decide.mutate(true)}>
+          <Button
+            icon={CheckCircle2}
+            busy={decide.isPending && decide.variables === true}
+            disabled={!admin || (downgrade && !downgradeConfirmed)}
+            onClick={() => decide.mutate(true)}
+          >
             {t(tool.status === "changed" ? "tools.services.acceptChange" : "tools.services.approve")}
           </Button>
         ) : null}
         {tool.status !== "rejected" ? (
-          <Button variant="ghost" icon={Ban} busy={decide.isPending && decide.variables === false} onClick={() => decide.mutate(false)}>
+          <Button variant="ghost" icon={Ban} busy={decide.isPending && decide.variables === false} disabled={!admin} onClick={() => decide.mutate(false)}>
             {t("tools.services.reject")}
           </Button>
         ) : null}
       </div>
+      <PermissionNote permission="admin" />
       {tool.approved_at ? (
         <p className="muted small">
           {t("tools.services.approvedBy", { who: tool.approved_by ?? "–", when: formatDate(tool.approved_at) })}
@@ -549,6 +618,7 @@ function ServerForm({
   const [dropToken, setDropToken] = useState(false);
   const [loopback, setLoopback] = useState(server?.allow_loopback ?? false);
   const [timeout, setTimeoutSeconds] = useState(String(server?.timeout_seconds ?? 60));
+  const addressProblem = transport === "http" ? urlProblem(url, status.loopback_possible, loopback) : null;
   const save = useMutation({
     mutationFn: () => {
       const lines = (text: string) => text.split("\n").map((line) => line.trim()).filter(Boolean);
@@ -576,8 +646,10 @@ function ServerForm({
       toast.success(t("tools.services.saved", { name: saved.name }));
       onSaved(saved);
     },
-    onError: toast.error,
+    // The problem stays in the dialog, next to what it is about (AD-13), not in a toast behind it.
   });
+  const saveError = save.error ? codedError(save.error) : null;
+  const urlError = saveError?.code && URL_CODES.has(saveError.code) ? saveError : null;
   return (
     <Modal
       title={server ? t("tools.services.editTitle", { name: server.name }) : t("tools.services.addTitle")}
@@ -590,7 +662,7 @@ function ServerForm({
           </Button>
           <Button
             busy={save.isPending}
-            disabled={!name.trim() || (transport === "stdio" ? !module.trim() || !requirements.trim() : !url.trim())}
+            disabled={!name.trim() || (transport === "stdio" ? !module.trim() || !requirements.trim() : !url.trim() || addressProblem !== null)}
             onClick={() => save.mutate()}
           >
             {t("common.save")}
@@ -637,8 +709,22 @@ function ServerForm({
         ) : (
           <>
             <Field label={t("tools.services.url")} htmlFor="mcp-url" hint={t("tools.services.urlHint")}>
-              <TextInput id="mcp-url" value={url} onChange={(event) => setUrl(event.target.value)} inputMode="url" />
+              <TextInput
+                id="mcp-url"
+                value={url}
+                onChange={(event) => setUrl(event.target.value)}
+                inputMode="url"
+                aria-invalid={addressProblem || urlError ? true : undefined}
+                aria-describedby={addressProblem || urlError ? "mcp-url-problem" : undefined}
+              />
             </Field>
+            {addressProblem || urlError ? (
+              <p id="mcp-url-problem" className="field-problem" role="alert" data-testid="mcp-url-problem">
+                {addressProblem
+                  ? t(`admin.mcp.${addressProblem}`, { toggle: t("tools.services.loopback") })
+                  : <ProblemText item={urlError!} compact />}
+              </p>
+            ) : null}
             <Field label={t("tools.services.authLabel")} htmlFor="mcp-auth" hint={auth === "oauth" ? t("tools.services.oauth.hint") : undefined}>
               <Select
                 id="mcp-auth"
@@ -680,6 +766,11 @@ function ServerForm({
             label={t("tools.services.loopback")}
             description={t("tools.services.loopbackHint")}
           />
+        ) : null}
+        {saveError && !urlError ? (
+          <Callout tone="danger">
+            <ErrorText error={save.error} />
+          </Callout>
         ) : null}
         <Field label={t("tools.services.timeout")} htmlFor="mcp-timeout">
           <TextInput

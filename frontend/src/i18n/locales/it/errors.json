@@ -92,6 +92,7 @@
   },
   "workflow": {
     "edge_dangling": "Un collegamento punta a un nodo che non esiste.",
+    "import_invalid": "Questo file non è un’esportazione di workflow Nodestro: non ha passi (\"nodes\").",
     "self_loop": "Un nodo non può essere collegato a sé stesso.",
     "cycle": "Il workflow contiene un ciclo; i collegamenti devono andare in una sola direzione.",
     "no_agents": "Il workflow non ha ancora alcun agente.",

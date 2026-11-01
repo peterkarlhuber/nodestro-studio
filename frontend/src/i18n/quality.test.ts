@@ -38,7 +38,7 @@ describe("texts left in English", () => {
   const ALLOWED: Record<string, string[]> = {
     de: [
       "name", "status", "start", "text", "memory", "limits", "thinking", "judge", "parallel", "review", "optional",
-      "format", "standard", "port", "score", "tags", "analyst", "details", "service",
+      "format", "standard", "port", "score", "tags", "analyst", "details", "service", "administrator",
       "assistant", // German names the button after the product, Nodestro Assistant
     ],
     es: ["error", "robot", "manual", "individual", "no"],
@@ -79,7 +79,7 @@ describe("counted texts", () => {
   const isPluralNoun = (word: string) => word.length > 2 && word.endsWith("s") && !word.endsWith("ss");
   // Variables that are not counts, and counted words where the number is never 1 or the plural reads fine.
   const NOT_COUNTS = new Set([
-    "name", "tool", "node", "workflow", "model", "provider", "time", "when", "size", "free", "cost", "version", "id", "server",
+    "name", "index", "tool", "node", "workflow", "model", "provider", "time", "when", "size", "free", "cost", "version", "id", "server",
     "who", "label", "path", "field", "fields", "url", "host", "type", "status", "value", "duration", "agent", "template",
     "current", "chosen", "latest", "rule", "space", "variable", "input", "iteration", "team", "teams", "max", "limit",
     "names", "tools", "nodes", "role", "tenant", "module", "packages", "previous", "number", "date", "total", "item",

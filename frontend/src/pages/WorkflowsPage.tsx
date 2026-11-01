@@ -18,7 +18,7 @@ import {
   TagEditor,
   applyOrganize,
 } from "../components/Organize";
-import { toast } from "../components/toast";
+import { toast, useToasts } from "../components/toast";
 import { ExampleGallery } from "../library/ExampleGallery";
 import {
   Badge,
@@ -40,6 +40,9 @@ import {
 import { newNode } from "../lib/defaults";
 import { ErrorText, LocalError } from "../lib/errors";
 import { relativeTime } from "../lib/format";
+import { nameFromFile, workflowFileProblem } from "../lib/workflowFile";
+import { useAccess } from "../api/access";
+import { PermissionNote } from "../components/Access";
 import { missingProviders } from "../lib/providers";
 import { ContinueArea } from "./ContinueArea";
 import { ModelNeeded, StartChoices } from "./StartChoices";
@@ -71,6 +74,7 @@ export function WorkflowsPage() {
   const workflows = useWorkflows();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const canEdit = useAccess().can("edit");
   const fileInput = useRef<HTMLInputElement>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const [name, setName] = useState("");
@@ -143,7 +147,15 @@ export function WorkflowsPage() {
     event.target.value = "";
     if (!file) return;
     try {
-      const data = JSON.parse(await file.text()) as WorkflowIn;
+      const parsed = JSON.parse(await file.text()) as unknown;
+      // Only a workflow export is imported; anything else is explained and creates nothing (AD-08).
+      const problem = workflowFileProblem(parsed);
+      if (problem) {
+        useToasts.getState().push("error", `${file.name}: ${t(`admin.import.${problem.code}`, problem)}`);
+        return;
+      }
+      const data = parsed as WorkflowIn;
+      if (typeof data.name !== "string" || !data.name.trim()) data.name = nameFromFile(file.name) || t("workflows.newName");
       const workflow = await api.importWorkflow(data);
       void refresh();
       toast.success(t("workflows.imported", { name: workflow.name }));
@@ -185,8 +197,12 @@ export function WorkflowsPage() {
         <div className="row-gap">
           <FavoriteButton kind="workflow" id={workflow.id} name={workflow.name} />
           <TagEditor kind="workflow" id={workflow.id} name={workflow.name} />
-          <IconButton icon={Copy} label={t("workflows.duplicate")} onClick={() => duplicate.mutate(workflow.id)} />
-          <IconButton icon={Trash2} label={t("common.delete")} onClick={() => setDeleting(workflow)} />
+          {canEdit ? (
+            <>
+              <IconButton icon={Copy} label={t("workflows.duplicate")} onClick={() => duplicate.mutate(workflow.id)} />
+              <IconButton icon={Trash2} label={t("common.delete")} onClick={() => setDeleting(workflow)} />
+            </>
+          ) : null}
         </div>
       </footer>
     </article>
@@ -201,14 +217,18 @@ export function WorkflowsPage() {
         actions={
           <>
             <input ref={fileInput} type="file" accept="application/json,.json" hidden onChange={onImport} />
-            <Hint id="workflow.import">
-              <Button icon={FileUp} onClick={() => fileInput.current?.click()}>
-                {t("common.import")}
-              </Button>
-            </Hint>
-            <Button variant="primary" icon={Plus} onClick={() => setCreateOpen(true)}>
-              {t("workflows.new")}
-            </Button>
+            {canEdit ? (
+              <>
+                <Hint id="workflow.import">
+                  <Button icon={FileUp} onClick={() => fileInput.current?.click()}>
+                    {t("common.import")}
+                  </Button>
+                </Hint>
+                <Button variant="primary" icon={Plus} onClick={() => setCreateOpen(true)}>
+                  {t("workflows.new")}
+                </Button>
+              </>
+            ) : null}
           </>
         }
       />
@@ -224,13 +244,16 @@ export function WorkflowsPage() {
             icon={Diamond}
             title={t("workflows.emptyTitle")}
             action={
-              <StartChoices variant="full" needsModel={needsModel} onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />
+              canEdit ? (
+                <StartChoices variant="full" needsModel={needsModel} onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />
+              ) : undefined
             }
           >
             {t("workflows.emptyText")}
           </EmptyState>
         ) : null}
-        {workflows.data?.length ? (
+        <PermissionNote permission="edit" />
+        {workflows.data?.length && canEdit ? (
           <StartChoices variant="compact" onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />
         ) : null}
         {workflows.data?.length ? <ContinueArea workflows={workflows.data} /> : null}

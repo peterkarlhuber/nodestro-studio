@@ -12,6 +12,7 @@ import type { ApiOverview, ApiRunStatus, ApiValidation, Publication } from "../a
 import { Button, Callout, Field, Hint, Select, Spinner, TextArea } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { CodeBlock } from "./common";
+import { RequestProblems, fieldErrorsOf } from "./RequestProblems";
 
 export function ApiTry({
   overview,
@@ -103,7 +104,14 @@ export function ApiTry({
       {parseError ? <Callout tone="danger">{t("publish.try.notJson")}</Callout> : null}
       {send.error && !parseError ? (
         <Callout tone="danger">
-          <ErrorText error={send.error} />
+          {fieldErrorsOf(send.error) ? (
+            <>
+              <strong>{t("admin.request.title")}</strong>
+              <RequestProblems error={send.error} openapi={docs.data?.openapi} />
+            </>
+          ) : (
+            <ErrorText error={send.error} />
+          )}
         </Callout>
       ) : null}
       {result && "input_text" in result ? (

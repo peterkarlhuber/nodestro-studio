@@ -7,7 +7,9 @@ import { Ban, Plus, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useAccess } from "../api/access";
 import { api } from "../api/client";
+import { PermissionNote } from "../components/Access";
 import { keys, useBatches, useSchedules, useTools } from "../api/hooks";
 import type { ToolApprovalEvent, ToolInfo, ToolPreGrant } from "../api/types";
 import {
@@ -15,6 +17,7 @@ import {
   Button,
   Callout,
   ConfirmIconButton,
+  DocLink,
   Field,
   Section,
   Select,
@@ -42,19 +45,50 @@ export function grantState(
 
 export function ToolApprovalRules() {
   const { t } = useTranslation();
+  const state = useQuery({ queryKey: keys.toolApprovalsState, queryFn: api.toolApprovalsState, retry: false });
+  const admin = useAccess().can("admin");
+  const off = state.data ? !state.data.enabled : false;
+  const details = (
+    <div className="stack">
+      <ActivationPanel />
+      {admin ? (
+        <>
+          <PreGrants />
+          <AuditTrail />
+        </>
+      ) : (
+        <PermissionNote permission="admin" />
+      )}
+    </div>
+  );
   return (
-    <Section title={t("approvals.rules.title")} icon={ShieldCheck} tip="tools.callApproval" id="tool-approval-rules">
-      <div className="stack">
-        <ActivationPanel />
-        <PreGrants />
-        <AuditTrail />
-      </div>
+    <Section
+      title={t("approvals.rules.title")}
+      icon={ShieldCheck}
+      tip="tools.callApproval"
+      id="tool-approval-rules"
+      summary={state.data ? <Badge tone={off ? "idle" : "success"}>{off ? t("approvals.rules.disabled") : t("approvals.rules.enabled")}</Badge> : undefined}
+    >
+      {off ? (
+        // While approvals per call are off, beginners see one sentence; the preparation stays one click away (AD-14).
+        <div className="stack" data-testid="tool-approvals-off">
+          <p className="small">
+            {t("admin.rules.off")} <DocLink to="verzweigungen#tool-freigabe" label={t("admin.rules.offDocs")} />
+          </p>
+          <Section title={t("admin.rules.preparation")} id="tool-approval-preparation">
+            {details}
+          </Section>
+        </div>
+      ) : (
+        details
+      )}
     </Section>
   );
 }
 
 function ActivationPanel() {
   const { t } = useTranslation();
+  const admin = useAccess().can("admin");
   const queryClient = useQueryClient();
   const state = useQuery({
     queryKey: keys.toolApprovalsState,
@@ -92,7 +126,7 @@ function ActivationPanel() {
       <p className="muted small">{t("approvals.rules.legacyText")}</p>
       {data.legacy === null ? (
         <p className="small" data-testid="legacy-not-run">
-          {t("approvals.rules.legacyNotRun")}
+          {data.enabled ? t("admin.rules.legacyNotRunOn") : t("approvals.rules.legacyNotRun")}
         </p>
       ) : bindings.length ? (
         <div className="table-wrap">
@@ -147,7 +181,7 @@ function ActivationPanel() {
           {t("approvals.rules.ranAt", { time: formatDate(data.legacy.stamped_at), name: data.legacy.stamped_by ?? "" })}
         </p>
       ) : null}
-      {data.legacy === null || !data.legacy.publications_stamped_at ? (
+      {admin && (data.legacy === null || !data.legacy.publications_stamped_at) ? (
         <div className="row-gap">
           <ConfirmIconButton
             icon={ShieldCheck}
@@ -156,7 +190,7 @@ function ActivationPanel() {
             busy={stamp.isPending}
             onConfirm={() => stamp.mutate()}
           />
-          <span className="muted small">{t("approvals.rules.stampHint")}</span>
+          <span className="muted small">{data.enabled ? t("admin.rules.stampHintOn") : t("approvals.rules.stampHint")}</span>
         </div>
       ) : null}
     </div>

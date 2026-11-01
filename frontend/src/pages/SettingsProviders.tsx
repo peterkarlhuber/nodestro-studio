@@ -12,6 +12,8 @@ import { keys, useMeta } from "../api/hooks";
 import type { CapabilityState, ProviderId, ProviderInfo, ProviderStatus, Settings } from "../api/types";
 import { providerLabel } from "../components/ModelPicker";
 import { toast } from "../components/toast";
+import { useAccess } from "../api/access";
+import { PermissionNote } from "../components/Access";
 import { Badge, Button, Callout, Field, HelpTip, Section, Select, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { defaultModelSwitch, providerOf } from "../lib/providers";
@@ -55,6 +57,8 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
   const meta = useMeta();
   const queryClient = useQueryClient();
   const follow = useFollowProvider();
+  const access = useAccess();
+  const admin = access.can("admin");
   const [apiKey, setApiKey] = useState("");
   const [baseUrl, setBaseUrl] = useState(status.base_url ?? "");
   const [capabilities, setCapabilities] = useState<Record<string, CapabilityState>>(status.capabilities);
@@ -124,11 +128,11 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
               onChange={(e) => setApiKey(e.target.value)}
               aria-label={t("settings.providers.apiKeyFor", { provider: name })}
             />
-            <Button type="submit" variant="primary" icon={Save} disabled={!apiKey.trim()} busy={save.isPending}>
+            <Button type="submit" variant="primary" icon={Save} disabled={!admin || !apiKey.trim()} busy={save.isPending}>
               {t("common.save")}
             </Button>
             {status.key_stored ? (
-              <Button variant="danger" icon={Trash2} onClick={() => save.mutate({ api_key: "" })}>
+              <Button variant="danger" icon={Trash2} disabled={!admin} onClick={() => save.mutate({ api_key: "" })}>
                 {t("common.remove")}
               </Button>
             ) : null}
@@ -173,7 +177,7 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
             <Button
               variant="primary"
               icon={Save}
-              disabled={!changed}
+              disabled={!admin || !changed}
               busy={save.isPending}
               onClick={() =>
                 save.mutate({
@@ -185,7 +189,7 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
               {t("settings.providers.saveEndpoint")}
             </Button>
           ) : null}
-          <Button icon={Plug} busy={connection.isPending} disabled={!status.configured} onClick={() => connection.mutate()}>
+          <Button icon={Plug} busy={connection.isPending} disabled={!status.configured || !access.can("install")} onClick={() => connection.mutate()}>
             {t("settings.providers.test")}
           </Button>
         </div>
@@ -214,6 +218,7 @@ export function ProviderSettings({ settings }: { settings: Settings }) {
         <HelpTip id="settings.providers" label={t("settings.providers.title")} />
       </h2>
       <p className="muted small">{t("settings.providers.intro")}</p>
+      <PermissionNote permission="admin" />
       {(meta.data?.providers ?? []).map((info) => {
         const status = settings.providers.find((item) => item.id === info.id);
         return status ? <ProviderCard key={info.id} info={info} status={status} settings={settings} /> : null;
