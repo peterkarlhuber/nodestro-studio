@@ -18,6 +18,7 @@ import { SuitePage, TestsPage } from "./pages/TestsPage";
 import { ToolsPage } from "./pages/ToolsPage";
 import { UsagePage } from "./pages/UsagePage";
 import { WorkflowsPage } from "./pages/WorkflowsPage";
+import { studioLoader } from "./welcome/firstVisit";
 
 // The docs carry every chapter in every language, so they load on first visit.
 async function loadDocsPage() {
@@ -25,9 +26,19 @@ async function loadDocsPage() {
   return { Component: DocsPage };
 }
 
+// The welcome page is a page of its own outside the Studio frame; its code loads on first visit.
+async function loadWelcomePage() {
+  const { WelcomePage } = await import("./welcome/WelcomePage");
+  return { Component: WelcomePage };
+}
+
 export const routes: RouteObject[] = [
+  { path: "welcome", lazy: loadWelcomePage, HydrateFallback: () => null },
   {
     element: <AppShell />,
+    // Sends the very first visit of the bare start page to /welcome (once per browser).
+    loader: studioLoader,
+    HydrateFallback: () => null,
     children: [
       { index: true, element: <WorkflowsPage /> },
       { path: "workflows/examples", element: <ExamplesPage /> },

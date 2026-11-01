@@ -17,5 +17,6 @@
   "tests": "Series de pruebas",
   "schedules": "Programaciones",
   "waiting_one": "{{count}} en espera",
-  "waiting_other": "{{count}} en espera"
+  "waiting_other": "{{count}} en espera",
+  "welcome": "Bienvenida"
 }

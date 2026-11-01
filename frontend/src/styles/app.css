@@ -206,7 +206,7 @@ ol {
 .brand__mark {
   width: 28px;
   height: 28px;
-  color: var(--nd-brand);
+  border-radius: 7px;
 }
 
 .brand__name {

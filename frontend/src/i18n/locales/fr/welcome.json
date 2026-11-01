@@ -1,0 +1,131 @@
+{
+  "documentTitle": "Nodestro · Connecting Intelligence",
+  "skipToContent": "Aller au contenu",
+  "home": "Nodestro, page d’accueil",
+  "toolbar": "Apparence et langue",
+  "language": "Langue",
+  "pauseMotion": "Mettre les animations en pause",
+  "playMotion": "Lancer les animations",
+  "openStudio": "Ouvrir le Studio",
+  "howItWorks": "Comment ça marche",
+  "docs": "Documentation",
+  "hero": {
+    "eyebrow": "Le studio visuel pour agents d’IA",
+    "lede": "Nodestro relie modèles d’IA, outils et connaissances en workflows d’agents que vous concevez visuellement, exécutez sous contrôle et suivez étape par étape.",
+    "diagram": "Schéma : modèles, connaissances et outils convergent dans Nodestro et deviennent des agents connectés, des validations et des exécutions traçables.",
+    "local": "Fonctionne en local sur votre ordinateur",
+    "providers": "Compatible avec"
+  },
+  "nodes": {
+    "models": {
+      "title": "Modèles",
+      "detail": "D’Anthropic à Ollama"
+    },
+    "knowledge": {
+      "title": "Connaissances",
+      "detail": "PDF, images et textes"
+    },
+    "tools": {
+      "title": "Outils",
+      "detail": "Fonctions Python et MCP"
+    },
+    "agents": {
+      "title": "Agents",
+      "detail": "Reliés en workflows"
+    },
+    "approvals": {
+      "title": "Validations",
+      "detail": "Vous gardez la main"
+    },
+    "runs": {
+      "title": "Exécutions",
+      "detail": "Chaque étape traçable"
+    }
+  },
+  "how": {
+    "kicker": "Le fonctionnement de Nodestro",
+    "title": "De l’idée à une exécution que vous pouvez suivre.",
+    "intro": "Un workflow est une chaîne d’agents. Chacun apporte son modèle, ses outils et ses connaissances, puis transmet son résultat au suivant.",
+    "design": {
+      "title": "Concevoir",
+      "text": "Placez et reliez les agents dans l’éditeur – ou décrivez le workflow avec vos propres mots et laissez l’architecte l’esquisser."
+    },
+    "run": {
+      "title": "Exécuter",
+      "text": "Un clic lance le workflow. Aux étapes que vous choisissez, il attend votre validation avant de continuer."
+    },
+    "trace": {
+      "title": "Retracer",
+      "text": "Chaque exécution montre les entrées et sorties, les appels d’outils, les tokens et les coûts de chaque agent."
+    },
+    "illustration": "Illustration – pas une exécution réelle",
+    "replay": "Rejouer",
+    "demo": {
+      "input": "Entrée",
+      "inputDetail": "Rapport-trimestriel.pdf",
+      "analyst": "Analyste",
+      "analystDetail": "Lit et évalue",
+      "writer": "Rédacteur",
+      "writerDetail": "Résume",
+      "output": "Résultat",
+      "outputDetail": "Synthèse",
+      "toolKnowledge": "Connaissances",
+      "toolPython": "Python",
+      "idle": "En attente",
+      "running": "En cours",
+      "done": "Terminé",
+      "history": "Historique"
+    }
+  },
+  "capabilities": {
+    "kicker": "Dans le Studio",
+    "title": "Tout ce dont les workflows d’agents ont besoin. Au même endroit.",
+    "open": "Ouvrir",
+    "workflows": {
+      "title": "Éditeur visuel",
+      "text": "Les agents comme nœuds, les connexions comme flux de données – avec branchements et sous-workflows."
+    },
+    "agents": {
+      "title": "Agents",
+      "text": "Modèle, instructions, outils, mémoire et format de sortie : configurés une fois, réutilisables partout."
+    },
+    "tools": {
+      "title": "Outils",
+      "text": "Vos propres fonctions Python, écrites et testées par l’IA si vous le souhaitez, et des services via MCP."
+    },
+    "knowledge": {
+      "title": "Connaissances et mémoire",
+      "text": "Associez des documents comme connaissances de fond et voyez ce qu’un agent retient."
+    },
+    "executions": {
+      "title": "Exécutions",
+      "text": "Suivi en direct de chaque exécution, comparaison de deux exécutions, tokens et coûts par agent."
+    },
+    "automation": {
+      "title": "Automatisation",
+      "text": "Exécutions par lots, séries de tests et planifications exécutent les workflows de façon répétée et vérifiable."
+    }
+  },
+  "principles": {
+    "local": {
+      "title": "Local et privé",
+      "text": "Nodestro fonctionne sur votre ordinateur. Les données n’en sortent que pour les requêtes aux fournisseurs d’IA que vous configurez."
+    },
+    "providers": {
+      "title": "Indépendant des fournisseurs",
+      "text": "Anthropic, OpenAI, Google Gemini, Ollama, vLLM ou un point d’accès compatible OpenAI – au choix pour chaque agent."
+    },
+    "integration": {
+      "title": "Ouvert à l’intégration",
+      "text": "Lancez n’importe quel workflow depuis vos propres applications via l’API et le SDK."
+    }
+  },
+  "closing": {
+    "title": "Votre premier workflow n’est qu’à quelques clics.",
+    "text": "Commencez par un exemple de la galerie ou par un workflow vide.",
+    "examples": "Voir les exemples"
+  },
+  "footer": {
+    "settings": "Réglages"
+  }
+}

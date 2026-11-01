@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Welcome page "Connecting Intelligence" and the original logo (2026-11-01)
+
+- New welcome page at `/welcome` (lazy route outside the Studio frame): the original logo as the hub of a small
+  diagram of what Nodestro connects, the official slogan *Connecting Intelligence* (untranslated in all six
+  languages), an illustrated run (labelled as an illustration), links into the real Studio pages, dark and light
+  mode, pause control and `prefers-reduced-motion`. Concept and integration decision: `docs/design/LANDING.md`.
+- The very first visit of the bare start page `/` in a browser opens the welcome page once; deep links, returning
+  visits and automated browsers go straight to the Studio. Sidebar *Help > Welcome* opens it at any time.
+- The original logo replaces the old three-dot mark in the top bar and the old `favicon.svg`: new `favicon.ico`,
+  PNG favicons, Apple touch icon and `manifest.webmanifest` with 192/512 icons.
+- New browser suite `welcome` (`npm run e2e:welcome`, part of `scripts/e2e.sh`, own instance on port 8090).
+
 ### MCP: sign-in, local servers, operation, Nodestro as an MCP tool (ADR-0007 WP-6/7/8/11)
 
 - *Tools → Connected services*: OAuth as a sign-in kind with **Sign in** / **Sign out** (the browser returns to
