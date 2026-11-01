@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 
-import i18n, { type Language } from "../i18n";
+import { type Language, setLanguage } from "../i18n";
 import {
   formatBytes,
   formatCost,
@@ -14,7 +14,7 @@ import {
 } from "./format";
 
 async function inLanguage(language: Language) {
-  await i18n.changeLanguage(language);
+  await setLanguage(language, false);
 }
 
 // Intl uses (narrow) no-break spaces in some languages; the tests compare with plain spaces.

@@ -13,11 +13,14 @@ import i18n, {
   detectLanguage,
   formatLocale,
   initialLanguage,
+  isLanguageLoaded,
+  loadLanguage,
   matchLanguage,
   setLanguage,
   storedLanguage,
 } from "./index";
-import { type Messages, bundles } from "./resources";
+import { bundles } from "../test/locales";
+import { type Messages, resources } from "./resources";
 
 /** Every key of a bundle as "area.path.to.key", with plural suffixes folded ("count_one" → "count"). */
 function flatten(messages: Messages, prefix = ""): Map<string, string> {
@@ -197,6 +200,37 @@ describe("switching languages", () => {
     await setLanguage("de", false);
     i18n.addResource("en", "translation", "test.onlyEnglish", "Only English");
     expect(i18n.t("test.onlyEnglish")).toBe("Only English");
+  });
+});
+
+describe("loading languages", () => {
+  it("keeps only English in the main bundle", () => {
+    expect(Object.keys(resources)).toEqual(["en"]);
+    expect(isLanguageLoaded("en")).toBe(true);
+  });
+
+  it("fetches a language once and adds all of its texts", async () => {
+    i18n.removeResourceBundle("it", "translation");
+    expect(isLanguageLoaded("it")).toBe(false);
+    const first = loadLanguage("it");
+    expect(loadLanguage("it")).toBe(first); // one fetch for two callers
+    await first;
+    expect(isLanguageLoaded("it")).toBe(true);
+    expect(i18n.t("common.save", { lng: "it" })).toBe((bundles.it.common as Messages).save);
+    // the derived plural form "many" is part of the loaded texts
+    expect(i18n.t("python.install.done", { lng: "it", count: 1_000_000 })).not.toBe(
+      i18n.t("python.install.done", { lng: "en", count: 1_000_000 }),
+    );
+  });
+
+  it("switches only once the texts are there", async () => {
+    i18n.removeResourceBundle("fr", "translation");
+    const seen: string[] = [];
+    const onChange = () => seen.push(i18n.t("nav.settings"));
+    i18n.on("languageChanged", onChange);
+    await setLanguage("fr", false);
+    i18n.off("languageChanged", onChange);
+    expect(seen).toEqual([(bundles.fr.nav as Messages).settings]);
   });
 });
 

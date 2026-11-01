@@ -96,6 +96,7 @@ function Controls({ motion, onMotion, reduced }: { motion: boolean; onMotion: (v
     onError: toast.error,
   });
   const language = currentLanguage();
+  const [loading, setLoading] = useState(false);
   return (
     <div className="wl-controls" role="group" aria-label={t("welcome.toolbar")}>
       <label className="wl-language">
@@ -103,9 +104,20 @@ function Controls({ motion, onMotion, reduced }: { motion: boolean; onMotion: (v
         <Globe2 size={14} aria-hidden />
         <select
           value={language}
+          disabled={loading}
+          aria-busy={loading || undefined}
           onChange={async (event) => {
             const next = event.target.value as Language;
-            await setLanguage(next);
+            // Every language but English is fetched on first use; the picker waits for it.
+            setLoading(true);
+            try {
+              await setLanguage(next);
+            } catch (error) {
+              toast.errorAbout(t("settings.language.loadFailed"), error);
+              return;
+            } finally {
+              setLoading(false);
+            }
             remember.mutate(next);
           }}
           data-testid="welcome-language"

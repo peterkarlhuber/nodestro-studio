@@ -43,7 +43,8 @@ export default defineConfig({
   build: {
     outDir: "../src/nodestro_studio/static",
     emptyOutDir: false,
-    // The main chunk carries the interface texts of all six languages (switching needs no reload).
+    // The main chunk carries the English interface texts; every other language is a chunk of its own
+    // (src/i18n/bundles), fetched before its first use.
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {

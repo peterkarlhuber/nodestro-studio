@@ -4,8 +4,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import i18n, { FALLBACK_LANGUAGE, LANGUAGES } from "./index";
-import { type Messages, bundles } from "./resources";
+import i18n, { FALLBACK_LANGUAGE, LANGUAGES, loadLanguage } from "./index";
+import { bundles } from "../test/locales";
+import type { Messages } from "./resources";
 
 function flatten(messages: Messages, prefix = ""): Map<string, string> {
   const result = new Map<string, string>();
@@ -131,6 +132,7 @@ describe("the plural category many", () => {
   });
 
   it.each(needsMany)("%s shows its own text for a million", async (language) => {
+    await loadLanguage(language);
     await i18n.changeLanguage(language);
     const million = i18n.t("python.install.done", { count: 1_000_000 });
     expect(million).toBe(i18n.t("python.install.done", { count: 2 }).replace("2", "1000000"));
