@@ -18,6 +18,13 @@
   `mcp.rate_limited`, `mcp.overloaded`, `mcp.release_tool_changed`, `api.mcp_*`, `export.mcp_tools`,
   `mcp_server.disabled`) and help sections *Tools > Signing in to a service*, *Tools > Local servers* and
   *API and export > As an MCP tool*, in six languages.
+- A service's documents (WP-10): the tool `resources/read` that reads a service's listed resources is marked
+  *The service's documents* in the tool list and explained in its review; help section *Tools > A service's documents*
+  in six languages. Browser suite `mcp`: sign-in at a loopback authorization server, sign-out, the operation view and
+  offering a published API as an MCP tool.
+- Platform pins: `nodestro-runtime` `1bc3924` (MCP resources), `nodestro-api` `2948bb3`, `nodestro-examples`
+  `6658599`, `nodestro-integrations` `86bfed0` and, in `platform/versions.json`, `nodestro-sdk` `f81f2dc` (MCP sign-in,
+  local server environment, statistics and publication update calls).
 
 ### Tool approvals: warnings before unattended starts (S-2, R1, 2026-11-01)
 
