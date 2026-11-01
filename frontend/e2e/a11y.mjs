@@ -158,8 +158,8 @@ try {
     const ctx = await context(browser);
     const page = await ctx.newPage();
     await open(page, `/workflows/${wf}`);
-    // Versions is always available; the run dialog only with a provider key (then its input gets the focus).
-    const versions = page.getByRole("button", { name: "Versions" }).first();
+    // API & Export is always available; the run dialog only with a provider key (then its input gets the focus).
+    const versions = page.getByTestId("open-api");
     await versions.focus();
     await page.keyboard.press("Enter");
     const dialog = page.getByRole("dialog");
