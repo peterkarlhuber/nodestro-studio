@@ -130,7 +130,13 @@
       "decision_refused": "Decisión rechazada",
       "pre_granted": "Aprobada de antemano",
       "pre_grant_revoked": "Aprobación previa revocada",
-      "legacy_stamped": "Asignaciones existentes marcadas"
+      "legacy_stamped": "Asignaciones existentes marcadas",
+      "suspended": "Ejecución pausada en una llamada",
+      "resumed": "Ejecución reanudada",
+      "executed": "Llamada aprobada realizada",
+      "stale": "Aprobación ya no válida",
+      "result_lost": "Resultado perdido",
+      "switch_off": "Cerrada porque el ajuste está desactivado"
     },
     "ranAt": "Marcado el {{time}} por {{name}}. El paso se ejecuta una sola vez: las asignaciones posteriores se preguntan.",
     "stampFinish": "Terminar de marcar las API publicadas",

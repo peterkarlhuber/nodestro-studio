@@ -130,7 +130,13 @@
       "decision_refused": "Decisão recusada",
       "pre_granted": "Aprovada antecipadamente",
       "pre_grant_revoked": "Aprovação antecipada revogada",
-      "legacy_stamped": "Atribuições existentes marcadas"
+      "legacy_stamped": "Atribuições existentes marcadas",
+      "suspended": "Execução pausada em uma chamada",
+      "resumed": "Execução retomada",
+      "executed": "Chamada aprovada realizada",
+      "stale": "Aprovação não é mais válida",
+      "result_lost": "Resultado perdido",
+      "switch_off": "Fechada porque a configuração está desligada"
     },
     "ranAt": "Marcado em {{time}} por {{name}}. A etapa roda uma única vez: atribuições feitas depois são perguntadas.",
     "stampFinish": "Concluir a marcação das APIs publicadas",
