@@ -128,6 +128,8 @@ try {
   const steps = view.getByTestId("orchestration-step");
   check((await steps.count()) === 5, "The view lists all five decisions");
   check(JSON.stringify(await statuses(steps.nth(1))) === JSON.stringify(["succeeded", "succeeded"]), "The parallel step ends with both teams succeeded");
+  // Team names come with the workflow list; under load it can arrive after the run.
+  await until(async () => (await view.getByTestId("orchestration-staff").allTextContents()).some((item) => item.includes("Lektorat")), "team names in the view");
   const staffText = await view.getByTestId("orchestration-staff").allTextContents();
   check(staffText.some((item) => item.includes("aufgenommen: Lektorat") && item.includes("entlassen: Recherche")), "The view says who joined and who left");
   check((await steps.nth(2).textContent()).includes("Jetzt nur noch glätten"), "The reason of the team change is shown");
