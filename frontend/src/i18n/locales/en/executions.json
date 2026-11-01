@@ -27,5 +27,10 @@
     "actions": "Actions"
   },
   "importedBadge": "Imported",
-  "delete": "Delete execution"
+  "delete": "Delete execution",
+  "limited_one": "Showing the newest run.",
+  "limited_other": "Showing the newest {{count}} runs.",
+  "limitedFilters": "The status and origin filters search these runs only.",
+  "loadOlder": "Load older runs",
+  "limitReached": "Older runs are still stored but not listed here; choose a workflow in the filter to reach them."
 }

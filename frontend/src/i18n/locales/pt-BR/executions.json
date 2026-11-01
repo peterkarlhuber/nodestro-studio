@@ -27,5 +27,10 @@
     "actions": "Ações"
   },
   "importedBadge": "Importado",
-  "delete": "Excluir execução"
+  "delete": "Excluir execução",
+  "limited_one": "Mostrando a execução mais recente.",
+  "limited_other": "Mostrando as {{count}} execuções mais recentes.",
+  "limitedFilters": "Os filtros de status e origem pesquisam apenas nestas execuções.",
+  "loadOlder": "Carregar execuções mais antigas",
+  "limitReached": "As execuções mais antigas continuam salvas, mas não aparecem aqui; escolha um fluxo de trabalho no filtro para chegar a elas."
 }

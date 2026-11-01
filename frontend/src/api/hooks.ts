@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 import { modelPriceHint } from "../lib/pricing";
 
 import { api } from "./client";
+import type { RunSummary } from "./types";
 
 export const keys = {
   meta: ["meta"] as const,
@@ -55,8 +56,53 @@ export const useTools = () => useQuery({ queryKey: keys.tools, queryFn: api.tool
 export const useKnowledge = (query?: string) =>
   useQuery({ queryKey: keys.knowledge(query), queryFn: () => api.knowledge(query) });
 export const useMemorySpaces = () => useQuery({ queryKey: keys.memorySpaces, queryFn: api.memorySpaces });
+/** Runs the list asks for at first, and the most the API returns in one answer (``GET /runs?limit``). */
+export const RUNS_PAGE = 100;
+export const RUNS_MAX = 500;
+
+/**
+ * How often the run list is fetched again: every 5 s while a listed run is queued or running (its
+ * status changes soon), otherwise every 30 s (a new run from a schedule, the API or another tab).
+ * A paused run waits for a person; deciding in this tab refreshes the list at once anyway.
+ */
+export function runsRefetchInterval(runs: Pick<RunSummary, "status">[] | undefined): number {
+  return runs?.some((run) => run.status === "queued" || run.status === "running") ? 5_000 : 30_000;
+}
+
+/** The newest runs (of one workflow), for pickers; polled like the run list. */
 export const useRuns = (workflowId?: string) =>
-  useQuery({ queryKey: keys.runs(workflowId), queryFn: () => api.runs(workflowId), refetchInterval: 5000 });
+  useQuery({
+    queryKey: keys.runs(workflowId),
+    queryFn: () => api.runs(workflowId),
+    refetchInterval: (query) => runsRefetchInterval(query.state.data),
+    refetchIntervalInBackground: false,
+  });
+
+/**
+ * The run list of the executions page, page by page (newest first).
+ *
+ * - With a server that pages (``X-Has-More`` / ``X-Next-Before``), "load older" fetches the next
+ *   page of ``RUNS_PAGE`` runs before the cursor, without an upper bound.
+ * - With an older server (no paging headers), only the newest ``limit`` runs exist for the list;
+ *   the page then grows ``limit`` up to ``RUNS_MAX`` (the API maximum).
+ *
+ * Polling stops while the tab is hidden; a returning tab fetches at once (refetch on window focus).
+ * A refetch reloads every loaded page, so statuses in older pages stay current too.
+ */
+export function useRunList(workflowId: string | undefined, limit: number = RUNS_PAGE) {
+  return useInfiniteQuery({
+    queryKey: [...keys.runs(workflowId), "pages", limit],
+    queryFn: ({ pageParam }) => api.runsPage(workflowId, { limit: pageParam ? RUNS_PAGE : limit, before: pageParam ?? undefined }),
+    initialPageParam: null as string | null,
+    getNextPageParam: (last) => (last.hasMore && last.nextBefore ? last.nextBefore : undefined),
+    refetchInterval: (query) => runsRefetchInterval(query.state.data?.pages.flatMap((page) => page.runs)),
+    refetchIntervalInBackground: false,
+    // A longer list keeps the current rows on screen until it is there; another workflow filter
+    // never shows the rows of the previous one.
+    placeholderData: (previous, previousQuery) => (previousQuery?.queryKey[1] === (workflowId ?? "all") ? previous : undefined),
+  });
+}
+
 export const useUsage = (days: number) => useQuery({ queryKey: keys.usage(days), queryFn: () => api.usage(days) });
 // The library never changes while the app runs, so its answers are cached for good.
 export const useExamples = (language: string) =>
