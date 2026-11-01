@@ -686,6 +686,20 @@ ol {
 
 /* ---- tables and charts -------------------------------------------------------- */
 
+/* Below a list that shows only the newest entries: what is shown, and a button for more. */
+.list-limit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-top: 12px;
+}
+
+.list-limit p {
+  margin: 0;
+}
+
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--nd-border);
@@ -1592,6 +1606,26 @@ details[open] > summary > .section__chevron {
   line-height: 1.55;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+/* Stands in for the code editor while CodeMirror loads: same frame, font and text as the editor. */
+.code-editor-placeholder {
+  margin: 0;
+  padding: 4px 6px 4px 34px;
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-sm);
+  background: var(--nd-surface);
+  color: var(--nd-text);
+  font-family: var(--nd-mono);
+  font-size: 12.5px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Markdown text shown as it is while the Markdown parser loads. */
+.markdown-pending {
+  white-space: pre-wrap;
 }
 
 .code-block--prose {

@@ -13,7 +13,7 @@ import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCar
 import { ProblemText, runProblem } from "../lib/errors";
 import { formatCost, formatDuration, formatTime, formatNumber, formatTokens, tokenBreakdown } from "../lib/format";
 import { type AgentContext, ContextView } from "./ContextView";
-import { branchLabel } from "./nodes";
+import { branchLabel } from "./branches";
 import { OrchestrationView } from "./OrchestrationView";
 
 type RunTab = "result" | "prompt" | "context" | "tools" | "thinking" | "memory";

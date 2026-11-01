@@ -38,7 +38,7 @@ import {
 import { newField, newRule } from "../lib/defaults";
 import { DEFAULT_FIELD_MB, FORMAT_GROUPS, fileFieldSummary } from "../lib/files";
 import { childLink, parseTrail } from "../lib/trail";
-import { branchLabel } from "./nodes";
+import { branchLabel } from "./branches";
 import { OutputFieldsEditor } from "./OutputFieldsEditor";
 import { useEditor } from "./store";
 

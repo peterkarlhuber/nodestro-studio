@@ -1,7 +1,6 @@
-import { type Edge, type Node, ReactFlow } from "@xyflow/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Brain, Copy, Download, FlaskConical, ListChecks, Network, PlugZap, Scale, ShieldAlert, ShieldCheck } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +10,6 @@ import type { ExampleDetail } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, HelpTip, Hint, Modal, Select, Spinner, Toggle } from "../components/ui";
-import { type FlowNodeData, nodeTypes } from "../editor/nodes";
 import { LANGUAGE_NAMES, LANGUAGES, type Language, currentLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -29,41 +27,19 @@ function PatternLabel({ pattern }: { pattern: ExampleDetail["pattern"] }) {
   );
 }
 
+// The canvas library loads when a preview opens, not with the examples page.
+const ExampleCanvas = lazy(() => import("./ExampleCanvas"));
+
 /** The workflow of an example as a small canvas that can be looked at but not changed. */
 function ExampleGraph({ example }: { example: ExampleDetail }) {
   const { t } = useTranslation();
-  const nodes: Node[] = useMemo(
-    () =>
-      example.workflow.nodes.map((node) => ({
-        id: node.id,
-        type: node.type,
-        position: node.position,
-        data: { node, issues: 0 } satisfies FlowNodeData,
-      })),
-    [example],
-  );
-  const edges: Edge[] = useMemo(
-    () => example.workflow.edges.map((edge) => ({ id: edge.id, source: edge.source, target: edge.target })),
-    [example],
-  );
   return (
-    <div className="example-graph nd-workflow-canvas" aria-label={t("library.preview.graph")} role="img">
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        nodeTypes={nodeTypes}
-        nodesDraggable={false}
-        nodesConnectable={false}
-        elementsSelectable={false}
-        zoomOnScroll={false}
-        panOnScroll={false}
-        preventScrolling={false}
-        fitView
-        fitViewOptions={{ padding: 0.08, maxZoom: 0.9 }}
-        minZoom={0.2}
-        proOptions={{ hideAttribution: true }}
-      />
-    </div>
+    <Suspense
+      // The same empty frame as the canvas, so the dialog keeps its layout while the canvas loads.
+      fallback={<div className="example-graph nd-workflow-canvas" aria-label={t("library.preview.graph")} role="img" aria-busy="true" />}
+    >
+      <ExampleCanvas example={example} />
+    </Suspense>
   );
 }
 

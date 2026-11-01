@@ -23,7 +23,8 @@ import { toast } from "../components/toast";
 import { formatNumber } from "../lib/format";
 import { childLink, parseTrail } from "../lib/trail";
 import { useEditorLayout } from "./layout";
-import { type FlowNodeData, branchLabel, isBranchTaken, nodeTypes } from "./nodes";
+import { branchLabel, isBranchTaken } from "./branches";
+import { type FlowNodeData, nodeTypes } from "./nodes";
 import { type TeamPreset, useEditor } from "./store";
 
 export const DRAG_TYPE = "application/x-nodestro-node";

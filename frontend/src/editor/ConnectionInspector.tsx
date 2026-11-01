@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { MAX_LOOP_ITERATIONS, type EdgeLoop } from "../api/types";
 import { Button, Callout, DocLink, Field, HelpTip, IconButton, Select, TextInput } from "../components/ui";
 import { toast } from "../components/toast";
-import { branchLabel } from "./nodes";
+import { branchLabel } from "./branches";
 import { DEFAULT_LOOP, useEditor, wouldCycle } from "./store";
 
 /** Placeholder syntax the text shows literally (i18next would otherwise fill it in). */

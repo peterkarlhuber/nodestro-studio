@@ -67,9 +67,9 @@ function useDocHits(query: string) {
   return useQuery({
     queryKey: ["doc-search", currentLanguage(), query],
     queryFn: async (): Promise<Hit[]> => {
-      // The documentation is large, so it is only loaded when someone searches.
-      const [{ chaptersFor }, { searchDocs }] = await Promise.all([import("../docs/index"), import("../docs/search")]);
-      return searchDocs(chaptersFor(currentLanguage()), query, 6).map((hit) => ({
+      // The documentation is large, so it is only loaded when someone searches (current language only).
+      const [{ loadChapters }, { searchDocs }] = await Promise.all([import("../docs/index"), import("../docs/search")]);
+      return searchDocs(await loadChapters(currentLanguage()), query, 6).map((hit) => ({
         key: `docs:${hit.chapter.id}#${hit.sectionId}`,
         kind: "docs",
         title: hit.title,
