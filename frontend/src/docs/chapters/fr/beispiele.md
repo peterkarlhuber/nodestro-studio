@@ -410,7 +410,7 @@ Une bonne recherche commence par une question précise et testable et par les bo
 | **Équipe méthodes qualitatives** | Planifie entretiens, observations ou groupes de discussion pour des questions sur des expériences, des motifs et des comportements : échantillon, guide et analyse. | qualitative methods, interviews, observation |
 | **Équipe éthique et protection des données** | Vérifie les études impliquant des personnes ou des données personnelles : consentement, minimisation des données, anonymisation, implication des représentants du personnel et avis éthique. | research ethics, data protection, informed consent |
 
-**Entrée:** Une question de recherche avec son objectif, les données existantes d'essais préliminaires et les contraintes comme le matériel, le temps et l'équipement. Vous pouvez joindre des données de mesure et des documents ; le fichier d'exemple contient les notes de l'essai préliminaire par plaque.
+**Entrée:** Une question de recherche avec son objectif, les données existantes d'essais préliminaires et les contraintes comme le matériel, le temps et l'équipement. Tu peux joindre des données de mesure et des documents ; le fichier d'exemple contient les notes de l'essai préliminaire par plaque.
 
 **Fichiers d'exemple:** `Essai_preliminaire_PL-7.csv`
 
