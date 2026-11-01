@@ -58,19 +58,22 @@ without OCR, like 0.1 without tesseract).
 
 ## Trust boundaries
 
-- **Studio API (`/api`)**: without user management and without its own keys, therefore bound to `127.0.0.1` by
-  default. It only answers requests to `localhost`, loopback addresses and the address chosen with `--host` (with
-  `0.0.0.0`: every IP address and the name of this computer, but no foreign host names), and it accepts changes only
-  from its own pages (`nodestro_api.local_access`); this way no web page in the browser can operate it through DNS
-  rebinding or cross-site requests. `NODESTRO_ALLOWED_HOSTS` names additional host names, for example behind a
-  reverse proxy. This check does not replace authentication: with `--host 0.0.0.0`, every device on the network
-  reaches the studio API.
+- **Studio API (`/api`)** in the desktop profile: without user management and without its own keys, therefore never
+  offered to the network. It listens on a loopback address only; `--host 0.0.0.0` and every other address are refused
+  with `access.network_needs_login`, and `NODESTRO_ALLOWED_HOSTS` may only add loopback names. It answers only
+  loopback host names, refuses requests forwarded by a proxy and accepts changes only from its own pages or from this
+  computer (`nodestro_api.local_access`); this way no web page in the browser can operate it through DNS rebinding or
+  cross-site requests. These checks are not authentication. The desktop app adds a per-launch secret
+  (`nodestro_api.launch`); Nodestro Local Docker requires an access key, and the server requires a login (see
+  [ARCHITECTURE.md](ARCHITECTURE.md#operating-profiles)).
 - **Published APIs (`/api/published/...`)**: only with Nodestro keys (`ndk_...`, stored as SHA-256), each key limited
   to scopes and publications; on the network only through the separate listener that the user switches on
   explicitly.
-- **Custom tools and AI-generated code** never run in the server process: by default in a separate Python process with
-  a time limit and the user's permissions (no isolation), with the "Docker" setting in a container. Provider keys
-  appear neither in responses nor in exports.
+- **Custom tools and AI-generated code** never run in the API process. Code a person wrote in the tool editor may run
+  on the desktop in a separate Python process with a time limit and the user's permissions (no isolation).
+  AI-generated code and code of unknown origin run only in an isolating sandbox: a container, or on the desktop the
+  built-in Linux sandbox where it is available; otherwise they are refused (ADR-0006). On a server and in Local Docker
+  all custom and AI-generated tool code runs in containers. Provider keys appear neither in responses nor in exports.
 
 ## Versions and pins
 
@@ -98,9 +101,9 @@ checks that contract and types are up to date.
 
 ## CI and access
 
-All repositories and Orkexa are private. Every CI first sets up read access with the existing repository secret
-`NODESTRO_READ` (a token with "Contents: Read" on `orkexa` and the `nodestro-*` repositories) and stops with a clear
-message if it is missing. The secret never appears in code, logs or artifacts. `nodestro-legacy` keeps its CI with
+The repositories and Orkexa are public on GitHub. The CI workflows still set up read access with the repository
+secret `NODESTRO_READ` (a token with "Contents: Read" on `orkexa` and the `nodestro-*` repositories) and stop with a
+clear message if it is missing. The secret never appears in code, logs or artifacts. `nodestro-legacy` keeps its CI with
 `ORKEXA_TOKEN` unchanged.
 
 | Repository | CI |
@@ -150,14 +153,24 @@ checks exactly that.
 The only new option: to run the API without the user interface, install `nodestro-api` and start `nodestro-api` with
 the same options (without `--no-browser`).
 
-## Desktop and server (planned)
+## Desktop, Local Docker and server
 
-Nodestro is planned to ship as two products on this one platform: an installable desktop application
-(`nodestro-desktop`, SQLite, no separate installations) and a multi-user server (`nodestro-server`, PostgreSQL,
-authentication, isolated workers). Both will use the same runtime, API and studio; the two new repositories hold
-packaging and deployment only. Nothing of this is implemented yet. The current-state inventory, the target
-architecture and the pull request plan are in [desktop-server/README.md](desktop-server/README.md), the decisions in
+The same runtime, API and studio ship as three products, each in its own repository that holds packaging and
+deployment only. None of them is released: they are unreleased previews, and no image or installer has been
+published. How the three operating profiles differ is described in
+[ARCHITECTURE.md](ARCHITECTURE.md#operating-profiles), the plan and its step-by-step status in
+[desktop-server/IMPLEMENTATION_STATUS.md](desktop-server/IMPLEMENTATION_STATUS.md), the decisions in
 [adr/](adr/README.md).
+
+| Product | Repository | Profile | State |
+| --- | --- | --- | --- |
+| Desktop app | [nodestro-desktop](https://github.com/peterkarlhuber/nodestro-desktop) | `desktop` | Linux x86_64 only, unsigned; release candidate `v0.2.0-preview.1` built and checked, not published. macOS and Windows are not built or tested. |
+| Server | [nodestro-server](https://github.com/peterkarlhuber/nodestro-server) | `server` | linux/amd64 image, development stack and end-to-end acceptance tests; release candidate `v0.2.0-preview.1` built and checked, not published; images unsigned. Operation: [RUNBOOK](https://github.com/peterkarlhuber/nodestro-server/blob/master/docs/RUNBOOK.md). |
+| Nodestro Local Docker | [nodestro-local-docker](https://github.com/peterkarlhuber/nodestro-local-docker) | `local-container` | Development preview: no published images, the launcher builds the image from source; tested on Linux x86_64 and arm64 only. |
+
+Known gaps (see the status file for the full list): no code signing, no key rotation for the server's
+`NODESTRO_SECRET_KEY`, and on a server only runs use the job queue (batches, test series, assistant drafts and
+Python environment installations still run in the API process that started them).
 
 The product evolution plan (progressive complexity first, then quality checks before publishing) is a reviewed
 proposal in [evolution/README.md](evolution/README.md); it is sequenced around the desktop/server plan and changes

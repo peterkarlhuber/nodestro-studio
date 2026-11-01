@@ -1,6 +1,6 @@
 # ADR-0003: Identity, roles and tenant isolation
 
-- Status: Proposed (M0, 2026-10-31)
+- Status: Accepted; implemented in PR-9 (nodestro-runtime #10, nodestro-api #12). Proposed in M0 (2026-10-31).
 - Repositories: nodestro-api (enforcement), nodestro-runtime (tenant-scoped services), nodestro-studio (login UI),
   nodestro-server (identity provider configuration)
 
