@@ -12,7 +12,7 @@ Apri un workflow nell’editor e fai clic su **API & Export**. La finestra di di
 | **Panoramica** | Stato, indirizzi, pubblicazione, versioni e ultime esecuzioni dell’API |
 | **Chiavi e accesso** | Chiavi API e accesso facoltativo dalla rete |
 | **Prova** | Verificare una richiesta o avviare una vera esecuzione di prova |
-| **Documentazione** | Endpoint, esempi curl e Python, descrizione OpenAPI |
+| **Documentazione** | Endpoint, esempi curl, Python e SDK ufficiali, descrizione OpenAPI |
 | **Limiti** | Nome nell’URL, descrizione e limiti |
 | **Esportazione** | Il progetto FastAPI autonomo come ZIP |
 
@@ -91,6 +91,8 @@ Il nome nell’URL (per es. `verifica-fatture`) lo scegli quando pubblichi e lo 
 | `GET /openapi.json` | Descrizione OpenAPI solo di questa API | – |
 
 Gli schemi completi sono in **Documentazione**, dove **Scarica la descrizione OpenAPI** ti dà anche il file OpenAPI.
+
+Gli esempi sono disponibili in **curl**, **Python**, **SDK Python** e **SDK TypeScript**, insieme alle possibili **Risposte**. I client ufficiali di `nodestro-sdk` avviano le esecuzioni con una chiave di idempotenza (un nuovo tentativo non avvia mai una seconda esecuzione), ritentano dopo errori di connessione e segnalano errori tipizzati. Gli esempi contengono già indirizzo, nome e una richiesta adatta di questa API; come installare il client è indicato in cima a ogni esempio.
 
 ## Richieste e risposte {#aufrufen}
 <!-- keywords: richiesta, request, corpo, body, json, input, values, modulo, schema, file, base64, risposta, 202, run_id, idempotency -->
@@ -204,7 +206,7 @@ Ogni errore ha la stessa forma, così i programmi possono interpretarlo:
 
 In **Prova** trovi una richiesta di esempio che puoi adattare:
 
-- **Verifica richiesta** valida il corpo esattamente come l’API, mostra l’input che il workflow riceverebbe e non avvia nulla. Non costa nulla.
+- **Verifica richiesta** valida il corpo esattamente come l’API, mostra l’input che il workflow riceverebbe e non avvia nulla. Non costa nulla. Se la richiesta non corrisponde (anche per un’esecuzione di prova), Nodestro elenca ogni campo una sola volta con la sua etichetta e il problema, per esempio *Quantità: deve essere un numero*, *obbligatorio* o *non fa parte dell’input*.
 - **Avvia esecuzione di prova** avvia una vera esecuzione della versione pubblicata attraverso lo stesso percorso dell’API. Viene addebitata come ogni esecuzione e compare in Esecuzioni come esecuzione di prova da Nodestro.
 
 Per i test di regressione di una nuova versione usa le [serie di test](/docs/automatisierung#testreihen): girano con la versione salvata prima che tu pubblichi.

@@ -67,8 +67,8 @@
     "loopback_toggle": "http is possible only for a development server on this computer: switch on “{{toggle}}” below."
   },
   "import": {
-    "not_object": "This file is not a Nodestro workflow: it contains no workflow object. Export a workflow in the editor (Export) and import that file.",
-    "no_nodes": "This file is not a Nodestro workflow: it has no steps (\"nodes\"). Export a workflow in the editor (Export) and import that file.",
+    "not_object": "This file is not a Nodestro workflow: it contains no workflow object. Export a workflow in the editor (More actions → Export as a file) and import that file.",
+    "no_nodes": "This file is not a Nodestro workflow: it has no steps (\"nodes\"). Export a workflow in the editor (More actions → Export as a file) and import that file.",
     "node_invalid": "This file is not a valid Nodestro workflow: step {{index}} has no id or type.",
     "edges_invalid": "This file is not a valid Nodestro workflow: its connections (\"edges\") are not a list.",
     "edge_invalid": "This file is not a valid Nodestro workflow: connection {{index}} has no start or end."

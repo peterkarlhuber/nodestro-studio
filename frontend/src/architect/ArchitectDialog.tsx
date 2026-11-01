@@ -306,7 +306,7 @@ export function ArchitectDialog({
         return confirmClose ? (
           <>
             <span className="modal__foot-text">{t("architect.review.confirmDiscard")}</span>
-            <Button variant="ghost" onClick={() => setConfirmClose(false)}>
+            <Button variant="ghost" data-autofocus onClick={() => setConfirmClose(false)}>
               {t("architect.review.keepReviewing")}
             </Button>
             <Button

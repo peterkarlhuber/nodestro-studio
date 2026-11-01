@@ -36,7 +36,7 @@ export function Output({ value, fields }: { value: unknown; fields?: OutputField
       <StructuredValue value={value} fields={fields ?? undefined} depth={0} />
       <details className="technical">
         <summary>{t("runs.output.showJson")}</summary>
-        <pre className="code-block">{outputText(value)}</pre>
+        <pre className="code-block" tabIndex={0}>{outputText(value)}</pre>
       </details>
     </div>
   );
@@ -70,7 +70,7 @@ function StructuredValue({ value, fields, depth }: { value: unknown; fields?: Ou
   if (value === null || value === undefined || value === "") return <span className="muted">–</span>;
   if (typeof value === "string") return <Text value={value} />;
   if (typeof value !== "object") return <span>{scalarText(t, value)}</span>;
-  if (depth >= MAX_DEPTH) return <pre className="code-block">{outputText(value)}</pre>;
+  if (depth >= MAX_DEPTH) return <pre className="code-block" tabIndex={0}>{outputText(value)}</pre>;
   if (Array.isArray(value)) {
     if (!value.length) return <span className="muted">–</span>;
     return (

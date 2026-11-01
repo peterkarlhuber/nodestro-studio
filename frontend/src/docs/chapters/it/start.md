@@ -38,10 +38,10 @@ Nodestro funziona in locale sul tuo computer. Workflow, esecuzioni, conoscenze e
 
 Crea il tuo primo workflow in pochi minuti:
 
-1. **Configura un provider di IA.** Apri *Impostazioni → Provider di IA* e inserisci la chiave API di un provider, per esempio Anthropic (o imposta prima dell’avvio una variabile d’ambiente come `ANTHROPIC_API_KEY`). Se usi un altro provider, cambia lì anche il modello predefinito. Senza un provider configurato puoi modificare tutto, ma non eseguire nulla.
+1. **Configura un provider di IA.** Apri *Impostazioni → Provider di IA* e inserisci la chiave API di un provider, per esempio Anthropic (o imposta prima dell’avvio una variabile d’ambiente come `ANTHROPIC_API_KEY`). Se usi un altro provider, cambia lì anche il modello predefinito. Senza un provider configurato puoi modificare tutto, ma non eseguire nulla; la pagina *Workflow* lo segnala in alto e porta alle impostazioni. Copiare un esempio funziona anche senza provider.
 2. **Crea un workflow.** In *Workflow*, fai clic su **Nuovo workflow**, inserisci un nome e conferma con **Crea e apri**. L'editor si apre con tre nodi già collegati: *Avvio*, *Nuovo agente* e *Risultato*.
 3. **Configura l'agente.** Fai clic sull'agente. A destra compare l'ispettore. Dai un nome all'agente e scrivi un prompt di sistema, per esempio: «Sei un correttore esperto. Migliora ortografia e stile senza cambiare il contenuto.»
-4. **Avvia.** Fai clic su **Avvia workflow**, inserisci un testo e conferma con **Avvia**. Nodestro salva il workflow automaticamente.
+4. **Avvia.** Fai clic su **Avvia workflow**, inserisci un testo e conferma con **Avvia**. Nodestro salva il workflow automaticamente. Se il pulsante è bloccato, il motivo compare subito accanto, con un collegamento alla soluzione.
 5. **Osserva.** Nella *Panoramica dell'esecuzione* sotto l'area di lavoro vedi in diretta cosa scrive l'agente, quali strumenti chiama, quanti token consuma e quanto costa.
 6. **Ricostruisci.** Con **Dettagli** arrivi all'esecuzione completa con la sua cronologia.
 
@@ -57,7 +57,7 @@ La **barra laterale** a sinistra segue il tuo modo di lavorare: creare, eseguire
 - **Automatizza e testa:** *Serie di test*, *Esecuzioni in serie* e *Pianificazioni*.
 - **Aiuto:** questa *Documentazione* e la pagina *Benvenuto*.
 
-In basso trovi le *Impostazioni*. In alto a destra passi dallo schema di colori scuro a quello chiaro; la scelta viene salvata nel browser. Se il provider del modello predefinito non è configurato, lì compare un avviso che porta direttamente alle impostazioni.
+In basso trovi le *Impostazioni* e, sotto, dove gira Nodestro: nell’app desktop e con il comando `nodestro` c’è scritto **Locale e privato**; su un server, **Il server della tua organizzazione** (vedi [Nodestro su un server](/docs/einstellungen#server)). In alto a destra passi dallo schema di colori scuro a quello chiaro; la scelta viene salvata nel browser. Se il provider del modello predefinito non è configurato, lì compare un avviso (*Configura provider di IA* oppure, se è già configurato un altro provider, *Il modello predefinito richiede …*) che porta direttamente alle impostazioni. Su un server, in alto a destra vedi anche il tuo account.
 
 **Aiuto proprio dove serve:** accanto a molti controlli c'è un piccolo simbolo **?**. Passaci sopra con il mouse, selezionalo con il tasto Tab o toccalo sui dispositivi touch: compare una breve spiegazione, spesso con un link alla sezione corrispondente di questa documentazione. Il simbolo del libro accanto ai titoli di pagina apre il capitolo corrispondente. Con **Esc** chiudi la spiegazione.
 
@@ -78,7 +78,7 @@ Tutti i dati sono salvati in un database SQLite nella directory dei dati, per im
 - `nodestro.db` con workflow, modelli di agenti, esecuzioni, impostazioni, file di conoscenza, indice di ricerca e spazi di memoria,
 - la cartella `tools` con gli strumenti tuoi e quelli creati dall'IA.
 
-Per fare un **backup**, copia la directory dei dati mentre Nodestro è chiuso. Al provider di un agente va solo il contenuto che l’agente serve per la sua richiesta: prompt di sistema, compito, conoscenze assegnate, contenuti di memoria che legge e risultati degli strumenti. Le chiavi API non vengono mai mostrate nell’interfaccia.
+Per fare un **backup**, copia la directory dei dati mentre Nodestro è chiuso. Al provider di un agente va solo il contenuto che l’agente serve per la sua richiesta: prompt di sistema, compito, conoscenze assegnate, contenuti di memoria che legge e risultati degli strumenti. Le chiavi API non vengono mai mostrate nell’interfaccia. Se lavori con Nodestro su un server, i dati sono salvati su quel server (vedi [Nodestro su un server](/docs/einstellungen#server)).
 
 ## L’app desktop {#desktop}
 <!-- keywords: desktop, app, finestra, linux, installazione, link di avvio, tauri -->

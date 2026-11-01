@@ -164,6 +164,7 @@ export function GlobalSearch() {
             <Search size={16} aria-hidden />
             <input
               autoFocus
+              data-autofocus
               type="search"
               value={query}
               role="combobox"

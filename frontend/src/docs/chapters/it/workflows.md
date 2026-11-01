@@ -3,17 +3,25 @@
 Un workflow collega agenti in una pipeline. Questo capitolo spiega come creare workflow, collegare nodi, come i dati passano tra gli agenti e come avviare un'esecuzione.
 
 ## Creare e gestire workflow {#anlegen}
-<!-- keywords: nuovo workflow, creare, eliminare, duplicare, copia, panoramica -->
+<!-- keywords: nuovo workflow, creare, eliminare, duplicare, copia, panoramica, riprendi, esecuzioni recenti, team, badge team, senza modello di ia, galleria, inizia qui, livello -->
 
 La pagina **Workflow** mostra tutti i workflow come schede con il numero di agenti, l'ultima modifica e lo stato dell'ultima esecuzione.
 
-La pagina offre tre modi equivalenti per iniziare: **Crea con l’IA** apre la finestra di un nuovo workflow con l’[architetto IA](/docs/ki-architekt#neu-erstellen), **Parti da un esempio** apre la [galleria di esempi](/docs/beispiele) e **Costruiscilo da te** apre la stessa finestra per un workflow vuoto. Finché non c’è nessun workflow compaiono come grandi riquadri, poi come una riga sottile sopra l’elenco.
+La pagina offre tre modi equivalenti per iniziare: **Crea con l’IA** apre la finestra di un nuovo workflow con l’[architetto IA](/docs/ki-architekt#neu-erstellen), **Parti da un esempio** apre la [galleria di esempi](/docs/beispiele) e **Costruiscilo da te** apre la stessa finestra per un workflow vuoto. Finché non c’è nessun workflow compaiono come grandi riquadri, poi come una riga sottile **Inizia da capo** sopra l’elenco.
+
+**Senza modello di IA:** se per il modello predefinito non è ancora configurato un provider di IA, un avviso sopra i grandi riquadri spiega che i workflow girano solo con un modello di IA collegato (una chiave API o un server di modelli locale come Ollama), con il collegamento **Configura nelle impostazioni**. L’esempio passa allora al primo posto, perché una copia non ha bisogno di un modello, e *Crea con l’IA* riporta *Richiede una connessione a un modello di IA*. Anche la finestra lo segnala se lì scegli *Crea con l’IA*: l’architetto IA lavora con il tuo modello predefinito.
 
 - **Nuovo workflow:** inserisci un nome e una descrizione facoltativa. Il nuovo workflow contiene già *Avvio → Agente → Risultato*.
 - **Crea con l’IA:** nella stessa finestra descrivi cosa vuoi e l’[architetto di workflow](/docs/ki-architekt#neu-erstellen) progetta il workflow da verificare.
 - **Aprire:** fai clic sulla scheda.
 - **Duplicare:** simbolo di copia sulla scheda. La copia si chiama «… (copia)»; le esecuzioni non vengono copiate.
 - **Eliminare:** simbolo del cestino. Le esecuzioni precedenti restano disponibili in *Esecuzioni*.
+
+**Riprendi:** appena esistono workflow ed esecuzioni, sopra l’elenco compare l’area **Riprendi**: quante approvazioni ti aspettano (un clic apre la pagina *Approvazioni*), le **Esecuzioni recenti** con il loro stato e, con più di sei workflow, i **Modificati di recente**. Le parti senza contenuto vengono omesse; se non c’è nulla, manca l’intera area.
+
+**Team:** i workflow con capacità o con un contratto di output portano il badge **Team**: un [orchestratore](/docs/verzweigungen#orchestrator) può delegare loro del lavoro. Si trovano sotto i tuoi workflow, nell’area apribile **Team**. Le copie di esempi orchestrati portano con sé i loro team.
+
+**Galleria di esempi:** sotto l’elenco trovi gli esempi consigliati, il più semplice per primo e contrassegnato con **Inizia qui** finché non hai nessun workflow. Dopo, la galleria è un’area chiusa che ricorda se l’hai aperta. Nella galleria completa cerchi per nome, ambito, blocco o livello e filtri per categoria e per **Livello**; ricerca, filtri e un’anteprima aperta fanno parte dell’indirizzo, così *Indietro* riporta alla stessa selezione. Sotto **Cosa ti serve**, l’anteprima indica quale provider di IA e quali modelli usa la copia (e se è configurato), se un’esecuzione si ferma per un’approvazione, quali file di conoscenza e di esempio sono inclusi e se serve una connessione a un altro servizio. Maggiori dettagli in [Workflow di esempio](/docs/beispiele).
 
 ## Preferiti e tag {#favoriten-tags}
 <!-- keywords: preferito, preferiti, stella, tag, etichetta, filtrare, ordinare -->
@@ -23,16 +31,16 @@ Workflow, modelli di agenti e strumenti si possono segnare come preferiti con la
 Sopra gli elenchi filtri per **Solo preferiti** e per tag. Preferiti e tag sono salvati separatamente dagli oggetti: non modificano né workflow né agenti né strumenti, e compaiono anche nella [ricerca](/docs/start#suche). Le cartelle non esistono, di proposito.
 
 ## L'editor {#editor}
-<!-- keywords: area di lavoro, canvas, palette, blocchi, ispettore, panoramica dell'esecuzione, zoom, minimappa -->
+<!-- keywords: area di lavoro, canvas, palette, blocchi, ispettore, panoramica dell'esecuzione, zoom, minimappa, barra del titolo, altre azioni, team nella palette -->
 
 L'editor ha quattro aree:
 
-1. **Barra del titolo:** nome, *Esporta*, *Salva*, *Aggiungi agente* e *Avvia workflow*.
-2. **Area di lavoro:** i nodi e i collegamenti. In alto a sinistra vedi se ci sono modifiche non salvate e quanti agenti e collegamenti ha il workflow. In basso a sinistra trovi lo zoom, *Mostra tutto*, *Disponi automaticamente* e anche *Annulla* e *Ripeti*. In alto a destra una mappa d'insieme mostra l'intero workflow.
-3. **Blocchi (palette):** *Agente* (vuoto), *Descrivi un agente* (l'IA progetta la configurazione), *Avvio*, *Risultato* e fino a otto modelli dalla libreria degli agenti. Trascina un blocco sull'area di lavoro o fai clic su di esso.
-4. **Ispettore (a destra):** senza selezione mostra le impostazioni del workflow, altrimenti la configurazione del nodo selezionato.
+1. **Barra del titolo:** nome, *Architetto IA*, *API ed esportazione*, il menu **Altre azioni** (*Versioni* ed *Esporta come file*), *Salva* e *Avvia workflow*. Con modifiche non salvate si aggiunge *Scarta*. Nelle finestre strette le azioni secondarie compaiono solo come icone.
+2. **Area di lavoro:** i nodi e i collegamenti. In alto a sinistra vedi se ci sono modifiche non salvate e quanti agenti e collegamenti ha il workflow. In basso a sinistra trovi lo zoom, *Mostra tutto*, *Disponi automaticamente* e anche *Annulla* e *Ripeti* (bloccati quando non c’è nulla da annullare o ripetere). In alto a destra una mappa d'insieme mostra l'intero workflow. Un workflow grande si apre a una dimensione leggibile sul suo nodo di avvio invece di essere rimpicciolito per entrare nello schermo.
+3. **Blocchi (palette):** *Agente* (vuoto), *Descrivi un agente* (l'IA progetta la configurazione), *Avvio*, *Risultato*, fino a otto modelli dalla libreria degli agenti e, sotto, i **Team**, che puoi cercare e chiudere; ogni team mostra le sue capacità. Trascina un blocco sull'area di lavoro o fai clic su di esso. Un nuovo nodo compare nella parte visibile dell’area di lavoro e viene subito selezionato.
+4. **Ispettore (a destra):** senza selezione mostra la verifica e le impostazioni del workflow, altrimenti la configurazione del nodo selezionato e, con più nodi selezionati, le azioni comuni (vedi [Comandi e scorciatoie da tastiera](/docs/workflows#bedienung)).
 
-Sotto l'area di lavoro c'è la **Panoramica dell'esecuzione** con l'ultima esecuzione di questo workflow.
+Sotto l'area di lavoro c'è la **Panoramica dell’esecuzione** con l'ultima esecuzione di questo workflow.
 
 I blocchi, l'ispettore (con il titolo *Proprietà*) e la panoramica dell'esecuzione sono pannelli. Il pulsante nell'intestazione di un pannello lo nasconde o lo mostra; un pannello nascosto lascia una barra stretta, e i blocchi restano disponibili come icone. Il divisore tra un pannello e l'area di lavoro ne cambia la dimensione: trascinalo, oppure selezionalo con *Tab* e usa i tasti freccia (con *Maiusc* a passi più grandi). Un doppio clic sul divisore ripristina la dimensione predefinita. Quando l'ispettore è nascosto, la sua barra indica il nodo selezionato; un doppio clic su un nodo ne mostra le proprietà. Nodestro ricorda la disposizione in questo browser per tutti i workflow. Non fa parte del workflow: modificarla non crea mai modifiche non salvate né un passaggio di annullamento, e un workflow in esecuzione continua a girare.
 
@@ -166,24 +174,24 @@ Una richiesta al modello o una chiamata a uno strumento già in corso viene comu
 Nodestro verifica il workflow a ogni modifica (dopo una pausa di mezzo secondo), senza chiamare l’API e senza costi:
 
 - **Struttura:** C’è almeno un agente? Il nodo iniziale non ha ingressi e il nodo del risultato non ha uscite? Non ci sono cicli, connessioni doppie o connessioni che non portano da nessuna parte? Il nodo del risultato ha un ingresso?
-- **Agenti:** ogni configurazione viene verificata con le regole della libreria. Gli agenti con errori mostrano “1 problema” sull’area di lavoro.
+- **Agenti:** ogni configurazione viene verificata con le regole della libreria. I nodi con errori mostrano “1 problema” sull’area di lavoro, anche Avvio e Risultato; gli avvisi compaiono come “1 avviso” con un colore e un’icona propri.
 - **Connessioni e segnaposto:** segnaposto che non corrispondono a nessun predecessore collegato, agenti senza ingresso, risultati che non arrivano da nessuna parte e nomi di agenti doppi.
 - **Impostazioni:** provider non configurati, file di conoscenza o di avvio eliminati, modelli senza prezzo noto e un budget pari a 0.
 
-I risultati compaiono nell’ispettore del workflow (clic su un punto vuoto dell’area di lavoro), divisi in **errori** e **avvisi**. Un clic su un messaggio seleziona l’agente interessato o evidenzia la connessione interessata; le connessioni con errori appaiono rosse e tratteggiate.
+I risultati compaiono in cima all’ispettore del workflow (clic su un punto vuoto dell’area di lavoro), divisi in **errori** e **avvisi**. Un clic su un messaggio seleziona l’agente interessato o evidenzia la connessione interessata; le connessioni con errori appaiono rosse e tratteggiate. Se selezioni un nodo, i suoi messaggi compaiono sopra le sue impostazioni. Finché un provider non è configurato, i nodi non mostrano «Pronto».
 
-Finché ci sono **errori**, **Avvia workflow** è bloccato; passa il mouse sul pulsante per vedere i motivi. Gli **avvisi** non bloccano l’avvio; la finestra di avvio li mostra di nuovo.
+Finché ci sono **errori**, **Avvia workflow** è bloccato. Il motivo compare subito accanto al pulsante; se i problemi sono più d’uno, il primo («3 problemi impediscono l’avvio. Per primo: …»). **Mostra** seleziona il nodo o la connessione interessati e apre l’ispettore; se manca un provider di IA, **Apri impostazioni** porta direttamente lì. Il pulsante bloccato resta raggiungibile da tastiera, e i lettori di schermo leggono il motivo. Gli **avvisi** non bloccano l’avvio; la finestra di avvio li mostra di nuovo.
 
 ## Avviare un'esecuzione {#starten}
-<!-- keywords: avviare, eseguire, run, finestra di avvio, input, allegare file -->
+<!-- keywords: avviare, eseguire, run, finestra di avvio, input, allegare file, compito precompilato, altri file -->
 
 **Avvia workflow** apre la finestra di avvio:
 
-- **Input:** il testo che tutti gli agenti ricevono all'inizio. È già compilato con l'*Input proposto* del nodo di avvio.
-- **Allega file (facoltativo):** file di conoscenza inseriti direttamente nel contesto dei primi agenti, solo per questa esecuzione (vedi [Allegare file all'avvio](/docs/wissen#start-dateien)).
+- **Input:** il testo che tutti gli agenti ricevono all'inizio. È già compilato con l'*Input proposto* del nodo di avvio. Se il workflow ha un [modulo di input](/docs/verzweigungen#eingabeformular), il campo si trova sotto i campi del modulo; se è precompilato si chiama **Compito (esempio precompilato)**: sostituisci l’esempio con la tua richiesta.
+- **Allega file (facoltativo):** file di conoscenza inseriti direttamente nel contesto dei primi agenti, solo per questa esecuzione (vedi [Allegare file all'avvio](/docs/wissen#start-dateien)). Se il modulo ha campi file propri, quest’area è chiusa sotto **Allega altri file (facoltativo)**.
 - **Budget:** la finestra mostra quale budget vale.
 
-Con **Avvia**, Nodestro salva il workflow e inizia l’esecuzione. L’esecuzione usa lo stato del workflow al momento dell’avvio; le modifiche successive valgono solo dall’esecuzione seguente. Se il provider di un modello non è configurato, la finestra lo segnala.
+Con **Avvia**, Nodestro salva il workflow e inizia l’esecuzione. L’esecuzione usa lo stato del workflow al momento dell’avvio; le modifiche successive valgono solo dall’esecuzione seguente. Se il provider di un modello non è configurato, la finestra lo segnala. Se l’esecuzione non può ancora partire, il motivo compare sotto **Avvia**: ci sono caricamenti di file in corso, oppure prima vanno corretti degli errori (*Prima risolvi i problemi qui sopra.*).
 
 ## Comandi e scorciatoie da tastiera {#bedienung}
 <!-- keywords: scorciatoie da tastiera, shortcuts, ctrl+s, ctrl+z, annulla, ripeti, canc, duplicare, disponi automaticamente -->
@@ -194,11 +202,14 @@ Altri suggerimenti:
 
 - **Disponi automaticamente** dispone i nodi in colonne secondo la loro posizione nel flusso dei dati.
 - **Mostra tutto** regola lo zoom in modo che sia visibile l'intero workflow.
-- Se lasci l'editor con modifiche non salvate, Nodestro chiede se salvarle o scartarle.
-- Annulla ricorda fino a 80 passaggi. Spostare un nodo è un passaggio, così come scrivere in un campo finché non passi a un altro campo o nodo. Nome, descrizione e budget del workflow sono inclusi.
+- **Selezionare più nodi:** Maiusc-clic o Ctrl-clic aggiunge nodi alla selezione; Maiusc e trascinamento sull’area di lavoro seleziona con un riquadro. Trascinare sposta tutti i nodi selezionati, **Canc** li elimina tutti, **Ctrl+D** li duplica tutti. L’ispettore offre allora *Duplica tutti*, *Elimina nodi* e *Annulla selezione*.
+- **Annullare un’eliminazione:** dopo aver eliminato dei nodi compare un messaggio con **Annulla**.
+- **Tracciare collegamenti:** mentre trascini, l’area di lavoro mostra già dove un collegamento non è consentito; se lo rilasci lì, un messaggio ne spiega il motivo.
+- Se lasci l'editor con modifiche non salvate, Nodestro chiede se salvarle, scartarle o **Continua a modificare**.
+- Annulla ricorda fino a 80 passaggi. Spostare un nodo è un passaggio, così come scrivere in un campo finché non passi a un altro campo o nodo. Nome, descrizione e budget del workflow sono inclusi. Se annulli tutto fino allo stato salvato, non restano modifiche non salvate.
 
 - **Eliminare connessioni:** fai clic su una connessione. Viene evidenziata, e **Canc** o **Backspace** la elimina. Mentre scrivi in un campo di input, questi tasti cancellano solo testo. Anche l’eliminazione di una connessione si può annullare.
-- La barra **Blocchi** è sempre chiusa all’apertura dell’editor; una volta aperta, resta aperta finché non esci dall’editor.
+- Nelle finestre strette (meno di 1100 pixel di larghezza) la barra **Blocchi** è inizialmente chiusa; poi vale la disposizione che hai scelto per ultima.
 
 ## Salvare e scartare {#speichern}
 <!-- keywords: salvare, scartare, non salvato, scartare le modifiche, ripristinare -->
@@ -207,23 +218,34 @@ Altri suggerimenti:
 
 **Scarta** butta via tutte le modifiche non salvate, inclusa la cronologia di annulla/ripeti, e ricarica l’ultimo stato salvato. Lo stesso vale se esci dall’editor e scegli **Scarta** nella finestra di dialogo: alla prossima apertura compare esattamente il workflow salvato.
 
+**Modificato altrove:** prima di salvare, Nodestro controlla se nel frattempo il workflow è stato salvato altrove, in un’altra scheda o da un’altra persona. In quel caso la finestra **Modificato altrove** ti chiede cosa fare, invece di sostituire in silenzio l’altra modifica:
+
+- **Carica versione salvata:** l’editor mostra lo stato salvato; le tue modifiche non salvate qui vanno perse.
+- **Tieni la mia come copia:** il tuo stato diventa un nuovo workflow «… (mia copia)», lo stato salvato resta com’è.
+- **Salva comunque la mia:** il tuo stato sostituisce l’altra modifica.
+- **Continua a modificare:** non viene salvato nulla.
+
+Niente va perso per sempre: ogni salvataggio resta nelle [Versioni](/docs/workflows#versionen).
+
 ## Versioni {#versionen}
 <!-- keywords: versione, versioni, cronologia, storico, ripristinare, tornare indietro, stato precedente -->
 
-Ogni salvataggio che modifica qualcosa viene conservato come **versione** numerata con data e ora. **Versioni** nella barra del titolo dell’editor apre la cronologia:
+Ogni salvataggio che modifica qualcosa viene conservato come **versione** numerata con data e ora. **Versioni**, nel menu **Altre azioni** della barra del titolo, apre la cronologia:
 
 - **Salva come versione** salva le modifiche attuali con una descrizione facoltativa (“prima di rifare la ricerca”).
 - L’icona della matita aggiunge o modifica la descrizione di una versione.
 - **Differenze** mostra cosa cambierebbe rispetto allo stato nell’editor: agenti, connessioni, nome e impostazioni.
-- **Ripristina** riporta il workflow a quella versione e salva il risultato come **nuova versione**. Nessuna versione viene sovrascritta o eliminata.
+- **Ripristina** riporta il workflow a quella versione e salva il risultato come **nuova versione**. Nessuna versione viene sovrascritta o eliminata. Se ci sono modifiche non salvate, scegli **Prima salva, poi ripristina** (le modifiche diventano prima una versione a sé) oppure **Ripristina senza salvare**.
 
 Le versioni sono indipendenti da annulla/ripeti, che vale solo all’interno di una sessione nell’editor. Le esecuzioni usano sempre lo stato al momento dell’avvio. Se un workflow viene eliminato, vengono eliminate anche le sue versioni. In cima alla cronologia compare il **risultato dei test** della versione salvata per ogni serie di test del workflow (come durante la [pubblicazione](/docs/api-und-export#veroeffentlichen)).
 
 ## Importare ed esportare {#import-export}
-<!-- keywords: esportare, importare, json, file, condividere, backup, .nodestro.json -->
+<!-- keywords: esportare, importare, json, file, condividere, backup, .nodestro.json, non è un workflow, file non valido -->
 
-- **Esporta** (nell'editor) salva il workflow come `<Nome>.nodestro.json`: tutti i nodi, collegamenti, posizioni e impostazioni degli agenti, oltre al budget.
-- **Importa** (nella pagina *Workflow*) carica un file di questo tipo come **nuova copia** con un nuovo ID. I workflow esistenti non vengono mai sovrascritti.
+- **Esporta come file** (nell'editor, sotto **Altre azioni**) salva il workflow come `<Nome>.nodestro.json`: tutti i nodi, collegamenti, posizioni e impostazioni degli agenti, oltre al budget.
+- **Importa** (nella pagina *Workflow*) carica un file di questo tipo come **nuova copia** con un nuovo ID. I workflow esistenti non vengono mai sovrascritti. Se il file non ha un nome, il workflow prende il nome del file.
+
+Nodestro controlla il file prima di creare qualcosa. Se non è l’esportazione di un workflow (per esempio un altro file JSON, un file senza passi o con collegamenti rotti), non viene importato nulla e il messaggio ne spiega il motivo, per esempio *Questo file non è un workflow Nodestro: non ha passi ("nodes").*
 
 **Non sono inclusi** file di conoscenza, spazi di memoria e strumenti propri; il file fa solo riferimento ai loro ID e nomi. Su un altro computer devono esistere lì, altrimenti la verifica segnala per esempio «Strumenti sconosciuti».
 

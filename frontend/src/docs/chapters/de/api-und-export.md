@@ -12,7 +12,7 @@ Ein fertiger Workflow lässt sich als Web-API nutzen: direkt aus Nodestro heraus
 | **Überblick** | Status, Adressen, Veröffentlichen, Versionen und die letzten API-Läufe |
 | **Schlüssel & Zugriff** | API-Schlüssel und der optionale Zugriff aus dem Netzwerk |
 | **Testen** | Eine Anfrage prüfen oder einen echten Testlauf starten |
-| **Dokumentation** | Endpunkte, Beispiele für curl und Python, OpenAPI-Beschreibung |
+| **Dokumentation** | Endpunkte, Beispiele für curl, Python und die offiziellen SDKs, OpenAPI-Beschreibung |
 | **Limits** | Name in der Adresse, Beschreibung und Grenzen |
 | **Export** | Das eigenständige FastAPI-Projekt als ZIP |
 
@@ -91,6 +91,8 @@ Den Namen in der URL (z. B. `rechnungen-pruefen`) legst du beim Veröffentlichen
 | `GET /openapi.json` | OpenAPI-Beschreibung nur dieser API | – |
 
 Die vollständigen Schemas siehst du unter **Dokumentation**. Dort lädst du mit **OpenAPI-Beschreibung herunterladen** auch die OpenAPI-Datei herunter.
+
+Die Beispiele gibt es als **curl**, **Python**, **Python-SDK** und **TypeScript-SDK** sowie die möglichen **Antworten**. Die offiziellen Clients aus `nodestro-sdk` starten Läufe mit einem Idempotenzschlüssel (eine Wiederholung startet nie einen zweiten Lauf), wiederholen nach Verbindungsfehlern und melden typisierte Fehler. Die Beispiele enthalten bereits Adresse, Namen und eine passende Anfrage dieser API; wie du den Client installierst, steht jeweils oben im Beispiel.
 
 ## Anfragen und Antworten {#aufrufen}
 <!-- keywords: anfrage, request, body, json, input, values, formular, schema, dateien, base64, antwort, 202, run_id, idempotency -->
@@ -204,7 +206,7 @@ Jeder Fehler hat dieselbe Form, damit Programme ihn auswerten können:
 
 Unter **Testen** steht eine Beispielanfrage, die du anpassen kannst:
 
-- **Anfrage prüfen** validiert den Körper genau wie die API, zeigt die Eingabe, die der Workflow bekäme, und startet nichts. Es entstehen keine Kosten.
+- **Anfrage prüfen** validiert den Körper genau wie die API, zeigt die Eingabe, die der Workflow bekäme, und startet nichts. Es entstehen keine Kosten. Passt die Anfrage nicht (auch beim Testlauf), listet Nodestro jedes Feld einmal mit seiner Beschriftung und dem Problem, etwa *Menge: muss eine Zahl sein*, *fehlt* oder *gehört nicht zur Eingabe*.
 - **Testlauf starten** startet einen echten Lauf der veröffentlichten Version über denselben Weg wie die API. Er wird wie jeder Lauf abgerechnet und erscheint unter Ausführungen als Testlauf aus Nodestro.
 
 Für Regressionstests einer neuen Version eignen sich [Testreihen](/docs/automatisierung#testreihen): Sie laufen mit der gespeicherten Fassung, bevor du veröffentlichst.

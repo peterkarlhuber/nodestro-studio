@@ -191,7 +191,7 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
         onClose={() => setConfirmClear(false)}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setConfirmClear(false)}>
+            <Button variant="ghost" data-autofocus onClick={() => setConfirmClear(false)}>
               {t("common.cancel")}
             </Button>
             <Button variant="danger" busy={clear.isPending} onClick={() => clear.mutate()}>

@@ -3,22 +3,24 @@
 Nodestro incluye 24 flujos de trabajo multiagente listos, uno para cada ámbito de aplicación típico. Cada ejemplo contiene agentes con prompts de sistema, las conexiones, una tarea de prueba preparada con datos inventados y un resultado claramente descrito. Este capítulo explica la galería, cómo copiar y adaptar los ejemplos, y describe cada uno por separado.
 
 ## La galería {#galerie}
-<!-- keywords: ejemplos, plantillas, galería, biblioteca, destacados, categorías, página de inicio -->
+<!-- keywords: ejemplos, plantillas, galería, biblioteca, destacados, categorías, página de inicio, empieza aquí, nivel, más sencillo -->
 
-La galería está en la página **Flujos de trabajo**, debajo de tus propios flujos de trabajo y claramente separada de ellos. Muestra algunos ejemplos destacados y las seis categorías. **Ver los 24 ejemplos** abre la galería completa, también dentro del área de flujos de trabajo.
+La galería está en la página **Flujos de trabajo**, debajo de tus propios flujos de trabajo y claramente separada de ellos. Muestra algunos ejemplos destacados, el más sencillo primero, y las seis categorías. Mientras aún no tengas ningún flujo de trabajo, el ejemplo más sencillo lleva la marca **Empieza aquí**; después, la galería es una sección cerrada que recuerda si la abriste. **Ver los 24 ejemplos** abre la galería completa, también dentro del área de flujos de trabajo.
 
-En la galería completa buscas por nombre, ámbito y descripción y filtras por categoría. Cada tarjeta muestra el ámbito, el nombre, la descripción, el número de agentes, el nivel y el patrón. Los ejemplos de ámbitos sensibles llevan la insignia **Requiere revisión experta**. La [búsqueda](/docs/start#suche) también encuentra ejemplos.
+En la galería completa buscas por nombre, ámbito, descripción, bloque o nivel y filtras por categoría y por **Nivel**. Los ejemplos están ordenados por nivel, los más sencillos primero; el más sencillo lleva **Empieza aquí**. La búsqueda, los filtros y una vista previa abierta forman parte de la dirección, así que *Atrás* te lleva a la misma selección. Cada tarjeta muestra el ámbito, el nombre, la descripción, el número de agentes, el nivel y el patrón. Los ejemplos de ámbitos sensibles llevan la insignia **Requiere revisión experta**. La [búsqueda](/docs/start#suche) también encuentra ejemplos.
 
 ## Vista previa y copia {#uebernehmen}
 <!-- keywords: vista previa, copiar, copia, plantilla, sin cambios, gratis -->
 
 Al hacer clic en una tarjeta se abre la **vista previa**: el flujo como diagrama, cada agente con su rol, modelo, herramientas y los resultados que recibe, la guía y la tarea de prueba. La vista previa no guarda nada y no llama a ningún modelo.
 
+Arriba del todo, la vista previa muestra **Qué necesitas**: qué proveedor de IA y qué modelos usa la copia y si ese proveedor está configurado (si no, con un enlace a los ajustes), si una ejecución se detiene para una aprobación, qué archivos de conocimiento y de ejemplo incluye y si hace falta una conexión con otro servicio.
+
 **Copiar a mis flujos de trabajo** crea un flujo de trabajo propio y lo abre en el editor. La copia es independiente: puedes cambiarlo todo, y la plantilla nunca cambia. Si copias un ejemplo dos veces, obtienes dos flujos de trabajo separados. La copia empieza con la versión 1 en el [historial de versiones](/docs/workflows#versionen).
 
 Si **Añadir los casos de prueba como serie de pruebas** está marcado (por defecto), la copia recibe además una [serie de pruebas](/docs/automatisierung#testreihen) con los casos de prueba preparados; los archivos de ejemplo necesarios se guardan como archivos de entrada de la copia. Copiar nunca inicia una ejecución, nunca crea una [programación](/docs/automatisierung#zeitplaene) y nunca publica una [API](/docs/api-und-export#veroeffentlichen); eso lo decides tú más adelante.
 
-Los ejemplos nunca se crean automáticamente; solo lo que copias aparece entre tus flujos. Solo hay costes cuando ejecutas una copia. Los ejemplos usan modelos de Anthropic; basta con ese [proveedor configurado](/docs/einstellungen#anbieter), y puedes cambiar los modelos de una copia a otro proveedor en cualquier momento. Ningún ejemplo necesita otros servicios, cuentas ni fuentes de datos de pago.
+Los ejemplos nunca se crean automáticamente; solo lo que copias aparece entre tus flujos. Solo hay costes cuando ejecutas una copia. Los modelos que recibe una copia dependen de tu modelo predeterminado: si es un modelo de Anthropic, la copia usa los modelos del ejemplo (Haiku, Sonnet u Opus, según la tarea del agente). Si pertenece a otro [proveedor](/docs/einstellungen#anbieter), todos los agentes de la copia usan tu modelo predeterminado, y los más exigentes tu modelo del asistente si pertenece al mismo proveedor; las herramientas de servidor, que solo funcionan con Anthropic, se omiten entonces. Puedes cambiar los modelos de una copia en cualquier momento. Ningún ejemplo necesita cuentas ni fuentes de datos de pago. Algunos ejemplos tienen una **Conexión opcional** con otro servicio mediante MCP: al copiar eliges un [servicio conectado](/docs/tools#verbundene-dienste) configurado o el **Modo sin conexión (datos de ejemplo)**, que viene preseleccionado.
 
 ## Idiomas {#sprachen}
 <!-- keywords: idioma, traducción, alemán, inglés, copia, prompts -->
@@ -70,7 +72,7 @@ Los resultados son ayudas de trabajo, no asesoramiento ni una decisión. Revísa
 - **Archivos propios:** pon los documentos para una sola ejecución directamente en el campo de archivo al iniciar; para eso no necesitas una colección de conocimiento.
 - **Conocimiento:** sube los documentos que necesitas de forma permanente como [conocimiento](/docs/wissen#modi) y asígnalos al agente adecuado.
 - **Prompts y tareas:** las tareas se refieren a sus predecesores con [marcadores](/docs/workflows#platzhalter). Si cambias el nombre de un agente, ajusta los marcadores.
-- **Datos actuales:** para información en vivo puedes añadir la [herramienta de servidor](/docs/tools#server-tools) de búsqueda web; cuesta un extra por búsqueda.
+- **Datos actuales:** para información en vivo puedes añadir la [herramienta de servidor](/docs/tools#server-tools) de búsqueda web (solo con modelos de Anthropic); cuesta un extra por búsqueda.
 
 Las secciones siguientes indican adaptaciones concretas para cada ejemplo.
 

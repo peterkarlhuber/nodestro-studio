@@ -5,7 +5,7 @@ Dieses Kapitel beschreibt alle Einstellungen, die Installation und den Start von
 ## KI-Anbieter {#anbieter}
 <!-- keywords: api key, api-schlüssel, anbieter, provider, anthropic, openai, gemini, ollama, vllm, openai-kompatibel, basis-url, umgebungsvariable, .env, fähigkeiten -->
 
-Nodestro führt Agenten über die Bibliothek Orkexa aus und arbeitet mit mehreren **KI-Anbietern** gleichzeitig: **Anthropic**, **OpenAI**, **Google Gemini** sowie eigenen Servern über einen **OpenAI-kompatiblen Endpunkt**, **Ollama** oder **vLLM**. Jeder Agent nutzt den Anbieter seines Modells. Ist dieser Anbieter nicht eingerichtet, startet der Lauf nicht; Nodestro weicht nie still auf einen anderen Anbieter aus. Fehlt der Anbieter des Standardmodells, erscheint oben rechts „KI-Anbieter einrichten“.
+Nodestro führt Agenten über die Bibliothek Orkexa aus und arbeitet mit mehreren **KI-Anbietern** gleichzeitig: **Anthropic**, **OpenAI**, **Google Gemini** sowie eigenen Servern über einen **OpenAI-kompatiblen Endpunkt**, **Ollama** oder **vLLM**. Jeder Agent nutzt den Anbieter seines Modells. Ist dieser Anbieter nicht eingerichtet, startet der Lauf nicht; Nodestro weicht nie still auf einen anderen Anbieter aus. Fehlt der Anbieter des Standardmodells, erscheint oben rechts „KI-Anbieter einrichten“, oder „Standardmodell braucht …“, wenn schon ein anderer Anbieter eingerichtet ist.
 
 Unter *Einstellungen → KI-Anbieter* hat jeder Anbieter einen eigenen Abschnitt:
 
@@ -13,6 +13,7 @@ Unter *Einstellungen → KI-Anbieter* hat jeder Anbieter einen eigenen Abschnitt
 - **OpenAI-kompatibler Endpunkt, Ollama, vLLM:** die **Basis-URL** des Servers eintragen (z. B. `http://localhost:11434/v1` für Ollama) und **Endpunkt speichern**; ein API-Schlüssel ist optional. Der Anbieter gilt erst als eingerichtet, wenn eine Basis-URL gespeichert ist.
 - **Was die Modelle können:** Für eigene Server gibst du an, ob ihre Modelle Tools, strukturierte Ausgabe, Bilder, PDF-Dokumente, Denkaufwand und weitere Fähigkeiten beherrschen. Nodestro nimmt nichts an: Eine Option, die ein Modell nicht kann oder deren Unterstützung unbekannt ist, meldet die Prüfung als Fehler, statt sie wegzulassen.
 - **Verbindung testen** fragt beim Anbieter nur die Modellliste ab; das kostet nichts.
+- **Erster Anbieter:** Speicherst du einen Schlüssel, während der Anbieter des Standardmodells noch nicht eingerichtet ist, nutzen neue Agenten ab jetzt ein Modell dieses Anbieters; eine Meldung sagt, welches. Das ändert nur die Einstellungen: Bestehende Workflows behalten ihre Modelle.
 
 Schlüssel kannst du auch als **Umgebungsvariable** setzen, vor dem Start oder in einer **`.env`-Datei** im Ordner, in dem du `nodestro` startest. Umgebungsvariablen haben **Vorrang** vor gespeicherten Schlüsseln:
 
@@ -28,10 +29,12 @@ Ein Schlüssel aus früheren Versionen (damals nur für Anthropic) wird beim ers
 ## Modelle der Assistenten und Standardmodell {#modelle}
 <!-- keywords: standardmodell, assistenzmodell, assistant model, default model, neue agenten -->
 
-- **Standardmodell für neue Agenten:** Mit diesem Anbieter und Modell starten neue, leere Agenten (aus der Palette, über *Agent hinzufügen*, in neuen Workflows und als leere Vorlage). Beim KI-Entwurf dient es als Ersatz, falls der Architekt ein nicht erlaubtes Modell vorschlägt. Bestehende Agenten bleiben unverändert.
+- **Standardmodell für neue Agenten:** Mit diesem Anbieter und Modell starten neue, leere Agenten (aus der Palette, in neuen Workflows und als leere Vorlage). Beim KI-Entwurf dient es als Ersatz, falls der Architekt ein nicht erlaubtes Modell vorschlägt. Bestehende Agenten bleiben unverändert.
 - **Modell für die Assistenten:** Dieses Modell entwirft Agenten aus deiner Beschreibung, schreibt als Coding Agent Tools, schlägt Memory-Strukturen vor und beantwortet als [Nodestro Assistant](/docs/assistent) deine Fragen. Ein starkes Modell (Standard: Claude Opus 5.5 von Anthropic) liefert bessere Vorschläge. Der KI-Entwurf schlägt nur Modelle von Anbietern vor, die eingerichtet sind.
 
 Beide Felder bestehen aus **Anbieter** und **Modell**. Das Modell wählst du aus der Liste oder tippst eine beliebige Modell-ID des Anbieters ein, zum Beispiel `gpt-5.5` bei OpenAI oder `llama3.1:8b` bei Ollama. Gespeichert wird es als `anbieter:modell` (etwa `openai:gpt-5.5`); ältere Angaben ohne Anbieter wie `claude-sonnet-5-5` gelten als Modelle von Anthropic.
+
+Gehört das Standardmodell zu einem Anbieter, der nicht eingerichtet ist, während ein anderer eingerichtet ist, sagt ein Hinweis über der Modellwahl, dass neue Agenten und Beispielkopien damit nicht laufen können, und bietet das passende Modell des eingerichteten Anbieters an (*… verwenden*). Bestehende Workflows behalten ihre Modelle in jedem Fall.
 
 Speichere Änderungen mit **Speichern** im Abschnitt *Modelle und Budget*.
 
@@ -116,6 +119,44 @@ Nodestro startet unter `http://localhost:8000` und öffnet den Browser. Optionen
 Beenden mit **Strg+C**. Laufende Läufe werden dabei abgebrochen.
 
 > **Sicherheit:** Nodestro hat noch keine Benutzerverwaltung und antwortet deshalb nur diesem Rechner. `--host 0.0.0.0`, andere Netzwerkadressen oder Netzwerknamen in `NODESTRO_ALLOWED_HOSTS` brechen den Start ab, und Nodestro lässt sich nicht hinter einen Reverse Proxy stellen. Damit andere Geräte einen Workflow nutzen können, veröffentliche ihn als API: Veröffentlichte APIs nutzen API-Schlüssel und haben einen eigenen Netzwerkzugang (siehe *API und Export*).
+
+## Nodestro auf einem Server {#server}
+<!-- keywords: server, anmelden, anmeldung, abmelden, rolle, rollen, berechtigung, berechtigungen, arbeitsbereich, mandant, tenant, nur lesen, mitglieder, nodestro-server, set-role, remove-member, revoke-sessions, sitzung abgelaufen -->
+
+Nodestro Studio kann auch auf einem **Nodestro-Server** deiner Organisation laufen. Dann meldest du dich über den Anmeldedienst deiner Organisation an, und deine Daten liegen auf diesem Server statt auf deinem Rechner. In der Desktop-App und mit dem Befehl `nodestro` gibt es weder Anmeldung noch Rollen; dort gilt nichts von diesem Abschnitt.
+
+**Anmelden und abmelden.** Öffnest du Nodestro, leitet der Server dich zur Anmeldung und danach zurück. Oben rechts steht dein Name mit deiner Rolle. Ein Klick öffnet dein Konto: Name, Rolle, **Arbeitsbereich**, deine Berechtigungen und **Abmelden**. Endet deine Sitzung, führt die nächste Aktion wieder zur Anmeldung und danach zurück zur selben Seite. Schlägt eine Anmeldung fehl (etwa weil sie zu lange gedauert hat), sagt ein Hinweis oben auf der Seite, was passiert ist, mit **Erneut anmelden**.
+
+**Arbeitsbereiche.** Workflows, Läufe, Wissen und Einstellungen gehören zu einem Arbeitsbereich. Bist du Mitglied mehrerer Arbeitsbereiche, wechselst du in deinem Konto unter **Arbeitsbereich wechseln**; Nodestro lädt dann die Startseite des anderen Arbeitsbereichs. Die Einstellungen gelten für deinen aktuellen Arbeitsbereich auf diesem Server.
+
+**Rollen und Berechtigungen.** Jede Rolle bringt feste Berechtigungen mit:
+
+| Rolle | Berechtigungen |
+|---|---|
+| **Eigentümer** | Lesen, Bearbeiten, Ausführen, Verwalten |
+| **Administrator** | Lesen, Bearbeiten, Ausführen, Verwalten |
+| **Bearbeiter** | Lesen, Bearbeiten, Ausführen |
+| **Ausführender** | Lesen, Ausführen |
+| **Betrachter** | Lesen |
+
+- **Lesen:** alles ansehen, auch Ausführungen und die Dokumentation.
+- **Bearbeiten:** Workflows, Agenten-Vorlagen, Wissen und Memory anlegen und ändern.
+- **Ausführen:** Workflows starten, Läufe abbrechen und fortsetzen, Freigaben entscheiden.
+- **Verwalten:** Einstellungen, KI-Anbieter, verbundene Dienste, Regeln für Tool-Aufrufe, das Veröffentlichen von APIs und API-Schlüssel.
+- **Installation verwalten** hat keine Rolle: Backup, Systemdiagnose und der Netzwerkzugang veröffentlichter APIs fehlen auf einem Server, darum kümmert sich der Betreiber.
+
+**Was deine Rolle nicht darf, zeigt Nodestro vorher.** Solche Bedienelemente fehlen oder sind gesperrt, und daneben steht der Grund, etwa *Deine Rolle (Betrachter) darf das nicht: Dafür braucht es die Berechtigung „Bearbeiten“. Frag einen Administrator deines Nodestro-Servers.* Als **Betrachter** oder **Ausführender** steht oben auf jeder Seite ein Hinweis, dass du alles ansehen, aber nichts ändern (und als Betrachter nichts ausführen) kannst. Der Server prüft jede Anfrage trotzdem selbst.
+
+**Mitglieder und Rollen** verwaltet der Betreiber des Servers mit Befehlen der Kommandozeile `nodestro-server`; in Nodestro Studio gibt es dafür keine Seite:
+
+- `nodestro-server members TENANT` listet die Mitglieder eines Arbeitsbereichs mit ihren Rollen.
+- `nodestro-server set-role TENANT USER ROLE` fügt eine Person hinzu oder ändert ihre Rolle (`owner`, `admin`, `editor`, `operator`, `viewer`).
+- `nodestro-server remove-member TENANT USER` entfernt eine Person aus dem Arbeitsbereich und beendet ihre Sitzungen dort.
+- `nodestro-server revoke-sessions USER` beendet alle Sitzungen einer Person (die Mitgliedschaften bleiben).
+
+`USER` ist eine Benutzer-ID (`u_…`), eine bestätigte E-Mail-Adresse oder die Kennung beim Anmeldedienst. Der Server kennt eine Person erst, wenn sie sich einmal angemeldet hat; ein Arbeitsbereich behält immer mindestens eine Eigentümerin oder einen Eigentümer. Details stehen im Runbook des Repositorys nodestro-server (`docs/RUNBOOK.md`, Abschnitt *Members*). Meldet die Anmeldung, dass dein Konto noch keinen Zugang hat, bitte eine Administratorin oder einen Administrator, dich hinzuzufügen.
+
+**Daten.** Unten in der Seitenleiste steht statt *Lokal & privat* **Server deiner Organisation**: Deine Daten bleiben auf diesem Server und gehen nur an die KI-Anbieter, die dein Betreiber erlaubt. Um Sicherungen und die Installation kümmert sich der Betreiber. Aussagen wie „läuft nur auf deinem Rechner“ gelten nur für die Desktop-App und den Befehl `nodestro`.
 
 ## Tastenkürzel {#tastenkuerzel}
 <!-- keywords: tastenkürzel, shortcuts, tastatur, keyboard, barrierefreiheit -->

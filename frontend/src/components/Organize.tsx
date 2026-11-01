@@ -171,6 +171,7 @@ export function TagEditor({ kind, id, name }: { kind: OrganizeKind; id: string; 
             value={text}
             maxLength={32}
             autoFocus
+            data-autofocus
             aria-label={t("organize.newTag")}
             placeholder={t("organize.newTagPlaceholder")}
             onChange={(event) => setText(event.target.value)}

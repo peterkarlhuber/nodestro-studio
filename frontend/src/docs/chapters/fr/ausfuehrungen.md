@@ -13,49 +13,62 @@ Vous voyez les exécutions à deux endroits :
 Les exécutions sont conservées même si vous modifiez ou supprimez le workflow ; chaque exécution enregistre le workflow tel qu’il était au lancement.
 
 ## Suivre en direct {#live}
-<!-- keywords: direct, streaming, suivre, vue d’ensemble de l’exécution, progression, temps réel -->
+<!-- keywords: direct, streaming, suivre, vue d’ensemble de l’exécution, progression, temps réel, vous attend, annuler l’exécution -->
 
 Pendant une exécution, la **Vue d’ensemble de l’exécution** affiche :
 
+- dans son en-tête, le statut de l’exécution et **Annuler l'exécution** (voir [Annuler des exécutions](/docs/ausfuehrungen#abbrechen)) ; une fois terminée, un lien vers les **Détails**,
 - en haut, le nombre d’agents, de requêtes API, de tokens et les coûts estimés, mis à jour en continu,
 - à gauche, tous les agents avec leur statut ; un clic affiche leurs détails à droite, *Résultat global* affiche le résultat du workflow,
 - à droite, le texte que l’agent sélectionné est en train d’écrire, ses appels d’outils et (si activée) sa réflexion.
 
+Si un [appel d’outil](/docs/verzweigungen#tool-freigabe) attend votre décision, l’exécution, l’étape et son nœud affichent **Vous attend** : l’exécution ne continue qu’une fois que vous avez décidé. Si l’exécution s’arrête pour une validation, la vue d’ensemble affiche la validation pour que vous décidiez ; une décision prise ailleurs (page *Validations*, autre onglet, API) apparaît aussi ici sans rechargement.
+
+Après l’exécution, la vue d’ensemble montre la même chose que la vue détaillée : la raison d’un échec, les appels d’outils sans résultat et les étapes non terminées (voir [La vue détaillée](/docs/ausfuehrungen#details)).
+
 Sur le canevas, chaque agent affiche son statut, puis après l’exécution ses tokens et ses coûts. Les connexions par lesquelles des données ont circulé sont mises en évidence.
 
 ## La liste des exécutions {#liste}
-<!-- keywords: liste, filtre, filtre de statut, filtre de workflow, supprimer, origine -->
+<!-- keywords: liste, filtre, filtre de statut, filtre de workflow, supprimer, origine, charger les exécutions plus anciennes, actualisation, terminée avec des problèmes -->
 
-La page **Exécutions** liste les exécutions, les plus récentes d’abord, avec workflow, statut, heure de lancement, durée, requêtes, tokens et coûts. Sous le nom du workflow figure l’entrée ou le message d’erreur.
+La page **Exécutions** liste les exécutions, les plus récentes d’abord, avec workflow, statut, heure de lancement, durée, requêtes, tokens et coûts. Sous le nom du workflow figure l’entrée ou le message d’erreur. Si une exécution terminée a eu des appels d’outils sans résultat, **Terminée avec des problèmes** s’affiche à côté de *Terminé*, à condition que le serveur fournisse cette information.
 
 - **Filtres :** par workflow, par statut et par origine (*Exécutions propres* ou *Traces importées*).
 - **Supprimer :** symbole de corbeille ; les exécutions en cours ne peuvent pas être supprimées.
 - **Importer une trace :** voir [Importer des traces](/docs/ausfuehrungen#trace-import).
+- **Charger les exécutions plus anciennes :** la liste affiche d’abord les 100 exécutions les plus récentes et l’indique en dessous. Les filtres par statut et par origine ne cherchent que dans les exécutions chargées. Si le serveur ne prend pas en charge la pagination, la liste s’arrête à 500 exécutions ; les plus anciennes restent enregistrées et sont accessibles avec le filtre par workflow.
 
-La liste se met à jour toutes les cinq secondes.
+La liste se met à jour toutes les cinq secondes tant qu’une exécution est en file d’attente ou en cours, sinon toutes les 30 secondes. Dans un onglet en arrière-plan, elle n’interroge pas le serveur ; à votre retour, elle est aussitôt à jour.
 
 ## La vue détaillée {#details}
-<!-- keywords: détails, vue détaillée, déroulement, cascade, chronologie, onglets, résultat, tâche, réflexion -->
+<!-- keywords: détails, vue détaillée, déroulement, cascade, chronologie, onglets, résultat, tâche, réflexion, échec à, terminée avec des problèmes, appels sans résultat, non terminé, interrompue, afficher en json, résultat structuré -->
 
 Un clic sur une exécution ouvre la vue détaillée :
 
 1. **Chiffres clés :** statut avec durée totale, requêtes API, tokens (répartis entre entrée, sortie, cache et réflexion) et coûts estimés.
 2. **Résumé de l’exécution :** combien d’étapes ont réussi et combien ont été ignorées, quel chemin les décisions ont pris, comment les validations ont été décidées, quels outils ont été appelés et combien de fois (avec les erreurs) et à quelle étape l’exécution a échoué, avec *Aller à l’étape*. Il est construit uniquement à partir des données enregistrées de l’exécution, sans appel à un modèle ; ce que l’exécution n’a pas enregistré apparaît comme *non enregistré*.
-3. **Entrée et résultat** du workflow côte à côte.
-4. **Déroulement :** une barre de temps par agent, dans l’ordre de leur démarrage. Chaque barre montre quand l’agent a tourné ; des barres superposées ont tourné en parallèle. À côté figurent la durée, les tokens et le nombre d’appels d’outils.
-5. **Détails de l’agent sélectionné :** durée, heures de début et de fin, tokens, requêtes et coûts, une éventuelle erreur, le résultat du contrôle qualité et les onglets :
+3. **Remarques sur l’issue** (seulement si nécessaire, voir plus bas).
+4. **Entrée et résultat** du workflow côte à côte.
+5. **Déroulement :** une barre de temps par agent, dans l’ordre de leur démarrage ; les étapes jamais démarrées viennent en dernier. Chaque barre montre quand l’agent a tourné ; des barres superposées ont tourné en parallèle. À côté figurent la durée, les tokens et le nombre d’appels d’outils. L’étape en échec est ouverte en premier, sinon une étape qui attend une personne.
+6. **Détails de l’agent sélectionné :** durée, heures de début et de fin, tokens, requêtes et coûts, une éventuelle erreur, le résultat du contrôle qualité et les onglets :
 
 | Onglet | Contenu |
 |---|---|
-| **Résultat** | La sortie de l’agent, en Markdown ou en JSON formaté. |
+| **Résultat** | La sortie de l’agent : le texte en Markdown, un résultat structuré sous forme de champs avec libellé (les descriptions courtes des champs servent de libellé). Le JSON est à un clic avec **Afficher en JSON**. |
 | **Tâche** | La tâche telle qu’elle a été envoyée à l’agent après remplacement des espaces réservés. Idéal pour trouver les problèmes de flux de données. |
 | **Outils** | Chaque appel d’outil avec entrée, résultat, moment, durée et réussite. |
 | **Réflexion** | Les réflexions du modèle (seulement si *Afficher la réflexion* était activé). |
 | **Mémoire** | Les notes d’un agent avec mémoire *Par exécution*. |
 
-**Ouvrir dans l’éditeur** mène au workflow ; **Annuler** arrête une exécution en cours.
+**Ouvrir dans l’éditeur** mène au workflow ; **Annuler l'exécution** arrête une exécution en cours.
 
 L’onglet **Contexte** montre ce que l’agent a reçu dans cette exécution : prompt système, tâche avec les entrées mises en évidence, messages d’exemple, outils, connaissances, mémoire, format de sortie et contrôle qualité, toujours avec la configuration du moment du lancement. Les identifiants ne sont jamais affichés.
+
+**Remarques sur l’issue.** Ce qui ne s’est pas bien passé s’affiche sous les chiffres clés :
+
+- **Échec à *étape* :** si une étape a échoué, le message la nomme avec son propre problème en clair et indique quoi faire, par exemple une réponse coupée à sa limite de tokens ou une clé API refusée. Pour les erreurs du fournisseur, le modèle est également indiqué. Lorsque la solution est un réglage, un lien y mène : **Ouvrir les réglages** ou **Ouvrir « Avancé » de *agent***. Si d’autres étapes ont échoué, leur nombre figure en dessous. Le texte d’origine se trouve sous *Détails techniques*.
+- **Terminée avec des problèmes :** une exécution peut être *Terminé* alors que des appels d’outils n’ont pas eu de résultat : refusés par une personne, expirés sans décision, non autorisés par les règles de validation, annulés, en échec ou avec une erreur de l’outil. Le badge orange **Terminée avec des problèmes** s’affiche alors à côté de *Terminé*, et une remarque liste chacun de ces appels avec l’étape, l’outil et la raison, chacun avec *Aller à l’étape*. Vérifiez si le résultat en dépend.
+- **Non terminé :** si une exécution s’est terminée alors que des étapes étaient encore en cours ou en attente (par exemple parce que Nodestro a été arrêté), ces étapes affichent **Non terminé** au lieu de *En attente* ou *En cours*. La remarque nomme les étapes qui n’ont jamais obtenu de résultat, ou indique que Nodestro s’est arrêté pendant l’exécution. **Reprendre**, directement dans la remarque, les termine ; les étapes terminées sont reprises (voir [Reprendre les exécutions échouées](/docs/verzweigungen#fortsetzen)).
 
 ## Statut {#status}
 <!-- keywords: statut, terminé, erreur, ignoré, annulé, en attente, en cours, file d’attente -->
@@ -71,7 +84,10 @@ L’onglet **Contexte** montre ce que l’agent a reçu dans cette exécution : 
 | **Bloqué** | Le nœud ne s’est pas exécuté parce qu’un prédécesseur a échoué ou a été annulé. |
 | **En attente de validation** | Une [validation](/docs/verzweigungen#freigabe) attend la décision d’une personne. |
 | **En pause** | L’exécution attend une validation et reprend après la décision. |
-| **Annulé** | Arrêté avec *Annuler*, refusé, ou une trace exportée avant d’être complète. |
+| **Annulé** | Arrêté avec *Annuler l'exécution*, refusé, ou une trace exportée avant d’être complète. |
+| **Vous attend** | Un appel d’outil attend votre validation ; l’exécution continue dès que vous avez décidé. |
+| **Non terminé** | Une étape d’une exécution terminée qui n’a jamais abouti (par exemple parce que Nodestro a été arrêté). |
+| **Terminée avec des problèmes** | Pas un statut à part, mais un badge à côté de *Terminé* : des appels d’outils de l’exécution n’ont pas eu de résultat. |
 
 Une exécution échouée ou annulée peut être [reprise](/docs/verzweigungen#fortsetzen). Les exécutions issues de planifications, de lots, de séries de tests et de sous-workflows indiquent leur origine dans la liste et dans les détails.
 
@@ -83,9 +99,9 @@ Une exécution échouée ou annulée peut être [reprise](/docs/verzweigungen#fo
 - Avec plusieurs nœuds de résultat (ou derniers agents), le résultat est un objet avec une entrée par nœud, nommée d’après le nœud.
 
 ## Annuler des exécutions {#abbrechen}
-<!-- keywords: annuler, arrêter, cancel, terminer -->
+<!-- keywords: annuler, arrêter, cancel, terminer, vraiment annuler, confirmer -->
 
-**Annuler** (dans la vue d’ensemble de l’exécution ou la vue détaillée) arrête l’exécution. Les agents en cours s’arrêtent à l’étape suivante (prochain morceau de texte, prochaine requête ou prochain appel d’outil) ; les agents pas encore démarrés ne sont plus exécutés. Les tokens consommés jusque-là sont facturés et affichés.
+**Annuler l'exécution** (dans la vue d’ensemble de l’exécution ou la vue détaillée) redemande par sécurité : un second clic sur **Vraiment annuler ?** dans les cinq secondes arrête l’exécution ; **Échap** ou un clic ailleurs la laisse continuer. Cela vaut aussi pour une exécution en pause. Les agents en cours s’arrêtent à l’étape suivante (prochain morceau de texte, prochaine requête ou prochain appel d’outil) ; les agents pas encore démarrés ne sont plus exécutés. Les tokens consommés jusque-là sont facturés et affichés.
 
 ## Exporter une trace {#trace-export}
 <!-- keywords: exporter une trace, export, json, run json, partager, archiver, nettoyer, anonymiser, confidentialité, données personnelles -->
@@ -131,7 +147,7 @@ Seules les données enregistrées sont comparées ; rien n’est réexécuté. S
 ## Interpréter les erreurs {#fehler}
 <!-- keywords: erreurs, message d’erreur, erreur, interpréter, cause, solution, refusalerror, budgetexceedederror -->
 
-Les erreurs figurent dans l’exécution au niveau de l’exécution (résumé « Échec : … ») et au niveau de l’agent concerné (message rouge). Le message apparaît dans la langue de l’interface et indique généralement le type d’erreur. Sous **Détails techniques**, vous trouvez le texte d’origine du serveur ou de l’API, par exemple pour le transmettre dans un rapport de bug.
+Les erreurs figurent dans les détails au niveau de l’exécution (« Échec à *étape* » avec le problème de cette étape) et au niveau de l’agent concerné (message rouge). Le message apparaît dans la langue de l’interface, dit en clair ce qui s’est passé et ce que vous pouvez faire, par exemple augmenter *Tokens max.* dans « Avancé » ou vérifier la clé sous *Réglages → Fournisseurs d’IA*. Les erreurs du fournisseur distinguent une clé refusée, trop de requêtes (limite de débit), un fournisseur surchargé et un fournisseur injoignable. Sous **Détails techniques**, vous trouvez le texte d’origine du serveur ou de l’API avec le type d’erreur, par exemple pour le transmettre dans un rapport de bug.
 
 | Message | Signification | Solution |
 |---|---|---|

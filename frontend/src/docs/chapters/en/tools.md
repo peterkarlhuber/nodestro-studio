@@ -177,9 +177,9 @@ Tools saved before this version, and all tools after restoring a backup, count a
 
 With the **Model Context Protocol (MCP)** you connect external services, for example a document search or a ticket system. Their tools are available to agents like any other tool, but only after your review. You find them under *Tools → Connected services*.
 
-1. **Connect a service:** name and address of the MCP endpoint (`https` only), an access token if needed. On the desktop you can allow `http://127.0.0.1` for a server you develop on this computer.
+1. **Connect a service:** name and address of the MCP endpoint (`https` only), an access token if needed. On the desktop, **Allow a local development server** permits `http://127.0.0.1` or `http://localhost` for a server you develop on this computer. The dialog checks the address while you type and says what is wrong; errors when saving stay in the dialog.
 2. **Test the connection:** Nodestro negotiates the protocol version and lists the service's tools. Every tool starts as **New**.
-3. **Review and classify:** you see the service's description, parameters and statements. This is **foreign text**: Nodestro shows it but never treats it as an instruction. Classify the tool: **Read only**, **Changes data** or **Deletes or destroys**. The service's statement is only a hint; when in doubt, "Changes data" applies.
+3. **Review and classify:** you see the service's description, parameters and statements. This is **foreign text**: Nodestro shows it but never treats it as an instruction. Classify the tool: **Read only**, **Changes data** or **Deletes or destroys**. The service's statement is only a hint. "Changes data" is preselected, or "Deletes or destroys" if the service states that. If you choose a less strict class than the service states, a notice explains the consequences, and **Approve** only works once you switch on **I checked the tool: the less strict classification is right**.
 4. **Approve:** only then do agents see the tool, as `mcp__<service>__<tool>`. You assign it to an agent like any other tool.
 
 For now only tools you classify as **read only** can be used; tools that change data stay blocked until approval per call exists. A reading tool still receives everything the agent sends it: connect only services you trust with that data.

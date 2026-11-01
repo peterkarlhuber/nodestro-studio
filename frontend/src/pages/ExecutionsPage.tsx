@@ -171,7 +171,7 @@ export function ExecutionsPage() {
         ) : null}
         {shown.length ? (
           <div className="table-wrap">
-            <table className="table">
+            <table className="table table--runs">
               <thead>
                 <tr>
                   <th>
@@ -223,11 +223,20 @@ export function ExecutionsPage() {
                       <StatusBadge status={run.status} />
                       <ListProblemsChip run={run} />
                     </td>
-                    <td>{formatDate(run.created_at)}</td>
-                    <td>{run.finished_at ? formatDuration(run.created_at, run.finished_at) : "–"}</td>
-                    <td className="num">{formatNumber(run.usage.requests)}</td>
-                    <td className="num">{formatTokens(run.usage.total_tokens)}</td>
-                    <td className="num">{formatCost(run.usage.estimated_cost_usd)}</td>
+                    {/* data-label names the value where phones show a run as two lines without the header. */}
+                    <td data-label={t("executions.columns.started")}>{formatDate(run.created_at)}</td>
+                    <td data-label={t("executions.columns.duration")}>
+                      {run.finished_at ? formatDuration(run.created_at, run.finished_at) : "–"}
+                    </td>
+                    <td className="num" data-label={t("executions.columns.requests")}>
+                      {formatNumber(run.usage.requests)}
+                    </td>
+                    <td className="num" data-label={t("executions.columns.tokens")}>
+                      {formatTokens(run.usage.total_tokens)}
+                    </td>
+                    <td className="num" data-label={t("executions.columns.cost")}>
+                      {formatCost(run.usage.estimated_cost_usd)}
+                    </td>
                     <td>
                       {run.status !== "running" && run.status !== "queued" ? (
                         <ConfirmIconButton icon={Trash2} label={t("executions.delete")} onConfirm={() => remove.mutate(run.id)} />

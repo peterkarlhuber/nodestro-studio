@@ -12,7 +12,7 @@ Abra um fluxo de trabalho no editor e clique em **API & Export**. A caixa de di�
 | **Visão geral** | Status, endereços, publicação, versões e as últimas execuções da API |
 | **Chaves e acesso** | Chaves de API e o acesso opcional pela rede |
 | **Testar** | Verificar uma requisição ou iniciar uma execução de teste real |
-| **Documentação** | Endpoints, exemplos em curl e Python, descrição OpenAPI |
+| **Documentação** | Endpoints, exemplos em curl, Python e SDKs oficiais, descrição OpenAPI |
 | **Limites** | Nome na URL, descrição e limites |
 | **Exportação** | O projeto FastAPI independente como ZIP |
 
@@ -91,6 +91,8 @@ Você define o nome na URL (por ex. `conferir-faturas`) ao publicar e o altera e
 | `GET /openapi.json` | Descrição OpenAPI só desta API | – |
 
 Os esquemas completos estão em **Documentação**, onde **Baixar a descrição OpenAPI** também entrega o arquivo OpenAPI.
+
+Os exemplos existem em **curl**, **Python**, **SDK Python** e **SDK TypeScript**, junto com as possíveis **Respostas**. Os clientes oficiais do `nodestro-sdk` iniciam execuções com uma chave de idempotência (uma nova tentativa nunca inicia uma segunda execução), tentam de novo após erros de conexão e informam erros tipados. Os exemplos já trazem o endereço, o nome e uma requisição adequada desta API; como instalar o cliente aparece no topo de cada exemplo.
 
 ## Requisições e respostas {#aufrufen}
 <!-- keywords: requisição, request, corpo, body, json, input, values, formulário, esquema, arquivos, base64, resposta, 202, run_id, idempotency -->
@@ -204,7 +206,7 @@ Todo erro tem a mesma forma, para que programas possam avaliá-lo:
 
 Em **Testar** há uma requisição de exemplo que você pode ajustar:
 
-- **Verificar requisição** valida o corpo exatamente como a API, mostra a entrada que o fluxo receberia e não inicia nada. Não custa nada.
+- **Verificar requisição** valida o corpo exatamente como a API, mostra a entrada que o fluxo receberia e não inicia nada. Não custa nada. Se a requisição não corresponder (também em uma execução de teste), o Nodestro lista cada campo uma única vez com seu rótulo e o problema, por exemplo *Quantidade: deve ser um número*, *obrigatório* ou *não faz parte da entrada*.
 - **Iniciar execução de teste** inicia uma execução real da versão publicada pelo mesmo caminho da API. Ela é cobrada como qualquer execução e aparece em Execuções como execução de teste a partir do Nodestro.
 
 Para testes de regressão de uma nova versão, use as [séries de testes](/docs/automatisierung#testreihen): elas rodam com a versão salva antes de você publicar.

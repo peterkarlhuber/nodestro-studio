@@ -8,7 +8,7 @@ Aquí encontrarás soluciones para los mensajes más habituales y respuestas a p
 | Mensaje o síntoma | Causa | Solución |
 |---|---|---|
 | «No hay clave de API para …» | El proveedor del modelo no está configurado. | Introduce la clave en *Ajustes → Proveedores de IA* o define la variable de entorno del proveedor, por ejemplo `ANTHROPIC_API_KEY`. |
-| «Iniciar flujo de trabajo» aparece en gris | Hay problemas en el flujo o hay una ejecución activa. | Pasa el ratón sobre el botón; los problemas aparecen en el inspector cuando no hay nada seleccionado. |
+| «Iniciar flujo de trabajo» está bloqueado | Hay problemas en el flujo, hay una ejecución activa o, en un servidor, a tu rol le falta el permiso. | El motivo aparece justo al lado del botón; **Mostrar** te lleva al problema. Todos los problemas aparecen en el inspector cuando no hay nada seleccionado. |
 | «El flujo de trabajo contiene un ciclo …» | Una conexión vuelve hacia atrás. | Elimina la conexión que vuelve hacia atrás. |
 | «Herramientas desconocidas: …» | Una herramienta asignada se eliminó o falta tras una importación. | Quita la herramienta en el inspector o vuelve a crearla en la biblioteca de herramientas. |
 | «… no permite forzar una herramienta …» | El modelo no admite herramientas forzadas. | Pon tool choice en *Automático*. |

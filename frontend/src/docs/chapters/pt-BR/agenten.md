@@ -136,7 +136,7 @@ O **raciocínio (thinking)** define se o modelo pensa antes de responder:
 
 O raciocínio conta como **tokens de saída** e é cobrado como tal.
 
-Se não se sabe se um modelo suporta esforço de raciocínio (servidores próprios, ids de modelo desconhecidos), um esforço definido gera um erro. Escolha então *Padrão do modelo* ou declare a capacidade em [Provedores de IA](/docs/einstellungen#anbieter).
+Se não se sabe se um modelo suporta esforço de raciocínio (servidores próprios, ids de modelo desconhecidos), um esforço definido gera um erro. Escolha então *Padrão do modelo* ou declare a capacidade em [Provedores de IA](/docs/einstellungen#anbieter). Endpoints compatíveis com OpenAI (como Ollama ou vLLM) não aceitam nenhuma configuração de esforço; a verificação explica isso, e **Definir esforço como padrão do modelo** ajusta o agente com um clique.
 
 ## Controle de qualidade {#qualitaet}
 <!-- keywords: controle de qualidade, juiz, judge, avaliador, critérios, revisão, refine, llm as a judge, avaliação -->

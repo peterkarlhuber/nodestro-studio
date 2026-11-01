@@ -7,55 +7,68 @@ Every run of a workflow is recorded in full: input, results, tasks, tool calls, 
 
 You see runs in two places:
 
-- **In the editor**, in the *Execution overview* below the canvas: the latest run of this workflow, live while it is running.
+- **In the editor**, in the *Run overview* below the canvas: the latest run of this workflow, live while it is running.
 - On the **Runs** page: all runs of all workflows, with a detail view.
 
 Runs are kept even if you change or delete the workflow; every run stores the workflow as it was at the start.
 
 ## Watching live {#live}
-<!-- keywords: live, streaming, watch, execution overview, progress, real time -->
+<!-- keywords: live, streaming, watch, execution overview, progress, real time, waiting for you, cancel run -->
 
-During a run, the **Execution overview** shows:
+During a run, the **Run overview** shows:
 
+- in its header the status of the run and **Cancel run** (see [Cancelling runs](/docs/ausfuehrungen#abbrechen)), after the end a link to the **Details**,
 - at the top the number of agents, API requests, tokens and the estimated costs, updated continuously,
 - on the left all agents with their status; a click shows their details on the right, *Overall result* shows the result of the workflow,
 - on the right the text the selected agent is writing, its tool calls and (if enabled) its thoughts.
 
+If a [tool call](/docs/verzweigungen#tool-freigabe) is waiting for your decision, the run, the step and its node show **Waiting for you**: the run only goes on once you have decided. If the run stops for an approval, the overview shows the approval so you can decide; a decision made elsewhere (the *Approvals* page, another tab, the API) shows up here too without reloading.
+
+After the run, the overview shows the same as the detail view: why it failed, tool calls without a result and steps that did not finish (see [The detail view](/docs/ausfuehrungen#details)).
+
 On the canvas, every agent shows its status, and after the run also tokens and costs. Connections through which data has flowed are highlighted.
 
 ## The list of runs {#liste}
-<!-- keywords: list, filter, status filter, workflow filter, delete, origin -->
+<!-- keywords: list, filter, status filter, workflow filter, delete, origin, load older runs, refresh, finished with problems -->
 
-The **Runs** page lists the runs, newest first, with workflow, status, start time, duration, requests, tokens and costs. The input or the error message is shown below the workflow name.
+The **Runs** page lists the runs, newest first, with workflow, status, start time, duration, requests, tokens and costs. The input or the error message is shown below the workflow name. If a finished run had tool calls without a result, **Finished with problems** appears next to *Done*, provided the server sends this information.
 
 - **Filters:** by workflow, by status and by origin (*Own runs* or *Imported traces*).
 - **Delete:** bin symbol; running runs cannot be deleted.
 - **Import trace:** see [Importing traces](/docs/ausfuehrungen#trace-import).
+- **Load older runs:** the list first shows the newest 100 runs and says so below it. The status and origin filters only search the loaded runs. If the server does not support paging, the list stops at 500 runs; older ones stay stored and can be reached with the workflow filter.
 
-The list refreshes every five seconds.
+The list refreshes every five seconds while a run is queued or running, otherwise every 30 seconds. In a background tab it does not ask; when you come back it is up to date at once.
 
 ## The detail view {#details}
-<!-- keywords: details, detail view, timeline, waterfall, tabs, result, task, thoughts -->
+<!-- keywords: details, detail view, timeline, waterfall, tabs, result, task, thoughts, failed at, finished with problems, tool calls without a result, not finished, interrupted, show as json, structured result -->
 
 Clicking a run opens the detail view:
 
 1. **Key figures:** status with total duration, API requests, tokens (broken down into input, output, cache and thinking) and estimated costs.
 2. **Run summary:** how many steps succeeded and how many were skipped, which path the decisions took, how approvals were decided, which tools were called how often (with errors) and at which step the run failed, with *Go to step*. It is built only from the run's stored data, without a model call; what the run did not record shows as *not recorded*.
-3. **Input and result** of the workflow side by side.
-4. **Timeline:** a time bar for every agent in the order they started. Each bar shows when the agent ran; bars on top of each other ran in parallel. Duration, tokens and number of tool calls are shown next to it.
-5. **Details of the selected agent:** duration, start and end time, tokens, requests and costs, any error, the result of the quality check, and the tabs:
+3. **Notes on the outcome** (only when needed, see below).
+4. **Input and result** of the workflow side by side.
+5. **Timeline:** a time bar for every agent in the order they started; steps that never started come last. Each bar shows when the agent ran; bars on top of each other ran in parallel. Duration, tokens and number of tool calls are shown next to it. The failed step is opened first, otherwise one that waits for a person.
+6. **Details of the selected agent:** duration, start and end time, tokens, requests and costs, any error, the result of the quality check, and the tabs:
 
 | Tab | Content |
 |---|---|
-| **Result** | The agent's output, as Markdown or formatted JSON. |
+| **Result** | The agent's output: text as Markdown, a structured result as labelled fields (short field descriptions serve as labels). The JSON is one click away with **Show as JSON**. |
 | **Task** | The task as it went to the agent after the placeholders were filled in. Ideal for finding data-flow problems. |
 | **Tools** | Every tool call with input, result, time, duration and success. |
 | **Thoughts** | The model's reasoning (only if *Show thoughts* was on). |
 | **Memory** | The notes of an agent with memory *Per run*. |
 
-**Open in editor** takes you to the workflow; **Cancel** stops a run in progress.
+**Open in editor** takes you to the workflow; **Cancel run** stops a run in progress.
 
 The **Context** tab shows what the agent got in this run: system prompt, task with highlighted inputs, example messages, tools, knowledge, memory, output format and quality check, each with the configuration at the start of the run. Credentials are never shown.
+
+**Notes on the outcome.** What did not go smoothly is shown below the key figures:
+
+- **Failed at *step*:** if a step failed, the message names it with its own problem in words and what to do, for example an answer cut off at its token limit or a rejected API key. For provider failures the model is shown too. Where the fix is a setting, a link leads there: **Open Settings** or **Open "Advanced" of *agent***. If more steps failed, their number is shown below. The original text is under *Technical details*.
+- **Finished with problems:** a run can be *Done* although tool calls had no result: rejected by a person, expired without a decision, not allowed by the approval rules, cancelled, failed, or with an error of the tool. Then the amber badge **Finished with problems** appears next to *Done*, and a notice lists each of these calls with step, tool and reason, each with *Go to step*. Check whether the result relies on them.
+- **Not finished:** if a run ended while steps were still running or waiting (for example because Nodestro was stopped), those steps read **Not finished** instead of *Waiting* or *Running*. The notice names the steps that never got a result, or says that Nodestro stopped while the run was going. **Continue** right in the notice completes them; finished steps are taken over (see [Continuing failed runs](/docs/verzweigungen#fortsetzen)).
 
 ## Status {#status}
 <!-- keywords: status, done, error, skipped, cancelled, waiting, running, queued -->
@@ -71,7 +84,10 @@ The **Context** tab shows what the agent got in this run: system prompt, task wi
 | **Blocked** | The node did not run because a predecessor failed or was cancelled. |
 | **Awaiting approval** | An [approval](/docs/verzweigungen#freigabe) waits for a person's decision. |
 | **Paused** | The run waits for an approval and continues after the decision. |
-| **Cancelled** | Stopped with *Cancel*, rejected, or a trace that was exported before it was complete. |
+| **Cancelled** | Stopped with *Cancel run*, rejected, or a trace that was exported before it was complete. |
+| **Waiting for you** | A tool call waits for your approval; the run goes on as soon as you have decided. |
+| **Not finished** | A step of a finished run that never completed (for example because Nodestro was stopped). |
+| **Finished with problems** | Not a status of its own but a badge next to *Done*: tool calls of the run had no result. |
 
 A failed or cancelled run can be [continued](/docs/verzweigungen#fortsetzen). Runs from schedules, batch runs, test series and sub-workflows show their origin in the list and in the details.
 
@@ -83,9 +99,9 @@ A failed or cancelled run can be [continued](/docs/verzweigungen#fortsetzen). Ru
 - With several result nodes (or last agents), the result is an object with one entry per node, named after the node.
 
 ## Cancelling runs {#abbrechen}
-<!-- keywords: cancel, stop, abort, end -->
+<!-- keywords: cancel, stop, abort, end, really cancel, confirm -->
 
-**Cancel** (in the execution overview or the detail view) stops the run. Running agents stop at the next step (next piece of text, next request or next tool call); agents that have not started yet are no longer run. Tokens used up to that point are charged and shown.
+**Cancel run** (in the run overview or the detail view) asks once more to be safe: a second click on **Really cancel?** within five seconds stops the run; **Esc** or a click elsewhere lets it keep running. This also applies to a paused run. Running agents stop at the next step (next piece of text, next request or next tool call); agents that have not started yet are no longer run. Tokens used up to that point are charged and shown.
 
 ## Exporting a trace {#trace-export}
 <!-- keywords: export trace, export, json, run json, share, archive, sanitize, anonymize, privacy, personal data -->
@@ -131,7 +147,7 @@ Only stored data is compared; nothing is executed again. If the runs belong to t
 ## Interpreting errors {#fehler}
 <!-- keywords: errors, error message, error, interpret, cause, solution, refusalerror, budgetexceedederror -->
 
-Errors are shown in the execution with the run (summary "Failed: …") and with the agent concerned (red message). The message appears in the interface language and usually names the error type. Under **Technical details** you find the original text from the server or the API, for example to pass it on in a bug report.
+Errors are shown in the run details with the run ("Failed at *step*" with that step's problem) and with the agent concerned (red message). The message appears in the interface language, says in words what happened and what you can do, for example raise *Max. tokens* under "Advanced" or check the key under *Settings → AI providers*. Provider failures tell a rejected key, too many requests (rate limit), an overloaded and an unreachable provider apart. Under **Technical details** you find the original text from the server or the API with the error type, for example to pass it on in a bug report.
 
 | Message | Meaning | Solution |
 |---|---|---|

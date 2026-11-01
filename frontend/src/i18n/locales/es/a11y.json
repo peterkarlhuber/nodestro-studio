@@ -1,0 +1,37 @@
+{
+  "connect": {
+    "title": "Conexiones",
+    "summary": "{{incoming}} de entrada · {{outgoing}} de salida",
+    "to": "A {{name}}",
+    "from": "Desde {{name}}",
+    "show": "Seleccionar",
+    "showLabel": "Seleccionar conexión: {{name}}",
+    "removeLabel": "Quitar conexión: {{name}}",
+    "listLabel": "Conexiones de este paso",
+    "none": "Este paso aún no tiene conexiones.",
+    "branch": "Rama",
+    "target": "Conectar con",
+    "pick": "Elige un paso …",
+    "noTargets": "Ningún otro paso puede seguir a este.",
+    "create": "Conectar",
+    "created": "{{source}} conectado con {{target}}."
+  },
+  "flow": {
+    "node": "Pulsa Intro o Espacio para seleccionar este paso y ver sus propiedades. Las flechas lo mueven, Supr lo elimina y Escape cancela. Para conectar pasos, usa Conexiones en el panel de propiedades.",
+    "edge": "Pulsa Intro o Espacio para seleccionar esta conexión. Supr la elimina y Escape cancela.",
+    "moved": "Paso movido hacia {{direction}}. Nueva posición: x {{x}}, y {{y}}",
+    "direction": {
+      "up": "arriba",
+      "down": "abajo",
+      "left": "la izquierda",
+      "right": "la derecha"
+    },
+    "controls": "Controles del lienzo",
+    "interactive": "Bloquear o desbloquear el lienzo",
+    "handle": "Puerto"
+  },
+  "nav": {
+    "open": "Mostrar todas las páginas",
+    "close": "Ocultar la lista de páginas"
+  }
+}

@@ -70,14 +70,16 @@ While the run waits, it has the status **Paused**, the approval **Awaiting appro
 ## The Approvals page {#freigaben-seite}
 <!-- keywords: approvals, open approvals, queue, decide, navigation, counter -->
 
-The **Approvals** page (navigation, group *Automation*) lists every open approval, oldest first, with workflow, origin (manual, schedule, batch, test series) and waiting time. The number next to the menu entry shows how many are waiting.
+The **Approvals** page (navigation, group *Run & review*) lists every open approval, oldest first, with workflow, origin (manual, schedule, batch, test series) and waiting time. The number next to the menu entry shows how many are waiting.
 
-Each card shows the note, the results to review, a comment box and the buttons *Approve* and *Reject*. Approvals inside sub-workflows appear here too, with the path to the parent run.
+Each card shows the note, the results to review (structured results as labelled fields, the JSON one click away), a comment box and the buttons *Approve* and *Reject*; the buttons stay in view even with long results. Approvals inside sub-workflows appear here too, with the path to the parent run. Cards for [tool calls](/docs/verzweigungen#tool-freigabe) name the workflow and the step ("*workflow* · step *name*").
 
 ## Approving tool calls {#tool-freigabe}
 <!-- keywords: tool approval, tool call, per call, arguments, deadline, pre-grant, unattended, legacy exemption -->
 
-Besides approval nodes, Nodestro can ask before **single tool calls** of an agent. This is meant for tools that change data or reach outside, for example sending an e-mail or writing to a ticket system. The administrator switches it on after the security review; until then nothing changes.
+Besides approval nodes, Nodestro can ask before **single tool calls** of an agent. This is meant for tools that change data or reach outside, for example sending an e-mail or writing to a ticket system.
+
+**Currently switched off.** Approvals per tool call are not switched on in Nodestro yet; they come only after a security review. Until then tools run without asking first, and on the **Approvals** page *Rules for tool calls* shows just this one sentence. The preparation for administrators (activation step, advance approvals, audit trail) is folded there under **Preparation for administrators**. The rest of this section describes how approvals work once they are switched on.
 
 When an agent wants to make such a call, the run keeps running but waits at this call. The card appears in the run, at the step, and on the **Approvals** page. It shows the tool, what it may do (*reads only*, *changes data*, *deletes or destroys*; *stays in Nodestro* or *reaches outside*), the **arguments exactly as they will be sent**, and the time left.
 
@@ -95,7 +97,7 @@ Runs nobody watches (schedules, batches, test series) cannot ask. There such a c
 
 1. Under *Approvals → Rules for tool calls*, an administrator runs **Mark existing assignments**. Every tool assignment that exists now in workflows, their versions and published APIs becomes an **exception from before**, bound to the tool version it runs with. Published APIs get a new checksum (digest) once; their history records the old and the new one. The step runs **only once**: assignments, workflows and releases made afterwards are new and are asked about.
 2. **Review the list.** An exception you do not want ends when you remove the tool from the agent and save; if you assign it again, it is asked about like a new one.
-3. Only then does the administrator switch approvals on (`NODESTRO_TOOL_APPROVALS=1`, then restart Nodestro).
+3. Only after that are approvals switched on. This version does not provide for that yet: they stay off until the security review is complete.
 
 If approvals are switched on without the first step, nothing is exempt: every assignment is asked about, and unattended runs refuse such calls. A new tool version always ends an exception. An approval never lifts the sandbox's limits.
 
@@ -138,29 +140,32 @@ A team can be tested on its own: create a [test series](/docs/automatisierung#te
 
 An **orchestrator** lets an AI model decide which team gets which part of the task. It makes one decision after another: **delegate** a task to a team, or **finish** with an answer. The answer is the node's result.
 
-- **Teams:** the saved workflows the model may choose from (at most 20). Of each team, the model only sees its name, description, capabilities and output contract.
-- **Teams by capability:** instead of picking every team, name capabilities (at most 10). When a run starts, saved teams with a matching capability join the pool (up to *At most this many teams*): those with the most matching tags first, then by name. Teams with errors are left out; teams with approval steps are included. The selection is fixed for that run (and for a published version); the run details show which tags each team matched. Nothing is scored or estimated.
-- **Task** and **Instructions:** what should get done and, optionally, how to plan it.
-- **Maximum decisions** (1 to 50, default 8) and **Maximum per team:** without an answer after the last decision, the step fails.
+The inspector of an orchestrator starts with a sentence that sums up how it works ("How this orchestrator works: …") and groups the settings into four collapsible areas; each shows a summary and any problems in its header:
 
-The orchestrator only chooses. It has no tools, creates no agents, tools or teams, and has no permissions of its own. Every chosen team runs as its **own linked run** with its share of the budget, its limits and its tool approvals. Decisions that are not allowed (an unknown team, the same task again, a team that was used up) are refused and shown to the model; they still count as a decision.
+- **Team pool:** the **Chosen workflows** are the saved workflows the model may choose from (at most 20). Of each team, the model only sees its name, description, capabilities and output contract.
+- **Teams by capability** (also in the team pool): instead of picking every team, name capabilities (at most 10). When a run starts, saved teams with a matching capability join the pool (up to *At most this many teams*): those with the most matching tags first, then by name. Teams with errors are left out; teams with approval steps are included. The selection is fixed for that run (and for a published version); the run details show which tags each team matched. Nothing is scored or estimated.
+- **Assignment:** **Task** and **Instructions** (what should get done and, optionally, how to plan it) as well as the orchestrator's **Model**.
+- **Limits:** **Maximum decisions** (1 to 50, default 8), **Maximum uses per team** and **Teams at the same time**. Without an answer after the last decision, the step fails.
+- **Active line-up:** the options under [Dynamic teams](/docs/verzweigungen#dynamische-teams).
+
+The orchestrator only chooses. It has no tools, creates no agents, tools or teams, and has no permissions of its own. Every chosen team runs as its **own linked run** with its share of the budget, its limits and its tool approvals. Decisions that are not allowed (an unknown team, the same task again, a team that was used up) are not carried out and are shown to the model; the run details call them *Invalid, not carried out*. They still count as a decision.
 
 The run details list every decision with its reason, task, result and a link to the team's run. When a team stops for an **approval** (also in a sub-workflow or below another orchestrator), the orchestrator waits with it: the run is *paused* and shows up under **Approvals**. After the decision the same team run continues, also after a restart, and the model is not asked again about that delegation. When a rejection ends the team's run (*On rejection: end the run*), this run ends too; no other team can get around the rejection. Cancelling a waiting run also cancels its waiting teams. A team may not call the orchestrator's workflow again.
 
 ## Dynamic teams {#dynamische-teams}
 <!-- keywords: dynamic team, assemble team, parallel, at the same time, parameters, start form, template, team composition, staffing -->
 
-In the **Dynamic teams** area of an orchestrator the model gets more room, always inside the pool and the limits. Everything starts switched off.
+In the **Active line-up** area of an orchestrator (field *Dynamic teams*) the model gets more room, always inside the pool and the limits. Everything starts switched off.
 
-- **Teams at the same time** (1 to 5): one decision may give work to several different teams at once, for parts that do not depend on each other. Each team gets its own result.
-- **Assemble the team itself:** the orchestrator takes teams from the pool into its team and lets them go again when intermediate results call for it. Only teams in the team get work; *At most in the team* limits its size. The same team may work several times (up to *At most per team*).
+- **Teams at the same time** (1 to 5, in the *Limits* area): one decision may give work to several different teams at once, for parts that do not depend on each other. Each team gets its own result.
+- **Assemble the active line-up itself:** the orchestrator takes teams from the pool into its line-up and lets them go again when intermediate results call for it. Only teams in the active line-up get work; *At most in the active line-up* limits its size. The same team may work several times (up to *Maximum uses per team*). Without this option the orchestrator chooses from the whole pool.
 - **Fill in the teams' start forms:** the orchestrator may set the fields of a team's input form (never files). The values are checked like a manual start; an unknown field or an invalid value is refused and shown to the model.
 
 The pool is fixed when the run starts, in the versions of that moment. New teams, agents or tools never appear, and each team's approvals, budget and limits apply unchanged.
 
-**What the run details show:** which orchestrator works with which model, how many decisions are used, the cost of the decisions and in total (unknown costs are shown as *not fully known*, never as 0), the pool with versions, the **team over time**, waiting teams and every decision with its reason, task, values and each team's outcome: *Succeeded*, *Waiting for approval*, *Failed*, *Rejected*, *Cancelled* or *Expired*. Only the recorded decisions are shown, no reasoning of the model.
+**What the run details show:** which orchestrator works with which model, how many decisions are used, the cost of the decisions and in total (unknown costs are shown as *not fully known*, never as 0), the pool with versions, the **Active line-up over time**, waiting teams and every decision with its reason, task, values and each team's outcome: *Succeeded*, *Waiting for approval*, *Failed*, *Rejected*, *Cancelled* or *Expired*. Only the recorded decisions are shown, no reasoning of the model.
 
-**Save team composition as a template:** a team exists only during the run. After the end, this button saves a **new workflow** with the same orchestrator, its start form, its limits and exactly the teams that worked, in the versions of the run. Nothing is saved without this click.
+**Save team composition as a template:** an active line-up exists only during the run. After the end, this button saves a **new workflow** with the same orchestrator, its start form, its limits and exactly the teams that worked, in the versions of the run. Nothing is saved without this click.
 
 ## Input forms {#eingabeformular}
 <!-- keywords: form, input form, fields, type, required, default, choice, date, number -->
@@ -190,5 +195,7 @@ A failed or cancelled run can be **continued** (button *Continue* in the detail 
 - Results taken over cost nothing in the new run; their cost stays with the old run and is not counted twice under [Usage](/docs/nutzung).
 - Approval decisions of steps taken over remain valid and are marked as taken over; nobody is asked twice.
 - If steps that run again had already called **own tools** that may act outside Nodestro (such as sending a message), you have to confirm this explicitly.
+
+If a run was interrupted because Nodestro stopped while it ran, its detail view names the steps that did not finish and offers **Continue** right in the notice; those steps run again with the reason *Was interrupted*.
 
 If nothing can be taken over safely, Nodestro offers a complete new start. Imported traces and single sub-workflow runs cannot be continued; continue the parent run instead.

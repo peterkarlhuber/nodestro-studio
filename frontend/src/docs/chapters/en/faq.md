@@ -8,7 +8,7 @@ Here you find solutions for common messages and answers to typical questions.
 | Message or symptom | Cause | Solution |
 |---|---|---|
 | "No API key for …" | The model's provider is not set up. | Enter the key under *Settings → AI providers* or set the provider's environment variable, for example `ANTHROPIC_API_KEY`. |
-| "Start workflow" is greyed out | There are problems in the workflow or a run is active. | Hover over the button; the problems are listed in the inspector when nothing is selected. |
+| "Start workflow" is blocked | There are problems in the workflow, a run is active, or on a server your role lacks the permission. | The reason is shown right next to the button; **Show** takes you to the problem. All problems are listed in the inspector when nothing is selected. |
 | "The workflow contains a cycle …" | A connection leads back. | Delete the connection that leads back. |
 | "Unknown tools: …" | An assigned tool was deleted or is missing after an import. | Remove the tool in the inspector or create it again in the tool library. |
 | "… does not allow a forced tool …" | The model does not allow a forced tool. | Set tool choice to *Automatic*. |
