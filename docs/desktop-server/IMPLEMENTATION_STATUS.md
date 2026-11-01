@@ -17,7 +17,7 @@ Rules that apply to every step (see README, "Non-negotiable rules", and ADR-0006
 
 ## Status
 
-Last update: 2026-10-31.
+Last update: 2026-11-01 (notes of PR-3 and PR-7/PR-8 brought in line with the backend audit fixes).
 
 | Step | Content | State | Pull requests (merge commit) |
 | --- | --- | --- | --- |
@@ -42,9 +42,11 @@ Last update: 2026-10-31.
 
 ### PR-3
 
-- `SCHEMA_VERSION` is `0` and `MIGRATIONS` is empty: existing data directories are not changed. The first real
-  migration takes a backup to `<data_dir>/backups/pre-migration-<from>-to-<to>-<time>.db` before it writes; a failed
-  backup or migration leaves the database unchanged and releases the lock.
+- At PR-3, `SCHEMA_VERSION` was `0` and `MIGRATIONS` was empty. Since the backend audit (2026-11-01) the SQLite
+  schema version is `1` (an index for `list()` and partial expression indexes for `find()`), so an existing data
+  directory is migrated once at start. A migration takes a backup to
+  `<data_dir>/backups/pre-migration-<from>-to-<to>-<time>.db` before it writes; a failed backup or migration leaves
+  the database unchanged and releases the lock.
 - A database with a newer schema than the runtime supports is refused at startup (`storage.schema_too_new`) and in
   a backup restore (`backup.schema_too_new`, translated in six languages).
 - Only `storage.py` and `sqlite_tables.py` touch SQLite connections (checked by
@@ -78,7 +80,9 @@ Last update: 2026-10-31.
 
 ### PR-7 and PR-8
 
-- `PostgresDatabase` holds one connection per process; migrations are forward-only SQL files under
+- `PostgresDatabase` held one connection per process until the backend audit (2026-11-01); it now keeps a checked
+  pool (`NODESTRO_DATABASE_POOL_SIZE`, default 8) plus one connection for session advisory locks, with statement
+  and idle-in-transaction timeouts. Migrations are forward-only SQL files under
   `nodestro_runtime/migrations/postgres`, applied under an advisory lock that is taken before `CREATE SCHEMA`
   (concurrent starts raced otherwise). A database with data needs a backup hook first (`storage.backup_required`).
 - PostgreSQL `jsonb` and `text` cannot hold U+0000: documents with it keep their exact JSON in a `raw` column;

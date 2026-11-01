@@ -1,6 +1,7 @@
 # ADR-0002: Storage, full-text search and file storage backends
 
-- Status: Proposed (M0, 2026-10-31)
+- Status: Accepted; implemented in PR-3 (nodestro-runtime #6, nodestro-api #8), PR-7 (nodestro-runtime #8) and PR-8
+  (nodestro-runtime #9). Proposed in M0 (2026-10-31).
 - Repositories: nodestro-runtime (implementations), nodestro-api (backup, diagnostics), nodestro-server (operations)
 
 ## Context

@@ -1,6 +1,7 @@
 # ADR-0004: Persistent jobs, workers and the scheduler
 
-- Status: Proposed (M0, 2026-10-31)
+- Status: Accepted; implemented in PR-10 (nodestro-runtime #11 and #12, nodestro-api #13). Proposed in M0
+  (2026-10-31).
 - Repositories: nodestro-runtime (engine, queue), nodestro-api (worker entry point, streams), nodestro-server
   (deployment)
 
