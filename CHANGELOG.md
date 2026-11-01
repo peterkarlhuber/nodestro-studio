@@ -52,9 +52,10 @@ LRC-1, studio part (the API, SDK and runtime parts are separate pull requests in
   (`ChatTarget.deciding`); messages of the desktop's own person show "You".
 - Browser suite `runchat` (`scripts/e2e.sh runchat`, port 8110): parallel and nested teams against the real backend
   with a scripted model, keyboard use, light and dark, phone width.
-- Pins `nodestro-runtime` `fe6f85d` (before: `d141b8f`), `nodestro-api` `3276855` (before: `db6a696`),
-  `nodestro-examples` `5129d75` (before: `660e9a9`), `nodestro-integrations` `2c68ecc` (before: `07dc1fd`) and, in
-  `platform/versions.json`, `nodestro-sdk` `d1eb927` (before: `4a97cef`): the runtime, API and SDK parts of LRC-1.
+- Pins `nodestro-runtime` `b5b765f` (before: `ac96c6f`; runtime #67 and its fix #68), `nodestro-api` `6890a2b`
+  (before: `4e2c8cd`), `nodestro-examples` `14a4d5b` (before: `dcad0d1`), `nodestro-integrations` `935c05d` (before:
+  `570d5c7`) and, in `platform/versions.json`, `nodestro-sdk` `ed512e7` (before: `3ca06b3`): the runtime, API and SDK
+  parts of LRC-1 on top of Amazon Bedrock. Re-pinned to the merge commits when those pull requests merge.
 - Technical record: [ADR-0008](docs/adr/0008-live-run-chat.md).
 
 ### Amazon Bedrock (AWS) in the studio (2026-11-01)
