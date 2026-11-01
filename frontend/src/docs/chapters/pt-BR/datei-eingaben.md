@@ -1,6 +1,6 @@
 # Arquivos como entrada
 
-Workflows podem receber arquivos diretamente como entrada: contratos, faturas, planilhas, imagens ou arquivos ZIP inteiros. Você os envia ao iniciar, sem incorporá-los antes ao conhecimento. O Nodestro os verifica e lê localmente e entrega aos agentes exatamente o que eles precisam.
+Fluxos de trabalho podem receber arquivos diretamente como entrada: contratos, faturas, planilhas, imagens ou arquivos ZIP inteiros. Você os envia ao iniciar, sem incorporá-los antes ao conhecimento. O Nodestro os verifica e lê localmente e entrega aos agentes exatamente o que eles precisam.
 
 ## Visão geral {#ueberblick}
 <!-- keywords: arquivo, arquivos, enviar, upload, entrada, documento, anexo, início -->
@@ -39,7 +39,7 @@ Todo campo, não só os de arquivo, é **obrigatório** ou **opcional**. Um camp
 
 - Na tarefa de um agente ele aparece como “(not provided)”, para que o agente saiba que nada foi informado.
 - Nós de decisão veem um valor vazio e podem testá-lo com *está vazio*.
-- Campos de arquivo vazios não criam referências a arquivos. Isso vale também para subworkflows, APIs publicadas e projetos exportados.
+- Campos de arquivo vazios não criam referências a arquivos. Isso vale também para subfluxos, APIs publicadas e projetos exportados.
 
 ## Formatos compatíveis {#formate}
 <!-- keywords: formatos, txt, markdown, csv, json, xlsx, excel, pdf, docx, word, png, jpg, webp, imagem, zip -->
@@ -108,24 +108,24 @@ Com **Ao conhecimento** você incorpora explicitamente:
 
 Antes de salvar, o diálogo mostra o que seria salvo, se o arquivo é pesquisável, se o mesmo conteúdo já existe (ele não é salvo duas vezes) e conteúdos parecidos. Textos gerados podem ser editados antes de salvar e marcados como *extraído de fontes*, *gerado por um agente* ou *suposição*. Você escolhe uma coleção ou cria uma nova.
 
-Nada é salvo antes da sua confirmação, e só exatamente o conteúdo verificado: se você mudar algo depois, verifica de novo. Cada arquivo mantém sua origem (workflow, etapa, agente, execução, momento, arquivos de origem). Workflows em andamento não mudam.
+Nada é salvo antes da sua confirmação, e só exatamente o conteúdo verificado: se você mudar algo depois, verifica de novo. Cada arquivo mantém sua origem (workflow, etapa, agente, execução, momento, arquivos de origem). Fluxos de trabalho em andamento não mudam.
 
 ## Propostas de agentes {#vorschlaege}
 <!-- keywords: proposta, propostas, agente propõe, propose_knowledge, propor conhecimento -->
 
 Na seção *Conhecimento* de um agente, ligue **Pode propor conteúdo para o conhecimento**. O agente recebe então a ferramenta `propose_knowledge` e seu resultado é oferecido como proposta após a execução. As propostas aparecem na etapa da execução e só são salvas depois que você as verifica e confirma.
 
-## Subworkflows, testes e agendamentos {#sub-workflows}
+## Subworkflows, testes e agendamentos {#subfluxos}
 <!-- keywords: subworkflow, série de testes, lote, agendamento, aprovação, continuar, reinício -->
 
-- **Subworkflows:** um campo de arquivo do subworkflow recebe com `{{form.<campo>}}` os arquivos de um campo ou com `{{files}}` todos os arquivos da execução. Os mesmos arquivos salvos são repassados, sem cópias.
+- **Subworkflows:** um campo de arquivo do subfluxo recebe com `{{form.<campo>}}` os arquivos de um campo ou com `{{files}}` todos os arquivos da execução. Os mesmos arquivos salvos são repassados, sem cópias.
 - **Aprovações e continuação:** os arquivos ficam salvos enquanto uma execução espera, roda ou está pausada, também após reiniciar o Nodestro.
 - **Casos de teste e agendamentos:** arquivos enviados ali ficam salvos para o caso de teste ou o [agendamento](/docs/automatisierung#zeitplaene) e são usados por cada execução. Arquivos de execuções anteriores nunca são reutilizados silenciosamente.
 
 ## Arquivos pela API {#api-uploads}
 <!-- keywords: api, multipart, form-data, base64, envio, curl, exportação, fastapi -->
 
-Workflows publicados aceitam arquivos de duas formas:
+Fluxos de trabalho publicados aceitam arquivos de duas formas:
 
 - como JSON com `name`, `media_type` e `content_base64` no valor do campo de arquivo,
 - como `multipart/form-data`: uma parte por arquivo com o nome do campo de arquivo e os demais campos como JSON na parte `values`.
@@ -142,7 +142,7 @@ Valem as mesmas verificações e limites do Nodestro. Um [projeto FastAPI export
 ## Armazenamento e limpeza {#speicherung}
 <!-- keywords: armazenamento, limpeza, excluir, espaço em disco, backup, restaurar -->
 
-Os arquivos enviados ficam na pasta de dados em `inputs`, não no banco de dados nem no workflow. Conteúdo idêntico é salvo só uma vez.
+Os arquivos enviados ficam na pasta de dados em `inputs`, não no banco de dados nem no fluxo de trabalho. Conteúdo idêntico é salvo só uma vez.
 
 - Arquivos de execuções na fila, em andamento ou pausadas nunca são removidos.
 - Ao iniciar, o Nodestro limpa arquivos que nada usa há mais de um dia. Em *Configurações* você vê o espaço usado e remove arquivos sem uso ou de execuções concluídas a partir de certa idade.

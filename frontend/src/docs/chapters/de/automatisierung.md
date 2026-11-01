@@ -49,7 +49,7 @@ Ist ein Lauf fehlgeschlagen, klicke in seinen Details auf **Als Testfall überne
 - Gespeichert wird erst, wenn du eine Testreihe wählst (oder eine neue anlegst) und **Zur Testreihe hinzufügen** klickst. Der Lauf selbst bleibt unverändert.
 - Der Fall merkt sich seine **Herkunft** (Lauf, Fehler, was ersetzt wurde) und zeigt sie in der Testreihe. Prüfregeln und Kriterien ergänzt du dort.
 
-Ändert ein neuer Fall eine Testreihe, die ein [Freigabe-Gate](/docs/api-und-export#freigabe-gate) nutzt, muss sie vor der nächsten Veröffentlichung erneut laufen.
+Ändert ein neuer Fall eine Testreihe, die eine [Veröffentlichungsprüfung](/docs/api-und-export#freigabe-gate) nutzt, muss sie vor der nächsten Veröffentlichung erneut laufen.
 
 ## KI-Bewertung {#ki-bewertung}
 <!-- keywords: ki bewertung, judge, llm as judge, kriterien, bewertung, note, punktzahl -->

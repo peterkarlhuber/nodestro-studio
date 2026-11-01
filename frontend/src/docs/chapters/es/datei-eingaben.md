@@ -1,6 +1,6 @@
 # Archivos como entrada
 
-Los workflows pueden recibir archivos directamente como entrada: contratos, facturas, hojas de cálculo, imágenes o archivos ZIP completos. Los subes al iniciar, sin incorporarlos antes al conocimiento. Nodestro los comprueba y lee localmente y da a los agentes justo lo que necesitan de ellos.
+Los flujos de trabajo pueden recibir archivos directamente como entrada: contratos, facturas, hojas de cálculo, imágenes o archivos ZIP completos. Los subes al iniciar, sin incorporarlos antes al conocimiento. Nodestro los comprueba y lee localmente y da a los agentes justo lo que necesitan de ellos.
 
 ## Resumen {#ueberblick}
 <!-- keywords: archivo, archivos, subir, entrada, documento, adjunto, inicio -->
@@ -39,7 +39,7 @@ Todo campo, no solo los de archivo, es **obligatorio** u **opcional**. Un campo 
 
 - En la tarea de un agente aparece como «(not provided)», para que el agente sepa que no se indicó nada.
 - Los nodos de decisión ven un valor vacío y pueden comprobarlo con *está vacío*.
-- Los campos de archivo vacíos no crean referencias a archivos. Esto vale también para subworkflows, API publicadas y proyectos exportados.
+- Los campos de archivo vacíos no crean referencias a archivos. Esto vale también para subflujos, API publicadas y proyectos exportados.
 
 ## Formatos compatibles {#formate}
 <!-- keywords: formatos, txt, markdown, csv, json, xlsx, excel, pdf, docx, word, png, jpg, webp, imagen, zip -->
@@ -108,24 +108,24 @@ Con **Al conocimiento** incorporas de forma explícita:
 
 Antes de guardar, el diálogo muestra qué se guardaría, si el archivo es buscable, si ya existe el mismo contenido (no se guarda dos veces) y contenidos parecidos. Los textos generados se pueden editar antes de guardar y marcar como *extraído de fuentes*, *generado por un agente* o *suposición*. Eliges una colección o creas una nueva.
 
-No se guarda nada antes de tu confirmación, y solo exactamente el contenido comprobado: si cambias algo después, compruebas de nuevo. Cada archivo conserva su procedencia (workflow, paso, agente, ejecución, momento, archivos de origen). Los workflows en curso no cambian.
+No se guarda nada antes de tu confirmación, y solo exactamente el contenido comprobado: si cambias algo después, compruebas de nuevo. Cada archivo conserva su procedencia (workflow, paso, agente, ejecución, momento, archivos de origen). Los flujos de trabajo en curso no cambian.
 
 ## Propuestas de agentes {#vorschlaege}
 <!-- keywords: propuesta, propuestas, el agente propone, propose_knowledge, proponer conocimiento -->
 
 En la sección *Conocimiento* de un agente activa **Puede proponer contenido para el conocimiento**. El agente recibe entonces la herramienta `propose_knowledge` y su resultado se ofrece como propuesta tras la ejecución. Las propuestas aparecen en el paso de la ejecución y solo se guardan cuando las has comprobado y confirmado.
 
-## Subworkflows, pruebas y programaciones {#sub-workflows}
+## Subworkflows, pruebas y programaciones {#subflujos}
 <!-- keywords: subworkflow, serie de pruebas, lote, programación, aprobación, continuar, reinicio -->
 
-- **Subworkflows:** un campo de archivo del subworkflow recibe con `{{form.<campo>}}` los archivos de un campo o con `{{files}}` todos los archivos de la ejecución. Se pasan los mismos archivos guardados, sin copias.
+- **Subworkflows:** un campo de archivo del subflujo recibe con `{{form.<campo>}}` los archivos de un campo o con `{{files}}` todos los archivos de la ejecución. Se pasan los mismos archivos guardados, sin copias.
 - **Aprobaciones y continuación:** los archivos siguen guardados mientras una ejecución espera, corre o está en pausa, también tras reiniciar Nodestro.
 - **Casos de prueba y programaciones:** los archivos que subas allí se conservan para el caso de prueba o la [programación](/docs/automatisierung#zeitplaene) y los usa cada ejecución. Nunca se reutilizan en silencio archivos de ejecuciones anteriores.
 
 ## Archivos a través de la API {#api-uploads}
 <!-- keywords: api, multipart, form-data, base64, subida, curl, exportación, fastapi -->
 
-Los workflows publicados aceptan archivos de dos formas:
+Los flujos de trabajo publicados aceptan archivos de dos formas:
 
 - como JSON con `name`, `media_type` y `content_base64` en el valor del campo de archivo,
 - como `multipart/form-data`: una parte por archivo con el nombre del campo de archivo y los demás campos como JSON en la parte `values`.
@@ -142,7 +142,7 @@ Se aplican las mismas comprobaciones y límites que en Nodestro. Un [proyecto Fa
 ## Almacenamiento y limpieza {#speicherung}
 <!-- keywords: almacenamiento, limpieza, borrar, espacio en disco, copia de seguridad, restaurar -->
 
-Los archivos subidos se guardan en la carpeta de datos, en `inputs`, no en la base de datos ni en el workflow. El mismo contenido se guarda una sola vez.
+Los archivos subidos se guardan en la carpeta de datos, en `inputs`, no en la base de datos ni en el flujo de trabajo. El mismo contenido se guarda una sola vez.
 
 - Los archivos de ejecuciones en cola, en curso o en pausa nunca se eliminan.
 - Al iniciar, Nodestro limpia los archivos que nada usa desde hace más de un día. En *Ajustes* ves el espacio ocupado y eliminas archivos sin usar o de ejecuciones terminadas a partir de cierta antigüedad.

@@ -103,7 +103,7 @@
     "branch_no_input": "{{node}} não tem conexão de entrada.",
     "branch_unknown": "Uma conexão de {{node}} não parte de nenhum ramo.",
     "condition_no_rules": "A decisão {{node}} não tem regras.",
-    "subworkflow_missing": "Nenhum workflow foi escolhido em {{node}}.",
+    "subworkflow_missing": "Nenhum fluxo de trabalho foi escolhido em {{node}}.",
     "contract_field_name": "{{node}}: o nome de campo {{field}} no contrato de saída é inválido (apenas letras, dígitos e _).",
     "contract_field_duplicate": "{{node}}: o contrato de saída nomeia o campo {{field}} duas vezes.",
     "node_duplicate": "Dois nós têm o mesmo id ({{id}}). Exclua um deles e adicione-o novamente.",
@@ -114,7 +114,7 @@
     "loop_invalid": "Este laço não é válido.",
     "orchestrator_no_members": "{{node}} não tem equipes para escolher.",
     "orchestrator_member_duplicate": "{{node}} cita uma equipe duas vezes.",
-    "orchestrator_self": "{{node}} escolheria o próprio workflow como equipe.",
+    "orchestrator_self": "{{node}} escolheria o próprio fluxo de trabalho como equipe.",
     "orchestrator_limits": "{{node}} permite a uma equipe mais usos do que decisões no total."
   },
   "run": {
@@ -133,10 +133,10 @@
     "approval_rejected": "Rejeitado em {{node}}; a execução foi encerrada.",
     "interrupted": "O Nodestro foi encerrado durante esta execução.",
     "not_paused": "Só uma execução pausada pode continuar.",
-    "subworkflow_failed": "O subworkflow {{name}} falhou.",
-    "subworkflow_missing": "O workflow de {{node}} não existe mais.",
-    "subworkflow_recursive": "{{node}} chamaria um workflow que já está em execução.",
-    "subworkflow_too_deep": "Em {{node}} os subworkflows estão aninhados profundamente demais.",
+    "subworkflow_failed": "O subfluxo {{name}} falhou.",
+    "subworkflow_missing": "O fluxo de trabalho de {{node}} não existe mais.",
+    "subworkflow_recursive": "{{node}} chamaria um fluxo de trabalho que já está em execução.",
+    "subworkflow_too_deep": "Em {{node}} os subfluxos estão aninhados profundamente demais.",
     "finished": "A execução já terminou.",
     "not_found": "Não há execução com este id.",
     "not_finished": "A execução ainda não terminou.",
@@ -245,12 +245,12 @@
     "merge_exclusive": "{{name}} une ramos de {{decision}}; chega exatamente um deles.",
     "merge_partial": "{{name}} une um caminho condicional ({{branches}}) a outras entradas. Se ele faltar, seu marcador mostra “-”.",
     "subworkflow_approval": "{{name}}: {{workflow}} aguarda uma aprovação; esta execução aguarda junto.",
-    "subworkflow_cycle": "{{name}} chamaria a si mesmo (diretamente ou por outros subworkflows).",
-    "subworkflow_field_unknown": "{{name}}: o subworkflow não tem o campo {{field}}.",
+    "subworkflow_cycle": "{{name}} chamaria a si mesmo (diretamente ou por outros subfluxos).",
+    "subworkflow_field_unknown": "{{name}}: o subfluxo não tem o campo {{field}}.",
     "subworkflow_field_unmapped": "{{name}}: o campo obrigatório {{field}} não recebe valor.",
-    "subworkflow_invalid_one": "{{name}}: o workflow {{workflow}} tem {{count}} erro.",
-    "subworkflow_invalid_other": "{{name}}: o workflow {{workflow}} tem {{count}} erros.",
-    "subworkflow_missing": "{{name}}: o workflow escolhido não existe mais.",
+    "subworkflow_invalid_one": "{{name}}: o fluxo de trabalho {{workflow}} tem {{count}} erro.",
+    "subworkflow_invalid_other": "{{name}}: o fluxo de trabalho {{workflow}} tem {{count}} erros.",
+    "subworkflow_missing": "{{name}}: o fluxo de trabalho escolhido não existe mais.",
     "subworkflow_outdated": "{{name}} usa a versão {{version}}; a versão {{latest}} é mais nova.",
     "subworkflow_version_missing": "{{name}}: a versão escolhida não existe mais.",
     "contract_text_source": "{{name}} responde em texto; então o contrato de saída só pode ser cumprido com uma resposta JSON. Defina o formato de saída do agente como “Estruturado”.",
@@ -259,7 +259,7 @@
     "provider_not_configured": "{{provider}} não está configurado: informe a URL base nas configurações.",
     "input_form_only": "{{name}} lê o nó inicial com {{input}}. Com o formulário preenchido, são apenas os valores do formulário, sem o texto adicional. Use {{run_input}} para receber os dois.",
     "orchestrator_member_missing": "{{name}}: uma equipe escolhida não existe mais.",
-    "orchestrator_cycle": "{{name}}: a equipe {{workflow}} chamaria este workflow de novo.",
+    "orchestrator_cycle": "{{name}}: a equipe {{workflow}} chamaria este fluxo de trabalho de novo.",
     "orchestrator_member_invalid_one": "{{name}}: a equipe {{workflow}} tem {{count}} erro.",
     "orchestrator_member_invalid_other": "{{name}}: a equipe {{workflow}} tem {{count}} erros.",
     "orchestrator_member_approval": "{{name}}: a equipe {{workflow}} pausa para aprovações. O orquestrador então também aguarda.",
@@ -378,10 +378,10 @@
   },
   "resume": {
     "imported": "Um trace importado não pode ser continuado.",
-    "child": "Continue a execução à qual este subworkflow pertence.",
+    "child": "Continue a execução à qual este subfluxo pertence.",
     "not_failed": "Só execuções com falha ou canceladas podem ser continuadas.",
-    "workflow_deleted": "O workflow desta execução não existe mais.",
-    "workflow_changed": "O workflow mudou desde esta execução; etapas alteradas e tudo depois delas rodam de novo.",
+    "workflow_deleted": "O fluxo de trabalho desta execução não existe mais.",
+    "workflow_changed": "O fluxo de trabalho mudou desde esta execução; etapas alteradas e tudo depois delas rodam de novo.",
     "agent_invalid": "Um agente não está totalmente configurado.",
     "files_missing_one": "{{count}} arquivo desta execução não existe mais.",
     "files_missing_other": "{{count}} arquivos desta execução não existem mais.",
@@ -408,7 +408,7 @@
     "encrypted": "{{name}} está protegido por senha e não pode ser lido. Envie uma versão sem senha."
   },
   "batch": {
-    "confirm_external": "O workflow usa ferramentas próprias que podem agir fora do Nodestro: {{tools}}. Confirme, por favor.",
+    "confirm_external": "O fluxo de trabalho usa ferramentas próprias que podem agir fora do Nodestro: {{tools}}. Confirme, por favor.",
     "delete_running": "Cancele o lote antes de excluí-lo.",
     "empty": "O lote não tem linhas.",
     "file_empty": "O arquivo não contém linhas.",
@@ -432,7 +432,7 @@
     "interrupted": "O Nodestro foi encerrado durante a série de testes.",
     "judge_failed": "A avaliação por IA falhou.",
     "model_cost_cap": "Comparar modelos exige um limite de custo.",
-    "model_node_unknown": "O workflow não tem nenhum agente {{node}}."
+    "model_node_unknown": "O fluxo de trabalho não tem nenhum agente {{node}}."
   },
   "schedule": {
     "api_key_missing": "{{provider}} não está configurado; as execuções vão falhar até que esteja.",
@@ -441,12 +441,12 @@
     "confirm_external": "Ferramentas próprias podem agir fora do Nodestro: {{tools}}. Confirme, por favor.",
     "date_invalid": "“{{value}}” não é uma data (AAAA-MM-DD).",
     "in_past": "O horário está no passado.",
-    "input_empty": "O agendamento não tem entrada para o workflow.",
+    "input_empty": "O agendamento não tem entrada para o fluxo de trabalho.",
     "no_budget": "Agendamentos precisam de um orçamento por execução (configurações).",
     "no_weekdays": "Escolha pelo menos um dia da semana.",
     "time_invalid": "“{{value}}” não é um horário (HH:MM).",
     "time_zone": "Fuso horário desconhecido {{zone}}.",
-    "workflow_missing": "O workflow não existe mais.",
+    "workflow_missing": "O fluxo de trabalho não existe mais.",
     "input_files_kept_one": "O arquivo enviado fica salvo para este agendamento e é usado por cada execução.",
     "input_files_kept_other": "Os {{count}} arquivos enviados ficam salvos para este agendamento e são usados por cada execução."
   },
@@ -471,7 +471,7 @@
     "memory_shared": "A memória persistente ({{spaces}}) é compartilhada pelo Nodestro e por toda execução da API.",
     "no_budget": "As execuções não têm limite de custo; defina um orçamento para o fluxo ou um orçamento diário para a API.",
     "subworkflow_unsaved": "{{name}}: o subfluxo não tem versão salva.",
-    "mcp_tool_unusable": "Uma ferramenta de serviço deste workflow não pode ser usada agora; ele não pode ser publicado.",
+    "mcp_tool_unusable": "Uma ferramenta de serviço deste fluxo de trabalho não pode ser usada agora; ele não pode ser publicado.",
     "mcp_tools": "As ferramentas de serviço ficam congeladas nesta versão; uma mudança posterior no serviço a interrompe até que seja publicada de novo.",
     "mcp_unattended_off": "Execuções da API só usam ferramentas de serviço quando o operador permite o uso sem supervisão (NODESTRO_MCP_UNATTENDED)."
   },
@@ -660,11 +660,11 @@
   "gate": {
     "blocked": "O controle de publicação bloqueia esta versão. Teste exatamente esta versão com suas séries de testes.",
     "override_required": "O controle de publicação não foi atendido. Informe um motivo para publicar mesmo assim.",
-    "suite_unknown": "Esta série de testes não pertence a este workflow."
+    "suite_unknown": "Esta série de testes não pertence a este fluxo de trabalho."
   },
   "testcase": {
     "run_not_failed": "Só uma execução com falha pode virar caso de teste.",
-    "run_unsupported": "Execuções importadas e de subworkflows não podem virar caso de teste."
+    "run_unsupported": "Execuções importadas e de subfluxos não podem virar caso de teste."
   },
   "mcp": {
     "address_refused": "O endereço {{host}} não é permitido (endereço interno, local ou de metadados).",
@@ -691,7 +691,7 @@
     "url_credentials": "O endereço não pode conter nome de usuário nem senha.",
     "url_invalid": "O endereço é inválido.",
     "vault_unavailable": "Não há armazenamento seguro para tokens de acesso.",
-    "write_not_supported": "Ferramentas que alteram dados só rodam em execuções de workflow que perguntam a uma pessoa antes de cada chamada, não em testes nem no painel de ferramentas.",
+    "write_not_supported": "Ferramentas que alteram dados só rodam em execuções de fluxo de trabalho que perguntam a uma pessoa antes de cada chamada, não em testes nem no painel de ferramentas.",
     "cooling_down": "{{server}} falhou várias vezes seguidas; as chamadas fazem uma breve pausa.",
     "environment_not_ready": "Os pacotes de {{server}} ainda não foram aprovados e instalados.",
     "limits_invalid": "{{variable}} não é um limite válido.",

@@ -167,7 +167,7 @@ O Nodestro decide pela **origem do código** onde ele pode rodar:
 O processo Python não é uma barreira de segurança: o código nele roda com as suas permissões. Por isso o Nodestro nunca executa ali código gerado por IA, e nem a sua aprovação nem uma configuração mudam isso; não existe nenhuma chave que permita mesmo assim. Onde o sandbox Linux integrado está disponível, o Nodestro o usa automaticamente para esse código. Sem ele e sem Docker:
 
 - **Criar com IA** não inicia, e rascunhos de ferramentas não podem ser testados nem aprovados;
-- agentes com uma ferramenta que precisa de isolamento não podem rodar; a verificação do workflow avisa antes do início;
+- agentes com uma ferramenta que precisa de isolamento não podem rodar; a verificação do fluxo de trabalho avisa antes do início;
 - ferramentas que precisam de isolamento não podem usar bibliotecas de terceiros.
 
 Ferramentas salvas antes desta versão, e todas as ferramentas depois de restaurar um backup, contam como de origem desconhecida, inclusive as escritas por você, porque a origem não foi registrada. Com isolamento, continuam funcionando. Uma nova versão dessa ferramenta, ou uma cópia do código dela em uma ferramenta nova, mantém esse status.
@@ -186,7 +186,7 @@ Por enquanto só podem ser usadas as ferramentas que você classificar como **so
 
 **Alterações:** o Nodestro guarda uma impressão digital de cada definição aprovada e a verifica antes de cada chamada. Se o serviço alterar uma ferramenta, ela fica **bloqueada**; execuções que a usam falham com uma mensagem clara. Você vê a alteração lado a lado (aprovado até agora, oferecido agora) e a aprova ou rejeita.
 
-**Tokens de acesso** são salvos criptografados: no desktop com uma chave do chaveiro do sistema operacional, no servidor com a chave do servidor, separadamente por inquilino. Sem um cofre de chaves seguro, um token vale só até fechar o app. Tokens nunca aparecem em workflows, exportações ou registros.
+**Tokens de acesso** são salvos criptografados: no desktop com uma chave do chaveiro do sistema operacional, no servidor com a chave do servidor, separadamente por inquilino. Sem um cofre de chaves seguro, um token vale só até fechar o app. Tokens nunca aparecem em fluxos de trabalho, exportações ou registros.
 
 **Limites:** o Nodestro nunca se conecta a endereços internos, locais ou de metadados, verifica cada endereço resolvido no momento da conexão e ignora as configurações de proxy do ambiente. Em um servidor, o operador libera os endereços com `NODESTRO_MCP_ENDPOINTS`. Agendamentos, lotes e APIs publicadas só usam ferramentas de serviços se o operador ativar isso expressamente. O Nodestro não conhece o custo de serviços externos; ele aparece como **desconhecido**, nunca como zero.
 

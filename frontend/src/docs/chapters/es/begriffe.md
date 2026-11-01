@@ -2,7 +2,7 @@
 
 Los términos más importantes de Nodestro, cada uno explicado brevemente con el capítulo que da más detalles. Aquí se distinguen expresamente los términos parecidos.
 
-## Flujo de trabajo {#workflow}
+## Flujo de trabajo {#flujo de trabajo}
 <!-- keywords: flujo de trabajo, workflow, nodo, conexión, inicio, resultado -->
 
 Un **flujo de trabajo** es una secuencia de nodos: un inicio, agentes, decisiones, aprobaciones y un resultado. Las conexiones deciden qué paso recibe los resultados de qué otro paso. Más en [Nodos](/docs/workflows#knoten).

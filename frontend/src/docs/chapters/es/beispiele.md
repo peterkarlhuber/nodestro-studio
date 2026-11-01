@@ -1,11 +1,11 @@
-# Workflows de ejemplo
+# Flujos de trabajo de ejemplo
 
-Nodestro incluye 24 workflows multiagente listos, uno para cada ámbito de aplicación típico. Cada ejemplo contiene agentes con prompts de sistema, las conexiones, una tarea de prueba preparada con datos inventados y un resultado claramente descrito. Este capítulo explica la galería, cómo copiar y adaptar los ejemplos, y describe cada uno por separado.
+Nodestro incluye 24 flujos de trabajo multiagente listos, uno para cada ámbito de aplicación típico. Cada ejemplo contiene agentes con prompts de sistema, las conexiones, una tarea de prueba preparada con datos inventados y un resultado claramente descrito. Este capítulo explica la galería, cómo copiar y adaptar los ejemplos, y describe cada uno por separado.
 
 ## La galería {#galerie}
 <!-- keywords: ejemplos, plantillas, galería, biblioteca, destacados, categorías, página de inicio -->
 
-La galería está en la página **Workflows**, debajo de tus propios workflows y claramente separada de ellos. Muestra algunos ejemplos destacados y las seis categorías. **Ver los 24 ejemplos** abre la galería completa, también dentro del área de workflows.
+La galería está en la página **Flujos de trabajo**, debajo de tus propios flujos de trabajo y claramente separada de ellos. Muestra algunos ejemplos destacados y las seis categorías. **Ver los 24 ejemplos** abre la galería completa, también dentro del área de flujos de trabajo.
 
 En la galería completa buscas por nombre, ámbito y descripción y filtras por categoría. Cada tarjeta muestra el ámbito, el nombre, la descripción, el número de agentes, el nivel y el patrón. Los ejemplos de ámbitos sensibles llevan la insignia **Requiere revisión experta**. La [búsqueda](/docs/start#suche) también encuentra ejemplos.
 
@@ -14,7 +14,7 @@ En la galería completa buscas por nombre, ámbito y descripción y filtras por 
 
 Al hacer clic en una tarjeta se abre la **vista previa**: el flujo como diagrama, cada agente con su rol, modelo, herramientas y los resultados que recibe, la guía y la tarea de prueba. La vista previa no guarda nada y no llama a ningún modelo.
 
-**Copiar a mis workflows** crea un workflow propio y lo abre en el editor. La copia es independiente: puedes cambiarlo todo, y la plantilla nunca cambia. Si copias un ejemplo dos veces, obtienes dos workflows separados. La copia empieza con la versión 1 en el [historial de versiones](/docs/workflows#versionen).
+**Copiar a mis flujos de trabajo** crea un flujo de trabajo propio y lo abre en el editor. La copia es independiente: puedes cambiarlo todo, y la plantilla nunca cambia. Si copias un ejemplo dos veces, obtienes dos flujos de trabajo separados. La copia empieza con la versión 1 en el [historial de versiones](/docs/workflows#versionen).
 
 Si **Añadir los casos de prueba como serie de pruebas** está marcado (por defecto), la copia recibe además una [serie de pruebas](/docs/automatisierung#testreihen) con los casos de prueba preparados; los archivos de ejemplo necesarios se guardan como archivos de entrada de la copia. Copiar nunca inicia una ejecución, nunca crea una [programación](/docs/automatisierung#zeitplaene) y nunca publica una [API](/docs/api-und-export#veroeffentlichen); eso lo decides tú más adelante.
 

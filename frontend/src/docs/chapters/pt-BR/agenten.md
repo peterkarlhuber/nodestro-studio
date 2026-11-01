@@ -256,7 +256,7 @@ Um agente criado a partir de um modelo é uma **cópia**: alterações posterior
 1. Digite uma **entrada de teste**. Ela é inserida na tarefa como a entrada de uma execução; os marcadores dos predecessores ficam vazios. Com *Enviar a entrada diretamente como tarefa*, só o seu texto vai para o agente.
 2. **Iniciar teste** mostra a resposta, todas as chamadas de ferramentas, erros, tokens, custo, duração e, se ativa, a verificação de qualidade.
 
-Um teste **não é uma execução do workflow**: ele não aparece em *Execuções* e não altera resultados. A memória persistente só é lida; o teste trabalha sobre uma cópia. Um teste chama o provedor do modelo e **pode custar dinheiro**; o diálogo informa os preços do modelo quando conhecidos, e o custo aparece na página [Uso](/docs/nutzung#statistik).
+Um teste **não é uma execução do fluxo de trabalho**: ele não aparece em *Execuções* e não altera resultados. A memória persistente só é lida; o teste trabalha sobre uma cópia. Um teste chama o provedor do modelo e **pode custar dinheiro**; o diálogo informa os preços do modelo quando conhecidos, e o custo aparece na página [Uso](/docs/nutzung#statistik).
 
 ## Validação e mensagens {#validierung}
 <!-- keywords: validação, mensagem de erro, problema, aviso, vermelho, mensagem do inspetor -->

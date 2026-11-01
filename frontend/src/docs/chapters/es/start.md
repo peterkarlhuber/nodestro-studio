@@ -45,7 +45,7 @@ Así creas tu primer flujo de trabajo en pocos minutos:
 5. **Observa.** En el *Resumen de la ejecución*, debajo del lienzo, ves en directo lo que escribe el agente, qué herramientas llama, cuántos tokens consume y cuánto cuesta.
 6. **Revisa.** Con **Detalles** llegas a la ejecución completa con su cronología.
 
-> **Consejo:** Debajo de tus workflows encontrarás la galería con 24 [workflows de ejemplo](/docs/beispiele) para tareas típicas, por ejemplo **Análisis financiero** y **Artículo de blog**. La vista previa es gratuita; los ejemplos copiados son copias propias que puedes cambiar libremente.
+> **Consejo:** Debajo de tus flujos de trabajo encontrarás la galería con 24 [workflows de ejemplo](/docs/beispiele) para tareas típicas, por ejemplo **Análisis financiero** y **Artículo de blog**. La vista previa es gratuita; los ejemplos copiados son copias propias que puedes cambiar libremente.
 
 ## La interfaz {#oberflaeche}
 <!-- keywords: navegación, barra lateral, menú, tema, oscuro, claro, diseño -->

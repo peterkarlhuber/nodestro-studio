@@ -88,7 +88,7 @@ O campo de filtro à esquerda só pesquisa nomes de arquivo e descrições.
 
 Coleções agrupam arquivos do conhecimento, ex.: “Contratos” ou “Dados de produtos”. Ao enviar, escolha uma coleção em *Enviar para a coleção*; depois você pode alterá-la em cada arquivo. Os chips acima da lista filtram por coleção. Os agentes continuam recebendo exatamente os arquivos atribuídos a eles.
 
-Conteúdo de execuções (arquivos enviados, arquivos de resultado, resultados e propostas de agentes) só entra no conhecimento após sua confirmação, veja [Incorporar ao conhecimento](/docs/datei-eingaben#knowledge-uebernahme). Esses arquivos mostram em *Origem* de qual workflow, etapa e execução vieram e se o conteúdo foi extraído, gerado ou é uma suposição.
+Conteúdo de execuções (arquivos enviados, arquivos de resultado, resultados e propostas de agentes) só entra no conhecimento após sua confirmação, veja [Incorporar ao conhecimento](/docs/datei-eingaben#knowledge-uebernahme). Esses arquivos mostram em *Origem* de qual fluxo de trabalho, etapa e execução vieram e se o conteúdo foi extraído, gerado ou é uma suposição.
 
 ## Gerenciar arquivos {#verwalten}
 <!-- keywords: editar descrição, excluir, gerenciar, remover -->

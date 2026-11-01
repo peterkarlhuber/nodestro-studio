@@ -58,7 +58,7 @@
     "input": "Entrada",
     "stillRunning": "Todavía en curso …",
     "noResult": "Sin resultado.",
-    "trace": "Desarrollo",
+    "trace": "Cronología",
     "nodeDetails": "Detalles de {{name}}"
   },
   "summary": {

@@ -62,7 +62,7 @@ Nodestro guarda cada aprobación con paquete, versión y fecha. Mientras nada ca
 
 Nodestro nunca actualiza en silencio: al resolver de nuevo se prefieren las versiones ya aprobadas, y cualquier otra versión aparece como *Cambio*.
 
-## Bibliotecas en el flujo de trabajo {#workflow}
+## Bibliotecas en el flujo de trabajo {#flujo de trabajo}
 <!-- keywords: flujo de trabajo, entorno, inspector, estado, iniciar, ejecución, entorno propio, instalar -->
 
 Cada flujo de trabajo con bibliotecas recibe un **entorno propio** con sus propias aprobaciones. En el inspector del flujo de trabajo (sin nodo seleccionado), la sección **Bibliotecas de Python** muestra:

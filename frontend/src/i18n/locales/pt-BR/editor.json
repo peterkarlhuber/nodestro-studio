@@ -68,7 +68,7 @@
     "flow": "Controlar o fluxo",
     "conditionHint": "Ramifica por regras, sem solicitação à IA",
     "approvalHint": "Pausa para uma revisão humana",
-    "subworkflowHint": "Executa outro workflow como uma etapa",
+    "subworkflowHint": "Executa outro fluxo de trabalho como uma etapa",
     "teams": "Equipes",
     "teamDelivers": "entrega {{fields}}",
     "orchestratorHint": "Um modelo de IA distribui a tarefa entre equipes"
@@ -179,8 +179,8 @@
   "subworkflow": {
     "latest": "Versão mais recente",
     "versionN": "Versão {{n}}",
-    "none": "Nenhum workflow escolhido",
-    "missing": "Workflow ausente"
+    "none": "Nenhum fluxo de trabalho escolhido",
+    "missing": "Fluxo de trabalho ausente"
   },
   "panels": {
     "inspector": "Propriedades",

@@ -152,7 +152,7 @@
     "confirmText_other": "He comprobado el contenido y quiero guardar {{count}} elementos en la colección «{{collection}}».",
     "changed": "Cambiaste el contenido o la colección: comprueba de nuevo antes de confirmar.",
     "done": "Incorporado al conocimiento: {{count}} · ya existentes: {{duplicates}}",
-    "notMemory": "El conocimiento es una colección de documentos para todos los agentes, separada de la memoria de un agente. Los workflows en curso no cambian."
+    "notMemory": "El conocimiento es una colección de documentos para todos los agentes, separada de la memoria de un agente. Los flujos de trabajo en curso no cambian."
   },
   "proposals": {
     "title_one": "{{count}} propuesta para el conocimiento",
@@ -173,8 +173,8 @@
     "uploaded": "Subido el",
     "archive": "Archivo comprimido",
     "path": "Ruta en el archivo comprimido",
-    "workflow": "Workflow",
-    "workflow_id": "ID del workflow",
+    "workflow": "Flujo de trabajo",
+    "workflow_id": "ID del flujo de trabajo",
     "run": "Ejecución",
     "run_at": "Momento de la ejecución",
     "sources": "Archivos de origen",

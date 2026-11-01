@@ -88,7 +88,7 @@ El campo de filtro de la izquierda solo busca en nombres de archivo y descripcio
 
 Las colecciones agrupan archivos de conocimiento, p. ej. «Contratos» o «Datos de producto». Al subir, elige una colección en *Subir a la colección*; puedes cambiarla en cada archivo más tarde. Los chips sobre la lista filtran por colección. Los agentes siguen recibiendo exactamente los archivos asignados.
 
-El contenido de ejecuciones (archivos subidos, archivos de resultado, resultados y propuestas de agentes) solo llega al conocimiento tras tu confirmación, ver [Incorporar al conocimiento](/docs/datei-eingaben#knowledge-uebernahme). Esos archivos muestran en *Procedencia* de qué workflow, paso y ejecución proceden y si el contenido fue extraído, generado o es una suposición.
+El contenido de ejecuciones (archivos subidos, archivos de resultado, resultados y propuestas de agentes) solo llega al conocimiento tras tu confirmación, ver [Incorporar al conocimiento](/docs/datei-eingaben#knowledge-uebernahme). Esos archivos muestran en *Procedencia* de qué flujo de trabajo, paso y ejecución proceden y si el contenido fue extraído, generado o es una suposición.
 
 ## Gestionar archivos {#verwalten}
 <!-- keywords: editar descripción, eliminar, gestionar, quitar -->

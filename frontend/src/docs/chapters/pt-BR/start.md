@@ -14,7 +14,7 @@ Usos típicos:
 - **Avaliação estruturada:** um agente retorna um objeto JSON validado com campos fixos que outros programas podem processar.
 - **Textos com controle de qualidade:** um juiz verifica o resultado segundo critérios e faz o agente melhorá-lo.
 
-O Nodestro roda localmente no seu computador. Workflows, execuções, conhecimento e memória ficam em um banco de dados SQLite. Os dados só saem do seu computador para solicitações aos provedores de IA que você configurou.
+O Nodestro roda localmente no seu computador. Fluxos de trabalho, execuções, conhecimento e memória ficam em um banco de dados SQLite. Os dados só saem do seu computador para solicitações aos provedores de IA que você configurou.
 
 ## Conceitos básicos {#begriffe}
 <!-- keywords: glossário, conceitos, nó, execução, trace, token -->
@@ -45,7 +45,7 @@ Crie seu primeiro fluxo de trabalho em poucos minutos:
 5. **Acompanhe.** Na *Visão geral da execução*, abaixo da tela, você vê ao vivo o que o agente escreve, quais ferramentas chama, quantos tokens usa e quanto custa.
 6. **Analise.** Em **Detalhes** você chega à execução completa com sua linha do tempo.
 
-> **Dica:** Abaixo dos seus workflows fica a galeria com 24 [workflows de exemplo](/docs/beispiele) para tarefas típicas, por exemplo **Análise financeira** e **Artigo de blog**. A prévia é gratuita; exemplos copiados são cópias suas, que você pode mudar livremente.
+> **Dica:** Abaixo dos seus fluxos de trabalho fica a galeria com 24 [workflows de exemplo](/docs/beispiele) para tarefas típicas, por exemplo **Análise financeira** e **Artigo de blog**. A prévia é gratuita; exemplos copiados são cópias suas, que você pode mudar livremente.
 
 ## A interface {#oberflaeche}
 <!-- keywords: navegação, barra lateral, menu, tema, escuro, claro, layout -->
