@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "../api/client";
 import type { Run, SanitizeReport } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, Callout, Modal, Segmented, Toggle } from "../components/ui";
+import { Button, Callout, HelpTip, Modal, Segmented, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 
 function downloadJson(data: unknown, name: string) {
@@ -58,15 +58,18 @@ export function TraceExportDialog({ open, onClose, run }: { open: boolean; onClo
         </>
       }
     >
-      <Segmented
-        value={mode}
-        onChange={setMode}
-        label={t("export.mode")}
-        options={[
-          { value: "sanitized", label: t("export.sanitized"), icon: ShieldCheck },
-          { value: "full", label: t("export.full") },
-        ]}
-      />
+      <div className="row-gap">
+        <Segmented
+          value={mode}
+          onChange={setMode}
+          label={t("export.mode")}
+          options={[
+            { value: "sanitized", label: t("export.sanitized"), icon: ShieldCheck },
+            { value: "full", label: t("export.full") },
+          ]}
+        />
+        <HelpTip id="runs.exportTrace" label={t("export.title")} />
+      </div>
       {mode === "full" ? (
         <>
           <p>{t("export.fullText")}</p>

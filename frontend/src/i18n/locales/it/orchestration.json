@@ -1,0 +1,41 @@
+{
+  "run": {
+    "teamRun": "Esecuzione del team",
+    "active": "attiva {{value}}",
+    "nested_one": "lavora con {{count}} esecuzione propria",
+    "nested_other": "lavora con {{count}} esecuzioni proprie",
+    "decisionN": "Decisione {{n}}",
+    "decisionRange": "Decisioni {{from}}–{{to}}",
+    "refusedGroup_one": "{{count}} risposta rifiutata, non è partito nulla",
+    "refusedGroup_other": "{{count}} risposte di fila rifiutate, non è partito nulla",
+    "refusedHint": "Il modello ha risposto più volte di fila senza una decisione valida. Di solito aiuta scegliere un modello più capace, scrivere istruzioni più chiare per l’orchestratore o consentire più decisioni.",
+    "refusedHelp": "Come decide l’orchestratore",
+    "pool_one": "Pool di {{count}} team",
+    "pool_other": "Pool di {{count}} team",
+    "state": {
+      "running": "In corso"
+    },
+    "perTeam": "ogni team al massimo {{max}} volte (più spesso: {{team}}, {{count}}×)",
+    "decisions": "Decisioni",
+    "usedOf": "{{used}} di {{max}}",
+    "teamRuns": "Esecuzioni dei team",
+    "stateCount": "{{state}}: {{count}}",
+    "noTeamRuns": "ancora nessuna",
+    "cost": "Costo con i team",
+    "stopped": "L’orchestratore si è fermato: {{reason}}",
+    "rounds": "Decisioni in ordine",
+    "current_one": "{{count}} team sta lavorando ora",
+    "current_other": "{{count}} team stanno lavorando ora"
+  },
+  "summary": {
+    "title": "Team",
+    "decisions_one": "{{count}} decisione",
+    "decisions_other": "{{count}} decisioni",
+    "runs_one": "{{count}} esecuzione di team",
+    "runs_other": "{{count}} esecuzioni di team"
+  },
+  "origin": {
+    "teamRun": "Esecuzione del team di {{name}} (decisione {{n}}).",
+    "teamRunPlain": "Esecuzione del team di un orchestratore."
+  }
+}

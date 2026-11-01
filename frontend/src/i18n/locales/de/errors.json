@@ -501,7 +501,7 @@
     "memory_included": "Memory {{space}}: der aktuelle Inhalt wird zum Startinhalt.",
     "memory_empty": "Memory {{space}} startet im Export leer.",
     "distribution_unconfirmed": "Bestätige, dass du den Quellcode von Orkexa weitergeben darfst, oder wähle die Git-Referenz.",
-    "private_repository": "Zum Installieren des Exports ist Lesezugriff auf das Repository peterkarlhuber/orkexa nötig, solange es privat ist.",
+    "private_repository": "Zum Installieren des Exports ist Lesezugriff auf das Repository peterkarlhuber/orkexa nötig, solange es privat ist. Ohne diesen Zugriff wähle „Quellcode beilegen“.",
     "bundled_library": "Der Quellcode von Orkexa wird ins Projekt kopiert (MIT-Lizenz liegt bei).",
     "runtime_differs": "Diese Version wurde mit {{published}} veröffentlicht; der Export enthält die aktuelle Runtime {{current}}.",
     "tool_libraries": "Die freigegebenen Tool-Bibliotheken werden mit dem Projekt installiert: {{packages}}.",

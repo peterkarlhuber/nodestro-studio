@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { useApprovals, useRuns, useToolApprovals } from "../api/hooks";
 import type { RunSummary, WorkflowSummary } from "../api/types";
 import { StatusBadge } from "../components/ui";
-import { relativeTime } from "../lib/format";
+import { changedText, relativeTime } from "../lib/format";
 
 const RUNS = 4;
 const EDITED = 3;
@@ -91,7 +91,7 @@ export function ContinueArea({ workflows }: { workflows: WorkflowSummary[] }) {
                 <li key={workflow.id}>
                   <Link to={`/workflows/${workflow.id}`} className="continue__item">
                     <span className="continue__name">{workflow.name}</span>
-                    <span className="muted small">{t("common.changed", { time: relativeTime(workflow.updated_at) })}</span>
+                    <span className="muted small">{changedText(t, workflow.updated_at)}</span>
                   </Link>
                 </li>
               ))}

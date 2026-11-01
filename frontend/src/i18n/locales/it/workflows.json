@@ -52,5 +52,6 @@
     "text": "Workflow a cui un orchestratore può delegare (dichiarano capacità o un contratto di output). Le copie degli esempi orchestrati portano con sé i loro team.",
     "badge": "Team",
     "badgeHint": "Un orchestratore può delegare lavoro a questo workflow"
-  }
+  },
+  "changedJustNow": "modificato poco fa"
 }

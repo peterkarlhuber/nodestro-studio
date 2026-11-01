@@ -102,6 +102,16 @@ try {
   check(JSON.stringify(await statuses(pending)) === JSON.stringify(["succeeded", "waiting"]), "The finished team is succeeded, the other waits");
   check((await pending.textContent()).includes("Fakten zu Ottern") && (await pending.textContent()).includes("Entwurf"), "Both assignments are shown with their tasks");
   check((await view.getByTestId("orchestration-template").count()) === 0, "No template can be saved while the run waits");
+  // ED-26: the waiting decision names its round and links each team run, with its own status, time and cost.
+  check((await pending.textContent()).includes("Entscheidung 2"), "The waiting decision names its round");
+  const waitingRows = pending.getByTestId("orchestration-team-run");
+  check((await waitingRows.count()) === 2, "The waiting decision lists both team runs");
+  const waitingRefs = await waitingRows.evaluateAll((items) => items.map((item) => item.dataset.ref));
+  check(JSON.stringify(waitingRefs) === JSON.stringify(paused.nodes.lead.orchestration.pending.outcomes.map((item) => item.ref)), "Each team run row is the run the API names");
+  await until(async () => (await pending.getByTestId("orchestration-team-run-meta").count()) === 2, "time and cost of both team runs");
+  check(/aktiv .+ · .*\$/.test(await pending.getByTestId("orchestration-team-run-meta").first().textContent()), "A team run shows its active time and cost");
+  const waitingLimits = await view.getByTestId("orchestration-limits").textContent();
+  check(waitingLimits.includes("2 von 8") && waitingLimits.includes("Wartet auf Freigabe: 1") && waitingLimits.includes("Erfolgreich: 1"), "The overview counts the decisions and the team runs by status while the run waits");
   await shot("orchestration-02-waiting");
 
   const approval = page.locator(".approval-card").first();
@@ -118,6 +128,8 @@ try {
   const steps = view.getByTestId("orchestration-step");
   check((await steps.count()) === 5, "The view lists all five decisions");
   check(JSON.stringify(await statuses(steps.nth(1))) === JSON.stringify(["succeeded", "succeeded"]), "The parallel step ends with both teams succeeded");
+  // Team names come with the workflow list; under load it can arrive after the run.
+  await until(async () => (await view.getByTestId("orchestration-staff").allTextContents()).some((item) => item.includes("Lektorat")), "team names in the view");
   const staffText = await view.getByTestId("orchestration-staff").allTextContents();
   check(staffText.some((item) => item.includes("aufgenommen: Lektorat") && item.includes("entlassen: Recherche")), "The view says who joined and who left");
   check((await steps.nth(2).textContent()).includes("Jetzt nur noch glätten"), "The reason of the team change is shown");
@@ -125,10 +137,28 @@ try {
   const team = await view.getByTestId("orchestration-team").textContent();
   check(team.includes("Aktive Besetzung im Verlauf") && team.includes("Nach Entscheidung 1") && team.includes("Nach Entscheidung 3"), "The team over time is shown");
   const limits = await view.getByTestId("orchestration-limits").textContent();
-  check(limits.includes("Entscheidungen 5 von 8") && limits.includes("bis zu 2 Teams gleichzeitig") && limits.includes("Besetzung höchstens 2"), "Decisions used and limits are shown");
-  check(limits.includes("Kosten der Entscheidungen"), "The cost of the decisions is shown");
+  check(limits.includes("Entscheidungen") && limits.includes("5 von 8") && limits.includes("bis zu 2 Teams gleichzeitig") && limits.includes("Besetzung höchstens 2"), "Decisions used and limits are shown");
+  check(limits.includes("Kosten der Entscheidungen") && limits.includes("Kosten mit Teams"), "The cost of the decisions and the total are shown");
+  check((await view.getByTestId("orchestration-team-run-count").textContent()) === "3" && limits.includes("Erfolgreich: 3"), "The overview counts three team runs (not two delegations)");
+  check(limits.includes("Teamläufe"), "The team runs are counted");
+  check((await view.getByText("Pool: 3 Teams").count()) === 1, "The pool has a heading");
+  const rows = view.getByTestId("orchestration-team-run");
+  const refs = await rows.evaluateAll((items) => items.map((item) => item.dataset.ref));
+  check(JSON.stringify(refs) === JSON.stringify(done.nodes.lead.child_run_ids), "Every team run is listed once, linked to its run, in order");
+  const summary = await page.getByTestId("run-summary-teams").textContent();
+  check(summary.includes("Leitung: 5 Entscheidungen, 3 Teamläufe (Erfolgreich: 3)"), `The run summary counts the team runs (${summary})`);
   check(!/chain|thinking|Gedanken/i.test(await view.textContent()), "Only structured decisions are shown");
   await shot("orchestration-03-done");
+
+  // ---- a team run links back to the orchestrator and the decision that started it -------------------------
+  await rows.nth(2).getByRole("link", { name: "Lauf des Teams öffnen" }).click();
+  await page.waitForURL(new RegExp(`/executions/${done.nodes.lead.child_run_ids[2]}$`));
+  const origin = page.getByTestId("run-origin-parent");
+  await until(async () => (await origin.textContent()).includes("Teamlauf von Leitung (Entscheidung 4)"), "the team run names its orchestrator");
+  await origin.getByRole("link").click();
+  await page.waitForURL(new RegExp(`/executions/${first.id}$`));
+  check(true, "A team run names its orchestrator and decision and links back to the parent run");
+  view = await openLead(first.id);
 
   // ---- save the team as a template (only on a click) -----------------------------------------------------
   const countBefore = (await api("/workflows")).length;

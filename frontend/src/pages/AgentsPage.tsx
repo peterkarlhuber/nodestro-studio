@@ -27,7 +27,7 @@ import { AgentForm } from "../editor/AgentInspector";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { defaultAgent } from "../lib/defaults";
 import { ErrorText } from "../lib/errors";
-import { relativeTime } from "../lib/format";
+import { changedText } from "../lib/format";
 import { useModelName } from "../components/ModelPicker";
 
 /** The agent library: reusable agent configurations that appear in the editor's palette. */
@@ -191,9 +191,7 @@ export function AgentsPage() {
                       {template.agent.description || <span className="muted">{t("common.noDescription")}</span>}
                     </p>
                     <span className="muted small">
-                      {t("common.changed", {
-                        time: relativeTime(template.updated_at),
-                      })}
+                      {changedText(t, template.updated_at)}
                     </span>
                   </button>
                   <TagChips kind="template" id={template.id} />

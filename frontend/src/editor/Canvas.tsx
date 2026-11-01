@@ -24,6 +24,7 @@ import type { AgentConfig, NodeType } from "../api/types";
 import { IconButton } from "../components/ui";
 import { toast } from "../components/toast";
 import { formatNumber } from "../lib/format";
+import { motionDuration } from "../lib/motion";
 import { useAppTheme } from "../lib/theme";
 import { childLink, parseTrail } from "../lib/trail";
 import { useFlowAriaLabels } from "./flowA11y";
@@ -293,7 +294,7 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
       reveal: (_id, position) =>
         void flow.setCenter(position.x + NEW_NODE.width / 2, position.y + NEW_NODE.height / 2, {
           zoom: flow.getZoom(),
-          duration: 200,
+          duration: motionDuration(200),
         }),
     });
     return () => registerCanvasView(null);
@@ -427,13 +428,13 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
           <IconButton icon={Plus} label={t("editor.canvas.zoomIn")} onClick={() => flow.zoomIn()} />
         </div>
         <div className="floatbox floatbox--group">
-          <IconButton icon={Maximize} label={t("editor.canvas.fitView")} onClick={() => flow.fitView({ padding: 0.25, duration: 200 })} />
+          <IconButton icon={Maximize} label={t("editor.canvas.fitView")} onClick={() => flow.fitView({ padding: 0.25, duration: motionDuration(200) })} />
           <IconButton
             icon={LayoutGrid}
             label={t("editor.canvas.autoLayout")}
             onClick={() => {
               autoLayout();
-              window.setTimeout(() => flow.fitView({ padding: 0.25, duration: 200 }), 30);
+              window.setTimeout(() => flow.fitView({ padding: 0.25, duration: motionDuration(200) }), 30);
             }}
           />
         </div>

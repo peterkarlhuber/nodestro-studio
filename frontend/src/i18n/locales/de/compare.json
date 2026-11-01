@@ -2,6 +2,7 @@
   "button": "Vergleichen ({{count}}/2)",
   "pickColumn": "Zum Vergleich auswählen",
   "pick": "{{name}} vom {{date}} zum Vergleich auswählen",
+  "rowHeader": "Verglichener Wert",
   "title": "Ausführungen vergleichen",
   "description": "Zwei gespeicherte Läufe nebeneinander: Ergebnis, Agenten, Modelle, Tools, Tokens, Kosten und Bewertungen.",
   "swap": "A und B tauschen",

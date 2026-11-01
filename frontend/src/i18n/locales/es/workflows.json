@@ -52,5 +52,6 @@
     "text": "Flujos de trabajo en los que un orquestador puede delegar (declaran capacidades o un contrato de salida). Las copias de ejemplos orquestados traen sus equipos.",
     "badge": "Equipo",
     "badgeHint": "Un orquestador puede delegar trabajo en este flujo de trabajo"
-  }
+  },
+  "changedJustNow": "modificado hace un momento"
 }

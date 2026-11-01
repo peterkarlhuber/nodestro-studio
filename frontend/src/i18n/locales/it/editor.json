@@ -135,6 +135,7 @@
     "hint": "Descrivi il compito, gli input, il risultato desiderato e il livello di qualità. L’architetto di agenti propone ruolo, prompt di sistema, modello, impegno e strumenti.",
     "placeholder": "ad es. Un agente che classifica le richieste dei clienti per urgenza e scrive una bozza di risposta cortese.",
     "review": "Controlla la proposta. Viene scritta nel nodo solo con «Applica» e resta modificabile in seguito.",
+    "costNote": "La proposta usa il tuo fornitore di IA e costa una piccola somma. Vedi il costo esatto insieme alla proposta e in Utilizzo.",
     "cost": "Costo della bozza: {{cost}}.",
     "role": "Ruolo",
     "limits": "Limiti",

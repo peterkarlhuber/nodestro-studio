@@ -501,7 +501,7 @@
     "memory_included": "Mémoire {{space}} : son contenu actuel devient la mémoire de départ.",
     "memory_empty": "La mémoire {{space}} démarre vide dans l’export.",
     "distribution_unconfirmed": "Confirmez que vous pouvez transmettre le code source d’Orkexa, ou choisissez la référence Git.",
-    "private_repository": "Installer l’export nécessite un accès en lecture au dépôt peterkarlhuber/orkexa tant qu’il est privé.",
+    "private_repository": "Installer l’export nécessite un accès en lecture au dépôt peterkarlhuber/orkexa tant qu’il est privé. Sans cet accès, choisissez « Inclure le code source ».",
     "bundled_library": "Le code source d’Orkexa est copié dans le projet (licence MIT incluse).",
     "runtime_differs": "Cette version a été publiée avec {{published}} ; l’export contient le runtime actuel {{current}}.",
     "tool_libraries": "Les bibliothèques d’outils approuvées sont installées avec le projet : {{packages}}.",

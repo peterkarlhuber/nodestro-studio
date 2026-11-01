@@ -1,0 +1,41 @@
+{
+  "run": {
+    "teamRun": "Teamlauf",
+    "active": "aktiv {{value}}",
+    "nested_one": "arbeitet mit {{count}} eigenen Lauf",
+    "nested_other": "arbeitet mit {{count}} eigenen Läufen",
+    "decisionN": "Entscheidung {{n}}",
+    "decisionRange": "Entscheidungen {{from}}–{{to}}",
+    "refusedGroup_one": "{{count}} Antwort abgelehnt, nichts ausgeführt",
+    "refusedGroup_other": "{{count}} Antworten in Folge abgelehnt, nichts ausgeführt",
+    "refusedHint": "Das Modell hat mehrmals hintereinander keine gültige Entscheidung geliefert. Meist hilft ein leistungsfähigeres Modell, klarere Anweisungen für den Orchestrator oder mehr erlaubte Entscheidungen.",
+    "refusedHelp": "Wie der Orchestrator entscheidet",
+    "pool_one": "Pool: {{count}} Team",
+    "pool_other": "Pool: {{count}} Teams",
+    "state": {
+      "running": "Läuft"
+    },
+    "perTeam": "je Team höchstens {{max}}-mal (am häufigsten: {{team}}, {{count}}×)",
+    "decisions": "Entscheidungen",
+    "usedOf": "{{used}} von {{max}}",
+    "teamRuns": "Teamläufe",
+    "stateCount": "{{state}}: {{count}}",
+    "noTeamRuns": "noch keine",
+    "cost": "Kosten mit Teams",
+    "stopped": "Der Orchestrator hat aufgehört: {{reason}}",
+    "rounds": "Entscheidungen der Reihe nach",
+    "current_one": "{{count}} Team arbeitet gerade",
+    "current_other": "{{count}} Teams arbeiten gerade"
+  },
+  "summary": {
+    "title": "Teams",
+    "decisions_one": "{{count}} Entscheidung",
+    "decisions_other": "{{count}} Entscheidungen",
+    "runs_one": "{{count}} Teamlauf",
+    "runs_other": "{{count}} Teamläufe"
+  },
+  "origin": {
+    "teamRun": "Teamlauf von {{name}} (Entscheidung {{n}}).",
+    "teamRunPlain": "Teamlauf eines Orchestrators."
+  }
+}

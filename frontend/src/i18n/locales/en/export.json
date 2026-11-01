@@ -6,7 +6,7 @@
   "fullText": "The complete trace holds everything the run stored: input, prompts, outputs, tool calls, memory and configuration.",
   "fullWarning": "Only pass it on if it contains nothing confidential.",
   "sanitizedText": "The sanitized trace replaces sensitive parts with placeholders like [EMAIL_1]. Equal values get the same placeholder, so the flow stays understandable.",
-  "alwaysSecrets": "Always removed: API keys, tokens, passwords and private keys.",
+  "alwaysSecrets": "Always replaced when recognized: API keys, tokens, passwords and private keys.",
   "personalData": "Replace personal data",
   "personalDataText": "E-mail addresses, phone numbers, IBANs, card numbers and IP addresses.",
   "contents": "Remove contents",

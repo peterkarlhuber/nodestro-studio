@@ -64,6 +64,6 @@
     "staleNotice_one": "{{count}} requête a été calculée avec un prix qui n’avait pas été vérifié depuis un moment.",
     "staleNotice_other": "{{count}} requêtes ont été calculées avec des prix qui n’avaient pas été vérifiés depuis un moment.",
     "basis": "Calculé avec les versions de prix {{versions}} issues de {{sources}}",
-    "quality": "qualité de prix la plus basse : {{quality}}"
+    "quality": "fiabilité des prix : {{quality}} (le prix le moins sûr utilisé)"
   }
 }

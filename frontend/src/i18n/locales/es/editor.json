@@ -135,6 +135,7 @@
     "hint": "Describe la tarea, las entradas, el resultado deseado y el nivel de calidad. El arquitecto de agentes propone rol, prompt de sistema, modelo, esfuerzo y herramientas.",
     "placeholder": "p. ej. Un agente que clasifica las consultas de clientes por urgencia y redacta una respuesta amable.",
     "review": "Revisa la propuesta. Solo se escribe en el nodo al pulsar «Aplicar» y después sigue siendo editable.",
+    "costNote": "La propuesta usa tu proveedor de IA y cuesta una pequeña cantidad. Ves el coste exacto junto a la propuesta y en Uso.",
     "cost": "Coste del borrador: {{cost}}.",
     "role": "Rol",
     "limits": "Límites",

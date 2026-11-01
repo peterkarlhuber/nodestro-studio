@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import type { Publication } from "../api/types";
-import { Button, Callout, Section, Segmented, Spinner } from "../components/ui";
+import { Button, Callout, HelpTip, Section, Segmented, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { CodeBlock, downloadJson } from "./common";
 import { SDK_REPOSITORY, baseUrlFrom, pythonSdk, typescriptSdk } from "./sdkSnippets";
@@ -30,7 +30,9 @@ export function ApiDocsPanel({ publication }: { publication: Publication }) {
   const { examples, openapi, number } = docs.data;
   return (
     <div className="stack">
-      <p className="muted small">{t("publish.docs.intro", { number })}</p>
+      <p className="muted small">
+        {t("publish.docs.intro", { number })} <HelpTip id="publish.open" label={t("publish.docs.openapi")} />
+      </p>
       <div className="row-gap">
         <Button icon={FileJson} onClick={() => downloadJson(openapi, `${publication.slug}-openapi.json`)} data-testid="api-openapi">
           {t("publish.docs.openapi")}
@@ -43,7 +45,9 @@ export function ApiDocsPanel({ publication }: { publication: Publication }) {
             <th>{t("publish.docs.method")}</th>
             <th>{t("publish.docs.path")}</th>
             <th>{t("publish.docs.purpose")}</th>
-            <th>{t("publish.docs.scope")}</th>
+            <th>
+              {t("publish.docs.scope")} <HelpTip id="publish.scopes" label={t("publish.docs.scope")} />
+            </th>
           </tr>
         </thead>
         <tbody>

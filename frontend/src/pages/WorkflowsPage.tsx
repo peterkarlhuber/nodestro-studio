@@ -39,7 +39,7 @@ import {
 } from "../components/ui";
 import { newNode } from "../lib/defaults";
 import { ErrorText, LocalError } from "../lib/errors";
-import { relativeTime } from "../lib/format";
+import { changedText } from "../lib/format";
 import { nameFromFile, workflowFileProblem } from "../lib/workflowFile";
 import { useAccess } from "../api/access";
 import { PermissionNote } from "../components/Access";
@@ -176,7 +176,7 @@ export function WorkflowsPage() {
             <h3>{workflow.name}</h3>
             <span className="muted small">
               {t("workflows.agentCount", { count: workflow.agents })} ·{" "}
-              {t("common.changed", { time: relativeTime(workflow.updated_at) })}
+              {changedText(t, workflow.updated_at)}
             </span>
           </div>
           {isTeam(workflow) ? (

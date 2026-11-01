@@ -83,7 +83,7 @@ Tool drafts are AI-generated: testing and approving them needs isolation, the bu
 
 Each draft calls the AI several times: for the analysis, the plan, each agent, tool drafts and corrections. You see the cost so far live in the progress view and in the review. Every call appears exactly once in the [usage overview](/docs/nutzung#statistik) under *Workflow Architect*, broken down by step.
 
-Under *Settings*, with the [models](/docs/einstellungen#modelle), you set the **cost limit** per draft (empty means no limit) and how many **AI correction attempts** are allowed (0 to 5). When the limit is reached, the architect stops. It never starts a workflow run and never calls paid external services.
+Under *Settings*, with the [models](/docs/einstellungen#modelle), you set the **cost limit** per draft (empty means no limit) and how many **AI corrections per draft** are allowed (0 to 5). When the limit is reached, the architect stops. It never starts a workflow run and never calls paid external services.
 
 ## Cancel {#abbrechen}
 <!-- keywords: cancel, stop, close, discard, safe -->

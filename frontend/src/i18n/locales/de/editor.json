@@ -135,6 +135,7 @@
     "hint": "Beschreibe Aufgabe, Eingaben, gewünschtes Ergebnis und Qualitätsanspruch. Der Agent-Architekt schlägt Rolle, System-Prompt, Modell, Aufwand und Tools vor.",
     "placeholder": "z. B. Ein Agent, der eingehende Kundenanfragen nach Dringlichkeit einstuft und eine höfliche Antwort entwirft.",
     "review": "Prüfe den Vorschlag. Er wird erst mit „Übernehmen“ in den Knoten geschrieben und bleibt danach editierbar.",
+    "costNote": "Der Vorschlag nutzt deinen KI-Anbieter und kostet einen kleinen Betrag. Die genauen Kosten siehst du beim Vorschlag und unter Nutzung.",
     "cost": "Kosten des Entwurfs: {{cost}}.",
     "role": "Rolle",
     "limits": "Limits",
