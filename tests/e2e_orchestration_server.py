@@ -30,7 +30,9 @@ def edge(source: str, target: str) -> dict[str, Any]:
     return {"id": f"{source}-{target}", "source": source, "target": target}
 
 
-def team(name: str, prompt: str, *, approval: bool = False, fields: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+def team(
+    name: str, prompt: str, *, approval: bool = False, fields: list[dict[str, Any]] | None = None
+) -> dict[str, Any]:
     nodes: list[dict[str, Any]] = [
         {"id": "s", "type": "start", "position": {"x": 0, "y": 0}, **({"start": {"fields": fields}} if fields else {})},
         {
@@ -61,7 +63,9 @@ def script(ids: dict[str, str]) -> dict[str, list[Any]]:
 
     def decide(**values: Any) -> Any:
         # The ids exist only once the teams are saved; the lambda reads them when the model answers.
-        return parsed(lambda model: model(**{key: value(ids) if callable(value) else value for key, value in values.items()}))
+        return parsed(
+            lambda model: model(**{key: value(ids) if callable(value) else value for key, value in values.items()})
+        )
 
     boss = [
         # run 1
@@ -73,7 +77,9 @@ def script(ids: dict[str, str]) -> dict[str, list[Any]]:
             reason="Beides ist unabhängig",
         ),
         decide(action="staff", add=lambda i: [i["l"]], remove=lambda i: [i["r"]], reason="Jetzt nur noch glätten"),
-        decide(action="delegate", member=lambda i: i["l"], task="Text glätten", values='{"tone": "formal"}', reason="Ton"),
+        decide(
+            action="delegate", member=lambda i: i["l"], task="Text glätten", values='{"tone": "formal"}', reason="Ton"
+        ),
         decide(action="finish", answer="Fertiger Text über Otter", reason="Alles erledigt"),
         # run 2
         decide(action="staff", add=lambda i: [i["d"]], reason="Nur ein Entwurf"),
