@@ -3,17 +3,25 @@
 Un flujo de trabajo conecta agentes para formar una cadena. Este capítulo explica cómo crear flujos de trabajo, conectar nodos, cómo fluyen los datos entre los agentes y cómo iniciar una ejecución.
 
 ## Crear y gestionar flujos de trabajo {#anlegen}
-<!-- keywords: nuevo flujo de trabajo, crear, eliminar, duplicar, copia, resumen, workflow -->
+<!-- keywords: nuevo flujo de trabajo, crear, eliminar, duplicar, copia, resumen, workflow, continuar, ejecuciones recientes, equipos, insignia equipo, sin modelo de ia, galería, empieza aquí, nivel -->
 
 La página **Flujos de trabajo** muestra todos los flujos como tarjetas con el número de agentes, el último cambio y el estado de la última ejecución.
 
-La página ofrece tres formas equivalentes de empezar: **Crear con IA** abre el diálogo de un nuevo flujo de trabajo con el [Arquitecto IA](/docs/ki-architekt#neu-erstellen), **Empezar con un ejemplo** abre la [galería de ejemplos](/docs/beispiele) y **Crearlo tú mismo** abre el mismo diálogo para un flujo vacío. Mientras no haya ningún flujo aparecen como mosaicos grandes; después, como una fila estrecha sobre la lista.
+La página ofrece tres formas equivalentes de empezar: **Crear con IA** abre el diálogo de un nuevo flujo de trabajo con el [Arquitecto IA](/docs/ki-architekt#neu-erstellen), **Empezar con un ejemplo** abre la [galería de ejemplos](/docs/beispiele) y **Crearlo tú mismo** abre el mismo diálogo para un flujo vacío. Mientras no haya ningún flujo aparecen como mosaicos grandes; después, como una fila estrecha **Empezar uno nuevo** sobre la lista.
+
+**Sin modelo de IA:** si todavía no hay ningún proveedor de IA configurado para el modelo predeterminado, un aviso sobre los mosaicos grandes indica que los flujos solo se ejecutan con un modelo de IA conectado (una clave de API o un servidor de modelos local como Ollama), con el enlace **Configurar en Ajustes**. El ejemplo pasa entonces al primer lugar, porque una copia no necesita modelo, y *Crear con IA* lleva la nota *Necesita una conexión a un modelo de IA*. El diálogo también lo dice si eliges allí *Crear con IA*: el Arquitecto IA trabaja con tu modelo predeterminado.
 
 - **Nuevo flujo de trabajo:** escribe un nombre y una descripción opcional. El nuevo flujo ya contiene *Inicio → Agente → Resultado*.
 - **Crear con IA:** en el mismo diálogo describes lo que quieres y el [arquitecto de flujos](/docs/ki-architekt#neu-erstellen) diseña el flujo para que lo revises.
 - **Abrir:** haz clic en la tarjeta.
 - **Duplicar:** símbolo de copia en la tarjeta. La copia se llama «… (copia)»; las ejecuciones no se copian.
 - **Eliminar:** símbolo de la papelera. Las ejecuciones anteriores siguen disponibles en *Ejecuciones*.
+
+**Continuar:** en cuanto hay flujos y ejecuciones, sobre la lista aparece el área **Continuar**: cuántas aprobaciones te esperan (un clic abre la página *Aprobaciones*), las **Ejecuciones recientes** con su estado y, con más de seis flujos, los **Editados recientemente**. Las partes sin contenido no se muestran; si no hay nada, falta toda el área.
+
+**Equipos:** los flujos con capacidades o contrato de salida llevan la insignia **Equipo**: un [orquestador](/docs/verzweigungen#orchestrator) puede delegarles trabajo. Aparecen debajo de tus propios flujos, en el área desplegable **Equipos**. Las copias de ejemplos orquestados traen sus equipos consigo.
+
+**Galería de ejemplos:** debajo de la lista están los ejemplos destacados, el más sencillo primero y marcado con **Empieza aquí** mientras aún no tienes ningún flujo. Después, la galería es un área plegada que recuerda si la abriste. En la galería completa buscas por nombre, ámbito, bloque o nivel y filtras por categoría y **Nivel**; la búsqueda, los filtros y una vista previa abierta forman parte de la dirección, así que *Atrás* vuelve a la misma selección. En **Qué necesitas**, la vista previa indica qué proveedor de IA y qué modelos usa la copia (y si está configurado), si una ejecución se detiene para una aprobación, qué archivos de conocimiento y de ejemplo vienen incluidos y si hace falta una conexión con otro servicio. Más en [Flujos de trabajo de ejemplo](/docs/beispiele).
 
 ## Favoritos y etiquetas {#favoriten-tags}
 <!-- keywords: favorito, favoritos, estrella, etiqueta, etiquetas, filtrar, ordenar -->
@@ -23,14 +31,14 @@ Los flujos de trabajo, las plantillas de agentes y las herramientas se pueden ma
 Encima de las listas filtras por **Solo favoritos** y por una etiqueta. Los favoritos y las etiquetas se guardan aparte de los objetos: no cambian ni flujos de trabajo ni agentes ni herramientas, y también aparecen en la [búsqueda](/docs/start#suche). No hay carpetas, a propósito.
 
 ## El editor {#editor}
-<!-- keywords: lienzo, canvas, paleta, bloques, inspector, resumen de la ejecución, zoom, minimapa -->
+<!-- keywords: lienzo, canvas, paleta, bloques, inspector, resumen de la ejecución, zoom, minimapa, barra de título, más acciones, equipos en la paleta -->
 
 El editor tiene cuatro áreas:
 
-1. **Barra de título:** nombre, *Exportar*, *Guardar*, *Añadir agente* e *Iniciar flujo de trabajo*.
-2. **Lienzo:** los nodos y las conexiones. Arriba a la izquierda se indica si hay cambios sin guardar y cuántos agentes y conexiones tiene el flujo. Abajo a la izquierda están el zoom, *Mostrar todo*, *Ordenar automáticamente* y también *Deshacer* y *Rehacer*. Arriba a la derecha, un mapa general muestra todo el flujo.
-3. **Bloques (paleta):** *Agente* (vacío), *Describir un agente* (la IA diseña la configuración), *Inicio*, *Resultado* y hasta ocho plantillas de la biblioteca de agentes. Arrastra un bloque al lienzo o haz clic en él.
-4. **Inspector (derecha):** sin selección muestra los ajustes del flujo de trabajo; si no, la configuración del nodo seleccionado.
+1. **Barra de título:** nombre, *Arquitecto IA*, *API y exportación*, el menú **Más acciones** (*Versiones* y *Exportar como archivo*), *Guardar* e *Iniciar flujo de trabajo*. Con cambios sin guardar se añade *Descartar*. En ventanas estrechas, las acciones secundarias se muestran solo como iconos.
+2. **Lienzo:** los nodos y las conexiones. Arriba a la izquierda se indica si hay cambios sin guardar y cuántos agentes y conexiones tiene el flujo. Abajo a la izquierda están el zoom, *Mostrar todo*, *Ordenar automáticamente* y también *Deshacer* y *Rehacer* (bloqueados cuando no hay nada que deshacer o rehacer). Arriba a la derecha, un mapa general muestra todo el flujo. Un flujo grande se abre con un tamaño legible en su nodo de inicio, en lugar de reducido hasta caber.
+3. **Bloques (paleta):** *Agente* (vacío), *Describir un agente* (la IA diseña la configuración), *Inicio*, *Resultado*, hasta ocho plantillas de la biblioteca de agentes y, debajo, los **Equipos**, que puedes buscar y plegar; cada equipo indica sus capacidades. Arrastra un bloque al lienzo o haz clic en él. Un nodo nuevo aparece en la parte visible del lienzo y queda seleccionado.
+4. **Inspector (derecha):** sin selección muestra la comprobación y los ajustes del flujo de trabajo; si no, la configuración del nodo seleccionado y, con varios nodos seleccionados, las acciones para todos ellos (consulta [Manejo y atajos de teclado](/docs/workflows#bedienung)).
 
 Debajo del lienzo está el **Resumen de la ejecución** con la última ejecución de este flujo.
 
@@ -166,24 +174,24 @@ Una solicitud al modelo o una llamada a una herramienta que ya está en curso se
 Nodestro comprueba el flujo de trabajo en cada cambio (tras una pausa de medio segundo), sin llamar a la API y sin coste:
 
 - **Estructura:** ¿Hay al menos un agente? ¿El nodo de inicio no tiene entradas y el nodo de resultado no tiene salidas? ¿No hay ciclos, conexiones duplicadas ni conexiones que no lleven a ninguna parte? ¿Tiene entrada el nodo de resultado?
-- **Agentes:** Cada configuración se comprueba con las reglas de la biblioteca. Los agentes con errores muestran «1 problema» en el lienzo.
+- **Agentes:** Cada configuración se comprueba con las reglas de la biblioteca. Los nodos con errores muestran «1 problema» en el lienzo, también Inicio y Resultado; las advertencias aparecen como «1 advertencia» con su propio color y un icono.
 - **Conexiones y marcadores:** marcadores que no coinciden con ningún predecesor conectado, agentes sin entrada, resultados que no llegan a ninguna parte y nombres de agente duplicados.
 - **Ajustes:** proveedores sin configurar, archivos de conocimiento o de inicio borrados, modelos sin precio conocido y un presupuesto de 0.
 
-Los resultados aparecen en el inspector del flujo de trabajo (clic en un lugar vacío del lienzo), ordenados en **errores** y **avisos**. Un clic en un mensaje selecciona el agente afectado o resalta la conexión afectada; las conexiones con errores aparecen en rojo discontinuo.
+Los resultados aparecen en la parte superior del inspector del flujo de trabajo (clic en un lugar vacío del lienzo), ordenados en **errores** y **avisos**. Un clic en un mensaje selecciona el agente afectado o resalta la conexión afectada; las conexiones con errores aparecen en rojo discontinuo. Si seleccionas un nodo, sus propios mensajes aparecen encima de sus ajustes. Mientras falte un proveedor, los nodos no muestran «Listo».
 
-Mientras haya **errores**, **Iniciar flujo de trabajo** está bloqueado; pasa el ratón por el botón para ver los motivos. Los **avisos** no bloquean el inicio; el diálogo de inicio los vuelve a mostrar.
+Mientras haya **errores**, **Iniciar flujo de trabajo** está bloqueado. El motivo aparece justo al lado del botón; con varios problemas, el primero («3 problemas impiden el inicio. Primero: …»). **Mostrar** selecciona el nodo o la conexión afectados y abre el inspector; si falta un proveedor de IA, **Abrir ajustes** lleva directamente allí. El botón bloqueado sigue siendo accesible con el teclado, y los lectores de pantalla leen el motivo. Los **avisos** no bloquean el inicio; el diálogo de inicio los vuelve a mostrar.
 
 ## Iniciar una ejecución {#starten}
-<!-- keywords: iniciar, ejecutar, run, diálogo de inicio, entrada, adjuntar archivos -->
+<!-- keywords: iniciar, ejecutar, run, diálogo de inicio, entrada, adjuntar archivos, tarea precargada, más archivos -->
 
 **Iniciar flujo de trabajo** abre el diálogo de inicio:
 
-- **Entrada:** el texto que reciben todos los agentes al inicio. Aparece rellenado con la *Propuesta de entrada* del nodo de inicio.
-- **Adjuntar archivos (opcional):** archivos de conocimiento que se colocan directamente en el contexto de los primeros agentes solo para esta ejecución (consulta [Adjuntar archivos al iniciar](/docs/wissen#start-dateien)).
+- **Entrada:** el texto que reciben todos los agentes al inicio. Aparece rellenado con la *Propuesta de entrada* del nodo de inicio. Si el flujo tiene un [formulario de entrada](/docs/verzweigungen#eingabeformular), el campo está debajo de los campos del formulario; si viene rellenado, se llama **Tarea (ejemplo precargado)**: sustituye el ejemplo por tu propia petición.
+- **Adjuntar archivos (opcional):** archivos de conocimiento que se colocan directamente en el contexto de los primeros agentes solo para esta ejecución (consulta [Adjuntar archivos al iniciar](/docs/wissen#start-dateien)). Si el formulario tiene campos de archivo propios, esta área está plegada en **Adjuntar más archivos (opcional)**.
 - **Presupuesto:** el diálogo muestra qué presupuesto se aplica.
 
-Con **Iniciar**, Nodestro guarda el flujo y comienza la ejecución. La ejecución usa el estado del flujo en el momento de iniciarla; los cambios posteriores solo surten efecto en la siguiente. Si el proveedor de un modelo no está configurado, el diálogo lo indica.
+Con **Iniciar**, Nodestro guarda el flujo y comienza la ejecución. La ejecución usa el estado del flujo en el momento de iniciarla; los cambios posteriores solo surten efecto en la siguiente. Si el proveedor de un modelo no está configurado, el diálogo lo indica. Si la ejecución aún no puede empezar, el motivo aparece debajo de **Iniciar**: todavía se están subiendo archivos o primero hay que corregir errores (*Primero corrige los problemas de arriba.*).
 
 ## Manejo y atajos de teclado {#bedienung}
 <!-- keywords: atajos de teclado, shortcuts, ctrl+s, ctrl+z, deshacer, rehacer, supr, duplicar, ordenar automáticamente -->
@@ -194,11 +202,14 @@ Más consejos:
 
 - **Ordenar automáticamente** coloca los nodos en columnas según su posición en el flujo de datos.
 - **Mostrar todo** ajusta el zoom para que se vea todo el flujo.
-- Si sales del editor con cambios sin guardar, Nodestro pregunta si quieres guardarlos o descartarlos.
-- Deshacer recuerda hasta 80 pasos. Mover un nodo es un paso, igual que escribir en un campo hasta que cambias a otro campo o nodo. El nombre, la descripción y el presupuesto del flujo también cuentan.
+- **Seleccionar varios nodos:** Mayús o Ctrl más clic añade nodos a la selección; Mayús y arrastrar sobre el lienzo selecciona con un marco. Arrastrar mueve todos los nodos seleccionados, **Supr** los elimina todos y **Ctrl+D** los duplica todos. El inspector ofrece entonces *Duplicar todos*, *Eliminar nodos* y *Quitar selección*.
+- **Deshacer una eliminación:** tras eliminar nodos aparece un mensaje con **Deshacer**.
+- **Trazar conexiones:** ya mientras arrastras, el lienzo muestra dónde no se permite una conexión; si la sueltas ahí, un mensaje indica el motivo.
+- Si sales del editor con cambios sin guardar, Nodestro pregunta si quieres guardarlos, descartarlos o **Seguir editando**.
+- Deshacer recuerda hasta 80 pasos. Mover un nodo es un paso, igual que escribir en un campo hasta que cambias a otro campo o nodo. El nombre, la descripción y el presupuesto del flujo también cuentan. Si deshaces todo hasta el estado guardado, ya no quedan cambios sin guardar.
 
 - **Eliminar conexiones:** Haz clic en una conexión. Se resalta, y **Supr** o **Retroceso** la elimina. Mientras escribes en un campo de entrada, estas teclas solo borran texto. Eliminar una conexión también se puede deshacer.
-- La barra **Bloques** siempre está plegada al abrir el editor; una vez desplegada, sigue abierta hasta que salgas del editor.
+- En ventanas estrechas (menos de 1100 píxeles de ancho), la barra **Bloques** empieza plegada; después se aplica la distribución que elegiste por última vez.
 
 ## Guardar y descartar {#speichern}
 <!-- keywords: guardar, descartar, sin guardar, descartar cambios, restablecer -->
@@ -207,23 +218,34 @@ Más consejos:
 
 **Descartar** desecha todos los cambios sin guardar, incluido el historial de deshacer/rehacer, y vuelve a cargar el último estado guardado. Lo mismo ocurre si sales del editor y eliges **Descartar** en el diálogo: la próxima vez que lo abras aparecerá exactamente el flujo de trabajo guardado.
 
+**Cambiado en otro lugar:** antes de guardar, Nodestro comprueba si el flujo se ha guardado mientras tanto en otro lugar, en otra pestaña o por otra persona. En ese caso pregunta el diálogo **Cambiado en otro lugar**, en lugar de sustituir el otro cambio sin decir nada:
+
+- **Cargar versión guardada:** el editor muestra el estado guardado; tus cambios sin guardar de aquí se pierden.
+- **Conservar el mío como copia:** tu estado se convierte en un flujo nuevo «… (mi copia)»; el guardado se queda como está.
+- **Guardar el mío de todos modos:** tu estado sustituye al otro cambio.
+- **Seguir editando:** no se guarda nada.
+
+Nada se pierde definitivamente: cada guardado se conserva en [Versiones](/docs/workflows#versionen).
+
 ## Versiones {#versionen}
 <!-- keywords: versión, versiones, historial, restaurar, volver, estado anterior -->
 
-Cada guardado que cambia algo se conserva como **versión** numerada con fecha y hora. **Versiones** en la barra de título del editor abre el historial:
+Cada guardado que cambia algo se conserva como **versión** numerada con fecha y hora. **Versiones**, en el menú **Más acciones** de la barra de título, abre el historial:
 
 - **Guardar como versión** guarda los cambios actuales con una descripción opcional («antes de rehacer la investigación»).
 - Con el icono del lápiz añades o cambias la descripción de una versión.
 - **Diferencias** muestra qué cambiaría respecto al estado del editor: agentes, conexiones, nombre y ajustes.
-- **Restaurar** devuelve el flujo de trabajo a esa versión y guarda el resultado como **versión nueva**. Ninguna versión se sobrescribe ni se elimina.
+- **Restaurar** devuelve el flujo de trabajo a esa versión y guarda el resultado como **versión nueva**. Ninguna versión se sobrescribe ni se elimina. Si hay cambios sin guardar, eliges **Guardar primero y restaurar** (los cambios pasan antes a ser una versión propia) o **Restaurar sin guardar**.
 
 Las versiones son independientes de deshacer/rehacer, que solo vale dentro de una sesión en el editor. Las ejecuciones usan siempre el estado del momento de inicio. Si se elimina un flujo de trabajo, también se eliminan sus versiones. Arriba del historial aparece el **resultado de pruebas** de la versión guardada en cada serie de pruebas del flujo (como al [publicar](/docs/api-und-export#veroeffentlichen)).
 
 ## Importar y exportar {#import-export}
-<!-- keywords: exportar, importar, json, archivo, compartir, copia de seguridad, .nodestro.json -->
+<!-- keywords: exportar, importar, json, archivo, compartir, copia de seguridad, .nodestro.json, no es un flujo, archivo no válido -->
 
-- **Exportar** (en el editor) guarda el flujo como `<Nombre>.nodestro.json`: todos los nodos, conexiones, posiciones y ajustes de agentes, además del presupuesto.
-- **Importar** (en la página *Flujos de trabajo*) carga un archivo así como **copia nueva** con un ID nuevo. Los flujos existentes nunca se sobrescriben.
+- **Exportar como archivo** (en el editor, en **Más acciones**) guarda el flujo como `<Nombre>.nodestro.json`: todos los nodos, conexiones, posiciones y ajustes de agentes, además del presupuesto.
+- **Importar** (en la página *Flujos de trabajo*) carga un archivo así como **copia nueva** con un ID nuevo. Los flujos existentes nunca se sobrescriben. Si el archivo no tiene nombre, el flujo se llama como el archivo.
+
+Nodestro comprueba el archivo antes de crear nada. Si no es una exportación de un flujo (por ejemplo, otro archivo JSON, un archivo sin pasos o con conexiones rotas), no se importa nada y el mensaje indica el motivo, por ejemplo *Este archivo no es un flujo de trabajo de Nodestro: no tiene pasos ("nodes").*
 
 **No se incluyen** los archivos de conocimiento, los espacios de memoria ni las herramientas propias; el archivo solo hace referencia a sus ID y nombres. En otro ordenador tienen que existir allí; si no, la comprobación indica, por ejemplo, «Herramientas desconocidas».
 

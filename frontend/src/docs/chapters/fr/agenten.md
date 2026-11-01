@@ -136,7 +136,7 @@ La **réflexion (thinking)** détermine si le modèle réfléchit avant de répo
 
 La réflexion compte comme **tokens de sortie** et est facturée comme tels.
 
-Si l’on ne sait pas si un modèle prend en charge l’effort de raisonnement (vos propres serveurs, identifiants de modèle inconnus), un effort défini provoque une erreur. Choisissez alors *Valeur par défaut du modèle* ou déclarez la capacité sous [Fournisseurs d’IA](/docs/einstellungen#anbieter).
+Si l’on ne sait pas si un modèle prend en charge l’effort de raisonnement (vos propres serveurs, identifiants de modèle inconnus), un effort défini provoque une erreur. Choisissez alors *Valeur par défaut du modèle* ou déclarez la capacité sous [Fournisseurs d’IA](/docs/einstellungen#anbieter). Les points d’accès compatibles OpenAI (comme Ollama ou vLLM) n’acceptent aucun réglage d’effort ; la vérification l’explique, et **Régler l’effort sur la valeur du modèle** modifie l’agent en un clic.
 
 ## Contrôle qualité {#qualitaet}
 <!-- keywords: contrôle qualité, juge, judge, évaluateur, critères, révision, refine, llm as a judge, évaluation -->

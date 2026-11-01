@@ -8,7 +8,7 @@ Vous trouverez ici des solutions aux messages courants et des réponses aux ques
 | Message ou symptôme | Cause | Solution |
 |---|---|---|
 | « Aucune clé API pour … » | Le fournisseur du modèle n’est pas configuré. | Saisissez la clé sous *Réglages → Fournisseurs d’IA* ou définissez la variable d’environnement du fournisseur, par exemple `ANTHROPIC_API_KEY`. |
-| « Lancer le workflow » est grisé | Le workflow présente des problèmes ou une exécution est en cours. | Survolez le bouton ; les problèmes figurent dans l’inspecteur quand rien n’est sélectionné. |
+| « Lancer le workflow » est bloqué | Le workflow présente des problèmes, une exécution est en cours ou, sur un serveur, votre rôle n’a pas l’autorisation. | La raison s’affiche juste à côté du bouton ; **Afficher** mène au problème. Tous les problèmes figurent dans l’inspecteur quand rien n’est sélectionné. |
 | « Le workflow contient une boucle … » | Une connexion revient en arrière. | Supprimez la connexion qui revient en arrière. |
 | « Outils inconnus : … » | Un outil attribué a été supprimé ou manque après un import. | Retirez l’outil dans l’inspecteur ou recréez-le dans la bibliothèque d’outils. |
 | « … n’accepte pas d’outil imposé … » | Le modèle n’autorise pas d’outil imposé. | Réglez tool choice sur *Automatique*. |

@@ -12,7 +12,7 @@ Ouvrez un workflow dans l’éditeur et cliquez sur **API & Export**. La boîte 
 | **Aperçu** | État, adresses, publication, versions et dernières exécutions de l’API |
 | **Clés et accès** | Clés d’API et accès facultatif depuis le réseau |
 | **Tester** | Vérifier une requête ou lancer une véritable exécution de test |
-| **Documentation** | Points de terminaison, exemples curl et Python, description OpenAPI |
+| **Documentation** | Points de terminaison, exemples curl, Python et SDK officiels, description OpenAPI |
 | **Limites** | Nom dans l’URL, description et limites |
 | **Export** | Le projet FastAPI autonome au format ZIP |
 
@@ -91,6 +91,8 @@ Vous définissez le nom dans l’URL (par ex. `verifier-factures`) lors de la pu
 | `GET /openapi.json` | Description OpenAPI de cette API uniquement | – |
 
 Les schémas complets se trouvent sous **Documentation**, où **Télécharger la description OpenAPI** vous donne aussi le fichier OpenAPI.
+
+Les exemples existent en **curl**, **Python**, **SDK Python** et **SDK TypeScript**, ainsi que les **Réponses** possibles. Les clients officiels de `nodestro-sdk` lancent les exécutions avec une clé d’idempotence (une nouvelle tentative ne lance jamais une seconde exécution), réessaient après des erreurs de connexion et signalent des erreurs typées. Les exemples contiennent déjà l’adresse, le nom et une requête adaptée de cette API ; la façon d’installer le client figure en haut de chaque exemple.
 
 ## Requêtes et réponses {#aufrufen}
 <!-- keywords: requête, request, corps, body, json, input, values, formulaire, schéma, fichiers, base64, réponse, 202, run_id, idempotency -->
@@ -204,7 +206,7 @@ Chaque erreur a la même forme pour que les programmes puissent l’exploiter :
 
 **Tester** contient une requête d’exemple que vous pouvez adapter :
 
-- **Vérifier la requête** valide le corps exactement comme l’API, affiche l’entrée que recevrait le workflow et ne lance rien. Cela ne coûte rien.
+- **Vérifier la requête** valide le corps exactement comme l’API, affiche l’entrée que recevrait le workflow et ne lance rien. Cela ne coûte rien. Si la requête ne correspond pas (aussi pour une exécution de test), Nodestro liste chaque champ une seule fois avec son libellé et le problème, par exemple *Quantité : doit être un nombre*, *obligatoire* ou *ne fait pas partie de l’entrée*.
 - **Lancer une exécution de test** lance une véritable exécution de la version publiée par le même chemin que l’API. Elle est facturée comme toute exécution et apparaît sous Exécutions comme exécution de test depuis Nodestro.
 
 Pour les tests de régression d’une nouvelle version, utilisez les [séries de tests](/docs/automatisierung#testreihen) : elles tournent avec la version enregistrée avant que vous ne publiiez.

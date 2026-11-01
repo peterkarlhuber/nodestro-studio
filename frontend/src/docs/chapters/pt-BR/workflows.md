@@ -3,17 +3,25 @@
 Um fluxo de trabalho conecta agentes em uma sequência. Este capítulo explica como criar fluxos de trabalho, conectar nós, como os dados passam entre os agentes e como iniciar uma execução.
 
 ## Criar e gerenciar fluxos de trabalho {#anlegen}
-<!-- keywords: novo fluxo de trabalho, criar, excluir, duplicar, cópia, visão geral, workflow -->
+<!-- keywords: novo fluxo de trabalho, criar, excluir, duplicar, cópia, visão geral, workflow, continuar, execuções recentes, equipes, selo equipe, sem modelo de ia, galeria, comece aqui, nível -->
 
 A página **Fluxos de trabalho** mostra todos os fluxos como cartões com o número de agentes, a última alteração e o status da última execução.
 
-A página oferece três formas equivalentes de começar: **Criar com IA** abre a caixa de diálogo de um novo fluxo de trabalho com o [Arquiteto IA](/docs/ki-architekt#neu-erstellen), **Começar com um exemplo** abre a [galeria de exemplos](/docs/beispiele) e **Montar você mesmo** abre a mesma caixa de diálogo para um fluxo vazio. Enquanto não houver nenhum fluxo, elas aparecem como blocos grandes; depois, como uma linha estreita acima da lista.
+A página oferece três formas equivalentes de começar: **Criar com IA** abre a caixa de diálogo de um novo fluxo de trabalho com o [Arquiteto IA](/docs/ki-architekt#neu-erstellen), **Começar com um exemplo** abre a [galeria de exemplos](/docs/beispiele) e **Montar você mesmo** abre a mesma caixa de diálogo para um fluxo vazio. Enquanto não houver nenhum fluxo, elas aparecem como blocos grandes; depois, como uma linha estreita **Começar um novo** acima da lista.
+
+**Sem modelo de IA:** se ainda não houver um provedor de IA configurado para o modelo padrão, um aviso acima dos blocos grandes explica que os fluxos só rodam com um modelo de IA conectado (uma chave de API ou um servidor de modelos local como o Ollama), com o link **Configurar nas configurações**. O exemplo passa então para o primeiro lugar, porque uma cópia não precisa de modelo, e *Criar com IA* mostra *Precisa de uma conexão com um modelo de IA*. A caixa de diálogo também avisa se você escolher *Criar com IA* nela: o Arquiteto IA trabalha com o seu modelo padrão.
 
 - **Novo fluxo de trabalho:** digite um nome e uma descrição opcional. O novo fluxo já contém *Início → Agente → Resultado*.
 - **Criar com IA:** no mesmo diálogo você descreve o que quer e o [arquiteto de fluxos](/docs/ki-architekt#neu-erstellen) projeta o fluxo para você revisar.
 - **Abrir:** clique no cartão.
 - **Duplicar:** símbolo de cópia no cartão. A cópia se chama "… (cópia)"; as execuções não são copiadas.
 - **Excluir:** símbolo da lixeira. As execuções anteriores continuam disponíveis em *Execuções*.
+
+**Continuar:** assim que existem fluxos e execuções, a área **Continuar** aparece acima da lista: quantas aprovações aguardam você (um clique abre a página *Aprovações*), as **Execuções recentes** com o status e, com mais de seis fluxos, os **Editados recentemente**. Partes sem conteúdo são omitidas; se não houver nada, a área inteira some.
+
+**Equipes:** fluxos com capacidades ou com um contrato de saída levam o selo **Equipe**: um [orquestrador](/docs/verzweigungen#orchestrator) pode delegar trabalho a eles. Eles ficam abaixo dos seus próprios fluxos, na área expansível **Equipes**. Cópias de exemplos orquestrados trazem suas equipes junto.
+
+**Galeria de exemplos:** abaixo da lista ficam os exemplos recomendados, o mais simples primeiro e marcado com **Comece aqui** enquanto você não tiver nenhum fluxo. Depois, a galeria é uma área recolhida que lembra se você a abriu. Na galeria completa você busca por nome, área, bloco ou nível e filtra por categoria e por **Nível**; busca, filtros e uma prévia aberta fazem parte do endereço, então *Voltar* leva à mesma seleção. Em **Do que você precisa**, a prévia mostra qual provedor de IA e quais modelos a cópia usa (e se ele está configurado), se uma execução para em uma aprovação, quais arquivos de conhecimento e de exemplo vêm junto e se é preciso uma conexão com outro serviço. Mais detalhes em [Fluxos de trabalho de exemplo](/docs/beispiele).
 
 ## Favoritos e tags {#favoriten-tags}
 <!-- keywords: favorito, favoritos, estrela, tag, tags, etiqueta, filtrar, organizar -->
@@ -23,14 +31,14 @@ Fluxos de trabalho, modelos de agentes e ferramentas podem ser marcados como fav
 Acima das listas você filtra por **Só favoritos** e por uma tag. Favoritos e tags são salvos separadamente dos objetos: não alteram fluxos de trabalho, agentes nem ferramentas, e também aparecem na [busca](/docs/start#suche). Pastas não existem, de propósito.
 
 ## O editor {#editor}
-<!-- keywords: tela, canvas, paleta, blocos, inspetor, visão geral da execução, zoom, minimapa -->
+<!-- keywords: tela, canvas, paleta, blocos, inspetor, visão geral da execução, zoom, minimapa, barra de título, mais ações, equipes na paleta -->
 
 O editor tem quatro áreas:
 
-1. **Barra de título:** nome, *Exportar*, *Salvar*, *Adicionar agente* e *Iniciar fluxo de trabalho*.
-2. **Tela:** os nós e as conexões. No canto superior esquerdo aparece se há alterações não salvas e quantos agentes e conexões o fluxo tem. No canto inferior esquerdo ficam o zoom, *Mostrar tudo*, *Organizar automaticamente* e também *Desfazer* e *Refazer*. No canto superior direito, um mapa geral mostra o fluxo inteiro.
-3. **Blocos (paleta):** *Agente* (vazio), *Descrever um agente* (a IA cria a configuração), *Início*, *Resultado* e até oito modelos da biblioteca de agentes. Arraste um bloco para a tela ou clique nele.
-4. **Inspetor (à direita):** sem seleção, mostra as configurações do fluxo de trabalho; caso contrário, a configuração do nó selecionado.
+1. **Barra de título:** nome, *Arquiteto IA*, *API e exportação*, o menu **Mais ações** (*Versões* e *Exportar como arquivo*), *Salvar* e *Iniciar fluxo de trabalho*. Com alterações não salvas, aparece também *Descartar*. Em janelas estreitas, as ações secundárias aparecem só como ícones.
+2. **Tela:** os nós e as conexões. No canto superior esquerdo aparece se há alterações não salvas e quantos agentes e conexões o fluxo tem. No canto inferior esquerdo ficam o zoom, *Mostrar tudo*, *Organizar automaticamente* e também *Desfazer* e *Refazer* (bloqueados quando não há nada a desfazer ou refazer). No canto superior direito, um mapa geral mostra o fluxo inteiro. Um fluxo grande abre em tamanho legível no seu nó de início, em vez de ser reduzido para caber na tela.
+3. **Blocos (paleta):** *Agente* (vazio), *Descrever um agente* (a IA cria a configuração), *Início*, *Resultado*, até oito modelos da biblioteca de agentes e, abaixo, as **Equipes**, que você pode buscar e recolher; cada equipe mostra suas capacidades. Arraste um bloco para a tela ou clique nele. Um novo nó aparece na parte visível da tela e já fica selecionado.
+4. **Inspetor (à direita):** sem seleção, mostra a verificação e as configurações do fluxo de trabalho; caso contrário, a configuração do nó selecionado e, com vários nós selecionados, as ações em comum (veja [Controles e atalhos de teclado](/docs/workflows#bedienung)).
 
 Abaixo da tela fica a **Visão geral da execução** com a última execução deste fluxo.
 
@@ -166,24 +174,24 @@ Uma solicitação ao modelo ou uma chamada de ferramenta que já está em andame
 O Nodestro verifica o fluxo de trabalho a cada alteração (após meio segundo de pausa), sem chamar a API e sem custo:
 
 - **Estrutura:** Há pelo menos um agente? O nó inicial não tem entradas e o nó de resultado não tem saídas? Não há ciclos, conexões duplicadas nem conexões que não levam a lugar nenhum? O nó de resultado tem uma entrada?
-- **Agentes:** Cada configuração é verificada com as regras da biblioteca. Agentes com erros mostram “1 problema” na área de trabalho.
+- **Agentes:** Cada configuração é verificada com as regras da biblioteca. Nós com erros mostram “1 problema” na área de trabalho, inclusive Início e Resultado; avisos aparecem como “1 aviso”, com cor e ícone próprios.
 - **Conexões e marcadores:** marcadores que não correspondem a nenhum predecessor conectado, agentes sem entrada, resultados que não chegam a lugar nenhum e nomes de agentes duplicados.
 - **Configurações:** provedores não configurados, arquivos de conhecimento ou de início apagados, modelos sem preço conhecido e orçamento 0.
 
-Os resultados aparecem no inspetor do fluxo de trabalho (clique em um ponto vazio da área de trabalho), separados em **erros** e **avisos**. Um clique em uma mensagem seleciona o agente afetado ou destaca a conexão afetada; conexões com erro aparecem em vermelho tracejado.
+Os resultados aparecem no topo do inspetor do fluxo de trabalho (clique em um ponto vazio da área de trabalho), separados em **erros** e **avisos**. Um clique em uma mensagem seleciona o agente afetado ou destaca a conexão afetada; conexões com erro aparecem em vermelho tracejado. Quando você seleciona um nó, as mensagens dele aparecem acima das configurações dele. Enquanto um provedor não estiver configurado, os nós não mostram “Pronto”.
 
-Enquanto houver **erros**, **Iniciar fluxo de trabalho** fica bloqueado; passe o mouse sobre o botão para ver os motivos. **Avisos** não bloqueiam o início; a caixa de diálogo de início os mostra novamente.
+Enquanto houver **erros**, **Iniciar fluxo de trabalho** fica bloqueado. O motivo aparece logo ao lado do botão; havendo vários problemas, o primeiro (“3 problemas impedem o início. Primeiro: …”). **Mostrar** seleciona o nó ou a conexão afetada e abre o inspetor; se faltar um provedor de IA, **Abrir configurações** leva direto até lá. O botão bloqueado continua acessível pelo teclado, e leitores de tela leem o motivo. **Avisos** não bloqueiam o início; a caixa de diálogo de início os mostra novamente.
 
 ## Iniciar uma execução {#starten}
-<!-- keywords: iniciar, executar, run, caixa de diálogo de início, entrada, anexar arquivos -->
+<!-- keywords: iniciar, executar, run, caixa de diálogo de início, entrada, anexar arquivos, tarefa pré-preenchida, mais arquivos -->
 
 **Iniciar fluxo de trabalho** abre a caixa de diálogo de início:
 
-- **Entrada:** o texto que todos os agentes recebem no início. Ele já vem preenchido com a *Sugestão de entrada* do nó de início.
-- **Anexar arquivos (opcional):** arquivos de conhecimento colocados diretamente no contexto dos primeiros agentes, só nesta execução (veja [Anexar arquivos ao iniciar](/docs/wissen#start-dateien)).
+- **Entrada:** o texto que todos os agentes recebem no início. Ele já vem preenchido com a *Sugestão de entrada* do nó de início. Se o fluxo tiver um [formulário de entrada](/docs/verzweigungen#eingabeformular), o campo fica abaixo dos campos do formulário; se estiver pré-preenchido, ele se chama **Tarefa (exemplo pré-preenchido)**: troque o exemplo pelo seu próprio pedido.
+- **Anexar arquivos (opcional):** arquivos de conhecimento colocados diretamente no contexto dos primeiros agentes, só nesta execução (veja [Anexar arquivos ao iniciar](/docs/wissen#start-dateien)). Se o formulário tiver campos de arquivo próprios, esta área fica recolhida em **Anexar mais arquivos (opcional)**.
 - **Orçamento:** a caixa de diálogo mostra qual orçamento vale.
 
-Com **Iniciar**, o Nodestro salva o fluxo de trabalho e começa a execução. A execução usa o estado do fluxo de trabalho no momento do início; mudanças posteriores só valem na próxima execução. Se o provedor de um modelo não estiver configurado, o diálogo avisa.
+Com **Iniciar**, o Nodestro salva o fluxo de trabalho e começa a execução. A execução usa o estado do fluxo de trabalho no momento do início; mudanças posteriores só valem na próxima execução. Se o provedor de um modelo não estiver configurado, o diálogo avisa. Se a execução ainda não puder começar, o motivo aparece abaixo de **Iniciar**: envios de arquivos ainda em andamento, ou erros que precisam ser corrigidos antes (*Primeiro corrija os problemas acima.*).
 
 ## Controles e atalhos de teclado {#bedienung}
 <!-- keywords: atalhos de teclado, shortcuts, ctrl+s, ctrl+z, desfazer, refazer, delete, duplicar, organizar automaticamente -->
@@ -194,11 +202,14 @@ Mais dicas:
 
 - **Organizar automaticamente** dispõe os nós em colunas conforme sua posição no fluxo de dados.
 - **Mostrar tudo** ajusta o zoom para que o fluxo inteiro fique visível.
-- Se você sair do editor com alterações não salvas, o Nodestro pergunta se deve salvá-las ou descartá-las.
-- Desfazer guarda até 80 etapas. Mover um nó é uma etapa, assim como digitar em um campo até você mudar para outro campo ou nó. O nome, a descrição e o orçamento do fluxo também contam.
+- **Selecionar vários nós:** Shift-clique ou Ctrl-clique adiciona nós à seleção; Shift e arrastar na tela seleciona com um retângulo. Arrastar move todos os nós selecionados, **Delete** exclui todos, **Ctrl+D** duplica todos. O inspetor oferece então *Duplicar todos*, *Excluir nós* e *Limpar seleção*.
+- **Desfazer uma exclusão:** depois de excluir nós, aparece uma mensagem com **Desfazer**.
+- **Criar conexões:** enquanto você arrasta, a tela já mostra onde uma conexão não é permitida; se você soltar ali, uma mensagem explica o motivo.
+- Se você sair do editor com alterações não salvas, o Nodestro pergunta se deve salvá-las, descartá-las ou **Continuar editando**.
+- Desfazer guarda até 80 etapas. Mover um nó é uma etapa, assim como digitar em um campo até você mudar para outro campo ou nó. O nome, a descrição e o orçamento do fluxo também contam. Se você desfizer tudo até o estado salvo, não restam alterações não salvas.
 
 - **Excluir conexões:** clique em uma conexão. Ela fica destacada, e **Delete** ou **Backspace** a remove. Enquanto você digita em um campo de entrada, essas teclas só apagam texto. Excluir uma conexão também pode ser desfeito.
-- A barra **Blocos** fica sempre recolhida ao abrir o editor; depois de expandida, continua aberta até você sair do editor.
+- Em janelas estreitas (menos de 1100 pixels de largura), a barra **Blocos** começa recolhida; depois vale o layout que você escolheu por último.
 
 ## Salvar e descartar {#speichern}
 <!-- keywords: salvar, descartar, não salvo, descartar alterações, redefinir -->
@@ -207,23 +218,34 @@ Mais dicas:
 
 **Descartar** joga fora todas as alterações não salvas, inclusive o histórico de desfazer/refazer, e recarrega o último estado salvo. O mesmo vale quando você sai do editor e escolhe **Descartar** na caixa de diálogo: na próxima abertura aparece exatamente o fluxo de trabalho salvo.
 
+**Alterado em outro lugar:** antes de salvar, o Nodestro verifica se o fluxo foi salvo em outro lugar nesse meio-tempo, em outra aba ou por outra pessoa. Nesse caso, a caixa de diálogo **Alterado em outro lugar** pergunta o que fazer, em vez de substituir a outra alteração sem avisar:
+
+- **Carregar versão salva:** o editor mostra o estado salvo; suas alterações não salvas aqui se perdem.
+- **Manter a minha como cópia:** seu estado vira um novo fluxo "… (minha cópia)", e o estado salvo fica como está.
+- **Salvar a minha mesmo assim:** seu estado substitui a outra alteração.
+- **Continuar editando:** nada é salvo.
+
+Nada se perde de vez: cada salvamento fica guardado em [Versões](/docs/workflows#versionen).
+
 ## Versões {#versionen}
 <!-- keywords: versão, versões, histórico, restaurar, voltar, estado anterior -->
 
-Cada salvamento que altera algo é guardado como **versão** numerada com data e hora. **Versões** na barra de título do editor abre o histórico:
+Cada salvamento que altera algo é guardado como **versão** numerada com data e hora. **Versões**, no menu **Mais ações** da barra de título, abre o histórico:
 
 - **Salvar como versão** salva as alterações atuais com uma descrição opcional (“antes de refazer a pesquisa”).
 - O ícone de lápis adiciona ou altera a descrição de uma versão.
 - **Diferenças** mostra o que mudaria em relação ao estado no editor: agentes, conexões, nome e configurações.
-- **Restaurar** volta o fluxo de trabalho para essa versão e salva o resultado como **nova versão**. Nenhuma versão é sobrescrita ou excluída.
+- **Restaurar** volta o fluxo de trabalho para essa versão e salva o resultado como **nova versão**. Nenhuma versão é sobrescrita ou excluída. Se houver alterações não salvas, escolha **Salvar primeiro e restaurar** (as alterações viram antes uma versão própria) ou **Restaurar sem salvar**.
 
 As versões são independentes de desfazer/refazer, que vale apenas dentro de uma sessão no editor. As execuções usam sempre o estado do momento do início. Quando um fluxo de trabalho é excluído, suas versões também são. No topo do histórico aparece o **resultado dos testes** da versão salva em cada série de testes do fluxo (como ao [publicar](/docs/api-und-export#veroeffentlichen)).
 
 ## Importar e exportar {#import-export}
-<!-- keywords: exportar, importar, json, arquivo, compartilhar, backup, .nodestro.json -->
+<!-- keywords: exportar, importar, json, arquivo, compartilhar, backup, .nodestro.json, não é um fluxo de trabalho, arquivo inválido -->
 
-- **Exportar** (no editor) salva o fluxo como `<Nome>.nodestro.json`: todos os nós, conexões, posições e configurações dos agentes, além do orçamento.
-- **Importar** (na página *Fluxos de trabalho*) carrega esse arquivo como **nova cópia** com um novo ID. Fluxos existentes nunca são sobrescritos.
+- **Exportar como arquivo** (no editor, em **Mais ações**) salva o fluxo como `<Nome>.nodestro.json`: todos os nós, conexões, posições e configurações dos agentes, além do orçamento.
+- **Importar** (na página *Fluxos de trabalho*) carrega esse arquivo como **nova cópia** com um novo ID. Fluxos existentes nunca são sobrescritos. Se o arquivo não tiver nome, o fluxo recebe o nome do arquivo.
+
+O Nodestro verifica o arquivo antes de criar qualquer coisa. Se não for a exportação de um fluxo de trabalho (por exemplo outro arquivo JSON, um arquivo sem etapas ou com conexões quebradas), nada é importado e a mensagem explica o motivo, por exemplo *Este arquivo não é um fluxo de trabalho do Nodestro: ele não tem etapas ("nodes").*
 
 **Não estão incluídos** arquivos de conhecimento, espaços de memória e ferramentas próprias; o arquivo só faz referência aos IDs e nomes deles. Em outro computador eles precisam existir lá; caso contrário, a verificação informa, por exemplo, "Ferramentas desconhecidas".
 

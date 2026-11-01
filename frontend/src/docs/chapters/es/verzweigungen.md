@@ -70,14 +70,16 @@ Mientras espera, la ejecución tiene el estado **En pausa** y la aprobación **P
 ## La página Aprobaciones {#freigaben-seite}
 <!-- keywords: aprobaciones, aprobaciones abiertas, cola, decidir, navegación, contador -->
 
-La página **Aprobaciones** (navegación, grupo *Automatización*) lista todas las aprobaciones abiertas, la más antigua primero, con flujo de trabajo, origen (manual, programación, lote, serie de pruebas) y tiempo de espera. El número junto a la entrada del menú indica cuántas esperan.
+La página **Aprobaciones** (navegación, grupo *Ejecutar y revisar*) lista todas las aprobaciones abiertas, la más antigua primero, con flujo de trabajo, origen (manual, programación, lote, serie de pruebas) y tiempo de espera. El número junto a la entrada del menú indica cuántas esperan.
 
-Cada tarjeta muestra la indicación, los resultados que revisar, un campo de comentario y los botones *Aprobar* y *Rechazar*. Las aprobaciones dentro de subflujos también aparecen aquí, con la ruta hasta la ejecución principal.
+Cada tarjeta muestra la indicación, los resultados que revisar (los resultados estructurados como campos con etiqueta y el JSON a un clic), un campo de comentario y los botones *Aprobar* y *Rechazar*; los botones siguen a la vista aunque los resultados sean largos. Las aprobaciones dentro de subflujos también aparecen aquí, con la ruta hasta la ejecución principal. Las tarjetas de [llamadas a herramientas](/docs/verzweigungen#tool-freigabe) indican el flujo de trabajo y el paso («*flujo* · paso *nombre*»).
 
 ## Aprobar llamadas a herramientas {#tool-freigabe}
 <!-- keywords: aprobación de herramienta, llamada a herramienta, por llamada, argumentos, plazo, aprobación previa, desatendida, excepción heredada -->
 
-Además de los nodos de aprobación, Nodestro puede preguntar antes de **llamadas sueltas a herramientas** de un agente. Está pensado para herramientas que modifican datos o actúan hacia fuera, por ejemplo enviar un correo o escribir en un sistema de tickets. La administración lo activa tras la revisión de seguridad; hasta entonces no cambia nada.
+Además de los nodos de aprobación, Nodestro puede preguntar antes de **llamadas sueltas a herramientas** de un agente. Está pensado para herramientas que modifican datos o actúan hacia fuera, por ejemplo enviar un correo o escribir en un sistema de tickets.
+
+**Desactivado por ahora.** Las aprobaciones por llamada a herramienta todavía no están activadas en Nodestro; llegarán solo tras una revisión de seguridad. Hasta entonces las herramientas se ejecutan sin preguntar antes, y en la página **Aprobaciones**, *Reglas para llamadas a herramientas* muestra solo esa frase. La preparación para administradores (paso de activación, aprobaciones previas, registro) está plegada allí en **Preparación para administradores**. El resto de esta sección describe cómo funcionan las aprobaciones una vez activadas.
 
 Cuando un agente quiere hacer una llamada así, la ejecución sigue en marcha pero espera en esa llamada. La tarjeta aparece en la ejecución, en el paso y en la página **Aprobaciones**. Muestra la herramienta, lo que puede hacer (*solo lee*, *modifica datos*, *borra o destruye*; *se queda en Nodestro* o *actúa hacia fuera*), los **argumentos exactamente como se enviarán** y el tiempo restante.
 
@@ -95,7 +97,7 @@ Las ejecuciones que nadie supervisa (programaciones, lotes, series de pruebas) n
 
 1. En *Aprobaciones → Reglas para llamadas a herramientas*, la administración ejecuta **Marcar asignaciones existentes**. Cada asignación de herramienta que existe ahora en flujos de trabajo, sus versiones y API publicadas pasa a ser una **excepción heredada**, ligada a la versión de la herramienta con la que se ejecuta. Las API publicadas reciben una sola vez una nueva suma de comprobación (digest); su historial guarda la antigua y la nueva. El paso se ejecuta **una sola vez**: las asignaciones, flujos de trabajo y versiones creados después son nuevos y se preguntan.
 2. **Revisa la lista.** Una excepción no deseada termina cuando quitas la herramienta del agente y guardas; si la vuelves a asignar, se pregunta como una nueva.
-3. Solo entonces la administración activa las aprobaciones (`NODESTRO_TOOL_APPROVALS=1` y reiniciar Nodestro).
+3. Solo después se activan las aprobaciones. Esta versión todavía no lo prevé: siguen desactivadas hasta que termine la revisión de seguridad.
 
 Si se activan sin el primer paso, nada queda exento: se pregunta por cada asignación y las ejecuciones desatendidas deniegan esas llamadas. Una nueva versión de la herramienta siempre termina una excepción. Una aprobación nunca levanta los límites del sandbox.
 
@@ -138,29 +140,32 @@ Un equipo puede probarse por sí solo: crea una [serie de pruebas](/docs/automat
 
 Un **orquestador** deja que un modelo de IA decida qué equipo recibe qué parte de la tarea. Toma una decisión tras otra: **delegar** una tarea a un equipo o **terminar** con una respuesta. La respuesta es el resultado del nodo.
 
-- **Equipos:** los flujos de trabajo guardados entre los que el modelo puede elegir (como máximo 20). De cada equipo, el modelo solo ve su nombre, descripción, capacidades y contrato de salida.
-- **Equipos por capacidad:** en lugar de elegir cada equipo, nombras capacidades (como máximo 10). Al iniciar una ejecución, los equipos guardados con una capacidad coincidente entran en el grupo (hasta *Como máximo tantos equipos*): primero los que tienen más etiquetas coincidentes, luego por nombre. Los equipos con errores quedan fuera; los equipos con pasos de aprobación se incluyen. La selección queda fija para esa ejecución (y para una versión publicada); los detalles muestran qué etiquetas coincidieron en cada equipo. No se puntúa ni se estima nada.
-- **Tarea** e **Instrucciones:** lo que hay que resolver y, opcionalmente, cómo planificarlo.
-- **Máximo de decisiones** (de 1 a 50, por defecto 8) y **Máximo por equipo:** si no hay respuesta tras la última decisión, el paso falla.
+El inspector de un orquestador empieza con una frase que resume cómo trabaja («Así trabaja este orquestador: …») y agrupa los ajustes en cuatro áreas desplegables; cada una muestra en su cabecera un resumen y los posibles problemas:
 
-El orquestador solo elige. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo elegido se ejecuta como una **ejecución vinculada propia**, con su parte del presupuesto, sus límites y sus aprobaciones de herramientas. Las decisiones no permitidas (un equipo desconocido, la misma tarea otra vez, un equipo agotado) se rechazan y se muestran al modelo; aun así cuentan como decisión.
+- **Pool de equipos:** los **Workflows elegidos** son los flujos de trabajo guardados entre los que el modelo puede elegir (como máximo 20). De cada equipo, el modelo solo ve su nombre, descripción, capacidades y contrato de salida.
+- **Equipos por capacidad** (también en el pool de equipos): en lugar de elegir cada equipo, nombras capacidades (como máximo 10). Al iniciar una ejecución, los equipos guardados con una capacidad coincidente entran en el grupo (hasta *Como máximo tantos equipos*): primero los que tienen más etiquetas coincidentes, luego por nombre. Los equipos con errores quedan fuera; los equipos con pasos de aprobación se incluyen. La selección queda fija para esa ejecución (y para una versión publicada); los detalles muestran qué etiquetas coincidieron en cada equipo. No se puntúa ni se estima nada.
+- **Encargo:** **Tarea** e **Instrucciones** (lo que hay que resolver y, opcionalmente, cómo planificarlo), además del **Modelo** del orquestador.
+- **Límites:** **Máximo de decisiones** (de 1 a 50, por defecto 8), **Usos máximos por equipo** y **Equipos a la vez**. Si no hay respuesta tras la última decisión, el paso falla.
+- **Alineación activa:** las opciones de [Equipos dinámicos](/docs/verzweigungen#dynamische-teams).
+
+El orquestador solo elige. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo elegido se ejecuta como una **ejecución vinculada propia**, con su parte del presupuesto, sus límites y sus aprobaciones de herramientas. Las decisiones no permitidas (un equipo desconocido, la misma tarea otra vez, un equipo agotado) no se ejecutan y se muestran al modelo; los detalles de la ejecución las llaman *No válida, no ejecutada*. Aun así cuentan como decisión.
 
 Los detalles de la ejecución muestran cada decisión con su motivo, tarea, resultado y un enlace a la ejecución del equipo. Cuando un equipo se detiene para una **aprobación** (también en un subflujo o bajo otro orquestador), el orquestador espera con él: la ejecución queda *en pausa* y aparece en **Aprobaciones**. Tras la decisión continúa la misma ejecución del equipo, también después de un reinicio, y no se vuelve a preguntar al modelo por esa delegación. Si un rechazo termina la ejecución del equipo (*Al rechazar: terminar la ejecución*), también termina esta ejecución; ningún otro equipo puede eludir el rechazo. Al cancelar una ejecución en espera se cancelan también sus equipos en espera. Un equipo no puede volver a llamar al flujo de trabajo del orquestador.
 
 ## Equipos dinámicos {#dynamische-teams}
 <!-- keywords: equipo dinámico, formar equipo, paralelo, a la vez, parámetros, formulario de inicio, plantilla, composición del equipo, staffing -->
 
-En el área **Equipos dinámicos** de un orquestador el modelo tiene más margen, siempre dentro del pool y de los límites. Todo empieza desactivado.
+En el área **Alineación activa** de un orquestador (campo *Equipos dinámicos*) el modelo tiene más margen, siempre dentro del pool y de los límites. Todo empieza desactivado.
 
-- **Equipos a la vez** (1 a 5): una decisión puede encargar trabajo a varios equipos distintos a la vez, para partes que no dependen entre sí. Cada equipo obtiene su propio resultado.
-- **Formar el equipo por sí mismo:** el orquestador incorpora equipos del pool a su equipo y los vuelve a retirar cuando los resultados intermedios lo sugieren. Solo los equipos del equipo reciben trabajo; *Como máximo en el equipo* limita su tamaño. El mismo equipo puede trabajar varias veces (hasta *Como máximo por equipo*).
+- **Equipos a la vez** (1 a 5, en el área *Límites*): una decisión puede encargar trabajo a varios equipos distintos a la vez, para partes que no dependen entre sí. Cada equipo obtiene su propio resultado.
+- **Formar la alineación activa por sí mismo:** el orquestador incorpora equipos del pool a su alineación y los vuelve a retirar cuando los resultados intermedios lo sugieren. Solo los equipos de la alineación activa reciben trabajo; *Como máximo en la alineación activa* limita su tamaño. El mismo equipo puede trabajar varias veces (hasta *Usos máximos por equipo*). Sin esta opción, el orquestador elige de todo el pool.
 - **Rellenar el formulario de inicio de los equipos:** el orquestador puede fijar los campos del formulario de entrada de un equipo (nunca archivos). Los valores se comprueban como en un inicio manual; un campo desconocido o un valor no válido se rechaza y se muestra al modelo.
 
 El pool queda fijo al iniciar la ejecución, en las versiones de ese momento. Nunca aparecen equipos, agentes ni herramientas nuevos, y las aprobaciones, el presupuesto y los límites de cada equipo se aplican sin cambios.
 
-**Qué muestran los detalles de la ejecución:** qué orquestador trabaja con qué modelo, cuántas decisiones se han usado, el coste de las decisiones y el total (los costes desconocidos se muestran como *no se conoce del todo*, nunca como 0), el pool con versiones, el **equipo a lo largo del tiempo**, los equipos en espera y cada decisión con su motivo, tarea, valores y el resultado de cada equipo: *Correcto*, *Esperando aprobación*, *Fallido*, *Rechazado*, *Cancelado* o *Caducado*. Solo se muestran las decisiones registradas, ningún razonamiento del modelo.
+**Qué muestran los detalles de la ejecución:** qué orquestador trabaja con qué modelo, cuántas decisiones se han usado, el coste de las decisiones y el total (los costes desconocidos se muestran como *no se conoce del todo*, nunca como 0), el pool con versiones, la **Alineación activa a lo largo del tiempo**, los equipos en espera y cada decisión con su motivo, tarea, valores y el resultado de cada equipo: *Correcto*, *Esperando aprobación*, *Fallido*, *Rechazado*, *Cancelado* o *Caducado*. Solo se muestran las decisiones registradas, ningún razonamiento del modelo.
 
-**Guardar la composición del equipo como plantilla:** un equipo solo existe durante la ejecución. Al terminar, este botón guarda un **flujo de trabajo nuevo** con el mismo orquestador, su formulario de inicio, sus límites y exactamente los equipos que trabajaron, en las versiones de la ejecución. Nada se guarda sin este clic.
+**Guardar la composición del equipo como plantilla:** una alineación activa solo existe durante la ejecución. Al terminar, este botón guarda un **flujo de trabajo nuevo** con el mismo orquestador, su formulario de inicio, sus límites y exactamente los equipos que trabajaron, en las versiones de la ejecución. Nada se guarda sin este clic.
 
 ## Formularios de entrada {#eingabeformular}
 <!-- keywords: formulario, formulario de entrada, campos, tipo, obligatorio, valor predeterminado, opción, fecha, número -->
@@ -190,5 +195,7 @@ Una ejecución fallida o cancelada se puede **continuar** (botón *Continuar* en
 - Los resultados reutilizados no cuestan nada en la nueva ejecución; su coste se queda en la ejecución anterior y no se cuenta dos veces en [Uso](/docs/nutzung).
 - Las decisiones de aprobación de los pasos reutilizados siguen valiendo y se marcan como reutilizadas; a nadie se le pregunta dos veces.
 - Si los pasos que se vuelven a ejecutar ya habían llamado a **herramientas propias** que pueden actuar fuera de Nodestro (como enviar un mensaje), tienes que confirmarlo expresamente.
+
+Si una ejecución se interrumpió porque Nodestro se detuvo mientras se ejecutaba, su vista de detalle nombra los pasos que no terminaron y ofrece **Continuar** en el mismo aviso; esos pasos se vuelven a ejecutar con el motivo *Se interrumpió*.
 
 Si no se puede reutilizar nada con seguridad, Nodestro ofrece un reinicio completo. Las trazas importadas y las ejecuciones sueltas de subflujos no se pueden continuar; continúa en su lugar la ejecución principal.

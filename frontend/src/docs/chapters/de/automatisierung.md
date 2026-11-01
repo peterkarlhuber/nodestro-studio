@@ -1,6 +1,6 @@
 # Automatisierung
 
-Unter *Automatisierung* in der Navigation laufen Workflows ohne Klick auf *Starten*: **Stapelläufe** bearbeiten viele Eingaben auf einmal, **Testreihen** messen die Qualität eines Workflows und **Zeitpläne** starten Workflows regelmäßig. Jeder einzelne Lauf ist ein ganz normaler Lauf mit Trace, Budget und Nutzung; Freigaben warten wie immer auf eine Person.
+Unter *Automatisieren & testen* in der Navigation laufen Workflows ohne Klick auf *Starten*: **Stapelläufe** bearbeiten viele Eingaben auf einmal, **Testreihen** messen die Qualität eines Workflows und **Zeitpläne** starten Workflows regelmäßig. Jeder einzelne Lauf ist ein ganz normaler Lauf mit Trace, Budget und Nutzung; Freigaben warten wie immer auf eine Person.
 
 ## Stapelläufe {#stapel}
 <!-- keywords: stapel, batch, viele eingaben, csv, excel, xlsx, json, tabelle, spalten, zuordnung, export -->

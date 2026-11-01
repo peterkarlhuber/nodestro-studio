@@ -12,7 +12,7 @@ Abre un flujo de trabajo en el editor y haz clic en **API & Export**. El diálog
 | **Resumen** | Estado, direcciones, publicación, versiones y las últimas ejecuciones de la API |
 | **Claves y acceso** | Claves de API y el acceso opcional desde la red |
 | **Probar** | Comprobar una solicitud o iniciar una ejecución de prueba real |
-| **Documentación** | Endpoints, ejemplos de curl y Python, descripción OpenAPI |
+| **Documentación** | Endpoints, ejemplos de curl, Python y los SDK oficiales, descripción OpenAPI |
 | **Límites** | Nombre en la URL, descripción y límites |
 | **Exportación** | El proyecto FastAPI independiente como ZIP |
 
@@ -91,6 +91,8 @@ El nombre en la URL (p. ej. `revisar-facturas`) lo defines al publicar y lo camb
 | `GET /openapi.json` | Descripción OpenAPI solo de esta API | – |
 
 Los esquemas completos están en **Documentación**, donde **Descargar la descripción OpenAPI** te da también el archivo OpenAPI.
+
+Los ejemplos están en **curl**, **Python**, **SDK de Python** y **SDK de TypeScript**, además de las posibles **Respuestas**. Los clientes oficiales de `nodestro-sdk` inician ejecuciones con una clave de idempotencia (un reintento nunca inicia una segunda ejecución), reintentan tras errores de conexión e informan de errores tipados. Los ejemplos ya contienen la dirección, el nombre y una solicitud adecuada de esta API; cómo instalar el cliente se indica al principio de cada ejemplo.
 
 ## Solicitudes y respuestas {#aufrufen}
 <!-- keywords: solicitud, request, cuerpo, body, json, input, values, formulario, esquema, archivos, base64, respuesta, 202, run_id, idempotency -->
@@ -204,7 +206,7 @@ Cada error tiene la misma forma para que los programas puedan evaluarlo:
 
 En **Probar** hay una solicitud de ejemplo que puedes adaptar:
 
-- **Comprobar solicitud** valida el cuerpo exactamente como la API, muestra la entrada que recibiría el flujo y no inicia nada. No cuesta nada.
+- **Comprobar solicitud** valida el cuerpo exactamente como la API, muestra la entrada que recibiría el flujo y no inicia nada. No cuesta nada. Si la solicitud no encaja (también en una ejecución de prueba), Nodestro enumera cada campo una vez con su etiqueta y el problema, por ejemplo *Cantidad: debe ser un número*, *obligatorio* o *no forma parte de la entrada*.
 - **Iniciar ejecución de prueba** inicia una ejecución real de la versión publicada por el mismo camino que la API. Se factura como cualquier ejecución y aparece en Ejecuciones como ejecución de prueba desde Nodestro.
 
 Para pruebas de regresión de una versión nueva, usa las [series de pruebas](/docs/automatisierung#testreihen): se ejecutan con la versión guardada antes de publicar.

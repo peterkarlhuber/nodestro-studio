@@ -136,7 +136,7 @@ El **razonamiento (thinking)** determina si el modelo piensa antes de responder:
 
 El razonamiento cuenta como **tokens de salida** y se cobra como tal.
 
-Si se desconoce si un modelo admite esfuerzo de razonamiento (servidores propios, ids de modelo desconocidos), un esfuerzo definido produce un error. Elige entonces *Predeterminado del modelo* o declara la capacidad en [Proveedores de IA](/docs/einstellungen#anbieter).
+Si se desconoce si un modelo admite esfuerzo de razonamiento (servidores propios, ids de modelo desconocidos), un esfuerzo definido produce un error. Elige entonces *Predeterminado del modelo* o declara la capacidad en [Proveedores de IA](/docs/einstellungen#anbieter). Los endpoints compatibles con OpenAI (como Ollama o vLLM) no aceptan ningún ajuste de esfuerzo; la comprobación lo explica, y **Poner el esfuerzo en el valor del modelo** cambia el agente con un clic.
 
 ## Control de calidad {#qualitaet}
 <!-- keywords: control de calidad, juez, judge, evaluador, criterios, revisión, refine, llm as a judge, evaluación -->

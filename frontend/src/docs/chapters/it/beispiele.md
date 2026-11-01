@@ -3,22 +3,24 @@
 Nodestro include 24 workflow multi-agente pronti, uno per ogni tipico ambito di applicazione. Ogni esempio contiene agenti con prompt di sistema, i collegamenti, un compito di prova preparato con dati inventati e un risultato descritto chiaramente. Questo capitolo spiega la galleria, la copia e l'adattamento, e descrive ogni esempio singolarmente.
 
 ## La galleria {#galerie}
-<!-- keywords: esempi, modelli, galleria, libreria, in evidenza, categorie, pagina iniziale -->
+<!-- keywords: esempi, modelli, galleria, libreria, in evidenza, categorie, pagina iniziale, inizia qui, livello, più semplice -->
 
-La galleria si trova nella pagina **Workflow**, sotto i tuoi workflow e chiaramente separata da essi. Mostra alcuni esempi in evidenza e le sei categorie. **Vedi tutti i 24 esempi** apre la galleria completa, anch'essa nell'area dei workflow.
+La galleria si trova nella pagina **Workflow**, sotto i tuoi workflow e chiaramente separata da essi. Mostra alcuni esempi in evidenza, il più semplice per primo, e le sei categorie. Finché non hai ancora nessun workflow, l’esempio più semplice porta il contrassegno **Inizia qui**; dopo, la galleria è un’area chiusa che ricorda se l’hai aperta. **Vedi tutti i 24 esempi** apre la galleria completa, anch'essa nell'area dei workflow.
 
-Nella galleria completa cerchi per nome, ambito e descrizione e filtri per categoria. Ogni scheda mostra ambito, nome, descrizione, numero di agenti, livello e schema. Gli esempi degli ambiti sensibili hanno il badge **Richiede verifica esperta**. Anche la [ricerca](/docs/start#suche) trova gli esempi.
+Nella galleria completa cerchi per nome, ambito, descrizione, blocco o livello e filtri per categoria e per **Livello**. Gli esempi sono ordinati per livello, i più semplici per primi; il più semplice porta **Inizia qui**. Ricerca, filtri e un’anteprima aperta fanno parte dell’indirizzo, così *Indietro* riporta alla stessa selezione. Ogni scheda mostra ambito, nome, descrizione, numero di agenti, livello e schema. Gli esempi degli ambiti sensibili hanno il badge **Richiede verifica esperta**. Anche la [ricerca](/docs/start#suche) trova gli esempi.
 
 ## Anteprima e copia {#uebernehmen}
 <!-- keywords: anteprima, copiare, copia, modello, invariato, gratuito -->
 
 Un clic su una scheda apre l'**anteprima**: il flusso come diagramma, ogni agente con ruolo, modello, strumenti e risultati che riceve, la guida e il compito di prova. L'anteprima non salva nulla e non chiama alcun modello.
 
+In cima all’anteprima, **Cosa ti serve** indica quale provider di IA e quali modelli usa la copia e se quel provider è configurato (altrimenti con un collegamento alle impostazioni), se un’esecuzione si ferma per un’approvazione, quali file di conoscenza e di esempio sono inclusi e se serve una connessione a un altro servizio.
+
 **Copia nei miei workflow** crea un workflow tuo e lo apre nell'editor. La copia è indipendente: puoi cambiare tutto e il modello resta sempre invariato. Se copi un esempio due volte, ottieni due workflow separati. La copia parte dalla versione 1 nella [cronologia delle versioni](/docs/workflows#versionen).
 
 Se **Aggiungere i casi di test come serie di test** è selezionato (predefinito), la copia riceve anche una [serie di test](/docs/automatisierung#testreihen) con i casi di test preparati; i file di esempio necessari vengono salvati come file di input della copia. La copia non avvia mai un'esecuzione, non crea mai una [pianificazione](/docs/automatisierung#zeitplaene) e non pubblica mai un'[API](/docs/api-und-export#veroeffentlichen); sei tu a deciderlo in seguito.
 
-Gli esempi non vengono mai creati automaticamente; solo ciò che copi compare tra i tuoi workflow. I costi nascono solo quando esegui una copia. Gli esempi usano modelli di Anthropic; basta quel [provider configurato](/docs/einstellungen#anbieter), e puoi passare in qualsiasi momento i modelli di una copia a un altro provider. Nessun esempio richiede altri servizi, account o fonti di dati a pagamento.
+Gli esempi non vengono mai creati automaticamente; solo ciò che copi compare tra i tuoi workflow. I costi nascono solo quando esegui una copia. I modelli di una copia dipendono dal tuo modello predefinito: se è un modello di Anthropic, la copia usa i modelli dell’esempio (Haiku, Sonnet o Opus, secondo il compito dell’agente). Se appartiene a un altro [provider](/docs/einstellungen#anbieter), tutti gli agenti della copia usano il tuo modello predefinito, e i più impegnativi il tuo modello degli assistenti se appartiene allo stesso provider; gli strumenti server, che funzionano solo con Anthropic, vengono allora omessi. Puoi cambiare i modelli di una copia in qualsiasi momento. Nessun esempio richiede account o fonti di dati a pagamento. Alcuni esempi hanno una **Connessione facoltativa** a un altro servizio tramite MCP: durante la copia scegli un [servizio collegato](/docs/tools#verbundene-dienste) configurato oppure la **Modalità offline (dati di esempio)**, preselezionata.
 
 ## Lingue {#sprachen}
 <!-- keywords: lingua, traduzione, tedesco, inglese, copia, prompt -->
@@ -70,7 +72,7 @@ I risultati sono strumenti di lavoro, non consulenza né una decisione. Verifica
 - **I tuoi file:** inserisci i documenti per una singola esecuzione direttamente nel campo file all'avvio; per questo non serve una raccolta di conoscenza.
 - **Conoscenza:** carica i documenti che ti servono in modo permanente come [conoscenza](/docs/wissen#modi) e assegnali all'agente adatto.
 - **Prompt e compiti:** i compiti fanno riferimento ai predecessori con dei [segnaposto](/docs/workflows#platzhalter). Se rinomini un agente, adatta i segnaposto.
-- **Dati aggiornati:** per informazioni in tempo reale puoi aggiungere lo [strumento server](/docs/tools#server-tools) di ricerca web; costa un supplemento per ogni ricerca.
+- **Dati aggiornati:** per informazioni in tempo reale puoi aggiungere lo [strumento server](/docs/tools#server-tools) di ricerca web (solo con modelli di Anthropic); costa un supplemento per ogni ricerca.
 
 Le sezioni seguenti indicano adattamenti concreti per ogni esempio.
 

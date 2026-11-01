@@ -136,7 +136,7 @@ The result then looks like this:
 
 Thoughts count as **output tokens** and are billed accordingly.
 
-If it is unknown whether a model supports reasoning effort (your own servers, unknown model ids), a set effort leads to an error. Choose *Model default* then, or declare the capability under [AI providers](/docs/einstellungen#anbieter).
+If it is unknown whether a model supports reasoning effort (your own servers, unknown model ids), a set effort leads to an error. Choose *Model default* then, or declare the capability under [AI providers](/docs/einstellungen#anbieter). OpenAI-compatible endpoints (such as Ollama or vLLM) accept no effort setting at all; the check explains this, and **Set effort to model default** switches the agent with one click.
 
 ## Quality check {#qualitaet}
 <!-- keywords: quality check, judge, evaluator, criteria, revision, refine, llm as a judge, assessment -->

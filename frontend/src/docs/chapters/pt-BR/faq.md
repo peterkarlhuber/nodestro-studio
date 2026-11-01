@@ -8,7 +8,7 @@ Aqui você encontra soluções para mensagens comuns e respostas a perguntas tí
 | Mensagem ou sintoma | Causa | Solução |
 |---|---|---|
 | “Não há chave de API para …” | O provedor do modelo não está configurado. | Informe a chave em *Configurações → Provedores de IA* ou defina a variável de ambiente do provedor, por exemplo `ANTHROPIC_API_KEY`. |
-| "Iniciar fluxo de trabalho" está cinza | Há problemas no fluxo ou uma execução está ativa. | Passe o mouse sobre o botão; os problemas aparecem no inspetor quando nada está selecionado. |
+| "Iniciar fluxo de trabalho" está bloqueado | Há problemas no fluxo, uma execução está ativa ou, em um servidor, sua função não tem a permissão. | O motivo aparece logo ao lado do botão; **Mostrar** leva ao problema. Todos os problemas aparecem no inspetor quando nada está selecionado. |
 | "O fluxo de trabalho contém um ciclo …" | Uma conexão volta para trás. | Exclua a conexão que volta para trás. |
 | "Ferramentas desconhecidas: …" | Uma ferramenta atribuída foi excluída ou falta depois de uma importação. | Remova a ferramenta no inspetor ou crie-a de novo na biblioteca de ferramentas. |
 | "… não permite forçar uma ferramenta …" | O modelo não permite ferramenta forçada. | Defina tool choice como *Automático*. |

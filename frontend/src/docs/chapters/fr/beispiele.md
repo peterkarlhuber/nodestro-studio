@@ -3,22 +3,24 @@
 Nodestro fournit 24 workflows multi-agents prêts à l'emploi, un pour chaque domaine d'application typique. Chaque exemple contient des agents avec leurs prompts système, les connexions, une tâche de test préparée avec des données inventées et un résultat clairement décrit. Ce chapitre explique la galerie, la copie et l'adaptation, et décrit chaque exemple séparément.
 
 ## La galerie {#galerie}
-<!-- keywords: exemples, modèles, galerie, bibliothèque, recommandés, catégories, page d'accueil -->
+<!-- keywords: exemples, modèles, galerie, bibliothèque, recommandés, catégories, page d'accueil, commencez ici, niveau, plus simple -->
 
-La galerie se trouve sur la page **Workflows**, sous vos propres workflows et clairement séparée d'eux. Elle présente quelques exemples recommandés et les six catégories. **Voir les 24 exemples** ouvre la galerie complète, elle aussi dans l'espace des workflows.
+La galerie se trouve sur la page **Workflows**, sous vos propres workflows et clairement séparée d'eux. Elle présente quelques exemples recommandés, le plus simple en premier, et les six catégories. Tant que vous n’avez aucun workflow, l’exemple le plus simple porte la mention **Commencez ici** ; ensuite, la galerie est une zone repliée qui se souvient si vous l’avez ouverte. **Voir les 24 exemples** ouvre la galerie complète, elle aussi dans l'espace des workflows.
 
-Dans la galerie complète, vous recherchez par nom, domaine et description et filtrez par catégorie. Chaque carte indique le domaine, le nom, la description, le nombre d'agents, le niveau et le schéma. Les exemples des domaines sensibles portent le badge **Vérification experte**. La [recherche](/docs/start#suche) trouve aussi les exemples.
+Dans la galerie complète, vous recherchez par nom, domaine, description, bloc ou niveau et filtrez par catégorie et par **Niveau**. Les exemples sont classés par niveau, les plus simples en premier ; le plus simple porte **Commencez ici**. La recherche, les filtres et un aperçu ouvert font partie de l’adresse, si bien que *Retour* ramène à la même sélection. Chaque carte indique le domaine, le nom, la description, le nombre d'agents, le niveau et le schéma. Les exemples des domaines sensibles portent le badge **Vérification experte**. La [recherche](/docs/start#suche) trouve aussi les exemples.
 
 ## Aperçu et copie {#uebernehmen}
 <!-- keywords: aperçu, copier, copie, modèle, inchangé, gratuit -->
 
 Un clic sur une carte ouvre l'**aperçu** : le déroulement sous forme de schéma, chaque agent avec son rôle, son modèle, ses outils et les résultats qu'il reçoit, le guide et la tâche de test. L'aperçu n'enregistre rien et n'appelle aucun modèle.
 
+Tout en haut de l’aperçu, **Ce dont vous avez besoin** indique le fournisseur d’IA et les modèles qu’utilise la copie et si ce fournisseur est configuré (sinon avec un lien vers les réglages), si une exécution s’arrête pour une validation, quels fichiers de connaissances et d’exemple sont fournis et si une connexion à un autre service est nécessaire.
+
 **Copier dans mes workflows** crée votre propre workflow et l'ouvre dans l'éditeur. La copie est indépendante : vous pouvez tout modifier, et le modèle reste toujours inchangé. Si vous copiez un exemple deux fois, vous obtenez deux workflows distincts. La copie commence avec la version 1 dans l'[historique des versions](/docs/workflows#versionen).
 
 Si **Ajouter les cas de test comme série de tests** est coché (par défaut), la copie reçoit aussi une [série de tests](/docs/automatisierung#testreihen) avec les cas de test préparés ; les fichiers d'exemple nécessaires sont enregistrés comme fichiers d'entrée de la copie. La copie ne lance jamais d'exécution, ne crée jamais de [planification](/docs/automatisierung#zeitplaene) et ne publie jamais d'[API](/docs/api-und-export#veroeffentlichen) ; c'est vous qui en décidez ensuite.
 
-Les exemples ne sont jamais créés automatiquement ; seul ce que vous copiez apparaît parmi vos workflows. Les coûts n’apparaissent que lorsque vous exécutez une copie. Les exemples utilisent des modèles d’Anthropic ; ce [fournisseur configuré](/docs/einstellungen#anbieter) suffit, et vous pouvez à tout moment basculer les modèles d’une copie vers un autre fournisseur. Aucun exemple ne nécessite d’autres services, comptes ou sources de données payantes.
+Les exemples ne sont jamais créés automatiquement ; seul ce que vous copiez apparaît parmi vos workflows. Les coûts n’apparaissent que lorsque vous exécutez une copie. Les modèles d’une copie dépendent de votre modèle par défaut : s’il s’agit d’un modèle d’Anthropic, la copie utilise les modèles de l’exemple (Haiku, Sonnet ou Opus, selon la tâche de l’agent). S’il appartient à un autre [fournisseur](/docs/einstellungen#anbieter), tous les agents de la copie utilisent votre modèle par défaut, et les plus exigeants votre modèle des assistants s’il appartient au même fournisseur ; les outils serveur, qui ne fonctionnent qu’avec Anthropic, sont alors omis. Vous pouvez modifier les modèles d’une copie à tout moment. Aucun exemple ne nécessite de comptes ou de sources de données payantes. Certains exemples ont une **Connexion facultative** à un autre service via MCP : lors de la copie, vous choisissez un [service connecté](/docs/tools#verbundene-dienste) configuré ou le **Mode hors ligne (données d'exemple)**, présélectionné.
 
 ## Langues {#sprachen}
 <!-- keywords: langue, traduction, allemand, anglais, copie, prompts -->
@@ -70,7 +72,7 @@ Les résultats sont des aides au travail, ni des conseils ni une décision. Vér
 - **Vos fichiers :** déposez les documents pour une seule exécution directement dans le champ de fichier au lancement ; aucune collection de connaissances n'est nécessaire pour cela.
 - **Connaissance :** chargez les documents dont vous avez durablement besoin comme [connaissance](/docs/wissen#modi) et attribuez-les à l'agent approprié.
 - **Prompts et tâches :** les tâches renvoient à leurs prédécesseurs par des [espaces réservés](/docs/workflows#platzhalter). Si vous renommez un agent, adaptez les espaces réservés.
-- **Données actuelles :** pour des informations en temps réel, vous pouvez ajouter l'[outil serveur](/docs/tools#server-tools) de recherche web ; il coûte un supplément par recherche.
+- **Données actuelles :** pour des informations en temps réel, vous pouvez ajouter l'[outil serveur](/docs/tools#server-tools) de recherche web (uniquement avec des modèles d’Anthropic) ; il coûte un supplément par recherche.
 
 Les sections ci-dessous indiquent des adaptations concrètes pour chaque exemple.
 

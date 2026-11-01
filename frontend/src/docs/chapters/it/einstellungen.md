@@ -5,7 +5,7 @@ Questo capitolo descrive tutte le impostazioni, l'installazione e l'avvio di Nod
 ## Provider di IA {#anbieter}
 <!-- keywords: chiave api, provider, anthropic, openai, gemini, ollama, vllm, compatibile con openai, url di base, variabile d’ambiente, .env, capacità -->
 
-Nodestro esegue gli agenti con la libreria Orkexa e lavora con più **provider di IA** contemporaneamente: **Anthropic**, **OpenAI**, **Google Gemini** e i tuoi server tramite un **endpoint compatibile con OpenAI**, **Ollama** o **vLLM**. Ogni agente usa il provider del suo modello. Se quel provider non è configurato, l’esecuzione non parte; Nodestro non passa mai in silenzio a un altro provider. Se manca il provider del modello predefinito, in alto a destra compare «Configura provider di IA».
+Nodestro esegue gli agenti con la libreria Orkexa e lavora con più **provider di IA** contemporaneamente: **Anthropic**, **OpenAI**, **Google Gemini** e i tuoi server tramite un **endpoint compatibile con OpenAI**, **Ollama** o **vLLM**. Ogni agente usa il provider del suo modello. Se quel provider non è configurato, l’esecuzione non parte; Nodestro non passa mai in silenzio a un altro provider. Se manca il provider del modello predefinito, in alto a destra compare «Configura provider di IA», oppure «Il modello predefinito richiede …» se è già configurato un altro provider.
 
 In *Impostazioni → Provider di IA* ogni provider ha una sezione propria:
 
@@ -13,6 +13,7 @@ In *Impostazioni → Provider di IA* ogni provider ha una sezione propria:
 - **Endpoint compatibile con OpenAI, Ollama, vLLM:** inserisci l’**URL di base** del server (per esempio `http://localhost:11434/v1` per Ollama) e premi **Salva endpoint**; la chiave API è facoltativa. Il provider risulta configurato solo quando è salvato un URL di base.
 - **Cosa sanno fare i modelli:** per i tuoi server indichi se i loro modelli supportano strumenti, output strutturato, immagini, documenti PDF, sforzo di ragionamento e altre capacità. Nodestro non presume nulla: un’opzione che un modello non sa fare, o il cui supporto è sconosciuto, viene segnalata come errore dal controllo invece di essere omessa.
 - **Verifica connessione** chiede al provider solo l’elenco dei modelli; non costa nulla.
+- **Primo provider:** se salvi una chiave mentre il provider del modello predefinito non è ancora configurato, i nuovi agenti usano da quel momento un modello di questo provider; un messaggio indica quale. Cambiano solo le impostazioni: i workflow esistenti mantengono i loro modelli.
 
 Puoi impostare le chiavi anche come **variabili d’ambiente**, prima dell’avvio o in un file **`.env`** nella cartella da cui avvii `nodestro`. Le variabili d’ambiente hanno la **precedenza** sulle chiavi salvate:
 
@@ -28,10 +29,12 @@ Una chiave delle versioni precedenti (allora solo per Anthropic) diventa automat
 ## Modello degli assistenti e modello predefinito {#modelle}
 <!-- keywords: modello predefinito, modello degli assistenti, default model, nuovi agenti -->
 
-- **Modello predefinito per i nuovi agenti:** i nuovi agenti vuoti partono con questo provider e modello (dalla tavolozza, con *Aggiungi agente*, nei nuovi workflow e come modello vuoto). Nelle bozze con l’IA fa da sostituto se l’architetto propone un modello non consentito. Gli agenti esistenti restano invariati.
+- **Modello predefinito per i nuovi agenti:** i nuovi agenti vuoti partono con questo provider e modello (dalla tavolozza, nei nuovi workflow e come modello vuoto). Nelle bozze con l’IA fa da sostituto se l’architetto propone un modello non consentito. Gli agenti esistenti restano invariati.
 - **Modello degli assistenti:** questo modello progetta agenti dalla tua descrizione, scrive strumenti come agente di codice, propone strutture di memoria e risponde alle tue domande come [Nodestro Assistant](/docs/assistent). Un modello potente (predefinito: Claude Opus 5.5 di Anthropic) dà proposte migliori. Le bozze con l’IA propongono solo modelli di provider configurati.
 
 Entrambi i campi sono composti da **provider** e **modello**. Scegli il modello dall’elenco o digita un qualsiasi id di modello del provider, per esempio `gpt-5.5` su OpenAI o `llama3.1:8b` su Ollama. Viene salvato come `provider:modello` (per esempio `openai:gpt-5.5`); i valori più vecchi senza provider, come `claude-sonnet-5-5`, valgono come modelli di Anthropic.
+
+Se il modello predefinito appartiene a un provider non configurato mentre un altro lo è, un avviso sopra la scelta del modello spiega che i nuovi agenti e le copie degli esempi non possono essere eseguiti con esso e propone il modello corrispondente del provider configurato (*Usa …*). I workflow esistenti mantengono comunque i loro modelli.
 
 Salva le modifiche con **Salva** nella sezione *Modelli e budget*.
 
@@ -116,6 +119,44 @@ Nodestro si avvia su `http://localhost:8000` e apre il browser. Opzioni del coma
 Si chiude con **Ctrl+C**. Le esecuzioni in corso vengono annullate.
 
 > **Sicurezza:** Nodestro non ha ancora una gestione degli utenti, quindi risponde solo a questo computer. `--host 0.0.0.0`, altri indirizzi di rete o nomi di rete in `NODESTRO_ALLOWED_HOSTS` interrompono l’avvio, e Nodestro non può essere messo dietro un reverse proxy. Per far usare un workflow ad altri dispositivi, pubblicalo come API: le API pubblicate usano chiavi API e hanno un proprio accesso di rete (vedi *API ed esportazione*).
+
+## Nodestro su un server {#server}
+<!-- keywords: server, accedere, accesso, login, uscire, ruolo, ruoli, permesso, permessi, area di lavoro, tenant, sola lettura, membri, nodestro-server, set-role, remove-member, revoke-sessions, sessione scaduta -->
+
+Nodestro Studio può girare anche su un **server Nodestro** della tua organizzazione. In quel caso accedi tramite il servizio di accesso della tua organizzazione, e i tuoi dati sono salvati su quel server invece che sul tuo computer. L’app desktop e il comando `nodestro` non hanno né accesso né ruoli; nulla di questa sezione vale per loro.
+
+**Accedere e uscire.** Quando apri Nodestro, il server ti porta all’accesso e poi di nuovo indietro. In alto a destra compaiono il tuo nome e il tuo ruolo. Un clic apre il tuo account: nome, ruolo, **area di lavoro**, i tuoi permessi ed **Esci**. Quando la tua sessione scade, l’azione successiva ti riporta all’accesso e poi alla stessa pagina. Se un accesso non riesce (per esempio perché ha richiesto troppo tempo), un avviso in cima alla pagina spiega cosa è successo, con **Accedi di nuovo**.
+
+**Aree di lavoro.** Workflow, esecuzioni, conoscenza e impostazioni appartengono a un’area di lavoro. Se sei membro di più aree, cambi nel tuo account con **Cambia area di lavoro**; Nodestro carica allora la pagina iniziale dell’altra area. Le impostazioni valgono per la tua area di lavoro attuale su quel server.
+
+**Ruoli e permessi.** Ogni ruolo ha permessi fissi:
+
+| Ruolo | Permessi |
+|---|---|
+| **Proprietario** | Leggere, Modificare, Eseguire, Amministrare |
+| **Amministratore** | Leggere, Modificare, Eseguire, Amministrare |
+| **Editor** | Leggere, Modificare, Eseguire |
+| **Operatore** | Leggere, Eseguire |
+| **Osservatore** | Leggere |
+
+- **Leggere:** vedere tutto, comprese le esecuzioni e la documentazione.
+- **Modificare:** creare e modificare workflow, modelli di agenti, conoscenza e memoria.
+- **Eseguire:** avviare workflow, annullare e continuare esecuzioni, decidere le approvazioni.
+- **Amministrare:** impostazioni, provider di IA, servizi collegati, regole per le chiamate di strumenti, pubblicazione di API e chiavi API.
+- **Gestire l’installazione** non appartiene a nessun ruolo: backup, diagnosi del sistema e accesso di rete delle API pubblicate non compaiono su un server; se ne occupa il gestore.
+
+**Nodestro mostra in anticipo ciò che il tuo ruolo non consente.** Questi comandi sono nascosti o bloccati, con il motivo accanto, per esempio *Il tuo ruolo (Osservatore) non può farlo: serve il permesso «Modificare». Chiedi a un amministratore del tuo server Nodestro.* Come **Osservatore** o **Operatore**, un avviso in cima a ogni pagina dice che puoi vedere tutto ma non modificare nulla (e, come osservatore, nemmeno eseguire). Il server controlla comunque ogni richiesta da sé.
+
+**Membri e ruoli** li gestisce il gestore del server con i comandi della riga di comando `nodestro-server`; Nodestro Studio non ha una pagina per questo:
+
+- `nodestro-server members TENANT` elenca i membri di un’area di lavoro con i loro ruoli.
+- `nodestro-server set-role TENANT USER ROLE` aggiunge una persona o ne cambia il ruolo (`owner`, `admin`, `editor`, `operator`, `viewer`).
+- `nodestro-server remove-member TENANT USER` toglie una persona dall’area di lavoro e chiude lì le sue sessioni.
+- `nodestro-server revoke-sessions USER` chiude tutte le sessioni di una persona (le appartenenze restano).
+
+`USER` è un ID utente (`u_…`), un indirizzo e-mail verificato o l’identificativo presso il servizio di accesso. Il server conosce una persona solo dopo che ha effettuato l’accesso una volta; un’area di lavoro mantiene sempre almeno un proprietario. I dettagli sono nel runbook del repository nodestro-server (`docs/RUNBOOK.md`, sezione *Members*). Se l’accesso indica che il tuo account non ha ancora accesso, chiedi a un amministratore di aggiungerti.
+
+**Dati.** In fondo alla barra laterale, al posto di *Locale e privato* compare **Il server della tua organizzazione**: i tuoi dati restano su quel server e vanno solo ai provider di IA consentiti dal tuo gestore. Backup e installazione sono a carico del gestore. Frasi come «gira solo sul tuo computer» valgono solo per l’app desktop e per il comando `nodestro`.
 
 ## Scorciatoie da tastiera {#tastenkuerzel}
 <!-- keywords: scorciatoie da tastiera, shortcuts, tastiera, keyboard, accessibilità -->

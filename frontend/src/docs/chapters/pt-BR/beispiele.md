@@ -3,22 +3,24 @@
 O Nodestro traz 24 fluxos de trabalho multiagente prontos, um para cada área de aplicação típica. Cada exemplo contém agentes com prompts de sistema, as conexões, uma tarefa de teste preparada com dados inventados e um resultado claramente descrito. Este capítulo explica a galeria, como copiar e adaptar, e descreve cada exemplo separadamente.
 
 ## A galeria {#galerie}
-<!-- keywords: exemplos, modelos, galeria, biblioteca, destaques, categorias, página inicial -->
+<!-- keywords: exemplos, modelos, galeria, biblioteca, destaques, categorias, página inicial, comece aqui, nível, mais simples -->
 
-A galeria fica na página **Fluxos de trabalho**, abaixo dos seus próprios fluxos de trabalho e claramente separada deles. Ela mostra alguns exemplos em destaque e as seis categorias. **Ver todos os 24 exemplos** abre a galeria completa, também dentro da área de fluxos de trabalho.
+A galeria fica na página **Fluxos de trabalho**, abaixo dos seus próprios fluxos de trabalho e claramente separada deles. Ela mostra alguns exemplos em destaque, o mais simples primeiro, e as seis categorias. Enquanto você ainda não tiver nenhum fluxo de trabalho, o exemplo mais simples leva a marca **Comece aqui**; depois, a galeria é uma área recolhida que lembra se você a abriu. **Ver todos os 24 exemplos** abre a galeria completa, também dentro da área de fluxos de trabalho.
 
-Na galeria completa você busca por nome, área e descrição e filtra por categoria. Cada cartão mostra a área, o nome, a descrição, o número de agentes, o nível e o padrão. Exemplos de áreas sensíveis têm o selo **Exige revisão especializada**. A [busca](/docs/start#suche) também encontra exemplos.
+Na galeria completa você busca por nome, área, descrição, bloco ou nível e filtra por categoria e por **Nível**. Os exemplos são ordenados por nível, os mais simples primeiro; o mais simples leva **Comece aqui**. Busca, filtros e uma prévia aberta fazem parte do endereço, então *Voltar* leva à mesma seleção. Cada cartão mostra a área, o nome, a descrição, o número de agentes, o nível e o padrão. Exemplos de áreas sensíveis têm o selo **Exige revisão especializada**. A [busca](/docs/start#suche) também encontra exemplos.
 
 ## Prévia e cópia {#uebernehmen}
 <!-- keywords: prévia, copiar, cópia, modelo, inalterado, gratuito -->
 
 Um clique em um cartão abre a **prévia**: o fluxo como diagrama, cada agente com sua função, modelo, ferramentas e os resultados que recebe, o guia e a tarefa de teste. A prévia não salva nada e não chama nenhum modelo.
 
+No topo da prévia, **Do que você precisa** mostra qual provedor de IA e quais modelos a cópia usa e se esse provedor está configurado (caso contrário, com um link para as configurações), se uma execução para em uma aprovação, quais arquivos de conhecimento e de exemplo vêm junto e se é preciso uma conexão com outro serviço.
+
 **Copiar para meus fluxos de trabalho** cria um fluxo de trabalho seu e o abre no editor. A cópia é independente: você pode mudar tudo, e o modelo continua sempre inalterado. Se você copiar um exemplo duas vezes, terá dois fluxos de trabalho separados. A cópia começa com a versão 1 no [histórico de versões](/docs/workflows#versionen).
 
 Se **Adicionar os casos de teste como série de testes** estiver marcado (padrão), a cópia recebe também uma [série de testes](/docs/automatisierung#testreihen) com os casos de teste preparados; os arquivos de exemplo necessários são salvos como arquivos de entrada da cópia. Copiar nunca inicia uma execução, nunca cria um [agendamento](/docs/automatisierung#zeitplaene) e nunca publica uma [API](/docs/api-und-export#veroeffentlichen); isso você decide depois.
 
-Os exemplos nunca são criados automaticamente; só o que você copia aparece entre seus fluxos de trabalho. Só há custos quando você executa uma cópia. Os exemplos usam modelos da Anthropic; basta esse [provedor configurado](/docs/einstellungen#anbieter), e você pode trocar os modelos de uma cópia para outro provedor a qualquer momento. Nenhum exemplo precisa de outros serviços, contas ou fontes de dados pagas.
+Os exemplos nunca são criados automaticamente; só o que você copia aparece entre seus fluxos de trabalho. Só há custos quando você executa uma cópia. Os modelos que uma cópia recebe dependem do seu modelo padrão: se for um modelo da Anthropic, a cópia usa os modelos do exemplo (Haiku, Sonnet ou Opus, conforme a tarefa do agente). Se ele pertencer a outro [provedor](/docs/einstellungen#anbieter), todos os agentes da cópia usam o seu modelo padrão, e os mais exigentes o seu modelo dos assistentes, se for do mesmo provedor; as ferramentas de servidor, que só funcionam com a Anthropic, ficam de fora nesse caso. Você pode trocar os modelos de uma cópia a qualquer momento. Nenhum exemplo precisa de contas ou fontes de dados pagas. Alguns exemplos têm uma **Conexão opcional** com outro serviço via MCP: ao copiar, você escolhe um [serviço conectado](/docs/tools#verbundene-dienste) configurado ou o **Modo offline (dados de exemplo)**, que vem pré-selecionado.
 
 ## Idiomas {#sprachen}
 <!-- keywords: idioma, tradução, alemão, inglês, cópia, prompts -->
@@ -70,7 +72,7 @@ Os resultados são ferramentas de apoio, não aconselhamento nem uma decisão. V
 - **Seus arquivos:** coloque documentos para uma única execução diretamente no campo de arquivo ao iniciar; para isso você não precisa de uma coleção de conhecimento.
 - **Conhecimento:** carregue documentos de que você precisa sempre como [conhecimento](/docs/wissen#modi) e atribua-os ao agente adequado.
 - **Prompts e tarefas:** as tarefas se referem aos antecessores com [marcadores](/docs/workflows#platzhalter). Se você renomear um agente, ajuste os marcadores.
-- **Dados atuais:** para informações ao vivo você pode adicionar a [ferramenta de servidor](/docs/tools#server-tools) de busca na web; ela tem custo extra por busca.
+- **Dados atuais:** para informações ao vivo você pode adicionar a [ferramenta de servidor](/docs/tools#server-tools) de busca na web (só com modelos da Anthropic); ela tem custo extra por busca.
 
 As seções abaixo indicam adaptações concretas para cada exemplo.
 

@@ -1,6 +1,6 @@
 # Automazione
 
-Sotto *Automazione* nella navigazione, i workflow girano senza fare clic su *Avvia*: le **esecuzioni in serie** elaborano molti input in una volta, le **serie di test** misurano la qualità di un workflow e le **pianificazioni** avviano workflow regolarmente. Ogni singola esecuzione è un'esecuzione normale con traccia, budget e utilizzo; le approvazioni attendono una persona come sempre.
+Sotto *Automatizza e testa* nella navigazione, i workflow girano senza fare clic su *Avvia*: le **esecuzioni in serie** elaborano molti input in una volta, le **serie di test** misurano la qualità di un workflow e le **pianificazioni** avviano workflow regolarmente. Ogni singola esecuzione è un'esecuzione normale con traccia, budget e utilizzo; le approvazioni attendono una persona come sempre.
 
 ## Esecuzioni in serie {#stapel}
 <!-- keywords: serie, batch, molti input, csv, excel, xlsx, json, tabella, colonne, assegnazione, esportare -->

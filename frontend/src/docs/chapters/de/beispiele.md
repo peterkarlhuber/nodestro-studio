@@ -3,22 +3,24 @@
 Nodestro bringt 24 fertige Multi-Agenten-Workflows mit, einen für jedes typische Anwendungsfeld. Jedes Beispiel enthält Agenten mit System-Prompts, die Verbindungen, eine vorbereitete Testaufgabe mit erfundenen Daten und ein klar beschriebenes Ergebnis. Dieses Kapitel erklärt die Galerie, das Übernehmen und Anpassen und beschreibt jedes Beispiel einzeln.
 
 ## Die Galerie {#galerie}
-<!-- keywords: beispiele, vorlagen, galerie, bibliothek, empfohlen, kategorien, startseite -->
+<!-- keywords: beispiele, vorlagen, galerie, bibliothek, empfohlen, kategorien, startseite, hier starten, niveau, einfachste -->
 
-Die Galerie steht auf der Seite **Workflows** unter deinen eigenen Workflows, klar davon getrennt. Sie zeigt einige empfohlene Beispiele und die sechs Kategorien. **Alle 24 Beispiele ansehen** öffnet die vollständige Galerie, ebenfalls im Bereich Workflows.
+Die Galerie steht auf der Seite **Workflows** unter deinen eigenen Workflows, klar davon getrennt. Sie zeigt einige empfohlene Beispiele, das einfachste zuerst, und die sechs Kategorien. Solange du noch keinen Workflow hast, trägt das einfachste Beispiel die Markierung **Hier starten**; danach ist die Galerie ein zugeklappter Bereich, der sich merkt, ob du ihn geöffnet hast. **Alle 24 Beispiele ansehen** öffnet die vollständige Galerie, ebenfalls im Bereich Workflows.
 
-In der vollständigen Galerie suchst du nach Name, Fachgebiet und Beschreibung und filterst nach Kategorie. Jede Karte zeigt Fachgebiet, Name, Beschreibung, die Zahl der Agenten, das Niveau und das Muster. Beispiele aus sensiblen Bereichen tragen das Abzeichen **Fachlich prüfen**. Auch die [Suche](/docs/start#suche) findet Beispiele.
+In der vollständigen Galerie suchst du nach Name, Fachgebiet, Beschreibung, Baustein oder Niveau und filterst nach Kategorie und **Niveau**. Die Beispiele sind nach Niveau geordnet, die einfachsten zuerst; das einfachste trägt **Hier starten**. Suche, Filter und eine geöffnete Vorschau stehen in der Adresse, sodass *Zurück* zur selben Auswahl führt. Jede Karte zeigt Fachgebiet, Name, Beschreibung, die Zahl der Agenten, das Niveau und das Muster. Beispiele aus sensiblen Bereichen tragen das Abzeichen **Fachlich prüfen**. Auch die [Suche](/docs/start#suche) findet Beispiele.
 
 ## Vorschau und Übernehmen {#uebernehmen}
 <!-- keywords: vorschau, übernehmen, kopie, kopieren, vorlage, unverändert, kostenlos -->
 
 Ein Klick auf eine Karte öffnet die **Vorschau**: den Ablauf als Grafik, jeden Agenten mit Rolle, Modell, Tools und den Ergebnissen, die er bekommt, die Anleitung und die Testaufgabe. Die Vorschau speichert nichts und ruft kein Modell auf.
 
+Ganz oben in der Vorschau steht **Was du brauchst**: welchen KI-Anbieter und welche Modelle die Kopie nutzt und ob dieser Anbieter eingerichtet ist (sonst mit Link zu den Einstellungen), ob ein Lauf für eine Freigabe anhält, welche Wissens- und Beispieldateien mitkommen und ob eine Verbindung zu einem anderen Dienst nötig ist.
+
 **Als Kopie übernehmen** legt einen eigenen Workflow an und öffnet ihn im Editor. Die Kopie ist unabhängig: Du kannst alles ändern, und die Vorlage bleibt immer unverändert. Übernimmst du ein Beispiel zweimal, entstehen zwei getrennte Workflows. Die Kopie beginnt mit Version 1 im [Versionsverlauf](/docs/workflows#versionen).
 
 Ist **Testfälle als Testreihe übernehmen** angehakt (vorbelegt), bekommt die Kopie zusätzlich eine [Testreihe](/docs/automatisierung#testreihen) mit den vorbereiteten Testfällen; die nötigen Beispieldateien werden dabei als Eingabedateien der Kopie gespeichert. Übernehmen startet nie einen Lauf, legt keinen [Zeitplan](/docs/automatisierung#zeitplaene) an und veröffentlicht keine [API](/docs/api-und-export#veroeffentlichen); das entscheidest du später selbst.
 
-Beispiele werden nie automatisch angelegt; nur was du übernimmst, erscheint unter deinen Workflows. Kosten entstehen erst, wenn du eine Kopie ausführst. Die Beispiele nutzen Modelle von Anthropic; dafür genügt dieser [eingerichtete Anbieter](/docs/einstellungen#anbieter), und du kannst die Modelle einer Kopie jederzeit auf einen anderen Anbieter umstellen. Kein Beispiel braucht weitere Dienste, Konten oder bezahlte Datenquellen.
+Beispiele werden nie automatisch angelegt; nur was du übernimmst, erscheint unter deinen Workflows. Kosten entstehen erst, wenn du eine Kopie ausführst. Welche Modelle eine Kopie bekommt, richtet sich nach deinem Standardmodell: Ist es ein Modell von Anthropic, nutzt die Kopie die Modelle des Beispiels (Haiku, Sonnet oder Opus, je nach Aufgabe des Agenten). Gehört es zu einem anderen [Anbieter](/docs/einstellungen#anbieter), nutzen alle Agenten der Kopie dein Standardmodell, die anspruchsvollsten dein Modell der Assistenten, wenn es zum selben Anbieter gehört; Server-Tools, die nur bei Anthropic laufen, entfallen dann. Du kannst die Modelle einer Kopie jederzeit ändern. Kein Beispiel braucht Konten oder bezahlte Datenquellen. Einige Beispiele haben eine **Optionale Verbindung** zu einem anderen Dienst über MCP: Beim Übernehmen wählst du einen eingerichteten [verbundenen Dienst](/docs/tools#verbundene-dienste) oder den **Offline-Modus (Beispieldaten)**, der vorbelegt ist.
 
 ## Sprachen {#sprachen}
 <!-- keywords: sprache, übersetzung, deutsch, englisch, kopie, prompts -->
@@ -70,7 +72,7 @@ Die Ergebnisse sind Arbeitshilfen, keine Beratung und keine Entscheidung. Prüfe
 - **Eigene Dateien:** Lege Dokumente für einen einzelnen Lauf direkt in das Dateifeld beim Starten; eine Wissenssammlung brauchst du dafür nicht.
 - **Wissen:** Dokumente, die du dauerhaft brauchst, lädst du als [Wissen](/docs/wissen#modi) hoch und weist sie dem passenden Agenten zu.
 - **Prompts und Aufgaben:** Die Aufgaben verweisen mit [Platzhaltern](/docs/workflows#platzhalter) auf ihre Vorgänger. Benennst du einen Agenten um, passe die Platzhalter an.
-- **Aktuelle Daten:** Für Live-Informationen kannst du das [Server-Tool](/docs/tools#server-tools) Websuche ergänzen; es kostet pro Suche extra.
+- **Aktuelle Daten:** Für Live-Informationen kannst du das [Server-Tool](/docs/tools#server-tools) Websuche ergänzen (nur mit Modellen von Anthropic); es kostet pro Suche extra.
 
 Die Abschnitte unten nennen für jedes Beispiel konkrete Anpassungen.
 

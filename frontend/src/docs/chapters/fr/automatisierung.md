@@ -1,6 +1,6 @@
 # Automatisation
 
-Sous *Automatisation* dans la navigation, les workflows s’exécutent sans clic sur *Lancer* : les **exécutions par lots** traitent de nombreuses entrées à la fois, les **séries de tests** mesurent la qualité d’un workflow et les **planifications** lancent des workflows régulièrement. Chaque exécution reste une exécution ordinaire avec trace, budget et utilisation ; les validations attendent une personne comme toujours.
+Sous *Automatiser et tester* dans la navigation, les workflows s’exécutent sans clic sur *Lancer* : les **exécutions par lots** traitent de nombreuses entrées à la fois, les **séries de tests** mesurent la qualité d’un workflow et les **planifications** lancent des workflows régulièrement. Chaque exécution reste une exécution ordinaire avec trace, budget et utilisation ; les validations attendent une personne comme toujours.
 
 ## Exécutions par lots {#stapel}
 <!-- keywords: lot, batch, nombreuses entrées, csv, excel, xlsx, json, tableau, colonnes, correspondance, export -->

@@ -70,14 +70,16 @@ Mentre attende, l'esecuzione ha lo stato **In pausa** e l'approvazione **In atte
 ## La pagina Approvazioni {#freigaben-seite}
 <!-- keywords: approvazioni, approvazioni aperte, coda, decidere, navigazione, contatore -->
 
-La pagina **Approvazioni** (navigazione, gruppo *Automazione*) elenca tutte le approvazioni aperte, dalla più vecchia, con workflow, origine (manuale, pianificazione, serie, serie di test) e tempo di attesa. Il numero accanto alla voce di menu indica quante sono in attesa.
+La pagina **Approvazioni** (navigazione, gruppo *Esegui e verifica*) elenca tutte le approvazioni aperte, dalla più vecchia, con workflow, origine (manuale, pianificazione, serie, serie di test) e tempo di attesa. Il numero accanto alla voce di menu indica quante sono in attesa.
 
-Ogni scheda mostra la nota, i risultati da verificare, un campo per il commento e i pulsanti *Approva* e *Rifiuta*. Anche le approvazioni dentro i sotto-workflow compaiono qui, con il percorso fino all'esecuzione principale.
+Ogni scheda mostra la nota, i risultati da verificare (i risultati strutturati come campi con etichetta, il JSON a un clic), un campo per il commento e i pulsanti *Approva* e *Rifiuta*; i pulsanti restano visibili anche con risultati lunghi. Anche le approvazioni dentro i sotto-workflow compaiono qui, con il percorso fino all'esecuzione principale. Le schede delle [chiamate di strumenti](/docs/verzweigungen#tool-freigabe) indicano workflow e passaggio («*workflow* · passo *nome*»).
 
 ## Approvare le chiamate di strumenti {#tool-freigabe}
 <!-- keywords: approvazione strumento, chiamata di strumento, per chiamata, argomenti, scadenza, approvazione anticipata, non presidiata, eccezione preesistente -->
 
-Oltre ai nodi di approvazione, Nodestro può chiedere prima di **singole chiamate di strumenti** di un agente. È pensato per strumenti che modificano dati o agiscono verso l’esterno, ad esempio inviare un’e-mail o scrivere in un sistema di ticket. L’amministrazione lo attiva dopo la verifica di sicurezza; fino ad allora non cambia nulla.
+Oltre ai nodi di approvazione, Nodestro può chiedere prima di **singole chiamate di strumenti** di un agente. È pensato per strumenti che modificano dati o agiscono verso l’esterno, ad esempio inviare un’e-mail o scrivere in un sistema di ticket.
+
+**Per ora disattivato.** Le approvazioni per singola chiamata di strumenti non sono ancora attive in Nodestro; arriveranno solo dopo una verifica di sicurezza. Fino ad allora gli strumenti vengono eseguiti senza chiedere prima, e nella pagina **Approvazioni** *Regole per le chiamate di strumenti* mostra solo questa frase. La preparazione per gli amministratori (passo di attivazione, approvazioni anticipate, registro) è chiusa lì sotto **Preparazione per gli amministratori**. Il resto di questa sezione descrive come funzioneranno le approvazioni una volta attive.
 
 Quando un agente vuole fare una chiamata del genere, l’esecuzione continua ma attende su quella chiamata. La scheda compare nell’esecuzione, nel passo e nella pagina **Approvazioni**. Mostra lo strumento, cosa può fare (*solo lettura*, *modifica dati*, *cancella o distrugge*; *resta in Nodestro* o *agisce verso l’esterno*), gli **argomenti esattamente come verranno inviati** e il tempo rimasto.
 
@@ -95,7 +97,7 @@ Le esecuzioni che nessuno segue (pianificazioni, serie, serie di test) non posso
 
 1. In *Approvazioni → Regole per le chiamate di strumenti* l’amministrazione esegue **Marca le assegnazioni esistenti**. Ogni assegnazione di strumento che esiste ora in workflow, loro versioni e API pubblicate diventa un’**eccezione preesistente**, legata alla versione dello strumento con cui gira. Le API pubblicate ricevono una sola volta una nuova impronta (digest); la loro cronologia conserva la vecchia e la nuova. Il passo viene eseguito **una sola volta**: assegnazioni, workflow e versioni creati dopo sono nuovi e vengono chiesti.
 2. **Controlla l’elenco.** Un’eccezione indesiderata termina quando togli lo strumento dall’agente e salvi; se lo assegni di nuovo, viene chiesto come uno nuovo.
-3. Solo dopo l’amministrazione attiva le approvazioni (`NODESTRO_TOOL_APPROVALS=1`, poi riavviare Nodestro).
+3. Solo dopo vengono attivate le approvazioni. Questa versione non lo prevede ancora: restano disattivate finché la verifica di sicurezza non è conclusa.
 
 Se si attiva senza il primo passo, nulla è esente: ogni assegnazione viene chiesta e le esecuzioni non presidiate negano tali chiamate. Una nuova versione dello strumento termina sempre un’eccezione. Un’approvazione non toglie mai i limiti della sandbox.
 
@@ -138,29 +140,32 @@ Un team si può verificare da solo: crea una [serie di test](/docs/automatisieru
 
 Un **orchestratore** lascia decidere a un modello di IA quale team riceve quale parte del compito. Prende una decisione dopo l’altra: **delegare** un compito a un team oppure **concludere** con una risposta. La risposta è il risultato del nodo.
 
-- **Team:** i workflow salvati tra cui il modello può scegliere (al massimo 20). Di ogni team il modello vede solo nome, descrizione, capacità e contratto di output.
-- **Team per capacità:** invece di scegliere ogni team, indichi delle capacità (al massimo 10). All’avvio di un’esecuzione i team salvati con una capacità corrispondente entrano nel gruppo (fino a *Al massimo tanti team*): prima quelli con più tag corrispondenti, poi per nome. I team con errori restano fuori; i team con passaggi di approvazione sono inclusi. La selezione resta fissa per quell’esecuzione (e per una versione pubblicata); i dettagli mostrano quali tag ha trovato ogni team. Non si assegnano punteggi né stime.
-- **Compito** e **Istruzioni:** cosa va fatto e, facoltativamente, come pianificarlo.
-- **Numero massimo di decisioni** (da 1 a 50, predefinito 8) e **Massimo per team:** senza risposta dopo l’ultima decisione, il passaggio fallisce.
+L’ispettore di un orchestratore inizia con una frase che riassume come lavora («Come lavora questo orchestratore: …») e raggruppa le impostazioni in quattro aree apribili; ognuna mostra nell’intestazione un riepilogo ed eventuali problemi:
 
-L’orchestratore sceglie soltanto. Non ha strumenti, non crea agenti, strumenti o team e non ha autorizzazioni proprie. Ogni team scelto viene eseguito come **esecuzione collegata a sé**, con la sua quota di budget, i suoi limiti e le sue approvazioni degli strumenti. Le decisioni non consentite (un team sconosciuto, lo stesso compito di nuovo, un team esaurito) vengono rifiutate e mostrate al modello; contano comunque come decisione.
+- **Pool di team:** i **Workflow scelti** sono i workflow salvati tra cui il modello può scegliere (al massimo 20). Di ogni team il modello vede solo nome, descrizione, capacità e contratto di output.
+- **Team per capacità** (anche nel pool di team): invece di scegliere ogni team, indichi delle capacità (al massimo 10). All’avvio di un’esecuzione i team salvati con una capacità corrispondente entrano nel gruppo (fino a *Al massimo tanti team*): prima quelli con più tag corrispondenti, poi per nome. I team con errori restano fuori; i team con passaggi di approvazione sono inclusi. La selezione resta fissa per quell’esecuzione (e per una versione pubblicata); i dettagli mostrano quali tag ha trovato ogni team. Non si assegnano punteggi né stime.
+- **Incarico:** **Compito** e **Istruzioni** (cosa va fatto e, facoltativamente, come pianificarlo) e il **Modello** dell’orchestratore.
+- **Limiti:** **Numero massimo di decisioni** (da 1 a 50, predefinito 8), **Utilizzi massimi per team** e **Team contemporaneamente**. Senza risposta dopo l’ultima decisione, il passaggio fallisce.
+- **Formazione attiva:** le opzioni descritte in [Team dinamici](/docs/verzweigungen#dynamische-teams).
+
+L’orchestratore sceglie soltanto. Non ha strumenti, non crea agenti, strumenti o team e non ha autorizzazioni proprie. Ogni team scelto viene eseguito come **esecuzione collegata a sé**, con la sua quota di budget, i suoi limiti e le sue approvazioni degli strumenti. Le decisioni non consentite (un team sconosciuto, lo stesso compito di nuovo, un team esaurito) non vengono eseguite e sono mostrate al modello; i dettagli dell’esecuzione le indicano come *Non valida, non eseguita*. Contano comunque come decisione.
 
 I dettagli dell’esecuzione elencano ogni decisione con motivo, compito, risultato e un link all’esecuzione del team. Quando un team si ferma per un’**approvazione** (anche in un sotto-workflow o sotto un altro orchestratore), l’orchestratore attende con lui: l’esecuzione è *in pausa* e compare in **Approvazioni**. Dopo la decisione continua la stessa esecuzione del team, anche dopo un riavvio, e il modello non viene interpellato di nuovo per quella delega. Se un rifiuto termina l’esecuzione del team (*In caso di rifiuto: termina l’esecuzione*), termina anche questa esecuzione; nessun altro team può aggirare il rifiuto. Annullare un’esecuzione in attesa annulla anche i suoi team in attesa. Un team non può richiamare il workflow dell’orchestratore.
 
 ## Team dinamici {#dynamische-teams}
 <!-- keywords: team dinamico, comporre il team, parallelo, contemporaneamente, parametri, modulo di avvio, modello, composizione del team, staffing -->
 
-Nell’area **Team dinamici** di un orchestratore il modello ha più margine, sempre all’interno del pool e dei limiti. All’inizio tutto è disattivato.
+Nell’area **Formazione attiva** di un orchestratore (campo *Team dinamici*) il modello ha più margine, sempre all’interno del pool e dei limiti. All’inizio tutto è disattivato.
 
-- **Team contemporaneamente** (da 1 a 5): una decisione può affidare lavoro a più team diversi insieme, per parti che non dipendono l’una dall’altra. Ogni team ottiene il proprio risultato.
-- **Comporre il team da sé:** l’orchestratore prende team dal pool nel suo team e li congeda di nuovo quando i risultati intermedi lo suggeriscono. Ricevono lavoro solo i team nel team; *Al massimo nel team* ne limita la dimensione. Lo stesso team può lavorare più volte (fino a *Al massimo per team*).
+- **Team contemporaneamente** (da 1 a 5, nell’area *Limiti*): una decisione può affidare lavoro a più team diversi insieme, per parti che non dipendono l’una dall’altra. Ogni team ottiene il proprio risultato.
+- **Comporre da sé la formazione attiva:** l’orchestratore prende team dal pool nella sua formazione attiva e li congeda di nuovo quando i risultati intermedi lo suggeriscono. Ricevono lavoro solo i team nella formazione attiva; *Al massimo nella formazione attiva* ne limita la dimensione. Lo stesso team può lavorare più volte (fino a *Utilizzi massimi per team*). Senza questa opzione l’orchestratore sceglie dall’intero pool.
 - **Compilare il modulo di avvio dei team:** l’orchestratore può impostare i campi del modulo di input di un team (mai file). I valori vengono verificati come in un avvio manuale; un campo sconosciuto o un valore non valido viene rifiutato e mostrato al modello.
 
 Il pool è fissato all’avvio dell’esecuzione, nelle versioni di quel momento. Non nascono mai nuovi team, agenti o strumenti, e approvazioni, budget e limiti di ogni team valgono invariati.
 
-**Cosa mostrano i dettagli dell’esecuzione:** quale orchestratore lavora con quale modello, quante decisioni sono state usate, il costo delle decisioni e quello totale (i costi sconosciuti appaiono come *non del tutto noto*, mai come 0), il pool con le versioni, il **team nel tempo**, i team in attesa e ogni decisione con motivo, compito, valori e l’esito di ogni team: *Riuscito*, *In attesa di approvazione*, *Non riuscito*, *Rifiutato*, *Annullato* o *Scaduto*. Vengono mostrate solo le decisioni registrate, nessun ragionamento del modello.
+**Cosa mostrano i dettagli dell’esecuzione:** quale orchestratore lavora con quale modello, quante decisioni sono state usate, il costo delle decisioni e quello totale (i costi sconosciuti appaiono come *non del tutto noto*, mai come 0), il pool con le versioni, la **Formazione attiva nel tempo**, i team in attesa e ogni decisione con motivo, compito, valori e l’esito di ogni team: *Riuscito*, *In attesa di approvazione*, *Non riuscito*, *Rifiutato*, *Annullato* o *Scaduto*. Vengono mostrate solo le decisioni registrate, nessun ragionamento del modello.
 
-**Salva la composizione del team come modello:** un team esiste solo durante l’esecuzione. Al termine, questo pulsante salva un **nuovo workflow** con lo stesso orchestratore, il suo modulo di avvio, i suoi limiti ed esattamente i team che hanno lavorato, nelle versioni dell’esecuzione. Senza questo clic non viene salvato nulla.
+**Salva la composizione del team come modello:** una formazione attiva esiste solo durante l’esecuzione. Al termine, questo pulsante salva un **nuovo workflow** con lo stesso orchestratore, il suo modulo di avvio, i suoi limiti ed esattamente i team che hanno lavorato, nelle versioni dell’esecuzione. Senza questo clic non viene salvato nulla.
 
 ## Moduli di input {#eingabeformular}
 <!-- keywords: modulo, modulo di input, campi, tipo, obbligatorio, valore predefinito, scelta, data, numero, form -->
@@ -190,5 +195,7 @@ Un'esecuzione non riuscita o annullata può essere **continuata** (pulsante *Con
 - I risultati ripresi non costano nulla nella nuova esecuzione; il loro costo resta nella vecchia e non viene contato due volte in [Utilizzo](/docs/nutzung).
 - Le decisioni di approvazione dei passaggi ripresi restano valide e sono segnate come riprese; a nessuno viene chiesto due volte.
 - Se i passaggi rieseguiti avevano già chiamato **strumenti propri** che possono agire fuori da Nodestro (per esempio inviare un messaggio), devi confermarlo esplicitamente.
+
+Se un’esecuzione è stata interrotta perché Nodestro si è fermato mentre era in corso, la sua vista di dettaglio nomina i passi non terminati e offre **Continua** direttamente nella nota; quei passi vengono rieseguiti con il motivo *È stato interrotto*.
 
 Se nulla può essere ripreso in sicurezza, Nodestro propone un nuovo avvio completo. Le tracce importate e le singole esecuzioni di sotto-workflow non possono essere continuate; continua invece l'esecuzione principale.

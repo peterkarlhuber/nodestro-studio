@@ -69,17 +69,17 @@
     "loopback_toggle": "http solo es posible para un servidor de desarrollo en este ordenador: activa «{{toggle}}» abajo."
   },
   "import": {
-    "not_object": "Este archivo no es un workflow de Nodestro: no contiene ningún objeto de workflow. Exporta un workflow en el editor (Exportar) e importa ese archivo.",
-    "no_nodes": "Este archivo no es un workflow de Nodestro: no tiene pasos (\"nodes\"). Exporta un workflow en el editor (Exportar) e importa ese archivo.",
-    "node_invalid": "Este archivo no es un workflow de Nodestro válido: el paso {{index}} no tiene id o tipo.",
-    "edges_invalid": "Este archivo no es un workflow de Nodestro válido: sus conexiones (\"edges\") no son una lista.",
-    "edge_invalid": "Este archivo no es un workflow de Nodestro válido: la conexión {{index}} no tiene inicio o fin."
+    "not_object": "Este archivo no es un flujo de trabajo de Nodestro: no contiene ningún objeto de flujo de trabajo. Exporta un flujo de trabajo en el editor (Más acciones → Exportar como archivo) e importa ese archivo.",
+    "no_nodes": "Este archivo no es un flujo de trabajo de Nodestro: no tiene pasos (\"nodes\"). Exporta un flujo de trabajo en el editor (Más acciones → Exportar como archivo) e importa ese archivo.",
+    "node_invalid": "Este archivo no es un flujo de trabajo de Nodestro válido: el paso {{index}} no tiene id o tipo.",
+    "edges_invalid": "Este archivo no es un flujo de trabajo de Nodestro válido: sus conexiones (\"edges\") no son una lista.",
+    "edge_invalid": "Este archivo no es un flujo de trabajo de Nodestro válido: la conexión {{index}} no tiene inicio o fin."
   },
   "conflict": {
     "title": "Cambiado en otro lugar",
-    "text": "Este workflow se guardó en otro lugar a las {{time}} (en otra pestaña o por otra persona) después de que lo abrieras. Si guardas ahora, sustituirás ese cambio.",
+    "text": "Este flujo de trabajo se guardó en otro lugar a las {{time}} (en otra pestaña o por otra persona) después de que lo abrieras. Si guardas ahora, sustituirás ese cambio.",
     "reloadHint": "Cargar la versión guardada: tus cambios sin guardar aquí se descartan.",
-    "copyHint": "Conservar el mío como copia: tu estado se convierte en un workflow nuevo y el guardado se queda como está.",
+    "copyHint": "Conservar el mío como copia: tu estado se convierte en un flujo de trabajo nuevo y el guardado se queda como está.",
     "overwriteHint": "Guardar el mío de todos modos: tu estado sustituye al otro cambio.",
     "versions": "En ningún caso se pierde nada para siempre: cada guardado se conserva en Versiones, donde puedes compararlo y restaurarlo.",
     "keepEditing": "Seguir editando",
@@ -87,7 +87,7 @@
     "copy": "Conservar el mío como copia",
     "overwrite": "Guardar el mío de todos modos",
     "copyName": "{{name}} (mi copia)",
-    "copied": "Guardado como el workflow nuevo «{{name}}».",
+    "copied": "Guardado como el flujo de trabajo nuevo «{{name}}».",
     "reloaded": "Se ha cargado la versión guardada."
   },
   "compat": {
@@ -99,7 +99,7 @@
     "offDocs": "Cómo funcionan las aprobaciones por llamada",
     "preparation": "Preparación para administradores",
     "legacyNotRunOn": "El paso de activación aún no se ha ejecutado: las asignaciones de antes se consultan como las nuevas.",
-    "stampHintOn": "Marca como excepciones las asignaciones que existen ahora en workflows, versiones y releases publicadas, para que sigan funcionando sin preguntar. Revisa la lista después; solo se ejecuta una vez."
+    "stampHintOn": "Marca como excepciones las asignaciones que existen ahora en flujos de trabajo, versiones y releases publicadas, para que sigan funcionando sin preguntar. Revisa la lista después; solo se ejecuta una vez."
   },
   "request": {
     "title": "La solicitud no encaja con la entrada de la API:",
