@@ -249,6 +249,12 @@
       "daily": "diariamente às {{at}} ({{zone}})",
       "weekly": "semanalmente {{days}} às {{at}} ({{zone}})",
       "monthly": "mensalmente no dia {{day}} às {{at}} ({{zone}})"
-    }
+    },
+    "enabledWithWarnings": "O agendamento está ativo, mas algumas chamadas de ferramentas seriam recusadas"
+  },
+  "toolWarnings": {
+    "title": "Chamadas de ferramentas que seriam recusadas",
+    "hint": "Nada é aprovado automaticamente. As aprovações antecipadas são dadas por uma pessoa administradora na página Aprovações.",
+    "open": "Abrir Aprovações"
   }
 }

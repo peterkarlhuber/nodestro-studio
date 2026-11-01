@@ -179,7 +179,14 @@
     "pre_grant_destructive": "Gli strumenti che cancellano o distruggono non possono essere approvati in anticipo.",
     "pre_grant_version": "Si può approvare in anticipo solo una versione precisa dello strumento.",
     "pre_grant_expiry": "La data di scadenza è nel passato.",
-    "pre_grant_not_found": "Questa approvazione anticipata non esiste."
+    "pre_grant_not_found": "Questa approvazione anticipata non esiste.",
+    "unattended_pre_grant_missing": "{{node}} ({{workflow}}): le chiamate a {{tool}} richiedono l'approvazione di una persona e in queste esecuzioni nessuno può rispondere, quindi verrebbero rifiutate. Approva {{tool}} in anticipo per questa pianificazione nella pagina Approvazioni, oppure avvia il workflow a mano.",
+    "unattended_pre_grant_outdated": "{{node}} ({{workflow}}): l'approvazione anticipata di {{tool}} non vale più (una nuova versione dello strumento, oppure è scaduta), quindi le sue chiamate verrebbero rifiutate. Approva di nuovo la versione attuale nella pagina Approvazioni.",
+    "unattended_not_started": "{{node}} ({{workflow}}): le chiamate a {{tool}} richiedono l'approvazione di una persona e verrebbero rifiutate. Un'approvazione anticipata può indicare solo una pianificazione salvata o un lotto o una serie di test già avviati, quindi le chiamate fatte prima che tu approvi {{tool}} nella pagina Approvazioni vengono rifiutate. Salva prima la pianificazione; un lotto o una serie di test è meglio avviarli a mano se ogni chiamata conta.",
+    "unattended_api": "{{node}} ({{workflow}}): le chiamate a {{tool}} richiedono l'approvazione di una persona. Le API pubblicate non hanno ancora un proprio passaggio di approvazione, quindi ogni chiamata di questo tipo verrebbe rifiutata. Rimuovi lo strumento dal workflow pubblicato, oppure usa uno strumento che si limita a leggere.",
+    "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} può cancellare, pagare o inviare qualcosa che non si può annullare. Queste chiamate non vengono mai approvate in anticipo e verrebbero rifiutate nelle esecuzioni senza supervisione. Avvia il workflow a mano, così una persona approva ogni chiamata.",
+    "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} è uno strumento di un servizio MCP collegato. Le sue chiamate non possono essere eseguite senza una persona che controlla e verrebbero rifiutate. Avvia il workflow a mano.",
+    "unattended_denied": "{{node}} ({{workflow}}): le chiamate a {{tool}} verrebbero rifiutate in queste esecuzioni."
   },
   "job": {
     "writing": "Il Coding Agent sta scrivendo codice e test …",

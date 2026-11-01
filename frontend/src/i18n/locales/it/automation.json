@@ -249,6 +249,12 @@
       "daily": "ogni giorno alle {{at}} ({{zone}})",
       "weekly": "ogni settimana il {{days}} alle {{at}} ({{zone}})",
       "monthly": "ogni mese il giorno {{day}} alle {{at}} ({{zone}})"
-    }
+    },
+    "enabledWithWarnings": "La pianificazione è attiva, ma alcune chiamate a strumenti verrebbero rifiutate"
+  },
+  "toolWarnings": {
+    "title": "Chiamate a strumenti che verrebbero rifiutate",
+    "hint": "Nulla viene approvato automaticamente. Le approvazioni anticipate le dà una persona amministratrice nella pagina Approvazioni.",
+    "open": "Apri Approvazioni"
   }
 }

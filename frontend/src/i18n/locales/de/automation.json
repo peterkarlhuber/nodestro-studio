@@ -249,6 +249,12 @@
       "daily": "täglich um {{at}} ({{zone}})",
       "weekly": "wöchentlich {{days}} um {{at}} ({{zone}})",
       "monthly": "monatlich am {{day}}. um {{at}} ({{zone}})"
-    }
+    },
+    "enabledWithWarnings": "Der Zeitplan ist eingeschaltet, aber einige Tool-Aufrufe würden verweigert"
+  },
+  "toolWarnings": {
+    "title": "Tool-Aufrufe, die verweigert würden",
+    "hint": "Nichts wird automatisch freigegeben. Vorabfreigaben erteilt eine Administratorin oder ein Administrator auf der Seite „Freigaben“.",
+    "open": "Freigaben öffnen"
   }
 }

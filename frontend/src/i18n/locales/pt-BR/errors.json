@@ -179,7 +179,14 @@
     "pre_grant_destructive": "Ferramentas que excluem ou destroem não podem ser aprovadas antecipadamente.",
     "pre_grant_version": "Só é possível aprovar antecipadamente uma versão específica da ferramenta.",
     "pre_grant_expiry": "A data de expiração está no passado.",
-    "pre_grant_not_found": "Esta aprovação antecipada não existe."
+    "pre_grant_not_found": "Esta aprovação antecipada não existe.",
+    "unattended_pre_grant_missing": "{{node}} ({{workflow}}): as chamadas de {{tool}} precisam da aprovação de uma pessoa, e ninguém pode responder nessas execuções, então elas seriam recusadas. Aprove {{tool}} antecipadamente para este agendamento na página Aprovações, ou inicie o fluxo de trabalho manualmente.",
+    "unattended_pre_grant_outdated": "{{node}} ({{workflow}}): a aprovação antecipada de {{tool}} não vale mais (nova versão da ferramenta, ou expirou), então suas chamadas seriam recusadas. Aprove a versão atual novamente na página Aprovações.",
+    "unattended_not_started": "{{node}} ({{workflow}}): as chamadas de {{tool}} precisam da aprovação de uma pessoa e seriam recusadas. Uma aprovação antecipada só pode indicar um agendamento salvo ou um lote ou série de testes já iniciado, então as chamadas feitas antes de você aprovar {{tool}} na página Aprovações são recusadas. Salve o agendamento primeiro; um lote ou uma série de testes é melhor iniciar manualmente se cada chamada importa.",
+    "unattended_api": "{{node}} ({{workflow}}): as chamadas de {{tool}} precisam da aprovação de uma pessoa. APIs publicadas ainda não têm uma etapa de aprovação própria, então cada uma dessas chamadas seria recusada. Remova a ferramenta do fluxo de trabalho publicado, ou use uma ferramenta que apenas lê.",
+    "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} pode excluir, pagar ou enviar algo que não pode ser desfeito. Essas chamadas nunca são aprovadas antecipadamente e seriam recusadas em execuções sem supervisão. Inicie o fluxo de trabalho manualmente, para que uma pessoa aprove cada chamada.",
+    "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} é uma ferramenta de um serviço MCP conectado. Suas chamadas não podem rodar sem uma pessoa acompanhando e seriam recusadas. Inicie o fluxo de trabalho manualmente.",
+    "unattended_denied": "{{node}} ({{workflow}}): as chamadas de {{tool}} seriam recusadas nessas execuções."
   },
   "job": {
     "writing": "O agente de programação está escrevendo código e testes …",

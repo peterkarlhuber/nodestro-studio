@@ -1864,6 +1864,8 @@ export interface BatchPlan {
   items: BatchItem[];
   estimate: CostEstimate;
   external_tools: string[];
+  /** Tool calls the per-call approval rules would refuse in these runs (only while approvals are switched on). */
+  tool_warnings: Problem[];
   approvals: number;
   fields: string[];
 }
@@ -2009,6 +2011,8 @@ export interface BenchmarkPlan {
   estimate: CostEstimate;
   judged_cases: number;
   external_tools: string[];
+  /** Tool calls the per-call approval rules would refuse in the test runs (only while approvals are switched on). */
+  tool_warnings: Problem[];
   approvals: number;
   /** Cases whose form values do not fit the workflow's form (they would be marked invalid). */
   problems: { case: string; errors: FieldError[] }[];

@@ -179,7 +179,14 @@
     "pre_grant_destructive": "Tools, die löschen oder zerstören, können nicht vorab freigegeben werden.",
     "pre_grant_version": "Vorab freigeben lässt sich nur eine bestimmte Tool-Version.",
     "pre_grant_expiry": "Das Ablaufdatum liegt in der Vergangenheit.",
-    "pre_grant_not_found": "Diese Vorab-Freigabe gibt es nicht."
+    "pre_grant_not_found": "Diese Vorab-Freigabe gibt es nicht.",
+    "unattended_pre_grant_missing": "{{node}} ({{workflow}}): Aufrufe von {{tool}} brauchen die Freigabe einer Person, und in diesen Ausführungen kann niemand antworten. Sie würden daher verweigert. Gib {{tool}} auf der Seite „Freigaben“ für diesen Zeitplan vorab frei, oder starte den Workflow von Hand.",
+    "unattended_pre_grant_outdated": "{{node}} ({{workflow}}): Die Vorabfreigabe von {{tool}} gilt nicht mehr (neue Tool-Version oder abgelaufen). Seine Aufrufe würden daher verweigert. Gib die aktuelle Version auf der Seite „Freigaben“ erneut frei.",
+    "unattended_not_started": "{{node}} ({{workflow}}): Aufrufe von {{tool}} brauchen die Freigabe einer Person und würden verweigert. Eine Vorabfreigabe kann nur einen gespeicherten Zeitplan oder einen gestarteten Stapel bzw. eine gestartete Testreihe nennen. Aufrufe, bevor du {{tool}} auf der Seite „Freigaben“ freigibst, werden daher verweigert. Speichere einen Zeitplan zuerst; einen Stapel oder eine Testreihe startest du besser von Hand, wenn jeder Aufruf zählt.",
+    "unattended_api": "{{node}} ({{workflow}}): Aufrufe von {{tool}} brauchen die Freigabe einer Person. Veröffentlichte APIs haben noch keinen eigenen Freigabeschritt, daher würde jeder solche Aufruf verweigert. Entferne das Tool aus dem veröffentlichten Workflow, oder nutze ein Tool, das nur liest.",
+    "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} kann etwas löschen, bezahlen oder versenden, das sich nicht rückgängig machen lässt. Solche Aufrufe werden nie vorab freigegeben und in Ausführungen ohne Aufsicht verweigert. Starte den Workflow von Hand, damit eine Person jeden Aufruf freigibt.",
+    "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} ist ein Tool eines verbundenen MCP-Dienstes. Seine Aufrufe laufen nicht ohne Aufsicht einer Person und würden verweigert. Starte den Workflow von Hand.",
+    "unattended_denied": "{{node}} ({{workflow}}): Aufrufe von {{tool}} würden in diesen Ausführungen verweigert."
   },
   "job": {
     "writing": "Der Coding Agent schreibt Code und Tests …",
