@@ -13,6 +13,7 @@
 - The original logo replaces the old three-dot mark in the top bar and the old `favicon.svg`: new `favicon.ico`,
   PNG favicons, Apple touch icon and `manifest.webmanifest` with 192/512 icons.
 - New browser suite `welcome` (`npm run e2e:welcome`, part of `scripts/e2e.sh`, own instance on port 8090).
+
 ### MCP: sign-in, local servers, operation, Nodestro as an MCP tool (ADR-0007 WP-6/7/8/11)
 
 - *Tools → Connected services*: OAuth as a sign-in kind with **Sign in** / **Sign out** (the browser returns to
