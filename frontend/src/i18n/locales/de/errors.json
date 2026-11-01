@@ -146,7 +146,25 @@
     "orchestration_limit": "{{node}} hat {{max_decisions}} Entscheidungen getroffen, ohne abzuschließen.",
     "orchestrator_member_missing": "Ein Team von {{node}} existiert nicht mehr.",
     "orchestrator_no_match": "Kein gespeichertes Team von {{node}} hat eine der Fähigkeiten {{capabilities}}.",
-    "orchestration_team_missing": "Der wartende Lauf eines Teams fehlt; das Team wurde nicht neu gestartet."
+    "orchestration_team_missing": "Der wartende Lauf eines Teams fehlt; das Team wurde nicht neu gestartet.",
+    "someProvider": "Der KI-Anbieter",
+    "agent": {
+      "IncompleteResponseError": "Die Antwort des Modells wurde an der Grenze von {{max_tokens}} Tokens abgeschnitten.",
+      "OutputLimitReached": "Die Antwort des Modells wurde an seiner Token-Grenze abgeschnitten.",
+      "ContextWindowExceeded": "Der Gesprächsverlauf ist größer als das Kontextfenster des Modells.",
+      "RefusalError": "Das Modell hat die Anfrage abgelehnt.",
+      "MaxToolRoundsError": "Der Agent hat öfter Tools aufgerufen, als seine Grenze an Tool-Runden erlaubt.",
+      "StructuredOutputError": "Das Modell hat kein Ergebnis im verlangten Ausgabeformat geliefert.",
+      "UnexpectedResponseError": "Die Antwort des Modells war anders als erwartet.",
+      "EvaluationFailedError": "Das Ergebnis hat die Qualitätsprüfung nicht bestanden.",
+      "ToolExecutionError": "Ein Tool des Agenten ist mit einem Fehler abgebrochen."
+    },
+    "api_error_auth": "{{provider}} hat den API-Schlüssel abgelehnt.",
+    "api_error_rate_limit": "{{provider}} hat zu viele Anfragen in kurzer Zeit gemeldet (Rate-Limit).",
+    "api_error_server": "{{provider}} ist gerade überlastet oder gestört.",
+    "api_error_connection": "{{provider}} war nicht erreichbar.",
+    "api_error_invalid": "{{provider}} hat die Anfrage als ungültig abgelehnt.",
+    "api_error_status": "{{provider}} hat die Anfrage abgelehnt (Status {{status}})."
   },
   "trace": {
     "invalid": "Der Trace ist beschädigt oder unvollständig.",
@@ -728,5 +746,30 @@
   },
   "mcp_server": {
     "disabled": "Der MCP-Server von Nodestro ist ausgeschaltet."
+  },
+  "hints": {
+    "run": {
+      "agent": {
+        "IncompleteResponseError": "Erhöhe beim Agenten unter „Erweitert“ den Wert „Max. Tokens“ oder bitte im Auftrag um eine kürzere Antwort.",
+        "OutputLimitReached": "Erhöhe beim Agenten unter „Erweitert“ den Wert „Max. Tokens“ oder bitte im Auftrag um eine kürzere Antwort.",
+        "ContextWindowExceeded": "Kürze die Eingabe oder das Wissen des Agenten, oder wähle ein Modell mit größerem Kontextfenster.",
+        "RefusalError": "Prüfe Auftrag und Eingabe und beschreibe die Aufgabe eindeutiger. Manche Inhalte lehnt das Modell grundsätzlich ab.",
+        "MaxToolRoundsError": "Erhöhe beim Agenten unter „Erweitert“ die „Max. Tool-Runden“ oder beschreibe im Auftrag, wann er fertig ist.",
+        "StructuredOutputError": "Prüfe die Felder unter „Ausgabeformat“; wenige, klar beschriebene Felder helfen. Oft genügt es, den Lauf fortzusetzen.",
+        "UnexpectedResponseError": "Setze den Lauf fort. Tritt es wieder auf, helfen die technischen Details beim Anbieter weiter.",
+        "EvaluationFailedError": "Lies beim Schritt die Begründung der Prüfung und passe Auftrag oder Kriterien an.",
+        "ToolExecutionError": "Die technischen Details nennen das Tool und seinen Fehler. Prüfe das Tool unter „Tools“."
+      },
+      "api_error_auth": "Prüfe den Schlüssel unter Einstellungen → KI-Anbieter und teste dort die Verbindung.",
+      "api_error_rate_limit": "Warte einen Moment und setze den Lauf fort. Weniger gleichzeitige Läufe oder ein höheres Limit beim Anbieter helfen dauerhaft.",
+      "api_error_server": "Das liegt nicht an deinem Workflow. Setze den Lauf in ein paar Minuten fort.",
+      "api_error_connection": "Prüfe Internetverbindung, Firewall oder Proxy und setze den Lauf dann fort.",
+      "api_error_invalid": "Prüfe Modell und Einstellungen des Agenten; die technischen Details nennen die Antwort des Anbieters.",
+      "api_error_status": "Prüfe Modell und Einstellungen des Agenten; die technischen Details nennen die Antwort des Anbieters.",
+      "budget_exceeded": "Erhöhe das Budget in den Workflow-Einstellungen oder setze den Lauf mit einem neuen Budget fort.",
+      "time_limit": "Erhöhe das Zeitlimit in den Workflow-Einstellungen unter „Grenzen“, wenn der Lauf mehr Zeit braucht.",
+      "step_limit": "Erhöhe die Schrittgrenze in den Workflow-Einstellungen unter „Grenzen“ oder prüfe Schleifen.",
+      "orchestration_limit": "Erhöhe beim Orchestrator „Höchstens Entscheidungen“ oder beschreibe in den Anweisungen, wann die Aufgabe erledigt ist."
+    }
   }
 }

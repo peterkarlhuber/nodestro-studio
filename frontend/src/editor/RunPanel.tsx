@@ -1,19 +1,19 @@
-import { ExternalLink, PanelBottomClose, PanelBottomOpen, Square } from "lucide-react";
+import { ExternalLink, PanelBottomClose, PanelBottomOpen } from "lucide-react";
 import { type Ref, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { api } from "../api/client";
-import { Output } from "../components/Markdown";
-import { toast } from "../components/toast";
-import { Button, Callout, Hint, IconButton, Stat, StatusBadge } from "../components/ui";
-import { ProblemText, runProblem } from "../lib/errors";
+import { Output, outputFieldsOf } from "../components/Markdown";
+import { IconButton, Stat, StatusBadge } from "../components/ui";
 import { formatCost, formatTokens, tokenBreakdown } from "../lib/format";
 import { RunApprovals } from "../runs/ApprovalCard";
+import { CancelRunButton } from "../runs/CancelRunButton";
+import { RunProblem } from "../runs/RunProblem";
+import { WaitingForYouBadge } from "../runs/WaitingForYouBadge";
 import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { useEditorLayout } from "./layout";
 import { NodeRunDetails, startFiles } from "./RunDetails";
-import { liveUsage, useEditor } from "./store";
+import { liveUsage, runWaitsForToolApproval, useEditor, waitsForToolApproval } from "./store";
 
 /** The execution overview below the canvas. Collapsing or resizing it never touches the run. */
 export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
@@ -31,6 +31,8 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
   const shown = shownId ? run?.workflow.nodes.find((node) => node.id === shownId) ?? nodes.find((n) => n.id === shownId) : null;
   const live = run && (run.status === "running" || run.status === "queued");
   const paused = run?.status === "paused";
+  // A tool call waits for a person: the run still counts as running, but nothing happens until someone decides.
+  const waitingForYou = runWaitsForToolApproval(run);
 
   return (
     <section
@@ -53,14 +55,16 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
           <h2 className="panel-head__title run-title">{t("runs.panel.title")}</h2>
         </div>
         <div className="row-gap">
-          {run ? <StatusBadge status={run.status} label={live ? t("status.running.label") : undefined} /> : <span className="muted small">{t("runs.panel.notStarted")}</span>}
-          {live || paused ? (
-            <Hint id="runs.cancel">
-              <Button size="sm" icon={Square} onClick={() => api.cancelRun(run.id).catch(toast.error)}>
-                {t("common.cancel")}
-              </Button>
-            </Hint>
-          ) : null}
+          {run ? (
+            waitingForYou ? (
+              <WaitingForYouBadge />
+            ) : (
+              <StatusBadge status={run.status} label={live ? t("status.running.label") : undefined} />
+            )
+          ) : (
+            <span className="muted small">{t("runs.panel.notStarted")}</span>
+          )}
+          {run && (live || paused) ? <CancelRunButton runId={run.id} size="sm" /> : null}
           {run && !live ? (
             <Link className="small" to={`/executions/${run.id}`}>
               {t("common.details")} <ExternalLink size={11} aria-hidden />
@@ -97,7 +101,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                           onClick={() => setFocus(node.id)}
                         >
                           <span>{node.label}</span>
-                          {state ? <StatusBadge status={state.status} /> : null}
+                          {waitsForToolApproval(state) ? <WaitingForYouBadge /> : state ? <StatusBadge status={state.status} /> : null}
                         </button>
                       </li>
                     );
@@ -121,14 +125,14 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                   <NodeRunDetails node={shown} state={run.nodes[shownId]} runFiles={startFiles(run, shownId)} run={run} />
                 ) : (
                   <div className="node-run">
-                    {run.error ? (
-                      <Callout tone="danger">
-                        <ProblemText item={runProblem(run)} />
-                      </Callout>
-                    ) : null}
+                    <RunProblem run={run} />
                     {paused ? <RunApprovals run={run} /> : null}
                     {run.status === "running" || run.status === "paused" ? <RunToolApprovals run={run} /> : null}
-                    {live ? <p className="muted">{t("runs.panel.running")}</p> : paused ? null : <Output value={run.output} />}
+                    {live ? (
+                      <p className="muted">{waitingForYou ? t("runs.panel.waitingForTool") : t("runs.panel.running")}</p>
+                    ) : paused ? null : (
+                      <Output value={run.output} fields={outputFieldsOf(run.workflow.nodes, "", run.output)} />
+                    )}
                   </div>
                 )}
               </div>
@@ -139,3 +143,4 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
     </section>
   );
 }
+

@@ -23,7 +23,9 @@ import { RunDialog } from "../editor/RunDialog";
 import { PANEL_VARIABLE, PanelSplitter } from "../editor/PanelSplitter";
 import { RunPanel } from "../editor/RunPanel";
 import { useEditor } from "../editor/store";
-import { useRunStream } from "../editor/useRunStream";
+import { useFollowRun } from "../editor/useRunStream";
+import type { AgentSectionId } from "../editor/agentSummaries";
+import { AGENT_SECTIONS, useAgentSections } from "../editor/sectionState";
 import { VersionsDialog } from "../editor/VersionsDialog";
 import { ErrorText, problemText } from "../lib/errors";
 import { crumbLink, parseTrail } from "../lib/trail";
@@ -83,11 +85,17 @@ export function EditorPage() {
   // The workflows above this one when it was opened from a team node (outermost first).
   const trail = parseTrail(searchParams.get("trail"), id);
   const workflows = useWorkflows();
+  // &section=<agent section> (from a failed run: "adjust Max. tokens") opens that section of the agent form too.
+  const focusSection = searchParams.get("section");
   useEffect(() => {
     if (!focusNode || loadedId !== id) return;
-    if (useEditor.getState().nodes.some((node) => node.id === focusNode)) useEditor.getState().select(focusNode);
+    if (useEditor.getState().nodes.some((node) => node.id === focusNode)) {
+      if (focusSection && (AGENT_SECTIONS as readonly string[]).includes(focusSection))
+        useAgentSections.getState().setOpen(focusSection as AgentSectionId, true);
+      useEditor.getState().select(focusNode);
+    }
     setSearchParams({}, { replace: true });
-  }, [focusNode, loadedId, id, setSearchParams]);
+  }, [focusNode, focusSection, loadedId, id, setSearchParams]);
 
   // The open workflow is only offered to the assistant; the user decides whether it is sent.
   const offer: ContextOffer | null =
@@ -146,7 +154,7 @@ export function EditorPage() {
   }, [workflow.data]);
 
   const liveRunId = run && (run.status === "running" || run.status === "queued") ? run.id : null;
-  useRunStream(liveRunId);
+  useFollowRun(run);
 
   const graph = useDebouncedGraph();
   const check = useQuery({

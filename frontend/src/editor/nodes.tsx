@@ -7,8 +7,10 @@ import type { NodeRun, WorkflowNode } from "../api/types";
 import { useMeta, useWorkflows } from "../api/hooks";
 import { agentIcon } from "../components/icons";
 import { StatusBadge, Tooltip } from "../components/ui";
+import { WaitingForYouBadge } from "../runs/WaitingForYouBadge";
 import { formatCost, formatTokens } from "../lib/format";
 import { findModel } from "../lib/providers";
+import { waitsForToolApproval } from "./store";
 
 export interface FlowNodeData extends Record<string, unknown> {
   node: WorkflowNode;
@@ -81,7 +83,7 @@ export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) 
       <div className="node-row">
         <span className="node-row__description">{agent.description || t("editor.nodes.agent")}</span>
         <Round state={state} />
-        <StatusBadge status={status} />
+        {waitsForToolApproval(state) ? <WaitingForYouBadge /> : <StatusBadge status={status} />}
       </div>
       <div className="node-tools">
         {facts.length ? facts.join(" · ") : t("editor.nodes.noTools")}
@@ -195,9 +197,14 @@ function NodeShell({
           <div className="node-title">{node.label}</div>
           <div className="node-type">{type}</div>
         </div>
-        <Round state={state} />
-        {state && state.status !== "waiting" ? <StatusBadge status={state.status} /> : null}
       </div>
+      {state && state.status !== "waiting" ? (
+        // Its own row, as on agent nodes: next to the title the badge would leave the title one letter wide.
+        <div className="node-row node-row--status">
+          <Round state={state} />
+          <StatusBadge status={state.status} />
+        </div>
+      ) : null}
       {children}
       {issues ? (
         <div className="node-tools">

@@ -44,7 +44,8 @@
     "notStarted": "Not started yet",
     "overall": "Overall result",
     "running": "The workflow is running. Choose an agent on the left to watch it live.",
-    "paused": "The run waits for an approval."
+    "paused": "The run waits for an approval.",
+    "waitingForTool": "A tool call is waiting for your decision. The run does not continue until then."
   },
   "detail": {
     "timeline": "Timeline",
@@ -88,5 +89,25 @@
     "noHardMaximum": "no hard maximum",
     "noHardMaximumHint_one": "{{count}} request could not be capped in advance (no price, built-in tools, images, or too large for the rest of the budget). So the budget was not a hard maximum.",
     "noHardMaximumHint_other": "{{count}} requests could not be capped in advance (no price, built-in tools, images, or too large for the rest of the budget). So the budget was not a hard maximum."
+  },
+  "output": {
+    "showJson": "Show as JSON"
+  },
+  "failure": {
+    "atStep": "Failed at {{name}}",
+    "more_one": "One more step failed.",
+    "more_other": "{{count}} more steps failed.",
+    "model": "Model: {{model}}",
+    "openSettings": "Open Settings",
+    "openAdvanced": "Open \"Advanced\" of {{name}}"
+  },
+  "cancelRun": {
+    "button": "Cancel run",
+    "confirm": "Really cancel?",
+    "done": "The run is being cancelled."
+  },
+  "waitingForYou": {
+    "label": "Waiting for you",
+    "description": "A tool call is waiting for your approval. The run continues as soon as you decide."
   }
 }

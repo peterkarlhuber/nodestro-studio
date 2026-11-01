@@ -146,7 +146,25 @@
     "orchestration_limit": "{{node}} a pris {{max_decisions}} décisions sans conclure.",
     "orchestrator_member_missing": "Une équipe de {{node}} n’existe plus.",
     "orchestrator_no_match": "Aucune équipe enregistrée de {{node}} n’a l’une des capacités {{capabilities}}.",
-    "orchestration_team_missing": "L'exécution en attente d'une équipe est introuvable ; l'équipe n'a pas été relancée."
+    "orchestration_team_missing": "L'exécution en attente d'une équipe est introuvable ; l'équipe n'a pas été relancée.",
+    "someProvider": "Le fournisseur d'IA",
+    "agent": {
+      "IncompleteResponseError": "La réponse du modèle a été coupée à la limite de {{max_tokens}} tokens.",
+      "OutputLimitReached": "La réponse du modèle a été coupée à sa limite de tokens.",
+      "ContextWindowExceeded": "La conversation dépasse la fenêtre de contexte du modèle.",
+      "RefusalError": "Le modèle a refusé la demande.",
+      "MaxToolRoundsError": "L'agent a appelé des outils plus souvent que sa limite de tours ne le permet.",
+      "StructuredOutputError": "Le modèle n'a pas renvoyé de résultat au format de sortie demandé.",
+      "UnexpectedResponseError": "La réponse du modèle ne correspondait pas à ce qui était attendu.",
+      "EvaluationFailedError": "Le résultat n'a pas passé le contrôle qualité.",
+      "ToolExecutionError": "Un outil de l'agent s'est arrêté avec une erreur."
+    },
+    "api_error_auth": "{{provider}} a refusé la clé API.",
+    "api_error_rate_limit": "{{provider}} a signalé trop de requêtes en peu de temps (limite de débit).",
+    "api_error_server": "{{provider}} est surchargé ou rencontre des problèmes en ce moment.",
+    "api_error_connection": "{{provider}} n'a pas pu être joint.",
+    "api_error_invalid": "{{provider}} a refusé la requête comme invalide.",
+    "api_error_status": "{{provider}} a refusé la requête (statut {{status}})."
   },
   "trace": {
     "invalid": "La trace est endommagée ou incomplète.",
@@ -728,5 +746,30 @@
   },
   "mcp_server": {
     "disabled": "Le serveur MCP de Nodestro est désactivé."
+  },
+  "hints": {
+    "run": {
+      "agent": {
+        "IncompleteResponseError": "Augmentez « Tokens max. » dans « Avancé » de cet agent, ou demandez une réponse plus courte dans sa tâche.",
+        "OutputLimitReached": "Augmentez « Tokens max. » dans « Avancé » de cet agent, ou demandez une réponse plus courte dans sa tâche.",
+        "ContextWindowExceeded": "Raccourcissez l'entrée ou les connaissances de l'agent, ou choisissez un modèle avec une fenêtre de contexte plus grande.",
+        "RefusalError": "Vérifiez la tâche et l'entrée et décrivez le travail plus clairement. Certains contenus sont toujours refusés par le modèle.",
+        "MaxToolRoundsError": "Augmentez « Tours d’outils max. » dans « Avancé » de cet agent, ou indiquez dans sa tâche quand il a terminé.",
+        "StructuredOutputError": "Vérifiez les champs sous « Format de sortie » ; peu de champs bien décrits aident. Souvent, reprendre l'exécution suffit.",
+        "UnexpectedResponseError": "Reprenez l'exécution. Si cela se reproduit, les détails techniques aideront le support du fournisseur.",
+        "EvaluationFailedError": "Lisez la justification du contrôle à l'étape et ajustez la tâche ou les critères.",
+        "ToolExecutionError": "Les détails techniques nomment l'outil et son erreur. Vérifiez l'outil sous « Outils »."
+      },
+      "api_error_auth": "Vérifiez la clé sous Réglages → Fournisseurs d’IA et testez-y la connexion.",
+      "api_error_rate_limit": "Attendez un instant et reprenez l'exécution. Moins d'exécutions simultanées ou une limite plus élevée chez le fournisseur règlent le problème durablement.",
+      "api_error_server": "Votre workflow n'est pas en cause. Reprenez l'exécution dans quelques minutes.",
+      "api_error_connection": "Vérifiez la connexion Internet, le pare-feu ou le proxy, puis reprenez l'exécution.",
+      "api_error_invalid": "Vérifiez le modèle et les paramètres de l'agent ; les détails techniques montrent la réponse du fournisseur.",
+      "api_error_status": "Vérifiez le modèle et les paramètres de l'agent ; les détails techniques montrent la réponse du fournisseur.",
+      "budget_exceeded": "Augmentez le budget dans les paramètres du workflow, ou reprenez l'exécution avec un nouveau budget.",
+      "time_limit": "Augmentez la limite de temps sous « Limites » dans les paramètres du workflow si l'exécution a besoin de plus de temps.",
+      "step_limit": "Augmentez la limite d'étapes sous « Limites » dans les paramètres du workflow, ou vérifiez les boucles.",
+      "orchestration_limit": "Augmentez « Nombre maximal de décisions » sur l'orchestrateur, ou indiquez dans ses instructions quand la tâche est terminée."
+    }
   }
 }

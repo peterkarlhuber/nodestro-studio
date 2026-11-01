@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useKnowledge } from "../api/hooks";
 import type { AdoptSource, KnowledgeProposal, KnowledgeRef, NodeRun, Run, WorkflowNode } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
-import { Output } from "../components/Markdown";
+import { Output, outputFieldsOf } from "../components/Markdown";
 import { Badge, Button, Callout, HelpTip, StatusBadge, Tooltip } from "../components/ui";
 import { ApprovalCard } from "../runs/ApprovalCard";
 import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCard";
@@ -271,7 +271,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
             </div>
           ) : (
             <>
-              <Output value={state.output} />
+              <Output value={state.output} fields={node.agent?.output?.fields} />
               {run && !run.imported_at && node.agent && state.status === "succeeded" ? (
                 <div className="row-gap">
                   <Button
@@ -410,5 +410,5 @@ function ToolCalls({ state }: { state: NodeRun }) {
 }
 
 export function RunOutput({ run }: { run: Run }) {
-  return <Output value={run.output} />;
+  return <Output value={run.output} fields={outputFieldsOf(run.workflow.nodes, "", run.output)} />;
 }

@@ -146,7 +146,25 @@
     "orchestration_limit": "{{node}} made {{max_decisions}} decisions without finishing.",
     "orchestrator_member_missing": "A team of {{node}} no longer exists.",
     "orchestrator_no_match": "No saved team of {{node}} has one of the capabilities {{capabilities}}.",
-    "orchestration_team_missing": "The waiting run of a team is missing; the team was not started again."
+    "orchestration_team_missing": "The waiting run of a team is missing; the team was not started again.",
+    "someProvider": "The AI provider",
+    "agent": {
+      "IncompleteResponseError": "The model's answer was cut off at the limit of {{max_tokens}} tokens.",
+      "OutputLimitReached": "The model's answer was cut off at its token limit.",
+      "ContextWindowExceeded": "The conversation is larger than the model's context window.",
+      "RefusalError": "The model declined the request.",
+      "MaxToolRoundsError": "The agent called tools more often than its tool round limit allows.",
+      "StructuredOutputError": "The model did not return a result in the required output format.",
+      "UnexpectedResponseError": "The model's answer was not what was expected.",
+      "EvaluationFailedError": "The result did not pass the quality check.",
+      "ToolExecutionError": "One of the agent's tools stopped with an error."
+    },
+    "api_error_auth": "{{provider}} rejected the API key.",
+    "api_error_rate_limit": "{{provider}} reported too many requests in a short time (rate limit).",
+    "api_error_server": "{{provider}} is overloaded or having problems right now.",
+    "api_error_connection": "{{provider}} could not be reached.",
+    "api_error_invalid": "{{provider}} rejected the request as invalid.",
+    "api_error_status": "{{provider}} rejected the request (status {{status}})."
   },
   "trace": {
     "invalid": "The trace is damaged or incomplete.",
@@ -728,5 +746,30 @@
   },
   "mcp_server": {
     "disabled": "Nodestro's MCP server is switched off."
+  },
+  "hints": {
+    "run": {
+      "agent": {
+        "IncompleteResponseError": "Raise \"Max. tokens\" under \"Advanced\" for this agent, or ask for a shorter answer in its task.",
+        "OutputLimitReached": "Raise \"Max. tokens\" under \"Advanced\" for this agent, or ask for a shorter answer in its task.",
+        "ContextWindowExceeded": "Shorten the input or the agent's knowledge, or choose a model with a larger context window.",
+        "RefusalError": "Check the task and the input and describe the job more clearly. Some content a model always declines.",
+        "MaxToolRoundsError": "Raise \"Max. tool rounds\" under \"Advanced\" for this agent, or say in its task when it is done.",
+        "StructuredOutputError": "Check the fields under \"Output format\"; a few clearly described fields help. Often continuing the run is enough.",
+        "UnexpectedResponseError": "Continue the run. If it happens again, the technical details help the provider's support.",
+        "EvaluationFailedError": "Read the check's reasoning at the step and adjust the task or the criteria.",
+        "ToolExecutionError": "The technical details name the tool and its error. Check the tool under \"Tools\"."
+      },
+      "api_error_auth": "Check the key under Settings → AI providers and test the connection there.",
+      "api_error_rate_limit": "Wait a moment and continue the run. Fewer runs at the same time or a higher limit with the provider help for good.",
+      "api_error_server": "This is not caused by your workflow. Continue the run in a few minutes.",
+      "api_error_connection": "Check the internet connection, firewall or proxy, then continue the run.",
+      "api_error_invalid": "Check the agent's model and settings; the technical details show the provider's answer.",
+      "api_error_status": "Check the agent's model and settings; the technical details show the provider's answer.",
+      "budget_exceeded": "Raise the budget in the workflow settings, or continue the run with a new budget.",
+      "time_limit": "Raise the time limit under \"Limits\" in the workflow settings if the run needs more time.",
+      "step_limit": "Raise the step limit under \"Limits\" in the workflow settings, or check for loops.",
+      "orchestration_limit": "Raise \"Maximum decisions\" on the orchestrator, or say in its instructions when the task is done."
+    }
   }
 }
