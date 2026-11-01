@@ -154,9 +154,9 @@ try {
   await page.keyboard.press("Control+z");
   await until(async () => (await page.locator(".react-flow__node").count()) === nodes, "undo of the added node");
   await page.getByRole("button", { name: "Show building blocks" }).click();
-  await page.getByRole("button", { name: "Hide execution overview" }).click();
+  await page.getByRole("button", { name: "Hide run overview" }).click();
   check((await box(runPanel)).height < 60, "The execution overview collapses to its header");
-  await page.getByRole("button", { name: "Show execution overview" }).click();
+  await page.getByRole("button", { name: "Show run overview" }).click();
   await shot("panels-02-hidden");
 
   // ---- 4. drop position and drag undo -----------------------------------------------------------
@@ -225,8 +225,8 @@ try {
   const heightBefore = (await box(runPanel)).height;
   await drag("splitter-runPanel", 0, -150);
   check((await box(runPanel)).height > heightBefore + 100, "The overview grows while the run is live");
-  await page.getByRole("button", { name: "Hide execution overview" }).click();
-  await page.getByRole("button", { name: "Show execution overview" }).click();
+  await page.getByRole("button", { name: "Hide run overview" }).click();
+  await page.getByRole("button", { name: "Show run overview" }).click();
   await drag("splitter-runPanel", 0, -3000);
   check((await box(canvas)).height >= 179, "The overview never pushes the canvas below its minimum height");
   // Released outside the window: moving the mouse afterwards resizes nothing.
