@@ -234,6 +234,8 @@ If tools need Python libraries, the export takes exactly the approved versions (
 
 In the exported project, `python -m app.keys new` creates keys for your clients. Set the access to the AI providers as environment variables, such as `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` or `GEMINI_API_KEY`; the README and `.env.example` name exactly the variables the workflow version needs. Base URLs of your own servers are exported too, unless they contain credentials; then you set them yourself (for example `OLLAMA_BASE_URL`).
 
+**Amazon Bedrock in the export:** the project signs in with the AWS default credentials of the machine it runs on (an IAM role, SSO, a profile or `AWS_*` variables) and reads the region from `AWS_REGION` (or `AWS_DEFAULT_REGION`); the exported settings carry only the region and the EU-only data residency, which stays in force. The ZIP contains no AWS credentials, no profile and no role. Grant the target machine's role the permissions listed under [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
+
 ## The Orkexa library {#orkexa}
 <!-- keywords: orkexa, library, repository, license, mit, vendor, include, git, access -->
 

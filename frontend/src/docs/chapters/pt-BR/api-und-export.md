@@ -234,6 +234,8 @@ Se as ferramentas precisam de bibliotecas Python, a exportação usa exatamente 
 
 No projeto exportado, `python -m app.keys new` cria chaves para seus clientes. O acesso aos provedores de IA é definido como variáveis de ambiente, como `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` ou `GEMINI_API_KEY`; o README e o `.env.example` citam exatamente as variáveis de que a versão do fluxo de trabalho precisa. URLs base de servidores próprios também são exportadas, a menos que contenham credenciais; nesse caso você mesmo as define (por exemplo `OLLAMA_BASE_URL`).
 
+**Amazon Bedrock na exportação:** o projeto entra com as credenciais padrão da AWS da máquina em que roda (uma função do IAM, SSO, um perfil ou variáveis `AWS_*`) e lê a região de `AWS_REGION` (ou `AWS_DEFAULT_REGION`); as configurações exportadas levam só a região e a residência de dados somente na UE, que continua valendo. O ZIP não contém credenciais da AWS, perfil nem função. Conceda à função da máquina de destino as permissões listadas em [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
+
 ## A biblioteca Orkexa {#orkexa}
 <!-- keywords: orkexa, biblioteca, repositório, licença, mit, vendor, incluir, git, acesso -->
 

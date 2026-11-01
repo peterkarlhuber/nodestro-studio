@@ -32,6 +32,12 @@ export interface PriceEntry {
   version: string | null;
   overridden: boolean;
   reference: PriceEntry | null;
+  /**
+   * Not in the API yet (nodestro-api 355e0a2 lists only the tariff dimensions in ``tariffs``, e.g. "aws_region"):
+   * the AWS regions an ``aws_region`` tariff covers. Shown when present; otherwise the table says the price is
+   * regional without naming the regions.
+   */
+  regions?: string[] | null;
 }
 
 export interface PricingOverview {
@@ -118,9 +124,22 @@ export interface OverrideIn {
   source?: string;
   source_url?: string | null;
   note?: string | null;
+  /**
+   * Amazon Bedrock only, required there (pricing.region_required): the AWS regions these rates apply to (at most 40);
+   * the API stores them as the price's ``aws_region`` tariff (pricing.invalid_region for a bad name).
+   */
+  aws_regions?: string[] | null;
 }
 
 export type BillingProvider = "openai" | "anthropic";
+
+/** Providers whose prices apply per AWS region (an ``aws_region`` tariff). */
+export const REGIONAL_PRICE_PROVIDERS = new Set(["bedrock"]);
+
+/** The region names of a comma or space separated text, without repeats. */
+export function parseRegions(text: string): string[] {
+  return [...new Set(text.split(/[\s,;]+/).map((item) => item.trim().toLowerCase()).filter(Boolean))];
+}
 
 export interface ReconciliationRequest {
   start: string;
@@ -144,7 +163,19 @@ export interface ReconciliationRow {
   note: string | null;
 }
 
+/** A provider with estimated costs in the period that was not compared with a bill (e.g. Amazon Bedrock). */
+export interface UnreconciledProvider {
+  provider: string;
+  code: "pricing.reconciliation_not_supported" | "pricing.reconciliation_not_configured" | string;
+  estimated_usd: string;
+  requests: number;
+  unpriced_requests: number;
+  note: string;
+}
+
 export interface ReconciliationReport {
+  /** Providers not compared with a bill (never presented as matching it); missing from older backends. */
+  not_reconciled?: UnreconciledProvider[];
   created_at: string;
   start: string;
   end: string;

@@ -11,6 +11,7 @@ Em *Configurações → Provedores de IA* cada provedor tem sua própria seção
 
 - **Anthropic, OpenAI, Google Gemini:** informe a chave de API e clique em **Salvar**. A chave fica no banco de dados local, nunca mais é exibida e só é enviada a este provedor. **Remover** a apaga.
 - **Endpoint compatível com OpenAI, Ollama, vLLM:** informe a **URL base** do servidor (por exemplo `http://localhost:11434/v1` para o Ollama) e clique em **Salvar endpoint**; a chave de API é opcional. O provedor só conta como configurado quando há uma URL base salva.
+- **Amazon Bedrock (AWS):** sem chave de API; você escolhe uma região da AWS e como o Nodestro entra na AWS; veja [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
 - **O que os modelos sabem fazer:** para seus próprios servidores você informa se os modelos suportam ferramentas, saída estruturada, imagens, documentos PDF, esforço de raciocínio e outras capacidades. O Nodestro não supõe nada: uma opção que um modelo não suporta, ou cujo suporte é desconhecido, é relatada como erro pela verificação em vez de ser omitida.
 - **Testar conexão** só pede ao provedor a lista de modelos; não custa nada.
 - **Primeiro provedor:** se você salvar uma chave enquanto o provedor do modelo padrão ainda não estiver configurado, novos agentes passam a usar um modelo desse provedor; uma mensagem diz qual. Só as configurações mudam: fluxos de trabalho existentes mantêm seus modelos.
@@ -25,6 +26,54 @@ Você também pode definir as chaves como **variáveis de ambiente**, antes de i
 | Compatível com OpenAI, Ollama, vLLM | `COMPATIBLE_API_KEY`, `OLLAMA_API_KEY`, `VLLM_API_KEY` (opcional) |
 
 Uma chave de versões anteriores (na época só para a Anthropic) vira automaticamente a chave da Anthropic nestas configurações na primeira inicialização.
+
+## Amazon Bedrock (AWS) {#bedrock}
+<!-- keywords: amazon bedrock, bedrock, aws, região, iam, função, perfil, sso, perfil de inferência, arn, ue, residência de dados, somente ue, converse, aws_region, sts -->
+
+O **Amazon Bedrock** executa Claude, Amazon Nova e outros modelos pela sua própria **conta da AWS**, na **região da AWS** que você escolher; os custos aparecem na sua fatura da AWS. O Bedrock **não tem campo de chave de API**: o Nodestro entra com credenciais da AWS e nunca armazena chaves de acesso da AWS. Uma função do IAM ou um perfil da AWS não é uma chave; só diz à AWS quem está perguntando.
+
+**Acesso no desktop.** Em *Configurações → Provedores de IA → Amazon Bedrock (AWS)* escolha:
+
+- **Credenciais padrão da AWS (ambiente, SSO, função de instância):** o que as ferramentas da AWS encontram neste computador, por exemplo depois de `aws sso login`, em variáveis de ambiente `AWS_*` ou de uma função de instância.
+- **Perfil da AWS:** um perfil nomeado de `~/.aws/config`; você digita só o **nome**, as credenciais ficam na sua configuração da AWS.
+
+No Nodestro Local (um contêiner) só há as credenciais padrão.
+
+**Acesso em um servidor.** As credenciais da AWS do próprio servidor nunca são usadas para um espaço de trabalho. O Bedrock fica desativado até o operador atribuir ao espaço de trabalho uma **função da AWS** própria; o cartão mostra então *Função atribuída pelo operador*, e você não pode ver nem alterar a função. Sem função, aparece *não disponível neste servidor*: fale com seu operador. O operador também pode limitar as regiões e exigir a residência de dados somente na UE para todos os espaços de trabalho (veja [Nodestro em um servidor](/docs/einstellungen#server)).
+
+**Região.** Digite a região para a qual as solicitações vão e que a AWS fatura, por exemplo `eu-central-1` (Frankfurt). O campo sugere regiões comuns e recusa nomes que não são regiões da AWS. O modelo precisa estar habilitado para sua conta nessa região.
+
+**Modelo.** No agente, escolha o provedor *Amazon Bedrock (AWS)*. A lista mostra modelos **sugeridos** (perfis de inferência da UE do Claude e do Amazon Nova); uma sugestão não quer dizer que o modelo esteja habilitado para sua conta. Você pode digitar qualquer **ID de modelo** (`anthropic.claude-sonnet-4-5-20250929-v1:0`), **ID de perfil de inferência** (`eu.anthropic.claude-sonnet-5-5`) ou **ARN** (por exemplo, de um perfil de inferência de aplicação); ele é salvo como `bedrock:<id>` e repassado exatamente como você digitou, com os dois-pontos (veja [Modelo](/docs/agenten#modell)).
+
+**Residência de dados somente na UE.** Com a chave ligada, o Nodestro verifica antes da primeira solicitação se a região e todas as regiões para as quais o modelo ou o perfil de inferência pode encaminhar são regiões da UE (Frankfurt, Estocolmo, Milão, Espanha, Irlanda, Paris); caso contrário, nada é enviado. Perfis de inferência globais (`global.…`) são sempre recusados; Londres e Zurique ficam na Europa, mas não na UE. A verificação cobre a configuração com que o Nodestro envia as solicitações. Ela **não garante** que a AWS processe tudo na UE: o registro de invocações de modelos, a detecção de abuso com sua retenção e as demais configurações da sua conta da AWS estão fora do Nodestro. Para impor isso na conta inteira, use o IAM e políticas de controle de serviço. Se seu operador exige “somente na UE”, a chave fica ligada.
+
+**Verificar conexão.** O botão entra na AWS (`sts:GetCallerIdentity`) e faz uma leitura gratuita no Bedrock (uma lista de modelos). **Nenhum modelo é chamado, então não custa nada.** Depois o selo mostra *Conexão verificada* ou *Verificação falhou* com o motivo; antes, *Não configurado* ou *Configurado*.
+
+**Permissões mínimas do IAM** da função ou do usuário:
+
+- `bedrock:InvokeModel` e `bedrock:InvokeModelWithResponseStream` no modelo ou perfil de inferência (a API Converse usa essas); com um perfil de inferência, também no modelo base em cada região de destino;
+- `bedrock:GetInferenceProfile` no perfil (verificação “somente na UE”) e `bedrock:GetGuardrail` se você usa um guardrail;
+- `sts:GetCallerIdentity` e `bedrock:ListFoundationModels` para *Verificar conexão*.
+
+**Preços.** O Bedrock é cobrado **por região**, nunca com os preços da Anthropic, nem para o Claude. Um preço só vale para as regiões que informa; uma região não informada tem custo **desconhecido**, nunca 0, e o modo de preço estrito então recusa a solicitação. Cadastre seus próprios preços com as regiões em [Preços dos modelos](/docs/nutzung#preise). Sua fatura da AWS pode ter mais itens do que o Nodestro conta (por exemplo, registro de invocações, guardrails ou outros serviços da AWS).
+
+**O que o Bedrock oferece.** Ferramentas, streaming, imagens e documentos PDF, saída estruturada e esforço de raciocínio dependem do modelo; opções que um modelo não suporta, ou cujo suporte é desconhecido (um ARN digitado, um perfil de inferência de aplicação), o Nodestro mostra desativadas com o motivo. **Não disponível no Bedrock**, nem para o Claude: ferramentas de servidor como a pesquisa na web, modos de pensamento, as configurações de cache de prompts da Anthropic, modelos de reserva, lotes e citações.
+
+**Ferramentas e credenciais da AWS.** No desktop, o Nodestro mantém as credenciais da AWS longe das ferramentas (variáveis de ambiente e consultas do SDK da AWS). O código de ferramentas no sandbox simples de subprocesso, porém, roda com o seu usuário e poderia ler diretamente os arquivos em `~/.aws`. Se houver credenciais reais da AWS na máquina, rode suas ferramentas e as geradas por IA no sandbox integrado ou em contêineres (veja [Sandbox](/docs/einstellungen#sandbox)).
+
+**Solução de problemas por mensagem:**
+
+| Mensagem | O que fazer |
+|---|---|
+| Nenhuma credencial da AWS foi encontrada | Entre (`aws sso login`), confira o perfil ou o ambiente e depois *Verificar conexão*. |
+| A AWS não aceitou as credenciais | Estão erradas ou expiraram: entre de novo. |
+| A AWS negou o acesso | Conceda as permissões acima e habilite o modelo no console da AWS. |
+| O perfil da AWS … não existe | Compare o nome do perfil com `~/.aws/config`. |
+| Não é um nome de região da AWS / não é válida | Use um nome como `eu-central-1`. |
+| Não é conhecido nesta região | Use um ID de modelo ou perfil de inferência oferecido nesta região. |
+| Não foi possível acessar | Confira rede, proxy e região. |
+| Poderia violar a residência de dados somente na UE | Use uma região da UE e um perfil `eu.` ou um modelo dessa região. |
+| Não disponível neste servidor | Peça ao seu operador que atribua uma função da AWS ao espaço de trabalho. |
 
 ## Modelo dos assistentes e modelo padrão {#modelle}
 <!-- keywords: modelo padrão, modelo dos assistentes, default model, novos agentes -->

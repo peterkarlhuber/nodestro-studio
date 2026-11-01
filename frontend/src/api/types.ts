@@ -738,7 +738,7 @@ export interface RunEvent {
   at: string;
 }
 
-export type ProviderId = "anthropic" | "openai" | "gemini" | "compatible" | "ollama" | "vllm";
+export type ProviderId = "anthropic" | "openai" | "gemini" | "compatible" | "ollama" | "vllm" | "bedrock";
 
 /** What a provider needs and offers (static, from /meta). */
 export interface ProviderInfo {
@@ -754,12 +754,79 @@ export interface ProviderInfo {
   /** Capabilities are unknown until declared in the settings. */
   declare_capabilities: boolean;
   example_model: string;
+  /**
+   * How agents of the provider authenticate (Bedrock design §2): an API key, an endpoint (base URL) or AWS
+   * credentials (``bedrock``: region and sign-in method, never a key or a base URL). Optional for older backends,
+   * which only know keys and endpoints.
+   */
+  auth?: ProviderAuthKind;
+  /** ``aws`` only: the environment variables an exported project reads the region from (AWS_REGION, ...). */
+  region_env_vars?: string[];
 }
+
+// ---- Amazon Bedrock (API-shape assumptions, see /mnt/project-files/bedrock-nodestro/design.md §2) --------------
+// Every Bedrock-specific field of /api/settings, /api/meta and the verification call is declared here, so a change
+// of the API shape is a change of this block only.
+
+export type ProviderAuthKind = "api_key" | "endpoint" | "aws";
+
+/** How Nodestro signs in to AWS: the machine's default chain or a named profile (desktop), the operator's role (server). */
+export type BedrockAuth = "default_chain" | "profile" | "operator_role";
+
+export type BedrockDataResidency = "eu_only";
+
+/** The state of the explicit connection check; never an account id, ARN, access key or token. */
+export type ProviderVerificationState = "not_configured" | "configured" | "verified" | "failed";
+
+export interface ProviderVerification {
+  state: ProviderVerificationState;
+  /** ISO time of the last explicit check (null before the first). */
+  checked_at: string | null;
+  /** Why the provider is not configured or the check failed (a stable code such as provider.aws_access_denied). */
+  code: string | null;
+}
+
+/** ``ProviderStatus`` fields of Amazon Bedrock; null or missing for the other providers. */
+export interface BedrockStatusFields {
+  /** The sign-in method in effect. */
+  auth?: BedrockAuth | null;
+  region?: string | null;
+  /** Desktop only: the name of the AWS profile (the credentials stay in ~/.aws). */
+  profile_name?: string | null;
+  data_residency?: BedrockDataResidency | null;
+  /** The operator forces eu_only for every workspace; the setting cannot be relaxed. */
+  data_residency_forced?: boolean | null;
+  /** The sign-in methods this installation allows (desktop: default_chain, profile; server: operator_role). */
+  auth_methods?: BedrockAuth[] | null;
+  /** The regions the operator allows (null: any region). */
+  allowed_regions?: string[] | null;
+  /** Server only: whether the operator assigned an AWS role to this workspace (the role itself is never shown). */
+  operator_role?: boolean | null;
+  verification?: ProviderVerification | null;
+}
+
+/** ``ProviderSettingsIn`` fields of Amazon Bedrock (other providers refuse them with provider.field_not_supported). */
+export interface BedrockSettingsIn {
+  region?: string | null;
+  auth?: BedrockAuth | null;
+  profile_name?: string | null;
+  /** "eu_only", or an empty text for none. */
+  data_residency?: BedrockDataResidency | "" | null;
+}
+
+/** Body of POST /api/settings/providers/bedrock/verify; the answer is the provider's ProviderStatus. */
+export interface ProviderVerifyIn {
+  /** Optional: a model id whose availability the control-plane read checks (nothing is invoked). */
+  model?: string | null;
+}
+
+/** An AWS region name such as eu-central-1 (the backend validates the same pattern). */
+export const AWS_REGION_PATTERN = /^[a-z]{2}(-[a-z]+)+-\d$/;
 
 export type CapabilityState = "supported" | "unsupported" | "unknown";
 
 /** A provider's configuration state; never contains the key. */
-export interface ProviderStatus {
+export interface ProviderStatus extends BedrockStatusFields {
   id: ProviderId;
   label: string;
   configured: boolean;
@@ -773,7 +840,7 @@ export interface ProviderStatus {
 }
 
 /** A change of one provider's settings: undefined keeps a value, an empty text removes it. */
-export interface ProviderSettingsIn {
+export interface ProviderSettingsIn extends BedrockSettingsIn {
   api_key?: string | null;
   base_url?: string | null;
   capabilities?: Record<string, CapabilityState> | null;
@@ -801,6 +868,14 @@ export interface ModelInfo {
   price_quality?: string | null;
   price_source?: string | null;
   price_version?: string | null;
+  /** Amazon Bedrock: the region the shown rates belong to, and every region the price covers (aws_region tariff). */
+  price_region?: string | null;
+  price_regions?: string[] | null;
+  /**
+   * Assumed (not yet in the API): the model's documented capabilities (Orkexa's capabilities() of the provider for
+   * this model). Missing: unknown, which disables capability-dependent settings for Bedrock.
+   */
+  capabilities?: Record<string, CapabilityState> | null;
 }
 
 export interface ServerToolInfo {
