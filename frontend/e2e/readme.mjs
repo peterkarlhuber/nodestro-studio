@@ -16,8 +16,12 @@ const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1500, height: 940 }, locale: "en-US" });
 await page.addInitScript(() => localStorage.setItem("nodestro-language", "en"));
 
+// The test servers close idle keep-alive connections after 5 s; a request sent on a pooled connection at that moment
+// fails with ECONNRESET. A fresh connection per API call avoids the race.
+const FRESH_CONNECTION = { connection: "close" };
+
 async function api(path, method = "GET", data) {
-  const response = await page.request.fetch(base + "/api" + path, { method, data });
+  const response = await page.request.fetch(base + "/api" + path, { method, data, headers: FRESH_CONNECTION });
   if (!response.ok()) throw new Error(`${method} ${path}: ${response.status()} ${await response.text()}`);
   return response.status() === 204 ? null : response.json();
 }
