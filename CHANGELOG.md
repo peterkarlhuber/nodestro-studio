@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Tool approvals: warnings before unattended starts (S-2, R1, 2026-11-01)
+
+- Schedule dialog, switching a schedule on, batch and test series start, and the API publication check show the tool
+  calls the per-call approval rules would refuse in those unattended runs (`ToolWarnings`, codes
+  `errors.tool.unattended_*` in six languages): agent, workflow, tool, why, and how to fix it, with a link to the
+  Approvals page. Nothing is approved from there, and the runtime still refuses at the call. A schedule switched on
+  with such warnings now says so. Shown only while `NODESTRO_TOOL_APPROVALS` is on.
+- Help *Branches > Approving tool calls* (six languages): what the warning covers and what it cannot see.
+- Browser suite `approvals`: schedule dialog warning, the advance approval ending it, no automatic grants, batch plan,
+  publication check.
+- Platform pins: `nodestro-runtime` `2d55242`, `nodestro-api` `a233d57` (includes Adaptive Orchestration M6a and MCP
+  WP-7/8/9/11), `nodestro-examples` `63be887`, `nodestro-integrations` `7bbce5f`; `nodestro-sdk` follows.
+
 ### Tool approvals: security acceptance (S-2, 2026-10-31)
 
 - New browser suite `approvals` (`npm run e2e:approvals`, part of `scripts/e2e.sh`) against an isolated instance with
