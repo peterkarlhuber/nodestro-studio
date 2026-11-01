@@ -13,7 +13,7 @@
 - Browser suite `approvals`: schedule dialog warning, the advance approval ending it, no automatic grants, batch plan,
   publication check.
 - Platform pins: `nodestro-runtime` `2d55242`, `nodestro-api` `a233d57` (includes Adaptive Orchestration M6a and MCP
-  WP-7/8/9/11), `nodestro-examples` `63be887`, `nodestro-integrations` `7bbce5f`; `nodestro-sdk` follows.
+  WP-7/8/9/11), `nodestro-examples` `63be887`, `nodestro-integrations` `7bbce5f` and, in `platform/versions.json`, `nodestro-sdk` `1383418`; `orkexa` stays `b91d0b7`.
 
 ### Tool approvals: security acceptance (S-2, 2026-10-31)
 
