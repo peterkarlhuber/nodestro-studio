@@ -10,6 +10,15 @@ permissions:
   contents: read
 
 jobs:
+  # File names that differ only in case break the checkout or the build on macOS and Windows.
+  case-clashes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: python3 scripts/check_case_collisions.py
+
   backend:
     runs-on: ubuntu-latest
     strategy:

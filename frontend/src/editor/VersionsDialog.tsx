@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { VersionSummary, Workflow } from "../api/types";
-import { TestStatus } from "../automation/TestStatus";
+import { WorkflowTestStatus } from "../automation/WorkflowTestStatus";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, IconButton, Modal, Spinner, TextInput } from "../components/ui";
 import { ErrorText, LocalError } from "../lib/errors";
@@ -172,7 +172,7 @@ export function VersionsDialog({
           </Button>
         </div>
       </Field>
-      {current ? <TestStatus workflowId={workflowId} version={current} /> : null}
+      {current ? <WorkflowTestStatus workflowId={workflowId} version={current} /> : null}
       {versions.isLoading ? <Spinner /> : null}
       {versions.error ? (
         <Callout tone="danger">

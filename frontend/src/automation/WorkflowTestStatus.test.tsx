@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { TestStatus } from "./TestStatus";
+import { WorkflowTestStatus } from "./WorkflowTestStatus";
 
 const SUITES = [
   { id: "suite_a", name: "Regression", workflow_id: "wf_1", updated_at: "2026-10-31T09:00:00+00:00", created_at: "2026-10-31T09:00:00+00:00", cases: [] },
@@ -43,7 +43,7 @@ function show() {
   return render(
     <QueryClientProvider client={client}>
       <MemoryRouter>
-        <TestStatus workflowId="wf_1" version={2} />
+        <WorkflowTestStatus workflowId="wf_1" version={2} />
       </MemoryRouter>
     </QueryClientProvider>,
   );

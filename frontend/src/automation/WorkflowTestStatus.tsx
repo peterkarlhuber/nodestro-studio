@@ -54,7 +54,7 @@ function StatusRow({ status }: { status: SuiteTestStatus }) {
 }
 
 /** The test series of ``workflowId`` and what their latest result says about saved version ``version``. */
-export function TestStatus({ workflowId, version }: { workflowId: string; version: number }) {
+export function WorkflowTestStatus({ workflowId, version }: { workflowId: string; version: number }) {
   const { t } = useTranslation();
   const suites = useSuites();
   const own = (suites.data ?? []).filter((suite) => suite.workflow_id === workflowId);
