@@ -249,6 +249,72 @@
       "daily": "a diario a las {{at}} ({{zone}})",
       "weekly": "cada semana {{days}} a las {{at}} ({{zone}})",
       "monthly": "cada mes el día {{day}} a las {{at}} ({{zone}})"
+    },
+    "enabledWithWarnings": "La programación está activa, pero algunas llamadas a herramientas se rechazarían"
+  },
+  "toolWarnings": {
+    "title": "Llamadas a herramientas que se rechazarían",
+    "hint": "Nada se aprueba automáticamente. Las aprobaciones anticipadas las da una persona administradora en la página Aprobaciones.",
+    "open": "Abrir Aprobaciones"
+  },
+  "modelChoice": {
+    "title": "Elección de modelo por mediciones",
+    "intro": "Qué modelo debe usar un agente se decide aquí solo con ejecuciones de prueba terminadas de esta serie: la de la versión guardada y las comparaciones de modelos. Nada cambia por sí solo.",
+    "agent": "Agente",
+    "objective": "Objetivo",
+    "objectives": {
+      "cost": "Menor coste",
+      "duration": "Menor duración",
+      "quality": "Mayor tasa de aprobados"
+    },
+    "minPassRate": "Tasa mínima de aprobados (%)",
+    "minPassRateHint": "Vacío: al menos tan bueno como el modelo actual en su ejecución medida.",
+    "minPassRateDefault": "como el modelo actual",
+    "minPassRateInvalid": "Un número de 0 a 100.",
+    "noNewFailures": "No puede perder un caso que el modelo actual aprobó",
+    "outcome": {
+      "switch": "Según esta regla, {{model}} encaja mejor que {{current}} (al menos {{rate}} aprobados).",
+      "keep": "{{current}} se mantiene: ningún modelo medido es mejor según esta regla.",
+      "no_baseline": "El modelo actual {{current}} aún no se ha medido con esta serie. Ejecuta la versión guardada o indica una tasa mínima de aprobados.",
+      "no_measurement": "Todavía no hay una medición adecuada. Ejecuta una prueba y una comparación de modelos; hasta entonces se mantiene {{current}}."
+    },
+    "apply": "Usar {{model}}",
+    "applied": "Modelo aplicado; el workflow se guardó como nueva versión.",
+    "versionNote": "Modelo según la serie de pruebas: {{model}}",
+    "current": "actual",
+    "recommended": "Recomendado",
+    "measuredAt": "Medido {{date}} · {{passed}} de {{cases}} aprobados",
+    "columns": {
+      "model": "Modelo",
+      "passRate": "Aprobados",
+      "costPerCase": "Coste por caso",
+      "duration": "Tiempo por caso",
+      "aiScore": "Valoración IA",
+      "status": "Evaluación"
+    },
+    "warnings": {
+      "few_cases": "Menos de 10 casos de prueba: la medición es escasa.",
+      "ai_judged": "La valoración IA es una estimación de la IA; solo cuenta a través de si los casos se aprueban."
+    },
+    "skippedIntro": "No usadas:",
+    "skipped": {
+      "older_record_one": "{{count}} ejecución antigua sin datos de modelos",
+      "older_record_other": "{{count}} ejecuciones antiguas sin datos de modelos",
+      "workflow_changed_one": "{{count}} ejecución de otro estado del workflow",
+      "workflow_changed_other": "{{count}} ejecuciones de otro estado del workflow",
+      "cases_changed_one": "{{count}} ejecución con otros casos de prueba",
+      "cases_changed_other": "{{count}} ejecuciones con otros casos de prueba",
+      "other_agents_differ_one": "{{count}} ejecución con otros modelos en otros agentes",
+      "other_agents_differ_other": "{{count}} ejecuciones con otros modelos en otros agentes",
+      "incomplete_one": "{{count}} ejecución incompleta",
+      "incomplete_other": "{{count}} ejecuciones incompletas"
+    },
+    "excluded": {
+      "unavailable": "Proveedor no configurado",
+      "pass_rate_low": "Tasa de aprobados demasiado baja",
+      "new_failures": "Pierde {{cases}} casos que el modelo actual aprobó",
+      "cost_unknown": "Coste desconocido (nunca cuenta como 0)",
+      "duration_unknown": "Duración desconocida"
     }
   }
 }

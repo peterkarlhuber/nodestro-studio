@@ -1864,6 +1864,8 @@ export interface BatchPlan {
   items: BatchItem[];
   estimate: CostEstimate;
   external_tools: string[];
+  /** Tool calls the per-call approval rules would refuse in these runs (only while approvals are switched on). */
+  tool_warnings: Problem[];
   approvals: number;
   fields: string[];
 }
@@ -1997,6 +1999,8 @@ export interface BenchmarkRun {
   judge: boolean;
   /** Agent node id -> model this run used instead of the saved one (Q-2); empty for the saved version. */
   models?: Record<string, string>;
+  /** The model every agent used, recorded at the start (AO M6); empty for older test runs. */
+  agent_models?: Record<string, string>;
   created_at: string;
   finished_at: string | null;
   results: CaseResult[];
@@ -2004,11 +2008,58 @@ export interface BenchmarkRun {
   judge_usage: Usage;
 }
 
+export type ModelObjective = "cost" | "duration" | "quality";
+
+export interface ModelPolicy {
+  objective: ModelObjective;
+  /** Least share of passed cases (0..1); null: the configured model's measured pass rate. */
+  min_pass_rate: number | null;
+  no_new_failures: boolean;
+}
+
+/** One model's newest test run that measured the workflow as it is saved now (AO M6). */
+export interface ModelMeasurement {
+  model: string;
+  benchmark_run_id: string;
+  created_at: string;
+  current: boolean;
+  cases: number;
+  passed: number;
+  pass_rate: number;
+  /** Average AI judge score, shown as an AI judgement; not used for the choice. */
+  judge_score: number | null;
+  /** Known cost per case; null when any case's cost is unknown. */
+  cost_per_case_usd: number | null;
+  avg_duration_s: number | null;
+  new_failures: string[];
+  available: boolean;
+  excluded: string[];
+}
+
+export type ModelChoiceOutcome = "switch" | "keep" | "no_baseline" | "no_measurement";
+
+export interface ModelChoice {
+  suite_id: string;
+  workflow_id: string;
+  node_id: string;
+  current_model: string;
+  policy: ModelPolicy;
+  required_pass_rate: number | null;
+  measurements: ModelMeasurement[];
+  recommended: string | null;
+  outcome: ModelChoiceOutcome;
+  /** Finished test runs that were not used, by reason. */
+  skipped: Record<string, number>;
+  warnings: string[];
+}
+
 export interface BenchmarkPlan {
   cases: number;
   estimate: CostEstimate;
   judged_cases: number;
   external_tools: string[];
+  /** Tool calls the per-call approval rules would refuse in the test runs (only while approvals are switched on). */
+  tool_warnings: Problem[];
   approvals: number;
   /** Cases whose form values do not fit the workflow's form (they would be marked invalid). */
   problems: { case: string; errors: FieldError[] }[];

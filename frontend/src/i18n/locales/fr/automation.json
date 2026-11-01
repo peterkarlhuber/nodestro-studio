@@ -249,6 +249,72 @@
       "daily": "tous les jours à {{at}} ({{zone}})",
       "weekly": "chaque semaine {{days}} à {{at}} ({{zone}})",
       "monthly": "chaque mois le {{day}} à {{at}} ({{zone}})"
+    },
+    "enabledWithWarnings": "La planification est active, mais certains appels d'outils seraient refusés"
+  },
+  "toolWarnings": {
+    "title": "Appels d'outils qui seraient refusés",
+    "hint": "Rien n'est approuvé automatiquement. Une personne administratrice donne les approbations anticipées sur la page Approbations.",
+    "open": "Ouvrir Approbations"
+  },
+  "modelChoice": {
+    "title": "Choix du modèle par les mesures",
+    "intro": "Le modèle qu’un agent doit utiliser découle ici uniquement des exécutions de test terminées de cette série : celle de la version enregistrée et les comparaisons de modèles. Rien ne change tout seul.",
+    "agent": "Agent",
+    "objective": "Objectif",
+    "objectives": {
+      "cost": "Coût le plus bas",
+      "duration": "Durée la plus courte",
+      "quality": "Taux de réussite le plus élevé"
+    },
+    "minPassRate": "Taux de réussite minimal (%)",
+    "minPassRateHint": "Vide : au moins aussi bon que le modèle actuel dans son exécution mesurée.",
+    "minPassRateDefault": "comme le modèle actuel",
+    "minPassRateInvalid": "Un nombre de 0 à 100.",
+    "noNewFailures": "Ne doit perdre aucun cas que le modèle actuel a réussi",
+    "outcome": {
+      "switch": "Selon cette règle, {{model}} convient mieux que {{current}} (au moins {{rate}} réussis).",
+      "keep": "{{current}} reste : aucun modèle mesuré n’est meilleur selon cette règle.",
+      "no_baseline": "Le modèle actuel {{current}} n’a pas encore été mesuré avec cette série. Lancez la version enregistrée ou indiquez un taux de réussite minimal.",
+      "no_measurement": "Pas encore de mesure adaptée. Lancez un test et une comparaison de modèles ; d’ici là, {{current}} reste."
+    },
+    "apply": "Utiliser {{model}}",
+    "applied": "Modèle appliqué ; le workflow a été enregistré comme nouvelle version.",
+    "versionNote": "Modèle d’après la série de tests : {{model}}",
+    "current": "actuel",
+    "recommended": "Recommandé",
+    "measuredAt": "Mesuré {{date}} · {{passed}} sur {{cases}} réussis",
+    "columns": {
+      "model": "Modèle",
+      "passRate": "Réussis",
+      "costPerCase": "Coût par cas",
+      "duration": "Durée par cas",
+      "aiScore": "Note IA",
+      "status": "Évaluation"
+    },
+    "warnings": {
+      "few_cases": "Moins de 10 cas de test : la mesure est mince.",
+      "ai_judged": "La note IA est une appréciation de l’IA ; elle ne compte qu’à travers la réussite des cas."
+    },
+    "skippedIntro": "Non utilisées :",
+    "skipped": {
+      "older_record_one": "{{count}} ancienne exécution sans données de modèles",
+      "older_record_other": "{{count}} anciennes exécutions sans données de modèles",
+      "workflow_changed_one": "{{count}} exécution d’un autre état du workflow",
+      "workflow_changed_other": "{{count}} exécutions d’un autre état du workflow",
+      "cases_changed_one": "{{count}} exécution avec d’autres cas de test",
+      "cases_changed_other": "{{count}} exécutions avec d’autres cas de test",
+      "other_agents_differ_one": "{{count}} exécution avec d’autres modèles dans d’autres agents",
+      "other_agents_differ_other": "{{count}} exécutions avec d’autres modèles dans d’autres agents",
+      "incomplete_one": "{{count}} exécution incomplète",
+      "incomplete_other": "{{count}} exécutions incomplètes"
+    },
+    "excluded": {
+      "unavailable": "Fournisseur non configuré",
+      "pass_rate_low": "Taux de réussite trop bas",
+      "new_failures": "Perd {{cases}} cas que le modèle actuel a réussis",
+      "cost_unknown": "Coût inconnu (jamais compté comme 0)",
+      "duration_unknown": "Durée inconnue"
     }
   }
 }

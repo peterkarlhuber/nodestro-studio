@@ -249,6 +249,72 @@
       "daily": "täglich um {{at}} ({{zone}})",
       "weekly": "wöchentlich {{days}} um {{at}} ({{zone}})",
       "monthly": "monatlich am {{day}}. um {{at}} ({{zone}})"
+    },
+    "enabledWithWarnings": "Der Zeitplan ist eingeschaltet, aber einige Tool-Aufrufe würden verweigert"
+  },
+  "toolWarnings": {
+    "title": "Tool-Aufrufe, die verweigert würden",
+    "hint": "Nichts wird automatisch freigegeben. Vorabfreigaben erteilt eine Administratorin oder ein Administrator auf der Seite „Freigaben“.",
+    "open": "Freigaben öffnen"
+  },
+  "modelChoice": {
+    "title": "Modellwahl nach Messwerten",
+    "intro": "Welches Modell ein Agent nutzen soll, ergibt sich hier nur aus abgeschlossenen Testläufen dieser Testreihe: dem Lauf der gespeicherten Version und den Modellvergleichen. Nichts ändert sich von selbst.",
+    "agent": "Agent",
+    "objective": "Ziel",
+    "objectives": {
+      "cost": "Geringste Kosten",
+      "duration": "Kürzeste Laufzeit",
+      "quality": "Höchste Bestehensquote"
+    },
+    "minPassRate": "Mindest-Bestehensquote (%)",
+    "minPassRateHint": "Leer: mindestens so gut wie das jetzige Modell im gemessenen Lauf.",
+    "minPassRateDefault": "wie jetziges Modell",
+    "minPassRateInvalid": "Eine Zahl von 0 bis 100.",
+    "noNewFailures": "Darf keinen Fall verlieren, den das jetzige Modell bestanden hat",
+    "outcome": {
+      "switch": "Nach dieser Regel passt {{model}} besser als {{current}} (mindestens {{rate}} bestanden).",
+      "keep": "{{current}} bleibt: Kein gemessenes Modell ist nach dieser Regel besser.",
+      "no_baseline": "Das jetzige Modell {{current}} wurde mit dieser Testreihe noch nicht gemessen. Starte einen Testlauf der gespeicherten Version oder gib eine Mindest-Bestehensquote an.",
+      "no_measurement": "Noch keine passende Messung. Starte einen Testlauf und einen Modellvergleich; bis dahin bleibt {{current}}."
+    },
+    "apply": "{{model}} übernehmen",
+    "applied": "Modell übernommen, der Workflow ist als neue Version gespeichert.",
+    "versionNote": "Modell nach Testreihe: {{model}}",
+    "current": "jetzt",
+    "recommended": "Empfohlen",
+    "measuredAt": "Gemessen {{date}} · {{passed}} von {{cases}} bestanden",
+    "columns": {
+      "model": "Modell",
+      "passRate": "Bestanden",
+      "costPerCase": "Kosten pro Fall",
+      "duration": "Zeit pro Fall",
+      "aiScore": "KI-Bewertung",
+      "status": "Einordnung"
+    },
+    "warnings": {
+      "few_cases": "Weniger als 10 Testfälle: Die Messung ist dünn.",
+      "ai_judged": "Die KI-Bewertung ist eine KI-Einschätzung; sie fließt nur über das Bestehen der Fälle ein."
+    },
+    "skippedIntro": "Nicht genutzt:",
+    "skipped": {
+      "older_record_one": "{{count}} älterer Lauf ohne Modellangaben",
+      "older_record_other": "{{count}} ältere Läufe ohne Modellangaben",
+      "workflow_changed_one": "{{count}} Lauf eines anderen Workflow-Stands",
+      "workflow_changed_other": "{{count}} Läufe eines anderen Workflow-Stands",
+      "cases_changed_one": "{{count}} Lauf mit anderen Testfällen",
+      "cases_changed_other": "{{count}} Läufe mit anderen Testfällen",
+      "other_agents_differ_one": "{{count}} Lauf mit anderen Modellen in anderen Agenten",
+      "other_agents_differ_other": "{{count}} Läufe mit anderen Modellen in anderen Agenten",
+      "incomplete_one": "{{count}} unvollständiger Lauf",
+      "incomplete_other": "{{count}} unvollständige Läufe"
+    },
+    "excluded": {
+      "unavailable": "Anbieter nicht eingerichtet",
+      "pass_rate_low": "Bestehensquote zu niedrig",
+      "new_failures": "Verliert {{cases}} Fälle, die das jetzige Modell bestand",
+      "cost_unknown": "Kosten unbekannt (zählen nie als 0)",
+      "duration_unknown": "Laufzeit unbekannt"
     }
   }
 }

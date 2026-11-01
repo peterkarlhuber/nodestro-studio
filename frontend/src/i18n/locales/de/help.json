@@ -224,7 +224,8 @@
     "scheduleTimeZone": "Termine gelten in dieser Zeitzone, inklusive Sommer- und Winterzeit.",
     "estimate": "Schätzung aus den letzten erfolgreichen Läufen dieses Workflows. Der Höchstwert folgt aus dem Budget pro Lauf.",
     "external": "Eigene Tools können z. B. Nachrichten senden. Bei vielen Läufen geschieht das entsprechend oft.",
-    "caseFromRun": "Macht aus der Eingabe dieses fehlgeschlagenen Laufs einen Testfall, mit ersetzten Zugangsdaten und personenbezogenen Daten. Gespeichert wird erst nach deiner Bestätigung."
+    "caseFromRun": "Macht aus der Eingabe dieses fehlgeschlagenen Laufs einen Testfall, mit ersetzten Zugangsdaten und personenbezogenen Daten. Gespeichert wird erst nach deiner Bestätigung.",
+    "modelChoice": "Die Empfehlung nutzt nur gemessene Testläufe derselben Testreihe mit demselben Workflow-Stand (außer den Modellen) und denselben Testfällen. Du wählst das Ziel und die Mindest-Bestehensquote; unbekannte Kosten zählen nie als 0. Erst *Übernehmen* ändert den Agenten und speichert eine neue Version."
   },
   "publish": {
     "open": "Veröffentliche diesen Workflow als API auf diesem Computer, verwalte Schlüssel und Netzwerkzugriff oder exportiere ihn als eigenständiges FastAPI-Projekt.",

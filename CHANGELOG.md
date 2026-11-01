@@ -19,6 +19,19 @@
   `mcp_server.disabled`) and help sections *Tools > Signing in to a service*, *Tools > Local servers* and
   *API and export > As an MCP tool*, in six languages.
 
+### Tool approvals: warnings before unattended starts (S-2, R1, 2026-11-01)
+
+- Schedule dialog, switching a schedule on, batch and test series start, and the API publication check show the tool
+  calls the per-call approval rules would refuse in those unattended runs (`ToolWarnings`, codes
+  `errors.tool.unattended_*` in six languages): agent, workflow, tool, why, and how to fix it, with a link to the
+  Approvals page. Nothing is approved from there, and the runtime still refuses at the call. A schedule switched on
+  with such warnings now says so. Shown only while `NODESTRO_TOOL_APPROVALS` is on.
+- Help *Branches > Approving tool calls* (six languages): what the warning covers and what it cannot see.
+- Browser suite `approvals`: schedule dialog warning, the advance approval ending it, no automatic grants, batch plan,
+  publication check.
+- Platform pins: `nodestro-runtime` `2d55242`, `nodestro-api` `a233d57` (includes Adaptive Orchestration M6a and MCP
+  WP-7/8/9/11), `nodestro-examples` `63be887`, `nodestro-integrations` `7bbce5f` and, in `platform/versions.json`, `nodestro-sdk` `1383418`; `orkexa` stays `b91d0b7`.
+
 ### Tool approvals: security acceptance (S-2, 2026-10-31)
 
 - New browser suite `approvals` (`npm run e2e:approvals`, part of `scripts/e2e.sh`) against an isolated instance with
@@ -39,6 +52,16 @@
   `nodestro-api` `c58d5de` (publications cutoff at the first stamping), `nodestro-examples` `2488c93`,
   `nodestro-integrations` `08f5faf` and, in `platform/versions.json`, `nodestro-sdk` `452a39d`; `orkexa` stays
   `b91d0b7`.
+
+### Model choice from measurements (Adaptive Orchestration M6a)
+
+- A test series page shows **Model choice from measurements** below its runs: for one agent, the goal (lowest cost,
+  shortest run time, highest pass rate), the minimum pass rate and "must not lose a case" make up the policy, and the
+  table shows each measured model's pass rate, cost and time per case, the AI rating (shown, not used), and why a
+  model is left out. Only finished test runs of the same workflow state, cases and other models count; unknown costs
+  never count as 0. *Use* saves the agent with the recommended model as a new workflow version; nothing changes
+  before that. Help and docs (`automatisierung#modellwahl-nach-messwerten`) in all six languages.
+- Needs `nodestro-api` with `GET /api/benchmarks/{suite_id}/model-choice` (api #33), included in the pinned `a233d57`.
 
 ### Platform pins: runtime 40e04b4, api e8eacd4, sdk 38082cc (Adaptive Orchestration M3–M5, 2026-10-31)
 

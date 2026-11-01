@@ -179,7 +179,14 @@
     "pre_grant_destructive": "Las herramientas que borran o destruyen no se pueden aprobar de antemano.",
     "pre_grant_version": "Solo se puede aprobar de antemano una versión concreta de la herramienta.",
     "pre_grant_expiry": "La fecha de caducidad está en el pasado.",
-    "pre_grant_not_found": "Esta aprobación previa no existe."
+    "pre_grant_not_found": "Esta aprobación previa no existe.",
+    "unattended_pre_grant_missing": "{{node}} ({{workflow}}): las llamadas a {{tool}} necesitan la aprobación de una persona y en estas ejecuciones nadie puede responder, así que se rechazarían. Aprueba {{tool}} por adelantado para esta programación en la página Aprobaciones, o inicia el flujo de trabajo a mano.",
+    "unattended_pre_grant_outdated": "{{node}} ({{workflow}}): la aprobación anticipada de {{tool}} ya no vale (una nueva versión de la herramienta, o caducó), así que sus llamadas se rechazarían. Vuelve a aprobar la versión actual en la página Aprobaciones.",
+    "unattended_not_started": "{{node}} ({{workflow}}): las llamadas a {{tool}} necesitan la aprobación de una persona y se rechazarían. Una aprobación anticipada solo puede nombrar una programación guardada o un lote o serie de pruebas ya iniciado, así que las llamadas anteriores a que apruebes {{tool}} en la página Aprobaciones se rechazan. Guarda primero la programación; un lote o una serie de pruebas mejor inícialos a mano si cada llamada importa.",
+    "unattended_api": "{{node}} ({{workflow}}): las llamadas a {{tool}} necesitan la aprobación de una persona. Las API publicadas aún no tienen un paso de aprobación propio, así que cada una de estas llamadas se rechazaría. Quita la herramienta del flujo de trabajo publicado o usa una herramienta que solo lea.",
+    "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} puede borrar, pagar o enviar algo que no se puede deshacer. Esas llamadas nunca se aprueban por adelantado y se rechazarían en ejecuciones sin supervisión. Inicia el flujo de trabajo a mano para que una persona apruebe cada llamada.",
+    "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} es una herramienta de un servicio MCP conectado. Sus llamadas no pueden ejecutarse sin una persona atenta y se rechazarían. Inicia el flujo de trabajo a mano.",
+    "unattended_denied": "{{node}} ({{workflow}}): las llamadas a {{tool}} se rechazarían en estas ejecuciones."
   },
   "job": {
     "writing": "El agente de programación está escribiendo código y pruebas …",

@@ -72,6 +72,20 @@ Ob ein günstigeres oder stärkeres Modell für einen Agenten genügt, prüfst d
 
 Ein solcher Lauf braucht ein **Kostenlimit** unter [Grenzen](/docs/automatisierung#grenzen), weil frühere Läufe andere Modelle nutzten und nichts über die Kosten sagen. In der Liste trägt er das Zeichen **Modellvergleich** und nennt die ersetzten Modelle. Vergleiche ihn danach mit einem Lauf der gespeicherten Version. Er zählt nicht als Testergebnis dieser Version, weil er eine Variante getestet hat. Passt ein Modell, übernimmst du es im Agenten selbst.
 
+## Modellwahl nach Messwerten {#modellwahl-nach-messwerten}
+<!-- keywords: modellwahl, empfehlung, günstigstes modell, policy, messwerte, bestehensquote, modell übernehmen -->
+
+Unter den Testläufen einer Testreihe zeigt **Modellwahl nach Messwerten**, welches Modell ein Agent nach deiner Regel nutzen sollte. Nodestro bewertet dabei nichts selbst: Es zählt nur, was abgeschlossene Testläufe gemessen haben.
+
+- **Ziel:** geringste Kosten, kürzeste Laufzeit oder höchste Bestehensquote. Bei Gleichstand entscheidet die höhere Bestehensquote, dann der Modellname.
+- **Mindest-Bestehensquote:** leer bedeutet, dass ein anderes Modell mindestens so viele Fälle bestehen muss wie das jetzige Modell in seinem gemessenen Lauf.
+- **Keinen Fall verlieren:** eingeschaltet scheidet ein Modell aus, das einen Fall nicht besteht, den das jetzige Modell bestanden hat.
+- **Unbekannte Kosten** zählen nie als 0. Ein Modell ohne bekannte Kosten kann beim Ziel *geringste Kosten* nicht gewinnen.
+
+Als Messung gilt nur der neueste abgeschlossene Lauf je Modell mit demselben Workflow-Stand (außer den Modellen; Position und Namen zählen nicht), denselben Testfällen und derselben KI-Bewertung, denselben Modellen in allen anderen Agenten und einem Ergebnis für jeden Fall. Ändert sich ein Prompt oder ein Testfall, startest du die Läufe neu. Die Liste nennt, welche Läufe aus welchem Grund nicht genutzt wurden. Ohne passende Messung bleibt das jetzige Modell.
+
+*Übernehmen* setzt das empfohlene Modell im Agenten und speichert den Workflow als neue [Version](/docs/workflows#versionen). Vorher ändert sich nichts. Die KI-Bewertung wird angezeigt, entscheidet aber nur über das Bestehen der Fälle mit.
+
 ## Zeitpläne {#zeitplaene}
 <!-- keywords: zeitplan, schedule, cron, regelmäßig, täglich, wöchentlich, monatlich, stündlich, zeitzone, verpasst -->
 

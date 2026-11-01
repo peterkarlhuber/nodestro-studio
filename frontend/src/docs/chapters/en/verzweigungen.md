@@ -89,6 +89,8 @@ When an agent wants to make such a call, the run keeps running but waits at this
 
 Runs nobody watches (schedules, batches, test series) cannot ask. There such a call is refused unless an administrator approved this tool version **in advance** for exactly that schedule or batch. Tools that delete or destroy and tools of connected services can never be approved in advance.
 
+**Warned before the start.** While approvals are on, the schedule dialog, the batch and test series start and the API publication check list every tool call such a run would refuse: which agent and tool, why (no or outdated advance approval, a batch that does not exist yet, a published API, a tool that deletes or destroys, a tool of a connected service) and how to fix it. This is only a warning: nothing is approved automatically, and the call is still refused at run time. An advance approval names a saved schedule or a started batch or test series, so calls before it is given are refused; start a batch by hand if every call matters. Published APIs have no approval step of their own yet, so their changing tool calls are always refused. The warning cannot see tools an orchestrator narrows or selects during the run, or approvals given or revoked after the check.
+
 **Switching on, in this order:**
 
 1. Under *Approvals → Rules for tool calls*, an administrator runs **Mark existing assignments**. Every tool assignment that exists now in workflows, their versions and published APIs becomes an **exception from before**, bound to the tool version it runs with. Published APIs get a new checksum (digest) once; their history records the old and the new one. The step runs **only once**: assignments, workflows and releases made afterwards are new and are asked about.

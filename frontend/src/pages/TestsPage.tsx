@@ -8,6 +8,7 @@ import { api } from "../api/client";
 import { keys, useSettings, useSuites, useWorkflows } from "../api/hooks";
 import type { BenchmarkRun, CaseChange, CaseResult, SanitizeReport, Suite, SuiteIn, TestCase, Workflow } from "../api/types";
 import { BenchmarkStartDialog } from "../automation/BenchmarkStartDialog";
+import { ModelChoicePanel } from "../automation/ModelChoicePanel";
 import { modelChanges } from "../automation/models";
 import { BATCH_TONE } from "../automation/status";
 import { isModelVariant } from "../automation/testStatus";
@@ -569,6 +570,7 @@ export function SuitePage() {
           ) : null}
         </section>
         {shownRun ? <RunResults run={shownRun} /> : null}
+        {runs.data?.length && !dirty ? <ModelChoicePanel suiteId={id} workflow={workflow.data} /> : null}
       </div>
       {suite.data ? (
         <BenchmarkStartDialog suite={suite.data} open={starting} onClose={() => setStarting(false)} onStarted={(run) => setShown(run.id)} />

@@ -179,7 +179,14 @@
     "pre_grant_destructive": "Tools that delete or destroy cannot be approved in advance.",
     "pre_grant_version": "Only a specific tool version can be approved in advance.",
     "pre_grant_expiry": "The expiry date lies in the past.",
-    "pre_grant_not_found": "This advance approval does not exist."
+    "pre_grant_not_found": "This advance approval does not exist.",
+    "unattended_pre_grant_missing": "{{node}} ({{workflow}}): calls of {{tool}} need a person's approval, and nobody can answer in these runs, so they would be refused. Approve {{tool}} in advance for this schedule on the Approvals page, or start the workflow by hand.",
+    "unattended_pre_grant_outdated": "{{node}} ({{workflow}}): the advance approval of {{tool}} no longer counts (a new tool version, or it expired), so its calls would be refused. Approve the current version again on the Approvals page.",
+    "unattended_not_started": "{{node}} ({{workflow}}): calls of {{tool}} need a person's approval and would be refused. An advance approval can only name a saved schedule or a started batch or test series, so calls made before you approve {{tool}} on the Approvals page are refused. Save a schedule first; for a batch or test series, start it by hand instead if every call matters.",
+    "unattended_api": "{{node}} ({{workflow}}): calls of {{tool}} need a person's approval. Published APIs have no approval step of their own yet, so every such call would be refused. Remove the tool from the published workflow, or use a tool that only reads.",
+    "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} can delete, pay or send something that cannot be undone. Such calls are never approved in advance and would be refused in runs nobody watches. Start the workflow by hand, so a person approves each call.",
+    "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} is a tool of a connected MCP service. Its calls cannot run without a person watching and would be refused. Start the workflow by hand.",
+    "unattended_denied": "{{node}} ({{workflow}}): calls of {{tool}} would be refused in these runs."
   },
   "job": {
     "writing": "The Coding Agent is writing code and tests …",
