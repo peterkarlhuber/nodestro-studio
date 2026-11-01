@@ -21,9 +21,10 @@ import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
-import { keys, useKnowledge, useMemorySpaces, useMeta, useModelOptions, useTools } from "../api/hooks";
+import { keys, useKnowledge, useMemorySpaces, useMeta, useModelOptions, useSettings, useTools } from "../api/hooks";
 import type {
   AgentConfig,
+  CapabilityState,
   ConfigIssue,
   ContentKind,
   KnowledgeFile,
@@ -61,7 +62,7 @@ import { MemoryAssistantDialog } from "./MemoryAssistantDialog";
 import { OutputFieldsEditor } from "./OutputFieldsEditor";
 import { serverToolDescription, serverToolLabel, toolDescription } from "../lib/catalog";
 import { getDefaultModel } from "../lib/defaults";
-import { providerOf, sameModel, splitModel } from "../lib/providers";
+import { findModel, providerOf, sameModel, splitModel } from "../lib/providers";
 import { ProblemText } from "../lib/errors";
 import { KNOWLEDGE_ACCEPT } from "../lib/knowledge";
 import {
@@ -458,8 +459,59 @@ interface SectionProps {
 /** Options only Anthropic offers: for another provider a note instead, unless a value is set (to reset it). */
 function AnthropicOnly({ agent, set, children }: { agent: AgentConfig; set: boolean; children: ReactNode }) {
   const { t } = useTranslation();
-  if (providerOf(agent.model) === "anthropic" || set) return <>{children}</>;
-  return <p className="field__hint">{t("agent.anthropicOnly")}</p>;
+  const provider = providerOf(agent.model);
+  if (provider === "anthropic" || set) return <>{children}</>;
+  // Claude on Amazon Bedrock is a different provider with the Converse feature set: these options stay refused.
+  return (
+    <p className="field__hint" data-testid="anthropic-only">
+      {provider === "bedrock" ? t("bedrock.agent.anthropicOnly") : t("agent.anthropicOnly")}
+    </p>
+  );
+}
+
+/**
+ * Options a Bedrock model may or may not offer (Orkexa's documented capabilities of the model behind the id): shown
+ * only when the capability is supported; a value that is set stays visible next to the reason (to reset it). Unknown (a typed id, an application
+ * inference profile, an ARN) counts as not available, with the reason. Other providers are not affected.
+ */
+function BedrockCapability({
+  agent,
+  capability,
+  set,
+  children,
+}: {
+  agent: AgentConfig;
+  capability: string;
+  set: boolean;
+  children: ReactNode;
+}) {
+  const { t } = useTranslation();
+  const state = useBedrockCapability(agent.model, capability);
+  if (state === null || state === "supported") return <>{children}</>;
+  const reason = (
+    <p className="field__hint" data-testid={`capability-${capability}`} data-state={state}>
+      {t(`bedrock.agent.capability.${state}`, { capability: t(`settings.providers.capability.${capability}`, { defaultValue: capability }) })}
+    </p>
+  );
+  // A value that is set stays visible with the reason, so it can be reset.
+  return set ? (
+    <>
+      {children}
+      {reason}
+    </>
+  ) : (
+    reason
+  );
+}
+
+/** A Bedrock model's state of ``capability`` (from the catalog, else the provider status); null for other providers. */
+function useBedrockCapability(model: string, capability: string): CapabilityState | null {
+  const meta = useMeta();
+  const settings = useSettings();
+  if (providerOf(model) !== "bedrock") return null;
+  const fromModel = findModel(meta.data?.models, model)?.capabilities?.[capability];
+  const fromProvider = settings.data?.providers.find((item) => item.id === "bedrock")?.capabilities?.[capability];
+  return (fromModel ?? fromProvider ?? "unknown") as CapabilityState;
 }
 
 function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
@@ -774,22 +826,24 @@ function OutputSection({ agent, update, ui }: SectionProps) {
       tip="agent.output"
       summary={output.mode === "text" ? t("agent.output.summaryText") : t("agent.output.fields", { count: output.fields.length })}
     >
-      <Segmented
-        label={t("agent.output.title")}
-        value={output.mode}
-        onChange={(mode) =>
-          setOutput({
-            mode,
-            fields: mode === "structured" && !output.fields.length
-              ? [{ name: "summary", type: "string", description: t("agent.output.defaultFieldDescription"), required: true }]
-              : output.fields,
-          })
-        }
-        options={[
-          { value: "text", label: t("agent.output.text") },
-          { value: "structured", label: t("agent.output.structured") },
-        ]}
-      />
+      <BedrockCapability agent={agent} capability="structured_output" set={output.mode === "structured"}>
+        <Segmented
+          label={t("agent.output.title")}
+          value={output.mode}
+          onChange={(mode) =>
+            setOutput({
+              mode,
+              fields: mode === "structured" && !output.fields.length
+                ? [{ name: "summary", type: "string", description: t("agent.output.defaultFieldDescription"), required: true }]
+                : output.fields,
+            })
+          }
+          options={[
+            { value: "text", label: t("agent.output.text") },
+            { value: "structured", label: t("agent.output.structured") },
+          ]}
+        />
+      </BedrockCapability>
       {output.mode === "structured" ? (
         <>
           <p className="field__hint">{t("agent.output.structuredHint")}</p>
@@ -810,12 +864,14 @@ function ThinkingSection({ agent, update, ui }: SectionProps) {
       summary={thinkingSummary(t, agent)}
     >
       <Field label={t("agent.thinking.effort")} tip="agent.effort" hint={t("agent.thinking.effortHint")}>
-        <Select
-          aria-label={t("agent.thinking.effortShort")}
-          value={agent.effort ?? ""}
-          options={options(t, "effort", EFFORTS)}
-          onChange={(value) => update({ effort: (value || null) as AgentConfig["effort"] })}
-        />
+        <BedrockCapability agent={agent} capability="reasoning" set={agent.effort !== null}>
+          <Select
+            aria-label={t("agent.thinking.effortShort")}
+            value={agent.effort ?? ""}
+            options={options(t, "effort", EFFORTS)}
+            onChange={(value) => update({ effort: (value || null) as AgentConfig["effort"] })}
+          />
+        </BedrockCapability>
       </Field>
       <Field label={t("agent.thinking.thinking")} tip="agent.thinking">
         <AnthropicOnly agent={agent} set={agent.thinking !== null}>
@@ -968,6 +1024,9 @@ function AdvancedSection({
   const [optionsText, setOptionsText] = useState(() => JSON.stringify(agent.request_options, null, 2));
   const [optionsError, setOptionsError] = useState<{ key: string; detail?: string } | null>(null);
   const tools = [...agent.tools, ...agent.server_tools, ...(agent.memory.mode !== "none" ? ["memory"] : [])];
+  // Bedrock: forcing a tool ("any", one tool) only where the model supports it (not e.g. Claude 5.5 on Bedrock).
+  const forcingState = useBedrockCapability(agent.model, "forced_tool_choice");
+  const forcing = forcingState === null || forcingState === "supported";
   return (
     <Section {...ui} title={t("agent.advanced.title")} icon={SlidersHorizontal} summary={advancedSummary(t, agent)}>
       <div className="grid-2">
@@ -1003,9 +1062,14 @@ function AdvancedSection({
           <Select
             aria-label={t("agent.advanced.toolChoice")}
             value={agent.tool_choice.type}
-            options={options(t, "toolChoice", ["auto", "none", "any", "tool"])}
+            options={options(t, "toolChoice", forcing || agent.tool_choice.type === "any" || agent.tool_choice.type === "tool" ? ["auto", "none", "any", "tool"] : ["auto", "none"])}
             onChange={(type) => update({ tool_choice: { type: type as AgentConfig["tool_choice"]["type"], name: agent.tool_choice.name } })}
           />
+          {forcing ? null : (
+            <p className="field__hint" data-testid="capability-forced_tool_choice" data-state={forcingState ?? undefined}>
+              {t(`bedrock.agent.capability.${forcingState}`, { capability: t("settings.providers.capability.forced_tool_choice") })}
+            </p>
+          )}
         </Field>
       </div>
       {agent.tool_choice.type === "tool" ? (

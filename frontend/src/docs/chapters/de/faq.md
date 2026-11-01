@@ -58,3 +58,6 @@ Sie werden abgebrochen. Was bis dahin gespeichert wurde, bleibt als Ausführung 
 
 **Ändert ein Sprachwechsel meine Agenten?**
 Nein. Die Sprache ändert nur die Oberfläche. Agenten, Prompts und Ergebnisse bleiben, wie sie sind, und Agenten antworten weiter in der Sprache ihres Prompts. Siehe [Sprache](/docs/einstellungen#sprache).
+
+**Kann ich Claude über Amazon Bedrock statt mit einem Anthropic-Schlüssel nutzen?**
+Ja, mit dem Anbieter *Amazon Bedrock (AWS)*: Er nutzt statt eines Schlüssels dein AWS-Konto, die Region und IAM-Berechtigungen, und AWS rechnet je Region ab. Optionen nur für Anthropic (Denken, Prompt-Caching-Einstellungen, Ersatzmodelle, Server-Tools) gibt es dort nicht. Siehe [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).

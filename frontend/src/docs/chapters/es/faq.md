@@ -58,3 +58,6 @@ Se cancelan. Lo que se haya guardado hasta entonces se conserva como ejecución.
 
 **¿Cambiar el idioma modifica mis agentes?**
 No. El idioma solo cambia la interfaz. Los agentes, los prompts y los resultados no cambian, y los agentes siguen respondiendo en el idioma de su prompt. Consulta [Idioma](/docs/einstellungen#sprache).
+
+**¿Puedo usar Claude a través de Amazon Bedrock en lugar de una clave de Anthropic?**
+Sí, con el proveedor *Amazon Bedrock (AWS)*: en lugar de una clave usa tu cuenta de AWS, la región y los permisos de IAM, y AWS lo factura por región. Las opciones exclusivas de Anthropic (pensamiento, ajustes de caché de prompts, modelos de respaldo, herramientas de servidor) no están disponibles allí. Consulta [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).

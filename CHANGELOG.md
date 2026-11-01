@@ -30,6 +30,39 @@ read-only pilot).
   `docs/i18n/terminology.md`); clearer error sentences; in-app docs updated in all six languages, including server
   sign-in, roles and the members commands.
 
+### Amazon Bedrock (AWS) in the studio (2026-11-01)
+
+Frontend, in-app docs and branch pins; no AWS secret is ever entered or shown.
+
+- Pins (branch only; the coordinated master cascade follows): `nodestro-runtime` `ac96c6f` (before: `d141b8f`; the
+  `bedrock` provider), `nodestro-api` `4e2c8cd` (before: `db6a696`), `nodestro-examples` `dcad0d1` (before:
+  `660e9a9`), `nodestro-integrations` `570d5c7` (before: `07dc1fd`) and, in `platform/versions.json`,
+  `nodestro-sdk` `3ca06b3` (before: `4a97cef`) and `orkexa` `3467940` (before: `6e69b9c`; boto3 for Bedrock).
+
+- Settings → AI providers: an "Amazon Bedrock (AWS)" card with the AWS region (suggestions, validated, operator
+  allowlist), the sign-in method (desktop: AWS default credentials or a named profile; server: the operator's role,
+  read-only, or "not available, ask your operator"), EU-only data residency (locked when the operator enforces it,
+  with its limits), a status badge (not set up / set up / connection checked / check failed, with the reason) and
+  "Check connection" (`POST /api/settings/providers/bedrock/verify`; no model is invoked, no costs). Saving stays
+  admin-only on a server.
+- Agents: Bedrock in the model picker with suggested models (labelled as suggestions) and free entry of model ids,
+  inference profile ids and ARNs, stored as `bedrock:<id>` with every colon kept. Anthropic-only options stay off
+  for Claude on Bedrock with the reason; reasoning effort, structured output and forced tool choice follow the
+  model's capabilities (unknown: off, with the reason).
+- Errors: sentences in six languages for the new `provider.*` (region, sign-in, profile, residency, AWS
+  credentials/permissions/reachability, verification), `check.bedrock_*`, `pricing.region_required`,
+  `pricing.invalid_region` and `pricing.reconciliation_not_supported` codes; a refused AWS sign-in is not called an
+  API key problem; run failures show the full model id.
+- Model prices: Bedrock overrides name the AWS regions they apply to (`aws_regions`, required in the override
+  dialog); the table marks regional prices and the model hint names the priced regions. The bill comparison lists
+  providers it did not compare (`not_reconciled`, e.g. Bedrock) with their estimate.
+- Export check: sentences for `export.region_missing`, `export.aws_profile_not_exported`,
+  `export.aws_role_not_exported` and the AWS wording of `export.provider` for Bedrock.
+- Docs (six languages): a Bedrock section in the settings chapter (sign-in on desktop and server, region, models and
+  inference profiles, EU residency and its limits, minimal IAM permissions, regional prices, supported features,
+  AWS credentials and tool sandboxes, troubleshooting by message), model ids in the agents chapter, the export
+  (AWS default chain and `AWS_REGION` on the target machine, no credentials in the ZIP) and an FAQ entry.
+
 ### Pins: PostgreSQL read performance (2026-11-01)
 
 - Pins `nodestro-runtime` `d141b8f` (before: `6eacec1`), `nodestro-api` `db6a696` (before: `7997bb4`),

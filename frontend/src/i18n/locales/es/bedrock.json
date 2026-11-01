@@ -1,0 +1,75 @@
+{
+  "intro": "Ejecuta Claude, Amazon Nova y otros modelos a través de tu cuenta de AWS, en la región de AWS que elijas. Los costes aparecen en tu factura de AWS.",
+  "notApiKey": "Amazon Bedrock no necesita clave de API, por eso aquí no hay campo de clave. Nodestro inicia sesión con credenciales de AWS: en este equipo con tus credenciales predeterminadas de AWS o un perfil de AWS con nombre; en un servidor, con un rol que asigna tu operador. Un rol de IAM o un perfil no es una clave: Nodestro nunca guarda claves de acceso de AWS.",
+  "state": {
+    "not_configured": "Sin configurar",
+    "configured": "Configurado",
+    "verified": "Conexión comprobada",
+    "failed": "Comprobación fallida"
+  },
+  "stateText": {
+    "not_configured": "Elige una región y cómo inicia sesión Nodestro en AWS.",
+    "configured": "La región y el inicio de sesión están definidos. Si AWS los acepta se ve en la primera ejecución, o ahora con «Comprobar conexión».",
+    "verified": "AWS aceptó el inicio de sesión y Amazon Bedrock respondió en esta región.",
+    "failed": "La última comprobación falló. Abajo verás el motivo y qué hacer."
+  },
+  "auth": {
+    "label": "Inicio de sesión en AWS",
+    "default_chain": "Credenciales predeterminadas de AWS",
+    "default_chainHint": "Las credenciales que las herramientas de AWS encuentran en este equipo: variables de entorno, AWS SSO (IAM Identity Center), el perfil predeterminado o un rol de instancia.",
+    "profile": "Perfil de AWS",
+    "profileHint": "Un perfil con nombre de tu configuración de AWS (~/.aws/config). Solo se guarda el nombre; las credenciales se quedan en tu configuración de AWS.",
+    "operator_role": "Rol asignado por el operador",
+    "operatorHint": "Tu operador dio a este espacio de trabajo su propio rol de AWS. No puedes verlo ni cambiarlo.",
+    "notAvailable": "Amazon Bedrock no está disponible en este servidor para este espacio de trabajo. Pide a tu operador que le asigne un rol de AWS."
+  },
+  "profile": {
+    "label": "Nombre del perfil",
+    "hint": "Por ejemplo, el nombre tras [profile …] en ~/.aws/config.",
+    "invalid": "Usa solo letras, cifras y _ . + = , @ - (como máximo 64 caracteres)."
+  },
+  "region": {
+    "label": "Región de AWS",
+    "for": "Región de AWS de {{provider}}",
+    "hint": "La región a la que Nodestro envía las solicitudes y que AWS factura, por ejemplo eu-central-1 (Fráncfort). El modelo debe estar habilitado allí.",
+    "invalid": "Esto no es un nombre de región de AWS. Usa un nombre como eu-central-1.",
+    "notAllowed": "Tu operador solo permite estas regiones: {{regions}}.",
+    "notEu": "Con la residencia de datos solo en la UE solo se pueden elegir regiones de la UE: {{regions}}."
+  },
+  "residency": {
+    "label": "Residencia de datos solo en la UE",
+    "hint": "Antes de la primera solicitud, Nodestro comprueba que la región y todas las regiones a las que el modelo o el perfil de inferencia pueden enrutar están en la UE; si no, no envía nada. Los perfiles de inferencia globales se rechazan.",
+    "forced": "Tu operador exige la residencia de datos solo en la UE para todos los espacios de trabajo; aquí no se puede desactivar.",
+    "limits": "Se comprueba la configuración con la que Nodestro envía las solicitudes. No garantiza que AWS procese todo en la UE: el registro de invocaciones, la detección de abusos y los demás ajustes de tu cuenta de AWS quedan fuera de Nodestro. Londres y Zúrich están en Europa, no en la UE."
+  },
+  "save": "Guardar ajustes de Bedrock",
+  "verify": {
+    "button": "Comprobar conexión",
+    "hint": "La comprobación inicia sesión en AWS y pide a Amazon Bedrock una lista de modelos. No se invoca ningún modelo, así que no cuesta nada.",
+    "done": "AWS aceptó el inicio de sesión; Amazon Bedrock está accesible.",
+    "checkedAt": "Última comprobación: {{time}}."
+  },
+  "model": {
+    "suggestedOption": "{{model}} (sugerido)",
+    "suggestedHint": "Modelo sugerido: solo está disponible si está habilitado para tu cuenta de AWS en esta región",
+    "customHint": "Tu propio ID de modelo, ID de perfil de inferencia o ARN: se pasa a Amazon Bedrock tal como lo escribes. Sus capacidades y su precio son desconocidos, así que las opciones que dependen de ellos se desactivan y los costes aparecen como desconocidos.",
+    "emptyHint": "Elige un modelo sugerido o escribe un ID de modelo, un ID de perfil de inferencia (eu.…) o un ARN.",
+    "priceRegions": "precios para {{regions}}"
+  },
+  "agent": {
+    "anthropicOnly": "Solo disponible para modelos de Anthropic; los modelos Claude en Amazon Bedrock tampoco lo ofrecen.",
+    "capability": {
+      "unsupported": "{{capability}}: este modelo no lo admite en Amazon Bedrock.",
+      "unknown": "{{capability}}: desconocido para este modelo en Amazon Bedrock, por eso está desactivado. Elige un modelo sugerido para usarlo."
+    }
+  },
+  "pricing": {
+    "regions": "Regiones de AWS",
+    "regionsHint": "Los precios de Amazon Bedrock se aplican por región. Indica las regiones a las que se aplican estas tarifas, separadas por comas. Una región no indicada tiene un coste desconocido, nunca 0.",
+    "regionsInvalid": "Indica al menos una región de AWS, con nombres como eu-central-1.",
+    "regionsList": "Regiones: {{regions}}",
+    "noRegions": "Ninguna región indicada: los costes siguen siendo desconocidos",
+    "regional": "Precio por región de AWS",
+    "notReconciled": "{{provider}} no se comparó con una factura (estimado: {{amount}})."
+  }
+}

@@ -4,7 +4,7 @@
 
 import type { ProviderId, ProviderStatus, Settings } from "../api/types";
 
-export const PROVIDER_IDS: readonly ProviderId[] = ["anthropic", "openai", "gemini", "compatible", "ollama", "vllm"];
+export const PROVIDER_IDS: readonly ProviderId[] = ["anthropic", "openai", "gemini", "compatible", "ollama", "vllm", "bedrock"];
 
 export function isProvider(value: string): value is ProviderId {
   return (PROVIDER_IDS as readonly string[]).includes(value);
