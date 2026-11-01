@@ -125,6 +125,7 @@ export function RunDetailPage() {
     <div className="page">
       <PageHeader
         title={data.workflow_name}
+        documentTitle={`${data.workflow_name} · ${t("nav.executions")}`}
         crumbs={
           <>
             <Link to="/executions">{t("nav.executions")}</Link> / <span>{formatDate(data.created_at)}</span>

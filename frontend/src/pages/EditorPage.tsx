@@ -26,6 +26,7 @@ import { useEditor } from "../editor/store";
 import { useRunStream } from "../editor/useRunStream";
 import { VersionsDialog } from "../editor/VersionsDialog";
 import { ErrorText, problemText } from "../lib/errors";
+import { useDocumentTitle } from "../lib/documentTitle";
 import { crumbLink, parseTrail } from "../lib/trail";
 import { ApiDialog } from "../publish/ApiDialog";
 import { findings } from "../editor/CheckList";
@@ -52,6 +53,7 @@ export function EditorPage() {
   const name = useEditor((s) => s.name);
   const dirty = useEditor((s) => s.dirty);
   const run = useEditor((s) => s.run);
+  useDocumentTitle(loadedId === id ? name || workflow.data?.name : workflow.data?.name);
   const [runOpen, setRunOpen] = useState(false);
   const [designOpen, setDesignOpen] = useState(false);
   const [architectOpen, setArchitectOpen] = useState(false);

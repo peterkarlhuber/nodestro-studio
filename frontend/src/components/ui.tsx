@@ -34,6 +34,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import type { NodeStatus, RunStatus } from "../api/types";
+import { useDocumentTitle } from "../lib/documentTitle";
 import { STATUS_TONE, type Tone } from "../lib/format";
 import { type HelpId, docPath, helpEntry } from "../lib/help";
 import { HelpTip, Tooltip } from "./Tooltip";
@@ -543,6 +544,7 @@ export function PageHeader({
   actions,
   crumbs,
   doc,
+  documentTitle,
 }: {
   title: string;
   description?: ReactNode;
@@ -550,8 +552,11 @@ export function PageHeader({
   crumbs?: ReactNode;
   /** A documentation chapter ("chapter" or "chapter#section") shown as a help link next to the title. */
   doc?: string;
+  /** The name in the browser tab when it should say more than the title (default: the title). */
+  documentTitle?: string;
 }) {
   const { t } = useTranslation();
+  useDocumentTitle(documentTitle ?? title);
   return (
     <header className="titlebar">
       <div>
