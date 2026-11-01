@@ -108,7 +108,7 @@
     "editTitle": "Modifier {{name}}",
     "empty": "Aucun service connecté pour l'instant",
     "emptyText": "Connectez un serveur MCP par son adresse. Testez ensuite la connexion et approuvez ses outils un par un.",
-    "counts": "{{approved}} outils approuvés sur {{total}} · {{pending}} en attente d'examen",
+    "counts": "Outils approuvés : {{approved}} sur {{total}} · en attente d'examen : {{pending}}",
     "unavailable": "MCP n'est pas disponible dans cette installation (Python 3.11 ou plus récent requis). Les services peuvent être configurés, mais pas joints.",
     "endpointList": "L'opérateur n'autorise que ces adresses : {{list}}",
     "endpointListEmpty": "L'opérateur n'a autorisé aucune adresse pour MCP (NODESTRO_MCP_ENDPOINTS). Aucun service ne peut être connecté ici.",

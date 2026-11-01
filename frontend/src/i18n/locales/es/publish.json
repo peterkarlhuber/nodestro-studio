@@ -52,7 +52,9 @@
     "deleteText": "Se eliminan todas sus versiones publicadas; las claves pierden el acceso. Sus ejecuciones permanecen en el historial. El flujo de trabajo no cambia."
   },
   "check": {
-    "ok": "Lista para publicar ({{warnings}} advertencias).",
+    "ok_one": "Lista para publicar ({{count}} advertencia).",
+    "ok_other": "Lista para publicar ({{count}} advertencias).",
+    "ready": "Lista para publicar.",
     "blocked_one": "{{count}} problema impide publicar.",
     "blocked_other": "{{count}} problemas impiden publicar.",
     "approvals_one": "{{count}} paso de aprobación: las ejecuciones esperan allí una decisión.",
@@ -272,7 +274,8 @@
     "probabilistic": "Juicio de IA, no garantizado",
     "probabilisticHint": "Las valoraciones de la IA pueden equivocarse. Se muestran aparte de las comprobaciones fijas.",
     "reason": "Motivo de la publicación",
-    "reasonHint": "Al menos {{count}} caracteres. Se guarda con la versión y en el historial.",
+    "reasonHint_one": "Al menos {{count}} carácter. Se guarda con la versión y en el historial.",
+    "reasonHint_other": "Al menos {{count}} caracteres. Se guarda con la versión y en el historial.",
     "publishWithReason": "Publicar la versión {{version}} con motivo",
     "releasePassed": "control cumplido",
     "releaseOverridden": "publicada con motivo",

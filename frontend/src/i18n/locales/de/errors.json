@@ -16,7 +16,8 @@
   "file": {
     "not_json": "Die Datei ist kein gültiges JSON.",
     "not_found": "Diese Ergebnisdatei gibt es nicht.",
-    "too_large": "Die Datei ist größer als erlaubt ({{limit_mb}} MB)."
+    "too_large": "Die Datei ist größer als erlaubt ({{limit_mb}} MB).",
+    "not_base64": "{{name}}: Der Dateiinhalt ist kein gültiges Base64, die Datei konnte also nicht gelesen werden. Kodiere die Datei in content_base64 als Base64 und sende die Anfrage erneut."
   },
   "assistant": {
     "description_missing": "Bitte beschreibe den Agenten, den du brauchst.",
@@ -86,7 +87,8 @@
     "model_invalid": "Ungültiger Modellname „{{model}}“.",
     "model_missing": "Wähle ein Modell.",
     "model_provider_missing": "Das Modell „{{model}}“ hat keinen Anbieter; schreibe es als anbieter:modell, zum Beispiel ollama:{{model}}.",
-    "provider_mismatch": "Dieser Zugang gehört zu einem anderen Anbieter und kann kein Modell von {{provider}} ausführen."
+    "provider_mismatch": "Dieser Zugang gehört zu einem anderen Anbieter und kann kein Modell von {{provider}} ausführen.",
+    "invalid": "Die Einstellung {{name}} muss eine positive Zahl sein, deshalb hat Nodestro sie nicht übernommen. Korrigiere den Wert und starte Nodestro neu."
   },
   "workflow": {
     "edge_dangling": "Eine Verbindung zeigt auf einen Knoten, den es nicht gibt.",
@@ -146,7 +148,9 @@
     "orchestration_limit": "{{node}} hat {{max_decisions}} Entscheidungen getroffen, ohne abzuschließen.",
     "orchestrator_member_missing": "Ein Team von {{node}} existiert nicht mehr.",
     "orchestrator_no_match": "Kein gespeichertes Team von {{node}} hat eine der Fähigkeiten {{capabilities}}.",
-    "orchestration_team_missing": "Der wartende Lauf eines Teams fehlt; das Team wurde nicht neu gestartet."
+    "orchestration_team_missing": "Der wartende Lauf eines Teams fehlt; das Team wurde nicht neu gestartet.",
+    "already_queued": "Dieser Lauf wartet bereits oder läuft gerade, deshalb wurde er nicht ein zweites Mal gestartet. Warte, bis er endet, oder verfolge ihn unter Ausführungen.",
+    "not_executable": "Dieser Lauf kann nicht gestartet werden: Nur ein wartender oder pausierter Lauf kann laufen, und dieser läuft schon oder ist beendet. Öffne ihn unter Ausführungen, um seinen Stand zu sehen."
   },
   "trace": {
     "invalid": "Der Trace ist beschädigt oder unvollständig.",
@@ -197,7 +201,9 @@
     "checkpoint_stale": "Der Agent wurde geändert, während er auf eine Freigabe wartete. Der wartende Aufruf wurde nicht ausgeführt.",
     "checkpoint_expired": "Der wartende Tool-Aufruf kann nicht mehr fortgesetzt werden (abgelaufen oder die Einstellung wurde ausgeschaltet). Er wurde nicht ausgeführt.",
     "approval_missing": "Die Freigabeanfrage zu diesem Aufruf gibt es nicht mehr; er wurde nicht ausgeführt.",
-    "approval_not_in_test": "Dieser Aufruf bräuchte die Freigabe einer Person; Tests fragen nicht, deshalb wurde er nicht ausgeführt."
+    "approval_not_in_test": "Dieser Aufruf bräuchte die Freigabe einer Person; Tests fragen nicht, deshalb wurde er nicht ausgeführt.",
+    "frozen": "Dieses Tool gehört zu einer veröffentlichten API-Version und kann nicht geändert werden, damit die Version genau so weiterläuft, wie sie veröffentlicht wurde. Ändere das Tool im Workflow und veröffentliche eine neue Version.",
+    "denied_by_policy": "Die Regeln für Tool-Aufrufe haben diesen Aufruf ohne Rückfrage abgelehnt, das Tool lief also nicht. Prüfe die Regeln auf der Seite Freigaben oder gib dem Agenten ein Tool, das nur liest."
   },
   "job": {
     "writing": "Der Coding Agent schreibt Code und Tests …",
@@ -496,7 +502,8 @@
     "tls_incomplete": "TLS braucht ein Zertifikat und den zugehörigen Schlüssel.",
     "port_unavailable": "Port {{port}} lässt sich nicht nutzen (ein anderes Programm belegt ihn oder er ist nicht erlaubt).",
     "start_failed": "Der Netzwerkzugriff konnte nicht starten.",
-    "not_enabled": "Veröffentlichte APIs antworten nur diesem Computer."
+    "not_enabled": "Veröffentlichte APIs antworten nur diesem Computer.",
+    "unavailable": "Der Netzwerkzugang lässt sich hier nicht einschalten: Nodestro Local Docker bietet seinen Port nur auf diesem Computer an. Veröffentlichte APIs funktionieren auf diesem Computer weiter; damit andere Geräte sie erreichen, betreibe Nodestro auf einem Server."
   },
   "request": {
     "invalid": "Die Anfrage passt nicht zur Eingabe der API: {{fields}}.",
@@ -613,7 +620,8 @@
     "launch_required": "Dieses Nodestro gehört zur Desktop-App, die es gestartet hat. Öffne Nodestro über die App.",
     "launch_used": "Der Startlink wurde bereits verwendet. Starte die Desktop-App neu, um ein neues Fenster zu öffnen.",
     "launch_invalid": "Der Startlink ist ungültig. Starte Nodestro über die Desktop-App.",
-    "cross_site": "Diese Änderung kam von einer anderen Website und wurde abgelehnt. Nutze Nodestro direkt."
+    "cross_site": "Diese Änderung kam von einer anderen Website und wurde abgelehnt. Nutze Nodestro direkt.",
+    "network_needs_login": "Nodestro Studio wird nur auf diesem Computer angeboten, weil es keine eigene Anmeldung hat. Starte es ohne Netzwerkadresse und ohne zusätzliche Hostnamen; um Workflows im Netzwerk anzubieten, schalte den Netzwerkzugang für veröffentlichte APIs ein."
   },
   "sandbox": {
     "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur isoliert (eingebaute Linux-Sandbox oder Docker); beides ist nicht verfügbar, daher wurde nichts ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",
@@ -626,7 +634,14 @@
     "provider": "Der Anmeldedienst ist nicht erreichbar oder nicht richtig eingerichtet. Wende dich an deine Administration.",
     "no_tenant": "Dein Konto hat noch keinen Zugang zu Nodestro. Bitte eine Administratorin oder einen Administrator, dich hinzuzufügen.",
     "bootstrap_invalid": "Dieser Einrichtungslink ist ungültig, schon verwendet oder abgelaufen.",
-    "not_a_member": "Dein Konto hat keinen Zugang zu diesem Arbeitsbereich."
+    "not_a_member": "Dein Konto hat keinen Zugang zu diesem Arbeitsbereich.",
+    "last_owner": "Ein Arbeitsbereich braucht mindestens eine Inhaberin oder einen Inhaber, deshalb wurde die Änderung abgelehnt. Mache zuerst ein anderes Mitglied zum Inhaber.",
+    "role": "„{{role}}“ ist keine bekannte Rolle, deshalb wurde nichts geändert. Wähle eine der angebotenen Rollen.",
+    "subject_missing": "Der Anmeldedienst hat nicht mitgeteilt, wer du bist, deshalb wurde die Anmeldung abgelehnt. Versuche es erneut; passiert es wieder, bitte deine Administration, die Anmeldung zu prüfen.",
+    "tenant_exists": "Ein Arbeitsbereich mit der Kennung {{tenant}} existiert bereits, deshalb wurde kein zweiter angelegt. Wähle eine andere Kennung.",
+    "tenant_has_owner": "Der Arbeitsbereich {{tenant}} hat schon einen Inhaber, deshalb kann dieser Einrichtungslink keinen weiteren hinzufügen. Bitte den Inhaber, dich hinzuzufügen.",
+    "tenant_id": "{{tenant}} kann nicht als Kennung eines Arbeitsbereichs dienen: Sie ist ungültig oder reserviert. Wähle eine andere Kennung.",
+    "tenant_unknown": "Es gibt keinen Arbeitsbereich {{tenant}}. Prüfe die Kennung oder bitte deine Administration um Zugang."
   },
   "secrets": {
     "unreadable": "Ein gespeicherter Schlüssel kann nicht mehr gelesen werden. Trag ihn in den Einstellungen bitte neu ein."

@@ -24,7 +24,8 @@
   "hidePreview": "Ocultar pré-visualização",
   "noText": "(sem texto)",
   "previewCut": "Só o início é mostrado.",
-  "tableSummary": "{{name}}: {{count}} linhas, {{columns}} colunas",
+  "tableSummary_one": "{{name}}: {{count}} linha, colunas: {{columns}}",
+  "tableSummary_other": "{{name}}: {{count}} linhas, colunas: {{columns}}",
   "summary": {
     "archive_one": "{{count}} arquivo, {{readable}} legíveis",
     "archive_other": "{{count}} arquivos, {{readable}} legíveis",
@@ -202,12 +203,13 @@
   "storage": {
     "title": "Arquivos de entrada enviados",
     "intro": "Arquivos enviados para execuções, casos de teste e agendamentos. Arquivos de execuções na fila, em andamento ou pausadas nunca são removidos.",
-    "summary": "{{count}} arquivos · {{size}} · {{unused}} sem uso · {{inUse}} em execuções em andamento",
+    "summary": "Arquivos: {{files}} · {{size}} · sem uso: {{unused}} · em execuções em andamento: {{inUse}}",
     "cleanUnused": "Remover arquivos sem uso",
     "olderThan": "Arquivos de execuções concluídas com mais de",
     "days": "dias",
     "cleanOld": "Remover",
-    "cleaned": "{{count}} arquivos removidos ({{size}} liberados).",
+    "cleaned_one": "{{count}} arquivo removido ({{size}} liberados).",
+    "cleaned_other": "{{count}} arquivos removidos ({{size}} liberados).",
     "safe": "Arquivos que casos de teste, agendamentos ou lotes ainda usam são mantidos."
   },
   "collections": {

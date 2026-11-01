@@ -52,7 +52,9 @@
     "deleteText": "Alle veröffentlichten Versionen werden entfernt; Schlüssel verlieren den Zugriff. Die Läufe bleiben im Verlauf. Der Workflow selbst bleibt unverändert."
   },
   "check": {
-    "ok": "Bereit zum Veröffentlichen ({{warnings}} Warnungen).",
+    "ok_one": "Bereit zum Veröffentlichen ({{count}} Warnung).",
+    "ok_other": "Bereit zum Veröffentlichen ({{count}} Warnungen).",
+    "ready": "Bereit zum Veröffentlichen.",
     "blocked_one": "{{count}} Problem verhindert das Veröffentlichen.",
     "blocked_other": "{{count}} Probleme verhindern das Veröffentlichen.",
     "approvals_one": "{{count}} Freigabeschritt: Läufe warten dort auf eine Entscheidung.",
@@ -272,7 +274,8 @@
     "probabilistic": "KI-Urteil, nicht garantiert",
     "probabilisticHint": "KI-Bewertungen können danebenliegen. Sie stehen getrennt von den festen Prüfungen.",
     "reason": "Begründung für die Freigabe",
-    "reasonHint": "Mindestens {{count}} Zeichen. Wird mit der Version und im Verlauf gespeichert.",
+    "reasonHint_one": "Mindestens {{count}} Zeichen. Wird mit der Version und im Verlauf gespeichert.",
+    "reasonHint_other": "Mindestens {{count}} Zeichen. Wird mit der Version und im Verlauf gespeichert.",
     "publishWithReason": "Version {{version}} mit Begründung veröffentlichen",
     "releasePassed": "Gate erfüllt",
     "releaseOverridden": "mit Begründung freigegeben",

@@ -24,9 +24,9 @@
   },
   "estimate": {
     "title": "Coût estimé",
-    "total_one": "{{runs}} exécutions, environ {{total}} ({{perRun}} par exécution, d’après {{count}} exécution précédente).",
-    "total_other": "{{runs}} exécutions, environ {{total}} ({{perRun}} par exécution, d’après {{count}} exécutions précédentes).",
-    "unknown": "{{runs}} exécutions. Pas encore d’estimation, faute d’exécution réussie.",
+    "total_one": "Exécutions : {{runs}}, environ {{total}} ({{perRun}} par exécution, d’après {{count}} exécution précédente).",
+    "total_other": "Exécutions : {{runs}}, environ {{total}} ({{perRun}} par exécution, d’après {{count}} exécutions précédentes).",
+    "unknown": "Exécutions : {{runs}}. Pas encore d’estimation, faute d’exécution réussie.",
     "max": "Au maximum {{max}} (budget par exécution × nombre).",
     "approvals_one": "Le workflow comporte {{count}} étape de validation. Chaque exécution y attend une décision.",
     "approvals_other": "Le workflow comporte {{count}} étapes de validation. Chaque exécution y attend une décision."
@@ -109,7 +109,7 @@
     "casesTitle_other": "{{count}} cas de test",
     "case": "Cas de test",
     "caseN": "Cas de test {{n}}",
-    "caseSummary": "{{checks}} vérifications · évaluation IA {{judge}}",
+    "caseSummary": "Vérifications : {{checks}} · évaluation IA {{judge}}",
     "addCase": "Ajouter un cas de test",
     "removeCase": "Supprimer le cas de test",
     "checks": "Règles de vérification",
@@ -312,7 +312,8 @@
     "excluded": {
       "unavailable": "Fournisseur non configuré",
       "pass_rate_low": "Taux de réussite trop bas",
-      "new_failures": "Perd {{cases}} cas que le modèle actuel a réussis",
+      "new_failures_one": "Perd {{count}} cas que le modèle actuel a réussi",
+      "new_failures_other": "Perd {{count}} cas que le modèle actuel a réussis",
       "cost_unknown": "Coût inconnu (jamais compté comme 0)",
       "duration_unknown": "Durée inconnue"
     }

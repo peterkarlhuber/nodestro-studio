@@ -36,6 +36,10 @@
     "branchPort": "Salida de la rama {{name}}",
     "orchestrator": "Orquestador"
   },
+  "defaults": {
+    "systemPrompt": "Eres un asistente útil.",
+    "outputName": "Resultado"
+  },
   "canvas": {
     "unsaved": "Cambios sin guardar",
     "agents_one": "{{count}} agente",
@@ -114,7 +118,7 @@
     "cost": "Coste del borrador: {{cost}}.",
     "role": "Rol",
     "limits": "Límites",
-    "limitsValue": "{{tokens}} tokens · {{rounds}} rondas de herramientas",
+    "limitsValue": "Máx. tokens: {{tokens}} · rondas de herramientas: {{rounds}}",
     "missingTools": "El arquitecto necesitaría además estas herramientas:",
     "missingToolsHint": "Puedes pedir a la IA que las cree en la <a>biblioteca de herramientas</a>."
   },

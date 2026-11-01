@@ -24,9 +24,9 @@
   },
   "estimate": {
     "title": "Coste estimado",
-    "total_one": "{{runs}} ejecuciones, unos {{total}} ({{perRun}} por ejecución, a partir de {{count}} ejecución anterior).",
-    "total_other": "{{runs}} ejecuciones, unos {{total}} ({{perRun}} por ejecución, a partir de {{count}} ejecuciones anteriores).",
-    "unknown": "{{runs}} ejecuciones. Aún no hay estimación porque no existe ninguna ejecución correcta.",
+    "total_one": "Ejecuciones: {{runs}}, unos {{total}} ({{perRun}} por ejecución, a partir de {{count}} ejecución anterior).",
+    "total_other": "Ejecuciones: {{runs}}, unos {{total}} ({{perRun}} por ejecución, a partir de {{count}} ejecuciones anteriores).",
+    "unknown": "Ejecuciones: {{runs}}. Aún no hay estimación porque no existe ninguna ejecución correcta.",
     "max": "Como máximo {{max}} (presupuesto por ejecución × número).",
     "approvals_one": "El workflow tiene {{count}} paso de aprobación. Cada ejecución espera allí una decisión.",
     "approvals_other": "El workflow tiene {{count}} pasos de aprobación. Cada ejecución espera allí una decisión."
@@ -109,7 +109,7 @@
     "casesTitle_other": "{{count}} casos de prueba",
     "case": "Caso de prueba",
     "caseN": "Caso de prueba {{n}}",
-    "caseSummary": "{{checks}} comprobaciones · evaluación por IA {{judge}}",
+    "caseSummary": "Comprobaciones: {{checks}} · evaluación por IA {{judge}}",
     "addCase": "Añadir caso de prueba",
     "removeCase": "Quitar caso de prueba",
     "checks": "Reglas de comprobación",
@@ -312,7 +312,8 @@
     "excluded": {
       "unavailable": "Proveedor no configurado",
       "pass_rate_low": "Tasa de aprobados demasiado baja",
-      "new_failures": "Pierde {{cases}} casos que el modelo actual aprobó",
+      "new_failures_one": "Pierde {{count}} caso que el modelo actual aprobó",
+      "new_failures_other": "Pierde {{count}} casos que el modelo actual aprobó",
       "cost_unknown": "Coste desconocido (nunca cuenta como 0)",
       "duration_unknown": "Duración desconocida"
     }

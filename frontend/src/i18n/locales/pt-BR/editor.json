@@ -36,6 +36,10 @@
     "branchPort": "Saída do ramo {{name}}",
     "orchestrator": "Orquestrador"
   },
+  "defaults": {
+    "systemPrompt": "Você é um assistente prestativo.",
+    "outputName": "Resultado"
+  },
   "canvas": {
     "unsaved": "Alterações não salvas",
     "agents_one": "{{count}} agente",
@@ -114,7 +118,7 @@
     "cost": "Custo do rascunho: {{cost}}.",
     "role": "Papel",
     "limits": "Limites",
-    "limitsValue": "{{tokens}} tokens · {{rounds}} rodadas de ferramentas",
+    "limitsValue": "Máx. de tokens: {{tokens}} · rodadas de ferramentas: {{rounds}}",
     "missingTools": "O arquiteto precisaria também destas ferramentas:",
     "missingToolsHint": "Você pode pedir à IA que as crie na <a>biblioteca de ferramentas</a>."
   },

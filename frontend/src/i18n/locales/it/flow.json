@@ -196,7 +196,7 @@
     "button": "Continua",
     "title": "Continua l’esecuzione",
     "intro": "Una nuova esecuzione collegata riprende i risultati ancora validi ed esegue di nuovo il resto. L’esecuzione non riuscita resta com’è.",
-    "summary": "{{reused}} passaggi vengono ripresi, {{rerun}} rieseguiti. Risparmio: circa {{saved}}.",
+    "summary": "Passaggi ripresi: {{reused}} · rieseguiti: {{rerun}}. Risparmio: circa {{saved}}.",
     "steps": "Passaggi",
     "step": "Passaggio",
     "action": "Azione",

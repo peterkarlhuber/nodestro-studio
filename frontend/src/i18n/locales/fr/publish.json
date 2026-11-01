@@ -52,7 +52,9 @@
     "deleteText": "Toutes ses versions publiées sont supprimées ; les clés perdent l’accès. Ses exécutions restent dans l’historique. Le workflow lui-même n’est pas modifié."
   },
   "check": {
-    "ok": "Prêt à publier ({{warnings}} avertissements).",
+    "ok_one": "Prêt à publier ({{count}} avertissement).",
+    "ok_other": "Prêt à publier ({{count}} avertissements).",
+    "ready": "Prêt à publier.",
     "blocked_one": "{{count}} problème empêche la publication.",
     "blocked_other": "{{count}} problèmes empêchent la publication.",
     "approvals_one": "{{count}} étape de validation : les exécutions y attendent une décision.",
@@ -272,7 +274,8 @@
     "probabilistic": "Avis de l'IA, non garanti",
     "probabilisticHint": "Les notes de l'IA peuvent se tromper. Elles sont séparées des vérifications fixes.",
     "reason": "Justification de la publication",
-    "reasonHint": "Au moins {{count}} caractères. Enregistrée avec la version et dans l'historique.",
+    "reasonHint_one": "Au moins {{count}} caractère. Enregistrée avec la version et dans l'historique.",
+    "reasonHint_other": "Au moins {{count}} caractères. Enregistrée avec la version et dans l'historique.",
     "publishWithReason": "Publier la version {{version}} avec justification",
     "releasePassed": "contrôle satisfait",
     "releaseOverridden": "publiée avec justification",

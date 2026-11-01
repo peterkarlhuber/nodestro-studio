@@ -108,7 +108,7 @@
     "editTitle": "Editar {{name}}",
     "empty": "Nenhum serviço conectado ainda",
     "emptyText": "Conecte um servidor MCP pelo endereço. Depois teste a conexão e aprove as ferramentas uma a uma.",
-    "counts": "{{approved}} de {{total}} ferramentas aprovadas · {{pending}} aguardam revisão",
+    "counts": "Ferramentas aprovadas: {{approved}} de {{total}} · aguardam revisão: {{pending}}",
     "unavailable": "O MCP não está disponível nesta instalação (requer Python 3.11 ou mais recente). Os serviços podem ser configurados, mas não alcançados.",
     "endpointList": "O operador permite apenas estes endereços: {{list}}",
     "endpointListEmpty": "O operador não liberou nenhum endereço para MCP (NODESTRO_MCP_ENDPOINTS). Não é possível conectar serviços aqui.",

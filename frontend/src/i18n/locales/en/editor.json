@@ -36,6 +36,10 @@
     "branchPort": "Output of branch {{name}}",
     "orchestrator": "Orchestrator"
   },
+  "defaults": {
+    "systemPrompt": "You are a helpful assistant.",
+    "outputName": "Result"
+  },
   "canvas": {
     "unsaved": "Unsaved changes",
     "agents_one": "{{count}} agent",
@@ -114,7 +118,7 @@
     "cost": "Cost of the draft: {{cost}}.",
     "role": "Role",
     "limits": "Limits",
-    "limitsValue": "{{tokens}} tokens · {{rounds}} tool rounds",
+    "limitsValue": "Max. tokens: {{tokens}} · tool rounds: {{rounds}}",
     "missingTools": "The Architect would also need these tools:",
     "missingToolsHint": "You can have the AI create them in the <a>tool library</a>."
   },

@@ -16,7 +16,8 @@
   "file": {
     "not_json": "The file is not valid JSON.",
     "not_found": "There is no such result file.",
-    "too_large": "The file is larger than allowed ({{limit_mb}} MB)."
+    "too_large": "The file is larger than allowed ({{limit_mb}} MB).",
+    "not_base64": "{{name}}: the file content is not valid Base64, so the file could not be read. Encode the file as Base64 in content_base64 and send the request again."
   },
   "assistant": {
     "description_missing": "Please describe the agent you need.",
@@ -86,7 +87,8 @@
     "model_invalid": "Invalid model name “{{model}}”.",
     "model_missing": "Choose a model.",
     "model_provider_missing": "The model “{{model}}” has no provider; write it as provider:model, for example ollama:{{model}}.",
-    "provider_mismatch": "This access belongs to another provider and cannot run a model of {{provider}}."
+    "provider_mismatch": "This access belongs to another provider and cannot run a model of {{provider}}.",
+    "invalid": "The setting {{name}} must be a positive number, so Nodestro did not apply it. Correct the value and start Nodestro again."
   },
   "workflow": {
     "edge_dangling": "A connection points to a node that does not exist.",
@@ -146,7 +148,9 @@
     "orchestration_limit": "{{node}} made {{max_decisions}} decisions without finishing.",
     "orchestrator_member_missing": "A team of {{node}} no longer exists.",
     "orchestrator_no_match": "No saved team of {{node}} has one of the capabilities {{capabilities}}.",
-    "orchestration_team_missing": "The waiting run of a team is missing; the team was not started again."
+    "orchestration_team_missing": "The waiting run of a team is missing; the team was not started again.",
+    "already_queued": "This run is already waiting or running, so it was not started a second time. Wait until it ends, or follow it on the Runs page.",
+    "not_executable": "This run cannot be started: only a waiting or paused run can run, and this one is already running or has ended. Open it on the Runs page to see its state."
   },
   "trace": {
     "invalid": "The trace is damaged or incomplete.",
@@ -197,7 +201,9 @@
     "checkpoint_stale": "The agent changed while it waited for an approval. The waiting call was not made.",
     "checkpoint_expired": "The waiting tool call can no longer continue (it expired or the setting was switched off). It was not made.",
     "approval_missing": "The approval request for this call is gone; the call was not made.",
-    "approval_not_in_test": "This call would need a person's approval; tests do not ask, so it was not made."
+    "approval_not_in_test": "This call would need a person's approval; tests do not ask, so it was not made.",
+    "frozen": "This tool belongs to a published API version and cannot be changed, so that the version keeps working exactly as it was published. Change the tool in the workflow and publish a new version.",
+    "denied_by_policy": "The rules for tool calls refused this call without asking anyone, so the tool did not run. Check the rules on the Approvals page, or give the agent a tool that only reads."
   },
   "job": {
     "writing": "The Coding Agent is writing code and tests …",
@@ -496,7 +502,8 @@
     "tls_incomplete": "TLS needs both a certificate and its key.",
     "port_unavailable": "Port {{port}} cannot be used (another program uses it, or it is not allowed).",
     "start_failed": "Network access could not start.",
-    "not_enabled": "Published APIs answer only this computer."
+    "not_enabled": "Published APIs answer only this computer.",
+    "unavailable": "Network access cannot be switched on here: Nodestro Local Docker offers its port only on this computer. Published APIs keep working on this computer; to reach them from other devices, run Nodestro on a server."
   },
   "request": {
     "invalid": "The request does not fit the API's input: {{fields}}.",
@@ -613,7 +620,8 @@
     "launch_required": "This Nodestro belongs to the desktop app that started it. Open Nodestro from the app.",
     "launch_used": "The launch link was already used. Restart the desktop app to open a new window.",
     "launch_invalid": "The launch link is not valid. Start Nodestro from the desktop app.",
-    "cross_site": "This change came from another website and was refused. Use Nodestro directly."
+    "cross_site": "This change came from another website and was refused. Use Nodestro directly.",
+    "network_needs_login": "Nodestro Studio is only offered on this computer, because it has no sign-in of its own. Start it without a network address or extra host names; to offer workflows on the network, switch on network access for published APIs."
   },
   "sandbox": {
     "isolation_required": "AI-created code and tools of unknown origin run only isolated (built-in Linux sandbox or Docker); neither is available, so nothing was run. Settings → Sandbox shows why.",
@@ -626,7 +634,14 @@
     "provider": "The login service cannot be reached or is not set up correctly. Contact your administrator.",
     "no_tenant": "Your account has no access to Nodestro yet. Ask an administrator to add you.",
     "bootstrap_invalid": "This setup link is invalid, already used or expired.",
-    "not_a_member": "Your account has no access to this workspace."
+    "not_a_member": "Your account has no access to this workspace.",
+    "last_owner": "A workspace needs at least one owner, so this change was refused. Make another member an owner first.",
+    "role": "“{{role}}” is not a known role, so nothing was changed. Choose one of the offered roles.",
+    "subject_missing": "The sign-in service did not say who you are, so the sign-in was refused. Try again; if it keeps happening, ask your administrator to check the sign-in setup.",
+    "tenant_exists": "A workspace with the id {{tenant}} already exists, so no second one was created. Choose another id.",
+    "tenant_has_owner": "The workspace {{tenant}} already has an owner, so this setup link cannot add another. Ask the owner to add you.",
+    "tenant_id": "{{tenant}} cannot be used as a workspace id: it is invalid or reserved. Choose another id.",
+    "tenant_unknown": "There is no workspace {{tenant}}. Check the id, or ask your administrator for access."
   },
   "secrets": {
     "unreadable": "A stored key can no longer be read. Please enter it again in the settings."

@@ -16,7 +16,8 @@
   "file": {
     "not_json": "Le fichier n’est pas un JSON valide.",
     "not_found": "Ce fichier de résultat n’existe pas.",
-    "too_large": "Le fichier dépasse la taille autorisée ({{limit_mb}} Mo)."
+    "too_large": "Le fichier dépasse la taille autorisée ({{limit_mb}} Mo).",
+    "not_base64": "{{name}} : le contenu du fichier n’est pas du Base64 valide ; le fichier n’a donc pas pu être lu. Encodez le fichier en Base64 dans content_base64 et renvoyez la requête."
   },
   "assistant": {
     "description_missing": "Veuillez décrire l’agent dont vous avez besoin.",
@@ -86,7 +87,8 @@
     "model_invalid": "Nom de modèle invalide « {{model}} ».",
     "model_missing": "Choisissez un modèle.",
     "model_provider_missing": "Le modèle « {{model}} » n’a pas de fournisseur ; écrivez-le sous la forme fournisseur:modèle, par exemple ollama:{{model}}.",
-    "provider_mismatch": "Cet accès appartient à un autre fournisseur et ne peut pas exécuter un modèle de {{provider}}."
+    "provider_mismatch": "Cet accès appartient à un autre fournisseur et ne peut pas exécuter un modèle de {{provider}}.",
+    "invalid": "Le réglage {{name}} doit être un nombre positif ; Nodestro ne l’a donc pas appliqué. Corrigez la valeur et redémarrez Nodestro."
   },
   "workflow": {
     "edge_dangling": "Une connexion pointe vers un nœud qui n’existe pas.",
@@ -146,7 +148,9 @@
     "orchestration_limit": "{{node}} a pris {{max_decisions}} décisions sans conclure.",
     "orchestrator_member_missing": "Une équipe de {{node}} n’existe plus.",
     "orchestrator_no_match": "Aucune équipe enregistrée de {{node}} n’a l’une des capacités {{capabilities}}.",
-    "orchestration_team_missing": "L'exécution en attente d'une équipe est introuvable ; l'équipe n'a pas été relancée."
+    "orchestration_team_missing": "L'exécution en attente d'une équipe est introuvable ; l'équipe n'a pas été relancée.",
+    "already_queued": "Cette exécution est déjà en attente ou en cours ; elle n’a donc pas été lancée une seconde fois. Attendez qu’elle se termine ou suivez-la sur la page Exécutions.",
+    "not_executable": "Cette exécution ne peut pas être lancée : seule une exécution en attente ou en pause peut s’exécuter, et celle-ci est déjà en cours ou terminée. Ouvrez-la sur la page Exécutions pour voir son état."
   },
   "trace": {
     "invalid": "La trace est endommagée ou incomplète.",
@@ -197,7 +201,9 @@
     "checkpoint_stale": "L’agent a été modifié pendant qu’il attendait une validation. L’appel en attente n’a pas été effectué.",
     "checkpoint_expired": "L’appel d’outil en attente ne peut plus reprendre (expiré ou réglage désactivé). Il n’a pas été effectué.",
     "approval_missing": "La demande de validation de cet appel n’existe plus ; l’appel n’a pas été effectué.",
-    "approval_not_in_test": "Cet appel nécessiterait la validation d'une personne ; les tests ne demandent pas, il n'a donc pas été effectué."
+    "approval_not_in_test": "Cet appel nécessiterait la validation d'une personne ; les tests ne demandent pas, il n'a donc pas été effectué.",
+    "frozen": "Cet outil fait partie d’une version publiée de l’API et ne peut pas être modifié, afin que la version continue de fonctionner exactement comme elle a été publiée. Modifiez l’outil dans le workflow et publiez une nouvelle version.",
+    "denied_by_policy": "Les règles des appels d’outils ont refusé cet appel sans demander à personne ; l’outil ne s’est donc pas exécuté. Vérifiez les règles sur la page Validations ou donnez à l’agent un outil qui ne fait que lire."
   },
   "job": {
     "writing": "Le Coding Agent écrit le code et les tests …",
@@ -496,7 +502,8 @@
     "tls_incomplete": "TLS nécessite un certificat et sa clé.",
     "port_unavailable": "Le port {{port}} ne peut pas être utilisé (un autre programme l’utilise ou il n’est pas autorisé).",
     "start_failed": "L’accès réseau n’a pas pu démarrer.",
-    "not_enabled": "Les API publiées ne répondent qu’à cet ordinateur."
+    "not_enabled": "Les API publiées ne répondent qu’à cet ordinateur.",
+    "unavailable": "L’accès réseau ne peut pas être activé ici : Nodestro Local Docker ne propose son port que sur cet ordinateur. Les API publiées continuent de fonctionner sur cet ordinateur ; pour les joindre depuis d’autres appareils, exécutez Nodestro sur un serveur."
   },
   "request": {
     "invalid": "La requête ne correspond pas à l’entrée de l’API : {{fields}}.",
@@ -613,7 +620,8 @@
     "launch_required": "Ce Nodestro appartient à l’application de bureau qui l’a démarré. Ouvrez Nodestro depuis l’application.",
     "launch_used": "Le lien de démarrage a déjà été utilisé. Redémarrez l’application de bureau pour ouvrir une nouvelle fenêtre.",
     "launch_invalid": "Le lien de démarrage n’est pas valide. Démarrez Nodestro depuis l’application de bureau.",
-    "cross_site": "Cette modification venait d'un autre site web et a été refusée. Utilisez Nodestro directement."
+    "cross_site": "Cette modification venait d'un autre site web et a été refusée. Utilisez Nodestro directement.",
+    "network_needs_login": "Nodestro Studio n’est proposé que sur cet ordinateur, car il n’a pas de connexion propre. Démarrez-le sans adresse réseau ni noms d’hôte supplémentaires ; pour proposer des workflows sur le réseau, activez l’accès réseau des API publiées."
   },
   "sandbox": {
     "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent qu’isolés (bac à sable Linux intégré ou Docker) ; aucun des deux n’est disponible, rien n’a donc été exécuté. Réglages → Bac à sable indique pourquoi.",
@@ -626,7 +634,14 @@
     "provider": "Le service de connexion est injoignable ou mal configuré. Contactez votre administrateur.",
     "no_tenant": "Votre compte n'a pas encore accès à Nodestro. Demandez à un administrateur de vous ajouter.",
     "bootstrap_invalid": "Ce lien de configuration est invalide, déjà utilisé ou expiré.",
-    "not_a_member": "Votre compte n'a pas accès à cet espace de travail."
+    "not_a_member": "Votre compte n'a pas accès à cet espace de travail.",
+    "last_owner": "Un espace de travail a besoin d’au moins un propriétaire ; la modification a donc été refusée. Nommez d’abord un autre membre propriétaire.",
+    "role": "« {{role}} » n’est pas un rôle connu ; rien n’a donc été modifié. Choisissez l’un des rôles proposés.",
+    "subject_missing": "Le service de connexion n’a pas indiqué qui vous êtes ; la connexion a donc été refusée. Réessayez ; si cela se reproduit, demandez à votre administration de vérifier la configuration de la connexion.",
+    "tenant_exists": "Un espace de travail avec l’identifiant {{tenant}} existe déjà ; aucun second n’a donc été créé. Choisissez un autre identifiant.",
+    "tenant_has_owner": "L’espace de travail {{tenant}} a déjà un propriétaire ; ce lien de configuration ne peut donc pas en ajouter un autre. Demandez au propriétaire de vous ajouter.",
+    "tenant_id": "{{tenant}} ne peut pas servir d’identifiant d’espace de travail : il est invalide ou réservé. Choisissez un autre identifiant.",
+    "tenant_unknown": "L’espace de travail {{tenant}} n’existe pas. Vérifiez l’identifiant ou demandez l’accès à votre administration."
   },
   "secrets": {
     "unreadable": "Une clé enregistrée ne peut plus être lue. Saisissez-la de nouveau dans les paramètres."

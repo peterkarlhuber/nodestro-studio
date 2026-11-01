@@ -16,7 +16,8 @@
   "file": {
     "not_json": "El archivo no es un JSON válido.",
     "not_found": "Este archivo de resultado no existe.",
-    "too_large": "El archivo supera el tamaño permitido ({{limit_mb}} MB)."
+    "too_large": "El archivo supera el tamaño permitido ({{limit_mb}} MB).",
+    "not_base64": "{{name}}: el contenido del archivo no es Base64 válido, así que no se pudo leer. Codifica el archivo en Base64 en content_base64 y envía la solicitud de nuevo."
   },
   "assistant": {
     "description_missing": "Describe el agente que necesitas.",
@@ -86,7 +87,8 @@
     "model_invalid": "Nombre de modelo no válido «{{model}}».",
     "model_missing": "Elige un modelo.",
     "model_provider_missing": "El modelo «{{model}}» no tiene proveedor; escríbelo como proveedor:modelo, por ejemplo ollama:{{model}}.",
-    "provider_mismatch": "Este acceso pertenece a otro proveedor y no puede ejecutar un modelo de {{provider}}."
+    "provider_mismatch": "Este acceso pertenece a otro proveedor y no puede ejecutar un modelo de {{provider}}.",
+    "invalid": "El ajuste {{name}} debe ser un número positivo, por eso Nodestro no lo aplicó. Corrige el valor y vuelve a iniciar Nodestro."
   },
   "workflow": {
     "edge_dangling": "Una conexión apunta a un nodo que no existe.",
@@ -146,7 +148,9 @@
     "orchestration_limit": "{{node}} tomó {{max_decisions}} decisiones sin terminar.",
     "orchestrator_member_missing": "Un equipo de {{node}} ya no existe.",
     "orchestrator_no_match": "Ningún equipo guardado de {{node}} tiene una de las capacidades {{capabilities}}.",
-    "orchestration_team_missing": "Falta la ejecución en espera de un equipo; el equipo no se volvió a iniciar."
+    "orchestration_team_missing": "Falta la ejecución en espera de un equipo; el equipo no se volvió a iniciar.",
+    "already_queued": "Esta ejecución ya está en espera o en curso, por eso no se inició una segunda vez. Espera a que termine o síguela en la página Ejecuciones.",
+    "not_executable": "Esta ejecución no se puede iniciar: solo puede ejecutarse una ejecución en espera o en pausa, y esta ya está en curso o ha terminado. Ábrela en la página Ejecuciones para ver su estado."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -197,7 +201,9 @@
     "checkpoint_stale": "El agente cambió mientras esperaba una aprobación. La llamada en espera no se realizó.",
     "checkpoint_expired": "La llamada a la herramienta en espera ya no puede continuar (caducó o se desactivó el ajuste). No se realizó.",
     "approval_missing": "La solicitud de aprobación de esta llamada ya no existe; la llamada no se realizó.",
-    "approval_not_in_test": "Esta llamada necesitaría la aprobación de una persona; las pruebas no preguntan, así que no se realizó."
+    "approval_not_in_test": "Esta llamada necesitaría la aprobación de una persona; las pruebas no preguntan, así que no se realizó.",
+    "frozen": "Esta herramienta pertenece a una versión publicada de la API y no se puede modificar, para que la versión siga funcionando exactamente como se publicó. Cambia la herramienta en el flujo de trabajo y publica una nueva versión.",
+    "denied_by_policy": "Las reglas de llamadas a herramientas rechazaron esta llamada sin preguntar a nadie, así que la herramienta no se ejecutó. Revisa las reglas en la página Aprobaciones o dale al agente una herramienta que solo lea."
   },
   "job": {
     "writing": "El agente de programación está escribiendo código y pruebas …",
@@ -496,7 +502,8 @@
     "tls_incomplete": "TLS necesita un certificado y su clave.",
     "port_unavailable": "No se puede usar el puerto {{port}} (otro programa lo usa o no está permitido).",
     "start_failed": "No se pudo iniciar el acceso en red.",
-    "not_enabled": "Las API publicadas solo responden a este ordenador."
+    "not_enabled": "Las API publicadas solo responden a este ordenador.",
+    "unavailable": "Aquí no se puede activar el acceso de red: Nodestro Local Docker ofrece su puerto solo en este ordenador. Las API publicadas siguen funcionando en este ordenador; para usarlas desde otros dispositivos, ejecuta Nodestro en un servidor."
   },
   "request": {
     "invalid": "La solicitud no se ajusta a la entrada de la API: {{fields}}.",
@@ -613,7 +620,8 @@
     "launch_required": "Este Nodestro pertenece a la aplicación de escritorio que lo inició. Abra Nodestro desde la aplicación.",
     "launch_used": "El enlace de inicio ya se usó. Reinicie la aplicación de escritorio para abrir una ventana nueva.",
     "launch_invalid": "El enlace de inicio no es válido. Inicie Nodestro desde la aplicación de escritorio.",
-    "cross_site": "Este cambio venía de otro sitio web y se rechazó. Usa Nodestro directamente."
+    "cross_site": "Este cambio venía de otro sitio web y se rechazó. Usa Nodestro directamente.",
+    "network_needs_login": "Nodestro Studio solo se ofrece en este ordenador porque no tiene inicio de sesión propio. Inícialo sin dirección de red ni nombres de host adicionales; para ofrecer flujos de trabajo en la red, activa el acceso de red de las API publicadas."
   },
   "sandbox": {
     "isolation_required": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan aislados (sandbox de Linux integrado o Docker); ninguno está disponible, así que no se ejecutó nada. Ajustes → Sandbox muestra el motivo.",
@@ -626,7 +634,14 @@
     "provider": "No se puede acceder al servicio de inicio de sesión o no está bien configurado. Contacta con tu administrador.",
     "no_tenant": "Tu cuenta todavía no tiene acceso a Nodestro. Pide a un administrador que te añada.",
     "bootstrap_invalid": "Este enlace de configuración no es válido, ya se usó o caducó.",
-    "not_a_member": "Tu cuenta no tiene acceso a este espacio de trabajo."
+    "not_a_member": "Tu cuenta no tiene acceso a este espacio de trabajo.",
+    "last_owner": "Un espacio de trabajo necesita al menos un propietario, por eso se rechazó el cambio. Haz primero propietario a otro miembro.",
+    "role": "«{{role}}» no es un rol conocido, así que no se cambió nada. Elige uno de los roles ofrecidos.",
+    "subject_missing": "El servicio de inicio de sesión no indicó quién eres, por eso se rechazó el inicio de sesión. Inténtalo de nuevo; si vuelve a pasar, pide a tu administración que revise la configuración.",
+    "tenant_exists": "Ya existe un espacio de trabajo con el id {{tenant}}, así que no se creó otro. Elige otro id.",
+    "tenant_has_owner": "El espacio de trabajo {{tenant}} ya tiene propietario, por eso este enlace de configuración no puede añadir otro. Pide al propietario que te añada.",
+    "tenant_id": "{{tenant}} no se puede usar como id de un espacio de trabajo: no es válido o está reservado. Elige otro id.",
+    "tenant_unknown": "No existe el espacio de trabajo {{tenant}}. Comprueba el id o pide acceso a tu administración."
   },
   "secrets": {
     "unreadable": "Una clave guardada ya no se puede leer. Vuelve a introducirla en la configuración."

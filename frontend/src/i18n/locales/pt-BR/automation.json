@@ -24,9 +24,9 @@
   },
   "estimate": {
     "title": "Custo estimado",
-    "total_one": "{{runs}} execuções, cerca de {{total}} ({{perRun}} por execução, com base em {{count}} execução anterior).",
-    "total_other": "{{runs}} execuções, cerca de {{total}} ({{perRun}} por execução, com base em {{count}} execuções anteriores).",
-    "unknown": "{{runs}} execuções. Ainda não há estimativa porque não existe execução bem-sucedida.",
+    "total_one": "Execuções: {{runs}}, cerca de {{total}} ({{perRun}} por execução, com base em {{count}} execução anterior).",
+    "total_other": "Execuções: {{runs}}, cerca de {{total}} ({{perRun}} por execução, com base em {{count}} execuções anteriores).",
+    "unknown": "Execuções: {{runs}}. Ainda não há estimativa porque não existe execução bem-sucedida.",
     "max": "No máximo {{max}} (orçamento por execução × quantidade).",
     "approvals_one": "O workflow tem {{count}} etapa de aprovação. Cada execução aguarda ali uma decisão.",
     "approvals_other": "O workflow tem {{count}} etapas de aprovação. Cada execução aguarda ali uma decisão."
@@ -109,7 +109,7 @@
     "casesTitle_other": "{{count}} casos de teste",
     "case": "Caso de teste",
     "caseN": "Caso de teste {{n}}",
-    "caseSummary": "{{checks}} verificações · avaliação por IA {{judge}}",
+    "caseSummary": "Verificações: {{checks}} · avaliação por IA {{judge}}",
     "addCase": "Adicionar caso de teste",
     "removeCase": "Remover caso de teste",
     "checks": "Regras de verificação",
@@ -312,7 +312,8 @@
     "excluded": {
       "unavailable": "Provedor não configurado",
       "pass_rate_low": "Taxa de aprovação baixa demais",
-      "new_failures": "Perde {{cases}} casos que o modelo atual aprovou",
+      "new_failures_one": "Perde {{count}} caso que o modelo atual aprovou",
+      "new_failures_other": "Perde {{count}} casos que o modelo atual aprovou",
       "cost_unknown": "Custo desconhecido (nunca conta como 0)",
       "duration_unknown": "Duração desconhecida"
     }

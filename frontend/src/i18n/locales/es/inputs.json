@@ -24,7 +24,8 @@
   "hidePreview": "Ocultar vista previa",
   "noText": "(sin texto)",
   "previewCut": "Solo se muestra el principio.",
-  "tableSummary": "{{name}}: {{count}} filas, {{columns}} columnas",
+  "tableSummary_one": "{{name}}: {{count}} fila, columnas: {{columns}}",
+  "tableSummary_other": "{{name}}: {{count}} filas, columnas: {{columns}}",
   "summary": {
     "archive_one": "{{count}} archivo, {{readable}} legibles",
     "archive_other": "{{count}} archivos, {{readable}} legibles",
@@ -202,12 +203,13 @@
   "storage": {
     "title": "Archivos de entrada subidos",
     "intro": "Archivos subidos para ejecuciones, casos de prueba y programaciones. Los archivos de ejecuciones en cola, en curso o en pausa nunca se eliminan.",
-    "summary": "{{count}} archivos · {{size}} · {{unused}} sin usar · {{inUse}} en ejecuciones en curso",
+    "summary": "Archivos: {{files}} · {{size}} · sin usar: {{unused}} · en ejecuciones en curso: {{inUse}}",
     "cleanUnused": "Eliminar archivos sin usar",
     "olderThan": "Archivos de ejecuciones terminadas con más de",
     "days": "días",
     "cleanOld": "Eliminar",
-    "cleaned": "{{count}} archivos eliminados ({{size}} liberados).",
+    "cleaned_one": "{{count}} archivo eliminado ({{size}} liberados).",
+    "cleaned_other": "{{count}} archivos eliminados ({{size}} liberados).",
     "safe": "Se conservan los archivos que aún necesitan casos de prueba, programaciones o lotes."
   },
   "collections": {

@@ -196,7 +196,7 @@
     "button": "Fortsetzen",
     "title": "Lauf fortsetzen",
     "intro": "Ein neuer, verknüpfter Lauf übernimmt die noch gültigen Ergebnisse und führt den Rest erneut aus. Der fehlgeschlagene Lauf bleibt unverändert.",
-    "summary": "{{reused}} Schritte werden übernommen, {{rerun}} laufen neu. Gespart: etwa {{saved}}.",
+    "summary": "Übernommene Schritte: {{reused}} · laufen neu: {{rerun}}. Gespart: etwa {{saved}}.",
     "steps": "Schritte",
     "step": "Schritt",
     "action": "Aktion",

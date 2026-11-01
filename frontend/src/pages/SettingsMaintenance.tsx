@@ -305,7 +305,7 @@ export function InputStoragePanel() {
       {data ? (
         <p data-testid="input-storage-summary">
           {t("inputs.storage.summary", {
-            count: data.files,
+            files: data.files,
             size: formatBytes(data.bytes),
             unused: data.unreferenced,
             inUse: data.in_use,

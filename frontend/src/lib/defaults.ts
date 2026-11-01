@@ -13,20 +13,24 @@ export function getDefaultModel(): string {
   return defaultModel;
 }
 
+/**
+ * A new agent in the interface language: its name, system prompt and output name are content the user edits,
+ * so they start in the language the user works in. Stored agents are never rewritten.
+ */
 export function defaultAgent(overrides: Partial<AgentConfig> = {}): AgentConfig {
   return {
     name: i18n.t("editor.nodes.newAgent"),
     description: "",
     icon: "bot",
     model: defaultModel,
-    system_prompt: "You are a helpful assistant.",
+    system_prompt: i18n.t("editor.defaults.systemPrompt"),
     task_template: "{{input}}",
     messages: [],
     tools: [],
     server_tools: [],
     knowledge: { file_ids: [], mode: "on_demand", citations: false },
     memory: { mode: "none", space: null },
-    output: { mode: "text", name: "Result", fields: [] },
+    output: { mode: "text", name: i18n.t("editor.defaults.outputName"), fields: [] },
     quality: { enabled: false, criteria: [], max_revisions: 1, judge_model: defaultModel },
     effort: "medium",
     thinking: null,

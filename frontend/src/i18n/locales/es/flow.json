@@ -196,7 +196,7 @@
     "button": "Continuar",
     "title": "Continuar la ejecución",
     "intro": "Una ejecución nueva y vinculada reutiliza los resultados que siguen siendo válidos y repite el resto. La ejecución fallida no cambia.",
-    "summary": "Se reutilizan {{reused}} pasos y {{rerun}} se repiten. Ahorro: unos {{saved}}.",
+    "summary": "Pasos reutilizados: {{reused}} · se repiten: {{rerun}}. Ahorro: unos {{saved}}.",
     "steps": "Pasos",
     "step": "Paso",
     "action": "Acción",

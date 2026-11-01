@@ -196,7 +196,7 @@
     "button": "Continuar",
     "title": "Continuar a execução",
     "intro": "Uma nova execução vinculada reaproveita os resultados ainda válidos e executa o resto de novo. A execução com falha permanece como estava.",
-    "summary": "{{reused}} etapas são reaproveitadas, {{rerun}} rodam de novo. Economia: cerca de {{saved}}.",
+    "summary": "Etapas reaproveitadas: {{reused}} · rodam de novo: {{rerun}}. Economia: cerca de {{saved}}.",
     "steps": "Etapas",
     "step": "Etapa",
     "action": "Ação",
