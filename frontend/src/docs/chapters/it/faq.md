@@ -8,7 +8,7 @@ Qui trovi le soluzioni ai messaggi più comuni e le risposte alle domande tipich
 | Messaggio o sintomo | Causa | Soluzione |
 |---|---|---|
 | «Nessuna chiave API per …» | Il provider del modello non è configurato. | Inserisci la chiave in *Impostazioni → Provider di IA* o imposta la variabile d’ambiente del provider, per esempio `ANTHROPIC_API_KEY`. |
-| «Avvia workflow» è disattivato | Ci sono problemi nel workflow o un'esecuzione è attiva. | Passa il mouse sul pulsante; i problemi sono elencati nell'ispettore quando non è selezionato nulla. |
+| «Avvia workflow» è bloccato | Ci sono problemi nel workflow, un'esecuzione è attiva oppure, su un server, il tuo ruolo non ha il permesso. | Il motivo compare subito accanto al pulsante; **Mostra** porta al problema. Tutti i problemi sono elencati nell'ispettore quando non è selezionato nulla. |
 | «Il workflow contiene un ciclo …» | Un collegamento torna indietro. | Elimina il collegamento che torna indietro. |
 | «Strumenti sconosciuti: …» | Uno strumento assegnato è stato eliminato o manca dopo un'importazione. | Rimuovi lo strumento nell'ispettore o ricrealo nella libreria degli strumenti. |
 | «… non consente di imporre uno strumento …» | Il modello non ammette strumenti imposti. | Imposta tool choice su *Automatico*. |

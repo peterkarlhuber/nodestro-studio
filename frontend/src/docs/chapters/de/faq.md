@@ -8,7 +8,7 @@ Hier findest du Lösungen für häufige Meldungen und Antworten auf typische Fra
 | Meldung oder Symptom | Ursache | Lösung |
 |---|---|---|
 | „Kein API-Schlüssel für …“ | Der Anbieter des Modells ist nicht eingerichtet. | Schlüssel unter *Einstellungen → KI-Anbieter* eintragen oder die Umgebungsvariable des Anbieters setzen, z. B. `ANTHROPIC_API_KEY`. |
-| „Workflow starten“ ist ausgegraut | Es gibt Probleme im Workflow oder ein Lauf ist aktiv. | Maus über die Schaltfläche halten; die Probleme stehen im Inspektor ohne Auswahl. |
+| „Workflow starten“ ist gesperrt | Es gibt Probleme im Workflow, ein Lauf ist aktiv, oder auf einem Server fehlt deiner Rolle die Berechtigung. | Der Grund steht direkt neben der Schaltfläche; **Zeigen** führt zum Problem. Alle Probleme stehen im Inspektor ohne Auswahl. |
 | „Der Workflow enthält einen Kreis …“ | Eine Verbindung führt zurück. | Die rückführende Verbindung löschen. |
 | „Unbekannte Tools: …“ | Ein zugewiesenes Tool wurde gelöscht oder fehlt nach einem Import. | Tool im Inspektor entfernen oder in der Tool-Bibliothek neu anlegen. |
 | „… erlaubt kein erzwungenes Tool …“ | Das Modell erlaubt kein erzwungenes Tool. | Tool-Choice auf *Automatisch* stellen. |
