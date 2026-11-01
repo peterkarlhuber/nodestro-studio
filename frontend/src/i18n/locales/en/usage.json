@@ -41,7 +41,8 @@
     "assistant": "Nodestro Assistant",
     "benchmark_judge": "AI rating of test series",
     "api_run": "Runs of published APIs",
-    "api_docs": "AI guide for an API"
+    "api_docs": "AI guide for an API",
+    "run_chat": "Live run chat"
   },
   "detail": {
     "analysis": "Analysis",

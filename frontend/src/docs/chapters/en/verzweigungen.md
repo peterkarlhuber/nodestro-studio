@@ -152,6 +152,8 @@ The orchestrator only chooses. It has no tools, creates no agents, tools or team
 
 The run details list every decision with its reason, task, result and a link to the team's run. When a team stops for an **approval** (also in a sub-workflow or below another orchestrator), the orchestrator waits with it: the run is *paused* and shows up under **Approvals**. After the decision the same team run continues, also after a restart, and the model is not asked again about that delegation. When a rejection ends the team's run (*On rejection: end the run*), this run ends too; no other team can get around the rejection. Cancelling a waiting run also cancels its waiting teams. A team may not call the orchestrator's workflow again.
 
+**During the run** you can ask the team leader questions and give it instructions for its next decision, in the **Team leader** tab of the detail view; see [Talking to the team leader](/docs/ausfuehrungen#teamleitung). **Live steering** in the *Limits* area sets who may give instructions.
+
 ## Dynamic teams {#dynamische-teams}
 <!-- keywords: dynamic team, assemble team, parallel, at the same time, parameters, start form, template, team composition, staffing -->
 

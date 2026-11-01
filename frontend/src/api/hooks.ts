@@ -13,6 +13,7 @@ export const keys = {
   workflow: (id: string) => ["workflow", id] as const,
   runs: (workflowId?: string) => ["runs", workflowId ?? "all"] as const,
   run: (id: string) => ["run", id] as const,
+  runChat: (runId: string) => ["run-chat", runId] as const,
   usage: (days: number) => ["usage", days] as const,
   templates: ["templates"] as const,
   tools: ["tools"] as const,

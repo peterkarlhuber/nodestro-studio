@@ -2,6 +2,9 @@
 
 import type {
   AttachRequest,
+  ChatMessageIn,
+  RunChatView,
+  RunMessage,
   ChatMessage,
   Conversation,
   ConversationSummary,
@@ -348,6 +351,12 @@ export const api = {
   resultFileUrl: (runId: string, fileId: string, inline = false) =>
     `/api/runs/${runId}/files/${fileId}${inline ? "?inline=true" : ""}`,
   run: (id: string) => request<Run>("GET", `/runs/${id}`),
+  // Live run chat (LRC-1): questions to and instructions for the orchestrators of a run.
+  runChat: (runId: string) => request<RunChatView>("GET", `/runs/${runId}/chat`),
+  sendRunChatMessage: (runId: string, body: ChatMessageIn) => request<RunMessage>("POST", `/runs/${runId}/chat/messages`, body),
+  runChatMessage: (runId: string, id: string) =>
+    request<RunMessage>("GET", `/runs/${runId}/chat/messages/${encodeURIComponent(id)}`),
+  runChatEventsUrl: (runId: string) => `/api/runs/${runId}/chat/events`,
   cancelRun: (id: string) => request<{ cancelled: boolean }>("POST", `/runs/${id}/cancel`),
   deleteRun: (id: string) => request<void>("DELETE", `/runs/${id}`),
   /** Store an exported trace file for viewing; nothing is executed. */

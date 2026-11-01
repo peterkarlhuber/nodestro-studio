@@ -805,5 +805,27 @@
   },
   "model_choice": {
     "node_unknown": "Il workflow non ha più nessun agente «{{node}}». Ricarica la pagina."
+  },
+  "run_chat": {
+    "empty_message": "Il messaggio è vuoto. Scrivi prima una domanda o un’istruzione.",
+    "message_too_long": "Il messaggio è troppo lungo. Accorcialo e invialo di nuovo.",
+    "invalid_client_id": "Non è stato possibile inviare il messaggio con questo identificativo. Invialo di nuovo.",
+    "client_id_reused": "Questo identificativo di messaggio è già stato usato per un altro testo. Invia di nuovo il messaggio.",
+    "unknown_target": "Questo responsabile del team non esiste (più) in questa esecuzione.",
+    "run_not_active": "L’esecuzione non è più attiva; la conversazione si può solo leggere.",
+    "imported_run": "Le esecuzioni importate sono di sola lettura.",
+    "not_an_orchestrator": "Questo passo non è un responsabile del team (orchestratore).",
+    "steering_off": "La guida in diretta è disattivata per questo responsabile del team nel workflow.",
+    "steering_unattended": "Nessuno ha avviato questa esecuzione a mano. Per dare istruzioni in queste esecuzioni, imposta la guida in diretta su Sempre nel workflow.",
+    "orchestrator_finished": "Il responsabile del team ha già finito.",
+    "too_many_messages": "Questa esecuzione ha raggiunto il limite di messaggi.",
+    "too_many_instructions": "Questo responsabile del team ha raggiunto il limite di istruzioni.",
+    "too_many_questions": "Questa esecuzione ha raggiunto il limite di domande.",
+    "busy": "Si sta ancora rispondendo a domande precedenti. Aspetta le loro risposte prima di chiedere di nuovo.",
+    "rate_limited": "Troppe domande in poco tempo. Riprova tra un minuto.",
+    "budget_exhausted": "Il budget della chat di questa esecuzione è esaurito.",
+    "run_ended": "L’esecuzione è terminata prima che l’istruzione fosse considerata.",
+    "answer_interrupted": "La risposta è stata interrotta. Fai di nuovo la domanda.",
+    "answer_failed": "Non è stato possibile scrivere una risposta. Riprova più tardi."
   }
 }

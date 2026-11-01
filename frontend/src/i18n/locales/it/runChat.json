@@ -1,0 +1,94 @@
+{
+  "tab": {
+    "label": "Viste dell’esecuzione",
+    "overview": "Panoramica",
+    "teamLeader": "Responsabile del team"
+  },
+  "intro": "Fai domande al responsabile del team (l’orchestratore) sull’esecuzione oppure dagli un’istruzione per la sua prossima decisione.",
+  "docs": "Come funziona la conversazione con il responsabile del team",
+  "noTargets": "Questa esecuzione non ha un responsabile del team con cui parlare.",
+  "noTarget": "Scegli prima un responsabile del team.",
+  "ended": "L’esecuzione è terminata; puoi ancora leggere la conversazione.",
+  "messages": "Conversazione con il responsabile del team",
+  "empty": "Ancora nessun messaggio.",
+  "someone": "Qualcuno",
+  "targets": {
+    "label": "Responsabile del team",
+    "depth": "Team annidato, livello {{level}}"
+  },
+  "activity": {
+    "title": "Attività attuale",
+    "decisions": "Decisioni: {{used}} di {{max}}",
+    "working_one": "{{count}} team sta lavorando ora",
+    "working_other": "{{count}} team stanno lavorando ora",
+    "noneWorking": "Al momento nessun team sta lavorando",
+    "specialists": "Al lavoro: {{names}}"
+  },
+  "kind": {
+    "question": "Domanda",
+    "instruction": "Istruzione",
+    "answer": "Risposta"
+  },
+  "status": {
+    "queued": "In attesa della prossima decisione",
+    "queuedWorking_one": "{{count}} team sta lavorando; l’istruzione verrà considerata alla prossima decisione",
+    "queuedWorking_other": "{{count}} team stanno lavorando; l’istruzione verrà considerata alla prossima decisione",
+    "delivered": "In considerazione nella decisione {{n}}",
+    "deliveredPlain": "In considerazione nella decisione in corso",
+    "considered": "Considerata nella decisione {{n}}",
+    "consideredPlain": "Considerata in una decisione",
+    "rejected": "Non accettata",
+    "expired": "Non più considerata",
+    "pending": "Risposta in corso…",
+    "answered": "Con risposta",
+    "failed": "Nessuna risposta"
+  },
+  "decision": {
+    "withTeams": "Decisione: {{action}} ({{teams}})",
+    "only": "Decisione: {{action}}",
+    "invalid": "La decisione non era valida e non è stata eseguita",
+    "action": {
+      "delegate": "delegata",
+      "parallel": "delegata a più team contemporaneamente",
+      "staff": "formazione modificata",
+      "finish": "conclusa con una risposta",
+      "other": "altro passo"
+    }
+  },
+  "answer": {
+    "label": "Risposta della chat, non una decisione",
+    "snapshot": "stato alle {{time}}"
+  },
+  "mode": {
+    "question": "Fai una domanda",
+    "instruction": "Dai un’istruzione",
+    "questionHint": "Una domanda non cambia mai l’esecuzione. Un modello di IA risponde dallo stato attuale; questo usa il budget della chat.",
+    "instructionHint": "Il responsabile del team considera l’istruzione alla sua prossima decisione. I team che lavorano già non vengono interrotti né modificati."
+  },
+  "composer": {
+    "mode": "Tipo di messaggio",
+    "questionLabel": "La tua domanda",
+    "instructionLabel": "La tua istruzione",
+    "keys": "Invio invia, Maiusc+Invio inizia una nuova riga.",
+    "count": "Caratteri: {{used}} di {{max}}",
+    "sendQuestion": "Fai la domanda",
+    "sendInstruction": "Invia istruzione",
+    "sending": "Invio in corso…",
+    "noInstructions": "Qui le istruzioni non sono possibili: {{reason}}"
+  },
+  "meta": {
+    "budget": "Budget della chat rimasto: {{value}}",
+    "questions": "Domande rimaste: {{value}}",
+    "unknown": "sconosciuto",
+    "model": "risponde {{model}}"
+  },
+  "editor": {
+    "label": "Guida in diretta",
+    "hint": "Chi può dare istruzioni a questo responsabile del team mentre un’esecuzione è attiva. Le domande sull’esecuzione non ne sono toccate.",
+    "options": {
+      "attended": "Esecuzioni avviate da una persona (predefinito)",
+      "always": "Sempre, anche esecuzioni non presidiate (pianificazione, API, esecuzione in serie, serie di test)",
+      "off": "Disattivata: nessuna istruzione durante un’esecuzione"
+    }
+  }
+}

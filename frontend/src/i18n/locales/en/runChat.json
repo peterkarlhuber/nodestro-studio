@@ -1,0 +1,94 @@
+{
+  "tab": {
+    "label": "Views of the run",
+    "overview": "Overview",
+    "teamLeader": "Team leader"
+  },
+  "intro": "Ask the team leader (the orchestrator) about the run, or give it an instruction for its next decision.",
+  "docs": "How talking to the team leader works",
+  "noTargets": "This run has no team leader to talk to.",
+  "noTarget": "Choose a team leader first.",
+  "ended": "The run has ended; the conversation can still be read.",
+  "messages": "Conversation with the team leader",
+  "empty": "No messages yet.",
+  "someone": "Someone",
+  "targets": {
+    "label": "Team leader",
+    "depth": "Nested team, level {{level}}"
+  },
+  "activity": {
+    "title": "Current activity",
+    "decisions": "Decisions: {{used}} of {{max}}",
+    "working_one": "{{count}} team is working now",
+    "working_other": "{{count}} teams are working now",
+    "noneWorking": "No team is working right now",
+    "specialists": "Working: {{names}}"
+  },
+  "kind": {
+    "question": "Question",
+    "instruction": "Instruction",
+    "answer": "Answer"
+  },
+  "status": {
+    "queued": "Waiting for the next decision",
+    "queuedWorking_one": "{{count}} team is working; the instruction is considered at the next decision",
+    "queuedWorking_other": "{{count}} teams are working; the instruction is considered at the next decision",
+    "delivered": "Being considered in decision {{n}}",
+    "deliveredPlain": "Being considered in the current decision",
+    "considered": "Included in decision {{n}}",
+    "consideredPlain": "Included in a decision",
+    "rejected": "Not accepted",
+    "expired": "No longer considered",
+    "pending": "Answering…",
+    "answered": "Answered",
+    "failed": "No answer"
+  },
+  "decision": {
+    "withTeams": "Decision: {{action}} ({{teams}})",
+    "only": "Decision: {{action}}",
+    "invalid": "The decision was invalid and was not carried out",
+    "action": {
+      "delegate": "delegated",
+      "parallel": "delegated to several teams at once",
+      "staff": "line-up changed",
+      "finish": "finished with an answer",
+      "other": "another step"
+    }
+  },
+  "answer": {
+    "label": "Chat answer, not a decision",
+    "snapshot": "state at {{time}}"
+  },
+  "mode": {
+    "question": "Ask a question",
+    "instruction": "Give an instruction",
+    "questionHint": "A question never changes the run. An AI model answers it from the current state; this uses the chat budget.",
+    "instructionHint": "The team leader takes the instruction into account at its next decision. Teams already working are not interrupted or changed."
+  },
+  "composer": {
+    "mode": "Kind of message",
+    "questionLabel": "Your question",
+    "instructionLabel": "Your instruction",
+    "keys": "Enter sends, Shift+Enter starts a new line.",
+    "count": "Characters: {{used}} of {{max}}",
+    "sendQuestion": "Ask question",
+    "sendInstruction": "Send instruction",
+    "sending": "Sending…",
+    "noInstructions": "Instructions are not possible here: {{reason}}"
+  },
+  "meta": {
+    "budget": "Chat budget left: {{value}}",
+    "questions": "Questions left: {{value}}",
+    "unknown": "unknown",
+    "model": "answers by {{model}}"
+  },
+  "editor": {
+    "label": "Live steering",
+    "hint": "Who may give this team leader instructions while a run is active. Questions about the run are not affected.",
+    "options": {
+      "attended": "Runs a person started (default)",
+      "always": "Always, also unattended runs (schedule, API, batch run, test series)",
+      "off": "Off: no instructions during a run"
+    }
+  }
+}

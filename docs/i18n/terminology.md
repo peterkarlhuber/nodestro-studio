@@ -35,6 +35,8 @@ Rules that apply to every language:
 | Agent, tool, knowledge, memory | agent, tool, knowledge, memory | |
 | Test series, batch run, schedule | test series, batch run, schedule | test suite |
 | Interface assistant | Assistant (button), Nodestro Assistant (product) | |
+| Orchestrator in the live run chat; its two input modes; the editor setting | team leader; "Ask a question" / "Give an instruction"; Live steering | supervisor, command |
+| What happened to an instruction | considered ("Included in decision N") | done, carried out, executed |
 
 ## German (de)
 
@@ -47,6 +49,8 @@ Rules that apply to every language:
 | Optional test check before publishing | Veröffentlichungsprüfung | Freigabe-Gate, Gate |
 | Workspace (server tenant) | Arbeitsbereich | Workspace |
 | Interface assistant | Assistant (button), Nodestro Assistant | Assistent as a label |
+| Orchestrator im Live-Chat eines Laufs; die zwei Eingabearten; die Editor-Einstellung | Teamleitung; „Frage stellen“ / „Anweisung geben“; Live-Steuerung | Teamleiter, Befehl |
+| Was mit einer Anweisung geschah | berücksichtigt („In Entscheidung N berücksichtigt“) | erledigt, ausgeführt, umgesetzt |
 
 "Freigabe" means one thing in the interface: a person lets something through (a run step, a tool call, a package).
 The release gate is a check, so it is a "Prüfung", not a "Freigabe".
@@ -61,6 +65,8 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 | Release gate | control de publicación | |
 | Run timeline | Cronología | Desarrollo |
 | Interface assistant | Asistente | Assistant |
+| Orchestrator in the live run chat; input modes; editor setting | líder de equipo; «Hacer una pregunta» / «Dar una instrucción»; Dirección en vivo | supervisor, orden |
+| What happened to an instruction | tenida en cuenta | hecha, ejecutada |
 
 ## French (fr)
 
@@ -73,6 +79,8 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 | Release gate | contrôle de publication (masculine: "un contrôle") | |
 | Address form | vous, imperative "-ez" | tu, ton, ta, tes |
 | Interface assistant | Assistant | |
+| Orchestrator in the live run chat; input modes; editor setting | chef d’équipe; « Poser une question » / « Donner une consigne »; Pilotage en direct | superviseur, ordre, instruction (for the message) |
+| What happened to an instruction | prise en compte | faite, exécutée |
 
 ## Italian (it)
 
@@ -83,6 +91,8 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 | Approval; the page | approvazione; page "Approvazioni"; approvazione anticipata | convalida |
 | Release gate | controllo di pubblicazione | |
 | Interface assistant | Assistente | Assistant |
+| Orchestrator in the live run chat; input modes; editor setting | responsabile del team; «Fai una domanda» / «Dai un’istruzione»; Guida in diretta | team leader, capo, comando |
+| What happened to an instruction | considerata | fatta, eseguita |
 
 ## Portuguese, Brazil (pt-BR)
 
@@ -93,3 +103,5 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 | Approval; the page | aprovação; page "Aprovações"; aprovação antecipada | liberação, autorização |
 | Release gate | controle de publicação | |
 | Interface assistant | Assistente | Assistant |
+| Orchestrator in the live run chat; input modes; editor setting | líder da equipe; “Fazer uma pergunta” / “Dar uma instrução”; Direção ao vivo | supervisor, comando |
+| What happened to an instruction | considerada | feita, executada |

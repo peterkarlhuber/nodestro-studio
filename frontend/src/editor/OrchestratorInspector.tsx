@@ -11,6 +11,8 @@ import {
   MAX_PARALLEL_TEAMS,
   MAX_POOL,
   MAX_SELECT_CAPABILITIES,
+  LIVE_STEERING_DEFAULT,
+  type LiveSteering,
   type OrchestratorConfig,
   type WorkflowCheck,
   type WorkflowNode,
@@ -246,6 +248,14 @@ export function OrchestratorInspector({ node, check }: { node: WorkflowNode; che
             data-testid="orchestrator-parallel"
           />
         </label>
+        <Field label={t("runChat.editor.label")} hint={t("runChat.editor.hint")}>
+          <Select
+            value={config.live_steering ?? LIVE_STEERING_DEFAULT}
+            onChange={(value) => set({ live_steering: value as LiveSteering })}
+            options={(["attended", "always", "off"] as const).map((value) => ({ value, label: t(`runChat.editor.options.${value}`) }))}
+            data-testid="orchestrator-live-steering"
+          />
+        </Field>
       </Section>
       <Section
         id="orchestrator-lineup"

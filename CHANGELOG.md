@@ -30,6 +30,25 @@ read-only pilot).
   `docs/i18n/terminology.md`); clearer error sentences; in-app docs updated in all six languages, including server
   sign-in, roles and the members commands.
 
+### Live run chat and steering (2026-11-01)
+
+LRC-1, studio part (frontend, in-app docs and texts only; the API and runtime parts are separate changes).
+
+- Run page: runs with an orchestrator (also in nested team runs) get the tabs **Overview** (the page as before)
+  and **Team leader**; approvals, tool approvals, status and summary stay above the tabs. A picker lists only the
+  team leaders the API reports (label, workflow path, level, status) with their decisions, teams and working
+  specialists.
+- Two explicit modes: **Ask a question** (a read-only AI answer, marked "chat answer, not a decision", with the time
+  of its snapshot) and **Give an instruction** (taken into account at the next decision; running teams are not
+  interrupted). Instructions show queued / delivered / considered (with what the decision did) / rejected /
+  expired with the reason; the wording never says "done".
+- Live updates over `GET /api/runs/{id}/chat/events` (`snapshot`, `message`, `targets`, `end`), polling when
+  EventSource is missing; sends carry one `client_id` per composed message, so retries are idempotent. The
+  composer is closed with a reason for ended runs, missing `run` permission and team leaders without steering.
+- Workflow editor: the orchestrator setting **Live steering** (`live_steering`: `attended` default, `always`,
+  `off`). Usage page: the source `run_chat` ("Live run chat"). Texts and error sentences for all `run_chat.*`
+  codes in six languages; the manual section "Talking to the team leader" (`ausfuehrungen#teamleitung`).
+
 ### Pins: PostgreSQL read performance (2026-11-01)
 
 - Pins `nodestro-runtime` `d141b8f` (before: `6eacec1`), `nodestro-api` `db6a696` (before: `7997bb4`),

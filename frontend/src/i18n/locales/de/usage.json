@@ -41,7 +41,8 @@
     "assistant": "Nodestro Assistant",
     "benchmark_judge": "KI-Bewertung von Testreihen",
     "api_run": "Läufe veröffentlichter APIs",
-    "api_docs": "KI-Leitfaden für eine API"
+    "api_docs": "KI-Leitfaden für eine API",
+    "run_chat": "Live-Chat im Lauf"
   },
   "detail": {
     "analysis": "Analyse",

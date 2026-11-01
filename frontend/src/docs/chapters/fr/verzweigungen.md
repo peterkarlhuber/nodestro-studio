@@ -152,6 +152,8 @@ L’orchestrateur ne fait que choisir. Il n’a pas d’outils, ne crée ni agen
 
 Les détails de l’exécution listent chaque décision avec son motif, sa tâche, son résultat et un lien vers l’exécution de l’équipe. Quand une équipe s’arrête pour une **validation** (y compris dans un sous-workflow ou sous un autre orchestrateur), l’orchestrateur attend avec elle : l’exécution est *en pause* et apparaît sous **Validations**. Après la décision, la même exécution de l’équipe continue, même après un redémarrage, et le modèle n’est pas consulté à nouveau pour cette délégation. Si un refus met fin à l’exécution de l’équipe (*En cas de refus : terminer l’exécution*), cette exécution se termine aussi ; aucune autre équipe ne peut contourner le refus. Annuler une exécution en attente annule aussi ses équipes en attente. Une équipe ne peut pas rappeler le workflow de l’orchestrateur.
 
+**Pendant l’exécution**, vous pouvez poser des questions au chef d’équipe et lui donner des consignes pour sa prochaine décision, dans l’onglet **Chef d’équipe** de la vue détaillée ; consultez [Parler au chef d’équipe](/docs/ausfuehrungen#teamleitung). **Pilotage en direct**, dans la zone *Limites*, fixe qui peut donner des consignes.
+
 ## Équipes dynamiques {#dynamische-teams}
 <!-- keywords: équipe dynamique, composer une équipe, parallèle, en même temps, paramètres, formulaire de démarrage, modèle, composition d'équipe, staffing -->
 

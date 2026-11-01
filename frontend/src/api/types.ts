@@ -233,7 +233,15 @@ export interface OrchestratorConfig {
   max_team?: number;
   /** The orchestrator may fill the teams' start form fields (never files). */
   allow_values?: boolean;
+  /**
+   * Who may steer the orchestrator during a run (LRC-1): ``attended`` (default) only runs a person started,
+   * ``always`` also unattended runs (schedule, API, batch, test series), ``off`` nobody. Questions are not affected.
+   */
+  live_steering?: LiveSteering;
 }
+
+export type LiveSteering = "attended" | "always" | "off";
+export const LIVE_STEERING_DEFAULT: LiveSteering = "attended";
 
 /** One team's part of a parallel decision. */
 export interface OrchestrationAssignment {
@@ -1050,7 +1058,8 @@ export type UsageSource =
   | "workflow_design"
   | "assistant"
   | "benchmark_judge"
-  | "api_docs";
+  | "api_docs"
+  | "run_chat";
 
 export interface UsageEntry {
   id: string;
@@ -2710,4 +2719,119 @@ export interface AdoptCheck {
 export interface AdoptOutcome {
   added: KnowledgeFile[];
   skipped: { name: string; reason: string; existing?: KnowledgeLink; message?: string }[];
+}
+
+// ---- live run chat and steering (LRC-1) ----------------------------------------
+// A hand-written mirror of nodestro-api ``api_run_chat.py``: the conversation with the orchestrators ("team
+// leaders") of a run. It always belongs to the top-level run; every route also takes a run below it.
+
+export type RunChatMessageKind = "question" | "instruction" | "answer";
+export type RunChatMessageStatus =
+  | "queued"
+  | "delivered"
+  | "considered"
+  | "rejected"
+  | "expired"
+  | "pending"
+  | "answered"
+  | "failed";
+
+/** What the decision that took an instruction into account did (recorded by the runtime, never guessed). */
+export interface DecisionNote {
+  action: string | null;
+  members: string[];
+  accepted: boolean;
+  reason: string;
+}
+
+export interface RunMessage {
+  id: string;
+  run_id: string;
+  target_run_id: string;
+  node_id: string;
+  seq: number;
+  kind: RunChatMessageKind;
+  content: string;
+  author: string;
+  author_name: string;
+  created_at: string;
+  status: RunChatMessageStatus;
+  status_at: string;
+  code: string | null;
+  /** The decision an instruction was delivered to or considered in. */
+  step: number | null;
+  decision: DecisionNote | null;
+  reply_to: string | null;
+  answer_id: string | null;
+  model: string | null;
+  usage: Usage | null;
+  /** When the state an answer is based on was read. */
+  snapshot_at: string | null;
+  snapshot_digest: string | null;
+}
+
+/** A team of an orchestrator and the specialists working in it right now. */
+export interface TeamActivity {
+  child_run_id: string;
+  member: string;
+  name: string;
+  status: string;
+  step: number | null;
+  slot: number | null;
+  task: string;
+  working: string[];
+}
+
+/** An orchestrator of the run (or of a nested team run) one can talk to. */
+export interface ChatTarget {
+  run_id: string;
+  node_id: string;
+  label: string;
+  workflow_name: string;
+  path: string[];
+  depth: number;
+  status: string;
+  decisions: number;
+  max_decisions: number;
+  steering: boolean;
+  steering_code: string | null;
+  teams: TeamActivity[];
+}
+
+export interface ChatLimits {
+  budget_usd: number;
+  max_questions: number;
+  max_instructions: number;
+  max_messages: number;
+  max_pending_questions: number;
+  questions_per_minute: number;
+}
+
+export interface RunChatView {
+  run_id: string;
+  run_status: string;
+  active: boolean;
+  targets: ChatTarget[];
+  messages: RunMessage[];
+  limits: ChatLimits;
+  max_chars: number;
+  remaining_budget_usd: number;
+  questions_left: number;
+  answer_model: string;
+}
+
+/** The data of the chat stream's ``targets`` event. */
+export interface RunChatTargets {
+  targets: ChatTarget[];
+  run_status: string;
+  active: boolean;
+}
+
+export interface ChatMessageIn {
+  kind: "question" | "instruction";
+  target_run_id: string;
+  node_id: string;
+  content: string;
+  /** The same id for every retry of one composed message ([A-Za-z0-9._:-]{1,100}); a retry answers 200. */
+  client_id?: string;
 }

@@ -184,6 +184,12 @@ describe("backend codes", () => {
     "run.already_queued", "run.not_executable", "tool.frozen", "tool.denied_by_policy", "lan.unavailable", "file.not_base64",
     "config.invalid", "access.network_needs_login", "identity.last_owner", "identity.role", "identity.subject_missing",
     "identity.tenant_exists", "identity.tenant_has_owner", "identity.tenant_id", "identity.tenant_unknown",
+    // Live run chat (LRC-1): refusals of the chat routes and the reasons stored on messages.
+    "run_chat.empty_message", "run_chat.message_too_long", "run_chat.invalid_client_id", "run_chat.client_id_reused",
+    "run_chat.unknown_target", "run_chat.run_not_active", "run_chat.imported_run", "run_chat.not_an_orchestrator",
+    "run_chat.steering_off", "run_chat.steering_unattended", "run_chat.orchestrator_finished", "run_chat.too_many_messages",
+    "run_chat.too_many_instructions", "run_chat.too_many_questions", "run_chat.busy", "run_chat.rate_limited",
+    "run_chat.budget_exhausted", "run_chat.run_ended", "run_chat.answer_interrupted", "run_chat.answer_failed",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

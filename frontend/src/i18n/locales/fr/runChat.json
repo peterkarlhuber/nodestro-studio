@@ -1,0 +1,94 @@
+{
+  "tab": {
+    "label": "Vues de l’exécution",
+    "overview": "Vue d’ensemble",
+    "teamLeader": "Chef d’équipe"
+  },
+  "intro": "Posez des questions au chef d’équipe (l’orchestrateur) sur l’exécution ou donnez-lui une consigne pour sa prochaine décision.",
+  "docs": "Comment fonctionne la conversation avec le chef d’équipe",
+  "noTargets": "Cette exécution n’a pas de chef d’équipe avec qui parler.",
+  "noTarget": "Choisissez d’abord un chef d’équipe.",
+  "ended": "L’exécution est terminée ; vous pouvez encore lire la conversation.",
+  "messages": "Conversation avec le chef d’équipe",
+  "empty": "Pas encore de messages.",
+  "someone": "Quelqu’un",
+  "targets": {
+    "label": "Chef d’équipe",
+    "depth": "Équipe imbriquée, niveau {{level}}"
+  },
+  "activity": {
+    "title": "Activité en cours",
+    "decisions": "Décisions : {{used}} sur {{max}}",
+    "working_one": "{{count}} équipe travaille en ce moment",
+    "working_other": "{{count}} équipes travaillent en ce moment",
+    "noneWorking": "Aucune équipe ne travaille en ce moment",
+    "specialists": "Au travail : {{names}}"
+  },
+  "kind": {
+    "question": "Question posée",
+    "instruction": "Consigne",
+    "answer": "Réponse"
+  },
+  "status": {
+    "queued": "En attente de la prochaine décision",
+    "queuedWorking_one": "{{count}} équipe travaille ; la consigne sera prise en compte à la prochaine décision",
+    "queuedWorking_other": "{{count}} équipes travaillent ; la consigne sera prise en compte à la prochaine décision",
+    "delivered": "En cours de prise en compte dans la décision {{n}}",
+    "deliveredPlain": "En cours de prise en compte dans la décision actuelle",
+    "considered": "Prise en compte dans la décision {{n}}",
+    "consideredPlain": "Prise en compte dans une décision",
+    "rejected": "Non acceptée",
+    "expired": "N’est plus prise en compte",
+    "pending": "Réponse en cours…",
+    "answered": "Répondue",
+    "failed": "Pas de réponse"
+  },
+  "decision": {
+    "withTeams": "Décision : {{action}} ({{teams}})",
+    "only": "Décision : {{action}}",
+    "invalid": "La décision n’était pas valide et n’a pas été exécutée",
+    "action": {
+      "delegate": "déléguée",
+      "parallel": "déléguée à plusieurs équipes en même temps",
+      "staff": "équipe active modifiée",
+      "finish": "terminée par une réponse",
+      "other": "autre étape"
+    }
+  },
+  "answer": {
+    "label": "Réponse du chat, pas une décision",
+    "snapshot": "état à {{time}}"
+  },
+  "mode": {
+    "question": "Poser une question",
+    "instruction": "Donner une consigne",
+    "questionHint": "Une question ne modifie jamais l’exécution. Un modèle d’IA y répond à partir de l’état actuel ; cela utilise le budget du chat.",
+    "instructionHint": "Le chef d’équipe prend la consigne en compte lors de sa prochaine décision. Les équipes qui travaillent déjà ne sont ni interrompues ni modifiées."
+  },
+  "composer": {
+    "mode": "Type de message",
+    "questionLabel": "Votre question",
+    "instructionLabel": "Votre consigne",
+    "keys": "Entrée envoie, Maj+Entrée commence une nouvelle ligne.",
+    "count": "Caractères : {{used}} sur {{max}}",
+    "sendQuestion": "Poser la question",
+    "sendInstruction": "Envoyer la consigne",
+    "sending": "Envoi…",
+    "noInstructions": "Les consignes ne sont pas possibles ici : {{reason}}"
+  },
+  "meta": {
+    "budget": "Budget du chat restant : {{value}}",
+    "questions": "Questions restantes : {{value}}",
+    "unknown": "inconnu",
+    "model": "réponses par {{model}}"
+  },
+  "editor": {
+    "label": "Pilotage en direct",
+    "hint": "Qui peut donner des consignes à ce chef d’équipe pendant qu’une exécution est active. Les questions sur l’exécution ne sont pas concernées.",
+    "options": {
+      "attended": "Exécutions lancées par une personne (par défaut)",
+      "always": "Toujours, aussi les exécutions sans surveillance (planification, API, exécution par lots, série de tests)",
+      "off": "Désactivé : aucune consigne pendant une exécution"
+    }
+  }
+}

@@ -805,5 +805,27 @@
   },
   "model_choice": {
     "node_unknown": "O workflow não tem mais nenhum agente “{{node}}”. Recarregue a página."
+  },
+  "run_chat": {
+    "empty_message": "A mensagem está vazia. Escreva primeiro uma pergunta ou uma instrução.",
+    "message_too_long": "A mensagem é longa demais. Encurte-a e envie de novo.",
+    "invalid_client_id": "Não foi possível enviar a mensagem com este identificador. Envie de novo.",
+    "client_id_reused": "Este identificador de mensagem já foi usado para outro texto. Envie a mensagem de novo.",
+    "unknown_target": "Este líder da equipe não existe (mais) nesta execução.",
+    "run_not_active": "A execução não está mais ativa; a conversa só pode ser lida.",
+    "imported_run": "Execuções importadas são somente leitura.",
+    "not_an_orchestrator": "Esta etapa não é um líder da equipe (orquestrador).",
+    "steering_off": "A direção ao vivo está desativada para este líder da equipe no fluxo de trabalho.",
+    "steering_unattended": "Ninguém iniciou esta execução manualmente. Para dar instruções nessas execuções, defina a direção ao vivo como Sempre no fluxo de trabalho.",
+    "orchestrator_finished": "O líder da equipe já terminou.",
+    "too_many_messages": "Esta execução atingiu o limite de mensagens.",
+    "too_many_instructions": "Este líder da equipe atingiu o limite de instruções.",
+    "too_many_questions": "Esta execução atingiu o limite de perguntas.",
+    "busy": "Perguntas anteriores ainda estão sendo respondidas. Aguarde as respostas antes de perguntar de novo.",
+    "rate_limited": "Perguntas demais em pouco tempo. Tente de novo em um minuto.",
+    "budget_exhausted": "O orçamento do chat desta execução acabou.",
+    "run_ended": "A execução terminou antes de a instrução ser considerada.",
+    "answer_interrupted": "A resposta foi interrompida. Faça a pergunta de novo.",
+    "answer_failed": "Não foi possível escrever uma resposta. Tente de novo mais tarde."
   }
 }

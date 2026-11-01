@@ -103,6 +103,26 @@ A failed or cancelled run can be [continued](/docs/verzweigungen#fortsetzen). Ru
 
 **Cancel run** (in the run overview or the detail view) asks once more to be safe: a second click on **Really cancel?** within five seconds stops the run; **Esc** or a click elsewhere lets it keep running. This also applies to a paused run. Running agents stop at the next step (next piece of text, next request or next tool call); agents that have not started yet are no longer run. Tokens used up to that point are charged and shown.
 
+## Talking to the team leader {#teamleitung}
+<!-- keywords: team leader, orchestrator, live chat, ask a question, give an instruction, steer, live steering, live_steering, chat budget, run_chat -->
+
+When a run has an **orchestrator** (also in a nested team run), the detail view shows a **Team leader** tab next to **Overview**. Approvals and the run's status stay visible above it. With several team leaders you choose one; each shows its workflow, its level and its status. Below it you see what it is doing: decisions (used of the maximum), its teams with their status and the specialists working right now.
+
+You choose explicitly what you write:
+
+- **Ask a question:** an AI model answers it from the current state of the run. A question never changes the run. The answer is marked *Chat answer, not a decision* and names the state it is based on.
+- **Give an instruction:** the team leader takes it into account at its **next decision**. A decision already being made and teams already working are not interrupted or changed; running specialists notice nothing until the next decision is made.
+
+Each instruction shows where it stands: *Waiting for the next decision* (with how many teams are working now), *Being considered in decision N*, *Included in decision N* with what was decided, or *No longer considered* with the reason. "Included" means the team leader read the instruction and took it into its decision; whether and how it follows it, it decides itself within its limits. Enter sends, Shift+Enter starts a new line.
+
+**Costs:** answers to questions have their own **chat budget** per run, separate from the run's budget. Their costs appear on the [Usage](/docs/nutzung#statistik) page under **Live run chat**, not in the run's costs. In the strict [price mode](/docs/nutzung#preismodus) questions to models without a known price are refused. Instructions cost nothing extra; they become part of the next decision.
+
+**Permissions and limits:** reading needs the *Read* permission, sending needs *Run*. A message has at most 2000 characters; per run and team leader there is a maximum number of messages, instructions and questions, and a limit of questions per minute. The line below the input shows the chat budget and the questions left.
+
+**Pause, restart, continue:** while a team waits for an approval, instructions stay open and apply to the next decision once the run goes on. If a decision is lost to a server restart, the instruction is given again to the next decision. When the run or the team leader ends, open instructions are marked *No longer considered* and are not carried over when you continue the run. After the end, the conversation can only be read.
+
+**Unattended runs:** in the orchestrator's inspector, **Live steering** sets who may give instructions: *Runs a person started* (default), *Always* (also schedule, API, batch run and test series) or *Off*. Questions are not affected. More about the orchestrator is under [Orchestrator](/docs/verzweigungen#orchestrator).
+
 ## Exporting a trace {#trace-export}
 <!-- keywords: export trace, export, json, run json, share, archive, sanitize, anonymize, privacy, personal data -->
 

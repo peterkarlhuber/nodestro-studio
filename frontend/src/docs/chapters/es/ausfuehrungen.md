@@ -103,6 +103,26 @@ Una ejecución fallida o cancelada se puede [continuar](/docs/verzweigungen#fort
 
 **Cancelar ejecución** (en el resumen de la ejecución o en la vista de detalle) pregunta otra vez por seguridad: un segundo clic en **¿Cancelar de verdad?** en menos de cinco segundos detiene la ejecución; **Esc** o un clic en otro sitio la deja seguir. Esto vale también para una ejecución en pausa. Los agentes en curso se detienen en el siguiente paso (siguiente fragmento de texto, siguiente solicitud o siguiente llamada a herramienta); los agentes que aún no han empezado ya no se ejecutan. Los tokens consumidos hasta ese momento se cobran y se muestran.
 
+## Hablar con el líder de equipo {#teamleitung}
+<!-- keywords: líder de equipo, orquestador, chat en vivo, hacer una pregunta, dar una instrucción, dirigir, dirección en vivo, live_steering, presupuesto del chat, run_chat -->
+
+Si una ejecución tiene un **orquestador** (también en una ejecución de equipo anidada), la vista de detalle muestra la pestaña **Líder de equipo** junto a **Resumen**. Las aprobaciones y el estado de la ejecución siguen visibles encima. Si hay varios líderes de equipo, eliges uno; cada uno muestra su flujo de trabajo, su nivel y su estado. Debajo ves lo que está haciendo: decisiones (usadas del máximo), sus equipos con su estado y los especialistas que trabajan ahora.
+
+Eliges de forma explícita lo que escribes:
+
+- **Hacer una pregunta:** un modelo de IA la responde a partir del estado actual de la ejecución. Una pregunta nunca cambia la ejecución. La respuesta se marca como *Respuesta del chat, no una decisión* e indica el estado en el que se basa.
+- **Dar una instrucción:** el líder de equipo la tiene en cuenta en su **próxima decisión**. Una decisión que ya se está tomando y los equipos que ya trabajan no se interrumpen ni se cambian; los especialistas en marcha no notan nada hasta la próxima decisión.
+
+Cada instrucción muestra su estado: *Esperando la próxima decisión* (con cuántos equipos trabajan ahora), *Se está teniendo en cuenta en la decisión N*, *Tenida en cuenta en la decisión N* con lo que se decidió, o *Ya no se tendrá en cuenta* con el motivo. «Tenida en cuenta» significa que el líder de equipo leyó la instrucción y la incluyó en su decisión; si la sigue y cómo, lo decide él mismo dentro de sus límites. Intro envía, Mayús+Intro empieza una línea nueva.
+
+**Costes:** las respuestas a preguntas tienen su propio **presupuesto del chat** por ejecución, separado del presupuesto de la ejecución. Sus costes aparecen en la página [Uso](/docs/nutzung#statistik) bajo **Chat en vivo de ejecuciones**, no en los costes de la ejecución. En el [modo de precios](/docs/nutzung#preismodus) estricto se rechazan las preguntas a modelos sin precio conocido. Las instrucciones no cuestan nada extra; pasan a formar parte de la próxima decisión.
+
+**Permisos y límites:** para leer basta el permiso *Leer*; para enviar necesitas *Ejecutar*. Un mensaje tiene como máximo 2000 caracteres; por ejecución y líder de equipo hay un número máximo de mensajes, instrucciones y preguntas, y un límite de preguntas por minuto. La línea bajo el campo de texto muestra el presupuesto del chat y las preguntas restantes.
+
+**Pausa, reinicio, continuar:** mientras un equipo espera una aprobación, las instrucciones siguen abiertas y valen para la próxima decisión cuando la ejecución continúa. Si un reinicio del servidor hace perder una decisión, la instrucción se entrega de nuevo a la próxima decisión. Cuando la ejecución o el líder de equipo terminan, las instrucciones abiertas se marcan como *Ya no se tendrá en cuenta* y no se trasladan al continuar la ejecución. Tras el final, la conversación solo se puede leer.
+
+**Ejecuciones desatendidas:** en el inspector del orquestador, **Dirección en vivo** fija quién puede dar instrucciones: *Ejecuciones iniciadas por una persona* (predeterminado), *Siempre* (también programación, API, ejecución por lotes y serie de pruebas) o *Desactivada*. Las preguntas no se ven afectadas. Más sobre el orquestador en [Orquestador](/docs/verzweigungen#orchestrator).
+
 ## Exportar traza {#trace-export}
 <!-- keywords: exportar traza, exportar, json, run json, compartir, archivar, depurar, anonimizar, privacidad, datos personales -->
 

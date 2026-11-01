@@ -1,0 +1,94 @@
+{
+  "tab": {
+    "label": "Ansichten des Laufs",
+    "overview": "Überblick",
+    "teamLeader": "Teamleitung"
+  },
+  "intro": "Stell der Teamleitung (dem Orchestrator) Fragen zum Lauf oder gib ihr eine Anweisung für ihre nächste Entscheidung.",
+  "docs": "So funktioniert das Gespräch mit der Teamleitung",
+  "noTargets": "Dieser Lauf hat keine Teamleitung, mit der du sprechen kannst.",
+  "noTarget": "Wähle zuerst eine Teamleitung.",
+  "ended": "Der Lauf ist beendet; das Gespräch kannst du weiterhin lesen.",
+  "messages": "Gespräch mit der Teamleitung",
+  "empty": "Noch keine Nachrichten.",
+  "someone": "Jemand",
+  "targets": {
+    "label": "Teamleitung",
+    "depth": "Verschachteltes Team, Ebene {{level}}"
+  },
+  "activity": {
+    "title": "Aktuelle Tätigkeit",
+    "decisions": "Entscheidungen: {{used}} von {{max}}",
+    "working_one": "{{count}} Team arbeitet gerade",
+    "working_other": "{{count}} Teams arbeiten gerade",
+    "noneWorking": "Gerade arbeitet kein Team",
+    "specialists": "Arbeiten gerade: {{names}}"
+  },
+  "kind": {
+    "question": "Frage",
+    "instruction": "Anweisung",
+    "answer": "Antwort"
+  },
+  "status": {
+    "queued": "Wartet auf die nächste Entscheidung",
+    "queuedWorking_one": "{{count}} Team arbeitet; die Anweisung wird bei der nächsten Entscheidung berücksichtigt",
+    "queuedWorking_other": "{{count}} Teams arbeiten; die Anweisung wird bei der nächsten Entscheidung berücksichtigt",
+    "delivered": "Wird in Entscheidung {{n}} berücksichtigt",
+    "deliveredPlain": "Wird in der laufenden Entscheidung berücksichtigt",
+    "considered": "In Entscheidung {{n}} berücksichtigt",
+    "consideredPlain": "In einer Entscheidung berücksichtigt",
+    "rejected": "Nicht angenommen",
+    "expired": "Nicht mehr berücksichtigt",
+    "pending": "Wird beantwortet…",
+    "answered": "Beantwortet",
+    "failed": "Keine Antwort"
+  },
+  "decision": {
+    "withTeams": "Entscheidung: {{action}} ({{teams}})",
+    "only": "Entscheidung: {{action}}",
+    "invalid": "Die Entscheidung war ungültig und wurde nicht ausgeführt",
+    "action": {
+      "delegate": "delegiert",
+      "parallel": "an mehrere Teams gleichzeitig delegiert",
+      "staff": "Besetzung geändert",
+      "finish": "mit einer Antwort abgeschlossen",
+      "other": "anderer Schritt"
+    }
+  },
+  "answer": {
+    "label": "Chat-Antwort, keine Entscheidung",
+    "snapshot": "Stand {{time}}"
+  },
+  "mode": {
+    "question": "Frage stellen",
+    "instruction": "Anweisung geben",
+    "questionHint": "Eine Frage ändert den Lauf nie. Ein KI-Modell beantwortet sie aus dem aktuellen Stand; das kostet Chat-Budget.",
+    "instructionHint": "Die Teamleitung berücksichtigt die Anweisung bei ihrer nächsten Entscheidung. Teams, die schon arbeiten, werden nicht unterbrochen oder geändert."
+  },
+  "composer": {
+    "mode": "Art der Nachricht",
+    "questionLabel": "Deine Frage",
+    "instructionLabel": "Deine Anweisung",
+    "keys": "Enter sendet, Umschalt+Enter beginnt eine neue Zeile.",
+    "count": "Zeichen: {{used}} von {{max}}",
+    "sendQuestion": "Frage stellen",
+    "sendInstruction": "Anweisung senden",
+    "sending": "Wird gesendet…",
+    "noInstructions": "Anweisungen sind hier nicht möglich: {{reason}}"
+  },
+  "meta": {
+    "budget": "Chat-Budget übrig: {{value}}",
+    "questions": "Fragen übrig: {{value}}",
+    "unknown": "unbekannt",
+    "model": "Antworten von {{model}}"
+  },
+  "editor": {
+    "label": "Live-Steuerung",
+    "hint": "Wer dieser Teamleitung während eines aktiven Laufs Anweisungen geben darf. Fragen zum Lauf betrifft das nicht.",
+    "options": {
+      "attended": "Läufe, die eine Person gestartet hat (Standard)",
+      "always": "Immer, auch unbeaufsichtigte Läufe (Zeitplan, API, Stapellauf, Testreihe)",
+      "off": "Aus: keine Anweisungen während eines Laufs"
+    }
+  }
+}

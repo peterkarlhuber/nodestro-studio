@@ -805,5 +805,27 @@
   },
   "model_choice": {
     "node_unknown": "Der Workflow hat keinen Agenten „{{node}}“ mehr. Lade die Seite neu."
+  },
+  "run_chat": {
+    "empty_message": "Die Nachricht ist leer. Schreib zuerst eine Frage oder eine Anweisung.",
+    "message_too_long": "Die Nachricht ist zu lang. Kürze sie und sende sie erneut.",
+    "invalid_client_id": "Die Nachricht konnte mit dieser Kennung nicht gesendet werden. Sende sie erneut.",
+    "client_id_reused": "Diese Nachrichtenkennung wurde schon für einen anderen Text verwendet. Sende die Nachricht erneut.",
+    "unknown_target": "Diese Teamleitung gibt es in diesem Lauf (nicht mehr).",
+    "run_not_active": "Der Lauf ist nicht mehr aktiv; das Gespräch kannst du nur noch lesen.",
+    "imported_run": "Importierte Läufe können nur gelesen werden.",
+    "not_an_orchestrator": "Dieser Schritt ist keine Teamleitung (Orchestrator).",
+    "steering_off": "Die Live-Steuerung ist für diese Teamleitung im Workflow ausgeschaltet.",
+    "steering_unattended": "Diesen Lauf hat niemand von Hand gestartet. Für Anweisungen in solchen Läufen stell im Workflow die Live-Steuerung auf Immer.",
+    "orchestrator_finished": "Die Teamleitung ist bereits fertig.",
+    "too_many_messages": "Dieser Lauf hat seine Höchstzahl an Nachrichten erreicht.",
+    "too_many_instructions": "Diese Teamleitung hat ihre Höchstzahl an Anweisungen erreicht.",
+    "too_many_questions": "Dieser Lauf hat seine Höchstzahl an Fragen erreicht.",
+    "busy": "Frühere Fragen werden noch beantwortet. Warte auf ihre Antworten, bevor du erneut fragst.",
+    "rate_limited": "Zu viele Fragen in kurzer Zeit. Versuch es in einer Minute erneut.",
+    "budget_exhausted": "Das Chat-Budget dieses Laufs ist aufgebraucht.",
+    "run_ended": "Der Lauf endete, bevor die Anweisung berücksichtigt wurde.",
+    "answer_interrupted": "Die Antwort wurde unterbrochen. Stell die Frage erneut.",
+    "answer_failed": "Es konnte keine Antwort geschrieben werden. Versuch es später erneut."
   }
 }
