@@ -1,0 +1,38 @@
+{
+  "connect": {
+    "title": "Conexões",
+    "summary": "{{incoming}} de entrada · {{outgoing}} de saída",
+    "to": "Para {{name}}",
+    "from": "De {{name}}",
+    "show": "Selecionar",
+    "showLabel": "Selecionar conexão: {{name}}",
+    "removeLabel": "Remover conexão: {{name}}",
+    "listLabel": "Conexões desta etapa",
+    "none": "Esta etapa ainda não tem conexões.",
+    "branch": "Ramo",
+    "target": "Conectar a",
+    "pick": "Escolha uma etapa …",
+    "noTargets": "Nenhuma outra etapa pode vir depois desta.",
+    "create": "Conectar",
+    "created": "{{source}} conectado a {{target}}."
+  },
+  "flow": {
+    "node": "Pressione Enter ou Espaço para selecionar esta etapa e ver as propriedades. As setas a movem, Delete a remove e Esc cancela. Para conectar etapas, use Conexões no painel de propriedades.",
+    "edge": "Pressione Enter ou Espaço para selecionar esta conexão. Delete a remove e Esc cancela.",
+    "moved": "Etapa movida para {{direction}}. Nova posição: x {{x}}, y {{y}}",
+    "direction": {
+      "up": "cima",
+      "down": "baixo",
+      "left": "a esquerda",
+      "right": "a direita"
+    },
+    "controls": "Controles da área de trabalho",
+    "interactive": "Bloquear ou desbloquear a área de trabalho",
+    "handle": "Porta"
+  },
+  "nav": {
+    "menu": "Menu",
+    "open": "Mostrar todas as páginas",
+    "close": "Ocultar a lista de páginas"
+  }
+}

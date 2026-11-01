@@ -3,11 +3,16 @@ import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { ArchitectMark, WorkflowIn } from "../api/types";
+import { useFlowAriaLabels } from "../editor/flowA11y";
 import { type FlowNodeData, nodeTypes } from "../editor/nodes";
+import { motionDuration } from "../lib/motion";
+import { useAppTheme } from "../lib/theme";
 import type { ArchitectGraph as Graph } from "./progress";
 
 function GraphInner({ graph, base, label }: { graph: Graph; base: WorkflowIn | null; label: string }) {
   const flow = useReactFlow();
+  const theme = useAppTheme();
+  const ariaLabelConfig = useFlowAriaLabels();
   const { workflow, marks, removed } = graph;
   const nodes: Node[] = useMemo(
     () => [
@@ -56,7 +61,7 @@ function GraphInner({ graph, base, label }: { graph: Graph; base: WorkflowIn | n
   // The view follows the graph as it grows.
   const count = nodes.length;
   useEffect(() => {
-    const timer = window.setTimeout(() => void flow.fitView({ padding: 0.12, maxZoom: 0.95, duration: 250 }), 60);
+    const timer = window.setTimeout(() => void flow.fitView({ padding: 0.12, maxZoom: 0.95, duration: motionDuration(250) }), 60);
     return () => window.clearTimeout(timer);
   }, [count, flow]);
 
@@ -76,6 +81,8 @@ function GraphInner({ graph, base, label }: { graph: Graph; base: WorkflowIn | n
         fitViewOptions={{ padding: 0.12, maxZoom: 0.95 }}
         minZoom={0.15}
         proOptions={{ hideAttribution: true }}
+        colorMode={theme}
+        ariaLabelConfig={ariaLabelConfig}
       />
     </div>
   );

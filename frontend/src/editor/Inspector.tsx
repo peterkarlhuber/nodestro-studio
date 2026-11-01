@@ -16,6 +16,7 @@ import { CheckList } from "./CheckList";
 import { ConnectionInspector } from "./ConnectionInspector";
 import { addCapabilities } from "../lib/capabilities";
 import { useEditorLayout } from "./layout";
+import { NodeConnections } from "./NodeConnections";
 import { OrchestratorInspector } from "./OrchestratorInspector";
 import { ApprovalInspector, ConditionInspector, FormEditor, OutputContractEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
 import { useEditor } from "./store";
@@ -74,7 +75,10 @@ export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefine
         {open ? <span className="panel-head__title">{t("editor.panels.inspector")}</span> : null}
       </div>
       {open ? (
-        <div className="inspector__body">{content}</div>
+        <div className="inspector__body">
+          {content}
+          {selected ? <NodeConnections key={`connections-${selected.id}`} nodeId={selected.id} /> : null}
+        </div>
       ) : (
         // The collapsed rail still names what is selected and opens the panel on click.
         <button type="button" className="inspector__rail" onClick={() => setOpen("inspector", true)} tabIndex={-1} aria-hidden>

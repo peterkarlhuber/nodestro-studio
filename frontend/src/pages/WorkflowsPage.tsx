@@ -302,7 +302,7 @@ export function WorkflowsPage() {
         onClose={() => setDeleting(null)}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setDeleting(null)}>
+            <Button variant="ghost" data-autofocus onClick={() => setDeleting(null)}>
               {t("common.cancel")}
             </Button>
             <Button variant="danger" busy={remove.isPending} onClick={() => deleting && remove.mutate(deleting.id)}>

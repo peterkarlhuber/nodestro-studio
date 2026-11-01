@@ -67,7 +67,7 @@ export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) 
       className={`nd-node flow-node ${selected ? "nd-node--selected" : ""} ${status === "running" ? "flow-node--running" : ""}`}
       data-testid={`node-${node.id}`}
     >
-      <Handle type="target" position={Position.Left} className="port port--in" aria-label={t("editor.nodes.input")} />
+      <Handle type="target" position={Position.Left} className="port port--in" />
       <div className="node-head">
         <div className="node-avatar">
           <Icon size={15} aria-hidden />
@@ -101,7 +101,7 @@ export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) 
         ) : null}
       </div>
       <Footer state={state} />
-      <Handle type="source" position={Position.Right} className="port port--out" aria-label={t("editor.nodes.outputPort")} />
+      <Handle type="source" position={Position.Right} className="port port--out" />
     </div>
   );
 });
@@ -126,7 +126,7 @@ export const StartNode = memo(function StartNode({ data, selected }: NodeProps) 
           <StatusBadge status={state.status} />
         </div>
       ) : null}
-      <Handle type="source" position={Position.Right} className="port port--out" aria-label={t("editor.nodes.outputPort")} />
+      <Handle type="source" position={Position.Right} className="port port--out" />
     </div>
   );
 });
@@ -137,7 +137,7 @@ export const OutputNode = memo(function OutputNode({ data, selected }: NodeProps
   const files = node.output?.files ?? [];
   return (
     <div className={`nd-node flow-node flow-node--terminal ${selected ? "nd-node--selected" : ""}`}>
-      <Handle type="target" position={Position.Left} className="port port--in" aria-label={t("editor.nodes.input")} />
+      <Handle type="target" position={Position.Left} className="port port--in" />
       <div className="node-head">
         <div className="node-avatar node-avatar--terminal">
           <Flag size={14} aria-hidden />
@@ -186,7 +186,7 @@ function NodeShell({
       className={`nd-node flow-node flow-node--logic ${selected ? "nd-node--selected" : ""} ${active ? "flow-node--running" : ""}`}
       data-testid={`node-${node.id}`}
     >
-      <Handle type="target" position={Position.Left} className="port port--in" aria-label={t("editor.nodes.input")} />
+      <Handle type="target" position={Position.Left} className="port port--in" />
       <div className="node-head">
         <div className="node-avatar node-avatar--logic">
           <Icon size={14} aria-hidden />
@@ -207,7 +207,7 @@ function NodeShell({
         </div>
       ) : null}
       {output ? (
-        <Handle type="source" position={Position.Right} className="port port--out" aria-label={t("editor.nodes.outputPort")} />
+        <Handle type="source" position={Position.Right} className="port port--out" />
       ) : null}
     </div>
   );
@@ -215,7 +215,6 @@ function NodeShell({
 
 /** One outgoing branch with its own port; the port id is what a connection stores as ``source_handle``. */
 function Branch({ id, label, taken, tone }: { id: string; label: string; taken?: boolean; tone?: string }) {
-  const { t } = useTranslation();
   return (
     <div className={`node-branch ${taken ? "node-branch--taken" : ""} ${tone ? `node-branch--${tone}` : ""}`}>
       <span className="node-branch__label">{label}</span>
@@ -224,7 +223,6 @@ function Branch({ id, label, taken, tone }: { id: string; label: string; taken?:
         id={id}
         position={Position.Right}
         className="port port--out port--branch"
-        aria-label={t("editor.nodes.branchPort", { name: label })}
       />
     </div>
   );

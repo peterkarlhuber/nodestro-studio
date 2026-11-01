@@ -236,7 +236,7 @@ export function BackupPanel() {
         wide
         footer={
           <>
-            <Button variant="ghost" onClick={() => setInfo(null)}>
+            <Button variant="ghost" data-autofocus onClick={() => setInfo(null)}>
               {t("common.cancel")}
             </Button>
             <Button

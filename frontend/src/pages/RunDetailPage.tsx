@@ -16,6 +16,7 @@ import { Output } from "../components/Markdown";
 import { Tooltip } from "../components/Tooltip";
 import { toast } from "../components/toast";
 import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
+import { prefersReducedMotion } from "../lib/motion";
 import { NodeRunDetails, startFiles } from "../editor/RunDetails";
 import { liveUsage } from "../editor/store";
 import { TraceExportDialog, sanitizeSummary } from "../editor/TraceExportDialog";
@@ -118,7 +119,7 @@ export function RunDetailPage() {
   const proposable = !imported && !data.parent_run_id && data.status === "failed";
   const openStep = (nodeId: string) => {
     setSelected(nodeId);
-    requestAnimationFrame(() => document.getElementById("run-node-details")?.scrollIntoView({ block: "start", behavior: "smooth" }));
+    requestAnimationFrame(() => document.getElementById("run-node-details")?.scrollIntoView({ block: "start", behavior: prefersReducedMotion() ? "auto" : "smooth" }));
   };
 
   return (

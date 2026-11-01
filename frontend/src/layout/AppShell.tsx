@@ -12,16 +12,18 @@ import {
   KeyRound,
   Layers,
   type LucideIcon,
+  Menu,
   Moon,
   Orbit,
   Rows3,
   Settings,
   Sparkles,
   Sun,
+  X,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 
 import { useApprovals, useSettings, useToolApprovals } from "../api/hooks";
 import logoSmall from "../assets/brand/nodestro-logo-64.png";
@@ -96,8 +98,40 @@ function NavGroup({ title, items }: { title: string; items: NavItem[] }) {
   );
 }
 
+/**
+ * Phones: the navigation is a menu that the button in the top bar opens and closes (wider windows always show it).
+ * It closes on Escape, on a click beside it and when a page is chosen.
+ */
+function usePhoneNav() {
+  const [open, setOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const { pathname } = useLocation();
+  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      toggle.current?.focus();
+    };
+    const onPointer = (event: PointerEvent) => {
+      const target = event.target as Element | null;
+      if (target?.closest?.(".sidebar, .nav-toggle")) return;
+      setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onPointer);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onPointer);
+    };
+  }, [open]);
+  return { open, setOpen, toggle };
+}
+
 export function AppShell() {
   const { t } = useTranslation();
+  const phoneNav = usePhoneNav();
   const [theme, setTheme] = useTheme();
   const settings = useSettings();
   const approvals = useApprovals();
@@ -134,6 +168,18 @@ export function AppShell() {
         {t("shell.skipToContent")}
       </a>
       <header className="topbar">
+        <button
+          ref={phoneNav.toggle}
+          type="button"
+          className="nav-toggle icon-button"
+          aria-expanded={phoneNav.open}
+          aria-controls="main-navigation"
+          aria-label={phoneNav.open ? t("a11y.nav.close") : t("a11y.nav.open")}
+          onClick={() => phoneNav.setOpen(!phoneNav.open)}
+          data-testid="nav-toggle"
+        >
+          {phoneNav.open ? <X size={18} aria-hidden /> : <Menu size={18} aria-hidden />}
+        </button>
         <Link to="/" className="brand" aria-label={t("shell.home")}>
           <BrandMark />
           <span className="brand__name">
@@ -172,7 +218,11 @@ export function AppShell() {
           />
         </div>
       </header>
-      <nav className="sidebar" aria-label={t("shell.mainNavigation")}>
+      <nav
+        id="main-navigation"
+        className={phoneNav.open ? "sidebar sidebar--open" : "sidebar"}
+        aria-label={t("shell.mainNavigation")}
+      >
         <NavGroup title={t("nav.groupWorkspace")} items={WORKSPACE} />
         <NavGroup
           title={t("nav.groupAutomation")}

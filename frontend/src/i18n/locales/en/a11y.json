@@ -1,0 +1,38 @@
+{
+  "connect": {
+    "title": "Connections",
+    "summary": "{{incoming}} in · {{outgoing}} out",
+    "to": "To {{name}}",
+    "from": "From {{name}}",
+    "show": "Select",
+    "showLabel": "Select connection: {{name}}",
+    "removeLabel": "Remove connection: {{name}}",
+    "listLabel": "Connections of this step",
+    "none": "This step has no connections yet.",
+    "branch": "Branch",
+    "target": "Connect to",
+    "pick": "Choose a step …",
+    "noTargets": "No other step can follow this one.",
+    "create": "Connect",
+    "created": "Connected {{source}} to {{target}}."
+  },
+  "flow": {
+    "node": "Press Enter or Space to select this step and show its properties. The arrow keys move it, Delete removes it, Escape cancels. To connect steps, use Connections in the properties panel.",
+    "edge": "Press Enter or Space to select this connection. Delete removes it, Escape cancels.",
+    "moved": "Moved the step {{direction}}. New position: x {{x}}, y {{y}}",
+    "direction": {
+      "up": "up",
+      "down": "down",
+      "left": "left",
+      "right": "right"
+    },
+    "controls": "Canvas controls",
+    "interactive": "Lock or unlock the canvas",
+    "handle": "Port"
+  },
+  "nav": {
+    "menu": "Menu",
+    "open": "Show all pages",
+    "close": "Hide the page list"
+  }
+}
