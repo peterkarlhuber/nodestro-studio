@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { Trash2 } from "lucide-react";
 
 import { useRef, useState } from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import { Button, ConfirmIconButton, Field, Modal, Section, Segmented, Select, StatusBadge, TextArea, TextInput, Toggle } from "./ui";
 
@@ -166,6 +167,30 @@ describe("ui", () => {
       element.open = !element.open;
       fireEvent(element, new Event("toggle"));
     };
+
+    it("keeps its help button next to the summary, not inside it (AX-09)", async () => {
+      const { container } = render(
+        <MemoryRouter>
+          <Section title="Memory" tip="agent.memory" summary="Off">
+            <input aria-label="Space" />
+          </Section>
+        </MemoryRouter>,
+      );
+      const help = screen.getByRole("button", { name: "Hilfe: Memory" });
+      expect(container.querySelector("summary")!.contains(help)).toBe(false);
+      expect(container.querySelector("summary button")).toBeNull();
+      // Right before the section in the keyboard order, and still there while the section is closed.
+      expect(details(container).open).toBe(false);
+      expect(help.compareDocumentPosition(container.querySelector("summary")!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      await userEvent.click(help);
+      expect(details(container).open).toBe(false);
+      expect(help).toHaveAttribute("aria-expanded", "true");
+    });
+
+    it("renders no frame without a help button", () => {
+      const { container } = render(<Section title="Plain">x</Section>);
+      expect(container.firstElementChild?.tagName).toBe("DETAILS");
+    });
 
     it("does not close itself when its default changes", () => {
       // e.g. the Memory section: choosing "off" turns the computed default from open to closed

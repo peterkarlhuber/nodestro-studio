@@ -658,9 +658,10 @@ export function Section({
   const isOpen = open ?? ownOpen;
   const errors = status?.errors ?? 0;
   const warnings = status?.warnings ?? 0;
-  return (
+  const classes = ["section", tip ? "section--tip" : "", className ?? ""].filter(Boolean).join(" ");
+  const details = (
     <details
-      className={className ? `section ${className}` : "section"}
+      className={classes}
       open={isOpen}
       data-section={id}
       onToggle={(event) => {
@@ -674,7 +675,6 @@ export function Section({
         <ChevronRight size={14} className="section__chevron" aria-hidden />
         {Icon ? <Icon size={15} aria-hidden className="section__icon" /> : null}
         <span className="section__title">{title}</span>
-        {tip ? <HelpTip id={tip} label={title} /> : null}
         {errors || warnings ? (
           <span className="section__status">
             {errors ? (
@@ -693,6 +693,18 @@ export function Section({
       </summary>
       <div className="section__body">{children}</div>
     </details>
+  );
+  if (!tip) return details;
+  // The help is a control of its own, so it may not sit inside the <summary> (a button in a button, AX-09). It
+  // stands next to the summary at the end of the header row, which keeps room for it, and comes right before the
+  // section in the keyboard order (after the summary it would only be reached behind an open section's content).
+  return (
+    <div className="section-frame">
+      <span className="section__tip">
+        <HelpTip id={tip} label={title} />
+      </span>
+      {details}
+    </div>
   );
 }
 
