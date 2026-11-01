@@ -23,7 +23,7 @@
   in six languages. Browser suite `mcp`: sign-in at a loopback authorization server, sign-out, the operation view and
   offering a published API as an MCP tool.
 - Platform pins: `nodestro-runtime` `1bc3924` (MCP resources), `nodestro-api` `2948bb3`, `nodestro-examples`
-  `6658599`, `nodestro-integrations` `86bfed0` and, in `platform/versions.json`, `nodestro-sdk` `f81f2dc` (MCP sign-in,
+  `6658599`, `nodestro-integrations` `86bfed0` and, in `platform/versions.json`, `nodestro-sdk` `b45c9d7` (MCP sign-in,
   local server environment, statistics and publication update calls).
 
 ### Tool approvals: warnings before unattended starts (S-2, R1, 2026-11-01)
