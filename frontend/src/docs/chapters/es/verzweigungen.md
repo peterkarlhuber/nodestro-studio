@@ -89,7 +89,15 @@ Cuando un agente quiere hacer una llamada así, la ejecución sigue en marcha pe
 
 Las ejecuciones que nadie supervisa (programaciones, lotes, series de pruebas) no pueden preguntar. Allí esa llamada se deniega, salvo que la administración haya **aprobado de antemano** esa versión de la herramienta para esa programación o lote concretos. Las herramientas que borran o destruyen y las de servicios conectados nunca se pueden aprobar de antemano.
 
-Los flujos de trabajo que ya existían al activarlo siguen funcionando: sus asignaciones de herramientas quedan marcadas como **excepciones heredadas**, ligadas a la versión de la herramienta con la que se ejecutaban. Una nueva versión de la herramienta o una nueva asignación se pregunta como siempre. Una aprobación nunca levanta los límites del sandbox.
+**Activación, en este orden:**
+
+1. En *Aprobaciones → Reglas para llamadas a herramientas*, la administración ejecuta **Marcar asignaciones existentes**. Cada asignación de herramienta que existe ahora en flujos de trabajo, sus versiones y API publicadas pasa a ser una **excepción heredada**, ligada a la versión de la herramienta con la que se ejecuta. Las API publicadas reciben una sola vez una nueva suma de comprobación (digest); su historial guarda la antigua y la nueva. El paso se ejecuta **una sola vez**: las asignaciones, flujos de trabajo y versiones creados después son nuevos y se preguntan.
+2. **Revisa la lista.** Una excepción no deseada termina cuando quitas la herramienta del agente y guardas; si la vuelves a asignar, se pregunta como una nueva.
+3. Solo entonces la administración activa las aprobaciones (`NODESTRO_TOOL_APPROVALS=1` y reiniciar Nodestro).
+
+Si se activan sin el primer paso, nada queda exento: se pregunta por cada asignación y las ejecuciones desatendidas deniegan esas llamadas. Una nueva versión de la herramienta siempre termina una excepción. Una aprobación nunca levanta los límites del sandbox.
+
+**No cubierto:** las herramientas de servidor del proveedor (búsqueda web, obtención web y ejecución de código en Anthropic) se ejecutan en el proveedor y no se pueden detener por llamada; desactívalas en el agente donde no deban usarse. Las herramientas propias de Nodestro para la ejecución (memoria, archivos de la ejecución) tampoco se preguntan. Las API publicadas no preguntan a nadie: tendrán más adelante su propia fase de aprobación.
 
 En **Aprobaciones → Reglas para llamadas a herramientas** ves si las aprobaciones están activadas y qué excepciones heredadas existen. La administración también ejecuta allí el paso de activación, concede y revoca aprobaciones previas y consulta el registro: quién decidió, concedió o revocó qué, y cada decisión rechazada. Los argumentos de una llamada nunca aparecen en el registro.
 

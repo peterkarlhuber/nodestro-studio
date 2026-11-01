@@ -67,7 +67,7 @@
     "enabled": "On",
     "disabled": "Off",
     "enabledText": "Tool calls that change data or reach outside wait for a person's decision.",
-    "disabledText": "Nodestro does not ask before tool calls yet. The administrator switches this on after the security review (NODESTRO_TOOL_APPROVALS=1).",
+    "disabledText": "Nodestro does not ask before tool calls yet. Order: mark the existing assignments here, review the list, then the administrator switches approvals on (NODESTRO_TOOL_APPROVALS=1) after the security review.",
     "legacyTitle": "Exceptions from before",
     "legacyText": "Tool assignments that existed before approvals per call keep working without a question, bound to the tool version they ran with. A new version or a new assignment is asked about as usual. Tools of connected services are always asked about.",
     "legacyNotRun": "The activation step has not run yet.",
@@ -80,9 +80,8 @@
     "workflow": "Workflow {{id}}",
     "workflowVersion": "Workflow {{id}}, version {{version}}",
     "stamp": "Mark existing assignments",
-    "stampAgain": "Mark again",
     "stampConfirm": "Mark now",
-    "stampHint": "Part of switching on: marks existing assignments of workflows, versions and published releases as exceptions. It does not switch approvals on and can be repeated.",
+    "stampHint": "Do this before switching approvals on, then review the list. It marks the assignments that exist now in workflows, versions and published releases (their digest changes once) and runs only once.",
     "stamped_one": "{{count}} assignment marked as an exception.",
     "stamped_other": "{{count}} assignments marked as exceptions.",
     "stampedCount_one": "{{count}} assignment marked",
@@ -132,6 +131,9 @@
       "pre_granted": "Approved in advance",
       "pre_grant_revoked": "Advance approval revoked",
       "legacy_stamped": "Existing assignments marked"
-    }
+    },
+    "ranAt": "Marked on {{time}} by {{name}}. The step runs once: assignments made afterwards are asked about.",
+    "stampFinish": "Finish marking published APIs",
+    "stampRepeated": "Repeated: nothing marked"
   }
 }

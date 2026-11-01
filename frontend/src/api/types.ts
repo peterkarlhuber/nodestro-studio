@@ -491,7 +491,16 @@ export interface ToolApprovalEvent {
 /** Whether per-call approvals are on, and what the activation step stamped as legacy exemptions. */
 export interface ToolApprovalsState {
   enabled: boolean;
-  legacy: { bindings: LegacyToolBinding[]; workflows: number; versions: number } | null;
+  legacy: {
+    bindings: LegacyToolBinding[];
+    workflows: number;
+    versions: number;
+    /** When and by whom the workflows were marked; the step runs once. */
+    stamped_at?: string | null;
+    stamped_by?: string | null;
+    /** When the published releases were marked (null: still to do, e.g. after an interrupted first call). */
+    publications_stamped_at?: string | null;
+  } | null;
 }
 
 export interface EvaluationRecord {

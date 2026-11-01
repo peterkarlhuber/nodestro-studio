@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|flow|panels|api|mcp|journeys ...]   (default: all)
+# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|flow|panels|api|mcp|approvals|journeys ...]   (default: all)
 # The journeys suite writes its report to $JOURNEY_REPORT when set.
 # Needs: the studio installed (pip install -e .), the frontend built (make frontend) and Playwright.
 set -euo pipefail
@@ -45,6 +45,8 @@ run() {  # run SUITE
       (cd frontend && npm run e2e:api) ;;
     mcp) start mcp 8070 python tests/e2e_mcp_server.py --data-dir "$work/mcp" --port 8070 --mcp-port 8071
       (cd frontend && npm run e2e:mcp) ;;
+    approvals) start approvals 8080 python tests/e2e_approvals_server.py --data-dir "$work/approvals" --port 8080 --wait 20
+      (cd frontend && npm run e2e:approvals) ;;
     journeys) start journeys 8060 python tests/e2e_journey_server.py --data-dir "$work/journeys" --port 8060
       (cd frontend && npm run e2e:journeys) ;;
     *) echo "unknown suite $1" >&2; return 2 ;;
@@ -53,7 +55,7 @@ run() {  # run SUITE
 
 # The smoke test goes first: it expects an empty start page and copies examples from the gallery.
 suites=("$@")
-[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant flow panels api mcp journeys)
+[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant flow panels api mcp approvals journeys)
 for suite in "${suites[@]}"; do
   echo "== e2e: $suite"
   run "$suite"

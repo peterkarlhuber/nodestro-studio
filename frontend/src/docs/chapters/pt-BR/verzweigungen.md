@@ -89,7 +89,15 @@ Quando um agente quer fazer uma chamada assim, a execução continua rodando, ma
 
 Execuções que ninguém acompanha (agendamentos, lotes, séries de testes) não podem perguntar. Nelas, uma chamada assim é recusada, a menos que a administração tenha **aprovado antecipadamente** essa versão da ferramenta para exatamente esse agendamento ou lote. Ferramentas que excluem ou destroem e ferramentas de serviços conectados nunca podem ser aprovadas antecipadamente.
 
-Workflows que já existiam quando isso foi ligado continuam funcionando: suas atribuições de ferramentas ficam marcadas como **exceções anteriores**, vinculadas à versão da ferramenta com que rodavam. Uma nova versão da ferramenta ou uma nova atribuição é perguntada como de costume. Uma aprovação nunca remove os limites do sandbox.
+**Ativação, nesta ordem:**
+
+1. Em *Aprovações → Regras para chamadas de ferramentas*, a administração executa **Marcar atribuições existentes**. Cada atribuição de ferramenta que existe agora em workflows, suas versões e APIs publicadas vira uma **exceção anterior**, vinculada à versão da ferramenta com que roda. APIs publicadas recebem uma única vez um novo resumo (digest); o histórico delas guarda o antigo e o novo. A etapa roda **uma única vez**: atribuições, workflows e versões criados depois são novos e são perguntados.
+2. **Confira a lista.** Uma exceção indesejada termina quando você remove a ferramenta do agente e salva; se você a atribuir de novo, ela é perguntada como uma nova.
+3. Só então a administração liga as aprovações (`NODESTRO_TOOL_APPROVALS=1` e reiniciar o Nodestro).
+
+Se ligar sem a primeira etapa, nada fica isento: toda atribuição é perguntada e execuções sem supervisão recusam essas chamadas. Uma nova versão da ferramenta sempre encerra uma exceção. Uma aprovação nunca remove os limites do sandbox.
+
+**Não coberto:** as ferramentas de servidor do provedor (busca na web, busca de páginas e execução de código na Anthropic) rodam no provedor e não podem ser retidas por chamada; desligue-as no agente onde não devem ser usadas. As ferramentas de execução próprias do Nodestro (memória, arquivos da execução) também não são perguntadas. APIs publicadas não perguntam a ninguém: terão mais tarde sua própria fase de aprovação.
 
 Em **Aprovações → Regras para chamadas de ferramentas** você vê se as aprovações estão ligadas e quais exceções anteriores existem. A administração também executa ali a etapa de ativação, concede e revoga aprovações antecipadas e consulta o registro: quem decidiu, concedeu ou revogou o quê, e cada decisão recusada. Os argumentos de uma chamada nunca aparecem no registro.
 

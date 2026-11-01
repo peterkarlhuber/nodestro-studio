@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+### Tool approvals: security acceptance (S-2, 2026-10-31)
+
+- New browser suite `approvals` (`npm run e2e:approvals`, part of `scripts/e2e.sh`) against an isolated instance with
+  `NODESTRO_TOOL_APPROVALS=1` (`tests/e2e_approvals_server.py`, 20-second wait, scripted model, user-authored tool
+  with arguments that contain quotes, markup, umlauts and a line break). It covers the exact argument display,
+  approve, reject with a comment, a decision about a changed call (stale hash, refused), a repeated decision
+  (refused), the timeout and a late decision (refused), the run details' notes, the audit trail without arguments,
+  the one-time activation step (a workflow made afterwards is asked about; repeating adds nothing), dark mode and a
+  phone width.
+- Rules section: the activation step shows when and by whom it ran and is offered only until it is complete (the
+  published-API part can be finished after an interrupted first call); repeated steps show as such in the audit
+  trail; the hint explains the order (mark, review, then switch on) and the one-time digest change.
+- Help *Branches > Approving tool calls* (six languages): the activation order, how to end an unwanted exception,
+  what happens without the first step, and what is not covered (provider server tools, Nodestro's own run tools,
+  published APIs' own approval phase).
+
+- Platform pins: `nodestro-runtime` `a13f894` (one-time legacy stamping, removed tools lose their exemption),
+  `nodestro-api` `c58d5de` (publications cutoff at the first stamping), `nodestro-examples` `2488c93`,
+  `nodestro-integrations` `08f5faf` and, in `platform/versions.json`, `nodestro-sdk` `452a39d`; `orkexa` stays
+  `b91d0b7`.
+
 ### Platform pins: runtime 40e04b4, api e8eacd4, sdk 38082cc (Adaptive Orchestration M3–M5, 2026-10-31)
 
 - Pins `nodestro-runtime` `40e04b4` (output contracts, capabilities, orchestrator node, pool selection, stdio MCP

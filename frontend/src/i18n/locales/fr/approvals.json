@@ -67,7 +67,7 @@
     "enabled": "Activées",
     "disabled": "Désactivées",
     "enabledText": "Les appels d’outils qui modifient des données ou agissent vers l’extérieur attendent la décision d’une personne.",
-    "disabledText": "Nodestro ne demande pas encore avant les appels d’outils. L’administration l’active après la revue de sécurité (NODESTRO_TOOL_APPROVALS=1).",
+    "disabledText": "Nodestro ne demande pas encore avant les appels d’outils. Ordre : marquer ici les attributions existantes, vérifier la liste, puis l’administration active les validations après la revue de sécurité (NODESTRO_TOOL_APPROVALS=1).",
     "legacyTitle": "Exceptions héritées",
     "legacyText": "Les attributions d’outils qui existaient avant la validation par appel continuent de fonctionner sans question, liées à la version d’outil avec laquelle elles tournaient. Une nouvelle version ou une nouvelle attribution est soumise à la question comme d’habitude. Pour les outils des services connectés, la question est toujours posée.",
     "legacyNotRun": "L’étape d’activation n’a pas encore été exécutée.",
@@ -80,9 +80,8 @@
     "workflow": "Workflow {{id}}",
     "workflowVersion": "Workflow {{id}}, version {{version}}",
     "stamp": "Marquer les attributions existantes",
-    "stampAgain": "Marquer à nouveau",
     "stampConfirm": "Marquer maintenant",
-    "stampHint": "Fait partie de l’activation : marque comme exceptions les attributions existantes des workflows, versions et versions publiées. N’active pas les validations et peut être répété.",
+    "stampHint": "À faire avant d’activer les validations, puis vérifier la liste. Marque les attributions existantes des workflows, versions et versions publiées (leur empreinte change une fois) et ne s’exécute qu’une fois.",
     "stamped_one": "{{count}} attribution marquée comme exception.",
     "stamped_other": "{{count}} attributions marquées comme exceptions.",
     "stampedCount_one": "{{count}} attribution marquée",
@@ -132,6 +131,9 @@
       "pre_granted": "Validé à l’avance",
       "pre_grant_revoked": "Validation anticipée révoquée",
       "legacy_stamped": "Attributions existantes marquées"
-    }
+    },
+    "ranAt": "Marqué le {{time}} par {{name}}. L’étape ne s’exécute qu’une fois : les attributions faites ensuite sont soumises à la question.",
+    "stampFinish": "Terminer le marquage des API publiées",
+    "stampRepeated": "Répété : rien de marqué"
   }
 }
