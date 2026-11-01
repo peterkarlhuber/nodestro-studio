@@ -18,6 +18,11 @@
   what happens without the first step, and what is not covered (provider server tools, Nodestro's own run tools,
   published APIs' own approval phase).
 
+- Platform pins: `nodestro-runtime` `a13f894` (one-time legacy stamping, removed tools lose their exemption),
+  `nodestro-api` `c58d5de` (publications cutoff at the first stamping), `nodestro-examples` `2488c93`,
+  `nodestro-integrations` `08f5faf` and, in `platform/versions.json`, `nodestro-sdk` `452a39d`; `orkexa` stays
+  `b91d0b7`.
+
 ### Platform pins: runtime 40e04b4, api e8eacd4, sdk 38082cc (Adaptive Orchestration M3–M5, 2026-10-31)
 
 - Pins `nodestro-runtime` `40e04b4` (output contracts, capabilities, orchestrator node, pool selection, stdio MCP
