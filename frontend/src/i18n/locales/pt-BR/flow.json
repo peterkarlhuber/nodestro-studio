@@ -112,7 +112,9 @@
     "requiredLabel": "Obrigatório ou opcional",
     "optional": "Opcional",
     "requiredHint": "A execução só começa quando o campo estiver preenchido.",
-    "optionalHint": "Pode ficar vazio: os agentes então veem que nada foi informado (decisões podem testar “está vazio”)."
+    "optionalHint": "Pode ficar vazio: os agentes então veem que nada foi informado (decisões podem testar “está vazio”).",
+    "prefilledInput": "Tarefa (exemplo pré-preenchido)",
+    "prefilledInputHint": "Um exemplo do modelo para que a primeira execução funcione na hora. Substitua pela sua própria solicitação."
   },
   "files": {
     "title": "Arquivos de resultado",
@@ -229,7 +231,7 @@
   },
   "orchestrator": {
     "text": "Um modelo de IA decide passo a passo qual equipe recebe qual tarefa e conclui com uma resposta.",
-    "teams": "Equipes",
+    "teams": "Equipes disponíveis (pool)",
     "teamsHint": "Os workflows entre os quais o modelo pode escolher (no máximo {{max}}). Capacidades e contratos de saída ajudam na escolha.",
     "noTeams": "Ainda não há equipes. Adicione pelo menos uma.",
     "addTeam": "Adicionar uma equipe…",
@@ -242,7 +244,7 @@
     "model": "Modelo",
     "maxDecisions": "Máximo de decisões",
     "maxDecisionsHint": "Cada delegação e a resposta final contam como uma decisão (de 1 a {{max}}). Sem resposta até lá, a etapa falha.",
-    "maxPerTeam": "Máximo por equipe",
+    "maxPerTeam": "Usos máximos por equipe",
     "maxPerTeamHint": "Quantas vezes a mesma equipe pode ser escolhida. Vazio: sem limite próprio.",
     "safety": "O orquestrador escolhe apenas entre estas equipes. Ele não tem ferramentas, não cria agentes, ferramentas nem equipes e não tem permissões próprias. Cada equipe roda como uma execução vinculada própria, com sua parte do orçamento, seus limites e suas aprovações. Quando uma equipe aguarda uma aprovação, o orquestrador também aguarda.",
     "run": {
@@ -258,11 +260,11 @@
       "matched": "escolhida por capacidade: {{tags}}",
       "parallel_one": "Delegado a {{count}} equipe ao mesmo tempo",
       "parallel_other": "Delegado a {{count}} equipes ao mesmo tempo",
-      "staffed": "Equipe alterada",
+      "staffed": "Escalação alterada",
       "added": "adicionadas: {{teams}}",
       "removed": "dispensadas: {{teams}}",
       "values": "Valores",
-      "teamOverTime": "Equipe ao longo do tempo",
+      "teamOverTime": "Escalação ativa ao longo do tempo",
       "afterStep": "Após a decisão {{n}}",
       "emptyTeam": "ninguém",
       "waitingTitle_one": "Aguardando aprovação: {{count}} equipe",
@@ -271,7 +273,7 @@
       "who": "{{name}} · modelo {{model}}",
       "decisionsUsed": "Decisões {{used}} de {{max}}",
       "parallelLimit": "até {{max}} equipes ao mesmo tempo",
-      "teamLimit": "equipe no máximo {{max}}",
+      "teamLimit": "escalação no máximo {{max}}",
       "costDecisions": "Custo das decisões {{cost}}",
       "costTotal": "total com equipes {{cost}}",
       "costUnknown": "não totalmente conhecido",
@@ -298,8 +300,27 @@
     "dynamic": "Equipes dinâmicas",
     "dynamicHint": "Tudo desligado significa: uma equipe após a outra de todo o pool, apenas com uma tarefa.",
     "maxParallel": "Equipes ao mesmo tempo",
-    "staffing": "Montar a equipe por conta própria: o orquestrador traz equipes do pool e as dispensa novamente",
-    "maxTeam": "No máximo na equipe",
-    "allowValues": "Preencher o formulário inicial das equipes (sem arquivos; verificado como um início manual)"
+    "staffing": "Montar a escalação ativa por conta própria: o orquestrador traz equipes do pool para a escalação e as dispensa novamente",
+    "maxTeam": "No máximo na escalação ativa",
+    "allowValues": "Preencher o formulário inicial das equipes (sem arquivos; verificado como um início manual)",
+    "members": "Workflows escolhidos",
+    "assignment": "Missão",
+    "limits": "Limites",
+    "lineup": "Escalação ativa",
+    "summary": {
+      "members_one": "{{count}} equipe",
+      "members_other": "{{count}} equipes",
+      "byCapability": "por capacidade: {{tags}}",
+      "noTeams": "ainda sem equipes",
+      "decisions_one": "no máximo {{count}} decisão",
+      "decisions_other": "no máximo {{count}} decisões",
+      "perTeam_one": "cada equipe no máximo {{count}} vez",
+      "perTeam_other": "cada equipe no máximo {{count}} vezes",
+      "parallel_one": "{{count}} equipe por vez",
+      "parallel_other": "até {{count}} equipes por vez",
+      "lineup": "monta a própria escalação ativa (no máximo {{count}})",
+      "lineupOff": "escolhe de todo o pool",
+      "how": "Como este orquestrador trabalha: {{pool}} · {{limits}} · {{lineup}}."
+    }
   }
 }

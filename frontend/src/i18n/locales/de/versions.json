@@ -30,5 +30,8 @@
   "restoreTitle": "Version {{number}} wiederherstellen?",
   "restoreText": "Der Workflow wird auf Version {{number}} zurückgesetzt und als neue Version gespeichert. Alle bisherigen Versionen bleiben erhalten.",
   "restoreDirty": "Ungespeicherte Änderungen im Editor gehen dabei verloren. Speichere sie vorher als Version, wenn du sie behalten willst.",
-  "restored": "Version {{number}} wiederhergestellt"
+  "restored": "Version {{number}} wiederhergestellt",
+  "beforeRestoreNote": "Vor dem Wiederherstellen von Version {{number}}",
+  "saveAndRestore": "Erst speichern, dann wiederherstellen",
+  "restoreDiscard": "Ohne Speichern wiederherstellen"
 }

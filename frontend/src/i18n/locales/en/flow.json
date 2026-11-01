@@ -112,7 +112,9 @@
     "requiredLabel": "Required or optional",
     "optional": "Optional",
     "requiredHint": "The run starts only when the field is filled in.",
-    "optionalHint": "May stay empty: agents then see that nothing was given (decisions can check “is empty”)."
+    "optionalHint": "May stay empty: agents then see that nothing was given (decisions can check “is empty”).",
+    "prefilledInput": "Task (prefilled example)",
+    "prefilledInputHint": "An example from the template so the first run works right away. Replace it with your own request."
   },
   "files": {
     "title": "Result files",
@@ -229,7 +231,7 @@
   },
   "orchestrator": {
     "text": "An AI model decides step by step which team gets which task, and finishes with an answer.",
-    "teams": "Teams",
+    "teams": "Team pool",
     "teamsHint": "The workflows the model may choose from (at most {{max}}). Capabilities and output contracts help it choose.",
     "noTeams": "No teams yet. Add at least one.",
     "addTeam": "Add a team…",
@@ -242,7 +244,7 @@
     "model": "Model",
     "maxDecisions": "Maximum decisions",
     "maxDecisionsHint": "Each delegation and the final answer is one decision (1 to {{max}}). Without an answer by then, the step fails.",
-    "maxPerTeam": "Maximum per team",
+    "maxPerTeam": "Maximum uses per team",
     "maxPerTeamHint": "How often one team may be chosen. Empty: no separate limit.",
     "safety": "The orchestrator only chooses among these teams. It has no tools, creates no agents, tools or teams and has no permissions of its own. Each team runs as its own linked run with its share of the budget, its limits and its approvals. When a team waits for an approval, the orchestrator waits too.",
     "run": {
@@ -258,11 +260,11 @@
       "matched": "selected by capability: {{tags}}",
       "parallel_one": "Delegated to {{count}} team at the same time",
       "parallel_other": "Delegated to {{count}} teams at the same time",
-      "staffed": "Team changed",
+      "staffed": "Line-up changed",
       "added": "added: {{teams}}",
       "removed": "removed: {{teams}}",
       "values": "Values",
-      "teamOverTime": "Team over time",
+      "teamOverTime": "Active line-up over time",
       "afterStep": "After decision {{n}}",
       "emptyTeam": "nobody",
       "waitingTitle_one": "Waiting for approval: {{count}} team",
@@ -271,7 +273,7 @@
       "who": "{{name}} · model {{model}}",
       "decisionsUsed": "Decisions {{used}} of {{max}}",
       "parallelLimit": "up to {{max}} teams at once",
-      "teamLimit": "team at most {{max}}",
+      "teamLimit": "line-up at most {{max}}",
       "costDecisions": "Cost of the decisions {{cost}}",
       "costTotal": "total with teams {{cost}}",
       "costUnknown": "not fully known",
@@ -298,8 +300,27 @@
     "dynamic": "Dynamic teams",
     "dynamicHint": "All off means: one team after the other from the whole pool, with a task only.",
     "maxParallel": "Teams at the same time",
-    "staffing": "Assemble the team itself: the orchestrator takes teams from the pool into its team and lets them go again",
-    "maxTeam": "At most in the team",
-    "allowValues": "Fill in the teams' start forms (no files; checked like a manual start)"
+    "staffing": "Assemble the active line-up itself: the orchestrator takes teams from the pool into its line-up and lets them go again",
+    "maxTeam": "At most in the active line-up",
+    "allowValues": "Fill in the teams' start forms (no files; checked like a manual start)",
+    "members": "Chosen workflows",
+    "assignment": "Assignment",
+    "limits": "Limits",
+    "lineup": "Active line-up",
+    "summary": {
+      "members_one": "{{count}} team",
+      "members_other": "{{count}} teams",
+      "byCapability": "by capability: {{tags}}",
+      "noTeams": "no teams yet",
+      "decisions_one": "at most {{count}} decision",
+      "decisions_other": "at most {{count}} decisions",
+      "perTeam_one": "each team at most {{count}} time",
+      "perTeam_other": "each team at most {{count}} times",
+      "parallel_one": "{{count}} team at a time",
+      "parallel_other": "up to {{count}} teams at a time",
+      "lineup": "assembles its active line-up itself (at most {{count}})",
+      "lineupOff": "chooses from the whole pool",
+      "how": "How this orchestrator works: {{pool}} · {{limits}} · {{lineup}}."
+    }
   }
 }

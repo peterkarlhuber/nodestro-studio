@@ -34,7 +34,10 @@
     "approval": "Approvazione",
     "subworkflow": "Sotto-workflow",
     "branchPort": "Uscita del ramo {{name}}",
-    "orchestrator": "Orchestratore"
+    "orchestrator": "Orchestratore",
+    "warnings_one": "{{count}} avviso",
+    "warnings_other": "{{count}} avvisi",
+    "warningsTip": "Il workflow può partire, ma qui probabilmente qualcosa non torna. Seleziona il nodo per vedere le note."
   },
   "canvas": {
     "unsaved": "Modifiche non salvate",
@@ -50,7 +53,10 @@
     "undo": "Annulla (Ctrl+Z)",
     "redo": "Ripeti (Ctrl+Maiusc+Z)",
     "edgeLabel": "Connessione da {{source}} a {{target}}. Canc la elimina.",
-    "dropInvalid": "Questo elemento non può essere posizionato sull’area di lavoro."
+    "dropInvalid": "Questo elemento non può essere posizionato sull’area di lavoro.",
+    "removedOne": "«{{name}}» rimosso.",
+    "removedMany_one": "{{count}} nodo rimosso.",
+    "removedMany_other": "{{count}} nodi rimossi."
   },
   "palette": {
     "title": "Blocchi",
@@ -67,7 +73,12 @@
     "subworkflowHint": "Esegue un altro workflow come un unico passaggio",
     "teams": "Team",
     "teamDelivers": "consegna {{fields}}",
-    "orchestratorHint": "Un modello di IA distribuisce il compito ai team"
+    "orchestratorHint": "Un modello di IA distribuisce il compito ai team",
+    "teamCapabilities": "Capacità: {{tags}}",
+    "teamsCount_one": "Team ({{count}})",
+    "teamsCount_other": "Team ({{count}})",
+    "searchTeams": "Cerca team",
+    "noTeamMatch": "Nessun team corrisponde alla ricerca."
   },
   "inspector": {
     "agent": "Configura agente",
@@ -101,7 +112,16 @@
     "controlDelete": "<kbd>Canc</kbd> elimina la selezione, <kbd>Ctrl</kbd>+<kbd>D</kbd> la duplica",
     "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> annulla, <kbd>Ctrl</kbd>+<kbd>S</kbd> salva",
     "controlPanels": "Trascina i divisori per regolare i pannelli; il doppio clic su un nodo ne mostra le proprietà",
-    "connection": "Collegamento"
+    "connection": "Collegamento",
+    "selection": "Selezione",
+    "selectedCount_one": "{{count}} nodo selezionato",
+    "selectedCount_other": "{{count}} nodi selezionati",
+    "duplicateAll": "Duplica tutti",
+    "deleteAll_one": "Elimina {{count}} nodo",
+    "deleteAll_other": "Elimina {{count}} nodi",
+    "clearSelection": "Annulla selezione",
+    "selectionHint": "Maiusc o Ctrl e clic aggiunge nodi, Maiusc e trascinare sulla tela seleziona con un riquadro. Trascinare li sposta tutti, Canc li elimina tutti, Ctrl+D li duplica tutti.",
+    "nodeProblems": "Problemi di questo nodo"
   },
   "design": {
     "title": "Progetta un agente con l’IA",
@@ -139,7 +159,9 @@
     "budgetText": "Budget per questa esecuzione: {{budget}}. L’esecuzione si interrompe non appena viene superato.",
     "unlimited": "illimitato",
     "providerMissing": "Non ancora configurato: {{providers}}. Gli agenti con questi modelli non possono essere eseguiti.",
-    "openSettings": "Apri impostazioni"
+    "openSettings": "Apri impostazioni",
+    "fixFirst": "Prima risolvi i problemi qui sopra.",
+    "moreFiles": "Allega altri file (facoltativo)"
   },
   "page": {
     "started": "Workflow avviato",
@@ -149,7 +171,12 @@
     "saveAndContinue": "Salva e continua",
     "unsavedText": "Il workflow ha modifiche che non sono ancora state salvate.",
     "discardTitle": "Scartare le modifiche?",
-    "discardText": "Tutte le modifiche non salvate e la cronologia di annulla/ripeti vengono scartate. L’editor carica l’ultimo stato salvato."
+    "discardText": "Tutte le modifiche non salvate e la cronologia di annulla/ripeti vengono scartate. L’editor carica l’ultimo stato salvato.",
+    "startBlockedMany_one": "{{count}} problema impedisce l’avvio: {{first}}",
+    "startBlockedMany_other": "{{count}} problemi impediscono l’avvio. Per primo: {{first}}",
+    "showProblem": "Mostra",
+    "moreActions": "Altre azioni",
+    "exportFile": "Esporta come file"
   },
   "check": {
     "title": "Verifica",

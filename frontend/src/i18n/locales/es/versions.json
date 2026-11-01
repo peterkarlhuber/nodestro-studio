@@ -30,5 +30,8 @@
   "restoreTitle": "¿Restaurar la versión {{number}}?",
   "restoreText": "El flujo de trabajo vuelve a la versión {{number}} y se guarda como versión nueva. Todas las versiones anteriores se conservan.",
   "restoreDirty": "Los cambios sin guardar del editor se perderán. Guárdalos antes como versión si quieres conservarlos.",
-  "restored": "Versión {{number}} restaurada"
+  "restored": "Versión {{number}} restaurada",
+  "beforeRestoreNote": "Antes de restaurar la versión {{number}}",
+  "saveAndRestore": "Guardar primero y restaurar",
+  "restoreDiscard": "Restaurar sin guardar"
 }

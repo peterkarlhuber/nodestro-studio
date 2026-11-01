@@ -30,5 +30,8 @@
   "restoreTitle": "Restaurer la version {{number}} ?",
   "restoreText": "Le workflow revient à la version {{number}} et est enregistré comme nouvelle version. Toutes les versions précédentes sont conservées.",
   "restoreDirty": "Les modifications non enregistrées de l’éditeur seront perdues. Enregistrez-les d’abord comme version si vous voulez les garder.",
-  "restored": "Version {{number}} restaurée"
+  "restored": "Version {{number}} restaurée",
+  "beforeRestoreNote": "Avant la restauration de la version {{number}}",
+  "saveAndRestore": "Enregistrer d’abord, puis restaurer",
+  "restoreDiscard": "Restaurer sans enregistrer"
 }

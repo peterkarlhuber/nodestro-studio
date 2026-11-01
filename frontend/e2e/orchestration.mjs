@@ -79,6 +79,8 @@ try {
   // ---- the inspector shows the dynamic settings ---------------------------------------------------------
   await page.goto(`${base}/workflows/${lead.id}`);
   await page.locator(".react-flow__node").filter({ hasText: "Leitung" }).first().click();
+  // The orchestrator form is grouped like the agent form; the limits are in their own section.
+  await page.locator('[data-section="orchestrator-limits"] > summary').click();
   await page.getByTestId("orchestrator-parallel").waitFor();
   check(true, "The inspector shows the dynamic team settings");
   check(await page.getByTestId("orchestrator-staffing").isChecked(), "Staffing is switched on for this orchestrator");
@@ -117,9 +119,9 @@ try {
   check((await steps.nth(2).textContent()).includes("Jetzt nur noch glätten"), "The reason of the team change is shown");
   check((await view.getByTestId("orchestration-values").first().textContent()).includes("formal"), "The team parameters are shown");
   const team = await view.getByTestId("orchestration-team").textContent();
-  check(team.includes("Team im Verlauf") && team.includes("Nach Entscheidung 1") && team.includes("Nach Entscheidung 3"), "The team over time is shown");
+  check(team.includes("Aktive Besetzung im Verlauf") && team.includes("Nach Entscheidung 1") && team.includes("Nach Entscheidung 3"), "The team over time is shown");
   const limits = await view.getByTestId("orchestration-limits").textContent();
-  check(limits.includes("Entscheidungen 5 von 8") && limits.includes("bis zu 2 Teams gleichzeitig") && limits.includes("Team höchstens 2"), "Decisions used and limits are shown");
+  check(limits.includes("Entscheidungen 5 von 8") && limits.includes("bis zu 2 Teams gleichzeitig") && limits.includes("Besetzung höchstens 2"), "Decisions used and limits are shown");
   check(limits.includes("Kosten der Entscheidungen"), "The cost of the decisions is shown");
   check(!/chain|thinking|Gedanken/i.test(await view.textContent()), "Only structured decisions are shown");
   await shot("orchestration-03-done");

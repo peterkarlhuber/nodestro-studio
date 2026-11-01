@@ -13,6 +13,7 @@ import {
   OctagonMinus,
   Loader2,
   type LucideIcon,
+  MoreHorizontal,
   SkipForward,
   X,
   XCircle,
@@ -20,9 +21,12 @@ import {
 import {
   type ButtonHTMLAttributes,
   type InputHTMLAttributes,
+  type MouseEvent,
+  type ReactElement,
   type ReactNode,
   type SelectHTMLAttributes,
   type TextareaHTMLAttributes,
+  cloneElement,
   forwardRef,
   useEffect,
   useId,
@@ -137,6 +141,171 @@ export function ConfirmIconButton({
     >
       {confirmLabel ?? t("common.confirmDelete")}
     </Button>
+  );
+}
+
+/** What a blocked control offers instead: a link to where the cause can be fixed, or an action that shows it. */
+export interface ReasonAction {
+  label: string;
+  /** An app route, e.g. "/settings". */
+  to?: string;
+  onClick?: () => void;
+}
+
+/**
+ * A control that cannot be used right now and says why, visibly and next to it (TX-10). A native ``disabled``
+ * button can neither be focused nor explain itself on touch, so the control stays focusable with
+ * ``aria-disabled``, ignores clicks, and is described by the reason text. ``action`` links to the fix
+ * (Settings, the node with the problem). Without a ``reason`` the control is passed through unchanged.
+ */
+export function DisabledReason({
+  reason,
+  action,
+  children,
+  placement = "before",
+}: {
+  reason?: ReactNode;
+  action?: ReasonAction;
+  children: ReactElement<{
+    disabled?: boolean;
+    onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+    className?: string;
+    "aria-disabled"?: boolean;
+    "aria-describedby"?: string;
+  }>;
+  /** Where the reason sits: before the control (title bars) or below it (forms, dialog footers). */
+  placement?: "before" | "below";
+}) {
+  const id = useId();
+  if (!reason) return children;
+  const control = cloneElement(children, {
+    disabled: false,
+    "aria-disabled": true,
+    "aria-describedby": id,
+    className: `${children.props.className ?? ""} is-blocked`.trim(),
+    onClick: (event: MouseEvent<HTMLButtonElement>) => event.preventDefault(),
+  });
+  const actionElement = action ? (
+    action.to ? (
+      <Link to={action.to} className="disabled-reason__action" onClick={action.onClick}>
+        {action.label}
+      </Link>
+    ) : (
+      <button type="button" className="disabled-reason__action" onClick={action.onClick}>
+        {action.label}
+      </button>
+    )
+  ) : null;
+  const note = (
+    <span className="disabled-reason__note" data-testid="disabled-reason">
+      <Info size={13} aria-hidden />
+      <span id={id} className="disabled-reason__text">
+        {reason}
+      </span>
+      {actionElement}
+    </span>
+  );
+  return (
+    <span className={`disabled-reason disabled-reason--${placement}`}>
+      {placement === "before" ? note : null}
+      {control}
+      {placement === "below" ? note : null}
+    </span>
+  );
+}
+
+export interface MenuItem {
+  label: string;
+  icon?: LucideIcon;
+  onSelect: () => void;
+  testId?: string;
+}
+
+/**
+ * A "More" button that opens a short list of secondary actions (a title bar keeps its primary actions visible).
+ * Arrow keys move between the items, Escape or a click outside closes the list and returns the focus.
+ */
+export function MenuButton({ label, items, icon = MoreHorizontal }: { label: string; items: MenuItem[]; icon?: LucideIcon }) {
+  const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const listRef = useRef<HTMLDivElement | null>(null);
+  const id = useId();
+  useEffect(() => {
+    if (!open) return;
+    listRef.current?.querySelector<HTMLButtonElement>("[role=menuitem]")?.focus();
+    const onPointer = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (!listRef.current?.contains(target) && !buttonRef.current?.contains(target)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointer);
+    return () => document.removeEventListener("pointerdown", onPointer);
+  }, [open]);
+  const close = () => {
+    setOpen(false);
+    buttonRef.current?.focus();
+  };
+  const Icon = icon;
+  return (
+    <span className="menu-button">
+      <Tooltip content={open ? null : label}>
+        <button
+          ref={buttonRef}
+          type="button"
+          className="icon-button"
+          aria-label={label}
+          aria-haspopup="menu"
+          aria-expanded={open}
+          aria-controls={open ? id : undefined}
+          onClick={() => setOpen(!open)}
+        >
+          <Icon size={16} aria-hidden />
+        </button>
+      </Tooltip>
+      {open ? (
+        <div
+          ref={listRef}
+          id={id}
+          role="menu"
+          aria-label={label}
+          className="menu-button__list"
+          onKeyDown={(event) => {
+            const entries = [...(listRef.current?.querySelectorAll<HTMLButtonElement>("[role=menuitem]") ?? [])];
+            const index = entries.indexOf(document.activeElement as HTMLButtonElement);
+            if (event.key === "Escape") {
+              event.preventDefault();
+              event.stopPropagation();
+              close();
+            } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+              event.preventDefault();
+              const step = event.key === "ArrowDown" ? 1 : -1;
+              entries[(index + step + entries.length) % entries.length]?.focus();
+            } else if (event.key === "Tab") {
+              setOpen(false);
+            }
+          }}
+        >
+          {items.map((item) => {
+            const ItemIcon = item.icon;
+            return (
+              <button
+                key={item.label}
+                type="button"
+                role="menuitem"
+                className="menu-button__item"
+                data-testid={item.testId}
+                onClick={() => {
+                  setOpen(false);
+                  item.onSelect();
+                }}
+              >
+                {ItemIcon ? <ItemIcon size={14} aria-hidden /> : null}
+                {item.label}
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+    </span>
   );
 }
 

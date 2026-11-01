@@ -40,6 +40,7 @@ import { DEFAULT_FIELD_MB, FORMAT_GROUPS, fileFieldSummary } from "../lib/files"
 import { childLink, parseTrail } from "../lib/trail";
 import { branchLabel } from "./nodes";
 import { OutputFieldsEditor } from "./OutputFieldsEditor";
+import { removeWithUndo } from "./actions";
 import { useEditor } from "./store";
 
 export const OPERATORS: ConditionOperator[] = [
@@ -197,7 +198,6 @@ export function outputFieldsOf(node: WorkflowNode | undefined): string[] {
 
 export function Header({ node, title, tip, text }: { node: WorkflowNode; title: string; tip: Parameters<typeof HelpTip>[0]["id"]; text: string }) {
   const { t } = useTranslation();
-  const { removeNodes } = useEditor.getState();
   return (
     <div className="row-between">
       <div>
@@ -206,7 +206,7 @@ export function Header({ node, title, tip, text }: { node: WorkflowNode; title: 
         </h2>
         <p className="muted small">{text}</p>
       </div>
-      <IconButton icon={Trash2} label={t("editor.inspector.deleteNode")} onClick={() => removeNodes([node.id])} />
+      <IconButton icon={Trash2} label={t("editor.inspector.deleteNode")} onClick={() => removeWithUndo([node.id])} />
     </div>
   );
 }

@@ -22,12 +22,25 @@ export function providerList(t: TFunction, providers: { id: string }[]): string 
   return providers.map((item) => providerLabel(t, item.id)).join(", ");
 }
 
+/** The display name of a model ("Claude Sonnet 5.5"); a model the catalog does not know keeps its id. */
+export function modelName(models: { id: string; label: string }[] | undefined, model: string): string {
+  return findModel(models, model)?.label ?? model;
+}
+
+/** ``modelName`` with the catalog from /api/meta. */
+export function useModelName(): (model: string) => string {
+  const meta = useMeta();
+  return (model: string) => modelName(meta.data?.models, model);
+}
+
 /** What the field hint says about a model: its description, unknown prices, a missing configuration. */
 export function useModelHint(model: string): string | undefined {
   const { t } = useTranslation();
   const meta = useMeta();
   const settings = useSettings();
   const { provider } = splitModel(model);
+  // Until the catalog is there, every model would look unknown ("custom model, price unknown").
+  if (!meta.data) return undefined;
   const status = settings.data?.providers.find((item) => item.id === provider);
   if (status && !status.configured) return t("providers.notConfiguredHint", { provider: providerLabel(t, provider) });
   const info = findModel(meta.data?.models, model);
@@ -62,7 +75,8 @@ export function ModelPicker({
   const { provider, id: modelId } = splitModel(value);
   const models = meta.data?.models ?? [];
   const info = meta.data?.providers.find((item) => item.id === provider);
-  const providerOptions = (meta.data?.providers ?? []).map((item) => {
+  // While the catalog loads, the stored provider is shown on its own instead of an empty list.
+  const providerOptions = (meta.data?.providers ?? [{ id: provider }]).map((item) => {
     const configured = settings.data?.providers.find((status) => status.id === item.id)?.configured;
     const name = providerLabel(t, item.id);
     return { value: item.id, label: configured === false ? t("providers.notConfiguredOption", { provider: name }) : name };

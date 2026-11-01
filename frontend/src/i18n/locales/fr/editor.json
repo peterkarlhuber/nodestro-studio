@@ -34,7 +34,10 @@
     "approval": "Validation",
     "subworkflow": "Sous-workflow",
     "branchPort": "Sortie de la branche {{name}}",
-    "orchestrator": "Orchestrateur"
+    "orchestrator": "Orchestrateur",
+    "warnings_one": "{{count}} avertissement",
+    "warnings_other": "{{count}} avertissements",
+    "warningsTip": "Le workflow peut démarrer, mais quelque chose ne convient probablement pas ici. Sélectionnez le nœud pour voir les remarques."
   },
   "canvas": {
     "unsaved": "Modifications non enregistrées",
@@ -50,7 +53,10 @@
     "undo": "Annuler (Ctrl+Z)",
     "redo": "Rétablir (Ctrl+Maj+Z)",
     "edgeLabel": "Connexion de {{source}} vers {{target}}. Suppr la supprime.",
-    "dropInvalid": "Cet élément ne peut pas être déposé sur le canevas."
+    "dropInvalid": "Cet élément ne peut pas être déposé sur le canevas.",
+    "removedOne": "« {{name}} » supprimé.",
+    "removedMany_one": "{{count}} nœud supprimé.",
+    "removedMany_other": "{{count}} nœuds supprimés."
   },
   "palette": {
     "title": "Blocs",
@@ -67,7 +73,12 @@
     "subworkflowHint": "Exécute un autre workflow comme une étape",
     "teams": "Équipes",
     "teamDelivers": "livre {{fields}}",
-    "orchestratorHint": "Un modèle d’IA répartit la tâche entre des équipes"
+    "orchestratorHint": "Un modèle d’IA répartit la tâche entre des équipes",
+    "teamCapabilities": "Capacités : {{tags}}",
+    "teamsCount_one": "Équipes ({{count}})",
+    "teamsCount_other": "Équipes ({{count}})",
+    "searchTeams": "Rechercher des équipes",
+    "noTeamMatch": "Aucune équipe ne correspond à la recherche."
   },
   "inspector": {
     "agent": "Configurer l’agent",
@@ -101,7 +112,16 @@
     "controlDelete": "<kbd>Suppr</kbd> supprime la sélection, <kbd>Ctrl</kbd>+<kbd>D</kbd> la duplique",
     "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> annule, <kbd>Ctrl</kbd>+<kbd>S</kbd> enregistre",
     "controlPanels": "Faites glisser les séparateurs pour ajuster les panneaux ; un double-clic sur un nœud affiche ses propriétés",
-    "connection": "Connexion"
+    "connection": "Connexion",
+    "selection": "Sélection",
+    "selectedCount_one": "{{count}} nœud sélectionné",
+    "selectedCount_other": "{{count}} nœuds sélectionnés",
+    "duplicateAll": "Tout dupliquer",
+    "deleteAll_one": "Supprimer {{count}} nœud",
+    "deleteAll_other": "Supprimer {{count}} nœuds",
+    "clearSelection": "Annuler la sélection",
+    "selectionHint": "Maj ou Ctrl + clic ajoute des nœuds, Maj + glisser sur le canevas sélectionne avec un cadre. Glisser les déplace tous, Suppr les supprime tous, Ctrl+D les duplique tous.",
+    "nodeProblems": "Problèmes de ce nœud"
   },
   "design": {
     "title": "Concevoir un agent avec l’IA",
@@ -139,7 +159,9 @@
     "budgetText": "Budget pour cette exécution : {{budget}}. L’exécution s’arrête dès qu’il est dépassé.",
     "unlimited": "illimité",
     "providerMissing": "Pas encore configuré : {{providers}}. Les agents utilisant ces modèles ne peuvent pas s’exécuter.",
-    "openSettings": "Ouvrir les réglages"
+    "openSettings": "Ouvrir les réglages",
+    "fixFirst": "Corrigez d’abord les problèmes ci-dessus.",
+    "moreFiles": "Joindre d’autres fichiers (facultatif)"
   },
   "page": {
     "started": "Workflow lancé",
@@ -149,7 +171,12 @@
     "saveAndContinue": "Enregistrer et continuer",
     "unsavedText": "Le workflow comporte des modifications qui ne sont pas encore enregistrées.",
     "discardTitle": "Abandonner les modifications ?",
-    "discardText": "Toutes les modifications non enregistrées et l’historique annuler/rétablir sont abandonnés. L’éditeur charge le dernier état enregistré."
+    "discardText": "Toutes les modifications non enregistrées et l’historique annuler/rétablir sont abandonnés. L’éditeur charge le dernier état enregistré.",
+    "startBlockedMany_one": "{{count}} problème empêche le démarrage : {{first}}",
+    "startBlockedMany_other": "{{count}} problèmes empêchent le démarrage. D’abord : {{first}}",
+    "showProblem": "Afficher",
+    "moreActions": "Plus d’actions",
+    "exportFile": "Exporter dans un fichier"
   },
   "check": {
     "title": "Vérification",

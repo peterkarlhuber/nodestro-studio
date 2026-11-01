@@ -34,7 +34,10 @@
     "approval": "Approval",
     "subworkflow": "Sub-workflow",
     "branchPort": "Output of branch {{name}}",
-    "orchestrator": "Orchestrator"
+    "orchestrator": "Orchestrator",
+    "warnings_one": "{{count}} warning",
+    "warnings_other": "{{count}} warnings",
+    "warningsTip": "The workflow can start, but something here probably does not fit. Select the node to see the notes."
   },
   "canvas": {
     "unsaved": "Unsaved changes",
@@ -50,7 +53,10 @@
     "undo": "Undo (Ctrl+Z)",
     "redo": "Redo (Ctrl+Shift+Z)",
     "edgeLabel": "Connection from {{source}} to {{target}}. Delete removes it.",
-    "dropInvalid": "This item cannot be placed on the canvas."
+    "dropInvalid": "This item cannot be placed on the canvas.",
+    "removedOne": "Removed “{{name}}”.",
+    "removedMany_one": "Removed {{count}} node.",
+    "removedMany_other": "Removed {{count}} nodes."
   },
   "palette": {
     "title": "Building blocks",
@@ -67,7 +73,12 @@
     "subworkflowHint": "Runs another workflow as one step",
     "teams": "Teams",
     "teamDelivers": "delivers {{fields}}",
-    "orchestratorHint": "An AI model delegates the task to teams"
+    "orchestratorHint": "An AI model delegates the task to teams",
+    "teamCapabilities": "Capabilities: {{tags}}",
+    "teamsCount_one": "Teams ({{count}})",
+    "teamsCount_other": "Teams ({{count}})",
+    "searchTeams": "Search teams",
+    "noTeamMatch": "No team matches the search."
   },
   "inspector": {
     "agent": "Configure agent",
@@ -101,7 +112,16 @@
     "controlDelete": "<kbd>Delete</kbd> removes the selection, <kbd>Ctrl</kbd>+<kbd>D</kbd> duplicates",
     "controlUndo": "<kbd>Ctrl</kbd>+<kbd>Z</kbd> undoes, <kbd>Ctrl</kbd>+<kbd>S</kbd> saves",
     "controlPanels": "Drag the dividers to resize the panels; double-click a node to show its properties",
-    "connection": "Connection"
+    "connection": "Connection",
+    "selection": "Selection",
+    "selectedCount_one": "{{count}} node selected",
+    "selectedCount_other": "{{count}} nodes selected",
+    "duplicateAll": "Duplicate all",
+    "deleteAll_one": "Delete {{count}} node",
+    "deleteAll_other": "Delete {{count}} nodes",
+    "clearSelection": "Clear selection",
+    "selectionHint": "Shift or Ctrl click adds nodes, Shift and drag on the canvas selects with a box. Dragging moves all of them, Delete removes all, Ctrl+D duplicates all.",
+    "nodeProblems": "Problems of this node"
   },
   "design": {
     "title": "Design an agent with AI",
@@ -139,7 +159,9 @@
     "budgetText": "Budget for this run: {{budget}}. The run stops as soon as it is exceeded.",
     "unlimited": "unlimited",
     "providerMissing": "Not set up yet: {{providers}}. Agents with these models cannot run.",
-    "openSettings": "Open settings"
+    "openSettings": "Open settings",
+    "fixFirst": "Fix the problems above first.",
+    "moreFiles": "Attach more files (optional)"
   },
   "page": {
     "started": "Workflow started",
@@ -149,7 +171,12 @@
     "saveAndContinue": "Save and continue",
     "unsavedText": "The workflow has changes that have not been saved yet.",
     "discardTitle": "Discard changes?",
-    "discardText": "All unsaved changes and the undo/redo history are discarded. The editor loads the last saved state."
+    "discardText": "All unsaved changes and the undo/redo history are discarded. The editor loads the last saved state.",
+    "startBlockedMany_one": "{{count}} problem blocks the start: {{first}}",
+    "startBlockedMany_other": "{{count}} problems block the start. First: {{first}}",
+    "showProblem": "Show",
+    "moreActions": "More actions",
+    "exportFile": "Export as a file"
   },
   "check": {
     "title": "Check",

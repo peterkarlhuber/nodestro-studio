@@ -112,8 +112,17 @@ try {
   await page.locator(".inspector summary", { hasText: "Tools" }).click();
   await shot("03-inspector");
 
-  await page.getByRole("button", { name: "Agent hinzufügen" }).click();
+  // The palette adds an agent where it can be seen and selects it (the title bar has no second "add" button).
+  await page.getByTestId("palette").getByRole("button", { name: /^Agent / }).first().click();
   check(await page.getByText("Ungespeicherte Änderungen").first().isVisible(), "Adding an agent marks the workflow dirty");
+  {
+    const added = await page.locator(".react-flow__node.selected").first().boundingBox();
+    const pane = await page.locator(".react-flow").boundingBox();
+    check(
+      added && pane && added.x >= pane.x && added.y >= pane.y && added.x + added.width <= pane.x + pane.width && added.y + added.height <= pane.y + pane.height,
+      "The added agent appears selected inside the visible canvas",
+    );
+  }
   await page.getByRole("button", { name: "Rückgängig (Strg+Z)" }).click();
 
   check((await page.locator(".palette__toggle").getAttribute("aria-expanded")) === "true", "Building blocks start open in a wide window");
@@ -155,7 +164,8 @@ try {
   await page.keyboard.press("Control+z");
   check((await edges.count()) === edgeCount, "Discard also clears the undo history");
 
-  await page.getByRole("button", { name: "Versionen" }).click();
+  await page.getByRole("button", { name: "Weitere Aktionen" }).click();
+  await page.getByRole("menuitem", { name: "Versionen" }).click();
   await page.getByRole("heading", { name: "Versionsverlauf" }).waitFor();
   check(true, "Version history opens");
   await shot("02c-versions");

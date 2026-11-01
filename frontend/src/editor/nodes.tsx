@@ -1,5 +1,5 @@
 import { Handle, type NodeProps, Position } from "@xyflow/react";
-import { FileText, Flag, GitBranch, Hand, Network, Play, ShieldCheck, Workflow } from "lucide-react";
+import { AlertTriangle, FileText, Flag, GitBranch, Hand, Network, Play, ShieldCheck, Workflow, XCircle } from "lucide-react";
 import { type ReactNode, memo } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -8,16 +8,41 @@ import { useMeta, useWorkflows } from "../api/hooks";
 import { agentIcon } from "../components/icons";
 import { StatusBadge, Tooltip } from "../components/ui";
 import { formatCost, formatTokens } from "../lib/format";
-import { findModel } from "../lib/providers";
+import { modelName } from "../components/ModelPicker";
 
 export interface FlowNodeData extends Record<string, unknown> {
   node: WorkflowNode;
   state?: NodeRun;
+  /** Errors of the workflow check on this node (they block the start). */
   issues: number;
+  /** Warnings of the workflow check on this node. */
+  warnings?: number;
+  /** The workflow cannot start for a reason outside the nodes (e.g. a provider without a key). */
+  blocked?: boolean;
 }
 
-function modelLabel(models: { id: string; label: string }[] | undefined, id: string) {
-  return findModel(models, id)?.label ?? id;
+/** Errors and warnings of the check on a node: icon, count and words, never colour alone. */
+export function NodeProblems({ issues, warnings = 0 }: { issues: number; warnings?: number }) {
+  const { t } = useTranslation();
+  if (!issues && !warnings) return null;
+  return (
+    <span className="node-problems" data-testid="node-problems">
+      {issues ? (
+        <Tooltip content={t("editor.nodes.issuesTip")}>
+          <span className="node-issues" data-level="error">
+            <XCircle size={11} aria-hidden /> {t("editor.nodes.issues", { count: issues })}
+          </span>
+        </Tooltip>
+      ) : null}
+      {warnings ? (
+        <Tooltip content={t("editor.nodes.warningsTip")}>
+          <span className="node-issues node-issues--warning" data-level="warning">
+            <AlertTriangle size={11} aria-hidden /> {t("editor.nodes.warnings", { count: warnings })}
+          </span>
+        </Tooltip>
+      ) : null}
+    </span>
+  );
 }
 
 /** The loop round of a node that runs again ("Round 2"), shown from the second round on. */
@@ -48,7 +73,7 @@ function Footer({ state }: { state?: NodeRun }) {
 }
 
 export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) {
-  const { node, state, issues } = data as FlowNodeData;
+  const { node, state, issues, warnings, blocked } = data as FlowNodeData;
   const { t } = useTranslation();
   const meta = useMeta();
   const agent = node.agent;
@@ -74,14 +99,15 @@ export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) 
         </div>
         <div className="node-head__text">
           <div className="node-title">{node.label || agent.name}</div>
-          <div className="node-type">{modelLabel(meta.data?.models, agent.model)}</div>
+          <div className="node-type">{modelName(meta.data?.models, agent.model)}</div>
         </div>
       </div>
       <div className="node-divider" />
       <div className="node-row">
         <span className="node-row__description">{agent.description || t("editor.nodes.agent")}</span>
         <Round state={state} />
-        <StatusBadge status={status} />
+        {/* "Ready" would be wrong while the workflow cannot start at all. */}
+        {state || !blocked ? <StatusBadge status={status} /> : null}
       </div>
       <div className="node-tools">
         {facts.length ? facts.join(" · ") : t("editor.nodes.noTools")}
@@ -92,13 +118,7 @@ export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) 
             </span>
           </Tooltip>
         ) : null}
-        {issues ? (
-          <Tooltip content={t("editor.nodes.issuesTip")}>
-            <span className="node-issues">
-              {t("editor.nodes.issues", { count: issues })}
-            </span>
-          </Tooltip>
-        ) : null}
+        <NodeProblems issues={issues} warnings={warnings} />
       </div>
       <Footer state={state} />
       <Handle type="source" position={Position.Right} className="port port--out" aria-label={t("editor.nodes.outputPort")} />
@@ -107,10 +127,10 @@ export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) 
 });
 
 export const StartNode = memo(function StartNode({ data, selected }: NodeProps) {
-  const { node, state } = data as FlowNodeData;
+  const { node, state, issues, warnings } = data as FlowNodeData;
   const { t } = useTranslation();
   return (
-    <div className={`nd-node flow-node flow-node--terminal ${selected ? "nd-node--selected" : ""}`}>
+    <div className={`nd-node flow-node flow-node--terminal ${selected ? "nd-node--selected" : ""}`} data-testid={`node-${node.id}`}>
       <div className="node-head">
         <div className="node-avatar node-avatar--terminal">
           <Play size={14} aria-hidden />
@@ -120,6 +140,11 @@ export const StartNode = memo(function StartNode({ data, selected }: NodeProps) 
           <div className="node-type">{t("editor.palette.startHint")}</div>
         </div>
       </div>
+      {issues || warnings ? (
+        <div className="node-tools">
+          <NodeProblems issues={issues} warnings={warnings} />
+        </div>
+      ) : null}
       {state && state.status !== "waiting" ? (
         <div className="node-row">
           <Round state={state} />
@@ -132,11 +157,11 @@ export const StartNode = memo(function StartNode({ data, selected }: NodeProps) 
 });
 
 export const OutputNode = memo(function OutputNode({ data, selected }: NodeProps) {
-  const { node, state } = data as FlowNodeData;
+  const { node, state, issues, warnings } = data as FlowNodeData;
   const { t } = useTranslation();
   const files = node.output?.files ?? [];
   return (
-    <div className={`nd-node flow-node flow-node--terminal ${selected ? "nd-node--selected" : ""}`}>
+    <div className={`nd-node flow-node flow-node--terminal ${selected ? "nd-node--selected" : ""}`} data-testid={`node-${node.id}`}>
       <Handle type="target" position={Position.Left} className="port port--in" aria-label={t("editor.nodes.input")} />
       <div className="node-head">
         <div className="node-avatar node-avatar--terminal">
@@ -150,6 +175,11 @@ export const OutputNode = memo(function OutputNode({ data, selected }: NodeProps
       {files.length ? (
         <div className="node-tools">
           <FileText size={11} aria-hidden /> {files.map((file) => file.format.toUpperCase()).join(" · ")}
+        </div>
+      ) : null}
+      {issues || warnings ? (
+        <div className="node-tools">
+          <NodeProblems issues={issues} warnings={warnings} />
         </div>
       ) : null}
       {state && state.status !== "waiting" ? (
@@ -167,6 +197,7 @@ function NodeShell({
   state,
   selected,
   issues,
+  warnings,
   icon: Icon,
   type,
   children,
@@ -199,11 +230,9 @@ function NodeShell({
         {state && state.status !== "waiting" ? <StatusBadge status={state.status} /> : null}
       </div>
       {children}
-      {issues ? (
+      {issues || warnings ? (
         <div className="node-tools">
-          <Tooltip content={t("editor.nodes.issuesTip")}>
-            <span className="node-issues">{t("editor.nodes.issues", { count: issues })}</span>
-          </Tooltip>
+          <NodeProblems issues={issues} warnings={warnings} />
         </div>
       ) : null}
       {output ? (

@@ -26,6 +26,7 @@ import { toast } from "../components/toast";
 import { Badge, Button, Callout, HelpTip } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatCost, type Tone } from "../lib/format";
+import { useModelName } from "../components/ModelPicker";
 
 const DELEGATING = new Set(["delegate", "parallel"]);
 
@@ -385,6 +386,7 @@ function Limits({ node, record, state }: { node: WorkflowNode; record: Orchestra
 export function OrchestrationView({ node, state, run }: { node: WorkflowNode; state: NodeRun; run?: Run }) {
   const { t } = useTranslation();
   const workflows = useWorkflows();
+  const modelLabel = useModelName();
   const record = state.orchestration;
   if (!record) return null;
   const names = new Map((workflows.data ?? []).map((item) => [item.id, item.name]));
@@ -394,7 +396,7 @@ export function OrchestrationView({ node, state, run }: { node: WorkflowNode; st
   return (
     <div className="stack-sm" data-testid="orchestration">
       <span className="nd-field-label">
-        {t("flow.orchestrator.run.who", { name: node.label || t("editor.nodes.orchestrator"), model: model ?? "–" })}
+        {t("flow.orchestrator.run.who", { name: node.label || t("editor.nodes.orchestrator"), model: model ? modelLabel(model) : "–" })}
       </span>
       <span className="small">
         {t("flow.orchestrator.run.summary", { decisions: record.steps.length, delegations: delegations.length })}

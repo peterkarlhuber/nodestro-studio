@@ -34,7 +34,10 @@
     "approval": "Freigabe",
     "subworkflow": "Unterworkflow",
     "branchPort": "Ausgang des Zweigs {{name}}",
-    "orchestrator": "Orchestrator"
+    "orchestrator": "Orchestrator",
+    "warnings_one": "{{count}} Warnung",
+    "warnings_other": "{{count}} Warnungen",
+    "warningsTip": "Der Workflow kann starten, aber hier passt etwas wahrscheinlich nicht. Wähle den Knoten aus, um die Hinweise zu sehen."
   },
   "canvas": {
     "unsaved": "Ungespeicherte Änderungen",
@@ -50,7 +53,10 @@
     "undo": "Rückgängig (Strg+Z)",
     "redo": "Wiederholen (Strg+Umschalt+Z)",
     "edgeLabel": "Verbindung von {{source}} zu {{target}}. Entf löscht sie.",
-    "dropInvalid": "Dieses Element lässt sich nicht auf der Fläche ablegen."
+    "dropInvalid": "Dieses Element lässt sich nicht auf der Fläche ablegen.",
+    "removedOne": "„{{name}}“ entfernt.",
+    "removedMany_one": "{{count}} Knoten entfernt.",
+    "removedMany_other": "{{count}} Knoten entfernt."
   },
   "palette": {
     "title": "Bausteine",
@@ -67,7 +73,12 @@
     "subworkflowHint": "Führt einen anderen Workflow als Schritt aus",
     "teams": "Teams",
     "teamDelivers": "liefert {{fields}}",
-    "orchestratorHint": "Ein KI-Modell verteilt die Aufgabe an Teams"
+    "orchestratorHint": "Ein KI-Modell verteilt die Aufgabe an Teams",
+    "teamCapabilities": "Fähigkeiten: {{tags}}",
+    "teamsCount_one": "Teams ({{count}})",
+    "teamsCount_other": "Teams ({{count}})",
+    "searchTeams": "Teams durchsuchen",
+    "noTeamMatch": "Kein Team passt zur Suche."
   },
   "inspector": {
     "agent": "Agent konfigurieren",
@@ -101,7 +112,16 @@
     "controlDelete": "<kbd>Entf</kbd> löscht die Auswahl, <kbd>Strg</kbd>+<kbd>D</kbd> dupliziert",
     "controlUndo": "<kbd>Strg</kbd>+<kbd>Z</kbd> rückgängig, <kbd>Strg</kbd>+<kbd>S</kbd> speichert",
     "controlPanels": "Trennlinien ziehen, um die Bereiche anzupassen; Doppelklick auf einen Knoten zeigt seine Eigenschaften",
-    "connection": "Verbindung"
+    "connection": "Verbindung",
+    "selection": "Auswahl",
+    "selectedCount_one": "{{count}} Knoten ausgewählt",
+    "selectedCount_other": "{{count}} Knoten ausgewählt",
+    "duplicateAll": "Alle duplizieren",
+    "deleteAll_one": "{{count}} Knoten löschen",
+    "deleteAll_other": "{{count}} Knoten löschen",
+    "clearSelection": "Auswahl aufheben",
+    "selectionHint": "Umschalt- oder Strg-Klick nimmt Knoten dazu, Umschalt und Ziehen auf der Fläche wählt mit einem Rahmen. Ziehen verschiebt alle, Entf löscht alle, Strg+D dupliziert alle.",
+    "nodeProblems": "Probleme dieses Knotens"
   },
   "design": {
     "title": "Agent mit KI entwerfen",
@@ -139,7 +159,9 @@
     "budgetText": "Budget für diesen Lauf: {{budget}}. Der Lauf bricht ab, sobald es überschritten wird.",
     "unlimited": "unbegrenzt",
     "providerMissing": "Noch nicht eingerichtet: {{providers}}. Agenten mit diesen Modellen können nicht laufen.",
-    "openSettings": "Einstellungen öffnen"
+    "openSettings": "Einstellungen öffnen",
+    "fixFirst": "Behebe zuerst die Probleme oben.",
+    "moreFiles": "Weitere Dateien mitgeben (optional)"
   },
   "page": {
     "started": "Workflow gestartet",
@@ -149,7 +171,12 @@
     "saveAndContinue": "Speichern und weiter",
     "unsavedText": "Der Workflow hat Änderungen, die noch nicht gespeichert sind.",
     "discardTitle": "Änderungen verwerfen?",
-    "discardText": "Alle ungespeicherten Änderungen und der Verlauf von Rückgängig/Wiederholen werden verworfen. Der Editor lädt den zuletzt gespeicherten Stand."
+    "discardText": "Alle ungespeicherten Änderungen und der Verlauf von Rückgängig/Wiederholen werden verworfen. Der Editor lädt den zuletzt gespeicherten Stand.",
+    "startBlockedMany_one": "{{count}} Problem verhindert den Start: {{first}}",
+    "startBlockedMany_other": "{{count}} Probleme verhindern den Start. Zuerst: {{first}}",
+    "showProblem": "Zeigen",
+    "moreActions": "Weitere Aktionen",
+    "exportFile": "Als Datei exportieren"
   },
   "check": {
     "title": "Prüfung",

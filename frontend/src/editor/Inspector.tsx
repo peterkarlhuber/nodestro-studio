@@ -1,4 +1,4 @@
-import { CheckCircle2, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from "lucide-react";
+import { CheckCircle2, Copy, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from "lucide-react";
 import { type Ref, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -9,10 +9,11 @@ import {
   MAX_STEPS_LIMIT,
   type WorkflowCheck,
 } from "../api/types";
-import { Chip, DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../components/ui";
+import { Button, Chip, DocLink, Field, HelpTip, IconButton, TextArea, TextInput } from "../components/ui";
+import { removeWithUndo } from "./actions";
 import { WorkflowDependencies } from "../python/DependencyPanel";
 import { AgentInspector } from "./AgentInspector";
-import { CheckList } from "./CheckList";
+import { CheckList, findings } from "./CheckList";
 import { ConnectionInspector } from "./ConnectionInspector";
 import { addCapabilities } from "../lib/capabilities";
 import { useEditorLayout } from "./layout";
@@ -23,6 +24,7 @@ import { useEditor } from "./store";
 export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefined; panelRef?: Ref<HTMLElement> }) {
   const { t } = useTranslation();
   const selectedId = useEditor((s) => s.selectedId);
+  const several = useEditor((s) => s.selectedIds.length > 1);
   const node = useEditor((s) => s.nodes.find((item) => item.id === s.selectedId));
   // Collapsing only hides the panel: the selection stays, and opening it again shows the same node.
   const open = useEditorLayout((state) => state.open.inspector);
@@ -32,7 +34,10 @@ export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefine
 
   let label = t("editor.inspector.workflow");
   let content = <WorkflowInspector check={check} />;
-  if (!selected && edgeId) {
+  if (several) {
+    label = t("editor.inspector.selection");
+    content = <SelectionInspector />;
+  } else if (!selected && edgeId) {
     label = t("editor.inspector.connection");
     content = <ConnectionInspector key={edgeId} edgeId={edgeId} />;
   } else if (selected?.type === "agent" && selected.agent) {
@@ -48,7 +53,7 @@ export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefine
       ) : selected.type === "subworkflow" && selected.subworkflow ? (
         <SubworkflowInspector key={selected.id} node={selected} />
       ) : selected.type === "orchestrator" && selected.orchestrator ? (
-        <OrchestratorInspector key={selected.id} node={selected} />
+        <OrchestratorInspector key={selected.id} node={selected} check={check} />
       ) : (
         <TerminalInspector key={selected.id} nodeId={selected.id} />
       );
@@ -74,7 +79,10 @@ export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefine
         {open ? <span className="panel-head__title">{t("editor.panels.inspector")}</span> : null}
       </div>
       {open ? (
-        <div className="inspector__body">{content}</div>
+        <div className="inspector__body">
+          {selected && !several ? <NodeFindings check={check} nodeId={selected.id} /> : null}
+          {content}
+        </div>
       ) : (
         // The collapsed rail still names what is selected and opens the panel on click.
         <button type="button" className="inspector__rail" onClick={() => setOpen("inspector", true)} tabIndex={-1} aria-hidden>
@@ -87,10 +95,48 @@ export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefine
 
 const KEYS = { kbd: <kbd /> };
 
+/** The check's errors and warnings about the selected node, above its settings (also workflow-level ones). */
+function NodeFindings({ check, nodeId }: { check: WorkflowCheck | undefined; nodeId: string }) {
+  const { t } = useTranslation();
+  const count = findings(check).filter((finding) => finding.level !== "info" && finding.nodeId === nodeId).length;
+  if (!check || !count) return null;
+  return (
+    <section className="check-panel check-panel--node" aria-label={t("editor.inspector.nodeProblems")} data-testid="node-findings">
+      <CheckList check={check} levels={["error", "warning"]} nodeId={nodeId} />
+    </section>
+  );
+}
+
+/** Several nodes are selected: what can be done with all of them at once. */
+function SelectionInspector() {
+  const { t } = useTranslation();
+  const ids = useEditor((s) => s.selectedIds);
+  const names = useEditor((s) => s.nodes.filter((node) => s.selectedIds.includes(node.id)).map((node) => node.label));
+  const { duplicateNodes, select } = useEditor.getState();
+  return (
+    <div className="inspector__content" data-testid="selection-inspector">
+      <h2 className="inspector__heading">{t("editor.inspector.selectedCount", { count: ids.length })}</h2>
+      <p className="muted small">{names.filter(Boolean).join(", ")}</p>
+      <div className="row-gap">
+        <Button icon={Copy} onClick={() => duplicateNodes(ids)}>
+          {t("editor.inspector.duplicateAll")}
+        </Button>
+        <Button icon={Trash2} variant="danger" onClick={() => removeWithUndo(ids)}>
+          {t("editor.inspector.deleteAll", { count: ids.length })}
+        </Button>
+        <Button variant="ghost" onClick={() => select(null)}>
+          {t("editor.inspector.clearSelection")}
+        </Button>
+      </div>
+      <p className="field__hint">{t("editor.inspector.selectionHint")}</p>
+    </div>
+  );
+}
+
 function TerminalInspector({ nodeId }: { nodeId: string }) {
   const { t } = useTranslation();
   const node = useEditor((s) => s.nodes.find((item) => item.id === nodeId))!;
-  const { updateNode, removeNodes } = useEditor.getState();
+  const { updateNode } = useEditor.getState();
   const isStart = node.type === "start";
   const title = isStart ? t("editor.nodes.start") : t("editor.nodes.output");
   return (
@@ -102,7 +148,7 @@ function TerminalInspector({ nodeId }: { nodeId: string }) {
           </h2>
           <p className="muted small">{isStart ? t("editor.inspector.startText") : t("editor.inspector.outputText")}</p>
         </div>
-        <IconButton icon={Trash2} label={t("editor.inspector.deleteNode")} onClick={() => removeNodes([node.id])} />
+        <IconButton icon={Trash2} label={t("editor.inspector.deleteNode")} onClick={() => removeWithUndo([node.id])} />
       </div>
       <Field label={t("editor.inspector.label")}>
         <TextInput value={node.label} onChange={(e) => updateNode(node.id, { label: e.target.value }, { record: false })} />
@@ -150,26 +196,8 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
         <DocLink to="workflows#einstellungen" label={t("editor.inspector.workflowDocs")} />
       </h2>
       <p className="muted small">{t("editor.inspector.selectNode")}</p>
-      <Field label={t("common.name")}>
-        <TextInput value={name} onChange={(e) => setMeta({ name: e.target.value })} />
-      </Field>
-      <Field label={t("common.description")}>
-        <TextArea rows={3} value={description} onChange={(e) => setMeta({ description: e.target.value })} />
-      </Field>
-      <Field label={t("editor.inspector.budget")} hint={t("editor.inspector.budgetHint")} tip="workflow.budget">
-        <TextInput
-          type="number"
-          min={0}
-          step={0.1}
-          value={budget ?? ""}
-          onChange={(e) => setMeta({ budget: e.target.value === "" ? null : Number(e.target.value) })}
-        />
-      </Field>
-      <LimitFields />
-      <CapabilityField />
-      {workflowId ? <WorkflowDependencies workflowId={workflowId} workflow={toWorkflow()} /> : null}
       {check ? (
-        <section className="check-panel" aria-label={t("editor.inspector.problemsLabel")}>
+        <section className="check-panel" tabIndex={-1} aria-label={t("editor.inspector.problemsLabel")}>
           <h3 className="check-panel__title">
             {t("editor.check.title")} <HelpTip id="workflow.problems" label={t("editor.inspector.problemsLabel")} />
           </h3>
@@ -190,6 +218,24 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
           <CheckList check={check} levels={["info"]} />
         </section>
       ) : null}
+      <Field label={t("common.name")}>
+        <TextInput value={name} onChange={(e) => setMeta({ name: e.target.value })} />
+      </Field>
+      <Field label={t("common.description")}>
+        <TextArea rows={3} value={description} onChange={(e) => setMeta({ description: e.target.value })} />
+      </Field>
+      <Field label={t("editor.inspector.budget")} hint={t("editor.inspector.budgetHint")} tip="workflow.budget">
+        <TextInput
+          type="number"
+          min={0}
+          step={0.1}
+          value={budget ?? ""}
+          onChange={(e) => setMeta({ budget: e.target.value === "" ? null : Number(e.target.value) })}
+        />
+      </Field>
+      <LimitFields />
+      <CapabilityField />
+      {workflowId ? <WorkflowDependencies workflowId={workflowId} workflow={toWorkflow()} /> : null}
       <div className="help-box">
         <strong>
           <Keyboard size={14} aria-hidden /> {t("editor.inspector.controls")}

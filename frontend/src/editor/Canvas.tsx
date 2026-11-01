@@ -4,16 +4,19 @@ import {
   type Connection,
   type Edge,
   type EdgeChange,
+  type FinalConnectionState,
+  type IsValidConnection,
   MiniMap,
   type Node,
   type NodeChange,
   ReactFlow,
   ReactFlowProvider,
+  useNodesInitialized,
   useReactFlow,
   useViewport,
 } from "@xyflow/react";
 import { LayoutGrid, Maximize, Minus, Plus, Redo2, Undo2 } from "lucide-react";
-import { type DragEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { type DragEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -24,7 +27,9 @@ import { formatNumber } from "../lib/format";
 import { childLink, parseTrail } from "../lib/trail";
 import { useEditorLayout } from "./layout";
 import { type FlowNodeData, branchLabel, isBranchTaken, nodeTypes } from "./nodes";
-import { type TeamPreset, useEditor } from "./store";
+import { type TeamPreset, connectionProblem, useEditor } from "./store";
+import { removeWithUndo } from "./actions";
+import { NEW_NODE, openingViewport, registerCanvasView } from "./viewport";
 
 export const DRAG_TYPE = "application/x-nodestro-node";
 
@@ -35,9 +40,6 @@ export interface DragPayload {
 }
 
 const NODE_TYPES: ReadonlySet<string> = new Set<NodeType>(["start", "agent", "output", "condition", "approval", "subworkflow", "orchestrator"]);
-
-/** The size of a new node in canvas units (see .flow-node), so a dropped node is centred on the pointer. */
-const NEW_NODE = { width: 216, height: 96 };
 
 /**
  * Reads what was dropped on the canvas. Anything that is not a building block from the palette
@@ -71,6 +73,10 @@ export function parseDragPayload(raw: string): DragPayload | null {
 export interface CanvasIssues {
   /** Number of errors per node. */
   nodes: Record<string, number>;
+  /** Number of warnings per node (they do not block the start). */
+  warnings?: Record<string, number>;
+  /** The workflow cannot start for a reason outside any node (e.g. a provider without a key). */
+  blocked?: boolean;
   /** Connections with a problem from the workflow check. */
   edges: Record<string, "error" | "warning">;
 }
@@ -84,6 +90,8 @@ export function typingIn(target: EventTarget | null): boolean {
   );
 }
 
+const MULTI_SELECT_KEYS = ["Shift", "Meta", "Control"];
+
 function CanvasInner({ issues }: { issues: CanvasIssues }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -91,10 +99,14 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
   const nodes = useEditor((s) => s.nodes);
   const edges = useEditor((s) => s.edges);
   const selectedId = useEditor((s) => s.selectedId);
+  const selectedIds = useEditor((s) => s.selectedIds);
+  const canUndo = useEditor((s) => s.past.length > 0);
+  const canRedo = useEditor((s) => s.future.length > 0);
+  const workflowId = useEditor((s) => s.workflowId);
   const selectedEdgeId = useEditor((s) => s.selectedEdgeId);
   const run = useEditor((s) => s.run);
   const dirty = useEditor((s) => s.dirty);
-  const { moveNodes, removeNodes, removeEdges, connect, select, selectEdge, addNode, undo, redo, autoLayout, duplicateNode } =
+  const { moveNodes, removeEdges, connect, select, setSelection, selectEdge, addNode, undo, redo, autoLayout, duplicateNodes } =
     useEditor.getState();
   const flow = useReactFlow();
   const { zoom } = useViewport();
@@ -107,11 +119,17 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         id: node.id,
         type: node.type,
         position: node.position,
-        selected: node.id === selectedId,
+        selected: selectedIds.includes(node.id),
         measured: sizes[node.id],
-        data: { node, state: run?.nodes[node.id], issues: issues.nodes[node.id] ?? 0 } satisfies FlowNodeData,
+        data: {
+          node,
+          state: run?.nodes[node.id],
+          issues: issues.nodes[node.id] ?? 0,
+          warnings: issues.warnings?.[node.id] ?? 0,
+          blocked: issues.blocked ?? false,
+        } satisfies FlowNodeData,
       })),
-    [nodes, selectedId, run, issues, sizes],
+    [nodes, selectedIds, run, issues, sizes],
   );
 
   const flowEdges: Edge[] = useMemo(
@@ -159,6 +177,9 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
       let finished = false;
       const removed: string[] = [];
       const measured: Record<string, { width: number; height: number }> = {};
+      // Selection changes (click, Shift/Ctrl click, selection box) apply to the current set of selected nodes.
+      const picked = new Set(useEditor.getState().selectedIds);
+      let selecting = false;
       for (const change of changes) {
         if (change.type === "dimensions" && change.dimensions) measured[change.id] = change.dimensions;
         if (change.type === "position" && change.position) {
@@ -166,17 +187,20 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
           if (change.dragging === false) finished = true;
         } else if (change.type === "position" && change.dragging === false) {
           finished = true;
-        } else if (change.type === "select" && change.selected) {
-          select(change.id);
+        } else if (change.type === "select") {
+          selecting = true;
+          if (change.selected) picked.add(change.id);
+          else picked.delete(change.id);
         } else if (change.type === "remove") {
           removed.push(change.id);
         }
       }
       if (Object.keys(positions).length || finished) moveNodes(positions, finished);
-      if (removed.length) removeNodes(removed);
+      if (removed.length) removeWithUndo(removed);
+      if (selecting) setSelection([...picked]);
       if (Object.keys(measured).length) setSizes((current) => ({ ...current, ...measured }));
     },
-    [moveNodes, removeNodes, select],
+    [moveNodes, setSelection],
   );
 
   const onEdgesChange = useCallback(
@@ -197,6 +221,63 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
     },
     [connect, t],
   );
+
+  // While a connection is dragged, only targets it can really connect to light up (the same rules as connect()).
+  const isValidConnection = useCallback<IsValidConnection>((connection) => {
+    if (!connection.source || !connection.target) return false;
+    const { nodes: current, edges: links } = useEditor.getState();
+    return connectionProblem(current, links, connection.source, connection.target, connection.sourceHandle ?? null) === null;
+  }, []);
+
+  // Dropped on a node it cannot connect to: say why, instead of silently doing nothing.
+  const onConnectEnd = useCallback(
+    (_event: MouseEvent | TouchEvent, state: FinalConnectionState) => {
+      if (state.isValid !== false || !state.fromNode || !state.toNode) return;
+      const { nodes: current, edges: links } = useEditor.getState();
+      const outgoing = state.fromHandle?.type !== "target";
+      const source = outgoing ? state.fromNode.id : state.toNode.id;
+      const target = outgoing ? state.toNode.id : state.fromNode.id;
+      const handle = outgoing ? state.fromHandle?.id : state.toHandle?.id;
+      const problem = connectionProblem(current, links, source, target, handle ?? null);
+      if (problem) toast.info(t(problem));
+    },
+    [t],
+  );
+
+  // A large workflow opens readable: fitted when that stays readable, otherwise at a readable zoom from the start.
+  const initialized = useNodesInitialized();
+  const opened = useRef<string | null>(null);
+  const paneRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!initialized || !workflowId || opened.current === workflowId) return;
+    opened.current = workflowId;
+    void Promise.resolve(flow.fitView({ padding: 0.12, maxZoom: 1.1 })).then(() => {
+      const pane = paneRef.current?.getBoundingClientRect();
+      if (!pane) return;
+      const placed = flow.getNodes().map((node) => ({ type: node.type ?? "", position: node.position, height: node.measured?.height }));
+      const next = openingViewport(flow.getViewport(), placed, pane);
+      if (next !== flow.getViewport()) void flow.setViewport(next);
+    });
+  }, [initialized, workflowId, flow]);
+
+  // The palette and the title actions add nodes where the user looks (see viewport.ts).
+  useEffect(() => {
+    registerCanvasView({
+      visible: () => {
+        const pane = paneRef.current?.getBoundingClientRect();
+        if (!pane || !pane.width) return null;
+        const topLeft = flow.screenToFlowPosition({ x: pane.left, y: pane.top });
+        const bottomRight = flow.screenToFlowPosition({ x: pane.right, y: pane.bottom });
+        return { x: topLeft.x, y: topLeft.y, width: bottomRight.x - topLeft.x, height: bottomRight.y - topLeft.y };
+      },
+      reveal: (_id, position) =>
+        void flow.setCenter(position.x + NEW_NODE.width / 2, position.y + NEW_NODE.height / 2, {
+          zoom: flow.getZoom(),
+          duration: 200,
+        }),
+    });
+    return () => registerCanvasView(null);
+  }, [flow]);
 
   const onDragOver = useCallback((event: DragEvent) => {
     // Always prevent the default: a file dropped by mistake would otherwise replace the page
@@ -234,12 +315,13 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
       const mod = event.metaKey || event.ctrlKey;
       if ((event.key === "Delete" || event.key === "Backspace") && !mod && !event.altKey) {
         const { selectedEdgeId: edgeId, selectedId: nodeId } = useEditor.getState();
+        const nodeIds = useEditor.getState().selectedIds;
         if (edgeId) {
           event.preventDefault();
           removeEdges([edgeId]);
-        } else if (nodeId) {
+        } else if (nodeIds.length || nodeId) {
           event.preventDefault();
-          removeNodes([nodeId]);
+          removeWithUndo(nodeIds.length ? nodeIds : [nodeId as string]);
         }
         return;
       }
@@ -251,21 +333,21 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         event.preventDefault();
         redo();
       } else if (mod && event.key.toLowerCase() === "d") {
-        const id = useEditor.getState().selectedId;
-        if (id) {
+        const ids = useEditor.getState().selectedIds;
+        if (ids.length) {
           event.preventDefault();
-          duplicateNode(id);
+          duplicateNodes(ids);
         }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [undo, redo, duplicateNode, removeEdges, removeNodes]);
+  }, [undo, redo, duplicateNodes, removeEdges]);
 
   const agents = nodes.filter((node) => node.type === "agent").length;
 
   return (
-    <div className="canvas nd-workflow-canvas" onDragOver={onDragOver} onDrop={onDrop}>
+    <div className="canvas nd-workflow-canvas" onDragOver={onDragOver} onDrop={onDrop} ref={paneRef}>
       <div className="canvas-status" data-dirty={dirty || undefined}>
         {dirty ? t("editor.canvas.unsaved") : t("common.saved")} · {t("editor.canvas.agents", { count: agents })} ·{" "}
         {t("editor.canvas.connections", { count: edges.length })}
@@ -277,6 +359,10 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        isValidConnection={isValidConnection}
+        onConnectEnd={onConnectEnd}
+        // Shift or Ctrl/Cmd click adds a node to the selection; Shift-drag on the background draws a selection box.
+        multiSelectionKeyCode={MULTI_SELECT_KEYS}
         onEdgeClick={(_event, edge) => selectEdge(edge.id)}
         // A double-click on a node shows its properties, also when the inspector is collapsed.
         // On a sub-workflow (a team) it opens that workflow, with the way back in the breadcrumbs.
@@ -294,8 +380,6 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         onPaneClick={() => select(null)}
         // Deleting is handled above, so it never fires while a text field has the focus.
         deleteKeyCode={null}
-        fitView
-        fitViewOptions={{ padding: 0.12, maxZoom: 1.1 }}
         minZoom={0.2}
         maxZoom={2}
         proOptions={{ hideAttribution: true }}
@@ -333,8 +417,8 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
           />
         </div>
         <div className="floatbox floatbox--group">
-          <IconButton icon={Undo2} label={t("editor.canvas.undo")} onClick={undo} />
-          <IconButton icon={Redo2} label={t("editor.canvas.redo")} onClick={redo} />
+          <IconButton icon={Undo2} label={t("editor.canvas.undo")} onClick={undo} disabled={!canUndo} />
+          <IconButton icon={Redo2} label={t("editor.canvas.redo")} onClick={redo} disabled={!canRedo} />
         </div>
       </div>
     </div>
