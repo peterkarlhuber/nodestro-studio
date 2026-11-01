@@ -69,17 +69,17 @@
     "loopback_toggle": "http só é possível para um servidor de desenvolvimento neste computador: ative “{{toggle}}” abaixo."
   },
   "import": {
-    "not_object": "Este arquivo não é um workflow do Nodestro: ele não contém nenhum objeto de workflow. Exporte um workflow no editor (Exportar) e importe esse arquivo.",
-    "no_nodes": "Este arquivo não é um workflow do Nodestro: ele não tem etapas (\"nodes\"). Exporte um workflow no editor (Exportar) e importe esse arquivo.",
-    "node_invalid": "Este arquivo não é um workflow válido do Nodestro: a etapa {{index}} não tem id ou tipo.",
-    "edges_invalid": "Este arquivo não é um workflow válido do Nodestro: suas conexões (\"edges\") não são uma lista.",
-    "edge_invalid": "Este arquivo não é um workflow válido do Nodestro: a conexão {{index}} não tem início ou fim."
+    "not_object": "Este arquivo não é um fluxo de trabalho do Nodestro: ele não contém nenhum objeto de fluxo de trabalho. Exporte um fluxo de trabalho no editor (Mais ações → Exportar como arquivo) e importe esse arquivo.",
+    "no_nodes": "Este arquivo não é um fluxo de trabalho do Nodestro: ele não tem etapas (\"nodes\"). Exporte um fluxo de trabalho no editor (Mais ações → Exportar como arquivo) e importe esse arquivo.",
+    "node_invalid": "Este arquivo não é um fluxo de trabalho válido do Nodestro: a etapa {{index}} não tem id ou tipo.",
+    "edges_invalid": "Este arquivo não é um fluxo de trabalho válido do Nodestro: suas conexões (\"edges\") não são uma lista.",
+    "edge_invalid": "Este arquivo não é um fluxo de trabalho válido do Nodestro: a conexão {{index}} não tem início ou fim."
   },
   "conflict": {
     "title": "Alterado em outro lugar",
-    "text": "Este workflow foi salvo em outro lugar às {{time}} (em outra aba ou por outra pessoa) depois que você o abriu. Salvar agora substituiria essa alteração.",
+    "text": "Este fluxo de trabalho foi salvo em outro lugar às {{time}} (em outra aba ou por outra pessoa) depois que você o abriu. Salvar agora substituiria essa alteração.",
     "reloadHint": "Carregar a versão salva: suas alterações não salvas aqui são descartadas.",
-    "copyHint": "Manter a minha como cópia: o seu estado vira um novo workflow e o salvo fica como está.",
+    "copyHint": "Manter a minha como cópia: o seu estado vira um novo fluxo de trabalho e o salvo fica como está.",
     "overwriteHint": "Salvar a minha mesmo assim: o seu estado substitui a outra alteração.",
     "versions": "Nada se perde para sempre: cada salvamento fica em Versões, onde você pode compará-lo e restaurá-lo.",
     "keepEditing": "Continuar editando",
@@ -87,7 +87,7 @@
     "copy": "Manter a minha como cópia",
     "overwrite": "Salvar a minha mesmo assim",
     "copyName": "{{name}} (minha cópia)",
-    "copied": "Salvo como o novo workflow “{{name}}”.",
+    "copied": "Salvo como o novo fluxo de trabalho “{{name}}”.",
     "reloaded": "A versão salva foi carregada."
   },
   "compat": {
@@ -99,7 +99,7 @@
     "offDocs": "Como funcionam as aprovações por chamada",
     "preparation": "Preparação para administradores",
     "legacyNotRunOn": "A etapa de ativação ainda não foi executada: atribuições anteriores são perguntadas como as novas.",
-    "stampHintOn": "Marca como exceções as atribuições que existem agora em workflows, versões e releases publicadas, para que continuem funcionando sem perguntas. Revise a lista depois; a etapa é executada apenas uma vez."
+    "stampHintOn": "Marca como exceções as atribuições que existem agora em fluxos de trabalho, versões e releases publicadas, para que continuem funcionando sem perguntas. Revise a lista depois; a etapa é executada apenas uma vez."
   },
   "request": {
     "title": "A solicitação não corresponde à entrada da API:",

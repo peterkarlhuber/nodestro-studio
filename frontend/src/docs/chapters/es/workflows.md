@@ -245,7 +245,7 @@ Las versiones son independientes de deshacer/rehacer, que solo vale dentro de un
 - **Exportar como archivo** (en el editor, en **Más acciones**) guarda el flujo como `<Nombre>.nodestro.json`: todos los nodos, conexiones, posiciones y ajustes de agentes, además del presupuesto.
 - **Importar** (en la página *Flujos de trabajo*) carga un archivo así como **copia nueva** con un ID nuevo. Los flujos existentes nunca se sobrescriben. Si el archivo no tiene nombre, el flujo se llama como el archivo.
 
-Nodestro comprueba el archivo antes de crear nada. Si no es una exportación de un flujo (por ejemplo, otro archivo JSON, un archivo sin pasos o con conexiones rotas), no se importa nada y el mensaje indica el motivo, por ejemplo que el archivo no tiene pasos («nodes»).
+Nodestro comprueba el archivo antes de crear nada. Si no es una exportación de un flujo (por ejemplo, otro archivo JSON, un archivo sin pasos o con conexiones rotas), no se importa nada y el mensaje indica el motivo, por ejemplo *Este archivo no es un flujo de trabajo de Nodestro: no tiene pasos ("nodes").*
 
 **No se incluyen** los archivos de conocimiento, los espacios de memoria ni las herramientas propias; el archivo solo hace referencia a sus ID y nombres. En otro ordenador tienen que existir allí; si no, la comprobación indica, por ejemplo, «Herramientas desconocidas».
 
