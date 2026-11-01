@@ -8,14 +8,18 @@ import { Link } from "react-router-dom";
 
 import type { Run } from "../api/types";
 import { Callout } from "../components/ui";
-import { ProblemText, problemCode, runProblem } from "../lib/errors";
+import { PROVIDER_FAILURES, ProblemText, isProviderAuth, problemCode, runProblem } from "../lib/errors";
 import { failedSteps } from "./runSummary";
 
 /** Codes of a failed agent whose fix is a setting under "Advanced" of that agent. */
 const ADVANCED_FIX = new Set(["run.agent.IncompleteResponseError", "run.agent.OutputLimitReached", "run.agent.MaxToolRoundsError"]);
 
-/** Provider failures whose fix starts in Settings (the key) or that name the model the step asked. */
+/**
+ * Provider failures, which name the model the step asked: the runtime's own codes first, then the readings of
+ * older runs' ``run.api_error`` (see refineProblem).
+ */
 const PROVIDER = new Set([
+  ...PROVIDER_FAILURES,
   "run.api_error_auth",
   "run.api_error_rate_limit",
   "run.api_error_server",
@@ -51,7 +55,7 @@ export function RunProblem({ run, children }: { run: Run; children?: ReactNode }
               {t("runs.failure.model", { model: first.agent.model })}
             </span>
           ) : null}
-          {code === "run.api_error_auth" ? (
+          {isProviderAuth(code) ? (
             <Link className="small run-problem__fix" to="/settings">
               <Settings size={12} aria-hidden /> {t("runs.failure.openSettings")}
             </Link>

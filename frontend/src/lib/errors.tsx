@@ -107,18 +107,33 @@ function resolved(item: Coded): { code: string | null; params: Record<string, un
 }
 
 /**
+ * Provider failures the runtime sorts itself (AD-01): the key (``run.provider_auth``), no answer
+ * (``run.provider_unreachable``), too many requests (``run.provider_rate_limited``) and no capacity
+ * (``run.provider_overloaded``), with ``params.provider`` and, when the provider answered, ``params.status``.
+ */
+export const PROVIDER_FAILURES = new Set([
+  "run.provider_auth",
+  "run.provider_unreachable",
+  "run.provider_rate_limited",
+  "run.provider_overloaded",
+]);
+
+/**
  * A more specific reading of a few agent failures, from facts the runtime already reports: the HTTP status of a
  * provider error and the stop reason in the technical text of an incomplete response. The codes it returns
  * (``run.api_error_*``, ``run.agent.ContextWindowExceeded``) exist only in the interface, for their own sentence
- * and advice; nothing is guessed beyond what the run recorded.
+ * and advice; nothing is guessed beyond what the run recorded. Runs since the runtime sorts provider failures
+ * itself carry ``run.provider_*`` and are taken as they are; ``run.api_error`` then only means "anything else",
+ * and the reading of its status stays for that and for older runs.
  */
 export function refineProblem(
   code: string | null,
   params: Record<string, unknown>,
   message: string,
 ): { code: string | null; params: Record<string, unknown> } {
+  // The sentences name the provider; without one they speak of the provider in general.
+  if (code && PROVIDER_FAILURES.has(code)) return { code, params: { ...params, provider: params.provider ?? "" } };
   if (code === "run.api_error") {
-    // The sentences name the provider; without one they speak of the provider in general.
     params = { ...params, provider: params.provider ?? "" };
     // The technical text names the library's error class; the status is the provider's HTTP answer (empty when
     // there was none). Either clearly tells the cause; otherwise the general sentence stays, without a status.
@@ -229,6 +244,11 @@ export function ErrorText({ error, compact }: { error: unknown; compact?: boolea
 /** Coded message of a run or node: its error with code, or the legacy text. */
 export function runProblem(target: { error: string | null; error_code?: string | null; error_params?: Record<string, unknown> }): Coded {
   return { code: target.error_code ?? null, params: target.error_params ?? {}, message: target.error };
+}
+
+/** A refused API key, from the runtime's own code or read from an older run's provider error. */
+export function isProviderAuth(code: string | null | undefined): boolean {
+  return code === "run.provider_auth" || code === "run.api_error_auth";
 }
 
 /** Problems a person solves in Settings → AI providers (a missing key or endpoint), with or without an area prefix. */

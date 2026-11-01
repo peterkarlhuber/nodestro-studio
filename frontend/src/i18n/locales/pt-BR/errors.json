@@ -116,7 +116,10 @@
     "orchestrator_no_members": "{{node}} não tem equipes para escolher.",
     "orchestrator_member_duplicate": "{{node}} cita uma equipe duas vezes.",
     "orchestrator_self": "{{node}} escolheria o próprio fluxo de trabalho como equipe.",
-    "orchestrator_limits": "{{node}} permite a uma equipe mais usos do que decisões no total."
+    "orchestrator_limits": "{{node}} permite a uma equipe mais usos do que decisões no total.",
+    "revision_invalid": "Ao salvar, foi indicada uma versão desconhecida do workflow. Recarregue a página e salve de novo.",
+    "conflict": "O workflow “{{name}}” foi alterado desde que você o abriu. Recarregue-o para ver a versão mais recente.",
+    "runs_active": "Ainda há execuções deste workflow em andamento. Exclua-o quando elas tiverem terminado ou sido canceladas."
   },
   "run": {
     "failed": "A etapa falhou.",
@@ -169,7 +172,11 @@
     "api_error_invalid": "{{provider}} recusou a solicitação como inválida.",
     "api_error_status": "{{provider}} recusou a solicitação (status {{status}}).",
     "already_queued": "Esta execução já está aguardando ou em andamento, por isso não foi iniciada uma segunda vez. Espere ela terminar ou acompanhe-a na página Execuções.",
-    "not_executable": "Esta execução não pode ser iniciada: só uma execução aguardando ou pausada pode rodar, e esta já está em andamento ou terminou. Abra-a na página Execuções para ver o estado."
+    "not_executable": "Esta execução não pode ser iniciada: só uma execução aguardando ou pausada pode rodar, e esta já está em andamento ou terminou. Abra-a na página Execuções para ver o estado.",
+    "provider_auth": "{{provider}} não aceitou a chave de API: ela está faltando, errada, expirada ou sem a permissão necessária.",
+    "provider_unreachable": "Não foi possível alcançar {{provider}}.",
+    "provider_rate_limited": "{{provider}} informou solicitações ou tokens demais em pouco tempo (limite de taxa).",
+    "provider_overloaded": "{{provider}} está sobrecarregado no momento."
   },
   "trace": {
     "invalid": "O trace está danificado ou incompleto.",
@@ -785,8 +792,18 @@
       "budget_exceeded": "Aumente o orçamento nas configurações do workflow ou continue a execução com um novo orçamento.",
       "time_limit": "Aumente o limite de tempo em \"Limites\" nas configurações do workflow se a execução precisar de mais tempo.",
       "step_limit": "Aumente o limite de etapas em \"Limites\" nas configurações do workflow ou confira os loops.",
-      "orchestration_limit": "Aumente \"Máx. de decisões\" no orquestrador ou diga nas instruções dele quando a tarefa está concluída."
+      "orchestration_limit": "Aumente \"Máx. de decisões\" no orquestrador ou diga nas instruções dele quando a tarefa está concluída.",
+      "provider_auth": "Confira a chave em Configurações → Provedores de IA e teste a conexão lá.",
+      "provider_unreachable": "Confira a conexão com a internet, o firewall ou o proxy e depois continue a execução.",
+      "provider_rate_limited": "Aguarde um momento e continue a execução. Menos execuções ao mesmo tempo ou um limite maior no provedor resolvem de vez.",
+      "provider_overloaded": "Isso não é causado pelo seu workflow. Aguarde alguns minutos e depois continue a execução."
     }
   },
-  "setupProvider": "Configurar provedor de IA"
+  "setupProvider": "Configurar provedor de IA",
+  "runs": {
+    "cursor_invalid": "Esta parte da lista de execuções não foi encontrada. Volte ao início da lista."
+  },
+  "model_choice": {
+    "node_unknown": "O workflow não tem mais nenhum agente “{{node}}”. Recarregue a página."
+  }
 }

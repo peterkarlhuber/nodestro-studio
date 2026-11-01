@@ -272,6 +272,34 @@ describe("backend messages", () => {
     }
   });
 
+  it("have their own sentence for the newer API refusals, in every language", async () => {
+    const refusals = [
+      { code: "runs.cursor_invalid", params: { before: "yesterday" } },
+      { code: "workflow.revision_invalid", params: { revision: "x" } },
+      { code: "workflow.conflict", params: { name: "Rechnungen", updated_at: "2026-11-01T10:00:00Z" } },
+      { code: "workflow.runs_active", params: { runs: 2 } },
+      { code: "workflow.edge_dangling", params: {} },
+      { code: "workflow.node_duplicate", params: { id: "a" } },
+      { code: "identity.login_expired", params: {} },
+      { code: "model_choice.node_unknown", params: { node: "writer" } },
+      { code: "run.provider_auth", params: { provider: "anthropic", status: 401 } },
+      { code: "run.provider_unreachable", params: { provider: "anthropic" } },
+      { code: "run.provider_rate_limited", params: { provider: "anthropic", status: 429 } },
+      { code: "run.provider_overloaded", params: { provider: "anthropic", status: 529 } },
+    ];
+    await setLanguage("en", false);
+    const english = refusals.map((item) => problemText(t, item));
+    for (const language of LANGUAGES) {
+      await setLanguage(language, false);
+      refusals.forEach((item, index) => {
+        const text = problemText(t, item);
+        expect(text, `${language} ${item.code}`).not.toBe(i18n.t("errors.unknown"));
+        expect(text, `${language} ${item.code}`).not.toMatch(/\{\{/);
+        if (language !== "en") expect(text, `${language} ${item.code}`).not.toBe(english[index]);
+      });
+    }
+  });
+
   it("use the plural form of a counted problem", async () => {
     await setLanguage("de", false);
     expect(problemText(t, { code: "assistant.secrets_masked", params: { count: 1 } })).toBe(
