@@ -73,10 +73,8 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
-      # Known advisories in the production dependencies. Not blocking yet: react-router-dom has open high advisories
-      # that the pending react-router-dom upgrade fixes; remove continue-on-error once it is merged.
+      # Fails on high or critical advisories in the production dependencies.
       - name: Dependency audit (production dependencies)
-        continue-on-error: true
         run: npm audit --omit=dev --audit-level=high
 
   package:
