@@ -3,7 +3,7 @@
 > Open work for this repository: release blockers, known bugs, security follow-ups, technical debt and planned improvements.
 > GitHub issues are the source of truth for details; this file is the entry point and summary.
 >
-> **Last full review:** 2026-11-01 against `master` at `8e18cae`.
+> **Last full review:** 2026-11-01 against `master` at `0055a30`.
 
 ## Summary
 
@@ -11,7 +11,7 @@
 |---|---|
 | P0 Critical | 0 |
 | P1 High | 0 |
-| P2 Medium | 3 |
+| P2 Medium | 1 |
 | P3 Low | 21 |
 | P4 Optional | 8 |
 
@@ -40,15 +40,6 @@ None known.
 
 ## Security
 
-### ST-001 · Independent security review of the per-call tool approval interface (S-2)
-
-- **Priority:** P2 Medium · **Status:** Needs external review · **Refs:** `docs/evolution/s-tool-approvals.md`, S-2 pilot
-- **What:** The studio side of per-call tool approvals (approval cards, rules, pre-grants) is built, but the switch
-  `NODESTRO_TOOL_APPROVALS` stays off outside one isolated pilot instance. Broad activation needs an independent
-  security review of the whole mechanism, including this interface.
-- **Next step:** Include the studio approval surfaces in the independent review; activate nothing before it is accepted.
-- **Depends on:** nodestro-runtime and nodestro-api (same review, server-side mechanism).
-
 ### ST-002 · Dependency audit gates production dependencies only
 
 - **Priority:** P4 Optional · **Status:** Open · **Refs:** backend audit D-04, `.github/workflows/ci.yml`
@@ -60,11 +51,11 @@ None known.
 
 ### ST-003 · Runs list and run banner show only "Failed: <step>" (AD-02)
 
-- **Priority:** P2 Medium · **Status:** Blocked (needs a run-level cause from the backend) · **Refs:** #81, UX audit AD-02
+- **Priority:** P3 Low · **Status:** Blocked (needs a run-level cause from the backend) · **Refs:** #81, UX audit AD-02
 - **What:** The run detail page derives the failure cause from step data, but the Runs list row and run-level banner
   only know `run.nodes_failed` with step names, so a budget stop or provider failure reads "Failed: Writer".
 - **Next step:** Agree a run-level cause field with runtime/api, then render "<step>: <reason>" in the list and banner.
-- **Depends on:** nodestro-runtime (store the cause on the run), nodestro-api (expose it in run summaries).
+- **Depends on:** nodestro-runtime RT-012 (store the cause on the run), nodestro-api API-018 (expose it in run summaries).
 
 ## Architecture and modularity
 
@@ -80,14 +71,6 @@ None known.
 - **Next step:** Profile the canvas mount, fix the dominant long tasks, keep a repeatable measurement.
 
 ## Features and enhancements
-
-### ST-005 · Live run chat and steering (LRC-1)
-
-- **Priority:** P2 Medium · **Status:** In progress · **Refs:** #77
-- **What:** Team leader tab on the run page with questions and instructions to running orchestrators. The PR also
-  re-pins the components (today's master pins are the Amazon Bedrock branch heads, not their merge commits).
-- **Next step:** Merge only after the project owner's explicit approval; re-pin to the merge commits at merge time.
-- **Depends on:** LRC-1 PRs in nodestro-api and nodestro-sdk (same approval).
 
 ### ST-006 · "Back to workflow" after saving a provider key (F8)
 
@@ -142,7 +125,7 @@ None known.
 - **What:** Usage does not show published-API daily budget use, runs stopped by their budget, or that MCP service and
   web-search fees are not included.
 - **Next step:** Add a "Not included" note now; add a Budgets card once the API reports budget use.
-- **Depends on:** nodestro-api (budget usage in the usage response).
+- **Depends on:** nodestro-api API-017 (budget usage in the usage response).
 
 ### ST-015 · New agent defaults: raw `{{input}}` and "Empty template" saving at once (ED-22)
 
@@ -179,7 +162,7 @@ None known.
 
 ### ST-012 · Dependabot pull requests cannot run the full CI
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** #85
+- **Priority:** P2 Medium · **Status:** Open · **Refs:** #85
 - **What:** CI exits when the `NODESTRO_READ` secret is missing, so on Dependabot runs the backend, pins, package and
   browser jobs fail before testing; only the frontend job is meaningful. All component repositories are public now.
 - **Next step:** Install the git dependencies anonymously and make the token optional, as in the other repositories
@@ -190,9 +173,9 @@ None known.
 - **Priority:** P3 Low · **Status:** In progress · **Refs:** #64, #66, #67, #75
 - **What:** actions/setup-node 6.5 → 7.1 (#64), globals 16 → 17 (#66, ESLint config only), jsdom 26 → 30 (#67, unit
   test environment only), npm minor/patch group (#75). The frontend job (lint, typecheck, unit tests, build, audit)
-  passes for all four on Node 22; the browser suites have not run (ST-012). #75 and #77 both touch
-  `frontend/package.json`.
-- **Next step:** After ST-012, re-run full CI; merge the majors one at a time; rebase #75 after #77.
+  passes for all four on Node 22; the browser suites have not run (ST-012). #75 needs a rebase on the
+  `frontend/package.json` changes from #77.
+- **Next step:** After ST-012, re-run full CI; merge the majors one at a time; rebase #75 first.
 
 ## Platform coverage
 
@@ -236,12 +219,12 @@ None known.
   implemented S-2 state.
 - **Next step:** One docs-only PR aligning the status lines with ADR-0006 and `docs/ARCHITECTURE.md`.
 
-### ST-023 · README lists nine browser suites; there are fourteen
+### ST-023 · README lists nine browser suites; there are fifteen
 
 - **Priority:** P4 Optional · **Status:** Open · **Refs:** `README.md` (Development table), `scripts/e2e.sh`
 - **What:** `make e2e` runs smoke, i18n, architect, python, assistant, flow, panels, api, mcp, approvals,
-  orchestration, journeys, welcome and a11y; the README names nine.
-- **Next step:** Update the table row (and add `runchat` if #77 merges).
+  orchestration, runchat, journeys, welcome and a11y; the README names nine.
+- **Next step:** Update the table row.
 
 ### ST-024 · Help links in four dialogs and links from docs into the app (TX-11)
 
@@ -281,7 +264,7 @@ None known.
 - **What:** Components are pinned by commit, but their third-party dependencies are resolved at install time, so studio
   installs (and the server and desktop builds made from them) are not reproducible.
 - **Next step:** Decide on a constraints or lock file for the platform install, together with the other Python repos.
-- **Depends on:** the same decision in nodestro-runtime, nodestro-api and the packaging repositories.
+- **Depends on:** the same decision in nodestro-runtime RT-023 and nodestro-server SRV-014 (desktop builds from the studio pins).
 
 ## Later optimizations
 
@@ -305,15 +288,16 @@ None known.
 
 | This repo item | Other repo | Other item | Relation |
 |---|---|---|---|
-| ST-001 | nodestro-runtime, nodestro-api | S-2 tool approvals review | Same independent review |
-| ST-003 | nodestro-runtime, nodestro-api | Run-level failure cause (AD-02) | Studio needs the field first |
-| ST-005 | nodestro-api, nodestro-sdk | LRC-1 PRs | Merged together after approval |
-| ST-014 | nodestro-api | Budget usage in usage data (AD-20) | Studio needs the field first |
+| (pointer) | nodestro-runtime | RT-001 (independent S-2 review, includes the studio approval surfaces) | Full entry in runtime |
+| ST-003 | nodestro-runtime, nodestro-api | RT-012, API-018 (run-level failure cause, AD-02) | Studio needs the field first |
+| ST-014 | nodestro-api | API-017 (budget usage in usage data, AD-20) | Studio needs the field first |
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |
-| ST-028 | nodestro-runtime, nodestro-api | Dependency locking (D-05) | One shared decision |
+| ST-028 | nodestro-runtime, nodestro-server | RT-023, SRV-014 (dependency locking, D-05) | One shared decision |
+| ST-018, ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update the status documents and `products` together |
+| ST-026 | nodestro-examples | EX-008 (typographic apostrophes) | Same typography decision |
 | ST-031, ST-032 | nodestro-examples | EX-003 (AD-18 marker), EX-001/EX-002 (ED-17) | Examples provide the marker and texts; studio shows them |
-| ST-012 | all component repositories | `NODESTRO_READ` CI change (api #50, sdk #47, runtime #75, server #25, desktop #17) | Same change everywhere |
-| — | nodestro-runtime, nodestro-api | X-01 decision response still `paused`; X-03 error code list | Change lives in runtime/api; studio already adapted |
+| ST-012 | all component repositories | `NODESTRO_READ` CI change (runtime #75 / RT-029, api #50, sdk #47, integrations #36, examples #40, server #25, desktop #17) | Same change everywhere |
+| — | nodestro-runtime, nodestro-api | X-01 decision response still `paused` (RT-005, API-018); X-03 error code list (RT-011, API-016) | Change lives in runtime/api; studio already adapted |
 
 Generated example chapters (`frontend/src/docs/chapters/*/beispiele.md`, between the `examples` markers) come from
 nodestro-examples; fix their content there.
