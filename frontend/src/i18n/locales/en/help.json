@@ -144,7 +144,8 @@
     "synthetic": "All test data is invented and marked as synthetic. Replace it with your own data in the start node.",
     "sequential": "The agents work one after another; each builds on the result of the one before.",
     "parallel": "Several agents work on the same input at the same time; another agent combines their results.",
-    "branching": "The workflow branches by rules or after an approval; not every agent always runs."
+    "branching": "The workflow branches by rules or after an approval; not every agent always runs.",
+    "adaptive": "An orchestrator decides while the workflow runs which teams work on the task, and combines their results. Each team is a workflow of its own."
   },
   "architect": {
     "open": "Let the Workflow Architect design a new workflow or revise this one from a description. You review the draft before anything changes.",

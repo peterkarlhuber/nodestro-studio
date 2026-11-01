@@ -51,6 +51,17 @@ const FALLBACKS: [string, string][] = [
   ["http.", "errors.http"],
 ];
 
+/**
+ * Codes whose texts live under another key: errors.library is the agent library's own sentence, so the example
+ * library's codes ("library.integration_unavailable") are kept under errors.examples.
+ */
+const ALIASES: [string, string][] = [["library.", "examples."]];
+
+function textKey(code: string): string {
+  const alias = ALIASES.find(([prefix]) => code.startsWith(prefix));
+  return alias ? alias[1] + code.slice(alias[0].length) : code;
+}
+
 function interpolationParams(t: TFunction, params: Record<string, unknown> | null | undefined): Record<string, unknown> {
   // Values are shown as they are; nested problems (e.g. why a workflow cannot start) in the current language too.
   const result: Record<string, unknown> = {};
@@ -84,7 +95,8 @@ export function problemText(t: TFunction, item: Coded): string {
   if (code) {
     const values = interpolationParams(t, params);
     // With the values, a plural key ("…_one", "…_other") counts as existing too.
-    if (i18n.exists(`errors.${code}`, values)) return t(`errors.${code}`, values);
+    const key = `errors.${textKey(code)}`;
+    if (i18n.exists(key, values)) return t(key, values);
     const fallback = FALLBACKS.find(([prefix]) => code!.startsWith(prefix));
     if (fallback) return t(fallback[1], values);
   }

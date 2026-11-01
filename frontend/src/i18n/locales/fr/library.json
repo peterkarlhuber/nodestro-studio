@@ -13,6 +13,8 @@
   "noMatch": "Aucun exemple ne correspond à la recherche et à la catégorie.",
   "agents_one": "{{count}} agent",
   "agents_other": "{{count}} agents",
+  "teams_one": "{{count}} équipe",
+  "teams_other": "{{count}} équipes",
   "sensitive": "Vérification experte",
   "copy": "Copier dans mes workflows",
   "copied": "« {{name}} » créé comme copie personnelle",
@@ -31,7 +33,8 @@
   "pattern": {
     "sequential": "Séquentiel",
     "parallel": "Parallèle",
-    "branching": "Avec branches"
+    "branching": "Avec branches",
+    "adaptive": "Adaptatif"
   },
   "feature": {
     "tools": "Outils",
@@ -45,7 +48,13 @@
     "files": "Fichiers de résultat",
     "documents": "Fichiers en entrée",
     "proposals": "Propositions de connaissances",
-    "memory": "Mémoire"
+    "memory": "Mémoire",
+    "orchestrator": "Orchestrateur",
+    "knowledge": "Connaissances",
+    "integration": "Connexion facultative",
+    "loop": "Boucle",
+    "budget": "Budget",
+    "contract": "Contrat de résultat"
   },
   "role": {
     "research": "Recherche",
@@ -59,7 +68,9 @@
     "flow": "Comment les agents collaborent",
     "input": "Entrée",
     "result": "Résultat",
-    "adapt": "L'adapter"
+    "adapt": "L'adapter",
+    "control": "Qui décide quoi",
+    "why": "Pourquoi cette architecture"
   },
   "preview": {
     "loading": "Chargement de l'exemple …",
@@ -77,6 +88,38 @@
     "samplesNote": "Petits fichiers inventés pour essayer les champs de fichier. Télécharge-les et sélectionne-les lors de l'exécution.",
     "tests": "Cas de test",
     "copyTests": "Ajouter les cas de test comme série de tests",
-    "copyTestsNote": "Crée une série de tests avec ces cas. Rien n'est exécuté, aucune planification n'est créée et aucune API n'est publiée."
+    "copyTestsNote": "Crée une série de tests avec ces cas. Rien n'est exécuté, aucune planification n'est créée et aucune API n'est publiée.",
+    "features": "Briques",
+    "budget": "Budget par exécution : {{amount}}",
+    "orchestratorNote": "Ne traite pas la tâche lui-même : il décide pendant l'exécution quelles équipes y travaillent et réunit leurs résultats.",
+    "searches": "Recherche dans : {{names}}",
+    "connection": "Avec connexion : {{names}}",
+    "teams": "Équipes",
+    "teamsNote": "L'orchestrateur choisit pendant l'exécution les équipes adaptées à la tâche. Quand tu copies l'exemple, chaque équipe devient un workflow à part entière que tu peux modifier.",
+    "teamApproval": "S'arrête pour une validation",
+    "capabilities": "Compétences",
+    "teamAgents": "Agents : {{names}}",
+    "teamParameters": "Réglages que l'orchestrateur peut remplir : {{names}}",
+    "teamContract": "Fournit : {{names}}",
+    "knowledge": "Fichiers de connaissances",
+    "knowledgeNote": "Créés dans ta base de connaissances lors de la copie. Les documents sont inventés ; les agents y cherchent et citent leurs sources.",
+    "copyTestsConnected": "Impossible avec une connexion : les séries de tests s'exécutent sans personne et les outils MCP n'y sont pas autorisés. Choisis le mode hors ligne pour reprendre les cas de test."
+  },
+  "connect": {
+    "title_one": "Connexion facultative",
+    "title_other": "Connexions facultatives",
+    "intro": "L'exemple fonctionne sans connexion : la copie s'exécute alors dans un mode hors ligne clairement signalé, avec les données d'exemple. Avec une connexion, les agents lisent des données via des outils en lecture seule approuvés d'un serveur MCP.",
+    "optional": "Connexion facultative",
+    "tools": "Outils nécessaires (approuvés en lecture seule) : {{tools}}",
+    "setup": "Comment la configurer",
+    "offline": "Sans connexion",
+    "choice": "Connexion pour la copie",
+    "offlineMode": "Mode hors ligne (données d'exemple)",
+    "server": "Serveur MCP : {{name}}",
+    "checked": "Lors de la copie, Nodestro vérifie que ce serveur propose chaque outil approuvé en lecture seule. Sinon, rien n'est copié.",
+    "missing": "Manquant ou non approuvé : {{tools}}",
+    "notReadOnly": "Non approuvé en lecture seule : {{tools}}",
+    "noServers": "Aucun serveur MCP n'est encore configuré, la copie s'exécute donc en mode hors ligne.",
+    "setUp": "Configurer les services connectés"
   }
 }

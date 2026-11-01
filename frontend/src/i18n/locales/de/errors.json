@@ -7,6 +7,11 @@
   "not_found": "„{{name}}“ wurde nicht gefunden. Vielleicht wurde es inzwischen gelöscht.",
   "api_key_missing": "Kein API-Schlüssel für {{provider}}. Trage ihn in den Einstellungen ein oder setze die Umgebungsvariable.",
   "library": "Die Agenten-Bibliothek hat die Konfiguration abgelehnt.",
+  "examples": {
+    "integration_unavailable": "Der gewählte MCP-Server kann diese Verbindung nicht bedienen: Er muss jedes Tool anbieten, das das Beispiel braucht, als nur lesend freigegeben. Es wurde nichts kopiert.",
+    "integration_unknown": "Das Beispiel hat keine Verbindung „{{integration}}“. Lade die Seite neu und versuche es noch einmal.",
+    "tests_need_offline": "Testreihen laufen ohne Person und können keine MCP-Tools nutzen. Übernimm das Beispiel im Offline-Modus, dann kommen auch seine Testfälle mit."
+  },
   "agentFailed": "Der Agent ist mit einem Fehler abgebrochen ({{type}}).",
   "file": {
     "not_json": "Die Datei ist kein gültiges JSON.",

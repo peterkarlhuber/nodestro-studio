@@ -1259,7 +1259,8 @@ export interface LocalBackup {
 
 export type ExampleCategory = "industry" | "business" | "customers" | "knowledge" | "administration" | "private";
 export type ExampleLevel = "beginner" | "advanced";
-export type ExamplePattern = "sequential" | "parallel" | "branching";
+/** ``adaptive``: an orchestrator decides at run time which teams work on the task. */
+export type ExamplePattern = "sequential" | "parallel" | "branching" | "adaptive";
 export type ExampleFeature =
   | "tools"
   | "structured"
@@ -1272,7 +1273,13 @@ export type ExampleFeature =
   | "files"
   | "documents"
   | "proposals"
-  | "memory";
+  | "memory"
+  | "orchestrator"
+  | "knowledge"
+  | "integration"
+  | "loop"
+  | "budget"
+  | "contract";
 export type AgentRole = "research" | "analysis" | "planning" | "review" | "writing";
 
 /** One example of the library in one language (GET /api/library). */
@@ -1292,6 +1299,8 @@ export interface ExampleSummary {
   agents: number;
   features: ExampleFeature[];
   tools: string[];
+  /** Teams the orchestrators delegate to (0 without orchestrator). */
+  teams: number;
 }
 
 export interface ExampleGuide {
@@ -1300,6 +1309,10 @@ export interface ExampleGuide {
   input: string;
   result: string;
   adapt: string;
+  /** What is decided automatically, the limits, and when a person decides (empty in older templates). */
+  control: string;
+  /** Why this architecture fits the task (empty in older templates). */
+  why: string;
 }
 
 export interface ExampleAgent {
@@ -1313,6 +1326,49 @@ export interface ExampleAgent {
   judge: boolean;
   /** Names of the agents (or the start) whose results this agent receives. */
   receives: string[];
+  /** ``orchestrator``: delegates to teams instead of working on the task itself. */
+  kind: "agent" | "orchestrator";
+  /** Names of the knowledge files the agent searches. */
+  knowledge: string[];
+  /** Integrations whose tools the agent gets while the copy is connected. */
+  integrations: string[];
+  memory: boolean;
+}
+
+/** A team an orchestrator of the example can delegate to; copied as a workflow of its own. */
+export interface ExampleTeam {
+  part_id: string;
+  name: string;
+  description: string;
+  capabilities: string[];
+  agents: ExampleAgent[];
+  /** The team stops for a person's approval; the orchestrator waits for the decision. */
+  approval: boolean;
+  /** The fields the team promises to deliver (its output contract). */
+  contract: string[];
+  /** The start form fields an orchestrator may fill when it delegates. */
+  parameters: string[];
+}
+
+/** An optional connection of an example (an MCP server's tools); without it the copy runs offline. */
+export interface ExampleIntegration {
+  id: string;
+  kind: string;
+  name: string;
+  description: string;
+  /** How to connect it (server, approval of the tools as read-only). */
+  setup: string;
+  /** The server tool names the integration needs, approved as read-only. */
+  tools: string[];
+  /** What the copy does in offline mode. */
+  offline: string;
+}
+
+/** A synthetic reference document a copy stores in the knowledge base. */
+export interface ExampleKnowledge {
+  id: string;
+  name: string;
+  description: string;
 }
 
 /** An example with everything the preview shows (GET /api/library/{id}); nothing is stored. */
@@ -1325,6 +1381,20 @@ export interface ExampleDetail extends ExampleSummary {
   samples: ExampleSample[];
   /** Names of the prepared test cases; copied as a test series only on request. */
   tests: string[];
+  team_details: ExampleTeam[];
+  integrations: ExampleIntegration[];
+  knowledge: ExampleKnowledge[];
+  /** The copy's budget per run in US dollars, if the example sets one. */
+  budget_usd: number | null;
+}
+
+/** POST /api/library/{id}/copy. */
+export interface ExampleCopyRequest {
+  language?: string;
+  /** Also create the test cases as a test series; refused together with connected integrations. */
+  tests?: boolean;
+  /** integration id -> MCP server id; integrations not named run in their offline mode. */
+  integrations?: Record<string, string>;
 }
 
 /** A synthetic sample file for one file field of an example. */

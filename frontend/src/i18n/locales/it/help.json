@@ -144,7 +144,8 @@
     "synthetic": "Tutti i dati di prova sono inventati e contrassegnati come sintetici. Sostituiscili con i tuoi dati nel nodo di avvio.",
     "sequential": "Gli agenti lavorano uno dopo l'altro; ognuno si basa sul risultato del precedente.",
     "parallel": "Più agenti lavorano contemporaneamente sullo stesso input; un altro agente riunisce i loro risultati.",
-    "branching": "Il workflow si ramifica secondo regole o dopo un’approvazione; non tutti gli agenti girano sempre."
+    "branching": "Il workflow si ramifica secondo regole o dopo un’approvazione; non tutti gli agenti girano sempre.",
+    "adaptive": "Durante l'esecuzione un orchestratore decide quali team lavorano al compito e riunisce i loro risultati. Ogni team è un workflow a sé."
   },
   "architect": {
     "open": "Lascia che l’architetto progetti un nuovo workflow o rielabori questo a partire da una descrizione. Controlli la bozza prima che cambi qualcosa.",
