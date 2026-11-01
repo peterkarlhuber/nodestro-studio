@@ -106,6 +106,13 @@ try {
   await page.locator(".page__body > .card-grid > .card", { hasText: "Finanzanalyse" }).first().click();
   await page.waitForURL(/\/workflows\/wf_/);
   await page.locator(".react-flow__node").first().waitFor();
+  // Without a provider the start explains itself next to the button and links to the settings (OB-01).
+  const reason = page.getByTestId("disabled-reason");
+  await reason.waitFor();
+  check((await reason.textContent()).includes("API-Schlüssel"), "The blocked start names the missing provider next to the button");
+  check(await reason.getByRole("link", { name: "Einstellungen öffnen" }).isVisible(), "The reason links to the settings");
+  check((await page.getByTestId("start-workflow").getAttribute("aria-disabled")) === "true", "The start button stays focusable but blocked");
+  check((await page.locator('.react-flow__node [data-status="idle"]').count()) === 0, "No node claims to be ready while the start is blocked");
   await page.locator(".react-flow__node-agent").first().click();
   await page.getByLabel("Name des Agenten").waitFor();
   check(true, "Inspector opens for an agent");

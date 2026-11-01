@@ -231,7 +231,7 @@
   },
   "orchestrator": {
     "text": "Un modello di IA decide passo dopo passo quale team riceve quale compito e conclude con una risposta.",
-    "teams": "Team disponibili (pool)",
+    "teams": "Pool di team",
     "teamsHint": "I workflow tra cui il modello può scegliere (al massimo {{max}}). Capacità e contratti di output lo aiutano a scegliere.",
     "noTeams": "Ancora nessun team. Aggiungine almeno uno.",
     "addTeam": "Aggiungi un team…",

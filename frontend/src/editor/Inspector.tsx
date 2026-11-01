@@ -111,7 +111,8 @@ function NodeFindings({ check, nodeId }: { check: WorkflowCheck | undefined; nod
 function SelectionInspector() {
   const { t } = useTranslation();
   const ids = useEditor((s) => s.selectedIds);
-  const names = useEditor((s) => s.nodes.filter((node) => s.selectedIds.includes(node.id)).map((node) => node.label));
+  const nodes = useEditor((s) => s.nodes);
+  const names = nodes.filter((node) => ids.includes(node.id)).map((node) => node.label);
   const { duplicateNodes, select } = useEditor.getState();
   return (
     <div className="inspector__content" data-testid="selection-inspector">

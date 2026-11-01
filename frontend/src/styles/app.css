@@ -6783,3 +6783,19 @@ ul.gate-report__list > li.gate-report__item {
   color: var(--nd-text-muted);
   font-size: 12px;
 }
+
+@media (max-width: 760px) {
+  /* The title bar stacks: the heading takes its own height, and a blocked control's reason gets a full line. */
+  .editor .titlebar__heading {
+    flex: none;
+  }
+
+  .editor .disabled-reason {
+    flex-wrap: wrap;
+  }
+
+  .editor .disabled-reason__note {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+}

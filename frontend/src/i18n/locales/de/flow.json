@@ -231,7 +231,7 @@
   },
   "orchestrator": {
     "text": "Ein KI-Modell entscheidet Schritt für Schritt, welches Team welche Aufgabe bekommt, und schließt mit einer Antwort ab.",
-    "teams": "Teams zur Auswahl (Pool)",
+    "teams": "Team-Pool",
     "teamsHint": "Die Workflows, aus denen das Modell wählen darf (höchstens {{max}}). Fähigkeiten und Ausgabeverträge helfen bei der Wahl.",
     "noTeams": "Noch keine Teams. Füge mindestens eins hinzu.",
     "addTeam": "Team hinzufügen…",

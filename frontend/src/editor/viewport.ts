@@ -97,11 +97,7 @@ export function openingViewport(
 }
 
 /** Adds a node where the user can see it, selects it and pans to it when needed. */
-export function addVisibleNode(
-  type: NodeType,
-  agent?: Partial<AgentConfig>,
-  team?: TeamPreset,
-): WorkflowNode {
+export function addVisibleNode(type: NodeType, agent?: Partial<AgentConfig>, team?: TeamPreset): WorkflowNode {
   const state = useEditor.getState();
   const visible = view?.visible() ?? null;
   const position = placeNewNode(state.nodes, state.selectedId, visible);

@@ -110,6 +110,8 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
     useEditor.getState();
   const flow = useReactFlow();
   const { zoom } = useViewport();
+  /** When the last node selection came in (see onEdgesChange). */
+  const nodeSelection = useRef(0);
   // Measured node sizes: the store keeps the workflow, React Flow needs the sizes (minimap, fit view).
   const [sizes, setSizes] = useState<Record<string, { width: number; height: number }>>({});
 
@@ -197,7 +199,10 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
       }
       if (Object.keys(positions).length || finished) moveNodes(positions, finished);
       if (removed.length) removeWithUndo(removed);
-      if (selecting) setSelection([...picked]);
+      if (selecting) {
+        setSelection([...picked]);
+        nodeSelection.current = performance.now();
+      }
       if (Object.keys(measured).length) setSizes((current) => ({ ...current, ...measured }));
     },
     [moveNodes, setSelection],
@@ -207,8 +212,10 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
     (changes: EdgeChange[]) => {
       const removed = changes.filter((change) => change.type === "remove").map((change) => change.id);
       if (removed.length) removeEdges(removed);
+      // A selection box also selects the connections between the boxed nodes; the nodes stay the selection then.
+      const boxed = performance.now() - nodeSelection.current < 100;
       const picked = changes.find((change) => change.type === "select" && change.selected);
-      if (picked && picked.type === "select") selectEdge(picked.id);
+      if (picked && picked.type === "select" && !boxed) selectEdge(picked.id);
     },
     [removeEdges, selectEdge],
   );
