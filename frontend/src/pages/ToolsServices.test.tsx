@@ -156,6 +156,31 @@ describe("ServicesTab", () => {
     );
   });
 
+  it("explains the resource reader and sends its name encoded", async () => {
+    const reader = {
+      ...TOOL,
+      name: "resources/read",
+      tool_name: "mcp__docs__resources_read_1a2b3c4d",
+      definition: {
+        ...definition("Read one of the documents (resources) this MCP service offers. Available:\n- docs://travel"),
+        name: "resources/read",
+        title: "Read resources",
+      },
+    };
+    const fetch = serve((method, url, body) =>
+      url === "/api/mcp/servers/mcp_1/tools/resources%2Fread/decision" ? { ...reader, status: "approved" } : routes({ tools: [reader] })(method, url, body),
+    );
+    renderWith(<ServicesTab />);
+    const review = await screen.findByTestId("mcp-review-resources/read");
+    expect(within(review).getByText(/liest nur die Dokumente, die der Dienst auflistet/)).toBeInTheDocument();
+    expect(within(review).getByText(/docs:\/\/travel/).closest("blockquote")).toHaveClass("foreign-text");
+    await userEvent.click(within(review).getByRole("radio", { name: "Nur lesend" }));
+    await userEvent.click(within(review).getByRole("button", { name: "Freigeben" }));
+    await waitFor(() =>
+      expect(fetch).toHaveBeenCalledWith("/api/mcp/servers/mcp_1/tools/resources%2Fread/decision", expect.objectContaining({ method: "POST" })),
+    );
+  });
+
   it("shows what changed in a changed definition", async () => {
     serve(routes({ tools: [CHANGED] }));
     renderWith(<ServicesTab />);

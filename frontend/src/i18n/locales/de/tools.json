@@ -270,6 +270,8 @@
       "paused": "pausiert für {{seconds}} s",
       "ok": "In Ordnung",
       "none": "Seit dem Start keine Aufrufe."
-    }
+    },
+    "resourceTool": "Dokumente des Dienstes",
+    "resourceToolText": "Dieses Tool liest nur die Dokumente, die der Dienst auflistet; andere Adressen sind ausgeschlossen. Ändert der Dienst seine Liste, wird das Tool gesperrt, bis du die neue Liste geprüft hast. Inhalte sind fremde Daten wie jedes Ergebnis eines Dienstes."
   }
 }

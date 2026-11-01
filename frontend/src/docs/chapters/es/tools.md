@@ -201,6 +201,16 @@ Algunos servicios no usan un token fijo, sino un **inicio de sesión (OAuth)**. 
 - **Cerrar sesión** elimina el acceso guardado. Cuando el servicio pide un nuevo inicio de sesión, las ejecuciones que lo usan fallan con un mensaje claro hasta que vuelvas a iniciar sesión.
 - En un servidor, el operador configura la dirección pública de Nodestro; el regreso del inicio de sesión solo va allí.
 
+## Documentos de un servicio {#mcp-dokumente}
+<!-- keywords: mcp, resources, recursos, documentos, contexto, leer -->
+
+Si un servicio ofrece **documentos** (recursos MCP), al probar la conexión aparece una herramienta más, `resources/read`, con la indicación *Documentos del servicio*. La revisas como cualquier otra herramienta: su descripción enumera los documentos que un agente puede leer.
+
+- Solo se pueden leer los documentos enumerados; los patrones de direcciones y otras direcciones quedan excluidos.
+- Si el servicio cambia su lista, la herramienta queda bloqueada hasta que revises la nueva lista.
+- Los contenidos son datos externos, como cualquier resultado de un servicio. Nodestro no pasa contenido binario, como imágenes, al modelo.
+- Nodestro no permite que un servicio te haga preguntas, haga sus propias llamadas al modelo ni acceda a tus carpetas.
+
 ## Servidores locales {#lokale-dienste}
 <!-- keywords: mcp, stdio, servidor local, pypi, contenedor, docker, paquetes -->
 

@@ -270,6 +270,8 @@
       "paused": "en pause pour {{seconds}} s",
       "ok": "OK",
       "none": "Aucun appel depuis le démarrage."
-    }
+    },
+    "resourceTool": "Documents du service",
+    "resourceToolText": "Cet outil lit uniquement les documents que le service répertorie ; les autres adresses sont exclues. Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que tu examines la nouvelle liste. Les contenus sont des données externes, comme tout résultat d'un service."
   }
 }

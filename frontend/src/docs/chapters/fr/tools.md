@@ -201,6 +201,16 @@ Certains services n'utilisent pas de jeton fixe mais une **connexion (OAuth)**. 
 - **Se déconnecter** supprime l'accès enregistré. Lorsque le service demande une nouvelle connexion, les exécutions qui l'utilisent échouent avec un message clair jusqu'à ce que vous vous reconnectiez.
 - Sur un serveur, l'exploitant configure l'adresse publique de Nodestro ; le retour de la connexion ne va que là.
 
+## Documents d'un service {#mcp-dokumente}
+<!-- keywords: mcp, resources, ressources, documents, contexte, lire -->
+
+Si un service propose des **documents** (ressources MCP), le test de la connexion affiche un outil supplémentaire, `resources/read`, avec la mention *Documents du service*. Tu l'examines comme tout autre outil : sa description liste les documents qu'un agent peut lire.
+
+- Seuls les documents listés peuvent être lus ; les modèles d'adresse et les autres adresses sont exclus.
+- Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que tu examines la nouvelle liste.
+- Les contenus sont des données externes, comme tout résultat d'un service. Nodestro ne transmet pas au modèle les contenus binaires comme les images.
+- Nodestro ne permet pas à un service de te poser des questions, de faire ses propres appels de modèle ni d'accéder à tes dossiers.
+
 ## Serveurs locaux {#lokale-dienste}
 <!-- keywords: mcp, stdio, serveur local, pypi, conteneur, docker, paquets -->
 

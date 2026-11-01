@@ -201,6 +201,16 @@ Some services do not use a fixed token but a **sign-in (OAuth)**. Choose *OAuth*
 - **Sign out** removes the stored access. When the service asks for a new sign-in, runs that use it fail with a clear message until you sign in again.
 - On a server the operator sets up the public address of Nodestro; the return from the sign-in goes only there.
 
+## A service's documents {#mcp-dokumente}
+<!-- keywords: mcp, resources, documents, context, read -->
+
+If a service offers **documents** (MCP resources), testing the connection shows one more tool, `resources/read`, marked *The service's documents*. You review it like any other tool: its description lists the documents an agent may read.
+
+- Only the listed documents can be read; address patterns and other addresses are excluded.
+- If the service changes its list, the tool is blocked until you have reviewed the new list.
+- Contents are external data like every result of a service. Nodestro does not pass binary content such as images to the model.
+- Nodestro does not let a service ask you questions, make its own model calls or access your folders.
+
 ## Local servers {#lokale-dienste}
 <!-- keywords: mcp, stdio, local server, pypi, container, docker, packages -->
 

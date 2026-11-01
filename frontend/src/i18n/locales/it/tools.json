@@ -270,6 +270,8 @@
       "paused": "in pausa per {{seconds}} s",
       "ok": "OK",
       "none": "Nessuna chiamata dall'avvio."
-    }
+    },
+    "resourceTool": "Documenti del servizio",
+    "resourceToolText": "Questo strumento legge solo i documenti elencati dal servizio; gli altri indirizzi sono esclusi. Se il servizio cambia l'elenco, lo strumento resta bloccato finché non esamini il nuovo elenco. I contenuti sono dati esterni, come ogni risultato di un servizio."
   }
 }

@@ -270,6 +270,8 @@
       "paused": "paused for {{seconds}} s",
       "ok": "OK",
       "none": "No calls since the start."
-    }
+    },
+    "resourceTool": "The service's documents",
+    "resourceToolText": "This tool reads only the documents the service lists; other addresses are excluded. If the service changes its list, the tool is blocked until you have reviewed the new list. Contents are external data like every result of a service."
   }
 }

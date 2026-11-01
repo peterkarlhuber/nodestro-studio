@@ -11,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 import { keys } from "../api/hooks";
 import {
   type McpAccess,
+  RESOURCE_TOOL,
   type McpServer,
   type McpServerIn,
   type McpStatus,
@@ -403,7 +404,9 @@ function ToolRow({ tool, status }: { tool: McpTool; status: McpStatus }) {
     <div className="mcp-tool">
       <div className="row-between">
         <span>
-          <code>{tool.name}</code> <Badge tone={STATUS_TONE[tool.status]}>{t(`tools.services.status.${tool.status}`)}</Badge>{" "}
+          <code>{tool.name}</code>
+          {tool.name === RESOURCE_TOOL ? <span className="muted small"> {t("tools.services.resourceTool")}</span> : null}{" "}
+          <Badge tone={STATUS_TONE[tool.status]}>{t(`tools.services.status.${tool.status}`)}</Badge>{" "}
           {tool.status === "approved" ? <Badge tone="idle">{t(`tools.services.access.${tool.access}`)}</Badge> : null}
         </span>
         <Button variant="ghost" onClick={() => setOpen((value) => !value)}>
@@ -472,6 +475,7 @@ function ToolReview({ tool, status, embedded }: { tool: McpTool; status: McpStat
           ))}
         </div>
       ) : null}
+      {tool.name === RESOURCE_TOOL ? <Callout tone="info">{t("tools.services.resourceToolText")}</Callout> : null}
       <Field label={t("tools.services.description")} hint={t("tools.services.foreignText")}>
         <blockquote className="foreign-text" lang="">
           {definition.title ? <strong>{definition.title}</strong> : null}

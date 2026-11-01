@@ -201,6 +201,16 @@ Manche Dienste verwenden kein festes Token, sondern eine **Anmeldung (OAuth)**. 
 - **Abmelden** entfernt den gespeicherten Zugang. Verlangt der Dienst eine neue Anmeldung, schlagen Läufe, die ihn verwenden, mit einer klaren Meldung fehl, bis du dich wieder anmeldest.
 - Auf einem Server richtet der Betreiber die öffentliche Adresse von Nodestro ein; der Rücksprung von der Anmeldung geht nur dorthin.
 
+## Dokumente eines Dienstes {#mcp-dokumente}
+<!-- keywords: mcp, resources, ressourcen, dokumente, kontext, lesen -->
+
+Bietet ein Dienst **Dokumente** (MCP-Ressourcen) an, erscheint beim Test der Verbindung ein zusätzliches Tool `resources/read` mit dem Hinweis *Dokumente des Dienstes*. Du prüfst es wie jedes andere Tool: Seine Beschreibung listet die Dokumente auf, die ein Agent lesen darf.
+
+- Lesbar sind nur die aufgelisteten Dokumente; Adressmuster und andere Adressen sind ausgeschlossen.
+- Ändert der Dienst seine Liste, wird das Tool gesperrt, bis du die neue Liste geprüft hast.
+- Inhalte sind fremde Daten wie jedes Ergebnis eines Dienstes. Binäre Inhalte wie Bilder gibt Nodestro nicht an das Modell weiter.
+- Rückfragen eines Dienstes an dich, eigene Modellaufrufe des Dienstes und Zugriff auf deine Ordner bietet Nodestro nicht an.
+
 ## Lokale Server {#lokale-dienste}
 <!-- keywords: mcp, stdio, lokaler server, pypi, container, docker, pakete -->
 

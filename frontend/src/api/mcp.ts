@@ -195,6 +195,9 @@ export const useMcpEvents = (enabled: boolean) =>
   useQuery({ queryKey: mcpKeys.events, queryFn: () => mcpApi.events(), enabled });
 
 /** Tools waiting for the administrator: new or changed definitions. */
+/** The tool that reads a server's listed resources (WP-10); `/` cannot occur in a server's own tool names. */
+export const RESOURCE_TOOL = "resources/read";
+
 export const needsDecision = (tool: McpTool) => tool.status === "new" || tool.status === "changed";
 
 export interface DefinitionChange {

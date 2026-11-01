@@ -201,6 +201,16 @@ Alcuni servizi non usano un token fisso ma un **accesso (OAuth)**. Scegli *OAuth
 - **Esci** rimuove l'accesso salvato. Quando il servizio richiede un nuovo accesso, le esecuzioni che lo usano falliscono con un messaggio chiaro finché non accedi di nuovo.
 - Su un server il gestore configura l'indirizzo pubblico di Nodestro; il ritorno dall'accesso va solo lì.
 
+## Documenti di un servizio {#mcp-dokumente}
+<!-- keywords: mcp, resources, risorse, documenti, contesto, leggere -->
+
+Se un servizio offre **documenti** (risorse MCP), il test della connessione mostra uno strumento in più, `resources/read`, con l'indicazione *Documenti del servizio*. Lo esamini come qualsiasi altro strumento: la sua descrizione elenca i documenti che un agente può leggere.
+
+- Si possono leggere solo i documenti elencati; modelli di indirizzo e altri indirizzi sono esclusi.
+- Se il servizio cambia l'elenco, lo strumento resta bloccato finché non esamini il nuovo elenco.
+- I contenuti sono dati esterni, come ogni risultato di un servizio. Nodestro non passa al modello contenuti binari come le immagini.
+- Nodestro non consente a un servizio di farti domande, di fare chiamate proprie al modello o di accedere alle tue cartelle.
+
 ## Server locali {#lokale-dienste}
 <!-- keywords: mcp, stdio, server locale, pypi, container, docker, pacchetti -->
 
