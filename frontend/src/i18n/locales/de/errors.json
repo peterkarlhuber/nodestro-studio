@@ -140,7 +140,8 @@
     "output_contract": "Das Ergebnis erfüllt den Ausgabevertrag des Workflows nicht: {{fields}}.",
     "orchestration_limit": "{{node}} hat {{max_decisions}} Entscheidungen getroffen, ohne abzuschließen.",
     "orchestrator_member_missing": "Ein Team von {{node}} existiert nicht mehr.",
-    "orchestrator_no_match": "Kein gespeichertes Team von {{node}} hat eine der Fähigkeiten {{capabilities}}."
+    "orchestrator_no_match": "Kein gespeichertes Team von {{node}} hat eine der Fähigkeiten {{capabilities}}.",
+    "orchestration_team_missing": "Der wartende Lauf eines Teams fehlt; das Team wurde nicht neu gestartet."
   },
   "trace": {
     "invalid": "Der Trace ist beschädigt oder unvollständig.",
@@ -245,7 +246,7 @@
     "orchestrator_cycle": "{{name}}: Das Team {{workflow}} würde diesen Workflow erneut aufrufen.",
     "orchestrator_member_invalid_one": "{{name}}: Das Team {{workflow}} hat {{count}} Fehler.",
     "orchestrator_member_invalid_other": "{{name}}: Das Team {{workflow}} hat {{count}} Fehler.",
-    "orchestrator_member_approval": "{{name}}: Das Team {{workflow}} hält für Freigaben an. In einem Orchestrator wird es an dieser Stelle abgebrochen.",
+    "orchestrator_member_approval": "{{name}}: Das Team {{workflow}} hält für Freigaben an. Der Orchestrator wartet dann mit.",
     "orchestrator_selected_one": "{{name}} wählt {{count}} Team nach Fähigkeit: {{teams}}.",
     "orchestrator_selected_other": "{{name}} wählt {{count}} Teams nach Fähigkeit: {{teams}}.",
     "orchestrator_no_match": "{{name}}: Kein gespeichertes Team hat eine der Fähigkeiten {{capabilities}}."
@@ -697,7 +698,18 @@
     "empty_answer": "Die Schlussantwort war leer.",
     "answer_too_long": "Die Schlussantwort war zu lang.",
     "finished": "Die Orchestrierung war bereits abgeschlossen.",
-    "invalid_decision": "Die Antwort war keine gültige Entscheidung."
+    "invalid_decision": "Die Antwort war keine gültige Entscheidung.",
+    "paused": "Ein Team wartet noch; es geht zuerst weiter.",
+    "not_in_team": "Dieses Team ist nicht im eigenen Team des Orchestrators.",
+    "unknown_parameter": "Dieses Team hat einen solchen Parameter nicht.",
+    "invalid_value": "Ein Wert passt nicht zum Parameter des Teams.",
+    "parallel_disabled": "Dieser Orchestrator gibt nur an ein Team gleichzeitig weiter.",
+    "parallel_limit": "Zu viele Teams gleichzeitig.",
+    "parallel_duplicate": "Ein Team kam in derselben Entscheidung doppelt vor.",
+    "staffing_disabled": "Dieser Orchestrator arbeitet mit dem ganzen Pool.",
+    "empty_staffing": "Die Teamänderung nahm niemanden auf und entließ niemanden.",
+    "already_in_team": "Dieses Team ist schon im Team.",
+    "team_limit": "Das Team wäre zu groß geworden."
   },
   "mcp_server": {
     "disabled": "Der MCP-Server von Nodestro ist ausgeschaltet."

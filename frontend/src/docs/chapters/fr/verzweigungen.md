@@ -139,13 +139,28 @@ Une équipe peut être testée seule : créez une [série de tests](/docs/automa
 Un **orchestrateur** laisse un modèle d’IA décider quelle équipe reçoit quelle partie de la tâche. Il prend une décision après l’autre : **déléguer** une tâche à une équipe ou **conclure** par une réponse. La réponse est le résultat du nœud.
 
 - **Équipes :** les workflows enregistrés parmi lesquels le modèle peut choisir (20 au maximum). De chaque équipe, le modèle ne voit que le nom, la description, les capacités et le contrat de sortie.
-- **Équipes par capacité :** au lieu de choisir chaque équipe, vous nommez des capacités (10 au maximum). Au démarrage d’une exécution, les équipes enregistrées ayant une capacité correspondante rejoignent le groupe (jusqu’à *Au maximum autant d’équipes*) : d’abord celles qui ont le plus d’étiquettes correspondantes, puis par nom. Les équipes avec des erreurs ou des étapes de validation sont écartées. La sélection reste fixe pour cette exécution (et pour une version publiée) ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté ni estimé.
+- **Équipes par capacité :** au lieu de choisir chaque équipe, vous nommez des capacités (10 au maximum). Au démarrage d’une exécution, les équipes enregistrées ayant une capacité correspondante rejoignent le groupe (jusqu’à *Au maximum autant d’équipes*) : d’abord celles qui ont le plus d’étiquettes correspondantes, puis par nom. Les équipes avec des erreurs sont écartées ; les équipes avec des étapes de validation sont incluses. La sélection reste fixe pour cette exécution (et pour une version publiée) ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté ni estimé.
 - **Tâche** et **Instructions :** ce qu’il faut accomplir et, si besoin, comment le planifier.
 - **Nombre maximal de décisions** (de 1 à 50, 8 par défaut) et **Maximum par équipe :** sans réponse après la dernière décision, l’étape échoue.
 
 L’orchestrateur ne fait que choisir. Il n’a pas d’outils, ne crée ni agents, ni outils, ni équipes et n’a aucune autorisation propre. Chaque équipe choisie s’exécute dans sa **propre exécution liée**, avec sa part du budget, ses limites et ses validations d’outils. Les décisions non autorisées (une équipe inconnue, la même tâche une nouvelle fois, une équipe épuisée) sont refusées et montrées au modèle ; elles comptent quand même comme une décision.
 
-Les détails de l’exécution listent chaque décision avec son motif, sa tâche, son résultat et un lien vers l’exécution de l’équipe. Les équipes qui s’arrêtent pour une validation ne sont pas encore prises en charge dans un orchestrateur : elles sont annulées à ce moment-là, et la vérification avant le démarrage le signale. Une équipe ne peut pas rappeler le workflow de l’orchestrateur.
+Les détails de l’exécution listent chaque décision avec son motif, sa tâche, son résultat et un lien vers l’exécution de l’équipe. Quand une équipe s’arrête pour une **validation** (y compris dans un sous-workflow ou sous un autre orchestrateur), l’orchestrateur attend avec elle : l’exécution est *en pause* et apparaît sous **Validations**. Après la décision, la même exécution de l’équipe continue, même après un redémarrage, et le modèle n’est pas consulté à nouveau pour cette délégation. Si un refus met fin à l’exécution de l’équipe (*En cas de refus : terminer l’exécution*), cette exécution se termine aussi ; aucune autre équipe ne peut contourner le refus. Annuler une exécution en attente annule aussi ses équipes en attente. Une équipe ne peut pas rappeler le workflow de l’orchestrateur.
+
+## Équipes dynamiques {#dynamische-teams}
+<!-- keywords: équipe dynamique, composer une équipe, parallèle, en même temps, paramètres, formulaire de démarrage, modèle, composition d'équipe, staffing -->
+
+Dans la zone **Équipes dynamiques** d’un orchestrateur, le modèle dispose de plus de latitude, toujours dans le pool et dans les limites. Tout est désactivé au départ.
+
+- **Équipes en même temps** (1 à 5) : une décision peut confier du travail à plusieurs équipes différentes à la fois, pour des parties indépendantes. Chaque équipe obtient son propre résultat.
+- **Composer l’équipe lui-même :** l’orchestrateur intègre des équipes du pool dans son équipe et les retire à nouveau quand les résultats intermédiaires le justifient. Seules les équipes de l’équipe reçoivent du travail ; *Au plus dans l’équipe* limite sa taille. La même équipe peut travailler plusieurs fois (jusqu’à *Au plus par équipe*).
+- **Remplir le formulaire de démarrage des équipes :** l’orchestrateur peut définir les champs du formulaire d’entrée d’une équipe (jamais de fichiers). Les valeurs sont vérifiées comme pour un démarrage manuel ; un champ inconnu ou une valeur invalide est refusé et montré au modèle.
+
+Le pool est fixé au démarrage de l’exécution, dans les versions de ce moment. Aucune nouvelle équipe, aucun agent ou outil n’apparaît, et les validations, le budget et les limites de chaque équipe s’appliquent sans changement.
+
+**Ce que montrent les détails de l’exécution :** quel orchestrateur travaille avec quel modèle, combien de décisions sont utilisées, le coût des décisions et le total (un coût inconnu est affiché comme *pas entièrement connu*, jamais comme 0), le pool avec les versions, l’**équipe au fil du temps**, les équipes en attente et chaque décision avec son motif, sa tâche, ses valeurs et le résultat de chaque équipe : *Réussi*, *En attente de validation*, *Échoué*, *Refusé*, *Annulé* ou *Expiré*. Seules les décisions enregistrées sont affichées, aucun raisonnement du modèle.
+
+**Enregistrer la composition de l’équipe comme modèle :** une équipe n’existe que pendant l’exécution. Une fois celle-ci terminée, ce bouton enregistre un **nouveau workflow** avec le même orchestrateur, son formulaire de démarrage, ses limites et exactement les équipes qui ont travaillé, dans les versions de l’exécution. Rien n’est enregistré sans ce clic.
 
 ## Formulaires d’entrée {#eingabeformular}
 <!-- keywords: formulaire, formulaire d’entrée, champs, type, obligatoire, valeur par défaut, choix, date, nombre -->

@@ -200,7 +200,9 @@
     "orchestrator": "Um modelo de IA planeja a tarefa e delega partes dela às equipes do seu grupo, uma decisão após a outra. Cada decisão é registrada com seu motivo.",
     "orchestratorTeams": "Equipes são workflows salvos. O modelo vê apenas nome, descrição, capacidades e contrato de saída. Ele não pode adicionar equipes.",
     "orchestratorLimits": "Os limites evitam que um orquestrador fique andando em círculos: ele para após o número máximo de decisões, e o orçamento e os limites do workflow também valem.",
-    "orchestratorSelect": "Em vez de citar cada equipe, você cita capacidades. Quando uma execução começa, as equipes salvas que as compartilham entram no grupo e ficam fixas para essa execução; os detalhes mostram quais tags cada equipe atendeu. Nada é pontuado: primeiro mais tags correspondentes, depois o nome."
+    "orchestratorSelect": "Em vez de citar cada equipe, você cita capacidades. Quando uma execução começa, as equipes salvas que as compartilham entram no grupo e ficam fixas para essa execução; os detalhes mostram quais tags cada equipe atendeu. Nada é pontuado: primeiro mais tags correspondentes, depois o nome.",
+    "orchestratorDynamic": "O orquestrador pode passar trabalho a várias equipes ao mesmo tempo, montar e alterar sua equipe a partir do pool durante a execução e preencher o formulário inicial das equipes. O pool fica fixo para a execução; nunca surgem novas equipes, agentes ou ferramentas.",
+    "orchestratorTemplate": "Uma equipe existe só durante a execução. Este botão a transforma em um novo workflow próprio: o mesmo orquestrador com exatamente as equipes que trabalharam, em suas versões. Você pode editá-lo depois; só quem pode editar workflows pode alterá-lo."
   },
   "files": {
     "output": "Formatos em que o nó de resultado salva o resultado no fim da execução: Markdown, JSON, CSV, HTML ou PDF.",

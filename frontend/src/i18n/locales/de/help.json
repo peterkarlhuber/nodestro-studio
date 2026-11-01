@@ -200,7 +200,9 @@
     "orchestrator": "Ein KI-Modell plant die Aufgabe und gibt Teile davon an Teams seines Pools weiter, eine Entscheidung nach der anderen. Jede Entscheidung wird mit ihrer Begründung festgehalten.",
     "orchestratorTeams": "Teams sind gespeicherte Workflows. Das Modell sieht nur Name, Beschreibung, Fähigkeiten und Ausgabevertrag. Es kann keine Teams hinzufügen.",
     "orchestratorLimits": "Die Grenzen verhindern, dass ein Orchestrator im Kreis läuft: Er stoppt nach der höchsten Zahl an Entscheidungen, und Budget und Grenzen des Workflows gelten zusätzlich.",
-    "orchestratorSelect": "Statt jedes Team zu nennen, nennst du Fähigkeiten. Beim Start eines Laufs kommen gespeicherte Teams mit passenden Fähigkeiten in den Pool und bleiben für diesen Lauf fest; die Details des Laufs zeigen, welche Stichworte jedes Team getroffen hat. Es wird nichts bewertet: mehr passende Stichworte kommen zuerst, dann der Name."
+    "orchestratorSelect": "Statt jedes Team zu nennen, nennst du Fähigkeiten. Beim Start eines Laufs kommen gespeicherte Teams mit passenden Fähigkeiten in den Pool und bleiben für diesen Lauf fest; die Details des Laufs zeigen, welche Stichworte jedes Team getroffen hat. Es wird nichts bewertet: mehr passende Stichworte kommen zuerst, dann der Name.",
+    "orchestratorDynamic": "Der Orchestrator kann mehrere Teams gleichzeitig beauftragen, sein Team während des Laufs aus dem Pool zusammenstellen und ändern und das Startformular der Teams ausfüllen. Der Pool bleibt für den Lauf fest; neue Teams, Agenten oder Werkzeuge entstehen nie.",
+    "orchestratorTemplate": "Ein Team besteht nur während des Laufs. Mit diesem Knopf wird daraus ein neuer, eigener Workflow: derselbe Orchestrator mit genau den Teams, die gearbeitet haben, in ihren Versionen. Du kannst ihn danach bearbeiten; ändern kann ihn nur, wer Workflows bearbeiten darf."
   },
   "files": {
     "output": "Formate, in denen der Ergebnis-Knoten sein Ergebnis am Ende des Laufs speichert: Markdown, JSON, CSV, HTML oder PDF.",

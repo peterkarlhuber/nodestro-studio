@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+### Orchestrators: dynamic teams and approvals inside teams (AO M6b)
+
+- Run details of an orchestrator: which orchestrator works with which model, decisions used of the limit, the
+  cost of the decisions and in total (unknown costs are shown as not fully known, never as 0), the pool with
+  versions, the **team over time**, waiting teams (*Waiting for approval*) and every decision with reason, task,
+  values and each team's outcome (succeeded, waiting, failed, rejected, cancelled, expired) with a link to the team
+  run. Only recorded decision data is shown, no model reasoning. Older (version 1) records show as before.
+- **Save team composition as a template:** after the run, one click saves a new workflow with the same orchestrator,
+  start form, limits and exactly the teams that worked, pinned to the run's versions. Nothing is saved without it.
+- Orchestrator inspector: new area *Dynamic teams* with *Teams at the same time* (1 to 5), *Assemble the team
+  itself* with *At most in the team*, and *Fill in the teams' start forms*; all off by default.
+- New refusal texts for the orchestration codes of protocol version 2, the changed preflight note for teams with
+  approvals, help entries and the docs section *Dynamic teams* (`verzweigungen#dynamische-teams`) in six languages.
+- New browser suite `orchestration` (`npm run e2e:orchestration`, part of `scripts/e2e.sh`, own instance on port
+  8100): parallel teams with one waiting, approval from the parent run page, team over time, template, rejection.
+- Pins: `nodestro-api` `ee67eac` (before `2948bb3`), `nodestro-runtime` `081705d` (before `1bc3924`),
+  `nodestro-examples` `b5aa4db` (before `6658599`), `nodestro-integrations` `4ae9fdd` (before `86bfed0`); in
+  `platform/versions.json` also orkexa `a06185d` (before `b91d0b7`) and `nodestro-sdk` `db7fd37` (before `b45c9d7`).
+
 ### Welcome page "Connecting Intelligence" and the original logo (2026-11-01)
 
 - New welcome page at `/welcome` (lazy route outside the Studio frame): the original logo as the hub of a small
