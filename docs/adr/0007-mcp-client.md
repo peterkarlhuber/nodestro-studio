@@ -90,7 +90,8 @@ Facts from the code (runtime `d2cb987`, orkexa `76883f7`):
 - Per-call approval is enforced only where a person is asked: the process-wide switch never opens a tool that changes
   data by itself; the caller must state that it asks (`gated`), and only the run engine does (independent review
   H-1, 2026-11-01). Agent tests and the tool panel follow the same tool rules and never ask. Destructive MCP calls
-  are decided by an administrator (M-3). Server addresses never carry credentials (M-1), every MCP answer is size
+  are decided by an administrator (M-3); an approval also covers the tool's classification, so a reclassification while
+  a call waits makes it stale and a call asked as or now classified destructive needs an administrator (R-1). Server addresses never carry credentials (M-1), every MCP answer is size
   limited before it is read (M-2).
 - Work packages WP-1 to WP-11 were approved on 2026-10-31 as one implementation assignment; release, production
   deployment and activation outside development configurations are not part of it.
@@ -101,3 +102,5 @@ Facts from the code (runtime `d2cb987`, orkexa `76883f7`):
 - 2026-10-31: accepted; threat model T2 and T7 made precise.
 - 2026-11-01: consequences of the independent security review (H-1, M-1 to M-3); the first pilot is limited to an
   isolated server test instance, MCP on the desktop is not released (M-4). See the threat model's review section.
+- 2026-11-01: consequences of the independent re-review (R-1 classification bound to approvals, R-2 reserved tool
+  name `memory`).
