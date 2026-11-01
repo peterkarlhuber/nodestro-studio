@@ -16,23 +16,7 @@ import { FormFields } from "../components/FormFields";
 import { ModelPicker } from "../components/ModelPicker";
 import { Output } from "../components/Markdown";
 import { toast } from "../components/toast";
-import {
-  Badge,
-  Button,
-  Callout,
-  EmptyState,
-  Field,
-  HelpTip,
-  IconButton,
-  Modal,
-  PageHeader,
-  Section,
-  Select,
-  Spinner,
-  Stat,
-  TextArea,
-  TextInput,
-} from "../components/ui";
+import { Badge, Button, Callout, DisabledReason, EmptyState, Field, HelpTip, IconButton, Modal, PageHeader, Section, Select, Spinner, Stat, TextArea, TextInput } from "../components/ui";
 import { RuleEditor, outputFieldsOf } from "../editor/FlowInspectors";
 import { sanitizeSummary } from "../editor/TraceExportDialog";
 import { newId, newRule } from "../lib/defaults";
@@ -454,15 +438,11 @@ export function SuitePage() {
             <Button icon={Save} disabled={!dirty} busy={save.isPending} onClick={() => save.mutate()}>
               {t("common.save")}
             </Button>
-            <Button
-              variant="primary"
-              icon={Play}
-              disabled={dirty || !draft.cases.length}
-              title={dirty ? t("automation.benchmark.saveFirst") : undefined}
-              onClick={() => setStarting(true)}
-            >
-              {t("automation.benchmark.run")}
-            </Button>
+            <DisabledReason reason={dirty ? t("automation.benchmark.saveFirst") : null}>
+              <Button variant="primary" icon={Play} disabled={!draft.cases.length} onClick={() => setStarting(true)}>
+                {t("automation.benchmark.run")}
+              </Button>
+            </DisabledReason>
           </>
         }
       />

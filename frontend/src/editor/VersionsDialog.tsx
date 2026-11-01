@@ -13,7 +13,7 @@ import type { VersionSummary, Workflow } from "../api/types";
 import { TestStatus } from "../automation/TestStatus";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, IconButton, Modal, Spinner, TextInput } from "../components/ui";
-import { ErrorText } from "../lib/errors";
+import { ErrorText, LocalError } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import { hasChanges, versionChanges } from "../lib/versionDiff";
 import { useEditor } from "./store";
@@ -137,8 +137,15 @@ export function VersionsDialog({
     },
   });
   const restore = useMutation({
-    mutationFn: (version: VersionSummary) => api.restoreVersion(workflowId, version.number),
-    onSuccess: (workflow, version) => {
+    // With ``saveFirst`` the unsaved changes become a version of their own before the restore, so nothing is lost.
+    mutationFn: async ({ version, saveFirst }: { version: VersionSummary; saveFirst?: boolean }) => {
+      if (saveFirst) {
+        const saved = await save(t("versions.beforeRestoreNote", { number: version.number }));
+        if (!saved) throw new LocalError("workflow.save_failed");
+      }
+      return api.restoreVersion(workflowId, version.number);
+    },
+    onSuccess: (workflow, { version }) => {
       setPending(null);
       onRestored(workflow);
       toast.success(t("versions.restored", { number: version.number }));
@@ -187,8 +194,23 @@ export function VersionsDialog({
             <Button variant="ghost" onClick={() => setPending(null)}>
               {t("common.cancel")}
             </Button>
-            <Button variant="primary" icon={RotateCcw} busy={restore.isPending} onClick={() => pending && restore.mutate(pending)}>
-              {t("versions.restore")}
+            {dirty ? (
+              <Button
+                icon={Save}
+                busy={restore.isPending && restore.variables?.saveFirst}
+                onClick={() => pending && restore.mutate({ version: pending, saveFirst: true })}
+                data-testid="restore-save-first"
+              >
+                {t("versions.saveAndRestore")}
+              </Button>
+            ) : null}
+            <Button
+              variant={dirty ? "danger" : "primary"}
+              icon={RotateCcw}
+              busy={restore.isPending && !restore.variables?.saveFirst}
+              onClick={() => pending && restore.mutate({ version: pending })}
+            >
+              {dirty ? t("versions.restoreDiscard") : t("versions.restore")}
             </Button>
           </>
         }

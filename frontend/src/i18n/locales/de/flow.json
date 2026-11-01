@@ -112,7 +112,9 @@
     "requiredLabel": "Pflichtfeld oder optional",
     "optional": "Optional",
     "requiredHint": "Der Lauf startet erst, wenn das Feld ausgefüllt ist.",
-    "optionalHint": "Darf leer bleiben: Agenten sehen dann, dass nichts angegeben wurde (Entscheidungen können „ist leer“ prüfen)."
+    "optionalHint": "Darf leer bleiben: Agenten sehen dann, dass nichts angegeben wurde (Entscheidungen können „ist leer“ prüfen).",
+    "prefilledInput": "Aufgabe (vorausgefülltes Beispiel)",
+    "prefilledInputHint": "Ein Beispiel aus der Vorlage, damit der erste Lauf sofort klappt. Ersetze es durch deine eigene Anfrage."
   },
   "files": {
     "title": "Ergebnisdateien",
@@ -229,7 +231,7 @@
   },
   "orchestrator": {
     "text": "Ein KI-Modell entscheidet Schritt für Schritt, welches Team welche Aufgabe bekommt, und schließt mit einer Antwort ab.",
-    "teams": "Teams",
+    "teams": "Team-Pool",
     "teamsHint": "Die Workflows, aus denen das Modell wählen darf (höchstens {{max}}). Fähigkeiten und Ausgabeverträge helfen bei der Wahl.",
     "noTeams": "Noch keine Teams. Füge mindestens eins hinzu.",
     "addTeam": "Team hinzufügen…",
@@ -242,7 +244,7 @@
     "model": "Modell",
     "maxDecisions": "Höchstens Entscheidungen",
     "maxDecisionsHint": "Jede Weitergabe und die Schlussantwort sind je eine Entscheidung (1 bis {{max}}). Ohne Antwort bis dahin schlägt der Schritt fehl.",
-    "maxPerTeam": "Höchstens pro Team",
+    "maxPerTeam": "Höchstens Einsätze pro Team",
     "maxPerTeamHint": "Wie oft ein Team gewählt werden darf. Leer: keine eigene Grenze.",
     "safety": "Der Orchestrator wählt nur unter diesen Teams. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes Team läuft als eigener verknüpfter Lauf mit seinem Anteil am Budget, seinen Grenzen und seinen Freigaben. Wartet ein Team auf eine Freigabe, wartet der Orchestrator mit.",
     "run": {
@@ -258,11 +260,11 @@
       "matched": "nach Fähigkeit gewählt: {{tags}}",
       "parallel_one": "An {{count}} Team gleichzeitig weitergegeben",
       "parallel_other": "An {{count}} Teams gleichzeitig weitergegeben",
-      "staffed": "Team geändert",
+      "staffed": "Besetzung geändert",
       "added": "aufgenommen: {{teams}}",
       "removed": "entlassen: {{teams}}",
       "values": "Werte",
-      "teamOverTime": "Team im Verlauf",
+      "teamOverTime": "Aktive Besetzung im Verlauf",
       "afterStep": "Nach Entscheidung {{n}}",
       "emptyTeam": "niemand",
       "waitingTitle_one": "Wartet auf Freigabe: {{count}} Team",
@@ -271,7 +273,7 @@
       "who": "{{name}} · Modell {{model}}",
       "decisionsUsed": "Entscheidungen {{used}} von {{max}}",
       "parallelLimit": "bis zu {{max}} Teams gleichzeitig",
-      "teamLimit": "Team höchstens {{max}}",
+      "teamLimit": "Besetzung höchstens {{max}}",
       "costDecisions": "Kosten der Entscheidungen {{cost}}",
       "costTotal": "gesamt mit Teams {{cost}}",
       "costUnknown": "nicht vollständig bekannt",
@@ -299,8 +301,27 @@
     "dynamic": "Dynamische Teams",
     "dynamicHint": "Alles aus bedeutet: ein Team nach dem anderen aus dem ganzen Pool, nur mit einer Aufgabe.",
     "maxParallel": "Teams gleichzeitig",
-    "staffing": "Team selbst zusammenstellen: der Orchestrator nimmt Teams aus dem Pool auf und entlässt sie wieder",
-    "maxTeam": "Höchstens im Team",
-    "allowValues": "Startformular der Teams ausfüllen (keine Dateien; geprüft wie ein Start von Hand)"
+    "staffing": "Aktive Besetzung selbst zusammenstellen: der Orchestrator nimmt Teams aus dem Pool in seine Besetzung auf und entlässt sie wieder",
+    "maxTeam": "Höchstens in der aktiven Besetzung",
+    "allowValues": "Startformular der Teams ausfüllen (keine Dateien; geprüft wie ein Start von Hand)",
+    "members": "Gewählte Workflows",
+    "assignment": "Auftrag",
+    "limits": "Grenzen",
+    "lineup": "Aktive Besetzung",
+    "summary": {
+      "members_one": "{{count}} Team",
+      "members_other": "{{count}} Teams",
+      "byCapability": "nach Fähigkeit: {{tags}}",
+      "noTeams": "noch keine Teams",
+      "decisions_one": "höchstens {{count}} Entscheidung",
+      "decisions_other": "höchstens {{count}} Entscheidungen",
+      "perTeam_one": "je Team höchstens {{count}}-mal",
+      "perTeam_other": "je Team höchstens {{count}}-mal",
+      "parallel_one": "{{count}} Team gleichzeitig",
+      "parallel_other": "bis zu {{count}} Teams gleichzeitig",
+      "lineup": "stellt die aktive Besetzung selbst zusammen (höchstens {{count}})",
+      "lineupOff": "wählt aus dem ganzen Pool",
+      "how": "So arbeitet dieser Orchestrator: {{pool}} · {{limits}} · {{lineup}}."
+    }
   }
 }

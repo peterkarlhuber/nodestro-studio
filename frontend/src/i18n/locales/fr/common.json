@@ -35,5 +35,7 @@
   "sectionErrors_one": "{{count}} erreur",
   "sectionErrors_other": "{{count}} erreurs",
   "sectionWarnings_one": "{{count}} avertissement",
-  "sectionWarnings_other": "{{count}} avertissements"
+  "sectionWarnings_other": "{{count}} avertissements",
+  "undo": "Annuler",
+  "keepEditing": "Continuer la modification"
 }

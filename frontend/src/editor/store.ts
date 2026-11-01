@@ -54,10 +54,15 @@ export interface EditorState {
   capabilities: string[];
   nodes: WorkflowNode[];
   edges: WorkflowEdge[];
+  /** The one selected node (the inspector shows it); ``null`` when none or several are selected. */
   selectedId: string | null;
+  /** Every selected node (Shift/Ctrl click or a selection box); Delete and duplicate act on all of them. */
+  selectedIds: string[];
   /** The selected connection (clicked on the canvas); Delete/Backspace removes it. */
   selectedEdgeId: string | null;
   dirty: boolean;
+  /** The state of the last load or save: undo/redo back to it is not an unsaved change. */
+  saved: Snapshot | null;
   past: Snapshot[];
   future: Snapshot[];
   run: Run | null;
@@ -92,12 +97,16 @@ export interface EditorState {
   applyDraft: (draft: Pick<WorkflowIn, "nodes" | "edges">, note: string) => void;
   removeNodes: (ids: string[]) => void;
   duplicateNode: (id: string) => void;
+  /** Duplicates several nodes as one undoable step; the copies become the selection. */
+  duplicateNodes: (ids: string[]) => void;
   /** Connects two nodes; returns the translation key of the reason if that is not possible, or of the note that a loop was created. */
   connect: (source: string, target: string, handle?: string | null) => string | null;
   removeEdges: (ids: string[]) => void;
   /** Changes the limits of a loop connection (``null`` makes it a normal connection, if that closes no cycle). */
   setEdgeLoop: (id: string, loop: EdgeLoop | null) => string | null;
   select: (id: string | null) => void;
+  /** Selects exactly these nodes (an empty list clears the selection). */
+  setSelection: (ids: string[]) => void;
   selectEdge: (id: string | null) => void;
   autoLayout: () => void;
   undo: () => void;
@@ -141,6 +150,52 @@ export function wouldCycle(edges: WorkflowEdge[], source: string, target: string
   return false;
 }
 
+/** The selection fields for a set of selected node ids. */
+export function selection(ids: string[]): Pick<EditorState, "selectedId" | "selectedIds"> {
+  const unique = [...new Set(ids)];
+  return { selectedIds: unique, selectedId: unique.length === 1 ? unique[0] : null };
+}
+
+/** Whether two states hold the same workflow (snapshots share their arrays, so references are enough). */
+function sameState(a: Snapshot, b: Snapshot | null): boolean {
+  if (!b) return false;
+  return (
+    a.name === b.name &&
+    a.description === b.description &&
+    a.budget === b.budget &&
+    a.limits === b.limits &&
+    a.capabilities === b.capabilities &&
+    a.nodes === b.nodes &&
+    a.edges === b.edges
+  );
+}
+
+/**
+ * Why ``source`` cannot be connected to ``target`` (a translation key), or ``null`` when it can. A connection that
+ * leads back from a branch is allowed and becomes a loop. The canvas uses this while a connection is dragged.
+ */
+export function connectionProblem(
+  nodes: WorkflowNode[],
+  edges: WorkflowEdge[],
+  source: string,
+  target: string,
+  handle: string | null = null,
+): string | null {
+  const from = nodes.find((node) => node.id === source);
+  const to = nodes.find((node) => node.id === target);
+  if (!from || !to) return "editor.connect.notFound";
+  if (source === target) return "editor.connect.self";
+  if (from.type === "output") return "editor.connect.fromOutput";
+  if (to.type === "start") return "editor.connect.toStart";
+  const handles = branchHandles(from);
+  const sourceHandle = handles ? (handle && handles.includes(handle) ? handle : null) : null;
+  if (handles && !sourceHandle) return "editor.connect.pickBranch";
+  if (edges.some((edge) => edge.source === source && edge.target === target)) return "editor.connect.exists";
+  // Leading back is only possible from a branch: a decision or an approval ends each round.
+  if (!sourceHandle && wouldCycle(edges, source, target)) return "editor.connect.cycle";
+  return null;
+}
+
 /** The limits a new loop connection starts with (the runtime requires a limit). */
 export const DEFAULT_LOOP: EdgeLoop = { max_iterations: 3, on_exhausted: "fail" };
 
@@ -180,8 +235,10 @@ export const useEditor = create<EditorState>((set, get) => {
     nodes: [],
     edges: [],
     selectedId: null,
+    selectedIds: [],
     selectedEdgeId: null,
     dirty: false,
+    saved: null,
     past: [],
     future: [],
     run: null,
@@ -201,6 +258,7 @@ export const useEditor = create<EditorState>((set, get) => {
         nodes: workflow.nodes,
         edges: workflow.edges,
         selectedId: null,
+        selectedIds: [],
         selectedEdgeId: null,
         dirty: false,
         past: [],
@@ -208,6 +266,7 @@ export const useEditor = create<EditorState>((set, get) => {
         run: null,
         pendingNote: null,
       });
+      set({ saved: snapshot() });
     },
 
     reset: () => {
@@ -223,8 +282,10 @@ export const useEditor = create<EditorState>((set, get) => {
         nodes: [],
         edges: [],
         selectedId: null,
+        selectedIds: [],
         selectedEdgeId: null,
         dirty: false,
+        saved: null,
         past: [],
         future: [],
         run: null,
@@ -248,8 +309,10 @@ export const useEditor = create<EditorState>((set, get) => {
           sent.budget_usd === budget &&
           sent.limits === limits &&
           sent.capabilities === capabilities);
-      if (unchanged) set({ dirty: false, workflowId: workflow.id, name: workflow.name, pendingNote: null });
-      else set({ workflowId: workflow.id, pendingNote: null });
+      if (unchanged) {
+        set({ dirty: false, workflowId: workflow.id, name: workflow.name, pendingNote: null });
+        set({ saved: snapshot() });
+      } else set({ workflowId: workflow.id, pendingNote: null });
     },
 
     setMeta: (patch) => edit(`meta:${Object.keys(patch).sort().join(",")}`, patch),
@@ -267,7 +330,7 @@ export const useEditor = create<EditorState>((set, get) => {
         node.label = label;
         if (node.agent) node.agent.name = label;
       }
-      commit({ nodes: [...get().nodes, node], selectedId: node.id });
+      commit({ nodes: [...get().nodes, node], ...selection([node.id]) });
       return node;
     },
 
@@ -318,6 +381,7 @@ export const useEditor = create<EditorState>((set, get) => {
         nodes: structuredClone(draft.nodes),
         edges: structuredClone(draft.edges),
         selectedId: null,
+        selectedIds: [],
         selectedEdgeId: null,
         pendingNote: note,
       });
@@ -325,46 +389,59 @@ export const useEditor = create<EditorState>((set, get) => {
 
     removeNodes: (ids) => {
       const remove = new Set(ids);
-      const { nodes, edges, selectedId } = get();
+      const { nodes, edges, selectedIds } = get();
+      if (!nodes.some((node) => remove.has(node.id))) return;
       commit({
         nodes: nodes.filter((node) => !remove.has(node.id)),
         edges: edges.filter((edge) => !remove.has(edge.source) && !remove.has(edge.target)),
-        selectedId: selectedId && remove.has(selectedId) ? null : selectedId,
+        ...selection(selectedIds.filter((id) => !remove.has(id))),
         selectedEdgeId: null,
       });
     },
 
-    duplicateNode: (id) => {
-      const node = get().nodes.find((item) => item.id === id);
-      if (!node) return;
-      const copy: WorkflowNode = structuredClone(node);
-      copy.id = newId("node");
-      copy.position = { x: node.position.x + 40, y: node.position.y + 140 };
-      copy.label = i18n.t("editor.copyName", { name: node.label });
-      if (copy.agent) copy.agent.name = copy.label;
-      commit({ nodes: [...get().nodes, copy], selectedId: copy.id });
+    duplicateNode: (id) => get().duplicateNodes([id]),
+
+    duplicateNodes: (ids) => {
+      const wanted = new Set(ids);
+      const originals = get().nodes.filter((item) => wanted.has(item.id));
+      if (!originals.length) return;
+      // Copies of several nodes keep their connections among each other, so a copied group still works.
+      const map = new Map<string, string>();
+      const copies = originals.map((node) => {
+        const copy: WorkflowNode = structuredClone(node);
+        copy.id = newId("node");
+        map.set(node.id, copy.id);
+        copy.position = { x: node.position.x + 40, y: node.position.y + 140 };
+        copy.label = i18n.t("editor.copyName", { name: node.label });
+        if (copy.agent) copy.agent.name = copy.label;
+        return copy;
+      });
+      const inner =
+        originals.length > 1
+          ? get()
+              .edges.filter((edge) => map.has(edge.source) && map.has(edge.target))
+              .map((edge) => ({ ...structuredClone(edge), id: newId("edge"), source: map.get(edge.source)!, target: map.get(edge.target)! }))
+          : [];
+      commit({
+        nodes: [...get().nodes, ...copies],
+        edges: inner.length ? [...get().edges, ...inner] : get().edges,
+        ...selection(copies.map((copy) => copy.id)),
+      });
     },
 
     connect: (source, target, handle = null) => {
       const { nodes, edges } = get();
-      const from = nodes.find((node) => node.id === source);
-      const to = nodes.find((node) => node.id === target);
-      if (!from || !to) return "editor.connect.notFound";
-      if (source === target) return "editor.connect.self";
-      if (from.type === "output") return "editor.connect.fromOutput";
-      if (to.type === "start") return "editor.connect.toStart";
+      const problem = connectionProblem(nodes, edges, source, target, handle);
+      if (problem) return problem;
+      const from = nodes.find((node) => node.id === source)!;
       const handles = branchHandles(from);
       // A node with branches connects from one of them; any other node from its single output.
-      const sourceHandle = handles ? (handle && handles.includes(handle) ? handle : null) : null;
-      if (handles && !sourceHandle) return "editor.connect.pickBranch";
-      if (edges.some((edge) => edge.source === source && edge.target === target)) return "editor.connect.exists";
+      const sourceHandle = handles && handle && handles.includes(handle) ? handle : null;
       const back = wouldCycle(edges, source, target);
-      // Leading back is only possible from a branch: a decision or an approval ends each round.
-      if (back && !sourceHandle) return "editor.connect.cycle";
       const edge: WorkflowEdge = { id: newId("edge"), source, target };
       if (sourceHandle) edge.source_handle = sourceHandle;
       if (back) edge.loop = { ...DEFAULT_LOOP };
-      commit({ edges: [...edges, edge], ...(back ? { selectedEdgeId: edge.id, selectedId: null } : {}) });
+      commit({ edges: [...edges, edge], ...(back ? { selectedEdgeId: edge.id, ...selection([]) } : {}) });
       return back ? "editor.connect.loopCreated" : null;
     },
 
@@ -393,12 +470,18 @@ export const useEditor = create<EditorState>((set, get) => {
 
     select: (id) => {
       editing = null;
-      set({ selectedId: id, selectedEdgeId: null });
+      set({ ...selection(id ? [id] : []), selectedEdgeId: null });
+    },
+
+    setSelection: (ids) => {
+      editing = null;
+      const known = new Set(get().nodes.map((node) => node.id));
+      set({ ...selection(ids.filter((id) => known.has(id))), selectedEdgeId: null });
     },
 
     selectEdge: (id) => {
       editing = null;
-      set({ selectedEdgeId: id, selectedId: id ? null : get().selectedId });
+      set({ selectedEdgeId: id, ...(id ? selection([]) : {}) });
     },
 
     autoLayout: () => {
@@ -431,7 +514,13 @@ export const useEditor = create<EditorState>((set, get) => {
       if (!previous) return;
       editing = null;
       // The version note of a taken draft goes and comes back with the draft.
-      set({ ...previous, past: past.slice(0, -1), future: [snapshot(), ...future], dirty: true, selectedEdgeId: null });
+      set({
+        ...previous,
+        past: past.slice(0, -1),
+        future: [snapshot(), ...future],
+        dirty: !sameState(previous, get().saved),
+        selectedEdgeId: null,
+      });
     },
 
     redo: () => {
@@ -439,7 +528,7 @@ export const useEditor = create<EditorState>((set, get) => {
       const next = future[0];
       if (!next) return;
       editing = null;
-      set({ ...next, future: future.slice(1), past: [...past, snapshot()], dirty: true, selectedEdgeId: null });
+      set({ ...next, future: future.slice(1), past: [...past, snapshot()], dirty: !sameState(next, get().saved), selectedEdgeId: null });
     },
 
     setRun: (run) => set({ run }),

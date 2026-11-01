@@ -194,6 +194,25 @@ try {
   const redone = await box(node);
   check(Math.abs(redone.x - moved.x) < 1 && Math.abs(redone.y - moved.y) < 1, "Redo moves it to where the drag ended");
 
+  // ---- 4b. several nodes at once: Shift-click selects a group, Delete removes it with an undo toast ----
+  const agents = page.locator(".react-flow__node-agent");
+  const agentCount = await agents.count();
+  await agents.nth(0).click();
+  await agents.nth(1).click({ modifiers: ["Shift"] });
+  await page.getByTestId("selection-inspector").waitFor();
+  check((await page.locator(".react-flow__node.selected").count()) === 2, "Shift-click adds a node to the selection");
+  check((await page.getByTestId("selection-inspector").textContent()).includes("2 nodes selected"), "The inspector names the selection");
+  await page.keyboard.press("Delete");
+  await until(async () => (await agents.count()) === agentCount - 2, "both selected nodes removed");
+  const undoToast = page.locator(".toast").filter({ hasText: "Removed 2 nodes" });
+  await undoToast.getByRole("button", { name: "Undo" }).click();
+  await until(async () => (await agents.count()) === agentCount, "undo from the toast");
+  check(true, "Delete removes the whole selection, and the toast's Undo restores it");
+  check(
+    await page.getByRole("button", { name: /^Redo/ }).isEnabled(),
+    "Redo is available right after an undo",
+  );
+
   // ---- 5. persistence -----------------------------------------------------------------------------
   await page.getByRole("button", { name: "Discard" }).first().click();
   await page.getByRole("dialog").getByRole("button", { name: "Discard" }).click();

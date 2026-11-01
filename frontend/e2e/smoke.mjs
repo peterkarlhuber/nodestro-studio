@@ -125,14 +125,30 @@ try {
   await page.locator(".page__body > .card-grid > .card", { hasText: "Finanzanalyse" }).first().click();
   await page.waitForURL(/\/workflows\/wf_/);
   await page.locator(".react-flow__node").first().waitFor();
+  // Without a provider the start explains itself next to the button and links to the settings (OB-01).
+  const reason = page.getByTestId("disabled-reason");
+  await reason.waitFor();
+  check((await reason.textContent()).includes("API-Schlüssel"), "The blocked start names the missing provider next to the button");
+  check(await reason.getByRole("link", { name: "Einstellungen öffnen" }).isVisible(), "The reason links to the settings");
+  check((await page.getByTestId("start-workflow").getAttribute("aria-disabled")) === "true", "The start button stays focusable but blocked");
+  check((await page.locator('.react-flow__node [data-status="idle"]').count()) === 0, "No node claims to be ready while the start is blocked");
   await page.locator(".react-flow__node-agent").first().click();
   await page.getByLabel("Name des Agenten").waitFor();
   check(true, "Inspector opens for an agent");
   await page.locator(".inspector summary", { hasText: "Tools" }).click();
   await shot("03-inspector");
 
-  await page.getByRole("button", { name: "Agent hinzufügen" }).click();
+  // The palette adds an agent where it can be seen and selects it (the title bar has no second "add" button).
+  await page.getByTestId("palette").getByRole("button", { name: /^Agent / }).first().click();
   check(await page.getByText("Ungespeicherte Änderungen").first().isVisible(), "Adding an agent marks the workflow dirty");
+  {
+    const added = await page.locator(".react-flow__node.selected").first().boundingBox();
+    const pane = await page.locator(".react-flow").boundingBox();
+    check(
+      added && pane && added.x >= pane.x && added.y >= pane.y && added.x + added.width <= pane.x + pane.width && added.y + added.height <= pane.y + pane.height,
+      "The added agent appears selected inside the visible canvas",
+    );
+  }
   await page.getByRole("button", { name: "Rückgängig (Strg+Z)" }).click();
 
   check((await page.locator(".palette__toggle").getAttribute("aria-expanded")) === "true", "Building blocks start open in a wide window");
@@ -174,7 +190,8 @@ try {
   await page.keyboard.press("Control+z");
   check((await edges.count()) === edgeCount, "Discard also clears the undo history");
 
-  await page.getByRole("button", { name: "Versionen" }).click();
+  await page.getByRole("button", { name: "Weitere Aktionen" }).click();
+  await page.getByRole("menuitem", { name: "Versionen" }).click();
   await page.getByRole("heading", { name: "Versionsverlauf" }).waitFor();
   check(true, "Version history opens");
   await shot("02c-versions");

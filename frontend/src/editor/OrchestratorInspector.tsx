@@ -1,6 +1,6 @@
 // Inspector of an orchestrator node: the pool of teams, the task, the model and the limits.
 
-import { Trash2 } from "lucide-react";
+import { ListChecks, Network, SlidersHorizontal, Trash2, Users } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
@@ -12,12 +12,14 @@ import {
   MAX_POOL,
   MAX_SELECT_CAPABILITIES,
   type OrchestratorConfig,
+  type WorkflowCheck,
   type WorkflowNode,
 } from "../api/types";
-import { ModelPicker } from "../components/ModelPicker";
-import { Callout, Chip, Field, IconButton, Select, TextArea, TextInput } from "../components/ui";
+import { ModelPicker, useModelName } from "../components/ModelPicker";
+import { Callout, Chip, Field, IconButton, Section, type SectionStatus, Select, TextArea, TextInput } from "../components/ui";
 import { addCapabilities } from "../lib/capabilities";
 import { childLink, parseTrail } from "../lib/trail";
+import { findings } from "./CheckList";
 import { Header, LabelField } from "./FlowInspectors";
 import { useEditor } from "./store";
 
@@ -28,8 +30,20 @@ export function wholeNumber(value: string, low: number, high: number): number | 
   return Number.isFinite(number) ? Math.min(high, Math.max(low, number)) : null;
 }
 
-export function OrchestratorInspector({ node }: { node: WorkflowNode }) {
+/** Problems of the check about the pool (missing, invalid or unmatched teams), for the Teams section's summary. */
+export function poolStatus(check: WorkflowCheck | undefined, nodeId: string): SectionStatus {
+  const status = { errors: 0, warnings: 0 };
+  for (const finding of findings(check)) {
+    if (finding.nodeId !== nodeId || !finding.item.code.startsWith("check.orchestrator_")) continue;
+    if (finding.level === "error") status.errors += 1;
+    else if (finding.level === "warning") status.warnings += 1;
+  }
+  return status;
+}
+
+export function OrchestratorInspector({ node, check }: { node: WorkflowNode; check?: WorkflowCheck }) {
   const { t } = useTranslation();
+  const modelLabel = useModelName();
   const workflowId = useEditor((s) => s.workflowId);
   const { updateNode } = useEditor.getState();
   const workflows = useWorkflows();
@@ -43,104 +57,206 @@ export function OrchestratorInspector({ node }: { node: WorkflowNode }) {
     .filter((item) => item.id !== workflowId && !chosen.has(item.id))
     .map((item) => ({ value: item.id, label: item.name }));
   const trail = workflowId ? parseTrail(searchParams.get("trail"), workflowId) : [];
+  const tags = config.select?.capabilities ?? [];
+  const staffing = config.staffing ?? false;
+  const parallel = config.max_parallel ?? 1;
+  const poolSummary =
+    [
+      config.members.length
+        ? t("flow.orchestrator.summary.members", {
+            count: config.members.length,
+          })
+        : null,
+      tags.length ? t("flow.orchestrator.summary.byCapability", { tags: tags.join(", ") }) : null,
+    ]
+      .filter(Boolean)
+      .join(" · ") || t("flow.orchestrator.summary.noTeams");
+  const limitSummary = [
+    t("flow.orchestrator.summary.decisions", { count: config.max_decisions }),
+    config.max_per_member ? t("flow.orchestrator.summary.perTeam", { count: config.max_per_member }) : null,
+    t("flow.orchestrator.summary.parallel", { count: parallel }),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const lineupSummary = staffing
+    ? t("flow.orchestrator.summary.lineup", { count: config.max_team ?? 5 })
+    : t("flow.orchestrator.summary.lineupOff");
   return (
     <div className="inspector__content">
       <Header node={node} title={t("editor.nodes.orchestrator")} tip="flow.orchestrator" text={t("flow.orchestrator.text")} />
+      <p className="orchestrator-summary" data-testid="orchestrator-summary">
+        {t("flow.orchestrator.summary.how", {
+          pool: poolSummary,
+          limits: limitSummary,
+          lineup: lineupSummary,
+        })}
+      </p>
       <LabelField node={node} />
-      <Field
-        label={t("flow.orchestrator.teams")}
-        hint={t("flow.orchestrator.teamsHint", { max: MAX_POOL })}
+      <Section
+        id="orchestrator-pool"
+        title={t("flow.orchestrator.teams")}
+        icon={Users}
         tip="flow.orchestratorTeams"
+        summary={poolSummary}
+        status={poolStatus(check, node.id)}
+        defaultOpen={!config.members.length && !tags.length}
       >
-        <div className="stack-sm" data-testid="orchestrator-teams">
-          {config.members.length === 0 && !config.select?.capabilities.length ? (
-            <p className="field__hint">{t("flow.orchestrator.noTeams")}</p>
-          ) : null}
-          {config.members.map((member) => {
-            const team = known.get(member.workflow_id);
-            return (
-              <div key={member.workflow_id} className="mapping-row" data-testid="orchestrator-team">
-                <div className="stack-sm">
-                  {team && workflowId ? (
-                    <Link to={childLink(trail, workflowId, member.workflow_id)}>{team.name}</Link>
-                  ) : (
-                    <span className="muted">{t("editor.subworkflow.missing")}</span>
-                  )}
-                  {team?.capabilities?.length ? (
-                    <div className="chip-row">
-                      {team.capabilities.map((tag) => (
-                        <Chip key={tag}>{tag}</Chip>
-                      ))}
-                    </div>
-                  ) : null}
-                  {team ? (
-                    <span className="field__hint">
-                      {team.contract?.length
-                        ? t("flow.orchestrator.delivers", { fields: team.contract.join(", ") })
-                        : t("flow.subworkflow.noContract")}
-                    </span>
-                  ) : null}
+        <Field label={t("flow.orchestrator.members")} hint={t("flow.orchestrator.teamsHint", { max: MAX_POOL })}>
+          <div className="stack-sm" data-testid="orchestrator-teams">
+            {config.members.length === 0 && !config.select?.capabilities.length ? (
+              <p className="field__hint">{t("flow.orchestrator.noTeams")}</p>
+            ) : null}
+            {config.members.map((member) => {
+              const team = known.get(member.workflow_id);
+              return (
+                <div key={member.workflow_id} className="pool-team" data-testid="orchestrator-team">
+                  <div className="pool-team__body">
+                    {team && workflowId ? (
+                      <Link to={childLink(trail, workflowId, member.workflow_id)}>{team.name}</Link>
+                    ) : (
+                      <span className="muted">{t("editor.subworkflow.missing")}</span>
+                    )}
+                    {team?.capabilities?.length ? (
+                      <div className="chip-row">
+                        {team.capabilities.map((tag) => (
+                          <Chip key={tag}>{tag}</Chip>
+                        ))}
+                      </div>
+                    ) : null}
+                    {/* Only a team that promises fields says so; the general note on contracts is in the help. */}
+                    {team?.contract?.length ? (
+                      <span className="field__hint">
+                        {t("flow.orchestrator.delivers", {
+                          fields: team.contract.join(", "),
+                        })}
+                      </span>
+                    ) : null}
+                  </div>
+                  <IconButton
+                    icon={Trash2}
+                    label={t("flow.orchestrator.removeTeam", {
+                      name: team?.name ?? member.workflow_id,
+                    })}
+                    onClick={() =>
+                      set({
+                        members: config.members.filter((item) => item.workflow_id !== member.workflow_id),
+                      })
+                    }
+                  />
                 </div>
-                <IconButton
-                  icon={Trash2}
-                  label={t("flow.orchestrator.removeTeam", { name: team?.name ?? member.workflow_id })}
-                  onClick={() => set({ members: config.members.filter((item) => item.workflow_id !== member.workflow_id) })}
-                />
-              </div>
-            );
-          })}
-          {config.members.length < MAX_POOL ? (
-            <Select
-              value=""
-              placeholder={t("flow.orchestrator.addTeam")}
-              onChange={(value) => value && set({ members: [...config.members, { workflow_id: value, version: null }] })}
-              options={options}
-            />
-          ) : null}
-        </div>
-      </Field>
-      <SelectField config={config} set={set} />
-      <Field label={t("flow.orchestrator.task")} hint={t("flow.orchestrator.taskHint", { input: "{{input}}" })}>
-        <TextArea rows={3} value={config.task_template} onChange={(e) => set({ task_template: e.target.value }, false)} />
-      </Field>
-      <Field label={t("flow.orchestrator.instructions")} hint={t("flow.orchestrator.instructionsHint")}>
-        <TextArea
-          rows={4}
-          value={config.instructions}
-          onChange={(e) => set({ instructions: e.target.value }, false)}
-          data-testid="orchestrator-instructions"
-        />
-      </Field>
-      <Field label={t("flow.orchestrator.model")}>
-        <ModelPicker id={`orchestrator-model-${node.id}`} value={config.model} onChange={(model) => set({ model })} />
-      </Field>
-      <Field
-        label={t("flow.orchestrator.maxDecisions")}
-        hint={t("flow.orchestrator.maxDecisionsHint", { max: MAX_DECISIONS })}
-        tip="flow.orchestratorLimits"
+              );
+            })}
+            {config.members.length < MAX_POOL ? (
+              <Select
+                value=""
+                placeholder={t("flow.orchestrator.addTeam")}
+                onChange={(value) =>
+                  value &&
+                  set({
+                    members: [...config.members, { workflow_id: value, version: null }],
+                  })
+                }
+                options={options}
+              />
+            ) : null}
+          </div>
+        </Field>
+        <SelectField config={config} set={set} />
+      </Section>
+      <Section
+        id="orchestrator-task"
+        title={t("flow.orchestrator.assignment")}
+        icon={ListChecks}
+        summary={modelLabel(config.model)}
+        defaultOpen={!config.task_template.trim()}
       >
-        <TextInput
-          type="number"
-          min={1}
-          max={MAX_DECISIONS}
-          step={1}
-          value={config.max_decisions}
-          onChange={(e) => set({ max_decisions: wholeNumber(e.target.value, 1, MAX_DECISIONS) ?? 1 })}
-          data-testid="orchestrator-decisions"
-        />
-      </Field>
-      <Field label={t("flow.orchestrator.maxPerTeam")} hint={t("flow.orchestrator.maxPerTeamHint")} tip="flow.orchestratorLimits">
-        <TextInput
-          type="number"
-          min={1}
-          max={config.max_decisions}
-          step={1}
-          value={config.max_per_member ?? ""}
-          onChange={(e) => set({ max_per_member: wholeNumber(e.target.value, 1, config.max_decisions) })}
-          data-testid="orchestrator-per-team"
-        />
-      </Field>
-      <DynamicField config={config} set={set} />
+        <Field label={t("flow.orchestrator.task")} hint={t("flow.orchestrator.taskHint", { input: "{{input}}" })}>
+          <TextArea rows={3} value={config.task_template} onChange={(e) => set({ task_template: e.target.value }, false)} />
+        </Field>
+        <Field label={t("flow.orchestrator.instructions")} hint={t("flow.orchestrator.instructionsHint")}>
+          <TextArea
+            rows={4}
+            value={config.instructions}
+            onChange={(e) => set({ instructions: e.target.value }, false)}
+            data-testid="orchestrator-instructions"
+          />
+        </Field>
+        <Field label={t("flow.orchestrator.model")}>
+          <ModelPicker id={`orchestrator-model-${node.id}`} value={config.model} onChange={(model) => set({ model })} />
+        </Field>
+      </Section>
+      <Section
+        id="orchestrator-limits"
+        title={t("flow.orchestrator.limits")}
+        icon={SlidersHorizontal}
+        tip="flow.orchestratorLimits"
+        summary={limitSummary}
+      >
+        <Field
+          label={t("flow.orchestrator.maxDecisions")}
+          hint={t("flow.orchestrator.maxDecisionsHint", { max: MAX_DECISIONS })}
+          tip="flow.orchestratorLimits"
+        >
+          <TextInput
+            type="number"
+            min={1}
+            max={MAX_DECISIONS}
+            step={1}
+            value={config.max_decisions}
+            onChange={(e) =>
+              set({
+                max_decisions: wholeNumber(e.target.value, 1, MAX_DECISIONS) ?? 1,
+              })
+            }
+            data-testid="orchestrator-decisions"
+          />
+        </Field>
+        <Field
+          label={t("flow.orchestrator.maxPerTeam")}
+          hint={t("flow.orchestrator.maxPerTeamHint")}
+          tip="flow.orchestratorLimits"
+        >
+          <TextInput
+            type="number"
+            min={1}
+            max={config.max_decisions}
+            step={1}
+            value={config.max_per_member ?? ""}
+            onChange={(e) =>
+              set({
+                max_per_member: wholeNumber(e.target.value, 1, config.max_decisions),
+              })
+            }
+            data-testid="orchestrator-per-team"
+          />
+        </Field>
+        <label className="mapping-row">
+          <span>{t("flow.orchestrator.maxParallel")}</span>
+          <TextInput
+            type="number"
+            min={1}
+            max={MAX_PARALLEL_TEAMS}
+            step={1}
+            value={parallel}
+            onChange={(e) =>
+              set({
+                max_parallel: wholeNumber(e.target.value, 1, MAX_PARALLEL_TEAMS) ?? 1,
+              })
+            }
+            data-testid="orchestrator-parallel"
+          />
+        </label>
+      </Section>
+      <Section
+        id="orchestrator-lineup"
+        title={t("flow.orchestrator.lineup")}
+        icon={Network}
+        tip="flow.orchestratorDynamic"
+        summary={lineupSummary}
+        defaultOpen={staffing || Boolean(config.allow_values)}
+      >
+        <DynamicField config={config} set={set} />
+      </Section>
       <Callout tone="info">{t("flow.orchestrator.safety")}</Callout>
     </div>
   );
@@ -157,25 +273,18 @@ function DynamicField({
   const { t } = useTranslation();
   const staffing = config.staffing ?? false;
   return (
-    <Field label={t("flow.orchestrator.dynamic")} hint={t("flow.orchestrator.dynamicHint")} tip="flow.orchestratorDynamic">
+    <Field label={t("flow.orchestrator.dynamic")} hint={t("flow.orchestrator.dynamicHint")}>
       <div className="stack-sm" data-testid="orchestrator-dynamic">
-        <label className="mapping-row">
-          <span>{t("flow.orchestrator.maxParallel")}</span>
-          <TextInput
-            type="number"
-            min={1}
-            max={MAX_PARALLEL_TEAMS}
-            step={1}
-            value={config.max_parallel ?? 1}
-            onChange={(e) => set({ max_parallel: wholeNumber(e.target.value, 1, MAX_PARALLEL_TEAMS) ?? 1 })}
-            data-testid="orchestrator-parallel"
-          />
-        </label>
         <label className="checkbox">
           <input
             type="checkbox"
             checked={staffing}
-            onChange={(e) => set({ staffing: e.target.checked, max_team: config.max_team ?? 5 })}
+            onChange={(e) =>
+              set({
+                staffing: e.target.checked,
+                max_team: config.max_team ?? 5,
+              })
+            }
             data-testid="orchestrator-staffing"
           />
           {t("flow.orchestrator.staffing")}

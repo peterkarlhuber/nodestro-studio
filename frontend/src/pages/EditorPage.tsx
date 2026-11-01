@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Download, History, Play, Plug, Plus, RotateCcw, Save, Sparkles } from "lucide-react";
+import { Download, History, Play, Plug, RotateCcw, Save, Sparkles } from "lucide-react";
 import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useBlocker, useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -13,7 +13,8 @@ import { useContextOffer } from "../assistant/useContextOffer";
 import { keys, useWorkflows } from "../api/hooks";
 import type { ArchitectJob, Run, Workflow } from "../api/types";
 import { toast } from "../components/toast";
-import { Button, DocLink, Hint, Modal, Spinner } from "../components/ui";
+import { UnsavedChangesModal } from "../components/UnsavedChanges";
+import { Button, DisabledReason, DocLink, Hint, MenuButton, Modal, Spinner } from "../components/ui";
 import { Canvas, type CanvasIssues } from "../editor/Canvas";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { Inspector } from "../editor/Inspector";
@@ -26,12 +27,13 @@ import { useEditor } from "../editor/store";
 import { useFollowRun } from "../editor/useRunStream";
 import type { AgentSectionId } from "../editor/agentSummaries";
 import { AGENT_SECTIONS, useAgentSections } from "../editor/sectionState";
+import { addVisibleNode } from "../editor/viewport";
 import { VersionsDialog } from "../editor/VersionsDialog";
 import { problemText } from "../lib/errors";
 import { useDocumentTitle } from "../lib/documentTitle";
 import { crumbLink, parseTrail } from "../lib/trail";
 import { ApiDialog } from "../publish/ApiDialog";
-import { findings } from "../editor/CheckList";
+import { countsByNode, findings, startBlock } from "../editor/CheckList";
 import { NotFoundState } from "../components/NotFoundState";
 
 function useDebouncedGraph() {
@@ -166,18 +168,36 @@ export function EditorPage() {
     enabled: loadedId === id && graph.nodes.length > 0,
     staleTime: 30_000,
   });
+  const block = useMemo(() => startBlock(check.data), [check.data]);
   const issues = useMemo<CanvasIssues>(() => {
-    const result: CanvasIssues = { nodes: {}, edges: {} };
+    const counts = countsByNode(check.data);
+    const result: CanvasIssues = { nodes: counts.errors, warnings: counts.warnings, edges: {}, blocked: Boolean(block?.provider) };
     for (const finding of findings(check.data)) {
-      if (finding.edgeId) {
-        if (finding.level !== "info" && result.edges[finding.edgeId] !== "error") result.edges[finding.edgeId] = finding.level;
-      } else if (finding.nodeId && finding.level === "error") {
-        result.nodes[finding.nodeId] = (result.nodes[finding.nodeId] ?? 0) + 1;
-      }
+      if (finding.edgeId && finding.level !== "info" && result.edges[finding.edgeId] !== "error")
+        result.edges[finding.edgeId] = finding.level;
     }
     return result;
-  }, [check.data]);
-  const blocked = Boolean(check.data && !check.data.ok);
+  }, [check.data, block]);
+
+  /** Show the problem that blocks the start: the node or connection it is about, or the check list. */
+  const showProblem = () => {
+    const first = block?.first;
+    const state = useEditor.getState();
+    if (first?.edgeId) state.selectEdge(first.edgeId);
+    else if (first?.nodeId && state.nodes.some((node) => node.id === first.nodeId)) state.select(first.nodeId);
+    else state.select(null);
+    useEditorLayout.getState().setOpen("inspector", true);
+    window.setTimeout(() => {
+      const target = first?.nodeId || first?.edgeId ? null : document.querySelector<HTMLElement>(".check-panel");
+      target?.scrollIntoView({ block: "nearest" });
+      target?.focus();
+    }, 50);
+  };
+  const startReason = block
+    ? block.count > 1
+      ? t("editor.page.startBlockedMany", { count: block.count, first: problemText(t, block.first.item) })
+      : problemText(t, block.first.item)
+    : null;
 
   // One save at a time: Ctrl+S during a running save (or a double click) sends no second request.
   const pendingSave = useRef<Promise<string | null> | null>(null);
@@ -281,7 +301,9 @@ export function EditorPage() {
         <header className="titlebar">
           <div className="titlebar__heading">
             <h1 className="titlebar__title">
-              {name || t("editor.inspector.workflowTitle")}
+              <span className="titlebar__name" title={name || undefined}>
+                {name || t("editor.inspector.workflowTitle")}
+              </span>
               <DocLink to="workflows#editor" label={t("editor.page.docs")} />
             </h1>
             <div className="breadcrumbs">
@@ -319,54 +341,36 @@ export function EditorPage() {
                 <span className="title-actions__label">{t("architect.button")}</span>
               </Button>
             </Hint>
-            <Hint id="workflow.versions">
-              <Button icon={History} variant="ghost" onClick={() => setVersionsOpen(true)}>
-                <span className="title-actions__label">{t("versions.button")}</span>
-              </Button>
-            </Hint>
             <Hint id="publish.open">
               <Button icon={Plug} variant="ghost" onClick={() => setApiOpen(true)} data-testid="open-api">
                 <span className="title-actions__label">{t("publish.button")}</span>
               </Button>
             </Hint>
-            <Hint id="workflow.export">
-              <Button icon={Download} variant="ghost" onClick={() => void exportWorkflow()}>
-                <span className="title-actions__label">{t("common.export")}</span>
-              </Button>
-            </Hint>
+            {/* Secondary actions share one menu, so the title bar keeps Save and Start in one row. */}
+            <MenuButton
+              label={t("editor.page.moreActions")}
+              items={[
+                { label: t("versions.button"), icon: History, onSelect: () => setVersionsOpen(true), testId: "open-versions" },
+                { label: t("editor.page.exportFile"), icon: Download, onSelect: () => void exportWorkflow(), testId: "export-workflow" },
+              ]}
+            />
             <Hint id="workflow.save">
               <Button icon={Save} busy={saving} disabled={!dirty} onClick={() => void save().then((ok) => ok && toast.success(t("common.saved")))}>
                 {t("common.save")}
               </Button>
             </Hint>
-            <Hint id="workflow.addAgent">
-              <Button
-                icon={Plus}
-                onClick={() => {
-                  const nodes = useEditor.getState().nodes;
-                  const x = nodes.length ? Math.max(...nodes.map((n) => n.position.x)) + 320 : 0;
-                  useEditor.getState().addNode("agent", { x, y: 0 });
-                }}
-              >
-                {t("editor.page.addAgent")}
-              </Button>
-            </Hint>
-            <Button
-              variant="primary"
-              icon={Play}
-              disabled={Boolean(liveRunId) || blocked}
-              title={
-                blocked
-                  ? findings(check.data)
-                      .filter((finding) => finding.level === "error")
-                      .map((finding) => problemText(t, finding.item))
-                      .join("\n")
-                  : undefined
+            <DisabledReason
+              reason={!liveRunId ? startReason : null}
+              action={
+                block?.provider
+                  ? { label: t("editor.run.openSettings"), to: "/settings" }
+                  : { label: t("editor.page.showProblem"), onClick: showProblem }
               }
-              onClick={() => setRunOpen(true)}
             >
-              {t("editor.run.title")}
-            </Button>
+              <Button variant="primary" icon={Play} disabled={Boolean(liveRunId)} onClick={() => setRunOpen(true)} data-testid="start-workflow">
+                {t("editor.run.title")}
+              </Button>
+            </DisabledReason>
           </div>
         </header>
         <div className="editor__workspace">
@@ -458,43 +462,23 @@ export function EditorPage() {
         open={designOpen}
         onClose={() => setDesignOpen(false)}
         initial={designInitial}
-        onApply={(config) => {
-          const nodes = useEditor.getState().nodes;
-          const x = nodes.length ? Math.max(...nodes.map((n) => n.position.x)) + 320 : 0;
-          useEditor.getState().addNode("agent", { x, y: 0 }, config);
-        }}
+        onApply={(config) => addVisibleNode("agent", config)}
       />
-      <Modal
-        title={t("editor.canvas.unsaved")}
+      <UnsavedChangesModal
         open={blocker.state === "blocked"}
-        onClose={() => blocker.reset?.()}
-        footer={
-          <>
-            <Button
-              variant="ghost"
-              onClick={() => {
-                useEditor.getState().reset();
-                queryClient.removeQueries({ queryKey: keys.workflow(id) });
-                blocker.proceed?.();
-              }}
-            >
-              {t("common.discard")}
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() =>
-                void save().then((saved) => {
-                  if (saved) blocker.proceed?.();
-                })
-              }
-            >
-              {t("editor.page.saveAndContinue")}
-            </Button>
-          </>
+        onStay={() => blocker.reset?.()}
+        onDiscard={() => {
+          useEditor.getState().reset();
+          queryClient.removeQueries({ queryKey: keys.workflow(id) });
+          blocker.proceed?.();
+        }}
+        saving={saving}
+        onSave={() =>
+          void save().then((saved) => {
+            if (saved) blocker.proceed?.();
+          })
         }
-      >
-        <p>{t("editor.page.unsavedText")}</p>
-      </Modal>
+      />
     </div>
   );
 }

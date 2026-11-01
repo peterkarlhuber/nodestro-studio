@@ -167,13 +167,13 @@ try {
   // 7. Unsaved changes: the user picks the draft; a later edit marks it changed.
   await chip.getByTestId("attachment-remove").click();
   await chip.waitFor({ state: "detached" });
-  await page.getByRole("button", { name: "Agent hinzufügen" }).click();
+  await page.getByTestId("palette").getByRole("button", { name: /^Agent / }).first().click();
   await suggestion.waitFor();
   check(await suggestion.getByTestId("suggestion-add").innerText() === "Gespeicherte Version", "With unsaved changes the saved version is one choice");
   await suggestion.getByTestId("suggestion-add-draft").click();
   await chip.getByText("Entwurf").waitFor();
   check((await conversation()).attachments[0].variant === "draft", "The unsaved draft was attached");
-  await page.getByRole("button", { name: "Agent hinzufügen" }).click();
+  await page.getByTestId("palette").getByRole("button", { name: /^Agent / }).first().click();
   await chip.getByText("geändert").waitFor();
   check(true, "Editing after attaching the draft marks it changed");
   await shot("assistant-05-draft");
