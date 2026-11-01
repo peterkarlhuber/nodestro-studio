@@ -139,13 +139,28 @@ Uma equipe pode ser testada sozinha: crie uma [série de testes](/docs/automatis
 Um **orquestrador** deixa um modelo de IA decidir qual equipe recebe qual parte da tarefa. Ele toma uma decisão após a outra: **delegar** uma tarefa a uma equipe ou **concluir** com uma resposta. A resposta é o resultado do nó.
 
 - **Equipes:** os workflows salvos entre os quais o modelo pode escolher (no máximo 20). De cada equipe, o modelo vê apenas nome, descrição, capacidades e contrato de saída.
-- **Equipes por capacidade:** em vez de escolher cada equipe, você cita capacidades (no máximo 10). Quando uma execução começa, equipes salvas com uma capacidade correspondente entram no grupo (até *No máximo tantas equipes*): primeiro as com mais tags correspondentes, depois pelo nome. Equipes com erros ou etapas de aprovação ficam de fora. A seleção fica fixa para essa execução (e para uma versão publicada); os detalhes mostram quais tags cada equipe atendeu. Nada é pontuado nem estimado.
+- **Equipes por capacidade:** em vez de escolher cada equipe, você cita capacidades (no máximo 10). Quando uma execução começa, equipes salvas com uma capacidade correspondente entram no grupo (até *No máximo tantas equipes*): primeiro as com mais tags correspondentes, depois pelo nome. Equipes com erros ficam de fora; equipes com etapas de aprovação são incluídas. A seleção fica fixa para essa execução (e para uma versão publicada); os detalhes mostram quais tags cada equipe atendeu. Nada é pontuado nem estimado.
 - **Tarefa** e **Instruções:** o que deve ser feito e, opcionalmente, como planejar.
 - **Máximo de decisões** (de 1 a 50, padrão 8) e **Máximo por equipe:** sem resposta após a última decisão, a etapa falha.
 
 O orquestrador apenas escolhe. Ele não tem ferramentas, não cria agentes, ferramentas nem equipes e não tem permissões próprias. Cada equipe escolhida roda como uma **execução vinculada própria**, com sua parte do orçamento, seus limites e suas aprovações de ferramentas. Decisões não permitidas (uma equipe desconhecida, a mesma tarefa de novo, uma equipe esgotada) são recusadas e mostradas ao modelo; mesmo assim contam como decisão.
 
-Os detalhes da execução listam cada decisão com motivo, tarefa, resultado e um link para a execução da equipe. Equipes que param para uma aprovação ainda não são compatíveis dentro de um orquestrador: elas são canceladas nesse ponto, e a verificação antes do início avisa sobre isso. Uma equipe não pode chamar de novo o workflow do orquestrador.
+Os detalhes da execução listam cada decisão com motivo, tarefa, resultado e um link para a execução da equipe. Quando uma equipe para para uma **aprovação** (também em um subworkflow ou abaixo de outro orquestrador), o orquestrador aguarda junto: a execução fica *pausada* e aparece em **Aprovações**. Após a decisão, a mesma execução da equipe continua, também depois de uma reinicialização, e o modelo não é consultado de novo sobre essa delegação. Se uma rejeição encerra a execução da equipe (*Ao rejeitar: encerrar a execução*), esta execução também termina; nenhuma outra equipe pode contornar a rejeição. Cancelar uma execução em espera também cancela suas equipes em espera. Uma equipe não pode chamar de novo o workflow do orquestrador.
+
+## Equipes dinâmicas {#dynamische-teams}
+<!-- keywords: equipe dinâmica, montar equipe, paralelo, ao mesmo tempo, parâmetros, formulário inicial, modelo, composição da equipe, staffing -->
+
+Na área **Equipes dinâmicas** de um orquestrador o modelo ganha mais espaço, sempre dentro do pool e dos limites. Tudo começa desligado.
+
+- **Equipes ao mesmo tempo** (1 a 5): uma decisão pode passar trabalho a várias equipes diferentes de uma vez, para partes que não dependem umas das outras. Cada equipe recebe seu próprio resultado.
+- **Montar a equipe por conta própria:** o orquestrador traz equipes do pool para a sua equipe e as dispensa novamente quando os resultados intermediários indicam. Só equipes da equipe recebem trabalho; *No máximo na equipe* limita o tamanho. A mesma equipe pode trabalhar várias vezes (até *No máximo por equipe*).
+- **Preencher o formulário inicial das equipes:** o orquestrador pode definir os campos do formulário de entrada de uma equipe (nunca arquivos). Os valores são verificados como em um início manual; um campo desconhecido ou um valor inválido é recusado e mostrado ao modelo.
+
+O pool fica fixo no início da execução, nas versões daquele momento. Nunca surgem novas equipes, agentes ou ferramentas, e as aprovações, o orçamento e os limites de cada equipe valem sem mudança.
+
+**O que os detalhes da execução mostram:** qual orquestrador trabalha com qual modelo, quantas decisões foram usadas, o custo das decisões e o total (custos desconhecidos aparecem como *não totalmente conhecido*, nunca como 0), o pool com versões, a **equipe ao longo do tempo**, as equipes em espera e cada decisão com motivo, tarefa, valores e o resultado de cada equipe: *Concluído*, *Aguardando aprovação*, *Falhou*, *Rejeitado*, *Cancelado* ou *Expirado*. Só as decisões registradas são mostradas, nenhum raciocínio do modelo.
+
+**Salvar a composição da equipe como modelo:** uma equipe existe só durante a execução. Depois do fim, este botão salva um **novo workflow** com o mesmo orquestrador, seu formulário inicial, seus limites e exatamente as equipes que trabalharam, nas versões da execução. Nada é salvo sem este clique.
 
 ## Formulários de entrada {#eingabeformular}
 <!-- keywords: formulário, formulário de entrada, campos, tipo, obrigatório, valor padrão, opção, data, número -->

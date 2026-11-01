@@ -139,13 +139,28 @@ Ein Team lässt sich für sich allein prüfen: Lege für den Workflow eine [Test
 Ein **Orchestrator** lässt ein KI-Modell entscheiden, welches Team welche Teilaufgabe bekommt. Es trifft eine Entscheidung nach der anderen: eine Aufgabe an ein Team **weitergeben** oder mit einer Antwort **abschließen**. Die Antwort ist das Ergebnis des Knotens.
 
 - **Teams:** die gespeicherten Workflows, aus denen das Modell wählen darf (höchstens 20). Das Modell sieht von jedem Team nur Name, Beschreibung, Fähigkeiten und Ausgabevertrag.
-- **Teams nach Fähigkeit:** statt jedes Team einzeln zu wählen, nennst du Fähigkeiten (höchstens 10). Beim Start eines Laufs kommen gespeicherte Teams mit einer passenden Fähigkeit dazu (höchstens *Höchstens so viele Teams*), zuerst die mit den meisten passenden Stichworten, dann nach Name. Teams mit Fehlern oder Freigabeschritten bleiben draußen. Die Auswahl gilt fest für diesen Lauf (und für eine veröffentlichte Version); die Details des Laufs zeigen, welche Stichworte jedes Team getroffen hat. Es wird nichts bewertet oder geschätzt.
+- **Teams nach Fähigkeit:** statt jedes Team einzeln zu wählen, nennst du Fähigkeiten (höchstens 10). Beim Start eines Laufs kommen gespeicherte Teams mit einer passenden Fähigkeit dazu (höchstens *Höchstens so viele Teams*), zuerst die mit den meisten passenden Stichworten, dann nach Name. Teams mit Fehlern bleiben draußen; Teams mit Freigabeschritten sind dabei. Die Auswahl gilt fest für diesen Lauf (und für eine veröffentlichte Version); die Details des Laufs zeigen, welche Stichworte jedes Team getroffen hat. Es wird nichts bewertet oder geschätzt.
 - **Aufgabe** und **Anweisungen:** was erledigt werden soll und, optional, wie geplant wird.
 - **Höchstens Entscheidungen** (1 bis 50, Standard 8) und **Höchstens pro Team:** Ohne Antwort nach der letzten Entscheidung schlägt der Schritt fehl.
 
 Der Orchestrator wählt nur aus. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes gewählte Team läuft als **eigener, verknüpfter Lauf** mit seinem Anteil am Budget, seinen Grenzen und seinen Freigaben für Werkzeuge. Entscheidungen, die nicht erlaubt sind (ein unbekanntes Team, dieselbe Aufgabe noch einmal, ein ausgeschöpftes Team), werden abgelehnt und dem Modell gezeigt; sie zählen trotzdem als Entscheidung.
 
-In den Details des Laufs steht jede Entscheidung mit Begründung, Aufgabe, Ergebnis und einem Link zum Lauf des Teams. Teams, die für eine Freigabe anhalten, werden in einem Orchestrator noch nicht unterstützt: Sie werden an dieser Stelle abgebrochen, und die Prüfung vor dem Start warnt davor. Ein Team darf den Workflow des Orchestrators nicht wieder aufrufen.
+In den Details des Laufs steht jede Entscheidung mit Begründung, Aufgabe, Ergebnis und einem Link zum Lauf des Teams. Hält ein Team für eine **Freigabe** an (auch in einem Unter-Workflow oder unter einem weiteren Orchestrator), wartet der Orchestrator mit: Der Lauf ist *pausiert* und erscheint unter **Freigaben**. Nach der Entscheidung läuft derselbe Lauf des Teams weiter, auch nach einem Neustart, und das Modell wird zu dieser Weitergabe nicht noch einmal gefragt. Beendet eine Ablehnung den Lauf des Teams (*Bei Ablehnung: Lauf beenden*), endet auch dieser Lauf; kein anderes Team kann die Ablehnung umgehen. Wird ein wartender Lauf abgebrochen, werden seine wartenden Teams mit abgebrochen. Ein Team darf den Workflow des Orchestrators nicht wieder aufrufen.
+
+## Dynamische Teams {#dynamische-teams}
+<!-- keywords: dynamisches team, team zusammenstellen, parallel, gleichzeitig, parameter, startformular, vorlage, teamzusammenstellung, staffing -->
+
+Im Bereich **Dynamische Teams** eines Orchestrators bekommt das Modell mehr Spielraum, immer innerhalb des Pools und der Grenzen. Alles ist anfangs aus.
+
+- **Teams gleichzeitig** (1 bis 5): Eine Entscheidung darf mehrere verschiedene Teams zugleich beauftragen, für Teile, die nicht voneinander abhängen. Jedes Team bekommt sein eigenes Ergebnis.
+- **Team selbst zusammenstellen:** Der Orchestrator nimmt Teams aus dem Pool in sein Team auf und entlässt sie wieder, wenn Zwischenergebnisse es nahelegen. Arbeit bekommen nur Teams im Team; *Höchstens im Team* begrenzt seine Größe. Dasselbe Team darf mehrmals arbeiten (bis *Höchstens pro Team*).
+- **Startformular der Teams ausfüllen:** Der Orchestrator darf die Felder des Eingabeformulars eines Teams setzen (nie Dateien). Die Werte werden geprüft wie bei einem Start von Hand; ein unbekanntes Feld oder ein ungültiger Wert wird abgelehnt und dem Modell gezeigt.
+
+Der Pool steht beim Start des Laufs fest, in den Versionen dieses Zeitpunkts. Neue Teams, Agenten oder Werkzeuge entstehen nie, und Freigaben, Budget und Grenzen jedes Teams gelten unverändert.
+
+**Was die Details des Laufs zeigen:** welcher Orchestrator mit welchem Modell arbeitet, wie viele Entscheidungen verbraucht sind, die Kosten der Entscheidungen und gesamt (unbekannte Kosten werden als *nicht vollständig bekannt* gezeigt, nie als 0), den Pool mit Versionen, das **Team im Verlauf**, wartende Teams und jede Entscheidung mit Begründung, Aufgabe, Werten und dem Ergebnis jedes Teams: *Erfolgreich*, *Wartet auf Freigabe*, *Fehlgeschlagen*, *Abgelehnt*, *Abgebrochen* oder *Abgelaufen*. Gezeigt werden nur die festgehaltenen Entscheidungen, keine Gedankengänge des Modells.
+
+**Teamzusammenstellung als Vorlage speichern:** Ein Team besteht nur während des Laufs. Nach dem Ende speichert dieser Knopf einen **neuen Workflow** mit demselben Orchestrator, seinem Startformular, seinen Grenzen und genau den Teams, die gearbeitet haben, in den Versionen des Laufs. Ohne diesen Klick wird nichts gespeichert.
 
 ## Eingabeformulare {#eingabeformular}
 <!-- keywords: formular, eingabeformular, felder, typ, pflichtfeld, standardwert, auswahl, datum, zahl, form -->
