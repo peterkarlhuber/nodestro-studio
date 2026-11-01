@@ -187,7 +187,11 @@
     "unattended_api": "{{node}} ({{workflow}}): calls of {{tool}} need a person's approval. Published APIs have no approval step of their own yet, so every such call would be refused. Remove the tool from the published workflow, or use a tool that only reads.",
     "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} can delete, pay or send something that cannot be undone. Such calls are never approved in advance and would be refused in runs nobody watches. Start the workflow by hand, so a person approves each call.",
     "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} is a tool of a connected MCP service. Its calls cannot run without a person watching and would be refused. Start the workflow by hand.",
-    "unattended_denied": "{{node}} ({{workflow}}): calls of {{tool}} would be refused in these runs."
+    "unattended_denied": "{{node}} ({{workflow}}): calls of {{tool}} would be refused in these runs.",
+    "result_lost": "The call may already have been made, but its result was lost. It is not made again.",
+    "checkpoint_stale": "The agent changed while it waited for an approval. The waiting call was not made.",
+    "checkpoint_expired": "The waiting tool call can no longer continue (it expired or the setting was switched off). It was not made.",
+    "approval_missing": "The approval request for this call is gone; the call was not made."
   },
   "job": {
     "writing": "The Coding Agent is writing code and tests …",

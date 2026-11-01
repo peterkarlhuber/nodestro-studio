@@ -187,7 +187,11 @@
     "unattended_api": "{{node}} ({{workflow}}): Aufrufe von {{tool}} brauchen die Freigabe einer Person. Veröffentlichte APIs haben noch keinen eigenen Freigabeschritt, daher würde jeder solche Aufruf verweigert. Entferne das Tool aus dem veröffentlichten Workflow, oder nutze ein Tool, das nur liest.",
     "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} kann etwas löschen, bezahlen oder versenden, das sich nicht rückgängig machen lässt. Solche Aufrufe werden nie vorab freigegeben und in Ausführungen ohne Aufsicht verweigert. Starte den Workflow von Hand, damit eine Person jeden Aufruf freigibt.",
     "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} ist ein Tool eines verbundenen MCP-Dienstes. Seine Aufrufe laufen nicht ohne Aufsicht einer Person und würden verweigert. Starte den Workflow von Hand.",
-    "unattended_denied": "{{node}} ({{workflow}}): Aufrufe von {{tool}} würden in diesen Ausführungen verweigert."
+    "unattended_denied": "{{node}} ({{workflow}}): Aufrufe von {{tool}} würden in diesen Ausführungen verweigert.",
+    "result_lost": "Der Aufruf wurde möglicherweise schon ausgeführt, sein Ergebnis ging aber verloren. Er wird nicht noch einmal ausgeführt.",
+    "checkpoint_stale": "Der Agent wurde geändert, während er auf eine Freigabe wartete. Der wartende Aufruf wurde nicht ausgeführt.",
+    "checkpoint_expired": "Der wartende Tool-Aufruf kann nicht mehr fortgesetzt werden (abgelaufen oder die Einstellung wurde ausgeschaltet). Er wurde nicht ausgeführt.",
+    "approval_missing": "Die Freigabeanfrage zu diesem Aufruf gibt es nicht mehr; er wurde nicht ausgeführt."
   },
   "job": {
     "writing": "Der Coding Agent schreibt Code und Tests …",

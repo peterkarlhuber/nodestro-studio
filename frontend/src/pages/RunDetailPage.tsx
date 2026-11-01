@@ -206,7 +206,7 @@ export function RunDetailPage() {
         ) : null}
         <RunOrigin run={data} />
         {paused ? <RunApprovals run={data} /> : null}
-        {data.status === "running" ? <RunToolApprovals run={data} /> : null}
+        {data.status === "running" || paused ? <RunToolApprovals run={data} /> : null}
         {data.sanitized ? (
           <Callout tone="info">
             <ShieldCheck size={13} aria-hidden /> {t("export.importedSanitized", { summary: sanitizeSummary(t, data.sanitized) })}

@@ -489,6 +489,11 @@ export interface ToolApprovalRequest {
   decided_at: string | null;
   comment: string | null;
   closed_because: string | null;
+  /** The run paused at this call instead of waiting in a thread (agent checkpoints, M6b; default off). */
+  checkpointed?: boolean;
+  /** What became of an approved paused call: open (not run yet), executed, stale or closed. */
+  use?: "open" | "executed" | "stale" | "closed";
+  executed_at?: string | null;
 }
 
 export interface LegacyToolBinding {
@@ -518,7 +523,18 @@ export interface ToolPreGrant {
 export interface ToolApprovalEvent {
   id: string;
   at: string;
-  kind: "decided" | "decision_refused" | "pre_granted" | "pre_grant_revoked" | "legacy_stamped";
+  kind:
+    | "decided"
+    | "decision_refused"
+    | "pre_granted"
+    | "pre_grant_revoked"
+    | "legacy_stamped"
+    | "suspended"
+    | "resumed"
+    | "executed"
+    | "stale"
+    | "result_lost"
+    | "switch_off";
   actor: string;
   tool: string | null;
   run_id: string | null;

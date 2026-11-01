@@ -130,7 +130,13 @@
       "decision_refused": "Entscheidung abgelehnt",
       "pre_granted": "Vorab freigegeben",
       "pre_grant_revoked": "Vorab-Freigabe widerrufen",
-      "legacy_stamped": "Bestehende Zuweisungen markiert"
+      "legacy_stamped": "Bestehende Zuweisungen markiert",
+      "suspended": "Lauf an Aufruf angehalten",
+      "resumed": "Lauf fortgesetzt",
+      "executed": "Freigegebener Aufruf ausgeführt",
+      "stale": "Freigabe nicht mehr gültig",
+      "result_lost": "Ergebnis verloren",
+      "switch_off": "Wegen ausgeschalteter Einstellung geschlossen"
     },
     "ranAt": "Markiert am {{time}} von {{name}}. Der Schritt läuft nur einmal: Später erstellte Zuweisungen werden abgefragt.",
     "stampFinish": "Markieren der veröffentlichten APIs abschließen",

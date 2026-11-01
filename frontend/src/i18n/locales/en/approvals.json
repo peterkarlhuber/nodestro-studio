@@ -130,7 +130,13 @@
       "decision_refused": "Decision refused",
       "pre_granted": "Approved in advance",
       "pre_grant_revoked": "Advance approval revoked",
-      "legacy_stamped": "Existing assignments marked"
+      "legacy_stamped": "Existing assignments marked",
+      "suspended": "Run paused at a call",
+      "resumed": "Run continued",
+      "executed": "Approved call made",
+      "stale": "Approval no longer valid",
+      "result_lost": "Result lost",
+      "switch_off": "Closed because the setting is off"
     },
     "ranAt": "Marked on {{time}} by {{name}}. The step runs once: assignments made afterwards are asked about.",
     "stampFinish": "Finish marking published APIs",

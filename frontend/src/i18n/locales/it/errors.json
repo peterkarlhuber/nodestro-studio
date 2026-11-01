@@ -187,7 +187,11 @@
     "unattended_api": "{{node}} ({{workflow}}): le chiamate a {{tool}} richiedono l'approvazione di una persona. Le API pubblicate non hanno ancora un proprio passaggio di approvazione, quindi ogni chiamata di questo tipo verrebbe rifiutata. Rimuovi lo strumento dal workflow pubblicato, oppure usa uno strumento che si limita a leggere.",
     "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} può cancellare, pagare o inviare qualcosa che non si può annullare. Queste chiamate non vengono mai approvate in anticipo e verrebbero rifiutate nelle esecuzioni senza supervisione. Avvia il workflow a mano, così una persona approva ogni chiamata.",
     "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} è uno strumento di un servizio MCP collegato. Le sue chiamate non possono essere eseguite senza una persona che controlla e verrebbero rifiutate. Avvia il workflow a mano.",
-    "unattended_denied": "{{node}} ({{workflow}}): le chiamate a {{tool}} verrebbero rifiutate in queste esecuzioni."
+    "unattended_denied": "{{node}} ({{workflow}}): le chiamate a {{tool}} verrebbero rifiutate in queste esecuzioni.",
+    "result_lost": "La chiamata potrebbe essere già stata eseguita, ma il suo risultato è andato perso. Non viene ripetuta.",
+    "checkpoint_stale": "L’agente è stato modificato mentre attendeva un’approvazione. La chiamata in attesa non è stata eseguita.",
+    "checkpoint_expired": "La chiamata allo strumento in attesa non può più continuare (scaduta o impostazione disattivata). Non è stata eseguita.",
+    "approval_missing": "La richiesta di approvazione per questa chiamata non esiste più; la chiamata non è stata eseguita."
   },
   "job": {
     "writing": "Il Coding Agent sta scrivendo codice e test …",

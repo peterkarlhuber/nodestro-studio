@@ -187,7 +187,11 @@
     "unattended_api": "{{node}} ({{workflow}}): as chamadas de {{tool}} precisam da aprovação de uma pessoa. APIs publicadas ainda não têm uma etapa de aprovação própria, então cada uma dessas chamadas seria recusada. Remova a ferramenta do fluxo de trabalho publicado, ou use uma ferramenta que apenas lê.",
     "unattended_destructive": "{{node}} ({{workflow}}): {{tool}} pode excluir, pagar ou enviar algo que não pode ser desfeito. Essas chamadas nunca são aprovadas antecipadamente e seriam recusadas em execuções sem supervisão. Inicie o fluxo de trabalho manualmente, para que uma pessoa aprove cada chamada.",
     "unattended_mcp": "{{node}} ({{workflow}}): {{tool}} é uma ferramenta de um serviço MCP conectado. Suas chamadas não podem rodar sem uma pessoa acompanhando e seriam recusadas. Inicie o fluxo de trabalho manualmente.",
-    "unattended_denied": "{{node}} ({{workflow}}): as chamadas de {{tool}} seriam recusadas nessas execuções."
+    "unattended_denied": "{{node}} ({{workflow}}): as chamadas de {{tool}} seriam recusadas nessas execuções.",
+    "result_lost": "A chamada pode já ter sido feita, mas o resultado se perdeu. Ela não é feita de novo.",
+    "checkpoint_stale": "O agente mudou enquanto esperava uma aprovação. A chamada em espera não foi feita.",
+    "checkpoint_expired": "A chamada de ferramenta em espera não pode mais continuar (expirou ou a configuração foi desligada). Ela não foi feita.",
+    "approval_missing": "A solicitação de aprovação desta chamada não existe mais; a chamada não foi feita."
   },
   "job": {
     "writing": "O agente de programação está escrevendo código e testes …",

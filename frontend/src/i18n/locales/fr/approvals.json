@@ -130,7 +130,13 @@
       "decision_refused": "Décision refusée",
       "pre_granted": "Validé à l’avance",
       "pre_grant_revoked": "Validation anticipée révoquée",
-      "legacy_stamped": "Attributions existantes marquées"
+      "legacy_stamped": "Attributions existantes marquées",
+      "suspended": "Exécution suspendue à un appel",
+      "resumed": "Exécution reprise",
+      "executed": "Appel approuvé effectué",
+      "stale": "Approbation plus valide",
+      "result_lost": "Résultat perdu",
+      "switch_off": "Fermé car le réglage est désactivé"
     },
     "ranAt": "Marqué le {{time}} par {{name}}. L’étape ne s’exécute qu’une fois : les attributions faites ensuite sont soumises à la question.",
     "stampFinish": "Terminer le marquage des API publiées",

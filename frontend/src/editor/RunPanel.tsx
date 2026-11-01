@@ -127,7 +127,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                       </Callout>
                     ) : null}
                     {paused ? <RunApprovals run={run} /> : null}
-                    {run.status === "running" ? <RunToolApprovals run={run} /> : null}
+                    {run.status === "running" || run.status === "paused" ? <RunToolApprovals run={run} /> : null}
                     {live ? <p className="muted">{t("runs.panel.running")}</p> : paused ? null : <Output value={run.output} />}
                   </div>
                 )}

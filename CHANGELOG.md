@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Runs paused at a tool approval (AO M6b, behind a switch, 2026-11-01)
+
+- With `NODESTRO_TOOL_APPROVALS=1` and the new switch `NODESTRO_TOOL_APPROVAL_CHECKPOINTS=1` (default off), a tool
+  call that waits for a person pauses the run instead of holding a worker. The run details and the run panel show
+  the open tool approvals of a paused run, also those of its team runs, and the decision continues the run where it
+  stopped, without asking the model again. Nothing changes while the switch is off.
+- New error texts in all six languages: `tool.result_lost`, `tool.checkpoint_stale`, `tool.checkpoint_expired`,
+  `tool.approval_missing`; the approval audit lists the new kinds (paused, continued, run, no longer valid, result
+  lost, switched off).
+- Pins: `nodestro-runtime` `c86781b` (before `6ac4ae3`), `nodestro-examples` `cd8b0af` (before `1da29b7`),
+  `nodestro-integrations` `99f13cf` (before `5cfdd3a`), `nodestro-api` `ae6cecd` (before `ebd99b3`); in
+  `platform/versions.json` also `nodestro-sdk` `eaec31b` (before `683df5e`).
+
 ### Security fix: stale tools in server workers (S-2 pilot finding F1, 2026-11-01)
 
 - Every process of an installation (the API and each server worker) now sees tool changes and deletions made by
