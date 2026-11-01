@@ -212,7 +212,7 @@ try {
   check(await maintenance.locator("tr[data-scope='tool:scratch']").getByText("verwaist").isVisible(), "Orphaned environments are marked");
   await shot("python-07-maintenance");
   await page.getByTestId("python-cleanup").click();
-  await page.getByText("verwaiste Umgebungen entfernt", { exact: false }).waitFor();
+  await page.getByText(/verwaiste Umgebung(en)? entfernt/).waitFor();
   const after = await api("/api/python");
   check(
     !after.environments.some((env) => env.orphaned) && after.environments.some((env) => env.scope === "tool:spread"),
