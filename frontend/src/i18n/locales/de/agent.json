@@ -1,6 +1,6 @@
 {
-  "savedAsTemplate": "„{{name}}“ ist jetzt in der Agenten-Bibliothek",
-  "saveAsTemplate": "Als Vorlage in der Agenten-Bibliothek speichern",
+  "savedAsTemplate": "„{{name}}“ ist jetzt in der Agentenbibliothek",
+  "saveAsTemplate": "Als Vorlage in der Agentenbibliothek speichern",
   "duplicate": "Duplizieren (Strg+D)",
   "delete": "Agent löschen",
   "nameLabel": "Name des Agenten",

@@ -52,7 +52,7 @@ So erstellst du in wenigen Minuten deinen ersten Workflow:
 
 Die **Seitenleiste** links folgt dem Arbeitsablauf: erstellen, ausführen und prüfen, dann automatisieren.
 
-- **Erstellen:** *Workflows* (deine Abläufe), *Agenten* (wiederverwendbare Vorlagen), *Tools*, *Wissen* und *Memory*.
+- **Erstellen:** *Workflows* (deine Abläufe), *Agentenbibliothek* (wiederverwendbare Vorlagen), *Tools*, *Wissen* und *Memory*.
 - **Ausführen & prüfen:** *Ausführungen* (alle Läufe im Detail), *Freigaben* (Entscheidungen, auf die Läufe warten) und *Nutzung* (Tokens und Kosten über die Zeit).
 - **Automatisieren & testen:** *Testreihen*, *Stapelläufe* und *Zeitpläne*.
 - **Hilfe:** diese *Dokumentation* und die *Willkommen*-Seite.
@@ -66,9 +66,9 @@ Status werden überall als Text und Symbol angezeigt, nie nur als Farbe. Alle Be
 ## Suche {#suche}
 <!-- keywords: suche, suchen, finden, strg+k, cmd+k, schnellsuche -->
 
-Das Suchfeld oben in der Titelleiste (oder **Strg+K**, auf dem Mac **⌘K**) durchsucht Workflows, Agenten in Workflows, die Agenten-Bibliothek, Tools, Wissen und diese Dokumentation. Die Treffer sind nach Art gruppiert; Favoriten erscheinen mit Stern.
+Das Suchfeld oben in der Titelleiste (oder **Strg+K**, auf dem Mac **⌘K**) durchsucht Workflows, Agenten in Workflows, die Agentenbibliothek, Tools, Wissen und diese Dokumentation. Die Treffer sind nach Art gruppiert; Favoriten erscheinen mit Stern.
 
-Mit den Pfeiltasten wählst du einen Treffer, **Enter** öffnet ihn dort, wo er hingehört: einen Agenten im Editor seines Workflows, eine Vorlage in der Agenten-Bibliothek, ein Tool in der Tool-Bibliothek, eine Wissensdatei in der Liste und einen Abschnitt in der Dokumentation. Groß- und Kleinschreibung und Akzente spielen keine Rolle.
+Mit den Pfeiltasten wählst du einen Treffer, **Enter** öffnet ihn dort, wo er hingehört: einen Agenten im Editor seines Workflows, eine Vorlage in der Agentenbibliothek, ein Tool in der Tool-Bibliothek, eine Wissensdatei in der Liste und einen Abschnitt in der Dokumentation. Groß- und Kleinschreibung und Akzente spielen keine Rolle.
 
 ## Wo liegen meine Daten? {#daten}
 <!-- keywords: datenschutz, speicherort, datenbank, sqlite, backup, nodestro_data_dir, ~/.nodestro -->

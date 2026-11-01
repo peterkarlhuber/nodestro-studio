@@ -52,7 +52,7 @@ Create your first workflow in a few minutes:
 
 The **sidebar** on the left follows the way you work: build, run and review, then automate.
 
-- **Build:** *Workflows* (your processes), *Agents* (reusable templates), *Tools*, *Knowledge* and *Memory*.
+- **Build:** *Workflows* (your processes), *Agent library* (reusable templates), *Tools*, *Knowledge* and *Memory*.
 - **Run & review:** *Runs* (all runs in detail), *Approvals* (decisions runs wait for) and *Usage* (tokens and costs over time).
 - **Automate & test:** *Test series*, *Batch runs* and *Schedules*.
 - **Help:** this *Documentation* and the *Welcome* page.

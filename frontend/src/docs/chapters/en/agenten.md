@@ -236,12 +236,12 @@ If the architect is missing abilities, it names **missing tools** with a descrip
 
 The draft is written in the interface language unless your description asks for another language. Field names and other technical identifiers stay English.
 
-Available via **Design with AI** in the inspector, **Describe an agent** in the palette or on the *Agents* page.
+Available via **Design with AI** in the inspector, **Describe an agent** in the palette or on the *Agent library* page.
 
 ## Agent library {#bibliothek}
 <!-- keywords: library, template, reuse, agents page -->
 
-On the **Agents** page you manage reusable agent templates:
+On the **Agent library** page you manage reusable agent templates:
 
 - **Empty template** or **Describe an agent** creates a new template.
 - In the editor, the save symbol in the inspector saves an agent as a template.

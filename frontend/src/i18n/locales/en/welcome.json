@@ -88,7 +88,7 @@
       "text": "Agents as nodes, connections as data flow – with branches and sub-workflows."
     },
     "agents": {
-      "title": "Agents",
+      "title": "Agent library",
       "text": "Model, instructions, tools, memory and output format: set up once, reusable everywhere."
     },
     "tools": {

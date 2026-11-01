@@ -52,7 +52,7 @@ Crea il tuo primo workflow in pochi minuti:
 
 La **barra laterale** a sinistra segue il tuo modo di lavorare: creare, eseguire e verificare, poi automatizzare.
 
-- **Crea:** *Workflow* (i tuoi processi), *Agenti* (modelli riutilizzabili), *Strumenti*, *Conoscenza* e *Memoria*.
+- **Crea:** *Workflow* (i tuoi processi), *Libreria di agenti* (modelli riutilizzabili), *Strumenti*, *Conoscenza* e *Memoria*.
 - **Esegui e verifica:** *Esecuzioni* (tutte le esecuzioni in dettaglio), *Approvazioni* (decisioni che le esecuzioni attendono) e *Utilizzo* (token e costi nel tempo).
 - **Automatizza e testa:** *Serie di test*, *Esecuzioni in serie* e *Pianificazioni*.
 - **Aiuto:** questa *Documentazione* e la pagina *Benvenuto*.
@@ -66,9 +66,9 @@ Gli stati sono sempre mostrati come testo e simbolo, mai solo con il colore. Tut
 ## Ricerca {#suche}
 <!-- keywords: ricerca, cercare, trovare, ctrl+k, cmd+k, ricerca rapida -->
 
-Il campo di ricerca in alto nella barra del titolo (o **Ctrl+K**, su Mac **⌘K**) cerca in workflow, agenti nei workflow, libreria degli agenti, strumenti, conoscenza e in questa documentazione. I risultati sono raggruppati per tipo; i preferiti compaiono con una stella.
+Il campo di ricerca in alto nella barra del titolo (o **Ctrl+K**, su Mac **⌘K**) cerca in workflow, agenti nei workflow, libreria di agenti, strumenti, conoscenza e in questa documentazione. I risultati sono raggruppati per tipo; i preferiti compaiono con una stella.
 
-Con le frecce scegli un risultato; **Invio** lo apre dove si trova: un agente nell’editor del suo workflow, un modello nella libreria degli agenti, uno strumento nella libreria degli strumenti, un file di conoscenza nell’elenco e una sezione nella documentazione. Maiuscole, minuscole e accenti non contano.
+Con le frecce scegli un risultato; **Invio** lo apre dove si trova: un agente nell’editor del suo workflow, un modello nella libreria di agenti, uno strumento nella libreria degli strumenti, un file di conoscenza nell’elenco e una sezione nella documentazione. Maiuscole, minuscole e accenti non contano.
 
 ## Dove sono i miei dati? {#daten}
 <!-- keywords: privacy, posizione, database, sqlite, backup, nodestro_data_dir, ~/.nodestro -->

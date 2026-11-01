@@ -12,7 +12,7 @@
     "save": "Salva tutte le modifiche (Ctrl+S). Prima di ogni avvio il workflow viene salvato anche automaticamente.",
     "addAgent": "Aggiunge un agente vuoto a destra dell’ultimo nodo.",
     "autoLayout": "Dispone tutti i nodi da sinistra a destra nell’ordine del loro flusso di dati.",
-    "palette": "Trascina i blocchi sull’area di lavoro o fai clic su di essi. Sotto compaiono i modelli della libreria degli agenti.",
+    "palette": "Trascina i blocchi sull’area di lavoro o fai clic su di essi. Sotto compaiono i modelli della libreria di agenti.",
     "paletteDesign": "Descrivi con parole tue che cosa deve fare un agente. L’architetto di agenti propone una configurazione completa; costa una richiesta al fornitore di IA.",
     "startNode": "L’input dell’avvio arriva a tutti gli agenti collegati all’avvio. Un workflow non ha bisogno di un nodo di avvio; anche gli agenti senza predecessori ricevono l’input.",
     "defaultInput": "Questo testo compare già nel campo di input all’avvio e lì si può modificare.",
@@ -27,7 +27,7 @@
   },
   "agent": {
     "design": "Dalla tua descrizione, l’architetto di agenti progetta ruolo, prompt di sistema, modello, impegno e strumenti. Controlli la proposta prima che venga applicata.",
-    "saveTemplate": "Salva una copia di questa configurazione nella libreria degli agenti. Comparirà poi nella tavolozza di ogni workflow.",
+    "saveTemplate": "Salva una copia di questa configurazione nella libreria di agenti. Comparirà poi nella tavolozza di ogni workflow.",
     "model": "Provider e modello di questo agente. Scegli un modello dall’elenco o digita un qualsiasi id di modello del provider. I modelli più grandi ragionano più a fondo, ma costano di più per token.",
     "systemPrompt": "Istruzioni permanenti per l’agente: ruolo, metodo, stile e livello di qualità. Valgono per ogni compito di questo agente.",
     "task": "Il compito concreto di ogni esecuzione. {{input}} inserisce i risultati dei predecessori, {{runInput}} l’input del workflow, {{agentName}} il risultato di un predecessore specifico.",

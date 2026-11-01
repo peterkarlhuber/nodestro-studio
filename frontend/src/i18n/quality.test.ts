@@ -142,7 +142,9 @@ describe("the plural category many", () => {
 
 describe("page names", () => {
   // A text that sends the user to a page names it as the navigation does.
-  const PAGES = ["approvals", "batches", "tests", "schedules", "executions", "usage", "knowledge", "memory", "settings", "tools"];
+  const PAGES = [
+    "agents", "approvals", "batches", "tests", "schedules", "executions", "usage", "knowledge", "memory", "settings", "tools",
+  ];
 
   it.each(PAGES)("match the navigation label of %s in every language", (page) => {
     const label = english.get(`nav.${page}`)!;
@@ -153,6 +155,21 @@ describe("page names", () => {
       if (key.startsWith("nav.") || !reference.test(text)) continue;
       for (const language of OTHERS) {
         const name = texts[language].get(`nav.${page}`)!.toLowerCase();
+        if (!texts[language].get(key)?.toLowerCase().includes(name)) wrong.push(`${language} ${key}: ${texts[language].get(key)}`);
+      }
+    }
+    expect(wrong).toEqual([]);
+  });
+
+  it("name the agent library as the navigation does in every language", () => {
+    // The page of agent templates is the "Agent library", also in running text ("in the agent library"). The
+    // library Orkexa that checks agent configurations is a different thing and keeps its own wording.
+    const ORKEXA = new Set(["errors.library", "errors.config.library", "backup.versions"]);
+    const wrong: string[] = [];
+    for (const [key, text] of english) {
+      if (key.startsWith("nav.") || ORKEXA.has(key) || !/\bagent library\b/i.test(text)) continue;
+      for (const language of OTHERS) {
+        const name = texts[language].get("nav.agents")!.toLowerCase();
         if (!texts[language].get(key)?.toLowerCase().includes(name)) wrong.push(`${language} ${key}: ${texts[language].get(key)}`);
       }
     }

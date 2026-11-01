@@ -236,12 +236,12 @@ Si al arquitecto le faltan capacidades, indica las **herramientas que faltan** c
 
 El diseño se redacta en el idioma de la interfaz, salvo que tu descripción pida otro idioma. Los nombres de campo y demás identificadores técnicos siguen en inglés.
 
-Disponible con **Diseñar con IA** en el inspector, **Describir un agente** en la paleta o en la página *Agentes*.
+Disponible con **Diseñar con IA** en el inspector, **Describir un agente** en la paleta o en la página *Biblioteca de agentes*.
 
 ## Biblioteca de agentes {#bibliothek}
 <!-- keywords: biblioteca, plantilla, template, reutilizar, página de agentes -->
 
-En la página **Agentes** gestionas plantillas de agentes reutilizables:
+En la página **Biblioteca de agentes** gestionas plantillas de agentes reutilizables:
 
 - **Plantilla vacía** o **Describir un agente** crea una plantilla nueva.
 - En el editor, el símbolo de guardar del inspector guarda un agente como plantilla.

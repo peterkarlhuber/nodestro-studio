@@ -14,7 +14,7 @@ const tokens = EditorView.theme({
   "&": {
     color: "var(--nd-text)",
     backgroundColor: "var(--nd-surface)",
-    fontSize: "12.5px",
+    fontSize: "var(--nd-font-size-base)",
     border: "1px solid var(--nd-border)",
     borderRadius: "var(--nd-radius-sm)",
   },

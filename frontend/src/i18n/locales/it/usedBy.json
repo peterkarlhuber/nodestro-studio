@@ -3,7 +3,7 @@
   "none": "Non usato da nessuna parte.",
   "agent": "{{workflow}} / {{agent}}",
   "start": "{{workflow}} / Avvio (file per ogni esecuzione)",
-  "template": "Libreria agenti: {{name}}",
+  "template": "Libreria di agenti: {{name}}",
   "publication": "API pubblicata {{name}} (v{{release}})",
   "warning_one": "Usato in {{count}} punto:",
   "warning_other": "Usato in {{count}} punti:",

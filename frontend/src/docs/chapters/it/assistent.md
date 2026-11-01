@@ -23,7 +23,7 @@ La documentazione è la sua unica fonte di conoscenza su Nodestro. Se non vi tro
 
 Perché l'assistente possa esaminare un oggetto preciso, lo alleghi. Ci sono due modi:
 
-- **Parlane con l'assistente** nella vista stessa: nell'editor dei workflow, nell'ispettore dell'agente, nella libreria degli agenti, su uno strumento, su un'esecuzione, in uno spazio di memoria e su un file di conoscenza.
+- **Parlane con l'assistente** nella vista stessa: nell'editor dei workflow, nell'ispettore dell'agente, nella libreria di agenti, su uno strumento, su un'esecuzione, in uno spazio di memoria e su un file di conoscenza.
 - La **graffetta** nel campo di inserimento apre una selezione di tutti i workflow, modelli di agente, strumenti, spazi di memoria, file di conoscenza ed esecuzioni.
 
 Ciò che l'assistente riceve dipende dal tipo:

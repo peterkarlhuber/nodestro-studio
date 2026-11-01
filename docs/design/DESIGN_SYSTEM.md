@@ -86,11 +86,34 @@ All color values and additional hover, pressed and focus tokens are in `nodestro
 
 - Font: Inter, falling back to the system sans-serif (no font files required).
 - Monospace: system monospace for Python code, model IDs, logs, JSON.
-- UI base: 14px; secondary text 12–13px; headings 16–20px; important metrics 20–24px.
+- Font sizes come only from the type scale below; no literal pixel sizes in style sheets or inline styles.
 - Border radius: 7px (controls), 11px (panels), 15px (nodes), 20px (larger areas).
 - Spacing: 4 / 8 / 12 / 16 / 24 / 32 px.
 - Focus: a visible 2px ring via `--nd-focus`; not just a color change.
 - Motion: short, 130–220ms; respect `prefers-reduced-motion`, also in script animations (`lib/motion.ts`).
+
+### Type scale
+
+Eight steps, defined as tokens in `midnight-citron.css`. The body text is `--nd-font-size-base` (13px); line heights
+are unitless (1.4–1.55 for running text), so they follow the step.
+
+| Token | Size | Use |
+|---|---|---|
+| `--nd-font-size-2xs` | 10px | Status badges, statistic labels, chart labels, node meta and edge labels on the canvas |
+| `--nd-font-size-xs` | 11px | Chips, tags, uppercase eyebrows and panel titles, table headers, `kbd`, one-line palette hints (full text in a tooltip) |
+| `--nd-font-size-sm` | 12px | Secondary text: field hints, errors, notes, small buttons, inputs, code blocks |
+| `--nd-font-size-base` | 13px | Body text, lists, tables, buttons, node titles, the code editor |
+| `--nd-font-size-md` | 14px | Card and panel titles, docs body, section titles |
+| `--nd-font-size-lg` | 16px | Page section headings, dialog titles, the workflow title |
+| `--nd-font-size-xl` | 18px | The page title in the title bar, large headings |
+| `--nd-font-size-2xl` | 20px | The wordmark and important metrics |
+
+Rules:
+
+- Text people read (hints, errors, notes, descriptions) is never smaller than `--nd-font-size-sm` (12px). Only short
+  labels such as badges, chips, counts and uppercase eyebrows use `--nd-font-size-2xs` or `--nd-font-size-xs`.
+- `code`, `kbd` and `pre` may scale relative to their context (`0.92em`); `font-size: 0` is only for hiding text.
+- A new size needs a new step here first. The welcome page (`/welcome`) has its own display sizes.
 
 ## Accessibility rules (WCAG 2.2 AA)
 

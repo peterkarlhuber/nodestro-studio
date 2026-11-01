@@ -43,7 +43,7 @@ describe("used in", () => {
     expect(links.map((link) => link.textContent)).toEqual([
       "Vertragsprüfung / Prüfer",
       "Vertragsprüfung / Start (Datei für jede Ausführung)",
-      "Agenten-Bibliothek: Juristin",
+      "Agentenbibliothek: Juristin",
       "Veröffentlichte API Prüf-API (v2)",
     ]);
     expect(links.map((link) => link.getAttribute("href"))).toEqual([

@@ -241,7 +241,7 @@ try {
   await page.getByTestId("favorites-filter").click();
 
   for (const [path, heading, name] of [
-    ["/agents", "Agenten", "04-agents"],
+    ["/agents", "Agentenbibliothek", "04-agents"],
     ["/tools", "Tools", "05-tools"],
     ["/tools?tab=write", "Tools", "06-tools-write"],
     ["/knowledge", "Wissen", "07-knowledge"],
