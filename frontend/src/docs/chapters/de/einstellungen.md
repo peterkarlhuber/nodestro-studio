@@ -121,7 +121,7 @@ Beenden mit **Strg+C**. Laufende Läufe werden dabei abgebrochen.
 > **Sicherheit:** Nodestro hat noch keine Benutzerverwaltung und antwortet deshalb nur diesem Rechner. `--host 0.0.0.0`, andere Netzwerkadressen oder Netzwerknamen in `NODESTRO_ALLOWED_HOSTS` brechen den Start ab, und Nodestro lässt sich nicht hinter einen Reverse Proxy stellen. Damit andere Geräte einen Workflow nutzen können, veröffentliche ihn als API: Veröffentlichte APIs nutzen API-Schlüssel und haben einen eigenen Netzwerkzugang (siehe *API und Export*).
 
 ## Nodestro auf einem Server {#server}
-<!-- keywords: server, anmelden, anmeldung, abmelden, rolle, rollen, berechtigung, berechtigungen, arbeitsbereich, mandant, tenant, nur lesen, mitglieder, nodestro-server, sitzung abgelaufen -->
+<!-- keywords: server, anmelden, anmeldung, abmelden, rolle, rollen, berechtigung, berechtigungen, arbeitsbereich, mandant, tenant, nur lesen, mitglieder, nodestro-server, set-role, remove-member, revoke-sessions, sitzung abgelaufen -->
 
 Nodestro Studio kann auch auf einem **Nodestro-Server** deiner Organisation laufen. Dann meldest du dich über den Anmeldedienst deiner Organisation an, und deine Daten liegen auf diesem Server statt auf deinem Rechner. In der Desktop-App und mit dem Befehl `nodestro` gibt es weder Anmeldung noch Rollen; dort gilt nichts von diesem Abschnitt.
 
@@ -147,7 +147,14 @@ Nodestro Studio kann auch auf einem **Nodestro-Server** deiner Organisation lauf
 
 **Was deine Rolle nicht darf, zeigt Nodestro vorher.** Solche Bedienelemente fehlen oder sind gesperrt, und daneben steht der Grund, etwa *Deine Rolle (Betrachter) darf das nicht: Dafür braucht es die Berechtigung „Bearbeiten“. Frag einen Administrator deines Nodestro-Servers.* Als **Betrachter** oder **Ausführender** steht oben auf jeder Seite ein Hinweis, dass du alles ansehen, aber nichts ändern (und als Betrachter nichts ausführen) kannst. Der Server prüft jede Anfrage trotzdem selbst.
 
-**Mitglieder und Rollen** verwaltet der Betreiber des Servers mit der Kommandozeile `nodestro-server` (siehe Betriebshandbuch des Servers); in Nodestro Studio gibt es dafür keine Seite. Meldet die Anmeldung, dass dein Konto noch keinen Zugang hat, bitte eine Administratorin oder einen Administrator, dich hinzuzufügen.
+**Mitglieder und Rollen** verwaltet der Betreiber des Servers mit Befehlen der Kommandozeile `nodestro-server`; in Nodestro Studio gibt es dafür keine Seite:
+
+- `nodestro-server members TENANT` listet die Mitglieder eines Arbeitsbereichs mit ihren Rollen.
+- `nodestro-server set-role TENANT USER ROLE` fügt eine Person hinzu oder ändert ihre Rolle (`owner`, `admin`, `editor`, `operator`, `viewer`).
+- `nodestro-server remove-member TENANT USER` entfernt eine Person aus dem Arbeitsbereich und beendet ihre Sitzungen dort.
+- `nodestro-server revoke-sessions USER` beendet alle Sitzungen einer Person (die Mitgliedschaften bleiben).
+
+`USER` ist eine Benutzer-ID (`u_…`), eine bestätigte E-Mail-Adresse oder die Kennung beim Anmeldedienst. Der Server kennt eine Person erst, wenn sie sich einmal angemeldet hat; ein Arbeitsbereich behält immer mindestens eine Eigentümerin oder einen Eigentümer. Details stehen im Runbook des Repositorys nodestro-server (`docs/RUNBOOK.md`, Abschnitt *Members*). Meldet die Anmeldung, dass dein Konto noch keinen Zugang hat, bitte eine Administratorin oder einen Administrator, dich hinzuzufügen.
 
 **Daten.** Unten in der Seitenleiste steht statt *Lokal & privat* **Server deiner Organisation**: Deine Daten bleiben auf diesem Server und gehen nur an die KI-Anbieter, die dein Betreiber erlaubt. Um Sicherungen und die Installation kümmert sich der Betreiber. Aussagen wie „läuft nur auf deinem Rechner“ gelten nur für die Desktop-App und den Befehl `nodestro`.
 

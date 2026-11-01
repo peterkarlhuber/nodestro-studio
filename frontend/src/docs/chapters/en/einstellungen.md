@@ -121,7 +121,7 @@ Stop with **Ctrl+C**. Running runs are cancelled.
 > **Security:** Nodestro has no user management yet, so it only answers this computer. `--host 0.0.0.0`, other network addresses or network names in `NODESTRO_ALLOWED_HOSTS` stop the start, and Nodestro cannot be put behind a reverse proxy. To let other devices use a workflow, publish it as an API: published APIs use API keys and have their own network access (see *API and export*).
 
 ## Nodestro on a server {#server}
-<!-- keywords: server, sign in, sign-in, sign out, role, roles, permission, permissions, workspace, tenant, read only, members, nodestro-server, session expired -->
+<!-- keywords: server, sign in, sign-in, sign out, role, roles, permission, permissions, workspace, tenant, read only, members, nodestro-server, set-role, remove-member, revoke-sessions, session expired -->
 
 Nodestro Studio can also run on a **Nodestro server** of your organization. You then sign in through your organization's sign-in service, and your data is stored on that server instead of on your computer. The desktop app and the `nodestro` command have no sign-in and no roles; nothing in this section applies there.
 
@@ -147,7 +147,14 @@ Nodestro Studio can also run on a **Nodestro server** of your organization. You 
 
 **Nodestro shows up front what your role cannot do.** Such controls are hidden or blocked, with the reason next to them, for example *Your role (Viewer) cannot do this: it needs the permission “Edit”. Ask an administrator of your Nodestro server.* As a **Viewer** or **Operator** you see a notice at the top of every page that you can look at everything but not change anything (and, as a viewer, not run anything). The server still checks every request itself.
 
-**Members and roles** are managed by the server's operator with the `nodestro-server` command line (see the server's operator runbook); Nodestro Studio has no page for this. If the sign-in says that your account has no access yet, ask an administrator to add you.
+**Members and roles** are managed by the server's operator with commands of the `nodestro-server` command line; Nodestro Studio has no page for this:
+
+- `nodestro-server members TENANT` lists the members of a workspace with their roles.
+- `nodestro-server set-role TENANT USER ROLE` adds a person or changes their role (`owner`, `admin`, `editor`, `operator`, `viewer`).
+- `nodestro-server remove-member TENANT USER` removes a person from the workspace and ends their sessions there.
+- `nodestro-server revoke-sessions USER` ends every session of a person (memberships stay).
+
+`USER` is a user id (`u_…`), a verified e-mail address or the subject at the sign-in service. The server only knows a person once they have signed in once; a workspace always keeps at least one owner. Details are in the runbook of the nodestro-server repository (`docs/RUNBOOK.md`, section *Members*). If the sign-in says that your account has no access yet, ask an administrator to add you.
 
 **Data.** At the bottom of the sidebar, **Your organization's server** replaces *Local & private*: your data stays on that server and goes only to the AI providers your operator allows. Backups and the installation are looked after by the operator. Statements such as "runs only on your computer" apply only to the desktop app and the `nodestro` command.
 

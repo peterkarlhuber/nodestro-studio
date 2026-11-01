@@ -121,7 +121,7 @@ Si chiude con **Ctrl+C**. Le esecuzioni in corso vengono annullate.
 > **Sicurezza:** Nodestro non ha ancora una gestione degli utenti, quindi risponde solo a questo computer. `--host 0.0.0.0`, altri indirizzi di rete o nomi di rete in `NODESTRO_ALLOWED_HOSTS` interrompono l’avvio, e Nodestro non può essere messo dietro un reverse proxy. Per far usare un workflow ad altri dispositivi, pubblicalo come API: le API pubblicate usano chiavi API e hanno un proprio accesso di rete (vedi *API ed esportazione*).
 
 ## Nodestro su un server {#server}
-<!-- keywords: server, accedere, accesso, login, uscire, ruolo, ruoli, permesso, permessi, area di lavoro, tenant, sola lettura, membri, nodestro-server, sessione scaduta -->
+<!-- keywords: server, accedere, accesso, login, uscire, ruolo, ruoli, permesso, permessi, area di lavoro, tenant, sola lettura, membri, nodestro-server, set-role, remove-member, revoke-sessions, sessione scaduta -->
 
 Nodestro Studio può girare anche su un **server Nodestro** della tua organizzazione. In quel caso accedi tramite il servizio di accesso della tua organizzazione, e i tuoi dati sono salvati su quel server invece che sul tuo computer. L’app desktop e il comando `nodestro` non hanno né accesso né ruoli; nulla di questa sezione vale per loro.
 
@@ -147,7 +147,14 @@ Nodestro Studio può girare anche su un **server Nodestro** della tua organizzaz
 
 **Nodestro mostra in anticipo ciò che il tuo ruolo non consente.** Questi comandi sono nascosti o bloccati, con il motivo accanto, per esempio *Il tuo ruolo (Osservatore) non può farlo: serve il permesso «Modificare». Chiedi a un amministratore del tuo server Nodestro.* Come **Osservatore** o **Operatore**, un avviso in cima a ogni pagina dice che puoi vedere tutto ma non modificare nulla (e, come osservatore, nemmeno eseguire). Il server controlla comunque ogni richiesta da sé.
 
-**Membri e ruoli** li gestisce il gestore del server con la riga di comando `nodestro-server` (vedi il manuale operativo del server); Nodestro Studio non ha una pagina per questo. Se l’accesso indica che il tuo account non ha ancora accesso, chiedi a un amministratore di aggiungerti.
+**Membri e ruoli** li gestisce il gestore del server con i comandi della riga di comando `nodestro-server`; Nodestro Studio non ha una pagina per questo:
+
+- `nodestro-server members TENANT` elenca i membri di un’area di lavoro con i loro ruoli.
+- `nodestro-server set-role TENANT USER ROLE` aggiunge una persona o ne cambia il ruolo (`owner`, `admin`, `editor`, `operator`, `viewer`).
+- `nodestro-server remove-member TENANT USER` toglie una persona dall’area di lavoro e chiude lì le sue sessioni.
+- `nodestro-server revoke-sessions USER` chiude tutte le sessioni di una persona (le appartenenze restano).
+
+`USER` è un ID utente (`u_…`), un indirizzo e-mail verificato o l’identificativo presso il servizio di accesso. Il server conosce una persona solo dopo che ha effettuato l’accesso una volta; un’area di lavoro mantiene sempre almeno un proprietario. I dettagli sono nel runbook del repository nodestro-server (`docs/RUNBOOK.md`, sezione *Members*). Se l’accesso indica che il tuo account non ha ancora accesso, chiedi a un amministratore di aggiungerti.
 
 **Dati.** In fondo alla barra laterale, al posto di *Locale e privato* compare **Il server della tua organizzazione**: i tuoi dati restano su quel server e vanno solo ai provider di IA consentiti dal tuo gestore. Backup e installazione sono a carico del gestore. Frasi come «gira solo sul tuo computer» valgono solo per l’app desktop e per il comando `nodestro`.
 

@@ -121,7 +121,7 @@ Arrêt avec **Ctrl+C**. Les exécutions en cours sont annulées.
 > **Sécurité :** Nodestro n’a pas encore de gestion des utilisateurs, il ne répond donc qu’à cet ordinateur. `--host 0.0.0.0`, d’autres adresses réseau ou des noms réseau dans `NODESTRO_ALLOWED_HOSTS` arrêtent le démarrage, et Nodestro ne peut pas être placé derrière un proxy inverse. Pour que d’autres appareils utilisent un workflow, publiez-le comme API : les API publiées utilisent des clés API et ont leur propre accès réseau (voir *API et export*).
 
 ## Nodestro sur un serveur {#server}
-<!-- keywords: serveur, se connecter, connexion, se déconnecter, rôle, rôles, autorisation, autorisations, espace de travail, tenant, lecture seule, membres, nodestro-server, session expirée -->
+<!-- keywords: serveur, se connecter, connexion, se déconnecter, rôle, rôles, autorisation, autorisations, espace de travail, tenant, lecture seule, membres, nodestro-server, set-role, remove-member, revoke-sessions, session expirée -->
 
 Nodestro Studio peut aussi fonctionner sur un **serveur Nodestro** de votre organisation. Vous vous connectez alors via le service de connexion de votre organisation, et vos données sont stockées sur ce serveur plutôt que sur votre ordinateur. L’application de bureau et la commande `nodestro` n’ont ni connexion ni rôles ; rien dans cette section ne s’y applique.
 
@@ -147,7 +147,14 @@ Nodestro Studio peut aussi fonctionner sur un **serveur Nodestro** de votre orga
 
 **Nodestro montre à l’avance ce que votre rôle ne permet pas.** Ces commandes sont masquées ou bloquées, avec la raison à côté, par exemple *Votre rôle (Lecteur) ne permet pas cette action : il faut l’autorisation « Modifier ». Adressez-vous à un administrateur de votre serveur Nodestro.* En tant que **Lecteur** ou **Opérateur**, un avis en haut de chaque page indique que vous pouvez tout consulter, mais rien modifier (et, en tant que lecteur, rien exécuter). Le serveur vérifie quand même chaque requête lui-même.
 
-**Les membres et les rôles** sont gérés par l’exploitant du serveur avec la ligne de commande `nodestro-server` (voir le manuel d’exploitation du serveur) ; Nodestro Studio n’a pas de page pour cela. Si la connexion indique que votre compte n’a pas encore d’accès, demandez à un administrateur de vous ajouter.
+**Les membres et les rôles** sont gérés par l’exploitant du serveur avec des commandes de la ligne de commande `nodestro-server` ; Nodestro Studio n’a pas de page pour cela :
+
+- `nodestro-server members TENANT` liste les membres d’un espace de travail avec leurs rôles.
+- `nodestro-server set-role TENANT USER ROLE` ajoute une personne ou modifie son rôle (`owner`, `admin`, `editor`, `operator`, `viewer`).
+- `nodestro-server remove-member TENANT USER` retire une personne de l’espace de travail et y met fin à ses sessions.
+- `nodestro-server revoke-sessions USER` met fin à toutes les sessions d’une personne (les adhésions restent).
+
+`USER` est un ID d’utilisateur (`u_…`), une adresse e-mail vérifiée ou l’identifiant auprès du service de connexion. Le serveur ne connaît une personne qu’après sa première connexion ; un espace de travail garde toujours au moins un propriétaire. Les détails figurent dans le runbook du dépôt nodestro-server (`docs/RUNBOOK.md`, section *Members*). Si la connexion indique que votre compte n’a pas encore d’accès, demandez à un administrateur de vous ajouter.
 
 **Données.** En bas de la barre latérale, **Le serveur de votre organisation** remplace *Local et privé* : vos données restent sur ce serveur et ne vont qu’aux fournisseurs d’IA autorisés par votre exploitant. Les sauvegardes et l’installation sont prises en charge par l’exploitant. Des phrases comme « s’exécute uniquement sur votre ordinateur » ne valent que pour l’application de bureau et la commande `nodestro`.
 
