@@ -68,7 +68,7 @@ Die Sprache betrifft nur die **Oberfläche**: Menüs, Hinweise, Fehlermeldungen,
 ## Darstellung {#darstellung}
 <!-- keywords: theme, dunkel, hell, dark mode, light mode, farbschema, design, midnight citron -->
 
-Oben rechts wechselst du zwischen **Dunkel** und **Hell**. Die Wahl wird im Browser gespeichert. Beide Varianten folgen dem Designsystem *Midnight Citron*. Auf schmalen Bildschirmen wird die Seitenleiste zu einer Symbolleiste.
+Oben rechts wechselst du zwischen **Dunkel** und **Hell**. Die Wahl wird im Browser gespeichert. Beide Varianten folgen dem Designsystem *Midnight Citron*. Auf schmalen Bildschirmen ist die Seitenleiste ausgeblendet: Die Menütaste oben links (**Alle Seiten zeigen**) öffnet sie als Bereich, **Esc** schließt ihn wieder.
 
 ## Backup und Wiederherstellung {#backup}
 <!-- keywords: backup, sicherung, wiederherstellen, restore, export, zip, umzug, datensicherung -->

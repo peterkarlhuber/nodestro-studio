@@ -29,6 +29,7 @@ export function NotFoundState({ kind, error }: { kind: MissingKind; error?: unkn
   return (
     <div className="page" data-testid="not-found-state">
       <EmptyState
+        level={1}
         icon={SearchX}
         title={missing ? t(`notFound.object.${kind}.title`) : t("notFound.object.failedTitle")}
         action={

@@ -14,7 +14,7 @@ export default function ExampleCanvas({ example }: { example: ExampleDetail }) {
         id: node.id,
         type: node.type,
         position: node.position,
-        data: { node, issues: 0 } satisfies FlowNodeData,
+        data: { node, issues: 0, preview: true } satisfies FlowNodeData,
       })),
     [example],
   );

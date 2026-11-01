@@ -56,6 +56,10 @@
       "keys": "<kbd>Delete</kbd> or <kbd>Backspace</kbd>",
       "action": "Delete the selected node or connection"
     },
+    "connect": {
+      "keys": "<kbd>C</kbd>",
+      "action": "Selected node on the canvas: go to “Connect to” in the properties"
+    },
     "canvas": {
       "keys": "Mouse wheel, dragging the canvas",
       "action": "Zoom and pan the canvas"

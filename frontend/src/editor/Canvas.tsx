@@ -21,7 +21,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import type { AgentConfig, NodeType } from "../api/types";
-import { IconButton } from "../components/ui";
+import { Button, IconButton } from "../components/ui";
 import { toast } from "../components/toast";
 import { formatNumber } from "../lib/format";
 import { motionDuration } from "../lib/motion";
@@ -265,21 +265,67 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
     [t],
   );
 
-  // A large workflow opens readable: fitted when that stays readable, otherwise at a readable zoom from the start.
+  // A workflow opens fitted into the free part of the canvas (F2): the floating status line, zoom controls and
+  // minimap cover none of it. Until the user moves the canvas, a change of the pane's size (a panel opening or
+  // the run overview growing) fits it again. A graph too large to stay readable opens from its start, with a cue.
   const initialized = useNodesInitialized();
   const opened = useRef<string | null>(null);
+  const touched = useRef(false);
   const paneRef = useRef<HTMLDivElement | null>(null);
+  const [partlyHidden, setPartlyHidden] = useState(false);
+  const applyOpening = useCallback(() => {
+    const element = paneRef.current;
+    const pane = element?.getBoundingClientRect();
+    if (!element || !pane || !pane.width || !pane.height) return;
+    const status = element.querySelector(".canvas-status")?.getBoundingClientRect();
+    const tools = element.querySelector(".floortools")?.getBoundingClientRect();
+    const minimap = element.querySelector(".react-flow__minimap")?.getBoundingClientRect();
+    const insets = {
+      top: status?.height ? status.bottom - pane.top + 4 : 0,
+      right: 0,
+      bottom: tools?.height ? pane.bottom - tools.top + 4 : 0,
+      left: 0,
+    };
+    const corner = minimap?.width ? { width: pane.right - minimap.left + 4, height: minimap.bottom - pane.top + 4 } : null;
+    const placed = flow.getNodes().map((node) => ({
+      type: node.type ?? "",
+      position: node.position,
+      width: node.measured?.width,
+      height: node.measured?.height,
+    }));
+    const view = openingViewport(placed, pane, insets, corner);
+    void flow.setViewport({ x: view.x, y: view.y, zoom: view.zoom });
+    setPartlyHidden(!view.fits);
+  }, [flow]);
   useEffect(() => {
     if (!initialized || !workflowId || opened.current === workflowId) return;
     opened.current = workflowId;
-    void Promise.resolve(flow.fitView({ padding: 0.12, maxZoom: 1.1 })).then(() => {
-      const pane = paneRef.current?.getBoundingClientRect();
-      if (!pane) return;
-      const placed = flow.getNodes().map((node) => ({ type: node.type ?? "", position: node.position, height: node.measured?.height }));
-      const next = openingViewport(flow.getViewport(), placed, pane);
-      if (next !== flow.getViewport()) void flow.setViewport(next);
+    touched.current = false;
+    applyOpening();
+  }, [initialized, workflowId, applyOpening]);
+  useEffect(() => {
+    const element = paneRef.current;
+    if (!element || typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(() => {
+      if (opened.current && !touched.current) applyOpening();
     });
-  }, [initialized, workflowId, flow]);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [applyOpening]);
+  const onUserMove = useCallback((event: MouseEvent | TouchEvent | null) => {
+    // Only a pan or zoom by the user counts; the opening view and the "show all" button pass no event.
+    if (!event) return;
+    touched.current = true;
+    setPartlyHidden(false);
+  }, []);
+  const markTouched = useCallback(() => {
+    touched.current = true;
+  }, []);
+  const showAll = useCallback(() => {
+    touched.current = true;
+    setPartlyHidden(false);
+    void flow.fitView({ padding: 0.12, duration: motionDuration(200) });
+  }, [flow]);
 
   // The palette and the title actions add nodes where the user looks (see viewport.ts).
   useEffect(() => {
@@ -346,6 +392,22 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         }
         return;
       }
+      // C on a selected step (focus on the canvas): straight to "Connect to" in the inspector (AX-12).
+      if (event.key.toLowerCase() === "c" && !mod && !event.altKey && !event.shiftKey) {
+        const { selectedId: nodeId, selectedIds: ids } = useEditor.getState();
+        const onCanvas = Boolean((document.activeElement as HTMLElement | null)?.closest(".canvas"));
+        if (nodeId && ids.length <= 1 && onCanvas) {
+          event.preventDefault();
+          useEditorLayout.getState().setOpen("inspector", true);
+          window.setTimeout(() => {
+            const panel = document.querySelector<HTMLElement>("[data-testid=node-connections]");
+            const section = panel?.querySelector("details");
+            if (section && !section.open) section.open = true;
+            panel?.querySelector<HTMLElement>("[data-testid=connect-branch], [data-testid=connect-target]:not(:disabled)")?.focus();
+          }, 0);
+        }
+        return;
+      }
       if (mod && event.key.toLowerCase() === "z") {
         event.preventDefault();
         if (event.shiftKey) redo();
@@ -368,7 +430,15 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
   const agents = nodes.filter((node) => node.type === "agent").length;
 
   return (
-    <div className="canvas nd-workflow-canvas" onDragOver={onDragOver} onDrop={onDrop} ref={paneRef}>
+    <div
+      className="canvas nd-workflow-canvas"
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      // Once the user works on the canvas, a panel opening no longer fits the view again.
+      onPointerDown={markTouched}
+      onKeyDown={markTouched}
+      ref={paneRef}
+    >
       <div className="canvas-status" data-dirty={dirty || undefined}>
         {dirty ? t("editor.canvas.unsaved") : t("common.saved")} · {t("editor.canvas.agents", { count: agents })} ·{" "}
         {t("editor.canvas.connections", { count: edges.length })}
@@ -399,6 +469,7 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         }}
         zoomOnDoubleClick={false}
         onPaneClick={() => select(null)}
+        onMoveStart={onUserMove}
         // Deleting is handled above, so it never fires while a text field has the focus.
         deleteKeyCode={null}
         minZoom={0.2}
@@ -442,6 +513,14 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
           <IconButton icon={Undo2} label={t("editor.canvas.undo")} onClick={undo} disabled={!canUndo} />
           <IconButton icon={Redo2} label={t("editor.canvas.redo")} onClick={redo} disabled={!canRedo} />
         </div>
+        {partlyHidden ? (
+          <div className="floatbox canvas-more" role="status" data-testid="canvas-partly-hidden">
+            <span>{t("editor.canvas.partlyHidden")}</span>
+            <Button size="sm" icon={Maximize} onClick={showAll}>
+              {t("editor.canvas.showAll")}
+            </Button>
+          </div>
+        ) : null}
       </div>
     </div>
   );

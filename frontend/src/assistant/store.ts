@@ -59,6 +59,9 @@ export interface AssistantState extends Persisted {
   handover: Handover | null;
   /** Fingerprints of attached editor drafts, to notice later edits in the editor. */
   drafts: Record<string, string>;
+  /** Counts the times the user opened the panel in this page; the panel then takes the focus (AX-11). A panel
+   *  that is open from the last visit does not take it. */
+  focusRequest: number;
 
   setOpen: (open: boolean) => void;
   toggle: () => void;
@@ -91,13 +94,15 @@ export const useAssistant = create<AssistantState>((set, get) => {
     pending: null,
     handover: null,
     drafts: {},
+    focusRequest: 0,
 
     setOpen: (open) => {
-      set({ open });
+      set((state) => ({ open, focusRequest: open && !state.open ? state.focusRequest + 1 : state.focusRequest }));
       persist();
     },
     toggle: () => {
-      set({ open: !get().open });
+      const open = !get().open;
+      set((state) => ({ open, focusRequest: open ? state.focusRequest + 1 : state.focusRequest }));
       persist();
     },
     setWide: (wide) => {
@@ -118,11 +123,16 @@ export const useAssistant = create<AssistantState>((set, get) => {
       }),
     dismiss: (offer) => set((state) => ({ dismissed: [...state.dismissed, offerKey(offer)] })),
     discuss: (request) => {
-      set({ pending: request, open: true, view: "chat" });
+      set((state) => ({ pending: request, open: true, view: "chat", focusRequest: state.focusRequest + (state.open ? 0 : 1) }));
       persist();
     },
     reveal: (offer) => {
-      set((state) => ({ open: true, view: "chat", dismissed: state.dismissed.filter((key) => key !== offerKey(offer)) }));
+      set((state) => ({
+        open: true,
+        view: "chat",
+        dismissed: state.dismissed.filter((key) => key !== offerKey(offer)),
+        focusRequest: state.focusRequest + (state.open ? 0 : 1),
+      }));
       persist();
     },
     clearPending: () => set({ pending: null }),

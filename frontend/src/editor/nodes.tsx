@@ -22,6 +22,8 @@ export interface FlowNodeData extends Record<string, unknown> {
   warnings?: number;
   /** The workflow cannot start for a reason outside the nodes (e.g. a provider without a key). */
   blocked?: boolean;
+  /** A read-only picture (the example preview): it never runs, so it shows no run state, not even "Ready" (F11). */
+  preview?: boolean;
 }
 
 /** Errors and warnings of the check on a node: icon, count and words, never colour alone. */
@@ -76,7 +78,7 @@ function Footer({ state }: { state?: NodeRun }) {
 }
 
 export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) {
-  const { node, state, issues, warnings, blocked } = data as FlowNodeData;
+  const { node, state, issues, warnings, blocked, preview } = data as FlowNodeData;
   const { t } = useTranslation();
   const meta = useMeta();
   const agent = node.agent;
@@ -111,7 +113,7 @@ export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) 
         <Round state={state} />
         {waitsForToolApproval(state) ? (
           <WaitingForYouBadge />
-        ) : state || !blocked ? (
+        ) : state || !(blocked || preview) ? (
           // "Ready" would be wrong while the workflow cannot start at all.
           <StatusBadge status={status} />
         ) : null}

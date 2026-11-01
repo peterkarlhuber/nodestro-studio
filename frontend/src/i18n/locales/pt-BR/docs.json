@@ -56,6 +56,10 @@
       "keys": "<kbd>Delete</kbd> ou <kbd>Backspace</kbd>",
       "action": "Excluir o nó ou a conexão selecionados"
     },
+    "connect": {
+      "keys": "<kbd>C</kbd>",
+      "action": "Nó selecionado na área de trabalho: ir para “Conectar a” nas propriedades"
+    },
     "canvas": {
       "keys": "Roda do mouse, arrastar a tela",
       "action": "Aplicar zoom e mover a área de trabalho"

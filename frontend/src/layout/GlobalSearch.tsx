@@ -153,7 +153,15 @@ export function GlobalSearch() {
   let index = -1;
   return (
     <>
-      <button type="button" className="search-trigger" onClick={() => setOpen(true)} aria-keyshortcuts="Control+K Meta+K" data-testid="search-open">
+      {/* The visible label is hidden at phone width, so the button carries its name itself (F4). */}
+      <button
+        type="button"
+        className="search-trigger"
+        onClick={() => setOpen(true)}
+        aria-label={t("search.open")}
+        aria-keyshortcuts="Control+K Meta+K"
+        data-testid="search-open"
+      >
         <Search size={14} aria-hidden />
         <span className="search-trigger__label">{t("search.open")}</span>
         <kbd>{shortcut}</kbd>
@@ -184,10 +192,12 @@ export function GlobalSearch() {
             {KINDS.filter((kind) => hits.some((hit) => hit.kind === kind)).map((kind) => {
               const Icon = ICONS[kind];
               return (
-                <section key={kind} className="global-search__group">
-                  <h3 className="global-search__heading">
+                // A listbox holds options or groups of options (ARIA APG, grouped listbox): each kind is a group
+                // named by its heading, which itself is presentational (F5).
+                <div key={kind} role="group" aria-labelledby={`search-group-${kind}`} className="global-search__group">
+                  <div role="presentation" id={`search-group-${kind}`} className="global-search__heading">
                     <Icon size={13} aria-hidden /> {t(`search.kind.${kind}`)}
-                  </h3>
+                  </div>
                   {hits
                     .filter((hit) => hit.kind === kind)
                     .map((hit) => {
@@ -214,7 +224,7 @@ export function GlobalSearch() {
                         </div>
                       );
                     })}
-                </section>
+                </div>
               );
             })}
           </div>

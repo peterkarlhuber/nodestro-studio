@@ -60,7 +60,9 @@
     "dropInvalid": "Cet élément ne peut pas être déposé sur le canevas.",
     "removedOne": "« {{name}} » supprimé.",
     "removedMany_one": "{{count}} nœud supprimé.",
-    "removedMany_other": "{{count}} nœuds supprimés."
+    "removedMany_other": "{{count}} nœuds supprimés.",
+    "partlyHidden": "Une partie du workflow est hors de la vue.",
+    "showAll": "Tout afficher"
   },
   "palette": {
     "title": "Blocs",

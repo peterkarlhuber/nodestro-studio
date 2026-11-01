@@ -68,7 +68,7 @@ The language only affects the **interface**: menus, notes, error messages, this 
 ## Appearance {#darstellung}
 <!-- keywords: theme, dark, light, dark mode, light mode, colour scheme, design, midnight citron -->
 
-At the top right you switch between **Dark** and **Light**. The choice is saved in the browser. Both variants follow the *Midnight Citron* design system. On narrow screens the sidebar becomes a toolbar.
+At the top right you switch between **Dark** and **Light**. The choice is saved in the browser. Both variants follow the *Midnight Citron* design system. On narrow screens the sidebar is hidden: the menu button at the top left (**Show all pages**) opens it as a panel, and **Esc** closes it again.
 
 ## Backup and restore {#backup}
 <!-- keywords: backup, restore, export, zip, move, data backup -->

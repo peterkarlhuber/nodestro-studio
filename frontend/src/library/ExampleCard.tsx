@@ -24,12 +24,16 @@ export function ExampleCard({
   example,
   onOpen,
   startHere = false,
+  headingLevel = 3,
 }: {
   example: ExampleSummary;
   onOpen: (id: string) => void;
   /** The easiest example, recommended as the first one to try. */
   startHere?: boolean;
+  /** h2 directly under a page title, h3 inside a titled gallery (heading order, AX-08). */
+  headingLevel?: 2 | 3;
 }) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   const { t } = useTranslation();
   const Icon = CATEGORY_ICONS[example.category];
   const PatternIcon = PATTERN_ICONS[example.pattern];
@@ -43,7 +47,7 @@ export function ExampleCard({
           </span>
           <div>
             <span className="example-card__field">{example.field}</span>
-            <h3>{example.name}</h3>
+            <Heading>{example.name}</Heading>
           </div>
           {startHere ? (
             <Badge tone="success" icon={Flag}>

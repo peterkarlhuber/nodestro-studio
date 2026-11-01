@@ -493,6 +493,7 @@ ol {
   gap: var(--nd-space-3);
 }
 
+.card__head h2,
 .card__head h3 {
   font-size: 13.5px;
   font-weight: 680;
@@ -1535,6 +1536,8 @@ details[open] > summary > .section__chevron {
   color: var(--nd-text-muted);
 }
 
+.empty h1,
+.empty h2,
 .empty h3 {
   color: var(--nd-text);
   font-size: 15px;
@@ -2203,13 +2206,22 @@ body.is-resizing--y * {
   --xy-minimap-node-stroke-color: var(--nd-border-strong);
 }
 
+/* F2: the opening view could not show the whole graph readable */
+.floatbox.canvas-more {
+  gap: 8px;
+  padding: 3px 3px 3px 10px;
+  font-size: 12px;
+}
+
 .floortools {
   position: absolute;
   left: 20px;
   bottom: 18px;
   z-index: 5;
   display: flex;
+  flex-wrap: wrap-reverse;
   gap: var(--nd-space-2);
+  max-width: calc(100% - 40px);
 }
 
 .floatbox {
@@ -3238,6 +3250,12 @@ body.is-resizing--y * {
   padding-right: 30px;
 }
 
+/* F7: the field has its own clear button; the browser's native one would be a second. */
+.docs-search .nd-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 .docs-search__icon {
   position: absolute;
   left: 10px;
@@ -3562,6 +3580,11 @@ body.is-resizing--y * {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
+  }
+
+  /* F7: above the results, the chapter list would push them below the fold while a search is active. */
+  .docs-nav__chapters--searching {
+    display: none;
   }
 }
 
@@ -5833,20 +5856,17 @@ kbd {
 }
 
 .approval-card__actions {
-  /* The decision stays in reach while a long result scrolls past (run panel, approvals page). */
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
+  /* F1: the decision comes after what is reviewed and is not sticky, so Approve is only in reach once the
+     content above it has been scrolled through (run panel, approvals page). */
+  align-items: flex-start;
   margin: 0 -14px -14px;
   padding: 10px 14px 14px;
   border-top: 1px solid var(--nd-border);
-  border-radius: 0 0 var(--nd-radius) var(--nd-radius);
-  background: var(--nd-surface);
 }
 
-.run-panel__focus .approval-card__actions {
-  /* down to the panel's edge, so nothing scrolls by below the buttons */
-  bottom: -12px;
+.approval-card__actions .disabled-reason--below {
+  /* the reason sits under Reject, the buttons stay on one line */
+  align-items: flex-start;
 }
 
 /* a structured result as labelled fields */

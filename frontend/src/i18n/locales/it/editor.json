@@ -60,7 +60,9 @@
     "dropInvalid": "Questo elemento non può essere posizionato sull’area di lavoro.",
     "removedOne": "«{{name}}» rimosso.",
     "removedMany_one": "{{count}} nodo rimosso.",
-    "removedMany_other": "{{count}} nodi rimossi."
+    "removedMany_other": "{{count}} nodi rimossi.",
+    "partlyHidden": "Una parte del workflow è fuori dalla vista.",
+    "showAll": "Mostra tutto"
   },
   "palette": {
     "title": "Blocchi",

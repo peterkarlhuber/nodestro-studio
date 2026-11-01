@@ -164,7 +164,10 @@ export function AppShell() {
     const onKey = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && !event.altKey && event.key.toLowerCase() === "j") {
         event.preventDefault();
+        const inPanel = Boolean((document.activeElement as HTMLElement | null)?.closest(".assistant-panel"));
         useAssistant.getState().toggle();
+        // Closed from inside, the focus would fall to the page; it goes back to the Assistant button (AX-11).
+        if (inPanel && !useAssistant.getState().open) document.querySelector<HTMLElement>("[data-testid=assistant-toggle]")?.focus();
       }
     };
     window.addEventListener("keydown", onKey);

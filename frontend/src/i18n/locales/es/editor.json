@@ -60,7 +60,9 @@
     "dropInvalid": "Este elemento no se puede colocar en el lienzo.",
     "removedOne": "Se eliminó «{{name}}».",
     "removedMany_one": "Se eliminó {{count}} nodo.",
-    "removedMany_other": "Se eliminaron {{count}} nodos."
+    "removedMany_other": "Se eliminaron {{count}} nodos.",
+    "partlyHidden": "Parte del flujo de trabajo queda fuera de la vista.",
+    "showAll": "Mostrar todo"
   },
   "palette": {
     "title": "Bloques",

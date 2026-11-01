@@ -56,6 +56,10 @@
       "keys": "<kbd>Suppr</kbd> ou <kbd>Retour arrière</kbd>",
       "action": "Supprimer le nœud ou la connexion sélectionnés"
     },
+    "connect": {
+      "keys": "<kbd>C</kbd>",
+      "action": "Nœud sélectionné sur le canevas : aller à « Connecter à » dans les propriétés"
+    },
     "canvas": {
       "keys": "Molette de la souris, glisser le canevas",
       "action": "Zoomer et déplacer le canevas"

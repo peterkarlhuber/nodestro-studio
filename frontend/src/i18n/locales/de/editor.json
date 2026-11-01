@@ -60,7 +60,9 @@
     "dropInvalid": "Dieses Element lässt sich nicht auf der Fläche ablegen.",
     "removedOne": "„{{name}}“ entfernt.",
     "removedMany_one": "{{count}} Knoten entfernt.",
-    "removedMany_other": "{{count}} Knoten entfernt."
+    "removedMany_other": "{{count}} Knoten entfernt.",
+    "partlyHidden": "Ein Teil des Workflows liegt außerhalb der Ansicht.",
+    "showAll": "Alles zeigen"
   },
   "palette": {
     "title": "Bausteine",

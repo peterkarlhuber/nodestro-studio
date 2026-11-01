@@ -17,7 +17,7 @@
     "created": "{{source}} connecté à {{target}}."
   },
   "flow": {
-    "node": "Appuyez sur Entrée ou Espace pour sélectionner cette étape et afficher ses propriétés. Les flèches la déplacent, Suppr la supprime, Échap annule. Pour connecter des étapes, utilisez Connexions dans le panneau des propriétés.",
+    "node": "Appuyez sur Entrée ou Espace pour sélectionner cette étape et afficher ses propriétés. Les flèches la déplacent, Suppr la supprime, Échap annule. Pour connecter cette étape, appuyez sur C (ou utilisez Connexions dans le panneau des propriétés).",
     "edge": "Appuyez sur Entrée ou Espace pour sélectionner cette connexion. Suppr la supprime, Échap annule.",
     "moved": "Étape déplacée vers {{direction}}. Nouvelle position : x {{x}}, y {{y}}",
     "direction": {

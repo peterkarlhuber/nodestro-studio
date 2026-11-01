@@ -56,6 +56,10 @@
       "keys": "<kbd>Supr</kbd> o <kbd>Retroceso</kbd>",
       "action": "Eliminar el nodo o la conexión seleccionados"
     },
+    "connect": {
+      "keys": "<kbd>C</kbd>",
+      "action": "Nodo seleccionado en el lienzo: ir a «Conectar con» en las propiedades"
+    },
     "canvas": {
       "keys": "Rueda del ratón, arrastrar el lienzo",
       "action": "Hacer zoom y desplazar el lienzo"

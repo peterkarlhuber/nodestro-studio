@@ -56,6 +56,10 @@
       "keys": "<kbd>Entf</kbd> oder <kbd>Rücktaste</kbd>",
       "action": "Gewählten Knoten oder gewählte Verbindung löschen"
     },
+    "connect": {
+      "keys": "<kbd>C</kbd>",
+      "action": "Ausgewählter Knoten auf der Arbeitsfläche: zu „Verbinden mit“ in den Eigenschaften springen"
+    },
     "canvas": {
       "keys": "Mausrad, Ziehen der Fläche",
       "action": "Zoomen und Verschieben der Arbeitsfläche"
