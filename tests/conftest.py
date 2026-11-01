@@ -16,13 +16,18 @@ from nodestro_studio.app import create_app
 
 @pytest.fixture
 def make_app(tmp_path: Path) -> Iterator[Callable[..., TestClient]]:
-    """``make_app(script)`` -> a TestClient of the studio whose agents answer from ``script``."""
+    """``make_app(script)`` -> a TestClient of the studio whose agents answer from ``script``.
+
+    ``static_dir``: a built interface to serve (none by default).
+    """
     clients: list[TestClient] = []
 
-    def factory(script: dict[str, list[Any]] | None = None, *, client: Any = None) -> TestClient:
+    def factory(
+        script: dict[str, list[Any]] | None = None, *, client: Any = None, static_dir: Path | None = None
+    ) -> TestClient:
         client = client or ScriptedClient(script or {})
         app = create_app(
-            AppConfig(data_dir=tmp_path / f"data{len(clients)}"),
+            AppConfig(data_dir=tmp_path / f"data{len(clients)}", static_dir=static_dir),
             client_factory=lambda _provider: client,
             integrations=[],
             scheduler=False,
