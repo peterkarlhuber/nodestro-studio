@@ -27,6 +27,13 @@ describe("style sheets", () => {
     });
   }
 
+  // The studio uses only the type scale tokens (DESIGN_SYSTEM.md, "Type scale"); the welcome page has its own sizes.
+  for (const [name, css] of Object.entries(sheets).filter(([name]) => name.startsWith("./"))) {
+    it(`${name} takes font sizes from the type scale`, () => {
+      expect(css.match(/font-size:\s*[0-9.]+(px|rem)/g) ?? []).toEqual([]);
+    });
+  }
+
   it("detects an unclosed block", () => {
     expect(unclosed(".a {\n  color: red;\n\n.b { color: blue; }\n")).toEqual([1]);
   });
