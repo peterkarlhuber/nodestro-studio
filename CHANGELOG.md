@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Security fixes from the independent MCP re-review R-1/R-2; pins (2026-11-01)
+
+- Pins `nodestro-runtime` `58cec5c` (before: `f71086a`), `nodestro-api` `05e449d` (before: `476cfc0`),
+  `nodestro-examples` `3429f5b` (before: `69e5e65`), `nodestro-integrations` `cb8c2da` (before: `31a7020`) and, in
+  `platform/versions.json`, `nodestro-sdk` `7f60f9b` (before: `7b795f7`).
+- R-1: deciding an MCP tool call requires an administrator when the stored or the current classification is
+  `destructive`. A security-relevant reclassification of the tool closes pending approvals and invalidates approved
+  but not yet executed ones (also for runs paused at a tool approval); the call is re-checked right before it is
+  sent and refused with `tool.approval_stale`. The existing error text covers it; no UI change.
+- R-2: the name `memory` is reserved for the agent's memory tool. Own or generated tools cannot be saved under it,
+  a tool stored under it before is never run, and an agent that lists it is reported as invalid
+  (`config.memory_name_reserved`, `tool.name_reserved`; existing texts in all six languages).
+- ADR-0007 and the MCP threat model record R-1 and R-2.
+
 ### Security fixes from the independent MCP review; pins (2026-11-01)
 
 - Pins `nodestro-runtime` `f71086a` (before: `c86781b`), `nodestro-api` `476cfc0` (before: `ae6cecd`),
