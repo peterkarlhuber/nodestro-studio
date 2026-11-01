@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 
-import { type Language, setLanguage } from "../i18n";
+import i18n, { type Language, setLanguage } from "../i18n";
 import {
   changedText,
   formatBytes,
