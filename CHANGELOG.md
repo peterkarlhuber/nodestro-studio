@@ -32,8 +32,12 @@ read-only pilot).
 
 ### Amazon Bedrock (AWS) in the studio (2026-11-01)
 
-Frontend and in-app docs only; it needs the runtime/API with the `bedrock` provider (pins follow in a coordinated
-step). No API key field for Bedrock, no AWS secret is ever entered or shown.
+Frontend, in-app docs and branch pins; no AWS secret is ever entered or shown.
+
+- Pins (branch only; the coordinated master cascade follows): `nodestro-runtime` `ac96c6f` (before: `d141b8f`; the
+  `bedrock` provider), `nodestro-api` `4e2c8cd` (before: `db6a696`), `nodestro-examples` `dcad0d1` (before:
+  `660e9a9`), `nodestro-integrations` `570d5c7` (before: `07dc1fd`) and, in `platform/versions.json`,
+  `nodestro-sdk` `3ca06b3` (before: `4a97cef`) and `orkexa` `3467940` (before: `6e69b9c`; boto3 for Bedrock).
 
 - Settings → AI providers: an "Amazon Bedrock (AWS)" card with the AWS region (suggestions, validated, operator
   allowlist), the sign-in method (desktop: AWS default credentials or a named profile; server: the operator's role,
