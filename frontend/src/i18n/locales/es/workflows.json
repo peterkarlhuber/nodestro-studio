@@ -31,6 +31,26 @@
     "example": "Empezar con un ejemplo",
     "exampleText": "Mira flujos de trabajo listos con datos de prueba sintéticos y copia uno como tuyo. Sin llamadas al modelo.",
     "manual": "Crearlo tú mismo",
-    "manualText": "Empieza con una entrada, un agente vacío y un resultado. Arrastras más bloques al lienzo."
+    "manualText": "Empieza con una entrada, un agente vacío y un resultado. Arrastras más bloques al lienzo.",
+    "aiNeedsModel": "Necesita una conexión a un modelo de IA",
+    "modelNeeded": "Para ejecutar flujos de trabajo, conecta primero un modelo de IA: una clave de API (por ejemplo Anthropic, OpenAI o Gemini) o un servidor de modelos local como Ollama. Copiar un ejemplo funciona sin ella.",
+    "aiModelNeeded": "Crear con IA necesita una conexión a un modelo de IA: el Arquitecto de flujos diseña el flujo de trabajo con tu modelo predeterminado, que aún no está configurado.",
+    "modelNeededLink": "Configurar en Ajustes"
+  },
+  "continue": {
+    "title": "Continuar",
+    "waiting_one": "{{count}} aprobación te espera",
+    "waiting_other": "{{count}} aprobaciones te esperan",
+    "runs": "Ejecuciones recientes",
+    "allRuns": "Todas las ejecuciones",
+    "edited": "Editados recientemente"
+  },
+  "teams": {
+    "title": "Equipos",
+    "count_one": "{{count}} equipo",
+    "count_other": "{{count}} equipos",
+    "text": "Flujos de trabajo en los que un orquestador puede delegar (declaran capacidades o un contrato de salida). Las copias de ejemplos orquestados traen sus equipos.",
+    "badge": "Equipo",
+    "badgeHint": "Un orquestador puede delegar trabajo en este flujo de trabajo"
   }
 }

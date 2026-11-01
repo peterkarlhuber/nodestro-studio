@@ -12,5 +12,6 @@
   "toolCount_other": "{{count}} Tools",
   "edit": "Vorlage bearbeiten",
   "delete": "Vorlage löschen",
-  "selectHint": "Wähle links einen Agenten, um ihn zu bearbeiten."
+  "selectHint": "Wähle links einen Agenten, um ihn zu bearbeiten.",
+  "unsavedText": "Die Vorlage „{{name}}“ hat Änderungen, die noch nicht gespeichert sind."
 }

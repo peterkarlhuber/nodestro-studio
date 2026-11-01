@@ -21,7 +21,11 @@
     "architectBudgetHint": "L’architetto si ferma se una bozza costa di più. Vuoto = nessun limite.",
     "architectRepairs": "Correzioni con IA per bozza",
     "architectRepairsHint": "Quante volte l’architetto può chiedere all’IA di correggere una configurazione o una bozza di strumento (da 0 a 5). Le correzioni senza IA vengono sempre fatte.",
-    "defaultHint": "I nuovi agenti partono con questo provider e modello."
+    "defaultHint": "I nuovi agenti partono con questo provider e modello.",
+    "defaultProviderMissing": "Il modello predefinito appartiene a {{provider}}, che non è configurato.",
+    "defaultSwitchHint": "I nuovi agenti e le copie degli esempi non possono essere eseguiti con esso. I workflow esistenti mantengono comunque i loro modelli.",
+    "defaultPickHint": "Scegli qui sotto un modello di {{providers}} come modello predefinito.",
+    "defaultSwitch": "Usa {{model}} ({{provider}})"
   },
   "sandbox": {
     "title": "Sandbox per gli strumenti personali",
@@ -91,6 +95,7 @@
       "reasoning": "Sforzo di ragionamento",
       "caching": "Cache dei prompt",
       "system_messages": "Messaggi di sistema"
-    }
+    },
+    "defaultFollowed": "I nuovi agenti ora usano {{model}} ({{provider}}). I workflow esistenti mantengono i loro modelli; puoi cambiarlo in Modelli."
   }
 }

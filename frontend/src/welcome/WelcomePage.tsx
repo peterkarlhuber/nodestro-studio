@@ -6,6 +6,7 @@ import {
   BookMarked,
   BookOpen,
   Bot,
+  KeyRound,
   CalendarClock,
   Command,
   Diamond,
@@ -24,10 +25,11 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
-import { keys } from "../api/hooks";
+import { keys, useSettings } from "../api/hooks";
 import logo from "../assets/brand/nodestro-logo-512.webp";
 import { Toaster, toast } from "../components/toast";
 import { LANGUAGE_NAMES, LANGUAGES, type Language, currentLanguage, setLanguage } from "../i18n";
+import { anyProviderConfigured } from "../lib/providers";
 import { useTheme } from "../lib/theme";
 import { Constellation } from "./Constellation";
 import { markWelcomeSeen } from "./firstVisit";
@@ -68,6 +70,18 @@ function Slogan({ as: Tag = "h1", id, className }: { as?: "h1" | "h2"; id?: stri
         </Fragment>
       ))}
     </Tag>
+  );
+}
+
+/** Before the first run: workflows need a connection to an AI model; shown only while none is set up (OB-01). */
+function ModelNote() {
+  const { t } = useTranslation();
+  const settings = useSettings();
+  if (!settings.data || anyProviderConfigured(settings.data)) return null;
+  return (
+    <p className="wl-model-note" data-testid="welcome-model-note">
+      <KeyRound size={13} aria-hidden /> {t("welcome.hero.modelNeeded")} <Link to="/settings">{t("welcome.hero.modelNeededLink")}</Link>
+    </p>
   );
 }
 
@@ -235,6 +249,7 @@ export function WelcomePage() {
                 {t("welcome.hero.providers")} {PROVIDERS.join(" · ")}
               </span>
             </p>
+            <ModelNote />
           </div>
         </section>
 

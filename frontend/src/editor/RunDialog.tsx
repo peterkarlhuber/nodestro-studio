@@ -9,7 +9,7 @@ import { useSettings } from "../api/hooks";
 import type { InputField, Run, WorkflowCheck } from "../api/types";
 import { FileInput } from "../components/FileInput";
 import { providerList } from "../components/ModelPicker";
-import { Button, Callout, Field, HelpTip, Modal, TextArea } from "../components/ui";
+import { Button, Callout, DisabledReason, Field, HelpTip, Modal, TextArea } from "../components/ui";
 import { FormFields, fieldErrors, formDefaults } from "../components/FormFields";
 import { ErrorText, LocalError } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -56,6 +56,9 @@ export function RunDialog({
   const [input, setInput] = useState("");
   const [fileIds, setFileIds] = useState<string[]>([]);
   const fields = start?.start?.fields ?? [];
+  // A form with its own file fields gets the generic attachments folded away: one obvious place for a file.
+  const formHasFiles = fields.some((field) => field.type === "file");
+  const prefilled = Boolean(start?.start?.default_input?.trim());
   const [values, setValues] = useState<Record<string, unknown>>({});
   useEffect(() => {
     if (open) {
@@ -80,6 +83,17 @@ export function RunDialog({
       onClose();
     },
   });
+  const files = (
+    <Field label={t("editor.run.files")} hint={t("inputs.runFilesHint")} tip="workflow.runFiles" htmlFor="run-files">
+      <FileInput
+        id="run-files"
+        field={RUN_FILES}
+        value={fileIds}
+        onChange={setFileIds}
+        onPendingChange={(count) => setPending((current) => ({ ...current, [RUN_FILES.name]: count }))}
+      />
+    </Field>
+  );
   const effectiveBudget = budget ?? settings.data?.default_budget_usd ?? null;
   return (
     <Modal
@@ -91,16 +105,13 @@ export function RunDialog({
           <Button variant="ghost" onClick={onClose}>
             {t("common.cancel")}
           </Button>
-          <Button
-            variant="primary"
-            icon={Play}
-            busy={run.isPending}
-            disabled={(check ? !check.ok : false) || uploading}
-            title={uploading ? t("inputs.waitForUploads") : undefined}
-            onClick={() => run.mutate()}
+          <DisabledReason
+            reason={uploading ? t("inputs.waitForUploads") : check && !check.ok ? t("editor.run.fixFirst") : null}
           >
-            {t("editor.run.start")}
-          </Button>
+            <Button variant="primary" icon={Play} busy={run.isPending} onClick={() => run.mutate()}>
+              {t("editor.run.start")}
+            </Button>
+          </DisabledReason>
         </>
       }
     >
@@ -133,8 +144,13 @@ export function RunDialog({
             errors={fieldErrors(run.error)}
             onPendingChange={(name, count) => setPending((current) => ({ ...current, [name]: count }))}
           />
-          <Field label={t("flow.form.extraInput")} hint={t("flow.form.extraInputHint")} tip="workflow.runInput">
-            <TextArea rows={3} value={input} onChange={(e) => setInput(e.target.value)} />
+          <Field
+            label={prefilled ? t("flow.form.prefilledInput") : t("flow.form.extraInput")}
+            hint={prefilled ? t("flow.form.prefilledInputHint") : t("flow.form.extraInputHint")}
+            tip="workflow.runInput"
+            htmlFor="run-input"
+          >
+            <TextArea id="run-input" rows={prefilled ? 5 : 3} value={input} onChange={(e) => setInput(e.target.value)} />
           </Field>
         </>
       ) : (
@@ -142,15 +158,14 @@ export function RunDialog({
           <TextArea rows={7} autoFocus value={input} onChange={(e) => setInput(e.target.value)} />
         </Field>
       )}
-      <Field label={t("editor.run.files")} hint={t("inputs.runFilesHint")} tip="workflow.runFiles" htmlFor="run-files">
-        <FileInput
-          id="run-files"
-          field={RUN_FILES}
-          value={fileIds}
-          onChange={setFileIds}
-          onPendingChange={(count) => setPending((current) => ({ ...current, [RUN_FILES.name]: count }))}
-        />
-      </Field>
+      {formHasFiles ? (
+        <details className="check-details" data-testid="run-more-files">
+          <summary>{t("editor.run.moreFiles", { count: fileIds.length })}</summary>
+          {files}
+        </details>
+      ) : (
+        files
+      )}
       <p className="field__hint">
         <HelpTip id="workflow.runBudget" label={t("editor.run.budget")} />{" "}
         {t("editor.run.budgetText", { budget: effectiveBudget === null ? t("editor.run.unlimited") : formatCost(effectiveBudget) })}

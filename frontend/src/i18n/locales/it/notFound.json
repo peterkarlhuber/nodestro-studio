@@ -1,5 +1,28 @@
 {
   "title": "Pagina non trovata",
   "action": "Vai ai workflow",
-  "text": "Questo indirizzo non esiste in Nodestro."
+  "text": "Questo indirizzo non esiste in Nodestro.",
+  "object": {
+    "workflow": {
+      "title": "Workflow non trovato",
+      "text": "Questo workflow non esiste oppure è stato eliminato.",
+      "back": "Torna ai workflow"
+    },
+    "run": {
+      "title": "Esecuzione non trovata",
+      "text": "Questa esecuzione non esiste oppure è stata eliminata.",
+      "back": "Torna alle esecuzioni"
+    },
+    "batch": {
+      "title": "Esecuzione in serie non trovata",
+      "text": "Questa esecuzione in serie non esiste oppure è stata eliminata.",
+      "back": "Torna alle esecuzioni in serie"
+    },
+    "suite": {
+      "title": "Serie di test non trovata",
+      "text": "Questa serie di test non esiste oppure è stata eliminata.",
+      "back": "Torna alle serie di test"
+    },
+    "failedTitle": "Impossibile caricare questa pagina"
+  }
 }

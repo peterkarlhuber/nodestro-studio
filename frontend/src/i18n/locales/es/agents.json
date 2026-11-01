@@ -12,5 +12,6 @@
   "toolCount_other": "{{count}} herramientas",
   "edit": "Editar plantilla",
   "delete": "Eliminar plantilla",
-  "selectHint": "Elige un agente a la izquierda para editarlo."
+  "selectHint": "Elige un agente a la izquierda para editarlo.",
+  "unsavedText": "La plantilla «{{name}}» tiene cambios que aún no se han guardado."
 }

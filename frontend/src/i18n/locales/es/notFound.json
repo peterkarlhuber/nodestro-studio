@@ -1,5 +1,28 @@
 {
   "title": "Página no encontrada",
   "action": "Ir a los flujos de trabajo",
-  "text": "Esta dirección no existe en Nodestro."
+  "text": "Esta dirección no existe en Nodestro.",
+  "object": {
+    "workflow": {
+      "title": "Flujo de trabajo no encontrado",
+      "text": "Este flujo de trabajo no existe o se eliminó.",
+      "back": "Volver a los flujos de trabajo"
+    },
+    "run": {
+      "title": "Ejecución no encontrada",
+      "text": "Esta ejecución no existe o se eliminó.",
+      "back": "Volver a las ejecuciones"
+    },
+    "batch": {
+      "title": "Ejecución por lotes no encontrada",
+      "text": "Esta ejecución por lotes no existe o se eliminó.",
+      "back": "Volver a las ejecuciones por lotes"
+    },
+    "suite": {
+      "title": "Serie de pruebas no encontrada",
+      "text": "Esta serie de pruebas no existe o se eliminó.",
+      "back": "Volver a las series de pruebas"
+    },
+    "failedTitle": "No se pudo cargar esta página"
+  }
 }

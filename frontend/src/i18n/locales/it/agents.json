@@ -12,5 +12,6 @@
   "toolCount_other": "{{count}} strumenti",
   "edit": "Modifica modello",
   "delete": "Elimina modello",
-  "selectHint": "Scegli un agente a sinistra per modificarlo."
+  "selectHint": "Scegli un agente a sinistra per modificarlo.",
+  "unsavedText": "Il modello «{{name}}» ha modifiche non ancora salvate."
 }

@@ -21,7 +21,11 @@
     "architectBudgetHint": "Der Architekt hält an, wenn ein Entwurf mehr kostet. Leer = kein Limit.",
     "architectRepairs": "KI-Korrekturversuche je Entwurf",
     "architectRepairsHint": "Wie oft der Architekt die KI bitten darf, eine Konfiguration oder einen Tool-Entwurf zu korrigieren (0 bis 5). Korrekturen ohne KI erfolgen immer.",
-    "defaultHint": "Neue Agenten starten mit diesem Anbieter und Modell."
+    "defaultHint": "Neue Agenten starten mit diesem Anbieter und Modell.",
+    "defaultProviderMissing": "Das Standardmodell gehört zu {{provider}}, und dieser Anbieter ist nicht eingerichtet.",
+    "defaultSwitchHint": "Neue Agenten und Beispielkopien können damit nicht laufen. Bestehende Workflows behalten ihre Modelle in jedem Fall.",
+    "defaultPickHint": "Wähle unten ein Modell von {{providers}} als Standardmodell.",
+    "defaultSwitch": "{{model}} ({{provider}}) verwenden"
   },
   "sandbox": {
     "title": "Sandbox für eigene Tools",
@@ -91,6 +95,7 @@
       "reasoning": "Denkaufwand",
       "caching": "Prompt-Caching",
       "system_messages": "System-Nachrichten"
-    }
+    },
+    "defaultFollowed": "Neue Agenten nutzen jetzt {{model}} ({{provider}}). Bestehende Workflows behalten ihre Modelle; ändern kannst du das unter Modelle."
   }
 }

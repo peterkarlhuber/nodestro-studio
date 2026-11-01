@@ -10,7 +10,7 @@ import type { ArchitectJob, ArchitectMode, ToolDraft, WorkflowIn } from "../api/
 import { toast } from "../components/toast";
 import { Button, Callout, Field, Hint, Modal, Segmented, TextArea, Toggle } from "../components/ui";
 import { currentLanguage } from "../i18n";
-import { ErrorText, ProblemText } from "../lib/errors";
+import { ErrorText, ProblemText, ProviderSetupLink, codedError } from "../lib/errors";
 import { formatCost } from "../lib/format";
 import { ArchitectProgress, CostMeter } from "./ArchitectProgress";
 import { ArchitectReview } from "./ArchitectReview";
@@ -391,6 +391,7 @@ export function ArchitectDialog({
             {error ? (
               <Callout tone="danger">
                 <ErrorText error={error} />
+                <ProviderSetupLink item={codedError(error)} />
               </Callout>
             ) : null}
           </div>
@@ -409,6 +410,7 @@ export function ArchitectDialog({
             {error ? (
               <Callout tone="danger">
                 <ErrorText error={error} />
+                <ProviderSetupLink item={codedError(error)} />
               </Callout>
             ) : null}
           </div>
@@ -447,6 +449,7 @@ export function ArchitectDialog({
             ) : (
               <Callout tone="danger">
                 {t("architect.ended.failed")} {job.error ? <ProblemText item={job.error} /> : null}
+                <ProviderSetupLink item={job.error} />
               </Callout>
             )}
             <p className="muted small">

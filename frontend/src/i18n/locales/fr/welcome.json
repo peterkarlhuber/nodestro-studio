@@ -14,7 +14,9 @@
     "lede": "Nodestro relie modèles d’IA, outils et connaissances en workflows d’agents que vous concevez visuellement, exécutez sous contrôle et suivez étape par étape.",
     "diagram": "Schéma : modèles, connaissances et outils convergent dans Nodestro et deviennent des agents connectés, des validations et des exécutions traçables.",
     "local": "Fonctionne en local sur votre ordinateur",
-    "providers": "Compatible avec"
+    "providers": "Compatible avec",
+    "modelNeeded": "Pour exécuter des workflows, Nodestro a besoin d’une connexion à un modèle d’IA : une clé API ou un serveur de modèles local.",
+    "modelNeededLink": "Configurer dans les paramètres"
   },
   "nodes": {
     "models": {

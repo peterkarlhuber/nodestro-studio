@@ -7,5 +7,6 @@
   "mainNavigation": "Main navigation",
   "privateTitle": "Local & private",
   "privateText": "Nodestro runs only on your computer. Data leaves it only for requests to the AI providers you set up.",
-  "providerMissing": "Set up AI provider"
+  "providerMissing": "Set up AI provider",
+  "defaultProviderMissing": "Default model needs {{provider}}"
 }

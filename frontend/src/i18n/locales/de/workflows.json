@@ -31,6 +31,26 @@
     "example": "Mit einem Beispiel beginnen",
     "exampleText": "Fertige Workflows mit synthetischen Testdaten ansehen und als eigene Kopie übernehmen. Ohne Modellaufruf.",
     "manual": "Selbst aufbauen",
-    "manualText": "Startet mit Eingabe, einem leeren Agenten und Ergebnis. Weitere Bausteine ziehst du auf die Arbeitsfläche."
+    "manualText": "Startet mit Eingabe, einem leeren Agenten und Ergebnis. Weitere Bausteine ziehst du auf die Arbeitsfläche.",
+    "aiNeedsModel": "Braucht eine Verbindung zu einem KI-Modell",
+    "modelNeeded": "Damit Workflows laufen, verbinde zuerst ein KI-Modell: einen API-Schlüssel (zum Beispiel Anthropic, OpenAI oder Gemini) oder einen lokalen Modellserver wie Ollama. Ein Beispiel kopieren geht auch ohne.",
+    "aiModelNeeded": "Mit KI erstellen braucht eine Verbindung zu einem KI-Modell: Der Workflow-Architekt entwirft den Workflow mit deinem Standardmodell, und das ist noch nicht eingerichtet.",
+    "modelNeededLink": "In den Einstellungen einrichten"
+  },
+  "continue": {
+    "title": "Weitermachen",
+    "waiting_one": "{{count}} Freigabe wartet auf dich",
+    "waiting_other": "{{count}} Freigaben warten auf dich",
+    "runs": "Letzte Ausführungen",
+    "allRuns": "Alle Ausführungen",
+    "edited": "Zuletzt bearbeitet"
+  },
+  "teams": {
+    "title": "Teams",
+    "count_one": "{{count}} Team",
+    "count_other": "{{count}} Teams",
+    "text": "Workflows, an die ein Orchestrator Arbeit abgeben kann (sie haben Fähigkeiten oder einen Ausgabevertrag). Kopien orchestrierter Beispiele bringen ihre Teams mit.",
+    "badge": "Team",
+    "badgeHint": "Ein Orchestrator kann Arbeit an diesen Workflow abgeben"
   }
 }

@@ -13,11 +13,13 @@ interface Toast {
   message: string;
   /** The technical original of an error, shown folded away. */
   detail?: string | null;
+  /** A button in the toast, e.g. "Undo" right after a removal. */
+  action?: { label: string; run: () => void };
 }
 
 interface ToastState {
   toasts: Toast[];
-  push: (tone: ToastTone, message: string, detail?: string | null) => void;
+  push: (tone: ToastTone, message: string, detail?: string | null, action?: Toast["action"]) => void;
   dismiss: (id: number) => void;
 }
 
@@ -25,10 +27,11 @@ let counter = 0;
 
 export const useToasts = create<ToastState>((set, get) => ({
   toasts: [],
-  push: (tone, message, detail) => {
+  push: (tone, message, detail, action) => {
     const id = ++counter;
-    set({ toasts: [...get().toasts, { id, tone, message, detail }] });
-    window.setTimeout(() => get().dismiss(id), tone === "error" ? 9000 : 4000);
+    set({ toasts: [...get().toasts, { id, tone, message, detail, action }] });
+    // A toast with a button stays a little longer, so there is time to reach it.
+    window.setTimeout(() => get().dismiss(id), tone === "error" ? 9000 : action ? 7000 : 4000);
   },
   dismiss: (id) => set({ toasts: get().toasts.filter((toast) => toast.id !== id) }),
 }));
@@ -47,6 +50,9 @@ export const toast = {
   /** An error about one item, e.g. a file: "name: sentence". */
   errorAbout: (name: string, error: unknown) => showError(error, name),
   info: (message: string) => useToasts.getState().push("info", message),
+  /** A note about something that just happened, with an "Undo" button. */
+  undoable: (message: string, undo: () => void) =>
+    useToasts.getState().push("info", message, null, { label: i18n.t("common.undo"), run: undo }),
 };
 
 const ICONS = { success: CheckCircle2, error: XCircle, info: Info };
@@ -70,6 +76,18 @@ export function Toaster() {
                 </details>
               ) : null}
             </span>
+            {item.action ? (
+              <button
+                type="button"
+                className="toast__action"
+                onClick={() => {
+                  item.action?.run();
+                  dismiss(item.id);
+                }}
+              >
+                {item.action.label}
+              </button>
+            ) : null}
             <button type="button" onClick={() => dismiss(item.id)} aria-label={t("common.dismissMessage")}>
               <X size={14} aria-hidden />
             </button>

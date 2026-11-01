@@ -786,5 +786,6 @@
       "step_limit": "Aumente o limite de etapas em \"Limites\" nas configurações do workflow ou confira os loops.",
       "orchestration_limit": "Aumente \"Máx. de decisões\" no orquestrador ou diga nas instruções dele quando a tarefa está concluída."
     }
-  }
+  },
+  "setupProvider": "Configurar provedor de IA"
 }

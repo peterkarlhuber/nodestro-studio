@@ -786,5 +786,6 @@
       "step_limit": "Augmentez la limite d'étapes sous « Limites » dans les paramètres du workflow, ou vérifiez les boucles.",
       "orchestration_limit": "Augmentez « Nombre maximal de décisions » sur l'orchestrateur, ou indiquez dans ses instructions quand la tâche est terminée."
     }
-  }
+  },
+  "setupProvider": "Configurer un fournisseur d’IA"
 }

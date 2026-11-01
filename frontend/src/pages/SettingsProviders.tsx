@@ -9,20 +9,52 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import { keys, useMeta } from "../api/hooks";
-import type { CapabilityState, ProviderInfo, ProviderStatus, Settings } from "../api/types";
+import type { CapabilityState, ProviderId, ProviderInfo, ProviderStatus, Settings } from "../api/types";
 import { providerLabel } from "../components/ModelPicker";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, HelpTip, Section, Select, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
-import { providerOf } from "../lib/providers";
+import { defaultModelSwitch, providerOf } from "../lib/providers";
 import { CheckRow } from "./SettingsMaintenance";
 
 const STATES: CapabilityState[] = ["unknown", "supported", "unsupported"];
+
+/** The editor's check asks whether the providers of a workflow are set up: after a change it must ask again. */
+export const CHECK_KEY = ["check"] as const;
+
+/**
+ * Lets new agents follow the providers that are set up: switches the default model (and the assistant model when
+ * its provider is not set up either) to a catalog model of ``provider``. Settings only; stored workflows keep the
+ * models they have.
+ */
+export function useFollowProvider() {
+  const { t } = useTranslation();
+  const meta = useMeta();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ settings, provider }: { settings: Settings; provider?: ProviderId }) => {
+      const next = defaultModelSwitch(settings, meta.data?.models, provider);
+      if (!next) return Promise.resolve(null);
+      const assistantMissing = settings.providers.some((item) => item.id === providerOf(settings.assistant_model) && !item.configured);
+      return api
+        .saveSettings({ default_model: next.model.id, ...(assistantMissing ? { assistant_model: next.model.id } : {}) })
+        .then((data) => ({ data, model: next.model.label, provider: providerLabel(t, next.provider.id) }));
+    },
+    onSuccess: (result) => {
+      if (!result) return;
+      queryClient.setQueryData(keys.settings, result.data);
+      void queryClient.invalidateQueries({ queryKey: CHECK_KEY });
+      toast.success(t("settings.providers.defaultFollowed", { model: result.model, provider: result.provider }));
+    },
+    onError: toast.error,
+  });
+}
 
 function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: ProviderStatus; settings: Settings }) {
   const { t } = useTranslation();
   const meta = useMeta();
   const queryClient = useQueryClient();
+  const follow = useFollowProvider();
   const [apiKey, setApiKey] = useState("");
   const [baseUrl, setBaseUrl] = useState(status.base_url ?? "");
   const [capabilities, setCapabilities] = useState<Record<string, CapabilityState>>(status.capabilities);
@@ -32,10 +64,15 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
   }, [status.base_url, status.capabilities]);
   const save = useMutation({
     mutationFn: (change: Parameters<typeof api.saveProvider>[1]) => api.saveProvider(info.id, change),
-    onSuccess: (data) => {
+    onSuccess: (data, change) => {
       queryClient.setQueryData(keys.settings, data);
+      // Checks made before the change still say the provider is missing (or set up); ask again.
+      void queryClient.invalidateQueries({ queryKey: CHECK_KEY });
       setApiKey("");
       toast.success(t("settings.saved"));
+      // The first provider set up becomes the one of new agents when the default model's provider has no key.
+      if (change.api_key && data.providers.some((item) => item.id === info.id && item.configured))
+        follow.mutate({ settings: data, provider: info.id });
     },
     onError: toast.error,
   });
@@ -182,5 +219,38 @@ export function ProviderSettings({ settings }: { settings: Settings }) {
         return status ? <ProviderCard key={info.id} info={info} status={status} settings={settings} /> : null;
       })}
     </section>
+  );
+}
+
+/**
+ * Above the model choice: the default model belongs to a provider that is not set up. Offers the model of a provider
+ * that is set up (a change of the settings only; existing workflows keep their models).
+ */
+export function DefaultModelNotice({ settings }: { settings: Settings }) {
+  const { t } = useTranslation();
+  const meta = useMeta();
+  const follow = useFollowProvider();
+  const current = settings.providers.find((item) => item.id === providerOf(settings.default_model));
+  if (!current || current.configured) return null;
+  const configured = settings.providers.filter((item) => item.configured);
+  if (!configured.length) return null;
+  const next = defaultModelSwitch(settings, meta.data?.models);
+  return (
+    <Callout tone="warning">
+      <span data-testid="default-model-notice">
+        {t("settings.models.defaultProviderMissing", { provider: providerLabel(t, current.id) })}{" "}
+        {next
+          ? t("settings.models.defaultSwitchHint")
+          : t("settings.models.defaultPickHint", { providers: configured.map((item) => providerLabel(t, item.id)).join(", ") })}
+      </span>
+      {next ? (
+        <>
+          {" "}
+          <Button size="sm" busy={follow.isPending} onClick={() => follow.mutate({ settings })}>
+            {t("settings.models.defaultSwitch", { model: next.model.label, provider: providerLabel(t, next.provider.id) })}
+          </Button>
+        </>
+      ) : null}
+    </Callout>
   );
 }

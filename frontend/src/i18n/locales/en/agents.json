@@ -12,5 +12,6 @@
   "toolCount_other": "{{count}} tools",
   "edit": "Edit template",
   "delete": "Delete template",
-  "selectHint": "Choose an agent on the left to edit it."
+  "selectHint": "Choose an agent on the left to edit it.",
+  "unsavedText": "The template “{{name}}” has changes that are not saved yet."
 }
