@@ -70,14 +70,16 @@ Während der Lauf wartet, hat er den Status **Pausiert**, die Freigabe **Wartet 
 ## Die Seite Freigaben {#freigaben-seite}
 <!-- keywords: freigaben, offene freigaben, warteschlange, entscheiden, navigation, zähler -->
 
-Die Seite **Freigaben** (Navigation, Gruppe *Automatisierung*) listet alle offenen Freigaben, die älteste zuerst, mit Workflow, Herkunft (manuell, Zeitplan, Stapel, Testreihe) und Wartezeit. Die Zahl neben dem Menüeintrag zeigt, wie viele warten.
+Die Seite **Freigaben** (Navigation, Gruppe *Ausführen & prüfen*) listet alle offenen Freigaben, die älteste zuerst, mit Workflow, Herkunft (manuell, Zeitplan, Stapel, Testreihe) und Wartezeit. Die Zahl neben dem Menüeintrag zeigt, wie viele warten.
 
-Jede Karte zeigt den Hinweis, die zu prüfenden Ergebnisse, ein Kommentarfeld und die Knöpfe *Freigeben* und *Ablehnen*. Freigaben in Unterworkflows erscheinen hier ebenfalls, mit dem Pfad zum übergeordneten Lauf.
+Jede Karte zeigt den Hinweis, die zu prüfenden Ergebnisse (strukturierte Ergebnisse als beschriftete Felder, das JSON einen Klick entfernt), ein Kommentarfeld und die Knöpfe *Freigeben* und *Ablehnen*; die Knöpfe bleiben auch bei langen Ergebnissen im Blick. Freigaben in Unterworkflows erscheinen hier ebenfalls, mit dem Pfad zum übergeordneten Lauf. Karten für [Tool-Aufrufe](/docs/verzweigungen#tool-freigabe) nennen Workflow und Schritt („*Workflow* · Schritt *Name*“).
 
 ## Tool-Aufrufe freigeben {#tool-freigabe}
 <!-- keywords: tool-freigabe, tool-aufruf, pro aufruf, argumente, frist, vorab-freigabe, unbeaufsichtigt, altbestand -->
 
-Neben Freigabeknoten kann Nodestro auch vor **einzelnen Tool-Aufrufen** eines Agenten fragen. Das ist für Tools gedacht, die Daten ändern oder nach außen wirken, zum Beispiel eine E-Mail senden oder in ein Ticketsystem schreiben. Die Administration schaltet das nach der Sicherheitsprüfung ein; bis dahin ändert sich nichts.
+Neben Freigabeknoten kann Nodestro auch vor **einzelnen Tool-Aufrufen** eines Agenten fragen. Das ist für Tools gedacht, die Daten ändern oder nach außen wirken, zum Beispiel eine E-Mail senden oder in ein Ticketsystem schreiben.
+
+**Derzeit ausgeschaltet.** Freigaben pro Tool-Aufruf sind in Nodestro noch nicht eingeschaltet; sie kommen erst nach einer Sicherheitsprüfung. Bis dahin laufen Tools ohne vorherige Nachfrage, und auf der Seite **Freigaben** steht unter *Regeln für Tool-Aufrufe* nur dieser eine Satz. Die Vorbereitung für Administratoren (Aktivierungsschritt, Vorab-Freigaben, Protokoll) liegt dort zugeklappt unter **Vorbereitung für Administratoren**. Der Rest dieses Abschnitts beschreibt, wie die Freigaben arbeiten, sobald sie eingeschaltet sind.
 
 Will ein Agent einen solchen Aufruf machen, läuft die Ausführung weiter, wartet aber an diesem Aufruf. Die Karte erscheint in der Ausführung, beim Schritt und auf der Seite **Freigaben**. Sie zeigt das Tool, was es darf (*liest nur*, *ändert Daten*, *löscht oder zerstört*; *bleibt in Nodestro* oder *wirkt nach außen*), die **Argumente genau so, wie sie gesendet werden**, und die verbleibende Zeit.
 
@@ -95,7 +97,7 @@ Ausführungen, bei denen niemand zusieht (Zeitpläne, Stapel, Testreihen), könn
 
 1. Unter *Freigaben → Regeln für Tool-Aufrufe* führt die Administration **Bestehende Zuweisungen markieren** aus. Jede Tool-Zuweisung, die es jetzt in Workflows, ihren Versionen und veröffentlichten APIs gibt, wird zur **Ausnahme aus dem Altbestand**, gebunden an die Tool-Version, mit der sie läuft. Veröffentlichte APIs erhalten dabei einmalig eine neue Prüfsumme (Digest); ihr Verlauf hält die alte und die neue fest. Der Schritt läuft **nur einmal**: Danach erstellte Zuweisungen, Workflows und Stände sind neu und werden abgefragt.
 2. **Die Liste prüfen.** Eine unerwünschte Ausnahme endet, wenn du das Tool beim Agenten entfernst und speicherst; weist du es wieder zu, wird es wie ein neues abgefragt.
-3. Erst danach schaltet die Administration die Freigaben ein (`NODESTRO_TOOL_APPROVALS=1`, dann Nodestro neu starten).
+3. Erst danach werden die Freigaben eingeschaltet. Das ist in dieser Version noch nicht vorgesehen: Bis die Sicherheitsprüfung abgeschlossen ist, bleiben sie aus.
 
 Wird ohne den ersten Schritt eingeschaltet, ist nichts ausgenommen: Jede Zuweisung wird abgefragt, und unbeaufsichtigte Ausführungen verweigern solche Aufrufe. Eine neue Tool-Version beendet eine Ausnahme immer. Eine Freigabe hebt die Grenzen der Sandbox nie auf.
 
@@ -138,29 +140,32 @@ Ein Team lässt sich für sich allein prüfen: Lege für den Workflow eine [Test
 
 Ein **Orchestrator** lässt ein KI-Modell entscheiden, welches Team welche Teilaufgabe bekommt. Es trifft eine Entscheidung nach der anderen: eine Aufgabe an ein Team **weitergeben** oder mit einer Antwort **abschließen**. Die Antwort ist das Ergebnis des Knotens.
 
-- **Teams:** die gespeicherten Workflows, aus denen das Modell wählen darf (höchstens 20). Das Modell sieht von jedem Team nur Name, Beschreibung, Fähigkeiten und Ausgabevertrag.
-- **Teams nach Fähigkeit:** statt jedes Team einzeln zu wählen, nennst du Fähigkeiten (höchstens 10). Beim Start eines Laufs kommen gespeicherte Teams mit einer passenden Fähigkeit dazu (höchstens *Höchstens so viele Teams*), zuerst die mit den meisten passenden Stichworten, dann nach Name. Teams mit Fehlern bleiben draußen; Teams mit Freigabeschritten sind dabei. Die Auswahl gilt fest für diesen Lauf (und für eine veröffentlichte Version); die Details des Laufs zeigen, welche Stichworte jedes Team getroffen hat. Es wird nichts bewertet oder geschätzt.
-- **Aufgabe** und **Anweisungen:** was erledigt werden soll und, optional, wie geplant wird.
-- **Höchstens Entscheidungen** (1 bis 50, Standard 8) und **Höchstens pro Team:** Ohne Antwort nach der letzten Entscheidung schlägt der Schritt fehl.
+Der Inspektor eines Orchestrators beginnt mit einem Satz, der zusammenfasst, wie er arbeitet („So arbeitet dieser Orchestrator: …“), und gliedert die Einstellungen in vier aufklappbare Bereiche; jeder nennt im Kopf eine Kurzfassung und eventuelle Probleme:
 
-Der Orchestrator wählt nur aus. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes gewählte Team läuft als **eigener, verknüpfter Lauf** mit seinem Anteil am Budget, seinen Grenzen und seinen Freigaben für Werkzeuge. Entscheidungen, die nicht erlaubt sind (ein unbekanntes Team, dieselbe Aufgabe noch einmal, ein ausgeschöpftes Team), werden abgelehnt und dem Modell gezeigt; sie zählen trotzdem als Entscheidung.
+- **Team-Pool:** **Gewählte Workflows** sind die gespeicherten Workflows, aus denen das Modell wählen darf (höchstens 20). Das Modell sieht von jedem Team nur Name, Beschreibung, Fähigkeiten und Ausgabevertrag.
+- **Teams nach Fähigkeit** (ebenfalls im Team-Pool): statt jedes Team einzeln zu wählen, nennst du Fähigkeiten (höchstens 10). Beim Start eines Laufs kommen gespeicherte Teams mit einer passenden Fähigkeit dazu (höchstens *Höchstens so viele Teams*), zuerst die mit den meisten passenden Stichworten, dann nach Name. Teams mit Fehlern bleiben draußen; Teams mit Freigabeschritten sind dabei. Die Auswahl gilt fest für diesen Lauf (und für eine veröffentlichte Version); die Details des Laufs zeigen, welche Stichworte jedes Team getroffen hat. Es wird nichts bewertet oder geschätzt.
+- **Auftrag:** **Aufgabe** und **Anweisungen** (was erledigt werden soll und, optional, wie geplant wird) sowie das **Modell** des Orchestrators.
+- **Grenzen:** **Höchstens Entscheidungen** (1 bis 50, Standard 8), **Höchstens Einsätze pro Team** und **Teams gleichzeitig**. Ohne Antwort nach der letzten Entscheidung schlägt der Schritt fehl.
+- **Aktive Besetzung:** die Optionen unter [Dynamische Teams](/docs/verzweigungen#dynamische-teams).
+
+Der Orchestrator wählt nur aus. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes gewählte Team läuft als **eigener, verknüpfter Lauf** mit seinem Anteil am Budget, seinen Grenzen und seinen Freigaben für Werkzeuge. Entscheidungen, die nicht erlaubt sind (ein unbekanntes Team, dieselbe Aufgabe noch einmal, ein ausgeschöpftes Team), werden nicht ausgeführt und dem Modell gezeigt; die Details des Laufs nennen sie *Ungültig, nicht ausgeführt*. Sie zählen trotzdem als Entscheidung.
 
 In den Details des Laufs steht jede Entscheidung mit Begründung, Aufgabe, Ergebnis und einem Link zum Lauf des Teams. Hält ein Team für eine **Freigabe** an (auch in einem Unter-Workflow oder unter einem weiteren Orchestrator), wartet der Orchestrator mit: Der Lauf ist *pausiert* und erscheint unter **Freigaben**. Nach der Entscheidung läuft derselbe Lauf des Teams weiter, auch nach einem Neustart, und das Modell wird zu dieser Weitergabe nicht noch einmal gefragt. Beendet eine Ablehnung den Lauf des Teams (*Bei Ablehnung: Lauf beenden*), endet auch dieser Lauf; kein anderes Team kann die Ablehnung umgehen. Wird ein wartender Lauf abgebrochen, werden seine wartenden Teams mit abgebrochen. Ein Team darf den Workflow des Orchestrators nicht wieder aufrufen.
 
 ## Dynamische Teams {#dynamische-teams}
 <!-- keywords: dynamisches team, team zusammenstellen, parallel, gleichzeitig, parameter, startformular, vorlage, teamzusammenstellung, staffing -->
 
-Im Bereich **Dynamische Teams** eines Orchestrators bekommt das Modell mehr Spielraum, immer innerhalb des Pools und der Grenzen. Alles ist anfangs aus.
+Im Bereich **Aktive Besetzung** eines Orchestrators (Feld *Dynamische Teams*) bekommt das Modell mehr Spielraum, immer innerhalb des Pools und der Grenzen. Alles ist anfangs aus.
 
-- **Teams gleichzeitig** (1 bis 5): Eine Entscheidung darf mehrere verschiedene Teams zugleich beauftragen, für Teile, die nicht voneinander abhängen. Jedes Team bekommt sein eigenes Ergebnis.
-- **Team selbst zusammenstellen:** Der Orchestrator nimmt Teams aus dem Pool in sein Team auf und entlässt sie wieder, wenn Zwischenergebnisse es nahelegen. Arbeit bekommen nur Teams im Team; *Höchstens im Team* begrenzt seine Größe. Dasselbe Team darf mehrmals arbeiten (bis *Höchstens pro Team*).
+- **Teams gleichzeitig** (1 bis 5, im Bereich *Grenzen*): Eine Entscheidung darf mehrere verschiedene Teams zugleich beauftragen, für Teile, die nicht voneinander abhängen. Jedes Team bekommt sein eigenes Ergebnis.
+- **Aktive Besetzung selbst zusammenstellen:** Der Orchestrator nimmt Teams aus dem Pool in seine Besetzung auf und entlässt sie wieder, wenn Zwischenergebnisse es nahelegen. Arbeit bekommen nur Teams der aktiven Besetzung; *Höchstens in der aktiven Besetzung* begrenzt ihre Größe. Dasselbe Team darf mehrmals arbeiten (bis *Höchstens Einsätze pro Team*). Ohne diese Option wählt der Orchestrator aus dem ganzen Pool.
 - **Startformular der Teams ausfüllen:** Der Orchestrator darf die Felder des Eingabeformulars eines Teams setzen (nie Dateien). Die Werte werden geprüft wie bei einem Start von Hand; ein unbekanntes Feld oder ein ungültiger Wert wird abgelehnt und dem Modell gezeigt.
 
 Der Pool steht beim Start des Laufs fest, in den Versionen dieses Zeitpunkts. Neue Teams, Agenten oder Werkzeuge entstehen nie, und Freigaben, Budget und Grenzen jedes Teams gelten unverändert.
 
-**Was die Details des Laufs zeigen:** welcher Orchestrator mit welchem Modell arbeitet, wie viele Entscheidungen verbraucht sind, die Kosten der Entscheidungen und gesamt (unbekannte Kosten werden als *nicht vollständig bekannt* gezeigt, nie als 0), den Pool mit Versionen, das **Team im Verlauf**, wartende Teams und jede Entscheidung mit Begründung, Aufgabe, Werten und dem Ergebnis jedes Teams: *Erfolgreich*, *Wartet auf Freigabe*, *Fehlgeschlagen*, *Abgelehnt*, *Abgebrochen* oder *Abgelaufen*. Gezeigt werden nur die festgehaltenen Entscheidungen, keine Gedankengänge des Modells.
+**Was die Details des Laufs zeigen:** welcher Orchestrator mit welchem Modell arbeitet, wie viele Entscheidungen verbraucht sind, die Kosten der Entscheidungen und gesamt (unbekannte Kosten werden als *nicht vollständig bekannt* gezeigt, nie als 0), den Pool mit Versionen, die **Aktive Besetzung im Verlauf**, wartende Teams und jede Entscheidung mit Begründung, Aufgabe, Werten und dem Ergebnis jedes Teams: *Erfolgreich*, *Wartet auf Freigabe*, *Fehlgeschlagen*, *Abgelehnt*, *Abgebrochen* oder *Abgelaufen*. Gezeigt werden nur die festgehaltenen Entscheidungen, keine Gedankengänge des Modells.
 
-**Teamzusammenstellung als Vorlage speichern:** Ein Team besteht nur während des Laufs. Nach dem Ende speichert dieser Knopf einen **neuen Workflow** mit demselben Orchestrator, seinem Startformular, seinen Grenzen und genau den Teams, die gearbeitet haben, in den Versionen des Laufs. Ohne diesen Klick wird nichts gespeichert.
+**Teamzusammenstellung als Vorlage speichern:** Eine aktive Besetzung besteht nur während des Laufs. Nach dem Ende speichert dieser Knopf einen **neuen Workflow** mit demselben Orchestrator, seinem Startformular, seinen Grenzen und genau den Teams, die gearbeitet haben, in den Versionen des Laufs. Ohne diesen Klick wird nichts gespeichert.
 
 ## Eingabeformulare {#eingabeformular}
 <!-- keywords: formular, eingabeformular, felder, typ, pflichtfeld, standardwert, auswahl, datum, zahl, form -->
@@ -190,5 +195,7 @@ Ein fehlgeschlagener oder abgebrochener Lauf lässt sich **fortsetzen** (Knopf *
 - Übernommene Ergebnisse kosten im neuen Lauf nichts; ihre Kosten bleiben beim alten Lauf und werden in der [Nutzung](/docs/nutzung) nicht doppelt gezählt.
 - Freigabe-Entscheidungen übernommener Schritte gelten weiter und sind als übernommen gekennzeichnet; niemand wird doppelt gefragt.
 - Hatten neu laufende Schritte bereits **eigene Tools** aufgerufen, die außerhalb von Nodestro wirken können (etwa eine Nachricht senden), musst du das ausdrücklich bestätigen.
+
+Wurde ein Lauf unterbrochen, weil Nodestro beendet wurde, während er lief, nennt seine Detailansicht die Schritte, die nicht fertig wurden, und bietet **Fortsetzen** direkt im Hinweis an; diese Schritte laufen mit dem Grund *Wurde unterbrochen* neu.
 
 Lässt sich nichts sicher übernehmen, bietet Nodestro einen vollständigen Neustart an. Importierte Traces und einzelne Unterworkflow-Läufe lassen sich nicht fortsetzen; setze dann den übergeordneten Lauf fort.
