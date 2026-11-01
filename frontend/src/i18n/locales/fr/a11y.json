@@ -31,7 +31,6 @@
     "handle": "Port"
   },
   "nav": {
-    "menu": "Menu",
     "open": "Afficher toutes les pages",
     "close": "Masquer la liste des pages"
   }
