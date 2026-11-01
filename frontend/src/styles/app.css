@@ -6566,8 +6566,8 @@ ul.gate-report__list > li.gate-report__item {
 
   /* Row checkboxes get a larger hit area without a larger box. */
   .table__pick input[type="checkbox"] {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
   }
 }
 
