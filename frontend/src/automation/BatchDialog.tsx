@@ -198,6 +198,7 @@ export function BatchDialog({ open, onClose, workflowId: initial = "" }: { open:
                 estimate={plan.data.estimate}
                 externalTools={plan.data.external_tools}
                 approvals={plan.data.approvals}
+                toolWarnings={plan.data.tool_warnings}
                 confirmed={confirmed}
                 onConfirm={setConfirmed}
               />

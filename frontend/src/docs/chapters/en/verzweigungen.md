@@ -89,7 +89,17 @@ When an agent wants to make such a call, the run keeps running but waits at this
 
 Runs nobody watches (schedules, batches, test series) cannot ask. There such a call is refused unless an administrator approved this tool version **in advance** for exactly that schedule or batch. Tools that delete or destroy and tools of connected services can never be approved in advance.
 
-Workflows that already existed when approvals were switched on keep working: their tool assignments are marked as **exceptions from before**, bound to the tool version they ran with. A new tool version or a new assignment is asked about as usual. An approval never lifts the sandbox's limits.
+**Warned before the start.** While approvals are on, the schedule dialog, the batch and test series start and the API publication check list every tool call such a run would refuse: which agent and tool, why (no or outdated advance approval, a batch that does not exist yet, a published API, a tool that deletes or destroys, a tool of a connected service) and how to fix it. This is only a warning: nothing is approved automatically, and the call is still refused at run time. An advance approval names a saved schedule or a started batch or test series, so calls before it is given are refused; start a batch by hand if every call matters. Published APIs have no approval step of their own yet, so their changing tool calls are always refused. The warning cannot see tools an orchestrator narrows or selects during the run, or approvals given or revoked after the check.
+
+**Switching on, in this order:**
+
+1. Under *Approvals → Rules for tool calls*, an administrator runs **Mark existing assignments**. Every tool assignment that exists now in workflows, their versions and published APIs becomes an **exception from before**, bound to the tool version it runs with. Published APIs get a new checksum (digest) once; their history records the old and the new one. The step runs **only once**: assignments, workflows and releases made afterwards are new and are asked about.
+2. **Review the list.** An exception you do not want ends when you remove the tool from the agent and save; if you assign it again, it is asked about like a new one.
+3. Only then does the administrator switch approvals on (`NODESTRO_TOOL_APPROVALS=1`, then restart Nodestro).
+
+If approvals are switched on without the first step, nothing is exempt: every assignment is asked about, and unattended runs refuse such calls. A new tool version always ends an exception. An approval never lifts the sandbox's limits.
+
+**Not covered:** the provider's server tools (web search, web fetch and code execution at Anthropic) run at the provider and cannot be held per call; switch them off for the agent where they must not be used. Nodestro's own run tools (memory, files of the run) are not asked about either. Published APIs ask no one: they get their own approval phase later.
 
 Under **Approvals → Rules for tool calls** you see whether approvals are on and which exceptions from before exist. Administrators also run the activation step there, grant and revoke approvals in advance, and read the audit trail: who decided, granted or revoked what, and every refused decision. The arguments of a call never appear in the audit trail.
 

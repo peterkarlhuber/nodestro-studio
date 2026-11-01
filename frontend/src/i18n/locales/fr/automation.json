@@ -249,7 +249,13 @@
       "daily": "tous les jours à {{at}} ({{zone}})",
       "weekly": "chaque semaine {{days}} à {{at}} ({{zone}})",
       "monthly": "chaque mois le {{day}} à {{at}} ({{zone}})"
-    }
+    },
+    "enabledWithWarnings": "La planification est active, mais certains appels d'outils seraient refusés"
+  },
+  "toolWarnings": {
+    "title": "Appels d'outils qui seraient refusés",
+    "hint": "Rien n'est approuvé automatiquement. Une personne administratrice donne les approbations anticipées sur la page Approbations.",
+    "open": "Ouvrir Approbations"
   },
   "modelChoice": {
     "title": "Choix du modèle par les mesures",

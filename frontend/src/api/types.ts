@@ -491,7 +491,16 @@ export interface ToolApprovalEvent {
 /** Whether per-call approvals are on, and what the activation step stamped as legacy exemptions. */
 export interface ToolApprovalsState {
   enabled: boolean;
-  legacy: { bindings: LegacyToolBinding[]; workflows: number; versions: number } | null;
+  legacy: {
+    bindings: LegacyToolBinding[];
+    workflows: number;
+    versions: number;
+    /** When and by whom the workflows were marked; the step runs once. */
+    stamped_at?: string | null;
+    stamped_by?: string | null;
+    /** When the published releases were marked (null: still to do, e.g. after an interrupted first call). */
+    publications_stamped_at?: string | null;
+  } | null;
 }
 
 export interface EvaluationRecord {
@@ -1855,6 +1864,8 @@ export interface BatchPlan {
   items: BatchItem[];
   estimate: CostEstimate;
   external_tools: string[];
+  /** Tool calls the per-call approval rules would refuse in these runs (only while approvals are switched on). */
+  tool_warnings: Problem[];
   approvals: number;
   fields: string[];
 }
@@ -2047,6 +2058,8 @@ export interface BenchmarkPlan {
   estimate: CostEstimate;
   judged_cases: number;
   external_tools: string[];
+  /** Tool calls the per-call approval rules would refuse in the test runs (only while approvals are switched on). */
+  tool_warnings: Problem[];
   approvals: number;
   /** Cases whose form values do not fit the workflow's form (they would be marked invalid). */
   problems: { case: string; errors: FieldError[] }[];

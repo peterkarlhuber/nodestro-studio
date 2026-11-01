@@ -2,6 +2,40 @@
 
 ## Unreleased
 
+### Tool approvals: warnings before unattended starts (S-2, R1, 2026-11-01)
+
+- Schedule dialog, switching a schedule on, batch and test series start, and the API publication check show the tool
+  calls the per-call approval rules would refuse in those unattended runs (`ToolWarnings`, codes
+  `errors.tool.unattended_*` in six languages): agent, workflow, tool, why, and how to fix it, with a link to the
+  Approvals page. Nothing is approved from there, and the runtime still refuses at the call. A schedule switched on
+  with such warnings now says so. Shown only while `NODESTRO_TOOL_APPROVALS` is on.
+- Help *Branches > Approving tool calls* (six languages): what the warning covers and what it cannot see.
+- Browser suite `approvals`: schedule dialog warning, the advance approval ending it, no automatic grants, batch plan,
+  publication check.
+- Platform pins: `nodestro-runtime` `2d55242`, `nodestro-api` `a233d57` (includes Adaptive Orchestration M6a and MCP
+  WP-7/8/9/11), `nodestro-examples` `63be887`, `nodestro-integrations` `7bbce5f` and, in `platform/versions.json`, `nodestro-sdk` `1383418`; `orkexa` stays `b91d0b7`.
+
+### Tool approvals: security acceptance (S-2, 2026-10-31)
+
+- New browser suite `approvals` (`npm run e2e:approvals`, part of `scripts/e2e.sh`) against an isolated instance with
+  `NODESTRO_TOOL_APPROVALS=1` (`tests/e2e_approvals_server.py`, 20-second wait, scripted model, user-authored tool
+  with arguments that contain quotes, markup, umlauts and a line break). It covers the exact argument display,
+  approve, reject with a comment, a decision about a changed call (stale hash, refused), a repeated decision
+  (refused), the timeout and a late decision (refused), the run details' notes, the audit trail without arguments,
+  the one-time activation step (a workflow made afterwards is asked about; repeating adds nothing), dark mode and a
+  phone width.
+- Rules section: the activation step shows when and by whom it ran and is offered only until it is complete (the
+  published-API part can be finished after an interrupted first call); repeated steps show as such in the audit
+  trail; the hint explains the order (mark, review, then switch on) and the one-time digest change.
+- Help *Branches > Approving tool calls* (six languages): the activation order, how to end an unwanted exception,
+  what happens without the first step, and what is not covered (provider server tools, Nodestro's own run tools,
+  published APIs' own approval phase).
+
+- Platform pins: `nodestro-runtime` `a13f894` (one-time legacy stamping, removed tools lose their exemption),
+  `nodestro-api` `c58d5de` (publications cutoff at the first stamping), `nodestro-examples` `2488c93`,
+  `nodestro-integrations` `08f5faf` and, in `platform/versions.json`, `nodestro-sdk` `452a39d`; `orkexa` stays
+  `b91d0b7`.
+
 ### Model choice from measurements (Adaptive Orchestration M6a)
 
 - A test series page shows **Model choice from measurements** below its runs: for one agent, the goal (lowest cost,
@@ -10,7 +44,7 @@
   model is left out. Only finished test runs of the same workflow state, cases and other models count; unknown costs
   never count as 0. *Use* saves the agent with the recommended model as a new workflow version; nothing changes
   before that. Help and docs (`automatisierung#modellwahl-nach-messwerten`) in all six languages.
-- Needs `nodestro-api` with `GET /api/benchmarks/{suite_id}/model-choice` (api #33); the pin follows.
+- Needs `nodestro-api` with `GET /api/benchmarks/{suite_id}/model-choice` (api #33), included in the pinned `a233d57`.
 
 ### Platform pins: runtime 40e04b4, api e8eacd4, sdk 38082cc (Adaptive Orchestration M3–M5, 2026-10-31)
 

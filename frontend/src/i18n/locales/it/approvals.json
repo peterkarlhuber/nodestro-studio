@@ -67,7 +67,7 @@
     "enabled": "Attive",
     "disabled": "Disattivate",
     "enabledText": "Le chiamate di strumenti che modificano dati o agiscono verso l’esterno attendono la decisione di una persona.",
-    "disabledText": "Nodestro non chiede ancora prima delle chiamate di strumenti. L’amministrazione lo attiva dopo la verifica di sicurezza (NODESTRO_TOOL_APPROVALS=1).",
+    "disabledText": "Nodestro non chiede ancora prima delle chiamate di strumenti. Ordine: marca qui le assegnazioni esistenti, controlla l’elenco, poi l’amministrazione attiva le approvazioni dopo la verifica di sicurezza (NODESTRO_TOOL_APPROVALS=1).",
     "legacyTitle": "Eccezioni preesistenti",
     "legacyText": "Le assegnazioni di strumenti che esistevano prima dell’approvazione per chiamata continuano a funzionare senza domanda, legate alla versione dello strumento con cui giravano. Una nuova versione o una nuova assegnazione viene chiesta come al solito. Per gli strumenti dei servizi collegati si chiede sempre.",
     "legacyNotRun": "Il passo di attivazione non è ancora stato eseguito.",
@@ -80,9 +80,8 @@
     "workflow": "Workflow {{id}}",
     "workflowVersion": "Workflow {{id}}, versione {{version}}",
     "stamp": "Marca le assegnazioni esistenti",
-    "stampAgain": "Marca di nuovo",
     "stampConfirm": "Marca ora",
-    "stampHint": "Parte dell’attivazione: marca come eccezioni le assegnazioni esistenti di workflow, versioni e versioni pubblicate. Non attiva le approvazioni e si può ripetere.",
+    "stampHint": "Da eseguire prima di attivare le approvazioni, poi controlla l’elenco. Marca le assegnazioni esistenti in workflow, versioni e versioni pubblicate (la loro impronta cambia una volta) e viene eseguito una sola volta.",
     "stamped_one": "{{count}} assegnazione marcata come eccezione.",
     "stamped_other": "{{count}} assegnazioni marcate come eccezioni.",
     "stampedCount_one": "{{count}} assegnazione marcata",
@@ -132,6 +131,9 @@
       "pre_granted": "Approvata in anticipo",
       "pre_grant_revoked": "Approvazione anticipata revocata",
       "legacy_stamped": "Assegnazioni esistenti marcate"
-    }
+    },
+    "ranAt": "Marcato il {{time}} da {{name}}. Il passo viene eseguito una sola volta: le assegnazioni successive vengono chieste.",
+    "stampFinish": "Completa la marcatura delle API pubblicate",
+    "stampRepeated": "Ripetuto: nulla marcato"
   }
 }
