@@ -511,6 +511,8 @@
   max-width: 560px;
   color: var(--nd-text-muted);
   font-size: 13px;
+  /* Whole pixels: the hero's height stays an integer, so "#how" scrolled to the top leaves it fully off screen. */
+  line-height: 20px;
   animation: wl-rise 0.8s var(--wl-ease) 1.9s both;
 }
 

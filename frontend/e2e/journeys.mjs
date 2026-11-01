@@ -179,6 +179,12 @@ try {
 
   // ---- J2 "I want to take an example, understand it, change it and start it" -------------------
   await journey("J2", "Copy, understand, change and start an example", async ({ click, fill }) => {
+    // A returning person sees the last run (J1's) under "Continue" on the start page.
+    await page.getByTestId("continue-runs").waitFor();
+    check(true, "J2: the start page offers the latest run under Continue");
+    // With workflows of their own (J1), the gallery on the start page is a closed section; it opens with one click.
+    const folded = page.locator("details[data-section='example-gallery']");
+    if ((await folded.count()) && !(await folded.evaluate((element) => element.open))) await click(folded.locator("summary"));
     await click(page.getByTestId("example-gallery").locator(".card", { hasText: "Blogartikel" }).getByRole("button").first());
     await page.getByTestId("example-preview").locator(".react-flow__node").first().waitFor();
     await click(page.getByRole("button", { name: "Als Kopie übernehmen" }));
