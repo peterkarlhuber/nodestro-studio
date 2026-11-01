@@ -34,7 +34,7 @@ describe("texts left in English", () => {
     "google", "gemini", "iban", "ibans", "json", "markdown", "md", "mcp", "nodestro", "connecting",
     "intelligence", "oauth", "ollama", "orkexa", "pdf", "python", "sandbox", "sdk", "streaming", "token", "tokens", "uv",
     "version", "workflow", "workflows", "max", "ok", "orchestrator", "teams", "team", "tools", "tool", "tests", "sqlite",
-    "openai", "vllm", "https", "ctrl", "esc",
+    "openai", "vllm", "https", "ctrl", "esc", "amazon", "bedrock", "aws", "nova", "claude", "eu", "central",
   ];
   const ALLOWED: Record<string, string[]> = {
     de: [
@@ -184,6 +184,18 @@ describe("backend codes", () => {
     "run.already_queued", "run.not_executable", "tool.frozen", "tool.denied_by_policy", "lan.unavailable", "file.not_base64",
     "config.invalid", "access.network_needs_login", "identity.last_owner", "identity.role", "identity.subject_missing",
     "identity.tenant_exists", "identity.tenant_has_owner", "identity.tenant_id", "identity.tenant_unknown",
+    // Amazon Bedrock (settings, verification, runs, pre-checks and prices).
+    "provider.region_missing", "provider.region_invalid", "provider.region_not_allowed", "provider.auth_invalid",
+    "provider.auth_not_allowed", "provider.profile_name_invalid", "provider.data_residency_invalid",
+    "provider.data_residency_forced", "provider.data_residency_region", "provider.data_residency_violation",
+    "provider.field_not_supported", "provider.bedrock_not_available", "provider.bedrock_not_configured",
+    "provider.verify_not_supported", "provider.verify_rate_limited", "provider.aws_credentials_missing",
+    "provider.aws_credentials_invalid", "provider.aws_access_denied", "provider.aws_profile_not_found",
+    "provider.aws_region_invalid", "provider.aws_model_not_found", "provider.aws_rate_limited", "provider.aws_unreachable",
+    "provider.aws_verification_failed", "check.bedrock_not_configured", "check.bedrock_not_available",
+    "check.bedrock_settings_invalid", "check.model_unpriced", "pricing.region_required", "pricing.invalid_region",
+    "pricing.reconciliation_not_supported", "config.reserved_request_options", "run.provider_auth_aws",
+    "export.region_missing", "export.aws_profile_not_exported", "export.aws_role_not_exported", "provider.model_invalid",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

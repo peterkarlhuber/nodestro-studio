@@ -11,6 +11,7 @@ Unter *Einstellungen → KI-Anbieter* hat jeder Anbieter einen eigenen Abschnitt
 
 - **Anthropic, OpenAI, Google Gemini:** API-Schlüssel eintragen und **Speichern**. Der Schlüssel liegt in der lokalen Datenbank, wird nie wieder angezeigt und nur an diesen Anbieter gesendet. **Entfernen** löscht ihn.
 - **OpenAI-kompatibler Endpunkt, Ollama, vLLM:** die **Basis-URL** des Servers eintragen (z. B. `http://localhost:11434/v1` für Ollama) und **Endpunkt speichern**; ein API-Schlüssel ist optional. Der Anbieter gilt erst als eingerichtet, wenn eine Basis-URL gespeichert ist.
+- **Amazon Bedrock (AWS):** kein API-Schlüssel; du wählst eine AWS-Region und wie sich Nodestro bei AWS anmeldet, siehe [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
 - **Was die Modelle können:** Für eigene Server gibst du an, ob ihre Modelle Tools, strukturierte Ausgabe, Bilder, PDF-Dokumente, Denkaufwand und weitere Fähigkeiten beherrschen. Nodestro nimmt nichts an: Eine Option, die ein Modell nicht kann oder deren Unterstützung unbekannt ist, meldet die Prüfung als Fehler, statt sie wegzulassen.
 - **Verbindung testen** fragt beim Anbieter nur die Modellliste ab; das kostet nichts.
 - **Erster Anbieter:** Speicherst du einen Schlüssel, während der Anbieter des Standardmodells noch nicht eingerichtet ist, nutzen neue Agenten ab jetzt ein Modell dieses Anbieters; eine Meldung sagt, welches. Das ändert nur die Einstellungen: Bestehende Workflows behalten ihre Modelle.
@@ -25,6 +26,54 @@ Schlüssel kannst du auch als **Umgebungsvariable** setzen, vor dem Start oder i
 | OpenAI-kompatibel, Ollama, vLLM | `COMPATIBLE_API_KEY`, `OLLAMA_API_KEY`, `VLLM_API_KEY` (optional) |
 
 Ein Schlüssel aus früheren Versionen (damals nur für Anthropic) wird beim ersten Start automatisch zum Schlüssel von Anthropic in diesen Einstellungen.
+
+## Amazon Bedrock (AWS) {#bedrock}
+<!-- keywords: amazon bedrock, bedrock, aws, region, iam, rolle, profil, sso, inferenzprofil, arn, eu, datenresidenz, nur eu, converse, aws_region, sts -->
+
+**Amazon Bedrock** führt Claude, Amazon Nova und andere Modelle über dein eigenes **AWS-Konto** aus, in der **AWS-Region**, die du wählst; die Kosten erscheinen auf deiner AWS-Rechnung. Bedrock hat **kein Feld für einen API-Schlüssel**: Nodestro meldet sich mit AWS-Zugangsdaten an und speichert nie AWS-Zugriffsschlüssel. Eine IAM-Rolle oder ein AWS-Profil ist kein Schlüssel, sie sagt AWS nur, wer fragt.
+
+**Anmeldung auf dem Desktop.** Unter *Einstellungen → KI-Anbieter → Amazon Bedrock (AWS)* wählst du:
+
+- **AWS-Standard-Zugangsdaten (Umgebung, SSO, Instanzrolle):** was die AWS-Werkzeuge auf diesem Computer finden, etwa nach `aws sso login`, aus `AWS_*`-Umgebungsvariablen oder von einer Instanzrolle.
+- **AWS-Profil:** ein benanntes Profil aus `~/.aws/config`; du gibst nur seinen **Namen** ein, die Zugangsdaten bleiben in deiner AWS-Konfiguration.
+
+In Nodestro Local (einem Container) gibt es nur die Standard-Zugangsdaten.
+
+**Anmeldung auf einem Server.** Die eigenen AWS-Zugangsdaten des Servers werden nie für einen Arbeitsbereich verwendet. Bedrock bleibt aus, bis der Betreiber dem Arbeitsbereich eine eigene **AWS-Rolle** zuweist; die Karte zeigt dann *Vom Betreiber zugewiesene Rolle*, und du kannst die Rolle weder sehen noch ändern. Ohne Rolle steht dort *nicht verfügbar*: Frage deinen Betreiber. Er kann auch die Regionen begrenzen und für alle Arbeitsbereiche die EU-Datenresidenz vorschreiben (siehe [Nodestro auf einem Server](/docs/einstellungen#server)).
+
+**Region.** Gib die Region ein, an die Anfragen gehen und die AWS abrechnet, zum Beispiel `eu-central-1` (Frankfurt). Das Feld schlägt gängige Regionen vor und lehnt Namen ab, die keine AWS-Regionen sind. Das Modell muss für dein Konto in dieser Region aktiviert sein.
+
+**Modell.** Wähle im Agenten den Anbieter *Amazon Bedrock (AWS)*. Die Liste zeigt **vorgeschlagene** Modelle (EU-Inferenzprofile von Claude und Amazon Nova); ein Vorschlag heißt nicht, dass das Modell für dein Konto aktiviert ist. Du kannst jede **Modell-ID** (`anthropic.claude-sonnet-4-5-20250929-v1:0`), **Inferenzprofil-ID** (`eu.anthropic.claude-sonnet-5-5`) oder **ARN** (etwa eines Anwendungs-Inferenzprofils) eingeben; sie wird als `bedrock:<id>` gespeichert und genau so weitergegeben, wie du sie eingibst, mit allen Doppelpunkten (siehe [Modell](/docs/agenten#modell)).
+
+**EU-Datenresidenz („Nur EU“).** Ist der Schalter an, prüft Nodestro vor der ersten Anfrage, dass die Region und jede Region, an die das Modell oder Inferenzprofil weiterleiten kann, EU-Regionen sind (Frankfurt, Stockholm, Mailand, Spanien, Irland, Paris), und sendet sonst nichts. Globale Inferenzprofile (`global.…`) werden immer abgelehnt; London und Zürich liegen in Europa, aber nicht in der EU. Die Prüfung gilt der Konfiguration, mit der Nodestro Anfragen sendet. Sie **garantiert nicht**, dass AWS alles in der EU verarbeitet: Protokollierung der Modellaufrufe, Missbrauchserkennung mit ihrer Aufbewahrung und die übrigen Einstellungen deines AWS-Kontos liegen außerhalb von Nodestro. Kontoweit setzt du das mit IAM und Service Control Policies durch. Schreibt dein Betreiber „Nur EU“ vor, bleibt der Schalter an.
+
+**Verbindung prüfen.** Der Knopf meldet sich bei AWS an (`sts:GetCallerIdentity`) und macht einen kostenlosen Lesezugriff auf Bedrock (eine Modellliste). **Es wird kein Modell aufgerufen, es entstehen also keine Kosten.** Danach zeigt das Abzeichen *Verbindung geprüft* oder *Prüfung fehlgeschlagen* mit dem Grund; vorher *Nicht eingerichtet* oder *Eingerichtet*.
+
+**Minimale IAM-Berechtigungen** der Rolle oder des Benutzers:
+
+- `bedrock:InvokeModel` und `bedrock:InvokeModelWithResponseStream` auf dem Modell oder Inferenzprofil (die Converse-API nutzt diese); bei einem Inferenzprofil auch auf dem Basismodell in jeder Zielregion;
+- `bedrock:GetInferenceProfile` auf dem Profil (Prüfung „Nur EU“) und `bedrock:GetGuardrail`, wenn du einen Guardrail nutzt;
+- `sts:GetCallerIdentity` und `bedrock:ListFoundationModels` für *Verbindung prüfen*.
+
+**Preise.** Bedrock wird **je Region** abgerechnet, nie mit den Preisen von Anthropic, auch nicht für Claude. Ein Preis gilt nur für die Regionen, die er nennt; eine nicht genannte Region hat **unbekannte** Kosten, nie 0, und der strenge Preismodus lehnt die Anfrage dann ab. Eigene Preise mit ihren Regionen trägst du unter [Modellpreise](/docs/nutzung#preise) ein. Deine AWS-Rechnung kann mehr enthalten, als Nodestro zählt (etwa Aufruf-Protokollierung, Guardrails oder andere AWS-Dienste).
+
+**Was Bedrock bietet.** Tools, Streaming, Bilder und PDF-Dokumente, strukturierte Ausgabe und Denkaufwand hängen vom Modell ab; Optionen, die ein Modell nicht unterstützt oder deren Unterstützung unbekannt ist (ein eingegebener ARN, ein Anwendungs-Inferenzprofil), zeigt Nodestro abgeschaltet mit dem Grund. **Auf Bedrock nicht verfügbar**, auch nicht für Claude: Server-Tools wie die Websuche, Denkmodi, die Prompt-Caching-Einstellungen von Anthropic, Ersatzmodelle, Batches und Zitate.
+
+**Tools und AWS-Zugangsdaten.** Auf dem Desktop hält Nodestro AWS-Zugangsdaten von Tools fern (Umgebungsvariablen und Abfragen des AWS SDK). Tool-Code in der einfachen Subprozess-Sandbox läuft aber als dein Benutzer und könnte die Dateien in `~/.aws` direkt lesen. Liegen echte AWS-Zugangsdaten auf dem Rechner, führe eigene und KI-erzeugte Tools in der eingebauten Sandbox oder in Containern aus (siehe [Sandbox](/docs/einstellungen#sandbox)).
+
+**Fehlerbehebung nach Meldung:**
+
+| Meldung | Was tun |
+|---|---|
+| Es wurden keine AWS-Zugangsdaten gefunden | Anmelden (`aws sso login`), Profil oder Umgebung prüfen, dann *Verbindung prüfen*. |
+| AWS hat die Zugangsdaten nicht akzeptiert | Sie sind falsch oder abgelaufen: neu anmelden. |
+| AWS hat den Zugriff verweigert | Die Berechtigungen oben erteilen und das Modell in der AWS-Konsole aktivieren. |
+| Das AWS-Profil … gibt es nicht | Den Profilnamen mit `~/.aws/config` vergleichen. |
+| Kein AWS-Regionsname / ungültig | Einen Namen wie `eu-central-1` verwenden. |
+| In dieser Region nicht bekannt | Eine Modell-ID oder ein Inferenzprofil dieser Region verwenden. |
+| Nicht erreichbar | Netzwerk, Proxy und Region prüfen. |
+| Könnte die EU-Datenresidenz verletzen | Eine EU-Region und ein `eu.`-Profil oder ein Modell dieser Region verwenden. |
+| Auf diesem Server nicht verfügbar | Den Betreiber bitten, dem Arbeitsbereich eine AWS-Rolle zuzuweisen. |
 
 ## Modelle der Assistenten und Standardmodell {#modelle}
 <!-- keywords: standardmodell, assistenzmodell, assistant model, default model, neue agenten -->

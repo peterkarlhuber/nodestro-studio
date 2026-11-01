@@ -16,6 +16,8 @@ import {
   type PricingOverview,
   type ReconciliationReport,
   type ReconciliationRequest,
+  REGIONAL_PRICE_PROVIDERS,
+  parseRegions,
   pricingApi,
   pricingKeys,
   rateValue,
@@ -25,7 +27,7 @@ import {
   usePricingHistory,
   usePricingStatus,
 } from "../api/pricing";
-import type { Settings } from "../api/types";
+import { AWS_REGION_PATTERN, type Settings } from "../api/types";
 import { toast } from "../components/toast";
 import {
   Badge,
@@ -42,7 +44,7 @@ import {
   Spinner,
   TextInput,
 } from "../components/ui";
-import { ErrorText } from "../lib/errors";
+import { ErrorText, ProblemText } from "../lib/errors";
 import { formatCost, formatDate, formatNumber, formatPrice } from "../lib/format";
 import { PRICE_STATUS_TONE, STALENESS_TONE } from "../lib/pricing";
 
@@ -230,6 +232,11 @@ function OverrideDialog({ entry, onClose }: { entry: PriceEntry | "new"; onClose
   const [provider, setProvider] = useState(existing?.provider ?? "openai");
   const [model, setModel] = useState(existing?.model ?? "");
   const [form, setForm] = useState<RateForm>(() => initialForm(existing));
+  // Amazon Bedrock is priced per AWS region: an override names the regions its rates apply to.
+  const [regionsText, setRegionsText] = useState(() => (existing?.regions ?? []).join(", "));
+  const regional = REGIONAL_PRICE_PROVIDERS.has(provider);
+  const regions = parseRegions(regionsText);
+  const regionsValid = !regional || (regions.length > 0 && regions.every((item) => AWS_REGION_PATTERN.test(item)));
   const save = useMutation({
     mutationFn: () => {
       const body: OverrideIn = {
@@ -239,6 +246,7 @@ function OverrideDialog({ entry, onClose }: { entry: PriceEntry | "new"; onClose
         source: form.source.trim() || "custom",
         source_url: form.source_url.trim() || null,
         note: form.note.trim() || null,
+        ...(regional ? { aws_regions: regions } : {}),
       };
       for (const field of ["cache_read_usd_per_mtok", "cache_write_5m_usd_per_mtok", "cache_write_1h_usd_per_mtok"] as const)
         body[field] = form[field].trim() || null;
@@ -253,6 +261,7 @@ function OverrideDialog({ entry, onClose }: { entry: PriceEntry | "new"; onClose
   });
   const valid =
     model.trim() !== "" &&
+    regionsValid &&
     isRate(form.input_usd_per_mtok) &&
     isRate(form.output_usd_per_mtok) &&
     (["cache_read_usd_per_mtok", "cache_write_5m_usd_per_mtok", "cache_write_1h_usd_per_mtok"] as const).every(
@@ -285,6 +294,22 @@ function OverrideDialog({ entry, onClose }: { entry: PriceEntry | "new"; onClose
             </Field>
           </div>
         )}
+        {regional ? (
+          <Field
+            label={t("bedrock.pricing.regions")}
+            htmlFor="pricing-regions"
+            hint={regionsText.trim() && !regionsValid ? t("bedrock.pricing.regionsInvalid") : t("bedrock.pricing.regionsHint")}
+          >
+            <TextInput
+              id="pricing-regions"
+              value={regionsText}
+              spellCheck={false}
+              placeholder="eu-central-1, eu-west-1"
+              aria-invalid={regionsText.trim() !== "" && !regionsValid}
+              onChange={(event) => setRegionsText(event.target.value)}
+            />
+          </Field>
+        ) : null}
         <div className="pricing__rates">
           {RATE_FIELDS.map((field) => (
             <Field key={field} label={t(`pricing.fields.${field}`)} htmlFor={`pricing-${field}`}>
@@ -390,6 +415,15 @@ function PriceTable({ entries }: { entries: PriceEntry[] }) {
                   <code>
                     {entry.provider}:{entry.model}
                   </code>
+                  {REGIONAL_PRICE_PROVIDERS.has(entry.provider) ? (
+                    <div className="muted small" data-testid="price-regions">
+                      {entry.regions?.length
+                        ? t("bedrock.pricing.regionsList", { regions: entry.regions.join(", ") })
+                        : entry.tariffs.includes("aws_region")
+                          ? t("bedrock.pricing.regional")
+                          : t("bedrock.pricing.noRegions")}
+                    </div>
+                  ) : null}
                   {entry.overridden && entry.reference ? (
                     <div className="muted small">
                       {t("pricing.referencePrice", { input: rate(entry.reference.input_usd_per_mtok), output: rate(entry.reference.output_usd_per_mtok) })}
@@ -555,6 +589,17 @@ function ReconciliationResult({ report }: { report: ReconciliationReport }) {
           </Callout>
         ),
       )}
+      {(report.not_reconciled ?? []).map((item) => (
+        <Callout key={item.provider} tone="info">
+          <span data-testid="not-reconciled" data-provider={item.provider}>
+            {t("bedrock.pricing.notReconciled", {
+              provider: t(`providers.names.${item.provider}`, { defaultValue: item.provider }),
+              amount: amount(item.estimated_usd),
+            })}{" "}
+            <ProblemText item={{ code: item.code, params: { provider: item.provider }, message: item.note }} compact />
+          </span>
+        </Callout>
+      ))}
       <Callout tone={report.warnings ? "warning" : "info"}>
         {report.warnings ? t("pricing.reconciliation.warnings", { count: report.warnings }) : t("pricing.reconciliation.noWarnings")}{" "}
         {t("pricing.reconciliation.thresholds", {

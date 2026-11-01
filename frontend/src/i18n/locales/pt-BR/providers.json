@@ -5,7 +5,8 @@
     "gemini": "Google Gemini",
     "compatible": "Endpoint compatível com OpenAI",
     "ollama": "Ollama",
-    "vllm": "vLLM"
+    "vllm": "vLLM",
+    "bedrock": "Amazon Bedrock (AWS)"
   },
   "provider": "Provedor",
   "model": "Modelo",

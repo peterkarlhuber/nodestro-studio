@@ -1,5 +1,5 @@
 // The AI providers in the settings: keys, endpoints and the declared capabilities of
-// OpenAI-compatible servers. Keys are only ever sent, never shown: the backend reports where a
+// OpenAI-compatible servers (Amazon Bedrock has its own card: SettingsBedrock.tsx). Keys are only ever sent, never shown: the backend reports where a
 // key comes from, not the key.
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -17,6 +17,7 @@ import { PermissionNote } from "../components/Access";
 import { Badge, Button, Callout, Field, HelpTip, Section, Select, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { defaultModelSwitch, providerOf } from "../lib/providers";
+import { BedrockCard } from "./SettingsBedrock";
 import { CheckRow } from "./SettingsMaintenance";
 
 const STATES: CapabilityState[] = ["unknown", "supported", "unsupported"];
@@ -221,7 +222,11 @@ export function ProviderSettings({ settings }: { settings: Settings }) {
       <PermissionNote permission="admin" />
       {(meta.data?.providers ?? []).map((info) => {
         const status = settings.providers.find((item) => item.id === info.id);
-        return status ? <ProviderCard key={info.id} info={info} status={status} settings={settings} /> : null;
+        if (!status) return null;
+        // Amazon Bedrock signs in with AWS credentials: region and sign-in method, never an API key field.
+        if (info.auth === "aws" || info.id === "bedrock")
+          return <BedrockCard key={info.id} info={info} status={status} settings={settings} />;
+        return <ProviderCard key={info.id} info={info} status={status} settings={settings} />;
       })}
     </section>
   );
