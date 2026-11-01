@@ -8,6 +8,8 @@
     "automatic": "Automatique (langue du navigateur)",
     "automaticHint": "Suit la langue de votre navigateur, actuellement {{language}}. Les langues non prises en charge affichent l’anglais.",
     "hint": "S’applique immédiatement et reste mémorisé, même après un redémarrage.",
+    "loading": "Chargement de la langue …",
+    "loadFailed": "Impossible de charger la langue",
     "contentNote": "La langue ne change que l’interface. Vos agents, prompts, workflows et résultats restent dans leur langue d’origine. Les nouveaux brouillons des assistants IA sont rédigés dans cette langue, sauf si vous en demandez une autre."
   },
   "models": {

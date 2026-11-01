@@ -9,8 +9,7 @@ import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import type { WorkflowNode } from "../api/types";
-import { Badge, Callout, Spinner } from "../components/ui";
-import { HelpTip } from "../components/Tooltip";
+import { Badge, Callout, Section, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDate } from "../lib/format";
 import { ContextView } from "./ContextView";
@@ -41,16 +40,16 @@ export function InputPreview({ node }: { node: WorkflowNode }) {
   });
   const data = preview.data;
   return (
-    <details className="section" data-testid="input-preview" onToggle={(event) => setOpen(event.currentTarget.open)}>
-      <summary>
-        <Eye size={15} aria-hidden className="section__icon" />
-        <span className="section__title">{t("preview.title")}</span>
-        <HelpTip id="agent.preview" label={t("preview.title")} />
-        {data ? (
-          <span className="section__summary">{data.complete ? t("preview.complete") : t("preview.incomplete")}</span>
-        ) : null}
-      </summary>
-      <div className="section__body stack-sm">
+    // A Section, so the help button stands next to the summary and not inside it (AX-09).
+    <Section
+      title={t("preview.title")}
+      icon={Eye}
+      tip="agent.preview"
+      id="input-preview"
+      onToggle={setOpen}
+      summary={data ? (data.complete ? t("preview.complete") : t("preview.incomplete")) : undefined}
+    >
+      <div className="stack-sm" data-testid="input-preview">
         {preview.isLoading ? <Spinner /> : null}
         {preview.error ? (
           <Callout tone="danger">
@@ -95,6 +94,6 @@ export function InputPreview({ node }: { node: WorkflowNode }) {
           </>
         ) : null}
       </div>
-    </details>
+    </Section>
   );
 }

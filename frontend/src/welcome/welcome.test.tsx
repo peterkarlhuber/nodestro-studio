@@ -3,7 +3,7 @@ import { act, cleanup, render, screen } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { bundles } from "../i18n/resources";
+import { bundles } from "../test/locales";
 import { LANGUAGES, setLanguage } from "../i18n";
 import { WELCOME_STORAGE_KEY, markWelcomeSeen, shouldWelcome, studioLoader, welcomeSeen } from "./firstVisit";
 import { LAST_PHASE, stageOf } from "./RunIllustration";

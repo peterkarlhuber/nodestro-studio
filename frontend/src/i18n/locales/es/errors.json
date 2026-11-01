@@ -116,7 +116,10 @@
     "orchestrator_no_members": "{{node}} no tiene equipos entre los que elegir.",
     "orchestrator_member_duplicate": "{{node}} nombra un equipo dos veces.",
     "orchestrator_self": "{{node}} elegiría su propio flujo de trabajo como equipo.",
-    "orchestrator_limits": "{{node}} permite a un equipo más usos que decisiones en total."
+    "orchestrator_limits": "{{node}} permite a un equipo más usos que decisiones en total.",
+    "revision_invalid": "Al guardar se indicó una versión desconocida del flujo de trabajo. Recarga la página y vuelve a guardar.",
+    "conflict": "El flujo de trabajo «{{name}}» cambió desde que lo abriste. Recárgalo para ver la versión más reciente.",
+    "runs_active": "Todavía hay ejecuciones de este flujo de trabajo en curso. Elimínalo cuando hayan terminado o se hayan cancelado."
   },
   "run": {
     "failed": "El paso ha fallado.",
@@ -169,7 +172,11 @@
     "api_error_invalid": "{{provider}} rechazó la solicitud por no ser válida.",
     "api_error_status": "{{provider}} rechazó la solicitud (estado {{status}}).",
     "already_queued": "Esta ejecución ya está en espera o en curso, por eso no se inició una segunda vez. Espera a que termine o síguela en la página Ejecuciones.",
-    "not_executable": "Esta ejecución no se puede iniciar: solo puede ejecutarse una ejecución en espera o en pausa, y esta ya está en curso o ha terminado. Ábrela en la página Ejecuciones para ver su estado."
+    "not_executable": "Esta ejecución no se puede iniciar: solo puede ejecutarse una ejecución en espera o en pausa, y esta ya está en curso o ha terminado. Ábrela en la página Ejecuciones para ver su estado.",
+    "provider_auth": "{{provider}} no aceptó la clave de API: falta, es incorrecta, ha caducado o no tiene los permisos necesarios.",
+    "provider_unreachable": "No se pudo contactar con {{provider}}.",
+    "provider_rate_limited": "{{provider}} informó de demasiadas solicitudes o tokens en poco tiempo (límite de frecuencia).",
+    "provider_overloaded": "{{provider}} está sobrecargado en este momento."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -785,8 +792,18 @@
       "budget_exceeded": "Aumenta el presupuesto en los ajustes del flujo de trabajo o continúa la ejecución con un nuevo presupuesto.",
       "time_limit": "Aumenta el límite de tiempo en «Límites» de los ajustes del flujo de trabajo si la ejecución necesita más tiempo.",
       "step_limit": "Aumenta el límite de pasos en «Límites» de los ajustes del flujo de trabajo o revisa los bucles.",
-      "orchestration_limit": "Aumenta «Máximo de decisiones» en el orquestador o indica en sus instrucciones cuándo está terminada la tarea."
+      "orchestration_limit": "Aumenta «Máximo de decisiones» en el orquestador o indica en sus instrucciones cuándo está terminada la tarea.",
+      "provider_auth": "Revisa la clave en Ajustes → Proveedores de IA y prueba allí la conexión.",
+      "provider_unreachable": "Revisa la conexión a internet, el cortafuegos o el proxy y luego continúa la ejecución.",
+      "provider_rate_limited": "Espera un momento y continúa la ejecución. Menos ejecuciones simultáneas o un límite mayor con el proveedor lo solucionan a largo plazo.",
+      "provider_overloaded": "No se debe a tu flujo de trabajo. Espera unos minutos y luego continúa la ejecución."
     }
   },
-  "setupProvider": "Configurar proveedor de IA"
+  "setupProvider": "Configurar proveedor de IA",
+  "runs": {
+    "cursor_invalid": "No se encontró esta parte de la lista de ejecuciones. Vuelve al principio de la lista."
+  },
+  "model_choice": {
+    "node_unknown": "El flujo de trabajo ya no tiene ningún agente «{{node}}». Recarga la página."
+  }
 }

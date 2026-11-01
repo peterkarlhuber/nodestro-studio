@@ -8,6 +8,8 @@
     "automatic": "Automático (idioma del navegador)",
     "automaticHint": "Sigue el idioma de tu navegador, ahora {{language}}. Los idiomas no compatibles muestran inglés.",
     "hint": "Se aplica al instante y se recuerda, también tras reiniciar.",
+    "loading": "Cargando el idioma …",
+    "loadFailed": "No se pudo cargar el idioma",
     "contentNote": "El idioma solo cambia la interfaz. Tus agentes, prompts, flujos de trabajo y resultados se quedan en su idioma original. Los nuevos borradores de los asistentes de IA se crean en este idioma, salvo que pidas otro."
   },
   "models": {

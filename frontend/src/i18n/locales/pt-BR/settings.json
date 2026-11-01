@@ -8,6 +8,8 @@
     "automatic": "Automático (idioma do navegador)",
     "automaticHint": "Segue o idioma do seu navegador, no momento {{language}}. Idiomas não suportados mostram inglês.",
     "hint": "Vale na hora e fica salvo, mesmo depois de reiniciar.",
+    "loading": "Carregando o idioma …",
+    "loadFailed": "Não foi possível carregar o idioma",
     "contentNote": "O idioma muda apenas a interface. Seus agentes, prompts, fluxos de trabalho e resultados continuam no idioma original. Novos rascunhos dos assistentes de IA são criados neste idioma, a menos que você peça outro."
   },
   "models": {

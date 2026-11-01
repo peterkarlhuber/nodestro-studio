@@ -1,21 +1,15 @@
 // Collects src/i18n/locales/<language>/<area>.json into one i18next bundle per language.
 // Every area file becomes a top-level key: locales/de/agent.json → t("agent.…").
+//
+// Only English (the fallback) is part of the main chunk. Every other language is a chunk of its own
+// (src/i18n/bundles/<language>.ts) that loadLanguage() in ./index.ts fetches before it is shown.
 
 import type { Resource, ResourceLanguage } from "i18next";
 
-const files = import.meta.glob<Record<string, unknown>>("./locales/*/*.json", { eager: true, import: "default" });
-
 export type Messages = Record<string, unknown>;
 
-/** language → area → messages, e.g. bundles.de.common.save */
-export const bundles: Record<string, Record<string, Messages>> = {};
-
-for (const [path, messages] of Object.entries(files)) {
-  const match = /\.\/locales\/([^/]+)\/([^/]+)\.json$/.exec(path);
-  if (!match) continue;
-  const [, language, area] = match;
-  (bundles[language] ??= {})[area] = messages;
-}
+/** area → messages, e.g. areas.common.save */
+export type Areas = Record<string, Messages>;
 
 /**
  * French, Spanish, Italian and Portuguese have a plural category "many" (1,000,000, 2,000,000 …). i18next looks
@@ -33,11 +27,28 @@ export function addManyForms(messages: Messages): Messages {
   return messages;
 }
 
-for (const [language, areas] of Object.entries(bundles)) {
-  if (!new Intl.PluralRules(language).resolvedOptions().pluralCategories.includes("many")) continue;
-  for (const messages of Object.values(areas)) addManyForms(messages);
+/** language → area → messages from the result of an eager import.meta.glob of locales/<language>/<area>.json. */
+export function collectBundles(files: Record<string, Messages>): Record<string, Areas> {
+  const bundles: Record<string, Areas> = {};
+  for (const [path, messages] of Object.entries(files)) {
+    const match = /locales\/([^/]+)\/([^/]+)\.json$/.exec(path);
+    if (!match) continue;
+    const [, language, area] = match;
+    (bundles[language] ??= {})[area] = messages;
+  }
+  for (const [language, areas] of Object.entries(bundles)) {
+    if (!new Intl.PluralRules(language).resolvedOptions().pluralCategories.includes("many")) continue;
+    for (const messages of Object.values(areas)) addManyForms(messages);
+  }
+  return bundles;
 }
 
-export const resources: Resource = Object.fromEntries(
-  Object.entries(bundles).map(([language, areas]) => [language, { translation: areas as ResourceLanguage }]),
-);
+/** The areas of one language from such a glob result (an empty object when the glob found nothing). */
+export function collectLanguage(language: string, files: Record<string, Messages>): Areas {
+  return collectBundles(files)[language] ?? {};
+}
+
+const english = collectLanguage("en", import.meta.glob<Messages>("./locales/en/*.json", { eager: true, import: "default" }));
+
+/** The bundles in the main chunk: English only. */
+export const resources: Resource = { en: { translation: english as ResourceLanguage } };

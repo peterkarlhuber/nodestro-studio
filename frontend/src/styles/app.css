@@ -1251,6 +1251,29 @@ details[open] > summary > .section__chevron {
   gap: 6px;
 }
 
+/* A section with a help button: the button stands next to the summary at the end of its row, not inside it. */
+.section-frame {
+  position: relative;
+}
+
+.section--tip > summary {
+  margin-right: 26px;
+}
+
+.section__tip {
+  position: absolute;
+  top: 12px;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  height: 18px;
+}
+
+.section__tip .help-tip {
+  margin: 0;
+}
+
 .section__body {
   display: flex;
   flex-direction: column;
@@ -3084,6 +3107,12 @@ body.is-resizing--y * {
     width: 28px;
     height: 28px;
     margin: -7px -3px -7px 0;
+  }
+
+  /* Next to a summary the larger target keeps its own room. */
+  .section--tip > summary,
+  .palette__group-frame > .palette__group > summary {
+    margin-right: 32px;
   }
 }
 
@@ -6858,6 +6887,27 @@ ul.gate-report__list > li.gate-report__item {
 .palette__group > summary {
   list-style: none;
   cursor: pointer;
+}
+
+/* The help of the teams group stands next to its summary, at the end of the row. */
+.palette__group-frame {
+  position: relative;
+}
+
+.palette__group-frame > .palette__group > summary {
+  margin-right: 26px;
+}
+
+.palette__group-tip {
+  position: absolute;
+  top: 8px;
+  right: 4px;
+  z-index: 1;
+  display: flex;
+}
+
+.palette__group-tip .help-tip {
+  margin: 0;
 }
 
 .palette__group > summary::-webkit-details-marker {

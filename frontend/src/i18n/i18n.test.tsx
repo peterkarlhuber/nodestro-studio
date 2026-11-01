@@ -13,11 +13,14 @@ import i18n, {
   detectLanguage,
   formatLocale,
   initialLanguage,
+  isLanguageLoaded,
+  loadLanguage,
   matchLanguage,
   setLanguage,
   storedLanguage,
 } from "./index";
-import { type Messages, bundles } from "./resources";
+import { bundles } from "../test/locales";
+import { type Messages, resources } from "./resources";
 
 /** Every key of a bundle as "area.path.to.key", with plural suffixes folded ("count_one" → "count"). */
 function flatten(messages: Messages, prefix = ""): Map<string, string> {
@@ -200,6 +203,37 @@ describe("switching languages", () => {
   });
 });
 
+describe("loading languages", () => {
+  it("keeps only English in the main bundle", () => {
+    expect(Object.keys(resources)).toEqual(["en"]);
+    expect(isLanguageLoaded("en")).toBe(true);
+  });
+
+  it("fetches a language once and adds all of its texts", async () => {
+    i18n.removeResourceBundle("it", "translation");
+    expect(isLanguageLoaded("it")).toBe(false);
+    const first = loadLanguage("it");
+    expect(loadLanguage("it")).toBe(first); // one fetch for two callers
+    await first;
+    expect(isLanguageLoaded("it")).toBe(true);
+    expect(i18n.t("common.save", { lng: "it" })).toBe((bundles.it.common as Messages).save);
+    // the derived plural form "many" is part of the loaded texts
+    expect(i18n.t("python.install.done", { lng: "it", count: 1_000_000 })).not.toBe(
+      i18n.t("python.install.done", { lng: "en", count: 1_000_000 }),
+    );
+  });
+
+  it("switches only once the texts are there", async () => {
+    i18n.removeResourceBundle("fr", "translation");
+    const seen: string[] = [];
+    const onChange = () => seen.push(i18n.t("nav.settings"));
+    i18n.on("languageChanged", onChange);
+    await setLanguage("fr", false);
+    i18n.off("languageChanged", onChange);
+    expect(seen).toEqual([(bundles.fr.nav as Messages).settings]);
+  });
+});
+
 describe("backend messages", () => {
   const t = i18n.t.bind(i18n);
 
@@ -235,6 +269,34 @@ describe("backend messages", () => {
       expect(text).toBe(i18n.t("errors.draft.judge_unsupported", { model: "compatible:local-llm" }));
       expect(text).toContain("compatible:local-llm");
       if (language !== "en") expect(text).not.toBe(note.message);
+    }
+  });
+
+  it("have their own sentence for the newer API refusals, in every language", async () => {
+    const refusals = [
+      { code: "runs.cursor_invalid", params: { before: "yesterday" } },
+      { code: "workflow.revision_invalid", params: { revision: "x" } },
+      { code: "workflow.conflict", params: { name: "Rechnungen", updated_at: "2026-11-01T10:00:00Z" } },
+      { code: "workflow.runs_active", params: { runs: 2 } },
+      { code: "workflow.edge_dangling", params: {} },
+      { code: "workflow.node_duplicate", params: { id: "a" } },
+      { code: "identity.login_expired", params: {} },
+      { code: "model_choice.node_unknown", params: { node: "writer" } },
+      { code: "run.provider_auth", params: { provider: "anthropic", status: 401 } },
+      { code: "run.provider_unreachable", params: { provider: "anthropic" } },
+      { code: "run.provider_rate_limited", params: { provider: "anthropic", status: 429 } },
+      { code: "run.provider_overloaded", params: { provider: "anthropic", status: 529 } },
+    ];
+    await setLanguage("en", false);
+    const english = refusals.map((item) => problemText(t, item));
+    for (const language of LANGUAGES) {
+      await setLanguage(language, false);
+      refusals.forEach((item, index) => {
+        const text = problemText(t, item);
+        expect(text, `${language} ${item.code}`).not.toBe(i18n.t("errors.unknown"));
+        expect(text, `${language} ${item.code}`).not.toMatch(/\{\{/);
+        if (language !== "en") expect(text, `${language} ${item.code}`).not.toBe(english[index]);
+      });
     }
   });
 

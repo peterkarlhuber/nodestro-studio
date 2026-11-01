@@ -8,6 +8,8 @@
     "automatic": "Automatisch (Browsersprache)",
     "automaticHint": "Folgt der Sprache deines Browsers, gerade {{language}}. Nicht unterstützte Sprachen zeigen Englisch.",
     "hint": "Gilt sofort und bleibt gespeichert, auch nach einem Neustart.",
+    "loading": "Die Sprache wird geladen …",
+    "loadFailed": "Die Sprache konnte nicht geladen werden",
     "contentNote": "Die Sprache ändert nur die Oberfläche. Deine Agenten, Prompts, Workflows und Ergebnisse bleiben in ihrer Originalsprache. Neue Entwürfe der KI-Assistenten entstehen in dieser Sprache, solange du keine andere verlangst."
   },
   "models": {

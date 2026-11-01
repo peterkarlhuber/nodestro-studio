@@ -8,6 +8,8 @@
     "automatic": "Automatic (browser language)",
     "automaticHint": "Follows your browser's language, currently {{language}}. Unsupported languages show English.",
     "hint": "Takes effect at once and is remembered, even after a restart.",
+    "loading": "Loading the language …",
+    "loadFailed": "Could not load the language",
     "contentNote": "The language only changes the interface. Your agents, prompts, workflows and results stay in their original language. New drafts by the AI assistants are written in this language unless you ask for another one."
   },
   "models": {

@@ -6,11 +6,14 @@
 // - Switching only re-renders the interface: no workflow runs, no AI request, stored content
 //   (agents, prompts, results) is never touched.
 // - English is the technical fallback for any missing key.
+// - Only English is part of the main chunk. Every other language is a chunk of its own that
+//   loadLanguage() fetches; main.tsx renders only once the first language is there, so nobody
+//   sees English texts before their own.
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import { resources } from "./resources";
+import { type Areas, resources } from "./resources";
 
 export const LANGUAGES = ["de", "en", "es", "fr", "pt-BR", "it"] as const;
 export type Language = (typeof LANGUAGES)[number];
@@ -106,12 +109,51 @@ export function formatLocale(language: Language = currentLanguage()): string {
   return DEFAULT_REGION[language];
 }
 
+/** The chunks of the languages besides English (see ./bundles). */
+const BUNDLES: Record<Exclude<Language, "en">, () => Promise<{ default: Areas }>> = {
+  de: () => import("./bundles/de"),
+  es: () => import("./bundles/es"),
+  fr: () => import("./bundles/fr"),
+  it: () => import("./bundles/it"),
+  "pt-BR": () => import("./bundles/pt-BR"),
+};
+const loading = new Map<Language, Promise<void>>();
+
+/** Whether the texts of a language are there (English always is). */
+export function isLanguageLoaded(language: Language): boolean {
+  return language === FALLBACK_LANGUAGE || i18n.hasResourceBundle(language, "translation");
+}
+
+/**
+ * Fetch the texts of a language once and add them to i18next. A failed fetch (offline, new
+ * version deployed) rejects and may be tried again; English stays the fallback meanwhile.
+ */
+export function loadLanguage(language: Language): Promise<void> {
+  if (language === "en" || isLanguageLoaded(language)) return Promise.resolve();
+  const pending =
+    loading.get(language) ??
+    BUNDLES[language]().then(
+      (module) => {
+        i18n.addResourceBundle(language, "translation", module.default, true, true);
+        loading.delete(language); // from now on hasResourceBundle answers
+      },
+      (error: unknown) => {
+        loading.delete(language);
+        throw error;
+      },
+    );
+  loading.set(language, pending);
+  return pending;
+}
+
 /**
  * Switch the interface language right away. ``remember`` stores a manual choice;
  * ``null`` forgets it and follows the browser again.
  */
 export async function setLanguage(language: Language | null, remember = true): Promise<Language> {
   const next = language ?? detectLanguage(browserLanguages());
+  // The texts first, then the switch: the interface never shows a half-loaded language.
+  await loadLanguage(next);
   if (remember) store(language);
   await i18n.changeLanguage(next);
   return next;
@@ -122,7 +164,10 @@ function applyDocumentLanguage(language: string): void {
 }
 
 void i18n.use(initReactI18next).init({
-  resources,
+  // A copy: i18next adds the loaded languages to the object it is given.
+  resources: { ...resources },
+  // The other languages are added by loadLanguage(); i18next must not treat English as all there is.
+  partialBundledLanguages: true,
   lng: initialLanguage(),
   fallbackLng: FALLBACK_LANGUAGE,
   supportedLngs: [...LANGUAGES],
