@@ -52,7 +52,7 @@ Así creas tu primer flujo de trabajo en pocos minutos:
 
 La **barra lateral** de la izquierda sigue tu forma de trabajar: crear, ejecutar y revisar, y después automatizar.
 
-- **Crear:** *Flujos de trabajo* (tus procesos), *Agentes* (plantillas reutilizables), *Herramientas*, *Conocimiento* y *Memoria*.
+- **Crear:** *Flujos de trabajo* (tus procesos), *Biblioteca de agentes* (plantillas reutilizables), *Herramientas*, *Conocimiento* y *Memoria*.
 - **Ejecutar y revisar:** *Ejecuciones* (todas las ejecuciones en detalle), *Aprobaciones* (decisiones que esperan las ejecuciones) y *Uso* (tokens y costes a lo largo del tiempo).
 - **Automatizar y probar:** *Series de pruebas*, *Ejecuciones por lotes* y *Programaciones*.
 - **Ayuda:** esta *Documentación* y la página de *Bienvenida*.

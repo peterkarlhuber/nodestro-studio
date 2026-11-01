@@ -52,7 +52,7 @@ Crie seu primeiro fluxo de trabalho em poucos minutos:
 
 A **barra lateral** à esquerda segue o seu jeito de trabalhar: criar, executar e revisar, e depois automatizar.
 
-- **Criar:** *Fluxos de trabalho* (seus processos), *Agentes* (modelos reutilizáveis), *Ferramentas*, *Conhecimento* e *Memória*.
+- **Criar:** *Fluxos de trabalho* (seus processos), *Biblioteca de agentes* (modelos reutilizáveis), *Ferramentas*, *Conhecimento* e *Memória*.
 - **Executar e revisar:** *Execuções* (todas as execuções em detalhe), *Aprovações* (decisões que as execuções aguardam) e *Uso* (tokens e custos ao longo do tempo).
 - **Automatizar e testar:** *Séries de testes*, *Execuções em lote* e *Agendamentos*.
 - **Ajuda:** esta *Documentação* e a página de *Boas-vindas*.

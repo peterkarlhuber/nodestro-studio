@@ -1,6 +1,6 @@
 {
-  "savedAsTemplate": "«{{name}}» è ora nella libreria degli agenti",
-  "saveAsTemplate": "Salva come modello nella libreria degli agenti",
+  "savedAsTemplate": "«{{name}}» è ora nella libreria di agenti",
+  "saveAsTemplate": "Salva come modello nella libreria di agenti",
   "duplicate": "Duplica (Ctrl+D)",
   "delete": "Elimina agente",
   "nameLabel": "Nome dell’agente",

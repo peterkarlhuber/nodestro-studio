@@ -236,12 +236,12 @@ Se all'architetto mancano capacità, indica gli **strumenti mancanti** con una d
 
 La proposta viene scritta nella lingua dell'interfaccia, a meno che la tua descrizione non chieda un'altra lingua. I nomi dei campi e gli altri identificatori tecnici restano in inglese.
 
-Disponibile con **Progetta con l'IA** nell'ispettore, **Descrivi un agente** nella palette o nella pagina *Agenti*.
+Disponibile con **Progetta con l'IA** nell'ispettore, **Descrivi un agente** nella palette o nella pagina *Libreria di agenti*.
 
-## Libreria degli agenti {#bibliothek}
+## Libreria di agenti {#bibliothek}
 <!-- keywords: libreria, modello, template, riutilizzare, pagina agenti -->
 
-Nella pagina **Agenti** gestisci modelli di agenti riutilizzabili:
+Nella pagina **Libreria di agenti** gestisci modelli di agenti riutilizzabili:
 
 - **Modello vuoto** o **Descrivi un agente** crea un nuovo modello.
 - Nell'editor, il simbolo di salvataggio nell'ispettore salva un agente come modello.
@@ -253,7 +253,7 @@ Un agente creato da un modello è una **copia**: le modifiche successive al mode
 ## Testare un agente {#agent-testen}
 <!-- keywords: testare, test, provare, testa agente, prova, eseguire da solo -->
 
-**Testa agente** nell’ispettore (nell’editor e nella libreria degli agenti) esegue solo questo agente con la sua **configurazione attuale, comprese le modifiche non salvate**:
+**Testa agente** nell’ispettore (nell’editor e nella libreria di agenti) esegue solo questo agente con la sua **configurazione attuale, comprese le modifiche non salvate**:
 
 1. Inserisci un **input di test**. Viene inserito nel compito come l’input di un’esecuzione; i segnaposto dei predecessori restano vuoti. Con *Invia l’input direttamente come compito* all’agente arriva solo il tuo testo.
 2. **Avvia test** mostra la risposta, tutte le chiamate agli strumenti, errori, token, costo, durata e, se attivo, il controllo qualità.

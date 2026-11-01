@@ -88,7 +88,7 @@
       "text": "Les agents comme nœuds, les connexions comme flux de données – avec branchements et sous-workflows."
     },
     "agents": {
-      "title": "Agents",
+      "title": "Bibliothèque d’agents",
       "text": "Modèle, instructions, outils, mémoire et format de sortie : configurés une fois, réutilisables partout."
     },
     "tools": {

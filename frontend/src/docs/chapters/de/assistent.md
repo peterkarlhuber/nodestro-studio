@@ -23,7 +23,7 @@ Die Dokumentation ist seine einzige Wissensquelle über Nodestro. Findet er etwa
 
 Damit der Assistant ein konkretes Objekt besprechen kann, hängst du es an. Dafür gibt es zwei Wege:
 
-- **Mit Assistant besprechen** in der jeweiligen Ansicht: im Workflow-Editor, im Agenten-Inspektor, in der Agenten-Bibliothek, bei einem Tool, bei einer Ausführung, in einem Memory-Raum und bei einer Wissensdatei.
+- **Mit Assistant besprechen** in der jeweiligen Ansicht: im Workflow-Editor, im Agenten-Inspektor, in der Agentenbibliothek, bei einem Tool, bei einer Ausführung, in einem Memory-Raum und bei einer Wissensdatei.
 - Die **Büroklammer** im Eingabefeld öffnet eine Auswahl aller Workflows, Agenten-Vorlagen, Tools, Memory-Räume, Wissensdateien und Ausführungen.
 
 Was der Assistant bekommt, hängt von der Art ab:

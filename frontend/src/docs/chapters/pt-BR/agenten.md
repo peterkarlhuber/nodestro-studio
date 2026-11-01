@@ -236,12 +236,12 @@ Se faltarem capacidades ao arquiteto, ele indica as **ferramentas que faltam** c
 
 A sugestão é escrita no idioma da interface, a menos que sua descrição peça outro idioma. Nomes de campos e outros identificadores técnicos continuam em inglês.
 
-Disponível em **Criar com IA** no inspetor, **Descrever um agente** na paleta ou na página *Agentes*.
+Disponível em **Criar com IA** no inspetor, **Descrever um agente** na paleta ou na página *Biblioteca de agentes*.
 
 ## Biblioteca de agentes {#bibliothek}
 <!-- keywords: biblioteca, modelo, template, reutilizar, página de agentes -->
 
-Na página **Agentes** você gerencia modelos de agentes reutilizáveis:
+Na página **Biblioteca de agentes** você gerencia modelos de agentes reutilizáveis:
 
 - **Modelo vazio** ou **Descrever um agente** cria um novo modelo.
 - No editor, o símbolo de salvar no inspetor salva um agente como modelo.

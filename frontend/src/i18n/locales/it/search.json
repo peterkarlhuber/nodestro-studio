@@ -9,7 +9,7 @@
   "kind": {
     "workflow": "Workflow",
     "agent": "Agenti nei workflow",
-    "template": "Libreria degli agenti",
+    "template": "Libreria di agenti",
     "example": "Workflow di esempio",
     "tool": "Strumenti",
     "knowledge": "Conoscenza",
