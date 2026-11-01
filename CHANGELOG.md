@@ -30,6 +30,32 @@ read-only pilot).
   `docs/i18n/terminology.md`); clearer error sentences; in-app docs updated in all six languages, including server
   sign-in, roles and the members commands.
 
+### Amazon Bedrock (AWS) in the studio (2026-11-01)
+
+Frontend and in-app docs only; it needs the runtime/API with the `bedrock` provider (pins follow in a coordinated
+step). No API key field for Bedrock, no AWS secret is ever entered or shown.
+
+- Settings → AI providers: an "Amazon Bedrock (AWS)" card with the AWS region (suggestions, validated, operator
+  allowlist), the sign-in method (desktop: AWS default credentials or a named profile; server: the operator's role,
+  read-only, or "not available, ask your operator"), EU-only data residency (locked when the operator enforces it,
+  with its limits), a status badge (not set up / set up / connection checked / check failed, with the reason) and
+  "Check connection" (`POST /api/settings/providers/bedrock/verify`; no model is invoked, no costs). Saving stays
+  admin-only on a server.
+- Agents: Bedrock in the model picker with suggested models (labelled as suggestions) and free entry of model ids,
+  inference profile ids and ARNs, stored as `bedrock:<id>` with every colon kept. Anthropic-only options stay off
+  for Claude on Bedrock with the reason; reasoning effort, structured output and forced tool choice follow the
+  model's capabilities (unknown: off, with the reason).
+- Errors: sentences in six languages for the new `provider.*` (region, sign-in, profile, residency, AWS
+  credentials/permissions/reachability, verification), `check.bedrock_*`, `pricing.region_required`,
+  `pricing.invalid_region` and `pricing.reconciliation_not_supported` codes; a refused AWS sign-in is not called an
+  API key problem; run failures show the full model id.
+- Model prices: Bedrock prices list the AWS regions they apply to (shown in the table, required in the override
+  dialog); the model hint names the priced regions.
+- Docs (six languages): a Bedrock section in the settings chapter (sign-in on desktop and server, region, models and
+  inference profiles, EU residency and its limits, minimal IAM permissions, regional prices, supported features,
+  AWS credentials and tool sandboxes, troubleshooting by message), model ids in the agents chapter, the export
+  (AWS default chain and `AWS_REGION` on the target machine, no credentials in the ZIP) and an FAQ entry.
+
 ### Pins: PostgreSQL read performance (2026-11-01)
 
 - Pins `nodestro-runtime` `d141b8f` (before: `6eacec1`), `nodestro-api` `db6a696` (before: `7997bb4`),

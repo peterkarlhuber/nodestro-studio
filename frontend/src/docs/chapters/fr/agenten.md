@@ -29,6 +29,8 @@ Le modèle détermine les capacités, la vitesse et le prix. Choisissez d’abor
 
 Le modèle par défaut des nouveaux agents se définit dans les [réglages](/docs/einstellungen#modelle), l’accès aux fournisseurs sous [Fournisseurs d’IA](/docs/einstellungen#anbieter). Certaines options n’existent que pour les modèles d’Anthropic : la réflexion et son affichage, le cache des prompts, les modèles de repli et les outils serveur. Pour les autres fournisseurs, l’inspecteur les masque ; si l’une d’elles est encore définie, la vérification signale une erreur au lieu de l’omettre en silence.
 
+**Amazon Bedrock :** les identifiants de modèle sont transmis tels que vous les saisissez, deux-points et barres obliques compris : `bedrock:anthropic.claude-sonnet-4-5-20250929-v1:0`, `bedrock:eu.anthropic.claude-sonnet-5-5` ou un ARN comme `bedrock:arn:aws:bedrock:eu-central-1:111122223333:application-inference-profile/abc`. Seul le premier deux-points sépare le fournisseur. Les modèles de la liste sont des suggestions, pas des modèles activés pour votre compte. Claude sur Bedrock est un fournisseur à part : les options réservées à Anthropic ci-dessus restent désactivées pour lui aussi, et des options comme la sortie structurée ou l’effort de raisonnement suivent ce que le modèle prend en charge sur Bedrock (inconnu pour un ARN saisi). Voir [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
+
 ## Prompt système {#system-prompt}
 <!-- keywords: prompt système, system prompt, rôle, instruction, persona, ingénierie de prompt -->
 

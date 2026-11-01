@@ -471,7 +471,7 @@ function AnthropicOnly({ agent, set, children }: { agent: AgentConfig; set: bool
 
 /**
  * Options a Bedrock model may or may not offer (Orkexa's documented capabilities of the model behind the id): shown
- * only when the capability is supported, or when a value is set (to reset it). Unknown (a typed id, an application
+ * only when the capability is supported; a value that is set stays visible next to the reason (to reset it). Unknown (a typed id, an application
  * inference profile, an ARN) counts as not available, with the reason. Other providers are not affected.
  */
 function BedrockCapability({
@@ -487,11 +487,20 @@ function BedrockCapability({
 }) {
   const { t } = useTranslation();
   const state = useBedrockCapability(agent.model, capability);
-  if (state === null || state === "supported" || set) return <>{children}</>;
-  return (
+  if (state === null || state === "supported") return <>{children}</>;
+  const reason = (
     <p className="field__hint" data-testid={`capability-${capability}`} data-state={state}>
       {t(`bedrock.agent.capability.${state}`, { capability: t(`settings.providers.capability.${capability}`, { defaultValue: capability }) })}
     </p>
+  );
+  // A value that is set stays visible with the reason, so it can be reset.
+  return set ? (
+    <>
+      {children}
+      {reason}
+    </>
+  ) : (
+    reason
   );
 }
 
@@ -1057,7 +1066,7 @@ function AdvancedSection({
             onChange={(type) => update({ tool_choice: { type: type as AgentConfig["tool_choice"]["type"], name: agent.tool_choice.name } })}
           />
           {forcing ? null : (
-            <p className="field__hint" data-testid="capability-forced_tool_choice">
+            <p className="field__hint" data-testid="capability-forced_tool_choice" data-state={forcingState ?? undefined}>
               {t(`bedrock.agent.capability.${forcingState}`, { capability: t("settings.providers.capability.forced_tool_choice") })}
             </p>
           )}

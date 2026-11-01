@@ -205,3 +205,71 @@ describe("AgentForm sections", () => {
     });
   });
 });
+
+describe("AgentForm with Amazon Bedrock", () => {
+  const SUGGESTED = "bedrock:eu.anthropic.claude-sonnet-5-5";
+  function stubBedrock() {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        const path = url.replace(/\?.*$/, "");
+        const body = path.endsWith("/meta")
+          ? {
+              providers: [{ id: "bedrock", label: "Amazon Bedrock (AWS)", auth: "aws", example_model: "" }],
+              capabilities: [],
+              server_tools: [{ key: "web_search", label: "Web search", description: "" }],
+              models: [
+                {
+                  id: SUGGESTED,
+                  provider: "bedrock",
+                  model: "eu.anthropic.claude-sonnet-5-5",
+                  label: "Claude Sonnet 5.5 (Bedrock EU)",
+                  recommended: true,
+                  capabilities: { reasoning: "supported", structured_output: "supported", forced_tool_choice: "unsupported" },
+                },
+              ],
+            }
+          : path.endsWith("/settings")
+            ? { providers: [], default_model: "claude-sonnet-5-5", assistant_model: "claude-opus-5-5" }
+            : [];
+        return new Response(JSON.stringify(body), { status: 200, headers: { "Content-Type": "application/json" } });
+      }),
+    );
+  }
+  const open = (container: HTMLElement, id: string) => {
+    section(container, id).open = true;
+  };
+  beforeEach(() => {
+    localStorage.clear();
+    useAgentSections.setState({ open: { thinking: true, advanced: true, output: true } });
+  });
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
+
+  it("keeps Anthropic-only options off for Claude on Bedrock, with the reason", async () => {
+    stubBedrock();
+    const { container } = show({ ...defaultAgent(), model: SUGGESTED });
+    open(container, "thinking");
+    await waitFor(() => expect(screen.getAllByTestId("anthropic-only").length).toBeGreaterThan(0));
+    for (const hint of screen.getAllByTestId("anthropic-only"))
+      expect(hint).toHaveTextContent("Claude-Modelle auf Amazon Bedrock bieten es ebenfalls nicht");
+  });
+
+  it("follows the model's capabilities and turns unknown ones off", async () => {
+    stubBedrock();
+    const first = show({ ...defaultAgent(), model: SUGGESTED });
+    open(first.container, "advanced");
+    // Claude Sonnet 5.5 on Bedrock cannot be forced to call a tool.
+    await waitFor(() => expect(screen.getByTestId("capability-forced_tool_choice")).toHaveAttribute("data-state", "unsupported"));
+    expect(screen.queryByTestId("capability-reasoning")).toBeNull();
+    cleanup();
+    // A typed ARN: nothing is known about the model behind it.
+    const second = show({ ...defaultAgent(), model: "bedrock:arn:aws:bedrock:eu-central-1:123456789012:application-inference-profile/abc" });
+    open(second.container, "thinking");
+    open(second.container, "output");
+    await waitFor(() => expect(screen.getByTestId("capability-reasoning")).toHaveAttribute("data-state", "unknown"));
+    expect(screen.getByTestId("capability-structured_output")).toHaveAttribute("data-state", "unknown");
+  });
+});

@@ -11,6 +11,7 @@ Under *Settings → AI providers* every provider has its own section:
 
 - **Anthropic, OpenAI, Google Gemini:** enter the API key and **Save**. The key is stored in the local database, never shown again and sent only to this provider. **Remove** deletes it.
 - **OpenAI-compatible endpoint, Ollama, vLLM:** enter the server's **base URL** (for example `http://localhost:11434/v1` for Ollama) and **Save endpoint**; an API key is optional. The provider only counts as set up once a base URL is saved.
+- **Amazon Bedrock (AWS):** no API key; choose an AWS region and how Nodestro signs in to AWS, see [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
 - **What the models can do:** for your own servers you state whether their models handle tools, structured output, images, PDF documents, reasoning effort and further capabilities. Nodestro assumes nothing: an option a model cannot do, or whose support is unknown, is reported as an error by the check instead of being left out.
 - **Test connection** only asks the provider for its list of models; this costs nothing.
 - **First provider:** if you save a key while the default model's provider is not set up yet, new agents use a model of this provider from now on; a message says which one. This only changes the settings: existing workflows keep their models.
@@ -25,6 +26,54 @@ You can also set keys as **environment variables**, before starting or in a **`.
 | OpenAI-compatible, Ollama, vLLM | `COMPATIBLE_API_KEY`, `OLLAMA_API_KEY`, `VLLM_API_KEY` (optional) |
 
 A key from earlier versions (back then for Anthropic only) automatically becomes Anthropic's key in these settings on the first start.
+
+## Amazon Bedrock (AWS) {#bedrock}
+<!-- keywords: amazon bedrock, bedrock, aws, region, iam, role, profile, sso, inference profile, arn, eu, data residency, eu only, converse, aws_region, sts -->
+
+**Amazon Bedrock** runs Claude, Amazon Nova and other models through your own **AWS account**, in the **AWS region** you choose; the costs appear on your AWS bill. Bedrock has **no API key field**: Nodestro signs in with AWS credentials and never stores AWS access keys. An IAM role or an AWS profile is not a key, it only tells AWS who is asking.
+
+**Sign-in on the desktop.** Under *Settings → AI providers → Amazon Bedrock (AWS)* choose:
+
+- **AWS default credentials (environment, SSO, instance role):** whatever the AWS tools find on this computer, for example after `aws sso login`, from `AWS_*` environment variables or an instance role.
+- **AWS profile:** a named profile from `~/.aws/config`; enter its **name** only, the credentials stay in your AWS configuration.
+
+In Nodestro Local (a container) only the default credentials are offered.
+
+**Sign-in on a server.** The server's own AWS credentials are never used for a workspace. Bedrock is off until the operator assigns the workspace its own **AWS role**; the card then says *Role assigned by the operator*, and you can neither see nor change the role. Without one it says *not available on this server*: ask your operator. The operator can also limit the regions and require EU-only data residency for every workspace (see [Nodestro on a server](/docs/einstellungen#server)).
+
+**Region.** Enter the region requests go to and AWS bills, for example `eu-central-1` (Frankfurt). The field suggests common regions and refuses names that are not AWS regions. The model must be enabled for your account in that region.
+
+**Model.** In the agent choose the provider *Amazon Bedrock (AWS)*. The list shows **suggested** models (EU inference profiles of Claude and Amazon Nova); a suggestion does not mean the model is enabled for your account. You can type any **model id** (`anthropic.claude-sonnet-4-5-20250929-v1:0`), **inference profile id** (`eu.anthropic.claude-sonnet-5-5`) or **ARN** (for example an application inference profile); it is stored as `bedrock:<id>` and passed on exactly as typed, colons included (see [Model](/docs/agenten#modell)).
+
+**EU-only data residency.** With the toggle on, Nodestro checks before the first request that the region and every region the model or inference profile can route to are EU regions (Frankfurt, Stockholm, Milan, Spain, Ireland, Paris), and sends nothing otherwise. Global inference profiles (`global.…`) are always refused; London and Zurich are in Europe but not in the EU. The check covers the configuration Nodestro sends requests with. It **does not guarantee** that AWS processes everything in the EU: model invocation logging, abuse detection with its retention and the other settings of your AWS account are outside Nodestro. Enforce it account-wide with IAM and service control policies. If your operator requires EU-only, the toggle stays on.
+
+**Check connection.** The button signs in to AWS (`sts:GetCallerIdentity`) and makes one free read call to Bedrock (a list of models). **No model is invoked, so it costs nothing.** The badge then reads *Connection checked* or *Check failed* with the reason; before that it reads *Not set up* or *Set up*.
+
+**Minimal IAM permissions** of the role or user:
+
+- `bedrock:InvokeModel` and `bedrock:InvokeModelWithResponseStream` on the model or inference profile (the Converse API uses these); with an inference profile also on the foundation model in every destination region;
+- `bedrock:GetInferenceProfile` on the profile (EU-only check) and `bedrock:GetGuardrail` if you use a guardrail;
+- `sts:GetCallerIdentity` and `bedrock:ListFoundationModels` for *Check connection*.
+
+**Prices.** Bedrock is priced **per region**, never with Anthropic's prices, also for Claude. A price applies only to the regions it lists; a region it does not list has an **unknown** cost, never 0, and the strict price mode then refuses the request. Enter your own prices with their regions under [Model prices](/docs/nutzung#preise). Your AWS bill can contain more than Nodestro counts (for example invocation logging, guardrails or other AWS services).
+
+**What Bedrock offers.** Tools, streaming, images and PDF documents, structured output and reasoning effort depend on the model; Nodestro shows options a model does not support, or whose support is unknown (a typed ARN, an application inference profile), as switched off with the reason. **Not available on Bedrock**, also not for Claude: server tools such as web search, thinking modes, Anthropic's prompt caching settings, fallback models, batches and citations.
+
+**Tools and AWS credentials.** On a desktop Nodestro keeps AWS credentials away from tools (environment variables and AWS SDK lookups). Tool code in the plain subprocess sandbox still runs as your user and could read the files in `~/.aws` directly. If real AWS credentials are on the machine, run your own and AI-generated tools in the built-in sandbox or in containers (see [Sandbox](/docs/einstellungen#sandbox)).
+
+**Troubleshooting by message:**
+
+| Message | What to do |
+|---|---|
+| No AWS credentials were found | Sign in (`aws sso login`), check the profile or the environment, then *Check connection*. |
+| AWS did not accept the credentials | They are wrong or expired: sign in again. |
+| AWS refused access | Grant the permissions above and enable the model in the AWS console. |
+| The AWS profile … does not exist | Check the profile name against `~/.aws/config`. |
+| Not an AWS region name / not valid | Use a name like `eu-central-1`. |
+| Not known in this region | Use a model id or inference profile offered in this region. |
+| Could not be reached | Check network, proxy and region. |
+| Could break the EU-only data residency | Use an EU region and an `eu.` profile or a model of that region. |
+| Not available on this server | Ask your operator to assign an AWS role to the workspace. |
 
 ## Assistant model and default model {#modelle}
 <!-- keywords: default model, assistant model, new agents -->

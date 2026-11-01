@@ -29,6 +29,8 @@ Das Modell bestimmt Fähigkeiten, Geschwindigkeit und Preis. Wähle zuerst den *
 
 Das Standardmodell für neue Agenten legst du in den [Einstellungen](/docs/einstellungen#modelle) fest, die Zugänge der Anbieter unter [KI-Anbieter](/docs/einstellungen#anbieter). Einige Optionen gibt es nur bei Modellen von Anthropic: Thinking und Gedanken anzeigen, Prompt-Caching, Ausweichmodelle und Server-Tools. Bei anderen Anbietern blendet der Inspektor sie aus; ist eine davon noch gesetzt, meldet die Prüfung einen Fehler, statt sie stillschweigend wegzulassen.
 
+**Amazon Bedrock:** Modell-IDs gehen genau so weiter, wie du sie eingibst, mit Doppelpunkten und Schrägstrichen: `bedrock:anthropic.claude-sonnet-4-5-20250929-v1:0`, `bedrock:eu.anthropic.claude-sonnet-5-5` oder ein ARN wie `bedrock:arn:aws:bedrock:eu-central-1:111122223333:application-inference-profile/abc`. Nur der erste Doppelpunkt trennt den Anbieter ab. Die Modelle der Liste sind Vorschläge, keine für dein Konto aktivierten Modelle. Claude auf Bedrock ist ein eigener Anbieter: Die Anthropic-Optionen oben bleiben auch dafür aus, und Optionen wie strukturierte Ausgabe oder Denkaufwand folgen dem, was das Modell auf Bedrock unterstützt (unbekannt bei einem eingegebenen ARN). Siehe [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
+
 ## System-Prompt {#system-prompt}
 <!-- keywords: system prompt, rolle, anweisung, persona, prompt engineering -->
 

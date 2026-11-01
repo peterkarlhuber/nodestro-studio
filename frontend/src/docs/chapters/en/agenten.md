@@ -29,6 +29,8 @@ The model determines abilities, speed and price. First choose the **provider**, 
 
 You set the default model for new agents in the [settings](/docs/einstellungen#modelle) and the providers' access under [AI providers](/docs/einstellungen#anbieter). Some options exist only for Anthropic models: thinking and showing thoughts, prompt caching, fallback models and server tools. For other providers the inspector hides them; if one of them is still set, the check reports an error instead of silently leaving it out.
 
+**Amazon Bedrock:** model ids are passed on exactly as typed, colons and slashes included: `bedrock:anthropic.claude-sonnet-4-5-20250929-v1:0`, `bedrock:eu.anthropic.claude-sonnet-5-5` or an ARN such as `bedrock:arn:aws:bedrock:eu-central-1:111122223333:application-inference-profile/abc`. Only the first colon separates the provider. Models in the list are suggestions, not models enabled for your account. Claude on Bedrock is a provider of its own: the Anthropic-only options above stay off for it as well, and options such as structured output or reasoning effort follow what the model supports on Bedrock (unknown for a typed ARN). See [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
+
 ## System prompt {#system-prompt}
 <!-- keywords: system prompt, role, instruction, persona, prompt engineering -->
 
