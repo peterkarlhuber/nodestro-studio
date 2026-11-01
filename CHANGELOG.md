@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Example library format 2 in the gallery; pins (2026-11-01)
+
+- Pins `nodestro-examples` `5e2d532` (0.3.0, before: `3429f5b`), `nodestro-api` `870ba5f` (before: `05e449d`) and, in
+  `platform/versions.json`, `nodestro-sdk` `d71fadd` (before: `7f60f9b`).
+- The gallery preview shows each example's teams (sub-workflows with capabilities and approvals), its knowledge files,
+  "Who decides what" (`control`) and "Why this architecture" (`why`), and its optional integrations with setup text,
+  offline behavior and a server choice for the copy. Offline mode is the default; a copy is only connected when the
+  chosen MCP server offers every needed tool approved as read-only, otherwise nothing is copied and the missing or
+  not read-only tools are named (`library.integration_unavailable`).
+- Copying creates the example's parts as own workflows, adds its knowledge files and returns which integrations are
+  connected and which run offline.
+- Texts in all six languages; the "Examples" docs chapter is regenerated from the library.
+
 ### Security fixes from the independent MCP re-review R-1/R-2; pins (2026-11-01)
 
 - Pins `nodestro-runtime` `58cec5c` (before: `f71086a`), `nodestro-api` `05e449d` (before: `476cfc0`),
