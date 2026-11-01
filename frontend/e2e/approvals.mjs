@@ -40,8 +40,12 @@ function check(condition, message) {
   console.log(`ok  ${message}`);
 }
 
+// The test servers close idle keep-alive connections after 5 s; a request sent on a pooled connection at that moment
+// fails with ECONNRESET. A fresh connection per API call avoids the race.
+const FRESH_CONNECTION = { connection: "close" };
+
 async function raw(path, method = "GET", data) {
-  return page.request.fetch(base + "/api" + path, { method, data });
+  return page.request.fetch(base + "/api" + path, { method, data, headers: FRESH_CONNECTION });
 }
 
 async function api(path, method = "GET", data) {
