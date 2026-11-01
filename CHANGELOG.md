@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+### Backend audit (2026-11-01): pins and architecture docs
+
+- Pins `nodestro-runtime` `6eacec1` (before: `58cec5c`), `nodestro-api` `e16202d` (before: `870ba5f`),
+  `nodestro-examples` `e370567` (before: `5e2d532`), `nodestro-integrations` `c221485` (before: `cb8c2da`) and, in
+  `platform/versions.json`, `nodestro-sdk` `76f7390` (before: `d71fadd`) and `orkexa` `6e69b9c` (before: `a06185d`).
+  They carry the fixes of the internal backend audit (not an external pentest or certification). Among them:
+  - Sandbox output is bounded in the host, and cancelling a run stops its running sandbox call.
+  - Run writes are fenced across processes, approval decisions use compare-and-set, and live runs without a job
+    are reconciled.
+  - The PostgreSQL connection pool reconnects and has statement timeouts.
+  - Server logins are bound to the browser, the access log is redacted, and `/api/health` checks the database.
+  - New operator commands manage tenant members.
+  - Additive API fields for the studio: `meta.profile`, run `warnings`, `If-Match` / 409 `workflow.conflict`,
+    run list paging, and provider failure codes.
+  See the runtime and API changelogs.
+- `docs/ARCHITECTURE.md` and `docs/PLATFORM.md` describe the three operating profiles (desktop, local container,
+  server) as implemented. ADRs 0001–0004 are marked accepted and implemented, and `IMPLEMENTATION_STATUS.md` is
+  updated where the audit changed it.
+- The accepted MCP pilot (studio `ba45ab3`) and the S-2 pilot B pin (`19a1127`) are not changed; their acceptance does
+  not cover these versions.
+
 ### Example library format 2 in the gallery; pins (2026-11-01)
 
 - Pins `nodestro-examples` `5e2d532` (0.3.0, before: `3429f5b`), `nodestro-api` `870ba5f` (before: `05e449d`) and, in
