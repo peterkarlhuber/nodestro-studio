@@ -1,6 +1,6 @@
 {
-  "groupWorkspace": "Espacio de trabajo",
-  "groupObservability": "Observabilidad",
+  "groupBuild": "Crear",
+  "groupRun": "Ejecutar y revisar",
   "groupHelp": "Ayuda",
   "workflows": "Flujos de trabajo",
   "agents": "Agentes",
@@ -11,7 +11,7 @@
   "usage": "Uso",
   "docs": "Documentación",
   "settings": "Ajustes",
-  "groupAutomation": "Automatización",
+  "groupAutomate": "Automatizar y probar",
   "approvals": "Aprobaciones",
   "batches": "Ejecuciones por lotes",
   "tests": "Series de pruebas",

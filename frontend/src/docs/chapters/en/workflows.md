@@ -12,8 +12,8 @@ Three equal ways to start are on the page: **Create with AI** opens the new-work
 - **New workflow:** enter a name and an optional description. The new workflow already contains *Start → Agent → Result*.
 - **Create with AI:** in the same dialog, describe what you want and the [Workflow Architect](/docs/ki-architekt#neu-erstellen) designs the workflow for you to review.
 - **Open:** click the card.
-- **Duplicate:** copy symbol on the card. The copy is called "… (copy)"; executions are not copied.
-- **Delete:** bin symbol. Previous executions remain available under *Executions*.
+- **Duplicate:** copy symbol on the card. The copy is called "… (copy)"; runs are not copied.
+- **Delete:** bin symbol. Previous runs remain available under *Runs*.
 
 ## Favorites and tags {#favoriten-tags}
 <!-- keywords: favorite, favorites, star, tag, tags, label, filter, organize -->

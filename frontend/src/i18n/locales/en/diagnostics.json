@@ -71,7 +71,7 @@
       "ok": "{{free}} free.",
       "low": "Only {{free}} free.",
       "fix": {
-        "low": "Free up space, for example by deleting old executions or backups."
+        "low": "Free up space, for example by deleting old runs or backups."
       }
     },
     "docker": {

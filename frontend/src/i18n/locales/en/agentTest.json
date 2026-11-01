@@ -1,7 +1,7 @@
 {
   "button": "Test agent",
   "title": "Test agent: {{name}}",
-  "note": "A test runs only this agent with its current configuration. It is not a workflow run, does not appear under “Executions” and changes no results.",
+  "note": "A test runs only this agent with its current configuration. It is not a workflow run, does not appear under “Runs” and changes no results.",
   "input": "Test input",
   "inputHint": "Inserted into the agent's task like the input of a run (placeholders for predecessors stay empty).",
   "rawHint": "Sent to the agent unchanged as its task.",

@@ -45,7 +45,8 @@ interface NavItem {
   badge?: number;
 }
 
-const WORKSPACE: NavItem[] = [
+// Groups follow the task flow: build a workflow, run and review it, then automate and test it.
+const BUILD: NavItem[] = [
   { to: "/", label: "workflows", icon: Diamond, end: true },
   { to: "/agents", label: "agents", icon: Bot },
   { to: "/tools", label: "tools", icon: Command },
@@ -53,15 +54,15 @@ const WORKSPACE: NavItem[] = [
   { to: "/memory", label: "memory", icon: Brain },
 ];
 
-const OBSERVABILITY: NavItem[] = [
+const RUN_AND_REVIEW: NavItem[] = [
   { to: "/executions", label: "executions", icon: Rows3 },
+  { to: "/approvals", label: "approvals", icon: Hand },
   { to: "/usage", label: "usage", icon: Activity },
 ];
 
-const AUTOMATION: NavItem[] = [
-  { to: "/approvals", label: "approvals", icon: Hand },
-  { to: "/batches", label: "batches", icon: Layers },
+const AUTOMATE_AND_TEST: NavItem[] = [
   { to: "/tests", label: "tests", icon: FlaskConical },
+  { to: "/batches", label: "batches", icon: Layers },
   { to: "/schedules", label: "schedules", icon: CalendarClock },
 ];
 
@@ -173,12 +174,12 @@ export function AppShell() {
         </div>
       </header>
       <nav className="sidebar" aria-label={t("shell.mainNavigation")}>
-        <NavGroup title={t("nav.groupWorkspace")} items={WORKSPACE} />
+        <NavGroup title={t("nav.groupBuild")} items={BUILD} />
         <NavGroup
-          title={t("nav.groupAutomation")}
-          items={AUTOMATION.map((item) => (item.label === "approvals" ? { ...item, badge: waiting || undefined } : item))}
+          title={t("nav.groupRun")}
+          items={RUN_AND_REVIEW.map((item) => (item.label === "approvals" ? { ...item, badge: waiting || undefined } : item))}
         />
-        <NavGroup title={t("nav.groupObservability")} items={OBSERVABILITY} />
+        <NavGroup title={t("nav.groupAutomate")} items={AUTOMATE_AND_TEST} />
         <NavGroup title={t("nav.groupHelp")} items={HELP_ITEMS} />
         <div className="sidebar__bottom">
           <NavLink to="/settings" title={t("nav.settings")} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>

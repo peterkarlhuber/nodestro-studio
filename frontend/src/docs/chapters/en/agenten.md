@@ -256,7 +256,7 @@ An agent from a template is a **copy**: later changes to the template do not aff
 1. Enter a **test input**. It is inserted into the task like the input of a run; placeholders for predecessors stay empty. With *Send the input directly as the task* only your text goes to the agent.
 2. **Start test** shows the answer, all tool calls, errors, tokens, cost, duration and, if enabled, the quality check.
 
-A test is **not a workflow run**: it does not appear under *Executions* and changes no results. Persistent memory is only read; the test works on a copy. A test calls the model's provider and **can cost money**; the dialog names the model's prices when they are known, and the cost appears on the [Usage](/docs/nutzung#statistik) page.
+A test is **not a workflow run**: it does not appear under *Runs* and changes no results. Persistent memory is only read; the test works on a copy. A test calls the model's provider and **can cost money**; the dialog names the model's prices when they are known, and the cost appears on the [Usage](/docs/nutzung#statistik) page.
 
 ## Validation and messages {#validierung}
 <!-- keywords: validation, error message, problem, warning, red, inspector message -->

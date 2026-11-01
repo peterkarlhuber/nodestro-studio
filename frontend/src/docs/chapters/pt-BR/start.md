@@ -50,11 +50,12 @@ Crie seu primeiro fluxo de trabalho em poucos minutos:
 ## A interface {#oberflaeche}
 <!-- keywords: navegação, barra lateral, menu, tema, escuro, claro, layout -->
 
-A **barra lateral** à esquerda divide o Nodestro em três áreas:
+A **barra lateral** à esquerda segue o seu jeito de trabalhar: criar, executar e revisar, e depois automatizar.
 
-- **Espaço de trabalho:** *Fluxos de trabalho* (seus processos), *Agentes* (modelos reutilizáveis), *Ferramentas*, *Conhecimento* e *Memória*.
-- **Observabilidade:** *Execuções* (todas as execuções em detalhe) e *Uso* (tokens e custos ao longo do tempo).
-- **Ajuda:** esta *Documentação*.
+- **Criar:** *Fluxos de trabalho* (seus processos), *Agentes* (modelos reutilizáveis), *Ferramentas*, *Conhecimento* e *Memória*.
+- **Executar e revisar:** *Execuções* (todas as execuções em detalhe), *Aprovações* (decisões que as execuções aguardam) e *Uso* (tokens e custos ao longo do tempo).
+- **Automatizar e testar:** *Séries de testes*, *Execuções em lote* e *Agendamentos*.
+- **Ajuda:** esta *Documentação* e a página de *Boas-vindas*.
 
 Embaixo ficam as *Configurações*. No canto superior direito você alterna entre o esquema de cores escuro e claro; a escolha fica salva no navegador. Se o provedor do modelo padrão não estiver configurado, aparece ali um aviso que leva direto às configurações.
 

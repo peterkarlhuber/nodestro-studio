@@ -70,7 +70,7 @@ At the top right you switch between **Dark** and **Light**. The choice is saved 
 ## Backup and restore {#backup}
 <!-- keywords: backup, restore, export, zip, move, data backup -->
 
-**Download backup** saves all data in one ZIP file: workflows with versions, agent templates, custom tools, knowledge files, memory, executions, usage data, favorites, tags and settings. The database is saved as a consistent snapshot, even while a run is working.
+**Download backup** saves all data in one ZIP file: workflows with versions, agent templates, custom tools, knowledge files, memory, runs, usage data, favorites, tags and settings. The database is saved as a consistent snapshot, even while a run is working.
 
 The **API keys** of the AI providers are never written into the backup, nor are base URLs that contain credentials. Restoring keeps the keys of this computer.
 

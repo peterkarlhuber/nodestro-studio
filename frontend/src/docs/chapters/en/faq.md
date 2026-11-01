@@ -45,7 +45,7 @@ Yes, with a [decision](/docs/verzweigungen#entscheidung): it checks the result w
 With *Export* and *Import*. You have to create knowledge files, memory spaces and your own tools there separately.
 
 **How do I show someone a run?**
-With *Export trace*. The other person opens the file under *Executions → Import trace*, without running the workflow again.
+With *Export trace*. The other person opens the file under *Runs → Import trace*, without running the workflow again.
 
 **Is my API key stored in the workflow export or the trace?**
 No. The keys are only in environment variables or in the local database and go neither into exports nor into backups.

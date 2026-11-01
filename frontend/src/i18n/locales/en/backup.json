@@ -1,6 +1,6 @@
 {
   "title": "Backup and restore",
-  "intro": "A backup holds all workflows with their versions, agent templates, tools, knowledge files, memory, executions and settings in one ZIP file.",
+  "intro": "A backup holds all workflows with their versions, agent templates, tools, knowledge files, memory, runs and settings in one ZIP file.",
   "noKey": "For security no API keys of the AI providers are written into a backup. Restoring keeps the keys configured on this computer.",
   "download": "Download backup",
   "restoreFromFile": "Restore from file …",
@@ -22,7 +22,7 @@
     "knowledge_files": "Knowledge files",
     "memory_spaces": "Memory spaces",
     "memory_files": "Memory files",
-    "runs": "Executions",
+    "runs": "Runs",
     "usage_entries": "Other AI operations",
     "conversations": "Assistant chats",
     "input_files": "Uploaded input files"

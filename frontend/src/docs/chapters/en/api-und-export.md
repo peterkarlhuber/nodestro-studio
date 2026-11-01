@@ -66,7 +66,7 @@ Published versions cannot be edited. That keeps results traceable: every API run
 
 **Switch off** refuses new runs with status `503` and the code `publication.disabled`. Running runs continue; when switching off you can cancel them too. Status and results of existing runs stay available. **Switch on** makes the API available again.
 
-**Delete API** removes all versions, and keys lose access to them. This only works when no run of this API is still running. The runs themselves stay under Executions. When the workflow is deleted, its API goes too.
+**Delete API** removes all versions, and keys lose access to them. This only works when no run of this API is still running. The runs themselves stay under Runs. When the workflow is deleted, its API goes too.
 
 ## Endpoints {#endpunkte}
 <!-- keywords: endpoints, url, address, runs, status, result, events, cancel, approve, resume, versions, openapi -->
@@ -205,14 +205,14 @@ Every error has the same shape so that programs can evaluate it:
 **Try it** holds an example request that you can adjust:
 
 - **Check request** validates the body exactly like the API, shows the input the workflow would get, and starts nothing. It costs nothing.
-- **Start test run** starts a real run of the published version through the same path as the API. It is billed like any run and appears under Executions as a test run from Nodestro.
+- **Start test run** starts a real run of the published version through the same path as the API. It is billed like any run and appears under Runs as a test run from Nodestro.
 
 For regression tests of a new version, use [test series](/docs/automatisierung#testreihen): they run with the saved version before you publish.
 
 ## Monitoring {#ueberwachung}
 <!-- keywords: monitoring, runs, origin, usage, cost, statistics, api runs -->
 
-API runs appear under Executions with the trigger **API**. The detail view names the version and the key that started the run. On the Usage page, runs of published APIs have their own line (see [The Usage page](/docs/nutzung#statistik)). The overview in the dialog shows this API's latest runs, and `GET /usage` gives programs the same numbers.
+API runs appear under Runs with the trigger **API**. The detail view names the version and the key that started the run. On the Usage page, runs of published APIs have their own line (see [The Usage page](/docs/nutzung#statistik)). The overview in the dialog shows this API's latest runs, and `GET /usage` gives programs the same numbers.
 
 ## Export as a FastAPI project {#export}
 <!-- keywords: export, zip, fastapi, project, standalone, docker, uvicorn, readme, tests, pyproject, lock, deployment, server -->
