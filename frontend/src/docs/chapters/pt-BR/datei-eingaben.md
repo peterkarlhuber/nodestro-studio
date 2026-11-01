@@ -115,7 +115,7 @@ Nada é salvo antes da sua confirmação, e só exatamente o conteúdo verificad
 
 Na seção *Conhecimento* de um agente, ligue **Pode propor conteúdo para o conhecimento**. O agente recebe então a ferramenta `propose_knowledge` e seu resultado é oferecido como proposta após a execução. As propostas aparecem na etapa da execução e só são salvas depois que você as verifica e confirma.
 
-## Subworkflows, testes e agendamentos {#subfluxos}
+## Subfluxos, testes e agendamentos {#sub-workflows}
 <!-- keywords: subworkflow, série de testes, lote, agendamento, aprovação, continuar, reinício -->
 
 - **Subworkflows:** um campo de arquivo do subfluxo recebe com `{{form.<campo>}}` os arquivos de um campo ou com `{{files}}` todos os arquivos da execução. Os mesmos arquivos salvos são repassados, sem cópias.

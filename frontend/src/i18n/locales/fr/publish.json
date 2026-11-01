@@ -286,7 +286,7 @@
       "suite_outdated": "la version {{version}} a été testée en dernier",
       "suite_changed": "la série a changé depuis le test",
       "tested": "cette version a été testée",
-      "pass_rate": "{{clean}} cas sur {{cases}} réussis ({{value}}, exigé {{threshold}})",
+      "pass_rate": "Cas réussis : {{clean}} sur {{cases}} ({{value}}, exigé {{threshold}})",
       "judge_score": "note de l'IA {{value}} (exigé {{threshold}})",
       "judge_missing": "aucune note de l'IA dans l'exécution (exigé {{threshold}})"
     }

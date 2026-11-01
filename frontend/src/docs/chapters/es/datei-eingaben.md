@@ -115,7 +115,7 @@ No se guarda nada antes de tu confirmación, y solo exactamente el contenido com
 
 En la sección *Conocimiento* de un agente activa **Puede proponer contenido para el conocimiento**. El agente recibe entonces la herramienta `propose_knowledge` y su resultado se ofrece como propuesta tras la ejecución. Las propuestas aparecen en el paso de la ejecución y solo se guardan cuando las has comprobado y confirmado.
 
-## Subworkflows, pruebas y programaciones {#subflujos}
+## Subflujos, pruebas y programaciones {#sub-workflows}
 <!-- keywords: subworkflow, serie de pruebas, lote, programación, aprobación, continuar, reinicio -->
 
 - **Subworkflows:** un campo de archivo del subflujo recibe con `{{form.<campo>}}` los archivos de un campo o con `{{files}}` todos los archivos de la ejecución. Se pasan los mismos archivos guardados, sin copias.

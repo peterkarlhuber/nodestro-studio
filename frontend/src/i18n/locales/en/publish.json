@@ -286,7 +286,7 @@
       "suite_outdated": "version {{version}} was tested last",
       "suite_changed": "test series changed since the test",
       "tested": "this version was tested",
-      "pass_rate": "{{clean}} of {{cases}} cases passed ({{value}}, required {{threshold}})",
+      "pass_rate": "Cases passed: {{clean}} of {{cases}} ({{value}}, required {{threshold}})",
       "judge_score": "AI rating {{value}} (required {{threshold}})",
       "judge_missing": "no AI rating in the test run (required {{threshold}})"
     }

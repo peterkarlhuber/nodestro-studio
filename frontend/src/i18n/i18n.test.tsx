@@ -58,8 +58,8 @@ describe("language files", () => {
       if (!PLURAL.test(key)) continue;
       const base = key.replace(PLURAL, "");
       for (const category of needed) {
-        // "many" is used by French, Spanish, Italian and Portuguese only for huge round numbers; "other" covers it.
-        if (category === "many") continue;
+        // French, Spanish, Italian and Portuguese use "many" for round millions. i18next does not fall back from
+        // "_many" to the same language's "_other" but to English, so "_many" must exist (resources.ts derives it).
         expect(keys.has(`${base}_${category}`), `${language}: ${base}_${category}`).toBe(true);
       }
     }

@@ -286,7 +286,7 @@
       "suite_outdated": "zuletzt wurde Version {{version}} getestet",
       "suite_changed": "Testreihe seit dem Test geändert",
       "tested": "diese Version getestet",
-      "pass_rate": "{{clean}} von {{cases}} Fällen bestanden ({{value}}, verlangt {{threshold}})",
+      "pass_rate": "Bestandene Fälle: {{clean}} von {{cases}} ({{value}}, verlangt {{threshold}})",
       "judge_score": "KI-Bewertung {{value}} (verlangt {{threshold}})",
       "judge_missing": "keine KI-Bewertung im Testlauf (verlangt {{threshold}})"
     }

@@ -94,7 +94,7 @@ describe("release gate", () => {
     await waitFor(() =>
       expect(publish).toHaveBeenCalledWith("wf_1", expect.objectContaining({ override: { reason: "Wortlaut geprüft, Team einverstanden" } })),
     );
-    expect(screen.getByText("mit Begründung freigegeben")).toBeTruthy();
+    expect(screen.getByText("mit Begründung veröffentlicht")).toBeTruthy();
   });
 
   it("cannot publish a blocked version, not even with a reason", async () => {
