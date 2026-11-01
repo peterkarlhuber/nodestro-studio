@@ -635,11 +635,12 @@ function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
             ))}
           </ul>
         </>
-      ) : (
+      ) : knowledge.isSuccess ? (
+        // Only once the list has loaded: while it loads, "no files yet" would be a false empty state.
         <p className="field__hint">
           <Trans i18nKey="agent.knowledge.noFiles" components={{ a: <Link to="/knowledge" /> }} />
         </p>
-      )}
+      ) : null}
       <Toggle
         label={t("agent.knowledge.citations")}
         description={t("agent.knowledge.citationsHint")}

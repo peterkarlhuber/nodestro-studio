@@ -6505,6 +6505,7 @@ ul.gate-report__list > li.gate-report__item {
 
 .mcp-diff__after {
   border-color: color-mix(in srgb, var(--nd-warning) 60%, var(--nd-border));
+}
 
 /* Loop rounds: the round of a node on the canvas and the round picker in its details. */
 .flow-node__round {

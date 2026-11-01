@@ -215,7 +215,10 @@ try {
     await click(page.locator('[data-section="knowledge"] .section__title'));
     // With an empty knowledge base the section says to upload under Knowledge first and links there. J1 copied an
     // example that brings its own knowledge file, so the section lists files instead: go there via the navigation.
-    const hint = page.locator('[data-section="knowledge"]').getByRole("link", { name: "Wissen" });
+    // Wait until the section has loaded the knowledge list: either the hint link or the file search is shown.
+    const section = page.locator('[data-section="knowledge"]');
+    const hint = section.getByRole("link", { name: "Wissen" });
+    await hint.or(section.getByRole("textbox")).first().waitFor();
     await click((await hint.count()) ? hint : page.getByRole("navigation").getByRole("link", { name: "Wissen", exact: true }).first());
     await page.getByRole("heading", { name: "Wissen", exact: true }).waitFor();
     await upload(page.locator("main input[type=file]").first(), { name: "preise.md", mimeType: "text/markdown", buffer: Buffer.from("# Preise\n\nDas Abo kostet 9 Euro im Monat.\n") });
