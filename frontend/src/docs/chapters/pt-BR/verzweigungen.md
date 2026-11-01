@@ -152,6 +152,8 @@ O orquestrador apenas escolhe. Ele não tem ferramentas, não cria agentes, ferr
 
 Os detalhes da execução listam cada decisão com motivo, tarefa, resultado e um link para a execução da equipe. Quando uma equipe para para uma **aprovação** (também em um subfluxo ou abaixo de outro orquestrador), o orquestrador aguarda junto: a execução fica *pausada* e aparece em **Aprovações**. Após a decisão, a mesma execução da equipe continua, também depois de uma reinicialização, e o modelo não é consultado de novo sobre essa delegação. Se uma rejeição encerra a execução da equipe (*Ao rejeitar: encerrar a execução*), esta execução também termina; nenhuma outra equipe pode contornar a rejeição. Cancelar uma execução em espera também cancela suas equipes em espera. Uma equipe não pode chamar de novo o fluxo de trabalho do orquestrador.
 
+**Durante a execução** você pode fazer perguntas ao líder da equipe e dar instruções para a próxima decisão, na aba **Líder da equipe** da visão de detalhes; veja [Conversar com o líder da equipe](/docs/ausfuehrungen#teamleitung). **Direção ao vivo**, na área *Limites*, define quem pode dar instruções.
+
 ## Equipes dinâmicas {#dynamische-teams}
 <!-- keywords: equipe dinâmica, montar equipe, paralelo, ao mesmo tempo, parâmetros, formulário inicial, modelo, composição da equipe, staffing -->
 

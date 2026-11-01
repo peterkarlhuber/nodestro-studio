@@ -588,20 +588,22 @@ export function Segmented<T extends string>({
   disabled,
 }: {
   value: T;
-  options: { value: T; label: string; icon?: LucideIcon }[];
+  /** ``disabled`` closes one option (say why next to it); ``testId`` names it for browser tests. */
+  options: { value: T; label: string; icon?: LucideIcon; disabled?: boolean; testId?: string }[];
   onChange: (value: T) => void;
   label: string;
   disabled?: boolean;
 }) {
   return (
     <div className="segmented" role="radiogroup" aria-label={label} aria-disabled={disabled || undefined}>
-      {options.map(({ value: item, label: text, icon: Icon }) => (
+      {options.map(({ value: item, label: text, icon: Icon, disabled: off, testId }) => (
         <button
           key={item}
           type="button"
           role="radio"
           aria-checked={value === item}
-          disabled={disabled}
+          disabled={disabled || off}
+          data-testid={testId}
           className={value === item ? "selected" : undefined}
           onClick={() => onChange(item)}
         >

@@ -1,0 +1,97 @@
+{
+  "tab": {
+    "label": "Vistas de la ejecución",
+    "overview": "Resumen",
+    "teamLeader": "Líder de equipo"
+  },
+  "intro": "Pregunta al líder de equipo (el orquestador) sobre la ejecución o dale una instrucción para su próxima decisión.",
+  "docs": "Cómo funciona la conversación con el líder de equipo",
+  "noTargets": "Esta ejecución no tiene un líder de equipo con quien hablar.",
+  "noTarget": "Elige primero un líder de equipo.",
+  "ended": "La ejecución ha terminado; puedes seguir leyendo la conversación.",
+  "messages": "Conversación con el líder de equipo",
+  "empty": "Todavía no hay mensajes.",
+  "someone": "Alguien",
+  "you": "Tú",
+  "targets": {
+    "label": "Líder de equipo",
+    "depth": "Equipo anidado, nivel {{level}}"
+  },
+  "activity": {
+    "title": "Actividad actual",
+    "decisions": "Decisiones: {{used}} de {{max}}",
+    "deciding": "La decisión {{n}} se está ejecutando",
+    "working_one": "{{count}} equipo está trabajando ahora",
+    "working_other": "{{count}} equipos están trabajando ahora",
+    "noneWorking": "Ahora no trabaja ningún equipo",
+    "specialists": "Trabajando: {{names}}"
+  },
+  "kind": {
+    "question": "Pregunta",
+    "instruction": "Instrucción",
+    "answer": "Respuesta"
+  },
+  "status": {
+    "queued": "Esperando la próxima decisión",
+    "queuedWorking_one": "{{count}} equipo está trabajando; la instrucción se tendrá en cuenta en la próxima decisión",
+    "queuedWorking_other": "{{count}} equipos están trabajando; la instrucción se tendrá en cuenta en la próxima decisión",
+    "delivered": "En manos del líder de equipo para la decisión {{n}}",
+    "deliveredPlain": "En manos del líder de equipo para la decisión actual",
+    "considered": "Incluida en la decisión {{n}}",
+    "consideredPlain": "Incluida en una decisión",
+    "consideredHint": "Incluida significa: el líder de equipo conocía la instrucción al tomar esta decisión. Si la sigue, lo muestra la decisión.",
+    "rejected": "No aceptada",
+    "expired": "Ya no se tendrá en cuenta",
+    "pending": "Respondiendo…",
+    "answered": "Respondida",
+    "failed": "Sin respuesta"
+  },
+  "decision": {
+    "withTeams": "Decisión: {{action}} ({{teams}})",
+    "only": "Decisión: {{action}}",
+    "invalid": "La decisión no era válida y no se llevó a cabo",
+    "action": {
+      "delegate": "delegada",
+      "parallel": "delegada a varios equipos a la vez",
+      "staff": "alineación cambiada",
+      "finish": "terminada con una respuesta",
+      "other": "otro paso"
+    }
+  },
+  "answer": {
+    "label": "Respuesta del chat, no una decisión",
+    "snapshot": "estado de las {{time}}"
+  },
+  "mode": {
+    "question": "Hacer una pregunta",
+    "instruction": "Dar una instrucción",
+    "questionHint": "Una pregunta nunca cambia la ejecución. Un modelo de IA la responde a partir del estado actual; esto usa el presupuesto del chat.",
+    "instructionHint": "El líder de equipo tiene en cuenta la instrucción en su próxima decisión. Los equipos que ya trabajan no se interrumpen ni se cambian."
+  },
+  "composer": {
+    "mode": "Tipo de mensaje",
+    "questionLabel": "Tu pregunta",
+    "instructionLabel": "Tu instrucción",
+    "keys": "Intro envía, Mayús+Intro empieza una línea nueva.",
+    "count": "Caracteres: {{used}} de {{max}}",
+    "sendQuestion": "Preguntar",
+    "sendInstruction": "Enviar instrucción",
+    "sending": "Enviando…",
+    "noInstructions": "Aquí no se pueden dar instrucciones: {{reason}}"
+  },
+  "meta": {
+    "budget": "Presupuesto del chat restante: {{value}}",
+    "questions": "Preguntas restantes: {{value}}",
+    "unknown": "desconocido",
+    "model": "responde {{model}}"
+  },
+  "editor": {
+    "label": "Dirección en vivo",
+    "hint": "Quién puede dar instrucciones a este líder de equipo mientras una ejecución está activa. Las preguntas sobre la ejecución no se ven afectadas.",
+    "options": {
+      "attended": "Ejecuciones iniciadas por una persona (predeterminado)",
+      "always": "Siempre, también ejecuciones desatendidas (programación, API, ejecución por lotes, serie de pruebas)",
+      "off": "Desactivada: sin instrucciones durante una ejecución"
+    }
+  }
+}

@@ -103,6 +103,26 @@ Uma execução com falha ou cancelada pode ser [continuada](/docs/verzweigungen#
 
 **Cancelar execução** (na visão geral da execução ou na visualização detalhada) pede confirmação por segurança: um segundo clique em **Cancelar mesmo?** em até cinco segundos interrompe a execução; **Esc** ou um clique em outro lugar a deixa continuar. Isso vale também para uma execução pausada. Agentes em andamento param no próximo passo (próximo trecho de texto, próxima solicitação ou próxima chamada de ferramenta); agentes que ainda não começaram não são mais executados. Os tokens usados até ali são cobrados e mostrados.
 
+## Conversar com o líder da equipe {#teamleitung}
+<!-- keywords: líder da equipe, orquestrador, chat ao vivo, fazer uma pergunta, dar uma instrução, direcionar, direção ao vivo, live_steering, orçamento do chat, run_chat -->
+
+Quando uma execução tem um **orquestrador** (também em uma execução de equipe aninhada), a visão de detalhes mostra a aba **Líder da equipe** ao lado de **Visão geral**. As aprovações e o status da execução continuam visíveis acima. Com vários líderes, você escolhe um; cada um mostra seu fluxo de trabalho, o nível e o status. Abaixo você vê o que ele está fazendo: decisões (usadas do máximo), suas equipes com status e os especialistas trabalhando agora.
+
+Você escolhe explicitamente o que escreve:
+
+- **Fazer uma pergunta:** um modelo de IA responde a partir do estado atual da execução. Uma pergunta nunca muda a execução. A resposta é marcada como *Resposta do chat, não uma decisão* e informa o estado em que se baseia.
+- **Dar uma instrução:** o líder da equipe a considera na **próxima decisão**. Uma decisão que já está sendo tomada e equipes que já estão trabalhando não são interrompidas nem alteradas; os especialistas em andamento não percebem nada até a próxima decisão.
+
+Cada instrução mostra seu estado: *Aguardando a próxima decisão* (com quantas equipes estão trabalhando agora), *Com o líder da equipe para a decisão N*, *Incluída na decisão N* com o que foi decidido, ou *Não será mais considerada* com o motivo. “Incluída” significa que o líder da equipe conhecia a instrução ao tomar esta decisão; se e como segui-la, ele decide sozinho dentro dos seus limites. Enter envia, Shift+Enter começa uma nova linha.
+
+**Custos:** as respostas às perguntas têm um **orçamento do chat** próprio por execução, separado do orçamento da execução. Os custos aparecem na página [Uso](/docs/nutzung#statistik) em **Chat ao vivo das execuções**, não nos custos da execução. No [modo de preços](/docs/nutzung#preismodus) estrito, perguntas a modelos sem preço conhecido são recusadas. Instruções não custam nada a mais; elas passam a fazer parte da próxima decisão.
+
+**Permissões e limites:** para ler basta a permissão *Ler*; para enviar você precisa de *Executar*. Uma mensagem tem no máximo 2000 caracteres; por execução e líder da equipe há um número máximo de mensagens, instruções e perguntas, além de um limite de perguntas por minuto. A linha abaixo do campo de texto mostra o orçamento do chat e as perguntas restantes.
+
+**Pausa, reinício, continuação:** enquanto uma equipe aguarda uma aprovação, as instruções continuam abertas e valem para a próxima decisão quando a execução prossegue. Se um reinício do servidor fizer perder uma decisão, a instrução é entregue de novo à decisão seguinte. Quando a execução ou o líder da equipe termina, as instruções abertas são marcadas como *Não será mais considerada* e não são levadas adiante quando você continua a execução. Depois do fim, a conversa só pode ser lida.
+
+**Execuções sem supervisão:** no inspetor do orquestrador, **Direção ao vivo** define quem pode dar instruções: *Execuções iniciadas por uma pessoa* (padrão), *Sempre* (também agendamento, API, execução em lote e série de testes) ou *Desativada*. Perguntas não são afetadas. Mais sobre o orquestrador em [Orquestrador](/docs/verzweigungen#orchestrator).
+
 ## Exportar trace {#trace-export}
 <!-- keywords: exportar trace, exportar, json, run json, compartilhar, arquivar, higienizar, anonimizar, privacidade, dados pessoais -->
 

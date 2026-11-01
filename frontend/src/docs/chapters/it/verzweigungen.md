@@ -152,6 +152,8 @@ L’orchestratore sceglie soltanto. Non ha strumenti, non crea agenti, strumenti
 
 I dettagli dell’esecuzione elencano ogni decisione con motivo, compito, risultato e un link all’esecuzione del team. Quando un team si ferma per un’**approvazione** (anche in un sotto-workflow o sotto un altro orchestratore), l’orchestratore attende con lui: l’esecuzione è *in pausa* e compare in **Approvazioni**. Dopo la decisione continua la stessa esecuzione del team, anche dopo un riavvio, e il modello non viene interpellato di nuovo per quella delega. Se un rifiuto termina l’esecuzione del team (*In caso di rifiuto: termina l’esecuzione*), termina anche questa esecuzione; nessun altro team può aggirare il rifiuto. Annullare un’esecuzione in attesa annulla anche i suoi team in attesa. Un team non può richiamare il workflow dell’orchestratore.
 
+**Durante l’esecuzione** puoi fare domande al responsabile del team e dargli istruzioni per la sua prossima decisione, nella scheda **Responsabile del team** della vista di dettaglio; vedi [Parlare con il responsabile del team](/docs/ausfuehrungen#teamleitung). **Guida in diretta**, nell’area *Limiti*, stabilisce chi può dare istruzioni.
+
 ## Team dinamici {#dynamische-teams}
 <!-- keywords: team dinamico, comporre il team, parallelo, contemporaneamente, parametri, modulo di avvio, modello, composizione del team, staffing -->
 

@@ -30,6 +30,9 @@ import { ResumeDialog } from "../runs/ResumeDialog";
 import { RunOrigin } from "../runs/RunOrigin";
 import { InterruptedNotice, RunOutcome, StepStatus, ToolProblemsNotice } from "../runs/RunProblems";
 import { RunSummaryLine } from "../runs/RunSummaryLine";
+import { hasOrchestrator } from "../runs/runChatModel";
+import { TeamLeaderChat } from "../runs/TeamLeaderChat";
+import { useRunChatView } from "../runs/useRunChat";
 import { initialStep, stepsInOrder } from "../runs/runSummary";
 import { STATUS_TONE, formatCost, formatDate, formatDuration, formatTokens, tokenBreakdown } from "../lib/format";
 import { NotFoundState } from "../components/NotFoundState";
@@ -80,6 +83,16 @@ function Trace({ run, selected, onSelect }: { run: Run; selected: string | null;
   );
 }
 
+/** The run's own content: as it always was, or the "Overview" tab panel when the run has a team leader tab. */
+function OverviewPanel({ tabbed, children }: { tabbed: boolean; children: ReactNode }) {
+  if (!tabbed) return <>{children}</>;
+  return (
+    <div className="tab-panel stack" role="tabpanel" id="run-tabpanel-overview" aria-labelledby="run-tab-overview">
+      {children}
+    </div>
+  );
+}
+
 export function RunDetailPage() {
   const { t } = useTranslation();
   const { id = "" } = useParams();
@@ -96,7 +109,12 @@ export function RunDetailPage() {
   const [exportOpen, setExportOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
   const [caseOpen, setCaseOpen] = useState(false);
+  const [tab, setTab] = useState<"overview" | "leader">("overview");
   const data = run.data;
+  // LRC-1: the "Team leader" tab, for runs with an orchestrator here or in a nested team run (only the chat view
+  // knows those); it stays readable after the run ended.
+  const chat = useRunChatView(id, Boolean(data));
+  const leader = hasOrchestrator(data) || Boolean(chat.data?.targets.length);
   const offer: ContextOffer | null = data ? { kind: "run", refId: data.id, label: `${data.workflow_name} · ${formatDate(data.created_at)}` } : null;
   useContextOffer("run", offer);
   const node = useMemo(() => {
@@ -205,51 +223,84 @@ export function RunDetailPage() {
         <RunOrigin run={data} />
         {paused ? <RunApprovals run={data} /> : null}
         {data.status === "running" || paused ? <RunToolApprovals run={data} /> : null}
-        {data.sanitized ? (
-          <Callout tone="info">
-            <ShieldCheck size={13} aria-hidden /> {t("export.importedSanitized", { summary: sanitizeSummary(t, data.sanitized) })}
-          </Callout>
+        {leader ? (
+          <div className="tabs lrc-tabs" role="tablist" aria-label={t("runChat.tab.label")}>
+            {(
+              [
+                ["overview", t("runChat.tab.overview"), "lrc-tab-overview"],
+                ["leader", t("runChat.tab.teamLeader"), "lrc-tab"],
+              ] as const
+            ).map(([value, label, testId]) => (
+              <button
+                key={value}
+                type="button"
+                role="tab"
+                id={`run-tab-${value}`}
+                aria-selected={tab === value}
+                aria-controls={`run-tabpanel-${value}`}
+                className={tab === value ? "selected" : undefined}
+                onClick={() => setTab(value)}
+                data-testid={testId}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         ) : null}
-        <RunProblem run={data} />
-        {/* The title bar already offers Continue; the notice explains why it is there. */}
-        {imported ? null : <InterruptedNotice run={data} />}
-        <div className="two-column">
-          <section className="panel stack" aria-label={t("runs.detail.input")}>
-            <h2 className="panel__title">{t("runs.detail.input")}</h2>
-            {data.values && Object.keys(data.values).length ? (
-              <dl className="form-values">
-                {Object.entries(data.values).map(([name, value]) => (
-                  <div key={name}>
-                    <dt>{data.workflow.nodes.find((item) => item.type === "start")?.start?.fields?.find((field) => field.name === name)?.label || name}</dt>
-                    <dd>{Array.isArray(value) ? value.map((item) => fileNames.get(String(item)) ?? String(item)).join(", ") : typeof value === "boolean" ? t(value ? "common.yes" : "common.no") : String(value ?? "–")}</dd>
-                  </div>
-                ))}
-              </dl>
+        {leader && tab === "leader" ? (
+          <div className="tab-panel" role="tabpanel" id="run-tabpanel-leader" aria-labelledby="run-tab-leader">
+            <TeamLeaderChat runId={data.id} />
+          </div>
+        ) : null}
+        {leader && tab === "leader" ? null : (
+          <OverviewPanel tabbed={leader}>
+            {data.sanitized ? (
+              <Callout tone="info">
+                <ShieldCheck size={13} aria-hidden /> {t("export.importedSanitized", { summary: sanitizeSummary(t, data.sanitized) })}
+              </Callout>
             ) : null}
-            <pre className="code-block code-block--prose">{data.input || "–"}</pre>
-          </section>
-          <section className="panel stack" aria-label={t("runs.tabs.result")}>
-            <h2 className="panel__title">{t("runs.tabs.result")}</h2>
-            {data.output !== null && data.output !== undefined ? (
-              <Output value={data.output} fields={outputFieldsOf(data.workflow.nodes, "", data.output)} />
-            ) : (
-              <p className="muted small">{live ? t("runs.detail.stillRunning") : t("runs.detail.noResult")}</p>
-            )}
-          </section>
-        </div>
-        <RunInputs run={data} />
-        <section className="panel stack" aria-label={t("runs.detail.trace")}>
-          <h2 className="panel__title">
-            {t("runs.detail.trace")} <HelpTip id="runs.trace" label={t("runs.detail.trace")} />
-          </h2>
-          <Trace run={data} selected={node?.id ?? null} onSelect={setSelected} />
-        </section>
-        {node && data.nodes[node.id] ? (
-          <section id="run-node-details" className="panel" aria-label={t("runs.detail.nodeDetails", { name: node.label })}>
-            <NodeRunDetails node={node} state={data.nodes[node.id]} runFiles={startFiles(data, node.id)} run={data} />
-          </section>
-        ) : null}
-        <ResultFiles run={data} />
+            <RunProblem run={data} />
+            {/* The title bar already offers Continue; the notice explains why it is there. */}
+            {imported ? null : <InterruptedNotice run={data} />}
+            <div className="two-column">
+              <section className="panel stack" aria-label={t("runs.detail.input")}>
+                <h2 className="panel__title">{t("runs.detail.input")}</h2>
+                {data.values && Object.keys(data.values).length ? (
+                  <dl className="form-values">
+                    {Object.entries(data.values).map(([name, value]) => (
+                      <div key={name}>
+                        <dt>{data.workflow.nodes.find((item) => item.type === "start")?.start?.fields?.find((field) => field.name === name)?.label || name}</dt>
+                        <dd>{Array.isArray(value) ? value.map((item) => fileNames.get(String(item)) ?? String(item)).join(", ") : typeof value === "boolean" ? t(value ? "common.yes" : "common.no") : String(value ?? "–")}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : null}
+                <pre className="code-block code-block--prose">{data.input || "–"}</pre>
+              </section>
+              <section className="panel stack" aria-label={t("runs.tabs.result")}>
+                <h2 className="panel__title">{t("runs.tabs.result")}</h2>
+                {data.output !== null && data.output !== undefined ? (
+                  <Output value={data.output} fields={outputFieldsOf(data.workflow.nodes, "", data.output)} />
+                ) : (
+                  <p className="muted small">{live ? t("runs.detail.stillRunning") : t("runs.detail.noResult")}</p>
+                )}
+              </section>
+            </div>
+            <RunInputs run={data} />
+            <section className="panel stack" aria-label={t("runs.detail.trace")}>
+              <h2 className="panel__title">
+                {t("runs.detail.trace")} <HelpTip id="runs.trace" label={t("runs.detail.trace")} />
+              </h2>
+              <Trace run={data} selected={node?.id ?? null} onSelect={setSelected} />
+            </section>
+            {node && data.nodes[node.id] ? (
+              <section id="run-node-details" className="panel" aria-label={t("runs.detail.nodeDetails", { name: node.label })}>
+                <NodeRunDetails node={node} state={data.nodes[node.id]} runFiles={startFiles(data, node.id)} run={data} />
+              </section>
+            ) : null}
+            <ResultFiles run={data} />
+          </OverviewPanel>
+        )}
       </div>
       <TraceExportDialog open={exportOpen} onClose={() => setExportOpen(false)} run={data} />
       {proposable && caseOpen ? <TestCaseFromRunDialog run={data} open={caseOpen} onClose={() => setCaseOpen(false)} /> : null}

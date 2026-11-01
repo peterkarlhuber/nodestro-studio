@@ -847,5 +847,27 @@
   },
   "model_choice": {
     "node_unknown": "The workflow has no agent “{{node}}” any more. Reload the page."
+  },
+  "run_chat": {
+    "empty_message": "The message is empty. Write a question or an instruction first.",
+    "message_too_long": "The message is too long. Shorten it and send it again.",
+    "invalid_client_id": "The message could not be sent with this id. Send it again.",
+    "client_id_reused": "This message id was already used for another text. Send the message again.",
+    "unknown_target": "This team leader does not exist in this run (anymore).",
+    "run_not_active": "The run is no longer active; the conversation can only be read.",
+    "imported_run": "Imported runs are read-only.",
+    "not_an_orchestrator": "This step is not a team leader (orchestrator).",
+    "steering_off": "Live steering is switched off for this team leader in the workflow.",
+    "steering_unattended": "Nobody started this run by hand. For instructions in such runs, set Live steering to Always in the workflow.",
+    "orchestrator_finished": "The team leader has already finished.",
+    "too_many_messages": "This run has reached its limit of messages.",
+    "too_many_instructions": "This team leader has reached its limit of instructions.",
+    "too_many_questions": "This run has reached its limit of questions.",
+    "busy": "Earlier questions are still being answered. Wait for their answers before you ask again.",
+    "rate_limited": "Too many questions in a short time. Try again in a minute.",
+    "budget_exhausted": "The chat budget of this run is used up.",
+    "run_ended": "The run ended before the instruction was considered.",
+    "answer_interrupted": "The answer was interrupted. Ask the question again.",
+    "answer_failed": "No answer could be written. Try again later."
   }
 }

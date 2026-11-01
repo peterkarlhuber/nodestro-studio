@@ -103,6 +103,26 @@ Une exécution échouée ou annulée peut être [reprise](/docs/verzweigungen#fo
 
 **Annuler l'exécution** (dans la vue d’ensemble de l’exécution ou la vue détaillée) redemande par sécurité : un second clic sur **Vraiment annuler ?** dans les cinq secondes arrête l’exécution ; **Échap** ou un clic ailleurs la laisse continuer. Cela vaut aussi pour une exécution en pause. Les agents en cours s’arrêtent à l’étape suivante (prochain morceau de texte, prochaine requête ou prochain appel d’outil) ; les agents pas encore démarrés ne sont plus exécutés. Les tokens consommés jusque-là sont facturés et affichés.
 
+## Parler au chef d’équipe {#teamleitung}
+<!-- keywords: chef d’équipe, orchestrateur, chat en direct, poser une question, donner une consigne, piloter, pilotage en direct, live_steering, budget du chat, run_chat -->
+
+Lorsqu’une exécution a un **orchestrateur** (aussi dans une exécution d’équipe imbriquée), la vue détaillée affiche l’onglet **Chef d’équipe** à côté de **Vue d’ensemble**. Les validations et le statut de l’exécution restent visibles au-dessus. S’il y a plusieurs chefs d’équipe, vous en choisissez un ; chacun indique son workflow, son niveau et son statut. En dessous, vous voyez ce qu’il fait : décisions (utilisées sur le maximum), ses équipes avec leur statut et les spécialistes qui travaillent en ce moment.
+
+Vous choisissez explicitement ce que vous écrivez :
+
+- **Poser une question :** un modèle d’IA y répond à partir de l’état actuel de l’exécution. Une question ne modifie jamais l’exécution. La réponse est marquée *Réponse du chat, pas une décision* et indique l’état sur lequel elle repose.
+- **Donner une consigne :** le chef d’équipe la prend en compte lors de sa **prochaine décision**. Une décision déjà en cours et les équipes qui travaillent déjà ne sont ni interrompues ni modifiées ; les spécialistes en cours ne remarquent rien avant la prochaine décision.
+
+Chaque consigne affiche son état : *En attente de la prochaine décision* (avec le nombre d’équipes au travail), *Transmise au chef d’équipe pour la décision N*, *Intégrée à la décision N* avec ce qui a été décidé, ou *N’est plus prise en compte* avec la raison. « Intégrée » signifie que le chef d’équipe connaissait la consigne lors de cette décision ; s’il la suit et comment, il le décide lui-même dans ses limites. Entrée envoie, Maj+Entrée commence une nouvelle ligne.
+
+**Coûts :** les réponses aux questions ont leur propre **budget du chat** par exécution, distinct du budget de l’exécution. Leurs coûts apparaissent sur la page [Utilisation](/docs/nutzung#statistik) sous **Chat en direct des exécutions**, pas dans les coûts de l’exécution. En [mode de prix](/docs/nutzung#preismodus) strict, les questions à des modèles sans prix connu sont refusées. Les consignes ne coûtent rien de plus ; elles font partie de la prochaine décision.
+
+**Autorisations et limites :** la lecture demande l’autorisation *Lire*, l’envoi demande *Exécuter*. Un message compte au plus 2000 caractères ; par exécution et par chef d’équipe, il existe un nombre maximal de messages, de consignes et de questions, ainsi qu’une limite de questions par minute. La ligne sous le champ de saisie indique le budget du chat et les questions restantes.
+
+**Pause, redémarrage, reprise :** tant qu’une équipe attend une validation, les consignes restent ouvertes et valent pour la prochaine décision dès que l’exécution reprend. Si un redémarrage du serveur fait perdre une décision, la consigne est transmise à nouveau à la décision suivante. Quand l’exécution ou le chef d’équipe se termine, les consignes ouvertes sont marquées *N’est plus prise en compte* et ne sont pas reprises lorsque vous poursuivez l’exécution. Après la fin, la conversation peut seulement être lue.
+
+**Exécutions sans surveillance :** dans l’inspecteur de l’orchestrateur, **Pilotage en direct** fixe qui peut donner des consignes : *Exécutions lancées par une personne* (par défaut), *Toujours* (aussi planification, API, exécution par lots et série de tests) ou *Désactivé*. Les questions ne sont pas concernées. Pour en savoir plus, consultez [Orchestrateur](/docs/verzweigungen#orchestrator).
+
 ## Exporter une trace {#trace-export}
 <!-- keywords: exporter une trace, export, json, run json, partager, archiver, nettoyer, anonymiser, confidentialité, données personnelles -->
 
