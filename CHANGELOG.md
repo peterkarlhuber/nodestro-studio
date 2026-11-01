@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Security fixes from the independent MCP review; pins (2026-11-01)
+
+- Pins `nodestro-runtime` `f71086a` (before: `c86781b`), `nodestro-api` `476cfc0` (before: `ae6cecd`),
+  `nodestro-examples` `69e5e65`, `nodestro-integrations` `31a7020` and `nodestro-sdk` `7b795f7`.
+  They carry the fixes of the independent MCP review (H-1 per-call approvals hold in agent tests and the tool panel,
+  M-1 no credentials in server addresses, M-2 response size limit, M-3 destructive MCP calls decided by
+  administrators, L-2 to L-8) and the offline worker fix F5.
+- Error texts in all six languages for the new codes `mcp.url_secret`, `mcp.url_secret_removed`,
+  `mcp.loopback_not_local`, `mcp.hash_required`, `mcp.response_too_large` and `tool.approval_not_in_test`;
+  `mcp.write_not_supported` now says where changing tools run.
+- ADR-0007 and the MCP threat model record the review findings, the fixes, the evaluated but not built approver role
+  and four-eyes rule, the corrected proxy statement (L-1) and that MCP on the desktop is not released (M-4).
+
 ### Runs paused at a tool approval (AO M6b, behind a switch, 2026-11-01)
 
 - With `NODESTRO_TOOL_APPROVALS=1` and the new switch `NODESTRO_TOOL_APPROVAL_CHECKPOINTS=1` (default off), a tool

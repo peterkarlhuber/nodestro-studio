@@ -96,8 +96,8 @@ try {
 
   const write = services.getByTestId("mcp-review-delete_page");
   await write.getByRole("button", { name: "Freigeben" }).click();
-  await services.getByText("Tools, die Daten ändern, sind noch gesperrt").waitFor();
-  check(true, "A tool approved as 'changes data' stays blocked until per-call approval exists");
+  await services.getByText("Tools, die Daten ändern, laufen nur in Workflow-Läufen").waitFor();
+  check(true, "A tool approved as 'changes data' is blocked outside runs that ask before each call");
 
   // ---- library ---------------------------------------------------------------------------------------
   await page.getByRole("radio", { name: "Bibliothek" }).click();

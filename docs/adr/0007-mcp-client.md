@@ -87,6 +87,11 @@ Facts from the code (runtime `d2cb987`, orkexa `76883f7`):
 - `ToolInfo.kind` gains the value `mcp` (additive API change; SDK clients with a fixed enumeration must accept it).
 - Per-call approval (needed for tools that change data) is one mechanism for all tool kinds, shared with the
   Evolution plan's S-1/S-2 and the orchestration plan's grants, enforced in the runtime's `before_tool`.
+- Per-call approval is enforced only where a person is asked: the process-wide switch never opens a tool that changes
+  data by itself; the caller must state that it asks (`gated`), and only the run engine does (independent review
+  H-1, 2026-11-01). Agent tests and the tool panel follow the same tool rules and never ask. Destructive MCP calls
+  are decided by an administrator (M-3). Server addresses never carry credentials (M-1), every MCP answer is size
+  limited before it is read (M-2).
 - Work packages WP-1 to WP-11 were approved on 2026-10-31 as one implementation assignment; release, production
   deployment and activation outside development configurations are not part of it.
 
@@ -94,3 +99,5 @@ Facts from the code (runtime `d2cb987`, orkexa `76883f7`):
 
 - 2026-10-31: draft (WP-0).
 - 2026-10-31: accepted; threat model T2 and T7 made precise.
+- 2026-11-01: consequences of the independent security review (H-1, M-1 to M-3); the first pilot is limited to an
+  isolated server test instance, MCP on the desktop is not released (M-4). See the threat model's review section.
