@@ -279,6 +279,11 @@ describe("TeamLeaderChat", () => {
     expect(await screen.findByText("Aus dem Snapshot")).toBeInTheDocument();
     act(() => source.emit("targets", { targets: [target({ decisions: 5 })], run_status: "running", active: true }));
     expect(await screen.findByText("Entscheidungen: 5 von 8")).toBeInTheDocument();
+    expect(screen.queryByTestId("lrc-deciding")).toBeNull();
+    // A decision whose teams still work counts as made, with a note.
+    act(() => source.emit("targets", { targets: [target({ decisions: 5, deciding: true })], run_status: "running", active: true }));
+    expect(await screen.findByText("Entscheidungen: 6 von 8")).toBeInTheDocument();
+    expect(screen.getByTestId("lrc-deciding")).toHaveTextContent("Entscheidung 6 wird gerade umgesetzt");
     const before = read.mock.calls.length;
     act(() => source.emit("end", { status: "succeeded" }));
     expect(source.closed).toBe(true);

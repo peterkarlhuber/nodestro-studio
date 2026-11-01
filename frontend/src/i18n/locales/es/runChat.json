@@ -20,6 +20,7 @@
   "activity": {
     "title": "Actividad actual",
     "decisions": "Decisiones: {{used}} de {{max}}",
+    "deciding": "La decisión {{n}} se está ejecutando",
     "working_one": "{{count}} equipo está trabajando ahora",
     "working_other": "{{count}} equipos están trabajando ahora",
     "noneWorking": "Ahora no trabaja ningún equipo",

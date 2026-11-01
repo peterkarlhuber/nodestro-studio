@@ -20,6 +20,7 @@
   "activity": {
     "title": "Aktuelle Tätigkeit",
     "decisions": "Entscheidungen: {{used}} von {{max}}",
+    "deciding": "Entscheidung {{n}} wird gerade umgesetzt",
     "working_one": "{{count}} Team arbeitet gerade",
     "working_other": "{{count}} Teams arbeiten gerade",
     "noneWorking": "Gerade arbeitet kein Team",

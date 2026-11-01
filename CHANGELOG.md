@@ -32,7 +32,7 @@ read-only pilot).
 
 ### Live run chat and steering (2026-11-01)
 
-LRC-1, studio part (frontend, in-app docs and texts only; the API and runtime parts are separate changes).
+LRC-1, studio part (the API, SDK and runtime parts are separate pull requests in their repositories).
 
 - Run page: runs with an orchestrator (also in nested team runs) get the tabs **Overview** (the page as before)
   and **Team leader**; approvals, tool approvals, status and summary stay above the tabs. A picker lists only the
@@ -48,6 +48,14 @@ LRC-1, studio part (frontend, in-app docs and texts only; the API and runtime pa
 - Workflow editor: the orchestrator setting **Live steering** (`live_steering`: `attended` default, `always`,
   `off`). Usage page: the source `run_chat` ("Live run chat"). Texts and error sentences for all `run_chat.*`
   codes in six languages; the manual section "Talking to the team leader" (`ausfuehrungen#teamleitung`).
+- The picker shows a decision whose teams still work as made, with the note "Decision n is being carried out"
+  (`ChatTarget.deciding`); messages of the desktop's own person show "You".
+- Browser suite `runchat` (`scripts/e2e.sh runchat`, port 8110): parallel and nested teams against the real backend
+  with a scripted model, keyboard use, light and dark, phone width.
+- Pins `nodestro-runtime` `fe6f85d` (before: `d141b8f`), `nodestro-api` `3276855` (before: `db6a696`),
+  `nodestro-examples` `5129d75` (before: `660e9a9`), `nodestro-integrations` `2c68ecc` (before: `07dc1fd`) and, in
+  `platform/versions.json`, `nodestro-sdk` `d1eb927` (before: `4a97cef`): the runtime, API and SDK parts of LRC-1.
+- Technical record: [ADR-0008](docs/adr/0008-live-run-chat.md).
 
 ### Pins: PostgreSQL read performance (2026-11-01)
 

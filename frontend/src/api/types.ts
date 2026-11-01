@@ -2791,7 +2791,10 @@ export interface ChatTarget {
   path: string[];
   depth: number;
   status: string;
+  /** Decisions recorded so far; a decision whose teams still work is not counted (see ``deciding``). */
   decisions: number;
+  /** A decision was made and its teams work now (it is decision number ``decisions + 1``). */
+  deciding?: boolean;
   max_decisions: number;
   steering: boolean;
   steering_code: string | null;

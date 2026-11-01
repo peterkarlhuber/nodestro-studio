@@ -74,13 +74,20 @@ function TargetPicker({ targets, selected, onSelect }: { targets: ChatTarget[]; 
 function TargetActivity({ target }: { target: ChatTarget }) {
   const { t } = useTranslation();
   const working = workingTeams(target);
+  // A decision whose teams still work is made but not recorded yet: a person counts it as made.
+  const made = target.decisions + (target.deciding ? 1 : 0);
   return (
     <section className="lrc-activity" aria-label={t("runChat.activity.title")}>
       <div className="lrc-activity__line">
         <Users size={14} aria-hidden />
         <span>
-          {t("runChat.activity.decisions", { used: formatNumber(target.decisions), max: formatNumber(target.max_decisions) })}
+          {t("runChat.activity.decisions", { used: formatNumber(made), max: formatNumber(target.max_decisions) })}
         </span>
+        {target.deciding ? (
+          <span className="muted small" data-testid="lrc-deciding">
+            {t("runChat.activity.deciding", { n: formatNumber(made) })}
+          </span>
+        ) : null}
         <span className="muted small">
           {working.length ? t("runChat.activity.working", { count: working.length }) : t("runChat.activity.noneWorking")}
         </span>
