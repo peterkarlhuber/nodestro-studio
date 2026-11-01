@@ -13,49 +13,62 @@ Läufe siehst du an zwei Stellen:
 Ausführungen bleiben erhalten, auch wenn du den Workflow änderst oder löschst; jeder Lauf speichert den Workflow so, wie er beim Start war.
 
 ## Live zusehen {#live}
-<!-- keywords: live, streaming, zusehen, ausführungsübersicht, fortschritt, echtzeit -->
+<!-- keywords: live, streaming, zusehen, ausführungsübersicht, fortschritt, echtzeit, wartet auf dich, lauf abbrechen -->
 
 Während eines Laufs zeigt die **Ausführungsübersicht**:
 
+- im Kopf den Status des Laufs und **Lauf abbrechen** (siehe [Läufe abbrechen](/docs/ausfuehrungen#abbrechen)), nach dem Ende einen Link zu den **Details**,
 - oben die Zahl der Agenten, API-Anfragen, Tokens und die geschätzten Kosten, laufend aktualisiert,
 - links alle Agenten mit Status; ein Klick zeigt rechts deren Details, *Gesamtergebnis* das Ergebnis des Workflows,
 - rechts den Text, den der gewählte Agent gerade schreibt, seine Tool-Aufrufe und (falls aktiviert) seine Gedanken.
 
+Wartet ein [Tool-Aufruf](/docs/verzweigungen#tool-freigabe) auf deine Entscheidung, steht beim Lauf, beim Schritt und auf seinem Knoten **Wartet auf dich**: Der Lauf geht erst weiter, wenn du entschieden hast. Hält der Lauf für eine Freigabe an, zeigt die Übersicht die Freigabe zum Entscheiden; eine Entscheidung an anderer Stelle (Seite *Freigaben*, ein anderer Tab, die API) erscheint auch hier ohne Neuladen.
+
+Nach dem Lauf zeigt die Übersicht dasselbe wie die Detailansicht: den Grund eines Fehlschlags, Tool-Aufrufe ohne Ergebnis und Schritte, die nicht fertig wurden (siehe [Die Detailansicht](/docs/ausfuehrungen#details)).
+
 Auf der Arbeitsfläche zeigt jeder Agent seinen Status, nach dem Lauf auch Tokens und Kosten. Verbindungen, über die Daten geflossen sind, sind hervorgehoben.
 
 ## Die Liste der Ausführungen {#liste}
-<!-- keywords: liste, filter, status filter, workflow filter, löschen, herkunft -->
+<!-- keywords: liste, filter, status filter, workflow filter, löschen, herkunft, ältere ausführungen laden, aktualisieren, mit problemen beendet -->
 
-Die Seite **Ausführungen** listet die Läufe, neueste zuerst, mit Workflow, Status, Startzeit, Dauer, Anfragen, Tokens und Kosten. Unter dem Workflow-Namen steht die Eingabe oder die Fehlermeldung.
+Die Seite **Ausführungen** listet die Läufe, neueste zuerst, mit Workflow, Status, Startzeit, Dauer, Anfragen, Tokens und Kosten. Unter dem Workflow-Namen steht die Eingabe oder die Fehlermeldung. Hatte ein fertiger Lauf Tool-Aufrufe ohne Ergebnis, steht neben *Fertig* **Mit Problemen beendet**, sofern der Server diese Angabe mitliefert.
 
 - **Filter:** nach Workflow, nach Status und nach Herkunft (*Eigene Läufe* oder *Importierte Traces*).
 - **Löschen:** Papierkorb-Symbol; laufende Ausführungen lassen sich nicht löschen.
 - **Trace importieren:** siehe [Traces importieren](/docs/ausfuehrungen#trace-import).
+- **Ältere Ausführungen laden:** Die Liste zeigt zunächst die neuesten 100 Läufe und sagt das darunter. Die Filter nach Status und Herkunft durchsuchen nur die geladenen Läufe. Unterstützt der Server kein Blättern, endet die Liste bei 500 Läufen; ältere bleiben gespeichert und sind über den Filter nach Workflow erreichbar.
 
-Die Liste aktualisiert sich alle fünf Sekunden.
+Die Liste aktualisiert sich alle fünf Sekunden, solange ein Lauf wartet oder läuft, sonst alle 30 Sekunden. In einem Tab im Hintergrund fragt sie nicht nach; kehrst du zurück, ist sie gleich wieder aktuell.
 
 ## Die Detailansicht {#details}
-<!-- keywords: details, detailansicht, ablauf, wasserfall, timeline, tabs, ergebnis, aufgabe, gedanken -->
+<!-- keywords: details, detailansicht, ablauf, wasserfall, timeline, tabs, ergebnis, aufgabe, gedanken, fehlgeschlagen bei, mit problemen beendet, tool-aufrufe ohne ergebnis, nicht beendet, unterbrochen, als json anzeigen, strukturiertes ergebnis -->
 
 Ein Klick auf einen Lauf öffnet die Detailansicht:
 
 1. **Kennzahlen:** Status mit Gesamtdauer, API-Anfragen, Tokens (aufgeschlüsselt in Eingabe, Ausgabe, Cache und Denken) und geschätzte Kosten.
 2. **Kurzfassung:** wie viele Schritte erfolgreich waren und wie viele übersprungen wurden, welchen Weg die Entscheidungen genommen haben, wie Freigaben entschieden wurden, welche Tools wie oft aufgerufen wurden (mit Fehlern) und bei welchem Schritt der Lauf fehlschlug, mit *Zum Schritt*. Sie entsteht nur aus den gespeicherten Daten des Laufs, ohne Modellaufruf; was der Lauf nicht aufgezeichnet hat, steht als *nicht aufgezeichnet* da.
-3. **Eingabe und Ergebnis** des Workflows nebeneinander.
-4. **Ablauf:** ein Zeitstrahl aller Agenten in der Reihenfolge ihres Starts. Jeder Balken zeigt, wann der Agent lief; übereinanderliegende Balken liefen parallel. Daneben stehen Dauer, Tokens und Zahl der Tool-Aufrufe.
-5. **Details des gewählten Agenten:** Dauer, Start- und Endzeit, Tokens, Anfragen und Kosten, ein eventueller Fehler, das Ergebnis der Qualitätsprüfung und die Tabs:
+3. **Hinweise zum Ausgang** (nur wenn nötig, siehe unten).
+4. **Eingabe und Ergebnis** des Workflows nebeneinander.
+5. **Ablauf:** ein Zeitstrahl aller Agenten in der Reihenfolge ihres Starts; Schritte, die nie gestartet sind, stehen am Ende. Jeder Balken zeigt, wann der Agent lief; übereinanderliegende Balken liefen parallel. Daneben stehen Dauer, Tokens und Zahl der Tool-Aufrufe. Geöffnet ist zuerst der fehlgeschlagene Schritt, sonst einer, der auf eine Person wartet.
+6. **Details des gewählten Agenten:** Dauer, Start- und Endzeit, Tokens, Anfragen und Kosten, ein eventueller Fehler, das Ergebnis der Qualitätsprüfung und die Tabs:
 
 | Tab | Inhalt |
 |---|---|
-| **Ergebnis** | Die Ausgabe des Agenten, als Markdown oder formatiertes JSON. |
+| **Ergebnis** | Die Ausgabe des Agenten: Text als Markdown, ein strukturiertes Ergebnis als beschriftete Felder (kurze Feldbeschreibungen dienen als Beschriftung). Das JSON ist mit **Als JSON anzeigen** einen Klick entfernt. |
 | **Aufgabe** | Die Aufgabe, wie sie nach dem Einsetzen der Platzhalter an den Agenten ging. Ideal, um Datenfluss-Probleme zu finden. |
 | **Tools** | Jeder Tool-Aufruf mit Eingabe, Ergebnis, Zeitpunkt, Dauer und Erfolg. |
 | **Gedanken** | Die Überlegungen des Modells (nur wenn *Gedanken anzeigen* aktiv war). |
 | **Memory** | Die Notizen eines Agenten mit Memory *Pro Lauf*. |
 
-Mit **Im Editor öffnen** gelangst du zum Workflow; **Abbrechen** stoppt einen laufenden Lauf.
+Mit **Im Editor öffnen** gelangst du zum Workflow; **Lauf abbrechen** stoppt einen laufenden Lauf.
 
 Der Tab **Kontext** zeigt, was der Agent in diesem Lauf bekommen hat: System-Prompt, Aufgabe mit markierten Eingaben, Beispiel-Nachrichten, Tools, Wissen, Memory, Ausgabeformat und Qualitätsprüfung, jeweils mit der Konfiguration zum Startzeitpunkt. Zugangsdaten werden nie angezeigt.
+
+**Hinweise zum Ausgang.** Was nicht glatt lief, steht unter den Kennzahlen:
+
+- **Fehlgeschlagen bei *Schritt*:** Ist ein Schritt fehlgeschlagen, nennt die Meldung ihn mit seinem eigenen Problem in Worten und was zu tun ist, zum Beispiel eine an der Token-Grenze abgeschnittene Antwort oder einen abgelehnten API-Schlüssel. Bei Anbieterfehlern steht das Modell dabei. Wo die Lösung eine Einstellung ist, führt ein Link hin: **Einstellungen öffnen** oder **„Erweitert“ von *Agent* öffnen**. Sind weitere Schritte fehlgeschlagen, steht ihre Zahl darunter. Den Originaltext findest du unter *Technische Details*.
+- **Mit Problemen beendet:** Ein Lauf kann *Fertig* sein, obwohl Tool-Aufrufe kein Ergebnis hatten: von einer Person abgelehnt, ohne Entscheidung abgelaufen, von den Freigaberegeln nicht erlaubt, abgebrochen, fehlgeschlagen oder mit einem Fehler des Tools. Dann steht neben *Fertig* das gelbe Abzeichen **Mit Problemen beendet**, und ein Hinweis listet jeden dieser Aufrufe mit Schritt, Tool und Grund, jeweils mit *Zum Schritt*. Prüfe, ob das Ergebnis darauf beruht.
+- **Nicht beendet:** Endete ein Lauf, während Schritte noch liefen oder warteten (etwa weil Nodestro beendet wurde), steht bei diesen Schritten **Nicht beendet** statt *Wartet* oder *Läuft*. Der Hinweis nennt die Schritte, die nie ein Ergebnis bekommen haben, oder sagt, dass Nodestro beendet wurde, während die Ausführung lief. Mit **Fortsetzen** direkt im Hinweis schließt du sie ab; fertige Schritte werden übernommen (siehe [Fehlgeschlagene Läufe fortsetzen](/docs/verzweigungen#fortsetzen)).
 
 ## Status {#status}
 <!-- keywords: status, fertig, fehler, übersprungen, abgebrochen, wartet, läuft, warteschlange -->
@@ -71,7 +84,10 @@ Der Tab **Kontext** zeigt, was der Agent in diesem Lauf bekommen hat: System-Pro
 | **Blockiert** | Der Knoten lief nicht, weil ein Vorgänger fehlgeschlagen ist oder abgebrochen wurde. |
 | **Wartet auf Freigabe** | Eine [Freigabe](/docs/verzweigungen#freigabe) wartet auf die Entscheidung einer Person. |
 | **Pausiert** | Der Lauf wartet auf eine Freigabe und geht nach der Entscheidung weiter. |
-| **Abgebrochen** | Durch *Abbrechen* gestoppt, abgelehnt, oder ein unvollständig exportierter Trace. |
+| **Abgebrochen** | Durch *Lauf abbrechen* gestoppt, abgelehnt, oder ein unvollständig exportierter Trace. |
+| **Wartet auf dich** | Ein Tool-Aufruf wartet auf deine Freigabe; der Lauf geht weiter, sobald du entschieden hast. |
+| **Nicht beendet** | Ein Schritt eines beendeten Laufs, der nie fertig wurde (zum Beispiel weil Nodestro beendet wurde). |
+| **Mit Problemen beendet** | Kein eigener Status, sondern ein Abzeichen neben *Fertig*: Tool-Aufrufe des Laufs hatten kein Ergebnis. |
 
 Ein fehlgeschlagener oder abgebrochener Lauf lässt sich [fortsetzen](/docs/verzweigungen#fortsetzen). Läufe aus Zeitplänen, Stapelläufen, Testreihen und Unterworkflows zeigen ihre Herkunft in der Liste und in den Details.
 
@@ -83,9 +99,9 @@ Ein fehlgeschlagener oder abgebrochener Lauf lässt sich [fortsetzen](/docs/verz
 - Bei mehreren Ergebnis-Knoten (oder letzten Agenten) ist das Ergebnis ein Objekt mit einem Eintrag je Knoten, benannt nach dem Knoten.
 
 ## Läufe abbrechen {#abbrechen}
-<!-- keywords: abbrechen, stoppen, cancel, beenden -->
+<!-- keywords: abbrechen, stoppen, cancel, beenden, wirklich abbrechen, bestätigen -->
 
-**Abbrechen** (in der Ausführungsübersicht oder der Detailansicht) stoppt den Lauf. Laufende Agenten halten beim nächsten Schritt an (nächster Textabschnitt, nächste Anfrage oder nächster Tool-Aufruf); noch nicht gestartete Agenten werden nicht mehr ausgeführt. Bis dahin verbrauchte Tokens werden berechnet und angezeigt.
+**Lauf abbrechen** (in der Ausführungsübersicht oder der Detailansicht) fragt zur Sicherheit noch einmal: Ein zweiter Klick auf **Wirklich abbrechen?** innerhalb von fünf Sekunden stoppt den Lauf; **Esc** oder ein Klick daneben lässt ihn weiterlaufen. Das gilt auch für einen pausierten Lauf. Laufende Agenten halten beim nächsten Schritt an (nächster Textabschnitt, nächste Anfrage oder nächster Tool-Aufruf); noch nicht gestartete Agenten werden nicht mehr ausgeführt. Bis dahin verbrauchte Tokens werden berechnet und angezeigt.
 
 ## Trace exportieren {#trace-export}
 <!-- keywords: trace exportieren, export, json, run json, teilen, archivieren, bereinigen, anonymisieren, datenschutz, personenbezogene daten -->
@@ -131,7 +147,7 @@ Verglichen werden nur gespeicherte Daten, nichts wird erneut ausgeführt. Gehör
 ## Fehler interpretieren {#fehler}
 <!-- keywords: fehler, fehlermeldung, error, interpretieren, ursache, lösung, refusalerror, budgetexceedederror -->
 
-Fehler stehen in der Ausführung beim Lauf (Zusammenfassung „Fehlgeschlagen: …“) und beim jeweiligen Agenten (rote Meldung). Die Meldung erscheint in der Sprache der Oberfläche und nennt meist den Fehlertyp. Unter **Technische Details** steht der Originaltext des Servers oder der API, etwa um ihn in einer Fehlermeldung weiterzugeben.
+Fehler stehen in der Ausführung beim Lauf („Fehlgeschlagen bei *Schritt*“ mit dem Problem dieses Schritts) und beim jeweiligen Agenten (rote Meldung). Die Meldung erscheint in der Sprache der Oberfläche, sagt in Worten, was passiert ist, und was du tun kannst, etwa *Max. Tokens* unter „Erweitert“ erhöhen oder den Schlüssel unter *Einstellungen → KI-Anbieter* prüfen. Anbieterfehler unterscheiden einen abgelehnten Schlüssel, zu viele Anfragen (Rate-Limit), einen überlasteten und einen nicht erreichbaren Anbieter. Unter **Technische Details** steht der Originaltext des Servers oder der API mit dem Fehlertyp, etwa um ihn in einer Fehlermeldung weiterzugeben.
 
 | Meldung | Bedeutung | Lösung |
 |---|---|---|

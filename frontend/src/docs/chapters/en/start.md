@@ -38,12 +38,12 @@ Nodestro runs locally on your computer. Workflows, runs, knowledge and memory ar
 
 Create your first workflow in a few minutes:
 
-1. **Set up an AI provider.** Open *Settings → AI providers* and enter the API key of a provider, for example Anthropic (or set an environment variable such as `ANTHROPIC_API_KEY` before starting). If you use another provider, switch the default model there too. Without a provider set up you can edit everything but run nothing.
+1. **Set up an AI provider.** Open *Settings → AI providers* and enter the API key of a provider, for example Anthropic (or set an environment variable such as `ANTHROPIC_API_KEY` before starting). If you use another provider, switch the default model there too. Without a provider set up you can edit everything but run nothing; the *Workflows* page says so at the top and leads to the settings. Copying an example works without one.
 2. **Create a workflow.** Under *Workflows*, click **New workflow**, enter a name and confirm with **Create and open**. The editor opens with three nodes, already connected: *Start*, *New agent* and *Result*.
 3. **Configure the agent.** Click the agent. The inspector appears on the right. Give the agent a name and write a system prompt, for example "You are an experienced editor. Improve spelling and style without changing the content."
-4. **Start.** Click **Start workflow**, enter a text and confirm with **Start**. Nodestro saves the workflow automatically.
-5. **Watch.** The *Execution overview* below the canvas shows live what the agent writes, which tools it calls, how many tokens it uses and what it costs.
-6. **Trace it.** **Details** takes you to the complete execution with its timeline.
+4. **Start.** Click **Start workflow**, enter a text and confirm with **Start**. Nodestro saves the workflow automatically. If the button is blocked, the reason is shown right next to it, with a link to the fix.
+5. **Watch.** The *Run overview* below the canvas shows live what the agent writes, which tools it calls, how many tokens it uses and what it costs.
+6. **Trace it.** **Details** takes you to the complete run with its timeline.
 
 > **Tip:** Below your workflows you find the gallery with 24 [example workflows](/docs/beispiele) for typical tasks, for example **Financial analysis** and **Blog article**. A preview is free; copied examples are your own copies that you can change freely.
 
@@ -57,7 +57,7 @@ The **sidebar** on the left follows the way you work: build, run and review, the
 - **Automate & test:** *Test series*, *Batch runs* and *Schedules*.
 - **Help:** this *Documentation* and the *Welcome* page.
 
-*Settings* are at the bottom. At the top right you switch between the dark and light colour scheme; your choice is saved in the browser. If the provider of the default model is not set up, a notice appears there that leads straight to the settings.
+*Settings* are at the bottom, and below them where Nodestro runs: in the desktop app and with the `nodestro` command it says **Local & private**, on a server **Your organization's server** (see [Nodestro on a server](/docs/einstellungen#server)). At the top right you switch between the dark and light colour scheme; your choice is saved in the browser. If the provider of the default model is not set up, a notice appears there (*Set up AI provider* or, once another provider is set up, *Default model needs …*) that leads straight to the settings. On a server, your account is shown at the top right as well.
 
 **Help right where you need it:** many controls have a small **?** symbol next to them. Hover over it, focus it with the Tab key or tap it on touch devices: a short explanation appears, often with a link to the matching section of this documentation. The book symbol next to page titles opens the matching chapter. **Esc** closes an explanation again.
 
@@ -78,7 +78,7 @@ All data is stored in a SQLite database in the data directory, `~/.nodestro` by 
 - `nodestro.db` with workflows, agent templates, runs, settings, knowledge files, search index and memory spaces,
 - the `tools` folder with your own and AI-created tools.
 
-To **back up**, copy the data directory while Nodestro is stopped. Only the content an agent needs for its request is sent to its provider: system prompt, task, assigned knowledge, memory content it reads, and tool results. The API keys are never shown in the interface.
+To **back up**, copy the data directory while Nodestro is stopped. Only the content an agent needs for its request is sent to its provider: system prompt, task, assigned knowledge, memory content it reads, and tool results. The API keys are never shown in the interface. If you work with Nodestro on a server, the data is stored there instead (see [Nodestro on a server](/docs/einstellungen#server)).
 
 ## The desktop app {#desktop}
 <!-- keywords: desktop, app, window, linux, install, launch link, tauri -->

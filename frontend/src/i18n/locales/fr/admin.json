@@ -69,8 +69,8 @@
     "loopback_toggle": "http n’est possible que pour un serveur de développement sur cet ordinateur : activez « {{toggle}} » ci-dessous."
   },
   "import": {
-    "not_object": "Ce fichier n’est pas un workflow Nodestro : il ne contient aucun objet workflow. Exportez un workflow dans l’éditeur (Exporter) et importez ce fichier.",
-    "no_nodes": "Ce fichier n’est pas un workflow Nodestro : il n’a aucune étape (\"nodes\"). Exportez un workflow dans l’éditeur (Exporter) et importez ce fichier.",
+    "not_object": "Ce fichier n’est pas un workflow Nodestro : il ne contient aucun objet workflow. Exportez un workflow dans l’éditeur (Plus d’actions → Exporter dans un fichier) et importez ce fichier.",
+    "no_nodes": "Ce fichier n’est pas un workflow Nodestro : il n’a aucune étape (\"nodes\"). Exportez un workflow dans l’éditeur (Plus d’actions → Exporter dans un fichier) et importez ce fichier.",
     "node_invalid": "Ce fichier n’est pas un workflow Nodestro valide : l’étape {{index}} n’a pas d’identifiant ou de type.",
     "edges_invalid": "Ce fichier n’est pas un workflow Nodestro valide : ses connexions (\"edges\") ne sont pas une liste.",
     "edge_invalid": "Ce fichier n’est pas un workflow Nodestro valide : la connexion {{index}} n’a pas de début ou de fin."

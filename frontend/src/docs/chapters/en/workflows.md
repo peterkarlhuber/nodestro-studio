@@ -3,17 +3,25 @@
 A workflow connects agents into a pipeline. This chapter explains how to create workflows, connect nodes, how data flows between agents and how to start a run.
 
 ## Creating and managing workflows {#anlegen}
-<!-- keywords: new workflow, create, delete, duplicate, copy, overview -->
+<!-- keywords: new workflow, create, delete, duplicate, copy, overview, continue, recent runs, teams, team badge, no ai model, gallery, start here, level -->
 
 The **Workflows** page shows all workflows as cards with the number of agents, the last change and the status of the last run.
 
-Three equal ways to start are on the page: **Create with AI** opens the new-workflow dialog with the [Workflow Architect](/docs/ki-architekt#neu-erstellen), **Start from an example** opens the [example gallery](/docs/beispiele) and **Build it yourself** opens the same dialog for an empty workflow. While there is no workflow they appear as large tiles, afterwards as a narrow row above the list.
+Three equal ways to start are on the page: **Create with AI** opens the new-workflow dialog with the [Workflow Architect](/docs/ki-architekt#neu-erstellen), **Start from an example** opens the [example gallery](/docs/beispiele) and **Build it yourself** opens the same dialog for an empty workflow. While there is no workflow they appear as large tiles, afterwards as a narrow **Start new** row above the list.
+
+**Without an AI model:** if no AI provider is set up for the default model yet, a notice above the large tiles says that workflows only run once an AI model is connected (an API key or a local model server such as Ollama), with the link **Set up in Settings**. The example then comes first, because a copy needs no model, and *Create with AI* is marked *Needs a connection to an AI model*. The dialog says so too when you choose *Create with AI* there: the Workflow Architect works with your default model.
 
 - **New workflow:** enter a name and an optional description. The new workflow already contains *Start → Agent → Result*.
 - **Create with AI:** in the same dialog, describe what you want and the [Workflow Architect](/docs/ki-architekt#neu-erstellen) designs the workflow for you to review.
 - **Open:** click the card.
 - **Duplicate:** copy symbol on the card. The copy is called "… (copy)"; runs are not copied.
 - **Delete:** bin symbol. Previous runs remain available under *Runs*.
+
+**Continue:** once there are workflows and runs, the **Continue** area appears above the list: how many approvals are waiting for you (a click opens the *Approvals* page), the **Recent runs** with their status and, with more than six workflows, the **Recently edited** ones. Parts without content are left out; if there is nothing at all, the whole area is left out.
+
+**Teams:** workflows with capabilities or an output contract carry the **Team** badge: an [orchestrator](/docs/verzweigungen#orchestrator) can delegate work to them. They are listed below your own workflows in the collapsible **Teams** area. Copies of orchestrated examples bring their teams along.
+
+**Example gallery:** below the list are the featured examples, the easiest first and marked **Start here** while you have no workflow yet. After that the gallery is a closed area that remembers whether you opened it. In the full gallery you search by name, field, building block or level and filter by category and **Level**; the search, the filters and an open preview are part of the address, so *Back* returns to the same selection. Under **What you need**, the preview names the AI provider and the models the copy uses (and whether it is set up), whether a run stops for an approval, which knowledge and sample files come along and whether a connection to another service is needed. More under [Example workflows](/docs/beispiele).
 
 ## Favorites and tags {#favoriten-tags}
 <!-- keywords: favorite, favorites, star, tag, tags, label, filter, organize -->
@@ -23,18 +31,18 @@ Workflows, agent templates and tools can be marked as favorites with the **star*
 Above the lists you filter by **Favorites only** and by a tag. Favorites and tags are stored apart from the objects: they change neither workflows nor agents nor tools, and they also show up in the [search](/docs/start#suche). There are deliberately no folders.
 
 ## The editor {#editor}
-<!-- keywords: panels, resize, divider, canvas, palette, building blocks, inspector, execution overview, zoom, minimap -->
+<!-- keywords: panels, resize, divider, canvas, palette, building blocks, inspector, execution overview, zoom, minimap, title bar, more actions, teams in the palette, run overview -->
 
 The editor has four areas:
 
-1. **Title bar:** name, *Export*, *Save*, *Add agent* and *Start workflow*.
-2. **Canvas:** the nodes and connections. The top left shows whether there are unsaved changes and how many agents and connections the workflow has. At the bottom left you find zoom, *Show everything*, *Arrange automatically* as well as *Undo* and *Redo*. At the top right an overview map shows the whole workflow.
-3. **Building blocks (palette):** *Agent* (empty), *Describe an agent* (the AI drafts the configuration), *Start*, *Result* and up to eight templates from the agent library. Drag a building block onto the canvas or click it.
-4. **Inspector (right):** without a selection it shows the workflow settings, otherwise the configuration of the selected node.
+1. **Title bar:** name, *AI architect*, *API & Export*, the **More actions** menu (*Versions* and *Export as a file*), *Save* and *Start workflow*. With unsaved changes, *Discard* is added. In narrow windows the secondary actions show as icons only.
+2. **Canvas:** the nodes and connections. The top left shows whether there are unsaved changes and how many agents and connections the workflow has. At the bottom left you find zoom, *Show everything*, *Arrange automatically* as well as *Undo* and *Redo* (disabled when there is nothing to undo or redo). At the top right an overview map shows the whole workflow. A large workflow opens at a readable size at its start node instead of shrunk to fit.
+3. **Building blocks (palette):** *Agent* (empty), *Describe an agent* (the AI drafts the configuration), *Start*, *Result*, up to eight templates from the agent library and below them the **Teams**, which you can search and collapse; each team names its capabilities. Drag a building block onto the canvas or click it. A new node appears in the visible part of the canvas and is selected right away.
+4. **Inspector (right):** without a selection it shows the check and the workflow settings, otherwise the configuration of the selected node, and with several nodes selected the actions for all of them (see [Controls and keyboard shortcuts](/docs/workflows#bedienung)).
 
-Below the canvas is the **Execution overview** with the last run of this workflow.
+Below the canvas is the **Run overview** with the last run of this workflow.
 
-The building blocks, the inspector (titled *Properties*) and the execution overview are panels. The button in a panel's header hides or shows it; a hidden panel leaves a narrow bar, and the building blocks then remain available as icons. The divider between a panel and the canvas changes its size: drag it, or focus it with *Tab* and use the arrow keys (with *Shift* in larger steps). A double-click on a divider restores the default size. While the inspector is hidden, its bar names the selected node; a double-click on a node shows its properties. Nodestro remembers the layout in this browser for every workflow. It is not part of the workflow: changing it never creates unsaved changes or an undo step, and a running workflow keeps running.
+The building blocks, the inspector (titled *Properties*) and the run overview are panels. The button in a panel's header hides or shows it; a hidden panel leaves a narrow bar, and the building blocks then remain available as icons. The divider between a panel and the canvas changes its size: drag it, or focus it with *Tab* and use the arrow keys (with *Shift* in larger steps). A double-click on a divider restores the default size. While the inspector is hidden, its bar names the selected node; a double-click on a node shows its properties. Nodestro remembers the layout in this browser for every workflow. It is not part of the workflow: changing it never creates unsaved changes or an undo step, and a running workflow keeps running.
 
 ## Node types {#knoten}
 <!-- keywords: start, result, output, agent, node, input, output port -->
@@ -166,24 +174,24 @@ A model request or tool call that is already running is still finished. The run 
 Nodestro checks the workflow on every change (after a pause of half a second), without calling the API and without cost:
 
 - **Structure:** Is there at least one agent? Does the start node have no inputs and the result node no outputs? Are there no cycles, no duplicate connections and none pointing nowhere? Does the result node have an input?
-- **Agents:** Every configuration is checked with the library's rules. Agents with errors show “1 problem” on the canvas.
+- **Agents:** Every configuration is checked with the library's rules. Nodes with errors show “1 problem” on the canvas, Start and Result too; warnings show as “1 warning” in their own colour and with an icon.
 - **Connections and placeholders:** placeholders that match no connected predecessor, agents without input, results that go nowhere, and duplicate agent names.
 - **Settings:** providers that are not set up, deleted knowledge or start files, models without a known price, and a budget of 0.
 
-The results are listed in the workflow inspector (click an empty spot of the canvas), sorted into **errors** and **notes**. Clicking a message selects the agent concerned or highlights the connection concerned; faulty connections appear red and dashed.
+The results are listed at the very top of the workflow inspector (click an empty spot of the canvas), sorted into **errors** and **notes**. Clicking a message selects the agent concerned or highlights the connection concerned; faulty connections appear red and dashed. When you select a node, its own messages are shown above its settings. While a provider is not set up, nodes show no “Ready”.
 
-As long as **errors** exist, **Start workflow** is disabled; hover over the button to see the reasons. **Notes** do not block the start; the start dialog shows them once more.
+As long as **errors** exist, **Start workflow** is blocked. The reason is shown right next to the button, with several problems the first one (“3 problems block the start. First: …”). **Show** selects the node or connection concerned and opens the inspector; if an AI provider is missing, **Open settings** goes straight there. The blocked button stays reachable with the keyboard, and screen readers read out the reason. **Notes** do not block the start; the start dialog shows them once more.
 
 ## Starting a run {#starten}
-<!-- keywords: start, run, execute, start dialog, input, attach files -->
+<!-- keywords: start, run, execute, start dialog, input, attach files, prefilled task, more files -->
 
 **Start workflow** opens the start dialog:
 
-- **Input:** the text all agents receive at the start. It is prefilled with the *Suggested input* of the start node.
-- **Attach files (optional):** knowledge files that are put directly into the context of the first agents for this run only (see [Attaching files at the start](/docs/wissen#start-dateien)).
+- **Input:** the text all agents receive at the start. It is prefilled with the *Suggested input* of the start node. If the workflow has an [input form](/docs/verzweigungen#eingabeformular), the field is below the form fields; when it is prefilled it is called **Task (prefilled example)**: replace the example with your own request.
+- **Attach files (optional):** knowledge files that are put directly into the context of the first agents for this run only (see [Attaching files at the start](/docs/wissen#start-dateien)). If the form has file fields of its own, this area is folded under **Attach more files (optional)**.
 - **Budget:** the dialog shows which budget applies.
 
-With **Start**, Nodestro saves the workflow and begins the run. The run uses the state of the workflow at the time it was started; later changes only take effect in the next run. If the provider of a model is not set up, the dialog points this out.
+With **Start**, Nodestro saves the workflow and begins the run. The run uses the state of the workflow at the time it was started; later changes only take effect in the next run. If the provider of a model is not set up, the dialog points this out. If the run cannot start yet, the reason is shown below **Start**: uploads are still running, or errors need fixing first (*Fix the problems above first.*).
 
 ## Controls and keyboard shortcuts {#bedienung}
 <!-- keywords: keyboard shortcuts, shortcuts, ctrl+s, ctrl+z, undo, redo, delete, duplicate, arrange automatically -->
@@ -194,11 +202,14 @@ More tips:
 
 - **Arrange automatically** arranges the nodes in columns according to their position in the data flow.
 - **Show everything** zooms so that the whole workflow is visible.
-- If you leave the editor with unsaved changes, Nodestro asks whether to save or discard them.
-- Undo remembers up to 80 steps. Moving a node is one step, and so is typing in one field until you switch to another field or node. The name, description and budget of the workflow are included.
+- **Selecting several nodes:** Shift- or Ctrl-click adds nodes to the selection; Shift and dragging on the canvas selects with a box. Dragging moves all selected nodes, **Delete** deletes them all, **Ctrl+D** duplicates them all. The inspector then offers *Duplicate all*, *Delete nodes* and *Clear selection*.
+- **Undoing a delete:** after you delete nodes, a message with **Undo** appears.
+- **Drawing connections:** while you drag, the canvas already shows where a connection is not allowed; if you drop it there, a message gives the reason.
+- If you leave the editor with unsaved changes, Nodestro asks whether to save, discard or **Keep editing**.
+- Undo remembers up to 80 steps. Moving a node is one step, and so is typing in one field until you switch to another field or node. The name, description and budget of the workflow are included. If you undo everything back to the saved state, there are no unsaved changes left.
 
 - **Deleting connections:** Click a connection. It is highlighted, and **Delete** or **Backspace** removes it. While you type in an input field these keys only delete text. Deleting a connection can be undone too.
-- The **Building blocks** bar is always collapsed when the editor opens; once expanded it stays open until you leave the editor.
+- In narrow windows (below 1100 pixels wide) the **Building blocks** bar starts collapsed; after that the layout you chose last applies.
 
 ## Saving and discarding {#speichern}
 <!-- keywords: save, discard, unsaved, discard changes, reset -->
@@ -207,23 +218,34 @@ More tips:
 
 **Discard** throws away all unsaved changes, including the undo/redo history, and reloads the last saved state. The same applies when you leave the editor and choose **Discard** in the dialog: the next time you open it, exactly the saved workflow appears.
 
+**Changed somewhere else:** before saving, Nodestro checks whether the workflow has been saved somewhere else in the meantime, in another tab or by someone else. Then the **Changed somewhere else** dialog asks instead of silently replacing the other change:
+
+- **Load saved version:** the editor shows the saved state; your unsaved changes here are dropped.
+- **Keep mine as a copy:** your state becomes a new workflow "… (my copy)", the saved one stays as it is.
+- **Save mine anyway:** your state replaces the other change.
+- **Keep editing:** nothing is saved.
+
+Nothing is lost for good: every save is kept under [Versions](/docs/workflows#versionen).
+
 ## Versions {#versionen}
 <!-- keywords: version, versions, history, restore, go back, older state -->
 
-Every save that changes something is kept as a numbered **version** with date and time. **Versions** in the editor's title bar opens the history:
+Every save that changes something is kept as a numbered **version** with date and time. **Versions** in the title bar's **More actions** menu opens the history:
 
 - **Save as version** saves the current changes with an optional description (“before reworking the research”).
 - The pencil icon adds or changes the description of a version.
 - **Differences** shows what would change compared with the state in the editor: agents, connections, name and settings.
-- **Restore** sets the workflow back to that version and saves the result as a **new version**. No version is overwritten or deleted.
+- **Restore** sets the workflow back to that version and saves the result as a **new version**. No version is overwritten or deleted. If there are unsaved changes, choose **Save first, then restore** (the changes first become a version of their own) or **Restore without saving**.
 
 Versions are independent of undo/redo, which only applies within one session in the editor. Runs always use the state at their start. When a workflow is deleted, its versions are deleted too. At the top of the history is the **test result** of the saved version from each test series of the workflow (as when [publishing](/docs/api-und-export#veroeffentlichen)).
 
 ## Import and export {#import-export}
-<!-- keywords: export, import, json, file, share, backup, .nodestro.json -->
+<!-- keywords: export, import, json, file, share, backup, .nodestro.json, not a workflow, invalid file -->
 
-- **Export** (in the editor) saves the workflow as `<Name>.nodestro.json`: all nodes, connections, positions and agent settings as well as the budget.
-- **Import** (on the *Workflows* page) loads such a file as a **new copy** with a new ID. Existing workflows are never overwritten.
+- **Export as a file** (in the editor under **More actions**) saves the workflow as `<Name>.nodestro.json`: all nodes, connections, positions and agent settings as well as the budget.
+- **Import** (on the *Workflows* page) loads such a file as a **new copy** with a new ID. Existing workflows are never overwritten. If the file has no name, the workflow is named after the file.
+
+Nodestro checks the file before anything is created. If it is not a workflow export (for example another JSON file, a file without steps or with broken connections), nothing is imported and the message gives the reason, for example *This file is not a Nodestro workflow: it has no steps ("nodes").*
 
 **Not included** are knowledge files, memory spaces and your own tools; the file only refers to their IDs and names. On another computer they must exist there, otherwise the check reports, for example, "Unknown tools".
 

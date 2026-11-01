@@ -69,8 +69,8 @@
     "loopback_toggle": "http è possibile solo per un server di sviluppo su questo computer: attiva «{{toggle}}» qui sotto."
   },
   "import": {
-    "not_object": "Questo file non è un workflow Nodestro: non contiene alcun oggetto workflow. Esporta un workflow nell’editor (Esporta) e importa quel file.",
-    "no_nodes": "Questo file non è un workflow Nodestro: non ha passi (\"nodes\"). Esporta un workflow nell’editor (Esporta) e importa quel file.",
+    "not_object": "Questo file non è un workflow Nodestro: non contiene alcun oggetto workflow. Esporta un workflow nell’editor (Altre azioni → Esporta come file) e importa quel file.",
+    "no_nodes": "Questo file non è un workflow Nodestro: non ha passi (\"nodes\"). Esporta un workflow nell’editor (Altre azioni → Esporta come file) e importa quel file.",
     "node_invalid": "Questo file non è un workflow Nodestro valido: il passo {{index}} non ha id o tipo.",
     "edges_invalid": "Questo file non è un workflow Nodestro valido: i suoi collegamenti (\"edges\") non sono un elenco.",
     "edge_invalid": "Questo file non è un workflow Nodestro valido: il collegamento {{index}} non ha inizio o fine."

@@ -8,7 +8,7 @@ Nodestro counts the tokens of every request to an AI provider and estimates the 
 You see tokens and costs in four places:
 
 - on every agent node after a run,
-- in the editor's *Execution overview* (live),
+- in the editor's *Run overview* (live),
 - in the detail view of every execution, in total and per agent,
 - on the **Usage** page, summarized by day, workflow and model.
 

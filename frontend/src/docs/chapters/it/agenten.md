@@ -136,7 +136,7 @@ Il **ragionamento (thinking)** stabilisce se il modello riflette prima di rispon
 
 Il ragionamento conta come **token di output** e viene fatturato di conseguenza.
 
-Se non è noto se un modello supporti lo sforzo di ragionamento (server propri, id di modello sconosciuti), uno sforzo impostato porta a un errore. Scegli allora *Predefinito del modello* oppure dichiara la capacità in [Provider di IA](/docs/einstellungen#anbieter).
+Se non è noto se un modello supporti lo sforzo di ragionamento (server propri, id di modello sconosciuti), uno sforzo impostato porta a un errore. Scegli allora *Predefinito del modello* oppure dichiara la capacità in [Provider di IA](/docs/einstellungen#anbieter). Gli endpoint compatibili con OpenAI (come Ollama o vLLM) non accettano alcuna impostazione dello sforzo; la verifica lo spiega, e **Imposta l’impegno sul predefinito del modello** corregge l’agente con un clic.
 
 ## Controllo qualità {#qualitaet}
 <!-- keywords: controllo qualità, giudice, judge, valutatore, criteri, revisione, refine, llm as a judge, valutazione -->

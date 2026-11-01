@@ -3,17 +3,25 @@
 Un workflow relie des agents pour former une chaîne. Ce chapitre explique comment créer des workflows, relier des nœuds, comment les données circulent entre les agents et comment lancer une exécution.
 
 ## Créer et gérer des workflows {#anlegen}
-<!-- keywords: nouveau workflow, créer, supprimer, dupliquer, copie, aperçu -->
+<!-- keywords: nouveau workflow, créer, supprimer, dupliquer, copie, aperçu, reprendre, exécutions récentes, équipes, badge équipe, sans modèle d’ia, galerie, commencez ici, niveau -->
 
 La page **Workflows** affiche tous les workflows sous forme de cartes avec le nombre d’agents, la dernière modification et le statut de la dernière exécution.
 
-La page propose trois façons équivalentes de commencer : **Créer avec l’IA** ouvre la boîte de dialogue d’un nouveau workflow avec l’[architecte IA](/docs/ki-architekt#neu-erstellen), **Partir d’un exemple** ouvre la [galerie d’exemples](/docs/beispiele) et **Le construire vous-même** ouvre la même boîte de dialogue pour un workflow vide. Tant qu’il n’y a aucun workflow, elles apparaissent sous forme de grandes tuiles, ensuite comme une ligne étroite au-dessus de la liste.
+La page propose trois façons équivalentes de commencer : **Créer avec l’IA** ouvre la boîte de dialogue d’un nouveau workflow avec l’[architecte IA](/docs/ki-architekt#neu-erstellen), **Partir d’un exemple** ouvre la [galerie d’exemples](/docs/beispiele) et **Le construire vous-même** ouvre la même boîte de dialogue pour un workflow vide. Tant qu’il n’y a aucun workflow, elles apparaissent sous forme de grandes tuiles, ensuite comme une ligne étroite **Nouveau départ** au-dessus de la liste.
+
+**Sans modèle d’IA :** si aucun fournisseur d’IA n’est encore configuré pour le modèle par défaut, un avis au-dessus des grandes tuiles indique que les workflows ne s’exécutent qu’avec un modèle d’IA connecté (une clé API ou un serveur de modèles local comme Ollama), avec le lien **Configurer dans les paramètres**. L’exemple passe alors en premier, car une copie n’a besoin d’aucun modèle, et *Créer avec l’IA* porte la mention *Nécessite une connexion à un modèle d’IA*. La boîte de dialogue le signale aussi si vous y choisissez *Créer avec l’IA* : l’architecte IA travaille avec votre modèle par défaut.
 
 - **Nouveau workflow :** saisissez un nom et une description facultative. Le nouveau workflow contient déjà *Départ → Agent → Résultat*.
 - **Créer avec l’IA :** dans la même boîte de dialogue, décrivez votre projet et l’[architecte de workflows](/docs/ki-architekt#neu-erstellen) conçoit le workflow pour que vous le vérifiiez.
 - **Ouvrir :** cliquez sur la carte.
 - **Dupliquer :** symbole de copie sur la carte. La copie s’appelle « … (copie) » ; les exécutions ne sont pas copiées.
 - **Supprimer :** symbole de corbeille. Les exécutions précédentes restent disponibles dans *Exécutions*.
+
+**Reprendre :** dès qu’il existe des workflows et des exécutions, la zone **Reprendre** apparaît au-dessus de la liste : combien de validations vous attendent (un clic ouvre la page *Validations*), les **Exécutions récentes** avec leur statut et, au-delà de six workflows, ceux **Modifiés récemment**. Les parties sans contenu sont omises ; s’il n’y a rien, toute la zone est omise.
+
+**Équipes :** les workflows dotés de capacités ou d’un contrat de sortie portent le badge **Équipe** : un [orchestrateur](/docs/verzweigungen#orchestrator) peut leur déléguer du travail. Ils figurent sous vos propres workflows, dans la zone dépliable **Équipes**. Les copies d’exemples orchestrés apportent leurs équipes.
+
+**Galerie d’exemples :** sous la liste se trouvent les exemples recommandés, le plus simple en premier et marqué **Commencez ici** tant que vous n’avez aucun workflow. Ensuite, la galerie est une zone repliée qui se souvient si vous l’avez ouverte. Dans la galerie complète, vous recherchez par nom, domaine, bloc ou niveau et filtrez par catégorie et par **Niveau** ; la recherche, les filtres et un aperçu ouvert font partie de l’adresse, si bien que *Retour* ramène à la même sélection. Sous **Ce dont vous avez besoin**, l’aperçu indique le fournisseur d’IA et les modèles qu’utilise la copie (et s’il est configuré), si une exécution s’arrête pour une validation, quels fichiers de connaissances et d’exemple sont fournis et si une connexion à un autre service est nécessaire. Plus d’informations dans [Workflows d’exemple](/docs/beispiele).
 
 ## Favoris et étiquettes {#favoriten-tags}
 <!-- keywords: favori, favoris, étoile, étiquette, étiquettes, tag, filtrer, ranger -->
@@ -23,14 +31,14 @@ Les workflows, modèles d’agents et outils peuvent être marqués comme favori
 Au-dessus des listes, vous filtrez par **Favoris uniquement** et par étiquette. Les favoris et les étiquettes sont enregistrés à part des objets : ils ne modifient ni les workflows, ni les agents, ni les outils, et apparaissent aussi dans la [recherche](/docs/start#suche). Il n’y a volontairement pas de dossiers.
 
 ## L’éditeur {#editor}
-<!-- keywords: canevas, canvas, palette, blocs, inspecteur, vue d’ensemble de l’exécution, zoom, minimap -->
+<!-- keywords: canevas, canvas, palette, blocs, inspecteur, vue d’ensemble de l’exécution, zoom, minimap, barre de titre, plus d’actions, équipes dans la palette -->
 
 L’éditeur comporte quatre zones :
 
-1. **Barre de titre :** nom, *Exporter*, *Enregistrer*, *Ajouter un agent* et *Lancer le workflow*.
-2. **Canevas :** les nœuds et les connexions. En haut à gauche, vous voyez s’il y a des modifications non enregistrées et combien d’agents et de connexions compte le workflow. En bas à gauche se trouvent le zoom, *Tout afficher*, *Organiser automatiquement* ainsi que *Annuler* et *Rétablir*. En haut à droite, une carte d’ensemble montre tout le workflow.
-3. **Blocs (palette) :** *Agent* (vide), *Décrire un agent* (l’IA conçoit la configuration), *Départ*, *Résultat* et jusqu’à huit modèles de la bibliothèque d’agents. Faites glisser un bloc sur le canevas ou cliquez dessus.
-4. **Inspecteur (à droite) :** sans sélection, il affiche les réglages du workflow ; sinon, la configuration du nœud sélectionné.
+1. **Barre de titre :** nom, *Architecte IA*, *API & Export*, le menu **Plus d’actions** (*Versions* et *Exporter dans un fichier*), *Enregistrer* et *Lancer le workflow*. En cas de modifications non enregistrées, *Abandonner* s’y ajoute. Dans les fenêtres étroites, les actions secondaires ne s’affichent que sous forme d’icônes.
+2. **Canevas :** les nœuds et les connexions. En haut à gauche, vous voyez s’il y a des modifications non enregistrées et combien d’agents et de connexions compte le workflow. En bas à gauche se trouvent le zoom, *Tout afficher*, *Organiser automatiquement* ainsi que *Annuler* et *Rétablir* (bloqués quand il n’y a rien à annuler ou à rétablir). En haut à droite, une carte d’ensemble montre tout le workflow. Un grand workflow s’ouvre à une taille lisible sur son nœud de départ au lieu d’être réduit pour tenir à l’écran.
+3. **Blocs (palette) :** *Agent* (vide), *Décrire un agent* (l’IA conçoit la configuration), *Départ*, *Résultat*, jusqu’à huit modèles de la bibliothèque d’agents et, en dessous, les **Équipes**, que vous pouvez rechercher et replier ; chaque équipe indique ses capacités. Faites glisser un bloc sur le canevas ou cliquez dessus. Un nouveau nœud apparaît dans la partie visible du canevas et est aussitôt sélectionné.
+4. **Inspecteur (à droite) :** sans sélection, il affiche la vérification et les réglages du workflow ; sinon, la configuration du nœud sélectionné et, si plusieurs nœuds sont sélectionnés, les actions communes (voir [Commandes et raccourcis clavier](/docs/workflows#bedienung)).
 
 Sous le canevas se trouve la **Vue d’ensemble de l’exécution** avec la dernière exécution de ce workflow.
 
@@ -166,24 +174,24 @@ Une requête au modèle ou un appel d’outil déjà en cours est mené à son t
 Nodestro vérifie le workflow à chaque modification (après une pause d’une demi-seconde), sans appeler l’API et sans frais :
 
 - **Structure :** Y a-t-il au moins un agent ? Le nœud de départ n’a-t-il aucune entrée et le nœud de résultat aucune sortie ? N’y a-t-il ni cycle, ni connexion en double, ni connexion qui ne mène nulle part ? Le nœud de résultat a-t-il une entrée ?
-- **Agents :** chaque configuration est vérifiée avec les règles de la bibliothèque. Les agents en erreur affichent « 1 problème » sur le canevas.
+- **Agents :** chaque configuration est vérifiée avec les règles de la bibliothèque. Les nœuds en erreur affichent « 1 problème » sur le canevas, Départ et Résultat compris ; les avertissements apparaissent comme « 1 avertissement » dans leur propre couleur et avec une icône.
 - **Connexions et espaces réservés :** espaces réservés qui ne correspondent à aucun prédécesseur relié, agents sans entrée, résultats qui ne mènent nulle part et noms d’agents en double.
 - **Réglages :** fournisseurs non configurés, fichiers de connaissances ou de départ supprimés, modèles sans prix connu et budget de 0.
 
-Les résultats figurent dans l’inspecteur du workflow (clic sur un endroit vide du canevas), triés en **erreurs** et **remarques**. Un clic sur un message sélectionne l’agent concerné ou met en évidence la connexion concernée ; les connexions fautives apparaissent en rouge pointillé.
+Les résultats figurent tout en haut de l’inspecteur du workflow (clic sur un endroit vide du canevas), triés en **erreurs** et **remarques**. Un clic sur un message sélectionne l’agent concerné ou met en évidence la connexion concernée ; les connexions fautives apparaissent en rouge pointillé. Lorsque vous sélectionnez un nœud, ses propres messages s’affichent au-dessus de ses réglages. Tant qu’un fournisseur n’est pas configuré, les nœuds n’affichent pas « Prêt ».
 
-Tant qu’il y a des **erreurs**, **Lancer le workflow** est bloqué ; survolez le bouton pour voir les raisons. Les **remarques** ne bloquent pas le lancement ; la boîte de dialogue de lancement les affiche à nouveau.
+Tant qu’il y a des **erreurs**, **Lancer le workflow** est bloqué. La raison s’affiche juste à côté du bouton ; s’il y a plusieurs problèmes, le premier (« 3 problèmes empêchent le démarrage. D’abord : … »). **Afficher** sélectionne le nœud ou la connexion concernés et ouvre l’inspecteur ; s’il manque un fournisseur d’IA, **Ouvrir les réglages** y mène directement. Le bouton bloqué reste accessible au clavier, et les lecteurs d’écran lisent la raison. Les **remarques** ne bloquent pas le lancement ; la boîte de dialogue de lancement les affiche à nouveau.
 
 ## Lancer une exécution {#starten}
-<!-- keywords: lancer, exécuter, run, boîte de dialogue de lancement, entrée, joindre des fichiers -->
+<!-- keywords: lancer, exécuter, run, boîte de dialogue de lancement, entrée, joindre des fichiers, tâche préremplie, autres fichiers -->
 
 **Lancer le workflow** ouvre la boîte de dialogue de lancement :
 
-- **Entrée :** le texte que tous les agents reçoivent au départ. Il est prérempli avec l’*Entrée proposée* du nœud de départ.
-- **Joindre des fichiers (facultatif) :** des fichiers de connaissances placés directement dans le contexte des premiers agents, pour cette exécution seulement (voir [Joindre des fichiers au lancement](/docs/wissen#start-dateien)).
+- **Entrée :** le texte que tous les agents reçoivent au départ. Il est prérempli avec l’*Entrée proposée* du nœud de départ. Si le workflow a un [formulaire de saisie](/docs/verzweigungen#eingabeformular), le champ se trouve sous les champs du formulaire ; s’il est prérempli, il s’appelle **Tâche (exemple prérempli)** : remplacez l’exemple par votre propre demande.
+- **Joindre des fichiers (facultatif) :** des fichiers de connaissances placés directement dans le contexte des premiers agents, pour cette exécution seulement (voir [Joindre des fichiers au lancement](/docs/wissen#start-dateien)). Si le formulaire a ses propres champs de fichier, cette zone est repliée sous **Joindre d’autres fichiers (facultatif)**.
 - **Budget :** la boîte de dialogue indique le budget applicable.
 
-Avec **Démarrer**, Nodestro enregistre le workflow et lance l’exécution. L’exécution utilise l’état du workflow au moment du démarrage ; les modifications ultérieures ne prennent effet qu’à la prochaine exécution. Si le fournisseur d’un modèle n’est pas configuré, la boîte de dialogue le signale.
+Avec **Lancer**, Nodestro enregistre le workflow et démarre l’exécution. L’exécution utilise l’état du workflow au moment du démarrage ; les modifications ultérieures ne prennent effet qu’à la prochaine exécution. Si le fournisseur d’un modèle n’est pas configuré, la boîte de dialogue le signale. Si l’exécution ne peut pas encore démarrer, la raison s’affiche sous **Lancer** : des envois de fichiers sont en cours, ou des erreurs doivent d’abord être corrigées (*Corrigez d’abord les problèmes ci-dessus.*).
 
 ## Commandes et raccourcis clavier {#bedienung}
 <!-- keywords: raccourcis clavier, shortcuts, ctrl+s, ctrl+z, annuler, rétablir, suppr, dupliquer, organiser automatiquement -->
@@ -194,11 +202,14 @@ Autres conseils :
 
 - **Organiser automatiquement** range les nœuds en colonnes selon leur position dans le flux de données.
 - **Tout afficher** ajuste le zoom pour que tout le workflow soit visible.
-- Si vous quittez l’éditeur avec des modifications non enregistrées, Nodestro demande s’il faut les enregistrer ou les abandonner.
-- Annuler mémorise jusqu’à 80 étapes. Déplacer un nœud compte pour une étape, tout comme la saisie dans un champ jusqu’à ce que vous passiez à un autre champ ou nœud. Le nom, la description et le budget du workflow en font partie.
+- **Sélectionner plusieurs nœuds :** Maj-clic ou Ctrl-clic ajoute des nœuds à la sélection ; Maj et glisser sur le canevas sélectionne avec un cadre. Glisser déplace tous les nœuds sélectionnés, **Suppr** les supprime tous, **Ctrl+D** les duplique tous. L’inspecteur propose alors *Tout dupliquer*, *Supprimer les nœuds* et *Annuler la sélection*.
+- **Annuler une suppression :** après la suppression de nœuds, un message avec **Annuler** apparaît.
+- **Tracer des connexions :** pendant le glissement, le canevas montre déjà où une connexion n’est pas permise ; si vous la relâchez à cet endroit, un message en donne la raison.
+- Si vous quittez l’éditeur avec des modifications non enregistrées, Nodestro demande s’il faut les enregistrer, les abandonner ou **Continuer la modification**.
+- Annuler mémorise jusqu’à 80 étapes. Déplacer un nœud compte pour une étape, tout comme la saisie dans un champ jusqu’à ce que vous passiez à un autre champ ou nœud. Le nom, la description et le budget du workflow en font partie. Si vous annulez tout jusqu’à l’état enregistré, il ne reste plus de modifications non enregistrées.
 
 - **Supprimer des connexions :** cliquez sur une connexion. Elle est mise en évidence, et **Suppr** ou **Retour arrière** la supprime. Tant que vous écrivez dans un champ de saisie, ces touches n’effacent que du texte. La suppression d’une connexion peut elle aussi être annulée.
-- La barre **Blocs** est toujours repliée à l’ouverture de l’éditeur ; une fois dépliée, elle le reste jusqu’à ce que vous quittiez l’éditeur.
+- Dans les fenêtres étroites (moins de 1100 pixels de large), la barre **Blocs** est d’abord repliée ; ensuite, la disposition que vous avez choisie en dernier s’applique.
 
 ## Enregistrer et abandonner {#speichern}
 <!-- keywords: enregistrer, abandonner, non enregistré, abandonner les modifications, réinitialiser -->
@@ -207,23 +218,34 @@ Autres conseils :
 
 **Abandonner** supprime toutes les modifications non enregistrées, y compris l’historique annuler/rétablir, et recharge le dernier état enregistré. Il en va de même si vous quittez l’éditeur et choisissez **Abandonner** dans la boîte de dialogue : à la prochaine ouverture, c’est exactement le workflow enregistré qui apparaît.
 
+**Modifié ailleurs :** avant d’enregistrer, Nodestro vérifie si le workflow a été enregistré ailleurs entre-temps, dans un autre onglet ou par quelqu’un d’autre. Dans ce cas, la boîte de dialogue **Modifié ailleurs** vous demande quoi faire au lieu de remplacer l’autre modification sans rien dire :
+
+- **Charger la version enregistrée :** l’éditeur affiche l’état enregistré ; vos modifications non enregistrées ici sont perdues.
+- **Garder la mienne comme copie :** votre état devient un nouveau workflow « … (ma copie) », l’état enregistré reste tel quel.
+- **Enregistrer la mienne quand même :** votre état remplace l’autre modification.
+- **Continuer à modifier :** rien n’est enregistré.
+
+Rien n’est perdu définitivement : chaque enregistrement est conservé dans [Versions](/docs/workflows#versionen).
+
 ## Versions {#versionen}
 <!-- keywords: version, versions, historique, restaurer, revenir, ancien état -->
 
-Chaque enregistrement qui modifie quelque chose est conservé comme **version** numérotée avec date et heure. **Versions** dans la barre de titre de l’éditeur ouvre l’historique :
+Chaque enregistrement qui modifie quelque chose est conservé comme **version** numérotée avec date et heure. **Versions**, dans le menu **Plus d’actions** de la barre de titre, ouvre l’historique :
 
 - **Enregistrer comme version** enregistre les modifications actuelles avec une description facultative (« avant de refaire la recherche »).
 - L’icône du crayon ajoute ou modifie la description d’une version.
 - **Différences** montre ce qui changerait par rapport à l’état dans l’éditeur : agents, connexions, nom et réglages.
-- **Restaurer** ramène le workflow à cette version et enregistre le résultat comme **nouvelle version**. Aucune version n’est écrasée ni supprimée.
+- **Restaurer** ramène le workflow à cette version et enregistre le résultat comme **nouvelle version**. Aucune version n’est écrasée ni supprimée. S’il y a des modifications non enregistrées, choisissez **Enregistrer d’abord, puis restaurer** (les modifications deviennent d’abord une version à part) ou **Restaurer sans enregistrer**.
 
 Les versions sont indépendantes d’annuler/rétablir, qui ne vaut que pendant une session dans l’éditeur. Les exécutions utilisent toujours l’état au moment du lancement. Si un workflow est supprimé, ses versions le sont aussi. En haut de l’historique figure le **résultat des tests** de la version enregistrée pour chaque série de tests du workflow (comme lors de la [publication](/docs/api-und-export#veroeffentlichen)).
 
 ## Importer et exporter {#import-export}
-<!-- keywords: exporter, importer, json, fichier, partager, sauvegarde, .nodestro.json -->
+<!-- keywords: exporter, importer, json, fichier, partager, sauvegarde, .nodestro.json, pas un workflow, fichier invalide -->
 
-- **Exporter** (dans l’éditeur) enregistre le workflow sous `<Nom>.nodestro.json` : tous les nœuds, connexions, positions et réglages des agents ainsi que le budget.
-- **Importer** (sur la page *Workflows*) charge un tel fichier comme **nouvelle copie** avec un nouvel ID. Les workflows existants ne sont jamais écrasés.
+- **Exporter dans un fichier** (dans l’éditeur, sous **Plus d’actions**) enregistre le workflow sous `<Nom>.nodestro.json` : tous les nœuds, connexions, positions et réglages des agents ainsi que le budget.
+- **Importer** (sur la page *Workflows*) charge un tel fichier comme **nouvelle copie** avec un nouvel ID. Les workflows existants ne sont jamais écrasés. Si le fichier n’a pas de nom, le workflow prend le nom du fichier.
+
+Nodestro vérifie le fichier avant de créer quoi que ce soit. S’il ne s’agit pas d’un export de workflow (par exemple un autre fichier JSON, un fichier sans étapes ou avec des connexions cassées), rien n’est importé et le message en donne la raison, par exemple *Ce fichier n’est pas un workflow Nodestro : il n’a aucune étape ("nodes").*
 
 **Ne sont pas inclus** les fichiers de connaissances, les espaces mémoire et vos propres outils ; le fichier ne fait que référencer leurs ID et leurs noms. Sur un autre ordinateur, ils doivent y exister, sinon la vérification signale par exemple « Outils inconnus ».
 

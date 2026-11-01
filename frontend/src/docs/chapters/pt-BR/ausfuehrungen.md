@@ -13,49 +13,62 @@ Você vê as execuções em dois lugares:
 As execuções são mantidas mesmo que você altere ou exclua o fluxo de trabalho; cada execução guarda o fluxo como ele era no início.
 
 ## Acompanhar ao vivo {#live}
-<!-- keywords: ao vivo, streaming, acompanhar, visão geral da execução, progresso, tempo real -->
+<!-- keywords: ao vivo, streaming, acompanhar, visão geral da execução, progresso, tempo real, aguarda você, cancelar execução -->
 
 Durante uma execução, a **Visão geral da execução** mostra:
 
+- no cabeçalho, o status da execução e **Cancelar execução** (veja [Cancelar execuções](/docs/ausfuehrungen#abbrechen)); ao terminar, um link para os **Detalhes**,
 - no topo, o número de agentes, requisições à API, tokens e os custos estimados, atualizados continuamente,
 - à esquerda, todos os agentes com o status; um clique mostra os detalhes à direita, e *Resultado geral* mostra o resultado do fluxo,
 - à direita, o texto que o agente selecionado está escrevendo, suas chamadas de ferramentas e (se ativado) seu raciocínio.
 
+Se uma [chamada de ferramenta](/docs/verzweigungen#tool-freigabe) aguarda a sua decisão, a execução, a etapa e o nó dela mostram **Aguarda você**: a execução só continua depois que você decidir. Se a execução parar em uma aprovação, a visão geral mostra a aprovação para você decidir; uma decisão tomada em outro lugar (página *Aprovações*, outra aba, a API) também aparece aqui sem recarregar.
+
+Depois da execução, a visão geral mostra o mesmo que a visualização detalhada: o motivo de uma falha, chamadas de ferramentas sem resultado e etapas não concluídas (veja [A visualização detalhada](/docs/ausfuehrungen#details)).
+
 Na tela, cada agente mostra seu status e, depois da execução, também tokens e custos. As conexões por onde passaram dados ficam destacadas.
 
 ## A lista de execuções {#liste}
-<!-- keywords: lista, filtro, filtro de status, filtro de fluxo, excluir, origem -->
+<!-- keywords: lista, filtro, filtro de status, filtro de fluxo, excluir, origem, carregar execuções mais antigas, atualização, concluída com problemas -->
 
-A página **Execuções** lista as execuções, das mais recentes para as mais antigas, com fluxo de trabalho, status, horário de início, duração, requisições, tokens e custos. Abaixo do nome do fluxo aparece a entrada ou a mensagem de erro.
+A página **Execuções** lista as execuções, das mais recentes para as mais antigas, com fluxo de trabalho, status, horário de início, duração, requisições, tokens e custos. Abaixo do nome do fluxo aparece a entrada ou a mensagem de erro. Se uma execução concluída teve chamadas de ferramentas sem resultado, aparece **Concluída com problemas** ao lado de *Concluído*, desde que o servidor forneça essa informação.
 
 - **Filtros:** por fluxo de trabalho, por status e por origem (*Execuções próprias* ou *Traces importados*).
 - **Excluir:** símbolo da lixeira; execuções em andamento não podem ser excluídas.
 - **Importar trace:** veja [Importar traces](/docs/ausfuehrungen#trace-import).
+- **Carregar execuções mais antigas:** a lista mostra primeiro as 100 execuções mais recentes e indica isso embaixo. Os filtros de status e de origem só procuram entre as execuções carregadas. Se o servidor não suportar carregamento por páginas, a lista para em 500 execuções; as mais antigas continuam salvas e podem ser encontradas com o filtro de fluxo de trabalho.
 
-A lista é atualizada a cada cinco segundos.
+A lista é atualizada a cada cinco segundos enquanto houver uma execução na fila ou em andamento; caso contrário, a cada 30 segundos. Em uma aba em segundo plano ela não consulta o servidor; quando você volta, ela se atualiza na hora.
 
 ## A visualização detalhada {#details}
-<!-- keywords: detalhes, visualização detalhada, linha do tempo, cascata, timeline, abas, resultado, tarefa, raciocínio -->
+<!-- keywords: detalhes, visualização detalhada, linha do tempo, cascata, timeline, abas, resultado, tarefa, raciocínio, falhou em, concluída com problemas, chamadas sem resultado, não concluído, interrompida, mostrar como json, resultado estruturado -->
 
 Um clique em uma execução abre a visualização detalhada:
 
 1. **Números principais:** status com duração total, requisições à API, tokens (divididos em entrada, saída, cache e raciocínio) e custos estimados.
 2. **Resumo da execução:** quantas etapas deram certo e quantas foram ignoradas, que caminho as decisões tomaram, como as aprovações foram decididas, quais ferramentas foram chamadas e quantas vezes (com erros) e em qual etapa a execução falhou, com *Ir para a etapa*. Ele é montado só com os dados salvos da execução, sem chamar nenhum modelo; o que a execução não registrou aparece como *não registrado*.
-3. **Entrada e resultado** do fluxo lado a lado.
-4. **Linha do tempo:** uma barra de tempo por agente, na ordem em que começaram. Cada barra mostra quando o agente rodou; barras sobrepostas rodaram em paralelo. Ao lado aparecem a duração, os tokens e o número de chamadas de ferramentas.
-5. **Detalhes do agente selecionado:** duração, horário de início e fim, tokens, requisições e custos, um eventual erro, o resultado do controle de qualidade e as abas:
+3. **Avisos sobre o resultado** (só quando necessário, veja abaixo).
+4. **Entrada e resultado** do fluxo lado a lado.
+5. **Linha do tempo:** uma barra de tempo por agente, na ordem em que começaram; etapas que nunca começaram vêm por último. Cada barra mostra quando o agente rodou; barras sobrepostas rodaram em paralelo. Ao lado aparecem a duração, os tokens e o número de chamadas de ferramentas. A etapa que falhou abre primeiro; caso contrário, uma etapa que aguarda uma pessoa.
+6. **Detalhes do agente selecionado:** duração, horário de início e fim, tokens, requisições e custos, um eventual erro, o resultado do controle de qualidade e as abas:
 
 | Aba | Conteúdo |
 |---|---|
-| **Resultado** | A saída do agente, como Markdown ou JSON formatado. |
+| **Resultado** | A saída do agente: o texto como Markdown, um resultado estruturado como campos com rótulo (as descrições curtas dos campos servem de rótulo). O JSON fica a um clique, em **Mostrar como JSON**. |
 | **Tarefa** | A tarefa como chegou ao agente depois de substituir os marcadores. Ideal para encontrar problemas no fluxo de dados. |
 | **Ferramentas** | Cada chamada de ferramenta com entrada, resultado, momento, duração e sucesso. |
 | **Raciocínio** | As reflexões do modelo (só se *Mostrar raciocínio* estava ativo). |
 | **Memória** | As anotações de um agente com memória *Por execução*. |
 
-**Abrir no editor** leva ao fluxo de trabalho; **Cancelar** interrompe uma execução em andamento.
+**Abrir no editor** leva ao fluxo de trabalho; **Cancelar execução** interrompe uma execução em andamento.
 
 A aba **Contexto** mostra o que o agente recebeu nesta execução: prompt do sistema, tarefa com as entradas destacadas, mensagens de exemplo, ferramentas, conhecimento, memória, formato de saída e verificação de qualidade, sempre com a configuração do momento do início. Credenciais nunca são exibidas.
+
+**Avisos sobre o resultado.** O que não deu certo aparece abaixo dos números principais:
+
+- **Falhou em *etapa*:** se uma etapa falhou, o aviso a nomeia com o próprio problema em linguagem clara e diz o que fazer, por exemplo uma resposta cortada no limite de tokens ou uma chave de API recusada. Em erros do provedor, o modelo também é indicado. Quando a solução é uma configuração, um link leva até ela: **Abrir Configurações** ou **Abrir "Avançado" de *agente***. Se outras etapas falharam, o número delas aparece abaixo. O texto original fica em *Detalhes técnicos*.
+- **Concluída com problemas:** uma execução pode ficar *Concluído* mesmo que chamadas de ferramentas não tenham tido resultado: recusadas por uma pessoa, expiradas sem decisão, não permitidas pelas regras de aprovação, canceladas, com falha ou com erro da ferramenta. Aparece então o selo laranja **Concluída com problemas** ao lado de *Concluído*, e um aviso lista cada uma dessas chamadas com etapa, ferramenta e motivo, cada uma com *Ir para a etapa*. Verifique se o resultado depende delas.
+- **Não concluído:** se uma execução terminou enquanto etapas ainda estavam em andamento ou aguardando (por exemplo porque o Nodestro foi encerrado), essas etapas mostram **Não concluído** em vez de *Aguardando* ou *Em execução*. O aviso nomeia as etapas que nunca tiveram resultado, ou diz que o Nodestro parou durante a execução. **Continuar**, direto no aviso, as conclui; etapas concluídas são aproveitadas (veja [Continuar execuções que falharam](/docs/verzweigungen#fortsetzen)).
 
 ## Status {#status}
 <!-- keywords: status, concluído, erro, ignorado, cancelado, aguardando, em execução, fila -->
@@ -71,7 +84,10 @@ A aba **Contexto** mostra o que o agente recebeu nesta execução: prompt do sis
 | **Bloqueado** | O nó não rodou porque um antecessor falhou ou foi cancelado. |
 | **Aguardando aprovação** | Uma [aprovação](/docs/verzweigungen#freigabe) espera a decisão de uma pessoa. |
 | **Pausado** | A execução espera uma aprovação e continua depois da decisão. |
-| **Cancelado** | Interrompido com *Cancelar*, rejeitado, ou um trace exportado antes de estar completo. |
+| **Cancelado** | Interrompido com *Cancelar execução*, rejeitado, ou um trace exportado antes de estar completo. |
+| **Aguarda você** | Uma chamada de ferramenta aguarda a sua aprovação; a execução continua assim que você decidir. |
+| **Não concluído** | Uma etapa de uma execução encerrada que nunca terminou (por exemplo porque o Nodestro foi encerrado). |
+| **Concluída com problemas** | Não é um status próprio, mas um selo ao lado de *Concluído*: chamadas de ferramentas da execução ficaram sem resultado. |
 
 Uma execução com falha ou cancelada pode ser [continuada](/docs/verzweigungen#fortsetzen). Execuções de agendamentos, lotes, séries de testes e subfluxos mostram sua origem na lista e nos detalhes.
 
@@ -83,9 +99,9 @@ Uma execução com falha ou cancelada pode ser [continuada](/docs/verzweigungen#
 - Com vários nós de resultado (ou últimos agentes), o resultado é um objeto com uma entrada por nó, com o nome do nó.
 
 ## Cancelar execuções {#abbrechen}
-<!-- keywords: cancelar, parar, cancel, encerrar -->
+<!-- keywords: cancelar, parar, cancel, encerrar, cancelar mesmo, confirmação -->
 
-**Cancelar** (na visão geral da execução ou na visualização detalhada) interrompe a execução. Agentes em andamento param no próximo passo (próximo trecho de texto, próxima solicitação ou próxima chamada de ferramenta); agentes que ainda não começaram não são mais executados. Os tokens usados até ali são cobrados e mostrados.
+**Cancelar execução** (na visão geral da execução ou na visualização detalhada) pede confirmação por segurança: um segundo clique em **Cancelar mesmo?** em até cinco segundos interrompe a execução; **Esc** ou um clique em outro lugar a deixa continuar. Isso vale também para uma execução pausada. Agentes em andamento param no próximo passo (próximo trecho de texto, próxima solicitação ou próxima chamada de ferramenta); agentes que ainda não começaram não são mais executados. Os tokens usados até ali são cobrados e mostrados.
 
 ## Exportar trace {#trace-export}
 <!-- keywords: exportar trace, exportar, json, run json, compartilhar, arquivar, higienizar, anonimizar, privacidade, dados pessoais -->
@@ -131,7 +147,7 @@ Apenas dados salvos são comparados; nada é executado novamente. Se as execuç�
 ## Interpretar erros {#fehler}
 <!-- keywords: erros, mensagem de erro, erro, interpretar, causa, solução, refusalerror, budgetexceedederror -->
 
-Os erros aparecem na execução junto à execução (resumo "Falharam: …") e junto ao agente afetado (mensagem vermelha). A mensagem aparece no idioma da interface e geralmente indica o tipo de erro. Em **Detalhes técnicos** fica o texto original do servidor ou da API, por exemplo para repassá-lo em um relatório de erro.
+Os erros aparecem nos detalhes junto à execução ("Falhou em *etapa*", com o problema dessa etapa) e junto ao agente afetado (mensagem vermelha). A mensagem aparece no idioma da interface, diz em linguagem clara o que aconteceu e o que você pode fazer, por exemplo aumentar *Máx. de tokens* em "Avançado" ou verificar a chave em *Configurações → Provedores de IA*. Erros do provedor distinguem uma chave recusada, requisições demais (limite de taxa), um provedor sobrecarregado e um provedor inacessível. Em **Detalhes técnicos** fica o texto original do servidor ou da API com o tipo de erro, por exemplo para repassá-lo em um relatório de erro.
 
 | Mensagem | Significado | Solução |
 |---|---|---|

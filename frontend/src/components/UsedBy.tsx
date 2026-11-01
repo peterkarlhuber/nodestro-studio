@@ -104,7 +104,7 @@ export function DeleteUsed({
         onClose={() => setOpen(false)}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setOpen(false)}>
+            <Button variant="ghost" data-autofocus onClick={() => setOpen(false)}>
               {t("common.cancel")}
             </Button>
             <Button

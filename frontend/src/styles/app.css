@@ -5777,7 +5777,7 @@ kbd {
   margin-top: var(--nd-space-2);
   padding: 14px;
   border: 1px solid var(--nd-border);
-  border-radius: var(--nd-radius);
+  border-radius: var(--nd-radius-md);
   background: var(--nd-surface);
   color: var(--nd-text);
 }
@@ -6923,4 +6923,242 @@ ul.gate-report__list > li.gate-report__item {
     flex: 1 1 100%;
     max-width: none;
   }
+}
+
+/* ---- accessibility: links, touch targets, phone navigation, connections ------------ */
+
+/* Links inside running text are underlined, so they never depend on color alone (WCAG 1.4.1). Navigation,
+   tabs, cards and buttons keep their own look. */
+:where(p, li, dd, blockquote, .callout, .field__hint, .markdown, .muted) a:where(:not([class]), .tooltip__link) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+:where(p, li, dd, blockquote, .callout, .field__hint, .markdown, .muted) a:where(:not([class])):hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Targets of at least 24px (WCAG 2.5.8): the docs table of contents and "used by" links. */
+.docs-toc a,
+.used-by__list a {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 24px;
+}
+
+@media (pointer: coarse) {
+  .docs-toc a,
+  .used-by__list a {
+    min-height: 32px;
+    line-height: 32px;
+  }
+
+  /* Row checkboxes get a larger hit area without a larger box. */
+  .table__pick input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* The menu button exists for phones only; wider windows always show the navigation. */
+.nav-toggle {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .nav-toggle {
+    display: inline-flex;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    margin-left: -6px;
+  }
+
+  /* Phones: the navigation is a drawer under the top bar, with labels, opened by the menu button. */
+  .sidebar {
+    display: none;
+  }
+
+  .sidebar.sidebar--open {
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    width: min(300px, 86vw);
+    padding: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-right: 1px solid var(--nd-border);
+    border-bottom: 0;
+    background: var(--nd-panel);
+    box-shadow: var(--nd-shadow-popover);
+  }
+
+  .sidebar.sidebar--open .nav-group {
+    flex-direction: column;
+  }
+
+  .sidebar.sidebar--open .nav-group__title,
+  .sidebar.sidebar--open .sidebar__note {
+    display: block;
+  }
+
+  .sidebar.sidebar--open .nav-item {
+    justify-content: flex-start;
+    gap: 10px;
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .sidebar.sidebar--open .sidebar__bottom {
+    margin-top: auto;
+  }
+
+  .topbar .segmented {
+    flex: none;
+    flex-wrap: nowrap;
+  }
+
+  .app {
+    grid-template-rows: 56px minmax(0, 1fr);
+  }
+}
+
+/* Narrow phones: the logo alone names the app, so the menu button and every header control fit. */
+@media (max-width: 420px) {
+  .topbar .brand__name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Responsive tables (WCAG 1.4.10): a wide table scrolls inside its frame, never the whole page. The frame is the
+   containing block of absolutely positioned content (visually hidden labels, checkboxes), which would otherwise
+   escape the scroll container and widen the page. */
+.table-wrap {
+  position: relative;
+  max-width: 100%;
+}
+
+.table--runs td:nth-child(4) {
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  /* Phones: each run becomes two lines: name, status and actions, then date, duration and usage. */
+  .table--runs thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .table--runs,
+  .table--runs tbody {
+    display: block;
+  }
+
+  .table--runs tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px 10px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--nd-border);
+  }
+
+  .table--runs tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  /* The line break between the two lines. */
+  .table--runs tr::after {
+    content: "";
+    order: 5;
+    flex-basis: 100%;
+    height: 0;
+  }
+
+  .table--runs td,
+  .table--runs tbody tr:last-child td {
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+
+  .table--runs td:nth-child(1) {
+    order: 1;
+  }
+
+  .table--runs td:nth-child(2) {
+    order: 2;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .table--runs td:nth-child(2) .truncate {
+    max-width: 100%;
+  }
+
+  .table--runs td:nth-child(3) {
+    order: 3;
+  }
+
+  .table--runs td:nth-child(9) {
+    order: 4;
+  }
+
+  .table--runs td:nth-child(n + 4):nth-child(-n + 8) {
+    order: 6;
+    color: var(--nd-text-muted);
+    font-size: 12px;
+    text-align: left !important;
+  }
+
+  .table--runs td:nth-child(4) {
+    padding-left: 30px;
+  }
+
+  .table--runs td[data-label]::before {
+    content: attr(data-label) ": ";
+    color: var(--nd-text-subtle);
+  }
+}
+
+/* The connections of a selected step in the inspector, with "Connect to…". */
+.inspector__content--follow {
+  padding-top: 0;
+}
+
+.node-connections {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.node-connections__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  color: var(--nd-text-muted);
+}
+
+.node-connections__name {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--nd-text);
 }

@@ -70,14 +70,16 @@ Pendant l’attente, l’exécution a le statut **En pause** et la validation **
 ## La page Validations {#freigaben-seite}
 <!-- keywords: validations, validations ouvertes, file d’attente, décider, navigation, compteur -->
 
-La page **Validations** (navigation, groupe *Automatisation*) liste toutes les validations ouvertes, la plus ancienne d’abord, avec le workflow, l’origine (manuelle, planification, lot, série de tests) et le temps d’attente. Le nombre à côté de l’entrée du menu indique combien attendent.
+La page **Validations** (navigation, groupe *Exécuter et vérifier*) liste toutes les validations ouvertes, la plus ancienne d’abord, avec le workflow, l’origine (manuelle, planification, lot, série de tests) et le temps d’attente. Le nombre à côté de l’entrée du menu indique combien attendent.
 
-Chaque carte montre la consigne, les résultats à vérifier, un champ de commentaire et les boutons *Valider* et *Refuser*. Les validations à l’intérieur de sous-workflows apparaissent aussi ici, avec le chemin vers l’exécution parente.
+Chaque carte montre la consigne, les résultats à vérifier (les résultats structurés sous forme de champs avec libellé, le JSON à un clic), un champ de commentaire et les boutons *Valider* et *Refuser* ; les boutons restent visibles même avec de longs résultats. Les validations à l’intérieur de sous-workflows apparaissent aussi ici, avec le chemin vers l’exécution parente. Les cartes d’[appels d’outils](/docs/verzweigungen#tool-freigabe) nomment le workflow et l’étape (« *workflow* · étape *nom* »).
 
 ## Valider les appels d’outils {#tool-freigabe}
 <!-- keywords: validation d’outil, appel d’outil, par appel, arguments, délai, validation anticipée, sans surveillance, exception héritée -->
 
-En plus des nœuds de validation, Nodestro peut demander avant **des appels d’outils isolés** d’un agent. C’est prévu pour les outils qui modifient des données ou agissent vers l’extérieur, par exemple envoyer un e-mail ou écrire dans un système de tickets. L’administration l’active après la revue de sécurité ; d’ici là, rien ne change.
+En plus des nœuds de validation, Nodestro peut demander avant **des appels d’outils isolés** d’un agent. C’est prévu pour les outils qui modifient des données ou agissent vers l’extérieur, par exemple envoyer un e-mail ou écrire dans un système de tickets.
+
+**Désactivé pour l’instant.** Les validations par appel d’outil ne sont pas encore activées dans Nodestro ; elles n’arriveront qu’après une revue de sécurité. D’ici là, les outils s’exécutent sans demande préalable, et sur la page **Validations**, *Règles des appels d’outils* n’affiche que cette phrase. La préparation pour les administrateurs (étape d’activation, validations anticipées, journal) y est repliée sous **Préparation pour les administrateurs**. La suite de cette section décrit le fonctionnement des validations une fois activées.
 
 Quand un agent veut faire un tel appel, l’exécution continue mais attend à cet appel. La carte apparaît dans l’exécution, à l’étape et sur la page **Validations**. Elle montre l’outil, ce qu’il peut faire (*lecture seule*, *modifie des données*, *supprime ou détruit* ; *reste dans Nodestro* ou *agit vers l’extérieur*), les **arguments exactement tels qu’ils seront envoyés** et le temps restant.
 
@@ -95,7 +97,7 @@ Les exécutions que personne ne surveille (planifications, lots, séries de test
 
 1. Sous *Validations → Règles des appels d’outils*, l’administration exécute **Marquer les attributions existantes**. Chaque attribution d’outil qui existe maintenant dans les workflows, leurs versions et les API publiées devient une **exception héritée**, liée à la version d’outil avec laquelle elle tourne. Les API publiées reçoivent une seule fois une nouvelle empreinte (digest) ; leur historique garde l’ancienne et la nouvelle. L’étape ne s’exécute **qu’une fois** : les attributions, workflows et versions créés ensuite sont nouveaux et soumis à la question.
 2. **Vérifier la liste.** Une exception non voulue prend fin quand vous retirez l’outil de l’agent et enregistrez ; si vous l’attribuez à nouveau, la question est posée comme pour un nouvel outil.
-3. Ensuite seulement, l’administration active les validations (`NODESTRO_TOOL_APPROVALS=1`, puis redémarrer Nodestro).
+3. Ensuite seulement, les validations sont activées. Cette version ne le prévoit pas encore : elles restent désactivées jusqu’à la fin de la revue de sécurité.
 
 Si on active sans la première étape, rien n’est exempté : chaque attribution est soumise à la question et les exécutions sans surveillance refusent ces appels. Une nouvelle version d’outil met toujours fin à une exception. Une validation ne lève jamais les limites du bac à sable.
 
@@ -138,29 +140,32 @@ Une équipe peut être testée seule : créez une [série de tests](/docs/automa
 
 Un **orchestrateur** laisse un modèle d’IA décider quelle équipe reçoit quelle partie de la tâche. Il prend une décision après l’autre : **déléguer** une tâche à une équipe ou **conclure** par une réponse. La réponse est le résultat du nœud.
 
-- **Équipes :** les workflows enregistrés parmi lesquels le modèle peut choisir (20 au maximum). De chaque équipe, le modèle ne voit que le nom, la description, les capacités et le contrat de sortie.
-- **Équipes par capacité :** au lieu de choisir chaque équipe, vous nommez des capacités (10 au maximum). Au démarrage d’une exécution, les équipes enregistrées ayant une capacité correspondante rejoignent le groupe (jusqu’à *Au maximum autant d’équipes*) : d’abord celles qui ont le plus d’étiquettes correspondantes, puis par nom. Les équipes avec des erreurs sont écartées ; les équipes avec des étapes de validation sont incluses. La sélection reste fixe pour cette exécution (et pour une version publiée) ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté ni estimé.
-- **Tâche** et **Instructions :** ce qu’il faut accomplir et, si besoin, comment le planifier.
-- **Nombre maximal de décisions** (de 1 à 50, 8 par défaut) et **Maximum par équipe :** sans réponse après la dernière décision, l’étape échoue.
+L’inspecteur d’un orchestrateur commence par une phrase qui résume son fonctionnement (« Fonctionnement de cet orchestrateur : … ») et regroupe les réglages en quatre zones dépliables ; chacune affiche dans son en-tête un résumé et les éventuels problèmes :
 
-L’orchestrateur ne fait que choisir. Il n’a pas d’outils, ne crée ni agents, ni outils, ni équipes et n’a aucune autorisation propre. Chaque équipe choisie s’exécute dans sa **propre exécution liée**, avec sa part du budget, ses limites et ses validations d’outils. Les décisions non autorisées (une équipe inconnue, la même tâche une nouvelle fois, une équipe épuisée) sont refusées et montrées au modèle ; elles comptent quand même comme une décision.
+- **Pool d’équipes :** les **Workflows choisis** sont les workflows enregistrés parmi lesquels le modèle peut choisir (20 au maximum). De chaque équipe, le modèle ne voit que le nom, la description, les capacités et le contrat de sortie.
+- **Équipes par capacité** (également dans le pool d’équipes) : au lieu de choisir chaque équipe, vous nommez des capacités (10 au maximum). Au démarrage d’une exécution, les équipes enregistrées ayant une capacité correspondante rejoignent le groupe (jusqu’à *Au maximum autant d’équipes*) : d’abord celles qui ont le plus d’étiquettes correspondantes, puis par nom. Les équipes avec des erreurs sont écartées ; les équipes avec des étapes de validation sont incluses. La sélection reste fixe pour cette exécution (et pour une version publiée) ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté ni estimé.
+- **Mission :** **Tâche** et **Instructions** (ce qu’il faut accomplir et, si besoin, comment le planifier) ainsi que le **Modèle** de l’orchestrateur.
+- **Limites :** **Nombre maximal de décisions** (de 1 à 50, 8 par défaut), **Utilisations maximales par équipe** et **Équipes en même temps**. Sans réponse après la dernière décision, l’étape échoue.
+- **Équipe active :** les options décrites sous [Équipes dynamiques](/docs/verzweigungen#dynamische-teams).
+
+L’orchestrateur ne fait que choisir. Il n’a pas d’outils, ne crée ni agents, ni outils, ni équipes et n’a aucune autorisation propre. Chaque équipe choisie s’exécute dans sa **propre exécution liée**, avec sa part du budget, ses limites et ses validations d’outils. Les décisions non autorisées (une équipe inconnue, la même tâche une nouvelle fois, une équipe épuisée) ne sont pas exécutées et sont montrées au modèle ; les détails de l’exécution les indiquent comme *Invalide, non exécutée*. Elles comptent quand même comme une décision.
 
 Les détails de l’exécution listent chaque décision avec son motif, sa tâche, son résultat et un lien vers l’exécution de l’équipe. Quand une équipe s’arrête pour une **validation** (y compris dans un sous-workflow ou sous un autre orchestrateur), l’orchestrateur attend avec elle : l’exécution est *en pause* et apparaît sous **Validations**. Après la décision, la même exécution de l’équipe continue, même après un redémarrage, et le modèle n’est pas consulté à nouveau pour cette délégation. Si un refus met fin à l’exécution de l’équipe (*En cas de refus : terminer l’exécution*), cette exécution se termine aussi ; aucune autre équipe ne peut contourner le refus. Annuler une exécution en attente annule aussi ses équipes en attente. Une équipe ne peut pas rappeler le workflow de l’orchestrateur.
 
 ## Équipes dynamiques {#dynamische-teams}
 <!-- keywords: équipe dynamique, composer une équipe, parallèle, en même temps, paramètres, formulaire de démarrage, modèle, composition d'équipe, staffing -->
 
-Dans la zone **Équipes dynamiques** d’un orchestrateur, le modèle dispose de plus de latitude, toujours dans le pool et dans les limites. Tout est désactivé au départ.
+Dans la zone **Équipe active** d’un orchestrateur (champ *Équipes dynamiques*), le modèle dispose de plus de latitude, toujours dans le pool et dans les limites. Tout est désactivé au départ.
 
-- **Équipes en même temps** (1 à 5) : une décision peut confier du travail à plusieurs équipes différentes à la fois, pour des parties indépendantes. Chaque équipe obtient son propre résultat.
-- **Composer l’équipe lui-même :** l’orchestrateur intègre des équipes du pool dans son équipe et les retire à nouveau quand les résultats intermédiaires le justifient. Seules les équipes de l’équipe reçoivent du travail ; *Au plus dans l’équipe* limite sa taille. La même équipe peut travailler plusieurs fois (jusqu’à *Au plus par équipe*).
+- **Équipes en même temps** (1 à 5, dans la zone *Limites*) : une décision peut confier du travail à plusieurs équipes différentes à la fois, pour des parties indépendantes. Chaque équipe obtient son propre résultat.
+- **Composer lui-même l’équipe active :** l’orchestrateur intègre des équipes du pool dans son équipe active et les retire à nouveau quand les résultats intermédiaires le justifient. Seules les équipes de l’équipe active reçoivent du travail ; *Au plus dans l’équipe active* limite sa taille. La même équipe peut travailler plusieurs fois (jusqu’à *Utilisations maximales par équipe*). Sans cette option, l’orchestrateur choisit dans tout le pool.
 - **Remplir le formulaire de démarrage des équipes :** l’orchestrateur peut définir les champs du formulaire d’entrée d’une équipe (jamais de fichiers). Les valeurs sont vérifiées comme pour un démarrage manuel ; un champ inconnu ou une valeur invalide est refusé et montré au modèle.
 
 Le pool est fixé au démarrage de l’exécution, dans les versions de ce moment. Aucune nouvelle équipe, aucun agent ou outil n’apparaît, et les validations, le budget et les limites de chaque équipe s’appliquent sans changement.
 
-**Ce que montrent les détails de l’exécution :** quel orchestrateur travaille avec quel modèle, combien de décisions sont utilisées, le coût des décisions et le total (un coût inconnu est affiché comme *pas entièrement connu*, jamais comme 0), le pool avec les versions, l’**équipe au fil du temps**, les équipes en attente et chaque décision avec son motif, sa tâche, ses valeurs et le résultat de chaque équipe : *Réussi*, *En attente de validation*, *Échoué*, *Refusé*, *Annulé* ou *Expiré*. Seules les décisions enregistrées sont affichées, aucun raisonnement du modèle.
+**Ce que montrent les détails de l’exécution :** quel orchestrateur travaille avec quel modèle, combien de décisions sont utilisées, le coût des décisions et le total (un coût inconnu est affiché comme *pas entièrement connu*, jamais comme 0), le pool avec les versions, l’**Équipe active au fil du temps**, les équipes en attente et chaque décision avec son motif, sa tâche, ses valeurs et le résultat de chaque équipe : *Réussi*, *En attente de validation*, *Échoué*, *Refusé*, *Annulé* ou *Expiré*. Seules les décisions enregistrées sont affichées, aucun raisonnement du modèle.
 
-**Enregistrer la composition de l’équipe comme modèle :** une équipe n’existe que pendant l’exécution. Une fois celle-ci terminée, ce bouton enregistre un **nouveau workflow** avec le même orchestrateur, son formulaire de démarrage, ses limites et exactement les équipes qui ont travaillé, dans les versions de l’exécution. Rien n’est enregistré sans ce clic.
+**Enregistrer la composition de l’équipe comme modèle :** une équipe active n’existe que pendant l’exécution. Une fois celle-ci terminée, ce bouton enregistre un **nouveau workflow** avec le même orchestrateur, son formulaire de démarrage, ses limites et exactement les équipes qui ont travaillé, dans les versions de l’exécution. Rien n’est enregistré sans ce clic.
 
 ## Formulaires d’entrée {#eingabeformular}
 <!-- keywords: formulaire, formulaire d’entrée, champs, type, obligatoire, valeur par défaut, choix, date, nombre -->
@@ -190,5 +195,7 @@ Une exécution échouée ou annulée peut être **reprise** (bouton *Reprendre* 
 - Les résultats repris ne coûtent rien dans la nouvelle exécution ; leur coût reste dans l’ancienne et n’est pas compté deux fois dans [Utilisation](/docs/nutzung).
 - Les décisions de validation des étapes reprises restent valables et sont marquées comme reprises ; personne n’est sollicité deux fois.
 - Si des étapes réexécutées avaient déjà appelé des **outils propres** pouvant agir hors de Nodestro (comme envoyer un message), vous devez le confirmer explicitement.
+
+Si une exécution a été interrompue parce que Nodestro s’est arrêté pendant qu’elle tournait, sa vue détaillée nomme les étapes non terminées et propose **Reprendre** directement dans la remarque ; ces étapes sont réexécutées avec le motif *A été interrompue*.
 
 Si rien ne peut être repris en toute sécurité, Nodestro propose un redémarrage complet. Les traces importées et les exécutions isolées de sous-workflows ne peuvent pas être reprises ; reprenez plutôt l’exécution parente.

@@ -38,10 +38,10 @@ Nodestro läuft lokal auf deinem Rechner. Workflows, Ausführungen, Wissen und M
 
 So erstellst du in wenigen Minuten deinen ersten Workflow:
 
-1. **KI-Anbieter einrichten.** Öffne *Einstellungen → KI-Anbieter* und trage den API-Schlüssel eines Anbieters ein, etwa von Anthropic (oder setze vor dem Start eine Umgebungsvariable wie `ANTHROPIC_API_KEY`). Nutzt du einen anderen Anbieter, stelle dort auch das Standardmodell um. Ohne eingerichteten Anbieter kannst du alles bearbeiten, aber nichts ausführen.
+1. **KI-Anbieter einrichten.** Öffne *Einstellungen → KI-Anbieter* und trage den API-Schlüssel eines Anbieters ein, etwa von Anthropic (oder setze vor dem Start eine Umgebungsvariable wie `ANTHROPIC_API_KEY`). Nutzt du einen anderen Anbieter, stelle dort auch das Standardmodell um. Ohne eingerichteten Anbieter kannst du alles bearbeiten, aber nichts ausführen; die Seite *Workflows* sagt das gleich oben und führt zu den Einstellungen. Ein Beispiel kopieren geht auch ohne.
 2. **Workflow anlegen.** Klicke unter *Workflows* auf **Neuer Workflow**, gib einen Namen ein und bestätige mit **Anlegen und öffnen**. Der Editor öffnet sich mit drei Knoten: *Start*, *Neuer Agent* und *Ergebnis*, bereits verbunden.
 3. **Agent konfigurieren.** Klicke auf den Agenten. Rechts erscheint der Inspektor. Gib dem Agenten einen Namen und schreibe einen System-Prompt, z. B. „Du bist ein erfahrener Lektor. Verbessere Rechtschreibung und Stil, ohne den Inhalt zu ändern.“
-4. **Starten.** Klicke **Workflow starten**, gib einen Text ein und bestätige mit **Starten**. Nodestro speichert den Workflow automatisch.
+4. **Starten.** Klicke **Workflow starten**, gib einen Text ein und bestätige mit **Starten**. Nodestro speichert den Workflow automatisch. Ist die Schaltfläche gesperrt, steht der Grund direkt daneben, mit einem Link zur Lösung.
 5. **Zusehen.** In der *Ausführungsübersicht* unter der Arbeitsfläche siehst du live, was der Agent schreibt, welche Tools er aufruft, wie viele Tokens er verbraucht und was es kostet.
 6. **Nachvollziehen.** Über **Details** gelangst du zur vollständigen Ausführung mit zeitlichem Ablauf.
 
@@ -57,7 +57,7 @@ Die **Seitenleiste** links folgt dem Arbeitsablauf: erstellen, ausführen und pr
 - **Automatisieren & testen:** *Testreihen*, *Stapelläufe* und *Zeitpläne*.
 - **Hilfe:** diese *Dokumentation* und die *Willkommen*-Seite.
 
-Unten findest du die *Einstellungen*. Oben rechts wechselst du zwischen dunklem und hellem Farbschema; die Wahl wird im Browser gespeichert. Ist der Anbieter des Standardmodells nicht eingerichtet, erscheint dort ein Hinweis, der direkt zu den Einstellungen führt.
+Unten findest du die *Einstellungen* und darunter, wo Nodestro läuft: in der Desktop-App und mit dem Befehl `nodestro` steht dort **Lokal & privat**, auf einem Server **Server deiner Organisation** (siehe [Nodestro auf einem Server](/docs/einstellungen#server)). Oben rechts wechselst du zwischen dunklem und hellem Farbschema; die Wahl wird im Browser gespeichert. Ist der Anbieter des Standardmodells nicht eingerichtet, erscheint dort ein Hinweis (*KI-Anbieter einrichten* oder, wenn schon ein anderer Anbieter eingerichtet ist, *Standardmodell braucht …*), der direkt zu den Einstellungen führt. Auf einem Server steht oben rechts außerdem dein Konto.
 
 **Hilfe direkt an der Stelle:** Hinter vielen Bedienelementen steht ein kleines **?**-Symbol. Fahre mit der Maus darüber, fokussiere es mit der Tabulatortaste oder tippe es auf Touch-Geräten an: Es erscheint eine kurze Erklärung, oft mit einem Link zum passenden Abschnitt dieser Dokumentation. Das Buch-Symbol neben Seitentiteln öffnet das zugehörige Kapitel. Mit **Esc** schließt du eine Erklärung wieder.
 
@@ -78,15 +78,15 @@ Alle Daten liegen in einer SQLite-Datenbank im Datenverzeichnis, standardmäßig
 - `nodestro.db` mit Workflows, Agenten-Vorlagen, Ausführungen, Einstellungen, Wissensdateien, Suchindex und Memory-Räumen,
 - der Ordner `tools` mit eigenen und KI-erstellten Tools.
 
-Zum **Sichern** kopierst du das Datenverzeichnis, während Nodestro beendet ist. An den Anbieter eines Agenten gehen nur die Inhalte, die der Agent für seine Anfrage braucht: System-Prompt, Aufgabe, zugewiesenes Wissen, Memory-Inhalte, die er liest, und Tool-Ergebnisse. Die API-Schlüssel werden nie in der Oberfläche angezeigt.
+Zum **Sichern** kopierst du das Datenverzeichnis, während Nodestro beendet ist. An den Anbieter eines Agenten gehen nur die Inhalte, die der Agent für seine Anfrage braucht: System-Prompt, Aufgabe, zugewiesenes Wissen, Memory-Inhalte, die er liest, und Tool-Ergebnisse. Die API-Schlüssel werden nie in der Oberfläche angezeigt. Arbeitest du mit Nodestro auf einem Server, liegen die Daten stattdessen dort (siehe [Nodestro auf einem Server](/docs/einstellungen#server)).
 
 ## Die Desktop-App {#desktop}
 <!-- keywords: desktop, app, fenster, linux, installation, startlink, tauri -->
 
-Neben dem Befehl `nodestro` gibt es Nodestro als Desktop-App (Vorschau für Linux x86_64, noch nicht signiert). Sie bringt ihr eigenes Python mit; außer WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`) muss nichts installiert sein. Entpacken Sie das Archiv und starten Sie `nodestro-desktop`.
+Neben dem Befehl `nodestro` gibt es Nodestro als Desktop-App (Vorschau für Linux x86_64, noch nicht signiert). Sie bringt ihr eigenes Python mit; außer WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`) muss nichts installiert sein. Entpacke das Archiv und starte `nodestro-desktop`.
 
 - Die App verwendet dasselbe Datenverzeichnis wie der Befehl (`~/.nodestro` oder `NODESTRO_DATA_DIR`). Es kann immer nur eines von beiden darauf zugreifen.
-- Nur das Fenster der App kann dieses Nodestro verwenden. Andere Programme auf dem Computer und Webseiten im Browser werden abgewiesen (*Dieses Nodestro gehört zur Desktop-App, die es gestartet hat*). Der Startlink des Fensters gilt nur einmal; für ein neues Fenster starten Sie die App neu.
+- Nur das Fenster der App kann dieses Nodestro verwenden. Andere Programme auf dem Computer und Webseiten im Browser werden abgewiesen (*Dieses Nodestro gehört zur Desktop-App, die es gestartet hat*). Der Startlink des Fensters gilt nur einmal; für ein neues Fenster startest du die App neu.
 - Links zu anderen Websites öffnen sich im Browser.
 - Das Schließen des Fensters beendet Nodestro. Endet es unerwartet, sagt das Fenster es und nennt die Protokolldatei.
 - KI-erstellte Tools laufen isoliert in der eingebauten Linux-Sandbox; dafür muss nichts installiert werden (siehe [Tools](/docs/tools#sandbox)). Meldet *Einstellungen → Sandbox*, dass sie nicht verfügbar ist, laufen sie nur mit Docker.

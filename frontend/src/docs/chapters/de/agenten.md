@@ -136,7 +136,7 @@ Das Ergebnis sieht dann so aus:
 
 Gedanken zählen zu den **Ausgabetokens** und werden entsprechend berechnet.
 
-Ist bei einem Modell unbekannt, ob es Denkaufwand unterstützt (eigene Server, unbekannte Modell-IDs), führt ein gesetzter Aufwand zu einem Fehler. Wähle dann *Modellstandard* oder gib die Fähigkeit unter [KI-Anbieter](/docs/einstellungen#anbieter) an.
+Ist bei einem Modell unbekannt, ob es Denkaufwand unterstützt (eigene Server, unbekannte Modell-IDs), führt ein gesetzter Aufwand zu einem Fehler. Wähle dann *Modellstandard* oder gib die Fähigkeit unter [KI-Anbieter](/docs/einstellungen#anbieter) an. OpenAI-kompatible Endpunkte (etwa Ollama oder vLLM) nehmen gar keine Aufwand-Einstellung an; die Prüfung erklärt das und stellt mit **Aufwand auf Modellstandard setzen** den Agenten mit einem Klick um.
 
 ## Qualitätsprüfung {#qualitaet}
 <!-- keywords: qualitätsprüfung, judge, evaluator, kriterien, überarbeitung, refine, llm as a judge, bewertung -->

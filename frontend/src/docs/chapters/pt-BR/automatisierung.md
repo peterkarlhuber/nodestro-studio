@@ -1,6 +1,6 @@
 # Automação
 
-Em *Automação*, na navegação, os fluxos de trabalho rodam sem clicar em *Iniciar*: **execuções em lote** processam muitas entradas de uma vez, **séries de testes** medem a qualidade de um fluxo e **agendamentos** iniciam fluxos regularmente. Cada execução individual é uma execução comum, com trace, orçamento e uso; as aprovações esperam uma pessoa como sempre.
+Em *Automatizar e testar*, na navegação, os fluxos de trabalho rodam sem clicar em *Iniciar*: **execuções em lote** processam muitas entradas de uma vez, **séries de testes** medem a qualidade de um fluxo e **agendamentos** iniciam fluxos regularmente. Cada execução individual é uma execução comum, com trace, orçamento e uso; as aprovações esperam uma pessoa como sempre.
 
 ## Execuções em lote {#stapel}
 <!-- keywords: lote, batch, muitas entradas, csv, excel, xlsx, json, tabela, colunas, mapeamento, exportar -->

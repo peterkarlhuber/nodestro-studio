@@ -1,12 +1,41 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Trash2 } from "lucide-react";
 
-import { ConfirmIconButton, Section, Segmented, StatusBadge, Toggle } from "./ui";
+import { useRef, useState } from "react";
+
+import { Button, ConfirmIconButton, Field, Modal, Section, Segmented, Select, StatusBadge, TextArea, TextInput, Toggle } from "./ui";
+
+function DialogHarness({ autoFocus = false, cancelFirst = false }: { autoFocus?: boolean; cancelFirst?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const cancel = useRef<HTMLButtonElement>(null);
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Öffnen</Button>
+      <Modal
+        title="Dialog"
+        open={open}
+        onClose={() => setOpen(false)}
+        initialFocus={cancelFirst ? cancel : undefined}
+        footer={
+          <Button ref={cancel} onClick={() => setOpen(false)}>
+            Abbrechen
+          </Button>
+        }
+      >
+        <Field label="Suche">
+          <TextInput autoFocus={autoFocus} />
+        </Field>
+      </Modal>
+    </>
+  );
+}
 
 describe("ui", () => {
+  afterEach(cleanup);
+
   it("shows status as text, not colour alone", () => {
     render(<StatusBadge status="failed" />);
     expect(screen.getByText("Fehler")).toBeInTheDocument();
@@ -49,6 +78,85 @@ describe("ui", () => {
     await userEvent.click(screen.getByRole("button", { name: "Lauf löschen" }));
     await userEvent.click(screen.getByRole("button", { name: "Lauf löschen: Wirklich löschen?" }));
     expect(onConfirm).toHaveBeenCalledTimes(1);
+  });
+
+  describe("Modal focus", () => {
+    it("returns the focus to the opener when it closes", async () => {
+      render(<DialogHarness />);
+      const opener = screen.getByRole("button", { name: "Öffnen" });
+      await userEvent.click(opener);
+      expect(screen.getByRole("dialog", { name: "Dialog" })).toBeInTheDocument();
+      await userEvent.click(screen.getByRole("button", { name: "Abbrechen" }));
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      expect(opener).toHaveFocus();
+    });
+
+    it("focuses an autoFocus field instead of the close button", async () => {
+      render(<DialogHarness autoFocus />);
+      await userEvent.click(screen.getByRole("button", { name: "Öffnen" }));
+      expect(screen.getByRole("textbox", { name: "Suche" })).toHaveFocus();
+      await userEvent.keyboard("job");
+      expect(screen.getByRole("textbox", { name: "Suche" })).toHaveValue("job");
+    });
+
+    it("focuses an explicit initialFocus target", async () => {
+      render(<DialogHarness cancelFirst />);
+      await userEvent.click(screen.getByRole("button", { name: "Öffnen" }));
+      expect(screen.getByRole("button", { name: "Abbrechen" })).toHaveFocus();
+    });
+  });
+
+  describe("Field", () => {
+    it("links its label and hint to the control without htmlFor", () => {
+      render(
+        <>
+          <Field label="Name" hint="Wie der Workflow heißt">
+            <TextInput />
+          </Field>
+          <Field label="Beschreibung">
+            <TextArea />
+          </Field>
+          <Field label="Modell">
+            <Select value="a" onChange={() => undefined} options={[{ value: "a", label: "A" }]} />
+          </Field>
+        </>,
+      );
+      const name = screen.getByRole("textbox", { name: "Name" });
+      expect(name).toHaveAccessibleDescription("Wie der Workflow heißt");
+      expect(screen.getByRole("textbox", { name: "Beschreibung" })).toBeInTheDocument();
+      expect(screen.getByRole("combobox", { name: "Modell" })).toBeInTheDocument();
+    });
+
+    it("keeps an own id and links only the first control", () => {
+      render(
+        <Field label="Grenze">
+          <TextInput id="limit" />
+          <TextInput aria-label="Zweites Feld" />
+        </Field>,
+      );
+      const first = screen.getByRole("textbox", { name: "Grenze" });
+      expect(first).toHaveAttribute("id", "limit");
+      const second = screen.getByRole("textbox", { name: "Zweites Feld" });
+      expect(second).not.toHaveAttribute("id");
+    });
+
+    it("respects an explicit htmlFor", () => {
+      render(
+        <Field label="Code" htmlFor="code-input">
+          <input id="code-input" />
+          <TextInput aria-label="Anderes" />
+        </Field>,
+      );
+      expect(screen.getByRole("textbox", { name: "Code" })).toHaveAttribute("id", "code-input");
+      expect(screen.getByRole("textbox", { name: "Anderes" })).not.toHaveAttribute("id");
+    });
+  });
+
+  it("gives the focus back to the delete button after Escape", async () => {
+    render(<ConfirmIconButton icon={Trash2} label="Lauf löschen" onConfirm={() => undefined} />);
+    await userEvent.click(screen.getByRole("button", { name: "Lauf löschen" }));
+    await userEvent.keyboard("{Escape}");
+    expect(screen.getByRole("button", { name: "Lauf löschen" })).toHaveFocus();
   });
 
   describe("Section", () => {

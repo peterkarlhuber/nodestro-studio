@@ -317,7 +317,7 @@ export function ApiOverviewPanel({
         onClose={() => setOffOpen(false)}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setOffOpen(false)}>
+            <Button variant="ghost" data-autofocus onClick={() => setOffOpen(false)}>
               {t("common.cancel")}
             </Button>
             <Button variant="danger" icon={Power} busy={enable.isPending} onClick={() => enable.mutate(false)}>
@@ -335,7 +335,7 @@ export function ApiOverviewPanel({
         onClose={() => setDeleteOpen(false)}
         footer={
           <>
-            <Button variant="ghost" onClick={() => setDeleteOpen(false)}>
+            <Button variant="ghost" data-autofocus onClick={() => setDeleteOpen(false)}>
               {t("common.cancel")}
             </Button>
             <Button variant="danger" icon={Trash2} busy={remove.isPending} onClick={() => remove.mutate()}>

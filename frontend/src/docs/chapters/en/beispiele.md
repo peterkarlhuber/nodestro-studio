@@ -3,22 +3,24 @@
 Nodestro comes with 24 ready-made multi-agent workflows, one for each typical field of application. Every example contains agents with system prompts, the connections, a prepared test task with invented data and a clearly described result. This chapter explains the gallery, copying and adapting, and describes each example on its own.
 
 ## The gallery {#galerie}
-<!-- keywords: examples, templates, gallery, library, featured, categories, start page -->
+<!-- keywords: examples, templates, gallery, library, featured, categories, start page, start here, level, easiest -->
 
-The gallery is on the **Workflows** page below your own workflows, clearly separated from them. It shows a few featured examples and the six categories. **View all 24 examples** opens the full gallery, also in the workflow area.
+The gallery is on the **Workflows** page below your own workflows, clearly separated from them. It shows a few featured examples, the easiest first, and the six categories. As long as you have no workflow yet, the easiest example carries the mark **Start here**; after that the gallery is a closed section that remembers whether you opened it. **View all 24 examples** opens the full gallery, also in the workflow area.
 
-In the full gallery you search by name, field and description and filter by category. Each card shows the field, name, description, number of agents, level and pattern. Examples from sensitive fields carry the badge **Needs expert check**. The [search](/docs/start#suche) finds examples too.
+In the full gallery you search by name, field, description, building block or level and filter by category and **Level**. The examples are ordered by level, the easiest first; the easiest one carries **Start here**. The search, the filters and an open preview are part of the address, so *Back* leads to the same selection. Each card shows the field, name, description, number of agents, level and pattern. Examples from sensitive fields carry the badge **Needs expert check**. The [search](/docs/start#suche) finds examples too.
 
 ## Preview and copy {#uebernehmen}
 <!-- keywords: preview, copy, template, unchanged, free -->
 
 Clicking a card opens the **preview**: the flow as a diagram, each agent with its role, model, tools and the results it receives, the guide and the test task. The preview stores nothing and calls no model.
 
+At the top of the preview, **What you need** shows which AI provider and models the copy uses and whether that provider is set up (otherwise with a link to the settings), whether a run pauses for an approval, which knowledge and sample files come with it and whether a connection to another service is needed.
+
 **Copy to my workflows** creates your own workflow and opens it in the editor. The copy is independent: you can change everything, and the template always stays unchanged. If you copy an example twice, you get two separate workflows. The copy starts with version 1 in the [version history](/docs/workflows#versionen).
 
 If **Add the test cases as a test series** is ticked (the default), the copy also gets a [test series](/docs/automatisierung#testreihen) with the prepared test cases; the sample files they need are stored as input files of the copy. Copying never starts a run, never creates a [schedule](/docs/automatisierung#zeitplaene) and never publishes an [API](/docs/api-und-export#veroeffentlichen); you decide on those later yourself.
 
-Examples are never created automatically; only what you copy appears among your workflows. Costs only arise when you run a copy. The examples use Anthropic models; that [provider set up](/docs/einstellungen#anbieter) is all they need, and you can switch a copy's models to another provider at any time. No example requires other services, accounts or paid data sources.
+Examples are never created automatically; only what you copy appears among your workflows. Costs only arise when you run a copy. Which models a copy gets depends on your default model: if it is an Anthropic model, the copy uses the example's models (Haiku, Sonnet or Opus, depending on the agent's task). If it belongs to another [provider](/docs/einstellungen#anbieter), every agent of the copy uses your default model, and the most demanding ones your assistant model if it belongs to the same provider; server tools, which only run with Anthropic, are then left out. You can change a copy's models at any time. No example needs accounts or paid data sources. Some examples have an **Optional connection** to another service via MCP: when copying, you choose a set-up [connected service](/docs/tools#verbundene-dienste) or the **Offline mode (sample data)**, which is preselected.
 
 ## Languages {#sprachen}
 <!-- keywords: language, translation, german, english, copy, prompts -->
@@ -70,7 +72,7 @@ The results are working aids, not advice and not a decision. Check them professi
 - **Your own files:** put documents for a single run directly into the file field when you start; you do not need a knowledge collection for that.
 - **Knowledge:** upload documents you need permanently as [knowledge](/docs/wissen#modi) and assign them to the matching agent.
 - **Prompts and tasks:** the tasks refer to their predecessors with [placeholders](/docs/workflows#platzhalter). If you rename an agent, adjust the placeholders.
-- **Current data:** for live information you can add the web search [server tool](/docs/tools#server-tools); it costs extra per search.
+- **Current data:** for live information you can add the web search [server tool](/docs/tools#server-tools) (only with Anthropic models); it costs extra per search.
 
 The sections below name concrete adjustments for each example.
 

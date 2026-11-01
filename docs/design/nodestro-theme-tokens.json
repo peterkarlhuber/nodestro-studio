@@ -45,7 +45,7 @@
       "--nd-border-strong": "#AEBFAD",
       "--nd-text": "#1A251F",
       "--nd-text-muted": "#56685E",
-      "--nd-text-subtle": "#68776D",
+      "--nd-text-subtle": "#5F6E64",
       "--nd-brand": "#546B25",
       "--nd-brand-hover": "#41551B",
       "--nd-brand-active": "#314111",
@@ -60,7 +60,7 @@
       "--nd-warning-soft": "#FFF0D5",
       "--nd-danger": "#B43E3A",
       "--nd-danger-soft": "#FAE7E3",
-      "--nd-idle": "#63756A",
+      "--nd-idle": "#5C6B61",
       "--nd-idle-soft": "#E9EFEB",
       "--nd-grid": "rgba(79, 102, 83, .12)"
     }
