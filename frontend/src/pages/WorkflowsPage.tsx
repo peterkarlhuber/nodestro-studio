@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Copy, Diamond, FilePlus2, FileUp, Plus, Sparkles, Trash2 } from "lucide-react";
+import { Copy, Diamond, FilePlus2, FileUp, Network, Plus, Sparkles, Trash2 } from "lucide-react";
 import { type ChangeEvent, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
 import { api } from "../api/client";
-import { keys, useOrganize, useWorkflows } from "../api/hooks";
+import { keys, useOrganize, useSettings, useWorkflows } from "../api/hooks";
 import { ArchitectDialog, ArchitectOptions, type ArchitectStart } from "../architect/ArchitectDialog";
 import { useTakeHandover } from "../assistant/handover";
 import type { WorkflowIn, WorkflowSummary } from "../api/types";
@@ -21,6 +21,7 @@ import {
 import { toast } from "../components/toast";
 import { ExampleGallery } from "../library/ExampleGallery";
 import {
+  Badge,
   Button,
   Callout,
   EmptyState,
@@ -29,6 +30,7 @@ import {
   IconButton,
   Modal,
   PageHeader,
+  Section,
   Segmented,
   Spinner,
   StatusBadge,
@@ -38,7 +40,18 @@ import {
 import { newNode } from "../lib/defaults";
 import { ErrorText, LocalError } from "../lib/errors";
 import { relativeTime } from "../lib/format";
-import { StartChoices } from "./StartChoices";
+import { missingProviders } from "../lib/providers";
+import { ContinueArea } from "./ContinueArea";
+import { ModelNeeded, StartChoices } from "./StartChoices";
+
+/**
+ * A team: a workflow with capability tags or an output contract, made for an orchestrator to delegate to (copies of
+ * orchestrated examples bring several). The workflow data has no reference to the workflow that uses it, so a team is
+ * recognised by these fields alone.
+ */
+export function isTeam(workflow: WorkflowSummary): boolean {
+  return Boolean(workflow.capabilities?.length || workflow.contract?.length);
+}
 
 function starterGraph(): Pick<WorkflowIn, "nodes" | "edges"> {
   const start = newNode("start", { x: 0, y: 60 });
@@ -74,6 +87,11 @@ export function WorkflowsPage() {
   const organize = useOrganize();
   const [filter, setFilter] = useState<OrganizeFilterValue>(NO_FILTER);
   const shown = applyOrganize(workflows.data ?? [], "workflow", (item) => item.id, filter, organize.data);
+  const own = shown.filter((item) => !isTeam(item));
+  const teams = shown.filter(isTeam);
+  const settings = useSettings();
+  // New agents and the Workflow Architect use the default model: without its provider nothing can run yet.
+  const needsModel = missingProviders(settings.data, [settings.data?.default_model]).length > 0;
 
   const refresh = () => queryClient.invalidateQueries({ queryKey: keys.workflows });
 
@@ -135,6 +153,45 @@ export function WorkflowsPage() {
     }
   };
 
+  const card = (workflow: WorkflowSummary) => (
+    <article key={workflow.id} className="card card--link">
+      <Link to={`/workflows/${workflow.id}`} className="card__main">
+        <div className="card__head">
+          <span className="card__avatar">
+            <Diamond size={16} aria-hidden />
+          </span>
+          <div>
+            <h3>{workflow.name}</h3>
+            <span className="muted small">
+              {t("workflows.agentCount", { count: workflow.agents })} ·{" "}
+              {t("common.changed", { time: relativeTime(workflow.updated_at) })}
+            </span>
+          </div>
+          {isTeam(workflow) ? (
+            <Badge tone="running" icon={Network}>
+              <span title={t("workflows.teams.badgeHint")}>{t("workflows.teams.badge")}</span>
+            </Badge>
+          ) : null}
+        </div>
+        <p className="card__text">{workflow.description || <span className="muted">{t("common.noDescription")}</span>}</p>
+      </Link>
+      <TagChips kind="workflow" id={workflow.id} />
+      <footer className="card__foot">
+        {workflow.last_run_status ? (
+          <StatusBadge status={workflow.last_run_status} />
+        ) : (
+          <span className="muted small">{t("workflows.neverRun")}</span>
+        )}
+        <div className="row-gap">
+          <FavoriteButton kind="workflow" id={workflow.id} name={workflow.name} />
+          <TagEditor kind="workflow" id={workflow.id} name={workflow.name} />
+          <IconButton icon={Copy} label={t("workflows.duplicate")} onClick={() => duplicate.mutate(workflow.id)} />
+          <IconButton icon={Trash2} label={t("common.delete")} onClick={() => setDeleting(workflow)} />
+        </div>
+      </footer>
+    </article>
+  );
+
   return (
     <div className="page">
       <PageHeader
@@ -166,7 +223,9 @@ export function WorkflowsPage() {
           <EmptyState
             icon={Diamond}
             title={t("workflows.emptyTitle")}
-            action={<StartChoices variant="full" onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />}
+            action={
+              <StartChoices variant="full" needsModel={needsModel} onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />
+            }
           >
             {t("workflows.emptyText")}
           </EmptyState>
@@ -174,48 +233,30 @@ export function WorkflowsPage() {
         {workflows.data?.length ? (
           <StartChoices variant="compact" onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />
         ) : null}
+        {workflows.data?.length ? <ContinueArea workflows={workflows.data} /> : null}
         {workflows.data?.length ? (
           <div className="page__filters">
             <OrganizeFilter kind="workflow" value={filter} onChange={setFilter} />
           </div>
         ) : null}
         {workflows.data?.length && !shown.length ? <p className="muted">{t("organize.noMatch")}</p> : null}
-        <div className="card-grid">
-          {shown.map((workflow) => (
-            <article key={workflow.id} className="card card--link">
-              <Link to={`/workflows/${workflow.id}`} className="card__main">
-                <div className="card__head">
-                  <span className="card__avatar">
-                    <Diamond size={16} aria-hidden />
-                  </span>
-                  <div>
-                    <h3>{workflow.name}</h3>
-                    <span className="muted small">
-                      {t("workflows.agentCount", { count: workflow.agents })} ·{" "}
-                      {t("common.changed", { time: relativeTime(workflow.updated_at) })}
-                    </span>
-                  </div>
-                </div>
-                <p className="card__text">{workflow.description || <span className="muted">{t("common.noDescription")}</span>}</p>
-              </Link>
-              <TagChips kind="workflow" id={workflow.id} />
-              <footer className="card__foot">
-                {workflow.last_run_status ? (
-                  <StatusBadge status={workflow.last_run_status} />
-                ) : (
-                  <span className="muted small">{t("workflows.neverRun")}</span>
-                )}
-                <div className="row-gap">
-                  <FavoriteButton kind="workflow" id={workflow.id} name={workflow.name} />
-                  <TagEditor kind="workflow" id={workflow.id} name={workflow.name} />
-                  <IconButton icon={Copy} label={t("workflows.duplicate")} onClick={() => duplicate.mutate(workflow.id)} />
-                  <IconButton icon={Trash2} label={t("common.delete")} onClick={() => setDeleting(workflow)} />
-                </div>
-              </footer>
-            </article>
-          ))}
-        </div>
-        <ExampleGallery />
+        <div className="card-grid">{own.map(card)}</div>
+        {teams.length ? (
+          <Section
+            id="workflow-teams"
+            className="workflow-teams"
+            icon={Network}
+            title={t("workflows.teams.title")}
+            summary={<span className="muted small">{t("workflows.teams.count", { count: teams.length })}</span>}
+            defaultOpen={!own.length}
+          >
+            <p className="muted small">{t("workflows.teams.text")}</p>
+            <div className="card-grid" data-testid="workflow-teams">
+              {teams.map(card)}
+            </div>
+          </Section>
+        ) : null}
+        <ExampleGallery collapsible={Boolean(workflows.data?.length)} />
       </div>
 
       <Modal
@@ -246,6 +287,7 @@ export function WorkflowsPage() {
             submit();
           }}
         >
+          {createMode === "ai" && needsModel ? <ModelNeeded forAi /> : null}
           <Segmented
             value={createMode}
             onChange={setCreateMode}

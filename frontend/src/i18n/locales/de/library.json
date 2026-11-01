@@ -121,5 +121,27 @@
     "notReadOnly": "Nicht als nur lesend freigegeben: {{tools}}",
     "noServers": "Es ist noch kein MCP-Server eingerichtet, daher läuft die Kopie im Offline-Modus.",
     "setUp": "Verbundene Dienste einrichten"
+  },
+  "startHere": "Hier starten",
+  "galleryCount_one": "{{count}} Beispiel",
+  "galleryCount_other": "{{count}} Beispiele",
+  "searchPlaceholderFeatures": "Name, Fachgebiet, Baustein oder Niveau …",
+  "levelLabel": "Niveau",
+  "allLevels": "Alle Niveaus",
+  "needs": {
+    "title": "Was du brauchst",
+    "models": "KI-Anbieter: {{provider}} · Modelle: {{models}}.",
+    "modelsAdapted": "KI-Anbieter: {{provider}}. Die Kopie nutzt statt der Modelle des Beispiels deine Standardmodelle: {{models}}.",
+    "providerMissing": "Noch nicht eingerichtet.",
+    "setUp": "Einrichten",
+    "providerReady": "Eingerichtet.",
+    "approval": "Eine Ausführung hält für deine Freigabe an, bevor sie weiterläuft.",
+    "knowledge_one": "Legt {{count}} Wissensdatei in deiner Wissensbasis an.",
+    "knowledge_other": "Legt {{count}} Wissensdateien in deiner Wissensbasis an.",
+    "samples_one": "{{count}} Beispieldatei zum Ausprobieren der Dateifelder (siehe unten).",
+    "samples_other": "{{count}} Beispieldateien zum Ausprobieren der Dateifelder (siehe unten).",
+    "files": "Nimmt deine eigenen Dateien als Eingabe.",
+    "connection": "Optionale Verbindung (MCP): {{names}}. Ohne sie läuft die Kopie offline mit Beispieldaten.",
+    "noConnection": "Keine Verbindung zu anderen Diensten nötig."
   }
 }

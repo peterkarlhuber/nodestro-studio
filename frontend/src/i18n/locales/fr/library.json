@@ -121,5 +121,27 @@
     "notReadOnly": "Non approuvé en lecture seule : {{tools}}",
     "noServers": "Aucun serveur MCP n'est encore configuré, la copie s'exécute donc en mode hors ligne.",
     "setUp": "Configurer les services connectés"
+  },
+  "startHere": "Commencez ici",
+  "galleryCount_one": "{{count}} exemple",
+  "galleryCount_other": "{{count}} exemples",
+  "searchPlaceholderFeatures": "Nom, domaine, bloc ou niveau …",
+  "levelLabel": "Niveau",
+  "allLevels": "Tous les niveaux",
+  "needs": {
+    "title": "Ce dont vous avez besoin",
+    "models": "Fournisseur d’IA : {{provider}} · modèles : {{models}}.",
+    "modelsAdapted": "Fournisseur d’IA : {{provider}}. La copie utilise vos modèles par défaut au lieu de ceux de l’exemple : {{models}}.",
+    "providerMissing": "Pas encore configuré.",
+    "setUp": "Configurer",
+    "providerReady": "Configuré.",
+    "approval": "Une exécution s’arrête pour votre validation avant de continuer.",
+    "knowledge_one": "Crée {{count}} fichier de connaissances dans votre base de connaissances.",
+    "knowledge_other": "Crée {{count}} fichiers de connaissances dans votre base de connaissances.",
+    "samples_one": "{{count}} fichier d’exemple pour essayer les champs de fichier (voir ci-dessous).",
+    "samples_other": "{{count}} fichiers d’exemple pour essayer les champs de fichier (voir ci-dessous).",
+    "files": "Prend vos propres fichiers en entrée.",
+    "connection": "Connexion facultative (MCP) : {{names}}. Sans elle, la copie s’exécute hors ligne avec des données d’exemple.",
+    "noConnection": "Aucune connexion à d’autres services n’est nécessaire."
   }
 }

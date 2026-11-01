@@ -728,5 +728,6 @@
   },
   "mcp_server": {
     "disabled": "Der MCP-Server von Nodestro ist ausgeschaltet."
-  }
+  },
+  "setupProvider": "KI-Anbieter einrichten"
 }

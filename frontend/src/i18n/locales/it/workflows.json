@@ -31,6 +31,26 @@
     "example": "Parti da un esempio",
     "exampleText": "Guarda workflow pronti con dati di test sintetici e copiane uno come tuo. Senza chiamate al modello.",
     "manual": "Costruiscilo da te",
-    "manualText": "Inizia con un input, un agente vuoto e un risultato. Trascini altri blocchi sull’area di lavoro."
+    "manualText": "Inizia con un input, un agente vuoto e un risultato. Trascini altri blocchi sull’area di lavoro.",
+    "aiNeedsModel": "Richiede una connessione a un modello di IA",
+    "modelNeeded": "Per eseguire i workflow, collega prima un modello di IA: una chiave API (per esempio Anthropic, OpenAI o Gemini) o un server di modelli locale come Ollama. Copiare un esempio funziona anche senza.",
+    "aiModelNeeded": "Crea con l’IA richiede una connessione a un modello di IA: l’architetto dei workflow progetta il workflow con il tuo modello predefinito, che non è ancora configurato.",
+    "modelNeededLink": "Configura nelle impostazioni"
+  },
+  "continue": {
+    "title": "Riprendi",
+    "waiting_one": "{{count}} approvazione ti aspetta",
+    "waiting_other": "{{count}} approvazioni ti aspettano",
+    "runs": "Esecuzioni recenti",
+    "allRuns": "Tutte le esecuzioni",
+    "edited": "Modificati di recente"
+  },
+  "teams": {
+    "title": "Team",
+    "count_one": "{{count}} team",
+    "count_other": "{{count}} team",
+    "text": "Workflow a cui un orchestratore può delegare (dichiarano capacità o un contratto di output). Le copie degli esempi orchestrati portano con sé i loro team.",
+    "badge": "Team",
+    "badgeHint": "Un orchestratore può delegare lavoro a questo workflow"
   }
 }

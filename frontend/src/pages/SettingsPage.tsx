@@ -14,7 +14,7 @@ import { ErrorText } from "../lib/errors";
 import { PythonMaintenance } from "../python/PythonMaintenance";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
-import { ProviderSettings } from "./SettingsProviders";
+import { CHECK_KEY, DefaultModelNotice, ProviderSettings } from "./SettingsProviders";
 
 const AUTOMATIC = "auto";
 
@@ -79,6 +79,8 @@ export function SettingsPage() {
     mutationFn: (body: Parameters<typeof api.saveSettings>[0]) => api.saveSettings(body),
     onSuccess: (data) => {
       queryClient.setQueryData(keys.settings, data);
+      // The default model decides which provider new agents need; the editor's check asks again.
+      void queryClient.invalidateQueries({ queryKey: CHECK_KEY });
       toast.success(t("settings.saved"));
     },
     onError: toast.error,
@@ -105,6 +107,7 @@ export function SettingsPage() {
           <h2 className="panel__title" id="settings-models">
             <Cpu size={15} aria-hidden /> {t("settings.models.title")}
           </h2>
+          {settings.data ? <DefaultModelNotice settings={settings.data} /> : null}
           <Field label={t("settings.models.defaultModel")} tip="settings.defaultModel" hint={defaultHint ?? t("settings.models.defaultHint")}>
             <ModelPicker
               label={t("settings.models.defaultModel")}

@@ -728,5 +728,6 @@
   },
   "mcp_server": {
     "disabled": "Nodestro's MCP server is switched off."
-  }
+  },
+  "setupProvider": "Set up AI provider"
 }

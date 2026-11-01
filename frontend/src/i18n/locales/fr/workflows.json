@@ -31,6 +31,26 @@
     "example": "Partir d’un exemple",
     "exampleText": "Parcourez des workflows prêts à l’emploi avec des données de test synthétiques et copiez-en un pour vous. Sans appel au modèle.",
     "manual": "Le construire vous-même",
-    "manualText": "Commence avec une entrée, un agent vide et un résultat. Vous glissez d’autres blocs sur le canevas."
+    "manualText": "Commence avec une entrée, un agent vide et un résultat. Vous glissez d’autres blocs sur le canevas.",
+    "aiNeedsModel": "Nécessite une connexion à un modèle d’IA",
+    "modelNeeded": "Pour exécuter des workflows, connectez d’abord un modèle d’IA : une clé API (par exemple Anthropic, OpenAI ou Gemini) ou un serveur de modèles local comme Ollama. Copier un exemple fonctionne sans.",
+    "aiModelNeeded": "Créer avec l’IA nécessite une connexion à un modèle d’IA : l’architecte de workflows conçoit le workflow avec votre modèle par défaut, qui n’est pas encore configuré.",
+    "modelNeededLink": "Configurer dans les paramètres"
+  },
+  "continue": {
+    "title": "Reprendre",
+    "waiting_one": "{{count}} validation vous attend",
+    "waiting_other": "{{count}} validations vous attendent",
+    "runs": "Exécutions récentes",
+    "allRuns": "Toutes les exécutions",
+    "edited": "Modifiés récemment"
+  },
+  "teams": {
+    "title": "Équipes",
+    "count_one": "{{count}} équipe",
+    "count_other": "{{count}} équipes",
+    "text": "Workflows auxquels un orchestrateur peut déléguer (ils déclarent des capacités ou un contrat de sortie). Les copies d’exemples orchestrés apportent leurs équipes.",
+    "badge": "Équipe",
+    "badgeHint": "Un orchestrateur peut déléguer du travail à ce workflow"
   }
 }

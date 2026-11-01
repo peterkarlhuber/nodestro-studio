@@ -1,0 +1,209 @@
+/* First success and returning users (UX initiative WP onboarding): the model note of the start choices, the
+   "Continue" area, the team group and the folded gallery on the start page, the gallery's level filter and the
+   "What you need" box of the example preview. */
+
+.start-choices__wrap {
+  width: 100%;
+  margin-top: var(--nd-space-2);
+}
+
+.start-choices__wrap .start-choices {
+  margin-top: 0;
+}
+
+.start-choice__note {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--nd-warning);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ---- "Continue" on the start page ------------------------------------------- */
+
+.continue {
+  margin-bottom: var(--nd-space-4);
+  padding: 14px 16px;
+  background: var(--nd-panel);
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-lg);
+}
+
+.continue__title {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--nd-text);
+}
+
+.continue__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--nd-space-3) var(--nd-space-6);
+  align-items: start;
+}
+
+.continue__heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  color: var(--nd-text-muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.continue__all {
+  margin-left: auto;
+  font-weight: 500;
+}
+
+.continue__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.continue__list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.continue__item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  padding: 3px 0;
+  color: var(--nd-text);
+}
+
+.continue__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.continue__waiting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--nd-warning) 45%, var(--nd-border));
+  border-radius: var(--nd-radius-md);
+  background: color-mix(in srgb, var(--nd-warning) 10%, transparent);
+  color: var(--nd-text);
+}
+
+.continue__waiting:hover {
+  text-decoration: none;
+  border-color: var(--nd-warning);
+}
+
+.continue__waiting > span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.continue__waiting .muted {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.continue__waiting svg {
+  flex: none;
+  color: var(--nd-warning);
+}
+
+/* ---- teams and the folded gallery ------------------------------------------------ */
+
+.workflow-teams,
+.example-gallery__section {
+  margin-top: var(--nd-space-6);
+}
+
+.workflow-teams > .card-grid {
+  margin: var(--nd-space-2) 0 var(--nd-space-4);
+}
+
+.example-gallery__section .example-gallery {
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: var(--nd-space-4);
+  border-top: 0;
+}
+
+.card__head > .nd-badge {
+  margin-left: auto;
+  align-self: flex-start;
+  flex: none;
+}
+
+/* ---- gallery filters and the preview's "What you need" ---------------------------- */
+
+.example-filters__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nd-space-2);
+}
+
+.example-filters__row .nd-input[type="search"] {
+  flex: 1 1 260px;
+}
+
+.example-filters__row .nd-select {
+  flex: 0 1 200px;
+}
+
+.example-needs {
+  padding: 12px 14px;
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-md);
+  background: var(--nd-surface);
+}
+
+.example-needs h3 {
+  margin-bottom: 8px;
+}
+
+.example-needs ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+}
+
+.example-needs li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.example-needs li > svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--nd-brand);
+}
+
+.example-needs__missing {
+  color: var(--nd-warning);
+  font-weight: 600;
+}
+
+.example-needs__ok {
+  color: var(--nd-success);
+}

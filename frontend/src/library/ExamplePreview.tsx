@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { api } from "../api/client";
-import { keys, useExample, useMeta } from "../api/hooks";
+import { keys, useExample, useMeta, useSettings } from "../api/hooks";
 import type { ExampleDetail } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { toast } from "../components/toast";
@@ -16,6 +16,7 @@ import { LANGUAGE_NAMES, LANGUAGES, type Language, currentLanguage } from "../i1
 import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
 import { findModel } from "../lib/providers";
+import { ExampleNeeds, copiedModel } from "./ExampleNeeds";
 import { ExampleConnections, KnowledgeList, TeamList } from "./ExampleSections";
 import { OFFLINE, PATTERN_ICONS, copyRequest } from "./examples";
 
@@ -70,12 +71,15 @@ function ExampleGraph({ example }: { example: ExampleDetail }) {
 function AgentList({ example }: { example: ExampleDetail }) {
   const { t } = useTranslation();
   const meta = useMeta();
+  const settings = useSettings();
   const icons = Object.fromEntries(example.workflow.nodes.map((node) => [node.id, node.agent?.icon ?? "bot"]));
   return (
     <ol className="example-agents">
       {example.agent_details.map((agent) => {
         const Icon = agentIcon(icons[agent.node_id]);
-        const model = findModel(meta.data?.models, agent.model)?.label ?? agent.model;
+        // The model the copy gets: it follows the default model's provider (see ExampleNeeds).
+        const copied = copiedModel(agent.model, settings.data, meta.data?.models);
+        const model = findModel(meta.data?.models, copied)?.label ?? copied;
         return (
           <li key={agent.node_id} className="example-agents__item">
             <span className="card__avatar">
@@ -134,7 +138,16 @@ const GUIDE_SECTIONS = ["control", "why"] as const;
  * The preview of an example: its graph, agents, guide and test task. Looking at it is free;
  * "copy" creates an independent workflow in the chosen language and opens it in the editor.
  */
-export function ExamplePreview({ id, onClose }: { id: string | null; onClose: () => void }) {
+export function ExamplePreview({
+  id,
+  onClose,
+  onCopied,
+}: {
+  id: string | null;
+  onClose: () => void;
+  /** Opens the copy; by default the editor as a new history entry. */
+  onCopied?: (workflowId: string) => void;
+}) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -151,7 +164,8 @@ export function ExamplePreview({ id, onClose }: { id: string | null; onClose: ()
     onSuccess: (workflow) => {
       void queryClient.invalidateQueries({ queryKey: keys.workflows });
       toast.success(t("library.copied", { name: workflow.name }));
-      navigate(`/workflows/${workflow.id}`);
+      if (onCopied) onCopied(workflow.id);
+      else navigate(`/workflows/${workflow.id}`);
     },
     onError: toast.error,
   });
@@ -209,6 +223,7 @@ export function ExamplePreview({ id, onClose }: { id: string | null; onClose: ()
               ))}
             </div>
           ) : null}
+          <ExampleNeeds example={data} />
           {data.budget_usd ? (
             <p className="small">
               <Scale size={12} aria-hidden /> {t("library.preview.budget", { amount: formatCost(data.budget_usd) })}

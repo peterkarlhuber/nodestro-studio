@@ -1504,7 +1504,7 @@ details[open] > summary > .section__chevron {
 }
 
 /* The three ways to start a workflow (pages/StartChoices.tsx): tiles in the empty state, one row above the list. */
-.empty:has(> .start-choices) {
+.empty:has(> .start-choices, > .start-choices__wrap) {
   max-width: 760px;
 }
 

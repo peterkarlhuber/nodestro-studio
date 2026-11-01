@@ -121,5 +121,27 @@
     "notReadOnly": "Non approvato in sola lettura: {{tools}}",
     "noServers": "Non è ancora configurato alcun server MCP, quindi la copia viene eseguita in modalità offline.",
     "setUp": "Configura i servizi collegati"
+  },
+  "startHere": "Inizia qui",
+  "galleryCount_one": "{{count}} esempio",
+  "galleryCount_other": "{{count}} esempi",
+  "searchPlaceholderFeatures": "Nome, ambito, blocco o livello …",
+  "levelLabel": "Livello",
+  "allLevels": "Tutti i livelli",
+  "needs": {
+    "title": "Cosa ti serve",
+    "models": "Provider di IA: {{provider}} · modelli: {{models}}.",
+    "modelsAdapted": "Provider di IA: {{provider}}. La copia usa i tuoi modelli predefiniti invece di quelli dell’esempio: {{models}}.",
+    "providerMissing": "Non ancora configurato.",
+    "setUp": "Configura",
+    "providerReady": "Configurato.",
+    "approval": "Un’esecuzione si ferma per la tua approvazione prima di proseguire.",
+    "knowledge_one": "Crea {{count}} file di conoscenza nella tua base di conoscenza.",
+    "knowledge_other": "Crea {{count}} file di conoscenza nella tua base di conoscenza.",
+    "samples_one": "{{count}} file di esempio per provare i campi file (vedi sotto).",
+    "samples_other": "{{count}} file di esempio per provare i campi file (vedi sotto).",
+    "files": "Usa i tuoi file come input.",
+    "connection": "Connessione facoltativa (MCP): {{names}}. Senza, la copia viene eseguita offline con dati di esempio.",
+    "noConnection": "Nessuna connessione ad altri servizi necessaria."
   }
 }

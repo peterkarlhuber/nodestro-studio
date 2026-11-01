@@ -31,7 +31,7 @@ import { Toaster } from "../components/toast";
 import { Hint, Segmented } from "../components/ui";
 import { isLanguage, setLanguage, storedLanguage } from "../i18n";
 import { setDefaultModel } from "../lib/defaults";
-import { missingProviders } from "../lib/providers";
+import { anyProviderConfigured, missingProviders, providerOf } from "../lib/providers";
 import { useTheme } from "../lib/theme";
 import { GlobalSearch } from "./GlobalSearch";
 
@@ -105,6 +105,10 @@ export function AppShell() {
   const waiting = (approvals.data?.length ?? 0) + (toolApprovals.data?.filter((item) => item.status === "pending").length ?? 0);
   // New agents use the default model: without its provider nothing runs.
   const missingKey = missingProviders(settings.data, [settings.data?.default_model]).length > 0;
+  // With another provider set up the problem is the default model, not a missing provider (OB-03).
+  const providerChip = anyProviderConfigured(settings.data)
+    ? t("shell.defaultProviderMissing", { provider: t(`providers.names.${providerOf(settings.data?.default_model ?? "")}`) })
+    : t("shell.providerMissing");
   const defaultModel = settings.data?.default_model;
   const savedLanguage = settings.data?.language;
   useEffect(() => {
@@ -144,8 +148,8 @@ export function AppShell() {
         <GlobalSearch />
         <div className="topbar__right">
           {missingKey ? (
-            <Link to="/settings" className="nd-badge nd-badge--warning" title={t("shell.providerMissing")}>
-              <KeyRound size={11} aria-hidden /> <span className="topbar__badge-label">{t("shell.providerMissing")}</span>
+            <Link to="/settings" className="nd-badge nd-badge--warning" title={providerChip} data-testid="provider-chip">
+              <KeyRound size={11} aria-hidden /> <span className="topbar__badge-label">{providerChip}</span>
             </Link>
           ) : null}
           <Hint id="assistant.open">

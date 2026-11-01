@@ -501,6 +501,23 @@
   background: transparent;
 }
 
+.wl-model-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 12px auto 0;
+  max-width: 560px;
+  color: var(--nd-text-muted);
+  font-size: 13px;
+  animation: wl-rise 0.8s var(--wl-ease) 1.9s both;
+}
+
+.wl-model-note a {
+  color: var(--nd-brand);
+}
+
 .wl-meta {
   display: flex;
   flex-wrap: wrap;

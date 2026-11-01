@@ -728,5 +728,6 @@
   },
   "mcp_server": {
     "disabled": "El servidor MCP de Nodestro está desactivado."
-  }
+  },
+  "setupProvider": "Configurar proveedor de IA"
 }

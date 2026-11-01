@@ -31,6 +31,26 @@
     "example": "Start from an example",
     "exampleText": "Look at ready-made workflows with synthetic test data and copy one as your own. No model call.",
     "manual": "Build it yourself",
-    "manualText": "Starts with an input, an empty agent and a result. You drag further building blocks onto the canvas."
+    "manualText": "Starts with an input, an empty agent and a result. You drag further building blocks onto the canvas.",
+    "aiNeedsModel": "Needs a connection to an AI model",
+    "modelNeeded": "To run workflows, connect an AI model first: an API key (for example Anthropic, OpenAI or Gemini) or a local model server such as Ollama. Copying an example works without it.",
+    "aiModelNeeded": "Create with AI needs a connection to an AI model: the Workflow Architect designs the workflow with your default model, which is not set up yet.",
+    "modelNeededLink": "Set up in Settings"
+  },
+  "continue": {
+    "title": "Continue",
+    "waiting_one": "{{count}} approval is waiting for you",
+    "waiting_other": "{{count}} approvals are waiting for you",
+    "runs": "Recent runs",
+    "allRuns": "All runs",
+    "edited": "Recently edited"
+  },
+  "teams": {
+    "title": "Teams",
+    "count_one": "{{count}} team",
+    "count_other": "{{count}} teams",
+    "text": "Workflows an orchestrator can delegate to (they declare capabilities or an output contract). Copies of orchestrated examples bring their teams along.",
+    "badge": "Team",
+    "badgeHint": "An orchestrator can delegate work to this workflow"
   }
 }

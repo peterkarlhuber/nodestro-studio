@@ -1,31 +1,35 @@
 import { LayoutTemplate } from "lucide-react";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
 
 import { useExamples } from "../api/hooks";
-import type { ExampleCategory } from "../api/types";
-import { Callout, EmptyState, PageHeader, Segmented, Spinner, TextInput } from "../components/ui";
+import type { ExampleCategory, ExampleLevel } from "../api/types";
+import { Callout, EmptyState, PageHeader, Segmented, Select, Spinner, TextInput } from "../components/ui";
 import { currentLanguage } from "../i18n";
 import { ExampleCard } from "../library/ExampleCard";
 import { ExamplePreview } from "../library/ExamplePreview";
-import { CATEGORIES, filterExamples, isCategory } from "../library/examples";
+import { CATEGORIES, LEVELS, byLevel, type ExampleLabels, filterExamples, isCategory, isLevel, startHere } from "../library/examples";
+import { usePreviewParam } from "../library/previewParam";
 import { ErrorText } from "../lib/errors";
 
 type CategoryFilter = ExampleCategory | "all";
+type LevelFilter = ExampleLevel | "all";
 
 /**
- * All examples of the library, inside the workflow area. ?category= preselects a category,
- * ?template=<id> (from the global search) opens that example's preview.
+ * All examples of the library, inside the workflow area, beginner examples first. The search (?q=), category
+ * (?category=) and level (?level=) live in the URL, so Back returns to the same selection; ?template=<id> (also from
+ * the global search) opens that example's preview.
  */
 export function ExamplesPage() {
   const { t, i18n } = useTranslation();
   const [params, setParams] = useSearchParams();
+  const preview = usePreviewParam();
   const examples = useExamples(i18n.language || currentLanguage());
-  const [query, setQuery] = useState("");
+  const query = params.get("q") ?? "";
   const category: CategoryFilter = isCategory(params.get("category")) ? (params.get("category") as ExampleCategory) : "all";
-  const open = params.get("template");
+  const level: LevelFilter = isLevel(params.get("level")) ? (params.get("level") as ExampleLevel) : "all";
 
+  /** Filter changes replace the entry: Back leaves the gallery instead of undoing every keystroke. */
   const update = (changes: Record<string, string | null>) => {
     const next = new URLSearchParams(params);
     for (const [key, value] of Object.entries(changes)) {
@@ -35,8 +39,15 @@ export function ExamplesPage() {
     setParams(next, { replace: true });
   };
 
-  const label = (item: ExampleCategory) => t(`library.category.${item}`);
-  const shown = filterExamples(examples.data ?? [], query, category === "all" ? null : category, label);
+  const labels: ExampleLabels = {
+    category: (item) => t(`library.category.${item}`),
+    level: (item) => t(`library.level.${item}`),
+    pattern: (item) => t(`library.pattern.${item}`),
+    feature: (item) => t(`library.feature.${item}`),
+  };
+  const all = examples.data ?? [];
+  const first = startHere(all);
+  const shown = byLevel(filterExamples(all, query, category === "all" ? null : category, labels, level === "all" ? null : level));
 
   return (
     <div className="page">
@@ -52,20 +63,31 @@ export function ExamplesPage() {
       />
       <div className="page__body">
         <div className="page__filters example-filters">
-          <TextInput
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={t("library.searchPlaceholder")}
-            aria-label={t("library.searchLabel")}
-          />
+          <div className="example-filters__row">
+            <TextInput
+              type="search"
+              value={query}
+              onChange={(event) => update({ q: event.target.value || null })}
+              placeholder={t("library.searchPlaceholderFeatures")}
+              aria-label={t("library.searchLabel")}
+            />
+            <Select
+              aria-label={t("library.levelLabel")}
+              value={level}
+              onChange={(value) => update({ level: isLevel(value) ? value : null })}
+              options={[
+                { value: "all", label: t("library.allLevels") },
+                ...LEVELS.map((item) => ({ value: item, label: t(`library.level.${item}`) })),
+              ]}
+            />
+          </div>
           <Segmented<CategoryFilter>
             label={t("library.categories")}
             value={category}
             onChange={(value) => update({ category: value === "all" ? null : value })}
             options={[
               { value: "all", label: t("library.allCategories") },
-              ...CATEGORIES.map((item) => ({ value: item, label: label(item) })),
+              ...CATEGORIES.map((item) => ({ value: item, label: labels.category(item) })),
             ]}
           />
         </div>
@@ -85,12 +107,14 @@ export function ExamplesPage() {
         ) : (
           <div className="card-grid">
             {shown.map((example) => (
-              <ExampleCard key={example.id} example={example} onOpen={(id) => update({ template: id })} />
+              <ExampleCard key={example.id} example={example} onOpen={preview.show} startHere={example.id === first} />
             ))}
           </div>
         )}
       </div>
-      {open ? <ExamplePreview key={open} id={open} onClose={() => update({ template: null })} /> : null}
+      {preview.open ? (
+        <ExamplePreview key={preview.open} id={preview.open} onClose={preview.close} onCopied={(id) => preview.leave(`/workflows/${id}`)} />
+      ) : null}
     </div>
   );
 }
