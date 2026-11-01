@@ -71,6 +71,11 @@ function interpolationParams(t: TFunction, params: Record<string, unknown> | nul
       result[key] = t(`providers.names.${value}`, { defaultValue: value });
       continue;
     }
+    if (key === "provider" && !value) {
+      // A provider error without a name: the sentence speaks of the provider in general.
+      result[key] = t("errors.run.someProvider");
+      continue;
+    }
     result[key] = Array.isArray(value)
       ? value.map((item) => (item && typeof item === "object" ? nestedText(t, item as Coded & { field?: string }) : String(item))).join("; ")
       : value;
@@ -84,14 +89,69 @@ function nestedText(t: TFunction, item: Coded & { field?: string }): string {
   return item.field ? `${item.field}: ${text}` : text;
 }
 
-/** The sentence for a coded message in the current language. */
-export function problemText(t: TFunction, item: Coded): string {
+/** The code and parameters of a coded message, also for stored messages without a code. */
+function resolved(item: Coded): { code: string | null; params: Record<string, unknown> } {
   let code = item.code ?? null;
   let params = item.params ?? {};
   if (!code && item.message) {
     const legacy = legacyCode(item.message);
     if (legacy) ({ code, params } = legacy);
   }
+  return refineProblem(code, params, item.message ?? "");
+}
+
+/**
+ * A more specific reading of a few agent failures, from facts the runtime already reports: the HTTP status of a
+ * provider error and the stop reason in the technical text of an incomplete response. The codes it returns
+ * (``run.api_error_*``, ``run.agent.ContextWindowExceeded``) exist only in the interface, for their own sentence
+ * and advice; nothing is guessed beyond what the run recorded.
+ */
+export function refineProblem(
+  code: string | null,
+  params: Record<string, unknown>,
+  message: string,
+): { code: string | null; params: Record<string, unknown> } {
+  if (code === "run.api_error") {
+    // The sentences name the provider; without one they speak of the provider in general.
+    params = { ...params, provider: params.provider ?? "" };
+    // The technical text names the library's error class; the status is the provider's HTTP answer (empty when
+    // there was none). Either clearly tells the cause; otherwise the general sentence stays, without a status.
+    const status = Number(params.status);
+    const empty = params.status === "" || params.status === null || params.status === undefined;
+    if (/\bAuthenticationError\b/.test(message) || status === 401 || status === 403) return { code: "run.api_error_auth", params };
+    if (/\bRateLimitError\b/.test(message) || status === 429) return { code: "run.api_error_rate_limit", params };
+    if (/\bProviderServerError\b/.test(message) || status >= 500) return { code: "run.api_error_server", params };
+    if (/\bProviderConnectionError\b/.test(message) || (empty && !/\bInvalidRequestError\b/.test(message)))
+      return { code: "run.api_error_connection", params };
+    return { code: empty ? "run.api_error_invalid" : "run.api_error_status", params };
+  }
+  if (code === "run.agent.IncompleteResponseError") {
+    const stop = /stop_reason='([^']*)'/.exec(message)?.[1] ?? "";
+    const limit = /max_tokens=(\d+)/.exec(message)?.[1];
+    if (stop.includes("context")) return { code: "run.agent.ContextWindowExceeded", params };
+    if (limit) return { code, params: { ...params, max_tokens: Number(limit).toLocaleString(i18n.language) } };
+    return { code: "run.agent.OutputLimitReached", params };
+  }
+  return { code, params };
+}
+
+/** The code a coded message is read with (also for stored messages without a code, and refined ones). */
+export function problemCode(item: Coded): string | null {
+  return resolved(item).code;
+}
+
+/** What the person can do about a coded problem (errors.hints.<code>), or null when there is no advice. */
+export function problemHint(t: TFunction, item: Coded): string | null {
+  const { code, params } = resolved(item);
+  if (!code) return null;
+  const values = interpolationParams(t, params);
+  const key = `errors.hints.${textKey(code)}`;
+  return i18n.exists(key, values) ? t(key, values) : null;
+}
+
+/** The sentence for a coded message in the current language. */
+export function problemText(t: TFunction, item: Coded): string {
+  const { code, params } = resolved(item);
   if (code) {
     const values = interpolationParams(t, params);
     // With the values, a plural key ("…_one", "…_other") counts as existing too.
@@ -136,9 +196,15 @@ export function ProblemText({ item, compact = false }: { item: Coded; compact?: 
   const { t } = useTranslation();
   const text = problemText(t, item);
   const technical = compact ? null : technicalText(t, item);
+  const hint = compact ? null : problemHint(t, item);
   return (
     <>
       <span>{text}</span>
+      {hint ? (
+        <span className="problem-hint" data-testid="problem-hint">
+          {hint}
+        </span>
+      ) : null}
       {technical ? (
         <details className="technical">
           <summary>{t("common.technicalDetails")}</summary>

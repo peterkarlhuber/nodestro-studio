@@ -1813,6 +1813,24 @@ details[open] > summary > .section__chevron {
 }
 
 /* The technical original of a message (server or API text), folded away below the sentence. */
+.problem-hint {
+  display: block;
+  margin-top: 4px;
+}
+
+.run-problem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.run-problem__fix {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+}
+
 .technical {
   margin-top: 6px;
   font-size: 11.5px;
@@ -2329,6 +2347,11 @@ body.is-resizing--y * {
   justify-content: space-between;
   gap: 8px;
   margin-top: 8px;
+}
+
+.node-row--status {
+  justify-content: flex-end;
+  margin-top: 6px;
 }
 
 .node-row__description {
@@ -5731,6 +5754,72 @@ kbd {
 
 .approval-card__head > div {
   flex: 1;
+}
+
+.approval-card__actions {
+  /* The decision stays in reach while a long result scrolls past (run panel, approvals page). */
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin: 0 -14px -14px;
+  padding: 10px 14px 14px;
+  border-top: 1px solid var(--nd-border);
+  border-radius: 0 0 var(--nd-radius) var(--nd-radius);
+  background: var(--nd-surface);
+}
+
+.run-panel__focus .approval-card__actions {
+  /* down to the panel's edge, so nothing scrolls by below the buttons */
+  bottom: -12px;
+}
+
+/* a structured result as labelled fields */
+.structured-output {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-2);
+  min-width: 0;
+}
+
+.structured-output__fields {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.structured-output__fields > div {
+  min-width: 0;
+}
+
+.structured-output__fields dt {
+  margin-bottom: 2px;
+  color: var(--nd-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.structured-output__fields dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.structured-output__fields dd .markdown > :first-child {
+  margin-top: 0;
+}
+
+.structured-output__fields dd .markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.structured-output__fields .structured-output__fields {
+  padding-left: 10px;
+  border-left: 2px solid var(--nd-border);
+}
+
+.structured-output__list {
+  margin: 0;
+  padding-left: 18px;
 }
 
 .approval-card__instructions {

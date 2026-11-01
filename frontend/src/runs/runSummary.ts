@@ -44,8 +44,33 @@ function label(node: WorkflowNode): string {
 /** The steps of the run in the order they started; steps that never started come last, in workflow order. */
 export function stepsInOrder(run: Run): WorkflowNode[] {
   const steps = run.workflow.nodes.filter((node) => node.type !== "start" && node.type !== "output");
-  const started = (node: WorkflowNode) => run.nodes[node.id]?.started_at ?? "~";
-  return [...steps].sort((a, b) => started(a).localeCompare(started(b)));
+  // Compared as times, never as text: a locale-aware text comparison sorts punctuation before digits.
+  const started = (node: WorkflowNode) => {
+    const at = run.nodes[node.id]?.started_at;
+    const time = at ? Date.parse(at) : Number.NaN;
+    return Number.isNaN(time) ? Number.POSITIVE_INFINITY : time;
+  };
+  // Array.prototype.sort is stable, so steps that started together and those that never started keep workflow order.
+  return [...steps].sort((a, b) => {
+    const first = started(a);
+    const second = started(b);
+    return first === second ? 0 : first < second ? -1 : 1;
+  });
+}
+
+/**
+ * The step a run's details open with: the one that failed, else the one that waits for a person, else the one
+ * that runs, else the first that started.
+ */
+export function initialStep(run: Run): WorkflowNode | undefined {
+  const steps = stepsInOrder(run);
+  const withStatus = (...statuses: string[]) => steps.find((node) => statuses.includes(run.nodes[node.id]?.status ?? ""));
+  return withStatus("failed") ?? withStatus("awaiting_approval") ?? withStatus("running") ?? steps[0];
+}
+
+/** The steps that failed, in the order they started. */
+export function failedSteps(run: Run): WorkflowNode[] {
+  return stepsInOrder(run).filter((node) => run.nodes[node.id]?.status === "failed");
 }
 
 export function summarizeRun(run: Run): RunSummary {

@@ -286,7 +286,8 @@
         "rejected": "Abgelehnt",
         "cancelled": "Abgebrochen",
         "expired": "Abgelaufen"
-      }
+      },
+      "invalidNotRun": "Ungültig, nicht ausgeführt"
     },
     "select": "Teams nach Fähigkeit",
     "selectHint": "Gespeicherte Teams mit einer dieser Fähigkeiten kommen beim Start eines Laufs in den Pool (höchstens 10 Stichworte). Die beste Übereinstimmung zuerst; Teams mit Fehlern bleiben draußen.",

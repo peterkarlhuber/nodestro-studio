@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Download, FileDown, FlaskConical, History, Pencil, ShieldCheck, Square } from "lucide-react";
+import { Download, FileDown, FlaskConical, History, Pencil, ShieldCheck } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
@@ -12,22 +12,24 @@ import { DiscussButton } from "../assistant/DiscussButton";
 import { TestCaseFromRunDialog } from "../automation/TestCaseFromRunDialog";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
-import { Output } from "../components/Markdown";
+import { Output, outputFieldsOf } from "../components/Markdown";
 import { Tooltip } from "../components/Tooltip";
-import { toast } from "../components/toast";
 import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
 import { NodeRunDetails, startFiles } from "../editor/RunDetails";
-import { liveUsage } from "../editor/store";
+import { liveUsage, runWaitsForToolApproval, waitsForToolApproval } from "../editor/store";
 import { TraceExportDialog, sanitizeSummary } from "../editor/TraceExportDialog";
-import { ErrorText, ProblemText, runProblem } from "../lib/errors";
+import { ErrorText } from "../lib/errors";
 import { RunApprovals } from "../runs/ApprovalCard";
 import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { ResultFiles } from "../runs/ResultFiles";
+import { CancelRunButton } from "../runs/CancelRunButton";
+import { RunProblem } from "../runs/RunProblem";
+import { WaitingForYouBadge } from "../runs/WaitingForYouBadge";
 import { RunInputs, useRunInputs } from "../runs/RunInputs";
 import { ResumeDialog } from "../runs/ResumeDialog";
 import { RunOrigin } from "../runs/RunOrigin";
 import { RunSummaryLine } from "../runs/RunSummaryLine";
-import { stepsInOrder } from "../runs/runSummary";
+import { initialStep, stepsInOrder } from "../runs/runSummary";
 import { STATUS_TONE, formatCost, formatDate, formatDuration, formatTokens, tokenBreakdown } from "../lib/format";
 
 /** A waterfall of the agents' run times: where the time went and what ran in parallel. */
@@ -67,7 +69,7 @@ function Trace({ run, selected, onSelect }: { run: Run; selected: string | null;
                   <span className={`trace__bar trace__bar--${tone}`} style={{ left: `${left}%`, width: `${width}%` }} />
                 ) : null}
               </span>
-              {state ? <StatusBadge status={state.status} /> : null}
+              {waitsForToolApproval(state) ? <WaitingForYouBadge /> : state ? <StatusBadge status={state.status} /> : null}
             </button>
           </li>
         );
@@ -96,7 +98,7 @@ export function RunDetailPage() {
   useContextOffer("run", offer);
   const node = useMemo(() => {
     if (!data) return null;
-    const id = selected ?? stepsInOrder(data)[0]?.id;
+    const id = selected ?? initialStep(data)?.id;
     return data.workflow.nodes.find((item) => item.id === id) ?? null;
   }, [data, selected]);
   const inputs = useRunInputs(data);
@@ -147,13 +149,7 @@ export function RunDetailPage() {
                 </Button>
               </Hint>
             ) : null}
-            {live || paused ? (
-              <Hint id="runs.cancel">
-                <Button icon={Square} onClick={() => api.cancelRun(data.id).catch(toast.error)}>
-                  {t("common.cancel")}
-                </Button>
-              </Hint>
-            ) : null}
+            {live || paused ? <CancelRunButton runId={data.id} /> : null}
             <Hint id="runs.exportTrace">
               <Button variant="ghost" icon={Download} onClick={() => setExportOpen(true)}>
                 {t("runs.detail.exportTrace")}
@@ -169,7 +165,9 @@ export function RunDetailPage() {
       />
       <div className="page__body stack">
         <div className="stats">
-          <Stat label={t("runs.stats.status")} value={<StatusBadge status={data.status} />} hint={formatDuration(data.started_at ?? data.created_at, data.finished_at)} />
+          <Stat
+            label={t("runs.stats.status")}
+            value={runWaitsForToolApproval(data) ? <WaitingForYouBadge /> : <StatusBadge status={data.status} />} hint={formatDuration(data.started_at ?? data.created_at, data.finished_at)} />
           <Stat label={t("runs.stats.requests")} value={usage.requests} tip="runs.requests" />
           <Stat
             label={t("runs.stats.tokens")}
@@ -212,11 +210,7 @@ export function RunDetailPage() {
             <ShieldCheck size={13} aria-hidden /> {t("export.importedSanitized", { summary: sanitizeSummary(t, data.sanitized) })}
           </Callout>
         ) : null}
-        {data.error ? (
-          <Callout tone={data.status === "failed" ? "danger" : "warning"}>
-            <ProblemText item={runProblem(data)} />
-          </Callout>
-        ) : null}
+        <RunProblem run={data} />
         <div className="two-column">
           <section className="panel stack" aria-label={t("runs.detail.input")}>
             <h2 className="panel__title">{t("runs.detail.input")}</h2>
@@ -235,7 +229,7 @@ export function RunDetailPage() {
           <section className="panel stack" aria-label={t("runs.tabs.result")}>
             <h2 className="panel__title">{t("runs.tabs.result")}</h2>
             {data.output !== null && data.output !== undefined ? (
-              <Output value={data.output} />
+              <Output value={data.output} fields={outputFieldsOf(data.workflow.nodes, "", data.output)} />
             ) : (
               <p className="muted small">{live ? t("runs.detail.stillRunning") : t("runs.detail.noResult")}</p>
             )}

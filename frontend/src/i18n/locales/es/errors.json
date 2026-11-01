@@ -146,7 +146,25 @@
     "orchestration_limit": "{{node}} tomó {{max_decisions}} decisiones sin terminar.",
     "orchestrator_member_missing": "Un equipo de {{node}} ya no existe.",
     "orchestrator_no_match": "Ningún equipo guardado de {{node}} tiene una de las capacidades {{capabilities}}.",
-    "orchestration_team_missing": "Falta la ejecución en espera de un equipo; el equipo no se volvió a iniciar."
+    "orchestration_team_missing": "Falta la ejecución en espera de un equipo; el equipo no se volvió a iniciar.",
+    "someProvider": "El proveedor de IA",
+    "agent": {
+      "IncompleteResponseError": "La respuesta del modelo se cortó en el límite de {{max_tokens}} tokens.",
+      "OutputLimitReached": "La respuesta del modelo se cortó en su límite de tokens.",
+      "ContextWindowExceeded": "La conversación es más grande que la ventana de contexto del modelo.",
+      "RefusalError": "El modelo rechazó la solicitud.",
+      "MaxToolRoundsError": "El agente llamó a herramientas más veces de lo que permite su límite de rondas.",
+      "StructuredOutputError": "El modelo no devolvió un resultado con el formato de salida requerido.",
+      "UnexpectedResponseError": "La respuesta del modelo no fue la esperada.",
+      "EvaluationFailedError": "El resultado no superó el control de calidad.",
+      "ToolExecutionError": "Una herramienta del agente se detuvo con un error."
+    },
+    "api_error_auth": "{{provider}} rechazó la clave de API.",
+    "api_error_rate_limit": "{{provider}} informó de demasiadas solicitudes en poco tiempo (límite de frecuencia).",
+    "api_error_server": "{{provider}} está sobrecargado o tiene problemas en este momento.",
+    "api_error_connection": "No se pudo contactar con {{provider}}.",
+    "api_error_invalid": "{{provider}} rechazó la solicitud por no ser válida.",
+    "api_error_status": "{{provider}} rechazó la solicitud (estado {{status}})."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -728,5 +746,30 @@
   },
   "mcp_server": {
     "disabled": "El servidor MCP de Nodestro está desactivado."
+  },
+  "hints": {
+    "run": {
+      "agent": {
+        "IncompleteResponseError": "Aumenta «Máx. tokens» en «Avanzado» de este agente o pide una respuesta más corta en su tarea.",
+        "OutputLimitReached": "Aumenta «Máx. tokens» en «Avanzado» de este agente o pide una respuesta más corta en su tarea.",
+        "ContextWindowExceeded": "Acorta la entrada o el conocimiento del agente, o elige un modelo con una ventana de contexto mayor.",
+        "RefusalError": "Revisa la tarea y la entrada y describe el trabajo con más claridad. Algunos contenidos el modelo los rechaza siempre.",
+        "MaxToolRoundsError": "Aumenta «Máx. rondas de herramientas» en «Avanzado» de este agente o indica en su tarea cuándo ha terminado.",
+        "StructuredOutputError": "Revisa los campos en «Formato de salida»; pocos campos bien descritos ayudan. A menudo basta con continuar la ejecución.",
+        "UnexpectedResponseError": "Continúa la ejecución. Si vuelve a ocurrir, los detalles técnicos ayudan al soporte del proveedor.",
+        "EvaluationFailedError": "Lee la justificación del control en el paso y ajusta la tarea o los criterios.",
+        "ToolExecutionError": "Los detalles técnicos indican la herramienta y su error. Revisa la herramienta en «Herramientas»."
+      },
+      "api_error_auth": "Revisa la clave en Ajustes → Proveedores de IA y prueba allí la conexión.",
+      "api_error_rate_limit": "Espera un momento y continúa la ejecución. Menos ejecuciones simultáneas o un límite mayor con el proveedor lo solucionan a largo plazo.",
+      "api_error_server": "No se debe a tu flujo de trabajo. Continúa la ejecución dentro de unos minutos.",
+      "api_error_connection": "Revisa la conexión a internet, el cortafuegos o el proxy y luego continúa la ejecución.",
+      "api_error_invalid": "Revisa el modelo y los ajustes del agente; los detalles técnicos muestran la respuesta del proveedor.",
+      "api_error_status": "Revisa el modelo y los ajustes del agente; los detalles técnicos muestran la respuesta del proveedor.",
+      "budget_exceeded": "Aumenta el presupuesto en los ajustes del flujo de trabajo o continúa la ejecución con un nuevo presupuesto.",
+      "time_limit": "Aumenta el límite de tiempo en «Límites» de los ajustes del flujo de trabajo si la ejecución necesita más tiempo.",
+      "step_limit": "Aumenta el límite de pasos en «Límites» de los ajustes del flujo de trabajo o revisa los bucles.",
+      "orchestration_limit": "Aumenta «Máximo de decisiones» en el orquestador o indica en sus instrucciones cuándo está terminada la tarea."
+    }
   }
 }

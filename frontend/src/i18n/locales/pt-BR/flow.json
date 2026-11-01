@@ -286,7 +286,8 @@
         "rejected": "Rejeitado",
         "cancelled": "Cancelado",
         "expired": "Expirado"
-      }
+      },
+      "invalidNotRun": "Inválida, não executada"
     },
     "select": "Equipes por capacidade",
     "selectHint": "Equipes salvas com uma dessas capacidades entram no pool quando uma execução começa (no máximo 10 tags). A melhor correspondência primeiro; equipes com erros ficam de fora.",

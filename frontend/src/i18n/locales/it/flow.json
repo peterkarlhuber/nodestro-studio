@@ -286,7 +286,8 @@
         "rejected": "Rifiutato",
         "cancelled": "Annullato",
         "expired": "Scaduto"
-      }
+      },
+      "invalidNotRun": "Non valida, non eseguita"
     },
     "select": "Team per capacità",
     "selectHint": "I team salvati con una di queste capacità entrano nel pool all'avvio di un'esecuzione (al massimo 10 parole chiave). Prima la corrispondenza migliore; i team con errori restano fuori.",

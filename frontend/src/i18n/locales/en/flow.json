@@ -286,7 +286,8 @@
         "rejected": "Rejected",
         "cancelled": "Cancelled",
         "expired": "Expired"
-      }
+      },
+      "invalidNotRun": "Invalid, not carried out"
     },
     "select": "Teams by capability",
     "selectHint": "Saved teams with one of these capabilities join the pool when a run starts (at most 10 tags). Best match first; teams with errors are left out.",

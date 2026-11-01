@@ -286,7 +286,8 @@
         "rejected": "Rechazado",
         "cancelled": "Cancelado",
         "expired": "Caducado"
-      }
+      },
+      "invalidNotRun": "No válida, no ejecutada"
     },
     "select": "Equipos por capacidad",
     "selectHint": "Los equipos guardados con una de estas capacidades entran en el pool al iniciar una ejecución (como máximo 10 etiquetas). Primero la mejor coincidencia; los equipos con errores quedan fuera.",

@@ -44,7 +44,8 @@
     "notStarted": "Noch nicht gestartet",
     "overall": "Gesamtergebnis",
     "running": "Der Workflow läuft. Wähle links einen Agenten, um ihm live zuzusehen.",
-    "paused": "Der Lauf wartet auf eine Freigabe."
+    "paused": "Der Lauf wartet auf eine Freigabe.",
+    "waitingForTool": "Ein Tool-Aufruf wartet auf deine Entscheidung. Bis dahin geht der Lauf nicht weiter."
   },
   "detail": {
     "timeline": "Zeitlicher Ablauf",
@@ -88,5 +89,25 @@
     "noHardMaximum": "kein hartes Maximum",
     "noHardMaximumHint_one": "{{count}} Anfrage konnte vorab nicht begrenzt werden (kein Preis, eingebaute Werkzeuge, Bilder oder zu groß für den Rest des Budgets). Das Budget war deshalb kein hartes Maximum.",
     "noHardMaximumHint_other": "{{count}} Anfragen konnten vorab nicht begrenzt werden (kein Preis, eingebaute Werkzeuge, Bilder oder zu groß für den Rest des Budgets). Das Budget war deshalb kein hartes Maximum."
+  },
+  "output": {
+    "showJson": "Als JSON anzeigen"
+  },
+  "failure": {
+    "atStep": "Fehlgeschlagen bei {{name}}",
+    "more_one": "Ein weiterer Schritt ist fehlgeschlagen.",
+    "more_other": "{{count}} weitere Schritte sind fehlgeschlagen.",
+    "model": "Modell: {{model}}",
+    "openSettings": "Einstellungen öffnen",
+    "openAdvanced": "„Erweitert“ von {{name}} öffnen"
+  },
+  "cancelRun": {
+    "button": "Lauf abbrechen",
+    "confirm": "Wirklich abbrechen?",
+    "done": "Der Lauf wird abgebrochen."
+  },
+  "waitingForYou": {
+    "label": "Wartet auf dich",
+    "description": "Ein Tool-Aufruf wartet auf deine Freigabe. Der Lauf geht weiter, sobald du entschieden hast."
   }
 }

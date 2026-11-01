@@ -123,12 +123,30 @@ export function ToolApprovalForm({ request, showContext = false }: { request: To
 }
 
 /** The open tool approvals of a running run (shown while it waits; the run itself stays "running"). */
+/**
+ * The run says a call waits (from its events or a fresh copy) but the list of open requests does not have it yet:
+ * read the list at once instead of waiting for its next regular poll.
+ */
+function useReadMissingRequests(run: Run, requests: ToolApprovalRequest[] | undefined) {
+  const queryClient = useQueryClient();
+  const known = new Set((requests ?? []).map((item) => item.id));
+  const missing = Object.values(run.nodes)
+    .flatMap((state) => state.tool_calls ?? [])
+    .filter((call) => call.approval?.status === "pending" && call.approval.request_id && !known.has(call.approval.request_id))
+    .map((call) => call.approval?.request_id)
+    .join(",");
+  useEffect(() => {
+    if (missing) void queryClient.invalidateQueries({ queryKey: keys.toolApprovals });
+  }, [missing, queryClient]);
+}
+
 export function RunToolApprovals({ run }: { run: Run }) {
   const { t } = useTranslation();
   const approvals = useToolApprovals();
   // A run paused at a tool call (M6b) may wait in one of its teams' or sub-workflows' runs.
   const ids = new Set([run.id, ...Object.values(run.nodes).flatMap((state) => [state.child_run_id, ...(state.child_run_ids ?? [])])]);
   const waiting = (approvals.data ?? []).filter((item) => ids.has(item.run_id) && item.status === "pending");
+  useReadMissingRequests(run, approvals.data);
   if (!waiting.length) return null;
   return (
     <Callout tone="warning">

@@ -44,7 +44,8 @@
     "notStarted": "Pas encore lancé",
     "overall": "Résultat global",
     "running": "Le workflow est en cours. Choisissez un agent à gauche pour le suivre en direct.",
-    "paused": "L’exécution attend une validation."
+    "paused": "L’exécution attend une validation.",
+    "waitingForTool": "Un appel d'outil attend votre décision. D'ici là, l'exécution ne continue pas."
   },
   "detail": {
     "timeline": "Déroulement dans le temps",
@@ -88,5 +89,25 @@
     "noHardMaximum": "pas de maximum strict",
     "noHardMaximumHint_one": "{{count}} requête n’a pas pu être plafonnée à l’avance (pas de prix, outils intégrés, images ou trop grande pour le reste du budget). Le budget n’était donc pas un maximum strict.",
     "noHardMaximumHint_other": "{{count}} requêtes n’ont pas pu être plafonnées à l’avance (pas de prix, outils intégrés, images ou trop grandes pour le reste du budget). Le budget n’était donc pas un maximum strict."
+  },
+  "output": {
+    "showJson": "Afficher en JSON"
+  },
+  "failure": {
+    "atStep": "Échec à {{name}}",
+    "more_one": "Une autre étape a échoué.",
+    "more_other": "{{count}} autres étapes ont échoué.",
+    "model": "Modèle : {{model}}",
+    "openSettings": "Ouvrir les réglages",
+    "openAdvanced": "Ouvrir « Avancé » de {{name}}"
+  },
+  "cancelRun": {
+    "button": "Annuler l'exécution",
+    "confirm": "Vraiment annuler ?",
+    "done": "L'exécution est en cours d'annulation."
+  },
+  "waitingForYou": {
+    "label": "Vous attend",
+    "description": "Un appel d'outil attend votre approbation. L'exécution continue dès que vous avez décidé."
   }
 }
