@@ -1,6 +1,7 @@
 # ADR-0001: Desktop and server operating profiles
 
-- Status: Proposed (M0, 2026-10-31)
+- Status: Accepted; implemented in PR-1 (nodestro-runtime #5) and PR-2 (nodestro-api #7). Proposed in M0
+  (2026-10-31).
 - Repositories: nodestro-runtime, nodestro-api, nodestro-studio, nodestro-desktop, nodestro-server
 
 ## Context
