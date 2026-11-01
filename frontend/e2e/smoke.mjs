@@ -22,6 +22,13 @@ page.on("console", (message) => {
   if (message.type() === "error") errors.push(message.text());
 });
 page.on("pageerror", (error) => errors.push(error.message));
+// Script chunks the browser fetched, by name ("codemirror", "flow", "docs-de" …), to check lazy loading.
+const chunks = new Set();
+page.on("request", (request) => {
+  const match = /\/assets\/(.+)-[\w-]{8}\.js$/.exec(new URL(request.url()).pathname);
+  if (match) chunks.add(match[1]);
+});
+const HEAVY = ["codemirror", "flow", "markdown", "EditorPage", "docs-de", "docs-en", "docs-es", "docs-fr", "docs-it", "docs-pt-BR"];
 
 async function shot(name) {
   if (shots) await page.screenshot({ path: join(shots, `${name}.png`) });
@@ -46,6 +53,8 @@ try {
     "Without a provider the empty state says that a model is needed and links to the settings",
   );
   check((await gallery.getByTestId("start-here").count()) === 1, "One featured example is marked as the place to start");
+  const early = HEAVY.filter((name) => chunks.has(name));
+  check(early.length === 0, `The start page loads no editor, canvas, Markdown or docs code${early.length ? `: ${early.join(", ")}` : ""}`);
   await shot("01-workflows");
 
   await gallery.getByRole("link", { name: /Alle 24 Beispiele/ }).click();
@@ -249,6 +258,8 @@ try {
     await shot(name);
   }
 
+  const docChunks = [...chunks].filter((name) => name.startsWith("docs-"));
+  check(docChunks.join() === "docs-de", `The documentation loads the chapters of the interface language only (${docChunks.join(", ")})`);
   await page.goto(base + "/docs");
   await page.getByRole("searchbox").fill("trace importieren");
   await page.locator(".docs-result").first().waitFor();

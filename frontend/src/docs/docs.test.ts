@@ -1,11 +1,20 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import { LANGUAGES } from "../i18n";
+import { LANGUAGES, type Language } from "../i18n";
 import { HELP_DOCS } from "../lib/help";
-import { CHAPTER_IDS, SOURCES, chaptersFor, docExists } from "./index";
+import { CHAPTER_IDS, type DocChapter, type Sources, docExists, loadChapters, loadSources } from "./index";
 import { parseChapter, plainText, splitWidgets } from "./parse";
 import { fold, searchDocs } from "./search";
 
+const SOURCES = Object.fromEntries(await Promise.all(LANGUAGES.map(async (language) => [language, await loadSources(language)]))) as Record<
+  Language,
+  Sources
+>;
+const LOADED = Object.fromEntries(await Promise.all(LANGUAGES.map(async (language) => [language, await loadChapters(language)]))) as Record<
+  Language,
+  DocChapter[]
+>;
+const chaptersFor = (language: Language) => LOADED[language];
 const CHAPTERS = chaptersFor("de");
 
 describe("documentation content", () => {
@@ -21,16 +30,17 @@ describe("documentation content", () => {
     }
   });
 
-  it("links only to sections that exist", () => {
+  it("links only to sections that exist", async () => {
     const links = CHAPTERS.flatMap((chapter) =>
       chapter.sections.flatMap((section) => [...section.body.matchAll(/\]\(\/docs\/([^)]+)\)/g)].map((match) => match[1])),
     );
     expect(links.length).toBeGreaterThan(10);
-    for (const link of links) expect(docExists(link), link).toBe(true);
+    for (const link of links) expect(await docExists(link), link).toBe(true);
   });
 
-  it("backs every tooltip link with a documentation section", () => {
-    for (const [id, doc] of Object.entries(HELP_DOCS)) if (doc) expect(docExists(doc), `${id} → ${doc}`).toBe(true);
+  it("backs every tooltip link with a documentation section", async () => {
+    for (const [id, doc] of Object.entries(HELP_DOCS)) if (doc) expect(await docExists(doc), `${id} → ${doc}`).toBe(true);
+    expect(await docExists("workflows#no-such-section")).toBe(false);
   });
 
   it("covers every area of the application", () => {
@@ -45,7 +55,7 @@ describe("documentation in every language", () => {
   const links = (text: string) => [...text.matchAll(/\]\((\/[^)\s]*)\)/g)].map((match) => match[1]).sort();
 
   it.each(LANGUAGES)("has every chapter in %s", (language) => {
-    for (const [id] of CHAPTER_IDS) expect(SOURCES[`${language}/${id}`], `${language}/${id}`).toBeTruthy();
+    for (const [id] of CHAPTER_IDS) expect(SOURCES[language][id], `${language}/${id}`).toBeTruthy();
   });
 
   it.each(LANGUAGES)("%s has the same sections, widgets and links as German", (language) => {
@@ -69,7 +79,20 @@ describe("documentation in every language", () => {
 
   it("is not just a copy of the German text", () => {
     for (const language of LANGUAGES.filter((item) => item !== "de"))
-      for (const [id] of CHAPTER_IDS) expect(SOURCES[`${language}/${id}`], `${language}/${id}`).not.toBe(SOURCES[`de/${id}`]);
+      for (const [id] of CHAPTER_IDS) expect(SOURCES[language][id], `${language}/${id}`).not.toBe(SOURCES.de[id]);
+  });
+});
+
+describe("loading per language", () => {
+  it("loads only the language that is asked for, once", async () => {
+    vi.resetModules();
+    const docs = await import("./index");
+    expect(docs.cachedChapters("fr")).toBeUndefined();
+    const french = await docs.loadChapters("fr");
+    expect(french.map((chapter) => chapter.id)).toEqual(CHAPTER_IDS.map(([id]) => id));
+    expect(docs.cachedChapters("fr")).toBe(french);
+    expect(await docs.loadChapters("fr")).toBe(french);
+    for (const language of LANGUAGES.filter((item) => item !== "fr")) expect(docs.cachedChapters(language), language).toBeUndefined();
   });
 });
 

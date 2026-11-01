@@ -149,6 +149,11 @@ export function startLogin(location: Pick<Location, "pathname" | "search" | "has
 }
 
 export async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
+  return (await requestWithHeaders<T>(method, path, body)).data;
+}
+
+/** Like ``request``, with the response headers (for paging headers such as ``X-Has-More``). */
+export async function requestWithHeaders<T>(method: string, path: string, body?: unknown): Promise<{ data: T; headers: Headers }> {
   // The interface language: the backend names new copies and the first examples in it.
   const headers: Record<string, string> = { "Accept-Language": currentLanguage() };
   const init: RequestInit = { method, headers };
@@ -183,8 +188,14 @@ export async function request<T>(method: string, path: string, body?: unknown): 
     if (response.status === 401 && code === "access.login_required") startLogin();
     throw new ApiError(message, response.status, code, params);
   }
-  if (response.status === 204) return undefined as T;
-  return (await response.json()) as T;
+  if (response.status === 204) return { data: undefined as T, headers: response.headers };
+  return { data: (await response.json()) as T, headers: response.headers };
+}
+
+export interface RunPage {
+  runs: RunSummary[];
+  hasMore: boolean | null;
+  nextBefore: string | null;
 }
 
 const q = (params: Record<string, string | undefined>) => {
@@ -271,15 +282,32 @@ export const api = {
 
   startRun: (workflowId: string, input: string, fileIds: string[] = [], values: Record<string, unknown> = {}) =>
     request<Run>("POST", `/workflows/${workflowId}/runs`, { input, file_ids: fileIds, values }),
-  runs: (workflowId?: string, options: { triggerRef?: string; includeChildren?: boolean } = {}) =>
+  runs: (workflowId?: string, options: { triggerRef?: string; includeChildren?: boolean; limit?: number } = {}) =>
     request<RunSummary[]>(
       "GET",
       `/runs${q({
         workflow_id: workflowId,
+        limit: options.limit === undefined ? undefined : String(options.limit),
         trigger_ref: options.triggerRef,
         include_children: options.includeChildren ? "true" : undefined,
       })}`,
     ),
+  /**
+   * One page of the run list, newest first. ``hasMore`` is null when the server sends no paging
+   * headers (servers before run list paging); then only the newest ``limit`` runs can be listed.
+   */
+  runsPage: async (workflowId: string | undefined, options: { limit: number; before?: string }): Promise<RunPage> => {
+    const { data, headers } = await requestWithHeaders<RunSummary[]>(
+      "GET",
+      `/runs${q({ workflow_id: workflowId, limit: String(options.limit), before: options.before })}`,
+    );
+    const more = headers.get("X-Has-More");
+    return {
+      runs: data,
+      hasMore: more === null ? null : more.trim().toLowerCase() === "true",
+      nextBefore: headers.get("X-Next-Before") || null,
+    };
+  },
   resumePlan: (id: string) => request<ResumePlan>("GET", `/runs/${id}/resume`),
   resumeRun: (id: string, mode: "continue" | "restart", confirmSideEffects: boolean) =>
     request<Run>("POST", `/runs/${id}/resume`, { mode, confirm_side_effects: confirmSideEffects }),

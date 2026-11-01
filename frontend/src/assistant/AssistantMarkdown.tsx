@@ -1,7 +1,8 @@
 import type { AnchorHTMLAttributes } from "react";
-import ReactMarkdown from "react-markdown";
+import type { Components } from "react-markdown";
 import { Link } from "react-router-dom";
-import remarkGfm from "remark-gfm";
+
+import { MarkdownText } from "../components/Markdown";
 
 /** Links inside Nodestro (e.g. a documentation section) open in the app, the panel stays open. */
 function ChatLink({ href, children, ...rest }: AnchorHTMLAttributes<HTMLAnchorElement>) {
@@ -13,13 +14,13 @@ function ChatLink({ href, children, ...rest }: AnchorHTMLAttributes<HTMLAnchorEl
   );
 }
 
+const COMPONENTS: Components = { a: ChatLink };
+
 /** An answer of the assistant: Markdown with lists, tables and code blocks; no raw HTML. */
 export function AssistantMarkdown({ text }: { text: string }) {
   return (
     <div className="markdown chat-markdown">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: ChatLink }}>
-        {text}
-      </ReactMarkdown>
+      <MarkdownText text={text} components={COMPONENTS} />
     </div>
   );
 }

@@ -1,9 +1,24 @@
+import { Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import type { Components } from "react-markdown";
 
 import type { OutputField } from "../api/types";
 import { outputText } from "../lib/format";
+
+// The Markdown parser (about 165 kB) loads with the first formatted text shown, not with every page.
+const MarkdownRenderer = lazy(() => import("./MarkdownRenderer"));
+
+/**
+ * Markdown text. Until the parser has loaded, the text is shown as it is (line breaks kept), so the
+ * content is there at once and no spinner blinks.
+ */
+export function MarkdownText({ text, components }: { text: string; components?: Components }) {
+  return (
+    <Suspense fallback={<p className="markdown-pending">{text}</p>}>
+      <MarkdownRenderer text={text} components={components} />
+    </Suspense>
+  );
+}
 
 /** How deep a structured result is shown as labelled fields; anything deeper is shown as JSON. */
 const MAX_DEPTH = 3;
@@ -30,7 +45,7 @@ export function Output({ value, fields }: { value: unknown; fields?: OutputField
 function Text({ value }: { value: string }) {
   return (
     <div className="markdown">
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{value}</ReactMarkdown>
+      <MarkdownText text={value} />
     </div>
   );
 }

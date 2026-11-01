@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
 import { api } from "../api/client";
-import { useRuns, useWorkflows } from "../api/hooks";
+import { RUNS_MAX, RUNS_PAGE, useRunList, useWorkflows } from "../api/hooks";
 import type { RunStatus } from "../api/types";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
@@ -42,7 +42,22 @@ export function ExecutionsPage() {
   const [workflowId, setWorkflowId] = useState("");
   const [status, setStatus] = useState<"" | RunStatus>("");
   const [origin, setOrigin] = useState<Origin>("");
-  const runs = useRuns(workflowId || undefined);
+  // Older servers list only the newest ``limit`` runs (at most RUNS_MAX); "Load older runs" asks
+  // for more. Servers that page (X-Has-More) load the next page instead, without an upper bound.
+  const [limit, setLimit] = useState(RUNS_PAGE);
+  const runs = useRunList(workflowId || undefined, limit);
+  const list = useMemo(() => {
+    const seen = new Set<string>();
+    return (runs.data?.pages ?? []).flatMap((page) => page.runs).filter((run) => !seen.has(run.id) && Boolean(seen.add(run.id)));
+  }, [runs.data]);
+  const pages = runs.data?.pages ?? [];
+  const paging = pages.length > 0 && pages[0].hasMore !== null;
+  const loaded = list.length;
+  const loadingOlder = paging ? runs.isFetchingNextPage : runs.isPlaceholderData;
+  // A full answer (or "more" from the server) means older runs exist; while they load, the current rows stay listed.
+  const capped = loaded > 0 && (loadingOlder || (paging ? runs.hasNextPage : loaded >= limit));
+  const atMaximum = !paging && loaded >= RUNS_MAX;
+  const loadOlder = () => (paging ? void runs.fetchNextPage() : setLimit(Math.min(limit + RUNS_PAGE, RUNS_MAX)));
   const workflows = useWorkflows();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -65,12 +80,12 @@ export function ExecutionsPage() {
   });
   const shown = useMemo(
     () =>
-      (runs.data ?? []).filter(
+      list.filter(
         (run) =>
           (!status || run.status === status) &&
           (!origin || (origin === "imported") === Boolean(run.imported_at)),
       ),
-    [runs.data, status, origin],
+    [list, status, origin],
   );
 
   const onFiles = (event: ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +105,10 @@ export function ExecutionsPage() {
             <Select
               aria-label={t("executions.filterWorkflow")}
               value={workflowId}
-              onChange={setWorkflowId}
+              onChange={(value) => {
+                setWorkflowId(value);
+                setLimit(RUNS_PAGE);
+              }}
               placeholder={t("executions.allWorkflows")}
               options={(workflows.data ?? []).map((workflow) => ({ value: workflow.id, label: workflow.name }))}
             />
@@ -217,6 +235,20 @@ export function ExecutionsPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+        ) : null}
+        {capped ? (
+          <div className="list-limit" data-testid="runs-limit">
+            <p className="muted small" role="status">
+              {t("executions.limited", { count: loaded })}
+              {status || origin ? <> {t("executions.limitedFilters")}</> : null}
+              {atMaximum ? <> {t("executions.limitReached")}</> : null}
+            </p>
+            {!atMaximum || loadingOlder ? (
+              <Button busy={loadingOlder} onClick={loadOlder}>
+                {t("executions.loadOlder")}
+              </Button>
+            ) : null}
           </div>
         ) : null}
       </div>
