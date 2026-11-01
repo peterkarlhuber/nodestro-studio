@@ -633,7 +633,9 @@ function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
             {candidates.slice(0, 6).map((file) => (
               <li key={file.id}>
                 <button type="button" onClick={() => setKnowledge({ file_ids: [...agent.knowledge.file_ids, file.id] })}>
-                  <Plus size={12} aria-hidden /> {file.name}
+                  <Plus size={12} aria-hidden />
+                  {/* Its own element, so a long file name wraps instead of pushing the count out of the panel. */}
+                  <span className="pick-list__name">{file.name}</span>
                   <small>{file.kind === "image" ? t("agent.knowledge.image") : t("agent.knowledge.chunks", { count: file.chunks })}</small>
                 </button>
               </li>

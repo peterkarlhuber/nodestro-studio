@@ -1345,9 +1345,20 @@ details[open] > summary > .section__chevron {
   background: var(--nd-surface-hover);
 }
 
+.pick-list button > svg {
+  flex-shrink: 0;
+}
+
+.pick-list__name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .pick-list small {
+  flex-shrink: 0;
   margin-left: auto;
   color: var(--nd-text-subtle);
+  white-space: nowrap;
 }
 
 .inline-form {
