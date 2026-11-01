@@ -17,5 +17,6 @@
   "tests": "Test series",
   "schedules": "Schedules",
   "waiting_one": "{{count}} waiting",
-  "waiting_other": "{{count}} waiting"
+  "waiting_other": "{{count}} waiting",
+  "welcome": "Welcome"
 }

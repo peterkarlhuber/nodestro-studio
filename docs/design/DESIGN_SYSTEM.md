@@ -72,6 +72,15 @@ All color values and additional hover, pressed and focus tokens are in `nodestro
 - Token usage, API calls and costs in calm statistic cards.
 - Status is semantic and never based on color alone.
 
+## Brand
+
+- **Logo:** the original Nodestro logo (dark rounded square, three citron spheres) is the only app mark: top bar,
+  favicons, app icons and the welcome page all derive from it (`frontend/src/assets/brand/`, `frontend/public/`).
+  Do not redraw it or replace it with a generic node symbol.
+- **Slogan:** *Connecting Intelligence*, always in English, also in localized interfaces.
+- The welcome page (`/welcome`) is the brand entrance and may be more expressive than the working interface, using
+  the same tokens; see [LANDING.md](LANDING.md).
+
 ## Typography and shapes
 
 - Font: Inter, falling back to the system sans-serif (no font files required).

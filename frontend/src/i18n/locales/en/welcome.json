@@ -1,0 +1,131 @@
+{
+  "documentTitle": "Nodestro · Connecting Intelligence",
+  "skipToContent": "Skip to content",
+  "home": "Nodestro, welcome page",
+  "toolbar": "Appearance and language",
+  "language": "Language",
+  "pauseMotion": "Pause animations",
+  "playMotion": "Play animations",
+  "openStudio": "Open Studio",
+  "howItWorks": "How it works",
+  "docs": "Documentation",
+  "hero": {
+    "eyebrow": "The visual studio for AI agents",
+    "lede": "Nodestro connects AI models, tools and knowledge into agent workflows that you build visually, run under your control and follow step by step.",
+    "diagram": "Diagram: models, knowledge and tools come together in Nodestro and become connected agents, approvals and traceable runs.",
+    "local": "Runs locally on your computer",
+    "providers": "Works with"
+  },
+  "nodes": {
+    "models": {
+      "title": "Models",
+      "detail": "From Anthropic to Ollama"
+    },
+    "knowledge": {
+      "title": "Knowledge",
+      "detail": "PDFs, images and text"
+    },
+    "tools": {
+      "title": "Tools",
+      "detail": "Python functions and MCP"
+    },
+    "agents": {
+      "title": "Agents",
+      "detail": "Connected into workflows"
+    },
+    "approvals": {
+      "title": "Approvals",
+      "detail": "You stay in the loop"
+    },
+    "runs": {
+      "title": "Runs",
+      "detail": "Every step traceable"
+    }
+  },
+  "how": {
+    "kicker": "How Nodestro works",
+    "title": "From an idea to a run you can follow.",
+    "intro": "A workflow is a chain of agents. Each brings its own model, tools and knowledge, and hands its result to the next.",
+    "design": {
+      "title": "Design",
+      "text": "Arrange and connect agents in the editor – or describe the workflow in your own words and let the architect draft it."
+    },
+    "run": {
+      "title": "Run",
+      "text": "One click starts the workflow. Wherever you decide, it waits for your approval before it continues."
+    },
+    "trace": {
+      "title": "Trace",
+      "text": "Every run shows the inputs and outputs, tool calls, tokens and costs of each individual agent."
+    },
+    "illustration": "Illustration – not a real run",
+    "replay": "Play again",
+    "demo": {
+      "input": "Input",
+      "inputDetail": "Quarterly-report.pdf",
+      "analyst": "Analyst",
+      "analystDetail": "Reads and assesses",
+      "writer": "Writer",
+      "writerDetail": "Summarizes",
+      "output": "Result",
+      "outputDetail": "Summary",
+      "toolKnowledge": "Knowledge",
+      "toolPython": "Python",
+      "idle": "Waiting",
+      "running": "Running",
+      "done": "Done",
+      "history": "History"
+    }
+  },
+  "capabilities": {
+    "kicker": "In the Studio",
+    "title": "Everything agent workflows need. In one place.",
+    "open": "Open",
+    "workflows": {
+      "title": "Visual editor",
+      "text": "Agents as nodes, connections as data flow – with branches and sub-workflows."
+    },
+    "agents": {
+      "title": "Agents",
+      "text": "Model, instructions, tools, memory and output format: set up once, reusable everywhere."
+    },
+    "tools": {
+      "title": "Tools",
+      "text": "Your own Python functions, written and tested by AI if you like, plus services via MCP."
+    },
+    "knowledge": {
+      "title": "Knowledge and memory",
+      "text": "Assign documents as background knowledge and see what an agent remembers."
+    },
+    "executions": {
+      "title": "Runs",
+      "text": "Live progress of every run, side-by-side comparison of two runs, and tokens and costs per agent."
+    },
+    "automation": {
+      "title": "Automation",
+      "text": "Batches, test suites and schedules run workflows repeatedly and verifiably."
+    }
+  },
+  "principles": {
+    "local": {
+      "title": "Local and private",
+      "text": "Nodestro runs on your computer. Data leaves it only for requests to the AI providers you set up."
+    },
+    "providers": {
+      "title": "Provider-independent",
+      "text": "Anthropic, OpenAI, Google Gemini, Ollama, vLLM or an OpenAI-compatible endpoint – chosen per agent."
+    },
+    "integration": {
+      "title": "Open to integrate",
+      "text": "Start any workflow from your own applications through the API and the SDK."
+    }
+  },
+  "closing": {
+    "title": "Your first workflow is just a few clicks away.",
+    "text": "Start with an example from the gallery or with an empty workflow.",
+    "examples": "Browse examples"
+  },
+  "footer": {
+    "settings": "Settings"
+  }
+}

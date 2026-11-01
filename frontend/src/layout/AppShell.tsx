@@ -13,6 +13,7 @@ import {
   Layers,
   type LucideIcon,
   Moon,
+  Orbit,
   Rows3,
   Settings,
   Sparkles,
@@ -23,6 +24,7 @@ import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
 import { useApprovals, useSettings, useToolApprovals } from "../api/hooks";
+import logoSmall from "../assets/brand/nodestro-logo-64.png";
 import { AssistantPanel } from "../assistant/AssistantPanel";
 import { useAssistant } from "../assistant/store";
 import { Toaster } from "../components/toast";
@@ -63,22 +65,14 @@ const AUTOMATION: NavItem[] = [
   { to: "/schedules", label: "schedules", icon: CalendarClock },
 ];
 
-const HELP_ITEMS: NavItem[] = [{ to: "/docs", label: "docs", icon: BookMarked }];
+const HELP_ITEMS: NavItem[] = [
+  { to: "/docs", label: "docs", icon: BookMarked },
+  { to: "/welcome", label: "welcome", icon: Orbit },
+];
 
+/** The official Nodestro logo, small enough for the top bar. */
 export function BrandMark() {
-  return (
-    <svg className="brand__mark" viewBox="0 0 32 32" aria-hidden>
-      <g stroke="currentColor" strokeWidth="1.8">
-        <line x1="10" y1="11" x2="16" y2="21" />
-        <line x1="22" y1="11" x2="16" y2="21" />
-      </g>
-      <g fill="currentColor">
-        <circle cx="10" cy="10" r="4.2" />
-        <circle cx="22" cy="10" r="4.2" />
-        <circle cx="16" cy="22" r="4.2" />
-      </g>
-    </svg>
-  );
+  return <img className="brand__mark" src={logoSmall} alt="" width={28} height={28} />;
 }
 
 function NavGroup({ title, items }: { title: string; items: NavItem[] }) {

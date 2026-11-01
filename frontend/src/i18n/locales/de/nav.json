@@ -17,5 +17,6 @@
   "tests": "Testreihen",
   "schedules": "Zeitpläne",
   "waiting_one": "{{count}} wartet",
-  "waiting_other": "{{count}} warten"
+  "waiting_other": "{{count}} warten",
+  "welcome": "Willkommen"
 }
