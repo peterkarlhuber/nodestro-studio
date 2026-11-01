@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Example guide terminology; pins (2026-11-01)
+
+- Pins `nodestro-examples` `1ead26c` (before: `e370567`), `nodestro-api` `7997bb4` (before: `e16202d`) and, in
+  `platform/versions.json`, `nodestro-sdk` `74c42d6` (before: `76f7390`). Only texts change: the localized example
+  guides use the interface's terms (de "Arbeitsbereich", it "spazio di lavoro", pt-BR "fluxo de trabalho", fr
+  "vous"), and the generated example chapters of the in-app docs are regenerated (`make example-docs`).
+
 ### Backend audit (2026-11-01): pins and architecture docs
 
 - Pins `nodestro-runtime` `6eacec1` (before: `58cec5c`), `nodestro-api` `e16202d` (before: `870ba5f`),
