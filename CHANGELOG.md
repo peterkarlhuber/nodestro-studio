@@ -2,6 +2,30 @@
 
 ## Unreleased
 
+### Sandbox modes after Docker-first (DS-3) and the DS-13 review of Settings → Sandbox (2026-11-02)
+
+- Settings → Sandbox offers the new `linux` mode (runtime DS-3) as an explicit choice on Linux computers:
+  the optional built-in Linux sandbox, never chosen automatically, without third-party Python packages for
+  AI-created tools. Every offered mode is explained below the choice: `auto` runs AI-created code only in Docker once
+  its checks passed, `subprocess` is for trusted use only and always blocks AI-created tools. The blocked notice has
+  a sentence for the `linux` mode; in `auto` it names Docker's reason, which the selection now reports instead of
+  `no-isolation`.
+- Refusals: `sandbox.isolation_required` with `reason` `subprocess-mode` and with a Docker reason, and
+  `sandbox.libraries_need_isolation` with `mode` `linux`, get their own sentences (also on dependency status
+  `unsupported`); the general sentences no longer promise the built-in Linux sandbox as an automatic fallback.
+- DS-13: the backend table, the Docker details, the "AI-created tools run in" summary and the blocked notice all
+  derive from one Docker status (the answer of the status routes until the settings bring a newer Docker row), so
+  they no longer disagree while the settings are read again. A forced check that did not run (`throttled` with
+  `retry_after`, or `refresh_ignored` for non-administrators) is shown as "not run" instead of a new result, and a
+  throttled button waits until the window has passed; `redacted` answers say that technical details are visible to
+  administrators. The rootful docker-group warning follows `rootless === false` instead of matching an English note.
+- Types: `SandboxMode` gains `"linux"`, new `SandboxStatus` (answers of `GET /api/sandbox/status` and
+  `POST /api/sandbox/self-test`: `check_started`, `throttled`, `retry_after`, `refresh_ignored`, `wait_skipped`,
+  `redacted`), `IsolationReason`, `isDockerReason`. Older APIs without these fields keep working; a runtime before
+  DS-3 rejects saving `linux`.
+- Docs (six languages): Settings → Sandbox and Tools → The sandbox / Trust and isolation describe the four modes, and
+  who may start a Docker check how often.
+
 ### New official logo (2026-11-02)
 
 - The new official Nodestro logo replaces the previous app-icon mark everywhere: top bar (lockup; symbol alone on
