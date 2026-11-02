@@ -151,7 +151,7 @@ Gli strumenti personali e quelli creati dall’IA **non vengono mai eseguiti nel
 
 La sandbox Linux integrata non richiede installazioni: usa funzioni del kernel Linux (Landlock e seccomp). Nodestro verifica una volta all’avvio che siano presenti e funzionino; *Impostazioni → Sandbox* mostra il risultato e, se non è disponibile, il motivo. Non protegge da errori del kernel Linux stesso e non nasconde se un file esiste altrove; Docker resta disponibile come alternativa.
 
-La sandbox si sceglie nelle [impostazioni](/docs/einstellungen#sandbox); *Automatica* la sceglie per te. Docker deve essere installato e in esecuzione ([Installare Docker](/docs/einstellungen#sandbox-docker)); altrimenti test e chiamate degli strumenti che ne hanno bisogno falliscono. Su macOS Nodestro ha anche una sandbox sperimentale; viene mostrata nelle impostazioni, ma non viene usata finché non è stata verificata in modo indipendente. Se una chiamata supera il limite di tempo, conta come errore e il processo viene terminato.
+La sandbox si sceglie nelle [impostazioni](/docs/einstellungen#sandbox); *Automatica* la sceglie per te. Docker deve essere installato e in esecuzione ([Installare Docker](/docs/einstellungen#sandbox-docker)); altrimenti test e chiamate degli strumenti che ne hanno bisogno falliscono. Su macOS e Windows Docker o un motore compatibile è l’unica sandbox per gli strumenti creati dall’IA, e Nodestro verifica il motore prima di usarlo. Se una chiamata supera il limite di tempo, conta come errore e il processo viene terminato.
 
 ## Fiducia e isolamento {#vertrauen}
 <!-- keywords: fiducia, non attendibile, origine, generato dall’ia, docker necessario, isolamento necessario, bloccato, limitato, richiede isolamento -->

@@ -257,6 +257,16 @@ describe("backend messages", () => {
     expect(problemText(t, { code: "totally.unknown" })).toBe(i18n.t("errors.unknown"));
   });
 
+  it("say why a source-only package was not built in a container", async () => {
+    await setLanguage("en", false);
+    const item = (reason?: string) => ({ code: "deps.build_required", params: { name: "lxml", ...(reason ? { reason } : {}) } });
+    expect(problemText(t, item())).toBe(i18n.t("errors.deps.build_required", { name: "lxml" }));
+    expect(problemText(t, item("sandbox.unavailable"))).toContain("Docker is not available");
+    expect(problemText(t, item("deps.build_unavailable"))).toContain("not set up in this version");
+    expect(problemText(t, item("deps.something_else"))).toBe(i18n.t("errors.deps.build_required", { name: "lxml" }));
+    expect(problemText(t, { code: "deps.image_too_large", params: { size_gb: "12.3", limit_gb: "8" } })).toContain("12.3 GB");
+  });
+
   it("name the default model a designed agent cannot be judged by, in every language", async () => {
     const note = {
       code: "draft.judge_unsupported",

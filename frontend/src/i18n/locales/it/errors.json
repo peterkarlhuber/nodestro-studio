@@ -360,10 +360,14 @@
     "run_active": "Il workflow è in esecuzione; riprova al termine.",
     "install_interrupted": "Nodestro si è arrestato durante l’installazione delle librerie. Installale di nuovo.",
     "build_required": "{{name}} è disponibile solo come codice sorgente. Risolverlo eseguirebbe il suo script di build, quindi Nodestro non l’ha risolto per lo strumento generato. Verifica il pacchetto e approvalo nella finestra delle librerie dello strumento, oppure fai scrivere lo strumento senza di esso.",
+    "build_required_no_docker": "{{name}} è disponibile solo come codice sorgente. Il suo script di build viene eseguito solo in un container, e qui Docker non è disponibile. Avvia Docker e riprova, oppure fai scrivere lo strumento senza di esso.",
+    "build_required_not_set_up": "{{name}} è disponibile solo come codice sorgente. La build dei pacchetti in un container non è configurata in questa versione, e Nodestro non esegue mai script di build su questo computer. Fai scrivere lo strumento senza di esso.",
+    "build_unavailable": "La build dei pacchetti dal codice sorgente in un container non è configurata in questa versione. Nodestro non esegue mai script di build su questo computer.",
     "lock_without_hashes": "Questa approvazione proviene da una versione precedente senza checksum. Approva di nuovo le librerie per usarle nella sandbox Docker.",
     "wheels_required": "Un pacchetto non esiste come pacchetto pronto (wheel) per Linux. Nella sandbox Docker i pacchetti non vengono compilati dal codice sorgente.",
     "hash_mismatch": "Un pacchetto scaricato non corrisponde all’approvazione. Non è stato installato nulla.",
-    "image_failed": "Non è stato possibile creare l’immagine del container con le librerie. I dettagli tecnici indicano il motivo."
+    "image_failed": "Non è stato possibile creare l’immagine del container con le librerie. I dettagli tecnici indicano il motivo.",
+    "image_too_large": "L’immagine del container di queste librerie occupa {{size_gb}} GB, più del limite di {{limit_gb}} GB, ed è stata rimossa. Usa meno librerie o librerie più piccole."
   },
   "condition": {
     "field_missing": "Il campo manca nel risultato.",
@@ -685,7 +689,9 @@
   "sandbox": {
     "isolation_required": "Il codice creato dall’IA e gli strumenti di origine sconosciuta vengono eseguiti solo isolati (sandbox Linux integrata o Docker); nessuna delle due è disponibile, quindi non è stato eseguito nulla. Impostazioni → Sandbox mostra il motivo.",
     "libraries_need_isolation": "{{name}} è creato dall’IA o di origine sconosciuta e richiede librerie di terze parti. Questi strumenti vengono eseguiti solo isolati (sandbox Linux integrata o Docker); qui nessuna delle due è disponibile. Impostazioni → Sandbox mostra il motivo.",
-    "unavailable": "Qui il codice degli strumenti viene eseguito solo in container; la sandbox «Processo Python» non è disponibile."
+    "unavailable": "Qui il codice degli strumenti viene eseguito solo in container; la sandbox «Processo Python» non è disponibile.",
+    "docker_insecure": "Docker non ha superato le verifiche di sicurezza di Nodestro, quindi il codice creato dall’IA non è stato eseguito. Impostazioni → Sandbox mostra quale verifica non è riuscita.",
+    "selftest_failed": "Il container di prova non ha superato le verifiche di Nodestro, quindi il codice creato dall’IA non è stato eseguito. Impostazioni → Sandbox mostra il motivo."
   },
   "identity": {
     "login_expired": "L'accesso ha richiesto troppo tempo o è già stato usato. Accedi di nuovo.",

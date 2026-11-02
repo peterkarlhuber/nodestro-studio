@@ -1,11 +1,30 @@
 # ADR-0009: Cross-platform sandbox architecture
 
-- Status: Proposed (2026-11-02, sandbox architecture work order). Accepting the pull requests accepts this record.
+- Status: Proposed (2026-11-02, sandbox architecture work order), superseded in part by Docker-first (2026-11-02,
+  see the status update below). Accepting the pull requests accepts this record.
   Releasing any new native backend for untrusted code needs a separate decision after an independent review.
 - Repositories: orkexa (capability model, probes, cancellation, experimental `MacOSSandbox`; #28), nodestro-runtime
   (`sandbox_selection`, `auto` mode, macOS/Windows start fix; #77, #78), nodestro-api (OpenAPI, release libraries),
   nodestro-studio (Settings → Sandbox, built-in docs). Desktop packaging: unchanged (DSK-001 stays NO-GO).
 - Related: [ADR-0006](0006-sandbox-policy.md) (trust classes and the policy, unchanged), [ADR-0005](0005-desktop-packaging.md).
+
+## Status update: Superseded in part by Docker-first (2026-11-02)
+
+Owner decision (2026-11-02). Points 6 and 7 of the decision and the open items on native backends no longer apply;
+everything else stands.
+
+- **Docker is the default sandbox** for untrusted (AI-generated, unknown) code on Linux, macOS and Windows. On macOS
+  and Windows a Docker-compatible engine is required: Docker Desktop, Colima, OrbStack and Podman are accepted only
+  if Nodestro's own checks pass (limits, seccomp, a self-test container that verifies user, capabilities, no-new-privs,
+  network, read-only root, cgroup v2 limits, rlimits and environment). An engine that fails is refused, whatever its
+  name; nothing is relaxed. Only Linux Docker Engine (rootful, and rootless with cgroup v2 delegation) and Podman are
+  verified in CI; Docker Desktop on macOS and Windows is not.
+- **The studio starts without Docker.** Only secure execution is blocked, with a reason the UI shows.
+- **macOS native sandbox removed.** Orkexa's `MacOSSandbox` was never activated and is gone (orkexa #30). The
+  runtime keeps reporting the backend `macos-seatbelt` as `unavailable` with reason `removed`; older runtimes report
+  `experimental / not-released`, and the studio explains both.
+- **Windows native sandbox stopped.** `windows-native` stays `unavailable / not-implemented`; ORK-015 is not pursued.
+- **The built-in Linux sandbox stays optional** (x86-64 only; it refuses on ARM64).
 
 ## Context
 

@@ -360,10 +360,14 @@
     "run_active": "Le workflow est en cours d’exécution ; réessayez après l’exécution.",
     "install_interrupted": "Nodestro s’est arrêté pendant l’installation des bibliothèques. Installez-les à nouveau.",
     "build_required": "{{name}} n’est disponible que sous forme de code source. Le résoudre exécuterait son script de construction ; Nodestro ne l’a donc pas résolu pour l’outil généré. Vérifiez le paquet et approuvez-le dans la boîte de dialogue des bibliothèques de l’outil, ou laissez l’outil être écrit sans lui.",
+    "build_required_no_docker": "{{name}} n’est disponible que sous forme de code source. Son script de construction ne s’exécute que dans un conteneur, et Docker n’est pas disponible ici. Démarrez Docker et réessayez, ou laissez l’outil être écrit sans lui.",
+    "build_required_not_set_up": "{{name}} n’est disponible que sous forme de code source. La construction de paquets dans un conteneur n’est pas configurée dans cette version, et Nodestro n’exécute jamais de scripts de construction sur cet ordinateur. Laissez l’outil être écrit sans lui.",
+    "build_unavailable": "La construction de paquets à partir du code source dans un conteneur n’est pas configurée dans cette version. Nodestro n’exécute jamais de scripts de construction sur cet ordinateur.",
     "lock_without_hashes": "Cette approbation provient d’une ancienne version sans sommes de contrôle. Approuvez de nouveau les bibliothèques pour les utiliser dans le bac à sable Docker.",
     "wheels_required": "Un paquet n’existe pas sous forme de paquet prêt à l’emploi (wheel) pour Linux. Dans le bac à sable Docker, les paquets ne sont pas compilés depuis les sources.",
     "hash_mismatch": "Un paquet téléchargé ne correspond pas à l’approbation. Rien n’a été installé.",
-    "image_failed": "L’image de conteneur avec les bibliothèques n’a pas pu être construite. Les détails techniques en indiquent la raison."
+    "image_failed": "L’image de conteneur avec les bibliothèques n’a pas pu être construite. Les détails techniques en indiquent la raison.",
+    "image_too_large": "L’image du conteneur de ces bibliothèques fait {{size_gb}} Go, plus que la limite de {{limit_gb}} Go ; elle a été supprimée. Utilisez moins de bibliothèques ou des bibliothèques plus petites."
   },
   "condition": {
     "field_missing": "Le champ manque dans le résultat.",
@@ -685,7 +689,9 @@
   "sandbox": {
     "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent qu’isolés (bac à sable Linux intégré ou Docker) ; aucun des deux n’est disponible, rien n’a donc été exécuté. Réglages → Bac à sable indique pourquoi.",
     "libraries_need_isolation": "{{name}} est créé par l’IA ou d’origine inconnue et nécessite des bibliothèques tierces. Ces outils ne s’exécutent qu’isolés (bac à sable Linux intégré ou Docker) ; aucun des deux n’est disponible ici. Réglages → Bac à sable indique pourquoi.",
-    "unavailable": "Ici, le code des outils ne s’exécute que dans des conteneurs ; le bac à sable « Processus Python » n’est pas disponible."
+    "unavailable": "Ici, le code des outils ne s’exécute que dans des conteneurs ; le bac à sable « Processus Python » n’est pas disponible.",
+    "docker_insecure": "Docker n’a pas réussi les vérifications de sécurité de Nodestro ; le code créé par l’IA n’a donc pas été exécuté. Réglages → Bac à sable indique quelle vérification a échoué.",
+    "selftest_failed": "Le conteneur de test a échoué aux vérifications de Nodestro ; le code créé par l’IA n’a donc pas été exécuté. Réglages → Bac à sable indique pourquoi."
   },
   "identity": {
     "login_expired": "La connexion a pris trop de temps ou a déjà été utilisée. Veuillez vous reconnecter.",

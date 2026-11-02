@@ -360,10 +360,14 @@
     "run_active": "O fluxo de trabalho está em execução; tente novamente depois.",
     "install_interrupted": "O Nodestro foi encerrado durante a instalação das bibliotecas. Instale-as novamente.",
     "build_required": "{{name}} só está disponível como código-fonte. Resolvê-lo executaria seu script de build, por isso o Nodestro não o resolveu para a ferramenta gerada. Verifique o pacote e aprove-o na janela de bibliotecas da ferramenta, ou deixe a ferramenta ser escrita sem ele.",
+    "build_required_no_docker": "{{name}} só está disponível como código-fonte. Seu script de build só roda em um contêiner, e o Docker não está disponível aqui. Inicie o Docker e tente de novo, ou deixe a ferramenta ser escrita sem ele.",
+    "build_required_not_set_up": "{{name}} só está disponível como código-fonte. Compilar pacotes em um contêiner não está configurado nesta versão, e o Nodestro nunca executa scripts de build neste computador. Deixe a ferramenta ser escrita sem ele.",
+    "build_unavailable": "Compilar pacotes a partir do código-fonte em um contêiner não está configurado nesta versão. O Nodestro nunca executa scripts de build neste computador.",
     "lock_without_hashes": "Esta aprovação vem de uma versão anterior sem somas de verificação. Aprove as bibliotecas novamente para usá-las no sandbox do Docker.",
     "wheels_required": "Um pacote não tem um pacote pronto (wheel) para Linux. No sandbox do Docker, os pacotes não são compilados a partir do código-fonte.",
     "hash_mismatch": "Um pacote baixado não corresponde à aprovação. Nada foi instalado.",
-    "image_failed": "Não foi possível criar a imagem de contêiner com as bibliotecas. Os detalhes técnicos indicam o motivo."
+    "image_failed": "Não foi possível criar a imagem de contêiner com as bibliotecas. Os detalhes técnicos indicam o motivo.",
+    "image_too_large": "A imagem do contêiner dessas bibliotecas tem {{size_gb}} GB, mais que o limite de {{limit_gb}} GB, e foi removida. Use menos bibliotecas ou bibliotecas menores."
   },
   "condition": {
     "field_missing": "O campo está ausente no resultado.",
@@ -685,7 +689,9 @@
   "sandbox": {
     "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados isolados (sandbox Linux integrado ou Docker); nenhum dos dois está disponível, então nada foi executado. Configurações → Sandbox mostra o motivo.",
     "libraries_need_isolation": "{{name}} foi criada por IA ou é de origem desconhecida e precisa de bibliotecas de terceiros. Essas ferramentas só são executadas isoladas (sandbox Linux integrado ou Docker); nenhum dos dois está disponível aqui. Configurações → Sandbox mostra o motivo.",
-    "unavailable": "Aqui o código das ferramentas só é executado em contêineres; o sandbox \"Processo Python\" não está disponível."
+    "unavailable": "Aqui o código das ferramentas só é executado em contêineres; o sandbox \"Processo Python\" não está disponível.",
+    "docker_insecure": "O Docker não passou nas verificações de segurança do Nodestro, por isso o código criado por IA não foi executado. Configurações → Sandbox mostra qual verificação falhou.",
+    "selftest_failed": "O contêiner de teste não passou nas verificações do Nodestro, por isso o código criado por IA não foi executado. Configurações → Sandbox mostra o motivo."
   },
   "identity": {
     "login_expired": "O login demorou demais ou já foi usado. Faça login novamente.",

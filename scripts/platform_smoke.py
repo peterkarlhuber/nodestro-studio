@@ -2,7 +2,8 @@
 
 Used by the ``Platforms`` workflow on macOS and Windows (and Linux): ``python scripts/platform_smoke.py``. It starts
 ``python -m nodestro_studio --no-browser`` on a free port with a fresh data directory, waits for ``/api/health``,
-reads ``/api/settings`` and the interface's ``index.html``, and stops the server. On systems without the built-in
+reads ``/api/settings`` (with a runtime that reports the Docker checks also ``/api/sandbox/status``) and the
+interface's ``index.html``, and stops the server. On systems without the built-in
 sandbox the settings must say so (reason ``platform``) instead of the start failing.
 """
 
@@ -30,6 +31,52 @@ def _get(url: str, timeout: float = 10) -> tuple[int, bytes]:
     request = urllib.request.Request(url, headers={"Host": url.split("/")[2]})
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return int(response.status), response.read()
+
+
+#: The Docker backend's reasons and check names (runtime 2026-11-02 and later); older runtimes report neither.
+DOCKER_REASONS = frozenset(
+    {
+        "docker-missing",
+        "docker-unreachable",
+        "docker-limits",
+        "docker-seccomp",
+        "docker-rootless-cgroup",
+        "docker-os-type",
+        "docker-selftest",
+        "docker-image",
+        "docker-checking",
+    }
+)
+DOCKER_CHECKS = frozenset({"cli", "daemon", "preflight", "image", "self-test"})
+
+
+def check_docker_status(docker: dict) -> None:
+    """Assert the Docker row's new fields when the runtime reports them (``checks``); older runtimes pass as they are.
+
+    Approved only after every check passed, the in-container self-test included; never available otherwise.
+    """
+    assert docker["name"] == "docker", docker
+    if "checks" not in docker:
+        return
+    state = docker["state"]
+    assert state in ("approved", "unavailable", "checking"), docker
+    assert docker["available"] is (state == "approved"), docker
+    assert isinstance(docker.get("engine", ""), str), docker
+    assert docker.get("rootless") in (True, False, None), docker
+    assert docker.get("cgroup_version") is None or isinstance(docker["cgroup_version"], str), docker
+    assert docker.get("tested_at") is None or isinstance(docker["tested_at"], str), docker
+    checks = docker["checks"]
+    assert isinstance(checks, list), docker
+    for check in checks:
+        assert check["name"] in DOCKER_CHECKS and isinstance(check["ok"], bool), check
+    if state == "approved":
+        assert docker["reason"] == "", docker
+        assert checks and all(check["ok"] for check in checks), docker
+        assert any(check["name"] == "self-test" for check in checks), docker
+    elif state == "checking":
+        assert docker["reason"] == "docker-checking", docker
+    else:
+        assert docker["reason"] in DOCKER_REASONS - {"docker-checking"}, docker
 
 
 def main() -> int:
@@ -97,6 +144,24 @@ def main() -> int:
                     for backend in settings.get("sandbox_backends") or []:
                         if backend["name"] in ("macos-seatbelt", "windows-native", "subprocess"):
                             assert backend["state"] != "approved", backend
+                        if backend["name"] == "macos-seatbelt":
+                            # The native macOS sandbox was removed (Docker-first); older runtimes report it as
+                            # experimental and not released. It never runs AI-generated code.
+                            assert (backend["state"], backend["reason"]) in (
+                                ("unavailable", "removed"),
+                                ("experimental", "not-released"),
+                            ), backend
+                docker = next((row for row in settings.get("sandbox_backends") or [] if row["name"] == "docker"), None)
+                if docker is not None:
+                    check_docker_status(docker)
+                    if "checks" in docker:
+                        # The status route answers the background check without waiting for the daemon.
+                        began = time.monotonic()
+                        _, body = _get(f"{base}/api/sandbox/status", timeout=30)
+                        status_row = json.loads(body)
+                        print("sandbox status:", json.dumps(status_row, indent=1))
+                        check_docker_status(status_row)
+                        assert time.monotonic() - began < 10, "GET /api/sandbox/status waited for the daemon"
                 status, page = _get(f"{base}/")
                 assert status == 200 and b"<html" in page.lower(), page[:200]
                 print("interface served:", len(page), "bytes")
