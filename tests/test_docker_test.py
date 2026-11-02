@@ -33,6 +33,11 @@ HOME = "/Users/peter"
         ("NODESTRO_READ_TOKEN=plainvalue", "plainvalue"),
         ("https://registry/v2/?token=abc123def&x=1", "abc123def"),
         ("jwt eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.abcdef", "eyJzdWIi"),
+        ("gitlab glpat-abcdefghijklmnopqrst12", "glpat-abcdef"),
+        ("google AIzaSyA1234567890abcdefghijklmnopqrstuv", "AIzaSyA12345"),
+        ("slack xoxb-1234567890-abcdefghij", "xoxb-12345"),
+        ("npm npm_abcdefghijklmnopqrstuvwxyz0123456789", "npm_abcdefgh"),
+        ("hf hf_abcdefghijklmnopqrstuvwxyzABCDEF", "hf_abcdefgh"),
     ],
 )
 def test_redact_removes_credentials(text: str, secret: str) -> None:
@@ -248,3 +253,20 @@ def test_the_smoke_report_records_steps(tmp_path: Path) -> None:
     assert [(c["step"], c["name"], c["ok"]) for c in data["checks"]] == [(3, "a", True), (8, "b", False)]
     assert data["failed"] == ["b"] and data["facts"]["owner"] == "nodestro-x"
     assert set(docker_smoke.STEPS) == set(docker_test.PLAIN) == set(range(1, 11))
+
+
+def test_the_work_folder_is_never_an_arbitrary_folder(tmp_path: Path) -> None:
+    assert docker_test.work_folder_usable(tmp_path / "missing")
+    assert docker_test.work_folder_usable(tmp_path)  # empty
+    (tmp_path / "venv").mkdir()
+    assert not docker_test.work_folder_usable(tmp_path)  # someone's folder (for example the home folder)
+    (tmp_path / docker_test.WORK_MARKER).touch()
+    assert docker_test.work_folder_usable(tmp_path)  # made by an earlier run
+    (tmp_path / "file").write_text("x")
+    assert not docker_test.work_folder_usable(tmp_path / "file")
+
+
+def test_main_refuses_a_foreign_work_folder(tmp_path: Path) -> None:
+    (tmp_path / "venv").mkdir()
+    assert docker_test.main(["--work", str(tmp_path)]) == 2
+    assert (tmp_path / "venv").exists() and not (tmp_path / docker_test.WORK_MARKER).exists()

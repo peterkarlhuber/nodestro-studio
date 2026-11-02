@@ -23,6 +23,15 @@ for argument in "$@"; do
   previous="$argument"
 done
 
+# The test deletes folders inside its work folder (run, venv, cache), so it uses only an empty folder or one it made
+# itself (the marker file), never an arbitrary folder such as the home folder.
+if [ -d "$work" ] && [ ! -e "$work/.nodestro-docker-test" ] && [ -n "$(ls -A "$work" 2>/dev/null)" ]; then
+  echo "The work folder $work is not empty and was not made by this test; choose another one with --work." >&2
+  exit 2
+fi
+mkdir -p "$work"
+touch "$work/.nodestro-docker-test"
+
 good_python() {
   "$1" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 11) else 1)' >/dev/null 2>&1
 }

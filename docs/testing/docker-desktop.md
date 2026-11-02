@@ -71,7 +71,7 @@ py -3.13 scripts\docker_test.py
 | `--context NAME` | Test this Docker context (for example `desktop-linux` when another engine is the current context) |
 | `--keep` | Keep the virtual environment and the test data (a rerun of the same commit then skips the install) |
 | `--remove-images` | Also remove the images this run pulled or built (sandbox image, `python`, `uv`); by default they are kept, so a rerun is faster |
-| `--work DIR` | Work folder (default `~/nodestro-docker-test`, on Windows `%USERPROFILE%\nodestro-docker-test`) |
+| `--work DIR` | Work folder (default `~/nodestro-docker-test`, on Windows `%USERPROFILE%\nodestro-docker-test`). It must be missing, empty or made by an earlier run (marker `.nodestro-docker-test`), because the test deletes folders inside it |
 | `--verbose` | Show every line of the test instead of the PASS/FAIL lines |
 | `--stop-command CMD`, `--start-command CMD` | Stop and start another engine for step 9 (CI: `colima stop`, `sudo systemctl stop docker`) |
 

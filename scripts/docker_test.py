@@ -124,6 +124,12 @@ _REDACTIONS: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"\b([A-Za-z][A-Za-z0-9+.-]*://)[^\s/@\"']+@"), r"\1<redacted>@"),
     (re.compile(r"\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})"), "<redacted-token>"),
     (re.compile(r"\bsk-(?:ant-)?[A-Za-z0-9_-]{16,}"), "<redacted-key>"),
+    # Bare tokens of other services with a known prefix: GitLab, Google API keys, Slack, npm, Hugging Face.
+    (
+        re.compile(r"\b(?:glpat-[A-Za-z0-9_-]{20,}|AIza[0-9A-Za-z_-]{35}|xox[abposr]-[A-Za-z0-9-]{10,})"),
+        "<redacted-token>",
+    ),
+    (re.compile(r"\b(?:npm_[A-Za-z0-9]{36}|hf_[A-Za-z0-9]{30,})\b"), "<redacted-token>"),
     (re.compile(r"\b(?:AKIA|ASIA)[0-9A-Z]{16}\b"), "<redacted-key>"),
     (re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]+"), "<redacted-jwt>"),
     (re.compile(r"(?i)\b(bearer|basic)\s+[A-Za-z0-9._~+/=-]{8,}"), r"\1 <redacted>"),
@@ -450,6 +456,19 @@ def repo_state() -> dict[str, Any]:
         return {"commit": "unknown", "dirty": None}
     code, status, _ = run(["git", "-C", str(REPO), "status", "--porcelain", "--untracked-files=no"], timeout=30)
     return {"commit": commit, "dirty": bool(status) if code == 0 else None}
+
+
+#: The file that marks a work folder this test made; the test deletes folders only inside such a folder.
+WORK_MARKER = ".nodestro-docker-test"
+
+
+def work_folder_usable(work: Path) -> bool:
+    """Whether ``work`` may be the work folder: missing, empty, or marked by an earlier run (never e.g. ``~``)."""
+    if not work.exists():
+        return True
+    if not work.is_dir():
+        return False
+    return (work / WORK_MARKER).exists() or not any(work.iterdir())
 
 
 def venv_python(venv: Path) -> Path:
@@ -788,7 +807,14 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.reconfigure(errors="replace")  # type: ignore[union-attr]
 
     work: Path = args.work.expanduser().resolve()
+    if not work_folder_usable(work):
+        say(
+            f"The work folder {work} is not empty and was not made by this test; choose another one with --work "
+            "(the test deletes folders inside it)."
+        )
+        return 2
     work.mkdir(parents=True, exist_ok=True)
+    (work / WORK_MARKER).touch()
     run_dir = work / "run"
     shutil.rmtree(run_dir, ignore_errors=True)
     run_dir.mkdir(parents=True)
