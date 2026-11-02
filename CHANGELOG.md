@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### macOS and Windows start (2026-11-02)
+
+- Pins: nodestro-runtime 47a665e (runtime #77) and the cascade (examples, integrations, api, sdk). The runtime could
+  not be imported on macOS (`prctl` looked up at import time) or Windows (`import resource`), so `nodestro` did not
+  start there at all. Off Linux the built-in sandbox now shows as not available (reason `platform`) and untrusted
+  code is refused, as without Docker on any other computer.
+- New workflow `platforms.yml` and `scripts/platform_smoke.py`: builds the interface, installs the studio at the
+  pinned commits and starts it on macOS arm64 and x86-64, Windows x64 and ARM64 and Linux; checks `/api/health`,
+  `/api/settings` (sandbox report) and the interface.
+
 ### macOS build: file name case clash (2026-11-01)
 
 - The frontend failed to build on a case-insensitive file system (default macOS): `automation/TestStatus.tsx`
