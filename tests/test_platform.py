@@ -56,7 +56,8 @@ def test_a_wrong_version_is_reported() -> None:
 
 def test_a_dynamic_version_is_read_from_the_version_file() -> None:
     text = '[project]\nname = "axentra"\ndynamic = ["version"]\ndependencies = []\n'
-    assert check_versions.check_pyproject("axentra", text, versions(), "0.1.0.dev0", '__version__ = "0.1.0.dev0"\n') == []
+    version_file = '__version__ = "0.1.0.dev0"\n'
+    assert check_versions.check_pyproject("axentra", text, versions(), "0.1.0.dev0", version_file) == []
     found = check_versions.check_pyproject("axentra", text, versions(), "0.2.0", '__version__ = "0.1.0.dev0"\n')
     assert found == ["axentra: version 0.1.0.dev0, versions.json says 0.2.0"]
     missing = check_versions.check_pyproject("axentra", text, versions(), "0.1.0.dev0", None)
