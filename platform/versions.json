@@ -9,7 +9,7 @@
   "components": {
     "axentra": {
       "comment": "Generic SaaS backend library, server profile only (nodestro-runtime[postgres] on Python 3.11+); the studio never depends on it.",
-      "commit": "f1149201792b7f5256f21a20bd44342aa832a0ce",
+      "commit": "f6ae01d4fe5945d56b322673202860f93e2213a9",
       "version": "0.1.0.dev0",
       "pyproject": "pyproject.toml",
       "version_file": "src/axentra/_version.py"
@@ -19,31 +19,31 @@
       "version": "0.1.0"
     },
     "nodestro-runtime": {
-      "commit": "95dbdfa76e37ebe6320053f9e95b9a6c74b2756e",
+      "commit": "95114ae5cf58a8e7f1b9b4b135e6278527f3317f",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-examples": {
-      "commit": "0ae5ad41b2ad182321cd3f533a1d3aab08603d33",
+      "commit": "9cdc1f5928f13a2b447546cfc9019fa3e664ab1e",
       "version": "0.3.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-integrations": {
-      "commit": "12013a426f5cb58375e2c10fec0c37d1e0565bbd",
+      "commit": "8ecfb0083f4328082d1d4c7fd2428bcff2b4861d",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-api": {
-      "commit": "c470b2ba9f86ababda472e474baa802010ece0ea",
+      "commit": "961afefe67bde3e3f60ee4383cd788c50063819b",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-sdk": {
-      "commit": "293a739c6a2bfeae460d4a1b442ee654da796597",
+      "commit": "1b1fee07684ec3a3359813d74df6d96a28134077",
       "version": "0.2.0",
       "pyproject": "python/pyproject.toml"
     }

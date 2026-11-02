@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Platform pins: Axentra completion (2026-11-02)
+
+- Pins: axentra `f6ae01d` (one Axentra commit across the chain; before `f114920`), nodestro-runtime `95114ae`
+  (suspended tenants, deterministic access definitions, runtime database role, secrets rollback guard, Axentra
+  files/metrics/notifications; all off by default), nodestro-api `961afef` (identity `axentra` mode, `/api/metrics`,
+  `/api/notifications`, `files` and `suspend-tenant`/`resume-tenant` commands, owner/runtime database roles),
+  nodestro-examples `9cdc1f5`, nodestro-integrations `8ecfb00`, nodestro-sdk `1b1fee0` (api pin only).
+
 ### Docker-first sandbox: texts, docs and the Docker status view (2026-11-02, ADR-0009 status update)
 
 - Settings → Sandbox shows the Docker sandbox as the runtime's background check found it (runtimes that report
