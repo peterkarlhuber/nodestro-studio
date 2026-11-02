@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Platform pins: Docker-first follow-up (2026-11-02)
+
+- Pins: nodestro-runtime `958be1d` (#90 R-1 source builds only on the desktop and R-5 container shape checks, #91 MCP
+  container deadline 15 minutes, #92 R-4 tool adoption), nodestro-examples `8c338d3` (#52), nodestro-integrations
+  `e71bf55` (#48), nodestro-api `b8139b0` (#70: adoption route, export sandbox image note) and nodestro-sdk `3a99c25`
+  (#63). orkexa stays `dec66eb` (orkexa #37 changed only CI, docs and test fixtures). Each change was accepted by
+  an independent review.
+
 ### Adopting AI-created tools as one's own, desktop only (R-4, 2026-11-02)
 
 - Tools → Library: on the desktop, an AI-created tool offers *Adopt as my own code*. The dialog shows the whole code
