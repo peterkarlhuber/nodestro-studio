@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 21 |
+| P3 Low | 22 |
 | P4 Optional | 8 |
 
 **Release blockers:** None for this repository.
@@ -189,6 +189,17 @@ None known.
   workflow starts the studio (API, settings, interface) on macOS arm64 and x86-64, Windows x64 and ARM64 and Linux;
   the interface itself has not been used in a browser on macOS or Windows.
 - **Next step:** Run the e2e suites once in Firefox and WebKit and record the result; decide whether CI adds one engine.
+
+### ST-034 · Welcome page on app start not checked in WebKit
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** studio #99, `frontend/src/welcome/startPage.ts`,
+  `docs/design/LANDING.md` §4
+- **What:** Every app start on `/` opens `/welcome`, decided by the Navigation Timing type (`navigate` = start;
+  `reload`/`back_forward` = stay). Verified in Chromium only, including the desktop-style launch page that moves on to
+  `/` with a meta refresh. Unverified: whether WebKit (desktop app on macOS and Linux, Safari) reports that meta
+  refresh as `navigate`. If not, the desktop app opens the Studio directly on start (no error, no loop).
+- **Next step:** Run `E2E_BROWSER=webkit scripts/e2e.sh welcome` once, or start the desktop app on macOS/Linux and
+  confirm the welcome page appears; remove this entry when confirmed.
 
 ### ST-020 · Assistive technology, zoom, motion and contrast checks
 
