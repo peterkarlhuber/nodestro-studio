@@ -1,0 +1,34 @@
+name: macOS frontend
+
+# The frontend build on a case-insensitive file system (macOS default APFS), where file names that differ
+# only in case clash. Runs when the frontend changes; scripts/check_case_collisions.py guards every PR.
+on:
+  push:
+    branches: [master]
+    paths: ["frontend/**", ".github/workflows/macos.yml"]
+  pull_request:
+    paths: ["frontend/**", ".github/workflows/macos.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build

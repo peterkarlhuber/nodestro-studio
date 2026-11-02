@@ -169,6 +169,7 @@ cd frontend && npm run dev          # user interface with hot reload on :5173
 | `make e2e` (`scripts/e2e.sh [suite ...]`) | All nine browser suites (smoke, i18n, architect, python, assistant, flow, panels, api, journeys) against Nodestro servers with simulated models and temporary data folders; needs the built user interface and Playwright; `E2E_BROWSER=firefox` or `webkit` runs them in another engine |
 | `make check-versions` | The pins of all components against [platform/versions.json](platform/versions.json) |
 | `make check-imports` | The dependency direction of the installed packages, no claude-agent |
+| `python scripts/check_case_collisions.py` | No file or module names that differ only in case (they clash on macOS and Windows) |
 
 The tests of the engine, API, examples and integrations live in their repositories; the platform pipeline
 (`.github/workflows/platform.yml`) runs them together against exactly the commits in `platform/versions.json`.

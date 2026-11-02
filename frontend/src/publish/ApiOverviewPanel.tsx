@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import type { ApiOverview } from "../api/types";
-import { TestStatus } from "../automation/TestStatus";
+import { WorkflowTestStatus } from "../automation/WorkflowTestStatus";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, Hint, Modal, Spinner, StatusBadge, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
@@ -190,7 +190,7 @@ export function ApiOverviewPanel({
         {version && newer ? (
           <>
             <p className="small">{t("publish.overview.willPublish", { version })}</p>
-            {gated ? null : <TestStatus workflowId={overview.workflow_id} version={version} />}
+            {gated ? null : <WorkflowTestStatus workflowId={overview.workflow_id} version={version} />}
             {gated && gate.isLoading ? <Spinner /> : null}
             {gated && gate.error ? (
               <Callout tone="danger">

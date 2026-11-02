@@ -183,7 +183,9 @@ None known.
 
 - **Priority:** P3 Low · **Status:** Open · **Refs:** final UX review §8, `docs/desktop-server/IMPLEMENTATION_STATUS.md`
 - **What:** All checks ran in Chromium on Linux. Firefox, Safari/WebKit, Windows, macOS and real mobile devices are
-  untested; `scripts/e2e.sh` supports `E2E_BROWSER=firefox|webkit`, but CI runs Chromium only.
+  untested; `scripts/e2e.sh` supports `E2E_BROWSER=firefox|webkit`, but CI runs Chromium only. Since 2026-11-01 the
+  frontend build and unit tests also run on `macos-latest` (`.github/workflows/macos.yml`), and every PR fails on
+  file names that differ only in case (`scripts/check_case_collisions.py`); the app itself is still not run on macOS.
 - **Next step:** Run the e2e suites once in Firefox and WebKit and record the result; decide whether CI adds one engine.
 
 ### ST-020 · Assistive technology, zoom, motion and contrast checks

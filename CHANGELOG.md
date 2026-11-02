@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### macOS build: file name case clash (2026-11-01)
+
+- The frontend failed to build on a case-insensitive file system (default macOS): `automation/TestStatus.tsx`
+  (component) and `automation/testStatus.ts` (helpers) differ only in case, so `import "./TestStatus"` resolved to
+  `testStatus.ts` (TS1149, TS2305). The component is now `automation/WorkflowTestStatus.tsx` (`WorkflowTestStatus`),
+  its test `WorkflowTestStatus.test.tsx`; no behavior change.
+- New check `scripts/check_case_collisions.py` (CI job `case-clashes`, every PR): fails on tracked paths or module
+  names (TS/JS/Python, directories included) that differ only in case. New workflow `macos.yml` builds and tests
+  the frontend on `macos-latest` when `frontend/` changes.
+
 ### UX initiative: usability, accessibility, performance and docs of the studio (2026-11-01)
 
 Studio #61, #63, #69, #70, #72, #73 and this change; frontend, e2e and in-app docs only. No security mechanism was

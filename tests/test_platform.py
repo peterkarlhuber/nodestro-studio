@@ -1,4 +1,4 @@
-"""The platform checks of scripts/: pins (check_versions) and dependency direction (check_imports)."""
+"""The platform checks of scripts/: pins (check_versions), dependency direction (check_imports) and case clashes."""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
+import check_case_collisions
 import check_imports
 import check_versions
 
@@ -69,3 +70,25 @@ def test_imports_are_read_from_the_source(tmp_path: Path) -> None:
 
 def test_the_installed_platform_keeps_its_dependency_direction(capsys: pytest.CaptureFixture[str]) -> None:
     assert check_imports.main() == 0, capsys.readouterr().out
+
+
+def test_case_collisions_find_module_names_that_differ_only_in_case() -> None:
+    found = check_case_collisions.collisions(["src/a/TestStatus.tsx", "src/a/testStatus.ts", "src/b/testStatus.ts"])
+    assert found == ["module names differ only in case: src/a/TestStatus.tsx, src/a/testStatus.ts"]
+
+
+def test_case_collisions_find_paths_and_directories() -> None:
+    assert check_case_collisions.collisions(["Docs/a.md", "docs/b.md"]) == ["paths differ only in case: Docs, docs"]
+    assert check_case_collisions.collisions(["src/foo/index.ts", "src/Foo.tsx"]) == [
+        "module names differ only in case: src/Foo.tsx, src/foo"
+    ]
+
+
+def test_case_collisions_allow_same_case_variants() -> None:
+    paths = ["src/Foo.ts", "src/Foo.tsx", "src/Foo.test.tsx", "src/foo.md", "src/FOO.json", "src/x/Foo.ts"]
+    # foo.md and FOO.json are not modules (an import names their extension), so only exact paths count for them.
+    assert check_case_collisions.collisions(paths) == []
+
+
+def test_repository_has_no_case_clashes() -> None:
+    assert check_case_collisions.collisions(check_case_collisions.tracked_files(ROOT)) == []
