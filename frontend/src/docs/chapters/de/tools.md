@@ -151,7 +151,7 @@ Eigene und von der KI erstellte Tools laufen **nie im Nodestro-Prozess**. Tests 
 
 Die eingebaute Linux-Sandbox braucht keine Installation: Sie nutzt Funktionen des Linux-Kernels (Landlock und seccomp). Nodestro prüft einmal beim Start, ob sie vorhanden sind und wirken; *Einstellungen → Sandbox* zeigt das Ergebnis und, falls sie nicht verfügbar ist, den Grund. Sie schützt nicht vor Fehlern im Linux-Kernel selbst und verbirgt nicht, ob eine Datei anderswo existiert; Docker bleibt als Alternative verfügbar.
 
-Die Sandbox wählst du in den [Einstellungen](/docs/einstellungen#sandbox); *Automatisch* wählt sie für dich. Docker muss installiert sein und laufen ([Docker installieren](/docs/einstellungen#sandbox-docker)), sonst schlagen Tests und Aufrufe der Tools fehl, die es brauchen. Unter macOS hat Nodestro außerdem eine experimentelle Sandbox; sie wird in den Einstellungen angezeigt, aber nicht verwendet, bis sie unabhängig geprüft ist. Überschreitet ein Aufruf das Zeitlimit, gilt er als Fehler und der Prozess wird beendet.
+Die Sandbox wählst du in den [Einstellungen](/docs/einstellungen#sandbox); *Automatisch* wählt sie für dich. Docker muss installiert sein und laufen ([Docker installieren](/docs/einstellungen#sandbox-docker)), sonst schlagen Tests und Aufrufe der Tools fehl, die es brauchen. Unter macOS und Windows ist Docker oder eine kompatible Engine die einzige Sandbox für KI-erstellte Tools, und Nodestro prüft die Engine, bevor es sie verwendet. Überschreitet ein Aufruf das Zeitlimit, gilt er als Fehler und der Prozess wird beendet.
 
 ## Vertrauen und Isolation {#vertrauen}
 <!-- keywords: vertrauen, nicht vertrauenswürdig, herkunft, ki-generiert, docker nötig, isolation nötig, gesperrt, eingeschränkt, braucht isolation -->

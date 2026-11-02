@@ -77,8 +77,8 @@ def test_the_studio_pins_agree_with_versions_json() -> None:
     pinned = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
     text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     assert check_versions.check_pyproject("nodestro-studio", text, pinned, pinned["platform"]) == []
-    # The orkexa commit nodestro-runtime pins (capabilities, cancellation, experimental macOS sandbox; orkexa #28).
-    assert pinned["components"]["orkexa"]["commit"] == "544ef92aa2c49ce2af37d475c66c03c8e703fc47"
+    # The orkexa commit nodestro-runtime pins (unified Docker sandbox engine, macOS sandbox removed; orkexa #30-#32).
+    assert pinned["components"]["orkexa"]["commit"] == "e220f706611dc8f2cc7cb4c87e44306a25f93fbf"
 
 
 def test_imports_are_read_from_the_source(tmp_path: Path) -> None:

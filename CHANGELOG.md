@@ -13,6 +13,13 @@
 - The welcome hero's hub has a node-card core behind the hexagon so the routes end at the logo.
 - Removed: `nodestro-logo-512.webp`, `nodestro-logo-64.png`, the CSS text wordmark (`.brand__name`, `.brand__dot`).
 
+### Platform pins: Docker-first sandbox (2026-11-02)
+
+- Pins: orkexa `e220f70` (unified Docker sandbox engine, orkexa #31; macOS sandbox removed, #30; budget #32),
+  nodestro-runtime `b608f90` (#83: Orkexa's run shape, background Docker status, image caps, no host builds),
+  nodestro-examples `50552a0` and nodestro-integrations `3120cca` (runtime pin only), nodestro-api `16a6118` (#63:
+  `GET /api/sandbox/status`, `POST /api/sandbox/self-test`), nodestro-sdk `9971a2f` (#57: their client methods).
+
 ### Platform pins: Axentra completion (2026-11-02)
 
 - Pins: axentra `f6ae01d` (one Axentra commit across the chain; before `f114920`), nodestro-runtime `95114ae`
@@ -20,6 +27,42 @@
   files/metrics/notifications; all off by default), nodestro-api `961afef` (identity `axentra` mode, `/api/metrics`,
   `/api/notifications`, `files` and `suspend-tenant`/`resume-tenant` commands, owner/runtime database roles),
   nodestro-examples `9cdc1f5`, nodestro-integrations `8ecfb00`, nodestro-sdk `1b1fee0` (api pin only).
+
+### Docker-first sandbox: texts, docs and the Docker status view (2026-11-02, ADR-0009 status update)
+
+- Settings → Sandbox shows the Docker sandbox as the runtime's background check found it (runtimes that report
+  `checks`): the engine, rootless/rootful and cgroup badges, each check (`cli`, `daemon`, `preflight`, `image`,
+  `self-test`) passed or failed with a sentence for the failed one, the docker-group root note of a rootful daemon
+  and when the self-test last ran. **Check again** asks `GET /api/sandbox/status?refresh=1` and follows a running
+  check; while the state is `checking` the panel polls `GET /api/sandbox/status?wait=2`, only while the page is
+  visible. Administrators get **Run self-test** (`POST /api/sandbox/self-test`; *Prepare sandbox* while the image is
+  missing). Blocked AI-created tools name the Docker reason (`docker-missing` … `docker-image`, `docker-checking`);
+  when a check settles the settings are read again. Older runtimes without these fields keep the earlier view.
+- `types.ts`: `SandboxCheck`, `SandboxBackendStatus.engine/rootless/cgroup_version/checks/tested_at`, state
+  `checking`, `DOCKER_REASONS`, `dockerReasonKey`; client `api.sandboxStatus`, `api.sandboxSelfTest`.
+- Six languages: the reason keys are named after the runtime's reasons (`rootless-cgroup`, `os-type`); the ten
+  in-container check texts gave way to the five check names the runtime reports; new texts for the self-test,
+  passed/failed, rootful, the checking state and two blocked sentences; diagnostics `docker.checking` and
+  `docker.unavailable` (the diagnosis appends the reason's sentence). Built-in docs: Check again and Run self-test.
+- `platform_smoke.py` asserts the Docker row's new fields when present (approved only with every check passed, the
+  self-test included; never available otherwise; known reasons and check names) and that `GET /api/sandbox/status`
+  answers without waiting for the daemon; older runtimes pass unchanged (`tests/test_platform_smoke.py`).
+
+- Docker (or a compatible engine that passes Nodestro's own checks) is the default sandbox for AI-created code on
+  Linux, macOS and Windows. The native macOS sandbox was removed: Settings → Sandbox names the backend
+  *Native macOS sandbox* and explains the runtime's new reason `removed`; the reason `not-released` of older runtimes
+  keeps its text. `platform_smoke.py` accepts both (`unavailable / removed`, `experimental / not-released`).
+- Six languages: texts for the coming Docker status view under `settings.sandbox.docker` (checking, ready, check
+  again, prepare, engine, rootless, cgroup, the docker-group root note, ten in-container checks and nine refusal
+  reasons) and errors `sandbox.docker_insecure`, `sandbox.selftest_failed`, `deps.image_too_large`,
+  `deps.build_unavailable`. `deps.build_required` with `reason` `sandbox.unavailable` or `deps.build_unavailable`
+  now says why the package could not be built in a container (`refineProblem`).
+- Built-in docs (six languages): *Installing Docker* says that Docker or a compatible engine is required on macOS
+  and Windows, that Nodestro checks the engine itself and refuses one that fails, lists Docker Desktop, Colima,
+  OrbStack and Podman, which engines CI verifies, the docker-group root equivalence and rootless Docker; Settings →
+  Sandbox and Tools no longer mention an experimental macOS sandbox.
+- `docs/PLATFORM.md`: engine matrix and the reasons a host is refused. ADR-0009: status update *Superseded in part by
+  Docker-first*. No pins changed.
 
 ### Platform pins: Axentra platform services (2026-11-02)
 

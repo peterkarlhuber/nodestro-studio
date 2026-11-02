@@ -79,8 +79,12 @@
       "available": "Verfügbar.",
       "not_installed": "Nicht installiert. KI-erstellte Tools brauchen die eingebaute Linux-Sandbox oder Docker.",
       "unreachable": "Die Sandbox steht auf Docker, aber Docker ist nicht erreichbar.",
+      "checking": "Nodestro prüft Docker noch im Hintergrund.",
+      "unavailable": "Docker kann für KI-erstellte Tools nicht verwendet werden.",
       "fix": {
-        "unreachable": "Starte Docker Desktop oder stelle die Sandbox auf „Python-Prozess“ um."
+        "unreachable": "Starte Docker Desktop oder stelle die Sandbox auf „Python-Prozess“ um.",
+        "checking": "Führe die Diagnose gleich noch einmal aus.",
+        "unavailable": "Einstellungen → Sandbox zeigt, welche Prüfung fehlgeschlagen ist."
       }
     },
     "sandbox": {

@@ -68,7 +68,9 @@
     "blockedBadge": "Gesperrt",
     "blocked": {
       "auto": "KI-erstellte Tools sind gesperrt: Dieser Computer hat keine freigegebene Sandbox und Docker läuft nicht. Installiere und starte Docker; Nodestro verwendet es dann automatisch.",
-      "subprocess": "KI-erstellte Tools sind gesperrt: Dieser Computer hat keine freigegebene Sandbox. Wähle Automatisch oder Docker und starte Docker."
+      "subprocess": "KI-erstellte Tools sind gesperrt: Dieser Computer hat keine freigegebene Sandbox. Wähle Automatisch oder Docker und starte Docker.",
+      "dockerRefused": "KI-erstellte Tools sind gesperrt: Dieser Computer hat keine freigegebene Sandbox, und Docker hat die Prüfungen von Nodestro nicht bestanden.",
+      "checking": "KI-erstellte Tools sind gesperrt, bis Nodestro die Prüfung von Docker abgeschlossen hat."
     },
     "installDocker": "Docker installieren",
     "backendsTitle": "Sandboxen auf diesem Computer",
@@ -79,7 +81,7 @@
     },
     "backend": {
       "linux-builtin": "Eingebaute Linux-Sandbox",
-      "macos-seatbelt": "macOS-Sandbox",
+      "macos-seatbelt": "Native macOS-Sandbox",
       "windows-native": "Windows-Sandbox",
       "docker": "Docker",
       "subprocess": "Python-Prozess"
@@ -89,16 +91,53 @@
       "experimental": "Experimentell, nicht verwendet",
       "unavailable": "Nicht verfügbar",
       "not-isolating": "Nicht isoliert",
-      "not-applicable": "Hier nicht verwendet"
+      "not-applicable": "Hier nicht verwendet",
+      "checking": "Wird geprüft"
     },
     "backendReason": {
       "not-released": "Umgesetzt und selbst getestet, aber nicht unabhängig geprüft. Nodestro verwendet sie nicht.",
       "not-implemented": "Für dieses Betriebssystem hat Nodestro noch keine eigene Sandbox.",
+      "removed": "Entfernt: Nodestro verwendet unter macOS Docker.",
       "unreachable": "Docker ist nicht installiert oder läuft nicht.",
       "missing": "Docker ist nicht installiert.",
       "server": "Auf einem Server läuft Tool-Code nur in Containern.",
       "platform": "Auf diesem Betriebssystem nicht verfügbar.",
       "unknown": "Auf diesem Computer nicht verfügbar."
+    },
+    "docker": {
+      "checking": "Docker wird geprüft …",
+      "ready": "Docker ist bereit: Die Engine hat die Prüfungen von Nodestro bestanden.",
+      "recheck": "Erneut prüfen",
+      "prepare": "Sandbox vorbereiten",
+      "selfTest": "Selbsttest ausführen",
+      "selfTestHint": "Startet einen Testcontainer mit den Einschränkungen der Sandbox und prüft, ob sie greifen. Nur Administratoren können ihn ausführen.",
+      "testedAt": "Zuletzt geprüft: {{date}}",
+      "engine": "Container-Engine",
+      "rootless": "Ohne Root-Rechte (rootless)",
+      "rootful": "Mit Root-Rechten (rootful)",
+      "cgroup": "Ressourcengrenzen (cgroup v{{version}})",
+      "rootfulNote": "Mitglieder der Gruppe docker haben auf diesem Computer faktisch Root-Rechte. Empfohlen ist Docker ohne Root-Rechte (rootless).",
+      "checksTitle": "Prüfungen",
+      "check": {
+        "cli": "Docker-Befehl gefunden",
+        "daemon": "Engine erreichbar",
+        "preflight": "Engine-Einstellungen (Grenzen, seccomp, Linux-Container)",
+        "image": "Sandbox-Image",
+        "self-test": "Selbsttest in einem Container"
+      },
+      "passed": "Bestanden",
+      "failed": "Fehlgeschlagen",
+      "reason": {
+        "missing": "Docker ist nicht installiert. Installiere Docker oder eine kompatible Engine; Nodestro erkennt sie automatisch.",
+        "unreachable": "Docker ist installiert, läuft aber nicht oder ist nicht erreichbar. Starte es und prüfe erneut.",
+        "limits": "Die Engine setzt keine Grenzen für Speicher, Prozesse und CPU durch. Nodestro braucht Grenzen über cgroup v2 und verwendet diese Engine nicht.",
+        "seccomp": "Die Engine wendet keinen Systemaufruf-Filter (seccomp) an. Nodestro verwendet diese Engine nicht.",
+        "rootless-cgroup": "Docker ohne Root-Rechte kann hier keine Grenzen durchsetzen: Die Delegation der cgroup-v2-Controller cpu, memory und pids fehlt.",
+        "os-type": "Die Engine führt Windows-Container aus. Stelle sie auf Linux-Container um.",
+        "selftest": "Der Testcontainer hat die Prüfungen von Nodestro nicht bestanden; die Engine wird nicht verwendet.",
+        "image": "Das Sandbox-Image fehlt oder passt nicht zu dieser Version. Bereite die Sandbox vor.",
+        "checking": "Die Prüfung läuft noch."
+      }
     }
   },
   "about": {

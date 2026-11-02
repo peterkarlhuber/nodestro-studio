@@ -68,7 +68,9 @@
     "blockedBadge": "Bloqueadas",
     "blocked": {
       "auto": "Ferramentas criadas por IA estão bloqueadas: este computador não tem nenhum sandbox aprovado e o Docker não está rodando. Instale e inicie o Docker; o Nodestro passa a usá-lo automaticamente.",
-      "subprocess": "Ferramentas criadas por IA estão bloqueadas: este computador não tem nenhum sandbox aprovado. Escolha Automático ou Docker e inicie o Docker."
+      "subprocess": "Ferramentas criadas por IA estão bloqueadas: este computador não tem nenhum sandbox aprovado. Escolha Automático ou Docker e inicie o Docker.",
+      "dockerRefused": "As ferramentas criadas por IA estão bloqueadas: este computador não tem um sandbox aprovado e o Docker não passou nas verificações do Nodestro.",
+      "checking": "As ferramentas criadas por IA estão bloqueadas até o Nodestro terminar de verificar o Docker."
     },
     "installDocker": "Como instalar o Docker",
     "backendsTitle": "Sandboxes neste computador",
@@ -79,7 +81,7 @@
     },
     "backend": {
       "linux-builtin": "Sandbox Linux integrado",
-      "macos-seatbelt": "Sandbox do macOS",
+      "macos-seatbelt": "Sandbox nativo do macOS",
       "windows-native": "Sandbox do Windows",
       "docker": "Docker",
       "subprocess": "Processo Python"
@@ -89,16 +91,53 @@
       "experimental": "Experimental, não usado",
       "unavailable": "Indisponível",
       "not-isolating": "Sem isolamento",
-      "not-applicable": "Não usado aqui"
+      "not-applicable": "Não usado aqui",
+      "checking": "Verificando"
     },
     "backendReason": {
       "not-released": "Implementado e autotestado, mas ainda não revisado de forma independente. O Nodestro não o usa.",
       "not-implemented": "O Nodestro ainda não tem um sandbox nativo para este sistema operacional.",
+      "removed": "Removido: no macOS, o Nodestro usa o Docker.",
       "unreachable": "O Docker não está instalado ou não está rodando.",
       "missing": "O Docker não está instalado.",
       "server": "Em um servidor, o código das ferramentas só roda em contêineres.",
       "platform": "Indisponível neste sistema operacional.",
       "unknown": "Indisponível neste computador."
+    },
+    "docker": {
+      "checking": "Verificando o Docker …",
+      "ready": "O Docker está pronto: o mecanismo passou nas verificações do Nodestro.",
+      "recheck": "Verificar de novo",
+      "prepare": "Preparar o sandbox",
+      "selfTest": "Executar autoteste",
+      "selfTestHint": "Inicia um contêiner de teste com as restrições do sandbox e verifica se elas são aplicadas. Só administradores podem executá-lo.",
+      "testedAt": "Última verificação: {{date}}",
+      "engine": "Mecanismo de contêineres",
+      "rootless": "Sem privilégios de root (rootless)",
+      "rootful": "Com privilégios de root (rootful)",
+      "cgroup": "Limites de recursos (cgroup v{{version}})",
+      "rootfulNote": "Membros do grupo docker têm, na prática, privilégios de root neste computador. Recomenda-se o Docker sem privilégios de root (rootless).",
+      "checksTitle": "Verificações",
+      "check": {
+        "cli": "Comando docker encontrado",
+        "daemon": "Mecanismo acessível",
+        "preflight": "Configurações do mecanismo (limites, seccomp, contêineres Linux)",
+        "image": "Imagem do sandbox",
+        "self-test": "Autoteste em um contêiner"
+      },
+      "passed": "Aprovada",
+      "failed": "Falhou",
+      "reason": {
+        "missing": "O Docker não está instalado. Instale o Docker ou um mecanismo compatível; o Nodestro o detecta automaticamente.",
+        "unreachable": "O Docker está instalado, mas não está rodando ou não pode ser acessado. Inicie-o e verifique de novo.",
+        "limits": "O mecanismo não aplica limites de memória, processos e CPU. O Nodestro precisa dos limites do cgroup v2 e não usa este mecanismo.",
+        "seccomp": "O mecanismo não aplica um filtro de chamadas de sistema (seccomp). O Nodestro não usa este mecanismo.",
+        "rootless-cgroup": "O Docker sem privilégios de root não consegue aplicar limites aqui: falta a delegação dos controladores cpu, memory e pids do cgroup v2.",
+        "os-type": "O mecanismo executa contêineres Windows. Mude-o para contêineres Linux.",
+        "selftest": "O contêiner de teste não passou nas verificações do Nodestro, por isso o mecanismo não é usado.",
+        "image": "A imagem do sandbox está faltando ou não corresponde a esta versão. Prepare o sandbox.",
+        "checking": "A verificação ainda está em andamento."
+      }
     }
   },
   "about": {
