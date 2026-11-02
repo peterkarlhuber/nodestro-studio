@@ -46,6 +46,7 @@ import { PlanTable } from "../python/PlanTable";
 import { ErrorText, LocalError, ProblemText, problemText } from "../lib/errors";
 import { formatCost, relativeTime } from "../lib/format";
 import { ToolOutputProblem } from "../runs/ToolOutputProblem";
+import { AdoptTool, AdoptedNote, PastedCodeWarning } from "./ToolAdoption";
 import { ServicesTab } from "./ToolsServices";
 
 type Tab = "library" | "services" | "write" | "generate";
@@ -104,11 +105,13 @@ export function ToolsPage() {
               sandbox:
                 settings.data.sandbox === "docker"
                   ? t("tools.sandboxDocker")
-                  : untrustedBackend(settings.data) === "linux-builtin"
-                    ? t("tools.sandboxBuiltin")
-                    : untrustedBackend(settings.data) === "docker"
-                      ? t("tools.sandboxAutoDocker")
-                      : t("tools.sandboxProcess"),
+                  : settings.data.sandbox_selection?.blocked
+                    ? t("tools.sandboxBlocked")
+                    : untrustedBackend(settings.data) === "linux-builtin"
+                      ? t("tools.sandboxBuiltin")
+                      : untrustedBackend(settings.data) === "docker"
+                        ? t("tools.sandboxAutoDocker")
+                        : t("tools.sandboxProcess"),
             })}
           </p>
         ) : null}
@@ -235,6 +238,7 @@ function TrustNote({ tool }: { tool: ToolInfo }) {
         </Callout>
       </div>
     );
+  if (tool.trust === "user-authored" && tool.adoption) return <AdoptedNote tool={tool} />;
   if (tool.trust === "user-authored")
     return (
       <p className="muted small" data-testid="tool-trust">
@@ -361,6 +365,7 @@ function ToolDetail({
       <p>{toolDescription(t, tool)}</p>
       <UsedByList users={users} loaded={usedBy.loaded} />
       <TrustNote tool={tool} />
+      <AdoptTool tool={tool} />
       {tool.requirement ? (
         <Callout tone="brand">
           <strong>{t("tools.requirement")}</strong> {tool.requirement}
@@ -475,6 +480,8 @@ function WriteTool({ onSaved }: { onSaved: () => void }) {
   });
   const [source, setSource] = useState<ToolSource | null>(null);
   const [check, setCheck] = useState<CheckResult | null>(null);
+  // Pasted code counts as written by the person (it cannot be told apart, ADR-0006 R-4): say so clearly.
+  const [pasted, setPasted] = useState(false);
   useEffect(() => {
     if (template.data && !source) setSource(template.data);
   }, [template.data, source]);
@@ -519,22 +526,25 @@ function WriteTool({ onSaved }: { onSaved: () => void }) {
             onChange={(e) => update({ function_name: e.target.value })}
           />
         </Field>
-        <Field label={t("common.code")}>
-          <CodeEditor
-            value={source.code}
-            onChange={(code) => update({ code })}
-            minHeight="240px"
-            ariaLabel={t("common.code")}
-          />
-        </Field>
-        <Field label={t("common.tests")} tip="tools.tests">
-          <CodeEditor
-            value={source.tests}
-            onChange={(tests) => update({ tests })}
-            minHeight="160px"
-            ariaLabel={t("common.tests")}
-          />
-        </Field>
+        <div className="stack" onPaste={() => setPasted(true)} data-testid="tool-write-sources">
+          <Field label={t("common.code")}>
+            <CodeEditor
+              value={source.code}
+              onChange={(code) => update({ code })}
+              minHeight="240px"
+              ariaLabel={t("common.code")}
+            />
+          </Field>
+          <Field label={t("common.tests")} tip="tools.tests">
+            <CodeEditor
+              value={source.tests}
+              onChange={(tests) => update({ tests })}
+              minHeight="160px"
+              ariaLabel={t("common.tests")}
+            />
+          </Field>
+          <PastedCodeWarning pasted={pasted} />
+        </div>
         <div className="row-gap">
           <Hint id="tools.check">
             <Button

@@ -11,6 +11,7 @@
   "sandboxNote": "Bac à sable pour tester et exécuter les outils personnels : {{sandbox}} (modifiable dans les réglages).",
   "sandboxDocker": "conteneur Docker",
   "sandboxProcess": "processus Python distinct",
+  "sandboxBlocked": "processus Python distinct ; les outils créés par l’IA sont bloqués",
   "empty": "Aucun outil",
   "kind": {
     "builtin": "Intégré",
@@ -58,7 +59,9 @@
     "functionName": "Nom de la fonction",
     "check": "Vérifier et tester",
     "result": "Résultat de la vérification",
-    "notChecked": "Pas encore vérifié."
+    "notChecked": "Pas encore vérifié.",
+    "ownCodeNote": "Le code de cet éditeur est considéré comme écrit par vous et s’exécute sans isolation sur cet ordinateur. N’y collez pas de code créé par l’IA : créez-le avec l’IA pour qu’il s’exécute isolé.",
+    "pastedWarning": "Vous avez collé du code. Le code collé est considéré comme écrit par vous et s’exécute sans isolation sur cet ordinateur : il peut lire vos fichiers et vos clés et utiliser le réseau. Ne collez que du code que vous avez lu et compris. Le code créé par l’IA a sa place dans « Créer avec l’IA », où il s’exécute isolé."
   },
   "jobStatus": {
     "running": "En cours",
@@ -274,5 +277,16 @@
     "resourceTool": "Documents du service",
     "resourceToolText": "Cet outil lit uniquement les documents que le service répertorie ; les autres adresses sont exclues. Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que vous examiniez la nouvelle liste. Les contenus sont des données externes, comme tout résultat d'un service."
   },
-  "sandboxAutoDocker": "processus Python distinct ; outils créés par l’IA dans Docker"
+  "sandboxAutoDocker": "processus Python distinct ; outils créés par l’IA dans Docker",
+  "adopt": {
+    "button": "Adopter comme mon propre code",
+    "title": "Adopter {{name}} comme votre propre code ?",
+    "intro": "Lisez ci-dessous l’intégralité du code et des tests de la version {{version}}. Vous confirmez exactement ce qui est affiché ici.",
+    "warning": "Ce code a été créé par l’IA. Une fois adopté, il est considéré comme écrit par vous et s’exécute sans isolation sur cet ordinateur : il peut lire vos fichiers et vos clés et utiliser le réseau. Nodestro ne peut pas vérifier ce qu’il fait. Ne l’adoptez que si vous l’avez lu et compris.",
+    "revocation": "L’adoption est enregistrée avec votre nom, l’heure et une empreinte de ce code. Si l’IA modifie l’outil plus tard, l’adoption prend fin et il ne s’exécute de nouveau qu’isolé. Vos propres modifications dans l’éditeur la conservent.",
+    "confirmText": "J’ai lu le code et les tests et j’assume la responsabilité de leur exécution sans isolation sur cet ordinateur.",
+    "confirm": "Adopter",
+    "adopted": "{{name}} est désormais considéré comme votre propre code",
+    "adoptedNote": "Créé par l’IA, adopté par vous comme votre propre code (version {{version}}, {{when}}) : s’exécute dans un processus Python séparé, sans isolation, sur cet ordinateur. Une modification ultérieure par l’IA met fin à l’adoption."
+  }
 }

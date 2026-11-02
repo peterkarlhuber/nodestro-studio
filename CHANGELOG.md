@@ -2,6 +2,39 @@
 
 ## Unreleased
 
+### Platform pins: Docker-first follow-up (2026-11-02)
+
+- Pins: nodestro-runtime `958be1d` (#90 R-1 source builds only on the desktop and R-5 container shape checks, #91 MCP
+  container deadline 15 minutes, #92 R-4 tool adoption), nodestro-examples `8c338d3` (#52), nodestro-integrations
+  `e71bf55` (#48), nodestro-api `b8139b0` (#70: adoption route, export sandbox image note) and nodestro-sdk `3a99c25`
+  (#63). orkexa stays `dec66eb` (orkexa #37 changed only CI, docs and test fixtures). Each change was accepted by
+  an independent review.
+
+### Adopting AI-created tools as one's own, desktop only (R-4, 2026-11-02)
+
+- Tools → Library: on the desktop, an AI-created tool offers *Adopt as my own code*. The dialog shows the whole code
+  and tests of the version, a warning that adopted code runs without isolation, and needs an explicit confirmation
+  checkbox; it sends the shown `content_hash`, so a tool changed meanwhile is refused (`tool.adoption_stale`). Not
+  offered on a server or in Nodestro Local Docker. An adopted tool's note says who adopted which version and that a
+  later AI change ends the adoption.
+- Tools → Write it yourself: a clearer note that code here counts as your own, and a warning once code was pasted.
+- Texts in six languages: `tools.adopt.*`, `tools.write.ownCodeNote`, `tools.write.pastedWarning`,
+  `errors.tool.adoption_*`, `errors.deps.source_build_disabled`, `errors.sandbox.shape_mismatch`; the text of
+  `errors.deps.build_unavailable` now also covers an image that cannot be loaded and a refused build network.
+- User documentation (Tools → Trust and isolation) in six languages; ADR-0006 amended (R-4).
+- Needs nodestro-runtime and nodestro-api pins with R-4.
+
+### Sandbox: hints after leaving the Python process, honest platform evidence (2026-11-02)
+
+- Settings → Sandbox, *Python process* mode: the blocked notice says that the mode no longer runs AI-created tools
+  in a built-in sandbox and that the earlier choice was kept (`settings.sandbox.blocked.subprocessChanged`); on a
+  Linux runtime it names the Linux sandbox as the other way (`blocked.subprocessLinux`). The refusal
+  `sandbox.isolation_required_subprocess` names it too. The diagnosis no longer suggests switching to the Python
+  process when Docker is unreachable, and the Tools page says AI-created tools are blocked when they are
+  (`tools.sandboxBlocked`). Six languages.
+- Docs (six languages), Installing Docker: which engines ran in CI and that Docker Desktop never did; Sandbox: what a
+  Python process choice from an earlier version means now.
+
 ### Docker workflow: AI-generated code in a real engine (2026-11-02)
 
 - `scripts/docker_smoke.py` and `.github/workflows/docker.yml`: the installed studio with a real engine (Docker on

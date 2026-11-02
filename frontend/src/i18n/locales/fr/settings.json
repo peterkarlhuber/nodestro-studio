@@ -72,6 +72,8 @@
     "blocked": {
       "auto": "Les outils créés par l’IA sont bloqués : Automatique ne les exécute que dans Docker, et Docker ne tourne pas. Installez et démarrez Docker ; Nodestro l’utilisera alors automatiquement.",
       "subprocess": "Les outils créés par l’IA sont bloqués : le processus Python est réservé à un usage de confiance. Pour les exécuter, choisissez Automatique et démarrez Docker.",
+      "subprocessLinux": "Les outils créés par l’IA sont bloqués : le processus Python est réservé à un usage de confiance. Pour les exécuter, choisissez Automatique et démarrez Docker, ou choisissez Bac à sable Linux (sans paquets Python tiers).",
+      "subprocessChanged": "Si vous aviez choisi Processus Python dans une version antérieure : ce mode n’exécute plus les outils créés par l’IA dans un bac à sable intégré, et Nodestro a conservé votre choix au lieu de passer à Automatique à votre place.",
       "linux": "Les outils créés par l’IA sont bloqués : le bac à sable Linux intégré n’est pas disponible sur cet ordinateur ; sa ligne ci-dessous indique pourquoi. Pour les exécuter plutôt dans Docker, choisissez Automatique et démarrez Docker.",
       "dockerRefused": "Les outils créés par l’IA sont bloqués : ils ne s’exécutent que dans Docker, et Docker n’a pas réussi les vérifications de Nodestro.",
       "checking": "Les outils créés par l’IA sont bloqués jusqu’à ce que Nodestro ait terminé la vérification de Docker."

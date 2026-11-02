@@ -1,7 +1,8 @@
 # ADR-0006: Sandbox policy for untrusted code
 
 - Status: Accepted; implemented in M1 PR-4 (2026-10-31): nodestro-runtime #7, nodestro-api #9 and the studio PR
-  that pins them. Revised the same day after Peter's review (see "Revision history")
+  that pins them. Revised the same day after Peter's review (see "Revision history"). Amended 2026-11-02 by
+  Peter's decision R-4: confirmed adoption of AI-generated code as `user-authored`, desktop only (point 8)
 - Repositories: nodestro-runtime (policy, environments), nodestro-api (settings, endpoints), orkexa (only if an image
   hook is missing after review), nodestro-desktop (bundled native sandbox, later), nodestro-server (container runtime)
 
@@ -55,6 +56,35 @@ does not isolate anything. The policy therefore rests on isolation, not on conse
    the tested distributions (Ubuntu 24.04 and Debian 13, x86-64) and only where its self-test passed on this computer.
    macOS (sandbox profiles for a helper process) and Windows (AppContainer with a job object) remain open; until a
    candidate passes there, nothing is presented as secure and the policy does not classify it as isolating.
+8. **Adoption of AI-generated code (amendment R-4, 2026-11-02).** A person may explicitly take over one version of
+   an `untrusted` tool as their own code. Adoption is not a sandbox decision and changes no policy: it changes the
+   provenance of one tool version, after which the existing rules for `user-authored` code apply.
+   - **Desktop only.** Only the desktop policy accepts it. In the server and `local-container` profiles, and for a
+     server tenant's workspace on the desktop codebase, it is refused with `tool.adoption_desktop_only`; their trust
+     policy does not change (there `user-authored` code needs a container anyway).
+   - **Only the local owner or an administrator** (`tool.adoption_forbidden` otherwise). The API declares `admin`
+     and records the role: `owner` for the desktop's local owner, the member's role otherwise.
+   - **A confirmed action.** The studio shows the whole code and tests of the version, a warning that the code will
+     run without isolation on this computer, and an explicit confirmation. The request carries the
+     `content_hash` (code and tests, normalized like `code_digest`) of exactly what was shown; a tool changed in
+     between is refused (`tool.adoption_stale`). Built-in, MCP and code-less tools cannot be adopted
+     (`tool.adoption_not_applicable`), and a tool that is not `untrusted` needs no adoption
+     (`tool.adoption_not_needed`).
+   - **Audited.** Every adoption, every refused attempt and every revocation is written to the tool audit trail
+     (`tool_approval_audit`, kinds `tool_adopted`, `tool_adoption_refused`, `tool_adoption_revoked`): who, when,
+     the tool, the version and the content hash.
+   - **Bound to the content.** The adoption counts only while the adopted version is stored with that content hash
+     and every later version was written by a person in the tool editor. Any later AI-written version (a job, a
+     draft, an agent) ends it: the tool is `untrusted` again and the record is dropped. Edits in the editor keep it.
+     A restore clears adoptions with the other provenance records, and an import into a server never carries them.
+   - **Defaults decided with R-4.** (1) AI code that a person edited stays `untrusted` until it is adopted.
+     (2) Pasted code stays `user-authored`, as before; the editor states this clearly and warns after a paste.
+     (3) Existing tools keep their class; there is no migration. (4) No similarity detection of pasted code for
+     now (a later hint at most, never a trust decision; see the TODO lists). (5) Any later AI change revokes.
+   - **Nothing else is weakened.** Points 3 to 5 stay as they are: `untrusted` code never runs in a host
+     subprocess, the subprocess mode still refuses it, and no setting, environment variable or dialog other than
+     this explicit, audited adoption of a specific content changes a tool's class. Adoption is a statement of
+     responsibility by the person, not an isolation measure; the dialog says so.
 
 ### Sandbox prototype acceptance tests (PR-13)
 
@@ -156,6 +186,12 @@ removed from the machine (the bundle brings its own). Results: see `docs/desktop
   cannot write outside its tmpfs.
 - The settings page and documentation (six languages) explain the isolation level of each choice and which features
   need isolation.
+- R-4: an adopted tool runs on the desktop like the person's own code, without isolation. The risk the policy
+  otherwise removes (a person cannot reliably judge generated code) is accepted by that person for that content
+  only, with a warning and an audit record; it never reaches a server or another tenant. Required tests: adoption
+  refused in every non-desktop profile and for other roles, a stale hash refused, an AI change revoking, an editor
+  change keeping it, audit records for success, refusal and revocation, restore clearing it, the API's problem
+  codes, and the studio dialog offered only on the desktop and only after an explicit confirmation.
 
 ## Revision history
 
@@ -169,3 +205,7 @@ removed from the machine (the bundle brings its own). Results: see `docs/desktop
 - 2026-10-31, built-in Linux sandbox implemented with Landlock and seccomp instead of bubblewrap (Ubuntu 24.04's
   AppArmor userns restriction), registered as isolating only for the desktop profile on Ubuntu 24.04 and Debian 13
   after the security and compatibility tests passed there (Peter's decision of 15:23Z).
+- 2026-11-02, amendment R-4 (Peter's decision): a person may adopt AI-generated code as their own on the desktop
+  only, as a confirmed action with the code, a warning and an audit record, bound to a content hash and revoked by
+  any later AI change (point 8). Implemented in nodestro-runtime (`ToolLibrary.adopt`, `tool_adoption`),
+  nodestro-api (`POST /api/tools/{name}/adopt`) and the studio (adoption dialog, paste warning).

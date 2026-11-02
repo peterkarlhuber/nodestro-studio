@@ -82,7 +82,7 @@
       "checking": "Nodestro is still checking Docker in the background.",
       "unavailable": "Docker cannot be used for AI-created tools.",
       "fix": {
-        "unreachable": "Start Docker Desktop or switch the sandbox to “Python process”.",
+        "unreachable": "Start Docker. Or choose Automatic in Settings → Sandbox: your own tools then run without Docker; AI-created tools still need it.",
         "checking": "Run the diagnosis again in a moment.",
         "unavailable": "Settings → Sandbox shows which check failed."
       }

@@ -226,6 +226,10 @@ describe("backend codes", () => {
     "budget.not_starter", "budget.action_invalid", "budget.request_not_found",
     // Docker-first sandbox: an engine that fails Nodestro's checks, image limits and no build scripts on the host.
     "sandbox.docker_insecure", "sandbox.selftest_failed", "deps.image_too_large", "deps.build_unavailable",
+    "deps.source_build_disabled", "sandbox.shape_mismatch",
+    // Adopting AI-created code as one's own (ADR-0006, R-4): refusals of POST /api/tools/{name}/adopt.
+    "tool.adoption_desktop_only", "tool.adoption_forbidden", "tool.adoption_stale", "tool.adoption_not_needed",
+    "tool.adoption_not_applicable",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

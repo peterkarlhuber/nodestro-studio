@@ -243,7 +243,12 @@
     "approval_missing": "Die Freigabeanfrage zu diesem Aufruf gibt es nicht mehr; er wurde nicht ausgeführt.",
     "approval_not_in_test": "Dieser Aufruf bräuchte die Freigabe einer Person; Tests fragen nicht, deshalb wurde er nicht ausgeführt.",
     "frozen": "Dieses Tool gehört zu einer veröffentlichten API-Version und kann nicht geändert werden, damit die Version genau so weiterläuft, wie sie veröffentlicht wurde. Ändere das Tool im Workflow und veröffentliche eine neue Version.",
-    "denied_by_policy": "Die Regeln für Tool-Aufrufe haben diesen Aufruf ohne Rückfrage abgelehnt, das Tool lief also nicht. Prüfe die Regeln auf der Seite Freigaben oder gib dem Agenten ein Tool, das nur liest."
+    "denied_by_policy": "Die Regeln für Tool-Aufrufe haben diesen Aufruf ohne Rückfrage abgelehnt, das Tool lief also nicht. Prüfe die Regeln auf der Seite Freigaben oder gib dem Agenten ein Tool, das nur liest.",
+    "adoption_desktop_only": "Von KI erstellten Code kannst du nur in der Desktop-App als eigenen übernehmen. Hier läuft er immer isoliert.",
+    "adoption_forbidden": "Nur der Besitzer dieses Rechners oder ein Administrator darf von KI erstellten Code übernehmen.",
+    "adoption_stale": "Das Tool hat sich geändert, nachdem es angezeigt wurde (jetzt Version {{version}}). Sieh es dir erneut an, bevor du es übernimmst.",
+    "adoption_not_needed": "Dieses Tool gilt bereits als dein eigener Code; es muss nicht übernommen werden.",
+    "adoption_not_applicable": "Dieses Tool hat keinen eigenen Code, der übernommen werden könnte."
   },
   "job": {
     "writing": "Der Coding Agent schreibt Code und Tests …",
@@ -375,12 +380,13 @@
     "build_required": "{{name}} gibt es nur als Quellcode. Beim Auflösen liefe sein Build-Skript, deshalb hat Nodestro es für das erzeugte Tool nicht aufgelöst. Prüfe das Paket und gib es im Bibliotheken-Dialog des Tools frei, oder lass das Tool ohne es schreiben.",
     "build_required_no_docker": "{{name}} gibt es nur als Quellcode. Sein Build-Skript läuft nur in einem Container, und Docker ist hier nicht verfügbar. Starte Docker und versuche es erneut, oder lass das Tool ohne es schreiben.",
     "build_required_not_set_up": "{{name}} gibt es nur als Quellcode. Pakete im Container zu bauen ist in dieser Version nicht eingerichtet, und Nodestro führt Build-Skripte nie auf diesem Computer aus. Lass das Tool ohne es schreiben.",
-    "build_unavailable": "Pakete aus Quellcode im Container zu bauen ist in dieser Version nicht eingerichtet. Nodestro führt Build-Skripte nie auf diesem Computer aus.",
+    "build_unavailable": "Pakete können hier nicht im Container aus Quellcode gebaut werden: Das Build-Image ist nicht festgelegt oder konnte nicht geladen werden, oder das Build-Netzwerk ist nicht erlaubt. Nodestro führt Build-Skripte nie auf diesem Computer aus.",
     "lock_without_hashes": "Diese Freigabe stammt aus einer älteren Version ohne Prüfsummen. Gib die Bibliotheken erneut frei, um sie in der Docker-Sandbox zu nutzen.",
     "wheels_required": "Ein Paket gibt es nicht als fertiges Paket (Wheel) für Linux. In der Docker-Sandbox werden Pakete nicht aus dem Quellcode gebaut.",
     "hash_mismatch": "Ein heruntergeladenes Paket stimmt nicht mit der Freigabe überein. Es wurde nichts installiert.",
     "image_failed": "Das Container-Image mit den Bibliotheken konnte nicht gebaut werden. Die technischen Details nennen den Grund.",
-    "image_too_large": "Das Container-Image dieser Bibliotheken ist {{size_gb}} GB groß, mehr als die Grenze von {{limit_gb}} GB, und wurde wieder entfernt. Verwende weniger oder kleinere Bibliotheken."
+    "image_too_large": "Das Container-Image dieser Bibliotheken ist {{size_gb}} GB groß, mehr als die Grenze von {{limit_gb}} GB, und wurde wieder entfernt. Verwende weniger oder kleinere Bibliotheken.",
+    "source_build_disabled": "{{name}} gibt es nur als Quellcode. Pakete aus Quellcode zu bauen ist auf einem Server und in Nodestro Local Docker nicht möglich (der Build hätte ungefilterten Netzwerkzugang). Verwende ein Paket mit fertigen Wheels."
   },
   "condition": {
     "field_missing": "Das Feld fehlt im Ergebnis.",
@@ -701,13 +707,14 @@
   },
   "sandbox": {
     "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur isoliert (in Docker oder, wenn gewählt, in der eingebauten Linux-Sandbox); nichts davon ist verfügbar, daher wurde nichts ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",
-    "isolation_required_subprocess": "Die Sandbox steht auf Python-Prozess, der nur für vertrauenswürdige Nutzung gedacht ist: KI-erstellter Code und Tools unbekannter Herkunft werden dort immer abgelehnt, daher wurde nichts ausgeführt. Wähle in Einstellungen → Sandbox Automatisch und starte Docker.",
+    "isolation_required_subprocess": "Die Sandbox steht auf Python-Prozess, der nur für vertrauenswürdige Nutzung gedacht ist: KI-erstellter Code und Tools unbekannter Herkunft werden dort immer abgelehnt, daher wurde nichts ausgeführt. Wähle in Einstellungen → Sandbox Automatisch und starte Docker. Unter Linux geht auch Linux-Sandbox (ohne Python-Pakete von Drittanbietern).",
     "isolation_required_docker": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur in Docker, und Docker ist nicht bereit, daher wurde nichts ausgeführt. {{reason}} Die Prüfungen zeigt Einstellungen → Sandbox.",
     "libraries_need_isolation": "{{name}} ist KI-erstellt oder unbekannter Herkunft und braucht Bibliotheken von Drittanbietern. Solche Tools laufen nur in Docker; es ist hier nicht verfügbar. Den Grund zeigt Einstellungen → Sandbox.",
     "libraries_need_isolation_linux": "KI-erstellte Tools und Tools unbekannter Herkunft bekommen in der eingebauten Linux-Sandbox keine Bibliotheken von Drittanbietern, daher wurde nichts ausgeführt. Um Bibliotheken zu nutzen, wähle in Einstellungen → Sandbox Automatisch und starte Docker.",
     "unavailable": "Tool-Code läuft hier nur in Containern; die Sandbox „Python-Prozess“ ist nicht verfügbar.",
     "docker_insecure": "Docker hat die Sicherheitsprüfungen von Nodestro nicht bestanden, daher wurde der KI-erstellte Code nicht ausgeführt. Welche Prüfung fehlschlug, zeigt Einstellungen → Sandbox.",
-    "selftest_failed": "Der Testcontainer hat die Prüfungen von Nodestro nicht bestanden, daher wurde der KI-erstellte Code nicht ausgeführt. Den Grund zeigt Einstellungen → Sandbox."
+    "selftest_failed": "Der Testcontainer hat die Prüfungen von Nodestro nicht bestanden, daher wurde der KI-erstellte Code nicht ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",
+    "shape_mismatch": "Ein Container wurde vor dem Start gestoppt, weil seine Einstellungen von der geprüften Konfiguration der Sandbox abweichen. Es wurde nichts ausgeführt. Bitte melde das; Einstellungen → Sandbox zeigt die Prüfungen."
   },
   "identity": {
     "login_expired": "Die Anmeldung hat zu lange gedauert oder wurde schon verwendet. Melde dich bitte erneut an.",

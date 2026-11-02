@@ -413,6 +413,8 @@ export const api = {
   deleteTool: (name: string) => request<void>("DELETE", `/tools/${encodeURIComponent(name)}`),
   runTool: (name: string, input: Record<string, unknown>) =>
     request<{ output: string; is_error: boolean }>("POST", `/tools/${encodeURIComponent(name)}/run`, { input }),
+  adoptTool: (name: string, contentHash: string) =>
+    request<ToolInfo>("POST", `/tools/${encodeURIComponent(name)}/adopt`, { content_hash: contentHash }),
   toolJobs: () => request<ToolJob[]>("GET", "/tools/jobs"),
   toolJob: (id: string) => request<ToolJob>("GET", `/tools/jobs/${id}`),
   startToolJob: (requirement: string) => request<ToolJob>("POST", "/tools/jobs", { requirement }),

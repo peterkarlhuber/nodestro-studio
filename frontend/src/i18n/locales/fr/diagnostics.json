@@ -82,7 +82,7 @@
       "checking": "Nodestro vérifie encore Docker en arrière-plan.",
       "unavailable": "Docker ne peut pas être utilisé pour les outils créés par l’IA.",
       "fix": {
-        "unreachable": "Démarrez Docker Desktop ou réglez la sandbox sur « Processus Python ».",
+        "unreachable": "Démarrez Docker. Ou choisissez Automatique dans Réglages → Bac à sable : vos propres outils s’exécutent alors sans Docker ; les outils créés par l’IA en ont toujours besoin.",
         "checking": "Relancez le diagnostic dans un instant.",
         "unavailable": "Réglages → Bac à sable indique quelle vérification a échoué."
       }

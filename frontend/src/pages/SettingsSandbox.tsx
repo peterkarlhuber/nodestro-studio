@@ -332,6 +332,8 @@ function dockerDecides(selection: SandboxSelection): boolean {
 
 /** The first sentence of the blocked notice: the mode's own, or why Docker does not run AI-created code. */
 function blockedLead(t: (key: string) => string, selection: SandboxSelection, dockerReason: string): string {
+  // Python process on Linux: the built-in Linux sandbox is the other way to run AI-created tools.
+  if (selection.mode === "subprocess" && selection.os === "linux") return t("settings.sandbox.blocked.subprocessLinux");
   if (!dockerDecides(selection)) return t(`settings.sandbox.blocked.${selection.mode}`);
   if (dockerReason === "docker-checking") return t("settings.sandbox.blocked.checking");
   if (dockerReason && dockerReason !== "docker-missing" && dockerReason !== "docker-unreachable")
@@ -465,6 +467,12 @@ export function SandboxPanel({
       {selection?.blocked ? (
         <Callout tone="warning">
           <span data-testid="sandbox-blocked">{blockedLead(t, selection, dockerReason)}</span>{" "}
+          {selection.mode === "subprocess" ? (
+            <>
+              {/* Earlier versions ran AI-created tools in this mode in a built-in sandbox; the choice was kept. */}
+              <span data-testid="sandbox-blocked-changed">{t("settings.sandbox.blocked.subprocessChanged")}</span>{" "}
+            </>
+          ) : null}
           {dockerDecides(selection) && dockerReasonText ? (
             <>
               <span data-testid="sandbox-blocked-reason">{t(dockerReasonText)}</span>{" "}

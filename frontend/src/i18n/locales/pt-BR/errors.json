@@ -243,7 +243,12 @@
     "approval_missing": "A solicitação de aprovação desta chamada não existe mais; a chamada não foi feita.",
     "approval_not_in_test": "Esta chamada precisaria da aprovação de uma pessoa; os testes não perguntam, então ela não foi feita.",
     "frozen": "Esta ferramenta pertence a uma versão publicada da API e não pode ser alterada, para que a versão continue funcionando exatamente como foi publicada. Altere a ferramenta no fluxo de trabalho e publique uma nova versão.",
-    "denied_by_policy": "As regras de chamadas de ferramentas recusaram esta chamada sem perguntar a ninguém, então a ferramenta não rodou. Confira as regras na página Aprovações ou dê ao agente uma ferramenta que só lê."
+    "denied_by_policy": "As regras de chamadas de ferramentas recusaram esta chamada sem perguntar a ninguém, então a ferramenta não rodou. Confira as regras na página Aprovações ou dê ao agente uma ferramenta que só lê.",
+    "adoption_desktop_only": "Código criado por IA só pode ser adotado como seu no aplicativo de desktop. Aqui ele é sempre executado isolado.",
+    "adoption_forbidden": "Somente o proprietário deste computador ou um administrador pode adotar código criado por IA.",
+    "adoption_stale": "A ferramenta mudou depois de ser mostrada (agora versão {{version}}). Veja-a novamente antes de adotá-la.",
+    "adoption_not_needed": "Esta ferramenta já conta como seu próprio código; não precisa ser adotada.",
+    "adoption_not_applicable": "Esta ferramenta não tem código próprio que possa ser adotado."
   },
   "job": {
     "writing": "O agente de programação está escrevendo código e testes …",
@@ -375,12 +380,13 @@
     "build_required": "{{name}} só está disponível como código-fonte. Resolvê-lo executaria seu script de build, por isso o Nodestro não o resolveu para a ferramenta gerada. Verifique o pacote e aprove-o na janela de bibliotecas da ferramenta, ou deixe a ferramenta ser escrita sem ele.",
     "build_required_no_docker": "{{name}} só está disponível como código-fonte. Seu script de build só roda em um contêiner, e o Docker não está disponível aqui. Inicie o Docker e tente de novo, ou deixe a ferramenta ser escrita sem ele.",
     "build_required_not_set_up": "{{name}} só está disponível como código-fonte. Compilar pacotes em um contêiner não está configurado nesta versão, e o Nodestro nunca executa scripts de build neste computador. Deixe a ferramenta ser escrita sem ele.",
-    "build_unavailable": "Compilar pacotes a partir do código-fonte em um contêiner não está configurado nesta versão. O Nodestro nunca executa scripts de build neste computador.",
+    "build_unavailable": "Aqui não é possível compilar pacotes a partir do código-fonte em um contêiner: a imagem de build não está fixada ou não pôde ser carregada, ou a rede de build não é permitida. O Nodestro nunca executa scripts de build neste computador.",
     "lock_without_hashes": "Esta aprovação vem de uma versão anterior sem somas de verificação. Aprove as bibliotecas novamente para usá-las no sandbox do Docker.",
     "wheels_required": "Um pacote não tem um pacote pronto (wheel) para Linux. No sandbox do Docker, os pacotes não são compilados a partir do código-fonte.",
     "hash_mismatch": "Um pacote baixado não corresponde à aprovação. Nada foi instalado.",
     "image_failed": "Não foi possível criar a imagem de contêiner com as bibliotecas. Os detalhes técnicos indicam o motivo.",
-    "image_too_large": "A imagem do contêiner dessas bibliotecas tem {{size_gb}} GB, mais que o limite de {{limit_gb}} GB, e foi removida. Use menos bibliotecas ou bibliotecas menores."
+    "image_too_large": "A imagem do contêiner dessas bibliotecas tem {{size_gb}} GB, mais que o limite de {{limit_gb}} GB, e foi removida. Use menos bibliotecas ou bibliotecas menores.",
+    "source_build_disabled": "{{name}} só está disponível como código-fonte. Compilar pacotes a partir do código-fonte não está disponível em um servidor nem no Nodestro Local Docker (o build teria acesso à rede sem filtro). Use um pacote que ofereça wheels prontas."
   },
   "condition": {
     "field_missing": "O campo está ausente no resultado.",
@@ -701,13 +707,14 @@
   },
   "sandbox": {
     "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados isolados (no Docker ou, se escolhido, no sandbox Linux integrado); nada disso está disponível, então nada foi executado. Configurações → Sandbox mostra o motivo.",
-    "isolation_required_subprocess": "O sandbox está em Processo Python, que é só para uso confiável: ali, código criado por IA e ferramentas de origem desconhecida são sempre recusados, então nada foi executado. Em Configurações → Sandbox, escolha Automático e inicie o Docker.",
+    "isolation_required_subprocess": "O sandbox está em Processo Python, que é só para uso confiável: ali, código criado por IA e ferramentas de origem desconhecida são sempre recusados, então nada foi executado. Em Configurações → Sandbox, escolha Automático e inicie o Docker. No Linux, Sandbox Linux também funciona (sem pacotes Python de terceiros).",
     "isolation_required_docker": "Código criado por IA e ferramentas de origem desconhecida só são executados no Docker, e o Docker não está pronto, então nada foi executado. {{reason}} Configurações → Sandbox mostra as verificações.",
     "libraries_need_isolation": "{{name}} foi criada por IA ou é de origem desconhecida e precisa de bibliotecas de terceiros. Essas ferramentas só são executadas no Docker; ele não está disponível aqui. Configurações → Sandbox mostra o motivo.",
     "libraries_need_isolation_linux": "Ferramentas criadas por IA e de origem desconhecida não recebem bibliotecas de terceiros no sandbox Linux integrado, então nada foi executado. Para usar bibliotecas, escolha Automático em Configurações → Sandbox e inicie o Docker.",
     "unavailable": "Aqui o código das ferramentas só é executado em contêineres; o sandbox \"Processo Python\" não está disponível.",
     "docker_insecure": "O Docker não passou nas verificações de segurança do Nodestro, por isso o código criado por IA não foi executado. Configurações → Sandbox mostra qual verificação falhou.",
-    "selftest_failed": "O contêiner de teste não passou nas verificações do Nodestro, por isso o código criado por IA não foi executado. Configurações → Sandbox mostra o motivo."
+    "selftest_failed": "O contêiner de teste não passou nas verificações do Nodestro, por isso o código criado por IA não foi executado. Configurações → Sandbox mostra o motivo.",
+    "shape_mismatch": "Um contêiner foi parado antes de iniciar porque suas configurações diferem da configuração testada do sandbox. Nada foi executado. Por favor, informe isso; Configurações → Sandbox mostra as verificações."
   },
   "identity": {
     "login_expired": "O login demorou demais ou já foi usado. Faça login novamente.",

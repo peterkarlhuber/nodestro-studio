@@ -72,6 +72,8 @@
     "blocked": {
       "auto": "Gli strumenti creati dall’IA sono bloccati: Automatica li esegue solo in Docker, e Docker non è in esecuzione. Installa e avvia Docker; Nodestro lo userà automaticamente.",
       "subprocess": "Gli strumenti creati dall’IA sono bloccati: il processo Python è solo per uso fidato. Per eseguirli, scegli Automatica e avvia Docker.",
+      "subprocessLinux": "Gli strumenti creati dall’IA sono bloccati: il processo Python è solo per uso fidato. Per eseguirli, scegli Automatica e avvia Docker, oppure scegli Sandbox Linux (senza pacchetti Python di terze parti).",
+      "subprocessChanged": "Se avevi scelto Processo Python in una versione precedente: questa modalità non esegue più gli strumenti creati dall’IA in una sandbox integrata, e Nodestro ha mantenuto la tua scelta invece di passare per te ad Automatica.",
       "linux": "Gli strumenti creati dall’IA sono bloccati: la sandbox Linux integrata non è disponibile su questo computer; la sua riga qui sotto indica il motivo. Per eseguirli invece in Docker, scegli Automatica e avvia Docker.",
       "dockerRefused": "Gli strumenti creati dall’IA sono bloccati: vengono eseguiti solo in Docker, e Docker non ha superato le verifiche di Nodestro.",
       "checking": "Gli strumenti creati dall’IA sono bloccati finché Nodestro non ha terminato la verifica di Docker."

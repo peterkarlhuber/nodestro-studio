@@ -172,6 +172,10 @@ El proceso de Python no es una barrera de seguridad: el código que contiene se 
 
 Las herramientas guardadas antes de esta versión, y todas las herramientas tras restaurar una copia de seguridad, se consideran de origen desconocido, también las que escribiste tú, porque su origen no se registró. Con aislamiento siguen funcionando. Una nueva versión de esa herramienta, o una copia de su código en una herramienta nueva, conserva ese estado.
 
+**Adoptar código creado por IA como propio (solo en la aplicación de escritorio).** En una herramienta que necesita aislamiento, *Adoptar como mi propio código* muestra todo su código y sus pruebas con una advertencia. Cuando confirmas, la herramienta cuenta como *Escrita por ti* y se ejecuta como tu propio código, sin aislamiento, en este equipo; por eso, adopta solo código que hayas leído y entendido. Solo el propietario de este equipo puede adoptar (un administrador, donde hay roles). Nodestro registra quién adoptó qué versión y cuándo, con una huella del código. Si la IA cambia la herramienta más adelante, la adopción termina y la herramienta vuelve a necesitar aislamiento; tus propios cambios en el editor la mantienen. En un servidor y en Nodestro Local Docker, el código creado por IA siempre se ejecuta aislado y no puede adoptarse.
+
+El código que pegas en *Escribirla tú* cuenta como escrito por ti, porque Nodestro no puede saber de dónde viene; el editor te avisa al pegar. Crea el código generado por IA con *Crear con IA*, para que se ejecute aislado.
+
 ## Servicios conectados {#verbundene-dienste}
 <!-- keywords: mcp, model context protocol, servicio externo, servicios conectados, servidor, token, aprobación, modificada -->
 

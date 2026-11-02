@@ -11,6 +11,7 @@
   "sandboxNote": "Sandbox für Tests und Ausführung eigener Tools: {{sandbox}} (in den Einstellungen änderbar).",
   "sandboxDocker": "Docker-Container",
   "sandboxProcess": "eigener Python-Prozess",
+  "sandboxBlocked": "eigener Python-Prozess; KI-erstellte Tools sind gesperrt",
   "empty": "Keine Tools",
   "kind": {
     "builtin": "Eingebaut",
@@ -58,7 +59,9 @@
     "functionName": "Name der Funktion",
     "check": "Prüfen und testen",
     "result": "Prüfergebnis",
-    "notChecked": "Noch nicht geprüft."
+    "notChecked": "Noch nicht geprüft.",
+    "ownCodeNote": "Code in diesem Editor gilt als von dir geschrieben und läuft ohne Isolation auf diesem Rechner. Füge hier keinen von KI erstellten Code ein: Lass ihn unter „Von KI erstellen“ erzeugen, dann läuft er isoliert.",
+    "pastedWarning": "Du hast Code eingefügt. Eingefügter Code gilt als von dir geschrieben und läuft ohne Isolation auf diesem Rechner: Er kann deine Dateien und Schlüssel lesen und das Netzwerk nutzen. Füge nur Code ein, den du gelesen und verstanden hast. Von KI erstellter Code gehört zu „Von KI erstellen“, dort läuft er isoliert."
   },
   "jobStatus": {
     "running": "In Arbeit",
@@ -274,5 +277,16 @@
     "resourceTool": "Dokumente des Dienstes",
     "resourceToolText": "Dieses Tool liest nur die Dokumente, die der Dienst auflistet; andere Adressen sind ausgeschlossen. Ändert der Dienst seine Liste, wird das Tool gesperrt, bis du die neue Liste geprüft hast. Inhalte sind fremde Daten wie jedes Ergebnis eines Dienstes."
   },
-  "sandboxAutoDocker": "eigener Python-Prozess; KI-erstellte Tools in Docker"
+  "sandboxAutoDocker": "eigener Python-Prozess; KI-erstellte Tools in Docker",
+  "adopt": {
+    "button": "Als eigenen Code übernehmen",
+    "title": "{{name}} als eigenen Code übernehmen?",
+    "intro": "Lies unten den ganzen Code und die Tests von Version {{version}}. Du bestätigst genau das, was hier gezeigt wird.",
+    "warning": "Dieser Code wurde von KI erstellt. Sobald du ihn übernimmst, gilt er als von dir geschrieben und läuft ohne Isolation auf diesem Rechner: Er kann deine Dateien und Schlüssel lesen und das Netzwerk nutzen. Nodestro kann nicht prüfen, was er tut. Übernimm ihn nur, wenn du ihn gelesen und verstanden hast.",
+    "revocation": "Die Übernahme wird mit deinem Namen, der Uhrzeit und einem Fingerabdruck dieses Codes protokolliert. Ändert KI das Tool später, endet die Übernahme und es läuft wieder nur isoliert. Eigene Änderungen im Editor behalten sie bei.",
+    "confirmText": "Ich habe Code und Tests gelesen und übernehme die Verantwortung dafür, dass sie ohne Isolation auf diesem Rechner laufen.",
+    "confirm": "Übernehmen",
+    "adopted": "{{name}} gilt jetzt als dein eigener Code",
+    "adoptedNote": "Von KI erstellt, von dir als eigener Code übernommen (Version {{version}}, {{when}}): läuft in einem eigenen Python-Prozess ohne Isolation auf diesem Rechner. Eine spätere Änderung durch KI beendet die Übernahme."
+  }
 }

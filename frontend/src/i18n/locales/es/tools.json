@@ -11,6 +11,7 @@
   "sandboxNote": "Sandbox para probar y ejecutar herramientas propias: {{sandbox}} (se puede cambiar en los ajustes).",
   "sandboxDocker": "contenedor Docker",
   "sandboxProcess": "proceso de Python propio",
+  "sandboxBlocked": "proceso de Python propio; las herramientas creadas por IA están bloqueadas",
   "empty": "No hay herramientas",
   "kind": {
     "builtin": "Integrada",
@@ -58,7 +59,9 @@
     "functionName": "Nombre de la función",
     "check": "Comprobar y probar",
     "result": "Resultado de la comprobación",
-    "notChecked": "Todavía sin comprobar."
+    "notChecked": "Todavía sin comprobar.",
+    "ownCodeNote": "El código de este editor cuenta como escrito por ti y se ejecuta sin aislamiento en este equipo. No pegues aquí código creado por IA: créalo con IA para que se ejecute aislado.",
+    "pastedWarning": "Has pegado código. El código pegado cuenta como escrito por ti y se ejecuta sin aislamiento en este equipo: puede leer tus archivos y claves y usar la red. Pega solo código que hayas leído y entendido. El código creado por IA va en «Crear con IA», donde se ejecuta aislado."
   },
   "jobStatus": {
     "running": "En curso",
@@ -274,5 +277,16 @@
     "resourceTool": "Documentos del servicio",
     "resourceToolText": "Esta herramienta solo lee los documentos que el servicio enumera; otras direcciones quedan excluidas. Si el servicio cambia su lista, la herramienta queda bloqueada hasta que revises la nueva lista. Los contenidos son datos externos, como cualquier resultado de un servicio."
   },
-  "sandboxAutoDocker": "proceso de Python propio; herramientas creadas por IA en Docker"
+  "sandboxAutoDocker": "proceso de Python propio; herramientas creadas por IA en Docker",
+  "adopt": {
+    "button": "Adoptar como mi propio código",
+    "title": "¿Adoptar {{name}} como tu propio código?",
+    "intro": "Lee abajo todo el código y las pruebas de la versión {{version}}. Confirmas exactamente lo que se muestra aquí.",
+    "warning": "Este código lo creó la IA. Cuando lo adoptes, contará como escrito por ti y se ejecutará sin aislamiento en este equipo: podrá leer tus archivos y claves y usar la red. Nodestro no puede comprobar lo que hace. Adóptalo solo si lo has leído y entendido.",
+    "revocation": "La adopción se registra con tu nombre, la hora y una huella de este código. Si la IA cambia la herramienta más adelante, la adopción termina y vuelve a ejecutarse solo aislada. Tus propios cambios en el editor la mantienen.",
+    "confirmText": "He leído el código y las pruebas y asumo la responsabilidad de ejecutarlos sin aislamiento en este equipo.",
+    "confirm": "Adoptar",
+    "adopted": "{{name}} cuenta ahora como tu propio código",
+    "adoptedNote": "Creada por IA, adoptada por ti como código propio (versión {{version}}, {{when}}): se ejecuta en un proceso de Python aparte, sin aislamiento, en este equipo. Un cambio posterior de la IA termina la adopción."
+  }
 }
