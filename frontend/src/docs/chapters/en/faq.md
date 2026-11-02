@@ -19,7 +19,8 @@ Here you find solutions for common messages and answers to typical questions.
 | "Citations cannot be combined with a structured output format" | Both options are on. | Switch one of them off. |
 | "Example messages must …" | The examples do not alternate properly. | Start with the user, alternate, end with the assistant. |
 | "Persistent memory needs a memory space" | Memory *Persistent* without a space. | Choose or create a space. |
-| Docker errors with tools | Docker is selected but not running. | Start Docker or choose the *Python process* sandbox. |
+| Docker errors with tools | Docker is selected but not running. | Start Docker or choose the *Automatic* sandbox. |
+| AI-created tools are blocked on macOS or Windows | There is no approved sandbox without Docker on these systems. | [Install Docker](/docs/einstellungen#sandbox-docker) and start it; *Automatic* then uses it. |
 | Agent was *skipped* | A predecessor failed. | Look at the first red agent in the timeline and fix it. |
 | Result contains "{{Name}}" literally | The placeholder does not match any direct predecessor (for example after renaming). | Insert the placeholder again using the buttons below the task. |
 | Trace import: "This is an exported workflow …" | The file is a workflow export. | Open it under *Workflows → Import*. |

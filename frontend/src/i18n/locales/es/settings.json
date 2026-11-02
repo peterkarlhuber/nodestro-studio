@@ -32,7 +32,7 @@
   "sandbox": {
     "title": "Sandbox para herramientas propias",
     "label": "Sandbox",
-    "text": "Las herramientas propias y las creadas por IA nunca se ejecutan en el proceso de Nodestro. Las herramientas que escribes tú se ejecutan en un proceso de Python aparte. Las herramientas creadas por IA y las de origen desconocido solo se ejecutan aisladas: en Ubuntu 24.04 y Debian 13 automáticamente en el sandbox de Linux integrado (sin red, sin acceso a tus archivos ni claves); en otros sistemas, solo con Docker. Sin aislamiento quedan bloqueadas.",
+    "text": "Las herramientas propias y las creadas por IA nunca se ejecutan en el proceso de Nodestro. Las herramientas que escribes tú se ejecutan en un proceso de Python aparte. Las herramientas creadas por IA y las de origen desconocido solo se ejecutan aisladas: en el sandbox de Linux integrado donde este equipo superó sus comprobaciones (Ubuntu 24.04, Debian 13) y, si no, en Docker; sin aislamiento quedan bloqueadas. En macOS y Windows necesitan Docker.",
     "subprocess": "Proceso de Python",
     "dockerAvailable": "Docker disponible",
     "dockerMissing": "Docker no encontrado",
@@ -48,6 +48,57 @@
       "paths": "Nodestro está dentro de una carpeta protegida (por ejemplo, directamente en tu carpeta personal o en la carpeta de datos). Mueve la aplicación a una carpeta propia.",
       "verify": "La autocomprobación del sandbox integrado falló: el aislamiento no se mantuvo. Las herramientas creadas por IA siguen bloqueadas; usa Docker.",
       "failed": "La autocomprobación del sandbox integrado no pudo ejecutarse. Las herramientas creadas por IA siguen bloqueadas; usa Docker."
+    },
+    "auto": "Automático",
+    "modeHint": {
+      "auto": "Automático: las herramientas creadas por IA usan el sandbox de Linux integrado si está disponible y, si no, Docker mientras esté en ejecución. Nodestro nunca recurre a un proceso sin protección.",
+      "subprocess": "Proceso de Python: tus herramientas se ejecutan en un proceso aparte. Las herramientas creadas por IA solo se ejecutan en el sandbox de Linux integrado; Docker no se usa.",
+      "docker": "Docker: todas las herramientas, también las tuyas, se ejecutan en un contenedor. Si Docker no está en ejecución, no se ejecuta ninguna herramienta."
+    },
+    "containersOnly": "En este servidor, todas las herramientas se ejecutan en un contenedor. El sandbox no se puede cambiar aquí.",
+    "runtime": "Equipo que ejecuta Nodestro",
+    "runtimeHint": "El equipo en el que se ejecuta el entorno de Nodestro, no el dispositivo de este navegador.",
+    "os": {
+      "linux": "Linux",
+      "macos": "macOS",
+      "windows": "Windows"
+    },
+    "untrustedRunsIn": "Las herramientas creadas por IA se ejecutan en",
+    "userRunsIn": "Tus herramientas se ejecutan en",
+    "blockedBadge": "Bloqueadas",
+    "blocked": {
+      "auto": "Las herramientas creadas por IA están bloqueadas: este equipo no tiene ningún sandbox aprobado y Docker no está en ejecución. Instala e inicia Docker; Nodestro lo usará automáticamente.",
+      "subprocess": "Las herramientas creadas por IA están bloqueadas: este equipo no tiene ningún sandbox aprobado. Elige Automático o Docker e inicia Docker."
+    },
+    "installDocker": "Cómo instalar Docker",
+    "backendsTitle": "Sandboxes en este equipo",
+    "column": {
+      "backend": "Sandbox",
+      "state": "Estado",
+      "why": "Nota"
+    },
+    "backend": {
+      "linux-builtin": "Sandbox de Linux integrado",
+      "macos-seatbelt": "Sandbox de macOS",
+      "windows-native": "Sandbox de Windows",
+      "docker": "Docker",
+      "subprocess": "Proceso de Python"
+    },
+    "state": {
+      "approved": "Aprobado",
+      "experimental": "Experimental, no se usa",
+      "unavailable": "No disponible",
+      "not-isolating": "Sin aislamiento",
+      "not-applicable": "No se usa aquí"
+    },
+    "backendReason": {
+      "not-released": "Implementado y autocomprobado, pero no revisado de forma independiente. Nodestro no lo usa.",
+      "not-implemented": "Nodestro aún no tiene un sandbox nativo para este sistema operativo.",
+      "unreachable": "Docker no está instalado o no está en ejecución.",
+      "missing": "Docker no está instalado.",
+      "server": "En un servidor, el código de las herramientas solo se ejecuta en contenedores.",
+      "platform": "No disponible en este sistema operativo.",
+      "unknown": "No disponible en este equipo."
     }
   },
   "about": {

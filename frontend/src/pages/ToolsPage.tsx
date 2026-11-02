@@ -25,7 +25,7 @@ import { DiscussIcon } from "../assistant/DiscussButton";
 import { useTakeHandover } from "../assistant/handover";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
-import { isolationAvailable } from "../api/types";
+import { isolationAvailable, untrustedBackend } from "../api/types";
 import type { CheckResult, ToolInfo, ToolJob, ToolSource } from "../api/types";
 import { CodeEditor } from "../components/CodeEditor";
 import {
@@ -104,9 +104,11 @@ export function ToolsPage() {
               sandbox:
                 settings.data.sandbox === "docker"
                   ? t("tools.sandboxDocker")
-                  : settings.data.builtin_sandbox?.available
+                  : untrustedBackend(settings.data) === "linux-builtin"
                     ? t("tools.sandboxBuiltin")
-                    : t("tools.sandboxProcess"),
+                    : untrustedBackend(settings.data) === "docker"
+                      ? t("tools.sandboxAutoDocker")
+                      : t("tools.sandboxProcess"),
             })}
           </p>
         ) : null}
@@ -246,7 +248,7 @@ function TrustNote({ tool }: { tool: ToolInfo }) {
         {t(
           blocked
             ? "tools.trustNote.untrustedBlocked"
-            : settings.data?.sandbox === "docker"
+            : settings.data && untrustedBackend(settings.data) === "docker"
               ? "tools.trustNote.untrusted"
               : "tools.trustNote.untrustedBuiltin",
         )}

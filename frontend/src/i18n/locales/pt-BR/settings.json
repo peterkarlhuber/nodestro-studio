@@ -32,7 +32,7 @@
   "sandbox": {
     "title": "Sandbox para ferramentas próprias",
     "label": "Sandbox",
-    "text": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro. As ferramentas que você mesmo escreve rodam em um processo Python separado. Ferramentas criadas por IA e de origem desconhecida só rodam isoladas: no Ubuntu 24.04 e no Debian 13, automaticamente no sandbox Linux integrado (sem rede, sem acesso aos seus arquivos ou chaves); em outros sistemas, só com Docker. Sem isolamento, ficam bloqueadas.",
+    "text": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro. As ferramentas que você mesmo escreve rodam em um processo Python separado. Ferramentas criadas por IA e de origem desconhecida só rodam isoladas: no sandbox Linux integrado onde este computador passou nas verificações (Ubuntu 24.04, Debian 13); caso contrário, no Docker; sem isolamento, ficam bloqueadas. No macOS e no Windows, elas precisam do Docker.",
     "subprocess": "Processo Python",
     "dockerAvailable": "Docker disponível",
     "dockerMissing": "Docker não encontrado",
@@ -48,6 +48,57 @@
       "paths": "O Nodestro está dentro de uma pasta protegida (por exemplo, diretamente na sua pasta pessoal ou na pasta de dados). Mova o aplicativo para uma pasta própria.",
       "verify": "O autoteste do sandbox integrado falhou: o isolamento não se manteve. Ferramentas criadas por IA continuam bloqueadas; use Docker.",
       "failed": "O autoteste do sandbox integrado não pôde rodar. Ferramentas criadas por IA continuam bloqueadas; use Docker."
+    },
+    "auto": "Automático",
+    "modeHint": {
+      "auto": "Automático: ferramentas criadas por IA usam o sandbox Linux integrado se ele estiver disponível; caso contrário, o Docker enquanto ele estiver rodando. O Nodestro nunca recorre a um processo sem proteção.",
+      "subprocess": "Processo Python: suas próprias ferramentas rodam em um processo separado. Ferramentas criadas por IA só rodam no sandbox Linux integrado; o Docker não é usado.",
+      "docker": "Docker: todas as ferramentas, inclusive as suas, rodam em um contêiner. Se o Docker não estiver rodando, nenhuma ferramenta roda."
+    },
+    "containersOnly": "Neste servidor, todas as ferramentas rodam em um contêiner. O sandbox não pode ser alterado aqui.",
+    "runtime": "Computador que executa o Nodestro",
+    "runtimeHint": "O computador onde roda o ambiente de execução do Nodestro, não o dispositivo deste navegador.",
+    "os": {
+      "linux": "Linux",
+      "macos": "macOS",
+      "windows": "Windows"
+    },
+    "untrustedRunsIn": "Ferramentas criadas por IA rodam em",
+    "userRunsIn": "Suas próprias ferramentas rodam em",
+    "blockedBadge": "Bloqueadas",
+    "blocked": {
+      "auto": "Ferramentas criadas por IA estão bloqueadas: este computador não tem nenhum sandbox aprovado e o Docker não está rodando. Instale e inicie o Docker; o Nodestro passa a usá-lo automaticamente.",
+      "subprocess": "Ferramentas criadas por IA estão bloqueadas: este computador não tem nenhum sandbox aprovado. Escolha Automático ou Docker e inicie o Docker."
+    },
+    "installDocker": "Como instalar o Docker",
+    "backendsTitle": "Sandboxes neste computador",
+    "column": {
+      "backend": "Sandbox",
+      "state": "Estado",
+      "why": "Observação"
+    },
+    "backend": {
+      "linux-builtin": "Sandbox Linux integrado",
+      "macos-seatbelt": "Sandbox do macOS",
+      "windows-native": "Sandbox do Windows",
+      "docker": "Docker",
+      "subprocess": "Processo Python"
+    },
+    "state": {
+      "approved": "Aprovado",
+      "experimental": "Experimental, não usado",
+      "unavailable": "Indisponível",
+      "not-isolating": "Sem isolamento",
+      "not-applicable": "Não usado aqui"
+    },
+    "backendReason": {
+      "not-released": "Implementado e autotestado, mas ainda não revisado de forma independente. O Nodestro não o usa.",
+      "not-implemented": "O Nodestro ainda não tem um sandbox nativo para este sistema operacional.",
+      "unreachable": "O Docker não está instalado ou não está rodando.",
+      "missing": "O Docker não está instalado.",
+      "server": "Em um servidor, o código das ferramentas só roda em contêineres.",
+      "platform": "Indisponível neste sistema operacional.",
+      "unknown": "Indisponível neste computador."
     }
   },
   "about": {

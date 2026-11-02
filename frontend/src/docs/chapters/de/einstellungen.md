@@ -93,11 +93,38 @@ Speichere Änderungen mit **Speichern** im Abschnitt *Modelle und Budget*.
 Das **Standardbudget pro Lauf** (anfangs 2 USD) gilt für alle Workflows ohne eigenes Budget. Leer bedeutet: kein Limit. Wie das Budget wirkt, steht unter [Budget pro Lauf](/docs/workflows#budget).
 
 ## Sandbox {#sandbox}
-<!-- keywords: sandbox wählen, docker, python prozess, docker verfügbar -->
+<!-- keywords: sandbox wählen, automatisch, docker, python prozess, docker verfügbar, eingebaute sandbox, linux sandbox, macos, windows, gesperrt, experimentell -->
 
-Hier wählst du, wo selbst geschriebene Tools laufen: **Python-Prozess** oder **Docker**. Die Änderung gilt sofort. Hinweise zeigen, ob Docker gefunden wurde und ob die **eingebaute Linux-Sandbox** aktiv ist; ist sie es nicht, steht der Grund dabei (zum Beispiel eine nicht getestete Linux-Distribution oder eine fehlende Kernel-Funktion). Ist Docker gewählt, aber nicht erreichbar, schlagen Tool-Tests und -Aufrufe fehl. Details stehen unter [Die Sandbox](/docs/tools#sandbox).
+Hier wählst du, wo Tools laufen. Die Änderung gilt sofort.
 
-Von der KI erstellte Tools und Tools unbekannter Herkunft laufen nur isoliert: automatisch in der eingebauten Linux-Sandbox, sonst nur mit Docker; siehe [Vertrauen und Isolation](/docs/tools#vertrauen).
+| Modus | Eigene Tools | KI-erstellte Tools und Tools unbekannter Herkunft |
+|---|---|---|
+| **Automatisch** (Standard) | Python-Prozess | eingebaute Linux-Sandbox, wenn sie verfügbar ist, sonst Docker, solange es läuft, sonst **gesperrt** |
+| **Python-Prozess** | Python-Prozess | nur die eingebaute Linux-Sandbox, sonst **gesperrt**; Docker wird nicht verwendet |
+| **Docker** | Docker | Docker; läuft Docker nicht, läuft kein Tool |
+
+Für KI-erstellten Code weicht Nodestro nie auf einen ungeschützten Prozess aus. Hast du nie einen Modus gewählt, verwendet Nodestro *Automatisch*; ein in einer früheren Version gewählter Modus bleibt erhalten.
+
+Unter der Auswahl zeigt Nodestro:
+
+- den **Computer, auf dem Nodestro läuft**, mit seinem Betriebssystem. Das ist der Computer der Nodestro-Laufzeit, nicht das Gerät deines Browsers: Öffnest du Nodestro auf einem Server von einem Mac aus, zählt das System des Servers;
+- wo KI-erstellte und eigene Tools **jetzt** laufen, oder dass sie **gesperrt** sind und warum;
+- jede **Sandbox auf diesem Computer** mit ihrem Status: *Freigegeben* (darf KI-erstellten Code ausführen), *Experimentell, nicht verwendet*, *Nicht verfügbar*, *Nicht isoliert* (der Python-Prozess) oder *Hier nicht verwendet*.
+
+Die eingebaute Linux-Sandbox ist unter Ubuntu 24.04 und Debian 13 (64-Bit Intel oder AMD) freigegeben, sobald ihr Selbsttest bestanden ist. Unter macOS hat Nodestro eine **experimentelle** Sandbox: Sie ist umgesetzt und getestet, aber noch nicht unabhängig geprüft; Nodestro zeigt sie deshalb an und verwendet sie nicht. Unter Windows gibt es noch keine eigene Sandbox. Auf beiden Systemen brauchen KI-erstellte Tools daher Docker. Details stehen unter [Die Sandbox](/docs/tools#sandbox) und [Vertrauen und Isolation](/docs/tools#vertrauen).
+
+Auf einem Server und in Nodestro Local Docker läuft jedes Tool in einem Container; die Einstellung lässt sich dort nicht ändern.
+
+## Docker installieren {#sandbox-docker}
+<!-- keywords: docker installieren, docker desktop, docker engine, macos, windows, linux, wsl, docker starten, docker läuft nicht -->
+
+KI-erstellte Tools brauchen Docker unter macOS und Windows sowie auf Linux-Systemen, auf denen die eingebaute Sandbox nicht verfügbar ist. Nodestro braucht nur ein laufendes Docker; das Container-Image wird beim ersten Gebrauch automatisch gebaut.
+
+- **macOS:** Installiere [Docker Desktop für Mac](https://docs.docker.com/desktop/setup/install/mac-install/) (Apple Silicon oder Intel), öffne es einmal und warte, bis es meldet, dass es läuft.
+- **Windows:** Installiere [Docker Desktop für Windows](https://docs.docker.com/desktop/setup/install/windows-install/) mit dem WSL-2-Backend, starte bei Nachfrage neu und starte Docker Desktop.
+- **Linux:** Installiere die [Docker Engine](https://docs.docker.com/engine/install/) für deine Distribution und erlaube deinem Benutzer den Zugriff (Gruppe `docker`), oder verwende Docker Desktop für Linux.
+
+Öffne danach *Einstellungen → Sandbox*: Mit **Automatisch** verwendet Nodestro Docker, sobald es läuft; *Docker verfügbar* wird angezeigt und KI-erstellte Tools sind nicht mehr gesperrt. Stoppt Docker, sind sie wieder gesperrt, bis es läuft; Nodestro wechselt nicht zum Python-Prozess.
 
 ## Sprache {#sprache}
 <!-- keywords: sprache, language, deutsch, englisch, spanisch, französisch, portugiesisch, italienisch, browsersprache, übersetzung, lokalisierung -->

@@ -93,11 +93,38 @@ Enregistrez les modifications avec **Enregistrer** dans la section *Modèles et 
 Le **budget par défaut par exécution** (au départ 2 USD) s’applique à tous les workflows sans budget propre. Vide signifie : pas de limite. Le fonctionnement du budget est expliqué dans [Budget par exécution](/docs/workflows#budget).
 
 ## Bac à sable {#sandbox}
-<!-- keywords: choisir le bac à sable, sandbox, docker, processus python, docker disponible -->
+<!-- keywords: choisir le bac à sable, sandbox, automatique, docker, processus python, docker disponible, bac à sable intégré, bac à sable linux, macos, windows, bloqué, expérimental -->
 
-Ici, vous choisissez où s’exécutent les outils que vous écrivez vous-même : **Processus Python** ou **Docker**. Le changement s’applique immédiatement. Des indications montrent si Docker a été trouvé et si le **bac à sable Linux intégré** est actif ; s’il ne l’est pas, la raison est indiquée (par exemple une distribution Linux non testée ou une fonction du noyau manquante). Si Docker est sélectionné mais injoignable, les tests et appels d’outils échouent. Les détails se trouvent sous [Le bac à sable](/docs/tools#sandbox).
+Ici, vous choisissez où s’exécutent les outils. Le changement s’applique immédiatement.
 
-Les outils créés par l’IA et ceux d’origine inconnue ne s’exécutent qu’isolés : automatiquement dans le bac à sable Linux intégré, sinon uniquement avec Docker ; voir [Confiance et isolation](/docs/tools#vertrauen).
+| Mode | Vos outils | Outils créés par l’IA et outils d’origine inconnue |
+|---|---|---|
+| **Automatique** (par défaut) | Processus Python | bac à sable Linux intégré s’il est disponible, sinon Docker tant qu’il tourne, sinon **bloqués** |
+| **Processus Python** | Processus Python | uniquement le bac à sable Linux intégré, sinon **bloqués** ; Docker n’est pas utilisé |
+| **Docker** | Docker | Docker ; si Docker ne tourne pas, aucun outil ne s’exécute |
+
+Nodestro ne se replie jamais sur un processus non protégé pour du code créé par l’IA. Si vous n’avez jamais choisi de mode, Nodestro utilise *Automatique* ; un mode choisi dans une version antérieure est conservé.
+
+Sous le choix, Nodestro affiche :
+
+- l’**ordinateur qui exécute Nodestro** avec son système d’exploitation. Il s’agit de l’ordinateur de l’environnement d’exécution de Nodestro, et non de l’appareil de votre navigateur : si vous ouvrez Nodestro sur un serveur depuis un Mac, c’est le système du serveur qui compte ;
+- où s’exécutent **maintenant** les outils créés par l’IA et vos outils, ou bien qu’ils sont **bloqués** et pourquoi ;
+- chaque **bac à sable sur cet ordinateur** avec son état : *Validé* (peut exécuter du code créé par l’IA), *Expérimental, non utilisé*, *Indisponible*, *Sans isolation* (le processus Python) ou *Non utilisé ici*.
+
+Le bac à sable Linux intégré est validé sous Ubuntu 24.04 et Debian 13 (Intel ou AMD 64 bits) dès que son autotest a réussi. Sous macOS, Nodestro dispose d’un bac à sable **expérimental** : il est implémenté et testé, mais pas encore examiné de façon indépendante ; Nodestro l’affiche donc sans l’utiliser. Sous Windows, il n’existe pas encore de bac à sable natif. Sur ces deux systèmes, les outils créés par l’IA nécessitent donc Docker. Les détails se trouvent sous [Le bac à sable](/docs/tools#sandbox) et [Confiance et isolation](/docs/tools#vertrauen).
+
+Sur un serveur et dans Nodestro Local Docker, chaque outil s’exécute dans un conteneur ; le réglage n’y est pas modifiable.
+
+## Installer Docker {#sandbox-docker}
+<!-- keywords: installer docker, docker desktop, docker engine, macos, windows, linux, wsl, démarrer docker, docker ne tourne pas -->
+
+Les outils créés par l’IA nécessitent Docker sous macOS et Windows, ainsi que sur les systèmes Linux où le bac à sable intégré n’est pas disponible. Nodestro a seulement besoin d’un Docker en cours d’exécution ; l’image du conteneur est construite automatiquement à la première utilisation.
+
+- **macOS :** installez [Docker Desktop pour Mac](https://docs.docker.com/desktop/setup/install/mac-install/) (Apple silicon ou Intel), ouvrez-le une fois et attendez qu’il indique qu’il est en cours d’exécution.
+- **Windows :** installez [Docker Desktop pour Windows](https://docs.docker.com/desktop/setup/install/windows-install/) avec le backend WSL 2, redémarrez si on vous le demande, puis démarrez Docker Desktop.
+- **Linux :** installez [Docker Engine](https://docs.docker.com/engine/install/) pour votre distribution et autorisez votre utilisateur à l’utiliser (groupe `docker`), ou utilisez Docker Desktop pour Linux.
+
+Ouvrez ensuite *Réglages → Bac à sable* : en mode **Automatique**, Nodestro utilise Docker dès qu’il tourne ; *Docker disponible* s’affiche et les outils créés par l’IA ne sont plus bloqués. Si Docker s’arrête, ils sont de nouveau bloqués jusqu’à ce qu’il tourne ; Nodestro ne bascule pas sur le processus Python.
 
 ## Langue {#sprache}
 <!-- keywords: langue, language, français, anglais, allemand, espagnol, portugais, italien, langue du navigateur, traduction, localisation -->

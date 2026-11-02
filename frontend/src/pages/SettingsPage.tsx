@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Container, Cpu, Languages, Save, ScanText } from "lucide-react";
+import { Cpu, Languages, Save, ScanText } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -10,12 +10,13 @@ import { keys, useMeta, useSettings } from "../api/hooks";
 import type { Settings } from "../api/types";
 import { ModelPicker, useModelHint } from "../components/ModelPicker";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, HelpTip, PageHeader, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Callout, Field, HelpTip, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { LANGUAGES, LANGUAGE_NAMES, type Language, currentLanguage, setLanguage, storedLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { PythonMaintenance } from "../python/PythonMaintenance";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
+import { SandboxPanel } from "./SettingsSandbox";
 import { CHECK_KEY, DefaultModelNotice, ProviderSettings } from "./SettingsProviders";
 
 const AUTOMATIC = "auto";
@@ -216,49 +217,7 @@ export function SettingsPage() {
 
         {admin ? <ReconciliationPanel /> : null}
 
-        <section className="panel stack" aria-labelledby="settings-sandbox">
-          <h2 className="panel__title" id="settings-sandbox">
-            <Container size={15} aria-hidden /> {t("settings.sandbox.title")}{" "}
-            <HelpTip id="settings.sandbox" label={t("settings.sandbox.label")} />
-          </h2>
-          <p className="muted small">{t("settings.sandbox.text")}</p>
-          <div className="row-gap">
-            <Segmented
-              label={t("settings.sandbox.label")}
-              value={form.sandbox}
-              disabled={!admin}
-              onChange={(sandbox) => save.mutate({ sandbox })}
-              options={[
-                { value: "subprocess", label: t("settings.sandbox.subprocess") },
-                { value: "docker", label: "Docker" },
-              ]}
-            />
-            <Badge tone={form.docker_available ? "success" : "idle"}>
-              {form.docker_available ? t("settings.sandbox.dockerAvailable") : t("settings.sandbox.dockerMissing")}
-            </Badge>
-            {form.builtin_sandbox ? (
-              <span data-testid="builtin-sandbox">
-                <Badge tone={form.builtin_sandbox.available ? "success" : "idle"}>
-                  {form.builtin_sandbox.available
-                    ? t("settings.sandbox.builtinActive")
-                    : t("settings.sandbox.builtinMissing")}
-                </Badge>
-              </span>
-            ) : null}
-          </div>
-          {form.builtin_sandbox && !form.builtin_sandbox.available && form.builtin_sandbox.reason !== "server" ? (
-            <p className="muted small" data-testid="builtin-sandbox-reason">
-              {t(`settings.sandbox.reason.${form.builtin_sandbox.reason}`, {
-                defaultValue: t("settings.sandbox.reason.failed"),
-                system: form.builtin_sandbox.system,
-              })}{" "}
-              {form.builtin_sandbox.detail ? <code>{form.builtin_sandbox.detail}</code> : null}
-            </p>
-          ) : null}
-          {form.sandbox === "docker" && !form.docker_available ? (
-            <Callout tone="warning">{t("settings.sandbox.dockerUnreachable")}</Callout>
-          ) : null}
-        </section>
+        <SandboxPanel settings={form} admin={admin} onMode={(sandbox) => save.mutate({ sandbox })} />
 
         <section className="panel stack" aria-labelledby="settings-ocr">
           <h2 className="panel__title" id="settings-ocr">

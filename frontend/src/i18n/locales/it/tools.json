@@ -28,7 +28,7 @@
   "trustNote": {
     "user-authored": "Scritto da te: viene eseguito in un processo Python separato, senza isolamento, su questo computer.",
     "untrusted": "Creato dall’IA o di origine sconosciuta: viene eseguito solo isolato, qui nella sandbox Docker.",
-    "untrustedBlocked": "Creato dall’IA o di origine sconosciuta: viene eseguito solo isolato, ma non sono disponibili né la sandbox Linux integrata né Docker. Gli agenti con questo strumento non possono essere eseguiti; vedi Impostazioni → Sandbox.",
+    "untrustedBlocked": "Creato dall’IA o di origine sconosciuta: viene eseguito solo isolato, ma questo computer non ha né una sandbox approvata né Docker in esecuzione. Gli agenti con questo strumento non possono essere eseguiti; vedi Impostazioni → Sandbox.",
     "untrustedBuiltin": "Creato dall’IA o di origine sconosciuta: viene eseguito solo isolato, qui nella sandbox Linux integrata (senza rete, senza accesso ai tuoi file o alle tue chiavi). Resta così anche dopo la tua approvazione.",
     "mcp": "Questo strumento appartiene al servizio collegato {{server}} (lì: {{name}}). Una chiamata invia i suoi argomenti a quel servizio; la risposta è testo estraneo, mai un'istruzione."
   },
@@ -91,7 +91,7 @@
     "approveLibraries": "Approva librerie",
     "withoutLibraries": "Riscrivi senza librerie",
     "usesLibraries": "Usa le librerie approvate: {{names}}",
-    "needsDocker": "Creare strumenti con l’IA richiede l’isolamento: i test del codice scritto dall’IA non vengono mai eseguiti senza. La sandbox Linux integrata qui non è disponibile (vedi Impostazioni → Sandbox); scegli invece Docker."
+    "needsDocker": "Creare strumenti con l’IA richiede l’isolamento: i test del codice scritto dall’IA non vengono mai eseguiti senza. Questo computer non ha una sandbox approvata (vedi Impostazioni → Sandbox); avvia Docker e scegli Automatica o Docker."
   },
   "drafts": {
     "title_one": "{{count}} bozza di strumento attende la tua decisione",
@@ -273,5 +273,6 @@
     },
     "resourceTool": "Documenti del servizio",
     "resourceToolText": "Questo strumento legge solo i documenti elencati dal servizio; gli altri indirizzi sono esclusi. Se il servizio cambia l'elenco, lo strumento resta bloccato finché non esamini il nuovo elenco. I contenuti sono dati esterni, come ogni risultato di un servizio."
-  }
+  },
+  "sandboxAutoDocker": "processo Python separato; strumenti creati dall’IA in Docker"
 }

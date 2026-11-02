@@ -28,7 +28,7 @@
   "trustNote": {
     "user-authored": "Écrit par vous : s’exécute dans un processus Python séparé, sans isolation, sur cet ordinateur.",
     "untrusted": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, ici dans le bac à sable Docker.",
-    "untrustedBlocked": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, mais ni le bac à sable Linux intégré ni Docker n’est disponible. Les agents qui utilisent cet outil ne peuvent pas s’exécuter ; voir Réglages → Bac à sable.",
+    "untrustedBlocked": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, mais cet ordinateur n’a ni bac à sable validé ni Docker en cours d’exécution. Les agents qui utilisent cet outil ne peuvent pas s’exécuter ; voir Réglages → Bac à sable.",
     "untrustedBuiltin": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, ici dans le bac à sable Linux intégré (sans réseau, sans accès à vos fichiers ni à vos clés). Cela reste ainsi après votre validation.",
     "mcp": "Cet outil appartient au service connecté {{server}} (là-bas : {{name}}). Un appel envoie ses arguments à ce service ; la réponse est un texte étranger, jamais une instruction."
   },
@@ -91,7 +91,7 @@
     "approveLibraries": "Approuver les bibliothèques",
     "withoutLibraries": "Réécrire sans bibliothèques",
     "usesLibraries": "Utilise les bibliothèques approuvées : {{names}}",
-    "needsDocker": "Créer des outils avec l’IA nécessite une isolation : les tests du code écrit par l’IA ne s’exécutent jamais sans elle. Le bac à sable Linux intégré n’est pas disponible ici (voir Réglages → Bac à sable) ; choisissez Docker à la place."
+    "needsDocker": "Créer des outils avec l’IA nécessite une isolation : les tests du code écrit par l’IA ne s’exécutent jamais sans elle. Cet ordinateur n’a aucun bac à sable validé (voir Réglages → Bac à sable) ; démarrez Docker et choisissez Automatique ou Docker."
   },
   "drafts": {
     "title_one": "{{count}} brouillon d’outil attend votre décision",
@@ -273,5 +273,6 @@
     },
     "resourceTool": "Documents du service",
     "resourceToolText": "Cet outil lit uniquement les documents que le service répertorie ; les autres adresses sont exclues. Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que vous examiniez la nouvelle liste. Les contenus sont des données externes, comme tout résultat d'un service."
-  }
+  },
+  "sandboxAutoDocker": "processus Python distinct ; outils créés par l’IA dans Docker"
 }

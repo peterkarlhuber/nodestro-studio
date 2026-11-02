@@ -93,11 +93,38 @@ Guarda los cambios con **Guardar** en la sección *Modelos y presupuesto*.
 El **presupuesto predeterminado por ejecución** (al principio 2 USD) se aplica a todos los flujos sin presupuesto propio. Vacío significa sin límite. Cómo funciona el presupuesto se explica en [Presupuesto por ejecución](/docs/workflows#budget).
 
 ## Sandbox {#sandbox}
-<!-- keywords: elegir sandbox, docker, proceso de python, docker disponible -->
+<!-- keywords: elegir sandbox, automático, docker, proceso de python, docker disponible, sandbox integrado, sandbox de linux, macos, windows, bloqueado, experimental -->
 
-Aquí eliges dónde se ejecutan las herramientas que escribes tú: **Proceso de Python** o **Docker**. El cambio se aplica de inmediato. Los avisos muestran si se encontró Docker y si el **sandbox de Linux integrado** está activo; si no lo está, se indica el motivo (por ejemplo, una distribución de Linux no probada o una función del núcleo que falta). Si Docker está seleccionado pero no es accesible, las pruebas y llamadas de herramientas fallan. Los detalles están en [El sandbox](/docs/tools#sandbox).
+Aquí eliges dónde se ejecutan las herramientas. El cambio se aplica de inmediato.
 
-Las herramientas creadas por IA y las de origen desconocido solo se ejecutan aisladas: automáticamente en el sandbox de Linux integrado y, si no, solo con Docker; consulta [Confianza y aislamiento](/docs/tools#vertrauen).
+| Modo | Tus herramientas | Herramientas creadas por IA y de origen desconocido |
+|---|---|---|
+| **Automático** (predeterminado) | Proceso de Python | sandbox de Linux integrado si está disponible; si no, Docker mientras esté en ejecución; si no, **bloqueadas** |
+| **Proceso de Python** | Proceso de Python | solo el sandbox de Linux integrado; si no, **bloqueadas**; Docker no se usa |
+| **Docker** | Docker | Docker; si Docker no está en ejecución, no se ejecuta ninguna herramienta |
+
+Nodestro nunca recurre a un proceso sin protección para el código creado por IA. Si nunca elegiste un modo, Nodestro usa *Automático*; un modo que elegiste en una versión anterior se mantiene.
+
+Debajo de la selección, Nodestro muestra:
+
+- el **equipo que ejecuta Nodestro** con su sistema operativo. Es el equipo del entorno de Nodestro, no el dispositivo de tu navegador: si abres Nodestro en un servidor desde un Mac, cuenta el sistema del servidor;
+- dónde se ejecutan **ahora** las herramientas creadas por IA y las tuyas, o que están **bloqueadas** y por qué;
+- cada **sandbox en este equipo** con su estado: *Aprobado* (puede ejecutar código creado por IA), *Experimental, no se usa*, *No disponible*, *Sin aislamiento* (el proceso de Python) o *No se usa aquí*.
+
+El sandbox de Linux integrado está aprobado en Ubuntu 24.04 y Debian 13 (Intel o AMD de 64 bits) una vez que su autocomprobación se ha superado. En macOS, Nodestro tiene un sandbox **experimental**: está implementado y probado, pero aún no se ha revisado de forma independiente, así que Nodestro lo muestra y no lo usa. En Windows todavía no hay un sandbox nativo. Por eso, en ambos sistemas las herramientas creadas por IA necesitan Docker. Los detalles están en [El sandbox](/docs/tools#sandbox) y [Confianza y aislamiento](/docs/tools#vertrauen).
+
+En un servidor y en Nodestro Local Docker, todas las herramientas se ejecutan en un contenedor; allí el ajuste no se puede cambiar.
+
+## Instalar Docker {#sandbox-docker}
+<!-- keywords: instalar docker, docker desktop, docker engine, macos, windows, linux, wsl, iniciar docker, docker no se ejecuta -->
+
+Las herramientas creadas por IA necesitan Docker en macOS y Windows, y en los sistemas Linux donde el sandbox integrado no está disponible. Nodestro solo necesita un Docker en ejecución; la imagen del contenedor se crea automáticamente en el primer uso.
+
+- **macOS:** instala [Docker Desktop para Mac](https://docs.docker.com/desktop/setup/install/mac-install/) (Apple silicon o Intel), ábrelo una vez y espera hasta que indique que está en ejecución.
+- **Windows:** instala [Docker Desktop para Windows](https://docs.docker.com/desktop/setup/install/windows-install/) con el backend WSL 2, reinicia si se te pide e inicia Docker Desktop.
+- **Linux:** instala [Docker Engine](https://docs.docker.com/engine/install/) para tu distribución y permite que tu usuario lo use (grupo `docker`), o usa Docker Desktop para Linux.
+
+Después abre *Ajustes → Sandbox*: con **Automático**, Nodestro usa Docker en cuanto está en ejecución; se muestra *Docker disponible* y las herramientas creadas por IA dejan de estar bloqueadas. Si Docker se detiene, vuelven a quedar bloqueadas hasta que se ejecute de nuevo; Nodestro no cambia al proceso de Python.
 
 ## Idioma {#sprache}
 <!-- keywords: idioma, language, español, inglés, alemán, francés, portugués, italiano, idioma del navegador, traducción, localización -->

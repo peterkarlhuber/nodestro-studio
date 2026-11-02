@@ -121,7 +121,7 @@
     "defaultModel": "New, empty agents and new workflows start with this model. For AI drafts it serves as a replacement if the proposed model is not available.",
     "assistantModel": "Model for the Agent Architect, the Coding Agent and the memory assistant. A strong model makes better proposals.",
     "budget": "Applies to all workflows without a budget of their own. Empty = no limit (not recommended).",
-    "sandbox": "Python process: for tools you wrote yourself, with time and memory limits. Built-in Linux sandbox (Ubuntu 24.04, Debian 13): AI-created tools run there automatically, without network and without access to your files, keys or other programs. Docker: a container, also without network and with a read-only file system.",
+    "sandbox": "Automatic (recommended): AI-created tools run in the built-in Linux sandbox where it is available, otherwise in Docker; without either they are blocked. Python process: for tools you wrote yourself, with time and memory limits. Docker: a container without network and with a read-only file system.",
     "language": "The language of the interface. “Automatic” follows the browser's language (English if it is not supported). The choice takes effect at once and is remembered. Content such as agents, prompts and results stays as it is.",
     "backup": "Downloads all data except the API keys as a ZIP file.",
     "restore": "Checks the file completely first and shows its contents. Data is only replaced after your confirmation; the current state is backed up before.",

@@ -89,5 +89,5 @@ Além do comando `nodestro`, o Nodestro está disponível como aplicativo de des
 - Somente a janela do aplicativo pode usar este Nodestro. Outros programas do computador e páginas da web no navegador são recusados (*Este Nodestro pertence ao aplicativo de desktop que o iniciou*). O link de início da janela funciona uma única vez; para abrir uma nova janela, reinicie o aplicativo.
 - Links para outros sites abrem no navegador.
 - Fechar a janela encerra o Nodestro. Se ele parar inesperadamente, a janela avisa e informa o arquivo de log.
-- Ferramentas criadas por IA rodam isoladas no sandbox Linux integrado; não é preciso instalar nada para isso (veja [Ferramentas](/docs/tools#sandbox)). Se *Configurações → Sandbox* disser que ele não está disponível, elas só rodam com Docker.
+- Ferramentas criadas por IA rodam isoladas no sandbox Linux integrado; não é preciso instalar nada para isso (veja [Ferramentas](/docs/tools#sandbox)). Se *Configurações → Sandbox* disser que ele não está disponível, e sempre no macOS e no Windows, elas só rodam com Docker ([Instalar o Docker](/docs/einstellungen#sandbox-docker)).
 - Ainda não existem versões para macOS e Windows.

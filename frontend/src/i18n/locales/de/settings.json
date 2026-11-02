@@ -32,7 +32,7 @@
   "sandbox": {
     "title": "Sandbox für eigene Tools",
     "label": "Sandbox",
-    "text": "Eigene und von der KI erstellte Tools laufen nie im Nodestro-Prozess. Selbst geschriebene Tools laufen in einem eigenen Python-Prozess. KI-erstellte Tools und Tools unbekannter Herkunft laufen nur isoliert: unter Ubuntu 24.04 und Debian 13 automatisch in der eingebauten Linux-Sandbox (kein Netzwerk, kein Zugriff auf deine Dateien oder Schlüssel), sonst nur mit Docker; ohne Isolation sind sie gesperrt.",
+    "text": "Eigene und von der KI erstellte Tools laufen nie im Nodestro-Prozess. Selbst geschriebene Tools laufen in einem eigenen Python-Prozess. KI-erstellte Tools und Tools unbekannter Herkunft laufen nur isoliert: in der eingebauten Linux-Sandbox, wo dieser Computer ihre Prüfungen bestanden hat (Ubuntu 24.04, Debian 13), sonst in Docker; ohne Isolation sind sie gesperrt. Unter macOS und Windows brauchen sie Docker.",
     "subprocess": "Python-Prozess",
     "dockerAvailable": "Docker verfügbar",
     "dockerMissing": "Docker nicht gefunden",
@@ -48,6 +48,57 @@
       "paths": "Nodestro liegt in einem geschützten Ordner (zum Beispiel direkt im Persönlichen Ordner oder im Datenordner). Verschiebe die App in einen eigenen Ordner.",
       "verify": "Der Selbsttest der eingebauten Sandbox ist fehlgeschlagen: Die Isolation hat nicht gehalten. KI-erstellte Tools bleiben gesperrt; verwende Docker.",
       "failed": "Der Selbsttest der eingebauten Sandbox konnte nicht laufen. KI-erstellte Tools bleiben gesperrt; verwende Docker."
+    },
+    "auto": "Automatisch",
+    "modeHint": {
+      "auto": "Automatisch: KI-erstellte Tools nutzen die eingebaute Linux-Sandbox, wenn sie verfügbar ist, sonst Docker, solange es läuft. Nodestro weicht nie auf einen ungeschützten Prozess aus.",
+      "subprocess": "Python-Prozess: Eigene Tools laufen in einem eigenen Prozess. KI-erstellte Tools laufen nur in der eingebauten Linux-Sandbox; Docker wird nicht verwendet.",
+      "docker": "Docker: Jedes Tool, auch dein eigenes, läuft in einem Container. Läuft Docker nicht, läuft kein Tool."
+    },
+    "containersOnly": "Auf diesem Server läuft jedes Tool in einem Container. Die Sandbox lässt sich hier nicht ändern.",
+    "runtime": "Computer, auf dem Nodestro läuft",
+    "runtimeHint": "Der Computer, auf dem die Nodestro-Laufzeit läuft, nicht das Gerät dieses Browsers.",
+    "os": {
+      "linux": "Linux",
+      "macos": "macOS",
+      "windows": "Windows"
+    },
+    "untrustedRunsIn": "KI-erstellte Tools laufen in",
+    "userRunsIn": "Eigene Tools laufen in",
+    "blockedBadge": "Gesperrt",
+    "blocked": {
+      "auto": "KI-erstellte Tools sind gesperrt: Dieser Computer hat keine freigegebene Sandbox und Docker läuft nicht. Installiere und starte Docker; Nodestro verwendet es dann automatisch.",
+      "subprocess": "KI-erstellte Tools sind gesperrt: Dieser Computer hat keine freigegebene Sandbox. Wähle Automatisch oder Docker und starte Docker."
+    },
+    "installDocker": "Docker installieren",
+    "backendsTitle": "Sandboxen auf diesem Computer",
+    "column": {
+      "backend": "Sandbox",
+      "state": "Status",
+      "why": "Hinweis"
+    },
+    "backend": {
+      "linux-builtin": "Eingebaute Linux-Sandbox",
+      "macos-seatbelt": "macOS-Sandbox",
+      "windows-native": "Windows-Sandbox",
+      "docker": "Docker",
+      "subprocess": "Python-Prozess"
+    },
+    "state": {
+      "approved": "Freigegeben",
+      "experimental": "Experimentell, nicht verwendet",
+      "unavailable": "Nicht verfügbar",
+      "not-isolating": "Nicht isoliert",
+      "not-applicable": "Hier nicht verwendet"
+    },
+    "backendReason": {
+      "not-released": "Umgesetzt und selbst getestet, aber nicht unabhängig geprüft. Nodestro verwendet sie nicht.",
+      "not-implemented": "Für dieses Betriebssystem hat Nodestro noch keine eigene Sandbox.",
+      "unreachable": "Docker ist nicht installiert oder läuft nicht.",
+      "missing": "Docker ist nicht installiert.",
+      "server": "Auf einem Server läuft Tool-Code nur in Containern.",
+      "platform": "Auf diesem Betriebssystem nicht verfügbar.",
+      "unknown": "Auf diesem Computer nicht verfügbar."
     }
   },
   "about": {

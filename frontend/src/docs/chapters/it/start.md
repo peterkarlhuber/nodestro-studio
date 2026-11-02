@@ -89,5 +89,5 @@ Oltre al comando `nodestro`, Nodestro è disponibile come app desktop (anteprima
 - Solo la finestra dell’app può usare questo Nodestro. Gli altri programmi del computer e le pagine web nel browser vengono rifiutati (*Questo Nodestro appartiene all’app desktop che lo ha avviato*). Il link di avvio della finestra vale una sola volta; per aprire una nuova finestra, riavviare l’app.
 - I link ad altri siti si aprono nel browser.
 - Chiudendo la finestra Nodestro si arresta. Se si arresta in modo imprevisto, la finestra lo segnala e indica il file di log.
-- Gli strumenti creati dall’IA vengono eseguiti isolati nella sandbox Linux integrata; non serve installare nulla (vedere [Strumenti](/docs/tools#sandbox)). Se *Impostazioni → Sandbox* indica che non è disponibile, vengono eseguiti solo con Docker.
+- Gli strumenti creati dall’IA vengono eseguiti isolati nella sandbox Linux integrata; non serve installare nulla (vedere [Strumenti](/docs/tools#sandbox)). Se *Impostazioni → Sandbox* indica che non è disponibile, e sempre su macOS e Windows, vengono eseguiti solo con Docker ([Installare Docker](/docs/einstellungen#sandbox-docker)).
 - Le versioni per macOS e Windows non esistono ancora.

@@ -19,7 +19,8 @@ Hier findest du Lösungen für häufige Meldungen und Antworten auf typische Fra
 | „Zitate lassen sich nicht mit einem strukturierten Ausgabeformat kombinieren“ | Beide Optionen sind aktiv. | Eine davon abschalten. |
 | „Beispiel-Nachrichten müssen …“ | Die Beispiele wechseln nicht sauber ab. | Mit Nutzer beginnen, abwechseln, mit Assistent enden. |
 | „Dauerhaftes Memory braucht einen Memory-Raum“ | Memory *Dauerhaft* ohne Raum. | Raum wählen oder anlegen. |
-| Docker-Fehler bei Tools | Docker ist gewählt, läuft aber nicht. | Docker starten oder Sandbox *Python-Prozess* wählen. |
+| Docker-Fehler bei Tools | Docker ist gewählt, läuft aber nicht. | Docker starten oder Sandbox *Automatisch* wählen. |
+| KI-erstellte Tools sind unter macOS oder Windows gesperrt | Ohne Docker gibt es auf diesen Systemen keine freigegebene Sandbox. | [Docker installieren](/docs/einstellungen#sandbox-docker) und starten; *Automatisch* verwendet es dann. |
 | Agent wurde *übersprungen* | Ein Vorgänger ist fehlgeschlagen. | Den ersten roten Agenten im Ablauf ansehen und beheben. |
 | Ergebnis enthält „{{Name}}“ wörtlich | Der Platzhalter passt zu keinem direkten Vorgänger (z. B. nach Umbenennen). | Platzhalter über die Schaltflächen unter der Aufgabe neu einfügen. |
 | Trace-Import: „Das ist ein exportierter Workflow …“ | Die Datei ist ein Workflow-Export. | Unter *Workflows → Importieren* öffnen. |

@@ -89,5 +89,5 @@ Además del comando `nodestro`, Nodestro está disponible como aplicación de es
 - Solo la ventana de la aplicación puede usar este Nodestro. Otros programas del equipo y las páginas web del navegador se rechazan (*Este Nodestro pertenece a la aplicación de escritorio que lo inició*). El enlace de inicio de la ventana funciona una sola vez; para abrir una ventana nueva, reinicie la aplicación.
 - Los enlaces a otros sitios web se abren en el navegador.
 - Al cerrar la ventana, Nodestro se detiene. Si se detiene de forma inesperada, la ventana lo indica y muestra el archivo de registro.
-- Las herramientas creadas por IA se ejecutan aisladas en el sandbox de Linux integrado; no hace falta instalar nada (consulte [Herramientas](/docs/tools#sandbox)). Si *Ajustes → Sandbox* indica que no está disponible, solo se ejecutan con Docker.
+- Las herramientas creadas por IA se ejecutan aisladas en el sandbox de Linux integrado; no hace falta instalar nada (consulte [Herramientas](/docs/tools#sandbox)). Si *Ajustes → Sandbox* indica que no está disponible, y siempre en macOS y Windows, solo se ejecutan con Docker ([Instalar Docker](/docs/einstellungen#sandbox-docker)).
 - Aún no existen versiones para macOS y Windows.

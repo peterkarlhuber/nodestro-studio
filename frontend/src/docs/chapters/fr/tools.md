@@ -147,11 +147,11 @@ Les outils personnels et ceux créés par l’IA ne s’exécutent **jamais dans
 |---|---|---|
 | **Processus Python** (par défaut pour vos outils) | processus séparé avec un environnement vide dans un dossier temporaire ; **pas** une barrière de sécurité | 15 secondes, 1 Go de mémoire |
 | **Bac à sable Linux intégré** (automatique pour les outils créés par l’IA sous Ubuntu 24.04 et Debian 13) | sans réseau, sans accès à vos fichiers, vos clés, les données de Nodestro ou d’autres programmes ; aucun nouveau processus ; seul son propre dossier temporaire est accessible en écriture | 15 secondes (60 avec bibliothèques), 1 Go de mémoire, 64 Mo de fichiers temporaires |
-| **Docker** | conteneur jetable sans réseau, avec un système de fichiers en lecture seule, sans privilèges | 20 secondes, 512 Mo de mémoire, 1 CPU |
+| **Docker** (automatique pour les outils créés par l’IA là où le bac à sable intégré n’est pas disponible, y compris sous macOS et Windows) | conteneur jetable sans réseau, avec un système de fichiers en lecture seule, sans privilèges | 20 secondes, 512 Mo de mémoire, 1 CPU |
 
 Le bac à sable Linux intégré ne nécessite aucune installation : il utilise des fonctions du noyau Linux (Landlock et seccomp). Nodestro vérifie une fois au démarrage qu’elles sont présentes et efficaces ; *Réglages → Bac à sable* affiche le résultat et, s’il n’est pas disponible, la raison. Il ne protège pas contre les erreurs du noyau Linux lui-même et ne cache pas l’existence d’un fichier ailleurs ; Docker reste disponible comme alternative.
 
-Vous choisissez le bac à sable dans les [réglages](/docs/einstellungen#sandbox). Docker doit être installé et en cours d’exécution ; sinon, les tests et les appels échouent. Si un appel dépasse la limite de temps, il compte comme une erreur et le processus est arrêté.
+Vous choisissez le bac à sable dans les [réglages](/docs/einstellungen#sandbox) ; *Automatique* le choisit pour vous. Docker doit être installé et en cours d’exécution ([Installer Docker](/docs/einstellungen#sandbox-docker)) ; sinon, les tests et les appels des outils qui en ont besoin échouent. Sous macOS, Nodestro dispose aussi d’un bac à sable expérimental ; il est affiché dans les réglages, mais n’est pas utilisé tant qu’il n’a pas été examiné de façon indépendante. Si un appel dépasse la limite de temps, il compte comme une erreur et le processus est arrêté.
 
 ## Confiance et isolation {#vertrauen}
 <!-- keywords: confiance, non fiable, origine, généré par l’ia, docker requis, isolation requise, bloqué, restreint, nécessite une isolation -->
@@ -164,7 +164,7 @@ Nodestro décide selon l’**origine du code** où il peut s’exécuter :
 | Écrit par vous dans *Écrire soi-même* | *Écrit par vous* | s’exécute, sans isolation sur cet ordinateur | s’exécute (dans le *Processus Python* ou isolé dans Docker) |
 | Créé par l’IA (même après votre validation), brouillons d’outils de l’architecte IA, outils d’origine inconnue | *Nécessite une isolation* | **bloqué** | s’exécute isolé |
 
-Le processus Python n’est pas une barrière de sécurité : le code qu’il exécute a vos droits. Nodestro n’y exécute donc jamais de code généré par l’IA, et ni votre validation ni un réglage n’y changent rien ; aucun interrupteur ne le permet malgré tout. Là où le bac à sable Linux intégré est disponible, Nodestro l’utilise automatiquement pour ce code. Sans lui et sans Docker :
+Le processus Python n’est pas une barrière de sécurité : le code qu’il exécute a vos droits. Nodestro n’y exécute donc jamais de code généré par l’IA, et ni votre validation ni un réglage n’y changent rien ; aucun interrupteur ne le permet malgré tout. Là où le bac à sable Linux intégré est disponible, Nodestro l’utilise automatiquement pour ce code ; sinon, en mode *Automatique*, Docker tant qu’il tourne. Sans l’un ni l’autre :
 
 - **Créer avec l’IA** ne démarre pas, et les brouillons d’outils ne peuvent être ni testés ni approuvés ;
 - les agents dotés d’un outil qui nécessite une isolation ne peuvent pas s’exécuter ; la vérification du workflow le signale avant le démarrage ;

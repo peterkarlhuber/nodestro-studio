@@ -89,5 +89,5 @@ En plus de la commande `nodestro`, Nodestro existe en application de bureau (pr�
 - Seule la fenêtre de l’application peut utiliser ce Nodestro. Les autres programmes de l’ordinateur et les pages web du navigateur sont refusés (*Ce Nodestro appartient à l’application de bureau qui l’a démarré*). Le lien de démarrage de la fenêtre ne fonctionne qu’une fois ; pour ouvrir une nouvelle fenêtre, redémarrez l’application.
 - Les liens vers d’autres sites s’ouvrent dans le navigateur.
 - Fermer la fenêtre arrête Nodestro. S’il s’arrête de manière inattendue, la fenêtre l’indique et nomme le fichier journal.
-- Les outils créés par l’IA s’exécutent isolés dans le bac à sable Linux intégré ; rien n’est à installer pour cela (voir [Outils](/docs/tools#sandbox)). Si *Réglages → Bac à sable* indique qu’il n’est pas disponible, ils ne s’exécutent qu’avec Docker.
+- Les outils créés par l’IA s’exécutent isolés dans le bac à sable Linux intégré ; rien n’est à installer pour cela (voir [Outils](/docs/tools#sandbox)). Si *Réglages → Bac à sable* indique qu’il n’est pas disponible, et toujours sous macOS et Windows, ils ne s’exécutent qu’avec Docker ([Installer Docker](/docs/einstellungen#sandbox-docker)).
 - Les versions pour macOS et Windows n’existent pas encore.

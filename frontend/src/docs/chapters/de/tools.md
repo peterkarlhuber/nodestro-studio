@@ -147,11 +147,11 @@ Eigene und von der KI erstellte Tools laufen **nie im Nodestro-Prozess**. Tests 
 |---|---|---|
 | **Python-Prozess** (Standard für eigene Tools) | eigener Prozess mit leerer Umgebung in einem temporären Ordner; **keine** Sicherheitsgrenze | 15 Sekunden, 1 GB Speicher |
 | **Eingebaute Linux-Sandbox** (automatisch für KI-erstellte Tools unter Ubuntu 24.04 und Debian 13) | kein Netzwerk, kein Zugriff auf deine Dateien, Schlüssel, die Nodestro-Daten oder andere Programme; keine neuen Prozesse; beschreibbar ist nur ein eigener temporärer Ordner | 15 Sekunden (60 mit Bibliotheken), 1 GB Speicher, 64 MB temporäre Dateien |
-| **Docker** | Wegwerf-Container ohne Netzwerk, mit schreibgeschütztem Dateisystem, ohne Rechte | 20 Sekunden, 512 MB Speicher, 1 CPU |
+| **Docker** (automatisch für KI-erstellte Tools, wo die eingebaute Sandbox nicht verfügbar ist, auch unter macOS und Windows) | Wegwerf-Container ohne Netzwerk, mit schreibgeschütztem Dateisystem, ohne Rechte | 20 Sekunden, 512 MB Speicher, 1 CPU |
 
 Die eingebaute Linux-Sandbox braucht keine Installation: Sie nutzt Funktionen des Linux-Kernels (Landlock und seccomp). Nodestro prüft einmal beim Start, ob sie vorhanden sind und wirken; *Einstellungen → Sandbox* zeigt das Ergebnis und, falls sie nicht verfügbar ist, den Grund. Sie schützt nicht vor Fehlern im Linux-Kernel selbst und verbirgt nicht, ob eine Datei anderswo existiert; Docker bleibt als Alternative verfügbar.
 
-Die Sandbox wählst du in den [Einstellungen](/docs/einstellungen#sandbox). Docker muss installiert sein und laufen, sonst schlagen Tests und Aufrufe fehl. Überschreitet ein Aufruf das Zeitlimit, gilt er als Fehler und der Prozess wird beendet.
+Die Sandbox wählst du in den [Einstellungen](/docs/einstellungen#sandbox); *Automatisch* wählt sie für dich. Docker muss installiert sein und laufen ([Docker installieren](/docs/einstellungen#sandbox-docker)), sonst schlagen Tests und Aufrufe der Tools fehl, die es brauchen. Unter macOS hat Nodestro außerdem eine experimentelle Sandbox; sie wird in den Einstellungen angezeigt, aber nicht verwendet, bis sie unabhängig geprüft ist. Überschreitet ein Aufruf das Zeitlimit, gilt er als Fehler und der Prozess wird beendet.
 
 ## Vertrauen und Isolation {#vertrauen}
 <!-- keywords: vertrauen, nicht vertrauenswürdig, herkunft, ki-generiert, docker nötig, isolation nötig, gesperrt, eingeschränkt, braucht isolation -->
@@ -164,7 +164,7 @@ Nodestro entscheidet nach der **Herkunft des Codes**, wo er laufen darf:
 | Von dir unter *Selbst schreiben* geschrieben | *Von dir geschrieben* | läuft, ohne Isolation auf diesem Rechner | läuft (im *Python-Prozess* oder isoliert in Docker) |
 | Von der KI erstellt (auch nach deiner Freigabe), Tool-Entwürfe des KI-Architekten, Tools unbekannter Herkunft | *Braucht Isolation* | **gesperrt** | läuft isoliert |
 
-Der Python-Prozess ist keine Sicherheitsgrenze: Code darin läuft mit deinen Rechten. Deshalb führt Nodestro KI-generierten Code dort nie aus, und weder deine Freigabe noch eine Einstellung ändert das; es gibt keinen Schalter, der es trotzdem erlaubt. Wo die eingebaute Linux-Sandbox verfügbar ist, nutzt Nodestro sie für solchen Code automatisch. Ohne sie und ohne Docker:
+Der Python-Prozess ist keine Sicherheitsgrenze: Code darin läuft mit deinen Rechten. Deshalb führt Nodestro KI-generierten Code dort nie aus, und weder deine Freigabe noch eine Einstellung ändert das; es gibt keinen Schalter, der es trotzdem erlaubt. Wo die eingebaute Linux-Sandbox verfügbar ist, nutzt Nodestro sie für solchen Code automatisch, sonst im Modus *Automatisch* Docker, solange es läuft. Ohne beides:
 
 - startet **Mit KI erstellen** nicht, und Tool-Entwürfe lassen sich weder testen noch freigeben;
 - können Agenten mit einem Tool, das Isolation braucht, nicht laufen; die Workflow-Prüfung meldet das vor dem Start;

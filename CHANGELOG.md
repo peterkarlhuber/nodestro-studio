@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### Settings → Sandbox for every operating system (2026-11-02, ADR-0009)
+
+- New mode **Automatic** (default when nothing was chosen): AI-created tools run in the built-in Linux sandbox
+  where it is approved, otherwise in Docker while it runs, otherwise they are blocked; never in the Python process.
+  A mode chosen earlier is kept.
+- The panel (`SettingsSandbox.tsx`) shows the computer running Nodestro (the runtime's OS and CPU, not the
+  browser's), where AI-created and own tools run now or why they are blocked, and a table of every sandbox on that
+  computer with its state (approved, experimental and not used, not available, not isolated, not used here). The
+  macOS sandbox of Orkexa is shown as experimental and is not used; Windows has no native sandbox yet. On a server
+  the panel says that tools run only in containers. Older runtimes keep the earlier view.
+- Tools page: the sandbox note and the trust notes follow the runtime's report (`untrustedBackend`); creating tools
+  with AI is blocked whenever the report says so (also with Docker chosen but not running).
+- Six languages; built-in docs: Settings → Sandbox rewritten, new section *Installing Docker* (macOS, Windows,
+  Linux), tools, start and FAQ updated. `platform_smoke.py` checks the report on every platform (OS, never an
+  unsafe backend, experimental backends never approved).
+- ADR-0009 (cross-platform sandbox architecture, proposed).
+
 ### macOS and Windows start (2026-11-02)
 
 - Pins: nodestro-runtime 47a665e (runtime #77) and the cascade (examples, integrations, api, sdk). The runtime could

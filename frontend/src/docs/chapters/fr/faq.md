@@ -19,7 +19,8 @@ Vous trouverez ici des solutions aux messages courants et des réponses aux ques
 | « Les citations ne peuvent pas être combinées avec un format de sortie structuré » | Les deux options sont activées. | Désactivez l’une d’elles. |
 | « Les messages d’exemple doivent … » | Les exemples n’alternent pas correctement. | Commencez par l’utilisateur, alternez, terminez par l’assistant. |
 | « Une mémoire persistante nécessite un espace mémoire » | Mémoire *Persistante* sans espace. | Choisissez ou créez un espace. |
-| Erreurs Docker avec les outils | Docker est choisi mais ne tourne pas. | Démarrez Docker ou choisissez le bac à sable *Processus Python*. |
+| Erreurs Docker avec les outils | Docker est choisi mais ne tourne pas. | Démarrez Docker ou choisissez le bac à sable *Automatique*. |
+| Les outils créés par l’IA sont bloqués sous macOS ou Windows | Sur ces systèmes, il n’existe aucun bac à sable validé sans Docker. | [Installez Docker](/docs/einstellungen#sandbox-docker) et démarrez-le ; *Automatique* l’utilise alors. |
 | Un agent a été *ignoré* | Un prédécesseur a échoué. | Examinez le premier agent en rouge dans le déroulement et corrigez-le. |
 | Le résultat contient « {{Nom}} » tel quel | L’espace réservé ne correspond à aucun prédécesseur direct (par exemple après un renommage). | Réinsérez l’espace réservé avec les boutons sous la tâche. |
 | Import de trace : « Il s’agit d’un workflow exporté … » | Le fichier est un export de workflow. | Ouvrez-le dans *Workflows → Importer*. |

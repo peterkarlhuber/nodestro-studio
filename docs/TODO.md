@@ -185,7 +185,9 @@ None known.
 - **What:** All checks ran in Chromium on Linux. Firefox, Safari/WebKit, Windows, macOS and real mobile devices are
   untested; `scripts/e2e.sh` supports `E2E_BROWSER=firefox|webkit`, but CI runs Chromium only. Since 2026-11-01 the
   frontend build and unit tests also run on `macos-latest` (`.github/workflows/macos.yml`), and every PR fails on
-  file names that differ only in case (`scripts/check_case_collisions.py`); the app itself is still not run on macOS.
+  file names that differ only in case (`scripts/check_case_collisions.py`). Since 2026-11-02 the `Platforms`
+  workflow starts the studio (API, settings, interface) on macOS arm64 and x86-64, Windows x64 and ARM64 and Linux;
+  the interface itself has not been used in a browser on macOS or Windows.
 - **Next step:** Run the e2e suites once in Firefox and WebKit and record the result; decide whether CI adds one engine.
 
 ### ST-020 · Assistive technology, zoom, motion and contrast checks
@@ -285,6 +287,15 @@ None known.
 - **What:** The MCP interface is accepted only for an isolated, read-only server pilot. Desktop MCP, write tools,
   unattended calls and Nodestro's own MCP server are not released; the residual risks are listed in the threat model.
 - **Next step:** Re-evaluate only with a new owner decision and a new security review.
+
+### ST-033 · Native sandboxes for macOS and Windows (ADR-0009)
+
+- **Priority:** P2 Medium · **Status:** Open · **Refs:** ADR-0009, orkexa ORK-014/ORK-015, runtime RT-019
+- **What:** Settings → Sandbox shows the runtime's OS, every backend with its state and why AI-created tools are
+  blocked; `auto` uses Docker where the built-in Linux sandbox is not available. The macOS sandbox is shown as
+  *Experimental, not used*; Windows has none. On both systems AI-created tools need Docker.
+- **Next step:** Independent security review of the macOS sandbox, then a release decision (only `isolation_of` in
+  the runtime changes; the studio already shows the state); a Windows backend as a separate decision.
 
 ## Cross-repository dependencies
 
