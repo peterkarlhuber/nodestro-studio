@@ -41,3 +41,16 @@ python scripts/derive_branding.py --product nodestro --masters branding \
 
 The script writes `nodestro-mark-on-dark.png` only for products whose symbol needs a dark-surface variant
 (Orkexa); Nodestro's lime symbol works on every surface. Requires Pillow and NumPy.
+
+## GitHub social preview
+
+`branding/social-preview.png` (1280 × 640) is the repository's GitHub social preview, uploaded by hand in the
+repository settings. `scripts/social_preview.py` renders it; the same template is vendored unchanged in the
+Orkexa and Axentra repositories, so all three previews share one layout: a dark background with a soft glow in
+the brand colour, the white-wordmark lockup, a short accent rule and a one-line caption. Only the logo pixels come
+from the master.
+
+```sh
+python scripts/social_preview.py --product nodestro --masters branding --out branding/social-preview.png \
+  --caption "Visual studio for multi-agent workflows"
+```
