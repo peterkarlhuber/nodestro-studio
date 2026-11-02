@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Platform pins: Axentra platform services (2026-11-02)
+
+- Pins: nodestro-runtime `95dbdfa` (Axentra audit/usage mirrors, identity backend; all off by default),
+  nodestro-api `bda8148` (`nodestro-server axentra status|reconcile|backfill-identity|reconcile-identity`,
+  `secrets reencrypt`), nodestro-examples `0ae5ad4`, nodestro-integrations `12013a4`, nodestro-sdk `c30f88b` (api pin only).
+- `platform/versions.json` lists `axentra` (`f114920`, pulled in by nodestro-runtime's `postgres` extra on
+  Python 3.11+). `check_versions` reads a dynamic version from the new `version_file` field; `check_imports` allows
+  only nodestro-runtime and nodestro-api to import `axentra`. The Studio UI and the desktop app do not use Axentra.
+
 ### Settings → Sandbox for every operating system (2026-11-02, ADR-0009)
 
 - New mode **Automatic** (default when nothing was chosen): AI-created tools run in the built-in Linux sandbox
