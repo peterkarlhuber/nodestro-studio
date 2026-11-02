@@ -76,7 +76,8 @@ Last update: 2026-11-01 (notes of PR-3 and PR-7/PR-8 brought in line with the ba
 - The generated `nodestro` script of a bundled wheel names the build-time interpreter path, so the shell calls the
   interpreter with `-m`, never the script.
 - Residual risk (documented): a process of the same OS user can read the backend's initial environment; the secret is
-  useless after the window used it.
+  useless after the window used it. Removed after review MS-1 (2026-11-02): the shell hands the launch secret and the
+  vault key over on a pipe (`--secrets-fd 0`, `nodestro_api.handoff`), never in the environment.
 
 ### PR-7 and PR-8
 
