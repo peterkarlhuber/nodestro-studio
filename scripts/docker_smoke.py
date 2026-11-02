@@ -24,11 +24,20 @@ Checks (each prints ``PASS`` or ``FAIL``; the exit code is 1 if any failed):
 6. with the engine unreachable (a second start with ``DOCKER_HOST`` at a closed port), the status is ``unavailable``
    with a ``docker-*`` reason and the untrusted tool and new tool jobs are refused with ``sandbox.isolation_required``;
    no container starts;
-7. optionally (``--stop-engine CMD``), the same after really stopping the engine (``sudo systemctl stop docker``,
-   ``colima stop``).
+7. optionally (``--stop-engine CMD``, or ``--stop-engine-prompt`` for a person who quits Docker Desktop by hand), the
+   same after really stopping the engine (``sudo systemctl stop docker``, ``colima stop``, ``docker desktop stop``);
+   ``--start-engine CMD`` starts it again afterwards;
+8. the diagnosis (``GET /api/diagnostics``) and the sandbox status give the reason the interface shows (its English
+   sentence from ``frontend/src/i18n/locales/en`` is printed when the checkout has it).
 
-The Docker CLI the studio uses must be on ``PATH`` (or ``NODESTRO_DOCKER``); the script reads ``docker events`` and
-``docker ps`` with the same CLI and environment.
+The Docker CLI the studio uses must be on ``PATH``; the script reads ``docker events`` and ``docker ps`` with the same
+CLI and environment (``NODESTRO_DOCKER`` only changes the CLI this script uses). Only this run's containers are looked
+at: those labelled with the installation's own owner (``org.orkexa.sandbox=nodestro-<id>``, from the data directory),
+so the containers of another Nodestro on the same engine are neither counted nor touched.
+
+Every check belongs to one of ten steps (:data:`STEPS`); ``--results FILE`` writes the checks with their step and the
+facts the run saw as JSON, which ``scripts/docker_test.py`` (the one-command test for Docker Desktop) turns into a
+plain-language summary and a diagnostic report.
 """
 
 from __future__ import annotations
@@ -36,6 +45,7 @@ from __future__ import annotations
 import argparse
 from collections.abc import Callable, Iterator
 import contextlib
+import hashlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
@@ -129,19 +139,47 @@ ENDLESS = 10**13
 # ---- results ----------------------------------------------------------------------------------------------------
 
 
+#: The steps of the full flow; every check belongs to one (``Report.step``).
+STEPS: dict[int, str] = {
+    1: "detection",
+    2: "preflight",
+    3: "image",
+    4: "self-test",
+    5: "AI-generated code in the Docker sandbox",
+    6: "isolation and resource limits",
+    7: "timeout and cancel",
+    8: "container cleanup",
+    9: "missing or stopped Docker",
+    10: "status and messages in Nodestro",
+}
+
+
 class Report:
     def __init__(self) -> None:
         self.failed: list[str] = []
         self.passed = 0
+        #: The step the next checks belong to (:data:`STEPS`).
+        self.step = 1
+        self.checks: list[dict[str, Any]] = []
+        #: What the run saw (engine, status rows, owner, ...), for ``--results``.
+        self.facts: dict[str, Any] = {}
 
-    def check(self, name: str, ok: bool, detail: Any = "") -> bool:
+    def check(self, name: str, ok: bool, detail: Any = "", *, step: int | None = None) -> bool:
         text = detail if isinstance(detail, str) else json.dumps(detail, default=str)
         print(f"{'PASS' if ok else 'FAIL'}: {name}" + (f" | {text}" if text else ""), flush=True)
+        self.checks.append({"step": step or self.step, "name": name, "ok": bool(ok), "detail": text[:2000]})
         if ok:
             self.passed += 1
         else:
             self.failed.append(name)
         return ok
+
+    def write(self, path: Path | None) -> None:
+        if path is None:
+            return
+        data = {"checks": self.checks, "facts": self.facts, "passed": self.passed, "failed": self.failed}
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(data, indent=2, default=str), encoding="utf-8")
 
 
 def note(text: str) -> None:
@@ -388,10 +426,35 @@ def wait_status(api: Api, limit: float, *, settled: Callable[[dict[str, Any]], b
 # ---- the engine -------------------------------------------------------------------------------------------------
 
 
+def installation_owner(data_dir: Path) -> str:
+    """The owner label of the studio's sandbox containers with this data directory (``nodestro-<12 hex digits>``),
+    as nodestro_runtime.docker_status.installation_owner computes it from the data directory and the installation id
+    (``<data>/python/installation-id``, written at the studio's start). Empty when the id is not there yet."""
+    try:
+        installation = (data_dir / "python" / "installation-id").read_text(encoding="utf-8").strip()
+    except OSError:
+        return ""
+    if not installation:
+        return ""
+    with contextlib.suppress(ImportError):
+        from nodestro_runtime.docker_status import installation_owner as runtime_owner
+
+        return str(runtime_owner(data_dir, installation))
+    resolved = str(data_dir.expanduser().resolve())
+    return "nodestro-" + hashlib.sha256(f"{resolved}\0{installation}".encode()).hexdigest()[:12]
+
+
+def owner_filter(owner: str) -> str:
+    """The ``--filter`` of this run's sandbox containers (any owner's while the owner is not known)."""
+    return f"label={OWNER_LABEL}={owner}" if owner else f"label={OWNER_LABEL}"
+
+
 class Engine:
-    def __init__(self, docker: str, env: dict[str, str]) -> None:
+    def __init__(self, docker: str, env: dict[str, str], owner: str = "") -> None:
         self.docker = docker
         self.env = env
+        #: The installation's owner label value; only containers with it are counted (see :func:`owner_filter`).
+        self.owner = owner
 
     def run(self, *args: str, timeout: float = 60) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
@@ -412,7 +475,7 @@ class Engine:
             "--filter",
             "type=container",
             "--filter",
-            f"label={OWNER_LABEL}",
+            owner_filter(self.owner),
             "--format",
             "{{json .}}",
             timeout=60,
@@ -424,7 +487,7 @@ class Engine:
         return events
 
     def containers(self, *, running: bool = False) -> list[dict[str, Any]]:
-        args = ["ps", "--no-trunc", "--filter", f"label={OWNER_LABEL}", "--format", "{{json .}}"]
+        args = ["ps", "--no-trunc", "--filter", owner_filter(self.owner), "--format", "{{json .}}"]
         if not running:
             args.insert(1, "-a")
         found = self.run(*args)
@@ -487,6 +550,8 @@ def isolation_flags(found: dict[str, Any]) -> dict[str, Any]:
         "binds": host.get("Binds"),
         "mounts": [m.get("Type") for m in found.get("Mounts") or []],
         "memory": host.get("Memory"),
+        "memory_swap": host.get("MemorySwap"),
+        "nano_cpus": host.get("NanoCpus"),
         "pids_limit": host.get("PidsLimit"),
     }
 
@@ -501,6 +566,58 @@ def isolated(flags: dict[str, Any]) -> bool:
         and not flags["binds"]
         and "bind" not in flags["mounts"]
     )
+
+
+def limited(flags: dict[str, Any]) -> bool:
+    """Memory (without extra swap), CPU and process limits are set on the container (that the engine enforces them is
+    the self-test's part: it reads the container's cgroup v2 files)."""
+    memory = flags.get("memory") or 0
+    return (
+        memory > 0
+        and flags.get("memory_swap") == memory
+        and (flags.get("nano_cpus") or 0) > 0
+        and (flags.get("pids_limit") or 0) > 0
+    )
+
+
+#: Where the interface's English texts live in a checkout (the sentences of the reasons and the diagnosis).
+LOCALES = Path(__file__).resolve().parents[1] / "frontend" / "src" / "i18n" / "locales" / "en"
+
+
+def _lookup(file: str, key: str) -> str:
+    try:
+        value: Any = json.loads((LOCALES / file).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return ""
+    for part in key.split("."):
+        value = value.get(part) if isinstance(value, dict) else None
+    return value if isinstance(value, str) else ""
+
+
+def reason_sentence(reason: str) -> str:
+    """The sentence Settings -> Sandbox shows for a ``docker-*`` reason (empty when unknown or not in this checkout)."""
+    if not reason.startswith("docker-"):
+        return ""
+    return _lookup("settings.json", f"sandbox.docker.reason.{reason[len('docker-') :]}")
+
+
+def diagnosis_sentence(code: str) -> str:
+    """The sentence the diagnosis page shows for its Docker check's ``code``."""
+    return _lookup("diagnostics.json", f"checks.docker.{code}")
+
+
+def docker_diagnosis(api: Api) -> dict[str, Any]:
+    """The Docker check of ``GET /api/diagnostics`` (empty when the endpoint or the check is missing)."""
+    status, body = api.call("GET", "/api/diagnostics", timeout=180)
+    if status != 200 or not isinstance(body, dict):
+        return {"http_status": status}
+    return next((dict(c) for c in body.get("checks") or [] if isinstance(c, dict) and c.get("id") == "docker"), {})
+
+
+def arch_matches(engine_arch: str, image_arch: str) -> bool:
+    """``docker info`` says ``aarch64``/``x86_64``, images say ``arm64``/``amd64``."""
+    aliases = {"aarch64": "arm64", "arm64": "arm64", "x86_64": "amd64", "amd64": "amd64"}
+    return bool(image_arch) and aliases.get(engine_arch.lower(), engine_arch.lower()) == image_arch.lower()
 
 
 # ---- the steps --------------------------------------------------------------------------------------------------
@@ -563,30 +680,76 @@ def workflow_with(api: Api, tool: str) -> str:
     return str(workflow["id"])
 
 
+#: The status checks (``GET /api/sandbox/status``) and the step each one belongs to.
+STATUS_STEPS = {"cli": 1, "daemon": 1, "preflight": 2, "image": 3, "self-test": 4}
+
+
+def status_facts(row: dict[str, Any]) -> dict[str, Any]:
+    return {k: row.get(k) for k in ("state", "reason", "detail", "engine", "rootless", "cgroup_version", "tested_at")}
+
+
 def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready_limit: float) -> bool:
-    """Steps 2 to 5 with the engine running; returns whether the tools exist for the blocked phase."""
+    """Steps 1 to 8 with the engine running; returns whether the tools exist for the blocked phase."""
+    report.step = 1
     configure_model(api, model_url)
     settings = api.get("/api/settings", timeout=60)
     report.check("sandbox mode is the default 'auto'", settings.get("sandbox") == "auto", settings.get("sandbox"))
 
+    began = time.monotonic()
     row = wait_status(api, ready_limit, settled=lambda r: r.get("state") != "checking")
+    report.facts["status_seconds"] = round(time.monotonic() - began, 1)
+    report.facts["status"] = {**status_facts(row), "checks": row.get("checks", [])}
     checks = {check["name"]: check for check in row.get("checks", [])}
+    for check in row.get("checks", []):
+        print(f"     check {check['name']}: {'ok' if check['ok'] else 'FAILED'} {check.get('detail', '')}")
+    # One PASS/FAIL per stage; a stage after the first failed one did not run (it is reported as not run).
+    for name, step in STATUS_STEPS.items():
+        if name in checks:
+            report.check(
+                f"status check '{name}' passed", bool(checks[name]["ok"]), checks[name].get("detail", ""), step=step
+            )
+    image_id = str((checks.get("image") or {}).get("detail", ""))
+    if image_id.startswith("sha256:"):
+        found = engine.run("image", "inspect", "--format", "{{.Os}}/{{.Architecture}}", image_id)
+        image_platform = found.stdout.strip()
+        report.facts["image_platform"] = image_platform
+        engine_arch = str(report.facts.get("engine", {}).get("Architecture") or "")
+        report.check(
+            "the sandbox image is a Linux image for the engine's architecture",
+            image_platform.startswith("linux/") and arch_matches(engine_arch, image_platform.partition("/")[2]),
+            {"image": image_platform, "engine": engine_arch},
+            step=3,
+        )
+    report.step = 4
     approved = report.check(
         "GET /api/sandbox/status: state approved",
         row.get("state") == "approved" and row.get("available") is True and row.get("reason") == "",
-        {k: row.get(k) for k in ("state", "reason", "detail", "engine", "rootless", "cgroup_version", "tested_at")},
+        status_facts(row),
     )
-    for check in row.get("checks", []):
-        print(f"     check {check['name']}: {'ok' if check['ok'] else 'FAILED'} {check.get('detail', '')}")
+    report.step = 10
+    sentence = reason_sentence(str(row.get("reason", "")))
+    if sentence:
+        note(f"Settings -> Sandbox shows: {sentence}")
+    diagnosis = docker_diagnosis(api)
+    report.facts["diagnosis"] = diagnosis
+    expected = (
+        "available" if approved else ("not_installed" if row.get("reason") == "docker-missing" else "unavailable")
+    )
     report.check(
-        "preflight and in-container self-test passed",
-        bool(checks) and all(c["ok"] for c in checks.values()) and {"preflight", "self-test"} <= set(checks),
-        sorted(checks),
+        f"the diagnosis (GET /api/diagnostics) reports Docker as '{expected}'",
+        diagnosis.get("code") == expected,
+        {**{k: diagnosis.get(k) for k in ("status", "code", "message")}, "text": diagnosis_sentence(expected)},
     )
     if not approved:
         # An engine that does not pass the checks is not used: generated code is refused, as without an engine.
+        report.step = 9
         status, body = api.call("POST", "/api/tools/jobs", {"requirement": "SMOKE-ADD: write the tool add_numbers"})
         params = body.get("params") or {} if isinstance(body, dict) else {}
+        report.facts["refusal"] = {
+            "status": status,
+            "code": body.get("code") if isinstance(body, dict) else body,
+            "params": params,
+        }
         report.check(
             "an engine that failed its checks is not used: tool jobs are refused",
             status == 400
@@ -596,6 +759,7 @@ def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready
             {"status": status, "code": body.get("code") if isinstance(body, dict) else body, "params": params},
         )
         return False
+    report.step = 1
     settings = api.get("/api/settings", timeout=60)
     selection = settings.get("sandbox_selection") or {}
     report.check(
@@ -603,6 +767,7 @@ def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready
         selection.get("untrusted") == "docker" and selection.get("blocked") is False and settings["docker_available"],
         selection,
     )
+    report.step = 5
 
     # A generated tool: its tests run in a container during the job.
     began = engine.now()
@@ -630,8 +795,10 @@ def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready
     )
     started, left = started_and_removed(engine.events(began, ended))
     report.check("the call ran in an orkexa-sandbox container (docker events)", len(started) >= 1, started)
-    report.check("that container was removed (destroy event)", bool(started) and not left, {"not_removed": left})
-    report.check("no sandbox container left after the call (docker ps -a)", not engine.wait_gone(10), "")
+    report.check(
+        "that container was removed (destroy event)", bool(started) and not left, {"not_removed": left}, step=8
+    )
+    report.check("no sandbox container left after the call (docker ps -a)", not engine.wait_gone(10), "", step=8)
 
     try:
         _job, spin = generate_tool(api, "SMOKE-SPIN", "spin_rounds")
@@ -641,6 +808,7 @@ def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready
         return True
 
     # A call past the timeout.
+    report.step = 7
     answer: dict[str, Any] = {}
 
     def call() -> None:
@@ -655,8 +823,18 @@ def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready
         assert running is not None
         found = engine.inspect(str(running["Names"]))
         flags = isolation_flags(found) if found else {}
+        report.facts["container_flags"] = flags
         report.check(
-            "docker inspect: isolation flags of the running sandbox container", bool(flags) and isolated(flags), flags
+            "docker inspect: isolation flags of the running sandbox container",
+            bool(flags) and isolated(flags),
+            flags,
+            step=6,
+        )
+        report.check(
+            "docker inspect: memory, CPU and process limits are set (the self-test proved the engine applies them)",
+            bool(flags) and limited(flags),
+            {k: flags.get(k) for k in ("memory", "memory_swap", "nano_cpus", "pids_limit")},
+            step=6,
         )
     worker.join(CALL_TIMEOUT * 6 + 10)
     result = answer.get("result") or {}
@@ -668,7 +846,7 @@ def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready
         {"status": answer.get("status"), "seconds": round(answer.get("seconds", -1), 1), "result": result},
     )
     remaining = engine.wait_gone(10)
-    report.check("no sandbox container left after the timeout", not remaining, remaining)
+    report.check("no sandbox container left after the timeout", not remaining, remaining, step=8)
 
     # A workflow run cancelled while its tool call runs.
     try:
@@ -722,8 +900,10 @@ def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready
 
 
 def phase_blocked(report: Report, api: Api, engine: Engine, label: str, have_tool: bool) -> None:
-    """Step 6/7: without a reachable engine nothing untrusted runs, and no container starts."""
+    """Steps 9 and 10: without a reachable engine nothing untrusted runs, no container starts, and Nodestro says why."""
+    report.step = 9
     row = wait_status(api, 180, settled=lambda r: r.get("state") != "checking")
+    report.facts.setdefault("blocked", {})[label] = status_facts(row)
     report.check(
         f"[{label}] sandbox status unavailable with a docker-* reason",
         row.get("state") == "unavailable"
@@ -755,9 +935,25 @@ def phase_blocked(report: Report, api: Api, engine: Engine, label: str, have_too
         status == 400 and isinstance(body, dict) and body.get("code") == "sandbox.isolation_required",
         {"status": status, "code": body.get("code") if isinstance(body, dict) else body},
     )
+    report.step = 10
+    reason = str(row.get("reason", ""))
+    sentence = reason_sentence(reason)
+    report.check(
+        f"[{label}] Settings -> Sandbox has a sentence for the reason {reason or '(none)'}",
+        bool(sentence) or not LOCALES.is_dir(),
+        sentence or "(no frontend texts in this checkout)",
+    )
+    expected = "not_installed" if reason == "docker-missing" else "unavailable"
+    diagnosis = docker_diagnosis(api)
+    report.facts["blocked"][label]["diagnosis"] = diagnosis
+    report.check(
+        f"[{label}] the diagnosis (GET /api/diagnostics) reports Docker as '{expected}'",
+        diagnosis.get("code") == expected,
+        {**{k: diagnosis.get(k) for k in ("status", "code", "message")}, "text": diagnosis_sentence(expected)},
+    )
 
 
-def unsuitable(report: Report, env: dict[str, str], docker: str) -> int:
+def unsuitable(report: Report, env: dict[str, str], docker: str, results: Path | None = None) -> int:
     """``--expect-unsuitable``: whatever engine this computer has (or none), untrusted code is refused."""
     note(f"docker CLI: {docker or 'not found'}")
     if docker:
@@ -778,8 +974,76 @@ def unsuitable(report: Report, env: dict[str, str], docker: str) -> int:
             phase_blocked(report, api, Engine(docker, env), "unsuitable engine", False)
         if report.failed:
             print("\n".join(log.read_text("utf-8", "replace").splitlines()[-200:]))
+    report.write(results)
     print(f"\n{report.passed} passed, {len(report.failed)} failed")
     return 1 if report.failed else 0
+
+
+def split_command(command: str) -> list[str]:
+    """A ``--stop-engine``/``--start-engine`` command as arguments: a JSON list as it is (a Windows path with spaces
+    needs no quoting), otherwise split like a shell would (on Windows backslashes are kept)."""
+    if command.lstrip().startswith("["):
+        with contextlib.suppress(json.JSONDecodeError):
+            value = json.loads(command)
+            if isinstance(value, list) and value and all(isinstance(part, str) for part in value):
+                return value
+    return shlex.split(command, posix=os.name != "nt")
+
+
+def start_detached(command: str) -> None:
+    """Start the engine without waiting for the command: ``Docker Desktop.exe`` keeps running, ``open -a Docker`` and
+    ``docker desktop start`` return; :func:`wait_engine` then waits for the engine."""
+    options: dict[str, Any] = {"stdin": subprocess.DEVNULL, "stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
+    if os.name == "nt":
+        options["creationflags"] = getattr(subprocess, "DETACHED_PROCESS", 0) | getattr(
+            subprocess, "CREATE_NEW_PROCESS_GROUP", 0
+        )
+    else:
+        options["start_new_session"] = True
+    try:
+        subprocess.Popen(split_command(command), **options)
+    except OSError as error:
+        note(f"the start command failed: {error}")
+
+
+def wait_engine(engine: Engine, *, up: bool, limit: float) -> bool:
+    """Wait until ``docker info`` succeeds (``up``) or fails; Docker Desktop takes a while to quit and to start."""
+    deadline = time.monotonic() + limit
+    while True:
+        try:
+            answered = engine.run("info", "--format", "{{.ServerVersion}}", timeout=30).returncode == 0
+        except subprocess.TimeoutExpired:
+            answered = False
+        if answered == up:
+            return True
+        if time.monotonic() > deadline:
+            return False
+        time.sleep(2)
+
+
+def stop_engine(report: Report, engine: Engine, command: str | None, prompt: bool, limit: float) -> bool:
+    """Stop the engine with ``command`` or, with ``prompt``, ask the person to quit it; True once it is gone."""
+    if command:
+        note(f"stopping the engine: {command}")
+        try:
+            stopped = subprocess.run(split_command(command), check=False, capture_output=True, text=True, timeout=300)
+            note(f"exit {stopped.returncode} {stopped.stdout.strip()[-300:]} {stopped.stderr.strip()[-300:]}")
+        except (OSError, subprocess.TimeoutExpired) as error:
+            note(f"the stop command failed: {error}")
+    if prompt:
+        print(
+            "\n>>> Please quit Docker Desktop now: whale icon in the menu bar (or the system tray) -> Quit."
+            "\n>>> The test continues by itself once Docker has stopped.",
+            flush=True,
+        )
+    gone = wait_engine(engine, up=False, limit=limit)
+    last = engine.run("info", timeout=30) if gone else None
+    report.check(
+        "engine really stopped (docker info fails)",
+        gone,
+        (last.stderr.strip()[-300:] if last is not None else f"still answering after {limit:g} s"),
+    )
+    return gone
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -787,6 +1051,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--data-dir", type=Path, help="data directory (default: a new temporary one)")
     parser.add_argument("--ready-timeout", type=float, default=900, help="seconds to wait for 'approved'")
     parser.add_argument("--stop-engine", help="command that really stops the engine for the last phase")
+    parser.add_argument(
+        "--stop-engine-prompt",
+        action="store_true",
+        help="for the last phase, ask the person at the keyboard to quit the engine (Docker Desktop) and wait for it",
+    )
+    parser.add_argument("--stop-timeout", type=float, default=300, help="seconds to wait for the engine to stop")
+    parser.add_argument("--start-engine", help="command that starts the engine again after the last phase")
+    parser.add_argument("--results", type=Path, help="write the checks (with their step) and facts as JSON here")
     parser.add_argument(
         "--expect-unsuitable",
         action="store_true",
@@ -799,9 +1071,11 @@ def main(argv: list[str] | None = None) -> int:
     env = {**os.environ, "PYTHONUTF8": "1"}
     env.pop("NODESTRO_PROFILE", None)
     docker = env.get("NODESTRO_DOCKER") or shutil.which("docker") or ""
+    report.facts["system"] = {"platform": sys.platform, "machine": platform.machine(), "os": platform.platform()}
     if args.expect_unsuitable:
-        return unsuitable(report, env, docker)
+        return unsuitable(report, env, docker, args.results)
     if not report.check("docker CLI on PATH", bool(docker), docker):
+        report.write(args.results)
         return 1
     engine = Engine(docker, env)
     version = engine.run("version", "--format", "{{json .}}")
@@ -811,24 +1085,22 @@ def main(argv: list[str] | None = None) -> int:
     info = engine.run("info", "--format", "{{json .}}")
     with contextlib.suppress(json.JSONDecodeError):
         facts = json.loads(info.stdout)
-        note(
-            "engine: "
-            + json.dumps(
-                {
-                    k: facts.get(k)
-                    for k in (
-                        "ServerVersion",
-                        "OperatingSystem",
-                        "OSType",
-                        "Architecture",
-                        "CgroupVersion",
-                        "CgroupDriver",
-                        "SecurityOptions",
-                        "Name",
-                    )
-                }
+        report.facts["engine"] = {
+            k: facts.get(k)
+            for k in (
+                "ServerVersion",
+                "OperatingSystem",
+                "OSType",
+                "Architecture",
+                "CgroupVersion",
+                "CgroupDriver",
+                "SecurityOptions",
+                "Name",
+                "MemTotal",
+                "NCPU",
             )
-        )
+        }
+        note("engine: " + json.dumps(report.facts["engine"]))
     print("system:", sys.platform, platform.machine(), platform.platform(), flush=True)
 
     with contextlib.ExitStack() as stack:
@@ -838,12 +1110,16 @@ def main(argv: list[str] | None = None) -> int:
         else:
             data_dir = args.data_dir
             directory = data_dir.parent
+        data_dir = data_dir.resolve()
         log = directory / "studio.log"
         model_url = stack.enter_context(stand_in_model())
         try:
             with studio(data_dir, log, env) as api:
+                engine.owner = installation_owner(data_dir)
+                report.facts["owner"] = engine.owner
+                note(f"this run's containers: {owner_filter(engine.owner)}")
                 have_tool = phase_engine(report, api, engine, model_url, args.ready_timeout)
-            report.check("no sandbox container left after the studio stopped", not engine.wait_gone(10), "")
+            report.check("no sandbox container left after the studio stopped", not engine.wait_gone(10), "", step=8)
 
             blocked_env = {**env, "DOCKER_HOST": UNREACHABLE}
             blocked_env.pop("DOCKER_CONTEXT", None)
@@ -851,24 +1127,30 @@ def main(argv: list[str] | None = None) -> int:
             with studio(data_dir, log, blocked_env) as api:
                 phase_blocked(report, api, engine, "engine unreachable", have_tool)
             started, _ = started_and_removed(engine.events(began, engine.now()))
-            report.check("[engine unreachable] no sandbox container started", not started, started)
+            report.check("[engine unreachable] no sandbox container started", not started, started, step=9)
 
-            if args.stop_engine:
-                note(f"stopping the engine: {args.stop_engine}")
-                stopped = subprocess.run(shlex.split(args.stop_engine), check=False, capture_output=True, text=True)
-                note(f"exit {stopped.returncode} {stopped.stdout.strip()} {stopped.stderr.strip()}")
-                gone = engine.run("info", timeout=30)
-                report.check(
-                    "engine really stopped (docker info fails)", gone.returncode != 0, gone.stderr.strip()[-300:]
-                )
-                with studio(data_dir, log, env) as api:
-                    phase_blocked(report, api, engine, "engine stopped", have_tool)
+            if args.stop_engine or args.stop_engine_prompt:
+                report.step = 9
+                if stop_engine(report, engine, args.stop_engine, args.stop_engine_prompt, args.stop_timeout):
+                    with studio(data_dir, log, env) as api:
+                        phase_blocked(report, api, engine, "engine stopped", have_tool)
+                if args.start_engine:
+                    note(f"starting the engine again: {args.start_engine}")
+                    start_detached(args.start_engine)
+                    report.check(
+                        "engine started again (docker info answers)",
+                        wait_engine(engine, up=True, limit=300),
+                        "",
+                        step=9,
+                    )
         finally:
+            report.write(args.results)
             if report.failed:
                 print("----- studio log (last 200 lines) -----")
                 with contextlib.suppress(OSError):
                     print("\n".join(log.read_text("utf-8", "replace").splitlines()[-200:]))
 
+    report.write(args.results)
     print(f"\n{report.passed} passed, {len(report.failed)} failed")
     for name in report.failed:
         print(f"  FAILED: {name}")

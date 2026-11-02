@@ -97,6 +97,8 @@ described in [docs/PLATFORM.md](docs/PLATFORM.md). Nodestro 0.1 is preserved unc
 **Tested platforms:** CI and the release checks run on Linux (Python 3.11 and 3.13, Node.js 20 and 22). The browser
 tests pass in Chromium and Firefox on Linux; WebKit on Linux passes their functional checks. macOS, Windows and Safari
 are not tested; the Windows hints below are untested.
+The Docker sandbox on Docker Desktop (macOS, Windows) is checked by hand with one command:
+[docs/testing/docker-desktop.md](docs/testing/docker-desktop.md).
 
 ## Installation
 

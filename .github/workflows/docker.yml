@@ -14,12 +14,15 @@ name: Docker
 # - windows-latest / windows-11-arm: the preinstalled engine (if any) runs Windows containers only, and WSL 2 / Docker
 #   Desktop need nested virtualization the hosted runners do not offer. The "unsuitable" job checks the real refusal.
 # - Docker Desktop itself cannot be installed on hosted runners (license, virtualization): Docker Desktop on real
-#   hardware remains a manual release check.
+#   hardware remains a manual release check, with the one command the job "one-command" runs here
+#   (docs/testing/docker-desktop.md).
 on:
   pull_request:
     paths:
       - ".github/workflows/docker.yml"
       - "scripts/docker_smoke.py"
+      - "scripts/docker_test.py"
+      - "scripts/mac_docker_test.sh"
       - "pyproject.toml"
       - "platform/versions.json"
   push:
@@ -27,6 +30,8 @@ on:
     paths:
       - ".github/workflows/docker.yml"
       - "scripts/docker_smoke.py"
+      - "scripts/docker_test.py"
+      - "scripts/mac_docker_test.sh"
       - "pyproject.toml"
       - "platform/versions.json"
   workflow_dispatch:
@@ -88,6 +93,76 @@ jobs:
           docker info
       - name: AI-generated tool in a real container
         run: python scripts/docker_smoke.py --ready-timeout 1200 --stop-engine "${{ matrix.stop }}"
+
+  # The one command a person runs on Docker Desktop (docs/testing/docker-desktop.md), itself: from a fresh checkout,
+  # scripts/mac_docker_test.sh finds Python, scripts/docker_test.py installs the studio into its own environment,
+  # runs docker_smoke.py, stops and starts the engine for step 9, writes the redacted report and cleans up. The
+  # engine is Docker Engine (ubuntu) or Colima (macOS Intel), not Docker Desktop: the wrapper is proven here, Docker
+  # Desktop itself stays a manual check.
+  one-command:
+    name: one command (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            stop: sudo systemctl stop docker.socket docker.service
+            start: sudo systemctl start docker.socket docker.service
+          - os: macos-15-intel
+            stop: colima stop
+            start: colima start
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Start Colima (macOS Intel)
+        if: runner.os == 'macOS'
+        run: |
+          brew install colima docker
+          if ! colima start --cpu 3 --memory 6 --disk 40; then
+            colima delete --force || true
+            brew install qemu
+            colima start --vm-type qemu --cpu 3 --memory 6 --disk 40
+          fi
+      # The token is in this step's environment for pip only; docker_test.py removes it (and every *TOKEN*, key and
+      # GIT_CONFIG_* variable) from the environment of the studio it starts, and never writes the environment.
+      - name: The one command
+        env:
+          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+        run: |
+          if [ -n "$NODESTRO_READ" ]; then
+            export GIT_CONFIG_COUNT=1
+            export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
+            export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
+          fi
+          bash scripts/mac_docker_test.sh --work "$RUNNER_TEMP/nodestro-docker-test" --yes \
+            --stop-command "${{ matrix.stop }}" --start-command "${{ matrix.start }}"
+      - name: Only the test's own resources are gone, the report has no token
+        if: always()
+        env:
+          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+        run: |
+          work="$RUNNER_TEMP/nodestro-docker-test"
+          ls -la "$work"
+          test ! -e "$work/venv" && test ! -e "$work/run"
+          left="$(docker ps -aq --filter label=org.orkexa.sandbox)"
+          test -z "$left" || { docker ps -a; exit 1; }
+          if [ -n "$NODESTRO_READ" ] && grep -rlF "$NODESTRO_READ" "$work"/report-*; then exit 1; fi
+          cat "$work"/report-*.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: docker-report-${{ matrix.os }}
+          path: ${{ runner.temp }}/nodestro-docker-test/*.zip
+          if-no-files-found: warn
 
   # Windows runners: no Linux containers. The real check here is the refusal: whatever engine the runner has (Windows
   # containers, a stopped service or none), AI-generated code is not run.

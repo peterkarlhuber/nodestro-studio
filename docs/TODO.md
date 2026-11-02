@@ -363,9 +363,22 @@ None known.
     and on `macos-15-intel` (Colima, cgroup v2): `approved`, the untrusted tool in an `orkexa-sandbox-*` container
     with the isolation flags, no container left after the timeout and after the cancelled run, and refusal with the
     engine unreachable and really stopped. `windows-latest` refused with `docker-os-type`.
-- **Next step:** remaining manual release checks on real
-  hardware: Docker Desktop on macOS Apple Silicon, macOS Intel, Windows x64 and Windows ARM64 (Linux containers,
-  WSL 2), each with `scripts/docker_smoke.py` against the installed studio; then the packaged desktop app
+- **One command for Docker Desktop (2026-11-02):** `scripts/mac_docker_test.sh` / `py -3.13 scripts\docker_test.py`
+  (`docs/testing/docker-desktop.md`) installs the checkout's studio into its own environment, runs
+  `docker_smoke.py`, prints PASS/FAIL for ten steps and writes a redacted report; the smoke test now looks only at
+  its own installation's containers and also checks resource limits, the image architecture, the diagnosis and the
+  interface's reason sentences. CI job `one-command` runs the wrapper on `ubuntu-latest` and `macos-15-intel`.
+  Locally (cloud dev VM, rootful Docker 29.9.2, cgroup v1) the wrapper detected the engine, installed the studio
+  from a clean venv, reported the self-test refusal (`docker-selftest`, steps 3 and 5 to 7 not checked, steps 1, 2,
+  8, 9 and 10 passed), stopped with exit code 2 and a plain reason for a missing CLI and an unreachable engine, and
+  removed only its own data folder and environment (no other container or image touched). Not yet run on Docker
+  Desktop; the real stop/start path (`--stop-docker-desktop`, `--stop-command`) was not run locally.
+  - **Open risk, Windows (nodestro-runtime):** the runtime gives the docker CLI only `PATH`, `HOME`, `DOCKER_*` and
+    proxy variables (`container_images._cli_environment`), not `USERPROFILE`/`SYSTEMROOT`; on Windows the CLI then
+    does not find `%USERPROFILE%\.docker` (contexts, credential helper) and uses the default pipe `docker_engine`.
+    The wrapper reports what the CLI sees with that environment (`runtime_env_context`); confirm on Windows.
+- **Next step:** run the one command on real hardware: Docker Desktop on macOS Apple Silicon, macOS Intel, Windows
+  x64 and Windows ARM64 (Linux containers, WSL 2), and record each report here; then the packaged desktop app
   (nodestro-desktop) on the same systems, which no CI job starts.
 
 ## Cross-repository dependencies
