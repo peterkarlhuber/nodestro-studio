@@ -88,13 +88,13 @@ described in [docs/PLATFORM.md](docs/PLATFORM.md). Nodestro 0.1 is preserved unc
 
 ## Requirements
 
-- Python 3.10 or newer
+- Python 3.11 or newer
 - Node.js 20 or newer (only to build the user interface)
 - An API key for at least one provider (Anthropic, OpenAI or Gemini) or a local OpenAI-compatible server such as
   Ollama or vLLM
 - Optionally Docker, for the more strongly isolated tool sandbox
 
-**Tested platforms:** CI and the release checks run on Linux (Python 3.10 and 3.13, Node.js 20 and 22). The browser
+**Tested platforms:** CI and the release checks run on Linux (Python 3.11 and 3.13, Node.js 20 and 22). The browser
 tests pass in Chromium and Firefox on Linux; WebKit on Linux passes their functional checks. macOS, Windows and Safari
 are not tested; the Windows hints below are untested.
 

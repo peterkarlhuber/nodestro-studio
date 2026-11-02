@@ -202,7 +202,7 @@ None.
 
 | Check | Reason |
 | --- | --- |
-| Python 3.10 matrix leg | only 3.13 in this environment; CI runs 3.10 on every push and is green |
+| Python 3.10 matrix leg (the minimum then; 3.11 since 2026-11) | only 3.13 in this environment; CI ran 3.10 on every push and was green |
 | `NODESTRO_NETWORK_TESTS=1` (real PyPI install) | opt-in network test, skipped by design |
 | integrations real OCR (4 tests) | Tesseract language data and Poppler not installed here; CI installs them |
 | `scripts/check_versions.py` against GitHub | needs `NODESTRO_READ`-style access from this container; the local variant was run instead (with checkouts at master it reports a mismatch, because master holds merge commits whose trees equal the pins; that is expected) |

@@ -190,7 +190,7 @@ FastAPI (nodestro_api.app or                                        nodestro-api
 
 | Topic | Decision | Reason |
 | --- | --- | --- |
-| Backend | Python 3.10+, FastAPI, uvicorn | The library is Python. FastAPI provides typed endpoints, OpenAPI and SSE without extra services. |
+| Backend | Python 3.11+, FastAPI, uvicorn | The library is Python. FastAPI provides typed endpoints, OpenAPI and SSE without extra services. |
 | Operating profiles | one `RuntimeProfile` (`desktop`, `local-container`, `server`), chosen once and validated; no fallback | One code base for three products; an incomplete server configuration must never start with desktop behavior (ADR-0001). |
 | Persistence | desktop and local container: one SQLite file in the data folder; server: PostgreSQL 17 with a tenant column on every row, behind the same `DocumentStore` contract | Local needs no installation and stays transactional; a server needs several processes and tenant separation (ADR-0002). |
 | Identity | desktop: none, loopback only (plus the launch secret in the desktop app); local container: access key; server: OpenID Connect with PKCE, `__Host-` session cookie, roles per tenant | A loopback studio has one person; a server never sees passwords and grants nothing without a role (ADR-0003). |

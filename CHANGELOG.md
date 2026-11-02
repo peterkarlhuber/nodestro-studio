@@ -10,6 +10,16 @@
   engine is unreachable or stopped. `windows-latest` checks the refusal only (no Linux containers there). Apple
   Silicon and Docker Desktop cannot run on hosted runners and stay manual release checks (`docs/TODO.md`, ST-033).
 
+### Python 3.11 minimum (2026-11-02)
+
+- Python 3.11 is now the minimum (3.10 reached end of life in October 2026): `requires-python`, ruff `py311`, mypy 3.11,
+  CI and platform matrices 3.11/3.13, the requirements in the README, `docs/PLATFORM.md`, `docs/ARCHITECTURE.md` and the
+  settings chapter of the help (all six languages).
+- `scripts/check_versions.py` uses the built-in `tomllib`; the `tomli` dev dependency is gone.
+- Pins: orkexa `dec66eb` (#36), nodestro-runtime `51262a2` (#88; also docs: M12 contract step is RT-039),
+  nodestro-examples `3f91300` (#51), nodestro-integrations `6e0c9e6` (#47), nodestro-api `ef04cb4` (#68),
+  nodestro-sdk `d06d468` (#62), all with Python 3.11 as the minimum. axentra stays `024da57`.
+
 ### Platform pins: Axentra migration completion and security review fixes (2026-11-02)
 
 - Pins: axentra `024da57` (#20 SR-02/SR-05 with migration 0011, #19 session resolution in one transaction, #21/#24
