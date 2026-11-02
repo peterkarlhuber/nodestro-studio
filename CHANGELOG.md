@@ -12,6 +12,8 @@
   white wordmark from the app theme; no CSS filters or background boxes.
 - The welcome hero's hub has a node-card core behind the hexagon so the routes end at the logo.
 - Removed: `nodestro-logo-512.webp`, `nodestro-logo-64.png`, the CSS text wordmark (`.brand__name`, `.brand__dot`).
+- GitHub social preview `branding/social-preview.png` (1280 × 640), rendered by `scripts/social_preview.py`, the
+  template shared with Orkexa and Axentra; uploaded by hand in the repository settings.
 
 ### Platform pins: Docker-first sandbox (2026-11-02)
 
