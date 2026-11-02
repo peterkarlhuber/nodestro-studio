@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import type { Settings } from "../api/types";
 import { Field, TextInput } from "../components/ui";
-import { normalizeMoneyInput } from "../lib/money";
+import { formatMoney, normalizeMoneyInput } from "../lib/money";
 
 export const DECISION_HOURS_MIN = 1;
 export const DECISION_HOURS_MAX = 720;
@@ -16,18 +16,22 @@ export function hasBudgetPolicy(settings: Pick<Settings, "budget_decision_hours"
   return typeof settings?.budget_decision_hours === "number";
 }
 
-/** The policy fields as the API takes them, or which of them is invalid. */
+/**
+ * The policy fields as the API takes them, or which of them is invalid. An empty maximum is sent as
+ * ``clear_max_run_budget`` (a null value would keep the stored one); the API takes at most two decimals.
+ */
 export function budgetPolicyUpdate(form: Pick<Settings, "max_run_budget_usd" | "budget_decision_hours">): {
-  update: Pick<Settings, "max_run_budget_usd" | "budget_decision_hours">;
+  update: Pick<Settings, "max_run_budget_usd" | "budget_decision_hours" | "clear_max_run_budget">;
   invalid: ("max" | "hours")[];
 } {
   const invalid: ("max" | "hours")[] = [];
   const text = (form.max_run_budget_usd ?? "").trim();
   const max = text ? normalizeMoneyInput(text) : null;
-  if (text && (max === null || Number(max) <= 0)) invalid.push("max");
+  if (text && (max === null || Number(max) <= 0 || Number(max) > 1_000_000 || !/^\d+\.\d{2}$/.test(max))) invalid.push("max");
   const hours = form.budget_decision_hours;
   if (typeof hours !== "number" || !Number.isInteger(hours) || hours < DECISION_HOURS_MIN || hours > DECISION_HOURS_MAX) invalid.push("hours");
-  return { update: { max_run_budget_usd: text ? max : null, budget_decision_hours: hours }, invalid };
+  const update = text ? { max_run_budget_usd: max, budget_decision_hours: hours } : { clear_max_run_budget: true, budget_decision_hours: hours };
+  return { update, invalid };
 }
 
 export function BudgetPolicyFields({
@@ -49,7 +53,16 @@ export function BudgetPolicyFields({
       <Field
         label={t("budget.settings.maxRunBudget")}
         tip="budget.maxRunBudget"
-        hint={maxInvalid ? <span className="text-danger">{t("budget.settings.invalidMax")}</span> : t("budget.settings.maxRunBudgetHint")}
+        hint={
+          maxInvalid ? (
+            <span className="text-danger">{t("budget.settings.invalidMax")}</span>
+          ) : (
+            <>
+              {t("budget.settings.maxRunBudgetHint")}
+              {form.operator_max_run_budget_usd ? ` ${t("budget.settings.operatorCap", { max: formatMoney(form.operator_max_run_budget_usd) })}` : ""}
+            </>
+          )
+        }
       >
         <TextInput
           inputMode="decimal"

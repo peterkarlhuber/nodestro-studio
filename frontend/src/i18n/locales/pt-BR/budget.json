@@ -97,6 +97,7 @@
     "decisionHours": "Prazo das decisões de orçamento (horas)",
     "decisionHoursHint": "Quanto tempo uma execução aguarda uma decisão de orçamento antes de terminar (de 1 a 720 horas).",
     "invalidMax": "Informe um valor em dólares americanos ou deixe o campo vazio.",
-    "invalidHours": "Informe horas inteiras de 1 a 720."
+    "invalidHours": "Informe horas inteiras de 1 a 720.",
+    "operatorCap": "No máximo {{max}} por execução (teto do operador)."
   }
 }

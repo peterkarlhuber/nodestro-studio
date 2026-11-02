@@ -184,6 +184,8 @@
     "provider_auth_aws": "AWS no aceptó el inicio de sesión para Amazon Bedrock: faltan las credenciales o han caducado, o al rol de IAM le falta un permiso."
   },
   "budget": {
+    "not_starter": "Solo la persona que inició la ejecución o un administrador puede decidir sobre su presupuesto.",
+    "action_invalid": "La decisión no es válida: elige elevar el límite o terminar la ejecución.",
     "limit_not_higher": "El nuevo límite debe ser mayor que el límite actual.",
     "limit_invalid": "El nuevo límite no es un importe válido en dólares estadounidenses.",
     "over_policy": "El nuevo límite supera el máximo de {{max_limit_usd}} USD por ejecución que permite este espacio de trabajo.",
@@ -817,6 +819,9 @@
     "disabled": "El servidor MCP de Nodestro está desactivado."
   },
   "hints": {
+    "budget": {
+      "not_starter": "Pide a la persona que inició la ejecución o a un administrador que decida; puedes seguir la decisión aquí."
+    },
     "run": {
       "agent": {
         "IncompleteResponseError": "Aumenta «Máx. tokens» en «Avanzado» de este agente o pide una respuesta más corta en su tarea.",

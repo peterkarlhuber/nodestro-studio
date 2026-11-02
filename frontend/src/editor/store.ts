@@ -713,7 +713,7 @@ export const useEditor = create<EditorState>((set, get) => {
                       request_id: request.id,
                       previous_limit_usd: request.limit_usd,
                       new_limit_usd: request.new_limit_usd as string,
-                      decided_by: request.decided_by,
+                      decided_by: request.decided_by ?? "",
                       decided_at: request.decided_at ?? event.at,
                     },
                   ]

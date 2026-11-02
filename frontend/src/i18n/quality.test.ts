@@ -223,6 +223,7 @@ describe("backend codes", () => {
     // Dynamic run budget approval (BUDGET-1): run outcomes and refused decisions.
     "run.budget_exceeded", "run.budget_ended", "run.budget_request_expired", "run.budget_waits_interrupted",
     "run.budget_checkpoint_lost", "budget.limit_not_higher", "budget.limit_invalid", "budget.over_policy", "budget.not_pending",
+    "budget.not_starter", "budget.action_invalid",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

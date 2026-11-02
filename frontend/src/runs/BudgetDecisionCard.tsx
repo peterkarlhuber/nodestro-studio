@@ -232,7 +232,7 @@ export function BudgetDecisionForm({
       </div>
       <p className="small" data-testid="budget-reason">
         {t(`budget.card.reason.${request.reason}`, {
-          next: formatMoney(request.requests?.[0]?.max_cost_usd ?? null),
+          next: formatMoney((request.requests?.find((item) => item.refused) ?? request.requests?.[0])?.max_cost_usd ?? null),
           left: formatMoney(clampZero(moneyDifference(request.limit_usd, request.spent_usd))),
         })}{" "}
         <HelpTip id="budget.reason" label={t("budget.card.reasonLabel")} />

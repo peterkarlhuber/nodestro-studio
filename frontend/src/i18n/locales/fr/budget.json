@@ -97,6 +97,7 @@
     "decisionHours": "Délai des décisions de budget (heures)",
     "decisionHoursHint": "Combien de temps une exécution attend une décision de budget avant de se terminer (1 à 720 heures).",
     "invalidMax": "Saisissez un montant en dollars américains ou laissez le champ vide.",
-    "invalidHours": "Saisissez un nombre entier d’heures entre 1 et 720."
+    "invalidHours": "Saisissez un nombre entier d’heures entre 1 et 720.",
+    "operatorCap": "Au plus {{max}} par exécution (plafond de l’exploitant)."
   }
 }

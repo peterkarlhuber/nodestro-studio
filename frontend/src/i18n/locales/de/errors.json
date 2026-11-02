@@ -184,6 +184,8 @@
     "provider_auth_aws": "AWS hat die Anmeldung für Amazon Bedrock nicht akzeptiert: Zugangsdaten fehlen oder sind abgelaufen, oder der IAM-Rolle fehlt eine Berechtigung."
   },
   "budget": {
+    "not_starter": "Nur die Person, die den Lauf gestartet hat, oder ein Administrator kann über sein Budget entscheiden.",
+    "action_invalid": "Die Entscheidung ist ungültig: Erhöhe das Limit oder beende den Lauf.",
     "limit_not_higher": "Das neue Limit muss höher sein als das aktuelle Limit.",
     "limit_invalid": "Das neue Limit ist kein gültiger Betrag in US-Dollar.",
     "over_policy": "Das neue Limit liegt über dem Höchstwert von {{max_limit_usd}} USD pro Lauf, den dieser Arbeitsbereich erlaubt.",
@@ -817,6 +819,9 @@
     "disabled": "Der MCP-Server von Nodestro ist ausgeschaltet."
   },
   "hints": {
+    "budget": {
+      "not_starter": "Bitte die Person, die den Lauf gestartet hat, oder einen Administrator um die Entscheidung; du kannst sie hier verfolgen."
+    },
     "run": {
       "agent": {
         "IncompleteResponseError": "Erhöhe beim Agenten unter „Erweitert“ den Wert „Max. Tokens“ oder bitte im Auftrag um eine kürzere Antwort.",

@@ -25,6 +25,12 @@ describe("budget codes (BUDGET-1)", () => {
     expect(problemText(i18n.t, { code })).not.toBe(i18n.t("errors.unknown"));
   });
 
+  it("explains a refusal of someone who did not start the run", () => {
+    expect(problemCode({ code: "access.forbidden", params: { reason: "budget.not_starter" } })).toBe("budget.not_starter");
+    expect(problemText(i18n.t, { code: "access.forbidden", params: { reason: "budget.not_starter" } })).toBe(i18n.t("errors.budget.not_starter"));
+    expect(problemHint(i18n.t, { code: "budget.not_starter" })).toBe(i18n.t("errors.hints.budget.not_starter"));
+  });
+
   it("names the workspace's maximum", () => {
     expect(problemText(i18n.t, { code: "budget.over_policy", params: { max_limit_usd: "5.00" } })).toContain("5.00 USD");
   });

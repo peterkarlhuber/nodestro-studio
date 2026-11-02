@@ -20,6 +20,7 @@
     "e2e:api": "node e2e/api.mjs",
     "e2e:mcp": "node e2e/mcp.mjs",
     "e2e:approvals": "node e2e/approvals.mjs",
+    "e2e:budget": "node e2e/budget.mjs",
     "e2e:orchestration": "node e2e/orchestration.mjs",
     "e2e:runchat": "node e2e/runChat.mjs",
     "e2e:journeys": "node e2e/journeys.mjs",

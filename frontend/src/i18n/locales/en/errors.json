@@ -184,6 +184,8 @@
     "provider_auth_aws": "AWS did not accept the sign-in for Amazon Bedrock: credentials are missing or expired, or the IAM role lacks a permission."
   },
   "budget": {
+    "not_starter": "Only the person who started the run or an administrator can decide its budget.",
+    "action_invalid": "The decision is not valid: choose to raise the limit or to end the run.",
     "limit_not_higher": "The new limit must be higher than the current limit.",
     "limit_invalid": "The new limit is not a valid amount in US dollars.",
     "over_policy": "The new limit is above the maximum of {{max_limit_usd}} USD per run that this workspace allows.",
@@ -817,6 +819,9 @@
     "disabled": "Nodestro's MCP server is switched off."
   },
   "hints": {
+    "budget": {
+      "not_starter": "Ask the person who started the run or an administrator to decide; you can follow the decision here."
+    },
     "run": {
       "agent": {
         "IncompleteResponseError": "Raise \"Max. tokens\" under \"Advanced\" for this agent, or ask for a shorter answer in its task.",

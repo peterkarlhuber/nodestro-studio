@@ -97,6 +97,7 @@
     "decisionHours": "Scadenza delle decisioni sul budget (ore)",
     "decisionHoursHint": "Quanto un’esecuzione attende una decisione sul budget prima di terminare (da 1 a 720 ore).",
     "invalidMax": "Inserisci un importo in dollari statunitensi o lascia vuoto il campo.",
-    "invalidHours": "Inserisci ore intere da 1 a 720."
+    "invalidHours": "Inserisci ore intere da 1 a 720.",
+    "operatorCap": "Al massimo {{max}} per esecuzione (tetto del gestore)."
   }
 }

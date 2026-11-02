@@ -15,7 +15,7 @@ export function budgetRequest(overrides: Partial<BudgetRequest> = {}): BudgetReq
     spent_usd: "1.95",
     unknown_cost: false,
     reserved_usd: "0.00",
-    requests: [{ run_id: "run_1", node_id: "writer", agent: "Texter", model: "claude-sonnet-4-5", max_cost_usd: "0.40", bounded: true, price_quality: "known" }],
+    requests: [{ run_id: "run_1", node_id: "writer", agent: "Texter", model: "claude-sonnet-4-5", max_cost_usd: "0.40", bounded: true, price_status: "verified", refused: true }],
     suggested_limit_usd: "2.35",
     created_at: "2026-11-02T10:00:00Z",
     deadline: new Date(Date.now() + 24 * 3600_000).toISOString(),
@@ -43,7 +43,7 @@ export function runBudget(overrides: Partial<RunBudgetOut> = {}, request: Partia
     ],
     pending: request === null ? null : budgetRequest(request),
     history: [],
-    policy: { max_limit_usd: null, can_decide: true, reason: null },
+    policy: { max_limit_usd: null, can_decide: true, reason: null, decision_hours: 24 },
     ...overrides,
   };
 }

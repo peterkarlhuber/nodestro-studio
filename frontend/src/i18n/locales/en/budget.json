@@ -97,6 +97,7 @@
     "decisionHours": "Budget decision deadline (hours)",
     "decisionHoursHint": "How long a run waits for a budget decision before it ends (1 to 720 hours).",
     "invalidMax": "Enter an amount in US dollars or leave the field empty.",
-    "invalidHours": "Enter whole hours from 1 to 720."
+    "invalidHours": "Enter whole hours from 1 to 720.",
+    "operatorCap": "At most {{max}} per run (the operator's cap)."
   }
 }

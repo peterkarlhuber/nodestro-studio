@@ -97,6 +97,7 @@
     "decisionHours": "Plazo de las decisiones de presupuesto (horas)",
     "decisionHoursHint": "Cuánto tiempo espera una ejecución una decisión de presupuesto antes de terminar (de 1 a 720 horas).",
     "invalidMax": "Introduce un importe en dólares estadounidenses o deja el campo vacío.",
-    "invalidHours": "Introduce horas enteras de 1 a 720."
+    "invalidHours": "Introduce horas enteras de 1 a 720.",
+    "operatorCap": "Como máximo {{max}} por ejecución (tope del operador)."
   }
 }

@@ -111,7 +111,7 @@ describe("BudgetDecisionForm", () => {
         reason: "request_too_large",
         spent_usd: "1.65",
         block: { scope: "team", run_id: "run_child", node_id: "lead", label: "Recherche" },
-        requests: [{ run_id: "run_child", node_id: "a", agent: null, model: "gpt-x", max_cost_usd: null, bounded: false, price_quality: null }],
+        requests: [{ run_id: "run_child", node_id: "a", agent: "", model: "gpt-x", max_cost_usd: null, bounded: false, price_status: null }],
         suggested_limit_usd: null,
       },
     );
@@ -128,7 +128,7 @@ describe("BudgetDecisionForm", () => {
 
   it("checks the value before sending and names the problem for screen readers", async () => {
     const fetch = serveDecisions(() => json(runBudget()));
-    const budget = runBudget({ policy: { max_limit_usd: "5.00", can_decide: true, reason: null } });
+    const budget = runBudget({ policy: { max_limit_usd: "5.00", can_decide: true, reason: null, decision_hours: 24 } });
     render(wrap(<BudgetDecisionForm budget={budget} request={budget.pending!} />));
     const input = screen.getByLabelText("Neues Gesamtlimit für diesen Lauf (USD)");
     await userEvent.clear(input);
@@ -216,7 +216,7 @@ describe("BudgetDecisionForm", () => {
   });
 
   it("explains instead of offering buttons when the person may not decide", () => {
-    const budget = runBudget({ policy: { max_limit_usd: null, can_decide: false, reason: "access.forbidden" } });
+    const budget = runBudget({ policy: { max_limit_usd: null, can_decide: false, reason: "access.forbidden", decision_hours: 24 } });
     render(wrap(<BudgetDecisionForm budget={budget} request={budget.pending!} />));
     expect(screen.getByTestId("budget-cannot-decide")).toHaveTextContent("Du kannst diese Entscheidung sehen, aber nicht treffen");
     expect(screen.queryByRole("button", { name: "Prüfen und fortsetzen" })).toBeNull();

@@ -14,7 +14,8 @@ describe("the workspace's budget policy (BUDGET-1)", () => {
       update: { max_run_budget_usd: "10.50", budget_decision_hours: 24 },
       invalid: [],
     });
-    expect(budgetPolicyUpdate(form({ max_run_budget_usd: "" })).update.max_run_budget_usd).toBeNull();
+    expect(budgetPolicyUpdate(form({ max_run_budget_usd: "" })).update).toEqual({ clear_max_run_budget: true, budget_decision_hours: 24 });
+    expect(budgetPolicyUpdate(form({ max_run_budget_usd: "1.005" })).invalid).toEqual(["max"]);
   });
 
   it("names invalid values", () => {

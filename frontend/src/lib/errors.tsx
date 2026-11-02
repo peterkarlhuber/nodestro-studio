@@ -146,6 +146,8 @@ export function refineProblem(
   if (code === "provider.not_configured" && params.provider === "bedrock") return { code: "provider.bedrock_not_configured", params };
   // BUDGET-1: a budget decision nobody made in time is stored as "budget used up" with ``expired``.
   if (code === "run.budget_exceeded" && params.expired === true) return { code: "run.budget_request_expired", params };
+  // A refused budget decision of someone who may run but did not start the run (and is no administrator).
+  if (code === "access.forbidden" && params.reason === "budget.not_starter") return { code: "budget.not_starter", params };
   if (code && PROVIDER_FAILURES.has(code)) return { code, params: { ...params, provider: params.provider ?? "" } };
   if (code === "run.api_error") {
     params = { ...params, provider: params.provider ?? "" };

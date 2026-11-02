@@ -97,6 +97,7 @@
     "decisionHours": "Frist für Budget-Entscheidungen (Stunden)",
     "decisionHoursHint": "Wie lange ein Lauf auf eine Budget-Entscheidung wartet, bevor er endet (1 bis 720 Stunden).",
     "invalidMax": "Gib einen Betrag in US-Dollar ein oder lass das Feld leer.",
-    "invalidHours": "Gib ganze Stunden von 1 bis 720 ein."
+    "invalidHours": "Gib ganze Stunden von 1 bis 720 ein.",
+    "operatorCap": "Höchstens {{max}} pro Lauf (Obergrenze des Betreibers)."
   }
 }

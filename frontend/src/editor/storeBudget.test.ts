@@ -96,7 +96,7 @@ describe("budget events of the live run (BUDGET-1)", () => {
   it("marks the team step whose child run waits, and keeps the run's limit on a team raise", () => {
     const request = budgetRequest({
       block: { scope: "team", run_id: "run_child", node_id: "lead", label: "Recherche" },
-      requests: [{ run_id: "run_child", node_id: "a", agent: null, model: "m", max_cost_usd: "0.10", bounded: true, price_quality: null }],
+      requests: [{ run_id: "run_child", node_id: "a", agent: "", model: "m", max_cost_usd: "0.10", bounded: true, price_status: null }],
     });
     expect(budgetWaitingNodes(run(), request)).toEqual(["team"]);
     apply("budget_required", { request });
