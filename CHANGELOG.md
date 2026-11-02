@@ -18,6 +18,8 @@
   Linux), tools, start and FAQ updated. `platform_smoke.py` checks the report on every platform (OS, never an
   unsafe backend, experimental backends never approved).
 - ADR-0009 (cross-platform sandbox architecture, proposed).
+- `scripts/e2e.sh` starts every test server without a reachable Docker (`DOCKER_HOST` points nowhere), so the
+  suites see the blocked state on CI runners that have Docker.
 - Pins: orkexa 544ef92 (#28), nodestro-runtime 7fd8761 (#78), examples f1c6403 (#43), integrations 4a834b4 (#39),
   api cb4b7fb (#59), sdk 007951e (#53).
 
