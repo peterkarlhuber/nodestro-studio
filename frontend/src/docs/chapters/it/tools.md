@@ -172,6 +172,10 @@ Il processo Python non è una barriera di sicurezza: il codice al suo interno gi
 
 Gli strumenti salvati prima di questa versione, e tutti gli strumenti dopo il ripristino di un backup, sono considerati di origine sconosciuta, anche quelli scritti da te, perché la loro origine non è stata registrata. Con l’isolamento continuano a funzionare. Una nuova versione di uno strumento simile, o una copia del suo codice in un nuovo strumento, mantiene questo stato.
 
+**Adottare come tuo il codice creato dall’IA (solo nell’app desktop).** Per uno strumento che richiede isolamento, *Adotta come mio codice* mostra tutto il codice e i test con un avviso. Dopo la tua conferma, lo strumento conta come *Scritto da te* e viene eseguito come il tuo codice, senza isolamento, su questo computer; adotta quindi solo codice che hai letto e capito. Solo il proprietario di questo computer può adottare (un amministratore, dove esistono ruoli). Nodestro registra chi ha adottato quale versione e quando, con un’impronta del codice. Se in seguito l’IA modifica lo strumento, l’adozione termina e lo strumento richiede di nuovo isolamento; le tue modifiche nell’editor la mantengono. Su un server e in Nodestro Local Docker il codice creato dall’IA viene sempre eseguito isolato e non può essere adottato.
+
+Il codice che incolli in *Scrivi tu* conta come scritto da te, perché Nodestro non può sapere da dove proviene; l’editor ti avvisa quando incolli. Crea invece il codice generato dall’IA con *Crea con l’IA*, così viene eseguito isolato.
+
 ## Servizi collegati {#verbundene-dienste}
 <!-- keywords: mcp, model context protocol, servizio esterno, servizi collegati, server, token, approvazione, modificato -->
 

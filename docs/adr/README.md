@@ -12,7 +12,7 @@ Status values: **Proposed** (under review in a pull request), **Accepted**, **Su
 | [0003](0003-identity-and-tenants.md) | Identity, roles and tenant isolation | Accepted; implemented in PR-9 |
 | [0004](0004-jobs-workers-scheduler.md) | Persistent jobs, workers and the scheduler | Accepted; implemented in PR-10 |
 | [0005](0005-desktop-packaging.md) | Desktop packaging without separate installations | Accepted (Tauri 2, PR-5) |
-| [0006](0006-sandbox-policy.md) | Sandbox policy for untrusted code | Accepted; implemented in PR-4 |
+| [0006](0006-sandbox-policy.md) | Sandbox policy for untrusted code | Accepted; implemented in PR-4; amended by R-4 (adoption, desktop only) |
 | [0007](0007-mcp-client.md) | MCP client for external tools | Accepted |
 | [0008](0008-live-run-chat.md) | Live run chat and steering of orchestrators | Proposed (LRC-1) |
 | [0009](0009-cross-platform-sandbox.md) | Cross-platform sandbox architecture | Proposed (2026-11-02) |

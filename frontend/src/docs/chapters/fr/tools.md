@@ -172,6 +172,10 @@ Le processus Python n’est pas une barrière de sécurité : le code qu’il ex
 
 Les outils enregistrés avant cette version, et tous les outils après la restauration d’une sauvegarde, sont considérés d’origine inconnue, y compris ceux que vous avez écrits, car leur origine n’a pas été enregistrée. Avec une isolation, ils continuent de fonctionner. Une nouvelle version d’un tel outil, ou une copie de son code dans un nouvel outil, conserve ce statut.
 
+**Adopter du code créé par l’IA comme le vôtre (application de bureau uniquement).** Pour un outil qui nécessite une isolation, *Adopter comme mon propre code* affiche l’intégralité de son code et de ses tests avec un avertissement. Après votre confirmation, l’outil est considéré comme *Écrit par vous* et s’exécute comme votre propre code, sans isolation, sur cet ordinateur ; n’adoptez donc que du code que vous avez lu et compris. Seul le propriétaire de cet ordinateur peut adopter (un administrateur, là où il existe des rôles). Nodestro enregistre qui a adopté quelle version et quand, avec une empreinte du code. Si l’IA modifie l’outil plus tard, l’adoption prend fin et l’outil nécessite de nouveau une isolation ; vos propres modifications dans l’éditeur la conservent. Sur un serveur et dans Nodestro Local Docker, le code créé par l’IA s’exécute toujours isolé et ne peut pas être adopté.
+
+Le code que vous collez sous *Écrire soi-même* est considéré comme écrit par vous, car Nodestro ne peut pas savoir d’où il vient ; l’éditeur vous avertit lorsque vous collez. Créez plutôt le code généré par l’IA avec *Créer avec l’IA*, pour qu’il s’exécute isolé.
+
 ## Services connectés {#verbundene-dienste}
 <!-- keywords: mcp, model context protocol, service externe, services connectés, serveur, jeton, validation, modifié -->
 

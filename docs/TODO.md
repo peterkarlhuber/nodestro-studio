@@ -13,7 +13,7 @@
 | P1 High | 0 |
 | P2 Medium | 1 |
 | P3 Low | 22 |
-| P4 Optional | 8 |
+| P4 Optional | 10 |
 
 **Release blockers:** None for this repository.
 
@@ -71,6 +71,24 @@ None known.
 - **Next step:** Profile the canvas mount, fix the dominant long tasks, keep a repeatable measurement.
 
 ## Features and enhancements
+
+### ST-035 · Similarity hint for pasted code in the tool editor (R-4)
+
+- **Priority:** P4 Optional · **Status:** Open (deferred by decision R-4) · **Refs:** ADR-0006 (R-4 amendment),
+  nodestro-runtime RT-041
+- **What:** Pasted code counts as written by the person; the editor only warns after a paste. Code that resembles
+  stored AI-generated code is not pointed out.
+- **Next step:** Once the runtime offers a similarity check (RT-041), show it as a hint next to the paste warning.
+  It never changes the trust class.
+
+### ST-036 · Diff against the previous version in the adoption dialog (R-4)
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** ADR-0006 (R-4 amendment), `pages/ToolAdoption.tsx`
+- **What:** The adoption dialog shows the whole code and tests of the version to adopt. When an earlier version of
+  the tool was the person's own (adopted or written in the editor), a diff against it would show what the AI
+  changed.
+- **Next step:** Needs the tool's version history in the API (`GET /api/tools/{name}` returns only the current
+  version); then render a side-by-side or unified diff above the full code.
 
 ### ST-006 · "Back to workflow" after saving a provider key (F8)
 
