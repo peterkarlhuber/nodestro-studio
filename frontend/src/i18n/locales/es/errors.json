@@ -700,8 +700,11 @@
     "network_needs_login": "Nodestro Studio solo se ofrece en este ordenador porque no tiene inicio de sesión propio. Inícialo sin dirección de red ni nombres de host adicionales; para ofrecer flujos de trabajo en la red, activa el acceso de red de las API publicadas."
   },
   "sandbox": {
-    "isolation_required": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan aislados (sandbox de Linux integrado o Docker); ninguno está disponible, así que no se ejecutó nada. Ajustes → Sandbox muestra el motivo.",
-    "libraries_need_isolation": "{{name}} está creada por IA o es de origen desconocido y necesita bibliotecas de terceros. Estas herramientas solo se ejecutan aisladas (sandbox de Linux integrado o Docker); ninguno está disponible aquí. Ajustes → Sandbox muestra el motivo.",
+    "isolation_required": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan aislados (en Docker o, si se eligió, en el sandbox de Linux integrado); nada de esto está disponible, así que no se ejecutó nada. Ajustes → Sandbox muestra el motivo.",
+    "isolation_required_subprocess": "El sandbox está en Proceso de Python, que es solo para uso de confianza: ahí el código creado por IA y las herramientas de origen desconocido siempre se rechazan, así que no se ejecutó nada. En Ajustes → Sandbox, elige Automático e inicia Docker.",
+    "isolation_required_docker": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan en Docker, y Docker no está listo, así que no se ejecutó nada. {{reason}} Ajustes → Sandbox muestra las comprobaciones.",
+    "libraries_need_isolation": "{{name}} está creada por IA o es de origen desconocido y necesita bibliotecas de terceros. Estas herramientas solo se ejecutan en Docker; aquí no está disponible. Ajustes → Sandbox muestra el motivo.",
+    "libraries_need_isolation_linux": "Las herramientas creadas por IA y las de origen desconocido no reciben bibliotecas de terceros en el sandbox de Linux integrado, así que no se ejecutó nada. Para usar bibliotecas, elige Automático en Ajustes → Sandbox e inicia Docker.",
     "unavailable": "Aquí el código de las herramientas solo se ejecuta en contenedores; el sandbox «Proceso de Python» no está disponible.",
     "docker_insecure": "Docker no superó las comprobaciones de seguridad de Nodestro, así que el código creado por IA no se ejecutó. Ajustes → Sandbox muestra qué comprobación falló.",
     "selftest_failed": "El contenedor de prueba no superó las comprobaciones de Nodestro, así que el código creado por IA no se ejecutó. Ajustes → Sandbox muestra el motivo."

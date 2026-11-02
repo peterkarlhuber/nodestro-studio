@@ -146,8 +146,8 @@ Your own and AI-created tools **never run in the Nodestro process**. Tests and e
 | Sandbox | Isolation | Limits |
 |---|---|---|
 | **Python process** (default for your own tools) | separate process with an empty environment in a temporary directory; **not** a security boundary | 15 seconds, 1 GB memory |
-| **Built-in Linux sandbox** (automatic for AI-created tools on Ubuntu 24.04 and Debian 13) | no network, no access to your files, keys, the Nodestro data or other programs; no new processes; only its own temporary folder is writable | 15 seconds (60 with libraries), 1 GB memory, 64 MB temporary files |
-| **Docker** (automatic for AI-created tools where the built-in sandbox is not available, also on macOS and Windows) | throwaway container without network, with a read-only file system, without privileges | 20 seconds, 512 MB memory, 1 CPU |
+| **Built-in Linux sandbox** (only in the *Linux sandbox* mode, on Ubuntu 24.04 and Debian 13; no third-party packages for AI-created tools) | no network, no access to your files, keys, the Nodestro data or other programs; no new processes; only its own temporary folder is writable | 15 seconds (60 with libraries), 1 GB memory, 64 MB temporary files |
+| **Docker** (for AI-created tools in the *Automatic* mode, on every system) | throwaway container without network, with a read-only file system, without privileges | 20 seconds, 512 MB memory, 1 CPU |
 
 The built-in Linux sandbox needs nothing to install: it uses functions of the Linux kernel (Landlock and seccomp). Nodestro checks once at the start whether they are there and work; *Settings → Sandbox* shows the result and, if it is not available, why. It does not protect against errors in the Linux kernel itself and does not hide whether a file exists elsewhere; Docker remains available as an alternative.
 
@@ -164,7 +164,7 @@ Nodestro decides by the **origin of the code** where it may run:
 | Written by you under *Write it yourself* | *Written by you* | runs, without isolation on this computer | runs (in the *Python process*, or isolated in Docker) |
 | Created by AI (also after your approval), tool drafts of the AI architect, tools of unknown origin | *Needs isolation* | **blocked** | runs isolated |
 
-The Python process is not a security boundary: code in it runs with your rights. Therefore Nodestro never runs AI-generated code there, and neither your approval nor a setting changes that; there is no switch to run it there anyway. Where the built-in Linux sandbox is available, Nodestro uses it automatically for such code; otherwise, in the *Automatic* mode, Docker while it is running. Without either:
+The Python process is not a security boundary: code in it runs with your rights. Therefore Nodestro never runs AI-generated code there, and neither your approval nor a setting changes that; there is no switch to run it there anyway. In the *Automatic* mode such code runs only in Docker, once it passed Nodestro's checks; in the *Linux sandbox* mode only in the built-in Linux sandbox; in the *Python process* mode never. Without that sandbox:
 
 - **Create with AI** does not start, and tool drafts cannot be tested or approved;
 - agents with a tool that needs isolation cannot run; the workflow check reports it before the start;

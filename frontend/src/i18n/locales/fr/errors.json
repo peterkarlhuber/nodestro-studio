@@ -700,8 +700,11 @@
     "network_needs_login": "Nodestro Studio n’est proposé que sur cet ordinateur, car il n’a pas de connexion propre. Démarrez-le sans adresse réseau ni noms d’hôte supplémentaires ; pour proposer des workflows sur le réseau, activez l’accès réseau des API publiées."
   },
   "sandbox": {
-    "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent qu’isolés (bac à sable Linux intégré ou Docker) ; aucun des deux n’est disponible, rien n’a donc été exécuté. Réglages → Bac à sable indique pourquoi.",
-    "libraries_need_isolation": "{{name}} est créé par l’IA ou d’origine inconnue et nécessite des bibliothèques tierces. Ces outils ne s’exécutent qu’isolés (bac à sable Linux intégré ou Docker) ; aucun des deux n’est disponible ici. Réglages → Bac à sable indique pourquoi.",
+    "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent qu’isolés (dans Docker ou, s’il a été choisi, dans le bac à sable Linux intégré) ; rien de cela n’est disponible, rien n’a donc été exécuté. Réglages → Bac à sable indique pourquoi.",
+    "isolation_required_subprocess": "Le bac à sable est réglé sur Processus Python, réservé à un usage de confiance : le code créé par l’IA et les outils d’origine inconnue y sont toujours refusés, rien n’a donc été exécuté. Dans Réglages → Bac à sable, choisissez Automatique et démarrez Docker.",
+    "isolation_required_docker": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent que dans Docker, et Docker n’est pas prêt, rien n’a donc été exécuté. {{reason}} Réglages → Bac à sable indique les vérifications.",
+    "libraries_need_isolation": "{{name}} est créé par l’IA ou d’origine inconnue et nécessite des bibliothèques tierces. Ces outils ne s’exécutent que dans Docker ; il n’est pas disponible ici. Réglages → Bac à sable indique pourquoi.",
+    "libraries_need_isolation_linux": "Les outils créés par l’IA et ceux d’origine inconnue ne reçoivent aucune bibliothèque tierce dans le bac à sable Linux intégré, rien n’a donc été exécuté. Pour utiliser des bibliothèques, choisissez Automatique dans Réglages → Bac à sable et démarrez Docker.",
     "unavailable": "Ici, le code des outils ne s’exécute que dans des conteneurs ; le bac à sable « Processus Python » n’est pas disponible.",
     "docker_insecure": "Docker n’a pas réussi les vérifications de sécurité de Nodestro ; le code créé par l’IA n’a donc pas été exécuté. Réglages → Bac à sable indique quelle vérification a échoué.",
     "selftest_failed": "Le conteneur de test a échoué aux vérifications de Nodestro ; le code créé par l’IA n’a donc pas été exécuté. Réglages → Bac à sable indique pourquoi."

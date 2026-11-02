@@ -32,8 +32,9 @@
   "sandbox": {
     "title": "Sandbox for your own tools",
     "label": "Sandbox",
-    "text": "Your own and AI-created tools never run in the Nodestro process. Tools you wrote yourself run in a separate Python process. AI-created tools and tools of unknown origin run only isolated: in the built-in Linux sandbox where this computer passed its checks (Ubuntu 24.04, Debian 13), otherwise in Docker; without isolation they are blocked. On macOS and Windows they need Docker.",
+    "text": "Your own and AI-created tools never run in the Nodestro process. Tools you wrote yourself run in a separate Python process. AI-created tools and tools of unknown origin run only isolated: in Docker once it passed Nodestro's checks, or in the built-in Linux sandbox if you chose it. Without isolation they are blocked; Nodestro never falls back to an unprotected process.",
     "subprocess": "Python process",
+    "linux": "Linux sandbox",
     "dockerAvailable": "Docker available",
     "dockerMissing": "Docker not found",
     "dockerUnreachable": "Docker cannot be reached. Tool tests and calls fail until Docker is running.",
@@ -50,9 +51,11 @@
       "failed": "The self-test of the built-in sandbox could not run. AI-created tools stay blocked; use Docker."
     },
     "auto": "Automatic",
+    "modesTitle": "What the modes do",
     "modeHint": {
-      "auto": "Automatic: AI-created tools use the built-in Linux sandbox if it is available, otherwise Docker while it is running. Nodestro never falls back to an unprotected process.",
-      "subprocess": "Python process: your own tools run in a separate process. AI-created tools run only in the built-in Linux sandbox; Docker is not used.",
+      "auto": "Automatic (recommended): AI-created tools run only in Docker, once it passed Nodestro's checks; otherwise they are blocked. The built-in Linux sandbox is never chosen automatically. Your own tools run in a separate Python process.",
+      "linux": "Linux sandbox (optional, Linux only): AI-created tools run in Nodestro's built-in Linux sandbox instead of Docker, but without third-party Python packages; tools that need such packages are blocked. It is used only when you choose it.",
+      "subprocess": "Python process (trusted use only): your own tools run in a separate process. AI-created tools and tools of unknown origin are always blocked; neither Docker nor the built-in Linux sandbox is used.",
       "docker": "Docker: every tool, also your own, runs in a container. If Docker is not running, no tool runs."
     },
     "containersOnly": "On this server, every tool runs in a container. The sandbox cannot be changed here.",
@@ -67,9 +70,10 @@
     "userRunsIn": "Your own tools run in",
     "blockedBadge": "Blocked",
     "blocked": {
-      "auto": "AI-created tools are blocked: this computer has no approved sandbox and Docker is not running. Install and start Docker; Nodestro then uses it automatically.",
-      "subprocess": "AI-created tools are blocked: this computer has no approved sandbox. Choose Automatic or Docker and start Docker.",
-      "dockerRefused": "AI-created tools are blocked: this computer has no approved sandbox and Docker did not pass Nodestro's checks.",
+      "auto": "AI-created tools are blocked: Automatic runs them only in Docker, and Docker is not running. Install and start Docker; Nodestro then uses it automatically.",
+      "subprocess": "AI-created tools are blocked: the Python process is for trusted use only. To run them, choose Automatic and start Docker.",
+      "linux": "AI-created tools are blocked: the built-in Linux sandbox is not available on this computer; its row below says why. To run them in Docker instead, choose Automatic and start Docker.",
+      "dockerRefused": "AI-created tools are blocked: they run only in Docker, and Docker did not pass Nodestro's checks.",
       "checking": "AI-created tools are blocked until Nodestro has finished checking Docker."
     },
     "installDocker": "How to install Docker",
@@ -112,6 +116,9 @@
       "selfTest": "Run self-test",
       "selfTestHint": "Starts a test container with the sandbox's restrictions and checks that they hold. Only administrators can run it.",
       "testedAt": "Last checked: {{date}}",
+      "throttled": "Not run: a check ran moments ago, so nothing new was checked. Try again in {{seconds}} s; the results shown are from the last check.",
+      "refreshIgnored": "Not run: only administrators can start a new check. The results shown are from the last check.",
+      "redacted": "Technical details are visible to administrators only.",
       "engine": "Container engine",
       "rootless": "Without root privileges (rootless)",
       "rootful": "With root privileges (rootful)",

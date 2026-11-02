@@ -920,8 +920,13 @@ export interface BuiltinSandboxStatus {
   system: string;
 }
 
-/** The sandbox setting: ``auto`` picks the isolation of this computer (built-in Linux sandbox, else Docker). */
-export type SandboxMode = "auto" | "subprocess" | "docker";
+/**
+ * The sandbox setting (Docker-first, DS-3): ``auto`` runs AI-created code only in Docker once its checks passed and
+ * refuses it otherwise; ``linux`` is the optional built-in Linux sandbox, used only when chosen (AI-created tools get
+ * no third-party packages there; runtimes before DS-3 reject it); ``subprocess`` is for trusted use only and always
+ * refuses AI-created code; ``docker`` runs every tool in a container.
+ */
+export type SandboxMode = "auto" | "subprocess" | "linux" | "docker";
 
 /** One step behind a backend's state: the Docker sandbox's cli, daemon, preflight, image and self-test. */
 export interface SandboxCheck {
@@ -945,9 +950,23 @@ export const DOCKER_REASONS = [
   "docker-checking",
 ] as const;
 
+export type DockerReason = (typeof DOCKER_REASONS)[number];
+
+/**
+ * Why AI-created code is refused (``SandboxSelection.reason``, the ``reason`` of ``sandbox.isolation_required``):
+ * ``no-isolation`` (``linux`` and ``subprocess`` modes, older runtimes also ``auto``), ``subprocess-mode`` (the
+ * refusal of a tool in ``subprocess`` mode, DS-3) or, in ``auto`` and ``docker`` mode, the Docker reason.
+ */
+export type IsolationReason = "no-isolation" | "subprocess-mode" | DockerReason;
+
+/** Whether ``reason`` is one of {@link DOCKER_REASONS}. */
+export function isDockerReason(reason: string | null | undefined): reason is DockerReason {
+  return (DOCKER_REASONS as readonly string[]).includes(reason ?? "");
+}
+
 /** The sentence of a Docker reason (settings.sandbox.docker.reason.*: docker-os-type → os-type); null for others. */
 export function dockerReasonKey(reason: string): string | null {
-  return (DOCKER_REASONS as readonly string[]).includes(reason)
+  return isDockerReason(reason)
     ? `settings.sandbox.docker.reason.${reason.slice("docker-".length)}`
     : null;
 }
@@ -984,6 +1003,30 @@ export interface SandboxBackendStatus {
   checks?: SandboxCheck[];
   /** When the self-test last ran (ISO 8601); null if it has not run. */
   tested_at?: string | null;
+  /** Host details were left out for a caller without ``admin`` (API DS-8; see {@link SandboxStatus.redacted}). */
+  redacted?: boolean;
+}
+
+/**
+ * The answer of ``GET /api/sandbox/status`` and ``POST /api/sandbox/self-test``: the Docker row and what this request
+ * did about it (API DS-6, DS-8, DS-12). Older APIs answer the bare row; every added field is then missing.
+ */
+export interface SandboxStatus extends SandboxBackendStatus {
+  /** Whether this request started a forced check (``refresh=1`` or the self-test). */
+  check_started?: boolean;
+  /** A forced check was asked for within 10 s of the last one on its path: nothing new ran. */
+  throttled?: boolean;
+  /** Seconds until the next forced check may start (with ``throttled``). */
+  retry_after?: number | null;
+  /** ``refresh=1`` came from a caller without ``admin`` and was ignored: the answer is the running or last check. */
+  refresh_ignored?: boolean;
+  /** ``wait`` was not waited because too many requests wait already. */
+  wait_skipped?: boolean;
+  /**
+   * Host details were left out (caller without ``admin``): ``detail`` is a generic text, the checks' ``detail`` and
+   * ``engine`` are empty, and on a server ``rootless`` and ``cgroup_version`` are null.
+   */
+  redacted?: boolean;
 }
 
 /** Where code runs now on the runtime's computer (never the browser's), or why AI-created code is blocked. */
@@ -998,7 +1041,10 @@ export interface SandboxSelection {
   /** The backend of code a person wrote; "" when no tool code runs at all. */
   user_authored: string;
   blocked: boolean;
-  /** no-isolation or docker-unreachable when blocked. */
+  /**
+   * Why AI-created code is blocked ({@link IsolationReason}): no-isolation (linux and subprocess modes), or in auto
+   * and docker mode Docker's reason (older runtimes: no-isolation in auto, docker-unreachable).
+   */
   reason: string;
   detail: string;
 }

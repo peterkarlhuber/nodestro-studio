@@ -32,8 +32,9 @@
   "sandbox": {
     "title": "Sandbox für eigene Tools",
     "label": "Sandbox",
-    "text": "Eigene und von der KI erstellte Tools laufen nie im Nodestro-Prozess. Selbst geschriebene Tools laufen in einem eigenen Python-Prozess. KI-erstellte Tools und Tools unbekannter Herkunft laufen nur isoliert: in der eingebauten Linux-Sandbox, wo dieser Computer ihre Prüfungen bestanden hat (Ubuntu 24.04, Debian 13), sonst in Docker; ohne Isolation sind sie gesperrt. Unter macOS und Windows brauchen sie Docker.",
+    "text": "Eigene und von der KI erstellte Tools laufen nie im Nodestro-Prozess. Selbst geschriebene Tools laufen in einem eigenen Python-Prozess. KI-erstellte Tools und Tools unbekannter Herkunft laufen nur isoliert: in Docker, sobald es die Prüfungen von Nodestro bestanden hat, oder in der eingebauten Linux-Sandbox, wenn du sie gewählt hast. Ohne Isolation sind sie gesperrt; Nodestro weicht nie auf einen ungeschützten Prozess aus.",
     "subprocess": "Python-Prozess",
+    "linux": "Linux-Sandbox",
     "dockerAvailable": "Docker verfügbar",
     "dockerMissing": "Docker nicht gefunden",
     "dockerUnreachable": "Docker ist nicht erreichbar. Tool-Tests und -Aufrufe schlagen fehl, bis Docker läuft.",
@@ -50,9 +51,11 @@
       "failed": "Der Selbsttest der eingebauten Sandbox konnte nicht laufen. KI-erstellte Tools bleiben gesperrt; verwende Docker."
     },
     "auto": "Automatisch",
+    "modesTitle": "Was die Modi bewirken",
     "modeHint": {
-      "auto": "Automatisch: KI-erstellte Tools nutzen die eingebaute Linux-Sandbox, wenn sie verfügbar ist, sonst Docker, solange es läuft. Nodestro weicht nie auf einen ungeschützten Prozess aus.",
-      "subprocess": "Python-Prozess: Eigene Tools laufen in einem eigenen Prozess. KI-erstellte Tools laufen nur in der eingebauten Linux-Sandbox; Docker wird nicht verwendet.",
+      "auto": "Automatisch (empfohlen): KI-erstellte Tools laufen nur in Docker, sobald es die Prüfungen von Nodestro bestanden hat; sonst sind sie gesperrt. Die eingebaute Linux-Sandbox wird nie automatisch gewählt. Eigene Tools laufen in einem eigenen Python-Prozess.",
+      "linux": "Linux-Sandbox (optional, nur Linux): KI-erstellte Tools laufen statt in Docker in der eingebauten Linux-Sandbox von Nodestro, aber ohne Python-Pakete von Drittanbietern; Tools, die solche Pakete brauchen, sind gesperrt. Sie wird nur verwendet, wenn du sie wählst.",
+      "subprocess": "Python-Prozess (nur für vertrauenswürdige Nutzung): Eigene Tools laufen in einem eigenen Prozess. KI-erstellte Tools und Tools unbekannter Herkunft sind immer gesperrt; weder Docker noch die eingebaute Linux-Sandbox wird verwendet.",
       "docker": "Docker: Jedes Tool, auch dein eigenes, läuft in einem Container. Läuft Docker nicht, läuft kein Tool."
     },
     "containersOnly": "Auf diesem Server läuft jedes Tool in einem Container. Die Sandbox lässt sich hier nicht ändern.",
@@ -67,9 +70,10 @@
     "userRunsIn": "Eigene Tools laufen in",
     "blockedBadge": "Gesperrt",
     "blocked": {
-      "auto": "KI-erstellte Tools sind gesperrt: Dieser Computer hat keine freigegebene Sandbox und Docker läuft nicht. Installiere und starte Docker; Nodestro verwendet es dann automatisch.",
-      "subprocess": "KI-erstellte Tools sind gesperrt: Dieser Computer hat keine freigegebene Sandbox. Wähle Automatisch oder Docker und starte Docker.",
-      "dockerRefused": "KI-erstellte Tools sind gesperrt: Dieser Computer hat keine freigegebene Sandbox, und Docker hat die Prüfungen von Nodestro nicht bestanden.",
+      "auto": "KI-erstellte Tools sind gesperrt: Automatisch führt sie nur in Docker aus, und Docker läuft nicht. Installiere und starte Docker; Nodestro verwendet es dann automatisch.",
+      "subprocess": "KI-erstellte Tools sind gesperrt: Der Python-Prozess ist nur für vertrauenswürdige Nutzung. Um sie auszuführen, wähle Automatisch und starte Docker.",
+      "linux": "KI-erstellte Tools sind gesperrt: Die eingebaute Linux-Sandbox ist auf diesem Computer nicht verfügbar; ihre Zeile unten nennt den Grund. Um sie stattdessen in Docker auszuführen, wähle Automatisch und starte Docker.",
+      "dockerRefused": "KI-erstellte Tools sind gesperrt: Sie laufen nur in Docker, und Docker hat die Prüfungen von Nodestro nicht bestanden.",
       "checking": "KI-erstellte Tools sind gesperrt, bis Nodestro die Prüfung von Docker abgeschlossen hat."
     },
     "installDocker": "Docker installieren",
@@ -112,6 +116,9 @@
       "selfTest": "Selbsttest ausführen",
       "selfTestHint": "Startet einen Testcontainer mit den Einschränkungen der Sandbox und prüft, ob sie greifen. Nur Administratoren können ihn ausführen.",
       "testedAt": "Zuletzt geprüft: {{date}}",
+      "throttled": "Nicht ausgeführt: Eine Prüfung lief gerade erst, daher wurde nichts neu geprüft. Versuche es in {{seconds}} s erneut; angezeigt wird das Ergebnis der letzten Prüfung.",
+      "refreshIgnored": "Nicht ausgeführt: Nur Administratoren können eine neue Prüfung starten. Angezeigt wird das Ergebnis der letzten Prüfung.",
+      "redacted": "Technische Details sehen nur Administratoren.",
       "engine": "Container-Engine",
       "rootless": "Ohne Root-Rechte (rootless)",
       "rootful": "Mit Root-Rechten (rootful)",

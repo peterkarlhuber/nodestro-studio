@@ -32,8 +32,9 @@
   "sandbox": {
     "title": "Sandbox para ferramentas próprias",
     "label": "Sandbox",
-    "text": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro. As ferramentas que você mesmo escreve rodam em um processo Python separado. Ferramentas criadas por IA e de origem desconhecida só rodam isoladas: no sandbox Linux integrado onde este computador passou nas verificações (Ubuntu 24.04, Debian 13); caso contrário, no Docker; sem isolamento, ficam bloqueadas. No macOS e no Windows, elas precisam do Docker.",
+    "text": "Ferramentas próprias e criadas por IA nunca rodam no processo do Nodestro. As ferramentas que você mesmo escreve rodam em um processo Python separado. Ferramentas criadas por IA e de origem desconhecida só rodam isoladas: no Docker, depois que ele passa nas verificações do Nodestro, ou no sandbox Linux integrado, se você o escolher. Sem isolamento, ficam bloqueadas; o Nodestro nunca recorre a um processo sem proteção.",
     "subprocess": "Processo Python",
+    "linux": "Sandbox Linux",
     "dockerAvailable": "Docker disponível",
     "dockerMissing": "Docker não encontrado",
     "dockerUnreachable": "Não foi possível acessar o Docker. Testes e chamadas de ferramentas falharão até o Docker estar em execução.",
@@ -50,9 +51,11 @@
       "failed": "O autoteste do sandbox integrado não pôde rodar. Ferramentas criadas por IA continuam bloqueadas; use Docker."
     },
     "auto": "Automático",
+    "modesTitle": "O que cada modo faz",
     "modeHint": {
-      "auto": "Automático: ferramentas criadas por IA usam o sandbox Linux integrado se ele estiver disponível; caso contrário, o Docker enquanto ele estiver rodando. O Nodestro nunca recorre a um processo sem proteção.",
-      "subprocess": "Processo Python: suas próprias ferramentas rodam em um processo separado. Ferramentas criadas por IA só rodam no sandbox Linux integrado; o Docker não é usado.",
+      "auto": "Automático (recomendado): ferramentas criadas por IA só rodam no Docker, depois que ele passa nas verificações do Nodestro; caso contrário, ficam bloqueadas. O sandbox Linux integrado nunca é escolhido automaticamente. Suas próprias ferramentas rodam em um processo Python separado.",
+      "linux": "Sandbox Linux (opcional, só Linux): ferramentas criadas por IA rodam no sandbox Linux integrado do Nodestro em vez do Docker, mas sem pacotes Python de terceiros; ferramentas que precisam desses pacotes ficam bloqueadas. Ele só é usado se você o escolher.",
+      "subprocess": "Processo Python (só para uso confiável): suas próprias ferramentas rodam em um processo separado. Ferramentas criadas por IA e de origem desconhecida ficam sempre bloqueadas; nem o Docker nem o sandbox Linux integrado são usados.",
       "docker": "Docker: todas as ferramentas, inclusive as suas, rodam em um contêiner. Se o Docker não estiver rodando, nenhuma ferramenta roda."
     },
     "containersOnly": "Neste servidor, todas as ferramentas rodam em um contêiner. O sandbox não pode ser alterado aqui.",
@@ -67,9 +70,10 @@
     "userRunsIn": "Suas próprias ferramentas rodam em",
     "blockedBadge": "Bloqueadas",
     "blocked": {
-      "auto": "Ferramentas criadas por IA estão bloqueadas: este computador não tem nenhum sandbox aprovado e o Docker não está rodando. Instale e inicie o Docker; o Nodestro passa a usá-lo automaticamente.",
-      "subprocess": "Ferramentas criadas por IA estão bloqueadas: este computador não tem nenhum sandbox aprovado. Escolha Automático ou Docker e inicie o Docker.",
-      "dockerRefused": "As ferramentas criadas por IA estão bloqueadas: este computador não tem um sandbox aprovado e o Docker não passou nas verificações do Nodestro.",
+      "auto": "Ferramentas criadas por IA estão bloqueadas: o modo Automático só as executa no Docker, e o Docker não está rodando. Instale e inicie o Docker; o Nodestro passa a usá-lo automaticamente.",
+      "subprocess": "Ferramentas criadas por IA estão bloqueadas: o processo Python é só para uso confiável. Para executá-las, escolha Automático e inicie o Docker.",
+      "linux": "Ferramentas criadas por IA estão bloqueadas: o sandbox Linux integrado não está disponível neste computador; a linha dele abaixo diz por quê. Para executá-las no Docker, escolha Automático e inicie o Docker.",
+      "dockerRefused": "As ferramentas criadas por IA estão bloqueadas: elas só rodam no Docker, e o Docker não passou nas verificações do Nodestro.",
       "checking": "As ferramentas criadas por IA estão bloqueadas até o Nodestro terminar de verificar o Docker."
     },
     "installDocker": "Como instalar o Docker",
@@ -112,6 +116,9 @@
       "selfTest": "Executar autoteste",
       "selfTestHint": "Inicia um contêiner de teste com as restrições do sandbox e verifica se elas são aplicadas. Só administradores podem executá-lo.",
       "testedAt": "Última verificação: {{date}}",
+      "throttled": "Não executada: uma verificação acabou de rodar, então nada novo foi verificado. Tente de novo em {{seconds}} s; os resultados mostrados são da última verificação.",
+      "refreshIgnored": "Não executada: só administradores podem iniciar uma nova verificação. Os resultados mostrados são da última verificação.",
+      "redacted": "Só administradores veem os detalhes técnicos.",
       "engine": "Mecanismo de contêineres",
       "rootless": "Sem privilégios de root (rootless)",
       "rootful": "Com privilégios de root (rootful)",

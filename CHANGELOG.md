@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Platform pins: Docker sandbox review fixes (2026-11-02)
+
+- Pins: orkexa `3364fb8` (#34: self-test mount table, seccomp probes, AppArmor stacks, digest-pinned sandbox image),
+  nodestro-runtime `bf9af7d` (#85: Docker only for AI-created code in `auto`, the `linux` mode, no host venvs for AI
+  scopes, MCP stdio servers proven and reaped, bounded capture, no gateway Env passthrough), nodestro-examples
+  `9669439` (#48) and nodestro-integrations `17b8de5` (#44) (runtime pin only), nodestro-api `dde77f5` (#65:
+  `SandboxStatus` with throttled checks and redacted host detail for readers, server start-up preflight), nodestro-sdk
+  `99f70fe` (#59: `SandboxStatus` client types).
+
 ### Welcome page on every app start (2026-11-02)
 
 - Every app start on the bare start page (`/`: new browser tab or window, `nodestro serve`, desktop app, server and
@@ -23,6 +32,30 @@
   all six languages. Needs the BUDGET-1 runtime/API; older backends show nothing new.
 - Pins: nodestro-runtime `64895e6` (#84), nodestro-api `5519708` (#64), nodestro-sdk `e85f079` (#58),
   nodestro-examples `59fc96b` (#47), nodestro-integrations `991dcf9` (#43), orkexa `e220f70` (#32).
+
+### Sandbox modes after Docker-first (DS-3) and the DS-13 review of Settings → Sandbox (2026-11-02)
+
+- Settings → Sandbox offers the new `linux` mode (runtime DS-3) as an explicit choice on Linux computers:
+  the optional built-in Linux sandbox, never chosen automatically, without third-party Python packages for
+  AI-created tools. Every offered mode is explained below the choice: `auto` runs AI-created code only in Docker once
+  its checks passed, `subprocess` is for trusted use only and always blocks AI-created tools. The blocked notice has
+  a sentence for the `linux` mode; in `auto` it names Docker's reason, which the selection now reports instead of
+  `no-isolation`.
+- Refusals: `sandbox.isolation_required` with `reason` `subprocess-mode` and with a Docker reason, and
+  `sandbox.libraries_need_isolation` with `mode` `linux`, get their own sentences (also on dependency status
+  `unsupported`); the general sentences no longer promise the built-in Linux sandbox as an automatic fallback.
+- DS-13: the backend table, the Docker details, the "AI-created tools run in" summary and the blocked notice all
+  derive from one Docker status (the answer of the status routes until the settings bring a newer Docker row), so
+  they no longer disagree while the settings are read again. A forced check that did not run (`throttled` with
+  `retry_after`, or `refresh_ignored` for non-administrators) is shown as "not run" instead of a new result, and a
+  throttled button waits until the window has passed; `redacted` answers say that technical details are visible to
+  administrators. The rootful docker-group warning follows `rootless === false` instead of matching an English note.
+- Types: `SandboxMode` gains `"linux"`, new `SandboxStatus` (answers of `GET /api/sandbox/status` and
+  `POST /api/sandbox/self-test`: `check_started`, `throttled`, `retry_after`, `refresh_ignored`, `wait_skipped`,
+  `redacted`), `IsolationReason`, `isDockerReason`. Older APIs without these fields keep working; a runtime before
+  DS-3 rejects saving `linux`.
+- Docs (six languages): Settings → Sandbox and Tools → The sandbox / Trust and isolation describe the four modes, and
+  who may start a Docker check how often.
 
 ### New official logo (2026-11-02)
 

@@ -146,8 +146,8 @@ Gli strumenti personali e quelli creati dall’IA **non vengono mai eseguiti nel
 | Sandbox | Isolamento | Limiti |
 |---|---|---|
 | **Processo Python** (predefinito per i tuoi strumenti) | processo separato con un ambiente vuoto in una cartella temporanea; **non** è una barriera di sicurezza | 15 secondi, 1 GB di memoria |
-| **Sandbox Linux integrata** (automatica per gli strumenti creati dall’IA su Ubuntu 24.04 e Debian 13) | senza rete, senza accesso ai tuoi file, alle chiavi, ai dati di Nodestro o ad altri programmi; nessun nuovo processo; è scrivibile solo la propria cartella temporanea | 15 secondi (60 con librerie), 1 GB di memoria, 64 MB di file temporanei |
-| **Docker** (automatico per gli strumenti creati dall’IA dove la sandbox integrata non è disponibile, anche su macOS e Windows) | container usa e getta senza rete, con file system di sola lettura, senza privilegi | 20 secondi, 512 MB di memoria, 1 CPU |
+| **Sandbox Linux integrata** (solo nella modalità *Sandbox Linux*, su Ubuntu 24.04 e Debian 13; nessun pacchetto di terze parti per gli strumenti creati dall’IA) | senza rete, senza accesso ai tuoi file, alle chiavi, ai dati di Nodestro o ad altri programmi; nessun nuovo processo; è scrivibile solo la propria cartella temporanea | 15 secondi (60 con librerie), 1 GB di memoria, 64 MB di file temporanei |
+| **Docker** (per gli strumenti creati dall’IA nella modalità *Automatica*, su ogni sistema) | container usa e getta senza rete, con file system di sola lettura, senza privilegi | 20 secondi, 512 MB di memoria, 1 CPU |
 
 La sandbox Linux integrata non richiede installazioni: usa funzioni del kernel Linux (Landlock e seccomp). Nodestro verifica una volta all’avvio che siano presenti e funzionino; *Impostazioni → Sandbox* mostra il risultato e, se non è disponibile, il motivo. Non protegge da errori del kernel Linux stesso e non nasconde se un file esiste altrove; Docker resta disponibile come alternativa.
 
@@ -164,7 +164,7 @@ Nodestro decide in base all’**origine del codice** dove può essere eseguito:
 | Scritto da te in *Scrivi tu* | *Scritto da te* | viene eseguito, senza isolamento su questo computer | viene eseguito (nel *Processo Python* o isolato in Docker) |
 | Creato dall’IA (anche dopo la tua approvazione), bozze di strumenti dell’architetto IA, strumenti di origine sconosciuta | *Richiede isolamento* | **bloccato** | viene eseguito isolato |
 
-Il processo Python non è una barriera di sicurezza: il codice al suo interno gira con i tuoi permessi. Per questo Nodestro non vi esegue mai codice generato dall’IA, e né la tua approvazione né un’impostazione lo cambiano; non esiste alcun interruttore che lo consenta comunque. Dove la sandbox Linux integrata è disponibile, Nodestro la usa automaticamente per questo codice; altrimenti, nella modalità *Automatica*, Docker finché è in esecuzione. Senza nessuna delle due:
+Il processo Python non è una barriera di sicurezza: il codice al suo interno gira con i tuoi permessi. Per questo Nodestro non vi esegue mai codice generato dall’IA, e né la tua approvazione né un’impostazione lo cambiano; non esiste alcun interruttore che lo consenta comunque. Nella modalità *Automatica* questo codice viene eseguito solo in Docker, dopo che ha superato le verifiche di Nodestro; nella modalità *Sandbox Linux* solo nella sandbox Linux integrata; nella modalità *Processo Python* mai. Senza questa sandbox:
 
 - **Crea con l’IA** non si avvia, e le bozze di strumenti non si possono né testare né approvare;
 - gli agenti con uno strumento che richiede isolamento non possono essere eseguiti; il controllo del workflow lo segnala prima dell’avvio;

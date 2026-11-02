@@ -700,8 +700,11 @@
     "network_needs_login": "Nodestro Studio wird nur auf diesem Computer angeboten, weil es keine eigene Anmeldung hat. Starte es ohne Netzwerkadresse und ohne zusätzliche Hostnamen; um Workflows im Netzwerk anzubieten, schalte den Netzwerkzugang für veröffentlichte APIs ein."
   },
   "sandbox": {
-    "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur isoliert (eingebaute Linux-Sandbox oder Docker); beides ist nicht verfügbar, daher wurde nichts ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",
-    "libraries_need_isolation": "{{name}} ist KI-erstellt oder unbekannter Herkunft und braucht Bibliotheken von Drittanbietern. Solche Tools laufen nur isoliert (eingebaute Linux-Sandbox oder Docker); beides ist hier nicht verfügbar. Den Grund zeigt Einstellungen → Sandbox.",
+    "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur isoliert (in Docker oder, wenn gewählt, in der eingebauten Linux-Sandbox); nichts davon ist verfügbar, daher wurde nichts ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",
+    "isolation_required_subprocess": "Die Sandbox steht auf Python-Prozess, der nur für vertrauenswürdige Nutzung gedacht ist: KI-erstellter Code und Tools unbekannter Herkunft werden dort immer abgelehnt, daher wurde nichts ausgeführt. Wähle in Einstellungen → Sandbox Automatisch und starte Docker.",
+    "isolation_required_docker": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur in Docker, und Docker ist nicht bereit, daher wurde nichts ausgeführt. {{reason}} Die Prüfungen zeigt Einstellungen → Sandbox.",
+    "libraries_need_isolation": "{{name}} ist KI-erstellt oder unbekannter Herkunft und braucht Bibliotheken von Drittanbietern. Solche Tools laufen nur in Docker; es ist hier nicht verfügbar. Den Grund zeigt Einstellungen → Sandbox.",
+    "libraries_need_isolation_linux": "KI-erstellte Tools und Tools unbekannter Herkunft bekommen in der eingebauten Linux-Sandbox keine Bibliotheken von Drittanbietern, daher wurde nichts ausgeführt. Um Bibliotheken zu nutzen, wähle in Einstellungen → Sandbox Automatisch und starte Docker.",
     "unavailable": "Tool-Code läuft hier nur in Containern; die Sandbox „Python-Prozess“ ist nicht verfügbar.",
     "docker_insecure": "Docker hat die Sicherheitsprüfungen von Nodestro nicht bestanden, daher wurde der KI-erstellte Code nicht ausgeführt. Welche Prüfung fehlschlug, zeigt Einstellungen → Sandbox.",
     "selftest_failed": "Der Testcontainer hat die Prüfungen von Nodestro nicht bestanden, daher wurde der KI-erstellte Code nicht ausgeführt. Den Grund zeigt Einstellungen → Sandbox."

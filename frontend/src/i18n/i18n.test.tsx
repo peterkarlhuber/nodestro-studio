@@ -267,6 +267,28 @@ describe("backend messages", () => {
     expect(problemText(t, { code: "deps.image_too_large", params: { size_gb: "12.3", limit_gb: "8" } })).toContain("12.3 GB");
   });
 
+  it("say why AI-created code was refused in each sandbox mode, in every language (DS-3)", async () => {
+    const subprocess = { code: "sandbox.isolation_required", params: { reason: "subprocess-mode" } };
+    const docker = { code: "sandbox.isolation_required", params: { reason: "docker-limits" } };
+    const linux = { code: "sandbox.libraries_need_isolation", params: { name: "parse_pdf", mode: "linux" } };
+    const auto = { code: "sandbox.libraries_need_isolation", params: { name: "parse_pdf", mode: "auto" } };
+    for (const language of ["de", "en", "es", "fr", "it", "pt-BR"] as const) {
+      await setLanguage(language, false);
+      expect(problemText(t, subprocess)).toBe(i18n.t("errors.sandbox.isolation_required_subprocess"));
+      const limits = problemText(t, docker);
+      expect(limits).toBe(
+        i18n.t("errors.sandbox.isolation_required_docker", { reason: i18n.t("settings.sandbox.docker.reason.limits") }),
+      );
+      expect(limits).toContain(i18n.t("settings.sandbox.docker.reason.limits"));
+      expect(problemText(t, linux)).toBe(i18n.t("errors.sandbox.libraries_need_isolation_linux"));
+      expect(problemText(t, auto)).toBe(i18n.t("errors.sandbox.libraries_need_isolation", { name: "parse_pdf" }));
+      // An older runtime's refusal without a reason keeps its general sentence.
+      expect(problemText(t, { code: "sandbox.isolation_required" })).toBe(i18n.t("errors.sandbox.isolation_required"));
+      for (const key of ["isolation_required_subprocess", "isolation_required_docker", "libraries_need_isolation_linux"])
+        expect(i18n.exists(`errors.sandbox.${key}`, { lng: language }), `${language}: ${key}`).toBe(true);
+    }
+  });
+
   it("name the default model a designed agent cannot be judged by, in every language", async () => {
     const note = {
       code: "draft.judge_unsupported",
