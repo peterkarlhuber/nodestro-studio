@@ -18,7 +18,7 @@ import { SuitePage, TestsPage } from "./pages/TestsPage";
 import { ToolsPage } from "./pages/ToolsPage";
 import { UsagePage } from "./pages/UsagePage";
 import { WorkflowsPage } from "./pages/WorkflowsPage";
-import { studioLoader } from "./welcome/firstVisit";
+import { studioLoader } from "./welcome/startPage";
 
 // The docs load on first visit, together with the chapters of the current language only
 // (so the page shows complete; other languages load when the user switches).
@@ -47,7 +47,7 @@ export const routes: RouteObject[] = [
   { path: "welcome", lazy: loadWelcomePage, HydrateFallback: () => null },
   {
     element: <AppShell />,
-    // Sends the very first visit of the bare start page to /welcome (once per browser).
+    // Sends every app start on the bare start page to /welcome (never in-app navigation).
     loader: studioLoader,
     HydrateFallback: () => null,
     children: [
