@@ -8,6 +8,8 @@ import { useEditor } from "./store";
 
 /** Events after which the open tool approvals change: the list (and its card) is read again at once. */
 const TOOL_APPROVAL_EVENTS = new Set(["tool_approval_requested", "tool_approval_decided"]);
+/** Events after which a run's budget and the pending budget decisions change (BUDGET-1). */
+export const BUDGET_EVENTS = new Set(["budget_required", "budget_decided", "run_paused", "run_finished"]);
 
 /**
  * How often a paused run is read again, and how often right after someone decided one of its approvals. A paused
@@ -52,6 +54,10 @@ export function useRunStream(runId: string | null) {
       const event = JSON.parse((message as MessageEvent).data) as RunEvent;
       applyEvent(event);
       if (TOOL_APPROVAL_EVENTS.has(event.type)) void queryClient.invalidateQueries({ queryKey: keys.toolApprovals });
+      if (BUDGET_EVENTS.has(event.type)) {
+        void queryClient.invalidateQueries({ queryKey: keys.runBudget(runId) });
+        void queryClient.invalidateQueries({ queryKey: keys.budgetRequests });
+      }
     });
     source.addEventListener("end", (message) => {
       source.close();
@@ -116,6 +122,8 @@ export function useFollowRun(run: Pick<Run, "id" | "status"> | null) {
           // It goes on (the stream follows) or it ended (its run lists change).
           void queryClient.invalidateQueries({ queryKey: ["runs"] });
           void queryClient.invalidateQueries({ queryKey: keys.approvals });
+          void queryClient.invalidateQueries({ queryKey: keys.runBudget(id) });
+          void queryClient.invalidateQueries({ queryKey: keys.budgetRequests });
           return;
         }
       } catch {

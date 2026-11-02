@@ -74,6 +74,8 @@ La page **Validations** (navigation, groupe *Exécuter et vérifier*) liste tout
 
 Chaque carte montre la consigne, les résultats à vérifier (les résultats structurés sous forme de champs avec libellé, le JSON à un clic), un champ de commentaire et les boutons *Valider* et *Refuser* ; les boutons restent visibles même avec de longs résultats. Les validations à l’intérieur de sous-workflows apparaissent aussi ici, avec le chemin vers l’exécution parente. Les cartes d’[appels d’outils](/docs/verzweigungen#tool-freigabe) nomment le workflow et l’étape (« *workflow* · étape *nom* »).
 
+Les exécutions qui attendent une [décision de budget](/docs/workflows#budget-freigabe) apparaissent en haut dans une section propre **Décisions de budget**, avec un lien vers l’exécution.
+
 ## Valider les appels d’outils {#tool-freigabe}
 <!-- keywords: validation d’outil, appel d’outil, par appel, arguments, délai, validation anticipée, sans surveillance, exception héritée -->
 

@@ -219,7 +219,7 @@ function NodeShell({
   output?: boolean;
 }) {
   const status = state?.status ?? "idle";
-  const active = status === "running" || status === "awaiting_approval";
+  const active = status === "running" || status === "awaiting_approval" || status === "awaiting_budget";
   return (
     <div
       className={`nd-node flow-node flow-node--logic ${selected ? "nd-node--selected" : ""} ${active ? "flow-node--running" : ""}`}

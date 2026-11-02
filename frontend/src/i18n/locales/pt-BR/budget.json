@@ -1,0 +1,103 @@
+{
+  "card": {
+    "title": "Decisão de orçamento necessária",
+    "label": "Decisão de orçamento {{name}}",
+    "reasonLabel": "Por que a execução aguarda",
+    "reason": {
+      "used_up": "O limite se esgotou: a próxima solicitação ao modelo não cabe mais no que resta.",
+      "request_too_large": "A próxima solicitação pode custar até {{next}}, mas restam apenas {{left}}. Ela não foi enviada; nada foi cobrado por ela.",
+      "request_too_largeBadge": "Próxima solicitação grande demais"
+    },
+    "blockLabel": "Qual limite bloqueia",
+    "block": {
+      "run": "O limite desta execução bloqueia.",
+      "subworkflow": "O limite próprio do subworkflow “{{label}}” bloqueia.",
+      "team": "O limite próprio da equipe “{{label}}” bloqueia.",
+      "appliesExactly": "Um aumento muda exatamente este limite."
+    },
+    "initialLimit": "Limite no início",
+    "currentLimit": "Limite atual",
+    "knownCost": "Custo conhecido",
+    "plusUnknown": "mais custos desconhecidos",
+    "remaining": "Resta",
+    "remainingUnknown": "menos os custos desconhecidos",
+    "reserved": "Reservado para solicitações em andamento",
+    "deadline": "Decidir até",
+    "deadlineAt": "{{time}}",
+    "deadlinePassed": "O prazo terminou; a execução termina sem decisão.",
+    "blockedLabel": "Solicitações ao modelo aguardando",
+    "blocked_one": "Solicitação ao modelo aguardando",
+    "blocked_other": "Solicitações ao modelo aguardando ({{count}})",
+    "canCostUpTo": "pode custar até {{cost}}",
+    "unbounded": "o custo dela não pode ser limitado de antemão",
+    "unboundedHint": "Um limite maior não torna conhecido um preço desconhecido; essas solicitações continuam sem teto.",
+    "suggestedLabel": "Limite sugerido:",
+    "suggested": "{{limit}}, o mínimo para a próxima solicitação. Não é uma previsão do custo do restante da execução.",
+    "noSuggestion": "nenhum, porque o custo da próxima solicitação não pode ser limitado de antemão.",
+    "newLimit": "Novo limite total desta execução (USD)",
+    "newLimitHint": "O novo total, não o valor a acrescentar. Maior que o limite atual.",
+    "newLimitHintMax": "O novo total, não o valor a acrescentar. Maior que o limite atual e no máximo {{max}}.",
+    "validation": {
+      "empty": "Informe o novo limite total.",
+      "invalid": "Informe um valor em dólares americanos, por exemplo 2,50.",
+      "notHigher": "O novo limite precisa ser maior que o limite atual de {{current}}.",
+      "overPolicy": "O espaço de trabalho permite no máximo {{max}} por execução."
+    },
+    "differenceLabel": "Diferença em relação ao limite atual",
+    "difference": "+ {{amount}} em relação ao limite atual",
+    "thisRunOnly": "Vale só para esta execução; o workflow e as configurações não mudam.",
+    "chatNever": "Mensagens do chat nunca aprovam orçamento.",
+    "raise": "Verificar e continuar",
+    "end": "Encerrar execução",
+    "endConfirm": "Encerrar mesmo a execução?",
+    "raisedToast": "Limite aumentado para {{limit}}. A execução continua.",
+    "endedToast": "A execução está sendo encerrada.",
+    "cannotDecide": "Você pode ver esta decisão, mas não tomá-la: decide a pessoa que iniciou a execução ou um administrador.",
+    "decidedBy": "{{who}} já decidiu: {{outcome}}.",
+    "decidedElsewhere": "Esta decisão já foi tomada em outro lugar: {{outcome}}.",
+    "newLimitIs": "O limite agora é {{limit}}.",
+    "youDecided": {
+      "raised": "Você aumentou o limite para {{limit}}. A execução continua.",
+      "ended": "Você encerrou a execução."
+    }
+  },
+  "status": {
+    "decided": "decidido",
+    "pending": "ainda aberta",
+    "raised": "limite aumentado",
+    "ended": "execução encerrada",
+    "expired": "sem decisão a tempo",
+    "cancelled": "execução cancelada"
+  },
+  "history": {
+    "title": "Aumentos anteriores",
+    "item": "{{previous}} → {{next}} · {{who}} · {{when}}",
+    "unknownPerson": "desconhecido"
+  },
+  "panel": {
+    "waiting": "A execução aguarda uma decisão de orçamento. Nada é enviado a um modelo até que alguém decida.",
+    "raised": "limite aumentado de {{initial}}"
+  },
+  "approvals": {
+    "title": "Decisões de orçamento",
+    "description": "Execuções pausadas porque o orçamento não basta para a próxima solicitação ao modelo."
+  },
+  "chat": {
+    "paused": "A execução aguarda uma decisão de orçamento. As perguntas continuam sendo respondidas (pelo orçamento do chat); as instruções são usadas assim que a execução continuar. Uma mensagem do chat nunca aprova orçamento."
+  },
+  "summary": {
+    "title": "Orçamento",
+    "waiting": "aguarda uma decisão",
+    "raises_one": "aumentado uma vez",
+    "raises_other": "aumentado {{count}} vezes"
+  },
+  "settings": {
+    "maxRunBudget": "Orçamento máximo por execução (USD)",
+    "maxRunBudgetHint": "Nenhuma execução pode começar com um limite maior nem ser aumentada além dele. Vazio: sem teto.",
+    "decisionHours": "Prazo das decisões de orçamento (horas)",
+    "decisionHoursHint": "Quanto tempo uma execução aguarda uma decisão de orçamento antes de terminar (de 1 a 720 horas).",
+    "invalidMax": "Informe um valor em dólares americanos ou deixe o campo vazio.",
+    "invalidHours": "Informe horas inteiras de 1 a 720.",
+    "operatorCap": "No máximo {{max}} por execução (teto do operador)."
+  }
+}

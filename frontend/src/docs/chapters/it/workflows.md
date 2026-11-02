@@ -157,6 +157,59 @@ Il budget limita i **costi stimati** di un'esecuzione in dollari statunitensi, p
 
 I costi sconosciuti **non** contano come 0. Se il costo massimo di una richiesta non può essere determinato in anticipo (nessun prezzo noto, immagini, file o strumenti del provider come la ricerca web), nella modalità standard viene eseguita senza limite superiore. L'esecuzione mostra allora accanto ai costi l'avviso **Nessun massimo rigido** con il numero di tali richieste. Nella modalità prezzi rigorosa le richieste senza prezzo noto non vengono inviate affatto.
 
+Le esecuzioni che avvii tu non si fermano quando il budget non basta: vanno in pausa e attendono una decisione, vedi [Decisioni sul budget durante un’esecuzione](/docs/workflows#budget-freigabe).
+
+## Budget predefinito, del workflow e dell’esecuzione {#budget-ebenen}
+<!-- keywords: budget predefinito, budget del workflow, budget dell’esecuzione, limite effettivo, limite iniziale, aumento, livelli -->
+
+Tre livelli stabiliscono quanto può costare un’esecuzione:
+
+- **Budget predefinito** (impostazioni): vale per ogni workflow senza un budget proprio.
+- **Budget del workflow** (impostazioni del workflow): sostituisce il budget predefinito per questo workflow. Una versione pubblicata mantiene il budget con cui è stata pubblicata.
+- **Budget dell’esecuzione:** il limite con cui parte una singola esecuzione (il budget del workflow, altrimenti quello predefinito) più ogni aumento approvato per quell’esecuzione. Un aumento non cambia né il workflow né le impostazioni; l’esecuzione successiva riparte con il budget del workflow.
+
+I dettagli dell’esecuzione mostrano il suo limite accanto ai costi e, dopo un aumento, *limite aumentato da …*. Gli amministratori possono impostare un **budget massimo per esecuzione** che nessuna esecuzione può superare, né all’avvio né dopo gli aumenti (vedi [Budget predefinito](/docs/einstellungen#budget)).
+
+## Decisioni sul budget durante un’esecuzione {#budget-freigabe}
+<!-- keywords: decisione sul budget, pausa di budget, aumentare il budget, continuare, terminare l’esecuzione, in attesa di budget, limite proposto, richiesta troppo grande, esaurito, scadenza -->
+
+Quando una richiesta al modello di un’esecuzione che hai avviato non rientra più nel suo budget, l’esecuzione non fallisce più. Va **in pausa** con lo stato *In attesa di una decisione sul budget*: le richieste già in corso terminano e vengono registrate, nessun’altra richiesta viene inviata e per la richiesta in attesa non viene addebitato nulla. Il suo passaggio mostra lo stesso stato.
+
+Il motivo è uno dei due:
+
+- **Esaurito:** i costi noti hanno raggiunto il limite.
+- **Prossima richiesta troppo grande:** il massimo che la prossima richiesta può costare (il suo input più la risposta più lunga possibile alla tariffa più alta) non rientra in ciò che resta. È un massimo, non un costo previsto; la richiesta viene trattenuta prima di essere pagata invece di superare il limite.
+
+La decisione sul budget compare nella panoramica dell’esecuzione nell’editor, nei dettagli dell’esecuzione e nella sezione **Decisioni sul budget** della [pagina Approvazioni](/docs/verzweigungen#freigaben-seite); il contatore nella navigazione la include. La scheda mostra il limite all’avvio e ora, i costi noti (con *più costi sconosciuti* quando alcuni costi sono sconosciuti, mai come 0), ciò che resta, ciò che è riservato per le richieste in corso, quale limite blocca, le richieste in attesa con il loro costo massimo, la scadenza e gli aumenti precedenti.
+
+- **Verifica e continua:** inserisci il nuovo limite **totale** di questa esecuzione. Il valore proposto sono i costi noti più il massimo che la prossima richiesta può costare, arrotondato al centesimo: un minimo per la prossima richiesta, mai una previsione per il resto dell’esecuzione. Nodestro verifica l’importo (più alto del limite attuale, non oltre il budget massimo per esecuzione) e riprende subito l’esecuzione.
+- **Termina l’esecuzione** (con conferma): l’esecuzione termina con la nota che è stata terminata durante una decisione sul budget. I risultati dei passaggi conclusi restano.
+
+Una decisione vale solo per questa esecuzione. Se il limite aumentato non basta di nuovo, l’esecuzione torna in pausa con una nuova decisione; questo si ripete tutte le volte necessarie. Una decisione si prende una sola volta: se qualcun altro ha deciso prima, la scheda dice chi e come. Lasciare la pagina non fa perdere nulla: la decisione è salvata sul server e si ritrova ovunque.
+
+Durante la pausa non viene occupato alcun thread né worker, e un riavvio di Nodestro non fa perdere nulla. La [chat dal vivo dell’esecuzione](/docs/ausfuehrungen#teamleitung) continua a rispondere alle domande (con il proprio budget della chat); le istruzioni vengono usate alla decisione successiva, dopo che l’esecuzione è ripresa. Un messaggio della chat non è **mai** una decisione sul budget.
+
+Se nessuno decide prima della scadenza (24 ore, salvo diversa impostazione di un amministratore), l’esecuzione fallisce con «budget esaurito». Puoi poi [continuarla](/docs/verzweigungen#fortsetzen) con un nuovo budget.
+
+## Limiti di sotto-workflow e team {#budget-teams}
+<!-- keywords: budget del sotto-workflow, budget del team, esecuzione figlia, esecuzione superiore, limite che blocca, annidato -->
+
+Un sotto-workflow o un team con un budget proprio funziona con il proprio limite, e ogni richiesta conta anche per l’esecuzione superiore. La decisione sul budget nomina il limite che ha rifiutato la richiesta: *il limite di questa esecuzione* oppure *il limite proprio del sotto-workflow / team «nome»*. Un aumento cambia esattamente quel limite, mai il workflow dietro. I limiti superiori restano validi: aumentare il limite di un team può portare a una seconda decisione per l’esecuzione superiore, e aumentare quest’ultima non solleva mai il limite proprio di un team. C’è sempre una decisione per ogni esecuzione di primo livello.
+
+## Chi può decidere {#budget-rechte}
+<!-- keywords: permesso, chi può aumentare, ha avviato l’esecuzione, amministratore, budget massimo per esecuzione, tenant -->
+
+Sul desktop decidi tu. Su un server può decidere chi ha il permesso *Eseguire* **e** ha avviato l’esecuzione; gli amministratori possono decidere per ogni esecuzione della loro area di lavoro. Le esecuzioni senza una persona avviante nota possono essere decise solo dagli amministratori. Chiunque abbia *Leggere* vede la decisione; la scheda spiega allora perché mancano i pulsanti. Nessun aumento può superare il **budget massimo per esecuzione** dell’area di lavoro né un tetto fissato da chi gestisce il server.
+
+## Esecuzioni non presidiate e limiti noti {#budget-grenzen}
+<!-- keywords: pianificazione, lotto, serie di test, api pubblicata, non presidiata, nessuna pausa, prezzo sconosciuto, qualità del prezzo, stato perso -->
+
+- **Le esecuzioni non presidiate non vanno in pausa.** Le esecuzioni da [pianificazioni, lotti e serie di test](/docs/automatisierung#zeitplaene) e dall’API pubblicata falliscono come prima quando il loro budget è esaurito (errore `BudgetExceededError`); nessuno viene interpellato e nulla viene aumentato automaticamente.
+- **Un budget più alto non rende noti i prezzi.** Le richieste il cui costo non ha un tetto (nessun prezzo noto nella modalità prezzi standard, strumenti del provider, immagini, file) vengono inviate finché il limite non è esaurito e contate senza tetto. Nella [modalità prezzi](/docs/nutzung#preismodus) rigorosa, prezzi sconosciuti o inaffidabili vengono rifiutati prima della richiesta; non è una decisione sul budget.
+- Una risposta che supera il limite dopo essere stata pagata viene conservata e usata, mai inviata di nuovo; la pausa arriva prima della richiesta successiva.
+- Il budget giornaliero dell’API, il limite di costo di un’API pubblicata, i limiti di frequenza, i limiti di tempo e di passaggi e il budget della chat non si possono aumentare qui.
+- Se lo stato salvato di un passaggio in attesa va perso, il passaggio fallisce con un messaggio proprio invece di ripartire di nascosto. [Continua l’esecuzione](/docs/verzweigungen#fortsetzen): Nodestro mostra cosa viene ripetuto e chiede prima di eseguire di nuovo gli strumenti.
+
 ## Limiti per esecuzione {#limits}
 <!-- keywords: limiti, contemporanei, parallelo, limite di tempo, durata, timeout, run.time_limit, passaggi, run.step_limit -->
 

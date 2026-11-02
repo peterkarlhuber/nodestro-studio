@@ -122,6 +122,9 @@ import type {
   ToolApprovalsState,
   ToolApprovalEvent,
   ToolPreGrant,
+  BudgetDecisionIn,
+  BudgetRequest,
+  RunBudgetOut,
 } from "./types";
 import { currentLanguage } from "../i18n";
 
@@ -340,6 +343,13 @@ export const api = {
       comment,
     }),
   toolApprovalsState: () => request<ToolApprovalsState>("GET", "/tool-approvals/legacy"),
+  /** The budget of a run (BUDGET-1); a child run answers for its top-level run. */
+  getRunBudget: (runId: string) => request<RunBudgetOut>("GET", `/runs/${encodeURIComponent(runId)}/budget`),
+  /** Raise the blocking limit and continue, or end the run; the same idempotency key answers with the stored result. */
+  decideRunBudget: (runId: string, body: BudgetDecisionIn) =>
+    request<RunBudgetOut>("POST", `/runs/${encodeURIComponent(runId)}/budget/decisions`, body),
+  /** The tenant's pending budget decisions, oldest first (Approvals page, navigation badge). */
+  listBudgetRequests: () => request<BudgetRequest[]>("GET", "/budget-requests?status=pending"),
   /** The activation step: marks existing tool assignments as legacy exemptions. It does not switch approvals on. */
   stampLegacyToolBindings: () => request<ToolApprovalsState>("POST", "/tool-approvals/legacy"),
   toolApprovalAudit: (limit = 200) => request<ToolApprovalEvent[]>("GET", `/tool-approvals/audit?limit=${limit}`),

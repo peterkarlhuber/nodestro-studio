@@ -134,6 +134,27 @@
     "priceMode": "Standard warnt bei unbekannten und veralteten Preisen; Streng lehnt solche Anfragen ab, bevor sie etwas kosten.",
     "reconciliation": "Vergleicht die Schätzungen mit den Abrechnungen der Anbieter. Braucht einen Admin-Schlüssel der Abrechnungs-API; es wird nichts verändert."
   },
+  "budget": {
+    "decision": "Der Lauf pausiert, weil sein Budget für die nächste Modellanfrage nicht reicht. Dafür wurde nichts gesendet. Erhöhe das Limit genau dieses Laufs und setze fort, oder beende den Lauf.",
+    "reason": "„Aufgebraucht“: Die bekannten Kosten haben das Limit erreicht. „Nächste Anfrage zu groß“: Das Höchste, was die nächste Anfrage kosten kann (Eingabe plus größte Ausgabe zum höchsten Preis), passt nicht in den Rest. Das ist ein Höchstwert, keine Schätzung der erwarteten Kosten.",
+    "block": "Das Limit, das die Anfrage abgelehnt hat: das eigene dieses Laufs oder das eigene Limit eines Unter-Workflows oder Teams. Eine Erhöhung ändert genau dieses Limit; Limits darüber gelten weiter und können erneut fragen.",
+    "initialLimit": "Das Limit, mit dem der Lauf gestartet ist: das Budget des Workflows oder das Standardbudget aus den Einstellungen.",
+    "currentLimit": "Das Limit, das jetzt gilt: das Startlimit plus jede für diesen Lauf freigegebene Erhöhung.",
+    "knownCost": "Was die Anfragen des Laufs bisher gekostet haben, nach bekannten Preisen. Unbekannte Kosten sind markiert und zählen nie als 0.",
+    "remaining": "Aktuelles Limit minus bekannte Kosten. Sind Kosten unbekannt, kann der echte Rest kleiner sein.",
+    "reserved": "Noch laufende Anfragen reservieren ihre höchstmöglichen Kosten; nach dem Ende ersetzen die echten Kosten die Reservierung.",
+    "deadline": "Entscheidet bis dahin niemand, endet der Lauf mit dem Fehler „Budget aufgebraucht“. Die Frist legen Administratoren in den Einstellungen fest.",
+    "blockedRequest": "Die wartende Modellanfrage mit dem Höchsten, was sie kosten kann. Manche Kosten lassen sich vorab nicht begrenzen (kein bekannter Preis, Bilder, Dateien, Anbieter-Tools).",
+    "suggested": "Bekannte Kosten plus das Höchste, was die nächste Anfrage kosten kann, auf einen Cent aufgerundet. Reicht für diese eine Anfrage; keine Prognose für den Rest des Laufs.",
+    "newLimit": "Gib das neue Gesamtlimit ein, nicht den Betrag, der dazukommt. Es muss höher sein als das aktuelle Limit und darf das Maximum des Arbeitsbereichs nicht überschreiten.",
+    "difference": "Um wie viel das neue Limit höher ist als das aktuelle. Ausgegeben wird nur, was der Lauf tatsächlich braucht.",
+    "end": "Beendet den Lauf sofort. Ergebnisse fertiger Schritte bleiben; an ein Modell geht nichts mehr.",
+    "history": "Jede freigegebene Erhöhung dieses Laufs: das Limit davor und danach, wer entschieden hat und wann.",
+    "runBudget": "Das Kostenlimit des Laufs. Begleitete Läufe pausieren, wenn es nicht reicht, und warten auf eine Entscheidung; Läufe aus Zeitplänen, Stapelläufen, Testreihen und der veröffentlichten API stoppen stattdessen.",
+    "maxRunBudget": "Das höchste Limit, das ein Lauf dieses Arbeitsbereichs haben darf, beim Start oder nach Erhöhungen. Leer heißt keine Obergrenze.",
+    "decisionHours": "Wie lange ein Lauf auf eine Budget-Entscheidung wartet, bevor er mit „Budget aufgebraucht“ endet (1 bis 720 Stunden, Standard 24).",
+    "permissions": "Es entscheidet die Person, die den Lauf gestartet hat, wenn sie die Berechtigung Ausführen hat; Administratoren können jeden Lauf entscheiden."
+  },
   "search": {
     "global": "Durchsucht Workflows, Agenten, Tools, Wissen und Dokumentation (Strg+K)."
   },

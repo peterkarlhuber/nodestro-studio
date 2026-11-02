@@ -92,6 +92,8 @@ Salva le modifiche con **Salva** nella sezione *Modelli e budget*.
 
 Il **budget predefinito per esecuzione** (inizialmente 2 USD) vale per tutti i workflow senza un budget proprio. Vuoto significa nessun limite. Come funziona il budget è spiegato in [Budget per esecuzione](/docs/workflows#budget).
 
+Gli amministratori impostano anche il **Budget massimo per esecuzione** (vuoto: nessun tetto): nessuna esecuzione può partire con un limite più alto né essere aumentata oltre. La **Scadenza delle decisioni sul budget** (da 1 a 720 ore, inizialmente 24) indica quanto un’esecuzione in pausa attende una [decisione sul budget](/docs/workflows#budget-freigabe) prima di fallire. Chi può decidere è spiegato in [Chi può decidere](/docs/workflows#budget-rechte).
+
 ## Sandbox {#sandbox}
 <!-- keywords: scegliere la sandbox, automatica, docker, processo python, docker disponibile, sandbox integrata, sandbox linux, macos, windows, bloccato, sperimentale -->
 

@@ -220,7 +220,8 @@ export function ExecutionsPage() {
                       </div>
                     </td>
                     <td>
-                      <StatusBadge status={run.status} />
+                      {/* BUDGET-1: a run paused for a budget decision says so in the list too. */}
+                      <StatusBadge status={run.budget?.pending_request_id && run.status !== "succeeded" && run.status !== "failed" && run.status !== "cancelled" ? "awaiting_budget" : run.status} />
                       <ListProblemsChip run={run} />
                     </td>
                     {/* data-label names the value where phones show a run as two lines without the header. */}

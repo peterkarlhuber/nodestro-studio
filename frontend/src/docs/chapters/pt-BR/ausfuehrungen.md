@@ -83,6 +83,7 @@ A aba **Contexto** mostra o que o agente recebeu nesta execução: prompt do sis
 | **Ignorado** | O nó não rodou porque sua ramificação não foi escolhida. Isso não é um erro. |
 | **Bloqueado** | O nó não rodou porque um antecessor falhou ou foi cancelado. |
 | **Aguardando aprovação** | Uma [aprovação](/docs/verzweigungen#freigabe) espera a decisão de uma pessoa. |
+| **Aguardando decisão de orçamento** | A próxima solicitação ao modelo precisa de mais orçamento; a execução fica pausada até que alguém aumente o limite dela ou a encerre ([decisões de orçamento](/docs/workflows#budget-freigabe)). |
 | **Pausado** | A execução espera uma aprovação e continua depois da decisão. |
 | **Cancelado** | Interrompido com *Cancelar execução*, rejeitado, ou um trace exportado antes de estar completo. |
 | **Aguarda você** | Uma chamada de ferramenta aguarda a sua aprovação; a execução continua assim que você decidir. |
@@ -122,6 +123,8 @@ Cada instrução mostra seu estado: *Aguardando a próxima decisão* (com quanta
 **Pausa, reinício, continuação:** enquanto uma equipe aguarda uma aprovação, as instruções continuam abertas e valem para a próxima decisão quando a execução prossegue. Se um reinício do servidor fizer perder uma decisão, a instrução é entregue de novo à decisão seguinte. Quando a execução ou o líder da equipe termina, as instruções abertas são marcadas como *Não será mais considerada* e não são levadas adiante quando você continua a execução. Depois do fim, a conversa só pode ser lida.
 
 **Execuções sem supervisão:** no inspetor do orquestrador, **Direção ao vivo** define quem pode dar instruções: *Execuções iniciadas por uma pessoa* (padrão), *Sempre* (também agendamento, API, execução em lote e série de testes) ou *Desativada*. Perguntas não são afetadas. Mais sobre o orquestrador em [Orquestrador](/docs/verzweigungen#orchestrator).
+
+**Durante uma pausa de orçamento** o chat continua funcionando: as perguntas são respondidas pelo orçamento do chat, as instruções são usadas depois que a execução continuar. Uma mensagem do chat nunca aumenta nem aprova o orçamento da execução; isso só acontece no cartão de decisão de orçamento.
 
 ## Exportar trace {#trace-export}
 <!-- keywords: exportar trace, exportar, json, run json, compartilhar, arquivar, higienizar, anonimizar, privacidade, dados pessoais -->

@@ -14,12 +14,13 @@ import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { Output, outputFieldsOf } from "../components/Markdown";
 import { Tooltip } from "../components/Tooltip";
-import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat } from "../components/ui";
+import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
 import { prefersReducedMotion } from "../lib/motion";
 import { NodeRunDetails, startFiles } from "../editor/RunDetails";
-import { liveUsage, runWaitsForToolApproval, waitsForToolApproval } from "../editor/store";
+import { liveUsage, runWaitsForBudget, runWaitsForToolApproval, waitsForToolApproval } from "../editor/store";
 import { TraceExportDialog, sanitizeSummary } from "../editor/TraceExportDialog";
 import { RunApprovals } from "../runs/ApprovalCard";
+import { BudgetRaiseHistory, RunBudgetDecision } from "../runs/BudgetDecisionCard";
 import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { ResultFiles } from "../runs/ResultFiles";
 import { CancelRunButton } from "../runs/CancelRunButton";
@@ -35,6 +36,7 @@ import { TeamLeaderChat } from "../runs/TeamLeaderChat";
 import { useRunChatView } from "../runs/useRunChat";
 import { initialStep, stepsInOrder } from "../runs/runSummary";
 import { STATUS_TONE, formatCost, formatDate, formatDuration, formatTokens, tokenBreakdown } from "../lib/format";
+import { formatMoney } from "../lib/money";
 import { NotFoundState } from "../components/NotFoundState";
 
 /** A waterfall of the agents' run times: where the time went and what ran in parallel. */
@@ -184,7 +186,16 @@ export function RunDetailPage() {
         <div className="stats">
           <Stat
             label={t("runs.stats.status")}
-            value={runWaitsForToolApproval(data) ? <WaitingForYouBadge /> : <RunOutcome run={data} />} hint={formatDuration(data.started_at ?? data.created_at, data.finished_at)} />
+            value={
+              runWaitsForBudget(data) ? (
+                <StatusBadge status="awaiting_budget" />
+              ) : runWaitsForToolApproval(data) ? (
+                <WaitingForYouBadge />
+              ) : (
+                <RunOutcome run={data} />
+              )
+            }
+            hint={formatDuration(data.started_at ?? data.created_at, data.finished_at)} />
           <Stat label={t("runs.stats.requests")} value={usage.requests} tip="runs.requests" />
           <Stat
             label={t("runs.stats.tokens")}
@@ -221,7 +232,8 @@ export function RunDetailPage() {
           </Callout>
         ) : null}
         <RunOrigin run={data} />
-        {paused ? <RunApprovals run={data} /> : null}
+        {imported ? null : <RunBudgetDecision run={data} />}
+        {paused && !runWaitsForBudget(data) ? <RunApprovals run={data} /> : null}
         {data.status === "running" || paused ? <RunToolApprovals run={data} /> : null}
         {leader ? (
           <div className="tabs lrc-tabs" role="tablist" aria-label={t("runChat.tab.label")}>
@@ -249,7 +261,7 @@ export function RunDetailPage() {
         ) : null}
         {leader && tab === "leader" ? (
           <div className="tab-panel" role="tabpanel" id="run-tabpanel-leader" aria-labelledby="run-tab-leader">
-            <TeamLeaderChat runId={data.id} />
+            <TeamLeaderChat runId={data.id} budgetWaiting={runWaitsForBudget(data)} />
           </div>
         ) : null}
         {leader && tab === "leader" ? null : (
@@ -299,6 +311,11 @@ export function RunDetailPage() {
               </section>
             ) : null}
             <ResultFiles run={data} />
+            {data.budget?.raises?.length && !runWaitsForBudget(data) ? (
+              <section className="panel" aria-label={t("budget.history.title")}>
+                <BudgetRaiseHistory raises={data.budget.raises} />
+              </section>
+            ) : null}
           </OverviewPanel>
         )}
       </div>
@@ -313,8 +330,16 @@ export function RunDetailPage() {
 /** The budget of a run and whether it was a hard maximum (AO-12); nothing for runs without a budget. */
 function budgetHint(run: Run, t: TFunction): ReactNode {
   if (run.budget_usd === null || run.budget_usd === undefined) return null;
-  const limit = t("runs.budget.limit", { limit: formatCost(run.budget_usd) });
-  if (run.budget_hard_maximum !== false) return limit;
+  const raisedFrom = run.budget?.raises?.length ? run.budget.initial_limit_usd : null;
+  // BUDGET-1: a raised limit names where it started; the help explains pauses and decisions.
+  const limit = (
+    <>
+      {t("runs.budget.limit", { limit: formatCost(run.budget_usd) })}
+      {raisedFrom ? <span data-testid="budget-raised-from"> · {t("budget.panel.raised", { initial: formatMoney(raisedFrom) })}</span> : null}{" "}
+      <HelpTip id="budget.runBudget" label={t("budget.summary.title")} />
+    </>
+  );
+  if (run.budget_hard_maximum !== false) return <span className="budget-hint">{limit}</span>;
   return (
     <span className="budget-hint" data-testid="budget-no-hard-maximum">
       {limit} ·{" "}

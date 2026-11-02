@@ -42,5 +42,9 @@
   "paused": {
     "label": "Pausado",
     "description": "A execução aguarda uma aprovação e continua após a decisão."
+  },
+  "awaiting_budget": {
+    "label": "Aguardando decisão de orçamento",
+    "description": "A próxima solicitação ao modelo precisa de mais orçamento. Uma pessoa aumenta o limite desta execução ou a encerra; até lá nada é enviado a um modelo."
   }
 }

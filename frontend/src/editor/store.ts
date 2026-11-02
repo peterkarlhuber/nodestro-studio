@@ -5,6 +5,8 @@ import { create } from "zustand";
 import {
   NO_LIMITS,
   type AgentConfig,
+  type BudgetRequest,
+  type RunBudget,
   type EdgeLoop,
   type NodeRun,
   type NodeType,
@@ -680,6 +682,50 @@ export const useEditor = create<EditorState>((set, get) => {
             node.finished_at = event.at;
           }
           break;
+        case "budget_required": {
+          // BUDGET-1: one budget decision for the whole run; its model requests wait until a person decides.
+          const request = data.request as BudgetRequest | undefined;
+          if (!request) break;
+          next.budget = { ...budgetOf(run), pending_request_id: request.id };
+          for (const nodeId of budgetWaitingNodes(run, request, id)) {
+            const state = nodes[nodeId];
+            if (state && (state.status === "running" || state.status === "waiting"))
+              nodes[nodeId] = { ...state, status: "awaiting_budget" };
+          }
+          break;
+        }
+        case "budget_decided": {
+          const request = data.request as BudgetRequest | undefined;
+          if (!request) break;
+          const budget = budgetOf(run);
+          const raised = request.status === "raised" && request.new_limit_usd;
+          const topLevel = !request.block || request.block.scope === "run" || request.block.run_id === run.id;
+          next.budget = {
+            ...budget,
+            pending_request_id: budget.pending_request_id === request.id ? null : budget.pending_request_id,
+            // Only a raise of the run's own limit changes the run's limit; a sub-workflow's limit is its own.
+            limit_usd: raised && topLevel ? request.new_limit_usd : budget.limit_usd,
+            raises:
+              raised && !budget.raises.some((item) => item.request_id === request.id)
+                ? [
+                    ...budget.raises,
+                    {
+                      request_id: request.id,
+                      previous_limit_usd: request.limit_usd,
+                      new_limit_usd: request.new_limit_usd as string,
+                      decided_by: request.decided_by ?? "",
+                      decided_at: request.decided_at ?? event.at,
+                    },
+                  ]
+                : budget.raises,
+          };
+          if (raised && topLevel) next.budget_usd = Number(request.new_limit_usd);
+          // A raise lets the waiting steps go on; an end is followed by the run's own end.
+          if (raised)
+            for (const [nodeId, state] of Object.entries(nodes))
+              if (state?.status === "awaiting_budget") nodes[nodeId] = { ...state, status: "running" };
+          break;
+        }
         case "run_paused":
         case "run_finished":
           next.status = data.status as Run["status"];
@@ -768,6 +814,44 @@ export function liveUsage(run: Run | null): Usage {
 /** Whether a step waits for a person to decide one of its tool calls (the step itself still counts as running). */
 export function waitsForToolApproval(state: NodeRun | undefined | null): boolean {
   return state?.status === "running" && (state.tool_calls ?? []).some((call) => call.approval?.status === "pending");
+}
+
+const NO_BUDGET: RunBudget = { source: "none", initial_limit_usd: null, limit_usd: null, raises: [], pending_request_id: null };
+
+/** The run's budget, or an empty one for runs of older backends. */
+function budgetOf(run: Run): RunBudget {
+  return { ...NO_BUDGET, ...(run.budget ?? {}), raises: run.budget?.raises ?? [] };
+}
+
+/**
+ * The steps of ``run`` that wait for a budget decision: those whose requests are blocked, the step of the event, and
+ * the sub-workflow or team step whose child run holds the blocking limit (its own steps live in the child run).
+ */
+export function budgetWaitingNodes(run: Run, request: BudgetRequest, eventNode: string | null = null): string[] {
+  const found = new Set<string>();
+  if (eventNode) found.add(eventNode);
+  const childRuns = new Set([request.block?.run_id, ...(request.requests ?? []).map((item) => item.run_id)].filter(Boolean));
+  for (const item of request.requests ?? []) if (item.run_id === run.id && item.node_id) found.add(item.node_id);
+  if (request.block?.run_id === run.id && request.block.node_id) found.add(request.block.node_id);
+  for (const [nodeId, state] of Object.entries(run.nodes)) {
+    const children = [state?.child_run_id, ...(state?.child_run_ids ?? [])];
+    if (children.some((child) => child && child !== run.id && childRuns.has(child))) found.add(nodeId);
+  }
+  return [...found].filter((nodeId) => nodeId in run.nodes);
+}
+
+/** Whether a step waits for a budget decision (BUDGET-1). */
+export function waitsForBudget(state: NodeRun | undefined | null): boolean {
+  return state?.status === "awaiting_budget";
+}
+
+/**
+ * Whether a run waits for a budget decision: ``run.budget.pending_request_id`` is set. Every budget wait pauses the run
+ * once nothing else is in flight; until then it still reads "running" (requests already sent are finishing).
+ */
+export function runWaitsForBudget(run: Pick<Run, "status" | "budget"> | null | undefined): boolean {
+  if (!run || !run.budget?.pending_request_id) return false;
+  return run.status === "paused" || run.status === "running" || run.status === "queued";
 }
 
 /** Whether a running run waits for a person to decide a tool call. */

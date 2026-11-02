@@ -157,6 +157,59 @@ The budget limits the **estimated costs** of a run in US dollars, across all age
 
 Unknown costs do **not** count as 0. If the highest cost of a request cannot be determined in advance (no known price, images, files, or provider tools such as web search), it runs without an upper bound in standard mode. The run then shows the note **No hard maximum** next to its costs, with the number of such requests. In strict price mode, requests without a known price are not sent at all.
 
+Runs you start yourself do not stop when the budget is not enough: they pause and wait for a decision, see [Budget decisions during a run](/docs/workflows#budget-freigabe).
+
+## Default, workflow and run budget {#budget-ebenen}
+<!-- keywords: default budget, workflow budget, run budget, effective limit, initial limit, raise, levels -->
+
+Three levels decide how much a run may cost:
+
+- **Default budget** (settings): applies to every workflow without a budget of its own.
+- **Workflow budget** (workflow settings): replaces the default budget for this workflow. A published release keeps the budget it was published with.
+- **Run budget:** the limit a single run starts with (the workflow budget, else the default budget) plus every raise approved for that run. Raising it changes neither the workflow nor the settings; the next run starts with the workflow budget again.
+
+The run details show the limit of the run next to its costs, and *raised from …* once it was raised. Administrators can set a **maximum run budget** that no run may exceed, at the start or after raises (see [Default budget](/docs/einstellungen#budget)).
+
+## Budget decisions during a run {#budget-freigabe}
+<!-- keywords: budget decision, budget pause, raise budget, continue, end run, awaiting budget, waiting for budget decision, suggested limit, request too large, used up, deadline -->
+
+When a model request of a run you started does not fit its budget, the run does not fail any more. It **pauses** with the status *Waiting for budget decision*: requests already running are finished and recorded, no further request is sent, and nothing is billed for the waiting request. Its step shows the same status.
+
+The reason is one of two:
+
+- **Used up:** the known costs have reached the limit.
+- **Next request too large:** the most the next request can cost (its input plus the largest possible answer at the highest rate) does not fit what is left. This is a maximum, not an expected cost; the request is held back before it is paid instead of overshooting the limit.
+
+The budget decision appears in the run panel of the editor, in the run details and in the section **Budget decisions** of the [Approvals page](/docs/verzweigungen#freigaben-seite); the counter in the navigation includes it. The card shows the limit at the start and now, the known cost (with *plus unknown costs* when some costs are unknown, never as 0), what is left, what is reserved for running requests, which limit blocks, the waiting requests with what they can cost at most, the deadline and earlier raises.
+
+- **Check and continue:** enter the new **total** limit for this run. The suggested value is the known cost plus the most the next request can cost, rounded up to a cent: a minimum for the next request, never a forecast for the rest of the run. Nodestro checks the amount (higher than the current limit, not above the maximum run budget) and continues the run at once.
+- **End run** (with a confirmation): the run ends with the note that it was ended at a budget decision. Results of finished steps stay.
+
+A decision applies to this run only. If the raised limit runs out again, the run pauses again with a new decision; this repeats as often as needed. A decision is taken once: if someone else decided first, the card says who and how. Leaving the page loses nothing: the decision is stored on the server and found again in all places.
+
+During the pause no thread or worker is held, and a restart of Nodestro loses nothing. The [Live run chat](/docs/ausfuehrungen#teamleitung) keeps answering questions (from its own chat budget); instructions are used at the next decision after the run continues. A chat message is **never** a budget decision.
+
+If nobody decides before the deadline (24 hours unless an administrator set another one), the run fails with “budget used up”. You can then [continue](/docs/verzweigungen#fortsetzen) it with a new budget.
+
+## Sub-workflow and team limits {#budget-teams}
+<!-- keywords: sub-workflow budget, team budget, child run, parent run, limit blocks, nested -->
+
+A sub-workflow or team with a budget of its own runs with its own limit, and every request also counts towards the run above it. The budget decision names the limit that refused the request: *the limit of this run*, or *the own limit of the sub-workflow / team “name”*. A raise changes exactly that limit, never the workflow behind it. Limits above it still apply: raising a team's limit can lead to a second decision for the run above it, and raising the run above never lifts a team's own limit. There is always one decision per top-level run.
+
+## Who may decide {#budget-rechte}
+<!-- keywords: permission, who may raise, started the run, administrator, maximum run budget, tenant -->
+
+On the desktop you decide yourself. On a server, a person may decide who holds the *Run* permission **and** started the run; administrators may decide every run of their workspace. Runs without a known starter can only be decided by administrators. Everyone with *Read* sees the decision; the card then explains why the buttons are missing. No raise may exceed the **maximum run budget** of the workspace or a cap set by the operator of the server.
+
+## Unattended runs and known limits {#budget-grenzen}
+<!-- keywords: schedule, batch, test series, published api, unattended, no pause, unknown price, price quality, checkpoint lost -->
+
+- **Unattended runs do not pause.** Runs from [schedules, batch runs and test series](/docs/automatisierung#zeitplaene) and from the published API fail as before when their budget is used up (error `BudgetExceededError`); nobody is asked and nothing is raised automatically.
+- **Prices are not fixed by a higher budget.** Requests whose cost has no upper bound (no known price in the standard price mode, provider tools, images, files) are sent while the limit is not used up and counted as uncapped. In the strict [price mode](/docs/nutzung#preismodus) unknown or unreliable prices are refused before the request; that is not a budget decision.
+- An answer that crosses the limit after it was paid is kept and used, never sent again; the pause comes before the next request.
+- The API's daily budget, the cost limit of a published API, rate limits, time and step limits and the chat budget cannot be raised here.
+- If the saved state of a waiting step is lost, the step fails with a message of its own instead of running again silently. [Continue](/docs/verzweigungen#fortsetzen) the run: Nodestro shows what runs again and asks before tools run again.
+
 ## Limits per run {#limits}
 <!-- keywords: limits, at the same time, parallel, time limit, run time, timeout, duration, run.time_limit, steps, run.step_limit -->
 

@@ -83,6 +83,7 @@ La pestaña **Contexto** muestra lo que recibió el agente en esta ejecución: p
 | **Omitido** | El nodo no se ejecutó porque su rama no fue elegida. No es un error. |
 | **Bloqueado** | El nodo no se ejecutó porque un predecesor falló o se canceló. |
 | **Pendiente de aprobación** | Una [aprobación](/docs/verzweigungen#freigabe) espera la decisión de una persona. |
+| **Espera una decisión de presupuesto** | La próxima solicitud al modelo necesita más presupuesto; la ejecución está en pausa hasta que alguien eleve su límite o la termine ([decisiones de presupuesto](/docs/workflows#budget-freigabe)). |
 | **En pausa** | La ejecución espera una aprobación y continúa tras la decisión. |
 | **Cancelado** | Detenido con *Cancelar ejecución*, rechazado, o una traza exportada antes de estar completa. |
 | **Te espera** | Una llamada a herramienta espera tu aprobación; la ejecución sigue en cuanto decides. |
@@ -122,6 +123,8 @@ Cada instrucción muestra su estado: *Esperando la próxima decisión* (con cuá
 **Pausa, reinicio, continuar:** mientras un equipo espera una aprobación, las instrucciones siguen abiertas y valen para la próxima decisión cuando la ejecución continúa. Si un reinicio del servidor hace perder una decisión, la instrucción se entrega de nuevo a la próxima decisión. Cuando la ejecución o el líder de equipo terminan, las instrucciones abiertas se marcan como *Ya no se tendrá en cuenta* y no se trasladan al continuar la ejecución. Tras el final, la conversación solo se puede leer.
 
 **Ejecuciones desatendidas:** en el inspector del orquestador, **Dirección en vivo** fija quién puede dar instrucciones: *Ejecuciones iniciadas por una persona* (predeterminado), *Siempre* (también programación, API, ejecución por lotes y serie de pruebas) o *Desactivada*. Las preguntas no se ven afectadas. Más sobre el orquestador en [Orquestador](/docs/verzweigungen#orchestrator).
+
+**Durante una pausa de presupuesto** el chat sigue funcionando: las preguntas se responden con el presupuesto del chat y las instrucciones se usan cuando la ejecución continúa. Un mensaje del chat nunca eleva ni aprueba el presupuesto de la ejecución; eso solo ocurre en la tarjeta de decisión de presupuesto.
 
 ## Exportar traza {#trace-export}
 <!-- keywords: exportar traza, exportar, json, run json, compartir, archivar, depurar, anonimizar, privacidad, datos personales -->

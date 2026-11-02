@@ -7,7 +7,7 @@ import { ArrowRight, History, Inbox, PenLine } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { useApprovals, useRuns, useToolApprovals } from "../api/hooks";
+import { pendingBudgetRequests, useApprovals, useBudgetRequests, useRuns, useToolApprovals } from "../api/hooks";
 import type { RunSummary, WorkflowSummary } from "../api/types";
 import { StatusBadge } from "../components/ui";
 import { changedText, relativeTime } from "../lib/format";
@@ -37,7 +37,9 @@ export function ContinueArea({ workflows }: { workflows: WorkflowSummary[] }) {
   const toolApprovals = useToolApprovals();
   const latest = recentRuns(runs.data);
   const edited = recentlyEdited(workflows);
-  const waiting = (approvals.data ?? []).length + (toolApprovals.data ?? []).filter((item) => item.status === "pending").length;
+  const budgets = pendingBudgetRequests(useBudgetRequests().data);
+  const waiting =
+    (approvals.data ?? []).length + (toolApprovals.data ?? []).filter((item) => item.status === "pending").length + budgets.length;
   if (!latest.length && !edited.length && !waiting) return null;
   return (
     <section className="continue" aria-labelledby="continue-title" data-testid="continue">
@@ -51,9 +53,11 @@ export function ContinueArea({ workflows }: { workflows: WorkflowSummary[] }) {
             <span>
               <strong>{t("workflows.continue.waiting", { count: waiting })}</strong>
               <span className="muted small">
-                {(approvals.data ?? [])
+                {[
+                  ...budgets.map((item) => `${item.workflow_name} · ${t("budget.approvals.title")}`),
+                  ...(approvals.data ?? []).map((item) => `${item.workflow_name} · ${item.label}`),
+                ]
                   .slice(0, 2)
-                  .map((item) => `${item.workflow_name} · ${item.label}`)
                   .join(", ")}
               </span>
             </span>

@@ -83,6 +83,7 @@ Der Tab **Kontext** zeigt, was der Agent in diesem Lauf bekommen hat: System-Pro
 | **Übersprungen** | Der Knoten lief nicht, weil sein Zweig nicht gewählt wurde. Das ist kein Fehler. |
 | **Blockiert** | Der Knoten lief nicht, weil ein Vorgänger fehlgeschlagen ist oder abgebrochen wurde. |
 | **Wartet auf Freigabe** | Eine [Freigabe](/docs/verzweigungen#freigabe) wartet auf die Entscheidung einer Person. |
+| **Wartet auf Budget-Entscheidung** | Die nächste Modellanfrage braucht mehr Budget; der Lauf pausiert, bis jemand sein Limit erhöht oder ihn beendet ([Budget-Entscheidungen](/docs/workflows#budget-freigabe)). |
 | **Pausiert** | Der Lauf wartet auf eine Freigabe und geht nach der Entscheidung weiter. |
 | **Abgebrochen** | Durch *Lauf abbrechen* gestoppt, abgelehnt, oder ein unvollständig exportierter Trace. |
 | **Wartet auf dich** | Ein Tool-Aufruf wartet auf deine Freigabe; der Lauf geht weiter, sobald du entschieden hast. |
@@ -122,6 +123,8 @@ Jede Anweisung zeigt ihren Stand: *Wartet auf die nächste Entscheidung* (mit de
 **Pausieren, Neustart, Fortsetzen:** Wartet ein Team auf eine Freigabe, bleiben Anweisungen offen und gelten für die nächste Entscheidung, sobald es weitergeht. Fällt eine Entscheidung durch einen Neustart des Servers aus, wird die Anweisung der nächsten Entscheidung erneut mitgegeben. Endet der Lauf oder die Teamleitung, werden offene Anweisungen als *Nicht mehr berücksichtigt* markiert und beim Fortsetzen nicht übernommen. Nach dem Ende ist das Gespräch nur noch lesbar.
 
 **Unbeaufsichtigte Läufe:** Im Inspektor des Orchestrators legt **Live-Steuerung** fest, wer Anweisungen geben darf: *Läufe, die eine Person gestartet hat* (Standard), *Immer* (auch Zeitplan, API, Stapellauf und Testreihe) oder *Aus*. Fragen betrifft das nicht. Mehr zum Orchestrator steht unter [Orchestrator](/docs/verzweigungen#orchestrator).
+
+**Während einer Budgetpause** funktioniert der Chat weiter: Fragen werden aus dem Chat-Budget beantwortet, Anweisungen werden verwendet, nachdem der Lauf weitergeht. Eine Chat-Nachricht erhöht oder genehmigt nie das Budget des Laufs; das geschieht nur auf der Karte der Budget-Entscheidung.
 
 ## Trace exportieren {#trace-export}
 <!-- keywords: trace exportieren, export, json, run json, teilen, archivieren, bereinigen, anonymisieren, datenschutz, personenbezogene daten -->

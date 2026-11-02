@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|flow|panels|api|mcp|approvals|orchestration|runchat|journeys|welcome|a11y ...]   (default: all)
+# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y ...]   (default: all)
 # The journeys suite writes its report to $JOURNEY_REPORT when set.
 # Needs: the studio installed (pip install -e .), the frontend built (make frontend) and Playwright.
 set -euo pipefail
@@ -49,6 +49,8 @@ run() {  # run SUITE
       (cd frontend && npm run e2e:mcp) ;;
     approvals) start approvals 8080 python tests/e2e_approvals_server.py --data-dir "$work/approvals" --port 8080 --wait 20
       (cd frontend && npm run e2e:approvals) ;;
+    budget) start budget 8150 python tests/e2e_budget_server.py --data-dir "$work/budget" --port 8150
+      (cd frontend && npm run e2e:budget) ;;
     orchestration) start orchestration 8100 python tests/e2e_orchestration_server.py --data-dir "$work/orchestration" --port 8100
       (cd frontend && npm run e2e:orchestration) ;;
     runchat) start runchat 8110 python tests/e2e_run_chat_server.py --data-dir "$work/runchat" --port 8110
@@ -65,7 +67,7 @@ run() {  # run SUITE
 
 # The smoke test goes first: it expects an empty start page and copies examples from the gallery.
 suites=("$@")
-[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant flow panels api mcp approvals orchestration runchat journeys welcome a11y)
+[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant flow panels api mcp approvals budget orchestration runchat journeys welcome a11y)
 for suite in "${suites[@]}"; do
   echo "== e2e: $suite"
   run "$suite"
