@@ -89,11 +89,15 @@ FastAPI (nodestro_api.app or                                        nodestro-api
   names (against DNS rebinding), refuses forwarded requests and accepts changing requests only from the studio's own
   origin or from this computer. These checks protect against web pages in the browser; they are not
   authentication.
-- **Launch secret:** the desktop app passes a random 256-bit secret in `NODESTRO_LAUNCH_SECRET` and opens
+- **Launch secret:** the desktop app hands a random 256-bit secret (and the MCP token vault key) to the backend
+  through a pipe on its standard input (`--secrets-fd 0`, `nodestro_api.handoff`), never in its environment or on its
+  command line, which every process of the same OS user can read (`/proc/<pid>/environ`, macOS `KERN_PROCARGS2`);
+  the backend keeps both in memory only, so its child processes never see them. The app opens
   `/api/launch?token=…` once; the backend exchanges it for an `HttpOnly`, `SameSite=Strict` cookie
   (`nodestro_api.launch.LaunchSecretMiddleware`). Every other request without that cookie gets 401
-  `access.launch_required`, except `/api/health` and the key-protected `/api/published` routes. Without the variable
-  (the `nodestro` command in a terminal) nothing changes.
+  `access.launch_required`, except `/api/health` and the key-protected `/api/published` routes. Operators can set
+  `NODESTRO_LAUNCH_SECRET` instead (taken out of `os.environ` when read); without either (the `nodestro` command in a
+  terminal) nothing changes.
 
 ### Local container
 
