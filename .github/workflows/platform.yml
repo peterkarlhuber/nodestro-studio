@@ -120,7 +120,7 @@ jobs:
         with:
           python-version: "3.13"
           cache: pip
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
@@ -179,7 +179,7 @@ jobs:
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           pip install -e ".[dev]"
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
           cache: npm
