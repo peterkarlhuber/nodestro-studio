@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### New official logo (2026-11-02)
+
+- The new official Nodestro logo replaces the previous app-icon mark everywhere: top bar (lockup; symbol alone on
+  narrow phones), welcome page (header, hero hub, closing, footer), favicons, Apple touch icon and web manifest
+  icons (new maskable icon). Icon links use `?v=3` to drop cached icons.
+- Masters in `branding/`, every derived file reproducible with `scripts/derive_branding.py` (see
+  `branding/README.md`). One component, `frontend/src/components/BrandLogo.tsx`, picks the lockup with the black or
+  white wordmark from the app theme; no CSS filters or background boxes.
+- The welcome hero's hub has a node-card core behind the hexagon so the routes end at the logo.
+- Removed: `nodestro-logo-512.webp`, `nodestro-logo-64.png`, the CSS text wordmark (`.brand__name`, `.brand__dot`).
+
 ### Platform pins: Docker-first sandbox (2026-11-02)
 
 - Pins: orkexa `e220f70` (unified Docker sandbox engine, orkexa #31; macOS sandbox removed, #30; budget #32),

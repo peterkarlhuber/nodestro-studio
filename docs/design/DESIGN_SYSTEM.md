@@ -75,9 +75,11 @@ All color values and additional hover, pressed and focus tokens are in `nodestro
 
 ## Brand
 
-- **Logo:** the original Nodestro logo (dark rounded square, three citron spheres) is the only app mark: top bar,
-  favicons, app icons and the welcome page all derive from it (`frontend/src/assets/brand/`, `frontend/public/`).
-  Do not redraw it or replace it with a generic node symbol.
+- **Logo:** the official Nodestro logo (lime hexagon symbol with two node dots, "Nodestro" wordmark) is the only
+  app mark. Use the `BrandLogo` (lockup, theme-matched) and `BrandMark` (symbol) components from
+  `frontend/src/components/BrandLogo.tsx`; never import the PNGs directly, recolor the logo with CSS filters or put
+  it on a white box. All files derive from `branding/` (see its README). Do not redraw it or replace it with a
+  generic node symbol.
 - **Slogan:** *Connecting Intelligence*, always in English, also in localized interfaces.
 - The welcome page (`/welcome`) is the brand entrance and may be more expressive than the working interface, using
   the same tokens; see [LANDING.md](LANDING.md).

@@ -10,7 +10,8 @@ This record describes the repository as it was split off. Later changes are in t
 files renamed since then for the English-only documentation policy: `docs/ARCHITEKTUR.md` → `docs/ARCHITECTURE.md`,
 `docs/PLATTFORM.md` → `docs/PLATFORM.md`, `docs/PROJEKTBESCHREIBUNG.md` → `docs/PROJECT_DESCRIPTION.md`,
 `docs/screenshots/ausfuehrung.png` → `execution.png`, `editor-dunkel.png` → `editor-dark.png`,
-`editor-hell.png` → `editor-light.png`.
+`editor-hell.png` → `editor-light.png`. Removed since: `frontend/public/favicon.svg` and `docs/design/preview-dark.png`,
+`preview-light.png` (unreferenced design mockups showing a retired logo; removed with the 2026-11-02 logo change).
 
 Folders taken over byte for byte (files summarized):
 

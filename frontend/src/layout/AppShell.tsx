@@ -27,10 +27,10 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 
 import { useAccess } from "../api/access";
 import { useApprovals, useSettings, useToolApprovals } from "../api/hooks";
-import logoSmall from "../assets/brand/nodestro-logo-64.png";
 import { AssistantPanel } from "../assistant/AssistantPanel";
 import { useAssistant } from "../assistant/store";
 import { LoginProblemNotice, ReadOnlyNotice, UserMenu } from "../components/Access";
+import { BrandLogo, BrandMark } from "../components/BrandLogo";
 import { Toaster } from "../components/toast";
 import { Hint, Segmented } from "../components/ui";
 import { isLanguage, setLanguage, storedLanguage } from "../i18n";
@@ -74,11 +74,6 @@ const HELP_ITEMS: NavItem[] = [
   { to: "/docs", label: "docs", icon: BookMarked },
   { to: "/welcome", label: "welcome", icon: Orbit },
 ];
-
-/** The official Nodestro logo, small enough for the top bar. */
-export function BrandMark() {
-  return <img className="brand__mark" src={logoSmall} alt="" width={28} height={28} />;
-}
 
 function NavGroup({ title, items }: { title: string; items: NavItem[] }) {
   const { t } = useTranslation();
@@ -193,10 +188,8 @@ export function AppShell() {
           {phoneNav.open ? <X size={18} aria-hidden /> : <Menu size={18} aria-hidden />}
         </button>
         <Link to="/" className="brand" aria-label={t("shell.home")}>
-          <BrandMark />
-          <span className="brand__name">
-            nodestro<span className="brand__dot">.</span>
-          </span>
+          <BrandLogo className="brand__logo" height={26} />
+          <BrandMark className="brand__mark" size={28} />
           <span className="brand__sub">Studio</span>
         </Link>
         <GlobalSearch />

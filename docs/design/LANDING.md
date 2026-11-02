@@ -1,6 +1,6 @@
 # Welcome page: "Connecting Intelligence"
 
-The welcome page (`/welcome`) is Nodestro's brand entrance: the original logo, the official slogan
+The welcome page (`/welcome`) is Nodestro's brand entrance: the official logo, the official slogan
 **Connecting Intelligence** and a short, honest explanation of what the Studio does, with one clear way in.
 It is part of the Studio app (same React app, router, theme, languages and tokens), not a separate website.
 
@@ -25,8 +25,9 @@ Code: `frontend/src/welcome/` · texts: `frontend/src/i18n/locales/<lang>/welcom
   feature has a deep link (`/workflows/:id`, `/executions/:id`, …). Theme lives in `localStorage["nodestro-theme"]`
   (applied before the first render in `index.html`), the language in `localStorage["nodestro-language"]` plus the
   backend settings. Browser suites open `/` and expect the Workflows page.
-- **Logo:** a 3D app-icon style mark (dark rounded square, three citron spheres forming a V: two nodes joining into
-  a third). It stays legible down to 16 px, so one derived icon set covers every size without a redrawn variant.
+- **Logo (since 2026-11-02):** the official lockup: a lime hexagon ring with two node dots on its edge (the
+  symbol) and the "Nodestro" wordmark. Masters and derivation: [`branding/README.md`](../../branding/README.md).
+  The earlier app-icon mark (dark rounded square, three citron spheres) is retired.
 
 ## 2. Concept
 
@@ -38,7 +39,7 @@ Three directions were weighed:
 | B. Logo-to-Studio morph | Scroll-driven transformation of the logo into a full Studio screenshot | Strong once, but heavy (scroll hijacking, large images), hard to keep honest and in six languages |
 | **C. The connection** | The logo *is* the hub of a small, real Nodestro diagram | **Chosen** |
 
-**C, "The connection":** the logo itself is a diagram (two nodes join into a third). The hero extends exactly
+**C, "The connection":** the logo itself is a node with connection points on its edge. The hero extends exactly
 that idea: what Nodestro connects (models, knowledge, tools) flows *into* the logo, and what comes out of it
 (agents connected into workflows, approvals, traceable runs) flows on. The slogan sits directly beneath and
 names what the visitor just watched. Everything in the diagram is a real Studio concept, drawn in the Studio's
@@ -109,25 +110,29 @@ the bare start page `/`, the Studio frame's loader (`studioLoader`, `welcome/fir
 - The page code (≈16 KB JS, 18 KB CSS before gzip) is a lazy route chunk; the Studio bundle only gained the texts
   and two small logo assets.
 
-Brand in the Studio itself: the top bar shows the original logo instead of the old three-dot SVG; the favicon
-set, Apple touch icon and web manifest are derived from the original logo; the window title of the welcome page
-is "Nodestro · Connecting Intelligence". Nothing else in the Studio's layout changed.
+Brand in the Studio itself: the top bar shows the official lockup (narrow phones: the symbol alone); the favicon
+set, Apple touch icon and web manifest icons are derived from the same masters; the window title of the welcome
+page is "Nodestro · Connecting Intelligence".
 
 ## 5. Assets
 
-All derived from the original 1254×1254 PNG with Lanczos downscaling (slight unsharp mask at 16/32 px), no redraw:
+Every logo file is derived from the official masters in `branding/` by `scripts/derive_branding.py`
+(details and the regeneration command: [`branding/README.md`](../../branding/README.md)); nothing is redrawn.
+All UI code takes the files from one component, `frontend/src/components/BrandLogo.tsx`.
 
 | File | Use |
 |---|---|
-| `public/favicon.ico` (16, 32, 48) | Classic favicon, every browser |
-| `public/favicon-16.png`, `favicon-32.png` | PNG favicons |
-| `public/apple-touch-icon.png` (180, opaque) | iOS home screen |
-| `public/icon-192.png`, `icon-512.png` + `manifest.webmanifest` | Installed web app |
-| `src/assets/brand/nodestro-logo-512.webp` (26 KB) | Welcome page logo (hashed by Vite) |
-| `src/assets/brand/nodestro-logo-64.png` (7 KB) | Studio top bar |
+| `src/assets/brand/nodestro-logo.png` / `nodestro-logo-on-dark.png` | Lockup with black / white wordmark; `BrandLogo` picks it from the app theme (top bar, welcome header, closing) |
+| `src/assets/brand/nodestro-mark.png` (512) | Symbol: welcome hero hub (also the mask of its light sheen) |
+| `src/assets/brand/nodestro-mark-128.png` | Symbol at small sizes: narrow-phone top bar, welcome footer |
+| `public/favicon.ico` (16, 32, 48), `favicon-16.png`, `favicon-32.png` | Browser tab: the symbol on a transparent background (lime reads on light and dark tabs) |
+| `public/apple-touch-icon.png` (180, opaque) | iOS home screen: the symbol on a dark tile |
+| `public/icon-192.png`, `icon-512.png`, `icon-maskable-512.png` + `manifest.webmanifest` | Installed web app (the maskable icon keeps the symbol inside the safe zone) |
 
-Icon links carry `?v=2` so browsers drop the cached old icon. An SVG version was not made: the logo's shading
-cannot be reproduced faithfully as vector art.
+The hero hub puts a node-card surface (`.wl-hub__core`, a hexagon under the ring's stroke) behind the symbol, so
+the routes end at the logo instead of showing through its open centre. Icon links carry `?v=3` so browsers drop
+cached older icons. There is no SVG version: the masters are raster art, and a traced vector would not be the
+official logo.
 
 ## 6. Accessibility
 

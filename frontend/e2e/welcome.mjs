@@ -84,12 +84,29 @@ try {
     for (const href of icons) if ((await context.request.get(href)).ok()) served += 1;
     check(icons.length >= 5 && served === icons.length, `All ${icons.length} icon and manifest links are served`);
     check(!(await context.request.get(base + "/favicon.svg")).headers()["content-type"]?.includes("svg"), "The old SVG favicon is gone");
+    const manifest = await (await context.request.get(base + "/manifest.webmanifest")).json();
+    check(manifest.icons.some((icon) => icon.purpose === "maskable"), "The web app manifest has a maskable icon");
+    for (const icon of manifest.icons) check((await context.request.get(new URL(icon.src, base).href)).ok(), `Manifest icon ${icon.src} is served`);
 
     await page.getByTestId("welcome-open-studio").click();
     await page.waitForURL((url) => url.pathname === "/");
     await page.getByRole("heading", { name: "Workflows", exact: true }).waitFor();
     check(true, "Open Studio leads to the workflows");
-    check((await page.locator(".topbar .brand__mark").getAttribute("src"))?.includes("nodestro-logo"), "The Studio top bar shows the original logo");
+    // Brand: the official lockup, matched to the theme (white wordmark on dark, black on light), never inverted.
+    const lockup = page.locator(".topbar .brand__logo");
+    const lockupOn = async () => ({ src: await lockup.getAttribute("src"), variant: await lockup.getAttribute("data-brand-variant") });
+    const theme = await page.evaluate(() => document.documentElement.dataset.theme);
+    const first = await lockupOn();
+    check(
+      first.src?.includes(theme === "light" ? "nodestro-logo-" : "nodestro-logo-on-dark") && first.variant === (theme === "light" ? "on-light" : "on-dark"),
+      `The Studio top bar shows the official logo for the ${theme} theme`,
+    );
+    check((await lockup.getAttribute("alt")) === "" && (await page.locator(".topbar .brand").getAttribute("aria-label")), "The logo is decorative inside a named home link");
+    check((await lockup.evaluate((img) => getComputedStyle(img).filter)) === "none", "The logo is not recoloured by a CSS filter");
+    await page.evaluate((next) => (document.documentElement.dataset.theme = next), theme === "light" ? "dark" : "light");
+    const second = await lockupOn();
+    check(second.variant !== first.variant && second.src !== first.src, "The top bar logo follows a theme switch");
+    await page.evaluate((next) => (document.documentElement.dataset.theme = next), theme);
     await page.goBack();
     await page.waitForURL(/\/welcome$/);
     check(true, "Back returns to the welcome page");
