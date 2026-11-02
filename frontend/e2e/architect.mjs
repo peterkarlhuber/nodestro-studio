@@ -92,7 +92,7 @@ try {
   await shot("architect-03-tool");
   // ADR-0006: AI-written code never runs without isolation, also not after approval.
   await tool.getByRole("button", { name: "Freigeben und registrieren" }).click();
-  await tool.getByText("laufen nur isoliert", { exact: false }).first().waitFor({ timeout: 30000 });
+  await tool.getByText("laufen nur in Docker", { exact: false }).first().waitFor({ timeout: 30000 });
   check(
     !(await api("/api/tools")).some((item) => item.name === "keyword_density"),
     "Without isolation, approving a draft runs nothing and registers nothing",
