@@ -145,11 +145,11 @@ clear message if it is missing. The secret never appears in code, logs or artifa
 
 | Repository | CI |
 | --- | --- |
-| runtime, examples, integrations, api | Python 3.10 and 3.13: ruff, ruff format, mypy (strict), pytest; build the wheel and install it into an empty environment |
+| runtime, examples, integrations, api | Python 3.11 and 3.13: ruff, ruff format, mypy (strict), pytest; build the wheel and install it into an empty environment |
 | integrations | additionally real OCR with tesseract and poppler |
 | api | additionally the OpenAPI contract and the export (the exported workflow passes its own tests) |
 | sdk | Python: ruff, mypy, pytest against a real Nodestro server with simulated models, contract and generated types up to date, client installable without the API; TypeScript: typecheck, vitest against the same server, build and `npm pack` |
-| studio | Backend (Python 3.10/3.13), frontend (lint, typecheck, vitest, build), all nine browser suites |
+| studio | Backend (Python 3.11/3.13), frontend (lint, typecheck, vitest, build), all nine browser suites |
 | studio, `platform.yml` | Platform pipeline, see below |
 
 No test calls a paid provider. All model responses come from scripts (`nodestro_runtime.testing.ScriptedClient`). The

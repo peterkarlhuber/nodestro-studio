@@ -179,7 +179,7 @@ La diagnosi è gratuita e non invia nulla a internet. **Verifica connessione** c
 ## Installazione e avvio {#installation}
 <!-- keywords: installazione, avvio, riga di comando, cli, porta, host, data-dir, no-browser, reload, python, node -->
 
-Requisiti: Python 3.10 o successivo e Node.js 20 o successivo (solo per compilare l'interfaccia); Docker facoltativo.
+Requisiti: Python 3.11 o successivo e Node.js 20 o successivo (solo per compilare l'interfaccia); Docker facoltativo.
 
 ```bash
 cd frontend && npm ci && npm run build && cd ..

@@ -179,7 +179,7 @@ The diagnosis is free and sends nothing to the internet. **Test connection** add
 ## Installation and start {#installation}
 <!-- keywords: installation, start, command line, cli, port, host, data-dir, no-browser, reload, python, node -->
 
-Requirements: Python 3.10 or newer and Node.js 20 or newer (only for building the interface), optionally Docker.
+Requirements: Python 3.11 or newer and Node.js 20 or newer (only for building the interface), optionally Docker.
 
 ```bash
 cd frontend && npm ci && npm run build && cd ..
