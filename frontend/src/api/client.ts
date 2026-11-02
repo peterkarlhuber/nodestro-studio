@@ -52,7 +52,7 @@ import type {
   ProviderSettingsIn,
   Run,
   RunSummary,
-  SandboxBackendStatus,
+  SandboxStatus,
   SearchHit,
   Settings,
   SettingsUpdate,
@@ -564,16 +564,17 @@ export const api = {
 
   /**
    * The Docker sandbox as the runtime's background check last found it; never waits for the daemon. ``refresh``
-   * starts a new check (at most every 10 s), ``wait`` (seconds, at most 5) waits that long for a running one.
+   * starts a new check (administrators only, otherwise ``refresh_ignored``; at most every 10 s, otherwise
+   * ``throttled`` with ``retry_after``), ``wait`` (seconds, at most 5) waits that long for a running one.
    */
   sandboxStatus: ({ refresh = false, wait = 0 }: { refresh?: boolean; wait?: number } = {}) =>
-    request<SandboxBackendStatus>(
+    request<SandboxStatus>(
       "GET",
       `/sandbox/status${q({ refresh: refresh ? "1" : undefined, wait: wait > 0 ? String(wait) : undefined })}`,
     ),
   /** Admin: run the Docker sandbox's checks again, the in-container self-test included (waits at most ``timeout`` s). */
   sandboxSelfTest: (timeout?: number) =>
-    request<SandboxBackendStatus>("POST", `/sandbox/self-test${q({ timeout: timeout === undefined ? undefined : String(timeout) })}`),
+    request<SandboxStatus>("POST", `/sandbox/self-test${q({ timeout: timeout === undefined ? undefined : String(timeout) })}`),
   diagnostics: () => request<Diagnostics>("GET", "/diagnostics"),
   checkConnection: (provider?: ProviderId) =>
     request<DiagnosticCheck>("POST", `/diagnostics/connection${provider ? `?provider=${encodeURIComponent(provider)}` : ""}`),

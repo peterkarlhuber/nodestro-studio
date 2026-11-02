@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useInRouterContext } from "react-router-dom";
 
 import { ApiError } from "../api/client";
+import { dockerReasonKey, isDockerReason } from "../api/types";
 import i18n from "../i18n";
 
 export interface Coded {
@@ -82,6 +83,11 @@ function interpolationParams(t: TFunction, params: Record<string, unknown> | nul
       result[key] = problemText(t, { code: value, params: { ...params, reason: undefined } });
       continue;
     }
+    if (key === "reason" && typeof value === "string" && isDockerReason(value)) {
+      // A sandbox refusal in automatic or Docker mode names Docker's reason (DS-3); the sentence reads it.
+      result[key] = t(dockerReasonKey(value)!);
+      continue;
+    }
     if (key === "permission" && typeof value === "string" && value) {
       // Permissions come as ids ("edit"); the sentence names them (AD-04).
       result[key] = t(`admin.permissions.${value}`, { defaultValue: value });
@@ -149,6 +155,14 @@ export function refineProblem(
   // why that container could not run (no Docker, or no pinned resolver image); never on this computer.
   if (code === "deps.build_required" && params.reason === "sandbox.unavailable") return { code: "deps.build_required_no_docker", params };
   if (code === "deps.build_required" && params.reason === "deps.build_unavailable") return { code: "deps.build_required_not_set_up", params };
+  // Docker-first (DS-3): why AI-created code was refused. The subprocess mode is for trusted use only; automatic and
+  // Docker mode name Docker's reason; the built-in Linux sandbox gives AI-created tools no third-party libraries.
+  if (code === "sandbox.isolation_required" && params.reason === "subprocess-mode")
+    return { code: "sandbox.isolation_required_subprocess", params };
+  if (code === "sandbox.isolation_required" && isDockerReason(params.reason as string))
+    return { code: "sandbox.isolation_required_docker", params };
+  if (code === "sandbox.libraries_need_isolation" && params.mode === "linux")
+    return { code: "sandbox.libraries_need_isolation_linux", params };
   if (code === "run.api_error") {
     params = { ...params, provider: params.provider ?? "" };
     // The technical text names the library's error class; the status is the provider's HTTP answer (empty when

@@ -687,8 +687,11 @@
     "network_needs_login": "Nodestro Studio is only offered on this computer, because it has no sign-in of its own. Start it without a network address or extra host names; to offer workflows on the network, switch on network access for published APIs."
   },
   "sandbox": {
-    "isolation_required": "AI-created code and tools of unknown origin run only isolated (built-in Linux sandbox or Docker); neither is available, so nothing was run. Settings → Sandbox shows why.",
-    "libraries_need_isolation": "{{name}} is AI-created or of unknown origin and needs third-party libraries. Such tools run only isolated (built-in Linux sandbox or Docker); neither is available here. Settings → Sandbox shows why.",
+    "isolation_required": "AI-created code and tools of unknown origin run only isolated (in Docker, or in the built-in Linux sandbox if it was chosen); none is available, so nothing was run. Settings → Sandbox shows why.",
+    "isolation_required_subprocess": "The sandbox is set to Python process, which is for trusted use only: AI-created code and tools of unknown origin are always refused there, so nothing was run. In Settings → Sandbox, choose Automatic and start Docker.",
+    "isolation_required_docker": "AI-created code and tools of unknown origin run only in Docker, and Docker is not ready, so nothing was run. {{reason}} Settings → Sandbox shows the checks.",
+    "libraries_need_isolation": "{{name}} is AI-created or of unknown origin and needs third-party libraries. Such tools run only in Docker; it is not available here. Settings → Sandbox shows why.",
+    "libraries_need_isolation_linux": "AI-created tools and tools of unknown origin get no third-party libraries in the built-in Linux sandbox, so nothing was run. To use libraries, choose Automatic in Settings → Sandbox and start Docker.",
     "unavailable": "Tool code runs only in containers here; the Python process sandbox is not available.",
     "docker_insecure": "Docker did not pass Nodestro's security checks, so the AI-created code was not run. Settings → Sandbox shows which check failed.",
     "selftest_failed": "The test container failed Nodestro's checks, so the AI-created code was not run. Settings → Sandbox shows why."

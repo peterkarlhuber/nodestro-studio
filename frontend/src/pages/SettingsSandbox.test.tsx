@@ -4,11 +4,11 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type { SandboxBackendStatus, SandboxCheck, SandboxSelection, Settings } from "../api/types";
+import type { SandboxBackendStatus, SandboxCheck, SandboxSelection, SandboxStatus, Settings } from "../api/types";
 import { DOCKER_REASONS, isolationAvailable, untrustedBackend } from "../api/types";
 import i18n, { loadLanguage } from "../i18n";
 
-import { SandboxPanel } from "./SettingsSandbox";
+import { SandboxPanel, checkOutcome, effectiveSelection } from "./SettingsSandbox";
 
 afterEach(() => {
   cleanup();
@@ -91,7 +91,7 @@ function setHidden(hidden: boolean) {
 }
 
 /** A fetch stand-in for /api/sandbox/*: answers the given statuses in turn (the last one again and again). */
-function stubStatus(...answers: SandboxBackendStatus[]) {
+function stubStatus(...answers: SandboxStatus[]) {
   let next = 0;
   const fetch = vi.fn(async (url: string, init?: RequestInit) => {
     void init;
@@ -154,10 +154,65 @@ describe("Settings → Sandbox", () => {
 
   it("offers the automatic mode and saves a change", async () => {
     const onMode = show(settings({ sandbox: "subprocess", sandbox_selection: selection({ mode: "subprocess" }) }));
-    expect(screen.getByTestId("sandbox-blocked").textContent).toContain("Wähle Automatisch oder Docker");
+    expect(screen.getByTestId("sandbox-blocked").textContent).toBe(i18n.t("settings.sandbox.blocked.subprocess"));
+    expect(screen.getByTestId("sandbox-blocked").textContent).toContain("nur für vertrauenswürdige Nutzung");
     const group = screen.getByRole("radiogroup", { name: "Sandbox" });
     await userEvent.click(within(group).getByRole("radio", { name: "Automatisch" }));
     expect(onMode).toHaveBeenCalledWith("auto");
+  });
+
+  it("explains every offered mode: Docker for AI code in automatic mode, the Python process for trusted use only", () => {
+    show(settings({ sandbox: "subprocess", sandbox_selection: selection({ mode: "subprocess" }) }));
+    expect(screen.getByTestId("sandbox-mode-hint-auto").textContent).toBe(i18n.t("settings.sandbox.modeHint.auto"));
+    expect(screen.getByTestId("sandbox-mode-hint-auto").textContent).toContain("nur in Docker");
+    expect(screen.getByTestId("sandbox-mode-hint-subprocess").textContent).toContain("immer gesperrt");
+    expect(screen.getByTestId("sandbox-mode-hint-subprocess").getAttribute("aria-current")).toBe("true");
+    expect(screen.getByTestId("sandbox-mode-hint-docker")).toBeTruthy();
+    // The built-in Linux sandbox is not offered on macOS.
+    expect(screen.queryByTestId("sandbox-mode-hint-linux")).toBeNull();
+    expect(screen.queryByRole("radio", { name: "Linux-Sandbox" })).toBeNull();
+  });
+
+  it("offers the built-in Linux sandbox as an explicit choice on Linux", async () => {
+    const onMode = show(settings({ sandbox_selection: selection({ os: "linux", arch: "x86_64", reason: "docker-missing" }) }));
+    const hint = screen.getByTestId("sandbox-mode-hint-linux").textContent;
+    expect(hint).toBe(i18n.t("settings.sandbox.modeHint.linux"));
+    expect(hint).toContain("nur Linux");
+    expect(hint).toContain("ohne Python-Pakete von Drittanbietern");
+    await userEvent.click(within(screen.getByRole("radiogroup", { name: "Sandbox" })).getByRole("radio", { name: "Linux-Sandbox" }));
+    expect(onMode).toHaveBeenCalledWith("linux");
+  });
+
+  it("names the built-in Linux sandbox when it runs AI-created tools", () => {
+    show(
+      settings({
+        sandbox: "linux",
+        sandbox_selection: selection({ mode: "linux", os: "linux", untrusted: "linux-builtin", blocked: false, reason: "" }),
+        sandbox_backends: [backend("linux-builtin", "approved"), docker("unavailable", "docker-missing", FAILED_CHECK["docker-missing"])],
+      }),
+    );
+    expect(screen.getByTestId("sandbox-untrusted").textContent).toBe("Eingebaute Linux-Sandbox");
+    expect(screen.queryByTestId("sandbox-blocked")).toBeNull();
+    expect(screen.getByTestId("sandbox-mode-hint-linux").getAttribute("aria-current")).toBe("true");
+  });
+
+  it("blocks AI-created tools in Linux mode without the built-in sandbox and never names Docker's reason", () => {
+    show(
+      settings({
+        sandbox: "linux",
+        sandbox_selection: selection({ mode: "linux", os: "linux", reason: "no-isolation" }),
+        sandbox_backends: [backend("linux-builtin", "unavailable", "landlock"), docker("unavailable", "docker-missing", FAILED_CHECK["docker-missing"])],
+      }),
+    );
+    expect(screen.getByTestId("sandbox-blocked").textContent).toBe(i18n.t("settings.sandbox.blocked.linux"));
+    expect(screen.queryByTestId("sandbox-blocked-reason")).toBeNull();
+    expect(screen.getByTestId("sandbox-untrusted").textContent).toBe("Gesperrt");
+  });
+
+  it("names Docker's reason that the automatic mode reports, also without the Docker checks", () => {
+    show(settings({ sandbox_selection: selection({ reason: "docker-limits" }), sandbox_backends: MAC_BACKENDS }));
+    expect(screen.getByTestId("sandbox-blocked").textContent).toBe(i18n.t("settings.sandbox.blocked.dockerRefused"));
+    expect(screen.getByTestId("sandbox-blocked-reason").textContent).toBe(i18n.t("settings.sandbox.docker.reason.limits"));
   });
 
   it("explains on a server that tools run only in containers", () => {
@@ -247,13 +302,21 @@ describe("Settings → Sandbox: the Docker checks", () => {
     expect(screen.queryByTestId("sandbox-blocked")).toBeNull();
   });
 
-  it("warns about the docker group of a rootful daemon", () => {
-    const note =
-      "This Docker daemon runs as root: membership in the docker group (or access to its socket) is equivalent to root access on this computer.";
-    show(settings({ sandbox_backends: [docker("approved", "", PASSED, { rootless: false, cgroup_version: "1", notes: [note] })] }));
+  it("warns about the docker group of a rootful daemon, from the rootless field and not the note's wording", () => {
+    // No English note: the warning follows rootless === false.
+    show(settings({ sandbox_backends: [docker("approved", "", PASSED, { rootless: false, cgroup_version: "1", notes: [] })] }));
     expect(screen.getByTestId("sandbox-docker-rootless").textContent).toBe("Mit Root-Rechten (rootful)");
     expect(screen.getByTestId("sandbox-docker-cgroup").textContent).toBe("Ressourcengrenzen (cgroup v1)");
     expect(screen.getByTestId("sandbox-docker-rootful").textContent).toContain("Gruppe docker");
+    cleanup();
+    // A note that mentions the docker group does not warn about a rootless engine, nor an unknown one (redacted).
+    const note = "membership in the docker group is equivalent to root access";
+    show(settings({ sandbox_backends: [docker("approved", "", PASSED, { rootless: true, notes: [note] })] }));
+    expect(screen.queryByTestId("sandbox-docker-rootful")).toBeNull();
+    cleanup();
+    show(settings({ sandbox_backends: [docker("approved", "", PASSED, { rootless: null, cgroup_version: null, notes: [note] })] }));
+    expect(screen.queryByTestId("sandbox-docker-rootful")).toBeNull();
+    expect(screen.queryByTestId("sandbox-docker-rootless")).toBeNull();
   });
 
   it("polls the status while Docker is being checked, then shows the result", async () => {
@@ -263,6 +326,11 @@ describe("Settings → Sandbox: the Docker checks", () => {
     expect(screen.getByTestId("sandbox-blocked").textContent).toBe(i18n.t("settings.sandbox.blocked.checking"));
     expect(screen.getByRole("button", { name: "Erneut prüfen" })).toBeDisabled();
     await screen.findByTestId("sandbox-docker-ready");
+    // The table, the summary and the notice read the same status (DS-13): the settings' selection still says
+    // blocked, but nothing on the page does any more.
+    expect(screen.getByTestId("sandbox-backend-docker").textContent).toContain("Freigegeben");
+    expect(screen.getByTestId("sandbox-untrusted").textContent).toBe("Docker");
+    expect(screen.queryByTestId("sandbox-blocked")).toBeNull();
     expect(sandboxCalls(fetch)).toEqual(["GET /api/sandbox/status?wait=2", "GET /api/sandbox/status?wait=2"]);
     const calls = sandboxCalls(fetch).length;
     await new Promise((resolve) => setTimeout(resolve, 50));
@@ -305,6 +373,77 @@ describe("Settings → Sandbox: the Docker checks", () => {
     await userEvent.click(screen.getByRole("button", { name: "Selbsttest ausführen" }));
     await screen.findByTestId("sandbox-docker-ready");
     expect(sandboxCalls(fetch)).toEqual(["POST /api/sandbox/self-test"]);
+  });
+
+  it("says a throttled self-test did not run and waits before it can run again", async () => {
+    const row = docker("unavailable", "docker-selftest", FAILED_CHECK["docker-selftest"]);
+    const fetch = stubStatus({ ...row, check_started: false, throttled: true, retry_after: 7.2 });
+    show(blockedDocker(row));
+    await userEvent.click(screen.getByRole("button", { name: "Selbsttest ausführen" }));
+    const note = await screen.findByTestId("sandbox-docker-not-run");
+    expect(note.dataset.kind).toBe("throttled");
+    expect(note.textContent).toBe(i18n.t("settings.sandbox.docker.throttled", { seconds: 8 }));
+    expect(note.textContent).toContain("8 s");
+    expect(screen.getByRole("button", { name: "Selbsttest ausführen" })).toBeDisabled();
+    // The view stays the last check's, which still fails: not presented as a new, passed result.
+    expect(screen.queryByTestId("sandbox-docker-ready")).toBeNull();
+    expect(screen.getByTestId("sandbox-check-self-test").dataset.ok).toBe("false");
+    expect(sandboxCalls(fetch)).toEqual(["POST /api/sandbox/self-test"]);
+  });
+
+  it("says when only administrators can start a check, and that details are hidden", async () => {
+    const row = docker("unavailable", "docker-unreachable", FAILED_CHECK["docker-unreachable"]);
+    const redacted: SandboxStatus = {
+      ...row,
+      engine: "",
+      checks: row.checks!.map((check) => ({ ...check, detail: "" })),
+      refresh_ignored: true,
+      check_started: false,
+      redacted: true,
+    };
+    stubStatus(redacted);
+    show(blockedDocker(row), vi.fn(), false);
+    expect(screen.queryByTestId("sandbox-docker-redacted")).toBeNull();
+    await userEvent.click(screen.getByRole("button", { name: "Erneut prüfen" }));
+    const note = await screen.findByTestId("sandbox-docker-not-run");
+    expect(note.dataset.kind).toBe("ignored");
+    expect(note.textContent).toBe(i18n.t("settings.sandbox.docker.refreshIgnored"));
+    expect(screen.getByTestId("sandbox-docker-redacted").textContent).toBe(i18n.t("settings.sandbox.docker.redacted"));
+    expect(screen.queryByTestId("sandbox-docker-engine")).toBeNull();
+    // Not a throttle: checking again stays possible.
+    expect(screen.getByRole("button", { name: "Erneut prüfen" })).toBeEnabled();
+  });
+
+  it("reads the outcome of a forced check, also from an API without the fields", () => {
+    const row = docker("approved", "", PASSED);
+    expect(checkOutcome(row)).toBeNull();
+    expect(checkOutcome({ ...row, check_started: true })).toBeNull();
+    expect(checkOutcome({ ...row, throttled: true, retry_after: 0.3 })).toEqual({ kind: "throttled", seconds: 1 });
+    expect(checkOutcome({ ...row, throttled: true, retry_after: null })).toEqual({ kind: "throttled", seconds: 10 });
+    expect(checkOutcome({ ...row, refresh_ignored: true })).toEqual({ kind: "ignored", seconds: 0 });
+  });
+
+  it("derives where AI-created code runs from the Docker status the table shows", () => {
+    const blocked = selection({ reason: "docker-checking" });
+    const approved = docker("approved", "", PASSED);
+    expect(effectiveSelection(blocked, approved, true)).toMatchObject({ blocked: false, untrusted: "docker", reason: "" });
+    expect(effectiveSelection(selection({ untrusted: "docker", blocked: false, reason: "" }), docker("unavailable", "docker-seccomp"), true))
+      .toMatchObject({ blocked: true, untrusted: "", reason: "docker-seccomp", user_authored: "subprocess" });
+    // Docker mode: every tool needs Docker.
+    expect(effectiveSelection(selection({ mode: "docker", user_authored: "" }), approved, true)).toMatchObject({
+      blocked: false,
+      untrusted: "docker",
+      user_authored: "docker",
+    });
+    // Docker never decides in the subprocess and linux modes, nor where an older runtime chose the built-in sandbox.
+    const subprocess = selection({ mode: "subprocess" });
+    expect(effectiveSelection(subprocess, approved, true)).toBe(subprocess);
+    const linux = selection({ mode: "linux", os: "linux" });
+    expect(effectiveSelection(linux, approved, true)).toBe(linux);
+    const older = selection({ untrusted: "linux-builtin", blocked: false, reason: "" });
+    expect(effectiveSelection(older, docker("unavailable", "docker-missing"), true)).toBe(older);
+    // Without the Docker checks the runtime's selection stays.
+    expect(effectiveSelection(blocked, approved, false)).toBe(blocked);
   });
 
   it("names the self-test after the sandbox preparation when the image is missing", () => {

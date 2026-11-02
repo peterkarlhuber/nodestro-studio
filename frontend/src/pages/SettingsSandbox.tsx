@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import { keys } from "../api/hooks";
-import type { SandboxBackendStatus, SandboxCheck, SandboxMode, Settings } from "../api/types";
-import { dockerReasonKey } from "../api/types";
+import type { SandboxBackendStatus, SandboxCheck, SandboxMode, SandboxSelection, SandboxStatus, Settings } from "../api/types";
+import { dockerReasonKey, isDockerReason } from "../api/types";
 import { Badge, Button, Callout, DocLink, HelpTip, Segmented } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDate, type Tone } from "../lib/format";
@@ -48,17 +48,40 @@ function usePageVisible(): boolean {
   return visible;
 }
 
+/** What a forced check (Check again, Run self-test) answered when it did not start a new check (API DS-6). */
+export interface CheckOutcome {
+  /** ``throttled``: a check ran less than 10 s ago; ``ignored``: only administrators start checks. */
+  kind: "throttled" | "ignored";
+  /** Whole seconds until the next check may start (``throttled``). */
+  seconds: number;
+}
+
+/** The outcome of a forced check's answer; null when it started one, or the API predates these fields. */
+export function checkOutcome(answer: SandboxStatus): CheckOutcome | null {
+  if (answer.refresh_ignored) return { kind: "ignored", seconds: 0 };
+  if (answer.throttled) return { kind: "throttled", seconds: Math.max(1, Math.ceil(answer.retry_after ?? 10)) };
+  return null;
+}
+
 /**
  * The Docker row, kept current: the settings' row until the user asks for a check, then the answers of
  * ``/api/sandbox/status``, polled (with a bounded server-side wait) while the state is ``checking`` and the page is
  * visible. When a check settles, the settings are read again (where AI-created code runs may have changed).
+ *
+ * One status wins at any time, and the table, the Docker details and the blocked notice all read it (DS-13): an
+ * answer of the status routes until the settings bring a newer Docker row, then that row.
  */
 function useDockerStatus(row: SandboxBackendStatus | undefined, pollInterval: number) {
   const queryClient = useQueryClient();
   const visible = usePageVisible();
   const live = reportsChecks(row);
-  const cached = queryClient.getQueryData<SandboxBackendStatus>(DOCKER_STATUS_KEY);
-  const current = cached ?? row;
+  // When the settings' row last changed: an answer older than that is stale.
+  const [seen, setSeen] = useState(() => ({ row, at: 0 }));
+  if (seen.row !== row) setSeen({ row, at: Date.now() });
+  const pick = (data: SandboxStatus | undefined, updatedAt: number): SandboxStatus | SandboxBackendStatus | undefined =>
+    data !== undefined && updatedAt >= seen.at ? data : row;
+  const cached = queryClient.getQueryState<SandboxStatus>(DOCKER_STATUS_KEY);
+  const current = pick(cached?.data, cached?.dataUpdatedAt ?? 0);
   const query = useQuery({
     queryKey: DOCKER_STATUS_KEY,
     queryFn: () => api.sandboxStatus({ wait: POLL_WAIT }),
@@ -68,16 +91,65 @@ function useDockerStatus(row: SandboxBackendStatus | undefined, pollInterval: nu
     gcTime: 0,
     retry: false,
   });
-  const docker = query.data ?? row;
+  const docker: (SandboxStatus | SandboxBackendStatus) | undefined = pick(query.data, query.dataUpdatedAt);
   const settled = docker?.state !== "checking";
   const fetched = query.data !== undefined;
   useEffect(() => {
     if (fetched && settled) void queryClient.invalidateQueries({ queryKey: keys.settings });
   }, [fetched, settled, docker?.reason, queryClient]);
-  const take = (status: SandboxBackendStatus) => queryClient.setQueryData(DOCKER_STATUS_KEY, status);
-  const recheck = useMutation({ mutationFn: () => api.sandboxStatus({ refresh: true }), onSuccess: take });
-  const selfTest = useMutation({ mutationFn: () => api.sandboxSelfTest(), onSuccess: take });
-  return { docker, live, recheck, selfTest, error: query.error };
+  // A forced check that did not run: not a new result. Shown until the window has passed (throttled) or the next
+  // request (ignored); the button of a throttled path waits as long.
+  const [outcome, setOutcome] = useState<{ action: "recheck" | "selfTest"; result: CheckOutcome } | null>(null);
+  useEffect(() => {
+    if (outcome?.result.kind !== "throttled") return;
+    const timer = setTimeout(() => setOutcome(null), outcome.result.seconds * 1000);
+    return () => clearTimeout(timer);
+  }, [outcome]);
+  const take = (action: "recheck" | "selfTest") => (answer: SandboxStatus) => {
+    // The answer is the current status either way (a running or the last check), so the view follows it.
+    queryClient.setQueryData(DOCKER_STATUS_KEY, answer);
+    const result = checkOutcome(answer);
+    setOutcome(result ? { action, result } : null);
+  };
+  const recheck = useMutation({
+    mutationFn: () => {
+      setOutcome(null);
+      return api.sandboxStatus({ refresh: true });
+    },
+    onSuccess: take("recheck"),
+  });
+  const selfTest = useMutation({
+    mutationFn: () => {
+      setOutcome(null);
+      return api.sandboxSelfTest();
+    },
+    onSuccess: take("selfTest"),
+  });
+  return { docker, live, recheck, selfTest, outcome, error: query.error };
+}
+
+/**
+ * Where AI-created code runs, from the same Docker status the table shows (DS-13), so the summary, the notice and
+ * the table never disagree while the settings are read again. Docker decides in Docker mode, on a server, and in
+ * automatic mode unless an older runtime chose the built-in Linux sandbox there; elsewhere the selection stays.
+ */
+export function effectiveSelection(
+  selection: SandboxSelection | null,
+  docker: SandboxBackendStatus | undefined,
+  live: boolean,
+): SandboxSelection | null {
+  if (!selection || !docker || !live) return selection;
+  const containers = selection.mode === "docker" || selection.profile !== "desktop";
+  const dockerDecides = containers || (selection.mode === "auto" && selection.untrusted !== "linux-builtin");
+  if (!dockerDecides) return selection;
+  const approved = docker.state === "approved";
+  return {
+    ...selection,
+    blocked: !approved,
+    untrusted: approved ? "docker" : "",
+    user_authored: containers ? (approved ? "docker" : "") : selection.user_authored,
+    reason: approved ? "" : docker.reason || selection.reason,
+  };
 }
 
 /** A backend's name in the interface language. */
@@ -135,17 +207,21 @@ function DockerDetails({
   admin,
   recheck,
   selfTest,
+  outcome,
   error,
 }: {
-  docker: SandboxBackendStatus & { checks: SandboxCheck[] };
+  docker: SandboxStatus & { checks: SandboxCheck[] };
   admin: boolean;
   recheck: { mutate: () => void; isPending: boolean; error: unknown };
   selfTest: { mutate: () => void; isPending: boolean; error: unknown };
+  outcome: { action: "recheck" | "selfTest"; result: CheckOutcome } | null;
   error: unknown;
 }) {
   const { t } = useTranslation();
   const checking = docker.state === "checking";
-  const rootful = docker.notes.some((note) => /docker group/i.test(note));
+  // The docker-group note of a rootful daemon, from the structured field (not the English note text).
+  const rootful = docker.rootless === false;
+  const waiting = (action: "recheck" | "selfTest") => outcome?.action === action && outcome.result.kind === "throttled";
   const reasonKey = dockerReasonKey(docker.reason);
   const problem = recheck.error ?? selfTest.error ?? error;
   return (
@@ -205,13 +281,39 @@ function DockerDetails({
           {t("settings.sandbox.docker.testedAt", { date: formatDate(docker.tested_at) })}
         </p>
       ) : null}
+      {docker.redacted ? (
+        <p className="muted small" data-testid="sandbox-docker-redacted">
+          {t("settings.sandbox.docker.redacted")}
+        </p>
+      ) : null}
+      {outcome ? (
+        <Callout tone="info">
+          <span data-testid="sandbox-docker-not-run" data-kind={outcome.result.kind}>
+            {outcome.result.kind === "throttled"
+              ? t("settings.sandbox.docker.throttled", { seconds: outcome.result.seconds })
+              : t("settings.sandbox.docker.refreshIgnored")}
+          </span>
+        </Callout>
+      ) : null}
       <div className="row-gap">
-        <Button icon={RefreshCw} size="sm" busy={recheck.isPending} disabled={checking} onClick={() => recheck.mutate()}>
+        <Button
+          icon={RefreshCw}
+          size="sm"
+          busy={recheck.isPending}
+          disabled={checking || waiting("recheck")}
+          onClick={() => recheck.mutate()}
+        >
           {t("settings.sandbox.docker.recheck")}
         </Button>
         {admin ? (
           <>
-            <Button icon={FlaskConical} size="sm" busy={selfTest.isPending} disabled={checking} onClick={() => selfTest.mutate()}>
+            <Button
+              icon={FlaskConical}
+              size="sm"
+              busy={selfTest.isPending}
+              disabled={checking || waiting("selfTest")}
+              onClick={() => selfTest.mutate()}
+            >
               {docker.reason === "docker-image" ? t("settings.sandbox.docker.prepare") : t("settings.sandbox.docker.selfTest")}
             </Button>
             <span className="muted small">{t("settings.sandbox.docker.selfTestHint")}</span>
@@ -221,6 +323,23 @@ function DockerDetails({
       {problem ? <ErrorText error={problem} compact /> : null}
     </div>
   );
+}
+
+/** Whether Docker's reason explains a block: not in the subprocess and linux modes, which never use Docker. */
+function dockerDecides(selection: SandboxSelection): boolean {
+  return selection.profile !== "desktop" || (selection.mode !== "subprocess" && selection.mode !== "linux");
+}
+
+/** The first sentence of the blocked notice: the mode's own, or why Docker does not run AI-created code. */
+function blockedLead(t: (key: string) => string, selection: SandboxSelection, dockerReason: string): string {
+  if (!dockerDecides(selection)) return t(`settings.sandbox.blocked.${selection.mode}`);
+  if (dockerReason === "docker-checking") return t("settings.sandbox.blocked.checking");
+  if (dockerReason && dockerReason !== "docker-missing" && dockerReason !== "docker-unreachable")
+    return t("settings.sandbox.blocked.dockerRefused");
+  // Docker mode needs Docker for every tool; automatic mode only for AI-created ones.
+  if (selection.mode === "docker" && (dockerReason || selection.reason === "docker-unreachable"))
+    return t("settings.sandbox.dockerUnreachable");
+  return t("settings.sandbox.blocked.auto");
 }
 
 /**
@@ -242,19 +361,24 @@ export function SandboxPanel({
 }) {
   const { t } = useTranslation();
   const backendName = useBackendName();
-  const selection = settings.sandbox_selection ?? null;
+  const reportedSelection = settings.sandbox_selection ?? null;
   const reported = settings.sandbox_backends ?? [];
-  const { docker, live, recheck, selfTest, error } = useDockerStatus(
+  const { docker, live, recheck, selfTest, outcome, error } = useDockerStatus(
     reported.find((backend) => backend.name === "docker"),
     pollInterval,
   );
+  // One Docker status for the table, the summary and the notice (DS-13).
   const backends = reported.map((backend) => (backend.name === "docker" && docker ? docker : backend));
-  const dockerReason = live && docker && docker.state !== "approved" ? docker.reason : "";
+  const selection = effectiveSelection(reportedSelection, docker, live);
+  const dockerReason = selection?.blocked && isDockerReason(selection.reason) ? selection.reason : "";
   const dockerReasonText = dockerReasonKey(dockerReason);
   const desktop = !selection || selection.profile === "desktop";
   const builtin = settings.builtin_sandbox;
+  // The built-in Linux sandbox is an explicit choice on a Linux computer (runtimes since DS-3).
+  const offerLinux = !!selection && (selection.os === "linux" || settings.sandbox === "linux");
   const modes: { value: SandboxMode; label: string }[] = [
     ...(selection ? [{ value: "auto" as const, label: t("settings.sandbox.auto") }] : []),
+    ...(offerLinux ? [{ value: "linux" as const, label: t("settings.sandbox.linux") }] : []),
     { value: "subprocess", label: t("settings.sandbox.subprocess") },
     { value: "docker", label: "Docker" },
   ];
@@ -284,7 +408,23 @@ export function SandboxPanel({
           {t("settings.sandbox.containersOnly")}
         </p>
       )}
-      {selection && desktop ? <p className="muted small">{t(`settings.sandbox.modeHint.${selection.mode}`)}</p> : null}
+      {selection && desktop ? (
+        <div className="stack" data-testid="sandbox-modes">
+          <span className="muted small">{t("settings.sandbox.modesTitle")}</span>
+          <ul className="plain-list stack">
+            {modes.map((mode) => (
+              <li
+                key={mode.value}
+                className={mode.value === selection.mode ? "small" : "muted small"}
+                data-testid={`sandbox-mode-hint-${mode.value}`}
+                aria-current={mode.value === selection.mode ? "true" : undefined}
+              >
+                {t(`settings.sandbox.modeHint.${mode.value}`)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       {selection ? (
         <dl className="sandbox-summary" data-testid="sandbox-selection">
@@ -324,18 +464,8 @@ export function SandboxPanel({
 
       {selection?.blocked ? (
         <Callout tone="warning">
-          <span data-testid="sandbox-blocked">
-            {selection.mode === "subprocess"
-              ? t("settings.sandbox.blocked.subprocess")
-              : dockerReason === "docker-checking"
-                ? t("settings.sandbox.blocked.checking")
-                : dockerReasonText && dockerReason !== "docker-missing" && dockerReason !== "docker-unreachable"
-                  ? t("settings.sandbox.blocked.dockerRefused")
-                  : selection.reason === "docker-unreachable"
-                    ? t("settings.sandbox.dockerUnreachable")
-                    : t("settings.sandbox.blocked.auto")}
-          </span>{" "}
-          {selection.mode !== "subprocess" && dockerReasonText ? (
+          <span data-testid="sandbox-blocked">{blockedLead(t, selection, dockerReason)}</span>{" "}
+          {dockerDecides(selection) && dockerReasonText ? (
             <>
               <span data-testid="sandbox-blocked-reason">{t(dockerReasonText)}</span>{" "}
             </>
@@ -390,7 +520,7 @@ export function SandboxPanel({
       ) : null}
 
       {live && reportsChecks(docker) ? (
-        <DockerDetails docker={docker} admin={admin} recheck={recheck} selfTest={selfTest} error={error} />
+        <DockerDetails docker={docker} admin={admin} recheck={recheck} selfTest={selfTest} outcome={outcome} error={error} />
       ) : null}
     </section>
   );
