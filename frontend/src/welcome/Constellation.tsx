@@ -2,13 +2,15 @@ import { BookOpen, Bot, Command, Cpu, Hand, type LucideIcon, Rows3 } from "lucid
 import { type CSSProperties, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import logo from "../assets/brand/nodestro-logo-512.webp";
+import { BRAND_ASSETS } from "../components/BrandLogo";
 import { useMediaQuery, usePointerParallax } from "./motion";
 
 // The hero diagram: what Nodestro connects (models, knowledge, tools) flows into the logo, and
-// what comes out of it (agents, approvals, runs) flows on. It mirrors the logo itself: two
-// nodes joining into a third. Geometry lives in a fixed coordinate space per layout; the SVG
-// lines and the HTML chips share it, so they always meet exactly at any width.
+// what comes out of it (agents, approvals, runs) flows on. It mirrors the logo itself: a node
+// (the hexagon) with connection points on its edge. The routes end at a solid core inside the
+// hexagon, so they meet the logo instead of crossing its open centre. Geometry lives in a fixed
+// coordinate space per layout; the SVG lines and the HTML chips share it, so they always meet
+// exactly at any width.
 
 type NodeId = "models" | "knowledge" | "tools" | "agents" | "approvals" | "runs";
 
@@ -124,8 +126,12 @@ export function Constellation({ animate }: { animate: boolean }) {
         <span className="wl-hub__halo wl-loop" />
         <span className="wl-hub__floor" />
         <span className="wl-hub__body">
-          <img src={logo} alt="" width={512} height={512} decoding="async" fetchPriority="high" draggable={false} />
-          <span className="wl-hub__sheen wl-loop" style={{ maskImage: `url(${logo})`, WebkitMaskImage: `url(${logo})` }} />
+          <span className="wl-hub__core" />
+          <img src={BRAND_ASSETS.mark} alt="" width={512} height={512} decoding="async" fetchPriority="high" draggable={false} />
+          <span
+            className="wl-hub__sheen wl-loop"
+            style={{ maskImage: `url(${BRAND_ASSETS.mark})`, WebkitMaskImage: `url(${BRAND_ASSETS.mark})` }}
+          />
         </span>
       </div>
       {[...INPUTS, ...OUTPUTS].map((id) => {

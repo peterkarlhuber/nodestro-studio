@@ -54,16 +54,17 @@
   text-decoration: none;
 }
 
-.wl-brand img {
-  width: 36px;
-  height: 36px;
-  filter: drop-shadow(0 4px 10px var(--wl-logo-shadow));
+/* The official lockup, theme-matched by BrandLogo; the narrowest phones show the symbol alone. */
+.wl-brand__logo {
+  display: block;
+  width: auto;
+  height: 34px;
 }
 
-.wl-brand__name {
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: -0.035em;
+.wl-brand__mark {
+  display: none;
+  width: 34px;
+  height: 34px;
 }
 
 .wl-nav__links {
@@ -275,7 +276,7 @@
   animation: wl-fade 0.5s ease-out 1.2s both;
 }
 
-/* The hub: the original logo, lit from behind; it catches the light when the inputs arrive. */
+/* The hub: the official logo, lit from behind; it catches the light when the inputs arrive. */
 .wl-hub {
   position: absolute;
   z-index: 1;
@@ -312,6 +313,18 @@
     translate3d(calc(var(--px, 0) * 6px), calc(var(--py, 0) * 6px), 0);
   transition: transform 0.6s var(--wl-ease);
   animation: wl-emerge 1.15s var(--wl-ease) 0.1s both;
+}
+
+/* The core: a node-card surface behind the logo's hexagon, so the routes end at the logo and do not show
+   through its open centre. Pointy-top hexagon, centred on the ring and tucked under its stroke
+   (measured on nodestro-mark.png: centre 48 % / 51.2 %, circumradius 37 % of the image). */
+.wl-hub__core {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 48% 44%, color-mix(in srgb, var(--nd-brand) 14%, transparent), transparent 58%),
+    var(--nd-surface);
+  clip-path: polygon(48% 14.1%, 80.2% 32.6%, 80.2% 69.8%, 48% 88.3%, 15.8% 69.8%, 15.8% 32.6%);
 }
 
 .wl-hub__body img {
@@ -933,9 +946,10 @@
 }
 
 .wl-closing__logo {
-  width: 88px;
-  height: 88px;
-  filter: drop-shadow(0 16px 26px var(--wl-logo-shadow));
+  display: block;
+  width: auto;
+  height: clamp(44px, 5vw, 60px);
+  margin-inline: auto;
 }
 
 .wl-slogan--small {
@@ -1057,13 +1071,8 @@
     border-left: 0;
   }
 
-  .wl-brand img {
-    width: 32px;
-    height: 32px;
-  }
-
-  .wl-brand__name {
-    font-size: 19px;
+  .wl-brand__logo {
+    height: 30px;
   }
 
   .wl-language select {
@@ -1156,8 +1165,12 @@
 }
 
 @media (max-width: 380px) {
-  .wl-brand__name {
+  .wl-brand__logo {
     display: none;
+  }
+
+  .wl-brand__mark {
+    display: block;
   }
 }
 
