@@ -11,6 +11,7 @@
   "sandboxNote": "Sandbox per testare ed eseguire gli strumenti personali: {{sandbox}} (modificabile nelle impostazioni).",
   "sandboxDocker": "container Docker",
   "sandboxProcess": "processo Python separato",
+  "sandboxBlocked": "processo Python separato; gli strumenti creati dall’IA sono bloccati",
   "empty": "Nessuno strumento",
   "kind": {
     "builtin": "Integrato",

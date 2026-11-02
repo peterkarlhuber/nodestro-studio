@@ -11,6 +11,7 @@
   "sandboxNote": "Sandbox für Tests und Ausführung eigener Tools: {{sandbox}} (in den Einstellungen änderbar).",
   "sandboxDocker": "Docker-Container",
   "sandboxProcess": "eigener Python-Prozess",
+  "sandboxBlocked": "eigener Python-Prozess; KI-erstellte Tools sind gesperrt",
   "empty": "Keine Tools",
   "kind": {
     "builtin": "Eingebaut",

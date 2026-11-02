@@ -315,7 +315,15 @@ None known.
   The `linux` mode, the DS-3 refusal sentences and the DS-13 review (one status for table and notice, throttled and
   ignored checks shown as not run, `redacted`, rootful warning from `rootless`) are done; pins moved to
   nodestro-runtime `bf9af7d` (#85), nodestro-api `dde77f5` (#65) and nodestro-sdk `99f70fe` (#59).
-- **Next step:** run the Platforms workflow (macOS Colima, Windows) against the real routes.
+- **Platform evidence (2026-11-02):** the engine checks (Orkexa's) ran in CI only on Docker Engine on Linux (rootful
+  x86-64 and arm64, rootless x86-64), rootful Podman 4.9.3 and, non-blocking, Colima on macOS x86-64; rootless Podman
+  4.9.3 is refused there (limits not applied, orkexa ORK-024); nodestro-runtime's Docker tests run on rootful Docker
+  Engine on Linux x86-64 only. Docker Desktop (macOS Apple silicon and Intel, Windows x64 and ARM64), OrbStack, Colima
+  on Apple silicon and Podman machine never ran in any CI; Settings → Installing Docker says so in six languages.
+  Users who kept `subprocess` from an earlier version get a note in the blocked notice that the mode no longer runs
+  AI-created tools and that their choice was kept, and on Linux the Linux sandbox as the other way.
+- **Next step:** run the Platforms workflow (macOS Colima, Windows) against the real routes; run the manual checklist
+  of orkexa's `docs/development/docker-manual-verification.md` on Docker Desktop (macOS, Windows) and OrbStack.
 
 ## Cross-repository dependencies
 

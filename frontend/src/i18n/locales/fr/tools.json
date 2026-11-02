@@ -11,6 +11,7 @@
   "sandboxNote": "Bac à sable pour tester et exécuter les outils personnels : {{sandbox}} (modifiable dans les réglages).",
   "sandboxDocker": "conteneur Docker",
   "sandboxProcess": "processus Python distinct",
+  "sandboxBlocked": "processus Python distinct ; les outils créés par l’IA sont bloqués",
   "empty": "Aucun outil",
   "kind": {
     "builtin": "Intégré",

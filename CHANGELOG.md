@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Sandbox: hints after leaving the Python process, honest platform evidence (2026-11-02)
+
+- Settings → Sandbox, *Python process* mode: the blocked notice says that the mode no longer runs AI-created tools
+  in a built-in sandbox and that the earlier choice was kept (`settings.sandbox.blocked.subprocessChanged`); on a
+  Linux runtime it names the Linux sandbox as the other way (`blocked.subprocessLinux`). The refusal
+  `sandbox.isolation_required_subprocess` names it too. The diagnosis no longer suggests switching to the Python
+  process when Docker is unreachable, and the Tools page says AI-created tools are blocked when they are
+  (`tools.sandboxBlocked`). Six languages.
+- Docs (six languages), Installing Docker: which engines ran in CI and that Docker Desktop never did; Sandbox: what a
+  Python process choice from an earlier version means now.
+
 ### Platform pins: Axentra migration completion and security review fixes (2026-11-02)
 
 - Pins: axentra `024da57` (#20 SR-02/SR-05 with migration 0011, #19 session resolution in one transaction, #21/#24

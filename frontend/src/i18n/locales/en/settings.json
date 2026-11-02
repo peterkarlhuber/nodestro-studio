@@ -72,6 +72,8 @@
     "blocked": {
       "auto": "AI-created tools are blocked: Automatic runs them only in Docker, and Docker is not running. Install and start Docker; Nodestro then uses it automatically.",
       "subprocess": "AI-created tools are blocked: the Python process is for trusted use only. To run them, choose Automatic and start Docker.",
+      "subprocessLinux": "AI-created tools are blocked: the Python process is for trusted use only. To run them, choose Automatic and start Docker, or choose Linux sandbox (without third-party Python packages).",
+      "subprocessChanged": "If you chose Python process in an earlier version: it no longer runs AI-created tools in a built-in sandbox, and Nodestro kept your choice instead of switching to Automatic for you.",
       "linux": "AI-created tools are blocked: the built-in Linux sandbox is not available on this computer; its row below says why. To run them in Docker instead, choose Automatic and start Docker.",
       "dockerRefused": "AI-created tools are blocked: they run only in Docker, and Docker did not pass Nodestro's checks.",
       "checking": "AI-created tools are blocked until Nodestro has finished checking Docker."

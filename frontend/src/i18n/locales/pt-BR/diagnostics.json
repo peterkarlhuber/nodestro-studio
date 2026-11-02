@@ -82,7 +82,7 @@
       "checking": "O Nodestro ainda está verificando o Docker em segundo plano.",
       "unavailable": "O Docker não pode ser usado para ferramentas criadas por IA.",
       "fix": {
-        "unreachable": "Inicie o Docker Desktop ou mude a sandbox para “Processo Python”.",
+        "unreachable": "Inicie o Docker. Ou escolha Automático em Configurações → Sandbox: suas próprias ferramentas passam a rodar sem Docker; ferramentas criadas por IA continuam precisando dele.",
         "checking": "Execute o diagnóstico de novo em instantes.",
         "unavailable": "Configurações → Sandbox mostra qual verificação falhou."
       }

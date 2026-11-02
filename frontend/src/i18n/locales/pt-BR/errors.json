@@ -701,7 +701,7 @@
   },
   "sandbox": {
     "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados isolados (no Docker ou, se escolhido, no sandbox Linux integrado); nada disso está disponível, então nada foi executado. Configurações → Sandbox mostra o motivo.",
-    "isolation_required_subprocess": "O sandbox está em Processo Python, que é só para uso confiável: ali, código criado por IA e ferramentas de origem desconhecida são sempre recusados, então nada foi executado. Em Configurações → Sandbox, escolha Automático e inicie o Docker.",
+    "isolation_required_subprocess": "O sandbox está em Processo Python, que é só para uso confiável: ali, código criado por IA e ferramentas de origem desconhecida são sempre recusados, então nada foi executado. Em Configurações → Sandbox, escolha Automático e inicie o Docker. No Linux, Sandbox Linux também funciona (sem pacotes Python de terceiros).",
     "isolation_required_docker": "Código criado por IA e ferramentas de origem desconhecida só são executados no Docker, e o Docker não está pronto, então nada foi executado. {{reason}} Configurações → Sandbox mostra as verificações.",
     "libraries_need_isolation": "{{name}} foi criada por IA ou é de origem desconhecida e precisa de bibliotecas de terceiros. Essas ferramentas só são executadas no Docker; ele não está disponível aqui. Configurações → Sandbox mostra o motivo.",
     "libraries_need_isolation_linux": "Ferramentas criadas por IA e de origem desconhecida não recebem bibliotecas de terceiros no sandbox Linux integrado, então nada foi executado. Para usar bibliotecas, escolha Automático em Configurações → Sandbox e inicie o Docker.",
