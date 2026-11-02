@@ -14,6 +14,8 @@
 - New error texts (`run.budget_ended`, `run.budget_request_expired`, `run.budget_checkpoint_lost`, `budget.*`),
   help texts and documentation sections (workflows: budget levels, decisions, team limits, permissions, limits) in
   all six languages. Needs the BUDGET-1 runtime/API; older backends show nothing new.
+- Pins: nodestro-runtime `64895e6` (#84), nodestro-api `5519708` (#64), nodestro-sdk `e85f079` (#58),
+  nodestro-examples `59fc96b` (#47), nodestro-integrations `991dcf9` (#43), orkexa `e220f70` (#32).
 
 ### New official logo (2026-11-02)
 
