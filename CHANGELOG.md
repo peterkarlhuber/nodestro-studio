@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Adopting AI-created tools as one's own, desktop only (R-4, 2026-11-02)
+
+- Tools → Library: on the desktop, an AI-created tool offers *Adopt as my own code*. The dialog shows the whole code
+  and tests of the version, a warning that adopted code runs without isolation, and needs an explicit confirmation
+  checkbox; it sends the shown `content_hash`, so a tool changed meanwhile is refused (`tool.adoption_stale`). Not
+  offered on a server or in Nodestro Local Docker. An adopted tool's note says who adopted which version and that a
+  later AI change ends the adoption.
+- Tools → Write it yourself: a clearer note that code here counts as your own, and a warning once code was pasted.
+- Texts in six languages: `tools.adopt.*`, `tools.write.ownCodeNote`, `tools.write.pastedWarning`,
+  `errors.tool.adoption_*`, `errors.deps.source_build_disabled`, `errors.sandbox.shape_mismatch`; the text of
+  `errors.deps.build_unavailable` now also covers an image that cannot be loaded and a refused build network.
+- User documentation (Tools → Trust and isolation) in six languages; ADR-0006 amended (R-4).
+- Needs nodestro-runtime and nodestro-api pins with R-4.
+
 ### Platform pins: Axentra migration completion and security review fixes (2026-11-02)
 
 - Pins: axentra `024da57` (#20 SR-02/SR-05 with migration 0011, #19 session resolution in one transaction, #21/#24

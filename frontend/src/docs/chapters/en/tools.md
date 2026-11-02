@@ -172,6 +172,10 @@ The Python process is not a security boundary: code in it runs with your rights.
 
 Tools saved before this version, and all tools after restoring a backup, count as of unknown origin, also the ones you wrote yourself, because their origin was not recorded. With isolation they keep working. A new version of such a tool, or a copy of its code in a new tool, keeps that status.
 
+**Adopting AI-created code as your own (desktop app only).** On a tool that needs isolation, *Adopt as my own code* shows its whole code and tests with a warning. Once you confirm, the tool counts as *Written by you* and runs like your own code, without isolation on this computer, so adopt only code you have read and understood. Only the owner of this computer can adopt (an administrator, where there are roles). Nodestro records who adopted which version and when, with a fingerprint of the code. If AI changes the tool later, the adoption ends and the tool needs isolation again; your own edits in the editor keep it. On a server and in Nodestro Local Docker, AI-created code always runs isolated and cannot be adopted.
+
+Code you paste under *Write it yourself* counts as written by you, because Nodestro cannot tell where it came from; the editor warns you when you paste. Create AI-generated code with *Create with AI* instead, so that it runs isolated.
+
 ## Connected services {#verbundene-dienste}
 <!-- keywords: mcp, model context protocol, external service, connected services, server, token, approval, changed -->
 

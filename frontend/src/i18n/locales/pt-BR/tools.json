@@ -58,7 +58,9 @@
     "functionName": "Nome da função",
     "check": "Verificar e testar",
     "result": "Resultado da verificação",
-    "notChecked": "Ainda não verificado."
+    "notChecked": "Ainda não verificado.",
+    "ownCodeNote": "O código neste editor conta como escrito por você e é executado sem isolamento neste computador. Não cole aqui código criado por IA: crie-o com IA para que seja executado isolado.",
+    "pastedWarning": "Você colou código. Código colado conta como escrito por você e é executado sem isolamento neste computador: pode ler seus arquivos e chaves e usar a rede. Cole somente código que você leu e entendeu. Código criado por IA vai em “Criar com IA”, onde é executado isolado."
   },
   "jobStatus": {
     "running": "Em andamento",
@@ -274,5 +276,16 @@
     "resourceTool": "Documentos do serviço",
     "resourceToolText": "Esta ferramenta lê apenas os documentos que o serviço lista; outros endereços ficam excluídos. Se o serviço mudar a lista, a ferramenta fica bloqueada até você revisar a nova lista. Os conteúdos são dados externos, como qualquer resultado de um serviço."
   },
-  "sandboxAutoDocker": "processo Python separado; ferramentas criadas por IA no Docker"
+  "sandboxAutoDocker": "processo Python separado; ferramentas criadas por IA no Docker",
+  "adopt": {
+    "button": "Adotar como meu próprio código",
+    "title": "Adotar {{name}} como seu próprio código?",
+    "intro": "Leia abaixo todo o código e os testes da versão {{version}}. Você confirma exatamente o que é mostrado aqui.",
+    "warning": "Este código foi criado por IA. Depois de adotado, ele conta como escrito por você e é executado sem isolamento neste computador: pode ler seus arquivos e chaves e usar a rede. O Nodestro não consegue verificar o que ele faz. Adote-o somente se você o leu e entendeu.",
+    "revocation": "A adoção é registrada com seu nome, o horário e uma impressão digital deste código. Se a IA alterar a ferramenta depois, a adoção termina e ela volta a ser executada só isolada. Suas próprias alterações no editor a mantêm.",
+    "confirmText": "Li o código e os testes e assumo a responsabilidade por executá-los sem isolamento neste computador.",
+    "confirm": "Adotar",
+    "adopted": "{{name}} agora conta como seu próprio código",
+    "adoptedNote": "Criada por IA, adotada por você como código próprio (versão {{version}}, {{when}}): é executada em um processo Python separado, sem isolamento, neste computador. Uma alteração posterior pela IA encerra a adoção."
+  }
 }

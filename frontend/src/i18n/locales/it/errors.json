@@ -243,7 +243,12 @@
     "approval_missing": "La richiesta di approvazione per questa chiamata non esiste più; la chiamata non è stata eseguita.",
     "approval_not_in_test": "Questa chiamata richiederebbe l'approvazione di una persona; i test non chiedono, quindi non è stata eseguita.",
     "frozen": "Questo strumento fa parte di una versione pubblicata dell’API e non può essere modificato, così la versione continua a funzionare esattamente come è stata pubblicata. Modifica lo strumento nel workflow e pubblica una nuova versione.",
-    "denied_by_policy": "Le regole per le chiamate agli strumenti hanno rifiutato questa chiamata senza chiedere a nessuno, quindi lo strumento non è stato eseguito. Controlla le regole nella pagina Approvazioni o dai all’agente uno strumento che legge soltanto."
+    "denied_by_policy": "Le regole per le chiamate agli strumenti hanno rifiutato questa chiamata senza chiedere a nessuno, quindi lo strumento non è stato eseguito. Controlla le regole nella pagina Approvazioni o dai all’agente uno strumento che legge soltanto.",
+    "adoption_desktop_only": "Il codice creato dall’IA può essere adottato come tuo solo nell’app desktop. Qui viene sempre eseguito isolato.",
+    "adoption_forbidden": "Solo il proprietario di questo computer o un amministratore può adottare codice creato dall’IA.",
+    "adoption_stale": "Lo strumento è cambiato dopo essere stato mostrato (ora versione {{version}}). Riguardalo prima di adottarlo.",
+    "adoption_not_needed": "Questo strumento conta già come tuo codice; non serve adottarlo.",
+    "adoption_not_applicable": "Questo strumento non ha codice proprio che si possa adottare."
   },
   "job": {
     "writing": "Il Coding Agent sta scrivendo codice e test …",
@@ -375,12 +380,13 @@
     "build_required": "{{name}} è disponibile solo come codice sorgente. Risolverlo eseguirebbe il suo script di build, quindi Nodestro non l’ha risolto per lo strumento generato. Verifica il pacchetto e approvalo nella finestra delle librerie dello strumento, oppure fai scrivere lo strumento senza di esso.",
     "build_required_no_docker": "{{name}} è disponibile solo come codice sorgente. Il suo script di build viene eseguito solo in un container, e qui Docker non è disponibile. Avvia Docker e riprova, oppure fai scrivere lo strumento senza di esso.",
     "build_required_not_set_up": "{{name}} è disponibile solo come codice sorgente. La build dei pacchetti in un container non è configurata in questa versione, e Nodestro non esegue mai script di build su questo computer. Fai scrivere lo strumento senza di esso.",
-    "build_unavailable": "La build dei pacchetti dal codice sorgente in un container non è configurata in questa versione. Nodestro non esegue mai script di build su questo computer.",
+    "build_unavailable": "Qui non è possibile eseguire la build dei pacchetti dal codice sorgente in un container: l’immagine di build non è fissata o non è stato possibile caricarla, oppure la rete di build non è consentita. Nodestro non esegue mai script di build su questo computer.",
     "lock_without_hashes": "Questa approvazione proviene da una versione precedente senza checksum. Approva di nuovo le librerie per usarle nella sandbox Docker.",
     "wheels_required": "Un pacchetto non esiste come pacchetto pronto (wheel) per Linux. Nella sandbox Docker i pacchetti non vengono compilati dal codice sorgente.",
     "hash_mismatch": "Un pacchetto scaricato non corrisponde all’approvazione. Non è stato installato nulla.",
     "image_failed": "Non è stato possibile creare l’immagine del container con le librerie. I dettagli tecnici indicano il motivo.",
-    "image_too_large": "L’immagine del container di queste librerie occupa {{size_gb}} GB, più del limite di {{limit_gb}} GB, ed è stata rimossa. Usa meno librerie o librerie più piccole."
+    "image_too_large": "L’immagine del container di queste librerie occupa {{size_gb}} GB, più del limite di {{limit_gb}} GB, ed è stata rimossa. Usa meno librerie o librerie più piccole.",
+    "source_build_disabled": "{{name}} è disponibile solo come codice sorgente. La build dei pacchetti dal codice sorgente non è disponibile su un server né in Nodestro Local Docker (la build avrebbe accesso alla rete senza filtri). Usa un pacchetto che offre wheel già pronte."
   },
   "condition": {
     "field_missing": "Il campo manca nel risultato.",
@@ -707,7 +713,8 @@
     "libraries_need_isolation_linux": "Gli strumenti creati dall’IA e quelli di origine sconosciuta non ricevono librerie di terze parti nella sandbox Linux integrata, quindi non è stato eseguito nulla. Per usare librerie, scegli Automatica in Impostazioni → Sandbox e avvia Docker.",
     "unavailable": "Qui il codice degli strumenti viene eseguito solo in container; la sandbox «Processo Python» non è disponibile.",
     "docker_insecure": "Docker non ha superato le verifiche di sicurezza di Nodestro, quindi il codice creato dall’IA non è stato eseguito. Impostazioni → Sandbox mostra quale verifica non è riuscita.",
-    "selftest_failed": "Il container di prova non ha superato le verifiche di Nodestro, quindi il codice creato dall’IA non è stato eseguito. Impostazioni → Sandbox mostra il motivo."
+    "selftest_failed": "Il container di prova non ha superato le verifiche di Nodestro, quindi il codice creato dall’IA non è stato eseguito. Impostazioni → Sandbox mostra il motivo.",
+    "shape_mismatch": "Un container è stato fermato prima dell’avvio perché le sue impostazioni differiscono dalla configurazione verificata della sandbox. Non è stato eseguito nulla. Segnalalo, per favore; Impostazioni → Sandbox mostra i controlli."
   },
   "identity": {
     "login_expired": "L'accesso ha richiesto troppo tempo o è già stato usato. Accedi di nuovo.",

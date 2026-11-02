@@ -243,7 +243,12 @@
     "approval_missing": "The approval request for this call is gone; the call was not made.",
     "approval_not_in_test": "This call would need a person's approval; tests do not ask, so it was not made.",
     "frozen": "This tool belongs to a published API version and cannot be changed, so that the version keeps working exactly as it was published. Change the tool in the workflow and publish a new version.",
-    "denied_by_policy": "The rules for tool calls refused this call without asking anyone, so the tool did not run. Check the rules on the Approvals page, or give the agent a tool that only reads."
+    "denied_by_policy": "The rules for tool calls refused this call without asking anyone, so the tool did not run. Check the rules on the Approvals page, or give the agent a tool that only reads.",
+    "adoption_desktop_only": "AI-created code can be adopted as your own only in the desktop app. Here it always runs isolated.",
+    "adoption_forbidden": "Only the owner of this computer or an administrator may adopt AI-created code.",
+    "adoption_stale": "The tool changed after it was shown (now version {{version}}). Look at it again before you adopt it.",
+    "adoption_not_needed": "This tool already counts as your own code; it needs no adoption.",
+    "adoption_not_applicable": "This tool has no code of its own that could be adopted."
   },
   "job": {
     "writing": "The Coding Agent is writing code and tests …",
@@ -375,12 +380,13 @@
     "build_required": "{{name}} is only available as source code. Resolving it would run its build script, so Nodestro did not resolve it for the generated tool. Check the package and approve it in the tool's library dialog, or let the tool be written without it.",
     "build_required_no_docker": "{{name}} is only available as source code. Its build script runs only in a container, and Docker is not available here. Start Docker and try again, or let the tool be written without it.",
     "build_required_not_set_up": "{{name}} is only available as source code. Building packages in a container is not set up in this version, and Nodestro never runs build scripts on this computer. Let the tool be written without it.",
-    "build_unavailable": "Building packages from source in a container is not set up in this version. Nodestro never runs build scripts on this computer.",
+    "build_unavailable": "Packages cannot be built from source in a container here: the build image is not pinned or could not be loaded, or the build network is not allowed. Nodestro never runs build scripts on this computer.",
     "lock_without_hashes": "This approval comes from an older version without checksums. Approve the libraries again to use them in the Docker sandbox.",
     "wheels_required": "A package has no ready-made package (wheel) for Linux. In the Docker sandbox, packages are not built from source.",
     "hash_mismatch": "A downloaded package does not match the approval. Nothing was installed.",
     "image_failed": "The container image with the libraries could not be built. The technical details name the reason.",
-    "image_too_large": "The container image of these libraries is {{size_gb}} GB, more than the limit of {{limit_gb}} GB, and was removed again. Use fewer or smaller libraries."
+    "image_too_large": "The container image of these libraries is {{size_gb}} GB, more than the limit of {{limit_gb}} GB, and was removed again. Use fewer or smaller libraries.",
+    "source_build_disabled": "{{name}} is only available as source code. Building packages from source is not available on a server or in Nodestro Local Docker (the build would have unfiltered network access). Use a package that offers ready-made wheels."
   },
   "condition": {
     "field_missing": "The field is missing in the result.",
@@ -707,7 +713,8 @@
     "libraries_need_isolation_linux": "AI-created tools and tools of unknown origin get no third-party libraries in the built-in Linux sandbox, so nothing was run. To use libraries, choose Automatic in Settings → Sandbox and start Docker.",
     "unavailable": "Tool code runs only in containers here; the Python process sandbox is not available.",
     "docker_insecure": "Docker did not pass Nodestro's security checks, so the AI-created code was not run. Settings → Sandbox shows which check failed.",
-    "selftest_failed": "The test container failed Nodestro's checks, so the AI-created code was not run. Settings → Sandbox shows why."
+    "selftest_failed": "The test container failed Nodestro's checks, so the AI-created code was not run. Settings → Sandbox shows why.",
+    "shape_mismatch": "A container was stopped before it started because its settings differ from the sandbox's tested configuration. Nothing was run. Please report this; Settings → Sandbox shows the checks."
   },
   "identity": {
     "login_expired": "The login took too long or was already used. Please log in again.",

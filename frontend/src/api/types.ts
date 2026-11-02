@@ -1144,6 +1144,21 @@ export interface ToolInfo {
   definition_hash?: string | null;
   /** The shared capability statement: access read/write/destructive, reach internal/external, source. */
   capability?: ToolCapabilityStatement | null;
+  /** The hash of ``code`` and ``tests``; an adoption names it (POST /api/tools/{name}/adopt, ADR-0006 R-4). */
+  content_hash?: string | null;
+  /** Set while an AI-created tool counts as the person's own because they adopted it on the desktop (R-4). */
+  adoption?: ToolAdoption | null;
+}
+
+/** A confirmed adoption of AI-created tool code as one's own (nodestro_runtime.tool_provenance.ToolAdoption). */
+export interface ToolAdoption {
+  name: string;
+  version: number;
+  content_hash: string;
+  actor: string;
+  /** ``owner`` (the desktop's local owner) or ``admin``. */
+  role: string;
+  at: string;
 }
 
 export interface TestResult {

@@ -58,7 +58,9 @@
     "functionName": "Function name",
     "check": "Check and test",
     "result": "Check result",
-    "notChecked": "Not checked yet."
+    "notChecked": "Not checked yet.",
+    "ownCodeNote": "Code in this editor counts as written by you and runs on this computer without isolation. Do not paste code created by AI here: create it with AI so that it runs isolated.",
+    "pastedWarning": "You pasted code. Pasted code counts as written by you and runs on this computer without isolation: it can read your files and keys and use the network. Paste only code you have read and understood. Code created by AI belongs in “Create with AI”, where it runs isolated."
   },
   "jobStatus": {
     "running": "In progress",
@@ -274,5 +276,16 @@
     "resourceTool": "The service's documents",
     "resourceToolText": "This tool reads only the documents the service lists; other addresses are excluded. If the service changes its list, the tool is blocked until you have reviewed the new list. Contents are external data like every result of a service."
   },
-  "sandboxAutoDocker": "separate Python process; AI-created tools in Docker"
+  "sandboxAutoDocker": "separate Python process; AI-created tools in Docker",
+  "adopt": {
+    "button": "Adopt as my own code",
+    "title": "Adopt {{name}} as your own code?",
+    "intro": "Read the whole code and the tests of version {{version}} below. You confirm exactly what is shown here.",
+    "warning": "This code was created by AI. Once you adopt it, it counts as written by you and runs on this computer without isolation: it can read your files and keys and use the network. Nodestro cannot check what it does. Adopt it only if you have read and understood it.",
+    "revocation": "Your adoption is recorded with your name, the time and a fingerprint of this code. If AI changes the tool later, the adoption ends and it runs only isolated again. Your own edits in the editor keep it.",
+    "confirmText": "I have read the code and the tests and take responsibility for running them without isolation on this computer.",
+    "confirm": "Adopt",
+    "adopted": "{{name}} now counts as your own code",
+    "adoptedNote": "Created by AI, adopted by you as your own code (version {{version}}, {{when}}): runs in a separate Python process without isolation on this computer. A later change by AI ends the adoption."
+  }
 }
