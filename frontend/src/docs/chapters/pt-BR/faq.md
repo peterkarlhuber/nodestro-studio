@@ -19,7 +19,8 @@ Aqui você encontra soluções para mensagens comuns e respostas a perguntas tí
 | "Citações não podem ser combinadas com um formato de saída estruturado" | As duas opções estão ativas. | Desligue uma delas. |
 | "As mensagens de exemplo devem …" | Os exemplos não se alternam corretamente. | Comece pelo usuário, alterne e termine com o assistente. |
 | "A memória permanente precisa de um espaço de memória" | Memória *Permanente* sem espaço. | Escolha ou crie um espaço. |
-| Erros do Docker em ferramentas | O Docker está escolhido, mas não está rodando. | Inicie o Docker ou escolha a sandbox *Processo Python*. |
+| Erros do Docker em ferramentas | O Docker está escolhido, mas não está rodando. | Inicie o Docker ou escolha o sandbox *Automático*. |
+| Ferramentas criadas por IA estão bloqueadas no macOS ou no Windows | Nesses sistemas não há nenhum sandbox aprovado sem Docker. | [Instale o Docker](/docs/einstellungen#sandbox-docker) e inicie-o; o *Automático* passa a usá-lo. |
 | Um agente foi *ignorado* | Um antecessor falhou. | Veja o primeiro agente vermelho na linha do tempo e corrija-o. |
 | O resultado contém "{{Nome}}" literalmente | O marcador não corresponde a nenhum antecessor direto (por exemplo, depois de renomear). | Insira o marcador de novo pelos botões abaixo da tarefa. |
 | Importar trace: "Este é um fluxo de trabalho exportado …" | O arquivo é uma exportação de fluxo de trabalho. | Abra-o em *Fluxos de trabalho → Importar*. |

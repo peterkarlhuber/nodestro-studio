@@ -89,5 +89,5 @@ Neben dem Befehl `nodestro` gibt es Nodestro als Desktop-App (Vorschau für Linu
 - Nur das Fenster der App kann dieses Nodestro verwenden. Andere Programme auf dem Computer und Webseiten im Browser werden abgewiesen (*Dieses Nodestro gehört zur Desktop-App, die es gestartet hat*). Der Startlink des Fensters gilt nur einmal; für ein neues Fenster startest du die App neu.
 - Links zu anderen Websites öffnen sich im Browser.
 - Das Schließen des Fensters beendet Nodestro. Endet es unerwartet, sagt das Fenster es und nennt die Protokolldatei.
-- KI-erstellte Tools laufen isoliert in der eingebauten Linux-Sandbox; dafür muss nichts installiert werden (siehe [Tools](/docs/tools#sandbox)). Meldet *Einstellungen → Sandbox*, dass sie nicht verfügbar ist, laufen sie nur mit Docker.
+- KI-erstellte Tools laufen isoliert in der eingebauten Linux-Sandbox; dafür muss nichts installiert werden (siehe [Tools](/docs/tools#sandbox)). Meldet *Einstellungen → Sandbox*, dass sie nicht verfügbar ist, und immer unter macOS und Windows, laufen sie nur mit Docker ([Docker installieren](/docs/einstellungen#sandbox-docker)).
 - Versionen für macOS und Windows gibt es noch nicht.

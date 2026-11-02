@@ -32,7 +32,7 @@
   "sandbox": {
     "title": "Sandbox for your own tools",
     "label": "Sandbox",
-    "text": "Your own and AI-created tools never run in the Nodestro process. Tools you wrote yourself run in a separate Python process. AI-created tools and tools of unknown origin run only isolated: on Ubuntu 24.04 and Debian 13 automatically in the built-in Linux sandbox (no network, no access to your files or keys), otherwise only with Docker; without isolation they are blocked.",
+    "text": "Your own and AI-created tools never run in the Nodestro process. Tools you wrote yourself run in a separate Python process. AI-created tools and tools of unknown origin run only isolated: in the built-in Linux sandbox where this computer passed its checks (Ubuntu 24.04, Debian 13), otherwise in Docker; without isolation they are blocked. On macOS and Windows they need Docker.",
     "subprocess": "Python process",
     "dockerAvailable": "Docker available",
     "dockerMissing": "Docker not found",
@@ -48,6 +48,57 @@
       "paths": "Nodestro is installed inside a protected folder (for example directly in your home folder or the data folder). Move the app to its own folder.",
       "verify": "The self-test of the built-in sandbox failed: the isolation did not hold. AI-created tools stay blocked; use Docker.",
       "failed": "The self-test of the built-in sandbox could not run. AI-created tools stay blocked; use Docker."
+    },
+    "auto": "Automatic",
+    "modeHint": {
+      "auto": "Automatic: AI-created tools use the built-in Linux sandbox if it is available, otherwise Docker while it is running. Nodestro never falls back to an unprotected process.",
+      "subprocess": "Python process: your own tools run in a separate process. AI-created tools run only in the built-in Linux sandbox; Docker is not used.",
+      "docker": "Docker: every tool, also your own, runs in a container. If Docker is not running, no tool runs."
+    },
+    "containersOnly": "On this server, every tool runs in a container. The sandbox cannot be changed here.",
+    "runtime": "Computer running Nodestro",
+    "runtimeHint": "The computer where the Nodestro runtime runs, not the device of this browser.",
+    "os": {
+      "linux": "Linux",
+      "macos": "macOS",
+      "windows": "Windows"
+    },
+    "untrustedRunsIn": "AI-created tools run in",
+    "userRunsIn": "Your own tools run in",
+    "blockedBadge": "Blocked",
+    "blocked": {
+      "auto": "AI-created tools are blocked: this computer has no approved sandbox and Docker is not running. Install and start Docker; Nodestro then uses it automatically.",
+      "subprocess": "AI-created tools are blocked: this computer has no approved sandbox. Choose Automatic or Docker and start Docker."
+    },
+    "installDocker": "How to install Docker",
+    "backendsTitle": "Sandboxes on this computer",
+    "column": {
+      "backend": "Sandbox",
+      "state": "State",
+      "why": "Note"
+    },
+    "backend": {
+      "linux-builtin": "Built-in Linux sandbox",
+      "macos-seatbelt": "macOS sandbox",
+      "windows-native": "Windows sandbox",
+      "docker": "Docker",
+      "subprocess": "Python process"
+    },
+    "state": {
+      "approved": "Approved",
+      "experimental": "Experimental, not used",
+      "unavailable": "Not available",
+      "not-isolating": "Not isolated",
+      "not-applicable": "Not used here"
+    },
+    "backendReason": {
+      "not-released": "Implemented and self-tested, but not independently reviewed. Nodestro does not use it.",
+      "not-implemented": "Nodestro has no native sandbox for this operating system yet.",
+      "unreachable": "Docker is not installed or not running.",
+      "missing": "Docker is not installed.",
+      "server": "On a server, tool code runs only in containers.",
+      "platform": "Not available on this operating system.",
+      "unknown": "Not available on this computer."
     }
   },
   "about": {

@@ -83,6 +83,18 @@ def main() -> int:
                         print(f"{key}:", json.dumps(settings[key], indent=1))
                 if not sys.platform.startswith("linux"):
                     assert builtin["available"] is False, builtin
+                selection = settings.get("sandbox_selection")
+                if selection is not None:
+                    expected_os = {"darwin": "macos", "win32": "windows"}.get(sys.platform, "linux")
+                    assert selection["os"] == expected_os, selection
+                    # Never an unsafe fallback: AI-generated code runs isolated or not at all.
+                    assert selection["untrusted"] in ("", "docker", "linux-builtin"), selection
+                    assert selection["blocked"] == (selection["untrusted"] == ""), selection
+                    if not sys.platform.startswith("linux"):
+                        assert selection["untrusted"] in ("", "docker"), selection
+                    for backend in settings.get("sandbox_backends") or []:
+                        if backend["name"] in ("macos-seatbelt", "windows-native", "subprocess"):
+                            assert backend["state"] != "approved", backend
                 status, page = _get(f"{base}/")
                 assert status == 200 and b"<html" in page.lower(), page[:200]
                 print("interface served:", len(page), "bytes")

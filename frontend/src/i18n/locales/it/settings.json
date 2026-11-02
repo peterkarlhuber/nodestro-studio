@@ -32,7 +32,7 @@
   "sandbox": {
     "title": "Sandbox per gli strumenti personali",
     "label": "Sandbox",
-    "text": "Gli strumenti personali e quelli creati dall’IA non girano mai nel processo di Nodestro. Gli strumenti scritti da te vengono eseguiti in un processo Python separato. Gli strumenti creati dall’IA e quelli di origine sconosciuta vengono eseguiti solo isolati: su Ubuntu 24.04 e Debian 13 automaticamente nella sandbox Linux integrata (senza rete, senza accesso ai tuoi file o alle tue chiavi), altrimenti solo con Docker. Senza isolamento sono bloccati.",
+    "text": "Gli strumenti personali e quelli creati dall’IA non girano mai nel processo di Nodestro. Gli strumenti scritti da te vengono eseguiti in un processo Python separato. Gli strumenti creati dall’IA e quelli di origine sconosciuta vengono eseguiti solo isolati: nella sandbox Linux integrata dove questo computer ha superato i controlli (Ubuntu 24.04, Debian 13), altrimenti in Docker; senza isolamento sono bloccati. Su macOS e Windows richiedono Docker.",
     "subprocess": "Processo Python",
     "dockerAvailable": "Docker disponibile",
     "dockerMissing": "Docker non trovato",
@@ -48,6 +48,57 @@
       "paths": "Nodestro si trova in una cartella protetta (ad esempio direttamente nella cartella home o nella cartella dei dati). Sposta l’app in una cartella propria.",
       "verify": "L’autotest della sandbox integrata non è riuscito: l’isolamento non ha tenuto. Gli strumenti creati dall’IA restano bloccati; usa Docker.",
       "failed": "L’autotest della sandbox integrata non è stato eseguito. Gli strumenti creati dall’IA restano bloccati; usa Docker."
+    },
+    "auto": "Automatica",
+    "modeHint": {
+      "auto": "Automatica: gli strumenti creati dall’IA usano la sandbox Linux integrata se è disponibile, altrimenti Docker finché è in esecuzione. Nodestro non ripiega mai su un processo non protetto.",
+      "subprocess": "Processo Python: i tuoi strumenti vengono eseguiti in un processo separato. Gli strumenti creati dall’IA vengono eseguiti solo nella sandbox Linux integrata; Docker non viene usato.",
+      "docker": "Docker: ogni strumento, anche i tuoi, viene eseguito in un container. Se Docker non è in esecuzione, nessuno strumento viene eseguito."
+    },
+    "containersOnly": "Su questo server ogni strumento viene eseguito in un container. Qui la sandbox non si può cambiare.",
+    "runtime": "Computer che esegue Nodestro",
+    "runtimeHint": "Il computer su cui gira il runtime di Nodestro, non il dispositivo di questo browser.",
+    "os": {
+      "linux": "Linux",
+      "macos": "macOS",
+      "windows": "Windows"
+    },
+    "untrustedRunsIn": "Gli strumenti creati dall’IA vengono eseguiti in",
+    "userRunsIn": "I tuoi strumenti vengono eseguiti in",
+    "blockedBadge": "Bloccati",
+    "blocked": {
+      "auto": "Gli strumenti creati dall’IA sono bloccati: questo computer non ha una sandbox approvata e Docker non è in esecuzione. Installa e avvia Docker; Nodestro lo userà automaticamente.",
+      "subprocess": "Gli strumenti creati dall’IA sono bloccati: questo computer non ha una sandbox approvata. Scegli Automatica o Docker e avvia Docker."
+    },
+    "installDocker": "Come installare Docker",
+    "backendsTitle": "Sandbox su questo computer",
+    "column": {
+      "backend": "Sandbox",
+      "state": "Stato",
+      "why": "Nota"
+    },
+    "backend": {
+      "linux-builtin": "Sandbox Linux integrata",
+      "macos-seatbelt": "Sandbox di macOS",
+      "windows-native": "Sandbox di Windows",
+      "docker": "Docker",
+      "subprocess": "Processo Python"
+    },
+    "state": {
+      "approved": "Approvata",
+      "experimental": "Sperimentale, non usata",
+      "unavailable": "Non disponibile",
+      "not-isolating": "Senza isolamento",
+      "not-applicable": "Non usata qui"
+    },
+    "backendReason": {
+      "not-released": "Implementata e autotestata, ma non ancora verificata in modo indipendente. Nodestro non la usa.",
+      "not-implemented": "Nodestro non ha ancora una sandbox nativa per questo sistema operativo.",
+      "unreachable": "Docker non è installato o non è in esecuzione.",
+      "missing": "Docker non è installato.",
+      "server": "Su un server il codice degli strumenti viene eseguito solo in container.",
+      "platform": "Non disponibile su questo sistema operativo.",
+      "unknown": "Non disponibile su questo computer."
     }
   },
   "about": {

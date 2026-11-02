@@ -7508,3 +7508,22 @@ ul.gate-report__list > li.gate-report__item {
     max-height: 60vh;
   }
 }
+
+/* Settings → Sandbox: where code runs on the runtime's computer. */
+.sandbox-summary {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--nd-space-1) var(--nd-space-3);
+  margin: 0;
+}
+.sandbox-summary dt {
+  color: var(--nd-text-muted);
+}
+.sandbox-summary dd {
+  margin: 0;
+}
+@media (max-width: 560px) {
+  .sandbox-summary {
+    grid-template-columns: 1fr;
+  }
+}

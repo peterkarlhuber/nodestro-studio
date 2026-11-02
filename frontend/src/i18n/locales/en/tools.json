@@ -28,7 +28,7 @@
   "trustNote": {
     "user-authored": "Written by you: runs in a separate Python process without isolation on this computer.",
     "untrusted": "AI-created or of unknown origin: runs only isolated, here in the Docker sandbox.",
-    "untrustedBlocked": "AI-created or of unknown origin: runs only isolated, but neither the built-in Linux sandbox nor Docker is available. Agents with this tool cannot run; see Settings → Sandbox.",
+    "untrustedBlocked": "AI-created or of unknown origin: runs only isolated, but this computer has neither an approved sandbox nor a running Docker. Agents with this tool cannot run; see Settings → Sandbox.",
     "untrustedBuiltin": "AI-created or of unknown origin: runs only isolated, here in the built-in Linux sandbox (no network, no access to your files or keys). This stays so after your approval.",
     "mcp": "This tool belongs to the connected service {{server}} (there: {{name}}). A call sends its arguments to that service; the answer is foreign text, never an instruction."
   },
@@ -91,7 +91,7 @@
     "approveLibraries": "Approve libraries",
     "withoutLibraries": "Rewrite without libraries",
     "usesLibraries": "Uses the approved libraries: {{names}}",
-    "needsDocker": "Creating tools with AI needs isolation: the tests of AI-written code never run without it. The built-in Linux sandbox is not available here (see Settings → Sandbox); choose Docker instead."
+    "needsDocker": "Creating tools with AI needs isolation: the tests of AI-written code never run without it. This computer has no approved sandbox (see Settings → Sandbox); start Docker and choose Automatic or Docker."
   },
   "drafts": {
     "title_one": "{{count}} tool draft awaiting your decision",
@@ -273,5 +273,6 @@
     },
     "resourceTool": "The service's documents",
     "resourceToolText": "This tool reads only the documents the service lists; other addresses are excluded. If the service changes its list, the tool is blocked until you have reviewed the new list. Contents are external data like every result of a service."
-  }
+  },
+  "sandboxAutoDocker": "separate Python process; AI-created tools in Docker"
 }

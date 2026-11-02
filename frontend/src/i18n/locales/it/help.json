@@ -121,7 +121,7 @@
     "defaultModel": "I nuovi agenti vuoti e i nuovi workflow partono con questo modello. Nelle bozze dell’IA fa da sostituto se il modello proposto non è disponibile.",
     "assistantModel": "Modello per l’architetto di agenti, il Coding Agent e l’assistente di memoria. Un modello potente fa proposte migliori.",
     "budget": "Vale per tutti i workflow senza un budget proprio. Vuoto = nessun limite (sconsigliato).",
-    "sandbox": "Processo Python: per gli strumenti scritti da te, con limiti di tempo e di memoria. Sandbox Linux integrata (Ubuntu 24.04, Debian 13): gli strumenti creati dall’IA vengono eseguiti lì automaticamente, senza rete e senza accesso ai tuoi file, alle chiavi o ad altri programmi. Docker: un container, anch’esso senza rete e con file system di sola lettura.",
+    "sandbox": "Automatica (consigliata): gli strumenti creati dall’IA vengono eseguiti nella sandbox Linux integrata dove è disponibile, altrimenti in Docker; senza nessuna delle due sono bloccati. Processo Python: per gli strumenti scritti da te, con limiti di tempo e di memoria. Docker: un container senza rete e con file system di sola lettura.",
     "language": "La lingua dell’interfaccia. «Automatica» segue la lingua del browser (inglese, se non è supportata). La scelta vale subito e viene ricordata. Contenuti come agenti, prompt e risultati restano come sono.",
     "backup": "Scarica tutti i dati tranne le chiavi API come file ZIP.",
     "restore": "Prima verifica completamente il file e ne mostra il contenuto. La sostituzione avviene solo dopo la tua conferma; prima viene salvato lo stato attuale.",

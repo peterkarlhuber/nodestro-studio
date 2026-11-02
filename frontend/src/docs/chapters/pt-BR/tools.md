@@ -147,11 +147,11 @@ Ferramentas próprias e criadas por IA **nunca rodam no processo do Nodestro**. 
 |---|---|---|
 | **Processo Python** (padrão para suas ferramentas) | processo separado com ambiente vazio em uma pasta temporária; **não** é uma barreira de segurança | 15 segundos, 1 GB de memória |
 | **Sandbox Linux integrado** (automático para ferramentas criadas por IA no Ubuntu 24.04 e no Debian 13) | sem rede, sem acesso aos seus arquivos, chaves, aos dados do Nodestro ou a outros programas; sem novos processos; só a própria pasta temporária aceita gravação | 15 segundos (60 com bibliotecas), 1 GB de memória, 64 MB de arquivos temporários |
-| **Docker** | contêiner descartável sem rede, com sistema de arquivos somente leitura, sem privilégios | 20 segundos, 512 MB de memória, 1 CPU |
+| **Docker** (automático para ferramentas criadas por IA onde o sandbox integrado não está disponível, também no macOS e no Windows) | contêiner descartável sem rede, com sistema de arquivos somente leitura, sem privilégios | 20 segundos, 512 MB de memória, 1 CPU |
 
 O sandbox Linux integrado não precisa de instalação: ele usa funções do kernel Linux (Landlock e seccomp). O Nodestro verifica uma vez na inicialização se elas existem e funcionam; *Configurações → Sandbox* mostra o resultado e, se não estiver disponível, o motivo. Ele não protege contra erros no próprio kernel Linux e não esconde se um arquivo existe em outro lugar; o Docker continua disponível como alternativa.
 
-Você escolhe o sandbox nas [configurações](/docs/einstellungen#sandbox). O Docker precisa estar instalado e em execução; caso contrário, testes e chamadas falham. Se uma chamada passar do limite de tempo, ela conta como erro e o processo é encerrado.
+Você escolhe o sandbox nas [configurações](/docs/einstellungen#sandbox); *Automático* escolhe por você. O Docker precisa estar instalado e em execução ([Instalar o Docker](/docs/einstellungen#sandbox-docker)); caso contrário, testes e chamadas das ferramentas que precisam dele falham. No macOS, o Nodestro também tem um sandbox experimental; ele aparece nas configurações, mas não é usado até ter sido revisado de forma independente. Se uma chamada passar do limite de tempo, ela conta como erro e o processo é encerrado.
 
 ## Confiança e isolamento {#vertrauen}
 <!-- keywords: confiança, não confiável, origem, gerado por ia, docker necessário, isolamento necessário, bloqueado, restrito, precisa de isolamento -->
@@ -164,7 +164,7 @@ O Nodestro decide pela **origem do código** onde ele pode rodar:
 | Escrita por você em *Escrever você mesmo* | *Escrita por você* | roda, sem isolamento neste computador | roda (no *Processo Python* ou isolada no Docker) |
 | Criada por IA (também depois da sua aprovação), rascunhos de ferramentas do arquiteto de IA, ferramentas de origem desconhecida | *Precisa de isolamento* | **bloqueada** | roda isolada |
 
-O processo Python não é uma barreira de segurança: o código nele roda com as suas permissões. Por isso o Nodestro nunca executa ali código gerado por IA, e nem a sua aprovação nem uma configuração mudam isso; não existe nenhuma chave que permita mesmo assim. Onde o sandbox Linux integrado está disponível, o Nodestro o usa automaticamente para esse código. Sem ele e sem Docker:
+O processo Python não é uma barreira de segurança: o código nele roda com as suas permissões. Por isso o Nodestro nunca executa ali código gerado por IA, e nem a sua aprovação nem uma configuração mudam isso; não existe nenhuma chave que permita mesmo assim. Onde o sandbox Linux integrado está disponível, o Nodestro o usa automaticamente para esse código; caso contrário, no modo *Automático*, o Docker enquanto estiver rodando. Sem nenhum dos dois:
 
 - **Criar com IA** não inicia, e rascunhos de ferramentas não podem ser testados nem aprovados;
 - agentes com uma ferramenta que precisa de isolamento não podem rodar; a verificação do fluxo de trabalho avisa antes do início;

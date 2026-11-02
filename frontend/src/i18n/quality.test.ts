@@ -34,7 +34,7 @@ describe("texts left in English", () => {
     "google", "gemini", "iban", "ibans", "json", "markdown", "md", "mcp", "nodestro", "connecting",
     "intelligence", "oauth", "ollama", "orkexa", "pdf", "python", "sandbox", "sdk", "streaming", "token", "tokens", "uv",
     "version", "workflow", "workflows", "max", "ok", "orchestrator", "teams", "team", "tools", "tool", "tests", "sqlite",
-    "openai", "vllm", "https", "ctrl", "esc", "amazon", "bedrock", "aws", "nova", "claude", "eu", "central",
+    "openai", "vllm", "https", "ctrl", "esc", "amazon", "bedrock", "aws", "nova", "claude", "eu", "central", "linux", "macos", "windows",
   ];
   const ALLOWED: Record<string, string[]> = {
     de: [

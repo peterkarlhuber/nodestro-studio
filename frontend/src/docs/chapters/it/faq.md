@@ -19,7 +19,8 @@ Qui trovi le soluzioni ai messaggi più comuni e le risposte alle domande tipich
 | «Le citazioni non si possono combinare con un formato di output strutturato» | Entrambe le opzioni sono attive. | Disattivane una. |
 | «I messaggi di esempio devono …» | Gli esempi non si alternano correttamente. | Inizia con l'utente, alterna e termina con l'assistente. |
 | «La memoria permanente richiede uno spazio di memoria» | Memoria *Permanente* senza spazio. | Scegli o crea uno spazio. |
-| Errori di Docker con gli strumenti | Docker è selezionato ma non è in esecuzione. | Avvia Docker o scegli la sandbox *Processo Python*. |
+| Errori di Docker con gli strumenti | Docker è selezionato ma non è in esecuzione. | Avvia Docker o scegli la sandbox *Automatica*. |
+| Gli strumenti creati dall’IA sono bloccati su macOS o Windows | Su questi sistemi non esiste una sandbox approvata senza Docker. | [Installa Docker](/docs/einstellungen#sandbox-docker) e avvialo; *Automatica* lo userà poi. |
 | Un agente è stato *saltato* | Un predecessore non è riuscito. | Guarda il primo agente rosso nell'andamento e correggilo. |
 | Il risultato contiene «{{Nome}}» alla lettera | Il segnaposto non corrisponde ad alcun predecessore diretto (per esempio dopo una ridenominazione). | Reinserisci il segnaposto con i pulsanti sotto il compito. |
 | Importazione traccia: «Questo è un workflow esportato …» | Il file è un'esportazione di workflow. | Aprilo in *Workflow → Importa*. |

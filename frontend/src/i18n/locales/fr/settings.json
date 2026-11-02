@@ -32,7 +32,7 @@
   "sandbox": {
     "title": "Bac à sable pour les outils personnels",
     "label": "Bac à sable",
-    "text": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro. Les outils que vous écrivez vous-même s’exécutent dans un processus Python séparé. Les outils créés par l’IA et ceux d’origine inconnue ne s’exécutent qu’isolés : sous Ubuntu 24.04 et Debian 13, automatiquement dans le bac à sable Linux intégré (sans réseau, sans accès à vos fichiers ni à vos clés) ; ailleurs, uniquement avec Docker. Sans isolation, ils sont bloqués.",
+    "text": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro. Les outils que vous écrivez vous-même s’exécutent dans un processus Python séparé. Les outils créés par l’IA et ceux d’origine inconnue ne s’exécutent qu’isolés : dans le bac à sable Linux intégré là où cet ordinateur a réussi ses vérifications (Ubuntu 24.04, Debian 13), sinon dans Docker ; sans isolation, ils sont bloqués. Sous macOS et Windows, ils nécessitent Docker.",
     "subprocess": "Processus Python",
     "dockerAvailable": "Docker disponible",
     "dockerMissing": "Docker introuvable",
@@ -48,6 +48,57 @@
       "paths": "Nodestro se trouve dans un dossier protégé (par exemple directement dans votre dossier personnel ou dans le dossier de données). Déplacez l’application dans son propre dossier.",
       "verify": "L’autotest du bac à sable intégré a échoué : l’isolation n’a pas tenu. Les outils créés par l’IA restent bloqués ; utilisez Docker.",
       "failed": "L’autotest du bac à sable intégré n’a pas pu s’exécuter. Les outils créés par l’IA restent bloqués ; utilisez Docker."
+    },
+    "auto": "Automatique",
+    "modeHint": {
+      "auto": "Automatique : les outils créés par l’IA utilisent le bac à sable Linux intégré s’il est disponible, sinon Docker tant qu’il tourne. Nodestro ne se replie jamais sur un processus non protégé.",
+      "subprocess": "Processus Python : vos outils s’exécutent dans un processus séparé. Les outils créés par l’IA ne s’exécutent que dans le bac à sable Linux intégré ; Docker n’est pas utilisé.",
+      "docker": "Docker : chaque outil, y compris les vôtres, s’exécute dans un conteneur. Si Docker ne tourne pas, aucun outil ne s’exécute."
+    },
+    "containersOnly": "Sur ce serveur, chaque outil s’exécute dans un conteneur. Le bac à sable ne peut pas être modifié ici.",
+    "runtime": "Ordinateur qui exécute Nodestro",
+    "runtimeHint": "L’ordinateur sur lequel tourne l’environnement d’exécution de Nodestro, et non l’appareil de ce navigateur.",
+    "os": {
+      "linux": "Linux",
+      "macos": "macOS",
+      "windows": "Windows"
+    },
+    "untrustedRunsIn": "Les outils créés par l’IA s’exécutent dans",
+    "userRunsIn": "Vos outils s’exécutent dans",
+    "blockedBadge": "Bloqués",
+    "blocked": {
+      "auto": "Les outils créés par l’IA sont bloqués : cet ordinateur n’a aucun bac à sable validé et Docker ne tourne pas. Installez et démarrez Docker ; Nodestro l’utilisera alors automatiquement.",
+      "subprocess": "Les outils créés par l’IA sont bloqués : cet ordinateur n’a aucun bac à sable validé. Choisissez Automatique ou Docker et démarrez Docker."
+    },
+    "installDocker": "Comment installer Docker",
+    "backendsTitle": "Bacs à sable sur cet ordinateur",
+    "column": {
+      "backend": "Bac à sable",
+      "state": "État",
+      "why": "Remarque"
+    },
+    "backend": {
+      "linux-builtin": "Bac à sable Linux intégré",
+      "macos-seatbelt": "Bac à sable macOS",
+      "windows-native": "Bac à sable Windows",
+      "docker": "Docker",
+      "subprocess": "Processus Python"
+    },
+    "state": {
+      "approved": "Validé",
+      "experimental": "Expérimental, non utilisé",
+      "unavailable": "Indisponible",
+      "not-isolating": "Sans isolation",
+      "not-applicable": "Non utilisé ici"
+    },
+    "backendReason": {
+      "not-released": "Implémenté et autotesté, mais pas encore examiné de façon indépendante. Nodestro ne l’utilise pas.",
+      "not-implemented": "Nodestro n’a pas encore de bac à sable natif pour ce système d’exploitation.",
+      "unreachable": "Docker n’est pas installé ou ne tourne pas.",
+      "missing": "Docker n’est pas installé.",
+      "server": "Sur un serveur, le code des outils ne s’exécute que dans des conteneurs.",
+      "platform": "Indisponible sur ce système d’exploitation.",
+      "unknown": "Indisponible sur cet ordinateur."
     }
   },
   "about": {

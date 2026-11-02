@@ -12,7 +12,9 @@ trap cleanup EXIT
 
 start() {  # start NAME PORT COMMAND...
   local name=$1 port=$2; shift 2
-  "$@" > "$work/$name.log" 2>&1 &
+  # Every suite runs on "a computer without Docker" (CI runners have one): the automatic sandbox mode would
+  # otherwise run AI-created tools there, and the suites check the blocked state. Doubles stand in where needed.
+  DOCKER_HOST=unix:///nonexistent/docker.sock "$@" > "$work/$name.log" 2>&1 &
   pids+=($!)
   for _ in $(seq 1 60); do
     curl -sf "http://127.0.0.1:$port/api/meta" > /dev/null && return 0

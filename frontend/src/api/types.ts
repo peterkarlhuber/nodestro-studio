@@ -911,9 +911,60 @@ export interface BuiltinSandboxStatus {
   system: string;
 }
 
+/** The sandbox setting: ``auto`` picks the isolation of this computer (built-in Linux sandbox, else Docker). */
+export type SandboxMode = "auto" | "subprocess" | "docker";
+
+/** One sandbox backend of the runtime's computer, as the sandbox policy sees it. */
+export interface SandboxBackendStatus {
+  /** linux-builtin, macos-seatbelt, windows-native, docker or subprocess. */
+  name: string;
+  available: boolean;
+  /** approved: may run AI-created code; experimental: implemented but not released, never used. */
+  state: "approved" | "experimental" | "unavailable" | "not-isolating" | "not-applicable";
+  /** Why not approved (not-released, not-implemented, unreachable, server, or a built-in sandbox reason). */
+  reason: string;
+  /** Technical detail in English, for support. */
+  detail: string;
+  /** none, container or os (Orkexa's capability model). */
+  isolation: string;
+  maturity: string;
+  /** kernel, watchdog or none. */
+  memory: string;
+  notes: string[];
+}
+
+/** Where code runs now on the runtime's computer (never the browser's), or why AI-created code is blocked. */
+export interface SandboxSelection {
+  mode: SandboxMode;
+  profile: string;
+  /** The runtime's operating system: linux, macos, windows (or another sys.platform value). */
+  os: string;
+  arch: string;
+  /** The backend of AI-created and unknown code; "" when it is blocked. */
+  untrusted: string;
+  /** The backend of code a person wrote; "" when no tool code runs at all. */
+  user_authored: string;
+  blocked: boolean;
+  /** no-isolation or docker-unreachable when blocked. */
+  reason: string;
+  detail: string;
+}
+
 /** Whether AI-created code can run here: in Docker or in the built-in Linux sandbox. */
-export function isolationAvailable(settings: Pick<Settings, "sandbox" | "builtin_sandbox">): boolean {
+export function isolationAvailable(
+  settings: Pick<Settings, "sandbox" | "builtin_sandbox"> & { sandbox_selection?: SandboxSelection | null },
+): boolean {
+  if (settings.sandbox_selection) return !settings.sandbox_selection.blocked;
   return settings.sandbox === "docker" || settings.builtin_sandbox?.available === true;
+}
+
+/** Where AI-created code runs now: docker, linux-builtin, or "" when it is blocked (older runtimes: derived). */
+export function untrustedBackend(
+  settings: Pick<Settings, "sandbox" | "builtin_sandbox"> & { sandbox_selection?: SandboxSelection | null },
+): string {
+  if (settings.sandbox_selection) return settings.sandbox_selection.untrusted;
+  if (settings.sandbox === "docker") return "docker";
+  return settings.builtin_sandbox?.available ? "linux-builtin" : "";
 }
 
 export interface Settings {
@@ -924,10 +975,14 @@ export interface Settings {
   default_model: string;
   assistant_model: string;
   default_budget_usd: number | null;
-  sandbox: "subprocess" | "docker";
+  sandbox: SandboxMode;
   docker_available: boolean;
   /** The built-in Linux sandbox: with it, AI-created code runs isolated without Docker (desktop only). */
   builtin_sandbox?: BuiltinSandboxStatus;
+  /** Where code runs now and why AI-created code may be blocked (runtime 2026-11-02 and later). */
+  sandbox_selection?: SandboxSelection | null;
+  /** Every sandbox of the runtime's computer with its state. */
+  sandbox_backends?: SandboxBackendStatus[];
   /** The interface language the user picked; null follows the browser. */
   language: string | null;
   /** Cost limit of one Workflow Architect job in USD; null: no limit. */

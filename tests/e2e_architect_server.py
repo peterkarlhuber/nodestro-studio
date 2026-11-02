@@ -66,6 +66,9 @@ def stand_in_for_docker() -> None:
         return ContainerDouble() if kind == "docker" else real(kind, policy, container)
 
     workspace.make_sandbox = make_sandbox  # type: ignore[assignment]
+    # The settings report Docker as running once it is chosen (the double stands in for it), so the studio's
+    # sandbox report (sandbox_selection) shows the container instead of "Docker unreachable".
+    workspace.Workspace._docker_available = lambda self: self._sandbox_kind() == "docker"  # type: ignore[method-assign]
 
 
 def main() -> None:

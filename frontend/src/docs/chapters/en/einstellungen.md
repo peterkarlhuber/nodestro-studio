@@ -93,11 +93,38 @@ Save changes with **Save** in the *Models and budget* section.
 The **Default budget per run** (initially 2 USD) applies to all workflows without a budget of their own. Empty means no limit. How the budget works is explained under [Budget per run](/docs/workflows#budget).
 
 ## Sandbox {#sandbox}
-<!-- keywords: choose sandbox, docker, python process, docker available, built-in sandbox, linux sandbox -->
+<!-- keywords: choose sandbox, automatic, docker, python process, docker available, built-in sandbox, linux sandbox, macos, windows, blocked, experimental -->
 
-Here you choose where tools you wrote yourself run: **Python process** or **Docker**. The change takes effect immediately. Notes show whether Docker was found and whether the **built-in Linux sandbox** is active; if it is not, the reason is shown (for example an untested Linux distribution or a missing kernel function). If Docker is selected but not reachable, tool tests and calls fail. Details are under [The sandbox](/docs/tools#sandbox).
+Here you choose where tools run. The change takes effect immediately.
 
-Tools created by AI and tools of unknown origin run only isolated: automatically in the built-in Linux sandbox, otherwise only with Docker; see [Trust and isolation](/docs/tools#vertrauen).
+| Mode | Your own tools | AI-created tools and tools of unknown origin |
+|---|---|---|
+| **Automatic** (default) | Python process | built-in Linux sandbox if it is available, otherwise Docker while it is running, otherwise **blocked** |
+| **Python process** | Python process | only the built-in Linux sandbox, otherwise **blocked**; Docker is not used |
+| **Docker** | Docker | Docker; if Docker is not running, no tool runs |
+
+Nodestro never falls back to an unprotected process for AI-created code. If you never chose a mode, Nodestro uses *Automatic*; a mode you chose in an earlier version stays.
+
+Below the choice Nodestro shows:
+
+- the **computer running Nodestro** with its operating system. This is the computer of the Nodestro runtime, not the device of your browser: if you open Nodestro on a server from a Mac, the server's system counts;
+- where AI-created tools and your own tools run **now**, or that they are **blocked** and why;
+- every **sandbox on this computer** with its state: *Approved* (may run AI-created code), *Experimental, not used*, *Not available*, *Not isolated* (the Python process) or *Not used here*.
+
+The built-in Linux sandbox is approved on Ubuntu 24.04 and Debian 13 (64-bit Intel or AMD) once its self-test passed. On macOS Nodestro has an **experimental** sandbox: it is implemented and tested, but not independently reviewed yet, so Nodestro shows it and does not use it. On Windows there is no native sandbox yet. On both, AI-created tools therefore need Docker. Details are under [The sandbox](/docs/tools#sandbox) and [Trust and isolation](/docs/tools#vertrauen).
+
+On a server and in Nodestro Local Docker every tool runs in a container; the setting cannot be changed there.
+
+## Installing Docker {#sandbox-docker}
+<!-- keywords: install docker, docker desktop, docker engine, macos, windows, linux, wsl, start docker, docker not running -->
+
+AI-created tools need Docker on macOS and Windows, and on Linux systems where the built-in sandbox is not available. Nodestro only needs a running Docker; the container image is built automatically on first use.
+
+- **macOS:** install [Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/) (Apple silicon or Intel), open it once and wait until it says it is running.
+- **Windows:** install [Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/) with the WSL 2 backend, restart if asked, and start Docker Desktop.
+- **Linux:** install [Docker Engine](https://docs.docker.com/engine/install/) for your distribution and allow your user to use it (group `docker`), or use Docker Desktop for Linux.
+
+Then open *Settings → Sandbox*: with **Automatic** Nodestro uses Docker as soon as it is running; *Docker available* is shown and AI-created tools are no longer blocked. If Docker stops, they are blocked again until it runs; Nodestro does not switch to the Python process.
 
 ## Language {#sprache}
 <!-- keywords: language, english, german, spanish, french, portuguese, italian, browser language, translation, localization -->
