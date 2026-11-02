@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Platform pins: Docker-first sandbox (2026-11-02)
+
+- Pins: orkexa `e220f70` (unified Docker sandbox engine, orkexa #31; macOS sandbox removed, #30; budget #32),
+  nodestro-runtime `b608f90` (#83: Orkexa's run shape, background Docker status, image caps, no host builds),
+  nodestro-examples `50552a0` and nodestro-integrations `3120cca` (runtime pin only), nodestro-api `16a6118` (#63:
+  `GET /api/sandbox/status`, `POST /api/sandbox/self-test`), nodestro-sdk `9971a2f` (#57: their client methods).
+
 ### Platform pins: Axentra completion (2026-11-02)
 
 - Pins: axentra `f6ae01d` (one Axentra commit across the chain; before `f114920`), nodestro-runtime `95114ae`
