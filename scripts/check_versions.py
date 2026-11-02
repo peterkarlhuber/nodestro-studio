@@ -24,12 +24,8 @@ import re
 import subprocess
 import sys
 import tempfile
+import tomllib
 from typing import Any
-
-try:
-    import tomllib
-except ModuleNotFoundError:  # Python 3.10
-    import tomli as tomllib  # type: ignore[no-redef,import-not-found]
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSIONS = ROOT / "platform" / "versions.json"

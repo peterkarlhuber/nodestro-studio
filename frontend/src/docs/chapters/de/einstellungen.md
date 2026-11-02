@@ -179,7 +179,7 @@ Die Diagnose ist kostenlos und sendet nichts ins Internet. **Verbindung testen**
 ## Installation und Start {#installation}
 <!-- keywords: installation, start, kommandozeile, cli, port, host, data-dir, no-browser, reload, python, node -->
 
-Voraussetzungen: Python 3.10 oder neuer und Node.js 20 oder neuer (nur zum Bauen der Oberfläche), optional Docker.
+Voraussetzungen: Python 3.11 oder neuer und Node.js 20 oder neuer (nur zum Bauen der Oberfläche), optional Docker.
 
 ```bash
 cd frontend && npm ci && npm run build && cd ..

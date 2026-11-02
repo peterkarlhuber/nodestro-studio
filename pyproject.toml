@@ -10,7 +10,7 @@ description = "Nodestro Studio – a visual studio for multi-agent workflows bui
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "Peter Karlhuber" }]
 dependencies = [
     # The platform: every component at the exact commit this studio release was tested with
@@ -29,8 +29,6 @@ dev = [
     "mypy>=1.13",
     "pytest>=8",
     "ruff>=0.8",
-    # scripts/check_versions.py reads pyproject.toml files (tomllib is built in from 3.11).
-    "tomli>=2; python_version < '3.11'",
 ]
 
 [project.scripts]
@@ -60,7 +58,7 @@ addopts = "-ra --strict-markers"
 
 [tool.ruff]
 line-length = 120
-target-version = "py310"
+target-version = "py311"
 extend-exclude = ["frontend"]
 
 [tool.ruff.lint]
@@ -73,7 +71,7 @@ known-third-party = ["nodestro_runtime", "nodestro_api", "nodestro_examples", "n
 known-local-folder = ["architect_script", "conftest", "check_case_collisions", "check_imports", "check_versions"]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 strict = true
 packages = ["nodestro_studio"]
 mypy_path = "src"

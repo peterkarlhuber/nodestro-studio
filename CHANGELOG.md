@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Python 3.11 minimum (2026-11-02)
+
+- Python 3.11 is now the minimum (3.10 reached end of life in October 2026): `requires-python`, ruff `py311`, mypy 3.11,
+  CI and platform matrices 3.11/3.13, the requirements in the README, `docs/PLATFORM.md`, `docs/ARCHITECTURE.md` and the
+  settings chapter of the help (all six languages).
+- `scripts/check_versions.py` uses the built-in `tomllib`; the `tomli` dev dependency is gone.
+
 ### Platform pins: Axentra migration completion and security review fixes (2026-11-02)
 
 - Pins: axentra `024da57` (#20 SR-02/SR-05 with migration 0011, #19 session resolution in one transaction, #21/#24

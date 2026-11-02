@@ -179,7 +179,7 @@ O diagnóstico é gratuito e não envia nada para a internet. **Testar conexão*
 ## Instalação e inicialização {#installation}
 <!-- keywords: instalação, inicialização, linha de comando, cli, porta, host, data-dir, no-browser, reload, python, node -->
 
-Requisitos: Python 3.10 ou mais recente e Node.js 20 ou mais recente (só para compilar a interface); Docker é opcional.
+Requisitos: Python 3.11 ou mais recente e Node.js 20 ou mais recente (só para compilar a interface); Docker é opcional.
 
 ```bash
 cd frontend && npm ci && npm run build && cd ..
