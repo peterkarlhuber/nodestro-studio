@@ -151,7 +151,7 @@ Your own and AI-created tools **never run in the Nodestro process**. Tests and e
 
 The built-in Linux sandbox needs nothing to install: it uses functions of the Linux kernel (Landlock and seccomp). Nodestro checks once at the start whether they are there and work; *Settings → Sandbox* shows the result and, if it is not available, why. It does not protect against errors in the Linux kernel itself and does not hide whether a file exists elsewhere; Docker remains available as an alternative.
 
-You choose the sandbox in the [settings](/docs/einstellungen#sandbox); *Automatic* picks it for you. Docker must be installed and running ([Installing Docker](/docs/einstellungen#sandbox-docker)); otherwise tests and calls of tools that need it fail. On macOS Nodestro also has an experimental sandbox; it is shown in the settings but not used until it has been independently reviewed. If a call exceeds the time limit, it counts as an error and the process is stopped.
+You choose the sandbox in the [settings](/docs/einstellungen#sandbox); *Automatic* picks it for you. Docker must be installed and running ([Installing Docker](/docs/einstellungen#sandbox-docker)); otherwise tests and calls of tools that need it fail. On macOS and Windows, Docker or a compatible engine is the only sandbox for AI-created tools, and Nodestro checks the engine before it uses it. If a call exceeds the time limit, it counts as an error and the process is stopped.
 
 ## Trust and isolation {#vertrauen}
 <!-- keywords: trust, untrusted, origin, ai-generated, docker required, isolation required, blocked, restricted, needs isolation -->

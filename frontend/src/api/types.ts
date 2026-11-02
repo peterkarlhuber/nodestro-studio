@@ -916,12 +916,15 @@ export type SandboxMode = "auto" | "subprocess" | "docker";
 
 /** One sandbox backend of the runtime's computer, as the sandbox policy sees it. */
 export interface SandboxBackendStatus {
-  /** linux-builtin, macos-seatbelt, windows-native, docker or subprocess. */
+  /** linux-builtin, macos-seatbelt (removed, always unavailable), windows-native, docker or subprocess. */
   name: string;
   available: boolean;
   /** approved: may run AI-created code; experimental: implemented but not released, never used. */
   state: "approved" | "experimental" | "unavailable" | "not-isolating" | "not-applicable";
-  /** Why not approved (not-released, not-implemented, unreachable, server, or a built-in sandbox reason). */
+  /**
+   * Why not approved: removed (the native macOS sandbox; older runtimes report not-released), not-implemented,
+   * unreachable, missing, server, or a built-in sandbox reason.
+   */
   reason: string;
   /** Technical detail in English, for support. */
   detail: string;

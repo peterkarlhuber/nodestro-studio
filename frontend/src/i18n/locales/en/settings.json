@@ -79,7 +79,7 @@
     },
     "backend": {
       "linux-builtin": "Built-in Linux sandbox",
-      "macos-seatbelt": "macOS sandbox",
+      "macos-seatbelt": "Native macOS sandbox",
       "windows-native": "Windows sandbox",
       "docker": "Docker",
       "subprocess": "Python process"
@@ -94,11 +94,45 @@
     "backendReason": {
       "not-released": "Implemented and self-tested, but not independently reviewed. Nodestro does not use it.",
       "not-implemented": "Nodestro has no native sandbox for this operating system yet.",
+      "removed": "Removed: Nodestro uses Docker on macOS.",
       "unreachable": "Docker is not installed or not running.",
       "missing": "Docker is not installed.",
       "server": "On a server, tool code runs only in containers.",
       "platform": "Not available on this operating system.",
       "unknown": "Not available on this computer."
+    },
+    "docker": {
+      "checking": "Checking Docker …",
+      "ready": "Docker is ready: the engine passed Nodestro's checks.",
+      "recheck": "Check again",
+      "prepare": "Prepare sandbox",
+      "engine": "Container engine",
+      "rootless": "Without root privileges (rootless)",
+      "cgroup": "Resource limits (cgroup v2)",
+      "rootfulNote": "Members of the docker group are effectively root on this computer. Rootless Docker is recommended.",
+      "check": {
+        "user": "Runs as an unprivileged user",
+        "caps": "No special privileges",
+        "seccomp": "System call filter (seccomp) active",
+        "network": "No network access",
+        "readonly": "Read-only file system",
+        "memory": "Memory limit enforced",
+        "pids": "Process limit enforced",
+        "cpu": "CPU limit enforced",
+        "nofile": "Limit on open files",
+        "env": "No secrets in the environment"
+      },
+      "reason": {
+        "missing": "Docker is not installed. Install Docker or a compatible engine; Nodestro detects it automatically.",
+        "unreachable": "Docker is installed but not running or cannot be reached. Start it and check again.",
+        "limits": "The engine does not enforce memory, process and CPU limits. Nodestro needs cgroup v2 limits and does not use this engine.",
+        "seccomp": "The engine does not apply a system call filter (seccomp). Nodestro does not use this engine.",
+        "rootlessCgroup": "Rootless Docker cannot enforce limits here: cgroup v2 delegation of the cpu, memory and pids controllers is missing.",
+        "osType": "The engine runs Windows containers. Switch it to Linux containers.",
+        "selftest": "The test container failed Nodestro's checks, so the engine is not used.",
+        "image": "The sandbox image is missing or does not match this version. Prepare the sandbox.",
+        "checking": "The check is still running."
+      }
     }
   },
   "about": {

@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+### Docker-first sandbox: texts and docs (2026-11-02, ADR-0009 status update)
+
+- Docker (or a compatible engine that passes Nodestro's own checks) is the default sandbox for AI-created code on
+  Linux, macOS and Windows. The native macOS sandbox was removed: Settings → Sandbox names the backend
+  *Native macOS sandbox* and explains the runtime's new reason `removed`; the reason `not-released` of older runtimes
+  keeps its text. `platform_smoke.py` accepts both (`unavailable / removed`, `experimental / not-released`).
+- Six languages: texts for the coming Docker status view under `settings.sandbox.docker` (checking, ready, check
+  again, prepare, engine, rootless, cgroup, the docker-group root note, ten in-container checks and nine refusal
+  reasons) and errors `sandbox.docker_insecure`, `sandbox.selftest_failed`, `deps.image_too_large`,
+  `deps.build_unavailable`. `deps.build_required` with `reason` `sandbox.unavailable` or `deps.build_unavailable`
+  now says why the package could not be built in a container (`refineProblem`).
+- Built-in docs (six languages): *Installing Docker* says that Docker or a compatible engine is required on macOS
+  and Windows, that Nodestro checks the engine itself and refuses one that fails, lists Docker Desktop, Colima,
+  OrbStack and Podman, which engines CI verifies, the docker-group root equivalence and rootless Docker; Settings →
+  Sandbox and Tools no longer mention an experimental macOS sandbox.
+- `docs/PLATFORM.md`: engine matrix and the reasons a host is refused. ADR-0009: status update *Superseded in part by
+  Docker-first*. No pins changed; the status view itself follows the runtime's final schema.
+
 ### Platform pins: Axentra platform services (2026-11-02)
 
 - Pins: nodestro-runtime `95dbdfa` (Axentra audit/usage mirrors, identity backend; all off by default),

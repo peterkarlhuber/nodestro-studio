@@ -79,7 +79,7 @@
     },
     "backend": {
       "linux-builtin": "Sandbox Linux integrata",
-      "macos-seatbelt": "Sandbox di macOS",
+      "macos-seatbelt": "Sandbox nativa di macOS",
       "windows-native": "Sandbox di Windows",
       "docker": "Docker",
       "subprocess": "Processo Python"
@@ -94,11 +94,45 @@
     "backendReason": {
       "not-released": "Implementata e autotestata, ma non ancora verificata in modo indipendente. Nodestro non la usa.",
       "not-implemented": "Nodestro non ha ancora una sandbox nativa per questo sistema operativo.",
+      "removed": "Rimossa: su macOS Nodestro usa Docker.",
       "unreachable": "Docker non è installato o non è in esecuzione.",
       "missing": "Docker non è installato.",
       "server": "Su un server il codice degli strumenti viene eseguito solo in container.",
       "platform": "Non disponibile su questo sistema operativo.",
       "unknown": "Non disponibile su questo computer."
+    },
+    "docker": {
+      "checking": "Verifica di Docker …",
+      "ready": "Docker è pronto: il motore ha superato le verifiche di Nodestro.",
+      "recheck": "Verifica di nuovo",
+      "prepare": "Prepara la sandbox",
+      "engine": "Motore dei container",
+      "rootless": "Senza privilegi di root (rootless)",
+      "cgroup": "Limiti delle risorse (cgroup v2)",
+      "rootfulNote": "I membri del gruppo docker hanno di fatto i privilegi di root su questo computer. Si consiglia Docker senza privilegi di root (rootless).",
+      "check": {
+        "user": "Viene eseguito come utente senza privilegi",
+        "caps": "Nessun privilegio speciale",
+        "seccomp": "Filtro delle chiamate di sistema (seccomp) attivo",
+        "network": "Nessun accesso alla rete",
+        "readonly": "File system di sola lettura",
+        "memory": "Limite di memoria applicato",
+        "pids": "Limite di processi applicato",
+        "cpu": "Limite di CPU applicato",
+        "nofile": "Limite di file aperti",
+        "env": "Nessun segreto nell’ambiente"
+      },
+      "reason": {
+        "missing": "Docker non è installato. Installa Docker o un motore compatibile; Nodestro lo rileva automaticamente.",
+        "unreachable": "Docker è installato, ma non è in esecuzione o non è raggiungibile. Avvialo e verifica di nuovo.",
+        "limits": "Il motore non applica limiti di memoria, processi e CPU. Nodestro ha bisogno dei limiti di cgroup v2 e non usa questo motore.",
+        "seccomp": "Il motore non applica un filtro delle chiamate di sistema (seccomp). Nodestro non usa questo motore.",
+        "rootlessCgroup": "Docker senza privilegi di root non può applicare limiti qui: manca la delega dei controller cpu, memory e pids di cgroup v2.",
+        "osType": "Il motore esegue container Windows. Passa ai container Linux.",
+        "selftest": "Il container di prova non ha superato le verifiche di Nodestro, quindi il motore non viene usato.",
+        "image": "L’immagine della sandbox manca o non corrisponde a questa versione. Prepara la sandbox.",
+        "checking": "La verifica è ancora in corso."
+      }
     }
   },
   "about": {

@@ -288,14 +288,18 @@ None known.
   unattended calls and Nodestro's own MCP server are not released; the residual risks are listed in the threat model.
 - **Next step:** Re-evaluate only with a new owner decision and a new security review.
 
-### ST-033 · Native sandboxes for macOS and Windows (ADR-0009)
+### ST-033 · Docker-first sandbox status in the studio (ADR-0009)
 
-- **Priority:** P2 Medium · **Status:** Open · **Refs:** ADR-0009, orkexa ORK-014/ORK-015, runtime RT-019
+- **Priority:** P2 Medium · **Status:** Open · **Refs:** ADR-0009 (status update Docker-first, 2026-11-02), orkexa #30,
+  runtime RT-019
 - **What:** Settings → Sandbox shows the runtime's OS, every backend with its state and why AI-created tools are
-  blocked; `auto` uses Docker where the built-in Linux sandbox is not available. The macOS sandbox is shown as
-  *Experimental, not used*; Windows has none. On both systems AI-created tools need Docker.
-- **Next step:** Independent security review of the macOS sandbox, then a release decision (only `isolation_of` in
-  the runtime changes; the studio already shows the state); a Windows backend as a separate decision.
+  blocked; `auto` uses Docker where the built-in Linux sandbox is not available. Docker (or a compatible engine that
+  passes Nodestro's checks) is the default sandbox on every system. The native macOS sandbox was removed and is
+  shown as *Not available* (reason `removed`); Windows has no native sandbox and none is planned. Texts for the
+  coming Docker status view (checks, refusal reasons, rootful note) and the built-in docs are in place.
+- **Next step:** When the runtime and API report the re-probed Docker status and the self-test
+  (`/api/sandbox/status`, `/api/sandbox/self-test`), show them in Settings → Sandbox with the prepared texts, update
+  `types.ts` from the final schema and move the pins.
 
 ## Cross-repository dependencies
 

@@ -79,7 +79,7 @@
     },
     "backend": {
       "linux-builtin": "Bac à sable Linux intégré",
-      "macos-seatbelt": "Bac à sable macOS",
+      "macos-seatbelt": "Bac à sable natif macOS",
       "windows-native": "Bac à sable Windows",
       "docker": "Docker",
       "subprocess": "Processus Python"
@@ -94,11 +94,45 @@
     "backendReason": {
       "not-released": "Implémenté et autotesté, mais pas encore examiné de façon indépendante. Nodestro ne l’utilise pas.",
       "not-implemented": "Nodestro n’a pas encore de bac à sable natif pour ce système d’exploitation.",
+      "removed": "Supprimé : Nodestro utilise Docker sous macOS.",
       "unreachable": "Docker n’est pas installé ou ne tourne pas.",
       "missing": "Docker n’est pas installé.",
       "server": "Sur un serveur, le code des outils ne s’exécute que dans des conteneurs.",
       "platform": "Indisponible sur ce système d’exploitation.",
       "unknown": "Indisponible sur cet ordinateur."
+    },
+    "docker": {
+      "checking": "Vérification de Docker …",
+      "ready": "Docker est prêt : le moteur a réussi les vérifications de Nodestro.",
+      "recheck": "Vérifier à nouveau",
+      "prepare": "Préparer le bac à sable",
+      "engine": "Moteur de conteneurs",
+      "rootless": "Sans droits root (rootless)",
+      "cgroup": "Limites de ressources (cgroup v2)",
+      "rootfulNote": "Les membres du groupe docker ont de fait les droits root sur cet ordinateur. Docker sans droits root (rootless) est recommandé.",
+      "check": {
+        "user": "S’exécute sous un utilisateur sans droits",
+        "caps": "Aucun privilège particulier",
+        "seccomp": "Filtre d’appels système (seccomp) actif",
+        "network": "Aucun accès au réseau",
+        "readonly": "Système de fichiers en lecture seule",
+        "memory": "Limite de mémoire appliquée",
+        "pids": "Limite de processus appliquée",
+        "cpu": "Limite de CPU appliquée",
+        "nofile": "Limite de fichiers ouverts",
+        "env": "Aucun secret dans l’environnement"
+      },
+      "reason": {
+        "missing": "Docker n’est pas installé. Installez Docker ou un moteur compatible ; Nodestro le détecte automatiquement.",
+        "unreachable": "Docker est installé, mais ne tourne pas ou est injoignable. Démarrez-le et vérifiez à nouveau.",
+        "limits": "Le moteur n’applique pas de limites de mémoire, de processus et de CPU. Nodestro a besoin des limites de cgroup v2 et n’utilise pas ce moteur.",
+        "seccomp": "Le moteur n’applique pas de filtre d’appels système (seccomp). Nodestro n’utilise pas ce moteur.",
+        "rootlessCgroup": "Docker sans droits root ne peut pas appliquer de limites ici : la délégation des contrôleurs cpu, memory et pids de cgroup v2 manque.",
+        "osType": "Le moteur exécute des conteneurs Windows. Passez-le aux conteneurs Linux.",
+        "selftest": "Le conteneur de test a échoué aux vérifications de Nodestro ; le moteur n’est donc pas utilisé.",
+        "image": "L’image du bac à sable manque ou ne correspond pas à cette version. Préparez le bac à sable.",
+        "checking": "La vérification est encore en cours."
+      }
     }
   },
   "about": {

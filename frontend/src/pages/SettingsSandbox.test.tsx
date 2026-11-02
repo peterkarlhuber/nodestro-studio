@@ -43,23 +43,32 @@ function show(value: Settings, onMode = vi.fn(), admin = true) {
 }
 
 const MAC_BACKENDS = [
-  backend("macos-seatbelt", "experimental", "not-released"),
+  backend("macos-seatbelt", "unavailable", "removed"),
   backend("docker", "unavailable", "unreachable"),
   backend("subprocess", "not-isolating"),
 ];
 
 describe("Settings → Sandbox", () => {
-  it("shows the runtime's macOS, the blocked state and every backend without using the experimental one", () => {
+  it("shows the runtime's macOS, the blocked state and every backend, the native macOS sandbox as removed", () => {
     show(settings({ sandbox_selection: selection({}), sandbox_backends: MAC_BACKENDS }));
     expect(screen.getByTestId("sandbox-runtime").textContent).toContain("macOS (arm64)");
     expect(screen.getByTestId("sandbox-untrusted").textContent).toBe("Gesperrt");
     expect(screen.getByTestId("sandbox-user-authored").textContent).toBe("Python-Prozess");
     expect(screen.getByTestId("sandbox-blocked").textContent).toContain("Installiere und starte Docker");
     const mac = screen.getByTestId("sandbox-backend-macos-seatbelt");
-    expect(mac.textContent).toContain("Experimentell, nicht verwendet");
-    expect(mac.textContent).toContain("nicht unabhängig geprüft");
+    expect(mac.textContent).toContain("Native macOS-Sandbox");
+    expect(mac.textContent).toContain("Nicht verfügbar");
+    expect(mac.textContent).toContain("Entfernt: Nodestro verwendet unter macOS Docker.");
     expect(screen.getByTestId("sandbox-backend-docker").textContent).toContain("läuft nicht");
     expect(screen.getByTestId("sandbox-backend-subprocess").textContent).toContain("Nicht isoliert");
+  });
+
+  it("still explains the experimental macOS sandbox of an older runtime", () => {
+    const backends = [backend("macos-seatbelt", "experimental", "not-released"), ...MAC_BACKENDS.slice(1)];
+    show(settings({ sandbox_selection: selection({}), sandbox_backends: backends }));
+    const mac = screen.getByTestId("sandbox-backend-macos-seatbelt");
+    expect(mac.textContent).toContain("Experimentell, nicht verwendet");
+    expect(mac.textContent).toContain("nicht unabhängig geprüft");
   });
 
   it("names Docker as the backend of AI-created tools in automatic mode", () => {

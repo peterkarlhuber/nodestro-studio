@@ -111,18 +111,22 @@ Unter der Auswahl zeigt Nodestro:
 - wo KI-erstellte und eigene Tools **jetzt** laufen, oder dass sie **gesperrt** sind und warum;
 - jede **Sandbox auf diesem Computer** mit ihrem Status: *Freigegeben* (darf KI-erstellten Code ausführen), *Experimentell, nicht verwendet*, *Nicht verfügbar*, *Nicht isoliert* (der Python-Prozess) oder *Hier nicht verwendet*.
 
-Die eingebaute Linux-Sandbox ist unter Ubuntu 24.04 und Debian 13 (64-Bit Intel oder AMD) freigegeben, sobald ihr Selbsttest bestanden ist. Unter macOS hat Nodestro eine **experimentelle** Sandbox: Sie ist umgesetzt und getestet, aber noch nicht unabhängig geprüft; Nodestro zeigt sie deshalb an und verwendet sie nicht. Unter Windows gibt es noch keine eigene Sandbox. Auf beiden Systemen brauchen KI-erstellte Tools daher Docker. Details stehen unter [Die Sandbox](/docs/tools#sandbox) und [Vertrauen und Isolation](/docs/tools#vertrauen).
+Die eingebaute Linux-Sandbox ist unter Ubuntu 24.04 und Debian 13 (64-Bit Intel oder AMD) freigegeben, sobald ihr Selbsttest bestanden ist; auf ARM64 ist sie nicht verfügbar. Unter macOS und Windows hat Nodestro keine eigene Sandbox: Die frühere experimentelle macOS-Sandbox wurde entfernt, und ihre Zeile sagt das. Auf beiden Systemen brauchen KI-erstellte Tools daher Docker oder eine kompatible Engine. Details stehen unter [Die Sandbox](/docs/tools#sandbox) und [Vertrauen und Isolation](/docs/tools#vertrauen).
 
 Auf einem Server und in Nodestro Local Docker läuft jedes Tool in einem Container; die Einstellung lässt sich dort nicht ändern.
 
 ## Docker installieren {#sandbox-docker}
-<!-- keywords: docker installieren, docker desktop, docker engine, macos, windows, linux, wsl, docker starten, docker läuft nicht -->
+<!-- keywords: docker installieren, docker desktop, docker engine, macos, windows, linux, wsl, docker starten, docker läuft nicht, colima, orbstack, podman, rootless, gruppe docker, engine prüfen -->
 
-KI-erstellte Tools brauchen Docker unter macOS und Windows sowie auf Linux-Systemen, auf denen die eingebaute Sandbox nicht verfügbar ist. Nodestro braucht nur ein laufendes Docker; das Container-Image wird beim ersten Gebrauch automatisch gebaut.
+Für KI-erstellte Tools ist unter macOS und Windows Docker oder eine kompatible Container-Engine nötig, ebenso auf Linux-Systemen, auf denen die eingebaute Sandbox nicht verfügbar ist. Nodestro selbst startet auch ohne Docker; nur KI-erstellte Tools bleiben gesperrt, bis eine geeignete Engine läuft. Eine laufende Engine findet Nodestro selbst, und das Container-Image wird beim ersten Gebrauch gebaut.
 
-- **macOS:** Installiere [Docker Desktop für Mac](https://docs.docker.com/desktop/setup/install/mac-install/) (Apple Silicon oder Intel), öffne es einmal und warte, bis es meldet, dass es läuft.
-- **Windows:** Installiere [Docker Desktop für Windows](https://docs.docker.com/desktop/setup/install/windows-install/) mit dem WSL-2-Backend, starte bei Nachfrage neu und starte Docker Desktop.
-- **Linux:** Installiere die [Docker Engine](https://docs.docker.com/engine/install/) für deine Distribution und erlaube deinem Benutzer den Zugriff (Gruppe `docker`), oder verwende Docker Desktop für Linux.
+- **macOS:** Installiere [Docker Desktop für Mac](https://docs.docker.com/desktop/setup/install/mac-install/) (Apple Silicon oder Intel), öffne es einmal und warte, bis es meldet, dass es läuft. [Colima](https://github.com/abiosoft/colima), [OrbStack](https://orbstack.dev/) und [Podman](https://podman.io/) werden ebenfalls akzeptiert, wenn sie die Prüfungen von Nodestro bestehen.
+- **Windows:** Installiere [Docker Desktop für Windows](https://docs.docker.com/desktop/setup/install/windows-install/) mit dem WSL-2-Backend, starte bei Nachfrage neu und starte Docker Desktop. Es muss Linux-Container ausführen. Podman wird ebenfalls akzeptiert, wenn es die Prüfungen von Nodestro besteht.
+- **Linux:** Installiere die [Docker Engine](https://docs.docker.com/engine/install/) für deine Distribution. Empfohlen ist [Docker ohne Root-Rechte (rootless)](https://docs.docker.com/engine/security/rootless/) mit Delegation von cgroup v2, damit die Grenzen greifen. Deinen Benutzer in die Gruppe `docker` aufzunehmen funktioniert auch, aber Mitglieder der Gruppe docker haben auf diesem Computer faktisch Root-Rechte. Podman wird ebenfalls akzeptiert.
+
+**Nodestro prüft die Engine selbst.** Bevor eine Engine KI-erstellten Code ausführt, prüft Nodestro ihre Grenzen und ihren Systemaufruf-Filter (seccomp) und startet einen kleinen Testcontainer. Darin muss der Code als Benutzer ohne Rechte und ohne besondere Berechtigungen laufen, ohne Netzwerk, auf einem schreibgeschützten Dateisystem, mit durchgesetzten Grenzen für Speicher, Prozesse, CPU und offene Dateien und ohne Geheimnisse in der Umgebung. Eine Engine, die eine Prüfung nicht besteht, lehnt Nodestro ab, egal wie sie heißt; *Einstellungen → Sandbox* zeigt, welche Prüfung fehlschlug. Die Prüfungen werden nie gelockert.
+
+In der CI von Nodestro geprüft sind nur die Docker Engine unter Linux (mit Root-Rechten sowie ohne Root-Rechte mit Delegation von cgroup v2) und Podman. Docker Desktop unter macOS und Windows, Colima und OrbStack werden in der CI nicht geprüft; dort verlässt sich Nodestro auf seine eigenen Prüfungen auf deinem Computer.
 
 Öffne danach *Einstellungen → Sandbox*: Mit **Automatisch** verwendet Nodestro Docker, sobald es läuft; *Docker verfügbar* wird angezeigt und KI-erstellte Tools sind nicht mehr gesperrt. Stoppt Docker, sind sie wieder gesperrt, bis es läuft; Nodestro wechselt nicht zum Python-Prozess.
 

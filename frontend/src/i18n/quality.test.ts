@@ -220,6 +220,8 @@ describe("backend codes", () => {
     "check.bedrock_settings_invalid", "check.model_unpriced", "pricing.region_required", "pricing.invalid_region",
     "pricing.reconciliation_not_supported", "config.reserved_request_options", "run.provider_auth_aws",
     "export.region_missing", "export.aws_profile_not_exported", "export.aws_role_not_exported", "provider.model_invalid",
+    // Docker-first sandbox: an engine that fails Nodestro's checks, image limits and no build scripts on the host.
+    "sandbox.docker_insecure", "sandbox.selftest_failed", "deps.image_too_large", "deps.build_unavailable",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

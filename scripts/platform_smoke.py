@@ -97,6 +97,13 @@ def main() -> int:
                     for backend in settings.get("sandbox_backends") or []:
                         if backend["name"] in ("macos-seatbelt", "windows-native", "subprocess"):
                             assert backend["state"] != "approved", backend
+                        if backend["name"] == "macos-seatbelt":
+                            # The native macOS sandbox was removed (Docker-first); older runtimes report it as
+                            # experimental and not released. It never runs AI-generated code.
+                            assert (backend["state"], backend["reason"]) in (
+                                ("unavailable", "removed"),
+                                ("experimental", "not-released"),
+                            ), backend
                 status, page = _get(f"{base}/")
                 assert status == 200 and b"<html" in page.lower(), page[:200]
                 print("interface served:", len(page), "bytes")
