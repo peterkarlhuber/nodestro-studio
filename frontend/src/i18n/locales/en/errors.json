@@ -125,6 +125,10 @@
     "failed": "The step failed.",
     "agentFailed": "The agent stopped with an error ({{type}}).",
     "budget_exceeded": "The budget for this run is used up; the run was stopped.",
+    "budget_ended": "The run was ended at a budget decision.",
+    "budget_request_expired": "Nobody decided about the budget in time; the run was stopped.",
+    "budget_waits_interrupted": "A budget decision was interrupted because Nodestro was restarted; the run was stopped.",
+    "budget_checkpoint_lost": "The saved state of the step that waited for its budget is gone; the step failed and was not repeated silently.",
     "api_error": "The AI provider reported an error (status {{status}}).",
     "skipped": "Skipped because a previous node did not succeed.",
     "cancelled": "The run was cancelled.",
@@ -178,6 +182,12 @@
     "provider_rate_limited": "{{provider}} reported too many requests or tokens in a short time (rate limit).",
     "provider_overloaded": "{{provider}} is overloaded right now.",
     "provider_auth_aws": "AWS did not accept the sign-in for Amazon Bedrock: credentials are missing or expired, or the IAM role lacks a permission."
+  },
+  "budget": {
+    "limit_not_higher": "The new limit must be higher than the current limit.",
+    "limit_invalid": "The new limit is not a valid amount in US dollars.",
+    "over_policy": "The new limit is above the maximum of {{max_limit_usd}} USD per run that this workspace allows.",
+    "not_pending": "This budget decision is no longer open: it was already decided, has expired or was replaced."
   },
   "trace": {
     "invalid": "The trace is damaged or incomplete.",
@@ -826,6 +836,8 @@
       "api_error_invalid": "Check the agent's model and settings; the technical details show the provider's answer.",
       "api_error_status": "Check the agent's model and settings; the technical details show the provider's answer.",
       "budget_exceeded": "Raise the budget in the workflow settings, or continue the run with a new budget.",
+      "budget_request_expired": "Continue the run with a higher budget, or ask an administrator for a longer budget decision deadline.",
+      "budget_checkpoint_lost": "Continue the run: Nodestro shows which steps run again and asks before tools run again.",
       "time_limit": "Raise the time limit under \"Limits\" in the workflow settings if the run needs more time.",
       "step_limit": "Raise the step limit under \"Limits\" in the workflow settings, or check for loops.",
       "orchestration_limit": "Raise \"Maximum decisions\" on the orchestrator, or say in its instructions when the task is done.",

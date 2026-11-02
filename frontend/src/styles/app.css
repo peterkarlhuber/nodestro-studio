@@ -5985,6 +5985,45 @@ kbd {
   margin: 0;
 }
 
+/* BUDGET-1: the budget decision card (an approval card with facts, the waiting requests and earlier raises). */
+.budget-facts dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.budget-facts dd {
+  overflow-wrap: anywhere;
+}
+
+.budget-requests,
+.budget-history__list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 18px;
+  overflow-wrap: anywhere;
+}
+
+.budget-history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-1);
+  padding-top: var(--nd-space-2);
+  border-top: 1px solid var(--nd-border);
+}
+
+.budget-card .approval-card__actions {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 560px) {
+  .budget-facts > div {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
 .nav-item__badge {
   margin-left: auto;
   min-width: 18px;

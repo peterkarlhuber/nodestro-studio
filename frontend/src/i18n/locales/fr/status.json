@@ -42,5 +42,9 @@
   "paused": {
     "label": "En pause",
     "description": "L’exécution attend une validation et reprend après la décision."
+  },
+  "awaiting_budget": {
+    "label": "En attente d’une décision de budget",
+    "description": "La prochaine requête au modèle a besoin de plus de budget. Une personne relève le plafond de cette exécution ou la termine ; d’ici là, rien n’est envoyé à un modèle."
   }
 }

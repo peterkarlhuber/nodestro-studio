@@ -125,6 +125,10 @@
     "failed": "Il passaggio non è riuscito.",
     "agentFailed": "L’agente si è fermato con un errore ({{type}}).",
     "budget_exceeded": "Il budget di questa esecuzione è esaurito; l’esecuzione è stata interrotta.",
+    "budget_ended": "L’esecuzione è stata terminata durante una decisione sul budget.",
+    "budget_request_expired": "Nessuno ha deciso sul budget in tempo; l’esecuzione è stata interrotta.",
+    "budget_waits_interrupted": "Una decisione sul budget è stata interrotta perché Nodestro è stato riavviato; l’esecuzione è stata interrotta.",
+    "budget_checkpoint_lost": "Lo stato salvato del passaggio che attendeva il suo budget non esiste più; il passaggio è fallito e non è stato ripetuto di nascosto.",
     "api_error": "Il provider di IA ha segnalato un errore (stato {{status}}).",
     "skipped": "Saltato perché un nodo precedente non è riuscito.",
     "cancelled": "L’esecuzione è stata annullata.",
@@ -178,6 +182,12 @@
     "provider_rate_limited": "{{provider}} ha segnalato troppe richieste o troppi token in poco tempo (limite di frequenza).",
     "provider_overloaded": "{{provider}} è sovraccarico in questo momento.",
     "provider_auth_aws": "AWS non ha accettato l’accesso per Amazon Bedrock: le credenziali mancano o sono scadute, oppure al ruolo IAM manca un permesso."
+  },
+  "budget": {
+    "limit_not_higher": "Il nuovo limite deve essere più alto del limite attuale.",
+    "limit_invalid": "Il nuovo limite non è un importo valido in dollari statunitensi.",
+    "over_policy": "Il nuovo limite supera il massimo di {{max_limit_usd}} USD per esecuzione consentito da quest’area di lavoro.",
+    "not_pending": "Questa decisione sul budget non è più aperta: è già stata presa, è scaduta o è stata sostituita."
   },
   "trace": {
     "invalid": "La traccia è danneggiata o incompleta.",
@@ -826,6 +836,8 @@
       "api_error_invalid": "Controlla il modello e le impostazioni dell'agente; i dettagli tecnici mostrano la risposta del provider.",
       "api_error_status": "Controlla il modello e le impostazioni dell'agente; i dettagli tecnici mostrano la risposta del provider.",
       "budget_exceeded": "Aumenta il budget nelle impostazioni del workflow, oppure continua l'esecuzione con un nuovo budget.",
+      "budget_request_expired": "Continua l’esecuzione con un budget più alto, oppure chiedi a un amministratore una scadenza più lunga per le decisioni sul budget.",
+      "budget_checkpoint_lost": "Continua l’esecuzione: Nodestro mostra quali passaggi vengono ripetuti e chiede prima di eseguire di nuovo gli strumenti.",
       "time_limit": "Aumenta il limite di tempo in «Limiti» nelle impostazioni del workflow se l'esecuzione ha bisogno di più tempo.",
       "step_limit": "Aumenta il limite di passaggi in «Limiti» nelle impostazioni del workflow, oppure controlla i cicli.",
       "orchestration_limit": "Aumenta «Numero massimo di decisioni» sull'orchestratore, oppure indica nelle sue istruzioni quando il compito è concluso.",

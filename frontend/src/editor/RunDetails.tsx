@@ -137,6 +137,11 @@ export function FlowNodeDetails({ run, node, state }: { run?: Run; node: Workflo
       ) : null}
       {node.type === "orchestrator" ? <OrchestrationView node={node} state={state} run={run ?? undefined} /> : null}
       {state.status === "running" && run ? <NodeToolApprovals runId={run.id} nodeId={node.id} /> : null}
+      {state.status === "awaiting_budget" ? (
+        <div data-testid="node-awaiting-budget">
+          <Callout tone="warning">{t("budget.panel.waiting")}</Callout>
+        </div>
+      ) : null}
       {node.type === "subworkflow" && state.child_run_id ? (
         <p>
           <Link to={`/executions/${state.child_run_id}`}>

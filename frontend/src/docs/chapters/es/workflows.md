@@ -157,6 +157,59 @@ El presupuesto limita los **costes estimados** de una ejecución en dólares est
 
 Los costes desconocidos **no** cuentan como 0. Si el coste máximo de una solicitud no puede determinarse de antemano (sin precio conocido, imágenes, archivos o herramientas del proveedor como la búsqueda web), en el modo estándar se ejecuta sin límite superior. La ejecución muestra entonces junto a los costes el aviso **Sin máximo estricto** con el número de esas solicitudes. En el modo de precios estricto, las solicitudes sin precio conocido no se envían.
 
+Las ejecuciones que inicias tú no se detienen cuando el presupuesto no alcanza: se pausan y esperan una decisión, consulta [Decisiones de presupuesto durante una ejecución](/docs/workflows#budget-freigabe).
+
+## Presupuesto predeterminado, del flujo y de la ejecución {#budget-ebenen}
+<!-- keywords: presupuesto predeterminado, presupuesto del flujo, presupuesto de la ejecución, límite efectivo, límite inicial, aumento, niveles -->
+
+Tres niveles deciden cuánto puede costar una ejecución:
+
+- **Presupuesto predeterminado** (ajustes): se aplica a todo flujo de trabajo sin presupuesto propio.
+- **Presupuesto del flujo de trabajo** (ajustes del flujo): sustituye al predeterminado para este flujo. Una versión publicada conserva el presupuesto con el que se publicó.
+- **Presupuesto de la ejecución:** el límite con el que empieza una ejecución (el presupuesto del flujo, si no el predeterminado) más cada aumento aprobado para esa ejecución. Un aumento no cambia ni el flujo ni los ajustes; la siguiente ejecución vuelve a empezar con el presupuesto del flujo.
+
+Los detalles de la ejecución muestran su límite junto a sus costes y, tras un aumento, *límite elevado desde …*. Los administradores pueden fijar un **presupuesto máximo por ejecución** que ninguna ejecución puede superar, ni al inicio ni tras aumentos (consulta [Presupuesto predeterminado](/docs/einstellungen#budget)).
+
+## Decisiones de presupuesto durante una ejecución {#budget-freigabe}
+<!-- keywords: decisión de presupuesto, pausa de presupuesto, elevar presupuesto, continuar, terminar ejecución, espera presupuesto, límite propuesto, solicitud demasiado grande, agotado, plazo -->
+
+Cuando una solicitud al modelo de una ejecución que iniciaste ya no cabe en su presupuesto, la ejecución ya no falla. Se **pausa** con el estado *Espera una decisión de presupuesto*: las solicitudes ya en curso terminan y se registran, no se envía ninguna otra y no se cobra nada por la solicitud en espera. Su paso muestra el mismo estado.
+
+El motivo es uno de dos:
+
+- **Agotado:** los costes conocidos han alcanzado el límite.
+- **Próxima solicitud demasiado grande:** lo máximo que puede costar la próxima solicitud (su entrada más la respuesta más larga posible a la tarifa más alta) no cabe en lo que queda. Es un máximo, no un coste esperado; la solicitud se retiene antes de pagarse en lugar de superar el límite.
+
+La decisión de presupuesto aparece en la vista de ejecución del editor, en los detalles de la ejecución y en la sección **Decisiones de presupuesto** de la [página Aprobaciones](/docs/verzweigungen#freigaben-seite); el contador de la navegación la incluye. La tarjeta muestra el límite al inicio y ahora, el coste conocido (con *más costes desconocidos* cuando hay costes desconocidos, nunca como 0), lo que queda, lo reservado para solicitudes en curso, qué límite bloquea, las solicitudes en espera con lo máximo que pueden costar, el plazo y los aumentos anteriores.
+
+- **Comprobar y continuar:** introduce el nuevo límite **total** de esta ejecución. El valor propuesto es el coste conocido más lo máximo que puede costar la próxima solicitud, redondeado al céntimo superior: un mínimo para la próxima solicitud, nunca una previsión para el resto de la ejecución. Nodestro comprueba el importe (mayor que el límite actual, no por encima del presupuesto máximo por ejecución) y continúa la ejecución al momento.
+- **Terminar la ejecución** (con confirmación): la ejecución termina con la nota de que se terminó en una decisión de presupuesto. Los resultados de los pasos terminados se conservan.
+
+Una decisión solo afecta a esta ejecución. Si el límite elevado vuelve a agotarse, la ejecución se pausa de nuevo con una nueva decisión; esto se repite tantas veces como haga falta. Una decisión se toma una sola vez: si otra persona decidió antes, la tarjeta dice quién y cómo. Salir de la página no hace perder nada: la decisión se guarda en el servidor y se vuelve a encontrar en todas partes.
+
+Durante la pausa no se ocupa ningún hilo ni worker, y un reinicio de Nodestro no hace perder nada. El [chat en vivo de la ejecución](/docs/ausfuehrungen#teamleitung) sigue respondiendo preguntas (con su propio presupuesto de chat); las instrucciones se usan en la siguiente decisión, una vez que la ejecución continúa. Un mensaje del chat **nunca** es una decisión de presupuesto.
+
+Si nadie decide antes del plazo (24 horas, salvo que un administrador haya fijado otro), la ejecución falla con «presupuesto agotado». Después puedes [continuarla](/docs/verzweigungen#fortsetzen) con un nuevo presupuesto.
+
+## Límites de subflujos y equipos {#budget-teams}
+<!-- keywords: presupuesto del subflujo, presupuesto del equipo, ejecución hija, ejecución superior, límite que bloquea, anidado -->
+
+Un subflujo o equipo con presupuesto propio se ejecuta con su propio límite, y cada solicitud cuenta además para la ejecución superior. La decisión de presupuesto nombra el límite que rechazó la solicitud: *el límite de esta ejecución* o *el límite propio del subflujo / equipo «nombre»*. Un aumento cambia exactamente ese límite, nunca el flujo de trabajo que hay detrás. Los límites superiores siguen vigentes: elevar el límite de un equipo puede llevar a una segunda decisión para la ejecución superior, y elevar esta nunca levanta el límite propio de un equipo. Siempre hay una decisión por ejecución de nivel superior.
+
+## Quién puede decidir {#budget-rechte}
+<!-- keywords: permiso, quién puede elevar, inició la ejecución, administrador, presupuesto máximo por ejecución, inquilino -->
+
+En el escritorio decides tú. En un servidor puede decidir quien tiene el permiso *Ejecutar* **y** inició la ejecución; los administradores pueden decidir en cualquier ejecución de su espacio de trabajo. Las ejecuciones sin una persona iniciadora conocida solo pueden decidirlas administradores. Todas las personas con *Leer* ven la decisión; la tarjeta explica entonces por qué faltan los botones. Ningún aumento puede superar el **presupuesto máximo por ejecución** del espacio de trabajo ni un tope fijado por quien opera el servidor.
+
+## Ejecuciones desatendidas y límites conocidos {#budget-grenzen}
+<!-- keywords: programación, lote, serie de pruebas, api publicada, desatendida, sin pausa, precio desconocido, calidad del precio, estado perdido -->
+
+- **Las ejecuciones desatendidas no se pausan.** Las ejecuciones de [programaciones, lotes y series de pruebas](/docs/automatisierung#zeitplaene) y de la API publicada fallan como antes cuando se agota su presupuesto (error `BudgetExceededError`); no se pregunta a nadie ni se eleva nada automáticamente.
+- **Un presupuesto mayor no hace conocidos los precios.** Las solicitudes cuyo coste no tiene tope (sin precio conocido en el modo de precios estándar, herramientas del proveedor, imágenes, archivos) se envían mientras el límite no esté agotado y se cuentan sin tope. En el [modo de precios](/docs/nutzung#preismodus) estricto, los precios desconocidos o poco fiables se rechazan antes de la solicitud; eso no es una decisión de presupuesto.
+- Una respuesta que supera el límite después de pagarse se conserva y se usa, nunca se vuelve a enviar; la pausa llega antes de la siguiente solicitud.
+- El presupuesto diario de la API, el límite de coste de una API publicada, los límites de frecuencia, los límites de tiempo y de pasos y el presupuesto del chat no se pueden elevar aquí.
+- Si se pierde el estado guardado de un paso en espera, el paso falla con un mensaje propio en lugar de repetirse en silencio. [Continúa la ejecución](/docs/verzweigungen#fortsetzen): Nodestro muestra qué se repite y pregunta antes de volver a ejecutar herramientas.
+
 ## Límites por ejecución {#limits}
 <!-- keywords: límites, a la vez, paralelo, límite de tiempo, duración, timeout, run.time_limit, pasos, run.step_limit -->
 

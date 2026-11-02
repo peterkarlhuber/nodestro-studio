@@ -7,6 +7,7 @@ import {
   Check,
   ChevronRight,
   CircleDashed,
+  CircleDollarSign,
   CirclePause,
   Hand,
   Info,
@@ -349,6 +350,7 @@ const STATUS_ICON: Record<NodeStatus | RunStatus, LucideIcon> = {
   skipped: SkipForward,
   blocked: OctagonMinus,
   awaiting_approval: Hand,
+  awaiting_budget: CircleDollarSign,
   paused: CirclePause,
   cancelled: Ban,
 };

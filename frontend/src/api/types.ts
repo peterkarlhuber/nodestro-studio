@@ -4,7 +4,10 @@ export type Effort = "low" | "medium" | "high" | "xhigh" | "max";
 export type ThinkingMode = "adaptive" | "between_tools" | "disabled";
 export type ThinkingDisplay = "summarized" | "omitted" | "updates";
 export type NodeType = "start" | "agent" | "output" | "condition" | "approval" | "subworkflow" | "orchestrator";
-/** ``paused``: the run waits for a person at an approval node. */
+/**
+ * ``paused``: the run waits for a person at an approval node, or for a budget decision (then
+ * ``run.budget.pending_request_id`` is set).
+ */
 export type RunStatus = "queued" | "running" | "paused" | "succeeded" | "failed" | "cancelled";
 /** ``skipped``: its branch was not chosen (no error); ``blocked``: a predecessor failed or was cancelled. */
 export type NodeStatus =
@@ -16,6 +19,8 @@ export type NodeStatus =
   | "skipped"
   | "blocked"
   | "awaiting_approval"
+  /** The step's next model request waits for a person to raise the run's budget or end the run (BUDGET-1). */
+  | "awaiting_budget"
   | "cancelled";
 export type RunTrigger = "manual" | "schedule" | "batch" | "benchmark" | "subworkflow" | "resume" | "api";
 
@@ -688,6 +693,10 @@ export interface Run extends RunOrigin {
   budget_usd?: number | null;
   /** Whether the budget capped every request in advance; null without a budget. */
   budget_hard_maximum?: boolean | null;
+  /** The effective budget of the run with its approved raises and a pending budget decision (BUDGET-1). */
+  budget?: RunBudget | null;
+  /** The principal that started the run ("local" on the desktop); null for older runs. */
+  started_by?: string | null;
   /** Active execution time in seconds (waiting for approvals not included). */
   active_seconds?: number;
   created_at: string;
@@ -2967,4 +2976,126 @@ export interface ChatMessageIn {
   content: string;
   /** The same id for every retry of one composed message ([A-Za-z0-9._:-]{1,100}); a retry answers 200. */
   client_id?: string;
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Dynamic run budget approval (BUDGET-1): nodestro-runtime run_budget.py, nodestro-api api_budget.py.
+// Money is a decimal string ("1.50"), never a float, so nothing is rounded on the way.
+// ---------------------------------------------------------------------------------------------------------------
+
+/** A US-dollar amount as a decimal string, e.g. "2.50". */
+export type MoneyString = string;
+
+/** Where the run's limit came from. */
+export type BudgetSource = "workflow" | "default" | "release" | "parent" | "none";
+
+/** One approved raise of a run's limit. */
+export interface BudgetRaise {
+  request_id: string;
+  previous_limit_usd: MoneyString | null;
+  new_limit_usd: MoneyString;
+  decided_by: string | null;
+  decided_at: string;
+}
+
+/** The budget of a run: the limit it started with, the limit now and a pending decision. */
+export interface RunBudget {
+  source: BudgetSource;
+  initial_limit_usd: MoneyString | null;
+  limit_usd: MoneyString | null;
+  raises: BudgetRaise[];
+  pending_request_id: string | null;
+}
+
+export type BudgetRequestStatus = "pending" | "raised" | "ended" | "expired" | "cancelled";
+
+/** The limit that blocks: the run's own, or the own limit of a sub-workflow or team (child) run. */
+export interface BudgetBlock {
+  scope: "run" | "subworkflow" | "team";
+  run_id: string;
+  node_id: string | null;
+  label: string | null;
+}
+
+/** A model request that waits for the budget. */
+export interface BudgetBlockedRequest {
+  run_id: string;
+  node_id: string | null;
+  agent: string | null;
+  model: string;
+  /** The most it can cost; null when it cannot be bounded in advance. */
+  max_cost_usd: MoneyString | null;
+  bounded: boolean;
+  price_quality: string | null;
+}
+
+/** A budget decision of a top-level run, pending or decided (the audit trail of every decision). */
+export interface BudgetRequest {
+  id: string;
+  run_id: string;
+  workflow_id: string;
+  workflow_name: string;
+  status: BudgetRequestStatus;
+  reason: "used_up" | "request_too_large";
+  attended: boolean;
+  block: BudgetBlock;
+  /** The blocking limit when the question was asked. */
+  limit_usd: MoneyString;
+  /** Known cost counted against it. */
+  spent_usd: MoneyString;
+  /** Some cost under the limit is unknown: shown as such, never as 0. */
+  unknown_cost: boolean;
+  /** In flight when the question was asked. */
+  reserved_usd: MoneyString;
+  requests: BudgetBlockedRequest[];
+  /** Spent plus the bound of the blocked request, rounded up to a cent; a minimum for the next request only. */
+  suggested_limit_usd: MoneyString | null;
+  created_at: string;
+  deadline: string | null;
+  decided_by: string | null;
+  decided_at: string | null;
+  new_limit_usd: MoneyString | null;
+  idempotency_key: string | null;
+  outcome: "continued" | "ended" | null;
+}
+
+/** Who may decide and up to which limit. */
+export interface BudgetPolicy {
+  max_limit_usd: MoneyString | null;
+  can_decide: boolean;
+  /** Why not, as a code (e.g. "access.forbidden"), when can_decide is false. */
+  reason: string | null;
+}
+
+/** GET /api/runs/{id}/budget (a child run answers for its top-level run). */
+export interface RunBudgetOut {
+  run_id: string;
+  status: RunStatus;
+  limit_usd: MoneyString | null;
+  initial_limit_usd: MoneyString | null;
+  source: BudgetSource;
+  spent_usd: MoneyString;
+  unknown_cost: boolean;
+  remaining_usd: MoneyString | null;
+  raises: BudgetRaise[];
+  pending: BudgetRequest | null;
+  history: BudgetRequest[];
+  policy: BudgetPolicy;
+}
+
+/** POST /api/runs/{id}/budget/decisions: raise and continue is one operation. */
+export interface BudgetDecisionIn {
+  request_id: string;
+  action: "raise" | "end";
+  /** The new total limit of the blocking limit (raise only). */
+  limit_usd?: MoneyString;
+  idempotency_key?: string;
+}
+
+/** The workspace's budget policy (admin): merged into ``Settings`` (absent on older backends). */
+export interface Settings {
+  /** No run limit, initial or raised, may exceed it; null: no cap. */
+  max_run_budget_usd?: MoneyString | null;
+  /** Hours a pending attended budget decision waits before the run fails (1..720). */
+  budget_decision_hours?: number;
 }

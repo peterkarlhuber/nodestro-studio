@@ -1,0 +1,102 @@
+{
+  "card": {
+    "title": "Budget decision needed",
+    "label": "Budget decision {{name}}",
+    "reasonLabel": "Why the run waits",
+    "reason": {
+      "used_up": "The limit is used up: the next model request does not fit what is left.",
+      "request_too_large": "The next request can cost up to {{next}}, but only {{left}} are left. It was not sent; nothing was billed for it.",
+      "request_too_largeBadge": "Next request too large"
+    },
+    "blockLabel": "Which limit blocks",
+    "block": {
+      "run": "The limit of this run blocks.",
+      "subworkflow": "The own limit of the sub-workflow “{{label}}” blocks.",
+      "team": "The own limit of the team “{{label}}” blocks.",
+      "appliesExactly": "A raise changes exactly this limit."
+    },
+    "initialLimit": "Limit at the start",
+    "currentLimit": "Current limit",
+    "knownCost": "Known cost",
+    "plusUnknown": "plus unknown costs",
+    "remaining": "Left",
+    "remainingUnknown": "less the unknown costs",
+    "reserved": "Reserved for requests in flight",
+    "deadline": "Decide by",
+    "deadlineAt": "{{time}}",
+    "deadlinePassed": "The deadline has passed; the run ends without a decision.",
+    "blockedLabel": "Waiting model requests",
+    "blocked_one": "Waiting model request",
+    "blocked_other": "Waiting model requests ({{count}})",
+    "canCostUpTo": "can cost up to {{cost}}",
+    "unbounded": "its cost cannot be bounded in advance",
+    "unboundedHint": "A higher limit does not make an unknown price known; such requests stay uncapped.",
+    "suggestedLabel": "Suggested limit:",
+    "suggested": "{{limit}}, the minimum for the next request. It is not a forecast of what the rest of the run will cost.",
+    "noSuggestion": "none, because the cost of the next request cannot be bounded in advance.",
+    "newLimit": "New total limit for this run (USD)",
+    "newLimitHint": "The new total, not the amount to add. Higher than the current limit.",
+    "newLimitHintMax": "The new total, not the amount to add. Higher than the current limit and at most {{max}}.",
+    "validation": {
+      "empty": "Enter the new total limit.",
+      "invalid": "Enter an amount in US dollars, for example 2.50.",
+      "notHigher": "The new limit must be higher than the current limit of {{current}}.",
+      "overPolicy": "The workspace allows at most {{max}} per run."
+    },
+    "differenceLabel": "Difference to the current limit",
+    "difference": "+ {{amount}} compared to the current limit",
+    "thisRunOnly": "Applies to this run only; the workflow and the settings stay unchanged.",
+    "chatNever": "Chat messages never approve budget.",
+    "raise": "Check and continue",
+    "end": "End run",
+    "endConfirm": "Really end the run?",
+    "raisedToast": "Limit raised to {{limit}}. The run continues.",
+    "endedToast": "The run is ended.",
+    "cannotDecide": "You may see this decision but not make it: the person who started the run or an administrator decides.",
+    "decidedBy": "{{who}} has already decided: {{outcome}}.",
+    "decidedElsewhere": "This decision was already made elsewhere: {{outcome}}.",
+    "newLimitIs": "The limit is now {{limit}}.",
+    "youDecided": {
+      "raised": "You raised the limit to {{limit}}. The run continues.",
+      "ended": "You ended the run."
+    }
+  },
+  "status": {
+    "decided": "decided",
+    "pending": "still open",
+    "raised": "limit raised",
+    "ended": "run ended",
+    "expired": "no decision in time",
+    "cancelled": "run cancelled"
+  },
+  "history": {
+    "title": "Earlier raises",
+    "item": "{{previous}} → {{next}} · {{who}} · {{when}}",
+    "unknownPerson": "unknown"
+  },
+  "panel": {
+    "waiting": "The run waits for a budget decision. Nothing is sent to a model until someone decides.",
+    "raised": "limit raised from {{initial}}"
+  },
+  "approvals": {
+    "title": "Budget decisions",
+    "description": "Runs that pause because their budget is not enough for the next model request."
+  },
+  "chat": {
+    "paused": "The run waits for a budget decision. Questions are still answered (from the chat budget); instructions are used once the run continues. A chat message never approves budget."
+  },
+  "summary": {
+    "title": "Budget",
+    "waiting": "waits for a decision",
+    "raises_one": "raised once",
+    "raises_other": "raised {{count}} times"
+  },
+  "settings": {
+    "maxRunBudget": "Maximum run budget (USD)",
+    "maxRunBudgetHint": "No run may start with or be raised above this limit. Empty: no cap.",
+    "decisionHours": "Budget decision deadline (hours)",
+    "decisionHoursHint": "How long a run waits for a budget decision before it ends (1 to 720 hours).",
+    "invalidMax": "Enter an amount in US dollars or leave the field empty.",
+    "invalidHours": "Enter whole hours from 1 to 720."
+  }
+}

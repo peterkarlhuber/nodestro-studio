@@ -1,0 +1,102 @@
+{
+  "card": {
+    "title": "Décision de budget requise",
+    "label": "Décision de budget {{name}}",
+    "reasonLabel": "Pourquoi l’exécution attend",
+    "reason": {
+      "used_up": "Le plafond est épuisé : la prochaine requête au modèle ne tient plus dans le reste.",
+      "request_too_large": "La prochaine requête peut coûter jusqu’à {{next}}, mais il ne reste que {{left}}. Elle n’a pas été envoyée ; rien n’a été facturé pour elle.",
+      "request_too_largeBadge": "Prochaine requête trop grande"
+    },
+    "blockLabel": "Quel plafond bloque",
+    "block": {
+      "run": "Le plafond de cette exécution bloque.",
+      "subworkflow": "Le plafond propre du sous-workflow « {{label}} » bloque.",
+      "team": "Le plafond propre de l’équipe « {{label}} » bloque.",
+      "appliesExactly": "Une hausse modifie exactement ce plafond."
+    },
+    "initialLimit": "Plafond au départ",
+    "currentLimit": "Plafond actuel",
+    "knownCost": "Coûts connus",
+    "plusUnknown": "plus des coûts inconnus",
+    "remaining": "Reste",
+    "remainingUnknown": "moins les coûts inconnus",
+    "reserved": "Réservé pour les requêtes en cours",
+    "deadline": "Décider avant le",
+    "deadlineAt": "{{time}}",
+    "deadlinePassed": "Le délai est dépassé ; l’exécution se termine sans décision.",
+    "blockedLabel": "Requêtes au modèle en attente",
+    "blocked_one": "Requête au modèle en attente",
+    "blocked_other": "Requêtes au modèle en attente ({{count}})",
+    "canCostUpTo": "peut coûter jusqu’à {{cost}}",
+    "unbounded": "son coût ne peut pas être borné à l’avance",
+    "unboundedHint": "Un plafond plus élevé ne rend pas un prix inconnu connu ; ces requêtes restent sans limite supérieure.",
+    "suggestedLabel": "Plafond proposé :",
+    "suggested": "{{limit}}, le minimum pour la prochaine requête. Ce n’est pas une prévision du coût du reste de l’exécution.",
+    "noSuggestion": "aucun, car le coût de la prochaine requête ne peut pas être borné à l’avance.",
+    "newLimit": "Nouveau plafond total de cette exécution (USD)",
+    "newLimitHint": "Le nouveau total, pas le montant à ajouter. Plus élevé que le plafond actuel.",
+    "newLimitHintMax": "Le nouveau total, pas le montant à ajouter. Plus élevé que le plafond actuel et au plus {{max}}.",
+    "validation": {
+      "empty": "Saisissez le nouveau plafond total.",
+      "invalid": "Saisissez un montant en dollars américains, par exemple 2,50.",
+      "notHigher": "Le nouveau plafond doit être plus élevé que le plafond actuel de {{current}}.",
+      "overPolicy": "L’espace de travail autorise au plus {{max}} par exécution."
+    },
+    "differenceLabel": "Écart par rapport au plafond actuel",
+    "difference": "+ {{amount}} par rapport au plafond actuel",
+    "thisRunOnly": "S’applique uniquement à cette exécution ; le workflow et les paramètres restent inchangés.",
+    "chatNever": "Les messages du chat n’accordent jamais de budget.",
+    "raise": "Vérifier et poursuivre",
+    "end": "Terminer l’exécution",
+    "endConfirm": "Vraiment terminer l’exécution ?",
+    "raisedToast": "Plafond porté à {{limit}}. L’exécution continue.",
+    "endedToast": "L’exécution est terminée.",
+    "cannotDecide": "Vous pouvez voir cette décision mais pas la prendre : c’est la personne qui a lancé l’exécution ou un administrateur qui décide.",
+    "decidedBy": "{{who}} a déjà décidé : {{outcome}}.",
+    "decidedElsewhere": "Cette décision a déjà été prise ailleurs : {{outcome}}.",
+    "newLimitIs": "Le plafond est maintenant de {{limit}}.",
+    "youDecided": {
+      "raised": "Vous avez porté le plafond à {{limit}}. L’exécution continue.",
+      "ended": "Vous avez terminé l’exécution."
+    }
+  },
+  "status": {
+    "decided": "décidé",
+    "pending": "encore ouvert",
+    "raised": "plafond relevé",
+    "ended": "exécution terminée",
+    "expired": "pas de décision à temps",
+    "cancelled": "exécution annulée"
+  },
+  "history": {
+    "title": "Hausses précédentes",
+    "item": "{{previous}} → {{next}} · {{who}} · {{when}}",
+    "unknownPerson": "inconnu"
+  },
+  "panel": {
+    "waiting": "L’exécution attend une décision de budget. Rien n’est envoyé à un modèle tant que personne n’a décidé.",
+    "raised": "plafond relevé depuis {{initial}}"
+  },
+  "approvals": {
+    "title": "Décisions de budget",
+    "description": "Exécutions en pause parce que leur budget ne suffit pas pour la prochaine requête au modèle."
+  },
+  "chat": {
+    "paused": "L’exécution attend une décision de budget. Les questions reçoivent toujours une réponse (sur le budget du chat) ; les instructions sont utilisées dès que l’exécution reprend. Un message du chat n’accorde jamais de budget."
+  },
+  "summary": {
+    "title": "Budget",
+    "waiting": "attend une décision",
+    "raises_one": "relevé une fois",
+    "raises_other": "relevé {{count}} fois"
+  },
+  "settings": {
+    "maxRunBudget": "Budget maximal par exécution (USD)",
+    "maxRunBudgetHint": "Aucune exécution ne peut démarrer avec un plafond plus élevé ni être relevée au-delà. Vide : pas de limite.",
+    "decisionHours": "Délai des décisions de budget (heures)",
+    "decisionHoursHint": "Combien de temps une exécution attend une décision de budget avant de se terminer (1 à 720 heures).",
+    "invalidMax": "Saisissez un montant en dollars américains ou laissez le champ vide.",
+    "invalidHours": "Saisissez un nombre entier d’heures entre 1 et 720."
+  }
+}

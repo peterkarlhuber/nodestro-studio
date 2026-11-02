@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Dynamic run budget approval, Studio (BUDGET-1, 2026-11-02)
+
+- An attended run whose budget is not enough for its next model request pauses with the new status
+  *Waiting for budget decision* (`awaiting_budget`) instead of failing. The budget decision card
+  (`runs/BudgetDecisionCard.tsx`) shows the limits, known/unknown cost, reserved amount, the blocking limit (run,
+  sub-workflow or team), the waiting requests and the suggested minimum; "Check and continue" raises exactly that
+  limit to a new total, "End run" ends it (with a confirmation). It appears in the editor's run panel, the run
+  details, the new "Budget decisions" section of the Approvals page and is counted by the navigation badge.
+- Settings: administrators set the maximum run budget and the budget decision deadline next to the default budget.
+- New error texts (`run.budget_ended`, `run.budget_request_expired`, `run.budget_checkpoint_lost`, `budget.*`),
+  help texts and documentation sections (workflows: budget levels, decisions, team limits, permissions, limits) in
+  all six languages. Needs the BUDGET-1 runtime/API; older backends show nothing new.
+
 ### Platform pins: Axentra platform services (2026-11-02)
 
 - Pins: nodestro-runtime `95dbdfa` (Axentra audit/usage mirrors, identity backend; all off by default),

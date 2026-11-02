@@ -83,6 +83,7 @@ La scheda **Contesto** mostra cosa ha ricevuto l’agente in questa esecuzione: 
 | **Saltato** | Il nodo non è stato eseguito perché il suo ramo non è stato scelto. Non è un errore. |
 | **Bloccato** | Il nodo non è stato eseguito perché un predecessore non è riuscito o è stato annullato. |
 | **In attesa di approvazione** | Un'[approvazione](/docs/verzweigungen#freigabe) attende la decisione di una persona. |
+| **In attesa di una decisione sul budget** | La prossima richiesta al modello ha bisogno di più budget; l’esecuzione è in pausa finché qualcuno non aumenta il suo limite o la termina ([decisioni sul budget](/docs/workflows#budget-freigabe)). |
 | **In pausa** | L'esecuzione attende un'approvazione e prosegue dopo la decisione. |
 | **Annullato** | Fermato con *Annulla esecuzione*, rifiutato, oppure una traccia esportata prima di essere completa. |
 | **Ti aspetta** | Una chiamata a uno strumento attende la tua approvazione; l’esecuzione prosegue appena hai deciso. |
@@ -122,6 +123,8 @@ Ogni istruzione mostra il suo stato: *In attesa della prossima decisione* (con q
 **Pausa, riavvio, ripresa:** mentre un team attende un’approvazione, le istruzioni restano aperte e valgono per la prossima decisione quando l’esecuzione riprende. Se un riavvio del server fa perdere una decisione, l’istruzione viene consegnata di nuovo alla decisione successiva. Quando l’esecuzione o il responsabile del team terminano, le istruzioni aperte vengono marcate *Non più considerata* e non vengono riprese quando continui l’esecuzione. Dopo la fine la conversazione si può solo leggere.
 
 **Esecuzioni non presidiate:** nell’inspector dell’orchestratore, **Guida in diretta** stabilisce chi può dare istruzioni: *Esecuzioni avviate da una persona* (predefinito), *Sempre* (anche pianificazione, API, esecuzione in serie e serie di test) oppure *Disattivata*. Le domande non ne sono toccate. Altro sull’orchestratore in [Orchestratore](/docs/verzweigungen#orchestrator).
+
+**Durante una pausa di budget** la chat continua a funzionare: le domande ricevono risposta dal budget della chat, le istruzioni vengono usate dopo che l’esecuzione è ripresa. Un messaggio della chat non aumenta né approva mai il budget dell’esecuzione; questo avviene solo nella scheda della decisione sul budget.
 
 ## Esportare una traccia {#trace-export}
 <!-- keywords: esportare traccia, esporta, json, run json, condividere, archiviare, ripulire, anonimizzare, privacy, dati personali -->

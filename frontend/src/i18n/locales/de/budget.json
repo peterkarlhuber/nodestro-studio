@@ -1,0 +1,102 @@
+{
+  "card": {
+    "title": "Budget-Entscheidung nötig",
+    "label": "Budget-Entscheidung {{name}}",
+    "reasonLabel": "Warum der Lauf wartet",
+    "reason": {
+      "used_up": "Das Limit ist aufgebraucht: Die nächste Modellanfrage passt nicht mehr in den Rest.",
+      "request_too_large": "Die nächste Anfrage kann bis zu {{next}} kosten, übrig sind nur {{left}}. Sie wurde nicht gesendet; dafür wurde nichts berechnet.",
+      "request_too_largeBadge": "Nächste Anfrage zu groß"
+    },
+    "blockLabel": "Welches Limit blockiert",
+    "block": {
+      "run": "Das Limit dieses Laufs blockiert.",
+      "subworkflow": "Das eigene Limit des Unter-Workflows „{{label}}“ blockiert.",
+      "team": "Das eigene Limit des Teams „{{label}}“ blockiert.",
+      "appliesExactly": "Eine Erhöhung ändert genau dieses Limit."
+    },
+    "initialLimit": "Limit beim Start",
+    "currentLimit": "Aktuelles Limit",
+    "knownCost": "Bekannte Kosten",
+    "plusUnknown": "plus unbekannte Kosten",
+    "remaining": "Übrig",
+    "remainingUnknown": "abzüglich der unbekannten Kosten",
+    "reserved": "Reserviert für laufende Anfragen",
+    "deadline": "Entscheiden bis",
+    "deadlineAt": "{{time}}",
+    "deadlinePassed": "Die Frist ist abgelaufen; der Lauf endet ohne Entscheidung.",
+    "blockedLabel": "Wartende Modellanfragen",
+    "blocked_one": "Wartende Modellanfrage",
+    "blocked_other": "Wartende Modellanfragen ({{count}})",
+    "canCostUpTo": "kann bis zu {{cost}} kosten",
+    "unbounded": "ihre Kosten lassen sich vorab nicht begrenzen",
+    "unboundedHint": "Ein höheres Limit macht einen unbekannten Preis nicht bekannt; solche Anfragen bleiben ohne Obergrenze.",
+    "suggestedLabel": "Vorgeschlagenes Limit:",
+    "suggested": "{{limit}}, das Minimum für die nächste Anfrage. Es ist keine Prognose, was der Rest des Laufs kostet.",
+    "noSuggestion": "keins, weil sich die Kosten der nächsten Anfrage vorab nicht begrenzen lassen.",
+    "newLimit": "Neues Gesamtlimit für diesen Lauf (USD)",
+    "newLimitHint": "Die neue Summe, nicht der Betrag, der dazukommt. Höher als das aktuelle Limit.",
+    "newLimitHintMax": "Die neue Summe, nicht der Betrag, der dazukommt. Höher als das aktuelle Limit und höchstens {{max}}.",
+    "validation": {
+      "empty": "Gib das neue Gesamtlimit ein.",
+      "invalid": "Gib einen Betrag in US-Dollar ein, zum Beispiel 2,50.",
+      "notHigher": "Das neue Limit muss höher sein als das aktuelle Limit von {{current}}.",
+      "overPolicy": "Der Arbeitsbereich erlaubt höchstens {{max}} pro Lauf."
+    },
+    "differenceLabel": "Unterschied zum aktuellen Limit",
+    "difference": "+ {{amount}} gegenüber dem aktuellen Limit",
+    "thisRunOnly": "Gilt nur für diesen Lauf; der Workflow und die Einstellungen bleiben unverändert.",
+    "chatNever": "Chat-Nachrichten geben nie Budget frei.",
+    "raise": "Prüfen und fortsetzen",
+    "end": "Lauf beenden",
+    "endConfirm": "Lauf wirklich beenden?",
+    "raisedToast": "Limit auf {{limit}} erhöht. Der Lauf geht weiter.",
+    "endedToast": "Der Lauf wird beendet.",
+    "cannotDecide": "Du kannst diese Entscheidung sehen, aber nicht treffen: Es entscheidet die Person, die den Lauf gestartet hat, oder eine Administratorin bzw. ein Administrator.",
+    "decidedBy": "{{who}} hat bereits entschieden: {{outcome}}.",
+    "decidedElsewhere": "Diese Entscheidung wurde bereits an anderer Stelle getroffen: {{outcome}}.",
+    "newLimitIs": "Das Limit beträgt jetzt {{limit}}.",
+    "youDecided": {
+      "raised": "Du hast das Limit auf {{limit}} erhöht. Der Lauf geht weiter.",
+      "ended": "Du hast den Lauf beendet."
+    }
+  },
+  "status": {
+    "decided": "entschieden",
+    "pending": "noch offen",
+    "raised": "Limit erhöht",
+    "ended": "Lauf beendet",
+    "expired": "keine Entscheidung rechtzeitig",
+    "cancelled": "Lauf abgebrochen"
+  },
+  "history": {
+    "title": "Frühere Erhöhungen",
+    "item": "{{previous}} → {{next}} · {{who}} · {{when}}",
+    "unknownPerson": "unbekannt"
+  },
+  "panel": {
+    "waiting": "Der Lauf wartet auf eine Budget-Entscheidung. Bis jemand entscheidet, geht nichts an ein Modell.",
+    "raised": "Limit erhöht von {{initial}}"
+  },
+  "approvals": {
+    "title": "Budget-Entscheidungen",
+    "description": "Läufe, die pausieren, weil ihr Budget für die nächste Modellanfrage nicht reicht."
+  },
+  "chat": {
+    "paused": "Der Lauf wartet auf eine Budget-Entscheidung. Fragen werden weiter beantwortet (aus dem Chat-Budget); Anweisungen werden verwendet, sobald der Lauf weitergeht. Eine Chat-Nachricht gibt nie Budget frei."
+  },
+  "summary": {
+    "title": "Budget",
+    "waiting": "wartet auf eine Entscheidung",
+    "raises_one": "einmal erhöht",
+    "raises_other": "{{count}}-mal erhöht"
+  },
+  "settings": {
+    "maxRunBudget": "Höchstes Budget pro Lauf (USD)",
+    "maxRunBudgetHint": "Kein Lauf darf mit einem höheren Limit starten oder darüber hinaus erhöht werden. Leer: keine Obergrenze.",
+    "decisionHours": "Frist für Budget-Entscheidungen (Stunden)",
+    "decisionHoursHint": "Wie lange ein Lauf auf eine Budget-Entscheidung wartet, bevor er endet (1 bis 720 Stunden).",
+    "invalidMax": "Gib einen Betrag in US-Dollar ein oder lass das Feld leer.",
+    "invalidHours": "Gib ganze Stunden von 1 bis 720 ein."
+  }
+}

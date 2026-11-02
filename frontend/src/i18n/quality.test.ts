@@ -220,6 +220,9 @@ describe("backend codes", () => {
     "check.bedrock_settings_invalid", "check.model_unpriced", "pricing.region_required", "pricing.invalid_region",
     "pricing.reconciliation_not_supported", "config.reserved_request_options", "run.provider_auth_aws",
     "export.region_missing", "export.aws_profile_not_exported", "export.aws_role_not_exported", "provider.model_invalid",
+    // Dynamic run budget approval (BUDGET-1): run outcomes and refused decisions.
+    "run.budget_exceeded", "run.budget_ended", "run.budget_request_expired", "run.budget_waits_interrupted",
+    "run.budget_checkpoint_lost", "budget.limit_not_higher", "budget.limit_invalid", "budget.over_policy", "budget.not_pending",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

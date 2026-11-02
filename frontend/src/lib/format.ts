@@ -126,6 +126,7 @@ export const STATUS_TONE: Record<NodeStatus | RunStatus, Tone> = {
   skipped: "idle",
   blocked: "warning",
   awaiting_approval: "warning",
+  awaiting_budget: "warning",
   paused: "warning",
   cancelled: "warning",
 };

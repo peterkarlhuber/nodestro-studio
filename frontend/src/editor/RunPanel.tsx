@@ -4,9 +4,10 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { Output, outputFieldsOf } from "../components/Markdown";
-import { IconButton, Stat } from "../components/ui";
+import { IconButton, Stat, StatusBadge } from "../components/ui";
 import { formatCost, formatTokens, tokenBreakdown } from "../lib/format";
 import { RunApprovals } from "../runs/ApprovalCard";
+import { RunBudgetDecision } from "../runs/BudgetDecisionCard";
 import { CancelRunButton } from "../runs/CancelRunButton";
 import { RunProblem } from "../runs/RunProblem";
 import { WaitingForYouBadge } from "../runs/WaitingForYouBadge";
@@ -14,7 +15,7 @@ import { InterruptedNotice, RunOutcome, StepStatus, ToolProblemsNotice } from ".
 import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { useEditorLayout } from "./layout";
 import { NodeRunDetails, startFiles } from "./RunDetails";
-import { liveUsage, runWaitsForToolApproval, useEditor, waitsForToolApproval } from "./store";
+import { liveUsage, runWaitsForBudget, runWaitsForToolApproval, useEditor, waitsForToolApproval } from "./store";
 
 /** The execution overview below the canvas. Collapsing or resizing it never touches the run. */
 export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
@@ -35,6 +36,8 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
   const paused = run?.status === "paused";
   // A tool call waits for a person: the run still counts as running, but nothing happens until someone decides.
   const waitingForYou = runWaitsForToolApproval(run);
+  // BUDGET-1: the run waits for someone to raise its budget or end it.
+  const waitingForBudget = runWaitsForBudget(run);
 
   return (
     <section
@@ -58,7 +61,9 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
         </div>
         <div className="row-gap">
           {run ? (
-            waitingForYou ? (
+            waitingForBudget ? (
+              <StatusBadge status="awaiting_budget" />
+            ) : waitingForYou ? (
               <WaitingForYouBadge />
             ) : (
               <RunOutcome run={run} label={live ? t("status.running.label") : undefined} />
@@ -92,6 +97,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
             />
             <Stat label={t("runs.stats.cost")} value={formatCost(usage.estimated_cost_usd)} tip="runs.cost" />
           </div>
+          {run ? <RunBudgetDecision run={run} /> : null}
           {run ? (
             <div className="run-panel__details">
               <ul className="run-steps">
@@ -135,11 +141,15 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                     <RunProblem run={run} />
                     <InterruptedNotice run={run} />
                     <ToolProblemsNotice run={run} onOpenStep={setFocus} />
-                    {paused ? <RunApprovals run={run} /> : null}
+                    {paused && !waitingForBudget ? <RunApprovals run={run} /> : null}
                     {run.status === "running" || run.status === "paused" ? <RunToolApprovals run={run} /> : null}
                     {live ? (
-                      <p className="muted">{waitingForYou ? t("runs.panel.waitingForTool") : t("runs.panel.running")}</p>
-                    ) : paused ? null : (
+                      <p className="muted">
+                        {waitingForBudget ? t("budget.panel.waiting") : waitingForYou ? t("runs.panel.waitingForTool") : t("runs.panel.running")}
+                      </p>
+                    ) : paused ? (
+                      waitingForBudget ? <p className="muted">{t("budget.panel.waiting")}</p> : null
+                    ) : (
                       <Output value={run.output} fields={outputFieldsOf(run.workflow.nodes, "", run.output)} />
                     )}
                   </div>

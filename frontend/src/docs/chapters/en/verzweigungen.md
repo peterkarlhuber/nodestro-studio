@@ -74,6 +74,8 @@ The **Approvals** page (navigation, group *Run & review*) lists every open appro
 
 Each card shows the note, the results to review (structured results as labelled fields, the JSON one click away), a comment box and the buttons *Approve* and *Reject*; the buttons stay in view even with long results. Approvals inside sub-workflows appear here too, with the path to the parent run. Cards for [tool calls](/docs/verzweigungen#tool-freigabe) name the workflow and the step ("*workflow* · step *name*").
 
+Runs that wait for a [budget decision](/docs/workflows#budget-freigabe) appear in their own section **Budget decisions** at the top, with a link to the run.
+
 ## Approving tool calls {#tool-freigabe}
 <!-- keywords: tool approval, tool call, per call, arguments, deadline, pre-grant, unattended, legacy exemption -->
 

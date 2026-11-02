@@ -92,6 +92,8 @@ Enregistrez les modifications avec **Enregistrer** dans la section *Modèles et 
 
 Le **budget par défaut par exécution** (au départ 2 USD) s’applique à tous les workflows sans budget propre. Vide signifie : pas de limite. Le fonctionnement du budget est expliqué dans [Budget par exécution](/docs/workflows#budget).
 
+Les administrateurs fixent aussi le **Budget maximal par exécution** (vide : pas de limite) : aucune exécution ne peut démarrer avec un plafond plus élevé ni être relevée au-delà. Le **Délai des décisions de budget** (1 à 720 heures, 24 au départ) indique combien de temps une exécution en pause attend une [décision de budget](/docs/workflows#budget-freigabe) avant d’échouer. Qui peut décider est expliqué sous [Qui peut décider](/docs/workflows#budget-rechte).
+
 ## Bac à sable {#sandbox}
 <!-- keywords: choisir le bac à sable, sandbox, automatique, docker, processus python, docker disponible, bac à sable intégré, bac à sable linux, macos, windows, bloqué, expérimental -->
 
