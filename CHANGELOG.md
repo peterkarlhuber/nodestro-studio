@@ -12,6 +12,7 @@
   white wordmark from the app theme; no CSS filters or background boxes.
 - The welcome hero's hub has a node-card core behind the hexagon so the routes end at the logo.
 - Removed: `nodestro-logo-512.webp`, `nodestro-logo-64.png`, the CSS text wordmark (`.brand__name`, `.brand__dot`).
+
 ### Platform pins: Axentra completion (2026-11-02)
 
 - Pins: axentra `f6ae01d` (one Axentra commit across the chain; before `f114920`), nodestro-runtime `95114ae`
