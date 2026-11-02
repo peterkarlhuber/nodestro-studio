@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Platform pins: Axentra migration completion and security review fixes (2026-11-02)
+
+- Pins: axentra `024da57` (#20 SR-02/SR-05 with migration 0011, #19 session resolution in one transaction, #21/#24
+  P1/P2 fixes, #25 AX-R1 cursor validation, #26 AX-R2 `invitation_accepted`), nodestro-runtime `0369132` (#86
+  security review fixes, performance fixes, M12 cleanup; #87 re-review Lows), nodestro-examples `b7a1d65` (#50) and
+  nodestro-integrations `0de02d0` (#46) (runtime pin only), nodestro-api `3e0a874` (#66 security review fixes,
+  `files cleanup`; #67 re-review Lows), nodestro-sdk `e5478d6` (#61; OpenAPI unchanged). orkexa stays `3364fb8`.
+- All Axentra switches stay off by default; nothing changes for the desktop or the studio's own code.
+
 ### Platform pins: Docker sandbox review fixes (2026-11-02)
 
 - Pins: orkexa `3364fb8` (#34: self-test mount table, seccomp probes, AppArmor stacks, digest-pinned sandbox image),

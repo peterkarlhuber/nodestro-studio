@@ -231,7 +231,13 @@ try {
       (await page.evaluate(() => [document.documentElement.dataset.theme, localStorage.getItem("nodestro-language")])).join() === "light,fr",
       "The Studio keeps the language and theme chosen on the welcome page",
     );
-    const saved = await (await context.request.get(base + "/api/settings")).json();
+    // The picker saves the language in the background (after the language is loaded), so the request may still be
+    // on its way when the Studio is already open: wait for it instead of reading once.
+    let saved = {};
+    for (let attempt = 0; attempt < 50 && saved.language !== "fr"; attempt++) {
+      if (attempt) await page.waitForTimeout(100);
+      saved = await (await context.request.get(base + "/api/settings")).json();
+    }
     check(saved.language === "fr", "The language is also saved in the settings, as in the Studio's own picker");
     await context.request.put(base + "/api/settings", { data: { language: null } });
     check(errors.length === 0, `no console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
