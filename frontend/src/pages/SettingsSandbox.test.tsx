@@ -161,6 +161,48 @@ describe("Settings → Sandbox", () => {
     expect(onMode).toHaveBeenCalledWith("auto");
   });
 
+  it("tells a Python process user what changed and how to run AI-created tools again", () => {
+    show(settings({ sandbox: "subprocess", sandbox_selection: selection({ mode: "subprocess" }) }));
+    // macOS: Automatic with Docker is the only way; the note says the earlier choice was kept, not switched.
+    expect(screen.getByTestId("sandbox-blocked").textContent).toBe(i18n.t("settings.sandbox.blocked.subprocess"));
+    expect(screen.getByTestId("sandbox-blocked-changed").textContent).toBe(
+      i18n.t("settings.sandbox.blocked.subprocessChanged"),
+    );
+    cleanup();
+    // Linux: the built-in Linux sandbox is named as the other way.
+    show(settings({ sandbox: "subprocess", sandbox_selection: selection({ mode: "subprocess", os: "linux", arch: "x86_64" }) }));
+    const lead = screen.getByTestId("sandbox-blocked").textContent ?? "";
+    expect(lead).toBe(i18n.t("settings.sandbox.blocked.subprocessLinux"));
+    expect(lead).toContain(i18n.t("settings.sandbox.linux"));
+    expect(lead).toContain(i18n.t("settings.sandbox.auto"));
+    expect(screen.getByTestId("sandbox-blocked-changed")).toBeTruthy();
+    cleanup();
+    // Automatic mode: no note about the Python process.
+    show(settings({ sandbox: "auto", sandbox_selection: selection({ mode: "auto", reason: "docker-unreachable" }) }));
+    expect(screen.queryByTestId("sandbox-blocked-changed")).toBeNull();
+  });
+
+  it("has the Python process hints in every language, naming the modes by their labels", async () => {
+    for (const language of ["de", "en", "es", "fr", "it", "pt-BR"] as const) {
+      await loadLanguage(language);
+      const t = i18n.getFixedT(language);
+      for (const key of ["subprocess", "subprocessLinux", "subprocessChanged"]) {
+        expect(i18n.exists(`settings.sandbox.blocked.${key}`, { lng: language }), `${language}: ${key}`).toBe(true);
+      }
+      expect(t("settings.sandbox.blocked.subprocessLinux"), language).toContain(t("settings.sandbox.linux"));
+      expect(t("settings.sandbox.blocked.subprocessLinux"), language).toContain(t("settings.sandbox.auto"));
+      expect(t("settings.sandbox.blocked.subprocessChanged"), language).toContain(t("settings.sandbox.subprocess"));
+      expect(t("settings.sandbox.blocked.subprocessChanged"), language).toContain(t("settings.sandbox.auto"));
+      expect(t("errors.sandbox.isolation_required_subprocess"), language).toContain(t("settings.sandbox.linux"));
+      // The diagnosis no longer suggests the Python process as the way out of an unreachable Docker.
+      const fix = t("diagnostics.checks.docker.fix.unreachable");
+      expect(fix, language).not.toContain(t("settings.sandbox.subprocess"));
+      expect(fix, language).toContain(t("settings.sandbox.auto"));
+      expect(i18n.exists("tools.sandboxBlocked", { lng: language }), language).toBe(true);
+    }
+    await loadLanguage("de");
+  });
+
   it("explains every offered mode: Docker for AI code in automatic mode, the Python process for trusted use only", () => {
     show(settings({ sandbox: "subprocess", sandbox_selection: selection({ mode: "subprocess" }) }));
     expect(screen.getByTestId("sandbox-mode-hint-auto").textContent).toBe(i18n.t("settings.sandbox.modeHint.auto"));

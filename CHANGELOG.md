@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Sandbox: hints after leaving the Python process, honest platform evidence (2026-11-02)
+
+- Settings → Sandbox, *Python process* mode: the blocked notice says that the mode no longer runs AI-created tools
+  in a built-in sandbox and that the earlier choice was kept (`settings.sandbox.blocked.subprocessChanged`); on a
+  Linux runtime it names the Linux sandbox as the other way (`blocked.subprocessLinux`). The refusal
+  `sandbox.isolation_required_subprocess` names it too. The diagnosis no longer suggests switching to the Python
+  process when Docker is unreachable, and the Tools page says AI-created tools are blocked when they are
+  (`tools.sandboxBlocked`). Six languages.
+- Docs (six languages), Installing Docker: which engines ran in CI and that Docker Desktop never did; Sandbox: what a
+  Python process choice from an earlier version means now.
+
 ### Docker workflow: AI-generated code in a real engine (2026-11-02)
 
 - `scripts/docker_smoke.py` and `.github/workflows/docker.yml`: the installed studio with a real engine (Docker on

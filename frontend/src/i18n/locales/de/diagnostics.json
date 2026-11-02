@@ -82,7 +82,7 @@
       "checking": "Nodestro prüft Docker noch im Hintergrund.",
       "unavailable": "Docker kann für KI-erstellte Tools nicht verwendet werden.",
       "fix": {
-        "unreachable": "Starte Docker Desktop oder stelle die Sandbox auf „Python-Prozess“ um.",
+        "unreachable": "Starte Docker. Oder wähle in Einstellungen → Sandbox Automatisch: Deine eigenen Tools laufen dann ohne Docker; KI-erstellte Tools brauchen es weiterhin.",
         "checking": "Führe die Diagnose gleich noch einmal aus.",
         "unavailable": "Einstellungen → Sandbox zeigt, welche Prüfung fehlgeschlagen ist."
       }

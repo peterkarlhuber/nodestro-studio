@@ -316,6 +316,13 @@ None known.
   The `linux` mode, the DS-3 refusal sentences and the DS-13 review (one status for table and notice, throttled and
   ignored checks shown as not run, `redacted`, rootful warning from `rootless`) are done; pins moved to
   nodestro-runtime `bf9af7d` (#85), nodestro-api `dde77f5` (#65) and nodestro-sdk `99f70fe` (#59).
+- **Engine checks (2026-11-02):** the engine checks (Orkexa's) ran in CI only on Docker Engine on Linux (rootful
+  x86-64 and arm64, rootless x86-64), rootful Podman 4.9.3 and, non-blocking, Colima on macOS x86-64; rootless Podman
+  4.9.3 is refused there (limits not applied, orkexa ORK-024); nodestro-runtime's Docker tests run on rootful Docker
+  Engine on Linux x86-64 only. Docker Desktop (macOS Apple silicon and Intel, Windows x64 and ARM64), OrbStack, Colima
+  on Apple silicon and Podman machine never ran in any CI; Settings → Installing Docker says so in six languages.
+  Users who kept `subprocess` from an earlier version get a note in the blocked notice that the mode no longer runs
+  AI-created tools and that their choice was kept, and on Linux the Linux sandbox as the other way.
 - **Platform evidence (2026-11-02):** the `Docker` workflow (`.github/workflows/docker.yml`,
   `scripts/docker_smoke.py`) runs the whole chain with a real engine: the installed studio detects the engine in
   `auto` mode, `GET /api/sandbox/status` must reach `approved` (preflight and in-container self-test), an
@@ -334,8 +341,11 @@ None known.
   - **Local run (cloud dev VM, rootful Docker 29.9.2, cgroup v1):** preflight passed, the runtime image was built,
     and the self-test correctly refused the engine (`docker-selftest`: "the container is not on cgroup v2"); tool jobs
     were refused with that reason, and the unreachable and really stopped engine (`pkill dockerd`) phases passed.
-    The approved path has not run yet: it needs the first green `Docker` workflow run.
-- **Next step:** run the `Docker` workflow and record the result here. Remaining manual release checks on real
+  - **First CI run (studio #104, 2026-11-02):** every check passed on `ubuntu-latest` (Docker Engine 29.4.2, cgroup v2)
+    and on `macos-15-intel` (Colima, cgroup v2): `approved`, the untrusted tool in an `orkexa-sandbox-*` container
+    with the isolation flags, no container left after the timeout and after the cancelled run, and refusal with the
+    engine unreachable and really stopped. `windows-latest` refused with `docker-os-type`.
+- **Next step:** remaining manual release checks on real
   hardware: Docker Desktop on macOS Apple Silicon, macOS Intel, Windows x64 and Windows ARM64 (Linux containers,
   WSL 2), each with `scripts/docker_smoke.py` against the installed studio; then the packaged desktop app
   (nodestro-desktop) on the same systems, which no CI job starts.

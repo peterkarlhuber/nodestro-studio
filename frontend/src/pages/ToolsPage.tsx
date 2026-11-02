@@ -104,11 +104,13 @@ export function ToolsPage() {
               sandbox:
                 settings.data.sandbox === "docker"
                   ? t("tools.sandboxDocker")
-                  : untrustedBackend(settings.data) === "linux-builtin"
-                    ? t("tools.sandboxBuiltin")
-                    : untrustedBackend(settings.data) === "docker"
-                      ? t("tools.sandboxAutoDocker")
-                      : t("tools.sandboxProcess"),
+                  : settings.data.sandbox_selection?.blocked
+                    ? t("tools.sandboxBlocked")
+                    : untrustedBackend(settings.data) === "linux-builtin"
+                      ? t("tools.sandboxBuiltin")
+                      : untrustedBackend(settings.data) === "docker"
+                        ? t("tools.sandboxAutoDocker")
+                        : t("tools.sandboxProcess"),
             })}
           </p>
         ) : null}

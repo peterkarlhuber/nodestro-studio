@@ -11,6 +11,7 @@
   "sandboxNote": "Sandbox for testing and running your own tools: {{sandbox}} (can be changed in the settings).",
   "sandboxDocker": "Docker container",
   "sandboxProcess": "separate Python process",
+  "sandboxBlocked": "separate Python process; AI-created tools are blocked",
   "empty": "No tools",
   "kind": {
     "builtin": "Built-in",
