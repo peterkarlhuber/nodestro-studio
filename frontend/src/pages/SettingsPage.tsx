@@ -17,6 +17,7 @@ import { PythonMaintenance } from "../python/PythonMaintenance";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
 import { SandboxPanel } from "./SettingsSandbox";
+import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy } from "./SettingsBudget";
 import { CHECK_KEY, DefaultModelNotice, ProviderSettings } from "./SettingsProviders";
 
 const AUTOMATIC = "auto";
@@ -172,6 +173,7 @@ export function SettingsPage() {
               onChange={(e) => setForm({ ...form, default_budget_usd: e.target.value === "" ? null : Number(e.target.value) })}
             />
           </Field>
+          <BudgetPolicyFields form={form} admin={admin} onChange={(patch) => setForm({ ...form, ...patch })} />
           <Field label={t("settings.models.architectBudget")} tip="settings.architectBudget" hint={t("settings.models.architectBudgetHint")}>
             <TextInput
               type="number"
@@ -196,7 +198,7 @@ export function SettingsPage() {
             <Button
               variant="primary"
               icon={Save}
-              disabled={!admin}
+              disabled={!admin || (hasBudgetPolicy(form) && budgetPolicyUpdate(form).invalid.length > 0)}
               busy={save.isPending}
               onClick={() =>
                 save.mutate({
@@ -205,6 +207,8 @@ export function SettingsPage() {
                   default_budget_usd: form.default_budget_usd,
                   architect_budget_usd: form.architect_budget_usd,
                   architect_max_repairs: form.architect_max_repairs,
+                  // BUDGET-1: the budget policy, only where the backend knows it.
+                  ...(hasBudgetPolicy(form) ? budgetPolicyUpdate(form).update : {}),
                 })
               }
             >

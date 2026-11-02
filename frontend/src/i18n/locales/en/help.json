@@ -134,6 +134,27 @@
     "priceMode": "Standard warns about unknown and stale prices; Strict refuses such requests before they cost anything.",
     "reconciliation": "Compares the estimates with the providers' bills. Needs an admin key of the billing API; nothing is changed."
   },
+  "budget": {
+    "decision": "The run paused because its budget is not enough for the next model request. Nothing was sent for it. Raise the limit of exactly this run and continue, or end the run.",
+    "reason": "“Used up”: the known costs have reached the limit. “Next request too large”: the most the next request can cost (input plus maximum output at the highest rate) does not fit what is left. That is a maximum, not an expected cost.",
+    "block": "The limit that refused the request: this run's own, or the own limit of a sub-workflow or team. A raise changes exactly that limit; limits above it still apply and may ask again.",
+    "initialLimit": "The limit the run started with: the workflow's budget, or the default budget from the settings.",
+    "currentLimit": "The limit that applies now: the starting limit plus every raise approved for this run.",
+    "knownCost": "What the run's requests have cost so far, by known prices. Unknown costs are marked and never counted as 0.",
+    "remaining": "Current limit minus known costs. If some costs are unknown, the real rest may be smaller.",
+    "reserved": "Requests that are still running reserve their highest possible cost; the reservation is replaced by the real cost when they finish.",
+    "deadline": "If nobody decides by then, the run ends with the error “budget used up”. Administrators set the deadline in the settings.",
+    "blockedRequest": "The model request that waits, with the most it can cost. Some costs cannot be bounded in advance (no known price, images, files, provider tools).",
+    "suggested": "Known costs plus the most the next request can cost, rounded up to a cent. Enough for that one request; it is not a forecast for the rest of the run.",
+    "newLimit": "Enter the new total limit, not the amount to add. It must be higher than the current limit and may not exceed the workspace's maximum.",
+    "difference": "How much higher the new limit is than the current one. Only what the run actually uses is spent.",
+    "end": "Ends the run now. Results of finished steps stay; nothing more is sent to a model.",
+    "history": "Every approved raise of this run: the limit before and after, who decided and when.",
+    "runBudget": "The run's cost limit. Attended runs pause when it is not enough and wait for a decision; runs from schedules, batches, test series and the published API stop instead.",
+    "maxRunBudget": "The most any run of this workspace may have as its limit, at the start or after raises. Empty means no cap.",
+    "decisionHours": "How long a run waits for a budget decision before it ends with “budget used up” (1 to 720 hours, default 24).",
+    "permissions": "The person who started the run decides if they hold the Run permission; administrators can decide every run."
+  },
   "search": {
     "global": "Searches workflows, agents, tools, knowledge and documentation (Ctrl+K)."
   },

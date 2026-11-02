@@ -92,6 +92,8 @@ Guarda los cambios con **Guardar** en la sección *Modelos y presupuesto*.
 
 El **presupuesto predeterminado por ejecución** (al principio 2 USD) se aplica a todos los flujos sin presupuesto propio. Vacío significa sin límite. Cómo funciona el presupuesto se explica en [Presupuesto por ejecución](/docs/workflows#budget).
 
+Los administradores fijan además el **Presupuesto máximo por ejecución** (vacío: sin tope): ninguna ejecución puede empezar con más ni elevarse por encima. El **Plazo de las decisiones de presupuesto** (de 1 a 720 horas, al principio 24) indica cuánto espera una ejecución pausada una [decisión de presupuesto](/docs/workflows#budget-freigabe) antes de fallar. Quién puede decidir se explica en [Quién puede decidir](/docs/workflows#budget-rechte).
+
 ## Sandbox {#sandbox}
 <!-- keywords: elegir sandbox, automático, docker, proceso de python, docker disponible, sandbox integrado, sandbox de linux, macos, windows, bloqueado, experimental -->
 

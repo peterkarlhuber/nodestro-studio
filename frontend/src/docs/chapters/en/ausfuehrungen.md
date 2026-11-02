@@ -83,6 +83,7 @@ The **Context** tab shows what the agent got in this run: system prompt, task wi
 | **Skipped** | The node did not run because its branch was not chosen. This is not an error. |
 | **Blocked** | The node did not run because a predecessor failed or was cancelled. |
 | **Awaiting approval** | An [approval](/docs/verzweigungen#freigabe) waits for a person's decision. |
+| **Waiting for budget decision** | The next model request needs more budget; the run is paused until someone raises its limit or ends it ([budget decisions](/docs/workflows#budget-freigabe)). |
 | **Paused** | The run waits for an approval and continues after the decision. |
 | **Cancelled** | Stopped with *Cancel run*, rejected, or a trace that was exported before it was complete. |
 | **Waiting for you** | A tool call waits for your approval; the run goes on as soon as you have decided. |
@@ -122,6 +123,8 @@ Each instruction shows where it stands: *Waiting for the next decision* (with ho
 **Pause, restart, continue:** while a team waits for an approval, instructions stay open and apply to the next decision once the run goes on. If a decision is lost to a server restart, the instruction is given again to the next decision. When the run or the team leader ends, open instructions are marked *No longer considered* and are not carried over when you continue the run. After the end, the conversation can only be read.
 
 **Unattended runs:** in the orchestrator's inspector, **Live steering** sets who may give instructions: *Runs a person started* (default), *Always* (also schedule, API, batch run and test series) or *Off*. Questions are not affected. More about the orchestrator is under [Orchestrator](/docs/verzweigungen#orchestrator).
+
+**During a budget pause** the chat keeps working: questions are answered from the chat budget, instructions are used after the run continues. A chat message never raises or approves the run's budget; that happens only on the budget decision card.
 
 ## Exporting a trace {#trace-export}
 <!-- keywords: export trace, export, json, run json, share, archive, sanitize, anonymize, privacy, personal data -->

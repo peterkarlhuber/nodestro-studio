@@ -35,6 +35,13 @@ export interface RunSummary {
   tools: ToolUse[];
   /** The first step that failed, in the order the steps started. */
   failed: { nodeId: string; label: string } | null;
+  /** BUDGET-1: whether the run waits for a budget decision, and how often its limit was raised. */
+  budget: { waiting: boolean; raises: number };
+}
+
+/** Whether a run waits for a budget decision: ``run.budget.pending_request_id`` while it is not finished. */
+export function waitsForBudgetDecision(run: Pick<Run, "status" | "budget">): boolean {
+  return Boolean(run.budget?.pending_request_id) && (run.status === "paused" || run.status === "running" || run.status === "queued");
 }
 
 function label(node: WorkflowNode): string {
@@ -65,7 +72,7 @@ export function stepsInOrder(run: Run): WorkflowNode[] {
 export function initialStep(run: Run): WorkflowNode | undefined {
   const steps = stepsInOrder(run);
   const withStatus = (...statuses: string[]) => steps.find((node) => statuses.includes(run.nodes[node.id]?.status ?? ""));
-  return withStatus("failed") ?? withStatus("awaiting_approval") ?? withStatus("running") ?? steps[0];
+  return withStatus("failed") ?? withStatus("awaiting_approval") ?? withStatus("awaiting_budget") ?? withStatus("running") ?? steps[0];
 }
 
 /** The steps that failed, in the order they started. */
@@ -111,5 +118,6 @@ export function summarizeRun(run: Run): RunSummary {
     approvals,
     tools: [...tools.values()].sort((a, b) => b.calls - a.calls || a.name.localeCompare(b.name)),
     failed,
+    budget: { waiting: waitsForBudgetDecision(run), raises: run.budget?.raises?.length ?? 0 },
   };
 }

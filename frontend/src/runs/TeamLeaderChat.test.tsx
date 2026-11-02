@@ -306,4 +306,11 @@ describe("TeamLeaderChat", () => {
     expect(screen.getByText("Zeichen: 5 von 10")).toBeInTheDocument();
     expect(screen.getByTestId("lrc-input")).toHaveAttribute("maxLength", "10");
   });
+
+  it("keeps working during a budget pause and says that a message never approves budget (BUDGET-1)", async () => {
+    vi.spyOn(api, "runChat").mockResolvedValue(view());
+    render(wrap(<TeamLeaderChat runId="run_1" budgetWaiting />));
+    expect(await screen.findByTestId("lrc-budget-paused")).toHaveTextContent("Eine Chat-Nachricht gibt nie Budget frei.");
+    expect(screen.getByTestId("lrc-input")).not.toBeDisabled();
+  });
 });

@@ -134,6 +134,27 @@
     "priceMode": "Estándar avisa de precios desconocidos o antiguos; Estricto rechaza esas solicitudes antes de que cuesten nada.",
     "reconciliation": "Compara las estimaciones con las facturas de los proveedores. Necesita una clave de administrador de la API de facturación; no se cambia nada."
   },
+  "budget": {
+    "decision": "La ejecución está en pausa porque su presupuesto no alcanza para la próxima solicitud al modelo. No se envió nada para ella. Eleva el límite de exactamente esta ejecución y continúa, o termina la ejecución.",
+    "reason": "«Agotado»: los costes conocidos han alcanzado el límite. «Próxima solicitud demasiado grande»: lo máximo que puede costar la próxima solicitud (entrada más salida máxima a la tarifa más alta) no cabe en lo que queda. Es un máximo, no un coste esperado.",
+    "block": "El límite que rechazó la solicitud: el de esta ejecución o el límite propio de un subflujo o equipo. Un aumento cambia exactamente ese límite; los límites superiores siguen vigentes y pueden volver a preguntar.",
+    "initialLimit": "El límite con el que empezó la ejecución: el presupuesto del flujo de trabajo o el presupuesto predeterminado de los ajustes.",
+    "currentLimit": "El límite que rige ahora: el límite inicial más cada aumento aprobado para esta ejecución.",
+    "knownCost": "Lo que han costado hasta ahora las solicitudes de la ejecución, según precios conocidos. Los costes desconocidos se marcan y nunca cuentan como 0.",
+    "remaining": "Límite actual menos costes conocidos. Si hay costes desconocidos, lo que queda de verdad puede ser menos.",
+    "reserved": "Las solicitudes que siguen en curso reservan su coste máximo posible; al terminar, el coste real sustituye a la reserva.",
+    "deadline": "Si nadie decide antes, la ejecución termina con el error «presupuesto agotado». Los administradores fijan el plazo en los ajustes.",
+    "blockedRequest": "La solicitud al modelo en espera, con lo máximo que puede costar. Algunos costes no se pueden acotar de antemano (sin precio conocido, imágenes, archivos, herramientas del proveedor).",
+    "suggested": "Costes conocidos más lo máximo que puede costar la próxima solicitud, redondeado al céntimo superior. Basta para esa solicitud; no es una previsión para el resto de la ejecución.",
+    "newLimit": "Introduce el nuevo límite total, no la cantidad que se añade. Debe ser mayor que el límite actual y no superar el máximo del espacio de trabajo.",
+    "difference": "Cuánto mayor es el nuevo límite que el actual. Solo se gasta lo que la ejecución usa de verdad.",
+    "end": "Termina la ejecución ahora. Los resultados de los pasos terminados se conservan; no se envía nada más a ningún modelo.",
+    "history": "Cada aumento aprobado de esta ejecución: el límite antes y después, quién decidió y cuándo.",
+    "runBudget": "El límite de coste de la ejecución. Las ejecuciones atendidas se pausan cuando no alcanza y esperan una decisión; las de programaciones, lotes, series de pruebas y la API publicada se detienen en su lugar.",
+    "maxRunBudget": "El límite más alto que puede tener una ejecución de este espacio de trabajo, al inicio o tras aumentos. Vacío significa sin tope.",
+    "decisionHours": "Cuánto tiempo espera una ejecución una decisión de presupuesto antes de terminar con «presupuesto agotado» (de 1 a 720 horas, 24 por defecto).",
+    "permissions": "Decide la persona que inició la ejecución si tiene el permiso Ejecutar; los administradores pueden decidir en cualquier ejecución."
+  },
   "search": {
     "global": "Busca en flujos de trabajo, agentes, herramientas, conocimiento y documentación (Ctrl+K)."
   },

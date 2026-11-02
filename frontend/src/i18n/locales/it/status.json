@@ -42,5 +42,9 @@
   "paused": {
     "label": "In pausa",
     "description": "L’esecuzione attende un’approvazione e prosegue dopo la decisione."
+  },
+  "awaiting_budget": {
+    "label": "In attesa di una decisione sul budget",
+    "description": "La prossima richiesta al modello ha bisogno di più budget. Una persona aumenta il limite di questa esecuzione o la termina; fino ad allora nulla viene inviato a un modello."
   }
 }

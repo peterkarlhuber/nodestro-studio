@@ -134,6 +134,27 @@
     "priceMode": "Standard avvisa per prezzi sconosciuti o vecchi; Rigorosa rifiuta queste richieste prima che costino qualcosa.",
     "reconciliation": "Confronta le stime con le fatture dei fornitori. Serve una chiave di amministrazione dell’API di fatturazione; non viene modificato nulla."
   },
+  "budget": {
+    "decision": "L’esecuzione è in pausa perché il suo budget non basta per la prossima richiesta al modello. Per essa non è stato inviato nulla. Aumenta il limite proprio di questa esecuzione e continua, oppure termina l’esecuzione.",
+    "reason": "«Esaurito»: i costi noti hanno raggiunto il limite. «Prossima richiesta troppo grande»: il massimo che la prossima richiesta può costare (input più output massimo alla tariffa più alta) non rientra in ciò che resta. È un massimo, non un costo previsto.",
+    "block": "Il limite che ha rifiutato la richiesta: quello di questa esecuzione, o il limite proprio di un sotto-workflow o di un team. Un aumento cambia esattamente quel limite; i limiti superiori restano validi e possono chiedere di nuovo.",
+    "initialLimit": "Il limite con cui è partita l’esecuzione: il budget del workflow, o il budget predefinito delle impostazioni.",
+    "currentLimit": "Il limite che vale ora: il limite iniziale più ogni aumento approvato per questa esecuzione.",
+    "knownCost": "Quanto sono costate finora le richieste dell’esecuzione, secondo i prezzi noti. I costi sconosciuti sono segnalati e non contano mai come 0.",
+    "remaining": "Limite attuale meno costi noti. Se alcuni costi sono sconosciuti, il resto reale può essere minore.",
+    "reserved": "Le richieste ancora in corso riservano il loro costo massimo possibile; alla fine il costo reale sostituisce la riserva.",
+    "deadline": "Se nessuno decide entro allora, l’esecuzione termina con l’errore «budget esaurito». Gli amministratori impostano la scadenza nelle impostazioni.",
+    "blockedRequest": "La richiesta al modello in attesa, con il massimo che può costare. Alcuni costi non si possono limitare in anticipo (nessun prezzo noto, immagini, file, strumenti del provider).",
+    "suggested": "Costi noti più il massimo che la prossima richiesta può costare, arrotondato al centesimo. Basta per quella sola richiesta; non è una previsione per il resto dell’esecuzione.",
+    "newLimit": "Inserisci il nuovo limite totale, non l’importo da aggiungere. Deve essere più alto del limite attuale e non superare il massimo dell’area di lavoro.",
+    "difference": "Di quanto il nuovo limite supera quello attuale. Si spende solo ciò che l’esecuzione usa davvero.",
+    "end": "Termina subito l’esecuzione. I risultati dei passaggi conclusi restano; a un modello non viene inviato più nulla.",
+    "history": "Ogni aumento approvato di questa esecuzione: il limite prima e dopo, chi ha deciso e quando.",
+    "runBudget": "Il limite di costo dell’esecuzione. Le esecuzioni seguite vanno in pausa quando non basta e attendono una decisione; quelle da pianificazioni, lotti, serie di test e dall’API pubblicata si fermano invece.",
+    "maxRunBudget": "Il limite più alto che un’esecuzione di quest’area di lavoro può avere, all’avvio o dopo gli aumenti. Vuoto significa nessun tetto.",
+    "decisionHours": "Quanto un’esecuzione attende una decisione sul budget prima di terminare con «budget esaurito» (da 1 a 720 ore, predefinito 24).",
+    "permissions": "Decide la persona che ha avviato l’esecuzione, se ha il permesso Esegui; gli amministratori possono decidere per ogni esecuzione."
+  },
   "search": {
     "global": "Cerca in workflow, agenti, strumenti, conoscenza e documentazione (Ctrl+K)."
   },

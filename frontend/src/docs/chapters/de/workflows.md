@@ -157,6 +157,59 @@ Das Budget begrenzt die **geschätzten Kosten** eines Laufs in US-Dollar, über 
 
 Unbekannte Kosten zählen **nicht** als 0. Kann der Höchstpreis einer Anfrage nicht vorab bestimmt werden (kein bekannter Preis, Bilder, Dateien oder Werkzeuge des Anbieters wie die Websuche), läuft sie im Standardmodus ohne Obergrenze. Der Lauf zeigt dann bei den Kosten den Hinweis **Kein hartes Maximum** mit der Zahl solcher Anfragen. Im strengen Preismodus werden Anfragen ohne bekannten Preis gar nicht gesendet.
 
+Läufe, die du selbst startest, brechen nicht ab, wenn das Budget nicht reicht: Sie pausieren und warten auf eine Entscheidung, siehe [Budget-Entscheidungen während eines Laufs](/docs/workflows#budget-freigabe).
+
+## Standard-, Workflow- und Laufbudget {#budget-ebenen}
+<!-- keywords: standardbudget, workflow-budget, laufbudget, wirksames limit, startlimit, erhöhung, ebenen -->
+
+Drei Ebenen bestimmen, wie viel ein Lauf kosten darf:
+
+- **Standardbudget** (Einstellungen): gilt für jeden Workflow ohne eigenes Budget.
+- **Workflow-Budget** (Workflow-Einstellungen): ersetzt für diesen Workflow das Standardbudget. Ein veröffentlichter Stand behält das Budget, mit dem er veröffentlicht wurde.
+- **Laufbudget:** das Limit, mit dem ein einzelner Lauf startet (das Workflow-Budget, sonst das Standardbudget), plus jede für diesen Lauf freigegebene Erhöhung. Eine Erhöhung ändert weder den Workflow noch die Einstellungen; der nächste Lauf startet wieder mit dem Workflow-Budget.
+
+Die Laufdetails zeigen das Limit des Laufs neben seinen Kosten, nach einer Erhöhung mit *Limit erhöht von …*. Administratoren können ein **höchstes Budget pro Lauf** festlegen, das kein Lauf überschreiten darf, weder beim Start noch nach Erhöhungen (siehe [Standardbudget](/docs/einstellungen#budget)).
+
+## Budget-Entscheidungen während eines Laufs {#budget-freigabe}
+<!-- keywords: budget-entscheidung, budgetpause, budget erhöhen, fortsetzen, lauf beenden, wartet auf budget, wartet auf budget-entscheidung, vorgeschlagenes limit, anfrage zu groß, aufgebraucht, frist -->
+
+Passt eine Modellanfrage eines Laufs, den du gestartet hast, nicht mehr in sein Budget, schlägt der Lauf nicht mehr fehl. Er **pausiert** mit dem Status *Wartet auf Budget-Entscheidung*: Bereits laufende Anfragen werden fertig und aufgezeichnet, keine weitere Anfrage wird gesendet, und für die wartende Anfrage wird nichts berechnet. Ihr Schritt zeigt denselben Status.
+
+Der Grund ist einer von zwei:
+
+- **Aufgebraucht:** Die bekannten Kosten haben das Limit erreicht.
+- **Nächste Anfrage zu groß:** Das Höchste, was die nächste Anfrage kosten kann (ihre Eingabe plus die größtmögliche Antwort zum höchsten Preis), passt nicht in den Rest. Das ist ein Höchstwert, keine erwarteten Kosten; die Anfrage wird zurückgehalten, bevor sie bezahlt wird, statt das Limit zu überschreiten.
+
+Die Budget-Entscheidung erscheint in der Ausführungsübersicht des Editors, in den Laufdetails und im Abschnitt **Budget-Entscheidungen** der [Seite Freigaben](/docs/verzweigungen#freigaben-seite); der Zähler in der Navigation zählt sie mit. Die Karte zeigt das Limit beim Start und jetzt, die bekannten Kosten (mit *plus unbekannte Kosten*, wenn Kosten unbekannt sind, nie als 0), den Rest, was für laufende Anfragen reserviert ist, welches Limit blockiert, die wartenden Anfragen mit ihren höchstmöglichen Kosten, die Frist und frühere Erhöhungen.
+
+- **Prüfen und fortsetzen:** Gib das neue **Gesamt**limit für diesen Lauf ein. Der Vorschlag sind die bekannten Kosten plus das Höchste, was die nächste Anfrage kosten kann, auf einen Cent aufgerundet: ein Minimum für die nächste Anfrage, nie eine Prognose für den Rest des Laufs. Nodestro prüft den Betrag (höher als das aktuelle Limit, nicht über dem höchsten Budget pro Lauf) und setzt den Lauf sofort fort.
+- **Lauf beenden** (mit Bestätigung): Der Lauf endet mit dem Hinweis, dass er bei einer Budget-Entscheidung beendet wurde. Ergebnisse fertiger Schritte bleiben.
+
+Eine Entscheidung gilt nur für diesen Lauf. Reicht das erhöhte Limit wieder nicht, pausiert der Lauf erneut mit einer neuen Entscheidung; das wiederholt sich so oft wie nötig. Eine Entscheidung wird einmal getroffen: Hat jemand anderes zuerst entschieden, sagt die Karte, wer und wie. Verlässt du die Seite, geht nichts verloren: Die Entscheidung liegt auf dem Server und erscheint überall wieder.
+
+Während der Pause wird kein Thread und kein Worker belegt, und ein Neustart von Nodestro verliert nichts. Der [Live-Chat des Laufs](/docs/ausfuehrungen#teamleitung) beantwortet weiter Fragen (aus seinem eigenen Chat-Budget); Anweisungen werden bei der nächsten Entscheidung verwendet, nachdem der Lauf weitergeht. Eine Chat-Nachricht ist **nie** eine Budget-Entscheidung.
+
+Entscheidet niemand vor Ablauf der Frist (24 Stunden, sofern Administratoren nichts anderes festgelegt haben), schlägt der Lauf mit „Budget aufgebraucht“ fehl. Du kannst ihn dann mit einem neuen Budget [fortsetzen](/docs/verzweigungen#fortsetzen).
+
+## Limits von Unter-Workflows und Teams {#budget-teams}
+<!-- keywords: unter-workflow-budget, team-budget, kindlauf, übergeordneter lauf, limit blockiert, verschachtelt -->
+
+Ein Unter-Workflow oder Team mit eigenem Budget läuft mit seinem eigenen Limit, und jede Anfrage zählt zusätzlich für den Lauf darüber. Die Budget-Entscheidung nennt das Limit, das die Anfrage abgelehnt hat: *das Limit dieses Laufs* oder *das eigene Limit des Unter-Workflows / Teams „Name“*. Eine Erhöhung ändert genau dieses Limit, nie den Workflow dahinter. Limits darüber gelten weiter: Die Erhöhung eines Team-Limits kann zu einer zweiten Entscheidung für den Lauf darüber führen, und die Erhöhung des Laufs darüber hebt nie das eigene Limit eines Teams an. Pro oberstem Lauf gibt es immer eine Entscheidung.
+
+## Wer entscheiden darf {#budget-rechte}
+<!-- keywords: berechtigung, wer darf erhöhen, lauf gestartet, administrator, höchstes budget pro lauf, mandant -->
+
+Auf dem Desktop entscheidest du selbst. Auf einem Server darf entscheiden, wer die Berechtigung *Ausführen* hat **und** den Lauf gestartet hat; Administratoren dürfen jeden Lauf ihres Arbeitsbereichs entscheiden. Läufe ohne bekannte startende Person können nur Administratoren entscheiden. Alle mit *Lesen* sehen die Entscheidung; die Karte erklärt dann, warum die Schaltflächen fehlen. Keine Erhöhung darf das **höchste Budget pro Lauf** des Arbeitsbereichs oder eine Obergrenze des Server-Betreibers überschreiten.
+
+## Unbegleitete Läufe und bekannte Grenzen {#budget-grenzen}
+<!-- keywords: zeitplan, stapellauf, testreihe, veröffentlichte api, unbegleitet, keine pause, unbekannter preis, preisqualität, stand verloren -->
+
+- **Unbegleitete Läufe pausieren nicht.** Läufe aus [Zeitplänen, Stapelläufen und Testreihen](/docs/automatisierung#zeitplaene) und aus der veröffentlichten API schlagen wie bisher fehl, wenn ihr Budget aufgebraucht ist (Fehler `BudgetExceededError`); niemand wird gefragt, nichts wird automatisch erhöht.
+- **Ein höheres Budget macht Preise nicht bekannt.** Anfragen, deren Kosten keine Obergrenze haben (kein bekannter Preis im Standard-Preismodus, Anbieter-Werkzeuge, Bilder, Dateien), werden gesendet, solange das Limit nicht aufgebraucht ist, und als ohne Obergrenze gezählt. Im strengen [Preismodus](/docs/nutzung#preismodus) werden unbekannte oder unzuverlässige Preise vor der Anfrage abgelehnt; das ist keine Budget-Entscheidung.
+- Eine Antwort, die das Limit erst nach der Bezahlung überschreitet, wird behalten und verwendet, nie erneut gesendet; die Pause kommt vor der nächsten Anfrage.
+- Das Tagesbudget der API, das Kostenlimit einer veröffentlichten API, Ratenlimits, Zeit- und Schrittgrenzen sowie das Chat-Budget lassen sich hier nicht erhöhen.
+- Geht der gespeicherte Stand eines wartenden Schritts verloren, schlägt der Schritt mit einer eigenen Meldung fehl, statt still erneut zu laufen. [Setze den Lauf fort](/docs/verzweigungen#fortsetzen): Nodestro zeigt, was erneut läuft, und fragt, bevor Tools erneut ausgeführt werden.
+
 ## Grenzen pro Lauf {#limits}
 <!-- keywords: grenzen, gleichzeitig, parallel, zeitlimit, laufzeit, timeout, dauer, run.time_limit, schritte, run.step_limit -->
 

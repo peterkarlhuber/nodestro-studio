@@ -92,6 +92,8 @@ Speichere Änderungen mit **Speichern** im Abschnitt *Modelle und Budget*.
 
 Das **Standardbudget pro Lauf** (anfangs 2 USD) gilt für alle Workflows ohne eigenes Budget. Leer bedeutet: kein Limit. Wie das Budget wirkt, steht unter [Budget pro Lauf](/docs/workflows#budget).
 
+Administratoren legen außerdem das **Höchste Budget pro Lauf** fest (leer: keine Obergrenze): Kein Lauf darf damit starten oder darüber hinaus erhöht werden. Die **Frist für Budget-Entscheidungen** (1 bis 720 Stunden, anfangs 24) bestimmt, wie lange ein pausierter Lauf auf eine [Budget-Entscheidung](/docs/workflows#budget-freigabe) wartet, bevor er fehlschlägt. Wer entscheiden darf, steht unter [Wer entscheiden darf](/docs/workflows#budget-rechte).
+
 ## Sandbox {#sandbox}
 <!-- keywords: sandbox wählen, automatisch, docker, python prozess, docker verfügbar, eingebaute sandbox, linux sandbox, macos, windows, gesperrt, experimentell -->
 
