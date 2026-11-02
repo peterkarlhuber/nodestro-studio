@@ -42,5 +42,9 @@
   "paused": {
     "label": "Paused",
     "description": "The run waits for an approval and continues after the decision."
+  },
+  "awaiting_budget": {
+    "label": "Waiting for budget decision",
+    "description": "The next model request needs more budget. A person raises the limit of this run or ends it; nothing is sent to a model until then."
   }
 }

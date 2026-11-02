@@ -92,6 +92,8 @@ Save changes with **Save** in the *Models and budget* section.
 
 The **Default budget per run** (initially 2 USD) applies to all workflows without a budget of their own. Empty means no limit. How the budget works is explained under [Budget per run](/docs/workflows#budget).
 
+Administrators also set the **Maximum run budget** (empty: no cap): no run may start with or be raised above it. The **Budget decision deadline** (1 to 720 hours, initially 24) says how long a paused run waits for a [budget decision](/docs/workflows#budget-freigabe) before it fails. Who may decide is explained under [Who may decide](/docs/workflows#budget-rechte).
+
 ## Sandbox {#sandbox}
 <!-- keywords: choose sandbox, automatic, docker, python process, docker available, built-in sandbox, linux sandbox, macos, windows, blocked, experimental -->
 

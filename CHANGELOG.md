@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Dynamic run budget approval, Studio (BUDGET-1, 2026-11-02)
+
+- An attended run whose budget is not enough for its next model request pauses with the new status
+  *Waiting for budget decision* (`awaiting_budget`) instead of failing. The budget decision card
+  (`runs/BudgetDecisionCard.tsx`) shows the limits, known/unknown cost, reserved amount, the blocking limit (run,
+  sub-workflow or team), the waiting requests and the suggested minimum; "Check and continue" raises exactly that
+  limit to a new total, "End run" ends it (with a confirmation). It appears in the editor's run panel, the run
+  details, the new "Budget decisions" section of the Approvals page and is counted by the navigation badge.
+- Settings: administrators set the maximum run budget and the budget decision deadline next to the default budget.
+- New error texts (`run.budget_ended`, `run.budget_request_expired`, `run.budget_checkpoint_lost`, `budget.*`),
+  help texts and documentation sections (workflows: budget levels, decisions, team limits, permissions, limits) in
+  all six languages. Needs the BUDGET-1 runtime/API; older backends show nothing new.
+- Pins: nodestro-runtime `64895e6` (#84), nodestro-api `5519708` (#64), nodestro-sdk `e85f079` (#58),
+  nodestro-examples `59fc96b` (#47), nodestro-integrations `991dcf9` (#43), orkexa `e220f70` (#32).
+
 ### Sandbox modes after Docker-first (DS-3) and the DS-13 review of Settings → Sandbox (2026-11-02)
 
 - Settings → Sandbox offers the new `linux` mode (runtime DS-3) as an explicit choice on Linux computers:

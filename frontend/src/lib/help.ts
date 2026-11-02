@@ -243,6 +243,26 @@ export const HELP_DOCS = {
   "inputs.proposals": "datei-eingaben#vorschlaege",
   "inputs.received": "datei-eingaben#nachvollziehen",
   "knowledge.collections": "wissen#sammlungen",
+  // Dynamic run budget approval (BUDGET-1): the decision card, the run's budget and the workspace's budget policy.
+  "budget.decision": "workflows#budget-freigabe",
+  "budget.reason": "workflows#budget-freigabe",
+  "budget.block": "workflows#budget-teams",
+  "budget.initialLimit": "workflows#budget",
+  "budget.currentLimit": "workflows#budget-freigabe",
+  "budget.knownCost": "workflows#budget",
+  "budget.remaining": "workflows#budget",
+  "budget.reserved": "workflows#budget",
+  "budget.deadline": "workflows#budget-freigabe",
+  "budget.blockedRequest": "workflows#budget",
+  "budget.suggested": "workflows#budget-freigabe",
+  "budget.newLimit": "workflows#budget-freigabe",
+  "budget.difference": "workflows#budget-freigabe",
+  "budget.end": "workflows#budget-freigabe",
+  "budget.history": "workflows#budget-freigabe",
+  "budget.runBudget": "workflows#budget-freigabe",
+  "budget.maxRunBudget": "einstellungen#budget",
+  "budget.decisionHours": "einstellungen#budget",
+  "budget.permissions": "workflows#budget-rechte",
 } satisfies Record<string, string | undefined>;
 
 export type HelpId = keyof typeof HELP_DOCS;

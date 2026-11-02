@@ -1,0 +1,103 @@
+{
+  "card": {
+    "title": "Se necesita una decisión de presupuesto",
+    "label": "Decisión de presupuesto {{name}}",
+    "reasonLabel": "Por qué espera la ejecución",
+    "reason": {
+      "used_up": "El límite está agotado: la próxima solicitud al modelo ya no cabe en lo que queda.",
+      "request_too_large": "La próxima solicitud puede costar hasta {{next}}, pero solo quedan {{left}}. No se envió; no se cobró nada por ella.",
+      "request_too_largeBadge": "Próxima solicitud demasiado grande"
+    },
+    "blockLabel": "Qué límite bloquea",
+    "block": {
+      "run": "Bloquea el límite de esta ejecución.",
+      "subworkflow": "Bloquea el límite propio del subflujo «{{label}}».",
+      "team": "Bloquea el límite propio del equipo «{{label}}».",
+      "appliesExactly": "Un aumento cambia exactamente este límite."
+    },
+    "initialLimit": "Límite al inicio",
+    "currentLimit": "Límite actual",
+    "knownCost": "Coste conocido",
+    "plusUnknown": "más costes desconocidos",
+    "remaining": "Queda",
+    "remainingUnknown": "menos los costes desconocidos",
+    "reserved": "Reservado para solicitudes en curso",
+    "deadline": "Decidir antes de",
+    "deadlineAt": "{{time}}",
+    "deadlinePassed": "El plazo ha vencido; la ejecución termina sin decisión.",
+    "blockedLabel": "Solicitudes al modelo en espera",
+    "blocked_one": "Solicitud al modelo en espera",
+    "blocked_other": "Solicitudes al modelo en espera ({{count}})",
+    "canCostUpTo": "puede costar hasta {{cost}}",
+    "unbounded": "su coste no se puede acotar de antemano",
+    "unboundedHint": "Un límite más alto no hace conocido un precio desconocido; esas solicitudes siguen sin tope.",
+    "suggestedLabel": "Límite propuesto:",
+    "suggested": "{{limit}}, el mínimo para la próxima solicitud. No es una previsión de lo que costará el resto de la ejecución.",
+    "noSuggestion": "ninguno, porque el coste de la próxima solicitud no se puede acotar de antemano.",
+    "newLimit": "Nuevo límite total de esta ejecución (USD)",
+    "newLimitHint": "El nuevo total, no la cantidad que se añade. Mayor que el límite actual.",
+    "newLimitHintMax": "El nuevo total, no la cantidad que se añade. Mayor que el límite actual y como máximo {{max}}.",
+    "validation": {
+      "empty": "Introduce el nuevo límite total.",
+      "invalid": "Introduce un importe en dólares estadounidenses, por ejemplo 2,50.",
+      "notHigher": "El nuevo límite debe ser mayor que el límite actual de {{current}}.",
+      "overPolicy": "El espacio de trabajo permite como máximo {{max}} por ejecución."
+    },
+    "differenceLabel": "Diferencia con el límite actual",
+    "difference": "+ {{amount}} respecto al límite actual",
+    "thisRunOnly": "Solo afecta a esta ejecución; el flujo de trabajo y los ajustes no cambian.",
+    "chatNever": "Los mensajes del chat nunca aprueban presupuesto.",
+    "raise": "Comprobar y continuar",
+    "end": "Terminar la ejecución",
+    "endConfirm": "¿Terminar de verdad la ejecución?",
+    "raisedToast": "Límite elevado a {{limit}}. La ejecución continúa.",
+    "endedToast": "La ejecución se termina.",
+    "cannotDecide": "Puedes ver esta decisión, pero no tomarla: decide la persona que inició la ejecución o un administrador.",
+    "decidedBy": "{{who}} ya ha decidido: {{outcome}}.",
+    "decidedElsewhere": "Esta decisión ya se tomó en otro lugar: {{outcome}}.",
+    "newLimitIs": "El límite es ahora {{limit}}.",
+    "youDecided": {
+      "raised": "Has elevado el límite a {{limit}}. La ejecución continúa.",
+      "ended": "Has terminado la ejecución."
+    }
+  },
+  "status": {
+    "decided": "decidido",
+    "pending": "aún abierta",
+    "raised": "límite elevado",
+    "ended": "ejecución terminada",
+    "expired": "sin decisión a tiempo",
+    "cancelled": "ejecución cancelada"
+  },
+  "history": {
+    "title": "Aumentos anteriores",
+    "item": "{{previous}} → {{next}} · {{who}} · {{when}}",
+    "unknownPerson": "desconocido"
+  },
+  "panel": {
+    "waiting": "La ejecución espera una decisión de presupuesto. No se envía nada a ningún modelo hasta que alguien decida.",
+    "raised": "límite elevado desde {{initial}}"
+  },
+  "approvals": {
+    "title": "Decisiones de presupuesto",
+    "description": "Ejecuciones en pausa porque su presupuesto no alcanza para la próxima solicitud al modelo."
+  },
+  "chat": {
+    "paused": "La ejecución espera una decisión de presupuesto. Las preguntas se siguen respondiendo (con el presupuesto del chat); las instrucciones se usan en cuanto la ejecución continúa. Un mensaje del chat nunca aprueba presupuesto."
+  },
+  "summary": {
+    "title": "Presupuesto",
+    "waiting": "espera una decisión",
+    "raises_one": "elevado una vez",
+    "raises_other": "elevado {{count}} veces"
+  },
+  "settings": {
+    "maxRunBudget": "Presupuesto máximo por ejecución (USD)",
+    "maxRunBudgetHint": "Ninguna ejecución puede empezar con un límite mayor ni elevarse por encima. Vacío: sin tope.",
+    "decisionHours": "Plazo de las decisiones de presupuesto (horas)",
+    "decisionHoursHint": "Cuánto tiempo espera una ejecución una decisión de presupuesto antes de terminar (de 1 a 720 horas).",
+    "invalidMax": "Introduce un importe en dólares estadounidenses o deja el campo vacío.",
+    "invalidHours": "Introduce horas enteras de 1 a 720.",
+    "operatorCap": "Como máximo {{max}} por ejecución (tope del operador)."
+  }
+}

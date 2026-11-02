@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { modelPriceHint } from "../lib/pricing";
 
 import { api } from "./client";
-import type { RunSummary } from "./types";
+import type { BudgetRequest, RunBudgetOut, RunSummary } from "./types";
 
 export const keys = {
   meta: ["meta"] as const,
@@ -47,6 +47,8 @@ export const keys = {
   runInputs: (runId: string) => ["run-inputs", runId] as const,
   collections: ["knowledge-collections"] as const,
   usedBy: (kind: string) => ["used-by", kind] as const,
+  runBudget: (runId: string) => ["run-budget", runId] as const,
+  budgetRequests: ["budget-requests"] as const,
 };
 
 export const useMeta = () => useQuery({ queryKey: keys.meta, queryFn: api.meta, staleTime: Infinity });
@@ -122,6 +124,38 @@ export const useApprovals = () =>
 /** Tool calls waiting for a person (per-call approvals); polled like the approvals. Empty while approvals are off. */
 export const useToolApprovals = () =>
   useQuery({ queryKey: keys.toolApprovals, queryFn: api.toolApprovals, refetchInterval: 5000, retry: false });
+/** How often a pending budget decision is read again: someone may decide it elsewhere, or its deadline may pass. */
+export const BUDGET_POLL_MS = 5000;
+
+/**
+ * The budget of a run (BUDGET-1), with its pending decision and the history of raises. It comes from the API, not
+ * from local state, so the decision is found again after leaving and returning. Polled while a decision is pending
+ * (like the other waits); the run's events and status changes read it again at once (see useRunStream and
+ * RunBudgetDecision).
+ */
+export const useRunBudget = (runId: string | null | undefined, enabled = true) =>
+  useQuery({
+    queryKey: keys.runBudget(runId ?? ""),
+    queryFn: () => api.getRunBudget(runId ?? ""),
+    enabled: Boolean(runId) && enabled,
+    retry: false,
+    refetchInterval: (query) => (query.state.data?.pending ? BUDGET_POLL_MS : false),
+  });
+
+/** The tenant's pending budget decisions; polled like the approvals. Empty on backends without budget decisions. */
+export const useBudgetRequests = () =>
+  useQuery({ queryKey: keys.budgetRequests, queryFn: api.listBudgetRequests, refetchInterval: BUDGET_POLL_MS, retry: false });
+
+/** The pending ones of an answer, tolerant of anything that is not a list (an older backend, a test double). */
+export function pendingBudgetRequests(data: BudgetRequest[] | undefined | null): BudgetRequest[] {
+  return Array.isArray(data) ? data.filter((item) => item && item.status === "pending") : [];
+}
+
+/** Whether an answer of GET /runs/{id}/budget is usable (an older backend or a test double may send anything). */
+export function isRunBudget(data: unknown): data is RunBudgetOut {
+  return Boolean(data && typeof data === "object" && "policy" in data && Array.isArray((data as RunBudgetOut).raises));
+}
+
 export const useBatches = () => useQuery({ queryKey: keys.batches, queryFn: api.batches, refetchInterval: 4000 });
 export const useSuites = () => useQuery({ queryKey: keys.suites, queryFn: () => api.suites() });
 export const useSchedules = () => useQuery({ queryKey: keys.schedules, queryFn: api.schedules, refetchInterval: 15000 });

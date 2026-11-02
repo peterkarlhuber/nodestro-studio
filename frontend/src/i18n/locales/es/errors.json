@@ -125,6 +125,10 @@
     "failed": "El paso ha fallado.",
     "agentFailed": "El agente se ha detenido con un error ({{type}}).",
     "budget_exceeded": "Se ha agotado el presupuesto de esta ejecución; la ejecución se ha detenido.",
+    "budget_ended": "La ejecución se terminó en una decisión de presupuesto.",
+    "budget_request_expired": "Nadie decidió sobre el presupuesto a tiempo; la ejecución se ha detenido.",
+    "budget_waits_interrupted": "Una decisión de presupuesto se interrumpió porque Nodestro se reinició; la ejecución se ha detenido.",
+    "budget_checkpoint_lost": "El estado guardado del paso que esperaba su presupuesto ya no existe; el paso ha fallado y no se ha repetido en silencio.",
     "api_error": "El proveedor de IA informó de un error (estado {{status}}).",
     "skipped": "Omitido porque un nodo anterior no tuvo éxito.",
     "cancelled": "La ejecución se ha cancelado.",
@@ -178,6 +182,15 @@
     "provider_rate_limited": "{{provider}} informó de demasiadas solicitudes o tokens en poco tiempo (límite de frecuencia).",
     "provider_overloaded": "{{provider}} está sobrecargado en este momento.",
     "provider_auth_aws": "AWS no aceptó el inicio de sesión para Amazon Bedrock: faltan las credenciales o han caducado, o al rol de IAM le falta un permiso."
+  },
+  "budget": {
+    "not_starter": "Solo la persona que inició la ejecución o un administrador puede decidir sobre su presupuesto.",
+    "request_not_found": "Esta decisión de presupuesto ya no existe. Vuelve a cargar la ejecución para ver su estado actual.",
+    "action_invalid": "La decisión no es válida: elige elevar el límite o terminar la ejecución.",
+    "limit_not_higher": "El nuevo límite debe ser mayor que el límite actual.",
+    "limit_invalid": "El nuevo límite no es un importe válido en dólares estadounidenses.",
+    "over_policy": "El nuevo límite supera el máximo de {{max_limit_usd}} USD por ejecución que permite este espacio de trabajo.",
+    "not_pending": "Esta decisión de presupuesto ya no está abierta: ya se tomó, venció o fue sustituida."
   },
   "trace": {
     "invalid": "La traza está dañada o incompleta.",
@@ -816,6 +829,10 @@
     "disabled": "El servidor MCP de Nodestro está desactivado."
   },
   "hints": {
+    "budget": {
+      "not_starter": "Pide a la persona que inició la ejecución o a un administrador que decida; puedes seguir la decisión aquí.",
+      "request_not_found": "Vuelve a cargar la ejecución; muestra la decisión de presupuesto actual, si hay una abierta."
+    },
     "run": {
       "agent": {
         "IncompleteResponseError": "Aumenta «Máx. tokens» en «Avanzado» de este agente o pide una respuesta más corta en su tarea.",
@@ -835,6 +852,8 @@
       "api_error_invalid": "Revisa el modelo y los ajustes del agente; los detalles técnicos muestran la respuesta del proveedor.",
       "api_error_status": "Revisa el modelo y los ajustes del agente; los detalles técnicos muestran la respuesta del proveedor.",
       "budget_exceeded": "Aumenta el presupuesto en los ajustes del flujo de trabajo o continúa la ejecución con un nuevo presupuesto.",
+      "budget_request_expired": "Continúa la ejecución con un presupuesto mayor o pide a un administrador un plazo más largo para las decisiones de presupuesto.",
+      "budget_checkpoint_lost": "Continúa la ejecución: Nodestro muestra qué pasos se repiten y pregunta antes de volver a ejecutar herramientas.",
       "time_limit": "Aumenta el límite de tiempo en «Límites» de los ajustes del flujo de trabajo si la ejecución necesita más tiempo.",
       "step_limit": "Aumenta el límite de pasos en «Límites» de los ajustes del flujo de trabajo o revisa los bucles.",
       "orchestration_limit": "Aumenta «Máximo de decisiones» en el orquestador o indica en sus instrucciones cuándo está terminada la tarea.",

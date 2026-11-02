@@ -42,5 +42,9 @@
   "paused": {
     "label": "Pausiert",
     "description": "Der Lauf wartet auf eine Freigabe und geht nach der Entscheidung weiter."
+  },
+  "awaiting_budget": {
+    "label": "Wartet auf Budget-Entscheidung",
+    "description": "Die nächste Modellanfrage braucht mehr Budget. Eine Person erhöht das Limit dieses Laufs oder beendet ihn; bis dahin geht nichts an ein Modell."
   }
 }

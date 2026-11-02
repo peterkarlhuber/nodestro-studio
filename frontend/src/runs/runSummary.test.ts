@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { NodeRun, Run, WorkflowNode } from "../api/types";
-import { summarizeRun } from "./runSummary";
+import { initialStep, summarizeRun, waitsForBudgetDecision } from "./runSummary";
 
 const node = (id: string, type: WorkflowNode["type"], label: string): WorkflowNode =>
   ({ id, type, label, position: { x: 0, y: 0 }, agent: null, start: null }) as WorkflowNode;
@@ -57,6 +57,7 @@ describe("run summary", () => {
         { name: "calc", calls: 1, errors: 1 },
       ],
       failed: null,
+      budget: { waiting: false, raises: 0 },
     });
   });
 
@@ -89,5 +90,43 @@ describe("run summary", () => {
     expect(summary.tools).toEqual([]);
     expect(summary.total).toBe(4);
     expect(summary.skipped).toBe(1);
+  });
+});
+
+describe("run summary of a budget decision (BUDGET-1)", () => {
+  const budget = (pending: string | null, raises = 0) => ({
+    source: "workflow" as const,
+    initial_limit_usd: "1.00",
+    limit_usd: "2.00",
+    raises: Array.from({ length: raises }, (_, index) => ({
+      request_id: `bud_${index}`,
+      previous_limit_usd: "1.00",
+      new_limit_usd: "2.00",
+      decided_by: "local",
+      decided_at: "2026-11-02T10:00:00Z",
+    })),
+    pending_request_id: pending,
+  });
+
+  it("says that a paused run waits for a budget decision and opens the waiting step", () => {
+    const paused = {
+      ...run(NODES, {
+        classify: state("succeeded", "2026-10-31T10:00:00Z"),
+        route: state("succeeded", "2026-10-31T10:00:01Z"),
+        answer: state("awaiting_budget", "2026-10-31T10:00:02Z"),
+      }),
+      status: "paused",
+      budget: budget("bud_1", 2),
+    } as Run;
+    expect(waitsForBudgetDecision(paused)).toBe(true);
+    expect(summarizeRun(paused).budget).toEqual({ waiting: true, raises: 2 });
+    expect(initialStep(paused)?.id).toBe("answer");
+  });
+
+  it("does not call a finished run waiting, and counts its raises", () => {
+    const done = { ...run(NODES, {}), status: "succeeded", budget: budget("bud_1", 1) } as Run;
+    expect(waitsForBudgetDecision(done)).toBe(false);
+    expect(summarizeRun(done).budget).toEqual({ waiting: false, raises: 1 });
+    expect(summarizeRun({ ...run(NODES, {}), status: "paused" } as Run).budget).toEqual({ waiting: false, raises: 0 });
   });
 });

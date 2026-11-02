@@ -74,6 +74,8 @@ Die Seite **Freigaben** (Navigation, Gruppe *Ausführen & prüfen*) listet alle 
 
 Jede Karte zeigt den Hinweis, die zu prüfenden Ergebnisse (strukturierte Ergebnisse als beschriftete Felder, das JSON einen Klick entfernt), ein Kommentarfeld und die Knöpfe *Freigeben* und *Ablehnen*; die Knöpfe bleiben auch bei langen Ergebnissen im Blick. Freigaben in Unterworkflows erscheinen hier ebenfalls, mit dem Pfad zum übergeordneten Lauf. Karten für [Tool-Aufrufe](/docs/verzweigungen#tool-freigabe) nennen Workflow und Schritt („*Workflow* · Schritt *Name*“).
 
+Läufe, die auf eine [Budget-Entscheidung](/docs/workflows#budget-freigabe) warten, stehen oben in einem eigenen Abschnitt **Budget-Entscheidungen**, mit einem Link zum Lauf.
+
 ## Tool-Aufrufe freigeben {#tool-freigabe}
 <!-- keywords: tool-freigabe, tool-aufruf, pro aufruf, argumente, frist, vorab-freigabe, unbeaufsichtigt, altbestand -->
 

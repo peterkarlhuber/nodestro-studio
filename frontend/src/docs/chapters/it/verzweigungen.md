@@ -74,6 +74,8 @@ La pagina **Approvazioni** (navigazione, gruppo *Esegui e verifica*) elenca tutt
 
 Ogni scheda mostra la nota, i risultati da verificare (i risultati strutturati come campi con etichetta, il JSON a un clic), un campo per il commento e i pulsanti *Approva* e *Rifiuta*; i pulsanti restano visibili anche con risultati lunghi. Anche le approvazioni dentro i sotto-workflow compaiono qui, con il percorso fino all'esecuzione principale. Le schede delle [chiamate di strumenti](/docs/verzweigungen#tool-freigabe) indicano workflow e passaggio («*workflow* · passo *nome*»).
 
+Le esecuzioni che attendono una [decisione sul budget](/docs/workflows#budget-freigabe) compaiono in alto in una sezione propria **Decisioni sul budget**, con un link all’esecuzione.
+
 ## Approvare le chiamate di strumenti {#tool-freigabe}
 <!-- keywords: approvazione strumento, chiamata di strumento, per chiamata, argomenti, scadenza, approvazione anticipata, non presidiata, eccezione preesistente -->
 

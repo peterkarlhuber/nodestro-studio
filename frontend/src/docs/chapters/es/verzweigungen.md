@@ -74,6 +74,8 @@ La página **Aprobaciones** (navegación, grupo *Ejecutar y revisar*) lista toda
 
 Cada tarjeta muestra la indicación, los resultados que revisar (los resultados estructurados como campos con etiqueta y el JSON a un clic), un campo de comentario y los botones *Aprobar* y *Rechazar*; los botones siguen a la vista aunque los resultados sean largos. Las aprobaciones dentro de subflujos también aparecen aquí, con la ruta hasta la ejecución principal. Las tarjetas de [llamadas a herramientas](/docs/verzweigungen#tool-freigabe) indican el flujo de trabajo y el paso («*flujo* · paso *nombre*»).
 
+Las ejecuciones que esperan una [decisión de presupuesto](/docs/workflows#budget-freigabe) aparecen arriba en una sección propia **Decisiones de presupuesto**, con un enlace a la ejecución.
+
 ## Aprobar llamadas a herramientas {#tool-freigabe}
 <!-- keywords: aprobación de herramienta, llamada a herramienta, por llamada, argumentos, plazo, aprobación previa, desatendida, excepción heredada -->
 

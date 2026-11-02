@@ -293,8 +293,11 @@ function Composer({
   );
 }
 
-/** The conversation with the team leaders of a run, followed live; read-only once the run ended. */
-export function TeamLeaderChat({ runId }: { runId: string }) {
+/**
+ * The conversation with the team leaders of a run, followed live; read-only once the run ended. While the run waits
+ * for a budget decision (``budgetWaiting``) the chat keeps working and says that a message never approves budget.
+ */
+export function TeamLeaderChat({ runId, budgetWaiting = false }: { runId: string; budgetWaiting?: boolean }) {
   const { t } = useTranslation();
   const { view, send } = useRunChat(runId);
   const [chosen, setChosen] = useState<string | null>(null);
@@ -324,6 +327,11 @@ export function TeamLeaderChat({ runId }: { runId: string }) {
           {t("runChat.intro")} <DocLink to="ausfuehrungen#teamleitung" label={t("runChat.docs")} />
         </p>
       </div>
+      {budgetWaiting ? (
+        <div data-testid="lrc-budget-paused">
+          <Callout tone="warning">{t("budget.chat.paused")}</Callout>
+        </div>
+      ) : null}
       {data.targets.length ? null : <p className="muted small">{t("runChat.noTargets")}</p>}
       {data.targets.length > 1 && selected ? (
         <TargetPicker targets={data.targets} selected={selected} onSelect={setChosen} />

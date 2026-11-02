@@ -134,6 +134,27 @@
     "priceMode": "Standard avertit pour les prix inconnus ou anciens ; Strict refuse ces requêtes avant qu’elles ne coûtent quoi que ce soit.",
     "reconciliation": "Compare les estimations avec les factures des fournisseurs. Nécessite une clé d’administration de l’API de facturation ; rien n’est modifié."
   },
+  "budget": {
+    "decision": "L’exécution est en pause parce que son budget ne suffit pas pour la prochaine requête au modèle. Rien n’a été envoyé pour elle. Relevez le plafond de cette exécution précise et poursuivez, ou terminez l’exécution.",
+    "reason": "« Épuisé » : les coûts connus ont atteint le plafond. « Prochaine requête trop grande » : le coût maximal de la prochaine requête (entrée plus sortie maximale au tarif le plus élevé) ne tient pas dans le reste. C’est un maximum, pas un coût attendu.",
+    "block": "Le plafond qui a refusé la requête : celui de cette exécution, ou le plafond propre d’un sous-workflow ou d’une équipe. Une hausse modifie exactement ce plafond ; les plafonds au-dessus restent valables et peuvent demander à nouveau.",
+    "initialLimit": "Le plafond avec lequel l’exécution a démarré : le budget du workflow, ou le budget par défaut des paramètres.",
+    "currentLimit": "Le plafond qui s’applique maintenant : le plafond de départ plus chaque hausse accordée à cette exécution.",
+    "knownCost": "Ce que les requêtes de l’exécution ont coûté jusqu’ici, selon les prix connus. Les coûts inconnus sont signalés et ne comptent jamais pour 0.",
+    "remaining": "Plafond actuel moins coûts connus. Si des coûts sont inconnus, le reste réel peut être plus petit.",
+    "reserved": "Les requêtes encore en cours réservent leur coût maximal possible ; à la fin, le coût réel remplace la réservation.",
+    "deadline": "Si personne ne décide d’ici là, l’exécution se termine avec l’erreur « budget épuisé ». Les administrateurs fixent le délai dans les paramètres.",
+    "blockedRequest": "La requête au modèle en attente, avec son coût maximal. Certains coûts ne peuvent pas être bornés à l’avance (pas de prix connu, images, fichiers, outils du fournisseur).",
+    "suggested": "Coûts connus plus le coût maximal de la prochaine requête, arrondi au cent supérieur. Suffit pour cette seule requête ; ce n’est pas une prévision pour le reste de l’exécution.",
+    "newLimit": "Saisissez le nouveau plafond total, pas le montant à ajouter. Il doit être plus élevé que le plafond actuel et ne pas dépasser le maximum de l’espace de travail.",
+    "difference": "De combien le nouveau plafond dépasse l’actuel. Seul ce que l’exécution utilise réellement est dépensé.",
+    "end": "Termine l’exécution immédiatement. Les résultats des étapes terminées restent ; plus rien n’est envoyé à un modèle.",
+    "history": "Chaque hausse accordée à cette exécution : le plafond avant et après, qui a décidé et quand.",
+    "runBudget": "Le plafond de coût de l’exécution. Les exécutions suivies se mettent en pause quand il ne suffit pas et attendent une décision ; celles issues de planifications, de lots, de séries de tests et de l’API publiée s’arrêtent à la place.",
+    "maxRunBudget": "Le plafond le plus élevé qu’une exécution de cet espace de travail peut avoir, au départ ou après des hausses. Vide signifie aucune limite.",
+    "decisionHours": "Combien de temps une exécution attend une décision de budget avant de se terminer avec « budget épuisé » (1 à 720 heures, 24 par défaut).",
+    "permissions": "La personne qui a lancé l’exécution décide si elle a l’autorisation Exécuter ; les administrateurs peuvent décider pour toute exécution."
+  },
   "search": {
     "global": "Recherche dans les workflows, agents, outils, connaissances et la documentation (Ctrl+K)."
   },

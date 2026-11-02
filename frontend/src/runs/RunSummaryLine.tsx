@@ -73,6 +73,19 @@ export function RunSummaryLine({ run, onOpenStep }: { run: Run; onOpenStep: (nod
               : t("runs.summary.noTools")}
           </dd>
         </div>
+        {summary.budget.waiting || summary.budget.raises ? (
+          <div data-testid="run-summary-budget">
+            <dt>{t("budget.summary.title")}</dt>
+            <dd>
+              {[
+                summary.budget.waiting ? t("budget.summary.waiting") : null,
+                summary.budget.raises ? t("budget.summary.raises", { count: summary.budget.raises }) : null,
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </dd>
+          </div>
+        ) : null}
         {summary.failed ? (
           <div>
             <dt>{t("runs.summary.failedAt")}</dt>

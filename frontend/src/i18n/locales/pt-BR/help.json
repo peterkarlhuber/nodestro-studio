@@ -134,6 +134,27 @@
     "priceMode": "Padrão avisa sobre preços desconhecidos ou antigos; Rigoroso recusa essas solicitações antes que custem algo.",
     "reconciliation": "Compara as estimativas com as faturas dos provedores. Precisa de uma chave de administrador da API de faturamento; nada é alterado."
   },
+  "budget": {
+    "decision": "A execução está pausada porque o orçamento não basta para a próxima solicitação ao modelo. Nada foi enviado para ela. Aumente o limite exatamente desta execução e continue, ou encerre a execução.",
+    "reason": "“Esgotado”: os custos conhecidos atingiram o limite. “Próxima solicitação grande demais”: o máximo que a próxima solicitação pode custar (entrada mais saída máxima na tarifa mais alta) não cabe no que resta. É um máximo, não um custo esperado.",
+    "block": "O limite que recusou a solicitação: o desta execução ou o limite próprio de um subworkflow ou equipe. Um aumento muda exatamente esse limite; limites acima continuam valendo e podem perguntar de novo.",
+    "initialLimit": "O limite com que a execução começou: o orçamento do workflow ou o orçamento padrão das configurações.",
+    "currentLimit": "O limite que vale agora: o limite inicial mais cada aumento aprovado para esta execução.",
+    "knownCost": "Quanto as solicitações da execução custaram até agora, por preços conhecidos. Custos desconhecidos são marcados e nunca contam como 0.",
+    "remaining": "Limite atual menos custos conhecidos. Se houver custos desconhecidos, o que resta de fato pode ser menor.",
+    "reserved": "Solicitações ainda em andamento reservam o custo máximo possível; ao terminar, o custo real substitui a reserva.",
+    "deadline": "Se ninguém decidir até lá, a execução termina com o erro “orçamento esgotado”. Administradores definem o prazo nas configurações.",
+    "blockedRequest": "A solicitação ao modelo que aguarda, com o máximo que pode custar. Alguns custos não podem ser limitados de antemão (sem preço conhecido, imagens, arquivos, ferramentas do provedor).",
+    "suggested": "Custos conhecidos mais o máximo que a próxima solicitação pode custar, arredondado para cima ao centavo. Basta para essa solicitação; não é uma previsão para o restante da execução.",
+    "newLimit": "Informe o novo limite total, não o valor a acrescentar. Ele precisa ser maior que o limite atual e não pode passar do máximo do espaço de trabalho.",
+    "difference": "Quanto o novo limite é maior que o atual. Só é gasto o que a execução realmente usar.",
+    "end": "Encerra a execução agora. Os resultados das etapas concluídas permanecem; nada mais é enviado a um modelo.",
+    "history": "Cada aumento aprovado desta execução: o limite antes e depois, quem decidiu e quando.",
+    "runBudget": "O limite de custo da execução. Execuções acompanhadas pausam quando ele não basta e aguardam uma decisão; as de agendamentos, lotes, séries de testes e da API publicada param em vez disso.",
+    "maxRunBudget": "O maior limite que uma execução deste espaço de trabalho pode ter, no início ou após aumentos. Vazio significa sem teto.",
+    "decisionHours": "Quanto tempo uma execução aguarda uma decisão de orçamento antes de terminar com “orçamento esgotado” (de 1 a 720 horas, padrão 24).",
+    "permissions": "Decide a pessoa que iniciou a execução, se tiver a permissão Executar; administradores podem decidir em qualquer execução."
+  },
   "search": {
     "global": "Busca em fluxos de trabalho, agentes, ferramentas, conhecimento e documentação (Ctrl+K)."
   },

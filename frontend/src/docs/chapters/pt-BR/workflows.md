@@ -157,6 +157,59 @@ O orçamento limita os **custos estimados** de uma execução em dólares americ
 
 Custos desconhecidos **não** contam como 0. Se o custo máximo de uma solicitação não puder ser determinado com antecedência (sem preço conhecido, imagens, arquivos ou ferramentas do provedor, como a pesquisa na web), no modo padrão ela é executada sem limite superior. A execução mostra então, ao lado dos custos, o aviso **Sem máximo rígido** com o número dessas solicitações. No modo de preço estrito, solicitações sem preço conhecido não são enviadas.
 
+Execuções que você mesmo inicia não param quando o orçamento não basta: elas pausam e aguardam uma decisão, veja [Decisões de orçamento durante uma execução](/docs/workflows#budget-freigabe).
+
+## Orçamento padrão, do workflow e da execução {#budget-ebenen}
+<!-- keywords: orçamento padrão, orçamento do workflow, orçamento da execução, limite efetivo, limite inicial, aumento, níveis -->
+
+Três níveis definem quanto uma execução pode custar:
+
+- **Orçamento padrão** (configurações): vale para todo workflow sem orçamento próprio.
+- **Orçamento do workflow** (configurações do workflow): substitui o orçamento padrão para este workflow. Uma versão publicada mantém o orçamento com que foi publicada.
+- **Orçamento da execução:** o limite com que uma execução começa (o orçamento do workflow, senão o padrão) mais cada aumento aprovado para essa execução. Um aumento não muda nem o workflow nem as configurações; a próxima execução começa de novo com o orçamento do workflow.
+
+Os detalhes da execução mostram o limite dela ao lado dos custos e, após um aumento, *limite aumentado de …*. Administradores podem definir um **orçamento máximo por execução** que nenhuma execução pode ultrapassar, nem no início nem após aumentos (veja [Orçamento padrão](/docs/einstellungen#budget)).
+
+## Decisões de orçamento durante uma execução {#budget-freigabe}
+<!-- keywords: decisão de orçamento, pausa de orçamento, aumentar orçamento, continuar, encerrar execução, aguardando orçamento, limite sugerido, solicitação grande demais, esgotado, prazo -->
+
+Quando uma solicitação ao modelo de uma execução que você iniciou não cabe mais no orçamento, a execução não falha mais. Ela **pausa** com o status *Aguardando decisão de orçamento*: solicitações já em andamento terminam e são registradas, nenhuma outra é enviada e nada é cobrado pela solicitação em espera. A etapa dela mostra o mesmo status.
+
+O motivo é um de dois:
+
+- **Esgotado:** os custos conhecidos atingiram o limite.
+- **Próxima solicitação grande demais:** o máximo que a próxima solicitação pode custar (a entrada mais a maior resposta possível na tarifa mais alta) não cabe no que resta. É um máximo, não um custo esperado; a solicitação é retida antes de ser paga em vez de ultrapassar o limite.
+
+A decisão de orçamento aparece na visão de execução do editor, nos detalhes da execução e na seção **Decisões de orçamento** da [página Aprovações](/docs/verzweigungen#freigaben-seite); o contador da navegação a inclui. O cartão mostra o limite no início e agora, o custo conhecido (com *mais custos desconhecidos* quando há custos desconhecidos, nunca como 0), o que resta, o que está reservado para solicitações em andamento, qual limite bloqueia, as solicitações em espera com o máximo que podem custar, o prazo e aumentos anteriores.
+
+- **Verificar e continuar:** informe o novo limite **total** desta execução. O valor sugerido é o custo conhecido mais o máximo que a próxima solicitação pode custar, arredondado para cima ao centavo: um mínimo para a próxima solicitação, nunca uma previsão para o restante da execução. O Nodestro verifica o valor (maior que o limite atual, não acima do orçamento máximo por execução) e continua a execução na hora.
+- **Encerrar execução** (com confirmação): a execução termina com a observação de que foi encerrada em uma decisão de orçamento. Os resultados das etapas concluídas permanecem.
+
+Uma decisão vale só para esta execução. Se o limite aumentado acabar de novo, a execução pausa novamente com uma nova decisão; isso se repete quantas vezes for preciso. Uma decisão é tomada uma única vez: se outra pessoa decidiu antes, o cartão diz quem e como. Sair da página não perde nada: a decisão fica salva no servidor e é encontrada de novo em todos os lugares.
+
+Durante a pausa nenhuma thread nem worker fica ocupado, e um reinício do Nodestro não perde nada. O [chat ao vivo da execução](/docs/ausfuehrungen#teamleitung) continua respondendo perguntas (com o próprio orçamento do chat); as instruções são usadas na próxima decisão, depois que a execução continuar. Uma mensagem do chat **nunca** é uma decisão de orçamento.
+
+Se ninguém decidir antes do prazo (24 horas, a menos que um administrador tenha definido outro), a execução falha com “orçamento esgotado”. Depois você pode [continuá-la](/docs/verzweigungen#fortsetzen) com um novo orçamento.
+
+## Limites de subworkflows e equipes {#budget-teams}
+<!-- keywords: orçamento do subworkflow, orçamento da equipe, execução filha, execução superior, limite que bloqueia, aninhado -->
+
+Um subworkflow ou equipe com orçamento próprio roda com o próprio limite, e cada solicitação conta também para a execução acima. A decisão de orçamento nomeia o limite que recusou a solicitação: *o limite desta execução* ou *o limite próprio do subworkflow / da equipe “nome”*. Um aumento muda exatamente esse limite, nunca o workflow por trás. Os limites acima continuam valendo: aumentar o limite de uma equipe pode levar a uma segunda decisão para a execução acima, e aumentar esta nunca levanta o limite próprio de uma equipe. Sempre há uma decisão por execução de nível superior.
+
+## Quem pode decidir {#budget-rechte}
+<!-- keywords: permissão, quem pode aumentar, iniciou a execução, administrador, orçamento máximo por execução, tenant -->
+
+No desktop, você mesmo decide. Em um servidor, pode decidir quem tem a permissão *Executar* **e** iniciou a execução; administradores podem decidir em qualquer execução do seu espaço de trabalho. Execuções sem uma pessoa iniciadora conhecida só podem ser decididas por administradores. Todos com *Ler* veem a decisão; o cartão explica então por que faltam os botões. Nenhum aumento pode ultrapassar o **orçamento máximo por execução** do espaço de trabalho nem um teto definido por quem opera o servidor.
+
+## Execuções sem acompanhamento e limites conhecidos {#budget-grenzen}
+<!-- keywords: agendamento, lote, série de testes, api publicada, sem acompanhamento, sem pausa, preço desconhecido, qualidade do preço, estado perdido -->
+
+- **Execuções sem acompanhamento não pausam.** Execuções de [agendamentos, lotes e séries de testes](/docs/automatisierung#zeitplaene) e da API publicada falham como antes quando o orçamento se esgota (erro `BudgetExceededError`); ninguém é consultado e nada é aumentado automaticamente.
+- **Um orçamento maior não torna os preços conhecidos.** Solicitações cujo custo não tem teto (sem preço conhecido no modo de preços padrão, ferramentas do provedor, imagens, arquivos) são enviadas enquanto o limite não se esgota e contadas sem teto. No [modo de preços](/docs/nutzung#preismodus) estrito, preços desconhecidos ou pouco confiáveis são recusados antes da solicitação; isso não é uma decisão de orçamento.
+- Uma resposta que ultrapassa o limite depois de paga é mantida e usada, nunca enviada de novo; a pausa vem antes da próxima solicitação.
+- O orçamento diário da API, o limite de custo de uma API publicada, limites de taxa, limites de tempo e de etapas e o orçamento do chat não podem ser aumentados aqui.
+- Se o estado salvo de uma etapa em espera se perder, a etapa falha com uma mensagem própria em vez de rodar de novo em silêncio. [Continue a execução](/docs/verzweigungen#fortsetzen): o Nodestro mostra o que roda de novo e pergunta antes de executar ferramentas novamente.
+
 ## Limites por execução {#limits}
 <!-- keywords: limites, ao mesmo tempo, paralelo, limite de tempo, duração, timeout, run.time_limit, etapas, run.step_limit -->
 

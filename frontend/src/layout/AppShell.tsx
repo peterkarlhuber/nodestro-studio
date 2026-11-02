@@ -26,7 +26,7 @@ import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 
 import { useAccess } from "../api/access";
-import { useApprovals, useSettings, useToolApprovals } from "../api/hooks";
+import { pendingBudgetRequests, useApprovals, useBudgetRequests, useSettings, useToolApprovals } from "../api/hooks";
 import { AssistantPanel } from "../assistant/AssistantPanel";
 import { useAssistant } from "../assistant/store";
 import { LoginProblemNotice, ReadOnlyNotice, UserMenu } from "../components/Access";
@@ -135,7 +135,12 @@ export function AppShell() {
   const access = useAccess();
   const approvals = useApprovals();
   const toolApprovals = useToolApprovals();
-  const waiting = (approvals.data?.length ?? 0) + (toolApprovals.data?.filter((item) => item.status === "pending").length ?? 0);
+  const budgetRequests = useBudgetRequests();
+  // Budget decisions (BUDGET-1) wait for a person like approvals do.
+  const waiting =
+    (approvals.data?.length ?? 0) +
+    (toolApprovals.data?.filter((item) => item.status === "pending").length ?? 0) +
+    pendingBudgetRequests(budgetRequests.data).length;
   // New agents use the default model: without its provider nothing runs.
   const missingKey = missingProviders(settings.data, [settings.data?.default_model]).length > 0;
   // With another provider set up the problem is the default model, not a missing provider (OB-03).

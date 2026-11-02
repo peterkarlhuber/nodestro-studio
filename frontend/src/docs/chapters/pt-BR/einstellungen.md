@@ -92,6 +92,8 @@ Salve as alterações com **Salvar** na seção *Modelos e orçamento*.
 
 O **orçamento padrão por execução** (inicialmente 2 USD) vale para todos os fluxos sem orçamento próprio. Vazio significa sem limite. Como o orçamento funciona está em [Orçamento por execução](/docs/workflows#budget).
 
+Administradores também definem o **Orçamento máximo por execução** (vazio: sem teto): nenhuma execução pode começar com mais nem ser aumentada além dele. O **Prazo das decisões de orçamento** (de 1 a 720 horas, inicialmente 24) diz quanto tempo uma execução pausada aguarda uma [decisão de orçamento](/docs/workflows#budget-freigabe) antes de falhar. Quem pode decidir é explicado em [Quem pode decidir](/docs/workflows#budget-rechte).
+
 ## Sandbox {#sandbox}
 <!-- keywords: escolher sandbox, automático, docker, processo python, docker disponível, sandbox integrado, sandbox linux, macos, windows, bloqueado, experimental -->
 

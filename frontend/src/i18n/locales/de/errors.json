@@ -125,6 +125,10 @@
     "failed": "Der Schritt ist fehlgeschlagen.",
     "agentFailed": "Der Agent ist mit einem Fehler abgebrochen ({{type}}).",
     "budget_exceeded": "Das Budget für diesen Lauf ist aufgebraucht; der Lauf wurde gestoppt.",
+    "budget_ended": "Der Lauf wurde bei einer Budget-Entscheidung beendet.",
+    "budget_request_expired": "Niemand hat rechtzeitig über das Budget entschieden; der Lauf wurde gestoppt.",
+    "budget_waits_interrupted": "Eine Budget-Entscheidung wurde unterbrochen, weil Nodestro neu gestartet wurde; der Lauf wurde gestoppt.",
+    "budget_checkpoint_lost": "Der gespeicherte Stand des Schritts, der auf sein Budget wartete, ist nicht mehr vorhanden; der Schritt ist fehlgeschlagen und wurde nicht stillschweigend wiederholt.",
     "api_error": "Der KI-Anbieter meldete einen Fehler (Status {{status}}).",
     "skipped": "Übersprungen, weil ein vorheriger Knoten nicht erfolgreich war.",
     "cancelled": "Der Lauf wurde abgebrochen.",
@@ -178,6 +182,15 @@
     "provider_rate_limited": "{{provider}} hat zu viele Anfragen oder Tokens in kurzer Zeit gemeldet (Rate-Limit).",
     "provider_overloaded": "{{provider}} ist gerade überlastet.",
     "provider_auth_aws": "AWS hat die Anmeldung für Amazon Bedrock nicht akzeptiert: Zugangsdaten fehlen oder sind abgelaufen, oder der IAM-Rolle fehlt eine Berechtigung."
+  },
+  "budget": {
+    "not_starter": "Nur die Person, die den Lauf gestartet hat, oder ein Administrator kann über sein Budget entscheiden.",
+    "request_not_found": "Diese Budget-Entscheidung gibt es nicht mehr. Lade die Ausführung neu, um den aktuellen Stand zu sehen.",
+    "action_invalid": "Die Entscheidung ist ungültig: Erhöhe das Limit oder beende den Lauf.",
+    "limit_not_higher": "Das neue Limit muss höher sein als das aktuelle Limit.",
+    "limit_invalid": "Das neue Limit ist kein gültiger Betrag in US-Dollar.",
+    "over_policy": "Das neue Limit liegt über dem Höchstwert von {{max_limit_usd}} USD pro Lauf, den dieser Arbeitsbereich erlaubt.",
+    "not_pending": "Diese Budget-Entscheidung ist nicht mehr offen: Sie wurde bereits getroffen, ist abgelaufen oder wurde ersetzt."
   },
   "trace": {
     "invalid": "Der Trace ist beschädigt oder unvollständig.",
@@ -816,6 +829,10 @@
     "disabled": "Der MCP-Server von Nodestro ist ausgeschaltet."
   },
   "hints": {
+    "budget": {
+      "not_starter": "Bitte die Person, die den Lauf gestartet hat, oder einen Administrator um die Entscheidung; du kannst sie hier verfolgen.",
+      "request_not_found": "Lade die Ausführung neu; sie zeigt die aktuelle Budget-Entscheidung, falls eine offen ist."
+    },
     "run": {
       "agent": {
         "IncompleteResponseError": "Erhöhe beim Agenten unter „Erweitert“ den Wert „Max. Tokens“ oder bitte im Auftrag um eine kürzere Antwort.",
@@ -835,6 +852,8 @@
       "api_error_invalid": "Prüfe Modell und Einstellungen des Agenten; die technischen Details nennen die Antwort des Anbieters.",
       "api_error_status": "Prüfe Modell und Einstellungen des Agenten; die technischen Details nennen die Antwort des Anbieters.",
       "budget_exceeded": "Erhöhe das Budget in den Workflow-Einstellungen oder setze den Lauf mit einem neuen Budget fort.",
+      "budget_request_expired": "Setze den Lauf mit einem höheren Budget fort oder bitte eine Administratorin bzw. einen Administrator um eine längere Frist für Budget-Entscheidungen.",
+      "budget_checkpoint_lost": "Setze den Lauf fort: Nodestro zeigt, welche Schritte erneut laufen, und fragt, bevor Tools erneut ausgeführt werden.",
       "time_limit": "Erhöhe das Zeitlimit in den Workflow-Einstellungen unter „Grenzen“, wenn der Lauf mehr Zeit braucht.",
       "step_limit": "Erhöhe die Schrittgrenze in den Workflow-Einstellungen unter „Grenzen“ oder prüfe Schleifen.",
       "orchestration_limit": "Erhöhe beim Orchestrator „Höchstens Entscheidungen“ oder beschreibe in den Anweisungen, wann die Aufgabe erledigt ist.",

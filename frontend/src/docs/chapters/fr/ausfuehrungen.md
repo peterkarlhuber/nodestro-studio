@@ -83,6 +83,7 @@ L’onglet **Contexte** montre ce que l’agent a reçu dans cette exécution : 
 | **Ignoré** | Le nœud ne s’est pas exécuté parce que sa branche n’a pas été choisie. Ce n’est pas une erreur. |
 | **Bloqué** | Le nœud ne s’est pas exécuté parce qu’un prédécesseur a échoué ou a été annulé. |
 | **En attente de validation** | Une [validation](/docs/verzweigungen#freigabe) attend la décision d’une personne. |
+| **En attente d’une décision de budget** | La prochaine requête au modèle a besoin de plus de budget ; l’exécution est en pause jusqu’à ce que quelqu’un relève son plafond ou la termine ([décisions de budget](/docs/workflows#budget-freigabe)). |
 | **En pause** | L’exécution attend une validation et reprend après la décision. |
 | **Annulé** | Arrêté avec *Annuler l'exécution*, refusé, ou une trace exportée avant d’être complète. |
 | **Vous attend** | Un appel d’outil attend votre validation ; l’exécution continue dès que vous avez décidé. |
@@ -122,6 +123,8 @@ Chaque consigne affiche son état : *En attente de la prochaine décision* (avec
 **Pause, redémarrage, reprise :** tant qu’une équipe attend une validation, les consignes restent ouvertes et valent pour la prochaine décision dès que l’exécution reprend. Si un redémarrage du serveur fait perdre une décision, la consigne est transmise à nouveau à la décision suivante. Quand l’exécution ou le chef d’équipe se termine, les consignes ouvertes sont marquées *N’est plus prise en compte* et ne sont pas reprises lorsque vous poursuivez l’exécution. Après la fin, la conversation peut seulement être lue.
 
 **Exécutions sans surveillance :** dans l’inspecteur de l’orchestrateur, **Pilotage en direct** fixe qui peut donner des consignes : *Exécutions lancées par une personne* (par défaut), *Toujours* (aussi planification, API, exécution par lots et série de tests) ou *Désactivé*. Les questions ne sont pas concernées. Pour en savoir plus, consultez [Orchestrateur](/docs/verzweigungen#orchestrator).
+
+**Pendant une pause de budget**, le chat continue de fonctionner : les questions reçoivent une réponse sur le budget du chat, les instructions sont utilisées une fois l’exécution reprise. Un message du chat ne relève ni n’accorde jamais le budget de l’exécution ; cela se fait uniquement sur la carte de décision de budget.
 
 ## Exporter une trace {#trace-export}
 <!-- keywords: exporter une trace, export, json, run json, partager, archiver, nettoyer, anonymiser, confidentialité, données personnelles -->

@@ -157,6 +157,59 @@ Le budget limite les **coûts estimés** d’une exécution en dollars américai
 
 Les coûts inconnus ne comptent **pas** pour 0. Si le coût maximal d’une requête ne peut pas être déterminé à l’avance (aucun prix connu, images, fichiers ou outils du fournisseur comme la recherche web), elle s’exécute sans plafond en mode standard. L’exécution affiche alors à côté des coûts la mention **Pas de maximum strict** avec le nombre de ces requêtes. En mode de prix strict, les requêtes sans prix connu ne sont pas envoyées du tout.
 
+Les exécutions que vous lancez vous-même ne s’arrêtent pas quand le budget ne suffit pas : elles se mettent en pause et attendent une décision, voir [Décisions de budget pendant une exécution](/docs/workflows#budget-freigabe).
+
+## Budget par défaut, du workflow et de l’exécution {#budget-ebenen}
+<!-- keywords: budget par défaut, budget du workflow, budget de l’exécution, plafond effectif, plafond de départ, hausse, niveaux -->
+
+Trois niveaux déterminent combien une exécution peut coûter :
+
+- **Budget par défaut** (paramètres) : s’applique à tout workflow sans budget propre.
+- **Budget du workflow** (paramètres du workflow) : remplace le budget par défaut pour ce workflow. Une version publiée garde le budget avec lequel elle a été publiée.
+- **Budget de l’exécution :** le plafond avec lequel une exécution démarre (le budget du workflow, sinon le budget par défaut), plus chaque hausse accordée à cette exécution. Une hausse ne modifie ni le workflow ni les paramètres ; l’exécution suivante repart avec le budget du workflow.
+
+Les détails de l’exécution indiquent son plafond à côté de ses coûts, et *plafond relevé depuis …* après une hausse. Les administrateurs peuvent fixer un **budget maximal par exécution** qu’aucune exécution ne peut dépasser, ni au départ ni après des hausses (voir [Budget par défaut](/docs/einstellungen#budget)).
+
+## Décisions de budget pendant une exécution {#budget-freigabe}
+<!-- keywords: décision de budget, pause de budget, relever le budget, poursuivre, terminer l’exécution, en attente de budget, plafond proposé, requête trop grande, épuisé, délai -->
+
+Quand une requête au modèle d’une exécution que vous avez lancée ne tient plus dans son budget, l’exécution n’échoue plus. Elle se **met en pause** avec le statut *En attente d’une décision de budget* : les requêtes déjà en cours se terminent et sont enregistrées, aucune autre requête n’est envoyée, et rien n’est facturé pour la requête en attente. Son étape affiche le même statut.
+
+La raison est l’une des deux suivantes :
+
+- **Épuisé :** les coûts connus ont atteint le plafond.
+- **Prochaine requête trop grande :** le coût maximal de la prochaine requête (son entrée plus la plus longue réponse possible au tarif le plus élevé) ne tient pas dans le reste. C’est un maximum, pas un coût attendu ; la requête est retenue avant d’être payée au lieu de dépasser le plafond.
+
+La décision de budget apparaît dans l’aperçu d’exécution de l’éditeur, dans les détails de l’exécution et dans la section **Décisions de budget** de la [page Validations](/docs/verzweigungen#freigaben-seite) ; le compteur de la navigation l’inclut. La carte indique le plafond au départ et maintenant, les coûts connus (avec *plus des coûts inconnus* quand des coûts sont inconnus, jamais 0), le reste, ce qui est réservé pour les requêtes en cours, quel plafond bloque, les requêtes en attente avec leur coût maximal, le délai et les hausses précédentes.
+
+- **Vérifier et poursuivre :** saisissez le nouveau plafond **total** de cette exécution. La valeur proposée correspond aux coûts connus plus le coût maximal de la prochaine requête, arrondi au cent supérieur : un minimum pour la prochaine requête, jamais une prévision pour le reste de l’exécution. Nodestro vérifie le montant (plus élevé que le plafond actuel, pas au-dessus du budget maximal par exécution) et reprend l’exécution aussitôt.
+- **Terminer l’exécution** (avec confirmation) : l’exécution se termine avec la mention qu’elle a été terminée lors d’une décision de budget. Les résultats des étapes terminées restent.
+
+Une décision ne vaut que pour cette exécution. Si le plafond relevé ne suffit plus, l’exécution se remet en pause avec une nouvelle décision ; cela se répète autant que nécessaire. Une décision n’est prise qu’une fois : si quelqu’un d’autre a décidé avant, la carte indique qui et comment. Quitter la page ne fait rien perdre : la décision est enregistrée sur le serveur et se retrouve partout.
+
+Pendant la pause, aucun thread ni worker n’est occupé, et un redémarrage de Nodestro ne fait rien perdre. Le [chat en direct de l’exécution](/docs/ausfuehrungen#teamleitung) continue de répondre aux questions (sur son propre budget de chat) ; les instructions sont utilisées à la prochaine décision, une fois l’exécution reprise. Un message du chat n’est **jamais** une décision de budget.
+
+Si personne ne décide avant le délai (24 heures sauf réglage contraire d’un administrateur), l’exécution échoue avec « budget épuisé ». Vous pouvez alors la [reprendre](/docs/verzweigungen#fortsetzen) avec un nouveau budget.
+
+## Plafonds des sous-workflows et des équipes {#budget-teams}
+<!-- keywords: budget du sous-workflow, budget d’équipe, exécution enfant, exécution parente, plafond bloquant, imbriqué -->
+
+Un sous-workflow ou une équipe avec un budget propre s’exécute avec son propre plafond, et chaque requête compte aussi pour l’exécution au-dessus. La décision de budget nomme le plafond qui a refusé la requête : *le plafond de cette exécution*, ou *le plafond propre du sous-workflow / de l’équipe « nom »*. Une hausse modifie exactement ce plafond, jamais le workflow derrière. Les plafonds au-dessus restent valables : relever le plafond d’une équipe peut entraîner une deuxième décision pour l’exécution au-dessus, et relever celle-ci ne lève jamais le plafond propre d’une équipe. Il y a toujours une seule décision par exécution de premier niveau.
+
+## Qui peut décider {#budget-rechte}
+<!-- keywords: autorisation, qui peut relever, a lancé l’exécution, administrateur, budget maximal par exécution, locataire -->
+
+Sur le poste de travail, vous décidez vous-même. Sur un serveur, peut décider la personne qui a l’autorisation *Exécuter* **et** qui a lancé l’exécution ; les administrateurs peuvent décider pour toute exécution de leur espace de travail. Les exécutions sans personne connue au lancement ne peuvent être décidées que par des administrateurs. Toute personne ayant *Lire* voit la décision ; la carte explique alors pourquoi les boutons manquent. Aucune hausse ne peut dépasser le **budget maximal par exécution** de l’espace de travail ni un plafond fixé par l’exploitant du serveur.
+
+## Exécutions sans surveillance et limites connues {#budget-grenzen}
+<!-- keywords: planification, lot, série de tests, api publiée, sans surveillance, pas de pause, prix inconnu, qualité des prix, état perdu -->
+
+- **Les exécutions sans surveillance ne se mettent pas en pause.** Les exécutions issues de [planifications, de lots et de séries de tests](/docs/automatisierung#zeitplaene) et de l’API publiée échouent comme avant quand leur budget est épuisé (erreur `BudgetExceededError`) ; personne n’est sollicité et rien n’est relevé automatiquement.
+- **Un budget plus élevé ne rend pas les prix connus.** Les requêtes dont le coût n’a pas de borne supérieure (pas de prix connu en mode de prix standard, outils du fournisseur, images, fichiers) sont envoyées tant que le plafond n’est pas épuisé et comptées sans limite supérieure. En [mode de prix](/docs/nutzung#preismodus) strict, les prix inconnus ou peu fiables sont refusés avant la requête ; ce n’est pas une décision de budget.
+- Une réponse qui dépasse le plafond après avoir été payée est conservée et utilisée, jamais renvoyée ; la pause intervient avant la requête suivante.
+- Le budget journalier de l’API, le plafond de coût d’une API publiée, les limites de débit, les limites de temps et d’étapes ainsi que le budget du chat ne peuvent pas être relevés ici.
+- Si l’état enregistré d’une étape en attente est perdu, l’étape échoue avec son propre message au lieu d’être relancée en silence. [Reprenez l’exécution](/docs/verzweigungen#fortsetzen) : Nodestro indique ce qui est relancé et demande avant de relancer des outils.
+
 ## Limites par exécution {#limits}
 <!-- keywords: limites, simultané, parallèle, limite de temps, durée, timeout, run.time_limit, étapes, run.step_limit -->
 

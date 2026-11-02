@@ -40,7 +40,7 @@ export interface ToolProblem {
 
 const FINISHED = new Set<Run["status"]>(["succeeded", "failed", "cancelled"]);
 /** Node states that mean "not done yet": in a finished run they never got to an end. */
-const UNFINISHED = new Set<NodeRun["status"]>(["waiting", "running", "awaiting_approval"]);
+const UNFINISHED = new Set<NodeRun["status"]>(["waiting", "running", "awaiting_approval", "awaiting_budget"]);
 
 function kindOf(call: ToolCallRecord): ToolProblemKind | null {
   const status = call.approval?.status;
