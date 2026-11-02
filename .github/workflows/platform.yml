@@ -66,7 +66,8 @@ jobs:
           export GIT_CONFIG_COUNT=1
           export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
           export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
-          pip install -e ".[dev]" pytest-asyncio httpx
+          # pglast: the runtime's static tenant-isolation check (tests/test_tenant_filters.py, security review SR-01).
+          pip install -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9"
       - run: python scripts/check_imports.py
       - name: Check out every component at its pinned commit
         env:
