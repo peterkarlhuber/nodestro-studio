@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import type { BackupContents, BackupInfo, DiagnosticCheck, DiagnosticStatus } from "../api/types";
+import { dockerReasonKey } from "../api/types";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, HelpTip, Hint, Modal, Section, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
@@ -29,6 +30,10 @@ export function CheckRow({ check }: { check: DiagnosticCheck }) {
   const params = displayParams(check.params);
   const fixKey = `diagnostics.checks.${check.id}.fix.${check.code}`;
   const fix = i18n.exists(fixKey) ? t(fixKey, params) : "";
+  // The Docker check names the runtime's reason (docker-seccomp, …): the same sentence as Settings → Sandbox.
+  const reason = typeof check.params.reason === "string" ? check.params.reason : "";
+  const reasonKey =
+    check.id === "docker" && check.code !== "available" && reason !== "docker-checking" ? dockerReasonKey(reason) : null;
   return (
     <li className={`diagnostic diagnostic--${check.status}`} data-check={check.id} data-status={check.status}>
       <Icon size={15} aria-hidden className="diagnostic__icon" />
@@ -36,6 +41,7 @@ export function CheckRow({ check }: { check: DiagnosticCheck }) {
         <strong>{t(`diagnostics.checks.${check.id}.title`)}</strong>{" "}
         <span className="sr-only">{t(`diagnostics.status.${check.status}`)}</span>
         <span>{t(`diagnostics.checks.${check.id}.${check.code}`, params)}</span>
+        {reasonKey ? <span data-testid="diagnostic-reason"> {t(reasonKey)}</span> : null}
         {fix ? <div className="small diagnostic__fix">{fix}</div> : null}
         {check.status !== "ok" && check.message ? (
           <details className="small">

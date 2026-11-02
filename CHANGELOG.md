@@ -2,7 +2,25 @@
 
 ## Unreleased
 
-### Docker-first sandbox: texts and docs (2026-11-02, ADR-0009 status update)
+### Docker-first sandbox: texts, docs and the Docker status view (2026-11-02, ADR-0009 status update)
+
+- Settings → Sandbox shows the Docker sandbox as the runtime's background check found it (runtimes that report
+  `checks`): the engine, rootless/rootful and cgroup badges, each check (`cli`, `daemon`, `preflight`, `image`,
+  `self-test`) passed or failed with a sentence for the failed one, the docker-group root note of a rootful daemon
+  and when the self-test last ran. **Check again** asks `GET /api/sandbox/status?refresh=1` and follows a running
+  check; while the state is `checking` the panel polls `GET /api/sandbox/status?wait=2`, only while the page is
+  visible. Administrators get **Run self-test** (`POST /api/sandbox/self-test`; *Prepare sandbox* while the image is
+  missing). Blocked AI-created tools name the Docker reason (`docker-missing` … `docker-image`, `docker-checking`);
+  when a check settles the settings are read again. Older runtimes without these fields keep the earlier view.
+- `types.ts`: `SandboxCheck`, `SandboxBackendStatus.engine/rootless/cgroup_version/checks/tested_at`, state
+  `checking`, `DOCKER_REASONS`, `dockerReasonKey`; client `api.sandboxStatus`, `api.sandboxSelfTest`.
+- Six languages: the reason keys are named after the runtime's reasons (`rootless-cgroup`, `os-type`); the ten
+  in-container check texts gave way to the five check names the runtime reports; new texts for the self-test,
+  passed/failed, rootful, the checking state and two blocked sentences; diagnostics `docker.checking` and
+  `docker.unavailable` (the diagnosis appends the reason's sentence). Built-in docs: Check again and Run self-test.
+- `platform_smoke.py` asserts the Docker row's new fields when present (approved only with every check passed, the
+  self-test included; never available otherwise; known reasons and check names) and that `GET /api/sandbox/status`
+  answers without waiting for the daemon; older runtimes pass unchanged (`tests/test_platform_smoke.py`).
 
 - Docker (or a compatible engine that passes Nodestro's own checks) is the default sandbox for AI-created code on
   Linux, macOS and Windows. The native macOS sandbox was removed: Settings → Sandbox names the backend
@@ -18,7 +36,7 @@
   OrbStack and Podman, which engines CI verifies, the docker-group root equivalence and rootless Docker; Settings →
   Sandbox and Tools no longer mention an experimental macOS sandbox.
 - `docs/PLATFORM.md`: engine matrix and the reasons a host is refused. ADR-0009: status update *Superseded in part by
-  Docker-first*. No pins changed; the status view itself follows the runtime's final schema.
+  Docker-first*. No pins changed.
 
 ### Platform pins: Axentra platform services (2026-11-02)
 

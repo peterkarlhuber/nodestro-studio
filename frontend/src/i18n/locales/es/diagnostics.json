@@ -79,8 +79,12 @@
       "available": "Disponible.",
       "not_installed": "No instalado. Las herramientas creadas por IA necesitan el sandbox de Linux integrado o Docker.",
       "unreachable": "El sandbox está configurado en Docker, pero Docker no está accesible.",
+      "checking": "Nodestro todavía está comprobando Docker en segundo plano.",
+      "unavailable": "Docker no se puede usar para las herramientas creadas por IA.",
       "fix": {
-        "unreachable": "Inicia Docker Desktop o cambia el sandbox a «Proceso de Python»."
+        "unreachable": "Inicia Docker Desktop o cambia el sandbox a «Proceso de Python».",
+        "checking": "Vuelve a ejecutar el diagnóstico en un momento.",
+        "unavailable": "Ajustes → Sandbox muestra qué comprobación falló."
       }
     },
     "sandbox": {

@@ -68,7 +68,9 @@
     "blockedBadge": "Bloqués",
     "blocked": {
       "auto": "Les outils créés par l’IA sont bloqués : cet ordinateur n’a aucun bac à sable validé et Docker ne tourne pas. Installez et démarrez Docker ; Nodestro l’utilisera alors automatiquement.",
-      "subprocess": "Les outils créés par l’IA sont bloqués : cet ordinateur n’a aucun bac à sable validé. Choisissez Automatique ou Docker et démarrez Docker."
+      "subprocess": "Les outils créés par l’IA sont bloqués : cet ordinateur n’a aucun bac à sable validé. Choisissez Automatique ou Docker et démarrez Docker.",
+      "dockerRefused": "Les outils créés par l’IA sont bloqués : cet ordinateur n’a pas de bac à sable validé et Docker n’a pas réussi les vérifications de Nodestro.",
+      "checking": "Les outils créés par l’IA sont bloqués jusqu’à ce que Nodestro ait terminé la vérification de Docker."
     },
     "installDocker": "Comment installer Docker",
     "backendsTitle": "Bacs à sable sur cet ordinateur",
@@ -89,7 +91,8 @@
       "experimental": "Expérimental, non utilisé",
       "unavailable": "Indisponible",
       "not-isolating": "Sans isolation",
-      "not-applicable": "Non utilisé ici"
+      "not-applicable": "Non utilisé ici",
+      "checking": "Vérification en cours"
     },
     "backendReason": {
       "not-released": "Implémenté et autotesté, mais pas encore examiné de façon indépendante. Nodestro ne l’utilise pas.",
@@ -106,29 +109,31 @@
       "ready": "Docker est prêt : le moteur a réussi les vérifications de Nodestro.",
       "recheck": "Vérifier à nouveau",
       "prepare": "Préparer le bac à sable",
+      "selfTest": "Lancer l’autotest",
+      "selfTestHint": "Démarre un conteneur de test avec les restrictions du bac à sable et vérifie qu’elles s’appliquent. Seuls les administrateurs peuvent le lancer.",
+      "testedAt": "Dernière vérification : {{date}}",
       "engine": "Moteur de conteneurs",
       "rootless": "Sans droits root (rootless)",
-      "cgroup": "Limites de ressources (cgroup v2)",
+      "rootful": "Avec droits root (rootful)",
+      "cgroup": "Limites de ressources (cgroup v{{version}})",
       "rootfulNote": "Les membres du groupe docker ont de fait les droits root sur cet ordinateur. Docker sans droits root (rootless) est recommandé.",
+      "checksTitle": "Vérifications",
       "check": {
-        "user": "S’exécute sous un utilisateur sans droits",
-        "caps": "Aucun privilège particulier",
-        "seccomp": "Filtre d’appels système (seccomp) actif",
-        "network": "Aucun accès au réseau",
-        "readonly": "Système de fichiers en lecture seule",
-        "memory": "Limite de mémoire appliquée",
-        "pids": "Limite de processus appliquée",
-        "cpu": "Limite de CPU appliquée",
-        "nofile": "Limite de fichiers ouverts",
-        "env": "Aucun secret dans l’environnement"
+        "cli": "Commande docker trouvée",
+        "daemon": "Moteur joignable",
+        "preflight": "Réglages du moteur (limites, seccomp, conteneurs Linux)",
+        "image": "Image du bac à sable",
+        "self-test": "Autotest dans un conteneur"
       },
+      "passed": "Réussie",
+      "failed": "Échouée",
       "reason": {
         "missing": "Docker n’est pas installé. Installez Docker ou un moteur compatible ; Nodestro le détecte automatiquement.",
         "unreachable": "Docker est installé, mais ne tourne pas ou est injoignable. Démarrez-le et vérifiez à nouveau.",
         "limits": "Le moteur n’applique pas de limites de mémoire, de processus et de CPU. Nodestro a besoin des limites de cgroup v2 et n’utilise pas ce moteur.",
         "seccomp": "Le moteur n’applique pas de filtre d’appels système (seccomp). Nodestro n’utilise pas ce moteur.",
-        "rootlessCgroup": "Docker sans droits root ne peut pas appliquer de limites ici : la délégation des contrôleurs cpu, memory et pids de cgroup v2 manque.",
-        "osType": "Le moteur exécute des conteneurs Windows. Passez-le aux conteneurs Linux.",
+        "rootless-cgroup": "Docker sans droits root ne peut pas appliquer de limites ici : la délégation des contrôleurs cpu, memory et pids de cgroup v2 manque.",
+        "os-type": "Le moteur exécute des conteneurs Windows. Passez-le aux conteneurs Linux.",
         "selftest": "Le conteneur de test a échoué aux vérifications de Nodestro ; le moteur n’est donc pas utilisé.",
         "image": "L’image du bac à sable manque ou ne correspond pas à cette version. Préparez le bac à sable.",
         "checking": "La vérification est encore en cours."

@@ -68,7 +68,9 @@
     "blockedBadge": "Bloccati",
     "blocked": {
       "auto": "Gli strumenti creati dall’IA sono bloccati: questo computer non ha una sandbox approvata e Docker non è in esecuzione. Installa e avvia Docker; Nodestro lo userà automaticamente.",
-      "subprocess": "Gli strumenti creati dall’IA sono bloccati: questo computer non ha una sandbox approvata. Scegli Automatica o Docker e avvia Docker."
+      "subprocess": "Gli strumenti creati dall’IA sono bloccati: questo computer non ha una sandbox approvata. Scegli Automatica o Docker e avvia Docker.",
+      "dockerRefused": "Gli strumenti creati dall’IA sono bloccati: questo computer non ha una sandbox approvata e Docker non ha superato le verifiche di Nodestro.",
+      "checking": "Gli strumenti creati dall’IA sono bloccati finché Nodestro non ha terminato la verifica di Docker."
     },
     "installDocker": "Come installare Docker",
     "backendsTitle": "Sandbox su questo computer",
@@ -89,7 +91,8 @@
       "experimental": "Sperimentale, non usata",
       "unavailable": "Non disponibile",
       "not-isolating": "Senza isolamento",
-      "not-applicable": "Non usata qui"
+      "not-applicable": "Non usata qui",
+      "checking": "Verifica in corso"
     },
     "backendReason": {
       "not-released": "Implementata e autotestata, ma non ancora verificata in modo indipendente. Nodestro non la usa.",
@@ -106,29 +109,31 @@
       "ready": "Docker è pronto: il motore ha superato le verifiche di Nodestro.",
       "recheck": "Verifica di nuovo",
       "prepare": "Prepara la sandbox",
+      "selfTest": "Esegui autotest",
+      "selfTestHint": "Avvia un container di prova con le restrizioni della sandbox e verifica che siano applicate. Solo gli amministratori possono eseguirlo.",
+      "testedAt": "Ultima verifica: {{date}}",
       "engine": "Motore dei container",
       "rootless": "Senza privilegi di root (rootless)",
-      "cgroup": "Limiti delle risorse (cgroup v2)",
+      "rootful": "Con privilegi di root (rootful)",
+      "cgroup": "Limiti delle risorse (cgroup v{{version}})",
       "rootfulNote": "I membri del gruppo docker hanno di fatto i privilegi di root su questo computer. Si consiglia Docker senza privilegi di root (rootless).",
+      "checksTitle": "Verifiche",
       "check": {
-        "user": "Viene eseguito come utente senza privilegi",
-        "caps": "Nessun privilegio speciale",
-        "seccomp": "Filtro delle chiamate di sistema (seccomp) attivo",
-        "network": "Nessun accesso alla rete",
-        "readonly": "File system di sola lettura",
-        "memory": "Limite di memoria applicato",
-        "pids": "Limite di processi applicato",
-        "cpu": "Limite di CPU applicato",
-        "nofile": "Limite di file aperti",
-        "env": "Nessun segreto nell’ambiente"
+        "cli": "Comando docker trovato",
+        "daemon": "Motore raggiungibile",
+        "preflight": "Impostazioni del motore (limiti, seccomp, container Linux)",
+        "image": "Immagine della sandbox",
+        "self-test": "Autotest in un container"
       },
+      "passed": "Superata",
+      "failed": "Non superata",
       "reason": {
         "missing": "Docker non è installato. Installa Docker o un motore compatibile; Nodestro lo rileva automaticamente.",
         "unreachable": "Docker è installato, ma non è in esecuzione o non è raggiungibile. Avvialo e verifica di nuovo.",
         "limits": "Il motore non applica limiti di memoria, processi e CPU. Nodestro ha bisogno dei limiti di cgroup v2 e non usa questo motore.",
         "seccomp": "Il motore non applica un filtro delle chiamate di sistema (seccomp). Nodestro non usa questo motore.",
-        "rootlessCgroup": "Docker senza privilegi di root non può applicare limiti qui: manca la delega dei controller cpu, memory e pids di cgroup v2.",
-        "osType": "Il motore esegue container Windows. Passa ai container Linux.",
+        "rootless-cgroup": "Docker senza privilegi di root non può applicare limiti qui: manca la delega dei controller cpu, memory e pids di cgroup v2.",
+        "os-type": "Il motore esegue container Windows. Passa ai container Linux.",
         "selftest": "Il container di prova non ha superato le verifiche di Nodestro, quindi il motore non viene usato.",
         "image": "L’immagine della sandbox manca o non corrisponde a questa versione. Prepara la sandbox.",
         "checking": "La verifica è ancora in corso."

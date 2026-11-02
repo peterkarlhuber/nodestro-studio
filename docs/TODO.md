@@ -290,16 +290,18 @@ None known.
 
 ### ST-033 · Docker-first sandbox status in the studio (ADR-0009)
 
-- **Priority:** P2 Medium · **Status:** Open · **Refs:** ADR-0009 (status update Docker-first, 2026-11-02), orkexa #30,
-  runtime RT-019
+- **Priority:** P2 Medium · **Status:** In progress (UI done locally, pins open) · **Refs:** ADR-0009 (status update
+  Docker-first, 2026-11-02), orkexa #30/#31, runtime RT-019/RT-033/RT-034, api A1
 - **What:** Settings → Sandbox shows the runtime's OS, every backend with its state and why AI-created tools are
   blocked; `auto` uses Docker where the built-in Linux sandbox is not available. Docker (or a compatible engine that
   passes Nodestro's checks) is the default sandbox on every system. The native macOS sandbox was removed and is
-  shown as *Not available* (reason `removed`); Windows has no native sandbox and none is planned. Texts for the
-  coming Docker status view (checks, refusal reasons, rootful note) and the built-in docs are in place.
-- **Next step:** When the runtime and API report the re-probed Docker status and the self-test
-  (`/api/sandbox/status`, `/api/sandbox/self-test`), show them in Settings → Sandbox with the prepared texts, update
-  `types.ts` from the final schema and move the pins.
+  shown as *Not available* (reason `removed`); Windows has no native sandbox and none is planned.
+- **Done:** the Docker status view (engine, rootless/cgroup badges, checks with a reason per failed check, rootful
+  note, Check again with polling while `checking` and the page is visible, Run self-test for admins) against
+  `GET /api/sandbox/status` and `POST /api/sandbox/self-test`; diagnostics texts `docker.checking`,
+  `docker.unavailable`; `platform_smoke.py` asserts the new fields when present. Older runtimes keep the earlier view.
+- **Next step:** move the pins (nodestro-runtime, nodestro-api, nodestro-sdk) once their Docker changes are merged,
+  then run the Platforms workflow (macOS Colima, Windows) against the real routes.
 
 ## Cross-repository dependencies
 
