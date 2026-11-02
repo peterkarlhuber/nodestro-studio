@@ -301,7 +301,7 @@ None known.
 
 ### ST-033 · Docker-first sandbox status in the studio (ADR-0009)
 
-- **Priority:** P2 Medium · **Status:** In progress (UI done locally, pins open) · **Refs:** ADR-0009 (status update
+- **Priority:** P2 Medium · **Status:** In progress (UI and pins done, platform run open) · **Refs:** ADR-0009 (status update
   Docker-first, 2026-11-02), orkexa #30/#31, runtime RT-019/RT-033/RT-034, api A1
 - **What:** Settings → Sandbox shows the runtime's OS, every backend with its state and why AI-created tools are
   blocked; `auto` runs AI-created code only in Docker (runtime DS-3), the built-in Linux sandbox is the explicit
@@ -313,10 +313,9 @@ None known.
   `GET /api/sandbox/status` and `POST /api/sandbox/self-test`; diagnostics texts `docker.checking`,
   `docker.unavailable`; `platform_smoke.py` asserts the new fields when present. Older runtimes keep the earlier view.
   The `linux` mode, the DS-3 refusal sentences and the DS-13 review (one status for table and notice, throttled and
-  ignored checks shown as not run, `redacted`, rootful warning from `rootless`) are done against the unreleased
-  runtime DS-3 and API DS-6/DS-8 contracts.
-- **Next step:** move the pins (nodestro-runtime with DS-3, nodestro-api with DS-6/DS-8, nodestro-sdk) once their
-  Docker changes are merged, then run the Platforms workflow (macOS Colima, Windows) against the real routes.
+  ignored checks shown as not run, `redacted`, rootful warning from `rootless`) are done; pins moved to
+  nodestro-runtime `bf9af7d` (#85), nodestro-api `dde77f5` (#65) and nodestro-sdk `99f70fe` (#59).
+- **Next step:** run the Platforms workflow (macOS Colima, Windows) against the real routes.
 
 ## Cross-repository dependencies
 
