@@ -26,7 +26,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import { keys, useSettings } from "../api/hooks";
-import logo from "../assets/brand/nodestro-logo-512.webp";
+import { BrandLogo, BrandMark } from "../components/BrandLogo";
 import { Toaster, toast } from "../components/toast";
 import { LANGUAGE_NAMES, LANGUAGES, type Language, currentLanguage, setLanguage } from "../i18n";
 import { anyProviderConfigured } from "../lib/providers";
@@ -160,10 +160,8 @@ function Brand() {
   const { t } = useTranslation();
   return (
     <Link to="/welcome" className="wl-brand" aria-label={t("welcome.home")}>
-      <img src={logo} alt="" width={36} height={36} />
-      <span className="wl-brand__name">
-        nodestro<span className="brand__dot">.</span>
-      </span>
+      <BrandLogo className="wl-brand__logo" height={34} />
+      <BrandMark className="wl-brand__mark" size={34} />
     </Link>
   );
 }
@@ -303,7 +301,7 @@ export function WelcomePage() {
           </section>
 
           <section className="wl-closing" aria-labelledby="wl-closing-title">
-            <img src={logo} alt="" width={88} height={88} className="wl-closing__logo" loading="lazy" />
+            <BrandLogo className="wl-closing__logo" height={60} />
             <Slogan as="h2" className="wl-slogan wl-slogan--small" />
             <p id="wl-closing-title" className="wl-closing__title">
               {t("welcome.closing.title")}
@@ -323,7 +321,7 @@ export function WelcomePage() {
 
       <footer className="wl-footer wl-shell">
         <span className="wl-footer__brand">
-          <img src={logo} alt="" width={20} height={20} loading="lazy" /> Nodestro · Connecting Intelligence
+          <BrandMark size={20} loading="lazy" /> Nodestro · Connecting Intelligence
         </span>
         <span className="wl-footer__links">
           <Link to="/docs">

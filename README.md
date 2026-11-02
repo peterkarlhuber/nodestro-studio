@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="frontend/src/assets/brand/nodestro-logo-on-dark.png">
+    <img src="frontend/src/assets/brand/nodestro-logo.png" alt="Nodestro" width="360">
+  </picture>
+</p>
+
 # Nodestro Studio
 
 **Nodestro** (*Node* + *Maestro*) is a visual studio for multi-agent workflows. You drag agents onto a canvas,
@@ -33,7 +40,7 @@ described in [docs/PLATFORM.md](docs/PLATFORM.md). Nodestro 0.1 is preserved unc
   runs; the assistant analyzes them but never changes anything itself, and on request hands improvements over to the
   architect. Secrets are replaced before sending.
 
-  ![Nodestro Assistant next to the editor, with an attachment and a handover to the architect](docs/screenshots/assistant.png)
+  ![Nodestro Assistant next to the editor, answering a question from the documentation with a linked source](docs/screenshots/assistant.png)
 
 - **API & export:** one click turns a workflow into a web API. Publishing freezes the saved version together with its
   tools and sub-workflows; versions are immutable and can be rolled back. By default the API answers only this
