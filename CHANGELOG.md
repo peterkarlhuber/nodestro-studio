@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Platform pins: Docker sandbox review fixes (2026-11-02)
+
+- Pins: orkexa `3364fb8` (#34: self-test mount table, seccomp probes, AppArmor stacks, digest-pinned sandbox image),
+  nodestro-runtime `bf9af7d` (#85: Docker only for AI-created code in `auto`, the `linux` mode, no host venvs for AI
+  scopes, MCP stdio servers proven and reaped, bounded capture, no gateway Env passthrough), nodestro-examples
+  `9669439` (#48) and nodestro-integrations `17b8de5` (#44) (runtime pin only), nodestro-api `dde77f5` (#65:
+  `SandboxStatus` with throttled checks and redacted host detail for readers, server start-up preflight), nodestro-sdk
+  `99f70fe` (#59: `SandboxStatus` client types).
+
 ### Welcome page on every app start (2026-11-02)
 
 - Every app start on the bare start page (`/`: new browser tab or window, `nodestro serve`, desktop app, server and
