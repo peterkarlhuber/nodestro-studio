@@ -11,6 +11,13 @@
   Python 3.11+). `check_versions` reads a dynamic version from the new `version_file` field; `check_imports` allows
   only nodestro-runtime and nodestro-api to import `axentra`. The Studio UI and the desktop app do not use Axentra.
 
+### Desktop secrets through a pipe (review MS-1, 2026-11-02)
+
+- `nodestro --secrets-fd FD` (from nodestro-api, `nodestro_api.handoff`): the desktop app hands the launch secret and
+  the MCP token vault key to the studio on its standard input instead of `NODESTRO_LAUNCH_SECRET` and
+  `NODESTRO_VAULT_KEY`, so no same-user process can read them from the backend's initial environment and no child
+  process inherits them. Pins: nodestro-api `c470b2b` (nodestro-api #60), nodestro-sdk `293a739` (#55); docs (`ARCHITECTURE.md`) describe it.
+
 ### Settings → Sandbox for every operating system (2026-11-02, ADR-0009)
 
 - New mode **Automatic** (default when nothing was chosen): AI-created tools run in the built-in Linux sandbox
