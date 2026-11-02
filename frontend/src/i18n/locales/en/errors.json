@@ -185,6 +185,7 @@
   },
   "budget": {
     "not_starter": "Only the person who started the run or an administrator can decide its budget.",
+    "request_not_found": "This budget decision no longer exists. Reload the run to see its current state.",
     "action_invalid": "The decision is not valid: choose to raise the limit or to end the run.",
     "limit_not_higher": "The new limit must be higher than the current limit.",
     "limit_invalid": "The new limit is not a valid amount in US dollars.",
@@ -372,10 +373,14 @@
     "run_active": "The workflow is running; try again after the run.",
     "install_interrupted": "Nodestro stopped during the installation of the libraries. Install them again.",
     "build_required": "{{name}} is only available as source code. Resolving it would run its build script, so Nodestro did not resolve it for the generated tool. Check the package and approve it in the tool's library dialog, or let the tool be written without it.",
+    "build_required_no_docker": "{{name}} is only available as source code. Its build script runs only in a container, and Docker is not available here. Start Docker and try again, or let the tool be written without it.",
+    "build_required_not_set_up": "{{name}} is only available as source code. Building packages in a container is not set up in this version, and Nodestro never runs build scripts on this computer. Let the tool be written without it.",
+    "build_unavailable": "Building packages from source in a container is not set up in this version. Nodestro never runs build scripts on this computer.",
     "lock_without_hashes": "This approval comes from an older version without checksums. Approve the libraries again to use them in the Docker sandbox.",
     "wheels_required": "A package has no ready-made package (wheel) for Linux. In the Docker sandbox, packages are not built from source.",
     "hash_mismatch": "A downloaded package does not match the approval. Nothing was installed.",
-    "image_failed": "The container image with the libraries could not be built. The technical details name the reason."
+    "image_failed": "The container image with the libraries could not be built. The technical details name the reason.",
+    "image_too_large": "The container image of these libraries is {{size_gb}} GB, more than the limit of {{limit_gb}} GB, and was removed again. Use fewer or smaller libraries."
   },
   "condition": {
     "field_missing": "The field is missing in the result.",
@@ -697,7 +702,9 @@
   "sandbox": {
     "isolation_required": "AI-created code and tools of unknown origin run only isolated (built-in Linux sandbox or Docker); neither is available, so nothing was run. Settings → Sandbox shows why.",
     "libraries_need_isolation": "{{name}} is AI-created or of unknown origin and needs third-party libraries. Such tools run only isolated (built-in Linux sandbox or Docker); neither is available here. Settings → Sandbox shows why.",
-    "unavailable": "Tool code runs only in containers here; the Python process sandbox is not available."
+    "unavailable": "Tool code runs only in containers here; the Python process sandbox is not available.",
+    "docker_insecure": "Docker did not pass Nodestro's security checks, so the AI-created code was not run. Settings → Sandbox shows which check failed.",
+    "selftest_failed": "The test container failed Nodestro's checks, so the AI-created code was not run. Settings → Sandbox shows why."
   },
   "identity": {
     "login_expired": "The login took too long or was already used. Please log in again.",
@@ -820,7 +827,8 @@
   },
   "hints": {
     "budget": {
-      "not_starter": "Ask the person who started the run or an administrator to decide; you can follow the decision here."
+      "not_starter": "Ask the person who started the run or an administrator to decide; you can follow the decision here.",
+      "request_not_found": "Reload the run; it shows the current budget decision, if one is open."
     },
     "run": {
       "agent": {

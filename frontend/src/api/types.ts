@@ -923,14 +923,48 @@ export interface BuiltinSandboxStatus {
 /** The sandbox setting: ``auto`` picks the isolation of this computer (built-in Linux sandbox, else Docker). */
 export type SandboxMode = "auto" | "subprocess" | "docker";
 
+/** One step behind a backend's state: the Docker sandbox's cli, daemon, preflight, image and self-test. */
+export interface SandboxCheck {
+  /** cli, daemon, preflight, image or self-test (Docker); other names may follow. */
+  name: string;
+  ok: boolean;
+  /** Technical detail in English, for support. */
+  detail: string;
+}
+
+/** The Docker backend's reasons (runtime 2026-11-02 and later); "" when approved. */
+export const DOCKER_REASONS = [
+  "docker-missing",
+  "docker-unreachable",
+  "docker-limits",
+  "docker-seccomp",
+  "docker-rootless-cgroup",
+  "docker-os-type",
+  "docker-selftest",
+  "docker-image",
+  "docker-checking",
+] as const;
+
+/** The sentence of a Docker reason (settings.sandbox.docker.reason.*: docker-os-type → os-type); null for others. */
+export function dockerReasonKey(reason: string): string | null {
+  return (DOCKER_REASONS as readonly string[]).includes(reason)
+    ? `settings.sandbox.docker.reason.${reason.slice("docker-".length)}`
+    : null;
+}
+
 /** One sandbox backend of the runtime's computer, as the sandbox policy sees it. */
 export interface SandboxBackendStatus {
-  /** linux-builtin, macos-seatbelt, windows-native, docker or subprocess. */
+  /** linux-builtin, macos-seatbelt (removed, always unavailable), windows-native, docker or subprocess. */
   name: string;
   available: boolean;
   /** approved: may run AI-created code; experimental: implemented but not released, never used. */
-  state: "approved" | "experimental" | "unavailable" | "not-isolating" | "not-applicable";
-  /** Why not approved (not-released, not-implemented, unreachable, server, or a built-in sandbox reason). */
+  /** checking: the Docker backend's first background check after the start has not finished yet. */
+  state: "approved" | "experimental" | "unavailable" | "not-isolating" | "not-applicable" | "checking";
+  /**
+   * Why not approved: removed (the native macOS sandbox; older runtimes report not-released), not-implemented,
+   * server, a built-in sandbox reason, or for Docker one of {@link DOCKER_REASONS} (older runtimes: unreachable,
+   * missing).
+   */
   reason: string;
   /** Technical detail in English, for support. */
   detail: string;
@@ -940,6 +974,16 @@ export interface SandboxBackendStatus {
   /** kernel, watchdog or none. */
   memory: string;
   notes: string[];
+  /** The Docker engine, e.g. "docker", "podman" (runtime 2026-11-02 and later; older runtimes omit the fields below). */
+  engine?: string;
+  /** Whether the engine runs without root privileges; null when unknown. */
+  rootless?: boolean | null;
+  /** "1" or "2"; null when unknown. */
+  cgroup_version?: string | null;
+  /** Each check behind the state, in the order they ran. */
+  checks?: SandboxCheck[];
+  /** When the self-test last ran (ISO 8601); null if it has not run. */
+  tested_at?: string | null;
 }
 
 /** Where code runs now on the runtime's computer (never the browser's), or why AI-created code is blocked. */

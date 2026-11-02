@@ -288,14 +288,20 @@ None known.
   unattended calls and Nodestro's own MCP server are not released; the residual risks are listed in the threat model.
 - **Next step:** Re-evaluate only with a new owner decision and a new security review.
 
-### ST-033 · Native sandboxes for macOS and Windows (ADR-0009)
+### ST-033 · Docker-first sandbox status in the studio (ADR-0009)
 
-- **Priority:** P2 Medium · **Status:** Open · **Refs:** ADR-0009, orkexa ORK-014/ORK-015, runtime RT-019
+- **Priority:** P2 Medium · **Status:** In progress (UI done locally, pins open) · **Refs:** ADR-0009 (status update
+  Docker-first, 2026-11-02), orkexa #30/#31, runtime RT-019/RT-033/RT-034, api A1
 - **What:** Settings → Sandbox shows the runtime's OS, every backend with its state and why AI-created tools are
-  blocked; `auto` uses Docker where the built-in Linux sandbox is not available. The macOS sandbox is shown as
-  *Experimental, not used*; Windows has none. On both systems AI-created tools need Docker.
-- **Next step:** Independent security review of the macOS sandbox, then a release decision (only `isolation_of` in
-  the runtime changes; the studio already shows the state); a Windows backend as a separate decision.
+  blocked; `auto` uses Docker where the built-in Linux sandbox is not available. Docker (or a compatible engine that
+  passes Nodestro's checks) is the default sandbox on every system. The native macOS sandbox was removed and is
+  shown as *Not available* (reason `removed`); Windows has no native sandbox and none is planned.
+- **Done:** the Docker status view (engine, rootless/cgroup badges, checks with a reason per failed check, rootful
+  note, Check again with polling while `checking` and the page is visible, Run self-test for admins) against
+  `GET /api/sandbox/status` and `POST /api/sandbox/self-test`; diagnostics texts `docker.checking`,
+  `docker.unavailable`; `platform_smoke.py` asserts the new fields when present. Older runtimes keep the earlier view.
+- **Next step:** move the pins (nodestro-runtime, nodestro-api, nodestro-sdk) once their Docker changes are merged,
+  then run the Platforms workflow (macOS Colima, Windows) against the real routes.
 
 ## Cross-repository dependencies
 

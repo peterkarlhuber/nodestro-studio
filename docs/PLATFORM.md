@@ -75,6 +75,43 @@ without OCR, like 0.1 without tesseract).
   built-in Linux sandbox where it is available; otherwise they are refused (ADR-0006). On a server and in Local Docker
   all custom and AI-generated tool code runs in containers. Provider keys appear neither in responses nor in exports.
 
+## Sandbox engines (Docker-first)
+
+Docker is the default sandbox for untrusted code on Linux, macOS and Windows ([ADR-0009](adr/0009-cross-platform-sandbox.md),
+status update 2026-11-02). The studio starts without an engine; only secure execution is blocked, with a reason in
+Settings → Sandbox. Nodestro never trusts an engine by its name: it checks every engine on the host and refuses one
+that fails, and the checks are the same for every engine.
+
+| Engine | Host | CI | Notes |
+| --- | --- | --- | --- |
+| Docker Engine, rootless with cgroup v2 delegation | Linux | Verified | Recommended on Linux. |
+| Docker Engine, rootful | Linux | Verified | Members of the `docker` group are effectively root on the host. |
+| Podman | Linux | Verified | |
+| Docker Desktop | macOS, Windows | Not verified | Accepted only if Nodestro's checks pass. Windows: Linux containers (WSL 2). |
+| Colima | macOS | Not verified | Accepted only if Nodestro's checks pass. |
+| OrbStack | macOS | Not verified | Accepted only if Nodestro's checks pass. |
+| Podman (machine) | macOS, Windows | Not verified | Accepted only if Nodestro's checks pass. |
+
+CI cannot run Linux containers on Apple silicon (no nested virtualization) or on the Windows runners, so those
+combinations rely on the checks on the user's computer.
+
+The built-in Linux sandbox stays optional (Ubuntu 24.04 and Debian 13, x86-64 only; it refuses on ARM64). macOS
+has no native sandbox (the experimental one was removed; reported as `unavailable / removed`), Windows has none
+(`unavailable / not-implemented`).
+
+A host is refused for untrusted code when:
+
+- no engine is installed or the daemon cannot be reached;
+- the engine runs Windows containers instead of Linux containers;
+- the engine does not enforce memory, process and CPU limits (cgroup v2), including rootless Docker without cgroup v2
+  delegation of the `cpu`, `memory` and `pids` controllers;
+- the engine does not apply a seccomp profile;
+- the self-test container fails: it must run as uid 65534 without capabilities, with `no_new_privs` and seccomp in
+  filter mode, with only the loopback interface, a read-only root file system, enforced `memory.max`, `pids.max` and
+  `cpu.max`, `RLIMIT_NOFILE` and `RLIMIT_FSIZE`, a non-executable work directory and only `PATH`, `HOME` and
+  `HOSTNAME` in the environment;
+- the sandbox image is missing or does not match the pinned image identity.
+
 ## Versions and pins
 
 - **All components have the same version** (0.2.0). A platform version is the set of commits in

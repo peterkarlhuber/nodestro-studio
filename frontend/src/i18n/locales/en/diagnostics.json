@@ -79,8 +79,12 @@
       "available": "Available.",
       "not_installed": "Not installed. AI-created tools need the built-in Linux sandbox or Docker.",
       "unreachable": "The sandbox is set to Docker, but Docker cannot be reached.",
+      "checking": "Nodestro is still checking Docker in the background.",
+      "unavailable": "Docker cannot be used for AI-created tools.",
       "fix": {
-        "unreachable": "Start Docker Desktop or switch the sandbox to “Python process”."
+        "unreachable": "Start Docker Desktop or switch the sandbox to “Python process”.",
+        "checking": "Run the diagnosis again in a moment.",
+        "unavailable": "Settings → Sandbox shows which check failed."
       }
     },
     "sandbox": {

@@ -15,10 +15,10 @@ authors = [{ name = "Peter Karlhuber" }]
 dependencies = [
     # The platform: every component at the exact commit this studio release was tested with
     # (platform/versions.json; `make check-versions` verifies they agree).
-    "nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@c470b2ba9f86ababda472e474baa802010ece0ea",
-    "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@95dbdfa76e37ebe6320053f9e95b9a6c74b2756e",
-    "nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@0ae5ad41b2ad182321cd3f533a1d3aab08603d33",
-    "nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@12013a426f5cb58375e2c10fec0c37d1e0565bbd",
+    "nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@16a61183f9670c121c7f2911683802056f933b41",
+    "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@b608f907c28ac54c719cf77246610f05c6bf33f1",
+    "nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@50552a0c9ba71f935b77d084c7dcd649fb149aee",
+    "nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@3120ccabf1e9d2a7fd2d9312aca11d76d9464e1b",
     "fastapi>=0.115",
     "uvicorn[standard]>=0.30",
 ]

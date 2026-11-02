@@ -223,7 +223,9 @@ describe("backend codes", () => {
     // Dynamic run budget approval (BUDGET-1): run outcomes and refused decisions.
     "run.budget_exceeded", "run.budget_ended", "run.budget_request_expired", "run.budget_waits_interrupted",
     "run.budget_checkpoint_lost", "budget.limit_not_higher", "budget.limit_invalid", "budget.over_policy", "budget.not_pending",
-    "budget.not_starter", "budget.action_invalid",
+    "budget.not_starter", "budget.action_invalid", "budget.request_not_found",
+    // Docker-first sandbox: an engine that fails Nodestro's checks, image limits and no build scripts on the host.
+    "sandbox.docker_insecure", "sandbox.selftest_failed", "deps.image_too_large", "deps.build_unavailable",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

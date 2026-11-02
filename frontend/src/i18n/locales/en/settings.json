@@ -68,7 +68,9 @@
     "blockedBadge": "Blocked",
     "blocked": {
       "auto": "AI-created tools are blocked: this computer has no approved sandbox and Docker is not running. Install and start Docker; Nodestro then uses it automatically.",
-      "subprocess": "AI-created tools are blocked: this computer has no approved sandbox. Choose Automatic or Docker and start Docker."
+      "subprocess": "AI-created tools are blocked: this computer has no approved sandbox. Choose Automatic or Docker and start Docker.",
+      "dockerRefused": "AI-created tools are blocked: this computer has no approved sandbox and Docker did not pass Nodestro's checks.",
+      "checking": "AI-created tools are blocked until Nodestro has finished checking Docker."
     },
     "installDocker": "How to install Docker",
     "backendsTitle": "Sandboxes on this computer",
@@ -79,7 +81,7 @@
     },
     "backend": {
       "linux-builtin": "Built-in Linux sandbox",
-      "macos-seatbelt": "macOS sandbox",
+      "macos-seatbelt": "Native macOS sandbox",
       "windows-native": "Windows sandbox",
       "docker": "Docker",
       "subprocess": "Python process"
@@ -89,16 +91,53 @@
       "experimental": "Experimental, not used",
       "unavailable": "Not available",
       "not-isolating": "Not isolated",
-      "not-applicable": "Not used here"
+      "not-applicable": "Not used here",
+      "checking": "Checking"
     },
     "backendReason": {
       "not-released": "Implemented and self-tested, but not independently reviewed. Nodestro does not use it.",
       "not-implemented": "Nodestro has no native sandbox for this operating system yet.",
+      "removed": "Removed: Nodestro uses Docker on macOS.",
       "unreachable": "Docker is not installed or not running.",
       "missing": "Docker is not installed.",
       "server": "On a server, tool code runs only in containers.",
       "platform": "Not available on this operating system.",
       "unknown": "Not available on this computer."
+    },
+    "docker": {
+      "checking": "Checking Docker …",
+      "ready": "Docker is ready: the engine passed Nodestro's checks.",
+      "recheck": "Check again",
+      "prepare": "Prepare sandbox",
+      "selfTest": "Run self-test",
+      "selfTestHint": "Starts a test container with the sandbox's restrictions and checks that they hold. Only administrators can run it.",
+      "testedAt": "Last checked: {{date}}",
+      "engine": "Container engine",
+      "rootless": "Without root privileges (rootless)",
+      "rootful": "With root privileges (rootful)",
+      "cgroup": "Resource limits (cgroup v{{version}})",
+      "rootfulNote": "Members of the docker group are effectively root on this computer. Rootless Docker is recommended.",
+      "checksTitle": "Checks",
+      "check": {
+        "cli": "Docker command found",
+        "daemon": "Engine reachable",
+        "preflight": "Engine settings (limits, seccomp, Linux containers)",
+        "image": "Sandbox image",
+        "self-test": "Self-test in a container"
+      },
+      "passed": "Passed",
+      "failed": "Failed",
+      "reason": {
+        "missing": "Docker is not installed. Install Docker or a compatible engine; Nodestro detects it automatically.",
+        "unreachable": "Docker is installed but not running or cannot be reached. Start it and check again.",
+        "limits": "The engine does not enforce memory, process and CPU limits. Nodestro needs cgroup v2 limits and does not use this engine.",
+        "seccomp": "The engine does not apply a system call filter (seccomp). Nodestro does not use this engine.",
+        "rootless-cgroup": "Rootless Docker cannot enforce limits here: cgroup v2 delegation of the cpu, memory and pids controllers is missing.",
+        "os-type": "The engine runs Windows containers. Switch it to Linux containers.",
+        "selftest": "The test container failed Nodestro's checks, so the engine is not used.",
+        "image": "The sandbox image is missing or does not match this version. Prepare the sandbox.",
+        "checking": "The check is still running."
+      }
     }
   },
   "about": {

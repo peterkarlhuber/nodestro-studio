@@ -149,6 +149,10 @@ export function refineProblem(
   // A refused budget decision of someone who may run but did not start the run (and is no administrator).
   if (code === "access.forbidden" && params.reason === "budget.not_starter") return { code: "budget.not_starter", params };
   if (code && PROVIDER_FAILURES.has(code)) return { code, params: { ...params, provider: params.provider ?? "" } };
+  // A source-only package a person accepted to build: its build script runs only in a container. The runtime names
+  // why that container could not run (no Docker, or no pinned resolver image); never on this computer.
+  if (code === "deps.build_required" && params.reason === "sandbox.unavailable") return { code: "deps.build_required_no_docker", params };
+  if (code === "deps.build_required" && params.reason === "deps.build_unavailable") return { code: "deps.build_required_not_set_up", params };
   if (code === "run.api_error") {
     params = { ...params, provider: params.provider ?? "" };
     // The technical text names the library's error class; the status is the provider's HTTP answer (empty when
