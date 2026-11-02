@@ -6,7 +6,8 @@ move). The script checks that
 - every commit in platform/versions.json is a full 40-character SHA,
 - every ``git+https://github.com/peterkarlhuber/...`` reference in the studio and in each pinned
   component (its pyproject.toml at the pinned commit) names the commit versions.json gives,
-- each component's version at that commit is the one versions.json gives,
+- each component's version at that commit is the one versions.json gives (a component with a dynamic version,
+  such as Axentra, names the file that holds it in ``version_file``: ``__version__ = "..."``),
 - nothing references claude-agent.
 
 ``python scripts/check_versions.py`` reads the components from GitHub (needs read access, see the
@@ -33,6 +34,7 @@ except ModuleNotFoundError:  # Python 3.10
 ROOT = Path(__file__).resolve().parents[1]
 VERSIONS = ROOT / "platform" / "versions.json"
 SHA = re.compile(r"^[0-9a-f]{40}$")
+VERSION_ASSIGNMENT = re.compile(r"^__version__\s*=\s*[\"']([^\"']+)[\"']", re.MULTILINE)
 REFERENCE = re.compile(r"git\+https://github\.com/peterkarlhuber/(?P<repo>[\w.-]+?)(?:\.git)?@(?P<ref>[^\s#;\"']+)")
 
 
@@ -48,12 +50,26 @@ def dependencies(pyproject: dict[str, Any]) -> list[str]:
     return found
 
 
-def check_pyproject(owner: str, text: str, versions: dict[str, Any], expected_version: str | None) -> list[str]:
+def check_pyproject(
+    owner: str,
+    text: str,
+    versions: dict[str, Any],
+    expected_version: str | None,
+    version_text: str | None = None,
+) -> list[str]:
+    """Problems of one pyproject; ``version_text`` is the content of a dynamic version's ``version_file``."""
     problems: list[str] = []
     if "claude-agent" in text or "claude_agent" in text:
         problems.append(f"{owner}: references claude-agent")
     pyproject = tomllib.loads(text)
-    version = pyproject.get("project", {}).get("version")
+    project = pyproject.get("project", {})
+    version = project.get("version")
+    if version is None and "version" in project.get("dynamic", []):
+        found = VERSION_ASSIGNMENT.search(version_text or "")
+        if found is None:
+            problems.append(f"{owner}: the version is dynamic; versions.json needs a version_file with __version__")
+            return problems
+        version = found.group(1)
     if expected_version is not None and version != expected_version:
         problems.append(f"{owner}: version {version}, versions.json says {expected_version}")
     components = versions["components"]
@@ -111,11 +127,21 @@ def main(argv: list[str] | None = None) -> int:
             path = entry.get("pyproject")
             if not path or not SHA.match(entry["commit"]):
                 continue
-            if args.local:
-                text = read_local(args.local, repo, entry["commit"], path, args.worktree)
-            else:
-                text = read_remote(repo, entry["commit"], path, Path(cache))
-            problems += check_pyproject(f"{repo}@{entry['commit'][:12]}", text, versions, entry.get("version"))
+
+            def read(file: str, repo: str = repo, commit: str = entry["commit"]) -> str:
+                if args.local:
+                    return read_local(args.local, repo, commit, file, args.worktree)
+                return read_remote(repo, commit, file, Path(cache))
+
+            text = read(path)
+            version_file = entry.get("version_file")
+            problems += check_pyproject(
+                f"{repo}@{entry['commit'][:12]}",
+                text,
+                versions,
+                entry.get("version"),
+                read(version_file) if version_file else None,
+            )
     for problem in problems:
         print(f"::error::{problem}")
     names = ", ".join(f"{repo} {entry.get('version', '')}@{entry['commit'][:12]}" for repo, entry in components.items())

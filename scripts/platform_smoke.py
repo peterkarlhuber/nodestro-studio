@@ -26,9 +26,9 @@ def _free_port() -> int:
         return int(probe.getsockname()[1])
 
 
-def _get(url: str) -> tuple[int, bytes]:
+def _get(url: str, timeout: float = 10) -> tuple[int, bytes]:
     request = urllib.request.Request(url, headers={"Host": url.split("/")[2]})
-    with urllib.request.urlopen(request, timeout=10) as response:
+    with urllib.request.urlopen(request, timeout=timeout) as response:
         return int(response.status), response.read()
 
 
@@ -73,7 +73,9 @@ def main() -> int:
                     if time.monotonic() > deadline:
                         raise SystemExit(f"no answer on {base}/api/health:\n{log.read_text('utf-8', 'replace')}")
                     time.sleep(1)
-                _, body = _get(f"{base}/api/settings")
+                # The first settings read probes Docker (`docker info`, up to 10 s); on hosted Windows runners that
+                # probe alone can take the full 10 s, so this read gets more time than the probe.
+                _, body = _get(f"{base}/api/settings", timeout=60)
                 settings = json.loads(body)
                 builtin = settings["builtin_sandbox"]
                 print("sandbox setting:", settings["sandbox"], "| docker:", settings["docker_available"])

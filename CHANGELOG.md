@@ -2,12 +2,21 @@
 
 ## Unreleased
 
+### Platform pins: Axentra platform services (2026-11-02)
+
+- Pins: nodestro-runtime `95dbdfa` (Axentra audit/usage mirrors, identity backend; all off by default),
+  nodestro-api `bda8148` (`nodestro-server axentra status|reconcile|backfill-identity|reconcile-identity`,
+  `secrets reencrypt`), nodestro-examples `0ae5ad4`, nodestro-integrations `12013a4`, nodestro-sdk `c30f88b` (api pin only).
+- `platform/versions.json` lists `axentra` (`f114920`, pulled in by nodestro-runtime's `postgres` extra on
+  Python 3.11+). `check_versions` reads a dynamic version from the new `version_file` field; `check_imports` allows
+  only nodestro-runtime and nodestro-api to import `axentra`. The Studio UI and the desktop app do not use Axentra.
+
 ### Desktop secrets through a pipe (review MS-1, 2026-11-02)
 
 - `nodestro --secrets-fd FD` (from nodestro-api, `nodestro_api.handoff`): the desktop app hands the launch secret and
   the MCP token vault key to the studio on its standard input instead of `NODESTRO_LAUNCH_SECRET` and
   `NODESTRO_VAULT_KEY`, so no same-user process can read them from the backend's initial environment and no child
-  process inherits them. Takes effect with the next nodestro-api pin; docs (`ARCHITECTURE.md`) describe it.
+  process inherits them. Pin: nodestro-api `c470b2b` (nodestro-api #60); docs (`ARCHITECTURE.md`) describe it.
 
 ### Settings → Sandbox for every operating system (2026-11-02, ADR-0009)
 

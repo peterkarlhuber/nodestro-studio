@@ -1,7 +1,9 @@
 """The platform's dependency direction, checked on the installed packages (``make check-imports``).
 
 runtime <- examples, integrations <- api <- studio; the SDK talks HTTP only. No package may import
-one that sits above it, and nothing may use claude-agent (Nodestro runs on orkexa).
+one that sits above it, and nothing may use claude-agent (Nodestro runs on orkexa). Axentra (the generic
+SaaS backend, server profile only) is imported by the runtime and the API only, never by the studio,
+the examples or the integrations.
 """
 
 from __future__ import annotations
@@ -24,6 +26,8 @@ ALLOWED: dict[str, set[str]] = {
 #: architect, export); both use the orkexa the runtime pins. Examples, integrations and the studio
 #: never talk to orkexa directly.
 ORKEXA_USERS = {"nodestro_runtime", "nodestro_api"}
+#: The packages that may use Axentra's library (server profile): the runtime (axentra_platform) and the API.
+AXENTRA_USERS = {"nodestro_runtime", "nodestro_api"}
 FORBIDDEN = {"claude_agent", "nodestro"}  # the old library and the 0.1 package name
 DISTRIBUTIONS = ["nodestro", "nodestro-api", "nodestro-runtime", "nodestro-examples", "nodestro-integrations"]
 
@@ -58,6 +62,8 @@ def main() -> int:
                     problems.append(f"{where} imports {name}")
                 if name == "orkexa" and package not in ORKEXA_USERS:
                     problems.append(f"{where} imports orkexa (only the runtime and the API may)")
+                if name == "axentra" and package not in AXENTRA_USERS:
+                    problems.append(f"{where} imports axentra (only the runtime and the API may)")
     if util.find_spec("claude_agent") is not None:
         problems.append("claude_agent is installed")
     for distribution in DISTRIBUTIONS:

@@ -54,6 +54,25 @@ def test_a_wrong_version_is_reported() -> None:
     assert found == ["x: version 0.1.0, versions.json says 0.2.0"]
 
 
+def test_a_dynamic_version_is_read_from_the_version_file() -> None:
+    text = '[project]\nname = "axentra"\ndynamic = ["version"]\ndependencies = []\n'
+    version_file = '__version__ = "0.1.0.dev0"\n'
+    assert check_versions.check_pyproject("axentra", text, versions(), "0.1.0.dev0", version_file) == []
+    found = check_versions.check_pyproject("axentra", text, versions(), "0.2.0", '__version__ = "0.1.0.dev0"\n')
+    assert found == ["axentra: version 0.1.0.dev0, versions.json says 0.2.0"]
+    missing = check_versions.check_pyproject("axentra", text, versions(), "0.1.0.dev0", None)
+    assert missing and "version_file" in missing[0]
+
+
+def test_axentra_is_pinned_with_its_version_file_for_the_server_profile_only() -> None:
+    pinned = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
+    axentra = pinned["components"]["axentra"]
+    assert check_versions.SHA.match(axentra["commit"])
+    assert axentra["version_file"] == "src/axentra/_version.py" and not axentra.get("studio_dependency")
+    studio = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    assert "axentra" not in studio  # it reaches a server only through nodestro-runtime[postgres]
+
+
 def test_the_studio_pins_agree_with_versions_json() -> None:
     pinned = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
     text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
