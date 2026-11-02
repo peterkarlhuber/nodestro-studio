@@ -18,6 +18,8 @@
   Linux), tools, start and FAQ updated. `platform_smoke.py` checks the report on every platform (OS, never an
   unsafe backend, experimental backends never approved).
 - ADR-0009 (cross-platform sandbox architecture, proposed).
+- Pins: orkexa 544ef92 (#28), nodestro-runtime 7fd8761 (#78), examples f1c6403 (#43), integrations 4a834b4 (#39),
+  api 79059d9 (#59), sdk b91f9e6 (#53).
 
 ### macOS and Windows start (2026-11-02)
 
