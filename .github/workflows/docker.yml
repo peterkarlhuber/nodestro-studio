@@ -1,0 +1,120 @@
+name: Docker
+
+# The whole execution chain with a real Docker-compatible engine: the installed studio (API, runtime, Orkexa's
+# DockerSandbox at the pinned commits) finds the engine itself, passes the preflight and the in-container self-test,
+# runs an AI-generated (untrusted) tool in a container, removes the container after a timeout and after a cancelled
+# run, and refuses the tool once the engine is unreachable or stopped (scripts/docker_smoke.py). Only the AI model is
+# a local stand-in endpoint; nothing in the sandbox chain is simulated.
+#
+# Where GitHub's hosted runners can run Linux containers:
+# - ubuntu-latest: Docker Engine is preinstalled (rootful, cgroup v2).
+# - macos-15-intel: Colima (a Lima VM with Docker Engine) through nested virtualization, which Intel runners have.
+# Not possible on hosted runners, so there is no job for them (see docs/TODO.md, ST-033):
+# - macos-latest (Apple Silicon): no nested virtualization, so no VM and no Linux engine (Colima, Docker Desktop).
+# - windows-latest / windows-11-arm: the preinstalled engine (if any) runs Windows containers only, and WSL 2 / Docker
+#   Desktop need nested virtualization the hosted runners do not offer. The "unsuitable" job checks the real refusal.
+# - Docker Desktop itself cannot be installed on hosted runners (license, virtualization): Docker Desktop on real
+#   hardware remains a manual release check.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/docker.yml"
+      - "scripts/docker_smoke.py"
+      - "pyproject.toml"
+      - "platform/versions.json"
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/docker.yml"
+      - "scripts/docker_smoke.py"
+      - "pyproject.toml"
+      - "platform/versions.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docker:
+    name: docker (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            stop: sudo systemctl stop docker.socket docker.service
+          - os: macos-15-intel
+            stop: colima stop
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: pip
+      # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
+      - name: Install the studio at the pinned commits
+        env:
+          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+        run: |
+          if [ -n "$NODESTRO_READ" ]; then
+            export GIT_CONFIG_COUNT=1
+            export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
+            export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
+          fi
+          pip install .
+      # Colima's defaults are larger than a hosted Intel runner (4 CPUs, 14 GB); the Virtualization framework (vz)
+      # is tried first, QEMU if it does not start.
+      - name: Start Colima (macOS Intel)
+        if: runner.os == 'macOS'
+        run: |
+          brew install colima docker
+          if ! colima start --cpu 3 --memory 6 --disk 40; then
+            colima delete --force || true
+            brew install qemu
+            colima start --vm-type qemu --cpu 3 --memory 6 --disk 40
+          fi
+          colima status
+      - name: Engine
+        run: |
+          python -c "import platform, sys; print(sys.platform, platform.machine(), platform.platform())"
+          docker version
+          docker info
+      - name: AI-generated tool in a real container
+        run: python scripts/docker_smoke.py --ready-timeout 1200 --stop-engine "${{ matrix.stop }}"
+
+  # Windows runners: no Linux containers. The real check here is the refusal: whatever engine the runner has (Windows
+  # containers, a stopped service or none), AI-generated code is not run.
+  unsuitable:
+    name: docker unsuitable (windows-latest)
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install the studio at the pinned commits
+        env:
+          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+        run: |
+          if [ -n "$NODESTRO_READ" ]; then
+            export GIT_CONFIG_COUNT=1
+            export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
+            export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
+          fi
+          pip install .
+      - name: Untrusted code is refused without a Linux engine
+        run: python scripts/docker_smoke.py --expect-unsuitable

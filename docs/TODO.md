@@ -187,7 +187,8 @@ None known.
   frontend build and unit tests also run on `macos-latest` (`.github/workflows/macos.yml`), and every PR fails on
   file names that differ only in case (`scripts/check_case_collisions.py`). Since 2026-11-02 the `Platforms`
   workflow starts the studio (API, settings, interface) on macOS arm64 and x86-64, Windows x64 and ARM64 and Linux;
-  the interface itself has not been used in a browser on macOS or Windows.
+  the interface itself has not been used in a browser on macOS or Windows. The `Docker` workflow runs AI-generated
+  code in a real engine on Linux and macOS Intel (ST-033).
 - **Next step:** Run the e2e suites once in Firefox and WebKit and record the result; decide whether CI adds one engine.
 
 ### ST-034 · Welcome page on app start not checked in WebKit
@@ -315,7 +316,29 @@ None known.
   The `linux` mode, the DS-3 refusal sentences and the DS-13 review (one status for table and notice, throttled and
   ignored checks shown as not run, `redacted`, rootful warning from `rootless`) are done; pins moved to
   nodestro-runtime `bf9af7d` (#85), nodestro-api `dde77f5` (#65) and nodestro-sdk `99f70fe` (#59).
-- **Next step:** run the Platforms workflow (macOS Colima, Windows) against the real routes.
+- **Platform evidence (2026-11-02):** the `Docker` workflow (`.github/workflows/docker.yml`,
+  `scripts/docker_smoke.py`) runs the whole chain with a real engine: the installed studio detects the engine in
+  `auto` mode, `GET /api/sandbox/status` must reach `approved` (preflight and in-container self-test), an
+  AI-generated tool comes in through the product's tool job (`POST /api/tools/jobs`, then the decision; the runtime
+  classes it `untrusted` itself) and runs in an `orkexa-sandbox-*` container (`docker events`, `docker inspect`
+  isolation flags), a call past the 15 s timeout and a cancelled workflow run leave no container, and after
+  `DOCKER_HOST` points nowhere and after the engine is really stopped the tool and new tool jobs are refused with
+  `sandbox.isolation_required` and a `docker-*` reason. Only the AI model is a local stand-in endpoint.
+  - **Covered by CI (hosted runners):** Linux x86-64 with Docker Engine (`ubuntu-latest`); macOS x86-64 with Colima
+    (`macos-15-intel`, nested virtualization); Windows x64 only as the refusal (`docker unsuitable (windows-latest)`:
+    no Linux containers there, untrusted code must be refused).
+  - **Not possible on hosted runners, so not in CI:** macOS Apple Silicon (`macos-latest`: no nested virtualization,
+    so no Linux VM, neither Colima nor Docker Desktop); Windows x64 and ARM64 with Linux containers (WSL 2 / Docker
+    Desktop need nested virtualization the runners lack); Docker Desktop on any system (cannot be installed on
+    hosted runners).
+  - **Local run (cloud dev VM, rootful Docker 29.9.2, cgroup v1):** preflight passed, the runtime image was built,
+    and the self-test correctly refused the engine (`docker-selftest`: "the container is not on cgroup v2"); tool jobs
+    were refused with that reason, and the unreachable and really stopped engine (`pkill dockerd`) phases passed.
+    The approved path has not run yet: it needs the first green `Docker` workflow run.
+- **Next step:** run the `Docker` workflow and record the result here. Remaining manual release checks on real
+  hardware: Docker Desktop on macOS Apple Silicon, macOS Intel, Windows x64 and Windows ARM64 (Linux containers,
+  WSL 2), each with `scripts/docker_smoke.py` against the installed studio; then the packaged desktop app
+  (nodestro-desktop) on the same systems, which no CI job starts.
 
 ## Cross-repository dependencies
 

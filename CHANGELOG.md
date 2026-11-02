@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Docker workflow: AI-generated code in a real engine (2026-11-02)
+
+- `scripts/docker_smoke.py` and `.github/workflows/docker.yml`: the installed studio with a real engine (Docker on
+  `ubuntu-latest`, Colima on `macos-15-intel`) must reach `approved`, run an AI-generated tool from the tool job in
+  an `orkexa-sandbox-*` container, leave no container after a timeout or a cancelled run, and refuse the tool once the
+  engine is unreachable or stopped. `windows-latest` checks the refusal only (no Linux containers there). Apple
+  Silicon and Docker Desktop cannot run on hosted runners and stay manual release checks (`docs/TODO.md`, ST-033).
+
 ### Python 3.11 minimum (2026-11-02)
 
 - Python 3.11 is now the minimum (3.10 reached end of life in October 2026): `requires-python`, ruff `py311`, mypy 3.11,
