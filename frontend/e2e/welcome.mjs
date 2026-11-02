@@ -37,8 +37,8 @@ function check(condition, message) {
 const browser = await browserType.launch();
 
 /**
- * A fresh browser profile. ``person`` hides navigator.webdriver, so the page treats the visit
- * like one by a person (automated browsers skip the first-visit redirect by design).
+ * A fresh browser profile. ``person`` hides navigator.webdriver, so the page treats the start
+ * like one by a person (automated browsers skip the app-start redirect by design).
  */
 async function open({ person = false, viewport = { width: 1440, height: 900 }, ...options } = {}) {
   const context = await browser.newContext({ viewport, locale: "de-DE", ...options });
@@ -70,13 +70,27 @@ const overflow = (page) =>
 const loops = (page) => page.evaluate(() => document.getAnimations().filter((animation) => animation.effect?.getTiming().iterations === Infinity && animation.playState === "running").length);
 
 try {
-  // --- First visit and hand-over -------------------------------------------------------------
+  const studio = (page) => page.getByRole("heading", { name: "Workflows", exact: true }).waitFor();
+  const path = (page) => {
+    const url = new URL(page.url());
+    return url.pathname + url.search + url.hash;
+  };
+  /** Records every document load and every URL the page lands on, to catch unexpected redirects. */
+  const watch = (page) => {
+    const seen = [];
+    page.on("framenavigated", (frame) => frame === page.mainFrame() && seen.push(path(page)));
+    return seen;
+  };
+
+  // --- App start and hand-over --------------------------------------------------------------
   {
     const { context, page, errors } = await open({ person: true });
+    const seen = watch(page);
     await page.goto(base + "/");
     await page.waitForURL(/\/welcome$/);
     await page.getByTestId("welcome").waitFor();
-    check(true, "The first visit of the start page opens the welcome page");
+    check(true, "The first start of the app opens the welcome page");
+    check(!(await page.evaluate(() => Object.keys(localStorage).some((key) => key.includes("welcome")))), "The start stores no welcome state");
     check((await page.locator("h1").innerText()).replace(/\s+/g, " ").trim() === SLOGAN, "The page heading is the slogan");
     check((await page.title()) === texts.de.welcome.documentTitle, "The window title names Nodestro and the slogan");
     const icons = await page.evaluate(() => [...document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"], link[rel="manifest"]')].map((link) => link.href));
@@ -90,8 +104,9 @@ try {
 
     await page.getByTestId("welcome-open-studio").click();
     await page.waitForURL((url) => url.pathname === "/");
-    await page.getByRole("heading", { name: "Workflows", exact: true }).waitFor();
-    check(true, "Open Studio leads to the workflows");
+    await studio(page);
+    await page.waitForTimeout(500);
+    check(path(page) === "/", "Open Studio leads to the workflows and stays there (no redirect loop)");
     // Brand: the official lockup, matched to the theme (white wordmark on dark, black on light), never inverted.
     const lockup = page.locator(".topbar .brand__logo");
     const lockupOn = async () => ({ src: await lockup.getAttribute("src"), variant: await lockup.getAttribute("data-brand-variant") });
@@ -107,30 +122,90 @@ try {
     const second = await lockupOn();
     check(second.variant !== first.variant && second.src !== first.src, "The top bar logo follows a theme switch");
     await page.evaluate((next) => (document.documentElement.dataset.theme = next), theme);
+
     await page.goBack();
     await page.waitForURL(/\/welcome$/);
     check(true, "Back returns to the welcome page");
     await page.goForward();
-    await page.waitForURL((url) => url.pathname === "/");
-    await page.getByRole("heading", { name: "Workflows", exact: true }).waitFor();
-    check(true, "Forward returns to the Studio without another redirect");
+    await studio(page);
+    await page.waitForTimeout(300);
+    check(path(page) === "/", "Forward returns to the Studio without another redirect");
+
+    // In-app navigation never comes back to the welcome page.
+    await page.getByRole("link", { name: texts.de.nav.executions, exact: true }).click();
+    await page.waitForURL((url) => url.pathname === "/executions");
+    await page.getByRole("link", { name: texts.de.nav.workflows, exact: true }).click();
+    await studio(page);
+    check(path(page) === "/", "The sidebar's Workflows link opens the workflows, not the welcome page");
+    await page.locator(".topbar .brand").click();
+    await studio(page);
+    check(path(page) === "/", "The top bar logo opens the workflows, not the welcome page");
+    await page.goBack();
+    await page.waitForURL((url) => url.pathname === "/executions");
+    await page.goForward();
+    await studio(page);
+    check(path(page) === "/", "Back and Forward between Studio pages stay in the Studio");
+
+    await page.reload();
+    await studio(page);
+    await page.waitForTimeout(300);
+    check(path(page) === "/", "Reloading the workflows keeps the Studio open");
+
+    await page.goto("about:blank");
+    await page.goBack();
+    await studio(page);
+    await page.waitForTimeout(300);
+    check(path(page) === "/", "Coming Back to the Studio from another site returns to the Studio");
+
     await page.goto(base + "/");
-    await page.getByRole("heading", { name: "Workflows", exact: true }).waitFor();
-    check(page.url() === base + "/", "A returning visit opens the Studio directly");
+    await page.waitForURL(/\/welcome$/);
+    await page.getByTestId("welcome").waitFor();
+    check(true, "Opening the start address again (a returning start) shows the welcome page again");
+    const tab = await context.newPage();
+    await tab.goto(base + "/");
+    await tab.waitForURL(/\/welcome$/);
+    check(true, "A new tab on the start address shows the welcome page");
+    await tab.close();
+    await page.getByRole("link", { name: texts.de.welcome.footer.settings, exact: true }).click();
+    await page.waitForURL((url) => url.pathname === "/settings");
     await page.getByRole("link", { name: texts.de.nav.welcome }).click();
     await page.waitForURL(/\/welcome$/);
     check(true, "The Studio navigation leads back to the welcome page");
+    const loads = seen.filter((entry, index) => entry === "/welcome" && seen[index - 1] !== "/welcome").length;
+    check(loads === 4, `The welcome page opened only on the two starts, Back and the sidebar link (${seen.join(" → ")})`);
     check(errors.length === 0, `no console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
     await context.close();
   }
   {
+    // The desktop app (and the local-container/server launch link) opens /api/launch, whose page moves on
+    // to "/" with a meta refresh. Simulated here with the same page, served for a path of this origin.
     const { context, page } = await open({ person: true });
-    await page.goto(base + "/executions");
-    await page.locator(".sidebar").waitFor();
-    check(new URL(page.url()).pathname === "/executions", "A deep link is never redirected, even on the first visit");
-    await page.goto(base + "/");
-    await page.getByRole("heading", { name: "Workflows", exact: true }).waitFor();
-    check(new URL(page.url()).pathname === "/", "After a deep link the start page is the Studio");
+    await page.route(base + "/launch-test", (route) =>
+      route.fulfill({ contentType: "text/html", body: '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/"><title>Nodestro</title>' }),
+    );
+    for (let start = 1; start <= 2; start += 1) {
+      await page.goto(base + "/launch-test");
+      await page.waitForURL(/\/welcome$/);
+      await page.getByTestId("welcome").waitFor();
+      check(true, `Desktop-style launch ${start} (launch page, then the start page) shows the welcome page`);
+    }
+    await context.close();
+  }
+  {
+    const { context, page } = await open({ person: true });
+    for (const link of ["/executions", "/settings", "/workflows/examples", "/docs/start", "/executions?status=failed", "/?q=report", "/#how", "/agents#top"]) {
+      await page.goto(base + link);
+      await page.locator(".sidebar").waitFor();
+      await page.waitForTimeout(200);
+      check(path(page) === link, `The deep link ${link} opens exactly what it names, even on a start`);
+    }
+    const workflow = await (await context.request.post(base + "/api/workflows", { data: { name: "Deep link" } })).json();
+    if (workflow.id) {
+      await page.goto(`${base}/workflows/${workflow.id}`);
+      await page.locator(".sidebar").waitFor();
+      check(new URL(page.url()).pathname === `/workflows/${workflow.id}`, "A deep link to a workflow opens the editor");
+      await context.request.delete(`${base}/api/workflows/${workflow.id}`);
+    }
     await context.close();
   }
   {

@@ -1,34 +1,83 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { bundles } from "../test/locales";
 import { LANGUAGES, setLanguage } from "../i18n";
-import { WELCOME_STORAGE_KEY, markWelcomeSeen, shouldWelcome, studioLoader, welcomeSeen } from "./firstVisit";
+import { WELCOME_PATH, resetPageLoad, shouldWelcome, studioLoader } from "./startPage";
 import { LAST_PHASE, stageOf } from "./RunIllustration";
 import { SLOGAN, WelcomePage } from "./WelcomePage";
 
 const url = (path: string) => new URL(path, "http://127.0.0.1:8000");
 
-describe("first visit", () => {
-  it("sends only the very first visit of the bare start page to the welcome page", () => {
-    expect(welcomeSeen()).toBe(false);
-    expect(shouldWelcome(url("/"))).toBe(true);
-    expect(welcomeSeen()).toBe(true);
-    expect(shouldWelcome(url("/"))).toBe(false);
+/** Pretends the document was loaded by a navigation of ``type`` (Navigation Timing). */
+function loadedBy(type: string) {
+  vi.spyOn(performance, "getEntriesByType").mockReturnValue([{ type } as unknown as PerformanceEntry]);
+}
+
+describe("app start", () => {
+  beforeEach(() => resetPageLoad());
+  afterEach(() => {
+    vi.restoreAllMocks();
+    localStorage.clear();
   });
 
-  it("never redirects deep links, and a deep link counts as the first visit", () => {
+  it("sends the first start of the bare start page to the welcome page", () => {
+    loadedBy("navigate");
+    expect(shouldWelcome(url("/"))).toBe(true);
+  });
+
+  it("sends every later start there too, whatever was visited before", () => {
+    for (let start = 0; start < 3; start += 1) {
+      resetPageLoad();
+      loadedBy("navigate");
+      localStorage.setItem("nodestro-welcome-seen", "1"); // the old first-visit flag no longer matters
+      expect(shouldWelcome(url("/"))).toBe(true);
+    }
+  });
+
+  it("never redirects in-app navigation after the start (Open Studio, sidebar, Back/Forward)", () => {
+    loadedBy("navigate");
+    expect(shouldWelcome(url("/"))).toBe(true);
+    expect(shouldWelcome(url("/"))).toBe(false);
     expect(shouldWelcome(url("/workflows/abc"))).toBe(false);
     expect(shouldWelcome(url("/"))).toBe(false);
   });
 
-  it("keeps query strings on the start page untouched", () => {
-    expect(shouldWelcome(url("/?q=report"))).toBe(false);
+  it("never redirects deep links, and they make later in-app visits of / open the Studio", () => {
+    loadedBy("navigate");
+    expect(shouldWelcome(url("/workflows/abc"))).toBe(false);
+    expect(shouldWelcome(url("/"))).toBe(false);
+  });
+
+  it.each(["/?q=report", "/#how", "/executions?status=failed#top", "/settings"])("keeps %s untouched", (path) => {
+    loadedBy("navigate");
+    expect(shouldWelcome(url(path))).toBe(false);
+  });
+
+  it("keeps a hash of the address bar, which the router leaves out of the request", () => {
+    loadedBy("navigate");
+    window.history.replaceState(null, "", "/#how");
+    try {
+      expect(shouldWelcome(url("/"))).toBe(false);
+    } finally {
+      window.history.replaceState(null, "", "/");
+    }
+  });
+
+  it.each(["reload", "back_forward"])("returns to the Studio on %s", (type) => {
+    loadedBy(type);
+    expect(shouldWelcome(url("/"))).toBe(false);
+  });
+
+  it("treats a browser without Navigation Timing as a start", () => {
+    vi.spyOn(performance, "getEntriesByType").mockReturnValue([]);
+    expect(shouldWelcome(url("/"))).toBe(true);
   });
 
   it("does not redirect automated browsers", () => {
+    loadedBy("navigate");
     Object.defineProperty(navigator, "webdriver", { configurable: true, get: () => true });
     try {
       expect(shouldWelcome(url("/"))).toBe(false);
@@ -37,16 +86,12 @@ describe("first visit", () => {
     }
   });
 
-  it("answers the loader with a redirect response once", () => {
+  it("answers the loader with a redirect on the start only", () => {
+    loadedBy("navigate");
     const first = studioLoader({ request: new Request("http://127.0.0.1:8000/") });
     expect(first).toBeInstanceOf(Response);
-    expect((first as Response).headers.get("Location")).toBe("/welcome");
+    expect((first as Response).headers.get("Location")).toBe(WELCOME_PATH);
     expect(studioLoader({ request: new Request("http://127.0.0.1:8000/") })).toBeNull();
-  });
-
-  it("remembers the visit in the browser", () => {
-    markWelcomeSeen();
-    expect(localStorage.getItem(WELCOME_STORAGE_KEY)).toBe("1");
   });
 });
 
@@ -70,10 +115,10 @@ function renderWelcome() {
 describe("welcome page", () => {
   afterEach(cleanup);
 
-  it("shows the slogan as the page heading and marks the visit", () => {
+  it("shows the slogan as the page heading and stores nothing", () => {
     renderWelcome();
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(SLOGAN.join(" "));
-    expect(welcomeSeen()).toBe(true);
+    expect(localStorage.getItem("nodestro-welcome-seen")).toBeNull();
     expect(document.title).toBe("Nodestro · Connecting Intelligence");
   });
 
