@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Welcome page on every app start (2026-11-02)
+
+- Every app start on the bare start page (`/`: new browser tab or window, `nodestro serve`, desktop app, server and
+  local-container launch links) now opens the welcome page "Connecting Intelligence" first, not only the first
+  visit. Reload, Back/Forward, in-app navigation (sidebar *Workflows*, top bar logo, *Open Studio*) and deep links
+  (paths, query strings, hashes) are never redirected. `welcome/firstVisit.ts` became `welcome/startPage.ts`; the
+  `nodestro-welcome-seen` storage key is gone. See `docs/design/LANDING.md` §4.
+
 ### New official logo (2026-11-02)
 
 - The new official Nodestro logo replaces the previous app-icon mark everywhere: top bar (lockup; symbol alone on

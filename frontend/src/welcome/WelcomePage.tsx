@@ -32,7 +32,6 @@ import { LANGUAGE_NAMES, LANGUAGES, type Language, currentLanguage, setLanguage 
 import { anyProviderConfigured } from "../lib/providers";
 import { useTheme } from "../lib/theme";
 import { Constellation } from "./Constellation";
-import { markWelcomeSeen } from "./firstVisit";
 import { useInView, useReducedMotion } from "./motion";
 import { RunIllustration, stageOf, useRunPhases } from "./RunIllustration";
 
@@ -206,10 +205,6 @@ export function WelcomePage() {
   const heroVisible = useInView(hero);
   const motion = motionWanted && !reduced;
 
-  useEffect(() => {
-    // Seeing this page counts as the first visit: the start page opens the Studio from now on.
-    markWelcomeSeen();
-  }, []);
   useEffect(() => {
     const previous = document.title;
     document.title = t("welcome.documentTitle");

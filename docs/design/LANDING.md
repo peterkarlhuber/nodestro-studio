@@ -85,24 +85,31 @@ layout properties.
 
 ## 4. Integration decision
 
-| Criterion | A. Separate `/welcome` only | B. Landing on `/`, Studio elsewhere | **C+. `/welcome` + first visit** |
+| Criterion | A. Separate `/welcome` only | B. Landing on `/`, Studio elsewhere | **C+. `/welcome` on every app start** |
 |---|---|---|---|
-| Wow on first open | No (nobody finds it) | Yes | **Yes** |
-| Returning users | Unaffected | An extra click every time, or a new Studio URL | **Unaffected** |
-| Deep links / bookmarks to `/` | Unchanged | Break (`/` changes meaning) | **Unchanged** |
-| Back / forward | Normal | Normal | **No loop (replace redirect, once)** |
+| Entrance on every start | No (nobody finds it) | Yes | **Yes** |
+| In-app navigation to the workflows | Unaffected | Needs a new Studio URL | **Unaffected (client-side, never redirected)** |
+| Deep links / bookmarks | Unchanged | Break (`/` changes meaning) | **Unchanged** |
+| Back / forward / reload | Normal | Normal | **No loop (replace redirect on the page load only)** |
 | Tests, docs, CLI, desktop app | Unchanged | All need a new start URL | **Unchanged** |
-| Complexity | Lowest | High | **Low (one loader, one flag)** |
+| Complexity | Lowest | High | **Low (one loader, no stored state)** |
 
-**Chosen: C+.** The page lives at its own route outside the Studio frame. The very first time a browser opens
-the bare start page `/`, the Studio frame's loader (`studioLoader`, `welcome/firstVisit.ts`) redirects to
-`/welcome` before anything renders (a replace, so Back does not bounce). Rules:
+**Chosen: C+.** The page lives at its own route outside the Studio frame. Every app start on the bare start page
+`/` (a new browser tab or window, the link `nodestro serve` opens, the desktop window, the server and
+local-container launch links, which all end on `/`) is redirected to `/welcome` by the Studio frame's loader
+(`studioLoader`, `welcome/startPage.ts`) before anything renders. It is a replace, so Back does not bounce. Rules:
 
-- Only `/` with no query and no hash is ever redirected. Every deep link opens exactly what it names.
-- Opening any Studio page or the welcome page sets `localStorage["nodestro-welcome-seen"]`, so the redirect
-  happens at most once per browser. Without storage there is no redirect at all.
-- Automated browsers (`navigator.webdriver`) are not a person's first visit and are never redirected; this keeps
-  every existing browser suite, screenshot tool and script unchanged. The welcome suite simulates a person.
+- Until 2026-11-02 the redirect happened once per browser (`localStorage["nodestro-welcome-seen"]`). The welcome
+  page is now the official entrance of every start; the key is no longer read or written.
+- Only the first navigation of a page load can be a start. Everything later in a running Studio (the sidebar's
+  *Workflows*, the top bar logo, *Open Studio*, Back/Forward between Studio pages) is client-side and never
+  redirected, so there is no loop and no state to keep.
+- A reload, or a Back/Forward from another site into the Studio (Navigation Timing type `reload` /
+  `back_forward`), returns to where the person was. Only a new navigation (`navigate`) is a start.
+- Only `/` with no query and no hash is ever redirected. Every deep link opens exactly what it names. The router
+  leaves the hash out of the loader's request, so the loader reads it from the address bar.
+- Automated browsers (`navigator.webdriver`) are never redirected; this keeps every existing browser suite,
+  screenshot tool and script unchanged. The welcome suite simulates a person.
 - *Open Studio* is a normal link to `/`; Back returns to the welcome page, Forward to the Studio.
 - The welcome page is always reachable: Studio sidebar *Help > Welcome*, or `/welcome`.
 - Theme: the same `useTheme()` hook and storage key. Language: the same `setLanguage()` and the same backend
