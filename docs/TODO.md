@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 22 |
+| P3 Low | 21 |
 | P4 Optional | 12 |
 
 **Release blockers:** None for this repository.
@@ -266,8 +266,11 @@ None known.
 - **Priority:** P3 Low · **Status:** Open · **Refs:** `platform/versions.json`
 - **What:** It still lists desktop `67122b7` / server `5bc7b82` built from studio `78710ce` as candidate
   v0.2.0-preview.1, a candidate that was not released and was superseded; there is no nodestro-local-docker entry.
-- **Next step:** With the next candidate (or now), mark the old candidate withdrawn and add local-docker; done by the
-  thread that holds the pin slot.
+  Its comment says the block is "updated when a product's studio.json moves", which no longer happens (the products
+  were re-pinned to newer studio commits without touching it), and `scripts/check_versions.py` does not check the block.
+- **Next step:** With the next candidate (or now), reword the comment to "last release candidate", mark the old
+  candidate withdrawn and add local-docker, or let `check_versions` verify the block; done by the thread that holds
+  the pin slot. (Backend audit 2, integration run.)
 
 ### ST-028 · Third-party Python dependencies are not locked
 
@@ -307,13 +310,6 @@ None known.
   of their own; "Version 1" stands alone in a callout; a blocked agent node shows "Ready" next to "1 problem"; danger
   callouts show two icons; the runs table overflows by 15 px in French at 1280 px.
 - **Next step:** Small fixes, one PR.
-
-### ST-042 · Runtime release must send `requests[].label` on budget requests (NJR-04)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** NSL-13, nodestro-runtime (additive field)
-- **What:** The budget card names the waiting agent by `label` and falls back to the node id; the label only appears
-  once the pinned runtime sends it.
-- **Next step:** Check in the joint integration run after the runtime pin.
 
 ## Later optimizations
 
