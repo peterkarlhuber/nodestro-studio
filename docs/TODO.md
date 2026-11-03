@@ -91,9 +91,8 @@ None known.
   template paths, the build steps with cancel, an explanation and a retry per error code (wrong checksum per file,
   missing file, incompatible file, reference vectors, cancelled), the reindex hint with a jump to *Knowledge search*.
   The catalog download of such a model stays only outside the strict offline mode. The manual names the pinned files.
-- **Open:** The catalog does not list the pinned input files yet; the form shows them once the API sends
-  `build_inputs` (`[{role, url, sha256, size}]`) and otherwise points to the manual. No browser e2e for a real build
-  (needs the 1.2 GB weights).
+- **Open:** The pinned input files come from the catalog's `build_inputs` once the api pin with them lands (until
+  then the form points to the manual). No browser e2e for a real build (needs the 1.2 GB weights).
 
 ### ST-046 · Show the context window and expected speed of local models
 
@@ -106,8 +105,8 @@ None known.
   "Measure speed" (no estimates), the CPU saving mode switch (`local_reasoning`), the "Reasoning reduced" badge on run
   steps and agent tests (`reasoning_reduced`), the three `check.local_*` texts, the local fit and measured speed in
   the model picker hint. Texts, help and manual in all six languages.
-- **Open:** Browser e2e of these fields once the pins land (unit tests use mocked API data). The fit column is
-  computed in the browser; a per-model `fits` from the API would keep it in one place.
+- **Open:** Browser e2e of these fields once the pins land (unit tests use mocked API data). The fit column follows
+  the catalog's `fits`; with an older API it falls back to a browser copy of the runtime's rule.
 
 ### ST-035 · Similarity hint for pasted code in the tool editor (R-4)
 

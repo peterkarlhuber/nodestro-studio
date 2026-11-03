@@ -11,7 +11,7 @@ import { Toaster } from "../components/toast";
 import { withNodeNames } from "../editor/CheckList";
 import i18n from "../i18n";
 import { problemText } from "../lib/errors";
-import { modelFit } from "./LocalModelsHardware";
+import { catalogFit, modelFit } from "./LocalModelsHardware";
 import { LocalModelsPanel } from "./SettingsLocalModels";
 
 const GB = 1_000_000_000;
@@ -129,6 +129,20 @@ describe("model fit", () => {
   });
 });
 
+describe("catalog fit", () => {
+  it("follows the runtime's fits verdict and lets the advice win", () => {
+    const base = { hardware: CPU, advice: [] };
+    expect(catalogFit({ ...MODEL, fits: true }, base)).toBe("cpu");
+    // The runtime knows more (e.g. free memory): its "no" wins over the browser's estimate.
+    expect(catalogFit({ ...MODEL, fits: false }, base)).toBe("too_large");
+    expect(catalogFit({ ...MODEL, memory_bytes: 10 * GB, cpu_friendly: false, fits: false }, base)).toBe("too_slow");
+    expect(catalogFit({ ...MODEL, fits: true }, { ...base, hardware: { ...CPU, gpu: "nvidia", gpu_memory_bytes: 8 * GB } })).toBe("gpu");
+    expect(
+      catalogFit({ ...MODEL, fits: true }, { ...base, advice: [{ code: "local.model_too_large", severity: "warning", model: "ollama:qwen3.5:4b", value: null, recommended: null }] }),
+    ).toBe("too_large");
+  });
+});
+
 describe("this computer", () => {
   it("shows the hardware, the runtime and the context window", async () => {
     serve({ "GET /api/local-models": overview() });
@@ -219,11 +233,11 @@ describe("speed", () => {
   });
 
   it("shows a measurement with where it ran", async () => {
-    const measured = { ...INSTALLED, speed: { tokens_per_second: 7.25, measured_at: "2026-11-03T10:00:00Z", context_length: 32768, processor: "cpu" as const } };
+    const measured = { ...INSTALLED, speed: { tokens_per_second: 7.25, measured_at: "2026-11-03T10:00:00Z", context_length: 32768, processor: "cpu" as const, prompt_tokens_per_second: 61.2 } };
     serve({ "GET /api/local-models": overview({}, { models: [measured] }) });
     show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
     const cell = await screen.findByTestId("local-speed-qwen3.5:4b");
-    expect(cell).toHaveTextContent("7,3 Tokens/s · auf der CPU");
+    expect(cell).toHaveTextContent("7,3 Tokens/s · auf der CPU · Prompt 61,2 Tokens/s");
     expect(cell).toHaveTextContent("gemessen am 3.11.2026 · Kontext 32.768");
     expect(within(cell).getByRole("button", { name: "Erneut messen" })).toBeEnabled();
   });

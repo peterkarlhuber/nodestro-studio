@@ -301,7 +301,8 @@
     "notMeasured": "Geschwindigkeit nicht gemessen",
     "measure": "Geschwindigkeit messen",
     "again": "Erneut messen",
-    "started": "Die Geschwindigkeit von {{model}} wird gemessen …"
+    "started": "Die Geschwindigkeit von {{model}} wird gemessen …",
+    "prompt": "Prompt {{speed}} Tokens/s"
   },
   "reasoning": {
     "label": "CPU-Sparmodus für Denkmodelle",

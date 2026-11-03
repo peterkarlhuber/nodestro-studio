@@ -109,11 +109,16 @@ function ExpectedFiles({ model }: { model: CatalogModel }) {
                   · {source.repository}
                   {source.revision ? <> · {t("localModels.build.revision", { revision: source.revision })}</> : null}
                 </>
-              ) : null}{" "}
-              ·{" "}
-              {input.role === "template"
-                ? t("localModels.build.headerSize", { size: formatBytes(input.size) })
-                : formatBytes(input.size)}
+              ) : null}
+              {input.size === null ? null : (
+                <>
+                  {" "}
+                  ·{" "}
+                  {input.role === "template"
+                    ? t("localModels.build.headerSize", { size: formatBytes(input.size) })
+                    : formatBytes(input.size)}
+                </>
+              )}
               <div className="muted">
                 SHA-256 <code style={{ wordBreak: "break-all" }}>{input.sha256}</code>
               </div>
@@ -240,7 +245,7 @@ export function BuildFromFiles({
       </Field>
       <Field
         label={t("localModels.build.templatePath")}
-        hint={t("localModels.build.templateHint", { size: templateInput ? formatBytes(templateInput.size) : "–" })}
+        hint={t("localModels.build.templateHint", { size: templateInput?.size ? formatBytes(templateInput.size) : "–" })}
       >
         <TextInput value={template} onChange={(event) => setTemplate(event.target.value)} spellCheck={false} disabled={running} />
       </Field>

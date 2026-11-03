@@ -110,6 +110,7 @@ describe("counted texts", () => {
     "localModels.advice.context_small",
     "localModels.advice.model_slow",
     "localModels.speed.value",
+    "localModels.speed.prompt",
   ]);
 
   it("have plural forms in English", () => {

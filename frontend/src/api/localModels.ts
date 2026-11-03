@@ -96,6 +96,8 @@ export interface CatalogModel {
   source?: "registry" | "build";
   /** Build: the pinned input files, when the API lists them (shown so an air-gapped computer gets the right ones). */
   build_inputs?: BuildInput[];
+  /** Whether the runtime's fits() says the model can run on this computer (older APIs leave it out). */
+  fits?: boolean;
   installed: boolean;
   verified: boolean;
 }
@@ -106,8 +108,8 @@ export interface BuildInput {
   /** Where it is published (the URL names the pinned revision). */
   url: string;
   sha256: string;
-  /** Bytes; for the template the length of its header (the start of the published file). */
-  size: number;
+  /** Bytes; for the template the length of its header (the start of the published file); null when unknown. */
+  size: number | null;
 }
 
 export interface Hardware {

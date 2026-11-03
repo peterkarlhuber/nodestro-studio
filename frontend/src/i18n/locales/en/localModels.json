@@ -301,7 +301,8 @@
     "notMeasured": "Speed not measured",
     "measure": "Measure speed",
     "again": "Measure again",
-    "started": "Measuring the speed of {{model}} …"
+    "started": "Measuring the speed of {{model}} …",
+    "prompt": "prompt {{speed}} tokens/s"
   },
   "reasoning": {
     "label": "CPU saving mode for thinking models",

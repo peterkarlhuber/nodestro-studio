@@ -301,6 +301,14 @@ describe("build from local files", () => {
     expect(calls.some((call) => call.url === "/api/local-models/pull")).toBe(false);
   });
 
+  it("leaves out a size the API does not know", async () => {
+    serve({ "GET /api/local-models": withBuild({ build_inputs: BUILD_INPUTS.map((input) => ({ ...input, size: null })) as unknown as typeof BUILD_INPUTS }) });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    const template = await screen.findByTestId("local-build-input-template");
+    expect(template).toHaveTextContent("mykor/mmBERT-base-GGUF · Revision 66e31bd");
+    expect(template).not.toHaveTextContent("werden geprüft");
+  });
+
   it("keeps the download when online and explains the files when the API does not list them", async () => {
     serve({ "GET /api/local-models": withBuild() });
     show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);

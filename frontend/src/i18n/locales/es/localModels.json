@@ -301,7 +301,8 @@
     "notMeasured": "Velocidad no medida",
     "measure": "Medir velocidad",
     "again": "Medir de nuevo",
-    "started": "Midiendo la velocidad de {{model}}…"
+    "started": "Midiendo la velocidad de {{model}}…",
+    "prompt": "lectura del prompt {{speed}} tokens/s"
   },
   "reasoning": {
     "label": "Modo de ahorro de CPU para modelos que razonan",

@@ -37,10 +37,18 @@ export function modelFit(model: Pick<CatalogModel, "memory_bytes" | "cpu_friendl
   return model.cpu_friendly ? "cpu" : "too_slow";
 }
 
-/** The fit, unless the runtime's advice says the model does not fit (it knows more, e.g. the free memory). */
+/**
+ * The fit from the runtime's verdict (CatalogEntry.fits) when the API sends it, the browser copy otherwise; the
+ * advice local.model_too_large always wins (it knows more, e.g. the free memory).
+ */
 export function catalogFit(model: CatalogModel, overview: Pick<LocalOverview, "hardware" | "advice">): ModelFit {
   const tooLarge = (overview.advice ?? []).some((item) => item.code === "local.model_too_large" && sameModel(item.model, model.name));
-  return tooLarge ? "too_large" : modelFit(model, overview.hardware);
+  if (tooLarge) return "too_large";
+  const computed = modelFit(model, overview.hardware);
+  if (model.fits === undefined) return computed;
+  if (model.fits) return computed === "gpu" ? "gpu" : "cpu";
+  // Does not run here: too slow on a CPU when it would fit the memory, too large otherwise.
+  return computed === "too_slow" ? "too_slow" : "too_large";
 }
 
 const FIT_TONE = { gpu: "success", cpu: "running", too_slow: "warning", too_large: "danger" } as const;
@@ -210,6 +218,9 @@ export function SpeedCell({ model, canMeasure }: { model: InstalledModel; canMea
         <span>
           {t("localModels.speed.value", { speed: formatSpeed(speed.tokens_per_second) })}
           {speed.processor ? ` · ${t(`localModels.speed.processor.${speed.processor}`)}` : ""}
+          {speed.prompt_tokens_per_second
+            ? ` · ${t("localModels.speed.prompt", { speed: formatSpeed(speed.prompt_tokens_per_second) })}`
+            : ""}
           <span className="muted">
             {" "}
             · {t("localModels.speed.measuredAt", { date: new Date(speed.measured_at).toLocaleDateString(i18n.language) })}
