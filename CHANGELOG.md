@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Navigation, settings and editor, UX round 2 (2026-11-03)
+
+- Settings has a contents list grouped by task (setup, costs, running, maintenance) with deep links to every section
+  and provider; links from a blocked Start, a failed run or an example's requirements open the right provider and offer
+  "Back to the workflow" or "Back to the run".
+- The navigation can be collapsed to an icon rail; in the editor it collapses automatically. The theme offers
+  "System" and follows the operating system by default; the pre-paint theme script moved to `public/theme-init.js`, so
+  a strict `script-src 'self'` policy works.
+- Ctrl+K also goes to pages and settings sections. F6 / Shift+F6 move between the editor's title bar, palette,
+  canvas, inspector and run panel. At tablet widths (761–1100 px) the inspector opens as a drawer on selection.
+- Sandbox settings say what to do about Docker once; the budget card names the waiting agent by its label when the
+  runtime sends one. Smaller fixes: provider select width, toasts no longer cover Save buttons, the help tip stays
+  below the inspector footer, the tracked `frontend/node_modules` symlink is gone.
+
 ### Languages and built-in docs, UX round 2 (2026-11-03)
 
 - Docs in all six languages: the start chapter, the Python libraries chapter, tool errors and the FAQ described the
