@@ -1,5 +1,5 @@
 import { CheckCircle2, Copy, Keyboard, PanelRightClose, PanelRightOpen, Trash2 } from "lucide-react";
-import { type Ref, useState } from "react";
+import { type Ref, memo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 import {
@@ -22,7 +22,7 @@ import { OrchestratorInspector } from "./OrchestratorInspector";
 import { ApprovalInspector, ConditionInspector, FormEditor, OutputContractEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
 import { useEditor } from "./store";
 
-export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefined; panelRef?: Ref<HTMLElement> }) {
+function InspectorView({ check, panelRef }: { check: WorkflowCheck | undefined; panelRef?: Ref<HTMLElement> }) {
   const { t } = useTranslation();
   const selectedId = useEditor((s) => s.selectedId);
   const several = useEditor((s) => s.selectedIds.length > 1);
@@ -371,3 +371,6 @@ function CapabilityField() {
     </Field>
   );
 }
+
+/** Memoized (ST-004): it reads what it shows from the stores, so a render of the editor page alone does not render it again. */
+export const Inspector = memo(InspectorView);

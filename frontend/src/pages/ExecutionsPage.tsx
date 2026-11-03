@@ -3,7 +3,7 @@ import { Columns2, FileDown, FileUp, Rows3, Trash2 } from "lucide-react";
 import type { TFunction } from "i18next";
 import { type ChangeEvent, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import { api } from "../api/client";
 import { RUNS_MAX, RUNS_PAGE, useRunList, useWorkflows } from "../api/hooks";
@@ -19,6 +19,18 @@ const STATUS_FILTER: ("" | RunStatus)[] = ["", "running", "paused", "succeeded",
 type Origin = "" | "own" | "imported";
 
 const ORIGIN_FILTER: Origin[] = ["", "own", "imported"];
+
+/** The filters as the address keeps them (?workflow=…&status=…&origin=…), so a filtered list can be linked to and
+ * survives the way back from a run. Unknown values count as no filter. */
+export function runFilters(params: URLSearchParams): { workflowId: string; status: "" | RunStatus; origin: Origin } {
+  const status = params.get("status") ?? "";
+  const origin = params.get("origin") ?? "";
+  return {
+    workflowId: params.get("workflow") ?? "",
+    status: (STATUS_FILTER as string[]).includes(status) ? (status as RunStatus) : "",
+    origin: (ORIGIN_FILTER as string[]).includes(origin) ? (origin as Origin) : "",
+  };
+}
 
 /** Import trace files one by one; returns the id to open when exactly one file was given. */
 async function importTraces(t: TFunction, files: File[]): Promise<string | null> {
@@ -40,9 +52,19 @@ async function importTraces(t: TFunction, files: File[]): Promise<string | null>
 
 export function ExecutionsPage() {
   const { t } = useTranslation();
-  const [workflowId, setWorkflowId] = useState("");
-  const [status, setStatus] = useState<"" | RunStatus>("");
-  const [origin, setOrigin] = useState<Origin>("");
+  const [params, setParams] = useSearchParams();
+  const { workflowId, status, origin } = runFilters(params);
+  const setFilter = (name: "workflow" | "status" | "origin", value: string) =>
+    setParams(
+      (current) => {
+        const next = new URLSearchParams(current);
+        if (value) next.set(name, value);
+        else next.delete(name);
+        return next;
+      },
+      { replace: true },
+    );
+  const filtered = Boolean(workflowId || status || origin);
   // Older servers list only the newest ``limit`` runs (at most RUNS_MAX); "Load older runs" asks
   // for more. Servers that page (X-Has-More) load the next page instead, without an upper bound.
   const [limit, setLimit] = useState(RUNS_PAGE);
@@ -107,7 +129,7 @@ export function ExecutionsPage() {
               aria-label={t("executions.filterWorkflow")}
               value={workflowId}
               onChange={(value) => {
-                setWorkflowId(value);
+                setFilter("workflow", value);
                 setLimit(RUNS_PAGE);
               }}
               placeholder={t("executions.allWorkflows")}
@@ -116,13 +138,13 @@ export function ExecutionsPage() {
             <Select
               aria-label={t("executions.filterStatus")}
               value={status}
-              onChange={(value) => setStatus(value as "" | RunStatus)}
+              onChange={(value) => setFilter("status", value)}
               options={STATUS_FILTER.map((value) => ({ value, label: value ? t(`status.${value}.label`) : t("executions.allStatuses") }))}
             />
             <Select
               aria-label={t("executions.filterOrigin")}
               value={origin}
-              onChange={(value) => setOrigin(value as Origin)}
+              onChange={(value) => setFilter("origin", value)}
               options={ORIGIN_FILTER.map((value) => ({ value, label: t(`executions.origin.${value || "all"}`) }))}
             />
             <input
@@ -156,7 +178,18 @@ export function ExecutionsPage() {
         {runs.error ? <Callout tone="danger">
             <ErrorText error={runs.error} />
           </Callout> : null}
-        {runs.data && !shown.length ? (
+        {runs.data && !shown.length && filtered ? (
+          <EmptyState
+            icon={Rows3}
+            title={t("executions.noMatch")}
+            action={
+              <Button onClick={() => setParams({}, { replace: true })} data-testid="runs-clear-filters">
+                {t("executions.clearFilters")}
+              </Button>
+            }
+          />
+        ) : null}
+        {runs.data && !shown.length && !filtered ? (
           <EmptyState
             icon={Rows3}
             title={t("executions.empty")}

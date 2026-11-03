@@ -258,6 +258,20 @@ export function technicalText(t: TFunction, item: Coded): string | null {
   return item.message === problemText(t, item) ? null : item.message;
 }
 
+/**
+ * A backend's own text (in English, whatever the interface language) folded away under "Technical details", so it
+ * never reads as an untranslated sentence (NSL-11). The text is shown as it came; it is never translated.
+ */
+export function TechnicalDetails({ text, testId }: { text: string; testId?: string }) {
+  const { t } = useTranslation();
+  return (
+    <details className="technical" data-testid={testId}>
+      <summary>{t("common.technicalDetails")}</summary>
+      <code lang="en">{text}</code>
+    </details>
+  );
+}
+
 /** A localized message, with the technical original folded away below it. */
 export function ProblemText({ item, compact = false }: { item: Coded; compact?: boolean }) {
   const { t } = useTranslation();
@@ -272,12 +286,7 @@ export function ProblemText({ item, compact = false }: { item: Coded; compact?: 
           {hint}
         </span>
       ) : null}
-      {technical ? (
-        <details className="technical">
-          <summary>{t("common.technicalDetails")}</summary>
-          <code>{technical}</code>
-        </details>
-      ) : null}
+      {technical ? <TechnicalDetails text={technical} /> : null}
     </>
   );
 }
@@ -347,6 +356,28 @@ export function ProviderSetupLink({ item }: { item: Coded | null | undefined }) 
         <a href="/settings">{label}</a>
       )}
     </>
+  );
+}
+
+/** Problems a person solves in Settings → Sandbox: AI-created code that needs isolation no sandbox here offers. */
+export function needsSandboxSetup(item: Coded | null | undefined): boolean {
+  return /^sandbox\.isolation_required/.test(item?.code ?? "");
+}
+
+/** "Open Settings → Sandbox" after such a problem (the path the sentence names, as a link); nothing otherwise. */
+export function SandboxSetupLink({ item, always = false }: { item?: Coded | null; always?: boolean }) {
+  const { t } = useTranslation();
+  const routed = useInRouterContext();
+  if (!always && !needsSandboxSetup(item)) return null;
+  const label = t("errors.openSandbox");
+  return routed ? <RoutedSandboxLink label={label} /> : <a href="/settings#settings-sandbox">{label}</a>;
+}
+
+function RoutedSandboxLink({ label }: { label: string }) {
+  return (
+    <Link to={useSettingsHref("settings-sandbox")} data-testid="sandbox-setup-link">
+      {label}
+    </Link>
   );
 }
 

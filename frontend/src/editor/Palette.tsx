@@ -1,6 +1,6 @@
 import type { TFunction } from "i18next";
 import { Bot, Flag, GitBranch, Hand, Network, PanelLeftClose, PanelLeftOpen, Play, Sparkles, Users, Workflow } from "lucide-react";
-import { type DragEvent, type Ref, useState } from "react";
+import { type DragEvent, type Ref, memo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useTemplates, useWorkflows } from "../api/hooks";
@@ -82,7 +82,7 @@ function Item({
   );
 }
 
-export function Palette({ onDesign, panelRef }: { onDesign: () => void; panelRef?: Ref<HTMLElement> }) {
+function PaletteView({ onDesign, panelRef }: { onDesign: () => void; panelRef?: Ref<HTMLElement> }) {
   const { t } = useTranslation();
   // Open or collapsed, and the width, are a layout preference of this browser (see layout.ts).
   const open = useEditorLayout((state) => state.open.palette);
@@ -214,3 +214,6 @@ export function Palette({ onDesign, panelRef }: { onDesign: () => void; panelRef
     </aside>
   );
 }
+
+/** Memoized (ST-004): it reads what it shows from the stores, so a render of the editor page alone does not render it again. */
+export const Palette = memo(PaletteView);

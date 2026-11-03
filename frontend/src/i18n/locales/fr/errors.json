@@ -881,6 +881,7 @@
     }
   },
   "setupProvider": "Configurer un fournisseur d’IA",
+  "openSandbox": "Ouvrir Réglages → Bac à sable",
   "runs": {
     "cursor_invalid": "Cette partie de la liste des exécutions est introuvable. Revenez au début de la liste."
   },

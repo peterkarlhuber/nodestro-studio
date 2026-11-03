@@ -287,6 +287,12 @@
     "confirmText": "He leído el código y las pruebas y asumo la responsabilidad de ejecutarlos sin aislamiento en este equipo.",
     "confirm": "Adoptar",
     "adopted": "{{name}} cuenta ahora como tu propio código",
-    "adoptedNote": "Creada por IA, adoptada por ti como código propio (versión {{version}}, {{when}}): se ejecuta en un proceso de Python aparte, sin aislamiento, en este equipo. Un cambio posterior de la IA termina la adopción."
+    "adoptedNote": "Creada por IA, adoptada por ti como código propio (versión {{version}}, {{when}}): se ejecuta en un proceso de Python aparte, sin aislamiento, en este equipo. Un cambio posterior de la IA termina la adopción.",
+    "change": {
+      "title": "Qué cambia",
+      "nowBlocked": "Ahora: no puede ejecutarse en este equipo, porque ningún sandbox está listo para aislarla.",
+      "nowIsolated": "Ahora: se ejecuta aislada ({{backend}}).",
+      "after": "Tras adoptarla: se ejecuta como el código que escribes tú ({{backend}})."
+    }
   }
 }

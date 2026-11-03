@@ -16,6 +16,8 @@
   "import": "Importar trace",
   "empty": "Nenhuma execução",
   "emptyText": "Inicie um fluxo de trabalho no editor; cada execução aparece aqui. Você pode importar traces exportados para visualizá-los.",
+  "noMatch": "Nenhuma execução corresponde a estes filtros.",
+  "clearFilters": "Mostrar todas as execuções",
   "columns": {
     "workflow": "Fluxo de trabalho",
     "status": "Status",

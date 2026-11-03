@@ -1,5 +1,5 @@
 import { ExternalLink, PanelBottomClose, PanelBottomOpen } from "lucide-react";
-import { type Ref, useEffect, useState } from "react";
+import { type Ref, memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -18,7 +18,7 @@ import { NodeRunDetails, startFiles } from "./RunDetails";
 import { liveUsage, runWaitsForBudget, runWaitsForToolApproval, useEditor, waitsForToolApproval } from "./store";
 
 /** The execution overview below the canvas. Collapsing or resizing it never touches the run. */
-export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
+function RunPanelView({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
   const { t } = useTranslation();
   const run = useEditor((s) => s.run);
   const nodes = useEditor((s) => s.nodes);
@@ -164,3 +164,5 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
   );
 }
 
+/** Memoized (ST-004): it reads what it shows from the stores, so a render of the editor page alone does not render it again. */
+export const RunPanel = memo(RunPanelView);

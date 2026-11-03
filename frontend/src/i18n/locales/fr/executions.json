@@ -16,6 +16,8 @@
   "import": "Importer une trace",
   "empty": "Aucune exécution",
   "emptyText": "Lancez un workflow dans l’éditeur ; chaque exécution apparaît ici. Vous pouvez importer des traces exportées pour les consulter.",
+  "noMatch": "Aucune exécution ne correspond à ces filtres.",
+  "clearFilters": "Afficher toutes les exécutions",
   "columns": {
     "workflow": "Workflow",
     "status": "Statut",

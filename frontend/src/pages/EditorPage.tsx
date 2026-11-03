@@ -69,6 +69,11 @@ export function EditorPage() {
   const [architectOpen, setArchitectOpen] = useState(false);
   const [architectStart, setArchitectStart] = useState<ArchitectStart | undefined>(undefined);
   const [designInitial, setDesignInitial] = useState("");
+  // Stable, so the memoized palette does not render again with every render of this page (ST-004).
+  const openDesign = useCallback(() => {
+    setDesignInitial("");
+    setDesignOpen(true);
+  }, []);
   const navigate = useNavigate();
   const [versionsOpen, setVersionsOpen] = useState(false);
   const [apiOpen, setApiOpen] = useState(false);
@@ -464,13 +469,7 @@ export function EditorPage() {
           </div>
         </header>
         <div className="editor__workspace">
-          <Palette
-            panelRef={paletteRef}
-            onDesign={() => {
-              setDesignInitial("");
-              setDesignOpen(true);
-            }}
-          />
+          <Palette panelRef={paletteRef} onDesign={openDesign} />
           {layout.open.palette ? (
             <PanelSplitter
               panel="palette"

@@ -118,7 +118,8 @@ try {
     check((await card.getByTestId("budget-reason").textContent()).includes("kann bis zu"), "editor: the reason names the most the next request can cost");
     check((await card.getByTestId("budget-blocked").textContent()).includes("anthropic:claude-sonnet-5-5"), "editor: the blocked request names its model");
     const input = card.getByTestId("budget-limit-input");
-    check((await input.inputValue()) === "0.03", "editor: the suggested limit is prefilled");
+    // The suggestion is written with the language's decimal mark (NSL-14); German writes "0,03".
+    check((await input.inputValue()) === "0,03", "editor: the suggested limit is prefilled with the decimal comma");
     check((await card.getByTestId("budget-difference").textContent()).includes("+"), "editor: the difference to the current limit is shown");
     const pendingCount = (await api("/budget-requests?status=pending")).length;
     await until(async () => Number((await page.locator(".nav-item__badge").first().textContent())?.trim()) >= pendingCount, "navigation badge counts the decision");
@@ -256,7 +257,7 @@ try {
     await until(async () => (await api("/settings")).budget_decision_hours === 48, "settings saved");
     check(Number((await api("/settings")).max_run_budget_usd) === 0.5, "settings: the maximum run budget is saved as 0.50");
     await page.reload();
-    check((await page.getByTestId("settings-max-run-budget").inputValue()).startsWith("0.5"), "settings: the saved maximum is shown after a reload");
+    check((await page.getByTestId("settings-max-run-budget").inputValue()) === "0,50", "settings: the saved maximum is shown after a reload, with the decimal comma");
     await shot(page, "budget-08-settings-de");
     const id = await pausedRun();
     await page.goto(`${base}/executions/${id}`);

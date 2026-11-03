@@ -11,8 +11,20 @@ function locale(): string {
   return formatLocale();
 }
 
+/** Formatters by locale and options: creating an Intl.NumberFormat costs far more than using one (ST-004). */
+const NUMBER_FORMATS = new Map<string, Intl.NumberFormat>();
+
 function numberFormat(options: Intl.NumberFormatOptions): Intl.NumberFormat {
-  return new Intl.NumberFormat(locale(), options);
+  const tag = locale();
+  const key = `${tag}|${JSON.stringify(options)}`;
+  let found = NUMBER_FORMATS.get(key);
+  if (!found) {
+    found = new Intl.NumberFormat(tag, options);
+    // Option sets are few (a handful per function); the bound only guards against an unexpected variety.
+    if (NUMBER_FORMATS.size > 200) NUMBER_FORMATS.clear();
+    NUMBER_FORMATS.set(key, found);
+  }
+  return found;
 }
 
 export function formatNumber(value: number, options: Intl.NumberFormatOptions = {}): string {
@@ -64,6 +76,20 @@ export function formatDate(value: string | null | undefined): string {
   return new Date(value).toLocaleString(locale(), { dateStyle: "medium", timeStyle: "short" });
 }
 
+/** Midnight UTC exactly: a value that carries a day, not a moment (the built-in price list is checked by day). */
+const DAY_ONLY = /^\d{4}-\d{2}-\d{2}(T00:00(:00(\.0+)?)?(Z|[+-]00:?00)?)?$/;
+
+/**
+ * A moment, or just its day when the value has no time of day (NSL-15: a price checked "on Oct 31" read
+ * "Oct 31, 2026, 12:00 AM" in English, a time nobody checked anything at).
+ */
+export function formatDateOrDay(value: string | null | undefined): string {
+  if (!value) return "–";
+  if (!DAY_ONLY.test(value)) return formatDate(value);
+  const day = value.slice(0, 10);
+  return new Date(`${day}T00:00:00Z`).toLocaleDateString(locale(), { dateStyle: "medium", timeZone: "UTC" });
+}
+
 /** A short day ("27.10.", "10/27", "27 oct") for a YYYY-MM-DD bucket of the usage report. */
 export function formatDay(value: string): string {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
@@ -72,9 +98,13 @@ export function formatDay(value: string): string {
   return date.toLocaleDateString(locale(), { day: "numeric", month: "numeric", timeZone: "UTC" });
 }
 
+/**
+ * A time of day with seconds, in the same style as the time in formatDate (NSL-15: "2-digit" hours gave
+ * "08:04:02 AM" in English next to "8:04 AM"; German keeps "08:04:02").
+ */
 export function formatTime(value: string | null | undefined): string {
   if (!value) return "–";
-  return new Date(value).toLocaleTimeString(locale(), { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  return new Date(value).toLocaleTimeString(locale(), { timeStyle: "medium" });
 }
 
 export function formatDuration(start: string | null | undefined, end: string | null | undefined): string {

@@ -881,6 +881,7 @@
     }
   },
   "setupProvider": "KI-Anbieter einrichten",
+  "openSandbox": "Einstellungen → Sandbox öffnen",
   "runs": {
     "cursor_invalid": "Dieser Teil der Liste der Läufe wurde nicht gefunden. Geh zurück an den Anfang der Liste."
   },

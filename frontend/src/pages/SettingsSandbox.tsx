@@ -8,7 +8,7 @@ import { keys } from "../api/hooks";
 import type { SandboxBackendStatus, SandboxCheck, SandboxMode, SandboxSelection, SandboxStatus, Settings } from "../api/types";
 import { dockerReasonKey, isDockerReason } from "../api/types";
 import { Badge, Button, Callout, DocLink, HelpTip, Segmented } from "../components/ui";
-import { ErrorText } from "../lib/errors";
+import { ErrorText, TechnicalDetails } from "../lib/errors";
 import { formatDate, type Tone } from "../lib/format";
 
 const STATE_TONE: Record<SandboxBackendStatus["state"], Tone> = {
@@ -191,12 +191,7 @@ function DockerCheckRow({ check, reason }: { check: SandboxCheck; reason: string
           </span>
         </>
       ) : null}
-      {check.detail && !check.ok ? (
-        <>
-          {" "}
-          <code className="small">{check.detail}</code>
-        </>
-      ) : null}
+      {check.detail && !check.ok ? <TechnicalDetails text={check.detail} testId={`sandbox-check-${check.name}-detail`} /> : null}
     </li>
   );
 }
@@ -325,6 +320,18 @@ function DockerDetails({
   );
 }
 
+/**
+ * The short Docker state next to the mode: available, not running (the command is there but the engine does not
+ * answer), not ready (it answers but a later check failed or still runs), or not found. "Not found" next to
+ * "Docker is installed but not running" contradicted itself.
+ */
+export function dockerBadgeKey(available: boolean, docker: Pick<SandboxBackendStatus, "state" | "reason"> | undefined): string {
+  if (available) return "settings.sandbox.dockerAvailable";
+  if (!docker || !docker.reason || docker.reason === "docker-missing") return "settings.sandbox.dockerMissing";
+  if (docker.reason === "docker-unreachable") return "settings.sandbox.dockerNotRunning";
+  return "settings.sandbox.dockerNotReady";
+}
+
 /** Whether Docker's reason explains a block: not in the subprocess and linux modes, which never use Docker. */
 function dockerDecides(selection: SandboxSelection): boolean {
   return selection.profile !== "desktop" || (selection.mode !== "subprocess" && selection.mode !== "linux");
@@ -403,9 +410,9 @@ export function SandboxPanel({
             onChange={onMode}
             options={modes}
           />
-          <Badge tone={settings.docker_available ? "success" : "idle"}>
-            {settings.docker_available ? t("settings.sandbox.dockerAvailable") : t("settings.sandbox.dockerMissing")}
-          </Badge>
+          <span data-testid="sandbox-docker-badge">
+            <Badge tone={settings.docker_available ? "success" : "idle"}>{t(dockerBadgeKey(settings.docker_available, docker))}</Badge>
+          </span>
         </div>
       ) : (
         <p className="muted small" data-testid="sandbox-containers-only">
@@ -493,7 +500,7 @@ export function SandboxPanel({
             defaultValue: t("settings.sandbox.reason.failed"),
             system: builtin.system,
           })}{" "}
-          {builtin.detail ? <code>{builtin.detail}</code> : null}
+          {builtin.detail ? <TechnicalDetails text={builtin.detail} /> : null}
         </p>
       ) : null}
 
@@ -517,10 +524,7 @@ export function SandboxPanel({
                 <td>
                   <BackendReason backend={backend} system={builtin?.system ?? ""} />
                   {backend.detail && backend.state !== "approved" ? (
-                    <>
-                      {" "}
-                      <code className="small">{backend.detail}</code>
-                    </>
+                    <TechnicalDetails text={backend.detail} testId={`sandbox-backend-${backend.name}-detail`} />
                   ) : null}
                 </td>
               </tr>

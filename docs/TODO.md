@@ -12,8 +12,8 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 21 |
-| P4 Optional | 10 |
+| P3 Low | 22 |
+| P4 Optional | 12 |
 
 **Release blockers:** None for this repository.
 
@@ -63,12 +63,15 @@ None known.
 
 ## Performance
 
-### ST-004 · Editor main-thread cost unchanged under CPU throttling (F3)
+### ST-004 · Editor main-thread cost under CPU throttling (F3)
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** #84, final UX review F3
-- **What:** Bundle and network cost dropped 4 to 6 times, but the editor's mount work did not: about 1.6 s of long
-  tasks under CPU 4x for a 9-node workflow. The paused-run polling part of F3 was fixed in #79.
-- **Next step:** Profile the canvas mount, fix the dominant long tasks, keep a repeatable measurement.
+- **Priority:** P3 Low · **Status:** In progress (UX round 2 reduced it) · **Refs:** #84, final UX review F3,
+  `frontend/e2e/perf-editor.mjs` (`npm run perf:editor`)
+- **What:** Opening a 9-node workflow under CPU 4x (median of 5): mount 1884 → 1335 ms, total blocking time
+  1557 → 956 ms, longest task 1028 → 756 ms after UX round 2 (fewer re-renders of nodes, panels and the zoom label;
+  cached number formatters). Still above the 50 ms long-task budget.
+- **Next step:** Mount closed editor dialogs only when open (about 100 ms at 4x; keep their state semantics), preload
+  the editor chunk from the Workflows page, look at React Flow's node measuring (110–180 ms at 4x).
 
 ## Features and enhancements
 
@@ -159,22 +162,15 @@ None known.
 
 ## Tests and quality assurance
 
-### ST-012 · Dependabot pull requests cannot run the full CI
-
-- **Priority:** P2 Medium · **Status:** Open · **Refs:** #85
-- **What:** CI exits when the `NODESTRO_READ` secret is missing, so on Dependabot runs the backend, pins, package and
-  browser jobs fail before testing; only the frontend job is meaningful. All component repositories are public now.
-- **Next step:** Install the git dependencies anonymously and make the token optional, as in the other repositories
-  (backend audit D-08 residual); a Dependabot secret (owner action) is only the fallback.
-
 ### ST-017 · Pending dependency updates (Dependabot)
 
 - **Priority:** P3 Low · **Status:** In progress · **Refs:** #64, #66, #67, #75
 - **What:** actions/setup-node 6.5 → 7.1 (#64), globals 16 → 17 (#66, ESLint config only), jsdom 26 → 30 (#67, unit
   test environment only), npm minor/patch group (#75). The frontend job (lint, typecheck, unit tests, build, audit)
-  passes for all four on Node 22; the browser suites have not run (ST-012). #75 needs a rebase on the
+  passes for all four on Node 22; the browser suites have not run yet. #75 needs a rebase on the
   `frontend/package.json` changes from #77.
-- **Next step:** After ST-012, re-run full CI; merge the majors one at a time; rebase #75 first.
+- **Next step:** CI no longer needs `NODESTRO_READ` (#110): re-run full CI on each; merge the majors one at a time;
+  rebase #75 first.
 
 ## Platform coverage
 
@@ -281,22 +277,43 @@ None known.
 - **Next step:** Decide on a constraints or lock file for the platform install, together with the other Python repos.
 - **Depends on:** the same decision in nodestro-runtime RT-023 and nodestro-server SRV-014 (desktop builds from the studio pins).
 
-### ST-037 · Version check misses component references in other spellings (API2-09)
+### ST-038 · Three scripts outside mypy (API2-16 rest)
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** backend audit 2 API2-09, `scripts/check_versions.py`
-- **What:** The pin check recognizes platform components only in the canonical pinned-URL form. References written
-  differently are not reported, so an unpinned or non-canonical component reference could slip into `pyproject.toml`.
-- **Next step:** Parse requirements with `packaging.requirements`, normalize names and require the exact canonical
-  pinned URL for every platform component.
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** backend audit 2 API2-16, studio #110
+- **What:** The studio now serves the frontend through `nodestro_api.frontend.mount_frontend` and the typed scripts
+  are in mypy, but `derive_branding`, `platform_smoke` and `social_preview` stay outside (17 errors, missing numpy
+  and PIL stubs).
+- **Next step:** Add the stub packages to the dev dependencies and fix the errors, or type the image helpers locally.
 
-### ST-038 · Duplicated frontend serving code; `scripts/` outside mypy (API2-16)
+### ST-039 · Name the blocked tool in sandbox problems (NJR-08)
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** backend audit 2 API2-16, `src/nodestro_studio/app.py`,
-  nodestro-api `frontend.py`
-- **What:** The studio serves the built frontend with its own code instead of `nodestro_api.frontend.mount_frontend`;
-  the two differ (e.g. `GET /api`), and security headers would have to be added twice. mypy does not check
-  `scripts/` (about 2,900 lines).
-- **Next step:** Reuse `mount_frontend` in the studio once the api's header middleware lands; add `scripts/` to mypy.
+- **Priority:** P3 Low · **Status:** Open · **Refs:** UX round 2 NJR-08
+- **What:** The sentence for a tool refused by the sandbox does not name the tool, although `params.name` carries
+  it; with several tools on one agent it is unclear which one is blocked.
+- **Next step:** Add `{{name}}` to the sandbox problem sentences in six languages.
+
+### ST-040 · Trust label "Origin: Needs isolation" (NJR-10)
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** UX round 2 NJR-10, tools docs chapter
+- **What:** The tool header reads "Origin: Needs isolation", and an adopted tool reads "Created by AI · Origin:
+  Written by you"; origin and trust class are mixed in one label.
+- **Next step:** Separate "created by" from "runs as", and change the tools docs in six languages in the same PR.
+
+### ST-041 · Runs list and run page polish (NJR-03, NJR-17 to NJR-20)
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** UX round 2 NJR-03, NJR-11, NJR-17 to NJR-20
+- **What:** An expired budget decision keeps the "Budget decision needed" title and "waiting" badge; the workflow
+  filter cannot tell two copies with the same name apart; runs waiting for a budget decision have no filter option
+  of their own; "Version 1" stands alone in a callout; a blocked agent node shows "Ready" next to "1 problem"; danger
+  callouts show two icons; the runs table overflows by 15 px in French at 1280 px.
+- **Next step:** Small fixes, one PR.
+
+### ST-042 · Runtime release must send `requests[].label` on budget requests (NJR-04)
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** NSL-13, nodestro-runtime (additive field)
+- **What:** The budget card names the waiting agent by `label` and falls back to the node id; the label only appears
+  once the pinned runtime sends it.
+- **Next step:** Check in the joint integration run after the runtime pin.
 
 ## Later optimizations
 
@@ -391,7 +408,6 @@ None known.
 | ST-018, ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update the status documents and `products` together |
 | ST-026 | nodestro-examples | EX-008 (typographic apostrophes) | Same typography decision |
 | ST-031, ST-032 | nodestro-examples | EX-003 (AD-18 marker), EX-001/EX-002 (ED-17) | Examples provide the marker and texts; studio shows them |
-| ST-012 | all component repositories | `NODESTRO_READ` CI change (runtime #75 / RT-029, api #50, sdk #47, integrations #36, examples #40, server #25, desktop #17) | Same change everywhere |
 | — | nodestro-runtime, nodestro-api | X-01 decision response still `paused` (RT-005, API-018); X-03 error code list (RT-011, API-016) | Change lives in runtime/api; studio already adapted |
 
 Generated example chapters (`frontend/src/docs/chapters/*/beispiele.md`, between the `examples` markers) come from

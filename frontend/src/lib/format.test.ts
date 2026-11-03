@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import i18n, { type Language, setLanguage } from "../i18n";
 import {
@@ -6,10 +6,12 @@ import {
   formatBytes,
   formatCost,
   formatDate,
+  formatDateOrDay,
   formatDay,
   formatDuration,
   formatNumber,
   formatPrice,
+  formatTime,
   outputText,
   tokenBreakdown,
 } from "./format";
@@ -65,6 +67,37 @@ describe("format", () => {
     await inLanguage("fr");
     expect(formatDay("2026-10-27")).toBe("27/10");
     expect(formatDay("Total")).toBe("Total");
+  });
+
+  it("reuses number formatters per language and options, and follows a language change", async () => {
+    const created = vi.spyOn(Intl, "NumberFormat");
+    try {
+      await inLanguage("en");
+      created.mockClear();
+      formatNumber(1234.5);
+      formatNumber(99.5);
+      expect(created.mock.calls.filter(([, options]) => JSON.stringify(options) === "{}").length).toBeLessThanOrEqual(1);
+      await inLanguage("de");
+      expect(formatNumber(1234.5)).toBe("1.234,5");
+      await inLanguage("en");
+      expect(formatNumber(1234.5)).toBe("1,234.5");
+    } finally {
+      created.mockRestore();
+    }
+  });
+
+  it("writes times like the time in a date and shows a bare day without midnight (NSL-15)", async () => {
+    await inLanguage("en");
+    expect(normalize(formatTime("2026-10-27T08:04:02Z"))).toBe("8:04:02 AM");
+    expect(normalize(formatDate("2026-10-27T08:04:02Z"))).toBe("Oct 27, 2026, 8:04 AM");
+    expect(formatDateOrDay("2026-10-31T00:00:00Z")).toBe("Oct 31, 2026");
+    expect(formatDateOrDay("2026-10-31")).toBe("Oct 31, 2026");
+    expect(formatDateOrDay("2026-10-31T00:00:00.000000+00:00")).toBe("Oct 31, 2026");
+    expect(normalize(formatDateOrDay("2026-10-31T09:15:00Z"))).toBe("Oct 31, 2026, 9:15 AM");
+    expect(formatDateOrDay(null)).toBe("–");
+    await inLanguage("de");
+    expect(formatTime("2026-10-27T08:04:02Z")).toBe("08:04:02");
+    expect(formatDateOrDay("2026-10-31T00:00:00Z")).toBe("31.10.2026");
   });
 
   it("formats sizes and durations", async () => {

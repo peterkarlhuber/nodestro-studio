@@ -16,6 +16,8 @@
   "import": "Import trace",
   "empty": "No runs",
   "emptyText": "Start a workflow in the editor; every run appears here. You can import exported traces to view them.",
+  "noMatch": "No runs match these filters.",
+  "clearFilters": "Show all runs",
   "columns": {
     "workflow": "Workflow",
     "status": "Status",
