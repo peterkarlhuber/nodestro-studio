@@ -4,8 +4,12 @@ Every Nodestro component and orkexa is referenced by an exact commit (no branch,
 move). The script checks that
 
 - every commit in platform/versions.json is a full 40-character SHA,
-- every ``git+https://github.com/peterkarlhuber/...`` reference in the studio and in each pinned
-  component (its pyproject.toml at the pinned commit) names the commit versions.json gives,
+- every dependency on a platform component in the studio and in each pinned component (its pyproject.toml at the
+  pinned commit) is exactly the canonical reference ``<name> @ git+https://github.com/peterkarlhuber/<repo>.git@<commit
+  versions.json gives>`` (requirements are parsed with ``packaging``, names compared normalised): a plain name
+  (``nodestro-runtime>=0.2``, which would install whatever a package index offers under that name), another owner or
+  spelling, ``git+ssh``, an archive URL or a branch are refused, and so is a URL of a component under another name
+  (API2-09),
 - each component's version at that commit is the one versions.json gives (a component with a dynamic version,
   such as Axentra, names the file that holds it in ``version_file``: ``__version__ = "..."``),
 - nothing references claude-agent.
@@ -27,15 +31,77 @@ import tempfile
 import tomllib
 from typing import Any
 
+from packaging.requirements import InvalidRequirement, Requirement
+from packaging.utils import canonicalize_name
+
 ROOT = Path(__file__).resolve().parents[1]
 VERSIONS = ROOT / "platform" / "versions.json"
 SHA = re.compile(r"^[0-9a-f]{40}$")
 VERSION_ASSIGNMENT = re.compile(r"^__version__\s*=\s*[\"']([^\"']+)[\"']", re.MULTILINE)
-REFERENCE = re.compile(r"git\+https://github\.com/peterkarlhuber/(?P<repo>[\w.-]+?)(?:\.git)?@(?P<ref>[^\s#;\"']+)")
+OWNER = "peterkarlhuber"
+#: A git reference of the owner's repositories (any spelling): the repository and the commit or branch it names.
+REFERENCE = re.compile(
+    r"github\.com[/:]" + OWNER + r"/(?P<repo>[\w.-]+?)(?:\.git)?(?:@(?P<ref>[^\s#;\"']+))?(?:[#;\s\"']|$)",
+    re.IGNORECASE,
+)
+#: Distributions whose name is not their repository's, and repositories whose package is in a subdirectory.
+DISTRIBUTIONS = {"nodestro-client": "nodestro-sdk"}
+SUBDIRECTORIES = {"nodestro-sdk": "python"}
+
+
+def canonical_url(repo: str, commit: str) -> str:
+    """The one accepted reference of a platform component."""
+    url = f"git+https://github.com/{OWNER}/{repo}.git@{commit}"
+    return url + (f"#subdirectory={SUBDIRECTORIES[repo]}" if repo in SUBDIRECTORIES else "")
+
+
+def component_of(name: str, components: dict[str, Any]) -> str | None:
+    """The platform component (repository) a distribution name stands for, compared normalised."""
+    wanted = canonicalize_name(name)
+    if wanted in DISTRIBUTIONS:
+        return DISTRIBUTIONS[wanted]
+    return next((repo for repo in components if canonicalize_name(repo) == wanted), None)
 
 
 def references(dependencies: list[str]) -> list[tuple[str, str]]:
-    return [(found["repo"], found["ref"]) for item in dependencies for found in REFERENCE.finditer(item)]
+    """``(repository, ref)`` of every reference to one of the owner's repositories (``ref`` empty without one)."""
+    return [(found["repo"].lower(), found["ref"] or "") for item in dependencies for found in REFERENCE.finditer(item)]
+
+
+def check_requirement(owner: str, item: str, components: dict[str, Any], own_name: str = "") -> list[str]:
+    """Problems of one dependency: a platform component must be referenced exactly by :func:`canonical_url`
+    (``own_name``: the package's own name, which its extras may name, as ``axentra[server]``)."""
+    try:
+        requirement = Requirement(item)
+    except InvalidRequirement as exc:
+        return [f"{owner}: {item!r} is not a valid requirement ({exc})"]
+    if own_name and canonicalize_name(requirement.name) == canonicalize_name(own_name) and not requirement.url:
+        return []
+    repo = component_of(requirement.name, components)
+    url = requirement.url or ""
+    linked = [found_repo for found_repo, _ref in references([url])]
+    if repo is None:
+        named = [found for found in linked if found in {name.lower() for name in components}]
+        if named:
+            return [f"{owner}: {requirement.name} refers to the component {named[0]} under another name"]
+        if linked:
+            return [f"{owner}: {linked[0]} is not in platform/versions.json"]
+        return []
+    commit = str(components[repo]["commit"])
+    expected = canonical_url(repo, commit)
+    if url == expected:
+        return []
+    if not url:
+        return [
+            f"{owner}: {requirement.name} is not pinned to a commit (a plain name installs whatever a package index "
+            f"offers under it); use {expected}"
+        ]
+    refs = [ref for found_repo, ref in references([url]) if found_repo == repo.lower()]
+    if refs and refs[0] and not SHA.match(refs[0]):
+        return [f"{owner}: {repo}@{refs[0]} is not pinned to a commit"]
+    if refs and SHA.match(refs[0]) and refs[0] != commit:
+        return [f"{owner}: {repo}@{refs[0][:12]}, versions.json pins {commit[:12]}"]
+    return [f"{owner}: {requirement.name} @ {url} is not the canonical reference {expected}"]
 
 
 def dependencies(pyproject: dict[str, Any]) -> list[str]:
@@ -69,13 +135,8 @@ def check_pyproject(
     if expected_version is not None and version != expected_version:
         problems.append(f"{owner}: version {version}, versions.json says {expected_version}")
     components = versions["components"]
-    for repo, ref in references(dependencies(pyproject)):
-        if not SHA.match(ref):
-            problems.append(f"{owner}: {repo}@{ref} is not pinned to a commit")
-        elif repo not in components:
-            problems.append(f"{owner}: {repo} is not in platform/versions.json")
-        elif components[repo]["commit"] != ref:
-            problems.append(f"{owner}: {repo}@{ref[:12]}, versions.json pins {components[repo]['commit'][:12]}")
+    for item in dependencies(pyproject):
+        problems += check_requirement(owner, item, components, str(project.get("name", "")))
     return problems
 
 
