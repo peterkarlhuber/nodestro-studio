@@ -108,7 +108,7 @@ Con **Al conocimiento** incorporas de forma explícita:
 
 Antes de guardar, el diálogo muestra qué se guardaría, si el archivo es buscable, si ya existe el mismo contenido (no se guarda dos veces) y contenidos parecidos. Los textos generados se pueden editar antes de guardar y marcar como *extraído de fuentes*, *generado por un agente* o *suposición*. Eliges una colección o creas una nueva.
 
-No se guarda nada antes de tu confirmación, y solo exactamente el contenido comprobado: si cambias algo después, compruebas de nuevo. Cada archivo conserva su procedencia (workflow, paso, agente, ejecución, momento, archivos de origen). Los flujos de trabajo en curso no cambian.
+No se guarda nada antes de tu confirmación, y solo exactamente el contenido comprobado: si cambias algo después, compruebas de nuevo. Cada archivo conserva su procedencia (flujo de trabajo, paso, agente, ejecución, momento, archivos de origen). Los flujos de trabajo en curso no cambian.
 
 ## Propuestas de agentes {#vorschlaege}
 <!-- keywords: propuesta, propuestas, el agente propone, propose_knowledge, proponer conocimiento -->
@@ -118,7 +118,7 @@ En la sección *Conocimiento* de un agente activa **Puede proponer contenido par
 ## Subflujos, pruebas y programaciones {#sub-workflows}
 <!-- keywords: subworkflow, serie de pruebas, lote, programación, aprobación, continuar, reinicio -->
 
-- **Subworkflows:** un campo de archivo del subflujo recibe con `{{form.<campo>}}` los archivos de un campo o con `{{files}}` todos los archivos de la ejecución. Se pasan los mismos archivos guardados, sin copias.
+- **Subflujos:** un campo de archivo del subflujo recibe con `{{form.<campo>}}` los archivos de un campo o con `{{files}}` todos los archivos de la ejecución. Se pasan los mismos archivos guardados, sin copias.
 - **Aprobaciones y continuación:** los archivos siguen guardados mientras una ejecución espera, corre o está en pausa, también tras reiniciar Nodestro.
 - **Casos de prueba y programaciones:** los archivos que subas allí se conservan para el caso de prueba o la [programación](/docs/automatisierung#zeitplaene) y los usa cada ejecución. Nunca se reutilizan en silencio archivos de ejecuciones anteriores.
 

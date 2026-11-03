@@ -10,7 +10,7 @@ Python's standard library is enough for many tools. When you need more:
 1. **Detect:** Nodestro reads the imports in the tool's code and works out the packages needed. Nothing is downloaded.
 2. **Approve:** Before anything is installed you see every package with its version and approve it. Without approval nothing is installed.
 3. **Install:** Nodestro installs exactly the approved versions with the package tool **uv** into a separate environment in the data folder.
-4. **Run:** The tool runs in the sandbox with the Python of that environment.
+4. **Run:** The tool runs in the sandbox with the Python of that environment. In Docker, Nodestro puts exactly the approved packages into a container image of their own.
 
 The Python that runs Nodestro itself never changes. Workflows whose tools only use the standard library need none of this and work as before.
 
@@ -42,7 +42,7 @@ Only a package name and version specification are allowed, no links or local pat
 ## Approval {#freigabe}
 <!-- keywords: approval, approve, permit, version, indirect, transitive, overview, install -->
 
-With **Review and approve** Nodestro resolves the versions (downloading package information; a package without a prebuilt wheel is built from source, which runs its build script) and shows an overview:
+With **Review and approve** Nodestro resolves the versions (downloading package information) and shows an overview. Nodestro never runs a package's build script on this computer: a package without a prebuilt wheel (only available as source code) is reported instead, and it can only be built in a container, never on a server or in Nodestro Local Docker.
 
 | Column | Meaning |
 |---|---|
@@ -131,6 +131,8 @@ Nodestro never deletes an environment without your action.
 | **No matching version** / **Conflict** | Loosen the version specification or align it between the tools. |
 | **Package index cannot be reached** | Check the internet connection; installed environments also work offline. |
 | **uv was not found** | Reinstall Nodestro; uv is installed with it. |
-| **Process sandbox only** | Tools with libraries do not run in the Docker sandbox. Switch the [sandbox](/docs/einstellungen#sandbox) to *Python process*. |
+| **Only available as source code** | The package has no prebuilt wheel, and Nodestro never runs its build script on this computer. Use a package with ready-made wheels or let the tool be written without it. For an AI-created tool you can check the package and approve it in the tool's library dialog; it is then built in a container (not on a server or in Nodestro Local Docker). |
+| **The container image of these libraries is … GB, more than the limit** | Use fewer or smaller libraries. |
+| **This approval comes from an older version without checksums** | Approve the libraries again; the Docker sandbox needs checksums. |
 
 If an installation fails, the **installation log** shows uv's output. **Install again** starts a new attempt.

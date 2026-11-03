@@ -241,6 +241,6 @@ In the execution, every tool call can be expanded: input, result, time and durat
 - **Invalid input:** the model filled in parameters incorrectly. Improve the parameter descriptions in the docstring.
 - **Expected tool error** (for example division by zero): the agent sees the message and can try again.
 - **Timeout or crash in the sandbox:** check the tool under *Try it* with the same input.
-- **Docker not reachable:** start Docker or switch to the *Python process* sandbox.
+- **Docker not reachable:** start Docker. AI-created tools always need it (or, on Linux, the *Linux sandbox*); with the *Docker* sandbox your own tools need it too, so choose *Automatic* to run them in the Python process.
 
 Whether unexpected errors end the agent is controlled by the [Tool errors](/docs/agenten#tool-fehler) setting.

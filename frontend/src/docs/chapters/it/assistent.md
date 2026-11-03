@@ -69,7 +69,7 @@ Se chiedi esplicitamente di realizzare un miglioramento, l'assistente prepara un
 
 - **[Architetto di workflow](/docs/ki-architekt)**: rielaborare un workflow allegato o progettarne uno nuovo.
 - **[Progettazione agenti](/docs/agenten#ki-entwurf)**: descrivere un nuovo agente per un workflow allegato.
-- **Creazione strumenti** in *Strumenti → Crea con l'IA*: far scrivere un nuovo strumento all'agente programmatore.
+- **Creazione strumenti** in *Strumenti → Crea con l’IA*: far scrivere un nuovo strumento all'agente programmatore.
 
 Lì non parte nulla finché non lo avvii tu, e controlli il risultato come al solito prima che cambi qualcosa. L'assistente stesso non modifica workflow, non esegue strumenti e non applica nulla senza la tua conferma.
 

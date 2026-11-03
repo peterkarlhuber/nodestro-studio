@@ -144,7 +144,7 @@ Un **orquestador** deja que un modelo de IA decida qué equipo recibe qué parte
 
 El inspector de un orquestador empieza con una frase que resume cómo trabaja («Así trabaja este orquestador: …») y agrupa los ajustes en cuatro áreas desplegables; cada una muestra en su cabecera un resumen y los posibles problemas:
 
-- **Pool de equipos:** los **Workflows elegidos** son los flujos de trabajo guardados entre los que el modelo puede elegir (como máximo 20). De cada equipo, el modelo solo ve su nombre, descripción, capacidades y contrato de salida.
+- **Pool de equipos:** los **Flujos de trabajo elegidos** son los flujos de trabajo guardados entre los que el modelo puede elegir (como máximo 20). De cada equipo, el modelo solo ve su nombre, descripción, capacidades y contrato de salida.
 - **Equipos por capacidad** (también en el pool de equipos): en lugar de elegir cada equipo, nombras capacidades (como máximo 10). Al iniciar una ejecución, los equipos guardados con una capacidad coincidente entran en el grupo (hasta *Como máximo tantos equipos*): primero los que tienen más etiquetas coincidentes, luego por nombre. Los equipos con errores quedan fuera; los equipos con pasos de aprobación se incluyen. La selección queda fija para esa ejecución (y para una versión publicada); los detalles muestran qué etiquetas coincidieron en cada equipo. No se puntúa ni se estima nada.
 - **Encargo:** **Tarea** e **Instrucciones** (lo que hay que resolver y, opcionalmente, cómo planificarlo), además del **Modelo** del orquestador.
 - **Límites:** **Máximo de decisiones** (de 1 a 50, por defecto 8), **Usos máximos por equipo** y **Equipos a la vez**. Si no hay respuesta tras la última decisión, el paso falla.

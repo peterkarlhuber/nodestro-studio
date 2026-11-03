@@ -241,6 +241,6 @@ Na execução, cada chamada de ferramenta pode ser expandida: entrada, resultado
 - **Entrada inválida:** o modelo preencheu os parâmetros errado. Melhore as descrições dos parâmetros na docstring.
 - **Erro esperado da ferramenta** (por exemplo, divisão por zero): o agente vê a mensagem e pode tentar de novo.
 - **Tempo esgotado ou falha na sandbox:** teste a ferramenta em *Experimentar* com a mesma entrada.
-- **Docker inacessível:** inicie o Docker ou mude para a sandbox *Processo Python*.
+- **Docker inacessível:** inicie o Docker. Ferramentas criadas por IA sempre precisam dele (ou, no Linux, do *Sandbox Linux*); com o sandbox *Docker*, suas próprias ferramentas também precisam, então escolha *Automático* para que rodem no processo Python.
 
 A configuração [Erros de ferramentas](/docs/agenten#tool-fehler) controla se erros inesperados encerram o agente.

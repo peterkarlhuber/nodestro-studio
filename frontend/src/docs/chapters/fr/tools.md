@@ -241,6 +241,6 @@ Dans l’exécution, chaque appel d’outil se déplie : entrée, résultat, mom
 - **Entrée non valide :** le modèle a mal rempli les paramètres. Améliorez les descriptions des paramètres dans la docstring.
 - **Erreur prévue de l’outil** (par exemple division par zéro) : l’agent voit le message et peut réessayer.
 - **Délai dépassé ou plantage dans le bac à sable :** testez l’outil dans *Essayer* avec la même entrée.
-- **Docker inaccessible :** démarrez Docker ou passez au bac à sable *Processus Python*.
+- **Docker inaccessible :** démarrez Docker. Les outils créés par l’IA en ont toujours besoin (ou, sous Linux, du *Bac à sable Linux*) ; avec le bac à sable *Docker*, vos outils en ont aussi besoin : choisissez donc *Automatique* pour qu’ils s’exécutent dans le processus Python.
 
 Le réglage [Erreurs d’outils](/docs/agenten#tool-fehler) détermine si les erreurs imprévues mettent fin à l’agent.
