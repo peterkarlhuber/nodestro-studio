@@ -40,6 +40,7 @@ describe("texts left in English", () => {
     de: [
       "name", "status", "start", "text", "memory", "limits", "thinking", "judge", "parallel", "review", "optional",
       "format", "standard", "port", "score", "tags", "analyst", "details", "service", "administrator",
+      "system",
       "assistant", // German names the button after the product, Nodestro Assistant
     ],
     es: ["error", "robot", "manual", "individual", "no"],
@@ -48,7 +49,7 @@ describe("texts left in English", () => {
       "description", "type", "effort", "image", "images", "structure", "validation", "sources", "suggestion", "actions",
       "action", "date", "active", "collection", "collections", "archive", "notes", "source", "strict", "note",
       "interface", "port", "module", "arguments", "service", "classification", "correction", "versions", "guide",
-      "instructions", "branches", "robot", "globe", "score", "word", "citations", "format", "standard", "direct", "indirect",
+      "instructions", "branches", "robot", "globe", "score", "word", "citations", "format", "standard", "direct", "indirect", "maintenance",
       "assistant",
     ],
     it: ["file", "input", "output", "robot", "database", "provider", "runtime", "standard", "no"],
