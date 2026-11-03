@@ -12,8 +12,8 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 21 |
-| P4 Optional | 10 |
+| P3 Low | 24 |
+| P4 Optional | 11 |
 
 **Release blockers:** None for this repository.
 
@@ -63,12 +63,15 @@ None known.
 
 ## Performance
 
-### ST-004 · Editor main-thread cost unchanged under CPU throttling (F3)
+### ST-004 · Editor main-thread cost under CPU throttling (F3)
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** #84, final UX review F3
-- **What:** Bundle and network cost dropped 4 to 6 times, but the editor's mount work did not: about 1.6 s of long
-  tasks under CPU 4x for a 9-node workflow. The paused-run polling part of F3 was fixed in #79.
-- **Next step:** Profile the canvas mount, fix the dominant long tasks, keep a repeatable measurement.
+- **Priority:** P3 Low · **Status:** In progress (UX round 2 reduced it) · **Refs:** #84, final UX review F3,
+  `frontend/e2e/perf-editor.mjs` (`npm run perf:editor`)
+- **What:** Opening a 9-node workflow under CPU 4x (median of 5): mount 1884 → 1335 ms, total blocking time
+  1557 → 956 ms, longest task 1028 → 756 ms after UX round 2 (fewer re-renders of nodes, panels and the zoom label;
+  cached number formatters). Still above the 50 ms long-task budget.
+- **Next step:** Mount closed editor dialogs only when open (about 100 ms at 4x; keep their state semantics), preload
+  the editor chunk from the Workflows page, look at React Flow's node measuring (110–180 ms at 4x).
 
 ## Features and enhancements
 
@@ -297,6 +300,36 @@ None known.
   the two differ (e.g. `GET /api`), and security headers would have to be added twice. mypy does not check
   `scripts/` (about 2,900 lines).
 - **Next step:** Reuse `mount_frontend` in the studio once the api's header middleware lands; add `scripts/` to mypy.
+
+### ST-039 · Name the blocked tool in sandbox problems (NJR-08)
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** UX round 2 NJR-08
+- **What:** The sentence for a tool refused by the sandbox does not name the tool, although `params.name` carries
+  it; with several tools on one agent it is unclear which one is blocked.
+- **Next step:** Add `{{name}}` to the sandbox problem sentences in six languages.
+
+### ST-040 · Trust label "Origin: Needs isolation" (NJR-10)
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** UX round 2 NJR-10, tools docs chapter
+- **What:** The tool header reads "Origin: Needs isolation", and an adopted tool reads "Created by AI · Origin:
+  Written by you"; origin and trust class are mixed in one label.
+- **Next step:** Separate "created by" from "runs as", and change the tools docs in six languages in the same PR.
+
+### ST-041 · Runs list and run page polish (NJR-03, NJR-17 to NJR-20)
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** UX round 2 NJR-03, NJR-11, NJR-17 to NJR-20
+- **What:** An expired budget decision keeps the "Budget decision needed" title and "waiting" badge; the workflow
+  filter cannot tell two copies with the same name apart; runs waiting for a budget decision have no filter option
+  of their own; "Version 1" stands alone in a callout; a blocked agent node shows "Ready" next to "1 problem"; danger
+  callouts show two icons; the runs table overflows by 15 px in French at 1280 px.
+- **Next step:** Small fixes, one PR.
+
+### ST-042 · Runtime release must send `requests[].label` on budget requests (NJR-04)
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** NSL-13, nodestro-runtime (additive field)
+- **What:** The budget card names the waiting agent by `label` and falls back to the node id; the label only appears
+  once the pinned runtime sends it.
+- **Next step:** Check in the joint integration run after the runtime pin.
 
 ## Later optimizations
 
