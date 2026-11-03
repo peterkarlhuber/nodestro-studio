@@ -6,6 +6,7 @@ from collections.abc import Callable, Iterator
 from pathlib import Path
 from typing import Any
 
+from e2e_defaults import keep_cloud_defaults
 from fastapi.testclient import TestClient
 from nodestro_api.context import AppConfig
 from nodestro_runtime.testing import ScriptedClient
@@ -34,6 +35,8 @@ def make_app(tmp_path: Path) -> Iterator[Callable[..., TestClient]]:
         )
         test_client = TestClient(app, base_url="http://127.0.0.1")
         test_client.__enter__()
+        # A new installation defaults to local models; the scripted client answers like the cloud models.
+        keep_cloud_defaults(app)
         test_client.fake = client  # type: ignore[attr-defined]
         clients.append(test_client)
         return test_client
