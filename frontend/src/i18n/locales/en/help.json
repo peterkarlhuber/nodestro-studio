@@ -138,6 +138,7 @@
     "localImport": "For computers without internet: import an offline model package (checked by SHA-256) or a GGUF file from a USB drive or a shared folder.",
     "localStorage": "Models are large. You can keep them on another drive, for example an external SSD; copying checks every model before the switch.",
     "strictOffline": "Refuses cloud models, remote model servers, server tools, remote MCP services and downloads before a run starts.",
+    "preferEuropean": "Suggests European local models (Mistral AI) when they are equally suited. Never a weaker model, never a cloud service; your own model choice wins.",
     "knowledgeSearch": "Full text finds words, semantic search finds meaning (also across languages). Semantic and combined search need the semantic index built with an embedding model."
   },
   "budget": {

@@ -3240,6 +3240,8 @@ export interface Settings {
   embedding_model?: string | null;
   /** Only local models and local tools; downloads are refused. */
   strict_offline?: boolean;
+  /** Prefer European local models among equally suited ones (never a cloud service, never a weaker model). */
+  prefer_european_models?: boolean;
   /** local: a new installation started with local default models; kept: an update kept the earlier defaults. */
   model_defaults?: "local" | "kept";
 }

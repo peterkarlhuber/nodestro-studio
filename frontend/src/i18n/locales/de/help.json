@@ -138,6 +138,7 @@
     "localImport": "Für Computer ohne Internet: ein Offline-Modellpaket (per SHA-256 geprüft) oder eine GGUF-Datei von einem USB-Laufwerk oder einem freigegebenen Ordner importieren.",
     "localStorage": "Modelle sind groß. Du kannst sie auf einem anderen Laufwerk ablegen, zum Beispiel einer externen SSD; beim Kopieren wird jedes Modell vor dem Wechsel geprüft.",
     "strictOffline": "Lehnt Cloud-Modelle, entfernte Modellserver, Server-Tools, entfernte MCP-Dienste und Downloads vor dem Start ab.",
+    "preferEuropean": "Schlägt europäische lokale Modelle (Mistral AI) vor, wenn sie gleich gut geeignet sind. Nie ein schwächeres Modell, nie ein Cloud-Dienst; deine eigene Modellwahl hat Vorrang.",
     "knowledgeSearch": "Volltext findet Wörter, die semantische Suche findet Bedeutungen (auch über Sprachen hinweg). Semantische und kombinierte Suche brauchen den semantischen Index, der mit einem Embedding-Modell aufgebaut wird."
   },
   "budget": {

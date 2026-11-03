@@ -43,7 +43,8 @@
     "tool_agent": "Agents with tools",
     "analysis": "Analysis and reasoning",
     "assistant": "Assistant and architect",
-    "embedding": "Semantic search"
+    "embedding": "Semantic search",
+    "coding": "Programming"
   },
   "quality": {
     "recommended": "Recommended",
@@ -127,6 +128,11 @@
     "text": "Only local models and local tools. Cloud models, remote servers and downloads are refused before a run starts.",
     "noDownloads": "Downloads are off in the strict offline mode."
   },
+  "europe": {
+    "label": "Prefer European models",
+    "text": "Among equally suited local models, suggest those of European publishers (Mistral AI). Qwen stays the standard otherwise. A model you choose yourself always wins, and nothing is sent to a cloud service.",
+    "badge": "European"
+  },
   "cost": {
     "localOnly": "local, no API billing",
     "plusLocal_one": "{{cost}} + {{count}} local request (no API billing)",
@@ -174,5 +180,6 @@
     "build": "Build index",
     "rebuild": "Rebuild index",
     "remove": "Remove the semantic index"
-  }
+  },
+  "onlyFor": "Only for: {{tasks}}"
 }

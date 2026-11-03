@@ -130,7 +130,7 @@ afterEach(() => {
 describe("local models", () => {
   it("offers the runtime install and explains the recommendations", async () => {
     const calls = serve({ "GET /api/local-models": overview() });
-    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} />);
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
     const setup = await screen.findByTestId("local-runtime-setup");
     expect(setup).toHaveTextContent("Ollama 0.40.14");
     const table = screen.getByTestId("local-recommendations");
@@ -143,15 +143,40 @@ describe("local models", () => {
 
   it("refuses downloads in the strict offline mode and leaves a server's models to its operator", async () => {
     serve({ "GET /api/local-models": overview({ offline: true }) });
-    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} />);
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
     const setup = await screen.findByTestId("local-runtime-setup");
     expect(within(setup).getByRole("button", { name: "Herunterladen und installieren" })).toBeDisabled();
     cleanup();
     serve({ "GET /api/local-models": overview({ mode: "external", running: true, runtime_installed: true }, false) });
-    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} />);
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
     expect(await screen.findByText(/betreibt der Betreiber den lokalen Modellserver/)).toBeInTheDocument();
     expect(screen.queryByTestId("local-import")).toBeNull();
     expect(within(screen.getByTestId("local-catalog")).getByRole("button", { name: "Herunterladen" })).toBeDisabled();
+  });
+});
+
+describe("european models", () => {
+  it("marks European alternatives in the catalog and stores the preference", async () => {
+    const base = overview();
+    const devstral = {
+      ...base.catalog[0],
+      name: "devstral-small-2:24b",
+      family: "devstral-small-2",
+      vendor: "Mistral AI",
+      region: "eu",
+      tasks: ["coding"],
+      alternative: true,
+    };
+    serve({ "GET /api/local-models": { ...base, catalog: [...base.catalog, devstral] } });
+    const europe = vi.fn();
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={europe} />);
+    const row = await screen.findByTestId("local-model-devstral-small-2:24b");
+    expect(row).toHaveTextContent("Mistral AI");
+    expect(row).toHaveTextContent("Europäisch");
+    expect(row).toHaveTextContent("Nur für: Programmieren");
+    expect(screen.getByTestId("local-model-qwen3.5:4b")).not.toHaveTextContent("Europäisch");
+    await userEvent.click(screen.getByRole("switch", { name: /^Europäische Modelle bevorzugen/ }));
+    expect(europe).toHaveBeenCalledWith(true);
   });
 });
 

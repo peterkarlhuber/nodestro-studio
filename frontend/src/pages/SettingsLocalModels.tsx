@@ -209,8 +209,17 @@ function Catalog({
       <td>
         <code>{model.name}</code>
         <div className="muted small">
-          {t(`localModels.kind.${model.kind}`)} · {model.license}
+          {t(`localModels.kind.${model.kind}`)} · {model.vendor ? `${model.vendor} · ` : ""}
+          {model.license}
         </div>
+        {model.region === "eu" || model.tasks?.length ? (
+          <div className="muted small">
+            {model.region === "eu" ? <Badge tone="idle">{t("localModels.europe.badge")}</Badge> : null}{" "}
+            {model.tasks?.length
+              ? t("localModels.onlyFor", { tasks: model.tasks.map((task) => t(`localModels.tasks.${task}`)).join(", ") })
+              : null}
+          </div>
+        ) : null}
       </td>
       <td className="num">{formatBytes(model.download_bytes)}</td>
       <td className="num">{formatBytes(model.memory_bytes)}</td>
@@ -438,7 +447,17 @@ function RuntimeSetup({ overview, canInstall }: { overview: LocalOverview; canIn
   );
 }
 
-export function LocalModelsPanel({ settings, admin, onOffline }: { settings: Settings; admin: boolean; onOffline: (value: boolean) => void }) {
+export function LocalModelsPanel({
+  settings,
+  admin,
+  onOffline,
+  onEurope,
+}: {
+  settings: Settings;
+  admin: boolean;
+  onOffline: (value: boolean) => void;
+  onEurope: (value: boolean) => void;
+}) {
   const { t } = useTranslation();
   const access = useAccess();
   const canInstall = access.can("install");
@@ -543,6 +562,14 @@ export function LocalModelsPanel({ settings, admin, onOffline }: { settings: Set
           label={t("localModels.offline.label")}
           description={t("localModels.offline.text")}
           tip="settings.strictOffline"
+        />
+        <Toggle
+          checked={Boolean(settings.prefer_european_models)}
+          disabled={!admin}
+          onChange={onEurope}
+          label={t("localModels.europe.label")}
+          description={t("localModels.europe.text")}
+          tip="settings.preferEuropean"
         />
       </div>
     </section>

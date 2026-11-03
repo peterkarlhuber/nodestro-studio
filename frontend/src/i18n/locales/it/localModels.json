@@ -43,7 +43,8 @@
     "tool_agent": "Agenti con strumenti",
     "analysis": "Analisi e ragionamento",
     "assistant": "Assistente e architetto",
-    "embedding": "Ricerca semantica"
+    "embedding": "Ricerca semantica",
+    "coding": "Programmazione"
   },
   "quality": {
     "recommended": "Consigliato",
@@ -127,6 +128,11 @@
     "text": "Solo modelli e strumenti locali. Modelli cloud, server remoti e download vengono rifiutati prima dell’avvio di un’esecuzione.",
     "noDownloads": "Nella modalità offline rigorosa i download sono disattivati."
   },
+  "europe": {
+    "label": "Preferisci modelli europei",
+    "text": "Tra modelli locali ugualmente adatti vengono proposti quelli di editori europei (Mistral AI). Altrimenti Qwen resta lo standard. Un modello scelto da te ha sempre la precedenza e nulla viene inviato a un servizio cloud.",
+    "badge": "Europeo"
+  },
   "cost": {
     "localOnly": "locale, nessuna fatturazione API",
     "plusLocal_one": "{{cost}} + {{count}} richiesta locale (nessuna fatturazione API)",
@@ -174,5 +180,6 @@
     "build": "Crea indice",
     "rebuild": "Ricostruisci indice",
     "remove": "Rimuovi l’indice semantico"
-  }
+  },
+  "onlyFor": "Solo per: {{tasks}}"
 }

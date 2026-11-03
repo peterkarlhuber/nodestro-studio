@@ -63,6 +63,14 @@ export interface CatalogModel {
   context: number | null;
   dimensions: number | null;
   notes: string;
+  /** The publisher (e.g. "Mistral AI") and its region ("eu", "cn", "us"). */
+  vendor?: string;
+  region?: string | null;
+  languages?: string[];
+  /** Task profiles the model is meant for; empty means all. */
+  tasks?: string[];
+  /** An alternative to the standard models: suggested only with a matching preference (e.g. European models). */
+  alternative?: boolean;
   installed: boolean;
   verified: boolean;
 }

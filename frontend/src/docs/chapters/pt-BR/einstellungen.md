@@ -3,7 +3,7 @@
 Este capítulo descreve todas as configurações, a instalação e a inicialização do Nodestro e os atalhos de teclado.
 
 ## Modelos locais {#lokale-modelle}
-<!-- keywords: modelo local, ollama, offline, sem chave de api, qwen, download, recomendação, hardware, gpu, memória, servidor de modelos -->
+<!-- keywords: modelo local, ollama, offline, sem chave de api, qwen, download, recomendação, hardware, gpu, memória, servidor de modelos, mistral, europeu, esforço de raciocínio -->
 
 O Nodestro pode rodar agentes, assistentes e a busca no conhecimento com **modelos locais** pelo Ollama, sem chave de API: prompts e documentos ficam neste computador. Uma instalação nova usa modelos locais por padrão (agentes `ollama:qwen3.5:4b`, assistente `ollama:qwen3.5:9b`); uma instalação atualizada mantém os modelos que tinha.
 
@@ -13,6 +13,10 @@ O Nodestro pode rodar agentes, assistentes e a busca no conhecimento com **model
 - **Ambiente:** se faltar, **Baixar e instalar** obtém uma vez a versão fixada e verifica o SHA-256. Sem internet, instale-o a partir do arquivo da versão (veja [Importação offline](/docs/einstellungen#offline-import)).
 - **Recomendado para este computador:** um modelo por tarefa (classificar, escrever, agentes com ferramentas, análise, assistente, busca semântica) conforme o que a tarefa precisa, a memória deste computador e os modelos instalados. Um modelo instalado que seja suficiente vem primeiro; *Limitado* significa que um modelo maior faria melhor. As sugestões nunca alteram um agente: você escolhe o modelo dele no editor.
 - **Modelos:** os modelos sugeridos com tamanho do download, memória necessária e licença; **Verificado** significa que a compilação instalada é a que o Nodestro verificou.
+
+**Preferir modelos europeus:** o Qwen continua sendo o padrão. Com a chave ligada, as recomendações sugerem, quando igualmente adequados, modelos da editora europeia Mistral AI (`ministral-3:3b`, `ministral-3:8b`, `ministral-3:14b` e, para programação, `devstral-small-2:24b`), mesmo que ainda precisem ser baixados; um modelo instalado continua sendo a primeira alternativa. Um modelo mais fraco nunca é sugerido, e a chave nunca usa um serviço na nuvem: todos esses modelos rodam neste computador. Um modelo que você mesmo define para um agente sempre tem prioridade, e o modo offline estrito continua recusando downloads. Para a busca semântica, a chave sugere o modelo europeu `mdenseon:307m` (LightOn) enquanto nenhum modelo de embedding estiver instalado. Ele não vem da biblioteca do Ollama: **Baixar** obtém os arquivos originais fixados (1,2 GB), verifica o SHA-256, monta o modelo a partir deles e só o mantém se ele reproduzir exatamente os vetores de referência. Um índice existente continua com seu modelo; trocar significa reconstruir o índice.
+
+**Esforço de raciocínio:** modelos locais que conseguem “pensar” fazem isso sem limite a partir do esforço *Médio*, e o raciocínio conta para o tamanho máximo da saída. Em um computador sem placa de vídeo, um modelo pequeno pode levar muitos minutos nisso. Para etapas rápidas (classificar, extrair, respostas estruturadas curtas), escolha *Baixo*: o modelo então responde sem pensar. O servidor de modelos que o Nodestro inicia dá a cada modelo 32.768 tokens de contexto para prompt, raciocínio e resposta juntos. Inicie um Ollama próprio com `OLLAMA_CONTEXT_LENGTH=32768`; o padrão de 4.096 tokens é pequeno demais para agentes.
 
 Custos: modelos locais **não têm cobrança de API externa**. O Nodestro não registra os custos de operação locais (hardware, energia); por isso as execuções mostram “local, sem cobrança de API” em vez de um total de 0, e execuções mistas somam ao custo o número de solicitações locais.
 
