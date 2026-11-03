@@ -24,7 +24,6 @@
   "start": "Iniciar",
   "stop": "Detener",
   "autostart": "Iniciar con Nodestro",
-  "hardware": "Este ordenador: {{cpus}} núcleos de CPU, {{ram}} de memoria, gráficos: {{gpu}}",
   "gpu": {
     "nvidia": "GPU NVIDIA",
     "apple": "Apple Silicon",
@@ -70,7 +69,8 @@
     "download": "Tamaño de descarga",
     "memory": "Memoria necesaria",
     "state": "Estado",
-    "own": "Modelo propio (importado o descargado aparte)"
+    "own": "Modelo propio (importado o descargado aparte)",
+    "fit": "En este ordenador"
   },
   "kind": {
     "chat": "Modelo de lenguaje",
@@ -87,7 +87,9 @@
       "install_runtime": "Instalar el entorno",
       "import_package": "Importar {{target}}",
       "import_gguf": "Importar {{target}}",
-      "move_models": "Mover la carpeta de modelos"
+      "move_models": "Mover la carpeta de modelos",
+      "build": "Crear {{target}}",
+      "benchmark": "Medir la velocidad de {{target}}"
     },
     "state": {
       "running": "En curso",
@@ -181,5 +183,134 @@
     "rebuild": "Reconstruir índice",
     "remove": "Eliminar el índice semántico"
   },
-  "onlyFor": "Solo para: {{tasks}}"
+  "onlyFor": "Solo para: {{tasks}}",
+  "build": {
+    "title": "Crear a partir de archivos locales",
+    "fromFiles": "Crear desde archivos",
+    "text": "Este modelo no está en la biblioteca de Ollama. Nodestro lo crea en este ordenador a partir de sus archivos originales, sin internet: comprueba ambos archivos con sus sumas SHA-256 fijadas, crea el modelo y solo lo conserva si reproduce exactamente los vectores de referencia.",
+    "model": "Modelo",
+    "expected": "Archivos esperados (cópialos desde un ordenador con internet, por ejemplo en una memoria USB):",
+    "expectedUnlisted": "Se necesitan dos archivos fijados: los pesos (safetensors) y un archivo de plantilla GGUF, {{size}} en total. El manual indica sus fuentes y sumas de comprobación.",
+    "revision": "revisión {{revision}}",
+    "headerSize": "se comprueban los primeros {{size}}",
+    "files": {
+      "weights": "Archivo de pesos",
+      "template": "Archivo de plantilla"
+    },
+    "inline": {
+      "weights": "archivo de pesos",
+      "template": "archivo de plantilla",
+      "either": "archivo"
+    },
+    "weightsPath": "Archivo de pesos (safetensors)",
+    "weightsHint": "Una ruta del ordenador donde funciona Nodestro (en Local Docker: dentro de su carpeta de importación), por ejemplo /media/usb/model.safetensors.",
+    "templatePath": "Archivo de plantilla (GGUF)",
+    "templateHint": "El archivo de plantilla GGUF completo, o solo sus primeros {{size}} (la cabecera).",
+    "offlineNote": "No se descarga nada: la creación usa solo estos dos archivos.",
+    "start": "Crear y comprobar",
+    "retry": "Reintentar",
+    "starting": "Iniciando…",
+    "progressLabel": "Creando {{model}}",
+    "step": "Paso {{step}} de {{total}}: {{name}}",
+    "steps": {
+      "verifyTemplate": "comprobando el archivo de plantilla",
+      "verifyWeights": "comprobando el archivo de pesos",
+      "write": "escribiendo el archivo del modelo",
+      "create": "creando el modelo en el servidor de modelos",
+      "check": "comprobando los vectores de referencia",
+      "done": "listo"
+    },
+    "done": "{{model}} se creó y se comprobó.",
+    "reindex": "Para usarlo en la búsqueda semántica, elígelo como modelo de embeddings en Búsqueda de conocimiento y reconstruye el índice. El índice actual se sigue usando hasta que el nuevo esté completo.",
+    "reindexActive": "{{model}} es el modelo de embeddings elegido: reconstruye el índice en Búsqueda de conocimiento para que la búsqueda lo use.",
+    "toIndex": "Ir a Búsqueda de conocimiento",
+    "errors": {
+      "cancelled": "La creación se canceló. No se instaló nada.",
+      "checksum_mismatch": "El {{name}} no coincide con la suma de comprobación fijada. No se instaló nada.",
+      "checksum_mismatchHint": "Comprueba que sea exactamente el archivo y la versión esperados (ver arriba) y que la copia esté completa, y vuelve a intentarlo.",
+      "source_missing": "No se encontró el {{name}}.",
+      "source_missingHint": "Comprueba la ruta. Debe indicar un archivo del ordenador donde funciona Nodestro (en Local Docker: dentro de su carpeta de importación).",
+      "invalid_template": "El archivo de plantilla no es un archivo GGUF compatible con este modelo.",
+      "invalid_templateHint": "Usa el archivo de plantilla indicado arriba, no otro archivo GGUF.",
+      "invalid_weights": "El archivo de pesos no es compatible con este modelo.",
+      "invalid_weightsHint": "Usa el archivo safetensors de la revisión indicada.",
+      "reference_mismatch": "El modelo creado no reproduce los vectores de referencia y se eliminó.",
+      "reference_mismatchHint": "Los archivos eran correctos, pero el servidor de modelos calcula otros vectores. Comprueba que tenga la versión fijada y vuelve a intentarlo."
+    }
+  },
+  "machine": {
+    "title": "Este ordenador",
+    "system": "Sistema",
+    "cpus": "Núcleos de CPU",
+    "memory": "Memoria",
+    "gpu": "Gráficos",
+    "gpuMemory": "{{gpu}} con {{memory}}",
+    "server": "Servidor de modelos",
+    "runtime": {
+      "none": "ninguno configurado",
+      "running": "en marcha (Ollama {{version}})",
+      "missing": "no instalado (se necesita Ollama {{version}})",
+      "stopped": "detenido"
+    },
+    "accelerated": {
+      "true": "los modelos se ejecutan en la GPU",
+      "false": "los modelos se ejecutan en la CPU",
+      "unknown": "uso de GPU desconocido"
+    },
+    "contextTitle": "Ventana de contexto",
+    "context": {
+      "configured": "{{tokens}} tokens (fijada por Nodestro)",
+      "server": "{{tokens}} tokens (indicada por el servidor)",
+      "unknown": "{{tokens}} tokens"
+    },
+    "contextUnknown": "aún desconocida (se muestra cuando un modelo se haya ejecutado)",
+    "unknown": "desconocido"
+  },
+  "fit": {
+    "gpu": "Se ejecuta en la GPU",
+    "cpu": "Funciona aquí",
+    "cpuOnly": "Se ejecuta en la CPU (más lento)",
+    "too_slow": "Demasiado lento sin GPU",
+    "too_large": "Demasiado grande para este ordenador",
+    "slowHint": "lento en este ordenador (medido)"
+  },
+  "advice": {
+    "context_small": "El servidor de modelos da a los modelos solo {{tokens}} tokens de contexto; los agentes necesitan unos {{recommended}} tokens para prompt, razonamiento y respuesta; si no, las respuestas se cortan.",
+    "context_fix": {
+      "external": "Es tu propio Ollama: define OLLAMA_CONTEXT_LENGTH={{raw}} en el ordenador donde se ejecuta y reinícialo.",
+      "managed": "Reinicia el servidor de modelos para que se aplique el ajuste de Nodestro.",
+      "other": "Pide al operador del servidor de modelos que amplíe la ventana de contexto."
+    },
+    "context_unknown": "La ventana de contexto de este servidor aún no se conoce. Un Ollama con los ajustes predeterminados da solo 4.096 tokens, demasiado pocos para agentes; inícialo con OLLAMA_CONTEXT_LENGTH=32768.",
+    "cpu_only": "No se encontró tarjeta gráfica: los modelos locales se ejecutan solo en la CPU. Cuenta con respuestas lentas, sobre todo con razonamiento. Funcionan mejor los modelos pequeños y el esfuerzo Bajo para pasos sencillos; las recomendaciones ya lo tienen en cuenta.",
+    "reasoning_saving": "El modo de ahorro de CPU está activado: los agentes con esfuerzo Medio en modelos locales que razonan responden sin la larga fase de razonamiento. El esfuerzo Alto nunca se reduce. Puedes desactivarlo abajo.",
+    "model_slow": "{{model}} generó {{speed}} tokens por segundo en este ordenador (medido). Un modelo más pequeño o el esfuerzo Bajo hacen sus pasos más rápidos.",
+    "model_too_large": "{{model}} necesita unos {{size}} de memoria y no cabe en este ordenador. Elige un modelo más pequeño.",
+    "memory_low": "Este ordenador tiene {{memory}} de memoria; los modelos locales necesitan unos {{recommended}} para funcionar bien. Cierra otros programas o elige modelos más pequeños.",
+    "other": "Nota sobre modelos locales: {{code}}."
+  },
+  "speed": {
+    "value": "{{speed}} tokens/s",
+    "processor": {
+      "gpu": "en la GPU",
+      "cpu": "en la CPU",
+      "mixed": "en parte en la GPU"
+    },
+    "measuredAt": "medido el {{date}}",
+    "context": "contexto {{tokens}}",
+    "notMeasured": "Velocidad no medida",
+    "measure": "Medir velocidad",
+    "again": "Medir de nuevo",
+    "started": "Midiendo la velocidad de {{model}}…",
+    "prompt": "lectura del prompt {{speed}} tokens/s"
+  },
+  "reasoning": {
+    "label": "Modo de ahorro de CPU para modelos que razonan",
+    "text": "En un ordenador sin tarjeta gráfica, los agentes con esfuerzo Medio en modelos locales que razonan responden sin la larga fase de razonamiento. El esfuerzo Alto y una opción de razonamiento explícita nunca se reducen, y las ejecuciones marcan cada paso reducido.",
+    "off": "Desactivado: los agentes razonan siempre como está configurado.",
+    "active": "Activo en este ordenador.",
+    "inactive": "No activo aquí: los modelos se ejecutan en una tarjeta gráfica.",
+    "badge": "Razonamiento reducido: modo de ahorro de CPU",
+    "badgeTip": "Este agente respondió sin la larga fase de razonamiento porque este ordenador no tiene tarjeta gráfica. Para un razonamiento completo, pon el esfuerzo del agente en Alto o desactiva el modo de ahorro de CPU en Ajustes → Modelos locales."
+  }
 }

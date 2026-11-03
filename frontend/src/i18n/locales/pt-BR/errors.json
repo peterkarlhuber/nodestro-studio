@@ -10,7 +10,8 @@
   "examples": {
     "integration_unavailable": "O servidor MCP escolhido não consegue atender esta conexão: ele precisa oferecer cada ferramenta de que o exemplo precisa, aprovada como somente leitura. Nada foi copiado.",
     "integration_unknown": "O exemplo não tem a conexão “{{integration}}”. Recarregue a página e tente de novo.",
-    "tests_need_offline": "Séries de testes rodam sem uma pessoa e não podem usar ferramentas MCP. Copie o exemplo no modo offline para adotar os casos de teste."
+    "tests_need_offline": "Séries de testes rodam sem uma pessoa e não podem usar ferramentas MCP. Copie o exemplo no modo offline para adotar os casos de teste.",
+    "agent_unknown": "Este exemplo não tem o agente “{{key}}”. Recarregue a página e tente de novo."
   },
   "agentFailed": "O agente parou com um erro ({{type}}).",
   "file": {
@@ -323,7 +324,10 @@
     "index_building": "Este agente usa a busca semântica, mas o índice semântico ainda está sendo criado.",
     "local_model_missing": "{{model}} não está instalado no servidor de modelos local. Baixe ou importe o modelo nas configurações.",
     "local_model_not_chat": "{{model}} é um modelo de embeddings e não pode responder como agente.",
-    "local_model_no_tools": "{{model}} não consegue chamar ferramentas, mas este agente usa ferramentas. Escolha um modelo que suporte chamadas de ferramentas."
+    "local_model_no_tools": "{{model}} não consegue chamar ferramentas, mas este agente usa ferramentas. Escolha um modelo que suporte chamadas de ferramentas.",
+    "local_context_small": "O servidor de modelos local dá aos modelos só {{tokens}} tokens de contexto; recomenda-se pelo menos {{recommended}} tokens, senão as respostas são cortadas.",
+    "local_max_tokens": "O limite de resposta deste agente ({{max_tokens}} tokens) não cabe na janela de contexto do servidor de modelos local ({{tokens}} tokens).",
+    "local_reasoning_saving": "Neste computador sem placa de vídeo, estes agentes respondem sem a fase de raciocínio (esforço Médio): {{nodes}}. Escolha o esforço Alto para um agente ou desligue o modo de economia de CPU nas configurações."
   },
   "backup": {
     "not_zip": "O arquivo não é um backup do Nodestro (não é um ZIP).",
@@ -964,7 +968,16 @@
     "unreachable": "O servidor de modelos local não está acessível.",
     "unsafe_archive": "O arquivo contém caminhos inseguros e não foi descompactado.",
     "unsupported_platform": "O ambiente de modelos local não está disponível para este sistema.",
-    "dimension_mismatch": "Os embeddings têm um tamanho diferente do índice."
+    "dimension_mismatch": "Os embeddings têm um tamanho diferente do índice.",
+    "source_missing": "Um arquivo do modelo não foi encontrado.",
+    "invalid_template": "O arquivo de template não corresponde a este modelo.",
+    "invalid_weights": "O arquivo de pesos não corresponde a este modelo.",
+    "reference_mismatch": "O modelo criado não reproduz seus vetores de referência e foi removido.",
+    "not_buildable": "Este modelo não é criado a partir de arquivos.",
+    "download_incomplete": "O download ficou incompleto. Tente de novo.",
+    "invalid_source": "A fonte deste modelo não é permitida.",
+    "not_chat_model": "Este não é um modelo de linguagem; só modelos de linguagem podem ser medidos.",
+    "benchmark_failed": "Não foi possível medir a velocidade."
   },
   "knowledge": {
     "failed": "Não foi possível atualizar o índice semântico.",

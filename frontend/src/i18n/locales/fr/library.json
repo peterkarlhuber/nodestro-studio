@@ -144,5 +144,47 @@
     "files": "Prend vos propres fichiers en entrée.",
     "connection": "Connexion facultative (MCP) : {{names}}. Sans elle, la copie s’exécute hors ligne avec des données d’exemple.",
     "noConnection": "Aucune connexion à d’autres services n’est nécessaire."
+  },
+  "models": {
+    "title": "Modèles sur cet ordinateur",
+    "text": "Cet espace de travail utilise des modèles locaux. Chaque agent reçoit le modèle dont sa tâche a besoin sur cet ordinateur ; vous pouvez en choisir un autre par agent. Votre choix est conservé dans la copie.",
+    "agent": "Agent",
+    "task": "Tâche",
+    "model": "Modèle",
+    "choose": "Modèle pour {{agent}}",
+    "installed": "Installé",
+    "download": "Téléchargement nécessaire",
+    "overridden": "Votre choix",
+    "reason": {
+      "installed": "Déjà installé.",
+      "needs_download": "Doit être téléchargé avant la première exécution.",
+      "installed_alternative": "Le meilleur modèle pour cette tâche doit être téléchargé ; un modèle installé est utilisé.",
+      "default_model": "Aucun modèle installé ne convient à cette tâche : le modèle par défaut de l’espace de travail est conservé.",
+      "manual": "Choisi par vous."
+    },
+    "tasks": {
+      "classify": "Trier et orienter",
+      "extract": "Extraire des données",
+      "write": "Rédiger des textes",
+      "document_vision": "Lire des documents et des images",
+      "tool_agent": "Travailler avec des outils",
+      "analysis": "Analyser et raisonner",
+      "coding": "Programmer",
+      "judge": "Vérifier la qualité",
+      "orchestrator": "Coordonner l’équipe"
+    },
+    "keepDefault": "Garder le modèle par défaut",
+    "planned": "{{model}} (prévu)",
+    "defaultStays": "Modèle par défaut",
+    "better": "Mieux : {{model}} (téléchargement nécessaire).",
+    "toLocalModels": "Modèles locaux",
+    "needs": "Nécessite : {{needs}}",
+    "need": {
+      "tools": "appels d’outils",
+      "vision": "images",
+      "thinking": "réflexion",
+      "structured": "sortie structurée"
+    },
+    "judge": "Contrôle qualité (juge) : {{model}}"
   }
 }

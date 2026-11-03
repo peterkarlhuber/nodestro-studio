@@ -279,3 +279,108 @@ describe("ExamplePreview", () => {
     expect(within(screen.getByTestId("example-integration-erp")).getByRole("combobox")).toBeDisabled();
   });
 });
+
+const PLAN = {
+  local: true,
+  judge: "ollama:qwen3.5:9b",
+  agents: [
+    {
+      key: "lead", name: "Einkaufsleitung", part: null, kind: "orchestrator", task: "orchestrator", tier: "strong", model: "ollama:qwen3.5:9b",
+      installed: true, reasons: ["installed"], suggested: null, alternatives: ["ollama:qwen3.5:4b"], needs: ["tools"],
+    },
+    {
+      key: "quality-check/qa", name: "Qualitätsprüfer", part: "Qualitätsprüfung", kind: "agent", task: "document_vision", tier: "fast",
+      model: "ollama:qwen3.5:4b", installed: true, reasons: ["installed_alternative", "no_gpu"], suggested: "ollama:qwen3.6:35b-a3b",
+      alternatives: [], needs: ["vision"],
+    },
+    {
+      key: "risk", name: "Risikoanalyse", part: null, kind: "agent", task: "coding", tier: "balanced", model: null,
+      installed: false, reasons: ["default_model"], suggested: null, alternatives: [], needs: [],
+    },
+  ],
+};
+
+const LOCAL_MODELS = {
+  status: {
+    models: [
+      { name: "qwen3.5:4b", kind: "chat" },
+      { name: "qwen3.5:9b", kind: "chat" },
+      { name: "ministral-3:8b", kind: "chat" },
+      { name: "qwen3-embedding:0.6b", kind: "embedding" },
+    ],
+  },
+};
+
+const localRoutes =
+  (plan: unknown, defaultModel = "ollama:qwen3.5:4b", copy?: (body: unknown) => unknown): Route =>
+  (method, url, body) => {
+    if (url.startsWith("/api/library/supplier-comparison/models")) return plan;
+    if (url === "/api/local-models") return LOCAL_MODELS;
+    if (url === "/api/settings") return { default_model: defaultModel, assistant_model: defaultModel, providers: [] };
+    return routes([], copy)(method, url, body);
+  };
+
+describe("models of a copy in a local workspace", () => {
+  it("shows the plan per agent and sends only the changed choice", async () => {
+    const fetch = serve(localRoutes(PLAN));
+    renderPreview();
+    const plan = await screen.findByTestId("example-models");
+    expect(fetch).toHaveBeenCalledWith("/api/library/supplier-comparison/models?language=de", expect.anything());
+    const lead = within(plan).getByTestId("example-model-lead");
+    expect(lead).toHaveTextContent("Das Team koordinieren");
+    expect(lead).toHaveTextContent("Braucht: Tool-Aufrufe");
+    expect(lead).toHaveTextContent("Bereits installiert.");
+    const qa = within(plan).getByTestId("example-model-quality-check/qa");
+    expect(qa).toHaveTextContent("Qualitätsprüfung");
+    expect(qa).toHaveTextContent("Dokumente und Bilder lesen");
+    expect(qa).toHaveTextContent("ein installiertes wird verwendet");
+    expect(qa).toHaveTextContent("Ohne Grafikkarte sind große Modelle zu langsam.");
+    const better = within(qa).getByTestId("example-model-better-quality-check/qa");
+    expect(better).toHaveTextContent("Besser: qwen3.6:35b-a3b (braucht einen Download).");
+    expect(within(better).getByRole("link", { name: "Lokale Modelle" })).toHaveAttribute("href", expect.stringContaining("#settings-local-models"));
+    const select = within(qa).getByRole("combobox", { name: "Modell für Qualitätsprüfer" });
+    expect(select).toHaveValue("ollama:qwen3.5:4b");
+    // Any installed chat model can be chosen, never an embedding model.
+    expect(await within(select).findByRole("option", { name: "ministral-3:8b" })).toBeInTheDocument();
+    expect(within(select).getByRole("option", { name: "qwen3.5:4b (geplant)" })).toBeInTheDocument();
+    expect(within(select).queryByRole("option", { name: "qwen3-embedding:0.6b" })).toBeNull();
+    const risk = within(plan).getByTestId("example-model-risk");
+    expect(risk).toHaveTextContent("Das Standardmodell des Arbeitsbereichs bleibt.");
+    expect(within(risk).getByRole("combobox")).toHaveValue("");
+    expect(screen.getByTestId("example-models-judge")).toHaveTextContent("Qualitätsprüfung (Judge): qwen3.5:9b");
+    await userEvent.selectOptions(select, "ollama:ministral-3:8b");
+    expect(qa).toHaveTextContent("Deine Wahl");
+    await userEvent.selectOptions(within(risk).getByRole("combobox"), "ollama:qwen3.5:9b");
+    await userEvent.click(screen.getByRole("button", { name: "Als Kopie übernehmen" }));
+    await waitFor(() => expect(fetch.mock.calls.some(([url]) => url === "/api/library/supplier-comparison/copy")).toBe(true));
+    const call = fetch.mock.calls.find(([url]) => url === "/api/library/supplier-comparison/copy")!;
+    expect(JSON.parse(String(call[1]!.body))).toEqual({
+      language: "de",
+      tests: true,
+      models: { "quality-check/qa": "ollama:ministral-3:8b", risk: "ollama:qwen3.5:9b" },
+    });
+  });
+
+  it("explains an agent the example does not know", () => {
+    expect(problemText(i18n.t.bind(i18n), { code: "library.agent_unknown", params: { key: "x" } })).toBe(
+      "Dieses Beispiel hat keinen Agenten „x“. Lade die Seite neu und versuche es erneut.",
+    );
+  });
+
+  it("leaves cloud workspaces unchanged", async () => {
+    const fetch = serve(localRoutes(PLAN, "anthropic:claude-sonnet-5-5"));
+    renderPreview();
+    await screen.findByTestId("example-preview");
+    expect(screen.queryByTestId("example-models")).toBeNull();
+    expect(fetch.mock.calls.some(([url]) => String(url).includes("/models"))).toBe(false);
+  });
+
+  it("hides the plan when the API says the workspace is not local", async () => {
+    const fetch = serve(localRoutes({ ...PLAN, local: false }));
+    renderPreview();
+    await screen.findByTestId("example-preview");
+    await waitFor(() => expect(fetch.mock.calls.some(([url]) => String(url).includes("/models"))).toBe(true));
+    await screen.findByText("Einkaufsleitung", { selector: "strong" });
+    expect(screen.queryByTestId("example-models")).toBeNull();
+  });
+});

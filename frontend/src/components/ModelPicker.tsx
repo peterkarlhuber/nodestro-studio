@@ -11,6 +11,7 @@ import { modelDescription } from "../lib/catalog";
 import { findModel, splitModel } from "../lib/providers";
 
 import { Select, TextInput } from "./ui";
+import { useLocalModelNote } from "../pages/LocalModelsHardware";
 
 /** The provider's name in the interface language. */
 export function providerLabel(t: TFunction, provider: ProviderId | string): string {
@@ -37,6 +38,13 @@ export function useModelName(): (model: string) => string {
 
 /** What the field hint says about a model: its description, unknown prices, a missing configuration. */
 export function useModelHint(model: string): string | undefined {
+  const hint = useProviderModelHint(model);
+  // A local model: how it runs on this computer and its measured speed (only for chosen ollama: models).
+  const local = useLocalModelNote(model);
+  return local ? [hint, local].filter(Boolean).join(" · ") : hint;
+}
+
+function useProviderModelHint(model: string): string | undefined {
   const { t } = useTranslation();
   const meta = useMeta();
   const settings = useSettings();

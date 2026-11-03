@@ -85,20 +85,28 @@ None known.
 
 ### ST-045 · Offline build of the mDenseOn embedding in the interface
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-api #81, nodestro-runtime #104 / RT-053
-- **What:** `mdenseon:307m` (LightOn, optional European embedding) is built from its pinned weights and a template
-  header. Online, *Download* in the catalog starts the build; offline, only `POST /api/local-models/import` with
-  `kind: "build"` and the two local files does it. *Settings → Local models* has no form for it.
-- **Next step:** Offer "Build from files" in the offline import dialog for catalog entries with `source: "build"`.
+- **Priority:** P3 Low · **Status:** Done (interface; e2e of the build route after the next api pin) · **Refs:**
+  nodestro-api #81, nodestro-runtime #104 / RT-053
+- **Done:** *Settings → Local models → Build from local files* for catalog entries with `source: "build"`: weights and
+  template paths, the build steps with cancel, an explanation and a retry per error code (wrong checksum per file,
+  missing file, incompatible file, reference vectors, cancelled), the reindex hint with a jump to *Knowledge search*.
+  The catalog download of such a model stays only outside the strict offline mode. The manual names the pinned files.
+- **Open:** The pinned input files come from the catalog's `build_inputs` once the api pin with them lands (until
+  then the form points to the manual). No browser e2e for a real build (needs the 1.2 GB weights).
 
 ### ST-046 · Show the context window and expected speed of local models
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-runtime RT-050, RT-051
-- **What:** An external Ollama may run with 4096 tokens of context (runs end with "length" long before `max_tokens`),
-  and multi-agent workflows on a computer without a GPU take tens of minutes. *Settings → Local models* shows
-  neither.
-- **Next step:** Show the server's context window with a warning below 8192 and a short "no GPU found: expect slow
-  runs" hint, once the runtime reports both.
+- **Priority:** P3 Low · **Status:** Done in the interface, waiting for the api/runtime pins · **Refs:**
+  nodestro-runtime RT-050, RT-051
+- **Done:** *Settings → Local models → This computer* (system, CPU cores, memory, GPU and its memory, model server
+  state and GPU use, context window with its source), the runtime's advice (`local.context_small` with the
+  `OLLAMA_CONTEXT_LENGTH` fix for an external Ollama, `context_unknown`, `cpu_only`, `reasoning_saving`, `model_slow`,
+  `model_too_large`, `memory_low`), an "On this computer" column (mirrors the runtime's `fits`), measured speeds with
+  "Measure speed" (no estimates), the CPU saving mode switch (`local_reasoning`), the "Reasoning reduced" badge on run
+  steps and agent tests (`reasoning_reduced`), the three `check.local_*` texts, the local fit and measured speed in
+  the model picker hint. Texts, help and manual in all six languages.
+- **Open:** Browser e2e of these fields once the pins land (unit tests use mocked API data). The fit column follows
+  the catalog's `fits`; with an older API it falls back to a browser copy of the runtime's rule.
 
 ### ST-035 · Similarity hint for pasted code in the tool editor (R-4)
 

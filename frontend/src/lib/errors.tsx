@@ -71,6 +71,11 @@ function interpolationParams(t: TFunction, params: Record<string, unknown> | nul
   // Values are shown as they are; nested problems (e.g. why a workflow cannot start) in the current language too.
   const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(params ?? {})) {
+    if ((key === "tokens" || key === "recommended" || key === "max_tokens") && typeof value === "number") {
+      // Token counts of the local context checks: 32768 reads as "32,768".
+      result[key] = value.toLocaleString(i18n.language);
+      continue;
+    }
     if (key === "provider" && typeof value === "string" && value) {
       // Providers come as ids ("openai"); the sentence names them.
       result[key] = t(`providers.names.${value}`, { defaultValue: value });

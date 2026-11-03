@@ -58,6 +58,8 @@ export function copyRequest(
   language: string,
   tests: boolean,
   connections: Record<string, string>,
+  /** Agent key -> model the person chose in the dialog (only choices that differ from the suggestion). */
+  models: Record<string, string> = {},
 ): ExampleCopyRequest {
   const known = new Set(example.integrations.map((integration) => integration.id));
   const integrations = Object.fromEntries(
@@ -68,6 +70,7 @@ export function copyRequest(
     language,
     tests: tests && !connected && example.tests.length > 0,
     ...(connected ? { integrations } : {}),
+    ...(Object.keys(models).length ? { models } : {}),
   };
 }
 

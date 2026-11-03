@@ -15,6 +15,7 @@ import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
 import { findModel } from "../lib/providers";
 import { ExampleNeeds, copiedModel } from "./ExampleNeeds";
+import { ExampleModelPlan, modelOverrides, useExampleModels, usesLocalModels } from "./ExampleModels";
 import { ExampleConnections, KnowledgeList, TeamList } from "./ExampleSections";
 import { OFFLINE, PATTERN_ICONS, copyRequest } from "./examples";
 
@@ -132,11 +133,22 @@ export function ExamplePreview({
   /** integration id -> MCP server id, or OFFLINE. */
   const [connections, setConnections] = useState<Record<string, string>>({});
   const example = useExample(id, language);
+  const settings = useSettings();
+  /** Agent key -> model chosen here (local workspaces only). */
+  const [models, setModels] = useState<Record<string, string>>({});
+  const plan = useExampleModels(id, language, usesLocalModels(settings.data?.default_model));
   const connected = Object.values(connections).some((server) => server !== OFFLINE);
 
   const copy = useMutation({
     mutationFn: () =>
-      api.copyExample(id ?? "", copyRequest(example.data ?? { tests: [], integrations: [] }, language, tests, connections)),
+      api.copyExample(id ?? "", copyRequest(
+          example.data ?? { tests: [], integrations: [] },
+          language,
+          tests,
+          connections,
+          modelOverrides(plan.data, models),
+        ),
+      ),
     onSuccess: (workflow) => {
       void queryClient.invalidateQueries({ queryKey: keys.workflows });
       toast.success(t("library.copied", { name: workflow.name }));
@@ -214,6 +226,7 @@ export function ExamplePreview({
           <ExampleGraph example={data} />
           <h3>{t("library.preview.agents")}</h3>
           <AgentList example={data} />
+          {plan.data ? <ExampleModelPlan plan={plan.data} value={models} onChange={setModels} /> : null}
           {data.team_details.length ? <TeamList teams={data.team_details} /> : null}
           <h3>{t("library.preview.guide")}</h3>
           <dl className="example-guide">

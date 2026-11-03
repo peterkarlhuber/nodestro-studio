@@ -2,6 +2,33 @@
 
 ## Unreleased
 
+### Local models: build from files, hardware and speed (2026-11-03)
+
+- *Settings → Local models → Build from local files* (ST-045): builds a catalog model with source "build"
+  (`mdenseon:307m`) from its weights and template files on the computer that runs Nodestro, without a download. It
+  lists the expected files (from `build_inputs` when the API sends them), shows the build step, cancels, explains
+  every failure (wrong checksum of the weights or template file, missing file, incompatible file, reference vectors
+  not reproduced, cancelled) with a retry, and after the build points to rebuilding the semantic index. In the strict
+  offline mode the catalog offers only the build for such a model. Texts, help and the manual section in all six
+  languages.
+- *Settings → Local models → This computer* (ST-046): the detected hardware, the model server's state, GPU use and
+  context window (set by Nodestro, reported by the server, or unknown), the runtime's hints (small context window with
+  the `OLLAMA_CONTEXT_LENGTH` fix for an external Ollama, CPU only, low memory, slow or too large models), whether each
+  model runs here (the runtime's `fits`), measured generation and prompt speeds with "Measure speed" (never
+  estimates), and the switch "CPU saving mode for thinking
+  models" (`local_reasoning`). Steps and agent tests that answered without the thinking phase carry a "Reasoning
+  reduced" badge. The workflow check explains `check.local_context_small`, `check.local_max_tokens` and
+  `check.local_reasoning_saving`; the model picker names how a local model runs here. Six languages, help and manual.
+- Copying an example in a workspace with local models (EX-011) shows each agent with its task in plain words, what it
+  needs, the installed model the copy gives it and why (`GET /api/library/{id}/models`), a better model that needs a
+  download with a link to the local models settings, and the judge's model. A select per agent offers the suitable
+  installed models first and every installed chat model; changed choices go to the copy as `models` and always win.
+  Cloud workspaces are unchanged. Six languages, help and manual.
+- Pins orkexa 4ec738c (orkexa #44: robust hybrid fusion), nodestro-runtime 3006ce0 (runtime #106: CPU saving mode,
+  context window and hardware advice, benchmark job), nodestro-examples be55542 (examples #64: agent task profiles),
+  nodestro-integrations f5a25d6, nodestro-api c2a2ad3 (api #82: local advice, benchmark, per-agent model plan) and
+  nodestro-sdk 98a697e (sdk #74: regenerated types).
+
 ### Local models, embeddings and semantic knowledge search (2026-11-03)
 
 - *Settings → Local models*: the state of the local model server (managed on the desktop, the Local Docker container,

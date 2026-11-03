@@ -101,6 +101,16 @@ describe("counted texts", () => {
     "errors.form.too_many_files", // "({{count}} given)": the count is not followed by its noun
     "pricing.staleCritical", // days: a configured threshold, always more than one
     "tools.services.stats.limits", // operator limits, always more than one
+    // Token counts of a context window and measured speeds: thousands of tokens, never one.
+    "errors.check.local_context_small",
+    "errors.check.local_max_tokens",
+    "localModels.machine.context.configured",
+    "localModels.machine.context.server",
+    "localModels.machine.context.unknown",
+    "localModels.advice.context_small",
+    "localModels.advice.model_slow",
+    "localModels.speed.value",
+    "localModels.speed.prompt",
   ]);
 
   it("have plural forms in English", () => {

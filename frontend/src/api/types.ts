@@ -625,6 +625,8 @@ export interface NodeRun {
   decision_usage?: Usage | null;
   /** Taken over from this earlier run when a failed run was continued. */
   reused_from?: string | null;
+  /** Why the agent answered with less thinking than configured ("cpu_saving": the CPU saving mode). */
+  reasoning_reduced?: string | null;
   /** The files the agent received, and how. */
   files?: ProvidedFile[];
   /** Content the agent proposed for knowledge (stored only after confirmation). */
@@ -1354,6 +1356,8 @@ export interface AgentTestResult {
   memory_isolated: boolean;
   started_at: string;
   finished_at: string | null;
+  /** As NodeRun.reasoning_reduced. */
+  reasoning_reduced?: string | null;
 }
 
 export interface PromptSegment {
@@ -1651,6 +1655,40 @@ export interface ExampleCopyRequest {
   tests?: boolean;
   /** integration id -> MCP server id; integrations not named run in their offline mode. */
   integrations?: Record<string, string>;
+  /** Agent key -> model, chosen by the person in the copy dialog; always wins over the suggestion. */
+  models?: Record<string, string>;
+}
+
+/** One agent of an example and the local model its copy would get (GET /api/library/{id}/models). */
+export interface ExampleAgentModel {
+  /** The key of models in the copy request. */
+  key: string;
+  name: string;
+  /** The team (or other part) the agent belongs to; null for agents of the workflow itself. */
+  part: string | null;
+  kind?: "agent" | "orchestrator";
+  /** classify, extract, write, document_vision, tool_agent, analysis, coding, judge, orchestrator. */
+  task: string;
+  tier: string;
+  /** Local: the installed model the copy uses (a copy never downloads); null: the workspace default stays. */
+  model: string | null;
+  installed: boolean;
+  /** Why this model: the codes of the local model recommendations, installed_alternative, default_model, manual. */
+  reasons: string[];
+  /** A better catalog model that needs a download first. */
+  suggested?: string | null;
+  /** Other installed models that suit the task, best first. */
+  alternatives: string[];
+  /** Capabilities the agent needs (e.g. tools, vision). */
+  needs?: string[];
+}
+
+export interface ExampleModelPlan {
+  /** The workspace uses local models: only then does the copy dialog show the plan. */
+  local: boolean;
+  /** The model of the example's quality check (judge), when it has one. */
+  judge?: string | null;
+  agents: ExampleAgentModel[];
 }
 
 /** A synthetic sample file for one file field of an example. */
@@ -3242,6 +3280,11 @@ export interface Settings {
   strict_offline?: boolean;
   /** Prefer European local models among equally suited ones (never a cloud service, never a weaker model). */
   prefer_european_models?: boolean;
+  /**
+   * auto: on computers without a GPU, agents with effort "medium" on local thinking models answer without the long
+   * thinking phase (effort "high" and an explicit reasoning option are never reduced); full: always as configured.
+   */
+  local_reasoning?: "auto" | "full";
   /** local: a new installation started with local default models; kept: an update kept the earlier defaults. */
   model_defaults?: "local" | "kept";
 }

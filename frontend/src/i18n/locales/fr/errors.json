@@ -10,7 +10,8 @@
   "examples": {
     "integration_unavailable": "Le serveur MCP choisi ne peut pas assurer cette connexion : il doit proposer chaque outil dont l'exemple a besoin, approuvé en lecture seule. Rien n'a été copié.",
     "integration_unknown": "L'exemple n'a pas de connexion « {{integration}} ». Rechargez la page et réessayez.",
-    "tests_need_offline": "Les séries de tests s'exécutent sans personne et ne peuvent pas utiliser d'outils MCP. Copiez l'exemple en mode hors ligne pour reprendre ses cas de test."
+    "tests_need_offline": "Les séries de tests s'exécutent sans personne et ne peuvent pas utiliser d'outils MCP. Copiez l'exemple en mode hors ligne pour reprendre ses cas de test.",
+    "agent_unknown": "Cet exemple n’a pas d’agent « {{key}} ». Rechargez la page et réessayez."
   },
   "agentFailed": "L’agent s’est arrêté sur une erreur ({{type}}).",
   "file": {
@@ -323,7 +324,10 @@
     "index_building": "Cet agent utilise la recherche sémantique, mais l’index sémantique est encore en cours de création.",
     "local_model_missing": "{{model}} n’est pas installé sur le serveur de modèles local. Téléchargez-le ou importez-le dans les paramètres.",
     "local_model_not_chat": "{{model}} est un modèle d’embeddings et ne peut pas répondre en tant qu’agent.",
-    "local_model_no_tools": "{{model}} ne peut pas appeler d’outils, mais cet agent en utilise. Choisissez un modèle qui prend en charge les appels d’outils."
+    "local_model_no_tools": "{{model}} ne peut pas appeler d’outils, mais cet agent en utilise. Choisissez un modèle qui prend en charge les appels d’outils.",
+    "local_context_small": "Le serveur de modèles local ne donne aux modèles que {{tokens}} tokens de contexte ; au moins {{recommended}} tokens sont recommandés, sinon les réponses sont coupées.",
+    "local_max_tokens": "La limite de réponse de cet agent ({{max_tokens}} tokens) ne tient pas dans la fenêtre de contexte du serveur de modèles local ({{tokens}} tokens).",
+    "local_reasoning_saving": "Sur cet ordinateur sans carte graphique, ces agents répondent sans phase de réflexion (effort Moyen) : {{nodes}}. Choisissez l’effort Élevé pour un agent, ou désactivez le mode économie CPU dans les réglages."
   },
   "backup": {
     "not_zip": "Le fichier n’est pas une sauvegarde Nodestro (pas de fichier ZIP).",
@@ -964,7 +968,16 @@
     "unreachable": "Le serveur de modèles local est injoignable.",
     "unsafe_archive": "L’archive contient des chemins dangereux et n’a pas été décompressée.",
     "unsupported_platform": "L’environnement de modèles local n’existe pas pour ce système.",
-    "dimension_mismatch": "Les embeddings n’ont pas la même taille que l’index."
+    "dimension_mismatch": "Les embeddings n’ont pas la même taille que l’index.",
+    "source_missing": "Un fichier du modèle est introuvable.",
+    "invalid_template": "Le fichier gabarit ne correspond pas à ce modèle.",
+    "invalid_weights": "Le fichier de poids ne correspond pas à ce modèle.",
+    "reference_mismatch": "Le modèle construit ne reproduit pas ses vecteurs de référence et a été supprimé.",
+    "not_buildable": "Ce modèle n’est pas construit à partir de fichiers.",
+    "download_incomplete": "Le téléchargement est incomplet. Réessayez.",
+    "invalid_source": "La source de ce modèle n’est pas autorisée.",
+    "not_chat_model": "Ce n’est pas un modèle de langage ; seuls les modèles de langage peuvent être mesurés.",
+    "benchmark_failed": "La vitesse n’a pas pu être mesurée."
   },
   "knowledge": {
     "failed": "L’index sémantique n’a pas pu être mis à jour.",

@@ -20,6 +20,17 @@ Nodestro puede ejecutar agentes, asistentes y la búsqueda de conocimiento con *
 
 Costes: los modelos locales **no tienen facturación de API externa**. Nodestro no registra los costes de funcionamiento locales (hardware, energía), por eso las ejecuciones muestran «local, sin facturación de API» en lugar de un total de 0, y las ejecuciones mixtas añaden el número de solicitudes locales al coste.
 
+## Este ordenador, ventana de contexto y velocidad {#lokale-hardware}
+<!-- keywords: hardware, gpu, solo cpu, memoria, ventana de contexto, ollama_context_length, velocidad, tokens por segundo, medir, modo de ahorro de cpu, razonamiento reducido -->
+
+*Ajustes → Modelos locales → Este ordenador* muestra lo que Nodestro detectó: sistema, núcleos de CPU, memoria, la tarjeta gráfica y su memoria, si el servidor de modelos está en marcha (y en la GPU o la CPU) y su **ventana de contexto**: fijada por Nodestro para el servidor que inicia, indicada por un servidor en marcha o aún desconocida para tu propio Ollama. La columna **En este ordenador** de la lista de modelos indica si un modelo se ejecuta en la GPU, en la CPU (más lento), si es demasiado lento sin GPU o demasiado grande para esta memoria.
+
+Aparecen avisos encima de la lista cuando corresponden: una ventana de contexto demasiado pequeña (para tu propio Ollama: define `OLLAMA_CONTEXT_LENGTH=32768` en su ordenador y reinícialo), sin tarjeta gráfica (cuenta con respuestas lentas; funcionan mejor los modelos pequeños y el esfuerzo *Bajo* para pasos sencillos), poca memoria, un modelo que no cabe o un modelo medido como lento. La comprobación del flujo de trabajo también avisa cuando la ventana de contexto es inferior a 16.384 tokens o el límite de respuesta de un agente no cabe en ella.
+
+**Velocidad:** Nodestro no estima velocidades. **Medir velocidad** en un modelo de lenguaje instalado ejecuta una generación corta en este ordenador y muestra los tokens por segundo medidos, cuándo se midió y si el modelo se ejecutó en la GPU o la CPU.
+
+**Modo de ahorro de CPU para modelos que razonan** (activado por defecto): en un ordenador sin tarjeta gráfica, los agentes con esfuerzo *Medio* en modelos locales que razonan responden sin la larga fase de razonamiento. El esfuerzo *Alto* y una opción de razonamiento fijada explícitamente nunca se reducen. Cada paso respondido así lleva la insignia «Razonamiento reducido: modo de ahorro de CPU» en la ejecución y en la prueba del agente. Desactiva el modo para que los agentes razonen siempre como está configurado.
+
 ## Importación sin conexión y carpeta de modelos {#offline-import}
 <!-- keywords: sin conexión, air gap, usb, gguf, paquete sin conexión, sha-256, ssd externo, carpeta de modelos, copiar -->
 
@@ -29,6 +40,18 @@ Para ordenadores sin internet, *Ajustes → Modelos locales → Importación sin
 - **Archivo GGUF:** un archivo de modelo; dale el nombre que usan los agentes (por ejemplo `mi-modelo:q4`) y, para modelos que leen imágenes, el proyector de visión (`mmproj`).
 
 **Carpeta de modelos:** los modelos ocupan mucho. Elige otra carpeta, por ejemplo en un SSD externo: **Copiarlos allí y comprobarlos** copia cada modelo, lo comprueba y solo entonces cambia (la carpeta anterior se conserva); **Usar la carpeta tal como está** cambia a una carpeta que ya contiene modelos de Ollama.
+
+## Crear un modelo a partir de archivos locales {#modell-bauen}
+<!-- keywords: crear, mdenseon, safetensors, plantilla, gguf, air gap, suma de comprobación, vectores de referencia, embedding, reconstruir índice -->
+
+Algunos modelos no están en la biblioteca de Ollama y se crean a partir de sus archivos originales: por ahora el modelo de embeddings europeo `mdenseon:307m` (LightOn, Apache-2.0). Con internet, **Descargar** en la lista de modelos obtiene los archivos y crea el modelo. Sin internet (o en el modo sin conexión estricto), usa *Ajustes → Modelos locales → Crear a partir de archivos locales*: copia los dos archivos desde un ordenador con internet, indica sus rutas en el ordenador donde funciona Nodestro (en Local Docker: dentro de su carpeta de importación) y elige **Crear y comprobar**. No se descarga nada.
+
+- **Archivo de pesos:** `model.safetensors` de `lightonai/mDenseOn`, revisión `a5fdb000f7a21da96c3bddde3a782ef777316df3`, 1,227,771,776 bytes, SHA-256 `a336c49fc679aeb23969114b12fb7317804da3cc7d8bc214818009dea39d545c`.
+- **Archivo de plantilla:** `mmBERT-Base-307M-F16.gguf` de `mykor/mmBERT-base-GGUF`, revisión `66e31bd2787f6b5fe9b762a664f4899af38b0605`; SHA-256 de sus primeros 6,036,928 bytes `a224ccdee4310594e73c9907934a1520405bfc4467a3577d3dcf418e7c017901`. Basta el archivo completo o solo estos primeros bytes (su cabecera).
+
+Nodestro comprueba ambos archivos con estas sumas, escribe el archivo del modelo, crea el modelo en el servidor de modelos y calcula textos de referencia: el modelo solo se conserva si cada vector coincide con la referencia. La lista muestra el paso en curso; **Cancelar** detiene la creación. Si falla, el mensaje indica el motivo: un archivo que no coincide con la suma (archivo equivocado, revisión equivocada o copia incompleta), un archivo que falta, un archivo que no corresponde al modelo o vectores de referencia que no coinciden (el modelo se elimina). **Reintentar** la inicia de nuevo con las mismas rutas.
+
+Después, el modelo aparece como modelo de embeddings. Un índice semántico existente se queda con su modelo: elige el nuevo modelo en [Búsqueda de conocimiento](/docs/wissen#suchverfahren) y reconstruye el índice; la búsqueda usa el índice anterior hasta que el nuevo esté completo.
 
 ## Modo sin conexión estricto {#offline}
 <!-- keywords: sin conexión estricto, air gap, sin nube, comprobación previa, descargas rechazadas -->

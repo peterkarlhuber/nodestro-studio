@@ -139,7 +139,10 @@
     "localStorage": "Los modelos ocupan mucho. Puedes guardarlos en otra unidad, por ejemplo un SSD externo; al copiarlos se comprueba cada modelo antes del cambio.",
     "strictOffline": "Rechaza modelos en la nube, servidores de modelos remotos, herramientas de servidor, servicios MCP remotos y descargas antes de iniciar una ejecución.",
     "preferEuropean": "Propone modelos locales europeos (Mistral AI) cuando son igual de adecuados. Nunca un modelo más débil ni un servicio en la nube; tu propia elección de modelo tiene prioridad.",
-    "knowledgeSearch": "El texto completo encuentra palabras; la búsqueda semántica encuentra significados (también entre idiomas). La búsqueda semántica y la combinada necesitan el índice semántico creado con un modelo de embeddings."
+    "knowledgeSearch": "El texto completo encuentra palabras; la búsqueda semántica encuentra significados (también entre idiomas). La búsqueda semántica y la combinada necesitan el índice semántico creado con un modelo de embeddings.",
+    "localBuild": "Algunos modelos (como mdenseon:307m) se crean a partir de sus archivos originales en lugar de descargarse de la biblioteca de Ollama. Indica ambos archivos: Nodestro comprueba su SHA-256, crea el modelo y solo lo conserva si sus vectores de referencia coinciden. Funciona sin internet.",
+    "localHardware": "Lo que Nodestro detectó en el ordenador del servidor de modelos y lo que indica el servidor. Las velocidades solo aparecen tras medirlas; Nodestro no hace estimaciones.",
+    "localReasoning": "Sin tarjeta gráfica, la fase de razonamiento de los modelos locales puede tardar minutos por paso. El modo de ahorro la omite con esfuerzo Medio; el esfuerzo Alto no cambia."
   },
   "budget": {
     "decision": "La ejecución está en pausa porque su presupuesto no alcanza para la próxima solicitud al modelo. No se envió nada para ella. Eleva el límite de exactamente esta ejecución y continúa, o termina la ejecución.",
@@ -173,7 +176,8 @@
     "sequential": "Los agentes trabajan uno tras otro; cada uno se basa en el resultado del anterior.",
     "parallel": "Varios agentes trabajan a la vez sobre la misma entrada; otro agente reúne sus resultados.",
     "branching": "El flujo de trabajo se ramifica según reglas o tras una aprobación; no todos los agentes se ejecutan siempre.",
-    "adaptive": "Un orquestador decide durante la ejecución qué equipos trabajan en la tarea y reúne sus resultados. Cada equipo es un flujo de trabajo propio."
+    "adaptive": "Un orquestador decide durante la ejecución qué equipos trabajan en la tarea y reúne sus resultados. Cada equipo es un flujo de trabajo propio.",
+    "models": "Qué modelo local recibe cada agente de la copia y por qué. La sugerencia sigue la tarea del agente y la memoria de este ordenador; un modelo que elijas aquí siempre tiene prioridad."
   },
   "architect": {
     "open": "Deja que el arquitecto diseñe un flujo nuevo o revise este a partir de una descripción. Revisas el borrador antes de que cambie nada.",

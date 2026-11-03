@@ -4,7 +4,7 @@
 // without a click, and the strict offline mode refuses every download.
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Database, Download, FolderInput, HardDrive, Play, RefreshCw, Search, Square, Trash2, X } from "lucide-react";
+import { Database, Download, FolderInput, Hammer, HardDrive, Play, RefreshCw, Search, Square, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -29,6 +29,8 @@ import { toast } from "../components/toast";
 import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatBytes } from "../lib/format";
+import { BuildFromFiles, buildableModels } from "./LocalModelBuild";
+import { AdviceList, FitBadge, MachinePanel, SpeedCell, catalogFit } from "./LocalModelsHardware";
 
 /** The tasks the panel recommends a model for (the runtime knows more; these cover the studio's choices). */
 const SHOWN_TASKS = ["classify", "write", "tool_agent", "analysis", "assistant", "embedding"] as const;
@@ -182,6 +184,13 @@ function Recommendations({ overview, onPull, pulling, canInstall }: { overview: 
   );
 }
 
+/** Brings "Build from local files" into view and puts the focus into its first path field. */
+function focusBuild() {
+  const section = document.querySelector<HTMLElement>("[data-testid=local-build]");
+  section?.scrollIntoView({ block: "start" });
+  section?.querySelector<HTMLInputElement>("input")?.focus({ preventScroll: true });
+}
+
 function Catalog({
   overview,
   onPull,
@@ -204,6 +213,7 @@ function Catalog({
     onError: toast.error,
   });
   const extra = overview.status.models.filter((model) => !model.catalog);
+  const installed = new Map(overview.status.models.map((model) => [model.name, model]));
   const row = (model: CatalogModel) => (
     <tr key={model.name} data-testid={`local-model-${model.name}`}>
       <td>
@@ -224,10 +234,16 @@ function Catalog({
       <td className="num">{formatBytes(model.download_bytes)}</td>
       <td className="num">{formatBytes(model.memory_bytes)}</td>
       <td>
+        <FitBadge fit={catalogFit(model, overview)} hardware={overview.hardware} />
+      </td>
+      <td>
         {model.installed ? (
-          <Badge tone={model.verified ? "success" : "warning"}>
-            {model.verified ? t("localModels.verified") : t("localModels.unverified")}
-          </Badge>
+          <div className="stack-sm">
+            <Badge tone={model.verified ? "success" : "warning"}>
+              {model.verified ? t("localModels.verified") : t("localModels.unverified")}
+            </Badge>
+            {installed.get(model.name) ? <SpeedCell model={installed.get(model.name)!} canMeasure={canInstall && overview.status.running} /> : null}
+          </div>
         ) : null}
       </td>
       <td>
@@ -240,15 +256,25 @@ function Catalog({
             onConfirm={() => remove.mutate(model.name)}
           />
         ) : (
-          <Button
-            size="sm"
-            icon={Download}
-            disabled={!canInstall || overview.status.offline}
-            busy={pulling === model.name}
-            onClick={() => onPull(model.name)}
-          >
-            {t("localModels.downloadShort")}
-          </Button>
+          <div className="row-gap">
+            {/* A model built from upstream files: the download is the online way; offline, the files are entered below. */}
+            {model.source === "build" && overview.status.offline ? null : (
+              <Button
+                size="sm"
+                icon={Download}
+                disabled={!canInstall || overview.status.offline}
+                busy={pulling === model.name}
+                onClick={() => onPull(model.name)}
+              >
+                {t("localModels.downloadShort")}
+              </Button>
+            )}
+            {model.source === "build" && overview.manageable && overview.status.mode !== "unavailable" ? (
+              <Button size="sm" icon={Hammer} variant="ghost" onClick={() => focusBuild()}>
+                {t("localModels.build.fromFiles")}
+              </Button>
+            ) : null}
+          </div>
         )}
       </td>
     </tr>
@@ -263,6 +289,7 @@ function Catalog({
               <th>{t("localModels.catalog.model")}</th>
               <th className="num">{t("localModels.catalog.download")}</th>
               <th className="num">{t("localModels.catalog.memory")}</th>
+              <th>{t("localModels.catalog.fit")}</th>
               <th>{t("localModels.catalog.state")}</th>
               <th />
             </tr>
@@ -278,6 +305,9 @@ function Catalog({
                 <td className="num">{formatBytes(model.size)}</td>
                 <td />
                 <td />
+                <td>
+                  <SpeedCell model={model} canMeasure={canInstall && overview.status.running} />
+                </td>
                 <td>
                   <ConfirmIconButton
                     icon={Trash2}
@@ -452,11 +482,14 @@ export function LocalModelsPanel({
   admin,
   onOffline,
   onEurope,
+  onReasoning,
 }: {
   settings: Settings;
   admin: boolean;
   onOffline: (value: boolean) => void;
   onEurope: (value: boolean) => void;
+  /** Stores local_reasoning (the CPU saving mode for thinking models). */
+  onReasoning?: (value: "auto" | "full") => void;
 }) {
   const { t } = useTranslation();
   const access = useAccess();
@@ -478,7 +511,6 @@ export function LocalModelsPanel({
   const status = data?.status;
   const manageable = Boolean(data?.manageable);
   const managed = status?.mode === "managed";
-  const ram = data?.hardware.ram_bytes;
   return (
     <section className="panel stack" aria-labelledby="settings-local-models" data-testid="settings-local-models">
       <h2 className="panel__title" id="settings-local-models">
@@ -529,13 +561,8 @@ export function LocalModelsPanel({
               />
             </div>
           ) : null}
-          <p className="muted small" data-testid="local-hardware">
-            {t("localModels.hardware", {
-              cpus: data.hardware.cpus,
-              ram: ram ? formatBytes(ram) : "–",
-              gpu: t(`localModels.gpu.${data.hardware.gpu}`),
-            })}
-          </p>
+          <MachinePanel overview={data} />
+          <AdviceList overview={data} />
           <Recommendations
             overview={data}
             canInstall={canInstall && manageable}
@@ -550,6 +577,14 @@ export function LocalModelsPanel({
           />
           <Jobs enabled={manageable} manageable={manageable} />
           {manageable && status.mode !== "unavailable" ? <ImportForm canInstall={canInstall} /> : null}
+          {manageable && status.mode !== "unavailable" && buildableModels(data.catalog).length ? (
+            <BuildFromFiles
+              models={buildableModels(data.catalog)}
+              canInstall={canInstall}
+              manageable={manageable}
+              embeddingModel={settings.embedding_model}
+            />
+          ) : null}
           {manageable && managed ? <StorageForm overview={data} canInstall={canInstall} /> : null}
           <PermissionNote permission="install" access={access} />
         </>
@@ -571,9 +606,27 @@ export function LocalModelsPanel({
           description={t("localModels.europe.text")}
           tip="settings.preferEuropean"
         />
+        <Toggle
+          checked={(settings.local_reasoning ?? "auto") === "auto"}
+          disabled={!admin || !onReasoning}
+          onChange={(value) => onReasoning?.(value ? "auto" : "full")}
+          label={t("localModels.reasoning.label")}
+          description={reasoningState(t, settings, data)}
+          tip="settings.localReasoning"
+        />
       </div>
     </section>
   );
+}
+
+/** What the CPU saving mode does, and whether it applies on this computer now. */
+function reasoningState(t: ReturnType<typeof useTranslation>["t"], settings: Settings, data: LocalOverview | undefined): string {
+  const text = t("localModels.reasoning.text");
+  if ((settings.local_reasoning ?? "auto") === "full") return `${text} ${t("localModels.reasoning.off")}`;
+  if (data?.advice?.some((item) => item.code === "local.reasoning_saving")) return `${text} ${t("localModels.reasoning.active")}`;
+  if (data && (data.status.accelerated === true || (data.status.accelerated === undefined && data.hardware.gpu !== "none")))
+    return `${text} ${t("localModels.reasoning.inactive")}`;
+  return text;
 }
 
 function indexLine(t: ReturnType<typeof useTranslation>["t"], index: KnowledgeIndexStatus): string {

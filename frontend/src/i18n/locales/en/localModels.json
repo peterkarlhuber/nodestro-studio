@@ -24,7 +24,6 @@
   "start": "Start",
   "stop": "Stop",
   "autostart": "Start with Nodestro",
-  "hardware": "This computer: {{cpus}} CPU cores, {{ram}} memory, graphics: {{gpu}}",
   "gpu": {
     "nvidia": "NVIDIA GPU",
     "apple": "Apple silicon",
@@ -70,7 +69,8 @@
     "download": "Download size",
     "memory": "Memory needed",
     "state": "State",
-    "own": "Own model (imported or downloaded separately)"
+    "own": "Own model (imported or downloaded separately)",
+    "fit": "On this computer"
   },
   "kind": {
     "chat": "Language model",
@@ -87,7 +87,9 @@
       "install_runtime": "Install the runtime",
       "import_package": "Import {{target}}",
       "import_gguf": "Import {{target}}",
-      "move_models": "Move the model folder"
+      "move_models": "Move the model folder",
+      "build": "Build {{target}}",
+      "benchmark": "Measure the speed of {{target}}"
     },
     "state": {
       "running": "In progress",
@@ -181,5 +183,134 @@
     "rebuild": "Rebuild index",
     "remove": "Remove the semantic index"
   },
-  "onlyFor": "Only for: {{tasks}}"
+  "onlyFor": "Only for: {{tasks}}",
+  "build": {
+    "title": "Build from local files",
+    "fromFiles": "Build from files",
+    "text": "This model is not in the Ollama library. Nodestro builds it on this computer from its original files, without internet: it checks both files against their pinned SHA-256 checksums, builds the model and keeps it only if it reproduces the reference vectors exactly.",
+    "model": "Model",
+    "expected": "Expected files (copy them from a computer with internet, for example to a USB drive):",
+    "expectedUnlisted": "Two pinned files are needed: the weights (safetensors) and a template GGUF file, {{size}} together. The manual lists their sources and checksums.",
+    "revision": "revision {{revision}}",
+    "headerSize": "first {{size}} checked",
+    "files": {
+      "weights": "Weights file",
+      "template": "Template file"
+    },
+    "inline": {
+      "weights": "weights file",
+      "template": "template file",
+      "either": "file"
+    },
+    "weightsPath": "Weights file (safetensors)",
+    "weightsHint": "A path on the computer that runs Nodestro (in Local Docker: inside its import folder), for example /media/usb/model.safetensors.",
+    "templatePath": "Template file (GGUF)",
+    "templateHint": "The whole template GGUF file, or only its first {{size}} (the header).",
+    "offlineNote": "Nothing is downloaded: the build uses only these two files.",
+    "start": "Build and check",
+    "retry": "Try again",
+    "starting": "Starting …",
+    "progressLabel": "Building {{model}}",
+    "step": "Step {{step}} of {{total}}: {{name}}",
+    "steps": {
+      "verifyTemplate": "checking the template file",
+      "verifyWeights": "checking the weights file",
+      "write": "writing the model file",
+      "create": "creating the model in the model server",
+      "check": "checking the reference vectors",
+      "done": "done"
+    },
+    "done": "{{model}} was built and checked.",
+    "reindex": "To use it for semantic search, choose it as the embedding model under Knowledge search and rebuild the index. The current index stays in use until the new one is complete.",
+    "reindexActive": "{{model}} is the chosen embedding model: rebuild the index under Knowledge search so that searches use it.",
+    "toIndex": "Go to Knowledge search",
+    "errors": {
+      "cancelled": "The build was canceled. Nothing was installed.",
+      "checksum_mismatch": "The {{name}} does not match the pinned checksum. Nothing was installed.",
+      "checksum_mismatchHint": "Check that it is exactly the expected file in the expected version (see above) and that the copy is complete, then try again.",
+      "source_missing": "The {{name}} was not found.",
+      "source_missingHint": "Check the path. It must name a file on the computer that runs Nodestro (in Local Docker: inside its import folder).",
+      "invalid_template": "The template file is not a compatible GGUF file for this model.",
+      "invalid_templateHint": "Use the template file named above, not another GGUF file.",
+      "invalid_weights": "The weights file is not compatible with this model.",
+      "invalid_weightsHint": "Use the safetensors file of the named revision.",
+      "reference_mismatch": "The built model does not reproduce the reference vectors and was removed again.",
+      "reference_mismatchHint": "The files were correct, but the model server computes different vectors. Check that the model server has the pinned version, then try again."
+    }
+  },
+  "machine": {
+    "title": "This computer",
+    "system": "System",
+    "cpus": "CPU cores",
+    "memory": "Memory",
+    "gpu": "Graphics",
+    "gpuMemory": "{{gpu}} with {{memory}}",
+    "server": "Model server",
+    "runtime": {
+      "none": "none configured",
+      "running": "running (Ollama {{version}})",
+      "missing": "not installed (Ollama {{version}} needed)",
+      "stopped": "stopped"
+    },
+    "accelerated": {
+      "true": "models run on the GPU",
+      "false": "models run on the CPU",
+      "unknown": "GPU use unknown"
+    },
+    "contextTitle": "Context window",
+    "context": {
+      "configured": "{{tokens}} tokens (set by Nodestro)",
+      "server": "{{tokens}} tokens (reported by the server)",
+      "unknown": "{{tokens}} tokens"
+    },
+    "contextUnknown": "not known yet (shown once a model has run)",
+    "unknown": "unknown"
+  },
+  "fit": {
+    "gpu": "Runs on the GPU",
+    "cpu": "Runs here",
+    "cpuOnly": "Runs on the CPU (slower)",
+    "too_slow": "Too slow without a GPU",
+    "too_large": "Too large for this computer",
+    "slowHint": "slow on this computer (measured)"
+  },
+  "advice": {
+    "context_small": "The model server gives models only {{tokens}} tokens of context; agents need about {{recommended}} tokens for prompt, thinking and answer, otherwise answers are cut off.",
+    "context_fix": {
+      "external": "This is your own Ollama: set OLLAMA_CONTEXT_LENGTH={{raw}} on the computer that runs it and restart it.",
+      "managed": "Restart the model server so that Nodestro's setting applies.",
+      "other": "Ask the operator of the model server to raise the context window."
+    },
+    "context_unknown": "The context window of this server is not known yet. An Ollama with default settings gives only 4,096 tokens, too few for agents; start it with OLLAMA_CONTEXT_LENGTH=32768.",
+    "cpu_only": "No graphics card found: local models run on the CPU only. Expect slow answers, especially with thinking. Small models and effort Low for simple steps work best; the recommendations take this into account.",
+    "reasoning_saving": "The CPU saving mode is on: agents with effort Medium on local thinking models answer without the long thinking phase. Effort High is never reduced. You can switch it off below.",
+    "model_slow": "{{model}} generated {{speed}} tokens per second on this computer (measured). A smaller model or effort Low makes its steps faster.",
+    "model_too_large": "{{model}} needs about {{size}} of memory and does not fit this computer. Choose a smaller model.",
+    "memory_low": "This computer has {{memory}} of memory; local models need about {{recommended}} to run well. Close other programs or choose smaller models.",
+    "other": "Note on local models: {{code}}."
+  },
+  "speed": {
+    "value": "{{speed}} tokens/s",
+    "processor": {
+      "gpu": "on the GPU",
+      "cpu": "on the CPU",
+      "mixed": "partly on the GPU"
+    },
+    "measuredAt": "measured {{date}}",
+    "context": "context {{tokens}}",
+    "notMeasured": "Speed not measured",
+    "measure": "Measure speed",
+    "again": "Measure again",
+    "started": "Measuring the speed of {{model}} …",
+    "prompt": "prompt {{speed}} tokens/s"
+  },
+  "reasoning": {
+    "label": "CPU saving mode for thinking models",
+    "text": "On a computer without a graphics card, agents with effort Medium on local thinking models answer without the long thinking phase. Effort High and an explicit reasoning option are never reduced, and runs mark every reduced step.",
+    "off": "Off: agents always think as configured.",
+    "active": "Active on this computer.",
+    "inactive": "Not active here: models run on a graphics card.",
+    "badge": "Reasoning reduced: CPU saving mode",
+    "badgeTip": "This agent answered without the long thinking phase because this computer has no graphics card. For full thinking, set the agent's effort to High or switch off the CPU saving mode in Settings → Local models."
+  }
 }

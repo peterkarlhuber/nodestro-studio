@@ -10,7 +10,8 @@
   "examples": {
     "integration_unavailable": "El servidor MCP elegido no puede atender esta conexión: debe ofrecer cada herramienta que necesita el ejemplo, aprobada como de solo lectura. No se ha copiado nada.",
     "integration_unknown": "El ejemplo no tiene la conexión «{{integration}}». Recarga la página e inténtalo de nuevo.",
-    "tests_need_offline": "Las series de pruebas se ejecutan sin una persona y no pueden usar herramientas MCP. Copia el ejemplo en modo sin conexión para adoptar sus casos de prueba."
+    "tests_need_offline": "Las series de pruebas se ejecutan sin una persona y no pueden usar herramientas MCP. Copia el ejemplo en modo sin conexión para adoptar sus casos de prueba.",
+    "agent_unknown": "Este ejemplo no tiene ningún agente «{{key}}». Recarga la página y vuelve a intentarlo."
   },
   "agentFailed": "El agente se ha detenido con un error ({{type}}).",
   "file": {
@@ -323,7 +324,10 @@
     "index_building": "Este agente usa la búsqueda semántica, pero el índice semántico aún se está creando.",
     "local_model_missing": "{{model}} no está instalado en el servidor de modelos local. Descárgalo o impórtalo en los ajustes.",
     "local_model_not_chat": "{{model}} es un modelo de embeddings y no puede responder como agente.",
-    "local_model_no_tools": "{{model}} no puede llamar a herramientas, pero este agente las usa. Elige un modelo que admita llamadas a herramientas."
+    "local_model_no_tools": "{{model}} no puede llamar a herramientas, pero este agente las usa. Elige un modelo que admita llamadas a herramientas.",
+    "local_context_small": "El servidor de modelos local da a los modelos solo {{tokens}} tokens de contexto; se recomiendan al menos {{recommended}} tokens; si no, las respuestas se cortan.",
+    "local_max_tokens": "El límite de respuesta de este agente ({{max_tokens}} tokens) no cabe en la ventana de contexto del servidor de modelos local ({{tokens}} tokens).",
+    "local_reasoning_saving": "En este ordenador sin tarjeta gráfica, estos agentes responden sin fase de razonamiento (esfuerzo Medio): {{nodes}}. Elige el esfuerzo Alto para un agente o desactiva el modo de ahorro de CPU en los ajustes."
   },
   "backup": {
     "not_zip": "El archivo no es una copia de seguridad de Nodestro (no es un ZIP).",
@@ -964,7 +968,16 @@
     "unreachable": "No se puede acceder al servidor de modelos local.",
     "unsafe_archive": "El archivo contiene rutas inseguras y no se ha descomprimido.",
     "unsupported_platform": "El entorno de modelos local no está disponible para este sistema.",
-    "dimension_mismatch": "Los embeddings tienen un tamaño distinto al del índice."
+    "dimension_mismatch": "Los embeddings tienen un tamaño distinto al del índice.",
+    "source_missing": "No se encontró un archivo del modelo.",
+    "invalid_template": "El archivo de plantilla no corresponde a este modelo.",
+    "invalid_weights": "El archivo de pesos no corresponde a este modelo.",
+    "reference_mismatch": "El modelo creado no reproduce sus vectores de referencia y se eliminó.",
+    "not_buildable": "Este modelo no se crea a partir de archivos.",
+    "download_incomplete": "La descarga quedó incompleta. Vuelve a intentarlo.",
+    "invalid_source": "La fuente de este modelo no está permitida.",
+    "not_chat_model": "No es un modelo de lenguaje; solo se pueden medir modelos de lenguaje.",
+    "benchmark_failed": "No se pudo medir la velocidad."
   },
   "knowledge": {
     "failed": "No se pudo actualizar el índice semántico.",

@@ -144,5 +144,47 @@
     "files": "Takes your own files as input.",
     "connection": "Optional connection (MCP): {{names}}. Without it, the copy runs offline with sample data.",
     "noConnection": "No connection to other services needed."
+  },
+  "models": {
+    "title": "Models on this computer",
+    "text": "This workspace uses local models. Each agent gets the model its task needs on this computer; you can choose another one per agent. Your choice is kept in the copy.",
+    "agent": "Agent",
+    "task": "Task",
+    "model": "Model",
+    "choose": "Model for {{agent}}",
+    "installed": "Installed",
+    "download": "Needs a download",
+    "overridden": "Your choice",
+    "reason": {
+      "installed": "Already installed.",
+      "needs_download": "Needs a download before the first run.",
+      "installed_alternative": "The best model for this task needs a download; an installed one is used.",
+      "default_model": "No installed model suits this task: the workspace default model stays.",
+      "manual": "Chosen by you."
+    },
+    "tasks": {
+      "classify": "Sorting and routing",
+      "extract": "Extracting data",
+      "write": "Writing texts",
+      "document_vision": "Reading documents and images",
+      "tool_agent": "Working with tools",
+      "analysis": "Analysis and reasoning",
+      "coding": "Programming",
+      "judge": "Checking quality",
+      "orchestrator": "Coordinating the team"
+    },
+    "keepDefault": "Keep the default model",
+    "planned": "{{model}} (planned)",
+    "defaultStays": "Default model",
+    "better": "Better: {{model}} (needs a download).",
+    "toLocalModels": "Local models",
+    "needs": "Needs: {{needs}}",
+    "need": {
+      "tools": "tool calls",
+      "vision": "images",
+      "thinking": "thinking",
+      "structured": "structured output"
+    },
+    "judge": "Quality check (judge): {{model}}"
   }
 }

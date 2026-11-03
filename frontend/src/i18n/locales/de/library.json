@@ -144,5 +144,47 @@
     "files": "Nimmt deine eigenen Dateien als Eingabe.",
     "connection": "Optionale Verbindung (MCP): {{names}}. Ohne sie läuft die Kopie offline mit Beispieldaten.",
     "noConnection": "Keine Verbindung zu anderen Diensten nötig."
+  },
+  "models": {
+    "title": "Modelle auf diesem Computer",
+    "text": "Dieser Arbeitsbereich nutzt lokale Modelle. Jeder Agent bekommt das Modell, das seine Aufgabe auf diesem Computer braucht; du kannst pro Agent ein anderes wählen. Deine Wahl bleibt in der Kopie erhalten.",
+    "agent": "Agent",
+    "task": "Aufgabe",
+    "model": "Modell",
+    "choose": "Modell für {{agent}}",
+    "installed": "Installiert",
+    "download": "Braucht einen Download",
+    "overridden": "Deine Wahl",
+    "reason": {
+      "installed": "Bereits installiert.",
+      "needs_download": "Braucht vor der ersten Ausführung einen Download.",
+      "installed_alternative": "Das beste Modell für diese Aufgabe braucht einen Download; ein installiertes wird verwendet.",
+      "default_model": "Kein installiertes Modell passt zu dieser Aufgabe: Das Standardmodell des Arbeitsbereichs bleibt.",
+      "manual": "Von dir gewählt."
+    },
+    "tasks": {
+      "classify": "Sortieren und Weiterleiten",
+      "extract": "Daten herausziehen",
+      "write": "Texte schreiben",
+      "document_vision": "Dokumente und Bilder lesen",
+      "tool_agent": "Mit Tools arbeiten",
+      "analysis": "Analysieren und abwägen",
+      "coding": "Programmieren",
+      "judge": "Qualität prüfen",
+      "orchestrator": "Das Team koordinieren"
+    },
+    "keepDefault": "Standardmodell behalten",
+    "planned": "{{model}} (geplant)",
+    "defaultStays": "Standardmodell",
+    "better": "Besser: {{model}} (braucht einen Download).",
+    "toLocalModels": "Lokale Modelle",
+    "needs": "Braucht: {{needs}}",
+    "need": {
+      "tools": "Tool-Aufrufe",
+      "vision": "Bilder",
+      "thinking": "Denken",
+      "structured": "strukturierte Ausgabe"
+    },
+    "judge": "Qualitätsprüfung (Judge): {{model}}"
   }
 }
