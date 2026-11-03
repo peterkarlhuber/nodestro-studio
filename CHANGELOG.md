@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Platform pins: backend audit round 2 (2026-11-03)
+
+- Pins nodestro-api 54478b3 (api #74: security headers with a strict `script-src 'self'`, request body limits,
+  uniform error answers, idempotent run start, keyset run list), nodestro-runtime 140d479 (runtime #96: PostgreSQL
+  migration backup lock fix, resume and pool fixes, budget request labels), nodestro-examples 8499edf,
+  nodestro-integrations e2582cc (OCR page pixel cap), nodestro-sdk 3c4d4a4, orkexa bc8c4ed (orkexa #40) and Axentra
+  a872242 (axentra #31, #32, #38).
+- The app serves the interface through `nodestro_api.frontend.mount_frontend`, the typed scripts are type-checked
+  (API2-16), `check_versions` requires the canonical pinned reference for every component (API2-09), and CI installs
+  the public sibling repositories anonymously (OPS2-05).
+
 ### Navigation, settings and editor, UX round 2 (2026-11-03)
 
 - Settings has a contents list grouped by task (setup, costs, running, maintenance) with deep links to every section
