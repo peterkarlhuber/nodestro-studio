@@ -821,8 +821,8 @@ def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready
     running = engine.wait_running(CALL_TIMEOUT)
     if report.check("the long call runs in a container", running is not None, running and running.get("Names")):
         assert running is not None
-        found = engine.inspect(str(running["Names"]))
-        flags = isolation_flags(found) if found else {}
+        inspected = engine.inspect(str(running["Names"]))
+        flags = isolation_flags(inspected) if inspected else {}
         report.facts["container_flags"] = flags
         report.check(
             "docker inspect: isolation flags of the running sandbox container",

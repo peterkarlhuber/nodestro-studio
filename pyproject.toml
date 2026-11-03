@@ -73,5 +73,13 @@ known-local-folder = ["architect_script", "conftest", "check_case_collisions", "
 [tool.mypy]
 python_version = "3.11"
 strict = true
-packages = ["nodestro_studio"]
+# derive_branding, docker_smoke, platform_smoke and social_preview are not typed yet (19 errors, API2-16).
+files = [
+  "src/nodestro_studio",
+  "scripts/check_case_collisions.py",
+  "scripts/check_imports.py",
+  "scripts/check_versions.py",
+  "scripts/checkout_components.py",
+  "scripts/docker_test.py",
+]
 mypy_path = "src"
