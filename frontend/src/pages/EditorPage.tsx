@@ -38,6 +38,7 @@ import { crumbLink, parseTrail } from "../lib/trail";
 import { ApiDialog } from "../publish/ApiDialog";
 import { countsByNode, findings, startBlock } from "../editor/CheckList";
 import { NotFoundState } from "../components/NotFoundState";
+import { useSettingsHref } from "../lib/settingsLink";
 
 function useDebouncedGraph() {
   const nodes = useEditor((s) => s.nodes);
@@ -194,6 +195,7 @@ export function EditorPage() {
     staleTime: 30_000,
   });
   const block = useMemo(() => startBlock(check.data), [check.data]);
+  const providerSetup = useSettingsHref("settings-providers");
   const issues = useMemo<CanvasIssues>(() => {
     const counts = countsByNode(check.data);
     const result: CanvasIssues = { nodes: counts.errors, warnings: counts.warnings, edges: {}, blocked: Boolean(block?.provider) };
@@ -442,7 +444,7 @@ export function EditorPage() {
                 runDenied
                   ? undefined
                   : block?.provider
-                  ? { label: t("editor.run.openSettings"), to: "/settings" }
+                  ? { label: t("editor.run.openSettings"), to: providerSetup }
                   : { label: t("editor.page.showProblem"), onClick: showProblem }
               }
             >

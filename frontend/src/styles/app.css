@@ -153,7 +153,8 @@ ol {
 /* Provider and model of an agent: the provider select beside a free model input. */
 .model-picker {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  /* Side by side where there is room; stacked in narrow panels, so "Provider (not set up)" is never cut off. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
   gap: var(--nd-space-2);
 }
 
@@ -1831,7 +1832,8 @@ details[open] > summary > .section__chevron {
 
 .toaster {
   position: fixed;
-  right: 20px;
+  /* Bottom centre: the side panels (inspector, assistant) keep their save buttons in the bottom corners. */
+  right: max(20px, calc(50vw - 190px));
   bottom: 20px;
   z-index: 50;
   display: flex;
@@ -2691,6 +2693,8 @@ body.is-resizing--y * {
 .inspector__footer {
   position: sticky;
   bottom: 0;
+  /* Above the help buttons of the sections that scroll beneath it (they sit at z-index 1). */
+  z-index: 2;
   display: flex;
   justify-content: flex-end;
   gap: var(--nd-space-2);
@@ -7560,5 +7564,148 @@ ul.gate-report__list > li.gate-report__item {
 @media (max-width: 560px) {
   .sandbox-summary {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Navigation rail (chosen by the person, or automatic in the workflow editor) -------------------------- */
+
+.nav-rail-toggle {
+  width: 100%;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+@media (min-width: 1101px) {
+  .app.app--rail {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .app.app--rail.app--assistant {
+    grid-template-columns: 64px minmax(0, 1fr) 400px;
+  }
+
+  .app.app--rail.app--assistant.app--assistant-wide {
+    grid-template-columns: 64px minmax(0, 1fr) min(640px, 48vw);
+  }
+
+  .app--rail .nav-item {
+    justify-content: center;
+    font-size: 0;
+    gap: 0;
+  }
+
+  .app--rail .nav-group__title,
+  .app--rail .sidebar__note,
+  .app--rail .brand__sub {
+    display: none;
+  }
+}
+
+/* Narrow windows always show the rail and phones a menu: there is nothing to switch. */
+@media (max-width: 1100px) {
+  .nav-rail-toggle {
+    display: none;
+  }
+}
+
+/* ---- Settings: table of contents and the way back ----------------------------------------------------- */
+
+.settings-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 760px) 220px;
+  gap: var(--nd-space-6);
+  align-items: start;
+}
+
+.settings-nav {
+  position: sticky;
+  top: var(--nd-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-3);
+  font-size: var(--nd-font-size-sm);
+}
+
+.settings-nav__title,
+.settings-nav__group-title {
+  color: var(--nd-text-muted);
+  font-size: var(--nd-font-size-2xs);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.settings-nav__group-title {
+  letter-spacing: 0.04em;
+}
+
+.settings-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.settings-nav a {
+  display: block;
+  padding: 4px 10px;
+  border-left: 2px solid var(--nd-border);
+  color: var(--nd-text);
+  text-decoration: none;
+}
+
+.settings-nav a:hover {
+  background: var(--nd-surface-hover);
+}
+
+.settings-nav a[aria-current] {
+  border-left-color: var(--nd-brand);
+  color: var(--nd-brand);
+  font-weight: 600;
+}
+
+.settings-return {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  font-weight: 600;
+}
+
+/* A section reached by a link stays clear of the window edge. */
+.settings > section {
+  scroll-margin-top: var(--nd-space-4);
+}
+
+@media (max-width: 1280px) {
+  .settings-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Narrower windows: the contents come first, as a compact list of links. */
+  .settings-nav {
+    position: static;
+    order: -1;
+    flex-flow: row wrap;
+    gap: var(--nd-space-2) var(--nd-space-4);
+    max-width: 760px;
+  }
+
+  .settings-nav__title {
+    display: none;
+  }
+
+  .settings-nav ul {
+    flex-flow: row wrap;
+  }
+
+  .settings-nav a {
+    border-left: 0;
+    padding: 2px 6px;
   }
 }

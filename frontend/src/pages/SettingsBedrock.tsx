@@ -144,6 +144,7 @@ export function BedrockCard({ info, status, settings }: { info: ProviderInfo; st
 
   return (
     <Section
+      id={`provider-${info.id}`}
       title={name}
       icon={Cloud}
       defaultOpen={status.configured || used}

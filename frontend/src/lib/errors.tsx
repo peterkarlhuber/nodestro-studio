@@ -13,6 +13,7 @@ import { Link, useInRouterContext } from "react-router-dom";
 import { ApiError } from "../api/client";
 import { dockerReasonKey, isDockerReason } from "../api/types";
 import i18n from "../i18n";
+import { useSettingsHref } from "./settingsLink";
 
 export interface Coded {
   code?: string | null;
@@ -330,12 +331,19 @@ export function ProviderSetupLink({ item }: { item: Coded | null | undefined }) 
     <>
       {" "}
       {routed ? (
-        <Link to="/settings" data-testid="provider-setup-link">
-          {label}
-        </Link>
+        <RoutedSetupLink label={label} />
       ) : (
         <a href="/settings">{label}</a>
       )}
     </>
+  );
+}
+
+/** Inside the app: to the AI providers in the settings, with the way back to this page. */
+function RoutedSetupLink({ label }: { label: string }) {
+  return (
+    <Link to={useSettingsHref("settings-providers")} data-testid="provider-setup-link">
+      {label}
+    </Link>
   );
 }

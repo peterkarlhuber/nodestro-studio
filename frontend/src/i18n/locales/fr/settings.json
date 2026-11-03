@@ -198,5 +198,18 @@
       "system_messages": "Messages système"
     },
     "defaultFollowed": "Les nouveaux agents utilisent désormais {{model}} ({{provider}}). Les workflows existants gardent leurs modèles ; vous pouvez modifier ce choix sous Modèles."
+  },
+  "nav": {
+    "title": "Sur cette page",
+    "back": "Retour",
+    "backToWorkflow": "Retour au workflow",
+    "backToRun": "Retour à l’exécution",
+    "groups": {
+      "setup": "Configuration",
+      "costs": "Coûts",
+      "running": "Outils et fichiers",
+      "maintenance": "Maintenance",
+      "more": "Autres"
+    }
   }
 }

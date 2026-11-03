@@ -16,6 +16,7 @@ import { formatCost } from "../lib/format";
 import { missingProviders } from "../lib/providers";
 import { CheckList } from "./CheckList";
 import { useEditor } from "./store";
+import { useSettingsHref } from "../lib/settingsLink";
 
 /** The run's extra files (besides the form): any known format, several files. */
 const RUN_FILES: InputField = {
@@ -53,6 +54,7 @@ export function RunDialog({
     settings.data,
     nodes.flatMap((node) => (node.agent ? [node.agent.model, node.agent.quality.enabled ? node.agent.quality.judge_model : null] : [])),
   );
+  const providerSetup = useSettingsHref(missing[0] ? `provider-${missing[0]}` : "settings-providers");
   const [input, setInput] = useState("");
   const [fileIds, setFileIds] = useState<string[]>([]);
   const fields = start?.start?.fields ?? [];
@@ -117,7 +119,7 @@ export function RunDialog({
     >
       {missing.length ? (
         <Callout tone="warning">
-          {t("editor.run.providerMissing", { providers: providerList(t, missing) })} <Link to="/settings">{t("editor.run.openSettings")}</Link>
+          {t("editor.run.providerMissing", { providers: providerList(t, missing) })} <Link to={providerSetup}>{t("editor.run.openSettings")}</Link>
         </Callout>
       ) : null}
       {check && !check.ok ? (

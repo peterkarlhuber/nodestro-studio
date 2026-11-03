@@ -16,8 +16,10 @@
     <title>Nodestro Studio</title>
     <script>
       try {
+        // Same rule as src/lib/theme.ts: a stored choice wins, otherwise the system setting (dark if unknown).
         const saved = localStorage.getItem("nodestro-theme");
-        if (saved === "light" || saved === "dark") document.documentElement.dataset.theme = saved;
+        const light = saved === "light" || (saved !== "dark" && window.matchMedia("(prefers-color-scheme: light)").matches);
+        document.documentElement.dataset.theme = light ? "light" : "dark";
       } catch (_) {}
     </script>
   </head>

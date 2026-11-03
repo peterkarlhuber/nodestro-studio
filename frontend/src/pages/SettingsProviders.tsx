@@ -88,6 +88,7 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
     baseUrl.trim() !== (status.base_url ?? "") || JSON.stringify(capabilities) !== JSON.stringify(status.capabilities);
   return (
     <Section
+      id={`provider-${info.id}`}
       title={name}
       icon={KeyRound}
       defaultOpen={status.configured || used}

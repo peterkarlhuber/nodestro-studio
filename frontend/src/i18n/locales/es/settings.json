@@ -198,5 +198,18 @@
       "system_messages": "Mensajes de sistema"
     },
     "defaultFollowed": "Los agentes nuevos usan ahora {{model}} ({{provider}}). Los flujos de trabajo existentes conservan sus modelos; puedes cambiarlo en Modelos."
+  },
+  "nav": {
+    "title": "En esta página",
+    "back": "Volver",
+    "backToWorkflow": "Volver al flujo de trabajo",
+    "backToRun": "Volver a la ejecución",
+    "groups": {
+      "setup": "Configuración",
+      "costs": "Costes",
+      "running": "Herramientas y archivos",
+      "maintenance": "Mantenimiento",
+      "more": "Más"
+    }
   }
 }
