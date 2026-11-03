@@ -2821,7 +2821,9 @@ body.is-resizing--y * {
   grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
   gap: var(--nd-space-3);
   flex: 1;
-  min-height: 0;
+  /* Room for the steps and the step details even when a budget or approval card above fills the panel: the body
+     scrolls to them instead of squeezing them to nothing (they drew over the panel's lower edge). */
+  min-height: 120px;
 }
 
 /* Steps and details scroll on their own, so long results never push the list away. */
@@ -2860,6 +2862,22 @@ body.is-resizing--y * {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* A long status (es, fr, it, pt-BR "waiting for a budget decision") moves under the step's name and wraps inside
+   its badge instead of pushing the button out of the 220 px column (NSL-12). */
+.run-step {
+  flex-wrap: wrap;
+}
+
+.run-step > span:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.run-step .nd-badge {
+  max-width: 100%;
+  white-space: normal;
 }
 
 .run-step.selected {
