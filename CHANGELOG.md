@@ -17,6 +17,15 @@
 - The welcome page links to the local models setup. Texts, error messages, help and the manual chapters (local models,
   offline import, strict offline mode, search methods) in all six languages.
 - The e2e servers keep the cloud defaults (`tests/e2e_defaults.py`): a new installation now defaults to local models.
+- *Settings → Local models*: the switch "Prefer European models" (Mistral Ministral 3 and Devstral Small 2 as
+  alternatives; Qwen stays the default, a manual choice always wins, the preference never leads to a cloud service).
+  Catalog rows show the vendor, an EU badge and models that only fit one task (Devstral: coding). The manual explains
+  the switch, the optional LightOn mDenseOn embedding and why thinking effort "low" switches thinking off.
+- When local models are not set up yet, the reason next to the blocked start links to *Settings → Local models*.
+- Pins orkexa 71f8aaf (orkexa #43: offline mDenseOn build), nodestro-runtime 90ba97b (runtime #103, #104: European
+  catalog entries, no thinking at effort "low", 32k context for the managed Ollama, mDenseOn build job),
+  nodestro-examples 7b79fde, nodestro-integrations 3026776, nodestro-api a24f32b (api #80, #81) and nodestro-sdk
+  6c487bc (sdk #73).
 
 ### Platform pins: backend audit round 2 (2026-11-03)
 

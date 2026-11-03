@@ -37,7 +37,14 @@ export function findings(check: WorkflowCheck | undefined): Finding[] {
 }
 
 /** Check codes of a provider without settings: no node causes them, the fix is in Settings. */
-export const PROVIDER_CODES: readonly string[] = ["check.api_key_missing", "check.provider_not_configured"];
+export const PROVIDER_CODES: readonly string[] = [
+  "check.api_key_missing",
+  "check.provider_not_configured",
+  "check.local_runtime_missing",
+];
+
+/** Check codes whose fix is the local models section of the settings rather than the provider list. */
+export const LOCAL_CODES: readonly string[] = ["check.local_runtime_missing"];
 
 /** What keeps a workflow from starting, for the reason next to the start button. */
 export interface StartBlock {
@@ -47,6 +54,8 @@ export interface StartBlock {
   count: number;
   /** A provider is missing: the fix is in Settings, and no node is ready to run. */
   provider: boolean;
+  /** The missing provider is the local model runtime: the fix is in the local models section. */
+  local: boolean;
 }
 
 export function startBlock(check: WorkflowCheck | undefined): StartBlock | null {
@@ -54,7 +63,12 @@ export function startBlock(check: WorkflowCheck | undefined): StartBlock | null 
   const errors = findings(check).filter((finding) => finding.level === "error");
   if (!errors.length) return null;
   const provider = errors.find((finding) => PROVIDER_CODES.includes(finding.item.code));
-  return { first: provider ?? errors[0], count: errors.length, provider: Boolean(provider) };
+  return {
+    first: provider ?? errors[0],
+    count: errors.length,
+    provider: Boolean(provider),
+    local: Boolean(provider && LOCAL_CODES.includes(provider.item.code)),
+  };
 }
 
 /** Errors and warnings per node, for the badges on the canvas. */

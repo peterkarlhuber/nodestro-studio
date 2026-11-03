@@ -135,10 +135,13 @@ try {
   await page.waitForURL(/\/workflows\/wf_/);
   await page.locator(".react-flow__node").first().waitFor();
   // Without a provider the start explains itself next to the button and links to the settings (OB-01).
+  // Fresh installs default to local models, so the reason names the missing local model runtime.
   const reason = page.getByTestId("disabled-reason");
   await reason.waitFor();
-  check((await reason.textContent()).includes("API-Schlüssel"), "The blocked start names the missing provider next to the button");
-  check(await reason.getByRole("link", { name: "Einstellungen öffnen" }).isVisible(), "The reason links to the settings");
+  check((await reason.textContent()).includes("Lokale Modelle"), "The blocked start names the missing provider next to the button");
+  const settingsLink = reason.getByRole("link", { name: "Einstellungen öffnen" });
+  check(await settingsLink.isVisible(), "The reason links to the settings");
+  check((await settingsLink.getAttribute("href")).includes("#settings-local-models"), "The link leads to the local models section");
   check((await page.getByTestId("start-workflow").getAttribute("aria-disabled")) === "true", "The start button stays focusable but blocked");
   check((await page.locator('.react-flow__node [data-status="idle"]').count()) === 0, "No node claims to be ready while the start is blocked");
   await page.locator(".react-flow__node-agent").first().click();

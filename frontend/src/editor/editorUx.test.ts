@@ -190,6 +190,21 @@ describe("why the start is blocked (OB-01, ED-12)", () => {
     expect(block?.first.item.code).toBe("check.api_key_missing");
     expect(countsByNode(check)).toEqual({ errors: { out: 1 }, warnings: { a: 1 } });
     expect(startBlock({ ...check, ok: true })).toBeNull();
+    expect(block?.local).toBe(false);
+  });
+
+  it("sends a missing local model runtime to the local models settings", () => {
+    const check: WorkflowCheck = {
+      ok: false,
+      errors: 2,
+      warnings: 0,
+      problems: [issue("check.output_unconnected", "error", "out"), issue("check.local_runtime_missing", "error")],
+      agents: {},
+    };
+    const block = startBlock(check);
+    expect(block?.provider).toBe(true);
+    expect(block?.local).toBe(true);
+    expect(block?.first.item.code).toBe("check.local_runtime_missing");
   });
 
   it("counts the pool's problems for the orchestrator's Teams section", () => {

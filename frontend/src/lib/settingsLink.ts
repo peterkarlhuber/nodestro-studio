@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 
 /** Sections of the settings page that other pages link to (the ids of their headings). */
 export type SettingsSection =
+  | "settings-local-models"
   | "settings-providers"
   | "settings-models"
   | "settings-prices"
