@@ -49,6 +49,41 @@ def test_wrong_pins_are_reported(dependency: str, problem: str) -> None:
     assert any(problem in item for item in found), found
 
 
+CANONICAL = "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A
+
+
+@pytest.mark.parametrize(
+    ("dependency", "problem"),
+    [
+        # API2-09: every other spelling of a platform component is refused, not skipped.
+        ("nodestro-runtime>=0.2", "not pinned to a commit"),
+        ("Nodestro_Runtime", "not pinned to a commit"),
+        ("nodestro.runtime[postgres]>=0.2", "not pinned to a commit"),
+        ("nodestro-runtime @ git+https://github.com/PeterKarlHuber/nodestro-runtime.git@" + A, "not the canonical"),
+        ("nodestro-runtime @ git+https://github.com/someone-else/nodestro-runtime.git@" + A, "not the canonical"),
+        ("nodestro-runtime @ git+ssh://git@github.com/peterkarlhuber/nodestro-runtime.git@" + A, "not the canonical"),
+        ("nodestro-runtime @ https://github.com/peterkarlhuber/nodestro-runtime/archive/" + A + ".zip", "canonical"),
+        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime@" + A, "not the canonical"),
+        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + B, "versions.json pins"),
+        ("runtime-fork @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A, "under another name"),
+        ("nodestro-client @ git+https://github.com/peterkarlhuber/nodestro-sdk.git@" + A, "canonical"),
+        ("this is not a requirement @@", "not a valid requirement"),
+    ],
+)
+def test_other_spellings_of_a_component_are_reported(dependency: str, problem: str) -> None:
+    pins = versions(**{"nodestro-runtime": A, "nodestro-sdk": A})
+    found = check_versions.check_pyproject("x", pyproject(dependency), pins, None)
+    assert len(found) == 1 and problem in found[0], found
+
+
+def test_canonical_references_and_unrelated_packages_pass() -> None:
+    pins = versions(**{"nodestro-runtime": A, "nodestro-sdk": A})
+    sdk = "nodestro-client @ git+https://github.com/peterkarlhuber/nodestro-sdk.git@" + A + "#subdirectory=python"
+    extras = "nodestro-runtime[postgres] @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A
+    text = pyproject(CANONICAL, extras, sdk, "fastapi>=0.115", "x[extra]")  # "x" is the package itself
+    assert check_versions.check_pyproject("x", text, pins, "0.2.0") == []
+
+
 def test_a_wrong_version_is_reported() -> None:
     found = check_versions.check_pyproject("x", pyproject(version="0.1.0"), versions(), "0.2.0")
     assert found == ["x: version 0.1.0, versions.json says 0.2.0"]
@@ -77,8 +112,8 @@ def test_the_studio_pins_agree_with_versions_json() -> None:
     pinned = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
     text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     assert check_versions.check_pyproject("nodestro-studio", text, pinned, pinned["platform"]) == []
-    # The orkexa commit nodestro-runtime pins (self-test env fix; orkexa #38).
-    assert pinned["components"]["orkexa"]["commit"] == "0861c1b2b79209c388a5e996035e5676a96f6d75"
+    # The orkexa commit nodestro-runtime pins (backend audit round 2; orkexa #40).
+    assert pinned["components"]["orkexa"]["commit"] == "bc8c4edae637b2e53f7f63f86f84846ea2e70e43"
 
 
 def test_imports_are_read_from_the_source(tmp_path: Path) -> None:

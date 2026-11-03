@@ -184,8 +184,8 @@ The tests of the engine, API, examples and integrations live in their repositori
 (`.github/workflows/platform.yml`) runs them together against exactly the commits in `platform/versions.json`.
 No test calls a paid provider.
 
-The CI on GitHub needs the repository secret `NODESTRO_READ`, a token with read access ("Contents: Read") to
-`peterkarlhuber/orkexa` and the `nodestro-*` repositories.
+The CI on GitHub needs no secret: `peterkarlhuber/orkexa` and the `nodestro-*` repositories are public and are
+cloned anonymously.
 
 The architecture is described in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), the platform in
 [docs/PLATFORM.md](docs/PLATFORM.md), the original idea in [docs/PROJECT_DESCRIPTION.md](docs/PROJECT_DESCRIPTION.md)

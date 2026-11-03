@@ -821,8 +821,8 @@ def phase_engine(report: Report, api: Api, engine: Engine, model_url: str, ready
     running = engine.wait_running(CALL_TIMEOUT)
     if report.check("the long call runs in a container", running is not None, running and running.get("Names")):
         assert running is not None
-        found = engine.inspect(str(running["Names"]))
-        flags = isolation_flags(found) if found else {}
+        inspected = engine.inspect(str(running["Names"]))
+        flags = isolation_flags(inspected) if inspected else {}
         report.facts["container_flags"] = flags
         report.check(
             "docker inspect: isolation flags of the running sandbox container",
@@ -1114,6 +1114,7 @@ def main(argv: list[str] | None = None) -> int:
         log = directory / "studio.log"
         model_url = stack.enter_context(stand_in_model())
         try:
+            engine_began = engine.now()
             with studio(data_dir, log, env) as api:
                 engine.owner = installation_owner(data_dir)
                 report.facts["owner"] = engine.owner
@@ -1126,7 +1127,12 @@ def main(argv: list[str] | None = None) -> int:
             began = engine.now()
             with studio(data_dir, log, blocked_env) as api:
                 phase_blocked(report, api, engine, "engine unreachable", have_tool)
+            # events() widens its window by 3 s on both sides for an engine clock in a VM, so containers of the
+            # previous phase that started just before `began` (the cancelled run's call) fall into it; leave out
+            # every container that had started by `began`.
+            earlier, _ = started_and_removed(engine.events(engine_began, began - 3))
             started, _ = started_and_removed(engine.events(began, engine.now()))
+            started = [name for name in started if name not in earlier]
             report.check("[engine unreachable] no sandbox container started", not started, started, step=9)
 
             if args.stop_engine or args.stop_engine_prompt:

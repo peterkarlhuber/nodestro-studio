@@ -63,16 +63,8 @@ jobs:
         with:
           python-version: "3.13"
           cache: pip
-      # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
       - name: Install the studio at the pinned commits
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
         run: |
-          if [ -n "$NODESTRO_READ" ]; then
-            export GIT_CONFIG_COUNT=1
-            export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-            export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
-          fi
           pip install .
       # Colima's defaults are larger than a hosted Intel runner (4 CPUs, 14 GB); the Virtualization framework (vz)
       # is tried first, QEMU if it does not start.
@@ -132,30 +124,18 @@ jobs:
             brew install qemu
             colima start --vm-type qemu --cpu 3 --memory 6 --disk 40
           fi
-      # The token is in this step's environment for pip only; docker_test.py removes it (and every *TOKEN*, key and
-      # GIT_CONFIG_* variable) from the environment of the studio it starts, and never writes the environment.
       - name: The one command
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
         run: |
-          if [ -n "$NODESTRO_READ" ]; then
-            export GIT_CONFIG_COUNT=1
-            export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-            export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
-          fi
           bash scripts/mac_docker_test.sh --work "$RUNNER_TEMP/nodestro-docker-test" --yes \
             --stop-command "${{ matrix.stop }}" --start-command "${{ matrix.start }}"
-      - name: Only the test's own resources are gone, the report has no token
+      - name: Only the test's own resources are gone, and the report is written
         if: always()
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
         run: |
           work="$RUNNER_TEMP/nodestro-docker-test"
           ls -la "$work"
           test ! -e "$work/venv" && test ! -e "$work/run"
           left="$(docker ps -aq --filter label=org.orkexa.sandbox)"
           test -z "$left" || { docker ps -a; exit 1; }
-          if [ -n "$NODESTRO_READ" ] && grep -rlF "$NODESTRO_READ" "$work"/report-*; then exit 1; fi
           cat "$work"/report-*.txt
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
@@ -182,14 +162,7 @@ jobs:
           python-version: "3.13"
           cache: pip
       - name: Install the studio at the pinned commits
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
         run: |
-          if [ -n "$NODESTRO_READ" ]; then
-            export GIT_CONFIG_COUNT=1
-            export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-            export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
-          fi
           pip install .
       - name: Untrusted code is refused without a Linux engine
         run: python scripts/docker_smoke.py --expect-unsuitable
