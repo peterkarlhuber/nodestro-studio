@@ -7239,8 +7239,21 @@ ul.gate-report__list > li.gate-report__item {
   max-width: 100%;
 }
 
-.table--runs td:nth-child(4) {
+.table--runs td:nth-child(4),
+.table--runs td:nth-child(5) {
   white-space: nowrap;
+}
+
+/* The input under the workflow name gives way first, so every column (also the delete action) fits at 1440 px with
+   the navigation open; a run's input is a hint here, the run page shows all of it. */
+.table--runs td:nth-child(2) .truncate {
+  max-width: min(420px, 22vw);
+}
+
+/* A long status ("En attente d’une décision de budget") wraps inside its badge instead of widening the column. */
+.table--runs td:nth-child(3) .nd-badge {
+  max-width: 190px;
+  white-space: normal;
 }
 
 @media (max-width: 760px) {

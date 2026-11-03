@@ -16,6 +16,8 @@
   "import": "Importar traza",
   "empty": "No hay ejecuciones",
   "emptyText": "Inicia un flujo de trabajo en el editor; cada ejecución aparece aquí. Puedes importar trazas exportadas para verlas.",
+  "noMatch": "Ninguna ejecución coincide con estos filtros.",
+  "clearFilters": "Mostrar todas las ejecuciones",
   "columns": {
     "workflow": "Flujo de trabajo",
     "status": "Estado",

@@ -16,6 +16,8 @@
   "import": "Trace importieren",
   "empty": "Keine Ausführungen",
   "emptyText": "Starte einen Workflow im Editor; jeder Lauf erscheint hier. Exportierte Traces kannst du zum Ansehen importieren.",
+  "noMatch": "Keine Ausführung passt zu diesen Filtern.",
+  "clearFilters": "Alle Ausführungen zeigen",
   "columns": {
     "workflow": "Workflow",
     "status": "Status",

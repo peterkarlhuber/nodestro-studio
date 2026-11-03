@@ -1,12 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { RUNS_MAX, runsRefetchInterval } from "../api/hooks";
 import type { RunStatus } from "../api/types";
-import { ExecutionsPage } from "./ExecutionsPage";
+import { ExecutionsPage, runFilters } from "./ExecutionsPage";
 
 const run = (index: number, status: RunStatus = "succeeded") => ({
   id: `run_${index}`,
@@ -53,12 +53,18 @@ const loadOlder = () => screen.getByText("Ältere Ausführungen laden").closest(
 const runRequests = (fetch: ReturnType<typeof stubApi>) =>
   fetch.mock.calls.map(([url]) => String(url)).filter((url) => url.includes("/runs"));
 
-function show() {
+function Address() {
+  const location = useLocation();
+  return <output data-testid="address">{location.search}</output>;
+}
+
+function show(path = "/executions") {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
     <QueryClientProvider client={client}>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[path]}>
         <ExecutionsPage />
+        <Address />
       </MemoryRouter>
     </QueryClientProvider>,
   );
@@ -143,5 +149,39 @@ describe("runsRefetchInterval", () => {
     expect(runsRefetchInterval([{ status: "succeeded" }, { status: "failed" }, { status: "paused" }])).toBe(30_000);
     expect(runsRefetchInterval([])).toBe(30_000);
     expect(runsRefetchInterval(undefined)).toBe(30_000);
+  });
+});
+
+describe("ExecutionsPage filters in the address", () => {
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
+
+  it("reads the filters from the address and ignores unknown values", () => {
+    expect(runFilters(new URLSearchParams("workflow=wf_1&status=failed&origin=imported"))).toEqual({
+      workflowId: "wf_1",
+      status: "failed",
+      origin: "imported",
+    });
+    expect(runFilters(new URLSearchParams("status=exploded&origin=x"))).toEqual({ workflowId: "", status: "", origin: "" });
+  });
+
+  it("opens filtered from a link, says when nothing matches and shows all runs again", async () => {
+    stubApi(3);
+    show("/executions?status=failed");
+    expect(await screen.findByText("Keine Ausführung passt zu diesen Filtern.")).toBeInTheDocument();
+    expect(screen.queryByText("Keine Ausführungen")).toBeNull();
+    await userEvent.click(screen.getByTestId("runs-clear-filters"));
+    await waitFor(() => expect(rows()).toBe(3));
+    expect(screen.getByTestId("address")).toHaveTextContent(/^$/);
+  });
+
+  it("keeps a chosen filter in the address", async () => {
+    stubApi(3);
+    show();
+    await waitFor(() => expect(rows()).toBe(3));
+    await userEvent.selectOptions(screen.getByRole("combobox", { name: "Nach Status filtern" }), "failed");
+    await waitFor(() => expect(screen.getByTestId("address")).toHaveTextContent("?status=failed"));
   });
 });
