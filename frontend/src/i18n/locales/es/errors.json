@@ -320,7 +320,10 @@
     "offline_server_tool": "El modo sin conexión estricto no permite herramientas de servidor ({{names}}).",
     "offline_mcp": "El modo sin conexión estricto no permite servicios MCP remotos ({{names}}).",
     "vectors_missing": "Este agente usa la búsqueda semántica, pero aún no hay índice semántico. Créalo en Ajustes.",
-    "index_building": "Este agente usa la búsqueda semántica, pero el índice semántico aún se está creando."
+    "index_building": "Este agente usa la búsqueda semántica, pero el índice semántico aún se está creando.",
+    "local_model_missing": "{{model}} no está instalado en el servidor de modelos local. Descárgalo o impórtalo en los ajustes.",
+    "local_model_not_chat": "{{model}} es un modelo de embeddings y no puede responder como agente.",
+    "local_model_no_tools": "{{model}} no puede llamar a herramientas, pero este agente las usa. Elige un modelo que admita llamadas a herramientas."
   },
   "backup": {
     "not_zip": "El archivo no es una copia de seguridad de Nodestro (no es un ZIP).",

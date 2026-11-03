@@ -293,7 +293,7 @@ describe("backend codes", () => {
     "local.models_dir", "knowledge.embedding_model_missing", "knowledge.vectors_missing", "knowledge.index_building",
     "knowledge.reindex_running", "knowledge.reindex_required", "check.local_runtime_missing", "check.offline_cloud_model",
     "check.offline_remote_endpoint", "check.offline_server_tool", "check.offline_mcp", "check.vectors_missing",
-    "check.index_building",
+    "check.index_building", "check.local_model_missing", "check.local_model_not_chat", "check.local_model_no_tools",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

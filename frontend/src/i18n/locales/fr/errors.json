@@ -320,7 +320,10 @@
     "offline_server_tool": "Le mode hors ligne strict n’autorise aucun outil serveur ({{names}}).",
     "offline_mcp": "Le mode hors ligne strict n’autorise aucun service MCP distant ({{names}}).",
     "vectors_missing": "Cet agent utilise la recherche sémantique, mais il n’y a pas encore d’index sémantique. Créez-le dans les réglages.",
-    "index_building": "Cet agent utilise la recherche sémantique, mais l’index sémantique est encore en cours de création."
+    "index_building": "Cet agent utilise la recherche sémantique, mais l’index sémantique est encore en cours de création.",
+    "local_model_missing": "{{model}} n’est pas installé sur le serveur de modèles local. Téléchargez-le ou importez-le dans les paramètres.",
+    "local_model_not_chat": "{{model}} est un modèle d’embeddings et ne peut pas répondre en tant qu’agent.",
+    "local_model_no_tools": "{{model}} ne peut pas appeler d’outils, mais cet agent en utilise. Choisissez un modèle qui prend en charge les appels d’outils."
   },
   "backup": {
     "not_zip": "Le fichier n’est pas une sauvegarde Nodestro (pas de fichier ZIP).",

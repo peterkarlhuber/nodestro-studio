@@ -320,7 +320,10 @@
     "offline_server_tool": "La modalità offline rigorosa non consente strumenti server ({{names}}).",
     "offline_mcp": "La modalità offline rigorosa non consente servizi MCP remoti ({{names}}).",
     "vectors_missing": "Questo agente usa la ricerca semantica, ma non c’è ancora un indice semantico. Crealo nelle Impostazioni.",
-    "index_building": "Questo agente usa la ricerca semantica, ma l’indice semantico è ancora in costruzione."
+    "index_building": "Questo agente usa la ricerca semantica, ma l’indice semantico è ancora in costruzione.",
+    "local_model_missing": "{{model}} non è installato sul server dei modelli locale. Scaricalo o importalo nelle impostazioni.",
+    "local_model_not_chat": "{{model}} è un modello di embedding e non può rispondere come agente.",
+    "local_model_no_tools": "{{model}} non può chiamare strumenti, ma questo agente li usa. Scegli un modello che supporti le chiamate agli strumenti."
   },
   "backup": {
     "not_zip": "Il file non è un backup di Nodestro (non è un file ZIP).",

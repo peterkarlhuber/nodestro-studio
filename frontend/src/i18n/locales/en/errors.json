@@ -320,7 +320,10 @@
     "offline_server_tool": "The strict offline mode allows no server tools ({{names}}).",
     "offline_mcp": "The strict offline mode allows no remote MCP services ({{names}}).",
     "vectors_missing": "This agent uses semantic search, but there is no semantic index yet. Build it in Settings.",
-    "index_building": "This agent uses semantic search, but the semantic index is still being built."
+    "index_building": "This agent uses semantic search, but the semantic index is still being built.",
+    "local_model_missing": "{{model}} is not installed on the local model server. Download or import it in Settings.",
+    "local_model_not_chat": "{{model}} is an embedding model and cannot answer as an agent.",
+    "local_model_no_tools": "{{model}} cannot call tools, but this agent uses tools. Choose a model that supports tool calls."
   },
   "backup": {
     "not_zip": "The file is not a Nodestro backup (no ZIP file).",
