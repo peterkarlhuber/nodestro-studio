@@ -4,6 +4,8 @@
 
 ### Platform pins: backend audit round 2 (2026-11-03)
 
+- Pins nodestro-api 7c195ed (api #77: the export works on installations without test tools, such as the server and
+  desktop images) and nodestro-sdk f44d156 (sdk #69).
 - Pins nodestro-api 84ca99d (api #74 and #75: security headers with a strict `script-src 'self'`, request body limits,
   uniform error answers, idempotent run start, keyset run list), nodestro-runtime 140d479 (runtime #96: PostgreSQL
   migration backup lock fix, resume and pool fixes, budget request labels), nodestro-examples 8499edf,
