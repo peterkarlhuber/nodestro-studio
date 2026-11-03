@@ -155,6 +155,17 @@ export function refineProblem(
   if (code === "run.budget_exceeded" && params.expired === true) return { code: "run.budget_request_expired", params };
   // A refused budget decision of someone who may run but did not start the run (and is no administrator).
   if (code === "access.forbidden" && params.reason === "budget.not_starter") return { code: "budget.not_starter", params };
+  // Validation answers name their fields either as ``fields`` (text) or as ``errors`` (one item per field); the
+  // sentence lists the field names, or speaks of the input in general when there are none.
+  if (code === "request.invalid" && !params.fields) {
+    const names = Array.isArray(params.errors)
+      ? [...new Set(params.errors.map((item) => (item && typeof item === "object" ? (item as { field?: unknown }).field : null)))]
+          .filter((name): name is string => typeof name === "string" && name !== "")
+      : [];
+    return names.length ? { code, params: { ...params, errors: undefined, fields: names.join(", ") } } : { code: "request.invalid_plain", params };
+  }
+  // A size limit, when the server names it.
+  if (code === "request.too_large" && params.limit_mb != null) return { code: "request.too_large_limit", params };
   if (code && PROVIDER_FAILURES.has(code)) return { code, params: { ...params, provider: params.provider ?? "" } };
   // A source-only package a person accepted to build: its build script runs only in a container. The runtime names
   // why that container could not run (no Docker, or no pinned resolver image); never on this computer.

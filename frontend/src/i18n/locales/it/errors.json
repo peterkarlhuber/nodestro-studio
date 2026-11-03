@@ -570,13 +570,17 @@
     "unknown_file_part": "Non esiste un campo file chiamato {{field}}.",
     "host_not_allowed": "Nodestro non risponde con il nome host {{host}}. Apri Nodestro tramite localhost oppure aggiungi il nome a NODESTRO_ALLOWED_HOSTS.",
     "origin_not_allowed": "Le modifiche dalla pagina web {{origin}} non vengono accettate.",
-    "forwarded_not_allowed": "Le richieste inoltrate da un proxy non sono accettate: Nodestro risponde solo a questo computer."
+    "forwarded_not_allowed": "Le richieste inoltrate da un proxy non sono accettate: Nodestro risponde solo a questo computer.",
+    "invalid_plain": "La richiesta non corrisponde all’input previsto.",
+    "too_large_limit": "La richiesta è troppo grande: sono accettati al massimo {{limit_mb}} MB.",
+    "malformed": "Non è possibile leggere la richiesta. Ricarica la pagina e riprova."
   },
   "publication": {
     "disabled": "Questa API è disattivata.",
     "not_found": "Non esiste alcun workflow pubblicato con questo nome.",
     "dependencies_changed": "Le librerie Python approvate sono cambiate dalla pubblicazione; pubblica di nuovo.",
-    "dependencies_unavailable": "Le librerie Python di questa API non sono pronte."
+    "dependencies_unavailable": "Le librerie Python di questa API non sono pronte.",
+    "slug_taken": "Un altro workflow pubblicato usa già il nome {{slug}}. Scegli un altro nome."
   },
   "limit": {
     "concurrent": "Troppe esecuzioni contemporanee (limite {{limit}}); riprova quando una è terminata.",
@@ -904,5 +908,11 @@
     "run_ended": "L’esecuzione è terminata prima che l’istruzione fosse considerata.",
     "answer_interrupted": "La risposta è stata interrotta. Fai di nuovo la domanda.",
     "answer_failed": "Non è stato possibile scrivere una risposta. Riprova più tardi."
+  },
+  "route": {
+    "not_found": "Questo indirizzo non esiste. Controlla il link o torna alla pagina iniziale."
+  },
+  "method": {
+    "not_allowed": "Questa azione non è possibile a questo indirizzo. Ricarica la pagina e riprova."
   }
 }

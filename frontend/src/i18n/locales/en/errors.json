@@ -570,13 +570,17 @@
     "unknown_file_part": "There is no file field called {{field}}.",
     "host_not_allowed": "Nodestro does not answer under the host name {{host}}. Open Nodestro via localhost or add the name to NODESTRO_ALLOWED_HOSTS.",
     "origin_not_allowed": "Changes from the web page {{origin}} are not accepted.",
-    "forwarded_not_allowed": "Requests forwarded by a proxy are not accepted: Nodestro only answers this computer."
+    "forwarded_not_allowed": "Requests forwarded by a proxy are not accepted: Nodestro only answers this computer.",
+    "invalid_plain": "The request does not fit the expected input.",
+    "too_large_limit": "The request is too large: at most {{limit_mb}} MB are accepted.",
+    "malformed": "The request cannot be read. Reload the page and try again."
   },
   "publication": {
     "disabled": "This API is switched off.",
     "not_found": "There is no published workflow with this name.",
     "dependencies_changed": "The approved Python libraries changed since publishing; publish again.",
-    "dependencies_unavailable": "The Python libraries of this API are not ready."
+    "dependencies_unavailable": "The Python libraries of this API are not ready.",
+    "slug_taken": "Another published workflow already uses the name {{slug}}. Choose another name."
   },
   "limit": {
     "concurrent": "Too many runs at the same time (limit {{limit}}); try again when one has finished.",
@@ -904,5 +908,11 @@
     "run_ended": "The run ended before the instruction was considered.",
     "answer_interrupted": "The answer was interrupted. Ask the question again.",
     "answer_failed": "No answer could be written. Try again later."
+  },
+  "route": {
+    "not_found": "This address does not exist. Check the link or go back to the start page."
+  },
+  "method": {
+    "not_allowed": "This action is not possible at this address. Reload the page and try again."
   }
 }

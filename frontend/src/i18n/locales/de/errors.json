@@ -570,13 +570,17 @@
     "unknown_file_part": "Es gibt kein Datei-Feld namens {{field}}.",
     "host_not_allowed": "Nodestro antwortet nicht unter dem Hostnamen {{host}}. Öffne Nodestro über localhost oder nenne den Namen in NODESTRO_ALLOWED_HOSTS.",
     "origin_not_allowed": "Änderungen von der Webseite {{origin}} werden nicht angenommen.",
-    "forwarded_not_allowed": "Von einem Proxy weitergeleitete Anfragen werden nicht angenommen: Nodestro antwortet nur diesem Rechner."
+    "forwarded_not_allowed": "Von einem Proxy weitergeleitete Anfragen werden nicht angenommen: Nodestro antwortet nur diesem Rechner.",
+    "invalid_plain": "Die Anfrage passt nicht zur erwarteten Eingabe.",
+    "too_large_limit": "Die Anfrage ist zu groß: Angenommen werden höchstens {{limit_mb}} MB.",
+    "malformed": "Die Anfrage kann nicht gelesen werden. Lade die Seite neu und versuche es noch einmal."
   },
   "publication": {
     "disabled": "Diese API ist ausgeschaltet.",
     "not_found": "Es gibt keinen veröffentlichten Workflow mit diesem Namen.",
     "dependencies_changed": "Die freigegebenen Python-Bibliotheken haben sich seit dem Veröffentlichen geändert; veröffentliche erneut.",
-    "dependencies_unavailable": "Die Python-Bibliotheken dieser API sind nicht bereit."
+    "dependencies_unavailable": "Die Python-Bibliotheken dieser API sind nicht bereit.",
+    "slug_taken": "Ein anderer veröffentlichter Workflow verwendet bereits den Namen {{slug}}. Wähle einen anderen Namen."
   },
   "limit": {
     "concurrent": "Zu viele gleichzeitige Läufe (Limit {{limit}}); versuche es erneut, wenn einer beendet ist.",
@@ -904,5 +908,11 @@
     "run_ended": "Der Lauf endete, bevor die Anweisung berücksichtigt wurde.",
     "answer_interrupted": "Die Antwort wurde unterbrochen. Stell die Frage erneut.",
     "answer_failed": "Es konnte keine Antwort geschrieben werden. Versuch es später erneut."
+  },
+  "route": {
+    "not_found": "Diese Adresse gibt es nicht. Prüfe den Link oder geh zurück zur Startseite."
+  },
+  "method": {
+    "not_allowed": "Diese Aktion ist unter dieser Adresse nicht möglich. Lade die Seite neu und versuche es noch einmal."
   }
 }

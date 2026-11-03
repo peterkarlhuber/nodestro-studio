@@ -570,13 +570,17 @@
     "unknown_file_part": "Aucun champ de fichier ne s’appelle {{field}}.",
     "host_not_allowed": "Nodestro ne répond pas sous le nom d’hôte {{host}}. Ouvrez Nodestro via localhost ou ajoutez ce nom à NODESTRO_ALLOWED_HOSTS.",
     "origin_not_allowed": "Les modifications venant de la page web {{origin}} ne sont pas acceptées.",
-    "forwarded_not_allowed": "Les requêtes transmises par un proxy ne sont pas acceptées : Nodestro ne répond qu’à cet ordinateur."
+    "forwarded_not_allowed": "Les requêtes transmises par un proxy ne sont pas acceptées : Nodestro ne répond qu’à cet ordinateur.",
+    "invalid_plain": "La requête ne correspond pas à l’entrée attendue.",
+    "too_large_limit": "La requête est trop volumineuse : {{limit_mb}} Mo au maximum sont acceptés.",
+    "malformed": "La requête ne peut pas être lue. Rechargez la page et réessayez."
   },
   "publication": {
     "disabled": "Cette API est désactivée.",
     "not_found": "Aucun workflow publié ne porte ce nom.",
     "dependencies_changed": "Les bibliothèques Python approuvées ont changé depuis la publication ; publiez à nouveau.",
-    "dependencies_unavailable": "Les bibliothèques Python de cette API ne sont pas prêtes."
+    "dependencies_unavailable": "Les bibliothèques Python de cette API ne sont pas prêtes.",
+    "slug_taken": "Un autre workflow publié utilise déjà le nom {{slug}}. Choisissez un autre nom."
   },
   "limit": {
     "concurrent": "Trop d’exécutions simultanées (limite {{limit}}) ; réessayez quand l’une d’elles est terminée.",
@@ -904,5 +908,11 @@
     "run_ended": "L’exécution s’est terminée avant que la consigne soit prise en compte.",
     "answer_interrupted": "La réponse a été interrompue. Posez la question à nouveau.",
     "answer_failed": "Aucune réponse n’a pu être rédigée. Réessayez plus tard."
+  },
+  "route": {
+    "not_found": "Cette adresse n’existe pas. Vérifiez le lien ou revenez à la page d’accueil."
+  },
+  "method": {
+    "not_allowed": "Cette action n’est pas possible à cette adresse. Rechargez la page et réessayez."
   }
 }

@@ -570,13 +570,17 @@
     "unknown_file_part": "No existe ningún campo de archivo llamado {{field}}.",
     "host_not_allowed": "Nodestro no responde bajo el nombre de host {{host}}. Abre Nodestro a través de localhost o añade el nombre a NODESTRO_ALLOWED_HOSTS.",
     "origin_not_allowed": "No se aceptan cambios desde la página web {{origin}}.",
-    "forwarded_not_allowed": "No se aceptan solicitudes reenviadas por un proxy: Nodestro solo responde a este equipo."
+    "forwarded_not_allowed": "No se aceptan solicitudes reenviadas por un proxy: Nodestro solo responde a este equipo.",
+    "invalid_plain": "La solicitud no se ajusta a la entrada esperada.",
+    "too_large_limit": "La solicitud es demasiado grande: se aceptan como máximo {{limit_mb}} MB.",
+    "malformed": "No se puede leer la solicitud. Recarga la página e inténtalo de nuevo."
   },
   "publication": {
     "disabled": "Esta API está desactivada.",
     "not_found": "No hay ningún flujo de trabajo publicado con este nombre.",
     "dependencies_changed": "Las bibliotecas de Python aprobadas cambiaron desde la publicación; vuelve a publicar.",
-    "dependencies_unavailable": "Las bibliotecas de Python de esta API no están listas."
+    "dependencies_unavailable": "Las bibliotecas de Python de esta API no están listas.",
+    "slug_taken": "Otro flujo de trabajo publicado ya usa el nombre {{slug}}. Elige otro nombre."
   },
   "limit": {
     "concurrent": "Demasiadas ejecuciones simultáneas (límite {{limit}}); inténtalo de nuevo cuando termine alguna.",
@@ -904,5 +908,11 @@
     "run_ended": "La ejecución terminó antes de que se tuviera en cuenta la instrucción.",
     "answer_interrupted": "La respuesta se interrumpió. Haz la pregunta de nuevo.",
     "answer_failed": "No se pudo escribir ninguna respuesta. Inténtalo más tarde."
+  },
+  "route": {
+    "not_found": "Esta dirección no existe. Comprueba el enlace o vuelve a la página de inicio."
+  },
+  "method": {
+    "not_allowed": "Esta acción no es posible en esta dirección. Recarga la página e inténtalo de nuevo."
   }
 }
