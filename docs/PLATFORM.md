@@ -138,9 +138,8 @@ checks that contract and types are up to date.
 
 ## CI and access
 
-The repositories and Orkexa are public on GitHub. The CI workflows still set up read access with the repository
-secret `NODESTRO_READ` (a token with "Contents: Read" on `orkexa` and the `nodestro-*` repositories) and stop with a
-clear message if it is missing. The secret never appears in code, logs or artifacts. `nodestro-legacy` keeps its CI with
+The repositories and Orkexa are public on GitHub. The CI workflows clone and install them anonymously over https and
+use no repository secret, so Dependabot pull requests (which cannot read secrets) run the full CI. `nodestro-legacy` keeps its CI with
 `ORKEXA_TOKEN` unchanged.
 
 | Repository | CI |

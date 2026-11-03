@@ -33,19 +33,8 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           cache: pip
-      # The Nodestro components and orkexa are private: pip and git clone them with a token that can read them.
-      # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
-      - name: Install with read access to the private repositories
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+      - name: Install
         run: |
-          if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
-            exit 1
-          fi
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           pip install -e ".[dev]"
       - run: ruff check .
       - run: ruff format --check .
@@ -106,19 +95,8 @@ jobs:
           npm ci
           npm run build
       - run: pip install build==1.6.1 && python -m build
-      # The Nodestro components and orkexa are private: pip clones them with a token that can read them.
-      # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
-      - name: Install the wheel into a fresh environment (private dependencies read with NODESTRO_READ)
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+      - name: Install the wheel into a fresh environment
         run: |
-          if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
-            exit 1
-          fi
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           python -m venv "$RUNNER_TEMP/wheel"
           "$RUNNER_TEMP/wheel/bin/pip" install dist/*.whl
       - name: Start the installed wheel
@@ -144,19 +122,8 @@ jobs:
         with:
           python-version: "3.13"
           cache: pip
-      # The Nodestro components and orkexa are private: pip and git clone them with a token that can read them.
-      # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
-      - name: Install with read access to the private repositories
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+      - name: Install
         run: |
-          if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
-            exit 1
-          fi
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           pip install -e ".[dev]"
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:

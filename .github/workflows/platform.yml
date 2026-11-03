@@ -23,18 +23,8 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
-      # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
-      - name: Check the version pins with read access to the private repositories
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+      - name: Check the version pins
         run: |
-          if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
-            exit 1
-          fi
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           python scripts/check_versions.py
 
   components:
@@ -54,28 +44,13 @@ jobs:
           cache: pip
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr poppler-utils
       # The studio pins every component: this one installation is the platform under test.
-      # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
-      - name: Install with read access to the private repositories
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+      - name: Install
         run: |
-          if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
-            exit 1
-          fi
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           # pglast: the runtime's static tenant-isolation check (tests/test_tenant_filters.py, security review SR-01).
           pip install -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9"
       - run: python scripts/check_imports.py
       - name: Check out every component at its pinned commit
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
         run: |
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           python scripts/checkout_components.py "$RUNNER_TEMP/components"
       # Each suite runs from its checkout but imports the installed (pinned) packages.
       - name: nodestro-runtime
@@ -124,27 +99,12 @@ jobs:
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: 22
-      # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
-      - name: Install with read access to the private repositories
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+      - name: Install
         run: |
-          if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
-            exit 1
-          fi
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           pip install -e ".[dev]"
       # The SDK's test extra pins nodestro-api too: pip refuses if it differs from the studio's.
-      - name: Check out and install the pinned SDK with read access to the private repositories
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+      - name: Check out and install the pinned SDK
         run: |
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           python scripts/checkout_components.py "$RUNNER_TEMP/components" nodestro-sdk
           pip install "$RUNNER_TEMP/components/nodestro-sdk/python[test]"
       - name: Python SDK against the API
@@ -167,18 +127,8 @@ jobs:
         with:
           python-version: "3.13"
           cache: pip
-      # The token exists only in this step's environment: no global Git configuration, nothing for later steps.
-      - name: Install with read access to the private repositories
-        env:
-          NODESTRO_READ: ${{ secrets.NODESTRO_READ }}
+      - name: Install
         run: |
-          if [ -z "$NODESTRO_READ" ]; then
-            echo "::error::Secret NODESTRO_READ is missing: a token with read access to orkexa and the nodestro repositories."
-            exit 1
-          fi
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="url.https://x-access-token:${NODESTRO_READ}@github.com/peterkarlhuber/.insteadOf"
-          export GIT_CONFIG_VALUE_0="https://github.com/peterkarlhuber/"
           pip install -e ".[dev]"
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
