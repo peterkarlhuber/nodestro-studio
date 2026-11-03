@@ -216,9 +216,18 @@ try {
     await context.close();
   }
 
+  // --- Without a stored choice the theme follows the operating system ---------------------
+  for (const scheme of ["light", "dark"]) {
+    const { context, page } = await open({ colorScheme: scheme });
+    await page.goto(base + "/welcome");
+    await page.getByTestId("welcome-theme").waitFor();
+    check((await page.evaluate(() => document.documentElement.dataset.theme)) === scheme, `A first visit follows the system's ${scheme} setting`);
+    await context.close();
+  }
+
   // --- Language and theme stay in step with the Studio -----------------------------------
   {
-    const { context, page, errors } = await open();
+    const { context, page, errors } = await open({ colorScheme: "dark" });
     await page.goto(base + "/welcome");
     await page.getByTestId("welcome-language").selectOption("fr");
     await page.getByText(texts.fr.welcome.hero.lede).waitFor();
