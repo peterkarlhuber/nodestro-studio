@@ -37,6 +37,8 @@
     "linux": "Linux sandbox",
     "dockerAvailable": "Docker available",
     "dockerMissing": "Docker not found",
+    "dockerNotRunning": "Docker not running",
+    "dockerNotReady": "Docker not ready",
     "dockerUnreachable": "Docker cannot be reached. Tool tests and calls fail until Docker is running.",
     "builtinActive": "Built-in Linux sandbox active",
     "builtinMissing": "Built-in Linux sandbox not available",

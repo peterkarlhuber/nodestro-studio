@@ -37,6 +37,8 @@
     "linux": "Bac à sable Linux",
     "dockerAvailable": "Docker disponible",
     "dockerMissing": "Docker introuvable",
+    "dockerNotRunning": "Docker n’est pas démarré",
+    "dockerNotReady": "Docker n’est pas prêt",
     "dockerUnreachable": "Docker est injoignable. Les tests et appels d’outils échoueront tant que Docker ne tourne pas.",
     "builtinActive": "Bac à sable Linux intégré actif",
     "builtinMissing": "Bac à sable Linux intégré indisponible",

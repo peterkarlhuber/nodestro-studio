@@ -8,7 +8,7 @@ import type { SandboxBackendStatus, SandboxCheck, SandboxSelection, SandboxStatu
 import { DOCKER_REASONS, isolationAvailable, untrustedBackend } from "../api/types";
 import i18n, { loadLanguage } from "../i18n";
 
-import { SandboxPanel, checkOutcome, effectiveSelection } from "./SettingsSandbox";
+import { SandboxPanel, checkOutcome, dockerBadgeKey, effectiveSelection } from "./SettingsSandbox";
 
 afterEach(() => {
   cleanup();
@@ -300,7 +300,15 @@ describe("Settings → Sandbox: the Docker checks", () => {
       const row = screen.getByTestId(`sandbox-check-${bad.name}`);
       expect(row.textContent).toContain("Fehlgeschlagen");
       expect(row.textContent).toContain(bad.detail);
+      if (bad.detail) {
+        // The runtime's English detail is labeled as technical details and marked as English (NSL-11).
+        const detail = screen.getByTestId(`sandbox-check-${bad.name}-detail`);
+        expect(within(detail).getByText("Technische Details")).toBeInTheDocument();
+        expect(detail.querySelector("code")?.getAttribute("lang")).toBe("en");
+      }
       expect(screen.getByTestId(`sandbox-check-${bad.name}-reason`).textContent).toBe(sentence);
+      // The badge next to the mode agrees with the reason: not "not found" when Docker is installed but not running.
+      expect(screen.getByTestId("sandbox-docker-badge").textContent).toBe(i18n.t(dockerBadgeKey(false, { state: "unavailable", reason })));
       for (const good of checks.filter((check) => check.ok)) {
         expect(screen.getByTestId(`sandbox-check-${good.name}`).textContent).toContain("Bestanden");
         expect(screen.queryByTestId(`sandbox-check-${good.name}-reason`)).toBeNull();
@@ -312,6 +320,14 @@ describe("Settings → Sandbox: the Docker checks", () => {
       else expect(lead).toBe(i18n.t("settings.sandbox.blocked.dockerRefused"));
     },
   );
+
+  it("names Docker's state next to the mode without contradicting the checks", () => {
+    expect(dockerBadgeKey(true, undefined)).toBe("settings.sandbox.dockerAvailable");
+    expect(dockerBadgeKey(false, undefined)).toBe("settings.sandbox.dockerMissing");
+    expect(dockerBadgeKey(false, { state: "unavailable", reason: "docker-missing" })).toBe("settings.sandbox.dockerMissing");
+    expect(dockerBadgeKey(false, { state: "unavailable", reason: "docker-unreachable" })).toBe("settings.sandbox.dockerNotRunning");
+    expect(dockerBadgeKey(false, { state: "unavailable", reason: "docker-selftest" })).toBe("settings.sandbox.dockerNotReady");
+  });
 
   it("has a sentence for every Docker reason in every language", async () => {
     for (const language of ["de", "en", "es", "fr", "it", "pt-BR"] as const) {

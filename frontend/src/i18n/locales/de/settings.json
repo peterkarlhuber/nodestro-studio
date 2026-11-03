@@ -37,6 +37,8 @@
     "linux": "Linux-Sandbox",
     "dockerAvailable": "Docker verfügbar",
     "dockerMissing": "Docker nicht gefunden",
+    "dockerNotRunning": "Docker läuft nicht",
+    "dockerNotReady": "Docker nicht bereit",
     "dockerUnreachable": "Docker ist nicht erreichbar. Tool-Tests und -Aufrufe schlagen fehl, bis Docker läuft.",
     "builtinActive": "Eingebaute Linux-Sandbox aktiv",
     "builtinMissing": "Eingebaute Linux-Sandbox nicht verfügbar",
