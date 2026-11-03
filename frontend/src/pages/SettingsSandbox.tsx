@@ -341,6 +341,8 @@ function blockedLead(t: (key: string) => string, selection: SandboxSelection, do
   // Docker mode needs Docker for every tool; automatic mode only for AI-created ones.
   if (selection.mode === "docker" && (dockerReason || selection.reason === "docker-unreachable"))
     return t("settings.sandbox.dockerUnreachable");
+  // The reason sentence after the lead already says what to do (install, or start Docker), so the lead does not repeat it.
+  if (dockerReasonKey(dockerReason)) return t("settings.sandbox.blocked.autoDocker");
   return t("settings.sandbox.blocked.auto");
 }
 

@@ -71,6 +71,7 @@
     "blockedBadge": "Bloqueadas",
     "blocked": {
       "auto": "Ferramentas criadas por IA estão bloqueadas: o modo Automático só as executa no Docker, e o Docker não está rodando. Instale e inicie o Docker; o Nodestro passa a usá-lo automaticamente.",
+      "autoDocker": "Ferramentas criadas por IA estão bloqueadas: o modo Automático só as executa no Docker. Assim que o Docker estiver rodando, o Nodestro passa a usá-lo automaticamente.",
       "subprocess": "Ferramentas criadas por IA estão bloqueadas: o processo Python é só para uso confiável. Para executá-las, escolha Automático e inicie o Docker.",
       "subprocessLinux": "Ferramentas criadas por IA estão bloqueadas: o processo Python é só para uso confiável. Para executá-las, escolha Automático e inicie o Docker, ou escolha Sandbox Linux (sem pacotes Python de terceiros).",
       "subprocessChanged": "Se você escolheu Processo Python em uma versão anterior: esse modo não executa mais ferramentas criadas por IA em um sandbox integrado, e o Nodestro manteve sua escolha em vez de mudar para Automático por você.",

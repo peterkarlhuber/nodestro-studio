@@ -71,6 +71,7 @@
     "blockedBadge": "Gesperrt",
     "blocked": {
       "auto": "KI-erstellte Tools sind gesperrt: Automatisch führt sie nur in Docker aus, und Docker läuft nicht. Installiere und starte Docker; Nodestro verwendet es dann automatisch.",
+      "autoDocker": "KI-erstellte Tools sind gesperrt: Automatisch führt sie nur in Docker aus. Sobald Docker läuft, verwendet Nodestro es automatisch.",
       "subprocess": "KI-erstellte Tools sind gesperrt: Der Python-Prozess ist nur für vertrauenswürdige Nutzung. Um sie auszuführen, wähle Automatisch und starte Docker.",
       "subprocessLinux": "KI-erstellte Tools sind gesperrt: Der Python-Prozess ist nur für vertrauenswürdige Nutzung. Um sie auszuführen, wähle Automatisch und starte Docker, oder wähle Linux-Sandbox (ohne Python-Pakete von Drittanbietern).",
       "subprocessChanged": "Falls du Python-Prozess in einer früheren Version gewählt hast: Dieser Modus führt KI-erstellte Tools nicht mehr in einer eingebauten Sandbox aus, und Nodestro hat deine Wahl behalten, statt für dich auf Automatisch umzustellen.",

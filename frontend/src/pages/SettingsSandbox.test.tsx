@@ -120,6 +120,7 @@ describe("Settings → Sandbox", () => {
     expect(screen.getByTestId("sandbox-runtime").textContent).toContain("macOS (arm64)");
     expect(screen.getByTestId("sandbox-untrusted").textContent).toBe("Gesperrt");
     expect(screen.getByTestId("sandbox-user-authored").textContent).toBe("Python-Prozess");
+    // Without a Docker reason the lead itself says what to do.
     expect(screen.getByTestId("sandbox-blocked").textContent).toContain("Installiere und starte Docker");
     const mac = screen.getByTestId("sandbox-backend-macos-seatbelt");
     expect(mac.textContent).toContain("Native macOS-Sandbox");
@@ -307,7 +308,7 @@ describe("Settings → Sandbox: the Docker checks", () => {
       // Blocked secure execution names the reason.
       expect(screen.getByTestId("sandbox-blocked-reason").textContent).toBe(sentence);
       const lead = screen.getByTestId("sandbox-blocked").textContent;
-      if (reason === "docker-missing" || reason === "docker-unreachable") expect(lead).toContain("Installiere und starte Docker");
+      if (reason === "docker-missing" || reason === "docker-unreachable") expect(lead).toBe(i18n.t("settings.sandbox.blocked.autoDocker"));
       else expect(lead).toBe(i18n.t("settings.sandbox.blocked.dockerRefused"));
     },
   );
