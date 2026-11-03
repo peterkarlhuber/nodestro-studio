@@ -11,6 +11,13 @@
   not reproduced, cancelled) with a retry, and after the build points to rebuilding the semantic index. In the strict
   offline mode the catalog offers only the build for such a model. Texts, help and the manual section in all six
   languages.
+- *Settings → Local models → This computer* (ST-046): the detected hardware, the model server's state, GPU use and
+  context window (set by Nodestro, reported by the server, or unknown), the runtime's hints (small context window with
+  the `OLLAMA_CONTEXT_LENGTH` fix for an external Ollama, CPU only, low memory, slow or too large models), whether each
+  model runs here, measured speeds with "Measure speed" (never estimates), and the switch "CPU saving mode for thinking
+  models" (`local_reasoning`). Steps and agent tests that answered without the thinking phase carry a "Reasoning
+  reduced" badge. The workflow check explains `check.local_context_small`, `check.local_max_tokens` and
+  `check.local_reasoning_saving`; the model picker names how a local model runs here. Six languages, help and manual.
 
 ### Local models, embeddings and semantic knowledge search (2026-11-03)
 

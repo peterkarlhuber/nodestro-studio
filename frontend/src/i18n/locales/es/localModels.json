@@ -24,7 +24,6 @@
   "start": "Iniciar",
   "stop": "Detener",
   "autostart": "Iniciar con Nodestro",
-  "hardware": "Este ordenador: {{cpus}} núcleos de CPU, {{ram}} de memoria, gráficos: {{gpu}}",
   "gpu": {
     "nvidia": "GPU NVIDIA",
     "apple": "Apple Silicon",
@@ -70,7 +69,8 @@
     "download": "Tamaño de descarga",
     "memory": "Memoria necesaria",
     "state": "Estado",
-    "own": "Modelo propio (importado o descargado aparte)"
+    "own": "Modelo propio (importado o descargado aparte)",
+    "fit": "En este ordenador"
   },
   "kind": {
     "chat": "Modelo de lenguaje",
@@ -88,7 +88,8 @@
       "import_package": "Importar {{target}}",
       "import_gguf": "Importar {{target}}",
       "move_models": "Mover la carpeta de modelos",
-      "build": "Crear {{target}}"
+      "build": "Crear {{target}}",
+      "benchmark": "Medir la velocidad de {{target}}"
     },
     "state": {
       "running": "En curso",
@@ -236,5 +237,79 @@
       "reference_mismatch": "El modelo creado no reproduce los vectores de referencia y se eliminó.",
       "reference_mismatchHint": "Los archivos eran correctos, pero el servidor de modelos calcula otros vectores. Comprueba que tenga la versión fijada y vuelve a intentarlo."
     }
+  },
+  "machine": {
+    "title": "Este ordenador",
+    "system": "Sistema",
+    "cpus": "Núcleos de CPU",
+    "memory": "Memoria",
+    "gpu": "Gráficos",
+    "gpuMemory": "{{gpu}} con {{memory}}",
+    "server": "Servidor de modelos",
+    "runtime": {
+      "none": "ninguno configurado",
+      "running": "en marcha (Ollama {{version}})",
+      "missing": "no instalado (se necesita Ollama {{version}})",
+      "stopped": "detenido"
+    },
+    "accelerated": {
+      "true": "los modelos se ejecutan en la GPU",
+      "false": "los modelos se ejecutan en la CPU",
+      "unknown": "uso de GPU desconocido"
+    },
+    "contextTitle": "Ventana de contexto",
+    "context": {
+      "configured": "{{tokens}} tokens (fijada por Nodestro)",
+      "server": "{{tokens}} tokens (indicada por el servidor)",
+      "unknown": "{{tokens}} tokens"
+    },
+    "contextUnknown": "aún desconocida (se muestra cuando un modelo se haya ejecutado)",
+    "unknown": "desconocido"
+  },
+  "fit": {
+    "gpu": "Se ejecuta en la GPU",
+    "cpu": "Funciona aquí",
+    "cpuOnly": "Se ejecuta en la CPU (más lento)",
+    "too_slow": "Demasiado lento sin GPU",
+    "too_large": "Demasiado grande para este ordenador",
+    "slowHint": "lento en este ordenador (medido)"
+  },
+  "advice": {
+    "context_small": "El servidor de modelos da a los modelos solo {{tokens}} tokens de contexto; los agentes necesitan unos {{recommended}} tokens para prompt, razonamiento y respuesta; si no, las respuestas se cortan.",
+    "context_fix": {
+      "external": "Es tu propio Ollama: define OLLAMA_CONTEXT_LENGTH={{raw}} en el ordenador donde se ejecuta y reinícialo.",
+      "managed": "Reinicia el servidor de modelos para que se aplique el ajuste de Nodestro.",
+      "other": "Pide al operador del servidor de modelos que amplíe la ventana de contexto."
+    },
+    "context_unknown": "La ventana de contexto de este servidor aún no se conoce. Un Ollama con los ajustes predeterminados da solo 4.096 tokens, demasiado pocos para agentes; inícialo con OLLAMA_CONTEXT_LENGTH=32768.",
+    "cpu_only": "No se encontró tarjeta gráfica: los modelos locales se ejecutan solo en la CPU. Cuenta con respuestas lentas, sobre todo con razonamiento. Funcionan mejor los modelos pequeños y el esfuerzo Bajo para pasos sencillos; las recomendaciones ya lo tienen en cuenta.",
+    "reasoning_saving": "El modo de ahorro de CPU está activado: los agentes con esfuerzo Medio en modelos locales que razonan responden sin la larga fase de razonamiento. El esfuerzo Alto nunca se reduce. Puedes desactivarlo abajo.",
+    "model_slow": "{{model}} generó {{speed}} tokens por segundo en este ordenador (medido). Un modelo más pequeño o el esfuerzo Bajo hacen sus pasos más rápidos.",
+    "model_too_large": "{{model}} necesita unos {{size}} de memoria y no cabe en este ordenador. Elige un modelo más pequeño.",
+    "memory_low": "Este ordenador tiene {{memory}} de memoria; los modelos locales necesitan unos {{recommended}} para funcionar bien. Cierra otros programas o elige modelos más pequeños.",
+    "other": "Nota sobre modelos locales: {{code}}."
+  },
+  "speed": {
+    "value": "{{speed}} tokens/s",
+    "processor": {
+      "gpu": "en la GPU",
+      "cpu": "en la CPU",
+      "mixed": "en parte en la GPU"
+    },
+    "measuredAt": "medido el {{date}}",
+    "context": "contexto {{tokens}}",
+    "notMeasured": "Velocidad no medida",
+    "measure": "Medir velocidad",
+    "again": "Medir de nuevo",
+    "started": "Midiendo la velocidad de {{model}}…"
+  },
+  "reasoning": {
+    "label": "Modo de ahorro de CPU para modelos que razonan",
+    "text": "En un ordenador sin tarjeta gráfica, los agentes con esfuerzo Medio en modelos locales que razonan responden sin la larga fase de razonamiento. El esfuerzo Alto y una opción de razonamiento explícita nunca se reducen, y las ejecuciones marcan cada paso reducido.",
+    "off": "Desactivado: los agentes razonan siempre como está configurado.",
+    "active": "Activo en este ordenador.",
+    "inactive": "No activo aquí: los modelos se ejecutan en una tarjeta gráfica.",
+    "badge": "Razonamiento reducido: modo de ahorro de CPU",
+    "badgeTip": "Este agente respondió sin la larga fase de razonamiento porque este ordenador no tiene tarjeta gráfica. Para un razonamiento completo, pon el esfuerzo del agente en Alto o desactiva el modo de ahorro de CPU en Ajustes → Modelos locales."
   }
 }

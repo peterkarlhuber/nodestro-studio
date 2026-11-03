@@ -140,7 +140,9 @@
     "strictOffline": "Refuse les modèles cloud, les serveurs de modèles distants, les outils serveur, les services MCP distants et les téléchargements avant le démarrage d’une exécution.",
     "preferEuropean": "Propose des modèles locaux européens (Mistral AI) lorsqu’ils sont aussi adaptés. Jamais un modèle moins performant, jamais un service cloud ; votre propre choix de modèle a la priorité.",
     "knowledgeSearch": "Le texte intégral trouve des mots, la recherche sémantique trouve le sens (y compris d’une langue à l’autre). Les recherches sémantique et combinée nécessitent l’index sémantique créé avec un modèle d’embeddings.",
-    "localBuild": "Certains modèles (comme mdenseon:307m) sont construits à partir de leurs fichiers d’origine au lieu d’être téléchargés depuis la bibliothèque Ollama. Indiquez les deux fichiers : Nodestro vérifie leur SHA-256, construit le modèle et ne le garde que si ses vecteurs de référence correspondent. Fonctionne sans internet."
+    "localBuild": "Certains modèles (comme mdenseon:307m) sont construits à partir de leurs fichiers d’origine au lieu d’être téléchargés depuis la bibliothèque Ollama. Indiquez les deux fichiers : Nodestro vérifie leur SHA-256, construit le modèle et ne le garde que si ses vecteurs de référence correspondent. Fonctionne sans internet.",
+    "localHardware": "Ce que Nodestro a détecté sur l’ordinateur du serveur de modèles et ce que le serveur indique. Les vitesses n’apparaissent qu’une fois mesurées ; Nodestro ne fait aucune estimation.",
+    "localReasoning": "Sans carte graphique, la phase de réflexion des modèles locaux peut prendre des minutes par étape. Le mode économie la saute pour l’effort Moyen ; l’effort Élevé reste inchangé."
   },
   "budget": {
     "decision": "L’exécution est en pause parce que son budget ne suffit pas pour la prochaine requête au modèle. Rien n’a été envoyé pour elle. Relevez le plafond de cette exécution précise et poursuivez, ou terminez l’exécution.",

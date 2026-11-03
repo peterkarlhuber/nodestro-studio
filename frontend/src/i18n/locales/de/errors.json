@@ -323,7 +323,10 @@
     "index_building": "Dieser Agent nutzt die semantische Suche, aber der semantische Index wird noch aufgebaut.",
     "local_model_missing": "{{model}} ist auf dem lokalen Modellserver nicht installiert. Lade es in den Einstellungen herunter oder importiere es.",
     "local_model_not_chat": "{{model}} ist ein Embedding-Modell und kann nicht als Agent antworten.",
-    "local_model_no_tools": "{{model}} kann keine Tools aufrufen, dieser Agent nutzt aber Tools. Wähle ein Modell, das Tool-Aufrufe unterstützt."
+    "local_model_no_tools": "{{model}} kann keine Tools aufrufen, dieser Agent nutzt aber Tools. Wähle ein Modell, das Tool-Aufrufe unterstützt.",
+    "local_context_small": "Der lokale Modellserver gibt Modellen nur {{tokens}} Tokens Kontext; empfohlen sind mindestens {{recommended}} Tokens, sonst werden Antworten abgeschnitten.",
+    "local_max_tokens": "Die Antwortgrenze dieses Agenten ({{max_tokens}} Tokens) passt nicht in das Kontextfenster des lokalen Modellservers ({{tokens}} Tokens).",
+    "local_reasoning_saving": "Auf diesem Computer ohne Grafikkarte antworten diese Agenten ohne Denkphase (Denkaufwand Mittel): {{nodes}}. Wähle für einen Agenten den Denkaufwand Hoch oder schalte den CPU-Sparmodus in den Einstellungen aus."
   },
   "backup": {
     "not_zip": "Die Datei ist kein Nodestro-Backup (keine ZIP-Datei).",
@@ -971,7 +974,9 @@
     "reference_mismatch": "Das gebaute Modell reproduziert seine Referenzvektoren nicht und wurde entfernt.",
     "not_buildable": "Dieses Modell wird nicht aus Dateien gebaut.",
     "download_incomplete": "Der Download war unvollständig. Versuche es erneut.",
-    "invalid_source": "Die Quelle dieses Modells ist nicht erlaubt."
+    "invalid_source": "Die Quelle dieses Modells ist nicht erlaubt.",
+    "not_chat_model": "Das ist kein Sprachmodell; messen lassen sich nur Sprachmodelle.",
+    "benchmark_failed": "Die Geschwindigkeit konnte nicht gemessen werden."
   },
   "knowledge": {
     "failed": "Der semantische Index konnte nicht aktualisiert werden.",

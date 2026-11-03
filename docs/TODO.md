@@ -97,12 +97,17 @@ None known.
 
 ### ST-046 · Show the context window and expected speed of local models
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-runtime RT-050, RT-051
-- **What:** An external Ollama may run with 4096 tokens of context (runs end with "length" long before `max_tokens`),
-  and multi-agent workflows on a computer without a GPU take tens of minutes. *Settings → Local models* shows
-  neither.
-- **Next step:** Show the server's context window with a warning below 8192 and a short "no GPU found: expect slow
-  runs" hint, once the runtime reports both.
+- **Priority:** P3 Low · **Status:** Done in the interface, waiting for the api/runtime pins · **Refs:**
+  nodestro-runtime RT-050, RT-051
+- **Done:** *Settings → Local models → This computer* (system, CPU cores, memory, GPU and its memory, model server
+  state and GPU use, context window with its source), the runtime's advice (`local.context_small` with the
+  `OLLAMA_CONTEXT_LENGTH` fix for an external Ollama, `context_unknown`, `cpu_only`, `reasoning_saving`, `model_slow`,
+  `model_too_large`, `memory_low`), an "On this computer" column (mirrors the runtime's `fits`), measured speeds with
+  "Measure speed" (no estimates), the CPU saving mode switch (`local_reasoning`), the "Reasoning reduced" badge on run
+  steps and agent tests (`reasoning_reduced`), the three `check.local_*` texts, the local fit and measured speed in
+  the model picker hint. Texts, help and manual in all six languages.
+- **Open:** Browser e2e of these fields once the pins land (unit tests use mocked API data). The fit column is
+  computed in the browser; a per-model `fits` from the API would keep it in one place.
 
 ### ST-035 · Similarity hint for pasted code in the tool editor (R-4)
 

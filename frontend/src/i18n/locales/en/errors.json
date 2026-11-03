@@ -323,7 +323,10 @@
     "index_building": "This agent uses semantic search, but the semantic index is still being built.",
     "local_model_missing": "{{model}} is not installed on the local model server. Download or import it in Settings.",
     "local_model_not_chat": "{{model}} is an embedding model and cannot answer as an agent.",
-    "local_model_no_tools": "{{model}} cannot call tools, but this agent uses tools. Choose a model that supports tool calls."
+    "local_model_no_tools": "{{model}} cannot call tools, but this agent uses tools. Choose a model that supports tool calls.",
+    "local_context_small": "The local model server gives models only {{tokens}} tokens of context; at least {{recommended}} tokens are recommended, otherwise answers are cut off.",
+    "local_max_tokens": "The answer limit of this agent ({{max_tokens}} tokens) does not fit the context window of the local model server ({{tokens}} tokens).",
+    "local_reasoning_saving": "On this computer without a graphics card, these agents answer without the thinking phase (effort Medium): {{nodes}}. Choose effort High for an agent, or switch off the CPU saving mode in Settings."
   },
   "backup": {
     "not_zip": "The file is not a Nodestro backup (no ZIP file).",
@@ -971,7 +974,9 @@
     "reference_mismatch": "The built model does not reproduce its reference vectors and was removed.",
     "not_buildable": "This model is not built from files.",
     "download_incomplete": "The download was incomplete. Try again.",
-    "invalid_source": "The source of this model is not allowed."
+    "invalid_source": "The source of this model is not allowed.",
+    "not_chat_model": "This is not a language model; only language models can be measured.",
+    "benchmark_failed": "The speed could not be measured."
   },
   "knowledge": {
     "failed": "The semantic index could not be updated.",

@@ -20,6 +20,17 @@ Nodestro can run agents, assistants and the knowledge search on **local models**
 
 Costs: local models have **no external API billing**. Nodestro does not record local operating costs (hardware, energy), so runs show “local, no API billing” instead of a total of 0, and mixed runs add the number of local requests to the cost.
 
+## This computer, context window and speed {#lokale-hardware}
+<!-- keywords: hardware, gpu, cpu only, ram, context window, ollama_context_length, speed, tokens per second, measure, cpu saving mode, reasoning reduced -->
+
+*Settings → Local models → This computer* shows what Nodestro detected: system, CPU cores, memory, the graphics card and its memory, whether the model server runs (and on the GPU or the CPU), and its **context window**: set by Nodestro for the server it starts, reported by a running server, or not known yet for your own Ollama. The column **On this computer** in the model list says whether a model runs on the GPU, on the CPU (slower), is too slow without a GPU or too large for this memory.
+
+Hints appear above the list when they apply: a context window that is too small (for your own Ollama: set `OLLAMA_CONTEXT_LENGTH=32768` on its computer and restart it), no graphics card (expect slow answers; small models and effort *Low* for simple steps work best), too little memory, a model that does not fit, or a model that was measured as slow. The workflow check warns too, when the context window is below 16,384 tokens or an agent's answer limit does not fit it.
+
+**Speed:** Nodestro does not estimate speeds. **Measure speed** on an installed language model runs one short generation on this computer and shows the measured tokens per second, when it was measured and whether the model ran on the GPU or the CPU.
+
+**CPU saving mode for thinking models** (on by default): on a computer without a graphics card, agents with effort *Medium* on local thinking models answer without the long thinking phase. Effort *High* and a reasoning option set explicitly are never reduced. Every step answered this way carries the badge “Reasoning reduced: CPU saving mode” in the run and in the agent test. Switch the mode off to let agents always think as configured.
+
 ## Offline import and model folder {#offline-import}
 <!-- keywords: offline, air gap, usb, gguf, offline package, sha-256, external ssd, model folder, copy -->
 

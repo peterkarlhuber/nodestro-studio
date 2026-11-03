@@ -625,6 +625,8 @@ export interface NodeRun {
   decision_usage?: Usage | null;
   /** Taken over from this earlier run when a failed run was continued. */
   reused_from?: string | null;
+  /** Why the agent answered with less thinking than configured ("cpu_saving": the CPU saving mode). */
+  reasoning_reduced?: string | null;
   /** The files the agent received, and how. */
   files?: ProvidedFile[];
   /** Content the agent proposed for knowledge (stored only after confirmation). */
@@ -1354,6 +1356,8 @@ export interface AgentTestResult {
   memory_isolated: boolean;
   started_at: string;
   finished_at: string | null;
+  /** As NodeRun.reasoning_reduced. */
+  reasoning_reduced?: string | null;
 }
 
 export interface PromptSegment {

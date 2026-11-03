@@ -323,7 +323,10 @@
     "index_building": "Questo agente usa la ricerca semantica, ma l’indice semantico è ancora in costruzione.",
     "local_model_missing": "{{model}} non è installato sul server dei modelli locale. Scaricalo o importalo nelle impostazioni.",
     "local_model_not_chat": "{{model}} è un modello di embedding e non può rispondere come agente.",
-    "local_model_no_tools": "{{model}} non può chiamare strumenti, ma questo agente li usa. Scegli un modello che supporti le chiamate agli strumenti."
+    "local_model_no_tools": "{{model}} non può chiamare strumenti, ma questo agente li usa. Scegli un modello che supporti le chiamate agli strumenti.",
+    "local_context_small": "Il server dei modelli locale dà ai modelli solo {{tokens}} token di contesto; sono consigliati almeno {{recommended}} token, altrimenti le risposte vengono troncate.",
+    "local_max_tokens": "Il limite di risposta di questo agente ({{max_tokens}} token) non entra nella finestra di contesto del server dei modelli locale ({{tokens}} token).",
+    "local_reasoning_saving": "Su questo computer senza scheda grafica, questi agenti rispondono senza fase di ragionamento (impegno Medio): {{nodes}}. Scegli l’impegno Alto per un agente o disattiva la modalità risparmio CPU nelle impostazioni."
   },
   "backup": {
     "not_zip": "Il file non è un backup di Nodestro (non è un file ZIP).",
@@ -971,7 +974,9 @@
     "reference_mismatch": "Il modello creato non riproduce i suoi vettori di riferimento ed è stato rimosso.",
     "not_buildable": "Questo modello non viene creato da file.",
     "download_incomplete": "Il download è incompleto. Riprova.",
-    "invalid_source": "La fonte di questo modello non è consentita."
+    "invalid_source": "La fonte di questo modello non è consentita.",
+    "not_chat_model": "Non è un modello linguistico; si possono misurare solo modelli linguistici.",
+    "benchmark_failed": "Non è stato possibile misurare la velocità."
   },
   "knowledge": {
     "failed": "Impossibile aggiornare l’indice semantico.",

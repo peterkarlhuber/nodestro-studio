@@ -20,6 +20,17 @@ Nodestro kann Agenten, Assistenten und die Wissenssuche mit **lokalen Modellen**
 
 Kosten: Lokale Modelle haben **keine externe API-Abrechnung**. Lokale Betriebskosten (Hardware, Energie) erfasst Nodestro nicht. Ausführungen zeigen deshalb „lokal, keine API-Abrechnung“ statt einer Summe von 0, und gemischte Ausführungen nennen zusätzlich die Zahl der lokalen Anfragen.
 
+## Dieser Computer, Kontextfenster und Geschwindigkeit {#lokale-hardware}
+<!-- keywords: hardware, gpu, nur cpu, arbeitsspeicher, kontextfenster, ollama_context_length, geschwindigkeit, tokens pro sekunde, messen, cpu-sparmodus, denken verkürzt -->
+
+*Einstellungen → Lokale Modelle → Dieser Computer* zeigt, was Nodestro erkannt hat: System, CPU-Kerne, Arbeitsspeicher, die Grafikkarte und ihren Speicher, ob der Modellserver läuft (und auf der GPU oder der CPU) und sein **Kontextfenster**: von Nodestro eingestellt für den Server, den es startet, von einem laufenden Server gemeldet oder für dein eigenes Ollama noch nicht bekannt. Die Spalte **Auf diesem Computer** in der Modellliste sagt, ob ein Modell auf der GPU läuft, auf der CPU (langsamer), ohne GPU zu langsam ist oder für diesen Speicher zu groß.
+
+Hinweise erscheinen über der Liste, wenn sie zutreffen: ein zu kleines Kontextfenster (bei deinem eigenen Ollama: setze `OLLAMA_CONTEXT_LENGTH=32768` auf seinem Computer und starte es neu), keine Grafikkarte (rechne mit langsamen Antworten; am besten eignen sich kleine Modelle und der Denkaufwand *Niedrig* für einfache Schritte), zu wenig Arbeitsspeicher, ein Modell, das nicht passt, oder ein Modell, das als langsam gemessen wurde. Auch die Workflow-Prüfung warnt, wenn das Kontextfenster unter 16.384 Tokens liegt oder die Antwortgrenze eines Agenten nicht hineinpasst.
+
+**Geschwindigkeit:** Nodestro schätzt keine Geschwindigkeiten. **Geschwindigkeit messen** bei einem installierten Sprachmodell führt eine kurze Generierung auf diesem Computer aus und zeigt die gemessenen Tokens pro Sekunde, wann gemessen wurde und ob das Modell auf der GPU oder der CPU lief.
+
+**CPU-Sparmodus für Denkmodelle** (standardmäßig an): Auf einem Computer ohne Grafikkarte antworten Agenten mit Denkaufwand *Mittel* auf lokalen Denkmodellen ohne die lange Denkphase. Der Denkaufwand *Hoch* und eine ausdrücklich gesetzte Reasoning-Option werden nie verringert. Jeder so beantwortete Schritt trägt in der Ausführung und im Agententest das Abzeichen „Denken verkürzt: CPU-Sparmodus“. Schalte den Modus aus, damit Agenten immer wie eingestellt denken.
+
 ## Offline-Import und Modellordner {#offline-import}
 <!-- keywords: offline, air gap, usb, gguf, offline-paket, sha-256, externe ssd, modellordner, kopieren -->
 

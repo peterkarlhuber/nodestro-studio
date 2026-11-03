@@ -20,6 +20,17 @@ Nodestro puede ejecutar agentes, asistentes y la búsqueda de conocimiento con *
 
 Costes: los modelos locales **no tienen facturación de API externa**. Nodestro no registra los costes de funcionamiento locales (hardware, energía), por eso las ejecuciones muestran «local, sin facturación de API» en lugar de un total de 0, y las ejecuciones mixtas añaden el número de solicitudes locales al coste.
 
+## Este ordenador, ventana de contexto y velocidad {#lokale-hardware}
+<!-- keywords: hardware, gpu, solo cpu, memoria, ventana de contexto, ollama_context_length, velocidad, tokens por segundo, medir, modo de ahorro de cpu, razonamiento reducido -->
+
+*Ajustes → Modelos locales → Este ordenador* muestra lo que Nodestro detectó: sistema, núcleos de CPU, memoria, la tarjeta gráfica y su memoria, si el servidor de modelos está en marcha (y en la GPU o la CPU) y su **ventana de contexto**: fijada por Nodestro para el servidor que inicia, indicada por un servidor en marcha o aún desconocida para tu propio Ollama. La columna **En este ordenador** de la lista de modelos indica si un modelo se ejecuta en la GPU, en la CPU (más lento), si es demasiado lento sin GPU o demasiado grande para esta memoria.
+
+Aparecen avisos encima de la lista cuando corresponden: una ventana de contexto demasiado pequeña (para tu propio Ollama: define `OLLAMA_CONTEXT_LENGTH=32768` en su ordenador y reinícialo), sin tarjeta gráfica (cuenta con respuestas lentas; funcionan mejor los modelos pequeños y el esfuerzo *Bajo* para pasos sencillos), poca memoria, un modelo que no cabe o un modelo medido como lento. La comprobación del flujo de trabajo también avisa cuando la ventana de contexto es inferior a 16.384 tokens o el límite de respuesta de un agente no cabe en ella.
+
+**Velocidad:** Nodestro no estima velocidades. **Medir velocidad** en un modelo de lenguaje instalado ejecuta una generación corta en este ordenador y muestra los tokens por segundo medidos, cuándo se midió y si el modelo se ejecutó en la GPU o la CPU.
+
+**Modo de ahorro de CPU para modelos que razonan** (activado por defecto): en un ordenador sin tarjeta gráfica, los agentes con esfuerzo *Medio* en modelos locales que razonan responden sin la larga fase de razonamiento. El esfuerzo *Alto* y una opción de razonamiento fijada explícitamente nunca se reducen. Cada paso respondido así lleva la insignia «Razonamiento reducido: modo de ahorro de CPU» en la ejecución y en la prueba del agente. Desactiva el modo para que los agentes razonen siempre como está configurado.
+
 ## Importación sin conexión y carpeta de modelos {#offline-import}
 <!-- keywords: sin conexión, air gap, usb, gguf, paquete sin conexión, sha-256, ssd externo, carpeta de modelos, copiar -->
 

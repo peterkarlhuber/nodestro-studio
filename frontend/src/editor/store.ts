@@ -568,6 +568,10 @@ export const useEditor = create<EditorState>((set, get) => {
         case "thinking":
           if (node) node.thinking = (node.thinking ?? "") + String(data.delta ?? "");
           break;
+        case "reasoning_reduced":
+          // The agent answers without the long thinking phase (CPU saving mode); the step shows a badge.
+          if (node) node.reasoning_reduced = String(data.reason ?? "cpu_saving");
+          break;
         case "tool_started":
           if (node) {
             // A call that waited for an approval is already listed (tool_approval_requested): it is the same call.

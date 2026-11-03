@@ -20,6 +20,17 @@ Nodestro peut faire fonctionner les agents, les assistants et la recherche dans 
 
 Coûts : les modèles locaux n’ont **pas de facturation d’API externe**. Nodestro n’enregistre pas les coûts d’exploitation locaux (matériel, énergie) : les exécutions affichent donc « local, pas de facturation d’API » au lieu d’un total de 0, et les exécutions mixtes ajoutent au coût le nombre de requêtes locales.
 
+## Cet ordinateur, fenêtre de contexte et vitesse {#lokale-hardware}
+<!-- keywords: matériel, gpu, cpu seul, mémoire, fenêtre de contexte, ollama_context_length, vitesse, tokens par seconde, mesurer, mode économie cpu, réflexion réduite -->
+
+*Réglages → Modèles locaux → Cet ordinateur* affiche ce que Nodestro a détecté : système, cœurs CPU, mémoire, la carte graphique et sa mémoire, si le serveur de modèles fonctionne (et sur le GPU ou le CPU) et sa **fenêtre de contexte** : fixée par Nodestro pour le serveur qu’il démarre, indiquée par un serveur en marche, ou pas encore connue pour votre propre Ollama. La colonne **Sur cet ordinateur** de la liste des modèles indique si un modèle s’exécute sur le GPU, sur le CPU (plus lent), s’il est trop lent sans GPU ou trop grand pour cette mémoire.
+
+Des remarques apparaissent au-dessus de la liste lorsqu’elles s’appliquent : une fenêtre de contexte trop petite (pour votre propre Ollama : définissez `OLLAMA_CONTEXT_LENGTH=32768` sur son ordinateur et redémarrez-le), pas de carte graphique (attendez-vous à des réponses lentes ; les petits modèles et l’effort *Faible* pour les étapes simples conviennent le mieux), trop peu de mémoire, un modèle qui ne tient pas, ou un modèle mesuré comme lent. La vérification du workflow avertit aussi lorsque la fenêtre de contexte est inférieure à 16 384 tokens ou que la limite de réponse d’un agent n’y tient pas.
+
+**Vitesse :** Nodestro n’estime aucune vitesse. **Mesurer la vitesse** sur un modèle de langage installé lance une courte génération sur cet ordinateur et affiche les tokens par seconde mesurés, la date de la mesure et si le modèle a tourné sur le GPU ou le CPU.
+
+**Mode économie CPU pour les modèles qui réfléchissent** (activé par défaut) : sur un ordinateur sans carte graphique, les agents avec l’effort *Moyen* sur des modèles locaux qui réfléchissent répondent sans la longue phase de réflexion. L’effort *Élevé* et une option de raisonnement définie explicitement ne sont jamais réduits. Chaque étape ainsi traitée porte le badge « Réflexion réduite : mode économie CPU » dans l’exécution et dans le test de l’agent. Désactivez le mode pour que les agents réfléchissent toujours comme configuré.
+
 ## Import hors ligne et dossier des modèles {#offline-import}
 <!-- keywords: hors ligne, air gap, usb, gguf, paquet hors ligne, sha-256, ssd externe, dossier des modèles, copier -->
 

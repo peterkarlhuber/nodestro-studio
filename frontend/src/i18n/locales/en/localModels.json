@@ -24,7 +24,6 @@
   "start": "Start",
   "stop": "Stop",
   "autostart": "Start with Nodestro",
-  "hardware": "This computer: {{cpus}} CPU cores, {{ram}} memory, graphics: {{gpu}}",
   "gpu": {
     "nvidia": "NVIDIA GPU",
     "apple": "Apple silicon",
@@ -70,7 +69,8 @@
     "download": "Download size",
     "memory": "Memory needed",
     "state": "State",
-    "own": "Own model (imported or downloaded separately)"
+    "own": "Own model (imported or downloaded separately)",
+    "fit": "On this computer"
   },
   "kind": {
     "chat": "Language model",
@@ -88,7 +88,8 @@
       "import_package": "Import {{target}}",
       "import_gguf": "Import {{target}}",
       "move_models": "Move the model folder",
-      "build": "Build {{target}}"
+      "build": "Build {{target}}",
+      "benchmark": "Measure the speed of {{target}}"
     },
     "state": {
       "running": "In progress",
@@ -236,5 +237,79 @@
       "reference_mismatch": "The built model does not reproduce the reference vectors and was removed again.",
       "reference_mismatchHint": "The files were correct, but the model server computes different vectors. Check that the model server has the pinned version, then try again."
     }
+  },
+  "machine": {
+    "title": "This computer",
+    "system": "System",
+    "cpus": "CPU cores",
+    "memory": "Memory",
+    "gpu": "Graphics",
+    "gpuMemory": "{{gpu}} with {{memory}}",
+    "server": "Model server",
+    "runtime": {
+      "none": "none configured",
+      "running": "running (Ollama {{version}})",
+      "missing": "not installed (Ollama {{version}} needed)",
+      "stopped": "stopped"
+    },
+    "accelerated": {
+      "true": "models run on the GPU",
+      "false": "models run on the CPU",
+      "unknown": "GPU use unknown"
+    },
+    "contextTitle": "Context window",
+    "context": {
+      "configured": "{{tokens}} tokens (set by Nodestro)",
+      "server": "{{tokens}} tokens (reported by the server)",
+      "unknown": "{{tokens}} tokens"
+    },
+    "contextUnknown": "not known yet (shown once a model has run)",
+    "unknown": "unknown"
+  },
+  "fit": {
+    "gpu": "Runs on the GPU",
+    "cpu": "Runs here",
+    "cpuOnly": "Runs on the CPU (slower)",
+    "too_slow": "Too slow without a GPU",
+    "too_large": "Too large for this computer",
+    "slowHint": "slow on this computer (measured)"
+  },
+  "advice": {
+    "context_small": "The model server gives models only {{tokens}} tokens of context; agents need about {{recommended}} tokens for prompt, thinking and answer, otherwise answers are cut off.",
+    "context_fix": {
+      "external": "This is your own Ollama: set OLLAMA_CONTEXT_LENGTH={{raw}} on the computer that runs it and restart it.",
+      "managed": "Restart the model server so that Nodestro's setting applies.",
+      "other": "Ask the operator of the model server to raise the context window."
+    },
+    "context_unknown": "The context window of this server is not known yet. An Ollama with default settings gives only 4,096 tokens, too few for agents; start it with OLLAMA_CONTEXT_LENGTH=32768.",
+    "cpu_only": "No graphics card found: local models run on the CPU only. Expect slow answers, especially with thinking. Small models and effort Low for simple steps work best; the recommendations take this into account.",
+    "reasoning_saving": "The CPU saving mode is on: agents with effort Medium on local thinking models answer without the long thinking phase. Effort High is never reduced. You can switch it off below.",
+    "model_slow": "{{model}} generated {{speed}} tokens per second on this computer (measured). A smaller model or effort Low makes its steps faster.",
+    "model_too_large": "{{model}} needs about {{size}} of memory and does not fit this computer. Choose a smaller model.",
+    "memory_low": "This computer has {{memory}} of memory; local models need about {{recommended}} to run well. Close other programs or choose smaller models.",
+    "other": "Note on local models: {{code}}."
+  },
+  "speed": {
+    "value": "{{speed}} tokens/s",
+    "processor": {
+      "gpu": "on the GPU",
+      "cpu": "on the CPU",
+      "mixed": "partly on the GPU"
+    },
+    "measuredAt": "measured {{date}}",
+    "context": "context {{tokens}}",
+    "notMeasured": "Speed not measured",
+    "measure": "Measure speed",
+    "again": "Measure again",
+    "started": "Measuring the speed of {{model}} …"
+  },
+  "reasoning": {
+    "label": "CPU saving mode for thinking models",
+    "text": "On a computer without a graphics card, agents with effort Medium on local thinking models answer without the long thinking phase. Effort High and an explicit reasoning option are never reduced, and runs mark every reduced step.",
+    "off": "Off: agents always think as configured.",
+    "active": "Active on this computer.",
+    "inactive": "Not active here: models run on a graphics card.",
+    "badge": "Reasoning reduced: CPU saving mode",
+    "badgeTip": "This agent answered without the long thinking phase because this computer has no graphics card. For full thinking, set the agent's effort to High or switch off the CPU saving mode in Settings → Local models."
   }
 }

@@ -35,6 +35,7 @@ export function asNodeRun(result: AgentTestResult): NodeRun {
     memory: result.memory,
     started_at: result.started_at,
     finished_at: result.finished_at,
+    reasoning_reduced: result.reasoning_reduced ?? null,
   };
 }
 

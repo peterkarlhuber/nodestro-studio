@@ -140,7 +140,9 @@
     "strictOffline": "Refuses cloud models, remote model servers, server tools, remote MCP services and downloads before a run starts.",
     "preferEuropean": "Suggests European local models (Mistral AI) when they are equally suited. Never a weaker model, never a cloud service; your own model choice wins.",
     "knowledgeSearch": "Full text finds words, semantic search finds meaning (also across languages). Semantic and combined search need the semantic index built with an embedding model.",
-    "localBuild": "Some models (such as mdenseon:307m) are built from their original files instead of being downloaded from the Ollama library. Enter both files: Nodestro checks their SHA-256, builds the model and keeps it only if its reference vectors match. Works without internet."
+    "localBuild": "Some models (such as mdenseon:307m) are built from their original files instead of being downloaded from the Ollama library. Enter both files: Nodestro checks their SHA-256, builds the model and keeps it only if its reference vectors match. Works without internet.",
+    "localHardware": "What Nodestro detected on the computer that runs the model server, and what the server reports. Speeds appear only once measured; Nodestro makes no estimates.",
+    "localReasoning": "Without a graphics card, the thinking phase of local models can take minutes per step. The saving mode skips it for effort Medium; effort High stays unchanged."
   },
   "budget": {
     "decision": "The run paused because its budget is not enough for the next model request. Nothing was sent for it. Raise the limit of exactly this run and continue, or end the run.",

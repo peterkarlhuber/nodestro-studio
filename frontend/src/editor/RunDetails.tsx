@@ -17,6 +17,7 @@ import { type AgentContext, ContextView } from "./ContextView";
 import { branchLabel } from "./branches";
 import { OrchestrationView } from "./OrchestrationView";
 import { usageCost } from "../lib/pricing";
+import { ReasoningReducedBadge } from "../components/ReasoningReducedBadge";
 
 type RunTab = "result" | "prompt" | "context" | "tools" | "thinking" | "memory";
 
@@ -232,7 +233,10 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
             </div>
           ) : null}
         </div>
-        <StatusBadge status={state.status} />
+        <div className="row-gap">
+          <ReasoningReducedBadge reason={state.reasoning_reduced} />
+          <StatusBadge status={state.status} />
+        </div>
       </div>
       <FlowNodeDetails run={run} node={node} state={state} />
       {state.error ? (

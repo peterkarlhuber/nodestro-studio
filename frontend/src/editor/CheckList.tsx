@@ -83,6 +83,14 @@ export function countsByNode(check: WorkflowCheck | undefined): { errors: Record
   return { errors, warnings };
 }
 
+/** A check that lists nodes by id (check.local_reasoning_saving: "nodes") names them by their labels. */
+export function withNodeNames<T extends { params?: Record<string, unknown> | null }>(item: T, label: (id: string | null) => string): T {
+  const nodes = item.params?.nodes;
+  if (typeof nodes !== "string" || !nodes) return item;
+  const names = nodes.split(",").map((id) => label(id.trim()) || id.trim());
+  return { ...item, params: { ...item.params, nodes: names.join(", ") } };
+}
+
 const ICONS = { error: XCircle, warning: AlertTriangle, info: Info };
 
 export function CheckList({
@@ -114,7 +122,7 @@ export function CheckList({
             <Icon size={13} aria-hidden className={`check-list__icon check-list__icon--${finding.level}`} />
             <span className="check-list__text">
               {name && target === "node" && !("node_id" in finding.item) ? <strong>{name}: </strong> : null}
-              <ProblemText item={finding.item} compact />
+              <ProblemText item={withNodeNames(finding.item, label)} compact />
             </span>
           </>
         );

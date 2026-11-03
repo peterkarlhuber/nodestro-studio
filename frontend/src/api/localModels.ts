@@ -35,6 +35,10 @@ export interface ModelSpeed {
   measured_at: string;
   /** The context window the measurement ran with. */
   context_length: number | null;
+  /** Prompt processing speed of the same measurement, when the server reports it. */
+  prompt_tokens_per_second?: number | null;
+  /** Where the model ran during the measurement. */
+  processor?: "gpu" | "cpu" | "mixed" | null;
 }
 
 /** configured: Nodestro starts the server with this window; server: read from the running server; unknown: not measured. */
@@ -61,6 +65,8 @@ export interface LocalStatus {
   /** The context window of the server's models in tokens (older APIs leave both out). */
   context_length?: number | null;
   context_source?: ContextSource;
+  /** Models run on a GPU; null: unknown (an external server). */
+  accelerated?: boolean | null;
 }
 
 export interface CatalogModel {
@@ -140,7 +146,8 @@ export interface LocalOverview {
 /**
  * One hint of the runtime. Codes: local.context_small (value: tokens, recommended: tokens), local.context_unknown,
  * local.cpu_only, local.reasoning_saving, local.model_slow (model; value: measured tokens/s x 10),
- * local.model_too_large (model), local.memory_low. Unknown codes are shown with a general sentence.
+ * local.model_too_large (model; value: its memory need in bytes), local.memory_low (value: RAM, recommended: RAM, in
+ * bytes). Unknown codes get a general sentence.
  */
 export interface LocalAdvice {
   code: string;

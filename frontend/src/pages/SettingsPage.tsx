@@ -143,6 +143,7 @@ export function SettingsPage() {
         <div className="settings" ref={body}>
         <LocalModelsPanel settings={form} admin={admin} onOffline={(strict_offline) => save.mutate({ strict_offline })}
           onEurope={(prefer_european_models) => save.mutate({ prefer_european_models })}
+          onReasoning={(local_reasoning) => save.mutate({ local_reasoning })}
         />
 
         <ProviderSettings settings={form} />
