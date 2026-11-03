@@ -79,9 +79,22 @@ Características de la búsqueda:
 
 - Los acentos se normalizan: «cancion» encuentra «canción».
 - Las palabras también coinciden como inicio de palabra: «garantía» encuentra «garantías».
-- Es una búsqueda por palabras clave, no por significado: no encuentra sinónimos. Formula los términos tal como aparecen en el documento.
+- El **texto completo** (predeterminado) es una búsqueda por palabras clave, no por significado: no encuentra sinónimos. Formula los términos tal como aparecen en el documento. Con la búsqueda semántica o la combinada (ver [Métodos de búsqueda](#suchverfahren)) también cuenta el significado.
 
 El campo de filtro de la izquierda solo busca en nombres de archivo y descripciones.
+
+## Métodos de búsqueda {#suchverfahren}
+<!-- keywords: búsqueda semántica, embedding, vector, híbrida, entre idiomas, índice, reconstruir, qwen3-embedding -->
+
+*Ajustes → Búsqueda de conocimiento* elige cómo ordenan las secciones los agentes en el modo *Búsqueda*:
+
+- **Texto completo** (predeterminado): encuentra las palabras de la pregunta. No necesita modelo.
+- **Semántica:** encuentra secciones por su significado, también entre idiomas (una pregunta en francés encuentra una sección en alemán). Necesita el índice semántico.
+- **Combinada:** las dos listas fusionadas. Necesita el índice semántico.
+
+El índice semántico se crea con un **modelo de embeddings** (por defecto `qwen3-embedding:0.6b`, unos 0,6 GB) mediante **Crear índice**; pertenece a ese modelo. Si eliges otro modelo, el estado muestra *Hay que reconstruirlo* y la búsqueda sigue usando el índice actual completo hasta que el nuevo esté terminado y se cambie en un solo paso. Una reconstrucción se puede cancelar y continúa donde se detuvo. Los archivos añadidos mientras el servidor de modelos no está en marcha se indexan para el texto completo y aparecen como *Incompleto* hasta la siguiente reconstrucción.
+
+Cada agente puede usar el método de los ajustes o elegir el suyo (*Método de búsqueda de este agente*). La búsqueda semántica y la combinada nunca recurren en silencio al texto completo: sin un índice completo, la comprobación previa lo indica y la ejecución no se inicia. Un agente solo busca en sus propios archivos, con cualquier método.
 
 ## Colecciones y procedencia {#sammlungen}
 <!-- keywords: colección, colecciones, ordenar, procedencia, incorporado, buscable -->

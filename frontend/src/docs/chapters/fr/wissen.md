@@ -79,9 +79,22 @@ Caractéristiques de la recherche :
 
 - Les accents sont normalisés : « eleve » trouve « élève ».
 - Les mots correspondent aussi en début de mot : « garantie » trouve « garanties ».
-- C’est une recherche par mots-clés, pas par le sens : les synonymes ne sont pas trouvés. Formulez les termes tels qu’ils figurent dans le document.
+- Le **texte intégral** (par défaut) est une recherche par mots-clés, pas par le sens : les synonymes ne sont pas trouvés. Formulez les termes tels qu’ils figurent dans le document. Avec la recherche sémantique ou combinée (voir [Méthodes de recherche](#suchverfahren)), le sens compte aussi.
 
 Le champ de filtre à gauche ne cherche que dans les noms de fichiers et les descriptions.
+
+## Méthodes de recherche {#suchverfahren}
+<!-- keywords: recherche sémantique, embedding, vecteur, hybride, multilingue, index, reconstruction, qwen3-embedding -->
+
+*Réglages → Recherche dans les connaissances* définit comment les agents en mode *Recherche* classent les passages :
+
+- **Texte intégral** (par défaut) : trouve les mots de la question. Aucun modèle requis.
+- **Sémantique :** trouve les passages par leur sens, y compris d’une langue à l’autre (une question en français trouve un passage en allemand). Nécessite l’index sémantique.
+- **Combinée :** les deux listes fusionnées. Nécessite l’index sémantique.
+
+L’index sémantique est créé avec un **modèle d’embeddings** (par défaut `qwen3-embedding:0.6b`, environ 0,6 Go) via **Créer l’index** ; il appartient à ce modèle. Si vous choisissez un autre modèle, l’état indique *À reconstruire* et la recherche continue avec l’index actuel complet jusqu’à ce que le nouveau soit terminé et activé en une seule étape. Une reconstruction peut être annulée et reprend là où elle s’est arrêtée. Les fichiers ajoutés pendant que le serveur de modèles ne fonctionne pas sont indexés pour le texte intégral et affichés comme *Incomplet* jusqu’à la prochaine reconstruction.
+
+Chaque agent peut reprendre la méthode des réglages ou choisir la sienne (*Méthode de recherche de cet agent*). Les recherches sémantique et combinée ne se replient jamais en silence sur le texte intégral : sans index complet, la vérification préalable le signale et l’exécution ne démarre pas. Un agent ne cherche que dans ses propres fichiers, quelle que soit la méthode.
 
 ## Collections et provenance {#sammlungen}
 <!-- keywords: collection, collections, classer, provenance, repris, recherche -->

@@ -79,6 +79,24 @@ describe("cost display", () => {
   });
 });
 
+describe("local models", () => {
+  it("never shows a total of 0 for local requests", () => {
+    // Only local requests: no external API billing, and local operating costs are not recorded.
+    expect(usageCost(t, usage({ estimated_cost_usd: 0, local_requests: 1 }))).toBe("lokal, keine API-Abrechnung");
+    expect(bucketCost(t, bucket({ estimated_cost_usd: 0, known_cost_usd: 0, local_requests: 2 }))).toBe("lokal, keine API-Abrechnung");
+    // Mixed: the API cost and how many requests were local.
+    expect(usageCost(t, usage({ requests: 3, local_requests: 1 }))).toBe(`${formatCost(0.25)} + 1 lokale Anfrage (keine API-Abrechnung)`);
+    expect(bucketCost(t, bucket({ requests: 5, local_requests: 2 }))).toBe(`${formatCost(0.5)} + 2 lokale Anfragen (keine API-Abrechnung)`);
+    expect(usageCost(t, usage({ local_requests: 0 }))).toBe(formatCost(0.25));
+  });
+
+  it("labels a local model in the picker without a price", () => {
+    expect(modelPriceHint(t, model({ price_status: "local", input_usd_per_mtok: 0, output_usd_per_mtok: 0 }))).toBe(
+      "lokales Modell, keine API-Abrechnung (Betriebskosten nicht erfasst)",
+    );
+  });
+});
+
 describe("model price hints", () => {
   it("names the prices and flags stale, individual and missing ones", () => {
     expect(modelPriceHint(t, model({ price_status: "current" }))).toBe(`${formatPrice(2)} / ${formatPrice(8)} pro Million Tokens (Eingabe / Ausgabe)`);

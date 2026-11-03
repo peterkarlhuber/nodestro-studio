@@ -803,6 +803,7 @@ export function liveUsage(run: Run | null): Usage {
       thinking_tokens: sum.thinking_tokens + usage.thinking_tokens,
       web_search_requests: sum.web_search_requests + usage.web_search_requests,
       total_tokens: sum.total_tokens + usage.total_tokens,
+      local_requests: (sum.local_requests ?? 0) + (usage.local_requests ?? 0),
       estimated_cost_usd:
         sum.estimated_cost_usd === null || usage.estimated_cost_usd === null
           ? null

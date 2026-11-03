@@ -15,7 +15,7 @@
     "diagram": "Diagram: models, knowledge and tools come together in Nodestro and become connected agents, approvals and traceable runs.",
     "local": "Runs locally on your computer",
     "providers": "Works with",
-    "modelNeeded": "To run workflows, Nodestro needs a connection to an AI model: an API key or a local model server.",
+    "modelNeeded": "To run workflows, Nodestro needs an AI model: a local model on this computer (no API key needed) or an API key of a cloud provider.",
     "modelNeededLink": "Set it up in Settings"
   },
   "nodes": {

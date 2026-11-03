@@ -20,6 +20,8 @@ import sys
 import threading
 from typing import Any
 
+from e2e_defaults import keep_cloud_defaults
+
 sys.path.insert(0, str(Path(__file__).parent))
 
 LEAD = "LEADBOSS"
@@ -154,6 +156,7 @@ def main() -> None:
     ids: dict[str, str] = {}
     client = ScriptedClient(script(ids))
     app = create_app(studio_config(Path(args.data_dir)), client_factory=lambda _provider: client)
+    keep_cloud_defaults(app)
     workspace = app.state.nodestro
     save = lambda item: workspace.save_workflow(WorkflowIn.model_validate(item))  # noqa: E731
     ids["slow"] = save(team("Langsam", "SLOWTEAM works slowly.")).id

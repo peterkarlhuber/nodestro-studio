@@ -79,9 +79,22 @@ Caratteristiche della ricerca:
 
 - Gli accenti vengono uniformati: «citta» trova «città».
 - Le parole corrispondono anche come inizio di parola: «contratt» trova «contratto» e «contrattuale».
-- È una ricerca per parole chiave, non per significato: i sinonimi non vengono trovati. Formula i termini come compaiono nel documento.
+- Il **testo completo** (predefinito) è una ricerca per parole chiave, non per significato: i sinonimi non vengono trovati. Formula i termini come compaiono nel documento. Con la ricerca semantica o combinata (vedi [Metodi di ricerca](#suchverfahren)) conta anche il significato.
 
 Il campo filtro a sinistra cerca solo nei nomi dei file e nelle descrizioni.
+
+## Metodi di ricerca {#suchverfahren}
+<!-- keywords: ricerca semantica, embedding, vettore, ibrida, tra lingue, indice, ricostruzione, qwen3-embedding -->
+
+*Impostazioni → Ricerca nella conoscenza* stabilisce come gli agenti in modalità *Ricerca* ordinano le sezioni:
+
+- **Testo completo** (predefinito): trova le parole della domanda. Non serve alcun modello.
+- **Semantica:** trova le sezioni in base al significato, anche tra lingue diverse (una domanda in francese trova una sezione in tedesco). Serve l’indice semantico.
+- **Combinata:** le due liste unite. Serve l’indice semantico.
+
+L’indice semantico si crea con un **modello di embedding** (predefinito `qwen3-embedding:0.6b`, circa 0,6 GB) tramite **Crea indice**; appartiene a quel modello. Se scegli un altro modello, lo stato mostra *Da ricostruire* e la ricerca continua con l’indice attuale completo finché il nuovo non è pronto e viene attivato in un solo passaggio. Una ricostruzione si può annullare e riprende da dove si era fermata. I file aggiunti mentre il server dei modelli non è attivo vengono indicizzati per il testo completo e mostrati come *Incompleto* fino alla ricostruzione successiva.
+
+Ogni agente può usare il metodo delle impostazioni o sceglierne uno proprio (*Metodo di ricerca di questo agente*). La ricerca semantica e quella combinata non ripiegano mai in silenzio sul testo completo: senza un indice completo, la verifica prima dell’esecuzione lo segnala e l’esecuzione non parte. Un agente cerca sempre e solo nei propri file, con qualsiasi metodo.
 
 ## Raccolte e provenienza {#sammlungen}
 <!-- keywords: raccolta, raccolte, ordinare, provenienza, inserito, ricercabile -->

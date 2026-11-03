@@ -132,7 +132,13 @@
     "providers": "Access to the AI providers: API keys (never shown; environment variables take precedence), base URLs of your own servers and what their models can do. Every agent uses the provider of its model; nothing switches to another provider.",
     "prices": "Where the prices come from, how often they are checked, and how individual prices and reviews work.",
     "priceMode": "Standard warns about unknown and stale prices; Strict refuses such requests before they cost anything.",
-    "reconciliation": "Compares the estimates with the providers' bills. Needs an admin key of the billing API; nothing is changed."
+    "reconciliation": "Compares the estimates with the providers' bills. Needs an admin key of the billing API; nothing is changed.",
+    "localModels": "Local models run on this computer with Ollama: no API key, no data leaves the computer. Nodestro installs the pinned runtime on request and checks every download.",
+    "localRecommendations": "Suggestions from the task, this computer's memory and the installed models. An installed model that is good enough wins over a better one that needs a download.",
+    "localImport": "For computers without internet: import an offline model package (checked by SHA-256) or a GGUF file from a USB drive or a shared folder.",
+    "localStorage": "Models are large. You can keep them on another drive, for example an external SSD; copying checks every model before the switch.",
+    "strictOffline": "Refuses cloud models, remote model servers, server tools, remote MCP services and downloads before a run starts.",
+    "knowledgeSearch": "Full text finds words, semantic search finds meaning (also across languages). Semantic and combined search need the semantic index built with an embedding model."
   },
   "budget": {
     "decision": "The run paused because its budget is not enough for the next model request. Nothing was sent for it. Raise the limit of exactly this run and continue, or end the run.",

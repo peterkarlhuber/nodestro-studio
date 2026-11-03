@@ -8,10 +8,11 @@ import { useMeta, useWorkflows } from "../api/hooks";
 import { agentIcon } from "../components/icons";
 import { StatusBadge, Tooltip } from "../components/ui";
 import { WaitingForYouBadge } from "../runs/WaitingForYouBadge";
-import { formatCost, formatTokens } from "../lib/format";
+import { formatTokens } from "../lib/format";
 import { waitsForToolApproval } from "./store";
 import { modelName } from "../components/ModelPicker";
 import { branchLabel } from "./branches";
+import { usageCost } from "../lib/pricing";
 
 export interface FlowNodeData extends Record<string, unknown> {
   node: WorkflowNode;
@@ -72,7 +73,7 @@ function Footer({ state }: { state?: NodeRun }) {
   if (!state || state.status === "waiting" || !state.usage?.requests) return null;
   return (
     <div className="flow-node__usage">
-      {t("runs.tokens", { value: formatTokens(state.usage.total_tokens) })} · {formatCost(state.usage.estimated_cost_usd)}
+      {t("runs.tokens", { value: formatTokens(state.usage.total_tokens) })} · {usageCost(t, state.usage)}
     </div>
   );
 }

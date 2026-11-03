@@ -2,6 +2,35 @@
 
 Este capítulo descreve todas as configurações, a instalação e a inicialização do Nodestro e os atalhos de teclado.
 
+## Modelos locais {#lokale-modelle}
+<!-- keywords: modelo local, ollama, offline, sem chave de api, qwen, download, recomendação, hardware, gpu, memória, servidor de modelos -->
+
+O Nodestro pode rodar agentes, assistentes e a busca no conhecimento com **modelos locais** pelo Ollama, sem chave de API: prompts e documentos ficam neste computador. Uma instalação nova usa modelos locais por padrão (agentes `ollama:qwen3.5:4b`, assistente `ollama:qwen3.5:9b`); uma instalação atualizada mantém os modelos que tinha.
+
+*Configurações → Modelos locais* mostra:
+
+- **Estado:** se o servidor de modelos está rodando e quem o fornece. No desktop, o Nodestro inicia o próprio servidor (um processo separado neste computador, com a própria pasta de modelos); no Nodestro Local Docker é um contêiner separado; em um servidor, o operador o fornece. Um Ollama que você já usa só é utilizado se você salvar o endereço dele no provedor Ollama.
+- **Ambiente:** se faltar, **Baixar e instalar** obtém uma vez a versão fixada e verifica o SHA-256. Sem internet, instale-o a partir do arquivo da versão (veja [Importação offline](/docs/einstellungen#offline-import)).
+- **Recomendado para este computador:** um modelo por tarefa (classificar, escrever, agentes com ferramentas, análise, assistente, busca semântica) conforme o que a tarefa precisa, a memória deste computador e os modelos instalados. Um modelo instalado que seja suficiente vem primeiro; *Limitado* significa que um modelo maior faria melhor. As sugestões nunca alteram um agente: você escolhe o modelo dele no editor.
+- **Modelos:** os modelos sugeridos com tamanho do download, memória necessária e licença; **Verificado** significa que a compilação instalada é a que o Nodestro verificou.
+
+Custos: modelos locais **não têm cobrança de API externa**. O Nodestro não registra os custos de operação locais (hardware, energia); por isso as execuções mostram “local, sem cobrança de API” em vez de um total de 0, e execuções mistas somam ao custo o número de solicitações locais.
+
+## Importação offline e pasta de modelos {#offline-import}
+<!-- keywords: offline, air gap, usb, gguf, pacote offline, sha-256, ssd externo, pasta de modelos, copiar -->
+
+Para computadores sem internet, *Configurações → Modelos locais → Importação offline* importa de um caminho no computador onde o Nodestro roda (no Local Docker: dentro da pasta de importação):
+
+- **Pacote offline:** uma pasta criada em um computador com internet (`orkexa-local export`). Cada arquivo é verificado pelo SHA-256 antes de ser usado.
+- **Arquivo GGUF:** um arquivo de modelo; dê a ele o nome que os agentes usam (por exemplo `meu-modelo:q4`) e, para modelos que leem imagens, o projetor de visão (`mmproj`).
+
+**Pasta de modelos:** os modelos são grandes. Escolha outra pasta, por exemplo em um SSD externo: **Copiá-los para lá e verificá-los** copia cada modelo, verifica-o e só então troca (a pasta antiga é mantida); **Usar a pasta como está** troca para uma pasta que já contém modelos do Ollama.
+
+## Modo offline estrito {#offline}
+<!-- keywords: offline estrito, air gap, sem nuvem, verificação prévia, downloads recusados -->
+
+Com o **Modo offline estrito** ligado, a verificação antes de cada execução recusa modelos na nuvem (também como modelo reserva, avaliador ou orquestrador), um servidor de modelos que não esteja neste computador, ferramentas de servidor como a busca na web e serviços MCP remotos; downloads também são recusados. Modelos locais, ferramentas locais e servidores MCP locais continuam funcionando. O modo não altera nenhum fluxo de trabalho: só recusa o que sairia do computador.
+
 ## Provedores de IA {#anbieter}
 <!-- keywords: chave de api, provedor, anthropic, openai, gemini, ollama, vllm, compatível com openai, url base, variável de ambiente, .env, capacidades -->
 

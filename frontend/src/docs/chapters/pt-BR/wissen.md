@@ -79,9 +79,22 @@ Características da pesquisa:
 
 - Acentos são normalizados: "acao" encontra "ação".
 - As palavras também correspondem como início de palavra: "garantia" encontra "garantias".
-- É uma pesquisa por palavras-chave, não por significado: sinônimos não são encontrados. Escreva os termos como aparecem no documento.
+- O **texto completo** (padrão) é uma pesquisa por palavras-chave, não por significado: sinônimos não são encontrados. Escreva os termos como aparecem no documento. Com a busca semântica ou combinada (veja [Métodos de busca](#suchverfahren)) o significado também conta.
 
 O campo de filtro à esquerda só pesquisa nomes de arquivo e descrições.
+
+## Métodos de busca {#suchverfahren}
+<!-- keywords: busca semântica, embedding, vetor, híbrida, entre idiomas, índice, reconstruir, qwen3-embedding -->
+
+*Configurações → Busca no conhecimento* define como os agentes no modo *Busca* ordenam os trechos:
+
+- **Texto completo** (padrão): encontra as palavras da pergunta. Não precisa de modelo.
+- **Semântica:** encontra trechos pelo significado, também entre idiomas (uma pergunta em francês encontra um trecho em alemão). Precisa do índice semântico.
+- **Combinada:** as duas listas unidas. Precisa do índice semântico.
+
+O índice semântico é criado com um **modelo de embeddings** (padrão `qwen3-embedding:0.6b`, cerca de 0,6 GB) em **Criar índice**; ele pertence a esse modelo. Se você escolher outro modelo, o estado mostra *Precisa reconstruir* e a busca continua usando o índice atual completo até o novo ficar pronto e ser ativado em um único passo. Uma reconstrução pode ser cancelada e continua de onde parou. Arquivos adicionados enquanto o servidor de modelos não está rodando são indexados para o texto completo e aparecem como *Incompleto* até a próxima reconstrução.
+
+Cada agente pode usar o método das configurações ou escolher o próprio (*Método de busca deste agente*). As buscas semântica e combinada nunca recorrem em silêncio ao texto completo: sem um índice completo, a verificação prévia avisa e a execução não começa. Um agente só busca nos próprios arquivos, em qualquer método.
 
 ## Coleções e origem {#sammlungen}
 <!-- keywords: coleção, coleções, organizar, origem, incorporado, pesquisável -->

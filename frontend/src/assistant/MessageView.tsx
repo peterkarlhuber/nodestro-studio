@@ -21,11 +21,12 @@ import { Link, useNavigate } from "react-router-dom";
 import type { AssistantStep, AttachmentKind, ChatMessage, ContextRef, Handover } from "../api/types";
 import { Button, Callout, Hint } from "../components/ui";
 import { ProblemText } from "../lib/errors";
-import { formatCost, formatTokens } from "../lib/format";
+import { formatTokens } from "../lib/format";
 import { AssistantMarkdown } from "./AssistantMarkdown";
 import { handoverPath } from "./handover";
 import { SnapshotDialog } from "./SnapshotDialog";
 import { useAssistant } from "./store";
+import { usageCost } from "../lib/pricing";
 
 export const KIND_ICON: Record<AttachmentKind, LucideIcon> = {
   workflow: Diamond,
@@ -122,7 +123,7 @@ function UsageLine({ message }: { message: ChatMessage }) {
       <span className="chat-usage" tabIndex={0}>
         {t("assistant.message.usage", {
           tokens: formatTokens(message.usage.total_tokens),
-          cost: formatCost(message.usage.estimated_cost_usd),
+          cost: usageCost(t, message.usage),
         })}
         {message.estimated ? ` · ${t("assistant.message.estimated")}` : ""}
       </span>

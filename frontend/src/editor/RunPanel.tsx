@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { Output, outputFieldsOf } from "../components/Markdown";
 import { IconButton, Stat, StatusBadge } from "../components/ui";
-import { formatCost, formatTokens, tokenBreakdown } from "../lib/format";
+import { formatTokens, tokenBreakdown } from "../lib/format";
 import { RunApprovals } from "../runs/ApprovalCard";
 import { RunBudgetDecision } from "../runs/BudgetDecisionCard";
 import { CancelRunButton } from "../runs/CancelRunButton";
@@ -16,6 +16,7 @@ import { RunToolApprovals } from "../runs/ToolApprovalCard";
 import { useEditorLayout } from "./layout";
 import { NodeRunDetails, startFiles } from "./RunDetails";
 import { liveUsage, runWaitsForBudget, runWaitsForToolApproval, useEditor, waitsForToolApproval } from "./store";
+import { usageCost } from "../lib/pricing";
 
 /** The execution overview below the canvas. Collapsing or resizing it never touches the run. */
 function RunPanelView({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
@@ -96,7 +97,7 @@ function RunPanelView({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
               hint={usage.requests ? tokenBreakdown(usage) : undefined}
               tip="runs.tokens"
             />
-            <Stat label={t("runs.stats.cost")} value={formatCost(usage.estimated_cost_usd)} tip="runs.cost" />
+            <Stat label={t("runs.stats.cost")} value={usageCost(t, usage)} tip="runs.cost" />
           </div>
           {run ? <RunBudgetDecision run={run} /> : null}
           {run ? (

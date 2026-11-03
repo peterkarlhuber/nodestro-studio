@@ -79,7 +79,7 @@ function ModelNote() {
   if (!settings.data || anyProviderConfigured(settings.data)) return null;
   return (
     <p className="wl-model-note" data-testid="welcome-model-note">
-      <KeyRound size={13} aria-hidden /> {t("welcome.hero.modelNeeded")} <Link to="/settings">{t("welcome.hero.modelNeededLink")}</Link>
+      <KeyRound size={13} aria-hidden /> {t("welcome.hero.modelNeeded")} <Link to="/settings#settings-local-models">{t("welcome.hero.modelNeededLink")}</Link>
     </p>
   );
 }

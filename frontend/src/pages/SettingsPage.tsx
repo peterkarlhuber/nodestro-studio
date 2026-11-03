@@ -17,6 +17,7 @@ import { PythonMaintenance } from "../python/PythonMaintenance";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
 import { SettingsNav, useSettingsHash } from "./SettingsNav";
+import { KnowledgeSearchPanel, LocalModelsPanel } from "./SettingsLocalModels";
 import { SandboxPanel } from "./SettingsSandbox";
 import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy, settingsForm } from "./SettingsBudget";
 import { CHECK_KEY, DefaultModelNotice, ProviderSettings } from "./SettingsProviders";
@@ -140,6 +141,8 @@ export function SettingsPage() {
       />
       <div className="page__body settings-layout">
         <div className="settings" ref={body}>
+        <LocalModelsPanel settings={form} admin={admin} onOffline={(strict_offline) => save.mutate({ strict_offline })} />
+
         <ProviderSettings settings={form} />
 
         <LanguagePicker />
@@ -226,6 +229,8 @@ export function SettingsPage() {
         {admin ? <ReconciliationPanel /> : null}
 
         <SandboxPanel settings={form} admin={admin} onMode={(sandbox) => save.mutate({ sandbox })} />
+
+        <KnowledgeSearchPanel settings={form} admin={admin} onSave={(change) => save.mutate(change)} />
 
         <section className="panel stack" aria-labelledby="settings-ocr">
           <h2 className="panel__title" id="settings-ocr">

@@ -8,12 +8,14 @@ import { prefersReducedMotion } from "../lib/motion";
 
 /** The groups of the page, in the order of the page; a section the map does not know goes to "more". */
 const GROUPS: Record<string, "setup" | "costs" | "running" | "maintenance"> = {
+  "settings-local-models": "setup",
   "settings-providers": "setup",
   "settings-language": "setup",
   "settings-models": "setup",
   "settings-prices": "costs",
   "settings-reconciliation": "costs",
   "settings-sandbox": "running",
+  "settings-knowledge-search": "running",
   "settings-ocr": "running",
   "settings-inputs": "running",
   "settings-python": "running",

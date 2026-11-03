@@ -52,6 +52,8 @@ const FALLBACKS: [string, string][] = [
   ["trace.", "errors.trace.invalid"],
   ["deps.", "errors.deps.failed"],
   ["http.", "errors.http"],
+  ["local.", "errors.local.failed"],
+  ["knowledge.", "errors.knowledge.failed"],
 ];
 
 /**

@@ -40,6 +40,7 @@ import {
   teamRunsOf,
   type TeamRun,
 } from "./orchestrationModel";
+import { usageCost } from "../lib/pricing";
 
 export { assignmentsOf, childRuns } from "./orchestrationModel";
 
@@ -148,7 +149,7 @@ function TeamRunRow({ entry, names, live }: { entry: TeamRun; names: Map<string,
         )}
         {child ? (
           <span className="muted small" data-testid="orchestration-team-run-meta">
-            {t("orchestration.run.active", { value: activeTime(child) })} · {formatCost(child.usage.estimated_cost_usd)}
+            {t("orchestration.run.active", { value: activeTime(child) })} · {usageCost(t, child.usage)}
           </span>
         ) : null}
         {nested ? (

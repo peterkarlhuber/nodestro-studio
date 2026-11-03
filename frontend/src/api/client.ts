@@ -484,8 +484,9 @@ export const api = {
   runInputs: (runId: string) => request<RunInput[]>("GET", `/runs/${runId}/inputs`),
   usedBy: (kind: ReferenceKind) => request<Reference[]>("GET", `/used-by${q({ kind })}`),
   deleteKnowledge: (id: string) => request<void>("DELETE", `/knowledge/${id}`),
-  searchKnowledge: (query: string, fileIds?: string[]) =>
-    request<SearchHit[]>("GET", `/knowledge/search${q({ q: query, file_ids: fileIds?.join(",") })}`),
+  /** ``mode``: fts, vector or hybrid (default: the settings' mode); vector and hybrid need the semantic index. */
+  searchKnowledge: (query: string, fileIds?: string[], mode?: "fts" | "vector" | "hybrid") =>
+    request<SearchHit[]>("GET", `/knowledge/search${q({ q: query, file_ids: fileIds?.join(","), mode })}`),
   knowledgeUrl: (id: string) => `/api/knowledge/${id}/content`,
   recognizeText: (id: string) => request<KnowledgeFile>("POST", `/knowledge/${id}/ocr`),
 

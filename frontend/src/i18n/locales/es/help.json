@@ -132,7 +132,13 @@
     "providers": "Accesos a los proveedores de IA: claves de API (nunca se muestran; las variables de entorno tienen prioridad), URL base de tus propios servidores y lo que pueden hacer sus modelos. Cada agente usa el proveedor de su modelo; nada cambia a otro proveedor.",
     "prices": "De dónde vienen los precios, con qué frecuencia se comprueban y cómo funcionan los precios individuales y las revisiones.",
     "priceMode": "Estándar avisa de precios desconocidos o antiguos; Estricto rechaza esas solicitudes antes de que cuesten nada.",
-    "reconciliation": "Compara las estimaciones con las facturas de los proveedores. Necesita una clave de administrador de la API de facturación; no se cambia nada."
+    "reconciliation": "Compara las estimaciones con las facturas de los proveedores. Necesita una clave de administrador de la API de facturación; no se cambia nada.",
+    "localModels": "Los modelos locales funcionan en este ordenador con Ollama: sin clave de API, ningún dato sale del ordenador. Nodestro instala el entorno fijado si lo pides y comprueba cada descarga.",
+    "localRecommendations": "Sugerencias según la tarea, la memoria de este ordenador y los modelos instalados. Un modelo instalado que es suficiente va antes que uno mejor que habría que descargar.",
+    "localImport": "Para ordenadores sin internet: importa un paquete de modelos sin conexión (comprobado con SHA-256) o un archivo GGUF desde una unidad USB o una carpeta compartida.",
+    "localStorage": "Los modelos ocupan mucho. Puedes guardarlos en otra unidad, por ejemplo un SSD externo; al copiarlos se comprueba cada modelo antes del cambio.",
+    "strictOffline": "Rechaza modelos en la nube, servidores de modelos remotos, herramientas de servidor, servicios MCP remotos y descargas antes de iniciar una ejecución.",
+    "knowledgeSearch": "El texto completo encuentra palabras; la búsqueda semántica encuentra significados (también entre idiomas). La búsqueda semántica y la combinada necesitan el índice semántico creado con un modelo de embeddings."
   },
   "budget": {
     "decision": "La ejecución está en pausa porque su presupuesto no alcanza para la próxima solicitud al modelo. No se envió nada para ella. Eleva el límite de exactamente esta ejecución y continúa, o termina la ejecución.",

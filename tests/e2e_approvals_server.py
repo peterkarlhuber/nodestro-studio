@@ -18,6 +18,8 @@ from pathlib import Path
 import sys
 from typing import Any
 
+from e2e_defaults import keep_cloud_defaults
+
 sys.path.insert(0, str(Path(__file__).parent))
 
 TOOL = "send_message"
@@ -70,6 +72,7 @@ def main() -> None:
 
     client = ScriptedClient(script())
     app = create_app(studio_config(Path(args.data_dir)), client_factory=lambda _provider: client)
+    keep_cloud_defaults(app)
     workspace = app.state.nodestro
     assert workspace.runs.tool_gate is not None, "the switch did not turn the gate on"
     workspace.runs.tool_gate = ToolGate(

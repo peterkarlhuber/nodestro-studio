@@ -2,6 +2,35 @@
 
 Ce chapitre décrit tous les réglages, l’installation et le démarrage de Nodestro ainsi que les raccourcis clavier.
 
+## Modèles locaux {#lokale-modelle}
+<!-- keywords: modèle local, ollama, hors ligne, sans clé d’api, qwen, téléchargement, recommandation, matériel, gpu, mémoire, serveur de modèles -->
+
+Nodestro peut faire fonctionner les agents, les assistants et la recherche dans les connaissances avec des **modèles locaux** via Ollama, sans clé d’API : les instructions et les documents restent sur cet ordinateur. Une nouvelle installation utilise par défaut des modèles locaux (agents `ollama:qwen3.5:4b`, assistant `ollama:qwen3.5:9b`) ; une installation mise à jour conserve ses modèles.
+
+*Réglages → Modèles locaux* affiche :
+
+- **État :** si le serveur de modèles fonctionne et qui le fournit. Sur le poste de travail, Nodestro démarre son propre serveur (un processus distinct sur cet ordinateur, avec son propre dossier de modèles) ; dans Nodestro Local Docker, c’est un conteneur distinct ; sur un serveur, l’exploitant le fournit. Un Ollama que vous utilisez déjà n’est employé que si vous enregistrez son adresse pour le fournisseur Ollama.
+- **Environnement :** s’il manque, **Télécharger et installer** récupère une fois la version fixée et vérifie son SHA-256. Sans internet, installez-le depuis son archive de version (voir [Import hors ligne](/docs/einstellungen#offline-import)).
+- **Recommandé pour cet ordinateur :** un modèle par tâche (trier, rédiger, agents avec outils, analyse, assistant, recherche sémantique) d’après les besoins de la tâche, la mémoire de cet ordinateur et les modèles installés. Un modèle installé suffisant passe en premier ; *Limité* signifie qu’un modèle plus grand ferait mieux. Les suggestions ne modifient jamais un agent : vous choisissez son modèle dans l’éditeur.
+- **Modèles :** les modèles proposés avec la taille du téléchargement, la mémoire requise et la licence ; **Vérifié** signifie que la version installée est celle que Nodestro a vérifiée.
+
+Coûts : les modèles locaux n’ont **pas de facturation d’API externe**. Nodestro n’enregistre pas les coûts d’exploitation locaux (matériel, énergie) : les exécutions affichent donc « local, pas de facturation d’API » au lieu d’un total de 0, et les exécutions mixtes ajoutent au coût le nombre de requêtes locales.
+
+## Import hors ligne et dossier des modèles {#offline-import}
+<!-- keywords: hors ligne, air gap, usb, gguf, paquet hors ligne, sha-256, ssd externe, dossier des modèles, copier -->
+
+Pour les ordinateurs sans internet, *Réglages → Modèles locaux → Import hors ligne* importe depuis un chemin sur l’ordinateur où fonctionne Nodestro (dans Local Docker : dans son dossier d’import) :
+
+- **Paquet hors ligne :** un dossier créé sur un ordinateur relié à internet (`orkexa-local export`). Chaque fichier est vérifié par son SHA-256 avant d’être utilisé.
+- **Fichier GGUF :** un fichier de modèle ; donnez-lui le nom qu’utilisent les agents (par exemple `mon-modele:q4`) et, pour les modèles qui lisent des images, le projecteur de vision (`mmproj`).
+
+**Dossier des modèles :** les modèles sont volumineux. Choisissez un autre dossier, par exemple sur un SSD externe : **Les y copier et les vérifier** copie chaque modèle, le vérifie et ne change qu’ensuite (l’ancien dossier est conservé) ; **Utiliser le dossier tel quel** passe à un dossier qui contient déjà des modèles Ollama.
+
+## Mode hors ligne strict {#offline}
+<!-- keywords: hors ligne strict, air gap, sans cloud, vérification préalable, téléchargements refusés -->
+
+Avec le **Mode hors ligne strict** activé, la vérification avant chaque exécution refuse les modèles cloud (y compris comme modèle de secours, d’évaluation ou d’orchestration), un serveur de modèles qui n’est pas sur cet ordinateur, les outils serveur comme la recherche web et les services MCP distants ; les téléchargements sont aussi refusés. Les modèles locaux, les outils locaux et les serveurs MCP locaux continuent de fonctionner. Le mode ne modifie aucun workflow : il refuse seulement ce qui quitterait l’ordinateur.
+
 ## Fournisseurs d’IA {#anbieter}
 <!-- keywords: clé api, fournisseur, anthropic, openai, gemini, ollama, vllm, compatible openai, url de base, variable d’environnement, .env, capacités -->
 

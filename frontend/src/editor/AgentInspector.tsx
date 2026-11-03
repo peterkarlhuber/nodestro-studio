@@ -108,6 +108,27 @@ function useDebounced<T>(value: T, delay: number): T {
   return debounced;
 }
 
+type Retrieval = NonNullable<AgentConfig["knowledge"]["retrieval"]>;
+
+/** How a searching agent ranks its sections: as in the settings, or its own method (semantic needs the index). */
+function RetrievalPicker({ agent, onChange }: { agent: AgentConfig; onChange: (retrieval: Retrieval) => void }) {
+  const { t } = useTranslation();
+  const settings = useSettings();
+  const workspace = settings.data?.knowledge_retrieval ?? "fts";
+  return (
+    <Field label={t("localModels.search.agentMode")} tip="settings.knowledgeSearch">
+      <Select
+        value={agent.knowledge.retrieval ?? "default"}
+        onChange={(value) => onChange(value as Retrieval)}
+        options={[
+          { value: "default", label: t("localModels.search.agentDefault", { mode: t(`localModels.search.modes.${workspace}`) }) },
+          ...(["fts", "vector", "hybrid"] as const).map((value) => ({ value, label: t(`localModels.search.modes.${value}`) })),
+        ]}
+      />
+    </Field>
+  );
+}
+
 function useIssues(agent: AgentConfig): ConfigIssue[] {
   const debounced = useDebounced(agent, 350);
   const query = useQuery({
@@ -643,6 +664,7 @@ function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {
         <HelpTip id="agent.knowledgeMode" label={t("agent.knowledge.modeShort")} />
       </div>
       <p className="field__hint">{t(`agent.knowledge.modeHint.${agent.knowledge.mode}`)}</p>
+      {agent.knowledge.mode === "search" ? <RetrievalPicker agent={agent} onChange={(retrieval) => setKnowledge({ retrieval })} /> : null}
       <div className="chip-row">
         {assigned.map((file) => (
           <Chip

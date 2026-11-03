@@ -12,10 +12,11 @@ import { ApprovalCard } from "../runs/ApprovalCard";
 import { ToolOutputProblem } from "../runs/ToolOutputProblem";
 import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCard";
 import { ProblemText, runProblem } from "../lib/errors";
-import { formatCost, formatDuration, formatTime, formatNumber, formatTokens, tokenBreakdown } from "../lib/format";
+import { formatDuration, formatTime, formatNumber, formatTokens, tokenBreakdown } from "../lib/format";
 import { type AgentContext, ContextView } from "./ContextView";
 import { branchLabel } from "./branches";
 import { OrchestrationView } from "./OrchestrationView";
+import { usageCost } from "../lib/pricing";
 
 type RunTab = "result" | "prompt" | "context" | "tools" | "thinking" | "memory";
 
@@ -222,7 +223,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
             <Tooltip content={tokenBreakdown(state.usage)}>
               <span className="has-tip" tabIndex={0}>{t("runs.tokens", { value: formatTokens(state.usage.total_tokens) })}</span>
             </Tooltip>{" "}
-            · {t("runs.requests", { count: state.usage.requests, value: formatNumber(state.usage.requests) })} · {formatCost(state.usage.estimated_cost_usd)}
+            · {t("runs.requests", { count: state.usage.requests, value: formatNumber(state.usage.requests) })} · {usageCost(t, state.usage)}
           </span>
           {state.started_at ? (
             <div className="muted small">

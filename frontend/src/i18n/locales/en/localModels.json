@@ -1,0 +1,178 @@
+{
+  "title": "Local models",
+  "text": "Agents, assistants and knowledge search can run on this computer with local models (Ollama), without an API key. Data stays here.",
+  "status": {
+    "running": "Running",
+    "stopped": "Stopped"
+  },
+  "mode": {
+    "managed": "Managed by Nodestro on this computer",
+    "container": "Model container of Nodestro Local Docker",
+    "external": "Your own Ollama server (saved address)",
+    "unavailable": "No local model server"
+  },
+  "serverManaged": "On this server the operator runs the local model server. You can see the installed models here.",
+  "unavailable": "No local model server is configured. Enter the address of an Ollama server for the Ollama provider below.",
+  "detected": "An Ollama server is already running at {{url}}. Nodestro uses it only if you save this address for the Ollama provider.",
+  "runtime": {
+    "missing": "The local model runtime (Ollama {{version}}) is not installed yet. Download it once, or install it offline from its release archive.",
+    "download": "Download and install",
+    "archive": "Release archive on this computer",
+    "archiveHint": "The archive of the pinned version (for example ollama-linux-amd64.tar.zst). Its SHA-256 is checked before installing.",
+    "fromArchive": "Install from archive"
+  },
+  "start": "Start",
+  "stop": "Stop",
+  "autostart": "Start with Nodestro",
+  "hardware": "This computer: {{cpus}} CPU cores, {{ram}} memory, graphics: {{gpu}}",
+  "gpu": {
+    "nvidia": "NVIDIA GPU",
+    "apple": "Apple silicon",
+    "none": "none (CPU only)"
+  },
+  "recommend": {
+    "title": "Recommended for this computer",
+    "text": "Suggestions based on the task, the memory of this computer and the installed models. You choose the model of each agent yourself; nothing is changed automatically.",
+    "task": "Task",
+    "model": "Model",
+    "quality": "Suitability"
+  },
+  "tasks": {
+    "classify": "Sorting and routing",
+    "write": "Writing texts",
+    "tool_agent": "Agents with tools",
+    "analysis": "Analysis and reasoning",
+    "assistant": "Assistant and architect",
+    "embedding": "Semantic search"
+  },
+  "quality": {
+    "recommended": "Recommended",
+    "acceptable": "Suitable",
+    "limited": "Limited",
+    "insufficient": "Not possible"
+  },
+  "reasons": {
+    "below_ideal": "A larger model would do this better.",
+    "hardware_limit": "This computer has too little memory for a larger model.",
+    "no_gpu": "Without a graphics card, large models are too slow.",
+    "no_fit": "No suggested model fits this computer.",
+    "preferred_region": "Matches your preferred origin.",
+    "preferred_region_unavailable": "No equally suitable model of your preferred origin.",
+    "languages_unverified": "No model documents all languages of this work."
+  },
+  "download": "Download ({{size}})",
+  "downloadShort": "Download",
+  "installed": "Installed",
+  "catalog": {
+    "title": "Models",
+    "model": "Model",
+    "download": "Download size",
+    "memory": "Memory needed",
+    "state": "State",
+    "own": "Own model (imported or downloaded separately)"
+  },
+  "kind": {
+    "chat": "Language model",
+    "embedding": "Embedding model"
+  },
+  "verified": "Checked",
+  "unverified": "Different build",
+  "delete": "Delete {{model}}",
+  "deleted": "{{model}} deleted",
+  "jobs": {
+    "title": "Tasks",
+    "kind": {
+      "pull": "Download {{target}}",
+      "install_runtime": "Install the runtime",
+      "import_package": "Import {{target}}",
+      "import_gguf": "Import {{target}}",
+      "move_models": "Move the model folder"
+    },
+    "state": {
+      "running": "In progress",
+      "done": "Done",
+      "failed": "Failed",
+      "cancelled": "Canceled"
+    },
+    "progress": "{{done}} of {{total}}"
+  },
+  "import": {
+    "title": "Offline import",
+    "package": "Offline package",
+    "gguf": "GGUF file",
+    "packagePath": "Folder of the offline package",
+    "ggufPath": "GGUF file",
+    "pathHint": "A path on the computer that runs Nodestro (in Local Docker: inside its import folder). Packages are checked by SHA-256.",
+    "name": "Model name",
+    "nameHint": "The name agents use, for example my-model:q4.",
+    "projector": "Vision projector (optional)",
+    "projectorHint": "The mmproj file, if the model reads images.",
+    "start": "Import",
+    "started": "Import started"
+  },
+  "storage": {
+    "title": "Model folder",
+    "current": "Models are stored in {{path}} ({{free}} free).",
+    "path": "New folder",
+    "pathHint": "An absolute path, for example on an external SSD.",
+    "transfer": "Existing models",
+    "copy": "Copy them there and check them",
+    "use": "Use the folder as it is",
+    "apply": "Switch folder",
+    "copying": "The models are being copied. The old folder is kept.",
+    "switched": "The model folder was switched."
+  },
+  "offline": {
+    "label": "Strict offline mode",
+    "text": "Only local models and local tools. Cloud models, remote servers and downloads are refused before a run starts.",
+    "noDownloads": "Downloads are off in the strict offline mode."
+  },
+  "cost": {
+    "localOnly": "local, no API billing",
+    "plusLocal_one": "{{cost}} + {{count}} local request (no API billing)",
+    "plusLocal_other": "{{cost}} + {{count}} local requests (no API billing)"
+  },
+  "search": {
+    "title": "Knowledge search",
+    "text": "How agents find sections in their knowledge files. Semantic search finds matching passages by meaning, also across languages.",
+    "mode": "Search method",
+    "modes": {
+      "fts": "Full text",
+      "vector": "Semantic",
+      "hybrid": "Combined"
+    },
+    "modeHint": {
+      "fts": "Finds the words of the question. Needs no model.",
+      "vector": "Finds passages by meaning. Needs the semantic index.",
+      "hybrid": "Combines full text and meaning. Needs the semantic index."
+    },
+    "embeddingModel": "Embedding model",
+    "embeddingHint": "Another model needs a new index. Searches keep using the current index until the new one is complete.",
+    "noModel": "No model chosen",
+    "agentDefault": "As in Settings ({{mode}})",
+    "agentMode": "Search method of this agent"
+  },
+  "index": {
+    "state": {
+      "off": "No semantic index yet. Sections: {{chunks}}.",
+      "ready": "Sections indexed: {{embedded}} of {{chunks}}.",
+      "incomplete": "Sections indexed: {{embedded}} of {{chunks}}. Rebuild to add the rest.",
+      "building": "The index is being built.",
+      "reindex_required": "The chosen model differs from the index. Rebuild the index for it.",
+      "unavailable": "The model server cannot be reached."
+    },
+    "badge": {
+      "off": "Off",
+      "ready": "Ready",
+      "incomplete": "Incomplete",
+      "building": "Building",
+      "reindex_required": "Rebuild needed",
+      "unavailable": "Unavailable"
+    },
+    "buildingProgress": "Building: {{done}} of {{total}} sections",
+    "needed": "Semantic and combined search need a complete index. Until then, runs that use them do not start.",
+    "build": "Build index",
+    "rebuild": "Rebuild index",
+    "remove": "Remove the semantic index"
+  }
+}

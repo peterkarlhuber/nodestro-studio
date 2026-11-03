@@ -18,8 +18,22 @@ export function bucketState(bucket: UsageBucket): CostState {
   return bucket.unpriced >= bucket.requests ? "unknown" : "partial";
 }
 
+/**
+ * Local models have no external API billing, and their local operating costs (hardware, energy) are not recorded:
+ * only local requests read "local, no API billing", never a total of 0; mixed usage adds how many were local.
+ */
+function withLocal(t: TFunction, requests: number, local: number | undefined, cost: string): string {
+  if (!local) return cost;
+  if (local >= requests) return t("localModels.cost.localOnly");
+  return t("localModels.cost.plusLocal", { cost, count: local });
+}
+
 /** The cost of a bucket as text: the amount, "at least" the amount, or "–". */
 export function bucketCost(t: TFunction, bucket: UsageBucket): string {
+  return withLocal(t, bucket.requests, bucket.local_requests, apiBucketCost(t, bucket));
+}
+
+function apiBucketCost(t: TFunction, bucket: UsageBucket): string {
   const amount = bucket.known_cost_usd ?? bucket.estimated_cost_usd;
   switch (bucketState(bucket)) {
     case "unknown":
@@ -33,6 +47,10 @@ export function bucketCost(t: TFunction, bucket: UsageBucket): string {
 
 /** The cost of one operation: complete, at least the known part, or unknown ("–"). */
 export function usageCost(t: TFunction, usage: Usage): string {
+  return withLocal(t, usage.requests, usage.local_requests, apiUsageCost(t, usage));
+}
+
+function apiUsageCost(t: TFunction, usage: Usage): string {
   if (usage.estimated_cost_usd !== null) return formatCost(usage.estimated_cost_usd);
   if (usage.cost_complete === false && usage.known_cost_usd)
     return t("usage.cost.atLeast", { value: formatCost(usage.known_cost_usd) });
@@ -51,6 +69,7 @@ export const STALENESS_TONE: Record<string, Tone> = { ok: "success", warning: "w
 
 /** The hint of a model in a picker: its prices per million tokens and whether they are reliable. */
 export function modelPriceHint(t: TFunction, model: ModelInfo): string {
+  if (model.price_status === "local") return t("models.priceStatus.local");
   if (model.input_usd_per_mtok === null || model.output_usd_per_mtok === null || model.price_status === "unknown")
     return t("models.priceUnknown");
   const prices = t("models.pricePerMTok", {

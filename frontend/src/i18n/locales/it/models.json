@@ -7,6 +7,7 @@
     "unknown": "prezzo sconosciuto",
     "stale": "prezzo non verificato da un po’",
     "pending_review": "una modifica di prezzo attende revisione",
-    "custom": "prezzo individuale"
+    "custom": "prezzo individuale",
+    "local": "modello locale, nessuna fatturazione API (costi di esercizio non registrati)"
   }
 }

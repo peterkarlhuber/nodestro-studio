@@ -61,6 +61,7 @@ export function useModelHint(model: string): string | undefined {
     const description = modelDescription(t, info);
     // A price that is missing, old, waiting for a review or set by hand changes what the costs mean.
     const status = info.price_status;
+    if (status === "local") return `${description} · ${t("models.priceStatus.local")}`;
     if (status === "unknown" || status === "stale" || status === "pending_review" || status === "custom")
       return `${description} · ${t(`models.priceStatus.${status}`)}`;
     return description;

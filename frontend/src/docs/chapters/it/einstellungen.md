@@ -2,6 +2,35 @@
 
 Questo capitolo descrive tutte le impostazioni, l'installazione e l'avvio di Nodestro e le scorciatoie da tastiera.
 
+## Modelli locali {#lokale-modelle}
+<!-- keywords: modello locale, ollama, offline, senza chiave api, qwen, download, consiglio, hardware, gpu, memoria, server dei modelli -->
+
+Nodestro può far funzionare agenti, assistenti e ricerca nella conoscenza con **modelli locali** tramite Ollama, senza chiave API: prompt e documenti restano su questo computer. Una nuova installazione usa per impostazione predefinita modelli locali (agenti `ollama:qwen3.5:4b`, assistente `ollama:qwen3.5:9b`); un’installazione aggiornata mantiene i modelli che aveva.
+
+*Impostazioni → Modelli locali* mostra:
+
+- **Stato:** se il server dei modelli è attivo e chi lo fornisce. Sul desktop Nodestro avvia un proprio server (un processo separato su questo computer, con una propria cartella dei modelli); in Nodestro Local Docker è un container separato; su un server lo fornisce il gestore. Un Ollama che usi già viene adoperato solo se salvi il suo indirizzo per il provider Ollama.
+- **Ambiente:** se manca, **Scarica e installa** recupera una volta la versione fissata e ne verifica lo SHA-256. Senza internet, installalo dal suo archivio di rilascio (vedi [Importazione offline](/docs/einstellungen#offline-import)).
+- **Consigliati per questo computer:** un modello per compito (smistare, scrivere, agenti con strumenti, analisi, assistente, ricerca semantica) in base alle esigenze del compito, alla memoria di questo computer e ai modelli installati. Un modello installato sufficiente viene prima; *Limitato* significa che un modello più grande lo farebbe meglio. I suggerimenti non cambiano mai un agente: il suo modello lo scegli nell’editor.
+- **Modelli:** i modelli proposti con dimensione del download, memoria necessaria e licenza; **Verificato** significa che la versione installata è quella verificata da Nodestro.
+
+Costi: i modelli locali **non hanno fatturazione API esterna**. Nodestro non registra i costi di esercizio locali (hardware, energia), quindi le esecuzioni mostrano «locale, nessuna fatturazione API» invece di un totale di 0, e le esecuzioni miste aggiungono al costo il numero di richieste locali.
+
+## Importazione offline e cartella dei modelli {#offline-import}
+<!-- keywords: offline, air gap, usb, gguf, pacchetto offline, sha-256, ssd esterno, cartella dei modelli, copiare -->
+
+Per i computer senza internet, *Impostazioni → Modelli locali → Importazione offline* importa da un percorso sul computer su cui funziona Nodestro (in Local Docker: nella sua cartella di importazione):
+
+- **Pacchetto offline:** una cartella creata su un computer con internet (`orkexa-local export`). Ogni file viene verificato con il suo SHA-256 prima dell’uso.
+- **File GGUF:** un file di modello; dagli il nome usato dagli agenti (per esempio `mio-modello:q4`) e, per i modelli che leggono immagini, il proiettore visivo (`mmproj`).
+
+**Cartella dei modelli:** i modelli sono grandi. Scegli un’altra cartella, per esempio su un SSD esterno: **Copiali lì e verificali** copia ogni modello, lo verifica e solo dopo cambia (la vecchia cartella resta); **Usa la cartella così com’è** passa a una cartella che contiene già modelli Ollama.
+
+## Modalità offline rigorosa {#offline}
+<!-- keywords: offline rigoroso, air gap, niente cloud, verifica preliminare, download rifiutati -->
+
+Con la **Modalità offline rigorosa** attiva, la verifica prima di ogni esecuzione rifiuta i modelli cloud (anche come modello di riserva, di valutazione o orchestratore), un server dei modelli che non è su questo computer, gli strumenti server come la ricerca web e i servizi MCP remoti; anche i download vengono rifiutati. Modelli locali, strumenti locali e server MCP locali continuano a funzionare. La modalità non cambia nessun workflow: rifiuta solo ciò che lascerebbe il computer.
+
 ## Provider di IA {#anbieter}
 <!-- keywords: chiave api, provider, anthropic, openai, gemini, ollama, vllm, compatibile con openai, url di base, variabile d’ambiente, .env, capacità -->
 

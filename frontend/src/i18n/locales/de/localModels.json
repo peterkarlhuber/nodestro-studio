@@ -1,0 +1,178 @@
+{
+  "title": "Lokale Modelle",
+  "text": "Agenten, Assistenten und die Wissenssuche können mit lokalen Modellen (Ollama) auf diesem Computer laufen, ohne API-Schlüssel. Die Daten bleiben hier.",
+  "status": {
+    "running": "Läuft",
+    "stopped": "Gestoppt"
+  },
+  "mode": {
+    "managed": "Von Nodestro auf diesem Computer verwaltet",
+    "container": "Modell-Container von Nodestro Local Docker",
+    "external": "Dein eigener Ollama-Server (gespeicherte Adresse)",
+    "unavailable": "Kein lokaler Modellserver"
+  },
+  "serverManaged": "Auf diesem Server betreibt der Betreiber den lokalen Modellserver. Die installierten Modelle siehst du hier.",
+  "unavailable": "Kein lokaler Modellserver eingerichtet. Trag unten beim Anbieter Ollama die Adresse eines Ollama-Servers ein.",
+  "detected": "Unter {{url}} läuft bereits ein Ollama-Server. Nodestro nutzt ihn nur, wenn du diese Adresse beim Anbieter Ollama speicherst.",
+  "runtime": {
+    "missing": "Die lokale Modell-Laufzeit (Ollama {{version}}) ist noch nicht installiert. Lade sie einmal herunter oder installiere sie offline aus ihrem Release-Archiv.",
+    "download": "Herunterladen und installieren",
+    "archive": "Release-Archiv auf diesem Computer",
+    "archiveHint": "Das Archiv der festgelegten Version (zum Beispiel ollama-linux-amd64.tar.zst). Seine SHA-256-Prüfsumme wird vor der Installation geprüft.",
+    "fromArchive": "Aus Archiv installieren"
+  },
+  "start": "Starten",
+  "stop": "Stoppen",
+  "autostart": "Mit Nodestro starten",
+  "hardware": "Dieser Computer: {{cpus}} CPU-Kerne, {{ram}} Arbeitsspeicher, Grafik: {{gpu}}",
+  "gpu": {
+    "nvidia": "NVIDIA-GPU",
+    "apple": "Apple Silicon",
+    "none": "keine (nur CPU)"
+  },
+  "recommend": {
+    "title": "Empfohlen für diesen Computer",
+    "text": "Vorschläge nach Aufgabe, Arbeitsspeicher dieses Computers und installierten Modellen. Das Modell jedes Agenten wählst du selbst; nichts wird automatisch geändert.",
+    "task": "Aufgabe",
+    "model": "Modell",
+    "quality": "Eignung"
+  },
+  "tasks": {
+    "classify": "Sortieren und Weiterleiten",
+    "write": "Texte schreiben",
+    "tool_agent": "Agenten mit Tools",
+    "analysis": "Analyse und Schlussfolgern",
+    "assistant": "Assistent und Architekt",
+    "embedding": "Semantische Suche"
+  },
+  "quality": {
+    "recommended": "Empfohlen",
+    "acceptable": "Geeignet",
+    "limited": "Eingeschränkt",
+    "insufficient": "Nicht möglich"
+  },
+  "reasons": {
+    "below_ideal": "Ein größeres Modell könnte das besser.",
+    "hardware_limit": "Für ein größeres Modell hat dieser Computer zu wenig Speicher.",
+    "no_gpu": "Ohne Grafikkarte sind große Modelle zu langsam.",
+    "no_fit": "Kein vorgeschlagenes Modell passt zu diesem Computer.",
+    "preferred_region": "Entspricht deiner bevorzugten Herkunft.",
+    "preferred_region_unavailable": "Kein gleich gut geeignetes Modell deiner bevorzugten Herkunft.",
+    "languages_unverified": "Kein Modell dokumentiert alle Sprachen dieser Arbeit."
+  },
+  "download": "Herunterladen ({{size}})",
+  "downloadShort": "Herunterladen",
+  "installed": "Installiert",
+  "catalog": {
+    "title": "Modelle",
+    "model": "Modell",
+    "download": "Downloadgröße",
+    "memory": "Speicherbedarf",
+    "state": "Zustand",
+    "own": "Eigenes Modell (importiert oder separat geladen)"
+  },
+  "kind": {
+    "chat": "Sprachmodell",
+    "embedding": "Embedding-Modell"
+  },
+  "verified": "Geprüft",
+  "unverified": "Andere Fassung",
+  "delete": "{{model}} löschen",
+  "deleted": "{{model}} gelöscht",
+  "jobs": {
+    "title": "Aufgaben",
+    "kind": {
+      "pull": "{{target}} herunterladen",
+      "install_runtime": "Laufzeit installieren",
+      "import_package": "{{target}} importieren",
+      "import_gguf": "{{target}} importieren",
+      "move_models": "Modellordner verschieben"
+    },
+    "state": {
+      "running": "Läuft",
+      "done": "Fertig",
+      "failed": "Fehlgeschlagen",
+      "cancelled": "Abgebrochen"
+    },
+    "progress": "{{done}} von {{total}}"
+  },
+  "import": {
+    "title": "Offline-Import",
+    "package": "Offline-Paket",
+    "gguf": "GGUF-Datei",
+    "packagePath": "Ordner des Offline-Pakets",
+    "ggufPath": "GGUF-Datei",
+    "pathHint": "Ein Pfad auf dem Computer, auf dem Nodestro läuft (in Local Docker: im Import-Ordner). Pakete werden per SHA-256 geprüft.",
+    "name": "Modellname",
+    "nameHint": "Der Name, den Agenten verwenden, zum Beispiel mein-modell:q4.",
+    "projector": "Vision-Projektor (optional)",
+    "projectorHint": "Die mmproj-Datei, wenn das Modell Bilder liest.",
+    "start": "Importieren",
+    "started": "Import gestartet"
+  },
+  "storage": {
+    "title": "Modellordner",
+    "current": "Die Modelle liegen in {{path}} ({{free}} frei).",
+    "path": "Neuer Ordner",
+    "pathHint": "Ein absoluter Pfad, zum Beispiel auf einer externen SSD.",
+    "transfer": "Vorhandene Modelle",
+    "copy": "Dorthin kopieren und prüfen",
+    "use": "Ordner so verwenden, wie er ist",
+    "apply": "Ordner wechseln",
+    "copying": "Die Modelle werden kopiert. Der alte Ordner bleibt erhalten.",
+    "switched": "Der Modellordner wurde gewechselt."
+  },
+  "offline": {
+    "label": "Strikter Offline-Modus",
+    "text": "Nur lokale Modelle und lokale Tools. Cloud-Modelle, entfernte Server und Downloads werden vor dem Start abgelehnt.",
+    "noDownloads": "Im strikten Offline-Modus sind Downloads aus."
+  },
+  "cost": {
+    "localOnly": "lokal, keine API-Abrechnung",
+    "plusLocal_one": "{{cost}} + {{count}} lokale Anfrage (keine API-Abrechnung)",
+    "plusLocal_other": "{{cost}} + {{count}} lokale Anfragen (keine API-Abrechnung)"
+  },
+  "search": {
+    "title": "Wissenssuche",
+    "text": "Wie Agenten Abschnitte in ihren Wissensdateien finden. Die semantische Suche findet passende Stellen nach ihrer Bedeutung, auch über Sprachen hinweg.",
+    "mode": "Suchverfahren",
+    "modes": {
+      "fts": "Volltext",
+      "vector": "Semantisch",
+      "hybrid": "Kombiniert"
+    },
+    "modeHint": {
+      "fts": "Findet die Wörter der Frage. Braucht kein Modell.",
+      "vector": "Findet Stellen nach ihrer Bedeutung. Braucht den semantischen Index.",
+      "hybrid": "Verbindet Volltext und Bedeutung. Braucht den semantischen Index."
+    },
+    "embeddingModel": "Embedding-Modell",
+    "embeddingHint": "Ein anderes Modell braucht einen neuen Index. Bis er fertig ist, sucht Nodestro weiter im bisherigen.",
+    "noModel": "Kein Modell gewählt",
+    "agentDefault": "Wie in den Einstellungen ({{mode}})",
+    "agentMode": "Suchverfahren dieses Agenten"
+  },
+  "index": {
+    "state": {
+      "off": "Noch kein semantischer Index. Abschnitte: {{chunks}}.",
+      "ready": "Indizierte Abschnitte: {{embedded}} von {{chunks}}.",
+      "incomplete": "Indizierte Abschnitte: {{embedded}} von {{chunks}}. Neu aufbauen, um den Rest aufzunehmen.",
+      "building": "Der Index wird aufgebaut.",
+      "reindex_required": "Das gewählte Modell passt nicht zum Index. Baue den Index dafür neu auf.",
+      "unavailable": "Der Modellserver ist nicht erreichbar."
+    },
+    "badge": {
+      "off": "Aus",
+      "ready": "Bereit",
+      "incomplete": "Unvollständig",
+      "building": "Im Aufbau",
+      "reindex_required": "Neuaufbau nötig",
+      "unavailable": "Nicht erreichbar"
+    },
+    "buildingProgress": "Aufbau: {{done}} von {{total}} Abschnitten",
+    "needed": "Semantische und kombinierte Suche brauchen einen vollständigen Index. Bis dahin starten Ausführungen, die sie nutzen, nicht.",
+    "build": "Index aufbauen",
+    "rebuild": "Index neu aufbauen",
+    "remove": "Semantischen Index entfernen"
+  }
+}

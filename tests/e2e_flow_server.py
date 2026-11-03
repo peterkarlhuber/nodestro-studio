@@ -18,6 +18,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from e2e_defaults import keep_cloud_defaults
 from nodestro_runtime.testing import ScriptedClient, text
 import uvicorn
 
@@ -62,6 +63,7 @@ def main() -> None:
     client = ScriptedClient(script())
     config = studio_config(Path(args.data_dir))
     app = create_app(config, client_factory=lambda _provider: client)
+    keep_cloud_defaults(app)
     uvicorn.run(app, host="127.0.0.1", port=args.port, log_level="warning")
 
 
