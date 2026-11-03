@@ -15,6 +15,9 @@
 - Sandbox settings say what to do about Docker once; the budget card names the waiting agent by its label when the
   runtime sends one. Smaller fixes: provider select width, toasts no longer cover Save buttons, the help tip stays
   below the inspector footer, the tracked `frontend/node_modules` symlink is gone.
+- Error sentences in six languages for the API's request and routing codes (`request.malformed`, `route.not_found`,
+  `method.not_allowed`, `publication.slug_taken`, a size limit on `request.too_large`); `request.invalid` lists the
+  fields of either answer shape.
 
 ### Languages and built-in docs, UX round 2 (2026-11-03)
 
