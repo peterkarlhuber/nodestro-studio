@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+### Local models, embeddings and semantic knowledge search (2026-11-03)
+
+- *Settings → Local models*: the state of the local model server (managed on the desktop, the Local Docker container,
+  an operator's server), installing the pinned runtime (download or offline release archive, SHA-256 checked),
+  start/stop and start with Nodestro, recommendations per task for this computer with their reasons, the model
+  catalog with download size, memory need, license and whether the installed build is the checked one, downloads,
+  offline import (offline package or GGUF file), moving the model folder (copy and check, or use as is), job progress
+  with cancel, and the strict offline mode.
+- *Settings → Knowledge search*: full text, semantic or combined search, the embedding model and the semantic index
+  (build, rebuild, cancel, remove); each searching agent can keep the setting or choose its own method.
+- Costs of local requests read "local, no API billing" instead of a total of 0; mixed usage adds the number of local
+  requests. Local models in the model picker say so instead of a price.
+- The welcome page links to the local models setup. Texts, error messages, help and the manual chapters (local models,
+  offline import, strict offline mode, search methods) in all six languages.
+- The e2e servers keep the cloud defaults (`tests/e2e_defaults.py`): a new installation now defaults to local models.
+
 ### Platform pins: backend audit round 2 (2026-11-03)
 
 - Pins nodestro-api 7c195ed (api #77: the export works on installations without test tools, such as the server and

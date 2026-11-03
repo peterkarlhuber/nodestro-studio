@@ -12,8 +12,8 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 21 |
-| P4 Optional | 12 |
+| P3 Low | 22 |
+| P4 Optional | 13 |
 
 **Release blockers:** None for this repository.
 
@@ -74,6 +74,14 @@ None known.
   the editor chunk from the Workflows page, look at React Flow's node measuring (110–180 ms at 4x).
 
 ## Features and enhancements
+
+### ST-044 · Task-aware model suggestions inside the model picker
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** local models work order (2026-11-03)
+- **What:** Recommendations per task show in *Settings → Local models*; the agent's model picker shows local models
+  with their "no API billing" label but not which one suits the agent's task on this computer.
+- **Next step:** Ask `GET /api/local-models/recommend?task=` from the agent inspector (task from the agent's tools
+  and output) and show the suggestion with its reasons next to the picker; never change the stored model.
 
 ### ST-035 · Similarity hint for pasted code in the tool editor (R-4)
 
@@ -161,6 +169,15 @@ None known.
 - **Depends on:** nodestro-examples EX-002 (possible `label` on the runtime's `OutputField`).
 
 ## Tests and quality assurance
+
+### ST-043 · End-to-end suite for the local models settings with a real model server
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** local models work order (2026-11-03), `pages/SettingsLocalModels.tsx`
+- **What:** The local models and knowledge search sections have unit tests against stubbed answers; the e2e suites keep
+  the cloud defaults (`tests/e2e_defaults.py`). No browser suite installs the runtime, downloads a model, builds the
+  semantic index and runs a local agent end to end.
+- **Next step:** Add an e2e server with a fake Ollama binary (as in nodestro-api `tests/test_local_models_api.py`)
+  and a suite for start, download progress, import errors and index build; run it with a real Ollama where CI allows.
 
 ### ST-017 · Pending dependency updates (Dependabot)
 
