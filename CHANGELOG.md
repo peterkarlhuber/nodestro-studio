@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+### Docker Desktop: the sandbox test in one command (2026-11-02)
+
+- `scripts/mac_docker_test.sh` (macOS, Linux) and `scripts/docker_test.py` (also Windows: `py -3.13
+  scripts\docker_test.py`): from a checkout, look at the computer and Docker (context, `DOCKER_HOST`, Linux or
+  Windows containers, cgroup version, memory, Docker Desktop version, what the runtime's reduced docker environment
+  sees), install the studio into its own virtual environment, run `scripts/docker_smoke.py`, print PASS/FAIL per step
+  in plain language and write a redacted report (`.txt`, `.json`, `.zip`; no environment dump, tokens, keys, URL
+  passwords or home folders). Cleans up only its own containers (by owner label), its data and environment, and with
+  `--remove-images` the images it pulled or built. Docker Desktop is quit only with `--stop-docker-desktop`, after
+  asking. Guide: `docs/testing/docker-desktop.md`.
+- `scripts/docker_smoke.py`: counts and inspects only the containers of its own installation
+  (`org.orkexa.sandbox=nodestro-<id>`), not those of another Nodestro on the same engine; checks the memory, swap,
+  CPU and process limits of the running container, that the sandbox image matches the engine's architecture (arm64
+  on Apple silicon), the diagnosis (`GET /api/diagnostics`) and that each reason has the sentence the interface
+  shows; one PASS/FAIL per status stage (cli, daemon, preflight, image, self-test); waits for the engine to really
+  stop (Docker Desktop takes a while), `--stop-engine-prompt` for quitting it by hand, `--start-engine`, JSON
+  commands for Windows paths; `--results` writes the checks with their step.
+- `.github/workflows/docker.yml`: job `one-command` runs the wrapper itself from a fresh checkout on `ubuntu-latest`
+  (Docker Engine) and `macos-15-intel` (Colima), including the real stop and start, and checks that only the test's
+  resources are gone and the report has no token.
+
 ### Platform pins: Nodestro–Axentra migration close-out (2026-11-03)
 
 - Pins: nodestro-runtime `bcfea7f` (#93 static tenant SQL check round-3 gaps and tool-job stop on suspension, NF-1;

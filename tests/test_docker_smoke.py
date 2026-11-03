@@ -59,3 +59,28 @@ def test_the_stand_in_model_answers_the_coding_agent_and_the_workflow_agent() ->
     assert json.loads(call["tool_calls"][0]["function"]["arguments"]) == {"rounds": docker_smoke.ENDLESS}
     after = docker_smoke.model_answer({"messages": [{"role": "tool", "content": "stopped"}], "tools": tools})
     assert after == {"role": "assistant", "content": "done"}
+
+
+def test_resource_limits_must_all_be_set() -> None:
+    flags = docker_smoke.isolation_flags(
+        inspected(Memory=512 * 2**20, MemorySwap=512 * 2**20, NanoCpus=10**9, PidsLimit=64)
+    )
+    assert docker_smoke.limited(flags)
+    assert not docker_smoke.limited({**flags, "memory_swap": -1})
+    assert not docker_smoke.limited({**flags, "nano_cpus": 0})
+    assert not docker_smoke.limited({**flags, "pids_limit": None})
+    assert not docker_smoke.limited({**flags, "memory": 0})
+
+
+def test_image_architecture_names_differ_from_the_engines() -> None:
+    assert docker_smoke.arch_matches("aarch64", "arm64")
+    assert docker_smoke.arch_matches("x86_64", "amd64")
+    assert not docker_smoke.arch_matches("aarch64", "amd64")
+    assert not docker_smoke.arch_matches("x86_64", "")
+
+
+def test_reasons_have_the_sentence_the_interface_shows() -> None:
+    assert "not running" in docker_smoke.reason_sentence("docker-unreachable")
+    assert "Linux containers" in docker_smoke.reason_sentence("docker-os-type")
+    assert docker_smoke.reason_sentence("no-isolation") == ""
+    assert docker_smoke.diagnosis_sentence("available") == "Available."
