@@ -13,6 +13,26 @@
   (API2-16), `check_versions` requires the canonical pinned reference for every component (API2-09), and CI installs
   the public sibling repositories anonymously (OPS2-05).
 
+### Journeys and editor performance, UX round 2 (2026-11-03)
+
+- Budget: the new-limit field of the budget card and the maximum budget in the settings use the language's decimal
+  mark ("0,03" next to a hint that says "2,50"); either mark is read back. English times with seconds read
+  "8:04:02 AM" like the other times, and a price checked on a day no longer shows "12:00 AM".
+- Sandbox: the runtime's English details (Docker output, built-in sandbox reasons) are folded under "Technical
+  details" and marked as English; the badge next to the mode says "Docker not running" or "Docker not ready" instead
+  of "Docker not found" when the checks found Docker. The workflow check, the tool page and a failed run offer "Open
+  Settings → Sandbox" where AI-created code is blocked.
+- Tool adoption: the dialog says what changes on this computer (blocked now or isolated in which sandbox, and where
+  the tool runs once adopted).
+- Runs: the list's filters live in the address (`/executions?status=failed` works, and coming back from a run keeps
+  them); a filter without matches says so and offers "Show all runs"; every column, also the delete action, fits at
+  1440 px. In the editor's run panel a long step status wraps (es, fr, it, pt-BR), and the steps keep their room
+  below a budget or approval card.
+- Editor opening (ST-004): fewer renders while the editor opens (zoom label on its own, node data reused while
+  equal, memoized panels and canvas, cached number formatters). `npm run perf:editor` (`e2e/perf-editor.mjs`)
+  measures it: nine-node workflow, CPU 4x slower, median of five, mount 1884 → 1335 ms, total blocking time
+  1557 → 956 ms.
+
 ### Navigation, settings and editor, UX round 2 (2026-11-03)
 
 - Settings has a contents list grouped by task (setup, costs, running, maintenance) with deep links to every section
