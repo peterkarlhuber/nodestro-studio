@@ -21,7 +21,7 @@ import { Button, DisabledReason, DocLink, Hint, MenuButton, Modal, Spinner } fro
 import { Canvas, type CanvasIssues } from "../editor/Canvas";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { Inspector } from "../editor/Inspector";
-import { useEditorLayout } from "../editor/layout";
+import { isTabletEditor, useEditorLayout } from "../editor/layout";
 import { Palette } from "../editor/Palette";
 import { RunDialog } from "../editor/RunDialog";
 import { PANEL_VARIABLE, PanelSplitter } from "../editor/PanelSplitter";
@@ -206,6 +206,13 @@ export function EditorPage() {
     }
     return result;
   }, [check.data, block]);
+
+  // Tablets: the properties are a drawer over the canvas; selecting a step or connection opens it (ST-009).
+  const selectedId = useEditor((state) => state.selectedId);
+  const selectedEdgeId = useEditor((state) => state.selectedEdgeId);
+  useEffect(() => {
+    if ((selectedId || selectedEdgeId) && isTabletEditor()) useEditorLayout.getState().setOpen("inspector", true);
+  }, [selectedId, selectedEdgeId]);
 
   /** Show the problem that blocks the start: the node or connection it is about, or the check list. */
   const showProblem = () => {

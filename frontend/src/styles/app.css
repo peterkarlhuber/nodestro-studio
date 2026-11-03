@@ -7709,3 +7709,25 @@ ul.gate-report__list > li.gate-report__item {
     padding: 2px 6px;
   }
 }
+
+/* ---- Editor on tablets (761-1100 px): the properties lie over the canvas as a drawer (ST-009) ---------- */
+
+@media (min-width: 761px) and (max-width: 1100px) {
+  .editor,
+  .editor.editor--inspector-collapsed {
+    position: relative;
+    grid-template-columns: minmax(0, 1fr) var(--editor-rail);
+  }
+
+  .editor:not(.editor--inspector-collapsed) .inspector {
+    position: absolute;
+    inset: 0 0 0 auto;
+    z-index: 20;
+    width: min(360px, 85%);
+    box-shadow: var(--nd-shadow-popover);
+  }
+
+  .splitter--inspector {
+    display: none;
+  }
+}
