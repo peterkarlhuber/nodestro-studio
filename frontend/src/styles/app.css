@@ -844,6 +844,14 @@ ol {
   font-size: var(--nd-font-size-sm);
 }
 
+/* A status badge in a key figure may wrap: on a phone a long status ("Waiting for budget decision", French and
+   Portuguese even longer) is wider than the card and was cut off at its edge. */
+.stat .nd-badge {
+  align-self: flex-start;
+  max-width: 100%;
+  white-space: normal;
+}
+
 /* ---- trace -------------------------------------------------------------------- */
 
 .trace {

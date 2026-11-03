@@ -57,11 +57,11 @@ The **sidebar** on the left follows the way you work: build, run and review, the
 - **Automate & test:** *Test series*, *Batch runs* and *Schedules*.
 - **Help:** this *Documentation* and the *Welcome* page.
 
-*Settings* are at the bottom, and below them where Nodestro runs: in the desktop app and with the `nodestro` command it says **Local & private**, on a server **Your organization's server** (see [Nodestro on a server](/docs/einstellungen#server)). At the top right you switch between the dark and light colour scheme; your choice is saved in the browser. If the provider of the default model is not set up, a notice appears there (*Set up AI provider* or, once another provider is set up, *Default model needs …*) that leads straight to the settings. On a server, your account is shown at the top right as well.
+*Settings* are at the bottom, and below them where Nodestro runs: in the desktop app and with the `nodestro` command it says **Local & private**, on a server **Your organization's server** (see [Nodestro on a server](/docs/einstellungen#server)). At the top right you switch between the dark and light color scheme; your choice is saved in the browser. If the provider of the default model is not set up, a notice appears there (*Set up AI provider* or, once another provider is set up, *Default model needs …*) that leads straight to the settings. On a server, your account is shown at the top right as well.
 
 **Help right where you need it:** many controls have a small **?** symbol next to them. Hover over it, focus it with the Tab key or tap it on touch devices: a short explanation appears, often with a link to the matching section of this documentation. The book symbol next to page titles opens the matching chapter. **Esc** closes an explanation again.
 
-Statuses are always shown as text and symbol, never by colour alone. All controls can also be reached with the keyboard.
+Statuses are always shown as text and symbol, never by color alone. All controls can also be reached with the keyboard.
 
 ## Search {#suche}
 <!-- keywords: search, find, ctrl+k, cmd+k, quick search -->

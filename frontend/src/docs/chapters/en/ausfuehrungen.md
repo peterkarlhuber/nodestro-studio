@@ -17,7 +17,7 @@ Runs are kept even if you change or delete the workflow; every run stores the wo
 
 During a run, the **Run overview** shows:
 
-- in its header the status of the run and **Cancel run** (see [Cancelling runs](/docs/ausfuehrungen#abbrechen)), after the end a link to the **Details**,
+- in its header the status of the run and **Cancel run** (see [Canceling runs](/docs/ausfuehrungen#abbrechen)), after the end a link to the **Details**,
 - at the top the number of agents, API requests, tokens and the estimated costs, updated continuously,
 - on the left all agents with their status; a click shows their details on the right, *Overall result* shows the result of the workflow,
 - on the right the text the selected agent is writing, its tool calls and (if enabled) its thoughts.
@@ -54,7 +54,7 @@ Clicking a run opens the detail view:
 
 | Tab | Content |
 |---|---|
-| **Result** | The agent's output: text as Markdown, a structured result as labelled fields (short field descriptions serve as labels). The JSON is one click away with **Show as JSON**. |
+| **Result** | The agent's output: text as Markdown, a structured result as labeled fields (short field descriptions serve as labels). The JSON is one click away with **Show as JSON**. |
 | **Task** | The task as it went to the agent after the placeholders were filled in. Ideal for finding data-flow problems. |
 | **Tools** | Every tool call with input, result, time, duration and success. |
 | **Thoughts** | The model's reasoning (only if *Show thoughts* was on). |
@@ -67,7 +67,7 @@ The **Context** tab shows what the agent got in this run: system prompt, task wi
 **Notes on the outcome.** What did not go smoothly is shown below the key figures:
 
 - **Failed at *step*:** if a step failed, the message names it with its own problem in words and what to do, for example an answer cut off at its token limit or a rejected API key. For provider failures the model is shown too. Where the fix is a setting, a link leads there: **Open Settings** or **Open "Advanced" of *agent***. If more steps failed, their number is shown below. The original text is under *Technical details*.
-- **Finished with problems:** a run can be *Done* although tool calls had no result: rejected by a person, expired without a decision, not allowed by the approval rules, cancelled, failed, or with an error of the tool. Then the amber badge **Finished with problems** appears next to *Done*, and a notice lists each of these calls with step, tool and reason, each with *Go to step*. Check whether the result relies on them.
+- **Finished with problems:** a run can be *Done* although tool calls had no result: rejected by a person, expired without a decision, not allowed by the approval rules, canceled, failed, or with an error of the tool. Then the amber badge **Finished with problems** appears next to *Done*, and a notice lists each of these calls with step, tool and reason, each with *Go to step*. Check whether the result relies on them.
 - **Not finished:** if a run ended while steps were still running or waiting (for example because Nodestro was stopped), those steps read **Not finished** instead of *Waiting* or *Running*. The notice names the steps that never got a result, or says that Nodestro stopped while the run was going. **Continue** right in the notice completes them; finished steps are taken over (see [Continuing failed runs](/docs/verzweigungen#fortsetzen)).
 
 ## Status {#status}
@@ -81,16 +81,16 @@ The **Context** tab shows what the agent got in this run: system prompt, task wi
 | **Done** | Completed successfully. |
 | **Error** | Failed; the message is in the details. A run has the status *Error* as soon as one node fails. |
 | **Skipped** | The node did not run because its branch was not chosen. This is not an error. |
-| **Blocked** | The node did not run because a predecessor failed or was cancelled. |
+| **Blocked** | The node did not run because a predecessor failed or was canceled. |
 | **Awaiting approval** | An [approval](/docs/verzweigungen#freigabe) waits for a person's decision. |
 | **Waiting for budget decision** | The next model request needs more budget; the run is paused until someone raises its limit or ends it ([budget decisions](/docs/workflows#budget-freigabe)). |
 | **Paused** | The run waits for an approval and continues after the decision. |
-| **Cancelled** | Stopped with *Cancel run*, rejected, or a trace that was exported before it was complete. |
+| **Canceled** | Stopped with *Cancel run*, rejected, or a trace that was exported before it was complete. |
 | **Waiting for you** | A tool call waits for your approval; the run goes on as soon as you have decided. |
 | **Not finished** | A step of a finished run that never completed (for example because Nodestro was stopped). |
 | **Finished with problems** | Not a status of its own but a badge next to *Done*: tool calls of the run had no result. |
 
-A failed or cancelled run can be [continued](/docs/verzweigungen#fortsetzen). Runs from schedules, batch runs, test series and sub-workflows show their origin in the list and in the details.
+A failed or canceled run can be [continued](/docs/verzweigungen#fortsetzen). Runs from schedules, batch runs, test series and sub-workflows show their origin in the list and in the details.
 
 ## The result of a run {#ergebnis}
 <!-- keywords: result, output, overall result, workflow output, sink -->
@@ -99,7 +99,7 @@ A failed or cancelled run can be [continued](/docs/verzweigungen#fortsetzen). Ru
 - If there is **no** result node, the agents without a successor count as the result.
 - With several result nodes (or last agents), the result is an object with one entry per node, named after the node.
 
-## Cancelling runs {#abbrechen}
+## Canceling runs {#abbrechen}
 <!-- keywords: cancel, stop, abort, end, really cancel, confirm -->
 
 **Cancel run** (in the run overview or the detail view) asks once more to be safe: a second click on **Really cancel?** within five seconds stops the run; **Esc** or a click elsewhere lets it keep running. This also applies to a paused run. Running agents stop at the next step (next piece of text, next request or next tool call); agents that have not started yet are no longer run. Tokens used up to that point are charged and shown.
@@ -150,7 +150,7 @@ This is how the import works:
 - Imported traces are **stored permanently** and, like any execution, can be opened again, filtered, exported and deleted.
 - **Existing runs are never overwritten:** every import gets a new ID; the original ID is shown in the detail view.
 - **Duplicates:** if the same run already exists (the original or an earlier import of the same file), Nodestro does not create a copy but opens the existing execution and tells you so.
-- **Incomplete traces:** if a run was exported while it was still running, it appears as *Cancelled* with a note.
+- **Incomplete traces:** if a run was exported while it was still running, it appears as *Canceled* with a note.
 - **Usage:** imported runs do not count towards the usage statistics, because their costs did not arise in this installation.
 - **Open in editor** is missing for imported traces, because the matching workflow usually does not exist here. You transfer the workflow itself with the [workflow export](/docs/workflows#import-export).
 
@@ -181,6 +181,6 @@ Errors are shown in the run details with the run ("Failed at *step*" with that s
 | `ToolExecutionError` | A tool failed unexpectedly and *Return tool errors to the model* was off. | Test the tool under *Try it*, switch the option on. |
 | *The AI provider reported an error …* | The provider reported an error (for example invalid key, overload, unknown model id, invalid request options). | Check the key and the model id, try again later, check the request options. |
 | *Skipped because a previous node did not succeed.* | A consequence of an error further back. | Fix the first failed agent. |
-| *The run was cancelled.* | Someone chose *Cancel*. | – |
+| *The run was canceled.* | Someone chose *Cancel*. | – |
 
 More messages and solutions are under [Common errors](/docs/faq#haeufige-fehler).

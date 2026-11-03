@@ -99,7 +99,7 @@
     "text": "as text",
     "document": "as PDF document",
     "image": "as image",
-    "ocr_text": "recognised text (OCR)",
+    "ocr_text": "recognized text (OCR)",
     "overview": "overview",
     "unavailable": "not handed over"
   },
@@ -107,7 +107,7 @@
     "text": "The agent got the file's content as text.",
     "document": "The agent got the PDF itself (text and layout).",
     "image": "The agent saw the image itself.",
-    "ocr_text": "The agent got the text recognised in the scan, not the image.",
+    "ocr_text": "The agent got the text recognized in the scan, not the image.",
     "overview": "The agent got the structure and read the content in parts with the input_files tool.",
     "unavailable": "The file could not be handed over."
   },

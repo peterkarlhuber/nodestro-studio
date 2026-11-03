@@ -1,7 +1,7 @@
 {
   "workflow": {
     "budget": "Maximum amount in US dollars for one run. Every request reserves its highest possible cost in advance, so parallel steps cannot exceed the budget together. Empty = default budget from the settings.",
-    "limits": "Limits how many steps of a run work at the same time, how long a run may actively work and how many steps it runs in total. At the time limit, running steps are cancelled; a request already sent still finishes.",
+    "limits": "Limits how many steps of a run work at the same time, how long a run may actively work and how many steps it runs in total. At the time limit, running steps are canceled; a request already sent still finishes.",
     "contract": "The fields the workflow promises as its result. If the result does not fit, the run fails instead of passing on something unchecked.",
     "capabilities": "Tags for what the workflow can do as a team. They help to find a fitting team and grant no permissions.",
     "problems": "These points prevent the start. They are checked again after every change.",
@@ -210,7 +210,7 @@
     "conditionInvalid": "When the field is missing or has the wrong type, the decision takes the otherwise branch or fails.",
     "approval": "The run pauses until a person approves or rejects. Open approvals are listed under Approvals.",
     "approvalShow": "The reviewer sees these results. Nothing selected: everything that arrives here.",
-    "approvalReject": "When rejected, the run follows the “Rejected” branch or ends as cancelled.",
+    "approvalReject": "When rejected, the run follows the “Rejected” branch or ends as canceled.",
     "approvals": "Every run that waits for a human decision.",
     "subworkflow": "Runs another workflow as one step. Its result arrives here like an agent's.",
     "subworkflowVersion": "A fixed version protects against later changes to the sub-workflow.",
@@ -231,7 +231,7 @@
     "sanitize": "Replaces credentials and personal data in the file with placeholders.",
     "run": "Files of this run. HTML is shown without scripts.",
     "formats": "Word (DOCX) and Excel (XLSX) are converted to Markdown on upload; formulas are shown, never run.",
-    "ocr": "Scanned PDFs without a text layer can be recognised locally with Tesseract. Uncertain words are marked."
+    "ocr": "Scanned PDFs without a text layer can be recognized locally with Tesseract. Uncertain words are marked."
   },
   "automation": {
     "batch": "One workflow over many inputs. Every row becomes a run of its own.",

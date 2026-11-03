@@ -234,13 +234,15 @@ describe("terminology", () => {
   // Words docs/i18n/terminology.md lists under "Avoid", checked where they cannot mean anything else. Placeholders
   // ({{workflow}}) are names, not words.
   const AVOID: Record<string, RegExp> = {
+    // English follows US spelling, like the rest of the repository.
+    en: /(?<!\p{L})(colours?|recognis\w*|analys(e|ed|ing)|labell(ed|ing)|judgement|catalogue|fulfil|cancell(ed|ing)|organis\w*|summaris\w*|prioritis\w*|behaviour\w*|grey)(?!\p{L})/iu,
     de: /Unter-Workflow/,
     es: /(?<!\p{L})(sub-?)?workflows?(?!\p{L})/iu,
     it: /(?<!\p{L})sub-?workflows?(?!\p{L})/iu,
     "pt-BR": /(?<!\p{L})(sub-?)?workflows?(?!\p{L})/iu,
   };
 
-  it.each(Object.keys(AVOID))("%s uses the terms for workflow and sub-workflow", (language) => {
+  it.each(Object.keys(AVOID))("%s uses the terms for workflow and sub-workflow and the agreed spelling", (language) => {
     const wrong = [...texts[language]]
       .filter(([, text]) => AVOID[language].test(text.replace(/\{\{[^}]*\}\}/g, "")))
       .map(([key, text]) => `${key}: ${text}`);

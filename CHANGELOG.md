@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Languages and built-in docs, UX round 2 (2026-11-03)
+
+- Docs in all six languages: the start chapter, the Python libraries chapter, tool errors and the FAQ described the
+  sandbox before Docker-first (AI-created tools in the built-in Linux sandbox by default, packages built from source on
+  this computer, "switch to the Python process"). French usage docs named the settings page "Paramètres".
+- Terms: pt-BR and es use "fluxo de trabalho"/"subfluxo" and "flujo de trabajo"/"subflujo" everywhere (budget card,
+  editor node, hints); it says "sotto-workflow", de "Unterworkflow". The English interface and docs follow US spelling
+  ("canceled", "color", "analyze", "recognized").
+- A status badge in the run's key figures wraps instead of being cut off at phone width.
+- New checks: translations keep every English placeholder; de, es, it and pt-BR keep the informal address and the
+  workflow terms (interface and docs); docs name interface paths with the navigation labels; `e2e/i18n.mjs` also
+  checks badges and a 390 px phone width.
+
 ### Docker Desktop: the sandbox test in one command (2026-11-02)
 
 - `scripts/mac_docker_test.sh` (macOS, Linux) and `scripts/docker_test.py` (also Windows: `py -3.13

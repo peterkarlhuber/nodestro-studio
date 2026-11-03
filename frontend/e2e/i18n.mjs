@@ -2,7 +2,8 @@
 // Usage: node e2e/i18n.mjs [baseUrl] [screenshotDir]
 // Covers browser language detection, switching in the settings (immediately, without a workflow run
 // or AI request), persistence across reloads, and long texts: every page in every language must
-// render without horizontal scrolling and without text that spills out of buttons, tabs or badges.
+// render without horizontal scrolling and without text that spills out of buttons, tabs or badges, also at
+// phone width (390 px).
 
 import { createRequire } from "node:module";
 import { mkdirSync, readFileSync } from "node:fs";
@@ -28,6 +29,8 @@ const TITLED = { "/agents": "agents", "/tools": "tools", "/knowledge": "knowledg
 const VIEWPORTS = [
   { width: 1500, height: 940 },
   { width: 1100, height: 800 },
+  // A phone: long words in de, fr and pt-BR must wrap, not run out of cards and badges.
+  { width: 390, height: 844 },
 ];
 
 const localeDir = join(dirname(fileURLToPath(import.meta.url)), "../src/i18n/locales");
@@ -74,7 +77,7 @@ async function overflow(page) {
     const root = document.documentElement;
     if (root.scrollWidth > window.innerWidth + 1) problems.push(`page scrolls sideways (${root.scrollWidth}px > ${window.innerWidth}px)`);
     const selector =
-      "button, .nd-btn, .nav-item, .nav-group__title, [role=tab], [role=radio], .badge, .chip, .tag, label, th, h1, h2, .page-header *";
+      "button, .nd-btn, .nav-item, .nav-group__title, [role=tab], [role=radio], .badge, .nd-badge, .chip, .tag, label, th, h1, h2, .page-header *";
     for (const element of document.querySelectorAll(selector)) {
       const style = getComputedStyle(element);
       if (style.display === "none" || style.visibility === "hidden" || element.closest("[aria-hidden=true]")) continue;
@@ -211,7 +214,8 @@ try {
       await page.setViewportSize(viewport);
       for (const path of runPath ? [...PAGES, runPath] : PAGES) {
         await page.goto(base + path);
-        await page.locator(".sidebar").waitFor();
+        // On a phone the navigation is a closed drawer: present, not visible.
+        await page.locator(".sidebar").waitFor({ state: "attached" });
         await page.locator("main h1, .page h1, h1").first().waitFor();
         await page.waitForTimeout(250);
         const problems = await overflow(page);
@@ -229,6 +233,8 @@ try {
           await page.screenshot({ path: join(shots, `${language}-${path.replace(/[/?=]+/g, "_") || "_"}.png`) });
         }
       }
+      // The editor is a desktop tool; the phone width covers the pages only.
+      if (viewport.width < 600) continue;
       // The editor of the first own workflow (not a card of the example gallery).
       await page.goto(base + "/");
       await page.locator(".page__body > .card-grid > .card").first().click();

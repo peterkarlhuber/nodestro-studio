@@ -114,7 +114,7 @@
     "modeShort": "Knowledge mode",
     "modeHint": {
       "context": "The files are in the prompt from the start. Good for a few short documents.",
-      "on_demand": "The agent sees a catalogue and loads files only when it needs them (tool “files”).",
+      "on_demand": "The agent sees a catalog and loads files only when it needs them (tool “files”).",
       "search": "The agent searches the text of the files and cites the passages it finds (RAG, tool “search”)."
     },
     "searchPlaceholder": "Search files …",

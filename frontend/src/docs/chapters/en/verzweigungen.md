@@ -72,7 +72,7 @@ While the run waits, it has the status **Paused**, the approval **Awaiting appro
 
 The **Approvals** page (navigation, group *Run & review*) lists every open approval, oldest first, with workflow, origin (manual, schedule, batch, test series) and waiting time. The number next to the menu entry shows how many are waiting.
 
-Each card shows the note, the results to review (structured results as labelled fields, the JSON one click away), a comment box and the buttons *Approve* and *Reject*; the buttons stay in view even with long results. Approvals inside sub-workflows appear here too, with the path to the parent run. Cards for [tool calls](/docs/verzweigungen#tool-freigabe) name the workflow and the step ("*workflow* · step *name*").
+Each card shows the note, the results to review (structured results as labeled fields, the JSON one click away), a comment box and the buttons *Approve* and *Reject*; the buttons stay in view even with long results. Approvals inside sub-workflows appear here too, with the path to the parent run. Cards for [tool calls](/docs/verzweigungen#tool-freigabe) name the workflow and the step ("*workflow* · step *name*").
 
 Runs that wait for a [budget decision](/docs/workflows#budget-freigabe) appear in their own section **Budget decisions** at the top, with a link to the run.
 
@@ -152,7 +152,7 @@ The inspector of an orchestrator starts with a sentence that sums up how it work
 
 The orchestrator only chooses. It has no tools, creates no agents, tools or teams, and has no permissions of its own. Every chosen team runs as its **own linked run** with its share of the budget, its limits and its tool approvals. Decisions that are not allowed (an unknown team, the same task again, a team that was used up) are not carried out and are shown to the model; the run details call them *Invalid, not carried out*. They still count as a decision.
 
-The run details list every decision with its reason, task, result and a link to the team's run. When a team stops for an **approval** (also in a sub-workflow or below another orchestrator), the orchestrator waits with it: the run is *paused* and shows up under **Approvals**. After the decision the same team run continues, also after a restart, and the model is not asked again about that delegation. When a rejection ends the team's run (*On rejection: end the run*), this run ends too; no other team can get around the rejection. Cancelling a waiting run also cancels its waiting teams. A team may not call the orchestrator's workflow again.
+The run details list every decision with its reason, task, result and a link to the team's run. When a team stops for an **approval** (also in a sub-workflow or below another orchestrator), the orchestrator waits with it: the run is *paused* and shows up under **Approvals**. After the decision the same team run continues, also after a restart, and the model is not asked again about that delegation. When a rejection ends the team's run (*On rejection: end the run*), this run ends too; no other team can get around the rejection. Canceling a waiting run also cancels its waiting teams. A team may not call the orchestrator's workflow again.
 
 **During the run** you can ask the team leader questions and give it instructions for its next decision, in the **Team leader** tab of the detail view; see [Talking to the team leader](/docs/ausfuehrungen#teamleitung). **Live steering** in the *Limits* area sets who may give instructions.
 
@@ -167,7 +167,7 @@ In the **Active line-up** area of an orchestrator (field *Dynamic teams*) the mo
 
 The pool is fixed when the run starts, in the versions of that moment. New teams, agents or tools never appear, and each team's approvals, budget and limits apply unchanged.
 
-**What the run details show:** which orchestrator works with which model, how many decisions are used, the cost of the decisions and in total (unknown costs are shown as *not fully known*, never as 0), the pool with versions, the **Active line-up over time**, waiting teams and every decision with its reason, task, values and each team's outcome: *Succeeded*, *Waiting for approval*, *Failed*, *Rejected*, *Cancelled* or *Expired*. Only the recorded decisions are shown, no reasoning of the model.
+**What the run details show:** which orchestrator works with which model, how many decisions are used, the cost of the decisions and in total (unknown costs are shown as *not fully known*, never as 0), the pool with versions, the **Active line-up over time**, waiting teams and every decision with its reason, task, values and each team's outcome: *Succeeded*, *Waiting for approval*, *Failed*, *Rejected*, *Canceled* or *Expired*. Only the recorded decisions are shown, no reasoning of the model.
 
 **Save team composition as a template:** an active line-up exists only during the run. After the end, this button saves a **new workflow** with the same orchestrator, its start form, its limits and exactly the teams that worked, in the versions of the run. Nothing is saved without this click.
 
@@ -192,7 +192,7 @@ Every field has a **label**, a **technical name** (letters, digits and _ only), 
 ## Continuing failed runs {#fortsetzen}
 <!-- keywords: continue, resume, retry, restart, failed, cancelled -->
 
-A failed or cancelled run can be **continued** (button *Continue* in the detail view). This creates a **new, linked run**; the old one stays unchanged.
+A failed or canceled run can be **continued** (button *Continue* in the detail view). This creates a **new, linked run**; the old one stays unchanged.
 
 - First Nodestro shows for every step whether its result is **taken over** or **run again**, and why.
 - A result is taken over only if the step succeeded, neither it nor its tools, connections, input or files changed, and all its predecessors are taken over too. Changed steps and everything after them run again.

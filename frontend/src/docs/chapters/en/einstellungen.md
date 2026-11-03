@@ -199,7 +199,7 @@ Nodestro starts at `http://localhost:8000` and opens the browser. Options of the
 | `--no-browser` | – | Do not open the browser automatically |
 | `--reload` | – | Restart on code changes (development) |
 
-Stop with **Ctrl+C**. Running runs are cancelled.
+Stop with **Ctrl+C**. Running runs are canceled.
 
 > **Security:** Nodestro has no user management yet, so it only answers this computer. `--host 0.0.0.0`, other network addresses or network names in `NODESTRO_ALLOWED_HOSTS` stop the start, and Nodestro cannot be put behind a reverse proxy. To let other devices use a workflow, publish it as an API: published APIs use API keys and have their own network access (see *API and export*).
 

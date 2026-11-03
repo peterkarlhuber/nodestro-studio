@@ -113,6 +113,7 @@ describe("documentation in every language", () => {
 
   // The words docs/i18n/terminology.md lists under "Avoid", and the address form; code, links and anchors aside.
   const AVOID: Partial<Record<Language, RegExp>> = {
+    en: /(?<!\p{L})(colours?|recognis\w*|analys(e|ed|ing)|labell(ed|ing)|judgement|catalogue|fulfil|cancell(ed|ing)|organis\w*|summaris\w*|prioritis\w*|behaviour\w*|grey)(?!\p{L})/iu,
     de: /Unter-Workflow/,
     es: /(?<!\p{L})(sub-?)?workflows?(?!\p{L})|(?<!\p{L})(usted|ustedes|consulte|introduzca|seleccione|pulse|asegúrese)(?!\p{L})/iu,
     it: /(?<!\p{L})sub-?workflows?(?!\p{L})/iu,

@@ -53,7 +53,7 @@ When you attach an object, Nodestro records its state. Every message remembers e
 
 If an attached object changes afterwards, the attachment is marked **changed**. **Refresh context** uses the new state for the following messages. Earlier messages and answers stay as they are and keep their state from that time. If an object is deleted, the attachment shows **no longer exists**; the chat keeps working.
 
-If the workflow in the editor has unsaved changes, you decide: **Saved version** sends the last saved state, **Unsaved draft** the current state of the editor. A draft is labelled **Draft** in the chat. If you keep editing afterwards, it is marked as changed too.
+If the workflow in the editor has unsaved changes, you decide: **Saved version** sends the last saved state, **Unsaved draft** the current state of the editor. A draft is labeled **Draft** in the chat. If you keep editing afterwards, it is marked as changed too.
 
 ## Analyses {#analyse}
 <!-- keywords: analysis, improve, review, find errors, optimize, reduce cost, executed, tested -->
@@ -94,9 +94,9 @@ Very large objects are shortened; the attachment is then marked **partial**, and
 
 Every answer is one or more requests to the model. Below each answer you see its tokens and estimated cost, and the chat header shows the total for the chat. On the [usage page](/docs/nutzung), all requests appear under the source **Nodestro Assistant**, each exactly once.
 
-For a cancelled answer, part of the cost has already been incurred; it is estimated and marked **estimated**.
+For a canceled answer, part of the cost has already been incurred; it is estimated and marked **estimated**.
 
-## Cancelling and errors {#fehler}
+## Canceling and errors {#fehler}
 <!-- keywords: cancel, stop, error, try again, retry, invalid key, model unavailable, connection -->
 
 **Stop** cancels a running answer; what was written so far stays. If an answer fails, the assistant names the reason, for example a missing or invalid API key, an unavailable model, a broken connection or too much context. **Try again** repeats the last answer.

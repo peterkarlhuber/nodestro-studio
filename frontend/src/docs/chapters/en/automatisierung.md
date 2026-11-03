@@ -13,7 +13,7 @@ A **batch run** runs a workflow for every row of a table, for example for 200 cu
 4. The preview counts valid and invalid rows and shows the estimated cost. Invalid rows do not run.
 5. Start. The detail page shows progress, cost and every row with its status and a link to its run.
 
-A batch can be **paused** (running runs finish, new ones do not start), **continued** and **cancelled**. An error in one row does not stop the others. If Nodestro stopped during a batch, it is *interrupted* and can be continued. You download the results as CSV or JSON.
+A batch can be **paused** (running runs finish, new ones do not start), **continued** and **canceled**. An error in one row does not stop the others. If Nodestro stopped during a batch, it is *interrupted* and can be continued. You download the results as CSV or JSON.
 
 ## Limits, cost and own tools {#grenzen}
 <!-- keywords: limits, cost limit, failure limit, concurrency, parallel, estimate, cost, rate limit, own tools -->

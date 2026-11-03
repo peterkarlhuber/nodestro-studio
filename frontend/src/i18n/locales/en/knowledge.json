@@ -39,12 +39,12 @@
   },
   "ocr": {
     "scan": "Scan without a text layer",
-    "recognised_one": "Text recognised: {{count}} word, uncertain: {{uncertain}}",
-    "recognised_other": "Text recognised: {{count}} words, uncertain: {{uncertain}}",
+    "recognised_one": "Text recognized: {{count}} word, uncertain: {{uncertain}}",
+    "recognised_other": "Text recognized: {{count}} words, uncertain: {{uncertain}}",
     "failed": "Text recognition failed",
-    "run": "Recognise text (OCR)",
-    "done_one": "Text recognised ({{count}} word).",
-    "done_other": "Text recognised ({{count}} words).",
+    "run": "Recognize text (OCR)",
+    "done_one": "Text recognized ({{count}} word).",
+    "done_other": "Text recognized ({{count}} words).",
     "enableFirst": "Switch OCR on in the settings",
     "unavailable": "Local OCR is not available (Tesseract, language data or Poppler missing)"
   }

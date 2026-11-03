@@ -55,7 +55,7 @@ No. The keys are only in environment variables or in the local database and go n
 Check whether it is assigned in the inspector and which mode is selected. Images and scanned PDFs cannot be found in *Search* mode.
 
 **What happens to running runs when I stop Nodestro?**
-They are cancelled. Whatever was saved up to that point is kept as an execution.
+They are canceled. Whatever was saved up to that point is kept as an execution.
 
 **Does switching the language change my agents?**
 No. The language only changes the interface. Agents, prompts and results stay as they are, and agents keep answering in the language of their prompts. See [Language](/docs/einstellungen#sprache).
