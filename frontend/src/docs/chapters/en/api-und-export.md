@@ -136,7 +136,7 @@ Every request needs a key, either as `Authorization: Bearer <key>` or as the hea
 - **Permissions:** `run` starts, cancels and continues, `read` reads status, results and events, `approve` decides approvals.
 - **Valid for:** the APIs the key may call. It never reaches other workflows or the Nodestro interface.
 
-The key is shown **exactly once**. Nodestro stores only a hash and later recognises the key by its beginning (`ndk_…`). **Revoke now** blocks a key. **Replace with a new key** creates a new key with the same settings and revokes the old one. Keys never appear in logs, traces, backups or exports. After many wrong keys in a short time, the API answers `429` for a while.
+The key is shown **exactly once**. Nodestro stores only a hash and later recognizes the key by its beginning (`ndk_…`). **Revoke now** blocks a key. **Replace with a new key** creates a new key with the same settings and revokes the old one. Keys never appear in logs, traces, backups or exports. After many wrong keys in a short time, the API answers `429` for a while.
 
 ## Access from the network {#netzwerk}
 <!-- keywords: network, lan, port, 8100, 0.0.0.0, other devices, tls, https, certificate, firewall, share -->

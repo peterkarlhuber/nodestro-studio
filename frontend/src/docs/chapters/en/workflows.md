@@ -227,7 +227,7 @@ A model request or tool call that is already running is still finished. The run 
 Nodestro checks the workflow on every change (after a pause of half a second), without calling the API and without cost:
 
 - **Structure:** Is there at least one agent? Does the start node have no inputs and the result node no outputs? Are there no cycles, no duplicate connections and none pointing nowhere? Does the result node have an input?
-- **Agents:** Every configuration is checked with the library's rules. Nodes with errors show “1 problem” on the canvas, Start and Result too; warnings show as “1 warning” in their own colour and with an icon.
+- **Agents:** Every configuration is checked with the library's rules. Nodes with errors show “1 problem” on the canvas, Start and Result too; warnings show as “1 warning” in their own color and with an icon.
 - **Connections and placeholders:** placeholders that match no connected predecessor, agents without input, results that go nowhere, and duplicate agent names.
 - **Settings:** providers that are not set up, deleted knowledge or start files, models without a known price, and a budget of 0.
 
@@ -328,6 +328,6 @@ Workflow export and trace export are different things: a workflow describes the 
 <!-- keywords: limits, limitations, loops, conditions, if, loop, branching -->
 
 - **Loops only with a limit:** a workflow is a directed graph; steps repeat only through [loops](/docs/verzweigungen#schleifen) of at most 20 rounds. Outside loops, every node runs at most once per run. Conditions are built with [decisions](/docs/verzweigungen#entscheidung); nodes on branches that were not chosen are skipped.
-- **Continue instead of repeat:** a failed or cancelled run can be [continued](/docs/verzweigungen#fortsetzen); this creates a new, linked run.
+- **Continue instead of repeat:** a failed or canceled run can be [continued](/docs/verzweigungen#fortsetzen); this creates a new, linked run.
 - **One run at a time per workflow in the editor:** while a run is active, *Start workflow* is disabled. To start many runs at once, use a [batch run](/docs/automatisierung#stapel).
 - **State at start time:** changes during a run only take effect in the next run.

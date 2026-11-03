@@ -85,7 +85,7 @@
     "open": "Apri",
     "workflows": {
       "title": "Editor visuale",
-      "text": "Agenti come nodi, collegamenti come flusso di dati, con diramazioni e sub-workflow."
+      "text": "Agenti come nodi, collegamenti come flusso di dati, con diramazioni e sotto-workflow."
     },
     "agents": {
       "title": "Libreria di agenti",

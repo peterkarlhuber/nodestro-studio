@@ -40,6 +40,7 @@ describe("texts left in English", () => {
     de: [
       "name", "status", "start", "text", "memory", "limits", "thinking", "judge", "parallel", "review", "optional",
       "format", "standard", "port", "score", "tags", "analyst", "details", "service", "administrator",
+      "system",
       "assistant", // German names the button after the product, Nodestro Assistant
     ],
     es: ["error", "robot", "manual", "individual", "no"],
@@ -48,7 +49,7 @@ describe("texts left in English", () => {
       "description", "type", "effort", "image", "images", "structure", "validation", "sources", "suggestion", "actions",
       "action", "date", "active", "collection", "collections", "archive", "notes", "source", "strict", "note",
       "interface", "port", "module", "arguments", "service", "classification", "correction", "versions", "guide",
-      "instructions", "branches", "robot", "globe", "score", "word", "citations", "format", "standard", "direct", "indirect",
+      "instructions", "branches", "robot", "globe", "score", "word", "citations", "format", "standard", "direct", "indirect", "maintenance",
       "assistant",
     ],
     it: ["file", "input", "output", "robot", "database", "provider", "runtime", "standard", "no"],
@@ -190,6 +191,62 @@ describe("address form", () => {
   it("is vous in French", () => {
     const informal = [...texts.fr].filter(([key, text]) => !PROMPTS.has(key) && INFORMAL.test(text)).map(([key, text]) => `${key}: ${text}`);
     expect(informal).toEqual([]);
+  });
+
+  // The other languages address the user informally (docs/i18n/terminology.md). Only forms that cannot be read
+  // another way count: "Sie" in the middle of a German sentence, Spanish "usted" and its imperatives, Italian
+  // "Lei", Portuguese "tu".
+  const FORMAL: Record<string, RegExp> = {
+    de: /(?<=[\p{Ll},;] )(Sie|Ihr|Ihre|Ihren|Ihrem|Ihrer|Ihres|Ihnen)(?!\p{L})/u,
+    es: /(?<!\p{L})(usted|ustedes|consulte|introduzca|seleccione|pulse|asegúrese|inténtelo|haga clic)(?!\p{L})/iu,
+    it: /(?<!\p{L})(Lei|La preghiamo|inserisca|riprovi)(?!\p{L})/u,
+    "pt-BR": /(?<!\p{L})(tu|teu|tua|teus|tuas|contigo)(?!\p{L})/iu,
+  };
+
+  it.each(Object.keys(FORMAL))("is informal in %s", (language) => {
+    const formal = [...texts[language]]
+      .filter(([key, text]) => !PROMPTS.has(key) && FORMAL[language].test(text.replace(/\{\{[^}]*\}\}/g, "")))
+      .map(([key, text]) => `${key}: ${text}`);
+    expect(formal).toEqual([]);
+  });
+});
+
+describe("placeholders", () => {
+  // A translation that drops a placeholder loses information (an amount, a name) without any error. Only the
+  // singular may leave out the count ("one file").
+  const names = (text: string) => new Set([...text.matchAll(/\{\{\s*([\w.]+)[^}]*\}\}/g)].map((match) => match[1]));
+
+  it.each(OTHERS)("%s keeps every placeholder of the English text", (language) => {
+    const dropped: string[] = [];
+    for (const [key, text] of texts[language]) {
+      const base = key.replace(PLURAL, "");
+      const source = english.get(key) ?? english.get(`${base}_other`) ?? english.get(base);
+      if (source === undefined) continue;
+      const kept = names(text);
+      const missing = [...names(source)].filter((name) => !kept.has(name) && !(name === "count" && key.endsWith("_one")));
+      if (missing.length) dropped.push(`${key}: ${missing.join(", ")}`);
+    }
+    expect(dropped).toEqual([]);
+  });
+});
+
+describe("terminology", () => {
+  // Words docs/i18n/terminology.md lists under "Avoid", checked where they cannot mean anything else. Placeholders
+  // ({{workflow}}) are names, not words.
+  const AVOID: Record<string, RegExp> = {
+    // English follows US spelling, like the rest of the repository.
+    en: /(?<!\p{L})(colours?|recognis\w*|analys(e|ed|ing)|labell(ed|ing)|judgement|catalogue|fulfil|cancell(ed|ing)|organis\w*|summaris\w*|prioritis\w*|behaviour\w*|grey)(?!\p{L})/iu,
+    de: /Unter-Workflow/,
+    es: /(?<!\p{L})(sub-?)?workflows?(?!\p{L})/iu,
+    it: /(?<!\p{L})sub-?workflows?(?!\p{L})/iu,
+    "pt-BR": /(?<!\p{L})(sub-?)?workflows?(?!\p{L})/iu,
+  };
+
+  it.each(Object.keys(AVOID))("%s uses the terms for workflow and sub-workflow and the agreed spelling", (language) => {
+    const wrong = [...texts[language]]
+      .filter(([, text]) => AVOID[language].test(text.replace(/\{\{[^}]*\}\}/g, "")))
+      .map(([key, text]) => `${key}: ${text}`);
+    expect(wrong).toEqual([]);
   });
 });
 

@@ -145,7 +145,7 @@ Les mêmes vérifications et limites que dans Nodestro s’appliquent. Un [proje
 Les fichiers envoyés sont conservés dans le dossier de données sous `inputs`, ni dans la base de données ni dans le workflow. Un contenu identique n’est enregistré qu’une fois.
 
 - Les fichiers des exécutions en attente, en cours ou en pause ne sont jamais supprimés.
-- Au démarrage, Nodestro nettoie les fichiers que plus rien n’utilise depuis plus d’un jour. Sous *Paramètres*, vous voyez l’espace occupé et supprimez les fichiers inutilisés ou ceux des exécutions terminées au-delà d’un certain âge.
+- Au démarrage, Nodestro nettoie les fichiers que plus rien n’utilise depuis plus d’un jour. Sous *Réglages*, vous voyez l’espace occupé et supprimez les fichiers inutilisés ou ceux des exécutions terminées au-delà d’un certain âge.
 - La suppression d’une exécution libère ses fichiers si rien d’autre ne les utilise.
 - Les sauvegardes contiennent les fichiers d’entrée et les restaurent.
 

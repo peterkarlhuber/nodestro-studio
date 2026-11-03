@@ -14,12 +14,8 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <title>Nodestro Studio</title>
-    <script>
-      try {
-        const saved = localStorage.getItem("nodestro-theme");
-        if (saved === "light" || saved === "dark") document.documentElement.dataset.theme = saved;
-      } catch (_) {}
-    </script>
+    <!-- Before the first paint, so the page never flashes in the other theme. A file, not inline, so a strict CSP (script-src 'self') allows it. -->
+    <script src="/theme-init.js"></script>
   </head>
   <body>
     <div id="root"></div>

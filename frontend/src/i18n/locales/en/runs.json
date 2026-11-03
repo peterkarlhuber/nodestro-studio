@@ -105,7 +105,7 @@
   "cancelRun": {
     "button": "Cancel run",
     "confirm": "Really cancel?",
-    "done": "The run is being cancelled."
+    "done": "The run is being canceled."
   },
   "waitingForYou": {
     "label": "Waiting for you",

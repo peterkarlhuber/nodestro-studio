@@ -15,8 +15,8 @@
   },
   "overview": {
     "published": "Version {{number}} is published.",
-    "cancelled_one": "{{count}} run was cancelled.",
-    "cancelled_other": "{{count}} runs were cancelled.",
+    "cancelled_one": "{{count}} run was canceled.",
+    "cancelled_other": "{{count}} runs were canceled.",
     "on": "Switched on",
     "off": "Switched off",
     "localOnly": "This computer only",
@@ -192,7 +192,7 @@
       "awaiting_approval": "waits for a decision (Nodestro or the approve endpoint)",
       "succeeded": "finished; the result is available",
       "failed": "ended with an error; it can be continued",
-      "cancelled": "cancelled"
+      "cancelled": "canceled"
     }
   },
   "settings": {

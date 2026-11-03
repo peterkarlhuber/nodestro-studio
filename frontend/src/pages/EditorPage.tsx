@@ -21,7 +21,7 @@ import { Button, DisabledReason, DocLink, Hint, MenuButton, Modal, Spinner } fro
 import { Canvas, type CanvasIssues } from "../editor/Canvas";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { Inspector } from "../editor/Inspector";
-import { useEditorLayout } from "../editor/layout";
+import { isTabletEditor, useEditorLayout } from "../editor/layout";
 import { Palette } from "../editor/Palette";
 import { RunDialog } from "../editor/RunDialog";
 import { PANEL_VARIABLE, PanelSplitter } from "../editor/PanelSplitter";
@@ -38,6 +38,8 @@ import { crumbLink, parseTrail } from "../lib/trail";
 import { ApiDialog } from "../publish/ApiDialog";
 import { countsByNode, findings, startBlock } from "../editor/CheckList";
 import { NotFoundState } from "../components/NotFoundState";
+import { useSettingsHref } from "../lib/settingsLink";
+import { onRegionKey } from "../editor/regions";
 
 function useDebouncedGraph() {
   const nodes = useEditor((s) => s.nodes);
@@ -194,6 +196,7 @@ export function EditorPage() {
     staleTime: 30_000,
   });
   const block = useMemo(() => startBlock(check.data), [check.data]);
+  const providerSetup = useSettingsHref("settings-providers");
   const issues = useMemo<CanvasIssues>(() => {
     const counts = countsByNode(check.data);
     const result: CanvasIssues = { nodes: counts.errors, warnings: counts.warnings, edges: {}, blocked: Boolean(block?.provider) };
@@ -203,6 +206,13 @@ export function EditorPage() {
     }
     return result;
   }, [check.data, block]);
+
+  // Tablets: the properties are a drawer over the canvas; selecting a step or connection opens it (ST-009).
+  const selectedId = useEditor((state) => state.selectedId);
+  const selectedEdgeId = useEditor((state) => state.selectedEdgeId);
+  useEffect(() => {
+    if ((selectedId || selectedEdgeId) && isTabletEditor()) useEditorLayout.getState().setOpen("inspector", true);
+  }, [selectedId, selectedEdgeId]);
 
   /** Show the problem that blocks the start: the node or connection it is about, or the check list. */
   const showProblem = () => {
@@ -299,6 +309,7 @@ export function EditorPage() {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      onRegionKey(event, editorRef.current);
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
         if (editDeniedRef.current) {
@@ -373,7 +384,7 @@ export function EditorPage() {
   return (
     <div className={panelClasses.join(" ")} ref={editorRef} style={panelSizes}>
       <div className="editor__main">
-        <header className="titlebar">
+        <header className="titlebar" data-editor-region aria-label={t("editor.regions.titlebar")}>
           <div className="titlebar__heading">
             <h1 className="titlebar__title">
               <span className="titlebar__name" title={name || undefined}>
@@ -442,7 +453,7 @@ export function EditorPage() {
                 runDenied
                   ? undefined
                   : block?.provider
-                  ? { label: t("editor.run.openSettings"), to: "/settings" }
+                  ? { label: t("editor.run.openSettings"), to: providerSetup }
                   : { label: t("editor.page.showProblem"), onClick: showProblem }
               }
             >
@@ -470,7 +481,7 @@ export function EditorPage() {
               canvas={canvasRef}
             />
           ) : null}
-          <div className="editor__canvas" ref={canvasRef}>
+          <div className="editor__canvas" ref={canvasRef} role="region" aria-label={t("editor.regions.canvas")} data-editor-region>
             <Canvas issues={issues} />
           </div>
         </div>

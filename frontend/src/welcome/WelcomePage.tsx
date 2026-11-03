@@ -87,7 +87,7 @@ function ModelNote() {
 /** Language, theme and motion: the same stored choices the Studio uses, so both stay in step. */
 function Controls({ motion, onMotion, reduced }: { motion: boolean; onMotion: (value: boolean) => void; reduced: boolean }) {
   const { t } = useTranslation();
-  const [theme, setTheme] = useTheme();
+  const [, setTheme, theme] = useTheme();
   const queryClient = useQueryClient();
   const remember = useMutation({
     mutationFn: (language: Language) => api.saveSettings({ language }),

@@ -2,6 +2,33 @@
 
 ## Unreleased
 
+### Navigation, settings and editor, UX round 2 (2026-11-03)
+
+- Settings has a contents list grouped by task (setup, costs, running, maintenance) with deep links to every section
+  and provider; links from a blocked Start, a failed run or an example's requirements open the right provider and offer
+  "Back to the workflow" or "Back to the run".
+- The navigation can be collapsed to an icon rail; in the editor it collapses automatically. The theme offers
+  "System" and follows the operating system by default; the pre-paint theme script moved to `public/theme-init.js`, so
+  a strict `script-src 'self'` policy works.
+- Ctrl+K also goes to pages and settings sections. F6 / Shift+F6 move between the editor's title bar, palette,
+  canvas, inspector and run panel. At tablet widths (761–1100 px) the inspector opens as a drawer on selection.
+- Sandbox settings say what to do about Docker once; the budget card names the waiting agent by its label when the
+  runtime sends one. Smaller fixes: provider select width, toasts no longer cover Save buttons, the help tip stays
+  below the inspector footer, the tracked `frontend/node_modules` symlink is gone.
+
+### Languages and built-in docs, UX round 2 (2026-11-03)
+
+- Docs in all six languages: the start chapter, the Python libraries chapter, tool errors and the FAQ described the
+  sandbox before Docker-first (AI-created tools in the built-in Linux sandbox by default, packages built from source on
+  this computer, "switch to the Python process"). French usage docs named the settings page "Paramètres".
+- Terms: pt-BR and es use "fluxo de trabalho"/"subfluxo" and "flujo de trabajo"/"subflujo" everywhere (budget card,
+  editor node, hints); it says "sotto-workflow", de "Unterworkflow". The English interface and docs follow US spelling
+  ("canceled", "color", "analyze", "recognized").
+- A status badge in the run's key figures wraps instead of being cut off at phone width.
+- New checks: translations keep every English placeholder; de, es, it and pt-BR keep the informal address and the
+  workflow terms (interface and docs); docs name interface paths with the navigation labels; `e2e/i18n.mjs` also
+  checks badges and a 390 px phone width.
+
 ### Docker Desktop: the sandbox test in one command (2026-11-02)
 
 - `scripts/mac_docker_test.sh` (macOS, Linux) and `scripts/docker_test.py` (also Windows: `py -3.13

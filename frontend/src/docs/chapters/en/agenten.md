@@ -67,7 +67,7 @@ The agent decides by itself whether and when to call a tool, based on its name a
 In the **Knowledge** section you assign uploaded files and choose **how** the agent gets them:
 
 - **In context:** the files are fully in the prompt from the start.
-- **On demand:** the agent sees a catalogue and loads files itself (tool `files`).
+- **On demand:** the agent sees a catalog and loads files itself (tool `files`).
 - **Search:** the agent looks for matching passages (tool `search`).
 
 **Enable citations** makes answers refer to the exact passages. Details and recommendations are in the [Knowledge](/docs/wissen#modi) chapter.
@@ -267,6 +267,6 @@ The inspector checks every change against the library's rules without calling th
 
 - **Red messages** (errors) prevent the start, for example an unknown tool, an invalid field name, thinking settings the model does not support, or a quality check without a criterion.
 - **Yellow messages** (warnings) allow the start, for example code execution together with web search.
-- **Grey notes** inform you, for example that inputs are appended because the task contains no placeholder.
+- **Gray notes** inform you, for example that inputs are appended because the task contains no placeholder.
 
 Common messages and their solutions are under [Common errors](/docs/faq#haeufige-fehler).

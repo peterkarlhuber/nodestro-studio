@@ -55,7 +55,7 @@
       "approved": "Approved",
       "rejected": "Rejected",
       "expired": "No decision in time (rejected)",
-      "cancelled": "Cancelled",
+      "cancelled": "Canceled",
       "denied": "Refused without a question"
     },
     "preGranted": "approved in advance",

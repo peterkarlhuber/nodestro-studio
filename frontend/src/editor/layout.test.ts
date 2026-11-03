@@ -1,18 +1,25 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { parseDragPayload } from "./Canvas";
-import { PANEL_BOUNDS, clampSize, parseLayout, useEditorLayout } from "./layout";
+import { PANEL_BOUNDS, clampSize, defaultLayout, isTabletEditor, parseLayout, useEditorLayout } from "./layout";
 import { useEditor } from "./store";
 
 describe("editor layout", () => {
   beforeEach(() => localStorage.clear());
 
   it("falls back to the defaults for missing, broken or foreign entries", () => {
-    for (const raw of [null, "", "not json", "[]", "42", '{"open": "yes", "size": {"palette": "wide"}}']) {
-      const layout = parseLayout(raw);
-      expect(layout.size).toEqual({ palette: 232, inspector: 320, runPanel: 260 });
-      expect(layout.open.inspector).toBe(true);
-      expect(layout.open.runPanel).toBe(true);
+    // A desktop window (jsdom's 1024 px would be a tablet, where the properties start closed).
+    const width = window.innerWidth;
+    window.innerWidth = 1440;
+    try {
+      for (const raw of [null, "", "not json", "[]", "42", '{"open": "yes", "size": {"palette": "wide"}}']) {
+        const layout = parseLayout(raw);
+        expect(layout.size).toEqual({ palette: 232, inspector: 320, runPanel: 260 });
+        expect(layout.open.inspector).toBe(true);
+        expect(layout.open.runPanel).toBe(true);
+      }
+    } finally {
+      window.innerWidth = width;
     }
   });
 
@@ -69,5 +76,26 @@ describe("palette drops", () => {
 
   it("drops agent settings sent along with a node that is not an agent", () => {
     expect(parseDragPayload('{"type":"start","agent":{"name":"x"}}')).toEqual({ type: "start", agent: undefined });
+  });
+});
+
+describe("editor layout on tablets (ST-009)", () => {
+  const width = window.innerWidth;
+  afterEach(() => {
+    window.innerWidth = width;
+    localStorage.clear();
+  });
+
+  it("starts with the properties closed between 761 and 1100 px, open on phones and desktops", () => {
+    for (const [w, open] of [
+      [820, false],
+      [1100, false],
+      [1101, true],
+      [390, true],
+    ] as const) {
+      window.innerWidth = w;
+      expect(isTabletEditor()).toBe(!open);
+      expect(defaultLayout().open.inspector).toBe(open);
+    }
   });
 });

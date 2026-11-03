@@ -66,7 +66,7 @@ Les exécutions sont rattachées à leur **heure de lancement**. Dans *Par modè
 ## Prix des modèles {#preise}
 <!-- keywords: prix des modèles, grille tarifaire, mettre à jour les prix, synchronisation, litellm, ancien, prix individuel, prix contractuel, validation, changement de prix -->
 
-**Paramètres → Prix des modèles** liste chaque prix avec son statut, sa qualité, sa source et la date de la dernière vérification. Les prix viennent de trois sources, dans cet ordre :
+**Réglages → Prix des modèles** liste chaque prix avec son statut, sa qualité, sa source et la date de la dernière vérification. Les prix viennent de trois sources, dans cet ordre :
 
 1. les prix vérifiés de la bibliothèque Orkexa,
 2. un fichier de prix validé fourni par l’exploitant (`NODESTRO_PRICE_SNAPSHOT_FILE`),
@@ -91,7 +91,7 @@ Vous définissez des **prix individuels**, par exemple des prix contractuels ou 
 ## Mode de prix {#preismodus}
 <!-- keywords: mode de prix, strict, standard, refuser prix inconnu, prix ancien -->
 
-Le **mode de prix** sous *Paramètres → Prix des modèles* détermine ce qui se passe avec des prix manquants ou anciens :
+Le **mode de prix** sous *Réglages → Prix des modèles* détermine ce qui se passe avec des prix manquants ou anciens :
 
 - **Standard :** les requêtes s’exécutent ; leurs coûts apparaissent comme inconnus ou comme borne inférieure, et les prix anciens sont signalés.
 - **Strict :** une requête vers un modèle sans prix connu, ou avec un prix non vérifié depuis plus de 7 jours, est refusée avant de coûter quoi que ce soit. Ainsi, un budget tient même quand un prix manque.
@@ -99,7 +99,7 @@ Le **mode de prix** sous *Paramètres → Prix des modèles* détermine ce qui s
 ## Comparaison avec les factures des fournisseurs {#abgleich}
 <!-- keywords: rapprochement, facture, facturation, openai costs, anthropic cost report, clé d’administration, écart -->
 
-En option, Nodestro compare ses estimations avec ce qu’**OpenAI** et **Anthropic** ont réellement facturé, par jour et par modèle (*Paramètres → Comparer avec les factures des fournisseurs*). Il faut pour cela une **clé d’administration** de l’API de facturation du fournisseur, distincte des clés API habituelles. La comparaison ne fait que lire.
+En option, Nodestro compare ses estimations avec ce qu’**OpenAI** et **Anthropic** ont réellement facturé, par jour et par modèle (*Réglages → Comparer avec les factures des fournisseurs*). Il faut pour cela une **clé d’administration** de l’API de facturation du fournisseur, distincte des clés API habituelles. La comparaison ne fait que lire.
 
 - **Bureau :** les clés d’administration ne sont pas enregistrées. Définissez `NODESTRO_OPENAI_ADMIN_KEY` ou `NODESTRO_ANTHROPIC_ADMIN_KEY`, ou saisissez une clé pour une seule comparaison.
 - **Serveur :** la clé est enregistrée chiffrée et n’est plus jamais affichée.

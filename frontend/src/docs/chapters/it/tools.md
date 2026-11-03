@@ -7,7 +7,7 @@ Gli strumenti sono funzioni che un agente può chiamare da solo per calcolare, c
 
 Uno strumento ha un **nome**, una **descrizione** e uno **schema di input** (i parametri). Il modello vede queste informazioni e decide se una chiamata è utile. Se chiama uno strumento, Nodestro esegue la funzione e restituisce il risultato al modello. Questo passaggio si chiama **turno di strumenti**; un agente può farne diversi di seguito.
 
-La pagina **Strumenti** ha tre sezioni: *Libreria*, *Scrivi tu* e *Crea con l'IA*. Esistono quattro tipi di strumenti:
+La pagina **Strumenti** ha tre sezioni: *Libreria*, *Scrivi tu* e *Crea con l’IA*. Esistono quattro tipi di strumenti:
 
 | Tipo | Origine | Esecuzione |
 |---|---|---|
@@ -110,7 +110,7 @@ L'**esito del controllo** mostra gli errori del controllo statico, ogni test com
 ## Far creare strumenti dall'IA {#ki-erstellen}
 <!-- keywords: strumento ia, agente programmatore, coding agent, generare, far creare uno strumento, dinamico, requisito -->
 
-In **Crea con l'IA** descrivi cosa deve saper fare lo strumento (almeno 10 caratteri), per esempio: «Calcola la rata di un prestito a partire da importo, tasso annuo in percentuale e durata in mesi.»
+In **Crea con l’IA** descrivi cosa deve saper fare lo strumento (almeno 10 caratteri), per esempio: «Calcola la rata di un prestito a partire da importo, tasso annuo in percentuale e durata in mesi.»
 
 Poi, in background:
 
@@ -241,6 +241,6 @@ Nell'esecuzione ogni chiamata a uno strumento si può espandere: input, risultat
 - **Input non valido:** il modello ha compilato male i parametri. Migliora le descrizioni dei parametri nella docstring.
 - **Errore previsto dello strumento** (per esempio divisione per zero): l'agente vede il messaggio e può riprovare.
 - **Timeout o crash nella sandbox:** prova lo strumento in *Prova* con lo stesso input.
-- **Docker non raggiungibile:** avvia Docker o passa alla sandbox *Processo Python*.
+- **Docker non raggiungibile:** avvia Docker. Gli strumenti creati dall’IA ne hanno sempre bisogno (oppure, su Linux, della *Sandbox Linux*); con la sandbox *Docker* ne hanno bisogno anche i tuoi strumenti, quindi scegli *Automatica* per eseguirli nel processo Python.
 
 L'impostazione [Errori degli strumenti](/docs/agenten#tool-fehler) stabilisce se gli errori imprevisti terminano l'agente.

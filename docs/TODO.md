@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 22 |
+| P3 Low | 21 |
 | P4 Optional | 10 |
 
 **Release blockers:** None for this repository.
@@ -90,13 +90,6 @@ None known.
 - **Next step:** Needs the tool's version history in the API (`GET /api/tools/{name}` returns only the current
   version); then render a side-by-side or unified diff above the full code.
 
-### ST-006 · "Back to workflow" after saving a provider key (F8)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** final UX review F8
-- **What:** The first-success journey still needs the browser Back button after saving a key: the blocked Start links
-  to `/settings` (`editor/RunDialog.tsx`), and Settings offers no way back.
-- **Next step:** Pass the origin when opening Settings from a blocked Start and show "Back to <workflow>" after saving.
-
 ### ST-007 · "Use sample file" in the run dialog of form examples (OB-13)
 
 - **Priority:** P3 Low · **Status:** Open · **Refs:** UX audit OB-13
@@ -104,25 +97,13 @@ None known.
   only downloadable in the preview, not offered where the run needs them.
 - **Next step:** Offer the copy's sample files as one-click inputs; check whether the copy needs an API field for them.
 
-### ST-008 · Global search for pages, settings sections and runs (OB-09)
+### ST-008 · Runs and recent items in the global search (OB-09)
 
 - **Priority:** P3 Low · **Status:** Open · **Refs:** #83, UX audit OB-09
-- **What:** Ctrl+K finds content kinds and docs only (`layout/GlobalSearch.tsx`), not pages, settings or runs, and
-  shows nothing for an empty query.
-- **Next step:** Add "Go to" and "Runs" groups and recent items.
-
-### ST-009 · Editor inspector as a drawer below 1100 px (AX-17)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** #82, UX audit AX-17
-- **What:** On tablets the inspector permanently takes about 40 % of the width; no inspector drawer exists.
-- **Next step:** Overlay drawer that opens on selection, plus a 768 px check in the e2e suites.
-
-### ST-010 · Editor keyboard efficiency and region navigation (AX-12)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** UX audit AX-12, final UX review F6
-- **What:** Keyboard connection works (and #79 added the C shortcut), but reaching the palette still takes about 30
-  Tabs and there is no way to jump between palette, canvas, inspector and run panel.
-- **Next step:** Roving tabindex in the palette and a region shortcut (F6) or extra skip links.
+- **What:** Ctrl+K now also goes to pages and settings sections (UX round 2), but it does not find runs and shows no
+  recent items for an empty query.
+- **Next step:** Add a "Runs" group (needs a run search in `GET /api/search` or a client-side filter of recent runs)
+  and recently opened items.
 
 ### ST-011 · Field-level diff in the versions dialog (ED-18)
 
@@ -299,6 +280,23 @@ None known.
   installs (and the server and desktop builds made from them) are not reproducible.
 - **Next step:** Decide on a constraints or lock file for the platform install, together with the other Python repos.
 - **Depends on:** the same decision in nodestro-runtime RT-023 and nodestro-server SRV-014 (desktop builds from the studio pins).
+
+### ST-037 · Version check misses component references in other spellings (API2-09)
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** backend audit 2 API2-09, `scripts/check_versions.py`
+- **What:** The pin check recognizes platform components only in the canonical pinned-URL form. References written
+  differently are not reported, so an unpinned or non-canonical component reference could slip into `pyproject.toml`.
+- **Next step:** Parse requirements with `packaging.requirements`, normalize names and require the exact canonical
+  pinned URL for every platform component.
+
+### ST-038 · Duplicated frontend serving code; `scripts/` outside mypy (API2-16)
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** backend audit 2 API2-16, `src/nodestro_studio/app.py`,
+  nodestro-api `frontend.py`
+- **What:** The studio serves the built frontend with its own code instead of `nodestro_api.frontend.mount_frontend`;
+  the two differ (e.g. `GET /api`), and security headers would have to be added twice. mypy does not check
+  `scripts/` (about 2,900 lines).
+- **Next step:** Reuse `mount_frontend` in the studio once the api's header middleware lands; add `scripts/` to mypy.
 
 ## Later optimizations
 

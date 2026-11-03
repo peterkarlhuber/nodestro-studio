@@ -59,7 +59,7 @@
     "blocked_other": "{{count}} problemi impediscono la pubblicazione.",
     "approvals_one": "{{count}} passaggio di approvazione: le esecuzioni vi attendono una decisione.",
     "approvals_other": "{{count}} passaggi di approvazione: le esecuzioni vi attendono decisioni.",
-    "subworkflows": "Sub-workflow (congelati nelle loro versioni): {{names}}",
+    "subworkflows": "Sotto-workflow (congelati nelle loro versioni): {{names}}",
     "tools": "Strumenti (congelati nelle loro versioni): {{names}}",
     "libraries": "Librerie Python: {{names}}"
   },

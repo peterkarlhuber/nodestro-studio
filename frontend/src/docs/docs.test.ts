@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { LANGUAGES, type Language } from "../i18n";
 import { HELP_DOCS } from "../lib/help";
+import { bundles } from "../test/locales";
 import { CHAPTER_IDS, type DocChapter, type Sources, docExists, loadChapters, loadSources } from "./index";
 import { parseChapter, plainText, splitWidgets } from "./parse";
 import { fold, plain, searchDocs } from "./search";
@@ -75,6 +76,58 @@ describe("documentation in every language", () => {
         expect(links(section.body), where).toEqual(links(reference.sections[at].body));
       });
     });
+  });
+
+  // "*Settings → Model prices*": a path through the interface starts with the page's navigation label and names
+  // existing interface texts after it. The chapter "beispiele" is generated from nodestro-examples.
+  const PATH = /(?<![*\w])\*\[?([^*\n]{2,120}?→[^*\n]*?)\]?(?:\([^)]*\))?\*(?![*\w])/g;
+  const PRODUCTS = new Set(["Amazon Bedrock"]);
+  const interfaceTexts = (language: Language) => {
+    const values = new Set<string>();
+    const visit = (messages: unknown) => {
+      for (const value of Object.values(messages as Record<string, unknown>))
+        if (value && typeof value === "object") visit(value);
+        else values.add(String(value).trim());
+    };
+    visit(bundles[language]);
+    return values;
+  };
+  const navigationPaths = (language: Language, id: string) => {
+    const labels = new Set(Object.values(bundles[language].nav as Record<string, unknown>).map(String));
+    return [...SOURCES[language][id].matchAll(PATH)]
+      .map((match) => match[1].split("→").map((part) => part.trim().replace(/^\[|\]$/g, "")))
+      .filter((parts) => labels.has(parts[0]));
+  };
+
+  it.each(LANGUAGES)("%s names interface paths with the navigation labels", (language) => {
+    const values = interfaceTexts(language);
+    for (const [id] of CHAPTER_IDS.filter(([chapter]) => chapter !== "beispiele")) {
+      const paths = navigationPaths(language, id);
+      // As many paths as in English: a path whose first step is not the navigation label is not counted.
+      expect(paths.length, `${language}/${id}`).toBe(navigationPaths("en", id).length);
+      for (const parts of paths)
+        for (const part of parts.slice(1))
+          expect(values.has(part) || PRODUCTS.has(part), `${language}/${id}: “${parts.join(" → ")}”`).toBe(true);
+    }
+  });
+
+  // The words docs/i18n/terminology.md lists under "Avoid", and the address form; code, links and anchors aside.
+  const AVOID: Partial<Record<Language, RegExp>> = {
+    en: /(?<!\p{L})(colours?|recognis\w*|analys(e|ed|ing)|labell(ed|ing)|judgement|catalogue|fulfil|cancell(ed|ing)|organis\w*|summaris\w*|prioritis\w*|behaviour\w*|grey)(?!\p{L})/iu,
+    de: /Unter-Workflow/,
+    es: /(?<!\p{L})(sub-?)?workflows?(?!\p{L})|(?<!\p{L})(usted|ustedes|consulte|introduzca|seleccione|pulse|asegúrese)(?!\p{L})/iu,
+    it: /(?<!\p{L})sub-?workflows?(?!\p{L})/iu,
+    "pt-BR": /(?<!\p{L})(sub-?)?workflows?(?!\p{L})|(?<!\p{L})(tu|teu|tua|teus|tuas)(?!\p{L})/iu,
+  };
+
+  it.each(Object.keys(AVOID) as Language[])("%s uses the terminology and the informal address", (language) => {
+    const wrong: string[] = [];
+    for (const [id] of CHAPTER_IDS.filter(([chapter]) => chapter !== "beispiele"))
+      SOURCES[language][id].split("\n").forEach((line, index) => {
+        const prose = line.replace(/`[^`]*`|\]\([^)]*\)|\{#[^}]*\}|<!--.*?-->|https?:\/\/\S+/g, "");
+        if (AVOID[language]!.test(prose)) wrong.push(`${id}:${index + 1}: ${line.slice(0, 120)}`);
+      });
+    expect(wrong).toEqual([]);
   });
 
   it("is not just a copy of the German text", () => {

@@ -57,11 +57,11 @@ The **sidebar** on the left follows the way you work: build, run and review, the
 - **Automate & test:** *Test series*, *Batch runs* and *Schedules*.
 - **Help:** this *Documentation* and the *Welcome* page.
 
-*Settings* are at the bottom, and below them where Nodestro runs: in the desktop app and with the `nodestro` command it says **Local & private**, on a server **Your organization's server** (see [Nodestro on a server](/docs/einstellungen#server)). At the top right you switch between the dark and light colour scheme; your choice is saved in the browser. If the provider of the default model is not set up, a notice appears there (*Set up AI provider* or, once another provider is set up, *Default model needs …*) that leads straight to the settings. On a server, your account is shown at the top right as well.
+*Settings* are at the bottom, and below them where Nodestro runs: in the desktop app and with the `nodestro` command it says **Local & private**, on a server **Your organization's server** (see [Nodestro on a server](/docs/einstellungen#server)). At the top right you switch between the dark and light color scheme; your choice is saved in the browser. If the provider of the default model is not set up, a notice appears there (*Set up AI provider* or, once another provider is set up, *Default model needs …*) that leads straight to the settings. On a server, your account is shown at the top right as well.
 
 **Help right where you need it:** many controls have a small **?** symbol next to them. Hover over it, focus it with the Tab key or tap it on touch devices: a short explanation appears, often with a link to the matching section of this documentation. The book symbol next to page titles opens the matching chapter. **Esc** closes an explanation again.
 
-Statuses are always shown as text and symbol, never by colour alone. All controls can also be reached with the keyboard.
+Statuses are always shown as text and symbol, never by color alone. All controls can also be reached with the keyboard.
 
 ## Search {#suche}
 <!-- keywords: search, find, ctrl+k, cmd+k, quick search -->
@@ -89,5 +89,5 @@ Besides the `nodestro` command, Nodestro is available as a desktop app (preview 
 - Only the app's own window can use this Nodestro. Other programs on the computer and web pages in your browser are refused (*This Nodestro belongs to the desktop app that started it*). The window's launch link works once; to open a new window, restart the app.
 - Links to other websites open in your browser.
 - Closing the window stops Nodestro. If it stops unexpectedly, the window says so and names the log file.
-- AI-created tools run isolated in the built-in Linux sandbox; nothing has to be installed for it (see [Tools](/docs/tools#sandbox)). If *Settings → Sandbox* says it is not available, and always on macOS and Windows, they run only with Docker ([Installing Docker](/docs/einstellungen#sandbox-docker)).
+- AI-created tools run only isolated: with the *Automatic* sandbox in Docker, once it has passed Nodestro's checks ([Installing Docker](/docs/einstellungen#sandbox-docker)). Instead you can choose the built-in **Linux sandbox**, which needs nothing to install but cannot use third-party Python packages (see [Tools](/docs/tools#sandbox)). Without either they are blocked; *Settings → Sandbox* shows why.
 - macOS and Windows versions do not exist yet.

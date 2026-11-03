@@ -241,6 +241,6 @@ En la ejecución, cada llamada a herramienta se puede desplegar: entrada, result
 - **Entrada no válida:** el modelo ha rellenado mal los parámetros. Mejora las descripciones de los parámetros en el docstring.
 - **Error previsto de la herramienta** (por ejemplo, división por cero): el agente ve el mensaje y puede volver a intentarlo.
 - **Tiempo agotado o fallo en el sandbox:** prueba la herramienta en *Probar* con la misma entrada.
-- **Docker no accesible:** inicia Docker o cambia al sandbox *Proceso de Python*.
+- **Docker no accesible:** inicia Docker. Las herramientas creadas por IA siempre lo necesitan (o, en Linux, el *Sandbox de Linux*); con el sandbox *Docker* también lo necesitan tus herramientas, así que elige *Automático* para que se ejecuten en el proceso de Python.
 
 El ajuste [Errores de herramientas](/docs/agenten#tool-fehler) controla si los errores imprevistos terminan el agente.

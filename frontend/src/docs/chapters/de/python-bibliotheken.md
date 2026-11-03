@@ -10,7 +10,7 @@ Die Standardbibliothek von Python reicht für viele Tools. Brauchst du mehr, gil
 1. **Erkennen:** Nodestro liest die Importe im Code des Tools und ermittelt daraus die nötigen Pakete. Dabei wird nichts heruntergeladen.
 2. **Freigeben:** Bevor etwas installiert wird, siehst du jedes Paket mit Version und gibst es frei. Ohne Freigabe wird nichts installiert.
 3. **Installieren:** Nodestro installiert genau die freigegebenen Versionen mit dem Paketwerkzeug **uv** in eine eigene Umgebung im Datenordner.
-4. **Ausführen:** Das Tool läuft in der Sandbox mit dem Python dieser Umgebung.
+4. **Ausführen:** Das Tool läuft in der Sandbox mit dem Python dieser Umgebung. In Docker legt Nodestro genau die freigegebenen Pakete in ein eigenes Container-Image.
 
 Das Python, mit dem Nodestro selbst läuft, bleibt immer unverändert. Workflows, deren Tools nur die Standardbibliothek nutzen, brauchen nichts davon und funktionieren wie bisher.
 
@@ -42,7 +42,7 @@ Erlaubt sind nur Paketname und Versionsangabe, keine Links oder lokalen Pfade.
 ## Freigabe {#freigabe}
 <!-- keywords: freigabe, freigeben, genehmigen, version, indirekt, transitive, übersicht, installieren -->
 
-Mit **Prüfen und freigeben** löst Nodestro die Versionen auf (dabei werden Paketinformationen geladen; ein Paket ohne fertiges Wheel wird aus dem Quellcode gebaut, wobei sein Build-Skript läuft) und zeigt eine Übersicht:
+Mit **Prüfen und freigeben** löst Nodestro die Versionen auf (dabei werden Paketinformationen geladen) und zeigt eine Übersicht. Das Build-Skript eines Pakets lässt Nodestro nie auf diesem Rechner laufen: Ein Paket ohne fertiges Wheel (nur als Quellcode verfügbar) wird stattdessen gemeldet und lässt sich nur in einem Container bauen, auf einem Server und in Nodestro Local Docker gar nicht.
 
 | Spalte | Bedeutung |
 |---|---|
@@ -131,6 +131,8 @@ Nodestro löscht nie eine Umgebung ohne deine Aktion.
 | **Keine passende Version** / **Konflikt** | Lockere die Versionsangabe oder gleiche sie zwischen den Tools an. |
 | **Paketverzeichnis nicht erreichbar** | Prüfe die Internetverbindung; installierte Umgebungen funktionieren auch offline. |
 | **uv wurde nicht gefunden** | Installiere Nodestro neu; uv wird mitinstalliert. |
-| **Nur in der Prozess-Sandbox** | Tools mit Bibliotheken laufen nicht in der Docker-Sandbox. Stelle die [Sandbox](/docs/einstellungen#sandbox) auf *Python-Prozess* um. |
+| **Gibt es nur als Quellcode** | Das Paket hat kein fertiges Wheel, und Nodestro lässt sein Build-Skript nie auf diesem Rechner laufen. Verwende ein Paket mit fertigen Wheels oder lass das Tool ohne es schreiben. Bei einem von KI erstellten Tool kannst du das Paket prüfen und im Bibliotheken-Dialog des Tools freigeben; es wird dann in einem Container gebaut (nicht auf einem Server und nicht in Nodestro Local Docker). |
+| **Das Container-Image dieser Bibliotheken ist … GB groß, mehr als die Grenze** | Verwende weniger oder kleinere Bibliotheken. |
+| **Diese Freigabe stammt aus einer älteren Version ohne Prüfsummen** | Gib die Bibliotheken erneut frei; die Docker-Sandbox braucht Prüfsummen. |
 
 Bei einer fehlgeschlagenen Installation zeigt das **Protokoll der Installation** die Ausgabe von uv. Mit **Erneut installieren** startest du einen neuen Versuch.

@@ -71,6 +71,7 @@
     "blockedBadge": "Bloccati",
     "blocked": {
       "auto": "Gli strumenti creati dall’IA sono bloccati: Automatica li esegue solo in Docker, e Docker non è in esecuzione. Installa e avvia Docker; Nodestro lo userà automaticamente.",
+      "autoDocker": "Gli strumenti creati dall’IA sono bloccati: Automatica li esegue solo in Docker. Appena Docker è in esecuzione, Nodestro lo usa automaticamente.",
       "subprocess": "Gli strumenti creati dall’IA sono bloccati: il processo Python è solo per uso fidato. Per eseguirli, scegli Automatica e avvia Docker.",
       "subprocessLinux": "Gli strumenti creati dall’IA sono bloccati: il processo Python è solo per uso fidato. Per eseguirli, scegli Automatica e avvia Docker, oppure scegli Sandbox Linux (senza pacchetti Python di terze parti).",
       "subprocessChanged": "Se avevi scelto Processo Python in una versione precedente: questa modalità non esegue più gli strumenti creati dall’IA in una sandbox integrata, e Nodestro ha mantenuto la tua scelta invece di passare per te ad Automatica.",
@@ -198,5 +199,18 @@
       "system_messages": "Messaggi di sistema"
     },
     "defaultFollowed": "I nuovi agenti ora usano {{model}} ({{provider}}). I workflow esistenti mantengono i loro modelli; puoi cambiarlo in Modelli."
+  },
+  "nav": {
+    "title": "In questa pagina",
+    "back": "Indietro",
+    "backToWorkflow": "Torna al workflow",
+    "backToRun": "Torna all’esecuzione",
+    "groups": {
+      "setup": "Configurazione",
+      "costs": "Costi",
+      "running": "Strumenti e file",
+      "maintenance": "Manutenzione",
+      "more": "Altro"
+    }
   }
 }

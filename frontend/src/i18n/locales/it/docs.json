@@ -60,6 +60,10 @@
       "keys": "<kbd>C</kbd>",
       "action": "Nodo selezionato nell’area di lavoro: vai a «Collega a» nelle proprietà"
     },
+    "regions": {
+      "keys": "<kbd>F6</kbd>",
+      "action": "Editor dei workflow: passa all’area successiva (Maiusc+F6: precedente): barra del titolo, blocchi, area di lavoro, proprietà, panoramica dell’esecuzione"
+    },
     "canvas": {
       "keys": "Rotellina del mouse, trascinamento dell’area",
       "action": "Zoom e spostamento dell’area di lavoro"
@@ -67,6 +71,10 @@
     "escape": {
       "keys": "<kbd>Esc</kbd>",
       "action": "Chiudi una finestra di dialogo o una spiegazione"
+    },
+    "globalSearch": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>K</kbd>",
+      "action": "Ovunque: cerca pagine, impostazioni, workflow, agenti, strumenti, conoscenza e documentazione"
     },
     "search": {
       "keys": "<kbd>/</kbd>",

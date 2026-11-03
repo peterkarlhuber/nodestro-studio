@@ -214,7 +214,7 @@
       "upstream_changed": "An earlier step runs again.",
       "no_fingerprint": "The earlier run holds no fingerprint for this step.",
       "was_failed": "Failed.",
-      "was_cancelled": "Was cancelled.",
+      "was_cancelled": "Was canceled.",
       "was_blocked": "Did not run because of an error before it.",
       "was_waiting": "Was not reached.",
       "was_running": "Did not finish.",
@@ -287,7 +287,7 @@
         "waiting": "Waiting for approval",
         "failed": "Failed",
         "rejected": "Rejected",
-        "cancelled": "Cancelled",
+        "cancelled": "Canceled",
         "expired": "Expired"
       },
       "invalidNotRun": "Invalid, not carried out",

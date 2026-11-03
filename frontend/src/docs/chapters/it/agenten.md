@@ -232,7 +232,7 @@ Invece di impostare tutto da te, descrivi l'agente con parole tue: compito, inpu
 
 Vedi la proposta con il costo della progettazione e la adotti solo con **Applica**; dopo resta tutto modificabile. Nell'editor, l'agente mantiene il compito precedente quando applichi.
 
-Se all'architetto mancano capacità, indica gli **strumenti mancanti** con una descrizione. Puoi farli creare in [Strumenti → Crea con l'IA](/docs/tools#ki-erstellen). L'architetto usa solo modelli attuali, impegno al massimo *Molto alto*, al massimo 32.000 token e 20 turni di strumenti.
+Se all'architetto mancano capacità, indica gli **strumenti mancanti** con una descrizione. Puoi farli creare in [Strumenti → Crea con l’IA](/docs/tools#ki-erstellen). L'architetto usa solo modelli attuali, impegno al massimo *Molto alto*, al massimo 32.000 token e 20 turni di strumenti.
 
 La proposta viene scritta nella lingua dell'interfaccia, a meno che la tua descrizione non chieda un'altra lingua. I nomi dei campi e gli altri identificatori tecnici restano in inglese.
 

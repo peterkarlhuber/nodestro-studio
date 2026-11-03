@@ -10,7 +10,7 @@ La biblioteca estándar de Python basta para muchas herramientas. Si necesitas m
 1. **Detectar:** Nodestro lee las importaciones del código de la herramienta y deduce los paquetes necesarios. No se descarga nada.
 2. **Aprobar:** Antes de instalar nada ves cada paquete con su versión y lo apruebas. Sin aprobación no se instala nada.
 3. **Instalar:** Nodestro instala exactamente las versiones aprobadas con la herramienta de paquetes **uv** en un entorno propio dentro de la carpeta de datos.
-4. **Ejecutar:** La herramienta se ejecuta en el sandbox con el Python de ese entorno.
+4. **Ejecutar:** La herramienta se ejecuta en el sandbox con el Python de ese entorno. En Docker, Nodestro coloca exactamente los paquetes aprobados en una imagen de contenedor propia.
 
 El Python con el que se ejecuta Nodestro no cambia nunca. Los flujos de trabajo cuyas herramientas solo usan la biblioteca estándar no necesitan nada de esto y funcionan como antes.
 
@@ -42,7 +42,7 @@ Solo se permiten el nombre del paquete y la especificación de versión, sin enl
 ## Aprobación {#freigabe}
 <!-- keywords: aprobación, aprobar, autorizar, versión, indirecto, transitivo, resumen, instalar -->
 
-Con **Revisar y aprobar** Nodestro resuelve las versiones (descarga información de paquetes; un paquete sin wheel precompilado se compila desde el código fuente, lo que ejecuta su script de compilación) y muestra un resumen:
+Con **Revisar y aprobar** Nodestro resuelve las versiones (descarga información de paquetes) y muestra un resumen. Nodestro nunca ejecuta el script de compilación de un paquete en este equipo: un paquete sin wheel precompilado (solo disponible como código fuente) se notifica en su lugar y solo puede compilarse en un contenedor, nunca en un servidor ni en Nodestro Local Docker.
 
 | Columna | Significado |
 |---|---|
@@ -131,6 +131,8 @@ Nodestro nunca elimina un entorno sin una acción tuya.
 | **Ninguna versión compatible** / **Conflicto** | Amplía la especificación de versión o iguálala entre las herramientas. |
 | **Índice de paquetes inaccesible** | Comprueba la conexión a internet; los entornos instalados también funcionan sin conexión. |
 | **No se encontró uv** | Reinstala Nodestro; uv se instala con él. |
-| **Solo en el sandbox de procesos** | Las herramientas con bibliotecas no se ejecutan en el sandbox Docker. Cambia el [sandbox](/docs/einstellungen#sandbox) a *Proceso de Python*. |
+| **Solo está disponible como código fuente** | El paquete no tiene wheel precompilado y Nodestro nunca ejecuta su script de compilación en este equipo. Usa un paquete con wheels listas para usar o deja que la herramienta se escriba sin él. En una herramienta creada por IA puedes revisar el paquete y aprobarlo en el diálogo de bibliotecas de la herramienta; entonces se compila en un contenedor (no en un servidor ni en Nodestro Local Docker). |
+| **La imagen del contenedor de estas bibliotecas ocupa … GB, más que el límite** | Usa menos bibliotecas o más pequeñas. |
+| **Esta aprobación procede de una versión anterior sin sumas de comprobación** | Aprueba de nuevo las bibliotecas; el sandbox de Docker necesita sumas de comprobación. |
 
 Si una instalación falla, el **registro de la instalación** muestra la salida de uv. Con **Instalar de nuevo** inicias otro intento.

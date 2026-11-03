@@ -109,7 +109,7 @@ Em **Aprovações → Regras para chamadas de ferramentas** você vê se as apro
 
 Nos detalhes da execução, cada chamada de ferramenta mostra o que as regras fizeram: permitida, aprovada ou rejeitada (por quem e quando), sem decisão a tempo ou recusada sem pergunta, com o motivo.
 
-## Subworkflows {#unterworkflow}
+## Subfluxos {#unterworkflow}
 <!-- keywords: subworkflow, sub-workflow, aninhar, reutilizar, bloco, versão, execução filha -->
 
 Um **subfluxo** executa outro fluxo de trabalho salvo como uma única etapa. O resultado chega como o de um agente.
@@ -144,7 +144,7 @@ Um **orquestrador** deixa um modelo de IA decidir qual equipe recebe qual parte 
 
 O inspetor de um orquestrador começa com uma frase que resume como ele trabalha ("Como este orquestrador trabalha: …") e agrupa as configurações em quatro áreas expansíveis; cada uma mostra no cabeçalho um resumo e eventuais problemas:
 
-- **Pool de equipes:** os **Workflows escolhidos** são os fluxos de trabalho salvos entre os quais o modelo pode escolher (no máximo 20). De cada equipe, o modelo vê apenas nome, descrição, capacidades e contrato de saída.
+- **Pool de equipes:** os **Fluxos de trabalho escolhidos** são os fluxos de trabalho salvos entre os quais o modelo pode escolher (no máximo 20). De cada equipe, o modelo vê apenas nome, descrição, capacidades e contrato de saída.
 - **Equipes por capacidade** (também no pool de equipes): em vez de escolher cada equipe, você cita capacidades (no máximo 10). Quando uma execução começa, equipes salvas com uma capacidade correspondente entram no grupo (até *No máximo tantas equipes*): primeiro as com mais tags correspondentes, depois pelo nome. Equipes com erros ficam de fora; equipes com etapas de aprovação são incluídas. A seleção fica fixa para essa execução (e para uma versão publicada); os detalhes mostram quais tags cada equipe atendeu. Nada é pontuado nem estimado.
 - **Missão:** **Tarefa** e **Instruções** (o que deve ser feito e, opcionalmente, como planejar) e o **Modelo** do orquestrador.
 - **Limites:** **Máximo de decisões** (de 1 a 50, padrão 8), **Usos máximos por equipe** e **Equipes ao mesmo tempo**. Sem resposta após a última decisão, a etapa falha.

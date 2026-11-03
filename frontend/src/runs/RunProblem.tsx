@@ -10,6 +10,8 @@ import type { Run } from "../api/types";
 import { Callout } from "../components/ui";
 import { AWS_PROVIDER_PROBLEMS, PROVIDER_FAILURES, ProblemText, isProviderAuth, problemCode, runProblem } from "../lib/errors";
 import { failedSteps } from "./runSummary";
+import { settingsHref } from "../lib/settingsLink";
+import { providerOf } from "../lib/providers";
 
 /** Codes of a failed agent whose fix is a setting under "Advanced" of that agent. */
 const ADVANCED_FIX = new Set(["run.agent.IncompleteResponseError", "run.agent.OutputLimitReached", "run.agent.MaxToolRoundsError"]);
@@ -58,7 +60,10 @@ export function RunProblem({ run, children }: { run: Run; children?: ReactNode }
             </span>
           ) : null}
           {isProviderAuth(code) ? (
-            <Link className="small run-problem__fix" to="/settings">
+            <Link
+              className="small run-problem__fix"
+              to={settingsHref(first.agent?.model ? `provider-${providerOf(first.agent.model)}` : "settings-providers", `/executions/${run.id}`)}
+            >
               <Settings size={12} aria-hidden /> {t("runs.failure.openSettings")}
             </Link>
           ) : null}

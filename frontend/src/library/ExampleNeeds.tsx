@@ -11,6 +11,7 @@ import { useMeta, useSettings } from "../api/hooks";
 import type { ExampleDetail, ModelInfo, Settings } from "../api/types";
 import { providerLabel } from "../components/ModelPicker";
 import { findModel, providerOf } from "../lib/providers";
+import { useSettingsHref } from "../lib/settingsLink";
 
 /**
  * The model a copy gives an agent the example describes with ``model``: the example's own (tiered Anthropic) model
@@ -45,6 +46,7 @@ export function ExampleNeeds({ example }: { example: ExampleDetail }) {
   const copied = [...new Set(exampleModels(example).map((model) => copiedModel(model, settings.data, models)))];
   const providers = [...new Set(copied.map(providerOf))];
   const missing = (settings.data?.providers ?? []).filter((item) => providers.includes(item.id) && !item.configured);
+  const providerSetup = useSettingsHref(missing[0] ? `provider-${missing[0].id}` : "settings-providers");
   const names = copied.map((model) => findModel(models, model)?.label ?? model).join(", ");
   const approval = example.features.includes("approval") || example.team_details.some((team) => team.approval);
   const adapted = settings.data && providerOf(settings.data.default_model) !== "anthropic";
@@ -60,7 +62,7 @@ export function ExampleNeeds({ example }: { example: ExampleDetail }) {
             })}{" "}
             {missing.length ? (
               <strong className="example-needs__missing">
-                {t("library.needs.providerMissing")} <Link to="/settings">{t("library.needs.setUp")}</Link>
+                {t("library.needs.providerMissing")} <Link to={providerSetup}>{t("library.needs.setUp")}</Link>
               </strong>
             ) : (
               <span className="example-needs__ok">{t("library.needs.providerReady")}</span>

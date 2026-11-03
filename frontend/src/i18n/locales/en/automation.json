@@ -39,7 +39,7 @@
     "running": "Running",
     "paused": "Paused",
     "finished": "Finished",
-    "cancelled": "Cancelled",
+    "cancelled": "Canceled",
     "stopped": "Stopped",
     "interrupted": "Interrupted"
   },
@@ -48,7 +48,7 @@
     "evaluating": "Being rated",
     "finished": "Finished",
     "stopped": "Stopped",
-    "cancelled": "Cancelled",
+    "cancelled": "Canceled",
     "interrupted": "Interrupted"
   },
   "itemStatus": {
@@ -58,7 +58,7 @@
     "paused": "Awaiting approval",
     "succeeded": "Done",
     "failed": "Failed",
-    "cancelled": "Cancelled",
+    "cancelled": "Canceled",
     "skipped": "Skipped"
   },
   "batch": {
@@ -294,7 +294,7 @@
     },
     "warnings": {
       "few_cases": "Fewer than 10 test cases: the measurement is thin.",
-      "ai_judged": "The AI rating is an AI judgement; it only counts through whether cases passed."
+      "ai_judged": "The AI rating is an AI judgment; it only counts through whether cases passed."
     },
     "skippedIntro": "Not used:",
     "skipped": {

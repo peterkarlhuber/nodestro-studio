@@ -13,8 +13,11 @@ import {
   Layers,
   type LucideIcon,
   Menu,
+  Monitor,
   Moon,
   Orbit,
+  PanelLeftClose,
+  PanelLeftOpen,
   Rows3,
   Settings,
   Sparkles,
@@ -36,6 +39,7 @@ import { Hint, Segmented } from "../components/ui";
 import { isLanguage, setLanguage, storedLanguage } from "../i18n";
 import { setDefaultModel } from "../lib/defaults";
 import { anyProviderConfigured, missingProviders, providerOf } from "../lib/providers";
+import { useNavRail } from "../lib/navRail";
 import { useTheme } from "../lib/theme";
 import { GlobalSearch } from "./GlobalSearch";
 
@@ -130,6 +134,7 @@ function usePhoneNav() {
 export function AppShell() {
   const { t } = useTranslation();
   const phoneNav = usePhoneNav();
+  const navRail = useNavRail();
   const [theme, setTheme] = useTheme();
   const settings = useSettings();
   const access = useAccess();
@@ -173,7 +178,14 @@ export function AppShell() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-  const frame = assistantOpen ? `app app--assistant ${assistantWide ? "app--assistant-wide" : ""}` : "app";
+  const frame = [
+    "app",
+    assistantOpen ? "app--assistant" : "",
+    assistantOpen && assistantWide ? "app--assistant-wide" : "",
+    navRail.rail ? "app--rail" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
   return (
     <div className={frame}>
       <a className="skip-link" href="#main">
@@ -223,6 +235,7 @@ export function AppShell() {
             value={theme}
             onChange={setTheme}
             options={[
+              { value: "system", label: t("shell.system"), icon: Monitor },
               { value: "dark", label: t("shell.dark"), icon: Moon },
               { value: "light", label: t("shell.light"), icon: Sun },
             ]}
@@ -242,6 +255,18 @@ export function AppShell() {
         <NavGroup title={t("nav.groupAutomate")} items={AUTOMATE_AND_TEST} />
         <NavGroup title={t("nav.groupHelp")} items={HELP_ITEMS} />
         <div className="sidebar__bottom">
+          <button
+            type="button"
+            className="nav-item nav-rail-toggle"
+            aria-controls="main-navigation"
+            aria-expanded={!navRail.rail}
+            title={navRail.rail ? t("shell.navExpand") : t("shell.navCollapse")}
+            onClick={navRail.toggle}
+            data-testid="nav-rail-toggle"
+          >
+            {navRail.rail ? <PanelLeftOpen size={16} aria-hidden /> : <PanelLeftClose size={16} aria-hidden />}
+            {navRail.rail ? t("shell.navExpand") : t("shell.navCollapse")}
+          </button>
           <NavLink to="/settings" title={t("nav.settings")} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
             <Settings size={16} aria-hidden />
             {t("nav.settings")}

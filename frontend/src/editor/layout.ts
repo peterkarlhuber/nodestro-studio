@@ -55,11 +55,18 @@ export function clampSize(panel: EditorPanel, size: number): number {
   return Math.round(Math.min(max, Math.max(min, size)));
 }
 
+/** Tablet widths, where the editor's properties are a drawer over the canvas (see app.css). */
+export function isTabletEditor(): boolean {
+  return typeof window !== "undefined" && window.innerWidth > 760 && window.innerWidth <= 1100;
+}
+
 export function defaultLayout(): Persisted {
   // Narrow windows start with the building blocks collapsed so the canvas keeps its room.
   const narrow = typeof window !== "undefined" && window.innerWidth < 1100;
   return {
-    open: { palette: !narrow, inspector: true, runPanel: true },
+    // On tablets the properties lie over the canvas as a drawer that opens with a selection (ST-009);
+    // on phones they follow below the canvas and stay open.
+    open: { palette: !narrow, inspector: !isTabletEditor(), runPanel: true },
     size: { palette: PANEL_BOUNDS.palette.default, inspector: PANEL_BOUNDS.inspector.default, runPanel: PANEL_BOUNDS.runPanel.default },
   };
 }

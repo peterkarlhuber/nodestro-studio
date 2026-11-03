@@ -45,7 +45,7 @@ Crie seu primeiro fluxo de trabalho em poucos minutos:
 5. **Acompanhe.** Na *Visão geral da execução*, abaixo da tela, você vê ao vivo o que o agente escreve, quais ferramentas chama, quantos tokens usa e quanto custa.
 6. **Analise.** Em **Detalhes** você chega à execução completa com sua linha do tempo.
 
-> **Dica:** Abaixo dos seus fluxos de trabalho fica a galeria com 24 [workflows de exemplo](/docs/beispiele) para tarefas típicas, por exemplo **Análise financeira** e **Artigo de blog**. A prévia é gratuita; exemplos copiados são cópias suas, que você pode mudar livremente.
+> **Dica:** Abaixo dos seus fluxos de trabalho fica a galeria com 24 [fluxos de trabalho de exemplo](/docs/beispiele) para tarefas típicas, por exemplo **Análise financeira** e **Artigo de blog**. A prévia é gratuita; exemplos copiados são cópias suas, que você pode mudar livremente.
 
 ## A interface {#oberflaeche}
 <!-- keywords: navegação, barra lateral, menu, tema, escuro, claro, layout -->
@@ -89,5 +89,5 @@ Além do comando `nodestro`, o Nodestro está disponível como aplicativo de des
 - Somente a janela do aplicativo pode usar este Nodestro. Outros programas do computador e páginas da web no navegador são recusados (*Este Nodestro pertence ao aplicativo de desktop que o iniciou*). O link de início da janela funciona uma única vez; para abrir uma nova janela, reinicie o aplicativo.
 - Links para outros sites abrem no navegador.
 - Fechar a janela encerra o Nodestro. Se ele parar inesperadamente, a janela avisa e informa o arquivo de log.
-- Ferramentas criadas por IA rodam isoladas no sandbox Linux integrado; não é preciso instalar nada para isso (veja [Ferramentas](/docs/tools#sandbox)). Se *Configurações → Sandbox* disser que ele não está disponível, e sempre no macOS e no Windows, elas só rodam com Docker ([Instalar o Docker](/docs/einstellungen#sandbox-docker)).
+- Ferramentas criadas por IA só rodam isoladas: com o sandbox *Automático*, no Docker, depois que ele passa nas verificações do Nodestro ([Instalar o Docker](/docs/einstellungen#sandbox-docker)). Em vez disso, você pode escolher o **Sandbox Linux** integrado, que não precisa de instalação, mas não pode usar pacotes Python de terceiros (veja [Ferramentas](/docs/tools#sandbox)). Sem nenhum dos dois, elas ficam bloqueadas; *Configurações → Sandbox* mostra o motivo.
 - Ainda não existem versões para macOS e Windows.

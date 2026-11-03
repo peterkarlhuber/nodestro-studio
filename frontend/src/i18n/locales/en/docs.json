@@ -60,6 +60,10 @@
       "keys": "<kbd>C</kbd>",
       "action": "Selected node on the canvas: go to “Connect to” in the properties"
     },
+    "regions": {
+      "keys": "<kbd>F6</kbd>",
+      "action": "Workflow editor: move to the next (Shift+F6: previous) area: title bar, building blocks, canvas, properties, run overview"
+    },
     "canvas": {
       "keys": "Mouse wheel, dragging the canvas",
       "action": "Zoom and pan the canvas"
@@ -67,6 +71,10 @@
     "escape": {
       "keys": "<kbd>Esc</kbd>",
       "action": "Close a dialog or explanation"
+    },
+    "globalSearch": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>K</kbd>",
+      "action": "Search pages, settings, workflows, agents, tools, knowledge and documentation from anywhere"
     },
     "search": {
       "keys": "<kbd>/</kbd>",

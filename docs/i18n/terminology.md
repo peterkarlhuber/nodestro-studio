@@ -12,7 +12,11 @@ Rules that apply to every language:
   in general (in a workflow, the Agent node). The library Orkexa that checks agent configurations keeps its own wording.
 - Counted texts use i18next plural forms (`_one`/`_other`; `_many` is derived from `_other` for es, fr, it and
   pt-BR in `src/i18n/resources.ts`). Texts with several numbers use the form "label: number".
-- Address form: de "du", en "you", es "tú", fr "vous", it "tu", pt-BR "você".
+- Address form: de "du", en "you", es "tú", fr "vous", it "tu", pt-BR "você". `src/i18n/quality.test.ts` checks
+  the interface texts and `src/docs/docs.test.ts` the chapters for forms that can only be the wrong address.
+- The workflow and sub-workflow terms of each language are checked the same way ("Avoid" column below).
+- A path through the interface in the docs (*Settings → Sandbox*) starts with the navigation label and names
+  existing interface texts; `src/docs/docs.test.ts` checks this.
 - Technical API names stay as they are in every language: Tool choice (`tool_choice`), Request options (JSON),
   Tokens, Trace, MCP, API, SDK, Base64. Brand names: Nodestro, Nodestro Studio, Nodestro Assistant.
 
@@ -46,6 +50,7 @@ Rules that apply to every language:
 | Concept | Term | Avoid |
 |---|---|---|
 | Workflow | Workflow | Arbeitsablauf |
+| Sub-workflow (node and concept) | Unterworkflow | Unter-Workflow |
 | One run; the page listing them | Lauf (plural Läufe); page "Ausführungen" | "Ausführung" for a single run in new texts |
 | Human decision step, tool-call decision, the page | Freigabe, Freigabeschritt; page "Freigaben"; Vorab-Freigabe | Genehmigung |
 | Approving packages or tool code | freigeben (Python-Pakete freigeben) | |
@@ -63,7 +68,7 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 
 | Concept | Term | Avoid |
 |---|---|---|
-| Workflow | flujo de trabajo (plural flujos de trabajo); sub-workflow: subflujo | workflow |
+| Workflow | flujo de trabajo (plural flujos de trabajo); sub-workflow: subflujo (node "Subflujo") | workflow, subworkflow |
 | Run; the page | ejecución; page "Ejecuciones" | run |
 | Approval; the page | aprobación; page "Aprobaciones"; aprobación previa | autorización, liberación |
 | Release gate | control de publicación | |
@@ -93,6 +98,7 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 | Concept | Term | Avoid |
 |---|---|---|
 | Workflow | workflow | flusso |
+| Sub-workflow (node and concept) | sotto-workflow | sub-workflow, subworkflow |
 | Run; the page | esecuzione; page "Esecuzioni" | run |
 | Approval; the page | approvazione; page "Approvazioni"; approvazione anticipata | convalida |
 | Release gate | controllo di pubblicazione | |
@@ -105,7 +111,7 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 
 | Concept | Term | Avoid |
 |---|---|---|
-| Workflow | fluxo de trabalho (plural fluxos de trabalho); sub-workflow: subfluxo | workflow |
+| Workflow | fluxo de trabalho (plural fluxos de trabalho); sub-workflow: subfluxo (node "Subfluxo") | workflow, subworkflow |
 | Run; the page | execução; page "Execuções" | run |
 | Approval; the page | aprovação; page "Aprovações"; aprovação antecipada | liberação, autorização |
 | Release gate | controle de publicação | |

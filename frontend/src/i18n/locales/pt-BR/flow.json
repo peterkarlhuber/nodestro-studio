@@ -190,7 +190,7 @@
     "schedule": "Agendamento",
     "batch": "Lote",
     "benchmark": "Série de testes",
-    "subworkflow": "Subworkflow",
+    "subworkflow": "Subfluxo",
     "resume": "Continuação",
     "api": "API"
   },
@@ -306,7 +306,7 @@
     "staffing": "Montar a escalação ativa por conta própria: o orquestrador traz equipes do pool para a escalação e as dispensa novamente",
     "maxTeam": "No máximo na escalação ativa",
     "allowValues": "Preencher o formulário inicial das equipes (sem arquivos; verificado como um início manual)",
-    "members": "Workflows escolhidos",
+    "members": "Fluxos de trabalho escolhidos",
     "assignment": "Missão",
     "limits": "Limites",
     "lineup": "Escalação ativa",

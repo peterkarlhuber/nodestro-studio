@@ -10,7 +10,7 @@ La bibliothèque standard de Python suffit pour beaucoup d’outils. Si vous ave
 1. **Détecter :** Nodestro lit les imports du code de l’outil et en déduit les paquets nécessaires. Rien n’est téléchargé.
 2. **Approuver :** Avant toute installation, vous voyez chaque paquet avec sa version et l’approuvez. Sans approbation, rien n’est installé.
 3. **Installer :** Nodestro installe exactement les versions approuvées avec l’outil de paquets **uv** dans un environnement dédié du dossier de données.
-4. **Exécuter :** L’outil s’exécute dans le sandbox avec le Python de cet environnement.
+4. **Exécuter :** L’outil s’exécute dans le bac à sable avec le Python de cet environnement. Dans Docker, Nodestro place exactement les paquets approuvés dans une image de conteneur dédiée.
 
 Le Python qui exécute Nodestro lui-même ne change jamais. Les workflows dont les outils n’utilisent que la bibliothèque standard n’ont besoin de rien de tout cela et fonctionnent comme avant.
 
@@ -42,7 +42,7 @@ Seuls le nom du paquet et la spécification de version sont autorisés, pas de l
 ## Approbation {#freigabe}
 <!-- keywords: approbation, approuver, autoriser, version, indirect, transitif, vue d’ensemble, installer -->
 
-Avec **Vérifier et approuver**, Nodestro résout les versions (en téléchargeant les informations des paquets ; un paquet sans wheel précompilé est construit à partir du code source, ce qui exécute son script de construction) et affiche une vue d’ensemble :
+Avec **Vérifier et approuver**, Nodestro résout les versions (en téléchargeant les informations des paquets) et affiche une vue d’ensemble. Nodestro n’exécute jamais le script de construction d’un paquet sur cet ordinateur : un paquet sans wheel précompilé (disponible uniquement sous forme de code source) est signalé à la place ; il ne peut être construit que dans un conteneur, jamais sur un serveur ni dans Nodestro Local Docker.
 
 | Colonne | Signification |
 |---|---|
@@ -131,6 +131,8 @@ Nodestro ne supprime jamais un environnement sans action de votre part.
 | **Aucune version ne correspond** / **Conflit** | Assouplissez la spécification de version ou harmonisez-la entre les outils. |
 | **Index des paquets injoignable** | Vérifiez la connexion Internet ; les environnements installés fonctionnent aussi hors ligne. |
 | **uv est introuvable** | Réinstallez Nodestro ; uv est installé avec lui. |
-| **Sandbox de processus uniquement** | Les outils avec bibliothèques ne fonctionnent pas dans le sandbox Docker. Passez le [sandbox](/docs/einstellungen#sandbox) sur *Processus Python*. |
+| **N’est disponible que sous forme de code source** | Le paquet n’a pas de wheel précompilé, et Nodestro n’exécute jamais son script de construction sur cet ordinateur. Utilisez un paquet qui propose des wheels prêtes à l’emploi ou laissez l’outil être écrit sans lui. Pour un outil créé par l’IA, vous pouvez vérifier le paquet et l’approuver dans la boîte de dialogue des bibliothèques de l’outil ; il est alors construit dans un conteneur (pas sur un serveur ni dans Nodestro Local Docker). |
+| **L’image du conteneur de ces bibliothèques fait … Go, plus que la limite** | Utilisez moins de bibliothèques ou des bibliothèques plus petites. |
+| **Cette approbation provient d’une ancienne version sans sommes de contrôle** | Approuvez de nouveau les bibliothèques ; le bac à sable Docker a besoin des sommes de contrôle. |
 
 En cas d’échec d’une installation, le **journal d’installation** affiche la sortie de uv. **Réinstaller** lance une nouvelle tentative.

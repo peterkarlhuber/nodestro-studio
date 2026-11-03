@@ -109,7 +109,7 @@
   "connect": {
     "title_one": "Optional connection",
     "title_other": "Optional connections",
-    "intro": "The example works without a connection: the copy then runs in a clearly labelled offline mode with the sample data. With a connection, agents read data through approved read-only tools of an MCP server.",
+    "intro": "The example works without a connection: the copy then runs in a clearly labeled offline mode with the sample data. With a connection, agents read data through approved read-only tools of an MCP server.",
     "optional": "Optional connection",
     "tools": "Tools it needs (approved as read-only): {{tools}}",
     "setup": "How to set it up",
@@ -135,7 +135,7 @@
     "modelsAdapted": "AI provider: {{provider}}. The copy uses your default models instead of the example’s: {{models}}.",
     "providerMissing": "Not set up yet.",
     "setUp": "Set up",
-    "providerReady": "Set up.",
+    "providerReady": "Already set up.",
     "approval": "A run pauses for your approval before it continues.",
     "knowledge_one": "Creates {{count}} knowledge file in your knowledge base.",
     "knowledge_other": "Creates {{count}} knowledge files in your knowledge base.",

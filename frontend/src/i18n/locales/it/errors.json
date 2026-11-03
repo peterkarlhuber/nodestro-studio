@@ -515,7 +515,7 @@
     "not_published": "Non è ancora pubblicata nessuna versione di questo workflow.",
     "guide_empty": "La guida è vuota.",
     "model_key_missing": "{{provider}} non è configurato: le esecuzioni pubblicate rispondono 503 finché non lo sarà.",
-    "subworkflow_agent_invalid": "Sub-workflow {{workflow}}: un agente non è configurato correttamente.",
+    "subworkflow_agent_invalid": "Sotto-workflow {{workflow}}: un agente non è configurato correttamente.",
     "approvals_one": "Le esecuzioni si fermano a {{count}} passaggio di approvazione finché qualcuno non decide in Nodestro o tramite l’API.",
     "approvals_other": "Le esecuzioni si fermano a {{count}} passaggi di approvazione finché qualcuno non decide in Nodestro o tramite l’API.",
     "server_tools": "Gli agenti usano strumenti server ({{tools}}); costano in più a ogni chiamata.",
@@ -523,7 +523,7 @@
     "knowledge_live_other": "{{count}} file di conoscenza vengono usati così come sono al momento dell’esecuzione (non congelati).",
     "memory_shared": "La memoria persistente ({{spaces}}) è condivisa da Nodestro e da ogni esecuzione dell’API.",
     "no_budget": "Le esecuzioni non hanno limite di costo; imposta un budget per il workflow o un budget giornaliero per l’API.",
-    "subworkflow_unsaved": "{{name}}: il sub-workflow non ha una versione salvata.",
+    "subworkflow_unsaved": "{{name}}: il sotto-workflow non ha una versione salvata.",
     "mcp_tool_unusable": "Uno strumento di servizio di questo workflow non è utilizzabile ora; non può essere pubblicato.",
     "mcp_tools": "Gli strumenti di servizio vengono congelati in questa versione; una modifica successiva del servizio la ferma finché non viene pubblicata di nuovo.",
     "mcp_unattended_off": "Le esecuzioni API usano gli strumenti di servizio solo se il gestore consente l'uso non presidiato (NODESTRO_MCP_UNATTENDED)."

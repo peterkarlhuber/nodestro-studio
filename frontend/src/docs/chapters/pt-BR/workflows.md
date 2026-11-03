@@ -53,7 +53,7 @@ Os blocos, o inspetor (com o título *Propriedades*) e a visão geral da execuç
 | **Agente** | Chama seu modelo de IA com sua configuração e retorna um resultado (texto ou JSON). | quantas quiser | quantas quiser |
 | **Decisão** | Escolhe uma ou mais ramificações por regras fixas, sem requisição à IA. | uma ou mais | uma saída por ramificação |
 | **Aprovação** | Segura a execução até que uma pessoa aprove ou rejeite. | quantas quiser | *Aprovado*, *Rejeitado* |
-| **Subworkflow** | Executa outro fluxo de trabalho salvo como uma única etapa. | quantas quiser | quantas quiser |
+| **Subfluxo** | Executa outro fluxo de trabalho salvo como uma única etapa. | quantas quiser | quantas quiser |
 | **Resultado** | Reúne os resultados dos agentes conectados como saída do fluxo de trabalho, se quiser também como arquivos. | quantas quiser | nenhuma |
 
 Os nós de início e de resultado são opcionais: agentes sem antecessor recebem automaticamente a entrada da execução e, sem nó de resultado, a saída dos últimos agentes vale como resultado (veja [O resultado de uma execução](/docs/ausfuehrungen#ergebnis)). Decisão, aprovação e subfluxo ficam na paleta, em *Controlar o fluxo*; veja [Ramificações e aprovações](/docs/verzweigungen).
@@ -159,14 +159,14 @@ Custos desconhecidos **não** contam como 0. Se o custo máximo de uma solicita�
 
 Execuções que você mesmo inicia não param quando o orçamento não basta: elas pausam e aguardam uma decisão, veja [Decisões de orçamento durante uma execução](/docs/workflows#budget-freigabe).
 
-## Orçamento padrão, do workflow e da execução {#budget-ebenen}
+## Orçamento padrão, do fluxo de trabalho e da execução {#budget-ebenen}
 <!-- keywords: orçamento padrão, orçamento do workflow, orçamento da execução, limite efetivo, limite inicial, aumento, níveis -->
 
 Três níveis definem quanto uma execução pode custar:
 
-- **Orçamento padrão** (configurações): vale para todo workflow sem orçamento próprio.
-- **Orçamento do workflow** (configurações do workflow): substitui o orçamento padrão para este workflow. Uma versão publicada mantém o orçamento com que foi publicada.
-- **Orçamento da execução:** o limite com que uma execução começa (o orçamento do workflow, senão o padrão) mais cada aumento aprovado para essa execução. Um aumento não muda nem o workflow nem as configurações; a próxima execução começa de novo com o orçamento do workflow.
+- **Orçamento padrão** (configurações): vale para todo fluxo de trabalho sem orçamento próprio.
+- **Orçamento do fluxo de trabalho** (configurações do fluxo de trabalho): substitui o orçamento padrão para este fluxo de trabalho. Uma versão publicada mantém o orçamento com que foi publicada.
+- **Orçamento da execução:** o limite com que uma execução começa (o orçamento do fluxo de trabalho, senão o padrão) mais cada aumento aprovado para essa execução. Um aumento não muda nem o fluxo de trabalho nem as configurações; a próxima execução começa de novo com o orçamento do fluxo de trabalho.
 
 Os detalhes da execução mostram o limite dela ao lado dos custos e, após um aumento, *limite aumentado de …*. Administradores podem definir um **orçamento máximo por execução** que nenhuma execução pode ultrapassar, nem no início nem após aumentos (veja [Orçamento padrão](/docs/einstellungen#budget)).
 
@@ -191,10 +191,10 @@ Durante a pausa nenhuma thread nem worker fica ocupado, e um reinício do Nodest
 
 Se ninguém decidir antes do prazo (24 horas, a menos que um administrador tenha definido outro), a execução falha com “orçamento esgotado”. Depois você pode [continuá-la](/docs/verzweigungen#fortsetzen) com um novo orçamento.
 
-## Limites de subworkflows e equipes {#budget-teams}
+## Limites de subfluxos e equipes {#budget-teams}
 <!-- keywords: orçamento do subworkflow, orçamento da equipe, execução filha, execução superior, limite que bloqueia, aninhado -->
 
-Um subworkflow ou equipe com orçamento próprio roda com o próprio limite, e cada solicitação conta também para a execução acima. A decisão de orçamento nomeia o limite que recusou a solicitação: *o limite desta execução* ou *o limite próprio do subworkflow / da equipe “nome”*. Um aumento muda exatamente esse limite, nunca o workflow por trás. Os limites acima continuam valendo: aumentar o limite de uma equipe pode levar a uma segunda decisão para a execução acima, e aumentar esta nunca levanta o limite próprio de uma equipe. Sempre há uma decisão por execução de nível superior.
+Um subfluxo ou equipe com orçamento próprio roda com o próprio limite, e cada solicitação conta também para a execução acima. A decisão de orçamento nomeia o limite que recusou a solicitação: *o limite desta execução* ou *o limite próprio do subfluxo / da equipe “nome”*. Um aumento muda exatamente esse limite, nunca o fluxo de trabalho por trás. Os limites acima continuam valendo: aumentar o limite de uma equipe pode levar a uma segunda decisão para a execução acima, e aumentar esta nunca levanta o limite próprio de uma equipe. Sempre há uma decisão por execução de nível superior.
 
 ## Quem pode decidir {#budget-rechte}
 <!-- keywords: permissão, quem pode aumentar, iniciou a execução, administrador, orçamento máximo por execução, tenant -->

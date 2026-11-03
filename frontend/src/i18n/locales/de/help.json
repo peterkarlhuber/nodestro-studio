@@ -137,7 +137,7 @@
   "budget": {
     "decision": "Der Lauf pausiert, weil sein Budget für die nächste Modellanfrage nicht reicht. Dafür wurde nichts gesendet. Erhöhe das Limit genau dieses Laufs und setze fort, oder beende den Lauf.",
     "reason": "„Aufgebraucht“: Die bekannten Kosten haben das Limit erreicht. „Nächste Anfrage zu groß“: Das Höchste, was die nächste Anfrage kosten kann (Eingabe plus größte Ausgabe zum höchsten Preis), passt nicht in den Rest. Das ist ein Höchstwert, keine Schätzung der erwarteten Kosten.",
-    "block": "Das Limit, das die Anfrage abgelehnt hat: das eigene dieses Laufs oder das eigene Limit eines Unter-Workflows oder Teams. Eine Erhöhung ändert genau dieses Limit; Limits darüber gelten weiter und können erneut fragen.",
+    "block": "Das Limit, das die Anfrage abgelehnt hat: das eigene dieses Laufs oder das eigene Limit eines Unterworkflows oder Teams. Eine Erhöhung ändert genau dieses Limit; Limits darüber gelten weiter und können erneut fragen.",
     "initialLimit": "Das Limit, mit dem der Lauf gestartet ist: das Budget des Workflows oder das Standardbudget aus den Einstellungen.",
     "currentLimit": "Das Limit, das jetzt gilt: das Startlimit plus jede für diesen Lauf freigegebene Erhöhung.",
     "knownCost": "Was die Anfragen des Laufs bisher gekostet haben, nach bekannten Preisen. Unbekannte Kosten sind markiert und zählen nie als 0.",

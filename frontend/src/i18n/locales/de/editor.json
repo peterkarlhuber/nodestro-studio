@@ -253,5 +253,9 @@
     "decisions_one": "max. {{count}} Entscheidung",
     "decisions_other": "max. {{count}} Entscheidungen",
     "byCapability": "nach Fähigkeit: {{tags}}"
+  },
+  "regions": {
+    "titlebar": "Titelleiste",
+    "canvas": "Arbeitsfläche"
   }
 }

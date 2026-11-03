@@ -37,7 +37,7 @@ In the inspector of the Start node every file field has a *File options* section
 
 Every field, not only file fields, is either **required** or **optional**. A required field must be filled before the start. An empty optional field stays empty:
 
-- In an agent's task it shows as “(not provided)”, so the agent recognises that nothing was given.
+- In an agent's task it shows as “(not provided)”, so the agent recognizes that nothing was given.
 - Decision nodes see an empty value and can test it with *is empty*.
 - Empty file fields create no file references. This also holds for sub-workflows, published APIs and exported projects.
 
@@ -49,7 +49,7 @@ Every field, not only file fields, is either **required** or **optional**. A req
 | Text | TXT, Markdown, source code | the text |
 | Data | CSV, JSON, Excel (XLSX) | tables with columns; Excel with all sheets |
 | Documents | PDF, Word (DOCX) | text with headings and tables; pages for PDFs |
-| Images | PNG, JPG, WebP | the image; recognised text when OCR is on |
+| Images | PNG, JPG, WebP | the image; recognized text when OCR is on |
 | Archives | ZIP | the folder structure and every contained file on its own |
 
 Nodestro checks the **real content**, not only the extension: a renamed file, a damaged file or invalid JSON is refused with an understandable reason. Scanned PDFs without a text layer are read with OCR when text recognition is on. Excel formulas are never calculated; the stored value is read.
@@ -73,7 +73,7 @@ Agents that get input from the Start node receive the run's files. Nodestro choo
 
 - **Text and tables** go to the agent as text as long as they fit (about 60,000 characters per file, 150,000 for all files together).
 - **PDFs** with a text layer go to the agent as a document (text and layout), up to 100 pages.
-- **Images** the agent sees itself when the model understands images. Otherwise this is noted. With OCR you see whether the agent got the recognised text or the image.
+- **Images** the agent sees itself when the model understands images. Otherwise this is noted. With OCR you see whether the agent got the recognized text or the image.
 - **Large files and archives** come as an overview. The agent reads the parts it needs with `input_files`, e.g. certain pages, a sheet or ranges of rows.
 
 The *Hand-over to agents* setting forces the content or the overview. For agents, uploaded content is always **data, not instructions**: Nodestro marks it accordingly.
@@ -82,7 +82,7 @@ The *Hand-over to agents* setting forces the content or the overview. For agents
 <!-- keywords: trace, context, which files, preview, sent to model, transparency -->
 
 - An agent's **input preview** shows before the start which files it gets and in which form.
-- In a run's detail view the *Context* tab of each step shows which files went to the model and how (as text, as PDF document, as image, as recognised text or as overview).
+- In a run's detail view the *Context* tab of each step shows which files went to the model and how (as text, as PDF document, as image, as recognized text or as overview).
 - Calls of `input_files` are listed with input and output under *Tools*.
 - *Received files* lists everything the run got and whether it has been taken over into knowledge since.
 

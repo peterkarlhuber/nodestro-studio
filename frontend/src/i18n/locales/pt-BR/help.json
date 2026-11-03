@@ -137,8 +137,8 @@
   "budget": {
     "decision": "A execução está pausada porque o orçamento não basta para a próxima solicitação ao modelo. Nada foi enviado para ela. Aumente o limite exatamente desta execução e continue, ou encerre a execução.",
     "reason": "“Esgotado”: os custos conhecidos atingiram o limite. “Próxima solicitação grande demais”: o máximo que a próxima solicitação pode custar (entrada mais saída máxima na tarifa mais alta) não cabe no que resta. É um máximo, não um custo esperado.",
-    "block": "O limite que recusou a solicitação: o desta execução ou o limite próprio de um subworkflow ou equipe. Um aumento muda exatamente esse limite; limites acima continuam valendo e podem perguntar de novo.",
-    "initialLimit": "O limite com que a execução começou: o orçamento do workflow ou o orçamento padrão das configurações.",
+    "block": "O limite que recusou a solicitação: o desta execução ou o limite próprio de um subfluxo ou equipe. Um aumento muda exatamente esse limite; limites acima continuam valendo e podem perguntar de novo.",
+    "initialLimit": "O limite com que a execução começou: o orçamento do fluxo de trabalho ou o orçamento padrão das configurações.",
     "currentLimit": "O limite que vale agora: o limite inicial mais cada aumento aprovado para esta execução.",
     "knownCost": "Quanto as solicitações da execução custaram até agora, por preços conhecidos. Custos desconhecidos são marcados e nunca contam como 0.",
     "remaining": "Limite atual menos custos conhecidos. Se houver custos desconhecidos, o que resta de fato pode ser menor.",

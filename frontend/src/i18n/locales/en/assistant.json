@@ -53,7 +53,7 @@
     "steps_one": "{{count}} step",
     "steps_other": "{{count}} steps",
     "sources": "Sources",
-    "cancelled": "Cancelled.",
+    "cancelled": "Canceled.",
     "retry": "Try again"
   },
   "attachments": {

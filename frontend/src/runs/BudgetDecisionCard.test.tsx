@@ -121,9 +121,25 @@ describe("BudgetDecisionForm", () => {
     expect(screen.getByTestId("budget-block")).toHaveTextContent("Das eigene Limit des Teams „Recherche“ blockiert.");
     expect(screen.getByTestId("budget-blocked")).toHaveTextContent("ihre Kosten lassen sich vorab nicht begrenzen");
     expect(screen.getByTestId("budget-suggested")).toHaveTextContent("keins");
+    // Without a label (older runtimes) the node id stands in for the waiting agent.
+    expect(screen.getByTestId("budget-blocked")).toHaveTextContent("gpt-x · a");
     // The run's own starting limit does not belong to a team's limit.
     expect(screen.queryByTestId("budget-initial")).toBeNull();
     expect(screen.getByLabelText("Neues Gesamtlimit für diesen Lauf (USD)")).toHaveValue("");
+  });
+
+  it("names the waiting agent by its label, not its node id", () => {
+    const budget = runBudget(
+      {},
+      {
+        requests: [
+          { run_id: "run_1", node_id: "a", agent: "a", label: "Writer", model: "gpt-x", max_cost_usd: "0.10", bounded: true, price_status: null },
+        ],
+      },
+    );
+    render(wrap(<BudgetDecisionForm budget={budget} request={budget.pending!} />));
+    expect(screen.getByTestId("budget-blocked")).toHaveTextContent("Writer");
+    expect(screen.getByTestId("budget-blocked")).not.toHaveTextContent("· a");
   });
 
   it("checks the value before sending and names the problem for screen readers", async () => {

@@ -71,6 +71,7 @@
     "blockedBadge": "Blocked",
     "blocked": {
       "auto": "AI-created tools are blocked: Automatic runs them only in Docker, and Docker is not running. Install and start Docker; Nodestro then uses it automatically.",
+      "autoDocker": "AI-created tools are blocked: Automatic runs them only in Docker. Once Docker runs, Nodestro uses it automatically.",
       "subprocess": "AI-created tools are blocked: the Python process is for trusted use only. To run them, choose Automatic and start Docker.",
       "subprocessLinux": "AI-created tools are blocked: the Python process is for trusted use only. To run them, choose Automatic and start Docker, or choose Linux sandbox (without third-party Python packages).",
       "subprocessChanged": "If you chose Python process in an earlier version: it no longer runs AI-created tools in a built-in sandbox, and Nodestro kept your choice instead of switching to Automatic for you.",
@@ -155,7 +156,7 @@
   },
   "ocr": {
     "title": "Text recognition (OCR)",
-    "text": "Recognises text in scanned PDFs locally with Tesseract. No data is sent anywhere. Uncertain words are marked.",
+    "text": "Recognizes text in scanned PDFs locally with Tesseract. No data is sent anywhere. Uncertain words are marked.",
     "label": "Use OCR for scans",
     "available": "OCR ready: Tesseract, language data and Poppler found",
     "missing": "Not available: needs Tesseract with language data and pdftoppm and pdfinfo (Poppler)"
@@ -198,5 +199,18 @@
       "system_messages": "System messages"
     },
     "defaultFollowed": "New agents now use {{model}} ({{provider}}). Existing workflows keep their models; you can change this under Models."
+  },
+  "nav": {
+    "title": "On this page",
+    "back": "Back",
+    "backToWorkflow": "Back to the workflow",
+    "backToRun": "Back to the run",
+    "groups": {
+      "setup": "Setup",
+      "costs": "Costs",
+      "running": "Tools and files",
+      "maintenance": "Maintenance",
+      "more": "More"
+    }
   }
 }

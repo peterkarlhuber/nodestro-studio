@@ -67,7 +67,7 @@
     "raised": "limit raised",
     "ended": "run ended",
     "expired": "no decision in time",
-    "cancelled": "run cancelled"
+    "cancelled": "run canceled"
   },
   "history": {
     "title": "Earlier raises",

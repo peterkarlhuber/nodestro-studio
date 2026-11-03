@@ -47,7 +47,7 @@ The index is an SQLite full-text search (FTS5 with BM25 ranking) right in the No
 | Mode | What the agent gets | Suitable for | Costs |
 |---|---|---|---|
 | **In context** | All assigned files in full at the beginning of the prompt. | A few short documents that are always needed (style guide, price list). Images too. | Every request contains all files; caching makes repetitions cheap. |
-| **On demand** | A catalogue (name, type, size, description) and the `files` tool, with which it loads individual files in full. | Medium-sized collections where only some files matter for each task. Images and scanned PDFs too. | Only loaded files cost tokens. |
+| **On demand** | A catalog (name, type, size, description) and the `files` tool, with which it loads individual files in full. | Medium-sized collections where only some files matter for each task. Images and scanned PDFs too. | Only loaded files cost tokens. |
 | **Search** | The `search` tool, which returns the best-matching sections with their source (RAG). | Large documents and collections from which individual facts are needed. | Only sections found cost tokens. |
 
 **Recommendations:**

@@ -71,6 +71,7 @@
     "blockedBadge": "Bloqueadas",
     "blocked": {
       "auto": "Las herramientas creadas por IA están bloqueadas: Automático solo las ejecuta en Docker, y Docker no está en ejecución. Instala e inicia Docker; Nodestro lo usará automáticamente.",
+      "autoDocker": "Las herramientas creadas por IA están bloqueadas: Automático solo las ejecuta en Docker. En cuanto Docker esté en ejecución, Nodestro lo usará automáticamente.",
       "subprocess": "Las herramientas creadas por IA están bloqueadas: el proceso de Python es solo para uso de confianza. Para ejecutarlas, elige Automático e inicia Docker.",
       "subprocessLinux": "Las herramientas creadas por IA están bloqueadas: el proceso de Python es solo para uso de confianza. Para ejecutarlas, elige Automático e inicia Docker, o elige Sandbox de Linux (sin paquetes de Python de terceros).",
       "subprocessChanged": "Si elegiste Proceso de Python en una versión anterior: este modo ya no ejecuta herramientas creadas por IA en un sandbox integrado, y Nodestro mantuvo tu elección en lugar de cambiar a Automático por ti.",
@@ -198,5 +199,18 @@
       "system_messages": "Mensajes de sistema"
     },
     "defaultFollowed": "Los agentes nuevos usan ahora {{model}} ({{provider}}). Los flujos de trabajo existentes conservan sus modelos; puedes cambiarlo en Modelos."
+  },
+  "nav": {
+    "title": "En esta página",
+    "back": "Volver",
+    "backToWorkflow": "Volver al flujo de trabajo",
+    "backToRun": "Volver a la ejecución",
+    "groups": {
+      "setup": "Configuración",
+      "costs": "Costes",
+      "running": "Herramientas y archivos",
+      "maintenance": "Mantenimiento",
+      "more": "Más"
+    }
   }
 }

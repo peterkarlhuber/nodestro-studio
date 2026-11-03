@@ -19,7 +19,7 @@ Here you find solutions for common messages and answers to typical questions.
 | "Citations cannot be combined with a structured output format" | Both options are on. | Switch one of them off. |
 | "Example messages must …" | The examples do not alternate properly. | Start with the user, alternate, end with the assistant. |
 | "Persistent memory needs a memory space" | Memory *Persistent* without a space. | Choose or create a space. |
-| Docker errors with tools | Docker is selected but not running. | Start Docker or choose the *Automatic* sandbox. |
+| Docker errors with tools | Docker is not running. | Start Docker. With the *Automatic* sandbox your own tools run without Docker; AI-created tools always need it. |
 | AI-created tools are blocked on macOS or Windows | There is no approved sandbox without Docker on these systems. | [Install Docker](/docs/einstellungen#sandbox-docker) and start it; *Automatic* then uses it. |
 | Agent was *skipped* | A predecessor failed. | Look at the first red agent in the timeline and fix it. |
 | Result contains "{{Name}}" literally | The placeholder does not match any direct predecessor (for example after renaming). | Insert the placeholder again using the buttons below the task. |
@@ -55,7 +55,7 @@ No. The keys are only in environment variables or in the local database and go n
 Check whether it is assigned in the inspector and which mode is selected. Images and scanned PDFs cannot be found in *Search* mode.
 
 **What happens to running runs when I stop Nodestro?**
-They are cancelled. Whatever was saved up to that point is kept as an execution.
+They are canceled. Whatever was saved up to that point is kept as an execution.
 
 **Does switching the language change my agents?**
 No. The language only changes the interface. Agents, prompts and results stay as they are, and agents keep answering in the language of their prompts. See [Language](/docs/einstellungen#sprache).

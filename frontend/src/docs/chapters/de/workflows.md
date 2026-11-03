@@ -191,10 +191,10 @@ Während der Pause wird kein Thread und kein Worker belegt, und ein Neustart von
 
 Entscheidet niemand vor Ablauf der Frist (24 Stunden, sofern Administratoren nichts anderes festgelegt haben), schlägt der Lauf mit „Budget aufgebraucht“ fehl. Du kannst ihn dann mit einem neuen Budget [fortsetzen](/docs/verzweigungen#fortsetzen).
 
-## Limits von Unter-Workflows und Teams {#budget-teams}
+## Limits von Unterworkflows und Teams {#budget-teams}
 <!-- keywords: unter-workflow-budget, team-budget, kindlauf, übergeordneter lauf, limit blockiert, verschachtelt -->
 
-Ein Unter-Workflow oder Team mit eigenem Budget läuft mit seinem eigenen Limit, und jede Anfrage zählt zusätzlich für den Lauf darüber. Die Budget-Entscheidung nennt das Limit, das die Anfrage abgelehnt hat: *das Limit dieses Laufs* oder *das eigene Limit des Unter-Workflows / Teams „Name“*. Eine Erhöhung ändert genau dieses Limit, nie den Workflow dahinter. Limits darüber gelten weiter: Die Erhöhung eines Team-Limits kann zu einer zweiten Entscheidung für den Lauf darüber führen, und die Erhöhung des Laufs darüber hebt nie das eigene Limit eines Teams an. Pro oberstem Lauf gibt es immer eine Entscheidung.
+Ein Unterworkflow oder Team mit eigenem Budget läuft mit seinem eigenen Limit, und jede Anfrage zählt zusätzlich für den Lauf darüber. Die Budget-Entscheidung nennt das Limit, das die Anfrage abgelehnt hat: *das Limit dieses Laufs* oder *das eigene Limit des Unterworkflows / Teams „Name“*. Eine Erhöhung ändert genau dieses Limit, nie den Workflow dahinter. Limits darüber gelten weiter: Die Erhöhung eines Team-Limits kann zu einer zweiten Entscheidung für den Lauf darüber führen, und die Erhöhung des Laufs darüber hebt nie das eigene Limit eines Teams an. Pro oberstem Lauf gibt es immer eine Entscheidung.
 
 ## Wer entscheiden darf {#budget-rechte}
 <!-- keywords: berechtigung, wer darf erhöhen, lauf gestartet, administrator, höchstes budget pro lauf, mandant -->

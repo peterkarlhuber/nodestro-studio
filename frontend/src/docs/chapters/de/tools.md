@@ -241,6 +241,6 @@ In der Ausführung ist jeder Tool-Aufruf aufklappbar: Eingabe, Ergebnis, Zeitpun
 - **Ungültige Eingabe:** Das Modell hat Parameter falsch befüllt. Verbessere die Parameterbeschreibungen im Docstring.
 - **Erwarteter Fehler des Tools** (z. B. Division durch null): Der Agent sieht die Meldung und kann es erneut versuchen.
 - **Zeitüberschreitung oder Absturz in der Sandbox:** Prüfe das Tool unter *Ausprobieren* mit derselben Eingabe.
-- **Docker nicht erreichbar:** Starte Docker oder wechsle zur Sandbox *Python-Prozess*.
+- **Docker nicht erreichbar:** Starte Docker. KI-erstellte Tools brauchen es immer (oder, unter Linux, die *Linux-Sandbox*); mit der Sandbox *Docker* brauchen es auch deine eigenen Tools, wähle also *Automatisch*, damit sie im Python-Prozess laufen.
 
 Ob unerwartete Fehler den Agenten beenden, steuert die Einstellung [Tool-Fehler](/docs/agenten#tool-fehler).

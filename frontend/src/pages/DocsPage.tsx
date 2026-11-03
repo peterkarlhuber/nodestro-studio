@@ -113,7 +113,20 @@ function ModelTable() {
 }
 
 /** Keyboard shortcuts: the keys and the action come from docs.shortcuts.<id> in the language files. */
-const SHORTCUTS = ["save", "undo", "redo", "duplicate", "delete", "connect", "canvas", "escape", "search", "assistant"] as const;
+const SHORTCUTS = [
+  "save",
+  "undo",
+  "redo",
+  "duplicate",
+  "delete",
+  "connect",
+  "regions",
+  "canvas",
+  "escape",
+  "globalSearch",
+  "search",
+  "assistant",
+] as const;
 
 const KEYS = { kbd: <kbd /> };
 

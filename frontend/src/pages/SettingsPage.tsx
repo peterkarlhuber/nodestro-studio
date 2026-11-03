@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Cpu, Languages, Save, ScanText } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 import { useAccess } from "../api/access";
@@ -16,6 +16,7 @@ import { ErrorText } from "../lib/errors";
 import { PythonMaintenance } from "../python/PythonMaintenance";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
+import { SettingsNav, useSettingsHash } from "./SettingsNav";
 import { SandboxPanel } from "./SettingsSandbox";
 import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy } from "./SettingsBudget";
 import { CHECK_KEY, DefaultModelNotice, ProviderSettings } from "./SettingsProviders";
@@ -101,6 +102,8 @@ export function SettingsPage() {
   const [form, setForm] = useState<Settings | null>(null);
   const defaultHint = useModelHint(form?.default_model ?? "");
   const assistantHint = useModelHint(form?.assistant_model ?? "");
+  const body = useRef<HTMLDivElement>(null);
+  useSettingsHash(Boolean(form));
 
   useEffect(() => {
     if (settings.data) setForm(settings.data);
@@ -135,7 +138,8 @@ export function SettingsPage() {
           server ? t("admin.settings.serverDescription", { tenant: access.me?.tenant_id ?? "" }) : t("settings.description")
         }
       />
-      <div className="page__body settings">
+      <div className="page__body settings-layout">
+        <div className="settings" ref={body}>
         <ProviderSettings settings={form} />
 
         <LanguagePicker />
@@ -241,16 +245,18 @@ export function SettingsPage() {
           </div>
         </section>
 
-        {install ? <BackupPanel /> : null}
-
         <InputStoragePanel />
 
         <PythonMaintenance />
 
+        {install ? <BackupPanel /> : null}
+
         {install ? <DiagnosticsPanel /> : null}
 
-        <section className="panel stack" aria-label={t("settings.about.title")}>
-          <h2 className="panel__title">{t("settings.about.title")}</h2>
+        <section className="panel stack" aria-labelledby="settings-about">
+          <h2 className="panel__title" id="settings-about">
+            {t("settings.about.title")}
+          </h2>
           <p className="small">
             Nodestro {meta.data?.version ?? ""} · Orkexa {meta.data?.library_version ?? ""}
           </p>
@@ -258,6 +264,8 @@ export function SettingsPage() {
             {server ? t("admin.settings.serverData") : <Trans i18nKey="settings.about.data" components={{ code: <code /> }} />}
           </p>
         </section>
+        </div>
+        <SettingsNav container={body} />
       </div>
     </div>
   );

@@ -108,7 +108,7 @@ Com **Ao conhecimento** você incorpora explicitamente:
 
 Antes de salvar, o diálogo mostra o que seria salvo, se o arquivo é pesquisável, se o mesmo conteúdo já existe (ele não é salvo duas vezes) e conteúdos parecidos. Textos gerados podem ser editados antes de salvar e marcados como *extraído de fontes*, *gerado por um agente* ou *suposição*. Você escolhe uma coleção ou cria uma nova.
 
-Nada é salvo antes da sua confirmação, e só exatamente o conteúdo verificado: se você mudar algo depois, verifica de novo. Cada arquivo mantém sua origem (workflow, etapa, agente, execução, momento, arquivos de origem). Fluxos de trabalho em andamento não mudam.
+Nada é salvo antes da sua confirmação, e só exatamente o conteúdo verificado: se você mudar algo depois, verifica de novo. Cada arquivo mantém sua origem (fluxo de trabalho, etapa, agente, execução, momento, arquivos de origem). Fluxos de trabalho em andamento não mudam.
 
 ## Propostas de agentes {#vorschlaege}
 <!-- keywords: proposta, propostas, agente propõe, propose_knowledge, propor conhecimento -->
@@ -118,7 +118,7 @@ Na seção *Conhecimento* de um agente, ligue **Pode propor conteúdo para o con
 ## Subfluxos, testes e agendamentos {#sub-workflows}
 <!-- keywords: subworkflow, série de testes, lote, agendamento, aprovação, continuar, reinício -->
 
-- **Subworkflows:** um campo de arquivo do subfluxo recebe com `{{form.<campo>}}` os arquivos de um campo ou com `{{files}}` todos os arquivos da execução. Os mesmos arquivos salvos são repassados, sem cópias.
+- **Subfluxos:** um campo de arquivo do subfluxo recebe com `{{form.<campo>}}` os arquivos de um campo ou com `{{files}}` todos os arquivos da execução. Os mesmos arquivos salvos são repassados, sem cópias.
 - **Aprovações e continuação:** os arquivos ficam salvos enquanto uma execução espera, roda ou está pausada, também após reiniciar o Nodestro.
 - **Casos de teste e agendamentos:** arquivos enviados ali ficam salvos para o caso de teste ou o [agendamento](/docs/automatisierung#zeitplaene) e são usados por cada execução. Arquivos de execuções anteriores nunca são reutilizados silenciosamente.
 

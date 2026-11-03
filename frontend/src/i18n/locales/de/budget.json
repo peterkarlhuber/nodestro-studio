@@ -11,7 +11,7 @@
     "blockLabel": "Welches Limit blockiert",
     "block": {
       "run": "Das Limit dieses Laufs blockiert.",
-      "subworkflow": "Das eigene Limit des Unter-Workflows „{{label}}“ blockiert.",
+      "subworkflow": "Das eigene Limit des Unterworkflows „{{label}}“ blockiert.",
       "team": "Das eigene Limit des Teams „{{label}}“ blockiert.",
       "appliesExactly": "Eine Erhöhung ändert genau dieses Limit."
     },

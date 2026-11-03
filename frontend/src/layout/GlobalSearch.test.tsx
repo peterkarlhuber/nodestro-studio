@@ -3,7 +3,8 @@ import { cleanup, fireEvent, render, screen, within } from "@testing-library/rea
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { GlobalSearch } from "./GlobalSearch";
+import i18n, { loadLanguage } from "../i18n";
+import { GlobalSearch, pageHits } from "./GlobalSearch";
 
 afterEach(() => {
   cleanup();
@@ -30,7 +31,8 @@ describe("global search (F4, F5)", () => {
     const trigger = screen.getByTestId("search-open");
     expect(trigger).toHaveAccessibleName();
     fireEvent.click(trigger);
-    fireEvent.change(screen.getByRole("combobox"), { target: { value: "b" } });
+    // A term no page name contains: only the (mocked) server results are listed.
+    fireEvent.change(screen.getByRole("combobox"), { target: { value: "qx" } });
     const options = await screen.findAllByRole("option", {}, { timeout: 3000 });
     expect(options).toHaveLength(2);
     const listbox = screen.getByRole("listbox");
@@ -42,5 +44,23 @@ describe("global search (F4, F5)", () => {
     expect(listbox.querySelector("section, h3")).toBeNull();
     // The dialog's head is no banner landmark.
     expect(screen.getByRole("dialog").querySelector("header")).toBeNull();
+  });
+});
+
+describe("pageHits", () => {
+  const t = i18n.getFixedT("de");
+
+  it("finds pages and settings sections by name, also without accents", async () => {
+    expect(pageHits("sandbox", t).map((hit) => hit.to)).toEqual(["/settings#settings-sandbox"]);
+    expect(pageHits("einstellungen backup", t).map((hit) => hit.to)).toEqual(["/settings#settings-backup"]);
+    await loadLanguage("fr");
+    const french = i18n.getFixedT("fr");
+    expect(pageHits("reglages", french).map((hit) => hit.to)).toContain("/settings");
+  });
+
+  it("offers every page, but no settings section, for an empty query", () => {
+    const hits = pageHits("", t);
+    expect(hits.map((hit) => hit.to)).toContain("/approvals");
+    expect(hits.every((hit) => !hit.to.includes("#"))).toBe(true);
   });
 });
