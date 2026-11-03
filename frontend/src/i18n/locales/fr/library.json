@@ -144,5 +144,23 @@
     "files": "Prend vos propres fichiers en entrée.",
     "connection": "Connexion facultative (MCP) : {{names}}. Sans elle, la copie s’exécute hors ligne avec des données d’exemple.",
     "noConnection": "Aucune connexion à d’autres services n’est nécessaire."
+  },
+  "models": {
+    "title": "Modèles sur cet ordinateur",
+    "text": "Cet espace de travail utilise des modèles locaux. Chaque agent reçoit le modèle dont sa tâche a besoin sur cet ordinateur ; vous pouvez en choisir un autre par agent. Votre choix est conservé dans la copie.",
+    "agent": "Agent",
+    "task": "Tâche",
+    "model": "Modèle",
+    "choose": "Modèle pour {{agent}}",
+    "suggested": "{{model}} (suggéré)",
+    "none": "Aucun modèle ne convient",
+    "installed": "Installé",
+    "download": "Téléchargement nécessaire",
+    "noFit": "Aucun modèle local ne convient à cet ordinateur",
+    "overridden": "Votre choix",
+    "reason": {
+      "installed": "Déjà installé.",
+      "needs_download": "Doit être téléchargé avant la première exécution."
+    }
   }
 }

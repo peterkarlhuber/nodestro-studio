@@ -1655,6 +1655,33 @@ export interface ExampleCopyRequest {
   tests?: boolean;
   /** integration id -> MCP server id; integrations not named run in their offline mode. */
   integrations?: Record<string, string>;
+  /** Agent key -> model, chosen by the person in the copy dialog; always wins over the suggestion. */
+  models?: Record<string, string>;
+}
+
+/** One agent of an example and the local model its copy would get (GET /api/library/{id}/models). */
+export interface ExampleAgentModel {
+  /** The key of models in the copy request. */
+  key: string;
+  name: string;
+  /** The team (or other part) the agent belongs to; null for agents of the workflow itself. */
+  part: string | null;
+  /** The task profile (as the local model recommendations: classify, write, tool_agent, analysis, ...). */
+  task: string;
+  tier: string;
+  /** The suggested model (ollama:...), or null when no local model fits this computer. */
+  model: string | null;
+  installed: boolean;
+  /** Why this model (the codes of the local model recommendations). */
+  reasons: string[];
+  /** Other models that would work, best first. */
+  alternatives: string[];
+}
+
+export interface ExampleModelPlan {
+  /** The workspace uses local models: only then does the copy dialog show the plan. */
+  local: boolean;
+  agents: ExampleAgentModel[];
 }
 
 /** A synthetic sample file for one file field of an example. */

@@ -144,5 +144,23 @@
     "files": "Usa i tuoi file come input.",
     "connection": "Connessione facoltativa (MCP): {{names}}. Senza, la copia viene eseguita offline con dati di esempio.",
     "noConnection": "Nessuna connessione ad altri servizi necessaria."
+  },
+  "models": {
+    "title": "Modelli su questo computer",
+    "text": "Questo spazio di lavoro usa modelli locali. Ogni agente riceve il modello di cui il suo compito ha bisogno su questo computer; puoi sceglierne un altro per agente. La tua scelta resta nella copia.",
+    "agent": "Agente",
+    "task": "Compito",
+    "model": "Modello",
+    "choose": "Modello per {{agent}}",
+    "suggested": "{{model}} (suggerito)",
+    "none": "Nessun modello adatto",
+    "installed": "Installato",
+    "download": "Richiede un download",
+    "noFit": "Nessun modello locale è adatto a questo computer",
+    "overridden": "La tua scelta",
+    "reason": {
+      "installed": "Già installato.",
+      "needs_download": "Richiede un download prima della prima esecuzione."
+    }
   }
 }

@@ -144,5 +144,23 @@
     "files": "Usa tus propios archivos como entrada.",
     "connection": "Conexión opcional (MCP): {{names}}. Sin ella, la copia se ejecuta sin conexión con datos de ejemplo.",
     "noConnection": "No necesita conexión con otros servicios."
+  },
+  "models": {
+    "title": "Modelos en este ordenador",
+    "text": "Este espacio de trabajo usa modelos locales. Cada agente recibe el modelo que su tarea necesita en este ordenador; puedes elegir otro por agente. Tu elección se mantiene en la copia.",
+    "agent": "Agente",
+    "task": "Tarea",
+    "model": "Modelo",
+    "choose": "Modelo para {{agent}}",
+    "suggested": "{{model}} (sugerido)",
+    "none": "Ningún modelo encaja",
+    "installed": "Instalado",
+    "download": "Necesita una descarga",
+    "noFit": "Ningún modelo local encaja en este ordenador",
+    "overridden": "Tu elección",
+    "reason": {
+      "installed": "Ya instalado.",
+      "needs_download": "Necesita una descarga antes de la primera ejecución."
+    }
   }
 }

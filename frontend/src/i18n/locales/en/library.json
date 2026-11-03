@@ -144,5 +144,23 @@
     "files": "Takes your own files as input.",
     "connection": "Optional connection (MCP): {{names}}. Without it, the copy runs offline with sample data.",
     "noConnection": "No connection to other services needed."
+  },
+  "models": {
+    "title": "Models on this computer",
+    "text": "This workspace uses local models. Each agent gets the model its task needs on this computer; you can choose another one per agent. Your choice is kept in the copy.",
+    "agent": "Agent",
+    "task": "Task",
+    "model": "Model",
+    "choose": "Model for {{agent}}",
+    "suggested": "{{model}} (suggested)",
+    "none": "No model fits",
+    "installed": "Installed",
+    "download": "Needs a download",
+    "noFit": "No local model fits this computer",
+    "overridden": "Your choice",
+    "reason": {
+      "installed": "Already installed.",
+      "needs_download": "Needs a download before the first run."
+    }
   }
 }

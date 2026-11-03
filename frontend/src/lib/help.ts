@@ -162,6 +162,7 @@ export const HELP_DOCS = {
   "settings.connection": "einstellungen#diagnose",
   "search.global": "start#suche",
   "library.copy": "beispiele#uebernehmen",
+  "library.models": "beispiele#uebernehmen",
   "library.language": "beispiele#sprachen",
   "library.sensitive": "beispiele#sensible-bereiche",
   "library.synthetic": "beispiele#testdaten",

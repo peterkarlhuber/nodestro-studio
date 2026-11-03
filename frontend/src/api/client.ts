@@ -38,6 +38,7 @@ import type {
   PythonStatus,
   ExampleCopyRequest,
   ExampleDetail,
+  ExampleModelPlan,
   ExampleSummary,
   KnowledgeFile,
   Reference,
@@ -283,6 +284,8 @@ export const api = {
   examples: (language: string) => request<ExampleSummary[]>("GET", `/library${q({ language })}`),
   example: (id: string, language: string) => request<ExampleDetail>("GET", `/library/${id}${q({ language })}`),
   /** An independent, editable copy of an example; the example itself never changes. */
+  exampleModels: (id: string, language: string) =>
+    request<ExampleModelPlan>("GET", `/library/${encodeURIComponent(id)}/models${q({ language })}`),
   copyExample: (id: string, body: ExampleCopyRequest) => request<Workflow>("POST", `/library/${id}/copy`, body),
   exampleSampleUrl: (id: string, sampleId: string, language: string) =>
     `/api/library/${id}/samples/${sampleId}?language=${encodeURIComponent(language)}`,

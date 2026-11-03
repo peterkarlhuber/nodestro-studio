@@ -176,7 +176,8 @@
     "sequential": "Die Agenten arbeiten nacheinander; jeder baut auf dem Ergebnis seines Vorgängers auf.",
     "parallel": "Mehrere Agenten arbeiten gleichzeitig an derselben Eingabe; ein weiterer Agent führt ihre Ergebnisse zusammen.",
     "branching": "Der Workflow verzweigt nach Regeln oder nach einer Freigabe; nicht jeder Agent läuft immer.",
-    "adaptive": "Ein Orchestrator entscheidet während der Ausführung, welche Teams an der Aufgabe arbeiten, und führt ihre Ergebnisse zusammen. Jedes Team ist ein eigener Workflow."
+    "adaptive": "Ein Orchestrator entscheidet während der Ausführung, welche Teams an der Aufgabe arbeiten, und führt ihre Ergebnisse zusammen. Jedes Team ist ein eigener Workflow.",
+    "models": "Welches lokale Modell jeder Agent der Kopie bekommt und warum. Der Vorschlag richtet sich nach der Aufgabe des Agenten und dem Speicher dieses Computers; ein Modell, das du hier wählst, hat immer Vorrang."
   },
   "architect": {
     "open": "Lass den KI-Workflow-Architekten aus einer Beschreibung einen neuen Workflow entwerfen oder diesen überarbeiten. Du prüfst den Entwurf, bevor sich etwas ändert.",

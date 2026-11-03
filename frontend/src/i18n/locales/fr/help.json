@@ -176,7 +176,8 @@
     "sequential": "Les agents travaillent l'un après l'autre ; chacun s'appuie sur le résultat du précédent.",
     "parallel": "Plusieurs agents travaillent en même temps sur la même entrée ; un autre agent réunit leurs résultats.",
     "branching": "Le workflow bifurque selon des règles ou après une validation ; tous les agents ne tournent pas toujours.",
-    "adaptive": "Un orchestrateur décide pendant l'exécution quelles équipes travaillent sur la tâche et réunit leurs résultats. Chaque équipe est un workflow à part entière."
+    "adaptive": "Un orchestrateur décide pendant l'exécution quelles équipes travaillent sur la tâche et réunit leurs résultats. Chaque équipe est un workflow à part entière.",
+    "models": "Le modèle local que reçoit chaque agent de la copie, et pourquoi. La suggestion suit la tâche de l’agent et la mémoire de cet ordinateur ; un modèle que vous choisissez ici l’emporte toujours."
   },
   "architect": {
     "open": "Laissez l’architecte concevoir un nouveau workflow ou retravailler celui-ci à partir d’une description. Vous examinez le brouillon avant tout changement.",

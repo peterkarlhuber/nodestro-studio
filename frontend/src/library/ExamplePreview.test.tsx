@@ -279,3 +279,67 @@ describe("ExamplePreview", () => {
     expect(within(screen.getByTestId("example-integration-erp")).getByRole("combobox")).toBeDisabled();
   });
 });
+
+const PLAN = {
+  local: true,
+  agents: [
+    {
+      key: "lead", name: "Einkaufsleitung", part: null, task: "assistant", tier: "strong", model: "ollama:qwen3.5:9b",
+      installed: true, reasons: ["installed"], alternatives: ["ollama:qwen3.5:4b", "ollama:ministral-3:8b"],
+    },
+    {
+      key: "quality-check/qa", name: "Qualitätsprüfer", part: "Qualitätsprüfung", task: "classify", tier: "fast", model: "ollama:qwen3.5:4b",
+      installed: false, reasons: ["needs_download", "no_gpu"], alternatives: ["ollama:qwen3.5:9b"],
+    },
+  ],
+};
+
+const localRoutes =
+  (plan: unknown, defaultModel = "ollama:qwen3.5:4b"): Route =>
+  (method, url, body) => {
+    if (url.startsWith("/api/library/supplier-comparison/models")) return plan;
+    if (url === "/api/settings") return { default_model: defaultModel, assistant_model: defaultModel, providers: [] };
+    return routes([])(method, url, body);
+  };
+
+describe("models of a copy in a local workspace", () => {
+  it("shows the plan per agent and sends only the changed choice", async () => {
+    const fetch = serve(localRoutes(PLAN));
+    renderPreview();
+    const plan = await screen.findByTestId("example-models");
+    expect(fetch).toHaveBeenCalledWith("/api/library/supplier-comparison/models?language=de", expect.anything());
+    const lead = within(plan).getByTestId("example-model-lead");
+    expect(lead).toHaveTextContent("Assistent und Architekt");
+    expect(lead).toHaveTextContent("Installiert");
+    const qa = within(plan).getByTestId("example-model-quality-check/qa");
+    expect(qa).toHaveTextContent("Qualitätsprüfung");
+    expect(qa).toHaveTextContent("Braucht einen Download");
+    expect(qa).toHaveTextContent("Ohne Grafikkarte sind große Modelle zu langsam.");
+    const select = within(qa).getByRole("combobox", { name: "Modell für Qualitätsprüfer" });
+    expect(select).toHaveValue("ollama:qwen3.5:4b");
+    expect(within(select).getByRole("option", { name: "qwen3.5:4b (vorgeschlagen)" })).toBeInTheDocument();
+    await userEvent.selectOptions(select, "ollama:qwen3.5:9b");
+    expect(qa).toHaveTextContent("Deine Wahl");
+    await userEvent.click(screen.getByRole("button", { name: "Als Kopie übernehmen" }));
+    await waitFor(() => expect(fetch.mock.calls.some(([url]) => url === "/api/library/supplier-comparison/copy")).toBe(true));
+    const call = fetch.mock.calls.find(([url]) => url === "/api/library/supplier-comparison/copy")!;
+    expect(JSON.parse(String(call[1]!.body))).toEqual({ language: "de", tests: true, models: { "quality-check/qa": "ollama:qwen3.5:9b" } });
+  });
+
+  it("leaves cloud workspaces unchanged", async () => {
+    const fetch = serve(localRoutes(PLAN, "anthropic:claude-sonnet-5-5"));
+    renderPreview();
+    await screen.findByTestId("example-preview");
+    expect(screen.queryByTestId("example-models")).toBeNull();
+    expect(fetch.mock.calls.some(([url]) => String(url).includes("/models"))).toBe(false);
+  });
+
+  it("hides the plan when the API says the workspace is not local", async () => {
+    const fetch = serve(localRoutes({ ...PLAN, local: false }));
+    renderPreview();
+    await screen.findByTestId("example-preview");
+    await waitFor(() => expect(fetch.mock.calls.some(([url]) => String(url).includes("/models"))).toBe(true));
+    await screen.findByText("Einkaufsleitung", { selector: "strong" });
+    expect(screen.queryByTestId("example-models")).toBeNull();
+  });
+});

@@ -144,5 +144,23 @@
     "files": "Nimmt deine eigenen Dateien als Eingabe.",
     "connection": "Optionale Verbindung (MCP): {{names}}. Ohne sie läuft die Kopie offline mit Beispieldaten.",
     "noConnection": "Keine Verbindung zu anderen Diensten nötig."
+  },
+  "models": {
+    "title": "Modelle auf diesem Computer",
+    "text": "Dieser Arbeitsbereich nutzt lokale Modelle. Jeder Agent bekommt das Modell, das seine Aufgabe auf diesem Computer braucht; du kannst pro Agent ein anderes wählen. Deine Wahl bleibt in der Kopie erhalten.",
+    "agent": "Agent",
+    "task": "Aufgabe",
+    "model": "Modell",
+    "choose": "Modell für {{agent}}",
+    "suggested": "{{model}} (vorgeschlagen)",
+    "none": "Kein Modell passt",
+    "installed": "Installiert",
+    "download": "Braucht einen Download",
+    "noFit": "Kein lokales Modell passt auf diesen Computer",
+    "overridden": "Deine Wahl",
+    "reason": {
+      "installed": "Bereits installiert.",
+      "needs_download": "Braucht vor der ersten Ausführung einen Download."
+    }
   }
 }

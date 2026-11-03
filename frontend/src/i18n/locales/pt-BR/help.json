@@ -176,7 +176,8 @@
     "sequential": "Os agentes trabalham um após o outro; cada um se baseia no resultado do anterior.",
     "parallel": "Vários agentes trabalham ao mesmo tempo na mesma entrada; outro agente reúne os resultados.",
     "branching": "O fluxo de trabalho se ramifica por regras ou após uma aprovação; nem todo agente roda sempre.",
-    "adaptive": "Um orquestrador decide durante a execução quais equipes trabalham na tarefa e reúne os resultados. Cada equipe é um fluxo de trabalho próprio."
+    "adaptive": "Um orquestrador decide durante a execução quais equipes trabalham na tarefa e reúne os resultados. Cada equipe é um fluxo de trabalho próprio.",
+    "models": "Qual modelo local cada agente da cópia recebe e por quê. A sugestão segue a tarefa do agente e a memória deste computador; um modelo que você escolher aqui sempre tem prioridade."
   },
   "architect": {
     "open": "Deixe o arquiteto projetar um fluxo novo ou revisar este a partir de uma descrição. Você revisa o rascunho antes de qualquer mudança.",

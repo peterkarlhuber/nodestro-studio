@@ -22,6 +22,8 @@ Si **Añadir los casos de prueba como serie de pruebas** está marcado (por defe
 
 Los ejemplos nunca se crean automáticamente; solo lo que copias aparece entre tus flujos. Solo hay costes cuando ejecutas una copia. Los modelos que recibe una copia dependen de tu modelo predeterminado: si es un modelo de Anthropic, la copia usa los modelos del ejemplo (Haiku, Sonnet u Opus, según la tarea del agente). Si pertenece a otro [proveedor](/docs/einstellungen#anbieter), todos los agentes de la copia usan tu modelo predeterminado, y los más exigentes tu modelo del asistente si pertenece al mismo proveedor; las herramientas de servidor, que solo funcionan con Anthropic, se omiten entonces. Puedes cambiar los modelos de una copia en cualquier momento. Ningún ejemplo necesita cuentas ni fuentes de datos de pago. Algunos ejemplos tienen una **Conexión opcional** con otro servicio mediante MCP: al copiar eliges un [servicio conectado](/docs/tools#verbundene-dienste) configurado o el **Modo sin conexión (datos de ejemplo)**, que viene preseleccionado.
 
+**Modelos en este ordenador:** si tu modelo predeterminado es un modelo local, la vista previa lista cada agente con su tarea en palabras sencillas, el modelo local que la copia le da en este ordenador y por qué (instalado, necesita una descarga, el modelo más grande que cabe en esta memoria). Puedes elegir otro modelo por agente: tu elección se guarda en la copia y siempre tiene prioridad sobre la sugerencia. Los espacios de trabajo con modelos en la nube no muestran esta lista.
+
 ## Idiomas {#sprachen}
 <!-- keywords: idioma, traducción, alemán, inglés, copia, prompts -->
 

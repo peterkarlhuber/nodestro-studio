@@ -176,7 +176,8 @@
     "sequential": "The agents work one after another; each builds on the result of the one before.",
     "parallel": "Several agents work on the same input at the same time; another agent combines their results.",
     "branching": "The workflow branches by rules or after an approval; not every agent always runs.",
-    "adaptive": "An orchestrator decides while the workflow runs which teams work on the task, and combines their results. Each team is a workflow of its own."
+    "adaptive": "An orchestrator decides while the workflow runs which teams work on the task, and combines their results. Each team is a workflow of its own.",
+    "models": "Which local model each agent of the copy gets, and why. The suggestion follows the agent's task and this computer's memory; a model you choose here always wins."
   },
   "architect": {
     "open": "Let the Workflow Architect design a new workflow or revise this one from a description. You review the draft before anything changes.",
