@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 22 |
+| P3 Low | 24 |
 | P4 Optional | 13 |
 
 **Release blockers:** None for this repository.
@@ -82,6 +82,23 @@ None known.
   with their "no API billing" label but not which one suits the agent's task on this computer.
 - **Next step:** Ask `GET /api/local-models/recommend?task=` from the agent inspector (task from the agent's tools
   and output) and show the suggestion with its reasons next to the picker; never change the stored model.
+
+### ST-045 · Offline build of the mDenseOn embedding in the interface
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-api #81, nodestro-runtime #104 / RT-053
+- **What:** `mdenseon:307m` (LightOn, optional European embedding) is built from its pinned weights and a template
+  header. Online, *Download* in the catalog starts the build; offline, only `POST /api/local-models/import` with
+  `kind: "build"` and the two local files does it. *Settings → Local models* has no form for it.
+- **Next step:** Offer "Build from files" in the offline import dialog for catalog entries with `source: "build"`.
+
+### ST-046 · Show the context window and expected speed of local models
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-runtime RT-050, RT-051
+- **What:** An external Ollama may run with 4096 tokens of context (runs end with "length" long before `max_tokens`),
+  and multi-agent workflows on a computer without a GPU take tens of minutes. *Settings → Local models* shows
+  neither.
+- **Next step:** Show the server's context window with a warning below 8192 and a short "no GPU found: expect slow
+  runs" hint, once the runtime reports both.
 
 ### ST-035 · Similarity hint for pasted code in the tool editor (R-4)
 
