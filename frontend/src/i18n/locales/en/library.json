@@ -135,7 +135,7 @@
     "modelsAdapted": "AI provider: {{provider}}. The copy uses your default models instead of the example’s: {{models}}.",
     "providerMissing": "Not set up yet.",
     "setUp": "Set up",
-    "providerReady": "Set up.",
+    "providerReady": "Already set up.",
     "approval": "A run pauses for your approval before it continues.",
     "knowledge_one": "Creates {{count}} knowledge file in your knowledge base.",
     "knowledge_other": "Creates {{count}} knowledge files in your knowledge base.",

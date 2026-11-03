@@ -37,7 +37,7 @@
     "orchestrator": "Orquestador",
     "warnings_one": "{{count}} advertencia",
     "warnings_other": "{{count}} advertencias",
-    "warningsTip": "El workflow puede iniciarse, pero probablemente algo no encaja aquí. Selecciona el nodo para ver los avisos."
+    "warningsTip": "El flujo de trabajo puede iniciarse, pero probablemente algo no encaja aquí. Selecciona el nodo para ver los avisos."
   },
   "defaults": {
     "systemPrompt": "Eres un asistente útil.",

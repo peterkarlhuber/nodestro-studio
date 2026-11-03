@@ -253,7 +253,7 @@
   },
   "publish": {
     "open": "Pubblica questo workflow come API su questo computer, gestisci chiavi e accesso in rete, oppure esportalo come progetto FastAPI autonomo.",
-    "publish": "Congela la versione salvata con i suoi strumenti e sub-workflow. Le modifiche successive non la cambiano finché non pubblichi di nuovo.",
+    "publish": "Congela la versione salvata con i suoi strumenti e sotto-workflow. Le modifiche successive non la cambiano finché non pubblichi di nuovo.",
     "note": "Una breve nota per te, ad esempio cosa è cambiato in questa versione.",
     "slug": "Il nome dell’API nel suo URL: /api/published/<name>/runs.",
     "rollback": "Rende di nuovo questa la versione usata da /runs. Non viene ripubblicato nulla; le esecuzioni in corso mantengono la loro versione.",

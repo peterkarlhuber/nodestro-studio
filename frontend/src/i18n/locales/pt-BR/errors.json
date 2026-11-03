@@ -92,7 +92,7 @@
   },
   "workflow": {
     "edge_dangling": "Uma conexão aponta para um nó que não existe.",
-    "import_invalid": "Este arquivo não é uma exportação de workflow do Nodestro: ele não tem etapas (\"nodes\").",
+    "import_invalid": "Este arquivo não é uma exportação de fluxo de trabalho do Nodestro: ele não tem etapas (\"nodes\").",
     "self_loop": "Um nó não pode ser conectado a si mesmo.",
     "cycle": "O fluxo de trabalho contém um ciclo; as conexões devem seguir em um só sentido.",
     "no_agents": "O fluxo de trabalho ainda não tem nenhum agente.",
@@ -117,9 +117,9 @@
     "orchestrator_member_duplicate": "{{node}} cita uma equipe duas vezes.",
     "orchestrator_self": "{{node}} escolheria o próprio fluxo de trabalho como equipe.",
     "orchestrator_limits": "{{node}} permite a uma equipe mais usos do que decisões no total.",
-    "revision_invalid": "Ao salvar, foi indicada uma versão desconhecida do workflow. Recarregue a página e salve de novo.",
-    "conflict": "O workflow “{{name}}” foi alterado desde que você o abriu. Recarregue-o para ver a versão mais recente.",
-    "runs_active": "Ainda há execuções deste workflow em andamento. Exclua-o quando elas tiverem terminado ou sido canceladas."
+    "revision_invalid": "Ao salvar, foi indicada uma versão desconhecida do fluxo de trabalho. Recarregue a página e salve de novo.",
+    "conflict": "O fluxo de trabalho “{{name}}” foi alterado desde que você o abriu. Recarregue-o para ver a versão mais recente.",
+    "runs_active": "Ainda há execuções deste fluxo de trabalho em andamento. Exclua-o quando elas tiverem terminado ou sido canceladas."
   },
   "run": {
     "failed": "A etapa falhou.",
@@ -854,20 +854,20 @@
       },
       "api_error_auth": "Confira a chave em Configurações → Provedores de IA e teste a conexão lá.",
       "api_error_rate_limit": "Aguarde um momento e continue a execução. Menos execuções ao mesmo tempo ou um limite maior no provedor resolvem de vez.",
-      "api_error_server": "Isso não é causado pelo seu workflow. Continue a execução em alguns minutos.",
+      "api_error_server": "Isso não é causado pelo seu fluxo de trabalho. Continue a execução em alguns minutos.",
       "api_error_connection": "Confira a conexão com a internet, o firewall ou o proxy e depois continue a execução.",
       "api_error_invalid": "Confira o modelo e as configurações do agente; os detalhes técnicos mostram a resposta do provedor.",
       "api_error_status": "Confira o modelo e as configurações do agente; os detalhes técnicos mostram a resposta do provedor.",
-      "budget_exceeded": "Aumente o orçamento nas configurações do workflow ou continue a execução com um novo orçamento.",
+      "budget_exceeded": "Aumente o orçamento nas configurações do fluxo de trabalho ou continue a execução com um novo orçamento.",
       "budget_request_expired": "Continue a execução com um orçamento maior ou peça a um administrador um prazo mais longo para decisões de orçamento.",
       "budget_checkpoint_lost": "Continue a execução: o Nodestro mostra quais etapas rodam de novo e pergunta antes de executar ferramentas novamente.",
-      "time_limit": "Aumente o limite de tempo em \"Limites\" nas configurações do workflow se a execução precisar de mais tempo.",
-      "step_limit": "Aumente o limite de etapas em \"Limites\" nas configurações do workflow ou confira os loops.",
+      "time_limit": "Aumente o limite de tempo em \"Limites\" nas configurações do fluxo de trabalho se a execução precisar de mais tempo.",
+      "step_limit": "Aumente o limite de etapas em \"Limites\" nas configurações do fluxo de trabalho ou confira os loops.",
       "orchestration_limit": "Aumente \"Máx. de decisões\" no orquestrador ou diga nas instruções dele quando a tarefa está concluída.",
       "provider_auth": "Confira a chave em Configurações → Provedores de IA e teste a conexão lá.",
       "provider_unreachable": "Confira a conexão com a internet, o firewall ou o proxy e depois continue a execução.",
       "provider_rate_limited": "Aguarde um momento e continue a execução. Menos execuções ao mesmo tempo ou um limite maior no provedor resolvem de vez.",
-      "provider_overloaded": "Isso não é causado pelo seu workflow. Aguarde alguns minutos e depois continue a execução.",
+      "provider_overloaded": "Isso não é causado pelo seu fluxo de trabalho. Aguarde alguns minutos e depois continue a execução.",
       "provider_auth_aws": "Confira o acesso e as permissões em Configurações → Provedores de IA → Amazon Bedrock com “Verificar conexão”."
     },
     "provider": {
@@ -881,7 +881,7 @@
     "cursor_invalid": "Esta parte da lista de execuções não foi encontrada. Volte ao início da lista."
   },
   "model_choice": {
-    "node_unknown": "O workflow não tem mais nenhum agente “{{node}}”. Recarregue a página."
+    "node_unknown": "O fluxo de trabalho não tem mais nenhum agente “{{node}}”. Recarregue a página."
   },
   "run_chat": {
     "empty_message": "A mensagem está vazia. Escreva primeiro uma pergunta ou uma instrução.",

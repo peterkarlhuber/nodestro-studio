@@ -755,7 +755,7 @@
   },
   "testcase": {
     "run_not_failed": "Nur ein fehlgeschlagener Lauf kann als Testfall übernommen werden.",
-    "run_unsupported": "Importierte Läufe und Läufe von Unter-Workflows können nicht als Testfall übernommen werden."
+    "run_unsupported": "Importierte Läufe und Läufe von Unterworkflows können nicht als Testfall übernommen werden."
   },
   "mcp": {
     "address_refused": "Die Adresse {{host}} ist nicht erlaubt (interne, lokale oder Metadaten-Adresse).",

@@ -11,7 +11,7 @@
     "blockLabel": "Qual limite bloqueia",
     "block": {
       "run": "O limite desta execução bloqueia.",
-      "subworkflow": "O limite próprio do subworkflow “{{label}}” bloqueia.",
+      "subworkflow": "O limite próprio do subfluxo “{{label}}” bloqueia.",
       "team": "O limite próprio da equipe “{{label}}” bloqueia.",
       "appliesExactly": "Um aumento muda exatamente este limite."
     },
@@ -45,7 +45,7 @@
     },
     "differenceLabel": "Diferença em relação ao limite atual",
     "difference": "+ {{amount}} em relação ao limite atual",
-    "thisRunOnly": "Vale só para esta execução; o workflow e as configurações não mudam.",
+    "thisRunOnly": "Vale só para esta execução; o fluxo de trabalho e as configurações não mudam.",
     "chatNever": "Mensagens do chat nunca aprovam orçamento.",
     "raise": "Verificar e continuar",
     "end": "Encerrar execução",
