@@ -12,8 +12,8 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 24 |
-| P4 Optional | 11 |
+| P3 Low | 22 |
+| P4 Optional | 12 |
 
 **Release blockers:** None for this repository.
 
@@ -284,22 +284,13 @@ None known.
 - **Next step:** Decide on a constraints or lock file for the platform install, together with the other Python repos.
 - **Depends on:** the same decision in nodestro-runtime RT-023 and nodestro-server SRV-014 (desktop builds from the studio pins).
 
-### ST-037 · Version check misses component references in other spellings (API2-09)
+### ST-038 · Three scripts outside mypy (API2-16 rest)
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** backend audit 2 API2-09, `scripts/check_versions.py`
-- **What:** The pin check recognizes platform components only in the canonical pinned-URL form. References written
-  differently are not reported, so an unpinned or non-canonical component reference could slip into `pyproject.toml`.
-- **Next step:** Parse requirements with `packaging.requirements`, normalize names and require the exact canonical
-  pinned URL for every platform component.
-
-### ST-038 · Duplicated frontend serving code; `scripts/` outside mypy (API2-16)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** backend audit 2 API2-16, `src/nodestro_studio/app.py`,
-  nodestro-api `frontend.py`
-- **What:** The studio serves the built frontend with its own code instead of `nodestro_api.frontend.mount_frontend`;
-  the two differ (e.g. `GET /api`), and security headers would have to be added twice. mypy does not check
-  `scripts/` (about 2,900 lines).
-- **Next step:** Reuse `mount_frontend` in the studio once the api's header middleware lands; add `scripts/` to mypy.
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** backend audit 2 API2-16, studio #110
+- **What:** The studio now serves the frontend through `nodestro_api.frontend.mount_frontend` and the typed scripts
+  are in mypy, but `derive_branding`, `platform_smoke` and `social_preview` stay outside (17 errors, missing numpy
+  and PIL stubs).
+- **Next step:** Add the stub packages to the dev dependencies and fix the errors, or type the image helpers locally.
 
 ### ST-039 · Name the blocked tool in sandbox problems (NJR-08)
 
