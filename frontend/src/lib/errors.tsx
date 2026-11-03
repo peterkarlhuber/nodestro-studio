@@ -331,7 +331,7 @@ export function ProviderSetupLink({ item }: { item: Coded | null | undefined }) 
     <>
       {" "}
       {routed ? (
-        <RoutedSetupLink label={label} />
+        <RoutedSetupLink label={label} provider={typeof item?.params?.provider === "string" ? item.params.provider : undefined} />
       ) : (
         <a href="/settings">{label}</a>
       )}
@@ -340,9 +340,9 @@ export function ProviderSetupLink({ item }: { item: Coded | null | undefined }) 
 }
 
 /** Inside the app: to the AI providers in the settings, with the way back to this page. */
-function RoutedSetupLink({ label }: { label: string }) {
+function RoutedSetupLink({ label, provider }: { label: string; provider?: string }) {
   return (
-    <Link to={useSettingsHref("settings-providers")} data-testid="provider-setup-link">
+    <Link to={useSettingsHref(provider ? `provider-${provider}` : "settings-providers")} data-testid="provider-setup-link">
       {label}
     </Link>
   );

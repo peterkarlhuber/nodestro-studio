@@ -60,6 +60,10 @@
       "keys": "<kbd>C</kbd>",
       "action": "Nœud sélectionné sur le canevas : aller à « Connecter à » dans les propriétés"
     },
+    "regions": {
+      "keys": "<kbd>F6</kbd>",
+      "action": "Éditeur de workflow : passer à la zone suivante (Maj+F6 : précédente) : barre de titre, blocs, canevas, propriétés, aperçu de l’exécution"
+    },
     "canvas": {
       "keys": "Molette de la souris, glisser le canevas",
       "action": "Zoomer et déplacer le canevas"
@@ -67,6 +71,10 @@
     "escape": {
       "keys": "<kbd>Échap</kbd>",
       "action": "Fermer une boîte de dialogue ou une explication"
+    },
+    "globalSearch": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>K</kbd>",
+      "action": "Partout : rechercher pages, réglages, workflows, agents, outils, connaissances et documentation"
     },
     "search": {
       "keys": "<kbd>/</kbd>",

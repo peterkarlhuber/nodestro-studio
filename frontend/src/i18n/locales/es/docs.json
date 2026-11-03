@@ -60,6 +60,10 @@
       "keys": "<kbd>C</kbd>",
       "action": "Nodo seleccionado en el lienzo: ir a «Conectar con» en las propiedades"
     },
+    "regions": {
+      "keys": "<kbd>F6</kbd>",
+      "action": "Editor de flujos: ir a la siguiente área (Mayús+F6: la anterior): barra de título, bloques, lienzo, propiedades, resumen de ejecución"
+    },
     "canvas": {
       "keys": "Rueda del ratón, arrastrar el lienzo",
       "action": "Hacer zoom y desplazar el lienzo"
@@ -67,6 +71,10 @@
     "escape": {
       "keys": "<kbd>Esc</kbd>",
       "action": "Cerrar un diálogo o una explicación"
+    },
+    "globalSearch": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>K</kbd>",
+      "action": "Desde cualquier lugar: buscar páginas, ajustes, flujos de trabajo, agentes, herramientas, conocimiento y documentación"
     },
     "search": {
       "keys": "<kbd>/</kbd>",

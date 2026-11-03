@@ -227,7 +227,10 @@ describe("ExamplesPage", () => {
     const provider = await within(needs).findByTestId("example-needs-provider");
     expect(provider).toHaveTextContent("Claude Haiku 5.5");
     expect(provider).toHaveTextContent("Noch nicht eingerichtet.");
-    expect(within(provider).getByRole("link", { name: "Einrichten" })).toHaveAttribute("href", "/settings");
+    expect(within(provider).getByRole("link", { name: "Einrichten" })).toHaveAttribute(
+      "href",
+      "/settings?from=%2Fworkflows%2Fexamples%3Ftemplate%3Dcustomer-service#provider-anthropic",
+    );
     expect(within(needs).getByTestId("example-needs-approval")).toBeInTheDocument();
     expect(within(needs).getByTestId("example-needs-knowledge")).toHaveTextContent("1 Wissensdatei");
     expect(within(needs).getByTestId("example-needs-samples")).toHaveTextContent("1 Beispieldatei");

@@ -253,5 +253,9 @@
     "decisions_one": "max. {{count}} décision",
     "decisions_other": "max. {{count}} décisions",
     "byCapability": "par capacité : {{tags}}"
+  },
+  "regions": {
+    "titlebar": "Barre de titre",
+    "canvas": "Canevas"
   }
 }

@@ -66,6 +66,7 @@ export function Inspector({ check, panelRef }: { check: WorkflowCheck | undefine
       id="editor-inspector"
       className={`inspector ${open ? "" : "inspector--collapsed"}`}
       aria-label={label}
+      data-editor-region
       data-testid="inspector"
     >
       <div className="panel-head inspector__panel-head">

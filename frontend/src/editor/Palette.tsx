@@ -104,6 +104,7 @@ export function Palette({ onDesign, panelRef }: { onDesign: () => void; panelRef
       id="editor-palette"
       className={`palette ${open ? "" : "palette--collapsed"}`}
       aria-label={t("editor.palette.title")}
+      data-editor-region
       data-testid="palette"
     >
       <div className="panel-head palette__head">

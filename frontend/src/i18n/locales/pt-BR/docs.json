@@ -60,6 +60,10 @@
       "keys": "<kbd>C</kbd>",
       "action": "Nó selecionado na área de trabalho: ir para “Conectar a” nas propriedades"
     },
+    "regions": {
+      "keys": "<kbd>F6</kbd>",
+      "action": "Editor de fluxos: ir para a próxima área (Shift+F6: a anterior): barra de título, blocos, tela, propriedades, visão geral da execução"
+    },
     "canvas": {
       "keys": "Roda do mouse, arrastar a tela",
       "action": "Aplicar zoom e mover a área de trabalho"
@@ -67,6 +71,10 @@
     "escape": {
       "keys": "<kbd>Esc</kbd>",
       "action": "Fechar uma caixa de diálogo ou explicação"
+    },
+    "globalSearch": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>K</kbd>",
+      "action": "Em qualquer lugar: buscar páginas, configurações, fluxos de trabalho, agentes, ferramentas, conhecimento e documentação"
     },
     "search": {
       "keys": "<kbd>/</kbd>",

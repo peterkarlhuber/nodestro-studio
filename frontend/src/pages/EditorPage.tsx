@@ -39,6 +39,7 @@ import { ApiDialog } from "../publish/ApiDialog";
 import { countsByNode, findings, startBlock } from "../editor/CheckList";
 import { NotFoundState } from "../components/NotFoundState";
 import { useSettingsHref } from "../lib/settingsLink";
+import { onRegionKey } from "../editor/regions";
 
 function useDebouncedGraph() {
   const nodes = useEditor((s) => s.nodes);
@@ -301,6 +302,7 @@ export function EditorPage() {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      onRegionKey(event, editorRef.current);
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
         if (editDeniedRef.current) {
@@ -375,7 +377,7 @@ export function EditorPage() {
   return (
     <div className={panelClasses.join(" ")} ref={editorRef} style={panelSizes}>
       <div className="editor__main">
-        <header className="titlebar">
+        <header className="titlebar" data-editor-region aria-label={t("editor.regions.titlebar")}>
           <div className="titlebar__heading">
             <h1 className="titlebar__title">
               <span className="titlebar__name" title={name || undefined}>
@@ -472,7 +474,7 @@ export function EditorPage() {
               canvas={canvasRef}
             />
           ) : null}
-          <div className="editor__canvas" ref={canvasRef}>
+          <div className="editor__canvas" ref={canvasRef} role="region" aria-label={t("editor.regions.canvas")} data-editor-region>
             <Canvas issues={issues} />
           </div>
         </div>

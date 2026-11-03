@@ -116,7 +116,7 @@ describe("failure reasons (ED-05, AD-01)", () => {
     expect(banner).toHaveTextContent("OpenAI hat den API-Schlüssel nicht akzeptiert");
     expect(banner).toHaveTextContent("Modell: openai:gpt-x");
     expect(screen.getByTestId("problem-hint")).toHaveTextContent("Einstellungen → KI-Anbieter");
-    expect(screen.getByRole("link", { name: /Einstellungen öffnen/ })).toHaveAttribute("href", "/settings");
+    expect(screen.getByRole("link", { name: /Einstellungen öffnen/ })).toHaveAttribute("href", "/settings?from=%2Fexecutions%2Frun_1#provider-openai");
   });
 
   it("gives retry advice, not a settings link, when the provider is busy", () => {
@@ -167,7 +167,7 @@ describe("failure reasons (ED-05, AD-01)", () => {
     expect(banner).toHaveTextContent("Fehlgeschlagen bei Kaputt");
     expect(banner).toHaveTextContent("Anthropic hat den API-Schlüssel abgelehnt.");
     expect(banner).toHaveTextContent("Modell: anthropic:claude-x");
-    expect(screen.getByRole("link", { name: /Einstellungen öffnen/ })).toHaveAttribute("href", "/settings");
+    expect(screen.getByRole("link", { name: /Einstellungen öffnen/ })).toHaveAttribute("href", "/settings?from=%2Fexecutions%2Frun_1#provider-anthropic");
   });
 
   it("keeps run-level stops (time limit) as the reason", () => {

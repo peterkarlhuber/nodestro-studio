@@ -253,5 +253,9 @@
     "decisions_one": "max. {{count}} decisione",
     "decisions_other": "max. {{count}} decisioni",
     "byCapability": "per capacità: {{tags}}"
+  },
+  "regions": {
+    "titlebar": "Barra del titolo",
+    "canvas": "Area di lavoro"
   }
 }

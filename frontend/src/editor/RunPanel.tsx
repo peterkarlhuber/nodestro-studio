@@ -45,6 +45,7 @@ export function RunPanel({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
       id="editor-run-panel"
       className={`run-panel ${open ? "" : "run-panel--closed"} ${run ? "" : "run-panel--idle"}`}
       aria-label={t("runs.panel.title")}
+      data-editor-region
       data-testid="run-panel"
     >
       <div className="panel-head run-panel__head">

@@ -253,5 +253,9 @@
     "decisions_one": "máx. {{count}} decisión",
     "decisions_other": "máx. {{count}} decisiones",
     "byCapability": "por capacidad: {{tags}}"
+  },
+  "regions": {
+    "titlebar": "Barra de título",
+    "canvas": "Lienzo"
   }
 }

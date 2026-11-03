@@ -253,5 +253,9 @@
     "decisions_one": "max. {{count}} decision",
     "decisions_other": "max. {{count}} decisions",
     "byCapability": "by capability: {{tags}}"
+  },
+  "regions": {
+    "titlebar": "Title bar",
+    "canvas": "Canvas"
   }
 }

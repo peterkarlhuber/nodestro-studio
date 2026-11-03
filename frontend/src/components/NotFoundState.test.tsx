@@ -73,7 +73,7 @@ describe("ProviderSetupLink", () => {
         <ProviderSetupLink item={{ code: "api_key_missing", params: { provider: "anthropic" } }} />
       </MemoryRouter>,
     );
-    expect(screen.getByRole("link", { name: "KI-Anbieter einrichten" })).toHaveAttribute("href", "/settings");
+    expect(screen.getByRole("link", { name: "KI-Anbieter einrichten" })).toHaveAttribute("href", "/settings?from=%2F#provider-anthropic");
     rerender(
       <MemoryRouter>
         <ProviderSetupLink item={{ code: "run.failed" }} />
