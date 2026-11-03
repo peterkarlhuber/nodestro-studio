@@ -162,22 +162,15 @@ None known.
 
 ## Tests and quality assurance
 
-### ST-012 · Dependabot pull requests cannot run the full CI
-
-- **Priority:** P2 Medium · **Status:** Open · **Refs:** #85
-- **What:** CI exits when the `NODESTRO_READ` secret is missing, so on Dependabot runs the backend, pins, package and
-  browser jobs fail before testing; only the frontend job is meaningful. All component repositories are public now.
-- **Next step:** Install the git dependencies anonymously and make the token optional, as in the other repositories
-  (backend audit D-08 residual); a Dependabot secret (owner action) is only the fallback.
-
 ### ST-017 · Pending dependency updates (Dependabot)
 
 - **Priority:** P3 Low · **Status:** In progress · **Refs:** #64, #66, #67, #75
 - **What:** actions/setup-node 6.5 → 7.1 (#64), globals 16 → 17 (#66, ESLint config only), jsdom 26 → 30 (#67, unit
   test environment only), npm minor/patch group (#75). The frontend job (lint, typecheck, unit tests, build, audit)
-  passes for all four on Node 22; the browser suites have not run (ST-012). #75 needs a rebase on the
+  passes for all four on Node 22; the browser suites have not run yet. #75 needs a rebase on the
   `frontend/package.json` changes from #77.
-- **Next step:** After ST-012, re-run full CI; merge the majors one at a time; rebase #75 first.
+- **Next step:** CI no longer needs `NODESTRO_READ` (#110): re-run full CI on each; merge the majors one at a time;
+  rebase #75 first.
 
 ## Platform coverage
 
@@ -415,7 +408,6 @@ None known.
 | ST-018, ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update the status documents and `products` together |
 | ST-026 | nodestro-examples | EX-008 (typographic apostrophes) | Same typography decision |
 | ST-031, ST-032 | nodestro-examples | EX-003 (AD-18 marker), EX-001/EX-002 (ED-17) | Examples provide the marker and texts; studio shows them |
-| ST-012 | all component repositories | `NODESTRO_READ` CI change (runtime #75 / RT-029, api #50, sdk #47, integrations #36, examples #40, server #25, desktop #17) | Same change everywhere |
 | — | nodestro-runtime, nodestro-api | X-01 decision response still `paused` (RT-005, API-018); X-03 error code list (RT-011, API-016) | Change lives in runtime/api; studio already adapted |
 
 Generated example chapters (`frontend/src/docs/chapters/*/beispiele.md`, between the `examples` markers) come from
