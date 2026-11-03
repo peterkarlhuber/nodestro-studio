@@ -570,13 +570,17 @@
     "unknown_file_part": "Não existe campo de arquivo chamado {{field}}.",
     "host_not_allowed": "O Nodestro não responde pelo nome de host {{host}}. Abra o Nodestro via localhost ou adicione o nome em NODESTRO_ALLOWED_HOSTS.",
     "origin_not_allowed": "Alterações vindas da página web {{origin}} não são aceitas.",
-    "forwarded_not_allowed": "Solicitações encaminhadas por um proxy não são aceitas: o Nodestro responde só a este computador."
+    "forwarded_not_allowed": "Solicitações encaminhadas por um proxy não são aceitas: o Nodestro responde só a este computador.",
+    "invalid_plain": "A requisição não corresponde à entrada esperada.",
+    "too_large_limit": "A requisição é grande demais: são aceitos no máximo {{limit_mb}} MB.",
+    "malformed": "Não é possível ler a requisição. Recarregue a página e tente de novo."
   },
   "publication": {
     "disabled": "Esta API está desligada.",
     "not_found": "Não há nenhum fluxo de trabalho publicado com este nome.",
     "dependencies_changed": "As bibliotecas Python aprovadas mudaram desde a publicação; publique novamente.",
-    "dependencies_unavailable": "As bibliotecas Python desta API não estão prontas."
+    "dependencies_unavailable": "As bibliotecas Python desta API não estão prontas.",
+    "slug_taken": "Outro fluxo de trabalho publicado já usa o nome {{slug}}. Escolha outro nome."
   },
   "limit": {
     "concurrent": "Execuções simultâneas demais (limite {{limit}}); tente de novo quando uma terminar.",
@@ -904,5 +908,11 @@
     "run_ended": "A execução terminou antes de a instrução ser considerada.",
     "answer_interrupted": "A resposta foi interrompida. Faça a pergunta de novo.",
     "answer_failed": "Não foi possível escrever uma resposta. Tente de novo mais tarde."
+  },
+  "route": {
+    "not_found": "Este endereço não existe. Verifique o link ou volte para a página inicial."
+  },
+  "method": {
+    "not_allowed": "Esta ação não é possível neste endereço. Recarregue a página e tente de novo."
   }
 }
