@@ -3,7 +3,7 @@
 // grouped by kind; Enter or a click opens the hit where it lives.
 
 import { useQuery } from "@tanstack/react-query";
-import { BookMarked, BookOpen, Bot, Command, Diamond, LayoutTemplate, type LucideIcon, Search, Star } from "lucide-react";
+import { BookMarked, BookOpen, Bot, Command, CornerDownRight, Diamond, LayoutTemplate, type LucideIcon, Search, Star } from "lucide-react";
 import { type KeyboardEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ import type { SearchResult } from "../api/types";
 import { Modal, Spinner } from "../components/ui";
 import { currentLanguage } from "../i18n";
 
-type Kind = SearchResult["kind"] | "docs";
+type Kind = "page" | SearchResult["kind"] | "docs";
 
 interface Hit {
   key: string;
@@ -25,8 +25,9 @@ interface Hit {
   favorite: boolean;
 }
 
-const KINDS: Kind[] = ["workflow", "agent", "template", "example", "tool", "knowledge", "docs"];
+const KINDS: Kind[] = ["page", "workflow", "agent", "template", "example", "tool", "knowledge", "docs"];
 const ICONS: Record<Kind, LucideIcon> = {
+  page: CornerDownRight,
   workflow: Diamond,
   agent: Bot,
   template: Bot,
@@ -52,6 +53,59 @@ export function targetOf(result: SearchResult): string {
     case "knowledge":
       return `/knowledge?file=${encodeURIComponent(result.id)}`;
   }
+}
+
+/** Pages and settings sections to jump to: the label keys of the navigation and of the settings headings. */
+const PAGES: { to: string; label: string; within?: string }[] = [
+  { to: "/", label: "nav.workflows" },
+  { to: "/workflows/examples", label: "library.title" },
+  { to: "/agents", label: "nav.agents" },
+  { to: "/tools", label: "nav.tools" },
+  { to: "/knowledge", label: "nav.knowledge" },
+  { to: "/memory", label: "nav.memory" },
+  { to: "/executions", label: "nav.executions" },
+  { to: "/approvals", label: "nav.approvals" },
+  { to: "/usage", label: "nav.usage" },
+  { to: "/tests", label: "nav.tests" },
+  { to: "/batches", label: "nav.batches" },
+  { to: "/schedules", label: "nav.schedules" },
+  { to: "/docs", label: "nav.docs" },
+  { to: "/welcome", label: "nav.welcome" },
+  { to: "/settings", label: "nav.settings" },
+  { to: "/settings#settings-providers", label: "settings.providers.title", within: "nav.settings" },
+  { to: "/settings#settings-language", label: "settings.language.title", within: "nav.settings" },
+  { to: "/settings#settings-models", label: "settings.models.title", within: "nav.settings" },
+  { to: "/settings#settings-prices", label: "pricing.title", within: "nav.settings" },
+  { to: "/settings#settings-reconciliation", label: "pricing.reconciliation.title", within: "nav.settings" },
+  { to: "/settings#settings-sandbox", label: "settings.sandbox.title", within: "nav.settings" },
+  { to: "/settings#settings-ocr", label: "settings.ocr.title", within: "nav.settings" },
+  { to: "/settings#settings-inputs", label: "inputs.storage.title", within: "nav.settings" },
+  { to: "/settings#settings-python", label: "python.maintenance.title", within: "nav.settings" },
+  { to: "/settings#settings-backup", label: "backup.title", within: "nav.settings" },
+  { to: "/settings#settings-diagnostics", label: "diagnostics.title", within: "nav.settings" },
+];
+
+/** Lower case without accents, so "regles" finds "Réglages". */
+function fold(text: string): string {
+  return text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+}
+
+/** Pages whose name (or, for settings sections, the section's name) contains every word of the query. */
+export function pageHits(query: string, translate: (key: string) => string): Hit[] {
+  const words = fold(query).split(/\s+/).filter(Boolean);
+  return PAGES.filter((page) => {
+    const text = fold(`${translate(page.label)} ${page.within ? translate(page.within) : ""}`);
+    // An empty query offers the pages themselves, not every settings section.
+    return words.length ? words.every((word) => text.includes(word)) : !page.within;
+  }).map((page) => ({
+    key: `page:${page.to}`,
+    kind: "page",
+    title: translate(page.label),
+    subtitle: page.within ? translate(page.within) : "",
+    snippet: "",
+    to: page.to,
+    favorite: false,
+  }));
 }
 
 function useDebounced(value: string, delay: number) {
@@ -120,10 +174,10 @@ export function GlobalSearch() {
       to: targetOf(result),
       favorite: result.favorite,
     }));
-    const all = [...fromServer, ...(docs.data ?? [])];
+    const all = [...pageHits(open ? query.trim() : "", t), ...fromServer, ...(docs.data ?? [])];
     // Grouped in a fixed order, so the keyboard order matches what is shown.
     return KINDS.flatMap((kind) => all.filter((hit) => hit.kind === kind));
-  }, [server.data, docs.data]);
+  }, [server.data, docs.data, open, query, t]);
 
   useEffect(() => setActive(0), [hits]);
 
