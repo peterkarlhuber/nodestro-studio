@@ -24,6 +24,10 @@
   download with a link to the local models settings, and the judge's model. A select per agent offers the suitable
   installed models first and every installed chat model; changed choices go to the copy as `models` and always win.
   Cloud workspaces are unchanged. Six languages, help and manual.
+- Pins orkexa 4ec738c (orkexa #44: robust hybrid fusion), nodestro-runtime 3006ce0 (runtime #106: CPU saving mode,
+  context window and hardware advice, benchmark job), nodestro-examples be55542 (examples #64: agent task profiles),
+  nodestro-integrations f5a25d6, nodestro-api c2a2ad3 (api #82: local advice, benchmark, per-agent model plan) and
+  nodestro-sdk 98a697e (sdk #74: regenerated types).
 
 ### Local models, embeddings and semantic knowledge search (2026-11-03)
 
