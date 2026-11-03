@@ -18,7 +18,7 @@ import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMain
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
 import { SettingsNav, useSettingsHash } from "./SettingsNav";
 import { SandboxPanel } from "./SettingsSandbox";
-import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy } from "./SettingsBudget";
+import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy, settingsForm } from "./SettingsBudget";
 import { CHECK_KEY, DefaultModelNotice, ProviderSettings } from "./SettingsProviders";
 
 const AUTOMATIC = "auto";
@@ -106,7 +106,7 @@ export function SettingsPage() {
   useSettingsHash(Boolean(form));
 
   useEffect(() => {
-    if (settings.data) setForm(settings.data);
+    if (settings.data) setForm(settingsForm(settings.data));
   }, [settings.data]);
 
   const save = useMutation({

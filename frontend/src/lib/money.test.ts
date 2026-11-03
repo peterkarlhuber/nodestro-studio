@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { compareMoney, formatMoney, moneyDifference, moneyText, normalizeMoneyInput, parseMoney } from "./money";
+import { setLanguage } from "../i18n";
+import { compareMoney, formatMoney, moneyDifference, moneyInputText, moneyText, normalizeMoneyInput, parseMoney } from "./money";
 
 describe("money as decimal strings", () => {
   it("compares and subtracts exactly", () => {
@@ -20,6 +21,18 @@ describe("money as decimal strings", () => {
     expect(normalizeMoneyInput("1,000.50")).toBeNull();
     expect(normalizeMoneyInput("-1")).toBeNull();
     expect(normalizeMoneyInput("abc")).toBeNull();
+  });
+
+  it("writes an amount for a text field with the language's decimal mark and reads it back (NSL-14)", async () => {
+    try {
+      for (const [language, expected] of [["de", "0,03"], ["fr", "0,03"], ["pt-BR", "0,03"], ["en", "0.03"]] as const) {
+        await setLanguage(language, false);
+        expect(moneyInputText("0.03"), language).toBe(expected);
+        expect(normalizeMoneyInput(moneyInputText("2.50")), language).toBe("2.50");
+      }
+    } finally {
+      await setLanguage("de", false);
+    }
   });
 
   it("formats in the interface language and shows unknown as a dash, never as 0", () => {

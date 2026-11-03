@@ -6,10 +6,12 @@ import {
   formatBytes,
   formatCost,
   formatDate,
+  formatDateOrDay,
   formatDay,
   formatDuration,
   formatNumber,
   formatPrice,
+  formatTime,
   outputText,
   tokenBreakdown,
 } from "./format";
@@ -65,6 +67,20 @@ describe("format", () => {
     await inLanguage("fr");
     expect(formatDay("2026-10-27")).toBe("27/10");
     expect(formatDay("Total")).toBe("Total");
+  });
+
+  it("writes times like the time in a date and shows a bare day without midnight (NSL-15)", async () => {
+    await inLanguage("en");
+    expect(normalize(formatTime("2026-10-27T08:04:02Z"))).toBe("8:04:02 AM");
+    expect(normalize(formatDate("2026-10-27T08:04:02Z"))).toBe("Oct 27, 2026, 8:04 AM");
+    expect(formatDateOrDay("2026-10-31T00:00:00Z")).toBe("Oct 31, 2026");
+    expect(formatDateOrDay("2026-10-31")).toBe("Oct 31, 2026");
+    expect(formatDateOrDay("2026-10-31T00:00:00.000000+00:00")).toBe("Oct 31, 2026");
+    expect(normalize(formatDateOrDay("2026-10-31T09:15:00Z"))).toBe("Oct 31, 2026, 9:15 AM");
+    expect(formatDateOrDay(null)).toBe("–");
+    await inLanguage("de");
+    expect(formatTime("2026-10-27T08:04:02Z")).toBe("08:04:02");
+    expect(formatDateOrDay("2026-10-31T00:00:00Z")).toBe("31.10.2026");
   });
 
   it("formats sizes and durations", async () => {

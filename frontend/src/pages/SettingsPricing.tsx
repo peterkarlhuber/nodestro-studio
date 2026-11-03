@@ -45,7 +45,7 @@ import {
   TextInput,
 } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
-import { formatCost, formatDate, formatNumber, formatPrice } from "../lib/format";
+import { formatCost, formatDate, formatDateOrDay, formatNumber, formatPrice } from "../lib/format";
 import { PRICE_STATUS_TONE, STALENESS_TONE } from "../lib/pricing";
 
 const BILLING_PROVIDERS: BillingProvider[] = ["openai", "anthropic"];
@@ -449,7 +449,7 @@ function PriceTable({ entries }: { entries: PriceEntry[] }) {
                     entry.source
                   )}
                 </td>
-                <td>{entry.checked_at ? formatDate(entry.checked_at) : "–"}</td>
+                <td>{formatDateOrDay(entry.checked_at)}</td>
                 <td className="row-gap">
                   <IconButton
                     icon={Pencil}

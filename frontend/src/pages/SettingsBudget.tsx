@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import type { Settings } from "../api/types";
 import { Field, TextInput } from "../components/ui";
-import { formatMoney, normalizeMoneyInput } from "../lib/money";
+import { formatMoney, moneyInputText, normalizeMoneyInput } from "../lib/money";
 
 export const DECISION_HOURS_MIN = 1;
 export const DECISION_HOURS_MAX = 720;
@@ -32,6 +32,15 @@ export function budgetPolicyUpdate(form: Pick<Settings, "max_run_budget_usd" | "
   if (typeof hours !== "number" || !Number.isInteger(hours) || hours < DECISION_HOURS_MIN || hours > DECISION_HOURS_MAX) invalid.push("hours");
   const update = text ? { max_run_budget_usd: max, budget_decision_hours: hours } : { clear_max_run_budget: true, budget_decision_hours: hours };
   return { update, invalid };
+}
+
+/**
+ * The settings as the form edits them: the maximum budget written with the interface language's decimal mark
+ * ("8,00" in German, NSL-14). budgetPolicyUpdate reads either mark back.
+ */
+export function settingsForm(settings: Settings): Settings {
+  const max = settings.max_run_budget_usd;
+  return max ? { ...settings, max_run_budget_usd: moneyInputText(max) } : settings;
 }
 
 export function BudgetPolicyFields({

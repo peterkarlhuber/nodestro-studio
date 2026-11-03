@@ -21,7 +21,7 @@ import { useEditor } from "../editor/store";
 import type { HelpId } from "../lib/help";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
-import { compareMoney, formatMoney, moneyDifference, normalizeMoneyInput, parseMoney } from "../lib/money";
+import { compareMoney, formatMoney, moneyDifference, moneyInputText, normalizeMoneyInput, parseMoney } from "../lib/money";
 import { newClientId } from "./runChatModel";
 import { CONFIRM_MS } from "./CancelRunButton";
 
@@ -54,10 +54,13 @@ export function checkNewLimit(
   return { value, problem: null };
 }
 
-/** The suggested limit as the input's first value: only when it is above the current limit. */
+/**
+ * The suggested limit as the input's first value, written with the interface language's decimal mark: only when it
+ * is above the current limit.
+ */
 export function initialLimitInput(request: Pick<BudgetRequest, "suggested_limit_usd" | "limit_usd">): string {
   const suggested = request.suggested_limit_usd;
-  return suggested && compareMoney(suggested, request.limit_usd) === 1 ? suggested : "";
+  return suggested && compareMoney(suggested, request.limit_usd) === 1 ? moneyInputText(suggested) : "";
 }
 
 /** One fact of the card with its help: a term and its value. */

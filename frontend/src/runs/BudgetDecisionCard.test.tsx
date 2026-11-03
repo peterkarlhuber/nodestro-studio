@@ -65,7 +65,7 @@ describe("checkNewLimit", () => {
   });
 
   it("prefills the suggestion only when it is above the current limit", () => {
-    expect(initialLimitInput({ suggested_limit_usd: "2.35", limit_usd: "2.00" })).toBe("2.35");
+    expect(initialLimitInput({ suggested_limit_usd: "2.35", limit_usd: "2.00" })).toBe("2,35");
     expect(initialLimitInput({ suggested_limit_usd: "2.00", limit_usd: "2.00" })).toBe("");
     expect(initialLimitInput({ suggested_limit_usd: null, limit_usd: "2.00" })).toBe("");
   });
@@ -88,7 +88,7 @@ describe("BudgetDecisionForm", () => {
     expect(screen.getByTestId("budget-block")).toHaveTextContent("Das Limit dieses Laufs blockiert. Eine Erhöhung ändert genau dieses Limit.");
     expect(screen.getByTestId("budget-blocked")).toHaveTextContent("claude-sonnet-4-5 · Texter · kann bis zu 0,40");
     expect(screen.getByTestId("budget-suggested")).toHaveTextContent(/2,35.*Minimum für die nächste Anfrage.*keine Prognose/);
-    expect(screen.getByLabelText("Neues Gesamtlimit für diesen Lauf (USD)")).toHaveValue("2.35");
+    expect(screen.getByLabelText("Neues Gesamtlimit für diesen Lauf (USD)")).toHaveValue("2,35");
     expect(screen.getByTestId("budget-difference")).toHaveTextContent("+ 0,35");
     expect(screen.getByTestId("budget-scope-note")).toHaveTextContent("Gilt nur für diesen Lauf; der Workflow und die Einstellungen bleiben unverändert.");
     expect(screen.getByTestId("budget-scope-note")).toHaveTextContent("Chat-Nachrichten geben nie Budget frei.");

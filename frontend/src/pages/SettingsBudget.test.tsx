@@ -2,7 +2,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { Settings } from "../api/types";
-import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy } from "./SettingsBudget";
+import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy, settingsForm } from "./SettingsBudget";
 
 afterEach(cleanup);
 
@@ -16,6 +16,13 @@ describe("the workspace's budget policy (BUDGET-1)", () => {
     });
     expect(budgetPolicyUpdate(form({ max_run_budget_usd: "" })).update).toEqual({ clear_max_run_budget: true, budget_decision_hours: 24 });
     expect(budgetPolicyUpdate(form({ max_run_budget_usd: "1.005" })).invalid).toEqual(["max"]);
+  });
+
+  it("shows the stored maximum with the language's decimal mark and sends it back unchanged (NSL-14)", () => {
+    const shown = settingsForm(form({ max_run_budget_usd: "8.00" }));
+    expect(shown.max_run_budget_usd).toBe("8,00");
+    expect(budgetPolicyUpdate(shown).update).toEqual({ max_run_budget_usd: "8.00", budget_decision_hours: 24 });
+    expect(settingsForm(form({ max_run_budget_usd: null })).max_run_budget_usd).toBeNull();
   });
 
   it("names invalid values", () => {

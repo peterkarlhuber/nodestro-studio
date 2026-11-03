@@ -2,6 +2,7 @@
 // rounded on the way. Comparisons and differences are exact (scaled integers); only the display goes through
 // formatCost in the interface language.
 
+import { formatLocale } from "../i18n";
 import { formatCost } from "./format";
 
 /** Decimal places kept exactly; more than any price or limit uses. */
@@ -63,4 +64,14 @@ export function compareMoney(a: string | null | undefined, b: string | null | un
 export function formatMoney(value: string | null | undefined): string {
   if (value === null || value === undefined || parseMoney(value) === null) return "–";
   return formatCost(Number(value));
+}
+
+/**
+ * A decimal-string amount as a text field shows it in the interface language: "0.03" becomes "0,03" where the
+ * language writes a decimal comma (NSL-14: the field showed "0.03" while its hint asked for "2,50"). No symbol and
+ * no grouping, so normalizeMoneyInput reads it back unchanged.
+ */
+export function moneyInputText(value: string): string {
+  const decimal = new Intl.NumberFormat(formatLocale()).formatToParts(1.5).find((part) => part.type === "decimal")?.value;
+  return decimal && decimal !== "." ? value.replace(".", decimal) : value;
 }
