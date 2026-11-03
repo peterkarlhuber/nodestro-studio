@@ -3127,7 +3127,10 @@ export interface BudgetBlock {
 export interface BudgetBlockedRequest {
   run_id: string;
   node_id: string;
+  /** The node id of the waiting agent (kept for older runtimes; prefer ``label``). */
   agent: string;
+  /** The waiting node's label in its own workflow, also for child runs; null or missing on older runtimes. */
+  label?: string | null;
   model: string;
   /** The most it can cost; null when it cannot be bounded in advance. */
   max_cost_usd: MoneyString | null;

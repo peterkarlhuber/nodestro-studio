@@ -286,7 +286,7 @@ export function BudgetDecisionForm({
           {(request.requests ?? []).map((item, index) => (
             <li key={`${item.run_id}:${item.node_id ?? ""}:${index}`}>
               <code>{item.model}</code>
-              {item.agent || item.node_id ? <span className="muted"> · {item.agent || item.node_id}</span> : null}
+              {item.label || item.agent || item.node_id ? <span className="muted"> · {item.label || item.agent || item.node_id}</span> : null}
               {" · "}
               {item.bounded && item.max_cost_usd !== null
                 ? t("budget.card.canCostUpTo", { cost: formatMoney(item.max_cost_usd) })
