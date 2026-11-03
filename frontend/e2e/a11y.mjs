@@ -83,7 +83,9 @@ async function workflowId() {
 }
 
 async function scan(page, label) {
-  await page.addScriptTag({ content: axe });
+  // Evaluated through the DevTools protocol, which the page's Content-Security-Policy does not govern (an inline
+  // <script> tag would be refused by script-src 'self'); the scan keeps the real policy active.
+  await page.evaluate(axe);
   const violations = await page.evaluate(async (tags) => {
     const result = await window.axe.run(document, { runOnly: { type: "tag", values: tags }, resultTypes: ["violations"] });
     return result.violations.map((v) => ({
