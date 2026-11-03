@@ -1,0 +1,185 @@
+{
+  "title": "Modelos locais",
+  "text": "Agentes, assistentes e a busca no conhecimento podem rodar neste computador com modelos locais (Ollama), sem chave de API. Os dados ficam aqui.",
+  "status": {
+    "running": "Em execução",
+    "stopped": "Parado"
+  },
+  "mode": {
+    "managed": "Gerenciado pelo Nodestro neste computador",
+    "container": "Contêiner de modelos do Nodestro Local Docker",
+    "external": "Seu próprio servidor Ollama (endereço salvo)",
+    "unavailable": "Nenhum servidor de modelos local"
+  },
+  "serverManaged": "Neste servidor, o operador mantém o servidor de modelos local. Aqui você vê os modelos instalados.",
+  "unavailable": "Nenhum servidor de modelos local configurado. Informe abaixo, no provedor Ollama, o endereço de um servidor Ollama.",
+  "detected": "Já há um servidor Ollama em {{url}}. O Nodestro só o usa se você salvar esse endereço no provedor Ollama.",
+  "runtime": {
+    "missing": "O ambiente de modelos local (Ollama {{version}}) ainda não está instalado. Baixe-o uma vez ou instale-o offline a partir do arquivo da versão.",
+    "download": "Baixar e instalar",
+    "archive": "Arquivo da versão neste computador",
+    "archiveHint": "O arquivo da versão fixada (por exemplo ollama-linux-amd64.tar.zst). O SHA-256 é verificado antes da instalação.",
+    "fromArchive": "Instalar a partir do arquivo"
+  },
+  "start": "Iniciar",
+  "stop": "Parar",
+  "autostart": "Iniciar com o Nodestro",
+  "hardware": "Este computador: {{cpus}} núcleos de CPU, {{ram}} de memória, gráficos: {{gpu}}",
+  "gpu": {
+    "nvidia": "GPU NVIDIA",
+    "apple": "chip Apple",
+    "none": "nenhuma (só CPU)"
+  },
+  "recommend": {
+    "title": "Recomendado para este computador",
+    "text": "Sugestões conforme a tarefa, a memória deste computador e os modelos instalados. Você escolhe o modelo de cada agente; nada é alterado automaticamente.",
+    "task": "Tarefa",
+    "model": "Modelo",
+    "quality": "Adequação"
+  },
+  "tasks": {
+    "classify": "Classificar e encaminhar",
+    "write": "Escrever textos",
+    "tool_agent": "Agentes com ferramentas",
+    "analysis": "Análise e raciocínio",
+    "assistant": "Assistente e arquiteto",
+    "embedding": "Busca semântica",
+    "coding": "Programação"
+  },
+  "quality": {
+    "recommended": "Recomendado",
+    "acceptable": "Adequado",
+    "limited": "Limitado",
+    "insufficient": "Não é possível"
+  },
+  "reasons": {
+    "below_ideal": "Um modelo maior faria isso melhor.",
+    "hardware_limit": "Este computador tem pouca memória para um modelo maior.",
+    "no_gpu": "Sem placa de vídeo, modelos grandes são lentos demais.",
+    "no_fit": "Nenhum modelo sugerido cabe neste computador.",
+    "preferred_region": "Corresponde à sua origem preferida.",
+    "preferred_region_unavailable": "Nenhum modelo igualmente adequado da sua origem preferida.",
+    "languages_unverified": "Nenhum modelo documenta todos os idiomas deste trabalho."
+  },
+  "download": "Baixar ({{size}})",
+  "downloadShort": "Baixar",
+  "installed": "Instalado",
+  "catalog": {
+    "title": "Modelos",
+    "model": "Modelo",
+    "download": "Tamanho do download",
+    "memory": "Memória necessária",
+    "state": "Estado",
+    "own": "Modelo próprio (importado ou baixado à parte)"
+  },
+  "kind": {
+    "chat": "Modelo de linguagem",
+    "embedding": "Modelo de embeddings"
+  },
+  "verified": "Verificado",
+  "unverified": "Outra compilação",
+  "delete": "Excluir {{model}}",
+  "deleted": "{{model}} excluído",
+  "jobs": {
+    "title": "Tarefas",
+    "kind": {
+      "pull": "Baixar {{target}}",
+      "install_runtime": "Instalar o ambiente",
+      "import_package": "Importar {{target}}",
+      "import_gguf": "Importar {{target}}",
+      "move_models": "Mover a pasta de modelos"
+    },
+    "state": {
+      "running": "Em andamento",
+      "done": "Concluído",
+      "failed": "Falhou",
+      "cancelled": "Cancelado"
+    },
+    "progress": "{{done}} de {{total}}"
+  },
+  "import": {
+    "title": "Importação offline",
+    "package": "Pacote offline",
+    "gguf": "Arquivo GGUF",
+    "packagePath": "Pasta do pacote offline",
+    "ggufPath": "Arquivo GGUF",
+    "pathHint": "Um caminho no computador onde o Nodestro roda (no Local Docker: dentro da pasta de importação). Os pacotes são verificados por SHA-256.",
+    "name": "Nome do modelo",
+    "nameHint": "O nome que os agentes usam, por exemplo meu-modelo:q4.",
+    "projector": "Projetor de visão (opcional)",
+    "projectorHint": "O arquivo mmproj, se o modelo lê imagens.",
+    "start": "Importar",
+    "started": "Importação iniciada"
+  },
+  "storage": {
+    "title": "Pasta de modelos",
+    "current": "Os modelos ficam em {{path}} ({{free}} livres).",
+    "path": "Nova pasta",
+    "pathHint": "Um caminho absoluto, por exemplo em um SSD externo.",
+    "transfer": "Modelos existentes",
+    "copy": "Copiá-los para lá e verificá-los",
+    "use": "Usar a pasta como está",
+    "apply": "Trocar de pasta",
+    "copying": "Os modelos estão sendo copiados. A pasta antiga é mantida.",
+    "switched": "A pasta de modelos foi trocada."
+  },
+  "offline": {
+    "label": "Modo offline estrito",
+    "text": "Só modelos e ferramentas locais. Modelos na nuvem, servidores remotos e downloads são recusados antes de uma execução começar.",
+    "noDownloads": "No modo offline estrito, os downloads ficam desligados."
+  },
+  "europe": {
+    "label": "Preferir modelos europeus",
+    "text": "Entre modelos locais igualmente adequados, são sugeridos os de editoras europeias (Mistral AI). Caso contrário, o Qwen continua sendo o padrão. Um modelo escolhido por você sempre tem prioridade, e nada é enviado a um serviço na nuvem.",
+    "badge": "Europeu"
+  },
+  "cost": {
+    "localOnly": "local, sem cobrança de API",
+    "plusLocal_one": "{{cost}} + {{count}} solicitação local (sem cobrança de API)",
+    "plusLocal_other": "{{cost}} + {{count}} solicitações locais (sem cobrança de API)"
+  },
+  "search": {
+    "title": "Busca no conhecimento",
+    "text": "Como os agentes encontram trechos nos seus arquivos de conhecimento. A busca semântica encontra trechos pelo significado, também entre idiomas.",
+    "mode": "Método de busca",
+    "modes": {
+      "fts": "Texto completo",
+      "vector": "Semântica",
+      "hybrid": "Combinada"
+    },
+    "modeHint": {
+      "fts": "Encontra as palavras da pergunta. Não precisa de modelo.",
+      "vector": "Encontra trechos pelo significado. Precisa do índice semântico.",
+      "hybrid": "Combina texto completo e significado. Precisa do índice semântico."
+    },
+    "embeddingModel": "Modelo de embeddings",
+    "embeddingHint": "Outro modelo precisa de um novo índice. Até ele ficar pronto, a busca continua usando o atual.",
+    "noModel": "Nenhum modelo escolhido",
+    "agentDefault": "Como nas Configurações ({{mode}})",
+    "agentMode": "Método de busca deste agente"
+  },
+  "index": {
+    "state": {
+      "off": "Ainda não há índice semântico. Trechos: {{chunks}}.",
+      "ready": "Trechos indexados: {{embedded}} de {{chunks}}.",
+      "incomplete": "Trechos indexados: {{embedded}} de {{chunks}}. Reconstrua o índice para incluir o restante.",
+      "building": "O índice está sendo criado.",
+      "reindex_required": "O modelo escolhido não corresponde ao índice. Reconstrua o índice para ele.",
+      "unavailable": "O servidor de modelos não está acessível."
+    },
+    "badge": {
+      "off": "Desligado",
+      "ready": "Pronto",
+      "incomplete": "Incompleto",
+      "building": "Em criação",
+      "reindex_required": "Precisa reconstruir",
+      "unavailable": "Inacessível"
+    },
+    "buildingProgress": "Criando: {{done}} de {{total}} trechos",
+    "needed": "As buscas semântica e combinada precisam de um índice completo. Até lá, as execuções que as usam não começam.",
+    "build": "Criar índice",
+    "rebuild": "Reconstruir índice",
+    "remove": "Remover o índice semântico"
+  },
+  "onlyFor": "Só para: {{tasks}}"
+}

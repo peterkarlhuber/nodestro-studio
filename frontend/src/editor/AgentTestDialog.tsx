@@ -12,10 +12,11 @@ import type { AgentConfig, AgentTestResult, NodeRun, WorkflowNode } from "../api
 import { providerList } from "../components/ModelPicker";
 import { Badge, Button, Callout, Field, Modal, Stat, TextArea, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
-import { formatCost, formatDuration, formatPrice, formatTokens } from "../lib/format";
+import { formatDuration, formatPrice, formatTokens } from "../lib/format";
 import { findModel, missingProviders } from "../lib/providers";
 import { NodeRunDetails } from "./RunDetails";
 import { useEditor } from "./store";
+import { usageCost } from "../lib/pricing";
 
 /** The test result in the shape of a node of a run, so the run view can show it. */
 export function asNodeRun(result: AgentTestResult): NodeRun {
@@ -122,7 +123,7 @@ export function AgentTestDialog({
           <div className="stats stats--compact">
             <Stat label={t("runs.stats.requests")} value={result.usage.requests} tip="runs.requests" />
             <Stat label={t("runs.stats.tokens")} value={formatTokens(result.usage.total_tokens)} tip="runs.tokens" />
-            <Stat label={t("runs.stats.cost")} value={formatCost(result.usage.estimated_cost_usd)} tip="runs.cost" />
+            <Stat label={t("runs.stats.cost")} value={usageCost(t, result.usage)} tip="runs.cost" />
             <Stat label={t("agentTest.duration")} value={formatDuration(result.started_at, result.finished_at)} />
           </div>
           <NodeRunDetails node={node} state={asNodeRun(result)} />

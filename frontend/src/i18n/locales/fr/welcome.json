@@ -15,7 +15,7 @@
     "diagram": "Schéma : modèles, connaissances et outils convergent dans Nodestro et deviennent des agents connectés, des validations et des exécutions traçables.",
     "local": "Fonctionne en local sur votre ordinateur",
     "providers": "Compatible avec",
-    "modelNeeded": "Pour exécuter des workflows, Nodestro a besoin d’une connexion à un modèle d’IA : une clé API ou un serveur de modèles local.",
+    "modelNeeded": "Pour exécuter des workflows, Nodestro a besoin d’un modèle d’IA : un modèle local sur cet ordinateur (sans clé d’API) ou la clé d’API d’un fournisseur cloud.",
     "modelNeededLink": "Configurer dans les paramètres"
   },
   "nodes": {

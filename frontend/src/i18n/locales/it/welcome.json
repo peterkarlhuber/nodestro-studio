@@ -15,7 +15,7 @@
     "diagram": "Schema: modelli, conoscenza e strumenti confluiscono in Nodestro e diventano agenti collegati, approvazioni ed esecuzioni tracciabili.",
     "local": "Funziona in locale sul tuo computer",
     "providers": "Compatibile con",
-    "modelNeeded": "Per eseguire i workflow, Nodestro ha bisogno di una connessione a un modello di IA: una chiave API o un server di modelli locale.",
+    "modelNeeded": "Per eseguire i workflow, Nodestro ha bisogno di un modello di IA: un modello locale su questo computer (senza chiave API) o la chiave API di un provider cloud.",
     "modelNeededLink": "Configuralo nelle impostazioni"
   },
   "nodes": {

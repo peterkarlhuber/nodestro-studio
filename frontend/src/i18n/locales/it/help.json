@@ -132,7 +132,14 @@
     "providers": "Accessi ai provider di IA: chiavi API (mai mostrate; le variabili d’ambiente hanno la precedenza), URL di base dei tuoi server e cosa sanno fare i loro modelli. Ogni agente usa il provider del suo modello; nulla passa a un altro provider.",
     "prices": "Da dove vengono i prezzi, ogni quanto vengono verificati e come funzionano prezzi individuali e revisioni.",
     "priceMode": "Standard avvisa per prezzi sconosciuti o vecchi; Rigorosa rifiuta queste richieste prima che costino qualcosa.",
-    "reconciliation": "Confronta le stime con le fatture dei fornitori. Serve una chiave di amministrazione dell’API di fatturazione; non viene modificato nulla."
+    "reconciliation": "Confronta le stime con le fatture dei fornitori. Serve una chiave di amministrazione dell’API di fatturazione; non viene modificato nulla.",
+    "localModels": "I modelli locali funzionano su questo computer con Ollama: senza chiave API, nessun dato lascia il computer. Nodestro installa su richiesta l’ambiente fissato e verifica ogni download.",
+    "localRecommendations": "Suggerimenti in base al compito, alla memoria di questo computer e ai modelli installati. Un modello installato sufficiente viene prima di uno migliore da scaricare.",
+    "localImport": "Per computer senza internet: importa un pacchetto di modelli offline (verificato con SHA-256) o un file GGUF da una chiavetta USB o da una cartella condivisa.",
+    "localStorage": "I modelli sono grandi. Puoi tenerli su un altro disco, per esempio un SSD esterno; durante la copia ogni modello viene verificato prima del cambio.",
+    "strictOffline": "Rifiuta modelli cloud, server di modelli remoti, strumenti server, servizi MCP remoti e download prima dell’avvio di un’esecuzione.",
+    "preferEuropean": "Propone modelli locali europei (Mistral AI) quando sono ugualmente adatti. Mai un modello più debole, mai un servizio cloud; la tua scelta del modello ha la precedenza.",
+    "knowledgeSearch": "Il testo completo trova parole, la ricerca semantica trova significati (anche tra lingue diverse). La ricerca semantica e quella combinata richiedono l’indice semantico creato con un modello di embedding."
   },
   "budget": {
     "decision": "L’esecuzione è in pausa perché il suo budget non basta per la prossima richiesta al modello. Per essa non è stato inviato nulla. Aumenta il limite proprio di questa esecuzione e continua, oppure termina l’esecuzione.",

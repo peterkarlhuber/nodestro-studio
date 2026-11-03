@@ -79,9 +79,22 @@ Properties of the search:
 
 - Accents and umlauts are normalized: "cafe" finds "café".
 - Words also match as the start of a word: "guarantee" finds "guarantees".
-- It is a keyword search, not a semantic search: synonyms are not found. Phrase search terms the way they appear in the document.
+- **Full text** (the default) is a keyword search, not a semantic search: synonyms are not found. Phrase search terms the way they appear in the document. With semantic or combined search (see [Search methods](#suchverfahren)) meaning counts too.
 
 The filter field on the left only searches file names and descriptions.
+
+## Search methods {#suchverfahren}
+<!-- keywords: semantic search, embedding, vector, hybrid, cross-lingual, index, reindex, qwen3-embedding -->
+
+*Settings → Knowledge search* chooses how agents in *Search* mode rank sections:
+
+- **Full text** (default): finds the words of the question. Needs no model.
+- **Semantic:** finds sections by meaning, also across languages (a French question finds a German section). Needs the semantic index.
+- **Combined:** both lists merged. Needs the semantic index.
+
+The semantic index is built with an **embedding model** (default `qwen3-embedding:0.6b`, about 0.6 GB) by **Build index**; it belongs to that model. If you choose another model, the state shows *Rebuild needed* and searches keep using the complete current index until the new one is finished and switched in one step. A rebuild can be canceled and continues where it stopped. Files added while the model server is not running are indexed for full text and shown as *Incomplete* until the next rebuild.
+
+Each agent can keep the method of the settings or choose its own (*Search method of this agent*). Semantic and combined search never fall back to full text silently: without a complete index, the check before the run reports it and the run does not start. An agent only ever searches its own files, in every method.
 
 ## Collections and origin {#sammlungen}
 <!-- keywords: collection, collections, organise, origin, taken over, searchable -->

@@ -2,6 +2,31 @@
 
 ## Unreleased
 
+### Local models, embeddings and semantic knowledge search (2026-11-03)
+
+- *Settings → Local models*: the state of the local model server (managed on the desktop, the Local Docker container,
+  an operator's server), installing the pinned runtime (download or offline release archive, SHA-256 checked),
+  start/stop and start with Nodestro, recommendations per task for this computer with their reasons, the model
+  catalog with download size, memory need, license and whether the installed build is the checked one, downloads,
+  offline import (offline package or GGUF file), moving the model folder (copy and check, or use as is), job progress
+  with cancel, and the strict offline mode.
+- *Settings → Knowledge search*: full text, semantic or combined search, the embedding model and the semantic index
+  (build, rebuild, cancel, remove); each searching agent can keep the setting or choose its own method.
+- Costs of local requests read "local, no API billing" instead of a total of 0; mixed usage adds the number of local
+  requests. Local models in the model picker say so instead of a price.
+- The welcome page links to the local models setup. Texts, error messages, help and the manual chapters (local models,
+  offline import, strict offline mode, search methods) in all six languages.
+- The e2e servers keep the cloud defaults (`tests/e2e_defaults.py`): a new installation now defaults to local models.
+- *Settings → Local models*: the switch "Prefer European models" (Mistral Ministral 3 and Devstral Small 2 as
+  alternatives; Qwen stays the default, a manual choice always wins, the preference never leads to a cloud service).
+  Catalog rows show the vendor, an EU badge and models that only fit one task (Devstral: coding). The manual explains
+  the switch, the optional LightOn mDenseOn embedding and why thinking effort "low" switches thinking off.
+- When local models are not set up yet, the reason next to the blocked start links to *Settings → Local models*.
+- Pins orkexa 71f8aaf (orkexa #43: offline mDenseOn build), nodestro-runtime 90ba97b (runtime #103, #104: European
+  catalog entries, no thinking at effort "low", 32k context for the managed Ollama, mDenseOn build job),
+  nodestro-examples 7b79fde, nodestro-integrations 3026776, nodestro-api a24f32b (api #80, #81) and nodestro-sdk
+  6c487bc (sdk #73).
+
 ### Platform pins: backend audit round 2 (2026-11-03)
 
 - Pins nodestro-api 7c195ed (api #77: the export works on installations without test tools, such as the server and

@@ -79,9 +79,22 @@ Eigenschaften der Suche:
 
 - Umlaute und Akzente werden vereinheitlicht: „Kase“ findet „Käse“.
 - Wörter passen auch als Wortanfang: „Garantie“ findet „Garantiezeit“.
-- Es ist eine Stichwortsuche, keine Bedeutungssuche: Synonyme werden nicht gefunden. Formuliere Suchbegriffe so, wie sie im Dokument stehen.
+- Der **Volltext** (Standard) ist eine Stichwortsuche, keine Bedeutungssuche: Synonyme werden nicht gefunden. Formuliere Suchbegriffe so, wie sie im Dokument stehen. Mit semantischer oder kombinierter Suche (siehe [Suchverfahren](#suchverfahren)) zählt auch die Bedeutung.
 
 Das Filterfeld links durchsucht nur Dateinamen und Beschreibungen.
+
+## Suchverfahren {#suchverfahren}
+<!-- keywords: semantische suche, embedding, vektor, hybrid, sprachübergreifend, index, neuaufbau, qwen3-embedding -->
+
+*Einstellungen → Wissenssuche* legt fest, wie Agenten im Modus *Suche* Abschnitte ordnen:
+
+- **Volltext** (Standard): findet die Wörter der Frage. Braucht kein Modell.
+- **Semantisch:** findet Abschnitte nach ihrer Bedeutung, auch über Sprachen hinweg (eine französische Frage findet einen deutschen Abschnitt). Braucht den semantischen Index.
+- **Kombiniert:** beide Listen zusammengeführt. Braucht den semantischen Index.
+
+Den semantischen Index baut **Index aufbauen** mit einem **Embedding-Modell** auf (Standard `qwen3-embedding:0.6b`, etwa 0,6 GB); er gehört zu diesem Modell. Wählst du ein anderes Modell, zeigt der Zustand *Neuaufbau nötig*, und die Suche nutzt den vollständigen bisherigen Index weiter, bis der neue fertig ist und in einem Schritt umgeschaltet wird. Ein Neuaufbau lässt sich abbrechen und setzt dort fort, wo er aufgehört hat. Dateien, die hinzukommen, während der Modellserver nicht läuft, werden für den Volltext indiziert und bis zum nächsten Neuaufbau als *Unvollständig* angezeigt.
+
+Jeder Agent kann das Verfahren der Einstellungen übernehmen oder ein eigenes wählen (*Suchverfahren dieses Agenten*). Semantische und kombinierte Suche weichen nie stillschweigend auf den Volltext aus: Ohne vollständigen Index meldet das die Prüfung vor der Ausführung, und die Ausführung startet nicht. Ein Agent durchsucht in jedem Verfahren nur seine eigenen Dateien.
 
 ## Sammlungen und Herkunft {#sammlungen}
 <!-- keywords: sammlung, sammlungen, ordnen, herkunft, übernommen, durchsuchbar -->

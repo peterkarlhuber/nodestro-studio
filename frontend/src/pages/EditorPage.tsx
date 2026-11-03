@@ -201,7 +201,9 @@ export function EditorPage() {
     staleTime: 30_000,
   });
   const block = useMemo(() => startBlock(check.data), [check.data]);
-  const providerSetup = useSettingsHref("settings-providers");
+  const providersHref = useSettingsHref("settings-providers");
+  const localModelsHref = useSettingsHref("settings-local-models");
+  const providerSetup = block?.local ? localModelsHref : providersHref;
   const issues = useMemo<CanvasIssues>(() => {
     const counts = countsByNode(check.data);
     const result: CanvasIssues = { nodes: counts.errors, warnings: counts.warnings, edges: {}, blocked: Boolean(block?.provider) };

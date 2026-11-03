@@ -132,7 +132,14 @@
     "providers": "Zugänge zu den KI-Anbietern: API-Schlüssel (nie angezeigt; Umgebungsvariablen haben Vorrang), Basis-URLs eigener Server und was deren Modelle können. Jeder Agent nutzt den Anbieter seines Modells; nichts wechselt zu einem anderen Anbieter.",
     "prices": "Woher die Preise kommen, wie oft sie geprüft werden und wie individuelle Preise und Prüfungen funktionieren.",
     "priceMode": "Standard warnt bei unbekannten und veralteten Preisen; Streng lehnt solche Anfragen ab, bevor sie etwas kosten.",
-    "reconciliation": "Vergleicht die Schätzungen mit den Abrechnungen der Anbieter. Braucht einen Admin-Schlüssel der Abrechnungs-API; es wird nichts verändert."
+    "reconciliation": "Vergleicht die Schätzungen mit den Abrechnungen der Anbieter. Braucht einen Admin-Schlüssel der Abrechnungs-API; es wird nichts verändert.",
+    "localModels": "Lokale Modelle laufen mit Ollama auf diesem Computer: ohne API-Schlüssel, keine Daten verlassen den Computer. Nodestro installiert die festgelegte Laufzeit auf Wunsch und prüft jeden Download.",
+    "localRecommendations": "Vorschläge aus Aufgabe, Arbeitsspeicher dieses Computers und installierten Modellen. Ein installiertes Modell, das gut genug ist, geht vor einem besseren, das erst heruntergeladen werden müsste.",
+    "localImport": "Für Computer ohne Internet: ein Offline-Modellpaket (per SHA-256 geprüft) oder eine GGUF-Datei von einem USB-Laufwerk oder einem freigegebenen Ordner importieren.",
+    "localStorage": "Modelle sind groß. Du kannst sie auf einem anderen Laufwerk ablegen, zum Beispiel einer externen SSD; beim Kopieren wird jedes Modell vor dem Wechsel geprüft.",
+    "strictOffline": "Lehnt Cloud-Modelle, entfernte Modellserver, Server-Tools, entfernte MCP-Dienste und Downloads vor dem Start ab.",
+    "preferEuropean": "Schlägt europäische lokale Modelle (Mistral AI) vor, wenn sie gleich gut geeignet sind. Nie ein schwächeres Modell, nie ein Cloud-Dienst; deine eigene Modellwahl hat Vorrang.",
+    "knowledgeSearch": "Volltext findet Wörter, die semantische Suche findet Bedeutungen (auch über Sprachen hinweg). Semantische und kombinierte Suche brauchen den semantischen Index, der mit einem Embedding-Modell aufgebaut wird."
   },
   "budget": {
     "decision": "Der Lauf pausiert, weil sein Budget für die nächste Modellanfrage nicht reicht. Dafür wurde nichts gesendet. Erhöhe das Limit genau dieses Laufs und setze fort, oder beende den Lauf.",

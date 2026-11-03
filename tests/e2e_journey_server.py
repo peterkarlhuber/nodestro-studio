@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from e2e_defaults import keep_cloud_defaults
 from nodestro_runtime.testing import AnswerAllClient
 import uvicorn
 
@@ -26,6 +27,7 @@ def main() -> None:
     client = AnswerAllClient()
     config = studio_config(Path(args.data_dir))
     app = create_app(config, client_factory=lambda _provider: client)
+    keep_cloud_defaults(app)
     uvicorn.run(app, host="127.0.0.1", port=args.port, log_level="warning")
 
 

@@ -7,6 +7,7 @@
     "unknown": "price unknown",
     "stale": "price not checked for a while",
     "pending_review": "a price change waits for review",
-    "custom": "individual price"
+    "custom": "individual price",
+    "local": "local model, no API billing (operating costs not recorded)"
   }
 }

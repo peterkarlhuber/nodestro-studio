@@ -21,6 +21,8 @@ from pathlib import Path
 import sys
 from typing import Any
 
+from e2e_defaults import keep_cloud_defaults
+
 sys.path.insert(0, str(Path(__file__).parent))
 
 BOSS = "You coordinate teams"
@@ -109,6 +111,7 @@ def main() -> None:
     ids: dict[str, str] = {}
     client = ScriptedClient(script(ids))
     app = create_app(studio_config(Path(args.data_dir)), client_factory=lambda _provider: client)
+    keep_cloud_defaults(app)
     workspace = app.state.nodestro
     save = lambda item: workspace.save_workflow(WorkflowIn.model_validate(item))  # noqa: E731
     ids["r"] = save(team("Recherche", "RESEARCHTEAM finds facts.")).id

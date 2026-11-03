@@ -2,6 +2,39 @@
 
 Este capítulo describe todos los ajustes, la instalación y el inicio de Nodestro y los atajos de teclado.
 
+## Modelos locales {#lokale-modelle}
+<!-- keywords: modelo local, ollama, sin conexión, sin clave de api, qwen, descarga, recomendación, hardware, gpu, memoria, servidor de modelos, mistral, europeo, esfuerzo de razonamiento -->
+
+Nodestro puede ejecutar agentes, asistentes y la búsqueda de conocimiento con **modelos locales** mediante Ollama, sin clave de API: las instrucciones y los documentos se quedan en este ordenador. Una instalación nueva usa modelos locales por defecto (agentes `ollama:qwen3.5:4b`, asistente `ollama:qwen3.5:9b`); una instalación actualizada conserva los modelos que tenía.
+
+*Ajustes → Modelos locales* muestra:
+
+- **Estado:** si el servidor de modelos está en marcha y quién lo proporciona. En el escritorio, Nodestro inicia su propio servidor (un proceso aparte en este ordenador, con su propia carpeta de modelos); en Nodestro Local Docker es un contenedor aparte; en un servidor lo proporciona el operador. Un Ollama que ya tengas en marcha solo se usa si guardas su dirección en el proveedor Ollama.
+- **Entorno:** si falta, **Descargar e instalar** obtiene una vez la versión fijada y comprueba su SHA-256. Sin internet, instálalo desde su archivo de versión (ver [Importación sin conexión](/docs/einstellungen#offline-import)).
+- **Recomendado para este ordenador:** un modelo por tarea (clasificar, redactar, agentes con herramientas, análisis, asistente, búsqueda semántica) según lo que necesita la tarea, la memoria de este ordenador y los modelos instalados. Un modelo instalado que sea suficiente va primero; *Limitado* significa que un modelo más grande lo haría mejor. Las sugerencias nunca cambian un agente: su modelo lo eliges en el editor.
+- **Modelos:** los modelos sugeridos con tamaño de descarga, memoria necesaria y licencia; **Comprobado** significa que la compilación instalada es la que Nodestro verificó.
+
+**Preferir modelos europeos:** Qwen sigue siendo el estándar. Con el interruptor activado, las recomendaciones proponen, si son igual de adecuados, modelos del editor europeo Mistral AI (`ministral-3:3b`, `ministral-3:8b`, `ministral-3:14b` y, para programación, `devstral-small-2:24b`), aunque todavía haya que descargarlos; un modelo instalado sigue siendo la primera alternativa. Nunca se propone un modelo más débil y el interruptor nunca usa un servicio en la nube: todos estos modelos se ejecutan en este ordenador. Un modelo que tú mismo asignes a un agente siempre tiene prioridad, y el modo sin conexión estricto sigue rechazando las descargas. Para la búsqueda semántica, el interruptor propone el modelo europeo `mdenseon:307m` (LightOn) mientras no haya ningún modelo de embeddings instalado. No procede de la biblioteca de Ollama: **Descargar** obtiene los archivos originales fijados (1,2 GB), comprueba su SHA-256, construye el modelo y solo lo conserva si reproduce exactamente los vectores de referencia. Un índice existente mantiene su modelo; cambiarlo implica reconstruir el índice.
+
+**Esfuerzo de razonamiento:** los modelos locales que pueden «pensar» lo hacen sin límite a partir del esfuerzo *Medio*, y ese razonamiento cuenta para la longitud máxima de salida. En un ordenador sin tarjeta gráfica, un modelo pequeño puede tardar muchos minutos en ello. Para pasos rápidos (clasificar, extraer, respuestas estructuradas cortas) elige *Bajo*: el modelo responde entonces sin pensar. El servidor de modelos que inicia Nodestro da a cada modelo 32.768 tokens de contexto para prompt, razonamiento y respuesta juntos. Inicia un Ollama propio con `OLLAMA_CONTEXT_LENGTH=32768`; su valor predeterminado de 4.096 tokens es demasiado pequeño para agentes.
+
+Costes: los modelos locales **no tienen facturación de API externa**. Nodestro no registra los costes de funcionamiento locales (hardware, energía), por eso las ejecuciones muestran «local, sin facturación de API» en lugar de un total de 0, y las ejecuciones mixtas añaden el número de solicitudes locales al coste.
+
+## Importación sin conexión y carpeta de modelos {#offline-import}
+<!-- keywords: sin conexión, air gap, usb, gguf, paquete sin conexión, sha-256, ssd externo, carpeta de modelos, copiar -->
+
+Para ordenadores sin internet, *Ajustes → Modelos locales → Importación sin conexión* importa desde una ruta del ordenador donde funciona Nodestro (en Local Docker: dentro de su carpeta de importación):
+
+- **Paquete sin conexión:** una carpeta creada en un ordenador con internet (`orkexa-local export`). Cada archivo se comprueba con su SHA-256 antes de usarlo.
+- **Archivo GGUF:** un archivo de modelo; dale el nombre que usan los agentes (por ejemplo `mi-modelo:q4`) y, para modelos que leen imágenes, el proyector de visión (`mmproj`).
+
+**Carpeta de modelos:** los modelos ocupan mucho. Elige otra carpeta, por ejemplo en un SSD externo: **Copiarlos allí y comprobarlos** copia cada modelo, lo comprueba y solo entonces cambia (la carpeta anterior se conserva); **Usar la carpeta tal como está** cambia a una carpeta que ya contiene modelos de Ollama.
+
+## Modo sin conexión estricto {#offline}
+<!-- keywords: sin conexión estricto, air gap, sin nube, comprobación previa, descargas rechazadas -->
+
+Con el **Modo sin conexión estricto** activado, la comprobación previa a cada ejecución rechaza los modelos en la nube (también como modelo de reserva, evaluador u orquestador), un servidor de modelos que no esté en este ordenador, las herramientas de servidor como la búsqueda web y los servicios MCP remotos; también se rechazan las descargas. Los modelos locales, las herramientas locales y los servidores MCP locales siguen funcionando. El modo no cambia ningún flujo de trabajo: solo rechaza lo que saldría del ordenador.
+
 ## Proveedores de IA {#anbieter}
 <!-- keywords: clave de api, proveedor, anthropic, openai, gemini, ollama, vllm, compatible con openai, url base, variable de entorno, .env, capacidades -->
 

@@ -17,6 +17,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from e2e_defaults import keep_cloud_defaults
 from nodestro_runtime.testing import FakeUv, ScriptedClient, text, tool_use
 import uvicorn
 
@@ -44,6 +45,7 @@ def main() -> None:
     client = ScriptedClient({"SPREAD": [tool_use("spread", {"values": [1.0, 4.0]}), text("fertig")] * 5})
     config = studio_config(Path(args.data_dir))
     app = create_app(config, client_factory=lambda _provider: client, python_runner=SlowUv(INDEX))
+    keep_cloud_defaults(app)
     uvicorn.run(app, host="127.0.0.1", port=args.port, log_level="warning")
 
 

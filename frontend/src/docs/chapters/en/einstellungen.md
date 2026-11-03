@@ -2,6 +2,39 @@
 
 This chapter describes all settings, how to install and start Nodestro, and the keyboard shortcuts.
 
+## Local models {#lokale-modelle}
+<!-- keywords: local model, ollama, offline, no api key, qwen, download, recommendation, hardware, gpu, ram, model server, mistral, european, reasoning effort -->
+
+Nodestro can run agents, assistants and the knowledge search on **local models** with Ollama, without an API key: prompts and documents stay on this computer. A new installation uses local models by default (agents `ollama:qwen3.5:4b`, assistant `ollama:qwen3.5:9b`); an updated installation keeps the models it had.
+
+*Settings → Local models* shows:
+
+- **State:** whether the model server runs and who provides it. On the desktop Nodestro starts its own server (a separate process on this computer, with its own model folder); in Nodestro Local Docker it is a separate container; on a server the operator provides it. An Ollama you already run is used only if you save its address for the Ollama provider.
+- **Runtime:** if it is missing, **Download and install** fetches the pinned version once and checks its SHA-256. Without internet, install it from its release archive (see [Offline import](/docs/einstellungen#offline-import)).
+- **Recommended for this computer:** a model per task (sorting, writing, agents with tools, analysis, assistant, semantic search) from the task's needs, the memory of this computer and the installed models. An installed model that is good enough comes first; *Limited* means a larger model would do better. Suggestions never change an agent: you choose its model in the editor.
+- **Models:** the suggested models with download size, memory needed and license; **Checked** means the installed build is the one Nodestro verified.
+
+**Prefer European models:** Qwen stays the standard. With the switch on, the recommendations suggest models of the European publisher Mistral AI when they are equally suited (`ministral-3:3b`, `ministral-3:8b`, `ministral-3:14b`, and `devstral-small-2:24b` for programming), even if they still need a download; an installed model stays the first alternative. A weaker model is never suggested, and the switch never uses a cloud service: all these models run on this computer. A model you give an agent yourself always wins, and the strict offline mode still refuses downloads. For semantic search the switch suggests the European model `mdenseon:307m` (LightOn) while no embedding model is installed yet. It does not come from the Ollama library: **Download** fetches the pinned original files (1.2 GB), checks their SHA-256, builds the model from them and keeps it only if it reproduces the reference vectors exactly. An existing index stays with its model; switching means rebuilding the index.
+
+**Reasoning effort:** local models that can “think” do so without a limit from effort *Medium* up, and the thinking counts toward the maximum output length. On a computer without a graphics card a small model can take many minutes for it. For fast steps (sorting, extraction, short structured answers) choose *Low*: the model then answers without thinking. The model server Nodestro starts gives every model 32,768 tokens of context for prompt, thinking and answer together. Start an Ollama you run yourself with `OLLAMA_CONTEXT_LENGTH=32768`; its default of 4,096 tokens is too small for agents.
+
+Costs: local models have **no external API billing**. Nodestro does not record local operating costs (hardware, energy), so runs show “local, no API billing” instead of a total of 0, and mixed runs add the number of local requests to the cost.
+
+## Offline import and model folder {#offline-import}
+<!-- keywords: offline, air gap, usb, gguf, offline package, sha-256, external ssd, model folder, copy -->
+
+For computers without internet, *Settings → Local models → Offline import* imports from a path on the computer that runs Nodestro (in Local Docker: inside its import folder):
+
+- **Offline package:** a folder made on a computer with internet (`orkexa-local export`). Every file is checked against its SHA-256 before it is used.
+- **GGUF file:** a model file; give it the name agents use (for example `my-model:q4`) and, for models that read images, the vision projector (`mmproj`).
+
+**Model folder:** models are large. Choose another folder, for example on an external SSD: **Copy them there and check them** copies every model, checks it and only then switches (the old folder is kept); **Use the folder as it is** switches to a folder that already holds Ollama models.
+
+## Strict offline mode {#offline}
+<!-- keywords: strict offline, air gap, no cloud, preflight, downloads refused -->
+
+With **Strict offline mode** on, the check before every run refuses cloud models (also as fallback, judge or orchestrator model), a model server that is not on this computer, server tools such as web search and remote MCP services; downloads are refused too. Local models, local tools and local MCP servers keep working. The mode does not change any workflow: it only refuses what would leave the computer.
+
 ## AI providers {#anbieter}
 <!-- keywords: api key, provider, anthropic, openai, gemini, ollama, vllm, openai-compatible, base url, environment variable, .env, capabilities -->
 

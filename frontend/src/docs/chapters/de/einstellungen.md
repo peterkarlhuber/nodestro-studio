@@ -2,6 +2,39 @@
 
 Dieses Kapitel beschreibt alle Einstellungen, die Installation und den Start von Nodestro sowie die Tastenkürzel.
 
+## Lokale Modelle {#lokale-modelle}
+<!-- keywords: lokales modell, ollama, offline, kein api-schlüssel, qwen, download, empfehlung, hardware, gpu, arbeitsspeicher, modellserver, mistral, europäisch, denkaufwand -->
+
+Nodestro kann Agenten, Assistenten und die Wissenssuche mit **lokalen Modellen** über Ollama betreiben, ohne API-Schlüssel: Prompts und Dokumente bleiben auf diesem Computer. Eine neue Installation nutzt standardmäßig lokale Modelle (Agenten `ollama:qwen3.5:4b`, Assistent `ollama:qwen3.5:9b`); eine aktualisierte Installation behält ihre bisherigen Modelle.
+
+*Einstellungen → Lokale Modelle* zeigt:
+
+- **Zustand:** ob der Modellserver läuft und wer ihn bereitstellt. Auf dem Desktop startet Nodestro einen eigenen Server (ein eigener Prozess auf diesem Computer mit eigenem Modellordner); in Nodestro Local Docker ist es ein eigener Container; auf einem Server stellt ihn der Betreiber. Ein Ollama, das du schon betreibst, wird nur genutzt, wenn du seine Adresse beim Anbieter Ollama speicherst.
+- **Laufzeit:** Fehlt sie, holt **Herunterladen und installieren** die festgelegte Version einmal und prüft ihre SHA-256-Prüfsumme. Ohne Internet installierst du sie aus ihrem Release-Archiv (siehe [Offline-Import](/docs/einstellungen#offline-import)).
+- **Empfohlen für diesen Computer:** ein Modell je Aufgabe (Sortieren, Schreiben, Agenten mit Tools, Analyse, Assistent, semantische Suche) aus den Anforderungen der Aufgabe, dem Arbeitsspeicher dieses Computers und den installierten Modellen. Ein installiertes Modell, das gut genug ist, kommt zuerst; *Eingeschränkt* heißt, ein größeres Modell könnte es besser. Vorschläge ändern nie einen Agenten: Sein Modell wählst du im Editor.
+- **Modelle:** die vorgeschlagenen Modelle mit Downloadgröße, Speicherbedarf und Lizenz; **Geprüft** heißt, die installierte Fassung ist die, die Nodestro geprüft hat.
+
+**Europäische Modelle bevorzugen:** Qwen bleibt der Standard. Ist der Schalter an, schlagen die Empfehlungen bei gleich guter Eignung Modelle des europäischen Anbieters Mistral AI vor (`ministral-3:3b`, `ministral-3:8b`, `ministral-3:14b`, für Programmierung `devstral-small-2:24b`), auch wenn sie erst heruntergeladen werden müssen; ein installiertes Modell bleibt die erste Alternative. Ein schwächeres Modell wird nie vorgeschlagen, und der Schalter nutzt nie einen Cloud-Dienst: Alle diese Modelle laufen auf diesem Computer. Ein Modell, das du einem Agenten selbst gibst, hat immer Vorrang, und der strikte Offline-Modus lehnt Downloads weiter ab. Für die semantische Suche schlägt der Schalter das europäische Modell `mdenseon:307m` (LightOn) vor, solange noch kein Embedding-Modell installiert ist. Es kommt nicht aus dem Ollama-Katalog: **Herunterladen** holt die festgelegten Originaldateien (1,2 GB), prüft ihre SHA-256-Prüfsummen, baut daraus das Modell und behält es nur, wenn es die Referenzvektoren exakt wiedergibt. Ein bestehender Index bleibt beim bisherigen Modell; ein Wechsel bedeutet, den Index neu aufzubauen.
+
+**Denkaufwand:** Lokale Modelle, die „denken“ können, denken ab dem Denkaufwand *Mittel* ohne Grenze mit, und das Denken zählt zur maximalen Ausgabelänge. Auf einem Computer ohne Grafikkarte kann ein kleines Modell dafür viele Minuten brauchen. Für schnelle Schritte (Sortieren, Extrahieren, kurze strukturierte Antworten) stelle *Niedrig* ein: Dann antwortet das Modell ohne zu denken. Der von Nodestro gestartete Modellserver gibt jedem Modell 32.768 Tokens Kontext für Prompt, Denken und Antwort zusammen. Ein Ollama, das du selbst betreibst, starte mit `OLLAMA_CONTEXT_LENGTH=32768`; sein Standard von 4.096 Tokens ist für Agenten zu klein.
+
+Kosten: Lokale Modelle haben **keine externe API-Abrechnung**. Lokale Betriebskosten (Hardware, Energie) erfasst Nodestro nicht. Ausführungen zeigen deshalb „lokal, keine API-Abrechnung“ statt einer Summe von 0, und gemischte Ausführungen nennen zusätzlich die Zahl der lokalen Anfragen.
+
+## Offline-Import und Modellordner {#offline-import}
+<!-- keywords: offline, air gap, usb, gguf, offline-paket, sha-256, externe ssd, modellordner, kopieren -->
+
+Für Computer ohne Internet importiert *Einstellungen → Lokale Modelle → Offline-Import* von einem Pfad auf dem Computer, auf dem Nodestro läuft (in Local Docker: im Import-Ordner):
+
+- **Offline-Paket:** ein Ordner, der auf einem Computer mit Internet erstellt wurde (`orkexa-local export`). Jede Datei wird vor der Verwendung gegen ihre SHA-256-Prüfsumme geprüft.
+- **GGUF-Datei:** eine Modelldatei; gib ihr den Namen, den Agenten verwenden (zum Beispiel `mein-modell:q4`), und bei Modellen, die Bilder lesen, den Vision-Projektor (`mmproj`).
+
+**Modellordner:** Modelle sind groß. Wähle einen anderen Ordner, zum Beispiel auf einer externen SSD: **Dorthin kopieren und prüfen** kopiert jedes Modell, prüft es und wechselt erst dann (der alte Ordner bleibt erhalten); **Ordner so verwenden, wie er ist** wechselt zu einem Ordner, der schon Ollama-Modelle enthält.
+
+## Strikter Offline-Modus {#offline}
+<!-- keywords: strikt offline, air gap, keine cloud, vorabprüfung, downloads abgelehnt -->
+
+Mit **Strikter Offline-Modus** lehnt die Prüfung vor jeder Ausführung Cloud-Modelle ab (auch als Ersatz-, Bewertungs- oder Orchestrator-Modell), einen Modellserver, der nicht auf diesem Computer läuft, Server-Tools wie die Websuche und entfernte MCP-Dienste; auch Downloads werden abgelehnt. Lokale Modelle, lokale Tools und lokale MCP-Server funktionieren weiter. Der Modus ändert keinen Workflow: Er lehnt nur ab, was den Computer verlassen würde.
+
 ## KI-Anbieter {#anbieter}
 <!-- keywords: api key, api-schlüssel, anbieter, provider, anthropic, openai, gemini, ollama, vllm, openai-kompatibel, basis-url, umgebungsvariable, .env, fähigkeiten -->
 

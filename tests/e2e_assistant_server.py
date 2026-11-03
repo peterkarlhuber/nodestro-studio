@@ -23,6 +23,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).parent))
 
 import anthropic
+from e2e_defaults import keep_cloud_defaults
 import httpx
 from nodestro_runtime.testing import text, tool_use
 import uvicorn
@@ -166,6 +167,7 @@ def main() -> None:
     client = ScriptedClient()
     config = studio_config(Path(args.data_dir))
     app = create_app(config, client_factory=lambda _provider: client)
+    keep_cloud_defaults(app)
     uvicorn.run(app, host="127.0.0.1", port=args.port, log_level="warning")
 
 

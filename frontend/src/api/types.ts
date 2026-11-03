@@ -871,8 +871,11 @@ export interface ModelInfo {
   cache_write_1h_usd_per_mtok: number | null;
   cache_read_usd_per_mtok: number | null;
   recommended: boolean;
-  /** current, stale, pending_review, custom (an individual price) or unknown (no price). */
-  price_status?: "current" | "stale" | "unknown" | "pending_review" | "custom";
+  /**
+   * current, stale, pending_review, custom (an individual price) or unknown (no price); local: a local model, no
+   * external API billing (its local operating costs are not recorded).
+   */
+  price_status?: "current" | "stale" | "unknown" | "pending_review" | "custom" | "local";
   /** Orkexa's quality of the price: verified, contract, unverified or estimated. */
   price_quality?: string | null;
   price_source?: string | null;
@@ -3226,4 +3229,43 @@ export interface Settings {
 /** The run list carries the run's budget too (a pending decision shows as "Waiting for budget decision"). */
 export interface RunSummary {
   budget?: RunBudget | null;
+}
+
+// ---- local models and the semantic knowledge index (runtime fc7c591 and later) -------------------------------------
+
+export interface Settings {
+  /** How agents with retrieval "default" search knowledge: full text (default), embeddings, or both. */
+  knowledge_retrieval?: "fts" | "vector" | "hybrid";
+  /** The embedding model of the semantic index (an Ollama model, e.g. qwen3-embedding:0.6b). */
+  embedding_model?: string | null;
+  /** Only local models and local tools; downloads are refused. */
+  strict_offline?: boolean;
+  /** Prefer European local models among equally suited ones (never a cloud service, never a weaker model). */
+  prefer_european_models?: boolean;
+  /** local: a new installation started with local default models; kept: an update kept the earlier defaults. */
+  model_defaults?: "local" | "kept";
+}
+
+export interface ProviderStatus {
+  /** Nodestro's own local model server provides this provider (no address saved). */
+  local_server?: boolean;
+}
+
+export interface Usage {
+  /** Requests answered by local models: no external API billing, local operating costs not recorded. */
+  local_requests?: number;
+}
+
+export interface UsageBucket {
+  local_requests?: number;
+}
+
+export interface KnowledgeConfig {
+  /** default follows the settings; vector and hybrid need the semantic index. */
+  retrieval?: "default" | "fts" | "vector" | "hybrid";
+}
+
+export interface SearchHit {
+  /** The hit's rank per method (fts, vector) before they were fused. */
+  ranks?: Record<string, number>;
 }

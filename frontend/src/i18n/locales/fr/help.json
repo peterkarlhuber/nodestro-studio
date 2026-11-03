@@ -132,7 +132,14 @@
     "providers": "Accès aux fournisseurs d’IA : clés API (jamais affichées ; les variables d’environnement sont prioritaires), URL de base de vos propres serveurs et ce que leurs modèles savent faire. Chaque agent utilise le fournisseur de son modèle ; rien ne bascule vers un autre fournisseur.",
     "prices": "D’où viennent les prix, à quelle fréquence ils sont vérifiés, et comment fonctionnent les prix individuels et les validations.",
     "priceMode": "Standard avertit pour les prix inconnus ou anciens ; Strict refuse ces requêtes avant qu’elles ne coûtent quoi que ce soit.",
-    "reconciliation": "Compare les estimations avec les factures des fournisseurs. Nécessite une clé d’administration de l’API de facturation ; rien n’est modifié."
+    "reconciliation": "Compare les estimations avec les factures des fournisseurs. Nécessite une clé d’administration de l’API de facturation ; rien n’est modifié.",
+    "localModels": "Les modèles locaux fonctionnent sur cet ordinateur avec Ollama : sans clé d’API, aucune donnée ne quitte l’ordinateur. Nodestro installe l’environnement fixé à la demande et vérifie chaque téléchargement.",
+    "localRecommendations": "Suggestions d’après la tâche, la mémoire de cet ordinateur et les modèles installés. Un modèle installé suffisant passe avant un meilleur modèle qu’il faudrait télécharger.",
+    "localImport": "Pour les ordinateurs sans internet : importez un paquet de modèles hors ligne (vérifié par SHA-256) ou un fichier GGUF depuis une clé USB ou un dossier partagé.",
+    "localStorage": "Les modèles sont volumineux. Vous pouvez les placer sur un autre disque, par exemple un SSD externe ; lors de la copie, chaque modèle est vérifié avant le changement.",
+    "strictOffline": "Refuse les modèles cloud, les serveurs de modèles distants, les outils serveur, les services MCP distants et les téléchargements avant le démarrage d’une exécution.",
+    "preferEuropean": "Propose des modèles locaux européens (Mistral AI) lorsqu’ils sont aussi adaptés. Jamais un modèle moins performant, jamais un service cloud ; votre propre choix de modèle a la priorité.",
+    "knowledgeSearch": "Le texte intégral trouve des mots, la recherche sémantique trouve le sens (y compris d’une langue à l’autre). Les recherches sémantique et combinée nécessitent l’index sémantique créé avec un modèle d’embeddings."
   },
   "budget": {
     "decision": "L’exécution est en pause parce que son budget ne suffit pas pour la prochaine requête au modèle. Rien n’a été envoyé pour elle. Relevez le plafond de cette exécution précise et poursuivez, ou terminez l’exécution.",

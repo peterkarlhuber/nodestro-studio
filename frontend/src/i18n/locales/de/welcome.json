@@ -15,7 +15,7 @@
     "diagram": "Schaubild: Modelle, Wissen und Werkzeuge fließen in Nodestro zusammen und werden zu verbundenen Agenten, Freigaben und nachvollziehbaren Ausführungen.",
     "local": "Läuft lokal auf deinem Rechner",
     "providers": "Funktioniert mit",
-    "modelNeeded": "Damit Workflows laufen, braucht Nodestro eine Verbindung zu einem KI-Modell: einen API-Schlüssel oder einen lokalen Modellserver.",
+    "modelNeeded": "Für Workflows braucht Nodestro ein KI-Modell: ein lokales Modell auf diesem Computer (ohne API-Schlüssel) oder den API-Schlüssel eines Cloud-Anbieters.",
     "modelNeededLink": "In den Einstellungen einrichten"
   },
   "nodes": {
