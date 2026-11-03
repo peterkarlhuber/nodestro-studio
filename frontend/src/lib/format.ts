@@ -11,8 +11,20 @@ function locale(): string {
   return formatLocale();
 }
 
+/** Formatters by locale and options: creating an Intl.NumberFormat costs far more than using one (ST-004). */
+const NUMBER_FORMATS = new Map<string, Intl.NumberFormat>();
+
 function numberFormat(options: Intl.NumberFormatOptions): Intl.NumberFormat {
-  return new Intl.NumberFormat(locale(), options);
+  const tag = locale();
+  const key = `${tag}|${JSON.stringify(options)}`;
+  let found = NUMBER_FORMATS.get(key);
+  if (!found) {
+    found = new Intl.NumberFormat(tag, options);
+    // Option sets are few (a handful per function); the bound only guards against an unexpected variety.
+    if (NUMBER_FORMATS.size > 200) NUMBER_FORMATS.clear();
+    NUMBER_FORMATS.set(key, found);
+  }
+  return found;
 }
 
 export function formatNumber(value: number, options: Intl.NumberFormatOptions = {}): string {

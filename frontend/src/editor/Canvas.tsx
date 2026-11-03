@@ -13,10 +13,10 @@ import {
   ReactFlowProvider,
   useNodesInitialized,
   useReactFlow,
-  useViewport,
+  useStore,
 } from "@xyflow/react";
 import { LayoutGrid, Maximize, Minus, Plus, Redo2, Undo2 } from "lucide-react";
-import { type DragEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type DragEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -97,6 +97,29 @@ export function typingIn(target: EventTarget | null): boolean {
 
 const MULTI_SELECT_KEYS = ["Shift", "Meta", "Control"];
 
+/**
+ * A node's data for React Flow: the previous object while every field is the same (ST-004). The nodes are memoized
+ * on their props, and a fresh but equal data object (after a size was measured, the check answered or the selection
+ * changed) rendered every node again during the editor's opening.
+ */
+export function reuseData(cache: Map<string, FlowNodeData>, id: string, next: FlowNodeData): FlowNodeData {
+  const previous = cache.get(id);
+  const keys = Object.keys(next);
+  if (previous && keys.length === Object.keys(previous).length && keys.every((key) => previous[key] === next[key])) return previous;
+  cache.set(id, next);
+  return next;
+}
+
+/**
+ * The zoom in percent. Its own component (ST-004): reading the viewport in CanvasInner re-rendered the whole canvas,
+ * with every node and connection mapped again, on every frame of a pan or zoom and on each opening fit; this reads
+ * only the zoom, rounded, so it renders when the shown number changes.
+ */
+function ZoomLabel() {
+  const percent = useStore((state) => Math.round(state.transform[2] * 100));
+  return <span className="zoom-label">{formatNumber(percent / 100, { style: "percent", maximumFractionDigits: 0 })}</span>;
+}
+
 function CanvasInner({ issues }: { issues: CanvasIssues }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -114,11 +137,12 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
   const { moveNodes, removeEdges, connect, select, setSelection, selectEdge, addNode, undo, redo, autoLayout, duplicateNodes } =
     useEditor.getState();
   const flow = useReactFlow();
-  const { zoom } = useViewport();
   /** When the last node selection came in (see onEdgesChange). */
   const nodeSelection = useRef(0);
   const theme = useAppTheme();
   const ariaLabelConfig = useFlowAriaLabels();
+  // The data last given to each node: reused while unchanged, so a node renders only when what it shows changed.
+  const nodeData = useRef(new Map<string, FlowNodeData>());
   // Measured node sizes: the store keeps the workflow, React Flow needs the sizes (minimap, fit view).
   const [sizes, setSizes] = useState<Record<string, { width: number; height: number }>>({});
 
@@ -134,13 +158,13 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
         ariaLabel: [nodeName(node, t), run?.nodes[node.id] ? t(`status.${run.nodes[node.id].status}.label`) : ""]
           .filter(Boolean)
           .join(", "),
-        data: {
+        data: reuseData(nodeData.current, node.id, {
           node,
           state: run?.nodes[node.id],
           issues: issues.nodes[node.id] ?? 0,
           warnings: issues.warnings?.[node.id] ?? 0,
           blocked: issues.blocked ?? false,
-        } satisfies FlowNodeData,
+        }),
       })),
     [nodes, selectedIds, run, issues, sizes, t],
   );
@@ -495,7 +519,7 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
       <div className="floortools">
         <div className="floatbox floatbox--group">
           <IconButton icon={Minus} label={t("editor.canvas.zoomOut")} onClick={() => flow.zoomOut()} />
-          <span className="zoom-label">{formatNumber(zoom, { style: "percent", maximumFractionDigits: 0 })}</span>
+          <ZoomLabel />
           <IconButton icon={Plus} label={t("editor.canvas.zoomIn")} onClick={() => flow.zoomIn()} />
         </div>
         <div className="floatbox floatbox--group">
@@ -526,10 +550,13 @@ function CanvasInner({ issues }: { issues: CanvasIssues }) {
   );
 }
 
-export function Canvas({ issues }: { issues: CanvasIssues }) {
+function CanvasView({ issues }: { issues: CanvasIssues }) {
   return (
     <ReactFlowProvider>
       <CanvasInner issues={issues} />
     </ReactFlowProvider>
   );
 }
+
+/** Memoized (ST-004): the canvas renders again when its issues change, not with every render of the editor page. */
+export const Canvas = memo(CanvasView);
