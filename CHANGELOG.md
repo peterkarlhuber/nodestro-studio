@@ -18,9 +18,11 @@
   models" (`local_reasoning`). Steps and agent tests that answered without the thinking phase carry a "Reasoning
   reduced" badge. The workflow check explains `check.local_context_small`, `check.local_max_tokens` and
   `check.local_reasoning_saving`; the model picker names how a local model runs here. Six languages, help and manual.
-- Copying an example in a workspace with local models (EX-011) shows each agent with its task, the local model the
-  copy gives it on this computer and why (`GET /api/library/{id}/models`), with a choice per agent; changed choices
-  go to the copy as `models` and always win. Cloud workspaces are unchanged. Six languages, help and manual.
+- Copying an example in a workspace with local models (EX-011) shows each agent with its task in plain words, what it
+  needs, the installed model the copy gives it and why (`GET /api/library/{id}/models`), a better model that needs a
+  download with a link to the local models settings, and the judge's model. A select per agent offers the suitable
+  installed models first and every installed chat model; changed choices go to the copy as `models` and always win.
+  Cloud workspaces are unchanged. Six languages, help and manual.
 
 ### Local models, embeddings and semantic knowledge search (2026-11-03)
 

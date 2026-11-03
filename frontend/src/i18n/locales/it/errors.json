@@ -10,7 +10,8 @@
   "examples": {
     "integration_unavailable": "Il server MCP scelto non può servire questa connessione: deve offrire ogni strumento di cui l'esempio ha bisogno, approvato in sola lettura. Non è stato copiato nulla.",
     "integration_unknown": "L'esempio non ha la connessione «{{integration}}». Ricarica la pagina e riprova.",
-    "tests_need_offline": "Le serie di test vengono eseguite senza una persona e non possono usare strumenti MCP. Copia l'esempio in modalità offline per riprenderne i casi di test."
+    "tests_need_offline": "Le serie di test vengono eseguite senza una persona e non possono usare strumenti MCP. Copia l'esempio in modalità offline per riprenderne i casi di test.",
+    "agent_unknown": "Questo esempio non ha un agente «{{key}}». Ricarica la pagina e riprova."
   },
   "agentFailed": "L’agente si è fermato con un errore ({{type}}).",
   "file": {

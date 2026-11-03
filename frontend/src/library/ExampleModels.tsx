@@ -3,13 +3,17 @@
 // person choose another model per agent. A choice made here is sent with the copy and always wins.
 
 import { useQuery } from "@tanstack/react-query";
+import { Download } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
+import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
+import { useLocalModels } from "../api/localModels";
 import type { ExampleAgentModel, ExampleModelPlan as Plan } from "../api/types";
 import { Badge, HelpTip, Select } from "../components/ui";
 import { providerOf } from "../lib/providers";
+import { useSettingsHref } from "../lib/settingsLink";
 
 /** The plan of an example's copy; asked only when the default model is a local one. */
 export function useExampleModels(id: string | null, language: string, local: boolean) {
@@ -29,16 +33,24 @@ export function usesLocalModels(defaultModel: string | undefined | null): boolea
 
 const plain = (model: string) => model.replace(/^ollama:/, "");
 
-/** The reasons of a suggestion in words (the codes of the local model recommendations). */
+/** Reasons of the copy route itself; the others are the codes of the local model recommendations. */
+const PLAN_REASONS = new Set(["installed", "needs_download", "installed_alternative", "default_model", "manual"]);
+
+/** The reasons of a suggestion in words. */
 export function planReasons(t: TFunction, agent: ExampleAgentModel): string {
   return agent.reasons
     .map((reason) =>
-      reason === "installed" || reason === "needs_download"
-        ? t(`library.models.reason.${reason}`)
+      PLAN_REASONS.has(reason)
+        ? t(`library.models.reason.${reason}`, { model: plain(agent.suggested ?? "") })
         : t(`localModels.reasons.${reason}`, { defaultValue: "" }),
     )
     .filter(Boolean)
     .join(" ");
+}
+
+/** The models the select offers: the plan's model, the suitable installed ones, then every other installed chat model. */
+export function modelOptions(agent: ExampleAgentModel, installedChat: string[]): string[] {
+  return [...new Set([...(agent.model ? [agent.model] : []), ...agent.alternatives, ...installedChat])];
 }
 
 /** Only the choices that differ from the suggestion go into the copy request. */
@@ -58,7 +70,10 @@ export function ExampleModelPlan({
   onChange: (value: Record<string, string>) => void;
 }) {
   const { t } = useTranslation();
+  const local = useLocalModels(plan.local);
+  const setup = useSettingsHref("settings-local-models");
   if (!plan.local || !plan.agents.length) return null;
+  const installedChat = (local.data?.status?.models ?? []).filter((model) => model.kind === "chat").map((model) => `ollama:${model.name}`);
   return (
     <section className="stack" aria-labelledby="example-models-title" data-testid="example-models">
       <h3 id="example-models-title">
@@ -76,21 +91,25 @@ export function ExampleModelPlan({
           </thead>
           <tbody>
             {plan.agents.map((agent) => {
-              const options = [...new Set([...(agent.model ? [agent.model] : []), ...agent.alternatives])];
+              const options = modelOptions(agent, installedChat);
               const current = value[agent.key] ?? agent.model ?? "";
               const why = planReasons(t, agent);
+              const needs = (agent.needs ?? []).map((need) => t(`library.models.need.${need}`, { defaultValue: need }));
               return (
                 <tr key={agent.key} data-testid={`example-model-${agent.key}`}>
                   <td>
                     <strong>{agent.name}</strong>
                     {agent.part ? <div className="muted small">{agent.part}</div> : null}
                   </td>
-                  <td>{t(`localModels.tasks.${agent.task}`, { defaultValue: agent.task })}</td>
+                  <td>
+                    {t(`library.models.tasks.${agent.task}`, { defaultValue: agent.task })}
+                    {needs.length ? <div className="muted small">{t("library.models.needs", { needs: needs.join(", ") })}</div> : null}
+                  </td>
                   <td>
                     <Select
                       aria-label={t("library.models.choose", { agent: agent.name })}
                       value={current}
-                      placeholder={agent.model ? undefined : t("library.models.none")}
+                      placeholder={agent.model ? undefined : t("library.models.keepDefault")}
                       onChange={(model) => {
                         const next = { ...value };
                         if (model && model !== agent.model) next[agent.key] = model;
@@ -99,7 +118,7 @@ export function ExampleModelPlan({
                       }}
                       options={options.map((model) => ({
                         value: model,
-                        label: model === agent.model ? t("library.models.suggested", { model: plain(model) }) : plain(model),
+                        label: model === agent.model ? t("library.models.planned", { model: plain(model) }) : plain(model),
                       }))}
                     />
                     <div className="muted small">
@@ -108,10 +127,16 @@ export function ExampleModelPlan({
                           {agent.installed ? t("library.models.installed") : t("library.models.download")}
                         </Badge>
                       ) : (
-                        <Badge tone="danger">{t("library.models.noFit")}</Badge>
+                        <Badge tone="warning">{t("library.models.defaultStays")}</Badge>
                       )}{" "}
                       {why}
                     </div>
+                    {agent.suggested ? (
+                      <div className="small" data-testid={`example-model-better-${agent.key}`}>
+                        <Download size={12} aria-hidden /> {t("library.models.better", { model: plain(agent.suggested) })}{" "}
+                        <Link to={setup}>{t("library.models.toLocalModels")}</Link>
+                      </div>
+                    ) : null}
                     {value[agent.key] ? <div className="small">{t("library.models.overridden")}</div> : null}
                   </td>
                 </tr>
@@ -120,6 +145,11 @@ export function ExampleModelPlan({
           </tbody>
         </table>
       </div>
+      {plan.judge ? (
+        <p className="small muted" data-testid="example-models-judge">
+          {t("library.models.judge", { model: plain(plan.judge) })}
+        </p>
+      ) : null}
     </section>
   );
 }

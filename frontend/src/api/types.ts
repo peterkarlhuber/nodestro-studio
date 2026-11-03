@@ -1666,21 +1666,28 @@ export interface ExampleAgentModel {
   name: string;
   /** The team (or other part) the agent belongs to; null for agents of the workflow itself. */
   part: string | null;
-  /** The task profile (as the local model recommendations: classify, write, tool_agent, analysis, ...). */
+  kind?: "agent" | "orchestrator";
+  /** classify, extract, write, document_vision, tool_agent, analysis, coding, judge, orchestrator. */
   task: string;
   tier: string;
-  /** The suggested model (ollama:...), or null when no local model fits this computer. */
+  /** Local: the installed model the copy uses (a copy never downloads); null: the workspace default stays. */
   model: string | null;
   installed: boolean;
-  /** Why this model (the codes of the local model recommendations). */
+  /** Why this model: the codes of the local model recommendations, installed_alternative, default_model, manual. */
   reasons: string[];
-  /** Other models that would work, best first. */
+  /** A better catalog model that needs a download first. */
+  suggested?: string | null;
+  /** Other installed models that suit the task, best first. */
   alternatives: string[];
+  /** Capabilities the agent needs (e.g. tools, vision). */
+  needs?: string[];
 }
 
 export interface ExampleModelPlan {
   /** The workspace uses local models: only then does the copy dialog show the plan. */
   local: boolean;
+  /** The model of the example's quality check (judge), when it has one. */
+  judge?: string | null;
   agents: ExampleAgentModel[];
 }
 

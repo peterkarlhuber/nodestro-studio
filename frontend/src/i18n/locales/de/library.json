@@ -152,15 +152,39 @@
     "task": "Aufgabe",
     "model": "Modell",
     "choose": "Modell für {{agent}}",
-    "suggested": "{{model}} (vorgeschlagen)",
-    "none": "Kein Modell passt",
     "installed": "Installiert",
     "download": "Braucht einen Download",
-    "noFit": "Kein lokales Modell passt auf diesen Computer",
     "overridden": "Deine Wahl",
     "reason": {
       "installed": "Bereits installiert.",
-      "needs_download": "Braucht vor der ersten Ausführung einen Download."
-    }
+      "needs_download": "Braucht vor der ersten Ausführung einen Download.",
+      "installed_alternative": "Das beste Modell für diese Aufgabe braucht einen Download; ein installiertes wird verwendet.",
+      "default_model": "Kein installiertes Modell passt zu dieser Aufgabe: Das Standardmodell des Arbeitsbereichs bleibt.",
+      "manual": "Von dir gewählt."
+    },
+    "tasks": {
+      "classify": "Sortieren und Weiterleiten",
+      "extract": "Daten herausziehen",
+      "write": "Texte schreiben",
+      "document_vision": "Dokumente und Bilder lesen",
+      "tool_agent": "Mit Tools arbeiten",
+      "analysis": "Analysieren und abwägen",
+      "coding": "Programmieren",
+      "judge": "Qualität prüfen",
+      "orchestrator": "Das Team koordinieren"
+    },
+    "keepDefault": "Standardmodell behalten",
+    "planned": "{{model}} (geplant)",
+    "defaultStays": "Standardmodell",
+    "better": "Besser: {{model}} (braucht einen Download).",
+    "toLocalModels": "Lokale Modelle",
+    "needs": "Braucht: {{needs}}",
+    "need": {
+      "tools": "Tool-Aufrufe",
+      "vision": "Bilder",
+      "thinking": "Denken",
+      "structured": "strukturierte Ausgabe"
+    },
+    "judge": "Qualitätsprüfung (Judge): {{model}}"
   }
 }

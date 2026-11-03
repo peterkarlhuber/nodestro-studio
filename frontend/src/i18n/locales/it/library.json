@@ -152,15 +152,39 @@
     "task": "Compito",
     "model": "Modello",
     "choose": "Modello per {{agent}}",
-    "suggested": "{{model}} (suggerito)",
-    "none": "Nessun modello adatto",
     "installed": "Installato",
     "download": "Richiede un download",
-    "noFit": "Nessun modello locale è adatto a questo computer",
     "overridden": "La tua scelta",
     "reason": {
       "installed": "Già installato.",
-      "needs_download": "Richiede un download prima della prima esecuzione."
-    }
+      "needs_download": "Richiede un download prima della prima esecuzione.",
+      "installed_alternative": "Il modello migliore per questo compito richiede un download; ne viene usato uno installato.",
+      "default_model": "Nessun modello installato è adatto a questo compito: resta il modello predefinito dello spazio di lavoro.",
+      "manual": "Scelto da te."
+    },
+    "tasks": {
+      "classify": "Smistare e instradare",
+      "extract": "Estrarre dati",
+      "write": "Scrivere testi",
+      "document_vision": "Leggere documenti e immagini",
+      "tool_agent": "Lavorare con strumenti",
+      "analysis": "Analizzare e ragionare",
+      "coding": "Programmare",
+      "judge": "Verificare la qualità",
+      "orchestrator": "Coordinare il team"
+    },
+    "keepDefault": "Mantieni il modello predefinito",
+    "planned": "{{model}} (previsto)",
+    "defaultStays": "Modello predefinito",
+    "better": "Meglio: {{model}} (richiede un download).",
+    "toLocalModels": "Modelli locali",
+    "needs": "Richiede: {{needs}}",
+    "need": {
+      "tools": "chiamate agli strumenti",
+      "vision": "immagini",
+      "thinking": "ragionamento",
+      "structured": "output strutturato"
+    },
+    "judge": "Controllo qualità (giudice): {{model}}"
   }
 }
