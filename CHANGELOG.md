@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Platform pins: Nodestro–Axentra migration close-out (2026-11-03)
+
+- Pins: nodestro-runtime `bcfea7f` (#93 static tenant SQL check round-3 gaps and tool-job stop on suspension, NF-1;
+  #94 real-engine resolve tests; #95 security review round 4 Lows R4-3 to R4-7), orkexa `0861c1b` (orkexa #38
+  self-test environment fix), Axentra `2767a2e` (axentra #28 and #29: invitation tokens kept out of URLs, GET OIDC
+  start refuses invitations), nodestro-examples `9dd0c1a`, nodestro-integrations `b3c7c90`, nodestro-api `f21fd6a`
+  (#71 warm Docker monitor, #72 NF-1, #73) and nodestro-sdk `d12ba72` (#64, #65). The security fixes were accepted
+  by the separate agent review (rounds 4 and 5); that is not an external sign-off.
+
 ### Platform pins: Docker-first follow-up (2026-11-02)
 
 - Pins: nodestro-runtime `958be1d` (#90 R-1 source builds only on the desktop and R-5 container shape checks, #91 MCP
