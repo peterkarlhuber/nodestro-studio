@@ -881,6 +881,7 @@
     }
   },
   "setupProvider": "Set up AI provider",
+  "openSandbox": "Open Settings → Sandbox",
   "runs": {
     "cursor_invalid": "This part of the run list cannot be found. Go back to the start of the list."
   },

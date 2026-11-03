@@ -359,6 +359,28 @@ export function ProviderSetupLink({ item }: { item: Coded | null | undefined }) 
   );
 }
 
+/** Problems a person solves in Settings → Sandbox: AI-created code that needs isolation no sandbox here offers. */
+export function needsSandboxSetup(item: Coded | null | undefined): boolean {
+  return /^sandbox\.isolation_required/.test(item?.code ?? "");
+}
+
+/** "Open Settings → Sandbox" after such a problem (the path the sentence names, as a link); nothing otherwise. */
+export function SandboxSetupLink({ item, always = false }: { item?: Coded | null; always?: boolean }) {
+  const { t } = useTranslation();
+  const routed = useInRouterContext();
+  if (!always && !needsSandboxSetup(item)) return null;
+  const label = t("errors.openSandbox");
+  return routed ? <RoutedSandboxLink label={label} /> : <a href="/settings#settings-sandbox">{label}</a>;
+}
+
+function RoutedSandboxLink({ label }: { label: string }) {
+  return (
+    <Link to={useSettingsHref("settings-sandbox")} data-testid="sandbox-setup-link">
+      {label}
+    </Link>
+  );
+}
+
 /** Inside the app: to the AI providers in the settings, with the way back to this page. */
 function RoutedSetupLink({ label, provider }: { label: string; provider?: string }) {
   return (

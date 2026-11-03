@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import type { Run } from "../api/types";
 import { Callout } from "../components/ui";
-import { AWS_PROVIDER_PROBLEMS, PROVIDER_FAILURES, ProblemText, isProviderAuth, problemCode, runProblem } from "../lib/errors";
+import { AWS_PROVIDER_PROBLEMS, PROVIDER_FAILURES, ProblemText, isProviderAuth, needsSandboxSetup, problemCode, runProblem } from "../lib/errors";
 import { failedSteps } from "./runSummary";
 import { settingsHref } from "../lib/settingsLink";
 import { providerOf } from "../lib/providers";
@@ -67,6 +67,7 @@ export function RunProblem({ run, children }: { run: Run; children?: ReactNode }
               <Settings size={12} aria-hidden /> {t("runs.failure.openSettings")}
             </Link>
           ) : null}
+          {needsSandboxSetup(runProblem(state)) ? <SandboxFix runId={run.id} /> : null}
           {editable ? (
             <Link className="small run-problem__fix" to={`/workflows/${run.workflow_id}?node=${encodeURIComponent(first.id)}&section=advanced`}>
               <SlidersHorizontal size={12} aria-hidden /> {t("runs.failure.openAdvanced", { name: first.label || first.agent?.name || first.id })}
@@ -81,8 +82,19 @@ export function RunProblem({ run, children }: { run: Run; children?: ReactNode }
     <Callout tone={run.status === "failed" ? "danger" : "warning"}>
       <div className="run-problem" data-testid="run-failure">
         <ProblemText item={runProblem(run)} />
+        {needsSandboxSetup(runProblem(run)) ? <SandboxFix runId={run.id} /> : null}
         {children}
       </div>
     </Callout>
+  );
+}
+
+/** AI-created code found no sandbox: the way to Settings → Sandbox, and back to this run. */
+function SandboxFix({ runId }: { runId: string }) {
+  const { t } = useTranslation();
+  return (
+    <Link className="small run-problem__fix" to={settingsHref("settings-sandbox", `/executions/${runId}`)} data-testid="run-failure-sandbox">
+      <Settings size={12} aria-hidden /> {t("errors.openSandbox")}
+    </Link>
   );
 }

@@ -119,6 +119,31 @@ describe("failure reasons (ED-05, AD-01)", () => {
     expect(screen.getByRole("link", { name: /Einstellungen öffnen/ })).toHaveAttribute("href", "/settings?from=%2Fexecutions%2Frun_1#provider-openai");
   });
 
+  it("links a step that found no sandbox for AI-created code to Settings → Sandbox", () => {
+    const failed = run(
+      [node("a", "agent", "Rechner", { agent: { name: "Rechner", model: "anthropic:claude-x" } as WorkflowNode["agent"] })],
+      {
+        a: state("failed", "2026-11-01T10:00:00Z", {
+          error: "The tool code 'double' is untrusted ...",
+          error_code: "sandbox.isolation_required",
+          error_params: { name: "double", trust: "untrusted", reason: "docker-unreachable" },
+        }),
+      },
+      { error: "Failed: Rechner", error_code: "run.nodes_failed", error_params: { nodes: "Rechner" } },
+    );
+    render(wrap(<RunProblem run={failed} />));
+    expect(screen.getByTestId("run-failure")).toHaveTextContent("laufen nur in Docker");
+    expect(screen.getByTestId("run-failure-sandbox")).toHaveTextContent("Einstellungen → Sandbox öffnen");
+    expect(screen.getByTestId("run-failure-sandbox")).toHaveAttribute("href", "/settings?from=%2Fexecutions%2Frun_1#settings-sandbox");
+    cleanup();
+    // A run refused as a whole (no step ran) links there too; other problems do not.
+    render(wrap(<RunProblem run={run([], {}, { error: "x", error_code: "sandbox.isolation_required", error_params: { reason: "no-isolation" } })} />));
+    expect(screen.getByTestId("run-failure-sandbox")).toBeInTheDocument();
+    cleanup();
+    render(wrap(<RunProblem run={run([], {}, { error: "time", error_code: "run.time_limit", error_params: { max_duration_s: 60 } })} />));
+    expect(screen.queryByTestId("run-failure-sandbox")).toBeNull();
+  });
+
   it("gives retry advice, not a settings link, when the provider is busy", () => {
     const failed = run(
       [node("a", "agent", "Kaputt", { agent: { name: "Kaputt", model: "anthropic:claude-x" } as WorkflowNode["agent"] })],

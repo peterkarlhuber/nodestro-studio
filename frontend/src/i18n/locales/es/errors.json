@@ -881,6 +881,7 @@
     }
   },
   "setupProvider": "Configurar proveedor de IA",
+  "openSandbox": "Abrir Ajustes → Sandbox",
   "runs": {
     "cursor_invalid": "No se encontró esta parte de la lista de ejecuciones. Vuelve al principio de la lista."
   },

@@ -43,7 +43,7 @@ import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, PageHeader, S
 import { toolDescription } from "../lib/catalog";
 import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
-import { ErrorText, LocalError, ProblemText, problemText } from "../lib/errors";
+import { ErrorText, LocalError, ProblemText, SandboxSetupLink, problemText } from "../lib/errors";
 import { formatCost, relativeTime } from "../lib/format";
 import { ToolOutputProblem } from "../runs/ToolOutputProblem";
 import { AdoptTool, AdoptedNote, PastedCodeWarning } from "./ToolAdoption";
@@ -256,6 +256,12 @@ function TrustNote({ tool }: { tool: ToolInfo }) {
               ? "tools.trustNote.untrusted"
               : "tools.trustNote.untrustedBuiltin",
         )}
+        {blocked ? (
+          <>
+            {" "}
+            <SandboxSetupLink always />
+          </>
+        ) : null}
       </Callout>
     </div>
   );
