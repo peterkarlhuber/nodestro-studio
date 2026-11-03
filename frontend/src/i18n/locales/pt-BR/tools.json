@@ -287,6 +287,12 @@
     "confirmText": "Li o código e os testes e assumo a responsabilidade por executá-los sem isolamento neste computador.",
     "confirm": "Adotar",
     "adopted": "{{name}} agora conta como seu próprio código",
-    "adoptedNote": "Criada por IA, adotada por você como código próprio (versão {{version}}, {{when}}): é executada em um processo Python separado, sem isolamento, neste computador. Uma alteração posterior pela IA encerra a adoção."
+    "adoptedNote": "Criada por IA, adotada por você como código próprio (versão {{version}}, {{when}}): é executada em um processo Python separado, sem isolamento, neste computador. Uma alteração posterior pela IA encerra a adoção.",
+    "change": {
+      "title": "O que muda",
+      "nowBlocked": "Agora: ela não pode ser executada neste computador, porque nenhum sandbox está pronto para isolá-la.",
+      "nowIsolated": "Agora: ela é executada isolada ({{backend}}).",
+      "after": "Depois de adotar: ela é executada como o código que você mesmo escreve ({{backend}})."
+    }
   }
 }

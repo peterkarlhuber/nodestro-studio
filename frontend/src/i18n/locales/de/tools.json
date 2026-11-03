@@ -287,6 +287,12 @@
     "confirmText": "Ich habe Code und Tests gelesen und übernehme die Verantwortung dafür, dass sie ohne Isolation auf diesem Rechner laufen.",
     "confirm": "Übernehmen",
     "adopted": "{{name}} gilt jetzt als dein eigener Code",
-    "adoptedNote": "Von KI erstellt, von dir als eigener Code übernommen (Version {{version}}, {{when}}): läuft in einem eigenen Python-Prozess ohne Isolation auf diesem Rechner. Eine spätere Änderung durch KI beendet die Übernahme."
+    "adoptedNote": "Von KI erstellt, von dir als eigener Code übernommen (Version {{version}}, {{when}}): läuft in einem eigenen Python-Prozess ohne Isolation auf diesem Rechner. Eine spätere Änderung durch KI beendet die Übernahme.",
+    "change": {
+      "title": "Was sich ändert",
+      "nowBlocked": "Jetzt: Es kann auf diesem Rechner nicht laufen, weil keine Sandbox bereit ist, es zu isolieren.",
+      "nowIsolated": "Jetzt: Es läuft isoliert ({{backend}}).",
+      "after": "Nach der Übernahme: Es läuft wie Code, den du selbst schreibst ({{backend}})."
+    }
   }
 }

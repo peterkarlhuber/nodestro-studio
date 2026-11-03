@@ -287,6 +287,12 @@
     "confirmText": "I have read the code and the tests and take responsibility for running them without isolation on this computer.",
     "confirm": "Adopt",
     "adopted": "{{name}} now counts as your own code",
-    "adoptedNote": "Created by AI, adopted by you as your own code (version {{version}}, {{when}}): runs in a separate Python process without isolation on this computer. A later change by AI ends the adoption."
+    "adoptedNote": "Created by AI, adopted by you as your own code (version {{version}}, {{when}}): runs in a separate Python process without isolation on this computer. A later change by AI ends the adoption.",
+    "change": {
+      "title": "What changes",
+      "nowBlocked": "Now: it cannot run on this computer, because no sandbox is ready to isolate it.",
+      "nowIsolated": "Now: it runs isolated ({{backend}}).",
+      "after": "After adopting: it runs like code you write yourself ({{backend}})."
+    }
   }
 }

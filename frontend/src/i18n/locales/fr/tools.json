@@ -287,6 +287,12 @@
     "confirmText": "J’ai lu le code et les tests et j’assume la responsabilité de leur exécution sans isolation sur cet ordinateur.",
     "confirm": "Adopter",
     "adopted": "{{name}} est désormais considéré comme votre propre code",
-    "adoptedNote": "Créé par l’IA, adopté par vous comme votre propre code (version {{version}}, {{when}}) : s’exécute dans un processus Python séparé, sans isolation, sur cet ordinateur. Une modification ultérieure par l’IA met fin à l’adoption."
+    "adoptedNote": "Créé par l’IA, adopté par vous comme votre propre code (version {{version}}, {{when}}) : s’exécute dans un processus Python séparé, sans isolation, sur cet ordinateur. Une modification ultérieure par l’IA met fin à l’adoption.",
+    "change": {
+      "title": "Ce qui change",
+      "nowBlocked": "Maintenant : il ne peut pas s’exécuter sur cet ordinateur, car aucun bac à sable n’est prêt à l’isoler.",
+      "nowIsolated": "Maintenant : il s’exécute isolé ({{backend}}).",
+      "after": "Après l’adoption : il s’exécute comme le code que vous écrivez vous-même ({{backend}})."
+    }
   }
 }

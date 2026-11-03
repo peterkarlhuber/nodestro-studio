@@ -12,8 +12,8 @@ import { useTranslation } from "react-i18next";
 
 import { useAccess } from "../api/access";
 import { api } from "../api/client";
-import { keys } from "../api/hooks";
-import type { ToolInfo } from "../api/types";
+import { keys, useSettings } from "../api/hooks";
+import type { SandboxSelection, ToolInfo } from "../api/types";
 import { CodeEditor } from "../components/CodeEditor";
 import { toast } from "../components/toast";
 import { Button, Callout, Field, Modal } from "../components/ui";
@@ -29,6 +29,42 @@ export function canAdopt(tool: ToolInfo, profile: string, admin: boolean): boole
     (tool.kind === "generated" || tool.kind === "custom") &&
     !!tool.code &&
     !!tool.content_hash
+  );
+}
+
+/**
+ * What adopting changes for this tool on this computer, as two language keys with the sandbox each names: where
+ * it runs now (or that it is blocked) and where it runs once adopted. Null for runtimes without the sandbox
+ * selection, or where no tool code runs at all.
+ */
+export function adoptionChange(
+  selection: SandboxSelection | null | undefined,
+): { now: { key: string; backend: string }; after: { key: string; backend: string } } | null {
+  if (!selection || !selection.user_authored) return null;
+  return {
+    now:
+      selection.blocked || !selection.untrusted
+        ? { key: "tools.adopt.change.nowBlocked", backend: "" }
+        : { key: "tools.adopt.change.nowIsolated", backend: selection.untrusted },
+    after: { key: "tools.adopt.change.after", backend: selection.user_authored },
+  };
+}
+
+/** The "what changes" lines of the dialog. */
+function AdoptionChange() {
+  const { t } = useTranslation();
+  const settings = useSettings();
+  const change = adoptionChange(settings.data?.sandbox_selection);
+  if (!change) return null;
+  const name = (backend: string) => t(`settings.sandbox.backend.${backend}`, { defaultValue: backend });
+  return (
+    <div className="stack-sm" data-testid="tool-adopt-change">
+      <span className="nd-field-label">{t("tools.adopt.change.title")}</span>
+      <ul className="plain-list stack-sm small">
+        <li data-testid="tool-adopt-now">{t(change.now.key, { backend: name(change.now.backend) })}</li>
+        <li data-testid="tool-adopt-after">{t(change.after.key, { backend: name(change.after.backend) })}</li>
+      </ul>
+    </div>
   );
 }
 
@@ -98,6 +134,7 @@ export function AdoptTool({ tool }: { tool: ToolInfo }) {
           <Callout tone="danger">
             <ShieldAlert size={14} aria-hidden /> {t("tools.adopt.warning")}
           </Callout>
+          <AdoptionChange />
           <p>{t("tools.adopt.intro", { version: item.version })}</p>
           <Field label={t("tools.codeOfTool")}>
             <CodeEditor value={item.code ?? ""} readOnly ariaLabel={t("tools.codeOfTool")} />

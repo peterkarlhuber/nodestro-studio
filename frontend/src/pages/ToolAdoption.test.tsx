@@ -8,7 +8,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ToolInfo } from "../api/types";
 import i18n from "../i18n";
 
-import { AdoptTool, AdoptedNote, PastedCodeWarning, canAdopt } from "./ToolAdoption";
+import { AdoptTool, AdoptedNote, PastedCodeWarning, adoptionChange, canAdopt } from "./ToolAdoption";
 
 const CODE = "def double(x: int) -> int:\n    \"\"\"Double x.\"\"\"\n    return 2 * x\n";
 const TESTS = "from tool import double\n\ndef test_double():\n    assert double(2) == 4\n";
@@ -40,9 +40,14 @@ function wrap(children: ReactNode) {
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 
-function serve(profile: string, adopt: (body: Record<string, unknown>) => Response = () => json({ ...TOOL })) {
+function serve(
+  profile: string,
+  adopt: (body: Record<string, unknown>) => Response = () => json({ ...TOOL }),
+  settings: Record<string, unknown> = {},
+) {
   const fetch = vi.fn(async (url: string, init?: RequestInit) => {
     if (url === "/api/meta") return json({ profile });
+    if (url === "/api/settings") return json(settings);
     if (url === "/api/auth/me") return json({ detail: "", code: "not_found", params: {} }, 404);
     if (url.endsWith("/adopt") && init?.method === "POST") return adopt(JSON.parse(String(init.body)));
     return json([]);
@@ -72,7 +77,32 @@ describe("canAdopt", () => {
   });
 });
 
+const SELECTION = { mode: "auto" as const, profile: "desktop", os: "linux", arch: "x86_64", reason: "docker-unreachable", detail: "" };
+
+describe("adoptionChange", () => {
+  it("names where the tool runs now and where it runs once adopted", () => {
+    expect(adoptionChange({ ...SELECTION, untrusted: "", user_authored: "subprocess", blocked: true })).toEqual({
+      now: { key: "tools.adopt.change.nowBlocked", backend: "" },
+      after: { key: "tools.adopt.change.after", backend: "subprocess" },
+    });
+    expect(adoptionChange({ ...SELECTION, untrusted: "docker", user_authored: "subprocess", blocked: false })?.now).toEqual({
+      key: "tools.adopt.change.nowIsolated",
+      backend: "docker",
+    });
+    expect(adoptionChange({ ...SELECTION, untrusted: "", user_authored: "", blocked: true })).toBeNull();
+    expect(adoptionChange(undefined)).toBeNull();
+  });
+});
+
 describe("AdoptTool", () => {
+  it("says in the dialog what adopting changes on this computer", async () => {
+    serve("desktop", undefined, { sandbox_selection: { ...SELECTION, untrusted: "", user_authored: "subprocess", blocked: true } });
+    render(wrap(<AdoptTool tool={TOOL} />));
+    await userEvent.click(await screen.findByTestId("tool-adopt"));
+    expect(await screen.findByTestId("tool-adopt-now")).toHaveTextContent(i18n.t("tools.adopt.change.nowBlocked"));
+    expect(screen.getByTestId("tool-adopt-after")).toHaveTextContent("Nach der Übernahme: Es läuft wie Code, den du selbst schreibst (Python-Prozess).");
+  });
+
   it("shows the code, the tests and a warning, and adopts only after an explicit confirmation", async () => {
     const fetch = serve("desktop");
     render(wrap(<AdoptTool tool={TOOL} />));
