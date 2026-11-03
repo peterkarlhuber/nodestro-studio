@@ -3,7 +3,7 @@
 // Speeds are only ever measured ones ("Measure speed"); nothing here estimates how fast a model will be.
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AlertTriangle, Cpu, Gauge, Info } from "lucide-react";
+import { Cpu, Gauge } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 
@@ -51,6 +51,12 @@ function sameModel(a: string | null | undefined, b: string): boolean {
 
 const number = (value: number) => value.toLocaleString(i18n.language);
 
+/** Memory in GB (decimal, as the catalog states memory needs); small values as formatBytes does. */
+export function formatMemory(bytes: number): string {
+  if (bytes < GB) return formatBytes(bytes);
+  return (bytes / GB).toLocaleString(i18n.language, { style: "unit", unit: "gigabyte", maximumFractionDigits: 1, minimumFractionDigits: 1 });
+}
+
 /** Measured tokens per second, with one decimal. */
 export function formatSpeed(value: number): string {
   return value.toLocaleString(i18n.language, { maximumFractionDigits: 1, minimumFractionDigits: 1 });
@@ -80,11 +86,11 @@ export function adviceText(t: TFunction, item: LocalAdvice, overview: Pick<Local
     case "local.model_slow":
       return t("localModels.advice.model_slow", { model, speed: formatSpeed((item.value ?? 0) / 10) });
     case "local.model_too_large":
-      return t("localModels.advice.model_too_large", { model, size: item.value ? formatBytes(item.value) : "–" });
+      return t("localModels.advice.model_too_large", { model, size: item.value ? formatMemory(item.value) : "–" });
     case "local.memory_low":
       return t("localModels.advice.memory_low", {
-        memory: item.value ? formatBytes(item.value) : "–",
-        recommended: item.recommended ? formatBytes(item.recommended) : "–",
+        memory: item.value ? formatMemory(item.value) : "–",
+        recommended: item.recommended ? formatMemory(item.recommended) : "–",
       });
     default:
       return t("localModels.advice.other", { code: item.code });
@@ -101,7 +107,6 @@ export function AdviceList({ overview }: { overview: LocalOverview }) {
       {ordered.map((item, index) => (
         <Callout key={`${item.code}:${item.model ?? ""}:${index}`} tone={item.severity === "warning" ? "warning" : "info"}>
           <span data-testid={`local-advice-${item.code.replace(/^local\./, "")}`}>
-            {item.severity === "warning" ? <AlertTriangle size={13} aria-hidden /> : <Info size={13} aria-hidden />}{" "}
             {adviceText(t, item, overview)}
           </span>
         </Callout>
@@ -151,12 +156,12 @@ export function MachinePanel({ overview }: { overview: LocalOverview }) {
         </div>
         <div>
           <dt>{t("localModels.machine.memory")}</dt>
-          <dd>{hardware.ram_bytes ? formatBytes(hardware.ram_bytes) : t("localModels.machine.unknown")}</dd>
+          <dd>{hardware.ram_bytes ? formatMemory(hardware.ram_bytes) : t("localModels.machine.unknown")}</dd>
         </div>
         <div>
           <dt>{t("localModels.machine.gpu")}</dt>
           <dd>
-            {hardware.gpu_memory_bytes ? t("localModels.machine.gpuMemory", { gpu, memory: formatBytes(hardware.gpu_memory_bytes) }) : gpu}
+            {hardware.gpu_memory_bytes ? t("localModels.machine.gpuMemory", { gpu, memory: formatMemory(hardware.gpu_memory_bytes) }) : gpu}
           </dd>
         </div>
         <div>

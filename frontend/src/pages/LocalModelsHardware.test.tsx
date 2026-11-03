@@ -11,7 +11,6 @@ import { Toaster } from "../components/toast";
 import { withNodeNames } from "../editor/CheckList";
 import i18n from "../i18n";
 import { problemText } from "../lib/errors";
-import { formatBytes } from "../lib/format";
 import { modelFit } from "./LocalModelsHardware";
 import { LocalModelsPanel } from "./SettingsLocalModels";
 
@@ -138,6 +137,7 @@ describe("this computer", () => {
     expect(machine).toHaveTextContent("Linux · x86_64");
     expect(machine).toHaveTextContent("CPU-Kerne4");
     expect(machine).toHaveTextContent("keine (nur CPU)");
+    expect(machine).toHaveTextContent("Arbeitsspeicher16,0 GB");
     expect(screen.getByTestId("local-runtime-state")).toHaveTextContent("läuft (Ollama 0.40.14) · Modelle laufen auf der CPU");
     expect(screen.getByTestId("local-context")).toHaveTextContent("32.768 Tokens (von Nodestro eingestellt)");
     const catalog = screen.getByTestId("local-catalog");
@@ -192,8 +192,8 @@ describe("advice", () => {
     expect(screen.getByTestId("local-advice-context_small")).toHaveTextContent("OLLAMA_CONTEXT_LENGTH=32768");
     expect(screen.getByTestId("local-advice-cpu_only")).toHaveTextContent("Keine Grafikkarte gefunden");
     expect(screen.getByTestId("local-advice-model_slow")).toHaveTextContent("qwen3.5:9b erzeugte auf diesem Computer 2,3 Tokens pro Sekunde (gemessen)");
-    expect(screen.getByTestId("local-advice-model_too_large")).toHaveTextContent(`qwen3.5:9b braucht etwa ${formatBytes(9 * GB)} Speicher`);
-    expect(screen.getByTestId("local-advice-memory_low")).toHaveTextContent(`Dieser Computer hat ${formatBytes(8 * GB)} Arbeitsspeicher`);
+    expect(screen.getByTestId("local-advice-model_too_large")).toHaveTextContent(`qwen3.5:9b braucht etwa 9,0 GB Speicher`);
+    expect(screen.getByTestId("local-advice-memory_low")).toHaveTextContent(`Dieser Computer hat 8,0 GB Arbeitsspeicher`);
     expect(screen.getByTestId("local-advice-reasoning_saving")).toHaveTextContent("Der CPU-Sparmodus ist an");
     expect(screen.getByTestId("local-advice-something_new")).toHaveTextContent("local.something_new");
     // The advice wins over the computed fit.
