@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Local models: build from files, hardware and speed (2026-11-03)
+
+- *Settings → Local models → Build from local files* (ST-045): builds a catalog model with source "build"
+  (`mdenseon:307m`) from its weights and template files on the computer that runs Nodestro, without a download. It
+  lists the expected files (from `build_inputs` when the API sends them), shows the build step, cancels, explains
+  every failure (wrong checksum of the weights or template file, missing file, incompatible file, reference vectors
+  not reproduced, cancelled) with a retry, and after the build points to rebuilding the semantic index. In the strict
+  offline mode the catalog offers only the build for such a model. Texts, help and the manual section in all six
+  languages.
+
 ### Local models, embeddings and semantic knowledge search (2026-11-03)
 
 - *Settings → Local models*: the state of the local model server (managed on the desktop, the Local Docker container,

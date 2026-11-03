@@ -964,7 +964,14 @@
     "unreachable": "Der lokale Modellserver ist nicht erreichbar.",
     "unsafe_archive": "Das Archiv enthält unsichere Pfade und wurde nicht entpackt.",
     "unsupported_platform": "Die lokale Modell-Laufzeit gibt es für dieses System nicht.",
-    "dimension_mismatch": "Die Embeddings haben eine andere Größe als der Index."
+    "dimension_mismatch": "Die Embeddings haben eine andere Größe als der Index.",
+    "source_missing": "Eine Datei des Modells wurde nicht gefunden.",
+    "invalid_template": "Die Vorlagendatei passt nicht zu diesem Modell.",
+    "invalid_weights": "Die Gewichtsdatei passt nicht zu diesem Modell.",
+    "reference_mismatch": "Das gebaute Modell reproduziert seine Referenzvektoren nicht und wurde entfernt.",
+    "not_buildable": "Dieses Modell wird nicht aus Dateien gebaut.",
+    "download_incomplete": "Der Download war unvollständig. Versuche es erneut.",
+    "invalid_source": "Die Quelle dieses Modells ist nicht erlaubt."
   },
   "knowledge": {
     "failed": "Der semantische Index konnte nicht aktualisiert werden.",

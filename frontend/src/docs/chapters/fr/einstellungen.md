@@ -30,6 +30,18 @@ Pour les ordinateurs sans internet, *Réglages → Modèles locaux → Import ho
 
 **Dossier des modèles :** les modèles sont volumineux. Choisissez un autre dossier, par exemple sur un SSD externe : **Les y copier et les vérifier** copie chaque modèle, le vérifie et ne change qu’ensuite (l’ancien dossier est conservé) ; **Utiliser le dossier tel quel** passe à un dossier qui contient déjà des modèles Ollama.
 
+## Construire un modèle à partir de fichiers locaux {#modell-bauen}
+<!-- keywords: construire, mdenseon, safetensors, gabarit, gguf, air gap, somme de contrôle, vecteurs de référence, embedding, reconstruire l’index -->
+
+Certains modèles ne figurent pas dans la bibliothèque Ollama et sont construits à partir de leurs fichiers d’origine : actuellement le modèle d’embeddings européen `mdenseon:307m` (LightOn, Apache-2.0). Avec internet, **Télécharger** dans la liste des modèles récupère les fichiers et construit le modèle. Sans internet (ou en mode hors ligne strict), utilisez *Réglages → Modèles locaux → Construire à partir de fichiers locaux* : copiez les deux fichiers depuis un ordinateur connecté, indiquez leurs chemins sur l’ordinateur où fonctionne Nodestro (dans Local Docker : dans son dossier d’import) et choisissez **Construire et vérifier**. Rien n’est téléchargé.
+
+- **Fichier de poids :** `model.safetensors` de `lightonai/mDenseOn`, révision `a5fdb000f7a21da96c3bddde3a782ef777316df3`, 1,227,771,776 octets, SHA-256 `a336c49fc679aeb23969114b12fb7317804da3cc7d8bc214818009dea39d545c`.
+- **Fichier gabarit :** `mmBERT-Base-307M-F16.gguf` de `mykor/mmBERT-base-GGUF`, révision `66e31bd2787f6b5fe9b762a664f4899af38b0605`; SHA-256 de ses premiers 6,036,928 octets `a224ccdee4310594e73c9907934a1520405bfc4467a3577d3dcf418e7c017901`. Le fichier complet ou seulement ces premiers octets (son en-tête) suffisent.
+
+Nodestro vérifie les deux fichiers par rapport à ces sommes, écrit le fichier du modèle, crée le modèle dans le serveur de modèles et calcule des textes de référence : le modèle n’est gardé que si chaque vecteur correspond à la référence. La liste affiche l’étape en cours ; **Annuler** arrête la construction. En cas d’échec, le message en donne la raison : un fichier qui ne correspond pas à la somme (mauvais fichier, mauvaise révision ou copie incomplète), un fichier manquant, un fichier qui ne convient pas au modèle, ou des vecteurs de référence différents (le modèle est alors supprimé). **Réessayer** la relance avec les mêmes chemins.
+
+Après la construction, le modèle apparaît comme modèle d’embeddings. Un index sémantique existant garde son modèle : choisissez le nouveau modèle dans [Recherche dans les connaissances](/docs/wissen#suchverfahren) et reconstruisez l’index ; la recherche utilise l’ancien index jusqu’à ce que le nouveau soit complet.
+
 ## Mode hors ligne strict {#offline}
 <!-- keywords: hors ligne strict, air gap, sans cloud, vérification préalable, téléchargements refusés -->
 

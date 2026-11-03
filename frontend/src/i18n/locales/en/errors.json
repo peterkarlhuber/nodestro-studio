@@ -964,7 +964,14 @@
     "unreachable": "The local model server cannot be reached.",
     "unsafe_archive": "The archive contains unsafe paths and was not unpacked.",
     "unsupported_platform": "The local model runtime is not available for this system.",
-    "dimension_mismatch": "The embeddings have a different size than the index."
+    "dimension_mismatch": "The embeddings have a different size than the index.",
+    "source_missing": "A file of the model was not found.",
+    "invalid_template": "The template file does not fit this model.",
+    "invalid_weights": "The weights file does not fit this model.",
+    "reference_mismatch": "The built model does not reproduce its reference vectors and was removed.",
+    "not_buildable": "This model is not built from files.",
+    "download_incomplete": "The download was incomplete. Try again.",
+    "invalid_source": "The source of this model is not allowed."
   },
   "knowledge": {
     "failed": "The semantic index could not be updated.",

@@ -87,7 +87,8 @@
       "install_runtime": "Install the runtime",
       "import_package": "Import {{target}}",
       "import_gguf": "Import {{target}}",
-      "move_models": "Move the model folder"
+      "move_models": "Move the model folder",
+      "build": "Build {{target}}"
     },
     "state": {
       "running": "In progress",
@@ -181,5 +182,59 @@
     "rebuild": "Rebuild index",
     "remove": "Remove the semantic index"
   },
-  "onlyFor": "Only for: {{tasks}}"
+  "onlyFor": "Only for: {{tasks}}",
+  "build": {
+    "title": "Build from local files",
+    "fromFiles": "Build from files",
+    "text": "This model is not in the Ollama library. Nodestro builds it on this computer from its original files, without internet: it checks both files against their pinned SHA-256 checksums, builds the model and keeps it only if it reproduces the reference vectors exactly.",
+    "model": "Model",
+    "expected": "Expected files (copy them from a computer with internet, for example to a USB drive):",
+    "expectedUnlisted": "Two pinned files are needed: the weights (safetensors) and a template GGUF file, {{size}} together. The manual lists their sources and checksums.",
+    "revision": "revision {{revision}}",
+    "headerSize": "first {{size}} checked",
+    "files": {
+      "weights": "Weights file",
+      "template": "Template file"
+    },
+    "inline": {
+      "weights": "weights file",
+      "template": "template file",
+      "either": "file"
+    },
+    "weightsPath": "Weights file (safetensors)",
+    "weightsHint": "A path on the computer that runs Nodestro (in Local Docker: inside its import folder), for example /media/usb/model.safetensors.",
+    "templatePath": "Template file (GGUF)",
+    "templateHint": "The whole template GGUF file, or only its first {{size}} (the header).",
+    "offlineNote": "Nothing is downloaded: the build uses only these two files.",
+    "start": "Build and check",
+    "retry": "Try again",
+    "starting": "Starting …",
+    "progressLabel": "Building {{model}}",
+    "step": "Step {{step}} of {{total}}: {{name}}",
+    "steps": {
+      "verifyTemplate": "checking the template file",
+      "verifyWeights": "checking the weights file",
+      "write": "writing the model file",
+      "create": "creating the model in the model server",
+      "check": "checking the reference vectors",
+      "done": "done"
+    },
+    "done": "{{model}} was built and checked.",
+    "reindex": "To use it for semantic search, choose it as the embedding model under Knowledge search and rebuild the index. The current index stays in use until the new one is complete.",
+    "reindexActive": "{{model}} is the chosen embedding model: rebuild the index under Knowledge search so that searches use it.",
+    "toIndex": "Go to Knowledge search",
+    "errors": {
+      "cancelled": "The build was canceled. Nothing was installed.",
+      "checksum_mismatch": "The {{name}} does not match the pinned checksum. Nothing was installed.",
+      "checksum_mismatchHint": "Check that it is exactly the expected file in the expected version (see above) and that the copy is complete, then try again.",
+      "source_missing": "The {{name}} was not found.",
+      "source_missingHint": "Check the path. It must name a file on the computer that runs Nodestro (in Local Docker: inside its import folder).",
+      "invalid_template": "The template file is not a compatible GGUF file for this model.",
+      "invalid_templateHint": "Use the template file named above, not another GGUF file.",
+      "invalid_weights": "The weights file is not compatible with this model.",
+      "invalid_weightsHint": "Use the safetensors file of the named revision.",
+      "reference_mismatch": "The built model does not reproduce the reference vectors and was removed again.",
+      "reference_mismatchHint": "The files were correct, but the model server computes different vectors. Check that the model server has the pinned version, then try again."
+    }
+  }
 }

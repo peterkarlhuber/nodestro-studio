@@ -30,6 +30,18 @@ Para computadores sem internet, *Configurações → Modelos locais → Importa�
 
 **Pasta de modelos:** os modelos são grandes. Escolha outra pasta, por exemplo em um SSD externo: **Copiá-los para lá e verificá-los** copia cada modelo, verifica-o e só então troca (a pasta antiga é mantida); **Usar a pasta como está** troca para uma pasta que já contém modelos do Ollama.
 
+## Criar um modelo a partir de arquivos locais {#modell-bauen}
+<!-- keywords: criar, mdenseon, safetensors, template, gguf, air gap, soma de verificação, vetores de referência, embedding, reconstruir índice -->
+
+Alguns modelos não estão na biblioteca do Ollama e são criados a partir dos arquivos originais: por enquanto o modelo de embeddings europeu `mdenseon:307m` (LightOn, Apache-2.0). Com internet, **Baixar** na lista de modelos busca os arquivos e cria o modelo. Sem internet (ou no modo offline estrito), use *Configurações → Modelos locais → Criar a partir de arquivos locais*: copie os dois arquivos de um computador com internet, informe os caminhos no computador onde o Nodestro roda (no Local Docker: dentro da pasta de importação) e escolha **Criar e verificar**. Nada é baixado.
+
+- **Arquivo de pesos:** `model.safetensors` de `lightonai/mDenseOn`, revisão `a5fdb000f7a21da96c3bddde3a782ef777316df3`, 1,227,771,776 bytes, SHA-256 `a336c49fc679aeb23969114b12fb7317804da3cc7d8bc214818009dea39d545c`.
+- **Arquivo de template:** `mmBERT-Base-307M-F16.gguf` de `mykor/mmBERT-base-GGUF`, revisão `66e31bd2787f6b5fe9b762a664f4899af38b0605`; SHA-256 dos primeiros 6,036,928 bytes `a224ccdee4310594e73c9907934a1520405bfc4467a3577d3dcf418e7c017901`. Basta o arquivo inteiro ou só esses primeiros bytes (o cabeçalho).
+
+O Nodestro verifica os dois arquivos com essas somas, grava o arquivo do modelo, cria o modelo no servidor de modelos e calcula textos de referência: o modelo só é mantido se cada vetor coincidir com a referência. A lista mostra a etapa em andamento; **Cancelar** interrompe a criação. Se falhar, a mensagem diz o motivo: um arquivo que não corresponde à soma (arquivo errado, revisão errada ou cópia incompleta), um arquivo que falta, um arquivo que não serve para o modelo ou vetores de referência diferentes (o modelo é removido). **Tentar de novo** inicia outra vez com os mesmos caminhos.
+
+Depois disso, o modelo aparece como modelo de embeddings. Um índice semântico existente continua com o modelo dele: escolha o novo modelo em [Busca no conhecimento](/docs/wissen#suchverfahren) e reconstrua o índice; a busca usa o índice antigo até o novo ficar completo.
+
 ## Modo offline estrito {#offline}
 <!-- keywords: offline estrito, air gap, sem nuvem, verificação prévia, downloads recusados -->
 

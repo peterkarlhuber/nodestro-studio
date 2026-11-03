@@ -30,6 +30,18 @@ Para ordenadores sin internet, *Ajustes → Modelos locales → Importación sin
 
 **Carpeta de modelos:** los modelos ocupan mucho. Elige otra carpeta, por ejemplo en un SSD externo: **Copiarlos allí y comprobarlos** copia cada modelo, lo comprueba y solo entonces cambia (la carpeta anterior se conserva); **Usar la carpeta tal como está** cambia a una carpeta que ya contiene modelos de Ollama.
 
+## Crear un modelo a partir de archivos locales {#modell-bauen}
+<!-- keywords: crear, mdenseon, safetensors, plantilla, gguf, air gap, suma de comprobación, vectores de referencia, embedding, reconstruir índice -->
+
+Algunos modelos no están en la biblioteca de Ollama y se crean a partir de sus archivos originales: por ahora el modelo de embeddings europeo `mdenseon:307m` (LightOn, Apache-2.0). Con internet, **Descargar** en la lista de modelos obtiene los archivos y crea el modelo. Sin internet (o en el modo sin conexión estricto), usa *Ajustes → Modelos locales → Crear a partir de archivos locales*: copia los dos archivos desde un ordenador con internet, indica sus rutas en el ordenador donde funciona Nodestro (en Local Docker: dentro de su carpeta de importación) y elige **Crear y comprobar**. No se descarga nada.
+
+- **Archivo de pesos:** `model.safetensors` de `lightonai/mDenseOn`, revisión `a5fdb000f7a21da96c3bddde3a782ef777316df3`, 1,227,771,776 bytes, SHA-256 `a336c49fc679aeb23969114b12fb7317804da3cc7d8bc214818009dea39d545c`.
+- **Archivo de plantilla:** `mmBERT-Base-307M-F16.gguf` de `mykor/mmBERT-base-GGUF`, revisión `66e31bd2787f6b5fe9b762a664f4899af38b0605`; SHA-256 de sus primeros 6,036,928 bytes `a224ccdee4310594e73c9907934a1520405bfc4467a3577d3dcf418e7c017901`. Basta el archivo completo o solo estos primeros bytes (su cabecera).
+
+Nodestro comprueba ambos archivos con estas sumas, escribe el archivo del modelo, crea el modelo en el servidor de modelos y calcula textos de referencia: el modelo solo se conserva si cada vector coincide con la referencia. La lista muestra el paso en curso; **Cancelar** detiene la creación. Si falla, el mensaje indica el motivo: un archivo que no coincide con la suma (archivo equivocado, revisión equivocada o copia incompleta), un archivo que falta, un archivo que no corresponde al modelo o vectores de referencia que no coinciden (el modelo se elimina). **Reintentar** la inicia de nuevo con las mismas rutas.
+
+Después, el modelo aparece como modelo de embeddings. Un índice semántico existente se queda con su modelo: elige el nuevo modelo en [Búsqueda de conocimiento](/docs/wissen#suchverfahren) y reconstruye el índice; la búsqueda usa el índice anterior hasta que el nuevo esté completo.
+
 ## Modo sin conexión estricto {#offline}
 <!-- keywords: sin conexión estricto, air gap, sin nube, comprobación previa, descargas rechazadas -->
 

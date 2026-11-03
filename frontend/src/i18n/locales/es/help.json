@@ -139,7 +139,8 @@
     "localStorage": "Los modelos ocupan mucho. Puedes guardarlos en otra unidad, por ejemplo un SSD externo; al copiarlos se comprueba cada modelo antes del cambio.",
     "strictOffline": "Rechaza modelos en la nube, servidores de modelos remotos, herramientas de servidor, servicios MCP remotos y descargas antes de iniciar una ejecución.",
     "preferEuropean": "Propone modelos locales europeos (Mistral AI) cuando son igual de adecuados. Nunca un modelo más débil ni un servicio en la nube; tu propia elección de modelo tiene prioridad.",
-    "knowledgeSearch": "El texto completo encuentra palabras; la búsqueda semántica encuentra significados (también entre idiomas). La búsqueda semántica y la combinada necesitan el índice semántico creado con un modelo de embeddings."
+    "knowledgeSearch": "El texto completo encuentra palabras; la búsqueda semántica encuentra significados (también entre idiomas). La búsqueda semántica y la combinada necesitan el índice semántico creado con un modelo de embeddings.",
+    "localBuild": "Algunos modelos (como mdenseon:307m) se crean a partir de sus archivos originales en lugar de descargarse de la biblioteca de Ollama. Indica ambos archivos: Nodestro comprueba su SHA-256, crea el modelo y solo lo conserva si sus vectores de referencia coinciden. Funciona sin internet."
   },
   "budget": {
     "decision": "La ejecución está en pausa porque su presupuesto no alcanza para la próxima solicitud al modelo. No se envió nada para ella. Eleva el límite de exactamente esta ejecución y continúa, o termina la ejecución.",

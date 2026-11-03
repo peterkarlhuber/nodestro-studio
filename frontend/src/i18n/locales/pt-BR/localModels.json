@@ -87,7 +87,8 @@
       "install_runtime": "Instalar o ambiente",
       "import_package": "Importar {{target}}",
       "import_gguf": "Importar {{target}}",
-      "move_models": "Mover a pasta de modelos"
+      "move_models": "Mover a pasta de modelos",
+      "build": "Criar {{target}}"
     },
     "state": {
       "running": "Em andamento",
@@ -181,5 +182,59 @@
     "rebuild": "Reconstruir índice",
     "remove": "Remover o índice semântico"
   },
-  "onlyFor": "Só para: {{tasks}}"
+  "onlyFor": "Só para: {{tasks}}",
+  "build": {
+    "title": "Criar a partir de arquivos locais",
+    "fromFiles": "Criar a partir de arquivos",
+    "text": "Este modelo não está na biblioteca do Ollama. O Nodestro o cria neste computador a partir dos arquivos originais, sem internet: verifica os dois arquivos com as somas SHA-256 fixadas, cria o modelo e só o mantém se ele reproduzir exatamente os vetores de referência.",
+    "model": "Modelo",
+    "expected": "Arquivos esperados (copie-os de um computador com internet, por exemplo para um pendrive):",
+    "expectedUnlisted": "São necessários dois arquivos fixados: os pesos (safetensors) e um arquivo de template GGUF, {{size}} no total. O manual indica as fontes e somas de verificação.",
+    "revision": "revisão {{revision}}",
+    "headerSize": "os primeiros {{size}} são verificados",
+    "files": {
+      "weights": "Arquivo de pesos",
+      "template": "Arquivo de template"
+    },
+    "inline": {
+      "weights": "arquivo de pesos",
+      "template": "arquivo de template",
+      "either": "arquivo"
+    },
+    "weightsPath": "Arquivo de pesos (safetensors)",
+    "weightsHint": "Um caminho no computador onde o Nodestro roda (no Local Docker: dentro da pasta de importação), por exemplo /media/usb/model.safetensors.",
+    "templatePath": "Arquivo de template (GGUF)",
+    "templateHint": "O arquivo de template GGUF inteiro, ou só os primeiros {{size}} (o cabeçalho).",
+    "offlineNote": "Nada é baixado: a criação usa só estes dois arquivos.",
+    "start": "Criar e verificar",
+    "retry": "Tentar de novo",
+    "starting": "Iniciando…",
+    "progressLabel": "Criando {{model}}",
+    "step": "Etapa {{step}} de {{total}}: {{name}}",
+    "steps": {
+      "verifyTemplate": "verificando o arquivo de template",
+      "verifyWeights": "verificando o arquivo de pesos",
+      "write": "gravando o arquivo do modelo",
+      "create": "criando o modelo no servidor de modelos",
+      "check": "verificando os vetores de referência",
+      "done": "concluído"
+    },
+    "done": "{{model}} foi criado e verificado.",
+    "reindex": "Para usá-lo na busca semântica, escolha-o como modelo de embeddings em Busca no conhecimento e reconstrua o índice. O índice atual continua em uso até o novo ficar completo.",
+    "reindexActive": "{{model}} é o modelo de embeddings escolhido: reconstrua o índice em Busca no conhecimento para que a busca o use.",
+    "toIndex": "Ir para Busca no conhecimento",
+    "errors": {
+      "cancelled": "A criação foi cancelada. Nada foi instalado.",
+      "checksum_mismatch": "O {{name}} não corresponde à soma de verificação fixada. Nada foi instalado.",
+      "checksum_mismatchHint": "Verifique se é exatamente o arquivo esperado na versão esperada (veja acima) e se a cópia está completa, e tente de novo.",
+      "source_missing": "O {{name}} não foi encontrado.",
+      "source_missingHint": "Verifique o caminho. Ele deve indicar um arquivo no computador onde o Nodestro roda (no Local Docker: dentro da pasta de importação).",
+      "invalid_template": "O arquivo de template não é um arquivo GGUF compatível com este modelo.",
+      "invalid_templateHint": "Use o arquivo de template indicado acima, não outro arquivo GGUF.",
+      "invalid_weights": "O arquivo de pesos não é compatível com este modelo.",
+      "invalid_weightsHint": "Use o arquivo safetensors da revisão indicada.",
+      "reference_mismatch": "O modelo criado não reproduz os vetores de referência e foi removido.",
+      "reference_mismatchHint": "Os arquivos estavam corretos, mas o servidor de modelos calcula outros vetores. Verifique se ele tem a versão fixada e tente de novo."
+    }
+  }
 }

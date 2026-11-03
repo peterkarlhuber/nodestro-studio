@@ -87,7 +87,8 @@
       "install_runtime": "Laufzeit installieren",
       "import_package": "{{target}} importieren",
       "import_gguf": "{{target}} importieren",
-      "move_models": "Modellordner verschieben"
+      "move_models": "Modellordner verschieben",
+      "build": "{{target}} bauen"
     },
     "state": {
       "running": "Läuft",
@@ -181,5 +182,59 @@
     "rebuild": "Index neu aufbauen",
     "remove": "Semantischen Index entfernen"
   },
-  "onlyFor": "Nur für: {{tasks}}"
+  "onlyFor": "Nur für: {{tasks}}",
+  "build": {
+    "title": "Aus lokalen Dateien bauen",
+    "fromFiles": "Aus Dateien bauen",
+    "text": "Dieses Modell gibt es nicht in der Ollama-Bibliothek. Nodestro baut es auf diesem Computer aus seinen Originaldateien, ohne Internet: Es prüft beide Dateien gegen ihre festgelegten SHA-256-Prüfsummen, baut das Modell und behält es nur, wenn es die Referenzvektoren exakt reproduziert.",
+    "model": "Modell",
+    "expected": "Erwartete Dateien (kopiere sie von einem Computer mit Internet, zum Beispiel auf einen USB-Stick):",
+    "expectedUnlisted": "Nötig sind zwei festgelegte Dateien: die Gewichte (safetensors) und eine GGUF-Vorlagendatei, zusammen {{size}}. Das Handbuch nennt ihre Quellen und Prüfsummen.",
+    "revision": "Revision {{revision}}",
+    "headerSize": "die ersten {{size}} werden geprüft",
+    "files": {
+      "weights": "Gewichtsdatei",
+      "template": "Vorlagendatei"
+    },
+    "inline": {
+      "weights": "Gewichtsdatei",
+      "template": "Vorlagendatei",
+      "either": "Datei"
+    },
+    "weightsPath": "Gewichtsdatei (safetensors)",
+    "weightsHint": "Ein Pfad auf dem Computer, auf dem Nodestro läuft (in Local Docker: im Import-Ordner), zum Beispiel /media/usb/model.safetensors.",
+    "templatePath": "Vorlagendatei (GGUF)",
+    "templateHint": "Die ganze GGUF-Vorlagendatei oder nur ihre ersten {{size}} (der Header).",
+    "offlineNote": "Es wird nichts heruntergeladen: Der Bau verwendet nur diese beiden Dateien.",
+    "start": "Bauen und prüfen",
+    "retry": "Erneut versuchen",
+    "starting": "Wird gestartet …",
+    "progressLabel": "{{model}} wird gebaut",
+    "step": "Schritt {{step}} von {{total}}: {{name}}",
+    "steps": {
+      "verifyTemplate": "Vorlagendatei wird geprüft",
+      "verifyWeights": "Gewichtsdatei wird geprüft",
+      "write": "Modelldatei wird geschrieben",
+      "create": "Modell wird im Modellserver angelegt",
+      "check": "Referenzvektoren werden geprüft",
+      "done": "fertig"
+    },
+    "done": "{{model}} wurde gebaut und geprüft.",
+    "reindex": "Um es für die semantische Suche zu nutzen, wähle es unter Wissenssuche als Embedding-Modell und baue den Index neu auf. Der bisherige Index bleibt in Gebrauch, bis der neue vollständig ist.",
+    "reindexActive": "{{model}} ist das gewählte Embedding-Modell: Baue den Index unter Wissenssuche neu auf, damit die Suche es verwendet.",
+    "toIndex": "Zur Wissenssuche",
+    "errors": {
+      "cancelled": "Der Bau wurde abgebrochen. Es wurde nichts installiert.",
+      "checksum_mismatch": "Die {{name}} stimmt nicht mit der festgelegten Prüfsumme überein. Es wurde nichts installiert.",
+      "checksum_mismatchHint": "Prüfe, ob es genau die erwartete Datei in der erwarteten Version ist (siehe oben) und ob die Kopie vollständig ist, und versuche es dann erneut.",
+      "source_missing": "Die {{name}} wurde nicht gefunden.",
+      "source_missingHint": "Prüfe den Pfad. Er muss eine Datei auf dem Computer nennen, auf dem Nodestro läuft (in Local Docker: im Import-Ordner).",
+      "invalid_template": "Die Vorlagendatei ist keine passende GGUF-Datei für dieses Modell.",
+      "invalid_templateHint": "Verwende die oben genannte Vorlagendatei, keine andere GGUF-Datei.",
+      "invalid_weights": "Die Gewichtsdatei passt nicht zu diesem Modell.",
+      "invalid_weightsHint": "Verwende die safetensors-Datei der genannten Revision.",
+      "reference_mismatch": "Das gebaute Modell reproduziert die Referenzvektoren nicht und wurde wieder entfernt.",
+      "reference_mismatchHint": "Die Dateien waren richtig, aber der Modellserver berechnet andere Vektoren. Prüfe, ob der Modellserver die festgelegte Version hat, und versuche es dann erneut."
+    }
+  }
 }

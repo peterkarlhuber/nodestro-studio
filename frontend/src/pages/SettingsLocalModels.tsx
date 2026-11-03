@@ -4,7 +4,7 @@
 // without a click, and the strict offline mode refuses every download.
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Database, Download, FolderInput, HardDrive, Play, RefreshCw, Search, Square, Trash2, X } from "lucide-react";
+import { Database, Download, FolderInput, Hammer, HardDrive, Play, RefreshCw, Search, Square, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -29,6 +29,7 @@ import { toast } from "../components/toast";
 import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatBytes } from "../lib/format";
+import { BuildFromFiles, buildableModels } from "./LocalModelBuild";
 
 /** The tasks the panel recommends a model for (the runtime knows more; these cover the studio's choices). */
 const SHOWN_TASKS = ["classify", "write", "tool_agent", "analysis", "assistant", "embedding"] as const;
@@ -182,6 +183,13 @@ function Recommendations({ overview, onPull, pulling, canInstall }: { overview: 
   );
 }
 
+/** Brings "Build from local files" into view and puts the focus into its first path field. */
+function focusBuild() {
+  const section = document.querySelector<HTMLElement>("[data-testid=local-build]");
+  section?.scrollIntoView({ block: "start" });
+  section?.querySelector<HTMLInputElement>("input")?.focus({ preventScroll: true });
+}
+
 function Catalog({
   overview,
   onPull,
@@ -240,15 +248,25 @@ function Catalog({
             onConfirm={() => remove.mutate(model.name)}
           />
         ) : (
-          <Button
-            size="sm"
-            icon={Download}
-            disabled={!canInstall || overview.status.offline}
-            busy={pulling === model.name}
-            onClick={() => onPull(model.name)}
-          >
-            {t("localModels.downloadShort")}
-          </Button>
+          <div className="row-gap">
+            {/* A model built from upstream files: the download is the online way; offline, the files are entered below. */}
+            {model.source === "build" && overview.status.offline ? null : (
+              <Button
+                size="sm"
+                icon={Download}
+                disabled={!canInstall || overview.status.offline}
+                busy={pulling === model.name}
+                onClick={() => onPull(model.name)}
+              >
+                {t("localModels.downloadShort")}
+              </Button>
+            )}
+            {model.source === "build" && overview.manageable && overview.status.mode !== "unavailable" ? (
+              <Button size="sm" icon={Hammer} variant="ghost" onClick={() => focusBuild()}>
+                {t("localModels.build.fromFiles")}
+              </Button>
+            ) : null}
+          </div>
         )}
       </td>
     </tr>
@@ -550,6 +568,14 @@ export function LocalModelsPanel({
           />
           <Jobs enabled={manageable} manageable={manageable} />
           {manageable && status.mode !== "unavailable" ? <ImportForm canInstall={canInstall} /> : null}
+          {manageable && status.mode !== "unavailable" && buildableModels(data.catalog).length ? (
+            <BuildFromFiles
+              models={buildableModels(data.catalog)}
+              canInstall={canInstall}
+              manageable={manageable}
+              embeddingModel={settings.embedding_model}
+            />
+          ) : null}
           {manageable && managed ? <StorageForm overview={data} canInstall={canInstall} /> : null}
           <PermissionNote permission="install" access={access} />
         </>

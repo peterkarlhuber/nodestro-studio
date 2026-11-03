@@ -964,7 +964,14 @@
     "unreachable": "No se puede acceder al servidor de modelos local.",
     "unsafe_archive": "El archivo contiene rutas inseguras y no se ha descomprimido.",
     "unsupported_platform": "El entorno de modelos local no está disponible para este sistema.",
-    "dimension_mismatch": "Los embeddings tienen un tamaño distinto al del índice."
+    "dimension_mismatch": "Los embeddings tienen un tamaño distinto al del índice.",
+    "source_missing": "No se encontró un archivo del modelo.",
+    "invalid_template": "El archivo de plantilla no corresponde a este modelo.",
+    "invalid_weights": "El archivo de pesos no corresponde a este modelo.",
+    "reference_mismatch": "El modelo creado no reproduce sus vectores de referencia y se eliminó.",
+    "not_buildable": "Este modelo no se crea a partir de archivos.",
+    "download_incomplete": "La descarga quedó incompleta. Vuelve a intentarlo.",
+    "invalid_source": "La fuente de este modelo no está permitida."
   },
   "knowledge": {
     "failed": "No se pudo actualizar el índice semántico.",

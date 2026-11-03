@@ -87,7 +87,8 @@
       "install_runtime": "Installer l’environnement",
       "import_package": "Importer {{target}}",
       "import_gguf": "Importer {{target}}",
-      "move_models": "Déplacer le dossier des modèles"
+      "move_models": "Déplacer le dossier des modèles",
+      "build": "Construire {{target}}"
     },
     "state": {
       "running": "En cours",
@@ -181,5 +182,59 @@
     "rebuild": "Reconstruire l’index",
     "remove": "Supprimer l’index sémantique"
   },
-  "onlyFor": "Uniquement pour : {{tasks}}"
+  "onlyFor": "Uniquement pour : {{tasks}}",
+  "build": {
+    "title": "Construire à partir de fichiers locaux",
+    "fromFiles": "Construire depuis des fichiers",
+    "text": "Ce modèle ne figure pas dans la bibliothèque Ollama. Nodestro le construit sur cet ordinateur à partir de ses fichiers d’origine, sans internet : il vérifie les deux fichiers par rapport à leurs sommes SHA-256 fixées, construit le modèle et ne le garde que s’il reproduit exactement les vecteurs de référence.",
+    "model": "Modèle",
+    "expected": "Fichiers attendus (copiez-les depuis un ordinateur connecté à internet, par exemple sur une clé USB) :",
+    "expectedUnlisted": "Deux fichiers fixés sont nécessaires : les poids (safetensors) et un fichier gabarit GGUF, {{size}} au total. Le manuel indique leurs sources et sommes de contrôle.",
+    "revision": "révision {{revision}}",
+    "headerSize": "les premiers {{size}} sont vérifiés",
+    "files": {
+      "weights": "Fichier de poids",
+      "template": "Fichier gabarit"
+    },
+    "inline": {
+      "weights": "fichier de poids",
+      "template": "fichier gabarit",
+      "either": "fichier"
+    },
+    "weightsPath": "Fichier de poids (safetensors)",
+    "weightsHint": "Un chemin sur l’ordinateur où fonctionne Nodestro (dans Local Docker : dans son dossier d’import), par exemple /media/usb/model.safetensors.",
+    "templatePath": "Fichier gabarit (GGUF)",
+    "templateHint": "Le fichier gabarit GGUF complet, ou seulement ses premiers {{size}} (l’en-tête).",
+    "offlineNote": "Rien n’est téléchargé : la construction n’utilise que ces deux fichiers.",
+    "start": "Construire et vérifier",
+    "retry": "Réessayer",
+    "starting": "Démarrage …",
+    "progressLabel": "Construction de {{model}}",
+    "step": "Étape {{step}} sur {{total}} : {{name}}",
+    "steps": {
+      "verifyTemplate": "vérification du fichier gabarit",
+      "verifyWeights": "vérification du fichier de poids",
+      "write": "écriture du fichier du modèle",
+      "create": "création du modèle dans le serveur de modèles",
+      "check": "vérification des vecteurs de référence",
+      "done": "terminé"
+    },
+    "done": "{{model}} a été construit et vérifié.",
+    "reindex": "Pour l’utiliser dans la recherche sémantique, choisissez-le comme modèle d’embeddings dans Recherche dans les connaissances et reconstruisez l’index. L’index actuel reste utilisé jusqu’à ce que le nouveau soit complet.",
+    "reindexActive": "{{model}} est le modèle d’embeddings choisi : reconstruisez l’index dans Recherche dans les connaissances pour que la recherche l’utilise.",
+    "toIndex": "Aller à Recherche dans les connaissances",
+    "errors": {
+      "cancelled": "La construction a été annulée. Rien n’a été installé.",
+      "checksum_mismatch": "Le {{name}} ne correspond pas à la somme de contrôle fixée. Rien n’a été installé.",
+      "checksum_mismatchHint": "Vérifiez qu’il s’agit exactement du fichier et de la version attendus (voir ci-dessus) et que la copie est complète, puis réessayez.",
+      "source_missing": "Le {{name}} est introuvable.",
+      "source_missingHint": "Vérifiez le chemin. Il doit désigner un fichier sur l’ordinateur où fonctionne Nodestro (dans Local Docker : dans son dossier d’import).",
+      "invalid_template": "Le fichier gabarit n’est pas un fichier GGUF compatible avec ce modèle.",
+      "invalid_templateHint": "Utilisez le fichier gabarit indiqué ci-dessus, pas un autre fichier GGUF.",
+      "invalid_weights": "Le fichier de poids n’est pas compatible avec ce modèle.",
+      "invalid_weightsHint": "Utilisez le fichier safetensors de la révision indiquée.",
+      "reference_mismatch": "Le modèle construit ne reproduit pas les vecteurs de référence et a été supprimé.",
+      "reference_mismatchHint": "Les fichiers étaient corrects, mais le serveur de modèles calcule d’autres vecteurs. Vérifiez qu’il a la version fixée, puis réessayez."
+    }
+  }
 }

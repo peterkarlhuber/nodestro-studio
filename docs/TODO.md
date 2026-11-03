@@ -85,11 +85,15 @@ None known.
 
 ### ST-045 · Offline build of the mDenseOn embedding in the interface
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-api #81, nodestro-runtime #104 / RT-053
-- **What:** `mdenseon:307m` (LightOn, optional European embedding) is built from its pinned weights and a template
-  header. Online, *Download* in the catalog starts the build; offline, only `POST /api/local-models/import` with
-  `kind: "build"` and the two local files does it. *Settings → Local models* has no form for it.
-- **Next step:** Offer "Build from files" in the offline import dialog for catalog entries with `source: "build"`.
+- **Priority:** P3 Low · **Status:** Done (interface; e2e of the build route after the next api pin) · **Refs:**
+  nodestro-api #81, nodestro-runtime #104 / RT-053
+- **Done:** *Settings → Local models → Build from local files* for catalog entries with `source: "build"`: weights and
+  template paths, the build steps with cancel, an explanation and a retry per error code (wrong checksum per file,
+  missing file, incompatible file, reference vectors, cancelled), the reindex hint with a jump to *Knowledge search*.
+  The catalog download of such a model stays only outside the strict offline mode. The manual names the pinned files.
+- **Open:** The catalog does not list the pinned input files yet; the form shows them once the API sends
+  `build_inputs` (`[{role, url, sha256, size}]`) and otherwise points to the manual. No browser e2e for a real build
+  (needs the 1.2 GB weights).
 
 ### ST-046 · Show the context window and expected speed of local models
 

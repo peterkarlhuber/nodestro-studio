@@ -3242,6 +3242,11 @@ export interface Settings {
   strict_offline?: boolean;
   /** Prefer European local models among equally suited ones (never a cloud service, never a weaker model). */
   prefer_european_models?: boolean;
+  /**
+   * auto: on computers without a GPU, agents with effort "medium" on local thinking models answer without the long
+   * thinking phase (effort "high" and an explicit reasoning option are never reduced); full: always as configured.
+   */
+  local_reasoning?: "auto" | "full";
   /** local: a new installation started with local default models; kept: an update kept the earlier defaults. */
   model_defaults?: "local" | "kept";
 }

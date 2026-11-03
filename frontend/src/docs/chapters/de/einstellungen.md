@@ -30,6 +30,18 @@ Für Computer ohne Internet importiert *Einstellungen → Lokale Modelle → Off
 
 **Modellordner:** Modelle sind groß. Wähle einen anderen Ordner, zum Beispiel auf einer externen SSD: **Dorthin kopieren und prüfen** kopiert jedes Modell, prüft es und wechselt erst dann (der alte Ordner bleibt erhalten); **Ordner so verwenden, wie er ist** wechselt zu einem Ordner, der schon Ollama-Modelle enthält.
 
+## Modell aus lokalen Dateien bauen {#modell-bauen}
+<!-- keywords: bauen, mdenseon, safetensors, vorlage, gguf, air gap, prüfsumme, referenzvektoren, embedding, index neu aufbauen -->
+
+Manche Modelle gibt es nicht in der Ollama-Bibliothek; sie werden aus ihren Originaldateien gebaut. Derzeit ist das das europäische Embedding-Modell `mdenseon:307m` (LightOn, Apache-2.0). Mit Internet holt **Herunterladen** in der Modellliste die Dateien und baut das Modell. Ohne Internet (oder im strikten Offline-Modus) verwende *Einstellungen → Lokale Modelle → Aus lokalen Dateien bauen*: Kopiere die beiden Dateien von einem Computer mit Internet, gib ihre Pfade auf dem Computer an, auf dem Nodestro läuft (in Local Docker: im Import-Ordner), und wähle **Bauen und prüfen**. Es wird nichts heruntergeladen.
+
+- **Gewichtsdatei:** `model.safetensors` aus `lightonai/mDenseOn`, Revision `a5fdb000f7a21da96c3bddde3a782ef777316df3`, 1,227,771,776 Bytes, SHA-256 `a336c49fc679aeb23969114b12fb7317804da3cc7d8bc214818009dea39d545c`.
+- **Vorlagendatei:** `mmBERT-Base-307M-F16.gguf` aus `mykor/mmBERT-base-GGUF`, Revision `66e31bd2787f6b5fe9b762a664f4899af38b0605`; SHA-256 der ersten 6,036,928 Bytes `a224ccdee4310594e73c9907934a1520405bfc4467a3577d3dcf418e7c017901`. Die ganze Datei oder nur diese ersten Bytes (ihr Header) genügen.
+
+Nodestro prüft beide Dateien gegen diese Prüfsummen, schreibt die Modelldatei, legt das Modell im Modellserver an und berechnet Referenztexte: Das Modell bleibt nur, wenn jeder Vektor mit der Referenz übereinstimmt. Die Liste zeigt den laufenden Schritt; **Abbrechen** stoppt den Bau. Schlägt er fehl, sagt die Meldung warum: eine Datei passt nicht zur Prüfsumme (falsche Datei, falsche Revision oder unvollständige Kopie), eine Datei fehlt, eine Datei passt nicht zum Modell, oder die Referenzvektoren stimmen nicht (das Modell wird wieder entfernt). **Erneut versuchen** startet ihn noch einmal mit denselben Pfaden.
+
+Nach dem Bau erscheint das Modell als Embedding-Modell. Ein bestehender semantischer Index bleibt bei seinem Modell: Wähle das neue Modell unter [Wissenssuche](/docs/wissen#suchverfahren) und baue den Index neu auf; die Suche verwendet den alten Index, bis der neue vollständig ist.
+
 ## Strikter Offline-Modus {#offline}
 <!-- keywords: strikt offline, air gap, keine cloud, vorabprüfung, downloads abgelehnt -->
 

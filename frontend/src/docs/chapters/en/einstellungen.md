@@ -30,6 +30,18 @@ For computers without internet, *Settings → Local models → Offline import* i
 
 **Model folder:** models are large. Choose another folder, for example on an external SSD: **Copy them there and check them** copies every model, checks it and only then switches (the old folder is kept); **Use the folder as it is** switches to a folder that already holds Ollama models.
 
+## Building a model from local files {#modell-bauen}
+<!-- keywords: build, mdenseon, safetensors, template, gguf, air gap, checksum, reference vectors, embedding, reindex -->
+
+Some models are not in the Ollama library and are built from their original files: currently the European embedding model `mdenseon:307m` (LightOn, Apache-2.0). With internet, **Download** in the model list fetches the files and builds the model. Without internet (or in the strict offline mode), use *Settings → Local models → Build from local files*: copy the two files from a computer with internet, enter their paths on the computer that runs Nodestro (in Local Docker: inside its import folder) and choose **Build and check**. Nothing is downloaded.
+
+- **Weights file:** `model.safetensors` from `lightonai/mDenseOn`, revision `a5fdb000f7a21da96c3bddde3a782ef777316df3`, 1,227,771,776 bytes, SHA-256 `a336c49fc679aeb23969114b12fb7317804da3cc7d8bc214818009dea39d545c`.
+- **Template file:** `mmBERT-Base-307M-F16.gguf` from `mykor/mmBERT-base-GGUF`, revision `66e31bd2787f6b5fe9b762a664f4899af38b0605`; SHA-256 of its first 6,036,928 bytes `a224ccdee4310594e73c9907934a1520405bfc4467a3577d3dcf418e7c017901`. The whole file or just these first bytes (its header) is enough.
+
+Nodestro checks both files against these checksums, writes the model file, creates the model in the model server and embeds reference texts: the model is kept only if every vector matches the reference. The list shows the step that is running; **Cancel** stops the build. If it fails, the message says why: a file that does not match the checksum (wrong file, wrong revision or incomplete copy), a file that is missing, a file that does not fit the model, or reference vectors that do not match (the model is removed again). **Try again** starts it once more with the same paths.
+
+After the build, the model is listed as an embedding model. An existing semantic index stays with its model: choose the new model under [Knowledge search](/docs/wissen#suchverfahren) and rebuild the index; searches keep using the old index until the new one is complete.
+
 ## Strict offline mode {#offline}
 <!-- keywords: strict offline, air gap, no cloud, preflight, downloads refused -->
 

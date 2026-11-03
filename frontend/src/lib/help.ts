@@ -145,6 +145,7 @@ export const HELP_DOCS = {
   "settings.localRecommendations": "einstellungen#lokale-modelle",
   "settings.localImport": "einstellungen#offline-import",
   "settings.localStorage": "einstellungen#offline-import",
+  "settings.localBuild": "einstellungen#modell-bauen",
   "settings.strictOffline": "einstellungen#offline",
   "settings.preferEuropean": "einstellungen#lokale-modelle",
   "settings.knowledgeSearch": "wissen#suchverfahren",

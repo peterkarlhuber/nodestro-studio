@@ -87,7 +87,8 @@
       "install_runtime": "Installa l’ambiente",
       "import_package": "Importa {{target}}",
       "import_gguf": "Importa {{target}}",
-      "move_models": "Sposta la cartella dei modelli"
+      "move_models": "Sposta la cartella dei modelli",
+      "build": "Crea {{target}}"
     },
     "state": {
       "running": "In corso",
@@ -181,5 +182,59 @@
     "rebuild": "Ricostruisci indice",
     "remove": "Rimuovi l’indice semantico"
   },
-  "onlyFor": "Solo per: {{tasks}}"
+  "onlyFor": "Solo per: {{tasks}}",
+  "build": {
+    "title": "Crea da file locali",
+    "fromFiles": "Crea da file",
+    "text": "Questo modello non è nella libreria di Ollama. Nodestro lo crea su questo computer dai suoi file originali, senza internet: verifica entrambi i file con i loro SHA-256 fissati, crea il modello e lo conserva solo se riproduce esattamente i vettori di riferimento.",
+    "model": "Modello",
+    "expected": "File previsti (copiali da un computer con internet, per esempio su una chiavetta USB):",
+    "expectedUnlisted": "Servono due file fissati: i pesi (safetensors) e un file template GGUF, {{size}} in tutto. Il manuale indica le loro fonti e i checksum.",
+    "revision": "revisione {{revision}}",
+    "headerSize": "verificati i primi {{size}}",
+    "files": {
+      "weights": "File dei pesi",
+      "template": "File template"
+    },
+    "inline": {
+      "weights": "file dei pesi",
+      "template": "file template",
+      "either": "file"
+    },
+    "weightsPath": "File dei pesi (safetensors)",
+    "weightsHint": "Un percorso sul computer su cui funziona Nodestro (in Local Docker: nella sua cartella di importazione), per esempio /media/usb/model.safetensors.",
+    "templatePath": "File template (GGUF)",
+    "templateHint": "L’intero file template GGUF, o solo i suoi primi {{size}} (l’intestazione).",
+    "offlineNote": "Non viene scaricato nulla: la creazione usa solo questi due file.",
+    "start": "Crea e verifica",
+    "retry": "Riprova",
+    "starting": "Avvio…",
+    "progressLabel": "Creazione di {{model}}",
+    "step": "Passo {{step}} di {{total}}: {{name}}",
+    "steps": {
+      "verifyTemplate": "verifica del file template",
+      "verifyWeights": "verifica del file dei pesi",
+      "write": "scrittura del file del modello",
+      "create": "creazione del modello nel server dei modelli",
+      "check": "verifica dei vettori di riferimento",
+      "done": "fatto"
+    },
+    "done": "{{model}} è stato creato e verificato.",
+    "reindex": "Per usarlo nella ricerca semantica, sceglilo come modello di embedding in Ricerca nella conoscenza e ricostruisci l’indice. L’indice attuale resta in uso finché il nuovo non è completo.",
+    "reindexActive": "{{model}} è il modello di embedding scelto: ricostruisci l’indice in Ricerca nella conoscenza perché la ricerca lo usi.",
+    "toIndex": "Vai a Ricerca nella conoscenza",
+    "errors": {
+      "cancelled": "La creazione è stata annullata. Non è stato installato nulla.",
+      "checksum_mismatch": "Il {{name}} non corrisponde al checksum fissato. Non è stato installato nulla.",
+      "checksum_mismatchHint": "Verifica che sia esattamente il file previsto nella versione prevista (vedi sopra) e che la copia sia completa, poi riprova.",
+      "source_missing": "Il {{name}} non è stato trovato.",
+      "source_missingHint": "Controlla il percorso. Deve indicare un file sul computer su cui funziona Nodestro (in Local Docker: nella sua cartella di importazione).",
+      "invalid_template": "Il file template non è un file GGUF compatibile con questo modello.",
+      "invalid_templateHint": "Usa il file template indicato sopra, non un altro file GGUF.",
+      "invalid_weights": "Il file dei pesi non è compatibile con questo modello.",
+      "invalid_weightsHint": "Usa il file safetensors della revisione indicata.",
+      "reference_mismatch": "Il modello creato non riproduce i vettori di riferimento ed è stato rimosso.",
+      "reference_mismatchHint": "I file erano corretti, ma il server dei modelli calcola vettori diversi. Verifica che abbia la versione fissata, poi riprova."
+    }
+  }
 }
