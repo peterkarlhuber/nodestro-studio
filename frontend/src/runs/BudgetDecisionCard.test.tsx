@@ -245,6 +245,10 @@ describe("BudgetDecisionForm", () => {
     render(wrap(<BudgetDecisionForm budget={budget} request={budget.pending!} />));
     expect(screen.getByTestId("budget-deadline")).toHaveTextContent("Die Frist ist abgelaufen");
     expect(screen.queryByRole("button", { name: "Prüfen und fortsetzen" })).toBeNull();
+    // It no longer reads as a decision that waits (NJR-03).
+    expect(screen.getByText("Budget-Entscheidung abgelaufen")).toBeInTheDocument();
+    expect(screen.queryByText("Budget-Entscheidung nötig")).toBeNull();
+    expect(screen.getByTestId("budget-decision").querySelector('[data-status="awaiting_budget"]')).toBeNull();
   });
 
   it("gives every fact a help button with an accessible name", () => {

@@ -7,14 +7,39 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import { api } from "../api/client";
 import { RUNS_MAX, RUNS_PAGE, useRunList, useWorkflows } from "../api/hooks";
-import type { RunStatus } from "../api/types";
+import type { RunStatus, RunSummary, WorkflowSummary } from "../api/types";
 import { toast } from "../components/toast";
 import { ListProblemsChip } from "../runs/RunProblems";
 import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
 import { ErrorText, ProblemText, runProblem } from "../lib/errors";
-import { formatCost, formatDate, formatDuration, formatNumber, formatTokens } from "../lib/format";
+import { formatCost, formatDate, formatDuration, formatNumber, formatTokens, relativeTime } from "../lib/format";
 
-const STATUS_FILTER: ("" | RunStatus)[] = ["", "running", "paused", "succeeded", "failed", "cancelled"];
+/** ``awaiting_budget``: paused runs that wait for a budget decision (NJR-19), a part of "paused". */
+type StatusFilter = "" | RunStatus | "awaiting_budget";
+const STATUS_FILTER: StatusFilter[] = ["", "running", "paused", "awaiting_budget", "succeeded", "failed", "cancelled"];
+
+const FINISHED = new Set<RunStatus>(["succeeded", "failed", "cancelled"]);
+
+/** Whether a listed run waits for a budget decision (BUDGET-1). */
+export function waitsForBudget(run: Pick<RunSummary, "status" | "budget">): boolean {
+  return Boolean(run.budget?.pending_request_id) && !FINISHED.has(run.status);
+}
+
+/**
+ * The workflow filter's options. Two workflows with the same name (e.g. two copies of an example) are told apart by
+ * when they were last changed (NJR-17).
+ */
+export function workflowOptions(
+  workflows: Pick<WorkflowSummary, "id" | "name" | "updated_at">[],
+  changed: (updatedAt: string) => string,
+): { value: string; label: string }[] {
+  const count = new Map<string, number>();
+  for (const workflow of workflows) count.set(workflow.name, (count.get(workflow.name) ?? 0) + 1);
+  return workflows.map((workflow) => ({
+    value: workflow.id,
+    label: (count.get(workflow.name) ?? 0) > 1 ? `${workflow.name} · ${changed(workflow.updated_at)}` : workflow.name,
+  }));
+}
 
 type Origin = "" | "own" | "imported";
 
@@ -22,12 +47,12 @@ const ORIGIN_FILTER: Origin[] = ["", "own", "imported"];
 
 /** The filters as the address keeps them (?workflow=…&status=…&origin=…), so a filtered list can be linked to and
  * survives the way back from a run. Unknown values count as no filter. */
-export function runFilters(params: URLSearchParams): { workflowId: string; status: "" | RunStatus; origin: Origin } {
+export function runFilters(params: URLSearchParams): { workflowId: string; status: StatusFilter; origin: Origin } {
   const status = params.get("status") ?? "";
   const origin = params.get("origin") ?? "";
   return {
     workflowId: params.get("workflow") ?? "",
-    status: (STATUS_FILTER as string[]).includes(status) ? (status as RunStatus) : "",
+    status: (STATUS_FILTER as string[]).includes(status) ? (status as StatusFilter) : "",
     origin: (ORIGIN_FILTER as string[]).includes(origin) ? (origin as Origin) : "",
   };
 }
@@ -105,7 +130,7 @@ export function ExecutionsPage() {
     () =>
       list.filter(
         (run) =>
-          (!status || run.status === status) &&
+          (!status || (status === "awaiting_budget" ? waitsForBudget(run) : run.status === status)) &&
           (!origin || (origin === "imported") === Boolean(run.imported_at)),
       ),
     [list, status, origin],
@@ -133,7 +158,7 @@ export function ExecutionsPage() {
                 setLimit(RUNS_PAGE);
               }}
               placeholder={t("executions.allWorkflows")}
-              options={(workflows.data ?? []).map((workflow) => ({ value: workflow.id, label: workflow.name }))}
+              options={workflowOptions(workflows.data ?? [], (updatedAt) => t("common.changed", { time: relativeTime(updatedAt) }))}
             />
             <Select
               aria-label={t("executions.filterStatus")}
@@ -254,7 +279,7 @@ export function ExecutionsPage() {
                     </td>
                     <td>
                       {/* BUDGET-1: a run paused for a budget decision says so in the list too. */}
-                      <StatusBadge status={run.budget?.pending_request_id && run.status !== "succeeded" && run.status !== "failed" && run.status !== "cancelled" ? "awaiting_budget" : run.status} />
+                      <StatusBadge status={waitsForBudget(run) ? "awaiting_budget" : run.status} />
                       <ListProblemsChip run={run} />
                     </td>
                     {/* data-label names the value where phones show a run as two lines without the header. */}
