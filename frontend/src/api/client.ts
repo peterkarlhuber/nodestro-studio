@@ -47,6 +47,7 @@ import type {
   MemorySeed,
   MemorySpaceInfo,
   Meta,
+  ModelCapabilities,
   ProviderId,
   ProviderStatus,
   ProviderVerifyIn,
@@ -262,6 +263,8 @@ export const api = {
   rejectToolDraft: (id: string) => request<void>("DELETE", `/tools/drafts/${id}`),
 
   meta: () => request<Meta>("GET", "/meta"),
+  /** Orkexa's capabilities of one typed model id (Bedrock ids, inference profiles, ARNs); free and local (#86). */
+  modelCapabilities: (model: string) => request<ModelCapabilities>("GET", `/models/capabilities${q({ model })}`),
   settings: () => request<Settings>("GET", "/settings"),
   saveSettings: (body: SettingsUpdate) => request<Settings>("PUT", "/settings", body),
   /** Changes one provider's key, endpoint or declared capabilities. */

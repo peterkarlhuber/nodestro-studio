@@ -838,6 +838,12 @@ export const AWS_REGION_PATTERN = /^[a-z]{2}(-[a-z]+)+-\d$/;
 
 export type CapabilityState = "supported" | "unsupported" | "unknown";
 
+/** ``GET /api/models/capabilities``: values for Amazon Bedrock ids, ``null`` for other providers and invalid ids. */
+export interface ModelCapabilities {
+  model: string;
+  capabilities: Record<string, CapabilityState> | null;
+}
+
 /** A provider's configuration state; never contains the key. */
 export interface ProviderStatus extends BedrockStatusFields {
   id: ProviderId;

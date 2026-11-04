@@ -231,12 +231,14 @@ describe("AgentForm sections", () => {
 
 describe("AgentForm with Amazon Bedrock", () => {
   const SUGGESTED = "bedrock:eu.anthropic.claude-sonnet-5-5";
-  function stubBedrock() {
+  function stubBedrock(typed: Record<string, string> | null = null) {
     vi.stubGlobal(
       "fetch",
       vi.fn(async (url: string) => {
         const path = url.replace(/\?.*$/, "");
-        const body = path.endsWith("/meta")
+        const body = path.endsWith("/models/capabilities")
+          ? { model: new URL(url, "http://x").searchParams.get("model"), capabilities: typed }
+          : path.endsWith("/meta")
           ? {
               providers: [{ id: "bedrock", label: "Amazon Bedrock (AWS)", auth: "aws", example_model: "" }],
               capabilities: [],
@@ -294,5 +296,18 @@ describe("AgentForm with Amazon Bedrock", () => {
     open(second.container, "output");
     await waitFor(() => expect(screen.getByTestId("capability-reasoning")).toHaveAttribute("data-state", "unknown"));
     expect(screen.getByTestId("capability-structured_output")).toHaveAttribute("data-state", "unknown");
+  });
+
+  it("asks the API about a typed model id and follows its answer (#86)", async () => {
+    const typedId = "bedrock:us.anthropic.claude-haiku-4-5-v1:0";
+    stubBedrock({ reasoning: "supported", structured_output: "unsupported", forced_tool_choice: "supported" });
+    const { container } = show({ ...defaultAgent(), model: typedId });
+    open(container, "thinking");
+    open(container, "output");
+    await waitFor(() => expect(screen.getByTestId("capability-structured_output")).toHaveAttribute("data-state", "unsupported"));
+    expect(screen.queryByTestId("capability-reasoning")).toBeNull();
+    const asked = vi.mocked(fetch).mock.calls.map(([url]) => String(url)).filter((url) => url.includes("/models/capabilities"));
+    expect(asked.length).toBeGreaterThan(0);
+    expect(asked[0]).toContain(`model=${encodeURIComponent(typedId)}`);
   });
 });
