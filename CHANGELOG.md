@@ -11,6 +11,9 @@
   is included, plus the providers and network needs. The package is built in the background with progress and
   cancel; the last builds stay listed with their download. The README language starts with the studio's language.
   Texts in six languages. Needs nodestro-api with the export jobs (api #85).
+- Pins nodestro-api b55793a (api #85: portable export), nodestro-runtime c6f0240 (runtime #112), orkexa 22f2910
+  (orkexa #47: the Ollama runtime for another platform), nodestro-examples ed350b2 (examples #69),
+  nodestro-integrations f299ecf (integrations #60) and nodestro-sdk 4ec713e (sdk #77: regenerated types).
 
 ### Key figures from a tool (2026-11-04)
 
