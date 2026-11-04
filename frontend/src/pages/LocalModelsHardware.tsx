@@ -22,7 +22,7 @@ import {
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, HelpTip } from "../components/ui";
 import i18n from "../i18n";
-import { formatBytes } from "../lib/format";
+import { formatLargeBytes } from "../lib/format";
 
 const GB = 1_000_000_000;
 
@@ -60,10 +60,7 @@ function sameModel(a: string | null | undefined, b: string): boolean {
 const number = (value: number) => value.toLocaleString(i18n.language);
 
 /** Memory in GB (decimal, as the catalog states memory needs); small values as formatBytes does. */
-export function formatMemory(bytes: number): string {
-  if (bytes < GB) return formatBytes(bytes);
-  return (bytes / GB).toLocaleString(i18n.language, { style: "unit", unit: "gigabyte", maximumFractionDigits: 1, minimumFractionDigits: 1 });
-}
+export const formatMemory = formatLargeBytes;
 
 /** Measured tokens per second, with one decimal. */
 export function formatSpeed(value: number): string {

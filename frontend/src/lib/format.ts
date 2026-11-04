@@ -125,6 +125,15 @@ export function formatBytes(size: number): string {
   return unit(size / 1024 / 1024, "megabyte", 1);
 }
 
+/**
+ * Model, download and package sizes: GB (decimal, as model catalogs and download pages state them) from 1 GB on, so
+ * "3.3 GB" instead of "3,147.1 MB"; smaller values as formatBytes.
+ */
+export function formatLargeBytes(size: number): string {
+  if (size < 1_000_000_000) return formatBytes(size);
+  return formatNumber(size / 1_000_000_000, { style: "unit", unit: "gigabyte", maximumFractionDigits: 1, minimumFractionDigits: 1 });
+}
+
 export function relativeTime(value: string): string {
   const seconds = (Date.now() - new Date(value).getTime()) / 1000;
   const rtf = new Intl.RelativeTimeFormat(i18n.language, { numeric: "auto" });

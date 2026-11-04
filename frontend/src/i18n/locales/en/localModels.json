@@ -3,7 +3,8 @@
   "text": "Agents, assistants and knowledge search can run on this computer with local models (Ollama), without an API key. Data stays here.",
   "status": {
     "running": "Running",
-    "stopped": "Stopped"
+    "stopped": "Stopped",
+    "notInstalled": "Not installed"
   },
   "mode": {
     "managed": "Managed by Nodestro on this computer",
@@ -63,6 +64,11 @@
   "download": "Download ({{size}})",
   "downloadShort": "Download",
   "installed": "Installed",
+  "needsServer": {
+    "missing": "Downloading, importing and building models needs the running model server: install the runtime above, then start it.",
+    "stopped": "Downloading, importing and building models needs the running model server: start it above.",
+    "other": "Downloading, importing and building models needs the running model server."
+  },
   "catalog": {
     "title": "Models",
     "model": "Model",
@@ -70,7 +76,8 @@
     "memory": "Memory needed",
     "state": "State",
     "own": "Own model (imported or downloaded separately)",
-    "fit": "On this computer"
+    "fit": "On this computer",
+    "actions": "Actions"
   },
   "kind": {
     "chat": "Language model",

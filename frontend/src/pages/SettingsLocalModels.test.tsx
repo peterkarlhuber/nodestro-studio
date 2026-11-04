@@ -7,7 +7,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { KnowledgeIndexStatus, LocalJob, LocalOverview } from "../api/localModels";
 import type { Settings } from "../api/types";
 import { Toaster } from "../components/toast";
-import { KnowledgeSearchPanel, LocalModelsPanel } from "./SettingsLocalModels";
+import { KnowledgeSearchPanel, LocalModelsPanel, licenseName } from "./SettingsLocalModels";
 
 const GB = 1_000_000_000;
 
@@ -141,6 +141,34 @@ describe("local models", () => {
     expect(calls.find((call) => call.url === "/api/local-models/runtime")?.body).toEqual({ download: true });
   });
 
+  it("offers downloads only with a running model server and says why", async () => {
+    serve({ "GET /api/local-models": overview() });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    const status = await screen.findByTestId("local-status");
+    expect(status).toHaveTextContent("Nicht installiert");
+    expect(screen.getByTestId("local-needs-server")).toHaveTextContent("Installiere oben die Laufzeit und starte sie dann.");
+    const table = screen.getByTestId("local-recommendations");
+    // Sizes as the catalog states them (decimal GB), not as thousands of MB.
+    expect(within(table).getByRole("button", { name: /^Herunterladen \(3,4\sGB\): qwen3.5:4b$/ })).toBeDisabled();
+    expect(within(screen.getByTestId("local-catalog")).getByRole("button", { name: /^Herunterladen: / })).toBeDisabled();
+    cleanup();
+    serve({ "GET /api/local-models": overview({ runtime_installed: true }) });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    expect(await screen.findByTestId("local-needs-server")).toHaveTextContent("Starte ihn oben.");
+    expect(screen.getByTestId("local-status")).toHaveTextContent("Gestoppt");
+    cleanup();
+    serve({ "GET /api/local-models": overview({ runtime_installed: true, running: true, version: "0.40.14" }) });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    const running = await screen.findByTestId("local-recommendations");
+    expect(screen.queryByTestId("local-needs-server")).toBeNull();
+    expect(within(running).getByRole("button", { name: /^Herunterladen \(3,4\sGB\): qwen3.5:4b$/ })).toBeEnabled();
+  });
+
+  it("shows the license name without the catalog's provenance note", () => {
+    expect(licenseName("Apache-2.0 (upstream; the Ollama manifest has no license layer)")).toBe("Apache-2.0");
+    expect(licenseName("MIT")).toBe("MIT");
+  });
+
   it("refuses downloads in the strict offline mode and leaves a server's models to its operator", async () => {
     serve({ "GET /api/local-models": overview({ offline: true }) });
     show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
@@ -151,7 +179,7 @@ describe("local models", () => {
     show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
     expect(await screen.findByText(/betreibt der Betreiber den lokalen Modellserver/)).toBeInTheDocument();
     expect(screen.queryByTestId("local-import")).toBeNull();
-    expect(within(screen.getByTestId("local-catalog")).getByRole("button", { name: "Herunterladen" })).toBeDisabled();
+    expect(within(screen.getByTestId("local-catalog")).getByRole("button", { name: /^Herunterladen: / })).toBeDisabled();
   });
 });
 
@@ -278,8 +306,8 @@ describe("build from local files", () => {
     const build = await screen.findByTestId("local-build");
     // Air-gapped: no download is offered for the built model, only the build.
     const row = screen.getByTestId("local-model-mdenseon:307m");
-    expect(within(row).queryByRole("button", { name: "Herunterladen" })).toBeNull();
-    expect(within(row).getByRole("button", { name: "Aus Dateien bauen" })).toBeEnabled();
+    expect(within(row).queryByRole("button", { name: /^Herunterladen: / })).toBeNull();
+    expect(within(row).getByRole("button", { name: /^Aus Dateien bauen: / })).toBeEnabled();
     const weights = within(build).getByTestId("local-build-input-weights");
     expect(weights).toHaveTextContent("model.safetensors");
     expect(weights).toHaveTextContent("lightonai/mDenseOn");
@@ -313,7 +341,7 @@ describe("build from local files", () => {
     serve({ "GET /api/local-models": withBuild() });
     show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
     const row = await screen.findByTestId("local-model-mdenseon:307m");
-    expect(within(row).getByRole("button", { name: "Herunterladen" })).toBeEnabled();
+    expect(within(row).getByRole("button", { name: /^Herunterladen: / })).toBeEnabled();
     expect(screen.getByTestId("local-build-expected")).toHaveTextContent("Das Handbuch nennt ihre Quellen und Prüfsummen.");
   });
 

@@ -3,7 +3,8 @@
   "text": "Agenti, assistenti e ricerca nella conoscenza possono funzionare su questo computer con modelli locali (Ollama), senza chiave API. I dati restano qui.",
   "status": {
     "running": "In funzione",
-    "stopped": "Fermo"
+    "stopped": "Fermo",
+    "notInstalled": "Non installato"
   },
   "mode": {
     "managed": "Gestito da Nodestro su questo computer",
@@ -63,6 +64,11 @@
   "download": "Scarica ({{size}})",
   "downloadShort": "Scarica",
   "installed": "Installato",
+  "needsServer": {
+    "missing": "Per scaricare, importare e creare modelli serve il server dei modelli in esecuzione: installa sopra l’ambiente, poi avvialo.",
+    "stopped": "Per scaricare, importare e creare modelli serve il server dei modelli in esecuzione: avvialo qui sopra.",
+    "other": "Per scaricare, importare e creare modelli serve il server dei modelli in esecuzione."
+  },
   "catalog": {
     "title": "Modelli",
     "model": "Modello",
@@ -70,7 +76,8 @@
     "memory": "Memoria necessaria",
     "state": "Stato",
     "own": "Modello proprio (importato o scaricato a parte)",
-    "fit": "Su questo computer"
+    "fit": "Su questo computer",
+    "actions": "Azioni"
   },
   "kind": {
     "chat": "Modello linguistico",
