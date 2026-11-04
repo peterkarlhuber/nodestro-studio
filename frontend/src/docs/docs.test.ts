@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { LANGUAGES, type Language } from "../i18n";
 import { HELP_DOCS } from "../lib/help";
+import { SETTINGS_GROUPS } from "../pages/SettingsNav";
 import { bundles } from "../test/locales";
 import { CHAPTER_IDS, type DocChapter, type Sources, docExists, loadChapters, loadSources } from "./index";
 import { parseChapter, plainText, splitWidgets } from "./parse";
@@ -37,6 +38,19 @@ describe("documentation content", () => {
     );
     expect(links.length).toBeGreaterThan(10);
     for (const link of links) expect(await docExists(link), link).toBe(true);
+  });
+
+  it("links into the app only to its pages and settings sections (TX-11)", () => {
+    const PAGES = ["/", "/workflows/examples", "/agents", "/tools", "/knowledge", "/memory", "/executions", "/approvals", "/usage", "/tests", "/batches", "/schedules", "/settings"];
+    const links = CHAPTERS.flatMap((chapter) =>
+      chapter.sections.flatMap((section) => [...section.body.matchAll(/\]\((\/(?!docs\/)[^)\s]*)\)/g)].map((match) => match[1])),
+    );
+    expect(links.length).toBeGreaterThan(0);
+    for (const link of links) {
+      const [path, hash] = link.split("#");
+      expect(PAGES, link).toContain(path);
+      if (hash) expect(Object.keys(SETTINGS_GROUPS), link).toContain(hash);
+    }
   });
 
   it("backs every tooltip link with a documentation section", async () => {

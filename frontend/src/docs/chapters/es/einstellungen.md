@@ -5,6 +5,8 @@ Este capítulo describe todos los ajustes, la instalación y el inicio de Nodest
 ## Modelos locales {#lokale-modelle}
 <!-- keywords: modelo local, ollama, sin conexión, sin clave de api, qwen, descarga, recomendación, hardware, gpu, memoria, servidor de modelos, mistral, europeo, esfuerzo de razonamiento -->
 
+→ [Abrir en Nodestro](/settings#settings-local-models)
+
 Nodestro puede ejecutar agentes, asistentes y la búsqueda de conocimiento con **modelos locales** mediante Ollama, sin clave de API: las instrucciones y los documentos se quedan en este ordenador. Una instalación nueva usa modelos locales por defecto (agentes `ollama:qwen3.5:4b`, asistente `ollama:qwen3.5:9b`); una instalación actualizada conserva los modelos que tenía.
 
 *Ajustes → Modelos locales* muestra:
@@ -60,6 +62,8 @@ Con el **Modo sin conexión estricto** activado, la comprobación previa a cada 
 
 ## Proveedores de IA {#anbieter}
 <!-- keywords: clave de api, proveedor, anthropic, openai, gemini, ollama, vllm, compatible con openai, url base, variable de entorno, .env, capacidades -->
+
+→ [Abrir en Nodestro](/settings#settings-providers)
 
 Nodestro ejecuta los agentes con la biblioteca Orkexa y trabaja con varios **proveedores de IA** a la vez: **Anthropic**, **OpenAI**, **Google Gemini** y tus propios servidores mediante un **endpoint compatible con OpenAI**, **Ollama** o **vLLM**. Cada agente usa el proveedor de su modelo. Si ese proveedor no está configurado, la ejecución no empieza; Nodestro nunca cambia en silencio a otro proveedor. Si falta el proveedor del modelo predeterminado, arriba a la derecha aparece «Configurar proveedor de IA», o «El modelo predeterminado necesita …» si ya hay otro proveedor configurado.
 
@@ -153,6 +157,8 @@ Los administradores fijan además el **Presupuesto máximo por ejecución** (vac
 ## Sandbox {#sandbox}
 <!-- keywords: elegir sandbox, automático, docker, proceso de python, docker disponible, sandbox integrado, sandbox de linux, macos, windows, bloqueado, experimental -->
 
+→ [Abrir en Nodestro](/settings#settings-sandbox)
+
 Aquí eliges dónde se ejecutan las herramientas. El cambio se aplica de inmediato.
 
 | Modo | Tus herramientas | Herramientas creadas por IA y de origen desconocido |
@@ -212,6 +218,8 @@ Arriba a la derecha cambias entre **Oscuro** y **Claro**. La elección se guarda
 ## Copia de seguridad y restauración {#backup}
 <!-- keywords: copia de seguridad, backup, restaurar, exportar, zip, mudanza, respaldo -->
 
+→ [Abrir en Nodestro](/settings#settings-backup)
+
 **Descargar copia de seguridad** guarda todos los datos en un archivo ZIP: flujos de trabajo con versiones, plantillas de agentes, herramientas propias, archivos de conocimiento, memoria, ejecuciones, datos de uso, favoritos, etiquetas y ajustes. La base de datos se guarda como una instantánea coherente, incluso mientras una ejecución está trabajando.
 
 Las **claves de API** de los proveedores de IA nunca se escriben en la copia, ni tampoco las URL base que contienen credenciales. Al restaurar se conservan las claves de este equipo.
@@ -220,6 +228,8 @@ Las **claves de API** de los proveedores de IA nunca se escriben en la copia, ni
 
 ## Diagnóstico del sistema {#diagnose}
 <!-- keywords: diagnóstico, comprobar, buscar errores, conexión, docker, sandbox, versión, problema -->
+
+→ [Abrir en Nodestro](/settings#settings-diagnostics)
 
 **Iniciar diagnóstico** comprueba si Nodestro funciona por completo en este equipo y muestra para cada punto **Correcto**, **Advertencia** o **Error**, con una explicación y una propuesta de solución:
 

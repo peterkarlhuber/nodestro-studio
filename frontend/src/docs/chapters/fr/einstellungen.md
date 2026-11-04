@@ -5,6 +5,8 @@ Ce chapitre décrit tous les réglages, l’installation et le démarrage de Nod
 ## Modèles locaux {#lokale-modelle}
 <!-- keywords: modèle local, ollama, hors ligne, sans clé d’api, qwen, téléchargement, recommandation, matériel, gpu, mémoire, serveur de modèles, mistral, européen, effort de raisonnement -->
 
+→ [Ouvrir dans Nodestro](/settings#settings-local-models)
+
 Nodestro peut faire fonctionner les agents, les assistants et la recherche dans les connaissances avec des **modèles locaux** via Ollama, sans clé d’API : les instructions et les documents restent sur cet ordinateur. Une nouvelle installation utilise par défaut des modèles locaux (agents `ollama:qwen3.5:4b`, assistant `ollama:qwen3.5:9b`) ; une installation mise à jour conserve ses modèles.
 
 *Réglages → Modèles locaux* affiche :
@@ -60,6 +62,8 @@ Avec le **Mode hors ligne strict** activé, la vérification avant chaque exécu
 
 ## Fournisseurs d’IA {#anbieter}
 <!-- keywords: clé api, fournisseur, anthropic, openai, gemini, ollama, vllm, compatible openai, url de base, variable d’environnement, .env, capacités -->
+
+→ [Ouvrir dans Nodestro](/settings#settings-providers)
 
 Nodestro exécute les agents avec la bibliothèque Orkexa et travaille avec plusieurs **fournisseurs d’IA** à la fois : **Anthropic**, **OpenAI**, **Google Gemini** et vos propres serveurs via un **point d’accès compatible OpenAI**, **Ollama** ou **vLLM**. Chaque agent utilise le fournisseur de son modèle. Si ce fournisseur n’est pas configuré, l’exécution ne démarre pas ; Nodestro ne bascule jamais en silence vers un autre fournisseur. S’il manque le fournisseur du modèle par défaut, « Configurer un fournisseur d’IA » apparaît en haut à droite, ou « Le modèle par défaut requiert … » si un autre fournisseur est déjà configuré.
 
@@ -153,6 +157,8 @@ Les administrateurs fixent aussi le **Budget maximal par exécution** (vide : pa
 ## Bac à sable {#sandbox}
 <!-- keywords: choisir le bac à sable, sandbox, automatique, docker, processus python, docker disponible, bac à sable intégré, bac à sable linux, macos, windows, bloqué, expérimental -->
 
+→ [Ouvrir dans Nodestro](/settings#settings-sandbox)
+
 Ici, vous choisissez où s’exécutent les outils. Le changement s’applique immédiatement.
 
 | Mode | Vos outils | Outils créés par l’IA et outils d’origine inconnue |
@@ -212,6 +218,8 @@ En haut à droite, vous passez de **Sombre** à **Clair**. Le choix est enregist
 ## Sauvegarde et restauration {#backup}
 <!-- keywords: sauvegarde, backup, restaurer, export, zip, déménagement, copie de sécurité -->
 
+→ [Ouvrir dans Nodestro](/settings#settings-backup)
+
 **Télécharger la sauvegarde** enregistre toutes les données dans un fichier ZIP : workflows avec versions, modèles d’agents, outils personnalisés, fichiers de connaissances, mémoire, exécutions, données d’utilisation, favoris, étiquettes et réglages. La base de données est sauvegardée comme instantané cohérent, même pendant qu’une exécution travaille.
 
 Les **clés API** des fournisseurs d’IA ne sont jamais écrites dans la sauvegarde, pas plus que les URL de base contenant des identifiants. La restauration conserve les clés de cet ordinateur.
@@ -220,6 +228,8 @@ Les **clés API** des fournisseurs d’IA ne sont jamais écrites dans la sauveg
 
 ## Diagnostic du système {#diagnose}
 <!-- keywords: diagnostic, vérifier, dépannage, connexion, docker, sandbox, version, problème -->
+
+→ [Ouvrir dans Nodestro](/settings#settings-diagnostics)
 
 **Lancer le diagnostic** vérifie si Nodestro fonctionne entièrement sur cet ordinateur et affiche pour chaque point **OK**, **Avertissement** ou **Erreur**, avec une explication et une proposition de solution :
 

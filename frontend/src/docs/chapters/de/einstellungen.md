@@ -5,6 +5,8 @@ Dieses Kapitel beschreibt alle Einstellungen, die Installation und den Start von
 ## Lokale Modelle {#lokale-modelle}
 <!-- keywords: lokales modell, ollama, offline, kein api-schlüssel, qwen, download, empfehlung, hardware, gpu, arbeitsspeicher, modellserver, mistral, europäisch, denkaufwand -->
 
+→ [In Nodestro öffnen](/settings#settings-local-models)
+
 Nodestro kann Agenten, Assistenten und die Wissenssuche mit **lokalen Modellen** über Ollama betreiben, ohne API-Schlüssel: Prompts und Dokumente bleiben auf diesem Computer. Eine neue Installation nutzt standardmäßig lokale Modelle (Agenten `ollama:qwen3.5:4b`, Assistent `ollama:qwen3.5:9b`); eine aktualisierte Installation behält ihre bisherigen Modelle.
 
 *Einstellungen → Lokale Modelle* zeigt:
@@ -60,6 +62,8 @@ Mit **Strikter Offline-Modus** lehnt die Prüfung vor jeder Ausführung Cloud-Mo
 
 ## KI-Anbieter {#anbieter}
 <!-- keywords: api key, api-schlüssel, anbieter, provider, anthropic, openai, gemini, ollama, vllm, openai-kompatibel, basis-url, umgebungsvariable, .env, fähigkeiten -->
+
+→ [In Nodestro öffnen](/settings#settings-providers)
 
 Nodestro führt Agenten über die Bibliothek Orkexa aus und arbeitet mit mehreren **KI-Anbietern** gleichzeitig: **Anthropic**, **OpenAI**, **Google Gemini** sowie eigenen Servern über einen **OpenAI-kompatiblen Endpunkt**, **Ollama** oder **vLLM**. Jeder Agent nutzt den Anbieter seines Modells. Ist dieser Anbieter nicht eingerichtet, startet der Lauf nicht; Nodestro weicht nie still auf einen anderen Anbieter aus. Fehlt der Anbieter des Standardmodells, erscheint oben rechts „KI-Anbieter einrichten“, oder „Standardmodell braucht …“, wenn schon ein anderer Anbieter eingerichtet ist.
 
@@ -153,6 +157,8 @@ Administratoren legen außerdem das **Höchste Budget pro Lauf** fest (leer: kei
 ## Sandbox {#sandbox}
 <!-- keywords: sandbox wählen, automatisch, docker, python prozess, docker verfügbar, eingebaute sandbox, linux sandbox, macos, windows, gesperrt, experimentell -->
 
+→ [In Nodestro öffnen](/settings#settings-sandbox)
+
 Hier wählst du, wo Tools laufen. Die Änderung gilt sofort.
 
 | Modus | Eigene Tools | KI-erstellte Tools und Tools unbekannter Herkunft |
@@ -212,6 +218,8 @@ Oben rechts wechselst du zwischen **Dunkel** und **Hell**. Die Wahl wird im Brow
 ## Backup und Wiederherstellung {#backup}
 <!-- keywords: backup, sicherung, wiederherstellen, restore, export, zip, umzug, datensicherung -->
 
+→ [In Nodestro öffnen](/settings#settings-backup)
+
 **Backup herunterladen** speichert alle Daten in einer ZIP-Datei: Workflows mit Versionen, Agenten-Vorlagen, eigene Tools, Wissensdateien, Memory, Ausführungen, Nutzungsdaten, Favoriten, Tags und Einstellungen. Die Datenbank wird dabei als konsistente Momentaufnahme gesichert, auch wenn gerade ein Lauf arbeitet.
 
 Die **API-Schlüssel** der KI-Anbieter werden nie ins Backup geschrieben, ebenso wenig Basis-URLs mit Zugangsdaten. Beim Wiederherstellen bleiben die Schlüssel dieses Rechners erhalten.
@@ -220,6 +228,8 @@ Die **API-Schlüssel** der KI-Anbieter werden nie ins Backup geschrieben, ebenso
 
 ## Systemdiagnose {#diagnose}
 <!-- keywords: diagnose, systemdiagnose, prüfen, fehler finden, verbindung, docker, sandbox, version, problem -->
+
+→ [In Nodestro öffnen](/settings#settings-diagnostics)
 
 **Diagnose starten** prüft, ob Nodestro auf diesem Rechner vollständig funktioniert, und zeigt für jeden Punkt **In Ordnung**, **Warnung** oder **Fehler** mit einer Erklärung und einem Lösungsvorschlag:
 

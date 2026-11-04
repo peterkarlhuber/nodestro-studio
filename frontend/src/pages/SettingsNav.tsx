@@ -7,7 +7,7 @@ import { safeReturnPath } from "../lib/settingsLink";
 import { prefersReducedMotion } from "../lib/motion";
 
 /** The groups of the page, in the order of the page; a section the map does not know goes to "more". */
-const GROUPS: Record<string, "setup" | "costs" | "running" | "maintenance"> = {
+export const SETTINGS_GROUPS: Record<string, "setup" | "costs" | "running" | "maintenance"> = {
   "settings-local-models": "setup",
   "settings-providers": "setup",
   "settings-language": "setup",
@@ -47,7 +47,7 @@ function useAnchors(container: RefObject<HTMLElement | null>): Anchor[] {
       const found = [...root.querySelectorAll<HTMLElement>(":scope > section > h2.panel__title[id]")].map((heading) => ({
         id: heading.id,
         title: headingText(heading),
-        group: GROUPS[heading.id] ?? "more",
+        group: SETTINGS_GROUPS[heading.id] ?? "more",
       }));
       setAnchors((previous) =>
         previous.length === found.length && previous.every((item, index) => item.id === found[index].id && item.title === found[index].title)
