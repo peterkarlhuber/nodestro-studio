@@ -409,10 +409,10 @@ Gute Forschung beginnt mit einer präzisen, prüfbaren Frage und den passenden M
 
 | Team | Aufgabe | Fähigkeiten |
 |---|---|---|
-| **Hypothesenteam** | Macht aus einer analysierten Forschungsfrage prüfbare Hypothesen mit Nullhypothesen und messbaren Vorhersagen; überarbeitet sie nach einer Methodenkritik. | hypotheses, operationalisation |
-| **Statistikteam** | Prüft quantitative Hypothesen an den Daten, wertet Vorversuchsdaten mit dem Rechner aus und schätzt die Stichprobengröße für ein vorgegebenes Design, Signifikanzniveau und eine Power. (Parameter: Studiendesign, Signifikanzniveau α, Angestrebte Power) | statistics, power analysis, quantitative methods |
-| **Team qualitative Methoden** | Plant Interviews, Beobachtungen oder Fokusgruppen für Fragen nach Erfahrungen, Gründen und Verhalten: Stichprobe, Leitfaden und Auswertung. | qualitative methods, interviews, observation |
-| **Team Ethik und Datenschutz** | Prüft Studien mit Menschen oder personenbezogenen Daten: Einwilligung, Datensparsamkeit, Anonymisierung, Beteiligung der Beschäftigtenvertretung und Ethikvotum. | research ethics, data protection, informed consent |
+| **Hypothesenteam** | Macht aus einer analysierten Forschungsfrage prüfbare Hypothesen mit Nullhypothesen und messbaren Vorhersagen; überarbeitet sie nach einer Methodenkritik. | Hypothesen, Operationalisierung |
+| **Statistikteam** | Prüft quantitative Hypothesen an den Daten, wertet Vorversuchsdaten mit dem Rechner aus und schätzt die Stichprobengröße für ein vorgegebenes Design, Signifikanzniveau und eine Power. (Parameter: Studiendesign, Signifikanzniveau α, Angestrebte Power) | Statistik, Poweranalyse, quantitative Methoden |
+| **Team qualitative Methoden** | Plant Interviews, Beobachtungen oder Fokusgruppen für Fragen nach Erfahrungen, Gründen und Verhalten: Stichprobe, Leitfaden und Auswertung. | qualitative Methoden, Interviews, Beobachtung |
+| **Team Ethik und Datenschutz** | Prüft Studien mit Menschen oder personenbezogenen Daten: Einwilligung, Datensparsamkeit, Anonymisierung, Beteiligung der Beschäftigtenvertretung und Ethikvotum. | Forschungsethik, Datenschutz, informierte Einwilligung |
 
 **Eingabe:** Eine Forschungsfrage mit Ziel, vorhandenen Daten aus Vorversuchen und Rahmenbedingungen wie Material, Zeit und Ausstattung. Messdaten und Dokumente kannst du als Dateien anhängen; die Beispieldatei enthält die Vorversuchsbewertungen je Blech.
 
@@ -599,11 +599,11 @@ Vor einer Gründung lohnt ein nüchterner Blick auf Markt, Zahlen und Risiken. D
 
 | Team | Aufgabe | Fähigkeiten |
 |---|---|---|
-| **Marktteam** | Schätzt Zielgruppen, Nachfrage, Zahlungsbereitschaft und Wettbewerb einer Geschäftsidee ein. | market analysis, target groups, competition |
-| **Wirtschaftlichkeitsteam** | Rechnet Deckungsbeitrag, Break-even, Amortisation und Szenarien einer Geschäftsidee mit dem Rechner-Tool. | profitability, break-even, financial planning |
-| **Risikoteam** | Sucht die Schwachstellen einer Geschäftsidee und günstige Wege, sie vor der Gründung zu testen. | risk analysis, validation experiments |
-| **Regulierungsteam** | Ermittelt Genehmigungen, Anmeldungen, Kennzeichnung, Hygiene, Versicherung und Datenschutzpflichten, die eine Geschäftsidee berührt. | regulation, permits, licences, data protection |
-| **Betriebsteam** | Prüft, ob eine Geschäftsidee wie beschrieben umsetzbar ist: Abläufe, Kapazität, Ausstattung, Lieferanten und Logistik. | operations, technology, logistics, suppliers |
+| **Marktteam** | Schätzt Zielgruppen, Nachfrage, Zahlungsbereitschaft und Wettbewerb einer Geschäftsidee ein. | Marktanalyse, Zielgruppen, Wettbewerb |
+| **Wirtschaftlichkeitsteam** | Rechnet Deckungsbeitrag, Break-even, Amortisation und Szenarien einer Geschäftsidee mit dem Rechner-Tool. | Wirtschaftlichkeit, Break-even, Finanzplanung |
+| **Risikoteam** | Sucht die Schwachstellen einer Geschäftsidee und günstige Wege, sie vor der Gründung zu testen. | Risikoanalyse, Validierungsexperimente |
+| **Regulierungsteam** | Ermittelt Genehmigungen, Anmeldungen, Kennzeichnung, Hygiene, Versicherung und Datenschutzpflichten, die eine Geschäftsidee berührt. | Regulierung, Genehmigungen, Lizenzen, Datenschutz |
+| **Betriebsteam** | Prüft, ob eine Geschäftsidee wie beschrieben umsetzbar ist: Abläufe, Kapazität, Ausstattung, Lieferanten und Logistik. | Betrieb, Technik, Logistik, Lieferanten |
 
 **Eingabe:** Eine Beschreibung der Idee mit Angebot, Zielgruppen, Preisen, Kosten, Kapazität und bekannten Wettbewerbern.
 
@@ -696,10 +696,10 @@ Verzögerungen auf der Baustelle haben unterschiedliche Ursachen, und jede Ursac
 
 | Team | Aufgabe | Fähigkeiten |
 |---|---|---|
-| **Baustellen- und Planungsteam** | Untersucht technische Ursachen von Bauverzug: Witterung, Baugrund, Planänderungen und Bauablauf; ordnet Verzugstage mit Nachweisen zu. | technical causes, design changes, ground conditions, weather |
-| **Lieferkettenteam** | Untersucht Verzug durch Lieferanten, Materiallieferungen und die Besetzung von Nachunternehmern; ordnet Verzugstage mit Nachweisen zu. | supply chain, subcontractors, material delivery |
-| **Nachtragsteam** | Entwirft Behinderungsanzeigen und bewertet Ansprüche auf Bauzeitverlängerung für Verzug außerhalb des Bereichs des Auftragnehmers; eine Bauleitung zeichnet den Entwurf ab. (hält für eine Freigabe an) | contract, claims, notice of obstruction |
-| **Beschleunigungsteam** | Entwickelt Beschleunigungsmaßnahmen für ein verzögertes Bauprojekt mit gewonnenen Tagen, Mehrkosten und neuer Fertigstellungsprognose. | recovery planning, acceleration, cost estimate |
+| **Baustellen- und Planungsteam** | Untersucht technische Ursachen von Bauverzug: Witterung, Baugrund, Planänderungen und Bauablauf; ordnet Verzugstage mit Nachweisen zu. | technische Ursachen, Planänderungen, Baugrund, Witterung |
+| **Lieferkettenteam** | Untersucht Verzug durch Lieferanten, Materiallieferungen und die Besetzung von Nachunternehmern; ordnet Verzugstage mit Nachweisen zu. | Lieferkette, Nachunternehmer, Materiallieferung |
+| **Nachtragsteam** | Entwirft Behinderungsanzeigen und bewertet Ansprüche auf Bauzeitverlängerung für Verzug außerhalb des Bereichs des Auftragnehmers; eine Bauleitung zeichnet den Entwurf ab. (hält für eine Freigabe an) | Vertrag, Nachträge, Behinderungsanzeige |
+| **Beschleunigungsteam** | Entwickelt Beschleunigungsmaßnahmen für ein verzögertes Bauprojekt mit gewonnenen Tagen, Mehrkosten und neuer Fertigstellungsprognose. | Aufholplanung, Beschleunigung, Kostenschätzung |
 
 **Eingabe:** Eine Terminübersicht mit geplanten und tatsächlichen Meilensteinen, Bemerkungen zu Ursachen, Berichtsdatum und Vertragsbedingungen, als Text oder als Dateien: Terminplan als Excel, Bautagebuch als PDF, Fotos als Bilder. Die Beispieldateien enthalten einen Terminplan und einen Auszug aus dem Bautagebuch.
 
@@ -709,7 +709,7 @@ Verzögerungen auf der Baustelle haben unterschiedliche Ursachen, und jede Ursac
 
 **Ergebnis:** Ein sachlicher Statusbericht mit Terminlage, Ursachen und Verantwortungsbereichen, Anzeigen und Verlängerungsansprüchen, Beschleunigungsmaßnahmen mit Kosten, nötigen Entscheidungen und Risiken; nach der Freigabe als PDF und bearbeitbare Word-Datei. Die Orchestrierungsansicht zeigt, welche Teams die Koordination besetzt hat, was jedes als strukturierte Daten geliefert hat und warum. Fragen zu Vertragsstrafen und Bauzeitverlängerung bleiben der fachlichen und rechtlichen Prüfung vorbehalten.
 
-**Was automatisch entschieden wird und wann ein Mensch eingreift:** Automatisch: Die Koordination wählt höchstens drei Teams, lässt höchstens zwei gleichzeitig arbeiten und gibt jedem Team höchstens zwei Aufträge; jede Besetzungs- und Auftragsentscheidung wird mit Begründung festgehalten. Eine Person entscheidet zweimal: Die Bauleitung zeichnet im Nachtragsteam den Entwurf der Behinderungsanzeige ab (eine Ablehnung beendet den Lauf), und eine Person gibt den Statusbericht frei, bevor Dateien entstehen. Grenzen: höchstens 8 Entscheidungen der Koordination, 50 Schritte, 40 Minuten und 4 USD pro Lauf.
+**Was automatisch entschieden wird und wann ein Mensch eingreift:** Automatisch: Die Koordination wählt höchstens drei Teams, lässt höchstens zwei gleichzeitig arbeiten und gibt jedem Team höchstens zwei Aufträge; jede Besetzungs- und Auftragsentscheidung wird mit Begründung festgehalten. Den erwarteten Verzug in Tagen übernimmt Nodestro nur als Ergebnis des Datumswerkzeugs oder des Rechners: Einen geschätzten Wert bekommt der Terminanalyst einmal zurück, danach stoppt der Schritt. Eine Person entscheidet zweimal: Die Bauleitung zeichnet im Nachtragsteam den Entwurf der Behinderungsanzeige ab (eine Ablehnung beendet den Lauf), und eine Person gibt den Statusbericht frei, bevor Dateien entstehen. Grenzen: höchstens 8 Entscheidungen der Koordination, 50 Schritte, 40 Minuten und 4 USD pro Lauf.
 
 **Warum diese Architektur:** Eine feste Kette behandelte jeden Verzug gleich: ein Ursachenanalyst, ein Maßnahmenplaner, egal ob das Problem Frost oder eine fehlende Anzeige war. Mit der Koordination kostet ein reiner Witterungsverzug keine Nachtragsprüfung, während eine vom Bauherrn angeordnete Planänderung das Nachtragsteam mit seiner Abzeichnung dazuholt. Die Teams liefern strukturierte Ergebnisse (Tage, Verantwortung, Nachweise), sodass der Bericht sie zusammenrechnen kann, statt Fließtext umzuformulieren. Terminberechnung, Bericht und abschließende Freigabe bleiben feste Schritte, weil jeder Bericht sie braucht.
 

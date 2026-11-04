@@ -15,7 +15,7 @@ from nodestro_studio import cli
 def test_the_options_of_0_1(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     served: list[tuple[str, argparse.Namespace]] = []
     opened: list[Any] = []
-    monkeypatch.setattr(cli, "serve", lambda factory, args: served.append((factory, args)))
+    monkeypatch.setattr(cli, "serve", lambda factory, args, ready=None: served.append((factory, args)))
     monkeypatch.setattr(cli.webbrowser, "open", opened.append)
     monkeypatch.delenv("NODESTRO_DATA_DIR", raising=False)
     monkeypatch.chdir(tmp_path)
@@ -63,3 +63,48 @@ def test_the_studio_is_not_started_on_the_network_or_as_a_server(
     with pytest.raises(SystemExit, match=reason):
         cli.main(["--data-dir", str(tmp_path / "d"), "--no-browser", *argv])
     assert started == []
+
+
+def test_a_taken_port_stops_before_running_and_the_browser(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """DX handover B2: with the port taken nothing says "running" and no browser opens the other program."""
+    import socket
+
+    import uvicorn
+
+    served: list[Any] = []
+    opened: list[Any] = []
+    monkeypatch.setattr(uvicorn.Server, "run", lambda self, *args, **kwargs: served.append(args))
+    monkeypatch.setattr(cli.webbrowser, "open", opened.append)
+    monkeypatch.setenv("NODESTRO_DATA_DIR", str(tmp_path / "d"))
+    monkeypatch.setenv("NODESTRO_PROFILE", "")
+    monkeypatch.setenv("NODESTRO_HOST", "127.0.0.1")  # the command line writes it; an earlier test may leave another
+    monkeypatch.chdir(tmp_path)
+    with socket.socket() as taken:
+        taken.bind(("127.0.0.1", 0))
+        taken.listen()
+        with pytest.raises(SystemExit) as stopped:
+            cli.main(["--port", str(taken.getsockname()[1])])
+    assert stopped.value.code == 2
+    shown = capsys.readouterr()
+    assert "running" not in shown.out and "already in use" in shown.err
+    assert served == [] and opened == []
+
+
+def test_running_and_the_browser_wait_for_the_server(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    import threading
+
+    calls: list[Any] = []
+    opened = threading.Event()
+    monkeypatch.setattr(cli, "serve", lambda factory, args, ready=None: calls.append(ready))
+    monkeypatch.setattr(cli.webbrowser, "open", lambda url: opened.set())
+    monkeypatch.setenv("NODESTRO_DATA_DIR", str(tmp_path / "d"))
+    monkeypatch.chdir(tmp_path)
+    cli.main(["--port", "0"])
+    assert "running" not in capsys.readouterr().out and not opened.is_set()
+    calls[0]()  # the server listens now
+    assert "Nodestro is running at" in capsys.readouterr().out
+    assert opened.wait(5)
