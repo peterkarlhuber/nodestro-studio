@@ -162,8 +162,8 @@ O Nodestro decide pela **origem do código** onde ele pode rodar:
 | Origem | Mostrada como | Sem isolamento (só *Processo Python*) | Sandbox Linux integrado ou Docker |
 |---|---|---|---|
 | Ferramentas integradas e integrações | *Integrada* | no processo do Nodestro | no processo do Nodestro |
-| Escrita por você em *Escrever você mesmo* | *Escrita por você* | roda, sem isolamento neste computador | roda (no *Processo Python* ou isolada no Docker) |
-| Criada por IA (também depois da sua aprovação), rascunhos de ferramentas do arquiteto de IA, ferramentas de origem desconhecida | *Precisa de isolamento* | **bloqueada** | roda isolada |
+| Escrita por você em *Escrever você mesmo* | *Execução: como seu próprio código* | roda, sem isolamento neste computador | roda (no *Processo Python* ou isolada no Docker) |
+| Criada por IA (também depois da sua aprovação), rascunhos de ferramentas do arquiteto de IA, ferramentas de origem desconhecida | *Execução: apenas isolada* | **bloqueada** | roda isolada |
 
 O processo Python não é uma barreira de segurança: o código nele roda com as suas permissões. Por isso o Nodestro nunca executa ali código gerado por IA, e nem a sua aprovação nem uma configuração mudam isso; não existe nenhuma chave que permita mesmo assim. No modo *Automático* esse código só roda no Docker, depois que ele passa nas verificações do Nodestro; no modo *Sandbox Linux*, só no sandbox Linux integrado; no modo *Processo Python*, nunca. Sem esse sandbox:
 
@@ -173,7 +173,7 @@ O processo Python não é uma barreira de segurança: o código nele roda com as
 
 Ferramentas salvas antes desta versão, e todas as ferramentas depois de restaurar um backup, contam como de origem desconhecida, inclusive as escritas por você, porque a origem não foi registrada. Com isolamento, continuam funcionando. Uma nova versão dessa ferramenta, ou uma cópia do código dela em uma ferramenta nova, mantém esse status.
 
-**Adotar código criado por IA como seu (somente no aplicativo de desktop).** Em uma ferramenta que precisa de isolamento, *Adotar como meu próprio código* mostra todo o código e os testes com um aviso. Depois da sua confirmação, a ferramenta conta como *Escrita por você* e é executada como seu próprio código, sem isolamento, neste computador; por isso, adote somente código que você leu e entendeu. Somente o proprietário deste computador pode adotar (um administrador, onde há papéis). O Nodestro registra quem adotou qual versão e quando, com uma impressão digital do código. Se a IA alterar a ferramenta depois, a adoção termina e a ferramenta volta a precisar de isolamento; suas próprias alterações no editor a mantêm. Em um servidor e no Nodestro Local Docker, código criado por IA sempre é executado isolado e não pode ser adotado.
+**Adotar código criado por IA como seu (somente no aplicativo de desktop).** Em uma ferramenta que precisa de isolamento, *Adotar como meu próprio código* mostra todo o código e os testes com um aviso. Depois da sua confirmação, a ferramenta mostra *Execução: como seu próprio código* e é executada como o código que você escreveu, sem isolamento, neste computador; por isso, adote somente código que você leu e entendeu. Somente o proprietário deste computador pode adotar (um administrador, onde há papéis). O Nodestro registra quem adotou qual versão e quando, com uma impressão digital do código. Se a IA alterar a ferramenta depois, a adoção termina e a ferramenta volta a precisar de isolamento; suas próprias alterações no editor a mantêm. Em um servidor e no Nodestro Local Docker, código criado por IA sempre é executado isolado e não pode ser adotado.
 
 Código que você cola em *Escrever você mesmo* conta como escrito por você, porque o Nodestro não consegue saber de onde ele veio; o editor avisa quando você cola. Crie código gerado por IA com *Criar com IA*, para que seja executado isolado.
 

@@ -21,11 +21,12 @@
   },
   "kindLabel": "Kind of tool",
   "trust": {
-    "trusted": "Built-in",
-    "user-authored": "Written by you",
-    "untrusted": "Needs isolation"
+    "trusted": "in Nodestro",
+    "user-authored": "as your own code",
+    "untrusted": "isolated only"
   },
-  "trustLabel": "Origin",
+  "trustLabel": "Runs",
+  "trustLine": "{{label}}: {{value}}",
   "trustNote": {
     "user-authored": "Written by you: runs in a separate Python process without isolation on this computer.",
     "untrusted": "AI-created or of unknown origin: runs only isolated, here in the Docker sandbox.",

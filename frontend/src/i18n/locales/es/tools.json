@@ -21,11 +21,12 @@
   },
   "kindLabel": "Tipo de herramienta",
   "trust": {
-    "trusted": "Integrada",
-    "user-authored": "Escrita por ti",
-    "untrusted": "Necesita aislamiento"
+    "trusted": "en Nodestro",
+    "user-authored": "como tu propio código",
+    "untrusted": "solo aislada"
   },
-  "trustLabel": "Origen",
+  "trustLabel": "Se ejecuta",
+  "trustLine": "{{label}}: {{value}}",
   "trustNote": {
     "user-authored": "Escrita por ti: se ejecuta en un proceso de Python aparte, sin aislamiento, en este equipo.",
     "untrusted": "Creada por IA o de origen desconocido: solo se ejecuta aislada, aquí en el sandbox de Docker.",

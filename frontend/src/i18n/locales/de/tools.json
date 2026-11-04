@@ -21,11 +21,12 @@
   },
   "kindLabel": "Art des Tools",
   "trust": {
-    "trusted": "Eingebaut",
-    "user-authored": "Von dir geschrieben",
-    "untrusted": "Braucht Isolation"
+    "trusted": "direkt in Nodestro",
+    "user-authored": "als dein eigener Code",
+    "untrusted": "nur isoliert"
   },
-  "trustLabel": "Herkunft",
+  "trustLabel": "Läuft",
+  "trustLine": "{{label}}: {{value}}",
   "trustNote": {
     "user-authored": "Von dir geschrieben: läuft in einem eigenen Python-Prozess ohne Isolation auf diesem Rechner.",
     "untrusted": "KI-erstellt oder unbekannter Herkunft: läuft nur isoliert, hier in der Docker-Sandbox.",
