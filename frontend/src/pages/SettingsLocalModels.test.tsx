@@ -7,7 +7,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { KnowledgeIndexStatus, LocalJob, LocalOverview } from "../api/localModels";
 import type { Settings } from "../api/types";
 import { Toaster } from "../components/toast";
-import { KnowledgeSearchPanel, LocalModelsPanel, licenseName } from "./SettingsLocalModels";
+import i18n, { LANGUAGES } from "../i18n";
+import { KnowledgeSearchPanel, LocalModelsPanel, licenseName, licenseSource } from "./SettingsLocalModels";
 
 const GB = 1_000_000_000;
 
@@ -167,6 +168,16 @@ describe("local models", () => {
   it("shows the license name without the catalog's provenance note", () => {
     expect(licenseName("Apache-2.0 (upstream; the Ollama manifest has no license layer)")).toBe("Apache-2.0");
     expect(licenseName("MIT")).toBe("MIT");
+  });
+
+  it("names where the license was read, also for older APIs with the note", () => {
+    expect(licenseSource({ license: "Apache-2.0", license_source: "ollama" })).toBe("ollama");
+    expect(licenseSource({ license: "Apache-2.0", license_source: "upstream" })).toBe("upstream");
+    expect(licenseSource({ license: "Apache-2.0 (Mistral AI's model card; the Ollama manifest has no license layer)" })).toBe("upstream");
+    expect(licenseSource({ license: "MIT" })).toBeNull();
+    for (const language of LANGUAGES)
+      for (const source of ["ollama", "upstream"])
+        expect(i18n.exists(`localModels.licenseSource.${source}`, { lng: language }), `${language} ${source}`).toBe(true);
   });
 
   it("refuses downloads in the strict offline mode and leaves a server's models to its operator", async () => {

@@ -499,8 +499,10 @@ export function ApiExport({
 }
 
 /**
- * In a ready-to-run package the library is always bundled, so the source project's "or choose the Git reference" is no
- * choice there (the portable confirmation says the same), and the summary already lists the downloads in words.
+ * In a ready-to-run package the summary already names the downloads in words, so "export.downloads" would say it
+ * twice. The library is always bundled there: APIs before PR #87 also sent the source project's "confirm or choose
+ * the Git reference" (export.distribution_unconfirmed) next to the portable confirmation; newer ones no longer do,
+ * and the filter stays for the older ones.
  */
 export function shownProblems(problems: ExportCheck["problems"], portable: boolean): ExportCheck["problems"] {
   if (!portable) return problems;

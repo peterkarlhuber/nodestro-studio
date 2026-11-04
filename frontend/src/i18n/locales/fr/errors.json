@@ -121,7 +121,8 @@
     "orchestrator_limits": "{{node}} autorise plus de recours à une équipe que de décisions au total.",
     "revision_invalid": "L’enregistrement indiquait une version inconnue du workflow. Rechargez la page et enregistrez à nouveau.",
     "conflict": "Le workflow « {{name}} » a été modifié depuis que vous l’avez ouvert. Rechargez-le pour voir la dernière version.",
-    "runs_active": "Des exécutions de ce workflow sont encore en cours. Supprimez-le une fois qu’elles sont terminées ou annulées."
+    "runs_active": "Des exécutions de ce workflow sont encore en cours. Supprimez-le une fois qu’elles sont terminées ou annulées.",
+    "not_found": "Ce workflow n’existe plus ; il a peut-être été supprimé entre-temps. Rechargez la page pour voir les workflows actuels."
   },
   "run": {
     "failed": "L’étape a échoué.",
@@ -148,7 +149,7 @@
     "subworkflow_recursive": "{{node}} appellerait un workflow déjà en cours.",
     "subworkflow_too_deep": "Les sous-workflows sont imbriqués trop profondément à {{node}}.",
     "finished": "L’exécution est déjà terminée.",
-    "not_found": "Aucune exécution ne porte cet identifiant.",
+    "not_found": "Cette exécution n’existe plus ; elle a peut-être été supprimée entre-temps. Rechargez la page pour voir les exécutions actuelles.",
     "not_finished": "L’exécution n’est pas encore terminée.",
     "no_event_loop": "L’exécution n’a pas pu démarrer : elle nécessite une boucle d’événements active.",
     "loop_exhausted": "La boucle à {{node}} a tourné {{max_iterations}} fois sans atteindre son objectif.",
@@ -580,13 +581,13 @@
     "offline_models_excluded": "Le fonctionnement hors ligne nécessite les modèles locaux dans le paquet.",
     "untrusted_tools_docker": "Les outils créés par l’IA ne s’exécutent que dans un bac à sable Docker isolé : l’ordinateur cible a besoin de Docker pour {{tools}}.",
     "portable_distribution": "Confirmez que vous pouvez transmettre le paquet (code source d’Orkexa et serveur de modèles).",
-    "download_needed": "La génération nécessite des téléchargements absents du cache : {{items}}.",
+    "download_needed": "La génération nécessite des téléchargements qui ne sont pas encore dans le cache : {{items}}. Lancez une génération avec une connexion Internet ; ils seront ensuite dans le cache.",
     "downloads": "La génération télécharge une seule fois {{items}} pour la plateforme cible.",
     "platform_unknown": "Cette plateforme n’est pas prise en charge.",
     "web_ui": "L’interface web est incluse : l’opérateur se connecte avec un lien à usage unique, les autres avec une clé d’API.",
     "portable_job": "Un paquet prêt à l’emploi est généré en arrière-plan ; utilisez « Générer le paquet ».",
     "not_portable": "Seuls les paquets prêts à l’emploi sont générés en arrière-plan.",
-    "busy": "Un autre paquet est en cours de génération ; attendez qu’il soit terminé.",
+    "busy": "Un autre paquet est déjà en cours de génération, peut-être par quelqu’un d’autre ; un seul est généré à la fois. Attendez qu’il soit terminé, puis relancez la génération.",
     "cancelled": "La génération a été annulée.",
     "disk_full": "Espace disque insuffisant pour générer le paquet.",
     "failed": "La génération du paquet a échoué.",
@@ -595,7 +596,12 @@
     "license_mismatch": "Une licence téléchargée ne correspond pas à celle attendue ; rien n’a été empaqueté.",
     "python_missing": "Python n’a pas pu être préparé pour cette plateforme.",
     "uv_failed": "La préparation des bibliothèques a échoué.",
-    "uv_missing": "L’outil uv, qui prépare Python et les bibliothèques, est absent de cette installation."
+    "uv_missing": "L’outil uv, qui prépare Python et les bibliothèques, est absent de cette installation.",
+    "server_unsupported": "Ce serveur ne génère pas de paquets prêts à l’emploi : son opérateur ne les a pas activés. Exportez plutôt le projet source, ou demandez à l’opérateur d’activer la génération de paquets.",
+    "server_too_large": "Ce paquet ferait environ {{size}}, plus que ce que ce serveur autorise ({{limit}}). Laissez de côté les modèles locaux pour le réduire, ou demandez à l’opérateur du serveur de relever la limite.",
+    "server_too_large_plain": "Le paquet dépasse la taille autorisée par ce serveur et n’a pas été conservé. Laissez de côté les modèles locaux pour le réduire, ou demandez à l’opérateur du serveur de relever la limite.",
+    "download_needed_plain": "La génération nécessite des téléchargements qui ne sont pas encore dans le cache. Lancez une génération avec une connexion Internet ; ils seront ensuite dans le cache.",
+    "downloads_plain": "La génération télécharge une seule fois les éléments manquants pour la plateforme cible."
   },
   "lan": {
     "tls_file_missing": "Fichier introuvable : {{path}}",
@@ -620,7 +626,7 @@
   },
   "publication": {
     "disabled": "Cette API est désactivée.",
-    "not_found": "Aucun workflow publié ne porte ce nom.",
+    "not_found": "Ce workflow publié n’existe plus ; son API a peut-être été retirée ou supprimée entre-temps. Rechargez la page pour voir les publications actuelles.",
     "dependencies_changed": "Les bibliothèques Python approuvées ont changé depuis la publication ; publiez à nouveau.",
     "dependencies_unavailable": "Les bibliothèques Python de cette API ne sont pas prêtes.",
     "slug_taken": "Un autre workflow publié utilise déjà le nom {{slug}}. Choisissez un autre nom."
@@ -985,7 +991,7 @@
     "http_error": "Le serveur de modèles local a refusé la requête.",
     "input_too_long": "Le texte est trop long pour le modèle.",
     "invalid_name": "Ce n’est pas un nom de modèle valide.",
-    "invalid_package": "Ce n’est pas un paquet hors ligne valide.",
+    "invalid_package": "Ce dossier n’est pas un paquet de modèles hors ligne que Nodestro peut importer. Choisissez le dossier créé avec orkexa-local export ; il contient orkexa-models.json.",
     "invalid_response": "Le serveur de modèles local a renvoyé une réponse inattendue.",
     "model_missing": "Le modèle n’est pas installé. Téléchargez-le ou importez-le d’abord.",
     "not_a_store": "Ce dossier ne contient aucun modèle Ollama.",
@@ -1006,7 +1012,9 @@
     "download_incomplete": "Le téléchargement est incomplet. Réessayez.",
     "invalid_source": "La source de ce modèle n’est pas autorisée.",
     "not_chat_model": "Ce n’est pas un modèle de langage ; seuls les modèles de langage peuvent être mesurés.",
-    "benchmark_failed": "La vitesse n’a pas pu être mesurée."
+    "benchmark_failed": "La vitesse n’a pas pu être mesurée.",
+    "invalid_package_path": "{{path}} n’est pas un paquet de modèles hors ligne que Nodestro peut importer. Choisissez le dossier créé avec orkexa-local export ; il contient orkexa-models.json.",
+    "invalid_package_reason": "{{path}} ne peut pas être importé comme paquet de modèles hors ligne. {{reason}} Exportez de nouveau le paquet sur l’ordinateur source."
   },
   "knowledge": {
     "failed": "L’index sémantique n’a pas pu être mis à jour.",
@@ -1022,6 +1030,8 @@
     "mode_unsupported": "Cette méthode de recherche n’est pas disponible ici.",
     "cancelled": "La création de l’index sémantique a été annulée.",
     "empty_input": "Il n’y a aucun texte à indexer.",
-    "too_many_inputs": "Trop de passages à la fois pour le modèle d’embeddings."
+    "too_many_inputs": "Trop de passages à la fois pour le modèle d’embeddings.",
+    "query_too_long": "Le texte de recherche est trop long : au plus {{max}} caractères sont recherchés. Raccourcissez-le et relancez la recherche.",
+    "hits_out_of_range": "Une recherche renvoie entre 1 et {{max}} résultats. Choisissez un nombre dans cette plage."
   }
 }

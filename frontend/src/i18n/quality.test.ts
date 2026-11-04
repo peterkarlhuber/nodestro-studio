@@ -316,6 +316,11 @@ describe("backend codes", () => {
     "knowledge.reindex_running", "knowledge.reindex_required", "check.local_runtime_missing", "check.offline_cloud_model",
     "check.offline_remote_endpoint", "check.offline_server_tool", "check.offline_mcp", "check.vectors_missing",
     "check.index_building", "check.local_model_missing", "check.local_model_not_chat", "check.local_model_no_tools",
+    // nodestro-api PR #87: unknown ids of their kind, server export jobs, refused offline packages, search bounds.
+    "workflow.not_found", "run.not_found", "publication.not_found", "export.server_unsupported", "export.busy",
+    "export.server_too_large", "export.server_too_large_plain", "export.download_needed", "export.download_needed_plain",
+    "export.downloads", "export.downloads_plain", "local.invalid_package", "local.invalid_package_path",
+    "local.invalid_package_reason", "knowledge.query_too_long", "knowledge.hits_out_of_range",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {
