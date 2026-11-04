@@ -4246,7 +4246,16 @@ kbd {
     margin-left: 12px;
   }
 
-  .search-trigger__label,
+  /* The label stays the button's accessible name on phones (WCAG 2.5.3: the name contains the visible text). */
+  .search-trigger__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
   .search-trigger kbd {
     display: none;
   }

@@ -305,7 +305,6 @@ export function GlobalSearch() {
         type="button"
         className="search-trigger"
         onClick={() => setOpen(true)}
-        aria-label={t("search.open")}
         aria-keyshortcuts="Control+K Meta+K"
         data-testid="search-open"
       >
