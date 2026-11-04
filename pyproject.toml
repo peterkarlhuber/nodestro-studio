@@ -16,9 +16,9 @@ dependencies = [
     # The platform: every component at the exact commit this studio release was tested with
     # (platform/versions.json; `make check-versions` verifies they agree).
     "nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@b55793ab99487d0797d9dc997edc4ef9d6f62c66",
-    "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@c6f02408a5df3c68840c7a0ceef1d4a931353161",
-    "nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@ed350b253053af1aa6c1f995167f6129aaf71615",
-    "nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@f299ecf03995525fe5c0a35a7929d1194114f25a",
+    "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@40c8c06cc088ba98defe532287ff24f23c5bf812",
+    "nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@64e534a88c3aa43820690ec9e2101e1cc7fe231e",
+    "nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@8687e09648ceb73a792b69e73fea93cde461bd3e",
     "fastapi>=0.115",
     "uvicorn[standard]>=0.30",
 ]

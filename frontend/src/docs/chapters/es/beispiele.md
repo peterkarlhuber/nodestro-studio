@@ -409,10 +409,10 @@ La buena investigación empieza con una pregunta precisa y comprobable y con los
 
 | Equipo | Tarea | Capacidades |
 |---|---|---|
-| **Equipo de hipótesis** | Convierte una pregunta de investigación analizada en hipótesis comprobables con hipótesis nulas y predicciones medibles; las revisa tras una crítica metodológica. | hypotheses, operationalisation |
-| **Equipo de estadística** | Contrasta las hipótesis cuantitativas con los datos, evalúa los datos previos con la calculadora y estima el tamaño de muestra para un diseño, un nivel de significación y una potencia dados. (Parámetros: Diseño del estudio, Nivel de significación α, Potencia objetivo) | statistics, power analysis, quantitative methods |
-| **Equipo de métodos cualitativos** | Planifica entrevistas, observaciones o grupos focales para preguntas sobre experiencias, motivos y comportamientos: muestra, guía y análisis. | qualitative methods, interviews, observation |
-| **Equipo de ética y protección de datos** | Revisa estudios con personas o datos personales: consentimiento, minimización de datos, anonimización, participación de la representación de los trabajadores y comité de ética. | research ethics, data protection, informed consent |
+| **Equipo de hipótesis** | Convierte una pregunta de investigación analizada en hipótesis comprobables con hipótesis nulas y predicciones medibles; las revisa tras una crítica metodológica. | hipótesis, operacionalización |
+| **Equipo de estadística** | Contrasta las hipótesis cuantitativas con los datos, evalúa los datos previos con la calculadora y estima el tamaño de muestra para un diseño, un nivel de significación y una potencia dados. (Parámetros: Diseño del estudio, Nivel de significación α, Potencia objetivo) | estadística, análisis de potencia, métodos cuantitativos |
+| **Equipo de métodos cualitativos** | Planifica entrevistas, observaciones o grupos focales para preguntas sobre experiencias, motivos y comportamientos: muestra, guía y análisis. | métodos cualitativos, entrevistas, observación |
+| **Equipo de ética y protección de datos** | Revisa estudios con personas o datos personales: consentimiento, minimización de datos, anonimización, participación de la representación de los trabajadores y comité de ética. | ética de la investigación, protección de datos, consentimiento informado |
 
 **Entrada:** Una pregunta de investigación con su objetivo, los datos existentes de ensayos previos y las condiciones como material, tiempo y equipos. Puedes adjuntar datos de medición y documentos como archivos; el archivo de ejemplo contiene las valoraciones del ensayo previo por panel.
 
@@ -599,11 +599,11 @@ Antes de emprender, conviene mirar con serenidad el mercado, las cifras y los ri
 
 | Equipo | Tarea | Capacidades |
 |---|---|---|
-| **Equipo de mercado** | Estima públicos objetivo, demanda, disposición a pagar y competencia de una idea de negocio. | market analysis, target groups, competition |
-| **Equipo de rentabilidad** | Calcula margen de contribución, punto de equilibrio, recuperación y escenarios de una idea de negocio con la calculadora. | profitability, break-even, financial planning |
-| **Equipo de riesgos** | Busca los puntos débiles de una idea de negocio y formas económicas de comprobarlos antes de emprender. | risk analysis, validation experiments |
-| **Equipo de regulación** | Identifica permisos, registros, etiquetado, higiene, seguros y obligaciones de protección de datos que afectan a una idea de negocio. | regulation, permits, licences, data protection |
-| **Equipo de operaciones** | Comprueba si una idea de negocio puede ejecutarse como se describe: procesos, capacidad, equipamiento, proveedores y logística. | operations, technology, logistics, suppliers |
+| **Equipo de mercado** | Estima públicos objetivo, demanda, disposición a pagar y competencia de una idea de negocio. | análisis de mercado, públicos objetivo, competencia |
+| **Equipo de rentabilidad** | Calcula margen de contribución, punto de equilibrio, recuperación y escenarios de una idea de negocio con la calculadora. | rentabilidad, punto de equilibrio, planificación financiera |
+| **Equipo de riesgos** | Busca los puntos débiles de una idea de negocio y formas económicas de comprobarlos antes de emprender. | análisis de riesgos, experimentos de validación |
+| **Equipo de regulación** | Identifica permisos, registros, etiquetado, higiene, seguros y obligaciones de protección de datos que afectan a una idea de negocio. | regulación, permisos, licencias, protección de datos |
+| **Equipo de operaciones** | Comprueba si una idea de negocio puede ejecutarse como se describe: procesos, capacidad, equipamiento, proveedores y logística. | operaciones, tecnología, logística, proveedores |
 
 **Entrada:** Una descripción de la idea con oferta, públicos objetivo, precios, costes, capacidad y competidores conocidos.
 
@@ -696,10 +696,10 @@ Los retrasos en obra tienen causas distintas, y cada causa necesita otro conocim
 
 | Equipo | Tarea | Capacidades |
 |---|---|---|
-| **Equipo de obra y proyecto** | Examina las causas técnicas de los retrasos de obra: clima, terreno, cambios de proyecto y secuencia de trabajos; atribuye días de retraso con pruebas. | technical causes, design changes, ground conditions, weather |
-| **Equipo de cadena de suministro** | Examina los retrasos causados por proveedores, entregas de material y la dotación de subcontratistas; atribuye días de retraso con pruebas. | supply chain, subcontractors, material delivery |
-| **Equipo de reclamaciones** | Redacta avisos de impedimento y valora reclamaciones de ampliación de plazo para retrasos fuera del ámbito del contratista; una jefatura de obra visa el borrador. (se detiene para una aprobación) | contract, claims, notice of obstruction |
-| **Equipo de recuperación** | Desarrolla medidas de aceleración para una obra retrasada con días recuperados, sobrecoste y una nueva previsión de terminación. | recovery planning, acceleration, cost estimate |
+| **Equipo de obra y proyecto** | Examina las causas técnicas de los retrasos de obra: clima, terreno, cambios de proyecto y secuencia de trabajos; atribuye días de retraso con pruebas. | causas técnicas, cambios de proyecto, terreno, meteorología |
+| **Equipo de cadena de suministro** | Examina los retrasos causados por proveedores, entregas de material y la dotación de subcontratistas; atribuye días de retraso con pruebas. | cadena de suministro, subcontratistas, entrega de material |
+| **Equipo de reclamaciones** | Redacta avisos de impedimento y valora reclamaciones de ampliación de plazo para retrasos fuera del ámbito del contratista; una jefatura de obra visa el borrador. (se detiene para una aprobación) | contrato, reclamaciones, aviso de obstrucción |
+| **Equipo de recuperación** | Desarrolla medidas de aceleración para una obra retrasada con días recuperados, sobrecoste y una nueva previsión de terminación. | plan de recuperación, aceleración, estimación de costes |
 
 **Entrada:** Un resumen del calendario con hitos previstos y reales, observaciones sobre las causas, fecha del informe y condiciones contractuales, como texto o como archivos: calendario en Excel, diario de obra en PDF, fotos como imágenes. Los archivos de ejemplo contienen un calendario y un extracto del diario de obra.
 
@@ -709,7 +709,7 @@ Los retrasos en obra tienen causas distintas, y cada causa necesita otro conocim
 
 **Resultado:** Un informe de situación objetivo con estado del plazo, causas y ámbitos de responsabilidad, avisos y reclamaciones de ampliación, medidas de recuperación con coste, decisiones necesarias y riesgos; tras la aprobación, en PDF y en un archivo de Word editable. La vista de orquestación muestra qué equipos formó la coordinación, qué entregó cada uno como datos estructurados y por qué. Las cuestiones sobre penalizaciones contractuales y ampliaciones de plazo quedan sujetas a revisión técnica y jurídica.
 
-**Qué se decide automáticamente y cuándo interviene una persona:** Automático: la coordinación elige como máximo tres equipos, hace trabajar como máximo dos a la vez y da a cada equipo como máximo dos encargos; cada decisión de composición y de encargo queda registrada con su motivo. Una persona decide dos veces: la jefatura de obra visa el borrador del aviso de impedimento dentro del equipo de reclamaciones (rechazarlo detiene la ejecución), y una persona aprueba el informe de situación antes de que se creen archivos. Límites: como máximo 8 decisiones de la coordinación, 50 pasos, 40 minutos y 4 USD por ejecución.
+**Qué se decide automáticamente y cuándo interviene una persona:** Automático: la coordinación elige como máximo tres equipos, hace trabajar como máximo dos a la vez y da a cada equipo como máximo dos encargos; cada decisión de composición y de encargo queda registrada con su motivo. Nodestro solo acepta el retraso esperado en días como resultado de la herramienta de fechas o de la calculadora: un valor estimado vuelve una vez al analista de plazos y, después, el paso se detiene. Una persona decide dos veces: la jefatura de obra visa el borrador del aviso de impedimento dentro del equipo de reclamaciones (rechazarlo detiene la ejecución), y una persona aprueba el informe de situación antes de que se creen archivos. Límites: como máximo 8 decisiones de la coordinación, 50 pasos, 40 minutos y 4 USD por ejecución.
 
 **Por qué esta arquitectura:** Una cadena fija trataba igual todos los retrasos: un analista de causas, un planificador de medidas, tanto si el problema era una helada como un aviso que faltaba. Con la coordinación, un retraso puramente climático no cuesta una revisión de reclamaciones, mientras que un cambio de proyecto ordenado por la propiedad incorpora el equipo de reclamaciones con su visado. Los equipos devuelven resultados estructurados (días, responsabilidad, pruebas), de modo que el informe puede sumarlos en lugar de reformular texto. El cálculo del plazo, el informe y la aprobación final siguen siendo pasos fijos porque todo informe los necesita.
 

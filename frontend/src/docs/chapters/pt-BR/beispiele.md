@@ -409,10 +409,10 @@ Boa pesquisa começa com uma pergunta precisa e testável e com os métodos cert
 
 | Equipe | Tarefa | Capacidades |
 |---|---|---|
-| **Equipe de hipóteses** | Transforma uma pergunta de pesquisa analisada em hipóteses testáveis com hipóteses nulas e previsões mensuráveis; revisa-as após uma crítica metodológica. | hypotheses, operationalisation |
-| **Equipe de estatística** | Confronta hipóteses quantitativas com os dados, avalia dados preliminares com a calculadora e estima o tamanho da amostra para um desenho, um nível de significância e um poder dados. (Parâmetros: Desenho do estudo, Nível de significância α, Poder desejado) | statistics, power analysis, quantitative methods |
-| **Equipe de métodos qualitativos** | Planeja entrevistas, observações ou grupos focais para perguntas sobre experiências, motivos e comportamentos: amostra, roteiro e análise. | qualitative methods, interviews, observation |
-| **Equipe de ética e proteção de dados** | Verifica estudos com pessoas ou dados pessoais: consentimento, minimização de dados, anonimização, participação da representação dos trabalhadores e parecer ético. | research ethics, data protection, informed consent |
+| **Equipe de hipóteses** | Transforma uma pergunta de pesquisa analisada em hipóteses testáveis com hipóteses nulas e previsões mensuráveis; revisa-as após uma crítica metodológica. | hipóteses, operacionalização |
+| **Equipe de estatística** | Confronta hipóteses quantitativas com os dados, avalia dados preliminares com a calculadora e estima o tamanho da amostra para um desenho, um nível de significância e um poder dados. (Parâmetros: Desenho do estudo, Nível de significância α, Poder desejado) | estatística, análise de poder, métodos quantitativos |
+| **Equipe de métodos qualitativos** | Planeja entrevistas, observações ou grupos focais para perguntas sobre experiências, motivos e comportamentos: amostra, roteiro e análise. | métodos qualitativos, entrevistas, observação |
+| **Equipe de ética e proteção de dados** | Verifica estudos com pessoas ou dados pessoais: consentimento, minimização de dados, anonimização, participação da representação dos trabalhadores e parecer ético. | ética em pesquisa, proteção de dados, consentimento informado |
 
 **Entrada:** Uma pergunta de pesquisa com seu objetivo, dados existentes de ensaios preliminares e restrições como material, tempo e equipamentos. Você pode anexar dados de medição e documentos como arquivos; o arquivo de exemplo contém as notas do ensaio preliminar por painel.
 
@@ -599,11 +599,11 @@ Antes de abrir um negócio, vale olhar com sobriedade para mercado, números e r
 
 | Equipe | Tarefa | Capacidades |
 |---|---|---|
-| **Equipe de mercado** | Estima públicos-alvo, demanda, disposição a pagar e concorrência de uma ideia de negócio. | market analysis, target groups, competition |
-| **Equipe de rentabilidade** | Calcula margem de contribuição, ponto de equilíbrio, retorno e cenários de uma ideia de negócio com a calculadora. | profitability, break-even, financial planning |
-| **Equipe de riscos** | Busca os pontos fracos de uma ideia de negócio e formas baratas de testá-los antes de abrir a empresa. | risk analysis, validation experiments |
-| **Equipe de regulação** | Identifica licenças, registros, rotulagem, higiene, seguros e obrigações de proteção de dados que uma ideia de negócio envolve. | regulation, permits, licences, data protection |
-| **Equipe de operações** | Verifica se uma ideia de negócio pode ser executada como descrito: processos, capacidade, equipamentos, fornecedores e logística. | operations, technology, logistics, suppliers |
+| **Equipe de mercado** | Estima públicos-alvo, demanda, disposição a pagar e concorrência de uma ideia de negócio. | análise de mercado, públicos-alvo, concorrência |
+| **Equipe de rentabilidade** | Calcula margem de contribuição, ponto de equilíbrio, retorno e cenários de uma ideia de negócio com a calculadora. | rentabilidade, ponto de equilíbrio, planejamento financeiro |
+| **Equipe de riscos** | Busca os pontos fracos de uma ideia de negócio e formas baratas de testá-los antes de abrir a empresa. | análise de riscos, experimentos de validação |
+| **Equipe de regulação** | Identifica licenças, registros, rotulagem, higiene, seguros e obrigações de proteção de dados que uma ideia de negócio envolve. | regulação, autorizações, licenças, proteção de dados |
+| **Equipe de operações** | Verifica se uma ideia de negócio pode ser executada como descrito: processos, capacidade, equipamentos, fornecedores e logística. | operações, tecnologia, logística, fornecedores |
 
 **Entrada:** Uma descrição da ideia com oferta, públicos-alvo, preços, custos, capacidade e concorrentes conhecidos.
 
@@ -696,10 +696,10 @@ Atrasos na obra têm causas diferentes, e cada causa precisa de outro conhecimen
 
 | Equipe | Tarefa | Capacidades |
 |---|---|---|
-| **Equipe de obra e projeto** | Examina causas técnicas de atrasos de obra: clima, solo, alterações de projeto e sequência dos serviços; atribui dias de atraso com evidências. | technical causes, design changes, ground conditions, weather |
-| **Equipe de suprimentos** | Examina atrasos causados por fornecedores, entregas de material e efetivo de subempreiteiros; atribui dias de atraso com evidências. | supply chain, subcontractors, material delivery |
-| **Equipe de pleitos** | Redige notificações de impedimento e avalia pleitos de prorrogação de prazo para atrasos fora da esfera da construtora; uma gerência de obra visa o rascunho. (para por uma liberação) | contract, claims, notice of obstruction |
-| **Equipe de recuperação** | Desenvolve medidas de aceleração para uma obra atrasada com dias recuperados, custo adicional e nova previsão de conclusão. | recovery planning, acceleration, cost estimate |
+| **Equipe de obra e projeto** | Examina causas técnicas de atrasos de obra: clima, solo, alterações de projeto e sequência dos serviços; atribui dias de atraso com evidências. | causas técnicas, mudanças de projeto, condições do solo, clima |
+| **Equipe de suprimentos** | Examina atrasos causados por fornecedores, entregas de material e efetivo de subempreiteiros; atribui dias de atraso com evidências. | cadeia de suprimentos, subempreiteiros, entrega de material |
+| **Equipe de pleitos** | Redige notificações de impedimento e avalia pleitos de prorrogação de prazo para atrasos fora da esfera da construtora; uma gerência de obra visa o rascunho. (para por uma liberação) | contrato, pleitos, notificação de impedimento |
+| **Equipe de recuperação** | Desenvolve medidas de aceleração para uma obra atrasada com dias recuperados, custo adicional e nova previsão de conclusão. | plano de recuperação, aceleração, estimativa de custos |
 
 **Entrada:** Uma visão geral do cronograma com marcos planejados e reais, observações sobre as causas, data do relatório e condições contratuais, como texto ou como arquivos: cronograma em Excel, diário de obra em PDF, fotos como imagens. Os arquivos de exemplo contêm um cronograma e um trecho do diário de obra.
 
@@ -709,7 +709,7 @@ Atrasos na obra têm causas diferentes, e cada causa precisa de outro conhecimen
 
 **Resultado:** Um relatório de status objetivo com situação do cronograma, causas e esferas de responsabilidade, notificações e pleitos de prorrogação, medidas de recuperação com custo, decisões necessárias e riscos; após a liberação, em PDF e em um arquivo Word editável. A visão de orquestração mostra quais equipes a coordenação montou, o que cada uma entregou como dados estruturados e por quê. Questões sobre multas contratuais e prorrogações de prazo continuam sujeitas a revisão técnica e jurídica.
 
-**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: a coordenação escolhe no máximo três equipes, faz no máximo duas trabalharem ao mesmo tempo e dá a cada equipe no máximo duas tarefas; cada decisão de composição e de tarefa é registrada com o motivo. Uma pessoa decide duas vezes: a gerência de obra visa o rascunho da notificação de impedimento dentro da equipe de pleitos (rejeitá-lo encerra a execução), e uma pessoa libera o relatório de status antes que arquivos sejam criados. Limites: no máximo 8 decisões da coordenação, 50 passos, 40 minutos e 4 USD por execução.
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: a coordenação escolhe no máximo três equipes, faz no máximo duas trabalharem ao mesmo tempo e dá a cada equipe no máximo duas tarefas; cada decisão de composição e de tarefa é registrada com o motivo. O Nodestro só aceita o atraso esperado em dias como resultado da ferramenta de datas ou da calculadora: um valor estimado volta uma vez para o analista de cronograma e, depois, a etapa para. Uma pessoa decide duas vezes: a gerência de obra visa o rascunho da notificação de impedimento dentro da equipe de pleitos (rejeitá-lo encerra a execução), e uma pessoa libera o relatório de status antes que arquivos sejam criados. Limites: no máximo 8 decisões da coordenação, 50 passos, 40 minutos e 4 USD por execução.
 
 **Por que esta arquitetura:** Uma cadeia fixa tratava todo atraso da mesma forma: um analista de causas, um planejador de medidas, fosse o problema geada ou uma notificação ausente. Com a coordenação, um atraso puramente climático não custa uma análise de pleitos, enquanto uma alteração de projeto determinada pelo contratante traz a equipe de pleitos com o seu visto. As equipes devolvem resultados estruturados (dias, responsabilidade, evidências), de modo que o relatório pode somá-los em vez de reformular texto. O cálculo do cronograma, o relatório e a liberação final continuam sendo passos fixos, porque todo relatório precisa deles.
 

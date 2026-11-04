@@ -409,10 +409,10 @@ Una buona ricerca comincia con una domanda precisa e verificabile e con i metodi
 
 | Team | Compito | Capacità |
 |---|---|---|
-| **Team ipotesi** | Trasforma una domanda di ricerca analizzata in ipotesi verificabili con ipotesi nulle e previsioni misurabili; le rivede dopo una critica metodologica. | hypotheses, operationalisation |
-| **Team statistica** | Confronta le ipotesi quantitative con i dati, analizza i dati preliminari con la calcolatrice e stima la dimensione del campione per un disegno, un livello di significatività e una potenza dati. (Parametri: Disegno dello studio, Livello di significatività α, Potenza desiderata) | statistics, power analysis, quantitative methods |
-| **Team metodi qualitativi** | Pianifica interviste, osservazioni o focus group per domande su esperienze, motivazioni e comportamenti: campione, traccia e analisi. | qualitative methods, interviews, observation |
-| **Team etica e protezione dei dati** | Verifica studi con persone o dati personali: consenso, minimizzazione dei dati, anonimizzazione, coinvolgimento delle rappresentanze dei lavoratori e parere etico. | research ethics, data protection, informed consent |
+| **Team ipotesi** | Trasforma una domanda di ricerca analizzata in ipotesi verificabili con ipotesi nulle e previsioni misurabili; le rivede dopo una critica metodologica. | ipotesi, operazionalizzazione |
+| **Team statistica** | Confronta le ipotesi quantitative con i dati, analizza i dati preliminari con la calcolatrice e stima la dimensione del campione per un disegno, un livello di significatività e una potenza dati. (Parametri: Disegno dello studio, Livello di significatività α, Potenza desiderata) | statistica, analisi della potenza, metodi quantitativi |
+| **Team metodi qualitativi** | Pianifica interviste, osservazioni o focus group per domande su esperienze, motivazioni e comportamenti: campione, traccia e analisi. | metodi qualitativi, interviste, osservazione |
+| **Team etica e protezione dei dati** | Verifica studi con persone o dati personali: consenso, minimizzazione dei dati, anonimizzazione, coinvolgimento delle rappresentanze dei lavoratori e parere etico. | etica della ricerca, protezione dei dati, consenso informato |
 
 **Input:** Una domanda di ricerca con il suo obiettivo, i dati esistenti delle prove preliminari e i vincoli come materiale, tempo e attrezzature. Puoi allegare dati di misura e documenti come file; il file di esempio contiene le valutazioni della prova preliminare per pannello.
 
@@ -599,11 +599,11 @@ Prima di avviare un'impresa conviene guardare con lucidità mercato, numeri e ri
 
 | Team | Compito | Capacità |
 |---|---|---|
-| **Team mercato** | Stima target, domanda, disponibilità a pagare e concorrenza di un'idea imprenditoriale. | market analysis, target groups, competition |
-| **Team redditività** | Calcola margine di contribuzione, punto di pareggio, rientro e scenari di un'idea imprenditoriale con la calcolatrice. | profitability, break-even, financial planning |
-| **Team rischi** | Cerca i punti deboli di un'idea imprenditoriale e modi economici per verificarli prima dell'avvio. | risk analysis, validation experiments |
-| **Team regolamentazione** | Individua autorizzazioni, registrazioni, etichettatura, igiene, assicurazioni e obblighi di protezione dei dati che riguardano un'idea imprenditoriale. | regulation, permits, licences, data protection |
-| **Team operazioni** | Verifica se un'idea imprenditoriale si può realizzare come descritto: processi, capacità, attrezzature, fornitori e logistica. | operations, technology, logistics, suppliers |
+| **Team mercato** | Stima target, domanda, disponibilità a pagare e concorrenza di un'idea imprenditoriale. | analisi di mercato, target, concorrenza |
+| **Team redditività** | Calcola margine di contribuzione, punto di pareggio, rientro e scenari di un'idea imprenditoriale con la calcolatrice. | redditività, punto di pareggio, pianificazione finanziaria |
+| **Team rischi** | Cerca i punti deboli di un'idea imprenditoriale e modi economici per verificarli prima dell'avvio. | analisi dei rischi, esperimenti di validazione |
+| **Team regolamentazione** | Individua autorizzazioni, registrazioni, etichettatura, igiene, assicurazioni e obblighi di protezione dei dati che riguardano un'idea imprenditoriale. | regolamentazione, autorizzazioni, licenze, protezione dei dati |
+| **Team operazioni** | Verifica se un'idea imprenditoriale si può realizzare come descritto: processi, capacità, attrezzature, fornitori e logistica. | operatività, tecnologia, logistica, fornitori |
 
 **Input:** Una descrizione dell'idea con offerta, target, prezzi, costi, capacità e concorrenti noti.
 
@@ -696,10 +696,10 @@ I ritardi in cantiere hanno cause diverse, e ogni causa richiede competenze dive
 
 | Team | Compito | Capacità |
 |---|---|---|
-| **Team di cantiere e progettazione** | Esamina le cause tecniche dei ritardi di cantiere: meteo, terreno, varianti e sequenza delle lavorazioni; attribuisce giorni di ritardo con prove. | technical causes, design changes, ground conditions, weather |
-| **Team forniture** | Esamina i ritardi causati da fornitori, consegne di materiale e organico dei subappaltatori; attribuisce giorni di ritardo con prove. | supply chain, subcontractors, material delivery |
-| **Team riserve** | Redige comunicazioni di impedimento e valuta richieste di proroga dei termini per ritardi fuori dalla sfera dell'impresa; una direzione di cantiere vista la bozza. (si ferma per un'approvazione) | contract, claims, notice of obstruction |
-| **Team recupero** | Sviluppa misure di accelerazione per un cantiere in ritardo con giorni recuperati, costi aggiuntivi e una nuova previsione di ultimazione. | recovery planning, acceleration, cost estimate |
+| **Team di cantiere e progettazione** | Esamina le cause tecniche dei ritardi di cantiere: meteo, terreno, varianti e sequenza delle lavorazioni; attribuisce giorni di ritardo con prove. | cause tecniche, varianti di progetto, terreno, meteo |
+| **Team forniture** | Esamina i ritardi causati da fornitori, consegne di materiale e organico dei subappaltatori; attribuisce giorni di ritardo con prove. | catena di fornitura, subappaltatori, consegna dei materiali |
+| **Team riserve** | Redige comunicazioni di impedimento e valuta richieste di proroga dei termini per ritardi fuori dalla sfera dell'impresa; una direzione di cantiere vista la bozza. (si ferma per un'approvazione) | contratto, riserve, comunicazione di impedimento |
+| **Team recupero** | Sviluppa misure di accelerazione per un cantiere in ritardo con giorni recuperati, costi aggiuntivi e una nuova previsione di ultimazione. | piano di recupero, accelerazione, stima dei costi |
 
 **Input:** Una panoramica del cronoprogramma con traguardi pianificati ed effettivi, note sulle cause, data del rapporto e condizioni contrattuali, come testo o come file: cronoprogramma in Excel, giornale dei lavori in PDF, foto come immagini. I file di esempio contengono un cronoprogramma e un estratto del giornale dei lavori.
 
@@ -709,7 +709,7 @@ I ritardi in cantiere hanno cause diverse, e ogni causa richiede competenze dive
 
 **Risultato:** Un rapporto di avanzamento oggettivo con situazione dei tempi, cause e sfere di responsabilità, comunicazioni e richieste di proroga, misure di recupero con costi, decisioni necessarie e rischi; dopo l'approvazione in PDF e in un file Word modificabile. La vista di orchestrazione mostra quali team il coordinamento ha composto, che cosa ciascuno ha consegnato come dati strutturati e perché. Le questioni su penali contrattuali e proroghe dei termini restano soggette a verifica tecnica e legale.
 
-**Che cosa viene deciso automaticamente e quando interviene una persona:** Automatico: il coordinamento sceglie al massimo tre team, ne fa lavorare al massimo due contemporaneamente e dà a ogni team al massimo due incarichi; ogni decisione di composizione e di incarico viene registrata con la motivazione. Una persona decide due volte: la direzione di cantiere vista la bozza di comunicazione di impedimento all'interno del team riserve (un rifiuto termina l'esecuzione), e una persona approva il rapporto di avanzamento prima che vengano creati i file. Limiti: al massimo 8 decisioni del coordinamento, 50 passi, 40 minuti e 4 USD per esecuzione.
+**Che cosa viene deciso automaticamente e quando interviene una persona:** Automatico: il coordinamento sceglie al massimo tre team, ne fa lavorare al massimo due contemporaneamente e dà a ogni team al massimo due incarichi; ogni decisione di composizione e di incarico viene registrata con la motivazione. Nodestro accetta il ritardo previsto in giorni solo come risultato dello strumento delle date o della calcolatrice: un valore stimato torna una volta all'analista del cronoprogramma, poi il passo si ferma. Una persona decide due volte: la direzione di cantiere vista la bozza di comunicazione di impedimento all'interno del team riserve (un rifiuto termina l'esecuzione), e una persona approva il rapporto di avanzamento prima che vengano creati i file. Limiti: al massimo 8 decisioni del coordinamento, 50 passi, 40 minuti e 4 USD per esecuzione.
 
 **Perché questa architettura:** Una catena fissa trattava ogni ritardo allo stesso modo: un analista delle cause, un pianificatore delle misure, che il problema fosse il gelo o una comunicazione mancante. Con il coordinamento, un ritardo puramente meteorologico non costa un esame delle riserve, mentre una variante ordinata dal committente coinvolge il team riserve con il suo visto. I team restituiscono risultati strutturati (giorni, responsabilità, prove), così il rapporto può sommarli invece di riformulare testo. Il calcolo dei tempi, il rapporto e l'approvazione finale restano passi fissi perché ogni rapporto ne ha bisogno.
 
