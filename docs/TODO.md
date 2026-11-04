@@ -13,7 +13,7 @@
 | P1 High | 0 |
 | P2 Medium | 1 |
 | P3 Low | 18 |
-| P4 Optional | 9 |
+| P4 Optional | 10 |
 
 **Release blockers:** None for this repository.
 
@@ -155,6 +155,15 @@ None known.
   every long example description starts with a short label, enforced in nodestro-examples).
 - **Next step:** Show localized labels once workflow summaries carry the contract descriptions.
 - **Depends on:** nodestro-api (contract descriptions in workflow summaries).
+
+### ST-048 · Local models settings: three small wording gaps
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** UX round 3 (studio-new N3 findings)
+- **What:** An external model server that cannot be reached shows "Stopped" instead of "Not reachable"; on machines
+  without a GPU the CPU saving mode sentence appears twice; the tool-agent task has different names in Settings >
+  Local models and in an example's model plan.
+- **Next step:** One status text for unreachable external servers, one CPU sentence, one task name in both places
+  (all six languages).
 
 ## Tests and quality assurance
 
