@@ -35,7 +35,9 @@
     "text": "Suggerimenti in base al compito, alla memoria di questo computer e ai modelli installati. Il modello di ogni agente lo scegli tu; nulla viene cambiato automaticamente.",
     "task": "Compito",
     "model": "Modello",
-    "quality": "Idoneità"
+    "quality": "Idoneità",
+    "titleServer": "Consigliati per questo server",
+    "textServer": "Suggerimenti in base al compito, alle risorse del server e ai modelli installati. Il modello di ogni agente lo scegli tu; nulla viene cambiato automaticamente."
   },
   "tasks": {
     "classify": "Smistare e instradare",
@@ -77,7 +79,8 @@
     "state": "Stato",
     "own": "Modello proprio (importato o scaricato a parte)",
     "fit": "Su questo computer",
-    "actions": "Azioni"
+    "actions": "Azioni",
+    "fitServer": "Sul server"
   },
   "kind": {
     "chat": "Modello linguistico",
@@ -271,7 +274,9 @@
       "unknown": "{{tokens}} token"
     },
     "contextUnknown": "non ancora nota (compare quando un modello è stato eseguito)",
-    "unknown": "sconosciuto"
+    "unknown": "sconosciuto",
+    "serverTitle": "Sul server",
+    "hidden": "L’hardware e le cartelle del server li vede solo il suo operatore."
   },
   "fit": {
     "gpu": "Gira sulla GPU",
@@ -279,7 +284,11 @@
     "cpuOnly": "Gira sulla CPU (più lento)",
     "too_slow": "Troppo lento senza GPU",
     "too_large": "Troppo grande per questo computer",
-    "slowHint": "lento su questo computer (misurato)"
+    "slowHint": "lento su questo computer (misurato)",
+    "server": {
+      "fits": "Funziona sul server",
+      "no": "Non adatto al server"
+    }
   },
   "advice": {
     "context_small": "Il server dei modelli dà ai modelli solo {{tokens}} token di contesto; gli agenti hanno bisogno di circa {{recommended}} token per prompt, ragionamento e risposta, altrimenti le risposte vengono troncate.",
@@ -319,5 +328,9 @@
     "inactive": "Non attiva qui: i modelli girano su una scheda grafica.",
     "badge": "Ragionamento ridotto: modalità risparmio CPU",
     "badgeTip": "Questo agente ha risposto senza la lunga fase di ragionamento perché questo computer non ha una scheda grafica. Per il ragionamento completo, imposta l’impegno dell’agente su Alto o disattiva la modalità risparmio CPU in Impostazioni → Modelli locali."
+  },
+  "licenseSource": {
+    "ollama": "secondo il manifest di Ollama",
+    "upstream": "secondo la scheda del modello dell’editore"
   }
 }

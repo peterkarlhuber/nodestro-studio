@@ -21,7 +21,7 @@ import {
   Toggle,
 } from "../components/ui";
 import { providerLabel } from "../components/ModelPicker";
-import { problemText } from "../lib/errors";
+import { downloadList, problemText } from "../lib/errors";
 import { formatDate, formatLargeBytes } from "../lib/format";
 
 export function PortableOptions({
@@ -274,12 +274,7 @@ export function PortableSummary({
         {portable.downloads.some((item) => !item.cached) ? (
           <p className="small muted">
             {t("publish.export.portable.downloads", {
-              items: portable.downloads
-                .filter((item) => !item.cached)
-                .map((item) =>
-                  t(`publish.export.portable.download.${item.what}`),
-                )
-                .join(", "),
+              items: downloadList(t, portable.downloads.filter((item) => !item.cached).map((item) => item.what)),
             })}
           </p>
         ) : null}

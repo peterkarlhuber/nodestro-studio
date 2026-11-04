@@ -13,6 +13,7 @@ import { Link, useInRouterContext } from "react-router-dom";
 import { ApiError } from "../api/client";
 import { dockerReasonKey, isDockerReason } from "../api/types";
 import i18n from "../i18n";
+import { formatLargeBytes } from "./format";
 import { useSettingsHref } from "./settingsLink";
 
 export interface Coded {
@@ -67,9 +68,11 @@ function textKey(code: string): string {
   return alias ? alias[1] + code.slice(alias[0].length) : code;
 }
 
-function interpolationParams(t: TFunction, params: Record<string, unknown> | null | undefined): Record<string, unknown> {
+function interpolationParams(t: TFunction, params: Record<string, unknown> | null | undefined, code?: string | null): Record<string, unknown> {
   // Values are shown as they are; nested problems (e.g. why a workflow cannot start) in the current language too.
   const result: Record<string, unknown> = {};
+  const special = codeParams(t, code ?? null, params ?? {});
+  if (special) return special;
   for (const [key, value] of Object.entries(params ?? {})) {
     if ((key === "tokens" || key === "recommended" || key === "max_tokens") && typeof value === "number") {
       // Token counts of the local context checks: 32768 reads as "32,768".
@@ -106,6 +109,15 @@ function interpolationParams(t: TFunction, params: Record<string, unknown> | nul
       : value;
   }
   return result;
+}
+
+/** Parameters of a few codes that need more than the per-key reading below (or null for all other codes). */
+function codeParams(t: TFunction, code: string | null, params: Record<string, unknown>): Record<string, unknown> | null {
+  if (code === "export.download_needed" || code === "export.downloads") return { ...params, items: downloadList(t, downloadCodes(params)) };
+  if (code === "export.server_too_large")
+    return { ...params, size: formatLargeBytes(Number(params.size)), limit: formatLargeBytes(Number(params.limit)) };
+  if (code === "local.invalid_package_reason") return { ...params, reason: t(`errors.local.${String(params.reason)}`) };
+  return null;
 }
 
 /** A nested problem; a form field's problem names its field. */
@@ -173,6 +185,17 @@ export function refineProblem(
   }
   // A size limit, when the server names it.
   if (code === "request.too_large" && params.limit_mb != null) return { code: "request.too_large_limit", params };
+  // The downloads a portable build needs: codes (python, libraries, ollama) named in words. Older APIs send them only
+  // joined in ``items`` and a failed build job names one in ``what``; without any of them the sentence stays general.
+  if ((code === "export.download_needed" || code === "export.downloads") && !downloadCodes(params).length)
+    return { code: `${code}_plain`, params };
+  // A server's size limit for portable packages: the refused estimate names both sizes, a failed build job neither.
+  if (code === "export.server_too_large" && !(Number(params.size) > 0 && Number(params.limit) > 0))
+    return { code: "export.server_too_large_plain", params };
+  // An offline model package refused before its import started: the folder, and what is wrong with it when the
+  // agent library's reason has a sentence of its own (a damaged manifest, an invalid model name).
+  if (code === "local.invalid_package" && typeof params.path === "string" && params.path)
+    return { code: PACKAGE_REASONS.has(params.reason as string) ? "local.invalid_package_reason" : "local.invalid_package_path", params };
   if (code && PROVIDER_FAILURES.has(code)) return { code, params: { ...params, provider: params.provider ?? "" } };
   // A source-only package a person accepted to build: its build script runs only in a container. The runtime names
   // why that container could not run (no Docker, or no pinned resolver image); never on this computer.
@@ -209,6 +232,29 @@ export function refineProblem(
   return { code, params };
 }
 
+/** Reasons of a refused offline package whose own sentence (errors.local.<reason>) says what is wrong. */
+const PACKAGE_REASONS = new Set(["checksum_mismatch", "invalid_name"]);
+
+/** The download codes of a portable export problem: ``downloads`` (since API PR #87), else ``items`` or ``what``. */
+export function downloadCodes(params: Record<string, unknown>): string[] {
+  if (Array.isArray(params.downloads)) return params.downloads.filter((item): item is string => typeof item === "string" && item !== "");
+  if (typeof params.items === "string" && params.items.trim()) return params.items.split(",").map((item) => item.trim()).filter(Boolean);
+  if (typeof params.what === "string" && params.what) return [params.what];
+  return [];
+}
+
+/** Download codes in words ("Python and the libraries"); an unknown code stays as it came. */
+export function downloadList(t: TFunction, codes: string[]): string {
+  const names = codes.map((item) => t(`publish.export.portable.download.${item}`, { defaultValue: item }));
+  try {
+    // The language of ``t`` (a fixed one in tests and previews), else the interface's.
+    const language = (t as unknown as { lng?: string }).lng || i18n.language;
+    return new Intl.ListFormat(language, { style: "long", type: "conjunction" }).format(names);
+  } catch {
+    return names.join(", ");
+  }
+}
+
 /** The code a coded message is read with (also for stored messages without a code, and refined ones). */
 export function problemCode(item: Coded): string | null {
   return resolved(item).code;
@@ -218,7 +264,7 @@ export function problemCode(item: Coded): string | null {
 export function problemHint(t: TFunction, item: Coded): string | null {
   const { code, params } = resolved(item);
   if (!code) return null;
-  const values = interpolationParams(t, params);
+  const values = interpolationParams(t, params, code);
   const key = `errors.hints.${textKey(code)}`;
   return i18n.exists(key, values) ? t(key, values) : null;
 }
@@ -237,7 +283,7 @@ function namedTool(t: TFunction, code: string, params: Record<string, unknown>, 
 export function problemText(t: TFunction, item: Coded): string {
   const { code, params } = resolved(item);
   if (code) {
-    const values = interpolationParams(t, params);
+    const values = interpolationParams(t, params, code);
     // With the values, a plural key ("…_one", "…_other") counts as existing too.
     const key = `errors.${textKey(code)}`;
     if (i18n.exists(key, values)) return namedTool(t, code, params, t(key, values));

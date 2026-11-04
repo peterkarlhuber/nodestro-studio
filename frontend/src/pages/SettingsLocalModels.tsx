@@ -133,12 +133,14 @@ function reasonText(t: ReturnType<typeof useTranslation>["t"], item: Recommendat
 function Recommendations({ overview, onPull, pulling, canDownload }: { overview: LocalOverview; onPull: (model: string) => void; pulling: string | null; canDownload: boolean }) {
   const { t } = useTranslation();
   const tasks = new Map(overview.recommendations.map((item) => [item.task, item]));
+  // For a server's tenants (no hardware shown) the suggestions are for the server, not for the computer in front of them.
+  const title = overview.hardware ? t("localModels.recommend.title") : t("localModels.recommend.titleServer");
   return (
     <div className="stack">
       <h3 className="small">
-        {t("localModels.recommend.title")} <HelpTip id="settings.localRecommendations" label={t("localModels.recommend.title")} />
+        {title} <HelpTip id="settings.localRecommendations" label={title} />
       </h3>
-      <p className="muted small">{t("localModels.recommend.text")}</p>
+      <p className="muted small">{overview.hardware ? t("localModels.recommend.text") : t("localModels.recommend.textServer")}</p>
       {/* Focusable, so the table can be scrolled with the keyboard on a phone even when it holds no button. */}
       <div className="table-wrap" tabIndex={0} role="region" aria-label={t("localModels.recommend.title")}>
         <table className="table table--compact" data-testid="local-recommendations">
@@ -196,11 +198,31 @@ function Recommendations({ overview, onPull, pulling, canDownload }: { overview:
 }
 
 /**
- * The license's name: the catalog adds an English note on where the license was read ("Apache-2.0 (upstream; the
+ * The license's SPDX id. Older runtimes add an English note on where the license was read ("Apache-2.0 (upstream; the
  * Ollama manifest has no license layer)"), which is provenance for maintainers, not text of the interface.
  */
 export function licenseName(license: string): string {
   return license.replace(/\s*\(.*\)\s*$/, "");
+}
+
+/**
+ * Where the license was read: ``license_source`` when the API sends it; for older ones, the note means the manifest
+ * had no license layer, so the publisher's model card (upstream) is the source. Null when nothing says.
+ */
+export function licenseSource(model: Pick<CatalogModel, "license" | "license_source">): "ollama" | "upstream" | null {
+  if (model.license_source === "ollama" || model.license_source === "upstream") return model.license_source;
+  return /\(.*\)\s*$/.test(model.license) ? "upstream" : null;
+}
+
+function LicenseText({ model }: { model: CatalogModel }) {
+  const { t } = useTranslation();
+  const source = licenseSource(model);
+  return (
+    <span data-testid={`local-license-${model.name}`}>
+      {licenseName(model.license)}
+      {source ? ` (${t(`localModels.licenseSource.${source}`)})` : ""}
+    </span>
+  );
 }
 
 /** Brings "Build from local files" into view and puts the focus into its first path field. */
@@ -236,13 +258,17 @@ function Catalog({
   });
   const extra = overview.status.models.filter((model) => !model.catalog);
   const installed = new Map(overview.status.models.map((model) => [model.name, model]));
+  // A server's tenants see no hardware: the fit is the runtime's verdict for the server, and an API without one
+  // leaves the column out instead of an empty one.
+  const fits = new Map(overview.catalog.map((model) => [model.name, catalogFit(model, overview)]));
+  const showFit = [...fits.values()].some((fit) => fit !== null);
   const row = (model: CatalogModel) => (
     <tr key={model.name} data-testid={`local-model-${model.name}`}>
       <td>
         <code>{model.name}</code>
         <div className="muted small">
           {t(`localModels.kind.${model.kind}`)} · {model.vendor ? `${model.vendor} · ` : ""}
-          {licenseName(model.license)}
+          <LicenseText model={model} />
         </div>
         {model.region === "eu" || model.tasks?.length ? (
           <div className="muted small">
@@ -255,9 +281,9 @@ function Catalog({
       </td>
       <td className="num">{formatLargeBytes(model.download_bytes)}</td>
       <td className="num">{formatLargeBytes(model.memory_bytes)}</td>
-      <td>
-        <FitBadge fit={catalogFit(model, overview)} hardware={overview.hardware} />
-      </td>
+      {showFit ? (
+        <td>{fits.get(model.name) ? <FitBadge fit={fits.get(model.name)!} hardware={overview.hardware} /> : "–"}</td>
+      ) : null}
       <td>
         {model.installed ? (
           <div className="stack-sm">
@@ -318,7 +344,7 @@ function Catalog({
               <th>{t("localModels.catalog.model")}</th>
               <th className="num">{t("localModels.catalog.download")}</th>
               <th className="num">{t("localModels.catalog.memory")}</th>
-              <th>{t("localModels.catalog.fit")}</th>
+              {showFit ? <th>{overview.hardware ? t("localModels.catalog.fit") : t("localModels.catalog.fitServer")}</th> : null}
               <th>{t("localModels.catalog.state")}</th>
               <th>
                 <span className="sr-only">{t("localModels.catalog.actions")}</span>
@@ -335,7 +361,7 @@ function Catalog({
                 </td>
                 <td className="num">{formatLargeBytes(model.size)}</td>
                 <td />
-                <td />
+                {showFit ? <td /> : null}
                 <td>
                   <SpeedCell model={model} canMeasure={canInstall && overview.status.running} />
                 </td>
@@ -439,7 +465,7 @@ function StorageForm({ overview, canInstall }: { overview: LocalOverview; canIns
       <p className="muted small">
         {t("localModels.storage.current", {
           path: status.models_dir ?? "–",
-          free: status.free_bytes === null ? "–" : formatLargeBytes(status.free_bytes),
+          free: status.free_bytes == null ? "–" : formatLargeBytes(status.free_bytes),
         })}
       </p>
       <Field label={t("localModels.storage.path")} hint={t("localModels.storage.pathHint")}>
@@ -673,7 +699,7 @@ function reasoningState(t: ReturnType<typeof useTranslation>["t"], settings: Set
   const text = t("localModels.reasoning.text");
   if ((settings.local_reasoning ?? "auto") === "full") return `${text} ${t("localModels.reasoning.off")}`;
   if (data?.advice?.some((item) => item.code === "local.reasoning_saving")) return `${text} ${t("localModels.reasoning.active")}`;
-  if (data && (data.status.accelerated === true || (data.status.accelerated === undefined && data.hardware.gpu !== "none")))
+  if (data && (data.status.accelerated === true || (data.status.accelerated === undefined && data.hardware && data.hardware.gpu !== "none")))
     return `${text} ${t("localModels.reasoning.inactive")}`;
   return text;
 }

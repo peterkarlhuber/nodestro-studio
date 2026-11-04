@@ -35,7 +35,9 @@
     "text": "Suggestions based on the task, the memory of this computer and the installed models. You choose the model of each agent yourself; nothing is changed automatically.",
     "task": "Task",
     "model": "Model",
-    "quality": "Suitability"
+    "quality": "Suitability",
+    "titleServer": "Recommended for this server",
+    "textServer": "Suggestions based on the task, the server's resources and the installed models. You choose the model of each agent yourself; nothing is changed automatically."
   },
   "tasks": {
     "classify": "Sorting and routing",
@@ -77,7 +79,8 @@
     "state": "State",
     "own": "Own model (imported or downloaded separately)",
     "fit": "On this computer",
-    "actions": "Actions"
+    "actions": "Actions",
+    "fitServer": "On the server"
   },
   "kind": {
     "chat": "Language model",
@@ -271,7 +274,9 @@
       "unknown": "{{tokens}} tokens"
     },
     "contextUnknown": "not known yet (shown once a model has run)",
-    "unknown": "unknown"
+    "unknown": "unknown",
+    "serverTitle": "On the server",
+    "hidden": "The server's hardware and folders are shown only to its operator."
   },
   "fit": {
     "gpu": "Runs on the GPU",
@@ -279,7 +284,11 @@
     "cpuOnly": "Runs on the CPU (slower)",
     "too_slow": "Too slow without a GPU",
     "too_large": "Too large for this computer",
-    "slowHint": "slow on this computer (measured)"
+    "slowHint": "slow on this computer (measured)",
+    "server": {
+      "fits": "Runs on the server",
+      "no": "Does not suit the server"
+    }
   },
   "advice": {
     "context_small": "The model server gives models only {{tokens}} tokens of context; agents need about {{recommended}} tokens for prompt, thinking and answer, otherwise answers are cut off.",
@@ -319,5 +328,9 @@
     "inactive": "Not active here: models run on a graphics card.",
     "badge": "Reasoning reduced: CPU saving mode",
     "badgeTip": "This agent answered without the long thinking phase because this computer has no graphics card. For full thinking, set the agent's effort to High or switch off the CPU saving mode in Settings → Local models."
+  },
+  "licenseSource": {
+    "ollama": "per the Ollama manifest",
+    "upstream": "per the publisher's model card"
   }
 }

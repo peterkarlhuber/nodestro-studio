@@ -121,7 +121,8 @@
     "orchestrator_limits": "{{node}} allows one team more often than it may decide at all.",
     "revision_invalid": "The save named an unknown version of the workflow. Reload the page and save again.",
     "conflict": "The workflow “{{name}}” was changed since you opened it. Reload it to see the latest version.",
-    "runs_active": "Runs of this workflow are still going. Delete it once they have finished or were canceled."
+    "runs_active": "Runs of this workflow are still going. Delete it once they have finished or were canceled.",
+    "not_found": "This workflow no longer exists; it may have been deleted in the meantime. Reload the page to see the current workflows."
   },
   "run": {
     "failed": "The step failed.",
@@ -148,7 +149,7 @@
     "subworkflow_recursive": "{{node}} would call a workflow that is already running.",
     "subworkflow_too_deep": "Sub-workflows are nested too deeply at {{node}}.",
     "finished": "The run has already ended.",
-    "not_found": "There is no run with this id.",
+    "not_found": "This run no longer exists; it may have been deleted in the meantime. Reload the page to see the current runs.",
     "not_finished": "The run has not finished yet.",
     "no_event_loop": "The run could not start: it needs a running event loop.",
     "loop_exhausted": "The loop at {{node}} ran {{max_iterations}} times without reaching its goal.",
@@ -580,13 +581,13 @@
     "offline_models_excluded": "Offline operation needs the local models in the package.",
     "untrusted_tools_docker": "AI-generated tools run only in an isolated Docker sandbox: the target computer needs Docker for {{tools}}.",
     "portable_distribution": "Confirm that you may pass on the package (Orkexa source code and the model server).",
-    "download_needed": "Building needs downloads that are not in the cache: {{items}}.",
+    "download_needed": "Building needs downloads that are not in the cache yet: {{items}}. Build once with an internet connection; afterwards they are in the cache.",
     "downloads": "Building downloads {{items}} for the target platform once.",
     "platform_unknown": "This platform is not supported.",
     "web_ui": "The web interface is included: the operator signs in with a one-time link, others with an API key.",
     "portable_job": "A ready-to-run package is built in the background; use “Build package”.",
     "not_portable": "Only ready-to-run packages are built in the background.",
-    "busy": "Another package is being built; wait until it is done.",
+    "busy": "Another package is already being built, perhaps by someone else; only one is built at a time. Wait until it is done, then build again.",
     "cancelled": "The build was canceled.",
     "disk_full": "Not enough free disk space to build the package.",
     "failed": "Building the package failed.",
@@ -595,7 +596,12 @@
     "license_mismatch": "A downloaded license does not match the expected one; nothing was packaged.",
     "python_missing": "Python for this platform could not be prepared.",
     "uv_failed": "Preparing the libraries failed.",
-    "uv_missing": "The tool uv, which prepares Python and the libraries, is missing in this installation."
+    "uv_missing": "The tool uv, which prepares Python and the libraries, is missing in this installation.",
+    "server_unsupported": "This server does not build ready-to-run packages: its operator has not enabled them. Export the source project instead, or ask the operator to enable package builds.",
+    "server_too_large": "This package would be about {{size}}, more than this server allows ({{limit}}). Leave out the local models to make it smaller, or ask the server's operator to raise the limit.",
+    "server_too_large_plain": "The package is larger than this server allows and was not kept. Leave out the local models to make it smaller, or ask the server's operator to raise the limit.",
+    "download_needed_plain": "Building needs downloads that are not in the cache yet. Build once with an internet connection; afterwards they are in the cache.",
+    "downloads_plain": "Building downloads the missing parts for the target platform once."
   },
   "lan": {
     "tls_file_missing": "File not found: {{path}}",
@@ -620,7 +626,7 @@
   },
   "publication": {
     "disabled": "This API is switched off.",
-    "not_found": "There is no published workflow with this name.",
+    "not_found": "This published workflow no longer exists; its API may have been withdrawn or deleted in the meantime. Reload the page to see the current publications.",
     "dependencies_changed": "The approved Python libraries changed since publishing; publish again.",
     "dependencies_unavailable": "The Python libraries of this API are not ready.",
     "slug_taken": "Another published workflow already uses the name {{slug}}. Choose another name."
@@ -985,7 +991,7 @@
     "http_error": "The local model server refused the request.",
     "input_too_long": "The text is too long for the model.",
     "invalid_name": "This is not a valid model name.",
-    "invalid_package": "This is not a valid offline package.",
+    "invalid_package": "This folder is not an offline model package Nodestro can import. Choose the folder made with orkexa-local export; it contains orkexa-models.json.",
     "invalid_response": "The local model server sent an unexpected answer.",
     "model_missing": "The model is not installed. Download or import it first.",
     "not_a_store": "This folder holds no Ollama models.",
@@ -1006,7 +1012,9 @@
     "download_incomplete": "The download was incomplete. Try again.",
     "invalid_source": "The source of this model is not allowed.",
     "not_chat_model": "This is not a language model; only language models can be measured.",
-    "benchmark_failed": "The speed could not be measured."
+    "benchmark_failed": "The speed could not be measured.",
+    "invalid_package_path": "{{path}} is not an offline model package Nodestro can import. Choose the folder made with orkexa-local export; it contains orkexa-models.json.",
+    "invalid_package_reason": "{{path}} cannot be imported as an offline model package. {{reason}} Export the package again from the source computer."
   },
   "knowledge": {
     "failed": "The semantic index could not be updated.",
@@ -1022,6 +1030,8 @@
     "mode_unsupported": "This search method is not available here.",
     "cancelled": "Building the semantic index was canceled.",
     "empty_input": "There is no text to index.",
-    "too_many_inputs": "Too many sections at once for the embedding model."
+    "too_many_inputs": "Too many sections at once for the embedding model.",
+    "query_too_long": "The search text is too long: at most {{max}} characters are searched. Shorten it and search again.",
+    "hits_out_of_range": "A search returns between 1 and {{max}} hits. Choose a number in this range."
   }
 }

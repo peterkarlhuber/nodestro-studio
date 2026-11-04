@@ -35,7 +35,9 @@
     "text": "Suggestions selon la tâche, la mémoire de cet ordinateur et les modèles installés. Vous choisissez vous-même le modèle de chaque agent ; rien n’est modifié automatiquement.",
     "task": "Tâche",
     "model": "Modèle",
-    "quality": "Adéquation"
+    "quality": "Adéquation",
+    "titleServer": "Recommandé pour ce serveur",
+    "textServer": "Suggestions selon la tâche, les ressources du serveur et les modèles installés. Vous choisissez vous-même le modèle de chaque agent ; rien n’est modifié automatiquement."
   },
   "tasks": {
     "classify": "Trier et orienter",
@@ -77,7 +79,8 @@
     "state": "État",
     "own": "Modèle personnel (importé ou téléchargé à part)",
     "fit": "Sur cet ordinateur",
-    "actions": "Actions"
+    "actions": "Actions",
+    "fitServer": "Sur le serveur"
   },
   "kind": {
     "chat": "Modèle de langage",
@@ -271,7 +274,9 @@
       "unknown": "{{tokens}} tokens"
     },
     "contextUnknown": "pas encore connue (affichée dès qu’un modèle a tourné)",
-    "unknown": "inconnu"
+    "unknown": "inconnu",
+    "serverTitle": "Sur le serveur",
+    "hidden": "Seul l’opérateur du serveur en voit le matériel et les dossiers."
   },
   "fit": {
     "gpu": "S’exécute sur le GPU",
@@ -279,7 +284,11 @@
     "cpuOnly": "S’exécute sur le CPU (plus lent)",
     "too_slow": "Trop lent sans GPU",
     "too_large": "Trop grand pour cet ordinateur",
-    "slowHint": "lent sur cet ordinateur (mesuré)"
+    "slowHint": "lent sur cet ordinateur (mesuré)",
+    "server": {
+      "fits": "Fonctionne sur le serveur",
+      "no": "Ne convient pas au serveur"
+    }
   },
   "advice": {
     "context_small": "Le serveur de modèles ne donne aux modèles que {{tokens}} tokens de contexte ; les agents ont besoin d’environ {{recommended}} tokens pour le prompt, la réflexion et la réponse, sinon les réponses sont coupées.",
@@ -319,5 +328,9 @@
     "inactive": "Inactif ici : les modèles s’exécutent sur une carte graphique.",
     "badge": "Réflexion réduite : mode économie CPU",
     "badgeTip": "Cet agent a répondu sans la longue phase de réflexion, car cet ordinateur n’a pas de carte graphique. Pour une réflexion complète, réglez l’effort de l’agent sur Élevé ou désactivez le mode économie CPU dans Réglages → Modèles locaux."
+  },
+  "licenseSource": {
+    "ollama": "selon le manifeste Ollama",
+    "upstream": "selon la fiche du modèle de l’éditeur"
   }
 }

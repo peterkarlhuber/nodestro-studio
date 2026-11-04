@@ -121,7 +121,8 @@
     "orchestrator_limits": "{{node}} consente a un team più impieghi delle decisioni totali.",
     "revision_invalid": "Il salvataggio indicava una versione sconosciuta del workflow. Ricarica la pagina e salva di nuovo.",
     "conflict": "Il workflow «{{name}}» è stato modificato da quando l'hai aperto. Ricaricalo per vedere la versione più recente.",
-    "runs_active": "Alcune esecuzioni di questo workflow sono ancora in corso. Eliminalo quando saranno terminate o annullate."
+    "runs_active": "Alcune esecuzioni di questo workflow sono ancora in corso. Eliminalo quando saranno terminate o annullate.",
+    "not_found": "Questo workflow non esiste più; forse nel frattempo è stato eliminato. Ricarica la pagina per vedere i workflow attuali."
   },
   "run": {
     "failed": "Il passaggio non è riuscito.",
@@ -148,7 +149,7 @@
     "subworkflow_recursive": "{{node}} chiamerebbe un workflow già in esecuzione.",
     "subworkflow_too_deep": "I sotto-workflow sono annidati troppo in profondità in {{node}}.",
     "finished": "L’esecuzione è già terminata.",
-    "not_found": "Non esiste alcuna esecuzione con questo id.",
+    "not_found": "Questa esecuzione non esiste più; forse nel frattempo è stata eliminata. Ricarica la pagina per vedere le esecuzioni attuali.",
     "not_finished": "L’esecuzione non è ancora terminata.",
     "no_event_loop": "L’esecuzione non è potuta partire: richiede un event loop attivo.",
     "loop_exhausted": "Il ciclo in {{node}} è stato eseguito {{max_iterations}} volte senza raggiungere il suo obiettivo.",
@@ -580,13 +581,13 @@
     "offline_models_excluded": "Il funzionamento offline richiede i modelli locali nel pacchetto.",
     "untrusted_tools_docker": "Gli strumenti creati dall’IA girano solo in una sandbox Docker isolata: il computer di destinazione ha bisogno di Docker per {{tools}}.",
     "portable_distribution": "Conferma di poter cedere il pacchetto (codice sorgente di Orkexa e server dei modelli).",
-    "download_needed": "La creazione richiede download che non sono nella cache: {{items}}.",
+    "download_needed": "La creazione richiede download che non sono ancora nella cache: {{items}}. Crea il pacchetto una volta con una connessione a internet; dopo saranno nella cache.",
     "downloads": "La creazione scarica una sola volta {{items}} per la piattaforma di destinazione.",
     "platform_unknown": "Questa piattaforma non è supportata.",
     "web_ui": "L’interfaccia web è inclusa: l’operatore accede con un link monouso, gli altri con una chiave API.",
     "portable_job": "Un pacchetto pronto all’uso viene creato in background; usa «Crea pacchetto».",
     "not_portable": "Solo i pacchetti pronti all’uso vengono creati in background.",
-    "busy": "È in corso la creazione di un altro pacchetto; attendi che finisca.",
+    "busy": "È già in corso la creazione di un altro pacchetto, forse da parte di qualcun altro; se ne crea uno alla volta. Attendi che finisca, poi crealo di nuovo.",
     "cancelled": "La creazione è stata annullata.",
     "disk_full": "Spazio libero su disco insufficiente per creare il pacchetto.",
     "failed": "La creazione del pacchetto non è riuscita.",
@@ -595,7 +596,12 @@
     "license_mismatch": "Una licenza scaricata non corrisponde a quella prevista; non è stato impacchettato nulla.",
     "python_missing": "Non è stato possibile preparare Python per questa piattaforma.",
     "uv_failed": "La preparazione delle librerie non è riuscita.",
-    "uv_missing": "In questa installazione manca lo strumento uv, che prepara Python e le librerie."
+    "uv_missing": "In questa installazione manca lo strumento uv, che prepara Python e le librerie.",
+    "server_unsupported": "Questo server non crea pacchetti pronti all’uso: il suo operatore non li ha abilitati. Esporta invece il progetto sorgente oppure chiedi all’operatore di abilitare la creazione di pacchetti.",
+    "server_too_large": "Questo pacchetto sarebbe di circa {{size}}, più di quanto consente questo server ({{limit}}). Escludi i modelli locali per renderlo più piccolo oppure chiedi all’operatore del server di alzare il limite.",
+    "server_too_large_plain": "Il pacchetto è più grande di quanto consente questo server e non è stato conservato. Escludi i modelli locali per renderlo più piccolo oppure chiedi all’operatore del server di alzare il limite.",
+    "download_needed_plain": "La creazione richiede download che non sono ancora nella cache. Crea il pacchetto una volta con una connessione a internet; dopo saranno nella cache.",
+    "downloads_plain": "La creazione scarica una sola volta le parti mancanti per la piattaforma di destinazione."
   },
   "lan": {
     "tls_file_missing": "File non trovato: {{path}}",
@@ -620,7 +626,7 @@
   },
   "publication": {
     "disabled": "Questa API è disattivata.",
-    "not_found": "Non esiste alcun workflow pubblicato con questo nome.",
+    "not_found": "Questo workflow pubblicato non esiste più; forse nel frattempo la sua API è stata ritirata o eliminata. Ricarica la pagina per vedere le pubblicazioni attuali.",
     "dependencies_changed": "Le librerie Python approvate sono cambiate dalla pubblicazione; pubblica di nuovo.",
     "dependencies_unavailable": "Le librerie Python di questa API non sono pronte.",
     "slug_taken": "Un altro workflow pubblicato usa già il nome {{slug}}. Scegli un altro nome."
@@ -985,7 +991,7 @@
     "http_error": "Il server dei modelli locale ha rifiutato la richiesta.",
     "input_too_long": "Il testo è troppo lungo per il modello.",
     "invalid_name": "Non è un nome di modello valido.",
-    "invalid_package": "Non è un pacchetto offline valido.",
+    "invalid_package": "Questa cartella non è un pacchetto di modelli offline che Nodestro può importare. Scegli la cartella creata con orkexa-local export; contiene orkexa-models.json.",
     "invalid_response": "Il server dei modelli locale ha dato una risposta inattesa.",
     "model_missing": "Il modello non è installato. Prima scaricalo o importalo.",
     "not_a_store": "Questa cartella non contiene modelli Ollama.",
@@ -1006,7 +1012,9 @@
     "download_incomplete": "Il download è incompleto. Riprova.",
     "invalid_source": "La fonte di questo modello non è consentita.",
     "not_chat_model": "Non è un modello linguistico; si possono misurare solo modelli linguistici.",
-    "benchmark_failed": "Non è stato possibile misurare la velocità."
+    "benchmark_failed": "Non è stato possibile misurare la velocità.",
+    "invalid_package_path": "{{path}} non è un pacchetto di modelli offline che Nodestro può importare. Scegli la cartella creata con orkexa-local export; contiene orkexa-models.json.",
+    "invalid_package_reason": "{{path}} non può essere importato come pacchetto di modelli offline. {{reason}} Esporta di nuovo il pacchetto sul computer di origine."
   },
   "knowledge": {
     "failed": "Impossibile aggiornare l’indice semantico.",
@@ -1022,6 +1030,8 @@
     "mode_unsupported": "Questo metodo di ricerca qui non è disponibile.",
     "cancelled": "La costruzione dell’indice semantico è stata annullata.",
     "empty_input": "Non c’è testo da indicizzare.",
-    "too_many_inputs": "Troppe sezioni in una volta per il modello di embedding."
+    "too_many_inputs": "Troppe sezioni in una volta per il modello di embedding.",
+    "query_too_long": "Il testo di ricerca è troppo lungo: si cercano al massimo {{max}} caratteri. Accorcialo e cerca di nuovo.",
+    "hits_out_of_range": "Una ricerca restituisce da 1 a {{max}} risultati. Scegli un numero in questo intervallo."
   }
 }
