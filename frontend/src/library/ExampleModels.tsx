@@ -94,7 +94,10 @@ export function ExampleModelPlan({
               const options = modelOptions(agent, installedChat);
               const current = value[agent.key] ?? agent.model ?? "";
               const why = planReasons(t, agent);
-              const needs = (agent.needs ?? []).map((need) => t(`library.models.need.${need}`, { defaultValue: need }));
+              // Every agent needs text completion: only the further needs (tools, images, …) tell something.
+              const needs = (agent.needs ?? [])
+                .filter((need) => need !== "completion")
+                .map((need) => t(`library.models.need.${need}`, { defaultValue: need }));
               return (
                 <tr key={agent.key} data-testid={`example-model-${agent.key}`}>
                   <td>
@@ -132,10 +135,10 @@ export function ExampleModelPlan({
                       {why}
                     </div>
                     {agent.suggested ? (
-                      <div className="small" data-testid={`example-model-better-${agent.key}`}>
+                      <p className="small" data-testid={`example-model-better-${agent.key}`}>
                         <Download size={12} aria-hidden /> {t("library.models.better", { model: plain(agent.suggested) })}{" "}
                         <Link to={setup}>{t("library.models.toLocalModels")}</Link>
-                      </div>
+                      </p>
                     ) : null}
                     {value[agent.key] ? <div className="small">{t("library.models.overridden")}</div> : null}
                   </td>

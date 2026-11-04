@@ -286,7 +286,7 @@ const PLAN = {
   agents: [
     {
       key: "lead", name: "Einkaufsleitung", part: null, kind: "orchestrator", task: "orchestrator", tier: "strong", model: "ollama:qwen3.5:9b",
-      installed: true, reasons: ["installed"], suggested: null, alternatives: ["ollama:qwen3.5:4b"], needs: ["tools"],
+      installed: true, reasons: ["installed"], suggested: null, alternatives: ["ollama:qwen3.5:4b"], needs: ["completion", "tools"],
     },
     {
       key: "quality-check/qa", name: "Qualitätsprüfer", part: "Qualitätsprüfung", kind: "agent", task: "document_vision", tier: "fast",
@@ -328,7 +328,9 @@ describe("models of a copy in a local workspace", () => {
     expect(fetch).toHaveBeenCalledWith("/api/library/supplier-comparison/models?language=de", expect.anything());
     const lead = within(plan).getByTestId("example-model-lead");
     expect(lead).toHaveTextContent("Das Team koordinieren");
+    // Text completion is what every agent needs: only the further needs are named (never the raw code).
     expect(lead).toHaveTextContent("Braucht: Tool-Aufrufe");
+    expect(lead).not.toHaveTextContent("completion");
     expect(lead).toHaveTextContent("Bereits installiert.");
     const qa = within(plan).getByTestId("example-model-quality-check/qa");
     expect(qa).toHaveTextContent("Qualitätsprüfung");
