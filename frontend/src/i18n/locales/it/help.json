@@ -65,7 +65,8 @@
     "requestOptions": "Per utenti esperti: campi aggiuntivi inseriti senza modifiche in ogni richiesta all’API. Deve essere un oggetto JSON.",
     "test": "Esegue solo questo agente con un input di test e mostra risposta, strumenti, token e costo. Consuma credito API, ma non è un’esecuzione del workflow.",
     "preview": "Mostra cosa riceve l’agente alla prossima esecuzione: prompt di sistema, compito con gli input inseriti e il resto del contesto. Senza chiamata API.",
-    "paletteDesign": "Descrivi con parole tue cosa deve fare un agente. L’Architetto di agenti propone una configurazione completa; costa una richiesta al modello dell’assistente."
+    "paletteDesign": "Descrivi con parole tue cosa deve fare un agente. L’Architetto di agenti propone una configurazione completa; costa una richiesta al modello dell’assistente.",
+    "outputFieldSource": "Indicatore chiave: il valore viene accettato solo se uno strumento lo ha calcolato in questo passo o in uno precedente (ad esempio la calcolatrice o table_totals). Altrimenti l'agente riceve una correzione; poi il passo si ferma, così nessuna decisione si basa su una cifra stimata."
   },
   "tools": {
     "kind": "Integrato: fornito con Nodestro. Strumento personale: scritto da te. Creato dall’IA: scritto dal Coding Agent e approvato da te.",

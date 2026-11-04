@@ -81,6 +81,7 @@ export const HELP_DOCS = {
   "agent.outputFieldType": "agenten#ausgabeformat",
   "agent.outputFieldDescription": undefined,
   "agent.outputFieldRequired": undefined,
+  "agent.outputFieldSource": "agenten#ausgabeformat",
   "agent.effort": "agenten#denken",
   "agent.thinking": "agenten#denken",
   "agent.thinkingDisplay": "agenten#denken",

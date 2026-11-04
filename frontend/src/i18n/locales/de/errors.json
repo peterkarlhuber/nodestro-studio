@@ -182,7 +182,8 @@
     "provider_unreachable": "{{provider}} war nicht erreichbar.",
     "provider_rate_limited": "{{provider}} hat zu viele Anfragen oder Tokens in kurzer Zeit gemeldet (Rate-Limit).",
     "provider_overloaded": "{{provider}} ist gerade überlastet.",
-    "provider_auth_aws": "AWS hat die Anmeldung für Amazon Bedrock nicht akzeptiert: Zugangsdaten fehlen oder sind abgelaufen, oder der IAM-Rolle fehlt eine Berechtigung."
+    "provider_auth_aws": "AWS hat die Anmeldung für Amazon Bedrock nicht akzeptiert: Zugangsdaten fehlen oder sind abgelaufen, oder der IAM-Rolle fehlt eine Berechtigung.",
+    "value_unverified": "Die Kennzahl {{field}} ({{value}}) wurde auch nach einer Korrektur nicht mit einem Tool berechnet. Der Schritt wurde gestoppt, damit keine Entscheidung auf einer ungeprüften Zahl beruht."
   },
   "budget": {
     "not_starter": "Nur die Person, die den Lauf gestartet hat, oder ein Administrator kann über sein Budget entscheiden.",
@@ -327,7 +328,9 @@
     "local_model_no_tools": "{{model}} kann keine Tools aufrufen, dieser Agent nutzt aber Tools. Wähle ein Modell, das Tool-Aufrufe unterstützt.",
     "local_context_small": "Der lokale Modellserver gibt Modellen nur {{tokens}} Tokens Kontext; empfohlen sind mindestens {{recommended}} Tokens, sonst werden Antworten abgeschnitten.",
     "local_max_tokens": "Die Antwortgrenze dieses Agenten ({{max_tokens}} Tokens) passt nicht in das Kontextfenster des lokalen Modellservers ({{tokens}} Tokens).",
-    "local_reasoning_saving": "Auf diesem Computer ohne Grafikkarte antworten diese Agenten ohne Denkphase (Denkaufwand Mittel): {{nodes}}. Wähle für einen Agenten den Denkaufwand Hoch oder schalte den CPU-Sparmodus in den Einstellungen aus."
+    "local_reasoning_saving": "Auf diesem Computer ohne Grafikkarte antworten diese Agenten ohne Denkphase (Denkaufwand Mittel): {{nodes}}. Wähle für einen Agenten den Denkaufwand Hoch oder schalte den CPU-Sparmodus in den Einstellungen aus.",
+    "value_source_type": "{{field}} soll aus einem Tool stammen, geprüft werden aber nur Zahlen eines strukturierten Ergebnisses.",
+    "value_source_no_tool": "{{field}} soll aus einem Tool stammen, aber weder dieser Agent noch ein Schritt davor hat ein Tool. Füge ein Tool wie den Rechner hinzu."
   },
   "backup": {
     "not_zip": "Die Datei ist kein Nodestro-Backup (keine ZIP-Datei).",

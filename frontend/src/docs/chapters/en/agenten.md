@@ -94,6 +94,7 @@ Every field has:
 | **Type** | *Text*, *Number* (decimal), *Integer*, *Yes/No*, *List (text)* or *List (numbers)*. |
 | **Description** | Explains to the model what belongs in the field. The more precise, the better. |
 | **Required** | Required fields are always filled; optional fields may be `null`. |
+| **From a tool** | *Number* and *Integer* only: a key figure that a decision or a later step relies on. Nodestro accepts the value only if a tool computed it in this step or an earlier one (for example the calculator, or `table_totals`, which adds up a table column exactly). Otherwise the agent gets one correction, then the step stops with a message. So no branch decides on an estimated number. What is checked is where the value came from, not whether the agent gave the tool the right inputs. |
 
 **Example** for an assessment:
 

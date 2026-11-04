@@ -182,7 +182,8 @@
     "provider_unreachable": "{{provider}} n’a pas pu être joint.",
     "provider_rate_limited": "{{provider}} a signalé trop de requêtes ou de tokens en peu de temps (limite de débit).",
     "provider_overloaded": "{{provider}} est surchargé en ce moment.",
-    "provider_auth_aws": "AWS n’a pas accepté la connexion pour Amazon Bedrock : les identifiants manquent ou ont expiré, ou il manque une autorisation au rôle IAM."
+    "provider_auth_aws": "AWS n’a pas accepté la connexion pour Amazon Bedrock : les identifiants manquent ou ont expiré, ou il manque une autorisation au rôle IAM.",
+    "value_unverified": "L'indicateur clé {{field}} ({{value}}) n'a pas été calculé avec un outil, même après une correction. L'étape a été arrêtée afin qu'aucune décision ne repose sur un chiffre non vérifié."
   },
   "budget": {
     "not_starter": "Seule la personne qui a lancé l’exécution ou un administrateur peut décider de son budget.",
@@ -327,7 +328,9 @@
     "local_model_no_tools": "{{model}} ne peut pas appeler d’outils, mais cet agent en utilise. Choisissez un modèle qui prend en charge les appels d’outils.",
     "local_context_small": "Le serveur de modèles local ne donne aux modèles que {{tokens}} tokens de contexte ; au moins {{recommended}} tokens sont recommandés, sinon les réponses sont coupées.",
     "local_max_tokens": "La limite de réponse de cet agent ({{max_tokens}} tokens) ne tient pas dans la fenêtre de contexte du serveur de modèles local ({{tokens}} tokens).",
-    "local_reasoning_saving": "Sur cet ordinateur sans carte graphique, ces agents répondent sans phase de réflexion (effort Moyen) : {{nodes}}. Choisissez l’effort Élevé pour un agent, ou désactivez le mode économie CPU dans les réglages."
+    "local_reasoning_saving": "Sur cet ordinateur sans carte graphique, ces agents répondent sans phase de réflexion (effort Moyen) : {{nodes}}. Choisissez l’effort Élevé pour un agent, ou désactivez le mode économie CPU dans les réglages.",
+    "value_source_type": "{{field}} doit provenir d'un outil, mais seuls les nombres d'un résultat structuré sont vérifiés.",
+    "value_source_no_tool": "{{field}} doit provenir d'un outil, mais ni cet agent ni une étape précédente n'a d'outil. Ajoutez un outil comme la calculatrice."
   },
   "backup": {
     "not_zip": "Le fichier n’est pas une sauvegarde Nodestro (pas de fichier ZIP).",

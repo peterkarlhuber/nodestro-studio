@@ -182,7 +182,8 @@
     "provider_unreachable": "{{provider}} could not be reached.",
     "provider_rate_limited": "{{provider}} reported too many requests or tokens in a short time (rate limit).",
     "provider_overloaded": "{{provider}} is overloaded right now.",
-    "provider_auth_aws": "AWS did not accept the sign-in for Amazon Bedrock: credentials are missing or expired, or the IAM role lacks a permission."
+    "provider_auth_aws": "AWS did not accept the sign-in for Amazon Bedrock: credentials are missing or expired, or the IAM role lacks a permission.",
+    "value_unverified": "The key figure {{field}} ({{value}}) was not computed with a tool, even after one correction. The step stopped so that no decision rests on an unchecked number."
   },
   "budget": {
     "not_starter": "Only the person who started the run or an administrator can decide its budget.",
@@ -327,7 +328,9 @@
     "local_model_no_tools": "{{model}} cannot call tools, but this agent uses tools. Choose a model that supports tool calls.",
     "local_context_small": "The local model server gives models only {{tokens}} tokens of context; at least {{recommended}} tokens are recommended, otherwise answers are cut off.",
     "local_max_tokens": "The answer limit of this agent ({{max_tokens}} tokens) does not fit the context window of the local model server ({{tokens}} tokens).",
-    "local_reasoning_saving": "On this computer without a graphics card, these agents answer without the thinking phase (effort Medium): {{nodes}}. Choose effort High for an agent, or switch off the CPU saving mode in Settings."
+    "local_reasoning_saving": "On this computer without a graphics card, these agents answer without the thinking phase (effort Medium): {{nodes}}. Choose effort High for an agent, or switch off the CPU saving mode in Settings.",
+    "value_source_type": "{{field}} must come from a tool, but only numbers of a structured result are checked.",
+    "value_source_no_tool": "{{field}} must come from a tool, but neither this agent nor a step before it has a tool. Add a tool such as the calculator."
   },
   "backup": {
     "not_zip": "The file is not a Nodestro backup (no ZIP file).",

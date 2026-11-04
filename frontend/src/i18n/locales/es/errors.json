@@ -182,7 +182,8 @@
     "provider_unreachable": "No se pudo contactar con {{provider}}.",
     "provider_rate_limited": "{{provider}} informó de demasiadas solicitudes o tokens en poco tiempo (límite de frecuencia).",
     "provider_overloaded": "{{provider}} está sobrecargado en este momento.",
-    "provider_auth_aws": "AWS no aceptó el inicio de sesión para Amazon Bedrock: faltan las credenciales o han caducado, o al rol de IAM le falta un permiso."
+    "provider_auth_aws": "AWS no aceptó el inicio de sesión para Amazon Bedrock: faltan las credenciales o han caducado, o al rol de IAM le falta un permiso.",
+    "value_unverified": "La cifra clave {{field}} ({{value}}) no se calculó con una herramienta, ni siquiera tras una corrección. El paso se detuvo para que ninguna decisión se base en una cifra sin comprobar."
   },
   "budget": {
     "not_starter": "Solo la persona que inició la ejecución o un administrador puede decidir sobre su presupuesto.",
@@ -327,7 +328,9 @@
     "local_model_no_tools": "{{model}} no puede llamar a herramientas, pero este agente las usa. Elige un modelo que admita llamadas a herramientas.",
     "local_context_small": "El servidor de modelos local da a los modelos solo {{tokens}} tokens de contexto; se recomiendan al menos {{recommended}} tokens; si no, las respuestas se cortan.",
     "local_max_tokens": "El límite de respuesta de este agente ({{max_tokens}} tokens) no cabe en la ventana de contexto del servidor de modelos local ({{tokens}} tokens).",
-    "local_reasoning_saving": "En este ordenador sin tarjeta gráfica, estos agentes responden sin fase de razonamiento (esfuerzo Medio): {{nodes}}. Elige el esfuerzo Alto para un agente o desactiva el modo de ahorro de CPU en los ajustes."
+    "local_reasoning_saving": "En este ordenador sin tarjeta gráfica, estos agentes responden sin fase de razonamiento (esfuerzo Medio): {{nodes}}. Elige el esfuerzo Alto para un agente o desactiva el modo de ahorro de CPU en los ajustes.",
+    "value_source_type": "{{field}} debe proceder de una herramienta, pero solo se comprueban números de un resultado estructurado.",
+    "value_source_no_tool": "{{field}} debe proceder de una herramienta, pero ni este agente ni un paso anterior tiene una herramienta. Añade una herramienta como la calculadora."
   },
   "backup": {
     "not_zip": "El archivo no es una copia de seguridad de Nodestro (no es un ZIP).",

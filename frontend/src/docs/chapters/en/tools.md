@@ -19,16 +19,17 @@ The **Tools** page has three sections: *Library*, *Write it yourself* and *Creat
 You assign tools from the library in an agent's inspector, and switch on server tools there (see [Assigning tools](/docs/agenten#tools)).
 
 ## Built-in tools {#eingebaut}
-<!-- keywords: calculator, current_datetime, date, time, days_between, days, text_statistics -->
+<!-- keywords: calculator, current_datetime, date, time, days_between, days, text_statistics, table_totals -->
 
 | Tool | Purpose | Example input |
 |---|---|---|
 | `calculator` | Calculates an expression exactly: `+ - * / // % **`, parentheses, `pi`, `e` and `sqrt`, `log`, `log10`, `exp`, `abs`, `round`, `min`, `max`, `sin`, `cos`, `tan`. | `{"expression": "(1250 - 980) / 980 * 100"}` |
+| `table_totals` | Adds up a column of a table (Markdown or CSV) row by row, optionally grouped, with shares and the share of a reference total. For totals and shares of table rows. | `{"table": "<table>", "value_column": "Duration (min)", "group_by": "Machine", "reference_total": 14400}` |
 | `current_datetime` | Current date, time and weekday in a time zone (default *Europe/Vienna*). | `{"timezone": "Europe/Berlin"}` |
 | `days_between` | Calendar days between two dates (negative if the end is earlier). | `{"start": "2026-01-01", "end": "2026-03-01"}` |
 | `text_statistics` | Counts the characters, words, sentences and paragraphs of a text. | `{"text": "…"}` |
 
-Language models make mistakes in mental arithmetic. Give agents that work with numbers the `calculator` and tell them in the system prompt to use it.
+Language models make mistakes in mental arithmetic. Give agents that work with numbers the `calculator` and tell them in the system prompt to use it. For totals and shares of a table, `table_totals` is safer, because it counts every row.
 
 The library shows the descriptions of built-in tools in the interface language. The model always gets the original English description, so existing agents behave the same in every language.
 

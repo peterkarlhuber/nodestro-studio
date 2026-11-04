@@ -179,7 +179,8 @@
       "empty": "Informe um nome.",
       "digit": "Somente letras, dígitos e _; não pode começar com um dígito.",
       "duplicate": "Este nome aparece mais de uma vez."
-    }
+    },
+    "fromTool": "De uma ferramenta"
   },
   "thinking": {
     "title": "Raciocínio e esforço",

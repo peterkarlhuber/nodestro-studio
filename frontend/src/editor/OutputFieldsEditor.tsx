@@ -19,10 +19,13 @@ export function OutputFieldsEditor({
   fields,
   onChange,
   idPrefix,
+  checkable = false,
 }: {
   fields: OutputField[];
   onChange: (fields: OutputField[]) => void;
   idPrefix: string;
+  /** Agents' results: number fields can be marked as key figures that must come from a tool. */
+  checkable?: boolean;
 }) {
   const { t } = useTranslation();
   const setField = (index: number, patch: Partial<OutputField>) =>
@@ -104,6 +107,18 @@ export function OutputFieldsEditor({
                   {t("agent.output.required")}
                 </label>
               </Tooltip>
+              {checkable && (field.type === "number" || field.type === "integer") ? (
+                <Tooltip content={helpEntry(t, "agent.outputFieldSource").text}>
+                  <label className="checkbox output-field__source">
+                    <input
+                      type="checkbox"
+                      checked={field.source === "tool"}
+                      onChange={(e) => setField(index, { source: e.target.checked ? "tool" : "model" })}
+                    />
+                    {t("agent.output.fromTool")}
+                  </label>
+                </Tooltip>
+              ) : null}
             </div>
           );
         })}

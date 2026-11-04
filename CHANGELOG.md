@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Key figures from a tool (2026-11-04)
+
+- Pins nodestro-runtime 2f1de71 (runtime #108 to #110), nodestro-examples c05ae45 (examples #67), nodestro-integrations
+  c349b64 (integrations #59), nodestro-api 3536268 (api #84) and nodestro-sdk 1b50d00 (sdk #76); orkexa 6e61862
+  (orkexa #45, #46: local Ollama agents with a structured result call their tools).
+- In the agent's output format, a number field can be marked *From a tool* (`OutputField.source = "tool"`, checkbox
+  with help in six languages; the workflow's output contract has no such switch). The runtime then accepts the value
+  only when a tool of the run computed it, so a condition never decides on an estimated figure. New messages for
+  `run.value_unverified`, `check.value_source_type` and `check.value_source_no_tool`, the built-in tool
+  `table_totals` in the tool catalog, and the manual chapters *Agents* (output format table) and *Tools* (built-in
+  tools) in six languages. The example chapter is regenerated: production-downtime now computes its downtime share
+  with `table_totals` (live with `qwen3.5:4b`: 4.62 % instead of an estimated 2.83 %, so the quality check runs).
+
 ### Local models: build from files, hardware and speed (2026-11-03)
 
 - Pins nodestro-runtime 7cb9b4b (runtime #107: in the CPU saving mode the quality judge of a local thinking model also

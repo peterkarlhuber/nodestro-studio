@@ -871,7 +871,12 @@ function OutputSection({ agent, update, ui }: SectionProps) {
       {output.mode === "structured" ? (
         <>
           <p className="field__hint">{t("agent.output.structuredHint")}</p>
-          <OutputFieldsEditor fields={output.fields} onChange={(fields) => setOutput({ fields })} idPrefix="output-field" />
+          <OutputFieldsEditor
+            fields={output.fields}
+            onChange={(fields) => setOutput({ fields })}
+            idPrefix="output-field"
+            checkable
+          />
         </>
       ) : null}
     </Section>

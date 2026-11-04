@@ -94,6 +94,7 @@ Cada campo tem:
 | **Tipo** | *Texto*, *Número* (decimal), *Número inteiro*, *Sim/Não*, *Lista (texto)* ou *Lista (números)*. |
 | **Descrição** | Explica ao modelo o que vai no campo. Quanto mais precisa, melhor. |
 | **Obrigatório** | Campos obrigatórios sempre são preenchidos; campos opcionais podem ser `null`. |
+| **De uma ferramenta** | Só para *Número* e *Inteiro*: um indicador-chave em que se baseia uma decisão ou uma etapa posterior. O Nodestro só aceita o valor se uma ferramenta o calculou nesta etapa ou em uma anterior (por exemplo a calculadora, ou `table_totals`, que soma exatamente uma coluna de tabela). Caso contrário, o agente recebe uma correção e depois a etapa para com uma mensagem. Assim, nenhum ramo decide com base em um número estimado. O que se confere é a origem do valor, não se o agente deu à ferramenta os dados certos. |
 
 **Exemplo** de uma avaliação:
 

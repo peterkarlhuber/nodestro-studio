@@ -19,16 +19,17 @@ La page **Outils** comporte trois rubriques : *Bibliothèque*, *Écrire soi-mêm
 Les outils de la bibliothèque s’attribuent dans l’inspecteur d’un agent, où l’on active aussi les outils serveur (voir [Attribuer des outils](/docs/agenten#tools)).
 
 ## Outils intégrés {#eingebaut}
-<!-- keywords: calculator, calculatrice, current_datetime, date, heure, days_between, jours, text_statistics -->
+<!-- keywords: calculator, calculatrice, current_datetime, date, heure, days_between, jours, text_statistics, table_totals -->
 
 | Outil | Rôle | Exemple d’entrée |
 |---|---|---|
 | `calculator` | Calcule une expression exactement : `+ - * / // % **`, parenthèses, `pi`, `e` et `sqrt`, `log`, `log10`, `exp`, `abs`, `round`, `min`, `max`, `sin`, `cos`, `tan`. | `{"expression": "(1250 - 980) / 980 * 100"}` |
+| `table_totals` | Additionne une colonne d’un tableau (Markdown ou CSV) ligne par ligne, éventuellement par groupe, avec les parts et la part d’un total de référence. Pour les totaux et les parts de lignes de tableau. | `{"table": "<tableau>", "value_column": "Durée (min)", "group_by": "Machine", "reference_total": 14400}` |
 | `current_datetime` | Date, heure et jour de la semaine actuels dans un fuseau horaire (par défaut *Europe/Vienna*). | `{"timezone": "Europe/Paris"}` |
 | `days_between` | Jours calendaires entre deux dates (négatif si la fin est antérieure). | `{"start": "2026-01-01", "end": "2026-03-01"}` |
 | `text_statistics` | Compte les caractères, mots, phrases et paragraphes d’un texte. | `{"text": "…"}` |
 
-Les modèles de langage se trompent facilement en calcul mental. Donnez la `calculator` aux agents qui manipulent des chiffres et demandez-leur dans le prompt système de l’utiliser.
+Les modèles de langage se trompent facilement en calcul mental. Donnez la `calculator` aux agents qui manipulent des chiffres et demandez-leur dans le prompt système de l’utiliser. Pour les totaux et les parts d’un tableau, `table_totals` est plus sûr, car il compte chaque ligne.
 
 La bibliothèque affiche les descriptions des outils intégrés dans la langue de l’interface. Le modèle reçoit toujours la description originale en anglais, pour que les agents existants se comportent de la même façon dans toutes les langues.
 

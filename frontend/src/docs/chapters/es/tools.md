@@ -19,16 +19,17 @@ La página **Herramientas** tiene tres secciones: *Biblioteca*, *Escribirla tú*
 Las herramientas de la biblioteca se asignan en el inspector de un agente, y allí también se activan las herramientas de servidor (consulta [Asignar herramientas](/docs/agenten#tools)).
 
 ## Herramientas integradas {#eingebaut}
-<!-- keywords: calculator, calculadora, current_datetime, fecha, hora, days_between, días, text_statistics -->
+<!-- keywords: calculator, calculadora, current_datetime, fecha, hora, days_between, días, text_statistics, table_totals -->
 
 | Herramienta | Finalidad | Entrada de ejemplo |
 |---|---|---|
 | `calculator` | Calcula una expresión con exactitud: `+ - * / // % **`, paréntesis, `pi`, `e` y `sqrt`, `log`, `log10`, `exp`, `abs`, `round`, `min`, `max`, `sin`, `cos`, `tan`. | `{"expression": "(1250 - 980) / 980 * 100"}` |
+| `table_totals` | Suma una columna de una tabla (Markdown o CSV) fila por fila, opcionalmente agrupada, con porcentajes y el porcentaje sobre un total de referencia. Para sumas y porcentajes de filas de tablas. | `{"table": "<tabla>", "value_column": "Duración (min)", "group_by": "Máquina", "reference_total": 14400}` |
 | `current_datetime` | Fecha, hora y día de la semana actuales en una zona horaria (por defecto *Europe/Vienna*). | `{"timezone": "Europe/Madrid"}` |
 | `days_between` | Días naturales entre dos fechas (negativo si el final es anterior). | `{"start": "2026-01-01", "end": "2026-03-01"}` |
 | `text_statistics` | Cuenta los caracteres, palabras, frases y párrafos de un texto. | `{"text": "…"}` |
 
-Los modelos de lenguaje se equivocan al calcular de cabeza. Da la `calculator` a los agentes que trabajan con números e indícales en el prompt de sistema que la usen.
+Los modelos de lenguaje se equivocan al calcular de cabeza. Da la `calculator` a los agentes que trabajan con números e indícales en el prompt de sistema que la usen. Para sumas y porcentajes de una tabla, `table_totals` es más seguro, porque cuenta cada fila.
 
 La biblioteca muestra las descripciones de las herramientas integradas en el idioma de la interfaz. El modelo recibe siempre la descripción original en inglés, para que los agentes existentes se comporten igual en todos los idiomas.
 

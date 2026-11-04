@@ -19,16 +19,17 @@ Die Seite **Tools** hat drei Bereiche: *Bibliothek*, *Selbst schreiben* und *Von
 Tools aus der Bibliothek weist du im Inspektor eines Agenten zu, Server-Tools schaltest du dort ein (siehe [Tools zuweisen](/docs/agenten#tools)).
 
 ## Eingebaute Tools {#eingebaut}
-<!-- keywords: calculator, taschenrechner, current_datetime, datum, uhrzeit, days_between, tage, text_statistics -->
+<!-- keywords: calculator, taschenrechner, current_datetime, datum, uhrzeit, days_between, tage, text_statistics, table_totals -->
 
 | Tool | Zweck | Beispiel-Eingabe |
 |---|---|---|
 | `calculator` | Rechnet einen Ausdruck exakt aus: `+ - * / // % **`, Klammern, `pi`, `e` und `sqrt`, `log`, `log10`, `exp`, `abs`, `round`, `min`, `max`, `sin`, `cos`, `tan`. | `{"expression": "(1250 - 980) / 980 * 100"}` |
+| `table_totals` | Addiert eine Spalte einer Tabelle (Markdown oder CSV) Zeile für Zeile, optional gruppiert, mit Anteilen und Anteil an einer Bezugsgröße. Für Summen und Anteile aus Tabellenzeilen. | `{"table": "<Tabelle>", "value_column": "Dauer (min)", "group_by": "Anlage", "reference_total": 14400}` |
 | `current_datetime` | Aktuelles Datum, Uhrzeit und Wochentag in einer Zeitzone (Standard *Europe/Vienna*). | `{"timezone": "Europe/Berlin"}` |
 | `days_between` | Kalendertage zwischen zwei Daten (negativ, wenn das Ende davor liegt). | `{"start": "2026-01-01", "end": "2026-03-01"}` |
 | `text_statistics` | Zählt Zeichen, Wörter, Sätze und Absätze eines Textes. | `{"text": "…"}` |
 
-Sprachmodelle rechnen im Kopf fehleranfällig. Gib Agenten, die mit Zahlen arbeiten, den `calculator` und weise im System-Prompt an, ihn zu benutzen.
+Sprachmodelle rechnen im Kopf fehleranfällig. Gib Agenten, die mit Zahlen arbeiten, den `calculator` und weise im System-Prompt an, ihn zu benutzen. Für Summen und Anteile aus einer Tabelle ist `table_totals` sicherer, weil es jede Zeile mitzählt.
 
 Die Bibliothek zeigt die Beschreibungen eingebauter Tools in der Sprache der Oberfläche. Das Modell erhält immer die englische Originalbeschreibung, damit sich bestehende Agenten in jeder Sprache gleich verhalten.
 

@@ -65,7 +65,8 @@
     "requestOptions": "For advanced users: additional fields added unchanged to every API request. Must be a JSON object.",
     "test": "Runs only this agent with a test input and shows answer, tools, tokens and cost. Uses API credit, but is not a workflow run.",
     "preview": "Shows what the agent gets in the next run: system prompt, task with inserted inputs and further context. No API call.",
-    "paletteDesign": "Describe in your own words what an agent should do. The Agent Architect proposes a complete configuration; this costs one request to the assistant model."
+    "paletteDesign": "Describe in your own words what an agent should do. The Agent Architect proposes a complete configuration; this costs one request to the assistant model.",
+    "outputFieldSource": "Key figure: the value is accepted only if a tool computed it in this step or an earlier one (for example the calculator or table_totals). Otherwise the agent gets one correction; then the step stops, so no decision rests on an estimated number."
   },
   "tools": {
     "kind": "Built-in: ships with Nodestro. Your own tool: written by you. AI-created: written by the Coding Agent and approved by you.",
