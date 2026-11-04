@@ -1,5 +1,6 @@
 {
   "unknown": "Something went wrong. The technical details are below.",
+  "namedTool": "Tool “{{name}}”: {{text}}",
   "network": "The Nodestro server cannot be reached. Is it still running?",
   "http": "The server rejected the request (status {{status}}).",
   "validation": "The request contains invalid values.",

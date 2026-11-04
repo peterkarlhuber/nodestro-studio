@@ -1,5 +1,6 @@
 {
   "unknown": "Qualcosa è andato storto. I dettagli tecnici sono qui sotto.",
+  "namedTool": "Strumento «{{name}}»: {{text}}",
   "network": "Il server di Nodestro non è raggiungibile. È ancora in esecuzione?",
   "http": "Il server ha rifiutato la richiesta (stato {{status}}).",
   "validation": "La richiesta contiene valori non validi.",

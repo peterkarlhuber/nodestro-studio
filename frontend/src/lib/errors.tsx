@@ -223,6 +223,16 @@ export function problemHint(t: TFunction, item: Coded): string | null {
   return i18n.exists(key, values) ? t(key, values) : null;
 }
 
+/**
+ * A sandbox refusal names the refused tool (NJR-08), so with several tools on one agent it is clear which one is
+ * blocked; sentences that already contain the name stay as they are.
+ */
+function namedTool(t: TFunction, code: string, params: Record<string, unknown>, text: string): string {
+  const name = params.name;
+  if (!code.startsWith("sandbox.") || typeof name !== "string" || !name.trim() || text.includes(name)) return text;
+  return t("errors.namedTool", { name, text });
+}
+
 /** The sentence for a coded message in the current language. */
 export function problemText(t: TFunction, item: Coded): string {
   const { code, params } = resolved(item);
@@ -230,7 +240,7 @@ export function problemText(t: TFunction, item: Coded): string {
     const values = interpolationParams(t, params);
     // With the values, a plural key ("…_one", "…_other") counts as existing too.
     const key = `errors.${textKey(code)}`;
-    if (i18n.exists(key, values)) return t(key, values);
+    if (i18n.exists(key, values)) return namedTool(t, code, params, t(key, values));
     const fallback = FALLBACKS.find(([prefix]) => code!.startsWith(prefix));
     if (fallback) return t(fallback[1], values);
   }

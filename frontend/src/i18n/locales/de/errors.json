@@ -1,5 +1,6 @@
 {
   "unknown": "Etwas ist schiefgelaufen. Die technischen Details stehen unten.",
+  "namedTool": "Tool „{{name}}“: {{text}}",
   "network": "Der Nodestro-Server ist nicht erreichbar. Läuft er noch?",
   "http": "Der Server hat die Anfrage abgelehnt (Status {{status}}).",
   "validation": "Die Anfrage enthält ungültige Werte.",

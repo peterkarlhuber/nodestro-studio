@@ -280,7 +280,14 @@ describe("backend messages", () => {
         i18n.t("errors.sandbox.isolation_required_docker", { reason: i18n.t("settings.sandbox.docker.reason.limits") }),
       );
       expect(limits).toContain(i18n.t("settings.sandbox.docker.reason.limits"));
-      expect(problemText(t, linux)).toBe(i18n.t("errors.sandbox.libraries_need_isolation_linux"));
+      // A sentence without the tool's name gets it in front (NJR-08); one that names it stays as it is.
+      expect(problemText(t, linux)).toBe(
+        i18n.t("errors.namedTool", { name: "parse_pdf", text: i18n.t("errors.sandbox.libraries_need_isolation_linux") }),
+      );
+      expect(problemText(t, { code: "sandbox.isolation_required", params: { name: "fetch_rates", reason: "subprocess-mode" } })).toBe(
+        i18n.t("errors.namedTool", { name: "fetch_rates", text: i18n.t("errors.sandbox.isolation_required_subprocess") }),
+      );
+      expect(problemText(t, { code: "sandbox.isolation_required", params: { name: "fetch_rates" } })).toContain("fetch_rates");
       expect(problemText(t, auto)).toBe(i18n.t("errors.sandbox.libraries_need_isolation", { name: "parse_pdf" }));
       // An older runtime's refusal without a reason keeps its general sentence.
       expect(problemText(t, { code: "sandbox.isolation_required" })).toBe(i18n.t("errors.sandbox.isolation_required"));

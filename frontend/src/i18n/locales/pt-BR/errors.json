@@ -1,5 +1,6 @@
 {
   "unknown": "Algo deu errado. Os detalhes técnicos estão abaixo.",
+  "namedTool": "Ferramenta “{{name}}”: {{text}}",
   "network": "Não foi possível acessar o servidor do Nodestro. Ele ainda está em execução?",
   "http": "O servidor recusou a requisição (status {{status}}).",
   "validation": "A requisição contém valores inválidos.",
