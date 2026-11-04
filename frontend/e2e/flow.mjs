@@ -197,8 +197,9 @@ try {
   await page.getByTestId("search-open").waitFor();
   await page.keyboard.press("Control+k");
   const recent = page.getByTestId("search-group-recent");
-  await recent.getByTestId("search-hit").first().waitFor();
-  check((await recent.getByTestId("search-hit").count()) >= 2, "The empty search offers recent runs and workflows");
+  // Recent runs and recent workflows come from two requests that answer independently.
+  await until(async () => (await recent.getByTestId("search-hit").count()) >= 2, "recent runs and workflows");
+  check(true, "The empty search offers recent runs and workflows");
   await page.getByRole("combobox", { name: "Suchbegriff" }).fill("Reklamationen fertig");
   const runGroup = page.getByTestId("search-group-run");
   await runGroup.getByTestId("search-hit").first().waitFor();
