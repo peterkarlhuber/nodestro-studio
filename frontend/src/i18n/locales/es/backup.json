@@ -11,7 +11,7 @@
   "restoreThis": "Restaurar …",
   "restoreTitle": "Restaurar copia de seguridad",
   "valid": "«{{name}}» es una copia de seguridad válida del {{date}}. Todos los archivos están completos e intactos.",
-  "versions": "Creada con Nodestro {{nodestro}} y la biblioteca de agentes {{library}}.",
+  "versions": "Creada con Nodestro {{nodestro}} y Orkexa {{library}}.",
   "inBackup": "En la copia",
   "current": "Actual",
   "contents": {

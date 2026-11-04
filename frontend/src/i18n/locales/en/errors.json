@@ -7,7 +7,7 @@
   "bad_request": "The request could not be processed.",
   "not_found": "“{{name}}” was not found. Perhaps it has been deleted in the meantime.",
   "api_key_missing": "No API key for {{provider}}. Enter it in the settings or set its environment variable.",
-  "library": "The agent library rejected the configuration.",
+  "library": "Orkexa, the agent engine, rejected the configuration.",
   "examples": {
     "integration_unavailable": "The chosen MCP server cannot serve this connection: it must offer every tool the example needs, approved as read-only. Nothing was copied.",
     "integration_unknown": "The example has no connection “{{integration}}”. Reload the page and try again.",
@@ -55,7 +55,7 @@
     "judge_unsupported": "The default model “{{model}}” cannot return the structured verdict of a quality check. Choose another judge before you switch the check on."
   },
   "config": {
-    "library": "The configuration does not match the rules of the agent library.",
+    "library": "The configuration does not match the rules of the agent engine Orkexa.",
     "output_no_fields": "A structured output format needs at least one field.",
     "output_field_name": "Invalid field name “{{name}}”: letters, digits and _ only.",
     "examples_order": "Example messages must start with the user and alternate.",

@@ -7,7 +7,7 @@
   "bad_request": "Die Anfrage konnte nicht verarbeitet werden.",
   "not_found": "„{{name}}“ wurde nicht gefunden. Vielleicht wurde es inzwischen gelöscht.",
   "api_key_missing": "Kein API-Schlüssel für {{provider}}. Trage ihn in den Einstellungen ein oder setze die Umgebungsvariable.",
-  "library": "Die Agenten-Bibliothek hat die Konfiguration abgelehnt.",
+  "library": "Orkexa, die Agenten-Engine, hat die Konfiguration abgelehnt.",
   "examples": {
     "integration_unavailable": "Der gewählte MCP-Server kann diese Verbindung nicht bedienen: Er muss jedes Tool anbieten, das das Beispiel braucht, als nur lesend freigegeben. Es wurde nichts kopiert.",
     "integration_unknown": "Das Beispiel hat keine Verbindung „{{integration}}“. Lade die Seite neu und versuche es noch einmal.",
@@ -55,7 +55,7 @@
     "judge_unsupported": "Das Standardmodell „{{model}}“ kann kein strukturiertes Urteil für eine Qualitätsprüfung liefern. Wähle einen anderen Judge, bevor du die Prüfung einschaltest."
   },
   "config": {
-    "library": "Die Konfiguration passt nicht zu den Regeln der Agenten-Bibliothek.",
+    "library": "Die Konfiguration passt nicht zu den Regeln der Agenten-Engine Orkexa.",
     "output_no_fields": "Ein strukturiertes Ausgabeformat braucht mindestens ein Feld.",
     "output_field_name": "Ungültiger Feldname „{{name}}“: nur Buchstaben, Ziffern und _.",
     "examples_order": "Beispiel-Nachrichten müssen mit dem Nutzer beginnen und abwechseln.",

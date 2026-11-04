@@ -11,7 +11,7 @@
   "restoreThis": "Restore …",
   "restoreTitle": "Restore backup",
   "valid": "“{{name}}” is a valid backup from {{date}}. All files are complete and undamaged.",
-  "versions": "Created with Nodestro {{nodestro}} and agent library {{library}}.",
+  "versions": "Created with Nodestro {{nodestro}} and Orkexa {{library}}.",
   "inBackup": "In backup",
   "current": "Current",
   "contents": {

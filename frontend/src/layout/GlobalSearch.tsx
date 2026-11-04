@@ -112,9 +112,13 @@ const RUN_HITS = 6;
 const RECENT_RUNS = 3;
 const RECENT_WORKFLOWS = 3;
 
-/** Lower case without accents, so "regles" finds "Réglages". */
+/** Lower case without accents and with plain apostrophes, so "regles" finds "Réglages" and "l'outil" "l’outil". */
 function fold(text: string): string {
-  return text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+  return text
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[\u2018\u2019\u02bc]/g, "'")
+    .toLowerCase();
 }
 
 /** Pages whose name (or, for settings sections, the section's name) contains every word of the query. */

@@ -38,7 +38,7 @@ Nodestro vérifie d’abord le workflow. Les erreurs empêchent la publication ;
 Chaque publication reçoit un numéro séquentiel et une note facultative. Les modifications ultérieures dans l’éditeur ne changent jamais une version publiée. Elles n’arrivent dans l’API qu’à la publication suivante.
 
 ## Contrôle de publication {#freigabe-gate}
-<!-- keywords: contrôle de publication, gate, qualité, série de tests, obligatoire, justification, override, publier, note de l'ia -->
+<!-- keywords: contrôle de publication, gate, qualité, série de tests, obligatoire, justification, override, publier, note de l’ia -->
 
 Avec le **contrôle de publication**, vous ne publiez une nouvelle version qu’après que ses [séries de tests](/docs/automatisierung#testreihen) l’ont testée. Le contrôle est facultatif et se règle par API. Vous l’activez après la première publication dans **Limites → Contrôle de publication** : choisissez les séries de tests, la part minimale de cas réussis et, en option, une note minimale de l’IA. Les versions déjà publiées ne changent pas.
 
@@ -148,14 +148,14 @@ Par défaut, les API publiées ne répondent qu’à cet ordinateur. Les autres 
 
 Ce port ne sert que les API publiées, jamais l’interface de Nodestro, ses réglages ou d’autres workflows. Si le port est occupé, la boîte de dialogue l’indique et Nodestro continue de fonctionner normalement. Après la restauration d’une sauvegarde, l’accès réseau est de nouveau désactivé.
 
-## En tant qu'outil MCP {#mcp-server}
+## En tant qu’outil MCP {#mcp-server}
 <!-- keywords: serveur mcp, outil mcp, assistant ia, claude, client, outil -->
 
-Une API publiée peut aussi être proposée comme **outil pour les clients MCP** de cet ordinateur, par exemple un assistant IA. C'est désactivé par défaut et nécessite deux interrupteurs : l'exploitant démarre Nodestro avec `NODESTRO_MCP_SERVER=1`, et vous activez **Proposer comme outil MCP** sous *Accès*.
+Une API publiée peut aussi être proposée comme **outil pour les clients MCP** de cet ordinateur, par exemple un assistant IA. C’est désactivé par défaut et nécessite deux interrupteurs : l’exploitant démarre Nodestro avec `NODESTRO_MCP_SERVER=1`, et vous activez **Proposer comme outil MCP** sous *Accès*.
 
-- Le client se connecte à `/api/published/_mcp` sur cet ordinateur et envoie une clé d'API comme jeton Bearer. Il voit les API proposées de cette clé comme des outils, nommés d'après l'API ; la clé doit être autorisée à lancer des exécutions.
-- Chaque appel d'outil est une **exécution normale** de l'API publiée : même version, mêmes limites, budgets, approbations et historique. Si l'attente synchrone est activée, la réponse contient le résultat ; sinon, ou si une exécution s'arrête à une approbation, elle indique l'exécution pour que vous puissiez la suivre dans Nodestro ou via l'API.
-- Les clients d'autres ordinateurs ne peuvent pas l'utiliser, pas même via l'accès réseau.
+- Le client se connecte à `/api/published/_mcp` sur cet ordinateur et envoie une clé d’API comme jeton Bearer. Il voit les API proposées de cette clé comme des outils, nommés d’après l’API ; la clé doit être autorisée à lancer des exécutions.
+- Chaque appel d’outil est une **exécution normale** de l’API publiée : même version, mêmes limites, budgets, approbations et historique. Si l’attente synchrone est activée, la réponse contient le résultat ; sinon, ou si une exécution s’arrête à une approbation, elle indique l’exécution pour que vous puissiez la suivre dans Nodestro ou via l’API.
+- Les clients d’autres ordinateurs ne peuvent pas l’utiliser, pas même via l’accès réseau.
 
 ## Sécurité {#sicherheit}
 <!-- keywords: sécurité, tls, https, chiffrement, internet, proxy inverse, reverse proxy, certificat, sauvegarde, secrets -->

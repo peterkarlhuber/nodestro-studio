@@ -197,6 +197,7 @@ describe("searchDocs", () => {
 
   it("ignores case and accents and needs every word", () => {
     expect(fold("Ausführung Größe")).toBe("ausfuhrung grosse");
+    expect(fold("l’outil")).toBe(fold("l'outil"));
     expect(searchDocs(CHAPTERS, "AUSFUHRUNGEN").length).toBeGreaterThan(0);
     expect(searchDocs(CHAPTERS, "sandbox docker").every((hit) => hit.snippet.length > 0)).toBe(true);
     expect(searchDocs(CHAPTERS, "xylophon")).toEqual([]);

@@ -16,7 +16,9 @@ export function fold(text: string): string {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "")
-    .replace(/ß/g, "ss");
+    .replace(/ß/g, "ss")
+    // Typographic apostrophes (fr, it: "l’outil") match the one a keyboard types ("l'outil").
+    .replace(/[‘’ʼ]/g, "'");
 }
 
 /** Markdown reduced to readable text for snippets. */

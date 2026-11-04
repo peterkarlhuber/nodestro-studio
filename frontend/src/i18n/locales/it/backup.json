@@ -11,7 +11,7 @@
   "restoreThis": "Ripristina …",
   "restoreTitle": "Ripristina backup",
   "valid": "“{{name}}” è un backup valido del {{date}}. Tutti i file sono completi e integri.",
-  "versions": "Creato con Nodestro {{nodestro}} e la libreria di agenti {{library}}.",
+  "versions": "Creato con Nodestro {{nodestro}} e Orkexa {{library}}.",
   "inBackup": "Nel backup",
   "current": "Attuale",
   "contents": {

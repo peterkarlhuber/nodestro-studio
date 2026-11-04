@@ -174,11 +174,15 @@ describe("page names", () => {
 
   it("name the agent library as the navigation does in every language", () => {
     // The page of agent templates is the "Agent library", also in running text ("in the agent library"). The
-    // library Orkexa that checks agent configurations is a different thing and keeps its own wording.
-    const ORKEXA = new Set(["errors.library", "errors.config.library", "backup.versions"]);
+    // library Orkexa that checks agent configurations is named by its name, never "agent library" (F10).
+    for (const language of LANGUAGES)
+      for (const key of ["errors.library", "errors.config.library", "backup.versions"]) {
+        expect(texts[language].get(key), `${language} ${key}`).toContain("Orkexa");
+        expect(texts[language].get(key)?.toLowerCase(), `${language} ${key}`).not.toContain(texts[language].get("nav.agents")!.toLowerCase());
+      }
     const wrong: string[] = [];
     for (const [key, text] of english) {
-      if (key.startsWith("nav.") || ORKEXA.has(key) || !/\bagent library\b/i.test(text)) continue;
+      if (key.startsWith("nav.") || !/\bagent library\b/i.test(text)) continue;
       for (const language of OTHERS) {
         const name = texts[language].get("nav.agents")!.toLowerCase();
         if (!texts[language].get(key)?.toLowerCase().includes(name)) wrong.push(`${language} ${key}: ${texts[language].get(key)}`);
@@ -218,6 +222,14 @@ describe("address form", () => {
       .filter(([key, text]) => !PROMPTS.has(key) && FORMAL[language].test(text.replace(/\{\{[^}]*\}\}/g, "")))
       .map(([key, text]) => `${key}: ${text}`);
     expect(formal).toEqual([]);
+  });
+});
+
+describe("typography", () => {
+  // French uses the typographic apostrophe ("l’outil"), as about 2,400 texts already did (final UX review F10).
+  it("uses typographic apostrophes in French", () => {
+    const straight = [...texts.fr].filter(([, text]) => /\p{L}'\p{L}/u.test(text)).map(([key, text]) => `${key}: ${text}`);
+    expect(straight).toEqual([]);
   });
 });
 

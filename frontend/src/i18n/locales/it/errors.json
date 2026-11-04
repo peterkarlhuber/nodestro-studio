@@ -7,7 +7,7 @@
   "bad_request": "Non è stato possibile elaborare la richiesta.",
   "not_found": "«{{name}}» non è stato trovato. Forse nel frattempo è stato eliminato.",
   "api_key_missing": "Nessuna chiave API per {{provider}}. Inseriscila nelle impostazioni o imposta la sua variabile d’ambiente.",
-  "library": "La libreria degli agenti ha rifiutato la configurazione.",
+  "library": "Orkexa, il motore degli agenti, ha rifiutato la configurazione.",
   "examples": {
     "integration_unavailable": "Il server MCP scelto non può servire questa connessione: deve offrire ogni strumento di cui l'esempio ha bisogno, approvato in sola lettura. Non è stato copiato nulla.",
     "integration_unknown": "L'esempio non ha la connessione «{{integration}}». Ricarica la pagina e riprova.",
@@ -55,7 +55,7 @@
     "judge_unsupported": "Il modello predefinito «{{model}}» non può restituire il giudizio strutturato di un controllo di qualità. Scegli un altro giudice prima di attivare il controllo."
   },
   "config": {
-    "library": "La configurazione non rispetta le regole della libreria degli agenti.",
+    "library": "La configurazione non rispetta le regole del motore degli agenti Orkexa.",
     "output_no_fields": "Un formato di output strutturato richiede almeno un campo.",
     "output_field_name": "Nome di campo non valido «{{name}}»: solo lettere, cifre e _.",
     "examples_order": "I messaggi di esempio devono iniziare con l’utente e alternarsi.",
