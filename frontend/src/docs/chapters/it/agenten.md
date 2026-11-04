@@ -94,6 +94,7 @@ Ogni campo ha:
 | **Tipo** | *Testo*, *Numero* (decimale), *Numero intero*, *Sì/No*, *Elenco (testo)* o *Elenco (numeri)*. |
 | **Descrizione** | Spiega al modello cosa va nel campo. Più è precisa, meglio è. |
 | **Obbligatorio** | I campi obbligatori sono sempre compilati; i campi facoltativi possono essere `null`. |
+| **Da uno strumento** | Solo per *Numero* e *Intero*: un indicatore chiave su cui si basa una decisione o un passo successivo. Nodestro accetta il valore solo se uno strumento lo ha calcolato in questo passo o in uno precedente (ad esempio la calcolatrice, o `table_totals`, che somma esattamente una colonna di tabella). Altrimenti l'agente riceve una correzione, poi il passo si ferma con un messaggio. Così nessun ramo decide su una cifra stimata. Viene verificata la provenienza del valore, non se l'agente abbia dato allo strumento i dati giusti. |
 
 **Esempio** per una valutazione:
 

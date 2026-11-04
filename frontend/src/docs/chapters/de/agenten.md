@@ -94,6 +94,7 @@ Jedes Feld hat:
 | **Typ** | *Text*, *Zahl* (Kommazahl), *Ganzzahl*, *Ja/Nein*, *Liste (Text)* oder *Liste (Zahlen)*. |
 | **Beschreibung** | Erklärt dem Modell, was in das Feld gehört. Je genauer, desto besser. |
 | **Pflicht** | Pflichtfelder sind immer gefüllt; optionale Felder dürfen `null` sein. |
+| **Aus einem Tool** | Nur bei *Zahl* und *Ganzzahl*: eine Kennzahl, auf der eine Entscheidung oder ein späterer Schritt beruht. Nodestro übernimmt den Wert nur, wenn ein Tool ihn in diesem oder einem früheren Schritt berechnet hat (z. B. der Rechner oder `table_totals`, das eine Tabellenspalte exakt addiert). Sonst bekommt der Agent einmal eine Korrektur, danach stoppt der Schritt mit einer Meldung. So entscheidet keine Verzweigung auf einer geschätzten Zahl. Geprüft wird die Herkunft des Werts, nicht, ob der Agent dem Tool die richtigen Angaben gegeben hat. |
 
 **Beispiel** für eine Bewertung:
 

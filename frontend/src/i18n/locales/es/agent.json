@@ -179,7 +179,8 @@
       "empty": "Introduce un nombre.",
       "digit": "Solo letras, cifras y _; no puede empezar por una cifra.",
       "duplicate": "Este nombre aparece más de una vez."
-    }
+    },
+    "fromTool": "De una herramienta"
   },
   "thinking": {
     "title": "Razonamiento y esfuerzo",

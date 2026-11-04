@@ -22,7 +22,10 @@
       "label": "Websuche",
       "description": "Sucht im Web und zitiert die Quellen (Anthropic führt die Suche aus; 10 $ pro 1.000 Suchen)."
     },
-    "web_fetch": { "label": "Web-Abruf", "description": "Lädt den Inhalt einer Webseite oder eines PDFs über eine URL." },
+    "web_fetch": {
+      "label": "Web-Abruf",
+      "description": "Lädt den Inhalt einer Webseite oder eines PDFs über eine URL."
+    },
     "code_execution": {
       "label": "Code-Ausführung",
       "description": "Führt Python in einer Sandbox von Anthropic aus. Nicht zusammen mit Websuche/Web-Abruf."
@@ -32,6 +35,7 @@
     "calculator": "Berechnet einen Rechenausdruck exakt, statt im Kopf zu rechnen. Unterstützt + - * / // % **, Klammern, pi, e und die Funktionen sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
     "current_datetime": "Liefert aktuelles Datum, Uhrzeit und Wochentag in einer Zeitzone.",
     "days_between": "Zählt die Kalendertage von einem Datum zum anderen.",
-    "text_statistics": "Zählt Zeichen, Wörter, Sätze und Absätze eines Textes."
+    "text_statistics": "Zählt Zeichen, Wörter, Sätze und Absätze eines Textes.",
+    "table_totals": "Addiert eine Spalte einer Tabelle exakt: Summe, Anzahl, Mittelwert, Gruppen in Pareto-Reihenfolge und den Anteil an einer Bezugsgröße. Liest Markdown- und CSV-Tabellen und europäische Zahlenformate."
   }
 }

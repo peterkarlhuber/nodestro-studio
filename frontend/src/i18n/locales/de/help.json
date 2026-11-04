@@ -65,7 +65,8 @@
     "requestOptions": "Für Fortgeschrittene: zusätzliche Felder, die unverändert in jede API-Anfrage übernommen werden. Muss ein JSON-Objekt sein.",
     "test": "Führt nur diesen Agenten mit einer Testeingabe aus und zeigt Antwort, Tools, Tokens und Kosten. Kostet API-Guthaben, ist aber kein Workflow-Lauf.",
     "preview": "Zeigt, was der Agent beim nächsten Lauf bekommt: System-Prompt, Aufgabe mit eingesetzten Eingaben und weiteren Kontext. Ohne API-Aufruf.",
-    "paletteDesign": "Beschreibe in eigenen Worten, was ein Agent tun soll. Der Agenten-Architekt schlägt eine vollständige Konfiguration vor; das kostet eine Anfrage an das Assistenzmodell."
+    "paletteDesign": "Beschreibe in eigenen Worten, was ein Agent tun soll. Der Agenten-Architekt schlägt eine vollständige Konfiguration vor; das kostet eine Anfrage an das Assistenzmodell.",
+    "outputFieldSource": "Kennzahl: Der Wert wird nur übernommen, wenn ein Tool ihn in diesem oder einem früheren Schritt berechnet hat (zum Beispiel der Rechner oder table_totals). Sonst bekommt der Agent eine Korrektur; danach stoppt der Schritt, damit keine Entscheidung auf einer geschätzten Zahl beruht."
   },
   "tools": {
     "kind": "Eingebaut: mit Nodestro ausgeliefert. Eigenes Tool: selbst geschrieben. Von KI erstellt: vom Coding Agent geschrieben und von dir freigegeben.",

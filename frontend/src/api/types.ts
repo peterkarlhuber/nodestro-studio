@@ -47,6 +47,8 @@ export interface OutputField {
   type: OutputFieldType;
   description: string;
   required: boolean;
+  /** "tool": a key figure that is accepted only as the result of a tool call (checked by the runtime). */
+  source?: "model" | "tool";
 }
 
 export interface OutputConfig {

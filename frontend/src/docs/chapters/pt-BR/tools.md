@@ -19,16 +19,17 @@ A página **Ferramentas** tem três seções: *Biblioteca*, *Escrever você mesm
 As ferramentas da biblioteca são atribuídas no inspetor de um agente, onde também se ativam as ferramentas de servidor (veja [Atribuir ferramentas](/docs/agenten#tools)).
 
 ## Ferramentas integradas {#eingebaut}
-<!-- keywords: calculator, calculadora, current_datetime, data, hora, days_between, dias, text_statistics -->
+<!-- keywords: calculator, calculadora, current_datetime, data, hora, days_between, dias, text_statistics, table_totals -->
 
 | Ferramenta | Finalidade | Entrada de exemplo |
 |---|---|---|
 | `calculator` | Calcula uma expressão com exatidão: `+ - * / // % **`, parênteses, `pi`, `e` e `sqrt`, `log`, `log10`, `exp`, `abs`, `round`, `min`, `max`, `sin`, `cos`, `tan`. | `{"expression": "(1250 - 980) / 980 * 100"}` |
+| `table_totals` | Soma uma coluna de uma tabela (Markdown ou CSV) linha por linha, opcionalmente agrupada, com as participações e a participação em um total de referência. Para somas e participações de linhas de tabela. | `{"table": "<tabela>", "value_column": "Duração (min)", "group_by": "Máquina", "reference_total": 14400}` |
 | `current_datetime` | Data, hora e dia da semana atuais em um fuso horário (padrão *Europe/Vienna*). | `{"timezone": "America/Sao_Paulo"}` |
 | `days_between` | Dias corridos entre duas datas (negativo se o fim for anterior). | `{"start": "2026-01-01", "end": "2026-03-01"}` |
 | `text_statistics` | Conta caracteres, palavras, frases e parágrafos de um texto. | `{"text": "…"}` |
 
-Modelos de linguagem erram em contas de cabeça. Dê a `calculator` aos agentes que trabalham com números e peça no prompt de sistema que a usem.
+Modelos de linguagem erram em contas de cabeça. Dê a `calculator` aos agentes que trabalham com números e peça no prompt de sistema que a usem. Para somas e participações de uma tabela, `table_totals` é mais seguro, porque conta cada linha.
 
 A biblioteca mostra as descrições das ferramentas integradas no idioma da interface. O modelo sempre recebe a descrição original em inglês, para que os agentes existentes se comportem igual em todos os idiomas.
 

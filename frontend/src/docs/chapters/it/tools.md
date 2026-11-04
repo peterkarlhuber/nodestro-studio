@@ -19,16 +19,17 @@ La pagina **Strumenti** ha tre sezioni: *Libreria*, *Scrivi tu* e *Crea con l’
 Gli strumenti della libreria si assegnano nell'ispettore di un agente, dove si attivano anche gli strumenti server (vedi [Assegnare strumenti](/docs/agenten#tools)).
 
 ## Strumenti integrati {#eingebaut}
-<!-- keywords: calculator, calcolatrice, current_datetime, data, ora, days_between, giorni, text_statistics -->
+<!-- keywords: calculator, calcolatrice, current_datetime, data, ora, days_between, giorni, text_statistics, table_totals -->
 
 | Strumento | Scopo | Input di esempio |
 |---|---|---|
 | `calculator` | Calcola un'espressione con precisione: `+ - * / // % **`, parentesi, `pi`, `e` e `sqrt`, `log`, `log10`, `exp`, `abs`, `round`, `min`, `max`, `sin`, `cos`, `tan`. | `{"expression": "(1250 - 980) / 980 * 100"}` |
+| `table_totals` | Somma una colonna di una tabella (Markdown o CSV) riga per riga, eventualmente per gruppi, con le quote e la quota su un totale di riferimento. Per totali e quote di righe di tabella. | `{"table": "<tabella>", "value_column": "Durata (min)", "group_by": "Macchina", "reference_total": 14400}` |
 | `current_datetime` | Data, ora e giorno della settimana attuali in un fuso orario (predefinito *Europe/Vienna*). | `{"timezone": "Europe/Rome"}` |
 | `days_between` | Giorni di calendario tra due date (negativo se la fine è precedente). | `{"start": "2026-01-01", "end": "2026-03-01"}` |
 | `text_statistics` | Conta caratteri, parole, frasi e paragrafi di un testo. | `{"text": "…"}` |
 
-I modelli linguistici sbagliano facilmente i calcoli a mente. Dai la `calculator` agli agenti che lavorano con i numeri e chiedi nel prompt di sistema di usarla.
+I modelli linguistici sbagliano facilmente i calcoli a mente. Dai la `calculator` agli agenti che lavorano con i numeri e chiedi nel prompt di sistema di usarla. Per totali e quote di una tabella, `table_totals` è più sicuro, perché conta ogni riga.
 
 La libreria mostra le descrizioni degli strumenti integrati nella lingua dell'interfaccia. Il modello riceve sempre la descrizione originale in inglese, così gli agenti esistenti si comportano allo stesso modo in ogni lingua.
 

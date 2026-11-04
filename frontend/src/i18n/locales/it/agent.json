@@ -179,7 +179,8 @@
       "empty": "Inserisci un nome.",
       "digit": "Solo lettere, cifre e _; non può iniziare con una cifra.",
       "duplicate": "Questo nome compare più volte."
-    }
+    },
+    "fromTool": "Da uno strumento"
   },
   "thinking": {
     "title": "Ragionamento e impegno",

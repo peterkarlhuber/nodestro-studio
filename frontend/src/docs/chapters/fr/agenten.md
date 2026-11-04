@@ -94,6 +94,7 @@ Chaque champ possède :
 | **Type** | *Texte*, *Nombre* (décimal), *Nombre entier*, *Oui/Non*, *Liste (texte)* ou *Liste (nombres)*. |
 | **Description** | Explique au modèle ce que doit contenir le champ. Plus elle est précise, mieux c’est. |
 | **Obligatoire** | Les champs obligatoires sont toujours remplis ; les champs facultatifs peuvent valoir `null`. |
+| **Issu d'un outil** | Uniquement pour *Nombre* et *Entier* : un indicateur clé sur lequel repose une décision ou une étape ultérieure. Nodestro n'accepte la valeur que si un outil l'a calculée dans cette étape ou une étape précédente (par exemple la calculatrice, ou `table_totals`, qui additionne exactement une colonne de tableau). Sinon, l'agent reçoit une correction, puis l'étape s'arrête avec un message. Ainsi, aucune branche ne décide sur un chiffre estimé. C'est l'origine de la valeur qui est vérifiée, pas le fait que l'agent ait donné les bonnes données à l'outil. |
 
 **Exemple** pour une évaluation :
 

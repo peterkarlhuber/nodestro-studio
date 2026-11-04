@@ -35,6 +35,7 @@
     "calculator": "Evaluates an arithmetic expression exactly instead of calculating in its head. Supports + - * / // % **, parentheses, pi, e and the functions sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
     "current_datetime": "Returns the current date, time and weekday in a time zone.",
     "days_between": "Counts the calendar days from one date to another.",
-    "text_statistics": "Counts the characters, words, sentences and paragraphs of a text."
+    "text_statistics": "Counts the characters, words, sentences and paragraphs of a text.",
+    "table_totals": "Adds up a column of a table exactly: total, count, mean, groups in Pareto order and the share of a reference total. Reads Markdown and CSV tables and European number formats."
   }
 }

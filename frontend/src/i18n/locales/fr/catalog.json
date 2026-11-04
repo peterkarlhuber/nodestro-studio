@@ -35,6 +35,7 @@
     "calculator": "Calcule exactement une expression au lieu de calculer de tête. Prend en charge + - * / // % **, les parenthèses, pi, e et les fonctions sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
     "current_datetime": "Renvoie la date, l’heure et le jour de la semaine actuels dans un fuseau horaire.",
     "days_between": "Compte les jours calendaires d’une date à une autre.",
-    "text_statistics": "Compte les caractères, mots, phrases et paragraphes d’un texte."
+    "text_statistics": "Compte les caractères, mots, phrases et paragraphes d’un texte.",
+    "table_totals": "Additionne exactement une colonne d'un tableau : total, nombre, moyenne, groupes dans l'ordre de Pareto et part d'un total de référence. Lit les tableaux Markdown et CSV et les formats de nombres européens."
   }
 }

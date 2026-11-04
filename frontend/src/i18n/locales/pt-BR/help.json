@@ -65,7 +65,8 @@
     "requestOptions": "Para usuários avançados: campos adicionais incluídos sem alteração em toda requisição à API. Deve ser um objeto JSON.",
     "test": "Executa apenas este agente com uma entrada de teste e mostra resposta, ferramentas, tokens e custo. Consome crédito da API, mas não é uma execução do fluxo de trabalho.",
     "preview": "Mostra o que o agente recebe na próxima execução: prompt do sistema, tarefa com as entradas inseridas e o restante do contexto. Sem chamada à API.",
-    "paletteDesign": "Descreva com suas palavras o que um agente deve fazer. O Arquiteto de agentes propõe uma configuração completa; isso custa uma solicitação ao modelo do assistente."
+    "paletteDesign": "Descreva com suas palavras o que um agente deve fazer. O Arquiteto de agentes propõe uma configuração completa; isso custa uma solicitação ao modelo do assistente.",
+    "outputFieldSource": "Indicador-chave: o valor só é aceito se uma ferramenta o calculou nesta etapa ou em uma anterior (por exemplo a calculadora ou table_totals). Caso contrário, o agente recebe uma correção; depois a etapa para, para que nenhuma decisão se baseie em um número estimado."
   },
   "tools": {
     "kind": "Integrada: vem com o Nodestro. Ferramenta própria: escrita por você. Criada por IA: escrita pelo agente de programação e aprovada por você.",

@@ -182,7 +182,8 @@
     "provider_unreachable": "Não foi possível alcançar {{provider}}.",
     "provider_rate_limited": "{{provider}} informou solicitações ou tokens demais em pouco tempo (limite de taxa).",
     "provider_overloaded": "{{provider}} está sobrecarregado no momento.",
-    "provider_auth_aws": "A AWS não aceitou o acesso ao Amazon Bedrock: as credenciais estão faltando ou expiraram, ou falta uma permissão à função do IAM."
+    "provider_auth_aws": "A AWS não aceitou o acesso ao Amazon Bedrock: as credenciais estão faltando ou expiraram, ou falta uma permissão à função do IAM.",
+    "value_unverified": "O indicador-chave {{field}} ({{value}}) não foi calculado com uma ferramenta, nem depois de uma correção. A etapa foi interrompida para que nenhuma decisão se baseie em um número não verificado."
   },
   "budget": {
     "not_starter": "Só a pessoa que iniciou a execução ou um administrador pode decidir sobre o orçamento dela.",
@@ -327,7 +328,9 @@
     "local_model_no_tools": "{{model}} não consegue chamar ferramentas, mas este agente usa ferramentas. Escolha um modelo que suporte chamadas de ferramentas.",
     "local_context_small": "O servidor de modelos local dá aos modelos só {{tokens}} tokens de contexto; recomenda-se pelo menos {{recommended}} tokens, senão as respostas são cortadas.",
     "local_max_tokens": "O limite de resposta deste agente ({{max_tokens}} tokens) não cabe na janela de contexto do servidor de modelos local ({{tokens}} tokens).",
-    "local_reasoning_saving": "Neste computador sem placa de vídeo, estes agentes respondem sem a fase de raciocínio (esforço Médio): {{nodes}}. Escolha o esforço Alto para um agente ou desligue o modo de economia de CPU nas configurações."
+    "local_reasoning_saving": "Neste computador sem placa de vídeo, estes agentes respondem sem a fase de raciocínio (esforço Médio): {{nodes}}. Escolha o esforço Alto para um agente ou desligue o modo de economia de CPU nas configurações.",
+    "value_source_type": "{{field}} deve vir de uma ferramenta, mas só números de um resultado estruturado são verificados.",
+    "value_source_no_tool": "{{field}} deve vir de uma ferramenta, mas nem este agente nem uma etapa anterior tem uma ferramenta. Adicione uma ferramenta como a calculadora."
   },
   "backup": {
     "not_zip": "O arquivo não é um backup do Nodestro (não é um ZIP).",

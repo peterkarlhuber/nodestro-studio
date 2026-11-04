@@ -35,6 +35,7 @@
     "calculator": "Calcula uma expressão aritmética com exatidão em vez de fazer a conta de cabeça. Aceita + - * / // % **, parênteses, pi, e e as funções sqrt, log, log10, exp, abs, round, min, max, sin, cos, tan.",
     "current_datetime": "Retorna a data, a hora e o dia da semana atuais em um fuso horário.",
     "days_between": "Conta os dias corridos de uma data a outra.",
-    "text_statistics": "Conta caracteres, palavras, frases e parágrafos de um texto."
+    "text_statistics": "Conta caracteres, palavras, frases e parágrafos de um texto.",
+    "table_totals": "Soma exatamente uma coluna de uma tabela: total, quantidade, média, grupos em ordem de Pareto e a participação em um total de referência. Lê tabelas Markdown e CSV e formatos numéricos europeus."
   }
 }
