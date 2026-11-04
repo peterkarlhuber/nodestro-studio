@@ -23,6 +23,11 @@
   texts; the help chapters match the dialog in six languages.
 - Examples: result fields take their label from the description, also inside collected results, so no English field
   ids appear in a run; the preview shows team deliverables, team and part names and model needs in words.
+- Adapted to nodestro-api #87 (backward compatible): texts in six languages for `workflow.not_found`,
+  `run.not_found`, `publication.not_found`, `export.server_unsupported`, `export.busy`, `export.server_too_large` and
+  `local.invalid_package`; Settings > Local models works for server tenants without hardware details ("On the
+  server"); knowledge search keeps within the API limits; export download needs and model licenses
+  (`license_source`) are named in words.
 
 ### Portable export (2026-11-04)
 

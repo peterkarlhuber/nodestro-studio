@@ -161,9 +161,10 @@ None known.
 - **Priority:** P4 Optional · **Status:** Open · **Refs:** UX round 3 (studio-new N3 findings)
 - **What:** An external model server that cannot be reached shows "Stopped" instead of "Not reachable"; on machines
   without a GPU the CPU saving mode sentence appears twice; the tool-agent task has different names in Settings >
-  Local models and in an example's model plan.
-- **Next step:** One status text for unreachable external servers, one CPU sentence, one task name in both places
-  (all six languages).
+  Local models and in an example's model plan. The server-tenant view (no hardware) still words a few hints for "this
+  computer", and the `export.server_too_large` sentence mixes MB and GB.
+- **Next step:** One status text for unreachable external servers, one CPU sentence, one task name in both places,
+  server wording in the tenant view, one size unit (all six languages).
 
 ## Tests and quality assurance
 
