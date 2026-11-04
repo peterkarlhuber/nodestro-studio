@@ -11,9 +11,16 @@ import { Link } from "react-router-dom";
 import { ApiError } from "../api/client";
 import { useMcpServers } from "../api/mcp";
 import type { ExampleDetail, ExampleIntegration, ExampleKnowledge, ExampleTeam } from "../api/types";
+import { fieldLabel } from "../components/Markdown";
 import { Badge, Callout, Field, Select } from "../components/ui";
 import { ProblemText, codedError } from "../lib/errors";
 import { OFFLINE } from "./examples";
+
+/** What a team delivers, labelled like result fields (from the descriptions in the example's language, ED-17). */
+export function contractNames(team: Pick<ExampleTeam, "contract" | "contract_fields">): string[] {
+  const fields = (team.contract_fields ?? []).map((field) => ({ ...field, type: "string" as const, required: true }));
+  return team.contract.map((name) => fieldLabel(name, fields));
+}
 
 /** The teams of an orchestrated example: what each can do, what it delivers and whether it stops for a person. */
 export function TeamList({ teams }: { teams: ExampleTeam[] }) {
@@ -52,7 +59,7 @@ export function TeamList({ teams }: { teams: ExampleTeam[] }) {
               <p className="small">{t("library.preview.teamParameters", { names: team.parameters.join(", ") })}</p>
             ) : null}
             {team.contract.length ? (
-              <p className="small">{t("library.preview.teamContract", { names: team.contract.join(", ") })}</p>
+              <p className="small">{t("library.preview.teamContract", { names: contractNames(team).join(" · ") })}</p>
             ) : null}
           </li>
         ))}
