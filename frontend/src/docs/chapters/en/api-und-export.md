@@ -236,6 +236,23 @@ In the exported project, `python -m app.keys new` creates keys for your clients.
 
 **Amazon Bedrock in the export:** the project signs in with the AWS default credentials of the machine it runs on (an IAM role, SSO, a profile or `AWS_*` variables) and reads the region from `AWS_REGION` (or `AWS_DEFAULT_REGION`); the exported settings carry only the region and the EU-only data residency, which stays in force. The ZIP contains no AWS credentials, no profile and no role. Grant the target machine's role the permissions listed under [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
 
+## Ready-to-run package {#portable}
+<!-- keywords: portable, package, offline, unzip, start, launcher, python, ollama, local models, web interface, platform, windows, macos, linux -->
+
+Under **Export**, choose **Ready-to-run package** instead of the source project. The package contains its own Python, every library, a start program and, if you like, the local models with their model server and a web interface. Whoever receives it unzips it and double-clicks `start.cmd` (Windows), `Start.command` (macOS) or runs `sh start.sh` (Linux). Nothing needs to be installed.
+
+| Option | Effect |
+|---|---|
+| **Target platform** | Windows, macOS or Linux, each for its processor. The package only runs there. |
+| **Include the local models** | The models and Ollama go into the package, checked by SHA-256. The summary shows size, memory need and license of every model. |
+| **Must work fully offline** | Refuses the export when anything needs a network: cloud models, web search, service tools, AI-created tools. |
+| **Include the web interface** | A form for this workflow with live progress, approvals and result files, in six languages. |
+| **Result folder** | Where the application also stores the result files of every run. The operator can change it later. |
+
+The package is built in the background; the dialog shows the progress and lets you cancel. Large models make it several gigabytes large.
+
+The package never contains keys. On the target computer, the operator enters the keys of the AI providers on the settings page of the web interface or with `start.sh configure` (Windows: `start.cmd configure`); they stay on that computer. Clients use API keys created with `start.sh keys new`. By default the application only answers on this computer; for the network it needs TLS or a reverse proxy. The README in the package explains start, stop, settings and troubleshooting. Packages are not signed: macOS and Windows ask once before the first start.
+
 ## The Orkexa library {#orkexa}
 <!-- keywords: orkexa, library, repository, license, mit, vendor, include, git, access -->
 
