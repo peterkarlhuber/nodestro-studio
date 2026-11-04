@@ -4,6 +4,8 @@
 
 ### Local models: build from files, hardware and speed (2026-11-03)
 
+- The browser smoke test checks the hardware panel of *Settings → Local models* and the per-agent model plan in an
+  example's copy preview against the real API. ST-045 and ST-046 are done and leave `docs/TODO.md`.
 - *Settings → Local models → Build from local files* (ST-045): builds a catalog model with source "build"
   (`mdenseon:307m`) from its weights and template files on the computer that runs Nodestro, without a download. It
   lists the expected files (from `build_inputs` when the API sends them), shows the build step, cancels, explains

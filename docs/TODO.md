@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 24 |
+| P3 Low | 22 |
 | P4 Optional | 13 |
 
 **Release blockers:** None for this repository.
@@ -82,31 +82,6 @@ None known.
   with their "no API billing" label but not which one suits the agent's task on this computer.
 - **Next step:** Ask `GET /api/local-models/recommend?task=` from the agent inspector (task from the agent's tools
   and output) and show the suggestion with its reasons next to the picker; never change the stored model.
-
-### ST-045 · Offline build of the mDenseOn embedding in the interface
-
-- **Priority:** P3 Low · **Status:** Done (interface; e2e of the build route after the next api pin) · **Refs:**
-  nodestro-api #81, nodestro-runtime #104 / RT-053
-- **Done:** *Settings → Local models → Build from local files* for catalog entries with `source: "build"`: weights and
-  template paths, the build steps with cancel, an explanation and a retry per error code (wrong checksum per file,
-  missing file, incompatible file, reference vectors, cancelled), the reindex hint with a jump to *Knowledge search*.
-  The catalog download of such a model stays only outside the strict offline mode. The manual names the pinned files.
-- **Open:** The pinned input files come from the catalog's `build_inputs` once the api pin with them lands (until
-  then the form points to the manual). No browser e2e for a real build (needs the 1.2 GB weights).
-
-### ST-046 · Show the context window and expected speed of local models
-
-- **Priority:** P3 Low · **Status:** Done in the interface, waiting for the api/runtime pins · **Refs:**
-  nodestro-runtime RT-050, RT-051
-- **Done:** *Settings → Local models → This computer* (system, CPU cores, memory, GPU and its memory, model server
-  state and GPU use, context window with its source), the runtime's advice (`local.context_small` with the
-  `OLLAMA_CONTEXT_LENGTH` fix for an external Ollama, `context_unknown`, `cpu_only`, `reasoning_saving`, `model_slow`,
-  `model_too_large`, `memory_low`), an "On this computer" column (mirrors the runtime's `fits`), measured speeds with
-  "Measure speed" (no estimates), the CPU saving mode switch (`local_reasoning`), the "Reasoning reduced" badge on run
-  steps and agent tests (`reasoning_reduced`), the three `check.local_*` texts, the local fit and measured speed in
-  the model picker hint. Texts, help and manual in all six languages.
-- **Open:** Browser e2e of these fields once the pins land (unit tests use mocked API data). The fit column follows
-  the catalog's `fits`; with an older API it falls back to a browser copy of the runtime's rule.
 
 ### ST-035 · Similarity hint for pasted code in the tool editor (R-4)
 
@@ -200,7 +175,9 @@ None known.
 - **Priority:** P3 Low · **Status:** Open · **Refs:** local models work order (2026-11-03), `pages/SettingsLocalModels.tsx`
 - **What:** The local models and knowledge search sections have unit tests against stubbed answers; the e2e suites keep
   the cloud defaults (`tests/e2e_defaults.py`). No browser suite installs the runtime, downloads a model, builds the
-  semantic index and runs a local agent end to end.
+  semantic index and runs a local agent end to end. The smoke suite checks the hardware panel and the per-agent model
+  plan of an example copy against the real API (no model server); the mDenseOn build from local files, the speed
+  measurement and the "Reasoning reduced" badge are covered by unit tests and by the runtime and API tests only.
 - **Next step:** Add an e2e server with a fake Ollama binary (as in nodestro-api `tests/test_local_models_api.py`)
   and a suite for start, download progress, import errors and index build; run it with a real Ollama where CI allows.
 
