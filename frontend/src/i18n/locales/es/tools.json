@@ -115,7 +115,7 @@
     "counts": "Herramientas aprobadas: {{approved}} de {{total}} · esperan revisión: {{pending}}",
     "unavailable": "MCP no está disponible en esta instalación (requiere Python 3.11 o posterior). Los servicios se pueden configurar, pero no alcanzar.",
     "endpointList": "El operador solo permite estas direcciones: {{list}}",
-    "endpointListEmpty": "El operador no ha permitido ninguna dirección para MCP (NODESTRO_MCP_ENDPOINTS). Aquí no se pueden conectar servicios.",
+    "endpointListEmpty": "El operador todavía no ha permitido ninguna dirección de servicios, así que aquí no se pueden conectar servicios. Pide a la persona que administra Nodestro que permita las direcciones que necesitas (ajuste <code>NODESTRO_MCP_ENDPOINTS</code>).",
     "noVault": "No hay un almacén de claves seguro: los tokens de acceso no se guardan, solo se mantienen en memoria hasta cerrar la aplicación.",
     "readOnlyMvp": "Por ahora solo se pueden usar las herramientas que clasifiques como «solo lectura».",
     "writeEnabled": "Las herramientas que modifican datos necesitan una aprobación en cada llamada.",

@@ -67,7 +67,7 @@
     "enabled": "Activées",
     "disabled": "Désactivées",
     "enabledText": "Les appels d’outils qui modifient des données ou agissent vers l’extérieur attendent la décision d’une personne.",
-    "disabledText": "Nodestro ne demande pas encore avant les appels d’outils. Ordre : marquer ici les attributions existantes, vérifier la liste, puis l’administration active les validations après la revue de sécurité (NODESTRO_TOOL_APPROVALS=1).",
+    "disabledText": "Nodestro ne demande pas encore avant les appels d’outils. Ordre : marquer ici les attributions existantes, vérifier la liste, puis l’administration active les validations après la revue de sécurité (réglage <code>NODESTRO_TOOL_APPROVALS=1</code>).",
     "legacyTitle": "Exceptions héritées",
     "legacyText": "Les attributions d’outils qui existaient avant la validation par appel continuent de fonctionner sans question, liées à la version d’outil avec laquelle elles tournaient. Une nouvelle version ou une nouvelle attribution est soumise à la question comme d’habitude. Pour les outils des services connectés, la question est toujours posée.",
     "legacyNotRun": "L’étape d’activation n’a pas encore été exécutée.",
