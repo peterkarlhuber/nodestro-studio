@@ -5,13 +5,15 @@ This chapter describes all settings, how to install and start Nodestro, and the 
 ## Local models {#lokale-modelle}
 <!-- keywords: local model, ollama, offline, no api key, qwen, download, recommendation, hardware, gpu, ram, model server, mistral, european, reasoning effort -->
 
+→ [Open in Nodestro](/settings#settings-local-models)
+
 Nodestro can run agents, assistants and the knowledge search on **local models** with Ollama, without an API key: prompts and documents stay on this computer. A new installation uses local models by default (agents `ollama:qwen3.5:4b`, assistant `ollama:qwen3.5:9b`); an updated installation keeps the models it had.
 
 *Settings → Local models* shows:
 
 - **State:** whether the model server runs and who provides it. On the desktop Nodestro starts its own server (a separate process on this computer, with its own model folder); in Nodestro Local Docker it is a separate container; on a server the operator provides it. An Ollama you already run is used only if you save its address for the Ollama provider.
 - **Runtime:** if it is missing, **Download and install** fetches the pinned version once and checks its SHA-256. Without internet, install it from its release archive (see [Offline import](/docs/einstellungen#offline-import)).
-- **Recommended for this computer:** a model per task (sorting, writing, agents with tools, analysis, assistant, semantic search) from the task's needs, the memory of this computer and the installed models. An installed model that is good enough comes first; *Limited* means a larger model would do better. Suggestions never change an agent: you choose its model in the editor.
+- **Recommended for this computer:** a model per task (sorting, writing, agents with tools, analysis, assistant, semantic search) from the task's needs, the memory of this computer and the installed models. An installed model that is good enough comes first; *Suitable* and *Limited* mean a larger model would do better; the reason is shown under the model. Suggestions never change an agent: you choose its model in the editor.
 - **Models:** the suggested models with download size, memory needed and license; **Checked** means the installed build is the one Nodestro verified.
 
 **Prefer European models:** Qwen stays the standard. With the switch on, the recommendations suggest models of the European publisher Mistral AI when they are equally suited (`ministral-3:3b`, `ministral-3:8b`, `ministral-3:14b`, and `devstral-small-2:24b` for programming), even if they still need a download; an installed model stays the first alternative. A weaker model is never suggested, and the switch never uses a cloud service: all these models run on this computer. A model you give an agent yourself always wins, and the strict offline mode still refuses downloads. For semantic search the switch suggests the European model `mdenseon:307m` (LightOn) while no embedding model is installed yet. It does not come from the Ollama library: **Download** fetches the pinned original files (1.2 GB), checks their SHA-256, builds the model from them and keeps it only if it reproduces the reference vectors exactly. An existing index stays with its model; switching means rebuilding the index.
@@ -60,6 +62,8 @@ With **Strict offline mode** on, the check before every run refuses cloud models
 
 ## AI providers {#anbieter}
 <!-- keywords: api key, provider, anthropic, openai, gemini, ollama, vllm, openai-compatible, base url, environment variable, .env, capabilities -->
+
+→ [Open in Nodestro](/settings#settings-providers)
 
 Nodestro runs agents through the Orkexa library and works with several **AI providers** at the same time: **Anthropic**, **OpenAI**, **Google Gemini** and your own servers through an **OpenAI-compatible endpoint**, **Ollama** or **vLLM**. Every agent uses the provider of its model. If that provider is not set up, the run does not start; Nodestro never silently switches to another provider. If the provider of the default model is missing, “Set up AI provider” appears at the top right, or “Default model needs …” once another provider is set up.
 
@@ -153,6 +157,8 @@ Administrators also set the **Maximum run budget** (empty: no cap): no run may s
 ## Sandbox {#sandbox}
 <!-- keywords: choose sandbox, automatic, docker, python process, docker available, built-in sandbox, linux sandbox, macos, windows, blocked, experimental -->
 
+→ [Open in Nodestro](/settings#settings-sandbox)
+
 Here you choose where tools run. The change takes effect immediately.
 
 | Mode | Your own tools | AI-created tools and tools of unknown origin |
@@ -212,6 +218,8 @@ At the top right you switch between **Dark** and **Light**. The choice is saved 
 ## Backup and restore {#backup}
 <!-- keywords: backup, restore, export, zip, move, data backup -->
 
+→ [Open in Nodestro](/settings#settings-backup)
+
 **Download backup** saves all data in one ZIP file: workflows with versions, agent templates, custom tools, knowledge files, memory, runs, usage data, favorites, tags and settings. The database is saved as a consistent snapshot, even while a run is working.
 
 The **API keys** of the AI providers are never written into the backup, nor are base URLs that contain credentials. Restoring keeps the keys of this computer.
@@ -220,6 +228,8 @@ The **API keys** of the AI providers are never written into the backup, nor are 
 
 ## System diagnosis {#diagnose}
 <!-- keywords: diagnosis, system check, check, troubleshoot, connection, docker, sandbox, version, problem -->
+
+→ [Open in Nodestro](/settings#settings-diagnostics)
 
 **Run diagnosis** checks whether Nodestro works completely on this computer and shows **OK**, **Warning** or **Error** for every point, with an explanation and a suggested fix:
 

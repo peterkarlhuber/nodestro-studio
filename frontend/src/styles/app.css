@@ -4246,7 +4246,16 @@ kbd {
     margin-left: 12px;
   }
 
-  .search-trigger__label,
+  /* The label stays the button's accessible name on phones (WCAG 2.5.3: the name contains the visible text). */
+  .search-trigger__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
   .search-trigger kbd {
     display: none;
   }
@@ -7244,10 +7253,13 @@ ul.gate-report__list > li.gate-report__item {
   white-space: nowrap;
 }
 
-/* The input under the workflow name gives way first, so every column (also the delete action) fits at 1440 px with
-   the navigation open; a run's input is a hint here, the run page shows all of it. */
+/* The input under the workflow name gives way first, so every column (also the delete action) fits with the
+   navigation open, at 1280 px in every language too (NJR-20): it adds nothing to the column's minimum width and
+   fills what the column gets. A run's input is a hint here; the run page shows all of it. */
 .table--runs td:nth-child(2) .truncate {
-  max-width: min(420px, 22vw);
+  width: 0;
+  min-width: 100%;
+  max-width: none;
 }
 
 /* A long status ("En attente d’une décision de budget") wraps inside its badge instead of widening the column. */

@@ -1,6 +1,7 @@
 {
   "card": {
     "title": "Decisão de orçamento necessária",
+    "titleExpired": "Decisão de orçamento expirada",
     "label": "Decisão de orçamento {{name}}",
     "reasonLabel": "Por que a execução aguarda",
     "reason": {

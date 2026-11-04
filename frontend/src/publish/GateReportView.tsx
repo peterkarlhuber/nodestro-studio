@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import type { GateItem, GateItemKind, GateReport } from "../api/types";
+import { HelpTip } from "../components/Tooltip";
 import { Badge, Callout } from "../components/ui";
 
 const pct = (value: number | null) => (value === null ? "–" : `${Math.round(value * 100)} %`);
@@ -58,21 +59,23 @@ export function GateReportView({ report }: { report: GateReport }) {
   const { t } = useTranslation();
   if (report.status === "off") return null;
   const of = (kind: GateItemKind) => report.items.filter((item) => item.kind === kind);
+  // What the gate checks and how a weaker result is released, with the way into the documentation (TX-11).
+  const tip = <HelpTip id="publish.gate" label={t("publish.gate.title")} />;
   return (
     <div className="gate-report stack-sm" data-testid="gate-report" data-status={report.status}>
       {report.status === "passed" ? (
         <Callout tone="info">
-          {t("publish.gate.passed")}
+          {t("publish.gate.passed")} {tip}
         </Callout>
       ) : null}
       {report.status === "blocked" ? (
         <Callout tone="danger">
-          {t("publish.gate.blocked")}
+          {t("publish.gate.blocked")} {tip}
         </Callout>
       ) : null}
       {report.status === "overridable" ? (
         <Callout tone="warning">
-          {t("publish.gate.overridable")}
+          {t("publish.gate.overridable")} {tip}
         </Callout>
       ) : null}
       <Group kind="critical" items={of("critical")} />

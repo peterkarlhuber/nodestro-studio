@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import { useLocalModels } from "../api/localModels";
-import type { ExampleAgentModel, ExampleModelPlan as Plan } from "../api/types";
+import type { ExampleAgentModel, ExampleDetail, ExampleModelPlan as Plan } from "../api/types";
 import { Badge, HelpTip, Select } from "../components/ui";
 import { providerOf } from "../lib/providers";
 import { useSettingsHref } from "../lib/settingsLink";
@@ -53,6 +53,11 @@ export function modelOptions(agent: ExampleAgentModel, installedChat: string[]):
   return [...new Set([...(agent.model ? [agent.model] : []), ...agent.alternatives, ...installedChat])];
 }
 
+/** Every chat model can complete text, so ``completion`` says nothing about the choice; the rest is shown. */
+export function shownNeeds(needs: string[] | undefined): string[] {
+  return (needs ?? []).filter((need) => need !== "completion");
+}
+
 /** Only the choices that differ from the suggestion go into the copy request. */
 export function modelOverrides(plan: Plan | undefined, chosen: Record<string, string>): Record<string, string> {
   if (!plan?.local) return {};
@@ -60,14 +65,34 @@ export function modelOverrides(plan: Plan | undefined, chosen: Record<string, st
   return Object.fromEntries(Object.entries(chosen).filter(([key, model]) => key in suggested && model && model !== suggested[key]));
 }
 
+/** The part ids of a library workflow's sub-workflow and team references ("library-part:<id>"). */
+const PART_PREFIX = "library-part:";
+
+/**
+ * The names of an example's parts in its language, by part id: its teams, and the steps that call a part as a
+ * sub-workflow. The plan names an agent's part by id only.
+ */
+export function partNames(example: Pick<ExampleDetail, "team_details" | "workflow">): Record<string, string> {
+  const names: Record<string, string> = {};
+  for (const node of example.workflow.nodes) {
+    const target = node.subworkflow?.workflow_id ?? "";
+    if (target.startsWith(PART_PREFIX) && node.label) names[target.slice(PART_PREFIX.length)] = node.label;
+  }
+  for (const team of example.team_details) names[team.part_id] = team.name;
+  return names;
+}
+
 export function ExampleModelPlan({
   plan,
   value,
   onChange,
+  parts = {},
 }: {
   plan: Plan;
   value: Record<string, string>;
   onChange: (value: Record<string, string>) => void;
+  /** Part id -> its name in the example's language (``partNames``). */
+  parts?: Record<string, string>;
 }) {
   const { t } = useTranslation();
   const local = useLocalModels(plan.local);
@@ -94,12 +119,12 @@ export function ExampleModelPlan({
               const options = modelOptions(agent, installedChat);
               const current = value[agent.key] ?? agent.model ?? "";
               const why = planReasons(t, agent);
-              const needs = (agent.needs ?? []).map((need) => t(`library.models.need.${need}`, { defaultValue: need }));
+              const needs = shownNeeds(agent.needs).map((need) => t(`library.models.need.${need}`, { defaultValue: need }));
               return (
                 <tr key={agent.key} data-testid={`example-model-${agent.key}`}>
                   <td>
                     <strong>{agent.name}</strong>
-                    {agent.part ? <div className="muted small">{agent.part}</div> : null}
+                    {agent.part ? <div className="muted small">{parts[agent.part] ?? agent.part}</div> : null}
                   </td>
                   <td>
                     {t(`library.models.tasks.${agent.task}`, { defaultValue: agent.task })}
@@ -131,11 +156,11 @@ export function ExampleModelPlan({
                       )}{" "}
                       {why}
                     </div>
-                    {agent.suggested ? (
-                      <div className="small" data-testid={`example-model-better-${agent.key}`}>
+                    {agent.suggested && agent.suggested !== agent.model ? (
+                      <p className="small" data-testid={`example-model-better-${agent.key}`}>
                         <Download size={12} aria-hidden /> {t("library.models.better", { model: plain(agent.suggested) })}{" "}
                         <Link to={setup}>{t("library.models.toLocalModels")}</Link>
-                      </div>
+                      </p>
                     ) : null}
                     {value[agent.key] ? <div className="small">{t("library.models.overridden")}</div> : null}
                   </td>

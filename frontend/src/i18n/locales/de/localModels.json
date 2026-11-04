@@ -3,7 +3,8 @@
   "text": "Agenten, Assistenten und die Wissenssuche können mit lokalen Modellen (Ollama) auf diesem Computer laufen, ohne API-Schlüssel. Die Daten bleiben hier.",
   "status": {
     "running": "Läuft",
-    "stopped": "Gestoppt"
+    "stopped": "Gestoppt",
+    "notInstalled": "Nicht installiert"
   },
   "mode": {
     "managed": "Von Nodestro auf diesem Computer verwaltet",
@@ -34,7 +35,9 @@
     "text": "Vorschläge nach Aufgabe, Arbeitsspeicher dieses Computers und installierten Modellen. Das Modell jedes Agenten wählst du selbst; nichts wird automatisch geändert.",
     "task": "Aufgabe",
     "model": "Modell",
-    "quality": "Eignung"
+    "quality": "Eignung",
+    "titleServer": "Empfohlen für diesen Server",
+    "textServer": "Vorschläge nach Aufgabe, den Ressourcen des Servers und den installierten Modellen. Das Modell jedes Agenten wählst du selbst; automatisch wird nichts geändert."
   },
   "tasks": {
     "classify": "Sortieren und Weiterleiten",
@@ -63,6 +66,11 @@
   "download": "Herunterladen ({{size}})",
   "downloadShort": "Herunterladen",
   "installed": "Installiert",
+  "needsServer": {
+    "missing": "Modelle herunterladen, importieren und bauen geht nur, während der Modellserver läuft: Installiere oben die Laufzeit und starte sie dann.",
+    "stopped": "Modelle herunterladen, importieren und bauen geht nur, während der Modellserver läuft: Starte ihn oben.",
+    "other": "Modelle herunterladen, importieren und bauen geht nur, während der Modellserver läuft."
+  },
   "catalog": {
     "title": "Modelle",
     "model": "Modell",
@@ -70,7 +78,9 @@
     "memory": "Speicherbedarf",
     "state": "Zustand",
     "own": "Eigenes Modell (importiert oder separat geladen)",
-    "fit": "Auf diesem Computer"
+    "fit": "Auf diesem Computer",
+    "actions": "Aktionen",
+    "fitServer": "Auf dem Server"
   },
   "kind": {
     "chat": "Sprachmodell",
@@ -264,7 +274,9 @@
       "unknown": "{{tokens}} Tokens"
     },
     "contextUnknown": "noch nicht bekannt (erscheint, sobald ein Modell gelaufen ist)",
-    "unknown": "unbekannt"
+    "unknown": "unbekannt",
+    "serverTitle": "Auf dem Server",
+    "hidden": "Hardware und Ordner des Servers sieht nur sein Betreiber."
   },
   "fit": {
     "gpu": "Läuft auf der GPU",
@@ -272,7 +284,11 @@
     "cpuOnly": "Läuft auf der CPU (langsamer)",
     "too_slow": "Ohne GPU zu langsam",
     "too_large": "Zu groß für diesen Computer",
-    "slowHint": "langsam auf diesem Computer (gemessen)"
+    "slowHint": "langsam auf diesem Computer (gemessen)",
+    "server": {
+      "fits": "Läuft auf dem Server",
+      "no": "Passt nicht zum Server"
+    }
   },
   "advice": {
     "context_small": "Der Modellserver gibt Modellen nur {{tokens}} Tokens Kontext; Agenten brauchen etwa {{recommended}} Tokens für Prompt, Denken und Antwort, sonst werden Antworten abgeschnitten.",
@@ -312,5 +328,9 @@
     "inactive": "Hier nicht aktiv: Modelle laufen auf einer Grafikkarte.",
     "badge": "Denken verkürzt: CPU-Sparmodus",
     "badgeTip": "Dieser Agent hat ohne die lange Denkphase geantwortet, weil dieser Computer keine Grafikkarte hat. Für volles Denken stelle den Denkaufwand des Agenten auf Hoch oder schalte den CPU-Sparmodus unter Einstellungen → Lokale Modelle aus."
+  },
+  "licenseSource": {
+    "ollama": "laut Ollama-Manifest",
+    "upstream": "laut Modellkarte des Herausgebers"
   }
 }

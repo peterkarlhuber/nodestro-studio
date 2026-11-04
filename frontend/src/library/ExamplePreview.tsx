@@ -15,7 +15,7 @@ import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
 import { findModel } from "../lib/providers";
 import { ExampleNeeds, copiedModel } from "./ExampleNeeds";
-import { ExampleModelPlan, modelOverrides, useExampleModels, usesLocalModels } from "./ExampleModels";
+import { ExampleModelPlan, modelOverrides, partNames, useExampleModels, usesLocalModels } from "./ExampleModels";
 import { ExampleConnections, KnowledgeList, TeamList } from "./ExampleSections";
 import { OFFLINE, PATTERN_ICONS, copyRequest } from "./examples";
 
@@ -226,7 +226,7 @@ export function ExamplePreview({
           <ExampleGraph example={data} />
           <h3>{t("library.preview.agents")}</h3>
           <AgentList example={data} />
-          {plan.data ? <ExampleModelPlan plan={plan.data} value={models} onChange={setModels} /> : null}
+          {plan.data ? <ExampleModelPlan plan={plan.data} value={models} onChange={setModels} parts={partNames(data)} /> : null}
           {data.team_details.length ? <TeamList teams={data.team_details} /> : null}
           <h3>{t("library.preview.guide")}</h3>
           <dl className="example-guide">

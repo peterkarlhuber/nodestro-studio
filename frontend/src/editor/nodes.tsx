@@ -114,8 +114,8 @@ export const AgentNode = memo(function AgentNode({ data, selected }: NodeProps) 
         <Round state={state} />
         {waitsForToolApproval(state) ? (
           <WaitingForYouBadge />
-        ) : state || !(blocked || preview) ? (
-          // "Ready" would be wrong while the workflow cannot start at all.
+        ) : state || !(blocked || preview || issues) ? (
+          // "Ready" would be wrong while the workflow cannot start at all, or next to this step's own errors (NJR-18).
           <StatusBadge status={status} />
         ) : null}
       </div>

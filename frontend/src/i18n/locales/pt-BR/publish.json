@@ -303,7 +303,7 @@
       },
       "jobs": "Gerações de pacotes",
       "build": "Gerar pacote",
-      "started": "O pacote está sendo gerado em segundo plano.",
+      "started": "O pacote está sendo gerado em segundo plano. Isso costuma levar alguns minutos, mais com modelos grandes; enquanto isso, você pode fechar esta caixa de diálogo.",
       "running": "Gerando: {{step}} ({{percent}} %)",
       "progress": "Progresso da geração do pacote",
       "done": "Pacote pronto ({{date}}).",

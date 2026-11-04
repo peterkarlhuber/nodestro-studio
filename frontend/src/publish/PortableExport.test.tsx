@@ -10,6 +10,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { api } from "../api/client";
 import type { ExportJob, ExportOptions, PortableCheck } from "../api/types";
+import { shownProblems } from "./ApiExport";
 import { ExportJobs, PortableOptions, PortableSummary } from "./PortableExport";
 
 const OPTIONS = {
@@ -102,8 +103,26 @@ describe("PortableExport", () => {
     wrap(<PortableSummary portable={PORTABLE} options={OPTIONS} />);
     const summary = screen.getByTestId("api-export-summary");
     expect(summary.textContent).toContain("qwen3.5:4b");
-    expect(summary.textContent).toContain("anthropic");
+    expect(summary.textContent).toContain("Anthropic");
     expect(summary.textContent).not.toContain("ollama,");
+    // Open from the start: size and needs are what the person decides on; sizes in GB.
+    expect(summary).toBeVisible();
+    expect(summary.textContent).toMatch(/3,6\sGB/);
+    expect(summary.textContent).toMatch(/3,4\sGB/);
+  });
+
+  it("keeps the local models in the package while it must work offline", () => {
+    wrap(<PortableOptions options={{ ...OPTIONS, offline: true, local_models: true }} setOptions={() => undefined} portable={PORTABLE} />);
+    expect(screen.getByRole("switch", { name: /Lokale Modelle beilegen/ })).toBeDisabled();
+  });
+
+  it("leaves out the source project's Git choice and the raw download list in a portable package", () => {
+    const problem = (code: string) => ({ code, params: {}, message: code, level: "info", node_id: null, edge_id: null });
+    const problems = [problem("export.distribution_unconfirmed"), problem("export.portable_distribution"), problem("export.downloads"), problem("export.provider")] as never;
+    expect(shownProblems(problems, true).map((item) => item.code)).toEqual(["export.portable_distribution", "export.provider"]);
+    expect(shownProblems(problems, false)).toHaveLength(4);
+    // Without the portable confirmation the general one stays, so a disabled build always has its reason.
+    expect(shownProblems([problem("export.distribution_unconfirmed")] as never, true)).toHaveLength(1);
   });
 
   it("shows a running build with progress and cancels it", async () => {

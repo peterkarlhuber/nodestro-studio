@@ -67,7 +67,7 @@
     "enabled": "On",
     "disabled": "Off",
     "enabledText": "Tool calls that change data or reach outside wait for a person's decision.",
-    "disabledText": "Nodestro does not ask before tool calls yet. Order: mark the existing assignments here, review the list, then the administrator switches approvals on (NODESTRO_TOOL_APPROVALS=1) after the security review.",
+    "disabledText": "Nodestro does not ask before tool calls yet. Order: mark the existing assignments here, review the list, then the administrator switches approvals on after the security review (setting <code>NODESTRO_TOOL_APPROVALS=1</code>).",
     "legacyTitle": "Exceptions from before",
     "legacyText": "Tool assignments that existed before approvals per call keep working without a question, bound to the tool version they ran with. A new version or a new assignment is asked about as usual. Tools of connected services are always asked about.",
     "legacyNotRun": "The activation step has not run yet.",

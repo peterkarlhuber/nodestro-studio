@@ -1,6 +1,7 @@
 {
   "card": {
     "title": "Budget-Entscheidung nötig",
+    "titleExpired": "Budget-Entscheidung abgelaufen",
     "label": "Budget-Entscheidung {{name}}",
     "reasonLabel": "Warum der Lauf wartet",
     "reason": {

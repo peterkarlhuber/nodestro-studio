@@ -11,6 +11,7 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { VersionSummary, Workflow } from "../api/types";
 import { WorkflowTestStatus } from "../automation/WorkflowTestStatus";
+import { HelpTip } from "../components/Tooltip";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, IconButton, Modal, Spinner, TextInput } from "../components/ui";
 import { ErrorText, LocalError } from "../lib/errors";
@@ -156,7 +157,7 @@ export function VersionsDialog({
   return (
     <Modal title={t("versions.title")} open={open} onClose={onClose} wide>
       <p className="muted small">
-        <History size={13} aria-hidden /> {t("versions.intro")}
+        <History size={13} aria-hidden /> {t("versions.intro")} <HelpTip id="workflow.versions" label={t("versions.title")} />
       </p>
       <Field label={t("versions.note")} htmlFor="version-note" hint={t("versions.noteHint")}>
         <div className="row-gap">

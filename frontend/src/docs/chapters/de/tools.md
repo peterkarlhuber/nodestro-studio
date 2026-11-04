@@ -162,8 +162,8 @@ Nodestro entscheidet nach der **Herkunft des Codes**, wo er laufen darf:
 | Herkunft | Angezeigt als | Ohne Isolation (nur *Python-Prozess*) | Eingebaute Linux-Sandbox oder Docker |
 |---|---|---|---|
 | Eingebaute Tools und Integrationen | *Eingebaut* | im Nodestro-Prozess | im Nodestro-Prozess |
-| Von dir unter *Selbst schreiben* geschrieben | *Von dir geschrieben* | läuft, ohne Isolation auf diesem Rechner | läuft (im *Python-Prozess* oder isoliert in Docker) |
-| Von der KI erstellt (auch nach deiner Freigabe), Tool-Entwürfe des KI-Architekten, Tools unbekannter Herkunft | *Braucht Isolation* | **gesperrt** | läuft isoliert |
+| Von dir unter *Selbst schreiben* geschrieben | *Läuft: als dein eigener Code* | läuft, ohne Isolation auf diesem Rechner | läuft (im *Python-Prozess* oder isoliert in Docker) |
+| Von der KI erstellt (auch nach deiner Freigabe), Tool-Entwürfe des KI-Architekten, Tools unbekannter Herkunft | *Läuft: nur isoliert* | **gesperrt** | läuft isoliert |
 
 Der Python-Prozess ist keine Sicherheitsgrenze: Code darin läuft mit deinen Rechten. Deshalb führt Nodestro KI-generierten Code dort nie aus, und weder deine Freigabe noch eine Einstellung ändert das; es gibt keinen Schalter, der es trotzdem erlaubt. Im Modus *Automatisch* läuft solcher Code nur in Docker, sobald es die Prüfungen von Nodestro bestanden hat; im Modus *Linux-Sandbox* nur in der eingebauten Linux-Sandbox; im Modus *Python-Prozess* nie. Ohne diese Sandbox:
 
@@ -173,7 +173,7 @@ Der Python-Prozess ist keine Sicherheitsgrenze: Code darin läuft mit deinen Rec
 
 Tools, die vor dieser Version gespeichert wurden, und alle Tools nach dem Wiederherstellen einer Sicherung gelten als unbekannter Herkunft, auch selbst geschriebene, weil ihre Herkunft nicht festgehalten wurde. Mit Isolation funktionieren sie weiter. Eine neue Version eines solchen Tools oder eine Kopie seines Codes in einem neuen Tool behält diesen Status.
 
-**KI-erstellten Code als eigenen übernehmen (nur in der Desktop-App).** Bei einem Tool, das Isolation braucht, zeigt *Als eigenen Code übernehmen* den ganzen Code und die Tests mit einer Warnung. Nach deiner Bestätigung gilt das Tool als *Von dir geschrieben* und läuft wie dein eigener Code ohne Isolation auf diesem Rechner; übernimm daher nur Code, den du gelesen und verstanden hast. Übernehmen kann nur der Besitzer dieses Rechners (wo es Rollen gibt, ein Administrator). Nodestro protokolliert, wer welche Version wann übernommen hat, mit einem Fingerabdruck des Codes. Ändert KI das Tool später, endet die Übernahme und das Tool braucht wieder Isolation; eigene Änderungen im Editor behalten sie bei. Auf einem Server und in Nodestro Local Docker läuft KI-erstellter Code immer isoliert und kann nicht übernommen werden.
+**KI-erstellten Code als eigenen übernehmen (nur in der Desktop-App).** Bei einem Tool, das Isolation braucht, zeigt *Als eigenen Code übernehmen* den ganzen Code und die Tests mit einer Warnung. Nach deiner Bestätigung zeigt das Tool *Läuft: als dein eigener Code* und läuft wie selbst geschriebener Code ohne Isolation auf diesem Rechner; übernimm daher nur Code, den du gelesen und verstanden hast. Übernehmen kann nur der Besitzer dieses Rechners (wo es Rollen gibt, ein Administrator). Nodestro protokolliert, wer welche Version wann übernommen hat, mit einem Fingerabdruck des Codes. Ändert KI das Tool später, endet die Übernahme und das Tool braucht wieder Isolation; eigene Änderungen im Editor behalten sie bei. Auf einem Server und in Nodestro Local Docker läuft KI-erstellter Code immer isoliert und kann nicht übernommen werden.
 
 Code, den du unter *Selbst schreiben* einfügst, gilt als von dir geschrieben, weil Nodestro nicht erkennen kann, woher er stammt; der Editor warnt dich beim Einfügen. Lass KI-generierten Code stattdessen mit *Von KI erstellen* erzeugen, dann läuft er isoliert.
 

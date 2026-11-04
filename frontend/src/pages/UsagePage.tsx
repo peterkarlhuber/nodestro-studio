@@ -245,6 +245,10 @@ export function UsagePage() {
             />
             <RecentOperations entries={data.recent} />
             <PriceBasis total={data.total} />
+            {/* What the estimate leaves out (AD-20); the budget figures follow once the API reports them (API-017). */}
+            <p className="muted small" data-testid="usage-not-included">
+              {t("usage.cost.notIncluded")}
+            </p>
           </>
         ) : null}
       </div>

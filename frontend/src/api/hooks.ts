@@ -8,6 +8,7 @@ import type { BudgetRequest, RunBudgetOut, RunSummary } from "./types";
 
 export const keys = {
   meta: ["meta"] as const,
+  modelCapabilities: (model: string) => ["model-capabilities", model] as const,
   settings: ["settings"] as const,
   workflows: ["workflows"] as const,
   workflow: (id: string) => ["workflow", id] as const,

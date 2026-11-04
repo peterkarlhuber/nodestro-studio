@@ -17,7 +17,7 @@ Les exécutions sont conservées même si vous modifiez ou supprimez le workflow
 
 Pendant une exécution, la **Vue d’ensemble de l’exécution** affiche :
 
-- dans son en-tête, le statut de l’exécution et **Annuler l'exécution** (voir [Annuler des exécutions](/docs/ausfuehrungen#abbrechen)) ; une fois terminée, un lien vers les **Détails**,
+- dans son en-tête, le statut de l’exécution et **Annuler l’exécution** (voir [Annuler des exécutions](/docs/ausfuehrungen#abbrechen)) ; une fois terminée, un lien vers les **Détails**,
 - en haut, le nombre d’agents, de requêtes API, de tokens et les coûts estimés, mis à jour en continu,
 - à gauche, tous les agents avec leur statut ; un clic affiche leurs détails à droite, *Résultat global* affiche le résultat du workflow,
 - à droite, le texte que l’agent sélectionné est en train d’écrire, ses appels d’outils et (si activée) sa réflexion.
@@ -60,7 +60,7 @@ Un clic sur une exécution ouvre la vue détaillée :
 | **Réflexion** | Les réflexions du modèle (seulement si *Afficher la réflexion* était activé). |
 | **Mémoire** | Les notes d’un agent avec mémoire *Par exécution*. |
 
-**Ouvrir dans l’éditeur** mène au workflow ; **Annuler l'exécution** arrête une exécution en cours.
+**Ouvrir dans l’éditeur** mène au workflow ; **Annuler l’exécution** arrête une exécution en cours.
 
 L’onglet **Contexte** montre ce que l’agent a reçu dans cette exécution : prompt système, tâche avec les entrées mises en évidence, messages d’exemple, outils, connaissances, mémoire, format de sortie et contrôle qualité, toujours avec la configuration du moment du lancement. Les identifiants ne sont jamais affichés.
 
@@ -85,7 +85,7 @@ L’onglet **Contexte** montre ce que l’agent a reçu dans cette exécution : 
 | **En attente de validation** | Une [validation](/docs/verzweigungen#freigabe) attend la décision d’une personne. |
 | **En attente d’une décision de budget** | La prochaine requête au modèle a besoin de plus de budget ; l’exécution est en pause jusqu’à ce que quelqu’un relève son plafond ou la termine ([décisions de budget](/docs/workflows#budget-freigabe)). |
 | **En pause** | L’exécution attend une validation et reprend après la décision. |
-| **Annulé** | Arrêté avec *Annuler l'exécution*, refusé, ou une trace exportée avant d’être complète. |
+| **Annulé** | Arrêté avec *Annuler l’exécution*, refusé, ou une trace exportée avant d’être complète. |
 | **Vous attend** | Un appel d’outil attend votre validation ; l’exécution continue dès que vous avez décidé. |
 | **Non terminé** | Une étape d’une exécution terminée qui n’a jamais abouti (par exemple parce que Nodestro a été arrêté). |
 | **Terminée avec des problèmes** | Pas un statut à part, mais un badge à côté de *Terminé* : des appels d’outils de l’exécution n’ont pas eu de résultat. |
@@ -102,7 +102,7 @@ Une exécution échouée ou annulée peut être [reprise](/docs/verzweigungen#fo
 ## Annuler des exécutions {#abbrechen}
 <!-- keywords: annuler, arrêter, cancel, terminer, vraiment annuler, confirmer -->
 
-**Annuler l'exécution** (dans la vue d’ensemble de l’exécution ou la vue détaillée) redemande par sécurité : un second clic sur **Vraiment annuler ?** dans les cinq secondes arrête l’exécution ; **Échap** ou un clic ailleurs la laisse continuer. Cela vaut aussi pour une exécution en pause. Les agents en cours s’arrêtent à l’étape suivante (prochain morceau de texte, prochaine requête ou prochain appel d’outil) ; les agents pas encore démarrés ne sont plus exécutés. Les tokens consommés jusque-là sont facturés et affichés.
+**Annuler l’exécution** (dans la vue d’ensemble de l’exécution ou la vue détaillée) redemande par sécurité : un second clic sur **Vraiment annuler ?** dans les cinq secondes arrête l’exécution ; **Échap** ou un clic ailleurs la laisse continuer. Cela vaut aussi pour une exécution en pause. Les agents en cours s’arrêtent à l’étape suivante (prochain morceau de texte, prochaine requête ou prochain appel d’outil) ; les agents pas encore démarrés ne sont plus exécutés. Les tokens consommés jusque-là sont facturés et affichés.
 
 ## Parler au chef d’équipe {#teamleitung}
 <!-- keywords: chef d’équipe, orchestrateur, chat en direct, poser une question, donner une consigne, piloter, pilotage en direct, live_steering, budget du chat, run_chat -->

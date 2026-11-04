@@ -21,11 +21,12 @@
   },
   "kindLabel": "Type d’outil",
   "trust": {
-    "trusted": "Intégré",
-    "user-authored": "Écrit par vous",
-    "untrusted": "Nécessite une isolation"
+    "trusted": "dans Nodestro",
+    "user-authored": "comme votre propre code",
+    "untrusted": "isolée uniquement"
   },
-  "trustLabel": "Origine",
+  "trustLabel": "Exécution",
+  "trustLine": "{{label}} : {{value}}",
   "trustNote": {
     "user-authored": "Écrit par vous : s’exécute dans un processus Python séparé, sans isolation, sur cet ordinateur.",
     "untrusted": "Créé par l’IA ou d’origine inconnue : ne s’exécute qu’isolé, ici dans le bac à sable Docker.",
@@ -105,21 +106,21 @@
   "sandboxBuiltin": "processus Python distinct ; outils créés par l’IA dans le bac à sable Linux intégré",
   "services": {
     "title": "Services connectés",
-    "intro": "Connectez des services externes via le Model Context Protocol (MCP). Un agent ne voit un outil qu'après que vous l'avez examiné et approuvé.",
+    "intro": "Connectez des services externes via le Model Context Protocol (MCP). Un agent ne voit un outil qu’après que vous l’avez examiné et approuvé.",
     "add": "Connecter un service",
     "addTitle": "Connecter un service",
     "editTitle": "Modifier {{name}}",
-    "empty": "Aucun service connecté pour l'instant",
+    "empty": "Aucun service connecté pour l’instant",
     "emptyText": "Connectez un serveur MCP par son adresse. Testez ensuite la connexion et approuvez ses outils un par un.",
-    "counts": "Outils approuvés : {{approved}} sur {{total}} · en attente d'examen : {{pending}}",
-    "unavailable": "MCP n'est pas disponible dans cette installation (Python 3.11 ou plus récent requis). Les services peuvent être configurés, mais pas joints.",
-    "endpointList": "L'opérateur n'autorise que ces adresses : {{list}}",
-    "endpointListEmpty": "L'opérateur n'a autorisé aucune adresse pour MCP (NODESTRO_MCP_ENDPOINTS). Aucun service ne peut être connecté ici.",
-    "noVault": "Aucun coffre de clés sécurisé : les jetons d'accès ne sont pas enregistrés, seulement gardés en mémoire jusqu'à la fermeture de l'application.",
-    "readOnlyMvp": "Pour l'instant, seuls les outils que vous classez « lecture seule » sont utilisables.",
+    "counts": "Outils approuvés : {{approved}} sur {{total}} · en attente d’examen : {{pending}}",
+    "unavailable": "MCP n’est pas disponible dans cette installation (Python 3.11 ou plus récent requis). Les services peuvent être configurés, mais pas joints.",
+    "endpointList": "L’opérateur n’autorise que ces adresses : {{list}}",
+    "endpointListEmpty": "L’opérateur n’a encore autorisé aucune adresse de service : aucun service ne peut donc être connecté ici. Demandez à la personne qui exploite Nodestro d’autoriser les adresses dont vous avez besoin (réglage <code>NODESTRO_MCP_ENDPOINTS</code>).",
+    "noVault": "Aucun coffre de clés sécurisé : les jetons d’accès ne sont pas enregistrés, seulement gardés en mémoire jusqu’à la fermeture de l’application.",
+    "readOnlyMvp": "Pour l’instant, seuls les outils que vous classez « lecture seule » sont utilisables.",
     "writeEnabled": "Les outils qui modifient des données nécessitent une approbation à chaque appel.",
-    "unattendedOff": "Les planifications, les lots et les API publiées n'utilisent pas les outils des services.",
-    "unattendedOn": "L'opérateur a activé l'utilisation dans les exécutions sans personne.",
+    "unattendedOff": "Les planifications, les lots et les API publiées n’utilisent pas les outils des services.",
+    "unattendedOn": "L’opérateur a activé l’utilisation dans les exécutions sans personne.",
     "disabled": "Désactivé",
     "error": "Erreur",
     "pending_one": "{{count}} en attente",
@@ -135,7 +136,7 @@
     "checked": "vérifié {{when}}",
     "auth": {
       "none": "Sans connexion",
-      "bearer": "Jeton d'accès",
+      "bearer": "Jeton d’accès",
       "oauth": "OAuth"
     },
     "storage": {
@@ -166,16 +167,16 @@
       "destructive": "Supprime ou détruit"
     },
     "accessHint": {
-      "read": "Lecture seule : l'outil ne modifie rien chez le service ni ailleurs. Il reçoit tout de même les arguments envoyés par l'agent.",
-      "write": "Modifie des données : crée, modifie ou envoie quelque chose. En cas de doute, c'est la bonne classification.",
+      "read": "Lecture seule : l’outil ne modifie rien chez le service ni ailleurs. Il reçoit tout de même les arguments envoyés par l’agent.",
+      "write": "Modifie des données : crée, modifie ou envoie quelque chose. En cas de doute, c’est la bonne classification.",
       "destructive": "Supprime ou détruit : peut effacer des données définitivement."
     },
     "close": "Fermer",
     "review": "Examiner",
-    "usable": "Les agents peuvent l'utiliser sous le nom {{name}}.",
+    "usable": "Les agents peuvent l’utiliser sous le nom {{name}}.",
     "approvedToast": "{{name}} est approuvé.",
     "rejectedToast": "{{name}} est refusé.",
-    "changedText": "Le service a modifié cet outil. Il est bloqué jusqu'à ce que vous examiniez la modification ; les exécutions qui l'utilisent échouent.",
+    "changedText": "Le service a modifié cet outil. Il est bloqué jusqu’à ce que vous examiniez la modification ; les exécutions qui l’utilisent échouent.",
     "field": {
       "title": "Titre",
       "description": "Description",
@@ -183,16 +184,16 @@
       "output_schema": "Sortie",
       "annotations": "Indications du service"
     },
-    "before": "Approuvé jusqu'ici",
+    "before": "Approuvé jusqu’ici",
     "after": "Proposé maintenant",
     "description": "Description du service",
     "foreignText": "Texte étranger venant du service : il est affiché, mais jamais traité comme une instruction.",
     "noDescription": "Aucune description.",
     "schema": "Paramètres et indications",
     "classify": "Classification",
-    "suggested": "Le service indique : {{access}}. C'est un indice, pas une garantie.",
-    "writeBlocked": "Les outils qui modifient des données restent bloqués jusqu'à ce que l'approbation par appel soit disponible.",
-    "argumentsNote": "Le service voit tout ce que l'agent lui envoie. Ne connectez que des services auxquels vous confiez ces données.",
+    "suggested": "Le service indique : {{access}}. C’est un indice, pas une garantie.",
+    "writeBlocked": "Les outils qui modifient des données restent bloqués jusqu’à ce que l’approbation par appel soit disponible.",
+    "argumentsNote": "Le service voit tout ce que l’agent lui envoie. Ne connectez que des services auxquels vous confiez ces données.",
     "approve": "Approuver",
     "acceptChange": "Approuver la modification",
     "reject": "Refuser",
@@ -200,18 +201,18 @@
     "hash": "Empreinte de la définition :",
     "name": "Nom",
     "url": "Adresse",
-    "urlHint": "L'adresse du point de terminaison MCP, p. ex. https://mcp.example.com/mcp. https uniquement.",
+    "urlHint": "L’adresse du point de terminaison MCP, p. ex. https://mcp.example.com/mcp. https uniquement.",
     "authLabel": "Connexion",
-    "token": "Jeton d'accès",
+    "token": "Jeton d’accès",
     "tokenVault": "Enregistré chiffré et jamais réaffiché.",
-    "tokenSession": "Aucun coffre de clés sécurisé : le jeton ne vaut que jusqu'à la fermeture de l'application.",
+    "tokenSession": "Aucun coffre de clés sécurisé : le jeton ne vaut que jusqu’à la fermeture de l’application.",
     "tokenKept": "Enregistré – laissez vide pour le conserver",
     "tokenRemove": "Supprimer le jeton enregistré",
     "loopback": "Autoriser un serveur de développement local",
     "loopbackHint": "Autorise http sur cet ordinateur (127.0.0.1) pour un serveur que vous développez vous-même.",
     "timeout": "Délai par appel (secondes)",
     "events": "Journal",
-    "noEvents": "Aucune entrée pour l'instant.",
+    "noEvents": "Aucune entrée pour l’instant.",
     "event": {
       "server_added": "Service connecté",
       "server_changed": "Service modifié",
@@ -228,7 +229,7 @@
       "oauth_started": "connexion commencée",
       "oauth_failed": "échec de la connexion"
     },
-    "stdioUnavailable": "Les serveurs locaux nécessitent le bac à sable Docker ; il n'est pas disponible ici.",
+    "stdioUnavailable": "Les serveurs locaux nécessitent le bac à sable Docker ; il n’est pas disponible ici.",
     "local": "Serveur local (conteneur)",
     "transport": "Type",
     "transportHint": {
@@ -245,7 +246,7 @@
     "moduleHint": "Démarré avec python -m et ce nom de module.",
     "args": "Arguments",
     "argsHint": "Facultatif, un par ligne.",
-    "localNote": "Un serveur local s'exécute dans son propre conteneur : pas de réseau, aucun accès à vos fichiers ni à vos clés, mémoire et processus limités. Les serveurs qui ont besoin d'Internet ou de Node.js ne peuvent pas être utilisés ainsi.",
+    "localNote": "Un serveur local s’exécute dans son propre conteneur : pas de réseau, aucun accès à vos fichiers ni à vos clés, mémoire et processus limités. Les serveurs qui ont besoin d’Internet ou de Node.js ne peuvent pas être utilisés ainsi.",
     "oauth": {
       "connected": "Connecté. Testez la connexion pour charger les outils.",
       "failed": "La connexion a échoué ({{code}}).",
@@ -256,9 +257,9 @@
       "notSignedIn": "Non connecté",
       "issuer": "chez {{issuer}}",
       "scope": "autorisations : {{scope}}",
-      "expires": "l'accès se renouvelle {{when}}",
+      "expires": "l’accès se renouvelle {{when}}",
       "pending": "connexion commencée",
-      "hint": "Après l'enregistrement, connectez-vous au service ; Nodestro conserve l'accès chiffré et le renouvelle lui-même."
+      "hint": "Après l’enregistrement, connectez-vous au service ; Nodestro conserve l’accès chiffré et le renouvelle lui-même."
     },
     "stats": {
       "title": "Fonctionnement",
@@ -275,7 +276,7 @@
       "none": "Aucun appel depuis le démarrage."
     },
     "resourceTool": "Documents du service",
-    "resourceToolText": "Cet outil lit uniquement les documents que le service répertorie ; les autres adresses sont exclues. Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que vous examiniez la nouvelle liste. Les contenus sont des données externes, comme tout résultat d'un service."
+    "resourceToolText": "Cet outil lit uniquement les documents que le service répertorie ; les autres adresses sont exclues. Si le service modifie sa liste, l’outil est bloqué jusqu’à ce que vous examiniez la nouvelle liste. Les contenus sont des données externes, comme tout résultat d’un service."
   },
   "sandboxAutoDocker": "processus Python distinct ; outils créés par l’IA dans Docker",
   "adopt": {

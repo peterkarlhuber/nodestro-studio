@@ -79,7 +79,11 @@ const EXAMPLE: ExampleDetail = {
       capabilities: ["Audit", "PPM"],
       agents: [{ ...agent, node_id: "qa", name: "Qualitätsprüfer", description: "" }],
       approval: true,
-      contract: ["Befund"],
+      contract: ["finding", "ppm_rate"],
+      contract_fields: [
+        { name: "finding", description: "Befund" },
+        { name: "ppm_rate", description: "Fehlerquote in ppm: fehlerhafte Teile je Million geprüfter Teile, aus den Prüfdaten" },
+      ],
       parameters: ["Lieferant"],
     },
   ],
@@ -200,6 +204,8 @@ describe("ExamplePreview", () => {
     expect(within(team).getByText("Hält für eine Freigabe an")).toBeInTheDocument();
     expect(within(team).getByText("Audit")).toBeInTheDocument();
     expect(within(team).getByText(/Lieferant/)).toBeInTheDocument();
+    // What the team delivers is labelled in the example's language, not by its technical field names (ED-17).
+    expect(within(team).getByText("Liefert: Befund · Fehlerquote in ppm")).toBeInTheDocument();
 
     expect(within(screen.getByTestId("example-knowledge")).getByText("Einkaufsrichtlinie")).toBeInTheDocument();
     expect(screen.getByText(/in deiner Wissensbasis angelegt/)).toBeInTheDocument();
@@ -286,16 +292,20 @@ const PLAN = {
   agents: [
     {
       key: "lead", name: "Einkaufsleitung", part: null, kind: "orchestrator", task: "orchestrator", tier: "strong", model: "ollama:qwen3.5:9b",
-      installed: true, reasons: ["installed"], suggested: null, alternatives: ["ollama:qwen3.5:4b"], needs: ["tools"],
+      installed: true, reasons: ["installed"], suggested: null, alternatives: ["ollama:qwen3.5:4b"], needs: ["completion", "tools"],
     },
     {
-      key: "quality-check/qa", name: "Qualitätsprüfer", part: "Qualitätsprüfung", kind: "agent", task: "document_vision", tier: "fast",
+      key: "quality-check/qa", name: "Qualitätsprüfer", part: "quality-check", kind: "agent", task: "document_vision", tier: "fast",
       model: "ollama:qwen3.5:4b", installed: true, reasons: ["installed_alternative", "no_gpu"], suggested: "ollama:qwen3.6:35b-a3b",
       alternatives: [], needs: ["vision"],
     },
     {
       key: "risk", name: "Risikoanalyse", part: null, kind: "agent", task: "coding", tier: "balanced", model: null,
       installed: false, reasons: ["default_model"], suggested: null, alternatives: [], needs: [],
+    },
+    {
+      key: "writer", name: "Berichtsautor", part: null, kind: "agent", task: "write", tier: "standard", model: "ollama:qwen3.5:4b",
+      installed: false, reasons: ["default_model"], suggested: "ollama:qwen3.5:4b", alternatives: [], needs: ["completion"],
     },
   ],
 };
@@ -328,7 +338,9 @@ describe("models of a copy in a local workspace", () => {
     expect(fetch).toHaveBeenCalledWith("/api/library/supplier-comparison/models?language=de", expect.anything());
     const lead = within(plan).getByTestId("example-model-lead");
     expect(lead).toHaveTextContent("Das Team koordinieren");
+    // Every chat model completes text: only the needs that narrow the choice are named.
     expect(lead).toHaveTextContent("Braucht: Tool-Aufrufe");
+    expect(lead).not.toHaveTextContent("completion");
     expect(lead).toHaveTextContent("Bereits installiert.");
     const qa = within(plan).getByTestId("example-model-quality-check/qa");
     expect(qa).toHaveTextContent("Qualitätsprüfung");
@@ -344,6 +356,10 @@ describe("models of a copy in a local workspace", () => {
     expect(await within(select).findByRole("option", { name: "ministral-3:8b" })).toBeInTheDocument();
     expect(within(select).getByRole("option", { name: "qwen3.5:4b (geplant)" })).toBeInTheDocument();
     expect(within(select).queryByRole("option", { name: "qwen3-embedding:0.6b" })).toBeNull();
+    // The default model stays because nothing suitable is installed: no "better" hint that names the same model.
+    const writer = within(plan).getByTestId("example-model-writer");
+    expect(writer).not.toHaveTextContent("Braucht:");
+    expect(within(writer).queryByTestId("example-model-better-writer")).toBeNull();
     const risk = within(plan).getByTestId("example-model-risk");
     expect(risk).toHaveTextContent("Das Standardmodell des Arbeitsbereichs bleibt.");
     expect(within(risk).getByRole("combobox")).toHaveValue("");

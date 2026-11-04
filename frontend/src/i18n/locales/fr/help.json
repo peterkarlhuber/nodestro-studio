@@ -66,7 +66,7 @@
     "test": "Exécute uniquement cet agent avec une entrée de test et affiche la réponse, les outils, les tokens et le coût. Consomme du crédit API, mais n’est pas une exécution du workflow.",
     "preview": "Montre ce que l’agent reçoit à la prochaine exécution : prompt système, tâche avec les entrées insérées et le reste du contexte. Sans appel à l’API.",
     "paletteDesign": "Décrivez avec vos mots ce qu’un agent doit faire. L’Architecte d’agents propose une configuration complète ; cela coûte une requête au modèle de l’assistant.",
-    "outputFieldSource": "Indicateur clé : la valeur n'est acceptée que si un outil l'a calculée dans cette étape ou une étape précédente (par exemple la calculatrice ou table_totals). Sinon, l'agent reçoit une correction ; ensuite l'étape s'arrête, afin qu'aucune décision ne repose sur un chiffre estimé."
+    "outputFieldSource": "Indicateur clé : la valeur n’est acceptée que si un outil l’a calculée dans cette étape ou une étape précédente (par exemple la calculatrice ou table_totals). Sinon, l’agent reçoit une correction ; ensuite l’étape s’arrête, afin qu’aucune décision ne repose sur un chiffre estimé."
   },
   "tools": {
     "kind": "Intégré : livré avec Nodestro. Outil personnel : écrit par vous. Créé par l’IA : écrit par le Coding Agent et validé par vous.",
@@ -81,10 +81,10 @@
     "approve": "Les outils validés peuvent être utilisés par tous les agents. Vérifiez d’abord que le code et les tests font ce que vous attendez. Sans décision, une demande est refusée au bout d’une heure.",
     "sandbox": "Les outils personnels et ceux créés par l’IA ne s’exécutent jamais dans le processus Nodestro, mais de façon isolée, avec des limites de temps et de mémoire.",
     "drafts": "Outils rédigés par l’architecte de workflows. Testez-les et approuvez-les ici, ou refusez-les.",
-    "services": "Services externes via MCP : vous connectez un serveur, testez la connexion et approuvez chaque outil après l'avoir examiné. Si le service modifie un outil, celui-ci est bloqué jusqu'à ce que vous examiniez la modification.",
+    "services": "Services externes via MCP : vous connectez un serveur, testez la connexion et approuvez chaque outil après l’avoir examiné. Si le service modifie un outil, celui-ci est bloqué jusqu’à ce que vous examiniez la modification.",
     "callApproval": "Une personne décide de chaque appel de cet outil, avec les arguments exacts. Sans décision dans le délai, l’appel compte comme refusé.",
-    "servicesLocal": "Un serveur MCP local s'exécute dans un conteneur isolé. Ses paquets sont vérifiés et approuvés comme les bibliothèques d'un outil.",
-    "servicesOAuth": "Certains services exigent une connexion. Nodestro ouvre leur page de connexion et conserve l'accès chiffré."
+    "servicesLocal": "Un serveur MCP local s’exécute dans un conteneur isolé. Ses paquets sont vérifiés et approuvés comme les bibliothèques d’un outil.",
+    "servicesOAuth": "Certains services exigent une connexion. Nodestro ouvre leur page de connexion et conserve l’accès chiffré."
   },
   "knowledge": {
     "upload": "PDF, images (PNG, JPEG, GIF, WebP) et formats texte. Images jusqu’à 5 Mo, documents jusqu’à 20 Mo. Les textes et les PDF sont indexés pour la recherche.",
@@ -170,14 +170,14 @@
     "global": "Recherche dans les workflows, agents, outils, connaissances et la documentation (Ctrl+K)."
   },
   "library": {
-    "copy": "Crée votre propre workflow indépendant dans la langue choisie et l'ouvre dans l'éditeur. Le modèle reste inchangé et aucun modèle d'IA n'est appelé.",
-    "language": "La langue dans laquelle sont créés les noms, les prompts et la tâche de test de la copie. Par défaut, c'est la langue de l'interface ; une copie enregistrée ne change plus ensuite avec elle.",
+    "copy": "Crée votre propre workflow indépendant dans la langue choisie et l’ouvre dans l’éditeur. Le modèle reste inchangé et aucun modèle d’IA n’est appelé.",
+    "language": "La langue dans laquelle sont créés les noms, les prompts et la tâche de test de la copie. Par défaut, c’est la langue de l’interface ; une copie enregistrée ne change plus ensuite avec elle.",
     "sensitive": "Finance, droit, RH ou administration : les agents signalent les incertitudes mais ne remplacent pas un conseil professionnel. Une personne qualifiée doit vérifier les résultats.",
     "synthetic": "Toutes les données de test sont inventées et marquées comme synthétiques. Remplacez-les par vos propres données dans le nœud de départ.",
-    "sequential": "Les agents travaillent l'un après l'autre ; chacun s'appuie sur le résultat du précédent.",
+    "sequential": "Les agents travaillent l’un après l’autre ; chacun s’appuie sur le résultat du précédent.",
     "parallel": "Plusieurs agents travaillent en même temps sur la même entrée ; un autre agent réunit leurs résultats.",
     "branching": "Le workflow bifurque selon des règles ou après une validation ; tous les agents ne tournent pas toujours.",
-    "adaptive": "Un orchestrateur décide pendant l'exécution quelles équipes travaillent sur la tâche et réunit leurs résultats. Chaque équipe est un workflow à part entière.",
+    "adaptive": "Un orchestrateur décide pendant l’exécution quelles équipes travaillent sur la tâche et réunit leurs résultats. Chaque équipe est un workflow à part entière.",
     "models": "Le modèle local que reçoit chaque agent de la copie, et pourquoi. La suggestion suit la tâche de l’agent et la mémoire de cet ordinateur ; un modèle que vous choisissez ici l’emporte toujours."
   },
   "architect": {
@@ -235,8 +235,8 @@
     "orchestratorTeams": "Les équipes sont des workflows enregistrés. Le modèle ne voit que leur nom, leur description, leurs capacités et leur contrat de sortie. Il ne peut pas ajouter d’équipes.",
     "orchestratorLimits": "Les limites empêchent un orchestrateur de tourner en rond : il s’arrête après le nombre maximal de décisions, et le budget et les limites du workflow s’appliquent en plus.",
     "orchestratorSelect": "Au lieu de nommer chaque équipe, vous nommez des capacités. Au démarrage d’une exécution, les équipes enregistrées qui les partagent rejoignent le groupe et restent fixes pour cette exécution ; les détails montrent les étiquettes correspondantes de chaque équipe. Rien n’est noté : d’abord le plus d’étiquettes correspondantes, puis le nom.",
-    "orchestratorDynamic": "L'orchestrateur peut confier du travail à plusieurs équipes à la fois, composer et modifier son équipe à partir du pool pendant l'exécution et remplir le formulaire de démarrage des équipes. Le pool reste fixe pour l'exécution ; aucune nouvelle équipe, aucun agent ou outil n'apparaît.",
-    "orchestratorTemplate": "Une équipe n'existe que pendant l'exécution. Ce bouton en fait un nouveau workflow à part entière : le même orchestrateur avec exactement les équipes qui ont travaillé, dans leurs versions. Vous pouvez ensuite le modifier ; seules les personnes autorisées à modifier des workflows peuvent le changer."
+    "orchestratorDynamic": "L’orchestrateur peut confier du travail à plusieurs équipes à la fois, composer et modifier son équipe à partir du pool pendant l’exécution et remplir le formulaire de démarrage des équipes. Le pool reste fixe pour l’exécution ; aucune nouvelle équipe, aucun agent ou outil n’apparaît.",
+    "orchestratorTemplate": "Une équipe n’existe que pendant l’exécution. Ce bouton en fait un nouveau workflow à part entière : le même orchestrateur avec exactement les équipes qui ont travaillé, dans leurs versions. Vous pouvez ensuite le modifier ; seules les personnes autorisées à modifier des workflows peuvent le changer."
   },
   "files": {
     "output": "Formats dans lesquels le nœud de résultat enregistre son résultat en fin d’exécution : Markdown, JSON, CSV, HTML ou PDF.",
@@ -260,7 +260,7 @@
     "scheduleTimeZone": "Les horaires valent dans ce fuseau horaire, heure d’été comprise.",
     "estimate": "Estimation d’après les dernières exécutions réussies de ce workflow. Le maximum découle du budget par exécution.",
     "external": "Des outils personnels peuvent p. ex. envoyer des messages. Avec de nombreuses exécutions, cela arrive aussi souvent.",
-    "caseFromRun": "Transforme l'entrée de cette exécution échouée en cas de test, avec identifiants et données personnelles remplacés. Rien n'est enregistré avant votre confirmation.",
+    "caseFromRun": "Transforme l’entrée de cette exécution échouée en cas de test, avec identifiants et données personnelles remplacés. Rien n’est enregistré avant votre confirmation.",
     "modelChoice": "La recommandation n’utilise que des exécutions de test mesurées de la même série, avec le même état du workflow (hors modèles) et les mêmes cas. Vous choisissez l’objectif et le taux minimal ; un coût inconnu ne compte jamais comme 0. Seul *Utiliser* modifie l’agent et enregistre une nouvelle version."
   },
   "publish": {
@@ -280,8 +280,8 @@
     "library": "Comment le projet exporté obtient Orkexa : depuis son dépôt Git, ou sous forme de code source inclus (licence MIT).",
     "export": "Génère le projet en ZIP : runtime, version du workflow, tests, exemples et README. Rien n’est envoyé nulle part.",
     "gate": "Exige un résultat de test à jour avant chaque nouvelle version. Les vérifications obligatoires bloquent toujours ; les résultats plus faibles peuvent être publiés avec une justification.",
-    "gateOverride": "La justification est enregistrée avec la version et dans l'historique de l'API. Les vérifications obligatoires ne peuvent jamais être ignorées.",
-    "mcpTool": "Permet aux clients MCP de cet ordinateur de lancer cette API comme un outil. Désactivé par défaut ; l'exploitant doit aussi l'activer."
+    "gateOverride": "La justification est enregistrée avec la version et dans l’historique de l’API. Les vérifications obligatoires ne peuvent jamais être ignorées.",
+    "mcpTool": "Permet aux clients MCP de cet ordinateur de lancer cette API comme un outil. Désactivé par défaut ; l’exploitant doit aussi l’activer."
   },
   "inputs": {
     "field": "Fichiers pour cette exécution : envoyez-les, déposez-les ou choisissez-les dans les connaissances. Ils sont vérifiés et enregistrés pour l’exécution seulement, pas dans les connaissances.",

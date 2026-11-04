@@ -92,6 +92,13 @@ export function RunOrigin({ run }: { run: Run }) {
       </span>,
     );
   if (!parts.length) return null;
+  // The version alone is a plain fact, not a notice (NJR-11): no callout around it.
+  if (parts.length === 1 && run.workflow_version)
+    return (
+      <p className="small" data-testid="run-version">
+        {parts}
+      </p>
+    );
   return (
     <Callout tone="info">
       <span className="row-gap">{parts}</span>

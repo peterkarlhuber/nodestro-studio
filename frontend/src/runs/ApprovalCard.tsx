@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import { keys, useApprovals } from "../api/hooks";
 import type { PendingApproval, Run } from "../api/types";
-import { Output, outputFieldsOf } from "../components/Markdown";
+import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
 import { Button, Callout, DisabledReason, Field, HelpTip, Section, TextArea } from "../components/ui";
 import { toast } from "../components/toast";
 import { useEditor } from "../editor/store";
@@ -100,7 +100,11 @@ export function ApprovalForm({ approval, showContext = false }: { approval: Pend
         <div className="stack-sm">
           {approval.items.map((item) => (
             <Section key={item.node_id} title={item.label} className="approval-card__item" defaultOpen={approval.items.length === 1}>
-              <Output value={item.value} fields={outputFieldsOf(waitingRun.data?.workflow.nodes, item.node_id, item.value)} />
+              <Output
+                value={item.value}
+                fields={outputFieldsOf(waitingRun.data?.workflow.nodes, item.node_id, item.value)}
+                steps={stepFieldsOf(waitingRun.data?.workflow.nodes, item.value)}
+              />
             </Section>
           ))}
         </div>

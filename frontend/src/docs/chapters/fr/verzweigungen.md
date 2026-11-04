@@ -157,7 +157,7 @@ Les détails de l’exécution listent chaque décision avec son motif, sa tâch
 **Pendant l’exécution**, vous pouvez poser des questions au chef d’équipe et lui donner des consignes pour sa prochaine décision, dans l’onglet **Chef d’équipe** de la vue détaillée ; consultez [Parler au chef d’équipe](/docs/ausfuehrungen#teamleitung). **Pilotage en direct**, dans la zone *Limites*, fixe qui peut donner des consignes.
 
 ## Équipes dynamiques {#dynamische-teams}
-<!-- keywords: équipe dynamique, composer une équipe, parallèle, en même temps, paramètres, formulaire de démarrage, modèle, composition d'équipe, staffing -->
+<!-- keywords: équipe dynamique, composer une équipe, parallèle, en même temps, paramètres, formulaire de démarrage, modèle, composition d’équipe, staffing -->
 
 Dans la zone **Équipe active** d’un orchestrateur (champ *Équipes dynamiques*), le modèle dispose de plus de latitude, toujours dans le pool et dans les limites. Tout est désactivé au départ.
 

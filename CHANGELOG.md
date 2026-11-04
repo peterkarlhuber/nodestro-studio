@@ -2,12 +2,38 @@
 
 ## Unreleased
 
-### Start on a taken port (backend audit round 3)
+### UX round 3 (2026-11-04)
 
-- `nodestro` checks the port before saying "running": a taken port stops with exit code 2 and one sentence (another
-  Nodestro or program, start with `--port`), and the browser no longer opens the other program. "Nodestro is running
-  at" and the browser follow once the server listens. Needs nodestro-api with `cli.require_free_port` and
-  `serve(..., ready=...)` (DX handover B2); bump the nodestro-api pin with this change.
+- Global search (Ctrl+K) finds runs (the newest 100) and shows recent runs and workflows for an empty query; it also
+  reaches the Local models, Knowledge search and About settings sections. The search button's accessible name now
+  contains its visible text (WCAG 2.5.3; axe-core 4.14).
+- Runs list and run page: expired budget decisions no longer show as waiting, a filter for runs waiting on a budget
+  decision, same-named workflow copies are told apart, no "Ready" on a step with errors; the runs table fits at
+  1280 px in all six languages.
+- Sandbox refusals name the blocked tool; the tool header separates who created a tool from how it runs ("Runs:
+  isolated only"); texts that named environment variables tell the user what to do.
+- Typed Bedrock model ids ask `GET /api/models/capabilities`; on tablets Escape closes the inspector drawer.
+- Help tips in the versions dialog and the gate report, links from the Settings chapter into the settings sections;
+  French uses typographic apostrophes throughout (with a test); Orkexa is named "the agent engine", no longer
+  "agent library" (the name of the Agent library page). The Usage page says MCP and service fees are not included.
+- Local models settings: downloads only with a running model server (with one sentence on what to do), sizes in GB,
+  distinct button names per model and task, scrollable tables on phones, no English catalog notes.
+- API & Export dialog: one export check per pause in typing (it took 2.7 to 10 s per keystroke), the last answer
+  stays visible, the build waits for a current check, provider names instead of ids, clearer portable package
+  texts; the help chapters match the dialog in six languages.
+- Examples: result fields take their label from the description, also inside collected results, so no English field
+  ids appear in a run; the preview shows team deliverables, team and part names and model needs in words.
+- Adapted to nodestro-api #87 (backward compatible): texts in six languages for `workflow.not_found`,
+  `run.not_found`, `publication.not_found`, `export.server_unsupported`, `export.busy`, `export.server_too_large` and
+  `local.invalid_package`; Settings > Local models works for server tenants without hardware details ("On the
+  server"); knowledge search keeps within the API limits; export download needs and model licenses
+  (`license_source`) are named in words.
+
+### Backend audit round 3 (2026-11-04)
+
+- `nodestro` stops on a taken port with exit code 2 and one sentence (another Nodestro or program, start with
+  `--port`) after the configuration checks, and no browser opens the other program; "Nodestro is running at" and
+  the browser follow once the server listens (DX handover B2, nodestro-api #87).
 
 ### Portable export (2026-11-04)
 

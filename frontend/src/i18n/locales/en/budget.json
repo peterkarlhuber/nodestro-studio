@@ -1,6 +1,7 @@
 {
   "card": {
     "title": "Budget decision needed",
+    "titleExpired": "Budget decision expired",
     "label": "Budget decision {{name}}",
     "reasonLabel": "Why the run waits",
     "reason": {

@@ -192,6 +192,22 @@ try {
   check(true, "The run explains which branch the decision chose");
   await shot("flow-03-run");
 
+  // ---- 4b. the global search reaches runs and offers recent items (OB-09) --------------------
+  await page.goto(`${base}/settings`);
+  await page.getByTestId("search-open").waitFor();
+  await page.keyboard.press("Control+k");
+  const recent = page.getByTestId("search-group-recent");
+  // Recent runs and recent workflows come from two requests that answer independently.
+  await until(async () => (await recent.getByTestId("search-hit").count()) >= 2, "recent runs and workflows");
+  check(true, "The empty search offers recent runs and workflows");
+  await page.getByRole("combobox", { name: "Suchbegriff" }).fill("Reklamationen fertig");
+  const runGroup = page.getByTestId("search-group-run");
+  await runGroup.getByTestId("search-hit").first().waitFor();
+  await shot("flow-03b-search-runs");
+  await runGroup.getByTestId("search-hit").first().click();
+  await page.waitForURL(/\/executions\/run_/);
+  check(true, "The global search finds a run by workflow name and status and opens it");
+
   // ---- 5. a cancelled run continues without repeating finished steps -----------------------
   const second = await api(`/workflows/${routed.id}/runs`, "POST", {
     input: "",
@@ -330,6 +346,21 @@ try {
   await until(async () => (await toggle.getAttribute("aria-checked")) === "true", "schedule switched on");
   check(true, "With a budget the schedule switches on");
   await shot("flow-06-schedules");
+
+  // ---- 9. the runs table fits at 1280 px in every language, with real rows (NJR-20) ---------
+  await page.setViewportSize({ width: 1280, height: 800 });
+  for (const language of ["de", "en", "es", "fr", "it", "pt-BR"]) {
+    await page.evaluate((value) => localStorage.setItem("nodestro-language", value), language);
+    await page.goto(`${base}/executions`);
+    await page.locator(".table--runs tbody tr").first().waitFor();
+    await page.waitForTimeout(200);
+    const fit = await page.evaluate(() => {
+      const frame = document.querySelector(".table--runs").parentElement;
+      return frame.scrollWidth - frame.clientWidth;
+    });
+    check(fit <= 0, `${language}: the runs table fits at 1280 px without scrolling (${fit})`);
+  }
+  await page.evaluate(() => localStorage.setItem("nodestro-language", "de"));
 
   check(errors.length === 0, `No console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
 } finally {

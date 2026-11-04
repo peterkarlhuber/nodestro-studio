@@ -47,6 +47,7 @@ import type {
   MemorySeed,
   MemorySpaceInfo,
   Meta,
+  ModelCapabilities,
   ProviderId,
   ProviderStatus,
   ProviderVerifyIn,
@@ -262,6 +263,8 @@ export const api = {
   rejectToolDraft: (id: string) => request<void>("DELETE", `/tools/drafts/${id}`),
 
   meta: () => request<Meta>("GET", "/meta"),
+  /** Orkexa's capabilities of one typed model id (Bedrock ids, inference profiles, ARNs); free and local (#86). */
+  modelCapabilities: (model: string) => request<ModelCapabilities>("GET", `/models/capabilities${q({ model })}`),
   settings: () => request<Settings>("GET", "/settings"),
   saveSettings: (body: SettingsUpdate) => request<Settings>("PUT", "/settings", body),
   /** Changes one provider's key, endpoint or declared capabilities. */
@@ -488,9 +491,13 @@ export const api = {
   runInputs: (runId: string) => request<RunInput[]>("GET", `/runs/${runId}/inputs`),
   usedBy: (kind: ReferenceKind) => request<Reference[]>("GET", `/used-by${q({ kind })}`),
   deleteKnowledge: (id: string) => request<void>("DELETE", `/knowledge/${id}`),
-  /** ``mode``: fts, vector or hybrid (default: the settings' mode); vector and hybrid need the semantic index. */
-  searchKnowledge: (query: string, fileIds?: string[], mode?: "fts" | "vector" | "hybrid") =>
-    request<SearchHit[]>("GET", `/knowledge/search${q({ q: query, file_ids: fileIds?.join(","), mode })}`),
+  /**
+   * ``mode``: fts, vector or hybrid (default: the settings' mode); vector and hybrid need the semantic index. ``k``:
+   * hits, kept within the API's 1 to 50 (it answers 422 otherwise, as for a ``query`` over 2000 characters, which
+   * the caller checks with checkSearchQuery).
+   */
+  searchKnowledge: (query: string, fileIds?: string[], mode?: "fts" | "vector" | "hybrid", k?: number) =>
+    request<SearchHit[]>("GET", `/knowledge/search${q({ q: query, file_ids: fileIds?.join(","), mode, k: k === undefined || !Number.isFinite(k) ? undefined : String(Math.min(50, Math.max(1, Math.round(k)))) })}`),
   knowledgeUrl: (id: string) => `/api/knowledge/${id}/content`,
   recognizeText: (id: string) => request<KnowledgeFile>("POST", `/knowledge/${id}/ocr`),
 

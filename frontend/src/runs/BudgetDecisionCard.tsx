@@ -210,7 +210,8 @@ export function BudgetDecisionForm({
       <header className="approval-card__head">
         <CircleDollarSign size={15} aria-hidden />
         <div>
-          <strong>{t("budget.card.title")}</strong>
+          {/* A decision whose deadline passed no longer waits for anyone (NJR-03). */}
+          <strong>{t(deadlinePassed ? "budget.card.titleExpired" : "budget.card.title")}</strong>
           <div className="muted small">
             {showContext ? (
               <>
@@ -228,7 +229,7 @@ export function BudgetDecisionForm({
         <HelpTip id="budget.decision" label={t("budget.card.title")} />
       </header>
       <div className="row-gap">
-        <StatusBadge status="awaiting_budget" />
+        {deadlinePassed ? <Badge tone="idle">{t("budget.status.expired")}</Badge> : <StatusBadge status="awaiting_budget" />}
         {request.reason === "request_too_large" ? (
           <Badge tone="warning">{t("budget.card.reason.request_too_largeBadge")}</Badge>
         ) : null}

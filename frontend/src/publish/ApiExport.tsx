@@ -2,7 +2,7 @@
 // stays out, the generated ZIP and the export history. An AI-written guide is optional and only
 // written on request (it costs one request and has to be reviewed before it can be included).
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Download, PackageOpen, Sparkles, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,6 +11,7 @@ import { api } from "../api/client";
 import type {
   ApiGuide,
   ApiOverview,
+  ExportCheck,
   ExportLanguage,
   ExportOptions,
   Publication,
@@ -32,6 +33,7 @@ import {
 import { currentLanguage, LANGUAGE_NAMES, LANGUAGES } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatCost, formatDate } from "../lib/format";
+import { useDebounced } from "../lib/useDebounced";
 import { Problems } from "./common";
 import { ExportJobs, PortableOptions, PortableSummary } from "./PortableExport";
 
@@ -70,10 +72,16 @@ export function ApiExport({
   });
   const portable = options.kind === "portable";
   const queryClient = useQueryClient();
+  // The check takes seconds (it assembles the whole project): typing in a field asks once after a pause, and the
+  // previous answer (platforms, summary) stays visible meanwhile instead of an empty form and a spinner.
+  const checked = useDebounced(options, 400);
   const check = useQuery({
-    queryKey: ["api", "export-check", publication.id, number, options],
-    queryFn: () => api.exportCheck(publication.id, options, number),
+    queryKey: ["api", "export-check", publication.id, number, checked],
+    queryFn: () => api.exportCheck(publication.id, checked, number),
+    placeholderData: keepPreviousData,
   });
+  // The answer shown belongs to other options until the new check is back: nothing is built from it.
+  const current = checked === options && !check.isPlaceholderData;
   const history = useQuery({
     queryKey: ["api", "exports", publication.id],
     queryFn: () => api.exports(publication.id),
@@ -302,7 +310,7 @@ export function ApiExport({
         </section>
       ) : null}
 
-      {check.isLoading ? <Spinner /> : null}
+      {check.isFetching || !current ? <Spinner /> : null}
       {check.error ? (
         <Callout tone="danger">
           <ErrorText error={check.error} />
@@ -310,7 +318,7 @@ export function ApiExport({
       ) : null}
       {check.data ? (
         <>
-          <Problems problems={check.data.problems} />
+          <Problems problems={shownProblems(check.data.problems, portable)} />
           {portable && check.data.portable ? (
             <PortableSummary portable={check.data.portable} options={options} />
           ) : null}
@@ -432,7 +440,7 @@ export function ApiExport({
           <Button
             variant="primary"
             icon={PackageOpen}
-            disabled={!check.data?.ok}
+            disabled={!check.data?.ok || !current}
             busy={portable ? build.isPending : create.isPending}
             onClick={() => (portable ? build.mutate() : create.mutate())}
             data-testid="api-export-create"
@@ -487,5 +495,20 @@ export function ApiExport({
         </section>
       ) : null}
     </div>
+  );
+}
+
+/**
+ * In a ready-to-run package the summary already names the downloads in words, so "export.downloads" would say it
+ * twice. The library is always bundled there: APIs before PR #87 also sent the source project's "confirm or choose
+ * the Git reference" (export.distribution_unconfirmed) next to the portable confirmation; newer ones no longer do,
+ * and the filter stays for the older ones.
+ */
+export function shownProblems(problems: ExportCheck["problems"], portable: boolean): ExportCheck["problems"] {
+  if (!portable) return problems;
+  const portableConfirm = problems.some((problem) => problem.code === "export.portable_distribution");
+  return problems.filter(
+    (problem) =>
+      problem.code !== "export.downloads" && !(portableConfirm && problem.code === "export.distribution_unconfirmed"),
   );
 }

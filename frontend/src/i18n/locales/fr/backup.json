@@ -11,7 +11,7 @@
   "restoreThis": "Restaurer …",
   "restoreTitle": "Restaurer une sauvegarde",
   "valid": "« {{name}} » est une sauvegarde valide du {{date}}. Tous les fichiers sont complets et intacts.",
-  "versions": "Créée avec Nodestro {{nodestro}} et la bibliothèque d’agents {{library}}.",
+  "versions": "Créée avec Nodestro {{nodestro}} et Orkexa {{library}}.",
   "inBackup": "Dans la sauvegarde",
   "current": "Actuel",
   "contents": {

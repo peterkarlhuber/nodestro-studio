@@ -12,8 +12,8 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 23 |
-| P4 Optional | 13 |
+| P3 Low | 18 |
+| P4 Optional | 10 |
 
 **Release blockers:** None for this repository.
 
@@ -69,7 +69,10 @@ None known.
   `frontend/e2e/perf-editor.mjs` (`npm run perf:editor`)
 - **What:** Opening a 9-node workflow under CPU 4x (median of 5): mount 1884 → 1335 ms, total blocking time
   1557 → 956 ms, longest task 1028 → 756 ms after UX round 2 (fewer re-renders of nodes, panels and the zoom label;
-  cached number formatters). Still above the 50 ms long-task budget.
+  cached number formatters). Still above the 50 ms long-task budget. UX round 3 re-measured median mount 1650 ms and
+  TBT about 1.2 s on a heavily loaded machine (single runs 1159 to 2424 ms, best runs at the round-2 level): no
+  regression shown, no low-risk fix found. Mounting closed dialogs only when open would reset text typed into the
+  run dialog, so it needs a state decision first.
 - **Next step:** Mount closed editor dialogs only when open (about 100 ms at 4x; keep their state semantics), preload
   the editor chunk from the Workflows page, look at React Flow's node measuring (110–180 ms at 4x).
 
@@ -108,14 +111,6 @@ None known.
   only downloadable in the preview, not offered where the run needs them.
 - **Next step:** Offer the copy's sample files as one-click inputs; check whether the copy needs an API field for them.
 
-### ST-008 · Runs and recent items in the global search (OB-09)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** #83, UX audit OB-09
-- **What:** Ctrl+K now also goes to pages and settings sections (UX round 2), but it does not find runs and shows no
-  recent items for an empty query.
-- **Next step:** Add a "Runs" group (needs a run search in `GET /api/search` or a client-side filter of recent runs)
-  and recently opened items.
-
 ### ST-011 · Field-level diff in the versions dialog (ED-18)
 
 - **Priority:** P3 Low · **Status:** Open · **Refs:** UX audit ED-18
@@ -132,9 +127,9 @@ None known.
 ### ST-014 · Budgets and excluded service costs on the Usage page (AD-20)
 
 - **Priority:** P3 Low · **Status:** Blocked (needs an API field) · **Refs:** UX audit AD-20
-- **What:** Usage does not show published-API daily budget use, runs stopped by their budget, or that MCP service and
-  web-search fees are not included.
-- **Next step:** Add a "Not included" note now; add a Budgets card once the API reports budget use.
+- **What:** Usage does not show published-API daily budget use or runs stopped by their budget. (The "not included"
+  note for MCP and service fees is shown since UX round 3; web-search fees are priced by Orkexa and included.)
+- **Next step:** Add a Budgets card once the API reports budget use.
 - **Depends on:** nodestro-api API-017 (budget usage in the usage response).
 
 ### ST-015 · New agent defaults: raw `{{input}}` and "Empty template" saving at once (ED-22)
@@ -144,13 +139,6 @@ None known.
   template" on the agent library page persists a template immediately on click.
 - **Next step:** Show the input placeholder as a chip with a raw-text toggle; create the template on first save.
 
-### ST-016 · Capabilities of typed model ids from `GET /api/models/capabilities`
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** #86, Bedrock final report open item 3
-- **What:** For hand-typed ids (Bedrock ids, inference profiles, ARNs) capability-dependent options stay off as
-  "unknown" although the API route can answer.
-- **Next step:** Query the route from the model picker for free-text ids; keep the current fallback.
-
 ### ST-031 · Offline (sample data) badge on example copies (AD-18)
 
 - **Priority:** P3 Low · **Status:** Blocked · **Refs:** UX audit AD-18, nodestro-examples #39
@@ -159,14 +147,24 @@ None known.
 - **Next step:** Show a badge in the workflow and run header once nodestro-examples EX-003 has chosen the marker.
 - **Depends on:** nodestro-examples EX-003 (marker), possibly a workflow field in nodestro-runtime/nodestro-api.
 
-### ST-032 · Technical field names in the team hint and result labels (ED-17)
+### ST-032 · Technical field names in the editor palette's team hint (ED-17)
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** UX audit ED-17
-- **What:** The palette team hint (`frontend/src/editor/Palette.tsx`, `teamHint()`) lists output fields by id, and
-  `fieldLabel()` in `components/Markdown.tsx` falls back to the English field id when a description exceeds 60
-  characters (10 to 17 example fields per language).
-- **Next step:** Show localized descriptions or labels instead of ids; agree the label source with nodestro-examples EX-002.
-- **Depends on:** nodestro-examples EX-002 (possible `label` on the runtime's `OutputField`).
+- **Priority:** P4 Optional · **Status:** Blocked (needs an API field) · **Refs:** UX audit ED-17
+- **What:** The palette team hint (`frontend/src/editor/Palette.tsx`, `teamHint()`) lists a team's output fields by
+  id. Result labels are fixed since UX round 3 (labels come from the description, also inside collected results;
+  every long example description starts with a short label, enforced in nodestro-examples).
+- **Next step:** Show localized labels once workflow summaries carry the contract descriptions.
+- **Depends on:** nodestro-api (contract descriptions in workflow summaries).
+
+### ST-048 · Local models settings: three small wording gaps
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** UX round 3 (studio-new N3 findings)
+- **What:** An external model server that cannot be reached shows "Stopped" instead of "Not reachable"; on machines
+  without a GPU the CPU saving mode sentence appears twice; the tool-agent task has different names in Settings >
+  Local models and in an example's model plan. The server-tenant view (no hardware) still words a few hints for "this
+  computer", and the `export.server_too_large` sentence mixes MB and GB.
+- **Next step:** One status text for unreachable external servers, one CPU sentence, one task name in both places,
+  server wording in the tenant view, one size unit (all six languages).
 
 ## Tests and quality assurance
 
@@ -259,35 +257,6 @@ None known.
   implemented S-2 state.
 - **Next step:** One docs-only PR aligning the status lines with ADR-0006 and `docs/ARCHITECTURE.md`.
 
-### ST-023 · README lists nine browser suites; there are fifteen
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** `README.md` (Development table), `scripts/e2e.sh`
-- **What:** `make e2e` runs smoke, i18n, architect, python, assistant, flow, panels, api, mcp, approvals,
-  orchestration, runchat, journeys, welcome and a11y; the README names nine.
-- **Next step:** Update the table row.
-
-### ST-024 · Help links in four dialogs and links from docs into the app (TX-11)
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** UX audit TX-11
-- **What:** The versions dialog and the gate report have no help tip; docs chapters never link to app routes
-  ("Open Settings → AI providers" is plain text).
-- **Next step:** Add the help tips; let DocsPage render app-route links in chapter Markdown.
-
-### ST-025 · Interface texts that name environment variables (TX-14)
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** UX audit TX-14
-- **What:** `approvals.rules.disabledText` and `tools.services.endpointListEmpty` show `NODESTRO_*` variable names in
-  plain text to ordinary users.
-- **Next step:** Lead with operator wording and put the variable in `<code>`, in all six languages.
-
-### ST-026 · Locale polish: French apostrophes and the Orkexa name in de/it
-
-- **Priority:** P4 Optional · **Status:** Needs decision · **Refs:** final UX review F10, `docs/i18n/terminology.md`
-- **What:** The fr locale has 301 straight apostrophes next to about 1,900 typographic ones. Three de/it texts
-  (`backup.json` `versions`, `errors.json` `library` twice) call Orkexa "Agenten-Bibliothek" / "libreria (degli)
-  agenti", which is close to the new page name "Agentenbibliothek".
-- **Next step:** Normalize the fr apostrophes; native speakers decide the Orkexa wording.
-
 ## Technical debt
 
 ### ST-027 · `products` in `platform/versions.json` is stale
@@ -309,36 +278,13 @@ None known.
 - **Next step:** Decide on a constraints or lock file for the platform install, together with the other Python repos.
 - **Depends on:** the same decision in nodestro-runtime RT-023 and nodestro-server SRV-014 (desktop builds from the studio pins).
 
-### ST-038 · Three scripts outside mypy (API2-16 rest)
+### ST-038 · Four scripts outside mypy (API2-16 rest)
 
 - **Priority:** P4 Optional · **Status:** Open · **Refs:** backend audit 2 API2-16, studio #110
 - **What:** The studio now serves the frontend through `nodestro_api.frontend.mount_frontend` and the typed scripts
-  are in mypy, but `derive_branding`, `platform_smoke` and `social_preview` stay outside (17 errors, missing numpy
-  and PIL stubs).
+  are in mypy, but `derive_branding`, `docker_smoke`, `platform_smoke` and `social_preview` stay outside (19 errors,
+  missing numpy and PIL stubs).
 - **Next step:** Add the stub packages to the dev dependencies and fix the errors, or type the image helpers locally.
-
-### ST-039 · Name the blocked tool in sandbox problems (NJR-08)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** UX round 2 NJR-08
-- **What:** The sentence for a tool refused by the sandbox does not name the tool, although `params.name` carries
-  it; with several tools on one agent it is unclear which one is blocked.
-- **Next step:** Add `{{name}}` to the sandbox problem sentences in six languages.
-
-### ST-040 · Trust label "Origin: Needs isolation" (NJR-10)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** UX round 2 NJR-10, tools docs chapter
-- **What:** The tool header reads "Origin: Needs isolation", and an adopted tool reads "Created by AI · Origin:
-  Written by you"; origin and trust class are mixed in one label.
-- **Next step:** Separate "created by" from "runs as", and change the tools docs in six languages in the same PR.
-
-### ST-041 · Runs list and run page polish (NJR-03, NJR-17 to NJR-20)
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** UX round 2 NJR-03, NJR-11, NJR-17 to NJR-20
-- **What:** An expired budget decision keeps the "Budget decision needed" title and "waiting" badge; the workflow
-  filter cannot tell two copies with the same name apart; runs waiting for a budget decision have no filter option
-  of their own; "Version 1" stands alone in a callout; a blocked agent node shows "Ready" next to "1 problem"; danger
-  callouts show two icons; the runs table overflows by 15 px in French at 1280 px.
-- **Next step:** Small fixes, one PR.
 
 ## Later optimizations
 
@@ -431,8 +377,7 @@ None known.
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |
 | ST-028 | nodestro-runtime, nodestro-server | RT-023, SRV-014 (dependency locking, D-05) | One shared decision |
 | ST-018, ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update the status documents and `products` together |
-| ST-026 | nodestro-examples | EX-008 (typographic apostrophes) | Same typography decision |
-| ST-031, ST-032 | nodestro-examples | EX-003 (AD-18 marker), EX-001/EX-002 (ED-17) | Examples provide the marker and texts; studio shows them |
+| ST-031 | nodestro-examples | EX-003 (AD-18 marker) | Examples provide the marker; studio shows it |
 | — | nodestro-runtime, nodestro-api | X-01 decision response still `paused` (RT-005, API-018); X-03 error code list (RT-011, API-016) | Change lives in runtime/api; studio already adapted |
 
 Generated example chapters (`frontend/src/docs/chapters/*/beispiele.md`, between the `examples` markers) come from

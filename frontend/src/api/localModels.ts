@@ -77,7 +77,10 @@ export interface CatalogModel {
   digest: string;
   listed_capabilities: string[];
   min_ollama: string;
+  /** The SPDX id ("Apache-2.0"); APIs before license_source add an English note: "Apache-2.0 (upstream; ...)". */
   license: string;
+  /** Where the license was read: the Ollama manifest's license layer, or the publisher's model card (upstream). */
+  license_source?: "ollama" | "upstream";
   memory_bytes: number;
   rank: number;
   cpu_friendly: boolean;
@@ -137,7 +140,12 @@ export interface Recommendation {
 export interface LocalOverview {
   status: LocalStatus;
   catalog: CatalogModel[];
-  hardware: Hardware;
+  /**
+   * The hardware of the computer that runs the model server; null for a server's tenants (API3-08: the server's
+   * machine is its operator's). Their status then also has no base_url, runtime_path, models_dir, free_bytes or
+   * detected_external (null).
+   */
+  hardware: Hardware | null;
   recommendations: Recommendation[];
   /** False on a server's tenants: the operator runs the model server. */
   manageable: boolean;

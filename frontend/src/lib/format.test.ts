@@ -9,6 +9,7 @@ import {
   formatDateOrDay,
   formatDay,
   formatDuration,
+  formatLargeBytes,
   formatNumber,
   formatPrice,
   formatTime,
@@ -105,6 +106,9 @@ describe("format", () => {
     expect(formatBytes(2048)).toBe("2.0 kB");
     expect(formatBytes(0)).toBe("0 bytes");
     expect(formatBytes(1)).toBe("1 byte");
+    // Model and package sizes: decimal GB from 1 GB, as catalogs state them, not "3,147.1 MB".
+    expect(formatLargeBytes(3_300_000_000)).toBe("3.3 GB");
+    expect(formatLargeBytes(610_000_000)).toBe(formatBytes(610_000_000));
     expect(formatDuration("2026-01-01T00:00:00Z", "2026-01-01T00:00:02.500Z")).toBe("2.5 s");
     expect(formatDuration("2026-01-01T00:00:00Z", "2026-01-01T00:01:05Z")).toBe("1 min 5 s");
     await inLanguage("de");
