@@ -65,6 +65,7 @@
     "staleNotice_one": "{{count}} solicitud se calculó con un precio que no se había comprobado desde hacía tiempo.",
     "staleNotice_other": "{{count}} solicitudes se calcularon con precios que no se habían comprobado desde hacía tiempo.",
     "basis": "Calculado con las versiones de precios {{versions}} de {{sources}}",
-    "quality": "fiabilidad de los precios: {{quality}} (el precio menos seguro usado)"
+    "quality": "fiabilidad de los precios: {{quality}} (el precio menos seguro usado)",
+    "notIncluded": "No incluido: las tarifas que cobran por su cuenta los servicios conectados (MCP) o los proveedores de datos de herramientas; Nodestro no las conoce."
   }
 }
