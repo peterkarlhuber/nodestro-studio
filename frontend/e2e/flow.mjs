@@ -192,6 +192,21 @@ try {
   check(true, "The run explains which branch the decision chose");
   await shot("flow-03-run");
 
+  // ---- 4b. the global search reaches runs and offers recent items (OB-09) --------------------
+  await page.goto(`${base}/settings`);
+  await page.getByTestId("search-open").waitFor();
+  await page.keyboard.press("Control+k");
+  const recent = page.getByTestId("search-group-recent");
+  await recent.getByTestId("search-hit").first().waitFor();
+  check((await recent.getByTestId("search-hit").count()) >= 2, "The empty search offers recent runs and workflows");
+  await page.getByRole("combobox", { name: "Suchbegriff" }).fill("Reklamationen fertig");
+  const runGroup = page.getByTestId("search-group-run");
+  await runGroup.getByTestId("search-hit").first().waitFor();
+  await shot("flow-03b-search-runs");
+  await runGroup.getByTestId("search-hit").first().click();
+  await page.waitForURL(/\/executions\/run_/);
+  check(true, "The global search finds a run by workflow name and status and opens it");
+
   // ---- 5. a cancelled run continues without repeating finished steps -----------------------
   const second = await api(`/workflows/${routed.id}/runs`, "POST", {
     input: "",

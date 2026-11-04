@@ -2,18 +2,22 @@
   "open": "Buscar …",
   "title": "Busca",
   "label": "Termo de busca",
-  "placeholder": "Buscar em páginas, configurações, fluxos de trabalho, agentes, ferramentas, conhecimento e documentação …",
+  "placeholder": "Buscar em páginas, configurações, fluxos de trabalho, execuções, agentes, ferramentas, conhecimento e documentação …",
   "hint": "Dica: Ctrl+K (⌘K no Mac) abre a busca de qualquer lugar. As setas selecionam, Enter abre.",
   "results": "Resultados",
   "empty": "Nada encontrado para “{{query}}”.",
   "kind": {
+    "recent": "Recentes",
     "page": "Ir para",
     "workflow": "Fluxos de trabalho",
+    "run": "Execuções",
     "agent": "Agentes em fluxos de trabalho",
     "template": "Biblioteca de agentes",
     "example": "Fluxos de trabalho de exemplo",
     "tool": "Ferramentas",
     "knowledge": "Conhecimento",
     "docs": "Documentação"
-  }
+  },
+  "recentRun": "Execução",
+  "recentWorkflow": "Fluxo de trabalho"
 }
