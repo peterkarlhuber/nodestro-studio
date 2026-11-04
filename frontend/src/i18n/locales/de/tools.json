@@ -21,11 +21,12 @@
   },
   "kindLabel": "Art des Tools",
   "trust": {
-    "trusted": "Eingebaut",
-    "user-authored": "Von dir geschrieben",
-    "untrusted": "Braucht Isolation"
+    "trusted": "direkt in Nodestro",
+    "user-authored": "als dein eigener Code",
+    "untrusted": "nur isoliert"
   },
-  "trustLabel": "Herkunft",
+  "trustLabel": "Läuft",
+  "trustLine": "{{label}}: {{value}}",
   "trustNote": {
     "user-authored": "Von dir geschrieben: läuft in einem eigenen Python-Prozess ohne Isolation auf diesem Rechner.",
     "untrusted": "KI-erstellt oder unbekannter Herkunft: läuft nur isoliert, hier in der Docker-Sandbox.",
@@ -114,7 +115,7 @@
     "counts": "Freigegebene Tools: {{approved}} von {{total}} · warten auf Prüfung: {{pending}}",
     "unavailable": "MCP ist in dieser Installation nicht verfügbar (benötigt Python 3.11 oder neuer). Dienste lassen sich einrichten, aber nicht erreichen.",
     "endpointList": "Der Betreiber erlaubt nur diese Adressen: {{list}}",
-    "endpointListEmpty": "Der Betreiber hat keine Adressen für MCP freigegeben (NODESTRO_MCP_ENDPOINTS). Dienste können hier nicht verbunden werden.",
+    "endpointListEmpty": "Der Betreiber hat noch keine Adressen für Dienste freigegeben, daher lassen sich hier keine Dienste verbinden. Bitte die Person, die Nodestro betreibt, die benötigten Adressen freizugeben (Einstellung <code>NODESTRO_MCP_ENDPOINTS</code>).",
     "noVault": "Kein sicherer Schlüsselspeicher verfügbar: Zugangstokens werden nicht gespeichert, sondern nur bis zum Schließen der App im Speicher gehalten.",
     "readOnlyMvp": "Nutzbar sind derzeit nur Tools, die du als „nur lesend“ einstufst.",
     "writeEnabled": "Tools, die Daten ändern, brauchen eine Freigabe pro Aufruf.",

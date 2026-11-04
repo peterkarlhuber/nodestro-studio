@@ -16,7 +16,7 @@ import {
   FlaskConical,
 } from "lucide-react";
 import type { TFunction } from "i18next";
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useMemo, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -65,6 +65,7 @@ import { getDefaultModel } from "../lib/defaults";
 import { findModel, providerOf, sameModel, splitModel } from "../lib/providers";
 import { ProblemText } from "../lib/errors";
 import { KNOWLEDGE_ACCEPT } from "../lib/knowledge";
+import { useDebounced } from "../lib/useDebounced";
 import {
   type AgentSectionId,
   advancedSummary,
@@ -97,15 +98,6 @@ const SECTION_TITLE: Record<AgentSectionId, string> = {
 /** Select options from option values; "" is the model default. */
 function options(t: TFunction, group: string, values: readonly string[]) {
   return values.map((value) => ({ value, label: t(`agent.options.${group}.${value || "default"}`) }));
-}
-
-function useDebounced<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const timer = window.setTimeout(() => setDebounced(value), delay);
-    return () => window.clearTimeout(timer);
-  }, [value, delay]);
-  return debounced;
 }
 
 type Retrieval = NonNullable<AgentConfig["knowledge"]["retrieval"]>;
@@ -525,14 +517,29 @@ function BedrockCapability({
   );
 }
 
-/** A Bedrock model's state of ``capability`` (from the catalog, else the provider status); null for other providers. */
+/**
+ * A Bedrock model's state of ``capability``: from the catalog; for a typed id (inference profile, ARN) from
+ * ``GET /api/models/capabilities`` (#86, asked once the id has stopped changing); else the provider status; null for
+ * other providers. While the answer is pending, or when the route is missing (older API), it stays "unknown".
+ */
 function useBedrockCapability(model: string, capability: string): CapabilityState | null {
   const meta = useMeta();
   const settings = useSettings();
-  if (providerOf(model) !== "bedrock") return null;
-  const fromModel = findModel(meta.data?.models, model)?.capabilities?.[capability];
+  const bedrock = providerOf(model) === "bedrock";
+  const catalog = bedrock ? findModel(meta.data?.models, model) : undefined;
+  const typed = useDebounced(bedrock && meta.data && !catalog ? model : "", 400);
+  const answer = useQuery({
+    queryKey: keys.modelCapabilities(typed),
+    queryFn: () => api.modelCapabilities(typed),
+    enabled: typed !== "" && typed === model,
+    staleTime: Infinity,
+    retry: false,
+  });
+  if (!bedrock) return null;
+  const fromModel = catalog?.capabilities?.[capability];
+  const fromRoute = typed === model ? answer.data?.capabilities?.[capability] : undefined;
   const fromProvider = settings.data?.providers.find((item) => item.id === "bedrock")?.capabilities?.[capability];
-  return (fromModel ?? fromProvider ?? "unknown") as CapabilityState;
+  return (fromModel ?? fromRoute ?? fromProvider ?? "unknown") as CapabilityState;
 }
 
 function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {

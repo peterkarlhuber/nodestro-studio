@@ -11,10 +11,11 @@ import { DiscussIcon } from "../assistant/DiscussButton";
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
 import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, PageHeader, Spinner, TextInput, Tooltip } from "../components/ui";
+import i18n from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatNumber, relativeTime } from "../lib/format";
 import { helpEntry } from "../lib/help";
-import { KNOWLEDGE_ACCEPT } from "../lib/knowledge";
+import { KNOWLEDGE_ACCEPT, SEARCH_QUERY_CHARS, checkSearchQuery, knowledgeSearchError } from "../lib/knowledge";
 
 const NONE = "\u0000none";
 
@@ -57,7 +58,18 @@ export function KnowledgePage() {
     },
     onError: toast.error,
   });
-  const search = useMutation({ mutationFn: () => api.searchKnowledge(query), onSuccess: setHits, onError: toast.error });
+  const search = useMutation({
+    mutationFn: async () => {
+      checkSearchQuery(query);
+      try {
+        return await api.searchKnowledge(query);
+      } catch (error) {
+        throw knowledgeSearchError(error);
+      }
+    },
+    onSuccess: setHits,
+    onError: toast.error,
+  });
 
   const onDrop = (event: DragEvent) => {
     event.preventDefault();
@@ -193,11 +205,23 @@ export function KnowledgePage() {
                 if (query.trim()) search.mutate();
               }}
             >
-              <TextInput value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("knowledge.searchTerm")} aria-label={t("knowledge.searchTerm")} />
+              <TextInput
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t("knowledge.searchTerm")}
+                aria-label={t("knowledge.searchTerm")}
+                maxLength={SEARCH_QUERY_CHARS}
+                data-testid="knowledge-search-input"
+              />
               <Button type="submit" icon={Search} busy={search.isPending}>
                 {t("knowledge.search")}
               </Button>
             </form>
+            {query.length >= SEARCH_QUERY_CHARS ? (
+              <p className="muted small" role="status" data-testid="knowledge-search-limit">
+                {t("knowledge.searchLimit", { max: SEARCH_QUERY_CHARS.toLocaleString(i18n.language) })}
+              </p>
+            ) : null}
             {hits && !hits.length ? <p className="muted small">{t("knowledge.noHits")}</p> : null}
             <ol className="hits">
               {hits?.map((hit, index) => (

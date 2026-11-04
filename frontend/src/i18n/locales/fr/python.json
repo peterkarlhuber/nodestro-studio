@@ -47,7 +47,7 @@
     "codeSeparate": "Le code des outils est vérifié et approuvé séparément.",
     "approve": "Approuver et installer",
     "confirm": "Appliquer",
-    "introMcp": "Le serveur MCP local {{name}} a besoin de ces paquets. Ils sont installés dans l'image de son conteneur."
+    "introMcp": "Le serveur MCP local {{name}} a besoin de ces paquets. Ils sont installés dans l’image de son conteneur."
   },
   "install": {
     "starting": "Démarrage de l’installation …",

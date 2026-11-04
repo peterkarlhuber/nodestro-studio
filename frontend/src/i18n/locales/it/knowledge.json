@@ -47,5 +47,6 @@
     "done_other": "Testo riconosciuto ({{count}} parole).",
     "enableFirst": "Attiva l’OCR nelle impostazioni",
     "unavailable": "OCR locale non disponibile (mancano Tesseract, dati linguistici o Poppler)"
-  }
+  },
+  "searchLimit": "Il testo di ricerca è limitato a {{max}} caratteri."
 }

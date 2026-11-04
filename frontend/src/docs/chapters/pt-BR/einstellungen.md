@@ -5,13 +5,15 @@ Este capítulo descreve todas as configurações, a instalação e a inicializa�
 ## Modelos locais {#lokale-modelle}
 <!-- keywords: modelo local, ollama, offline, sem chave de api, qwen, download, recomendação, hardware, gpu, memória, servidor de modelos, mistral, europeu, esforço de raciocínio -->
 
+→ [Abrir no Nodestro](/settings#settings-local-models)
+
 O Nodestro pode rodar agentes, assistentes e a busca no conhecimento com **modelos locais** pelo Ollama, sem chave de API: prompts e documentos ficam neste computador. Uma instalação nova usa modelos locais por padrão (agentes `ollama:qwen3.5:4b`, assistente `ollama:qwen3.5:9b`); uma instalação atualizada mantém os modelos que tinha.
 
 *Configurações → Modelos locais* mostra:
 
 - **Estado:** se o servidor de modelos está rodando e quem o fornece. No desktop, o Nodestro inicia o próprio servidor (um processo separado neste computador, com a própria pasta de modelos); no Nodestro Local Docker é um contêiner separado; em um servidor, o operador o fornece. Um Ollama que você já usa só é utilizado se você salvar o endereço dele no provedor Ollama.
 - **Ambiente:** se faltar, **Baixar e instalar** obtém uma vez a versão fixada e verifica o SHA-256. Sem internet, instale-o a partir do arquivo da versão (veja [Importação offline](/docs/einstellungen#offline-import)).
-- **Recomendado para este computador:** um modelo por tarefa (classificar, escrever, agentes com ferramentas, análise, assistente, busca semântica) conforme o que a tarefa precisa, a memória deste computador e os modelos instalados. Um modelo instalado que seja suficiente vem primeiro; *Limitado* significa que um modelo maior faria melhor. As sugestões nunca alteram um agente: você escolhe o modelo dele no editor.
+- **Recomendado para este computador:** um modelo por tarefa (classificar, escrever, agentes com ferramentas, análise, assistente, busca semântica) conforme o que a tarefa precisa, a memória deste computador e os modelos instalados. Um modelo instalado que seja suficiente vem primeiro; *Adequado* e *Limitado* significam que um modelo maior faria melhor; o motivo aparece sob o modelo. As sugestões nunca alteram um agente: você escolhe o modelo dele no editor.
 - **Modelos:** os modelos sugeridos com tamanho do download, memória necessária e licença; **Verificado** significa que a compilação instalada é a que o Nodestro verificou.
 
 **Preferir modelos europeus:** o Qwen continua sendo o padrão. Com a chave ligada, as recomendações sugerem, quando igualmente adequados, modelos da editora europeia Mistral AI (`ministral-3:3b`, `ministral-3:8b`, `ministral-3:14b` e, para programação, `devstral-small-2:24b`), mesmo que ainda precisem ser baixados; um modelo instalado continua sendo a primeira alternativa. Um modelo mais fraco nunca é sugerido, e a chave nunca usa um serviço na nuvem: todos esses modelos rodam neste computador. Um modelo que você mesmo define para um agente sempre tem prioridade, e o modo offline estrito continua recusando downloads. Para a busca semântica, a chave sugere o modelo europeu `mdenseon:307m` (LightOn) enquanto nenhum modelo de embedding estiver instalado. Ele não vem da biblioteca do Ollama: **Baixar** obtém os arquivos originais fixados (1,2 GB), verifica o SHA-256, monta o modelo a partir deles e só o mantém se ele reproduzir exatamente os vetores de referência. Um índice existente continua com seu modelo; trocar significa reconstruir o índice.
@@ -60,6 +62,8 @@ Com o **Modo offline estrito** ligado, a verificação antes de cada execução 
 
 ## Provedores de IA {#anbieter}
 <!-- keywords: chave de api, provedor, anthropic, openai, gemini, ollama, vllm, compatível com openai, url base, variável de ambiente, .env, capacidades -->
+
+→ [Abrir no Nodestro](/settings#settings-providers)
 
 O Nodestro executa os agentes com a biblioteca Orkexa e trabalha com vários **provedores de IA** ao mesmo tempo: **Anthropic**, **OpenAI**, **Google Gemini** e seus próprios servidores por meio de um **endpoint compatível com OpenAI**, **Ollama** ou **vLLM**. Cada agente usa o provedor do seu modelo. Se esse provedor não estiver configurado, a execução não começa; o Nodestro nunca troca em silêncio para outro provedor. Se faltar o provedor do modelo padrão, aparece “Configurar provedor de IA” no canto superior direito, ou “O modelo padrão precisa de …” se outro provedor já estiver configurado.
 
@@ -153,6 +157,8 @@ Administradores também definem o **Orçamento máximo por execução** (vazio: 
 ## Sandbox {#sandbox}
 <!-- keywords: escolher sandbox, automático, docker, processo python, docker disponível, sandbox integrado, sandbox linux, macos, windows, bloqueado, experimental -->
 
+→ [Abrir no Nodestro](/settings#settings-sandbox)
+
 Aqui você escolhe onde as ferramentas rodam. A mudança vale na hora.
 
 | Modo | Suas próprias ferramentas | Ferramentas criadas por IA e de origem desconhecida |
@@ -212,6 +218,8 @@ No canto superior direito você alterna entre **Escuro** e **Claro**. A escolha 
 ## Backup e restauração {#backup}
 <!-- keywords: backup, cópia de segurança, restaurar, exportar, zip, mudança, salvaguarda -->
 
+→ [Abrir no Nodestro](/settings#settings-backup)
+
 **Baixar backup** salva todos os dados em um arquivo ZIP: fluxos de trabalho com versões, modelos de agentes, ferramentas próprias, arquivos de conhecimento, memória, execuções, dados de uso, favoritos, tags e configurações. O banco de dados é salvo como um instantâneo consistente, mesmo enquanto uma execução está trabalhando.
 
 As **chaves de API** dos provedores de IA nunca vão para o backup, nem URLs base que contenham credenciais. A restauração mantém as chaves deste computador.
@@ -220,6 +228,8 @@ As **chaves de API** dos provedores de IA nunca vão para o backup, nem URLs bas
 
 ## Diagnóstico do sistema {#diagnose}
 <!-- keywords: diagnóstico, verificar, encontrar erros, conexão, docker, sandbox, versão, problema -->
+
+→ [Abrir no Nodestro](/settings#settings-diagnostics)
 
 **Iniciar diagnóstico** verifica se o Nodestro funciona por completo neste computador e mostra para cada item **OK**, **Aviso** ou **Erro**, com uma explicação e uma sugestão de solução:
 

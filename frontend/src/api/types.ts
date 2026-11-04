@@ -838,6 +838,12 @@ export const AWS_REGION_PATTERN = /^[a-z]{2}(-[a-z]+)+-\d$/;
 
 export type CapabilityState = "supported" | "unsupported" | "unknown";
 
+/** ``GET /api/models/capabilities``: values for Amazon Bedrock ids, ``null`` for other providers and invalid ids. */
+export interface ModelCapabilities {
+  model: string;
+  capabilities: Record<string, CapabilityState> | null;
+}
+
 /** A provider's configuration state; never contains the key. */
 export interface ProviderStatus extends BedrockStatusFields {
   id: ProviderId;
@@ -1606,8 +1612,10 @@ export interface ExampleTeam {
   agents: ExampleAgent[];
   /** The team stops for a person's approval; the orchestrator waits for the decision. */
   approval: boolean;
-  /** The fields the team promises to deliver (its output contract). */
+  /** The fields the team promises to deliver (its output contract), by technical name. */
   contract: string[];
+  /** The same fields with their descriptions in the example's language; missing from older libraries. */
+  contract_fields?: { name: string; description: string }[];
   /** The start form fields an orchestrator may fill when it delegates. */
   parameters: string[];
 }
@@ -1666,7 +1674,7 @@ export interface ExampleAgentModel {
   /** The key of models in the copy request. */
   key: string;
   name: string;
-  /** The team (or other part) the agent belongs to; null for agents of the workflow itself. */
+  /** The id of the team (or other part) the agent belongs to; null for agents of the workflow itself. */
   part: string | null;
   kind?: "agent" | "orchestrator";
   /** classify, extract, write, document_vision, tool_agent, analysis, coding, judge, orchestrator. */

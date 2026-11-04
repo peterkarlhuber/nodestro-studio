@@ -5,8 +5,8 @@ import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { RUNS_MAX, runsRefetchInterval } from "../api/hooks";
-import type { RunStatus } from "../api/types";
-import { ExecutionsPage, runFilters } from "./ExecutionsPage";
+import type { RunBudget, RunStatus } from "../api/types";
+import { ExecutionsPage, runFilters, waitsForBudget, workflowOptions } from "./ExecutionsPage";
 
 const run = (index: number, status: RunStatus = "succeeded") => ({
   id: `run_${index}`,
@@ -165,6 +165,23 @@ describe("ExecutionsPage filters in the address", () => {
       origin: "imported",
     });
     expect(runFilters(new URLSearchParams("status=exploded&origin=x"))).toEqual({ workflowId: "", status: "", origin: "" });
+  });
+
+  it("filters runs waiting for a budget decision and tells copies with the same name apart (NJR-17, NJR-19)", () => {
+    expect(runFilters(new URLSearchParams("status=awaiting_budget")).status).toBe("awaiting_budget");
+    const budget: RunBudget = { source: "workflow", initial_limit_usd: null, limit_usd: "1.00", raises: [], pending_request_id: "br_1" };
+    expect(waitsForBudget({ status: "paused", budget })).toBe(true);
+    expect(waitsForBudget({ status: "cancelled", budget })).toBe(false);
+    expect(waitsForBudget({ status: "paused", budget: { ...budget, pending_request_id: null } })).toBe(false);
+    const options = workflowOptions(
+      [
+        { id: "a", name: "Blog", updated_at: "2026-11-01T00:00:00Z" },
+        { id: "b", name: "Blog", updated_at: "2026-11-03T00:00:00Z" },
+        { id: "c", name: "Invoice", updated_at: "2026-11-02T00:00:00Z" },
+      ],
+      (at) => `changed ${at.slice(5, 10)}`,
+    );
+    expect(options.map((option) => option.label)).toEqual(["Blog · changed 11-01", "Blog · changed 11-03", "Invoice"]);
   });
 
   it("opens filtered from a link, says when nothing matches and shows all runs again", async () => {

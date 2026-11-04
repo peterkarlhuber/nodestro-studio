@@ -5,13 +5,15 @@ Questo capitolo descrive tutte le impostazioni, l'installazione e l'avvio di Nod
 ## Modelli locali {#lokale-modelle}
 <!-- keywords: modello locale, ollama, offline, senza chiave api, qwen, download, consiglio, hardware, gpu, memoria, server dei modelli, mistral, europeo, sforzo di ragionamento -->
 
+→ [Apri in Nodestro](/settings#settings-local-models)
+
 Nodestro può far funzionare agenti, assistenti e ricerca nella conoscenza con **modelli locali** tramite Ollama, senza chiave API: prompt e documenti restano su questo computer. Una nuova installazione usa per impostazione predefinita modelli locali (agenti `ollama:qwen3.5:4b`, assistente `ollama:qwen3.5:9b`); un’installazione aggiornata mantiene i modelli che aveva.
 
 *Impostazioni → Modelli locali* mostra:
 
 - **Stato:** se il server dei modelli è attivo e chi lo fornisce. Sul desktop Nodestro avvia un proprio server (un processo separato su questo computer, con una propria cartella dei modelli); in Nodestro Local Docker è un container separato; su un server lo fornisce il gestore. Un Ollama che usi già viene adoperato solo se salvi il suo indirizzo per il provider Ollama.
 - **Ambiente:** se manca, **Scarica e installa** recupera una volta la versione fissata e ne verifica lo SHA-256. Senza internet, installalo dal suo archivio di rilascio (vedi [Importazione offline](/docs/einstellungen#offline-import)).
-- **Consigliati per questo computer:** un modello per compito (smistare, scrivere, agenti con strumenti, analisi, assistente, ricerca semantica) in base alle esigenze del compito, alla memoria di questo computer e ai modelli installati. Un modello installato sufficiente viene prima; *Limitato* significa che un modello più grande lo farebbe meglio. I suggerimenti non cambiano mai un agente: il suo modello lo scegli nell’editor.
+- **Consigliati per questo computer:** un modello per compito (smistare, scrivere, agenti con strumenti, analisi, assistente, ricerca semantica) in base alle esigenze del compito, alla memoria di questo computer e ai modelli installati. Un modello installato sufficiente viene prima; *Adatto* e *Limitato* significano che un modello più grande lo farebbe meglio; il motivo è indicato sotto il modello. I suggerimenti non cambiano mai un agente: il suo modello lo scegli nell’editor.
 - **Modelli:** i modelli proposti con dimensione del download, memoria necessaria e licenza; **Verificato** significa che la versione installata è quella verificata da Nodestro.
 
 **Preferisci modelli europei:** Qwen resta lo standard. Con l’interruttore attivo, a parità di idoneità le raccomandazioni propongono modelli dell’editore europeo Mistral AI (`ministral-3:3b`, `ministral-3:8b`, `ministral-3:14b` e, per la programmazione, `devstral-small-2:24b`), anche se vanno ancora scaricati; un modello installato resta la prima alternativa. Non viene mai proposto un modello più debole e l’interruttore non usa mai un servizio cloud: tutti questi modelli girano su questo computer. Un modello che assegni tu stesso a un agente ha sempre la precedenza, e la modalità offline rigorosa continua a rifiutare i download. Per la ricerca semantica l’interruttore propone il modello europeo `mdenseon:307m` (LightOn) finché non è installato alcun modello di embedding. Non proviene dalla libreria di Ollama: **Scarica** recupera i file originali fissati (1,2 GB), ne verifica lo SHA-256, costruisce il modello e lo conserva solo se riproduce esattamente i vettori di riferimento. Un indice esistente resta con il suo modello; cambiarlo significa ricostruire l’indice.
@@ -60,6 +62,8 @@ Con la **Modalità offline rigorosa** attiva, la verifica prima di ogni esecuzio
 
 ## Provider di IA {#anbieter}
 <!-- keywords: chiave api, provider, anthropic, openai, gemini, ollama, vllm, compatibile con openai, url di base, variabile d’ambiente, .env, capacità -->
+
+→ [Apri in Nodestro](/settings#settings-providers)
 
 Nodestro esegue gli agenti con la libreria Orkexa e lavora con più **provider di IA** contemporaneamente: **Anthropic**, **OpenAI**, **Google Gemini** e i tuoi server tramite un **endpoint compatibile con OpenAI**, **Ollama** o **vLLM**. Ogni agente usa il provider del suo modello. Se quel provider non è configurato, l’esecuzione non parte; Nodestro non passa mai in silenzio a un altro provider. Se manca il provider del modello predefinito, in alto a destra compare «Configura provider di IA», oppure «Il modello predefinito richiede …» se è già configurato un altro provider.
 
@@ -153,6 +157,8 @@ Gli amministratori impostano anche il **Budget massimo per esecuzione** (vuoto: 
 ## Sandbox {#sandbox}
 <!-- keywords: scegliere la sandbox, automatica, docker, processo python, docker disponibile, sandbox integrata, sandbox linux, macos, windows, bloccato, sperimentale -->
 
+→ [Apri in Nodestro](/settings#settings-sandbox)
+
 Qui scegli dove vengono eseguiti gli strumenti. La modifica ha effetto subito.
 
 | Modalità | I tuoi strumenti | Strumenti creati dall’IA e di origine sconosciuta |
@@ -212,6 +218,8 @@ In alto a destra passi da **Scuro** a **Chiaro**. La scelta viene salvata nel br
 ## Backup e ripristino {#backup}
 <!-- keywords: backup, copia di sicurezza, ripristinare, esportare, zip, trasloco, salvataggio dati -->
 
+→ [Apri in Nodestro](/settings#settings-backup)
+
 **Scarica backup** salva tutti i dati in un file ZIP: workflow con versioni, modelli di agenti, strumenti personali, file di conoscenza, memoria, esecuzioni, dati di utilizzo, preferiti, tag e impostazioni. Il database viene salvato come istantanea coerente, anche mentre un’esecuzione è in corso.
 
 Le **chiavi API** dei provider di IA non finiscono mai nel backup, e nemmeno gli URL di base che contengono credenziali. Il ripristino mantiene le chiavi di questo computer.
@@ -220,6 +228,8 @@ Le **chiavi API** dei provider di IA non finiscono mai nel backup, e nemmeno gli
 
 ## Diagnosi del sistema {#diagnose}
 <!-- keywords: diagnosi, verificare, trovare errori, connessione, docker, sandbox, versione, problema -->
+
+→ [Apri in Nodestro](/settings#settings-diagnostics)
 
 **Avvia diagnosi** verifica se Nodestro funziona completamente su questo computer e mostra per ogni punto **OK**, **Avviso** o **Errore**, con una spiegazione e una proposta di soluzione:
 

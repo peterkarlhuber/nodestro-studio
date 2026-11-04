@@ -3,7 +3,7 @@ import { type Ref, memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { Output, outputFieldsOf } from "../components/Markdown";
+import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
 import { IconButton, Stat, StatusBadge } from "../components/ui";
 import { formatTokens, tokenBreakdown } from "../lib/format";
 import { RunApprovals } from "../runs/ApprovalCard";
@@ -152,7 +152,11 @@ function RunPanelView({ panelRef }: { panelRef?: Ref<HTMLElement> }) {
                     ) : paused ? (
                       waitingForBudget ? <p className="muted">{t("budget.panel.waiting")}</p> : null
                     ) : (
-                      <Output value={run.output} fields={outputFieldsOf(run.workflow.nodes, "", run.output)} />
+                      <Output
+                        value={run.output}
+                        fields={outputFieldsOf(run.workflow.nodes, "", run.output)}
+                        steps={stepFieldsOf(run.workflow.nodes, run.output)}
+                      />
                     )}
                   </div>
                 )}

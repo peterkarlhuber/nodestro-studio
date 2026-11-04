@@ -67,7 +67,7 @@
     "enabled": "Ligadas",
     "disabled": "Desligadas",
     "enabledText": "Chamadas de ferramentas que alteram dados ou agem para fora aguardam a decisão de uma pessoa.",
-    "disabledText": "O Nodestro ainda não pergunta antes das chamadas de ferramentas. Ordem: marque aqui as atribuições existentes, confira a lista e depois a administração liga as aprovações após a revisão de segurança (NODESTRO_TOOL_APPROVALS=1).",
+    "disabledText": "O Nodestro ainda não pergunta antes das chamadas de ferramentas. Ordem: marque aqui as atribuições existentes, confira a lista e depois a administração liga as aprovações após a revisão de segurança (configuração <code>NODESTRO_TOOL_APPROVALS=1</code>).",
     "legacyTitle": "Exceções anteriores",
     "legacyText": "Atribuições de ferramentas que já existiam antes da aprovação por chamada continuam funcionando sem pergunta, vinculadas à versão da ferramenta com que rodavam. Uma nova versão ou uma nova atribuição é perguntada como de costume. Para ferramentas de serviços conectados, sempre se pergunta.",
     "legacyNotRun": "A etapa de ativação ainda não foi executada.",

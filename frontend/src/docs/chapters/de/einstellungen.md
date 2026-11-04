@@ -5,13 +5,15 @@ Dieses Kapitel beschreibt alle Einstellungen, die Installation und den Start von
 ## Lokale Modelle {#lokale-modelle}
 <!-- keywords: lokales modell, ollama, offline, kein api-schlüssel, qwen, download, empfehlung, hardware, gpu, arbeitsspeicher, modellserver, mistral, europäisch, denkaufwand -->
 
+→ [In Nodestro öffnen](/settings#settings-local-models)
+
 Nodestro kann Agenten, Assistenten und die Wissenssuche mit **lokalen Modellen** über Ollama betreiben, ohne API-Schlüssel: Prompts und Dokumente bleiben auf diesem Computer. Eine neue Installation nutzt standardmäßig lokale Modelle (Agenten `ollama:qwen3.5:4b`, Assistent `ollama:qwen3.5:9b`); eine aktualisierte Installation behält ihre bisherigen Modelle.
 
 *Einstellungen → Lokale Modelle* zeigt:
 
 - **Zustand:** ob der Modellserver läuft und wer ihn bereitstellt. Auf dem Desktop startet Nodestro einen eigenen Server (ein eigener Prozess auf diesem Computer mit eigenem Modellordner); in Nodestro Local Docker ist es ein eigener Container; auf einem Server stellt ihn der Betreiber. Ein Ollama, das du schon betreibst, wird nur genutzt, wenn du seine Adresse beim Anbieter Ollama speicherst.
 - **Laufzeit:** Fehlt sie, holt **Herunterladen und installieren** die festgelegte Version einmal und prüft ihre SHA-256-Prüfsumme. Ohne Internet installierst du sie aus ihrem Release-Archiv (siehe [Offline-Import](/docs/einstellungen#offline-import)).
-- **Empfohlen für diesen Computer:** ein Modell je Aufgabe (Sortieren, Schreiben, Agenten mit Tools, Analyse, Assistent, semantische Suche) aus den Anforderungen der Aufgabe, dem Arbeitsspeicher dieses Computers und den installierten Modellen. Ein installiertes Modell, das gut genug ist, kommt zuerst; *Eingeschränkt* heißt, ein größeres Modell könnte es besser. Vorschläge ändern nie einen Agenten: Sein Modell wählst du im Editor.
+- **Empfohlen für diesen Computer:** ein Modell je Aufgabe (Sortieren, Schreiben, Agenten mit Tools, Analyse, Assistent, semantische Suche) aus den Anforderungen der Aufgabe, dem Arbeitsspeicher dieses Computers und den installierten Modellen. Ein installiertes Modell, das gut genug ist, kommt zuerst; Bei *Geeignet* und *Eingeschränkt* könnte ein größeres Modell es besser; der Grund steht unter dem Modell. Vorschläge ändern nie einen Agenten: Sein Modell wählst du im Editor.
 - **Modelle:** die vorgeschlagenen Modelle mit Downloadgröße, Speicherbedarf und Lizenz; **Geprüft** heißt, die installierte Fassung ist die, die Nodestro geprüft hat.
 
 **Europäische Modelle bevorzugen:** Qwen bleibt der Standard. Ist der Schalter an, schlagen die Empfehlungen bei gleich guter Eignung Modelle des europäischen Anbieters Mistral AI vor (`ministral-3:3b`, `ministral-3:8b`, `ministral-3:14b`, für Programmierung `devstral-small-2:24b`), auch wenn sie erst heruntergeladen werden müssen; ein installiertes Modell bleibt die erste Alternative. Ein schwächeres Modell wird nie vorgeschlagen, und der Schalter nutzt nie einen Cloud-Dienst: Alle diese Modelle laufen auf diesem Computer. Ein Modell, das du einem Agenten selbst gibst, hat immer Vorrang, und der strikte Offline-Modus lehnt Downloads weiter ab. Für die semantische Suche schlägt der Schalter das europäische Modell `mdenseon:307m` (LightOn) vor, solange noch kein Embedding-Modell installiert ist. Es kommt nicht aus dem Ollama-Katalog: **Herunterladen** holt die festgelegten Originaldateien (1,2 GB), prüft ihre SHA-256-Prüfsummen, baut daraus das Modell und behält es nur, wenn es die Referenzvektoren exakt wiedergibt. Ein bestehender Index bleibt beim bisherigen Modell; ein Wechsel bedeutet, den Index neu aufzubauen.
@@ -60,6 +62,8 @@ Mit **Strikter Offline-Modus** lehnt die Prüfung vor jeder Ausführung Cloud-Mo
 
 ## KI-Anbieter {#anbieter}
 <!-- keywords: api key, api-schlüssel, anbieter, provider, anthropic, openai, gemini, ollama, vllm, openai-kompatibel, basis-url, umgebungsvariable, .env, fähigkeiten -->
+
+→ [In Nodestro öffnen](/settings#settings-providers)
 
 Nodestro führt Agenten über die Bibliothek Orkexa aus und arbeitet mit mehreren **KI-Anbietern** gleichzeitig: **Anthropic**, **OpenAI**, **Google Gemini** sowie eigenen Servern über einen **OpenAI-kompatiblen Endpunkt**, **Ollama** oder **vLLM**. Jeder Agent nutzt den Anbieter seines Modells. Ist dieser Anbieter nicht eingerichtet, startet der Lauf nicht; Nodestro weicht nie still auf einen anderen Anbieter aus. Fehlt der Anbieter des Standardmodells, erscheint oben rechts „KI-Anbieter einrichten“, oder „Standardmodell braucht …“, wenn schon ein anderer Anbieter eingerichtet ist.
 
@@ -153,6 +157,8 @@ Administratoren legen außerdem das **Höchste Budget pro Lauf** fest (leer: kei
 ## Sandbox {#sandbox}
 <!-- keywords: sandbox wählen, automatisch, docker, python prozess, docker verfügbar, eingebaute sandbox, linux sandbox, macos, windows, gesperrt, experimentell -->
 
+→ [In Nodestro öffnen](/settings#settings-sandbox)
+
 Hier wählst du, wo Tools laufen. Die Änderung gilt sofort.
 
 | Modus | Eigene Tools | KI-erstellte Tools und Tools unbekannter Herkunft |
@@ -212,6 +218,8 @@ Oben rechts wechselst du zwischen **Dunkel** und **Hell**. Die Wahl wird im Brow
 ## Backup und Wiederherstellung {#backup}
 <!-- keywords: backup, sicherung, wiederherstellen, restore, export, zip, umzug, datensicherung -->
 
+→ [In Nodestro öffnen](/settings#settings-backup)
+
 **Backup herunterladen** speichert alle Daten in einer ZIP-Datei: Workflows mit Versionen, Agenten-Vorlagen, eigene Tools, Wissensdateien, Memory, Ausführungen, Nutzungsdaten, Favoriten, Tags und Einstellungen. Die Datenbank wird dabei als konsistente Momentaufnahme gesichert, auch wenn gerade ein Lauf arbeitet.
 
 Die **API-Schlüssel** der KI-Anbieter werden nie ins Backup geschrieben, ebenso wenig Basis-URLs mit Zugangsdaten. Beim Wiederherstellen bleiben die Schlüssel dieses Rechners erhalten.
@@ -220,6 +228,8 @@ Die **API-Schlüssel** der KI-Anbieter werden nie ins Backup geschrieben, ebenso
 
 ## Systemdiagnose {#diagnose}
 <!-- keywords: diagnose, systemdiagnose, prüfen, fehler finden, verbindung, docker, sandbox, version, problem -->
+
+→ [In Nodestro öffnen](/settings#settings-diagnostics)
 
 **Diagnose starten** prüft, ob Nodestro auf diesem Rechner vollständig funktioniert, und zeigt für jeden Punkt **In Ordnung**, **Warnung** oder **Fehler** mit einer Erklärung und einem Lösungsvorschlag:
 

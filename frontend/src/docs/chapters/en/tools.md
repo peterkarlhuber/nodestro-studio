@@ -162,8 +162,8 @@ Nodestro decides by the **origin of the code** where it may run:
 | Origin | Shown as | Without isolation (only *Python process*) | Built-in Linux sandbox or Docker |
 |---|---|---|---|
 | Built-in tools and integrations | *Built-in* | in the Nodestro process | in the Nodestro process |
-| Written by you under *Write it yourself* | *Written by you* | runs, without isolation on this computer | runs (in the *Python process*, or isolated in Docker) |
-| Created by AI (also after your approval), tool drafts of the AI architect, tools of unknown origin | *Needs isolation* | **blocked** | runs isolated |
+| Written by you under *Write it yourself* | *Runs: as your own code* | runs, without isolation on this computer | runs (in the *Python process*, or isolated in Docker) |
+| Created by AI (also after your approval), tool drafts of the AI architect, tools of unknown origin | *Runs: isolated only* | **blocked** | runs isolated |
 
 The Python process is not a security boundary: code in it runs with your rights. Therefore Nodestro never runs AI-generated code there, and neither your approval nor a setting changes that; there is no switch to run it there anyway. In the *Automatic* mode such code runs only in Docker, once it passed Nodestro's checks; in the *Linux sandbox* mode only in the built-in Linux sandbox; in the *Python process* mode never. Without that sandbox:
 
@@ -173,7 +173,7 @@ The Python process is not a security boundary: code in it runs with your rights.
 
 Tools saved before this version, and all tools after restoring a backup, count as of unknown origin, also the ones you wrote yourself, because their origin was not recorded. With isolation they keep working. A new version of such a tool, or a copy of its code in a new tool, keeps that status.
 
-**Adopting AI-created code as your own (desktop app only).** On a tool that needs isolation, *Adopt as my own code* shows its whole code and tests with a warning. Once you confirm, the tool counts as *Written by you* and runs like your own code, without isolation on this computer, so adopt only code you have read and understood. Only the owner of this computer can adopt (an administrator, where there are roles). Nodestro records who adopted which version and when, with a fingerprint of the code. If AI changes the tool later, the adoption ends and the tool needs isolation again; your own edits in the editor keep it. On a server and in Nodestro Local Docker, AI-created code always runs isolated and cannot be adopted.
+**Adopting AI-created code as your own (desktop app only).** On a tool that needs isolation, *Adopt as my own code* shows its whole code and tests with a warning. Once you confirm, the tool shows *Runs: as your own code* and runs like code you wrote, without isolation on this computer, so adopt only code you have read and understood. Only the owner of this computer can adopt (an administrator, where there are roles). Nodestro records who adopted which version and when, with a fingerprint of the code. If AI changes the tool later, the adoption ends and the tool needs isolation again; your own edits in the editor keep it. On a server and in Nodestro Local Docker, AI-created code always runs isolated and cannot be adopted.
 
 Code you paste under *Write it yourself* counts as written by you, because Nodestro cannot tell where it came from; the editor warns you when you paste. Create AI-generated code with *Create with AI* instead, so that it runs isolated.
 

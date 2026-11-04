@@ -341,7 +341,7 @@ function ToolDetail({
             <HelpTip id="tools.kind" label={t("tools.kindLabel")} />{" "}
             {t(`tools.kind.${tool.kind}`)}
             {tool.kind !== "builtin" && tool.kind !== "mcp"
-              ? ` · ${t("tools.trustLabel")}: ${t(`tools.trust.${tool.trust}`)}`
+              ? ` · ${t("tools.trustLine", { label: t("tools.trustLabel"), value: t(`tools.trust.${tool.trust}`) })}`
               : ""}
             {tool.kind !== "builtin" && tool.kind !== "mcp"
               ? ` · ${t("tools.version", { version: tool.version })}`

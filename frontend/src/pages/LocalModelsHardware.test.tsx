@@ -181,6 +181,63 @@ describe("this computer", () => {
   });
 });
 
+describe("a server's tenants (no hardware)", () => {
+  // API3-08: a server shows its tenants neither its machine nor its folders and addresses (all null).
+  const tenant = () =>
+    overview(
+      {
+        hardware: null,
+        manageable: false,
+        catalog: [
+          { ...MODEL, fits: true, license_source: "upstream" },
+          { ...MODEL, name: "qwen3.6:27b", memory_bytes: 20 * GB, cpu_friendly: false, rank: 3, installed: false, verified: false, fits: false },
+        ],
+      },
+      { mode: "external", base_url: null, runtime_path: null, models_dir: null, free_bytes: null, detected_external: null },
+    );
+
+  it("shows the model server without empty hardware rows and says why", async () => {
+    serve({ "GET /api/local-models": tenant() });
+    show(<LocalModelsPanel settings={SETTINGS} admin={false} onOffline={() => {}} onEurope={() => {}} />);
+    const machine = await screen.findByTestId("local-hardware");
+    expect(machine).toHaveTextContent("Auf dem Server");
+    expect(machine).not.toHaveTextContent("Dieser Computer");
+    expect(machine).not.toHaveTextContent("CPU-Kerne");
+    expect(machine).not.toHaveTextContent("Arbeitsspeicher");
+    expect(screen.getByTestId("local-hardware-hidden")).toHaveTextContent("Hardware und Ordner des Servers sieht nur sein Betreiber.");
+    expect(screen.getByTestId("local-runtime-state")).toHaveTextContent("läuft (Ollama 0.40.14)");
+    expect(screen.getByText("Auf diesem Server betreibt der Betreiber den lokalen Modellserver.", { exact: false })).toBeInTheDocument();
+    // No address, no folders, no storage form.
+    expect(screen.getByTestId("local-status").querySelector("code")).toBeNull();
+    expect(screen.queryByTestId("local-storage")).toBeNull();
+    // The fit is the runtime's verdict for the server.
+    const catalog = screen.getByTestId("local-catalog");
+    expect(catalog).toHaveTextContent("Auf dem Server");
+    expect(catalog).not.toHaveTextContent("Auf diesem Computer");
+    expect(within(screen.getByTestId("local-model-qwen3.5:4b")).getByText("Läuft auf dem Server")).toBeInTheDocument();
+    expect(within(screen.getByTestId("local-model-qwen3.6:27b")).getByText("Passt nicht zum Server")).toBeInTheDocument();
+    expect(screen.getByText("Empfohlen für diesen Server")).toBeInTheDocument();
+    expect(screen.getByTestId("local-license-qwen3.5:4b")).toHaveTextContent("Apache-2.0 (laut Modellkarte des Herausgebers)");
+  });
+
+  it("leaves out the fit column when the runtime gives no verdict either", async () => {
+    const data = tenant();
+    data.catalog = data.catalog.map(({ fits: _fits, ...model }) => model);
+    serve({ "GET /api/local-models": data });
+    show(<LocalModelsPanel settings={SETTINGS} admin={false} onOffline={() => {}} onEurope={() => {}} />);
+    const catalog = await screen.findByTestId("local-catalog");
+    expect(catalog).not.toHaveTextContent("Auf dem Server");
+    expect(catalog.querySelectorAll("thead th")).toHaveLength(5);
+    expect(catalog.querySelector("tbody tr")!.querySelectorAll("td")).toHaveLength(5);
+  });
+
+  it("reads the fit without hardware", () => {
+    expect(catalogFit({ ...MODEL, fits: true }, { hardware: null, advice: [] })).toBe("cpu");
+    expect(catalogFit({ ...MODEL, fits: false }, { hardware: null, advice: [] })).toBe("too_large");
+    expect(catalogFit(MODEL, { hardware: null, advice: [] })).toBeNull();
+  });
+});
+
 describe("advice", () => {
   it("explains each code, the external fix for a small context first", async () => {
     serve({

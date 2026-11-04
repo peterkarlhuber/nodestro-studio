@@ -9,7 +9,8 @@ Rules that apply to every language:
 - A page is named exactly as in the navigation (`nav.json`). A text that sends the user to a page quotes that
   label ("on the Approvals page"). `src/i18n/quality.test.ts` checks this for the pages in its PAGES list and for
   every mention of the agent library. The agent library is the page of agent templates; "agents" alone means agents
-  in general (in a workflow, the Agent node). The library Orkexa that checks agent configurations keeps its own wording.
+  in general (in a workflow, the Agent node). The library Orkexa that checks agent configurations is called by its name
+  ("Orkexa, the agent engine"), never "agent library".
 - Counted texts use i18next plural forms (`_one`/`_other`; `_many` is derived from `_other` for es, fr, it and
   pt-BR in `src/i18n/resources.ts`). Texts with several numbers use the form "label: number".
 - Address form: de "du", en "you", es "tú", fr "vous", it "tu", pt-BR "você". `src/i18n/quality.test.ts` checks

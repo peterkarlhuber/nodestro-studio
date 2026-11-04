@@ -22,7 +22,7 @@ import {
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, HelpTip } from "../components/ui";
 import i18n from "../i18n";
-import { formatBytes } from "../lib/format";
+import { formatLargeBytes } from "../lib/format";
 
 const GB = 1_000_000_000;
 
@@ -39,11 +39,14 @@ export function modelFit(model: Pick<CatalogModel, "memory_bytes" | "cpu_friendl
 
 /**
  * The fit from the runtime's verdict (CatalogEntry.fits) when the API sends it, the browser copy otherwise; the
- * advice local.model_too_large always wins (it knows more, e.g. the free memory).
+ * advice local.model_too_large always wins (it knows more, e.g. the free memory). Without the hardware (a server's
+ * tenants) only the runtime's verdict is known: "cpu" stands for "runs there", "too_large" for "does not"; null when
+ * there is no verdict either.
  */
-export function catalogFit(model: CatalogModel, overview: Pick<LocalOverview, "hardware" | "advice">): ModelFit {
+export function catalogFit(model: CatalogModel, overview: Pick<LocalOverview, "hardware" | "advice">): ModelFit | null {
   const tooLarge = (overview.advice ?? []).some((item) => item.code === "local.model_too_large" && sameModel(item.model, model.name));
   if (tooLarge) return "too_large";
+  if (!overview.hardware) return model.fits === undefined ? null : model.fits ? "cpu" : "too_large";
   const computed = modelFit(model, overview.hardware);
   if (model.fits === undefined) return computed;
   if (model.fits) return computed === "gpu" ? "gpu" : "cpu";
@@ -60,20 +63,22 @@ function sameModel(a: string | null | undefined, b: string): boolean {
 const number = (value: number) => value.toLocaleString(i18n.language);
 
 /** Memory in GB (decimal, as the catalog states memory needs); small values as formatBytes does. */
-export function formatMemory(bytes: number): string {
-  if (bytes < GB) return formatBytes(bytes);
-  return (bytes / GB).toLocaleString(i18n.language, { style: "unit", unit: "gigabyte", maximumFractionDigits: 1, minimumFractionDigits: 1 });
-}
+export const formatMemory = formatLargeBytes;
 
 /** Measured tokens per second, with one decimal. */
 export function formatSpeed(value: number): string {
   return value.toLocaleString(i18n.language, { maximumFractionDigits: 1, minimumFractionDigits: 1 });
 }
 
-export function FitBadge({ fit, hardware }: { fit: ModelFit; hardware: Hardware }) {
+/** The label of a fit: on this computer, or on the server when its hardware is not shown (hardware null). */
+export function fitLabel(t: TFunction, fit: ModelFit, hardware: Hardware | null): string {
+  if (!hardware) return t(`localModels.fit.server.${fit === "gpu" || fit === "cpu" ? "fits" : "no"}`);
+  return t(`localModels.fit.${fit === "cpu" && hardware.gpu === "none" ? "cpuOnly" : fit}`);
+}
+
+export function FitBadge({ fit, hardware }: { fit: ModelFit; hardware: Hardware | null }) {
   const { t } = useTranslation();
-  const key = fit === "cpu" && hardware.gpu === "none" ? "cpuOnly" : fit;
-  return <Badge tone={FIT_TONE[fit]}>{t(`localModels.fit.${key}`)}</Badge>;
+  return <Badge tone={FIT_TONE[fit]}>{fitLabel(t, fit, hardware)}</Badge>;
 }
 
 /** The sentence of one piece of advice (with the server's own context hint for an external Ollama). */
@@ -130,11 +135,15 @@ function contextLine(t: TFunction, overview: LocalOverview): string | null {
   return t(`localModels.machine.context.${status.context_source ?? "server"}`, { tokens: number(status.context_length) });
 }
 
-/** The detected hardware and what the model server reports about itself. */
+/**
+ * The detected hardware and what the model server reports about itself. A server's tenants do not see the server's
+ * machine (hardware null): then only the model server's state and context window, and why the rest is missing.
+ */
 export function MachinePanel({ overview }: { overview: LocalOverview }) {
   const { t } = useTranslation();
   const { hardware, status } = overview;
-  const gpu = t(`localModels.gpu.${hardware.gpu}`);
+  const gpu = hardware ? t(`localModels.gpu.${hardware.gpu}`) : "";
+  const title = hardware ? t("localModels.machine.title") : t("localModels.machine.serverTitle");
   const context = contextLine(t, overview);
   const runtime = status.mode === "unavailable"
     ? t("localModels.machine.runtime.none")
@@ -148,30 +157,38 @@ export function MachinePanel({ overview }: { overview: LocalOverview }) {
   return (
     <div className="stack" data-testid="local-hardware">
       <h3 className="small">
-        <Cpu size={13} aria-hidden /> {t("localModels.machine.title")}{" "}
-        <HelpTip id="settings.localHardware" label={t("localModels.machine.title")} />
+        <Cpu size={13} aria-hidden /> {title} <HelpTip id="settings.localHardware" label={title} />
       </h3>
+      {hardware ? null : (
+        <p className="muted small" data-testid="local-hardware-hidden">
+          {t("localModels.machine.hidden")}
+        </p>
+      )}
       <dl className="form-values">
-        <div>
-          <dt>{t("localModels.machine.system")}</dt>
-          <dd>
-            {hardware.system} · {hardware.machine}
-          </dd>
-        </div>
-        <div>
-          <dt>{t("localModels.machine.cpus")}</dt>
-          <dd>{hardware.cpus}</dd>
-        </div>
-        <div>
-          <dt>{t("localModels.machine.memory")}</dt>
-          <dd>{hardware.ram_bytes ? formatMemory(hardware.ram_bytes) : t("localModels.machine.unknown")}</dd>
-        </div>
-        <div>
-          <dt>{t("localModels.machine.gpu")}</dt>
-          <dd>
-            {hardware.gpu_memory_bytes ? t("localModels.machine.gpuMemory", { gpu, memory: formatMemory(hardware.gpu_memory_bytes) }) : gpu}
-          </dd>
-        </div>
+        {hardware ? (
+          <>
+            <div>
+              <dt>{t("localModels.machine.system")}</dt>
+              <dd>
+                {hardware.system} · {hardware.machine}
+              </dd>
+            </div>
+            <div>
+              <dt>{t("localModels.machine.cpus")}</dt>
+              <dd>{hardware.cpus}</dd>
+            </div>
+            <div>
+              <dt>{t("localModels.machine.memory")}</dt>
+              <dd>{hardware.ram_bytes ? formatMemory(hardware.ram_bytes) : t("localModels.machine.unknown")}</dd>
+            </div>
+            <div>
+              <dt>{t("localModels.machine.gpu")}</dt>
+              <dd>
+                {hardware.gpu_memory_bytes ? t("localModels.machine.gpuMemory", { gpu, memory: formatMemory(hardware.gpu_memory_bytes) }) : gpu}
+              </dd>
+            </div>
+          </>
+        ) : null}
         <div>
           <dt>{t("localModels.machine.server")}</dt>
           <dd data-testid="local-runtime-state">
@@ -248,14 +265,12 @@ export function useLocalModelNote(model: string): string | undefined {
   const local = model.startsWith("ollama:");
   const overview = useLocalModels(local);
   const data = overview.data;
-  if (!local || !data?.catalog || !data.hardware) return undefined;
+  if (!local || !data?.catalog) return undefined;
   const name = model.slice("ollama:".length);
   const parts: string[] = [];
   const entry = data.catalog.find((item) => item.name === name);
-  if (entry) {
-    const fit = catalogFit(entry, data);
-    parts.push(t(`localModels.fit.${fit === "cpu" && data.hardware.gpu === "none" ? "cpuOnly" : fit}`));
-  }
+  const fit = entry ? catalogFit(entry, data) : null;
+  if (fit) parts.push(fitLabel(t, fit, data.hardware ?? null));
   const installed = data.status?.models?.find((item) => item.name === name);
   if (installed?.speed) parts.push(t("localModels.speed.value", { speed: formatSpeed(installed.speed.tokens_per_second) }));
   const slow = (data.advice ?? []).find((item) => item.code === "local.model_slow" && sameModel(item.model, name));

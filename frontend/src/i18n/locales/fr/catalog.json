@@ -36,6 +36,6 @@
     "current_datetime": "Renvoie la date, l’heure et le jour de la semaine actuels dans un fuseau horaire.",
     "days_between": "Compte les jours calendaires d’une date à une autre.",
     "text_statistics": "Compte les caractères, mots, phrases et paragraphes d’un texte.",
-    "table_totals": "Additionne exactement une colonne d'un tableau : total, nombre, moyenne, groupes dans l'ordre de Pareto et part d'un total de référence. Lit les tableaux Markdown et CSV et les formats de nombres européens."
+    "table_totals": "Additionne exactement une colonne d’un tableau : total, nombre, moyenne, groupes dans l’ordre de Pareto et part d’un total de référence. Lit les tableaux Markdown et CSV et les formats de nombres européens."
   }
 }

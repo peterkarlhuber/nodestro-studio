@@ -162,8 +162,8 @@ Nodestro décide selon l’**origine du code** où il peut s’exécuter :
 | Origine | Affiché comme | Sans isolation (uniquement *Processus Python*) | Bac à sable Linux intégré ou Docker |
 |---|---|---|---|
 | Outils intégrés et intégrations | *Intégré* | dans le processus Nodestro | dans le processus Nodestro |
-| Écrit par vous dans *Écrire soi-même* | *Écrit par vous* | s’exécute, sans isolation sur cet ordinateur | s’exécute (dans le *Processus Python* ou isolé dans Docker) |
-| Créé par l’IA (même après votre validation), brouillons d’outils de l’architecte IA, outils d’origine inconnue | *Nécessite une isolation* | **bloqué** | s’exécute isolé |
+| Écrit par vous dans *Écrire soi-même* | *Exécution : comme votre propre code* | s’exécute, sans isolation sur cet ordinateur | s’exécute (dans le *Processus Python* ou isolé dans Docker) |
+| Créé par l’IA (même après votre validation), brouillons d’outils de l’architecte IA, outils d’origine inconnue | *Exécution : isolée uniquement* | **bloqué** | s’exécute isolé |
 
 Le processus Python n’est pas une barrière de sécurité : le code qu’il exécute a vos droits. Nodestro n’y exécute donc jamais de code généré par l’IA, et ni votre validation ni un réglage n’y changent rien ; aucun interrupteur ne le permet malgré tout. En mode *Automatique*, ce code ne s’exécute que dans Docker, une fois qu’il a réussi les vérifications de Nodestro ; en mode *Bac à sable Linux*, uniquement dans le bac à sable Linux intégré ; en mode *Processus Python*, jamais. Sans ce bac à sable :
 
@@ -173,59 +173,59 @@ Le processus Python n’est pas une barrière de sécurité : le code qu’il ex
 
 Les outils enregistrés avant cette version, et tous les outils après la restauration d’une sauvegarde, sont considérés d’origine inconnue, y compris ceux que vous avez écrits, car leur origine n’a pas été enregistrée. Avec une isolation, ils continuent de fonctionner. Une nouvelle version d’un tel outil, ou une copie de son code dans un nouvel outil, conserve ce statut.
 
-**Adopter du code créé par l’IA comme le vôtre (application de bureau uniquement).** Pour un outil qui nécessite une isolation, *Adopter comme mon propre code* affiche l’intégralité de son code et de ses tests avec un avertissement. Après votre confirmation, l’outil est considéré comme *Écrit par vous* et s’exécute comme votre propre code, sans isolation, sur cet ordinateur ; n’adoptez donc que du code que vous avez lu et compris. Seul le propriétaire de cet ordinateur peut adopter (un administrateur, là où il existe des rôles). Nodestro enregistre qui a adopté quelle version et quand, avec une empreinte du code. Si l’IA modifie l’outil plus tard, l’adoption prend fin et l’outil nécessite de nouveau une isolation ; vos propres modifications dans l’éditeur la conservent. Sur un serveur et dans Nodestro Local Docker, le code créé par l’IA s’exécute toujours isolé et ne peut pas être adopté.
+**Adopter du code créé par l’IA comme le vôtre (application de bureau uniquement).** Pour un outil qui nécessite une isolation, *Adopter comme mon propre code* affiche l’intégralité de son code et de ses tests avec un avertissement. Après votre confirmation, l’outil affiche *Exécution : comme votre propre code* et s’exécute comme du code que vous avez écrit, sans isolation, sur cet ordinateur ; n’adoptez donc que du code que vous avez lu et compris. Seul le propriétaire de cet ordinateur peut adopter (un administrateur, là où il existe des rôles). Nodestro enregistre qui a adopté quelle version et quand, avec une empreinte du code. Si l’IA modifie l’outil plus tard, l’adoption prend fin et l’outil nécessite de nouveau une isolation ; vos propres modifications dans l’éditeur la conservent. Sur un serveur et dans Nodestro Local Docker, le code créé par l’IA s’exécute toujours isolé et ne peut pas être adopté.
 
 Le code que vous collez sous *Écrire soi-même* est considéré comme écrit par vous, car Nodestro ne peut pas savoir d’où il vient ; l’éditeur vous avertit lorsque vous collez. Créez plutôt le code généré par l’IA avec *Créer avec l’IA*, pour qu’il s’exécute isolé.
 
 ## Services connectés {#verbundene-dienste}
 <!-- keywords: mcp, model context protocol, service externe, services connectés, serveur, jeton, validation, modifié -->
 
-Avec le **Model Context Protocol (MCP)**, vous connectez des services externes, par exemple une recherche de documents ou un système de tickets. Leurs outils sont disponibles pour les agents comme n'importe quel autre outil, mais seulement après votre examen. Vous les trouvez sous *Outils → Services connectés*.
+Avec le **Model Context Protocol (MCP)**, vous connectez des services externes, par exemple une recherche de documents ou un système de tickets. Leurs outils sont disponibles pour les agents comme n’importe quel autre outil, mais seulement après votre examen. Vous les trouvez sous *Outils → Services connectés*.
 
-1. **Connecter un service :** nom et adresse du point de terminaison MCP (`https` uniquement), un jeton d'accès si nécessaire. Sur le bureau, **Autoriser un serveur de développement local** permet `http://127.0.0.1` ou `http://localhost` pour un serveur que vous développez sur cet ordinateur. La boîte de dialogue vérifie l’adresse pendant la saisie et indique ce qui ne va pas ; les erreurs à l’enregistrement restent affichées dans la boîte de dialogue.
+1. **Connecter un service :** nom et adresse du point de terminaison MCP (`https` uniquement), un jeton d’accès si nécessaire. Sur le bureau, **Autoriser un serveur de développement local** permet `http://127.0.0.1` ou `http://localhost` pour un serveur que vous développez sur cet ordinateur. La boîte de dialogue vérifie l’adresse pendant la saisie et indique ce qui ne va pas ; les erreurs à l’enregistrement restent affichées dans la boîte de dialogue.
 2. **Tester la connexion :** Nodestro négocie la version du protocole et récupère les outils du service. Chaque outil commence comme **Nouveau**.
-3. **Examiner et classer :** vous voyez la description, les paramètres et les indications du service. C'est un **texte étranger** : Nodestro l'affiche, mais ne le traite jamais comme une instruction. Classez l'outil : **Lecture seule**, **Modifie des données** ou **Supprime ou détruit**. L'indication du service n'est qu'un indice. « Modifie des données » est présélectionné, ou « Supprime ou détruit » si le service l'indique. Si vous choisissez une classe moins stricte que celle indiquée par le service, un avis en explique les conséquences, et **Approuver** ne fonctionne qu’une fois **J’ai vérifié l’outil : la classification moins stricte est correcte** activé.
-4. **Approuver :** ce n'est qu'alors que les agents voient l'outil, sous le nom `mcp__<service>__<outil>`. Vous l'attribuez à un agent comme n'importe quel autre outil.
+3. **Examiner et classer :** vous voyez la description, les paramètres et les indications du service. C’est un **texte étranger** : Nodestro l’affiche, mais ne le traite jamais comme une instruction. Classez l’outil : **Lecture seule**, **Modifie des données** ou **Supprime ou détruit**. L’indication du service n’est qu’un indice. « Modifie des données » est présélectionné, ou « Supprime ou détruit » si le service l’indique. Si vous choisissez une classe moins stricte que celle indiquée par le service, un avis en explique les conséquences, et **Approuver** ne fonctionne qu’une fois **J’ai vérifié l’outil : la classification moins stricte est correcte** activé.
+4. **Approuver :** ce n’est qu’alors que les agents voient l’outil, sous le nom `mcp__<service>__<outil>`. Vous l’attribuez à un agent comme n’importe quel autre outil.
 
-Pour l'instant, seuls les outils que vous classez **lecture seule** sont utilisables ; ceux qui modifient des données restent bloqués jusqu'à ce que l'approbation par appel existe. Un outil de lecture reçoit tout de même tout ce que l'agent lui envoie : ne connectez que des services auxquels vous confiez ces données.
+Pour l’instant, seuls les outils que vous classez **lecture seule** sont utilisables ; ceux qui modifient des données restent bloqués jusqu’à ce que l’approbation par appel existe. Un outil de lecture reçoit tout de même tout ce que l’agent lui envoie : ne connectez que des services auxquels vous confiez ces données.
 
-**Modifications :** Nodestro conserve une empreinte de chaque définition approuvée et la vérifie avant chaque appel. Si le service modifie un outil, celui-ci est **bloqué** ; les exécutions qui l'utilisent échouent avec un message clair. Vous voyez la modification côte à côte (approuvé jusqu'ici, proposé maintenant) et vous l'approuvez ou la refusez.
+**Modifications :** Nodestro conserve une empreinte de chaque définition approuvée et la vérifie avant chaque appel. Si le service modifie un outil, celui-ci est **bloqué** ; les exécutions qui l’utilisent échouent avec un message clair. Vous voyez la modification côte à côte (approuvé jusqu’ici, proposé maintenant) et vous l’approuvez ou la refusez.
 
-**Les jetons d'accès** sont enregistrés chiffrés : sur le bureau avec une clé du trousseau du système d'exploitation, sur le serveur avec la clé du serveur, séparément pour chaque locataire. Sans coffre de clés sécurisé, un jeton ne vaut que jusqu'à la fermeture de l'application. Les jetons n'apparaissent jamais dans les workflows, les exports ou les journaux.
+**Les jetons d’accès** sont enregistrés chiffrés : sur le bureau avec une clé du trousseau du système d’exploitation, sur le serveur avec la clé du serveur, séparément pour chaque locataire. Sans coffre de clés sécurisé, un jeton ne vaut que jusqu’à la fermeture de l’application. Les jetons n’apparaissent jamais dans les workflows, les exports ou les journaux.
 
-**Limites :** Nodestro ne se connecte jamais à des adresses internes, locales ou de métadonnées, vérifie chaque adresse résolue au moment de la connexion et ignore les réglages de proxy de l'environnement. Sur un serveur, l'opérateur autorise les adresses avec `NODESTRO_MCP_ENDPOINTS`. Les planifications, les lots et les API publiées n'utilisent les outils des services que si l'opérateur l'active expressément. Nodestro ne connaît pas le coût des services externes ; il apparaît comme **inconnu**, jamais comme zéro.
+**Limites :** Nodestro ne se connecte jamais à des adresses internes, locales ou de métadonnées, vérifie chaque adresse résolue au moment de la connexion et ignore les réglages de proxy de l’environnement. Sur un serveur, l’opérateur autorise les adresses avec `NODESTRO_MCP_ENDPOINTS`. Les planifications, les lots et les API publiées n’utilisent les outils des services que si l’opérateur l’active expressément. Nodestro ne connaît pas le coût des services externes ; il apparaît comme **inconnu**, jamais comme zéro.
 
-**Fonctionnement :** sous *Fonctionnement*, les administrateurs voient combien d'appels de service sont en cours, les limites de l'exploitant et, par service, les appels, les échecs et la durée du dernier appel. Un service qui échoue plusieurs fois de suite est brièvement mis en pause.
+**Fonctionnement :** sous *Fonctionnement*, les administrateurs voient combien d’appels de service sont en cours, les limites de l’exploitant et, par service, les appels, les échecs et la durée du dernier appel. Un service qui échoue plusieurs fois de suite est brièvement mis en pause.
 
 ## Se connecter à un service {#mcp-anmeldung}
 <!-- keywords: mcp, oauth, connexion, login, autorisation, accès, renouveler -->
 
-Certains services n'utilisent pas de jeton fixe mais une **connexion (OAuth)**. Choisissez *OAuth* comme connexion lorsque vous ajoutez le service, puis enregistrez. Cliquez ensuite sur **Se connecter** : Nodestro ouvre la page de connexion du service, vous y confirmez l'accès et revenez à *Outils → Services connectés*. Testez la connexion pour charger les outils.
+Certains services n’utilisent pas de jeton fixe mais une **connexion (OAuth)**. Choisissez *OAuth* comme connexion lorsque vous ajoutez le service, puis enregistrez. Cliquez ensuite sur **Se connecter** : Nodestro ouvre la page de connexion du service, vous y confirmez l’accès et revenez à *Outils → Services connectés*. Testez la connexion pour charger les outils.
 
-- Nodestro conserve l'accès chiffré comme un jeton et le renouvelle lui-même. Vous voyez où vous êtes connecté, avec quelles autorisations et quand l'accès se renouvelle ; l'accès lui-même n'est jamais affiché.
-- **Se déconnecter** supprime l'accès enregistré. Lorsque le service demande une nouvelle connexion, les exécutions qui l'utilisent échouent avec un message clair jusqu'à ce que vous vous reconnectiez.
-- Sur un serveur, l'exploitant configure l'adresse publique de Nodestro ; le retour de la connexion ne va que là.
+- Nodestro conserve l’accès chiffré comme un jeton et le renouvelle lui-même. Vous voyez où vous êtes connecté, avec quelles autorisations et quand l’accès se renouvelle ; l’accès lui-même n’est jamais affiché.
+- **Se déconnecter** supprime l’accès enregistré. Lorsque le service demande une nouvelle connexion, les exécutions qui l’utilisent échouent avec un message clair jusqu’à ce que vous vous reconnectiez.
+- Sur un serveur, l’exploitant configure l’adresse publique de Nodestro ; le retour de la connexion ne va que là.
 
-## Documents d'un service {#mcp-dokumente}
+## Documents d’un service {#mcp-dokumente}
 <!-- keywords: mcp, resources, ressources, documents, contexte, lire -->
 
-Si un service propose des **documents** (ressources MCP), le test de la connexion affiche un outil supplémentaire, `resources/read`, avec la mention *Documents du service*. Vous l'examinez comme tout autre outil : sa description liste les documents qu'un agent peut lire.
+Si un service propose des **documents** (ressources MCP), le test de la connexion affiche un outil supplémentaire, `resources/read`, avec la mention *Documents du service*. Vous l’examinez comme tout autre outil : sa description liste les documents qu’un agent peut lire.
 
-- Seuls les documents listés peuvent être lus ; les modèles d'adresse et les autres adresses sont exclus.
-- Si le service modifie sa liste, l'outil est bloqué jusqu'à ce que vous examiniez la nouvelle liste.
-- Les contenus sont des données externes, comme tout résultat d'un service. Nodestro ne transmet pas au modèle les contenus binaires comme les images.
-- Nodestro ne permet pas à un service de vous poser des questions, de faire ses propres appels de modèle ni d'accéder à vos dossiers.
+- Seuls les documents listés peuvent être lus ; les modèles d’adresse et les autres adresses sont exclus.
+- Si le service modifie sa liste, l’outil est bloqué jusqu’à ce que vous examiniez la nouvelle liste.
+- Les contenus sont des données externes, comme tout résultat d’un service. Nodestro ne transmet pas au modèle les contenus binaires comme les images.
+- Nodestro ne permet pas à un service de vous poser des questions, de faire ses propres appels de modèle ni d’accéder à vos dossiers.
 
 ## Serveurs locaux {#lokale-dienste}
 <!-- keywords: mcp, stdio, serveur local, pypi, conteneur, docker, paquets -->
 
-En plus des services distants, vous pouvez exécuter un **serveur MCP local** de PyPI, par exemple un service d'heure ou de calcul. Choisissez *Serveur local* comme type, indiquez les paquets (un par ligne) et le module démarré avec `python -m`.
+En plus des services distants, vous pouvez exécuter un **serveur MCP local** de PyPI, par exemple un service d’heure ou de calcul. Choisissez *Serveur local* comme type, indiquez les paquets (un par ligne) et le module démarré avec `python -m`.
 
-1. **Vérifier les paquets :** Nodestro résout les versions exactes avec leurs empreintes. Vous les voyez et les approuvez, comme pour les bibliothèques d'un outil. Rien n'est installé avant.
+1. **Vérifier les paquets :** Nodestro résout les versions exactes avec leurs empreintes. Vous les voyez et les approuvez, comme pour les bibliothèques d’un outil. Rien n’est installé avant.
 2. **Installation :** les paquets vont dans une image de conteneur distincte.
-3. **Tester la connexion :** le serveur démarre dans un conteneur isolé et liste ses outils. À partir de là, la vérification et l'approbation sont les mêmes que pour les services distants.
+3. **Tester la connexion :** le serveur démarre dans un conteneur isolé et liste ses outils. À partir de là, la vérification et l’approbation sont les mêmes que pour les services distants.
 
-Le conteneur n'a **pas de réseau**, aucun accès à vos fichiers, clés ou autres processus, ainsi qu'une mémoire et des processus limités. C'est pourquoi les serveurs locaux ne sont disponibles que si le bac à sable Docker est utilisé ; les serveurs qui ont besoin d'Internet ou de Node.js ne peuvent pas être exécutés ainsi. Un serveur local ne reçoit ni jeton ni connexion.
+Le conteneur n’a **pas de réseau**, aucun accès à vos fichiers, clés ou autres processus, ainsi qu’une mémoire et des processus limités. C’est pourquoi les serveurs locaux ne sont disponibles que si le bac à sable Docker est utilisé ; les serveurs qui ont besoin d’Internet ou de Node.js ne peuvent pas être exécutés ainsi. Un serveur local ne reçoit ni jeton ni connexion.
 
 ## Versions et suppression {#versionen}
 <!-- keywords: version, supprimer, retirer, revoke, mettre à jour, écraser -->

@@ -2,18 +2,22 @@
   "open": "Search …",
   "title": "Search",
   "label": "Search term",
-  "placeholder": "Search pages, settings, workflows, agents, tools, knowledge and documentation …",
+  "placeholder": "Search pages, settings, workflows, runs, agents, tools, knowledge and documentation …",
   "hint": "Tip: Ctrl+K (⌘K on a Mac) opens the search from anywhere. Arrow keys select, Enter opens.",
   "results": "Results",
   "empty": "Nothing found for “{{query}}”.",
   "kind": {
+    "recent": "Recent",
     "page": "Go to",
     "workflow": "Workflows",
+    "run": "Runs",
     "agent": "Agents in workflows",
     "template": "Agent library",
     "example": "Example workflows",
     "tool": "Tools",
     "knowledge": "Knowledge",
     "docs": "Documentation"
-  }
+  },
+  "recentRun": "Run",
+  "recentWorkflow": "Workflow"
 }

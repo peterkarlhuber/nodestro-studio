@@ -1,19 +1,36 @@
 // Global search (Ctrl/Cmd+K): workflows, agents in workflows, agent templates, examples, tools and
-// knowledge from the server, plus the documentation in the current language. Results are
-// grouped by kind; Enter or a click opens the hit where it lives.
+// knowledge from the server, plus pages and settings sections, the latest runs (filtered here, OB-09) and
+// the documentation in the current language. Without a query it offers the recent runs and workflows.
+// Results are grouped by kind; Enter or a click opens the hit where it lives.
 
 import { useQuery } from "@tanstack/react-query";
-import { BookMarked, BookOpen, Bot, Command, CornerDownRight, Diamond, LayoutTemplate, type LucideIcon, Search, Star } from "lucide-react";
+import {
+  BookMarked,
+  BookOpen,
+  Bot,
+  Command,
+  CornerDownRight,
+  Diamond,
+  History,
+  LayoutTemplate,
+  type LucideIcon,
+  Play,
+  Search,
+  Star,
+} from "lucide-react";
 import { type KeyboardEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { api } from "../api/client";
-import type { SearchResult } from "../api/types";
+import { keys } from "../api/hooks";
+import type { RunSummary, SearchResult, WorkflowSummary } from "../api/types";
 import { Modal, Spinner } from "../components/ui";
 import { currentLanguage } from "../i18n";
+import { relativeTime } from "../lib/format";
 
-type Kind = "page" | SearchResult["kind"] | "docs";
+type Kind = "recent" | "page" | SearchResult["kind"] | "run" | "docs";
+type Translate = (key: string, options?: Record<string, unknown>) => string;
 
 interface Hit {
   key: string;
@@ -25,10 +42,12 @@ interface Hit {
   favorite: boolean;
 }
 
-const KINDS: Kind[] = ["page", "workflow", "agent", "template", "example", "tool", "knowledge", "docs"];
+const KINDS: Kind[] = ["recent", "page", "workflow", "run", "agent", "template", "example", "tool", "knowledge", "docs"];
 const ICONS: Record<Kind, LucideIcon> = {
+  recent: History,
   page: CornerDownRight,
   workflow: Diamond,
+  run: Play,
   agent: Bot,
   template: Bot,
   example: LayoutTemplate,
@@ -72,22 +91,34 @@ const PAGES: { to: string; label: string; within?: string }[] = [
   { to: "/docs", label: "nav.docs" },
   { to: "/welcome", label: "nav.welcome" },
   { to: "/settings", label: "nav.settings" },
+  { to: "/settings#settings-local-models", label: "localModels.title", within: "nav.settings" },
   { to: "/settings#settings-providers", label: "settings.providers.title", within: "nav.settings" },
   { to: "/settings#settings-language", label: "settings.language.title", within: "nav.settings" },
   { to: "/settings#settings-models", label: "settings.models.title", within: "nav.settings" },
   { to: "/settings#settings-prices", label: "pricing.title", within: "nav.settings" },
   { to: "/settings#settings-reconciliation", label: "pricing.reconciliation.title", within: "nav.settings" },
   { to: "/settings#settings-sandbox", label: "settings.sandbox.title", within: "nav.settings" },
+  { to: "/settings#settings-knowledge-search", label: "localModels.search.title", within: "nav.settings" },
   { to: "/settings#settings-ocr", label: "settings.ocr.title", within: "nav.settings" },
   { to: "/settings#settings-inputs", label: "inputs.storage.title", within: "nav.settings" },
   { to: "/settings#settings-python", label: "python.maintenance.title", within: "nav.settings" },
   { to: "/settings#settings-backup", label: "backup.title", within: "nav.settings" },
   { to: "/settings#settings-diagnostics", label: "diagnostics.title", within: "nav.settings" },
+  { to: "/settings#settings-about", label: "settings.about.title", within: "nav.settings" },
 ];
 
-/** Lower case without accents, so "regles" finds "Réglages". */
+/** Runs shown at most in the "Runs" group, and recent runs and workflows for an empty query. */
+const RUN_HITS = 6;
+const RECENT_RUNS = 3;
+const RECENT_WORKFLOWS = 3;
+
+/** Lower case without accents and with plain apostrophes, so "regles" finds "Réglages" and "l'outil" "l’outil". */
 function fold(text: string): string {
-  return text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+  return text
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[\u2018\u2019\u02bc]/g, "'")
+    .toLowerCase();
 }
 
 /** Pages whose name (or, for settings sections, the section's name) contains every word of the query. */
@@ -106,6 +137,58 @@ export function pageHits(query: string, translate: (key: string) => string): Hit
     to: page.to,
     favorite: false,
   }));
+}
+
+function runHit(run: RunSummary, t: Translate, kind: Kind = "run"): Hit {
+  const input = run.input.replace(/\s+/g, " ").trim();
+  return {
+    key: `${kind}:run:${run.id}`,
+    kind,
+    title: run.workflow_name || run.workflow_id,
+    subtitle: `${t(`status.${run.status}.label`)} · ${relativeTime(run.created_at)}`,
+    snippet: input.length > 120 ? `${input.slice(0, 119)}…` : input,
+    to: `/executions/${encodeURIComponent(run.id)}`,
+    favorite: false,
+  };
+}
+
+/**
+ * Runs whose workflow name, input, status or id contains every word of the query: a filter of the newest runs the
+ * list answers (``GET /runs``, up to 100), since the server search has no runs. Newest first.
+ */
+export function runHits(query: string, runs: RunSummary[] | undefined, t: Translate, limit = RUN_HITS): Hit[] {
+  const words = fold(query).split(/\s+/).filter(Boolean);
+  if (!words.length) return [];
+  return [...(runs ?? [])]
+    .sort((a, b) => b.created_at.localeCompare(a.created_at))
+    .filter((run) => {
+      const text = fold(`${run.workflow_name} ${run.input.slice(0, 2000)} ${t(`status.${run.status}.label`)} ${run.id}`);
+      return words.every((word) => text.includes(word));
+    })
+    .slice(0, limit)
+    .map((run) => runHit(run, t));
+}
+
+/** For an empty query: the latest runs a person started and the most recently changed workflows. */
+export function recentHits(runs: RunSummary[] | undefined, workflows: WorkflowSummary[] | undefined, t: Translate): Hit[] {
+  const latestRuns = [...(runs ?? [])]
+    .filter((run) => !run.imported_at)
+    .sort((a, b) => b.created_at.localeCompare(a.created_at))
+    .slice(0, RECENT_RUNS)
+    .map((run) => ({ ...runHit(run, t, "recent"), subtitle: `${t("search.recentRun")} · ${runHit(run, t).subtitle}` }));
+  const latestWorkflows = [...(workflows ?? [])]
+    .sort((a, b) => b.updated_at.localeCompare(a.updated_at))
+    .slice(0, RECENT_WORKFLOWS)
+    .map((workflow) => ({
+      key: `recent:workflow:${workflow.id}`,
+      kind: "recent" as const,
+      title: workflow.name,
+      subtitle: `${t("search.recentWorkflow")} · ${t("common.changed", { time: relativeTime(workflow.updated_at) })}`,
+      snippet: "",
+      to: `/workflows/${encodeURIComponent(workflow.id)}`,
+      favorite: false,
+    }));
+  return [...latestRuns, ...latestWorkflows];
 }
 
 function useDebounced(value: string, delay: number) {
@@ -152,6 +235,9 @@ export function GlobalSearch() {
     staleTime: 5_000,
   });
   const docs = useDocHits(open ? debounced : "");
+  // The run list and the workflows as the other pages load them (same cache); only while the search is open.
+  const runs = useQuery({ queryKey: keys.runs(undefined), queryFn: () => api.runs(), enabled: open, staleTime: 10_000 });
+  const workflows = useQuery({ queryKey: keys.workflows, queryFn: api.workflows, enabled: open, staleTime: 10_000 });
 
   useEffect(() => {
     const onKey = (event: globalThis.KeyboardEvent) => {
@@ -174,10 +260,17 @@ export function GlobalSearch() {
       to: targetOf(result),
       favorite: result.favorite,
     }));
-    const all = [...pageHits(open ? query.trim() : "", t), ...fromServer, ...(docs.data ?? [])];
+    const typed = open ? query.trim() : "";
+    const all = [
+      ...(open && !typed ? recentHits(runs.data, workflows.data, t) : []),
+      ...pageHits(typed, t),
+      ...fromServer,
+      ...runHits(typed, runs.data, t),
+      ...(docs.data ?? []),
+    ];
     // Grouped in a fixed order, so the keyboard order matches what is shown.
     return KINDS.flatMap((kind) => all.filter((hit) => hit.kind === kind));
-  }, [server.data, docs.data, open, query, t]);
+  }, [server.data, docs.data, runs.data, workflows.data, open, query, t]);
 
   useEffect(() => setActive(0), [hits]);
 
@@ -212,7 +305,6 @@ export function GlobalSearch() {
         type="button"
         className="search-trigger"
         onClick={() => setOpen(true)}
-        aria-label={t("search.open")}
         aria-keyshortcuts="Control+K Meta+K"
         data-testid="search-open"
       >
@@ -248,7 +340,13 @@ export function GlobalSearch() {
               return (
                 // A listbox holds options or groups of options (ARIA APG, grouped listbox): each kind is a group
                 // named by its heading, which itself is presentational (F5).
-                <div key={kind} role="group" aria-labelledby={`search-group-${kind}`} className="global-search__group">
+                <div
+                  key={kind}
+                  role="group"
+                  aria-labelledby={`search-group-${kind}`}
+                  className="global-search__group"
+                  data-testid={`search-group-${kind}`}
+                >
                   <div role="presentation" id={`search-group-${kind}`} className="global-search__heading">
                     <Icon size={13} aria-hidden /> {t(`search.kind.${kind}`)}
                   </div>

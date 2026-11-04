@@ -303,7 +303,7 @@
       },
       "jobs": "Package builds",
       "build": "Build package",
-      "started": "The package is being built in the background.",
+      "started": "The package is being built in the background. This usually takes a few minutes, longer with large models; you can close this dialog meanwhile.",
       "running": "Building: {{step}} ({{percent}} %)",
       "progress": "Progress of the package build",
       "done": "Package ready ({{date}}).",

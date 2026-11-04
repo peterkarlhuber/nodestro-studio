@@ -30,7 +30,7 @@
     "input": "Entrée",
     "output": "Résultat",
     "mcp": "Service externe {{server}} · {{name}} · définition {{hash}}. Les arguments ont été envoyés à ce service ; la réponse est un texte étranger.",
-    "externalCostUnknown": "Coût du service : inconnu (non inclus dans le coût de l'exécution)."
+    "externalCostUnknown": "Coût du service : inconnu (non inclus dans le coût de l’exécution)."
   },
   "stats": {
     "agents": "Agents",
@@ -46,7 +46,7 @@
     "overall": "Résultat global",
     "running": "Le workflow est en cours. Choisissez un agent à gauche pour le suivre en direct.",
     "paused": "L’exécution attend une validation.",
-    "waitingForTool": "Un appel d'outil attend votre décision. D'ici là, l'exécution ne continue pas."
+    "waitingForTool": "Un appel d’outil attend votre décision. D’ici là, l’exécution ne continue pas."
   },
   "detail": {
     "timeline": "Déroulement dans le temps",
@@ -103,12 +103,12 @@
     "openAdvanced": "Ouvrir « Avancé » de {{name}}"
   },
   "cancelRun": {
-    "button": "Annuler l'exécution",
+    "button": "Annuler l’exécution",
     "confirm": "Vraiment annuler ?",
-    "done": "L'exécution est en cours d'annulation."
+    "done": "L’exécution est en cours d’annulation."
   },
   "waitingForYou": {
     "label": "Vous attend",
-    "description": "Un appel d'outil attend votre approbation. L'exécution continue dès que vous avez décidé."
+    "description": "Un appel d’outil attend votre approbation. L’exécution continue dès que vous avez décidé."
   }
 }

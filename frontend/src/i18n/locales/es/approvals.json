@@ -67,7 +67,7 @@
     "enabled": "Activadas",
     "disabled": "Desactivadas",
     "enabledText": "Las llamadas a herramientas que modifican datos o actúan hacia fuera esperan la decisión de una persona.",
-    "disabledText": "Nodestro todavía no pregunta antes de las llamadas a herramientas. Orden: marca aquí las asignaciones existentes, revisa la lista y después la administración activa las aprobaciones tras la revisión de seguridad (NODESTRO_TOOL_APPROVALS=1).",
+    "disabledText": "Nodestro todavía no pregunta antes de las llamadas a herramientas. Orden: marca aquí las asignaciones existentes, revisa la lista y después la administración activa las aprobaciones tras la revisión de seguridad (ajuste <code>NODESTRO_TOOL_APPROVALS=1</code>).",
     "legacyTitle": "Excepciones heredadas",
     "legacyText": "Las asignaciones de herramientas que ya existían antes de la aprobación por llamada siguen funcionando sin preguntar, ligadas a la versión de la herramienta con la que se ejecutaban. Una nueva versión o una nueva asignación se pregunta como siempre. Para las herramientas de servicios conectados siempre se pregunta.",
     "legacyNotRun": "El paso de activación aún no se ha ejecutado.",
