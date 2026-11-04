@@ -2,6 +2,28 @@
 
 ## Unreleased
 
+### UX round 3 (2026-11-04)
+
+- Global search (Ctrl+K) finds runs (the newest 100) and shows recent runs and workflows for an empty query; it also
+  reaches the Local models, Knowledge search and About settings sections. The search button's accessible name now
+  contains its visible text (WCAG 2.5.3; axe-core 4.14).
+- Runs list and run page: expired budget decisions no longer show as waiting, a filter for runs waiting on a budget
+  decision, same-named workflow copies are told apart, no "Ready" on a step with errors; the runs table fits at
+  1280 px in all six languages.
+- Sandbox refusals name the blocked tool; the tool header separates who created a tool from how it runs ("Runs:
+  isolated only"); texts that named environment variables tell the user what to do.
+- Typed Bedrock model ids ask `GET /api/models/capabilities`; on tablets Escape closes the inspector drawer.
+- Help tips in the versions dialog and the gate report, links from the Settings chapter into the settings sections;
+  French uses typographic apostrophes throughout (with a test); Orkexa is named "the agent engine", no longer
+  "agent library" (the name of the Agent library page). The Usage page says MCP and service fees are not included.
+- Local models settings: downloads only with a running model server (with one sentence on what to do), sizes in GB,
+  distinct button names per model and task, scrollable tables on phones, no English catalog notes.
+- API & Export dialog: one export check per pause in typing (it took 2.7 to 10 s per keystroke), the last answer
+  stays visible, the build waits for a current check, provider names instead of ids, clearer portable package
+  texts; the help chapters match the dialog in six languages.
+- Examples: result fields take their label from the description, also inside collected results, so no English field
+  ids appear in a run; the preview shows team deliverables, team and part names and model needs in words.
+
 ### Portable export (2026-11-04)
 
 - The *API & Export* dialog offers two packages: the FastAPI source project (unchanged) and a ready-to-run package
