@@ -303,7 +303,7 @@
       },
       "jobs": "Générations de paquets",
       "build": "Générer le paquet",
-      "started": "Le paquet est en cours de génération en arrière-plan.",
+      "started": "Le paquet est en cours de génération en arrière-plan. Cela prend en général quelques minutes, davantage avec de grands modèles ; vous pouvez fermer cette boîte de dialogue en attendant.",
       "running": "Génération : {{step}} ({{percent}} %)",
       "progress": "Progression de la génération du paquet",
       "done": "Paquet prêt ({{date}}).",

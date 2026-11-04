@@ -303,7 +303,7 @@
       },
       "jobs": "Creazioni di pacchetti",
       "build": "Crea pacchetto",
-      "started": "Il pacchetto viene creato in background.",
+      "started": "Il pacchetto viene creato in background. Di solito ci vogliono alcuni minuti, di più con modelli grandi; nel frattempo puoi chiudere questa finestra.",
       "running": "Creazione: {{step}} ({{percent}} %)",
       "progress": "Avanzamento della creazione del pacchetto",
       "done": "Pacchetto pronto ({{date}}).",
