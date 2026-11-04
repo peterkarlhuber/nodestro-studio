@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 22 |
+| P3 Low | 23 |
 | P4 Optional | 13 |
 
 **Release blockers:** None for this repository.
@@ -169,6 +169,16 @@ None known.
 - **Depends on:** nodestro-examples EX-002 (possible `label` on the runtime's `OutputField`).
 
 ## Tests and quality assurance
+
+### ST-047 · Portable export dialog: no browser test against a real package build
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-api #85, `frontend/src/publish/PortableExport.tsx`
+- **What:** The dialog's portable options, summary, build progress, cancel and download are covered by component
+  tests with a mocked API. The backend build is tested end to end in nodestro-api (offline container, browser E2E
+  of the exported web interface, CI on six platforms), but no studio browser test drives a real build from the
+  dialog (a build downloads Python and wheels and takes minutes).
+- **Next step:** Add a browser test that starts a portable build of a model-free workflow from the dialog against
+  a cached export cache, and downloads the ZIP.
 
 ### ST-043 · End-to-end suite for the local models settings with a real model server
 
