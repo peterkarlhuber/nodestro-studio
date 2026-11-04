@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Start on a taken port (backend audit round 3)
+
+- `nodestro` checks the port before saying "running": a taken port stops with exit code 2 and one sentence (another
+  Nodestro or program, start with `--port`), and the browser no longer opens the other program. "Nodestro is running
+  at" and the browser follow once the server listens. Needs nodestro-api with `cli.require_free_port` and
+  `serve(..., ready=...)` (DX handover B2); bump the nodestro-api pin with this change.
+
 ### Portable export (2026-11-04)
 
 - The *API & Export* dialog offers two packages: the FastAPI source project (unchanged) and a ready-to-run package
