@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Portable export (2026-11-04)
+
+- The *API & Export* dialog offers two packages: the FastAPI source project (unchanged) and a ready-to-run package
+  (its own Python, every library, a launcher, optionally the local models with Ollama and a web interface; nothing
+  to install on the target computer). For the package you choose the target platform, the local models, offline
+  operation and the result folder; the summary shows every model with its role, size, memory, license and whether it
+  is included, plus the providers and network needs. The package is built in the background with progress and
+  cancel; the last builds stay listed with their download. The README language starts with the studio's language.
+  Texts in six languages. Needs nodestro-api with the export jobs (api #85).
+
 ### Key figures from a tool (2026-11-04)
 
 - Pins nodestro-runtime 2f1de71 (runtime #108 to #110), nodestro-examples c05ae45 (examples #67), nodestro-integrations
