@@ -34,6 +34,12 @@
 - `nodestro` stops on a taken port with exit code 2 and one sentence (another Nodestro or program, start with
   `--port`) after the configuration checks, and no browser opens the other program; "Nodestro is running at" and
   the browser follow once the server listens (DX handover B2, nodestro-api #87).
+- Pins nodestro-api 5ee13f7 (api #87: portable export hardening, server export jobs only with the operator opt-in,
+  tenants see no machine details in Local models, `*.not_found` codes, DX fixes), nodestro-runtime 40c8c06 (runtime
+  #113: backend audit round 3), orkexa e9c2147 (orkexa #49: a stale managed Ollama is reclaimed), axentra 0a1d1cc
+  (axentra #41: API keys answer 403 while their creator lacks the rights), nodestro-examples 64e534a (examples #71),
+  nodestro-integrations 8687e09 (integrations #61) and nodestro-sdk abdf686 (sdk #79: regenerated types,
+  `update_settings`). The example chapters are regenerated (`make example-docs`).
 
 ### Portable export (2026-11-04)
 
