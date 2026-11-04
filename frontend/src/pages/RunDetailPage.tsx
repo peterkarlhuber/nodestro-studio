@@ -12,7 +12,7 @@ import { DiscussButton } from "../assistant/DiscussButton";
 import { TestCaseFromRunDialog } from "../automation/TestCaseFromRunDialog";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
-import { Output, outputFieldsOf } from "../components/Markdown";
+import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
 import { Tooltip } from "../components/Tooltip";
 import { Button, Callout, HelpTip, Hint, PageHeader, Spinner, Stat, StatusBadge } from "../components/ui";
 import { prefersReducedMotion } from "../lib/motion";
@@ -292,7 +292,11 @@ export function RunDetailPage() {
               <section className="panel stack" aria-label={t("runs.tabs.result")}>
                 <h2 className="panel__title">{t("runs.tabs.result")}</h2>
                 {data.output !== null && data.output !== undefined ? (
-                  <Output value={data.output} fields={outputFieldsOf(data.workflow.nodes, "", data.output)} />
+                  <Output
+                    value={data.output}
+                    fields={outputFieldsOf(data.workflow.nodes, "", data.output)}
+                    steps={stepFieldsOf(data.workflow.nodes, data.output)}
+                  />
                 ) : (
                   <p className="muted small">{live ? t("runs.detail.stillRunning") : t("runs.detail.noResult")}</p>
                 )}

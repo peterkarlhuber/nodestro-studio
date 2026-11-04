@@ -26,14 +26,23 @@ const MAX_DEPTH = 3;
 const LABEL_MAX = 60;
 
 /** Agent output: Markdown for text, labelled fields for structured results (the JSON stays one click away). */
-export function Output({ value, fields }: { value: unknown; fields?: OutputField[] | null }) {
+export function Output({
+  value,
+  fields,
+  steps,
+}: {
+  value: unknown;
+  fields?: OutputField[] | null;
+  /** For a result that collects several steps: each step's described fields by its name (see ``stepFieldsOf``). */
+  steps?: Record<string, OutputField[]>;
+}) {
   const { t } = useTranslation();
   if (value === null || value === undefined || value === "") return <p className="muted">{t("runs.noOutputYet")}</p>;
   if (typeof value === "string") return <Text value={value} />;
   if (typeof value !== "object") return <p>{scalarText(t, value)}</p>;
   return (
     <div className="structured-output" data-testid="structured-output">
-      <StructuredValue value={value} fields={fields ?? undefined} depth={0} />
+      <StructuredValue value={value} fields={fields ?? undefined} steps={steps} depth={0} />
       <details className="technical">
         <summary>{t("runs.output.showJson")}</summary>
         <pre className="code-block" tabIndex={0}>{outputText(value)}</pre>
@@ -57,15 +66,49 @@ function scalarText(t: (key: string) => string, value: unknown): string {
 }
 
 /** "d2_problem" → "D2 problem": a readable name for a field that has no description. */
-export function fieldLabel(name: string, fields?: OutputField[]): string {
-  const described = fields?.find((field) => field.name === name)?.description?.trim();
-  // A short description reads as a label ("D1 Team mit Rollen"); a long one stays the field's tooltip.
-  if (described && described.length <= LABEL_MAX) return described;
+function humanize(name: string): string {
   const words = name.replace(/[_-]+/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim();
   return words ? words.charAt(0).toUpperCase() + words.slice(1) : name;
 }
 
-function StructuredValue({ value, fields, depth }: { value: unknown; fields?: OutputField[]; depth: number }) {
+/**
+ * The label a field description gives: a short description is the label itself ("D1 Team mit Rollen"); a long one
+ * gives its lead before the first colon ("Stillstandsanteil: Anteil der …" → "Stillstandsanteil"), else before the
+ * first other break (" (", "; ", " – ", ", "), else its first words. The description stays the field's tooltip, and it
+ * is in the workflow's language, unlike the field's technical name (ED-17, EX-002).
+ */
+export function descriptionLabel(description: string): string {
+  const text = description.trim();
+  if (text.length <= LABEL_MAX) return text;
+  const lead = (end: number) => text.slice(0, end).trim();
+  const colon = text.search(/:\s/);
+  if (colon > 0 && lead(colon).length <= LABEL_MAX) return lead(colon);
+  const other = text.search(/ \(|; | – | — |, /);
+  if (other > 0 && lead(other).length >= 3 && lead(other).length <= LABEL_MAX) return lead(other);
+  const cut = text.slice(0, LABEL_MAX);
+  const space = cut.lastIndexOf(" ");
+  return `${(space > 0 ? cut.slice(0, space) : cut).replace(/[\s,;:.]+$/, "")}…`;
+}
+
+/** The label of a structured result field: from its description when it has one, else its humanized name. */
+export function fieldLabel(name: string, fields?: OutputField[]): string {
+  const described = fields?.find((field) => field.name === name)?.description?.trim();
+  return described ? descriptionLabel(described) : humanize(name);
+}
+
+function StructuredValue({
+  value,
+  fields,
+  steps,
+  depth,
+}: {
+  value: unknown;
+  /** The described fields of this object (only where they are known). */
+  fields?: OutputField[];
+  /** The described fields of each entry of this object, by key (a result that collects several steps). */
+  steps?: Record<string, OutputField[]>;
+  depth: number;
+}) {
   const { t } = useTranslation();
   if (value === null || value === undefined || value === "") return <span className="muted">–</span>;
   if (typeof value === "string") return <Text value={value} />;
@@ -89,11 +132,9 @@ function StructuredValue({ value, fields, depth }: { value: unknown; fields?: Ou
     <dl className="structured-output__fields">
       {entries.map(([name, item]) => (
         <div key={name}>
-          <dt title={(depth === 0 ? fields : undefined)?.find((field) => field.name === name)?.description || name}>
-            {fieldLabel(name, depth === 0 ? fields : undefined)}
-          </dt>
+          <dt title={fields?.find((field) => field.name === name)?.description || name}>{fieldLabel(name, fields)}</dt>
           <dd>
-            <StructuredValue value={item} depth={depth + 1} />
+            <StructuredValue value={item} fields={steps?.[name]} depth={depth + 1} />
           </dd>
         </div>
       ))}
@@ -101,7 +142,7 @@ function StructuredValue({ value, fields, depth }: { value: unknown; fields?: Ou
   );
 }
 
-type FieldNode = { id: string; agent?: { output?: { fields?: OutputField[] } } | null };
+type FieldNode = { id: string; label?: string | null; agent?: { name?: string; output?: { fields?: OutputField[] } } | null };
 
 /**
  * The described fields of a structured result, looked up in the workflow the run used: those of the node itself,
@@ -115,4 +156,20 @@ export function outputFieldsOf(nodes: FieldNode[] | undefined, nodeId: string, v
   return nodes
     ?.map((node) => node.agent?.output?.fields)
     .find((fields) => fields?.length && keys.every((key) => fields.some((field) => field.name === key)));
+}
+
+/**
+ * A result node with several inputs collects them by step name ({"Downtime analyst": {...}, ...}; the runtime's
+ * ``node_label``: the node's label, else its agent's name). This maps each such key to the described fields of that
+ * agent, so the fields inside show their labels instead of technical names. Undefined when nothing matches.
+ */
+export function stepFieldsOf(nodes: FieldNode[] | undefined, value: unknown): Record<string, OutputField[]> | undefined {
+  if (!nodes || !value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  const found: Record<string, OutputField[]> = {};
+  for (const [key, item] of Object.entries(value as Record<string, unknown>)) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) continue;
+    const fields = nodes.find((node) => (node.label || node.agent?.name) === key)?.agent?.output?.fields;
+    if (fields?.length) found[key] = fields;
+  }
+  return Object.keys(found).length ? found : undefined;
 }

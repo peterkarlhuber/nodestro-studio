@@ -271,11 +271,40 @@ describe("cancelling a run (ED-08)", () => {
 });
 
 describe("field labels of a passed-on result (ED-04)", () => {
-  it("finds the agent whose fields name every key, and keeps long descriptions out of the label", async () => {
+  it("finds the agent whose fields name every key", async () => {
     const { outputFieldsOf } = await import("../components/Markdown");
     const report = { id: "report", agent: { output: { fields: [{ name: "d1_team", type: "string", description: "D1 Team mit Rollen", required: true }] } } };
     const fields = outputFieldsOf([{ id: "output", agent: null }, report] as never, "output", { d1_team: "x" });
     expect(fields?.[0].description).toBe("D1 Team mit Rollen");
-    expect(fieldLabel("analysis", [{ name: "analysis", type: "string", description: "x".repeat(80), required: true }])).toBe("Analysis");
+  });
+
+  it("labels a field by the lead of a long description, never by its technical name (ED-17, EX-002)", () => {
+    const field = (description: string) => [{ name: "downtime_share_percent", type: "number" as const, description, required: true }];
+    expect(fieldLabel("downtime_share_percent", field("Stillstandsanteil: Anteil der Stillstände an der geplanten Produktionszeit in Prozent"))).toBe(
+      "Stillstandsanteil",
+    );
+    expect(fieldLabel("downtime_share_percent", field("Part des arrêts : part des arrêts dans le temps de production planifié, en pour cent"))).toBe(
+      "Part des arrêts",
+    );
+    expect(fieldLabel("downtime_share_percent", field("Urteil (weiterverfolgen, anpassen oder verwerfen) mit Begründung und Gewichtung"))).toBe("Urteil");
+    const words = fieldLabel("downtime_share_percent", field("Anteil der Stillstände an der geplanten Produktionszeit in Prozent und mehr"));
+    expect(words).toBe("Anteil der Stillstände an der geplanten Produktionszeit in…");
+    expect(fieldLabel("downtime_share_percent", field(""))).toBe("Downtime share percent");
+  });
+
+  it("labels the fields of each step a result node collects by step name", async () => {
+    const { stepFieldsOf } = await import("../components/Markdown");
+    const fields = [{ name: "downtime_share_percent", type: "number" as const, description: "Stillstandsanteil in Prozent", required: true }];
+    const nodes = [
+      { id: "downtime", label: "", agent: { name: "Stillstandsanalyst", output: { fields } } },
+      { id: "measures", label: "", agent: { name: "Maßnahmenplaner", output: { fields: [] } } },
+    ];
+    const value = { Stillstandsanalyst: { downtime_share_percent: 4.6 }, Maßnahmenplaner: "Plan" };
+    const steps = stepFieldsOf(nodes, value);
+    expect(steps).toEqual({ Stillstandsanalyst: fields });
+    render(wrap(<Output value={value} steps={steps} />));
+    expect(screen.getByText("Stillstandsanalyst")).toBeInTheDocument();
+    expect(screen.getByText("Stillstandsanteil in Prozent")).toBeInTheDocument();
+    expect(screen.queryByText("Downtime share percent")).toBeNull();
   });
 });
