@@ -98,6 +98,7 @@ import type {
   ApiScope,
   ApiValidation,
   ExportCheck,
+  ExportJob,
   ExportOptions,
   ExportRecord,
   NetworkConfig,
@@ -647,6 +648,11 @@ export const api = {
   createExport: (id: string, options: ExportOptions, number?: number | null) =>
     request<ExportRecord>("POST", `/publications/${id}/exports`, { options, number: number ?? null }),
   exports: (id: string) => request<ExportRecord[]>("GET", `/publications/${id}/exports`),
+  startExportJob: (id: string, options: ExportOptions, number?: number | null) =>
+    request<ExportJob>("POST", `/publications/${id}/export-jobs`, { options, number: number ?? null }),
+  exportJobs: (id: string) => request<ExportJob[]>("GET", `/publications/${id}/export-jobs`),
+  exportJob: (jobId: string) => request<ExportJob>("GET", `/export-jobs/${jobId}`),
+  cancelExportJob: (jobId: string) => request<ExportJob>("POST", `/export-jobs/${jobId}/cancel`),
   exportUrl: (exportId: string) => `/api/exports/${exportId}/download`,
   createGuide: (id: string, language: string, number?: number | null) =>
     request<ApiGuide>("POST", `/publications/${id}/guide`, { language, number: number ?? null }),

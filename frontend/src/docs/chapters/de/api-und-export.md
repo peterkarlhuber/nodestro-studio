@@ -236,6 +236,23 @@ Im exportierten Projekt erzeugt `python -m app.keys new` Schlüssel für deine C
 
 **Amazon Bedrock im Export:** Das Projekt meldet sich mit den AWS-Standard-Zugangsdaten des Rechners an, auf dem es läuft (eine IAM-Rolle, SSO, ein Profil oder `AWS_*`-Variablen), und liest die Region aus `AWS_REGION` (oder `AWS_DEFAULT_REGION`); die exportierten Einstellungen enthalten nur die Region und die EU-Datenresidenz, die weiter gilt. Das ZIP enthält keine AWS-Zugangsdaten, kein Profil und keine Rolle. Gib der Rolle des Zielrechners die Berechtigungen, die unter [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock) stehen.
 
+## Startfertiges Paket {#portable}
+<!-- keywords: portabel, paket, offline, entpacken, starten, startprogramm, python, ollama, lokale modelle, weboberfläche, plattform, windows, macos, linux -->
+
+Wähle unter **Export** statt des Quellprojekts das **startfertige Paket**. Es enthält ein eigenes Python, alle Bibliotheken, ein Startprogramm und auf Wunsch die lokalen Modelle mit ihrem Modellserver sowie eine Weboberfläche. Wer es bekommt, entpackt es und startet `start.cmd` (Windows), `Start.command` (macOS) oder `sh start.sh` (Linux). Installiert werden muss nichts.
+
+| Option | Wirkung |
+|---|---|
+| **Zielplattform** | Windows, macOS oder Linux, jeweils für den Prozessor. Das Paket läuft nur dort. |
+| **Lokale Modelle einbeziehen** | Modelle und Ollama kommen ins Paket, geprüft per SHA-256. Die Zusammenfassung zeigt Größe, Speicherbedarf und Lizenz jedes Modells. |
+| **Muss vollständig offline laufen** | Verweigert den Export, wenn etwas ein Netzwerk braucht: Cloud-Modelle, Websuche, Dienst-Werkzeuge, KI-erstellte Werkzeuge. |
+| **Weboberfläche mitliefern** | Ein Formular für diesen Workflow mit Live-Fortschritt, Freigaben und Ergebnisdateien, in sechs Sprachen. |
+| **Ergebnisordner** | Wo die Anwendung die Ergebnisdateien jedes Laufs zusätzlich ablegt. Der Betreiber kann ihn später ändern. |
+
+Das Paket wird im Hintergrund gebaut; der Dialog zeigt den Fortschritt und lässt dich abbrechen. Große Modelle machen es mehrere Gigabyte groß.
+
+Das Paket enthält nie Schlüssel. Auf dem Zielrechner trägt der Betreiber die Schlüssel der KI-Anbieter auf der Einstellungsseite der Weboberfläche oder mit `start.sh configure` (Windows: `start.cmd configure`) ein; sie bleiben auf diesem Rechner. Clients nutzen API-Schlüssel, die `start.sh keys new` erzeugt. Standardmäßig antwortet die Anwendung nur auf diesem Rechner; fürs Netzwerk braucht sie TLS oder einen Reverse-Proxy. Die README im Paket erklärt Start, Stopp, Einstellungen und Fehlerbehebung. Pakete sind nicht signiert: macOS und Windows fragen vor dem ersten Start einmal nach.
+
 ## Die Bibliothek Orkexa {#orkexa}
 <!-- keywords: orkexa, bibliothek, repository, lizenz, mit, vendor, mitliefern, git, zugriff -->
 

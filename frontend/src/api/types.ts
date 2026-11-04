@@ -2820,13 +2820,93 @@ export interface ApiRunStatus {
   output?: unknown;
 }
 
+export type ExportLanguage = "de" | "en" | "es" | "fr" | "pt-BR" | "it";
+
 export interface ExportOptions {
+  /** standard: the FastAPI source project; portable: a ready-to-run package for one platform. */
+  kind: "standard" | "portable";
   orkexa: "git" | "bundle";
   confirm_distribution: boolean;
   knowledge: string[];
   memory: string[];
-  language: "de" | "en";
+  /** The README's language and the web interface's first language. */
+  language: ExportLanguage;
   guide_id: string | null;
+  web_ui: boolean;
+  platform: string | null;
+  local_models: boolean;
+  offline: boolean;
+  confirm_models: boolean;
+  allow_downloads: boolean;
+  output_dir: string;
+}
+
+export type ModelRole = "agent" | "fallback" | "judge" | "orchestrator" | "embedding";
+
+export interface ExportModelUse {
+  model: string;
+  provider: string;
+  local: boolean;
+  roles: ModelRole[];
+  used_by: string[];
+}
+
+export interface ExportLocalModel {
+  name: string;
+  kind: "chat" | "embedding";
+  roles: ModelRole[];
+  used_by: string[];
+  installed: boolean;
+  size: number;
+  digest: string | null;
+  capabilities: string[];
+  license: string | null;
+  redistribution: "permitted" | "unknown";
+  memory_bytes: number | null;
+  cpu_friendly: boolean | null;
+  context: number | null;
+  catalog: boolean;
+}
+
+export interface ExportNetworkNeed {
+  kind: "cloud_model" | "endpoint" | "server_tool" | "mcp" | "docker_sandbox" | "ollama_cloud";
+  name: string;
+  detail: string;
+  used_by: string[];
+}
+
+export interface PortableCheck {
+  platform: string;
+  platforms: { id: string; label: string }[];
+  providers: string[];
+  models: ExportModelUse[];
+  local_models: ExportLocalModel[];
+  bundled_models: string[];
+  network_needs: ExportNetworkNeed[];
+  downloads: { what: string; size: number; cached: boolean }[];
+  estimated_bytes: number;
+  offline_capable: boolean;
+  target_requirements: string[];
+  memory_bytes: number | null;
+}
+
+export interface ExportJob {
+  id: string;
+  publication_id: string;
+  release_number: number;
+  options: Partial<ExportOptions>;
+  state: "running" | "done" | "failed" | "cancelled";
+  step: string;
+  steps: string[];
+  progress: number;
+  message: string;
+  bytes_done: number;
+  bytes_total: number;
+  error_code: string | null;
+  error: string | null;
+  export_id: string | null;
+  created_at: string;
+  finished_at: string | null;
 }
 
 export interface ExportResource {
@@ -2848,6 +2928,7 @@ export interface ExportCheck {
   runtime_modules: string[];
   runtime: Record<string, string>;
   files: string[];
+  portable?: PortableCheck | null;
 }
 
 export interface ExportRecord {

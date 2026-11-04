@@ -236,6 +236,23 @@ No projeto exportado, `python -m app.keys new` cria chaves para seus clientes. O
 
 **Amazon Bedrock na exportação:** o projeto entra com as credenciais padrão da AWS da máquina em que roda (uma função do IAM, SSO, um perfil ou variáveis `AWS_*`) e lê a região de `AWS_REGION` (ou `AWS_DEFAULT_REGION`); as configurações exportadas levam só a região e a residência de dados somente na UE, que continua valendo. O ZIP não contém credenciais da AWS, perfil nem função. Conceda à função da máquina de destino as permissões listadas em [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
 
+## Pacote pronto para usar {#portable}
+<!-- keywords: portátil, pacote, offline, descompactar, iniciar, inicializador, python, ollama, modelos locais, interface web, plataforma, windows, macos, linux -->
+
+Em **Exportação**, escolha **Pacote pronto para usar** em vez do projeto-fonte. O pacote contém o próprio Python, todas as bibliotecas, um programa de inicialização e, se você quiser, os modelos locais com o servidor de modelos e uma interface web. Quem o recebe descompacta e abre `start.cmd` (Windows), `Start.command` (macOS) ou executa `sh start.sh` (Linux). Não é preciso instalar nada.
+
+| Opção | Efeito |
+|---|---|
+| **Plataforma de destino** | Windows, macOS ou Linux, cada um para o seu processador. O pacote só funciona lá. |
+| **Incluir os modelos locais** | Os modelos e o Ollama entram no pacote, verificados por SHA-256. O resumo mostra tamanho, memória necessária e licença de cada modelo. |
+| **Deve funcionar totalmente offline** | Recusa a exportação se algo precisar de rede: modelos na nuvem, busca na web, ferramentas de serviços, ferramentas criadas por IA. |
+| **Incluir a interface web** | Um formulário para este fluxo com progresso ao vivo, aprovações e arquivos de resultado, em seis idiomas. |
+| **Pasta de resultados** | Onde o aplicativo também salva os arquivos de resultado de cada execução. O operador pode mudá-la depois. |
+
+O pacote é gerado em segundo plano; a caixa de diálogo mostra o progresso e permite cancelar. Modelos grandes o deixam com vários gigabytes.
+
+O pacote nunca contém chaves. No computador de destino, o operador informa as chaves dos provedores de IA na página de configurações da interface web ou com `start.sh configure` (Windows: `start.cmd configure`); elas ficam nesse computador. Os clientes usam chaves de API criadas com `start.sh keys new`. Por padrão o aplicativo só responde neste computador; para a rede ele precisa de TLS ou de um proxy reverso. O README do pacote explica início, parada, configurações e solução de problemas. Os pacotes não são assinados: o macOS e o Windows perguntam uma vez antes da primeira inicialização.
+
 ## A biblioteca Orkexa {#orkexa}
 <!-- keywords: orkexa, biblioteca, repositório, licença, mit, vendor, incluir, git, acesso -->
 
