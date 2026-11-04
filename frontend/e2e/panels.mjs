@@ -288,10 +288,12 @@ try {
   await page.locator(".inspector__body input, .inspector__body textarea").first().focus();
   await page.keyboard.press("Escape");
   await until(async () => (await box(inspector)).width < 100, "Escape closes the drawer");
-  check(
-    await page.evaluate(() => document.activeElement?.classList.contains("inspector__toggle")),
-    "Escape closes the drawer and moves the focus to its toggle",
+  // The focus moves in a timeout after the drawer closes, so wait for it instead of reading it once.
+  await until(
+    async () => page.evaluate(() => document.activeElement?.classList.contains("inspector__toggle")),
+    "focus on the drawer toggle",
   );
+  check(true, "Escape closes the drawer and moves the focus to its toggle");
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.getByTestId("assistant-toggle").click();
   await page.locator(".assistant-panel").waitFor();
