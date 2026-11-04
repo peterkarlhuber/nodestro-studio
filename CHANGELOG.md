@@ -4,6 +4,10 @@
 
 ### Local models: build from files, hardware and speed (2026-11-03)
 
+- Pins nodestro-runtime 7cb9b4b (runtime #107: in the CPU saving mode the quality judge of a local thinking model also
+  answers without the thinking phase, and a local model server gets 60 minutes per request instead of the SDK's 10),
+  nodestro-examples 36488a6 (examples #65), nodestro-integrations 40d6053 (integrations #58), nodestro-api 5951197 (api
+  #83) and nodestro-sdk e58249b (sdk #75).
 - The browser smoke test checks the hardware panel of *Settings → Local models* and the per-agent model plan in an
   example's copy preview against the real API. ST-045 and ST-046 are done and leave `docs/TODO.md`.
 - *Settings → Local models → Build from local files* (ST-045): builds a catalog model with source "build"
