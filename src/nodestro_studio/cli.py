@@ -17,7 +17,7 @@ def main(argv: list[str] | None = None) -> None:
     # "running" and no browser opens the other program (DX handover B2).
 
     def ready() -> None:
-        print(f"Nodestro is running at {url}  (stop with Ctrl+C)")
+        print(f"Nodestro is running at {url}  (stop with Ctrl+C)", flush=True)
         if not args.no_browser:
             threading.Thread(target=webbrowser.open, args=(url,), name="nodestro-browser", daemon=True).start()
 
