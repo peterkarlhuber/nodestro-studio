@@ -220,6 +220,20 @@ export function EditorPage() {
   useEffect(() => {
     if ((selectedId || selectedEdgeId) && isTabletEditor()) useEditorLayout.getState().setOpen("inspector", true);
   }, [selectedId, selectedEdgeId]);
+  // Escape closes the drawer again (AX-17), unless something inside it (a dialog, a menu, a field) used the key;
+  // focus that was inside it goes to its toggle, so keyboard users are not left on a hidden element.
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented || !isTabletEditor()) return;
+      if (!useEditorLayout.getState().open.inspector || document.querySelector("dialog[open], [role=dialog][aria-modal=true]")) return;
+      const panel = inspectorRef.current;
+      const inside = Boolean(panel && document.activeElement && panel.contains(document.activeElement));
+      useEditorLayout.getState().setOpen("inspector", false);
+      if (inside) window.setTimeout(() => panel?.querySelector<HTMLElement>(".inspector__toggle")?.focus());
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   /** Show the problem that blocks the start: the node or connection it is about, or the check list. */
   const showProblem = () => {

@@ -274,6 +274,24 @@ try {
     const editorRight = (await box(page.locator(".editor__main"))).x + (await box(page.locator(".editor__main"))).width;
     check(save.width > 0 && save.x + save.width <= editorRight + 1, `${width}px: no title action hides behind a panel`);
   }
+  // Tablets (761-1100 px): the inspector is a drawer over the canvas; a selection opens it, Escape closes it (AX-17).
+  await page.setViewportSize({ width: 900, height: 860 });
+  await page.waitForTimeout(250);
+  await page.locator(".react-flow__pane").click({ position: { x: 20, y: 20 } });
+  if ((await box(inspector)).width > 100) await page.getByTestId("inspector").locator(".inspector__toggle").click();
+  await until(async () => (await box(inspector)).width < 100, "drawer closed");
+  const canvasClosed = (await box(canvas)).width;
+  await page.locator(".react-flow__node").nth(1).click();
+  await until(async () => (await box(inspector)).width >= 300, "drawer opens on selection");
+  const canvasOpen = (await box(canvas)).width;
+  check(Math.abs(canvasOpen - canvasClosed) < 2, `900px: the drawer lies over the canvas, which keeps its width (${Math.round(canvasOpen)})`);
+  await page.locator(".inspector__body input, .inspector__body textarea").first().focus();
+  await page.keyboard.press("Escape");
+  await until(async () => (await box(inspector)).width < 100, "Escape closes the drawer");
+  check(
+    await page.evaluate(() => document.activeElement?.classList.contains("inspector__toggle")),
+    "Escape closes the drawer and moves the focus to its toggle",
+  );
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.getByTestId("assistant-toggle").click();
   await page.locator(".assistant-panel").waitFor();
