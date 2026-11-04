@@ -244,9 +244,9 @@ Wähle unter **Export** statt des Quellprojekts das **startfertige Paket**. Es e
 | Option | Wirkung |
 |---|---|
 | **Zielplattform** | Windows, macOS oder Linux, jeweils für den Prozessor. Das Paket läuft nur dort. |
-| **Lokale Modelle einbeziehen** | Modelle und Ollama kommen ins Paket, geprüft per SHA-256. Die Zusammenfassung zeigt Größe, Speicherbedarf und Lizenz jedes Modells. |
-| **Muss vollständig offline laufen** | Verweigert den Export, wenn etwas ein Netzwerk braucht: Cloud-Modelle, Websuche, Dienst-Werkzeuge, KI-erstellte Werkzeuge. |
-| **Weboberfläche mitliefern** | Ein Formular für diesen Workflow mit Live-Fortschritt, Freigaben und Ergebnisdateien, in sechs Sprachen. |
+| **Lokale Modelle beilegen** | Modelle und Ollama kommen ins Paket, geprüft per SHA-256. Die Zusammenfassung zeigt Größe, Speicherbedarf und Lizenz jedes Modells. |
+| **Muss vollständig offline funktionieren** | Verweigert den Export, wenn etwas ein Netzwerk braucht: Cloud-Modelle, Websuche, MCP-Dienste, KI-erstellte Tools. Schaltet *Lokale Modelle beilegen* mit ein. |
+| **Weboberfläche beilegen** | Ein Formular für diesen Workflow mit Live-Fortschritt, Freigaben und Ergebnisdateien, in sechs Sprachen. |
 | **Ergebnisordner** | Wo die Anwendung die Ergebnisdateien jedes Laufs zusätzlich ablegt. Der Betreiber kann ihn später ändern. |
 
 Das Paket wird im Hintergrund gebaut; der Dialog zeigt den Fortschritt und lässt dich abbrechen. Große Modelle machen es mehrere Gigabyte groß.

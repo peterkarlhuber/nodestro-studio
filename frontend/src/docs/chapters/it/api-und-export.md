@@ -245,7 +245,7 @@ In **Esportazione**, scegli **Pacchetto pronto all’uso** invece del progetto s
 |---|---|
 | **Piattaforma di destinazione** | Windows, macOS o Linux, ciascuno per il proprio processore. Il pacchetto funziona solo lì. |
 | **Includi i modelli locali** | I modelli e Ollama entrano nel pacchetto, verificati con SHA-256. Il riepilogo mostra dimensione, memoria necessaria e licenza di ogni modello. |
-| **Deve funzionare completamente offline** | Rifiuta l’esportazione se qualcosa ha bisogno della rete: modelli cloud, ricerca web, strumenti di servizi, strumenti creati dall’IA. |
+| **Deve funzionare completamente offline** | Rifiuta l’esportazione se qualcosa ha bisogno della rete: modelli cloud, ricerca web, servizi MCP, strumenti creati dall’IA. Attiva anche *Includi i modelli locali*. |
 | **Includi l’interfaccia web** | Un modulo per questo workflow con avanzamento in diretta, approvazioni e file di risultato, in sei lingue. |
 | **Cartella dei risultati** | Dove l’applicazione salva anche i file di risultato di ogni esecuzione. Il gestore può cambiarla in seguito. |
 

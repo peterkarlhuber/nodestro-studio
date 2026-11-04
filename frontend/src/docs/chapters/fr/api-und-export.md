@@ -245,9 +245,9 @@ Sous **Export**, choisissez **Paquet prêt à l’emploi** au lieu du projet sou
 |---|---|
 | **Plateforme cible** | Windows, macOS ou Linux, chacun pour son processeur. Le paquet ne fonctionne que là. |
 | **Inclure les modèles locaux** | Les modèles et Ollama entrent dans le paquet, vérifiés par SHA-256. Le résumé indique la taille, la mémoire nécessaire et la licence de chaque modèle. |
-| **Doit fonctionner entièrement hors ligne** | Refuse l’export si quelque chose a besoin du réseau : modèles cloud, recherche web, outils de services, outils créés par l’IA. |
+| **Doit fonctionner entièrement hors ligne** | Refuse l’export si quelque chose a besoin du réseau : modèles cloud, recherche web, services MCP, outils créés par l’IA. Active aussi *Inclure les modèles locaux*. |
 | **Inclure l’interface web** | Un formulaire pour ce workflow avec la progression en direct, les validations et les fichiers de résultats, en six langues. |
-| **Dossier de résultats** | Où l’application enregistre aussi les fichiers de résultats de chaque exécution. L’exploitant peut le changer ensuite. |
+| **Dossier des résultats** | Où l’application enregistre aussi les fichiers de résultats de chaque exécution. L’exploitant peut le changer ensuite. |
 
 Le paquet est généré en arrière-plan ; la boîte de dialogue affiche la progression et vous permet d’annuler. Les grands modèles le font peser plusieurs gigaoctets.
 
