@@ -3,7 +3,8 @@
   "text": "Los agentes, los asistentes y la búsqueda de conocimiento pueden funcionar en este ordenador con modelos locales (Ollama), sin clave de API. Los datos se quedan aquí.",
   "status": {
     "running": "En marcha",
-    "stopped": "Detenido"
+    "stopped": "Detenido",
+    "notInstalled": "No instalado"
   },
   "mode": {
     "managed": "Gestionado por Nodestro en este ordenador",
@@ -63,6 +64,11 @@
   "download": "Descargar ({{size}})",
   "downloadShort": "Descargar",
   "installed": "Instalado",
+  "needsServer": {
+    "missing": "Para descargar, importar y crear modelos, el servidor de modelos tiene que estar en marcha: instala arriba el entorno y luego inícialo.",
+    "stopped": "Para descargar, importar y crear modelos, el servidor de modelos tiene que estar en marcha: inícialo arriba.",
+    "other": "Para descargar, importar y crear modelos, el servidor de modelos tiene que estar en marcha."
+  },
   "catalog": {
     "title": "Modelos",
     "model": "Modelo",
@@ -70,7 +76,8 @@
     "memory": "Memoria necesaria",
     "state": "Estado",
     "own": "Modelo propio (importado o descargado aparte)",
-    "fit": "En este ordenador"
+    "fit": "En este ordenador",
+    "actions": "Acciones"
   },
   "kind": {
     "chat": "Modelo de lenguaje",

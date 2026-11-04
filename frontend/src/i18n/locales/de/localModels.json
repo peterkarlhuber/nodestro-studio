@@ -3,7 +3,8 @@
   "text": "Agenten, Assistenten und die Wissenssuche können mit lokalen Modellen (Ollama) auf diesem Computer laufen, ohne API-Schlüssel. Die Daten bleiben hier.",
   "status": {
     "running": "Läuft",
-    "stopped": "Gestoppt"
+    "stopped": "Gestoppt",
+    "notInstalled": "Nicht installiert"
   },
   "mode": {
     "managed": "Von Nodestro auf diesem Computer verwaltet",
@@ -63,6 +64,11 @@
   "download": "Herunterladen ({{size}})",
   "downloadShort": "Herunterladen",
   "installed": "Installiert",
+  "needsServer": {
+    "missing": "Modelle herunterladen, importieren und bauen geht nur, während der Modellserver läuft: Installiere oben die Laufzeit und starte sie dann.",
+    "stopped": "Modelle herunterladen, importieren und bauen geht nur, während der Modellserver läuft: Starte ihn oben.",
+    "other": "Modelle herunterladen, importieren und bauen geht nur, während der Modellserver läuft."
+  },
   "catalog": {
     "title": "Modelle",
     "model": "Modell",
@@ -70,7 +76,8 @@
     "memory": "Speicherbedarf",
     "state": "Zustand",
     "own": "Eigenes Modell (importiert oder separat geladen)",
-    "fit": "Auf diesem Computer"
+    "fit": "Auf diesem Computer",
+    "actions": "Aktionen"
   },
   "kind": {
     "chat": "Sprachmodell",

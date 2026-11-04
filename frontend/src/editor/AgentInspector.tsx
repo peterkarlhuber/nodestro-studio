@@ -16,7 +16,7 @@ import {
   FlaskConical,
 } from "lucide-react";
 import type { TFunction } from "i18next";
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useMemo, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -65,6 +65,7 @@ import { getDefaultModel } from "../lib/defaults";
 import { findModel, providerOf, sameModel, splitModel } from "../lib/providers";
 import { ProblemText } from "../lib/errors";
 import { KNOWLEDGE_ACCEPT } from "../lib/knowledge";
+import { useDebounced } from "../lib/useDebounced";
 import {
   type AgentSectionId,
   advancedSummary,
@@ -97,15 +98,6 @@ const SECTION_TITLE: Record<AgentSectionId, string> = {
 /** Select options from option values; "" is the model default. */
 function options(t: TFunction, group: string, values: readonly string[]) {
   return values.map((value) => ({ value, label: t(`agent.options.${group}.${value || "default"}`) }));
-}
-
-function useDebounced<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const timer = window.setTimeout(() => setDebounced(value), delay);
-    return () => window.clearTimeout(timer);
-  }, [value, delay]);
-  return debounced;
 }
 
 type Retrieval = NonNullable<AgentConfig["knowledge"]["retrieval"]>;

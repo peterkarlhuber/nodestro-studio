@@ -14,7 +14,7 @@ import { keys } from "../api/hooks";
 import { type BuildInput, type CatalogModel, type LocalJob, localApi, localKeys, useLocalJobs } from "../api/localModels";
 import { Badge, Button, Callout, Field, HelpTip, Select, TextInput } from "../components/ui";
 import { ErrorText, problemHint, problemText } from "../lib/errors";
-import { formatBytes } from "../lib/format";
+import { formatLargeBytes } from "../lib/format";
 import { revealSettingsSection } from "./SettingsNav";
 
 /** The steps orkexa's build_model reports in the job message, in order. */
@@ -91,7 +91,7 @@ function ExpectedFiles({ model }: { model: CatalogModel }) {
   if (!inputs.length)
     return (
       <p className="muted small" data-testid="local-build-expected">
-        {t("localModels.build.expectedUnlisted", { size: formatBytes(model.download_bytes) })}
+        {t("localModels.build.expectedUnlisted", { size: formatLargeBytes(model.download_bytes) })}
       </p>
     );
   return (
@@ -115,8 +115,8 @@ function ExpectedFiles({ model }: { model: CatalogModel }) {
                   {" "}
                   ·{" "}
                   {input.role === "template"
-                    ? t("localModels.build.headerSize", { size: formatBytes(input.size) })
-                    : formatBytes(input.size)}
+                    ? t("localModels.build.headerSize", { size: formatLargeBytes(input.size) })
+                    : formatLargeBytes(input.size)}
                 </>
               )}
               <div className="muted">
@@ -245,7 +245,7 @@ export function BuildFromFiles({
       </Field>
       <Field
         label={t("localModels.build.templatePath")}
-        hint={t("localModels.build.templateHint", { size: templateInput?.size ? formatBytes(templateInput.size) : "–" })}
+        hint={t("localModels.build.templateHint", { size: templateInput?.size ? formatLargeBytes(templateInput.size) : "–" })}
       >
         <TextInput value={template} onChange={(event) => setTemplate(event.target.value)} spellCheck={false} disabled={running} />
       </Field>

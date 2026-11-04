@@ -20,8 +20,9 @@ import {
   TextInput,
   Toggle,
 } from "../components/ui";
+import { providerLabel } from "../components/ModelPicker";
 import { problemText } from "../lib/errors";
-import { formatBytes, formatDate } from "../lib/format";
+import { formatDate, formatLargeBytes } from "../lib/format";
 
 export function PortableOptions({
   options,
@@ -46,6 +47,7 @@ export function PortableOptions({
         >
           <Select
             value={options.platform ?? portable?.platform ?? ""}
+            placeholder={platforms.length ? undefined : t("common.loading")}
             onChange={(platform) =>
               setOptions({ ...options, platform: platform || null })
             }
@@ -73,6 +75,8 @@ export function PortableOptions({
       </div>
       <Toggle
         checked={options.local_models}
+        // Offline needs the models in the package: the offline switch turns this on and keeps it on.
+        disabled={options.offline}
         onChange={(local_models) => setOptions({ ...options, local_models })}
         label={t("publish.export.portable.localModels")}
         description={t("publish.export.portable.localModelsHint")}
@@ -135,12 +139,12 @@ export function PortableSummary({
     .filter((item) => portable.bundled_models.includes(item.name))
     .reduce((sum, item) => sum + item.size, 0);
   return (
-    <Section title={t("publish.export.portable.summary")} icon={PackageOpen}>
+    <Section title={t("publish.export.portable.summary")} icon={PackageOpen} defaultOpen>
       <div className="stack-sm" data-testid="api-export-summary">
         <p className="small">
           {t("publish.export.portable.summaryLine", {
             platform,
-            size: formatBytes(portable.estimated_bytes),
+            size: formatLargeBytes(portable.estimated_bytes),
           })}{" "}
           {portable.offline_capable ? (
             <Badge tone="success" icon={WifiOff}>
@@ -194,9 +198,9 @@ export function PortableSummary({
                         )
                         .join(", ")}
                     </td>
-                    <td>{item.size ? formatBytes(item.size) : "–"}</td>
+                    <td>{item.size ? formatLargeBytes(item.size) : "–"}</td>
                     <td>
-                      {item.memory_bytes ? formatBytes(item.memory_bytes) : "–"}
+                      {item.memory_bytes ? formatLargeBytes(item.memory_bytes) : "–"}
                     </td>
                     <td>
                       {item.license ??
@@ -235,9 +239,9 @@ export function PortableSummary({
         {modelBytes ? (
           <p className="small muted">
             {t("publish.export.portable.modelsTotal", {
-              size: formatBytes(modelBytes),
+              size: formatLargeBytes(modelBytes),
               memory: portable.memory_bytes
-                ? formatBytes(portable.memory_bytes)
+                ? formatLargeBytes(portable.memory_bytes)
                 : "–",
             })}
           </p>
@@ -247,6 +251,7 @@ export function PortableSummary({
             {t("publish.export.portable.providers", {
               providers: portable.providers
                 .filter((item) => item !== "ollama")
+                .map((item) => providerLabel(t, item))
                 .join(", "),
             })}
           </p>
@@ -409,7 +414,7 @@ function JobRow({
       />
       {job.bytes_total ? (
         <span className="muted small">
-          {formatBytes(job.bytes_done)} / {formatBytes(job.bytes_total)}
+          {formatLargeBytes(job.bytes_done)} / {formatLargeBytes(job.bytes_total)}
         </span>
       ) : null}
     </div>

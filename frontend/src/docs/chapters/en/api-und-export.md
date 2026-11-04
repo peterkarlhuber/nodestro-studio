@@ -245,7 +245,7 @@ Under **Export**, choose **Ready-to-run package** instead of the source project.
 |---|---|
 | **Target platform** | Windows, macOS or Linux, each for its processor. The package only runs there. |
 | **Include the local models** | The models and Ollama go into the package, checked by SHA-256. The summary shows size, memory need and license of every model. |
-| **Must work fully offline** | Refuses the export when anything needs a network: cloud models, web search, service tools, AI-created tools. |
+| **Must work fully offline** | Refuses the export when anything needs a network: cloud models, web search, MCP services, AI-created tools. Also turns on *Include the local models*. |
 | **Include the web interface** | A form for this workflow with live progress, approvals and result files, in six languages. |
 | **Result folder** | Where the application also stores the result files of every run. The operator can change it later. |
 

@@ -303,7 +303,7 @@
       },
       "jobs": "Paket-Builds",
       "build": "Paket erstellen",
-      "started": "Das Paket wird im Hintergrund erstellt.",
+      "started": "Das Paket wird im Hintergrund erstellt. Das dauert meist einige Minuten, mit großen Modellen länger; du kannst den Dialog währenddessen schließen.",
       "running": "Wird erstellt: {{step}} ({{percent}} %)",
       "progress": "Fortschritt der Paketerstellung",
       "done": "Paket fertig ({{date}}).",

@@ -157,10 +157,10 @@ export function ExampleModelPlan({
                       {why}
                     </div>
                     {agent.suggested && agent.suggested !== agent.model ? (
-                      <div className="small" data-testid={`example-model-better-${agent.key}`}>
+                      <p className="small" data-testid={`example-model-better-${agent.key}`}>
                         <Download size={12} aria-hidden /> {t("library.models.better", { model: plain(agent.suggested) })}{" "}
                         <Link to={setup}>{t("library.models.toLocalModels")}</Link>
-                      </div>
+                      </p>
                     ) : null}
                     {value[agent.key] ? <div className="small">{t("library.models.overridden")}</div> : null}
                   </td>

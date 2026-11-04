@@ -245,7 +245,7 @@ En **Exportación**, elige **Paquete listo para usar** en lugar del proyecto fue
 |---|---|
 | **Plataforma de destino** | Windows, macOS o Linux, cada uno para su procesador. El paquete solo funciona allí. |
 | **Incluir los modelos locales** | Los modelos y Ollama entran en el paquete, verificados con SHA-256. El resumen muestra tamaño, memoria necesaria y licencia de cada modelo. |
-| **Debe funcionar sin conexión** | Rechaza la exportación si algo necesita red: modelos en la nube, búsqueda web, herramientas de servicios, herramientas creadas por IA. |
+| **Debe funcionar totalmente sin conexión** | Rechaza la exportación si algo necesita red: modelos en la nube, búsqueda web, servicios MCP, herramientas creadas por IA. También activa *Incluir los modelos locales*. |
 | **Incluir la interfaz web** | Un formulario para este flujo con progreso en directo, aprobaciones y archivos de resultados, en seis idiomas. |
 | **Carpeta de resultados** | Dónde guarda además la aplicación los archivos de resultados de cada ejecución. El operador puede cambiarla después. |
 
