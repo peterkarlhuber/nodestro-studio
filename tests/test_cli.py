@@ -71,11 +71,15 @@ def test_a_taken_port_stops_before_running_and_the_browser(
     """DX handover B2: with the port taken nothing says "running" and no browser opens the other program."""
     import socket
 
+    import uvicorn
+
     served: list[Any] = []
     opened: list[Any] = []
-    monkeypatch.setattr(cli, "serve", lambda *args, **kwargs: served.append(args))
+    monkeypatch.setattr(uvicorn.Server, "run", lambda self, *args, **kwargs: served.append(args))
     monkeypatch.setattr(cli.webbrowser, "open", opened.append)
     monkeypatch.setenv("NODESTRO_DATA_DIR", str(tmp_path / "d"))
+    monkeypatch.setenv("NODESTRO_PROFILE", "")
+    monkeypatch.setenv("NODESTRO_HOST", "127.0.0.1")  # the command line writes it; an earlier test may leave another
     monkeypatch.chdir(tmp_path)
     with socket.socket() as taken:
         taken.bind(("127.0.0.1", 0))
