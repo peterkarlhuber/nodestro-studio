@@ -125,6 +125,12 @@ try {
 
   // A second example, for the lists below.
   await page.goto(base + "/workflows/examples?template=blog-article");
+  // A fresh install uses local models: the preview shows the model each agent gets, from the server's plan (EX-011).
+  await page.getByTestId("example-models").waitFor();
+  check(
+    (await page.locator('[data-testid^="example-model-"]:not([data-testid^="example-model-better-"])').count()) === 3,
+    "The copy preview lists the local model of each of the three agents",
+  );
   await page.getByRole("button", { name: "Als Kopie übernehmen" }).click();
   await page.waitForURL(/\/workflows\/wf_/);
   await page.goto(base);
@@ -208,6 +214,12 @@ try {
   check(true, "Version history opens");
   await shot("02c-versions");
   await page.keyboard.press("Escape");
+
+  // The local models section shows this computer as the server detects it (ST-046).
+  await page.goto(base + "/settings#settings-local-models");
+  await page.getByTestId("local-hardware").waitFor();
+  check(/\d/.test(await page.getByTestId("local-hardware").textContent()), "The local models section shows this computer's hardware");
+  check((await page.getByTestId("local-runtime-state").textContent()).trim().length > 0, "It names the state of the local model server");
 
   // Global search jumps to an agent inside its workflow.
   await page.goto(base + "/settings");
