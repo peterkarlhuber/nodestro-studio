@@ -346,6 +346,21 @@ try {
   check(true, "With a budget the schedule switches on");
   await shot("flow-06-schedules");
 
+  // ---- 9. the runs table fits at 1280 px in every language, with real rows (NJR-20) ---------
+  await page.setViewportSize({ width: 1280, height: 800 });
+  for (const language of ["de", "en", "es", "fr", "it", "pt-BR"]) {
+    await page.evaluate((value) => localStorage.setItem("nodestro-language", value), language);
+    await page.goto(`${base}/executions`);
+    await page.locator(".table--runs tbody tr").first().waitFor();
+    await page.waitForTimeout(200);
+    const fit = await page.evaluate(() => {
+      const frame = document.querySelector(".table--runs").parentElement;
+      return frame.scrollWidth - frame.clientWidth;
+    });
+    check(fit <= 0, `${language}: the runs table fits at 1280 px without scrolling (${fit})`);
+  }
+  await page.evaluate(() => localStorage.setItem("nodestro-language", "de"));
+
   check(errors.length === 0, `No console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
 } finally {
   await browser.close();
