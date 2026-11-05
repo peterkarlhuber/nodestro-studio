@@ -20,6 +20,17 @@
 - Small fixes: German "Strg+K" in the search button and the shortcut table, "Memory" as the German building block
   name, "changed just now" in the runs workflow filter and the search, the full start-blocking reason on hover in the
   editor title bar, and fit badges that wrap so the model catalog's actions stay visible at 1440 px.
+- The strict offline mode text names its full scope (only Ollama; OpenAI-compatible and vLLM endpoints are refused
+  also on this computer, for assistants and price checks too), the knowledge index shows "unavailable" where the
+  installation cannot hold vectors, and `pricing.offline_sync` has a message; the unused
+  `run.budget_waits_interrupted` message is gone.
+- In-app docs and README follow the current behavior in all six languages (budget pause, global search scope, theme,
+  node kinds and loops, sandbox limits, code adoption, MCP and service addresses without internal switch names, Low
+  effort and the CPU saving mode, run filters); the examples chapter is regenerated for nodestro-examples f015a4d.
+- Pins: nodestro-runtime 57b40d2 (runtime #116: strict offline mode outside runs, orchestrators with models without
+  a reasoning effort, expired budget decisions end a run failed, index unavailable without sqlite-vec),
+  nodestro-examples f015a4d (#74), nodestro-integrations 9a5c955 (#63), nodestro-api f796916 (#90: no price check in
+  the strict offline mode, server batches and test series follow their runs), nodestro-sdk 8c4c9ff (#83).
 
 ### UX round 3 (2026-11-04)
 
