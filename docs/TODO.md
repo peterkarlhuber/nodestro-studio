@@ -3,7 +3,7 @@
 > Open work for this repository: release blockers, known bugs, security follow-ups, technical debt and planned improvements.
 > GitHub issues are the source of truth for details; this file is the entry point and summary.
 >
-> **Last full review:** 2026-11-04 against `master` at `2c072d7` (UX round 3 and backend audit 3).
+> **Last full review:** 2026-11-05 against `master` at `e46911d` (quality round 3 close-out; TODO consolidated).
 
 ## Summary
 
@@ -12,16 +12,17 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 18 |
+| P3 Low | 17 |
 | P4 Optional | 10 |
 
-**Release blockers:** None for this repository.
+**Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
+preview is gated by nodestro-desktop DSK-001 (new candidate and Go/No-Go), not by an item here.
 
-The studio is in a good state after the UX initiative (studio #61 to #80): the independent final review accepted it with
-conditions that #79 addressed, and master CI is green. What remains is a backlog of usability and accessibility
-follow-ups, one cross-repository failure-cause gap, pending dependency updates, stale status documents and the
-platforms nobody has tested yet. The desktop release blocker (built-in Linux sandbox) lives in the runtime and desktop
-repositories, not here.
+The studio is in a good state after the UX initiative (studio #61 to #80) and UX round 3 (#123, #125): the independent
+final review accepted it with conditions that #79 addressed, and master CI is green. What remains is a backlog of
+usability and accessibility follow-ups, cross-repository gaps that wait for backend fields (failure cause, budgets,
+example origin), stale status documents and the platforms nobody has tested yet. The portable export dialog (#121)
+is covered by the independent review tracked in nodestro-api API-054.
 
 ## Priorities and statuses
 
@@ -39,6 +40,11 @@ Statuses: `Open`, `In progress` (PR linked), `Blocked` (names the blocker), `Nee
 None known.
 
 ## Security
+
+Two items need an independent security review; their full entries live in the owning repositories:
+nodestro-runtime RT-001 (tool approvals, `NODESTRO_TOOL_APPROVALS` stays off; includes the studio approval surfaces)
+and nodestro-api API-054 (portable export, api #85 with the #87 hardening, including this repository's export dialog
+from #121). Both have status `Needs external review`.
 
 ### ST-002 · Dependency audit gates production dependencies only
 
@@ -171,7 +177,8 @@ None known.
 
 ### ST-047 · Portable export dialog: no browser test against a real package build
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-api #85, `frontend/src/publish/PortableExport.tsx`
+- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-api #85, studio #121, `frontend/src/publish/PortableExport.tsx`;
+  security review: nodestro-api API-054
 - **What:** The dialog's portable options, summary, build progress, cancel and download are covered by component
   tests with a mocked API. The backend build is tested end to end in nodestro-api (offline container, browser E2E
   of the exported web interface, CI on six platforms), but no studio browser test drives a real build from the
@@ -189,16 +196,6 @@ None known.
   measurement and the "Reasoning reduced" badge are covered by unit tests and by the runtime and API tests only.
 - **Next step:** Add an e2e server with a fake Ollama binary (as in nodestro-api `tests/test_local_models_api.py`)
   and a suite for start, download progress, import errors and index build; run it with a real Ollama where CI allows.
-
-### ST-017 · Pending dependency updates (Dependabot)
-
-- **Priority:** P3 Low · **Status:** In progress · **Refs:** #64, #66, #67, #75
-- **What:** actions/setup-node 6.5 → 7.1 (#64), globals 16 → 17 (#66, ESLint config only), jsdom 26 → 30 (#67, unit
-  test environment only), npm minor/patch group (#75). The frontend job (lint, typecheck, unit tests, build, audit)
-  passes for all four on Node 22; the browser suites have not run yet. #75 needs a rebase on the
-  `frontend/package.json` changes from #77.
-- **Next step:** CI no longer needs `NODESTRO_READ` (#110): re-run full CI on each; merge the majors one at a time;
-  rebase #75 first.
 
 ## Platform coverage
 
@@ -262,9 +259,11 @@ None known.
 
 ### ST-027 · `products` in `platform/versions.json` is stale
 
-- **Priority:** P3 Low · **Status:** Open · **Refs:** `platform/versions.json`
+- **Priority:** P3 Low · **Status:** Open · **Refs:** `platform/versions.json`, backend audit round 3 OPS3-06 (product
+  pins moved in this round; the block itself was not touched or checked)
 - **What:** It still lists desktop `67122b7` / server `5bc7b82` built from studio `78710ce` as candidate
-  v0.2.0-preview.1, a candidate that was not released and was superseded; there is no nodestro-local-docker entry.
+  v0.2.0-preview.1, a candidate that is frozen, NO-GO and not published (nodestro-desktop DSK-001); there is no
+  nodestro-local-docker entry.
   Its comment says the block is "updated when a product's studio.json moves", which no longer happens (the products
   were re-pinned to newer studio commits without touching it), and `scripts/check_versions.py` does not check the block.
 - **Next step:** With the next candidate (or now), reword the comment to "last release candidate", mark the old
@@ -333,7 +332,7 @@ None known.
   `auto` mode, `GET /api/sandbox/status` must reach `approved` (preflight and in-container self-test), an
   AI-generated tool comes in through the product's tool job (`POST /api/tools/jobs`, then the decision; the runtime
   classes it `untrusted` itself) and runs in an `orkexa-sandbox-*` container (`docker events`, `docker inspect`
-  isolation flags), a call past the 15 s timeout and a cancelled workflow run leave no container, and after
+  isolation flags), a call past the 15 s timeout and a canceled workflow run leave no container, and after
   `DOCKER_HOST` points nowhere and after the engine is really stopped the tool and new tool jobs are refused with
   `sandbox.isolation_required` and a `docker-*` reason. Only the AI model is a local stand-in endpoint.
   - **Covered by CI (hosted runners):** Linux x86-64 with Docker Engine (`ubuntu-latest`); macOS x86-64 with Colima
@@ -348,7 +347,7 @@ None known.
     were refused with that reason, and the unreachable and really stopped engine (`pkill dockerd`) phases passed.
   - **First CI run (studio #104, 2026-11-02):** every check passed on `ubuntu-latest` (Docker Engine 29.4.2, cgroup v2)
     and on `macos-15-intel` (Colima, cgroup v2): `approved`, the untrusted tool in an `orkexa-sandbox-*` container
-    with the isolation flags, no container left after the timeout and after the cancelled run, and refusal with the
+    with the isolation flags, no container left after the timeout and after the canceled run, and refusal with the
     engine unreachable and really stopped. `windows-latest` refused with `docker-os-type`.
 - **One command for Docker Desktop (2026-11-02):** `scripts/mac_docker_test.sh` / `py -3.13 scripts\docker_test.py`
   (`docs/testing/docker-desktop.md`) installs the checkout's studio into its own environment, runs
@@ -373,6 +372,7 @@ None known.
 | This repo item | Other repo | Other item | Relation |
 |---|---|---|---|
 | (pointer) | nodestro-runtime | RT-001 (independent S-2 review, includes the studio approval surfaces) | Full entry in runtime |
+| (pointer) | nodestro-api | API-054 (independent review of the portable export, api #85/#87, studio #121) | Full entry in api |
 | ST-003 | nodestro-runtime, nodestro-api | RT-012, API-018 (run-level failure cause, AD-02) | Studio needs the field first |
 | ST-014 | nodestro-api | API-017 (budget usage in usage data, AD-20) | Studio needs the field first |
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |
