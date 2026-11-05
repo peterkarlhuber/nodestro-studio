@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 19 |
+| P3 Low | 20 |
 | P4 Optional | 12 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -196,6 +196,19 @@ None known.
 - **Next step:** Make the trigger's accessible name start with its visible label (UX decision), move axe-core to the
   newest release, and remove the `ignore` rule.
 
+### ST-053 · ESLint 10 waits for the React Compiler rules of eslint-plugin-react-hooks 7
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** Dependabot #130 and #131 (closed, dependency round 2026-11-05),
+  `frontend/package.json`, `frontend/eslint.config.js`, `.github/dependabot.yml`
+- **What:** ESLint 10 (with `@eslint/js` 10) needs eslint-plugin-react-hooks 7: 5.2.0 declares peer `eslint` up to
+  `^9`, so `@eslint/js` 10 alone fails `npm ci` (#131). eslint-plugin-react-hooks 7 adds the React Compiler rules to
+  `recommended`, and the frontend then reports 46 errors (#130), most of them `react-hooks/set-state-in-effect`
+  (for example `welcome/RunIllustration.tsx`, `welcome/motion.ts`). Each one is a behavior question (derive the
+  value during render, move it into an event handler, or keep the effect with a reason), not a mechanical fix.
+  Dependabot ignores the majors of `eslint`, `@eslint/js` and `eslint-plugin-react-hooks` until then.
+- **Next step:** One pull request: eslint-plugin-react-hooks 7, fix or justify each finding with tests, then ESLint
+  10 and `@eslint/js` 10 together; remove the three `ignore` rules.
+
 ### ST-047 · Portable export dialog: no browser test against a real package build
 
 - **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-api #85, studio #121, `frontend/src/publish/PortableExport.tsx`;
@@ -305,9 +318,11 @@ None known.
   repository; dependency round 2026-11-05 (thread "Clean up Dependabot PRs and update strategy")
 - **What:** Owner entry for the Nodestro repositories (the others point here). Every repository gets weekly, grouped
   Dependabot pull requests with a small limit: one group for GitHub Actions (pinned by commit SHA), one group per
-  ecosystem for minor and patch updates, each major alone. A cooldown of 3 days (7 for majors) holds back brand-new
+  ecosystem for minor and patch updates, each major alone. A cooldown of 3 days (7 for npm, pip and Cargo majors; Dependabot allows only `default-days` for
+  GitHub Actions and Docker) holds back brand-new
   releases; security updates are not delayed. Majors that are known not to work are ignored with a reason next to
-  the rule and an entry in that repository's TODO (studio: TypeScript, axe-core ST-051; sdk: TypeScript,
+  the rule and an entry in that repository's TODO (studio: TypeScript, axe-core ST-051, ESLint 10 and
+  eslint-plugin-react-hooks 7 ST-053; sdk: TypeScript,
   `@types/node`, Vitest, SDK-009/SDK-010). Python dependencies are not watched: the Nodestro components are pinned by
   commit and move only with the pin cascade (`scripts/check_versions.py`), and CI's blocking `pip-audit` covers the
   third-party ranges (see ST-028). Dependabot never changes a component pin, `platform/versions.json` or a product

@@ -37,3 +37,10 @@ updates:
       # axe-core 4.14 moves label-content-name-mismatch into wcag21a, which the global search trigger fails (ST-051).
       - dependency-name: axe-core
         versions: [">= 4.14.0"]
+      # ESLint 10 needs eslint-plugin-react-hooks 7, whose React Compiler rules report 46 errors to fix first (ST-053).
+      - dependency-name: eslint
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: eslint-plugin-react-hooks
+        update-types: ["version-update:semver-major"]
