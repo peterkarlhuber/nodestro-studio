@@ -12,8 +12,8 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 18 |
-| P4 Optional | 11 |
+| P3 Low | 19 |
+| P4 Optional | 12 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
 preview is gated by nodestro-desktop DSK-001 (new candidate and Go/No-Go), not by an item here.
@@ -185,6 +185,17 @@ None known.
 
 ## Tests and quality assurance
 
+### ST-051 · axe-core held at 4.11.0 (WCAG 2.5.3 on the global search trigger)
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** `d7344ee` (Dependabot #75), `frontend/src/layout/GlobalSearch.tsx`,
+  `.github/dependabot.yml`
+- **What:** axe-core 4.14 moves `label-content-name-mismatch` (WCAG 2.5.3, label in name) from experimental into
+  wcag21a. The a11y e2e suite then fails on all 32 page checks, because the visible text of the global search trigger
+  includes the keyboard shortcut while its accessible name does not. axe-core stays at 4.11.0, and Dependabot ignores
+  axe-core 4.14 and later (dependency round 2026-11-05), so the minor/patch group is not blocked by it.
+- **Next step:** Make the trigger's accessible name start with its visible label (UX decision), move axe-core to the
+  newest release, and remove the `ignore` rule.
+
 ### ST-047 · Portable export dialog: no browser test against a real package build
 
 - **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-api #85, studio #121, `frontend/src/publish/PortableExport.tsx`;
@@ -287,6 +298,28 @@ None known.
   installs (and the server and desktop builds made from them) are not reproducible.
 - **Next step:** Decide on a constraints or lock file for the platform install, together with the other Python repos.
 - **Depends on:** the same decision in nodestro-runtime RT-023 and nodestro-server SRV-014 (desktop builds from the studio pins).
+
+### ST-052 · Dependency updates: weekly Dependabot pull requests, merged by hand
+
+- **Priority:** P4 Optional · **Status:** Needs decision · **Refs:** `.github/dependabot.yml` in every Nodestro
+  repository; dependency round 2026-11-05 (thread "Clean up Dependabot PRs and update strategy")
+- **What:** Owner entry for the Nodestro repositories (the others point here). Every repository gets weekly, grouped
+  Dependabot pull requests with a small limit: one group for GitHub Actions (pinned by commit SHA), one group per
+  ecosystem for minor and patch updates, each major alone. A cooldown of 3 days (7 for majors) holds back brand-new
+  releases; security updates are not delayed. Majors that are known not to work are ignored with a reason next to
+  the rule and an entry in that repository's TODO (studio: TypeScript, axe-core ST-051; sdk: TypeScript,
+  `@types/node`, Vitest, SDK-009/SDK-010). Python dependencies are not watched: the Nodestro components are pinned by
+  commit and move only with the pin cascade (`scripts/check_versions.py`), and CI's blocking `pip-audit` covers the
+  third-party ranges (see ST-028). Dependabot never changes a component pin, `platform/versions.json` or a product
+  pin.
+  Auto-merge is off. `master` has no branch protection with required status checks in any repository, so GitHub
+  auto-merge would merge without waiting for CI; merging stays manual after CI (and, for majors, runtime, sandbox,
+  security or Docker changes, a review with local tests).
+- **Next step:** Owner decision. If wanted: protect `master` with the CI jobs as required checks, allow auto-merge
+  in the repository settings, then add a workflow that enables auto-merge (merge commit) only for Dependabot
+  patch/minor updates of development tools and GitHub Actions (`dependabot/fetch-metadata`); never for majors,
+  production runtime dependencies, Docker images or pins. When the repositories become private, also add
+  `NODESTRO_READ` as a **Dependabot** secret: Dependabot pull requests do not receive Actions secrets.
 
 ### ST-038 · Four scripts outside mypy (API2-16 rest)
 
@@ -396,6 +429,7 @@ None known.
 | ST-014 | nodestro-api | API-017 (budget usage in usage data, AD-20) | Studio needs the field first |
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |
 | ST-028 | nodestro-runtime, nodestro-server | RT-023, SRV-014 (dependency locking, D-05) | One shared decision |
+| ST-052 | all Nodestro repositories | Dependabot policy and auto-merge prerequisites | Owner entry here; the others point to it |
 | ST-018, ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update the status documents and `products` together |
 | ST-007, ST-031 | nodestro-examples, nodestro-runtime | EX-003 (AD-18 marker), RT-055 (copy origin) | Examples and runtime provide the marker; studio shows it |
 | ST-032 | nodestro-api | API-053 (contract descriptions in summaries) | Studio needs the field first |

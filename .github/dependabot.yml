@@ -1,13 +1,20 @@
 # Weekly, grouped update pull requests with a small limit. Every action in the workflows is pinned by commit SHA
 # (the version is the trailing comment); Dependabot keeps those pins current.
-# Python dependencies are left out: pyproject.toml names the private Nodestro components by git URL, which
-# Dependabot cannot read without credentials of its own.
+# Python dependencies are left out: pyproject.toml pins the (public) Nodestro components by git commit, and those
+# pins move only with the platform's pin cascade (studio scripts/check_versions.py); third-party ranges resolve
+# fresh in every CI run, whose blocking pip-audit step catches known vulnerabilities.
+# cooldown: a new release is proposed only after a few days (a week for majors), so a broken or compromised release
+# is usually withdrawn before it reaches a pull request; security updates are not delayed. Merging stays manual
+# (no auto-merge; docs/TODO.md, "Dependency updates").
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
     open-pull-requests-limit: 3
     groups:
       github-actions:
@@ -17,7 +24,17 @@ updates:
     directory: /frontend
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
     open-pull-requests-limit: 3
     groups:
       npm-minor-and-patch:
         update-types: [minor, patch]
+    ignore:
+      # typescript-eslint (peer typescript < 6.1) does not support TypeScript 6/7 yet.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      # axe-core 4.14 moves label-content-name-mismatch into wcag21a, which the global search trigger fails (ST-051).
+      - dependency-name: axe-core
+        versions: [">= 4.14.0"]
