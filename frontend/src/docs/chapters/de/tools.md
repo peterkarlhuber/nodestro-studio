@@ -193,7 +193,7 @@ Derzeit sind nur Tools nutzbar, die du als **nur lesend** einstufst; Tools, die 
 
 **Zugangstokens** werden verschlüsselt gespeichert: auf dem Desktop mit einem Schlüssel aus dem Schlüsselbund des Betriebssystems, auf dem Server mit dem Serverschlüssel, getrennt je Mandant. Ohne sicheren Schlüsselspeicher gilt ein Token nur bis zum Schließen der App. Tokens erscheinen nie in Workflows, Exporten oder Protokollen.
 
-**Grenzen:** Nodestro verbindet sich nie mit internen, lokalen oder Metadaten-Adressen, prüft jede aufgelöste Adresse direkt beim Verbinden und ignoriert Proxy-Einstellungen der Umgebung. Auf einem Server erlaubt der Betreiber die Adressen mit `NODESTRO_MCP_ENDPOINTS`. Zeitpläne, Stapel und veröffentlichte APIs verwenden Dienst-Tools erst, wenn der Betreiber das ausdrücklich einschaltet. Kosten externer Dienste kennt Nodestro nicht; sie erscheinen als **unbekannt**, nie als null.
+**Grenzen:** Nodestro verbindet sich nie mit internen, lokalen oder Metadaten-Adressen, prüft jede aufgelöste Adresse direkt beim Verbinden und ignoriert Proxy-Einstellungen der Umgebung. Auf einem Server legt der Betreiber fest, welche Adressen erlaubt sind. Zeitpläne, Stapel und veröffentlichte APIs verwenden Dienst-Tools erst, wenn der Betreiber das ausdrücklich einschaltet. Kosten externer Dienste kennt Nodestro nicht; sie erscheinen als **unbekannt**, nie als null.
 
 **Betrieb:** Unter *Betrieb* sehen Administratoren, wie viele Dienstaufrufe gerade laufen, die Grenzen des Betreibers und je Dienst Aufrufe, Fehler und die Dauer des letzten Aufrufs. Ein Dienst, der mehrmals hintereinander fehlschlägt, wird kurz pausiert.
 

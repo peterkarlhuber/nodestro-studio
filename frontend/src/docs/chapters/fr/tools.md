@@ -193,7 +193,7 @@ Pour l’instant, seuls les outils que vous classez **lecture seule** sont utili
 
 **Les jetons d’accès** sont enregistrés chiffrés : sur le bureau avec une clé du trousseau du système d’exploitation, sur le serveur avec la clé du serveur, séparément pour chaque locataire. Sans coffre de clés sécurisé, un jeton ne vaut que jusqu’à la fermeture de l’application. Les jetons n’apparaissent jamais dans les workflows, les exports ou les journaux.
 
-**Limites :** Nodestro ne se connecte jamais à des adresses internes, locales ou de métadonnées, vérifie chaque adresse résolue au moment de la connexion et ignore les réglages de proxy de l’environnement. Sur un serveur, l’opérateur autorise les adresses avec `NODESTRO_MCP_ENDPOINTS`. Les planifications, les lots et les API publiées n’utilisent les outils des services que si l’opérateur l’active expressément. Nodestro ne connaît pas le coût des services externes ; il apparaît comme **inconnu**, jamais comme zéro.
+**Limites :** Nodestro ne se connecte jamais à des adresses internes, locales ou de métadonnées, vérifie chaque adresse résolue au moment de la connexion et ignore les réglages de proxy de l’environnement. Sur un serveur, l’exploitant décide quelles adresses sont autorisées. Les planifications, les lots et les API publiées n’utilisent les outils des services que si l’opérateur l’active expressément. Nodestro ne connaît pas le coût des services externes ; il apparaît comme **inconnu**, jamais comme zéro.
 
 **Fonctionnement :** sous *Fonctionnement*, les administrateurs voient combien d’appels de service sont en cours, les limites de l’exploitant et, par service, les appels, les échecs et la durée du dernier appel. Un service qui échoue plusieurs fois de suite est brièvement mis en pause.
 

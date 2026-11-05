@@ -193,7 +193,7 @@ For now only tools you classify as **read only** can be used; tools that change 
 
 **Access tokens** are stored encrypted: on the desktop with a key from the operating system's keychain, on the server with the server key, separately per tenant. Without a secure key store a token is kept only until the app closes. Tokens never appear in workflows, exports or logs.
 
-**Limits:** Nodestro never connects to internal, local or metadata addresses, checks every resolved address at the moment it connects and ignores proxy settings of the environment. On a server the operator allows addresses with `NODESTRO_MCP_ENDPOINTS`. Schedules, batches and published APIs use service tools only when the operator explicitly enables it. Nodestro does not know what external services cost; their cost shows as **unknown**, never as zero.
+**Limits:** Nodestro never connects to internal, local or metadata addresses, checks every resolved address at the moment it connects and ignores proxy settings of the environment. On a server the operator decides which addresses are allowed. Schedules, batches and published APIs use service tools only when the operator explicitly enables it. Nodestro does not know what external services cost; their cost shows as **unknown**, never as zero.
 
 **Operation:** under *Operation* administrators see how many service calls are running, the operator's limits and, per service, calls, failures and the duration of the last call. A service that fails several times in a row is paused briefly.
 

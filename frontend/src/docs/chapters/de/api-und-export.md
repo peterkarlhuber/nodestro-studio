@@ -151,7 +151,7 @@ Standardmäßig antworten veröffentlichte APIs nur diesem Computer. Andere Ger�
 ## Als MCP-Tool {#mcp-server}
 <!-- keywords: mcp-server, mcp-tool, ki-assistent, claude, client, tool -->
 
-Eine veröffentlichte API kann auch als **Tool für MCP-Clients** auf diesem Computer angeboten werden, zum Beispiel für einen KI-Assistenten. Das ist standardmäßig aus und braucht zwei Schalter: Der Betreiber startet Nodestro mit `NODESTRO_MCP_SERVER=1`, und du schaltest unter *Zugriff* **Als MCP-Tool anbieten** ein.
+Eine veröffentlichte API kann auch als **Tool für MCP-Clients** auf diesem Computer angeboten werden, zum Beispiel für einen KI-Assistenten. Das ist standardmäßig aus und braucht zwei Schalter: Nodestros MCP-Server muss in dieser Installation eingeschaltet sein, und du schaltest unter *Zugriff* **Als MCP-Tool anbieten** ein.
 
 - Der Client verbindet sich auf diesem Computer mit `/api/published/_mcp` und sendet einen API-Schlüssel als Bearer-Token. Er sieht die angebotenen APIs dieses Schlüssels als Tools, benannt nach der API; der Schlüssel braucht die Berechtigung, Läufe zu starten.
 - Jeder Tool-Aufruf ist ein **normaler Lauf** der veröffentlichten API: dieselbe Version, dieselben Grenzen, Budgets, Freigaben und derselbe Verlauf. Ist synchrones Warten eingeschaltet, enthält die Antwort das Ergebnis; sonst, oder wenn ein Lauf an einer Freigabe hält, nennt sie den Lauf, damit du ihn in Nodestro oder über die API verfolgen kannst.

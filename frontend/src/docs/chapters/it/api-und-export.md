@@ -151,7 +151,7 @@ Questa porta serve solo le API pubblicate, mai l’interfaccia di Nodestro, le s
 ## Come strumento MCP {#mcp-server}
 <!-- keywords: server mcp, strumento mcp, assistente ia, claude, client, strumento -->
 
-Un'API pubblicata può anche essere offerta come **strumento per i client MCP** di questo computer, per esempio un assistente IA. È disattivato per impostazione predefinita e richiede due interruttori: il gestore avvia Nodestro con `NODESTRO_MCP_SERVER=1` e tu attivi **Offri come strumento MCP** in *Accesso*.
+Un'API pubblicata può anche essere offerta come **strumento per i client MCP** di questo computer, per esempio un assistente IA. È disattivato per impostazione predefinita e richiede due interruttori: il server MCP di Nodestro deve essere attivato in questa installazione e tu attivi **Offri come strumento MCP** in *Accesso*.
 
 - Il client si collega a `/api/published/_mcp` su questo computer e invia una chiave API come token Bearer. Vede le API offerte di quella chiave come strumenti, con il nome dell'API; la chiave deve avere il permesso di avviare esecuzioni.
 - Ogni chiamata allo strumento è un'**esecuzione normale** dell'API pubblicata: stessa versione, stessi limiti, budget, approvazioni e cronologia. Se l'attesa sincrona è attiva, la risposta contiene il risultato; altrimenti, o se un'esecuzione si ferma a un'approvazione, indica l'esecuzione così che tu possa seguirla in Nodestro o tramite l'API.

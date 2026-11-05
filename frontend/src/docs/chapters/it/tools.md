@@ -193,7 +193,7 @@ Per ora si possono usare solo gli strumenti che classifichi come **sola lettura*
 
 **I token di accesso** vengono salvati cifrati: sul desktop con una chiave del portachiavi del sistema operativo, sul server con la chiave del server, separatamente per ogni tenant. Senza un archivio sicuro delle chiavi, un token vale solo fino alla chiusura dell'app. I token non compaiono mai in workflow, esportazioni o registri.
 
-**Limiti:** Nodestro non si collega mai a indirizzi interni, locali o di metadati, verifica ogni indirizzo risolto nel momento in cui si collega e ignora le impostazioni proxy dell'ambiente. Su un server l'operatore consente gli indirizzi con `NODESTRO_MCP_ENDPOINTS`. Pianificazioni, lotti e API pubblicate usano strumenti dei servizi solo se l'operatore lo attiva espressamente. Nodestro non conosce il costo dei servizi esterni; appare come **sconosciuto**, mai come zero.
+**Limiti:** Nodestro non si collega mai a indirizzi interni, locali o di metadati, verifica ogni indirizzo risolto nel momento in cui si collega e ignora le impostazioni proxy dell'ambiente. Su un server l'operatore decide quali indirizzi sono consentiti. Pianificazioni, lotti e API pubblicate usano strumenti dei servizi solo se l'operatore lo attiva espressamente. Nodestro non conosce il costo dei servizi esterni; appare come **sconosciuto**, mai come zero.
 
 **Funzionamento:** in *Funzionamento* gli amministratori vedono quante chiamate ai servizi sono in corso, i limiti del gestore e, per ogni servizio, chiamate, errori e durata dell'ultima chiamata. Un servizio che fallisce più volte di seguito viene messo brevemente in pausa.
 

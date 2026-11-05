@@ -193,7 +193,7 @@ Por ahora solo se pueden usar las herramientas que clasifiques como **solo lectu
 
 **Los tokens de acceso** se guardan cifrados: en el escritorio con una clave del llavero del sistema operativo, en el servidor con la clave del servidor, por separado para cada inquilino. Sin un almacén de claves seguro, un token solo vale hasta cerrar la aplicación. Los tokens nunca aparecen en flujos de trabajo, exportaciones ni registros.
 
-**Límites:** Nodestro nunca se conecta a direcciones internas, locales o de metadatos, comprueba cada dirección resuelta en el momento de conectar e ignora la configuración de proxy del entorno. En un servidor, el operador permite las direcciones con `NODESTRO_MCP_ENDPOINTS`. Las planificaciones, los lotes y las API publicadas solo usan herramientas de servicios si el operador lo activa expresamente. Nodestro no conoce el coste de los servicios externos; aparece como **desconocido**, nunca como cero.
+**Límites:** Nodestro nunca se conecta a direcciones internas, locales o de metadatos, comprueba cada dirección resuelta en el momento de conectar e ignora la configuración de proxy del entorno. En un servidor, el operador decide qué direcciones se permiten. Las planificaciones, los lotes y las API publicadas solo usan herramientas de servicios si el operador lo activa expresamente. Nodestro no conoce el coste de los servicios externos; aparece como **desconocido**, nunca como cero.
 
 **Funcionamiento:** en *Funcionamiento* los administradores ven cuántas llamadas a servicios están en curso, los límites del operador y, por servicio, las llamadas, los fallos y la duración de la última llamada. Un servicio que falla varias veces seguidas se pausa brevemente.
 

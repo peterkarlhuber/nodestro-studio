@@ -151,7 +151,7 @@ Ce port ne sert que les API publiées, jamais l’interface de Nodestro, ses ré
 ## En tant qu’outil MCP {#mcp-server}
 <!-- keywords: serveur mcp, outil mcp, assistant ia, claude, client, outil -->
 
-Une API publiée peut aussi être proposée comme **outil pour les clients MCP** de cet ordinateur, par exemple un assistant IA. C’est désactivé par défaut et nécessite deux interrupteurs : l’exploitant démarre Nodestro avec `NODESTRO_MCP_SERVER=1`, et vous activez **Proposer comme outil MCP** sous *Accès*.
+Une API publiée peut aussi être proposée comme **outil pour les clients MCP** de cet ordinateur, par exemple un assistant IA. C’est désactivé par défaut et nécessite deux interrupteurs : le serveur MCP de Nodestro doit être activé dans cette installation, et vous activez **Proposer comme outil MCP** sous *Accès*.
 
 - Le client se connecte à `/api/published/_mcp` sur cet ordinateur et envoie une clé d’API comme jeton Bearer. Il voit les API proposées de cette clé comme des outils, nommés d’après l’API ; la clé doit être autorisée à lancer des exécutions.
 - Chaque appel d’outil est une **exécution normale** de l’API publiée : même version, mêmes limites, budgets, approbations et historique. Si l’attente synchrone est activée, la réponse contient le résultat ; sinon, ou si une exécution s’arrête à une approbation, elle indique l’exécution pour que vous puissiez la suivre dans Nodestro ou via l’API.

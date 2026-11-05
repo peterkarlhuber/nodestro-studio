@@ -193,7 +193,7 @@ Por enquanto só podem ser usadas as ferramentas que você classificar como **so
 
 **Tokens de acesso** são salvos criptografados: no desktop com uma chave do chaveiro do sistema operacional, no servidor com a chave do servidor, separadamente por inquilino. Sem um cofre de chaves seguro, um token vale só até fechar o app. Tokens nunca aparecem em fluxos de trabalho, exportações ou registros.
 
-**Limites:** o Nodestro nunca se conecta a endereços internos, locais ou de metadados, verifica cada endereço resolvido no momento da conexão e ignora as configurações de proxy do ambiente. Em um servidor, o operador libera os endereços com `NODESTRO_MCP_ENDPOINTS`. Agendamentos, lotes e APIs publicadas só usam ferramentas de serviços se o operador ativar isso expressamente. O Nodestro não conhece o custo de serviços externos; ele aparece como **desconhecido**, nunca como zero.
+**Limites:** o Nodestro nunca se conecta a endereços internos, locais ou de metadados, verifica cada endereço resolvido no momento da conexão e ignora as configurações de proxy do ambiente. Em um servidor, o operador decide quais endereços são permitidos. Agendamentos, lotes e APIs publicadas só usam ferramentas de serviços se o operador ativar isso expressamente. O Nodestro não conhece o custo de serviços externos; ele aparece como **desconhecido**, nunca como zero.
 
 **Operação:** em *Operação* os administradores veem quantas chamadas de serviço estão em andamento, os limites do operador e, por serviço, chamadas, falhas e a duração da última chamada. Um serviço que falha várias vezes seguidas é pausado por pouco tempo.
 

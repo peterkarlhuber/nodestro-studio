@@ -151,7 +151,7 @@ This port only serves the published APIs, never the Nodestro interface, its sett
 ## As an MCP tool {#mcp-server}
 <!-- keywords: mcp server, mcp tool, ai assistant, claude, client, tool -->
 
-A published API can also be offered as a **tool for MCP clients** on this computer, for example an AI assistant. This is off by default and needs two switches: the operator starts Nodestro with `NODESTRO_MCP_SERVER=1`, and you switch on **Offer as an MCP tool** under *Access*.
+A published API can also be offered as a **tool for MCP clients** on this computer, for example an AI assistant. This is off by default and needs two switches: Nodestro's MCP server must be switched on in this installation, and you switch on **Offer as an MCP tool** under *Access*.
 
 - The client connects to `/api/published/_mcp` on this computer and sends an API key as a Bearer token. It sees the offered APIs of that key as tools, named after the API; the key needs the permission to start runs.
 - Every tool call is an **ordinary run** of the published API: same version, limits, budgets, approvals and history. When synchronous waiting is enabled, the answer contains the result; otherwise, or when a run stops at an approval, it names the run so you can follow it in Nodestro or through the API.
