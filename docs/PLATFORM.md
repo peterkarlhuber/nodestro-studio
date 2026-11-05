@@ -155,6 +155,14 @@ No test calls a paid provider. All model responses come from scripts (`nodestro_
 only network exception is the explicitly marked test that installs a real package from PyPI with uv
 (`NODESTRO_NETWORK_TESTS=1`, free of charge).
 
+### Merging and dependency updates
+
+Changes reach `master` only through pull requests with merge commits (component pins point at pull request commits).
+Dependabot opens weekly, grouped pull requests; they are merged by hand after green CI, auto-merge is off. The owner
+decided on 2026-11-05 to protect `master` in every repository with required CI checks and to block force pushes and
+branch deletion; until that is in place, see `docs/TODO.md` ST-052. The next common Node.js version is 24 LTS
+(ST-054, Q1 2027); until then CI and builds use Node 22.
+
 ## Platform pipeline
 
 `.github/workflows/platform.yml` in the studio runs on every push and pull request, weekly and on demand:
