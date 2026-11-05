@@ -23,7 +23,8 @@
 - The strict offline mode text names its full scope (only Ollama; OpenAI-compatible and vLLM endpoints are refused
   also on this computer, for assistants and price checks too), the knowledge index shows "unavailable" where the
   installation cannot hold vectors, and `pricing.offline_sync` has a message; the unused
-  `run.budget_waits_interrupted` message is gone.
+  `run.budget_waits_interrupted` message and the unused `export.private_repository` message (Orkexa is public) are
+  gone.
 - In-app docs and README follow the current behavior in all six languages (budget pause, global search scope, theme,
   node kinds and loops, sandbox limits, code adoption, MCP and service addresses without internal switch names, Low
   effort and the CPU saving mode, run filters); the examples chapter is regenerated for nodestro-examples f015a4d.
