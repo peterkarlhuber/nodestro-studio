@@ -256,9 +256,9 @@ The package never contains keys. On the target computer, the operator enters the
 ## The Orkexa library {#orkexa}
 <!-- keywords: orkexa, library, repository, license, mit, vendor, include, git, access -->
 
-Nodestro runs agents with the **Orkexa** library, which talks to all supported providers. It is not on PyPI and lives in a repository that is currently private. The export therefore offers two ways:
+Nodestro runs agents with the **Orkexa** library, which talks to all supported providers. It is not on PyPI; its source is in a public repository on GitHub, under the MIT license. The export therefore offers two ways:
 
-- **Git reference** (default): `pyproject.toml` points to the exact commit. Whoever installs the project needs read access to the repository.
+- **Git reference** (default): `pyproject.toml` points to the exact commit. Installing the project downloads the library from GitHub, so it needs access to github.com.
 - **Include source:** the source goes to `vendor/orkexa/` and the project installs without access to the repository. The library is under the MIT license. Confirm that you may pass it on before giving this project to others.
 
 Without one of the two the project cannot be installed. The README names the chosen way.

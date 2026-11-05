@@ -22,7 +22,7 @@ Nodestro se ejecuta localmente en tu equipo. Los flujos, ejecuciones, conocimien
 | Concepto | Significado |
 |---|---|
 | **Flujo de trabajo** | Un proceso guardado formado por nodos y conexiones. |
-| **Nodo** | Un bloque del lienzo: *Inicio*, *Agente* o *Resultado*. |
+| **Nodo** | Un bloque del lienzo: *Inicio*, *Agente*, *Resultado*, *Decisión*, *Aprobación*, *Subflujo* u *Orquestador*. Una conexión de una decisión o aprobación de vuelta a un paso anterior crea un bucle. |
 | **Agente** | Un modelo de IA con prompt de sistema, tarea y, opcionalmente, herramientas, conocimiento, memoria y formato de salida. |
 | **Conexión** | Pasa el resultado de un nodo al nodo siguiente. |
 | **Ejecución** | Una única ejecución de un flujo de trabajo con una entrada concreta. |
@@ -31,7 +31,7 @@ Nodestro se ejecuta localmente en tu equipo. Los flujos, ejecuciones, conocimien
 | **Conocimiento** | Archivos subidos (PDF, imágenes, textos) que los agentes usan como material de referencia. |
 | **Memoria** | Notas que un agente escribe por sí mismo y vuelve a leer en tareas posteriores. |
 | **Token** | La unidad de facturación de los modelos: aproximadamente un fragmento de palabra. 1.000 tokens equivalen a unas 600 palabras en español. |
-| **Presupuesto** | Un límite de coste por ejecución; si se supera, la ejecución se detiene. |
+| **Presupuesto** | Un límite de coste por ejecución. Si no alcanza en una ejecución que iniciaste tú, la ejecución se pausa y espera una decisión de presupuesto; las ejecuciones desatendidas (programaciones, ejecuciones por lotes, series de pruebas) fallan en su lugar. |
 
 ## Primeros pasos {#erste-schritte}
 <!-- keywords: guía, tutorial, inicio rápido, primer flujo, quickstart -->
@@ -57,7 +57,7 @@ La **barra lateral** de la izquierda sigue tu forma de trabajar: crear, ejecutar
 - **Automatizar y probar:** *Series de pruebas*, *Ejecuciones por lotes* y *Programaciones*.
 - **Ayuda:** esta *Documentación* y la página de *Bienvenida*.
 
-Abajo están los *Ajustes* y, debajo, dónde se ejecuta Nodestro: en la aplicación de escritorio y con el comando `nodestro` pone **Local y privado**; en un servidor, **El servidor de tu organización** (consulta [Nodestro en un servidor](/docs/einstellungen#server)). Arriba a la derecha cambias entre el esquema de color oscuro y claro; la elección se guarda en el navegador. Si el proveedor del modelo predeterminado no está configurado, ahí aparece un aviso (*Configurar proveedor de IA* o, si ya hay otro proveedor configurado, *El modelo predeterminado necesita …*) que lleva directamente a los ajustes. En un servidor, arriba a la derecha aparece además tu cuenta.
+Abajo están los *Ajustes* y, debajo, dónde se ejecuta Nodestro: si ejecutas Nodestro en tu equipo con el comando `nodestro`, pone **Local y privado**; en un servidor, **El servidor de tu organización** (consulta [Nodestro en un servidor](/docs/einstellungen#server)). Arriba a la derecha eliges el esquema de color: *Sistema* (sigue a tu sistema operativo, el predeterminado), *Oscuro* o *Claro*; la elección se guarda en el navegador. Si el proveedor del modelo predeterminado no está configurado, ahí aparece un aviso (*Configurar proveedor de IA* o, si ya hay otro proveedor configurado, *El modelo predeterminado necesita …*) que lleva directamente a los ajustes. En un servidor, arriba a la derecha aparece además tu cuenta.
 
 **Ayuda justo donde la necesitas:** junto a muchos controles hay un pequeño símbolo **?**. Pasa el ratón por encima, enfócalo con la tecla Tab o tócalo en dispositivos táctiles: aparece una breve explicación, a menudo con un enlace a la sección correspondiente de esta documentación. El símbolo del libro junto a los títulos de página abre el capítulo correspondiente. Con **Esc** cierras la explicación.
 
@@ -66,7 +66,7 @@ Los estados se muestran siempre como texto y símbolo, nunca solo con color. Tod
 ## Búsqueda {#suche}
 <!-- keywords: búsqueda, buscar, encontrar, ctrl+k, cmd+k, búsqueda rápida -->
 
-El campo de búsqueda de la barra de título (o **Ctrl+K**, en Mac **⌘K**) busca en flujos de trabajo, agentes de los flujos de trabajo, la biblioteca de agentes, herramientas, conocimiento y esta documentación. Los resultados se agrupan por tipo; los favoritos aparecen con estrella.
+El campo de búsqueda de la barra de título (o **Ctrl+K**, en Mac **⌘K**) busca en páginas y secciones de los ajustes, flujos de trabajo, ejecuciones, agentes de los flujos de trabajo, la biblioteca de agentes, flujos de ejemplo, herramientas, conocimiento y esta documentación. Los resultados se agrupan por tipo; los favoritos aparecen con estrella. Las ejecuciones se encuentran entre las más recientes por nombre del flujo, entrada, estado o ID. Con el campo vacío, te ofrece tus últimas ejecuciones y los flujos de trabajo modificados recientemente.
 
 Con las flechas eliges un resultado; **Intro** lo abre donde corresponde: un agente en el editor de su flujo de trabajo, una plantilla en la biblioteca de agentes, una herramienta en la biblioteca de herramientas, un archivo de conocimiento en la lista y una sección en la documentación. Las mayúsculas, minúsculas y tildes no importan.
 
@@ -81,13 +81,6 @@ Todos los datos se guardan en una base de datos SQLite en el directorio de datos
 Para hacer una **copia de seguridad**, copia el directorio de datos con Nodestro detenido. Al proveedor de un agente solo se envía lo que el agente necesita para su solicitud: prompt de sistema, tarea, conocimiento asignado, contenido de memoria que lee y resultados de herramientas. Las claves de API nunca se muestran en la interfaz. Si trabajas con Nodestro en un servidor, los datos se guardan allí (consulta [Nodestro en un servidor](/docs/einstellungen#server)).
 
 ## La aplicación de escritorio {#desktop}
-<!-- keywords: escritorio, aplicación, ventana, linux, instalación, enlace de inicio, tauri -->
+<!-- keywords: escritorio, aplicación, aplicación de escritorio, descarga, instalación, ventana -->
 
-Además del comando `nodestro`, Nodestro está disponible como aplicación de escritorio (versión preliminar para Linux x86_64, aún sin firmar). Incluye su propio Python, así que solo necesita WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`). Descomprima el archivo e inicie `nodestro-desktop`.
-
-- La aplicación usa el mismo directorio de datos que el comando (`~/.nodestro` o `NODESTRO_DATA_DIR`). Solo uno de los dos puede usarlo a la vez.
-- Solo la ventana de la aplicación puede usar este Nodestro. Otros programas del equipo y las páginas web del navegador se rechazan (*Este Nodestro pertenece a la aplicación de escritorio que lo inició*). El enlace de inicio de la ventana funciona una sola vez; para abrir una ventana nueva, reinicie la aplicación.
-- Los enlaces a otros sitios web se abren en el navegador.
-- Al cerrar la ventana, Nodestro se detiene. Si se detiene de forma inesperada, la ventana lo indica y muestra el archivo de registro.
-- Las herramientas creadas por IA solo se ejecutan aisladas: con el sandbox *Automático*, en Docker, una vez que supera las comprobaciones de Nodestro ([Instalar Docker](/docs/einstellungen#sandbox-docker)). En su lugar puedes elegir el **Sandbox de Linux** integrado, que no necesita instalación pero no puede usar paquetes de Python de terceros (consulta [Herramientas](/docs/tools#sandbox)). Sin ninguno de los dos quedan bloqueadas; *Ajustes → Sandbox* indica el motivo.
-- Aún no existen versiones para macOS y Windows.
+En esta versión no existe una aplicación de escritorio de Nodestro, y no se puede descargar ninguna. Para usar Nodestro en tu equipo, inícialo con el comando `nodestro`: se ejecuta localmente y se abre en el navegador (consulta [Instalación e inicio](/docs/einstellungen#installation)).

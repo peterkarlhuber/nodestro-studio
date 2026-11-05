@@ -22,7 +22,7 @@ Nodestro funziona in locale sul tuo computer. Workflow, esecuzioni, conoscenze e
 | Concetto | Significato |
 |---|---|
 | **Workflow** | Un processo salvato fatto di nodi e collegamenti. |
-| **Nodo** | Un blocco sull'area di lavoro: *Avvio*, *Agente* o *Risultato*. |
+| **Nodo** | Un blocco sull'area di lavoro: *Avvio*, *Agente*, *Risultato*, *Decisione*, *Approvazione*, *Sotto-workflow* o *Orchestratore*. Un collegamento da una decisione o da un’approvazione a un passaggio precedente crea un ciclo. |
 | **Agente** | Un modello di IA con prompt di sistema, compito e, facoltativamente, strumenti, conoscenze, memoria e formato di output. |
 | **Collegamento** | Passa il risultato di un nodo al nodo successivo. |
 | **Esecuzione** | Una singola esecuzione di un workflow con un input specifico. |
@@ -31,7 +31,7 @@ Nodestro funziona in locale sul tuo computer. Workflow, esecuzioni, conoscenze e
 | **Conoscenza** | File caricati (PDF, immagini, testi) che gli agenti usano come materiale di riferimento. |
 | **Memoria** | Note che un agente scrive da solo e rilegge in attività successive. |
 | **Token** | L'unità di fatturazione dei modelli: circa un frammento di parola. 1.000 token corrispondono a circa 600 parole in italiano. |
-| **Budget** | Un limite di costo per esecuzione; se viene superato, l'esecuzione si interrompe. |
+| **Budget** | Un limite di costo per esecuzione. Se non basta per un’esecuzione che hai avviato tu, l’esecuzione si mette in pausa e attende una decisione sul budget; le esecuzioni non presidiate (pianificazioni, esecuzioni in batch, serie di test) invece falliscono. |
 
 ## Primi passi {#erste-schritte}
 <!-- keywords: guida, tutorial, avvio rapido, primo workflow, quickstart -->
@@ -57,7 +57,7 @@ La **barra laterale** a sinistra segue il tuo modo di lavorare: creare, eseguire
 - **Automatizza e testa:** *Serie di test*, *Esecuzioni in serie* e *Pianificazioni*.
 - **Aiuto:** questa *Documentazione* e la pagina *Benvenuto*.
 
-In basso trovi le *Impostazioni* e, sotto, dove gira Nodestro: nell’app desktop e con il comando `nodestro` c’è scritto **Locale e privato**; su un server, **Il server della tua organizzazione** (vedi [Nodestro su un server](/docs/einstellungen#server)). In alto a destra passi dallo schema di colori scuro a quello chiaro; la scelta viene salvata nel browser. Se il provider del modello predefinito non è configurato, lì compare un avviso (*Configura provider di IA* oppure, se è già configurato un altro provider, *Il modello predefinito richiede …*) che porta direttamente alle impostazioni. Su un server, in alto a destra vedi anche il tuo account.
+In basso trovi le *Impostazioni* e, sotto, dove gira Nodestro: se avvii Nodestro sul tuo computer con il comando `nodestro`, c’è scritto **Locale e privato**; su un server, **Il server della tua organizzazione** (vedi [Nodestro su un server](/docs/einstellungen#server)). In alto a destra scegli lo schema di colori: *Sistema* (segue il sistema operativo, predefinito), *Scuro* o *Chiaro*; la scelta viene salvata nel browser. Se il provider del modello predefinito non è configurato, lì compare un avviso (*Configura provider di IA* oppure, se è già configurato un altro provider, *Il modello predefinito richiede …*) che porta direttamente alle impostazioni. Su un server, in alto a destra vedi anche il tuo account.
 
 **Aiuto proprio dove serve:** accanto a molti controlli c'è un piccolo simbolo **?**. Passaci sopra con il mouse, selezionalo con il tasto Tab o toccalo sui dispositivi touch: compare una breve spiegazione, spesso con un link alla sezione corrispondente di questa documentazione. Il simbolo del libro accanto ai titoli di pagina apre il capitolo corrispondente. Con **Esc** chiudi la spiegazione.
 
@@ -66,7 +66,7 @@ Gli stati sono sempre mostrati come testo e simbolo, mai solo con il colore. Tut
 ## Ricerca {#suche}
 <!-- keywords: ricerca, cercare, trovare, ctrl+k, cmd+k, ricerca rapida -->
 
-Il campo di ricerca in alto nella barra del titolo (o **Ctrl+K**, su Mac **⌘K**) cerca in workflow, agenti nei workflow, libreria di agenti, strumenti, conoscenza e in questa documentazione. I risultati sono raggruppati per tipo; i preferiti compaiono con una stella.
+Il campo di ricerca in alto nella barra del titolo (o **Ctrl+K**, su Mac **⌘K**) cerca in pagine e sezioni delle impostazioni, workflow, esecuzioni, agenti nei workflow, libreria di agenti, workflow di esempio, strumenti, conoscenza e in questa documentazione. I risultati sono raggruppati per tipo; i preferiti compaiono con una stella. Le esecuzioni vengono trovate tra le più recenti per nome del workflow, input, stato o ID. Con il campo vuoto, ti propone le tue ultime esecuzioni e i workflow modificati di recente.
 
 Con le frecce scegli un risultato; **Invio** lo apre dove si trova: un agente nell’editor del suo workflow, un modello nella libreria di agenti, uno strumento nella libreria degli strumenti, un file di conoscenza nell’elenco e una sezione nella documentazione. Maiuscole, minuscole e accenti non contano.
 
@@ -81,13 +81,6 @@ Tutti i dati sono salvati in un database SQLite nella directory dei dati, per im
 Per fare un **backup**, copia la directory dei dati mentre Nodestro è chiuso. Al provider di un agente va solo il contenuto che l’agente serve per la sua richiesta: prompt di sistema, compito, conoscenze assegnate, contenuti di memoria che legge e risultati degli strumenti. Le chiavi API non vengono mai mostrate nell’interfaccia. Se lavori con Nodestro su un server, i dati sono salvati su quel server (vedi [Nodestro su un server](/docs/einstellungen#server)).
 
 ## L’app desktop {#desktop}
-<!-- keywords: desktop, app, finestra, linux, installazione, link di avvio, tauri -->
+<!-- keywords: desktop, app, app desktop, download, installazione, finestra -->
 
-Oltre al comando `nodestro`, Nodestro è disponibile come app desktop (anteprima per Linux x86_64, non ancora firmata). Include il proprio Python: oltre a WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`) non serve installare nulla. Estrarre l’archivio e avviare `nodestro-desktop`.
-
-- L’app usa la stessa directory dei dati del comando (`~/.nodestro` o `NODESTRO_DATA_DIR`). Solo uno dei due può usarla alla volta.
-- Solo la finestra dell’app può usare questo Nodestro. Gli altri programmi del computer e le pagine web nel browser vengono rifiutati (*Questo Nodestro appartiene all’app desktop che lo ha avviato*). Il link di avvio della finestra vale una sola volta; per aprire una nuova finestra, riavviare l’app.
-- I link ad altri siti si aprono nel browser.
-- Chiudendo la finestra Nodestro si arresta. Se si arresta in modo imprevisto, la finestra lo segnala e indica il file di log.
-- Gli strumenti creati dall’IA vengono eseguiti solo isolati: con la sandbox *Automatica* in Docker, dopo che ha superato le verifiche di Nodestro ([Installare Docker](/docs/einstellungen#sandbox-docker)). In alternativa puoi scegliere la **Sandbox Linux** integrata, che non richiede installazioni ma non può usare pacchetti Python di terze parti (vedi [Strumenti](/docs/tools#sandbox)). Senza nessuna delle due sono bloccati; *Impostazioni → Sandbox* indica il motivo.
-- Le versioni per macOS e Windows non esistono ancora.
+In questa versione non esiste un’app desktop di Nodestro, e non se ne può scaricare nessuna. Per usare Nodestro sul tuo computer, avvialo con il comando `nodestro`: gira in locale e si apre nel browser (vedi [Installazione e avvio](/docs/einstellungen#installation)).

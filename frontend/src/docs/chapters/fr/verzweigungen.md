@@ -77,37 +77,11 @@ Chaque carte montre la consigne, les résultats à vérifier (les résultats str
 Les exécutions qui attendent une [décision de budget](/docs/workflows#budget-freigabe) apparaissent en haut dans une section propre **Décisions de budget**, avec un lien vers l’exécution.
 
 ## Valider les appels d’outils {#tool-freigabe}
-<!-- keywords: validation d’outil, appel d’outil, par appel, arguments, délai, validation anticipée, sans surveillance, exception héritée -->
+<!-- keywords: validation d’outil, appel d’outil, par appel, valider les appels d’outils, non activé, règles des appels d’outils -->
 
-En plus des nœuds de validation, Nodestro peut demander avant **des appels d’outils isolés** d’un agent. C’est prévu pour les outils qui modifient des données ou agissent vers l’extérieur, par exemple envoyer un e-mail ou écrire dans un système de tickets.
+Les validations d’**appels d’outils individuels** ne sont pas activées dans cette version. Les outils qu’un agent peut utiliser s’exécutent sans demander avant chaque appel. Sur la page **Validations**, *Règles des appels d’outils* affiche cet état.
 
-**Désactivé pour l’instant.** Les validations par appel d’outil ne sont pas encore activées dans Nodestro ; elles n’arriveront qu’après une revue de sécurité. D’ici là, les outils s’exécutent sans demande préalable, et sur la page **Validations**, *Règles des appels d’outils* n’affiche que cette phrase. La préparation pour les administrateurs (étape d’activation, validations anticipées, journal) y est repliée sous **Préparation pour les administrateurs**. La suite de cette section décrit le fonctionnement des validations une fois activées.
-
-Quand un agent veut faire un tel appel, l’exécution continue mais attend à cet appel. La carte apparaît dans l’exécution, à l’étape et sur la page **Validations**. Elle montre l’outil, ce qu’il peut faire (*lecture seule*, *modifie des données*, *supprime ou détruit* ; *reste dans Nodestro* ou *agit vers l’extérieur*), les **arguments exactement tels qu’ils seront envoyés** et le temps restant.
-
-- **Autoriser cet appel** laisse passer exactement cet appel. Une décision ne vaut que pour les arguments et la version d’outil que vous avez vus : si l’un d’eux a changé, Nodestro refuse la décision et affiche l’appel actuel.
-- **Refuser** empêche l’appel ; l’agent apprend qu’il a été refusé et peut continuer sans lui.
-- **Sans décision** dans le délai (15 minutes par défaut), l’appel compte comme refusé, y compris après un redémarrage. Une décision refusée ou expirée n’est jamais réutilisée.
-- Un outil **non classé** compte comme modifiant et externe.
-- Pour les outils des **services connectés** qui modifient des données, la question est posée à chaque appel.
-
-Les exécutions que personne ne surveille (planifications, lots, séries de tests) ne peuvent pas demander. Un tel appel y est refusé, sauf si l’administration a **validé à l’avance** cette version de l’outil pour exactement cette planification ou ce lot. Les outils qui suppriment ou détruisent et ceux des services connectés ne peuvent jamais être validés à l’avance.
-
-**Avertissement avant le lancement.** Tant que les approbations sont actives, la boîte de dialogue de planification, le lancement des lots et des séries de tests et la vérification avant de publier une API listent chaque appel d’outil qu’une telle exécution refuserait : quel agent et quel outil, pourquoi (aucune approbation anticipée ou une approbation périmée, un lot qui n’existe pas encore, une API publiée, un outil qui supprime ou détruit, un outil d’un service connecté) et comment y remédier. Ce n’est qu’un avertissement : rien n’est approuvé automatiquement, et l’appel reste refusé pendant l’exécution. Une approbation anticipée vise une planification enregistrée ou un lot ou une série de tests déjà lancés : les appels antérieurs sont refusés ; lancez un lot à la main si chaque appel compte. Les API publiées n’ont pas encore d’étape d’approbation propre : leurs appels d’outils qui modifient sont toujours refusés. L’avertissement ne voit pas les outils qu’un orchestrateur restreint ou choisit pendant l’exécution, ni les approbations données ou révoquées après la vérification.
-
-**Activation, dans cet ordre :**
-
-1. Sous *Validations → Règles des appels d’outils*, l’administration exécute **Marquer les attributions existantes**. Chaque attribution d’outil qui existe maintenant dans les workflows, leurs versions et les API publiées devient une **exception héritée**, liée à la version d’outil avec laquelle elle tourne. Les API publiées reçoivent une seule fois une nouvelle empreinte (digest) ; leur historique garde l’ancienne et la nouvelle. L’étape ne s’exécute **qu’une fois** : les attributions, workflows et versions créés ensuite sont nouveaux et soumis à la question.
-2. **Vérifier la liste.** Une exception non voulue prend fin quand vous retirez l’outil de l’agent et enregistrez ; si vous l’attribuez à nouveau, la question est posée comme pour un nouvel outil.
-3. Ensuite seulement, les validations sont activées. Cette version ne le prévoit pas encore : elles restent désactivées jusqu’à la fin de la revue de sécurité.
-
-Si on active sans la première étape, rien n’est exempté : chaque attribution est soumise à la question et les exécutions sans surveillance refusent ces appels. Une nouvelle version d’outil met toujours fin à une exception. Une validation ne lève jamais les limites du bac à sable.
-
-**Non couvert :** les outils serveur du fournisseur (recherche web, récupération web et exécution de code chez Anthropic) tournent chez le fournisseur et ne peuvent pas être retenus par appel ; désactivez-les pour l’agent là où ils ne doivent pas servir. Les outils d’exécution propres à Nodestro (mémoire, fichiers de l’exécution) ne sont pas soumis à la question non plus. Les API publiées ne demandent à personne : elles auront plus tard leur propre phase de validation.
-
-Sous **Validations → Règles des appels d’outils**, vous voyez si les validations sont activées et quelles exceptions héritées existent. L’administration y exécute aussi l’étape d’activation, accorde et révoque des validations anticipées et consulte le journal : qui a décidé, accordé ou révoqué quoi, et chaque décision refusée. Les arguments d’un appel n’apparaissent jamais dans le journal.
-
-Dans les détails de l’exécution, chaque appel d’outil montre ce qu’ont fait les règles : autorisé, validé ou refusé (par qui et quand), pas de décision à temps ou refusé sans question, avec la raison.
+Pour qu’une personne vérifie les résultats avant que l’exécution continue, utilisez une [validation](/docs/verzweigungen#freigabe). Pour limiter ce qu’un agent peut faire, attribuez-lui uniquement les outils dont il a besoin (voir [Attribuer des outils](/docs/agenten#tools)).
 
 ## Sous-workflows {#unterworkflow}
 <!-- keywords: sous-workflow, subworkflow, imbriquer, réutiliser, brique, version, exécution enfant -->

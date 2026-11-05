@@ -77,37 +77,11 @@ Jede Karte zeigt den Hinweis, die zu prüfenden Ergebnisse (strukturierte Ergebn
 Läufe, die auf eine [Budget-Entscheidung](/docs/workflows#budget-freigabe) warten, stehen oben in einem eigenen Abschnitt **Budget-Entscheidungen**, mit einem Link zum Lauf.
 
 ## Tool-Aufrufe freigeben {#tool-freigabe}
-<!-- keywords: tool-freigabe, tool-aufruf, pro aufruf, argumente, frist, vorab-freigabe, unbeaufsichtigt, altbestand -->
+<!-- keywords: tool-freigabe, tool-aufruf, pro aufruf, tool-aufrufe freigeben, nicht aktiviert, regeln für tool-aufrufe -->
 
-Neben Freigabeknoten kann Nodestro auch vor **einzelnen Tool-Aufrufen** eines Agenten fragen. Das ist für Tools gedacht, die Daten ändern oder nach außen wirken, zum Beispiel eine E-Mail senden oder in ein Ticketsystem schreiben.
+Freigaben für **einzelne Tool-Aufrufe** sind in dieser Version nicht aktiviert. Tools, die ein Agent verwenden darf, laufen, ohne vor jedem Aufruf zu fragen. Auf der Seite **Freigaben** zeigt *Regeln für Tool-Aufrufe* diesen Stand.
 
-**Derzeit ausgeschaltet.** Freigaben pro Tool-Aufruf sind in Nodestro noch nicht eingeschaltet; sie kommen erst nach einer Sicherheitsprüfung. Bis dahin laufen Tools ohne vorherige Nachfrage, und auf der Seite **Freigaben** steht unter *Regeln für Tool-Aufrufe* nur dieser eine Satz. Die Vorbereitung für Administratoren (Aktivierungsschritt, Vorab-Freigaben, Protokoll) liegt dort zugeklappt unter **Vorbereitung für Administratoren**. Der Rest dieses Abschnitts beschreibt, wie die Freigaben arbeiten, sobald sie eingeschaltet sind.
-
-Will ein Agent einen solchen Aufruf machen, läuft die Ausführung weiter, wartet aber an diesem Aufruf. Die Karte erscheint in der Ausführung, beim Schritt und auf der Seite **Freigaben**. Sie zeigt das Tool, was es darf (*liest nur*, *ändert Daten*, *löscht oder zerstört*; *bleibt in Nodestro* oder *wirkt nach außen*), die **Argumente genau so, wie sie gesendet werden**, und die verbleibende Zeit.
-
-- **Diesen Aufruf erlauben** lässt genau diesen Aufruf durch. Eine Entscheidung gilt nur für die Argumente und die Tool-Version, die du gesehen hast: Hat sich eines davon geändert, lehnt Nodestro die Entscheidung ab und zeigt den aktuellen Aufruf.
-- **Ablehnen** verhindert den Aufruf; der Agent erfährt, dass er abgelehnt wurde, und kann ohne ihn weitermachen.
-- **Ohne Entscheidung** innerhalb der Frist (standardmäßig 15 Minuten) gilt der Aufruf als abgelehnt, auch nach einem Neustart. Eine abgelehnte oder abgelaufene Entscheidung wird nie wiederverwendet.
-- Ein **nicht eingestuftes** Tool gilt als ändernd und nach außen wirkend.
-- Bei Tools **verbundener Dienste**, die Daten ändern, wird bei jedem Aufruf gefragt.
-
-Ausführungen, bei denen niemand zusieht (Zeitpläne, Stapel, Testreihen), können nicht fragen. Dort wird ein solcher Aufruf verweigert, außer die Administration hat diese Tool-Version für genau diesen Zeitplan oder Stapel **vorab freigegeben**. Tools, die löschen oder zerstören, und Tools verbundener Dienste lassen sich nie vorab freigeben.
-
-**Warnung vor dem Start.** Solange Freigaben eingeschaltet sind, zeigen der Zeitplan-Dialog, der Start von Stapeln und Testreihen sowie die Prüfung vor dem Veröffentlichen einer API jeden Tool-Aufruf, den eine solche Ausführung verweigern würde: welcher Agent und welches Tool, warum (keine oder veraltete Vorabfreigabe, ein Stapel, der noch nicht existiert, eine veröffentlichte API, ein Tool, das löscht oder zerstört, ein Tool eines verbundenen Dienstes) und wie du es behebst. Das ist nur eine Warnung: Nichts wird automatisch freigegeben, und der Aufruf wird in der Ausführung weiterhin verweigert. Eine Vorabfreigabe nennt einen gespeicherten Zeitplan oder einen gestarteten Stapel bzw. eine gestartete Testreihe; Aufrufe davor werden verweigert. Starte einen Stapel von Hand, wenn jeder Aufruf zählt. Veröffentlichte APIs haben noch keinen eigenen Freigabeschritt, daher werden ihre ändernden Tool-Aufrufe immer verweigert. Nicht sichtbar sind Tools, die ein Orchestrator erst während der Ausführung einschränkt oder auswählt, und Freigaben, die nach der Prüfung erteilt oder widerrufen werden.
-
-**Einschalten, in dieser Reihenfolge:**
-
-1. Unter *Freigaben → Regeln für Tool-Aufrufe* führt die Administration **Bestehende Zuweisungen markieren** aus. Jede Tool-Zuweisung, die es jetzt in Workflows, ihren Versionen und veröffentlichten APIs gibt, wird zur **Ausnahme aus dem Altbestand**, gebunden an die Tool-Version, mit der sie läuft. Veröffentlichte APIs erhalten dabei einmalig eine neue Prüfsumme (Digest); ihr Verlauf hält die alte und die neue fest. Der Schritt läuft **nur einmal**: Danach erstellte Zuweisungen, Workflows und Stände sind neu und werden abgefragt.
-2. **Die Liste prüfen.** Eine unerwünschte Ausnahme endet, wenn du das Tool beim Agenten entfernst und speicherst; weist du es wieder zu, wird es wie ein neues abgefragt.
-3. Erst danach werden die Freigaben eingeschaltet. Das ist in dieser Version noch nicht vorgesehen: Bis die Sicherheitsprüfung abgeschlossen ist, bleiben sie aus.
-
-Wird ohne den ersten Schritt eingeschaltet, ist nichts ausgenommen: Jede Zuweisung wird abgefragt, und unbeaufsichtigte Ausführungen verweigern solche Aufrufe. Eine neue Tool-Version beendet eine Ausnahme immer. Eine Freigabe hebt die Grenzen der Sandbox nie auf.
-
-**Nicht abgedeckt:** Die Server-Tools des Anbieters (Websuche, Webabruf und Codeausführung bei Anthropic) laufen beim Anbieter und lassen sich nicht pro Aufruf anhalten; schalte sie beim Agenten ab, wo sie nicht genutzt werden dürfen. Nodestros eigene Ausführungs-Tools (Gedächtnis, Dateien der Ausführung) werden ebenfalls nicht abgefragt. Veröffentlichte APIs fragen niemanden: Sie erhalten später eine eigene Freigabephase.
-
-Unter **Freigaben → Regeln für Tool-Aufrufe** siehst du, ob die Freigaben eingeschaltet sind und welche Ausnahmen aus dem Altbestand es gibt. Die Administration führt dort auch den Aktivierungsschritt aus, erteilt und widerruft Vorab-Freigaben und liest das Protokoll: wer was entschieden, erteilt oder widerrufen hat, und jede abgelehnte Entscheidung. Die Argumente eines Aufrufs erscheinen nie im Protokoll.
-
-In den Details der Ausführung zeigt jeder Tool-Aufruf, was die Regeln getan haben: erlaubt, freigegeben oder abgelehnt (von wem und wann), keine Entscheidung rechtzeitig oder ohne Rückfrage verweigert, mit Grund.
+Soll eine Person Ergebnisse prüfen, bevor der Lauf weitergeht, nimm eine [Freigabe](/docs/verzweigungen#freigabe). Um einzuschränken, was ein Agent tun kann, weise ihm nur die Tools zu, die er braucht (siehe [Tools zuweisen](/docs/agenten#tools)).
 
 ## Unterworkflows {#unterworkflow}
 <!-- keywords: unterworkflow, subworkflow, verschachteln, wiederverwenden, baustein, version, kindlauf -->

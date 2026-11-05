@@ -256,9 +256,9 @@ Das Paket enthält nie Schlüssel. Auf dem Zielrechner trägt der Betreiber die 
 ## Die Bibliothek Orkexa {#orkexa}
 <!-- keywords: orkexa, bibliothek, repository, lizenz, mit, vendor, mitliefern, git, zugriff -->
 
-Nodestro führt Agenten mit der Bibliothek **Orkexa** aus, die alle unterstützten Anbieter anspricht. Sie ist nicht auf PyPI und liegt in einem Repository, das derzeit privat ist. Der Export bietet deshalb zwei Wege:
+Nodestro führt Agenten mit der Bibliothek **Orkexa** aus, die alle unterstützten Anbieter anspricht. Sie ist nicht auf PyPI; ihr Quellcode liegt in einem öffentlichen Repository auf GitHub, unter der MIT-Lizenz. Der Export bietet deshalb zwei Wege:
 
-- **Git-Referenz** (Standard): `pyproject.toml` verweist auf den genauen Commit. Wer das Projekt installiert, braucht Lesezugriff auf das Repository.
+- **Git-Referenz** (Standard): `pyproject.toml` verweist auf den genauen Commit. Beim Installieren wird die Bibliothek von GitHub geladen; dafür ist Zugang zu github.com nötig.
 - **Quellcode beilegen:** Der Quellcode kommt nach `vendor/orkexa/` und das Projekt installiert sich ohne Zugriff auf das Repository. Die Bibliothek steht unter der MIT-Lizenz. Bestätige, dass du sie weitergeben darfst, bevor du dieses Projekt anderen gibst.
 
 Ohne eines von beiden lässt sich das Projekt nicht installieren. Das README nennt den gewählten Weg.

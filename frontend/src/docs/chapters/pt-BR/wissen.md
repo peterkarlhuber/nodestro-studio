@@ -86,7 +86,7 @@ O campo de filtro à esquerda só pesquisa nomes de arquivo e descrições.
 ## Métodos de busca {#suchverfahren}
 <!-- keywords: busca semântica, embedding, vetor, híbrida, entre idiomas, índice, reconstruir, qwen3-embedding -->
 
-*Configurações → Busca no conhecimento* define como os agentes no modo *Busca* ordenam os trechos:
+*Configurações → Busca no conhecimento* define como os agentes no modo *Pesquisa* ordenam os trechos:
 
 - **Texto completo** (padrão): encontra as palavras da pergunta. Não precisa de modelo.
 - **Semântica:** encontra trechos pelo significado, também entre idiomas (uma pergunta em francês encontra um trecho em alemão). Precisa do índice semântico.

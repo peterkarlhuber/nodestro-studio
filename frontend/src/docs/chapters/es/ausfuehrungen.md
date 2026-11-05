@@ -33,7 +33,7 @@ En el lienzo, cada agente muestra su estado y, tras la ejecución, también toke
 
 La página **Ejecuciones** lista las ejecuciones, de la más reciente a la más antigua, con flujo de trabajo, estado, hora de inicio, duración, solicitudes, tokens y costes. Debajo del nombre del flujo aparece la entrada o el mensaje de error. Si una ejecución terminada tuvo llamadas a herramientas sin resultado, junto a *Terminado* aparece **Terminada con problemas**, siempre que el servidor envíe este dato.
 
-- **Filtros:** por flujo de trabajo, por estado y por origen (*Ejecuciones propias* o *Trazas importadas*).
+- **Filtros:** por flujo de trabajo, por estado (también *Espera una decisión de presupuesto*) y por origen (*Ejecuciones propias* o *Trazas importadas*). Los filtros forman parte de la dirección, así que *Atrás* y un enlace guardado llevan a la misma selección. Los flujos con el mismo nombre se distinguen en el filtro por la fecha de su último cambio.
 - **Eliminar:** símbolo de la papelera; las ejecuciones en curso no se pueden eliminar.
 - **Importar traza:** consulta [Importar trazas](/docs/ausfuehrungen#trace-import).
 - **Cargar ejecuciones anteriores:** la lista muestra primero las 100 ejecuciones más recientes y lo indica debajo. Los filtros por estado y origen solo buscan en las ejecuciones cargadas. Si el servidor no admite paginación, la lista termina en 500 ejecuciones; las anteriores siguen guardadas y se alcanzan con el filtro por flujo de trabajo.

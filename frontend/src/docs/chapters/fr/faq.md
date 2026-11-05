@@ -40,7 +40,7 @@ Nodestro calcule avec les prix catalogue. Remises, taxes, autres plateformes ou 
 Non, seulement celui de ses prédécesseurs directs. Reliez-le aussi à l’agent souhaité ; l’entrée d’origine est toujours accessible avec `{{run.input}}`.
 
 **Puis-je créer des branches selon le résultat ?**
-Oui, avec une [décision](/docs/verzweigungen#entscheidung) : elle vérifie le résultat avec des règles fixes et ouvre la branche correspondante. Il n’y a pas de boucles.
+Oui, avec une [décision](/docs/verzweigungen#entscheidung) : elle vérifie le résultat avec des règles fixes et ouvre la branche correspondante. Pour répéter des étapes jusqu’à ce qu’un résultat convienne, reliez une branche à une étape antérieure ([boucles](/docs/verzweigungen#schleifen)).
 
 **Comment transférer un workflow sur un autre ordinateur ?**
 Avec *Exporter* et *Importer*. Vous devez y recréer séparément les fichiers de connaissances, les espaces mémoire et vos propres outils.

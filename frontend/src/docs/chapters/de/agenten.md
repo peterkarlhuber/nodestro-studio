@@ -139,6 +139,8 @@ Das Ergebnis sieht dann so aus:
 
 Gedanken zählen zu den **Ausgabetokens** und werden entsprechend berechnet.
 
+**Lokale Denkmodelle** (Ollama) kennen keine Abstufung des Aufwands: *Niedrig* antwortet ohne Denken, *Mittel* und *Hoch* lassen das Modell denken. Auf einem Computer ohne Grafikkarte überspringt der [CPU-Sparmodus](/docs/einstellungen#lokale-hardware) das Denken auch bei *Mittel*; *Hoch*, *Modellstandard* und eine unter *Request-Options* gesetzte Reasoning-Option werden nie reduziert.
+
 Ist bei einem Modell unbekannt, ob es Denkaufwand unterstützt (eigene Server, unbekannte Modell-IDs), führt ein gesetzter Aufwand zu einem Fehler. Wähle dann *Modellstandard* oder gib die Fähigkeit unter [KI-Anbieter](/docs/einstellungen#anbieter) an. OpenAI-kompatible Endpunkte (etwa Ollama oder vLLM) nehmen gar keine Aufwand-Einstellung an; die Prüfung erklärt das und stellt mit **Aufwand auf Modellstandard setzen** den Agenten mit einem Klick um.
 
 ## Qualitätsprüfung {#qualitaet}

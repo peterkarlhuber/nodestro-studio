@@ -256,9 +256,9 @@ El paquete nunca contiene claves. En el ordenador de destino, el operador introd
 ## La biblioteca Orkexa {#orkexa}
 <!-- keywords: orkexa, biblioteca, repositorio, licencia, mit, vendor, incluir, git, acceso -->
 
-Nodestro ejecuta los agentes con la biblioteca **Orkexa**, que habla con todos los proveedores admitidos. No está en PyPI y se encuentra en un repositorio que por ahora es privado. Por eso la exportación ofrece dos caminos:
+Nodestro ejecuta los agentes con la biblioteca **Orkexa**, que habla con todos los proveedores admitidos. No está en PyPI; su código fuente está en un repositorio público de GitHub, con licencia MIT. Por eso la exportación ofrece dos caminos:
 
-- **Referencia Git** (predeterminada): `pyproject.toml` apunta al commit exacto. Quien instale el proyecto necesita acceso de lectura al repositorio.
+- **Referencia Git** (predeterminada): `pyproject.toml` apunta al commit exacto. Al instalar el proyecto, la biblioteca se descarga de GitHub, así que hace falta acceso a github.com.
 - **Incluir el código fuente:** el código va a `vendor/orkexa/` y el proyecto se instala sin acceso al repositorio. La biblioteca tiene licencia MIT. Confirma que puedes cederla antes de dar este proyecto a otras personas.
 
 Sin uno de los dos el proyecto no se puede instalar. El README indica el camino elegido.

@@ -40,7 +40,7 @@ O Nodestro calcula com preços de tabela. Descontos, impostos, outras plataforma
 Não, só o dos antecessores diretos. Conecte-o também ao agente desejado; a entrada original sempre está disponível com `{{run.input}}`.
 
 **Posso ramificar um fluxo conforme o resultado?**
-Sim, com uma [decisão](/docs/verzweigungen#entscheidung): ela verifica o resultado com regras fixas e abre a ramificação correspondente. Não há laços.
+Sim, com uma [decisão](/docs/verzweigungen#entscheidung): ela verifica o resultado com regras fixas e abre a ramificação correspondente. Para repetir etapas até que um resultado sirva, ligue uma ramificação de volta a uma etapa anterior ([laços](/docs/verzweigungen#schleifen)).
 
 **Como levo um fluxo de trabalho para outro computador?**
 Com *Exportar* e *Importar*. Arquivos de conhecimento, espaços de memória e ferramentas próprias precisam ser criados lá separadamente.

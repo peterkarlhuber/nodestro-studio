@@ -52,7 +52,9 @@ described in [docs/PLATFORM.md](docs/PLATFORM.md). Nodestro 0.1 is preserved unc
   complete configuration.
 - **Tool library:** built-in tools, your own Python tools with tests, and tools created by the AI.
   - Code and tests are checked statically.
-  - The tests run in a sandbox (a separate process or Docker).
+  - The tests run in a sandbox. AI-created tools run only isolated: in Docker (or a compatible engine that passes
+    Nodestro's checks), or on Linux in the built-in Linux sandbox when you choose it. Only your own code runs in a
+    separate Python process, which is not a security boundary.
   - A tool becomes available to all agents only after you approve it.
   - Tools may use Python libraries such as `numpy` or `pandas`. Nodestro detects them, shows versions and indirect
     packages, and installs only after your approval, with `uv` into a separate environment per workflow.
@@ -92,7 +94,8 @@ described in [docs/PLATFORM.md](docs/PLATFORM.md). Nodestro 0.1 is preserved unc
 - Node.js 20 or newer (only to build the user interface)
 - An API key for at least one provider (Anthropic, OpenAI or Gemini) or a local OpenAI-compatible server such as
   Ollama or vLLM
-- Optionally Docker, for the more strongly isolated tool sandbox
+- Docker (or a compatible container engine) for AI-created tools: without it they stay blocked. Nodestro itself starts
+  without Docker, and on Linux the built-in Linux sandbox is an alternative without third-party packages
 
 **Tested platforms:** CI and the release checks run on Linux (Python 3.11 and 3.13, Node.js 20 and 22). The browser
 tests pass in Chromium and Firefox on Linux; WebKit on Linux passes their functional checks. macOS, Windows and Safari
@@ -118,8 +121,8 @@ source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e .
 ```
 
-`make install` does both in one step (macOS/Linux). The components and orkexa are private repositories; pip needs
-read access to GitHub for them.
+`make install` does both in one step (macOS/Linux). The components and orkexa are public repositories on GitHub; pip
+downloads them from there, so it needs access to github.com.
 
 **Upgrading from 0.1:** the distribution is still called `nodestro`. In the environment where 0.1 is installed, run
 the steps above in a checkout of this repository (build the user interface, then `pip install -U .` or

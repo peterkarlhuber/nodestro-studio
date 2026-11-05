@@ -54,9 +54,10 @@ Os blocos, o inspetor (com o título *Propriedades*) e a visão geral da execuç
 | **Decisão** | Escolhe uma ou mais ramificações por regras fixas, sem requisição à IA. | uma ou mais | uma saída por ramificação |
 | **Aprovação** | Segura a execução até que uma pessoa aprove ou rejeite. | quantas quiser | *Aprovado*, *Rejeitado* |
 | **Subfluxo** | Executa outro fluxo de trabalho salvo como uma única etapa. | quantas quiser | quantas quiser |
+| **Orquestrador** | Deixa um modelo de IA delegar a tarefa a equipes, uma decisão após a outra. | quantas quiser | quantas quiser |
 | **Resultado** | Reúne os resultados dos agentes conectados como saída do fluxo de trabalho, se quiser também como arquivos. | quantas quiser | nenhuma |
 
-Os nós de início e de resultado são opcionais: agentes sem antecessor recebem automaticamente a entrada da execução e, sem nó de resultado, a saída dos últimos agentes vale como resultado (veja [O resultado de uma execução](/docs/ausfuehrungen#ergebnis)). Decisão, aprovação e subfluxo ficam na paleta, em *Controlar o fluxo*; veja [Ramificações e aprovações](/docs/verzweigungen).
+Os nós de início e de resultado são opcionais: agentes sem antecessor recebem automaticamente a entrada da execução e, sem nó de resultado, a saída dos últimos agentes vale como resultado (veja [O resultado de uma execução](/docs/ausfuehrungen#ergebnis)). Decisão, aprovação, subfluxo e orquestrador ficam na paleta, em *Controlar o fluxo*; veja [Ramificações e aprovações](/docs/verzweigungen).
 
 Cada nó tem um nome único. Se você criar um segundo agente com o mesmo nome, o Nodestro acrescenta um número ("Agente 2"). O nome de um agente também é o seu marcador nas tarefas.
 

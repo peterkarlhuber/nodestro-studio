@@ -40,7 +40,7 @@ Nodestro rechnet mit Listenpreisen. Rabatte, Steuern, andere Plattformen oder So
 Nein, nur die direkten Vorgänger. Verbinde ihn zusätzlich mit dem gewünschten Agenten; die ursprüngliche Eingabe erreichst du immer mit `{{run.input}}`.
 
 **Kann ich einen Workflow verzweigen, je nach Ergebnis?**
-Ja, mit einer [Entscheidung](/docs/verzweigungen#entscheidung): Sie prüft das Ergebnis mit festen Regeln und öffnet den passenden Zweig. Schleifen gibt es nicht.
+Ja, mit einer [Entscheidung](/docs/verzweigungen#entscheidung): Sie prüft das Ergebnis mit festen Regeln und öffnet den passenden Zweig. Um Schritte zu wiederholen, bis ein Ergebnis passt, verbindest du einen Zweig zurück mit einem früheren Schritt ([Schleifen](/docs/verzweigungen#schleifen)).
 
 **Wie übertrage ich einen Workflow auf einen anderen Rechner?**
 Mit *Export* und *Importieren*. Wissensdateien, Memory-Räume und eigene Tools musst du dort separat anlegen.

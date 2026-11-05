@@ -77,37 +77,11 @@ Cada tarjeta muestra la indicación, los resultados que revisar (los resultados 
 Las ejecuciones que esperan una [decisión de presupuesto](/docs/workflows#budget-freigabe) aparecen arriba en una sección propia **Decisiones de presupuesto**, con un enlace a la ejecución.
 
 ## Aprobar llamadas a herramientas {#tool-freigabe}
-<!-- keywords: aprobación de herramienta, llamada a herramienta, por llamada, argumentos, plazo, aprobación previa, desatendida, excepción heredada -->
+<!-- keywords: aprobación de herramienta, llamada a herramienta, por llamada, aprobar llamadas a herramientas, no activado, reglas para llamadas a herramientas -->
 
-Además de los nodos de aprobación, Nodestro puede preguntar antes de **llamadas sueltas a herramientas** de un agente. Está pensado para herramientas que modifican datos o actúan hacia fuera, por ejemplo enviar un correo o escribir en un sistema de tickets.
+Las aprobaciones de **llamadas individuales a herramientas** no están activadas en esta versión. Las herramientas que un agente puede usar se ejecutan sin preguntar antes de cada llamada. En la página **Aprobaciones**, *Reglas para llamadas a herramientas* muestra este estado.
 
-**Desactivado por ahora.** Las aprobaciones por llamada a herramienta todavía no están activadas en Nodestro; llegarán solo tras una revisión de seguridad. Hasta entonces las herramientas se ejecutan sin preguntar antes, y en la página **Aprobaciones**, *Reglas para llamadas a herramientas* muestra solo esa frase. La preparación para administradores (paso de activación, aprobaciones previas, registro) está plegada allí en **Preparación para administradores**. El resto de esta sección describe cómo funcionan las aprobaciones una vez activadas.
-
-Cuando un agente quiere hacer una llamada así, la ejecución sigue en marcha pero espera en esa llamada. La tarjeta aparece en la ejecución, en el paso y en la página **Aprobaciones**. Muestra la herramienta, lo que puede hacer (*solo lee*, *modifica datos*, *borra o destruye*; *se queda en Nodestro* o *actúa hacia fuera*), los **argumentos exactamente como se enviarán** y el tiempo restante.
-
-- **Permitir esta llamada** deja pasar exactamente esta llamada. Una decisión solo vale para los argumentos y la versión de la herramienta que viste: si alguno cambió, Nodestro rechaza la decisión y muestra la llamada actual.
-- **Rechazar** impide la llamada; el agente sabe que fue rechazada y puede seguir sin ella.
-- **Sin decisión** dentro del plazo (15 minutos por defecto), la llamada cuenta como rechazada, también tras un reinicio. Una decisión rechazada o caducada nunca se reutiliza.
-- Una herramienta **sin clasificar** cuenta como modificadora y externa.
-- Para las herramientas de **servicios conectados** que modifican datos se pregunta en cada llamada.
-
-Las ejecuciones que nadie supervisa (programaciones, lotes, series de pruebas) no pueden preguntar. Allí esa llamada se deniega, salvo que la administración haya **aprobado de antemano** esa versión de la herramienta para esa programación o lote concretos. Las herramientas que borran o destruyen y las de servicios conectados nunca se pueden aprobar de antemano.
-
-**Aviso antes del inicio.** Mientras las aprobaciones están activas, el diálogo de programación, el inicio de lotes y series de pruebas y la comprobación antes de publicar una API muestran cada llamada a herramientas que esa ejecución rechazaría: qué agente y qué herramienta, por qué (sin aprobación previa o con una caducada, un lote que aún no existe, una API publicada, una herramienta que borra o destruye, una herramienta de un servicio conectado) y cómo solucionarlo. Es solo un aviso: nada se aprueba automáticamente y la llamada se sigue rechazando durante la ejecución. Una aprobación previa nombra una programación guardada o un lote o serie de pruebas ya iniciado, así que las llamadas anteriores se rechazan; inicia un lote a mano si cada llamada importa. Las API publicadas aún no tienen un paso de aprobación propio, así que sus llamadas que cambian datos siempre se rechazan. El aviso no ve las herramientas que un orquestador limita o elige durante la ejecución, ni las aprobaciones dadas o revocadas después de la comprobación.
-
-**Activación, en este orden:**
-
-1. En *Aprobaciones → Reglas para llamadas a herramientas*, la administración ejecuta **Marcar asignaciones existentes**. Cada asignación de herramienta que existe ahora en flujos de trabajo, sus versiones y API publicadas pasa a ser una **excepción heredada**, ligada a la versión de la herramienta con la que se ejecuta. Las API publicadas reciben una sola vez una nueva suma de comprobación (digest); su historial guarda la antigua y la nueva. El paso se ejecuta **una sola vez**: las asignaciones, flujos de trabajo y versiones creados después son nuevos y se preguntan.
-2. **Revisa la lista.** Una excepción no deseada termina cuando quitas la herramienta del agente y guardas; si la vuelves a asignar, se pregunta como una nueva.
-3. Solo después se activan las aprobaciones. Esta versión todavía no lo prevé: siguen desactivadas hasta que termine la revisión de seguridad.
-
-Si se activan sin el primer paso, nada queda exento: se pregunta por cada asignación y las ejecuciones desatendidas deniegan esas llamadas. Una nueva versión de la herramienta siempre termina una excepción. Una aprobación nunca levanta los límites del sandbox.
-
-**No cubierto:** las herramientas de servidor del proveedor (búsqueda web, obtención web y ejecución de código en Anthropic) se ejecutan en el proveedor y no se pueden detener por llamada; desactívalas en el agente donde no deban usarse. Las herramientas propias de Nodestro para la ejecución (memoria, archivos de la ejecución) tampoco se preguntan. Las API publicadas no preguntan a nadie: tendrán más adelante su propia fase de aprobación.
-
-En **Aprobaciones → Reglas para llamadas a herramientas** ves si las aprobaciones están activadas y qué excepciones heredadas existen. La administración también ejecuta allí el paso de activación, concede y revoca aprobaciones previas y consulta el registro: quién decidió, concedió o revocó qué, y cada decisión rechazada. Los argumentos de una llamada nunca aparecen en el registro.
-
-En los detalles de la ejecución, cada llamada a herramienta muestra qué hicieron las reglas: permitida, aprobada o rechazada (por quién y cuándo), sin decisión a tiempo o denegada sin preguntar, con el motivo.
+Si una persona debe revisar los resultados antes de que la ejecución continúe, usa una [aprobación](/docs/verzweigungen#freigabe). Para limitar lo que puede hacer un agente, asígnale solo las herramientas que necesita (consulta [Asignar herramientas](/docs/agenten#tools)).
 
 ## Subflujos {#unterworkflow}
 <!-- keywords: subflujo, sub-workflow, anidar, reutilizar, bloque, versión, ejecución hija -->

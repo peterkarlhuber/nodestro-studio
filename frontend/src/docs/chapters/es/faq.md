@@ -40,7 +40,7 @@ Nodestro calcula con precios de lista. No tiene en cuenta descuentos, impuestos,
 No, solo los de sus predecesores directos. Conéctalo también con el agente que quieras; la entrada original siempre está disponible con `{{run.input}}`.
 
 **¿Puedo ramificar un flujo según el resultado?**
-Sí, con una [decisión](/docs/verzweigungen#entscheidung): comprueba el resultado con reglas fijas y abre la rama que corresponde. No hay bucles.
+Sí, con una [decisión](/docs/verzweigungen#entscheidung): comprueba el resultado con reglas fijas y abre la rama que corresponde. Para repetir pasos hasta que un resultado encaje, conecta una rama de vuelta a un paso anterior ([bucles](/docs/verzweigungen#schleifen)).
 
 **¿Cómo paso un flujo de trabajo a otro ordenador?**
 Con *Exportar* e *Importar*. Los archivos de conocimiento, los espacios de memoria y las herramientas propias tienes que crearlos allí por separado.

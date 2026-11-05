@@ -33,7 +33,7 @@ On the canvas, every agent shows its status, and after the run also tokens and c
 
 The **Runs** page lists the runs, newest first, with workflow, status, start time, duration, requests, tokens and costs. The input or the error message is shown below the workflow name. If a finished run had tool calls without a result, **Finished with problems** appears next to *Done*, provided the server sends this information.
 
-- **Filters:** by workflow, by status and by origin (*Own runs* or *Imported traces*).
+- **Filters:** by workflow, by status (including *Waiting for budget decision*) and by origin (*Own runs* or *Imported traces*). The filters are part of the address, so *Back* and a saved link lead to the same selection. Workflows with the same name are told apart in the workflow filter by when they were last changed.
 - **Delete:** bin symbol; running runs cannot be deleted.
 - **Import trace:** see [Importing traces](/docs/ausfuehrungen#trace-import).
 - **Load older runs:** the list first shows the newest 100 runs and says so below it. The status and origin filters only search the loaded runs. If the server does not support paging, the list stops at 500 runs; older ones stay stored and can be reached with the workflow filter.

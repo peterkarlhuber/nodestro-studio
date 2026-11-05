@@ -256,9 +256,9 @@ Il pacchetto non contiene mai chiavi. Sul computer di destinazione, il gestore i
 ## La libreria Orkexa {#orkexa}
 <!-- keywords: orkexa, libreria, repository, licenza, mit, vendor, includere, git, accesso -->
 
-Nodestro esegue gli agenti con la libreria **Orkexa**, che dialoga con tutti i provider supportati. Non è su PyPI e si trova in un repository attualmente privato. L’esportazione offre quindi due strade:
+Nodestro esegue gli agenti con la libreria **Orkexa**, che dialoga con tutti i provider supportati. Non è su PyPI; il suo codice sorgente si trova in un repository pubblico su GitHub, con licenza MIT. L’esportazione offre quindi due strade:
 
-- **Riferimento Git** (predefinito): `pyproject.toml` punta al commit esatto. Chi installa il progetto ha bisogno dell’accesso in lettura al repository.
+- **Riferimento Git** (predefinito): `pyproject.toml` punta al commit esatto. Installando il progetto, la libreria viene scaricata da GitHub, quindi serve l’accesso a github.com.
 - **Includere il codice sorgente:** il codice va in `vendor/orkexa/` e il progetto si installa senza accesso al repository. La libreria è sotto licenza MIT. Conferma di poterla cedere prima di dare questo progetto ad altri.
 
 Senza una delle due il progetto non si può installare. Il README indica la strada scelta.
