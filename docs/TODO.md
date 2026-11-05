@@ -3,7 +3,7 @@
 > Open work for this repository: release blockers, known bugs, security follow-ups, technical debt and planned improvements.
 > GitHub issues are the source of truth for details; this file is the entry point and summary.
 >
-> **Last full review:** 2026-11-03 against `master` at `3a7686b` (close of UX round 2 and backend audit 2).
+> **Last full review:** 2026-11-04 against `master` at `2c072d7` (UX round 3 and backend audit 3).
 
 ## Summary
 
@@ -109,7 +109,8 @@ None known.
 - **Priority:** P3 Low · **Status:** Open · **Refs:** UX audit OB-13
 - **What:** The prefilled label and the collapsed "more files" area are done; the sample files of an example are still
   only downloadable in the preview, not offered where the run needs them.
-- **Next step:** Offer the copy's sample files as one-click inputs; check whether the copy needs an API field for them.
+- **Next step:** Offer the copy's sample files as one-click inputs once the copy knows its source example.
+- **Depends on:** nodestro-runtime RT-055 (origin of an example copy stored on the workflow).
 
 ### ST-011 · Field-level diff in the versions dialog (ED-18)
 
@@ -145,7 +146,7 @@ None known.
 - **What:** Copies of examples whose optional connection is missing run on sample data, but only the copy chooser
   (`frontend/src/library/ExampleSections.tsx`) says so; the editor and run headers show no badge.
 - **Next step:** Show a badge in the workflow and run header once nodestro-examples EX-003 has chosen the marker.
-- **Depends on:** nodestro-examples EX-003 (marker), possibly a workflow field in nodestro-runtime/nodestro-api.
+- **Depends on:** nodestro-examples EX-003 (marker), nodestro-runtime RT-055 (origin of an example copy).
 
 ### ST-032 · Technical field names in the editor palette's team hint (ED-17)
 
@@ -154,7 +155,7 @@ None known.
   id. Result labels are fixed since UX round 3 (labels come from the description, also inside collected results;
   every long example description starts with a short label, enforced in nodestro-examples).
 - **Next step:** Show localized labels once workflow summaries carry the contract descriptions.
-- **Depends on:** nodestro-api (contract descriptions in workflow summaries).
+- **Depends on:** nodestro-api API-053 (contract descriptions in workflow summaries).
 
 ### ST-048 · Local models settings: three small wording gaps
 
@@ -377,7 +378,8 @@ None known.
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |
 | ST-028 | nodestro-runtime, nodestro-server | RT-023, SRV-014 (dependency locking, D-05) | One shared decision |
 | ST-018, ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update the status documents and `products` together |
-| ST-031 | nodestro-examples | EX-003 (AD-18 marker) | Examples provide the marker; studio shows it |
+| ST-007, ST-031 | nodestro-examples, nodestro-runtime | EX-003 (AD-18 marker), RT-055 (copy origin) | Examples and runtime provide the marker; studio shows it |
+| ST-032 | nodestro-api | API-053 (contract descriptions in summaries) | Studio needs the field first |
 | — | nodestro-runtime, nodestro-api | X-01 decision response still `paused` (RT-005, API-018); X-03 error code list (RT-011, API-016) | Change lives in runtime/api; studio already adapted |
 
 Generated example chapters (`frontend/src/docs/chapters/*/beispiele.md`, between the `examples` markers) come from
