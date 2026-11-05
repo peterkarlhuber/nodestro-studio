@@ -151,7 +151,7 @@ This port only serves the published APIs, never the Nodestro interface, its sett
 ## As an MCP tool {#mcp-server}
 <!-- keywords: mcp server, mcp tool, ai assistant, claude, client, tool -->
 
-A published API can also be offered as a **tool for MCP clients** on this computer, for example an AI assistant. This is off by default and needs two switches: the operator starts Nodestro with `NODESTRO_MCP_SERVER=1`, and you switch on **Offer as an MCP tool** under *Access*.
+A published API can also be offered as a **tool for MCP clients** on this computer, for example an AI assistant. This is off by default and needs two switches: Nodestro's MCP server must be switched on in this installation, and you switch on **Offer as an MCP tool** under *Access*.
 
 - The client connects to `/api/published/_mcp` on this computer and sends an API key as a Bearer token. It sees the offered APIs of that key as tools, named after the API; the key needs the permission to start runs.
 - Every tool call is an **ordinary run** of the published API: same version, limits, budgets, approvals and history. When synchronous waiting is enabled, the answer contains the result; otherwise, or when a run stops at an approval, it names the run so you can follow it in Nodestro or through the API.
@@ -256,9 +256,9 @@ The package never contains keys. On the target computer, the operator enters the
 ## The Orkexa library {#orkexa}
 <!-- keywords: orkexa, library, repository, license, mit, vendor, include, git, access -->
 
-Nodestro runs agents with the **Orkexa** library, which talks to all supported providers. It is not on PyPI and lives in a repository that is currently private. The export therefore offers two ways:
+Nodestro runs agents with the **Orkexa** library, which talks to all supported providers. It is not on PyPI; its source is in a public repository on GitHub, under the MIT license. The export therefore offers two ways:
 
-- **Git reference** (default): `pyproject.toml` points to the exact commit. Whoever installs the project needs read access to the repository.
+- **Git reference** (default): `pyproject.toml` points to the exact commit. Installing the project downloads the library from GitHub, so it needs access to github.com.
 - **Include source:** the source goes to `vendor/orkexa/` and the project installs without access to the repository. The library is under the MIT license. Confirm that you may pass it on before giving this project to others.
 
 Without one of the two the project cannot be installed. The README names the chosen way.

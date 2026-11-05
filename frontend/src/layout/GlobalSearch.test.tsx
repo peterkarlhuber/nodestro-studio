@@ -38,6 +38,8 @@ describe("global search (F4, F5)", () => {
     );
     const trigger = screen.getByTestId("search-open");
     expect(trigger).toHaveAccessibleName();
+    // German names the key "Strg", as the shortcut table does.
+    expect(trigger.querySelector("kbd")).toHaveTextContent(/^(Strg\+K|⌘K)$/);
     fireEvent.click(trigger);
     // A term no page name contains: only the (mocked) server results are listed.
     fireEvent.change(screen.getByRole("combobox"), { target: { value: "qx" } });

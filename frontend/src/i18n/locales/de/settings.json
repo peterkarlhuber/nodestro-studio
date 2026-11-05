@@ -18,7 +18,7 @@
     "assistantModel": "Modell für die Assistenten",
     "assistantHint": "Entwirft Agenten aus deiner Beschreibung, schreibt Tools und schlägt Memory vor.",
     "budget": "Standardbudget pro Lauf (USD)",
-    "budgetHint": "Ein Lauf bricht ab, sobald die geschätzten Kosten das Budget überschreiten. Leer = kein Limit.",
+    "budgetHint": "Reicht das Budget nicht, pausieren begleitete Läufe und warten auf eine Entscheidung; Läufe aus Zeitplänen, Stapelläufen, Testreihen und der veröffentlichten API stoppen stattdessen. Leer = kein Limit.",
     "architectBudget": "Kostenlimit des Workflow-Architekten (USD je Entwurf)",
     "architectBudgetHint": "Der Architekt hält an, wenn ein Entwurf mehr kostet. Leer = kein Limit.",
     "architectRepairs": "KI-Korrekturversuche je Entwurf",

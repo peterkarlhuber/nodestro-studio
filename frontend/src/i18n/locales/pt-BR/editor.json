@@ -163,7 +163,7 @@
     "addFile": "Adicionar arquivo",
     "addFilePlaceholder": "+ Adicionar arquivo …",
     "budget": "Orçamento",
-    "budgetText": "Orçamento desta execução: {{budget}}. A execução para assim que ele for ultrapassado.",
+    "budgetText": "Orçamento desta execução: {{budget}}. Se ele não bastar, a execução pausa e aguarda sua decisão.",
     "unlimited": "ilimitado",
     "providerMissing": "Ainda não configurado: {{providers}}. Agentes com esses modelos não podem rodar.",
     "openSettings": "Abrir configurações",

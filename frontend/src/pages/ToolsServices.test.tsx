@@ -211,9 +211,10 @@ describe("ServicesTab", () => {
   it("blocks adding when the operator allows no addresses", async () => {
     serve(routes({ status: { ...STATUS, endpoint_list: [], loopback_possible: false }, servers: [] }));
     renderWith(<ServicesTab />);
-    // The sentence speaks to the person; the operator's setting follows as code (TX-14).
+    // The sentence speaks to the person and names no internal setting.
     const note = await screen.findByText(/noch keine Adressen für Dienste freigegeben/);
-    expect(note.querySelector("code")).toHaveTextContent("NODESTRO_MCP_ENDPOINTS");
+    expect(note.textContent).not.toMatch(/NODESTRO_/);
+    expect(note.querySelector("code")).toBeNull();
     expect(screen.getByRole("button", { name: "Dienst verbinden" })).toBeDisabled();
   });
 });

@@ -163,7 +163,7 @@
     "addFile": "Añadir archivo",
     "addFilePlaceholder": "+ Añadir archivo …",
     "budget": "Presupuesto",
-    "budgetText": "Presupuesto para esta ejecución: {{budget}}. La ejecución se detiene en cuanto se supera.",
+    "budgetText": "Presupuesto para esta ejecución: {{budget}}. Si no alcanza, la ejecución se pausa y espera tu decisión.",
     "unlimited": "ilimitado",
     "providerMissing": "Aún sin configurar: {{providers}}. Los agentes con estos modelos no pueden ejecutarse.",
     "openSettings": "Abrir ajustes",

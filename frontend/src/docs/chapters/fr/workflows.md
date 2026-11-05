@@ -54,9 +54,10 @@ Les blocs, l’inspecteur (intitulé *Propriétés*) et la vue d’ensemble de l
 | **Décision** | Choisit une ou plusieurs branches selon des règles fixes, sans requête à l’IA. | une ou plusieurs | une sortie par branche |
 | **Validation** | Arrête l’exécution jusqu’à ce qu’une personne valide ou refuse. | autant que voulu | *Validé*, *Refusé* |
 | **Sous-workflow** | Exécute un autre workflow enregistré comme une seule étape. | autant que voulu | autant que voulu |
+| **Orchestrateur** | Laisse un modèle d’IA confier la tâche à des équipes, une décision après l’autre. | autant que voulu | autant que voulu |
 | **Résultat** | Rassemble les résultats des agents reliés comme sortie du workflow, en option aussi sous forme de fichiers. | autant que voulu | aucune |
 
-Les nœuds Départ et Résultat sont facultatifs : les agents sans prédécesseur reçoivent automatiquement l’entrée de l’exécution et, sans nœud Résultat, la sortie des derniers agents tient lieu de résultat (voir [Le résultat d’une exécution](/docs/ausfuehrungen#ergebnis)). Décision, validation et sous-workflow se trouvent dans la palette sous *Piloter le déroulement* ; voir [Branches et validations](/docs/verzweigungen).
+Les nœuds Départ et Résultat sont facultatifs : les agents sans prédécesseur reçoivent automatiquement l’entrée de l’exécution et, sans nœud Résultat, la sortie des derniers agents tient lieu de résultat (voir [Le résultat d’une exécution](/docs/ausfuehrungen#ergebnis)). Décision, validation, sous-workflow et orchestrateur se trouvent dans la palette sous *Piloter le déroulement* ; voir [Branches et validations](/docs/verzweigungen).
 
 Chaque nœud a un nom unique. Si vous créez un second agent du même nom, Nodestro ajoute un numéro (« Agent 2 »). Le nom d’un agent est aussi son espace réservé dans les tâches.
 

@@ -163,7 +163,7 @@
     "addFile": "Datei hinzufügen",
     "addFilePlaceholder": "+ Datei hinzufügen …",
     "budget": "Budget",
-    "budgetText": "Budget für diesen Lauf: {{budget}}. Der Lauf bricht ab, sobald es überschritten wird.",
+    "budgetText": "Budget für diesen Lauf: {{budget}}. Reicht es nicht, pausiert der Lauf und wartet auf deine Entscheidung.",
     "unlimited": "unbegrenzt",
     "providerMissing": "Noch nicht eingerichtet: {{providers}}. Agenten mit diesen Modellen können nicht laufen.",
     "openSettings": "Einstellungen öffnen",

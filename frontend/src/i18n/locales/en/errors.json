@@ -130,7 +130,6 @@
     "budget_exceeded": "The budget for this run is used up; the run was stopped.",
     "budget_ended": "The run was ended at a budget decision.",
     "budget_request_expired": "Nobody decided about the budget in time; the run was stopped.",
-    "budget_waits_interrupted": "A budget decision was interrupted because Nodestro was restarted; the run was stopped.",
     "budget_checkpoint_lost": "The saved state of the step that waited for its budget is gone; the step failed and was not repeated silently.",
     "api_error": "The AI provider reported an error (status {{status}}).",
     "skipped": "Skipped because a previous node did not succeed.",
@@ -248,7 +247,7 @@
     "approval_not_in_test": "This call would need a person's approval; tests do not ask, so it was not made.",
     "frozen": "This tool belongs to a published API version and cannot be changed, so that the version keeps working exactly as it was published. Change the tool in the workflow and publish a new version.",
     "denied_by_policy": "The rules for tool calls refused this call without asking anyone, so the tool did not run. Check the rules on the Approvals page, or give the agent a tool that only reads.",
-    "adoption_desktop_only": "AI-created code can be adopted as your own only in the desktop app. Here it always runs isolated.",
+    "adoption_desktop_only": "AI-created code can be adopted as your own only when you use Nodestro locally on your computer, not on a server or in Nodestro Local Docker. Here it always runs isolated.",
     "adoption_forbidden": "Only the owner of this computer or an administrator may adopt AI-created code.",
     "adoption_stale": "The tool changed after it was shown (now version {{version}}). Look at it again before you adopt it.",
     "adoption_not_needed": "This tool already counts as your own code; it needs no adoption.",
@@ -545,7 +544,7 @@
     "subworkflow_unsaved": "{{name}}: the sub-workflow has no saved version.",
     "mcp_tool_unusable": "A service tool of this workflow cannot be used right now; it cannot be published.",
     "mcp_tools": "The service tools are frozen in this version; a later change at the service stops it until it is published again.",
-    "mcp_unattended_off": "API runs use service tools only when the operator allows unattended use (NODESTRO_MCP_UNATTENDED)."
+    "mcp_unattended_off": "API runs use service tools only when the operator allows unattended use."
   },
   "export": {
     "knowledge_missing": "{{name}} no longer exists.",
@@ -554,7 +553,6 @@
     "memory_included": "Memory {{space}}: its current content becomes the starting memory.",
     "memory_empty": "Memory {{space}} starts empty in the export.",
     "distribution_unconfirmed": "Confirm that you may pass on the source code of Orkexa, or choose the Git reference.",
-    "private_repository": "Installing the export needs read access to the repository peterkarlhuber/orkexa while it is private. Without that access, choose “Include source”.",
     "bundled_library": "The source code of Orkexa is copied into the project (MIT license included).",
     "runtime_differs": "This version was published with {{published}}; the export contains the current runtime {{current}}.",
     "tool_libraries": "The approved tool libraries are installed with the project: {{packages}}.",
@@ -799,7 +797,8 @@
     "price_unreliable": "The price of {{model}} is not reliable enough; the request was not sent (strict price mode).",
     "region_required": "An Amazon Bedrock price must list the AWS regions it applies to.",
     "invalid_region": "One of the regions is not an AWS region name.",
-    "reconciliation_not_supported": "{{provider}} has no billing API Nodestro can compare with; compare these costs with your bill yourself."
+    "reconciliation_not_supported": "{{provider}} has no billing API Nodestro can compare with; compare these costs with your bill yourself.",
+    "offline_sync": "The strict offline mode is on: checking prices needs the internet."
   },
   "gate": {
     "blocked": "The release gate blocks this version. Test exactly this version with its test series.",
@@ -817,7 +816,7 @@
     "definition_moved": "The tool has changed since your review. Review it again.",
     "dns_failed": "The name {{host}} could not be resolved.",
     "endpoint_not_allowed": "This address is not on the operator's list.",
-    "endpoints_invalid": "The operator's address list (NODESTRO_MCP_ENDPOINTS) is invalid.",
+    "endpoints_invalid": "The operator's address list for services is invalid.",
     "http_error": "The service answered with HTTP {{status}}.",
     "https_required": "Services are reached over https only (http only for a local development server on this computer).",
     "protocol_error": "The service did not answer like an MCP server.",

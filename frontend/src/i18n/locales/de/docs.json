@@ -73,7 +73,7 @@
       "action": "Dialog oder Erklärung schließen"
     },
     "globalSearch": {
-      "keys": "<kbd>Ctrl</kbd>+<kbd>K</kbd>",
+      "keys": "<kbd>Strg</kbd>+<kbd>K</kbd>",
       "action": "Überall: Seiten, Einstellungen, Workflows, Agenten, Tools, Wissen und Dokumentation durchsuchen"
     },
     "search": {

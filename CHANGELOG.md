@@ -2,6 +2,37 @@
 
 ## Unreleased
 
+### Product findings of the manual review (2026-11-05)
+
+- Texts follow the current behavior in all six languages: an attended run pauses at its budget and waits for a
+  decision (runs from schedules, batches, test series and the API stop), team runs below an orchestrator have no fixed
+  budget share, the effort hint names only OpenAI-compatible endpoints (the Ollama connection passes the effort),
+  the knowledge test search uses the configured search method, adopting AI-created code works for local use (not on a
+  server or in Nodestro Local Docker), and "Create with AI" names the assistant model the Workflow Architect drafts
+  with; its readiness check now also needs that model's provider.
+- No internal feature switches in the interface: the tool approval, MCP server and service address texts no longer
+  name environment variables or internal review steps (a quality test keeps it that way; operator settings such as
+  the data folder, allowed host names and billing admin keys stay named).
+- New Ollama agents start at effort medium like the runtime's default, so the CPU saving mode applies to them;
+  vLLM and other OpenAI-compatible endpoints keep the model default.
+- Knowledge search settings list installed embedding models first and warn before a build with a model that is not
+  installed; the offline import offers packages only for a model server Nodestro manages.
+- Small fixes: German "Strg+K" in the search button and the shortcut table, "Memory" as the German building block
+  name, "changed just now" in the runs workflow filter and the search, the full start-blocking reason on hover in the
+  editor title bar, and fit badges that wrap so the model catalog's actions stay visible at 1440 px.
+- The strict offline mode text names its full scope (only Ollama; OpenAI-compatible and vLLM endpoints are refused
+  also on this computer, for assistants and price checks too), the knowledge index shows "unavailable" where the
+  installation cannot hold vectors, and `pricing.offline_sync` has a message; the unused
+  `run.budget_waits_interrupted` message and the unused `export.private_repository` message (Orkexa is public) are
+  gone.
+- In-app docs and README follow the current behavior in all six languages (budget pause, global search scope, theme,
+  node kinds and loops, sandbox limits, code adoption, MCP and service addresses without internal switch names, Low
+  effort and the CPU saving mode, run filters); the examples chapter is regenerated for nodestro-examples f015a4d.
+- Pins: nodestro-runtime 57b40d2 (runtime #116: strict offline mode outside runs, orchestrators with models without
+  a reasoning effort, expired budget decisions end a run failed, index unavailable without sqlite-vec),
+  nodestro-examples f015a4d (#74), nodestro-integrations 9a5c955 (#63), nodestro-api f796916 (#90: no price check in
+  the strict offline mode, server batches and test series follow their runs), nodestro-sdk 8c4c9ff (#83).
+
 ### UX round 3 (2026-11-04)
 
 - Global search (Ctrl+K) finds runs (the newest 100) and shows recent runs and workflows for an empty query; it also

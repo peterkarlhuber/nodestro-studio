@@ -16,7 +16,7 @@
   "noMatchesText": "Kein Dateiname passt zum Filter.",
   "emptyText": "Lade Dateien hoch und weise sie im Editor einem Agenten zu.",
   "searchTitle": "Suche ausprobieren",
-  "searchText": "So findet ein Agent mit „Wissen durchsuchen“ passende Abschnitte (Volltextsuche).",
+  "searchText": "So findet ein Agent mit „Wissen durchsuchen“ passende Abschnitte. Die Suche hier verwendet das Suchverfahren aus Einstellungen → Wissenssuche (Volltext, Semantisch oder Kombiniert).",
   "searchTerm": "Suchbegriff",
   "search": "Suchen",
   "noHits": "Keine Treffer.",

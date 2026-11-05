@@ -163,7 +163,7 @@
     "addFile": "Add file",
     "addFilePlaceholder": "+ Add file …",
     "budget": "Budget",
-    "budgetText": "Budget for this run: {{budget}}. The run stops as soon as it is exceeded.",
+    "budgetText": "Budget for this run: {{budget}}. If it is not enough, the run pauses and waits for your decision.",
     "unlimited": "unlimited",
     "providerMissing": "Not set up yet: {{providers}}. Agents with these models cannot run.",
     "openSettings": "Open settings",

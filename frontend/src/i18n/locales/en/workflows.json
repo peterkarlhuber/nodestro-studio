@@ -34,7 +34,7 @@
     "manualText": "Starts with an input, an empty agent and a result. You drag further building blocks onto the canvas.",
     "aiNeedsModel": "Needs a connection to an AI model",
     "modelNeeded": "To run workflows, connect an AI model first: an API key (for example Anthropic, OpenAI or Gemini) or a local model server such as Ollama. Copying an example works without it.",
-    "aiModelNeeded": "Create with AI needs a connection to an AI model: the Workflow Architect designs the workflow with your default model, which is not set up yet.",
+    "aiModelNeeded": "Create with AI needs a connection to an AI model: the Workflow Architect designs the workflow with the model for the assistants, and the new agents use the default model for new agents. At least one of them has no connection set up yet.",
     "modelNeededLink": "Set up in Settings"
   },
   "continue": {

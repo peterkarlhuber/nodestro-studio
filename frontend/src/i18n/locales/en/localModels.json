@@ -121,7 +121,8 @@
     "projector": "Vision projector (optional)",
     "projectorHint": "The mmproj file, if the model reads images.",
     "start": "Import",
-    "started": "Import started"
+    "started": "Import started",
+    "packageExternal": "Offline packages can be imported only into a model server that Nodestro manages. Import them into your own Ollama server with its own tools; you can import a GGUF file here."
   },
   "storage": {
     "title": "Model folder",
@@ -137,7 +138,7 @@
   },
   "offline": {
     "label": "Strict offline mode",
-    "text": "Only local models and local tools. Cloud models, remote servers and downloads are refused before a run starts.",
+    "text": "Only the local model server (Ollama) and local tools. Cloud models, OpenAI-compatible and vLLM endpoints (also on this computer), remote servers, price checks and downloads are refused, for runs and for the assistants.",
     "noDownloads": "Downloads are off in the strict offline mode."
   },
   "europe": {
@@ -168,7 +169,9 @@
     "embeddingHint": "Another model needs a new index. Searches keep using the current index until the new one is complete.",
     "noModel": "No model chosen",
     "agentDefault": "As in Settings ({{mode}})",
-    "agentMode": "Search method of this agent"
+    "agentMode": "Search method of this agent",
+    "notInstalled": "{{model}} is not installed yet. Download it above under local models before you build the index; otherwise the build fails.",
+    "notInstalledServer": "{{model}} is not installed on this server, so the index cannot be built with it. Ask the person who runs Nodestro to install the model."
   },
   "index": {
     "state": {
@@ -177,7 +180,7 @@
       "incomplete": "Sections indexed: {{embedded}} of {{chunks}}. Rebuild to add the rest.",
       "building": "The index is being built.",
       "reindex_required": "The chosen model differs from the index. Rebuild the index for it.",
-      "unavailable": "The model server cannot be reached."
+      "unavailable": "This installation cannot hold a semantic index. Full-text search keeps working."
     },
     "badge": {
       "off": "Off",

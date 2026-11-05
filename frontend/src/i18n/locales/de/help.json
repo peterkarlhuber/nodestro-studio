@@ -90,7 +90,7 @@
     "upload": "PDFs, Bilder (PNG, JPEG, GIF, WebP) und Textformate. Bilder bis 5 MB, Dokumente bis 20 MB. Texte und PDFs werden für die Suche indexiert.",
     "description": "Hilft Agenten im Modus „Bei Bedarf“ zu entscheiden, welche Datei sie laden. Wird beim Verlassen des Feldes gespeichert.",
     "chunks": "Die Datei wurde für die Volltextsuche in Abschnitte von etwa 1.500 Zeichen zerlegt (PDFs seitenweise). Ohne Abschnitte ist sie nicht durchsuchbar.",
-    "search": "Volltextsuche (BM25) über alle indexierten Dateien – so findet ein Agent im Modus „Durchsuchen“ passende Stellen. Kostet nichts.",
+    "search": "Suche über alle indexierten Dateien mit dem Suchverfahren aus Einstellungen → Wissenssuche – so findet ein Agent im Modus „Durchsuchen“ passende Stellen. Kostet nichts.",
     "score": "Relevanz des Treffers: je höher, desto besser passt der Abschnitt zur Suche.",
     "collections": "Sammlungen ordnen Wissensdateien, z. B. „Verträge“ oder „Produktdaten“. Agenten bekommen weiterhin genau die Dateien, die ihnen zugewiesen sind."
   },

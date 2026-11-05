@@ -26,7 +26,10 @@ const settings = (configured: boolean) => ({
 });
 
 /** The studio API as far as the page needs it: the workflow list, every other list is empty unless given. */
-function stubApi(workflows: unknown[], extra: { configured?: boolean; runs?: unknown[]; approvals?: unknown[] } = {}) {
+function stubApi(
+  workflows: unknown[],
+  extra: { configured?: boolean; runs?: unknown[]; approvals?: unknown[]; assistantModel?: string } = {},
+) {
   vi.stubGlobal(
     "fetch",
     vi.fn(async (url: string) => {
@@ -36,7 +39,7 @@ function stubApi(workflows: unknown[], extra: { configured?: boolean; runs?: unk
         : path.endsWith("/organize")
           ? { items: {}, tags: [] }
           : path.endsWith("/settings")
-            ? settings(extra.configured ?? true)
+            ? { ...settings(extra.configured ?? true), ...(extra.assistantModel ? { assistant_model: extra.assistantModel } : {}) }
             : path.endsWith("/runs")
               ? (extra.runs ?? [])
               : path.endsWith("/approvals")
@@ -122,6 +125,20 @@ describe("WorkflowsPage without a model connection", () => {
     const dialog = await screen.findByRole("dialog");
     expect(within(dialog).getByTestId("model-needed")).toHaveTextContent("Workflow-Architekt");
     expect(within(dialog).getByRole("link", { name: "In den Einstellungen einrichten" })).toHaveAttribute("href", "/settings");
+  });
+
+  it("asks for the assistant model's provider before creating with AI, which drafts with that model", async () => {
+    // The default model (Anthropic) is set up, the assistant model (OpenAI) is not: workflows can run, but the
+    // Workflow Architect cannot draft.
+    stubApi([], { assistantModel: "openai:gpt-5.5" });
+    show();
+    const group = await choices();
+    expect(screen.queryByTestId("model-needed")).toBeNull();
+    expect(within(group).getByRole("button", { name: /Mit KI erstellen/ })).toHaveTextContent("Braucht eine Verbindung zu einem KI-Modell");
+    await userEvent.click(within(group).getByRole("button", { name: /Mit KI erstellen/ }));
+    const dialog = await screen.findByRole("dialog");
+    expect(within(dialog).getByTestId("model-needed")).toHaveTextContent("Modell für die Assistenten");
+    expect(within(dialog).getByTestId("model-needed")).not.toHaveTextContent("deinem Standardmodell");
   });
 
   it("shows no model note once the provider is set up", async () => {

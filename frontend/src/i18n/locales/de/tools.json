@@ -115,7 +115,7 @@
     "counts": "Freigegebene Tools: {{approved}} von {{total}} · warten auf Prüfung: {{pending}}",
     "unavailable": "MCP ist in dieser Installation nicht verfügbar (benötigt Python 3.11 oder neuer). Dienste lassen sich einrichten, aber nicht erreichen.",
     "endpointList": "Der Betreiber erlaubt nur diese Adressen: {{list}}",
-    "endpointListEmpty": "Der Betreiber hat noch keine Adressen für Dienste freigegeben, daher lassen sich hier keine Dienste verbinden. Bitte die Person, die Nodestro betreibt, die benötigten Adressen freizugeben (Einstellung <code>NODESTRO_MCP_ENDPOINTS</code>).",
+    "endpointListEmpty": "Der Betreiber hat noch keine Adressen für Dienste freigegeben, daher lassen sich hier keine Dienste verbinden. Bitte die Person, die Nodestro betreibt, die benötigten Adressen freizugeben.",
     "noVault": "Kein sicherer Schlüsselspeicher verfügbar: Zugangstokens werden nicht gespeichert, sondern nur bis zum Schließen der App im Speicher gehalten.",
     "readOnlyMvp": "Nutzbar sind derzeit nur Tools, die du als „nur lesend“ einstufst.",
     "writeEnabled": "Tools, die Daten ändern, brauchen eine Freigabe pro Aufruf.",

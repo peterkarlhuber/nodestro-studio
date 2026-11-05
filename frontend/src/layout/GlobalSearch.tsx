@@ -27,7 +27,7 @@ import { keys } from "../api/hooks";
 import type { RunSummary, SearchResult, WorkflowSummary } from "../api/types";
 import { Modal, Spinner } from "../components/ui";
 import { currentLanguage } from "../i18n";
-import { relativeTime } from "../lib/format";
+import { changedText, relativeTime } from "../lib/format";
 
 type Kind = "recent" | "page" | SearchResult["kind"] | "run" | "docs";
 type Translate = (key: string, options?: Record<string, unknown>) => string;
@@ -183,7 +183,7 @@ export function recentHits(runs: RunSummary[] | undefined, workflows: WorkflowSu
       key: `recent:workflow:${workflow.id}`,
       kind: "recent" as const,
       title: workflow.name,
-      subtitle: `${t("search.recentWorkflow")} · ${t("common.changed", { time: relativeTime(workflow.updated_at) })}`,
+      subtitle: `${t("search.recentWorkflow")} · ${changedText(t, workflow.updated_at)}`,
       snippet: "",
       to: `/workflows/${encodeURIComponent(workflow.id)}`,
       favorite: false,
@@ -295,7 +295,7 @@ export function GlobalSearch() {
     }
   };
 
-  const shortcut = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘K" : "Ctrl+K";
+  const shortcut = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘K" : t("search.shortcut");
   const loading = server.isFetching || docs.isFetching;
   let index = -1;
   return (

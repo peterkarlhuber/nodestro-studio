@@ -121,7 +121,8 @@
     "projector": "Projecteur de vision (facultatif)",
     "projectorHint": "Le fichier mmproj, si le modèle lit des images.",
     "start": "Importer",
-    "started": "Import lancé"
+    "started": "Import lancé",
+    "packageExternal": "Les paquets hors ligne ne peuvent être importés que dans un serveur de modèles géré par Nodestro. Importez-les dans votre propre serveur Ollama avec ses propres outils ; vous pouvez importer ici un fichier GGUF."
   },
   "storage": {
     "title": "Dossier des modèles",
@@ -137,7 +138,7 @@
   },
   "offline": {
     "label": "Mode hors ligne strict",
-    "text": "Uniquement des modèles et des outils locaux. Les modèles cloud, les serveurs distants et les téléchargements sont refusés avant le démarrage d’une exécution.",
+    "text": "Uniquement le serveur de modèles local (Ollama) et les outils locaux. Les modèles cloud, les points de terminaison compatibles OpenAI et vLLM (même sur cet ordinateur), les serveurs distants, les vérifications de prix et les téléchargements sont refusés, pour les exécutions comme pour les assistants.",
     "noDownloads": "En mode hors ligne strict, les téléchargements sont désactivés."
   },
   "europe": {
@@ -168,7 +169,9 @@
     "embeddingHint": "Un autre modèle nécessite un nouvel index. Tant qu’il n’est pas terminé, la recherche continue avec l’index actuel.",
     "noModel": "Aucun modèle choisi",
     "agentDefault": "Comme dans les réglages ({{mode}})",
-    "agentMode": "Méthode de recherche de cet agent"
+    "agentMode": "Méthode de recherche de cet agent",
+    "notInstalled": "{{model}} n’est pas encore installé. Téléchargez-le plus haut dans les modèles locaux avant de construire l’index ; sinon, la construction échoue.",
+    "notInstalledServer": "{{model}} n’est pas installé sur ce serveur : l’index ne peut donc pas être construit avec lui. Demandez à la personne qui exploite Nodestro d’installer le modèle."
   },
   "index": {
     "state": {
@@ -177,7 +180,7 @@
       "incomplete": "Passages indexés : {{embedded}} sur {{chunks}}. Reconstruisez l’index pour ajouter le reste.",
       "building": "L’index est en cours de création.",
       "reindex_required": "Le modèle choisi ne correspond pas à l’index. Reconstruisez l’index pour ce modèle.",
-      "unavailable": "Le serveur de modèles est injoignable."
+      "unavailable": "Cette installation ne peut pas stocker d’index sémantique. La recherche en texte intégral continue de fonctionner."
     },
     "badge": {
       "off": "Désactivé",

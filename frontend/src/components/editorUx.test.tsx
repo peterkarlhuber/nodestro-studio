@@ -33,6 +33,8 @@ describe("DisabledReason (TX-10, OB-01)", () => {
     expect(button).not.toBeDisabled();
     expect(button).toHaveAttribute("aria-disabled", "true");
     expect(button).toHaveAccessibleDescription("Kein API-Schlüssel für Anthropic.");
+    // The note is cut after two lines in the editor's title bar; hovering shows the whole sentence.
+    expect(screen.getByText("Kein API-Schlüssel für Anthropic.")).toHaveAttribute("title", "Kein API-Schlüssel für Anthropic.");
     await userEvent.click(button);
     expect(onClick).not.toHaveBeenCalled();
     // Keyboard users reach the link to the fix and the control itself (a native disabled button is skipped).

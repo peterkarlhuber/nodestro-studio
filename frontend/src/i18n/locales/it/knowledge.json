@@ -16,7 +16,7 @@
   "noMatchesText": "Nessun nome di file corrisponde al filtro.",
   "emptyText": "Carica dei file e assegnali a un agente nell’editor.",
   "searchTitle": "Prova la ricerca",
-  "searchText": "Così un agente con conoscenza in modalità «Ricerca» trova le sezioni pertinenti (ricerca full-text).",
+  "searchText": "Così un agente con conoscenza in modalità «Ricerca» trova le sezioni pertinenti. La ricerca qui usa il metodo di ricerca di Impostazioni → Ricerca nella conoscenza (Testo completo, Semantica o Combinata).",
   "searchTerm": "Termine di ricerca",
   "search": "Cerca",
   "noHits": "Nessun risultato.",

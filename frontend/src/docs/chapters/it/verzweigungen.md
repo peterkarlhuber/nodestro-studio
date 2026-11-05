@@ -77,37 +77,11 @@ Ogni scheda mostra la nota, i risultati da verificare (i risultati strutturati c
 Le esecuzioni che attendono una [decisione sul budget](/docs/workflows#budget-freigabe) compaiono in alto in una sezione propria **Decisioni sul budget**, con un link all’esecuzione.
 
 ## Approvare le chiamate di strumenti {#tool-freigabe}
-<!-- keywords: approvazione strumento, chiamata di strumento, per chiamata, argomenti, scadenza, approvazione anticipata, non presidiata, eccezione preesistente -->
+<!-- keywords: approvazione strumento, chiamata di strumento, per chiamata, approvare le chiamate di strumenti, non attivato, regole per le chiamate di strumenti -->
 
-Oltre ai nodi di approvazione, Nodestro può chiedere prima di **singole chiamate di strumenti** di un agente. È pensato per strumenti che modificano dati o agiscono verso l’esterno, ad esempio inviare un’e-mail o scrivere in un sistema di ticket.
+Le approvazioni per **singole chiamate di strumenti** non sono attivate in questa versione. Gli strumenti che un agente può usare vengono eseguiti senza chiedere prima di ogni chiamata. Nella pagina **Approvazioni**, *Regole per le chiamate di strumenti* mostra questo stato.
 
-**Per ora disattivato.** Le approvazioni per singola chiamata di strumenti non sono ancora attive in Nodestro; arriveranno solo dopo una verifica di sicurezza. Fino ad allora gli strumenti vengono eseguiti senza chiedere prima, e nella pagina **Approvazioni** *Regole per le chiamate di strumenti* mostra solo questa frase. La preparazione per gli amministratori (passo di attivazione, approvazioni anticipate, registro) è chiusa lì sotto **Preparazione per gli amministratori**. Il resto di questa sezione descrive come funzioneranno le approvazioni una volta attive.
-
-Quando un agente vuole fare una chiamata del genere, l’esecuzione continua ma attende su quella chiamata. La scheda compare nell’esecuzione, nel passo e nella pagina **Approvazioni**. Mostra lo strumento, cosa può fare (*solo lettura*, *modifica dati*, *cancella o distrugge*; *resta in Nodestro* o *agisce verso l’esterno*), gli **argomenti esattamente come verranno inviati** e il tempo rimasto.
-
-- **Consenti questa chiamata** lascia passare esattamente questa chiamata. Una decisione vale solo per gli argomenti e la versione dello strumento che hai visto: se uno dei due è cambiato, Nodestro rifiuta la decisione e mostra la chiamata attuale.
-- **Rifiuta** impedisce la chiamata; l’agente sa che è stata rifiutata e può continuare senza.
-- **Senza decisione** entro il termine (15 minuti di default) la chiamata conta come rifiutata, anche dopo un riavvio. Una decisione rifiutata o scaduta non viene mai riutilizzata.
-- Uno strumento **non classificato** conta come modificante ed esterno.
-- Per gli strumenti dei **servizi collegati** che modificano dati si chiede a ogni chiamata.
-
-Le esecuzioni che nessuno segue (pianificazioni, serie, serie di test) non possono chiedere. Lì una chiamata del genere viene negata, a meno che l’amministrazione abbia **approvato in anticipo** quella versione dello strumento proprio per quella pianificazione o serie. Gli strumenti che cancellano o distruggono e quelli dei servizi collegati non si possono mai approvare in anticipo.
-
-**Avviso prima dell’avvio.** Finché le approvazioni sono attive, la finestra della pianificazione, l’avvio di lotti e serie di test e il controllo prima di pubblicare un’API elencano ogni chiamata a strumenti che un’esecuzione simile rifiuterebbe: quale agente e quale strumento, perché (nessuna approvazione anticipata o una superata, un lotto che non esiste ancora, un’API pubblicata, uno strumento che cancella o distrugge, uno strumento di un servizio collegato) e come rimediare. È solo un avviso: nulla viene approvato automaticamente e la chiamata viene comunque rifiutata durante l’esecuzione. Un’approvazione anticipata indica una pianificazione salvata o un lotto o una serie di test già avviati, quindi le chiamate precedenti vengono rifiutate; avvia un lotto a mano se ogni chiamata conta. Le API pubblicate non hanno ancora un proprio passaggio di approvazione, quindi le loro chiamate che modificano vengono sempre rifiutate. L’avviso non vede gli strumenti che un orchestratore limita o sceglie durante l’esecuzione, né le approvazioni date o revocate dopo il controllo.
-
-**Attivazione, in questo ordine:**
-
-1. In *Approvazioni → Regole per le chiamate di strumenti* l’amministrazione esegue **Marca le assegnazioni esistenti**. Ogni assegnazione di strumento che esiste ora in workflow, loro versioni e API pubblicate diventa un’**eccezione preesistente**, legata alla versione dello strumento con cui gira. Le API pubblicate ricevono una sola volta una nuova impronta (digest); la loro cronologia conserva la vecchia e la nuova. Il passo viene eseguito **una sola volta**: assegnazioni, workflow e versioni creati dopo sono nuovi e vengono chiesti.
-2. **Controlla l’elenco.** Un’eccezione indesiderata termina quando togli lo strumento dall’agente e salvi; se lo assegni di nuovo, viene chiesto come uno nuovo.
-3. Solo dopo vengono attivate le approvazioni. Questa versione non lo prevede ancora: restano disattivate finché la verifica di sicurezza non è conclusa.
-
-Se si attiva senza il primo passo, nulla è esente: ogni assegnazione viene chiesta e le esecuzioni non presidiate negano tali chiamate. Una nuova versione dello strumento termina sempre un’eccezione. Un’approvazione non toglie mai i limiti della sandbox.
-
-**Non coperto:** gli strumenti server del fornitore (ricerca web, recupero web ed esecuzione di codice presso Anthropic) girano presso il fornitore e non si possono fermare per chiamata; disattivali nell’agente dove non devono essere usati. Nemmeno gli strumenti di esecuzione propri di Nodestro (memoria, file dell’esecuzione) vengono chiesti. Le API pubblicate non chiedono a nessuno: avranno più avanti una propria fase di approvazione.
-
-In **Approvazioni → Regole per le chiamate di strumenti** vedi se le approvazioni sono attive e quali eccezioni preesistenti ci sono. L’amministrazione vi esegue anche il passo di attivazione, concede e revoca approvazioni anticipate e legge il registro: chi ha deciso, concesso o revocato cosa, e ogni decisione rifiutata. Gli argomenti di una chiamata non compaiono mai nel registro.
-
-Nei dettagli dell’esecuzione, ogni chiamata di strumento mostra cosa hanno fatto le regole: consentita, approvata o rifiutata (da chi e quando), nessuna decisione in tempo o negata senza domanda, con il motivo.
+Se una persona deve controllare i risultati prima che l’esecuzione prosegua, usa un’[approvazione](/docs/verzweigungen#freigabe). Per limitare ciò che un agente può fare, assegnagli solo gli strumenti di cui ha bisogno (vedi [Assegnare strumenti](/docs/agenten#tools)).
 
 ## Sotto-workflow {#unterworkflow}
 <!-- keywords: sotto-workflow, subworkflow, annidare, riutilizzare, blocco, versione, esecuzione figlia -->

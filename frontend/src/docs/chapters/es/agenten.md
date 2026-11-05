@@ -139,6 +139,8 @@ El **razonamiento (thinking)** determina si el modelo piensa antes de responder:
 
 El razonamiento cuenta como **tokens de salida** y se cobra como tal.
 
+Los **modelos locales con razonamiento** (Ollama) no tienen niveles de esfuerzo: *Bajo* responde sin razonar; *Medio* y *Alto* dejan razonar al modelo. En un equipo sin tarjeta gráfica, el [modo de ahorro de CPU](/docs/einstellungen#lokale-hardware) también omite el razonamiento con *Medio*; *Alto*, *Valor del modelo* y una opción de razonamiento fijada en las opciones de solicitud nunca se reducen.
+
 Si se desconoce si un modelo admite esfuerzo de razonamiento (servidores propios, ids de modelo desconocidos), un esfuerzo definido produce un error. Elige entonces *Predeterminado del modelo* o declara la capacidad en [Proveedores de IA](/docs/einstellungen#anbieter). Los endpoints compatibles con OpenAI (como Ollama o vLLM) no aceptan ningún ajuste de esfuerzo; la comprobación lo explica, y **Poner el esfuerzo en el valor del modelo** cambia el agente con un clic.
 
 ## Control de calidad {#qualitaet}

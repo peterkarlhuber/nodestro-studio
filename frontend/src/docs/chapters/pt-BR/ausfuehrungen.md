@@ -33,7 +33,7 @@ Na tela, cada agente mostra seu status e, depois da execução, também tokens e
 
 A página **Execuções** lista as execuções, das mais recentes para as mais antigas, com fluxo de trabalho, status, horário de início, duração, requisições, tokens e custos. Abaixo do nome do fluxo aparece a entrada ou a mensagem de erro. Se uma execução concluída teve chamadas de ferramentas sem resultado, aparece **Concluída com problemas** ao lado de *Concluído*, desde que o servidor forneça essa informação.
 
-- **Filtros:** por fluxo de trabalho, por status e por origem (*Execuções próprias* ou *Traces importados*).
+- **Filtros:** por fluxo de trabalho, por status (inclusive *Aguardando decisão de orçamento*) e por origem (*Execuções próprias* ou *Traces importados*). Os filtros fazem parte do endereço, então *Voltar* e um link salvo levam à mesma seleção. No filtro de fluxo, fluxos com o mesmo nome se distinguem pela última alteração.
 - **Excluir:** símbolo da lixeira; execuções em andamento não podem ser excluídas.
 - **Importar trace:** veja [Importar traces](/docs/ausfuehrungen#trace-import).
 - **Carregar execuções mais antigas:** a lista mostra primeiro as 100 execuções mais recentes e indica isso embaixo. Os filtros de status e de origem só procuram entre as execuções carregadas. Se o servidor não suportar carregamento por páginas, a lista para em 500 execuções; as mais antigas continuam salvas e podem ser encontradas com o filtro de fluxo de trabalho.

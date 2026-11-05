@@ -90,7 +90,7 @@
     "upload": "PDF, images (PNG, JPEG, GIF, WebP) et formats texte. Images jusqu’à 5 Mo, documents jusqu’à 20 Mo. Les textes et les PDF sont indexés pour la recherche.",
     "description": "Aide les agents en mode « À la demande » à choisir le fichier à charger. Enregistré quand vous quittez le champ.",
     "chunks": "Le fichier a été découpé en extraits d’environ 1 500 caractères pour la recherche plein texte (les PDF page par page). Sans extraits, il n’est pas consultable par la recherche.",
-    "search": "Recherche plein texte (BM25) dans tous les fichiers indexés – c’est ainsi qu’un agent en mode « Recherche » trouve les passages pertinents. Gratuit.",
+    "search": "Recherche dans tous les fichiers indexés avec la méthode de recherche de Réglages → Recherche dans les connaissances – c’est ainsi qu’un agent en mode « Recherche » trouve les passages pertinents. Gratuit.",
     "score": "Pertinence du résultat : plus elle est élevée, mieux l’extrait correspond à la recherche.",
     "collections": "Les collections regroupent les fichiers de connaissances, p. ex. « Contrats » ou « Données produit ». Les agents reçoivent toujours exactement les fichiers qui leur sont attribués."
   },

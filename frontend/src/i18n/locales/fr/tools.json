@@ -115,7 +115,7 @@
     "counts": "Outils approuvés : {{approved}} sur {{total}} · en attente d’examen : {{pending}}",
     "unavailable": "MCP n’est pas disponible dans cette installation (Python 3.11 ou plus récent requis). Les services peuvent être configurés, mais pas joints.",
     "endpointList": "L’opérateur n’autorise que ces adresses : {{list}}",
-    "endpointListEmpty": "L’opérateur n’a encore autorisé aucune adresse de service : aucun service ne peut donc être connecté ici. Demandez à la personne qui exploite Nodestro d’autoriser les adresses dont vous avez besoin (réglage <code>NODESTRO_MCP_ENDPOINTS</code>).",
+    "endpointListEmpty": "L’opérateur n’a encore autorisé aucune adresse de service : aucun service ne peut donc être connecté ici. Demandez à la personne qui exploite Nodestro d’autoriser les adresses dont vous avez besoin.",
     "noVault": "Aucun coffre de clés sécurisé : les jetons d’accès ne sont pas enregistrés, seulement gardés en mémoire jusqu’à la fermeture de l’application.",
     "readOnlyMvp": "Pour l’instant, seuls les outils que vous classez « lecture seule » sont utilisables.",
     "writeEnabled": "Les outils qui modifient des données nécessitent une approbation à chaque appel.",

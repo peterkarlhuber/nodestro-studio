@@ -247,7 +247,7 @@
     "maxDecisionsHint": "Cada delegação e a resposta final contam como uma decisão (de 1 a {{max}}). Sem resposta até lá, a etapa falha.",
     "maxPerTeam": "Usos máximos por equipe",
     "maxPerTeamHint": "Quantas vezes a mesma equipe pode ser escolhida. Vazio: sem limite próprio.",
-    "safety": "O orquestrador escolhe apenas entre estas equipes. Ele não tem ferramentas, não cria agentes, ferramentas nem equipes e não tem permissões próprias. Cada equipe roda como uma execução vinculada própria, com sua parte do orçamento, seus limites e suas aprovações. Quando uma equipe aguarda uma aprovação, o orquestrador também aguarda.",
+    "safety": "O orquestrador escolhe apenas entre estas equipes. Ele não tem ferramentas, não cria agentes, ferramentas nem equipes e não tem permissões próprias. Cada equipe roda como uma execução vinculada própria, com seus limites, suas aprovações e seu próprio orçamento, se a equipe tiver um; todos os custos contam também para o orçamento desta execução. Quando uma equipe aguarda uma aprovação, o orquestrador também aguarda.",
     "run": {
       "delegated": "Delegado a {{team}}",
       "finished": "Concluído com uma resposta",

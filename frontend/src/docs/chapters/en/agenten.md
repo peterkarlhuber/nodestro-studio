@@ -139,6 +139,8 @@ The result then looks like this:
 
 Thoughts count as **output tokens** and are billed accordingly.
 
+**Local thinking models** (Ollama) have no graded effort: *Low* answers without thinking, *Medium* and *High* let the model think. On a computer without a graphics card, the [CPU saving mode](/docs/einstellungen#lokale-hardware) also skips thinking at *Medium*; *High*, *Model default* and a reasoning option set under *Request options* are never reduced.
+
 If it is unknown whether a model supports reasoning effort (your own servers, unknown model ids), a set effort leads to an error. Choose *Model default* then, or declare the capability under [AI providers](/docs/einstellungen#anbieter). OpenAI-compatible endpoints (such as Ollama or vLLM) accept no effort setting at all; the check explains this, and **Set effort to model default** switches the agent with one click.
 
 ## Quality check {#qualitaet}

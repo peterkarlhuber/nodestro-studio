@@ -54,9 +54,10 @@ I blocchi, l'ispettore (con il titolo *Proprietà*) e la panoramica dell'esecuzi
 | **Decisione** | Sceglie uno o più rami secondo regole fisse, senza richiesta all'IA. | uno o più | un'uscita per ramo |
 | **Approvazione** | Ferma l'esecuzione finché una persona approva o rifiuta. | quanti vuoi | *Approvato*, *Rifiutato* |
 | **Sotto-workflow** | Esegue un altro workflow salvato come un unico passaggio. | quanti vuoi | quanti vuoi |
+| **Orchestratore** | Lascia che un modello di IA affidi il compito ai team, una decisione dopo l’altra. | quanti vuoi | quanti vuoi |
 | **Risultato** | Raccoglie i risultati degli agenti collegati come output del workflow, su richiesta anche come file. | quanti vuoi | nessuna |
 
-I nodi di avvio e di risultato sono facoltativi: gli agenti senza predecessore ricevono automaticamente l'input dell'esecuzione e, senza nodo di risultato, l'output degli ultimi agenti vale come risultato (vedi [Il risultato di un'esecuzione](/docs/ausfuehrungen#ergebnis)). Decisione, approvazione e sotto-workflow si trovano nella tavolozza sotto *Controllare il flusso*; vedi [Ramificazioni e approvazioni](/docs/verzweigungen).
+I nodi di avvio e di risultato sono facoltativi: gli agenti senza predecessore ricevono automaticamente l'input dell'esecuzione e, senza nodo di risultato, l'output degli ultimi agenti vale come risultato (vedi [Il risultato di un'esecuzione](/docs/ausfuehrungen#ergebnis)). Decisione, approvazione, sotto-workflow e orchestratore si trovano nella tavolozza sotto *Controllare il flusso*; vedi [Ramificazioni e approvazioni](/docs/verzweigungen).
 
 Ogni nodo ha un nome univoco. Se crei un secondo agente con lo stesso nome, Nodestro aggiunge un numero («Agente 2»). Il nome di un agente è anche il suo segnaposto nei compiti.
 

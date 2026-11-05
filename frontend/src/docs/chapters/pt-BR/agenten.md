@@ -139,6 +139,8 @@ O **raciocínio (thinking)** define se o modelo pensa antes de responder:
 
 O raciocínio conta como **tokens de saída** e é cobrado como tal.
 
+**Modelos locais com raciocínio** (Ollama) não têm níveis de esforço: *Baixo* responde sem raciocinar, *Médio* e *Alto* deixam o modelo raciocinar. Em um computador sem placa de vídeo, o [modo de economia de CPU](/docs/einstellungen#lokale-hardware) também pula o raciocínio no *Médio*; *Alto*, *Padrão do modelo* e uma opção de raciocínio definida nas opções de requisição nunca são reduzidos.
+
 Se não se sabe se um modelo suporta esforço de raciocínio (servidores próprios, ids de modelo desconhecidos), um esforço definido gera um erro. Escolha então *Padrão do modelo* ou declare a capacidade em [Provedores de IA](/docs/einstellungen#anbieter). Endpoints compatíveis com OpenAI (como Ollama ou vLLM) não aceitam nenhuma configuração de esforço; a verificação explica isso, e **Definir esforço como padrão do modelo** ajusta o agente com um clique.
 
 ## Controle de qualidade {#qualitaet}

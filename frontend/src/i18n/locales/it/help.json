@@ -90,7 +90,7 @@
     "upload": "PDF, immagini (PNG, JPEG, GIF, WebP) e formati di testo. Immagini fino a 5 MB, documenti fino a 20 MB. Testi e PDF vengono indicizzati per la ricerca.",
     "description": "Aiuta gli agenti in modalità «Su richiesta» a decidere quale file caricare. Viene salvata quando esci dal campo.",
     "chunks": "Il file è stato suddiviso in sezioni di circa 1.500 caratteri per la ricerca full-text (i PDF pagina per pagina). Senza sezioni non è ricercabile.",
-    "search": "Ricerca full-text (BM25) in tutti i file indicizzati – così un agente in modalità «Ricerca» trova i passaggi pertinenti. Non costa nulla.",
+    "search": "Ricerca in tutti i file indicizzati con il metodo di ricerca di Impostazioni → Ricerca nella conoscenza – così un agente in modalità «Ricerca» trova i passaggi pertinenti. Non costa nulla.",
     "score": "Pertinenza del risultato: più è alta, più la sezione corrisponde alla ricerca.",
     "collections": "Le raccolte raggruppano i file della conoscenza, ad es. «Contratti» o «Dati prodotto». Gli agenti ricevono sempre esattamente i file assegnati."
   },

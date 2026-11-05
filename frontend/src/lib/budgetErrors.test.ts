@@ -16,7 +16,6 @@ describe("budget codes (BUDGET-1)", () => {
   it.each([
     "run.budget_ended",
     "run.budget_checkpoint_lost",
-    "run.budget_waits_interrupted",
     "budget.limit_not_higher",
     "budget.limit_invalid",
     "budget.not_pending",

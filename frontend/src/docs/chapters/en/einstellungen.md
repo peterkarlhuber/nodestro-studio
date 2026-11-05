@@ -191,7 +191,7 @@ Docker, or a compatible container engine, is required for AI-created tools on ev
 
 **Nodestro checks the engine itself.** Before an engine runs AI-created code, Nodestro checks its limits and its system call filter (seccomp) and starts a small test container. Inside it, the code must run as an unprivileged user without special privileges, without network, on a read-only file system, with enforced limits for memory, processes, CPU and open files, and without secrets in the environment. Nodestro refuses an engine that fails a check, whatever its name, and *Settings → Sandbox* shows which check failed. The checks are never relaxed. Nodestro checks in the background, so the page never waits for Docker; while the check runs, the Docker row says *Checking* and updates by itself. After starting or changing the engine, click **Check again**. Administrators can also click **Run self-test** to start the test container right away (**Prepare sandbox** when the sandbox image is still missing). Only administrators start a new check, and at most every 10 seconds: otherwise the page says that nothing new was checked (and when to try again) and keeps showing the last result. Other users see the state and each check without technical details.
 
-The engine checks Nodestro uses run in CI on Docker Engine on Linux (rootful on x86-64 and ARM64, rootless with cgroup v2 delegation on x86-64), on rootful Podman on Linux and, not required to pass, on Colima on an Intel Mac; Nodestro's own Docker tests run on rootful Docker Engine on Linux x86-64. Rootless Podman 4.9 is refused in CI, because it does not apply the sandbox's file and open-file limits. **Docker Desktop has never run in CI**, neither on macOS (Apple silicon or Intel) nor on Windows (x64 or ARM64), and neither have OrbStack, Colima on Apple silicon and Podman machine; on them, Nodestro relies on its own checks on your computer.
+**Which engine?** On Linux, Docker Engine is the most direct choice, ideally rootless with cgroup v2 delegation; rootful Podman works too. Rootless Podman can fail the checks, because it may not apply all of the sandbox's file limits. On macOS and Windows, use Docker Desktop or one of the alternatives above. Whichever engine you choose, its name does not decide: Nodestro relies on its own checks on your computer.
 
 Then open *Settings → Sandbox*: with **Automatic** Nodestro uses Docker as soon as it is running; *Docker available* is shown and AI-created tools are no longer blocked. If Docker stops, they are blocked again until it runs; Nodestro does not switch to the Python process.
 
@@ -260,7 +260,7 @@ Nodestro starts at `http://localhost:8000` and opens the browser. Options of the
 | `--host` | `NODESTRO_HOST` | Address (default `127.0.0.1`). Only addresses of this computer (`127.0.0.1`, `::1`, `localhost`) are accepted, because Nodestro has no login yet |
 | `--port` | `NODESTRO_PORT` | Port (default `8000`) |
 | `--data-dir` | `NODESTRO_DATA_DIR` | Data directory (default `~/.nodestro`) |
-| `--profile` | `NODESTRO_PROFILE` | Operating profile (default `desktop`). `server` cannot be started yet |
+| `--profile` | `NODESTRO_PROFILE` | Operating profile (default `desktop`). A Nodestro server is not started with this command: it runs as the separate Nodestro server distribution that your organization's operator installs |
 | – | `NODESTRO_ALLOWED_HOSTS` | Further names of this computer Nodestro answers under (comma-separated, e.g. `studio.localhost`). Other host names, changes from foreign web pages and requests forwarded by a proxy are refused, so no web page in the browser can operate Nodestro |
 | `--no-browser` | – | Do not open the browser automatically |
 | `--reload` | – | Restart on code changes (development) |
@@ -272,7 +272,7 @@ Stop with **Ctrl+C**. Running runs are canceled.
 ## Nodestro on a server {#server}
 <!-- keywords: server, sign in, sign-in, sign out, role, roles, permission, permissions, workspace, tenant, read only, members, nodestro-server, set-role, remove-member, revoke-sessions, session expired -->
 
-Nodestro Studio can also run on a **Nodestro server** of your organization. You then sign in through your organization's sign-in service, and your data is stored on that server instead of on your computer. The desktop app and the `nodestro` command have no sign-in and no roles; nothing in this section applies there.
+Nodestro Studio can also run on a **Nodestro server** of your organization. You then sign in through your organization's sign-in service, and your data is stored on that server instead of on your computer. Nodestro started with the `nodestro` command has no sign-in and no roles; nothing in this section applies there.
 
 **Signing in and out.** When you open Nodestro, the server takes you to the sign-in and back. Your name and role are shown at the top right. A click opens your account: name, role, **workspace**, your permissions and **Sign out**. When your session ends, the next action takes you to the sign-in again and then back to the same page. If a sign-in fails (for example because it took too long), a notice at the top of the page says what happened, with **Sign in again**.
 

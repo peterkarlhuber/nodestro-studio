@@ -121,7 +121,8 @@
     "projector": "Proyector de visión (opcional)",
     "projectorHint": "El archivo mmproj, si el modelo lee imágenes.",
     "start": "Importar",
-    "started": "Importación iniciada"
+    "started": "Importación iniciada",
+    "packageExternal": "Los paquetes sin conexión solo se pueden importar en un servidor de modelos que gestione Nodestro. En tu propio servidor de Ollama, impórtalos con sus propias herramientas; aquí puedes importar un archivo GGUF."
   },
   "storage": {
     "title": "Carpeta de modelos",
@@ -137,7 +138,7 @@
   },
   "offline": {
     "label": "Modo sin conexión estricto",
-    "text": "Solo modelos y herramientas locales. Los modelos en la nube, los servidores remotos y las descargas se rechazan antes de iniciar una ejecución.",
+    "text": "Solo el servidor de modelos local (Ollama) y herramientas locales. Se rechazan los modelos en la nube, los endpoints compatibles con OpenAI y vLLM (también en este equipo), los servidores remotos, las comprobaciones de precios y las descargas, tanto en las ejecuciones como en los asistentes.",
     "noDownloads": "En el modo sin conexión estricto no hay descargas."
   },
   "europe": {
@@ -168,7 +169,9 @@
     "embeddingHint": "Otro modelo necesita un índice nuevo. Hasta que esté completo, la búsqueda sigue usando el actual.",
     "noModel": "Ningún modelo elegido",
     "agentDefault": "Como en Ajustes ({{mode}})",
-    "agentMode": "Método de búsqueda de este agente"
+    "agentMode": "Método de búsqueda de este agente",
+    "notInstalled": "{{model}} todavía no está instalado. Descárgalo arriba en los modelos locales antes de crear el índice; si no, la creación falla.",
+    "notInstalledServer": "{{model}} no está instalado en este servidor, así que no se puede crear el índice con él. Pide a la persona que administra Nodestro que instale el modelo."
   },
   "index": {
     "state": {
@@ -177,7 +180,7 @@
       "incomplete": "Secciones indexadas: {{embedded}} de {{chunks}}. Reconstrúyelo para añadir el resto.",
       "building": "El índice se está creando.",
       "reindex_required": "El modelo elegido no coincide con el índice. Reconstruye el índice para él.",
-      "unavailable": "No se puede acceder al servidor de modelos."
+      "unavailable": "Esta instalación no puede guardar un índice semántico. La búsqueda de texto completo sigue funcionando."
     },
     "badge": {
       "off": "Desactivado",

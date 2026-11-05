@@ -137,6 +137,12 @@ ol {
   max-width: 100%;
 }
 
+/* The model catalog's fit badges ("Zu groß für diesen Computer") wrap, so the action column stays in view at 1440 px
+   instead of behind a horizontal scroll. */
+.local-catalog .nd-badge {
+  white-space: normal;
+}
+
 .row-between {
   display: flex;
   align-items: flex-start;

@@ -134,6 +134,10 @@ describe("ToolApprovalRules", () => {
     expect(screen.getAllByText("Aus").length).toBeGreaterThan(0);
     await userEvent.click(screen.getByText("Vorbereitung für Administratoren"));
     expect(screen.getByTestId("legacy-not-run")).toBeInTheDocument();
+    // The text speaks to the person: no internal switch, no internal process (security review).
+    const state = screen.getByTestId("tool-approval-state");
+    expect(state).toHaveTextContent("Vorbereiten kannst du sie schon");
+    expect(state.textContent).not.toMatch(/NODESTRO_|Sicherheitsprüfung/);
     const grants = await screen.findByTestId("pre-grants");
     expect(within(grants).getByText("mailer")).toBeInTheDocument();
     expect(within(grants).getByText("Aktiv")).toBeInTheDocument();

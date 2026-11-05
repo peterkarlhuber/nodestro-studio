@@ -184,6 +184,25 @@ describe("ExecutionsPage filters in the address", () => {
     expect(options.map((option) => option.label)).toEqual(["Blog · changed 11-01", "Blog · changed 11-03", "Invoice"]);
   });
 
+  it("says a copy changed under a minute ago was changed just now, not \"geändert jetzt\"", async () => {
+    const now = new Date().toISOString();
+    const workflows = [
+      { id: "a", name: "Blog", updated_at: now },
+      { id: "b", name: "Blog", updated_at: "2026-11-01T00:00:00Z" },
+    ];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        const body = url.split("?")[0].endsWith("/workflows") ? workflows : [];
+        return new Response(JSON.stringify(body), { status: 200, headers: { "Content-Type": "application/json" } });
+      }),
+    );
+    show("/executions");
+    await waitFor(() => expect(screen.getByRole("option", { name: "Blog · gerade eben geändert" })).toBeInTheDocument());
+    const select = screen.getByRole("option", { name: "Blog · gerade eben geändert" }).closest("select")!;
+    expect(select).not.toHaveTextContent("geändert jetzt");
+  });
+
   it("opens filtered from a link, says when nothing matches and shows all runs again", async () => {
     stubApi(3);
     show("/executions?status=failed");

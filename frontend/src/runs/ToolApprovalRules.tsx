@@ -5,7 +5,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Ban, Plus, ShieldCheck } from "lucide-react";
 import { useState } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 import { useAccess } from "../api/access";
 import { api } from "../api/client";
@@ -122,8 +122,8 @@ function ActivationPanel() {
           {data.enabled ? (
             t("approvals.rules.enabledText")
           ) : (
-            // The operator's setting stays named, as code after the sentence for the person (TX-14).
-            <Trans i18nKey="approvals.rules.disabledText" components={{ code: <code /> }} />
+            // Speaks to the person: no internal switch names (they are for the operator's documentation).
+            t("approvals.rules.disabledText")
           )}
         </span>
       </p>

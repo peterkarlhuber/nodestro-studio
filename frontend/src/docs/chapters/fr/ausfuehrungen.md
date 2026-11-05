@@ -33,7 +33,7 @@ Sur le canevas, chaque agent affiche son statut, puis après l’exécution ses 
 
 La page **Exécutions** liste les exécutions, les plus récentes d’abord, avec workflow, statut, heure de lancement, durée, requêtes, tokens et coûts. Sous le nom du workflow figure l’entrée ou le message d’erreur. Si une exécution terminée a eu des appels d’outils sans résultat, **Terminée avec des problèmes** s’affiche à côté de *Terminé*, à condition que le serveur fournisse cette information.
 
-- **Filtres :** par workflow, par statut et par origine (*Exécutions propres* ou *Traces importées*).
+- **Filtres :** par workflow, par statut (y compris *En attente d’une décision de budget*) et par origine (*Exécutions propres* ou *Traces importées*). Les filtres font partie de l’adresse : *Retour* et un lien enregistré mènent à la même sélection. Dans le filtre par workflow, les workflows de même nom se distinguent par leur dernière modification.
 - **Supprimer :** symbole de corbeille ; les exécutions en cours ne peuvent pas être supprimées.
 - **Importer une trace :** voir [Importer des traces](/docs/ausfuehrungen#trace-import).
 - **Charger les exécutions plus anciennes :** la liste affiche d’abord les 100 exécutions les plus récentes et l’indique en dessous. Les filtres par statut et par origine ne cherchent que dans les exécutions chargées. Si le serveur ne prend pas en charge la pagination, la liste s’arrête à 500 exécutions ; les plus anciennes restent enregistrées et sont accessibles avec le filtre par workflow.

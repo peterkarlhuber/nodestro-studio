@@ -89,7 +89,7 @@
     "reloaded": "Die gespeicherte Version ist geladen."
   },
   "compat": {
-    "effortText": "OpenAI-kompatible Endpunkte (zum Beispiel Ollama oder vLLM) nehmen keine Aufwand-Einstellung von Nodestro an. Stell den Aufwand dieses Agenten auf „Modellstandard“.",
+    "effortText": "Dieser OpenAI-kompatible Endpunkt (zum Beispiel vLLM) nimmt keine Aufwand-Einstellung von Nodestro an. Stell den Aufwand dieses Agenten auf „Modellstandard“.",
     "effortOff": "Aufwand auf Modellstandard setzen"
   },
   "rules": {

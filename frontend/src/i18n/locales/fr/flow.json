@@ -247,7 +247,7 @@
     "maxDecisionsHint": "Chaque délégation et la réponse finale comptent chacune pour une décision (de 1 à {{max}}). Sans réponse d’ici là, l’étape échoue.",
     "maxPerTeam": "Utilisations maximales par équipe",
     "maxPerTeamHint": "Combien de fois une même équipe peut être choisie. Vide : pas de limite propre.",
-    "safety": "L’orchestrateur choisit uniquement parmi ces équipes. Il n’a pas d’outils, ne crée ni agents, ni outils, ni équipes et n’a aucune autorisation propre. Chaque équipe s’exécute comme une exécution liée distincte avec sa part du budget, ses limites et ses validations. Quand une équipe attend une validation, l’orchestrateur attend aussi.",
+    "safety": "L’orchestrateur choisit uniquement parmi ces équipes. Il n’a pas d’outils, ne crée ni agents, ni outils, ni équipes et n’a aucune autorisation propre. Chaque équipe s’exécute comme une exécution liée distincte avec ses limites, ses validations et son propre budget si l’équipe en a un ; tous les coûts comptent en plus dans le budget de cette exécution. Quand une équipe attend une validation, l’orchestrateur attend aussi.",
     "run": {
       "delegated": "Délégué à {{team}}",
       "finished": "Terminé avec une réponse",

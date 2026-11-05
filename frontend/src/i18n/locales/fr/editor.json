@@ -163,7 +163,7 @@
     "addFile": "Ajouter un fichier",
     "addFilePlaceholder": "+ Ajouter un fichier …",
     "budget": "Budget",
-    "budgetText": "Budget pour cette exécution : {{budget}}. L’exécution s’arrête dès qu’il est dépassé.",
+    "budgetText": "Budget pour cette exécution : {{budget}}. S’il ne suffit pas, l’exécution se met en pause et attend votre décision.",
     "unlimited": "illimité",
     "providerMissing": "Pas encore configuré : {{providers}}. Les agents utilisant ces modèles ne peuvent pas s’exécuter.",
     "openSettings": "Ouvrir les réglages",

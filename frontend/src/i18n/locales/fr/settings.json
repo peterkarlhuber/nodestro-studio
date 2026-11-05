@@ -18,7 +18,7 @@
     "assistantModel": "Modèle des assistants",
     "assistantHint": "Conçoit des agents à partir de votre description, écrit des outils et propose de la mémoire.",
     "budget": "Budget par défaut par exécution (USD)",
-    "budgetHint": "Une exécution s’arrête dès que les coûts estimés dépassent le budget. Vide = pas de limite.",
+    "budgetHint": "Si le budget ne suffit pas, les exécutions suivies se mettent en pause et attendent une décision ; celles issues de planifications, de lots, de séries de tests et de l’API publiée s’arrêtent à la place. Vide = pas de limite.",
     "architectBudget": "Plafond de coût de l’architecte (USD par brouillon)",
     "architectBudgetHint": "L’architecte s’arrête si un brouillon coûte davantage. Vide = pas de plafond.",
     "architectRepairs": "Corrections par IA par brouillon",

@@ -139,6 +139,8 @@ La **réflexion (thinking)** détermine si le modèle réfléchit avant de répo
 
 La réflexion compte comme **tokens de sortie** et est facturée comme tels.
 
+Les **modèles locaux à réflexion** (Ollama) n’ont pas de niveaux d’effort : *Faible* répond sans réfléchir, *Moyen* et *Élevé* laissent le modèle réfléchir. Sur un ordinateur sans carte graphique, le [mode économie CPU](/docs/einstellungen#lokale-hardware) saute aussi la réflexion avec *Moyen* ; *Élevé*, *Valeur du modèle* et une option de raisonnement définie dans les options de requête ne sont jamais réduits.
+
 Si l’on ne sait pas si un modèle prend en charge l’effort de raisonnement (vos propres serveurs, identifiants de modèle inconnus), un effort défini provoque une erreur. Choisissez alors *Valeur par défaut du modèle* ou déclarez la capacité sous [Fournisseurs d’IA](/docs/einstellungen#anbieter). Les points d’accès compatibles OpenAI (comme Ollama ou vLLM) n’acceptent aucun réglage d’effort ; la vérification l’explique, et **Régler l’effort sur la valeur du modèle** modifie l’agent en un clic.
 
 ## Contrôle qualité {#qualitaet}

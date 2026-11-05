@@ -54,9 +54,10 @@ Los bloques, el inspector (con el título *Propiedades*) y el resumen de la ejec
 | **Decisión** | Elige una o varias ramas según reglas fijas, sin petición a la IA. | una o varias | una salida por rama |
 | **Aprobación** | Detiene la ejecución hasta que una persona aprueba o rechaza. | las que quieras | *Aprobado*, *Rechazado* |
 | **Subflujo** | Ejecuta otro flujo de trabajo guardado como un solo paso. | las que quieras | las que quieras |
+| **Orquestador** | Deja que un modelo de IA delegue la tarea en equipos, una decisión tras otra. | las que quieras | las que quieras |
 | **Resultado** | Reúne los resultados de los agentes conectados como salida del flujo de trabajo, si quieres también como archivos. | las que quieras | ninguna |
 
-Los nodos de inicio y de resultado son opcionales: los agentes sin predecesor reciben automáticamente la entrada de la ejecución y, sin nodo de resultado, la salida de los últimos agentes cuenta como resultado (consulta [El resultado de una ejecución](/docs/ausfuehrungen#ergebnis)). Decisión, aprobación y subflujo están en la paleta, en *Controlar el flujo*; más información en [Ramas y aprobaciones](/docs/verzweigungen).
+Los nodos de inicio y de resultado son opcionales: los agentes sin predecesor reciben automáticamente la entrada de la ejecución y, sin nodo de resultado, la salida de los últimos agentes cuenta como resultado (consulta [El resultado de una ejecución](/docs/ausfuehrungen#ergebnis)). Decisión, aprobación, subflujo y orquestador están en la paleta, en *Controlar el flujo*; más información en [Ramas y aprobaciones](/docs/verzweigungen).
 
 Cada nodo tiene un nombre único. Si creas un segundo agente con el mismo nombre, Nodestro añade un número («Agente 2»). El nombre de un agente es también su marcador de posición en las tareas.
 

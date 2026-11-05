@@ -121,7 +121,8 @@
     "projector": "Proiettore visivo (facoltativo)",
     "projectorHint": "Il file mmproj, se il modello legge immagini.",
     "start": "Importa",
-    "started": "Importazione avviata"
+    "started": "Importazione avviata",
+    "packageExternal": "I pacchetti offline si possono importare solo in un server dei modelli gestito da Nodestro. Nel tuo server Ollama importali con i suoi strumenti; qui puoi importare un file GGUF."
   },
   "storage": {
     "title": "Cartella dei modelli",
@@ -137,7 +138,7 @@
   },
   "offline": {
     "label": "Modalità offline rigorosa",
-    "text": "Solo modelli e strumenti locali. Modelli cloud, server remoti e download vengono rifiutati prima dell’avvio di un’esecuzione.",
+    "text": "Solo il server di modelli locale (Ollama) e strumenti locali. Modelli cloud, endpoint compatibili con OpenAI e vLLM (anche su questo computer), server remoti, verifiche dei prezzi e download vengono rifiutati, sia per le esecuzioni sia per gli assistenti.",
     "noDownloads": "Nella modalità offline rigorosa i download sono disattivati."
   },
   "europe": {
@@ -168,7 +169,9 @@
     "embeddingHint": "Un altro modello richiede un nuovo indice. Finché non è pronto, la ricerca continua con quello attuale.",
     "noModel": "Nessun modello scelto",
     "agentDefault": "Come nelle Impostazioni ({{mode}})",
-    "agentMode": "Metodo di ricerca di questo agente"
+    "agentMode": "Metodo di ricerca di questo agente",
+    "notInstalled": "{{model}} non è ancora installato. Scaricalo sopra tra i modelli locali prima di creare l’indice; altrimenti la creazione non riesce.",
+    "notInstalledServer": "{{model}} non è installato su questo server, quindi non si può creare l’indice con esso. Chiedi a chi gestisce Nodestro di installare il modello."
   },
   "index": {
     "state": {
@@ -177,7 +180,7 @@
       "incomplete": "Sezioni indicizzate: {{embedded}} su {{chunks}}. Ricostruisci l’indice per aggiungere il resto.",
       "building": "L’indice è in costruzione.",
       "reindex_required": "Il modello scelto non corrisponde all’indice. Ricostruisci l’indice per questo modello.",
-      "unavailable": "Il server dei modelli non è raggiungibile."
+      "unavailable": "Questa installazione non può memorizzare un indice semantico. La ricerca full-text continua a funzionare."
     },
     "badge": {
       "off": "Spento",

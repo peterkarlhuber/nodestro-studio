@@ -33,7 +33,7 @@ Auf der Arbeitsfläche zeigt jeder Agent seinen Status, nach dem Lauf auch Token
 
 Die Seite **Ausführungen** listet die Läufe, neueste zuerst, mit Workflow, Status, Startzeit, Dauer, Anfragen, Tokens und Kosten. Unter dem Workflow-Namen steht die Eingabe oder die Fehlermeldung. Hatte ein fertiger Lauf Tool-Aufrufe ohne Ergebnis, steht neben *Fertig* **Mit Problemen beendet**, sofern der Server diese Angabe mitliefert.
 
-- **Filter:** nach Workflow, nach Status und nach Herkunft (*Eigene Läufe* oder *Importierte Traces*).
+- **Filter:** nach Workflow, nach Status (auch *Wartet auf Budget-Entscheidung*) und nach Herkunft (*Eigene Läufe* oder *Importierte Traces*). Die Filter sind Teil der Adresse, sodass *Zurück* und ein gespeicherter Link zur selben Auswahl führen. Gleichnamige Workflows unterscheidet der Workflow-Filter nach ihrer letzten Änderung.
 - **Löschen:** Papierkorb-Symbol; laufende Ausführungen lassen sich nicht löschen.
 - **Trace importieren:** siehe [Traces importieren](/docs/ausfuehrungen#trace-import).
 - **Ältere Ausführungen laden:** Die Liste zeigt zunächst die neuesten 100 Läufe und sagt das darunter. Die Filter nach Status und Herkunft durchsuchen nur die geladenen Läufe. Unterstützt der Server kein Blättern, endet die Liste bei 500 Läufen; ältere bleiben gespeichert und sind über den Filter nach Workflow erreichbar.

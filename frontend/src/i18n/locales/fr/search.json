@@ -19,5 +19,6 @@
     "docs": "Documentation"
   },
   "recentRun": "Exécution",
-  "recentWorkflow": "Workflow"
+  "recentWorkflow": "Workflow",
+  "shortcut": "Ctrl+K"
 }

@@ -153,7 +153,7 @@
     "placeholder": "Clé d’administration",
     "store": "Enregistrer chiffrée",
     "remove": "Supprimer la clé d’administration de {{provider}}",
-    "desktop": "L’application de bureau n’enregistre pas de clés d’administration. Définissez NODESTRO_OPENAI_ADMIN_KEY ou NODESTRO_ANTHROPIC_ADMIN_KEY, ou saisissez une clé pour une comparaison ci-dessous."
+    "desktop": "Cette installation n’enregistre pas de clés d’administration. Définissez NODESTRO_OPENAI_ADMIN_KEY ou NODESTRO_ANTHROPIC_ADMIN_KEY, ou saisissez une clé pour une comparaison ci-dessous."
   },
   "showAll": "Afficher les {{count}}"
 }

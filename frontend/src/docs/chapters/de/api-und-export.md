@@ -151,7 +151,7 @@ Standardmäßig antworten veröffentlichte APIs nur diesem Computer. Andere Ger�
 ## Als MCP-Tool {#mcp-server}
 <!-- keywords: mcp-server, mcp-tool, ki-assistent, claude, client, tool -->
 
-Eine veröffentlichte API kann auch als **Tool für MCP-Clients** auf diesem Computer angeboten werden, zum Beispiel für einen KI-Assistenten. Das ist standardmäßig aus und braucht zwei Schalter: Der Betreiber startet Nodestro mit `NODESTRO_MCP_SERVER=1`, und du schaltest unter *Zugriff* **Als MCP-Tool anbieten** ein.
+Eine veröffentlichte API kann auch als **Tool für MCP-Clients** auf diesem Computer angeboten werden, zum Beispiel für einen KI-Assistenten. Das ist standardmäßig aus und braucht zwei Schalter: Nodestros MCP-Server muss in dieser Installation eingeschaltet sein, und du schaltest unter *Zugriff* **Als MCP-Tool anbieten** ein.
 
 - Der Client verbindet sich auf diesem Computer mit `/api/published/_mcp` und sendet einen API-Schlüssel als Bearer-Token. Er sieht die angebotenen APIs dieses Schlüssels als Tools, benannt nach der API; der Schlüssel braucht die Berechtigung, Läufe zu starten.
 - Jeder Tool-Aufruf ist ein **normaler Lauf** der veröffentlichten API: dieselbe Version, dieselben Grenzen, Budgets, Freigaben und derselbe Verlauf. Ist synchrones Warten eingeschaltet, enthält die Antwort das Ergebnis; sonst, oder wenn ein Lauf an einer Freigabe hält, nennt sie den Lauf, damit du ihn in Nodestro oder über die API verfolgen kannst.
@@ -256,9 +256,9 @@ Das Paket enthält nie Schlüssel. Auf dem Zielrechner trägt der Betreiber die 
 ## Die Bibliothek Orkexa {#orkexa}
 <!-- keywords: orkexa, bibliothek, repository, lizenz, mit, vendor, mitliefern, git, zugriff -->
 
-Nodestro führt Agenten mit der Bibliothek **Orkexa** aus, die alle unterstützten Anbieter anspricht. Sie ist nicht auf PyPI und liegt in einem Repository, das derzeit privat ist. Der Export bietet deshalb zwei Wege:
+Nodestro führt Agenten mit der Bibliothek **Orkexa** aus, die alle unterstützten Anbieter anspricht. Sie ist nicht auf PyPI; ihr Quellcode liegt in einem öffentlichen Repository auf GitHub, unter der MIT-Lizenz. Der Export bietet deshalb zwei Wege:
 
-- **Git-Referenz** (Standard): `pyproject.toml` verweist auf den genauen Commit. Wer das Projekt installiert, braucht Lesezugriff auf das Repository.
+- **Git-Referenz** (Standard): `pyproject.toml` verweist auf den genauen Commit. Beim Installieren wird die Bibliothek von GitHub geladen; dafür ist Zugang zu github.com nötig.
 - **Quellcode beilegen:** Der Quellcode kommt nach `vendor/orkexa/` und das Projekt installiert sich ohne Zugriff auf das Repository. Die Bibliothek steht unter der MIT-Lizenz. Bestätige, dass du sie weitergeben darfst, bevor du dieses Projekt anderen gibst.
 
 Ohne eines von beiden lässt sich das Projekt nicht installieren. Das README nennt den gewählten Weg.

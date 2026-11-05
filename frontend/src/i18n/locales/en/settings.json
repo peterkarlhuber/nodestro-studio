@@ -18,7 +18,7 @@
     "assistantModel": "Model for the assistants",
     "assistantHint": "Designs agents from your description, writes tools and proposes memory.",
     "budget": "Default budget per run (USD)",
-    "budgetHint": "A run stops as soon as the estimated costs exceed the budget. Empty = no limit.",
+    "budgetHint": "When the budget is not enough, attended runs pause and wait for a decision; runs from schedules, batches, test series and the published API stop instead. Empty = no limit.",
     "architectBudget": "Cost limit of the Workflow Architect (USD per draft)",
     "architectBudgetHint": "The architect stops when a draft costs more. Empty = no limit.",
     "architectRepairs": "AI corrections per draft",

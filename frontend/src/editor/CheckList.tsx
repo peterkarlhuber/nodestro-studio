@@ -155,9 +155,10 @@ export function CheckList({
 }
 
 /**
- * An OpenAI-compatible endpoint (Ollama, vLLM, ...) cannot receive the effort setting: the agent library refuses
- * it with a technical message about CompatibleOptions, which no setting of Nodestro offers (AD-09). The way out the
- * studio has is the agent's own effort: back to the model default, which sends none.
+ * An OpenAI-compatible endpoint (vLLM, a server of your own) cannot receive the effort setting; Nodestro's Ollama
+ * connection is not one of them, it passes the effort to thinking models. The agent library refuses it with a
+ * technical message about CompatibleOptions, which no setting of Nodestro offers (AD-09). The way out the studio has
+ * is the agent's own effort: back to the model default, which sends none.
  */
 export function needsEffortOff(item: { code?: string | null; message?: string | null }): boolean {
   return Boolean(item.message && /send_reasoning_effort/.test(item.message));

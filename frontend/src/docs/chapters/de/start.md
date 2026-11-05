@@ -22,7 +22,7 @@ Nodestro läuft lokal auf deinem Rechner. Workflows, Ausführungen, Wissen und M
 | Begriff | Bedeutung |
 |---|---|
 | **Workflow** | Ein gespeicherter Ablauf aus Knoten und Verbindungen. |
-| **Knoten** | Ein Baustein auf der Arbeitsfläche: *Start*, *Agent* oder *Ergebnis*. |
+| **Knoten** | Ein Baustein auf der Arbeitsfläche: *Start*, *Agent*, *Ergebnis*, *Entscheidung*, *Freigabe*, *Unterworkflow* oder *Orchestrator*. Eine Verbindung von einer Entscheidung oder Freigabe zurück zu einem früheren Schritt bildet eine Schleife. |
 | **Agent** | Ein KI-Modell mit System-Prompt, Aufgabe und optional Tools, Wissen, Memory und Ausgabeformat. |
 | **Verbindung** | Leitet das Ergebnis eines Knotens an einen nachfolgenden Knoten weiter. |
 | **Lauf (Ausführung)** | Eine einzelne Ausführung eines Workflows mit einer bestimmten Eingabe. |
@@ -31,7 +31,7 @@ Nodestro läuft lokal auf deinem Rechner. Workflows, Ausführungen, Wissen und M
 | **Wissen** | Hochgeladene Dateien (PDFs, Bilder, Texte), die Agenten als Hintergrundmaterial nutzen. |
 | **Memory** | Notizen, die ein Agent selbst anlegt und bei späteren Aufgaben wieder liest. |
 | **Token** | Die Abrechnungseinheit der Modelle: ungefähr ein Wortteil. 1.000 Tokens entsprechen grob 700 Wörtern. |
-| **Budget** | Eine Kostengrenze pro Lauf; wird sie überschritten, bricht der Lauf ab. |
+| **Budget** | Eine Kostengrenze pro Lauf. Reicht sie bei einem Lauf, den du gestartet hast, nicht aus, pausiert der Lauf und wartet auf eine Budget-Entscheidung; unbeaufsichtigte Läufe (Zeitpläne, Stapelläufe, Testreihen) schlagen stattdessen fehl. |
 
 ## Erste Schritte {#erste-schritte}
 <!-- keywords: anleitung, tutorial, quickstart, erster workflow, schnellstart -->
@@ -57,7 +57,7 @@ Die **Seitenleiste** links folgt dem Arbeitsablauf: erstellen, ausführen und pr
 - **Automatisieren & testen:** *Testreihen*, *Stapelläufe* und *Zeitpläne*.
 - **Hilfe:** diese *Dokumentation* und die *Willkommen*-Seite.
 
-Unten findest du die *Einstellungen* und darunter, wo Nodestro läuft: in der Desktop-App und mit dem Befehl `nodestro` steht dort **Lokal & privat**, auf einem Server **Server deiner Organisation** (siehe [Nodestro auf einem Server](/docs/einstellungen#server)). Oben rechts wechselst du zwischen dunklem und hellem Farbschema; die Wahl wird im Browser gespeichert. Ist der Anbieter des Standardmodells nicht eingerichtet, erscheint dort ein Hinweis (*KI-Anbieter einrichten* oder, wenn schon ein anderer Anbieter eingerichtet ist, *Standardmodell braucht …*), der direkt zu den Einstellungen führt. Auf einem Server steht oben rechts außerdem dein Konto.
+Unten findest du die *Einstellungen* und darunter, wo Nodestro läuft: startest du Nodestro auf deinem Computer mit dem Befehl `nodestro`, steht dort **Lokal & privat**, auf einem Server **Server deiner Organisation** (siehe [Nodestro auf einem Server](/docs/einstellungen#server)). Oben rechts wählst du das Farbschema: *System* (folgt deinem Betriebssystem, Standard), *Dunkel* oder *Hell*; die Wahl wird im Browser gespeichert. Ist der Anbieter des Standardmodells nicht eingerichtet, erscheint dort ein Hinweis (*KI-Anbieter einrichten* oder, wenn schon ein anderer Anbieter eingerichtet ist, *Standardmodell braucht …*), der direkt zu den Einstellungen führt. Auf einem Server steht oben rechts außerdem dein Konto.
 
 **Hilfe direkt an der Stelle:** Hinter vielen Bedienelementen steht ein kleines **?**-Symbol. Fahre mit der Maus darüber, fokussiere es mit der Tabulatortaste oder tippe es auf Touch-Geräten an: Es erscheint eine kurze Erklärung, oft mit einem Link zum passenden Abschnitt dieser Dokumentation. Das Buch-Symbol neben Seitentiteln öffnet das zugehörige Kapitel. Mit **Esc** schließt du eine Erklärung wieder.
 
@@ -66,7 +66,7 @@ Status werden überall als Text und Symbol angezeigt, nie nur als Farbe. Alle Be
 ## Suche {#suche}
 <!-- keywords: suche, suchen, finden, strg+k, cmd+k, schnellsuche -->
 
-Das Suchfeld oben in der Titelleiste (oder **Strg+K**, auf dem Mac **⌘K**) durchsucht Workflows, Agenten in Workflows, die Agentenbibliothek, Tools, Wissen und diese Dokumentation. Die Treffer sind nach Art gruppiert; Favoriten erscheinen mit Stern.
+Das Suchfeld oben in der Titelleiste (oder **Strg+K**, auf dem Mac **⌘K**) durchsucht Seiten und Bereiche der Einstellungen, Workflows, Ausführungen, Agenten in Workflows, die Agentenbibliothek, Beispiel-Workflows, Tools, Wissen und diese Dokumentation. Die Treffer sind nach Art gruppiert; Favoriten erscheinen mit Stern. Ausführungen findet die Suche unter den neuesten Läufen nach Workflow-Name, Eingabe, Status oder ID. Bei leerem Suchfeld bietet sie deine letzten Läufe und zuletzt geänderten Workflows an.
 
 Mit den Pfeiltasten wählst du einen Treffer, **Enter** öffnet ihn dort, wo er hingehört: einen Agenten im Editor seines Workflows, eine Vorlage in der Agentenbibliothek, ein Tool in der Tool-Bibliothek, eine Wissensdatei in der Liste und einen Abschnitt in der Dokumentation. Groß- und Kleinschreibung und Akzente spielen keine Rolle.
 
@@ -81,13 +81,6 @@ Alle Daten liegen in einer SQLite-Datenbank im Datenverzeichnis, standardmäßig
 Zum **Sichern** kopierst du das Datenverzeichnis, während Nodestro beendet ist. An den Anbieter eines Agenten gehen nur die Inhalte, die der Agent für seine Anfrage braucht: System-Prompt, Aufgabe, zugewiesenes Wissen, Memory-Inhalte, die er liest, und Tool-Ergebnisse. Die API-Schlüssel werden nie in der Oberfläche angezeigt. Arbeitest du mit Nodestro auf einem Server, liegen die Daten stattdessen dort (siehe [Nodestro auf einem Server](/docs/einstellungen#server)).
 
 ## Die Desktop-App {#desktop}
-<!-- keywords: desktop, app, fenster, linux, installation, startlink, tauri -->
+<!-- keywords: desktop, app, desktop-app, download, installation, fenster -->
 
-Neben dem Befehl `nodestro` gibt es Nodestro als Desktop-App (Vorschau für Linux x86_64, noch nicht signiert). Sie bringt ihr eigenes Python mit; außer WebKitGTK 4.1 (`libwebkit2gtk-4.1-0`) muss nichts installiert sein. Entpacke das Archiv und starte `nodestro-desktop`.
-
-- Die App verwendet dasselbe Datenverzeichnis wie der Befehl (`~/.nodestro` oder `NODESTRO_DATA_DIR`). Es kann immer nur eines von beiden darauf zugreifen.
-- Nur das Fenster der App kann dieses Nodestro verwenden. Andere Programme auf dem Computer und Webseiten im Browser werden abgewiesen (*Dieses Nodestro gehört zur Desktop-App, die es gestartet hat*). Der Startlink des Fensters gilt nur einmal; für ein neues Fenster startest du die App neu.
-- Links zu anderen Websites öffnen sich im Browser.
-- Das Schließen des Fensters beendet Nodestro. Endet es unerwartet, sagt das Fenster es und nennt die Protokolldatei.
-- KI-erstellte Tools laufen nur isoliert: mit der Sandbox *Automatisch* in Docker, sobald es die Prüfungen von Nodestro bestanden hat ([Docker installieren](/docs/einstellungen#sandbox-docker)). Stattdessen kannst du die eingebaute **Linux-Sandbox** wählen; sie braucht keine Installation, kann aber keine Python-Pakete von Drittanbietern nutzen (siehe [Tools](/docs/tools#sandbox)). Ohne beides sind sie gesperrt; *Einstellungen → Sandbox* zeigt den Grund.
-- Versionen für macOS und Windows gibt es noch nicht.
+In dieser Version gibt es keine Desktop-App für Nodestro, und es lässt sich keine herunterladen. Auf deinem Computer startest du Nodestro mit dem Befehl `nodestro`: Es läuft lokal und öffnet sich im Browser (siehe [Installation und Start](/docs/einstellungen#installation)).

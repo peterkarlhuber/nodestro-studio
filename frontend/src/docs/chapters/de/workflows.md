@@ -54,9 +54,10 @@ Bausteine, Inspektor (Überschrift *Eigenschaften*) und Ausführungsübersicht s
 | **Entscheidung** | Wählt nach festen Regeln einen oder mehrere Zweige, ohne KI-Anfrage. | einer oder mehrere | ein Ausgang je Zweig |
 | **Freigabe** | Hält den Lauf an, bis eine Person freigibt oder ablehnt. | beliebig viele | *Freigegeben*, *Abgelehnt* |
 | **Unterworkflow** | Führt einen anderen gespeicherten Workflow als einen Schritt aus. | beliebig viele | beliebig viele |
+| **Orchestrator** | Lässt ein KI-Modell die Aufgabe an Teams abgeben, eine Entscheidung nach der anderen. | beliebig viele | beliebig viele |
 | **Ergebnis** | Sammelt die Ergebnisse der verbundenen Agenten als Ausgabe des Workflows, auf Wunsch auch als Dateien. | beliebig viele | keine |
 
-Start- und Ergebnis-Knoten sind optional: Agenten ohne Vorgänger erhalten automatisch die Eingabe des Laufs, und ohne Ergebnis-Knoten gilt die Ausgabe der letzten Agenten als Ergebnis (siehe [Ergebnis eines Laufs](/docs/ausfuehrungen#ergebnis)). Entscheidung, Freigabe und Unterworkflow findest du in der Palette unter *Ablauf steuern*; mehr dazu unter [Verzweigungen und Freigaben](/docs/verzweigungen).
+Start- und Ergebnis-Knoten sind optional: Agenten ohne Vorgänger erhalten automatisch die Eingabe des Laufs, und ohne Ergebnis-Knoten gilt die Ausgabe der letzten Agenten als Ergebnis (siehe [Ergebnis eines Laufs](/docs/ausfuehrungen#ergebnis)). Entscheidung, Freigabe, Unterworkflow und Orchestrator findest du in der Palette unter *Ablauf steuern*; mehr dazu unter [Verzweigungen und Freigaben](/docs/verzweigungen).
 
 Jeder Knoten hat einen eindeutigen Namen. Legst du einen zweiten Agenten mit gleichem Namen an, hängt Nodestro eine Nummer an („Agent 2“). Der Name eines Agenten ist zugleich sein Platzhalter in Aufgaben.
 

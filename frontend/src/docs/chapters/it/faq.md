@@ -40,7 +40,7 @@ Nodestro calcola con i prezzi di listino. Sconti, tasse, altre piattaforme o con
 No, solo quello dei predecessori diretti. Collegalo anche all'agente desiderato; l'input originale è sempre raggiungibile con `{{run.input}}`.
 
 **Posso ramificare un workflow in base al risultato?**
-Sì, con una [decisione](/docs/verzweigungen#entscheidung): controlla il risultato con regole fisse e apre il ramo corrispondente. Non ci sono cicli.
+Sì, con una [decisione](/docs/verzweigungen#entscheidung): controlla il risultato con regole fisse e apre il ramo corrispondente. Per ripetere dei passaggi finché un risultato va bene, collega un ramo a un passaggio precedente ([cicli](/docs/verzweigungen#schleifen)).
 
 **Come trasferisco un workflow su un altro computer?**
 Con *Esporta* e *Importa*. File di conoscenza, spazi di memoria e strumenti personali vanno ricreati lì separatamente.

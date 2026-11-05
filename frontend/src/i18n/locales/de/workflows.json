@@ -34,7 +34,7 @@
     "manualText": "Startet mit Eingabe, einem leeren Agenten und Ergebnis. Weitere Bausteine ziehst du auf die Arbeitsfläche.",
     "aiNeedsModel": "Braucht eine Verbindung zu einem KI-Modell",
     "modelNeeded": "Damit Workflows laufen, verbinde zuerst ein KI-Modell: einen API-Schlüssel (zum Beispiel Anthropic, OpenAI oder Gemini) oder einen lokalen Modellserver wie Ollama. Ein Beispiel kopieren geht auch ohne.",
-    "aiModelNeeded": "Mit KI erstellen braucht eine Verbindung zu einem KI-Modell: Der Workflow-Architekt entwirft den Workflow mit deinem Standardmodell, und das ist noch nicht eingerichtet.",
+    "aiModelNeeded": "Mit KI erstellen braucht eine Verbindung zu einem KI-Modell: Der Workflow-Architekt entwirft den Workflow mit dem Modell für die Assistenten, und die neuen Agenten verwenden das Standardmodell für neue Agenten. Für mindestens eines davon ist noch keine Verbindung eingerichtet.",
     "modelNeededLink": "In den Einstellungen einrichten"
   },
   "continue": {

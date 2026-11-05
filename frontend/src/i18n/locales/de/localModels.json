@@ -121,7 +121,8 @@
     "projector": "Vision-Projektor (optional)",
     "projectorHint": "Die mmproj-Datei, wenn das Modell Bilder liest.",
     "start": "Importieren",
-    "started": "Import gestartet"
+    "started": "Import gestartet",
+    "packageExternal": "Offline-Pakete lassen sich nur in einen Modellserver importieren, den Nodestro verwaltet. In deinen eigenen Ollama-Server importierst du sie mit dessen eigenen Werkzeugen; eine GGUF-Datei kannst du hier importieren."
   },
   "storage": {
     "title": "Modellordner",
@@ -137,7 +138,7 @@
   },
   "offline": {
     "label": "Strikter Offline-Modus",
-    "text": "Nur lokale Modelle und lokale Tools. Cloud-Modelle, entfernte Server und Downloads werden vor dem Start abgelehnt.",
+    "text": "Nur der lokale Modellserver (Ollama) und lokale Tools. Cloud-Modelle, OpenAI-kompatible und vLLM-Endpunkte (auch auf diesem Computer), entfernte Server, Preisprüfungen und Downloads werden abgelehnt, für Läufe und für die Assistenten.",
     "noDownloads": "Im strikten Offline-Modus sind Downloads aus."
   },
   "europe": {
@@ -168,7 +169,9 @@
     "embeddingHint": "Ein anderes Modell braucht einen neuen Index. Bis er fertig ist, sucht Nodestro weiter im bisherigen.",
     "noModel": "Kein Modell gewählt",
     "agentDefault": "Wie in den Einstellungen ({{mode}})",
-    "agentMode": "Suchverfahren dieses Agenten"
+    "agentMode": "Suchverfahren dieses Agenten",
+    "notInstalled": "{{model}} ist noch nicht installiert. Lade es oben bei den lokalen Modellen herunter, bevor du den Index aufbaust; sonst schlägt der Aufbau fehl.",
+    "notInstalledServer": "{{model}} ist auf diesem Server nicht installiert, daher lässt sich der Index damit nicht aufbauen. Bitte die Person, die Nodestro betreibt, das Modell zu installieren."
   },
   "index": {
     "state": {
@@ -177,7 +180,7 @@
       "incomplete": "Indizierte Abschnitte: {{embedded}} von {{chunks}}. Neu aufbauen, um den Rest aufzunehmen.",
       "building": "Der Index wird aufgebaut.",
       "reindex_required": "Das gewählte Modell passt nicht zum Index. Baue den Index dafür neu auf.",
-      "unavailable": "Der Modellserver ist nicht erreichbar."
+      "unavailable": "Diese Installation kann keinen semantischen Index speichern. Die Volltextsuche funktioniert weiter."
     },
     "badge": {
       "off": "Aus",

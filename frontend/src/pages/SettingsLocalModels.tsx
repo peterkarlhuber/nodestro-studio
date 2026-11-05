@@ -338,7 +338,7 @@ function Catalog({
     <div className="stack">
       <h3 className="small">{t("localModels.catalog.title")}</h3>
       <div className="table-wrap" tabIndex={0} role="region" aria-label={t("localModels.catalog.title")}>
-        <table className="table table--compact" data-testid="local-catalog">
+        <table className="table table--compact local-catalog" data-testid="local-catalog">
           <thead>
             <tr>
               <th>{t("localModels.catalog.model")}</th>
@@ -382,11 +382,16 @@ function Catalog({
   );
 }
 
-/** Offline: an offline model package or a GGUF file on this computer (in Local Docker: inside its import folder). */
-function ImportForm({ canInstall }: { canInstall: boolean }) {
+/**
+ * Offline: an offline model package or a GGUF file on this computer (in Local Docker: inside its import folder).
+ * Packages go only into a model server Nodestro manages (desktop, Local Docker); your own Ollama refuses them
+ * (local.not_managed), so the choice is closed there and says why.
+ */
+function ImportForm({ canInstall, packages }: { canInstall: boolean; packages: boolean }) {
   const { t } = useTranslation();
   const refresh = useRefresh();
-  const [kind, setKind] = useState<"package" | "gguf">("package");
+  const [chosen, setKind] = useState<"package" | "gguf">(packages ? "package" : "gguf");
+  const kind = packages ? chosen : "gguf";
   const [path, setPath] = useState("");
   const [name, setName] = useState("");
   const [projector, setProjector] = useState("");
@@ -411,10 +416,15 @@ function ImportForm({ canInstall }: { canInstall: boolean }) {
         value={kind}
         onChange={setKind}
         options={[
-          { value: "package", label: t("localModels.import.package") },
+          { value: "package", label: t("localModels.import.package"), disabled: !packages, testId: "import-package" },
           { value: "gguf", label: t("localModels.import.gguf") },
         ]}
       />
+      {packages ? null : (
+        <p className="muted small" data-testid="import-package-external">
+          {t("localModels.import.packageExternal")}
+        </p>
+      )}
       <Field label={kind === "gguf" ? t("localModels.import.ggufPath") : t("localModels.import.packagePath")} hint={t("localModels.import.pathHint")}>
         <TextInput value={path} onChange={(event) => setPath(event.target.value)} spellCheck={false} />
       </Field>
@@ -651,7 +661,7 @@ export function LocalModelsPanel({
             onPull={(model) => pull.mutate(model)}
           />
           <Jobs enabled={manageable} manageable={manageable} />
-          {manageable && status.mode !== "unavailable" ? <ImportForm canInstall={canInstall && status.running} /> : null}
+          {manageable && status.mode !== "unavailable" ? <ImportForm canInstall={canInstall && status.running} packages={status.mode === "managed" || status.mode === "container"} /> : null}
           {manageable && status.mode !== "unavailable" && buildableModels(data.catalog).length ? (
             <BuildFromFiles
               models={buildableModels(data.catalog)}
@@ -731,13 +741,10 @@ export function KnowledgeSearchPanel({
   const cancel = useMutation({ mutationFn: localApi.cancelIndex, onSuccess: update, onError: toast.error });
   const drop = useMutation({ mutationFn: localApi.dropIndex, onSuccess: update, onError: toast.error });
   const mode = settings.knowledge_retrieval ?? "fts";
-  const embeddingModels = [
-    ...new Set([
-      ...(overview.data?.catalog ?? []).filter((model) => model.kind === "embedding").map((model) => model.name),
-      ...(overview.data?.status.models ?? []).filter((model) => model.kind === "embedding").map((model) => model.name),
-      ...(settings.embedding_model ? [settings.embedding_model] : []),
-    ]),
-  ];
+  const embeddingModels = embeddingChoices(overview.data, settings.embedding_model ?? null);
+  const groupInstalled = embeddingModels.some((model) => !model.installed);
+  // A model that is not installed cannot build the index (the job fails with local.model_missing): say so before.
+  const chosen = embeddingModels.find((model) => model.name === settings.embedding_model);
   const data = index.data;
   const running = data?.job?.state === "running";
   return (
@@ -761,9 +768,26 @@ export function KnowledgeSearchPanel({
           disabled={!admin}
           placeholder={t("localModels.search.noModel")}
           onChange={(value) => onSave({ embedding_model: value || null })}
-          options={embeddingModels.map((name) => ({ value: name, label: name }))}
+          options={embeddingModels.map((model) => ({
+            value: model.name,
+            label: model.name,
+            group: groupInstalled
+              ? model.installed
+                ? t("localModels.installed")
+                : t("localModels.status.notInstalled")
+              : undefined,
+          }))}
         />
       </Field>
+      {chosen && !chosen.installed && overview.data ? (
+        <div data-testid="embedding-not-installed">
+          <Callout tone="warning">
+            {overview.data.manageable
+              ? t("localModels.search.notInstalled", { model: chosen.name })
+              : t("localModels.search.notInstalledServer", { model: chosen.name })}
+          </Callout>
+        </div>
+      ) : null}
       {index.error ? (
         <Callout tone="danger">
           <ErrorText error={index.error} />
@@ -813,4 +837,29 @@ export function KnowledgeSearchPanel({
       )}
     </section>
   );
+}
+
+/**
+ * The embedding models to choose from: the installed ones first, then the catalog's (they must be downloaded before
+ * the index can be built) and the saved one, whatever it is.
+ */
+export function embeddingChoices(
+  overview: Pick<LocalOverview, "catalog" | "status"> | undefined,
+  saved: string | null,
+): { name: string; installed: boolean }[] {
+  const installed = new Set([
+    ...(overview?.status.models ?? []).filter((model) => model.kind === "embedding").map((model) => model.name),
+    ...(overview?.catalog ?? []).filter((model) => model.kind === "embedding" && model.installed).map((model) => model.name),
+  ]);
+  const names = [
+    ...new Set([
+      ...installed,
+      ...(overview?.catalog ?? []).filter((model) => model.kind === "embedding").map((model) => model.name),
+      ...(saved ? [saved] : []),
+    ]),
+  ];
+  // Without an overview (still loading) nothing is known to be missing.
+  const known = overview !== undefined;
+  const choices = names.map((name) => ({ name, installed: !known || installed.has(name) }));
+  return [...choices.filter((item) => item.installed), ...choices.filter((item) => !item.installed)];
 }

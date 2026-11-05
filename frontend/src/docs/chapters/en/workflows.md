@@ -54,9 +54,10 @@ The building blocks, the inspector (titled *Properties*) and the run overview ar
 | **Decision** | Picks one or more branches by fixed rules, without an AI request. | one or more | one output per branch |
 | **Approval** | Holds the run until a person approves or rejects. | any number | *Approved*, *Rejected* |
 | **Sub-workflow** | Runs another saved workflow as one step. | any number | any number |
+| **Orchestrator** | Lets an AI model delegate the task to teams, one decision after another. | any number | any number |
 | **Result** | Collects the results of the connected agents as the output of the workflow, optionally also as files. | any number | none |
 
-Start and result nodes are optional: agents without a predecessor automatically receive the input of the run, and without a result node the output of the last agents counts as the result (see [The result of a run](/docs/ausfuehrungen#ergebnis)). Decision, approval and sub-workflow are in the palette under *Control the flow*; see [Branches and approvals](/docs/verzweigungen).
+Start and result nodes are optional: agents without a predecessor automatically receive the input of the run, and without a result node the output of the last agents counts as the result (see [The result of a run](/docs/ausfuehrungen#ergebnis)). Decision, approval, sub-workflow and orchestrator are in the palette under *Control the flow*; see [Branches and approvals](/docs/verzweigungen).
 
 Every node has a unique name. If you create a second agent with the same name, Nodestro adds a number ("Agent 2"). An agent's name is also its placeholder in tasks.
 

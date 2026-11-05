@@ -50,7 +50,6 @@ describe("microcopy", () => {
       expect(text(language, "pricing.intro")).toMatch(/Orkexa, .*Nodestro/);
       expect(text(language, "usage.cost.quality")).toContain("{{quality}} (");
       expect(text(language, "compare.rowHeader")).not.toBe("undefined");
-      expect(text(language, "errors.export.private_repository")).toContain(text(language, "publish.export.libraryBundle"));
     }
   });
 });

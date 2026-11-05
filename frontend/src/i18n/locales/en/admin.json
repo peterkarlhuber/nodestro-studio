@@ -89,7 +89,7 @@
     "reloaded": "The saved version is loaded."
   },
   "compat": {
-    "effortText": "OpenAI-compatible endpoints (for example Ollama or vLLM) do not accept an effort setting from Nodestro. Set this agent's effort to “Model default”.",
+    "effortText": "This OpenAI-compatible endpoint (for example vLLM) does not accept an effort setting from Nodestro. Set this agent's effort to “Model default”.",
     "effortOff": "Set effort to model default"
   },
   "rules": {

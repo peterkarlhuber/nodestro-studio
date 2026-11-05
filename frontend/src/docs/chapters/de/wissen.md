@@ -86,7 +86,7 @@ Das Filterfeld links durchsucht nur Dateinamen und Beschreibungen.
 ## Suchverfahren {#suchverfahren}
 <!-- keywords: semantische suche, embedding, vektor, hybrid, sprachübergreifend, index, neuaufbau, qwen3-embedding -->
 
-*Einstellungen → Wissenssuche* legt fest, wie Agenten im Modus *Suche* Abschnitte ordnen:
+*Einstellungen → Wissenssuche* legt fest, wie Agenten im Modus *Durchsuchen* Abschnitte ordnen:
 
 - **Volltext** (Standard): findet die Wörter der Frage. Braucht kein Modell.
 - **Semantisch:** findet Abschnitte nach ihrer Bedeutung, auch über Sprachen hinweg (eine französische Frage findet einen deutschen Abschnitt). Braucht den semantischen Index.

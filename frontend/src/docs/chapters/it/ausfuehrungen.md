@@ -33,7 +33,7 @@ Sull'area di lavoro ogni agente mostra il suo stato e, dopo l'esecuzione, anche 
 
 La pagina **Esecuzioni** elenca le esecuzioni, dalla più recente, con workflow, stato, ora di avvio, durata, richieste, token e costi. Sotto il nome del workflow compare l'input o il messaggio di errore. Se un’esecuzione completata ha avuto chiamate a strumenti senza risultato, accanto a *Completato* compare **Terminata con problemi**, se il server fornisce questa informazione.
 
-- **Filtri:** per workflow, per stato e per origine (*Esecuzioni proprie* o *Tracce importate*).
+- **Filtri:** per workflow, per stato (anche *In attesa di una decisione sul budget*) e per origine (*Esecuzioni proprie* o *Tracce importate*). I filtri fanno parte dell’indirizzo, quindi *Indietro* e un link salvato portano alla stessa selezione. Nel filtro per workflow, i workflow con lo stesso nome si distinguono per la loro ultima modifica.
 - **Eliminare:** simbolo del cestino; le esecuzioni in corso non si possono eliminare.
 - **Importa traccia:** vedi [Importare tracce](/docs/ausfuehrungen#trace-import).
 - **Carica esecuzioni precedenti:** l’elenco mostra prima le 100 esecuzioni più recenti e lo indica sotto. I filtri per stato e per origine cercano solo tra le esecuzioni caricate. Se il server non supporta il caricamento a pagine, l’elenco si ferma a 500 esecuzioni; quelle più vecchie restano salvate e si raggiungono con il filtro per workflow.

@@ -40,7 +40,7 @@ Nodestro calculates with list prices. Discounts, taxes, other platforms or speci
 No, only its direct predecessors. Connect it to the agent you want as well; you can always reach the original input with `{{run.input}}`.
 
 **Can I branch a workflow depending on the result?**
-Yes, with a [decision](/docs/verzweigungen#entscheidung): it checks the result with fixed rules and opens the matching branch. There are no loops.
+Yes, with a [decision](/docs/verzweigungen#entscheidung): it checks the result with fixed rules and opens the matching branch. To repeat steps until a result fits, connect a branch back to an earlier step ([loops](/docs/verzweigungen#schleifen)).
 
 **How do I transfer a workflow to another computer?**
 With *Export* and *Import*. You have to create knowledge files, memory spaces and your own tools there separately.

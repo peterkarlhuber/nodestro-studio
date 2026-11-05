@@ -139,6 +139,8 @@ Il **ragionamento (thinking)** stabilisce se il modello riflette prima di rispon
 
 Il ragionamento conta come **token di output** e viene fatturato di conseguenza.
 
+I **modelli locali con ragionamento** (Ollama) non hanno livelli di impegno: *Basso* risponde senza ragionare, *Medio* e *Alto* lasciano ragionare il modello. Su un computer senza scheda grafica, la [modalità risparmio CPU](/docs/einstellungen#lokale-hardware) salta il ragionamento anche con *Medio*; *Alto*, *Predefinito del modello* e un’opzione di ragionamento impostata nelle opzioni della richiesta non vengono mai ridotti.
+
 Se non è noto se un modello supporti lo sforzo di ragionamento (server propri, id di modello sconosciuti), uno sforzo impostato porta a un errore. Scegli allora *Predefinito del modello* oppure dichiara la capacità in [Provider di IA](/docs/einstellungen#anbieter). Gli endpoint compatibili con OpenAI (come Ollama o vLLM) non accettano alcuna impostazione dello sforzo; la verifica lo spiega, e **Imposta l’impegno sul predefinito del modello** corregge l’agente con un clic.
 
 ## Controllo qualità {#qualitaet}

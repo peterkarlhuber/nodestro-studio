@@ -26,13 +26,16 @@ describe("the effort of new agents (F12)", () => {
   it("is the model default on providers that refuse an effort, medium elsewhere", () => {
     expect(defaultEffort("claude-sonnet-5-5")).toBe("medium");
     expect(defaultEffort("openai:gpt-5.5")).toBe("medium");
-    expect(defaultEffort("ollama:llama4")).toBeNull();
+    // Ollama takes the effort of thinking models; medium lets the CPU saving mode apply.
+    expect(defaultEffort("ollama:qwen3.5:4b")).toBe("medium");
     expect(defaultEffort("vllm:qwen3")).toBeNull();
     expect(defaultEffort("compatible:my-model")).toBeNull();
     const before = getDefaultModel();
     try {
-      setDefaultModel("ollama:llama4");
+      setDefaultModel("vllm:qwen3");
       expect(defaultAgent().effort).toBeNull();
+      setDefaultModel("ollama:qwen3.5:4b");
+      expect(defaultAgent().effort).toBe("medium");
       expect(defaultAgent({ model: "claude-sonnet-5-5" }).effort).toBe("medium");
     } finally {
       setDefaultModel(before);
