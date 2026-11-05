@@ -12,8 +12,8 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 20 |
-| P4 Optional | 12 |
+| P3 Low | 22 |
+| P4 Optional | 11 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
 preview is gated by nodestro-desktop DSK-001 (new candidate and Go/No-Go), not by an item here.
@@ -312,9 +312,9 @@ None known.
 - **Next step:** Decide on a constraints or lock file for the platform install, together with the other Python repos.
 - **Depends on:** the same decision in nodestro-runtime RT-023 and nodestro-server SRV-014 (desktop builds from the studio pins).
 
-### ST-052 · Dependency updates: weekly Dependabot pull requests, merged by hand
+### ST-052 · Dependency updates: weekly Dependabot pull requests, merged by hand; branch protection
 
-- **Priority:** P4 Optional · **Status:** Needs decision · **Refs:** `.github/dependabot.yml` in every Nodestro
+- **Priority:** P3 Low · **Status:** Decided (owner, 2026-11-05), not implemented · **Refs:** `.github/dependabot.yml` in every Nodestro
   repository; dependency round 2026-11-05 (thread "Clean up Dependabot PRs and update strategy")
 - **What:** Owner entry for the Nodestro repositories (the others point here). Every repository gets weekly, grouped
   Dependabot pull requests with a small limit: one group for GitHub Actions (pinned by commit SHA), one group per
@@ -327,14 +327,39 @@ None known.
   commit and move only with the pin cascade (`scripts/check_versions.py`), and CI's blocking `pip-audit` covers the
   third-party ranges (see ST-028). Dependabot never changes a component pin, `platform/versions.json` or a product
   pin.
-  Auto-merge is off. `master` has no branch protection with required status checks in any repository, so GitHub
-  auto-merge would merge without waiting for CI; merging stays manual after CI (and, for majors, runtime, sandbox,
+  **Owner decision 2026-11-05:** protect `master` in every repository (Nodestro, Orkexa, Axentra) with required CI
+  status checks, and block force pushes and branch deletion. The existing coding-agent and pull request flow must
+  keep working. Auto-merge stays off for now; merging stays manual after CI (and, for majors, runtime, sandbox,
   security or Docker changes, a review with local tests).
-- **Next step:** Owner decision. If wanted: protect `master` with the CI jobs as required checks, allow auto-merge
-  in the repository settings, then add a workflow that enables auto-merge (merge commit) only for Dependabot
-  patch/minor updates of development tools and GitHub Actions (`dependabot/fetch-metadata`); never for majors,
-  production runtime dependencies, Docker images or pins. When the repositories become private, also add
-  `NODESTRO_READ` as a **Dependabot** secret: Dependabot pull requests do not receive Actions secrets.
+- **Next step:** Separate work order, one repository at a time:
+  1. Per repository, pick the required checks: only jobs that run on every pull request to `master` and always
+     report. A path-filtered, scheduled-only or matrix job that can be skipped never reports and would block the
+     pull request forever; leave such jobs optional or give them an always-reporting summary job.
+  2. Ruleset (or classic protection) on `master`: require a pull request and the chosen checks; block force pushes
+     and deletion. No required approvals (one maintainer; the standing authorization lets Claude merge after green
+     CI), and leave "branches must be up to date" off, so parallel agent PRs and pin cascades do not need a rebase
+     loop after every merge. Merge commits stay allowed (pins point at PR-branch commits).
+  3. Check that Dependabot PRs and agent PRs (branches `claude/*`) still run and merge, then record the required
+     checks in `docs/PLATFORM.md`.
+  4. Auto-merge later only if the owner decides again: allow it in the settings, then a workflow that enables it
+     (merge commit) only for Dependabot patch/minor updates of development tools and GitHub Actions
+     (`dependabot/fetch-metadata`); never for majors, production runtime dependencies, Docker images or pins.
+  When the repositories become private, also add `NODESTRO_READ` as a **Dependabot** secret: Dependabot pull
+  requests do not receive Actions secrets.
+
+### ST-054 · Node.js 24 LTS as the next common Node.js version (Q1 2027)
+
+- **Priority:** P3 Low · **Status:** Decided (owner, 2026-11-05), planned for Q1 2027 · **Refs:** ST-052, sdk
+  SDK-010, server SRV-015, axentra-studio and axentra `docs/TODO.md`; Node.js 22 is supported until 2027-04-30
+- **What:** Owner entry for all repositories that use Node.js. The owner chose Node.js 24 LTS as the next common
+  target. Today every repository builds and tests on Node 22: studio (CI, `frontend` engines), sdk (CI 20/22,
+  engines `>=20`, see SDK-010), desktop (CI), server (`NODE_IMAGE` build stage), axentra (TypeScript SDK, engines
+  `>=20`, CI 22) and axentra-studio (CI, engines `>=22.22.0`, build image). Dependabot ignores Node image and
+  `@types/node` majors until the switch.
+- **Next step:** Separate work order in Q1 2027, after a compatibility check per repository (dependencies' `engines`,
+  native modules, Playwright, Vite and Tauri tooling, the server and axentra-studio images). Then one pull request
+  per repository that moves CI (`setup-node`), `engines`, Docker build images and runtime configuration together,
+  bumps `@types/node` to 24 and removes the matching `ignore` rules. Merge in the usual order; no release.
 
 ### ST-038 · Four scripts outside mypy (API2-16 rest)
 
@@ -444,7 +469,8 @@ None known.
 | ST-014 | nodestro-api | API-017 (budget usage in usage data, AD-20) | Studio needs the field first |
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |
 | ST-028 | nodestro-runtime, nodestro-server | RT-023, SRV-014 (dependency locking, D-05) | One shared decision |
-| ST-052 | all Nodestro repositories | Dependabot policy and auto-merge prerequisites | Owner entry here; the others point to it |
+| ST-052 | all Nodestro repositories | Dependabot policy, branch protection decision, auto-merge prerequisites | Owner entry here; the others point to it |
+| ST-054 | nodestro-sdk, nodestro-desktop, nodestro-server, axentra, axentra-studio | SDK-010, SRV-015, Node.js 24 entries | Owner entry here; move together in Q1 2027 |
 | ST-018, ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update the status documents and `products` together |
 | ST-007, ST-031 | nodestro-examples, nodestro-runtime | EX-003 (AD-18 marker), RT-055 (copy origin) | Examples and runtime provide the marker; studio shows it |
 | ST-032 | nodestro-api | API-053 (contract descriptions in summaries) | Studio needs the field first |
