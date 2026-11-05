@@ -138,7 +138,7 @@
   },
   "offline": {
     "label": "Mode hors ligne strict",
-    "text": "Uniquement des modèles et des outils locaux. Les modèles cloud, les serveurs distants et les téléchargements sont refusés avant le démarrage d’une exécution.",
+    "text": "Uniquement le serveur de modèles local (Ollama) et les outils locaux. Les modèles cloud, les points de terminaison compatibles OpenAI et vLLM (même sur cet ordinateur), les serveurs distants, les vérifications de prix et les téléchargements sont refusés, pour les exécutions comme pour les assistants.",
     "noDownloads": "En mode hors ligne strict, les téléchargements sont désactivés."
   },
   "europe": {
@@ -180,7 +180,7 @@
       "incomplete": "Passages indexés : {{embedded}} sur {{chunks}}. Reconstruisez l’index pour ajouter le reste.",
       "building": "L’index est en cours de création.",
       "reindex_required": "Le modèle choisi ne correspond pas à l’index. Reconstruisez l’index pour ce modèle.",
-      "unavailable": "Le serveur de modèles est injoignable."
+      "unavailable": "Cette installation ne peut pas stocker d’index sémantique. La recherche en texte intégral continue de fonctionner."
     },
     "badge": {
       "off": "Désactivé",

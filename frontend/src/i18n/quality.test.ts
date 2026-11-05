@@ -320,7 +320,7 @@ describe("backend codes", () => {
     "pricing.reconciliation_not_supported", "config.reserved_request_options", "run.provider_auth_aws",
     "export.region_missing", "export.aws_profile_not_exported", "export.aws_role_not_exported", "provider.model_invalid",
     // Dynamic run budget approval (BUDGET-1): run outcomes and refused decisions.
-    "run.budget_exceeded", "run.budget_ended", "run.budget_request_expired", "run.budget_waits_interrupted",
+    "run.budget_exceeded", "run.budget_ended", "run.budget_request_expired",
     "run.budget_checkpoint_lost", "budget.limit_not_higher", "budget.limit_invalid", "budget.over_policy", "budget.not_pending",
     "budget.not_starter", "budget.action_invalid", "budget.request_not_found",
     // Docker-first sandbox: an engine that fails Nodestro's checks, image limits and no build scripts on the host.
@@ -334,7 +334,7 @@ describe("backend codes", () => {
     "local.checksum_mismatch", "local.not_embedding_model", "local.unreachable", "local.file_missing", "local.not_gguf",
     "local.models_dir", "knowledge.embedding_model_missing", "knowledge.vectors_missing", "knowledge.index_building",
     "knowledge.reindex_running", "knowledge.reindex_required", "check.local_runtime_missing", "check.offline_cloud_model",
-    "check.offline_remote_endpoint", "check.offline_server_tool", "check.offline_mcp", "check.vectors_missing",
+    "pricing.offline_sync", "check.offline_remote_endpoint", "check.offline_server_tool", "check.offline_mcp", "check.vectors_missing",
     "check.index_building", "check.local_model_missing", "check.local_model_not_chat", "check.local_model_no_tools",
     // nodestro-api PR #87: unknown ids of their kind, server export jobs, refused offline packages, search bounds.
     "workflow.not_found", "run.not_found", "publication.not_found", "export.server_unsupported", "export.busy",

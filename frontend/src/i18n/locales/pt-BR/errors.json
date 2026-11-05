@@ -130,7 +130,6 @@
     "budget_exceeded": "O orçamento desta execução acabou; a execução foi interrompida.",
     "budget_ended": "A execução foi encerrada em uma decisão de orçamento.",
     "budget_request_expired": "Ninguém decidiu sobre o orçamento a tempo; a execução foi interrompida.",
-    "budget_waits_interrupted": "Uma decisão de orçamento foi interrompida porque o Nodestro foi reiniciado; a execução foi interrompida.",
     "budget_checkpoint_lost": "O estado salvo da etapa que aguardava o orçamento não existe mais; a etapa falhou e não foi repetida em silêncio.",
     "api_error": "O provedor de IA relatou um erro (status {{status}}).",
     "skipped": "Ignorado porque um nó anterior não teve sucesso.",
@@ -799,7 +798,8 @@
     "price_unreliable": "O preço de {{model}} não é confiável o suficiente; a solicitação não foi enviada (modo de preços rigoroso).",
     "region_required": "Um preço do Amazon Bedrock precisa informar as regiões da AWS às quais se aplica.",
     "invalid_region": "Uma das regiões não é um nome de região da AWS.",
-    "reconciliation_not_supported": "{{provider}} não tem uma API de faturamento com a qual o Nodestro possa comparar; compare você mesmo estes custos com sua fatura."
+    "reconciliation_not_supported": "{{provider}} não tem uma API de faturamento com a qual o Nodestro possa comparar; compare você mesmo estes custos com sua fatura.",
+    "offline_sync": "O modo offline estrito está ligado: a conferência de preços precisa de internet."
   },
   "gate": {
     "blocked": "O controle de publicação bloqueia esta versão. Teste exatamente esta versão com suas séries de testes.",

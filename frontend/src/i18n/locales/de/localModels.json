@@ -138,7 +138,7 @@
   },
   "offline": {
     "label": "Strikter Offline-Modus",
-    "text": "Nur lokale Modelle und lokale Tools. Cloud-Modelle, entfernte Server und Downloads werden vor dem Start abgelehnt.",
+    "text": "Nur der lokale Modellserver (Ollama) und lokale Tools. Cloud-Modelle, OpenAI-kompatible und vLLM-Endpunkte (auch auf diesem Computer), entfernte Server, Preisprüfungen und Downloads werden abgelehnt, für Läufe und für die Assistenten.",
     "noDownloads": "Im strikten Offline-Modus sind Downloads aus."
   },
   "europe": {
@@ -180,7 +180,7 @@
       "incomplete": "Indizierte Abschnitte: {{embedded}} von {{chunks}}. Neu aufbauen, um den Rest aufzunehmen.",
       "building": "Der Index wird aufgebaut.",
       "reindex_required": "Das gewählte Modell passt nicht zum Index. Baue den Index dafür neu auf.",
-      "unavailable": "Der Modellserver ist nicht erreichbar."
+      "unavailable": "Diese Installation kann keinen semantischen Index speichern. Die Volltextsuche funktioniert weiter."
     },
     "badge": {
       "off": "Aus",

@@ -138,7 +138,7 @@
   },
   "offline": {
     "label": "Strict offline mode",
-    "text": "Only local models and local tools. Cloud models, remote servers and downloads are refused before a run starts.",
+    "text": "Only the local model server (Ollama) and local tools. Cloud models, OpenAI-compatible and vLLM endpoints (also on this computer), remote servers, price checks and downloads are refused, for runs and for the assistants.",
     "noDownloads": "Downloads are off in the strict offline mode."
   },
   "europe": {
@@ -180,7 +180,7 @@
       "incomplete": "Sections indexed: {{embedded}} of {{chunks}}. Rebuild to add the rest.",
       "building": "The index is being built.",
       "reindex_required": "The chosen model differs from the index. Rebuild the index for it.",
-      "unavailable": "The model server cannot be reached."
+      "unavailable": "This installation cannot hold a semantic index. Full-text search keeps working."
     },
     "badge": {
       "off": "Off",

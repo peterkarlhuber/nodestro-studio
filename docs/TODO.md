@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 17 |
+| P3 Low | 18 |
 | P4 Optional | 11 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -83,6 +83,16 @@ None known.
   the editor chunk from the Workflows page, look at React Flow's node measuring (110–180 ms at 4x).
 
 ## Features and enhancements
+
+### ST-050 · English labels of local catalog models in every language
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** manual review 2026-11-05 (internal report §9.8), nodestro-runtime
+  `catalog._LOCAL_LABELS`
+- **What:** Local catalog models carry runtime labels such as "Qwen3.5 4B (local)" (also English `tier` and
+  `description`). The model picker, example needs and preview, architect review, provider settings, docs page and
+  orchestration view show them unchanged in all six languages.
+- **Next step:** Together with the runtime: drop the "(local)" suffix from the runtime labels and add one studio
+  helper that appends a localized marker where `price_status === "local"`; then use it in every place listed above.
 
 ### ST-044 · Task-aware model suggestions inside the model picker
 

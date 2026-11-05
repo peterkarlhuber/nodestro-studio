@@ -138,7 +138,7 @@
   },
   "offline": {
     "label": "Modalità offline rigorosa",
-    "text": "Solo modelli e strumenti locali. Modelli cloud, server remoti e download vengono rifiutati prima dell’avvio di un’esecuzione.",
+    "text": "Solo il server di modelli locale (Ollama) e strumenti locali. Modelli cloud, endpoint compatibili con OpenAI e vLLM (anche su questo computer), server remoti, verifiche dei prezzi e download vengono rifiutati, sia per le esecuzioni sia per gli assistenti.",
     "noDownloads": "Nella modalità offline rigorosa i download sono disattivati."
   },
   "europe": {
@@ -180,7 +180,7 @@
       "incomplete": "Sezioni indicizzate: {{embedded}} su {{chunks}}. Ricostruisci l’indice per aggiungere il resto.",
       "building": "L’indice è in costruzione.",
       "reindex_required": "Il modello scelto non corrisponde all’indice. Ricostruisci l’indice per questo modello.",
-      "unavailable": "Il server dei modelli non è raggiungibile."
+      "unavailable": "Questa installazione non può memorizzare un indice semantico. La ricerca full-text continua a funzionare."
     },
     "badge": {
       "off": "Spento",
