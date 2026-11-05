@@ -91,7 +91,7 @@
     "reloaded": "La versione salvata è caricata."
   },
   "compat": {
-    "effortText": "Gli endpoint compatibili con OpenAI (per esempio Ollama o vLLM) non accettano un’impostazione di impegno da Nodestro. Imposta l’impegno di questo agente su «Predefinito del modello».",
+    "effortText": "Questo endpoint compatibile con OpenAI (per esempio vLLM) non accetta un’impostazione di impegno da Nodestro. Imposta l’impegno di questo agente su «Predefinito del modello».",
     "effortOff": "Imposta l’impegno sul predefinito del modello"
   },
   "rules": {

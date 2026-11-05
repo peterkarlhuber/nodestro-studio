@@ -90,7 +90,7 @@
     "upload": "PDFs, imagens (PNG, JPEG, GIF, WebP) e formatos de texto. Imagens de até 5 MB, documentos de até 20 MB. Textos e PDFs são indexados para a pesquisa.",
     "description": "Ajuda os agentes no modo “Sob demanda” a decidir qual arquivo carregar. É salvo ao sair do campo.",
     "chunks": "O arquivo foi dividido em trechos de cerca de 1.500 caracteres para a pesquisa de texto completo (PDFs página por página). Sem trechos, não é possível pesquisá-lo.",
-    "search": "Pesquisa de texto completo (BM25) em todos os arquivos indexados – é assim que um agente no modo “Pesquisa” encontra os trechos certos. Não custa nada.",
+    "search": "Pesquisa em todos os arquivos indexados com o método de busca de Configurações → Busca no conhecimento – é assim que um agente no modo “Pesquisa” encontra os trechos certos. Não custa nada.",
     "score": "Relevância do resultado: quanto mais alta, melhor o trecho corresponde à pesquisa.",
     "collections": "Coleções agrupam arquivos do conhecimento, ex.: “Contratos” ou “Dados de produtos”. Os agentes continuam recebendo exatamente os arquivos atribuídos a eles."
   },

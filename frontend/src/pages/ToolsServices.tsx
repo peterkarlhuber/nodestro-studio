@@ -5,7 +5,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Activity, Ban, CheckCircle2, History, LogIn, LogOut, Pencil, PlugZap, Plus, RefreshCw, ShieldAlert, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 
 import { useAccess } from "../api/access";
@@ -231,7 +231,7 @@ function StatusNotes({ status }: { status: McpStatus }) {
           </Callout>
         ) : (
           <Callout tone="warning">
-            <Trans i18nKey="tools.services.endpointListEmpty" components={{ code: <code /> }} />
+            {t("tools.services.endpointListEmpty")}
           </Callout>
         )
       ) : null}

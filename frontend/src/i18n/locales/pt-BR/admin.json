@@ -91,7 +91,7 @@
     "reloaded": "A versão salva foi carregada."
   },
   "compat": {
-    "effortText": "Endpoints compatíveis com a OpenAI (por exemplo Ollama ou vLLM) não aceitam uma configuração de esforço do Nodestro. Defina o esforço deste agente como “Padrão do modelo”.",
+    "effortText": "Este endpoint compatível com a OpenAI (por exemplo vLLM) não aceita uma configuração de esforço do Nodestro. Defina o esforço deste agente como “Padrão do modelo”.",
     "effortOff": "Definir esforço como padrão do modelo"
   },
   "rules": {

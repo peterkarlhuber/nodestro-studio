@@ -18,6 +18,8 @@ interface StartChoicesProps {
   onManual: () => void;
   /** No AI provider is set up for new agents: running and "Create with AI" need one first. */
   needsModel?: boolean;
+  /** "Create with AI" cannot start: the assistant model or the default model has no AI provider (default: needsModel). */
+  aiNeedsModel?: boolean;
 }
 
 function Choice({ icon: Icon, title, text, note }: { icon: LucideIcon; title: string; text: string; note?: string }) {
@@ -50,7 +52,7 @@ export function ModelNeeded({ forAi = false }: { forAi?: boolean }) {
   );
 }
 
-export function StartChoices({ variant, onAi, onManual, needsModel = false }: StartChoicesProps) {
+export function StartChoices({ variant, onAi, onManual, needsModel = false, aiNeedsModel = needsModel }: StartChoicesProps) {
   const { t } = useTranslation();
   if (variant === "compact") {
     return (
@@ -75,7 +77,7 @@ export function StartChoices({ variant, onAi, onManual, needsModel = false }: St
         icon={Sparkles}
         title={t("workflows.start.ai")}
         text={t("workflows.start.aiText")}
-        note={needsModel ? t("workflows.start.aiNeedsModel") : undefined}
+        note={aiNeedsModel ? t("workflows.start.aiNeedsModel") : undefined}
       />
     </button>
   );

@@ -16,7 +16,7 @@
   "noMatchesText": "Aucun nom de fichier ne correspond au filtre.",
   "emptyText": "Importez des fichiers et attribuez-les à un agent dans l’éditeur.",
   "searchTitle": "Tester la recherche",
-  "searchText": "C’est ainsi qu’un agent en mode « Recherche » trouve les extraits pertinents (recherche plein texte).",
+  "searchText": "C’est ainsi qu’un agent en mode « Recherche » trouve les extraits pertinents. La recherche ici utilise la méthode de recherche de Réglages → Recherche dans les connaissances (Texte intégral, Sémantique ou Combinée).",
   "searchTerm": "Terme recherché",
   "search": "Rechercher",
   "noHits": "Aucun résultat.",

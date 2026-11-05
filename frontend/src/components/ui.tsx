@@ -221,7 +221,8 @@ export function DisabledReason({
   const note = (
     <span className="disabled-reason__note" data-testid="disabled-reason">
       <Info size={13} aria-hidden />
-      <span id={id} className="disabled-reason__text">
+      {/* The note is cut after two lines in narrow title bars: the full sentence stays available on hover. */}
+      <span id={id} className="disabled-reason__text" title={typeof reason === "string" ? reason : undefined}>
         {reason}
       </span>
       {actionElement}

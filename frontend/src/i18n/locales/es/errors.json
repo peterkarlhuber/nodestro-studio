@@ -248,7 +248,7 @@
     "approval_not_in_test": "Esta llamada necesitaría la aprobación de una persona; las pruebas no preguntan, así que no se realizó.",
     "frozen": "Esta herramienta pertenece a una versión publicada de la API y no se puede modificar, para que la versión siga funcionando exactamente como se publicó. Cambia la herramienta en el flujo de trabajo y publica una nueva versión.",
     "denied_by_policy": "Las reglas de llamadas a herramientas rechazaron esta llamada sin preguntar a nadie, así que la herramienta no se ejecutó. Revisa las reglas en la página Aprobaciones o dale al agente una herramienta que solo lea.",
-    "adoption_desktop_only": "El código creado por IA solo puede adoptarse como propio en la aplicación de escritorio. Aquí siempre se ejecuta aislado.",
+    "adoption_desktop_only": "El código creado por IA solo puede adoptarse como propio si usas Nodestro en local en tu equipo, no en un servidor ni en Nodestro Local Docker. Aquí siempre se ejecuta aislado.",
     "adoption_forbidden": "Solo el propietario de este equipo o un administrador puede adoptar código creado por IA.",
     "adoption_stale": "La herramienta cambió después de mostrarse (ahora versión {{version}}). Vuelve a revisarla antes de adoptarla.",
     "adoption_not_needed": "Esta herramienta ya cuenta como tu propio código; no necesita adopción.",
@@ -545,7 +545,7 @@
     "subworkflow_unsaved": "{{name}}: el subflujo no tiene ninguna versión guardada.",
     "mcp_tool_unusable": "Una herramienta de servicio de este flujo de trabajo no se puede usar ahora; no se puede publicar.",
     "mcp_tools": "Las herramientas de servicio quedan congeladas en esta versión; un cambio posterior en el servicio la detiene hasta que se publique de nuevo.",
-    "mcp_unattended_off": "Las ejecuciones de la API usan herramientas de servicio solo si el operador permite el uso desatendido (NODESTRO_MCP_UNATTENDED)."
+    "mcp_unattended_off": "Las ejecuciones de la API usan herramientas de servicio solo si el operador permite el uso desatendido."
   },
   "export": {
     "knowledge_missing": "{{name}} ya no existe.",
@@ -817,7 +817,7 @@
     "definition_moved": "La herramienta ha cambiado desde tu revisión. Revísala de nuevo.",
     "dns_failed": "No se pudo resolver el nombre {{host}}.",
     "endpoint_not_allowed": "Esta dirección no está en la lista del operador.",
-    "endpoints_invalid": "La lista de direcciones del operador (NODESTRO_MCP_ENDPOINTS) no es válida.",
+    "endpoints_invalid": "La lista de direcciones de servicios del operador no es válida.",
     "http_error": "El servicio respondió con HTTP {{status}}.",
     "https_required": "Los servicios solo se alcanzan por https (http solo para un servidor de desarrollo local en este equipo).",
     "protocol_error": "El servicio no respondió como un servidor MCP.",

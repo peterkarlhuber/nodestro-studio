@@ -12,7 +12,7 @@ import { toast } from "../components/toast";
 import { ListProblemsChip } from "../runs/RunProblems";
 import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
 import { ErrorText, ProblemText, runProblem } from "../lib/errors";
-import { formatCost, formatDate, formatDuration, formatNumber, formatTokens, relativeTime } from "../lib/format";
+import { changedText, formatCost, formatDate, formatDuration, formatNumber, formatTokens } from "../lib/format";
 
 /** ``awaiting_budget``: paused runs that wait for a budget decision (NJR-19), a part of "paused". */
 type StatusFilter = "" | RunStatus | "awaiting_budget";
@@ -158,7 +158,7 @@ export function ExecutionsPage() {
                 setLimit(RUNS_PAGE);
               }}
               placeholder={t("executions.allWorkflows")}
-              options={workflowOptions(workflows.data ?? [], (updatedAt) => t("common.changed", { time: relativeTime(updatedAt) }))}
+              options={workflowOptions(workflows.data ?? [], (updatedAt) => changedText(t, updatedAt))}
             />
             <Select
               aria-label={t("executions.filterStatus")}

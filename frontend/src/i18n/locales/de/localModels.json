@@ -121,7 +121,8 @@
     "projector": "Vision-Projektor (optional)",
     "projectorHint": "Die mmproj-Datei, wenn das Modell Bilder liest.",
     "start": "Importieren",
-    "started": "Import gestartet"
+    "started": "Import gestartet",
+    "packageExternal": "Offline-Pakete lassen sich nur in einen Modellserver importieren, den Nodestro verwaltet. In deinen eigenen Ollama-Server importierst du sie mit dessen eigenen Werkzeugen; eine GGUF-Datei kannst du hier importieren."
   },
   "storage": {
     "title": "Modellordner",
@@ -168,7 +169,9 @@
     "embeddingHint": "Ein anderes Modell braucht einen neuen Index. Bis er fertig ist, sucht Nodestro weiter im bisherigen.",
     "noModel": "Kein Modell gewählt",
     "agentDefault": "Wie in den Einstellungen ({{mode}})",
-    "agentMode": "Suchverfahren dieses Agenten"
+    "agentMode": "Suchverfahren dieses Agenten",
+    "notInstalled": "{{model}} ist noch nicht installiert. Lade es oben bei den lokalen Modellen herunter, bevor du den Index aufbaust; sonst schlägt der Aufbau fehl.",
+    "notInstalledServer": "{{model}} ist auf diesem Server nicht installiert, daher lässt sich der Index damit nicht aufbauen. Bitte die Person, die Nodestro betreibt, das Modell zu installieren."
   },
   "index": {
     "state": {

@@ -18,7 +18,7 @@
     "assistantModel": "Modello per gli assistenti",
     "assistantHint": "Progetta agenti dalla tua descrizione, scrive strumenti e propone la memoria.",
     "budget": "Budget predefinito per esecuzione (USD)",
-    "budgetHint": "Un’esecuzione si interrompe non appena i costi stimati superano il budget. Vuoto = nessun limite.",
+    "budgetHint": "Se il budget non basta, le esecuzioni seguite vanno in pausa e attendono una decisione; quelle da pianificazioni, lotti, serie di test e dall’API pubblicata si fermano invece. Vuoto = nessun limite.",
     "architectBudget": "Limite di costo dell’architetto (USD per bozza)",
     "architectBudgetHint": "L’architetto si ferma se una bozza costa di più. Vuoto = nessun limite.",
     "architectRepairs": "Correzioni con IA per bozza",

@@ -13,7 +13,7 @@
 | P1 High | 0 |
 | P2 Medium | 1 |
 | P3 Low | 17 |
-| P4 Optional | 10 |
+| P4 Optional | 11 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
 preview is gated by nodestro-desktop DSK-001 (new candidate and Go/No-Go), not by an item here.
@@ -296,6 +296,15 @@ None known.
 - **Next step:** Review at the next phase gate; nothing to build until then.
 
 ## Accepted risks
+
+### ST-049 · Date fields follow the browser's language, not the interface language
+
+- **Priority:** P4 Optional · **Status:** Accepted risk (native control) · **Refs:** manual review 2026-11-05
+- **What:** The native `<input type="date">` and `datetime-local` fields (schedules, price reconciliation, advance
+  approvals) show their format and calendar in the browser's or operating system's language; the `lang` attribute
+  the studio sets is ignored by Chromium. A German interface in an English browser shows MM/DD/YYYY there.
+- **Next step:** None planned: a custom date picker is a new component with its own accessibility work. Revisit only
+  if users report it; the stored value is ISO in every case.
 
 ### ST-030 · MCP limited to the read-only server pilot
 

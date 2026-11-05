@@ -67,7 +67,7 @@
     "enabled": "Attive",
     "disabled": "Disattivate",
     "enabledText": "Le chiamate di strumenti che modificano dati o agiscono verso l’esterno attendono la decisione di una persona.",
-    "disabledText": "Nodestro non chiede ancora prima delle chiamate di strumenti. Ordine: marca qui le assegnazioni esistenti, controlla l’elenco, poi l’amministrazione attiva le approvazioni dopo la verifica di sicurezza (impostazione <code>NODESTRO_TOOL_APPROVALS=1</code>).",
+    "disabledText": "Finché le approvazioni per chiamata di strumento sono disattivate, Nodestro non chiede prima delle chiamate di strumenti. Puoi già prepararle: marca qui le assegnazioni esistenti e controlla l’elenco.",
     "legacyTitle": "Eccezioni preesistenti",
     "legacyText": "Le assegnazioni di strumenti che esistevano prima dell’approvazione per chiamata continuano a funzionare senza domanda, legate alla versione dello strumento con cui giravano. Una nuova versione o una nuova assegnazione viene chiesta come al solito. Per gli strumenti dei servizi collegati si chiede sempre.",
     "legacyNotRun": "Il passo di attivazione non è ancora stato eseguito.",

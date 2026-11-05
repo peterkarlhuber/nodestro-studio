@@ -34,7 +34,7 @@
     "manualText": "Começa com uma entrada, um agente vazio e um resultado. Você arrasta outros blocos para a área de trabalho.",
     "aiNeedsModel": "Precisa de uma conexão com um modelo de IA",
     "modelNeeded": "Para executar fluxos de trabalho, conecte primeiro um modelo de IA: uma chave de API (por exemplo Anthropic, OpenAI ou Gemini) ou um servidor de modelos local como o Ollama. Copiar um exemplo funciona sem isso.",
-    "aiModelNeeded": "Criar com IA precisa de uma conexão com um modelo de IA: o Arquiteto de fluxos projeta o fluxo de trabalho com seu modelo padrão, que ainda não está configurado.",
+    "aiModelNeeded": "Criar com IA precisa de uma conexão com um modelo de IA: o Arquiteto de fluxos projeta o fluxo de trabalho com o modelo dos assistentes, e os novos agentes usam o modelo padrão para novos agentes. Pelo menos um deles ainda não tem uma conexão configurada.",
     "modelNeededLink": "Configurar nas configurações"
   },
   "continue": {

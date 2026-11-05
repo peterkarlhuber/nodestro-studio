@@ -18,7 +18,7 @@
     "assistantModel": "Modelo para los asistentes",
     "assistantHint": "Diseña agentes a partir de tu descripción, escribe herramientas y propone memoria.",
     "budget": "Presupuesto predeterminado por ejecución (USD)",
-    "budgetHint": "Una ejecución se detiene en cuanto los costes estimados superan el presupuesto. Vacío = sin límite.",
+    "budgetHint": "Si el presupuesto no alcanza, las ejecuciones atendidas se pausan y esperan una decisión; las de programaciones, lotes, series de pruebas y la API publicada se detienen en su lugar. Vacío = sin límite.",
     "architectBudget": "Límite de coste del arquitecto (USD por borrador)",
     "architectBudgetHint": "El arquitecto se detiene si un borrador cuesta más. Vacío = sin límite.",
     "architectRepairs": "Correcciones con IA por borrador",

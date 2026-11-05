@@ -248,7 +248,7 @@
     "approval_not_in_test": "Questa chiamata richiederebbe l'approvazione di una persona; i test non chiedono, quindi non è stata eseguita.",
     "frozen": "Questo strumento fa parte di una versione pubblicata dell’API e non può essere modificato, così la versione continua a funzionare esattamente come è stata pubblicata. Modifica lo strumento nel workflow e pubblica una nuova versione.",
     "denied_by_policy": "Le regole per le chiamate agli strumenti hanno rifiutato questa chiamata senza chiedere a nessuno, quindi lo strumento non è stato eseguito. Controlla le regole nella pagina Approvazioni o dai all’agente uno strumento che legge soltanto.",
-    "adoption_desktop_only": "Il codice creato dall’IA può essere adottato come tuo solo nell’app desktop. Qui viene sempre eseguito isolato.",
+    "adoption_desktop_only": "Il codice creato dall’IA può essere adottato come tuo solo se usi Nodestro in locale sul tuo computer, non su un server né in Nodestro Local Docker. Qui viene sempre eseguito isolato.",
     "adoption_forbidden": "Solo il proprietario di questo computer o un amministratore può adottare codice creato dall’IA.",
     "adoption_stale": "Lo strumento è cambiato dopo essere stato mostrato (ora versione {{version}}). Riguardalo prima di adottarlo.",
     "adoption_not_needed": "Questo strumento conta già come tuo codice; non serve adottarlo.",
@@ -545,7 +545,7 @@
     "subworkflow_unsaved": "{{name}}: il sotto-workflow non ha una versione salvata.",
     "mcp_tool_unusable": "Uno strumento di servizio di questo workflow non è utilizzabile ora; non può essere pubblicato.",
     "mcp_tools": "Gli strumenti di servizio vengono congelati in questa versione; una modifica successiva del servizio la ferma finché non viene pubblicata di nuovo.",
-    "mcp_unattended_off": "Le esecuzioni API usano gli strumenti di servizio solo se il gestore consente l'uso non presidiato (NODESTRO_MCP_UNATTENDED)."
+    "mcp_unattended_off": "Le esecuzioni API usano gli strumenti di servizio solo se il gestore consente l'uso non presidiato."
   },
   "export": {
     "knowledge_missing": "{{name}} non esiste più.",
@@ -817,7 +817,7 @@
     "definition_moved": "Lo strumento è cambiato dal tuo esame. Esaminalo di nuovo.",
     "dns_failed": "Impossibile risolvere il nome {{host}}.",
     "endpoint_not_allowed": "Questo indirizzo non è nell'elenco dell'operatore.",
-    "endpoints_invalid": "L'elenco di indirizzi dell'operatore (NODESTRO_MCP_ENDPOINTS) non è valido.",
+    "endpoints_invalid": "L'elenco di indirizzi di servizio dell'operatore non è valido.",
     "http_error": "Il servizio ha risposto con HTTP {{status}}.",
     "https_required": "I servizi si raggiungono solo via https (http solo per un server di sviluppo locale su questo computer).",
     "protocol_error": "Il servizio non ha risposto come un server MCP.",

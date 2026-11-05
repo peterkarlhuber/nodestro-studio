@@ -153,7 +153,7 @@
     "placeholder": "Chiave di amministrazione",
     "store": "Salva cifrata",
     "remove": "Rimuovi la chiave di amministrazione di {{provider}}",
-    "desktop": "L’app desktop non salva chiavi di amministrazione. Imposta NODESTRO_OPENAI_ADMIN_KEY o NODESTRO_ANTHROPIC_ADMIN_KEY, oppure inserisci qui sotto una chiave per un confronto."
+    "desktop": "Questa installazione non salva chiavi di amministrazione. Imposta NODESTRO_OPENAI_ADMIN_KEY o NODESTRO_ANTHROPIC_ADMIN_KEY, oppure inserisci qui sotto una chiave per un confronto."
   },
   "showAll": "Mostra tutti i {{count}}"
 }

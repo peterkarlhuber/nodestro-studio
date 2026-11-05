@@ -247,7 +247,7 @@
     "maxDecisionsHint": "Ogni delega e la risposta finale valgono una decisione ciascuna (da 1 a {{max}}). Senza risposta entro allora, il passaggio fallisce.",
     "maxPerTeam": "Utilizzi massimi per team",
     "maxPerTeamHint": "Quante volte si può scegliere lo stesso team. Vuoto: nessun limite proprio.",
-    "safety": "L'orchestratore sceglie solo tra questi team. Non ha strumenti, non crea agenti, strumenti o team e non ha permessi propri. Ogni team viene eseguito come un'esecuzione collegata propria con la sua parte di budget, i suoi limiti e le sue approvazioni. Se un team attende un'approvazione, anche l'orchestratore attende.",
+    "safety": "L'orchestratore sceglie solo tra questi team. Non ha strumenti, non crea agenti, strumenti o team e non ha permessi propri. Ogni team viene eseguito come un'esecuzione collegata propria con i suoi limiti, le sue approvazioni e il suo budget, se il team ne ha uno; tutti i costi contano anche sul budget di questa esecuzione. Se un team attende un'approvazione, anche l'orchestratore attende.",
     "run": {
       "delegated": "Delegato a {{team}}",
       "finished": "Concluso con una risposta",

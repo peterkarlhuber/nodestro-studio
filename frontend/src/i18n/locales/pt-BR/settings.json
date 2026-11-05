@@ -18,7 +18,7 @@
     "assistantModel": "Modelo dos assistentes",
     "assistantHint": "Cria agentes a partir da sua descrição, escreve ferramentas e sugere memória.",
     "budget": "Orçamento padrão por execução (USD)",
-    "budgetHint": "Uma execução para assim que os custos estimados ultrapassam o orçamento. Vazio = sem limite.",
+    "budgetHint": "Se o orçamento não bastar, execuções acompanhadas pausam e aguardam uma decisão; as de agendamentos, lotes, séries de testes e da API publicada param em vez disso. Vazio = sem limite.",
     "architectBudget": "Limite de custo do arquiteto (USD por rascunho)",
     "architectBudgetHint": "O arquiteto para quando um rascunho custa mais. Vazio = sem limite.",
     "architectRepairs": "Correções com IA por rascunho",

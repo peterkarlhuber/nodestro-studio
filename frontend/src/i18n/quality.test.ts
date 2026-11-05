@@ -272,6 +272,26 @@ describe("terminology", () => {
   });
 });
 
+describe("internal switches", () => {
+  // Texts speak to the person and never name the environment switch of a feature that is not switched on in this
+  // version, or an internal process. Only settings an operator needs for the installation itself may be named.
+  const OPERATOR_SETTINGS = new Set([
+    "NODESTRO_DATA_DIR", "NODESTRO_ALLOWED_HOSTS", "NODESTRO_OPENAI_ADMIN_KEY", "NODESTRO_ANTHROPIC_ADMIN_KEY",
+  ]);
+
+  it.each(LANGUAGES)("are not named in %s", (language) => {
+    const named = [...texts[language]].flatMap(([key, text]) =>
+      [...text.matchAll(/NODESTRO_[A-Z0-9_]+/g)].filter(([name]) => !OPERATOR_SETTINGS.has(name)).map(([name]) => `${key}: ${name}`),
+    );
+    expect(named).toEqual([]);
+  });
+
+  it.each(LANGUAGES)("are not tied to a security review in %s", (language) => {
+    const review = /security review|Sicherheitsprüfung die|revisión de seguridad|revue de sécurité|verifica di sicurezza|revisão de segurança/i;
+    expect([...texts[language]].filter(([, text]) => review.test(text)).map(([key]) => key)).toEqual([]);
+  });
+});
+
 describe("backend codes", () => {
   // Codes the runtime and the API raise that can reach the interface. Each needs its own sentence; the generic
   // sentence of its area ("The step failed.") would be wrong for them. A cross-repository check that scrapes the

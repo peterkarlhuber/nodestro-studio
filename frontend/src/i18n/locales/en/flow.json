@@ -247,7 +247,7 @@
     "maxDecisionsHint": "Each delegation and the final answer is one decision (1 to {{max}}). Without an answer by then, the step fails.",
     "maxPerTeam": "Maximum uses per team",
     "maxPerTeamHint": "How often one team may be chosen. Empty: no separate limit.",
-    "safety": "The orchestrator only chooses among these teams. It has no tools, creates no agents, tools or teams and has no permissions of its own. Each team runs as its own linked run with its share of the budget, its limits and its approvals. When a team waits for an approval, the orchestrator waits too.",
+    "safety": "The orchestrator only chooses among these teams. It has no tools, creates no agents, tools or teams and has no permissions of its own. Each team runs as its own linked run with its limits, its approvals and its own budget if the team has one; all costs also count against this run's budget. When a team waits for an approval, the orchestrator waits too.",
     "run": {
       "delegated": "Delegated to {{team}}",
       "finished": "Finished with an answer",

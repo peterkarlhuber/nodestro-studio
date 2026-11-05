@@ -16,7 +16,7 @@
   "noMatchesText": "Ningún nombre de archivo coincide con el filtro.",
   "emptyText": "Sube archivos y asígnalos a un agente en el editor.",
   "searchTitle": "Probar la búsqueda",
-  "searchText": "Así encuentra un agente con conocimiento en modo «Búsqueda» los fragmentos adecuados (búsqueda de texto completo).",
+  "searchText": "Así encuentra un agente con conocimiento en modo «Búsqueda» los fragmentos adecuados. La búsqueda de aquí usa el método de búsqueda de Ajustes → Búsqueda de conocimiento (Texto completo, Semántica o Combinada).",
   "searchTerm": "Término de búsqueda",
   "search": "Buscar",
   "noHits": "Sin coincidencias.",

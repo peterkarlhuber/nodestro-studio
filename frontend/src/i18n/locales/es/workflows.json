@@ -34,7 +34,7 @@
     "manualText": "Empieza con una entrada, un agente vacío y un resultado. Arrastras más bloques al lienzo.",
     "aiNeedsModel": "Necesita una conexión a un modelo de IA",
     "modelNeeded": "Para ejecutar flujos de trabajo, conecta primero un modelo de IA: una clave de API (por ejemplo Anthropic, OpenAI o Gemini) o un servidor de modelos local como Ollama. Copiar un ejemplo funciona sin ella.",
-    "aiModelNeeded": "Crear con IA necesita una conexión a un modelo de IA: el Arquitecto de flujos diseña el flujo de trabajo con tu modelo predeterminado, que aún no está configurado.",
+    "aiModelNeeded": "Crear con IA necesita una conexión a un modelo de IA: el Arquitecto de flujos diseña el flujo de trabajo con el modelo para los asistentes, y los agentes nuevos usan el modelo predeterminado para agentes nuevos. Al menos uno de ellos aún no tiene una conexión configurada.",
     "modelNeededLink": "Configurar en Ajustes"
   },
   "continue": {

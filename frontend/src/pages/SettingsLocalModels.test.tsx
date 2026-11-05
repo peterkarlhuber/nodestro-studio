@@ -8,7 +8,7 @@ import type { KnowledgeIndexStatus, LocalJob, LocalOverview } from "../api/local
 import type { Settings } from "../api/types";
 import { Toaster } from "../components/toast";
 import i18n, { LANGUAGES } from "../i18n";
-import { KnowledgeSearchPanel, LocalModelsPanel, licenseName, licenseSource } from "./SettingsLocalModels";
+import { KnowledgeSearchPanel, LocalModelsPanel, embeddingChoices, licenseName, licenseSource } from "./SettingsLocalModels";
 
 const GB = 1_000_000_000;
 
@@ -191,6 +191,66 @@ describe("local models", () => {
     expect(await screen.findByText(/betreibt der Betreiber den lokalen Modellserver/)).toBeInTheDocument();
     expect(screen.queryByTestId("local-import")).toBeNull();
     expect(within(screen.getByTestId("local-catalog")).getByRole("button", { name: /^Herunterladen: / })).toBeDisabled();
+  });
+});
+
+describe("offline import", () => {
+  it("offers offline packages only for a model server Nodestro manages", async () => {
+    serve({ "GET /api/local-models": overview({ mode: "managed", running: true, runtime_installed: true }) });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    const managed = await screen.findByTestId("local-import");
+    expect(within(managed).getByTestId("import-package")).toBeEnabled();
+    expect(within(managed).getByTestId("import-package")).toHaveAttribute("aria-checked", "true");
+    expect(screen.queryByTestId("import-package-external")).toBeNull();
+    cleanup();
+    // Your own Ollama refuses packages (local.not_managed): only the GGUF file is offered, and the page says why.
+    serve({ "GET /api/local-models": overview({ mode: "external", running: true, runtime_installed: true }) });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    const external = await screen.findByTestId("local-import");
+    expect(within(external).getByTestId("import-package")).toBeDisabled();
+    expect(within(external).getByRole("radio", { name: "GGUF-Datei" })).toHaveAttribute("aria-checked", "true");
+    expect(within(external).getByRole("textbox", { name: /^GGUF-Datei/ })).toBeInTheDocument();
+    expect(screen.getByTestId("import-package-external")).toHaveTextContent(/nur in einen Modellserver importieren, den Nodestro verwaltet/);
+  });
+});
+
+describe("embedding model choice", () => {
+  const embedding = (name: string, installed: boolean) => ({ ...MDENSEON, name, source: undefined, installed });
+
+  it("lists installed models first and marks the others", () => {
+    const base = overview();
+    const data = {
+      ...base,
+      catalog: [embedding("catalog:a", false), embedding("catalog:b", true)],
+      status: { ...base.status, models: [{ name: "own:c", kind: "embedding" } as never] },
+    };
+    expect(embeddingChoices(data, "saved:d")).toEqual([
+      { name: "own:c", installed: true },
+      { name: "catalog:b", installed: true },
+      { name: "catalog:a", installed: false },
+      { name: "saved:d", installed: false },
+    ]);
+    // Still loading: nothing is known to be missing.
+    expect(embeddingChoices(undefined, "saved:d")).toEqual([{ name: "saved:d", installed: true }]);
+  });
+
+  it("warns before an index is built with a model that is not installed", async () => {
+    const base = overview();
+    const data = { ...base, catalog: [embedding("qwen3-embedding:0.6b", false), embedding("bge-m3", true)] };
+    serve({ "GET /api/knowledge/index": INDEX, "GET /api/local-models": data });
+    const settings = { ...SETTINGS, knowledge_retrieval: "vector", embedding_model: "qwen3-embedding:0.6b" } as Settings;
+    show(<KnowledgeSearchPanel settings={settings} admin onSave={() => {}} />);
+    expect(await screen.findByTestId("embedding-not-installed")).toHaveTextContent(
+      "qwen3-embedding:0.6b ist noch nicht installiert",
+    );
+    const select = screen.getByLabelText("Embedding-Modell", { exact: false });
+    const groups = [...select.querySelectorAll("optgroup")].map((group) => group.getAttribute("label"));
+    expect(groups).toEqual(["Installiert", "Nicht installiert"]);
+    cleanup();
+    serve({ "GET /api/knowledge/index": INDEX, "GET /api/local-models": data });
+    show(<KnowledgeSearchPanel settings={{ ...settings, embedding_model: "bge-m3" } as Settings} admin onSave={() => {}} />);
+    await screen.findByTestId("knowledge-index");
+    expect(screen.queryByTestId("embedding-not-installed")).toBeNull();
   });
 });
 

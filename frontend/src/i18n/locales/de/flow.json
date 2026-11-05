@@ -247,7 +247,7 @@
     "maxDecisionsHint": "Jede Weitergabe und die Schlussantwort sind je eine Entscheidung (1 bis {{max}}). Ohne Antwort bis dahin schlägt der Schritt fehl.",
     "maxPerTeam": "Höchstens Einsätze pro Team",
     "maxPerTeamHint": "Wie oft ein Team gewählt werden darf. Leer: keine eigene Grenze.",
-    "safety": "Der Orchestrator wählt nur unter diesen Teams. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes Team läuft als eigener verknüpfter Lauf mit seinem Anteil am Budget, seinen Grenzen und seinen Freigaben. Wartet ein Team auf eine Freigabe, wartet der Orchestrator mit.",
+    "safety": "Der Orchestrator wählt nur unter diesen Teams. Er hat keine Werkzeuge, erstellt keine Agenten, Werkzeuge oder Teams und hat keine eigenen Berechtigungen. Jedes Team läuft als eigener verknüpfter Lauf mit seinen Grenzen, seinen Freigaben und seinem eigenen Budget, falls das Team eines hat; alle Kosten zählen zusätzlich zum Budget dieses Laufs. Wartet ein Team auf eine Freigabe, wartet der Orchestrator mit.",
     "run": {
       "delegated": "An {{team}} weitergegeben",
       "finished": "Mit einer Antwort abgeschlossen",

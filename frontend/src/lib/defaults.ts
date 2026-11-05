@@ -15,11 +15,16 @@ export function getDefaultModel(): string {
 }
 
 /**
- * Providers that refuse an effort setting: OpenAI-compatible endpoints (Ollama, vLLM, ...) never receive one from
- * Nodestro, so an agent with an effort fails at the start (AD-09, F12). New agents on them start with the model
+ * Providers that refuse an effort setting: OpenAI-compatible endpoints (vLLM, a server of your own) never receive one
+ * from Nodestro, so an agent with an effort fails at the start (AD-09, F12). New agents on them start with the model
  * default (null), which sends none.
+ *
+ * Ollama is not one of them: the runtime passes the effort to a thinking model and leaves it out for a model that
+ * cannot think. New Ollama agents start at medium like the runtime's default, so the CPU saving mode (it applies to
+ * effort medium on a computer without a GPU) works for them; with the model default a thinking model would think
+ * without a limit there.
  */
-const NO_EFFORT: ReadonlySet<ProviderId> = new Set<ProviderId>(["compatible", "ollama", "vllm"]);
+const NO_EFFORT: ReadonlySet<ProviderId> = new Set<ProviderId>(["compatible", "vllm"]);
 
 /** The effort a new agent on ``model`` starts with. */
 export function defaultEffort(model: string): AgentConfig["effort"] {

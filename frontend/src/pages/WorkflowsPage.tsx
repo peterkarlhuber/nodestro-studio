@@ -94,8 +94,11 @@ export function WorkflowsPage() {
   const own = shown.filter((item) => !isTeam(item));
   const teams = shown.filter(isTeam);
   const settings = useSettings();
-  // New agents and the Workflow Architect use the default model: without its provider nothing can run yet.
+  // New agents use the default model: without its provider nothing can run yet. The Workflow Architect drafts with
+  // the assistant model, and the agents it drafts use the default model: "Create with AI" needs both.
   const needsModel = missingProviders(settings.data, [settings.data?.default_model]).length > 0;
+  const aiNeedsModel =
+    missingProviders(settings.data, [settings.data?.assistant_model, settings.data?.default_model]).length > 0;
 
   const refresh = () => queryClient.invalidateQueries({ queryKey: keys.workflows });
 
@@ -245,7 +248,7 @@ export function WorkflowsPage() {
             title={t("workflows.emptyTitle")}
             action={
               canEdit ? (
-                <StartChoices variant="full" needsModel={needsModel} onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />
+                <StartChoices variant="full" needsModel={needsModel} aiNeedsModel={aiNeedsModel} onAi={() => openCreate("ai")} onManual={() => openCreate("manual")} />
               ) : undefined
             }
           >
@@ -310,7 +313,7 @@ export function WorkflowsPage() {
             submit();
           }}
         >
-          {createMode === "ai" && needsModel ? <ModelNeeded forAi /> : null}
+          {createMode === "ai" && aiNeedsModel ? <ModelNeeded forAi /> : null}
           <Segmented
             value={createMode}
             onChange={setCreateMode}

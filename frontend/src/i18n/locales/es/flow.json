@@ -247,7 +247,7 @@
     "maxDecisionsHint": "Cada delegación y la respuesta final cuentan como una decisión (de 1 a {{max}}). Si para entonces no hay respuesta, el paso falla.",
     "maxPerTeam": "Usos máximos por equipo",
     "maxPerTeamHint": "Cuántas veces se puede elegir un mismo equipo. Vacío: sin límite propio.",
-    "safety": "El orquestador solo elige entre estos equipos. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo se ejecuta como una ejecución vinculada propia con su parte del presupuesto, sus límites y sus aprobaciones. Si un equipo espera una aprobación, el orquestador también espera.",
+    "safety": "El orquestador solo elige entre estos equipos. No tiene herramientas, no crea agentes, herramientas ni equipos y no tiene permisos propios. Cada equipo se ejecuta como una ejecución vinculada propia con sus límites, sus aprobaciones y su propio presupuesto si el equipo tiene uno; todos los costes cuentan además para el presupuesto de esta ejecución. Si un equipo espera una aprobación, el orquestador también espera.",
     "run": {
       "delegated": "Delegado a {{team}}",
       "finished": "Terminado con una respuesta",

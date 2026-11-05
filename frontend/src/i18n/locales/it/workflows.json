@@ -34,7 +34,7 @@
     "manualText": "Inizia con un input, un agente vuoto e un risultato. Trascini altri blocchi sull’area di lavoro.",
     "aiNeedsModel": "Richiede una connessione a un modello di IA",
     "modelNeeded": "Per eseguire i workflow, collega prima un modello di IA: una chiave API (per esempio Anthropic, OpenAI o Gemini) o un server di modelli locale come Ollama. Copiare un esempio funziona anche senza.",
-    "aiModelNeeded": "Crea con l’IA richiede una connessione a un modello di IA: l’architetto dei workflow progetta il workflow con il tuo modello predefinito, che non è ancora configurato.",
+    "aiModelNeeded": "Crea con l’IA richiede una connessione a un modello di IA: l’architetto dei workflow progetta il workflow con il modello per gli assistenti, e i nuovi agenti usano il modello predefinito per i nuovi agenti. Almeno uno dei due non ha ancora una connessione configurata.",
     "modelNeededLink": "Configura nelle impostazioni"
   },
   "continue": {

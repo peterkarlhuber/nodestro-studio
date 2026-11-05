@@ -115,7 +115,7 @@
     "counts": "Tools approved: {{approved}} of {{total}} · waiting for review: {{pending}}",
     "unavailable": "MCP is not available in this installation (needs Python 3.11 or later). Services can be set up but not reached.",
     "endpointList": "The operator allows only these addresses: {{list}}",
-    "endpointListEmpty": "The operator has not allowed any service addresses yet, so services cannot be connected here. Ask the person who runs Nodestro to allow the addresses you need (setting <code>NODESTRO_MCP_ENDPOINTS</code>).",
+    "endpointListEmpty": "The operator has not allowed any service addresses yet, so services cannot be connected here. Ask the person who runs Nodestro to allow the addresses you need.",
     "noVault": "No secure key store available: access tokens are not saved, only kept in memory until the app closes.",
     "readOnlyMvp": "For now only tools you classify as \"read only\" can be used.",
     "writeEnabled": "Tools that change data need an approval for each call.",

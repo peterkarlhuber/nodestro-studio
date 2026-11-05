@@ -248,7 +248,7 @@
     "approval_not_in_test": "Dieser Aufruf bräuchte die Freigabe einer Person; Tests fragen nicht, deshalb wurde er nicht ausgeführt.",
     "frozen": "Dieses Tool gehört zu einer veröffentlichten API-Version und kann nicht geändert werden, damit die Version genau so weiterläuft, wie sie veröffentlicht wurde. Ändere das Tool im Workflow und veröffentliche eine neue Version.",
     "denied_by_policy": "Die Regeln für Tool-Aufrufe haben diesen Aufruf ohne Rückfrage abgelehnt, das Tool lief also nicht. Prüfe die Regeln auf der Seite Freigaben oder gib dem Agenten ein Tool, das nur liest.",
-    "adoption_desktop_only": "Von KI erstellten Code kannst du nur in der Desktop-App als eigenen übernehmen. Hier läuft er immer isoliert.",
+    "adoption_desktop_only": "Von KI erstellten Code kannst du nur bei lokaler Nutzung auf deinem Computer als eigenen übernehmen, nicht auf einem Server und nicht in Nodestro Local Docker. Hier läuft er immer isoliert.",
     "adoption_forbidden": "Nur der Besitzer dieses Rechners oder ein Administrator darf von KI erstellten Code übernehmen.",
     "adoption_stale": "Das Tool hat sich geändert, nachdem es angezeigt wurde (jetzt Version {{version}}). Sieh es dir erneut an, bevor du es übernimmst.",
     "adoption_not_needed": "Dieses Tool gilt bereits als dein eigener Code; es muss nicht übernommen werden.",
@@ -545,7 +545,7 @@
     "subworkflow_unsaved": "{{name}}: der Sub-Workflow hat keine gespeicherte Version.",
     "mcp_tool_unusable": "Ein Dienst-Tool dieses Workflows ist gerade nicht nutzbar; er kann nicht veröffentlicht werden.",
     "mcp_tools": "Die Dienst-Tools werden in dieser Version eingefroren; eine spätere Änderung beim Dienst stoppt sie, bis sie neu veröffentlicht wird.",
-    "mcp_unattended_off": "API-Läufe verwenden Dienst-Tools erst, wenn der Betreiber unbeaufsichtigte Nutzung erlaubt (NODESTRO_MCP_UNATTENDED)."
+    "mcp_unattended_off": "API-Läufe verwenden Dienst-Tools erst, wenn der Betreiber unbeaufsichtigte Nutzung erlaubt."
   },
   "export": {
     "knowledge_missing": "{{name}} existiert nicht mehr.",
@@ -817,7 +817,7 @@
     "definition_moved": "Das Tool hat sich seit deiner Prüfung geändert. Prüfe es erneut.",
     "dns_failed": "Der Name {{host}} konnte nicht aufgelöst werden.",
     "endpoint_not_allowed": "Diese Adresse steht nicht auf der Liste des Betreibers.",
-    "endpoints_invalid": "Die Adressliste des Betreibers (NODESTRO_MCP_ENDPOINTS) ist ungültig.",
+    "endpoints_invalid": "Die Adressliste des Betreibers für Dienste ist ungültig.",
     "http_error": "Der Dienst antwortete mit HTTP {{status}}.",
     "https_required": "Dienste werden nur über https erreicht (http nur für einen lokalen Entwicklungsserver auf diesem Computer).",
     "protocol_error": "Der Dienst antwortete nicht wie ein MCP-Server.",

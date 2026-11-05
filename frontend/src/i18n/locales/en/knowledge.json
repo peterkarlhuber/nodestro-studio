@@ -16,7 +16,7 @@
   "noMatchesText": "No file name matches the filter.",
   "emptyText": "Upload files and assign them to an agent in the editor.",
   "searchTitle": "Try the search",
-  "searchText": "This is how an agent with “Search” knowledge finds matching sections (full-text search).",
+  "searchText": "This is how an agent with “Search” knowledge finds matching sections. The search here uses the search method from Settings → Knowledge search (Full text, Semantic or Combined).",
   "searchTerm": "Search term",
   "search": "Search",
   "noHits": "No matches.",

@@ -121,7 +121,8 @@
     "projector": "Projetor de visão (opcional)",
     "projectorHint": "O arquivo mmproj, se o modelo lê imagens.",
     "start": "Importar",
-    "started": "Importação iniciada"
+    "started": "Importação iniciada",
+    "packageExternal": "Pacotes offline só podem ser importados em um servidor de modelos que o Nodestro gerencia. No seu próprio servidor Ollama, importe-os com as ferramentas dele; aqui você pode importar um arquivo GGUF."
   },
   "storage": {
     "title": "Pasta de modelos",
@@ -168,7 +169,9 @@
     "embeddingHint": "Outro modelo precisa de um novo índice. Até ele ficar pronto, a busca continua usando o atual.",
     "noModel": "Nenhum modelo escolhido",
     "agentDefault": "Como nas Configurações ({{mode}})",
-    "agentMode": "Método de busca deste agente"
+    "agentMode": "Método de busca deste agente",
+    "notInstalled": "{{model}} ainda não está instalado. Baixe-o acima, nos modelos locais, antes de criar o índice; caso contrário, a criação falha.",
+    "notInstalledServer": "{{model}} não está instalado neste servidor, por isso não é possível criar o índice com ele. Peça à pessoa que opera o Nodestro para instalar o modelo."
   },
   "index": {
     "state": {

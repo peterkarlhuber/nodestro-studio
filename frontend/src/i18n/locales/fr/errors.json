@@ -248,7 +248,7 @@
     "approval_not_in_test": "Cet appel nécessiterait la validation d’une personne ; les tests ne demandent pas, il n’a donc pas été effectué.",
     "frozen": "Cet outil fait partie d’une version publiée de l’API et ne peut pas être modifié, afin que la version continue de fonctionner exactement comme elle a été publiée. Modifiez l’outil dans le workflow et publiez une nouvelle version.",
     "denied_by_policy": "Les règles des appels d’outils ont refusé cet appel sans demander à personne ; l’outil ne s’est donc pas exécuté. Vérifiez les règles sur la page Validations ou donnez à l’agent un outil qui ne fait que lire.",
-    "adoption_desktop_only": "Le code créé par l’IA ne peut être adopté comme le vôtre que dans l’application de bureau. Ici, il s’exécute toujours isolé.",
+    "adoption_desktop_only": "Le code créé par l’IA ne peut être adopté comme le vôtre que si vous utilisez Nodestro en local sur votre ordinateur, pas sur un serveur ni dans Nodestro Local Docker. Ici, il s’exécute toujours isolé.",
     "adoption_forbidden": "Seul le propriétaire de cet ordinateur ou un administrateur peut adopter du code créé par l’IA.",
     "adoption_stale": "L’outil a changé après son affichage (désormais version {{version}}). Examinez-le de nouveau avant de l’adopter.",
     "adoption_not_needed": "Cet outil est déjà considéré comme votre propre code ; aucune adoption n’est nécessaire.",
@@ -545,7 +545,7 @@
     "subworkflow_unsaved": "{{name}} : le sous-workflow n’a pas de version enregistrée.",
     "mcp_tool_unusable": "Un outil de service de ce workflow n’est pas utilisable actuellement ; il ne peut pas être publié.",
     "mcp_tools": "Les outils de service sont figés dans cette version ; une modification ultérieure du service l’arrête jusqu’à une nouvelle publication.",
-    "mcp_unattended_off": "Les exécutions d’API n’utilisent les outils de service que si l’exploitant autorise l’utilisation sans surveillance (NODESTRO_MCP_UNATTENDED)."
+    "mcp_unattended_off": "Les exécutions d’API n’utilisent les outils de service que si l’exploitant autorise l’utilisation sans surveillance."
   },
   "export": {
     "knowledge_missing": "{{name}} n’existe plus.",
@@ -817,7 +817,7 @@
     "definition_moved": "L’outil a changé depuis votre examen. Examinez-le à nouveau.",
     "dns_failed": "Le nom {{host}} n’a pas pu être résolu.",
     "endpoint_not_allowed": "Cette adresse ne figure pas sur la liste de l’opérateur.",
-    "endpoints_invalid": "La liste d’adresses de l’opérateur (NODESTRO_MCP_ENDPOINTS) n’est pas valide.",
+    "endpoints_invalid": "La liste d’adresses de service de l’opérateur n’est pas valide.",
     "http_error": "Le service a répondu avec HTTP {{status}}.",
     "https_required": "Les services ne sont joints qu’en https (http uniquement pour un serveur de développement local sur cet ordinateur).",
     "protocol_error": "Le service n’a pas répondu comme un serveur MCP.",

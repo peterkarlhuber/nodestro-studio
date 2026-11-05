@@ -91,7 +91,7 @@
     "reloaded": "La version enregistrée est chargée."
   },
   "compat": {
-    "effortText": "Les endpoints compatibles OpenAI (par exemple Ollama ou vLLM) n’acceptent pas de réglage d’effort de Nodestro. Réglez l’effort de cet agent sur « Valeur du modèle ».",
+    "effortText": "Cet endpoint compatible OpenAI (par exemple vLLM) n’accepte pas de réglage d’effort de Nodestro. Réglez l’effort de cet agent sur « Valeur du modèle ».",
     "effortOff": "Régler l’effort sur la valeur du modèle"
   },
   "rules": {
