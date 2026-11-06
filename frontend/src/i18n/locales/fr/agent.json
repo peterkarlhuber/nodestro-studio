@@ -275,5 +275,12 @@
     "text": "L’agent traite exactement cela, sans autre consigne.",
     "edit": "Rédiger la tâche",
     "asChip": "Afficher comme espace réservé"
+  },
+  "localSuggestion": {
+    "current": "Modèle local recommandé pour « {{task}} » sur ce serveur de modèles.",
+    "other": "Pour « {{task}} », ce serveur de modèles recommande {{model}} ({{quality}}).",
+    "none": "Ce serveur de modèles ne recommande aucun modèle local pour « {{task}} ».",
+    "download": "Il faut d’abord le télécharger ({{size}}).",
+    "use": "Utiliser ce modèle"
   }
 }

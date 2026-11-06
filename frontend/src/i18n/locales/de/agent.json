@@ -275,5 +275,12 @@
     "text": "Der Agent bearbeitet genau das, ohne weitere Anweisung.",
     "edit": "Aufgabe formulieren",
     "asChip": "Als Platzhalter zeigen"
+  },
+  "localSuggestion": {
+    "current": "Empfohlenes lokales Modell für „{{task}}“ auf diesem Modellserver.",
+    "other": "Für „{{task}}“ empfiehlt dieser Modellserver {{model}} ({{quality}}).",
+    "none": "Für „{{task}}“ empfiehlt dieser Modellserver kein lokales Modell.",
+    "download": "Dafür ist ein Download von {{size}} nötig.",
+    "use": "Dieses Modell verwenden"
   }
 }

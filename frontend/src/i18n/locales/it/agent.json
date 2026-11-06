@@ -275,5 +275,12 @@
     "text": "L’agente lavora esattamente su questo, senza altre istruzioni.",
     "edit": "Scrivi il compito",
     "asChip": "Mostra come segnaposto"
+  },
+  "localSuggestion": {
+    "current": "Modello locale consigliato per «{{task}}» su questo server di modelli.",
+    "other": "Per «{{task}}» questo server di modelli consiglia {{model}} ({{quality}}).",
+    "none": "Questo server di modelli non consiglia alcun modello locale per «{{task}}».",
+    "download": "Richiede un download di {{size}}.",
+    "use": "Usa questo modello"
   }
 }

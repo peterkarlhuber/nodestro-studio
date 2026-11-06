@@ -7751,3 +7751,11 @@ ul.gate-report__list > li.gate-report__item {
   border: 1px dashed var(--nd-border);
   border-radius: var(--nd-radius-sm);
 }
+
+/* The local model suggestion under the agent's model picker (ST-044). */
+.local-suggestion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}

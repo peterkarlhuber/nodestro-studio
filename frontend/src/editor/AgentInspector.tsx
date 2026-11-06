@@ -21,6 +21,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
+import { LocalModelSuggestion } from "./LocalModelSuggestion";
 import { TaskTemplateInput } from "./TaskTemplateInput";
 import { keys, useKnowledge, useMemorySpaces, useMeta, useModelOptions, useSettings, useTools } from "../api/hooks";
 import type {
@@ -336,6 +337,7 @@ export function AgentForm({
         hint={modelHint}
       >
         <ModelPicker id="agent-model" value={agent.model} onChange={(model) => update({ model })} />
+        <LocalModelSuggestion agent={agent} onUse={(model) => update({ model })} />
       </Field>
 
       <Field label={t("agent.systemPrompt")} htmlFor="agent-system" tip="agent.systemPrompt" hint={t("agent.systemPromptHint")}>

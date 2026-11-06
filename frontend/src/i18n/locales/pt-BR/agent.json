@@ -275,5 +275,12 @@
     "text": "O agente trabalha exatamente nisso, sem outras instruções.",
     "edit": "Escrever a tarefa",
     "asChip": "Mostrar como marcador"
+  },
+  "localSuggestion": {
+    "current": "Modelo local recomendado para “{{task}}” neste servidor de modelos.",
+    "other": "Para “{{task}}”, este servidor de modelos recomenda {{model}} ({{quality}}).",
+    "none": "Este servidor de modelos não recomenda nenhum modelo local para “{{task}}”.",
+    "download": "Exige um download de {{size}}.",
+    "use": "Usar este modelo"
   }
 }

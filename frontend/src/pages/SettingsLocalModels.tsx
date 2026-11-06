@@ -15,8 +15,6 @@ import {
   type KnowledgeIndexStatus,
   type LocalJob,
   type LocalOverview,
-  type LocalReason,
-  type Recommendation,
   isJob,
   localApi,
   localKeys,
@@ -31,6 +29,7 @@ import { withLocalModel } from "../missingModel/store";
 import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatLargeBytes } from "../lib/format";
+import { reasonText } from "../lib/localRecommend";
 import { BuildFromFiles, buildableModels } from "./LocalModelBuild";
 import { InlineJobProgress, LocalJobsList, SetupProgress, setupJob, useJobsFinished } from "./LocalModelJobs";
 import { AdviceList, FitBadge, MachinePanel, SpeedCell, catalogFit } from "./LocalModelsHardware";
@@ -56,22 +55,6 @@ function useRefresh() {
     // Whether Ollama counts as set up depends on the server: the provider list and the workflow check ask again.
     void queryClient.invalidateQueries({ queryKey: keys.settings });
   };
-}
-
-type ShownReason = Exclude<LocalReason, "installed" | "needs_download">;
-
-/** The text key of a reason; those that speak of "this computer" have a server wording for a server's tenants (ST-048). */
-function reasonKey(reason: ShownReason, server: boolean): ShownReason | "hardware_limit_server" | "no_fit_server" {
-  if (server && reason === "hardware_limit") return "hardware_limit_server";
-  if (server && reason === "no_fit") return "no_fit_server";
-  return reason;
-}
-
-function reasonText(t: ReturnType<typeof useTranslation>["t"], item: Recommendation, server = false): string {
-  return item.reasons
-    .filter((reason): reason is ShownReason => reason !== "installed" && reason !== "needs_download")
-    .map((reason) => t(`localModels.reasons.${reasonKey(reason, server)}`, { model: item.better ?? "" }))
-    .join(" ");
 }
 
 function Recommendations({

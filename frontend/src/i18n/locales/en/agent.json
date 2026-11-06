@@ -275,5 +275,12 @@
     "text": "The agent works on exactly this, without further instructions.",
     "edit": "Write the task",
     "asChip": "Show as placeholder"
+  },
+  "localSuggestion": {
+    "current": "Suggested local model for “{{task}}” on this model server.",
+    "other": "For “{{task}}” this model server suggests {{model}} ({{quality}}).",
+    "none": "No local model is suggested for “{{task}}” on this model server.",
+    "download": "It needs a download of {{size}}.",
+    "use": "Use this model"
   }
 }

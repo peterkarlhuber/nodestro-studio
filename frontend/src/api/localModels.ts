@@ -299,10 +299,13 @@ export const localKeys = {
   overview: ["local-models"] as const,
   jobs: ["local-models", "jobs"] as const,
   index: ["knowledge-index"] as const,
+  recommend: (task: LocalTask) => ["local-models", "recommend", task] as const,
 };
 
 export const localApi = {
   overview: () => request<LocalOverview>("GET", "/local-models"),
+  /** The model for one task profile on the computer (or server) that runs the model server. */
+  recommend: (task: LocalTask) => request<Recommendation>("GET", `/local-models/recommend?task=${encodeURIComponent(task)}`),
   start: () => request<LocalStatus>("POST", "/local-models/start"),
   stop: () => request<LocalStatus>("POST", "/local-models/stop"),
   setAutostart: (enabled: boolean) => request<LocalStatus>("PUT", "/local-models/autostart", { enabled }),
