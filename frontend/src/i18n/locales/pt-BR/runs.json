@@ -110,5 +110,11 @@
   "waitingForYou": {
     "label": "Aguarda você",
     "description": "Uma chamada de ferramenta aguarda sua aprovação. A execução continua assim que você decidir."
+  },
+  "sources": {
+    "title": "Fontes de conhecimento usadas",
+    "passages_one": "({{count}} trecho)",
+    "passages_other": "({{count}} trechos)",
+    "hint": "Encontradas pela busca de conhecimento do agente; a aba Ferramentas mostra os trechos."
   }
 }

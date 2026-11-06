@@ -7711,3 +7711,26 @@ ul.gate-report__list > li.gate-report__item {
     display: none;
   }
 }
+
+/* ---- knowledge sources of a run result (AD-19) ---------------------------------- */
+.used-sources {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--nd-border);
+  border-radius: 8px;
+}
+
+.used-sources__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.used-sources__list {
+  margin: 0;
+  padding-left: 18px;
+  overflow-wrap: anywhere;
+}

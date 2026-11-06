@@ -28,3 +28,37 @@ export function checkSearchQuery(query: string): void {
   if (query.length > SEARCH_QUERY_CHARS)
     throw new LocalError("knowledge.query_too_long", { max: SEARCH_QUERY_CHARS.toLocaleString(i18n.language) });
 }
+
+/** A knowledge passage an agent found with its search tool: the file (id) and its title (name, with the page of a PDF). */
+export interface UsedSource {
+  source: string;
+  title: string;
+  /** How many passages of this title the agent's searches returned. */
+  passages: number;
+}
+
+// The recorded output of a knowledge search lists every hit as `[search_result 'source' 'title'] text` (Orkexa's
+// describe_content, Python string reprs); other tools never write that marker at the start of a line.
+const REPR = String.raw`'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"`;
+const HIT = new RegExp(String.raw`^\[search_result (${REPR}) (${REPR}|None)\]`, "gm");
+
+function unrepr(value: string): string {
+  if (value === "None") return "";
+  return value.slice(1, -1).replace(/\\(.)/g, (_, char: string) => (char === "n" ? " " : char === "t" ? " " : char));
+}
+
+/** The knowledge sources an agent's searches returned in a run, in the order first found. */
+export function usedSources(calls: readonly { output: string | null; is_error: boolean }[]): UsedSource[] {
+  const found = new Map<string, UsedSource>();
+  for (const call of calls) {
+    if (call.is_error || !call.output) continue;
+    for (const match of call.output.matchAll(HIT)) {
+      const source = unrepr(match[1]);
+      const title = unrepr(match[2]) || source;
+      const known = found.get(title);
+      if (known) known.passages += 1;
+      else found.set(title, { source, title, passages: 1 });
+    }
+  }
+  return [...found.values()];
+}

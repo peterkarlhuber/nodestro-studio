@@ -110,5 +110,11 @@
   "waitingForYou": {
     "label": "Ti aspetta",
     "description": "Una chiamata a uno strumento attende la tua approvazione. L'esecuzione prosegue appena decidi."
+  },
+  "sources": {
+    "title": "Fonti di conoscenza usate",
+    "passages_one": "({{count}} passaggio)",
+    "passages_other": "({{count}} passaggi)",
+    "hint": "Trovate dalla ricerca nella conoscenza dell’agente; la scheda Strumenti mostra i passaggi."
   }
 }

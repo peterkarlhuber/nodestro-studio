@@ -110,5 +110,11 @@
   "waitingForYou": {
     "label": "Vous attend",
     "description": "Un appel d’outil attend votre approbation. L’exécution continue dès que vous avez décidé."
+  },
+  "sources": {
+    "title": "Sources de connaissances utilisées",
+    "passages_one": "({{count}} extrait)",
+    "passages_other": "({{count}} extraits)",
+    "hint": "Trouvées par la recherche de connaissances de l’agent ; l’onglet Outils affiche les extraits."
   }
 }
