@@ -330,7 +330,14 @@ try {
       // The editor of the first own workflow (not a card of the example gallery).
       await page.goto(base + "/");
       await page.locator(".page__body > .card-grid > .card").first().click();
-      await page.locator(".react-flow__node").first().waitFor();
+      try {
+        await page.locator(".react-flow__node").first().waitFor();
+      } catch (error) {
+        // What the browser showed instead of the editor, so a CI failure can be told apart from a slow start.
+        const body = (await page.locator("body").innerText().catch(() => "")).slice(0, 1500);
+        console.log(`FAIL  ${language} ${viewport.width}px editor did not open: ${page.url()}\n  errors: ${errors.join(" | ")}\n  page: ${body}`);
+        throw error;
+      }
       // In narrow windows the palette may cover a node, so the click goes straight to the node.
       await page.locator(".react-flow__node-agent").first().dispatchEvent("click");
       await page.locator(".inspector").waitFor();
