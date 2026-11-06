@@ -113,7 +113,7 @@ def test_the_studio_pins_agree_with_versions_json() -> None:
     text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     assert check_versions.check_pyproject("nodestro-studio", text, pinned, pinned["platform"]) == []
     # The orkexa commit nodestro-runtime pins (orkexa #49: backend audit round 3, stale managed Ollama reclaimed).
-    assert pinned["components"]["orkexa"]["commit"] == "3bfc77820498302eb3a61de453e0304caae86914"
+    assert pinned["components"]["orkexa"]["commit"] == "566aa3c22ebef87b498ac3fa1145329a939b904e"
 
 
 def test_imports_are_read_from_the_source(tmp_path: Path) -> None:
