@@ -8,6 +8,7 @@ import "./styles/admin.css";
 import "./styles/assistant-files.css";
 import "./styles/progress.css";
 import "./styles/reasoning.css";
+import "./styles/missing-model.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

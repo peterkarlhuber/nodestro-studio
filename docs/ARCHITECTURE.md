@@ -268,6 +268,23 @@ retry or resume button where it helps. The backend contract is described in node
 fresh data folder (download, reload, cancel). It replays recorded states for the indeterminate, the failed and the
 parallel-download cases.
 
+## Missing local models
+
+One mechanism serves every action that needs a local model (`frontend/src/missingModel/`). The server decides the
+cause and the allowed actions (`409 model.local_unavailable`, `src/api/modelReadiness.ts`); the studio never guesses
+them. A surface passes the refused action's error to `askMissingModel()` or wraps its request in `withLocalModel()`;
+`MissingModelHost` (mounted once in the app shell) shows `MissingModelDialog`, and the promise says how to continue:
+with the same model once it is ready, with another ready model chosen for this action only (`switched`), or not at
+all. The surface keeps its own inputs and repeats its own request, so server checks (budget, permissions) apply again
+and nothing is entered twice. The dialog drives the existing jobs (`readinessApi.download` attaches to a running
+download, setup attaches on `local.job_running`) and their `JobCard`, checks readiness once when the job is done,
+and continues once: by **Continue**, or by itself after the explicit opt-in. A new request ends an open one.
+
+Problems reported by unattended starts, runs and checks (`check.local_model_missing`, `run.local_model_missing`,
+also inside `workflow.blocked`) get a **Fix** button (`ModelFixButton`): the same dialog in `fixOnly` mode, which
+continues nothing. The browser test `frontend/e2e/missingModel.mjs` runs against `tests/e2e_missing_model_server.py`
+(a fake managed Ollama whose `/api/pull` writes into the real model folder, scripted answers).
+
 ## Knowledge and memory
 
 - Files live in the `SQLiteFileStore`; texts are additionally stored in sections in the `SQLiteIndex` (FTS5). Through

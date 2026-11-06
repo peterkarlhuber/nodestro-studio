@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useInRouterContext } from "react-router-dom";
 
 import { ApiError } from "../api/client";
+import { ModelFixButton } from "../missingModel/ModelFixButton";
 import { dockerReasonKey, isDockerReason } from "../api/types";
 import i18n from "../i18n";
 import { formatLargeBytes } from "./format";
@@ -350,6 +351,7 @@ export function ProblemText({ item, compact = false }: { item: Coded; compact?: 
         </span>
       ) : null}
       {technical ? <TechnicalDetails text={technical} /> : null}
+      {compact ? null : <ModelFixButton item={item} />}
     </>
   );
 }

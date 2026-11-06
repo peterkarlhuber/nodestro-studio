@@ -50,6 +50,17 @@ Si algo falla, la entrada indica **Se necesita una acción**, qué pasó y qué 
 
 Las tareas las guarda Nodestro, no la página: tras recargar la página, la configuración y las descargas en curso vuelven a aparecer con su progreso. Si Nodestro se cierra mientras una tarea se ejecuta, la próxima vez aparece como interrumpida; **Continuar** la retoma donde se detuvo. Solo se ejecuta una configuración a la vez, también entre varias ventanas de Nodestro.
 
+## Modelo necesario no instalado {#modell-fehlt}
+<!-- keywords: falta el modelo, modelo no instalado, modelo necesario, descargar modelo, elegir otro modelo, model not found, continuar, servidor inaccesible, permiso, administrador, desatendido, programación, corregir -->
+
+Cuando el Arquitecto de IA, el asistente, el diseño o la prueba de un agente, una ejecución o la búsqueda de conocimiento necesitan un modelo local que ahora no se puede usar, Nodestro no inicia la acción y abre un diálogo. Te dice **por qué**: el modelo no está instalado (con el tamaño de la descarga, el espacio libre de la [carpeta de modelos](/docs/einstellungen#offline-import) y la memoria que necesita), los modelos locales aún no están configurados, el servidor de modelos no arranca o no responde, el disco está demasiado lleno, el modelo no puede hacer lo que el paso necesita (llamadas a herramientas, resultados estructurados, imágenes, embeddings), probablemente es demasiado grande para este ordenador o el nombre no es un modelo local. También dice **dónde** va el modelo: en este ordenador, en el contenedor de Local Docker, en un servidor de modelos que configuraste o en el servidor de Nodestro.
+
+El diálogo ofrece solo lo que puedes hacer aquí: **Descargar modelo** (tras una interrupción, **Continuar la descarga**), **Configurar modelos locales**, **Comprobar de nuevo**, **Elegir otro modelo** o **Copiar nombre del modelo** para un administrador. Sin permiso para instalar, en un servidor de Nodestro (allí instala el operador) y en el modo sin conexión estricto no se descarga nada, y el diálogo lo dice. Si el mismo modelo ya se está descargando, por ejemplo en otra ventana, el diálogo sigue esa descarga; nunca empieza una segunda.
+
+Tus entradas se quedan donde están: la descripción para el Arquitecto de IA, el mensaje y sus archivos en el asistente, la entrada de prueba o las entradas de la ejecución. Cuando termina la descarga, Nodestro comprueba que el modelo está de verdad y puede hacer el paso; entonces **Continuar** inicia la acción una vez con las mismas entradas. Si marcas **Continuar automáticamente cuando el modelo esté listo**, sigue sola, una vez. Puedes cerrar el diálogo mientras la descarga sigue: continúa en **Tareas**. **Elegir otro modelo** muestra solo modelos listos que pueden hacer el paso, locales y en la nube (que pueden costar dinero); la elección vale para esta acción y no cambia tus ajustes.
+
+Las programaciones, las ejecuciones por lotes y las API publicadas nunca descargan nada. Una ejecución que no puede empezar informa del modelo que falta (por ejemplo, en la última ejecución de la programación) con **Solucionar**, que abre el mismo diálogo sin continuar nada por sí solo.
+
 ## Este ordenador, ventana de contexto y velocidad {#lokale-hardware}
 <!-- keywords: hardware, gpu, solo cpu, memoria, ventana de contexto, ollama_context_length, velocidad, tokens por segundo, medir, modo de ahorro de cpu, razonamiento reducido -->
 

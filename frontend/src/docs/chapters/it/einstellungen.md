@@ -50,6 +50,17 @@ Se qualcosa non riesce, la voce indica **Serve un intervento**, cosa è successo
 
 Le attività le conserva Nodestro, non la pagina: dopo aver ricaricato la pagina, la configurazione e i download in corso riappaiono con il loro avanzamento. Se Nodestro viene chiuso mentre un’attività è in corso, la volta successiva compare come interrotta; **Continua** la riprende da dove si era fermata. Si esegue una sola configurazione alla volta, anche tra più finestre di Nodestro.
 
+## Modello richiesto non installato {#modell-fehlt}
+<!-- keywords: modello mancante, modello non installato, modello richiesto, scaricare modello, scegliere un altro modello, model not found, continuare, server non raggiungibile, permesso, amministratore, non presidiato, pianificazione, correggere -->
+
+Quando l’Architetto IA, l’assistente, la progettazione o il test di un agente, un’esecuzione o la ricerca nella conoscenza hanno bisogno di un modello locale che ora non si può usare, Nodestro non avvia l’azione e apre una finestra di dialogo. Ti dice **perché**: il modello non è installato (con la dimensione del download, lo spazio libero nella [cartella dei modelli](/docs/einstellungen#offline-import) e la memoria necessaria), i modelli locali non sono ancora configurati, il server dei modelli non si avvia o non risponde, il disco è troppo pieno, il modello non sa fare ciò che serve al passaggio (chiamate agli strumenti, risultati strutturati, immagini, embedding), probabilmente è troppo grande per questo computer, oppure il nome non è un modello locale. Dice anche **dove** va il modello: su questo computer, nel container Local Docker, su un server dei modelli che hai configurato o sul server Nodestro.
+
+La finestra offre solo ciò che puoi fare qui: **Scarica modello** (dopo un’interruzione, **Riprendi download**), **Configura modelli locali**, **Controlla di nuovo**, **Scegli un altro modello** o **Copia nome del modello** per un amministratore. Senza il permesso di installare, su un server Nodestro (lì installa il gestore) e nella modalità offline rigorosa non si scarica nulla, e la finestra lo dice. Se lo stesso modello si sta già scaricando, per esempio in un’altra finestra, la finestra segue quel download; un secondo non parte mai.
+
+I tuoi dati restano dove sono: la descrizione per l’Architetto IA, il messaggio con i suoi file nell’assistente, l’input del test o gli input dell’esecuzione. Finito il download, Nodestro controlla che il modello ci sia davvero e sappia fare il passaggio; poi **Continua** avvia l’azione una volta con gli stessi dati. Se spunti **Continua automaticamente quando il modello è pronto**, prosegue da sola, una volta. Puoi chiudere la finestra mentre il download è in corso: continua in **Attività**. **Scegli un altro modello** elenca solo modelli pronti che sanno fare il passaggio, locali e nel cloud (che possono avere un costo); la scelta vale per questa sola azione e non cambia le tue impostazioni.
+
+Pianificazioni, esecuzioni in batch e API pubblicate non scaricano mai nulla. Un’esecuzione che non può partire segnala il modello mancante (per esempio nell’ultima esecuzione della pianificazione) con **Risolvi**, che apre la stessa finestra senza proseguire nulla da sola.
+
 ## Questo computer, finestra di contesto e velocità {#lokale-hardware}
 <!-- keywords: hardware, gpu, solo cpu, memoria, finestra di contesto, ollama_context_length, velocità, token al secondo, misurare, modalità risparmio cpu, ragionamento ridotto -->
 

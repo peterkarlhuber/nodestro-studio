@@ -1,0 +1,146 @@
+{
+  "title": {
+    "model_missing": "Benötigtes Modell nicht installiert",
+    "runtime_missing": "Lokale Modelle sind noch nicht eingerichtet",
+    "server_stopped": "Der lokale Modellserver ist nicht gestartet",
+    "server_unreachable": "Der Modellserver antwortet nicht",
+    "server_missing": "Kein lokaler Modellserver verfügbar",
+    "model_name_invalid": "Der Modellname ist ungültig",
+    "disk_full": "Nicht genug Speicherplatz für das Modell",
+    "capability_missing": "Das Modell kann nicht, was hier nötig ist",
+    "hardware_insufficient": "Das Modell ist für diesen Computer vermutlich zu groß"
+  },
+  "cause": {
+    "model_missing": {
+      "this_computer": "Das lokale Modell {{model}} ist auf diesem Computer noch nicht verfügbar.",
+      "container": "Das lokale Modell {{model}} ist im lokalen Modell-Container noch nicht verfügbar.",
+      "remote": "Das lokale Modell {{model}} ist auf dem Modellserver {{host}} noch nicht verfügbar.",
+      "server": "Das lokale Modell {{model}} ist auf diesem Nodestro-Server nicht installiert."
+    },
+    "runtime_missing": {
+      "this_computer": "Lokale Modelle brauchen die lokale Modell-Laufzeit (Ollama), die auf diesem Computer noch nicht installiert ist. Nodestro kann sie für dich einrichten; danach lässt sich {{model}} herunterladen."
+    },
+    "server_stopped": {
+      "this_computer": "Der lokale Modellserver auf diesem Computer ließ sich nicht starten, deshalb kann Nodestro {{model}} weder prüfen noch verwenden."
+    },
+    "server_unreachable": {
+      "this_computer": "Der von dir eingetragene Ollama-Server antwortet nicht, deshalb kann Nodestro {{model}} weder prüfen noch verwenden.",
+      "container": "Der lokale Modell-Container antwortet nicht. Prüfe, ob Nodestro Local Docker vollständig läuft.",
+      "remote": "Der Modellserver {{host}} antwortet nicht, deshalb kann Nodestro {{model}} weder prüfen noch verwenden.",
+      "server": "Der Modellserver dieses Nodestro-Servers antwortet nicht. Deine Administration kann ihn prüfen."
+    },
+    "server_missing": {
+      "this_computer": "Hier ist kein lokaler Modellserver eingerichtet, deshalb kann {{model}} nicht laufen.",
+      "server": "Dieser Nodestro-Server hat keinen lokalen Modellserver. Deine Administration kann einen einrichten."
+    },
+    "model_name_invalid": {
+      "this_computer": "„{{model}}“ ist kein Name eines Modells, das lokal läuft (ein ungültiger Name oder ein Ollama-Cloud-Modell). Prüfe das Modell in der Konfiguration."
+    },
+    "disk_full": {
+      "this_computer": "{{model}} braucht etwa {{size}}, im Modellordner sind aber nur {{free}} frei. Gib Speicherplatz frei oder verschiebe den Modellordner in den Einstellungen auf ein größeres Laufwerk.",
+      "container": "{{model}} braucht etwa {{size}}, im Modellordner des Containers sind aber nur {{free}} frei. Gib Speicherplatz auf dem Laufwerk frei und prüfe dann erneut."
+    },
+    "capability_missing": {
+      "this_computer": "{{model}} ist installiert, unterstützt aber nicht, was dieser Schritt braucht: {{list}}."
+    },
+    "hardware_insufficient": {
+      "this_computer": "{{model}} ist nicht installiert und braucht vermutlich mehr Arbeitsspeicher, als dieser Computer hat.",
+      "container": "{{model}} ist nicht installiert und braucht vermutlich mehr Arbeitsspeicher, als dieser Computer dem Container gibt."
+    }
+  },
+  "catalog": "Von Nodestro geprüft",
+  "facts": {
+    "size": "Downloadgröße: {{size}}",
+    "sizeUnknown": "Die Downloadgröße ist vorab nicht bekannt.",
+    "free": "Freier Platz im Modellordner: {{free}}",
+    "memory": "Braucht zum Ausführen etwa {{memory}} Arbeitsspeicher",
+    "partial": "Bereits heruntergeladen: {{size}}. Der Download macht dort weiter.",
+    "fitsNo": "Dieser Computer hat für dieses Modell möglicherweise zu wenig Arbeitsspeicher. Es kann sehr langsam oder gar nicht laufen; ein kleineres Modell ist meist die bessere Wahl."
+  },
+  "blocked": {
+    "permission": "Du darfst hier keine Modelle installieren. Bitte eine Administratorin oder einen Administrator, {{model}} zu installieren.",
+    "operator": "Modelle dieses Nodestro-Servers installiert sein Betrieb, nicht dein Computer. Bitte deine Administration, {{model}} auf dem Server zu installieren.",
+    "offline": "Der strikte Offline-Modus ist an, deshalb wird nichts heruntergeladen. Importiere das Modell in den Einstellungen aus einer Datei oder wähle ein anderes Modell."
+  },
+  "why": {
+    "architect": "Der KI-Workflow-Architekt entwirft deinen Workflow mit diesem Modell.",
+    "assistant": "Der Assistent beantwortet deine Nachricht mit diesem Modell.",
+    "agent_design": "Nodestro entwirft mit diesem Modell, worum du gebeten hast.",
+    "agent_test": "Der Agent nutzt dieses Modell für den Test.",
+    "run": "Ein Agent dieses Workflows nutzt dieses Modell.",
+    "knowledge_index": "Die Wissenssuche baut mit diesem Modell den semantischen Index.",
+    "check": "Dieser Workflow oder diese Aufgabe braucht dieses Modell."
+  },
+  "keep": {
+    "architect": "Name, Beschreibung und Optionen bleiben erhalten. Der KI-Workflow-Architekt startet damit, sobald das Modell bereit ist.",
+    "assistant": "Deine Nachricht und ihre Dateien bleiben im Eingabefeld. Sie werden gesendet, sobald das Modell bereit ist.",
+    "agent_design": "Deine Beschreibung bleibt erhalten. Nodestro macht damit weiter, sobald das Modell bereit ist.",
+    "agent_test": "Deine Testeingabe bleibt erhalten. Der Test läuft, sobald das Modell bereit ist.",
+    "run": "Deine Eingaben für den Lauf bleiben erhalten. Der Lauf startet, sobald das Modell bereit ist.",
+    "knowledge_index": "Der semantische Index wird gebaut, sobald das Modell bereit ist.",
+    "check": "Starte die Aktion nach dem Download erneut."
+  },
+  "continueTo": {
+    "architect": "den KI-Workflow-Architekten starten",
+    "assistant": "deine Nachricht senden",
+    "agent_design": "weitermachen",
+    "agent_test": "den Test starten",
+    "run": "den Lauf starten",
+    "knowledge_index": "den Index bauen",
+    "check": "weitermachen"
+  },
+  "actionsLabel": "Was du tun kannst",
+  "actions": {
+    "download": "Modell herunterladen",
+    "downloadAnyway": "Trotzdem herunterladen",
+    "resume": "Download fortsetzen",
+    "setup": "Lokale Modelle einrichten",
+    "retry": "Erneut prüfen",
+    "choose": "Anderes Modell wählen",
+    "copyName": "Modellnamen kopieren",
+    "openSettings": "Einstellungen der lokalen Modelle öffnen",
+    "close": "Schließen",
+    "continue": "Weiter",
+    "done": "Fertig",
+    "useModel": "Dieses Modell verwenden"
+  },
+  "askAdmin": {
+    "copied": "Modellname kopiert"
+  },
+  "capability": {
+    "tools": "Tool-Aufrufe",
+    "image_input": "Bilder",
+    "vision": "Bilder",
+    "structured_output": "strukturierte Ergebnisse",
+    "reasoning": "Nachdenken (Reasoning)",
+    "thinking": "Nachdenken (Reasoning)",
+    "completion": "Antworten mit Text (es ist ein Embedding-Modell)",
+    "embedding": "Embeddings für die Wissenssuche (es ist ein Chat-Modell)"
+  },
+  "choose": {
+    "title": "Modelle, die jetzt bereit sind",
+    "note": "Das gewählte Modell gilt nur für diese Aktion. Deine Einstellungen ändern sich nicht.",
+    "noteAgent": "Das gewählte Modell gilt nur für diesen Test. Der gespeicherte Agent behält sein Modell.",
+    "back": "Zurück",
+    "local": "Lokal",
+    "cloud": "Cloud-Anbieter, es können Kosten entstehen",
+    "context": "Kontextfenster (Tokens): {{tokens}}",
+    "limited": "Seine maximale Ausgabe ist kleiner, als dieser Schritt verlangt; das Ausgabelimit wird deshalb gesenkt."
+  },
+  "job": {
+    "already": "Dieses Modell wird bereits heruntergeladen. Der Fortschritt steht hier; es wird kein zweiter Download gestartet.",
+    "background": "Du kannst diesen Dialog schließen: Der Download läuft im Hintergrund weiter (Einstellungen, Lokale Modelle).",
+    "auto": "Automatisch weitermachen, sobald das Modell bereit ist",
+    "autoHint": "Nodestro wird einmal {{action}}, mit deinen Eingaben, sobald das Modell geprüft ist.",
+    "checking": "Modell wird geprüft …"
+  },
+  "ready": {
+    "title": "Das Modell ist bereit",
+    "text": "{{model}} ist installiert und wurde geprüft. Als Nächstes: {{action}}.",
+    "fix": "{{model}} ist installiert und wurde geprüft. Starte die Aktion erneut, wenn du so weit bist."
+  },
+  "fix": {
+    "button": "Beheben",
+    "label": "Modell {{model}} installieren oder einrichten"
+  }
+}

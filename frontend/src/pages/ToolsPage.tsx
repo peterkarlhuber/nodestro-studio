@@ -19,6 +19,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 
 import { api } from "../api/client";
+import { withLocalModel } from "../missingModel/store";
 import { keys, useOrganize, useSettings, useToolDrafts, useTools } from "../api/hooks";
 import { ToolDraftPanel } from "../architect/ToolDraftPanel";
 import { DiscussIcon } from "../assistant/DiscussButton";
@@ -624,7 +625,7 @@ function GenerateTool() {
       query.state.data?.some((job) => job.status === "running") ? 1500 : 6000,
   });
   const start = useMutation({
-    mutationFn: () => api.startToolJob(requirement),
+    mutationFn: () => withLocalModel(() => api.startToolJob(requirement), { action: "agent_design" }),
     onSuccess: () => {
       setRequirement("");
       void queryClient.invalidateQueries({ queryKey: keys.toolJobs });

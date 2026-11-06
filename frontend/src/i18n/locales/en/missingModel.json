@@ -1,0 +1,146 @@
+{
+  "title": {
+    "model_missing": "Required model not installed",
+    "runtime_missing": "Local models are not set up yet",
+    "server_stopped": "The local model server did not start",
+    "server_unreachable": "The model server does not answer",
+    "server_missing": "No local model server available",
+    "model_name_invalid": "The model name is not valid",
+    "disk_full": "Not enough disk space for the model",
+    "capability_missing": "The model cannot do what is needed",
+    "hardware_insufficient": "The model may be too large for this computer"
+  },
+  "cause": {
+    "model_missing": {
+      "this_computer": "The local model {{model}} is not available on this computer yet.",
+      "container": "The local model {{model}} is not available in the local model container yet.",
+      "remote": "The local model {{model}} is not available on the model server {{host}} yet.",
+      "server": "The local model {{model}} is not installed on this Nodestro server."
+    },
+    "runtime_missing": {
+      "this_computer": "Local models need the local model runtime (Ollama), which is not installed on this computer yet. Nodestro can set it up for you; after that, {{model}} can be downloaded."
+    },
+    "server_stopped": {
+      "this_computer": "The local model server on this computer could not be started, so Nodestro cannot check or use {{model}}."
+    },
+    "server_unreachable": {
+      "this_computer": "The Ollama server you configured does not answer, so Nodestro cannot check or use {{model}}.",
+      "container": "The local model container does not answer. Check that Nodestro Local Docker is running completely.",
+      "remote": "The model server {{host}} does not answer, so Nodestro cannot check or use {{model}}.",
+      "server": "The model server of this Nodestro server does not answer. Your administrator can check it."
+    },
+    "server_missing": {
+      "this_computer": "No local model server is configured here, so {{model}} cannot run.",
+      "server": "This Nodestro server has no local model server. Your administrator can configure one."
+    },
+    "model_name_invalid": {
+      "this_computer": "“{{model}}” is not the name of a model that runs locally (an invalid name, or an Ollama cloud model). Check the model in the configuration."
+    },
+    "disk_full": {
+      "this_computer": "{{model}} needs about {{size}}, but only {{free}} are free in the model folder. Free up space, or move the model folder to a larger drive in the settings.",
+      "container": "{{model}} needs about {{size}}, but only {{free}} are free in the container’s model folder. Free up space on the drive, then check again."
+    },
+    "capability_missing": {
+      "this_computer": "{{model}} is installed, but it does not support what this step needs: {{list}}."
+    },
+    "hardware_insufficient": {
+      "this_computer": "{{model}} is not installed, and it probably needs more memory than this computer has.",
+      "container": "{{model}} is not installed, and it probably needs more memory than this computer gives the container."
+    }
+  },
+  "catalog": "Checked by Nodestro",
+  "facts": {
+    "size": "Download size: {{size}}",
+    "sizeUnknown": "The download size is not known in advance.",
+    "free": "Free space in the model folder: {{free}}",
+    "memory": "Needs about {{memory}} of memory to run",
+    "partial": "Already downloaded: {{size}}. The download continues there.",
+    "fitsNo": "This computer may not have enough memory for this model. It can run very slowly or not at all; a smaller model is usually the better choice."
+  },
+  "blocked": {
+    "permission": "You do not have permission to install models here. Ask an administrator to install {{model}}.",
+    "operator": "Models on this Nodestro server are installed by its operator, not on your computer. Ask your administrator to install {{model}} on the server.",
+    "offline": "The strict offline mode is on, so nothing is downloaded. Import the model from a file in the settings, or choose another model."
+  },
+  "why": {
+    "architect": "The Workflow Architect uses this model to design your workflow.",
+    "assistant": "The assistant uses this model to answer your message.",
+    "agent_design": "Nodestro uses this model to design what you asked for.",
+    "agent_test": "The agent uses this model for the test.",
+    "run": "An agent of this workflow uses this model.",
+    "knowledge_index": "The knowledge search uses this model to build the semantic index.",
+    "check": "This workflow or task needs this model."
+  },
+  "keep": {
+    "architect": "Your name, description and options are kept. The Workflow Architect starts with them as soon as the model is ready.",
+    "assistant": "Your message and its files stay in the input field. They are sent as soon as the model is ready.",
+    "agent_design": "Your description is kept. Nodestro continues with it as soon as the model is ready.",
+    "agent_test": "Your test input is kept. The test runs as soon as the model is ready.",
+    "run": "Your run inputs are kept. The run starts as soon as the model is ready.",
+    "knowledge_index": "The semantic index is built as soon as the model is ready.",
+    "check": "After the download, start the action again."
+  },
+  "continueTo": {
+    "architect": "start the Workflow Architect",
+    "assistant": "send your message",
+    "agent_design": "continue",
+    "agent_test": "start the test",
+    "run": "start the run",
+    "knowledge_index": "build the index",
+    "check": "continue"
+  },
+  "actionsLabel": "What you can do",
+  "actions": {
+    "download": "Download model",
+    "downloadAnyway": "Download anyway",
+    "resume": "Continue download",
+    "setup": "Set up local models",
+    "retry": "Check again",
+    "choose": "Choose another model",
+    "copyName": "Copy model name",
+    "openSettings": "Open local model settings",
+    "close": "Close",
+    "continue": "Continue",
+    "done": "Done",
+    "useModel": "Use this model"
+  },
+  "askAdmin": {
+    "copied": "Model name copied"
+  },
+  "capability": {
+    "tools": "tool calls",
+    "image_input": "images",
+    "vision": "images",
+    "structured_output": "structured results",
+    "reasoning": "reasoning",
+    "thinking": "reasoning",
+    "completion": "answering with text (it is an embedding model)",
+    "embedding": "embeddings for the knowledge search (it is a chat model)"
+  },
+  "choose": {
+    "title": "Models that are ready now",
+    "note": "The chosen model is used for this action only. Your settings are not changed.",
+    "noteAgent": "The chosen model is used for this test only. The saved agent keeps its model.",
+    "back": "Back",
+    "local": "Local",
+    "cloud": "Cloud provider, costs may apply",
+    "context": "Context window (tokens): {{tokens}}",
+    "limited": "Its maximum output is smaller than this step asks for, so the output limit is lowered."
+  },
+  "job": {
+    "already": "This model is already being downloaded. Its progress is shown here; no second download is started.",
+    "background": "You can close this dialog: the download continues in the background (Settings, Local models).",
+    "auto": "Continue automatically when the model is ready",
+    "autoHint": "Nodestro will {{action}} once, with what you entered, as soon as the model has been checked.",
+    "checking": "Checking the model…"
+  },
+  "ready": {
+    "title": "The model is ready",
+    "text": "{{model}} is installed and was checked. Continue to {{action}}.",
+    "fix": "{{model}} is installed and was checked. Start the action again when you are ready."
+  },
+  "fix": {
+    "button": "Fix",
+    "label": "Install or set up the model {{model}}"
+  }
+}

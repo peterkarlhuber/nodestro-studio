@@ -10,6 +10,7 @@ import { useModelName } from "../components/ModelPicker";
 import { Button, Callout, Chip, Field, Modal, TextArea } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatCost, formatNumber } from "../lib/format";
+import { withLocalModel } from "../missingModel/store";
 import { useEditor } from "./store";
 
 /** "Describe the agent you need": the Agent Architect proposes a configuration to review. */
@@ -38,7 +39,9 @@ export function DesignAgentDialog({
   }, [open, initial]);
   const design = useMutation({
     mutationFn: () =>
-      api.designAgent(description, existing ?? useEditor.getState().nodes.map((node) => node.label)),
+      withLocalModel(() => api.designAgent(description, existing ?? useEditor.getState().nodes.map((node) => node.label)), {
+        action: "agent_design",
+      }),
     onSuccess: setDraft,
   });
   const config = draft?.config;

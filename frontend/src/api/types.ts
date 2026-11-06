@@ -1730,6 +1730,8 @@ export interface ArchitectRequest {
   skip_questions?: boolean;
   generate_tools?: boolean;
   budget_usd?: number | null;
+  /** Another ready model for this job only (missing local model dialog); the settings stay as they are. */
+  model?: string | null;
 }
 
 export interface ArchitectEvent {

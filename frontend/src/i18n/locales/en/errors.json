@@ -196,7 +196,8 @@
     "provider_rate_limited": "{{provider}} reported too many requests or tokens in a short time (rate limit).",
     "provider_overloaded": "{{provider}} is overloaded right now.",
     "provider_auth_aws": "AWS did not accept the sign-in for Amazon Bedrock: credentials are missing or expired, or the IAM role lacks a permission.",
-    "value_unverified": "The key figure {{field}} ({{value}}) was not computed with a tool, even after one correction. The step stopped so that no decision rests on an unchecked number."
+    "value_unverified": "The key figure {{field}} ({{value}}) was not computed with a tool, even after one correction. The step stopped so that no decision rests on an unchecked number.",
+    "local_model_missing": "The local model {{model}} is not installed on the model server."
   },
   "budget": {
     "not_starter": "Only the person who started the run or an administrator can decide its budget.",
@@ -661,7 +662,9 @@
     "not_found": "This version was not published."
   },
   "model": {
-    "unavailable": "Nodestro has no settings for {{provider}}; runs cannot start."
+    "unavailable": "Nodestro has no settings for {{provider}}; runs cannot start.",
+    "local_unavailable": "The model {{model}} is not ready to use here yet.",
+    "choice_invalid": "{{model}} cannot be used for this action here. Choose one of the models that are ready."
   },
   "sync": {
     "disabled": "Waiting for the result is not enabled for this API."
@@ -937,12 +940,16 @@
       "provider_unreachable": "Check the internet connection, firewall or proxy, then continue the run.",
       "provider_rate_limited": "Wait a moment and continue the run. Fewer runs at the same time or a higher limit with the provider help for good.",
       "provider_overloaded": "This is not caused by your workflow. Wait a few minutes, then continue the run.",
-      "provider_auth_aws": "Check the sign-in and permissions under Settings → AI providers → Amazon Bedrock with “Check connection”."
+      "provider_auth_aws": "Check the sign-in and permissions under Settings → AI providers → Amazon Bedrock with “Check connection”.",
+      "local_model_missing": "Install it with “Fix” or under Settings, Local models, then start the run again. Automatic runs never download models themselves."
     },
     "provider": {
       "aws_access_denied": "Grant bedrock:InvokeModel and bedrock:InvokeModelWithResponseStream on the model or inference profile (with EU-only also bedrock:GetInferenceProfile), and enable the model in the AWS console.",
       "aws_credentials_missing": "On this computer: sign in with “aws sso login” or check the profile, then use “Check connection” under Settings → AI providers.",
       "data_residency_violation": "Use an EU region and an EU inference profile (eu.…) or a model id of that region; global profiles are always refused."
+    },
+    "check": {
+      "local_model_missing": "Install it with “Fix” or under Settings, Local models, then start the run again. Automatic runs never download models themselves."
     }
   },
   "setupProvider": "Set up AI provider",

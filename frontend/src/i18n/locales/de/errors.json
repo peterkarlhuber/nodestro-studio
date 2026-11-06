@@ -196,7 +196,8 @@
     "provider_rate_limited": "{{provider}} hat zu viele Anfragen oder Tokens in kurzer Zeit gemeldet (Rate-Limit).",
     "provider_overloaded": "{{provider}} ist gerade überlastet.",
     "provider_auth_aws": "AWS hat die Anmeldung für Amazon Bedrock nicht akzeptiert: Zugangsdaten fehlen oder sind abgelaufen, oder der IAM-Rolle fehlt eine Berechtigung.",
-    "value_unverified": "Die Kennzahl {{field}} ({{value}}) wurde auch nach einer Korrektur nicht mit einem Tool berechnet. Der Schritt wurde gestoppt, damit keine Entscheidung auf einer ungeprüften Zahl beruht."
+    "value_unverified": "Die Kennzahl {{field}} ({{value}}) wurde auch nach einer Korrektur nicht mit einem Tool berechnet. Der Schritt wurde gestoppt, damit keine Entscheidung auf einer ungeprüften Zahl beruht.",
+    "local_model_missing": "Das lokale Modell {{model}} ist auf dem Modellserver nicht installiert."
   },
   "budget": {
     "not_starter": "Nur die Person, die den Lauf gestartet hat, oder ein Administrator kann über sein Budget entscheiden.",
@@ -661,7 +662,9 @@
     "not_found": "Diese Version wurde nicht veröffentlicht."
   },
   "model": {
-    "unavailable": "Nodestro hat keine Einstellungen für {{provider}}; Läufe können nicht starten."
+    "unavailable": "Nodestro hat keine Einstellungen für {{provider}}; Läufe können nicht starten.",
+    "local_unavailable": "Das Modell {{model}} ist hier noch nicht einsatzbereit.",
+    "choice_invalid": "{{model}} kann für diese Aktion hier nicht verwendet werden. Wähle eines der Modelle, die bereit sind."
   },
   "sync": {
     "disabled": "Auf das Ergebnis zu warten ist für diese API nicht eingeschaltet."
@@ -937,12 +940,16 @@
       "provider_unreachable": "Prüfe Internetverbindung, Firewall oder Proxy und setze den Lauf dann fort.",
       "provider_rate_limited": "Warte einen Moment und setze den Lauf fort. Weniger gleichzeitige Läufe oder ein höheres Limit beim Anbieter helfen dauerhaft.",
       "provider_overloaded": "Das liegt nicht an deinem Workflow. Warte ein paar Minuten und setze den Lauf dann fort.",
-      "provider_auth_aws": "Prüfe Anmeldung und Berechtigungen unter Einstellungen → KI-Anbieter → Amazon Bedrock mit „Verbindung prüfen“."
+      "provider_auth_aws": "Prüfe Anmeldung und Berechtigungen unter Einstellungen → KI-Anbieter → Amazon Bedrock mit „Verbindung prüfen“.",
+      "local_model_missing": "Installiere es mit „Beheben“ oder unter Einstellungen, Lokale Modelle, und starte den Lauf dann erneut. Automatische Läufe laden nie selbst Modelle herunter."
     },
     "provider": {
       "aws_access_denied": "Erlaube bedrock:InvokeModel und bedrock:InvokeModelWithResponseStream auf dem Modell oder Inferenzprofil (mit „Nur EU“ auch bedrock:GetInferenceProfile) und aktiviere das Modell in der AWS-Konsole.",
       "aws_credentials_missing": "Auf diesem Computer: Melde dich mit „aws sso login“ an oder prüfe das Profil und nutze dann „Verbindung prüfen“ unter Einstellungen → KI-Anbieter.",
       "data_residency_violation": "Verwende eine EU-Region und ein EU-Inferenzprofil (eu.…) oder eine Modell-ID dieser Region; globale Profile werden immer abgelehnt."
+    },
+    "check": {
+      "local_model_missing": "Installiere es mit „Beheben“ oder unter Einstellungen, Lokale Modelle, und starte den Lauf dann erneut. Automatische Läufe laden nie selbst Modelle herunter."
     }
   },
   "setupProvider": "KI-Anbieter einrichten",
