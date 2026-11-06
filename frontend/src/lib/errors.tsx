@@ -14,7 +14,7 @@ import { ApiError } from "../api/client";
 import { ModelFixButton } from "../missingModel/ModelFixButton";
 import { dockerReasonKey, isDockerReason } from "../api/types";
 import i18n from "../i18n";
-import { formatComparedBytes } from "./format";
+import { formatComparedBytes, formatLargeBytes } from "./format";
 import { useSettingsHref } from "./settingsLink";
 
 export interface Coded {
@@ -120,6 +120,9 @@ function codeParams(t: TFunction, code: string | null, params: Record<string, un
     const [size, limit] = formatComparedBytes([Number(params.size), Number(params.limit)]);
     return { ...params, size, limit };
   }
+  if (code === "export.server_limit" && Number(params.limit) > 0) return { ...params, limit: formatLargeBytes(Number(params.limit)) };
+  if (code === "local.task_unknown_allowed" && Array.isArray(params.allowed))
+    return { ...params, allowed: params.allowed.map((task) => t(`localModels.tasks.${String(task)}`, { defaultValue: String(task) })).join(", ") };
   if (code === "local.invalid_package_reason") return { ...params, reason: t(`errors.local.${String(params.reason)}`, { defaultValue: String(params.reason) }) };
   return null;
 }
@@ -204,6 +207,11 @@ export function refineProblem(
   // agent library's reason has a sentence of its own (a damaged manifest, an invalid model name).
   if (code === "local.invalid_package" && typeof params.path === "string" && params.path)
     return { code: PACKAGE_REASONS.has(params.reason as string) ? "local.invalid_package_reason" : "local.invalid_package_path", params };
+  // A server's size limit for packages as information (nodestro-api API-053); without the limit the sentence is general.
+  if (code === "export.server_limit" && !(Number(params.limit) > 0)) return { code: "export.server_limit_plain", params };
+  // An unknown task profile of the local model recommendation; newer APIs name the known ones (API-053).
+  if (code === "local.task_unknown" && Array.isArray(params.allowed) && params.allowed.length)
+    return { code: "local.task_unknown_allowed", params };
   if (code && PROVIDER_FAILURES.has(code)) return { code, params: { ...params, provider: params.provider ?? "" } };
   // A source-only package a person accepted to build: its build script runs only in a container. The runtime names
   // why that container could not run (no Docker, or no pinned resolver image); never on this computer.

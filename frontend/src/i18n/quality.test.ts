@@ -351,6 +351,9 @@ describe("backend codes", () => {
     "export.server_too_large", "export.server_too_large_plain", "export.download_needed", "export.download_needed_plain",
     "export.downloads", "export.downloads_plain", "local.invalid_package", "local.invalid_package_path",
     "local.invalid_package_reason", "knowledge.query_too_long", "knowledge.hits_out_of_range",
+    // nodestro-api round 2026-11-06 (API-053, API-055, API-065).
+    "assistant.provider_rejected_messages", "input.assistant_file", "export.server_limit", "export.server_limit_plain",
+    "local.task_unknown_allowed",
     // Local model setup and downloads with steps: what a job can end with.
     "local.network", "local.disk_full", "local.install_running", "local.interrupted", "local.unavailable", "local.start_failed",
   ];

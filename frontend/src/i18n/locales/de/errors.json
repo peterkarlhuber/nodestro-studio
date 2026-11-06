@@ -50,7 +50,8 @@
     "too_many_files": "Ein Chat enthält höchstens {{limit}} Dateien. Entferne zuerst Dateien, die du nicht mehr brauchst.",
     "too_many_message_files": "Mit einer Nachricht können höchstens {{limit}} Dateien gesendet werden.",
     "file_missing": "Eine Datei gehört nicht mehr zu diesem Chat. Entferne sie aus der Nachricht und versuche es erneut.",
-    "file_removed": "Die Datei wurde aus dem Chat entfernt."
+    "file_removed": "Die Datei wurde aus dem Chat entfernt.",
+    "provider_rejected_messages": "{{provider}} hat diesen Chat abgelehnt: Eine seiner Nachrichten hat eine Form, die der Anbieter nicht annimmt. Erneutes Senden hilft nicht; beginne einen neuen Chat."
   },
   "draft": {
     "unknown_tool": "Das unbekannte Tool „{{name}}“ wurde weggelassen.",
@@ -619,7 +620,9 @@
     "server_too_large": "Dieses Paket wäre etwa {{size}} groß, mehr als dieser Server erlaubt ({{limit}}). Lass die lokalen Modelle weg, um es kleiner zu machen, oder bitte den Betreiber des Servers, die Grenze anzuheben.",
     "server_too_large_plain": "Das Paket ist größer, als dieser Server erlaubt, und wurde nicht behalten. Lass die lokalen Modelle weg, um es kleiner zu machen, oder bitte den Betreiber des Servers, die Grenze anzuheben.",
     "download_needed_plain": "Das Erstellen braucht Downloads, die noch nicht im Zwischenspeicher liegen. Erstelle einmal mit Internetverbindung; danach liegen sie im Zwischenspeicher.",
-    "downloads_plain": "Das Erstellen lädt die fehlenden Teile für die Zielplattform einmalig herunter."
+    "downloads_plain": "Das Erstellen lädt die fehlenden Teile für die Zielplattform einmalig herunter.",
+    "server_limit": "Dieser Server baut Pakete bis {{limit}}.",
+    "server_limit_plain": "Dieser Server baut Pakete bis zu einer Größe, die sein Betreiber festlegt."
   },
   "lan": {
     "tls_file_missing": "Datei nicht gefunden: {{path}}",
@@ -718,7 +721,8 @@
     "too_large_inline": "Zu groß für die vollständige Übergabe; der Agent liest sie gezielt.",
     "model_no_images": "Das Modell kann keine Bilder sehen; das Bild wurde nicht übergeben.",
     "image_too_large": "Das Bild ist zu groß, um es dem Modell zu zeigen.",
-    "model_no_documents": "Das Modell kann keine PDF-Seiten lesen; das gescannte PDF steht ihm nicht zur Verfügung."
+    "model_no_documents": "Das Modell kann keine PDF-Seiten lesen; das gescannte PDF steht ihm nicht zur Verfügung.",
+    "assistant_file": "Eine Datei aus einem Assistenten-Chat kann keine Eingabe eines Laufs sein. Lade sie stattdessen für den Lauf hoch."
   },
   "adopt": {
     "archive_select": "Wähle die Dateien aus {{name}}, die übernommen werden sollen.",
@@ -1050,7 +1054,8 @@
     "install_running": "Die lokale Modell-Laufzeit wird bereits installiert.",
     "interrupted": "Nodestro wurde beendet, während das lief.",
     "unavailable": "Hier ist kein lokaler Modellserver verfügbar.",
-    "start_failed": "Der lokale Modellserver ist nicht gestartet."
+    "start_failed": "Der lokale Modellserver ist nicht gestartet.",
+    "task_unknown_allowed": "Unbekannte Aufgabe. Bekannte Aufgaben: {{allowed}}."
   },
   "knowledge": {
     "failed": "Der semantische Index konnte nicht aktualisiert werden.",

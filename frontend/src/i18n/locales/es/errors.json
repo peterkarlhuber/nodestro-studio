@@ -50,7 +50,8 @@
     "too_many_files": "Un chat admite como máximo {{limit}} archivos. Elimina primero los que ya no necesites.",
     "too_many_message_files": "Con un mensaje se pueden enviar como máximo {{limit}} archivos.",
     "file_missing": "Un archivo ya no forma parte de este chat. Quítalo del mensaje e inténtalo de nuevo.",
-    "file_removed": "El archivo se eliminó del chat."
+    "file_removed": "El archivo se eliminó del chat.",
+    "provider_rejected_messages": "{{provider}} rechazó este chat: uno de sus mensajes tiene una forma que el proveedor no acepta. Volver a enviarlo no ayuda; empieza un chat nuevo."
   },
   "draft": {
     "unknown_tool": "Se ha omitido la herramienta desconocida «{{name}}».",
@@ -619,7 +620,9 @@
     "server_too_large": "Este paquete ocuparía unos {{size}}, más de lo que permite este servidor ({{limit}}). Deja fuera los modelos locales para reducirlo o pide al operador del servidor que aumente el límite.",
     "server_too_large_plain": "El paquete es más grande de lo que permite este servidor y no se ha conservado. Deja fuera los modelos locales para reducirlo o pide al operador del servidor que aumente el límite.",
     "download_needed_plain": "La generación necesita descargas que aún no están en la caché. Genera una vez con conexión a internet; después estarán en la caché.",
-    "downloads_plain": "La generación descarga una vez las partes que faltan para la plataforma de destino."
+    "downloads_plain": "La generación descarga una vez las partes que faltan para la plataforma de destino.",
+    "server_limit": "Este servidor genera paquetes de hasta {{limit}}.",
+    "server_limit_plain": "Este servidor genera paquetes hasta un tamaño máximo que fija su operador."
   },
   "lan": {
     "tls_file_missing": "Archivo no encontrado: {{path}}",
@@ -718,7 +721,8 @@
     "too_large_inline": "Demasiado grande para entregarlo completo; el agente lo lee por partes.",
     "model_no_images": "El modelo no puede ver imágenes; la imagen no se entregó.",
     "image_too_large": "La imagen es demasiado grande para mostrársela al modelo.",
-    "model_no_documents": "El modelo no puede leer páginas PDF; el PDF escaneado no está disponible para él."
+    "model_no_documents": "El modelo no puede leer páginas PDF; el PDF escaneado no está disponible para él.",
+    "assistant_file": "Un archivo de un chat del asistente no puede ser una entrada de una ejecución. Súbelo para la ejecución."
   },
   "adopt": {
     "archive_select": "Elige los archivos de {{name}} que quieres incorporar.",
@@ -1050,7 +1054,8 @@
     "install_running": "El motor de modelos locales ya se está instalando.",
     "interrupted": "Nodestro se cerró mientras esto se ejecutaba.",
     "unavailable": "Aquí no hay ningún servidor de modelos local disponible.",
-    "start_failed": "El servidor de modelos local no se inició."
+    "start_failed": "El servidor de modelos local no se inició.",
+    "task_unknown_allowed": "Tarea desconocida. Tareas conocidas: {{allowed}}."
   },
   "knowledge": {
     "failed": "No se pudo actualizar el índice semántico.",

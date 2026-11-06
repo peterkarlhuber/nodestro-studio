@@ -130,3 +130,17 @@ describe("knowledge search bounds", () => {
     expect(knowledgeSearchError(other)).toBe(other);
   });
 });
+
+describe("codes of nodestro-api round 2026-11-06", () => {
+  it("name the server's package limit, the known tasks and the refused chat in words", () => {
+    expect(problemText(t, { code: "export.server_limit", params: { limit: 2_000_000_000 } })).toMatch(/^This server builds packages up to 2[.,]0\sGB\.$/);
+    expect(problemText(t, { code: "export.server_limit", params: {} })).toBe(t("errors.export.server_limit_plain"));
+    expect(problemText(t, { code: "local.task_unknown", params: { task: "x", allowed: ["write", "classify"] } })).toBe(
+      "Unknown task. Known tasks: Writing texts, Sorting and routing.",
+    );
+    expect(problemText(t, { code: "local.task_unknown", params: { task: "x" } })).toBe("Unknown task.");
+    expect(problemText(t, { code: "assistant.provider_rejected_messages", params: { provider: "openai", status: 400 } })).toMatch(/^OpenAI refused this chat/);
+    expect(problemText(t, { code: "input.assistant_file", params: { file_id: "in_1" } })).toMatch(/assistant chat cannot be a run input/);
+  });
+});
+

@@ -50,7 +50,8 @@
     "too_many_files": "A chat holds at most {{limit}} files. Remove files you no longer need first.",
     "too_many_message_files": "At most {{limit}} files can be sent with one message.",
     "file_missing": "A file is no longer part of this chat. Remove it from the message and try again.",
-    "file_removed": "The file was removed from the chat."
+    "file_removed": "The file was removed from the chat.",
+    "provider_rejected_messages": "{{provider}} refused this chat: one of its messages has a form the provider does not accept. Sending it again will not help; start a new chat."
   },
   "draft": {
     "unknown_tool": "The unknown tool “{{name}}” was left out.",
@@ -619,7 +620,9 @@
     "server_too_large": "This package would be about {{size}}, more than this server allows ({{limit}}). Leave out the local models to make it smaller, or ask the server's operator to raise the limit.",
     "server_too_large_plain": "The package is larger than this server allows and was not kept. Leave out the local models to make it smaller, or ask the server's operator to raise the limit.",
     "download_needed_plain": "Building needs downloads that are not in the cache yet. Build once with an internet connection; afterwards they are in the cache.",
-    "downloads_plain": "Building downloads the missing parts for the target platform once."
+    "downloads_plain": "Building downloads the missing parts for the target platform once.",
+    "server_limit": "This server builds packages up to {{limit}}.",
+    "server_limit_plain": "This server builds packages up to a size limit set by its operator."
   },
   "lan": {
     "tls_file_missing": "File not found: {{path}}",
@@ -718,7 +721,8 @@
     "too_large_inline": "Too large to hand over in full; the agent reads it in parts.",
     "model_no_images": "The model cannot see images; the image was not handed over.",
     "image_too_large": "The image is too large to show to the model.",
-    "model_no_documents": "The model cannot read PDF pages; the scanned PDF is not available to it."
+    "model_no_documents": "The model cannot read PDF pages; the scanned PDF is not available to it.",
+    "assistant_file": "A file from an assistant chat cannot be a run input. Upload it for the run instead."
   },
   "adopt": {
     "archive_select": "Choose the files of {{name}} to take over.",
@@ -1050,7 +1054,8 @@
     "install_running": "The local model runtime is already being installed.",
     "interrupted": "Nodestro was closed while this was running.",
     "unavailable": "No local model server is available here.",
-    "start_failed": "The local model server did not start."
+    "start_failed": "The local model server did not start.",
+    "task_unknown_allowed": "Unknown task. Known tasks: {{allowed}}."
   },
   "knowledge": {
     "failed": "The semantic index could not be updated.",
