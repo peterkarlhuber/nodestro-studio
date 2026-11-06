@@ -1,0 +1,83 @@
+{
+  "reason": {
+    "provider": "Non disponible pour les modèles de ce fournisseur.",
+    "model": "Ce modèle ne le prend pas en charge.",
+    "automatic": "Le fournisseur le fait automatiquement pour ce modèle ; il n’y a rien à régler.",
+    "not_mapped": "Le fournisseur propose une fonction similaire, mais Nodestro ne l’offre pas encore sous forme de cette option.",
+    "unknown": "Il n’est pas documenté si ce modèle le prend en charge."
+  },
+  "nativeTool": {
+    "provider": "{{tool}} : non disponible pour les modèles de ce fournisseur.",
+    "not_integrated": "{{tool}} : le fournisseur propose un tel outil, mais Nodestro ne l’utilise pas encore, car ses frais ne peuvent être ni chiffrés ni plafonnés.",
+    "capability": "{{tool}} : ce modèle ne peut pas utiliser les outils propres au fournisseur."
+  },
+  "optionName": {
+    "thinking": "Réflexion",
+    "thinking_display": "Afficher les réflexions",
+    "thinking_budget": "Budget de réflexion",
+    "cache_control": "Mise en cache du prompt",
+    "cache_ttl": "Durée du cache",
+    "fallbacks": "Modèles de secours"
+  },
+  "thinkingBudget": {
+    "label": "Budget de réflexion (tokens)",
+    "hint": "Nombre de tokens que le modèle peut consacrer à la réflexion avant de répondre. Vide : le modèle décide. 0 désactive la réflexion lorsque le modèle le permet. Les tokens de réflexion comptent dans les tokens max.",
+    "placeholder": "Valeur par défaut du modèle"
+  },
+  "limits": {
+    "maxOutput": "Maximum du modèle : {{tokens}} tokens de sortie",
+    "contextWindow": "fenêtre de contexte : {{tokens}} tokens",
+    "unknown": "La sortie maximale du modèle n’est pas documentée ; le fournisseur décide.",
+    "source": {
+      "documented": "documenté",
+      "declared": "indiqué dans les paramètres",
+      "unknown": "inconnu"
+    }
+  },
+  "operation": {
+    "architect_analysis": "Architecte : analyse des besoins",
+    "architect_plan": "Architecte : plan du workflow",
+    "architect_agent": "Architecte : configuration des agents",
+    "architect_repair": "Architecte : réparation",
+    "tool_generation": "Création d’outils (Coding Agent)",
+    "assistant_chat": "Chat de l’assistant",
+    "agent_design": "Conception d’agent",
+    "memory_proposal": "Suggestion de mémoire",
+    "api_guide": "Guide de l’API",
+    "run_chat": "Questions sur une exécution",
+    "orchestrator": "Décisions de l’orchestrateur",
+    "quality_judge": "Contrôle qualité (évaluateur)"
+  },
+  "settings": {
+    "title": "Limites de sortie des modèles",
+    "intro": "Nombre maximal de tokens avec lequel les étapes d’IA de Nodestro peuvent répondre. Laissez un champ vide pour utiliser la valeur par défaut. Les agents ont leur propre limite dans l’éditeur d’agent (Tokens max.).",
+    "budgetNote": "La limite inclut la réflexion du modèle. Une limite plus élevée permet des réponses plus longues, mais ne contourne jamais un budget : le contrôle des coûts réserve exactement cette valeur avant chaque requête.",
+    "modelMaximum": "Modèle d’assistance {{model}} : au plus {{tokens}} tokens de sortie.",
+    "modelMaximumUnknown": "La sortie maximale du modèle d’assistance {{model}} n’est pas documentée ; les valeurs sont envoyées telles quelles.",
+    "group": {
+      "architect": "Architecte de workflows",
+      "assistants": "Assistants IA",
+      "runs": "Exécutions"
+    },
+    "column": {
+      "operation": "Étape",
+      "limit": "Limite (tokens)",
+      "sent": "Envoyé au modèle"
+    },
+    "inputLabel": "Limite de sortie de {{operation}}",
+    "reset": "Rétablir la valeur par défaut pour {{operation}}",
+    "invalid": "Saisissez un nombre entier de {{min}} à {{max}}.",
+    "default": "Par défaut",
+    "defaultIs": "Par défaut : {{tokens}}",
+    "perModel": "{{tokens}}, au plus le maximum du modèle utilisé",
+    "reduced": {
+      "model_maximum": "Réduite à la sortie maximale du modèle.",
+      "context_window": "Réduite à la moitié de la fenêtre de contexte du modèle."
+    },
+    "retry": "Redemander les réponses tronquées",
+    "retryHint": "Lorsqu’une réponse de l’architecte de workflows atteint sa limite, la demande est renvoyée une fois avec une limite doublée (au plus la valeur ci-dessous et le maximum du modèle). La nouvelle tentative n’est envoyée que si son coût total tient dans le budget restant de la tâche.",
+    "retryMax": "Limite maximale pour une nouvelle tentative (tokens)",
+    "retryMaxHint": "De 1 024 à 1 000 000 tokens.",
+    "fixInvalid": "Certaines valeurs sont hors de la plage autorisée ({{min}} à {{max}} tokens). Corrigez-les pour enregistrer."
+  }
+}

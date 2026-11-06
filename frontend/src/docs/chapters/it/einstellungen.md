@@ -164,6 +164,17 @@ Il **budget predefinito per esecuzione** (inizialmente 2 USD) vale per tutti i w
 
 Gli amministratori impostano anche il **Budget massimo per esecuzione** (vuoto: nessun tetto): nessuna esecuzione può partire con un limite più alto né essere aumentata oltre. La **Scadenza delle decisioni sul budget** (da 1 a 720 ore, inizialmente 24) indica quanto un’esecuzione in pausa attende una [decisione sul budget](/docs/workflows#budget-freigabe) prima di fallire. Chi può decidere è spiegato in [Chi può decidere](/docs/workflows#budget-rechte).
 
+## Limiti di output dei modelli {#ausgabelimits}
+<!-- keywords: limite di output, token max., max_tokens, troncato, limite dell’architetto, finestra di contesto -->
+
+I passaggi di IA propri di Nodestro (l’architetto dei workflow, gli assistenti, le domande su un’esecuzione, le decisioni dell’orchestratore e il controllo qualità) non hanno impostazioni di agente proprie. In **Limiti di output dei modelli** imposti con quanti token può rispondere ogni passaggio; un campo vuoto usa il valore predefinito integrato (per esempio 32.000 per il piano del workflow dell’architetto e 8.000 per la sua analisi). Gli agenti mantengono i propri *Token max.* nell’[editor degli agenti](/docs/agenten#limits).
+
+Il valore inviato deriva da tre livelli: la tua impostazione, altrimenti il valore predefinito, al massimo l’output massimo documentato del modello (o metà della sua finestra di contesto per un modello locale il cui massimo non è noto). La tabella mostra il valore inviato al modello dell’assistente e indica quando è stato ridotto; niente viene accorciato in silenzio.
+
+Il limite include il ragionamento del modello. Un limite più alto consente risposte più lunghe, ma non aggira mai un budget: prima di ogni richiesta, il controllo dei costi riserva esattamente questo valore.
+
+**Richiedi di nuovo le risposte troncate:** quando una risposta dell’architetto dei workflow raggiunge il suo limite, viene richiesta una volta con il limite raddoppiato, al massimo il *Limite massimo per un nuovo tentativo* (inizialmente 64.000) e il massimo del modello. Il nuovo tentativo viene inviato solo se il suo costo completo rientra in ciò che resta del budget del lavoro. Altrimenti, o con il nuovo tentativo disattivato, il lavoro si ferma con un messaggio che indica il passaggio e il suo limite.
+
 ## Sandbox {#sandbox}
 <!-- keywords: scegliere la sandbox, automatica, docker, processo python, docker disponibile, sandbox integrata, sandbox linux, macos, windows, bloccato, sperimentale -->
 

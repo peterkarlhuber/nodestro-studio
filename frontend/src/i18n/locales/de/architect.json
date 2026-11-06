@@ -269,6 +269,11 @@
     },
     "present": {
       "ready": "Der Entwurf ist bereit zur Prüfung."
+    },
+    "architect": {
+      "limit": "Ausgabelimit für „$t(modelParams.operation.{{operation}})“: {{max_tokens}} Tokens.",
+      "limit_reduced": "Ausgabelimit für „$t(modelParams.operation.{{operation}})“ von {{configured}} auf {{max_tokens}} Tokens gesenkt: Das Modell erlaubt nicht mehr.",
+      "truncated_retry": "Die Antwort wurde bei {{max_tokens}} Tokens abgeschnitten; neue Anfrage mit bis zu {{higher}} Tokens."
     }
   }
 }

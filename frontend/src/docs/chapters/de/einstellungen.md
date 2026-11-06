@@ -164,6 +164,17 @@ Das **Standardbudget pro Lauf** (anfangs 2 USD) gilt für alle Workflows ohne ei
 
 Administratoren legen außerdem das **Höchste Budget pro Lauf** fest (leer: keine Obergrenze): Kein Lauf darf damit starten oder darüber hinaus erhöht werden. Die **Frist für Budget-Entscheidungen** (1 bis 720 Stunden, anfangs 24) bestimmt, wie lange ein pausierter Lauf auf eine [Budget-Entscheidung](/docs/workflows#budget-freigabe) wartet, bevor er fehlschlägt. Wer entscheiden darf, steht unter [Wer entscheiden darf](/docs/workflows#budget-rechte).
 
+## Ausgabelimits der Modelle {#ausgabelimits}
+<!-- keywords: Ausgabelimit, max. Tokens, max_tokens, abgeschnitten, Architekt-Limit, Kontextfenster -->
+
+Nodestros eigene KI-Schritte (der Workflow-Architekt, die Assistenten, Fragen zu einem Lauf, Entscheidungen des Orchestrators und die Qualitätsprüfung) haben keine eigenen Agenteneinstellungen. Unter **Ausgabelimits der Modelle** legst du fest, mit wie vielen Tokens jeder Schritt antworten darf; ein leeres Feld verwendet die eingebaute Vorgabe (zum Beispiel 32.000 für den Workflow-Plan des Architekten und 8.000 für seine Analyse). Agenten behalten ihre eigenen *Max. Tokens* im [Agenten-Editor](/docs/agenten#limits).
+
+Der gesendete Wert ergibt sich aus drei Stufen: deiner Einstellung, sonst der Vorgabe, höchstens der dokumentierten maximalen Ausgabe des Modells (oder der Hälfte seines Kontextfensters bei einem lokalen Modell ohne bekanntes Maximum). Die Tabelle zeigt den Wert, der an das Assistenzmodell geht, und sagt, wenn er gesenkt wurde; nichts wird stillschweigend gekürzt.
+
+Das Limit schließt das Denken des Modells ein. Ein höheres Limit erlaubt längere Antworten, umgeht aber nie ein Budget: Vor jeder Anfrage reserviert die Kostenprüfung genau diesen Wert.
+
+**Abgeschnittene Antworten erneut anfordern:** Erreicht eine Antwort des Workflow-Architekten ihr Limit, wird sie einmal mit doppeltem Limit neu angefordert, höchstens mit dem *Höchsten Limit für eine Wiederholung* (anfangs 64.000) und dem Maximum des Modells. Die Wiederholung wird nur gesendet, wenn ihre vollen Kosten in das verbleibende Budget des Auftrags passen. Sonst, oder bei ausgeschalteter Wiederholung, endet der Auftrag mit einer Meldung, die den Schritt und sein Limit nennt.
+
 ## Sandbox {#sandbox}
 <!-- keywords: sandbox wählen, automatisch, docker, python prozess, docker verfügbar, eingebaute sandbox, linux sandbox, macos, windows, gesperrt, experimentell -->
 

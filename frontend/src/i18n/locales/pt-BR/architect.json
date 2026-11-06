@@ -269,6 +269,11 @@
     },
     "present": {
       "ready": "O rascunho está pronto para sua revisão."
+    },
+    "architect": {
+      "limit": "Limite de saída para “$t(modelParams.operation.{{operation}})”: {{max_tokens}} tokens.",
+      "limit_reduced": "Limite de saída para “$t(modelParams.operation.{{operation}})” reduzido de {{configured}} para {{max_tokens}} tokens: o modelo não permite mais.",
+      "truncated_retry": "A resposta foi cortada em {{max_tokens}} tokens; nova solicitação com até {{higher}} tokens."
     }
   }
 }

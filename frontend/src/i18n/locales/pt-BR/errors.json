@@ -56,7 +56,8 @@
     "unknown_tool": "A ferramenta desconhecida “{{name}}” foi deixada de fora.",
     "model_unavailable": "O modelo “{{model}}” não está disponível; foi escolhido {{chosen}}.",
     "server_tool_provider": "A ferramenta de servidor “{{name}}” foi deixada de fora: ela só está disponível para modelos da Anthropic.",
-    "judge_unsupported": "O modelo padrão “{{model}}” não consegue devolver o veredito estruturado de uma verificação de qualidade. Escolha outro juiz antes de ativar a verificação."
+    "judge_unsupported": "O modelo padrão “{{model}}” não consegue devolver o veredito estruturado de uma verificação de qualidade. Escolha outro juiz antes de ativar a verificação.",
+    "max_tokens_reduced": "O limite de resposta foi reduzido para {{max_tokens}} tokens, a saída máxima de {{model}}."
   },
   "config": {
     "library": "A configuração não segue as regras do motor de agentes Orkexa.",
@@ -94,7 +95,14 @@
     "model_missing": "Escolha um modelo.",
     "model_provider_missing": "O modelo “{{model}}” não tem provedor; escreva-o como provedor:modelo, por exemplo ollama:{{model}}.",
     "provider_mismatch": "Este acesso pertence a outro provedor e não pode executar um modelo de {{provider}}.",
-    "invalid": "A configuração {{name}} precisa ser um número positivo, por isso o Nodestro não a aplicou. Corrija o valor e inicie o Nodestro de novo."
+    "invalid": "A configuração {{name}} precisa ser um número positivo, por isso o Nodestro não a aplicou. Corrija o valor e inicie o Nodestro de novo.",
+    "option_unsupported": "“$t(modelParams.optionName.{{option}})” não pode ser usado com este modelo. Redefina a opção ou escolha outro modelo.",
+    "native_tool_unsupported": "A ferramenta do provedor “{{name}}” não pode ser usada com este modelo. Remova-a ou escolha outro modelo.",
+    "max_tokens_above_model": "O limite de resposta ({{max_tokens}} tokens) excede a saída máxima do modelo ({{maximum}} tokens). Reduza-o.",
+    "max_tokens_above_context": "O limite de resposta ({{max_tokens}} tokens) não deixa espaço para o prompt na janela de contexto do modelo ({{window}} tokens).",
+    "thinking_budget_with_effort": "Defina um esforço ou um orçamento de raciocínio, não os dois.",
+    "effort_adjusted": "O modelo não aceita o esforço “$t(agent.options.effort.{{effort}})”; “$t(agent.options.effort.{{used}})” é usado no lugar.",
+    "effort_dropped": "O modelo não aceita nenhuma configuração de esforço; “$t(agent.options.effort.{{effort}})” não é enviado. Volte o esforço para o padrão."
   },
   "workflow": {
     "edge_dangling": "Uma conexão aponta para um nó que não existe.",
@@ -335,7 +343,8 @@
     "local_max_tokens": "O limite de resposta deste agente ({{max_tokens}} tokens) não cabe na janela de contexto do servidor de modelos local ({{tokens}} tokens).",
     "local_reasoning_saving": "Neste computador sem placa de vídeo, estes agentes respondem sem a fase de raciocínio (esforço Médio): {{nodes}}. Escolha o esforço Alto para um agente ou desligue o modo de economia de CPU nas configurações.",
     "value_source_type": "{{field}} deve vir de uma ferramenta, mas só números de um resultado estruturado são verificados.",
-    "value_source_no_tool": "{{field}} deve vir de uma ferramenta, mas nem este agente nem uma etapa anterior tem uma ferramenta. Adicione uma ferramenta como a calculadora."
+    "value_source_no_tool": "{{field}} deve vir de uma ferramenta, mas nem este agente nem uma etapa anterior tem uma ferramenta. Adicione uma ferramenta como a calculadora.",
+    "orchestrator_model_unsupported": "O orquestrador “{{name}}” usa {{model}}, que não consegue retornar decisões estruturadas. Escolha outro modelo para ele."
   },
   "backup": {
     "not_zip": "O arquivo não é um backup do Nodestro (não é um ZIP).",
@@ -364,7 +373,9 @@
     "workflow_missing": "Para revisar é preciso o fluxo atual.",
     "not_ready": "Este rascunho não pode (mais) ser aceito.",
     "agents_capped_one": "{{count}} agente foi deixado de fora para manter o fluxo gerenciável.",
-    "agents_capped_other": "{{count}} agentes foram deixados de fora para manter o fluxo gerenciável."
+    "agents_capped_other": "{{count}} agentes foram deixados de fora para manter o fluxo gerenciável.",
+    "truncated": "A resposta da etapa “$t(modelParams.operation.{{operation}})” foi cortada no limite de saída ({{max_tokens}} tokens). Aumente o limite em Configurações > Limites de saída dos modelos ou descreva um fluxo de trabalho menor.",
+    "truncated_over_budget": "A resposta da etapa “$t(modelParams.operation.{{operation}})” foi cortada no limite de saída. Uma nova tentativa com até {{max_tokens}} tokens poderia custar mais do que resta do orçamento da tarefa ({{budget}} USD), por isso não foi enviada. Aumente o orçamento ou o limite de saída da etapa."
   },
   "tool_draft": {
     "name_taken": "Já existe uma ferramenta chamada {{name}}.",
@@ -749,7 +760,9 @@
     "aws_rate_limited": "A AWS informou solicitações demais. Tente de novo mais tarde.",
     "aws_unreachable": "Não foi possível acessar o Amazon Bedrock nesta região (rede, proxy ou nome da região).",
     "aws_verification_failed": "A verificação de conexão com a AWS falhou.",
-    "model_invalid": "Este modelo não pertence a {{provider}}; verifique só um ID de modelo do Bedrock, um perfil de inferência ou um ARN."
+    "model_invalid": "Este modelo não pertence a {{provider}}; verifique só um ID de modelo do Bedrock, um perfil de inferência ou um ARN.",
+    "limit_unknown": "Limites desconhecidos: {{names}}.",
+    "limit_invalid": "{{name}} deve ser um número inteiro de {{min}} a {{max}}."
   },
   "access": {
     "login_required": "Faça login para usar esta parte do Nodestro.",
@@ -1036,5 +1049,9 @@
     "too_many_inputs": "Trechos demais de uma vez para o modelo de embeddings.",
     "query_too_long": "O texto de busca é longo demais: no máximo {{max}} caracteres são pesquisados. Encurte-o e pesquise novamente.",
     "hits_out_of_range": "Uma busca retorna entre 1 e {{max}} resultados. Escolha um número nesse intervalo."
+  },
+  "settings": {
+    "output_limit_unknown": "Etapas desconhecidas: {{names}}.",
+    "output_limit_invalid": "O limite de saída de “$t(modelParams.operation.{{operation}})” deve ser um número inteiro de {{min}} a {{max}}."
   }
 }

@@ -111,6 +111,16 @@ describe("counted texts", () => {
     "localModels.advice.model_slow",
     "localModels.speed.value",
     "localModels.speed.prompt",
+    // Output limits of models and operations: thousands of tokens (at least 256), never one.
+    "architect.log.architect.limit",
+    "architect.log.architect.limit_reduced",
+    "architect.log.architect.truncated_retry",
+    "errors.draft.max_tokens_reduced",
+    "errors.config.max_tokens_above_model",
+    "errors.config.max_tokens_above_context",
+    "errors.architect.truncated",
+    "errors.architect.truncated_over_budget",
+    "modelParams.limits.contextWindow",
   ]);
 
   it("have plural forms in English", () => {

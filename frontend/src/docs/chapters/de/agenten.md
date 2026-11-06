@@ -27,7 +27,7 @@ Das Modell bestimmt Fähigkeiten, Geschwindigkeit und Preis. Wähle zuerst den *
 - **Opus 5.5** für anspruchsvolles Denken, Planung, Code und lange Aufgaben mit vielen Tools.
 - **Fable 5.1** für die schwierigsten Aufgaben, wenn Qualität wichtiger ist als Kosten.
 
-Das Standardmodell für neue Agenten legst du in den [Einstellungen](/docs/einstellungen#modelle) fest, die Zugänge der Anbieter unter [KI-Anbieter](/docs/einstellungen#anbieter). Einige Optionen gibt es nur bei Modellen von Anthropic: Thinking und Gedanken anzeigen, Prompt-Caching, Ausweichmodelle und Server-Tools. Bei anderen Anbietern blendet der Inspektor sie aus; ist eine davon noch gesetzt, meldet die Prüfung einen Fehler, statt sie stillschweigend wegzulassen.
+Das Standardmodell für neue Agenten legst du in den [Einstellungen](/docs/einstellungen#modelle) fest, die Zugänge der Anbieter unter [KI-Anbieter](/docs/einstellungen#anbieter). Einige Optionen hängen vom Modell ab, nicht nur vom Anbieter: Thinking und Gedanken anzeigen, das Denkbudget, Prompt-Caching, Ausweichmodelle, Server-Tools und die Aufwandsstufen. Der Inspektor zeigt sie, wo das gewählte Modell sie unterstützt, und nennt sonst den Grund (zum Beispiel *für Modelle dieses Anbieters nicht verfügbar*, *der Anbieter erledigt das automatisch* oder *für dieses Modell nicht dokumentiert*). Ist eine solche Option nach einem Modellwechsel noch gesetzt, bleibt sie neben dem Grund sichtbar, und die Prüfung meldet einen Fehler, statt sie stillschweigend wegzulassen.
 
 **Amazon Bedrock:** Modell-IDs gehen genau so weiter, wie du sie eingibst, mit Doppelpunkten und Schrägstrichen: `bedrock:anthropic.claude-sonnet-4-5-20250929-v1:0`, `bedrock:eu.anthropic.claude-sonnet-5-5` oder ein ARN wie `bedrock:arn:aws:bedrock:eu-central-1:111122223333:application-inference-profile/abc`. Nur der erste Doppelpunkt trennt den Anbieter ab. Die Modelle der Liste sind Vorschläge, keine für dein Konto aktivierten Modelle. Claude auf Bedrock ist ein eigener Anbieter: Die Anthropic-Optionen oben bleiben auch dafür aus, und Optionen wie strukturierte Ausgabe oder Denkaufwand folgen dem, was das Modell auf Bedrock unterstützt (unbekannt bei einem eingegebenen ARN). Siehe [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
 
@@ -57,7 +57,7 @@ Steht in der Aufgabe kein Platzhalter, weist der Inspektor darauf hin: Die Ergeb
 
 Im Abschnitt **Tools** wählst du aus der Tool-Bibliothek, welche Funktionen der Agent aufrufen darf. Die Liste ist nach *Eingebaut*, *Eigene* und *KI-generiert* gruppiert; beim Darüberfahren erscheint die Beschreibung.
 
-Darunter schaltest du die **Server-Tools von Anthropic** ein: *Websuche*, *Web-Abruf* und *Code-Ausführung*. Sie laufen auf den Servern von Anthropic (siehe [Server-Tools](/docs/tools#server-tools)). Server-Tools gibt es nur bei Modellen von Anthropic.
+Darunter schaltest du die **Server-Tools von Anthropic** ein: *Websuche*, *Web-Abruf* und *Code-Ausführung*. Sie laufen auf den Servern von Anthropic (siehe [Server-Tools](/docs/tools#server-tools)). Sie werden angeboten, wo der Anbieter des Modells sie ausführt; heute sind das Modelle von Anthropic. OpenAI und Google Gemini haben ähnliche eigene Werkzeuge, deren Gebühren aber noch nicht im Preiskatalog stehen, sodass sich die Kosten nicht schätzen oder begrenzen ließen: Der Inspektor zeigt sie mit diesem Grund als nicht verfügbar.
 
 Der Agent entscheidet selbst, ob und wann er ein Tool aufruft, anhand des Namens und der Beschreibung. Wie oft er das darf, steuern [Max. Tool-Runden und Parallele Tools](/docs/agenten#limits); ob er muss, steuert [Tool-Choice](/docs/agenten#tool-choice).
 
@@ -143,6 +143,8 @@ Gedanken zählen zu den **Ausgabetokens** und werden entsprechend berechnet.
 
 Ist bei einem Modell unbekannt, ob es Denkaufwand unterstützt (eigene Server, unbekannte Modell-IDs), führt ein gesetzter Aufwand zu einem Fehler. Wähle dann *Modellstandard* oder gib die Fähigkeit unter [KI-Anbieter](/docs/einstellungen#anbieter) an. OpenAI-kompatible Endpunkte (etwa Ollama oder vLLM) nehmen gar keine Aufwand-Einstellung an; die Prüfung erklärt das und stellt mit **Aufwand auf Modellstandard setzen** den Agenten mit einem Klick um.
 
+**Denkbudget** (nur Gemini-2.5-Modelle) legt fest, wie viele Tokens das Modell vor der Antwort zum Denken verwenden darf; leer überlässt es dem Modell, 0 schaltet das Denken aus, wo das Modell es erlaubt. Es ersetzt den Aufwand: Stelle den Aufwand auf *Modellstandard*, um es zu nutzen. Nimmt ein Modell die gewählte Aufwandsstufe nicht an (zum Beispiel *Sehr hoch* bei Claude Sonnet 4.6 oder jede Stufe bei Claude Haiku 4.5), warnt die Prüfung und nennt die Stufe, die stattdessen gesendet wird.
+
 ## Qualitätsprüfung {#qualitaet}
 <!-- keywords: qualitätsprüfung, judge, evaluator, kriterien, überarbeitung, refine, llm as a judge, bewertung -->
 
@@ -164,7 +166,7 @@ Das Ergebnis der Prüfung steht in der Ausführung beim Agenten: bestanden oder 
 
 | Einstellung | Standard | Wirkung |
 |---|---|---|
-| **Max. Tokens** | 8.000 | Höchstzahl an Ausgabetokens pro Antwort, inklusive Denken (bis 128.000). Ist sie erreicht, bricht der Agent mit `IncompleteResponseError` ab. |
+| **Max. Tokens** | 8.000 | Höchstzahl an Ausgabetokens pro Antwort, inklusive Denken (bis zum dokumentierten Maximum des Modells, z. B. 128.000 bei Claude Opus 5.5 und 64.000 bei Claude Haiku 4.5; der Inspektor zeigt es neben dem Feld). Ist sie erreicht, bricht der Agent mit `IncompleteResponseError` ab. |
 | **Max. Tool-Runden** | 8 | Wie viele Runden aus Tool-Aufrufen der Agent pro Aufgabe machen darf (0–50). Danach endet er mit `MaxToolRoundsError`. Bei 0 darf er gar keine Tools aufrufen. |
 | **Parallele Tools** | 1 | Wie viele Tool-Aufrufe einer Antwort gleichzeitig ausgeführt werden (1–16). Sinnvoll bei langsamen, unabhängigen Tools wie Websuchen. |
 

@@ -27,7 +27,7 @@ Le modèle détermine les capacités, la vitesse et le prix. Choisissez d’abor
 - **Opus 5.5** pour le raisonnement exigeant, la planification, le code et les longues tâches avec beaucoup d’outils.
 - **Fable 5.1** pour les tâches les plus difficiles, quand la qualité compte plus que le coût.
 
-Le modèle par défaut des nouveaux agents se définit dans les [réglages](/docs/einstellungen#modelle), l’accès aux fournisseurs sous [Fournisseurs d’IA](/docs/einstellungen#anbieter). Certaines options n’existent que pour les modèles d’Anthropic : la réflexion et son affichage, le cache des prompts, les modèles de repli et les outils serveur. Pour les autres fournisseurs, l’inspecteur les masque ; si l’une d’elles est encore définie, la vérification signale une erreur au lieu de l’omettre en silence.
+Le modèle par défaut des nouveaux agents se définit dans les [réglages](/docs/einstellungen#modelle), l’accès aux fournisseurs sous [Fournisseurs d’IA](/docs/einstellungen#anbieter). Certaines options dépendent du modèle, pas seulement du fournisseur : la réflexion et son affichage, le budget de réflexion, le cache des prompts, les modèles de repli, les outils serveur et les niveaux d’effort. L’inspecteur les affiche lorsque le modèle choisi les prend en charge et indique sinon la raison (par exemple *non disponible pour les modèles de ce fournisseur*, *le fournisseur le fait automatiquement* ou *non documenté pour ce modèle*). Si une telle option est encore définie après un changement de modèle, elle reste visible à côté de la raison et la vérification signale une erreur au lieu de l’omettre en silence.
 
 **Amazon Bedrock :** les identifiants de modèle sont transmis tels que vous les saisissez, deux-points et barres obliques compris : `bedrock:anthropic.claude-sonnet-4-5-20250929-v1:0`, `bedrock:eu.anthropic.claude-sonnet-5-5` ou un ARN comme `bedrock:arn:aws:bedrock:eu-central-1:111122223333:application-inference-profile/abc`. Seul le premier deux-points sépare le fournisseur. Les modèles de la liste sont des suggestions, pas des modèles activés pour votre compte. Claude sur Bedrock est un fournisseur à part : les options réservées à Anthropic ci-dessus restent désactivées pour lui aussi, et des options comme la sortie structurée ou l’effort de raisonnement suivent ce que le modèle prend en charge sur Bedrock (inconnu pour un ARN saisi). Voir [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
 
@@ -57,7 +57,7 @@ Si la tâche ne contient aucun espace réservé, l’inspecteur le signale : les
 
 Dans la section **Outils**, vous choisissez dans la bibliothèque d’outils les fonctions que l’agent peut appeler. La liste est groupée en *Intégrés*, *Personnels* et *Générés par l’IA* ; la description apparaît au survol.
 
-En dessous, vous activez les **outils serveur d’Anthropic** : *Recherche web*, *Récupération web* et *Exécution de code*. Ils s’exécutent sur les serveurs d’Anthropic (voir [Outils serveur](/docs/tools#server-tools)). Les outils serveur ne sont disponibles que pour les modèles d’Anthropic.
+En dessous, vous activez les **outils serveur d’Anthropic** : *Recherche web*, *Récupération web* et *Exécution de code*. Ils s’exécutent sur les serveurs d’Anthropic (voir [Outils serveur](/docs/tools#server-tools)). Ils sont proposés lorsque le fournisseur du modèle les exécute ; aujourd’hui, ce sont les modèles d’Anthropic. OpenAI et Google Gemini ont des outils similaires, mais leurs frais ne figurent pas encore dans le catalogue de prix, si bien que les coûts ne pourraient être ni estimés ni plafonnés : l’inspecteur les affiche comme non disponibles avec cette raison.
 
 L’agent décide lui-même s’il appelle un outil et quand, d’après son nom et sa description. Le nombre d’appels permis dépend de [Tours d’outils max. et Outils en parallèle](/docs/agenten#limits) ; l’obligation d’appeler dépend du [Tool choice](/docs/agenten#tool-choice).
 
@@ -143,6 +143,8 @@ Les **modèles locaux à réflexion** (Ollama) n’ont pas de niveaux d’effort
 
 Si l’on ne sait pas si un modèle prend en charge l’effort de raisonnement (vos propres serveurs, identifiants de modèle inconnus), un effort défini provoque une erreur. Choisissez alors *Valeur par défaut du modèle* ou déclarez la capacité sous [Fournisseurs d’IA](/docs/einstellungen#anbieter). Les points d’accès compatibles OpenAI (comme Ollama ou vLLM) n’acceptent aucun réglage d’effort ; la vérification l’explique, et **Régler l’effort sur la valeur du modèle** modifie l’agent en un clic.
 
+**Budget de réflexion** (modèles Gemini 2.5 uniquement) fixe le nombre de tokens que le modèle peut consacrer à la réflexion avant de répondre ; vide, le modèle décide, 0 désactive la réflexion lorsque le modèle le permet. Il remplace l’effort : réglez l’effort sur *Valeur du modèle* pour l’utiliser. Si un modèle n’accepte pas le niveau d’effort choisi (par exemple *Très élevé* avec Claude Sonnet 4.6, ou n’importe quel niveau avec Claude Haiku 4.5), la vérification vous avertit et indique le niveau envoyé à la place.
+
 ## Contrôle qualité {#qualitaet}
 <!-- keywords: contrôle qualité, juge, judge, évaluateur, critères, révision, refine, llm as a judge, évaluation -->
 
@@ -164,7 +166,7 @@ Le résultat du contrôle figure dans l’exécution à côté de l’agent : r�
 
 | Réglage | Par défaut | Effet |
 |---|---|---|
-| **Tokens max.** | 8 000 | Nombre maximal de tokens de sortie par réponse, réflexion comprise (jusqu’à 128 000). S’il est atteint, l’agent s’arrête avec `IncompleteResponseError`. |
+| **Tokens max.** | 8 000 | Nombre maximal de tokens de sortie par réponse, réflexion comprise (jusqu’au maximum documenté du modèle, par exemple 128 000 pour Claude Opus 5.5 et 64 000 pour Claude Haiku 4.5 ; l’inspecteur l’affiche à côté du champ). S’il est atteint, l’agent s’arrête avec `IncompleteResponseError`. |
 | **Tours d’outils max.** | 8 | Nombre de tours d’appels d’outils que l’agent peut faire par tâche (0 à 50). Ensuite, il se termine avec `MaxToolRoundsError`. À 0, il ne peut appeler aucun outil. |
 | **Outils en parallèle** | 1 | Nombre d’appels d’outils d’une réponse exécutés simultanément (1 à 16). Utile pour les outils lents et indépendants comme les recherches web. |
 

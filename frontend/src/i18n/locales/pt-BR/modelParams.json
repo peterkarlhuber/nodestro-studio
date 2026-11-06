@@ -1,0 +1,83 @@
+{
+  "reason": {
+    "provider": "Não disponível para modelos deste provedor.",
+    "model": "Este modelo não oferece suporte a isso.",
+    "automatic": "O provedor faz isso automaticamente para este modelo; não há nada a ajustar.",
+    "not_mapped": "O provedor tem um recurso parecido, mas o Nodestro ainda não o oferece como esta opção.",
+    "unknown": "Não está documentado se este modelo oferece suporte a isso."
+  },
+  "nativeTool": {
+    "provider": "{{tool}}: não disponível para modelos deste provedor.",
+    "not_integrated": "{{tool}}: o provedor oferece uma ferramenta assim, mas o Nodestro ainda não a usa porque as tarifas dela não podem ser calculadas nem limitadas.",
+    "capability": "{{tool}}: este modelo não pode usar as ferramentas próprias do provedor."
+  },
+  "optionName": {
+    "thinking": "Raciocínio",
+    "thinking_display": "Mostrar raciocínio",
+    "thinking_budget": "Orçamento de raciocínio",
+    "cache_control": "Cache de prompts",
+    "cache_ttl": "Duração do cache",
+    "fallbacks": "Modelos alternativos"
+  },
+  "thinkingBudget": {
+    "label": "Orçamento de raciocínio (tokens)",
+    "hint": "Quantos tokens o modelo pode usar para raciocinar antes de responder. Vazio: o modelo decide. 0 desativa o raciocínio onde o modelo permite. Tokens de raciocínio contam para o máx. de tokens.",
+    "placeholder": "Padrão do modelo"
+  },
+  "limits": {
+    "maxOutput": "Máximo do modelo: {{tokens}} tokens de saída",
+    "contextWindow": "janela de contexto: {{tokens}} tokens",
+    "unknown": "A saída máxima do modelo não está documentada; o provedor decide.",
+    "source": {
+      "documented": "documentado",
+      "declared": "informado nas configurações",
+      "unknown": "desconhecido"
+    }
+  },
+  "operation": {
+    "architect_analysis": "Arquiteto: análise de requisitos",
+    "architect_plan": "Arquiteto: plano do fluxo de trabalho",
+    "architect_agent": "Arquiteto: configuração dos agentes",
+    "architect_repair": "Arquiteto: correção",
+    "tool_generation": "Criação de ferramentas (Coding Agent)",
+    "assistant_chat": "Chat do assistente",
+    "agent_design": "Criação de agentes",
+    "memory_proposal": "Sugestão de memória",
+    "api_guide": "Guia da API",
+    "run_chat": "Perguntas sobre uma execução",
+    "orchestrator": "Decisões do orquestrador",
+    "quality_judge": "Verificação de qualidade (avaliador)"
+  },
+  "settings": {
+    "title": "Limites de saída dos modelos",
+    "intro": "Com quantos tokens, no máximo, as etapas de IA do próprio Nodestro podem responder. Deixe um campo vazio para usar o padrão. Os agentes têm seu próprio limite no editor de agentes (Máx. de tokens).",
+    "budgetNote": "O limite inclui o raciocínio do modelo. Um limite maior permite respostas mais longas, mas nunca contorna um orçamento: a verificação de custos reserva exatamente esse valor antes de cada solicitação.",
+    "modelMaximum": "Modelo do assistente {{model}}: no máximo {{tokens}} tokens de saída.",
+    "modelMaximumUnknown": "A saída máxima do modelo do assistente {{model}} não está documentada; os valores são enviados como definidos.",
+    "group": {
+      "architect": "Arquiteto de fluxos de trabalho",
+      "assistants": "Assistentes",
+      "runs": "Execuções"
+    },
+    "column": {
+      "operation": "Etapa",
+      "limit": "Limite (tokens)",
+      "sent": "Enviado ao modelo"
+    },
+    "inputLabel": "Limite de saída de {{operation}}",
+    "reset": "Restaurar o padrão de {{operation}}",
+    "invalid": "Digite um número inteiro de {{min}} a {{max}}.",
+    "default": "Padrão",
+    "defaultIs": "Padrão: {{tokens}}",
+    "perModel": "{{tokens}}, no máximo o máximo do modelo usado",
+    "reduced": {
+      "model_maximum": "Reduzido à saída máxima do modelo.",
+      "context_window": "Reduzido à metade da janela de contexto do modelo."
+    },
+    "retry": "Pedir novamente respostas cortadas",
+    "retryHint": "Quando uma resposta do arquiteto de fluxos de trabalho atinge o limite, ela é pedida mais uma vez com o limite dobrado (no máximo o valor abaixo e o máximo do modelo). A nova tentativa só é enviada se o custo total couber no orçamento restante da tarefa.",
+    "retryMax": "Limite máximo para uma nova tentativa (tokens)",
+    "retryMaxHint": "De 1.024 a 1.000.000 tokens.",
+    "fixInvalid": "Alguns valores estão fora do intervalo permitido ({{min}} a {{max}} tokens). Corrija-os para salvar."
+  }
+}
