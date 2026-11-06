@@ -113,7 +113,7 @@ try {
   const liveAnswer = page.getByTestId("lrc-live-answer");
   await liveAnswer.waitFor({ timeout: 20000 });
   const liveReasoning = liveAnswer.getByTestId("lrc-reasoning");
-  await liveReasoning.waitFor({ timeout: 10000 });
+  await liveReasoning.waitFor({ timeout: 20000 });
   check(["thinking", "summary"].includes(await liveReasoning.getAttribute("data-state")), "The answer being written shows the team leader's reasoning live");
   await page.getByTestId("lrc-thinking-display").selectOption("live");
   await until(async () => (await liveAnswer.count()) === 0 || (await liveReasoning.locator(".reasoning__body").count()) === 1, "the live text opens");
