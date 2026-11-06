@@ -13,6 +13,7 @@
 //   highlights the hit; says when nothing matches.
 // - The settings entry in the top bar: one entry, tooltip, return to the previous page, Ctrl+, there and back,
 //   unsaved "Models and budget" edits ask before they are left.
+// - Retention of assistant chat files (API-056): set, refused, kept after a reload, cleared; phone width in light and dark.
 // - "Changed" marks (ST-059): a value that differs from GET /api/settings/defaults is marked, Reset restores the
 //   default (into the input, or saved at once), keyboard, phone width in light and dark, and no marks and no error on
 //   an API without the route.
@@ -486,6 +487,67 @@ try {
     // The browser itself logs the refused request; that is the simulated old API, not a fault of the page.
     errors.splice(before, errors.length - before, ...errors.slice(before).filter((message) => !message.includes("404")));
     await context.close();
+  }
+
+  // ---- 6. Retention of assistant chat files (nodestro-api API-056) -------------------------------------------------
+  {
+    const { context, page } = await open({ viewport: { width: 1440, height: 900 } });
+    await page.goto(`${base}/settings`);
+    await page.locator("#settings-about").waitFor();
+    const field = page.getByTestId("assistant-retention");
+    if ((await page.request.get(`${base}/api/assistant/files/retention`)).status() === 404) {
+      check((await field.count()) === 0, "retention: an API without the route shows no field");
+      await context.close();
+    } else {
+      await field.scrollIntoViewIfNeeded();
+      const days = page.getByRole("spinbutton", { name: "Keep assistant chat files (days)" });
+      const save = page.getByTestId("assistant-retention-save");
+      check((await days.inputValue()) === "" && (await save.isDisabled()), "retention: empty (keep with the conversation) and nothing to save");
+      await days.fill("0");
+      await page.getByText("Enter whole days from 1 to 3650, or leave the field empty.").waitFor();
+      check(await save.isDisabled(), "retention: 0 days is refused with a sentence");
+      await days.fill("30");
+      await Promise.all([
+        page.waitForResponse((response) => response.url().endsWith("/api/assistant/files/retention") && response.request().method() === "PUT"),
+        save.click(),
+      ]);
+      await page.reload();
+      await days.waitFor();
+      check((await days.inputValue()) === "30", "retention: a saved period stays after a reload");
+      await days.fill("");
+      await Promise.all([
+        page.waitForResponse((response) => response.url().endsWith("/api/assistant/files/retention") && response.request().method() === "PUT"),
+        save.click(),
+      ]);
+      const stored = await (await page.request.get(`${base}/api/assistant/files/retention`)).json();
+      check(stored.retention_days === null, "retention: clearing the field keeps the files with their conversation again");
+      await context.close();
+      for (const [name, options] of [
+        ["phone, dark", { viewport: { width: 390, height: 844 }, colorScheme: "dark" }],
+        ["phone, light", { viewport: { width: 390, height: 844 }, colorScheme: "light" }],
+      ]) {
+        const phone = await open(options);
+        await phone.page.goto(`${base}/settings`);
+        const box = phone.page.getByTestId("assistant-retention");
+        await box.waitFor();
+        await box.scrollIntoViewIfNeeded();
+        const state = await box.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const hint = element.querySelector(".field__hint, .small, p") ?? element;
+          let background = "rgba(0, 0, 0, 0)";
+          for (let node = hint; node && background === "rgba(0, 0, 0, 0)"; node = node.parentElement) background = getComputedStyle(node).backgroundColor;
+          return {
+            inside: rect.left >= 0 && rect.right <= window.innerWidth,
+            scroll: document.documentElement.scrollWidth > window.innerWidth,
+            text: [getComputedStyle(hint).color, background],
+          };
+        });
+        check(state.inside && !state.scroll, `retention (${name}): the field fits the window, no horizontal scrolling`);
+        check(contrast(...state.text) >= 4.5, `retention (${name}): the hint is readable (contrast ≥ 4.5)`);
+        await shot(phone.page, `settings-retention-${name.replace(/\W+/g, "-")}`);
+        await phone.context.close();
+      }
+    }
   }
 
   check(errors.length === 0, `no browser errors (${errors.join(" | ")})`);

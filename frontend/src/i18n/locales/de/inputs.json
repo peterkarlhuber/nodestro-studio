@@ -210,7 +210,9 @@
     "cleanOld": "Entfernen",
     "cleaned_one": "{{count}} Datei entfernt ({{size}} frei).",
     "cleaned_other": "{{count}} Dateien entfernt ({{size}} frei).",
-    "safe": "Dateien, die Testfälle, Zeitpläne oder Stapel noch brauchen, bleiben erhalten."
+    "safe": "Dateien, die Testfälle, Zeitpläne oder Stapel noch brauchen, bleiben erhalten.",
+    "assistantExpired_one": "{{count}} Chat-Datei des Assistenten nach Ablauf der Aufbewahrung entfernt.",
+    "assistantExpired_other": "{{count}} Chat-Dateien des Assistenten nach Ablauf der Aufbewahrung entfernt."
   },
   "collections": {
     "title": "Sammlungen",
@@ -223,5 +225,15 @@
     "label": "Beispieldateien des Beispiels:",
     "use": "{{name}} verwenden",
     "used": "{{name}} hinzugefügt"
+  },
+  "retention": {
+    "label": "Chat-Dateien des Assistenten behalten (Tage)",
+    "hint": "Leer: so lange wie ihr Gespräch. Ältere Chat-Dateien entfernt die Bereinigung oben und in der Desktop-App jede Stunde; Gespräche und Nachrichten bleiben.",
+    "placeholder": "Behalten",
+    "invalid": "Gib ganze Tage von 1 bis 3650 ein oder lass das Feld leer.",
+    "keep": "so lange wie ihr Gespräch",
+    "days_one": "{{count}} Tag",
+    "days_other": "{{count}} Tage",
+    "readonly": "Aufbewahrung der Chat-Dateien des Assistenten: {{period}}."
   }
 }

@@ -210,7 +210,9 @@
     "cleanOld": "Eliminar",
     "cleaned_one": "{{count}} archivo eliminado ({{size}} liberados).",
     "cleaned_other": "{{count}} archivos eliminados ({{size}} liberados).",
-    "safe": "Se conservan los archivos que aún necesitan casos de prueba, programaciones o lotes."
+    "safe": "Se conservan los archivos que aún necesitan casos de prueba, programaciones o lotes.",
+    "assistantExpired_one": "{{count}} archivo del chat del asistente eliminado por superar su plazo de conservación.",
+    "assistantExpired_other": "{{count}} archivos del chat del asistente eliminados por superar su plazo de conservación."
   },
   "collections": {
     "title": "Colecciones",
@@ -223,5 +225,15 @@
     "label": "Archivos de ejemplo:",
     "use": "Usar {{name}}",
     "used": "{{name}} añadido"
+  },
+  "retention": {
+    "label": "Conservar archivos del chat del asistente (días)",
+    "hint": "Vacío: mientras exista su conversación. La limpieza de arriba y, en la app de escritorio, una pasada cada hora eliminan los archivos más antiguos; las conversaciones y los mensajes se mantienen.",
+    "placeholder": "Conservar",
+    "invalid": "Introduce días enteros de 1 a 3650 o deja el campo vacío.",
+    "keep": "mientras exista su conversación",
+    "days_one": "{{count}} día",
+    "days_other": "{{count}} días",
+    "readonly": "Conservación de los archivos del chat del asistente: {{period}}."
   }
 }

@@ -135,7 +135,8 @@
     "revision_invalid": "Ao salvar, foi indicada uma versão desconhecida do fluxo de trabalho. Recarregue a página e salve de novo.",
     "conflict": "O fluxo de trabalho “{{name}}” foi alterado desde que você o abriu. Recarregue-o para ver a versão mais recente.",
     "runs_active": "Ainda há execuções deste fluxo de trabalho em andamento. Exclua-o quando elas tiverem terminado ou sido canceladas.",
-    "not_found": "Este fluxo de trabalho não existe mais; talvez tenha sido excluído nesse meio-tempo. Recarregue a página para ver os fluxos de trabalho atuais."
+    "not_found": "Este fluxo de trabalho não existe mais; talvez tenha sido excluído nesse meio-tempo. Recarregue a página para ver os fluxos de trabalho atuais.",
+    "not_found_named": "O fluxo de trabalho “{{display}}” não existe mais; talvez tenha sido excluído nesse meio-tempo. Recarregue a página para ver os fluxos de trabalho atuais."
   },
   "run": {
     "failed": "A etapa falhou.",
@@ -202,7 +203,8 @@
     "value_unverified": "O indicador-chave {{field}} ({{value}}) não foi calculado com uma ferramenta, nem depois de uma correção. A etapa foi interrompida para que nenhuma decisão se baseie em um número não verificado.",
     "local_model_missing": "O modelo local {{model}} não está instalado no servidor de modelos.",
     "provider_rejected_messages": "{{provider}} recusou a conversa desta etapa (status {{status}}): uma de suas mensagens tem um formato que o provedor não aceita. A causa não é o seu fluxo de trabalho nem a sua entrada.",
-    "provider_context_exceeded": "A conversa desta etapa é maior que a janela de contexto que {{provider}} dá ao modelo."
+    "provider_context_exceeded": "A conversa desta etapa é maior que a janela de contexto que {{provider}} dá ao modelo.",
+    "not_found_named": "A execução “{{display}}” não existe mais; talvez tenha sido excluída nesse meio-tempo. Recarregue a página para ver as execuções atuais."
   },
   "budget": {
     "not_starter": "Só a pessoa que iniciou a execução ou um administrador pode decidir sobre o orçamento dela.",
@@ -650,7 +652,8 @@
     "not_found": "Este fluxo de trabalho publicado não existe mais; talvez sua API tenha sido retirada ou excluída nesse meio-tempo. Recarregue a página para ver as publicações atuais.",
     "dependencies_changed": "As bibliotecas Python aprovadas mudaram desde a publicação; publique novamente.",
     "dependencies_unavailable": "As bibliotecas Python desta API não estão prontas.",
-    "slug_taken": "Outro fluxo de trabalho publicado já usa o nome {{slug}}. Escolha outro nome."
+    "slug_taken": "Outro fluxo de trabalho publicado já usa o nome {{slug}}. Escolha outro nome.",
+    "not_found_named": "O fluxo de trabalho publicado “{{display}}” não existe mais; talvez sua API tenha sido retirada ou excluída nesse meio-tempo. Recarregue a página para ver as publicações atuais."
   },
   "limit": {
     "concurrent": "Execuções simultâneas demais (limite {{limit}}); tente de novo quando uma terminar.",
@@ -677,7 +680,8 @@
     "disabled": "Aguardar o resultado não está ativado para esta API."
   },
   "idempotency": {
-    "conflict": "Esta Idempotency-Key foi usada para outra requisição."
+    "conflict": "Esta Idempotency-Key foi usada para outra requisição.",
+    "in_progress": "Uma requisição com esta Idempotency-Key ainda está iniciando sua execução. Tente de novo em um instante; a nova tentativa retornará essa execução."
   },
   "release": {
     "invalid": "A versão publicada não pode ser executada; publique-a novamente."

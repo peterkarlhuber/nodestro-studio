@@ -135,7 +135,8 @@
     "revision_invalid": "Al guardar se indicó una versión desconocida del flujo de trabajo. Recarga la página y vuelve a guardar.",
     "conflict": "El flujo de trabajo «{{name}}» cambió desde que lo abriste. Recárgalo para ver la versión más reciente.",
     "runs_active": "Todavía hay ejecuciones de este flujo de trabajo en curso. Elimínalo cuando hayan terminado o se hayan cancelado.",
-    "not_found": "Este flujo de trabajo ya no existe; puede que se haya eliminado entretanto. Recarga la página para ver los flujos de trabajo actuales."
+    "not_found": "Este flujo de trabajo ya no existe; puede que se haya eliminado entretanto. Recarga la página para ver los flujos de trabajo actuales.",
+    "not_found_named": "El flujo de trabajo «{{display}}» ya no existe; puede que se haya eliminado entretanto. Recarga la página para ver los flujos de trabajo actuales."
   },
   "run": {
     "failed": "El paso ha fallado.",
@@ -202,7 +203,8 @@
     "value_unverified": "La cifra clave {{field}} ({{value}}) no se calculó con una herramienta, ni siquiera tras una corrección. El paso se detuvo para que ninguna decisión se base en una cifra sin comprobar.",
     "local_model_missing": "El modelo local {{model}} no está instalado en el servidor de modelos.",
     "provider_rejected_messages": "{{provider}} rechazó la conversación de este paso (estado {{status}}): uno de sus mensajes tiene una forma que el proveedor no acepta. No se debe a tu flujo de trabajo ni a tu entrada.",
-    "provider_context_exceeded": "La conversación de este paso es más grande que la ventana de contexto que {{provider}} da al modelo."
+    "provider_context_exceeded": "La conversación de este paso es más grande que la ventana de contexto que {{provider}} da al modelo.",
+    "not_found_named": "La ejecución «{{display}}» ya no existe; puede que se haya eliminado entretanto. Recarga la página para ver las ejecuciones actuales."
   },
   "budget": {
     "not_starter": "Solo la persona que inició la ejecución o un administrador puede decidir sobre su presupuesto.",
@@ -650,7 +652,8 @@
     "not_found": "Este flujo de trabajo publicado ya no existe; puede que su API se haya retirado o eliminado entretanto. Recarga la página para ver las publicaciones actuales.",
     "dependencies_changed": "Las bibliotecas de Python aprobadas cambiaron desde la publicación; vuelve a publicar.",
     "dependencies_unavailable": "Las bibliotecas de Python de esta API no están listas.",
-    "slug_taken": "Otro flujo de trabajo publicado ya usa el nombre {{slug}}. Elige otro nombre."
+    "slug_taken": "Otro flujo de trabajo publicado ya usa el nombre {{slug}}. Elige otro nombre.",
+    "not_found_named": "El flujo de trabajo publicado «{{display}}» ya no existe; puede que su API se haya retirado o eliminado entretanto. Recarga la página para ver las publicaciones actuales."
   },
   "limit": {
     "concurrent": "Demasiadas ejecuciones simultáneas (límite {{limit}}); inténtalo de nuevo cuando termine alguna.",
@@ -677,7 +680,8 @@
     "disabled": "Esperar el resultado no está activado para esta API."
   },
   "idempotency": {
-    "conflict": "Esta Idempotency-Key se usó para otra solicitud."
+    "conflict": "Esta Idempotency-Key se usó para otra solicitud.",
+    "in_progress": "Una solicitud con esta Idempotency-Key todavía está iniciando su ejecución. Inténtalo de nuevo en un momento; el reintento devolverá esa ejecución."
   },
   "release": {
     "invalid": "La versión publicada no puede ejecutarse; vuelve a publicarla."

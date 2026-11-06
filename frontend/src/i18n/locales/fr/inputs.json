@@ -210,7 +210,9 @@
     "cleanOld": "Supprimer",
     "cleaned_one": "{{count}} fichier supprimé ({{size}} libérés).",
     "cleaned_other": "{{count}} fichiers supprimés ({{size}} libérés).",
-    "safe": "Les fichiers encore utilisés par des cas de test, des planifications ou des lots sont conservés."
+    "safe": "Les fichiers encore utilisés par des cas de test, des planifications ou des lots sont conservés.",
+    "assistantExpired_one": "{{count}} fichier du chat de l’assistant supprimé après sa durée de conservation.",
+    "assistantExpired_other": "{{count}} fichiers du chat de l’assistant supprimés après leur durée de conservation."
   },
   "collections": {
     "title": "Collections",
@@ -223,5 +225,15 @@
     "label": "Fichiers d’exemple :",
     "use": "Utiliser {{name}}",
     "used": "{{name}} ajouté"
+  },
+  "retention": {
+    "label": "Conserver les fichiers du chat de l’assistant (jours)",
+    "hint": "Vide : aussi longtemps que leur conversation. Le nettoyage ci-dessus et, dans l’application de bureau, un passage toutes les heures suppriment les fichiers plus anciens ; les conversations et les messages restent.",
+    "placeholder": "Conserver",
+    "invalid": "Saisissez un nombre entier de jours entre 1 et 3650, ou laissez le champ vide.",
+    "keep": "aussi longtemps que leur conversation",
+    "days_one": "{{count}} jour",
+    "days_other": "{{count}} jours",
+    "readonly": "Conservation des fichiers du chat de l’assistant : {{period}}."
   }
 }

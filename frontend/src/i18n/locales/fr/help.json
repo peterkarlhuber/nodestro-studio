@@ -292,6 +292,7 @@
     "storage": "Les fichiers envoyés pour les exécutions, les cas de test et les planifications restent sur cet ordinateur avec leurs exécutions et occupent de l’espace disque. Vous voyez ici combien et vous retirez les fichiers inutilisés ou anciens. Les fichiers des exécutions en attente, en cours ou en pause et ceux dont des cas de test, des planifications ou des lots ont encore besoin sont toujours conservés ; un fichier retiré ne peut plus être ouvert depuis son exécution.",
     "adopt": "Enregistre durablement le contenu choisi dans les connaissances, uniquement après votre confirmation et avec sa provenance.",
     "proposals": "L’agent peut proposer du contenu pour les connaissances. Seul ce que vous vérifiez et confirmez est enregistré.",
-    "received": "Quels fichiers l’exécution a reçus et comment chaque agent les a reçus."
+    "received": "Quels fichiers l’exécution a reçus et comment chaque agent les a reçus.",
+    "retention": "Les fichiers joints dans les conversations avec Nodestro Assistant restent jusqu’à la suppression de la conversation. Avec un nombre de jours, les fichiers plus anciens sont supprimés lors du nettoyage ici et, dans l’application de bureau, toutes les heures ; la conversation et ses messages restent, et un message envoyé garde le nom du fichier. Seuls les administrateurs peuvent le modifier."
   }
 }

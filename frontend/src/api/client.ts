@@ -58,6 +58,7 @@ import type {
   RunSummary,
   SandboxStatus,
   SearchHit,
+  AssistantFileRetention,
   Settings,
   SettingsDefaults,
   SettingsUpdate,
@@ -579,6 +580,17 @@ export const api = {
   inputUrl: (id: string) => `/api/inputs/${id}/content`,
   deleteInput: (id: string) => request<void>("DELETE", `/inputs/${id}`),
   inputStorage: () => request<InputStorage>("GET", "/inputs"),
+  /** How long assistant chat files are kept (API-056); null on an API without the route. */
+  assistantFileRetention: async (): Promise<AssistantFileRetention | null> => {
+    try {
+      return await request<AssistantFileRetention>("GET", "/assistant/files/retention");
+    } catch (error) {
+      if (error instanceof ApiError && (error.status === 404 || error.status === 405)) return null;
+      throw error;
+    }
+  },
+  saveAssistantFileRetention: (retentionDays: number | null) =>
+    request<AssistantFileRetention>("PUT", "/assistant/files/retention", { retention_days: retentionDays }),
   cleanupInputs: (olderThanDays: number | null) =>
     request<InputCleanup>("POST", "/inputs/cleanup", { older_than_days: olderThanDays }),
   runInputs: (runId: string) => request<RunInput[]>("GET", `/runs/${runId}/inputs`),

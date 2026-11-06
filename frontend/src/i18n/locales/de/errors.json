@@ -135,7 +135,8 @@
     "revision_invalid": "Beim Speichern wurde eine unbekannte Version des Workflows genannt. Lade die Seite neu und speichere noch einmal.",
     "conflict": "Der Workflow „{{name}}“ wurde geändert, seit du ihn geöffnet hast. Lade ihn neu, um den neuesten Stand zu sehen.",
     "runs_active": "Läufe dieses Workflows sind noch nicht beendet. Lösche ihn, wenn sie fertig sind oder abgebrochen wurden.",
-    "not_found": "Diesen Workflow gibt es nicht mehr; vielleicht wurde er inzwischen gelöscht. Lade die Seite neu, um die aktuellen Workflows zu sehen."
+    "not_found": "Diesen Workflow gibt es nicht mehr; vielleicht wurde er inzwischen gelöscht. Lade die Seite neu, um die aktuellen Workflows zu sehen.",
+    "not_found_named": "Den Workflow „{{display}}“ gibt es nicht mehr; vielleicht wurde er inzwischen gelöscht. Lade die Seite neu, um die aktuellen Workflows zu sehen."
   },
   "run": {
     "failed": "Der Schritt ist fehlgeschlagen.",
@@ -202,7 +203,8 @@
     "value_unverified": "Die Kennzahl {{field}} ({{value}}) wurde auch nach einer Korrektur nicht mit einem Tool berechnet. Der Schritt wurde gestoppt, damit keine Entscheidung auf einer ungeprüften Zahl beruht.",
     "local_model_missing": "Das lokale Modell {{model}} ist auf dem Modellserver nicht installiert.",
     "provider_rejected_messages": "{{provider}} hat den Gesprächsverlauf dieses Schritts abgelehnt (Status {{status}}): Eine seiner Nachrichten hat eine Form, die der Anbieter nicht annimmt. Das liegt nicht an deinem Workflow oder deiner Eingabe.",
-    "provider_context_exceeded": "Der Gesprächsverlauf dieses Schritts ist größer als das Kontextfenster, das {{provider}} dem Modell gibt."
+    "provider_context_exceeded": "Der Gesprächsverlauf dieses Schritts ist größer als das Kontextfenster, das {{provider}} dem Modell gibt.",
+    "not_found_named": "Den Lauf „{{display}}“ gibt es nicht mehr; vielleicht wurde er inzwischen gelöscht. Lade die Seite neu, um die aktuellen Läufe zu sehen."
   },
   "budget": {
     "not_starter": "Nur die Person, die den Lauf gestartet hat, oder ein Administrator kann über sein Budget entscheiden.",
@@ -650,7 +652,8 @@
     "not_found": "Diesen veröffentlichten Workflow gibt es nicht mehr; vielleicht wurde seine API inzwischen zurückgezogen oder gelöscht. Lade die Seite neu, um die aktuellen Veröffentlichungen zu sehen.",
     "dependencies_changed": "Die freigegebenen Python-Bibliotheken haben sich seit dem Veröffentlichen geändert; veröffentliche erneut.",
     "dependencies_unavailable": "Die Python-Bibliotheken dieser API sind nicht bereit.",
-    "slug_taken": "Ein anderer veröffentlichter Workflow verwendet bereits den Namen {{slug}}. Wähle einen anderen Namen."
+    "slug_taken": "Ein anderer veröffentlichter Workflow verwendet bereits den Namen {{slug}}. Wähle einen anderen Namen.",
+    "not_found_named": "Den veröffentlichten Workflow „{{display}}“ gibt es nicht mehr; vielleicht wurde seine API inzwischen zurückgezogen oder gelöscht. Lade die Seite neu, um die aktuellen Veröffentlichungen zu sehen."
   },
   "limit": {
     "concurrent": "Zu viele gleichzeitige Läufe (Limit {{limit}}); versuche es erneut, wenn einer beendet ist.",
@@ -677,7 +680,8 @@
     "disabled": "Auf das Ergebnis zu warten ist für diese API nicht eingeschaltet."
   },
   "idempotency": {
-    "conflict": "Dieser Idempotency-Key wurde für eine andere Anfrage verwendet."
+    "conflict": "Dieser Idempotency-Key wurde für eine andere Anfrage verwendet.",
+    "in_progress": "Eine Anfrage mit diesem Idempotency-Key startet ihren Lauf noch. Versuche es gleich noch einmal; die Wiederholung liefert dann diesen Lauf."
   },
   "release": {
     "invalid": "Die veröffentlichte Version kann nicht laufen; veröffentliche sie erneut."

@@ -3203,6 +3203,13 @@ export interface InputCleanup {
   removed: number;
   freed_bytes: number;
   kept_in_use: number;
+  /** Assistant chat files removed because they were older than the retention period (API-056); missing before. */
+  assistant_files_expired?: number;
+}
+
+/** How long assistant chat files are kept (nodestro-api API-056); null: as long as their conversation. */
+export interface AssistantFileRetention {
+  retention_days: number | null;
 }
 
 // ---- taking content over into knowledge -------------------------------------------

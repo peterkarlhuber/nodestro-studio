@@ -210,7 +210,9 @@
     "cleanOld": "Remove",
     "cleaned_one": "{{count}} file removed ({{size}} freed).",
     "cleaned_other": "{{count}} files removed ({{size}} freed).",
-    "safe": "Files that test cases, schedules or batches still need are kept."
+    "safe": "Files that test cases, schedules or batches still need are kept.",
+    "assistantExpired_one": "{{count}} assistant chat file past its retention period removed.",
+    "assistantExpired_other": "{{count}} assistant chat files past their retention period removed."
   },
   "collections": {
     "title": "Collections",
@@ -223,5 +225,15 @@
     "label": "Sample files of the example:",
     "use": "Use {{name}}",
     "used": "{{name}} added"
+  },
+  "retention": {
+    "label": "Keep assistant chat files (days)",
+    "hint": "Empty: as long as their conversation. Older chat files are removed by the clean-up above and, in the desktop app, every hour; conversations and messages stay.",
+    "placeholder": "Keep",
+    "invalid": "Enter whole days from 1 to 3650, or leave the field empty.",
+    "keep": "as long as their conversation",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days",
+    "readonly": "Retention of assistant chat files: {{period}}."
   }
 }
