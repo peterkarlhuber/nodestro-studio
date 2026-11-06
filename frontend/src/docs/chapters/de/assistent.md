@@ -39,6 +39,28 @@ Was der Assistant bekommt, hängt von der Art ab:
 
 Du kannst mehrere Objekte gleichzeitig anhängen und jedes einzeln mit **×** entfernen. Ein Anhang bleibt aktiv, bis du ihn entfernst, und geht mit jeder weiteren Nachricht mit. Die Anhänge stehen immer sichtbar über dem Eingabefeld.
 
+## Eigene Dateien {#dateien}
+<!-- keywords: datei, hochladen, upload, pdf, excel, xlsx, csv, word, docx, bild, screenshot, drag and drop, ziehen, eigene dateien, tabelle, dokument -->
+
+Du kannst dem Assistant auch eigene Dateien direkt geben, ohne vorher etwas in Nodestro anzulegen: PDF, Word (DOCX), Excel (XLSX), CSV, JSON, Text-, Markdown- und Code-Dateien, Bilder (PNG, JPEG, WebP) und ZIP-Archive, bis 50 MB pro Datei. Wähle sie mit **Dateien vom Computer anhängen** (das Upload-Symbol neben der Büroklammer), ziehe sie auf das Eingabefeld oder füge einen Screenshot ein. Mehrere Dateien auf einmal sind möglich; mit einer Nachricht gehen höchstens 10.
+
+Jede Datei erscheint über dem Eingabefeld mit Name, Typ und Größe. Solange Nodestro sie hochlädt und liest, steht dort **Wird hochgeladen und gelesen …**; eine abgelehnte Datei bleibt rot mit dem Grund sichtbar, etwa ein nicht unterstützter Typ oder eine leere, beschädigte oder zu große Datei. **×** entfernt eine Datei vor dem Senden. Eine Nachricht darf auch nur aus Dateien bestehen.
+
+Das Etikett an jeder Datei zeigt, wie sie das Modell erreicht; das hängt vom **Modell für die Assistenten** ab:
+
+| Etikett | Bedeutung |
+| --- | --- |
+| PDF nativ | das Modell liest die PDF selbst, mit ihren Seitenbildern |
+| Bild | das Modell sieht das Bild |
+| Extrahierter Text | Nodestro liest Text und Tabellen lokal (Excel-Blätter, CSV, Word, PDF-Text), das Modell erhält sie als Text |
+| OCR-Text | eine gescannte PDF, deren Text Nodestro lokal erkannt hat, wenn die [Texterkennung (OCR)](/docs/dateien#ocr) eingeschaltet ist |
+| Übersicht | zu groß, um sie ganz zu senden: das Modell erhält die Struktur und liest die Teile, die es braucht |
+| Nicht lesbar | das Modell kann sie nicht lesen, etwa ein Bild bei einem Modell ohne Bildeingabe; das Etikett nennt den Grund |
+
+Eine Zeile unter den Dateien sagt, was das aktuelle Modell nativ liest. Unter deiner Nachricht behalten die gesendeten Dateien das Etikett des Wegs, den sie tatsächlich genommen haben.
+
+**Dateien in diesem Chat** listet alle Dateien des Gesprächs. Sie bleiben dort, bis du sie oder den ganzen Chat löschst; in späteren Nachrichten sieht der Assistant die Liste und kann Teile daraus erneut lesen. **Erneut verwenden** sendet eine Datei vollständig mit deiner nächsten Nachricht, das Auge zeigt, was Nodestro aus ihr gelesen hat, und du kannst sie herunterladen. Wissen entsteht daraus nicht von selbst: **Im Wissen speichern** übernimmt eine Datei erst nach deiner Bestätigung ins [Wissen](/docs/wissen). Für Dateien, die ein Agent immer haben soll, nutze das Wissen oder die Wissenseinstellungen des Agenten; der Assistant selbst hat keine festen Dateien.
+
 ## Kontextvorschläge {#vorschlaege}
 <!-- keywords: vorschlag, vorgeschlagen, aktueller workflow, automatisch, bestätigen, ignorieren -->
 
@@ -88,6 +110,8 @@ An das Modell geht nur, was du schreibst, was du angehängt hast, und die Abschn
 API-Schlüssel, Passwörter, Tokens und vergleichbare Werte werden vor dem Senden durch Platzhalter ersetzt, auch dein hinterlegter API-Schlüssel. Ein Hinweis im Anhang zeigt, wenn etwas ersetzt wurde. Was genau gesendet wurde, siehst du mit einem Klick auf einen Anhang oder auf **Gesendet mit**.
 
 Sehr große Objekte werden gekürzt; der Anhang ist dann als **teilweise** markiert, und der Assistant weiß, dass er nur einen Teil gesehen hat. Anweisungen in angehängten Inhalten, etwa in einer Wissensdatei oder einer Tool-Ausgabe, behandelt der Assistant als Daten, nicht als Anweisungen an sich.
+
+Eigene Dateien sind für den Assistant Daten, keine Anweisungen: Was auch immer in einer Datei steht, sie kann den Assistant nichts ändern, ausführen oder freigeben lassen, und ihr Inhalt ist für das Modell als nicht vertrauenswürdige Daten markiert. Dateien liegen in deinem Nodestro-Datenordner, werden gelöscht, wenn du sie oder den Chat löschst, und gehen nur mit der Nachricht an das Modell, an der sie hängen (oder werden in einer späteren Nachricht desselben Chats bei Bedarf erneut gelesen). Auf einem Server mit Anmeldung sieht einen Chat und seine Dateien nur die Person, die ihn begonnen hat.
 
 ## Kosten {#kosten}
 <!-- keywords: kosten, tokens, nutzung, preis, chat kosten, abgerechnet -->

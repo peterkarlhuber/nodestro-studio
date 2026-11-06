@@ -46,7 +46,11 @@
     "too_many_steps": "La réponse a demandé trop d’étapes et a été arrêtée. Posez une question plus précise.",
     "answer_too_long": "La réponse est devenue trop longue et a été coupée. Demandez une réponse plus courte.",
     "refused": "Le modèle a refusé de répondre.",
-    "failed": "La réponse a échoué."
+    "failed": "La réponse a échoué.",
+    "too_many_files": "Une conversation contient au plus {{limit}} fichiers. Supprimez d’abord ceux dont vous n’avez plus besoin.",
+    "too_many_message_files": "Vous pouvez envoyer au plus {{limit}} fichiers avec un message.",
+    "file_missing": "Un fichier ne fait plus partie de cette conversation. Retirez-le du message et réessayez.",
+    "file_removed": "Le fichier a été supprimé de la conversation."
   },
   "draft": {
     "unknown_tool": "L’outil inconnu « {{name}} » a été écarté.",

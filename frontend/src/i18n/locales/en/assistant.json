@@ -36,14 +36,16 @@
     "docs_search": "Searching the documentation: {{detail}}",
     "docs_read": "Reading sections: {{detail}}",
     "generate": "Writing the answer …",
-    "handover": "Preparing a handover …"
+    "handover": "Preparing a handover …",
+    "files": "Reading files: {{detail}}"
   },
   "done": {
     "context": "Processed attachments: {{detail}}",
     "docs_search": "Searched the documentation: {{detail}}",
     "docs_read": "Read sections: {{detail}}",
     "generate": "Wrote the answer",
-    "handover": "Prepared a handover"
+    "handover": "Prepared a handover",
+    "files": "Read files: {{detail}}"
   },
   "message": {
     "sentWith": "Sent with",

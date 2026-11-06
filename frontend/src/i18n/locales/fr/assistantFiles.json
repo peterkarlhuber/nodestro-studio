@@ -1,0 +1,55 @@
+{
+  "attach": "Joindre des fichiers depuis votre ordinateur",
+  "drop": "Déposez des fichiers pour les joindre à votre message",
+  "composerLabel": "Fichiers pour votre prochain message",
+  "again": "À nouveau",
+  "status": {
+    "uploading": "Envoi et lecture…"
+  },
+  "remove": "Retirer {{name}} du message",
+  "dismiss": "Masquer {{name}}",
+  "sent": "Fichiers envoyés avec ce message",
+  "waitUploads": "Attendez que les fichiers soient envoyés et lus.",
+  "mode": {
+    "document": "PDF natif",
+    "image": "Image",
+    "text": "Texte extrait",
+    "ocr_text": "Texte OCR",
+    "overview": "Aperçu",
+    "unavailable": "Illisible"
+  },
+  "modeHelp": {
+    "document": "Le modèle lit le PDF lui-même, avec son texte et les images des pages.",
+    "image": "Le modèle voit l’image elle-même.",
+    "text": "Nodestro extrait le texte et les tableaux localement ; le modèle les reçoit sous forme de texte.",
+    "ocr_text": "Un PDF numérisé : Nodestro a reconnu son texte localement (OCR). Le texte peut contenir des erreurs.",
+    "overview": "Trop volumineux pour être envoyé en entier : le modèle reçoit la structure et lit les parties dont il a besoin.",
+    "unavailable": "Le modèle actuel ne peut pas lire ce fichier."
+  },
+  "model": {
+    "native": "{{model}} lit nativement les PDF et les images.",
+    "pdfOnly": "{{model}} lit nativement les PDF mais ne peut pas voir les images.",
+    "imagesOnly": "{{model}} voit les images ; les PDF sont envoyés sous forme de texte extrait.",
+    "none": "{{model}} reçoit les PDF sous forme de texte extrait et ne peut pas voir les images."
+  },
+  "list": {
+    "toggle_one": "{{count}} fichier dans cette conversation",
+    "toggle_other": "{{count}} fichiers dans cette conversation",
+    "label": "Fichiers de cette conversation",
+    "hint": "Les fichiers restent dans cette conversation jusqu’à ce que vous les supprimiez, eux ou la conversation. Dans les messages suivants, l’assistant peut les relire ; « Réutiliser » envoie un fichier en entier avec votre prochain message. Rien ne devient une connaissance sans que vous l’y enregistriez.",
+    "added": "ajouté {{time}}",
+    "waiting": "Prochain message",
+    "inKnowledge": "Dans les connaissances",
+    "reuseName": "Réutiliser {{name}} dans le prochain message",
+    "reused": "Déjà joint au prochain message",
+    "preview": "Afficher ce que Nodestro a lu de {{name}}",
+    "download": "Télécharger {{name}}",
+    "saveKnowledge": "Enregistrer {{name}} dans les connaissances",
+    "delete": "Supprimer {{name}}"
+  },
+  "preview": {
+    "title": "Ce que Nodestro a lu de {{name}}",
+    "empty": "Nodestro n’a lu aucun texte dans ce fichier (par exemple une image).",
+    "truncated": "Seul le début est affiché ici."
+  }
+}

@@ -46,7 +46,11 @@
     "too_many_steps": "La respuesta necesitó demasiados pasos y se detuvo. Haz una pregunta más concreta.",
     "answer_too_long": "La respuesta fue demasiado larga y se cortó. Pide una respuesta más breve.",
     "refused": "El modelo se negó a responder.",
-    "failed": "La respuesta falló."
+    "failed": "La respuesta falló.",
+    "too_many_files": "Un chat admite como máximo {{limit}} archivos. Elimina primero los que ya no necesites.",
+    "too_many_message_files": "Con un mensaje se pueden enviar como máximo {{limit}} archivos.",
+    "file_missing": "Un archivo ya no forma parte de este chat. Quítalo del mensaje e inténtalo de nuevo.",
+    "file_removed": "El archivo se eliminó del chat."
   },
   "draft": {
     "unknown_tool": "Se ha omitido la herramienta desconocida «{{name}}».",

@@ -4,8 +4,9 @@ Usage: python tests/e2e_assistant_server.py --data-dir DIR [--port 8030]
 
 The model decides from the conversation what to do, the way a real one would: look up the
 documentation for a question about Nodestro, describe an attached workflow, propose a
-handover when asked to implement something, write slowly (so the browser can cancel) and fail
-once with a connection error (so the browser can retry). Nothing calls the API.
+handover when asked to implement something, write slowly (so the browser can cancel), fail
+once with a connection error (so the browser can retry) and say which files it received and how
+(a PDF document, extracted text or an image). Nothing calls the API.
 """
 
 from __future__ import annotations
@@ -64,6 +65,23 @@ def _last_tool(messages: list[Any]) -> str | None:
         if _field(block, "type") == "tool_use":
             return str(_field(block, "name"))
     return None
+
+
+def _files(messages: list[Any]) -> list[str]:
+    """The files the last user message carried, as the model receives them: ``name (PDF)``, ``name (Text)``,
+    ``Bild``."""
+    if not messages or _field(messages[-1], "role") != "user":
+        return []
+    found = []
+    for block in _blocks(_field(messages[-1], "content")):
+        kind = _field(block, "type")
+        if kind == "document":
+            source = _field(block, "source") or {}
+            media = _field(source, "media_type")
+            found.append(f"{_field(block, 'title')} ({'PDF' if media == 'application/pdf' else 'Text'})")
+        elif kind == "image":
+            found.append("Bild")
+    return found
 
 
 class _Stream:
@@ -147,6 +165,9 @@ class AssistantModel:
         if "verbindung" in lower and not self.failed_once:
             self.failed_once = True
             raise anthropic.APIConnectionError(request=httpx.Request("POST", "https://api.anthropic.com/v1/messages"))
+        files = _files(messages) if tool is None else []
+        if files:
+            return _Stream(text(f"Erhaltene Dateien: {'; '.join(files)}. Ich habe nichts ausgeführt."))
         if headers:
             described = "; ".join(f"{item['kind']} „{item['label']}“ ({item['version']})" for item in headers)
             return _Stream(text(f"Angehängt sehe ich: {described}. Ich habe nichts ausgeführt."))

@@ -327,6 +327,23 @@ tool calls, the export's `Sanitizer`, `preflight()` and the usage log.
   agent, tool, memory, knowledge, run), masks secrets, shortens large texts traceably and computes a fingerprint. Every
   message stores the snapshots it was sent with. *Update context* creates a new snapshot; older messages keep referring
   to theirs. Unsaved editor states come along as a `draft`; the interface detects changes to drafts by fingerprint.
+- **Own files** (`nodestro_api.assistant_files`, UI in `frontend/src/assistant/AssistantFiles.tsx` and
+  `useComposerFiles.ts`): files the user uploads to a conversation (`POST /api/assistant/conversations/{id}/files`,
+  multipart, one file per request from the UI) are workflow input files with `origin="assistant"`
+  (`nodestro_runtime.input_files`: format check by content, local extraction of PDF/Word/Excel/CSV, optional OCR,
+  cached extraction, content-addressed bytes). The conversation document lists them (`files`), so the input-file
+  clean-up keeps them (holder `conversation`); removing a file or deleting the conversation deletes them. Three scopes
+  stay apart: a message carries the files it was sent with in full (`SendRequest.file_ids`, recorded as
+  `ChatMessage.files` with the delivery mode each took); later messages see the conversation's other files as a list
+  and read them with the read-only `input_files` tool; knowledge is only created through the confirmed adoption
+  (`/api/knowledge/adopt`, "Save to knowledge"). How a file reaches the model is the run's delivery
+  (`nodestro_runtime.file_delivery.plan/deliver` with the assistant's own intro and tool wording): PDF as a native
+  document and images as image blocks only when the model's capabilities (`builder.capabilities`) support them,
+  otherwise extracted text, an overview plus the tool, or `unavailable` with a reason. File content is wrapped as
+  untrusted data; the files tool grants nothing. Downloads use `uploaded_file_headers(inline=False)` (attachment,
+  nosniff, sandbox CSP). On a server, a conversation belongs to the user who started it (`Conversation.owner`): every
+  conversation route answers 404 for another user, and `/api/inputs/*` and the adoption refuse another user's
+  assistant files the same way. Limits: 50 MB per file, 10 files per message, 50 per conversation.
 - **Suggestions** of the current view exist only in the browser (`frontend/src/assistant/store.ts`) and are attached
   only through an explicit action.
 - **Handover:** the tool `propose_handover` only creates a card. It opens the Workflow Architect, the agent designer or
@@ -334,7 +351,8 @@ tool calls, the export's `Sanitizer`, `preflight()` and the usage log.
 - **Flow:** one thread per answer; events (step, text, source, handover, usage) arrive through SSE under
   `/api/assistant/conversations/{id}/messages/{mid}/events`. Cancelling closes the stream; the tokens used until then
   are estimated. After a restart, open answers are marked as interrupted.
-- **Storage and costs:** chats, messages and snapshots live in the workspace's document store and in the backup.
+- **Storage and costs:** chats, messages and snapshots live in the workspace's document store and in the backup; the
+  bytes of a chat's files live with the input files (`<data dir>/inputs`).
   Every answer is exactly one entry in the usage log (source `assistant`, with chat and message).
 
 ## Published APIs and export

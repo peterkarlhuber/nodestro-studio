@@ -2040,7 +2040,7 @@ export interface Handover {
   variant: AttachmentVariant | null;
 }
 
-export type AssistantStepKind = "context" | "docs_search" | "docs_read" | "generate" | "handover";
+export type AssistantStepKind = "context" | "files" | "docs_search" | "docs_read" | "generate" | "handover";
 
 export interface AssistantStep {
   kind: AssistantStepKind;
@@ -2059,6 +2059,8 @@ export interface ChatMessage {
   status: ChatStatus;
   error: Problem | null;
   context: ContextRef[];
+  /** User messages: the files sent with it and how the model received them. */
+  files: SentFile[];
   sources: DocSource[];
   handovers: Handover[];
   steps: AssistantStep[];
@@ -2080,6 +2082,7 @@ export interface ConversationSummary {
   messages: number;
   attachments: number;
   cost_usd: number | null;
+  files: number;
 }
 
 export interface Conversation {
@@ -2091,6 +2094,8 @@ export interface Conversation {
   usage: Usage;
   messages: number;
   attachment_states: Attachment[];
+  /** The user's own files of this conversation, with how the current model would receive each. */
+  file_states: AssistantFile[];
   history: ChatMessage[];
   streaming: string | null;
 }
@@ -3402,4 +3407,57 @@ export interface KnowledgeConfig {
 export interface SearchHit {
   /** The hit's rank per method (fts, vector) before they were fused. */
   ranks?: Record<string, number>;
+}
+
+// --- att ---
+// Files the user attaches to a Nodestro Assistant conversation (nodestro_api.assistant_files).
+
+/** How a file reaches the model: natively (document, image), as extracted text, as an overview, or not at all. */
+export type FileDeliveryMode = "text" | "document" | "image" | "ocr_text" | "overview" | "unavailable";
+
+export interface AssistantFile {
+  id: string;
+  name: string;
+  format: string;
+  group: FormatGroup;
+  media_type: string;
+  size: number;
+  info: Record<string, unknown>;
+  notes: string[];
+  outline: string;
+  chars: number;
+  added_at: string;
+  /** When it was last sent with a message; null: it waits for the next message. */
+  sent_at: string | null;
+  mode: FileDeliveryMode;
+  mode_notes: string[];
+  knowledge_ids: string[];
+}
+
+export interface SentFile {
+  file_id: string;
+  name: string;
+  format: string | null;
+  group: FormatGroup | null;
+  size: number;
+  /** null until the answer started. */
+  mode: FileDeliveryMode | null;
+  notes: string[];
+  chars: number;
+}
+
+export interface AssistantFileUpload {
+  name: string;
+  file: AssistantFile | null;
+  problem: Problem | null;
+}
+
+export interface AssistantFileSupport {
+  model: string;
+  max_file_mb: number;
+  max_files_per_message: number;
+  max_files_per_conversation: number;
+  images: boolean;
+  pdfs: boolean;
+  formats: FileFormatInfo[];
 }

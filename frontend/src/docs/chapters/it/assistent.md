@@ -39,6 +39,28 @@ Ciò che l'assistente riceve dipende dal tipo:
 
 Puoi allegare più oggetti insieme e rimuoverli uno per uno con **×**. Un allegato resta attivo finché non lo rimuovi e accompagna ogni messaggio successivo. Gli allegati sono sempre visibili sopra il campo di inserimento.
 
+## I tuoi file {#dateien}
+<!-- keywords: file, caricare, upload, pdf, excel, xlsx, csv, word, docx, immagine, screenshot, trascina e rilascia, allegare file, foglio di calcolo, documento -->
+
+Puoi anche dare direttamente all'assistente i tuoi file, senza creare prima nulla in Nodestro: PDF, Word (DOCX), Excel (XLSX), CSV, JSON, file di testo, Markdown e codice, immagini (PNG, JPEG, WebP) e archivi ZIP, fino a 50 MB per file. Sceglili con **Allega file dal tuo computer** (l'icona di caricamento accanto alla graffetta), trascinali sul campo di inserimento o incolla uno screenshot. Puoi aggiungere più file insieme; con un messaggio ne partono al massimo 10.
+
+Ogni file compare sopra il campo di inserimento con nome, tipo e dimensione. Mentre Nodestro lo carica e lo legge, mostra **Caricamento e lettura…**; un file rifiutato resta visibile in rosso con il motivo, per esempio un tipo non supportato o un file vuoto, danneggiato o troppo grande. **×** rimuove un file prima dell'invio. Un messaggio può essere composto anche solo da file.
+
+L'etichetta di ogni file mostra come raggiunge il modello, il che dipende dal **modello per gli assistenti**:
+
+| Etichetta | Significato |
+| --- | --- |
+| PDF nativo | il modello legge direttamente il PDF, con le immagini delle pagine |
+| Immagine | il modello vede l'immagine |
+| Testo estratto | Nodestro legge testo e tabelle in locale (fogli Excel, CSV, Word, testo PDF) e il modello li riceve come testo |
+| Testo OCR | un PDF scansionato di cui Nodestro ha riconosciuto il testo in locale, se il [riconoscimento del testo (OCR)](/docs/dateien#ocr) è attivo |
+| Panoramica | troppo grande per inviarlo per intero: il modello riceve la struttura e legge le parti che gli servono |
+| Non leggibile | il modello non può leggerlo, per esempio un'immagine con un modello senza input di immagini; l'etichetta ne indica il motivo |
+
+Una riga sotto i file dice cosa legge in modo nativo il modello attuale. Sotto il tuo messaggio, i file inviati mantengono l'etichetta del percorso che hanno effettivamente seguito.
+
+**File in questa chat** elenca tutti i file della conversazione. Restano lì finché non elimini loro o l'intera chat; nei messaggi successivi l'assistente vede l'elenco e può rileggerne delle parti. **Usa di nuovo** invia un file per intero con il tuo prossimo messaggio, l'occhio mostra cosa ha letto Nodestro e puoi scaricarlo. Nulla diventa conoscenza da solo: **Salva nella conoscenza** porta un file nella [conoscenza](/docs/wissen) solo dopo la tua conferma. Per i file che un agente deve avere sempre, usa la conoscenza o le impostazioni di conoscenza dell'agente; l'assistente non ha file fissi.
+
 ## Suggerimenti di contesto {#vorschlaege}
 <!-- keywords: suggerimento, suggerito, workflow attuale, automatico, confermare, ignorare -->
 
@@ -88,6 +110,8 @@ Al modello arriva solo ciò che scrivi, ciò che hai allegato e le sezioni della
 Chiavi API, password, token e valori simili vengono sostituiti con segnaposto prima dell'invio, compresa la chiave API che hai salvato. Una nota sull'allegato indica quando qualcosa è stato sostituito. Per vedere esattamente cosa è stato inviato, fai clic su un allegato o su **Inviato con**.
 
 Gli oggetti molto grandi vengono accorciati; l'allegato è allora segnato come **parziale**, e l'assistente sa di averne visto solo una parte. Le istruzioni contenute negli allegati, per esempio in un file di conoscenza o nell'output di uno strumento, vengono trattate dall'assistente come dati, non come istruzioni rivolte a lui.
+
+I tuoi file sono dati per l'assistente, non istruzioni: qualunque cosa dica un file, non può far modificare, eseguire o approvare nulla all'assistente, e il suo contenuto è segnalato al modello come dati non attendibili. I file sono salvati nella tua cartella dati di Nodestro, vengono eliminati quando elimini loro o la chat e arrivano al modello solo con il messaggio a cui sono allegati (o vengono riletti su richiesta in un messaggio successivo della stessa chat). Su un server con accesso, una chat e i suoi file sono visibili solo alla persona che l'ha iniziata.
 
 ## Costi {#kosten}
 <!-- keywords: costo, token, utilizzo, prezzo, costo della chat, addebitato -->

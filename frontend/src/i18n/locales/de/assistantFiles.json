@@ -1,0 +1,55 @@
+{
+  "attach": "Dateien vom Computer anhängen",
+  "drop": "Dateien hier ablegen, um sie an die Nachricht anzuhängen",
+  "composerLabel": "Dateien für deine nächste Nachricht",
+  "again": "Erneut",
+  "status": {
+    "uploading": "Wird hochgeladen und gelesen …"
+  },
+  "remove": "{{name}} aus der Nachricht entfernen",
+  "dismiss": "{{name}} ausblenden",
+  "sent": "Mit dieser Nachricht gesendete Dateien",
+  "waitUploads": "Warte, bis die Dateien hochgeladen und gelesen sind.",
+  "mode": {
+    "document": "PDF nativ",
+    "image": "Bild",
+    "text": "Extrahierter Text",
+    "ocr_text": "OCR-Text",
+    "overview": "Übersicht",
+    "unavailable": "Nicht lesbar"
+  },
+  "modeHelp": {
+    "document": "Das Modell liest die PDF selbst, mit Text und Seitenbildern.",
+    "image": "Das Modell sieht das Bild selbst.",
+    "text": "Nodestro extrahiert Text und Tabellen lokal; das Modell erhält sie als Text.",
+    "ocr_text": "Eine gescannte PDF: Nodestro hat ihren Text lokal erkannt (OCR). Der Text kann Fehler enthalten.",
+    "overview": "Zu groß, um sie vollständig zu senden: Das Modell erhält die Struktur und liest die Teile, die es braucht.",
+    "unavailable": "Das aktuelle Modell kann diese Datei nicht lesen."
+  },
+  "model": {
+    "native": "{{model}} liest PDFs und Bilder nativ.",
+    "pdfOnly": "{{model}} liest PDFs nativ, kann aber keine Bilder sehen.",
+    "imagesOnly": "{{model}} sieht Bilder; PDFs werden als extrahierter Text gesendet.",
+    "none": "{{model}} erhält PDFs als extrahierten Text und kann keine Bilder sehen."
+  },
+  "list": {
+    "toggle_one": "{{count}} Datei in diesem Chat",
+    "toggle_other": "{{count}} Dateien in diesem Chat",
+    "label": "Dateien in diesem Chat",
+    "hint": "Dateien bleiben in diesem Chat, bis du sie oder den Chat löschst. In späteren Nachrichten kann der Assistent sie erneut lesen; „Erneut verwenden“ sendet eine Datei vollständig mit deiner nächsten Nachricht. Wissen wird daraus nur, wenn du sie dort speicherst.",
+    "added": "hinzugefügt {{time}}",
+    "waiting": "Nächste Nachricht",
+    "inKnowledge": "Im Wissen",
+    "reuseName": "{{name}} in der nächsten Nachricht erneut verwenden",
+    "reused": "Bereits an die nächste Nachricht angehängt",
+    "preview": "Anzeigen, was Nodestro aus {{name}} gelesen hat",
+    "download": "{{name}} herunterladen",
+    "saveKnowledge": "{{name}} im Wissen speichern",
+    "delete": "{{name}} löschen"
+  },
+  "preview": {
+    "title": "Was Nodestro aus {{name}} gelesen hat",
+    "empty": "Nodestro hat aus dieser Datei keinen Text gelesen (zum Beispiel bei einem Bild).",
+    "truncated": "Hier wird nur der Anfang angezeigt."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "attach": "Attach files from your computer",
+  "drop": "Drop files to attach them to your message",
+  "composerLabel": "Files for your next message",
+  "again": "Again",
+  "status": {
+    "uploading": "Uploading and reading…"
+  },
+  "remove": "Remove {{name}} from the message",
+  "dismiss": "Dismiss {{name}}",
+  "sent": "Files sent with this message",
+  "waitUploads": "Wait until the files are uploaded and read.",
+  "mode": {
+    "document": "Native PDF",
+    "image": "Image",
+    "text": "Extracted text",
+    "ocr_text": "OCR text",
+    "overview": "Overview",
+    "unavailable": "Not readable"
+  },
+  "modeHelp": {
+    "document": "The model reads the PDF itself, with its text and page images.",
+    "image": "The model sees the image itself.",
+    "text": "Nodestro extracts the text and tables locally; the model receives them as text.",
+    "ocr_text": "A scanned PDF: Nodestro recognized its text locally (OCR). The text may contain errors.",
+    "overview": "Too large to send in full: the model gets the structure and reads the parts it needs.",
+    "unavailable": "The current model cannot read this file."
+  },
+  "model": {
+    "native": "{{model}} reads PDFs and images natively.",
+    "pdfOnly": "{{model}} reads PDFs natively but cannot view images.",
+    "imagesOnly": "{{model}} views images; PDFs are sent as extracted text.",
+    "none": "{{model}} receives PDFs as extracted text and cannot view images."
+  },
+  "list": {
+    "toggle_one": "{{count}} file in this chat",
+    "toggle_other": "{{count}} files in this chat",
+    "label": "Files in this chat",
+    "hint": "Files stay in this chat until you delete them or the chat. In later messages the assistant can read them again; “Use again” sends a file in full with your next message. Nothing becomes knowledge unless you save it there.",
+    "added": "added {{time}}",
+    "waiting": "Next message",
+    "inKnowledge": "In knowledge",
+    "reuseName": "Use {{name}} again in the next message",
+    "reused": "Already attached to the next message",
+    "preview": "Show what Nodestro read from {{name}}",
+    "download": "Download {{name}}",
+    "saveKnowledge": "Save {{name}} to knowledge",
+    "delete": "Delete {{name}}"
+  },
+  "preview": {
+    "title": "What Nodestro read from {{name}}",
+    "empty": "Nodestro read no text from this file (for example an image).",
+    "truncated": "Only the beginning is shown here."
+  }
+}

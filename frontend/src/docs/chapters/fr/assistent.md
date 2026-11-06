@@ -39,6 +39,28 @@ Ce que reçoit l’assistant dépend du type :
 
 Vous pouvez joindre plusieurs objets à la fois et retirer chacun avec **×**. Une pièce jointe reste active jusqu’à ce que vous la retiriez et accompagne chaque message suivant. Les pièces jointes sont toujours visibles au-dessus du champ de saisie.
 
+## Vos propres fichiers {#dateien}
+<!-- keywords: fichier, téléverser, envoyer, pdf, excel, xlsx, csv, word, docx, image, capture d’écran, glisser-déposer, joindre un fichier, tableur, document -->
+
+Vous pouvez aussi donner directement vos propres fichiers à l’assistant, sans rien créer au préalable dans Nodestro : PDF, Word (DOCX), Excel (XLSX), CSV, JSON, fichiers texte, Markdown et code, images (PNG, JPEG, WebP) et archives ZIP, jusqu’à 50 Mo par fichier. Choisissez-les avec **Joindre des fichiers depuis votre ordinateur** (l’icône d’envoi à côté du trombone), glissez-les sur le champ de saisie ou collez une capture d’écran. Plusieurs fichiers à la fois sont possibles ; un message en emporte au plus 10.
+
+Chaque fichier apparaît au-dessus du champ de saisie avec son nom, son type et sa taille. Pendant que Nodestro l’envoie et le lit, il affiche **Envoi et lecture…** ; un fichier refusé reste visible en rouge avec la raison, par exemple un type non pris en charge ou un fichier vide, endommagé ou trop volumineux. **×** retire un fichier avant l’envoi. Un message peut ne contenir que des fichiers.
+
+L’étiquette de chaque fichier indique comment il parvient au modèle, ce qui dépend du **modèle des assistants** :
+
+| Étiquette | Signification |
+| --- | --- |
+| PDF natif | le modèle lit le PDF lui-même, avec les images de ses pages |
+| Image | le modèle voit l’image |
+| Texte extrait | Nodestro lit le texte et les tableaux localement (feuilles Excel, CSV, Word, texte PDF) et le modèle les reçoit sous forme de texte |
+| Texte OCR | un PDF numérisé dont Nodestro a reconnu le texte localement, si la [reconnaissance de texte (OCR)](/docs/dateien#ocr) est activée |
+| Aperçu | trop volumineux pour être envoyé en entier : le modèle reçoit la structure et lit les parties dont il a besoin |
+| Illisible | le modèle ne peut pas le lire, par exemple une image pour un modèle sans entrée d’images ; l’étiquette en donne la raison |
+
+Une ligne sous les fichiers indique ce que le modèle actuel lit nativement. Sous votre message, les fichiers envoyés gardent l’étiquette du chemin qu’ils ont réellement pris.
+
+**Fichiers dans cette conversation** liste tous les fichiers de la conversation. Ils y restent jusqu’à ce que vous les supprimiez, eux ou toute la conversation ; dans les messages suivants, l’assistant voit la liste et peut en relire des parties. **Réutiliser** envoie un fichier en entier avec votre prochain message, l’œil montre ce que Nodestro en a lu, et vous pouvez le télécharger. Rien ne devient une connaissance de soi-même : **Enregistrer dans les connaissances** reprend un fichier dans les [connaissances](/docs/wissen) seulement après votre confirmation. Pour des fichiers qu’un agent doit toujours avoir, utilisez les connaissances ou les réglages de connaissances de l’agent ; l’assistant lui-même n’a pas de fichiers fixes.
+
 ## Suggestions de contexte {#vorschlaege}
 <!-- keywords: suggestion, suggéré, workflow actuel, automatique, confirmer, ignorer -->
 
@@ -88,6 +110,8 @@ Seuls ce que vous écrivez, ce que vous avez joint et les sections de documentat
 Les clés API, mots de passe, tokens et valeurs similaires sont remplacés par des espaces réservés avant l’envoi, y compris votre clé API enregistrée. Une remarque sur la pièce jointe indique quand quelque chose a été remplacé. Pour voir exactement ce qui a été envoyé, cliquez sur une pièce jointe ou sur **Envoyé avec**.
 
 Les objets très volumineux sont raccourcis ; la pièce jointe est alors marquée **partiel**, et l’assistant sait qu’il n’en a vu qu’une partie. Les instructions contenues dans un contenu joint, par exemple dans un fichier de connaissances ou une sortie d’outil, sont traitées par l’assistant comme des données, et non comme des instructions qui lui sont adressées.
+
+Vos propres fichiers sont des données pour l’assistant, pas des instructions : quoi que dise un fichier, il ne peut pas amener l’assistant à modifier, exécuter ou approuver quoi que ce soit, et son contenu est signalé au modèle comme des données non fiables. Les fichiers sont stockés dans votre dossier de données Nodestro, supprimés lorsque vous les supprimez ou supprimez la conversation, et ne sont envoyés au modèle qu’avec le message auquel ils sont joints (ou relus à la demande dans un message ultérieur de la même conversation). Sur un serveur avec connexion, une conversation et ses fichiers ne sont visibles que par la personne qui l’a commencée.
 
 ## Coûts {#kosten}
 <!-- keywords: coût, tokens, utilisation, prix, coût du chat, facturé -->

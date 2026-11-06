@@ -22,6 +22,7 @@ import type { AssistantStep, AttachmentKind, ChatMessage, ContextRef, Handover }
 import { Button, Callout, Hint } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { formatTokens } from "../lib/format";
+import { SentFileChips } from "./AssistantFiles";
 import { AssistantMarkdown } from "./AssistantMarkdown";
 import { handoverPath } from "./handover";
 import { SnapshotDialog } from "./SnapshotDialog";
@@ -162,7 +163,8 @@ export function MessageView({
   if (message.role === "user") {
     return (
       <div className="chat-message chat-message--user" data-testid="chat-user">
-        <div className="chat-bubble">{message.content}</div>
+        {message.content ? <div className="chat-bubble">{message.content}</div> : null}
+        <SentFileChips files={message.files ?? []} />
         <ContextChips context={message.context} conversationId={conversationId} />
       </div>
     );

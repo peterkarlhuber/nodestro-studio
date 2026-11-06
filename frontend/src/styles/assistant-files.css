@@ -1,0 +1,201 @@
+/* The user's own files in the Nodestro Assistant (assistant/AssistantFiles.tsx): the chips of the next message,
+   the drop zone over the composer, the files of the conversation and the files a sent message carried. */
+
+.chat-composer {
+  position: relative;
+}
+
+.chat-composer--dropping {
+  outline: 2px dashed var(--nd-brand);
+  outline-offset: -6px;
+}
+
+.chat-composer__drop {
+  position: absolute;
+  inset: 6px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  border-radius: var(--nd-radius-md);
+  background: color-mix(in srgb, var(--nd-panel) 88%, transparent);
+  color: var(--nd-text);
+  font-weight: 650;
+  text-align: center;
+  pointer-events: none;
+}
+
+.chat-input__tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.chat-files {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.chat-files__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chat-files__list--sent {
+  justify-content: flex-end;
+  max-width: 100%;
+}
+
+.chat-files__model {
+  margin: 0;
+}
+
+.chat-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 4px 4px 4px 9px;
+  border: 1px solid var(--nd-border-strong);
+  border-radius: var(--nd-radius-sm);
+  background: var(--nd-surface);
+  font-size: var(--nd-font-size-sm);
+}
+
+.chat-file--error {
+  border-color: var(--nd-danger);
+  background: var(--nd-danger-soft);
+}
+
+.chat-file--sent {
+  padding-right: 9px;
+  background: var(--nd-brand-soft);
+  border-color: var(--nd-brand);
+}
+
+.chat-file--row {
+  display: flex;
+  width: 100%;
+}
+
+.chat-file__icon {
+  flex: none;
+  color: var(--nd-text-muted);
+}
+
+.chat-file__main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.chat-file__name {
+  overflow: hidden;
+  color: var(--nd-text);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-file__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  color: var(--nd-text-muted);
+  font-size: var(--nd-font-size-xs);
+}
+
+.chat-file__error {
+  color: var(--nd-danger);
+  white-space: normal;
+}
+
+.chat-file__mode:focus-visible {
+  outline: 2px solid var(--nd-brand);
+  outline-offset: 1px;
+}
+
+.chat-file__actions {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+}
+
+.chat-file-shelf {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.chat-file-shelf__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: var(--nd-radius-sm);
+  background: none;
+  color: var(--nd-text-muted);
+  font: inherit;
+  font-size: var(--nd-font-size-sm);
+  cursor: pointer;
+}
+
+.chat-file-shelf__toggle:hover {
+  color: var(--nd-text);
+}
+
+.chat-file-shelf__toggle:focus-visible {
+  outline: 2px solid var(--nd-brand);
+  outline-offset: 1px;
+}
+
+.chat-file-shelf__body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.chat-file-shelf__body > p {
+  margin: 0;
+}
+
+.chat-file-shelf__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chat-file-preview {
+  max-height: 60vh;
+  overflow: auto;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-sm);
+  background: var(--nd-surface);
+  font-size: var(--nd-font-size-sm);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.chat-file-preview__notes {
+  margin: 0 0 8px;
+  padding-left: 18px;
+}

@@ -4,11 +4,14 @@
 // Covers: panel and shortcut, documentation answers with sources, chat across navigation,
 // suggestions that are never sent by themselves, attachments with versions, refresh and drafts,
 // secret masking, handover to the architect without changes, cancel, errors and retry, history,
-// usage, phone layout and the interface language.
+// usage, phone layout and the interface language; the user's own files: a PDF, an Excel file and
+// an image (file chooser and drag and drop), refused files, removing before sending, using a file
+// again, the path each file takes to the model, light and dark, phone width and deletion with the chat.
 
 import { createRequire } from "node:module";
-import { mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { mkdirSync, readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const require = createRequire(import.meta.url);
 // Chromium by default; E2E_BROWSER=firefox or webkit runs the same checks in another engine.
@@ -19,6 +22,7 @@ const shots = process.argv[3] ?? process.env.NODESTRO_SCREENSHOTS;
 if (shots) mkdirSync(shots, { recursive: true });
 
 const SECRET = "sk-ant-api03-e2eSECRETvalue0000000000000000000000000000";
+const FIXTURES = join(dirname(fileURLToPath(import.meta.url)), "fixtures", "assistant");
 
 const browser = await browserType.launch();
 const context = await browser.newContext({ viewport: { width: 1500, height: 940 }, locale: "de-DE" });
@@ -58,6 +62,39 @@ async function ask(question) {
 
 async function finished(answer, status = "complete") {
   await answer.and(page.locator(`[data-status=${status}]`)).waitFor({ timeout: 30000 });
+}
+
+// axe-core (a devDependency) checks the files in the panel; without it that check is skipped.
+const axeSource = (() => {
+  try {
+    return readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
+  } catch {
+    return null;
+  }
+})();
+
+async function axePanel(label) {
+  if (!axeSource) {
+    console.log(`skip axe-core not found (${label})`);
+    return;
+  }
+  await page.evaluate(axeSource);
+  const bad = await page.evaluate(async () => {
+    const result = await window.axe.run("[data-testid=assistant-panel]", {
+      runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"] },
+      resultTypes: ["violations"],
+    });
+    return result.violations.filter((v) => ["serious", "critical"].includes(v.impact)).map((v) => `${v.id}: ${v.nodes[0]?.target.join(" ")}`);
+  });
+  check(bad.length === 0, `No serious accessibility problems with files in the panel (${label}) ${bad.join(" | ")}`);
+}
+
+/** Opens the panel after a reload (it may already be open: it remembers its state). */
+async function openPanel() {
+  const toggle = page.getByTestId("assistant-toggle");
+  await toggle.waitFor();
+  if (!(await panel.isVisible())) await toggle.click();
+  await panel.waitFor();
 }
 
 async function conversation() {
@@ -266,6 +303,121 @@ try {
   await page.getByTestId("assistant-close").click();
   await panel.waitFor({ state: "detached" });
   check(true, "The panel closes");
+
+  // 13. The user's own files: chosen and dropped, refused with a reason, removed, sent, used again, deleted.
+  await page.evaluate(() => {
+    localStorage.setItem("nodestro-language", "de");
+    localStorage.setItem("nodestro-theme", "light");
+  });
+  await page.reload();
+  await openPanel();
+  await page.getByTestId("assistant-new").click();
+  await panel.getByText("Wie kann ich helfen?").waitFor();
+  const composerFiles = panel.getByTestId("composer-file");
+  const fixture = (name, mimeType) => ({ name, mimeType, buffer: readFileSync(join(FIXTURES, name)) });
+  await page.getByTestId("assistant-file-input").setInputFiles([
+    fixture("quartalsbericht.pdf", "application/pdf"),
+    fixture("kosten.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+    { name: "setup.exe", mimeType: "application/octet-stream", buffer: Buffer.from("MZ") },
+  ]);
+  await panel.locator("[data-testid=composer-file][data-state=ready]").nth(1).waitFor();
+  check((await composerFiles.count()) === 3, `Several files are chosen at once, each with its own state (${await composerFiles.count()})`);
+  check(
+    await panel.getByTestId("composer-file-error").getByText("nicht unterstützt", { exact: false }).isVisible(),
+    "An unsupported file is refused with a clear reason and never uploaded",
+  );
+  const pdfChip = composerFiles.filter({ hasText: "quartalsbericht.pdf" });
+  check((await pdfChip.innerText()).includes("PDF") && (await pdfChip.getByTestId("file-mode").innerText()) === "PDF nativ", "A PDF shows its type, size and that the model reads it natively");
+  check((await composerFiles.filter({ hasText: "kosten.xlsx" }).getByTestId("file-mode").innerText()) === "Extrahierter Text", "An Excel file goes to the model as extracted tables");
+  // Drag and drop onto the composer.
+  const picture = readFileSync(join(FIXTURES, "diagramm.png"));
+  const transfer = await page.evaluateHandle((bytes) => {
+    const data = new DataTransfer();
+    data.items.add(new File([new Uint8Array(bytes)], "diagramm.png", { type: "image/png" }));
+    return data;
+  }, [...picture]);
+  const composerZone = page.getByTestId("assistant-composer");
+  await composerZone.dispatchEvent("dragenter", { dataTransfer: transfer });
+  check(await panel.getByText("Dateien hier ablegen", { exact: false }).isVisible(), "Dragging files over the composer shows the drop zone");
+  await composerZone.dispatchEvent("drop", { dataTransfer: transfer });
+  await composerFiles.filter({ hasText: "diagramm.png" }).and(page.locator("[data-state=ready]")).waitFor();
+  check((await composerFiles.filter({ hasText: "diagramm.png" }).getByTestId("file-mode").innerText()) === "Bild", "A dropped image is attached and shown to the model as an image");
+  // A damaged file is refused by the server, with the reason.
+  await page.getByTestId("assistant-file-input").setInputFiles([{ name: "kaputt.xlsx", mimeType: "application/octet-stream", buffer: Buffer.from("PK\u0003\u0004 kein Excel") }]);
+  await panel.getByTestId("composer-file-error").filter({ hasText: "kaputt.xlsx" }).waitFor();
+  check(await panel.getByText("kaputt.xlsx ist beschädigt", { exact: false }).isVisible(), "A damaged file is refused with a clear reason");
+  check(await panel.getByTestId("composer-files-model").isVisible(), "The composer says what the model reads natively");
+  await shot("assistant-10-files-light");
+  await axePanel("light");
+  let filesChat = await conversation();
+  check(filesChat.file_states.length === 3, "Only the accepted files were stored");
+  // Remove before sending: the image is deleted again.
+  await composerFiles.filter({ hasText: "diagramm.png" }).getByTestId("composer-file-remove").click();
+  await composerFiles.filter({ hasText: "diagramm.png" }).waitFor({ state: "detached" });
+  for (const name of ["setup.exe", "kaputt.xlsx"]) await panel.getByRole("button", { name: `${name} ausblenden` }).click();
+  filesChat = await conversation();
+  check(filesChat.file_states.map((file) => file.name).sort().join() === "kosten.xlsx,quartalsbericht.pdf", "A file removed before sending is gone");
+  const fileAnswer = await ask("Was steht in diesen Dateien?");
+  await finished(fileAnswer);
+  const answerText = await fileAnswer.innerText();
+  check(
+    ["quartalsbericht.pdf (PDF)", "kosten.xlsx (Text)"].every((part) => answerText.includes(part)),
+    "The model received the PDF natively and the Excel file as text",
+  );
+  check((await composerFiles.count()) === 0, "Sent files leave the composer");
+  const sentChips = panel.getByTestId("chat-user").last().getByTestId("sent-file");
+  check((await sentChips.count()) === 2, "The message shows the files it was sent with");
+  check((await sentChips.filter({ hasText: "quartalsbericht.pdf" }).getByTestId("file-mode").innerText()) === "PDF nativ", "The message shows how each file reached the model");
+  // Use a file again in the same chat.
+  await panel.getByTestId("conversation-files-toggle").click();
+  const shelf = panel.getByTestId("conversation-file");
+  check((await shelf.count()) === 2, "The chat lists its files");
+  await shelf.filter({ hasText: "kosten.xlsx" }).getByTestId("conversation-file-reuse").click();
+  await composerFiles.filter({ hasText: "kosten.xlsx" }).waitFor();
+  await shot("assistant-11-files-reuse-light");
+  const again = await ask("Bitte die Tabelle noch einmal ansehen.");
+  await finished(again);
+  check(await again.getByText("Erhaltene Dateien: kosten.xlsx (Text)", { exact: false }).isVisible(), "A file used again is sent in full once more");
+  // What Nodestro read, in a dialog.
+  await shelf.filter({ hasText: "kosten.xlsx" }).getByTestId("conversation-file-preview").click();
+  const preview = page.getByRole("dialog");
+  await preview.getByTestId("file-preview-text").waitFor();
+  check((await preview.getByTestId("file-preview-text").innerText()).includes("Miete"), "The user sees what Nodestro read from a file");
+  await page.keyboard.press("Escape");
+  // Dark theme, phone width and another language.
+  await page.evaluate(() => localStorage.setItem("nodestro-theme", "dark"));
+  await page.reload();
+  await openPanel();
+  await panel.getByTestId("conversation-files-toggle").click();
+  await page.getByTestId("assistant-file-input").setInputFiles([join(FIXTURES, "diagramm.png")]);
+  await composerFiles.filter({ hasText: "diagramm.png" }).and(page.locator("[data-state=ready]")).waitFor();
+  await shot("assistant-12-files-dark");
+  await axePanel("dark");
+  await page.setViewportSize({ width: 390, height: 820 });
+  check((await page.evaluate(() => document.documentElement.scrollWidth)) <= 390, "The files fit a phone without overflow");
+  await shot("assistant-13-files-phone");
+  await page.setViewportSize({ width: 1500, height: 940 });
+  await page.evaluate(() => localStorage.setItem("nodestro-language", "fr"));
+  await page.reload();
+  await openPanel();
+  await panel.getByTestId("conversation-files-toggle").click();
+  await panel.getByText("3 fichiers dans cette conversation").waitFor();
+  check(await composerFiles.filter({ hasText: "diagramm.png" }).getByText("Image").first().isVisible(), "A file waiting after a reload is still in the composer (in French)");
+  await shot("assistant-14-files-fr");
+  // Deleting the chat deletes its files.
+  const ids = (await conversation()).file_states.map((file) => file.id);
+  await page.evaluate(() => localStorage.setItem("nodestro-language", "de"));
+  await page.reload();
+  await openPanel();
+  await page.getByTestId("assistant-history").click();
+  const chats = panel.getByTestId("chat-list-item");
+  await chats.first().waitFor();
+  const before13 = await chats.count();
+  await chats.first().getByTestId("chat-delete").click();
+  await chats.first().getByTestId("chat-delete-confirm").click();
+  await page.waitForFunction((count) => document.querySelectorAll("[data-testid=chat-list-item]").length === count - 1, before13);
+  const gone = await Promise.all(ids.map((id) => page.request.fetch(`${base}/api/inputs/${id}`).then((response) => response.status())));
+  check(gone.every((status) => status === 404), "Deleting the chat deletes its files");
 
   check(errors.length === 0, `No browser errors (${errors.join(" | ")})`);
 } catch (error) {

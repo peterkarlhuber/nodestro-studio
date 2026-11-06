@@ -1,6 +1,8 @@
 // A thin fetch wrapper for the Nodestro REST API.
 
 import type {
+  AssistantFileSupport,
+  AssistantFileUpload,
   AttachRequest,
   ChatMessageIn,
   RunChatView,
@@ -238,11 +240,24 @@ export const api = {
   detach: (id: string, attachmentId: string) => request<Conversation>("DELETE", `${chatPath(id)}/attachments/${attachmentId}`),
   snapshot: (id: string, snapshotId: string) => request<Snapshot>("GET", `${chatPath(id)}/snapshots/${snapshotId}`),
   /** The assistant answers in the interface language unless the message asks for another. */
-  sendMessage: (id: string, content: string) =>
+  sendMessage: (id: string, content: string, fileIds: string[] = []) =>
     request<{ user: ChatMessage; assistant: ChatMessage }>("POST", `${chatPath(id)}/messages`, {
       content,
       language: currentLanguage(),
+      file_ids: fileIds,
     }),
+  /** Formats and limits of files, and whether the assistant's model reads images and PDFs natively. */
+  assistantFileSupport: () => request<AssistantFileSupport>("GET", "/assistant/files/support"),
+  /** Checks, reads and attaches one file to the conversation; it waits for the next message. */
+  uploadAssistantFile: (id: string, file: File) => {
+    const form = new FormData();
+    form.append("files", file, file.name);
+    return request<AssistantFileUpload[]>("POST", `${chatPath(id)}/files`, form);
+  },
+  /** Removes the file from the conversation and deletes it. */
+  removeAssistantFile: (id: string, fileId: string) => request<Conversation>("DELETE", `${chatPath(id)}/files/${fileId}`),
+  assistantFileText: (id: string, fileId: string) => request<FileText>("GET", `${chatPath(id)}/files/${fileId}/text`),
+  assistantFileUrl: (id: string, fileId: string) => `/api${chatPath(id)}/files/${fileId}/content`,
   retryMessage: (id: string, messageId: string) =>
     request<ChatMessage>("POST", `${chatPath(id)}/messages/${messageId}/retry`, { language: currentLanguage() }),
   cancelMessage: (id: string, messageId: string) => request<ChatMessage>("POST", `${chatPath(id)}/messages/${messageId}/cancel`),

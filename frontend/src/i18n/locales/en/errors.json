@@ -46,7 +46,11 @@
     "too_many_steps": "The answer needed too many steps and was stopped. Ask a narrower question.",
     "answer_too_long": "The answer became too long and was cut off. Ask for a shorter answer.",
     "refused": "The model declined to answer.",
-    "failed": "The answer failed."
+    "failed": "The answer failed.",
+    "too_many_files": "A chat holds at most {{limit}} files. Remove files you no longer need first.",
+    "too_many_message_files": "At most {{limit}} files can be sent with one message.",
+    "file_missing": "A file is no longer part of this chat. Remove it from the message and try again.",
+    "file_removed": "The file was removed from the chat."
   },
   "draft": {
     "unknown_tool": "The unknown tool “{{name}}” was left out.",

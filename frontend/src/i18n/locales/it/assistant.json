@@ -36,14 +36,16 @@
     "docs_search": "Ricerca nella documentazione: {{detail}}",
     "docs_read": "Lettura delle sezioni: {{detail}}",
     "generate": "Scrittura della risposta …",
-    "handover": "Preparazione di un passaggio …"
+    "handover": "Preparazione di un passaggio …",
+    "files": "Lettura dei file: {{detail}}"
   },
   "done": {
     "context": "Allegati elaborati: {{detail}}",
     "docs_search": "Documentazione consultata: {{detail}}",
     "docs_read": "Sezioni lette: {{detail}}",
     "generate": "Risposta scritta",
-    "handover": "Passaggio preparato"
+    "handover": "Passaggio preparato",
+    "files": "File letti: {{detail}}"
   },
   "message": {
     "sentWith": "Inviato con",
