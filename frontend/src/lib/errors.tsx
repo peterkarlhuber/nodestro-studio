@@ -116,7 +116,7 @@ function codeParams(t: TFunction, code: string | null, params: Record<string, un
   if (code === "export.download_needed" || code === "export.downloads") return { ...params, items: downloadList(t, downloadCodes(params)) };
   if (code === "export.server_too_large")
     return { ...params, size: formatLargeBytes(Number(params.size)), limit: formatLargeBytes(Number(params.limit)) };
-  if (code === "local.invalid_package_reason") return { ...params, reason: t(`errors.local.${String(params.reason)}`) };
+  if (code === "local.invalid_package_reason") return { ...params, reason: t(`errors.local.${String(params.reason)}`, { defaultValue: String(params.reason) }) };
   return null;
 }
 

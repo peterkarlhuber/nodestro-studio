@@ -13,8 +13,7 @@ import { toast } from "../components/toast";
 import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, IconButton, Modal, Select, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatBytes, formatDate } from "../lib/format";
-
-const FORMATS: ReportFormat[] = ["md", "json", "csv", "html", "pdf", "docx", "xlsx"];
+import { canPreview, isResultFormat, resultFormatOptions } from "../lib/resultFormats";
 
 export function ResultFiles({ run }: { run: Run }) {
   const { t } = useTranslation();
@@ -61,7 +60,7 @@ export function ResultFiles({ run }: { run: Run }) {
               </span>
             ) : (
               <span className="row-gap">
-                {["html", "pdf", "md"].includes(file.format) ? (
+                {canPreview(file.format) ? (
                   <IconButton icon={Eye} label={t("flow.files.view", { name: file.name })} onClick={() => setPreview(file)} />
                 ) : null}
                 <a
@@ -136,8 +135,10 @@ function CreateFileDialog({ run, open, onClose }: { run: Run; open: boolean; onC
       <Field label={t("flow.files.format")} tip="files.output">
         <Select
           value={format}
-          onChange={(value) => setFormat(value as ReportFormat)}
-          options={FORMATS.map((value) => ({ value, label: t(`flow.files.formats.${value}`) }))}
+          onChange={(value) => {
+            if (isResultFormat(value)) setFormat(value);
+          }}
+          options={resultFormatOptions(t)}
         />
       </Field>
       <Field label={t("flow.files.content")}>

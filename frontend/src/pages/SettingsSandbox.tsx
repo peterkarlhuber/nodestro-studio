@@ -341,7 +341,9 @@ function dockerDecides(selection: SandboxSelection): boolean {
 function blockedLead(t: (key: string) => string, selection: SandboxSelection, dockerReason: string): string {
   // Python process on Linux: the built-in Linux sandbox is the other way to run AI-created tools.
   if (selection.mode === "subprocess" && selection.os === "linux") return t("settings.sandbox.blocked.subprocessLinux");
-  if (!dockerDecides(selection)) return t(`settings.sandbox.blocked.${selection.mode}`);
+  // The same condition as dockerDecides(), written out so that the key below is one of two known ones.
+  if (selection.profile === "desktop" && (selection.mode === "subprocess" || selection.mode === "linux"))
+    return t(`settings.sandbox.blocked.${selection.mode}`);
   if (dockerReason === "docker-checking") return t("settings.sandbox.blocked.checking");
   if (dockerReason && dockerReason !== "docker-missing" && dockerReason !== "docker-unreachable")
     return t("settings.sandbox.blocked.dockerRefused");

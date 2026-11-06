@@ -43,11 +43,12 @@ import { useNavRail } from "../lib/navRail";
 import { safeReturnPath, settingsHref } from "../lib/settingsLink";
 import { useTheme } from "../lib/theme";
 import { GlobalSearch } from "./GlobalSearch";
+import type NavTexts from "../i18n/locales/en/nav.json";
 
 interface NavItem {
   to: string;
-  /** Key below "nav." in the language files. */
-  label: string;
+  /** Key below "nav." in the language files (typed by them, so a label without a text does not compile). */
+  label: keyof typeof NavTexts;
   icon: LucideIcon;
   end?: boolean;
   /** A count shown next to the label (e.g. approvals waiting for a decision). */

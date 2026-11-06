@@ -113,7 +113,7 @@ export function DiagnosticsPanel() {
             <dl className="key-values">
               {Object.entries(data.versions).map(([name, version]) => (
                 <div key={name}>
-                  <dt>{t(`diagnostics.version.${name}`)}</dt>
+                  <dt>{t(`diagnostics.version.${name}`, { defaultValue: name })}</dt>
                   <dd>
                     <code>{version}</code>
                   </dd>

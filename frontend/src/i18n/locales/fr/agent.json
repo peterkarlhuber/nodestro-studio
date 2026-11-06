@@ -95,7 +95,8 @@
     "kind": {
       "builtin": "Intégrés",
       "custom": "Personnels",
-      "generated": "Générés par l’IA"
+      "generated": "Générés par l’IA",
+      "mcp": "Services externes"
     },
     "missingHint": "Il manque un outil ? Écrivez-le vous-même dans la <a>bibliothèque d’outils</a> ou faites-le créer par l’IA.",
     "serverTools": "Outils serveur d’Anthropic",

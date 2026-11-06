@@ -7,8 +7,8 @@ import i18n from "../i18n";
 import { CheckRow, DiagnosticsPanel } from "./SettingsMaintenance";
 
 const DIAGNOSTICS = {
-  versions: { studio: "0.2.0", runtime: "0.2.0" },
-  checks: [{ id: "database", status: "ok", code: "diagnostics.database_ok", params: {}, message: "ok" }],
+  versions: { nodestro: "0.2.0", orkexa: "0.2.0" },
+  checks: [{ id: "database", status: "ok", code: "ok", params: {}, message: "ok" }],
   status: "ok",
 };
 

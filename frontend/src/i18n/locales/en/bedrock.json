@@ -20,7 +20,7 @@
     "profile": "AWS profile",
     "profileHint": "A named profile from your AWS configuration (~/.aws/config). Only the name is stored; the credentials stay in your AWS configuration.",
     "operator_role": "Role assigned by the operator",
-    "operatorHint": "Your operator gave this workspace its own AWS role. You cannot see or change it.",
+    "operator_roleHint": "Your operator gave this workspace its own AWS role. You cannot see or change it.",
     "notAvailable": "Amazon Bedrock is not available on this server for this workspace. Ask your operator to assign an AWS role to it."
   },
   "profile": {

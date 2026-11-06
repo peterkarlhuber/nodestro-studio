@@ -239,7 +239,7 @@
     "orchestratorTemplate": "A team exists only during the run. This button turns it into a new workflow of its own: the same orchestrator with exactly the teams that worked, in their versions. You can edit it afterwards; only people who may edit workflows can change it."
   },
   "files": {
-    "output": "Formats in which the result node stores its result at the end of the run: Markdown, JSON, CSV, HTML or PDF.",
+    "output": "Formats in which the result node stores its result at the end of the run: Markdown, JSON, CSV, HTML, PDF, Word (.docx) or Excel (.xlsx).",
     "sanitize": "Replaces credentials and personal data in the file with placeholders.",
     "run": "Files of this run. HTML is shown without scripts.",
     "formats": "Word (DOCX) and Excel (XLSX) are converted to Markdown on upload; formulas are shown, never run.",

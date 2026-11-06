@@ -239,7 +239,7 @@
     "orchestratorTemplate": "Un equipo solo existe durante la ejecución. Este botón lo convierte en un flujo de trabajo nuevo y propio: el mismo orquestador con exactamente los equipos que trabajaron, en sus versiones. Después puedes editarlo; solo puede cambiarlo quien pueda editar flujos de trabajo."
   },
   "files": {
-    "output": "Formatos en los que el nodo de resultado guarda su resultado al final de la ejecución: Markdown, JSON, CSV, HTML o PDF.",
+    "output": "Formatos en los que el nodo de resultado guarda su resultado al final de la ejecución: Markdown, JSON, CSV, HTML, PDF, Word (.docx) o Excel (.xlsx).",
     "sanitize": "Sustituye credenciales y datos personales del archivo por marcadores.",
     "run": "Archivos de esta ejecución. El HTML se muestra sin scripts.",
     "formats": "Word (DOCX) y Excel (XLSX) se convierten a Markdown al subirlos; las fórmulas se muestran, nunca se ejecutan.",

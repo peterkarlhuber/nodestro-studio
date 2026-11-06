@@ -239,7 +239,7 @@
     "orchestratorTemplate": "Une équipe n’existe que pendant l’exécution. Ce bouton en fait un nouveau workflow à part entière : le même orchestrateur avec exactement les équipes qui ont travaillé, dans leurs versions. Vous pouvez ensuite le modifier ; seules les personnes autorisées à modifier des workflows peuvent le changer."
   },
   "files": {
-    "output": "Formats dans lesquels le nœud de résultat enregistre son résultat en fin d’exécution : Markdown, JSON, CSV, HTML ou PDF.",
+    "output": "Formats dans lesquels le nœud de résultat enregistre son résultat en fin d’exécution : Markdown, JSON, CSV, HTML, PDF, Word (.docx) ou Excel (.xlsx).",
     "sanitize": "Remplace les identifiants et données personnelles du fichier par des espaces réservés.",
     "run": "Fichiers de cette exécution. Le HTML est affiché sans scripts.",
     "formats": "Word (DOCX) et Excel (XLSX) sont convertis en Markdown à l’import ; les formules sont affichées, jamais exécutées.",

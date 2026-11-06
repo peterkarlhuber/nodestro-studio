@@ -126,7 +126,9 @@
       "json": "JSON (.json)",
       "csv": "Tabella CSV (.csv)",
       "html": "Pagina HTML (.html)",
-      "pdf": "PDF (.pdf)"
+      "pdf": "PDF (.pdf)",
+      "docx": "Documento Word (.docx)",
+      "xlsx": "Cartella di lavoro Excel (.xlsx)"
     },
     "name": "Nome del file",
     "namePlaceholder": "Nome del workflow",

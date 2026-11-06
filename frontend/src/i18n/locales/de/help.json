@@ -239,7 +239,7 @@
     "orchestratorTemplate": "Ein Team besteht nur während des Laufs. Mit diesem Knopf wird daraus ein neuer, eigener Workflow: derselbe Orchestrator mit genau den Teams, die gearbeitet haben, in ihren Versionen. Du kannst ihn danach bearbeiten; ändern kann ihn nur, wer Workflows bearbeiten darf."
   },
   "files": {
-    "output": "Formate, in denen der Ergebnis-Knoten sein Ergebnis am Ende des Laufs speichert: Markdown, JSON, CSV, HTML oder PDF.",
+    "output": "Formate, in denen der Ergebnis-Knoten sein Ergebnis am Ende des Laufs speichert: Markdown, JSON, CSV, HTML, PDF, Word (.docx) oder Excel (.xlsx).",
     "sanitize": "Ersetzt Zugangsdaten und persönliche Daten in der Datei durch Platzhalter.",
     "run": "Dateien dieses Laufs. HTML wird ohne Skripte angezeigt.",
     "formats": "Word (DOCX) und Excel (XLSX) werden beim Hochladen in Markdown umgewandelt; Formeln werden angezeigt, nie ausgeführt.",
