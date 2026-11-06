@@ -3460,6 +3460,8 @@ export interface AssistantFileSupport {
   images: boolean;
   pdfs: boolean;
   formats: FileFormatInfo[];
+}
+
 // --- params ---
 
 /** The operations of Nodestro's own AI requests that have a configurable output limit (Settings > Model output limits). */
