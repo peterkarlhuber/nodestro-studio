@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Copy, Diamond, FilePlus2, FileUp, Network, Plus, Sparkles, Trash2 } from "lucide-react";
-import { type ChangeEvent, useRef, useState } from "react";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
 import { api } from "../api/client";
+import { preloadEditor } from "../editorChunk";
 import { keys, useOrganize, useSettings, useWorkflows } from "../api/hooks";
 import { ArchitectDialog, ArchitectOptions, type ArchitectStart } from "../architect/ArchitectDialog";
 import { useTakeHandover } from "../assistant/handover";
@@ -71,6 +72,8 @@ function starterGraph(): Pick<WorkflowIn, "nodes" | "edges"> {
 
 export function WorkflowsPage() {
   const { t } = useTranslation();
+  // Most visits here end in the editor: its code downloads while the browser is idle (ST-004).
+  useEffect(() => preloadEditor(), []);
   const workflows = useWorkflows();
   const queryClient = useQueryClient();
   const navigate = useNavigate();

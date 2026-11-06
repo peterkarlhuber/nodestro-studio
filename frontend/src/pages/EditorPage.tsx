@@ -15,6 +15,7 @@ import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
 import { keys, useWorkflows } from "../api/hooks";
 import type { ArchitectJob, Run, Workflow } from "../api/types";
+import { MountWhenOpened } from "../components/MountWhenOpened";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
 import { Button, DisabledReason, DocLink, Hint, MenuButton, Modal, Spinner } from "../components/ui";
@@ -544,9 +545,15 @@ export function EditorPage() {
         />
       ) : null}
       <Inspector check={check.data} panelRef={inspectorRef} />
-      <RunDialog open={runOpen} onClose={() => setRunOpen(false)} onStarted={onStarted} save={save} check={check.data} />
-      <ApiDialog open={apiOpen} onClose={closeApi} workflowId={id} dirty={dirty} save={save} />
-      <VersionsDialog open={versionsOpen} onClose={() => setVersionsOpen(false)} save={save} onRestored={onRestored} />
+      <MountWhenOpened open={runOpen}>
+        <RunDialog open={runOpen} onClose={() => setRunOpen(false)} onStarted={onStarted} save={save} check={check.data} />
+      </MountWhenOpened>
+      <MountWhenOpened open={apiOpen}>
+        <ApiDialog open={apiOpen} onClose={closeApi} workflowId={id} dirty={dirty} save={save} />
+      </MountWhenOpened>
+      <MountWhenOpened open={versionsOpen}>
+        <VersionsDialog open={versionsOpen} onClose={() => setVersionsOpen(false)} save={save} onRestored={onRestored} />
+      </MountWhenOpened>
       <Modal
         title={t("editor.page.discardTitle")}
         open={discardOpen}
@@ -579,24 +586,28 @@ export function EditorPage() {
           conflictAnswer.current = null;
         }}
       />
-      <ArchitectDialog
-        open={architectOpen}
-        onClose={() => setArchitectOpen(false)}
-        modes={["revise", "create"]}
-        start={architectStart}
-        current={() => {
-          const state = useEditor.getState();
-          return { workflow: state.toWorkflow(), workflowId: id, dirty: state.dirty };
-        }}
-        onCreated={(created) => navigate(`/workflows/${created}`)}
-        onRevision={applyRevision}
-      />
-      <DesignAgentDialog
-        open={designOpen}
-        onClose={() => setDesignOpen(false)}
-        initial={designInitial}
-        onApply={(config) => addVisibleNode("agent", config)}
-      />
+      <MountWhenOpened open={architectOpen}>
+        <ArchitectDialog
+          open={architectOpen}
+          onClose={() => setArchitectOpen(false)}
+          modes={["revise", "create"]}
+          start={architectStart}
+          current={() => {
+            const state = useEditor.getState();
+            return { workflow: state.toWorkflow(), workflowId: id, dirty: state.dirty };
+          }}
+          onCreated={(created) => navigate(`/workflows/${created}`)}
+          onRevision={applyRevision}
+        />
+      </MountWhenOpened>
+      <MountWhenOpened open={designOpen}>
+        <DesignAgentDialog
+          open={designOpen}
+          onClose={() => setDesignOpen(false)}
+          initial={designInitial}
+          onApply={(config) => addVisibleNode("agent", config)}
+        />
+      </MountWhenOpened>
       <UnsavedChangesModal
         open={blocker.state === "blocked"}
         onStay={() => blocker.reset?.()}
