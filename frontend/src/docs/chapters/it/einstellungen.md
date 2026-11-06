@@ -215,6 +215,36 @@ La lingua riguarda solo l'**interfaccia**: menu, avvisi, messaggi di errore, que
 
 In alto a destra passi da **Scuro** a **Chiaro**. La scelta viene salvata nel browser. Entrambe le varianti seguono il design system *Midnight Citron*. Sugli schermi stretti la barra laterale è nascosta: il pulsante del menu in alto a sinistra (**Mostra tutte le pagine**) la apre come pannello ed **Esc** la richiude.
 
+## Visualizzazione del ragionamento {#denken-anzeige}
+<!-- keywords: ragionamento, thinking, reasoning, riepilogo, pensiero, in diretta, stato, non trasmesso -->
+
+Mentre un modello lavora, Nodestro mostra ciò che il suo provider trasmette del ragionamento: nell’assistente, nella chat con il team leader di un’esecuzione, nelle esecuzioni dei workflow, nell’Architetto di workflow e nel test dell’agente. **Nodestro non scrive, completa o riformula mai da sé il ragionamento.** Se un provider tiene per sé il ragionamento, vedi solo che il modello sta ragionando, e perché non c’è testo.
+
+La visualizzazione separa sempre il ragionamento dalla risposta (cornice tratteggiata, etichetta propria) e indica uno di questi stati:
+
+| Stato | Significato |
+|---|---|
+| *Sta ragionando…* | È in corso una fase di ragionamento; non è (ancora) arrivato testo, oppure il testo è nascosto. |
+| *Testo del ragionamento* | Il ragionamento del modello così come è stato generato (modelli aperti, ad es. tramite Ollama o vLLM). |
+| *Riepilogo del ragionamento* | Un riepilogo scritto dal provider di un ragionamento che non espone (OpenAI, Gemini, Claude). |
+| *Ragionamento non trasmesso* | Il modello ha ragionato, ma il provider non ha inviato testo (cifrato, omesso o non richiesto). |
+| *Ragionamento non esposto* | Il modello non ragiona, oppure il suo provider non invia mai il ragionamento. |
+
+**Visualizzazione in questo browser** (sezione *Visualizzazione del ragionamento*): *Mostra in diretta* apre il testo mentre arriva, *Compresso* (predefinito) mostra l’attività e lascia il testo a un clic, *Solo stato* non mostra mai il testo. L’assistente e la chat con il team leader hanno una propria scelta per conversazione (**Ragionamento** sotto l’inserimento o l’introduzione); *Predefinito* segue la scelta globale. La scelta resta in questo browser e non modifica alcun workflow né alcuna conversazione.
+
+**Mostrare non è attivare.** Se e quanto un modello ragiona si imposta sull’agente ([Ragionamento e impegno](/docs/agenten#denken)). Alcuni provider inviano testo solo su richiesta:
+
+| Provider | Cosa arriva in diretta | Come ottenere il testo |
+|---|---|---|
+| Anthropic (Claude 4 e successivi) | riepilogo | l’opzione dell’agente per mostrare il ragionamento (*Mostra in sintesi*) |
+| OpenAI (modelli che ragionano) | riepilogo; il ragionamento stesso mai | **Richiedi riepiloghi del ragionamento** (amministratori; OpenAI può richiedere un’organizzazione verificata) |
+| OpenAI GPT-4o, GPT-4.1 | niente: non ragionano | – |
+| Gemini 2.5 e successivi | riepilogo (riepiloghi dei pensieri) | **Richiedi riepiloghi del ragionamento** |
+| Amazon Bedrock | Claude: riepilogo; altri modelli che ragionano: testo del ragionamento quando il modello lo invia | le opzioni di richiesta dell’agente |
+| Ollama, vLLM, server compatibili con OpenAI | testo del ragionamento quando il server lo separa | la configurazione del server (ad es. un parser del ragionamento) |
+
+Richiedere i riepiloghi non cambia alcuna risposta né alcun costo: il provider fattura i token di ragionamento sia che il testo venga trasmesso sia che no. Le opzioni di ragionamento dell’agente indicano ciò che trasmette il suo modello (*Ragionamento in diretta: …*).
+
 ## Backup e ripristino {#backup}
 <!-- keywords: backup, copia di sicurezza, ripristinare, esportare, zip, trasloco, salvataggio dati -->
 

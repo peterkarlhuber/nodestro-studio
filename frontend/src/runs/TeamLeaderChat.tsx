@@ -6,11 +6,13 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useAccess } from "../api/access";
-import type { ChatTarget, RunChatView, RunMessage, TeamActivity } from "../api/types";
+import type { ChatTarget, LiveAnswer, RunChatView, RunMessage, TeamActivity } from "../api/types";
 import { PermissionNote } from "../components/Access";
+import { ReasoningView, ScopedThinkingDisplay } from "../components/ReasoningView";
 import { Badge, Button, Callout, DocLink, Field, Segmented, Spinner, StatusBadge, TextArea } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { STATUS_TONE, formatCost, formatNumber, formatTime } from "../lib/format";
+import { type ThinkingDisplay, useThinkingDisplay } from "../lib/thinkingDisplay";
 import {
   type ChatEntry,
   type ChatMode,
@@ -152,19 +154,33 @@ function Author({ message }: { message: RunMessage }) {
 }
 
 /** A question with its answer, an instruction with its status. */
-function Entry({ entry, teams }: { entry: ChatEntry; teams: TeamActivity[] }) {
+function Entry({ entry, teams, live, display }: { entry: ChatEntry; teams: TeamActivity[]; live?: LiveAnswer; display: ThinkingDisplay }) {
   const { message, answer } = entry;
   return (
     <li className={`lrc-message lrc-message--${message.kind}`} data-testid="lrc-message" data-kind={message.kind} data-status={message.status}>
       <Author message={message} />
       <p className="lrc-message__text">{message.content}</p>
       <MessageStatusLine message={message} teams={teams} />
-      {answer ? <Answer message={answer} /> : null}
+      {answer ? <Answer message={answer} display={display} /> : live ? <LiveAnswerView live={live} display={display} /> : null}
     </li>
   );
 }
 
-function Answer({ message }: { message: RunMessage }) {
+/** An answer being written: the team leader's reasoning and text as they arrive (only what its provider sends). */
+function LiveAnswerView({ live, display }: { live: LiveAnswer; display: ThinkingDisplay }) {
+  const { t } = useTranslation();
+  return (
+    <div className="lrc-answer" data-testid="lrc-live-answer">
+      <span className="muted small lrc-message__meta">
+        <MessageSquareText size={12} aria-hidden /> {t("runChat.answer.label")} · {t("reasoning.answering")}
+      </span>
+      <ReasoningView trace={live.reasoning} display={display} testId="lrc-reasoning" />
+      {live.text ? <p className="lrc-message__text">{live.text}</p> : null}
+    </div>
+  );
+}
+
+function Answer({ message, display }: { message: RunMessage; display: ThinkingDisplay }) {
   const { t } = useTranslation();
   return (
     <div className="lrc-answer" data-testid="lrc-answer">
@@ -172,6 +188,7 @@ function Answer({ message }: { message: RunMessage }) {
         <MessageSquareText size={12} aria-hidden /> {t("runChat.answer.label")}
         {message.snapshot_at ? ` · ${t("runChat.answer.snapshot", { time: formatTime(message.snapshot_at) })}` : ""}
       </span>
+      <ReasoningView trace={message.reasoning} display={display} testId="lrc-reasoning" />
       <p className="lrc-message__text">{message.content}</p>
     </div>
   );
@@ -300,6 +317,7 @@ function Composer({
 export function TeamLeaderChat({ runId, budgetWaiting = false }: { runId: string; budgetWaiting?: boolean }) {
   const { t } = useTranslation();
   const { view, send } = useRunChat(runId);
+  const { display } = useThinkingDisplay(`run-chat:${runId}`);
   const [chosen, setChosen] = useState<string | null>(null);
   const data = view.data;
   const target = data ? pickTarget(data.targets, chosen) : null;
@@ -326,6 +344,7 @@ export function TeamLeaderChat({ runId, budgetWaiting = false }: { runId: string
         <p className="muted small">
           {t("runChat.intro")} <DocLink to="ausfuehrungen#teamleitung" label={t("runChat.docs")} />
         </p>
+        <ScopedThinkingDisplay scope={`run-chat:${runId}`} testId="lrc-thinking-display" />
       </div>
       {budgetWaiting ? (
         <div data-testid="lrc-budget-paused">
@@ -339,7 +358,13 @@ export function TeamLeaderChat({ runId, budgetWaiting = false }: { runId: string
       {target ? <TargetActivity target={target} /> : null}
       <ol ref={list} className="lrc-messages" role="log" aria-live="polite" aria-label={t("runChat.messages")}>
         {entries.map((entry) => (
-          <Entry key={entry.message.id} entry={entry} teams={target?.teams ?? []} />
+          <Entry
+            key={entry.message.id}
+            entry={entry}
+            teams={target?.teams ?? []}
+            live={data.answering?.find((item) => item.question_id === entry.message.id)}
+            display={display}
+          />
         ))}
       </ol>
       {entries.length ? null : <p className="muted small">{t("runChat.empty")}</p>}

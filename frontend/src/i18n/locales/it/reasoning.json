@@ -1,0 +1,54 @@
+{
+  "status": {
+    "active": "Sta ragionando…",
+    "done": "Ragionamento concluso"
+  },
+  "hiddenByPreference": "Testo nascosto (visualizzazione: solo stato)",
+  "state": {
+    "text": "Testo del ragionamento",
+    "summary": "Riepilogo del ragionamento",
+    "notTransmitted": "Ragionamento non trasmesso",
+    "notExposed": "Ragionamento non esposto"
+  },
+  "why": {
+    "redacted": "Il provider ha inviato questo ragionamento solo cifrato o l’ha omesso, quindi non c’è testo da mostrare.",
+    "thinkingDisplay": "La visualizzazione del ragionamento dell’agente omette il testo. Scegli «Mostra in sintesi» nelle opzioni di ragionamento dell’agente per riceverlo.",
+    "notRequested": "Il provider invia riepiloghi del ragionamento solo su richiesta. Un amministratore può attivare «Richiedi riepiloghi del ragionamento» nelle impostazioni.",
+    "notExposed": "Questo modello non ragiona, oppure il suo provider non invia mai il ragionamento. Nodestro non inventa mai testo di ragionamento.",
+    "noText": "Il provider ha segnalato una fase di ragionamento ma non ha inviato testo."
+  },
+  "source": {
+    "text": "Inviato dal modello mentre ragionava. Non fa parte della risposta.",
+    "summary": "Un riepilogo scritto dal provider di un ragionamento che non espone. Non fa parte della risposta."
+  },
+  "display": {
+    "label": "Ragionamento",
+    "live": "Mostra in diretta",
+    "collapsed": "Compresso",
+    "status": "Solo stato",
+    "default": "Predefinito ({{value}})"
+  },
+  "answering": "Sta rispondendo…",
+  "steps": {
+    "analysis": "Ragionamento sui requisiti",
+    "plan": "Ragionamento sulla pianificazione",
+    "agent_revision": "Ragionamento sugli agenti",
+    "repair": "Ragionamento sulla riparazione"
+  },
+  "settings": {
+    "title": "Visualizzazione del ragionamento",
+    "intro": "Come viene mostrato il ragionamento dei modelli mentre lavorano. Viene mostrato solo ciò che invia il provider; Nodestro non scrive mai da sé testo di ragionamento.",
+    "display": "Visualizzazione in questo browser",
+    "displayHint": "Vale per l’assistente, la chat dell’esecuzione, le esecuzioni dei workflow, l’Architetto di workflow e il test dell’agente. Ogni conversazione può scegliere una propria visualizzazione.",
+    "summaries": "Richiedi riepiloghi del ragionamento",
+    "summariesHint": "Chiede a OpenAI e Gemini riepiloghi del ragionamento dei modelli che ragionano. Non cambia nessuna risposta né alcun costo; OpenAI può richiedere un’organizzazione verificata. I modelli Anthropic seguono la visualizzazione del ragionamento dell’agente.",
+    "adminOnly": "Solo gli amministratori possono modificare questa impostazione."
+  },
+  "model": {
+    "summary": "Ragionamento in diretta: il provider di questo modello invia riepiloghi del ragionamento.",
+    "summaryNotRequested": "Ragionamento in diretta: il provider di questo modello invia riepiloghi solo se l’area di lavoro li richiede (impostazioni).",
+    "thinking": "Ragionamento in diretta: questo modello invia il suo testo di ragionamento.",
+    "none": "Ragionamento in diretta: questo modello non invia alcun ragionamento.",
+    "unknown": "Ragionamento in diretta: l’invio del ragionamento dipende dalla configurazione del server."
+  }
+}

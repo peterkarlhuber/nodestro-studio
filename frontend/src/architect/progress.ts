@@ -2,6 +2,7 @@
 // log, the growing graph and the cost so far. Everything comes from the backend's events; the
 // interface adds no progress of its own.
 
+import { withDelta, withStatus } from "../lib/reasoningTrace";
 import type { ArchitectEvent, ArchitectJob, ArchitectMark, ArchitectPhase, ArchitectStatus, WorkflowIn, WorkflowNode } from "../api/types";
 
 export interface ArchitectGraph {
@@ -14,6 +15,7 @@ export interface ArchitectGraph {
 /** One event applied to the job, without changing the original object. */
 export function applyArchitectEvent(job: ArchitectJob, event: ArchitectEvent): ArchitectJob {
   if (job.id !== event.job_id || job.events.some((item) => item.seq === event.seq)) return job;
+  if (event.type === "thinking" || event.type === "thinking_status") return withReasoning(job, event);
   const next: ArchitectJob = { ...job, events: [...job.events, event] };
   if (event.cost_usd !== null) next.usage = { ...next.usage, estimated_cost_usd: event.cost_usd };
   switch (event.type) {
@@ -33,6 +35,23 @@ export function applyArchitectEvent(job: ArchitectJob, event: ArchitectEvent): A
       break;
   }
   return next;
+}
+
+/**
+ * A live reasoning event: it changes the entry of its request (``data.index``) and, like on the server, is not kept in
+ * the job's events (a long reasoning cannot crowd out the activity log).
+ */
+function withReasoning(job: ArchitectJob, event: ArchitectEvent): ArchitectJob {
+  const reasoning = [...(job.reasoning ?? [])];
+  const index = typeof event.data.index === "number" ? event.data.index : reasoning.length - 1;
+  const step = String(event.data.step ?? "plan");
+  const current = reasoning[index] ?? { text: "", kind: null, phases: 0, redacted: false, active: false, step };
+  const changed =
+    event.type === "thinking"
+      ? withDelta(current, event.message, event.data.reasoning_kind)
+      : withStatus(current, event.data.state, event.data.redacted);
+  reasoning[index] = { ...changed, step };
+  return { ...job, reasoning };
 }
 
 /** The latest graph the job reported, or the draft once it is ready. */

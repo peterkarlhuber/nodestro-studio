@@ -22,6 +22,7 @@ import type { ArchitectEvent, ArchitectJob, ArchitectPhase } from "../api/types"
 import { HelpTip } from "../components/Tooltip";
 import { formatCost, formatTime } from "../lib/format";
 import { ArchitectGraph, MarkLegend } from "./ArchitectGraph";
+import { ArchitectReasoning } from "./ArchitectReasoning";
 import { latestGraph, logEntries, stepStates } from "./progress";
 
 export const PHASE_ICONS: Record<ArchitectPhase, LucideIcon> = {
@@ -97,6 +98,7 @@ function ActivityLog({ job }: { job: ArchitectJob }) {
         })}
         {!entries.length ? <li className="muted small">{t("architect.progress.starting")}</li> : null}
       </ol>
+      <ArchitectReasoning job={job} />
     </section>
   );
 }

@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import anthropic
 from e2e_defaults import keep_cloud_defaults
 import httpx
-from nodestro_runtime.testing import text, tool_use
+from nodestro_runtime.testing import text, thinking, tool_use
 import uvicorn
 
 from nodestro_studio.app import create_app, studio_config
@@ -84,7 +84,15 @@ class _Stream:
             input_tokens=1200, output_tokens=1, cache_read_input_tokens=0, cache_creation_input_tokens=0
         )
         yield SimpleNamespace(type="message_start", message=SimpleNamespace(model=self.response.model, usage=usage))
-        for block in self.response.content:
+        for index, block in enumerate(self.response.content):
+            if block.type in ("thinking", "redacted_thinking"):
+                # Summarized thinking, as Claude streams it (the browser test of the live reasoning display).
+                yield SimpleNamespace(type="content_block_start", index=index, content_block=block)
+                for piece in re.findall(r"\S+\s*", getattr(block, "thinking", "") or ""):
+                    threading.Event().wait(self.delay)
+                    yield SimpleNamespace(type="thinking", thinking=piece)
+                yield SimpleNamespace(type="content_block_stop", index=index)
+                continue
             if block.type != "text":
                 continue
             for word in re.findall(r"\S+\s*", block.text):
@@ -141,6 +149,15 @@ class AssistantModel:
                 )
             return _Stream(
                 text("Ich habe eine Übergabe an den Workflow-Architekten vorbereitet. Geändert wurde nichts.")
+            )
+        if "denk nach" in lower:
+            return _Stream(
+                thinking(
+                    "Die Frage betrifft Läufe. Ein Lauf ist eine Ausführung eines Workflows; "
+                    "ich erkläre das kurz und verweise auf die Dokumentation.",
+                    "Ein **Lauf** ist eine Ausführung eines Workflows.",
+                ),
+                delay=0.12,
             )
         if "ausführlich" in lower:
             return _Stream(text(" ".join(f"Absatz{index}" for index in range(400))), delay=0.08)

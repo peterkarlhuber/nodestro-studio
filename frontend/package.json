@@ -15,6 +15,7 @@
     "e2e:architect": "node e2e/architect.mjs",
     "e2e:python": "node e2e/python.mjs",
     "e2e:assistant": "node e2e/assistant.mjs",
+    "e2e:reasoning": "node e2e/reasoning.mjs",
     "e2e:flow": "node e2e/flow.mjs",
     "e2e:panels": "node e2e/panels.mjs",
     "e2e:api": "node e2e/api.mjs",

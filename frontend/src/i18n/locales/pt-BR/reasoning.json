@@ -1,0 +1,54 @@
+{
+  "status": {
+    "active": "Pensando…",
+    "done": "Raciocínio concluído"
+  },
+  "hiddenByPreference": "Texto oculto (exibição: só status)",
+  "state": {
+    "text": "Texto do raciocínio",
+    "summary": "Resumo do raciocínio",
+    "notTransmitted": "Raciocínio não transmitido",
+    "notExposed": "Raciocínio não exposto"
+  },
+  "why": {
+    "redacted": "O provedor enviou este raciocínio apenas criptografado ou o omitiu, então não há texto para mostrar.",
+    "thinkingDisplay": "A exibição do raciocínio do agente omite o texto. Escolha “Mostrar resumido” nas opções de raciocínio do agente para recebê-lo.",
+    "notRequested": "O provedor envia resumos do raciocínio só quando solicitado. Um administrador pode ativar “Solicitar resumos do raciocínio” nas configurações.",
+    "notExposed": "Este modelo não raciocina, ou o provedor dele nunca envia o raciocínio. O Nodestro nunca inventa texto de raciocínio.",
+    "noText": "O provedor marcou uma fase de raciocínio, mas não enviou texto."
+  },
+  "source": {
+    "text": "Enviado pelo modelo enquanto raciocinava. Não faz parte da resposta.",
+    "summary": "Um resumo escrito pelo provedor de um raciocínio que ele não expõe. Não faz parte da resposta."
+  },
+  "display": {
+    "label": "Raciocínio",
+    "live": "Mostrar ao vivo",
+    "collapsed": "Recolhido",
+    "status": "Só status",
+    "default": "Padrão ({{value}})"
+  },
+  "answering": "Respondendo…",
+  "steps": {
+    "analysis": "Raciocínio sobre os requisitos",
+    "plan": "Raciocínio sobre o planejamento",
+    "agent_revision": "Raciocínio sobre os agentes",
+    "repair": "Raciocínio sobre a correção"
+  },
+  "settings": {
+    "title": "Exibição do raciocínio",
+    "intro": "Como o raciocínio dos modelos é mostrado enquanto eles trabalham. Só é mostrado o que o provedor envia; o Nodestro nunca escreve texto de raciocínio por conta própria.",
+    "display": "Exibição neste navegador",
+    "displayHint": "Vale para o assistente, o chat da execução, as execuções de fluxos, o Arquiteto de fluxos e o teste de agente. Cada conversa pode escolher a própria exibição.",
+    "summaries": "Solicitar resumos do raciocínio",
+    "summariesHint": "Pede à OpenAI e ao Gemini resumos do raciocínio dos modelos que raciocinam. Não muda nenhuma resposta nem custo; a OpenAI pode exigir uma organização verificada. Os modelos da Anthropic seguem a exibição do raciocínio do agente.",
+    "adminOnly": "Só administradores podem alterar esta configuração."
+  },
+  "model": {
+    "summary": "Raciocínio ao vivo: o provedor deste modelo envia resumos do raciocínio.",
+    "summaryNotRequested": "Raciocínio ao vivo: o provedor deste modelo envia resumos só quando o espaço de trabalho os solicita (configurações).",
+    "thinking": "Raciocínio ao vivo: este modelo envia o texto do raciocínio.",
+    "none": "Raciocínio ao vivo: este modelo não envia raciocínio.",
+    "unknown": "Raciocínio ao vivo: se o servidor envia raciocínio depende da configuração dele."
+  }
+}

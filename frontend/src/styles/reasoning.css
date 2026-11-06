@@ -1,0 +1,127 @@
+/* Reasoning (thinking text, reasoning summaries, status): components/ReasoningView.tsx. Set apart from the answer by
+   a dashed edge, a muted tone and its own label; the answer itself is never styled like this. */
+
+.reasoning {
+  margin: 4px 0 8px;
+  border: 1px dashed var(--nd-border-strong);
+  border-radius: var(--nd-radius-sm);
+  background: var(--nd-surface-raised);
+  color: var(--nd-text-muted);
+  font-size: var(--nd-font-size-sm);
+  max-width: 100%;
+  min-width: 0;
+}
+
+.reasoning--status,
+.reasoning--empty {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 10px;
+}
+
+.reasoning--empty > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.reasoning > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 6px 10px;
+  min-height: 24px;
+  list-style: none;
+  cursor: pointer;
+  border-radius: var(--nd-radius-sm);
+}
+
+.reasoning > summary::-webkit-details-marker {
+  display: none;
+}
+
+.reasoning > summary:hover {
+  background: var(--nd-surface-hover);
+}
+
+.reasoning > summary:focus-visible,
+.reasoning__body:focus-visible {
+  outline: 2px solid var(--nd-focus);
+  outline-offset: 2px;
+}
+
+.reasoning__chevron {
+  flex: none;
+  transition: transform var(--nd-duration-normal, 150ms) ease;
+}
+
+.reasoning[open] > summary > .reasoning__chevron {
+  transform: rotate(90deg);
+}
+
+.reasoning__icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--nd-text-subtle);
+}
+
+.reasoning__icon--active {
+  color: var(--nd-brand);
+  animation: reasoning-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes reasoning-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.reasoning__label {
+  font-weight: 600;
+  color: var(--nd-text);
+}
+
+.reasoning__note {
+  color: var(--nd-text-subtle);
+}
+
+.reasoning__body {
+  max-height: 260px;
+  overflow: auto;
+  margin: 0 10px;
+  padding: 8px 10px;
+  border-left: 2px solid var(--nd-border-strong);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--nd-text-muted);
+}
+
+.reasoning__source {
+  margin: 4px 10px 8px;
+  color: var(--nd-text-subtle);
+  font-size: var(--nd-font-size-xs);
+}
+
+.reasoning-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--nd-font-size-sm);
+  color: var(--nd-text-muted);
+}
+
+.reasoning-picker > select {
+  width: auto;
+  min-height: 24px;
+}
+
+.architect-reasoning {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}

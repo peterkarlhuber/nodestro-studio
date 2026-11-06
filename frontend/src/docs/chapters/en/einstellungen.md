@@ -215,6 +215,36 @@ The language only affects the **interface**: menus, notes, error messages, this 
 
 At the top right you switch between **Dark** and **Light**. The choice is saved in the browser. Both variants follow the *Midnight Citron* design system. On narrow screens the sidebar is hidden: the menu button at the top left (**Show all pages**) opens it as a panel, and **Esc** closes it again.
 
+## Reasoning display {#denken-anzeige}
+<!-- keywords: thinking, reasoning, reasoning summary, thoughts, live, status, redacted, not transmitted, summaries -->
+
+While a model works, Nodestro shows what its provider transmits of the reasoning: in the assistant, the team leader chat of a run, workflow runs, the Workflow Architect and the agent test. **Nodestro never writes, completes or paraphrases reasoning itself.** If a provider keeps the reasoning to itself, you only see that the model is thinking, and why there is no text.
+
+The display always keeps reasoning apart from the answer (dashed frame, its own label) and names one of these states:
+
+| State | Meaning |
+|---|---|
+| *Thinking…* | A reasoning phase is running; no text has arrived (yet), or the text is hidden. |
+| *Thinking text* | The model's reasoning as it was generated (open-weight models, e.g. via Ollama or vLLM). |
+| *Reasoning summary* | A summary the provider writes of reasoning it does not expose (OpenAI, Gemini, Claude). |
+| *Reasoning not transmitted* | The model reasoned, but the provider sent no text (encrypted, omitted or not requested). |
+| *Reasoning not exposed* | The model does not reason, or its provider never sends reasoning. |
+
+**Display in this browser** (section *Reasoning display*): *Show live* opens the text while it arrives, *Collapsed* (default) shows the activity and keeps the text one click away, *Status only* never shows the text. The assistant and the team leader chat have their own choice per conversation (**Reasoning** below the input or the introduction); *Default* follows the global choice. The choice stays in this browser and changes no workflow and no conversation.
+
+**Showing is not enabling.** Whether and how much a model reasons is set on the agent ([Thinking and effort](/docs/agenten#denken)). Some providers send text only on request:
+
+| Provider | What arrives live | How to get text |
+|---|---|---|
+| Anthropic (Claude 4 and later) | summary | the agent's *Show thoughts* option (*Show summarized*) |
+| OpenAI (reasoning models) | summary; the reasoning itself never | **Request reasoning summaries** (administrators; OpenAI may require a verified organization) |
+| OpenAI GPT-4o, GPT-4.1 | nothing: they do not reason | – |
+| Gemini 2.5 and later | summary (thought summaries) | **Request reasoning summaries** |
+| Amazon Bedrock | Claude: summary; other reasoning models: thinking text where the model sends it | the agent's request options |
+| Ollama, vLLM, OpenAI-compatible servers | thinking text where the server separates it | server configuration (e.g. a reasoning parser) |
+
+Requesting summaries changes no answer and no cost: reasoning tokens are billed by the provider whether text is transmitted or not. The agent's thinking options show what its model transmits (*Live reasoning: …*).
+
 ## Backup and restore {#backup}
 <!-- keywords: backup, restore, export, zip, move, data backup -->
 
