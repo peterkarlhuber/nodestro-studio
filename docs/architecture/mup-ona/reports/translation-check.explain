@@ -1,0 +1,6 @@
+# Explained differences between the German MUP-ONA 1.1 and MUP-ONA.md (category token  # reason)
+ids G0  # the English version keeps the German original wording of the activation command (1.1) below its translation, which names G0 once more
+ids O13  # the translation note below the header table and the new annex B row "1.1-en" name O13
+numbers 1 MiB  # German "1-MiB-Limit" (hyphenated compound, not matched as number+unit) is "1 MiB limit" in English
+numbers 2 MiB  # German "2-MiB-Antwort" (hyphenated compound) is "2 MiB response" in English
+code architektur-umsetzungsplan-orkexa-nodestro-axentra.md  # second occurrence inside the kept German original of the activation command (1.1)
