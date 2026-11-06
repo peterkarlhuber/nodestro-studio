@@ -200,7 +200,16 @@
       "caching": "Cache des prompts",
       "system_messages": "Messages système"
     },
-    "defaultFollowed": "Les nouveaux agents utilisent désormais {{model}} ({{provider}}). Les workflows existants gardent leurs modèles ; vous pouvez modifier ce choix sous Modèles."
+    "defaultFollowed": "Les nouveaux agents utilisent désormais {{model}} ({{provider}}). Les workflows existants gardent leurs modèles ; vous pouvez modifier ce choix sous Modèles.",
+    "limits": {
+      "title": "Limites de tokens des modèles",
+      "hint": "Pour les modèles dont personne ne documente les limites : la réponse la plus longue et la fenêtre de contexte des modèles de ce point d’accès. Les agents et la validation les utilisent ; laissez un champ vide si vous ne connaissez pas la valeur.",
+      "max_output_tokens": "Sortie maximale (tokens)",
+      "context_window": "Fenêtre de contexte (tokens)",
+      "range": "Vide : non déclaré. Un nombre entier de {{min}} à {{max}}.",
+      "invalid": "Saisissez un nombre entier de {{min}} à {{max}} (la sortie maximale ne peut pas dépasser la fenêtre de contexte).",
+      "placeholder": "non déclaré"
+    }
   },
   "nav": {
     "title": "Sur cette page",

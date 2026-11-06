@@ -389,7 +389,7 @@ export function AgentForm({
       <KnowledgeSection agent={agent} update={update} issues={issues} ui={ui("knowledge")} />
       <MemorySection agent={agent} update={update} onAssistant={() => setMemoryOpen(true)} ui={ui("memory")} />
       <OutputSection agent={agent} update={update} ui={ui("output")} />
-      <ThinkingSection agent={agent} update={update} ui={ui("thinking")} />
+      <ThinkingSection agent={agent} update={update} issues={issues} ui={ui("thinking")} />
       <QualitySection agent={agent} update={update} issues={issues} ui={ui("quality")} />
       <AdvancedSection agent={agent} update={update} modelOptions={modelOptions} ui={ui("advanced")} />
 
@@ -889,7 +889,7 @@ function OutputSection({ agent, update, ui }: SectionProps) {
   );
 }
 
-function ThinkingSection({ agent, update, ui }: SectionProps) {
+function ThinkingSection({ agent, update, issues = [], ui }: SectionProps) {
   const { t } = useTranslation();
   const profile = useModelProfile(agent.model);
   const provider = providerOf(agent.model);
@@ -915,6 +915,7 @@ function ThinkingSection({ agent, update, ui }: SectionProps) {
           />
         </BedrockCapability>
       </Field>
+      <FieldErrors issues={issues} field="effort" />
       <Field label={t("agent.thinking.thinking")} tip="agent.thinking">
         <ModelOptionGate profile={profile} provider={provider} option="thinking" set={agent.thinking !== null}>
           <Select

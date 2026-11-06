@@ -1428,6 +1428,11 @@ details[open] > summary > .section__chevron {
   font-size: var(--nd-font-size-sm);
 }
 
+/* A field's hint that says what is wrong with its value. */
+.field__error {
+  color: var(--nd-danger);
+}
+
 @container (min-width: 440px) {
   .output-field {
     grid-template-columns: minmax(0, 1fr) minmax(130px, 170px) auto;

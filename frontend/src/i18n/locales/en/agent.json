@@ -99,7 +99,7 @@
       "mcp": "External services"
     },
     "missingHint": "Missing a tool? Write it yourself in the <a>tool library</a> or have the AI create it.",
-    "serverTools": "Server tools from Anthropic",
+    "serverTools": "Server tools of the model's provider",
     "serverToolsShort": "Server tools"
   },
   "knowledge": {
@@ -250,7 +250,6 @@
     "invalidJson": "Not valid JSON.",
     "objectExpected": "A JSON object is expected."
   },
-  "anthropicOnly": "Only available for Anthropic models.",
   "summary": {
     "problemsIn": "Problems in",
     "more": "+{{count}}",

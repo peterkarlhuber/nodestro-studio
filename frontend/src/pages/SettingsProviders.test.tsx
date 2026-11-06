@@ -135,3 +135,71 @@ describe("provider settings", () => {
     expect(screen.queryByTestId("default-model-notice")).toBeNull();
   });
 });
+
+describe("declared token limits of an endpoint (ST-057)", () => {
+  const ENDPOINT_META = {
+    ...META,
+    providers: [
+      {
+        id: "openai_compatible",
+        label: "openai_compatible",
+        needs_key: false,
+        env_vars: [],
+        base_url: true,
+        default_base_url: null,
+        declare_capabilities: true,
+        example_model: "",
+      },
+    ],
+  };
+  const endpoint = (limits: Record<string, number> | null) =>
+    ({
+      providers: [{ ...status("openai_compatible", true), base_url: "http://gpu-box:8000/v1", limits }],
+      default_provider: "anthropic",
+      default_model: "anthropic:claude-sonnet-5-5",
+      assistant_model: "anthropic:claude-opus-5-5",
+    }) as unknown as Settings;
+
+  function card() {
+    return document.querySelector("[data-provider='openai_compatible']") as HTMLElement;
+  }
+
+  it("shows the declared limits and saves a change with the endpoint, an empty field as removed", async () => {
+    const calls = serve(endpoint({ max_output_tokens: 8192, context_window: 32768 }));
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    client.setQueryData(keys.meta, ENDPOINT_META);
+    show(<ProviderSettings settings={endpoint({ max_output_tokens: 8192, context_window: 32768 })} />, client);
+    const output = within(card()).getByTestId("provider-limit-max_output_tokens") as HTMLInputElement;
+    const window = within(card()).getByTestId("provider-limit-context_window") as HTMLInputElement;
+    expect([output.value, window.value]).toEqual(["8192", "32768"]);
+    const save = within(card()).getByRole("button", { name: "Endpunkt speichern" });
+    expect(save).toBeDisabled();
+    await userEvent.clear(output);
+    await userEvent.clear(window);
+    await userEvent.type(window, "131072");
+    expect(save).toBeEnabled();
+    await userEvent.click(save);
+    await waitFor(() => expect(calls.some((call) => call.method === "PUT")).toBe(true));
+    const sent = calls.find((call) => call.method === "PUT")!.body as { providers: Record<string, { limits: unknown }> };
+    expect(sent.providers.openai_compatible.limits).toEqual({ max_output_tokens: 0, context_window: 131072 });
+  });
+
+  it("names a value the API would refuse and does not save it", async () => {
+    serve(endpoint(null));
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    client.setQueryData(keys.meta, ENDPOINT_META);
+    show(<ProviderSettings settings={endpoint(null)} />, client);
+    const output = within(card()).getByTestId("provider-limit-max_output_tokens");
+    const save = within(card()).getByRole("button", { name: "Endpunkt speichern" });
+    await userEvent.type(output, "100");
+    expect(within(card()).getByTestId("provider-limit-error-max_output_tokens")).toHaveTextContent("ganze Zahl von 256 bis 10.000.000");
+    expect(output).toHaveAttribute("aria-invalid", "true");
+    expect(save).toBeDisabled();
+    await userEvent.clear(output);
+    await userEvent.type(output, "65536");
+    await userEvent.type(within(card()).getByTestId("provider-limit-context_window"), "32768");
+    // The maximum output cannot exceed the context window.
+    expect(within(card()).getByTestId("provider-limit-error-max_output_tokens")).toHaveTextContent("von 256 bis 32.768");
+    expect(save).toBeDisabled();
+  });
+});

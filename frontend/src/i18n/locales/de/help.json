@@ -33,7 +33,7 @@
     "task": "Die konkrete Aufgabe pro Lauf. {{input}} setzt die Ergebnisse der Vorgänger ein, {{runInput}} die Eingabe des Workflows, {{agentName}} das Ergebnis eines bestimmten Vorgängers.",
     "placeholders": "Fügt den Platzhalter eines direkten Vorgängers ein. Nicht verwendete Vorgänger-Ergebnisse werden unter „# Eingaben“ angehängt.",
     "tools": "Funktionen, die der Agent selbst aufrufen kann. Er entscheidet anhand der Tool-Beschreibung, wann ein Aufruf hilft.",
-    "serverTools": "Werkzeuge, die Anthropic auf seinen Servern ausführt. Websuche kostet zusätzlich 10 $ pro 1.000 Suchen.",
+    "serverTools": "Werkzeuge, die der Anbieter des Modells auf seinen eigenen Servern ausführt, etwa die Websuche. Welche davon ein Modell nutzen kann, hängt von seinem Anbieter ab; jedes Werkzeug sagt es. Die Websuche von Anthropic kostet zusätzlich 10 $ pro 1.000 Suchen.",
     "knowledge": "Dateien aus „Wissen“, die dieser Agent nutzen darf. Er sieht nur die hier zugewiesenen Dateien.",
     "knowledgeMode": "Im Kontext: Dateien stehen immer im Prompt. Bei Bedarf: der Agent lädt Dateien selbst (Tool „files“). Durchsuchen: der Agent sucht passende Textstellen (Tool „search“).",
     "citations": "Im Modus „Im Kontext“ verweisen Antworten auf die genauen Stellen in den Dokumenten (im Modus „Durchsuchen“ sind Quellen immer dabei). Nicht mit einem strukturierten Ausgabeformat kombinierbar.",

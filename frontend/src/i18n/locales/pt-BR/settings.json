@@ -200,7 +200,16 @@
       "caching": "Cache de prompts",
       "system_messages": "Mensagens de sistema"
     },
-    "defaultFollowed": "Novos agentes agora usam {{model}} ({{provider}}). Os fluxos de trabalho existentes mantêm seus modelos; você pode mudar isso em Modelos."
+    "defaultFollowed": "Novos agentes agora usam {{model}} ({{provider}}). Os fluxos de trabalho existentes mantêm seus modelos; você pode mudar isso em Modelos.",
+    "limits": {
+      "title": "Limites de tokens dos modelos",
+      "hint": "Para modelos cujos limites ninguém documenta: a resposta mais longa e a janela de contexto dos modelos deste endpoint. Os agentes e a validação os usam; deixe um campo vazio quando você não souber o valor.",
+      "max_output_tokens": "Saída máxima (tokens)",
+      "context_window": "Janela de contexto (tokens)",
+      "range": "Vazio: não declarado. Um número inteiro de {{min}} a {{max}}.",
+      "invalid": "Digite um número inteiro de {{min}} a {{max}} (a saída máxima não pode ser maior que a janela de contexto).",
+      "placeholder": "não declarado"
+    }
   },
   "nav": {
     "title": "Nesta página",

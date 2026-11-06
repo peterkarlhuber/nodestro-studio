@@ -75,6 +75,24 @@ describe("AgentForm sections", () => {
     expect(quality.open).toBe(true);
   });
 
+  it("shows an effort warning at the effort field, not only in the problem list (ST-057)", async () => {
+    stubApi([
+      {
+        level: "warning",
+        field: "effort",
+        code: "config.effort_adjusted",
+        params: { effort: "max", used: "high", efforts: "low, medium, high" },
+        message: "x does not take the effort 'max'; 'high' is sent instead",
+      },
+    ]);
+    const { container } = show({ ...defaultAgent(), effort: "max" });
+    const thinking = section(container, "thinking");
+    await waitFor(() => expect(thinking.querySelector("summary")).toHaveTextContent("1 Warnung"));
+    await userEvent.click(screen.getByRole("button", { name: /1 Warnung/ }));
+    expect(thinking.open).toBe(true);
+    expect(thinking.querySelector(".section__body")).toHaveTextContent(/stattdessen wird „Hoch – gründlich“ verwendet/);
+  });
+
   it("shows no problem links for a valid agent", async () => {
     stubApi([]);
     const { container } = show(defaultAgent());
