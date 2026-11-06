@@ -13,7 +13,8 @@ import type { Run } from "../api/types";
 import { TextDiff } from "../components/TextDiff";
 import { Badge, Callout, EmptyState, PageHeader, Section, Spinner, StatusBadge } from "../components/ui";
 import { compareRuns, type AgentPair, type AgentSide, type RunTotals } from "../lib/compare";
-import { ErrorText, ProblemText, runProblem } from "../lib/errors";
+import { ErrorText, ProblemText } from "../lib/errors";
+import { RunReason } from "../runs/RunReason";
 import { formatCost, formatDate, formatNumber, formatTokens } from "../lib/format";
 import { modelName } from "../components/ModelPicker";
 
@@ -179,7 +180,7 @@ function RunHead({ run, letter }: { run: Run; letter: string }) {
       </div>
       {run.error ? (
         <div className="small text-danger">
-          <ProblemText item={runProblem(run)} compact />
+          <RunReason run={run} />
         </div>
       ) : null}
     </div>

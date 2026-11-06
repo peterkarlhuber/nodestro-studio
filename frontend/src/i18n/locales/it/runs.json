@@ -96,6 +96,7 @@
   },
   "failure": {
     "atStep": "Non riuscita in {{name}}",
+    "cause": "{{step}}: {{reason}}",
     "more_one": "Un altro passaggio non è riuscito.",
     "more_other": "Altri {{count}} passaggi non sono riusciti.",
     "model": "Modello: {{model}}",

@@ -11,7 +11,8 @@ import type { RunStatus, RunSummary, WorkflowSummary } from "../api/types";
 import { toast } from "../components/toast";
 import { ListProblemsChip } from "../runs/RunProblems";
 import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Select, Spinner, StatusBadge } from "../components/ui";
-import { ErrorText, ProblemText, runProblem } from "../lib/errors";
+import { ErrorText } from "../lib/errors";
+import { RunReason } from "../runs/RunReason";
 import { changedText, formatCost, formatDate, formatDuration, formatNumber, formatTokens } from "../lib/format";
 
 /** ``awaiting_budget``: paused runs that wait for a budget decision (NJR-19), a part of "paused". */
@@ -274,7 +275,7 @@ export function ExecutionsPage() {
                         {run.trigger && run.trigger !== "manual" ? <Badge>{t(`flow.trigger.${run.trigger}`)}</Badge> : null}
                       </div>
                       <div className="muted small truncate">
-                        {run.error ? <ProblemText item={runProblem(run)} compact /> : run.input}
+                        {run.error ? <RunReason run={run} /> : run.input}
                       </div>
                     </td>
                     <td>

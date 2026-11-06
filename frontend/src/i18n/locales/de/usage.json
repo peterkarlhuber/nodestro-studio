@@ -53,6 +53,22 @@
     "tool": "Tool-Entwurf",
     "reply": "Antwort"
   },
+  "budgets": {
+    "title": "Budgets und Limits",
+    "stopped_one": "{{count}} Lauf dieses Zeitraums wurde von seinem Budget gestoppt.",
+    "stopped_other": "{{count}} Läufe dieses Zeitraums wurden von ihrem Budget gestoppt.",
+    "noneStopped": "Kein Lauf dieses Zeitraums wurde von seinem Budget gestoppt.",
+    "waiting_one": "{{count}} Lauf wartet auf eine Budget-Entscheidung.",
+    "waiting_other": "{{count}} Läufe warten auf eine Budget-Entscheidung.",
+    "api": "Veröffentlichte API",
+    "last24h": "Letzte 24 Stunden",
+    "dailyLimit": "Tageslimit",
+    "used": "Verbraucht",
+    "usedOf": "Verbrauchter Anteil des Tageslimits von {{name}}",
+    "noLimit": "Kein Limit",
+    "reached": "Limit erreicht",
+    "hint": "Erreicht eine API ihr Tageslimit, werden neue Läufe abgelehnt, bis die Kosten der letzten 24 Stunden wieder darunter liegen. Die Limits änderst du unter Veröffentlichungen."
+  },
   "cost": {
     "atLeast": "mindestens {{value}}",
     "staleMark": "(veralteter Preis)",

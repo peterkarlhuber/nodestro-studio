@@ -690,6 +690,8 @@ export interface Run extends RunOrigin {
   error: string | null;
   error_code?: string | null;
   error_params?: Record<string, unknown>;
+  /** The step that failed and why (runs before RT-012 have none). */
+  cause?: RunCause | null;
   output: unknown;
   nodes: Record<string, NodeRun>;
   usage: Usage;
@@ -720,6 +722,17 @@ export interface SanitizeReport {
   replaced: Record<string, number>;
 }
 
+/**
+ * Why a run failed, in the words of the step that caused it (runtime RT-012, API-018): set when the run failed
+ * because of a step (``run.nodes_failed``); the earliest failed step, ``code`` and ``params`` as in its own error.
+ */
+export interface RunCause {
+  node_id: string;
+  label: string;
+  code: string;
+  params: Record<string, unknown>;
+}
+
 export interface RunSummary extends RunOrigin {
   id: string;
   workflow_id: string;
@@ -732,6 +745,8 @@ export interface RunSummary extends RunOrigin {
   error: string | null;
   error_code?: string | null;
   error_params?: Record<string, unknown>;
+  /** The step that failed and why (runs before RT-012 have none). */
+  cause?: RunCause | null;
   imported_at?: string | null;
   source_run_id?: string | null;
   sanitized?: SanitizeReport | null;
@@ -1334,6 +1349,29 @@ export interface UsageEntry {
   estimated?: boolean;
 }
 
+/** The daily cost limit of one published API and how much of it the last 24 hours used (API-017, AD-20). */
+export interface PublicationBudget {
+  publication_id: string;
+  slug: string;
+  name: string;
+  /** ``null``: no daily limit. */
+  daily_budget_usd: number | null;
+  last_24h_usd: number;
+  /** ``null``: the workflow's budget, else the default budget. */
+  run_budget_usd: number | null;
+  /** The daily limit is reached: new runs are refused (``limit.daily_budget``). */
+  exhausted: boolean;
+}
+
+export interface UsageBudgets {
+  /** Closest to their daily limit first. */
+  publications: PublicationBudget[];
+  /** Top-level runs of the period that ended at a budget. */
+  stopped_runs: number;
+  /** Top-level runs of the period that wait for a budget decision. */
+  waiting_runs: number;
+}
+
 export interface UsageReport {
   total: UsageBucket;
   by_day: UsageBucket[];
@@ -1341,6 +1379,8 @@ export interface UsageReport {
   by_model: UsageBucket[];
   by_source: UsageBucket[];
   recent: UsageEntry[];
+  /** Missing from an API before API-017. */
+  budgets?: UsageBudgets;
 }
 
 // ---- agent test and context preview -------------------------------------------

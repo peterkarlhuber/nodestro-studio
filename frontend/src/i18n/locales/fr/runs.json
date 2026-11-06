@@ -96,6 +96,7 @@
   },
   "failure": {
     "atStep": "Échec à {{name}}",
+    "cause": "{{step}} : {{reason}}",
     "more_one": "Une autre étape a échoué.",
     "more_other": "{{count}} autres étapes ont échoué.",
     "model": "Modèle : {{model}}",
