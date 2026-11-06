@@ -82,6 +82,7 @@ files = [
   "scripts/check_imports.py",
   "scripts/check_versions.py",
   "scripts/checkout_components.py",
+  "scripts/mup_translation_check.py",
   "scripts/derive_branding.py",
   "scripts/docker_smoke.py",
   "scripts/docker_test.py",

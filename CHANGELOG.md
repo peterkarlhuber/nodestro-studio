@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### MUP-ONA master implementation plan (2026-11-06)
+
+- docs: the security and database-backend master plan MUP-ONA (Orkexa, Nodestro, Axentra) is versioned in
+  `docs/architecture/mup-ona/`: the English translation `MUP-ONA.md` (binding after the client's approval of the
+  translation check), the central execution state `STATUS.md` and `reports/` (translation check; later the gate
+  reports G1, G2 and A9). `scripts/mup_translation_check.py` compares the German reference with the translation.
+
 ### TODO abatement round (2026-11-06)
 
 - Pins: orkexa 1b61fda (orkexa #55), runtime 3d69702 (#120), examples 82d894b (#77), integrations 1e73e29 (#66),

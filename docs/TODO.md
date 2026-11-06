@@ -11,7 +11,7 @@
 |---|---|
 | P0 Critical | 0 |
 | P1 High | 0 |
-| P2 Medium | 1 |
+| P2 Medium | 4 |
 | P3 Low | 13 |
 | P4 Optional | 4 |
 
@@ -50,7 +50,27 @@ from #121). Both have status `Needs external review`.
 
 ## Architecture and modularity
 
-None known.
+### MUP-ONA
+
+The master implementation plan MUP-ONA ([MUP-ONA.md](https://github.com/peterkarlhuber/nodestro-studio/blob/master/docs/architecture/mup-ona/MUP-ONA.md), status in
+[STATUS.md](architecture/mup-ona/STATUS.md)) adds these studio items. Package state lives only in STATUS.md.
+
+### ST-MUP-B3 · G1 ranking and compatibility report
+
+- **Priority:** P2 Medium · **Status:** Open · **Refs:** MUP-ONA MP-B3, gate G1 (plan 7.2)
+- After the B3 merge in nodestro-runtime, `docs/architecture/mup-ona/reports/G1-ranking.md` documents the ranking
+  change against FX-RANK-0, U1–U5 and the readiness for B4–B6.
+
+### ST-MUP-O10 · ADR-0002 addendum on full-text search
+
+- **Priority:** P2 Medium · **Status:** Open · **Refs:** MUP-ONA O10, MP-B3
+- A new ADR file adds the full-text query semantics (folding, prefix `to_tsquery`) to ADR-0002 without editing
+  ADR-0002 itself.
+
+### ST-MUP-A9 · RLS assessment report and ADR draft
+
+- **Priority:** P2 Medium · **Status:** Open · **Refs:** MUP-ONA MP-A9, gate G3
+- After B6: `docs/architecture/mup-ona/reports/A9-rls-evaluation.md` and an ADR draft with status "Proposed".
 
 ## Performance
 

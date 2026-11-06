@@ -204,7 +204,8 @@ deployment only. None of them is released: they are unreleased previews, and no 
 published. How the three operating profiles differ is described in
 [ARCHITECTURE.md](ARCHITECTURE.md#operating-profiles), the plan and its step-by-step status in
 [desktop-server/IMPLEMENTATION_STATUS.md](desktop-server/IMPLEMENTATION_STATUS.md), the decisions in
-[adr/](adr/README.md).
+[adr/](adr/README.md). The security and database-backend master plan MUP-ONA (Orkexa, Nodestro, Axentra) and its
+execution state live in [architecture/mup-ona/](architecture/mup-ona/STATUS.md).
 
 | Product | Repository | Profile | State |
 | --- | --- | --- | --- |
