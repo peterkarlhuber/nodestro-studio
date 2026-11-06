@@ -150,6 +150,24 @@ describe("tooltips in dialogs", () => {
     expect(onDialogKey).not.toHaveBeenCalled();
   });
 
+  it("that only name a control let Escape through, so the dialog still closes with one key", async () => {
+    const onDialogKey = vi.fn();
+    render(
+      <MemoryRouter>
+        <dialog open onKeyDown={(event) => onDialogKey(event.key)}>
+          <Tooltip content="Schließen">
+            <button type="button">x</button>
+          </Tooltip>
+        </dialog>
+      </MemoryRouter>,
+    );
+    await userEvent.tab();
+    expect(screen.getByRole("tooltip")).toBeInTheDocument();
+    await userEvent.keyboard("{Escape}");
+    expect(screen.queryByRole("tooltip")).toBeNull();
+    expect(onDialogKey).toHaveBeenCalledWith("Escape");
+  });
+
   it("lead Tab into the documentation link and on to the next control, never trapping the focus", async () => {
     render(
       <MemoryRouter>

@@ -10,6 +10,7 @@
 //   ancestors. Without the Popover API (old browsers, jsdom) it is a fixed element with a high z-index.
 // - It is kept inside the window: flipped below the anchor when there is no room above, shifted sideways at the
 //   edges, and scrolls itself when it is taller than the window (high zoom, large text).
+// - Escape closes a help text (HelpTip) without closing the dialog around it; see useTip's `ownEscape`.
 
 import { CircleHelp } from "lucide-react";
 import {
@@ -66,7 +67,12 @@ interface TipState {
 }
 
 /** The shared behaviour of all tooltips: timers, a single open tooltip, Escape, outside clicks. */
-function useTip() {
+/**
+ * `ownEscape`: Escape closes only this tooltip and goes no further, so a help text opened inside a dialog does not
+ * close the dialog with it (HelpTip). A plain Tooltip names a control (often the one a dialog focuses first): there
+ * Escape closes the tooltip and still does what it does without one, e.g. close the dialog.
+ */
+function useTip({ ownEscape = false }: { ownEscape?: boolean } = {}) {
   const [state, setState] = useState<TipState>({ anchor: null, pinned: false });
   const timer = useRef<number | undefined>(undefined);
   const bubbleRef = useRef<HTMLDivElement | null>(null);
@@ -96,11 +102,13 @@ function useTip() {
       if (closeActive === close) closeActive = null;
       return;
     }
-    // Escape closes the tooltip only: in a dialog it must not also close the dialog (captured before its handler).
+    // Captured before the dialog's own handler (see ownEscape).
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
-      event.preventDefault();
-      event.stopPropagation();
+      if (ownEscape) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       close();
     };
     const onPointer = (event: globalThis.PointerEvent) => {
@@ -120,7 +128,7 @@ function useTip() {
       window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("resize", close);
     };
-  }, [state.anchor, close]);
+  }, [state.anchor, close, ownEscape]);
 
   const hoverProps = {
     onPointerEnter: (event: PointerEvent<HTMLElement>) => {
@@ -337,7 +345,7 @@ export function Tooltip({
  */
 export function HelpTip({ id, label }: { id: HelpId; label?: string }) {
   const { t } = useTranslation();
-  const tip = useTip();
+  const tip = useTip({ ownEscape: true });
   const help = helpEntry(t, id);
   const open = tip.state.anchor !== null;
   return (

@@ -59,9 +59,6 @@ export function SettingsSearch({ container }: { container: RefObject<HTMLElement
   const current = showList ? hits[Math.min(active, hits.length - 1)] : undefined;
   return (
     <div className="settings-search" role="search" data-testid="settings-search">
-      <label className="sr-only" htmlFor={`${id}-input`}>
-        {t("settingsUi.search.label")}
-      </label>
       <div className="settings-search__box">
         <Search size={14} aria-hidden className="settings-search__icon" />
         <input
@@ -69,6 +66,7 @@ export function SettingsSearch({ container }: { container: RefObject<HTMLElement
           className="nd-input settings-search__input"
           type="search"
           role="combobox"
+          aria-label={t("settingsUi.search.label")}
           autoComplete="off"
           spellCheck={false}
           aria-expanded={showList}
