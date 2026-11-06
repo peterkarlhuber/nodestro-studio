@@ -4,7 +4,10 @@
   "composerLabel": "Archivos para tu próximo mensaje",
   "again": "De nuevo",
   "status": {
-    "uploading": "Subiendo y leyendo…"
+    "uploading": "Subiendo y leyendo…",
+    "sending": "Subiendo",
+    "reading": "Leyendo…",
+    "progress": "Subida de {{name}}"
   },
   "remove": "Quitar {{name}} del mensaje",
   "dismiss": "Descartar {{name}}",

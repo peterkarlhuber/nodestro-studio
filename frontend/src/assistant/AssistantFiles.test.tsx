@@ -3,7 +3,7 @@ import { act, cleanup, fireEvent, render, renderHook, screen, waitFor } from "@t
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { api } from "../api/client";
+import { ApiError, api, uploadForm } from "../api/client";
 import type { AssistantFile, AssistantFileSupport, Conversation, SentFile } from "../api/types";
 import { ComposerFileChips, ConversationFiles, SentFileChips, useFileDrop } from "./AssistantFiles";
 import { type ComposerFiles, precheckFile, supportKey, useComposerFiles } from "./useComposerFiles";
@@ -243,5 +243,136 @@ describe("assistant files: the conversation and its messages", () => {
     ];
     render(<SentFileChips files={sent} />);
     expect(screen.getAllByTestId("file-mode").map((tag) => tag.textContent)).toEqual(["PDF nativ", "Übersicht"]);
+  });
+});
+
+describe("assistant files: upload progress (ST-055)", () => {
+  it("shows the sent share of each file, then that the server reads it", () => {
+    const files = composer({
+      uploads: [
+        { key: "u1", name: "gross.pdf", size: 40_000_000, status: "uploading", progress: 0.42 },
+        { key: "u2", name: "fertig.pdf", size: 40_000_000, status: "uploading", progress: 1 },
+        { key: "u3", name: "alt.pdf", size: 4096, status: "uploading" },
+      ],
+      uploading: true,
+    });
+    render(<ComposerFileChips files={files} />);
+    const chips = screen.getAllByTestId("composer-file");
+    expect(chips[0]).toHaveTextContent("Wird hochgeladen");
+    expect(screen.getByTestId("composer-file-percent")).toHaveTextContent(/42\s%/);
+    const bar = screen.getByRole("progressbar", { name: "Hochladen von gross.pdf" });
+    expect(bar).toHaveAttribute("aria-valuenow", "42");
+    // All bytes sent: the server checks and reads the file, without a bar.
+    expect(chips[1]).toHaveTextContent("Wird gelesen");
+    expect(screen.getAllByRole("progressbar")).toHaveLength(1);
+    // Without measured progress the earlier sentence stays.
+    expect(chips[2]).toHaveTextContent("Wird hochgeladen und gelesen");
+    // Only the phase is announced, never every percent.
+    expect(screen.getAllByRole("status").map((item) => item.textContent)).toEqual(["Wird hochgeladen", "Wird gelesen …", "Wird hochgeladen und gelesen …"]);
+  });
+
+  it("keeps the progress of a running upload in whole percent", async () => {
+    let report: (share: number) => void = () => {};
+    let finish: () => void = () => {};
+    const upload = vi.spyOn(api, "uploadAssistantFile").mockImplementation(
+      (_id, chosen, onProgress) =>
+        new Promise((resolve) => {
+          report = onProgress ?? (() => {});
+          finish = () => resolve([{ name: chosen.name, file: file({ name: chosen.name }), problem: null }]);
+        }),
+    );
+    const { result } = renderHook(() => useComposerFiles(conversation([]), async () => "chat_1"), { wrapper: wrapper() });
+    let adding: Promise<void> = Promise.resolve();
+    act(() => {
+      adding = result.current.add([new File(["%PDF-1.4"], "gross.pdf")]);
+    });
+    await waitFor(() => expect(result.current.uploads).toHaveLength(1));
+    await waitFor(() => expect(upload).toHaveBeenCalledTimes(1));
+    act(() => report(0.4239));
+    expect(result.current.uploads[0].progress).toBe(0.42);
+    act(() => report(1));
+    expect(result.current.uploads[0].progress).toBe(1);
+    await act(async () => {
+      finish();
+      await adding;
+    });
+    expect(result.current.uploads).toEqual([]);
+  });
+});
+
+describe("uploadForm", () => {
+  class FakeXhr {
+    static last: FakeXhr | null = null;
+    upload: { onprogress: ((event: { lengthComputable: boolean; loaded: number; total: number }) => void) | null; onload: (() => void) | null } = {
+      onprogress: null,
+      onload: null,
+    };
+    onload: (() => void) | null = null;
+    onerror: (() => void) | null = null;
+    onabort: (() => void) | null = null;
+    status = 0;
+    statusText = "";
+    responseText = "";
+    headers: Record<string, string> = {};
+    method = "";
+    url = "";
+    body: unknown = null;
+    constructor() {
+      FakeXhr.last = this;
+    }
+    open(method: string, url: string) {
+      this.method = method;
+      this.url = url;
+    }
+    setRequestHeader(name: string, value: string) {
+      this.headers[name] = value;
+    }
+    send(body: unknown) {
+      this.body = body;
+    }
+  }
+
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("reports the sent share and resolves with the JSON answer", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXhr);
+    const shares: number[] = [];
+    const form = new FormData();
+    const done = uploadForm<{ ok: boolean }>("/assistant/conversations/c/files", form, (share) => shares.push(share));
+    const xhr = FakeXhr.last!;
+    expect([xhr.method, xhr.url, xhr.body]).toEqual(["POST", "/api/assistant/conversations/c/files", form]);
+    expect(xhr.headers["Accept-Language"]).toBe("de");
+    xhr.upload.onprogress?.({ lengthComputable: true, loaded: 25, total: 100 });
+    xhr.upload.onprogress?.({ lengthComputable: false, loaded: 50, total: 0 });
+    xhr.upload.onload?.();
+    Object.assign(xhr, { status: 200, responseText: JSON.stringify({ ok: true }) });
+    xhr.onload?.();
+    await expect(done).resolves.toEqual({ ok: true });
+    expect(shares).toEqual([0.25, 1]);
+  });
+
+  it("rejects with the API's problem code, and with a network error", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXhr);
+    const refused = uploadForm("/x", new FormData(), () => {});
+    Object.assign(FakeXhr.last!, {
+      status: 413,
+      statusText: "Payload Too Large",
+      responseText: JSON.stringify({ detail: "The request is too large", code: "request.too_large", params: { limit_mb: 50 } }),
+    });
+    FakeXhr.last!.onload?.();
+    await expect(refused).rejects.toMatchObject({ status: 413, code: "request.too_large", params: { limit_mb: 50 } });
+    const lost = uploadForm("/x", new FormData(), () => {});
+    FakeXhr.last!.onerror?.();
+    await expect(lost).rejects.toBeInstanceOf(ApiError);
+  });
+
+  it("is the plain request without a progress callback", async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify([1]), { status: 200, headers: { "Content-Type": "application/json" } }));
+    vi.stubGlobal("fetch", fetchMock);
+    vi.stubGlobal("XMLHttpRequest", FakeXhr);
+    FakeXhr.last = null;
+    await expect(uploadForm("/x", new FormData())).resolves.toEqual([1]);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(FakeXhr.last).toBeNull();
   });
 });

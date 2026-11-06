@@ -25,6 +25,8 @@ export interface LocalUpload {
   name: string;
   size: number;
   status: "uploading" | "error";
+  /** The share (0…1) the browser has sent, in whole percent; undefined while unknown. 1: the server reads it. */
+  progress?: number;
   problem?: Coded;
 }
 
@@ -96,7 +98,13 @@ export function useComposerFiles(conversation: Conversation | undefined, ensure:
       await Promise.all(
         queue.map(async (item) => {
           try {
-            const [result] = await api.uploadAssistantFile(id, item.file);
+            const [result] = await api.uploadAssistantFile(id, item.file, (share) => {
+              // Whole percent only: a large file reports progress many times a second.
+              const progress = Math.floor(share * 100) / 100;
+              setUploads((current) =>
+                current.map((entry) => (entry.key === item.key && entry.progress !== progress ? { ...entry, progress } : entry)),
+              );
+            });
             if (result?.file) {
               setUploads((current) => current.filter((entry) => entry.key !== item.key));
             } else {

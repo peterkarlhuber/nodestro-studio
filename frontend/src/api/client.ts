@@ -190,26 +190,65 @@ export async function requestWithHeaders<T>(
     throw new ApiError(error instanceof Error ? error.message : String(error), 0, "network");
   }
   if (!response.ok) {
-    let message = `${response.status} ${response.statusText}`;
-    let code: string | null = `http.${response.status}`;
-    let params: Record<string, unknown> = { status: response.status };
+    let data: unknown = null;
     try {
-      const data = await response.json();
-      if (typeof data.detail === "string") message = data.detail;
-      else if (Array.isArray(data.detail)) {
-        message = data.detail.map((d: { msg?: string; loc?: string[] }) => `${d.loc?.join(".")}: ${d.msg}`).join("; ");
-        code = "validation";
-      }
-      if (typeof data.code === "string") code = data.code;
-      if (data.params && typeof data.params === "object") params = data.params;
+      data = await response.json();
     } catch {
       // not JSON
     }
-    if (response.status === 401 && code === "access.login_required") startLogin();
-    throw new ApiError(message, response.status, code, params);
+    throw failedResponse(response.status, response.statusText, data);
   }
   if (response.status === 204) return { data: undefined as T, headers: response.headers };
   return { data: (await response.json()) as T, headers: response.headers };
+}
+
+/** The ApiError of a response that is not ok, from its JSON body when there is one (FastAPI's detail, code, params). */
+function failedResponse(status: number, statusText: string, body: unknown): ApiError {
+  let message = `${status} ${statusText}`;
+  let code: string | null = `http.${status}`;
+  let params: Record<string, unknown> = { status };
+  const data = body && typeof body === "object" ? (body as { detail?: unknown; code?: unknown; params?: unknown }) : null;
+  if (data) {
+    if (typeof data.detail === "string") message = data.detail;
+    else if (Array.isArray(data.detail)) {
+      message = data.detail.map((d: { msg?: string; loc?: string[] }) => `${d.loc?.join(".")}: ${d.msg}`).join("; ");
+      code = "validation";
+    }
+    if (typeof data.code === "string") code = data.code;
+    if (data.params && typeof data.params === "object") params = data.params as Record<string, unknown>;
+  }
+  if (status === 401 && code === "access.login_required") startLogin();
+  return new ApiError(message, status, code, params);
+}
+
+/**
+ * POSTs a form and reports how much of it the browser has sent (0…1). fetch() cannot report upload progress, so this
+ * uses XMLHttpRequest; without a progress callback (or without XMLHttpRequest) it is the plain request().
+ */
+export function uploadForm<T>(path: string, form: FormData, onProgress?: (share: number) => void): Promise<T> {
+  if (!onProgress || typeof XMLHttpRequest === "undefined") return request<T>("POST", path, form);
+  return new Promise<T>((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `/api${path}`);
+    xhr.setRequestHeader("Accept-Language", currentLanguage());
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && event.total > 0) onProgress(Math.min(1, event.loaded / event.total));
+    };
+    xhr.upload.onload = () => onProgress(1);
+    xhr.onerror = () => reject(new ApiError("Network error", 0, "network"));
+    xhr.onabort = () => reject(new ApiError("Upload aborted", 0, "network"));
+    xhr.onload = () => {
+      let data: unknown = null;
+      try {
+        data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+      } catch {
+        // not JSON
+      }
+      if (xhr.status >= 200 && xhr.status < 300) resolve((xhr.status === 204 ? undefined : data) as T);
+      else reject(failedResponse(xhr.status, xhr.statusText, data));
+    };
+    xhr.send(form);
+  });
 }
 
 export interface RunPage {
@@ -252,10 +291,10 @@ export const api = {
   /** Formats and limits of files, and whether the assistant's model reads images and PDFs natively. */
   assistantFileSupport: () => request<AssistantFileSupport>("GET", "/assistant/files/support"),
   /** Checks, reads and attaches one file to the conversation; it waits for the next message. */
-  uploadAssistantFile: (id: string, file: File) => {
+  uploadAssistantFile: (id: string, file: File, onProgress?: (share: number) => void) => {
     const form = new FormData();
     form.append("files", file, file.name);
-    return request<AssistantFileUpload[]>("POST", `${chatPath(id)}/files`, form);
+    return uploadForm<AssistantFileUpload[]>(`${chatPath(id)}/files`, form, onProgress);
   },
   /** Removes the file from the conversation and deletes it. */
   removeAssistantFile: (id: string, fileId: string) => request<Conversation>("DELETE", `${chatPath(id)}/files/${fileId}`),

@@ -4,7 +4,10 @@
   "composerLabel": "File per il tuo prossimo messaggio",
   "again": "Di nuovo",
   "status": {
-    "uploading": "Caricamento e lettura…"
+    "uploading": "Caricamento e lettura…",
+    "sending": "Caricamento",
+    "reading": "Lettura…",
+    "progress": "Caricamento di {{name}}"
   },
   "remove": "Rimuovi {{name}} dal messaggio",
   "dismiss": "Ignora {{name}}",
