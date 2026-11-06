@@ -6,6 +6,7 @@ import "./styles/settings.css";
 import "./styles/onboarding.css";
 import "./styles/admin.css";
 import "./styles/assistant-files.css";
+import "./styles/progress.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

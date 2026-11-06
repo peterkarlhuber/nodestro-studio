@@ -1030,7 +1030,12 @@
     "not_chat_model": "This is not a language model; only language models can be measured.",
     "benchmark_failed": "The speed could not be measured.",
     "invalid_package_path": "{{path}} is not an offline model package Nodestro can import. Choose the folder made with orkexa-local export; it contains orkexa-models.json.",
-    "invalid_package_reason": "{{path}} cannot be imported as an offline model package. {{reason}} Export the package again from the source computer."
+    "invalid_package_reason": "{{path}} cannot be imported as an offline model package. {{reason}} Export the package again from the source computer.",
+    "network": "The internet could not be reached.",
+    "install_running": "The local model runtime is already being installed.",
+    "interrupted": "Nodestro was closed while this was running.",
+    "unavailable": "No local model server is available here.",
+    "start_failed": "The local model server did not start."
   },
   "knowledge": {
     "failed": "The semantic index could not be updated.",

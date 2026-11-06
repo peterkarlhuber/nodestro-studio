@@ -45,7 +45,8 @@ export function buildableModels(catalog: CatalogModel[]): CatalogModel[] {
 
 /** The newest build job of a model. */
 export function latestBuild(jobs: LocalJob[] | undefined, model: string): LocalJob | undefined {
-  return (jobs ?? []).filter((job) => job.kind === "build" && job.target === model).at(-1);
+  // The API lists the newest job first.
+  return (jobs ?? []).find((job) => job.kind === "build" && job.target === model);
 }
 
 /** Which input a failed build was checking (the step in its message), or null after both were checked. */

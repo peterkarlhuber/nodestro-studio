@@ -1,0 +1,108 @@
+{
+  "kind": {
+    "setup": "Configurer le serveur de modèles local"
+  },
+  "stepOf": "Étape {{index}} sur {{count}} : {{step}}",
+  "stepsOf": "Étapes : {{title}}",
+  "working": "En cours …",
+  "noAction": "Aucune action requise : vous pouvez continuer à travailler, l’opération se poursuit en arrière-plan.",
+  "actionNeeded": "Action requise",
+  "stopped": "Arrêté",
+  "retry": "Réessayer",
+  "resume": "Reprendre",
+  "restarted": "Relancé.",
+  "checkServer": "Vérifier le serveur de modèles",
+  "checkServerHint": "Vérifie que le serveur répond et quel matériel il utilise. Nodestro ne démarre, n’arrête ni ne modifie jamais ce serveur.",
+  "model": "{{vendor}} · {{family}}",
+  "resumed": "Repris : {{size}} étaient déjà présents d’une tentative précédente.",
+  "stalled": "Aucune nouvelle donnée depuis {{time}}. La connexion est peut-être interrompue ; le téléchargement retente automatiquement pendant un moment.",
+  "done": {
+    "setup": "Le serveur de modèles local est prêt.",
+    "pull": "{{target}} est installé et vérifié.",
+    "other": "Terminé."
+  },
+  "facts": {
+    "bytes": "{{done}} sur {{total}}",
+    "soFar": "{{done}} téléchargés",
+    "file": "Fichier {{index}} : {{done}} sur {{total}}",
+    "eta": "encore environ {{time}}",
+    "etaFile": "ce fichier : encore environ {{time}}"
+  },
+  "steps": {
+    "setup": {
+      "check": "Vérifier le système et l’installation existante",
+      "prerequisites": "Vérifier les prérequis",
+      "download": "Télécharger Ollama",
+      "verify": "Vérifier le téléchargement (SHA-256)",
+      "install": "Installer Ollama",
+      "configure": "Configurer le serveur",
+      "start": "Démarrer le serveur",
+      "reachable": "Vérifier que le serveur répond",
+      "hardware": "Détecter le GPU et le matériel",
+      "ready": "Serveur de modèles prêt"
+    },
+    "pull": {
+      "check": "Vérifier l’espace libre",
+      "manifest": "Récupérer la liste des fichiers du modèle",
+      "download": "Télécharger les fichiers du modèle",
+      "verify": "Vérifier les fichiers (SHA-256)",
+      "finalize": "Terminer l’installation"
+    },
+    "build": {
+      "template": "Récupérer et vérifier le modèle de base",
+      "weights": "Récupérer et vérifier les poids",
+      "convert": "Convertir en GGUF",
+      "create": "Créer le modèle",
+      "check": "Vérifier les vecteurs de référence",
+      "install": "Installer le modèle"
+    }
+  },
+  "notes": {
+    "bundled": "Fourni avec cette application, rien à installer.",
+    "installed": "Déjà installé.",
+    "missing": "Pas encore installé : Nodestro installe la version fixée.",
+    "external_found": "Pas encore installé. Votre propre Ollama tourne sur cet ordinateur ; Nodestro n’y touche pas et fait tourner son propre serveur à côté.",
+    "archive": "Installé depuis l’archive de version que vous avez choisie.",
+    "container": "Nodestro Local Docker fournit le serveur dans son propre conteneur.",
+    "external": "Votre propre serveur : Nodestro se contente de l’utiliser.",
+    "not_managed": "Nodestro ne s’en charge pas pour ce serveur.",
+    "already_running": "Il tournait déjà.",
+    "autostart_off": "Non démarré : le serveur ne démarre pas avec l’application.",
+    "version_differs": "Le serveur indique une autre version que celle installée par Nodestro.",
+    "gpu_nvidia": "Carte graphique NVIDIA détectée : les modèles tournent sur le GPU.",
+    "gpu_apple": "Puce Apple : les modèles utilisent son GPU.",
+    "gpu_none": "Aucune carte graphique prise en charge : les modèles tournent sur le CPU (plus lent).",
+    "remote": "Le serveur tourne sur un autre ordinateur : son matériel n’est pas connu ici.",
+    "not_here": "Le dossier de modèles de ce serveur n’est pas sur cet ordinateur.",
+    "ready": "Les agents peuvent désormais utiliser les modèles locaux."
+  },
+  "remedy": {
+    "network": "Vérifiez la connexion Internet (et le proxy, si vous en utilisez un), puis réessayez. Un téléchargement reprend là où il s’est arrêté.",
+    "disk_full": "Libérez de l’espace sur ce disque ou choisissez un autre dossier sous Dossier des modèles, puis réessayez.",
+    "cancelledResume": "Cliquez sur Reprendre pour continuer : ce qui a déjà été téléchargé est conservé.",
+    "cancelled": "Relancez-le quand vous en avez besoin.",
+    "interrupted": "Cliquez sur Reprendre : un téléchargement reprend là où il s’est arrêté.",
+    "unreachable": "Vérifiez que le serveur tourne et que son adresse est correcte, puis réessayez.",
+    "timeout": "Le serveur est occupé ou lent. Patientez un instant, puis réessayez.",
+    "start_failed": "Consultez le journal du serveur indiqué dans les détails techniques. Redémarrer l’ordinateur libère un port bloqué ou de la mémoire.",
+    "checksum_mismatch": "Le fichier a été supprimé. Réessayez : il sera téléchargé à nouveau.",
+    "offline_download": "Le mode hors ligne strict est activé. Installez depuis une archive de version sur cet ordinateur ou désactivez ce mode.",
+    "unsupported_platform": "Faites tourner votre propre Ollama et saisissez son adresse pour le fournisseur Ollama sous Fournisseurs d’IA.",
+    "models_dir": "Choisissez sous Dossier des modèles un dossier dans lequel vous pouvez écrire.",
+    "model_missing": "Vérifiez le nom du modèle. Seuls les modèles de la bibliothèque Ollama peuvent être téléchargés.",
+    "install_running": "Une autre fenêtre de Nodestro installe déjà. Attendez qu’elle ait terminé.",
+    "job_running": "Attendez la fin de l’opération.",
+    "port_in_use": "Un autre programme utilise le port. Redémarrez Nodestro.",
+    "not_running": "Démarrez d’abord le serveur de modèles.",
+    "unsafe_archive": "Utilisez l’archive de version d’origine de la version fixée.",
+    "generic": "Consultez les détails techniques, puis réessayez."
+  },
+  "details": {
+    "job": "Tâche",
+    "started": "Démarrée",
+    "finished": "Terminée",
+    "digest": "Empreinte attendue",
+    "error": "Erreur",
+    "log": "Journal"
+  }
+}
