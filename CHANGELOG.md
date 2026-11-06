@@ -2,6 +2,39 @@
 
 ## Unreleased
 
+### TODO abatement round (2026-11-06)
+
+- Local catalog models show a localized marker ("(lokal)", "(locale)" …) and their descriptions in every interface
+  language; the studio handles runtime labels with and without "(local)".
+- Settings → Local models: "Not reachable" for an external server that does not answer, one CPU saving sentence,
+  one name for the tool-agent task, server wording for a server's tenants, decimal byte units everywhere (sizes in
+  one sentence share a unit), no "Download and install" next to "Try again" after a failed setup.
+- Assistant chat files show their upload percentage.
+- Model parameters: declared token limits of an OpenAI-compatible endpoint can be set in its provider card; effort
+  warnings appear at the field; the server tools texts are provider-neutral.
+- Settings search: Ctrl+K offers it as its last group (`/settings?search=`) and knows the reasoning and output limit
+  sections; it also finds the local model parts that appear only when available; leaving with unsaved provider input
+  asks first.
+- Versions dialog: each changed step lists its changed fields (model, tools, …) with a line diff of system prompt
+  and task.
+- Run results list the knowledge sources the agent's searches returned (file and page, number of passages).
+- New agents: a task that is only `{{input}}` shows as a placeholder chip with a switch to the text; "Empty
+  template" opens an unsaved form and creates the template on Save.
+- The agent form suggests the local model for the agent's task next to the model picker (with reasons; it never
+  changes the model by itself).
+- Texts in six languages for `run.agent.MaxToolCallsError` (Orkexa ORK-029, with the link to the agent's advanced
+  settings), `assistant.provider_rejected_messages`, `input.assistant_file`, `export.server_limit`, `lease.lost`
+  and the known tasks of `local.task_unknown`.
+- Editor: its dialogs mount on first opening; the editor code starts loading when the pointer or focus reaches a
+  workflow.
+- More translation keys are checked as closed sets (settings groups, local build steps and problems, GPU state).
+- Browser tests: ports are configurable (`E2E_PORT_OFFSET`, every suite takes its URL), the missing-model suite
+  (with the batch Fix case) and the recorded local models suite run in `scripts/e2e.sh`; a non-blocking CI job runs
+  welcome, a11y and settings-ui in Firefox and WebKit; CI reports the full `npm audit` without failing; axe-core is
+  no longer held back by Dependabot.
+- mypy covers every script (branding, Docker and platform smoke, social preview).
+- Docs: desktop/server status, releases and the S-2 worker concept match the current state.
+
 ### Settings, attachments and providers (2026-11-06)
 
 - Pins: orkexa 566aa3c (orkexa #54), runtime 62527d1 (#119), examples 97bf788 (#76), integrations 2e975ad (#65),

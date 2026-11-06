@@ -3,7 +3,7 @@
 > Open work for this repository: release blockers, known bugs, security follow-ups, technical debt and planned improvements.
 > GitHub issues are the source of truth for details; this file is the entry point and summary.
 >
-> **Last full review:** 2026-11-05 against `master` at `e46911d` (quality round 3 close-out; TODO consolidated).
+> **Last full review:** 2026-11-06 against master at 58bb17d (TODO abatement round)
 
 ## Summary
 
@@ -12,8 +12,8 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 25 |
-| P4 Optional | 15 |
+| P3 Low | 19 |
+| P4 Optional | 6 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
 preview is gated by nodestro-desktop DSK-001 (new candidate and Go/No-Go), not by an item here.
@@ -21,7 +21,7 @@ preview is gated by nodestro-desktop DSK-001 (new candidate and Go/No-Go), not b
 The studio is in a good state after the UX initiative (studio #61 to #80) and UX round 3 (#123, #125): the independent
 final review accepted it with conditions that #79 addressed, and master CI is green. What remains is a backlog of
 usability and accessibility follow-ups, cross-repository gaps that wait for backend fields (failure cause, budgets,
-example origin), stale status documents and the platforms nobody has tested yet. The portable export dialog (#121)
+example origin, settings defaults) and the platforms nobody has tested yet. The portable export dialog (#121)
 is covered by the independent review tracked in nodestro-api API-054.
 
 ## Priorities and statuses
@@ -46,13 +46,6 @@ nodestro-runtime RT-001 (tool approvals, `NODESTRO_TOOL_APPROVALS` stays off; in
 and nodestro-api API-054 (portable export, api #85 with the #87 hardening, including this repository's export dialog
 from #121). Both have status `Needs external review`.
 
-### ST-002 · Dependency audit gates production dependencies only
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** backend audit D-04, `.github/workflows/ci.yml`
-- **What:** CI runs `npm audit --omit=dev --audit-level=high` (green on master); advisories in development and build
-  dependencies are not reported anywhere.
-- **Next step:** Add a non-blocking full `npm audit` report to CI, or review dev advisories with each Dependabot round.
-
 ## Bugs and reliability
 
 ### ST-003 · Runs list and run banner show only "Failed: <step>" (AD-02)
@@ -71,36 +64,18 @@ None known.
 
 ### ST-004 · Editor main-thread cost under CPU throttling (F3)
 
-- **Priority:** P3 Low · **Status:** In progress (UX round 2 reduced it) · **Refs:** #84, final UX review F3,
+- **Priority:** P3 Low · **Status:** In progress · **Refs:** #84, final UX review F3,
   `frontend/e2e/perf-editor.mjs` (`npm run perf:editor`)
-- **What:** Opening a 9-node workflow under CPU 4x (median of 5): mount 1884 → 1335 ms, total blocking time
-  1557 → 956 ms, longest task 1028 → 756 ms after UX round 2 (fewer re-renders of nodes, panels and the zoom label;
-  cached number formatters). Still above the 50 ms long-task budget. UX round 3 re-measured median mount 1650 ms and
-  TBT about 1.2 s on a heavily loaded machine (single runs 1159 to 2424 ms, best runs at the round-2 level): no
-  regression shown, no low-risk fix found. Mounting closed dialogs only when open would reset text typed into the
-  run dialog, so it needs a state decision first.
-- **Next step:** Mount closed editor dialogs only when open (about 100 ms at 4x; keep their state semantics), preload
-  the editor chunk from the Workflows page, look at React Flow's node measuring (110–180 ms at 4x).
+- **What:** Opening a 9-node workflow under CPU 4x: mount 1884 → 1335 ms and total blocking time 1557 → 956 ms after
+  UX round 2; still above the 50 ms long-task budget. The TODO round of 2026-11-06 mounts the editor's dialogs only
+  on their first opening (they stay mounted afterwards, so typed text and running requests behave as before) and
+  starts the editor chunk download when the pointer or focus reaches a workflow on the Workflows page (not on page
+  load: the smoke suite keeps the start page free of editor code). Measured on the cloud dev VM (median of 7): mount
+  913 → 949 ms, TBT 535 → 576 ms, within the run-to-run noise, so no gain is shown for this measurement.
+- **Next step:** Profile React Flow's node measuring (110–180 ms at 4x) with `--profile` and reduce it; that is the
+  remaining large long task.
 
 ## Features and enhancements
-
-### ST-050 · English labels of local catalog models in every language
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** manual review 2026-11-05 (internal report §9.8), nodestro-runtime
-  `catalog._LOCAL_LABELS`
-- **What:** Local catalog models carry runtime labels such as "Qwen3.5 4B (local)" (also English `tier` and
-  `description`). The model picker, example needs and preview, architect review, provider settings, docs page and
-  orchestration view show them unchanged in all six languages.
-- **Next step:** Together with the runtime: drop the "(local)" suffix from the runtime labels and add one studio
-  helper that appends a localized marker where `price_status === "local"`; then use it in every place listed above.
-
-### ST-044 · Task-aware model suggestions inside the model picker
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** local models work order (2026-11-03)
-- **What:** Recommendations per task show in *Settings → Local models*; the agent's model picker shows local models
-  with their "no API billing" label but not which one suits the agent's task on this computer.
-- **Next step:** Ask `GET /api/local-models/recommend?task=` from the agent inspector (task from the agent's tools
-  and output) and show the suggestion with its reasons next to the picker; never change the stored model.
 
 ### ST-035 · Similarity hint for pasted code in the tool editor (R-4)
 
@@ -128,19 +103,6 @@ None known.
 - **Next step:** Offer the copy's sample files as one-click inputs once the copy knows its source example.
 - **Depends on:** nodestro-runtime RT-055 (origin of an example copy stored on the workflow).
 
-### ST-011 · Field-level diff in the versions dialog (ED-18)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** UX audit ED-18
-- **What:** "Save and restore" is done; the diff still names only changed steps (`lib/versionDiff.ts`), not which
-  fields changed (system prompt, model, tools).
-- **Next step:** List changed fields per step with a text diff (`components/TextDiff.tsx` exists).
-
-### ST-013 · Knowledge sources cited in run results (AD-19)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** UX audit AD-19
-- **What:** Run views have no "sources used" list; knowledge use is visible only indirectly in the Context and Tools tabs.
-- **Next step:** Show file and section per agent result from the recorded knowledge tool calls or context.
-
 ### ST-014 · Budgets and excluded service costs on the Usage page (AD-20)
 
 - **Priority:** P3 Low · **Status:** Blocked (needs an API field) · **Refs:** UX audit AD-20
@@ -148,13 +110,6 @@ None known.
   note for MCP and service fees is shown since UX round 3; web-search fees are priced by Orkexa and included.)
 - **Next step:** Add a Budgets card once the API reports budget use.
 - **Depends on:** nodestro-api API-017 (budget usage in the usage response).
-
-### ST-015 · New agent defaults: raw `{{input}}` and "Empty template" saving at once (ED-22)
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** UX audit ED-22
-- **What:** The default system prompt is localized now, but the task field starts as raw `{{input}}`, and "Empty
-  template" on the agent library page persists a template immediately on click.
-- **Next step:** Show the input placeholder as a chip with a raw-text toggle; create the template on first save.
 
 ### ST-031 · Offline (sample data) badge on example copies (AD-18)
 
@@ -173,58 +128,18 @@ None known.
 - **Next step:** Show localized labels once workflow summaries carry the contract descriptions.
 - **Depends on:** nodestro-api API-053 (contract descriptions in workflow summaries).
 
-### ST-048 · Local models settings: three small wording gaps
+### ST-059 · "Default" and "changed" markers on settings fields
 
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** UX round 3 (studio-new N3 findings)
-- **What:** An external model server that cannot be reached shows "Stopped" instead of "Not reachable"; on machines
-  without a GPU the CPU saving mode sentence appears twice; the tool-agent task has different names in Settings >
-  Local models and in an example's model plan. The server-tenant view (no hardware) still words a few hints for "this
-  computer", and the `export.server_too_large` sentence mixes MB and GB.
-- **Next step:** One status text for unreachable external servers, one CPU sentence, one task name in both places,
-  server wording in the tenant view, one size unit (all six languages).
-
-### ST-055 · No upload percentage for large chat files
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (attachments stream)
-- **What:** Each file shows a spinner while it uploads.
-- **Next step:** Show upload progress per file.
-
-### ST-056 · Local models: byte units and a doubled setup call to action
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (local setup stream)
-- **What:** `formatBytes` mixes binary MB and decimal GB; after a failed setup the "Download and install" callout stays next to "Try again".
-- **Next step:** One unit system; hide the callout while the failed setup card is shown.
-
-### ST-057 · Model parameters: remaining polish
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (params stream)
-- **What:** No form for limits declared by an OpenAI-compatible endpoint; effort warnings show only in the validation list; the keys `agent.anthropicOnly` and `bedrock.agent.anthropicOnly` are unused; the label "Server tools from Anthropic" is unchanged.
-- **Next step:** Add the endpoint limits form, inline effort warnings, and remove the unused texts.
-
-### ST-058 · Settings: search and navigation gaps
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (settings UI stream)
-- **What:** Ctrl+K does not deep-link into the settings search and lacks the output limits section; the settings search cannot find conditionally rendered content; provider cards do not guard unsaved key or base URL input.
-- **Next step:** Deep link from the global search, add the section to `SETTINGS_GROUPS`, warn before leaving an unsaved provider card.
-
-### ST-059 · About 50 weak settings help texts
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (settings UI stream, tooltip audit)
-- **What:** The tooltip audit rewrote the worst help texts; about 50 still repeat the label (including Local models).
-- **Next step:** Rewrite them in six languages; show "default" or "changed" on every field once API-061 exists.
+- **Priority:** P3 Low · **Status:** Blocked (needs nodestro-api API-061 on master) · **Refs:** settings/providers round
+  2026-11-06 (settings UI stream, tooltip audit)
+- **What:** The settings fields do not show whether a value is the default or was changed. The help-text part of the
+  original entry ("about 50 still repeat the label") could not be reproduced in the TODO round of 2026-11-06: the 25
+  settings help texts explain more than their label, and a scan of the settings, local models and model parameter
+  hints found six short hints, each of which adds an example or a range.
+- **Next step:** Once `GET /api/settings/defaults` (API-061) is on master, read it once per settings page and mark
+  each changed field with a "changed" badge and a reset action (older APIs: no badge).
 
 ## Tests and quality assurance
-
-### ST-051 · axe-core held at 4.11.0 (WCAG 2.5.3 on the global search trigger)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** `d7344ee` (Dependabot #75), `frontend/src/layout/GlobalSearch.tsx`,
-  `.github/dependabot.yml`
-- **What:** axe-core 4.14 moves `label-content-name-mismatch` (WCAG 2.5.3, label in name) from experimental into
-  wcag21a. The a11y e2e suite then fails on all 32 page checks, because the visible text of the global search trigger
-  includes the keyboard shortcut while its accessible name does not. axe-core stays at 4.11.0, and Dependabot ignores
-  axe-core 4.14 and later (dependency round 2026-11-05), so the minor/patch group is not blocked by it.
-- **Next step:** Make the trigger's accessible name start with its visible label (UX decision), move axe-core to the
-  newest release, and remove the `ignore` rule.
 
 ### ST-053 · ESLint 10 waits for the React Compiler rules of eslint-plugin-react-hooks 7
 
@@ -258,20 +173,19 @@ None known.
   semantic index and runs a local agent end to end. The smoke suite checks the hardware panel and the per-agent model
   plan of an example copy against the real API (no model server); the mDenseOn build from local files, the speed
   measurement and the "Reasoning reduced" badge are covered by unit tests and by the runtime and API tests only.
+  The recorded part of `e2e/localModels.mjs` (`LOCAL_E2E_REAL=0`) and `e2e/missingModel.mjs` run in
+  `scripts/e2e.sh` (suites `local-models`, `missing-model`) since the TODO round of 2026-11-06.
 - **Next step:** Add an e2e server with a fake Ollama binary (as in nodestro-api `tests/test_local_models_api.py`)
   and a suite for start, download progress, import errors and index build; run it with a real Ollama where CI allows.
 
 ### ST-060 · Dynamic translation keys and tooltips: remaining coverage
 
 - **Priority:** P3 Low · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (i18n stream, I18N-DYN-1, I18N-E2E-2)
-- **What:** 37 dynamic keys built from free text are covered only by the runtime guard and e2e; the raw-key sweep does not open most dialogs or hover tooltips.
-- **Next step:** Type the 37 values so `dynamicKeys.test.ts` checks them; extend the sweep to main dialogs and help tooltips.
-
-### ST-061 · Browser tests not yet in CI
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (local setup, missing-model and settings UI streams)
-- **What:** `localModels.mjs` (with `LOCAL_E2E_REAL=0`) and `missingModel.mjs` run locally only; Fix on a batch stopped by `check.local_model_missing` has no e2e; settings-ui and a11y run in Chromium only.
-- **Next step:** Add them to CI; add the batch Fix case; run settings-ui and a11y in Firefox and WebKit.
+- **What:** 29 dynamic keys built from free text are covered only by the runtime guard and e2e (`OPEN` in
+  `frontend/src/i18n/dynamicKeys.test.ts`; the local reasons and tasks, settings groups, local build steps and
+  problems and the GPU state are typed now); the raw-key sweep does not open most dialogs or hover tooltips.
+- **Next step:** Type the remaining values (backend codes as unions in `api/types.ts`) so `dynamicKeys.test.ts` checks
+  them; extend the sweep to main dialogs and help tooltips.
 
 ## Platform coverage
 
@@ -285,7 +199,10 @@ None known.
   workflow starts the studio (API, settings, interface) on macOS arm64 and x86-64, Windows x64 and ARM64 and Linux;
   the interface itself has not been used in a browser on macOS or Windows. The `Docker` workflow runs AI-generated
   code in a real engine on Linux and macOS Intel (ST-033).
-- **Next step:** Run the e2e suites once in Firefox and WebKit and record the result; decide whether CI adds one engine.
+  Since the TODO round of 2026-11-06 the CI job `browser-engines` (non-blocking) runs `welcome`, `a11y` and
+  `settings-ui` in Firefox and WebKit; it has not run yet (only Chromium is installed in the dev VM).
+- **Next step:** Read the first `browser-engines` results, fix what they find and decide whether the job blocks; run
+  the remaining suites once in Firefox and WebKit.
 
 ### ST-034 · Welcome page on app start not checked in WebKit
 
@@ -295,8 +212,8 @@ None known.
   `reload`/`back_forward` = stay). Verified in Chromium only, including the desktop-style launch page that moves on to
   `/` with a meta refresh. Unverified: whether WebKit (desktop app on macOS and Linux, Safari) reports that meta
   refresh as `navigate`. If not, the desktop app opens the Studio directly on start (no error, no loop).
-- **Next step:** Run `E2E_BROWSER=webkit scripts/e2e.sh welcome` once, or start the desktop app on macOS/Linux and
-  confirm the welcome page appears; remove this entry when confirmed.
+- **Next step:** Read the WebKit result of the CI job `browser-engines` (runs the `welcome` suite), or start the
+  desktop app on macOS/Linux and confirm the welcome page appears; remove this entry when confirmed.
 
 ### ST-020 · Assistive technology, zoom, motion and contrast checks
 
@@ -322,14 +239,6 @@ None known.
 - **Next step:** Arrange moderated tests when participants are available.
 
 ## Documentation
-
-### ST-018 · Desktop/server and evolution status documents are stale
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** #87
-- **What:** `docs/desktop-server/IMPLEMENTATION_STATUS.md` and `RELEASES.md` predate the built-in Linux sandbox and the
-  withdrawn desktop candidate; `docs/evolution/s2-worker-concept.md` and §9 of the evolution plan do not record the
-  implemented S-2 state.
-- **Next step:** One docs-only PR aligning the status lines with ADR-0006 and `docs/ARCHITECTURE.md`.
 
 ## Technical debt
 
@@ -363,7 +272,7 @@ None known.
   ecosystem for minor and patch updates, each major alone. A cooldown of 3 days (7 for npm, pip and Cargo majors; Dependabot allows only `default-days` for
   GitHub Actions and Docker) holds back brand-new
   releases; security updates are not delayed. Majors that are known not to work are ignored with a reason next to
-  the rule and an entry in that repository's TODO (studio: TypeScript, axe-core ST-051, ESLint 10 and
+  the rule and an entry in that repository's TODO (studio: TypeScript, ESLint 10 and
   eslint-plugin-react-hooks 7 ST-053; sdk: TypeScript,
   `@types/node`, Vitest, SDK-009/SDK-010). Python dependencies are not watched: the Nodestro components are pinned by
   commit and move only with the pin cascade (`scripts/check_versions.py`), and CI's blocking `pip-audit` covers the
@@ -402,14 +311,6 @@ None known.
   native modules, Playwright, Vite and Tauri tooling, the server and axentra-studio images). Then one pull request
   per repository that moves CI (`setup-node`), `engines`, Docker build images and runtime configuration together,
   bumps `@types/node` to 24 and removes the matching `ignore` rules. Merge in the usual order; no release.
-
-### ST-038 · Four scripts outside mypy (API2-16 rest)
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** backend audit 2 API2-16, studio #110
-- **What:** The studio now serves the frontend through `nodestro_api.frontend.mount_frontend` and the typed scripts
-  are in mypy, but `derive_branding`, `docker_smoke`, `platform_smoke` and `social_preview` stay outside (19 errors,
-  missing numpy and PIL stubs).
-- **Next step:** Add the stub packages to the dev dependencies and fix the errors, or type the image helpers locally.
 
 ## Later optimizations
 
@@ -513,7 +414,7 @@ None known.
 | ST-028 | nodestro-runtime, nodestro-server | RT-023, SRV-014 (dependency locking, D-05) | One shared decision |
 | ST-052 | all Nodestro repositories | Dependabot policy, branch protection decision, auto-merge prerequisites | Owner entry here; the others point to it |
 | ST-054 | nodestro-sdk, nodestro-desktop, nodestro-server, axentra, axentra-studio | SDK-010, SRV-015, Node.js 24 entries | Owner entry here; move together in Q1 2027 |
-| ST-018, ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update the status documents and `products` together |
+| ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update `products` with the next candidate |
 | ST-007, ST-031 | nodestro-examples, nodestro-runtime | EX-003 (AD-18 marker), RT-055 (copy origin) | Examples and runtime provide the marker; studio shows it |
 | ST-032 | nodestro-api | API-053 (contract descriptions in summaries) | Studio needs the field first |
 | — | nodestro-runtime, nodestro-api | X-01 decision response still `paused` (RT-005, API-018); X-03 error code list (RT-011, API-016) | Change lives in runtime/api; studio already adapted |
