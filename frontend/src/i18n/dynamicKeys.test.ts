@@ -51,8 +51,6 @@ const OPEN: Record<string, string> = {
     "true, false or unknown",
   "pages/RunComparePage.tsx compare.aspect.${aspect}": "aspects the run comparison names",
   "pages/SchedulesPage.tsx automation.schedule.weekdaysShort.${day}": "weekday numbers 0 to 6",
-  "pages/SettingsLocalModels.tsx localModels.reasons.${reason}": "reasons of the local model catalog",
-  "pages/SettingsLocalModels.tsx localModels.tasks.${task}": "tasks of the local model catalog",
   'pages/SettingsMaintenance.tsx backup.notes.${note.replace("backup.", "")}': "notes of a backup",
   "pages/SettingsMaintenance.tsx diagnostics.checks.${check.id}.${check.code}": "checks of the diagnostics API",
   "pages/SettingsMaintenance.tsx diagnostics.checks.${check.id}.title": "checks of the diagnostics API",

@@ -224,6 +224,59 @@ describe("local models", () => {
   });
 });
 
+describe("local models wording (ST-048, ST-056)", () => {
+  const failedSetup = {
+    id: "s1", kind: "setup", target: "server", state: "failed", retryable: true, completed: 0, total: null, message: "", error_code: "local.download_failed",
+    error: "connection refused", started_at: "2026-11-06T08:00:00Z", finished_at: "2026-11-06T08:01:00Z", phase: "download",
+    steps: [{ id: "check", state: "done" }, { id: "download", state: "failed" }],
+  };
+
+  it("calls an external server that does not answer not reachable, not stopped", async () => {
+    serve({ "GET /api/local-models": overview({ mode: "external", running: false, runtime_installed: false, base_url: "http://gpu-box:11434" }) });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    const status = await screen.findByTestId("local-status");
+    expect(status).toHaveTextContent("Nicht erreichbar");
+    expect(status).not.toHaveTextContent("Gestoppt");
+  });
+
+  it("says once that the CPU saving mode is active", async () => {
+    serve({
+      "GET /api/local-models": { ...overview(), advice: [{ code: "local.cpu_only", severity: "info" }, { code: "local.reasoning_saving", severity: "info" }] },
+    });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    await screen.findByTestId("local-advice-cpu_only");
+    expect(screen.queryByTestId("local-advice-reasoning_saving")).toBeNull();
+    expect(screen.getAllByText(/Auf diesem Computer aktiv\./)).toHaveLength(1);
+  });
+
+  it("names the same tool task as an example's model plan", () => {
+    for (const language of LANGUAGES)
+      expect(i18n.t("localModels.tasks.tool_agent", { lng: language }), language).toBe(i18n.t("library.models.tasks.tool_agent", { lng: language }));
+  });
+
+  it("speaks of the server, not of this computer, to a server's tenants", async () => {
+    serve({ "GET /api/local-models": { ...overview({ mode: "external", running: true, runtime_installed: true }, false), hardware: null, advice: [{ code: "local.reasoning_saving", severity: "info" }] } });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    const table = await screen.findByTestId("local-recommendations");
+    const panel = screen.getByTestId("settings-local-models");
+    expect(panel).toHaveTextContent("lokalen Modellen (Ollama) dieses Servers");
+    expect(table).toHaveTextContent("Für ein größeres Modell hat der Server zu wenig Speicher.");
+    expect(panel).toHaveTextContent("Auf diesem Server aktiv.");
+    expect(panel).not.toHaveTextContent(/diese[mn]? Computer/);
+    expect(screen.getByRole("region", { name: "Empfohlen für diesen Server" })).toBeInTheDocument();
+  });
+
+  it("offers no second download next to a failed setup's Try again, but keeps the release archive", async () => {
+    serve({ "GET /api/local-models": overview(), "GET /api/local-models/jobs": [failedSetup] });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    const progress = await screen.findByTestId("local-setup-progress");
+    expect(within(progress).getByRole("button", { name: /Erneut versuchen/ })).toBeInTheDocument();
+    const setup = screen.getByTestId("local-runtime-setup");
+    expect(within(setup).queryByTestId("local-setup-start")).toBeNull();
+    expect(within(setup).getByRole("textbox")).toBeInTheDocument();
+  });
+});
+
 describe("offline import", () => {
   it("offers offline packages only for a model server Nodestro manages", async () => {
     serve({ "GET /api/local-models": overview({ mode: "managed", running: true, runtime_installed: true }) });
@@ -414,7 +467,7 @@ describe("build from local files", () => {
     expect(weights).toHaveTextContent("lightonai/mDenseOn");
     expect(weights).toHaveTextContent("Revision a5fdb00");
     expect(weights).toHaveTextContent("a336c49fc679aeb23969114b12fb7317804da3cc7d8bc214818009dea39d545c");
-    expect(within(build).getByTestId("local-build-input-template")).toHaveTextContent("die ersten 5,8 MB werden geprüft");
+    expect(within(build).getByTestId("local-build-input-template")).toHaveTextContent("die ersten 6,0 MB werden geprüft");
     const start = within(build).getByRole("button", { name: "Bauen und prüfen" });
     expect(start).toBeDisabled();
     await userEvent.type(within(build).getByLabelText("Gewichtsdatei (safetensors)"), " /media/usb/model.safetensors ");

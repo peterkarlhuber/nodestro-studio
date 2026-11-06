@@ -4,7 +4,8 @@
   "status": {
     "running": "Läuft",
     "stopped": "Gestoppt",
-    "notInstalled": "Nicht installiert"
+    "notInstalled": "Nicht installiert",
+    "unreachable": "Nicht erreichbar"
   },
   "mode": {
     "managed": "Von Nodestro auf diesem Computer verwaltet",
@@ -42,11 +43,16 @@
   "tasks": {
     "classify": "Sortieren und Weiterleiten",
     "write": "Texte schreiben",
-    "tool_agent": "Agenten mit Tools",
+    "tool_agent": "Mit Tools arbeiten",
     "analysis": "Analyse und Schlussfolgern",
     "assistant": "Assistent und Architekt",
     "embedding": "Semantische Suche",
-    "coding": "Programmieren"
+    "coding": "Programmieren",
+    "extract": "Daten herausziehen",
+    "document_vision": "Dokumente und Bilder lesen",
+    "judge": "Qualität prüfen",
+    "orchestrator": "Das Team koordinieren",
+    "architect": "Workflows entwerfen"
   },
   "quality": {
     "recommended": "Empfohlen",
@@ -61,7 +67,9 @@
     "no_fit": "Kein vorgeschlagenes Modell passt zu diesem Computer.",
     "preferred_region": "Entspricht deiner bevorzugten Herkunft.",
     "preferred_region_unavailable": "Kein gleich gut geeignetes Modell deiner bevorzugten Herkunft.",
-    "languages_unverified": "Kein Modell dokumentiert alle Sprachen dieser Arbeit."
+    "languages_unverified": "Kein Modell dokumentiert alle Sprachen dieser Arbeit.",
+    "hardware_limit_server": "Für ein größeres Modell hat der Server zu wenig Speicher.",
+    "no_fit_server": "Kein vorgeschlagenes Modell passt zum Server."
   },
   "download": "Herunterladen ({{size}})",
   "downloadShort": "Herunterladen",
@@ -139,7 +147,8 @@
   "offline": {
     "label": "Strikter Offline-Modus",
     "text": "Nur der lokale Modellserver (Ollama) und lokale Tools. Cloud-Modelle, OpenAI-kompatible und vLLM-Endpunkte (auch auf diesem Computer), entfernte Server, Preisprüfungen und Downloads werden abgelehnt, für Läufe und für die Assistenten.",
-    "noDownloads": "Im strikten Offline-Modus sind Downloads aus."
+    "noDownloads": "Im strikten Offline-Modus sind Downloads aus.",
+    "textServer": "Nur der lokale Modellserver (Ollama) und lokale Tools. Cloud-Modelle, OpenAI-kompatible und vLLM-Endpunkte (auch auf dem Server), entfernte Server, Preisprüfungen und Downloads werden abgelehnt, für Läufe und für die Assistenten."
   },
   "europe": {
     "label": "Europäische Modelle bevorzugen",
@@ -330,10 +339,12 @@
     "active": "Auf diesem Computer aktiv.",
     "inactive": "Hier nicht aktiv: Modelle laufen auf einer Grafikkarte.",
     "badge": "Denken verkürzt: CPU-Sparmodus",
-    "badgeTip": "Dieser Agent hat ohne die lange Denkphase geantwortet, weil dieser Computer keine Grafikkarte hat. Für volles Denken stelle den Denkaufwand des Agenten auf Hoch oder schalte den CPU-Sparmodus unter Einstellungen → Lokale Modelle aus."
+    "badgeTip": "Dieser Agent hat ohne die lange Denkphase geantwortet, weil dieser Computer keine Grafikkarte hat. Für volles Denken stelle den Denkaufwand des Agenten auf Hoch oder schalte den CPU-Sparmodus unter Einstellungen → Lokale Modelle aus.",
+    "activeServer": "Auf diesem Server aktiv."
   },
   "licenseSource": {
     "ollama": "laut Ollama-Manifest",
     "upstream": "laut Modellkarte des Herausgebers"
-  }
+  },
+  "textServer": "Agenten, Assistenten und die Wissenssuche können mit den lokalen Modellen (Ollama) dieses Servers laufen, ohne API-Schlüssel. Die Daten bleiben auf dem Server."
 }

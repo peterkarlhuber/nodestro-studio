@@ -68,6 +68,11 @@ describe("export jobs on a server", () => {
   it("names both sizes of a refused estimate, none of a failed job", () => {
     const text = problemText(t, { code: "export.server_too_large", params: { size: 3_500_000_000, limit: 2 * 1024 ** 3 } });
     expect(text).toMatch(/about 3[.,]5\sGB.*\(2[.,]1\sGB\)/);
+    // A size below 1 GB is given in GB too when the limit is (one unit in the sentence).
+    const smaller = problemText(t, { code: "export.server_too_large", params: { size: 900_000_000, limit: 800_000_000 } });
+    expect(smaller).toMatch(/about 900[.,]0\sMB.*\(800[.,]0\sMB\)/);
+    const mixed = problemText(t, { code: "export.server_too_large", params: { size: 2_500_000_000, limit: 900_000_000 } });
+    expect(mixed).toMatch(/about 2[.,]5\sGB.*\(0[.,]9\sGB\)/);
     expect(problemText(t, { code: "export.server_too_large", params: {} })).toBe(t("errors.export.server_too_large_plain"));
   });
 });

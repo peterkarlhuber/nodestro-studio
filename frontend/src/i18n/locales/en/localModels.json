@@ -4,7 +4,8 @@
   "status": {
     "running": "Running",
     "stopped": "Stopped",
-    "notInstalled": "Not installed"
+    "notInstalled": "Not installed",
+    "unreachable": "Not reachable"
   },
   "mode": {
     "managed": "Managed by Nodestro on this computer",
@@ -42,11 +43,16 @@
   "tasks": {
     "classify": "Sorting and routing",
     "write": "Writing texts",
-    "tool_agent": "Agents with tools",
+    "tool_agent": "Working with tools",
     "analysis": "Analysis and reasoning",
     "assistant": "Assistant and architect",
     "embedding": "Semantic search",
-    "coding": "Programming"
+    "coding": "Programming",
+    "extract": "Extracting data",
+    "document_vision": "Reading documents and images",
+    "judge": "Checking quality",
+    "orchestrator": "Coordinating the team",
+    "architect": "Designing workflows"
   },
   "quality": {
     "recommended": "Recommended",
@@ -61,7 +67,9 @@
     "no_fit": "No suggested model fits this computer.",
     "preferred_region": "Matches your preferred origin.",
     "preferred_region_unavailable": "No equally suitable model of your preferred origin.",
-    "languages_unverified": "No model documents all languages of this work."
+    "languages_unverified": "No model documents all languages of this work.",
+    "hardware_limit_server": "The server has too little memory for a larger model.",
+    "no_fit_server": "No suggested model fits the server."
   },
   "download": "Download ({{size}})",
   "downloadShort": "Download",
@@ -139,7 +147,8 @@
   "offline": {
     "label": "Strict offline mode",
     "text": "Only the local model server (Ollama) and local tools. Cloud models, OpenAI-compatible and vLLM endpoints (also on this computer), remote servers, price checks and downloads are refused, for runs and for the assistants.",
-    "noDownloads": "Downloads are off in the strict offline mode."
+    "noDownloads": "Downloads are off in the strict offline mode.",
+    "textServer": "Only the local model server (Ollama) and local tools. Cloud models, OpenAI-compatible and vLLM endpoints (also on the server), remote servers, price checks and downloads are refused, for runs and for the assistants."
   },
   "europe": {
     "label": "Prefer European models",
@@ -330,10 +339,12 @@
     "active": "Active on this computer.",
     "inactive": "Not active here: models run on a graphics card.",
     "badge": "Reasoning reduced: CPU saving mode",
-    "badgeTip": "This agent answered without the long thinking phase because this computer has no graphics card. For full thinking, set the agent's effort to High or switch off the CPU saving mode in Settings → Local models."
+    "badgeTip": "This agent answered without the long thinking phase because this computer has no graphics card. For full thinking, set the agent's effort to High or switch off the CPU saving mode in Settings → Local models.",
+    "activeServer": "Active on this server."
   },
   "licenseSource": {
     "ollama": "per the Ollama manifest",
     "upstream": "per the publisher's model card"
-  }
+  },
+  "textServer": "Agents, assistants and knowledge search can run on this server's local models (Ollama), without an API key. Data stays on the server."
 }

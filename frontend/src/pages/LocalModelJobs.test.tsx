@@ -9,7 +9,7 @@ import { Toaster } from "../components/toast";
 import i18n from "../i18n";
 import { JobCard, LocalJobsList, SetupProgress, setupJob } from "./LocalModelJobs";
 
-const MB = 1024 * 1024; // formatBytes counts binary megabytes below 1 GB
+const MB = 1_000_000; // decimal megabytes, as formatBytes shows them
 const SETUP_STEPS = ["check", "prerequisites", "download", "verify", "install", "configure", "start", "reachable", "hardware", "ready"];
 
 function steps(ids: string[], running: string, patch: Partial<Record<string, Partial<LocalJobStep>>> = {}): LocalJobStep[] {
@@ -95,7 +95,7 @@ describe("setting up the local model server", () => {
     const bar = screen.getByRole("progressbar");
     expect(bar.getAttribute("aria-valuenow")).toBe("26");
     const facts = screen.getByTestId("local-job-facts").textContent ?? "";
-    expect(facts).toContain("400.0 MB of 1.6 GB");
+    expect(facts).toContain("400.0 MB of 1.5 GB");
     expect(facts).toContain("26%");
     expect(facts).toContain("MB/s");
     expect(facts).toContain("about 58 seconds left");

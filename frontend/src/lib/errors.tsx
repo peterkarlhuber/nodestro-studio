@@ -14,7 +14,7 @@ import { ApiError } from "../api/client";
 import { ModelFixButton } from "../missingModel/ModelFixButton";
 import { dockerReasonKey, isDockerReason } from "../api/types";
 import i18n from "../i18n";
-import { formatLargeBytes } from "./format";
+import { formatComparedBytes } from "./format";
 import { useSettingsHref } from "./settingsLink";
 
 export interface Coded {
@@ -115,8 +115,11 @@ function interpolationParams(t: TFunction, params: Record<string, unknown> | nul
 /** Parameters of a few codes that need more than the per-key reading below (or null for all other codes). */
 function codeParams(t: TFunction, code: string | null, params: Record<string, unknown>): Record<string, unknown> | null {
   if (code === "export.download_needed" || code === "export.downloads") return { ...params, items: downloadList(t, downloadCodes(params)) };
-  if (code === "export.server_too_large")
-    return { ...params, size: formatLargeBytes(Number(params.size)), limit: formatLargeBytes(Number(params.limit)) };
+  if (code === "export.server_too_large") {
+    // One unit for both sizes of the sentence (ST-048).
+    const [size, limit] = formatComparedBytes([Number(params.size), Number(params.limit)]);
+    return { ...params, size, limit };
+  }
   if (code === "local.invalid_package_reason") return { ...params, reason: t(`errors.local.${String(params.reason)}`, { defaultValue: String(params.reason) }) };
   return null;
 }

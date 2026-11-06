@@ -11,7 +11,7 @@ import { Toaster } from "../components/toast";
 import { withNodeNames } from "../editor/CheckList";
 import i18n from "../i18n";
 import { problemText } from "../lib/errors";
-import { catalogFit, modelFit } from "./LocalModelsHardware";
+import { adviceText, catalogFit, modelFit } from "./LocalModelsHardware";
 import { LocalModelsPanel } from "./SettingsLocalModels";
 
 const GB = 1_000_000_000;
@@ -265,7 +265,9 @@ describe("advice", () => {
     expect(screen.getByTestId("local-advice-model_slow")).toHaveTextContent("qwen3.5:9b erzeugte auf diesem Computer 2,3 Tokens pro Sekunde (gemessen)");
     expect(screen.getByTestId("local-advice-model_too_large")).toHaveTextContent(`qwen3.5:9b braucht etwa 9,0 GB Speicher`);
     expect(screen.getByTestId("local-advice-memory_low")).toHaveTextContent(`Dieser Computer hat 8,0 GB Arbeitsspeicher`);
-    expect(screen.getByTestId("local-advice-reasoning_saving")).toHaveTextContent("Der CPU-Sparmodus ist an");
+    // The CPU saving mode is named once, by its switch below (ST-048); the advice sentence stays for other places.
+    expect(screen.queryByTestId("local-advice-reasoning_saving")).toBeNull();
+    expect(adviceText(i18n.t, { code: "local.reasoning_saving", severity: "info", model: null, value: null, recommended: null }, { status: { mode: "external" } as never })).toMatch(/^Der CPU-Sparmodus ist an/);
     expect(screen.getByTestId("local-advice-something_new")).toHaveTextContent("local.something_new");
     // The advice wins over the computed fit.
     expect(within(screen.getByTestId("local-model-qwen3.5:9b")).getByText("Zu groß für diesen Computer")).toBeInTheDocument();

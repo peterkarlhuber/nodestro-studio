@@ -4,6 +4,7 @@ import i18n, { type Language, setLanguage } from "../i18n";
 import {
   changedText,
   formatBytes,
+  formatComparedBytes,
   formatCost,
   formatDate,
   formatDateOrDay,
@@ -109,10 +110,18 @@ describe("format", () => {
     // Model and package sizes: decimal GB from 1 GB, as catalogs state them, not "3,147.1 MB".
     expect(formatLargeBytes(3_300_000_000)).toBe("3.3 GB");
     expect(formatLargeBytes(610_000_000)).toBe(formatBytes(610_000_000));
+    // One unit system (ST-056): decimal below 1 GB too, so there is no jump at the GB boundary.
+    expect(formatBytes(999_900_000)).toBe("999.9 MB");
+    expect(formatLargeBytes(1_000_000_000)).toBe("1.0 GB");
+    expect(formatBytes(1_000)).toBe("1.0 kB");
+    expect(formatBytes(999)).toBe("999 bytes");
+    // Sizes in one sentence share the unit of the largest.
+    expect(formatComparedBytes([900_000_000, 2 * 1024 ** 3])).toEqual(["0.9 GB", "2.1 GB"]);
+    expect(formatComparedBytes([5_000_000, 20_000_000])).toEqual(["5.0 MB", "20.0 MB"]);
     expect(formatDuration("2026-01-01T00:00:00Z", "2026-01-01T00:00:02.500Z")).toBe("2.5 s");
     expect(formatDuration("2026-01-01T00:00:00Z", "2026-01-01T00:01:05Z")).toBe("1 min 5 s");
     await inLanguage("de");
-    expect(formatBytes(1.5 * 1024 * 1024)).toBe("1,5 MB");
+    expect(formatBytes(1_500_000)).toBe("1,5 MB");
     expect(formatDuration("2026-01-01T00:00:00Z", "2026-01-01T00:00:02.500Z")).toBe("2,5 s");
     await inLanguage("fr");
     expect(normalize(formatBytes(2048))).toBe("2,0 ko");

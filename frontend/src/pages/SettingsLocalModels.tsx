@@ -15,6 +15,7 @@ import {
   type KnowledgeIndexStatus,
   type LocalJob,
   type LocalOverview,
+  type LocalReason,
   type Recommendation,
   isJob,
   localApi,
@@ -57,10 +58,19 @@ function useRefresh() {
   };
 }
 
-function reasonText(t: ReturnType<typeof useTranslation>["t"], item: Recommendation): string {
+type ShownReason = Exclude<LocalReason, "installed" | "needs_download">;
+
+/** The text key of a reason; those that speak of "this computer" have a server wording for a server's tenants (ST-048). */
+function reasonKey(reason: ShownReason, server: boolean): ShownReason | "hardware_limit_server" | "no_fit_server" {
+  if (server && reason === "hardware_limit") return "hardware_limit_server";
+  if (server && reason === "no_fit") return "no_fit_server";
+  return reason;
+}
+
+function reasonText(t: ReturnType<typeof useTranslation>["t"], item: Recommendation, server = false): string {
   return item.reasons
-    .filter((reason) => reason !== "installed" && reason !== "needs_download")
-    .map((reason) => t(`localModels.reasons.${reason}`, { model: item.better ?? "" }))
+    .filter((reason): reason is ShownReason => reason !== "installed" && reason !== "needs_download")
+    .map((reason) => t(`localModels.reasons.${reasonKey(reason, server)}`, { model: item.better ?? "" }))
     .join(" ");
 }
 
@@ -89,7 +99,7 @@ function Recommendations({
       </h3>
       <p className="muted small">{overview.hardware ? t("localModels.recommend.text") : t("localModels.recommend.textServer")}</p>
       {/* Focusable, so the table can be scrolled with the keyboard on a phone even when it holds no button. */}
-      <div className="table-wrap" tabIndex={0} role="region" aria-label={t("localModels.recommend.title")}>
+      <div className="table-wrap" tabIndex={0} role="region" aria-label={title}>
         <table className="table table--compact" data-testid="local-recommendations">
           <thead>
             <tr>
@@ -106,7 +116,7 @@ function Recommendations({
               const item = tasks.get(task);
               if (!item) return null;
               const name = item.model?.replace(/^ollama:/, "") ?? null;
-              const why = reasonText(t, item);
+              const why = reasonText(t, item, !overview.hardware);
               return (
                 <tr key={task}>
                   <td>{t(`localModels.tasks.${task}`)}</td>
@@ -457,7 +467,18 @@ function StorageForm({ overview, canInstall }: { overview: LocalOverview; canIns
  * Without a runtime (desktop): set the server up, which downloads the pinned version (or installs it offline from its
  * release archive), starts and checks it, step by step (SetupProgress shows the steps).
  */
-function RuntimeSetup({ overview, canInstall, busy }: { overview: LocalOverview; canInstall: boolean; busy: boolean }) {
+function RuntimeSetup({
+  overview,
+  canInstall,
+  busy,
+  retryShown = false,
+}: {
+  overview: LocalOverview;
+  canInstall: boolean;
+  busy: boolean;
+  /** A failed setup's card above offers "Try again": no second download call to action next to it (ST-056). */
+  retryShown?: boolean;
+}) {
   const { t } = useTranslation();
   const refresh = useRefresh();
   const [archive, setArchive] = useState("");
@@ -470,19 +491,21 @@ function RuntimeSetup({ overview, canInstall, busy }: { overview: LocalOverview;
     <Callout tone="brand">
       <div className="stack" data-testid="local-runtime-setup">
         <span>{t("localModels.runtime.missing", { version: overview.status.pinned_version })}</span>
-        <div className="row-gap">
-          <Button
-            variant="primary"
-            icon={Download}
-            disabled={!canInstall || overview.status.offline || busy}
-            busy={install.isPending && install.variables?.download === true}
-            onClick={() => install.mutate({ download: true })}
-            data-testid="local-setup-start"
-          >
-            {t("localModels.runtime.download")}
-          </Button>
-          {overview.status.offline ? <span className="muted small">{t("localModels.offline.noDownloads")}</span> : null}
-        </div>
+        {retryShown ? null : (
+          <div className="row-gap">
+            <Button
+              variant="primary"
+              icon={Download}
+              disabled={!canInstall || overview.status.offline || busy}
+              busy={install.isPending && install.variables?.download === true}
+              onClick={() => install.mutate({ download: true })}
+              data-testid="local-setup-start"
+            >
+              {t("localModels.runtime.download")}
+            </Button>
+            {overview.status.offline ? <span className="muted small">{t("localModels.offline.noDownloads")}</span> : null}
+          </div>
+        )}
         <Field label={t("localModels.runtime.archive")} hint={t("localModels.runtime.archiveHint")}>
           <TextInput value={archive} onChange={(event) => setArchive(event.target.value)} spellCheck={false} />
         </Field>
@@ -559,7 +582,7 @@ export function LocalModelsPanel({
         <Database size={15} aria-hidden /> {t("localModels.title")}{" "}
         <HelpTip id="settings.localModels" label={t("localModels.title")} />
       </h2>
-      <p className="muted small">{t("localModels.text")}</p>
+      <p className="muted small">{overview.data && !overview.data.hardware ? t("localModels.textServer") : t("localModels.text")}</p>
       {overview.error ? (
         <Callout tone="danger">
           <ErrorText error={overview.error} />
@@ -574,7 +597,9 @@ export function LocalModelsPanel({
                 ? t("localModels.status.running")
                 : managed && !status.runtime_installed
                   ? t("localModels.status.notInstalled")
-                  : t("localModels.status.stopped")}
+                  : status.mode === "external" || status.mode === "container"
+                    ? t("localModels.status.unreachable")
+                    : t("localModels.status.stopped")}
             </Badge>
             <span className="small">{t(`localModels.mode.${status.mode}`)}</span>
             {status.version ? <span className="muted small">Ollama {status.version}</span> : null}
@@ -590,7 +615,12 @@ export function LocalModelsPanel({
           ) : null}
           {setup && manageable ? <SetupProgress job={setup} canAct={canInstall} /> : null}
           {managed && manageable && !status.runtime_installed && !settingUp ? (
-            <RuntimeSetup overview={data} canInstall={canInstall} busy={settingUp} />
+            <RuntimeSetup
+              overview={data}
+              canInstall={canInstall}
+              busy={settingUp}
+              retryShown={Boolean(setup?.retryable) && (setup?.state === "failed" || setup?.state === "cancelled")}
+            />
           ) : null}
           {managed && manageable && status.runtime_installed ? (
             <div className="row-gap">
@@ -625,7 +655,8 @@ export function LocalModelsPanel({
             </div>
           ) : null}
           <MachinePanel overview={data} />
-          <AdviceList overview={data} />
+          {/* The CPU saving mode toggle below says when the mode is active: not a second time here (ST-048). */}
+          <AdviceList overview={data} omit={["local.reasoning_saving"]} />
           {serverNote ? (
             <p className="muted small" data-testid="local-needs-server">
               {t(`localModels.needsServer.${serverNote}`)}
@@ -666,7 +697,7 @@ export function LocalModelsPanel({
           disabled={!admin}
           onChange={onOffline}
           label={t("localModels.offline.label")}
-          description={t("localModels.offline.text")}
+          description={data && !data.hardware ? t("localModels.offline.textServer") : t("localModels.offline.text")}
           tip="settings.strictOffline"
         />
         <Toggle
@@ -694,7 +725,8 @@ export function LocalModelsPanel({
 function reasoningState(t: ReturnType<typeof useTranslation>["t"], settings: Settings, data: LocalOverview | undefined): string {
   const text = t("localModels.reasoning.text");
   if ((settings.local_reasoning ?? "auto") === "full") return `${text} ${t("localModels.reasoning.off")}`;
-  if (data?.advice?.some((item) => item.code === "local.reasoning_saving")) return `${text} ${t("localModels.reasoning.active")}`;
+  if (data?.advice?.some((item) => item.code === "local.reasoning_saving"))
+    return `${text} ${t(data.hardware ? "localModels.reasoning.active" : "localModels.reasoning.activeServer")}`;
   if (data && (data.status.accelerated === true || (data.status.accelerated === undefined && data.hardware && data.hardware.gpu !== "none")))
     return `${text} ${t("localModels.reasoning.inactive")}`;
   return text;
