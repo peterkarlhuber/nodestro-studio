@@ -104,7 +104,11 @@
     "teamContract": "Entrega: {{names}}",
     "knowledge": "Archivos de conocimiento",
     "knowledgeNote": "Se crean en tu base de conocimiento al copiar. Los documentos son inventados; los agentes buscan en ellos y citan sus fuentes.",
-    "copyTestsConnected": "No es posible con una conexión: las series de pruebas se ejecutan sin una persona y en ellas no se permiten herramientas MCP. Elige el modo sin conexión para adoptar los casos de prueba."
+    "copyTestsConnected": "No es posible con una conexión: las series de pruebas se ejecutan sin una persona y en ellas no se permiten herramientas MCP. Elige el modo sin conexión para adoptar los casos de prueba.",
+    "memorySpace": "Espacio de memoria de la copia",
+    "memorySpaceHint": "Sus agentes con memoria permanente guardan sus notas en este espacio, separadas de otras copias. Déjalo vacío para compartir el espacio de memoria del ejemplo con todas las demás copias.",
+    "memorySpaceInvalid": "Usa hasta 64 letras A–Z (sin acentos), dígitos, espacios, _ . o -, empezando por una letra o un dígito.",
+    "memorySpaceShared": "Vacío: compartido con las demás copias"
   },
   "connect": {
     "title_one": "Conexión opcional",

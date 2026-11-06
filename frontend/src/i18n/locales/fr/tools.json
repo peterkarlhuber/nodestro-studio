@@ -294,6 +294,17 @@
       "nowBlocked": "Maintenant : il ne peut pas s’exécuter sur cet ordinateur, car aucun bac à sable n’est prêt à l’isoler.",
       "nowIsolated": "Maintenant : il s’exécute isolé ({{backend}}).",
       "after": "Après l’adoption : il s’exécute comme le code que vous écrivez vous-même ({{backend}})."
+    },
+    "diff": {
+      "title": "Modifications depuis votre version {{version}}",
+      "intro": {
+        "editor": "La version {{previous}} est la dernière que vous avez écrite dans l’éditeur. Les lignes marquées + ont été ajoutées et celles marquées − supprimées dans la version {{version}}.",
+        "adopted": "La version {{previous}} est la dernière que vous avez adoptée comme votre propre code. Les lignes marquées + ont été ajoutées et celles marquées − supprimées dans la version {{version}}."
+      },
+      "testsUnchanged": "Les tests sont inchangés.",
+      "none": "Aucune version antérieure de cet outil n’était votre propre code ; il n’y a donc rien à comparer : lisez ci-dessous l’intégralité du code.",
+      "loading": "Recherche de votre version précédente…",
+      "unavailable": "Les versions antérieures n’ont pas pu être chargées ; lisez ci-dessous l’intégralité du code."
     }
   }
 }

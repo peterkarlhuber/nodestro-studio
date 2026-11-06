@@ -104,7 +104,11 @@
     "teamContract": "Delivers: {{names}}",
     "knowledge": "Knowledge files",
     "knowledgeNote": "Created in your knowledge base when you copy. The documents are invented; the agents search them and name their sources.",
-    "copyTestsConnected": "Not possible with a connection: test series run without a person, and MCP tools are not allowed there. Choose offline mode to take over the test cases."
+    "copyTestsConnected": "Not possible with a connection: test series run without a person, and MCP tools are not allowed there. Choose offline mode to take over the test cases.",
+    "memorySpace": "Memory space of the copy",
+    "memorySpaceHint": "Its agents with persistent memory keep their notes in this space, apart from other copies. Leave it empty to share the example's memory space with every other copy.",
+    "memorySpaceInvalid": "Use up to 64 letters A–Z (without accents), digits, spaces, _ . or -, starting with a letter or digit.",
+    "memorySpaceShared": "Empty: shared with the other copies"
   },
   "connect": {
     "title_one": "Optional connection",

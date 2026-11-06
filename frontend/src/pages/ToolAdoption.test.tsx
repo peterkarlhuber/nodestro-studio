@@ -5,10 +5,10 @@ import type { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type { ToolInfo } from "../api/types";
+import type { ToolInfo, ToolVersion } from "../api/types";
 import i18n from "../i18n";
 
-import { AdoptTool, AdoptedNote, PastedCodeWarning, adoptionChange, canAdopt } from "./ToolAdoption";
+import { AdoptTool, AdoptedNote, PastedCodeWarning, adoptionChange, canAdopt, previousOwnVersion } from "./ToolAdoption";
 
 const CODE = "def double(x: int) -> int:\n    \"\"\"Double x.\"\"\"\n    return 2 * x\n";
 const TESTS = "from tool import double\n\ndef test_double():\n    assert double(2) == 4\n";
@@ -44,9 +44,11 @@ function serve(
   profile: string,
   adopt: (body: Record<string, unknown>) => Response = () => json({ ...TOOL }),
   settings: Record<string, unknown> = {},
+  versions: () => Response = () => json([]),
 ) {
   const fetch = vi.fn(async (url: string, init?: RequestInit) => {
     if (url === "/api/meta") return json({ profile });
+    if (url === "/api/tools/double/versions") return versions();
     if (url === "/api/settings") return json(settings);
     if (url === "/api/auth/me") return json({ detail: "", code: "not_found", params: {} }, 404);
     if (url.endsWith("/adopt") && init?.method === "POST") return adopt(JSON.parse(String(init.body)));
@@ -141,6 +143,75 @@ describe("AdoptTool", () => {
     render(wrap(<AdoptTool tool={TOOL} />));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith("/api/meta", expect.anything()));
     expect(screen.queryByTestId("tool-adopt")).toBeNull();
+  });
+});
+
+const version = (number: number, author: ToolVersion["author"], code = CODE, tests = TESTS): ToolVersion => ({
+  version: number,
+  status: "approved",
+  created_at: null,
+  author,
+  own: author !== "ai",
+  description: "Double x.",
+  function_name: "double",
+  code,
+  tests,
+  content_hash: String(number).repeat(64),
+});
+
+const OWN_CODE = "def double(x: int) -> int:\n    \"\"\"Double x.\"\"\"\n    return x + x\n";
+
+describe("previousOwnVersion", () => {
+  it("is the newest own version before the one to adopt", () => {
+    const history = [version(3, "ai"), version(2, "ai"), version(1, "editor")];
+    expect(previousOwnVersion(history, 3)?.version).toBe(1);
+    expect(previousOwnVersion([version(4, "editor"), version(2, "adopted"), version(1, "editor")], 3)?.version).toBe(2);
+    expect(previousOwnVersion([version(3, "ai"), version(1, "ai")], 3)).toBeNull();
+    expect(previousOwnVersion([{ ...version(1, "editor"), code: null }], 3)).toBeNull();
+    expect(previousOwnVersion([], 3)).toBeNull();
+  });
+});
+
+describe("AdoptTool: changes since the person's own version (ST-036)", () => {
+  it("shows what the AI changed against the last version written in the editor", async () => {
+    serve("desktop", undefined, {}, () => json([version(3, "ai"), version(2, "ai", "x = 1\n"), version(1, "editor", OWN_CODE)]));
+    render(wrap(<AdoptTool tool={TOOL} />));
+    await userEvent.click(await screen.findByTestId("tool-adopt"));
+    const diff = await screen.findByTestId("tool-adopt-diff");
+    expect(diff).toHaveTextContent(i18n.t("tools.adopt.diff.title", { version: 1 }));
+    expect(diff).toHaveTextContent(i18n.t("tools.adopt.diff.intro.editor", { previous: 1, version: 3 }));
+    expect(screen.getByRole("region", { name: i18n.t("tools.adopt.diff.title", { version: 1 }) })).toBe(diff);
+    const lines = [...diff.querySelectorAll(".diff__line")].map((line) => [line.className.replace("diff__line diff__line--", ""), line.textContent]);
+    expect(lines).toContainEqual(["removed", expect.stringContaining("return x + x")]);
+    expect(lines).toContainEqual(["added", expect.stringContaining("return 2 * x")]);
+    expect(diff).toHaveTextContent(i18n.t("tools.adopt.diff.testsUnchanged"));
+    // The full code stays below, and the confirmation still names exactly the version shown.
+    expect(screen.getByRole("dialog")).toHaveTextContent(i18n.t("tools.adopt.intro", { version: 3 }));
+  });
+
+  it("names an adopted version and diffs changed tests", async () => {
+    serve("desktop", undefined, {}, () => json([version(3, "ai"), version(2, "adopted", CODE, "def test_nothing():\n    pass\n")]));
+    render(wrap(<AdoptTool tool={TOOL} />));
+    await userEvent.click(await screen.findByTestId("tool-adopt"));
+    const diff = await screen.findByTestId("tool-adopt-diff");
+    expect(diff).toHaveTextContent(i18n.t("tools.adopt.diff.intro.adopted", { previous: 2, version: 3 }));
+    expect(diff).not.toHaveTextContent(i18n.t("tools.adopt.diff.testsUnchanged"));
+    expect(diff).toHaveTextContent("def test_nothing():");
+  });
+
+  it("says when there is nothing to compare, or when the history could not be read", async () => {
+    serve("desktop", undefined, {}, () => json([version(3, "ai"), version(1, "ai")]));
+    render(wrap(<AdoptTool tool={TOOL} />));
+    await userEvent.click(await screen.findByTestId("tool-adopt"));
+    expect(await screen.findByTestId("tool-adopt-diff-none")).toHaveTextContent(i18n.t("tools.adopt.diff.none"));
+    cleanup();
+    serve("desktop", undefined, {}, () => json({ detail: "x", code: "http.500", params: {} }, 500));
+    render(wrap(<AdoptTool tool={TOOL} />));
+    await userEvent.click(await screen.findByTestId("tool-adopt"));
+    expect(await screen.findByTestId("tool-adopt-diff-unavailable")).toHaveTextContent(i18n.t("tools.adopt.diff.unavailable"));
+    // Adopting stays possible: the full code is shown either way.
+    await userEvent.click(screen.getByTestId("tool-adopt-check"));
+    expect(screen.getByTestId("tool-adopt-confirm")).toBeEnabled();
   });
 });
 

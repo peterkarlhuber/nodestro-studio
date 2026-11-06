@@ -104,7 +104,11 @@
     "teamContract": "Fournit : {{names}}",
     "knowledge": "Fichiers de connaissances",
     "knowledgeNote": "Créés dans votre base de connaissances lors de la copie. Les documents sont inventés ; les agents y cherchent et citent leurs sources.",
-    "copyTestsConnected": "Impossible avec une connexion : les séries de tests s’exécutent sans personne et les outils MCP n’y sont pas autorisés. Choisissez le mode hors ligne pour reprendre les cas de test."
+    "copyTestsConnected": "Impossible avec une connexion : les séries de tests s’exécutent sans personne et les outils MCP n’y sont pas autorisés. Choisissez le mode hors ligne pour reprendre les cas de test.",
+    "memorySpace": "Espace mémoire de la copie",
+    "memorySpaceHint": "Ses agents à mémoire persistante gardent leurs notes dans cet espace, séparées des autres copies. Laissez le champ vide pour partager l’espace mémoire de l’exemple avec toutes les autres copies.",
+    "memorySpaceInvalid": "Utilisez jusqu’à 64 lettres A–Z (sans accents), chiffres, espaces, _ . ou -, en commençant par une lettre ou un chiffre.",
+    "memorySpaceShared": "Vide : partagé avec les autres copies"
   },
   "connect": {
     "title_one": "Connexion facultative",

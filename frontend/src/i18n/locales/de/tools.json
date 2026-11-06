@@ -294,6 +294,17 @@
       "nowBlocked": "Jetzt: Es kann auf diesem Rechner nicht laufen, weil keine Sandbox bereit ist, es zu isolieren.",
       "nowIsolated": "Jetzt: Es läuft isoliert ({{backend}}).",
       "after": "Nach der Übernahme: Es läuft wie Code, den du selbst schreibst ({{backend}})."
+    },
+    "diff": {
+      "title": "Änderungen seit deiner Version {{version}}",
+      "intro": {
+        "editor": "Version {{previous}} hast du zuletzt selbst im Editor geschrieben. Mit + markierte Zeilen sind in Version {{version}} hinzugekommen, mit − markierte entfernt.",
+        "adopted": "Version {{previous}} hast du zuletzt als eigenen Code übernommen. Mit + markierte Zeilen sind in Version {{version}} hinzugekommen, mit − markierte entfernt."
+      },
+      "testsUnchanged": "Die Tests sind unverändert.",
+      "none": "Keine frühere Version dieses Tools war dein eigener Code, daher gibt es nichts zu vergleichen: Lies unten den ganzen Code.",
+      "loading": "Deine vorherige Version wird gesucht …",
+      "unavailable": "Die früheren Versionen konnten nicht geladen werden; lies unten den ganzen Code."
     }
   }
 }
