@@ -154,6 +154,17 @@ El **presupuesto predeterminado por ejecución** (al principio 2 USD) se aplica 
 
 Los administradores fijan además el **Presupuesto máximo por ejecución** (vacío: sin tope): ninguna ejecución puede empezar con más ni elevarse por encima. El **Plazo de las decisiones de presupuesto** (de 1 a 720 horas, al principio 24) indica cuánto espera una ejecución pausada una [decisión de presupuesto](/docs/workflows#budget-freigabe) antes de fallar. Quién puede decidir se explica en [Quién puede decidir](/docs/workflows#budget-rechte).
 
+## Límites de salida de los modelos {#ausgabelimits}
+<!-- keywords: límite de salida, máx. tokens, max_tokens, cortado, límite del arquitecto, ventana de contexto -->
+
+Los pasos de IA propios de Nodestro (el arquitecto de flujos de trabajo, los asistentes, las preguntas sobre una ejecución, las decisiones del orquestador y el control de calidad) no tienen ajustes de agente propios. En **Límites de salida de los modelos** defines con cuántos tokens puede responder cada paso; un campo vacío usa el valor predeterminado integrado (por ejemplo 32.000 para el plan del flujo de trabajo del arquitecto y 8.000 para su análisis). Los agentes mantienen su propio *Máx. tokens* en el [editor de agentes](/docs/agenten#limits).
+
+El valor enviado sale de tres niveles: tu ajuste, si no el predeterminado, como máximo la salida máxima documentada del modelo (o la mitad de su ventana de contexto en un modelo local cuyo máximo no se conoce). La tabla muestra el valor que se envía al modelo del asistente e indica cuándo se redujo; nada se acorta en silencio.
+
+El límite incluye el razonamiento del modelo. Un límite más alto permite respuestas más largas, pero nunca elude un presupuesto: antes de cada solicitud, el control de costes reserva exactamente este valor.
+
+**Volver a pedir respuestas cortadas:** cuando una respuesta del arquitecto de flujos de trabajo alcanza su límite, se pide una vez más con el límite duplicado, como máximo el *Límite máximo para un reintento* (al principio 64.000) y el máximo del modelo. El reintento solo se envía si su coste completo cabe en lo que queda del presupuesto de la tarea. Si no, o con el reintento desactivado, la tarea se detiene con un mensaje que indica el paso y su límite.
+
 ## Sandbox {#sandbox}
 <!-- keywords: elegir sandbox, automático, docker, proceso de python, docker disponible, sandbox integrado, sandbox de linux, macos, windows, bloqueado, experimental -->
 

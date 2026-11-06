@@ -52,7 +52,8 @@
     "unknown_tool": "The unknown tool “{{name}}” was left out.",
     "model_unavailable": "The model “{{model}}” is not available; {{chosen}} was chosen instead.",
     "server_tool_provider": "The server tool “{{name}}” was left out: it is available only for Anthropic models.",
-    "judge_unsupported": "The default model “{{model}}” cannot return the structured verdict of a quality check. Choose another judge before you switch the check on."
+    "judge_unsupported": "The default model “{{model}}” cannot return the structured verdict of a quality check. Choose another judge before you switch the check on.",
+    "max_tokens_reduced": "The answer limit was lowered to {{max_tokens}} tokens, the maximum output of {{model}}."
   },
   "config": {
     "library": "The configuration does not match the rules of the agent engine Orkexa.",
@@ -90,7 +91,14 @@
     "model_missing": "Choose a model.",
     "model_provider_missing": "The model “{{model}}” has no provider; write it as provider:model, for example ollama:{{model}}.",
     "provider_mismatch": "This access belongs to another provider and cannot run a model of {{provider}}.",
-    "invalid": "The setting {{name}} must be a positive number, so Nodestro did not apply it. Correct the value and start Nodestro again."
+    "invalid": "The setting {{name}} must be a positive number, so Nodestro did not apply it. Correct the value and start Nodestro again.",
+    "option_unsupported": "“$t(modelParams.optionName.{{option}})” cannot be used with this model. Reset it or choose another model.",
+    "native_tool_unsupported": "The provider tool “{{name}}” cannot be used with this model. Remove it or choose another model.",
+    "max_tokens_above_model": "The answer limit ({{max_tokens}} tokens) exceeds the model's maximum output ({{maximum}} tokens). Lower it.",
+    "max_tokens_above_context": "The answer limit ({{max_tokens}} tokens) leaves no room for the prompt in the model's context window ({{window}} tokens).",
+    "thinking_budget_with_effort": "Set either an effort or a thinking budget, not both.",
+    "effort_adjusted": "The model does not take the effort “$t(agent.options.effort.{{effort}})”; “$t(agent.options.effort.{{used}})” is used instead.",
+    "effort_dropped": "The model takes no effort setting; “$t(agent.options.effort.{{effort}})” is not sent. Set the effort to the default."
   },
   "workflow": {
     "edge_dangling": "A connection points to a node that does not exist.",
@@ -331,7 +339,8 @@
     "local_max_tokens": "The answer limit of this agent ({{max_tokens}} tokens) does not fit the context window of the local model server ({{tokens}} tokens).",
     "local_reasoning_saving": "On this computer without a graphics card, these agents answer without the thinking phase (effort Medium): {{nodes}}. Choose effort High for an agent, or switch off the CPU saving mode in Settings.",
     "value_source_type": "{{field}} must come from a tool, but only numbers of a structured result are checked.",
-    "value_source_no_tool": "{{field}} must come from a tool, but neither this agent nor a step before it has a tool. Add a tool such as the calculator."
+    "value_source_no_tool": "{{field}} must come from a tool, but neither this agent nor a step before it has a tool. Add a tool such as the calculator.",
+    "orchestrator_model_unsupported": "The orchestrator “{{name}}” uses {{model}}, which cannot return structured decisions. Choose another model for it."
   },
   "backup": {
     "not_zip": "The file is not a Nodestro backup (no ZIP file).",
@@ -360,7 +369,9 @@
     "workflow_missing": "Revising needs the current workflow.",
     "not_ready": "This draft cannot be accepted (any more).",
     "agents_capped_one": "Only {{count}} agent was left out to keep the workflow manageable.",
-    "agents_capped_other": "{{count}} agents were left out to keep the workflow manageable."
+    "agents_capped_other": "{{count}} agents were left out to keep the workflow manageable.",
+    "truncated": "The answer of the step “$t(modelParams.operation.{{operation}})” was cut off at its output limit ({{max_tokens}} tokens). Raise the limit under Settings > Model output limits, or describe a smaller workflow.",
+    "truncated_over_budget": "The answer of the step “$t(modelParams.operation.{{operation}})” was cut off at its output limit. A retry with up to {{max_tokens}} tokens could cost more than what is left of the job's budget ({{budget}} USD), so it was not sent. Raise the budget or the step's output limit."
   },
   "tool_draft": {
     "name_taken": "A tool named {{name}} exists already.",
@@ -745,7 +756,9 @@
     "aws_rate_limited": "AWS reported too many requests. Try again later.",
     "aws_unreachable": "Amazon Bedrock could not be reached in this region (network, proxy or region name).",
     "aws_verification_failed": "The connection check with AWS failed.",
-    "model_invalid": "This model does not belong to {{provider}}; check only a Bedrock model id, inference profile or ARN."
+    "model_invalid": "This model does not belong to {{provider}}; check only a Bedrock model id, inference profile or ARN.",
+    "limit_unknown": "Unknown limits: {{names}}.",
+    "limit_invalid": "{{name}} must be a whole number from {{min}} to {{max}}."
   },
   "access": {
     "login_required": "Log in to use this part of Nodestro.",
@@ -1032,5 +1045,9 @@
     "too_many_inputs": "Too many sections at once for the embedding model.",
     "query_too_long": "The search text is too long: at most {{max}} characters are searched. Shorten it and search again.",
     "hits_out_of_range": "A search returns between 1 and {{max}} hits. Choose a number in this range."
+  },
+  "settings": {
+    "output_limit_unknown": "Unknown steps: {{names}}.",
+    "output_limit_invalid": "The output limit of “$t(modelParams.operation.{{operation}})” must be a whole number from {{min}} to {{max}}."
   }
 }

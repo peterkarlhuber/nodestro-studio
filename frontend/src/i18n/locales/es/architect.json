@@ -269,6 +269,11 @@
     },
     "present": {
       "ready": "El borrador está listo para tu revisión."
+    },
+    "architect": {
+      "limit": "Límite de salida para «$t(modelParams.operation.{{operation}})»: {{max_tokens}} tokens.",
+      "limit_reduced": "Límite de salida para «$t(modelParams.operation.{{operation}})» reducido de {{configured}} a {{max_tokens}} tokens: el modelo no permite más.",
+      "truncated_retry": "La respuesta se cortó en {{max_tokens}} tokens; se pide de nuevo con hasta {{higher}} tokens."
     }
   }
 }

@@ -154,6 +154,17 @@ O **orçamento padrão por execução** (inicialmente 2 USD) vale para todos os 
 
 Administradores também definem o **Orçamento máximo por execução** (vazio: sem teto): nenhuma execução pode começar com mais nem ser aumentada além dele. O **Prazo das decisões de orçamento** (de 1 a 720 horas, inicialmente 24) diz quanto tempo uma execução pausada aguarda uma [decisão de orçamento](/docs/workflows#budget-freigabe) antes de falhar. Quem pode decidir é explicado em [Quem pode decidir](/docs/workflows#budget-rechte).
 
+## Limites de saída dos modelos {#ausgabelimits}
+<!-- keywords: limite de saída, máx. de tokens, max_tokens, cortado, limite do arquiteto, janela de contexto -->
+
+As etapas de IA do próprio Nodestro (o arquiteto de fluxos de trabalho, os assistentes, as perguntas sobre uma execução, as decisões do orquestrador e a verificação de qualidade) não têm configurações de agente próprias. Em **Limites de saída dos modelos** você define com quantos tokens cada etapa pode responder; um campo vazio usa o padrão embutido (por exemplo 32.000 para o plano do fluxo de trabalho do arquiteto e 8.000 para a análise dele). Os agentes mantêm o próprio *Máx. de tokens* no [editor de agentes](/docs/agenten#limits).
+
+O valor enviado vem de três níveis: a sua configuração, senão o padrão, no máximo a saída máxima documentada do modelo (ou metade da janela de contexto, para um modelo local cujo máximo não é conhecido). A tabela mostra o valor enviado ao modelo do assistente e informa quando ele foi reduzido; nada é encurtado em silêncio.
+
+O limite inclui o raciocínio do modelo. Um limite maior permite respostas mais longas, mas nunca contorna um orçamento: antes de cada solicitação, a verificação de custos reserva exatamente esse valor.
+
+**Pedir novamente respostas cortadas:** quando uma resposta do arquiteto de fluxos de trabalho atinge o limite, ela é pedida mais uma vez com o limite dobrado, no máximo o *Limite máximo para uma nova tentativa* (inicialmente 64.000) e o máximo do modelo. A nova tentativa só é enviada se o custo total couber no que resta do orçamento da tarefa. Caso contrário, ou com a nova tentativa desativada, a tarefa para com uma mensagem que informa a etapa e o limite dela.
+
 ## Sandbox {#sandbox}
 <!-- keywords: escolher sandbox, automático, docker, processo python, docker disponível, sandbox integrado, sandbox linux, macos, windows, bloqueado, experimental -->
 

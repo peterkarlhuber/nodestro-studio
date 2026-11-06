@@ -13,6 +13,7 @@ export const SETTINGS_GROUPS: Record<string, "setup" | "costs" | "running" | "ma
   "settings-language": "setup",
   "settings-models": "setup",
   "settings-reasoning": "setup",
+  "settings-output-limits": "setup",
   "settings-prices": "costs",
   "settings-reconciliation": "costs",
   "settings-sandbox": "running",
