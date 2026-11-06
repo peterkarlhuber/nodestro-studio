@@ -16,7 +16,8 @@
     "example": "Beispiel-Workflows",
     "tool": "Tools",
     "knowledge": "Wissen",
-    "docs": "Dokumentation"
+    "docs": "Dokumentation",
+    "settings": "Einstellungen"
   },
   "recentRun": "Ausführung",
   "recentWorkflow": "Workflow",

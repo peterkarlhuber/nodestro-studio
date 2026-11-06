@@ -16,7 +16,8 @@
     "example": "Fluxos de trabalho de exemplo",
     "tool": "Ferramentas",
     "knowledge": "Conhecimento",
-    "docs": "Documentação"
+    "docs": "Documentação",
+    "settings": "Configurações"
   },
   "recentRun": "Execução",
   "recentWorkflow": "Fluxo de trabalho",

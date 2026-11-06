@@ -16,6 +16,7 @@ import {
   type LucideIcon,
   Play,
   Search,
+  Settings,
   Star,
 } from "lucide-react";
 import { type KeyboardEvent, useEffect, useMemo, useState } from "react";
@@ -29,7 +30,7 @@ import { Modal, Spinner } from "../components/ui";
 import { currentLanguage } from "../i18n";
 import { changedText, relativeTime } from "../lib/format";
 
-type Kind = "recent" | "page" | SearchResult["kind"] | "run" | "docs";
+type Kind = "recent" | "page" | SearchResult["kind"] | "run" | "docs" | "settings";
 type Translate = (key: string, options?: Record<string, unknown>) => string;
 
 interface Hit {
@@ -42,7 +43,8 @@ interface Hit {
   favorite: boolean;
 }
 
-const KINDS: Kind[] = ["recent", "page", "workflow", "run", "agent", "template", "example", "tool", "knowledge", "docs"];
+// "Search the settings" comes last: Enter opens the best real hit, never this general offer.
+const KINDS: Kind[] = ["recent", "page", "workflow", "run", "agent", "template", "example", "tool", "knowledge", "docs", "settings"];
 const ICONS: Record<Kind, LucideIcon> = {
   recent: History,
   page: CornerDownRight,
@@ -54,6 +56,7 @@ const ICONS: Record<Kind, LucideIcon> = {
   tool: Command,
   knowledge: BookOpen,
   docs: BookMarked,
+  settings: Settings,
 };
 
 /** Where a search result opens. */
@@ -150,7 +153,7 @@ export function settingsSearchHit(query: string, t: Translate): Hit | null {
   if (typed.length < 3) return null;
   return {
     key: SETTINGS_SEARCH_KEY,
-    kind: "page",
+    kind: "settings",
     title: t("search.inSettings", { query: typed }),
     subtitle: t("nav.settings"),
     snippet: "",
