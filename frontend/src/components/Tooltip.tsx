@@ -54,7 +54,7 @@ const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([t
 export function focusableAfter(anchor: HTMLElement): HTMLElement | undefined {
   const scope: ParentNode = anchor.closest("dialog[open]") ?? document;
   const all = [...scope.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
-    (element) => !element.closest("[role=tooltip]") && (element === anchor || element.getClientRects().length > 0),
+    (element) => element === anchor || !element.closest("[role=tooltip], [hidden], [inert], details:not([open]) > :not(summary)"),
   );
   const index = all.indexOf(anchor);
   return index >= 0 ? all[index + 1] : undefined;
@@ -163,6 +163,8 @@ function useTip() {
       const next = event.shiftKey ? anchor : (focusableAfter(anchor) ?? anchor);
       close();
       next.focus();
+      // A control that cannot take the focus (not rendered): back to the anchor rather than to nowhere.
+      if (document.activeElement !== next) anchor.focus();
     },
     onBlur: (event: FocusEvent<HTMLElement>) => {
       const to = event.relatedTarget as Node | null;
@@ -343,6 +345,8 @@ export function HelpTip({ id, label }: { id: HelpId; label?: string }) {
       <button
         type="button"
         className={`help-tip ${open ? "help-tip--open" : ""}`}
+        // Names its text for the settings search, which finds settings by their help as well (pages/settingsSearch.ts).
+        data-help={id}
         aria-label={label ? t("common.helpFor", { label }) : t("common.help")}
         aria-expanded={open}
         aria-describedby={open ? tip.id : undefined}

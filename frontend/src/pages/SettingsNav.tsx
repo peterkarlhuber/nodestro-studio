@@ -1,10 +1,11 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, RotateCcw } from "lucide-react";
 import { type RefObject, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import { safeReturnPath } from "../lib/settingsLink";
 import { prefersReducedMotion } from "../lib/motion";
+import { SettingsSearch } from "./SettingsSearch";
 
 /** The groups of the page, in the order of the page; a section the map does not know goes to "more". */
 export const SETTINGS_GROUPS: Record<string, "setup" | "costs" | "running" | "maintenance"> = {
@@ -138,46 +139,95 @@ export function SettingsReturn() {
   );
 }
 
-/** The page's table of contents: grouped, follows the reading position, and keeps #section in the address. */
-export function SettingsNav({ container }: { container: RefObject<HTMLElement | null> }) {
+/**
+ * The page's table of contents: grouped, follows the reading position, and keeps #section in the address. Above it
+ * the search for single settings and, when the person changed the width, the way back to the standard width. Where
+ * the window leaves no room beside the content (styles/settings.css, container query) the navigation stands above
+ * the content and the list becomes a "Go to section" select.
+ */
+export function SettingsNav({
+  container,
+  navRef,
+  widthChanged = false,
+  onResetWidth,
+}: {
+  container: RefObject<HTMLElement | null>;
+  navRef?: RefObject<HTMLElement | null>;
+  widthChanged?: boolean;
+  onResetWidth?: () => void;
+}) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const anchors = useAnchors(container);
   const active = useActive(anchors);
-  if (anchors.length < 2) return null;
+  const go = (id: string) => {
+    navigate({ search: location.search, hash: id }, { replace: true });
+    revealSettingsSection(id);
+  };
   const groups: [string, Anchor[]][] = [];
   for (const anchor of anchors) {
     const last = groups[groups.length - 1];
     if (last && last[0] === anchor.group) last[1].push(anchor);
     else groups.push([anchor.group, [anchor]]);
   }
+  const listed = anchors.length >= 2;
   return (
-    <nav className="settings-nav" aria-label={t("settings.nav.title")} data-testid="settings-nav">
+    <nav ref={navRef} className="settings-nav" aria-label={t("settings.nav.title")} data-testid="settings-nav">
       <SettingsReturn />
-      <div className="settings-nav__title">{t("settings.nav.title")}</div>
-      {groups.map(([group, items], index) => (
-        <div key={`${group}-${index}`} className="settings-nav__group">
-          <div className="settings-nav__group-title">{t(`settings.nav.groups.${group}`)}</div>
-          <ul>
-            {items.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  aria-current={active === item.id ? "location" : undefined}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    navigate({ search: location.search, hash: item.id }, { replace: true });
-                    revealSettingsSection(item.id);
-                  }}
-                >
-                  {item.title}
-                </a>
-              </li>
+      <SettingsSearch container={container} />
+      {widthChanged && onResetWidth ? (
+        <button type="button" className="settings-nav__reset link-button small" onClick={onResetWidth} data-testid="settings-width-reset">
+          <RotateCcw size={12} aria-hidden /> {t("settingsUi.width.reset")}
+        </button>
+      ) : null}
+      {listed ? (
+        <>
+          <label className="settings-nav__jump">
+            <span className="settings-nav__title">{t("settingsUi.jump.label")}</span>
+            <select
+              className="nd-input nd-select"
+              value={active ?? anchors[0].id}
+              onChange={(event) => go(event.target.value)}
+              data-testid="settings-nav-select"
+            >
+              {groups.map(([group, items], index) => (
+                <optgroup key={`${group}-${index}`} label={t(`settings.nav.groups.${group}`)}>
+                  {items.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.title}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+          </label>
+          <div className="settings-nav__list">
+            <div className="settings-nav__title">{t("settings.nav.title")}</div>
+            {groups.map(([group, items], index) => (
+              <div key={`${group}-${index}`} className="settings-nav__group">
+                <div className="settings-nav__group-title">{t(`settings.nav.groups.${group}`)}</div>
+                <ul>
+                  {items.map((item) => (
+                    <li key={item.id}>
+                      <a
+                        href={`#${item.id}`}
+                        aria-current={active === item.id ? "location" : undefined}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          go(item.id);
+                        }}
+                      >
+                        {item.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
-        </div>
-      ))}
+          </div>
+        </>
+      ) : null}
     </nav>
   );
 }

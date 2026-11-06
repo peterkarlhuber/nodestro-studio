@@ -4,7 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import i18n from "../i18n";
-import { HelpTip, Tooltip } from "./Tooltip";
+import { HelpTip, Tooltip, focusableAfter, placeTip, tipHost } from "./Tooltip";
 
 function renderInRouter(ui: React.ReactNode) {
   return render(<MemoryRouter>{ui}</MemoryRouter>);
@@ -87,5 +87,84 @@ describe("HelpTip", () => {
     await userEvent.click(screen.getByRole("button", { name: "Hilfe: Modell" }));
     expect(screen.getAllByRole("tooltip")).toHaveLength(1);
     expect(screen.getByRole("tooltip")).toHaveTextContent(i18n.t("help.agent.model"));
+  });
+});
+
+describe("tooltip placement", () => {
+  const view = { width: 1000, height: 800 };
+  const size = { width: 300, height: 100 };
+
+  it("stands above the anchor when there is room, centred on it", () => {
+    const place = placeTip({ top: 400, bottom: 420, left: 490, width: 20 }, size, view);
+    expect(place).toEqual({ top: 292, left: 350, below: false });
+  });
+
+  it("flips below the anchor at the top edge and shifts away from the side edges", () => {
+    const place = placeTip({ top: 20, bottom: 40, left: 990, width: 10 }, size, view);
+    expect(place.below).toBe(true);
+    expect(place.top).toBe(48);
+    expect(place.left).toBe(1000 - 300 - 8);
+    expect(placeTip({ top: 400, bottom: 420, left: 0, width: 10 }, size, view).left).toBe(8);
+  });
+
+  it("stays inside the window when it is taller than the room on both sides", () => {
+    const place = placeTip({ top: 300, bottom: 320, left: 400, width: 20 }, { width: 300, height: 900 }, view);
+    expect(place.top).toBeGreaterThanOrEqual(8);
+  });
+});
+
+describe("tooltips in dialogs", () => {
+  afterEach(() => {
+    cleanup();
+    document.body.innerHTML = "";
+  });
+
+  it("render into the anchor's open dialog (modal dialogs lie in the top layer, above <body>)", async () => {
+    render(
+      <MemoryRouter>
+        <dialog open>
+          <HelpTip id="agent.effort" label="Aufwand" />
+        </dialog>
+        <HelpTip id="agent.model" label="Modell" />
+      </MemoryRouter>,
+    );
+    const inDialog = screen.getByRole("button", { name: "Hilfe: Aufwand" });
+    expect(tipHost(inDialog).tagName).toBe("DIALOG");
+    expect(tipHost(screen.getByRole("button", { name: "Hilfe: Modell" }))).toBe(document.body);
+    await userEvent.click(inDialog);
+    expect(screen.getByRole("tooltip").parentElement?.tagName).toBe("DIALOG");
+  });
+
+  it("close with Escape without letting the dialog see the key", async () => {
+    const onDialogKey = vi.fn();
+    render(
+      <MemoryRouter>
+        <dialog open onKeyDown={(event) => onDialogKey(event.key)}>
+          <HelpTip id="agent.effort" label="Aufwand" />
+        </dialog>
+      </MemoryRouter>,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Hilfe: Aufwand" }));
+    await userEvent.keyboard("{Escape}");
+    expect(screen.queryByRole("tooltip")).toBeNull();
+    expect(onDialogKey).not.toHaveBeenCalled();
+  });
+
+  it("lead Tab into the documentation link and on to the next control, never trapping the focus", async () => {
+    render(
+      <MemoryRouter>
+        <dialog open>
+          <HelpTip id="agent.effort" label="Aufwand" />
+          <button type="button">Weiter</button>
+        </dialog>
+      </MemoryRouter>,
+    );
+    const help = screen.getByRole("button", { name: "Hilfe: Aufwand" });
+    await userEvent.click(help);
+    await userEvent.tab();
+    expect(document.activeElement).toBe(screen.getByRole("link", { name: /Mehr in der Dokumentation/ }));
+    await userEvent.tab();
+    expect(screen.queryByRole("tooltip")).toBeNull();
+    expect(focusableAfter(help)).toBeDefined();
   });
 });

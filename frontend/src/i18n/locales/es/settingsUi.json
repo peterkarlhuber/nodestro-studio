@@ -1,0 +1,35 @@
+{
+  "entry": {
+    "label": "Ajustes",
+    "tooltip": "Ajustes (Ctrl+,): proveedores de IA, modelos locales, presupuestos, sandbox y más. «Volver» en la página de ajustes, o de nuevo Ctrl+, , te trae aquí de vuelta."
+  },
+  "width": {
+    "label": "Ancho del contenido de los ajustes",
+    "hint": "Arrastra para hacer los ajustes más anchos o más estrechos. Con el teclado: flechas (con Mayús en pasos más grandes), Inicio y Fin. Un doble clic restablece el ancho estándar.",
+    "value": "{{width}} px de ancho",
+    "reset": "Ancho estándar"
+  },
+  "jump": {
+    "label": "Ir a la sección"
+  },
+  "search": {
+    "label": "Buscar en los ajustes",
+    "placeholder": "Buscar un ajuste …",
+    "clear": "Borrar la búsqueda",
+    "results": "Ajustes que coinciden",
+    "found_one": "{{count}} ajuste encontrado – Intro lleva al primero",
+    "found_other": "{{count}} ajustes encontrados – Intro lleva al primero",
+    "none": "Ningún ajuste coincide con «{{query}}». Prueba otra palabra o elige una sección."
+  },
+  "advanced": {
+    "badge": "Avanzado",
+    "changed_one": "{{count}} cambiado",
+    "changed_other": "{{count}} cambiados"
+  },
+  "models": {
+    "groupModels": "Modelos",
+    "groupBudget": "Presupuesto por ejecución",
+    "groupArchitect": "Arquitecto de flujos de trabajo",
+    "unsaved": "Tus cambios en «Modelos y presupuesto» aún no están guardados. Guárdalos, descártalos o sigue editando."
+  }
+}

@@ -121,19 +121,19 @@
   "settings": {
     "defaultModel": "Mit diesem Modell starten neue, leere Agenten und neue Workflows. Beim KI-Entwurf dient es als Ersatz, falls das vorgeschlagene Modell nicht verfügbar ist.",
     "assistantModel": "Modell für Agent-Architekt, Coding Agent und Memory-Assistent. Ein starkes Modell liefert bessere Vorschläge.",
-    "budget": "Gilt für alle Workflows ohne eigenes Budget. Leer = kein Limit (nicht empfohlen).",
+    "budget": "Das Kostenlimit für Läufe, deren Workflow kein eigenes Budget hat. Erreicht ein Lauf es, wird keine weitere KI-Anfrage gestellt: Ein von einer Person gestarteter Lauf pausiert für eine Budget-Entscheidung, Läufe aus Zeitplänen, Stapelläufen, Testreihen und der veröffentlichten API stoppen. Leer = kein Limit, solche Läufe können also beliebig viel kosten.",
     "sandbox": "Automatisch (empfohlen): KI-erstellte Tools laufen nur in Docker, sobald es die Prüfungen von Nodestro bestanden hat; sonst sind sie gesperrt. Linux-Sandbox: optional, nur Linux; KI-erstellte Tools laufen in der eingebauten Linux-Sandbox ohne Pakete von Drittanbietern. Python-Prozess: für selbst geschriebene Tools; KI-erstellte Tools sind immer gesperrt. Docker: Jedes Tool läuft in einem Container ohne Netzwerk und mit schreibgeschütztem Dateisystem.",
     "language": "Die Sprache der Oberfläche. „Automatisch“ folgt der Sprache des Browsers (Englisch, wenn sie nicht unterstützt wird). Die Wahl gilt sofort und bleibt gespeichert. Inhalte wie Agenten, Prompts und Ergebnisse bleiben, wie sie sind.",
-    "backup": "Lädt alle Daten außer den API-Schlüsseln als ZIP-Datei herunter.",
+    "backup": "Hält alles in einer ZIP-Datei fest, zum sicheren Aufbewahren oder für den Umzug auf einen anderen Computer. API-Schlüssel bleiben bewusst draußen, so lässt sich eine Sicherung weitergeben; beim Wiederherstellen bleiben die Schlüssel dieses Computers erhalten. Wiederherstellen ersetzt alle aktuellen Daten, Nodestro sichert den aktuellen Stand aber vorher automatisch.",
     "restore": "Prüft die Datei zuerst vollständig und zeigt ihren Inhalt. Ersetzt wird erst nach deiner Bestätigung; vorher wird der aktuelle Stand gesichert.",
-    "diagnostics": "Prüft Versionen, Datenbank, Verzeichnisse, Sandbox und Voraussetzungen. Kostenlos und ohne Internet.",
-    "connection": "Fragt beim Anbieter des Standardmodells die Modellliste ab. Verbraucht keine Tokens.",
-    "architectBudget": "Höchste geschätzte Kosten eines Entwurfs des Workflow-Architekten. Der Architekt hält an, wenn sie erreicht sind.",
-    "architectRepairs": "Begrenzt die zusätzlichen KI-Anfragen für Korrekturen. Offensichtliche Korrekturen erfolgen ohne KI.",
+    "diagnostics": "Hilfreich nach einem Update, nach dem Verschieben des Datenordners oder wenn etwas nicht funktioniert: Jede Prüfung sagt, ob sie bestanden ist und, falls nicht, warum. Sie liest nur: Nichts wird geändert oder repariert, keine KI wird genutzt und nichts ins Internet gesendet. API-Schlüssel erscheinen nie im Ergebnis, du kannst es also für den Support weitergeben.",
+    "connection": "Eine Anfrage an den Anbieter des Standardmodells nach seiner Modellliste: Sie zeigt, ob Schlüssel oder Adresse funktionieren, bevor ein Agent sie braucht, und welchen Fehler der Anbieter sonst meldet. Verbraucht keine Tokens und kostet nichts; kein Agent und kein Workflow läuft.",
+    "architectBudget": "Gilt für einen ganzen Auftrag des Workflow-Architekten: den Entwurf, die Tool-Entwürfe des Coding Agent und jede Korrektur. Erreichen die geschätzten Kosten das Limit, bricht der Auftrag ohne Entwurf ab und sagt das; die bisherigen Kosten zählen trotzdem. Ein zu niedriges Limit lässt größere Workflows scheitern, leer heißt kein Limit.",
+    "architectRepairs": "Besteht ein Entwurf oder ein Tool-Entwurf die Prüfungen von Nodestro nicht, darf der Architekt das Modell so oft um eine Korrektur bitten (0 bis 5). Jeder Versuch ist eine zusätzliche KI-Anfrage innerhalb des Kostenlimits des Entwurfs; 0 spart Kosten, lässt dir aber mehr Probleme zum Beheben. Korrekturen ohne KI werden immer gemacht.",
     "providers": "Zugänge zu den KI-Anbietern: API-Schlüssel (nie angezeigt; Umgebungsvariablen haben Vorrang), Basis-URLs eigener Server und was deren Modelle können. Jeder Agent nutzt den Anbieter seines Modells; nichts wechselt zu einem anderen Anbieter.",
     "prices": "Woher die Preise kommen, wie oft sie geprüft werden und wie individuelle Preise und Prüfungen funktionieren.",
     "priceMode": "Standard warnt bei unbekannten und veralteten Preisen; Streng lehnt solche Anfragen ab, bevor sie etwas kosten.",
-    "reconciliation": "Vergleicht die Schätzungen mit den Abrechnungen der Anbieter. Braucht einen Admin-Schlüssel der Abrechnungs-API; es wird nichts verändert.",
+    "reconciliation": "Zeigt, ob die Kostenschätzungen von Nodestro zu dem passen, was du wirklich zahlst: Es liest, was OpenAI und Anthropic pro Tag und Modell abgerechnet haben, und warnt bei großen Abweichungen, ein Zeichen, dass Preise oder Budgets angepasst werden sollten. Braucht einen Admin-Schlüssel der Abrechnungs-API des Anbieters; es liest nur und ändert beim Anbieter nie etwas.",
     "localModels": "Lokale Modelle laufen mit Ollama auf diesem Computer: ohne API-Schlüssel, keine Daten verlassen den Computer. Nodestro installiert die festgelegte Laufzeit auf Wunsch und prüft jeden Download.",
     "localRecommendations": "Vorschläge aus Aufgabe, Arbeitsspeicher dieses Computers und installierten Modellen. Ein installiertes Modell, das gut genug ist, geht vor einem besseren, das erst heruntergeladen werden müsste.",
     "localImport": "Für Computer ohne Internet: ein Offline-Modellpaket (per SHA-256 geprüft) oder eine GGUF-Datei von einem USB-Laufwerk oder einem freigegebenen Ordner importieren.",
@@ -163,7 +163,7 @@
     "history": "Jede freigegebene Erhöhung dieses Laufs: das Limit davor und danach, wer entschieden hat und wann.",
     "runBudget": "Das Kostenlimit des Laufs. Begleitete Läufe pausieren, wenn es nicht reicht, und warten auf eine Entscheidung; Läufe aus Zeitplänen, Stapelläufen, Testreihen und der veröffentlichten API stoppen stattdessen.",
     "maxRunBudget": "Das höchste Limit, das ein Lauf dieses Arbeitsbereichs haben darf, beim Start oder nach Erhöhungen. Leer heißt keine Obergrenze.",
-    "decisionHours": "Wie lange ein Lauf auf eine Budget-Entscheidung wartet, bevor er mit „Budget aufgebraucht“ endet (1 bis 720 Stunden, Standard 24).",
+    "decisionHours": "Nur für Läufe, die eine Person gestartet hat: Ist ihr Budget aufgebraucht, pausieren sie, und jemand kann das Limit erhöhen oder den Lauf beenden. Fällt in dieser Zeit keine Entscheidung, endet der Lauf mit „Budget aufgebraucht“. Läufe aus Zeitplänen, Stapelläufen, Testreihen und der veröffentlichten API stoppen sofort und warten nicht. Standard 24 Stunden.",
     "permissions": "Es entscheidet die Person, die den Lauf gestartet hat, wenn sie die Berechtigung Ausführen hat; Administratoren können jeden Lauf entscheiden."
   },
   "search": {
@@ -183,7 +183,7 @@
   "architect": {
     "open": "Lass den KI-Workflow-Architekten aus einer Beschreibung einen neuen Workflow entwerfen oder diesen überarbeiten. Du prüfst den Entwurf, bevor sich etwas ändert.",
     "create": "Beschreibe das Ziel; der Architekt plant, konfiguriert und prüft einen vollständigen Workflow.",
-    "generateTools": "Passt kein vorhandenes Tool, schreibt der Coding Agent ein Python-Tool als Entwurf. Es läuft erst nach deiner ausdrücklichen Freigabe.",
+    "generateTools": "An: Für jedes Tool, das der Entwurf braucht und deine Tool-Bibliothek nicht hat, schreibt der Coding Agent Python-Code mit Tests. Das nutzt das Modell für die Assistenten und zählt zum Kostenlimit des Entwurfs. Entwürfe sind nicht registriert und laufen nie von selbst: Agenten, die sie brauchen, starten erst, wenn du die Tools getestet und freigegeben hast (gleich oder später unter Tools); für den Test von KI-geschriebenem Code braucht es eine Sandbox wie Docker. Aus: Fehlende Tools werden nur beschrieben, du legst sie selbst an oder entfernst sie.",
     "log": "Jede Zeile beschreibt einen Schritt, den der Architekt tatsächlich ausgeführt hat, oder ein Ergebnis. Interne Gedankengänge des Modells werden nicht gezeigt.",
     "cost": "Geschätzte API-Kosten aller bisherigen Anfragen dieses Entwurfs. Sie erscheinen in der Nutzungsübersicht unter Workflow-Architekt.",
     "cancel": "Hält sofort an. Nichts wird gespeichert, kein Workflow verändert; bereits gesendete Anfragen werden gezählt.",
@@ -243,7 +243,7 @@
     "sanitize": "Ersetzt Zugangsdaten und persönliche Daten in der Datei durch Platzhalter.",
     "run": "Dateien dieses Laufs. HTML wird ohne Skripte angezeigt.",
     "formats": "Word (DOCX) und Excel (XLSX) werden beim Hochladen in Markdown umgewandelt; Formeln werden angezeigt, nie ausgeführt.",
-    "ocr": "Gescannte PDFs ohne Textebene lassen sich lokal mit Tesseract erkennen. Unsichere Wörter sind markiert."
+    "ocr": "Braucht Tesseract und pdftoppm auf diesem Computer (das Abzeichen zeigt, ob sie da sind). An: Seiten gescannter PDFs ohne Textebene werden beim Einlesen der Datei lokal erkannt, das dauert einige Sekunden pro Seite; unsichere Wörter werden markiert, damit du sie prüfen kannst. Aus: Solche Seiten liefern Agenten und der Wissenssuche keinen Text."
   },
   "automation": {
     "batch": "Ein Workflow über viele Eingaben. Jede Zeile wird ein eigener Lauf.",
@@ -272,7 +272,7 @@
     "disable": "Lehnt neue Läufe mit 503 ab, bis du die API wieder einschaltest.",
     "keyName": "Wer den Schlüssel nutzt, z. B. der Name der Anwendung. Nur in Nodestro sichtbar.",
     "scopes": "run startet und bricht Läufe ab, read liest Status und Ergebnisse, approve entscheidet Freigaben.",
-    "network": "Öffnet einen eigenen Port für Geräte in deinem Netzwerk. Standardmäßig aus; die Nodestro-Oberfläche ist dort nie erreichbar.",
+    "network": "Nur nötig, wenn andere Geräte deine veröffentlichten APIs aufrufen sollen. Jede API muss zusätzlich für das Netzwerk eingeschaltet sein, und jeder Aufruf braucht einen API-Schlüssel. Prüfe deine Firewall und nutze in gemeinsamen Netzen besser HTTPS. Die Nodestro-Oberfläche und ihre internen Endpunkte sind über diesen Port nie erreichbar.",
     "networkShare": "Nur hier eingeschaltete APIs sind über den Netzwerk-Port erreichbar.",
     "validate": "Prüft die Anfrage genau wie die API. Es startet kein Lauf, nichts wird berechnet.",
     "testRun": "Startet einen echten Lauf der veröffentlichten Version über den Weg der API; er kostet wie jeder Lauf.",
@@ -289,7 +289,7 @@
     "formats": "Wähle Gruppen oder einzelne Formate. Nodestro prüft den echten Inhalt, nicht nur die Endung.",
     "optional": "Pflichtfelder müssen vor dem Start ausgefüllt sein. Optionale Felder dürfen leer bleiben; Agenten und Entscheidungen erkennen das.",
     "delivery": "Wie Agenten die Dateien bekommen: als Inhalt, als Übersicht mit gezieltem Lesen, oder automatisch je nach Größe.",
-    "storage": "Hochgeladene Dateien liegen bei den Läufen. Ungenutzte und alte Dateien kannst du hier aufräumen.",
+    "storage": "Für Läufe, Testfälle und Zeitpläne hochgeladene Dateien bleiben mit ihren Läufen auf diesem Computer und belegen Speicherplatz. Hier siehst du, wie viel, und entfernst ungenutzte oder alte Dateien. Dateien von wartenden, laufenden oder pausierten Läufen und Dateien, die Testfälle, Zeitpläne oder Stapelläufe noch brauchen, bleiben immer erhalten; eine entfernte Datei lässt sich aus ihrem Lauf nicht mehr öffnen.",
     "adopt": "Übernimmt ausgewählte Inhalte dauerhaft ins Wissen, erst nach deiner Bestätigung und mit Herkunft.",
     "proposals": "Der Agent darf Inhalte fürs Wissen vorschlagen. Gespeichert wird nur, was du prüfst und bestätigst.",
     "received": "Welche Dateien der Lauf bekommen hat und wie jeder Agent sie erhalten hat."

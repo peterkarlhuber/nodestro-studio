@@ -121,19 +121,19 @@
   "settings": {
     "defaultModel": "New, empty agents and new workflows start with this model. For AI drafts it serves as a replacement if the proposed model is not available.",
     "assistantModel": "Model for the Agent Architect, the Coding Agent and the memory assistant. A strong model makes better proposals.",
-    "budget": "Applies to all workflows without a budget of their own. Empty = no limit (not recommended).",
+    "budget": "The cost limit of runs whose workflow has no budget of its own. When a run reaches it, no further AI request is made: a run started by a person pauses for a budget decision, runs from schedules, batches, test series and the published API stop. Empty = no limit, so such runs can cost any amount.",
     "sandbox": "Automatic (recommended): AI-created tools run only in Docker once it passed Nodestro's checks; otherwise they are blocked. Linux sandbox: optional, Linux only; AI-created tools run in the built-in Linux sandbox without third-party packages. Python process: for tools you wrote yourself; AI-created tools are always blocked. Docker: every tool runs in a container without network and with a read-only file system.",
     "language": "The language of the interface. “Automatic” follows the browser's language (English if it is not supported). The choice takes effect at once and is remembered. Content such as agents, prompts and results stays as it is.",
-    "backup": "Downloads all data except the API keys as a ZIP file.",
+    "backup": "Keeps everything in one ZIP file, to store safely or to move to another computer. API keys are left out on purpose, so a backup can be passed on; restoring keeps the keys of this computer. Restoring replaces all current data, but Nodestro first saves the current state as a safety backup.",
     "restore": "Checks the file completely first and shows its contents. Data is only replaced after your confirmation; the current state is backed up before.",
-    "diagnostics": "Checks versions, database, directories, sandbox and requirements. Free and without internet.",
-    "connection": "Asks the provider of the default model for its list of models. Uses no tokens.",
-    "architectBudget": "Maximum estimated cost of one Workflow Architect draft. The architect stops when it is reached.",
-    "architectRepairs": "Limits the extra AI requests for corrections. Obvious fixes are made without AI.",
+    "diagnostics": "Useful after an update, after moving the data folder or when something does not work: every check says whether it passed and, if not, why. It only reads: nothing is changed or repaired, no AI is used and nothing is sent to the internet. API keys never appear in the result, so you can pass it on for support.",
+    "connection": "One request to the provider of the default model for its list of models: it shows whether the key or the address works before an agent needs it, and which error the provider reports if not. Uses no tokens and costs nothing; no agent or workflow runs.",
+    "architectBudget": "Covers one whole Workflow Architect job: the design, the tool drafts of the Coding Agent and every correction. When the estimated cost reaches it, the job stops without a draft and says so; the cost so far is still counted. Too low a limit makes larger workflows fail, empty means no limit.",
+    "architectRepairs": "When a design or a tool draft fails Nodestro’s checks, the architect may ask the model this many times to fix it (0 to 5). Each try is an extra AI request within the draft’s cost limit; 0 saves cost but leaves more problems for you to fix. Corrections that need no AI are always made.",
     "providers": "Access to the AI providers: API keys (never shown; environment variables take precedence), base URLs of your own servers and what their models can do. Every agent uses the provider of its model; nothing switches to another provider.",
     "prices": "Where the prices come from, how often they are checked, and how individual prices and reviews work.",
     "priceMode": "Standard warns about unknown and stale prices; Strict refuses such requests before they cost anything.",
-    "reconciliation": "Compares the estimates with the providers' bills. Needs an admin key of the billing API; nothing is changed.",
+    "reconciliation": "Shows whether Nodestro’s cost estimates match what you really pay: it reads what OpenAI and Anthropic billed per day and model and warns about large gaps, a sign that prices or budgets need adjusting. Needs an admin key of the provider’s billing API; it only reads and never changes anything at the provider.",
     "localModels": "Local models run on this computer with Ollama: no API key, no data leaves the computer. Nodestro installs the pinned runtime on request and checks every download.",
     "localRecommendations": "Suggestions from the task, this computer's memory and the installed models. An installed model that is good enough wins over a better one that needs a download.",
     "localImport": "For computers without internet: import an offline model package (checked by SHA-256) or a GGUF file from a USB drive or a shared folder.",
@@ -163,7 +163,7 @@
     "history": "Every approved raise of this run: the limit before and after, who decided and when.",
     "runBudget": "The run's cost limit. Attended runs pause when it is not enough and wait for a decision; runs from schedules, batches, test series and the published API stop instead.",
     "maxRunBudget": "The most any run of this workspace may have as its limit, at the start or after raises. Empty means no cap.",
-    "decisionHours": "How long a run waits for a budget decision before it ends with “budget used up” (1 to 720 hours, default 24).",
+    "decisionHours": "Only for runs started by a person: when their budget is used up they pause, and someone can raise the limit or end the run. After this time without a decision the run ends as “budget used up”. Runs from schedules, batches, test series and the published API stop at once and do not wait. Default 24 hours.",
     "permissions": "The person who started the run decides if they hold the Run permission; administrators can decide every run."
   },
   "search": {
@@ -183,7 +183,7 @@
   "architect": {
     "open": "Let the Workflow Architect design a new workflow or revise this one from a description. You review the draft before anything changes.",
     "create": "Describe the goal; the architect plans, configures and checks a complete workflow.",
-    "generateTools": "If no existing tool fits, the Coding Agent writes a Python tool as a draft. It only runs after your explicit approval.",
+    "generateTools": "On: for every tool the design needs but your tool library lacks, the Coding Agent writes Python code with tests. This uses the model for the assistants and counts toward the draft’s cost limit. Drafts are not registered and never run by themselves: agents that need them start only after you test and approve the tools (now or later under Tools); testing AI-written code needs a sandbox such as Docker. Off: missing tools are only described, and you create or remove them yourself.",
     "log": "Every line describes a step the architect actually carried out or a result it got. Internal reasoning of the model is not shown.",
     "cost": "Estimated API cost of all requests of this draft so far. It is recorded in the usage overview under Workflow Architect.",
     "cancel": "Stops at once. Nothing is saved, no workflow changes; requests already sent are counted.",
@@ -243,7 +243,7 @@
     "sanitize": "Replaces credentials and personal data in the file with placeholders.",
     "run": "Files of this run. HTML is shown without scripts.",
     "formats": "Word (DOCX) and Excel (XLSX) are converted to Markdown on upload; formulas are shown, never run.",
-    "ocr": "Scanned PDFs without a text layer can be recognized locally with Tesseract. Uncertain words are marked."
+    "ocr": "Needs Tesseract and pdftoppm on this computer (the badge shows whether they are there). On: pages of scanned PDFs without a text layer are recognized locally when the file is read, which takes some seconds per page; uncertain words are marked so you can check them. Off: such pages give agents and the knowledge search no text."
   },
   "automation": {
     "batch": "One workflow over many inputs. Every row becomes a run of its own.",
@@ -272,7 +272,7 @@
     "disable": "Refuses new runs with 503 until you switch the API on again.",
     "keyName": "Who uses the key, e.g. the name of the application. Only shown in Nodestro.",
     "scopes": "run starts and cancels runs, read reads status and results, approve decides approvals.",
-    "network": "Opens a separate port for devices in your network. Off by default; the Nodestro interface is never reachable there.",
+    "network": "Needed only when other devices should call your published APIs. Each API must also be switched on for the network, and every call needs an API key. Check your firewall and prefer HTTPS in shared networks. The Nodestro interface and its internal endpoints are never reachable through this port.",
     "networkShare": "Only APIs switched on here are reachable through the network port.",
     "validate": "Checks the request body exactly like the API does. No run starts, nothing is billed.",
     "testRun": "Starts a real run of the published version through the API's own path; it is billed like any run.",
@@ -289,7 +289,7 @@
     "formats": "Choose groups or single formats. Nodestro checks the real content, not only the extension.",
     "optional": "Required fields must be filled before the start. Optional fields may stay empty; agents and decisions notice that.",
     "delivery": "How agents get the files: as content, as an overview with targeted reading, or automatically depending on the size.",
-    "storage": "Uploaded files are kept with the runs. Clean up unused and old files here.",
+    "storage": "Files uploaded for runs, test cases and schedules stay on this computer with their runs and take up disk space. Here you see how much and remove unused or old files. Files of queued, running or paused runs and files that test cases, schedules or batches still need are always kept; a removed file can no longer be opened from its run.",
     "adopt": "Stores chosen content permanently in knowledge, only after your confirmation and with its origin.",
     "proposals": "The agent may propose content for knowledge. Only what you check and confirm is stored.",
     "received": "Which files the run got and how each agent received them."

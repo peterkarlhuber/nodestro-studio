@@ -1,0 +1,35 @@
+{
+  "entry": {
+    "label": "Configurações",
+    "tooltip": "Configurações (Ctrl+,): provedores de IA, modelos locais, orçamentos, sandbox e mais. “Voltar” na página de configurações, ou Ctrl+, de novo, traz você de volta aqui."
+  },
+  "width": {
+    "label": "Largura do conteúdo das configurações",
+    "hint": "Arraste para deixar as configurações mais largas ou mais estreitas. Pelo teclado: setas (com Shift em passos maiores), Home e End. Um clique duplo restaura a largura padrão.",
+    "value": "{{width}} px de largura",
+    "reset": "Largura padrão"
+  },
+  "jump": {
+    "label": "Ir para a seção"
+  },
+  "search": {
+    "label": "Pesquisar nas configurações",
+    "placeholder": "Encontrar uma configuração …",
+    "clear": "Limpar a pesquisa",
+    "results": "Configurações correspondentes",
+    "found_one": "{{count}} configuração encontrada – Enter leva à primeira",
+    "found_other": "{{count}} configurações encontradas – Enter leva à primeira",
+    "none": "Nenhuma configuração corresponde a “{{query}}”. Tente outra palavra ou escolha uma seção."
+  },
+  "advanced": {
+    "badge": "Avançado",
+    "changed_one": "{{count}} alterada",
+    "changed_other": "{{count}} alteradas"
+  },
+  "models": {
+    "groupModels": "Modelos",
+    "groupBudget": "Orçamento por execução",
+    "groupArchitect": "Arquiteto de fluxos de trabalho",
+    "unsaved": "Suas alterações em “Modelos e orçamento” ainda não foram salvas. Salve, descarte ou continue editando."
+  }
+}
