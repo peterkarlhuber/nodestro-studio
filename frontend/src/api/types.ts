@@ -1349,6 +1349,29 @@ export interface UsageEntry {
   estimated?: boolean;
 }
 
+/** The daily cost limit of one published API and how much of it the last 24 hours used (API-017, AD-20). */
+export interface PublicationBudget {
+  publication_id: string;
+  slug: string;
+  name: string;
+  /** ``null``: no daily limit. */
+  daily_budget_usd: number | null;
+  last_24h_usd: number;
+  /** ``null``: the workflow's budget, else the default budget. */
+  run_budget_usd: number | null;
+  /** The daily limit is reached: new runs are refused (``limit.daily_budget``). */
+  exhausted: boolean;
+}
+
+export interface UsageBudgets {
+  /** Closest to their daily limit first. */
+  publications: PublicationBudget[];
+  /** Top-level runs of the period that ended at a budget. */
+  stopped_runs: number;
+  /** Top-level runs of the period that wait for a budget decision. */
+  waiting_runs: number;
+}
+
 export interface UsageReport {
   total: UsageBucket;
   by_day: UsageBucket[];
@@ -1356,6 +1379,8 @@ export interface UsageReport {
   by_model: UsageBucket[];
   by_source: UsageBucket[];
   recent: UsageEntry[];
+  /** Missing from an API before API-017. */
+  budgets?: UsageBudgets;
 }
 
 // ---- agent test and context preview -------------------------------------------

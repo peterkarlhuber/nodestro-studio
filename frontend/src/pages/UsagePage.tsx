@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useUsage } from "../api/hooks";
-import type { UsageBucket, UsageEntry } from "../api/types";
+import type { UsageBucket, UsageBudgets, UsageEntry } from "../api/types";
 import { useModelName } from "../components/ModelPicker";
-import { Callout, EmptyState, HelpTip, PageHeader, Segmented, Spinner, Stat } from "../components/ui";
+import { Badge, Callout, EmptyState, HelpTip, PageHeader, Segmented, Spinner, Stat } from "../components/ui";
 import { ErrorText } from "../lib/errors";
-import { formatDate, formatDay, formatNumber, formatTokens } from "../lib/format";
+import { formatCost, formatDate, formatDay, formatNumber, formatTokens } from "../lib/format";
 import { bucketCost, bucketState, usageCost } from "../lib/pricing";
 
 function Bars({ buckets, label }: { buckets: UsageBucket[]; label: string }) {
@@ -120,6 +120,74 @@ function PriceBasis({ total }: { total: UsageBucket }) {
       {t("usage.cost.basis", { versions: versions.join(", ") || "–", sources: sources.join(", ") || "–" })}
       {total.pricing_quality ? ` · ${t("usage.cost.quality", { quality: t(`pricing.quality.${total.pricing_quality}`, { defaultValue: total.pricing_quality }) })}` : null}
     </p>
+  );
+}
+
+/**
+ * Budgets (AD-20, API-017): how much of their daily cost limit published APIs used in the last 24 hours, and the
+ * runs of the period a budget stopped or holds for a decision. Hidden when there is nothing to show.
+ */
+export function BudgetsCard({ budgets }: { budgets: UsageBudgets | undefined }) {
+  const { t } = useTranslation();
+  if (!budgets || (!budgets.publications.length && !budgets.stopped_runs && !budgets.waiting_runs)) return null;
+  return (
+    <section className="panel stack" aria-label={t("usage.budgets.title")} data-testid="usage-budgets">
+      <h2 className="panel__title">{t("usage.budgets.title")}</h2>
+      <p className="muted small" data-testid="usage-budget-runs">
+        {budgets.stopped_runs ? t("usage.budgets.stopped", { count: budgets.stopped_runs }) : t("usage.budgets.noneStopped")}
+        {budgets.waiting_runs ? ` ${t("usage.budgets.waiting", { count: budgets.waiting_runs })}` : null}
+      </p>
+      {budgets.publications.length ? (
+        <div className="table-wrap">
+          <table className="table table--compact" data-testid="usage-budget-apis">
+            <thead>
+              <tr>
+                <th>{t("usage.budgets.api")}</th>
+                <th className="num">{t("usage.budgets.last24h")}</th>
+                <th className="num">{t("usage.budgets.dailyLimit")}</th>
+                <th>{t("usage.budgets.used")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {budgets.publications.map((item) => {
+                const limit = item.daily_budget_usd;
+                const share = limit ? Math.min(item.last_24h_usd / limit, 1) : limit === 0 ? 1 : 0;
+                return (
+                  <tr key={item.publication_id}>
+                    <td>
+                      {item.name}
+                      {item.exhausted ? (
+                        <>
+                          {" "}
+                          <Badge tone="danger">{t("usage.budgets.reached")}</Badge>
+                        </>
+                      ) : null}
+                    </td>
+                    <td className="num">{formatCost(item.last_24h_usd)}</td>
+                    <td className="num">{limit === null ? t("usage.budgets.noLimit") : formatCost(limit)}</td>
+                    <td>
+                      {limit === null ? null : (
+                        <div
+                          className="share"
+                          role="meter"
+                          aria-label={t("usage.budgets.usedOf", { name: item.name })}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                          aria-valuenow={Math.round(share * 100)}
+                        >
+                          <div className={`share__fill${item.exhausted ? " share__fill--danger" : share >= 0.8 ? " share__fill--warning" : ""}`} style={{ width: `${share * 100}%` }} />
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      ) : null}
+      <p className="muted small">{t("usage.budgets.hint")}</p>
+    </section>
   );
 }
 
@@ -243,9 +311,10 @@ export function UsagePage() {
               labelOf={(bucket) => t(`usage.sources.${bucket.key}`)}
               countLabel={t("usage.count")}
             />
+            <BudgetsCard budgets={data.budgets} />
             <RecentOperations entries={data.recent} />
             <PriceBasis total={data.total} />
-            {/* What the estimate leaves out (AD-20); the budget figures follow once the API reports them (API-017). */}
+            {/* What the estimate leaves out (AD-20). */}
             <p className="muted small" data-testid="usage-not-included">
               {t("usage.cost.notIncluded")}
             </p>

@@ -766,6 +766,14 @@ ol {
   background: var(--nd-brand);
 }
 
+.share__fill--warning {
+  background: var(--nd-warning);
+}
+
+.share__fill--danger {
+  background: var(--nd-danger);
+}
+
 .bars {
   display: flex;
   align-items: flex-end;
