@@ -11,13 +11,57 @@ import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { VersionSummary, Workflow } from "../api/types";
 import { WorkflowTestStatus } from "../automation/WorkflowTestStatus";
+import { TextDiff } from "../components/TextDiff";
 import { HelpTip } from "../components/Tooltip";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, IconButton, Modal, Spinner, TextInput } from "../components/ui";
 import { ErrorText, LocalError } from "../lib/errors";
 import { formatDate } from "../lib/format";
-import { hasChanges, versionChanges } from "../lib/versionDiff";
+import { type FieldChange, type StepChange, hasChanges, versionChanges } from "../lib/versionDiff";
 import { useEditor } from "./store";
+
+/** One changed field of a step: what restoring the version would change compared with the editor. */
+function FieldLine({ change }: { change: FieldChange }) {
+  const { t } = useTranslation();
+  const field = t(`versions.fields.${change.field}`);
+  const shown = (value: string) => value || t("versions.diff.empty");
+  if (change.kind === "flag") return <li>{field}</li>;
+  if (change.kind === "value")
+    return <li>{t("versions.diff.value", { field, before: shown(change.before), after: shown(change.after) })}</li>;
+  if (change.kind === "list") {
+    const parts = [
+      change.added.length ? t("versions.diff.added", { items: change.added.join(", ") }) : null,
+      change.removed.length ? t("versions.diff.removed", { items: change.removed.join(", ") }) : null,
+    ].filter(Boolean);
+    return (
+      <li>
+        {field}: {parts.length ? parts.join("; ") : t("versions.diff.order")}
+      </li>
+    );
+  }
+  return (
+    <li>
+      <details className="version-changes__text">
+        <summary>{t("versions.diff.text", { field })}</summary>
+        <p className="muted small">{t("versions.diff.direction")}</p>
+        <TextDiff a={change.before} b={change.after} />
+      </details>
+    </li>
+  );
+}
+
+function StepChanges({ step }: { step: StepChange }) {
+  return (
+    <li data-testid="version-step-changes">
+      <strong>{step.name}</strong>
+      <ul className="version-changes__fields">
+        {step.fields.map((change) => (
+          <FieldLine key={change.field} change={change} />
+        ))}
+      </ul>
+    </li>
+  );
+}
 
 function Changes({ workflowId, version }: { workflowId: string; version: VersionSummary }) {
   const { t } = useTranslation();
@@ -35,7 +79,16 @@ function Changes({ workflowId, version }: { workflowId: string; version: Version
       {changes.renamed ? <li>{t("versions.changes.renamed", { name: full.data.snapshot.name })}</li> : null}
       {changes.added.length ? <li>{t("versions.changes.added", { names: changes.added.join(", ") })}</li> : null}
       {changes.removed.length ? <li>{t("versions.changes.removed", { names: changes.removed.join(", ") })}</li> : null}
-      {changes.changed.length ? <li>{t("versions.changes.changed", { names: changes.changed.join(", ") })}</li> : null}
+      {changes.steps.length ? (
+        <li>
+          {t("versions.changes.changed", { names: changes.changed.join(", ") })}
+          <ul className="version-changes__steps">
+            {changes.steps.map((step) => (
+              <StepChanges key={step.id} step={step} />
+            ))}
+          </ul>
+        </li>
+      ) : null}
       {changes.connectionsAdded + changes.connectionsRemoved ? (
         <li>
           {t("versions.changes.connections", { added: changes.connectionsAdded, removed: changes.connectionsRemoved })}

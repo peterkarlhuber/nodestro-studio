@@ -21,6 +21,8 @@ import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
+import { LocalModelSuggestion } from "./LocalModelSuggestion";
+import { TaskTemplateInput } from "./TaskTemplateInput";
 import { keys, useKnowledge, useMemorySpaces, useMeta, useModelOptions, useSettings, useTools } from "../api/hooks";
 import type {
   AgentConfig,
@@ -335,6 +337,7 @@ export function AgentForm({
         hint={modelHint}
       >
         <ModelPicker id="agent-model" value={agent.model} onChange={(model) => update({ model })} />
+        <LocalModelSuggestion agent={agent} onUse={(model) => update({ model })} />
       </Field>
 
       <Field label={t("agent.systemPrompt")} htmlFor="agent-system" tip="agent.systemPrompt" hint={t("agent.systemPromptHint")}>
@@ -360,12 +363,7 @@ export function AgentForm({
           />
         }
       >
-        <TextArea
-          id="agent-task"
-          rows={3}
-          value={agent.task_template}
-          onChange={(e) => update({ task_template: e.target.value })}
-        />
+        <TaskTemplateInput id="agent-task" value={agent.task_template} onChange={(task_template) => update({ task_template })} />
         {placeholders.length ? (
           <div className="chip-row" aria-label={t("agent.insertPlaceholder")}>
             <HelpTip id="agent.placeholders" label={t("agent.placeholders")} />
@@ -389,7 +387,7 @@ export function AgentForm({
       <KnowledgeSection agent={agent} update={update} issues={issues} ui={ui("knowledge")} />
       <MemorySection agent={agent} update={update} onAssistant={() => setMemoryOpen(true)} ui={ui("memory")} />
       <OutputSection agent={agent} update={update} ui={ui("output")} />
-      <ThinkingSection agent={agent} update={update} ui={ui("thinking")} />
+      <ThinkingSection agent={agent} update={update} issues={issues} ui={ui("thinking")} />
       <QualitySection agent={agent} update={update} issues={issues} ui={ui("quality")} />
       <AdvancedSection agent={agent} update={update} modelOptions={modelOptions} ui={ui("advanced")} />
 
@@ -889,7 +887,7 @@ function OutputSection({ agent, update, ui }: SectionProps) {
   );
 }
 
-function ThinkingSection({ agent, update, ui }: SectionProps) {
+function ThinkingSection({ agent, update, issues = [], ui }: SectionProps) {
   const { t } = useTranslation();
   const profile = useModelProfile(agent.model);
   const provider = providerOf(agent.model);
@@ -915,6 +913,7 @@ function ThinkingSection({ agent, update, ui }: SectionProps) {
           />
         </BedrockCapability>
       </Field>
+      <FieldErrors issues={issues} field="effort" />
       <Field label={t("agent.thinking.thinking")} tip="agent.thinking">
         <ModelOptionGate profile={profile} provider={provider} option="thinking" set={agent.thinking !== null}>
           <Select

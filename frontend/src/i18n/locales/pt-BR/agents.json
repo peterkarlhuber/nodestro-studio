@@ -13,5 +13,6 @@
   "edit": "Editar modelo",
   "delete": "Excluir modelo",
   "selectHint": "Escolha um agente à esquerda para editá-lo.",
-  "unsavedText": "O modelo “{{name}}” tem alterações que ainda não foram salvas."
+  "unsavedText": "O modelo “{{name}}” tem alterações que ainda não foram salvas.",
+  "newUnsaved": "Novo modelo: ele entra na biblioteca quando você salvar."
 }

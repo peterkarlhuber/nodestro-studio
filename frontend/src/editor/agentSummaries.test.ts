@@ -44,6 +44,11 @@ describe("agent section problems", () => {
   it("maps server tools to the tools section", () => {
     expect(SECTION_OF_FIELD.server_tools).toBe("tools");
   });
+
+  it("maps the effort to the thinking section", () => {
+    expect(SECTION_OF_FIELD.effort).toBe("thinking");
+    expect(unroutedIssues([issue("effort", "warning")])).toEqual([]);
+  });
 });
 
 describe("agent section summaries", () => {

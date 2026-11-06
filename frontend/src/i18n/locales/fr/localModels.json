@@ -4,7 +4,8 @@
   "status": {
     "running": "En marche",
     "stopped": "Arrêté",
-    "notInstalled": "Non installé"
+    "notInstalled": "Non installé",
+    "unreachable": "Inaccessible"
   },
   "mode": {
     "managed": "Géré par Nodestro sur cet ordinateur",
@@ -42,11 +43,16 @@
   "tasks": {
     "classify": "Trier et orienter",
     "write": "Rédiger des textes",
-    "tool_agent": "Agents avec outils",
+    "tool_agent": "Travailler avec des outils",
     "analysis": "Analyse et raisonnement",
     "assistant": "Assistant et architecte",
     "embedding": "Recherche sémantique",
-    "coding": "Programmation"
+    "coding": "Programmation",
+    "extract": "Extraire des données",
+    "document_vision": "Lire des documents et des images",
+    "judge": "Vérifier la qualité",
+    "orchestrator": "Coordonner l’équipe",
+    "architect": "Concevoir des workflows"
   },
   "quality": {
     "recommended": "Recommandé",
@@ -61,7 +67,9 @@
     "no_fit": "Aucun modèle proposé ne convient à cet ordinateur.",
     "preferred_region": "Correspond à votre origine préférée.",
     "preferred_region_unavailable": "Aucun modèle aussi adapté de votre origine préférée.",
-    "languages_unverified": "Aucun modèle ne documente toutes les langues de ce travail."
+    "languages_unverified": "Aucun modèle ne documente toutes les langues de ce travail.",
+    "hardware_limit_server": "Le serveur a trop peu de mémoire pour un modèle plus grand.",
+    "no_fit_server": "Aucun modèle proposé ne convient au serveur."
   },
   "download": "Télécharger ({{size}})",
   "downloadShort": "Télécharger",
@@ -139,7 +147,8 @@
   "offline": {
     "label": "Mode hors ligne strict",
     "text": "Uniquement le serveur de modèles local (Ollama) et les outils locaux. Les modèles cloud, les points de terminaison compatibles OpenAI et vLLM (même sur cet ordinateur), les serveurs distants, les vérifications de prix et les téléchargements sont refusés, pour les exécutions comme pour les assistants.",
-    "noDownloads": "En mode hors ligne strict, les téléchargements sont désactivés."
+    "noDownloads": "En mode hors ligne strict, les téléchargements sont désactivés.",
+    "textServer": "Uniquement le serveur de modèles local (Ollama) et les outils locaux. Les modèles cloud, les points de terminaison compatibles OpenAI et vLLM (même sur le serveur), les serveurs distants, les vérifications de prix et les téléchargements sont refusés, pour les exécutions comme pour les assistants."
   },
   "europe": {
     "label": "Préférer les modèles européens",
@@ -330,10 +339,12 @@
     "active": "Actif sur cet ordinateur.",
     "inactive": "Inactif ici : les modèles s’exécutent sur une carte graphique.",
     "badge": "Réflexion réduite : mode économie CPU",
-    "badgeTip": "Cet agent a répondu sans la longue phase de réflexion, car cet ordinateur n’a pas de carte graphique. Pour une réflexion complète, réglez l’effort de l’agent sur Élevé ou désactivez le mode économie CPU dans Réglages → Modèles locaux."
+    "badgeTip": "Cet agent a répondu sans la longue phase de réflexion, car cet ordinateur n’a pas de carte graphique. Pour une réflexion complète, réglez l’effort de l’agent sur Élevé ou désactivez le mode économie CPU dans Réglages → Modèles locaux.",
+    "activeServer": "Actif sur ce serveur."
   },
   "licenseSource": {
     "ollama": "selon le manifeste Ollama",
     "upstream": "selon la fiche du modèle de l’éditeur"
-  }
+  },
+  "textServer": "Les agents, les assistants et la recherche dans les connaissances peuvent fonctionner avec les modèles locaux (Ollama) de ce serveur, sans clé d’API. Les données restent sur le serveur."
 }

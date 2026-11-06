@@ -766,6 +766,14 @@ ol {
   background: var(--nd-brand);
 }
 
+.share__fill--warning {
+  background: var(--nd-warning);
+}
+
+.share__fill--danger {
+  background: var(--nd-danger);
+}
+
 .bars {
   display: flex;
   align-items: flex-end;
@@ -1426,6 +1434,11 @@ details[open] > summary > .section__chevron {
 .output-field__error {
   color: var(--nd-danger);
   font-size: var(--nd-font-size-sm);
+}
+
+/* A field's hint that says what is wrong with its value. */
+.field__error {
+  color: var(--nd-danger);
 }
 
 @container (min-width: 440px) {
@@ -3829,6 +3842,28 @@ button.check-list__item:hover {
   margin: 0;
   padding-left: 18px;
   color: var(--nd-text-muted);
+}
+
+.version-changes__steps,
+.version-changes__fields {
+  margin: 4px 0;
+  padding-left: 18px;
+}
+
+.version-changes__steps strong {
+  color: var(--nd-text);
+}
+
+.version-changes__text summary {
+  cursor: pointer;
+}
+
+.version-changes__text[open] {
+  margin: 4px 0 8px;
+  color: var(--nd-text);
+  /* Long prompt lines wrap or scroll inside the diff, never the dialog (390px). */
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 /* ---- run comparison ----------------------------------------------------------- */
@@ -7683,4 +7718,52 @@ ul.gate-report__list > li.gate-report__item {
   .splitter--inspector {
     display: none;
   }
+}
+
+/* ---- knowledge sources of a run result (AD-19) ---------------------------------- */
+.used-sources {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--nd-border);
+  border-radius: 8px;
+}
+
+.used-sources__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.used-sources__list {
+  margin: 0;
+  padding-left: 18px;
+  overflow-wrap: anywhere;
+}
+
+/* A new agent template that is not saved yet (ED-22). */
+.inspector__note {
+  margin: 0;
+  padding: 12px 18px 0;
+}
+
+/* The task of a new agent as a placeholder chip (ED-22). */
+.task-chip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  padding: 8px 10px;
+  border: 1px dashed var(--nd-border);
+  border-radius: var(--nd-radius-sm);
+}
+
+/* The local model suggestion under the agent's model picker (ST-044). */
+.local-suggestion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
 }

@@ -199,3 +199,8 @@
   margin: 0 0 8px;
   padding-left: 18px;
 }
+
+/* The sent share of a file that uploads (ST-055). */
+.chat-file__main .nd-progress {
+  margin-top: 4px;
+}

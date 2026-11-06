@@ -68,6 +68,11 @@ describe("export jobs on a server", () => {
   it("names both sizes of a refused estimate, none of a failed job", () => {
     const text = problemText(t, { code: "export.server_too_large", params: { size: 3_500_000_000, limit: 2 * 1024 ** 3 } });
     expect(text).toMatch(/about 3[.,]5\sGB.*\(2[.,]1\sGB\)/);
+    // A size below 1 GB is given in GB too when the limit is (one unit in the sentence).
+    const smaller = problemText(t, { code: "export.server_too_large", params: { size: 900_000_000, limit: 800_000_000 } });
+    expect(smaller).toMatch(/about 900[.,]0\sMB.*\(800[.,]0\sMB\)/);
+    const mixed = problemText(t, { code: "export.server_too_large", params: { size: 2_500_000_000, limit: 900_000_000 } });
+    expect(mixed).toMatch(/about 2[.,]5\sGB.*\(0[.,]9\sGB\)/);
     expect(problemText(t, { code: "export.server_too_large", params: {} })).toBe(t("errors.export.server_too_large_plain"));
   });
 });
@@ -125,3 +130,18 @@ describe("knowledge search bounds", () => {
     expect(knowledgeSearchError(other)).toBe(other);
   });
 });
+
+describe("codes of nodestro-api round 2026-11-06", () => {
+  it("name the server's package limit, the known tasks and the refused chat in words", () => {
+    expect(problemText(t, { code: "export.server_limit", params: { limit: 2_000_000_000 } })).toMatch(/^This server builds packages up to 2[.,]0\sGB\.$/);
+    expect(problemText(t, { code: "export.server_limit", params: {} })).toBe(t("errors.export.server_limit_plain"));
+    expect(problemText(t, { code: "local.task_unknown", params: { task: "x", allowed: ["write", "classify"] } })).toBe(
+      "Unknown task. Known tasks: Writing texts, Sorting and routing.",
+    );
+    expect(problemText(t, { code: "local.task_unknown", params: { task: "x" } })).toBe("Unknown task.");
+    expect(problemText(t, { code: "assistant.provider_rejected_messages", params: { provider: "openai", status: 400 } })).toMatch(/^OpenAI refused this chat/);
+    expect(problemText(t, { code: "input.assistant_file", params: { file_id: "in_1" } })).toMatch(/assistant chat cannot be a run input/);
+    expect(problemText(t, { code: "lease.lost", params: { id: "b_1" } })).toMatch(/^Another server process took over this batch/);
+  });
+});
+

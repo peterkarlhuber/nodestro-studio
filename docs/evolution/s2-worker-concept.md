@@ -1,9 +1,9 @@
 # S-2: waiting tool approvals on server workers (technical concept)
 
-- Status: **Concept for review** (2026-10-31). The project owner chose option A ("waiting slots per worker") with
-  conditions 1–8 below; this concept checks whether A is safe and manageable. S-2a starts only after this review. If
-  A turns out not to be, the fallback is option C (no per-call questions on a server until an agent checkpoint
-  exists), not a blocking short limit.
+- Status: **Implemented** (status updated 2026-11-06; written 2026-10-31 as a concept for review). The project owner
+  chose option A ("waiting slots per worker") with conditions 1–8 below; this concept checked whether A is safe and
+  manageable, and the fallback would have been option C. See [Implementation status](#implementation-status) at the
+  end; the sections below are the concept as reviewed.
 - Context: [s-tool-approvals.md](s-tool-approvals.md) §3.2 and §8; ADR-0004 (jobs, workers, scheduler).
 - Checked in nodestro-runtime `78d2899` (`jobs.py`, `engine.py`, `storage_postgres.py`) and nodestro-api `5ca1c75`
   (`worker.py`).
@@ -130,3 +130,21 @@ New, against a real PostgreSQL:
 11. Heartbeats: one held run blocks its agent thread for longer than the lease while the other job's lease stays alive.
 12. Load: 3 workers, 30 runs where every third asks, decisions arriving at random; nothing exceeds the limits, every
     run ends, no request stays `pending`.
+
+## Implementation status
+
+Recorded 2026-11-06 from the runtime, API and studio changelogs.
+
+- **Option A is built:** server workers hold up to `max_runs` runs (default 2), of which up to `max_waiting`
+  (default 1) may wait for a person's tool approval (`RunWorker(max_runs=, max_waiting=)`, `jobs.check_capacity`;
+  `DEFAULT_MAX_RUNS`/`DEFAULT_MAX_WAITING` in nodestro-runtime `jobs.py`). A run that would wait beyond `max_waiting` is
+  denied at once (`tool.approval_capacity`); the desktop shares `WaitingSlots` (3 runs per process).
+- **S-2b to S-2d** (2026-10-31): per-call approvals in the engine, legacy exemptions, stored pre-grants, the audit
+  trail, the approval inbox and the studio's approval surfaces; the security acceptance fixes (D10b) and the warning
+  before unattended starts (risk R1, 2026-11-01). Pilot findings F1 (stale tools across processes) and F5 (tools
+  after a restart without network) are fixed.
+- **Agent checkpoints (M6b)** exist behind a second switch, `NODESTRO_TOOL_APPROVAL_CHECKPOINTS=1`: a waiting run is
+  `paused` and frees its worker slot. Known limit: agents with a quality check still wait in the thread and count
+  against `max_waiting`.
+- **Not active:** `NODESTRO_TOOL_APPROVALS` and the checkpoint switch stay off by default. Activation waits for the
+  independent security review (nodestro-runtime RT-001, `Needs external review`).

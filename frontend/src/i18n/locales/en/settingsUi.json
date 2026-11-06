@@ -19,7 +19,8 @@
     "results": "Matching settings",
     "found_one": "{{count}} setting found – Enter jumps to the first one",
     "found_other": "{{count}} settings found – Enter jumps to the first one",
-    "none": "No setting matches “{{query}}”. Try another word or pick a section."
+    "none": "No setting matches “{{query}}”. Try another word or pick a section.",
+    "conditional": "not shown right now (only when it applies)"
   },
   "advanced": {
     "badge": "Advanced",
@@ -31,5 +32,8 @@
     "groupBudget": "Budget per run",
     "groupArchitect": "Workflow Architect",
     "unsaved": "Your changes to “Models and budget” are not saved yet. Save them, discard them or keep editing."
+  },
+  "providers": {
+    "unsaved": "Your input for {{providers}} is not saved yet. Save it in the provider's card, or discard it and leave."
   }
 }

@@ -99,7 +99,7 @@
       "mcp": "Externe Dienste"
     },
     "missingHint": "Fehlt ein Tool? In der <a>Tool-Bibliothek</a> selbst schreiben oder von der KI erstellen lassen.",
-    "serverTools": "Server-Tools von Anthropic",
+    "serverTools": "Server-Tools des Modellanbieters",
     "serverToolsShort": "Server-Tools"
   },
   "knowledge": {
@@ -250,7 +250,6 @@
     "invalidJson": "Kein gültiges JSON.",
     "objectExpected": "Ein JSON-Objekt erwartet."
   },
-  "anthropicOnly": "Nur für Modelle von Anthropic verfügbar.",
   "summary": {
     "problemsIn": "Probleme in",
     "more": "+{{count}}",
@@ -270,5 +269,18 @@
     "examples_other": "{{count}} Beispielnachrichten",
     "requestOptions": "Anfrageoptionen",
     "judge": "Judge: {{model}}"
+  },
+  "taskChip": {
+    "label": "Ergebnisse der vorherigen Schritte",
+    "text": "Der Agent bearbeitet genau das, ohne weitere Anweisung.",
+    "edit": "Aufgabe formulieren",
+    "asChip": "Als Platzhalter zeigen"
+  },
+  "localSuggestion": {
+    "current": "Empfohlenes lokales Modell für „{{task}}“ auf diesem Modellserver.",
+    "other": "Für „{{task}}“ empfiehlt dieser Modellserver {{model}} ({{quality}}).",
+    "none": "Für „{{task}}“ empfiehlt dieser Modellserver kein lokales Modell.",
+    "download": "Dafür ist ein Download von {{size}} nötig.",
+    "use": "Dieses Modell verwenden"
   }
 }

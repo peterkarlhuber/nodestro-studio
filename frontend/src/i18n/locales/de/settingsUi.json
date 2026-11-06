@@ -19,7 +19,8 @@
     "results": "Passende Einstellungen",
     "found_one": "{{count}} Einstellung gefunden – Enter springt zur ersten",
     "found_other": "{{count}} Einstellungen gefunden – Enter springt zur ersten",
-    "none": "Keine Einstellung passt zu „{{query}}“. Versuche ein anderes Wort oder wähle einen Abschnitt."
+    "none": "Keine Einstellung passt zu „{{query}}“. Versuche ein anderes Wort oder wähle einen Abschnitt.",
+    "conditional": "gerade nicht angezeigt (nur wenn es zutrifft)"
   },
   "advanced": {
     "badge": "Erweitert",
@@ -31,5 +32,8 @@
     "groupBudget": "Budget pro Lauf",
     "groupArchitect": "Workflow-Architekt",
     "unsaved": "Deine Änderungen unter „Modelle und Budget“ sind noch nicht gespeichert. Speichere sie, verwirf sie oder bearbeite weiter."
+  },
+  "providers": {
+    "unsaved": "Deine Eingaben für {{providers}} sind noch nicht gespeichert. Speichere sie in der Karte des Anbieters oder verwirf sie und verlasse die Seite."
   }
 }

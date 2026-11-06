@@ -1,8 +1,10 @@
 # Releases (M6)
 
 How Nodestro products are released, what a release contains, and which platforms are supported. Recorded
-2026-10-31. Status: release candidate **`v0.2.0-preview.1`** is built and checked but **not published**; no build is
-signed. The steps of every release are in [release-checklist.md](release-checklist.md).
+2026-10-31, status updated 2026-11-06. Status: the release candidate **`v0.2.0-preview.1`** was built and checked
+but is **withdrawn**: frozen and NO-GO by the owner's decision of 2026-10-31, never published. It predates the
+built-in Linux sandbox and the Docker-first decision (ADR-0009); a new candidate is nodestro-desktop DSK-001. No
+build is signed. The steps of every release are in [release-checklist.md](release-checklist.md).
 
 ## What gets released
 
@@ -86,12 +88,15 @@ Signing must not be described as done until the certificate exists and a signed 
 | Windows 10/11 | not built | not tested | — |
 | Browsers for the server's studio | — | not tested in a browser: the server's acceptance tests use HTTP; the studio's browser tests run Chromium against the desktop profile; Safari and Firefox not tested | — |
 
-AI-generated tools need an isolating sandbox. On the desktop that is Docker, on the server the remote Docker daemon.
-The built-in sandbox prototype is not isolating yet; see [sandbox-prototype-report.md](sandbox-prototype-report.md).
+AI-generated tools need an isolating sandbox. Since the Docker-first decision (2026-11-02, ADR-0009) that is a
+Docker-compatible engine that passes Nodestro's checks on every desktop system, and the remote Docker daemon on the
+server. The built-in Linux sandbox (`linux` mode, x86-64, tested distributions only) is optional; the candidate below
+was built before it and before Docker-first.
 
 ## Release candidate v0.2.0-preview.1
 
-Built and checked 2026-10-31, **not published** (no tag, no release, no image in a registry). Both products build
+Built and checked 2026-10-31, **withdrawn** (frozen, NO-GO, never published: no tag, no release, no image in a
+registry). Both products build
 from studio `78710ce` (orkexa `cbf6df3`, runtime `c6bc2e5`, examples `86c58a1`, integrations `652c231`, api
 `a08c9c3`, sdk `e508e6b`). Later studio and component commits are not part of this candidate.
 

@@ -33,5 +33,27 @@
   "restored": "Version {{number}} restored",
   "beforeRestoreNote": "Before restoring version {{number}}",
   "saveAndRestore": "Save first, then restore",
-  "restoreDiscard": "Restore without saving"
+  "restoreDiscard": "Restore without saving",
+  "fields": {
+    "label": "Step name",
+    "name": "Agent name",
+    "model": "Model",
+    "system_prompt": "System prompt",
+    "task_template": "Task",
+    "tools": "Tools",
+    "server_tools": "Provider tools",
+    "fallbacks": "Fallback models",
+    "knowledge": "Knowledge settings differ",
+    "output": "Result format differs",
+    "other": "Other settings differ"
+  },
+  "diff": {
+    "value": "{{field}}: {{before}} → {{after}}",
+    "empty": "(empty)",
+    "added": "would be added: {{items}}",
+    "removed": "would be removed: {{items}}",
+    "order": "order differs",
+    "text": "{{field}} differs: show the lines",
+    "direction": "Lines marked as added come from the version, removed lines are in the editor now."
+  }
 }

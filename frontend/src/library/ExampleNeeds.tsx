@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 import { useMeta, useSettings } from "../api/hooks";
 import type { ExampleDetail, ModelInfo, Settings } from "../api/types";
-import { providerLabel } from "../components/ModelPicker";
+import { modelName, providerLabel } from "../components/ModelPicker";
 import { findModel, providerOf } from "../lib/providers";
 import { useSettingsHref } from "../lib/settingsLink";
 
@@ -47,7 +47,7 @@ export function ExampleNeeds({ example }: { example: ExampleDetail }) {
   const providers = [...new Set(copied.map(providerOf))];
   const missing = (settings.data?.providers ?? []).filter((item) => providers.includes(item.id) && !item.configured);
   const providerSetup = useSettingsHref(missing[0] ? `provider-${missing[0].id}` : "settings-providers");
-  const names = copied.map((model) => findModel(models, model)?.label ?? model).join(", ");
+  const names = copied.map((model) => modelName(models, model)).join(", ");
   const approval = example.features.includes("approval") || example.team_details.some((team) => team.approval);
   const adapted = settings.data && providerOf(settings.data.default_model) !== "anthropic";
   return (

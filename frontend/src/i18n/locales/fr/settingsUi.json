@@ -19,7 +19,8 @@
     "results": "Réglages correspondants",
     "found_one": "{{count}} réglage trouvé – Entrée mène au premier",
     "found_other": "{{count}} réglages trouvés – Entrée mène au premier",
-    "none": "Aucun réglage ne correspond à « {{query}} ». Essayez un autre mot ou choisissez une section."
+    "none": "Aucun réglage ne correspond à « {{query}} ». Essayez un autre mot ou choisissez une section.",
+    "conditional": "pas affiché pour l’instant (seulement quand cela s’applique)"
   },
   "advanced": {
     "badge": "Avancé",
@@ -31,5 +32,8 @@
     "groupBudget": "Budget par exécution",
     "groupArchitect": "Architecte de workflows",
     "unsaved": "Vos modifications dans « Modèles et budget » ne sont pas encore enregistrées. Enregistrez-les, abandonnez-les ou continuez la modification."
+  },
+  "providers": {
+    "unsaved": "Votre saisie pour {{providers}} n’est pas encore enregistrée. Enregistrez-la dans la carte du fournisseur, ou abandonnez-la et quittez la page."
   }
 }

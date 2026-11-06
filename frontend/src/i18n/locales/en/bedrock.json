@@ -57,7 +57,6 @@
     "priceRegions": "prices for {{regions}}"
   },
   "agent": {
-    "anthropicOnly": "Only available for Anthropic models; Claude models on Amazon Bedrock do not offer it either.",
     "capability": {
       "unsupported": "{{capability}}: this model on Amazon Bedrock does not support it.",
       "unknown": "{{capability}}: unknown for this model on Amazon Bedrock, so it is turned off. Pick a suggested model to use it."

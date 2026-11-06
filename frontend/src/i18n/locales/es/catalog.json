@@ -15,7 +15,15 @@
     "gpt-5_5": "Modelo de OpenAI (ejemplo; se puede introducir cualquier id de modelo de OpenAI)",
     "gpt-6_1-sol": "Modelo de OpenAI (ejemplo; se puede introducir cualquier id de modelo de OpenAI)",
     "gemini-3-pro": "Modelo de Google (ejemplo; se puede introducir cualquier id de modelo de Gemini)",
-    "gemini-3_8-flash": "Modelo de Google (ejemplo; se puede introducir cualquier id de modelo de Gemini)"
+    "gemini-3_8-flash": "Modelo de Google (ejemplo; se puede introducir cualquier id de modelo de Gemini)",
+    "qwen3_5_4b": "Pequeño y rápido: clasificar, extraer, textos cortos; las herramientas funcionan con límites",
+    "qwen3_5_9b": "Trabajo diario de agentes: redacción, herramientas, documentos e imágenes",
+    "qwen3_6_35b-a3b": "Trabajo exigente; una mezcla de expertos (3B activos), bastante rápida en una CPU con memoria suficiente",
+    "qwen3_8_27b": "Trabajo exigente en una GPU (un modelo denso: lento en una CPU)",
+    "ministral-3_3b": "Alternativa europea para tareas pequeñas: clasificar, extraer, textos cortos, herramientas sencillas",
+    "ministral-3_8b": "Alternativa europea para el trabajo diario de agentes: redacción, herramientas, documentos e imágenes",
+    "ministral-3_14b": "Alternativa europea para un trabajo diario más exigente; más lenta en una CPU (aún no probada por Nodestro)",
+    "devstral-small-2_24b": "Modelo europeo para agentes de programación en una GPU (aún no probado aquí)"
   },
   "serverTools": {
     "web_search": {

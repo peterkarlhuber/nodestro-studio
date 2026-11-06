@@ -10,6 +10,7 @@ import { api } from "../api/client";
 import { useMeta, useSettings } from "../api/hooks";
 import type { AgentConfig, AgentTestResult, NodeRun, WorkflowNode } from "../api/types";
 import { providerList } from "../components/ModelPicker";
+import { modelLabel } from "../lib/catalog";
 import { Badge, Button, Callout, Field, Modal, Stat, TextArea, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { formatDuration, formatPrice, formatTokens } from "../lib/format";
@@ -117,7 +118,7 @@ export function AgentTestDialog({
       <Toggle checked={raw} onChange={setRaw} label={t("agentTest.raw")} description={t("agentTest.rawDescription")} />
       <p className="muted small">
         {t("agentTest.costNote", {
-          model: model?.label ?? agent.model,
+          model: model ? modelLabel(model) : agent.model,
           input: model ? formatPrice(model.input_usd_per_mtok) : "?",
           output: model ? formatPrice(model.output_usd_per_mtok) : "?",
         })}

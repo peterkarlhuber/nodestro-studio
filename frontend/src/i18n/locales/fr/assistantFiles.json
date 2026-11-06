@@ -4,7 +4,10 @@
   "composerLabel": "Fichiers pour votre prochain message",
   "again": "À nouveau",
   "status": {
-    "uploading": "Envoi et lecture…"
+    "uploading": "Envoi et lecture…",
+    "sending": "Envoi",
+    "reading": "Lecture…",
+    "progress": "Envoi de {{name}}"
   },
   "remove": "Retirer {{name}} du message",
   "dismiss": "Masquer {{name}}",

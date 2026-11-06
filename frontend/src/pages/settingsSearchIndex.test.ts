@@ -99,3 +99,30 @@ describe("settings search", () => {
     expect(entry.element.classList.contains("settings-hit")).toBe(true);
   });
 });
+
+describe("parts that are rendered only when they apply (ST-058)", () => {
+  afterEach(() => document.body.replaceChildren());
+
+  const IMPORT = {
+    section: "settings-ocr",
+    help: "import",
+    label: "Import offline packages",
+    note: "not shown right now",
+  };
+
+  it("are found through their help text and lead to their section", () => {
+    const root = page();
+    const entries = indexSettings(root, (id) => (id === "import" ? "Bring models from a folder made offline." : undefined), [IMPORT]);
+    const [hit] = searchSettings(entries, "offline folder");
+    expect(hit.label).toBe("Import offline packages");
+    expect(hit.context).toBe("Text recognition › not shown right now");
+    expect(hit.element).toBe(document.getElementById("settings-ocr")?.parentElement);
+  });
+
+  it("are not listed twice when they are on the page, nor for a section that is missing", () => {
+    const root = page();
+    root.querySelector("#settings-ocr")!.insertAdjacentHTML("beforeend", '<button class="help-tip" data-help="import">?</button>');
+    expect(indexSettings(root, () => "x", [IMPORT]).some((entry) => entry.key.startsWith("conditional."))).toBe(false);
+    expect(indexSettings(root, () => "x", [{ ...IMPORT, help: "other", section: "settings-missing" }]).some((entry) => entry.key.startsWith("conditional."))).toBe(false);
+  });
+});

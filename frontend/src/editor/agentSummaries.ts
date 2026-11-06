@@ -16,6 +16,8 @@ export const SECTION_OF_FIELD: Record<string, AgentSectionId> = {
   server_tools: "tools",
   knowledge: "knowledge",
   quality: "quality",
+  // config.effort_adjusted / config.effort_dropped: shown at the effort field (ST-057).
+  effort: "thinking",
 };
 
 /** Fields whose problems are shown next to the core fields at the top, outside any section. */

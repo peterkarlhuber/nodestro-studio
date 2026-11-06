@@ -10,7 +10,8 @@
 //   4. a download that fails (network, then a full disk) and is retried;
 //   5. a model server that does not answer (a real dead address);
 //   6. a remote model server, missing permission and the operator's server (recorded answers through page.route);
-//   7. an unattended scheduled run never downloads: it reports the problem, and "Fix" opens the same dialog.
+//   7. an unattended scheduled run never downloads: it reports the problem, and "Fix" opens the same dialog;
+//   8. a batch stops on the missing model (no download), and "Fix" on the batch page opens the same dialog.
 // Screenshots: light and dark, English, German and French, phone width.
 
 import { createRequire } from "node:module";
@@ -339,6 +340,45 @@ try {
   await sched.getByTestId("missing-model-cancel").click();
   check((await pullJobs()).length === pullsBefore, "Opening Fix downloads nothing by itself");
   await sched.context().close();
+
+  // ---- 8. Unattended: a batch stops on the missing model, and "Fix" on its page opens the same dialog -------------
+  const created = await api("/api/batches", "POST", {
+    workflow_id: workflow.id,
+    name: "Nightly batch",
+    rows: [{ input: "first" }, { input: "second" }],
+    concurrency: 1,
+  });
+  check(created.status === 200 || created.status === 201, `The batch is accepted (${created.status})`);
+  const batchId = created.body?.id;
+  let batch = created.body;
+  await waitFor(
+    async () => {
+      batch = await json(`/api/batches/${batchId}`);
+      return batch.status === "stopped";
+    },
+    20000,
+    "the batch stops",
+  );
+  check(
+    batch.stop_code === "workflow.blocked" && (batch.stop_params?.problems ?? []).some((item) => item.code === "check.local_model_missing"),
+    "The batch reports the missing model as a traceable problem",
+  );
+  check((await pullJobs()).length === pullsBefore, "The batch downloaded nothing");
+  const batchPage = await newPage({ theme: "dark" });
+  await batchPage.goto(`${base}/batches/${batchId}`);
+  const batchFix = batchPage.getByTestId("model-fix");
+  await batchFix.waitFor();
+  await shot(batchPage, "missing-15-batch-fix-en-dark");
+  await batchFix.click();
+  await dialog(batchPage).waitFor();
+  check((await dialog(batchPage).getAttribute("data-cause")) === "model_missing", "Fix on the batch opens the same dialog for its model");
+  check(
+    (await batchPage.getByTestId("missing-model-download").count()) === 1 && (await batchPage.getByTestId("missing-model-keep").count()) === 0,
+    "Fix on the batch offers the download and continues nothing by itself",
+  );
+  await batchPage.getByTestId("missing-model-cancel").click();
+  check((await pullJobs()).length === pullsBefore, "Opening Fix on the batch downloads nothing by itself");
+  await batchPage.context().close();
 } catch (error) {
   failures += 1;
   console.log(`FAIL ${error.stack ?? error}`);

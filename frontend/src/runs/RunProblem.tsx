@@ -1,5 +1,6 @@
 // Why a run did not succeed, in the words of the step that failed: its own problem, what to do about it, and the
-// technical text one click away. A run that failed because of a step only says "Failed: <step>"; the step knows why.
+// technical text one click away. A run that failed because of a step only says "Failed: <step>"; the step knows why
+// (and the run's cause, RT-012, when the step's data is not at hand).
 
 import { Settings, SlidersHorizontal } from "lucide-react";
 import type { ReactNode } from "react";
@@ -10,11 +11,18 @@ import type { Run } from "../api/types";
 import { Callout } from "../components/ui";
 import { AWS_PROVIDER_PROBLEMS, PROVIDER_FAILURES, ProblemText, isProviderAuth, needsSandboxSetup, problemCode, runProblem } from "../lib/errors";
 import { failedSteps } from "./runSummary";
+import { causeStep, stepCause } from "./RunReason";
 import { settingsHref } from "../lib/settingsLink";
 import { providerOf } from "../lib/providers";
 
 /** Codes of a failed agent whose fix is a setting under "Advanced" of that agent. */
-const ADVANCED_FIX = new Set(["run.agent.IncompleteResponseError", "run.agent.OutputLimitReached", "run.agent.MaxToolRoundsError"]);
+const ADVANCED_FIX = new Set([
+  "run.agent.IncompleteResponseError",
+  "run.agent.OutputLimitReached",
+  "run.agent.MaxToolRoundsError",
+  // Orkexa ORK-029: one answer asked for more tool calls than max_tool_calls_per_round (64 by default).
+  "run.agent.MaxToolCallsError",
+]);
 
 /**
  * Provider failures, which name the model the step asked: the runtime's own codes first, then the readings of
@@ -73,6 +81,19 @@ export function RunProblem({ run, children }: { run: Run; children?: ReactNode }
               <SlidersHorizontal size={12} aria-hidden /> {t("runs.failure.openAdvanced", { name: first.label || first.agent?.name || first.id })}
             </Link>
           ) : null}
+          {children}
+        </div>
+      </Callout>
+    );
+  }
+  // The step's data is not at hand (e.g. a run whose steps were cleaned up): the run's own cause names step and reason.
+  const cause = stepCause(run);
+  if (cause) {
+    return (
+      <Callout tone="danger">
+        <div className="run-problem" data-testid="run-failure">
+          <strong>{t("runs.failure.atStep", { name: causeStep(cause) })}</strong>
+          <ProblemText item={{ code: cause.code, params: cause.params, message: null }} />
           {children}
         </div>
       </Callout>

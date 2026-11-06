@@ -96,6 +96,7 @@
   },
   "failure": {
     "atStep": "Non riuscita in {{name}}",
+    "cause": "{{step}}: {{reason}}",
     "more_one": "Un altro passaggio non è riuscito.",
     "more_other": "Altri {{count}} passaggi non sono riusciti.",
     "model": "Modello: {{model}}",
@@ -110,5 +111,11 @@
   "waitingForYou": {
     "label": "Ti aspetta",
     "description": "Una chiamata a uno strumento attende la tua approvazione. L'esecuzione prosegue appena decidi."
+  },
+  "sources": {
+    "title": "Fonti di conoscenza usate",
+    "passages_one": "({{count}} passaggio)",
+    "passages_other": "({{count}} passaggi)",
+    "hint": "Trovate dalla ricerca nella conoscenza dell’agente; la scheda Strumenti mostra i passaggi."
   }
 }

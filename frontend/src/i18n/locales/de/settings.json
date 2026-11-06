@@ -200,7 +200,16 @@
       "caching": "Prompt-Caching",
       "system_messages": "System-Nachrichten"
     },
-    "defaultFollowed": "Neue Agenten nutzen jetzt {{model}} ({{provider}}). Bestehende Workflows behalten ihre Modelle; ändern kannst du das unter Modelle."
+    "defaultFollowed": "Neue Agenten nutzen jetzt {{model}} ({{provider}}). Bestehende Workflows behalten ihre Modelle; ändern kannst du das unter Modelle.",
+    "limits": {
+      "title": "Token-Grenzen der Modelle",
+      "hint": "Für Modelle, deren Grenzen niemand dokumentiert: die längste Antwort und das Kontextfenster der Modelle dieses Endpunkts. Agenten und die Prüfung verwenden sie; lass ein Feld leer, wenn du den Wert nicht kennst.",
+      "max_output_tokens": "Maximale Ausgabe (Tokens)",
+      "context_window": "Kontextfenster (Tokens)",
+      "range": "Leer: nicht angegeben. Eine ganze Zahl von {{min}} bis {{max}}.",
+      "invalid": "Gib eine ganze Zahl von {{min}} bis {{max}} ein (die maximale Ausgabe kann nicht größer als das Kontextfenster sein).",
+      "placeholder": "nicht angegeben"
+    }
   },
   "nav": {
     "title": "Auf dieser Seite",

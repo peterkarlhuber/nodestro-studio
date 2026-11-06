@@ -53,6 +53,22 @@
     "tool": "Rascunho de ferramenta",
     "reply": "Resposta"
   },
+  "budgets": {
+    "title": "Orçamentos e limites",
+    "stopped_one": "{{count}} execução deste período foi interrompida pelo seu orçamento.",
+    "stopped_other": "{{count}} execuções deste período foram interrompidas pelo seu orçamento.",
+    "noneStopped": "Nenhuma execução deste período foi interrompida pelo seu orçamento.",
+    "waiting_one": "{{count}} execução aguarda uma decisão de orçamento.",
+    "waiting_other": "{{count}} execuções aguardam uma decisão de orçamento.",
+    "api": "API publicada",
+    "last24h": "Últimas 24 horas",
+    "dailyLimit": "Limite diário",
+    "used": "Usado",
+    "usedOf": "Parte usada do limite diário de {{name}}",
+    "noLimit": "Sem limite",
+    "reached": "Limite atingido",
+    "hint": "Quando uma API atinge seu limite diário, novas execuções são recusadas até que o custo das últimas 24 horas fique abaixo dele novamente. Altere os limites em Publicações."
+  },
   "cost": {
     "atLeast": "pelo menos {{value}}",
     "staleMark": "(preço antigo)",

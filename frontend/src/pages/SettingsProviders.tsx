@@ -5,16 +5,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Plug, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { create } from "zustand";
 import { Trans, useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import { keys, useMeta } from "../api/hooks";
-import type { CapabilityState, ProviderId, ProviderInfo, ProviderStatus, Settings } from "../api/types";
+import type { CapabilityState, DeclaredModelLimits, ProviderId, ProviderInfo, ProviderStatus, Settings } from "../api/types";
 import { providerLabel } from "../components/ModelPicker";
+import { modelLabel } from "../lib/catalog";
 import { toast } from "../components/toast";
 import { useAccess } from "../api/access";
 import { PermissionNote } from "../components/Access";
 import { Badge, Button, Callout, Field, HelpTip, Section, Select, TextInput } from "../components/ui";
+import i18n from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { defaultModelSwitch, providerOf } from "../lib/providers";
 import { BedrockCard } from "./SettingsBedrock";
@@ -42,7 +45,7 @@ export function useFollowProvider() {
       const assistantMissing = settings.providers.some((item) => item.id === providerOf(settings.assistant_model) && !item.configured);
       return api
         .saveSettings({ default_model: next.model.id, ...(assistantMissing ? { assistant_model: next.model.id } : {}) })
-        .then((data) => ({ data, model: next.model.label, provider: providerLabel(t, next.provider.id) }));
+        .then((data) => ({ data, model: modelLabel(next.model), provider: providerLabel(t, next.provider.id) }));
     },
     onSuccess: (result) => {
       if (!result) return;
@@ -52,6 +55,54 @@ export function useFollowProvider() {
     },
     onError: toast.error,
   });
+}
+
+/** Provider cards with input that is not saved yet (a typed key, an address, capabilities, limits), by provider id:
+ *  the settings page asks before leaving them (ST-058). */
+export const useUnsavedProviders = create<{ dirty: Record<string, boolean>; mark: (id: string, dirty: boolean) => void }>((set) => ({
+  dirty: {},
+  mark: (id, dirty) => set((state) => (Boolean(state.dirty[id]) === dirty ? state : { dirty: { ...state.dirty, [id]: dirty } })),
+}));
+
+/** The names of the providers with unsaved input. */
+export function unsavedProviderIds(dirty: Record<string, boolean>): string[] {
+  return Object.entries(dirty)
+    .filter(([, value]) => value)
+    .map(([id]) => id);
+}
+
+/** The token limits an endpoint's models may declare (nodestro-runtime providers.LIMIT_NAMES, DECLARED_LIMIT_RANGE). */
+const LIMIT_NAMES = ["max_output_tokens", "context_window"] as const;
+type LimitName = (typeof LIMIT_NAMES)[number];
+export const DECLARED_LIMIT_MIN = 256;
+export const DECLARED_LIMIT_MAX = 10_000_000;
+
+type LimitDraft = Record<LimitName, string>;
+
+function limitDraft(limits: DeclaredModelLimits | null | undefined): LimitDraft {
+  return {
+    max_output_tokens: limits?.max_output_tokens ? String(limits.max_output_tokens) : "",
+    context_window: limits?.context_window ? String(limits.context_window) : "",
+  };
+}
+
+/** What is wrong with the declared limits (null: nothing), checked as the API checks them. */
+export function limitProblem(draft: LimitDraft): { name: LimitName; max: number } | null {
+  for (const name of LIMIT_NAMES) {
+    const text = draft[name].trim();
+    if (!text) continue;
+    const value = Number(text);
+    if (!Number.isInteger(value) || value < DECLARED_LIMIT_MIN || value > DECLARED_LIMIT_MAX) return { name, max: DECLARED_LIMIT_MAX };
+  }
+  const output = Number(draft.max_output_tokens.trim() || 0);
+  const window = Number(draft.context_window.trim() || 0);
+  if (output && window && output > window) return { name: "max_output_tokens", max: window };
+  return null;
+}
+
+/** The limits to save: empty fields are sent as 0, which removes a declared limit. */
+function limitsOf(draft: LimitDraft): DeclaredModelLimits {
+  return { max_output_tokens: Number(draft.max_output_tokens.trim() || 0), context_window: Number(draft.context_window.trim() || 0) };
 }
 
 function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: ProviderStatus; settings: Settings }) {
@@ -64,10 +115,12 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
   const [apiKey, setApiKey] = useState("");
   const [baseUrl, setBaseUrl] = useState(status.base_url ?? "");
   const [capabilities, setCapabilities] = useState<Record<string, CapabilityState>>(status.capabilities);
+  const [limits, setLimits] = useState<LimitDraft>(() => limitDraft(status.limits));
   useEffect(() => {
     setBaseUrl(status.base_url ?? "");
     setCapabilities(status.capabilities);
-  }, [status.base_url, status.capabilities]);
+    setLimits(limitDraft(status.limits));
+  }, [status.base_url, status.capabilities, status.limits]);
   const save = useMutation({
     mutationFn: (change: Parameters<typeof api.saveProvider>[1]) => api.saveProvider(info.id, change),
     onSuccess: (data, change) => {
@@ -85,8 +138,19 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
   const connection = useMutation({ mutationFn: () => api.checkConnection(info.id) });
   const name = providerLabel(t, info.id);
   const used = [settings.default_model, settings.assistant_model].some((model) => providerOf(model) === info.id);
+  const limitsChanged = JSON.stringify(limitDraft(limitsOf(limits))) !== JSON.stringify(limitDraft(status.limits));
+  const problem = info.declare_capabilities ? limitProblem(limits) : null;
   const changed =
-    baseUrl.trim() !== (status.base_url ?? "") || JSON.stringify(capabilities) !== JSON.stringify(status.capabilities);
+    baseUrl.trim() !== (status.base_url ?? "") ||
+    JSON.stringify(capabilities) !== JSON.stringify(status.capabilities) ||
+    (info.declare_capabilities && limitsChanged);
+  const number = (value: number) => value.toLocaleString(i18n.language);
+  const unsaved = Boolean(apiKey.trim()) || Boolean(changed);
+  const mark = useUnsavedProviders((state) => state.mark);
+  useEffect(() => {
+    mark(info.id, unsaved);
+  }, [info.id, unsaved, mark]);
+  useEffect(() => () => mark(info.id, false), [info.id, mark]);
   return (
     <Section
       id={`provider-${info.id}`}
@@ -184,17 +248,58 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
             </div>
           </SettingsAdvanced>
         ) : null}
+        {info.declare_capabilities ? (
+          // Token limits of the endpoint's models (ST-057): used only where Orkexa documents nothing for a model.
+          <SettingsAdvanced
+            title={t("settings.providers.limits.title")}
+            hint={t("settings.providers.limits.hint")}
+            changed={LIMIT_NAMES.filter((name) => limits[name].trim()).length}
+            testId={`provider-limits-${info.id}`}
+          >
+            <div className="settings-columns">
+              {LIMIT_NAMES.map((name) => (
+                <Field
+                  key={name}
+                  label={t(`settings.providers.limits.${name}`)}
+                  hint={
+                    problem?.name === name ? (
+                      <span className="field__error" data-testid={`provider-limit-error-${name}`}>
+                        {t("settings.providers.limits.invalid", { min: number(DECLARED_LIMIT_MIN), max: number(problem.max) })}
+                      </span>
+                    ) : (
+                      t("settings.providers.limits.range", { min: number(DECLARED_LIMIT_MIN), max: number(DECLARED_LIMIT_MAX) })
+                    )
+                  }
+                >
+                  <TextInput
+                    type="number"
+                    inputMode="numeric"
+                    min={DECLARED_LIMIT_MIN}
+                    max={DECLARED_LIMIT_MAX}
+                    step={1024}
+                    value={limits[name]}
+                    disabled={!admin}
+                    placeholder={t("settings.providers.limits.placeholder")}
+                    aria-invalid={problem?.name === name || undefined}
+                    onChange={(event) => setLimits({ ...limits, [name]: event.target.value })}
+                    data-testid={`provider-limit-${name}`}
+                  />
+                </Field>
+              ))}
+            </div>
+          </SettingsAdvanced>
+        ) : null}
         <div className="row-gap">
           {info.base_url || info.declare_capabilities ? (
             <Button
               variant="primary"
               icon={Save}
-              disabled={!admin || !changed}
+              disabled={!admin || !changed || Boolean(problem)}
               busy={save.isPending}
               onClick={() =>
                 save.mutate({
                   ...(info.base_url ? { base_url: baseUrl.trim() } : {}),
-                  ...(info.declare_capabilities ? { capabilities } : {}),
+                  ...(info.declare_capabilities ? { capabilities, limits: limitsOf(limits) } : {}),
                 })
               }
             >
@@ -268,7 +373,7 @@ export function DefaultModelNotice({ settings }: { settings: Settings }) {
         <>
           {" "}
           <Button size="sm" busy={follow.isPending} onClick={() => follow.mutate({ settings })}>
-            {t("settings.models.defaultSwitch", { model: next.model.label, provider: providerLabel(t, next.provider.id) })}
+            {t("settings.models.defaultSwitch", { model: modelLabel(next.model), provider: providerLabel(t, next.provider.id) })}
           </Button>
         </>
       ) : null}

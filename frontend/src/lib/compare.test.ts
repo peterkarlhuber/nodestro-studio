@@ -5,7 +5,7 @@ import { newNode } from "./defaults";
 import { compareRuns, totals } from "./compare";
 import { diffLines } from "./diff";
 import { HIDDEN, redact } from "./redact";
-import { hasChanges, versionChanges } from "./versionDiff";
+import { fieldChanges, hasChanges, versionChanges } from "./versionDiff";
 
 function usage(tokens: number, cost: number | null): Usage {
   return {
@@ -154,6 +154,44 @@ describe("versionChanges", () => {
     const moved = { ...one, position: { x: 500, y: 500 } };
     const base = { name: "W", description: "", budget_usd: null, edges: [] };
     expect(hasChanges(versionChanges({ ...base, nodes: [one] }, { ...base, nodes: [moved] }))).toBe(false);
+  });
+});
+
+describe("fieldChanges (ST-011)", () => {
+  const one = agent("a", "A");
+  const edit = (changes: Partial<NonNullable<WorkflowNode["agent"]>>, label = one.label): WorkflowNode => ({
+    ...one,
+    label,
+    agent: { ...one.agent!, ...changes },
+  });
+
+  it("names model, prompt, task and tool changes field by field", () => {
+    const before = edit({ system_prompt: "Be brief.", task_template: "Do {{input}}", tools: ["web_search", "calc"] });
+    const after = edit({ model: "gpt-9", system_prompt: "Be thorough.", task_template: "Do {{input}}", tools: ["calc", "files"] });
+    expect(fieldChanges(before, after)).toEqual([
+      { field: "model", kind: "value", before: "claude-sonnet-5-5", after: "gpt-9" },
+      { field: "system_prompt", kind: "text", before: "Be brief.", after: "Be thorough." },
+      { field: "tools", kind: "list", added: ["files"], removed: ["web_search"] },
+    ]);
+  });
+
+  it("reports a reordered list, a renamed step and the remaining options as other", () => {
+    const before = edit({ fallbacks: ["x", "y"], max_tokens: 1000 });
+    const after = edit({ fallbacks: ["y", "x"], max_tokens: 2000 }, "B");
+    expect(fieldChanges(before, after)).toEqual([
+      { field: "label", kind: "value", before: "A", after: "B" },
+      { field: "fallbacks", kind: "list", added: [], removed: [] },
+      { field: "other", kind: "flag" },
+    ]);
+  });
+
+  it("is listed per changed step in versionChanges, and ignores the position", () => {
+    const base = { name: "W", description: "", budget_usd: null, edges: [] };
+    const moved = { ...edit({ system_prompt: "new" }), position: { x: 9, y: 9 } };
+    const changes = versionChanges({ ...base, nodes: [one] }, { ...base, nodes: [moved] });
+    expect(changes.steps).toEqual([
+      { id: "a", name: "A", fields: [{ field: "system_prompt", kind: "text", before: one.agent!.system_prompt, after: "new" }] },
+    ]);
   });
 });
 

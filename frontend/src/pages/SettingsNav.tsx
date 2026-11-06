@@ -9,7 +9,9 @@ import { SettingsSearch } from "./SettingsSearch";
 
 /** The groups of the page, in the order of the page; a section the map does not know goes to "more".
  *  How a new section joins the navigation and the search: docs/design/SETTINGS_PAGE.md. */
-export const SETTINGS_GROUPS: Record<string, "setup" | "costs" | "running" | "maintenance"> = {
+type SettingsGroup = "setup" | "costs" | "running" | "maintenance" | "more";
+
+export const SETTINGS_GROUPS: Record<string, Exclude<SettingsGroup, "more">> = {
   "settings-local-models": "setup",
   "settings-providers": "setup",
   "settings-language": "setup",
@@ -31,7 +33,7 @@ export const SETTINGS_GROUPS: Record<string, "setup" | "costs" | "running" | "ma
 interface Anchor {
   id: string;
   title: string;
-  group: string;
+  group: SettingsGroup;
 }
 
 /** A heading's own words, without the labels of its help button. */
@@ -168,7 +170,7 @@ export function SettingsNav({
     navigate({ search: location.search, hash: id }, { replace: true });
     revealSettingsSection(id);
   };
-  const groups: [string, Anchor[]][] = [];
+  const groups: [SettingsGroup, Anchor[]][] = [];
   for (const anchor of anchors) {
     const last = groups[groups.length - 1];
     if (last && last[0] === anchor.group) last[1].push(anchor);

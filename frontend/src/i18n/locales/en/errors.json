@@ -50,7 +50,8 @@
     "too_many_files": "A chat holds at most {{limit}} files. Remove files you no longer need first.",
     "too_many_message_files": "At most {{limit}} files can be sent with one message.",
     "file_missing": "A file is no longer part of this chat. Remove it from the message and try again.",
-    "file_removed": "The file was removed from the chat."
+    "file_removed": "The file was removed from the chat.",
+    "provider_rejected_messages": "{{provider}} refused this chat: one of its messages has a form the provider does not accept. Sending it again will not help; start a new chat."
   },
   "draft": {
     "unknown_tool": "The unknown tool “{{name}}” was left out.",
@@ -182,7 +183,8 @@
       "UnexpectedResponseError": "The model's answer was not what was expected.",
       "HistoryConversionError": "The conversation of this step could not be prepared for the model: one of its messages has a form this provider does not accept. Nothing was sent.",
       "EvaluationFailedError": "The result did not pass the quality check.",
-      "ToolExecutionError": "One of the agent's tools stopped with an error."
+      "ToolExecutionError": "One of the agent's tools stopped with an error.",
+      "MaxToolCallsError": "The model asked for more tool calls in one answer than allowed (64 by default); none of them ran."
     },
     "api_error_auth": "{{provider}} rejected the API key.",
     "api_error_rate_limit": "{{provider}} reported too many requests in a short time (rate limit).",
@@ -618,7 +620,9 @@
     "server_too_large": "This package would be about {{size}}, more than this server allows ({{limit}}). Leave out the local models to make it smaller, or ask the server's operator to raise the limit.",
     "server_too_large_plain": "The package is larger than this server allows and was not kept. Leave out the local models to make it smaller, or ask the server's operator to raise the limit.",
     "download_needed_plain": "Building needs downloads that are not in the cache yet. Build once with an internet connection; afterwards they are in the cache.",
-    "downloads_plain": "Building downloads the missing parts for the target platform once."
+    "downloads_plain": "Building downloads the missing parts for the target platform once.",
+    "server_limit": "This server builds packages up to {{limit}}.",
+    "server_limit_plain": "This server builds packages up to a size limit set by its operator."
   },
   "lan": {
     "tls_file_missing": "File not found: {{path}}",
@@ -717,7 +721,8 @@
     "too_large_inline": "Too large to hand over in full; the agent reads it in parts.",
     "model_no_images": "The model cannot see images; the image was not handed over.",
     "image_too_large": "The image is too large to show to the model.",
-    "model_no_documents": "The model cannot read PDF pages; the scanned PDF is not available to it."
+    "model_no_documents": "The model cannot read PDF pages; the scanned PDF is not available to it.",
+    "assistant_file": "A file from an assistant chat cannot be a run input. Upload it for the run instead."
   },
   "adopt": {
     "archive_select": "Choose the files of {{name}} to take over.",
@@ -926,7 +931,8 @@
         "UnexpectedResponseError": "Continue the run. If it happens again, the technical details help the provider's support.",
         "HistoryConversionError": "If the agent was switched to a model of another provider, continue with the earlier model. Otherwise the technical details name the message for a bug report.",
         "EvaluationFailedError": "Read the check's reasoning at the step and adjust the task or the criteria.",
-        "ToolExecutionError": "The technical details name the tool and its error. Check the tool under \"Tools\"."
+        "ToolExecutionError": "The technical details name the tool and its error. Check the tool under \"Tools\".",
+        "MaxToolCallsError": "Give this agent fewer tools per step, or split its task so that one answer needs fewer calls."
       },
       "api_error_auth": "Check the key under Settings → AI providers and test the connection there.",
       "api_error_rate_limit": "Wait a moment and continue the run. Fewer runs at the same time or a higher limit with the provider help for good.",
@@ -1048,7 +1054,8 @@
     "install_running": "The local model runtime is already being installed.",
     "interrupted": "Nodestro was closed while this was running.",
     "unavailable": "No local model server is available here.",
-    "start_failed": "The local model server did not start."
+    "start_failed": "The local model server did not start.",
+    "task_unknown_allowed": "Unknown task. Known tasks: {{allowed}}."
   },
   "knowledge": {
     "failed": "The semantic index could not be updated.",
@@ -1071,5 +1078,8 @@
   "settings": {
     "output_limit_unknown": "Unknown steps: {{names}}.",
     "output_limit_invalid": "The output limit of “$t(modelParams.operation.{{operation}})” must be a whole number from {{min}} to {{max}}."
+  },
+  "lease": {
+    "lost": "Another server process took over this batch or test series after this one stopped answering. The work is marked as interrupted; reload the page and continue it."
   }
 }

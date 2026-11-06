@@ -16,9 +16,11 @@
     "example": "Workflows d’exemple",
     "tool": "Outils",
     "knowledge": "Connaissances",
-    "docs": "Documentation"
+    "docs": "Documentation",
+    "settings": "Réglages"
   },
   "recentRun": "Exécution",
   "recentWorkflow": "Workflow",
-  "shortcut": "Ctrl+K"
+  "shortcut": "Ctrl+K",
+  "inSettings": "Rechercher « {{query}} » dans les réglages"
 }

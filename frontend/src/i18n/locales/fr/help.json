@@ -33,7 +33,7 @@
     "task": "La tâche concrète de chaque exécution. {{input}} insère les résultats des prédécesseurs, {{runInput}} l’entrée du workflow, {{agentName}} le résultat d’un prédécesseur précis.",
     "placeholders": "Insère la variable d’un prédécesseur direct. Les résultats de prédécesseurs non utilisés sont ajoutés sous « # Inputs ».",
     "tools": "Fonctions que l’agent peut appeler lui-même. Il décide d’après la description de l’outil quand un appel est utile.",
-    "serverTools": "Outils qu’Anthropic exécute sur ses serveurs. La recherche web coûte en plus 10 $US pour 1 000 recherches.",
+    "serverTools": "Outils que le fournisseur du modèle exécute sur ses propres serveurs, comme la recherche web. Ceux qu’un modèle peut utiliser dépendent de son fournisseur ; chaque outil l’indique. La recherche web d’Anthropic coûte en plus 10 $US pour 1 000 recherches.",
     "knowledge": "Fichiers de « Connaissances » que cet agent peut utiliser. Il ne voit que les fichiers attribués ici.",
     "knowledgeMode": "Dans le contexte : les fichiers sont toujours dans le prompt. À la demande : l’agent charge lui-même les fichiers (outil « files »). Recherche : l’agent cherche les passages pertinents (outil « search »).",
     "citations": "En mode « Dans le contexte », les réponses renvoient aux passages exacts des documents (en mode « Recherche », les sources sont toujours fournies). Incompatible avec un format de sortie structuré.",

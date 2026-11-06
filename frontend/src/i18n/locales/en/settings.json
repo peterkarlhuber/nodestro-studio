@@ -200,7 +200,16 @@
       "caching": "Prompt caching",
       "system_messages": "System messages"
     },
-    "defaultFollowed": "New agents now use {{model}} ({{provider}}). Existing workflows keep their models; you can change this under Models."
+    "defaultFollowed": "New agents now use {{model}} ({{provider}}). Existing workflows keep their models; you can change this under Models.",
+    "limits": {
+      "title": "Token limits of the models",
+      "hint": "For models whose limits nobody documents: the longest answer and the context window of this endpoint's models. Agents and the validation use them; leave a field empty when you do not know the value.",
+      "max_output_tokens": "Maximum output (tokens)",
+      "context_window": "Context window (tokens)",
+      "range": "Empty: not declared. A whole number from {{min}} to {{max}}.",
+      "invalid": "Enter a whole number from {{min}} to {{max}} (the maximum output cannot exceed the context window).",
+      "placeholder": "not declared"
+    }
   },
   "nav": {
     "title": "On this page",

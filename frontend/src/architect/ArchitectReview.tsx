@@ -11,7 +11,7 @@ import { Badge, Callout, Chip, Field, TextInput } from "../components/ui";
 import { findings } from "../editor/CheckList";
 import { ProblemText } from "../lib/errors";
 import { formatCost, formatNumber } from "../lib/format";
-import { findModel } from "../lib/providers";
+import { modelName } from "../components/ModelPicker";
 import { ArchitectGraph, MarkLegend } from "./ArchitectGraph";
 import { type AgentDiff, draftDiff } from "./draftDiff";
 import { latestGraph } from "./progress";
@@ -173,7 +173,7 @@ function AgentCard({ node, diff, issues, mode }: { node: WorkflowNode; diff?: Ag
   const meta = useMeta();
   const agent = node.agent!;
   const Icon = agentIcon(agent.icon);
-  const model = findModel(meta.data?.models, agent.model)?.label ?? agent.model;
+  const model = modelName(meta.data?.models, agent.model);
   return (
     <article className={`architect-agent architect-agent--${diff?.kind ?? "added"}`} data-testid={`architect-agent-${node.id}`}>
       <header className="architect-agent__head">

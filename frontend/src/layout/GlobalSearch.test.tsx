@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import i18n, { loadLanguage } from "../i18n";
 import type { RunSummary, WorkflowSummary } from "../api/types";
-import { GlobalSearch, pageHits, recentHits, runHits } from "./GlobalSearch";
+import { GlobalSearch, pageHits, recentHits, runHits, settingsSearchHit } from "./GlobalSearch";
 
 afterEach(() => {
   cleanup();
@@ -54,6 +54,12 @@ describe("global search (F4, F5)", () => {
     expect(listbox.querySelector("section, h3")).toBeNull();
     // The dialog's head is no banner landmark.
     expect(screen.getByRole("dialog").querySelector("header")).toBeNull();
+    // From three characters on, "search the settings" is offered as the last group: Enter opens the first real hit.
+    fireEvent.change(screen.getByRole("combobox"), { target: { value: "qxz" } });
+    await within(listbox).findByTestId("search-group-settings", {}, { timeout: 3000 });
+    const last = within(listbox).getAllByRole("group").at(-1)!;
+    expect(last).toHaveAttribute("data-testid", "search-group-settings");
+    expect(within(last).getByRole("option")).toHaveTextContent("In den Einstellungen nach „qxz“ suchen");
   });
 });
 
@@ -66,6 +72,15 @@ describe("pageHits", () => {
     await loadLanguage("fr");
     const french = i18n.getFixedT("fr");
     expect(pageHits("reglages", french).map((hit) => hit.to)).toContain("/settings");
+  });
+
+  it("finds the reasoning and output limit sections, and offers the settings search for any query (ST-058)", () => {
+    expect(pageHits("ausgabe", t).map((hit) => hit.to)).toContain("/settings#settings-output-limits");
+    expect(pageHits(t("reasoning.settings.title"), t).map((hit) => hit.to)).toContain("/settings#settings-reasoning");
+    const hit = settingsSearchHit("  CPU Spar ", t);
+    expect(hit?.to).toBe("/settings?search=CPU%20Spar");
+    expect(hit?.title).toBe("In den Einstellungen nach „CPU Spar“ suchen");
+    expect(settingsSearchHit(" ab ", t)).toBeNull();
   });
 
   it("offers every page, but no settings section, for an empty query", () => {

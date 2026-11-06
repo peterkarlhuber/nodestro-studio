@@ -14,7 +14,22 @@ function translated(t: TFunction, key: string, fallback: string): string {
 
 export function modelDescription(t: TFunction, model: ModelInfo | undefined): string | undefined {
   if (!model) return undefined;
-  return translated(t, `catalog.models.${model.model.replace(/\./g, "_")}`, model.description);
+  // Colons (local models such as "qwen3.5:4b") would read as an i18next namespace separator.
+  return translated(t, `catalog.models.${model.model.replace(/[.:]/g, "_")}`, model.description);
+}
+
+/** The English marker older runtimes append to local catalog labels ("Qwen3.5 4B (local)"). */
+const LOCAL_SUFFIX = /\s*\(local\)\s*$/i;
+
+/**
+ * The display name of a catalog model in the interface language. A local model (``price_status === "local"``) gets
+ * the localized marker ("Qwen3.5 4B (lokal)"); the runtime's own English "(local)" suffix is dropped first, so the
+ * name reads the same with older and newer runtimes. Every other model keeps its label (product names).
+ */
+export function modelLabel(model: Pick<ModelInfo, "label" | "price_status">): string {
+  if (model.price_status !== "local") return model.label;
+  const name = model.label.replace(LOCAL_SUFFIX, "").trim() || model.label;
+  return i18n.t("models.localName", { name });
 }
 
 export function serverToolLabel(t: TFunction, tool: ServerToolInfo): string {

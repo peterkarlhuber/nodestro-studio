@@ -96,6 +96,7 @@
   },
   "failure": {
     "atStep": "Fehlgeschlagen bei {{name}}",
+    "cause": "{{step}}: {{reason}}",
     "more_one": "Ein weiterer Schritt ist fehlgeschlagen.",
     "more_other": "{{count}} weitere Schritte sind fehlgeschlagen.",
     "model": "Modell: {{model}}",
@@ -110,5 +111,11 @@
   "waitingForYou": {
     "label": "Wartet auf dich",
     "description": "Ein Tool-Aufruf wartet auf deine Freigabe. Der Lauf geht weiter, sobald du entschieden hast."
+  },
+  "sources": {
+    "title": "Verwendete Wissensquellen",
+    "passages_one": "({{count}} Abschnitt)",
+    "passages_other": "({{count}} Abschnitte)",
+    "hint": "Gefunden über die Wissenssuche des Agenten; der Tab Tools zeigt die Abschnitte."
   }
 }

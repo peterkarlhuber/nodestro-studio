@@ -41,9 +41,17 @@ conventions below. This keeps the page open for sections that other features add
 4. Group related settings with `SettingsGroup` (an `h3`; `columns` puts short fields side by side on wide screens).
    Put expert settings into `SettingsAdvanced` (a closed `<details>` with an "Advanced" badge and a count of values
    that differ from the standard). Use `<details>` rather than conditional rendering for anything that can be
-   hidden: content that is not rendered cannot be found, and a hit inside a closed part opens it.
+   hidden: content that is not rendered cannot be found, and a hit inside a closed part opens it. A part that is
+   rendered only where it applies (an installation without it never shows it) goes into `CONDITIONAL` in
+   `pages/SettingsSearch.tsx` with its section, help id and name: the search then finds it by its help text, leads
+   to its section and says that the part is not shown right now.
 5. A section with its own Save button keeps unsaved input when other sections save (see
-   `pages/settingsModelsForm.ts`) and asks before the page is left (`UnsavedChangesModal`).
+   `pages/settingsModelsForm.ts`) and asks before the page is left (`UnsavedChangesModal`). The provider cards save
+   on their own; a card with a typed key, address, capabilities or token limits that are not saved marks itself in
+   `useUnsavedProviders`, and leaving the page asks first too.
+7. The global search (Ctrl+K) lists every section of `layout/GlobalSearch.tsx`'s page list and, from three typed
+   characters on, offers "Search the settings for …", which opens `/settings?search=…` with this page's search
+   filled in.
 6. Every visible string exists in all six languages; the search works in whatever language is shown.
 
 ## Tooltips

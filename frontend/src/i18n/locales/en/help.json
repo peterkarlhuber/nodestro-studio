@@ -33,7 +33,7 @@
     "task": "The concrete task per run. {{input}} inserts the results of the predecessors, {{runInput}} the workflow's input, {{agentName}} the result of a specific predecessor.",
     "placeholders": "Inserts the placeholder of a direct predecessor. Predecessor results that are not used are appended under “# Inputs”.",
     "tools": "Functions the agent can call by itself. It decides from the tool description when a call helps.",
-    "serverTools": "Tools that Anthropic runs on its servers. Web search costs an extra $10 per 1,000 searches.",
+    "serverTools": "Tools that the model's provider runs on its own servers, such as web search. Which of them a model can use depends on its provider; each tool says so. Anthropic's web search costs an extra $10 per 1,000 searches.",
     "knowledge": "Files from “Knowledge” that this agent may use. It only sees the files assigned here.",
     "knowledgeMode": "In context: files are always in the prompt. On demand: the agent loads files itself (tool “files”). Search: the agent looks for matching passages (tool “search”).",
     "citations": "In “In context” mode, answers point to the exact passages in the documents (in “Search” mode, sources are always included). Cannot be combined with a structured output format.",

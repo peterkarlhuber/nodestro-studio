@@ -33,7 +33,7 @@
     "task": "Il compito concreto di ogni esecuzione. {{input}} inserisce i risultati dei predecessori, {{runInput}} l’input del workflow, {{agentName}} il risultato di un predecessore specifico.",
     "placeholders": "Inserisce il segnaposto di un predecessore diretto. I risultati dei predecessori non usati vengono aggiunti sotto «# Inputs».",
     "tools": "Funzioni che l’agente può chiamare da solo. Decide in base alla descrizione dello strumento quando una chiamata è utile.",
-    "serverTools": "Strumenti che Anthropic esegue sui propri server. La ricerca web costa in più 10 USD ogni 1.000 ricerche.",
+    "serverTools": "Strumenti che il provider del modello esegue sui propri server, come la ricerca web. Quali può usare un modello dipende dal suo provider; ogni strumento lo indica. La ricerca web di Anthropic costa in più 10 USD ogni 1.000 ricerche.",
     "knowledge": "File di «Conoscenza» che questo agente può usare. Vede solo i file assegnati qui.",
     "knowledgeMode": "Nel contesto: i file sono sempre nel prompt. Su richiesta: l’agente carica i file da solo (strumento «files»). Ricerca: l’agente cerca i passaggi pertinenti (strumento «search»).",
     "citations": "In modalità «Nel contesto», le risposte rimandano ai passaggi esatti dei documenti (in modalità «Ricerca» le fonti sono sempre incluse). Non combinabile con un formato di output strutturato.",

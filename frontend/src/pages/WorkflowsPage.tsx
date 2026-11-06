@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
 import { api } from "../api/client";
+import { preloadEditor } from "../editorChunk";
 import { keys, useOrganize, useSettings, useWorkflows } from "../api/hooks";
 import { ArchitectDialog, ArchitectOptions, type ArchitectStart } from "../architect/ArchitectDialog";
 import { useTakeHandover } from "../assistant/handover";
@@ -71,6 +72,9 @@ function starterGraph(): Pick<WorkflowIn, "nodes" | "edges"> {
 
 export function WorkflowsPage() {
   const { t } = useTranslation();
+  // Pointing at or tabbing to a workflow starts the editor's download, so the click does not wait for it (ST-004).
+  // Not on page load: the start page itself stays free of editor code (checked by e2e/smoke.mjs).
+  const intent = { onPointerOver: preloadEditor, onFocus: preloadEditor };
   const workflows = useWorkflows();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -266,7 +270,9 @@ export function WorkflowsPage() {
           </div>
         ) : null}
         {workflows.data?.length && !shown.length ? <p className="muted">{t("organize.noMatch")}</p> : null}
-        <div className="card-grid">{own.map(card)}</div>
+        <div className="card-grid" {...intent}>
+          {own.map(card)}
+        </div>
         {teams.length ? (
           <Section
             id="workflow-teams"
@@ -277,7 +283,7 @@ export function WorkflowsPage() {
             defaultOpen={!own.length}
           >
             <p className="muted small">{t("workflows.teams.text")}</p>
-            <div className="card-grid" data-testid="workflow-teams">
+            <div className="card-grid" data-testid="workflow-teams" {...intent}>
               {teams.map(card)}
             </div>
           </Section>

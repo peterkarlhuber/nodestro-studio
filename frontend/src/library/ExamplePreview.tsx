@@ -13,7 +13,7 @@ import { Badge, Button, Callout, Field, HelpTip, Hint, Modal, Select, Spinner, T
 import { LANGUAGE_NAMES, LANGUAGES, type Language, currentLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
-import { findModel } from "../lib/providers";
+import { modelName } from "../components/ModelPicker";
 import { ExampleNeeds, copiedModel } from "./ExampleNeeds";
 import { ExampleModelPlan, modelOverrides, partNames, useExampleModels, usesLocalModels } from "./ExampleModels";
 import { ExampleConnections, KnowledgeList, TeamList } from "./ExampleSections";
@@ -56,7 +56,7 @@ function AgentList({ example }: { example: ExampleDetail }) {
         const Icon = agentIcon(icons[agent.node_id]);
         // The model the copy gets: it follows the default model's provider (see ExampleNeeds).
         const copied = copiedModel(agent.model, settings.data, meta.data?.models);
-        const model = findModel(meta.data?.models, copied)?.label ?? copied;
+        const model = modelName(meta.data?.models, copied);
         return (
           <li key={agent.node_id} className="example-agents__item">
             <span className="card__avatar">

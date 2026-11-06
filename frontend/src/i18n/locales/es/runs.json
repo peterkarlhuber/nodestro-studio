@@ -96,6 +96,7 @@
   },
   "failure": {
     "atStep": "Falló en {{name}}",
+    "cause": "{{step}}: {{reason}}",
     "more_one": "Falló otro paso más.",
     "more_other": "Fallaron {{count}} pasos más.",
     "model": "Modelo: {{model}}",
@@ -110,5 +111,11 @@
   "waitingForYou": {
     "label": "Te espera",
     "description": "Una llamada a una herramienta espera tu aprobación. La ejecución continúa en cuanto decidas."
+  },
+  "sources": {
+    "title": "Fuentes de conocimiento usadas",
+    "passages_one": "({{count}} fragmento)",
+    "passages_other": "({{count}} fragmentos)",
+    "hint": "Encontradas por la búsqueda de conocimiento del agente; la pestaña Herramientas muestra los fragmentos."
   }
 }

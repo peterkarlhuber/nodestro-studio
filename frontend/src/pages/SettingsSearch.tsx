@@ -4,19 +4,59 @@
 // The index is read from the page (pages/settingsSearchIndex.ts), so new sections are found without a list here.
 
 import { Search, X } from "lucide-react";
-import { type KeyboardEvent, type RefObject, useId, useMemo, useState } from "react";
+import { type KeyboardEvent, type RefObject, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 
 import { prefersReducedMotion } from "../lib/motion";
-import { type SettingHit, indexSettings, revealSetting, searchSettings, snippet } from "./settingsSearchIndex";
+import { type ConditionalSetting, type SettingHit, indexSettings, revealSetting, searchSettings, snippet } from "./settingsSearchIndex";
+
+/** Parts that are rendered only when they apply: section, help id and name (ST-058). */
+const CONDITIONAL = [
+  ["settings-local-models", "settings.localRecommendations", "localModels.recommend.title"],
+  ["settings-local-models", "settings.localHardware", "localModels.machine.title"],
+  ["settings-local-models", "settings.localImport", "localModels.import.title"],
+  ["settings-local-models", "settings.localBuild", "localModels.build.title"],
+  ["settings-local-models", "settings.localStorage", "localModels.storage.title"],
+] as const;
 
 export function SettingsSearch({ container }: { container: RefObject<HTMLElement | null> }) {
   const { t, i18n } = useTranslation();
-  const [query, setQuery] = useState("");
+  // The global search (Ctrl+K) opens /settings?search=… to search here (ST-058).
+  const [params] = useSearchParams();
+  const initial = params.get("search")?.trim() ?? "";
+  const [query, setQuery] = useState(initial);
   const [active, setActive] = useState(0);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(Boolean(initial));
+  const input = useRef<HTMLInputElement>(null);
   const id = useId();
   const listId = `${id}-list`;
+  // Sections fill in as their data arrives: a search that came with the address looks again while they do.
+  const [version, setVersion] = useState(0);
+  useEffect(() => {
+    if (!initial) return;
+    input.current?.focus();
+    const root = container.current;
+    if (!root) return;
+    let frame = 0;
+    const again = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        setVersion((value) => value + 1);
+      });
+    };
+    // The page is there only after the first render (the container's ref), and fills in later.
+    again();
+    const observer = new MutationObserver(again);
+    observer.observe(root, { childList: true, subtree: true });
+    const stop = window.setTimeout(() => observer.disconnect(), 5000);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(stop);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [container, initial]);
 
   const hits = useMemo<SettingHit[]>(() => {
     const root = container.current;
@@ -25,10 +65,16 @@ export function SettingsSearch({ container }: { container: RefObject<HTMLElement
       const text = t(`help.${key}`, { defaultValue: "" });
       return typeof text === "string" ? text : "";
     };
-    return searchSettings(indexSettings(root, help), query);
-    // The language is part of the key: the page's texts change with it.
+    const conditional: ConditionalSetting[] = CONDITIONAL.map(([section, helpId, label]) => ({
+      section,
+      help: helpId,
+      label: t(label),
+      note: t("settingsUi.search.conditional"),
+    }));
+    return searchSettings(indexSettings(root, help, conditional), query);
+    // The language is part of the key: the page's texts change with it; version: the page changed.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [container, query, i18n.language, open]);
+  }, [container, query, i18n.language, open, version]);
 
   const choose = (hit: SettingHit | undefined) => {
     if (!hit || !hit.element.isConnected) return;
@@ -62,6 +108,7 @@ export function SettingsSearch({ container }: { container: RefObject<HTMLElement
       <div className="settings-search__box">
         <Search size={14} aria-hidden className="settings-search__icon" />
         <input
+          ref={input}
           id={`${id}-input`}
           className="nd-input settings-search__input"
           type="search"

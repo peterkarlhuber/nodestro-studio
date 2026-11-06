@@ -33,7 +33,7 @@
     "task": "A tarefa concreta de cada execução. {{input}} insere os resultados dos antecessores, {{runInput}} a entrada do fluxo de trabalho, {{agentName}} o resultado de um antecessor específico.",
     "placeholders": "Insere o marcador de um antecessor direto. Resultados de antecessores não usados são anexados em “# Inputs”.",
     "tools": "Funções que o agente pode chamar por conta própria. Ele decide pela descrição da ferramenta quando uma chamada ajuda.",
-    "serverTools": "Ferramentas que a Anthropic executa nos próprios servidores. A pesquisa na web custa mais US$ 10 a cada 1.000 pesquisas.",
+    "serverTools": "Ferramentas que o provedor do modelo executa nos próprios servidores, como a pesquisa na web. Quais delas um modelo pode usar depende do provedor; cada ferramenta informa isso. A pesquisa na web da Anthropic custa mais US$ 10 a cada 1.000 pesquisas.",
     "knowledge": "Arquivos de “Conhecimento” que este agente pode usar. Ele só vê os arquivos atribuídos aqui.",
     "knowledgeMode": "No contexto: os arquivos estão sempre no prompt. Sob demanda: o agente carrega os arquivos sozinho (ferramenta “files”). Pesquisa: o agente procura os trechos certos (ferramenta “search”).",
     "citations": "No modo “No contexto”, as respostas apontam para os trechos exatos dos documentos (no modo “Pesquisa” as fontes sempre vêm junto). Não pode ser combinado com um formato de saída estruturado.",

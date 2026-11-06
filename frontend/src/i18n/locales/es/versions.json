@@ -33,5 +33,27 @@
   "restored": "Versión {{number}} restaurada",
   "beforeRestoreNote": "Antes de restaurar la versión {{number}}",
   "saveAndRestore": "Guardar primero y restaurar",
-  "restoreDiscard": "Restaurar sin guardar"
+  "restoreDiscard": "Restaurar sin guardar",
+  "fields": {
+    "label": "Nombre del paso",
+    "name": "Nombre del agente",
+    "model": "Modelo",
+    "system_prompt": "Prompt de sistema",
+    "task_template": "Tarea",
+    "tools": "Herramientas",
+    "server_tools": "Herramientas del proveedor",
+    "fallbacks": "Modelos de respaldo",
+    "knowledge": "La configuración de conocimiento es distinta",
+    "output": "El formato del resultado es distinto",
+    "other": "Otros ajustes son distintos"
+  },
+  "diff": {
+    "value": "{{field}}: {{before}} → {{after}}",
+    "empty": "(vacío)",
+    "added": "se añadirían: {{items}}",
+    "removed": "se quitarían: {{items}}",
+    "order": "el orden es distinto",
+    "text": "{{field}} es distinto: mostrar las líneas",
+    "direction": "Las líneas marcadas como añadidas vienen de la versión; las eliminadas están ahora en el editor."
+  }
 }

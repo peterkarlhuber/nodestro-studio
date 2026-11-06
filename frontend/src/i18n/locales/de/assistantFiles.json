@@ -4,7 +4,10 @@
   "composerLabel": "Dateien für deine nächste Nachricht",
   "again": "Erneut",
   "status": {
-    "uploading": "Wird hochgeladen und gelesen …"
+    "uploading": "Wird hochgeladen und gelesen …",
+    "sending": "Wird hochgeladen",
+    "reading": "Wird gelesen …",
+    "progress": "Hochladen von {{name}}"
   },
   "remove": "{{name}} aus der Nachricht entfernen",
   "dismiss": "{{name}} ausblenden",

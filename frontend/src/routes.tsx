@@ -20,6 +20,7 @@ import { ToolsPage } from "./pages/ToolsPage";
 import { UsagePage } from "./pages/UsagePage";
 import { WorkflowsPage } from "./pages/WorkflowsPage";
 import { studioLoader } from "./welcome/startPage";
+import { loadEditorModule } from "./editorChunk";
 
 // The docs load on first visit, together with the chapters of the current language only
 // (so the page shows complete; other languages load when the user switches).
@@ -34,7 +35,7 @@ async function loadDocsPage() {
 // The editor carries the canvas (@xyflow/react) and the code editor, so it loads on first visit.
 // The router keeps the current page until the code is there, so nothing blinks in between.
 async function loadEditorPage() {
-  const { EditorPage } = await import("./pages/EditorPage");
+  const { EditorPage } = await loadEditorModule();
   return { Component: EditorPage };
 }
 

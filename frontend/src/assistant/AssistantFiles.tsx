@@ -31,6 +31,7 @@ import type { AssistantFile, AssistantFileSupport, FileDeliveryMode, FormatGroup
 import { AdoptDialog } from "../components/AdoptDialog";
 import { toast } from "../components/toast";
 import { Tooltip } from "../components/Tooltip";
+import { ProgressBar, formatPercent } from "../components/Progress";
 import { Callout, ConfirmIconButton, IconButton, Modal, Spinner } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatBytes, relativeTime } from "../lib/format";
@@ -140,6 +141,27 @@ function modelLine(t: ReturnType<typeof useTranslation>["t"], support: Assistant
   return t(`assistantFiles.model.${key}`, { model });
 }
 
+/**
+ * An upload's state: the sent share as a bar and a percentage while the browser sends it, then "reading" while the
+ * server checks and reads it (ST-055). The live region names only the phase, not every percent.
+ */
+function UploadState({ progress }: { progress?: number }) {
+  const { t } = useTranslation();
+  if (progress === undefined) return <span role="status">{t("assistantFiles.status.uploading")}</span>;
+  const reading = progress >= 1;
+  return (
+    <>
+      <span role="status">{reading ? t("assistantFiles.status.reading") : t("assistantFiles.status.sending")}</span>
+      {reading ? null : (
+        <span data-testid="composer-file-percent" aria-hidden>
+          {" "}
+          {formatPercent(progress)}
+        </span>
+      )}
+    </>
+  );
+}
+
 /** The files of the next message: uploading, refused (with the reason) and ready (with their path to the model). */
 export function ComposerFileChips({ files }: { files: ComposerFiles }) {
   const { t } = useTranslation();
@@ -183,13 +205,20 @@ export function ComposerFileChips({ files }: { files: ComposerFiles }) {
               <span className="chat-file__meta">
                 {formatBytes(item.size)} ·{" "}
                 {item.status === "uploading" ? (
-                  <span role="status">{t("assistantFiles.status.uploading")}</span>
+                  <UploadState progress={item.progress} />
                 ) : (
                   <span className="chat-file__error" role="alert" data-testid="composer-file-error">
                     {problemText(t, item.problem ?? {})}
                   </span>
                 )}
               </span>
+              {item.status === "uploading" && item.progress !== undefined && item.progress < 1 ? (
+                <ProgressBar
+                  share={item.progress}
+                  label={t("assistantFiles.status.progress", { name: item.name })}
+                  testId="composer-file-progress"
+                />
+              ) : null}
             </span>
             {item.status === "error" ? (
               <IconButton icon={X} label={t("assistantFiles.dismiss", { name: item.name })} onClick={() => files.dismiss(item.key)} />

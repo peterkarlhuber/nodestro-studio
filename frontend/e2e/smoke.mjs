@@ -226,8 +226,9 @@ try {
   await page.getByTestId("search-open").waitFor();
   await page.keyboard.press("Control+k");
   await page.getByRole("combobox", { name: "Suchbegriff" }).fill("Finanz");
-  await page.getByTestId("search-hit").first().waitFor();
-  check((await page.getByTestId("search-hit").count()) >= 1, "Global search finds workflows");
+  // The settings-search offer appears at once (last group); wait for the server's workflow hits before Enter.
+  await page.getByTestId("search-group-workflow").getByTestId("search-hit").first().waitFor();
+  check((await page.getByTestId("search-group-workflow").getByTestId("search-hit").count()) >= 1, "Global search finds workflows");
   await shot("02d-search");
   await page.keyboard.press("Enter");
   await page.waitForURL(/\/workflows\//);

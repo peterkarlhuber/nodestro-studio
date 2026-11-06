@@ -200,7 +200,16 @@
       "caching": "Caché de prompts",
       "system_messages": "Mensajes de sistema"
     },
-    "defaultFollowed": "Los agentes nuevos usan ahora {{model}} ({{provider}}). Los flujos de trabajo existentes conservan sus modelos; puedes cambiarlo en Modelos."
+    "defaultFollowed": "Los agentes nuevos usan ahora {{model}} ({{provider}}). Los flujos de trabajo existentes conservan sus modelos; puedes cambiarlo en Modelos.",
+    "limits": {
+      "title": "Límites de tokens de los modelos",
+      "hint": "Para modelos cuyos límites nadie documenta: la respuesta más larga y la ventana de contexto de los modelos de este endpoint. Los agentes y la validación los usan; deja un campo vacío si no conoces el valor.",
+      "max_output_tokens": "Salida máxima (tokens)",
+      "context_window": "Ventana de contexto (tokens)",
+      "range": "Vacío: no declarado. Un número entero de {{min}} a {{max}}.",
+      "invalid": "Introduce un número entero de {{min}} a {{max}} (la salida máxima no puede superar la ventana de contexto).",
+      "placeholder": "no declarado"
+    }
   },
   "nav": {
     "title": "En esta página",

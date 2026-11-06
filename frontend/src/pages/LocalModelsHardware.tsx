@@ -110,9 +110,9 @@ export function adviceText(t: TFunction, item: LocalAdvice, overview: Pick<Local
   }
 }
 
-export function AdviceList({ overview }: { overview: LocalOverview }) {
+export function AdviceList({ overview, omit = [] }: { overview: LocalOverview; omit?: readonly string[] }) {
   const { t } = useTranslation();
-  const advice = overview.advice ?? [];
+  const advice = (overview.advice ?? []).filter((item) => !omit.includes(item.code));
   if (!advice.length) return null;
   const ordered = [...advice].sort((a, b) => (a.severity === b.severity ? 0 : a.severity === "warning" ? -1 : 1));
   return (
@@ -153,7 +153,7 @@ export function MachinePanel({ overview }: { overview: LocalOverview }) {
         ? t("localModels.machine.runtime.missing", { version: status.pinned_version })
         : t("localModels.machine.runtime.stopped");
   const accelerated =
-    status.accelerated === undefined ? null : t(`localModels.machine.accelerated.${status.accelerated === null ? "unknown" : String(status.accelerated)}`);
+    status.accelerated === undefined ? null : t(`localModels.machine.accelerated.${status.accelerated === null ? "unknown" : status.accelerated ? "true" : "false"}`);
   return (
     <div className="stack" data-testid="local-hardware">
       <h3 className="small">

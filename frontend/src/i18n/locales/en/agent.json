@@ -99,7 +99,7 @@
       "mcp": "External services"
     },
     "missingHint": "Missing a tool? Write it yourself in the <a>tool library</a> or have the AI create it.",
-    "serverTools": "Server tools from Anthropic",
+    "serverTools": "Server tools of the model's provider",
     "serverToolsShort": "Server tools"
   },
   "knowledge": {
@@ -250,7 +250,6 @@
     "invalidJson": "Not valid JSON.",
     "objectExpected": "A JSON object is expected."
   },
-  "anthropicOnly": "Only available for Anthropic models.",
   "summary": {
     "problemsIn": "Problems in",
     "more": "+{{count}}",
@@ -270,5 +269,18 @@
     "examples_other": "{{count}} example messages",
     "requestOptions": "request options",
     "judge": "judge: {{model}}"
+  },
+  "taskChip": {
+    "label": "Results of the previous steps",
+    "text": "The agent works on exactly this, without further instructions.",
+    "edit": "Write the task",
+    "asChip": "Show as placeholder"
+  },
+  "localSuggestion": {
+    "current": "Suggested local model for “{{task}}” on this model server.",
+    "other": "For “{{task}}” this model server suggests {{model}} ({{quality}}).",
+    "none": "No local model is suggested for “{{task}}” on this model server.",
+    "download": "It needs a download of {{size}}.",
+    "use": "Use this model"
   }
 }

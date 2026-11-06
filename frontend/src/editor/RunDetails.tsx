@@ -13,6 +13,7 @@ import { ToolOutputProblem } from "../runs/ToolOutputProblem";
 import { NodeToolApprovals, ToolCallApprovalNote } from "../runs/ToolApprovalCard";
 import { ProblemText, runProblem } from "../lib/errors";
 import { formatDuration, formatTime, formatNumber, formatTokens, tokenBreakdown } from "../lib/format";
+import { usedSources } from "../lib/knowledge";
 import { type AgentContext, ContextView } from "./ContextView";
 import { branchLabel } from "./branches";
 import { OrchestrationView } from "./OrchestrationView";
@@ -289,6 +290,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
             <>
               <ReasoningView trace={nodeTrace(state)} display={thinkingDisplay} testId="run-reasoning" />
               <Output value={state.output} fields={node.agent?.output?.fields} />
+              {node.agent ? <UsedSources state={state} /> : null}
               {run && !run.imported_at && node.agent && state.status === "succeeded" ? (
                 <div className="row-gap">
                   <Button
@@ -384,6 +386,29 @@ function Proposals({
       </ul>
       <p className="small muted">{t("inputs.proposals.note")}</p>
     </Callout>
+  );
+}
+
+/** The knowledge passages the agent's searches returned (AD-19): file name and page, with how often each was found. */
+function UsedSources({ state }: { state: NodeRun }) {
+  const { t } = useTranslation();
+  const sources = usedSources(state.tool_calls);
+  if (!sources.length) return null;
+  return (
+    <section className="used-sources small" aria-label={t("runs.sources.title")} data-testid="used-sources">
+      <span className="used-sources__title">
+        <BookOpen size={13} aria-hidden /> {t("runs.sources.title")}
+      </span>
+      <ul className="used-sources__list">
+        {sources.map((item) => (
+          <li key={item.title}>
+            {item.title}
+            {item.passages > 1 ? <span className="muted"> {t("runs.sources.passages", { count: item.passages })}</span> : null}
+          </li>
+        ))}
+      </ul>
+      <span className="muted">{t("runs.sources.hint")}</span>
+    </section>
   );
 }
 

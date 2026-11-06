@@ -53,6 +53,22 @@
     "tool": "Tool draft",
     "reply": "Answer"
   },
+  "budgets": {
+    "title": "Budgets and limits",
+    "stopped_one": "{{count}} run of this period was stopped by its budget.",
+    "stopped_other": "{{count}} runs of this period were stopped by their budget.",
+    "noneStopped": "No run of this period was stopped by its budget.",
+    "waiting_one": "{{count}} run waits for a budget decision.",
+    "waiting_other": "{{count}} runs wait for a budget decision.",
+    "api": "Published API",
+    "last24h": "Last 24 hours",
+    "dailyLimit": "Daily limit",
+    "used": "Used",
+    "usedOf": "Share of the daily limit {{name}} used",
+    "noLimit": "No limit",
+    "reached": "Limit reached",
+    "hint": "When an API reaches its daily limit, new runs are refused until the cost of the last 24 hours is below it again. Change the limits under Publications."
+  },
   "cost": {
     "atLeast": "at least {{value}}",
     "staleMark": "(stale price)",

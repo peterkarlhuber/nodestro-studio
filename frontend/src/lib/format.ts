@@ -117,21 +117,32 @@ export function formatDuration(start: string | null | undefined, end: string | n
 }
 
 export function formatBytes(size: number): string {
+  // One unit system everywhere (ST-056): decimal kB, MB and GB, the units the names stand for and the ones model
+  // catalogs and download pages use, so "999.9 MB" is followed by "1.0 GB" and never by a jump.
   const unit = (value: number, name: string, digits: number, display: "short" | "long" = "short") =>
     formatNumber(value, { style: "unit", unit: name, unitDisplay: display, maximumFractionDigits: digits, minimumFractionDigits: digits });
   // Bytes spelled out: the short form has no plural in English ("0 byte", AD-17).
-  if (size < 1024) return unit(size, "byte", 0, "long");
-  if (size < 1024 * 1024) return unit(size / 1024, "kilobyte", 1);
-  return unit(size / 1024 / 1024, "megabyte", 1);
+  if (size < 1000) return unit(size, "byte", 0, "long");
+  if (size < 1_000_000) return unit(size / 1000, "kilobyte", 1);
+  return unit(size / 1_000_000, "megabyte", 1);
 }
 
 /**
- * Model, download and package sizes: GB (decimal, as model catalogs and download pages state them) from 1 GB on, so
- * "3.3 GB" instead of "3,147.1 MB"; smaller values as formatBytes.
+ * Model, download and package sizes: GB from 1 GB on, so "3.3 GB" instead of "3,300.0 MB"; smaller values as
+ * formatBytes.
  */
 export function formatLargeBytes(size: number): string {
   if (size < 1_000_000_000) return formatBytes(size);
   return formatNumber(size / 1_000_000_000, { style: "unit", unit: "gigabyte", maximumFractionDigits: 1, minimumFractionDigits: 1 });
+}
+
+/** Sizes compared in one sentence ("about 900 MB, more than 2.1 GB"), all in the unit of the largest one. */
+export function formatComparedBytes(sizes: number[]): string[] {
+  const largest = Math.max(...sizes);
+  if (largest < 1_000_000_000) return sizes.map(formatBytes);
+  return sizes.map((size) =>
+    formatNumber(size / 1_000_000_000, { style: "unit", unit: "gigabyte", maximumFractionDigits: 1, minimumFractionDigits: 1 }),
+  );
 }
 
 export function relativeTime(value: string): string {

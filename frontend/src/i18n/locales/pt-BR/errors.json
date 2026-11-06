@@ -50,7 +50,8 @@
     "too_many_files": "Um chat comporta no máximo {{limit}} arquivos. Remova primeiro os arquivos de que você não precisa mais.",
     "too_many_message_files": "É possível enviar no máximo {{limit}} arquivos com uma mensagem.",
     "file_missing": "Um arquivo não faz mais parte deste chat. Remova-o da mensagem e tente novamente.",
-    "file_removed": "O arquivo foi removido do chat."
+    "file_removed": "O arquivo foi removido do chat.",
+    "provider_rejected_messages": "{{provider}} recusou este chat: uma das mensagens tem um formato que o provedor não aceita. Enviar de novo não ajuda; comece um novo chat."
   },
   "draft": {
     "unknown_tool": "A ferramenta desconhecida “{{name}}” foi deixada de fora.",
@@ -182,7 +183,8 @@
       "UnexpectedResponseError": "A resposta do modelo não foi a esperada.",
       "HistoryConversionError": "Não foi possível preparar a conversa desta etapa para o modelo: uma de suas mensagens tem um formato que este provedor não aceita. Nada foi enviado.",
       "EvaluationFailedError": "O resultado não passou na verificação de qualidade.",
-      "ToolExecutionError": "Uma ferramenta do agente parou com um erro."
+      "ToolExecutionError": "Uma ferramenta do agente parou com um erro.",
+      "MaxToolCallsError": "O modelo pediu em uma só resposta mais chamadas de ferramentas do que o permitido (64 por padrão); nenhuma foi executada."
     },
     "api_error_auth": "{{provider}} recusou a chave de API.",
     "api_error_rate_limit": "{{provider}} informou solicitações demais em pouco tempo (limite de taxa).",
@@ -618,7 +620,9 @@
     "server_too_large": "Este pacote teria cerca de {{size}}, mais do que este servidor permite ({{limit}}). Deixe os modelos locais de fora para reduzi-lo ou peça ao operador do servidor que aumente o limite.",
     "server_too_large_plain": "O pacote é maior do que este servidor permite e não foi mantido. Deixe os modelos locais de fora para reduzi-lo ou peça ao operador do servidor que aumente o limite.",
     "download_needed_plain": "A geração precisa de downloads que ainda não estão no cache. Gere uma vez com conexão à internet; depois eles ficam no cache.",
-    "downloads_plain": "A geração baixa uma única vez as partes que faltam para a plataforma de destino."
+    "downloads_plain": "A geração baixa uma única vez as partes que faltam para a plataforma de destino.",
+    "server_limit": "Este servidor gera pacotes de até {{limit}}.",
+    "server_limit_plain": "Este servidor gera pacotes até um tamanho definido pelo operador."
   },
   "lan": {
     "tls_file_missing": "Arquivo não encontrado: {{path}}",
@@ -717,7 +721,8 @@
     "too_large_inline": "Grande demais para ser entregue inteiro; o agente o lê em partes.",
     "model_no_images": "O modelo não vê imagens; a imagem não foi entregue.",
     "image_too_large": "A imagem é grande demais para ser mostrada ao modelo.",
-    "model_no_documents": "O modelo não consegue ler páginas de PDF; o PDF digitalizado não está disponível para ele."
+    "model_no_documents": "O modelo não consegue ler páginas de PDF; o PDF digitalizado não está disponível para ele.",
+    "assistant_file": "Um arquivo de um chat do assistente não pode ser entrada de uma execução. Envie-o para a execução."
   },
   "adopt": {
     "archive_select": "Escolha os arquivos de {{name}} a incorporar.",
@@ -926,7 +931,8 @@
         "UnexpectedResponseError": "Continue a execução. Se acontecer de novo, os detalhes técnicos ajudam o suporte do provedor.",
         "HistoryConversionError": "Se o agente foi trocado para um modelo de outro provedor, continue com o modelo anterior. Caso contrário, os detalhes técnicos indicam a mensagem para um relatório de erro.",
         "EvaluationFailedError": "Leia a justificativa da verificação na etapa e ajuste a tarefa ou os critérios.",
-        "ToolExecutionError": "Os detalhes técnicos indicam a ferramenta e o erro dela. Confira a ferramenta em \"Ferramentas\"."
+        "ToolExecutionError": "Os detalhes técnicos indicam a ferramenta e o erro dela. Confira a ferramenta em \"Ferramentas\".",
+        "MaxToolCallsError": "Dê a este agente menos ferramentas por etapa ou divida a tarefa para que uma resposta precise de menos chamadas."
       },
       "api_error_auth": "Confira a chave em Configurações → Provedores de IA e teste a conexão lá.",
       "api_error_rate_limit": "Aguarde um momento e continue a execução. Menos execuções ao mesmo tempo ou um limite maior no provedor resolvem de vez.",
@@ -1048,7 +1054,8 @@
     "install_running": "O runtime de modelos locais já está sendo instalado.",
     "interrupted": "O Nodestro foi fechado enquanto isso rodava.",
     "unavailable": "Nenhum servidor de modelos local está disponível aqui.",
-    "start_failed": "O servidor de modelos local não iniciou."
+    "start_failed": "O servidor de modelos local não iniciou.",
+    "task_unknown_allowed": "Tarefa desconhecida. Tarefas conhecidas: {{allowed}}."
   },
   "knowledge": {
     "failed": "Não foi possível atualizar o índice semântico.",
@@ -1071,5 +1078,8 @@
   "settings": {
     "output_limit_unknown": "Etapas desconhecidas: {{names}}.",
     "output_limit_invalid": "O limite de saída de “$t(modelParams.operation.{{operation}})” deve ser um número inteiro de {{min}} a {{max}}."
+  },
+  "lease": {
+    "lost": "Outro processo do servidor assumiu este lote ou esta série de testes porque este parou de responder. O trabalho está marcado como interrompido; recarregue a página e continue."
   }
 }

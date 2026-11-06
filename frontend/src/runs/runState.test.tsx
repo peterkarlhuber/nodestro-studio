@@ -181,6 +181,7 @@ describe("failure reasons (ED-05, AD-01)", () => {
       "run.agent.IncompleteResponseError",
       "run.agent.RefusalError",
       "run.agent.MaxToolRoundsError",
+      "run.agent.MaxToolCallsError",
       "run.api_error_auth",
       "run.api_error_rate_limit",
       "run.api_error_connection",

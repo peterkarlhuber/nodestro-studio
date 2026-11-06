@@ -34,9 +34,6 @@ updates:
       # typescript-eslint (peer typescript < 6.1) does not support TypeScript 6/7 yet.
       - dependency-name: typescript
         update-types: ["version-update:semver-major"]
-      # axe-core 4.14 moves label-content-name-mismatch into wcag21a, which the global search trigger fails (ST-051).
-      - dependency-name: axe-core
-        versions: [">= 4.14.0"]
       # ESLint 10 needs eslint-plugin-react-hooks 7, whose React Compiler rules report 46 errors to fix first (ST-053).
       - dependency-name: eslint
         update-types: ["version-update:semver-major"]

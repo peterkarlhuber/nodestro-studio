@@ -50,7 +50,8 @@
     "too_many_files": "Une conversation contient au plus {{limit}} fichiers. Supprimez d’abord ceux dont vous n’avez plus besoin.",
     "too_many_message_files": "Vous pouvez envoyer au plus {{limit}} fichiers avec un message.",
     "file_missing": "Un fichier ne fait plus partie de cette conversation. Retirez-le du message et réessayez.",
-    "file_removed": "Le fichier a été supprimé de la conversation."
+    "file_removed": "Le fichier a été supprimé de la conversation.",
+    "provider_rejected_messages": "{{provider}} a refusé ce chat : l’un de ses messages a une forme que le fournisseur n’accepte pas. Le renvoyer n’aidera pas ; commencez un nouveau chat."
   },
   "draft": {
     "unknown_tool": "L’outil inconnu « {{name}} » a été écarté.",
@@ -182,7 +183,8 @@
       "UnexpectedResponseError": "La réponse du modèle ne correspondait pas à ce qui était attendu.",
       "HistoryConversionError": "La conversation de cette étape n’a pas pu être préparée pour le modèle : l’un de ses messages a une forme que ce fournisseur n’accepte pas. Rien n’a été envoyé.",
       "EvaluationFailedError": "Le résultat n’a pas passé le contrôle qualité.",
-      "ToolExecutionError": "Un outil de l’agent s’est arrêté avec une erreur."
+      "ToolExecutionError": "Un outil de l’agent s’est arrêté avec une erreur.",
+      "MaxToolCallsError": "Le modèle a demandé dans une seule réponse plus d’appels d’outils que permis (64 par défaut) ; aucun n’a été exécuté."
     },
     "api_error_auth": "{{provider}} a refusé la clé API.",
     "api_error_rate_limit": "{{provider}} a signalé trop de requêtes en peu de temps (limite de débit).",
@@ -618,7 +620,9 @@
     "server_too_large": "Ce paquet ferait environ {{size}}, plus que ce que ce serveur autorise ({{limit}}). Laissez de côté les modèles locaux pour le réduire, ou demandez à l’opérateur du serveur de relever la limite.",
     "server_too_large_plain": "Le paquet dépasse la taille autorisée par ce serveur et n’a pas été conservé. Laissez de côté les modèles locaux pour le réduire, ou demandez à l’opérateur du serveur de relever la limite.",
     "download_needed_plain": "La génération nécessite des téléchargements qui ne sont pas encore dans le cache. Lancez une génération avec une connexion Internet ; ils seront ensuite dans le cache.",
-    "downloads_plain": "La génération télécharge une seule fois les éléments manquants pour la plateforme cible."
+    "downloads_plain": "La génération télécharge une seule fois les éléments manquants pour la plateforme cible.",
+    "server_limit": "Ce serveur construit des paquets jusqu’à {{limit}}.",
+    "server_limit_plain": "Ce serveur construit des paquets jusqu’à une taille fixée par son opérateur."
   },
   "lan": {
     "tls_file_missing": "Fichier introuvable : {{path}}",
@@ -717,7 +721,8 @@
     "too_large_inline": "Trop volumineux pour être transmis en entier ; l’agent le lit par parties.",
     "model_no_images": "Le modèle ne voit pas les images ; l’image n’a pas été transmise.",
     "image_too_large": "L’image est trop grande pour être montrée au modèle.",
-    "model_no_documents": "Le modèle ne sait pas lire les pages PDF ; le PDF numérisé ne lui est pas accessible."
+    "model_no_documents": "Le modèle ne sait pas lire les pages PDF ; le PDF numérisé ne lui est pas accessible.",
+    "assistant_file": "Un fichier d’un chat de l’assistant ne peut pas être une entrée d’exécution. Importez-le plutôt pour l’exécution."
   },
   "adopt": {
     "archive_select": "Choisissez les fichiers de {{name}} à reprendre.",
@@ -926,7 +931,8 @@
         "UnexpectedResponseError": "Reprenez l’exécution. Si cela se reproduit, les détails techniques aideront le support du fournisseur.",
         "HistoryConversionError": "Si l’agent a été basculé vers un modèle d’un autre fournisseur, reprenez avec le modèle précédent. Sinon, les détails techniques indiquent le message pour un rapport d’erreur.",
         "EvaluationFailedError": "Lisez la justification du contrôle à l’étape et ajustez la tâche ou les critères.",
-        "ToolExecutionError": "Les détails techniques nomment l’outil et son erreur. Vérifiez l’outil sous « Outils »."
+        "ToolExecutionError": "Les détails techniques nomment l’outil et son erreur. Vérifiez l’outil sous « Outils ».",
+        "MaxToolCallsError": "Donnez à cet agent moins d’outils par étape ou découpez sa tâche pour qu’une réponse demande moins d’appels."
       },
       "api_error_auth": "Vérifiez la clé sous Réglages → Fournisseurs d’IA et testez-y la connexion.",
       "api_error_rate_limit": "Attendez un instant et reprenez l’exécution. Moins d’exécutions simultanées ou une limite plus élevée chez le fournisseur règlent le problème durablement.",
@@ -1048,7 +1054,8 @@
     "install_running": "Le moteur des modèles locaux est déjà en cours d’installation.",
     "interrupted": "Nodestro a été fermé pendant l’opération.",
     "unavailable": "Aucun serveur de modèles local n’est disponible ici.",
-    "start_failed": "Le serveur de modèles local n’a pas démarré."
+    "start_failed": "Le serveur de modèles local n’a pas démarré.",
+    "task_unknown_allowed": "Tâche inconnue. Tâches connues : {{allowed}}."
   },
   "knowledge": {
     "failed": "L’index sémantique n’a pas pu être mis à jour.",
@@ -1071,5 +1078,8 @@
   "settings": {
     "output_limit_unknown": "Étapes inconnues : {{names}}.",
     "output_limit_invalid": "La limite de sortie de « $t(modelParams.operation.{{operation}}) » doit être un nombre entier de {{min}} à {{max}}."
+  },
+  "lease": {
+    "lost": "Un autre processus du serveur a repris ce lot ou cette série de tests, car celui-ci ne répondait plus. Le travail est marqué comme interrompu ; rechargez la page et reprenez-le."
   }
 }

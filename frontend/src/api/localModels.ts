@@ -92,7 +92,7 @@ export interface CatalogModel {
   region?: string | null;
   languages?: string[];
   /** Task profiles the model is meant for; empty means all. */
-  tasks?: string[];
+  tasks?: LocalTask[];
   /** An alternative to the standard models: suggested only with a matching preference (e.g. European models). */
   alternative?: boolean;
   /** registry: pulled from the Ollama library; build: built from pinned upstream files (e.g. mdenseon:307m). */
@@ -124,14 +124,41 @@ export interface Hardware {
   gpu_memory_bytes: number | null;
 }
 
+/** The task profiles of the local model catalog (nodestro-runtime local_models.TASK_PROFILES). */
+export type LocalTask =
+  | "classify"
+  | "extract"
+  | "write"
+  | "document_vision"
+  | "tool_agent"
+  | "analysis"
+  | "coding"
+  | "judge"
+  | "orchestrator"
+  | "architect"
+  | "assistant"
+  | "embedding";
+
+/** Why a model is recommended for a task (nodestro-runtime local_models.recommend). */
+export type LocalReason =
+  | "installed"
+  | "needs_download"
+  | "below_ideal"
+  | "hardware_limit"
+  | "no_gpu"
+  | "no_fit"
+  | "preferred_region"
+  | "preferred_region_unavailable"
+  | "languages_unverified";
+
 export interface Recommendation {
-  task: string;
+  task: LocalTask;
   /** The qualified model (ollama:…), or null when nothing fits this computer. */
   model: string | null;
   quality: LocalQuality;
   installed: boolean;
   download_bytes: number;
-  reasons: string[];
+  reasons: LocalReason[];
   /** A better model that needs a download or more memory. */
   better: string | null;
   alternatives: string[];
@@ -272,10 +299,13 @@ export const localKeys = {
   overview: ["local-models"] as const,
   jobs: ["local-models", "jobs"] as const,
   index: ["knowledge-index"] as const,
+  recommend: (task: LocalTask) => ["local-models", "recommend", task] as const,
 };
 
 export const localApi = {
   overview: () => request<LocalOverview>("GET", "/local-models"),
+  /** The model for one task profile on the computer (or server) that runs the model server. */
+  recommend: (task: LocalTask) => request<Recommendation>("GET", `/local-models/recommend?task=${encodeURIComponent(task)}`),
   start: () => request<LocalStatus>("POST", "/local-models/start"),
   stop: () => request<LocalStatus>("POST", "/local-models/stop"),
   setAutostart: (enabled: boolean) => request<LocalStatus>("PUT", "/local-models/autostart", { enabled }),
