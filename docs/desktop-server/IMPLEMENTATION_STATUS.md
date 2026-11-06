@@ -17,7 +17,9 @@ Rules that apply to every step (see README, "Non-negotiable rules", and ADR-0006
 
 ## Status
 
-Last update: 2026-11-01 (notes of PR-3 and PR-7/PR-8 brought in line with the backend audit fixes).
+Last update: 2026-11-06 (status aligned with ADR-0006, ADR-0009 and [ARCHITECTURE.md](../ARCHITECTURE.md): the
+built-in Linux sandbox replaced the PR-13 prototype, Docker is the default sandbox since the Docker-first decision of
+2026-11-02, and the candidate `v0.2.0-preview.1` is withdrawn; see "Since the candidate" below).
 
 | Step | Content | State | Pull requests (merge commit) |
 | --- | --- | --- | --- |
@@ -34,9 +36,25 @@ Last update: 2026-11-01 (notes of PR-3 and PR-7/PR-8 brought in line with the ba
 | PR-10 | Persistent jobs and workers | done | runtime #11 (`136f0cf`: job queue, reaper, run events, scheduler lock), runtime #12 (`3a052d1`: remote run events); pins: examples #9 (`e591c48`), integrations #9 (`77bbff4`); api #13 (`3a895e7`: `ServerWorker`) |
 | PR-11 | Container sandbox with libraries | done | runtime #13 (`4104176`: image per approved lock with hashes, wheels only, `--pull never`); pins: examples #10 (`43e02f6`), integrations #10 (`13160d1`); api #14 (`817c8c4`); sdk #12 (`7f0b0df`); studio (this PR: texts) |
 | PR-12 | Server integration and deployment | done | runtime #14 (`640ed68`: `ServerSettings`, encrypted tenant secrets, container calls without bind mounts), runtime #15 (`51f0a6c`: model endpoint allowlist), runtime #16 (`c6bc2e5`: a run is stored as running as soon as a worker starts it); pins: examples #11 (`f13227c`), #12 (`86c58a1`), integrations #11 (`268c3ed`), #12 (`652c231`); api #15 (`f119cfc`: `nodestro-server` command, backups, HTTPS-only identity providers); sdk #13 (`2ed893a`); studio #19 (`6b73625`: pins, texts); nodestro-server #1 (`2d512c3`: image, compose, runbook, end-to-end tests); nodestro-desktop #3 (`26612f9`: backend from studio `6b73625`) |
-| PR-13 | Built-in sandbox prototype | done (prototype, not isolating) | runtime #17 (`f3931e8`: `builtin_sandbox`, bubblewrap + seccomp, acceptance tests in CI); report: [sandbox-prototype-report.md](sandbox-prototype-report.md); no pin change (nothing uses it) |
+| PR-13 | Built-in sandbox prototype | done; superseded by the built-in `LinuxSandbox` (see "Since the candidate") | runtime #17 (`f3931e8`: `builtin_sandbox`, bubblewrap + seccomp, acceptance tests in CI); report: [sandbox-prototype-report.md](sandbox-prototype-report.md); no pin change (nothing uses it) |
 | M6 | Release pipelines, manifests, signing, OS support matrix | done (pipelines; no release made, nothing signed) | nodestro-desktop #4 (`3ee764a`) and nodestro-server #2 (`e8a4899`): release workflows with draft releases, `release_manifest.py` (pins, checksums, digests, license inventory, signing state); both build from studio `5a1cf56`; [RELEASES.md](RELEASES.md): steps, signing, OS support matrix, update and rollback |
-| RC | Release candidate `v0.2.0-preview.1` (Linux x86_64 desktop, linux/amd64 server) | built and checked, **not published** | nodestro-server #3 (`b34505e`) and #4 (`5bc7b82`), nodestro-desktop #5 (`67122b7`): candidate build without publishing, separate `publish.yml` with confirmation, secret scan, license texts, preview labels; candidate runs 41212112554 (desktop) and 41212693919 (server), both from studio `78710ce`; [RELEASES.md](RELEASES.md#release-candidate-v020-preview1), [release-checklist.md](release-checklist.md) |
+| RC | Release candidate `v0.2.0-preview.1` (Linux x86_64 desktop, linux/amd64 server) | built and checked, **withdrawn** (frozen, NO-GO by the owner's decision of 2026-10-31, never published; a new candidate is nodestro-desktop DSK-001) | nodestro-server #3 (`b34505e`) and #4 (`5bc7b82`), nodestro-desktop #5 (`67122b7`): candidate build without publishing, separate `publish.yml` with confirmation, secret scan, license texts, preview labels; candidate runs 41212112554 (desktop) and 41212693919 (server), both from studio `78710ce`; [RELEASES.md](RELEASES.md#release-candidate-v020-preview1), [release-checklist.md](release-checklist.md) |
+
+## Since the candidate
+
+- **Built-in Linux sandbox:** the PR-13 prototype became `LinuxSandbox` (`nodestro_runtime.builtin_sandbox`,
+  Landlock and seccomp, no Docker needed; ADR-0006 "Built-in Linux sandbox"). It counts as isolating only in the
+  desktop profile, only on a tested Linux x86-64 system whose self-test passed, and it refuses on ARM64. Since
+  runtime `45e7774` it is part of the platform pins; nodestro-desktop #6 integrated and tested it on real machines.
+- **Docker-first (owner decision 2026-11-02, [ADR-0009](../adr/0009-cross-platform-sandbox.md) status update):** a
+  Docker-compatible engine that passes Nodestro's own checks is the default sandbox for untrusted (AI-generated)
+  code on Linux, macOS and Windows; the `auto` mode runs that code only in Docker. The built-in Linux sandbox is the
+  explicit, optional `linux` mode; `SubprocessSandbox` is for trusted use only and never a fallback for AI code. The
+  native macOS sandbox was removed (reported as `removed`) and Windows has no native sandbox. The studio starts
+  without Docker; only secure execution is blocked, with a reason in Settings → Sandbox.
+- **Candidate:** `v0.2.0-preview.1` predates both changes. It stays frozen and NO-GO, `publish.yml` refuses its runs,
+  and a new candidate has to be built and evaluated against the Docker-first behavior (nodestro-desktop DSK-001).
+  `platform/versions.json` `products` still lists it (nodestro-studio TODO ST-027).
 
 ## Notes per step
 
@@ -150,9 +168,10 @@ Last update: 2026-11-01 (notes of PR-3 and PR-7/PR-8 brought in line with the ba
 - Linux x86-64 candidate: `BubblewrapSandbox` (namespaces, a root file system with only the interpreter, an empty
   environment, a seccomp filter). Every security probe of ADR-0006 passes in CI and locally; the compatibility checks
   with the examples' generated tools, a compiled library from a lock file, and the desktop bundle on a clean machine
-  are not run yet, so `isolation_of` keeps returning `"none"`. Details and the remaining steps are in the report.
+  were not run at that point, so the prototype's `isolation_of` returned `"none"`. Details are in the report; the
+  prototype has since become the built-in `LinuxSandbox` (see "Since the candidate").
 - No candidate for macOS, Windows or aarch64; nothing was run on those systems.
-- The platform pins stay at runtime `c6bc2e5`; the next pin bump picks the prototype up.
+- At PR-13 the platform pins stayed at runtime `c6bc2e5`; the built-in sandbox came in with runtime `45e7774`.
 
 ### M6
 
@@ -174,7 +193,9 @@ Last update: 2026-11-01 (notes of PR-3 and PR-7/PR-8 brought in line with the ba
 
 ## Limitations known so far
 
-- Tested on Linux (CI and local) only. macOS and Windows are not tested.
+- The desktop and server products are tested on Linux (CI and local) only; no desktop or server build exists for
+  macOS or Windows. The studio itself starts in CI on macOS and Windows (`Platforms` workflow), and the `Docker`
+  workflow runs AI-generated code in a real engine on Linux and macOS Intel (TODO ST-033); Docker Desktop never ran.
 - No code-signing or notarization certificates are available; no signed build exists.
 - The development stack of nodestro-server (Dex, model stub, Docker-in-Docker with host networking) runs on Linux
   only and is not a production setup; base images are referenced by tag, not by digest.
