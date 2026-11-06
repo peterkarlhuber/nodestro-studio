@@ -59,7 +59,7 @@ beside it.
 
 ## Tests
 
-- Unit: `pages/settingsWidth.test.ts`, `pages/settingsSearch.test.ts`, `pages/SettingsResizer.test.tsx`,
+- Unit: `pages/settingsWidth.test.ts`, `pages/settingsSearchIndex.test.ts`, `pages/SettingsResizer.test.tsx`,
   `pages/SettingsNav.test.tsx`, `pages/SettingsParts.test.tsx`, `pages/settingsModelsForm.test.ts`,
   `components/Tooltip.test.tsx`, `layout/settingsEntry.test.ts`.
 - Browser: `frontend/e2e/settings-ui.mjs` (`scripts/e2e.sh settings-ui`): tooltips inside modal dialogs

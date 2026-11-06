@@ -1,7 +1,7 @@
 // The search box of the settings page: finds single settings by their name, explanation and help text, in the
 // interface language, and jumps to one (opening the parts around it, focusing its control, highlighting it).
 // A combobox with a list of hits (WAI-ARIA combobox pattern): arrow keys choose, Enter jumps, Escape clears.
-// The index is read from the page (pages/settingsSearch.ts), so new sections are found without a list here.
+// The index is read from the page (pages/settingsSearchIndex.ts), so new sections are found without a list here.
 
 import { Search, X } from "lucide-react";
 import { type KeyboardEvent, type RefObject, useId, useMemo, useState } from "react";

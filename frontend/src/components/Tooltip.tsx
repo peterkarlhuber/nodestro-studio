@@ -354,7 +354,7 @@ export function HelpTip({ id, label }: { id: HelpId; label?: string }) {
       <button
         type="button"
         className={`help-tip ${open ? "help-tip--open" : ""}`}
-        // Names its text for the settings search, which finds settings by their help as well (pages/settingsSearch.ts).
+        // Names its text for the settings search, which finds settings by their help as well (pages/settingsSearchIndex.ts).
         data-help={id}
         aria-label={label ? t("common.helpFor", { label }) : t("common.help")}
         aria-expanded={open}
