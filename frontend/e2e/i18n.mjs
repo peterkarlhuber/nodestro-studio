@@ -329,7 +329,7 @@ try {
       if (viewport.width < 600) continue;
       // The editor of the first own workflow (not a card of the example gallery).
       await page.goto(base + "/");
-      await page.locator(".page__body > .card-grid > .card").first().click();
+      await page.locator(".page__body > .card-grid > .card .card__main").first().click();
       try {
         await page.locator(".react-flow__node").first().waitFor();
       } catch (error) {
@@ -396,7 +396,7 @@ try {
       await page.locator("dialog[open] [role=radio]").nth(mode).click();
       await checkDialog(page, language, `new workflow ${mode + 1}`);
     }
-    await page.locator(".page__body > .card-grid > .card").first().click();
+    await page.locator(".page__body > .card-grid > .card .card__main").first().click();
     await page.locator(".react-flow__node").first().waitFor();
     await page.getByTestId("open-api").click();
     await checkDialog(page, language, "API");
