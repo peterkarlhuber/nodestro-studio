@@ -19,8 +19,8 @@
 - Settings → Local models: a semantic reindex whose server worker stopped explains `knowledge.reindex_interrupted`
   in six languages.
 - Pins nodestro-runtime b29b738 (runtime #121: semantic reindex as a server job), nodestro-examples 4b947c4 (#79),
-  nodestro-integrations bf15c68 (#67), nodestro-api f98b08b (api #96: member routes, `DELETE /api/exports/{id}`,
-  export quota, reindex jobs, idle tenant contexts) and nodestro-sdk 7a52243 (sdk #90 and #92: stream reconnect,
+  nodestro-integrations bf15c68 (#67), nodestro-api 8efbfbb (api #96: member routes, `DELETE /api/exports/{id}`,
+  export quota, reindex jobs, idle tenant contexts) and nodestro-sdk 1ee487c (sdk #90 and #92: stream reconnect,
   streamed downloads, batch and schedule methods).
 
 ### TODO abatement round (2026-11-06)
