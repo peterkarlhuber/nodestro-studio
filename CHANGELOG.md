@@ -40,6 +40,27 @@
   no longer held back by Dependabot.
 - mypy covers every script (branding, Docker and platform smoke, social preview).
 - Docs: desktop/server status, releases and the S-2 worker concept match the current state.
+- Settings: a field whose value differs from its default (`GET /api/settings/defaults`, nodestro-api API-061) shows
+  "Changed" and a reset action next to its label; an API without the route shows no marks (ST-059).
+- Editor palette: the team hint names a team's output fields by their localized label from the contract
+  descriptions in the workflow summaries (nodestro-api API-053), and by id only without one (ST-032).
+- Copies of examples: the run dialog offers the example's sample files as one-click inputs per file field (ST-007),
+  and the editor and run headers show a "Sample data" badge naming the connections that run offline, both from the
+  copy's stored origin (nodestro-runtime RT-055; ST-031).
+- Settings, maintenance: administrators set how long assistant chat files are kept (empty: as long as their
+  conversation; nodestro-api API-056), and the storage clean-up names the removed chat files.
+- Error texts name the missing workflow, run or publication when the API sends its name (`params.display`), and
+  `idempotency.in_progress` has a sentence of its own.
+- The adoption dialog of an AI-created tool shows what the AI changed since the person's previous own version (written
+  in the editor or adopted): a line diff of the code and the tests above the full code, or a note that there is
+  nothing to compare (ST-036; needs nodestro-api `GET /api/tools/{name}/versions`).
+- The copy dialog of an example whose agents keep persistent memory offers the copy's own memory space, prefilled
+  from the copy's name and checked with the runtime's name rule; empty shares the example's space as before
+  (examples EX-007; needs nodestro-api `memory_space` on the copy route).
+- Editor performance: the number formatters are created in idle time, not in the editor's first render; the profile
+  of the remaining long tasks is in ST-004.
+- The remaining dynamic translation keys built from backend codes are typed as closed sets; the i18n browser sweep
+  opens the main dialogs and hovers the settings help tooltips (ST-060).
 
 ### Settings, attachments and providers (2026-11-06)
 
