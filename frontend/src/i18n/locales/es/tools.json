@@ -294,6 +294,17 @@
       "nowBlocked": "Ahora: no puede ejecutarse en este equipo, porque ningún sandbox está listo para aislarla.",
       "nowIsolated": "Ahora: se ejecuta aislada ({{backend}}).",
       "after": "Tras adoptarla: se ejecuta como el código que escribes tú ({{backend}})."
+    },
+    "diff": {
+      "title": "Cambios desde tu versión {{version}}",
+      "intro": {
+        "editor": "La versión {{previous}} fue la última que escribiste en el editor. Las líneas marcadas con + se añadieron y las marcadas con − se eliminaron en la versión {{version}}.",
+        "adopted": "La versión {{previous}} fue la última que adoptaste como propia. Las líneas marcadas con + se añadieron y las marcadas con − se eliminaron en la versión {{version}}."
+      },
+      "testsUnchanged": "Las pruebas no han cambiado.",
+      "none": "Ninguna versión anterior de esta herramienta fue código tuyo, así que no hay nada que comparar: lee abajo todo el código.",
+      "loading": "Buscando tu versión anterior…",
+      "unavailable": "No se pudieron cargar las versiones anteriores; lee abajo todo el código."
     }
   }
 }

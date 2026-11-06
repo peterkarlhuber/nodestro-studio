@@ -1178,6 +1178,22 @@ export interface ToolInfo {
   adoption?: ToolAdoption | null;
 }
 
+/** One stored version of a tool and who wrote it (GET /api/tools/{name}/versions, ST-036). */
+export interface ToolVersion {
+  version: number;
+  status: string;
+  created_at: string | null;
+  /** ``editor``: written in the tool editor; ``adopted``: an AI version adopted as one's own; ``ai``: by AI. */
+  author: "editor" | "adopted" | "ai";
+  /** Whether the version is the person's own (``editor`` or ``adopted``). */
+  own: boolean;
+  description: string;
+  function_name: string | null;
+  code: string | null;
+  tests: string | null;
+  content_hash: string | null;
+}
+
 /** A confirmed adoption of AI-created tool code as one's own (nodestro_runtime.tool_provenance.ToolAdoption). */
 export interface ToolAdoption {
   name: string;

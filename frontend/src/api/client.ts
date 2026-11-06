@@ -61,6 +61,7 @@ import type {
   Settings,
   SettingsUpdate,
   ToolInfo,
+  ToolVersion,
   ToolJob,
   ToolSource,
   TraceImport,
@@ -477,6 +478,8 @@ export const api = {
   deleteTool: (name: string) => request<void>("DELETE", `/tools/${encodeURIComponent(name)}`),
   runTool: (name: string, input: Record<string, unknown>) =>
     request<{ output: string; is_error: boolean }>("POST", `/tools/${encodeURIComponent(name)}/run`, { input }),
+  /** Every stored version of a tool, newest first, with who wrote it (ST-036). */
+  toolVersions: (name: string) => request<ToolVersion[]>("GET", `/tools/${encodeURIComponent(name)}/versions`),
   adoptTool: (name: string, contentHash: string) =>
     request<ToolInfo>("POST", `/tools/${encodeURIComponent(name)}/adopt`, { content_hash: contentHash }),
   toolJobs: () => request<ToolJob[]>("GET", "/tools/jobs"),

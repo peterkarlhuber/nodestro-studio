@@ -294,6 +294,17 @@
       "nowBlocked": "Agora: ela não pode ser executada neste computador, porque nenhum sandbox está pronto para isolá-la.",
       "nowIsolated": "Agora: ela é executada isolada ({{backend}}).",
       "after": "Depois de adotar: ela é executada como o código que você mesmo escreve ({{backend}})."
+    },
+    "diff": {
+      "title": "Alterações desde a sua versão {{version}}",
+      "intro": {
+        "editor": "A versão {{previous}} foi a última que você escreveu no editor. As linhas marcadas com + foram adicionadas e as marcadas com − removidas na versão {{version}}.",
+        "adopted": "A versão {{previous}} foi a última que você adotou como seu próprio código. As linhas marcadas com + foram adicionadas e as marcadas com − removidas na versão {{version}}."
+      },
+      "testsUnchanged": "Os testes não mudaram.",
+      "none": "Nenhuma versão anterior desta ferramenta era código seu, então não há nada a comparar: leia abaixo todo o código.",
+      "loading": "Procurando sua versão anterior…",
+      "unavailable": "Não foi possível carregar as versões anteriores; leia abaixo todo o código."
     }
   }
 }

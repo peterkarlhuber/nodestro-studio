@@ -294,6 +294,17 @@
       "nowBlocked": "Now: it cannot run on this computer, because no sandbox is ready to isolate it.",
       "nowIsolated": "Now: it runs isolated ({{backend}}).",
       "after": "After adopting: it runs like code you write yourself ({{backend}})."
+    },
+    "diff": {
+      "title": "Changes since your version {{version}}",
+      "intro": {
+        "editor": "Version {{previous}} was the last one you wrote in the editor. Lines marked + were added and lines marked − removed in version {{version}}.",
+        "adopted": "Version {{previous}} was the last one you adopted as your own. Lines marked + were added and lines marked − removed in version {{version}}."
+      },
+      "testsUnchanged": "The tests are unchanged.",
+      "none": "No earlier version of this tool was your own, so there is nothing to compare: read the whole code below.",
+      "loading": "Looking for your previous version…",
+      "unavailable": "The earlier versions could not be loaded; read the whole code below."
     }
   }
 }

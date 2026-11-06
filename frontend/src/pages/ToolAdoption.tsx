@@ -4,8 +4,10 @@
 // their own after reading its code and tests and confirming a warning; it then runs like code they wrote, without
 // isolation. The confirmation names exactly the content shown (its content_hash), the API checks it again, writes
 // the audit trail and refuses everywhere but the desktop. Off the desktop the action is not offered at all.
+// When an earlier version was the person's own (written in the editor or adopted), the dialog shows what the AI
+// changed since then, above the full code (ST-036).
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ShieldAlert, UserCheck } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -13,8 +15,9 @@ import { useTranslation } from "react-i18next";
 import { useAccess } from "../api/access";
 import { api } from "../api/client";
 import { keys, useSettings } from "../api/hooks";
-import type { SandboxSelection, ToolInfo } from "../api/types";
+import type { SandboxSelection, ToolInfo, ToolVersion } from "../api/types";
 import { CodeEditor } from "../components/CodeEditor";
+import { TextDiff } from "../components/TextDiff";
 import { toast } from "../components/toast";
 import { Button, Callout, Field, Modal } from "../components/ui";
 import { ErrorText } from "../lib/errors";
@@ -48,6 +51,51 @@ export function adoptionChange(
         : { key: "tools.adopt.change.nowIsolated", backend: selection.untrusted },
     after: { key: "tools.adopt.change.after", backend: selection.user_authored },
   };
+}
+
+/** The person's newest own version before ``version`` (written in the editor or adopted), if any. */
+export function previousOwnVersion(versions: ToolVersion[], version: number): ToolVersion | null {
+  const own = versions.filter((item) => item.own && item.version < version && item.code !== null);
+  return own.reduce<ToolVersion | null>((best, item) => (best === null || item.version > best.version ? item : best), null);
+}
+
+/** What the AI changed since the person's previous own version: a diff of the code and of the tests. */
+function ChangesSinceOwn({ tool }: { tool: ToolInfo }) {
+  const { t } = useTranslation();
+  const versions = useQuery({
+    queryKey: [...keys.tools, tool.name, "versions"],
+    queryFn: () => api.toolVersions(tool.name),
+    retry: false,
+  });
+  if (versions.isPending) return <p className="muted small">{t("tools.adopt.diff.loading")}</p>;
+  if (versions.isError)
+    return (
+      <p className="muted small" data-testid="tool-adopt-diff-unavailable">
+        {t("tools.adopt.diff.unavailable")}
+      </p>
+    );
+  const previous = previousOwnVersion(versions.data, tool.version);
+  if (!previous)
+    return (
+      <p className="muted small" data-testid="tool-adopt-diff-none">
+        {t("tools.adopt.diff.none")}
+      </p>
+    );
+  const sameTests = (previous.tests ?? "") === (tool.tests ?? "");
+  return (
+    <section className="stack-sm" aria-labelledby="tool-adopt-diff-title" data-testid="tool-adopt-diff">
+      <h3 id="tool-adopt-diff-title" className="section-title">
+        {t("tools.adopt.diff.title", { version: previous.version })}
+      </h3>
+      <p className="muted small">
+        {t(`tools.adopt.diff.intro.${previous.author}`, { previous: previous.version, version: tool.version })}
+      </p>
+      <span className="nd-field-label">{t("tools.codeOfTool")}</span>
+      <TextDiff a={previous.code ?? ""} b={tool.code ?? ""} />
+      <span className="nd-field-label">{t("tools.testsOfTool")}</span>
+      {sameTests ? <p className="muted small">{t("tools.adopt.diff.testsUnchanged")}</p> : <TextDiff a={previous.tests ?? ""} b={tool.tests ?? ""} />}
+    </section>
+  );
 }
 
 /** The "what changes" lines of the dialog. */
@@ -136,6 +184,7 @@ export function AdoptTool({ tool }: { tool: ToolInfo }) {
           </Callout>
           <AdoptionChange />
           <p>{t("tools.adopt.intro", { version: item.version })}</p>
+          <ChangesSinceOwn tool={item} />
           <Field label={t("tools.codeOfTool")}>
             <CodeEditor value={item.code ?? ""} readOnly ariaLabel={t("tools.codeOfTool")} />
           </Field>
