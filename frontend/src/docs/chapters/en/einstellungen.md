@@ -154,6 +154,17 @@ The **Default budget per run** (initially 2 USD) applies to all workflows withou
 
 Administrators also set the **Maximum run budget** (empty: no cap): no run may start with or be raised above it. The **Budget decision deadline** (1 to 720 hours, initially 24) says how long a paused run waits for a [budget decision](/docs/workflows#budget-freigabe) before it fails. Who may decide is explained under [Who may decide](/docs/workflows#budget-rechte).
 
+## Model output limits {#ausgabelimits}
+<!-- keywords: output limit, max tokens, max_tokens, truncated, cut off, architect limit, context window -->
+
+Nodestro's own AI steps (the Workflow Architect, the assistants, questions about a run, orchestrator decisions and the quality check) have no agent settings of their own. Under **Model output limits** you set how many tokens each step may answer with; an empty field uses the built-in default (for example 32,000 for the architect's workflow plan and 8,000 for its analysis). Agents keep their own *Max. tokens* in the [agent editor](/docs/agenten#limits).
+
+The value that is sent comes from three levels: your setting, else the default, at most the model's documented maximum output (or half of its context window for a local model whose maximum is not known). The table shows the value sent to the assistant model and says when it was lowered; nothing is shortened silently.
+
+The limit includes the model's thinking. A higher limit allows longer answers but never bypasses a budget: before each request, the cost check reserves exactly this value.
+
+**Retry answers that were cut off:** when an answer of the Workflow Architect reaches its limit, it is asked once more with a doubled limit, at most the *Highest limit for a retry* (initially 64,000) and the model's maximum. The retry is sent only if its full cost fits into what is left of the job's budget. Otherwise, or with the retry switched off, the job stops with a message that names the step and its limit.
+
 ## Sandbox {#sandbox}
 <!-- keywords: choose sandbox, automatic, docker, python process, docker available, built-in sandbox, linux sandbox, macos, windows, blocked, experimental -->
 

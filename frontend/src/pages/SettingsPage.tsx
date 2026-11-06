@@ -19,6 +19,7 @@ import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
 import { SettingsNav, useSettingsHash } from "./SettingsNav";
 import { KnowledgeSearchPanel, LocalModelsPanel } from "./SettingsLocalModels";
 import { SandboxPanel } from "./SettingsSandbox";
+import { OutputLimitsPanel } from "./SettingsOutputLimits";
 import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy, settingsForm } from "./SettingsBudget";
 import { CHECK_KEY, DefaultModelNotice, ProviderSettings } from "./SettingsProviders";
 
@@ -226,6 +227,8 @@ export function SettingsPage() {
             </Button>
           </div>
         </section>
+
+        {settings.data ? <OutputLimitsPanel settings={settings.data} admin={admin} /> : null}
 
         <PricingPanel settings={form} onMode={(price_mode) => save.mutate({ price_mode })} />
 

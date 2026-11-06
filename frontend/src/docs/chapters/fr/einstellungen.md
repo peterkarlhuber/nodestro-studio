@@ -154,6 +154,17 @@ Le **budget par défaut par exécution** (au départ 2 USD) s’applique à tous
 
 Les administrateurs fixent aussi le **Budget maximal par exécution** (vide : pas de limite) : aucune exécution ne peut démarrer avec un plafond plus élevé ni être relevée au-delà. Le **Délai des décisions de budget** (1 à 720 heures, 24 au départ) indique combien de temps une exécution en pause attend une [décision de budget](/docs/workflows#budget-freigabe) avant d’échouer. Qui peut décider est expliqué sous [Qui peut décider](/docs/workflows#budget-rechte).
 
+## Limites de sortie des modèles {#ausgabelimits}
+<!-- keywords: limite de sortie, tokens max., max_tokens, tronqué, limite de l’architecte, fenêtre de contexte -->
+
+Les étapes d’IA propres à Nodestro (l’architecte de workflows, les assistants, les questions sur une exécution, les décisions de l’orchestrateur et le contrôle qualité) n’ont pas de réglages d’agent. Sous **Limites de sortie des modèles**, vous définissez le nombre de tokens avec lequel chaque étape peut répondre ; un champ vide utilise la valeur par défaut intégrée (par exemple 32 000 pour le plan de workflow de l’architecte et 8 000 pour son analyse). Les agents conservent leurs propres *Tokens max.* dans l’[éditeur d’agent](/docs/agenten#limits).
+
+La valeur envoyée provient de trois niveaux : votre réglage, sinon la valeur par défaut, au plus la sortie maximale documentée du modèle (ou la moitié de sa fenêtre de contexte pour un modèle local dont le maximum est inconnu). Le tableau affiche la valeur envoyée au modèle d’assistance et indique quand elle a été réduite ; rien n’est raccourci en silence.
+
+La limite inclut la réflexion du modèle. Une limite plus élevée permet des réponses plus longues, mais ne contourne jamais un budget : avant chaque requête, le contrôle des coûts réserve exactement cette valeur.
+
+**Redemander les réponses tronquées :** lorsqu’une réponse de l’architecte de workflows atteint sa limite, elle est redemandée une fois avec une limite doublée, au plus la *Limite maximale pour une nouvelle tentative* (64 000 au départ) et le maximum du modèle. La nouvelle tentative n’est envoyée que si son coût total tient dans ce qui reste du budget de la tâche. Sinon, ou si la nouvelle tentative est désactivée, la tâche s’arrête avec un message qui indique l’étape et sa limite.
+
 ## Bac à sable {#sandbox}
 <!-- keywords: choisir le bac à sable, sandbox, automatique, docker, processus python, docker disponible, bac à sable intégré, bac à sable linux, macos, windows, bloqué, expérimental -->
 

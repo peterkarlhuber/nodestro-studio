@@ -1,0 +1,83 @@
+{
+  "reason": {
+    "provider": "Not available for models of this provider.",
+    "model": "This model does not support it.",
+    "automatic": "The provider does this automatically for this model; there is nothing to set.",
+    "not_mapped": "The provider has a similar feature, but Nodestro does not offer it as this option yet.",
+    "unknown": "It is not documented whether this model supports it."
+  },
+  "nativeTool": {
+    "provider": "{{tool}}: not available for models of this provider.",
+    "not_integrated": "{{tool}}: the provider offers such a tool, but Nodestro does not use it yet because its fees cannot be priced and limited.",
+    "capability": "{{tool}}: this model cannot use the provider's own tools."
+  },
+  "optionName": {
+    "thinking": "Thinking",
+    "thinking_display": "Show thoughts",
+    "thinking_budget": "Thinking budget",
+    "cache_control": "Prompt caching",
+    "cache_ttl": "Cache duration",
+    "fallbacks": "Fallback models"
+  },
+  "thinkingBudget": {
+    "label": "Thinking budget (tokens)",
+    "hint": "How many tokens the model may spend on thinking before it answers. Empty: the model decides. 0 turns thinking off where the model allows it. Thinking tokens count against Max. tokens.",
+    "placeholder": "Model default"
+  },
+  "limits": {
+    "maxOutput": "Model maximum: {{tokens}} output tokens",
+    "contextWindow": "context window: {{tokens}} tokens",
+    "unknown": "The model's maximum output is not documented; the provider decides.",
+    "source": {
+      "documented": "documented",
+      "declared": "declared in the settings",
+      "unknown": "unknown"
+    }
+  },
+  "operation": {
+    "architect_analysis": "Architect: requirements analysis",
+    "architect_plan": "Architect: workflow plan",
+    "architect_agent": "Architect: agent configuration",
+    "architect_repair": "Architect: repair",
+    "tool_generation": "Tool generation (Coding Agent)",
+    "assistant_chat": "Assistant chat",
+    "agent_design": "Agent design",
+    "memory_proposal": "Memory suggestion",
+    "api_guide": "API guide",
+    "run_chat": "Questions about a run",
+    "orchestrator": "Orchestrator decisions",
+    "quality_judge": "Quality check (judge)"
+  },
+  "settings": {
+    "title": "Model output limits",
+    "intro": "How many tokens Nodestro's own AI steps may answer with. Leave a field empty to use the default. Agents set their own limit in the agent editor (Max. tokens).",
+    "budgetNote": "The limit includes the model's thinking. A higher limit allows longer answers but never bypasses a budget: the cost check reserves exactly this value before each request.",
+    "modelMaximum": "Assistant model {{model}}: at most {{tokens}} output tokens.",
+    "modelMaximumUnknown": "The maximum output of the assistant model {{model}} is not documented; values are sent as set.",
+    "group": {
+      "architect": "Workflow Architect",
+      "assistants": "Assistants",
+      "runs": "Runs"
+    },
+    "column": {
+      "operation": "Step",
+      "limit": "Limit (tokens)",
+      "sent": "Sent to the model"
+    },
+    "inputLabel": "Output limit of {{operation}}",
+    "reset": "Reset {{operation}} to the default",
+    "invalid": "Enter a whole number from {{min}} to {{max}}.",
+    "default": "Default",
+    "defaultIs": "Default: {{tokens}}",
+    "perModel": "{{tokens}}, at most the maximum of the model used",
+    "reduced": {
+      "model_maximum": "Lowered to the model's maximum output.",
+      "context_window": "Lowered to half of the model's context window."
+    },
+    "retry": "Retry answers that were cut off",
+    "retryHint": "When an answer of the Workflow Architect reaches its limit, ask once more with a doubled limit (at most the value below and the model's maximum). The retry is sent only if its full cost fits into the job's remaining budget.",
+    "retryMax": "Highest limit for a retry (tokens)",
+    "retryMaxHint": "From 1,024 to 1,000,000 tokens.",
+    "fixInvalid": "Some values are outside the allowed range ({{min}} to {{max}} tokens). Correct them to save."
+  }
+}

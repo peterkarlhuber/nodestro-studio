@@ -269,6 +269,11 @@
     },
     "present": {
       "ready": "Le brouillon est prêt pour votre examen."
+    },
+    "architect": {
+      "limit": "Limite de sortie pour « $t(modelParams.operation.{{operation}}) » : {{max_tokens}} tokens.",
+      "limit_reduced": "Limite de sortie pour « $t(modelParams.operation.{{operation}}) » réduite de {{configured}} à {{max_tokens}} tokens : le modèle n’en permet pas plus.",
+      "truncated_retry": "La réponse a été tronquée à {{max_tokens}} tokens ; nouvelle demande avec jusqu’à {{higher}} tokens."
     }
   }
 }

@@ -1,0 +1,83 @@
+{
+  "reason": {
+    "provider": "Für Modelle dieses Anbieters nicht verfügbar.",
+    "model": "Dieses Modell unterstützt das nicht.",
+    "automatic": "Der Anbieter erledigt das bei diesem Modell automatisch; hier ist nichts einzustellen.",
+    "not_mapped": "Der Anbieter hat eine ähnliche Funktion, Nodestro bietet sie aber noch nicht als diese Option an.",
+    "unknown": "Es ist nicht dokumentiert, ob dieses Modell das unterstützt."
+  },
+  "nativeTool": {
+    "provider": "{{tool}}: für Modelle dieses Anbieters nicht verfügbar.",
+    "not_integrated": "{{tool}}: Der Anbieter hat ein solches Werkzeug, Nodestro nutzt es aber noch nicht, weil sich seine Gebühren nicht berechnen und begrenzen lassen.",
+    "capability": "{{tool}}: Dieses Modell kann die eigenen Werkzeuge des Anbieters nicht nutzen."
+  },
+  "optionName": {
+    "thinking": "Denken",
+    "thinking_display": "Gedanken anzeigen",
+    "thinking_budget": "Denkbudget",
+    "cache_control": "Prompt-Caching",
+    "cache_ttl": "Cache-Dauer",
+    "fallbacks": "Ersatzmodelle"
+  },
+  "thinkingBudget": {
+    "label": "Denkbudget (Tokens)",
+    "hint": "Wie viele Tokens das Modell vor der Antwort zum Denken verwenden darf. Leer: Das Modell entscheidet. 0 schaltet das Denken aus, wo das Modell es erlaubt. Denk-Tokens zählen zu den max. Tokens.",
+    "placeholder": "Vorgabe des Modells"
+  },
+  "limits": {
+    "maxOutput": "Modellmaximum: {{tokens}} Ausgabe-Tokens",
+    "contextWindow": "Kontextfenster: {{tokens}} Tokens",
+    "unknown": "Die maximale Ausgabe des Modells ist nicht dokumentiert; der Anbieter entscheidet.",
+    "source": {
+      "documented": "dokumentiert",
+      "declared": "in den Einstellungen angegeben",
+      "unknown": "unbekannt"
+    }
+  },
+  "operation": {
+    "architect_analysis": "Architekt: Anforderungsanalyse",
+    "architect_plan": "Architekt: Workflow-Plan",
+    "architect_agent": "Architekt: Agenten-Konfiguration",
+    "architect_repair": "Architekt: Reparatur",
+    "tool_generation": "Werkzeugerstellung (Coding Agent)",
+    "assistant_chat": "Assistenten-Chat",
+    "agent_design": "Agenten-Entwurf",
+    "memory_proposal": "Gedächtnis-Vorschlag",
+    "api_guide": "API-Leitfaden",
+    "run_chat": "Fragen zu einem Lauf",
+    "orchestrator": "Entscheidungen des Orchestrators",
+    "quality_judge": "Qualitätsprüfung (Prüfer)"
+  },
+  "settings": {
+    "title": "Ausgabelimits der Modelle",
+    "intro": "Mit wie vielen Tokens Nodestros eigene KI-Schritte höchstens antworten dürfen. Lass ein Feld leer, um die Vorgabe zu verwenden. Agenten haben ihr eigenes Limit im Agenten-Editor (Max. Tokens).",
+    "budgetNote": "Das Limit schließt das Denken des Modells ein. Ein höheres Limit erlaubt längere Antworten, umgeht aber nie ein Budget: Die Kostenprüfung reserviert vor jeder Anfrage genau diesen Wert.",
+    "modelMaximum": "Assistenzmodell {{model}}: höchstens {{tokens}} Ausgabe-Tokens.",
+    "modelMaximumUnknown": "Die maximale Ausgabe des Assistenzmodells {{model}} ist nicht dokumentiert; die Werte werden wie eingestellt gesendet.",
+    "group": {
+      "architect": "Workflow-Architekt",
+      "assistants": "Assistenten",
+      "runs": "Läufe"
+    },
+    "column": {
+      "operation": "Schritt",
+      "limit": "Limit (Tokens)",
+      "sent": "An das Modell gesendet"
+    },
+    "inputLabel": "Ausgabelimit von {{operation}}",
+    "reset": "{{operation}} auf die Vorgabe zurücksetzen",
+    "invalid": "Gib eine ganze Zahl von {{min}} bis {{max}} ein.",
+    "default": "Vorgabe",
+    "defaultIs": "Vorgabe: {{tokens}}",
+    "perModel": "{{tokens}}, höchstens das Maximum des verwendeten Modells",
+    "reduced": {
+      "model_maximum": "Auf die maximale Ausgabe des Modells gesenkt.",
+      "context_window": "Auf die Hälfte des Kontextfensters des Modells gesenkt."
+    },
+    "retry": "Abgeschnittene Antworten erneut anfordern",
+    "retryHint": "Erreicht eine Antwort des Workflow-Architekten ihr Limit, wird einmal mit doppeltem Limit neu gefragt (höchstens mit dem Wert unten und dem Maximum des Modells). Die Wiederholung wird nur gesendet, wenn ihre vollen Kosten in das verbleibende Budget des Auftrags passen.",
+    "retryMax": "Höchstes Limit für eine Wiederholung (Tokens)",
+    "retryMaxHint": "Von 1.024 bis 1.000.000 Tokens.",
+    "fixInvalid": "Einige Werte liegen außerhalb des erlaubten Bereichs ({{min}} bis {{max}} Tokens). Korrigiere sie, um zu speichern."
+  }
+}

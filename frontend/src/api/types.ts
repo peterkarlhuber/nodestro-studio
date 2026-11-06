@@ -3403,3 +3403,92 @@ export interface SearchHit {
   /** The hit's rank per method (fts, vector) before they were fused. */
   ranks?: Record<string, number>;
 }
+
+// --- params ---
+
+/** The operations of Nodestro's own AI requests that have a configurable output limit (Settings > Model output limits). */
+export type OutputLimitOperation =
+  | "architect_analysis"
+  | "architect_plan"
+  | "architect_agent"
+  | "architect_repair"
+  | "assistant_chat"
+  | "agent_design"
+  | "memory_proposal"
+  | "api_guide"
+  | "run_chat"
+  | "orchestrator"
+  | "quality_judge"
+  | "tool_generation";
+
+export interface Settings {
+  /** Workspace overrides of the output limits (tokens) of Nodestro's own operations; missing: the default applies. A
+   * change sends 0 to remove an override. */
+  output_limits?: Partial<Record<OutputLimitOperation, number>>;
+  /** The built-in output limit of each operation. */
+  output_limit_defaults?: Record<OutputLimitOperation, number>;
+  /** Whether the Workflow Architect asks again with a higher limit when an answer was cut off. */
+  architect_retry_truncated?: boolean;
+  /** The highest output limit such a retry may use. */
+  architect_retry_max_tokens?: number;
+}
+
+/** Declared token limits of an OpenAI-compatible endpoint's models (used only where nothing is documented). */
+export interface DeclaredModelLimits {
+  max_output_tokens?: number;
+  context_window?: number;
+}
+
+export interface ProviderStatus {
+  limits?: DeclaredModelLimits | null;
+}
+
+export interface ProviderSettingsIn {
+  /** Declared limits; an empty object removes them. */
+  limits?: DeclaredModelLimits | null;
+}
+
+export interface AgentConfig {
+  /** Gemini 2.5: the thinking token budget (0 turns thinking off where the model allows it); null: the model's default. */
+  thinking_budget?: number | null;
+}
+
+/** Whether an agent option can be used with a model; ``reason`` is a code (provider, model, automatic, not_mapped, unknown). */
+export interface OptionSupport {
+  available: boolean;
+  reason: string | null;
+  values: string[] | null;
+}
+
+/** A provider-native tool (run by the provider) and whether this model can use it. */
+export interface NativeToolSupport {
+  key: string;
+  available: boolean;
+  /** provider, not_integrated (fees not priced yet) or capability. */
+  reason: string | null;
+}
+
+export interface ModelLimitsInfo {
+  context_window: number | null;
+  max_output_tokens: number | null;
+  efforts: string[] | null;
+  thinking_modes: string[] | null;
+  thinking_budget: boolean | null;
+  /** documented, declared or unknown. */
+  source: string;
+}
+
+/** ``GET /api/models/profile``: capabilities, token limits and model-dependent agent options of one model. */
+export interface ModelProfile {
+  model: string;
+  provider: string | null;
+  /** Why the id cannot be used (an error code), else null. */
+  error: string | null;
+  capabilities: Record<string, CapabilityState>;
+  reasons: Record<string, string>;
+  limits: ModelLimitsInfo;
+  /** The highest max_tokens an agent of this model may use. */
+  max_tokens_limit: number;
+  options: Record<"thinking" | "thinking_display" | "thinking_budget" | "cache_control" | "cache_ttl" | "fallbacks", OptionSupport>;
+  native_tools: NativeToolSupport[];
+}
