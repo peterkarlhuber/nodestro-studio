@@ -165,7 +165,7 @@ export function OutputLimitsPanel({ settings, admin }: { settings: Settings; adm
                 const bad = invalid(text);
                 return (
                   <tr key={name} data-operation={name}>
-                    <th scope="row" style={{ fontWeight: 500, textTransform: "none", letterSpacing: "normal", fontSize: "inherit" }}>
+                    <th scope="row" className="output-limits__operation" style={{ fontWeight: 500, textTransform: "none", letterSpacing: "normal", fontSize: "inherit" }}>
                       {label}
                     </th>
                     <td>

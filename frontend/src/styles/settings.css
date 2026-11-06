@@ -465,3 +465,9 @@
   outline: 2px solid var(--nd-focus);
   outline-offset: 2px;
 }
+
+/* Output limits: long operation names (German compounds) wrap inside their fixed-width column on phones. */
+.output-limits__operation {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
