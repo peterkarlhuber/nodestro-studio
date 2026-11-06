@@ -624,7 +624,9 @@
     "download_needed_plain": "A geração precisa de downloads que ainda não estão no cache. Gere uma vez com conexão à internet; depois eles ficam no cache.",
     "downloads_plain": "A geração baixa uma única vez as partes que faltam para a plataforma de destino.",
     "server_limit": "Este servidor gera pacotes de até {{limit}}.",
-    "server_limit_plain": "Este servidor gera pacotes até um tamanho definido pelo operador."
+    "server_limit_plain": "Este servidor gera pacotes até um tamanho definido pelo operador.",
+    "server_quota": "Este pacote (cerca de {{size}}) não cabe: este espaço de trabalho já guarda {{used}} de exportações e este servidor permite {{limit}}. Exclua exportações mais antigas ou peça ao operador do servidor que aumente a cota.",
+    "server_quota_plain": "As exportações deste espaço de trabalho ocupariam mais espaço do que este servidor permite, por isso o pacote não foi mantido. Exclua exportações mais antigas ou peça ao operador do servidor que aumente a cota."
   },
   "lan": {
     "tls_file_missing": "Arquivo não encontrado: {{path}}",
@@ -812,7 +814,8 @@
     "tenant_exists": "Já existe um espaço de trabalho com o id {{tenant}}, então nenhum segundo foi criado. Escolha outro id.",
     "tenant_has_owner": "O espaço de trabalho {{tenant}} já tem um proprietário, por isso este link de configuração não pode adicionar outro. Peça ao proprietário para adicionar você.",
     "tenant_id": "{{tenant}} não pode ser usado como id de espaço de trabalho: é inválido ou reservado. Escolha outro id.",
-    "tenant_unknown": "Não existe o espaço de trabalho {{tenant}}. Confira o id ou peça acesso à administração."
+    "tenant_unknown": "Não existe o espaço de trabalho {{tenant}}. Confira o id ou peça acesso à administração.",
+    "owner_required": "Somente um proprietário deste espaço de trabalho pode dar, retirar ou alterar a função de proprietário, por isso nada foi alterado."
   },
   "secrets": {
     "unreadable": "Uma chave salva não pode mais ser lida. Informe-a novamente nas configurações."

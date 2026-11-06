@@ -120,6 +120,11 @@ function codeParams(t: TFunction, code: string | null, params: Record<string, un
     const [size, limit] = formatComparedBytes([Number(params.size), Number(params.limit)]);
     return { ...params, size, limit };
   }
+  if (code === "export.server_quota") {
+    // The package, what is stored and the quota, in one unit (API-048).
+    const [size, used, limit] = formatComparedBytes([Number(params.size), Number(params.used), Number(params.limit)]);
+    return { ...params, size, used, limit };
+  }
   if (code === "export.server_limit" && Number(params.limit) > 0) return { ...params, limit: formatLargeBytes(Number(params.limit)) };
   if (code === "local.task_unknown_allowed" && Array.isArray(params.allowed))
     return { ...params, allowed: params.allowed.map((task) => t(`localModels.tasks.${String(task)}`, { defaultValue: String(task) })).join(", ") };
@@ -203,6 +208,9 @@ export function refineProblem(
   // A server's size limit for portable packages: the refused estimate names both sizes, a failed build job neither.
   if (code === "export.server_too_large" && !(Number(params.size) > 0 && Number(params.limit) > 0))
     return { code: "export.server_too_large_plain", params };
+  // A server's quota for the stored exports of a workspace (nodestro-api API-048): all three sizes, or a general text.
+  if (code === "export.server_quota" && !(Number(params.size) >= 0 && Number(params.used) >= 0 && Number(params.limit) > 0))
+    return { code: "export.server_quota_plain", params };
   // An offline model package refused before its import started: the folder, and what is wrong with it when the
   // agent library's reason has a sentence of its own (a damaged manifest, an invalid model name).
   if (code === "local.invalid_package" && typeof params.path === "string" && params.path)

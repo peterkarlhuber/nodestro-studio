@@ -26,7 +26,7 @@
     "permissions": "Permissões: {{list}}",
     "switch": "Trocar de espaço de trabalho",
     "logout": "Sair",
-    "members": "Membros e funções são gerenciados pelo operador do servidor com a linha de comando nodestro-server (veja o manual de operação).",
+    "members": "Os administradores gerenciam membros e funções nas configurações (Membros e funções). Novos membros entram com um link de configuração do operador do servidor.",
     "signInAgain": "Entrar novamente"
   },
   "server": {
@@ -120,5 +120,21 @@
     "python": "SDK Python",
     "typescript": "SDK TypeScript",
     "intro": "Os clientes oficiais iniciam execuções com uma chave de idempotência (uma nova tentativa nunca inicia uma segunda execução), tentam de novo após erros de conexão e informam erros tipados. Instale-os a partir de"
+  },
+  "members": {
+    "title": "Membros e funções",
+    "description": "Quem tem acesso ao espaço de trabalho {{tenant}} e com qual função. Uma nova função vale a partir da próxima ação do membro; as sessões de um membro removido terminam aqui na hora.",
+    "ownerNote": "Somente proprietários podem dar, retirar ou alterar a função de proprietário. Um espaço de trabalho sempre mantém pelo menos um proprietário.",
+    "invite": "Ainda não há convites: novos membros entram com um link de configuração ou pelo operador do servidor.",
+    "member": "Membro",
+    "role": "Função",
+    "actions": "Ações",
+    "you": "você",
+    "roleOf": "Função de {{name}}",
+    "remove": "Remover {{name}}",
+    "confirmRemove": "Remover?",
+    "changed": "{{name}} agora é {{role}}.",
+    "removed": "{{name}} não tem mais acesso a este espaço de trabalho.",
+    "empty": "Este espaço de trabalho ainda não tem membros."
   }
 }

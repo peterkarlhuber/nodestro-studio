@@ -26,7 +26,7 @@
     "permissions": "Permisos: {{list}}",
     "switch": "Cambiar de espacio de trabajo",
     "logout": "Cerrar sesión",
-    "members": "Los miembros y los roles los gestiona el operador del servidor con la línea de comandos nodestro-server (consulta el manual de operación).",
+    "members": "Los administradores gestionan los miembros y los roles en la configuración (Miembros y roles). Los nuevos miembros entran con un enlace de configuración del operador del servidor.",
     "signInAgain": "Volver a iniciar sesión"
   },
   "server": {
@@ -120,5 +120,21 @@
     "python": "SDK de Python",
     "typescript": "SDK de TypeScript",
     "intro": "Los clientes oficiales inician ejecuciones con una clave de idempotencia (un reintento nunca inicia una segunda ejecución), reintentan tras errores de conexión e informan de errores tipados. Instálalos desde"
+  },
+  "members": {
+    "title": "Miembros y roles",
+    "description": "Quién tiene acceso al espacio de trabajo {{tenant}} y con qué rol. Un rol nuevo se aplica a la siguiente acción del miembro; las sesiones de un miembro eliminado terminan aquí al instante.",
+    "ownerNote": "Solo los propietarios pueden dar, quitar o cambiar el rol de propietario. Un espacio de trabajo siempre conserva al menos un propietario.",
+    "invite": "Todavía no hay invitaciones: los nuevos miembros entran con un enlace de configuración o a través del operador del servidor.",
+    "member": "Miembro",
+    "role": "Rol",
+    "actions": "Acciones",
+    "you": "tú",
+    "roleOf": "Rol de {{name}}",
+    "remove": "Quitar a {{name}}",
+    "confirmRemove": "¿Quitar?",
+    "changed": "{{name}} ahora es {{role}}.",
+    "removed": "{{name}} ya no tiene acceso a este espacio de trabajo.",
+    "empty": "Este espacio de trabajo aún no tiene miembros."
   }
 }

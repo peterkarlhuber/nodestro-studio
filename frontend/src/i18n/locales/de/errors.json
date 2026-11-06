@@ -624,7 +624,9 @@
     "download_needed_plain": "Das Erstellen braucht Downloads, die noch nicht im Zwischenspeicher liegen. Erstelle einmal mit Internetverbindung; danach liegen sie im Zwischenspeicher.",
     "downloads_plain": "Das Erstellen lädt die fehlenden Teile für die Zielplattform einmalig herunter.",
     "server_limit": "Dieser Server baut Pakete bis {{limit}}.",
-    "server_limit_plain": "Dieser Server baut Pakete bis zu einer Größe, die sein Betreiber festlegt."
+    "server_limit_plain": "Dieser Server baut Pakete bis zu einer Größe, die sein Betreiber festlegt.",
+    "server_quota": "Dieses Paket (etwa {{size}}) passt nicht mehr: Dieser Arbeitsbereich hat schon {{used}} an Exporten gespeichert, und dieser Server erlaubt {{limit}}. Lösche ältere Exporte oder bitte den Betreiber des Servers, das Kontingent anzuheben.",
+    "server_quota_plain": "Die Exporte dieses Arbeitsbereichs würden mehr Platz belegen, als dieser Server erlaubt, daher wurde das Paket nicht behalten. Lösche ältere Exporte oder bitte den Betreiber des Servers, das Kontingent anzuheben."
   },
   "lan": {
     "tls_file_missing": "Datei nicht gefunden: {{path}}",
@@ -812,7 +814,8 @@
     "tenant_exists": "Ein Arbeitsbereich mit der Kennung {{tenant}} existiert bereits, deshalb wurde kein zweiter angelegt. Wähle eine andere Kennung.",
     "tenant_has_owner": "Der Arbeitsbereich {{tenant}} hat schon einen Inhaber, deshalb kann dieser Einrichtungslink keinen weiteren hinzufügen. Bitte den Inhaber, dich hinzuzufügen.",
     "tenant_id": "{{tenant}} kann nicht als Kennung eines Arbeitsbereichs dienen: Sie ist ungültig oder reserviert. Wähle eine andere Kennung.",
-    "tenant_unknown": "Es gibt keinen Arbeitsbereich {{tenant}}. Prüfe die Kennung oder bitte deine Administration um Zugang."
+    "tenant_unknown": "Es gibt keinen Arbeitsbereich {{tenant}}. Prüfe die Kennung oder bitte deine Administration um Zugang.",
+    "owner_required": "Nur ein Eigentümer dieses Arbeitsbereichs kann die Eigentümerrolle vergeben, entziehen oder ändern; es wurde nichts geändert."
   },
   "secrets": {
     "unreadable": "Ein gespeicherter Schlüssel kann nicht mehr gelesen werden. Trag ihn in den Einstellungen bitte neu ein."

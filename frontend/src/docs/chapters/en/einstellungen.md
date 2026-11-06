@@ -376,7 +376,7 @@ Nodestro Studio can also run on a **Nodestro server** of your organization. You 
 
 **Nodestro shows up front what your role cannot do.** Such controls are hidden or blocked, with the reason next to them, for example *Your role (Viewer) cannot do this: it needs the permission “Edit”. Ask an administrator of your Nodestro server.* As a **Viewer** or **Operator** you see a notice at the top of every page that you can look at everything but not change anything (and, as a viewer, not run anything). The server still checks every request itself.
 
-**Members and roles** are managed by the server's operator with commands of the `nodestro-server` command line; Nodestro Studio has no page for this:
+**Members and roles.** Owners and administrators of a workspace manage its members in **Settings › Members and roles**: change a member's role or remove them (their sessions in this workspace end at once). Only owners give, take or change the owner role, and a workspace always keeps at least one owner; every change is recorded in the workspace's access audit trail. New members join with a setup link; invitations are not available yet. The server's operator can do the same with commands of the `nodestro-server` command line:
 
 - `nodestro-server members TENANT` lists the members of a workspace with their roles.
 - `nodestro-server set-role TENANT USER ROLE` adds a person or changes their role (`owner`, `admin`, `editor`, `operator`, `viewer`).

@@ -376,7 +376,7 @@ Nodestro Studio kann auch auf einem **Nodestro-Server** deiner Organisation lauf
 
 **Was deine Rolle nicht darf, zeigt Nodestro vorher.** Solche Bedienelemente fehlen oder sind gesperrt, und daneben steht der Grund, etwa *Deine Rolle (Betrachter) darf das nicht: Dafür braucht es die Berechtigung „Bearbeiten“. Frag einen Administrator deines Nodestro-Servers.* Als **Betrachter** oder **Ausführender** steht oben auf jeder Seite ein Hinweis, dass du alles ansehen, aber nichts ändern (und als Betrachter nichts ausführen) kannst. Der Server prüft jede Anfrage trotzdem selbst.
 
-**Mitglieder und Rollen** verwaltet der Betreiber des Servers mit Befehlen der Kommandozeile `nodestro-server`; in Nodestro Studio gibt es dafür keine Seite:
+**Mitglieder und Rollen.** Eigentümer und Administratoren eines Arbeitsbereichs verwalten seine Mitglieder unter **Einstellungen › Mitglieder und Rollen**: die Rolle eines Mitglieds ändern oder es entfernen (seine Sitzungen in diesem Arbeitsbereich enden sofort). Nur Eigentümer vergeben, entziehen oder ändern die Eigentümerrolle, und ein Arbeitsbereich behält immer mindestens einen Eigentümer; jede Änderung steht im Zugriffsprotokoll des Arbeitsbereichs. Neue Mitglieder kommen über einen Einrichtungslink dazu; Einladungen gibt es noch nicht. Der Betreiber des Servers kann dasselbe mit Befehlen der Kommandozeile `nodestro-server` tun:
 
 - `nodestro-server members TENANT` listet die Mitglieder eines Arbeitsbereichs mit ihren Rollen.
 - `nodestro-server set-role TENANT USER ROLE` fügt eine Person hinzu oder ändert ihre Rolle (`owner`, `admin`, `editor`, `operator`, `viewer`).

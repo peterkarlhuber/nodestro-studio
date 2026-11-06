@@ -75,6 +75,12 @@ describe("export jobs on a server", () => {
     expect(mixed).toMatch(/about 2[.,]5\sGB.*\(0[.,]9\sGB\)/);
     expect(problemText(t, { code: "export.server_too_large", params: {} })).toBe(t("errors.export.server_too_large_plain"));
   });
+
+  it("names the package, the stored exports and the quota in one unit (API-048)", () => {
+    const text = problemText(t, { code: "export.server_quota", params: { size: 1_500_000_000, used: 7_000_000_000, limit: 8 * 1024 ** 3 } });
+    expect(text).toMatch(/1[.,]5\sGB.*7[.,]0\sGB.*8[.,]6\sGB/);
+    expect(problemText(t, { code: "export.server_quota", params: {} })).toBe(t("errors.export.server_quota_plain"));
+  });
 });
 
 describe("refused offline model packages", () => {

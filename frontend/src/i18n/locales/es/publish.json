@@ -320,7 +320,9 @@
         "archive": "archivo ZIP",
         "done": "listo"
       }
-    }
+    },
+    "delete": "Eliminar {{file}}",
+    "deleted": "Se eliminó la exportación."
   },
   "guide": {
     "title": "Guía de integración con IA (opcional)",
