@@ -105,3 +105,51 @@
 .modal__foot {
   flex-wrap: wrap;
 }
+
+/* Settings > Members and roles (API-019): one row per member; on a phone the role and the remove button wrap below
+   the name instead of widening the page. */
+.members {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-2);
+}
+
+.members__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nd-space-2);
+  padding: var(--nd-space-2) 0;
+  border-bottom: 1px solid var(--nd-border);
+}
+
+.members__who {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  flex: 1 1 14rem;
+}
+
+.members__name,
+.members__email {
+  overflow-wrap: anywhere;
+}
+
+.members__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--nd-space-2);
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+.members__actions .nd-select {
+  min-width: 9rem;
+  max-width: 100%;
+}

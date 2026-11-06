@@ -15,6 +15,7 @@ export const SETTINGS_GROUPS: Record<string, Exclude<SettingsGroup, "more">> = {
   "settings-local-models": "setup",
   "settings-providers": "setup",
   "settings-language": "setup",
+  "settings-members": "setup",
   "settings-models": "setup",
   "settings-reasoning": "setup",
   "settings-output-limits": "setup",

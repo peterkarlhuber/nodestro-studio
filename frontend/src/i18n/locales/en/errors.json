@@ -624,7 +624,9 @@
     "download_needed_plain": "Building needs downloads that are not in the cache yet. Build once with an internet connection; afterwards they are in the cache.",
     "downloads_plain": "Building downloads the missing parts for the target platform once.",
     "server_limit": "This server builds packages up to {{limit}}.",
-    "server_limit_plain": "This server builds packages up to a size limit set by its operator."
+    "server_limit_plain": "This server builds packages up to a size limit set by its operator.",
+    "server_quota": "This package (about {{size}}) does not fit: this workspace already keeps {{used}} of exports and this server allows {{limit}}. Delete older exports, or ask the server's operator to raise the quota.",
+    "server_quota_plain": "The exports of this workspace would use more space than this server allows, so the package was not kept. Delete older exports, or ask the server's operator to raise the quota."
   },
   "lan": {
     "tls_file_missing": "File not found: {{path}}",
@@ -812,7 +814,8 @@
     "tenant_exists": "A workspace with the id {{tenant}} already exists, so no second one was created. Choose another id.",
     "tenant_has_owner": "The workspace {{tenant}} already has an owner, so this setup link cannot add another. Ask the owner to add you.",
     "tenant_id": "{{tenant}} cannot be used as a workspace id: it is invalid or reserved. Choose another id.",
-    "tenant_unknown": "There is no workspace {{tenant}}. Check the id, or ask your administrator for access."
+    "tenant_unknown": "There is no workspace {{tenant}}. Check the id, or ask your administrator for access.",
+    "owner_required": "Only an owner of this workspace can give, take or change the owner role, so nothing was changed."
   },
   "secrets": {
     "unreadable": "A stored key can no longer be read. Please enter it again in the settings."
@@ -1069,6 +1072,7 @@
     "index_building": "The semantic index is still being built. Semantic search works once it is complete.",
     "reindex_running": "The semantic index is already being built.",
     "reindex_failed": "Building the semantic index failed.",
+    "reindex_interrupted": "Building the semantic index stopped because its server worker stopped. Start it again to continue where it stopped.",
     "reindex_required": "The semantic index belongs to another model. Rebuild it.",
     "vector_incomplete": "Not all sections were indexed. Rebuild the index to continue.",
     "vector_unavailable": "The semantic index is not available.",

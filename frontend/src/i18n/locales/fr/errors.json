@@ -624,7 +624,9 @@
     "download_needed_plain": "La génération nécessite des téléchargements qui ne sont pas encore dans le cache. Lancez une génération avec une connexion Internet ; ils seront ensuite dans le cache.",
     "downloads_plain": "La génération télécharge une seule fois les éléments manquants pour la plateforme cible.",
     "server_limit": "Ce serveur construit des paquets jusqu’à {{limit}}.",
-    "server_limit_plain": "Ce serveur construit des paquets jusqu’à une taille fixée par son opérateur."
+    "server_limit_plain": "Ce serveur construit des paquets jusqu’à une taille fixée par son opérateur.",
+    "server_quota": "Ce paquet (environ {{size}}) ne tient plus : cet espace de travail conserve déjà {{used}} d’exports et ce serveur autorise {{limit}}. Supprimez des exports plus anciens ou demandez à l’opérateur du serveur d’augmenter le quota.",
+    "server_quota_plain": "Les exports de cet espace de travail occuperaient plus de place que ce serveur n’en autorise, le paquet n’a donc pas été conservé. Supprimez des exports plus anciens ou demandez à l’opérateur du serveur d’augmenter le quota."
   },
   "lan": {
     "tls_file_missing": "Fichier introuvable : {{path}}",
@@ -812,7 +814,8 @@
     "tenant_exists": "Un espace de travail avec l’identifiant {{tenant}} existe déjà ; aucun second n’a donc été créé. Choisissez un autre identifiant.",
     "tenant_has_owner": "L’espace de travail {{tenant}} a déjà un propriétaire ; ce lien de configuration ne peut donc pas en ajouter un autre. Demandez au propriétaire de vous ajouter.",
     "tenant_id": "{{tenant}} ne peut pas servir d’identifiant d’espace de travail : il est invalide ou réservé. Choisissez un autre identifiant.",
-    "tenant_unknown": "L’espace de travail {{tenant}} n’existe pas. Vérifiez l’identifiant ou demandez l’accès à votre administration."
+    "tenant_unknown": "L’espace de travail {{tenant}} n’existe pas. Vérifiez l’identifiant ou demandez l’accès à votre administration.",
+    "owner_required": "Seul un propriétaire de cet espace de travail peut attribuer, retirer ou modifier le rôle de propriétaire ; rien n’a été modifié."
   },
   "secrets": {
     "unreadable": "Une clé enregistrée ne peut plus être lue. Saisissez-la de nouveau dans les paramètres."
@@ -1069,6 +1072,7 @@
     "index_building": "L’index sémantique est encore en cours de création. La recherche sémantique fonctionnera dès qu’il sera complet.",
     "reindex_running": "L’index sémantique est déjà en cours de création.",
     "reindex_failed": "La création de l’index sémantique a échoué.",
+    "reindex_interrupted": "La création de l’index sémantique s’est arrêtée, car son processus de travail du serveur s’est arrêté. Relancez-la pour reprendre là où elle s’est arrêtée.",
     "reindex_required": "L’index sémantique appartient à un autre modèle. Reconstruisez-le.",
     "vector_incomplete": "Tous les passages n’ont pas été indexés. Reconstruisez l’index pour continuer.",
     "vector_unavailable": "L’index sémantique n’est pas disponible.",

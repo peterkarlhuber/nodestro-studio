@@ -320,7 +320,9 @@
         "archive": "fichier ZIP",
         "done": "terminé"
       }
-    }
+    },
+    "delete": "Supprimer {{file}}",
+    "deleted": "L’export a été supprimé."
   },
   "guide": {
     "title": "Guide d’intégration avec l’IA (facultatif)",

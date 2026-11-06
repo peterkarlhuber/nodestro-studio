@@ -624,7 +624,9 @@
     "download_needed_plain": "La creazione richiede download che non sono ancora nella cache. Crea il pacchetto una volta con una connessione a internet; dopo saranno nella cache.",
     "downloads_plain": "La creazione scarica una sola volta le parti mancanti per la piattaforma di destinazione.",
     "server_limit": "Questo server crea pacchetti fino a {{limit}}.",
-    "server_limit_plain": "Questo server crea pacchetti fino a una dimensione stabilita dal suo gestore."
+    "server_limit_plain": "Questo server crea pacchetti fino a una dimensione stabilita dal suo gestore.",
+    "server_quota": "Questo pacchetto (circa {{size}}) non ci sta più: questo spazio di lavoro conserva già {{used}} di esportazioni e questo server consente {{limit}}. Elimina le esportazioni più vecchie o chiedi all'operatore del server di aumentare la quota.",
+    "server_quota_plain": "Le esportazioni di questo spazio di lavoro occuperebbero più spazio di quanto consente questo server, quindi il pacchetto non è stato conservato. Elimina le esportazioni più vecchie o chiedi all'operatore del server di aumentare la quota."
   },
   "lan": {
     "tls_file_missing": "File non trovato: {{path}}",
@@ -812,7 +814,8 @@
     "tenant_exists": "Esiste già uno spazio di lavoro con l’id {{tenant}}, quindi non ne è stato creato un secondo. Scegli un altro id.",
     "tenant_has_owner": "Lo spazio di lavoro {{tenant}} ha già un proprietario, quindi questo link di configurazione non può aggiungerne un altro. Chiedi al proprietario di aggiungerti.",
     "tenant_id": "{{tenant}} non può essere usato come id di uno spazio di lavoro: non è valido o è riservato. Scegli un altro id.",
-    "tenant_unknown": "Lo spazio di lavoro {{tenant}} non esiste. Controlla l’id o chiedi l’accesso all’amministrazione."
+    "tenant_unknown": "Lo spazio di lavoro {{tenant}} non esiste. Controlla l’id o chiedi l’accesso all’amministrazione.",
+    "owner_required": "Solo un proprietario di questo spazio di lavoro può assegnare, togliere o cambiare il ruolo di proprietario, quindi non è stato cambiato nulla."
   },
   "secrets": {
     "unreadable": "Una chiave salvata non può più essere letta. Inseriscila di nuovo nelle impostazioni."
@@ -1069,6 +1072,7 @@
     "index_building": "L’indice semantico è ancora in costruzione. La ricerca semantica funzionerà quando sarà completo.",
     "reindex_running": "L’indice semantico è già in costruzione.",
     "reindex_failed": "La costruzione dell’indice semantico non è riuscita.",
+    "reindex_interrupted": "La creazione dell’indice semantico si è interrotta perché il suo processo di lavoro del server si è fermato. Avviala di nuovo per riprendere da dove si è fermata.",
     "reindex_required": "L’indice semantico appartiene a un altro modello. Ricostruiscilo.",
     "vector_incomplete": "Non tutte le sezioni sono state indicizzate. Ricostruisci l’indice per continuare.",
     "vector_unavailable": "L’indice semantico non è disponibile.",

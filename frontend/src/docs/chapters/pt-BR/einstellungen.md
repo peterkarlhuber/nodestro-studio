@@ -376,7 +376,7 @@ O Nodestro Studio também pode rodar em um **servidor Nodestro** da sua organiza
 
 **O Nodestro mostra antes o que sua função não permite.** Esses controles ficam ocultos ou bloqueados, com o motivo ao lado, por exemplo *Sua função (Observador) não permite isso: é preciso a permissão “Editar”. Peça a um administrador do seu servidor Nodestro.* Como **Observador** ou **Operador**, um aviso no topo de cada página diz que você pode ver tudo, mas não alterar nada (e, como observador, também não executar). O servidor verifica cada requisição por conta própria mesmo assim.
 
-**Membros e funções** são gerenciados pelo operador do servidor com comandos da linha de comando `nodestro-server`; o Nodestro Studio não tem uma página para isso:
+**Membros e funções.** Proprietários e administradores de um espaço de trabalho gerenciam seus membros em **Configurações › Membros e funções**: alterar a função de um membro ou removê-lo (as sessões dele neste espaço de trabalho terminam na hora). Somente proprietários dão, retiram ou alteram a função de proprietário, e um espaço de trabalho sempre mantém pelo menos um proprietário; cada alteração fica registrada no registro de acessos do espaço de trabalho. Novos membros entram com um link de configuração; ainda não há convites. O operador do servidor pode fazer o mesmo com comandos da linha de comando `nodestro-server`:
 
 - `nodestro-server members TENANT` lista os membros de um espaço de trabalho com suas funções.
 - `nodestro-server set-role TENANT USER ROLE` adiciona uma pessoa ou altera a função dela (`owner`, `admin`, `editor`, `operator`, `viewer`).

@@ -376,7 +376,7 @@ Nodestro Studio può girare anche su un **server Nodestro** della tua organizzaz
 
 **Nodestro mostra in anticipo ciò che il tuo ruolo non consente.** Questi comandi sono nascosti o bloccati, con il motivo accanto, per esempio *Il tuo ruolo (Osservatore) non può farlo: serve il permesso «Modificare». Chiedi a un amministratore del tuo server Nodestro.* Come **Osservatore** o **Operatore**, un avviso in cima a ogni pagina dice che puoi vedere tutto ma non modificare nulla (e, come osservatore, nemmeno eseguire). Il server controlla comunque ogni richiesta da sé.
 
-**Membri e ruoli** li gestisce il gestore del server con i comandi della riga di comando `nodestro-server`; Nodestro Studio non ha una pagina per questo:
+**Membri e ruoli.** I proprietari e gli amministratori di uno spazio di lavoro gestiscono i suoi membri in **Impostazioni › Membri e ruoli**: cambiare il ruolo di un membro o rimuoverlo (le sue sessioni in questo spazio di lavoro terminano subito). Solo i proprietari assegnano, tolgono o cambiano il ruolo di proprietario, e uno spazio di lavoro mantiene sempre almeno un proprietario; ogni modifica è registrata nel registro degli accessi dello spazio di lavoro. I nuovi membri entrano con un link di configurazione; gli inviti non sono ancora disponibili. Il gestore del server può fare lo stesso con i comandi della riga di comando `nodestro-server`:
 
 - `nodestro-server members TENANT` elenca i membri di un’area di lavoro con i loro ruoli.
 - `nodestro-server set-role TENANT USER ROLE` aggiunge una persona o ne cambia il ruolo (`owner`, `admin`, `editor`, `operator`, `viewer`).

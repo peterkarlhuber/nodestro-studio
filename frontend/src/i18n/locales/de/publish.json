@@ -320,7 +320,9 @@
         "archive": "ZIP-Datei",
         "done": "fertig"
       }
-    }
+    },
+    "delete": "{{file}} löschen",
+    "deleted": "Der Export wurde gelöscht."
   },
   "guide": {
     "title": "Integrationsleitfaden mit KI (optional)",

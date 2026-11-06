@@ -9,6 +9,19 @@
   translation check), the central execution state `STATUS.md` and `reports/` (translation check; later the gate
   reports G1, G2 and A9). `scripts/mup_translation_check.py` compares the German reference with the translation.
 
+### TODO abatement round 3 (2026-11-06)
+
+- Settings → Members (server, administrators): lists the workspace's members with their roles, changes a role and
+  removes a member after a confirmation; owner choices appear only for owners, and the API's answers (last owner,
+  owner required) are shown in place. Texts in six languages, also for `identity.owner_required`.
+- Exports: a member who can edit deletes an export and its package; `export.server_quota` explains the tenant's
+  export quota with used space and limit.
+- Settings → Local models: a semantic reindex whose server worker stopped explains `knowledge.reindex_interrupted`
+  in six languages.
+- Pins nodestro-api d6f5041 (api #96: member routes, `DELETE /api/exports/{id}`, export quota, reindex jobs; runtime
+  b29b738) and nodestro-sdk b9617a4 (sdk #90 and #92: stream reconnect, streamed downloads, batch and schedule
+  methods).
+
 ### TODO abatement round (2026-11-06)
 
 - Pins: orkexa 1b61fda (orkexa #55), runtime 3d69702 (#120), examples 82d894b (#77), integrations 1e73e29 (#66),

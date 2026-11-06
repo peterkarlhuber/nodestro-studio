@@ -320,7 +320,9 @@
         "archive": "file ZIP",
         "done": "completato"
       }
-    }
+    },
+    "delete": "Elimina {{file}}",
+    "deleted": "L'esportazione è stata eliminata."
   },
   "guide": {
     "title": "Guida all’integrazione con IA (facoltativa)",

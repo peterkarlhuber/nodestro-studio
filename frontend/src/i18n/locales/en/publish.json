@@ -320,7 +320,9 @@
         "archive": "ZIP file",
         "done": "done"
       }
-    }
+    },
+    "delete": "Delete {{file}}",
+    "deleted": "The export was deleted."
   },
   "guide": {
     "title": "Integration guide with AI (optional)",

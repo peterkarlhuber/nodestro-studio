@@ -26,7 +26,7 @@
     "permissions": "Permissions: {{list}}",
     "switch": "Switch workspace",
     "logout": "Sign out",
-    "members": "Members and roles are managed by the server's operator with the nodestro-server command line (see the operator runbook).",
+    "members": "Administrators manage members and roles in the settings (Members and roles). New members join with a setup link from the server's operator.",
     "signInAgain": "Sign in again"
   },
   "server": {
@@ -118,5 +118,21 @@
     "python": "Python SDK",
     "typescript": "TypeScript SDK",
     "intro": "The official clients start runs with an idempotency key (a retry never starts a second run), retry on connection errors and report typed errors. Install them from"
+  },
+  "members": {
+    "title": "Members and roles",
+    "description": "Who has access to the workspace {{tenant}}, and with which role. A new role applies to the member's next action; a removed member's sessions here end at once.",
+    "ownerNote": "Only owners can give, take or change the owner role. A workspace always keeps at least one owner.",
+    "invite": "Invitations are not available yet: new members join with a setup link or through the server's operator.",
+    "member": "Member",
+    "role": "Role",
+    "actions": "Actions",
+    "you": "you",
+    "roleOf": "Role of {{name}}",
+    "remove": "Remove {{name}}",
+    "confirmRemove": "Remove?",
+    "changed": "{{name}} is now {{role}}.",
+    "removed": "{{name}} no longer has access to this workspace.",
+    "empty": "This workspace has no members yet."
   }
 }
