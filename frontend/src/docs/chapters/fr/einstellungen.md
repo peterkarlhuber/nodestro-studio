@@ -376,7 +376,7 @@ Nodestro Studio peut aussi fonctionner sur un **serveur Nodestro** de votre orga
 
 **Nodestro montre à l’avance ce que votre rôle ne permet pas.** Ces commandes sont masquées ou bloquées, avec la raison à côté, par exemple *Votre rôle (Lecteur) ne permet pas cette action : il faut l’autorisation « Modifier ». Adressez-vous à un administrateur de votre serveur Nodestro.* En tant que **Lecteur** ou **Opérateur**, un avis en haut de chaque page indique que vous pouvez tout consulter, mais rien modifier (et, en tant que lecteur, rien exécuter). Le serveur vérifie quand même chaque requête lui-même.
 
-**Les membres et les rôles** sont gérés par l’exploitant du serveur avec des commandes de la ligne de commande `nodestro-server` ; Nodestro Studio n’a pas de page pour cela :
+**Membres et rôles.** Les propriétaires et administrateurs d’un espace de travail gèrent ses membres dans **Paramètres › Membres et rôles** : changer le rôle d’un membre ou le retirer (ses sessions dans cet espace de travail se terminent immédiatement). Seuls les propriétaires attribuent, retirent ou modifient le rôle de propriétaire, et un espace de travail garde toujours au moins un propriétaire ; chaque modification est consignée dans le journal d’accès de l’espace de travail. Les nouveaux membres arrivent avec un lien de configuration ; les invitations ne sont pas encore disponibles. L’exploitant du serveur peut faire de même avec des commandes de la ligne de commande `nodestro-server` :
 
 - `nodestro-server members TENANT` liste les membres d’un espace de travail avec leurs rôles.
 - `nodestro-server set-role TENANT USER ROLE` ajoute une personne ou modifie son rôle (`owner`, `admin`, `editor`, `operator`, `viewer`).

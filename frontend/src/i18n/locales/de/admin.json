@@ -26,7 +26,7 @@
     "permissions": "Berechtigungen: {{list}}",
     "switch": "Arbeitsbereich wechseln",
     "logout": "Abmelden",
-    "members": "Mitglieder und Rollen verwaltet der Betreiber des Servers mit der Kommandozeile nodestro-server (siehe Betriebshandbuch).",
+    "members": "Administratoren verwalten Mitglieder und Rollen in den Einstellungen (Mitglieder und Rollen). Neue Mitglieder kommen über einen Einrichtungslink des Serverbetreibers dazu.",
     "signInAgain": "Erneut anmelden"
   },
   "server": {
@@ -118,5 +118,21 @@
     "python": "Python-SDK",
     "typescript": "TypeScript-SDK",
     "intro": "Die offiziellen Clients starten Ausführungen mit einem Idempotenzschlüssel (eine Wiederholung startet nie eine zweite Ausführung), wiederholen nach Verbindungsfehlern und melden typisierte Fehler. Installiere sie aus"
+  },
+  "members": {
+    "title": "Mitglieder und Rollen",
+    "description": "Wer Zugriff auf den Arbeitsbereich {{tenant}} hat und mit welcher Rolle. Eine neue Rolle gilt ab der nächsten Aktion des Mitglieds; die Sitzungen eines entfernten Mitglieds enden hier sofort.",
+    "ownerNote": "Nur Eigentümer können die Eigentümerrolle vergeben, entziehen oder ändern. Ein Arbeitsbereich behält immer mindestens einen Eigentümer.",
+    "invite": "Einladungen gibt es noch nicht: Neue Mitglieder kommen über einen Einrichtungslink oder über den Betreiber des Servers dazu.",
+    "member": "Mitglied",
+    "role": "Rolle",
+    "actions": "Aktionen",
+    "you": "du",
+    "roleOf": "Rolle von {{name}}",
+    "remove": "{{name}} entfernen",
+    "confirmRemove": "Entfernen?",
+    "changed": "{{name}} ist jetzt {{role}}.",
+    "removed": "{{name}} hat keinen Zugriff mehr auf diesen Arbeitsbereich.",
+    "empty": "Dieser Arbeitsbereich hat noch keine Mitglieder."
   }
 }

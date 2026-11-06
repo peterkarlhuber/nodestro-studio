@@ -3,10 +3,11 @@
 // written on request (it costs one request and has to be reviewed before it can be included).
 
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Check, Download, PackageOpen, Sparkles, X } from "lucide-react";
+import { Check, Download, PackageOpen, Sparkles, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useAccess } from "../api/access";
 import { api } from "../api/client";
 import type {
   ApiGuide,
@@ -22,6 +23,7 @@ import {
   Badge,
   Button,
   Callout,
+  ConfirmIconButton,
   Field,
   Hint,
   Section,
@@ -97,6 +99,18 @@ export function ApiExport({
       void queryClient.invalidateQueries({
         queryKey: ["api", "export-jobs", publication.id],
       });
+    },
+    onError: (error) => toast.error(error),
+  });
+  const canEdit = useAccess().can("edit");
+  const remove = useMutation({
+    mutationFn: (exportId: string) => api.deleteExport(exportId),
+    onSuccess: () => {
+      toast.success(t("publish.export.deleted"));
+      void history.refetch();
+      // A freed quota (server) changes the check's answer.
+      void queryClient.invalidateQueries({ queryKey: ["api", "export-check", publication.id] });
+      onChanged();
     },
     onError: (error) => toast.error(error),
   });
@@ -488,6 +502,15 @@ export function ApiExport({
                 {record.options.knowledge.length ||
                 record.options.memory.length ? (
                   <Badge tone="warning">{t("publish.export.withData")}</Badge>
+                ) : null}
+                {canEdit ? (
+                  <ConfirmIconButton
+                    icon={Trash2}
+                    label={t("publish.export.delete", { file: record.file_name })}
+                    busy={remove.isPending && remove.variables === record.id}
+                    onConfirm={() => remove.mutate(record.id)}
+                    data-testid="api-export-delete"
+                  />
                 ) : null}
               </li>
             ))}

@@ -376,7 +376,7 @@ Nodestro Studio también puede ejecutarse en un **servidor Nodestro** de tu orga
 
 **Nodestro muestra de antemano lo que tu rol no puede hacer.** Esos controles están ocultos o bloqueados, con el motivo al lado, por ejemplo *Tu rol (Observador) no puede hacer esto: necesita el permiso «Editar». Pide ayuda a un administrador de tu servidor Nodestro.* Como **Observador** u **Operador** ves arriba de cada página un aviso de que puedes verlo todo, pero no cambiar nada (y, como observador, tampoco ejecutar nada). Aun así, el servidor comprueba cada solicitud por su cuenta.
 
-**Los miembros y los roles** los gestiona el operador del servidor con comandos de la línea de comandos `nodestro-server`; Nodestro Studio no tiene ninguna página para ello:
+**Miembros y roles.** Los propietarios y administradores de un espacio de trabajo gestionan sus miembros en **Configuración › Miembros y roles**: cambiar el rol de un miembro o quitarlo (sus sesiones en este espacio de trabajo terminan al instante). Solo los propietarios dan, quitan o cambian el rol de propietario, y un espacio de trabajo siempre conserva al menos un propietario; cada cambio queda en el registro de accesos del espacio de trabajo. Los nuevos miembros entran con un enlace de configuración; todavía no hay invitaciones. El operador del servidor puede hacer lo mismo con comandos de la línea de comandos `nodestro-server`:
 
 - `nodestro-server members TENANT` lista los miembros de un espacio de trabajo con sus roles.
 - `nodestro-server set-role TENANT USER ROLE` añade a una persona o cambia su rol (`owner`, `admin`, `editor`, `operator`, `viewer`).

@@ -768,6 +768,8 @@ export const api = {
   exportJob: (jobId: string) => request<ExportJob>("GET", `/export-jobs/${jobId}`),
   cancelExportJob: (jobId: string) => request<ExportJob>("POST", `/export-jobs/${jobId}/cancel`),
   exportUrl: (exportId: string) => `/api/exports/${exportId}/download`,
+  /** Delete an export and its ZIP (on a server this frees the workspace's export quota, nodestro-api API-048). */
+  deleteExport: (exportId: string) => request<void>("DELETE", `/exports/${exportId}`),
   createGuide: (id: string, language: string, number?: number | null) =>
     request<ApiGuide>("POST", `/publications/${id}/guide`, { language, number: number ?? null }),
   guides: (id: string) => request<ApiGuide[]>("GET", `/publications/${id}/guides`),

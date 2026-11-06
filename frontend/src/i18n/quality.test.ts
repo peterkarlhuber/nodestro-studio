@@ -343,7 +343,7 @@ describe("backend codes", () => {
     "local.runtime_missing", "local.not_running", "local.offline_download", "local.server_managed", "local.model_missing",
     "local.checksum_mismatch", "local.not_embedding_model", "local.unreachable", "local.file_missing", "local.not_gguf",
     "local.models_dir", "knowledge.embedding_model_missing", "knowledge.vectors_missing", "knowledge.index_building",
-    "knowledge.reindex_running", "knowledge.reindex_required", "check.local_runtime_missing", "check.offline_cloud_model",
+    "knowledge.reindex_running", "knowledge.reindex_required", "knowledge.reindex_interrupted", "check.local_runtime_missing", "check.offline_cloud_model",
     "pricing.offline_sync", "check.offline_remote_endpoint", "check.offline_server_tool", "check.offline_mcp", "check.vectors_missing",
     "check.index_building", "check.local_model_missing", "check.local_model_not_chat", "check.local_model_no_tools",
     // nodestro-api PR #87: unknown ids of their kind, server export jobs, refused offline packages, search bounds.

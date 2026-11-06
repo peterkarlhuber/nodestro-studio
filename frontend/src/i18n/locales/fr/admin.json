@@ -26,7 +26,7 @@
     "permissions": "Autorisations : {{list}}",
     "switch": "Changer d’espace de travail",
     "logout": "Se déconnecter",
-    "members": "Les membres et les rôles sont gérés par l’exploitant du serveur avec la ligne de commande nodestro-server (voir le manuel d’exploitation).",
+    "members": "Les administrateurs gèrent les membres et les rôles dans les paramètres (Membres et rôles). Les nouveaux membres arrivent avec un lien de configuration de l’opérateur du serveur.",
     "signInAgain": "Se reconnecter"
   },
   "server": {
@@ -120,5 +120,21 @@
     "python": "SDK Python",
     "typescript": "SDK TypeScript",
     "intro": "Les clients officiels lancent les exécutions avec une clé d’idempotence (une nouvelle tentative ne lance jamais une deuxième exécution), réessaient après les erreurs de connexion et signalent des erreurs typées. Installez-les depuis"
+  },
+  "members": {
+    "title": "Membres et rôles",
+    "description": "Qui a accès à l’espace de travail {{tenant}}, et avec quel rôle. Un nouveau rôle s’applique à la prochaine action du membre ; les sessions d’un membre retiré se terminent ici immédiatement.",
+    "ownerNote": "Seuls les propriétaires peuvent attribuer, retirer ou modifier le rôle de propriétaire. Un espace de travail garde toujours au moins un propriétaire.",
+    "invite": "Les invitations ne sont pas encore disponibles : les nouveaux membres arrivent avec un lien de configuration ou par l’opérateur du serveur.",
+    "member": "Membre",
+    "role": "Rôle",
+    "actions": "Actions",
+    "you": "vous",
+    "roleOf": "Rôle de {{name}}",
+    "remove": "Retirer {{name}}",
+    "confirmRemove": "Retirer ?",
+    "changed": "{{name}} est maintenant {{role}}.",
+    "removed": "{{name}} n’a plus accès à cet espace de travail.",
+    "empty": "Cet espace de travail n’a encore aucun membre."
   }
 }

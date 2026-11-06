@@ -624,7 +624,9 @@
     "download_needed_plain": "La generación necesita descargas que aún no están en la caché. Genera una vez con conexión a internet; después estarán en la caché.",
     "downloads_plain": "La generación descarga una vez las partes que faltan para la plataforma de destino.",
     "server_limit": "Este servidor genera paquetes de hasta {{limit}}.",
-    "server_limit_plain": "Este servidor genera paquetes hasta un tamaño máximo que fija su operador."
+    "server_limit_plain": "Este servidor genera paquetes hasta un tamaño máximo que fija su operador.",
+    "server_quota": "Este paquete (unos {{size}}) no cabe: este espacio de trabajo ya guarda {{used}} de exportaciones y este servidor permite {{limit}}. Elimina exportaciones anteriores o pide al operador del servidor que aumente la cuota.",
+    "server_quota_plain": "Las exportaciones de este espacio de trabajo ocuparían más espacio del que permite este servidor, así que el paquete no se conservó. Elimina exportaciones anteriores o pide al operador del servidor que aumente la cuota."
   },
   "lan": {
     "tls_file_missing": "Archivo no encontrado: {{path}}",
@@ -812,7 +814,8 @@
     "tenant_exists": "Ya existe un espacio de trabajo con el id {{tenant}}, así que no se creó otro. Elige otro id.",
     "tenant_has_owner": "El espacio de trabajo {{tenant}} ya tiene propietario, por eso este enlace de configuración no puede añadir otro. Pide al propietario que te añada.",
     "tenant_id": "{{tenant}} no se puede usar como id de un espacio de trabajo: no es válido o está reservado. Elige otro id.",
-    "tenant_unknown": "No existe el espacio de trabajo {{tenant}}. Comprueba el id o pide acceso a tu administración."
+    "tenant_unknown": "No existe el espacio de trabajo {{tenant}}. Comprueba el id o pide acceso a tu administración.",
+    "owner_required": "Solo un propietario de este espacio de trabajo puede dar, quitar o cambiar el rol de propietario, así que no se cambió nada."
   },
   "secrets": {
     "unreadable": "Una clave guardada ya no se puede leer. Vuelve a introducirla en la configuración."
@@ -1069,6 +1072,7 @@
     "index_building": "El índice semántico aún se está creando. La búsqueda semántica funcionará cuando esté completo.",
     "reindex_running": "El índice semántico ya se está creando.",
     "reindex_failed": "No se pudo crear el índice semántico.",
+    "reindex_interrupted": "La creación del índice semántico se detuvo porque su proceso de trabajo del servidor se detuvo. Vuelve a iniciarla para continuar donde se quedó.",
     "reindex_required": "El índice semántico pertenece a otro modelo. Reconstrúyelo.",
     "vector_incomplete": "No se indexaron todas las secciones. Reconstruye el índice para continuar.",
     "vector_unavailable": "El índice semántico no está disponible.",

@@ -18,6 +18,7 @@ import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
 import { PythonMaintenance } from "../python/PythonMaintenance";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
+import { MembersPanel } from "./SettingsMembers";
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
 import { SettingsNav, useSettingsHash } from "./SettingsNav";
 import { DefaultMark } from "./SettingsDefaults";
@@ -207,6 +208,8 @@ export function SettingsPage() {
         <ProviderSettings settings={form} />
 
         <LanguagePicker />
+
+        <MembersPanel />
 
         <ReasoningDisplayPanel settings={form} admin={admin} onSave={(change) => save.mutate(change)} />
 
