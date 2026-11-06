@@ -11,6 +11,7 @@ import { api } from "../api/client";
 import { keys, useMeta } from "../api/hooks";
 import type { CapabilityState, ProviderId, ProviderInfo, ProviderStatus, Settings } from "../api/types";
 import { providerLabel } from "../components/ModelPicker";
+import { modelLabel } from "../lib/catalog";
 import { toast } from "../components/toast";
 import { useAccess } from "../api/access";
 import { PermissionNote } from "../components/Access";
@@ -42,7 +43,7 @@ export function useFollowProvider() {
       const assistantMissing = settings.providers.some((item) => item.id === providerOf(settings.assistant_model) && !item.configured);
       return api
         .saveSettings({ default_model: next.model.id, ...(assistantMissing ? { assistant_model: next.model.id } : {}) })
-        .then((data) => ({ data, model: next.model.label, provider: providerLabel(t, next.provider.id) }));
+        .then((data) => ({ data, model: modelLabel(next.model), provider: providerLabel(t, next.provider.id) }));
     },
     onSuccess: (result) => {
       if (!result) return;
@@ -268,7 +269,7 @@ export function DefaultModelNotice({ settings }: { settings: Settings }) {
         <>
           {" "}
           <Button size="sm" busy={follow.isPending} onClick={() => follow.mutate({ settings })}>
-            {t("settings.models.defaultSwitch", { model: next.model.label, provider: providerLabel(t, next.provider.id) })}
+            {t("settings.models.defaultSwitch", { model: modelLabel(next.model), provider: providerLabel(t, next.provider.id) })}
           </Button>
         </>
       ) : null}

@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import { useMeta, useSettings } from "../api/hooks";
 import type { ProviderId } from "../api/types";
-import { modelDescription } from "../lib/catalog";
+import { modelDescription, modelLabel } from "../lib/catalog";
 import { findModel, splitModel } from "../lib/providers";
 
 import { Select, TextInput } from "./ui";
@@ -27,7 +27,8 @@ export function providerList(t: TFunction, providers: { id: string }[]): string 
 export function modelName(models: { id: string; label: string }[] | undefined, model: string): string {
   // While the catalog loads, the provider's own id is shorter and less technical than "provider:id".
   if (!models) return splitModel(model).id;
-  return findModel(models, model)?.label ?? model;
+  const found = findModel(models, model);
+  return found ? modelLabel(found) : model;
 }
 
 /** ``modelName`` with the catalog from /api/meta. */
@@ -127,7 +128,7 @@ export function ModelPicker({
           .filter((model) => model.provider === provider)
           .map((model) => (
             <option key={model.id} value={model.model}>
-              {provider === "bedrock" ? t("bedrock.model.suggestedOption", { model: model.label }) : model.label}
+              {provider === "bedrock" ? t("bedrock.model.suggestedOption", { model: modelLabel(model) }) : modelLabel(model)}
             </option>
           ))}
       </datalist>

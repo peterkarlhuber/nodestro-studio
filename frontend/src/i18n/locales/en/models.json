@@ -9,5 +9,6 @@
     "pending_review": "a price change waits for review",
     "custom": "individual price",
     "local": "local model, no API billing (operating costs not recorded)"
-  }
+  },
+  "localName": "{{name}} (local)"
 }

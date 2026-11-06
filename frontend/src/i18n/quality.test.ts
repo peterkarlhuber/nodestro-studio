@@ -43,17 +43,17 @@ describe("texts left in English", () => {
       "system",
       "assistant", // German names the button after the product, Nodestro Assistant
     ],
-    es: ["error", "robot", "manual", "individual", "no"],
+    es: ["error", "robot", "manual", "individual", "no", "local"],
     fr: [
       "message", "messages", "minute", "minutes", "section", "sections", "page", "pages", "documents", "documentation",
       "description", "type", "effort", "image", "images", "structure", "validation", "sources", "suggestion", "actions",
       "action", "date", "active", "collection", "collections", "archive", "notes", "source", "strict", "note",
       "interface", "port", "module", "arguments", "service", "classification", "correction", "versions", "guide",
       "instructions", "branches", "robot", "globe", "score", "word", "citations", "format", "standard", "direct", "indirect", "maintenance",
-      "assistant", "publication", "publications", "exports",
+      "assistant", "publication", "publications", "exports", "local",
     ],
     it: ["file", "input", "output", "robot", "database", "provider", "runtime", "standard", "no"],
-    "pt-BR": ["status", "manual", "individual", "interface", "loop", "tags"],
+    "pt-BR": ["status", "manual", "individual", "interface", "loop", "tags", "local"],
   };
   // Technical API names kept in English on purpose (see docs/i18n/terminology.md).
   const KEPT_KEYS = new Set(["agent.advanced.toolChoice", "agent.advanced.requestOptions", "assistant.role"]);

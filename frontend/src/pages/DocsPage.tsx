@@ -13,7 +13,7 @@ import { type DocChapter, cachedChapters, loadChapters } from "../docs";
 import { plainText, splitWidgets } from "../docs/parse";
 import { type DocHit, fold, searchDocs } from "../docs/search";
 import { currentLanguage, isLanguage } from "../i18n";
-import { modelDescription } from "../lib/catalog";
+import { modelDescription, modelLabel } from "../lib/catalog";
 import { formatNumber, formatPrice } from "../lib/format";
 
 const SECTION_PREFIX = "doc-";
@@ -91,7 +91,7 @@ function ModelTable() {
           {models.map((model) => (
             <tr key={model.id}>
               <td>
-                <strong>{model.label}</strong>
+                <strong>{modelLabel(model)}</strong>
                 <div className="muted small">
                   <code>{model.id}</code>
                 </div>

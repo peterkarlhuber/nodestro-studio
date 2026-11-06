@@ -15,7 +15,7 @@ import { Badge, Callout, EmptyState, PageHeader, Section, Spinner, StatusBadge }
 import { compareRuns, type AgentPair, type AgentSide, type RunTotals } from "../lib/compare";
 import { ErrorText, ProblemText, runProblem } from "../lib/errors";
 import { formatCost, formatDate, formatNumber, formatTokens } from "../lib/format";
-import { findModel } from "../lib/providers";
+import { modelName } from "../components/ModelPicker";
 
 function seconds(ms: number | null): string {
   return ms === null ? "–" : `${formatNumber(ms / 1000, { maximumFractionDigits: 1 })} s`;
@@ -195,7 +195,7 @@ export function RunComparePage() {
   const runA = useQuery({ queryKey: ["run", idA], queryFn: () => api.run(idA), enabled: Boolean(idA) });
   const runB = useQuery({ queryKey: ["run", idB], queryFn: () => api.run(idB), enabled: Boolean(idB) });
   const comparison = useMemo(() => (runA.data && runB.data ? compareRuns(runA.data, runB.data) : null), [runA.data, runB.data]);
-  const modelLabel = (id: string) => findModel(meta.data?.models, id)?.label ?? id;
+  const modelLabel = (id: string) => modelName(meta.data?.models, id);
   const error = runA.error ?? runB.error;
   const differing = comparison?.agents.filter((pair) => pair.differs.size).length ?? 0;
 
