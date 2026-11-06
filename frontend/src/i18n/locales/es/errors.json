@@ -182,7 +182,8 @@
       "UnexpectedResponseError": "La respuesta del modelo no fue la esperada.",
       "HistoryConversionError": "La conversación de este paso no se pudo preparar para el modelo: uno de sus mensajes tiene una forma que este proveedor no acepta. No se envió nada.",
       "EvaluationFailedError": "El resultado no superó el control de calidad.",
-      "ToolExecutionError": "Una herramienta del agente se detuvo con un error."
+      "ToolExecutionError": "Una herramienta del agente se detuvo con un error.",
+      "MaxToolCallsError": "El modelo pidió en una sola respuesta más llamadas a herramientas de las permitidas (64 de forma predeterminada); no se ejecutó ninguna."
     },
     "api_error_auth": "{{provider}} rechazó la clave de API.",
     "api_error_rate_limit": "{{provider}} informó de demasiadas solicitudes en poco tiempo (límite de frecuencia).",
@@ -926,7 +927,8 @@
         "UnexpectedResponseError": "Continúa la ejecución. Si vuelve a ocurrir, los detalles técnicos ayudan al soporte del proveedor.",
         "HistoryConversionError": "Si el agente se cambió a un modelo de otro proveedor, continúa con el modelo anterior. Si no, los detalles técnicos indican el mensaje para un informe de error.",
         "EvaluationFailedError": "Lee la justificación del control en el paso y ajusta la tarea o los criterios.",
-        "ToolExecutionError": "Los detalles técnicos indican la herramienta y su error. Revisa la herramienta en «Herramientas»."
+        "ToolExecutionError": "Los detalles técnicos indican la herramienta y su error. Revisa la herramienta en «Herramientas».",
+        "MaxToolCallsError": "Da a este agente menos herramientas por paso o divide su tarea para que una respuesta necesite menos llamadas."
       },
       "api_error_auth": "Revisa la clave en Ajustes → Proveedores de IA y prueba allí la conexión.",
       "api_error_rate_limit": "Espera un momento y continúa la ejecución. Menos ejecuciones simultáneas o un límite mayor con el proveedor lo solucionan a largo plazo.",

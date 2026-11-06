@@ -182,7 +182,8 @@
       "UnexpectedResponseError": "La risposta del modello non era quella prevista.",
       "HistoryConversionError": "Non è stato possibile preparare la conversazione di questo passaggio per il modello: uno dei suoi messaggi ha una forma che questo provider non accetta. Non è stato inviato nulla.",
       "EvaluationFailedError": "Il risultato non ha superato il controllo di qualità.",
-      "ToolExecutionError": "Uno strumento dell'agente si è interrotto con un errore."
+      "ToolExecutionError": "Uno strumento dell'agente si è interrotto con un errore.",
+      "MaxToolCallsError": "Il modello ha chiesto in una sola risposta più chiamate di strumenti di quelle consentite (64 per impostazione predefinita); nessuna è stata eseguita."
     },
     "api_error_auth": "{{provider}} ha rifiutato la chiave API.",
     "api_error_rate_limit": "{{provider}} ha segnalato troppe richieste in poco tempo (limite di frequenza).",
@@ -926,7 +927,8 @@
         "UnexpectedResponseError": "Continua l'esecuzione. Se succede di nuovo, i dettagli tecnici aiutano l'assistenza del provider.",
         "HistoryConversionError": "Se l'agente è passato a un modello di un altro provider, continua con il modello precedente. Altrimenti i dettagli tecnici indicano il messaggio per una segnalazione di errore.",
         "EvaluationFailedError": "Leggi la motivazione del controllo nel passaggio e adatta il compito o i criteri.",
-        "ToolExecutionError": "I dettagli tecnici indicano lo strumento e il suo errore. Controlla lo strumento in «Strumenti»."
+        "ToolExecutionError": "I dettagli tecnici indicano lo strumento e il suo errore. Controlla lo strumento in «Strumenti».",
+        "MaxToolCallsError": "Dai a questo agente meno strumenti per passaggio oppure dividi il suo compito, così una risposta richiede meno chiamate."
       },
       "api_error_auth": "Controlla la chiave in Impostazioni → Provider di IA e prova lì la connessione.",
       "api_error_rate_limit": "Aspetta un momento e continua l'esecuzione. Meno esecuzioni contemporanee o un limite più alto presso il provider risolvono a lungo termine.",

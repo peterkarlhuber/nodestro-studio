@@ -182,7 +182,8 @@
       "UnexpectedResponseError": "The model's answer was not what was expected.",
       "HistoryConversionError": "The conversation of this step could not be prepared for the model: one of its messages has a form this provider does not accept. Nothing was sent.",
       "EvaluationFailedError": "The result did not pass the quality check.",
-      "ToolExecutionError": "One of the agent's tools stopped with an error."
+      "ToolExecutionError": "One of the agent's tools stopped with an error.",
+      "MaxToolCallsError": "The model asked for more tool calls in one answer than allowed (64 by default); none of them ran."
     },
     "api_error_auth": "{{provider}} rejected the API key.",
     "api_error_rate_limit": "{{provider}} reported too many requests in a short time (rate limit).",
@@ -926,7 +927,8 @@
         "UnexpectedResponseError": "Continue the run. If it happens again, the technical details help the provider's support.",
         "HistoryConversionError": "If the agent was switched to a model of another provider, continue with the earlier model. Otherwise the technical details name the message for a bug report.",
         "EvaluationFailedError": "Read the check's reasoning at the step and adjust the task or the criteria.",
-        "ToolExecutionError": "The technical details name the tool and its error. Check the tool under \"Tools\"."
+        "ToolExecutionError": "The technical details name the tool and its error. Check the tool under \"Tools\".",
+        "MaxToolCallsError": "Give this agent fewer tools per step, or split its task so that one answer needs fewer calls."
       },
       "api_error_auth": "Check the key under Settings → AI providers and test the connection there.",
       "api_error_rate_limit": "Wait a moment and continue the run. Fewer runs at the same time or a higher limit with the provider help for good.",

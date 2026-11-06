@@ -182,7 +182,8 @@
       "UnexpectedResponseError": "La réponse du modèle ne correspondait pas à ce qui était attendu.",
       "HistoryConversionError": "La conversation de cette étape n’a pas pu être préparée pour le modèle : l’un de ses messages a une forme que ce fournisseur n’accepte pas. Rien n’a été envoyé.",
       "EvaluationFailedError": "Le résultat n’a pas passé le contrôle qualité.",
-      "ToolExecutionError": "Un outil de l’agent s’est arrêté avec une erreur."
+      "ToolExecutionError": "Un outil de l’agent s’est arrêté avec une erreur.",
+      "MaxToolCallsError": "Le modèle a demandé dans une seule réponse plus d’appels d’outils que permis (64 par défaut) ; aucun n’a été exécuté."
     },
     "api_error_auth": "{{provider}} a refusé la clé API.",
     "api_error_rate_limit": "{{provider}} a signalé trop de requêtes en peu de temps (limite de débit).",
@@ -926,7 +927,8 @@
         "UnexpectedResponseError": "Reprenez l’exécution. Si cela se reproduit, les détails techniques aideront le support du fournisseur.",
         "HistoryConversionError": "Si l’agent a été basculé vers un modèle d’un autre fournisseur, reprenez avec le modèle précédent. Sinon, les détails techniques indiquent le message pour un rapport d’erreur.",
         "EvaluationFailedError": "Lisez la justification du contrôle à l’étape et ajustez la tâche ou les critères.",
-        "ToolExecutionError": "Les détails techniques nomment l’outil et son erreur. Vérifiez l’outil sous « Outils »."
+        "ToolExecutionError": "Les détails techniques nomment l’outil et son erreur. Vérifiez l’outil sous « Outils ».",
+        "MaxToolCallsError": "Donnez à cet agent moins d’outils par étape ou découpez sa tâche pour qu’une réponse demande moins d’appels."
       },
       "api_error_auth": "Vérifiez la clé sous Réglages → Fournisseurs d’IA et testez-y la connexion.",
       "api_error_rate_limit": "Attendez un instant et reprenez l’exécution. Moins d’exécutions simultanées ou une limite plus élevée chez le fournisseur règlent le problème durablement.",

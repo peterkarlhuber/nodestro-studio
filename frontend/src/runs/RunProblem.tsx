@@ -14,7 +14,13 @@ import { settingsHref } from "../lib/settingsLink";
 import { providerOf } from "../lib/providers";
 
 /** Codes of a failed agent whose fix is a setting under "Advanced" of that agent. */
-const ADVANCED_FIX = new Set(["run.agent.IncompleteResponseError", "run.agent.OutputLimitReached", "run.agent.MaxToolRoundsError"]);
+const ADVANCED_FIX = new Set([
+  "run.agent.IncompleteResponseError",
+  "run.agent.OutputLimitReached",
+  "run.agent.MaxToolRoundsError",
+  // Orkexa ORK-029: one answer asked for more tool calls than max_tool_calls_per_round (64 by default).
+  "run.agent.MaxToolCallsError",
+]);
 
 /**
  * Provider failures, which name the model the step asked: the runtime's own codes first, then the readings of
