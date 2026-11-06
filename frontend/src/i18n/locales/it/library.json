@@ -86,7 +86,7 @@
     "sensitiveNote": "Questo esempio appartiene all'ambito {{field}}. Gli agenti forniscono strumenti di lavoro, non consulenza: verifica ogni risultato con competenza prima di usarlo.",
     "costNote": "L’anteprima e la copia sono gratuite e non chiamano alcun modello. I costi nascono solo quando esegui la copia; basta l’accesso ai provider dei suoi modelli.",
     "samples": "File di esempio",
-    "samplesNote": "Piccoli file inventati per provare i campi file. Scaricali e selezionali quando esegui il workflow.",
+    "samplesNote": "Piccoli file inventati per provare i campi file. Scaricali qui; una copia li offre anche quando la esegui.",
     "tests": "Casi di test",
     "copyTests": "Aggiungere i casi di test come serie di test",
     "copyTestsNote": "Crea una serie di test con questi casi. Non viene eseguito nulla, non viene creata alcuna pianificazione e non viene pubblicata alcuna API.",
@@ -104,7 +104,11 @@
     "teamContract": "Fornisce: {{names}}",
     "knowledge": "File di conoscenza",
     "knowledgeNote": "Vengono creati nella tua base di conoscenza quando copi. I documenti sono inventati; gli agenti li consultano e citano le fonti.",
-    "copyTestsConnected": "Non possibile con una connessione: le serie di test vengono eseguite senza una persona e lì gli strumenti MCP non sono ammessi. Scegli la modalità offline per riprendere i casi di test."
+    "copyTestsConnected": "Non possibile con una connessione: le serie di test vengono eseguite senza una persona e lì gli strumenti MCP non sono ammessi. Scegli la modalità offline per riprendere i casi di test.",
+    "memorySpace": "Spazio di memoria della copia",
+    "memorySpaceHint": "I suoi agenti con memoria permanente conservano gli appunti in questo spazio, separati dalle altre copie. Lascia il campo vuoto per condividere lo spazio di memoria dell’esempio con tutte le altre copie.",
+    "memorySpaceInvalid": "Usa fino a 64 lettere A–Z (senza accenti), cifre, spazi, _ . o -, iniziando con una lettera o una cifra.",
+    "memorySpaceShared": "Vuoto: condiviso con le altre copie"
   },
   "connect": {
     "title_one": "Connessione facoltativa",
@@ -186,5 +190,10 @@
       "structured": "output strutturato"
     },
     "judge": "Controllo qualità (giudice): {{model}}"
+  },
+  "origin": {
+    "offlineBadge": "Dati di esempio",
+    "offlineTip_one": "Copia dell’esempio «{{example}}»: {{names}} funziona offline con dati di esempio, senza connessione. Per dati reali, copia di nuovo l’esempio e scegli un server MCP.",
+    "offlineTip_other": "Copia dell’esempio «{{example}}»: {{names}} funzionano offline con dati di esempio, senza connessione. Per dati reali, copia di nuovo l’esempio e scegli un server MCP."
   }
 }

@@ -292,6 +292,7 @@
     "storage": "Für Läufe, Testfälle und Zeitpläne hochgeladene Dateien bleiben mit ihren Läufen auf diesem Computer und belegen Speicherplatz. Hier siehst du, wie viel, und entfernst ungenutzte oder alte Dateien. Dateien von wartenden, laufenden oder pausierten Läufen und Dateien, die Testfälle, Zeitpläne oder Stapelläufe noch brauchen, bleiben immer erhalten; eine entfernte Datei lässt sich aus ihrem Lauf nicht mehr öffnen.",
     "adopt": "Übernimmt ausgewählte Inhalte dauerhaft ins Wissen, erst nach deiner Bestätigung und mit Herkunft.",
     "proposals": "Der Agent darf Inhalte fürs Wissen vorschlagen. Gespeichert wird nur, was du prüfst und bestätigst.",
-    "received": "Welche Dateien der Lauf bekommen hat und wie jeder Agent sie erhalten hat."
+    "received": "Welche Dateien der Lauf bekommen hat und wie jeder Agent sie erhalten hat.",
+    "retention": "Dateien, die in Gesprächen mit dem Nodestro Assistant angehängt werden, bleiben, bis das Gespräch gelöscht wird. Mit einer Anzahl Tage werden ältere Chat-Dateien beim Bereinigen hier und in der Desktop-App stündlich entfernt; das Gespräch und seine Nachrichten bleiben, eine gesendete Nachricht behält den Dateinamen. Nur Administratoren können es ändern."
   }
 }

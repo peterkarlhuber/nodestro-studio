@@ -295,12 +295,19 @@ function namedTool(t: TFunction, code: string, params: Record<string, unknown>, 
   return t("errors.namedTool", { name, text });
 }
 
+/** Codes whose sentence has a variant that names the missing item (errors.<code>_named). */
+const NAMED_NOT_FOUND = ["workflow.not_found", "run.not_found", "publication.not_found"] as const;
+const namesMissing = (code: string): code is (typeof NAMED_NOT_FOUND)[number] => (NAMED_NOT_FOUND as readonly string[]).includes(code);
+
 /** The sentence for a coded message in the current language. */
 export function problemText(t: TFunction, item: Coded): string {
   const { code, params } = resolved(item);
   if (code) {
     const values = interpolationParams(t, params, code);
     // With the values, a plural key ("…_one", "…_other") counts as existing too.
+    // A missing item the reference knew by name (params.display, nodestro-api API-053) is named in the sentence.
+    const display = typeof params?.display === "string" ? params.display.trim() : "";
+    if (display && namesMissing(code)) return t(`errors.${code}_named`, { ...values, display });
     const key = `errors.${textKey(code)}`;
     if (i18n.exists(key, values)) return namedTool(t, code, params, t(key, values));
     const fallback = FALLBACKS.find(([prefix]) => code!.startsWith(prefix));

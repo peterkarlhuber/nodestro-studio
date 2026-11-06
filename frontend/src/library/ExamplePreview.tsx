@@ -9,7 +9,7 @@ import { keys, useExample, useMeta, useSettings } from "../api/hooks";
 import type { ExampleDetail } from "../api/types";
 import { agentIcon } from "../components/icons";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, Field, HelpTip, Hint, Modal, Select, Spinner, Toggle } from "../components/ui";
+import { Badge, Button, Callout, Field, HelpTip, Hint, Modal, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { LANGUAGE_NAMES, LANGUAGES, type Language, currentLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
 import { formatCost } from "../lib/format";
@@ -17,7 +17,7 @@ import { modelName } from "../components/ModelPicker";
 import { ExampleNeeds, copiedModel } from "./ExampleNeeds";
 import { ExampleModelPlan, modelOverrides, partNames, useExampleModels, usesLocalModels } from "./ExampleModels";
 import { ExampleConnections, KnowledgeList, TeamList } from "./ExampleSections";
-import { OFFLINE, PATTERN_ICONS, copyRequest } from "./examples";
+import { OFFLINE, PATTERN_ICONS, copyRequest, memorySpaceSuggestion, usesMemory, validMemorySpace } from "./examples";
 
 function PatternLabel({ pattern }: { pattern: ExampleDetail["pattern"] }) {
   const { t } = useTranslation();
@@ -138,6 +138,11 @@ export function ExamplePreview({
   const [models, setModels] = useState<Record<string, string>>({});
   const plan = useExampleModels(id, language, usesLocalModels(settings.data?.default_model));
   const connected = Object.values(connections).some((server) => server !== OFFLINE);
+  /** The copy's own memory space as the person typed it; null: the suggestion made from the copy's name. */
+  const [space, setSpace] = useState<string | null>(null);
+  const memory = example.data ? usesMemory(example.data) : false;
+  const memorySpace = memory ? (space ?? memorySpaceSuggestion(example.data?.name ?? "")) : "";
+  const spaceValid = validMemorySpace(memorySpace);
 
   const copy = useMutation({
     mutationFn: () =>
@@ -147,6 +152,7 @@ export function ExamplePreview({
           tests,
           connections,
           modelOverrides(plan.data, models),
+          memorySpace,
         ),
       ),
     onSuccess: (workflow) => {
@@ -171,7 +177,13 @@ export function ExamplePreview({
             {t("common.cancel")}
           </Button>
           <Hint id="library.copy">
-            <Button variant="primary" icon={Copy} busy={copy.isPending} disabled={!data} onClick={() => copy.mutate()}>
+            <Button
+              variant="primary"
+              icon={Copy}
+              busy={copy.isPending}
+              disabled={!data || !spaceValid}
+              onClick={() => copy.mutate()}
+            >
               {t("library.copy")}
             </Button>
           </Hint>
@@ -228,6 +240,35 @@ export function ExamplePreview({
           <AgentList example={data} />
           {plan.data ? <ExampleModelPlan plan={plan.data} value={models} onChange={setModels} parts={partNames(data)} /> : null}
           {data.team_details.length ? <TeamList teams={data.team_details} /> : null}
+          {memory ? (
+            <div className="example-preview__memory" data-testid="example-memory-space">
+              <Field
+                label={t("library.preview.memorySpace")}
+                hint={
+                  spaceValid ? (
+                    t("library.preview.memorySpaceHint")
+                  ) : (
+                    <span className="field__error" role="alert">
+                      {t("library.preview.memorySpaceInvalid")}
+                    </span>
+                  )
+                }
+              >
+                <TextInput
+                  value={memorySpace}
+                  maxLength={64}
+                  spellCheck={false}
+                  autoComplete="off"
+                  placeholder={t("library.preview.memorySpaceShared")}
+                  aria-invalid={spaceValid ? undefined : true}
+                  onChange={(event) => {
+                    setSpace(event.target.value);
+                    copy.reset();
+                  }}
+                />
+              </Field>
+            </div>
+          ) : null}
           <h3>{t("library.preview.guide")}</h3>
           <dl className="example-guide">
             {GUIDE_PARTS.map((part) => (

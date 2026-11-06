@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { ApiError } from "../api/client";
 import type { FieldError, InputField } from "../api/types";
 import { problemText } from "../lib/errors";
-import { FileInput, type UploadOrigin } from "./FileInput";
+import { type FileOffer, FileInput, type UploadOrigin } from "./FileInput";
 import { Field, Select, TextArea, TextInput } from "./ui";
 
 /** The per-field problems of a rejected start (``form.invalid``), by field name. */
@@ -32,6 +32,7 @@ export function FormFields({
   errors = {},
   origin = "studio",
   onPendingChange,
+  samples,
 }: {
   fields: InputField[];
   values: Record<string, unknown>;
@@ -41,6 +42,8 @@ export function FormFields({
   origin?: UploadOrigin;
   /** Uploads still running per file field. */
   onPendingChange?: (field: string, count: number) => void;
+  /** Files offered with one click per file field (an example copy's sample files, ST-007). */
+  samples?: Record<string, FileOffer[]>;
 }) {
   const { t } = useTranslation();
   // Uploads finish one after another; each change builds on the latest values.
@@ -104,6 +107,7 @@ export function FormFields({
                 value={ids}
                 origin={origin}
                 invalid={invalid}
+                samples={samples?.[field.name]}
                 onChange={(next) => set(field.name, next)}
                 onPendingChange={onPendingChange ? (count) => onPendingChange(field.name, count) : undefined}
               />

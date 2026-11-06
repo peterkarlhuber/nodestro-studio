@@ -35,5 +35,15 @@
   },
   "providers": {
     "unsaved": "Your input for {{providers}} is not saved yet. Save it in the provider's card, or discard it and leave."
+  },
+  "defaults": {
+    "changed": "Changed",
+    "changedTip": "This value differs from the default ({{value}}).",
+    "reset": "Reset",
+    "resetTip": "Back to the default: {{value}}",
+    "resetLabel": "Reset {{setting}} to the default ({{value}})",
+    "on": "on",
+    "off": "off",
+    "none": "none"
   }
 }

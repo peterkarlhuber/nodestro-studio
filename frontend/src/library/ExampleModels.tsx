@@ -34,13 +34,14 @@ export function usesLocalModels(defaultModel: string | undefined | null): boolea
 const plain = (model: string) => model.replace(/^ollama:/, "");
 
 /** Reasons of the copy route itself; the others are the codes of the local model recommendations. */
-const PLAN_REASONS = new Set(["installed", "needs_download", "installed_alternative", "default_model", "manual"]);
+const PLAN_REASONS = ["installed", "needs_download", "installed_alternative", "default_model", "manual"] as const;
+const isPlanReason = (reason: string): reason is (typeof PLAN_REASONS)[number] => (PLAN_REASONS as readonly string[]).includes(reason);
 
 /** The reasons of a suggestion in words. */
 export function planReasons(t: TFunction, agent: ExampleAgentModel): string {
   return agent.reasons
     .map((reason) =>
-      PLAN_REASONS.has(reason)
+      isPlanReason(reason)
         ? t(`library.models.reason.${reason}`, { model: plain(agent.suggested ?? "") })
         : t(`localModels.reasons.${reason}`, { defaultValue: "" }),
     )

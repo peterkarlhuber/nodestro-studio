@@ -86,7 +86,7 @@
     "sensitiveNote": "Cet exemple relève du domaine {{field}}. Les agents fournissent des aides au travail, pas des conseils : vérifiez chaque résultat avec un regard professionnel avant de l’utiliser.",
     "costNote": "L’aperçu et la copie sont gratuits et n’appellent aucun modèle. Les coûts n’apparaissent que lorsque vous exécutez la copie ; il suffit d’un accès aux fournisseurs de ses modèles.",
     "samples": "Fichiers d’exemple",
-    "samplesNote": "Petits fichiers inventés pour essayer les champs de fichier. Télécharge-les et sélectionne-les lors de l’exécution.",
+    "samplesNote": "Petits fichiers inventés pour essayer les champs de fichier. Téléchargez-les ici ; une copie les propose aussi lors de son exécution.",
     "tests": "Cas de test",
     "copyTests": "Ajouter les cas de test comme série de tests",
     "copyTestsNote": "Crée une série de tests avec ces cas. Rien n’est exécuté, aucune planification n’est créée et aucune API n’est publiée.",
@@ -104,7 +104,11 @@
     "teamContract": "Fournit : {{names}}",
     "knowledge": "Fichiers de connaissances",
     "knowledgeNote": "Créés dans votre base de connaissances lors de la copie. Les documents sont inventés ; les agents y cherchent et citent leurs sources.",
-    "copyTestsConnected": "Impossible avec une connexion : les séries de tests s’exécutent sans personne et les outils MCP n’y sont pas autorisés. Choisissez le mode hors ligne pour reprendre les cas de test."
+    "copyTestsConnected": "Impossible avec une connexion : les séries de tests s’exécutent sans personne et les outils MCP n’y sont pas autorisés. Choisissez le mode hors ligne pour reprendre les cas de test.",
+    "memorySpace": "Espace mémoire de la copie",
+    "memorySpaceHint": "Ses agents à mémoire persistante gardent leurs notes dans cet espace, séparées des autres copies. Laissez le champ vide pour partager l’espace mémoire de l’exemple avec toutes les autres copies.",
+    "memorySpaceInvalid": "Utilisez jusqu’à 64 lettres A–Z (sans accents), chiffres, espaces, _ . ou -, en commençant par une lettre ou un chiffre.",
+    "memorySpaceShared": "Vide : partagé avec les autres copies"
   },
   "connect": {
     "title_one": "Connexion facultative",
@@ -186,5 +190,10 @@
       "structured": "sortie structurée"
     },
     "judge": "Contrôle qualité (juge) : {{model}}"
+  },
+  "origin": {
+    "offlineBadge": "Données d’exemple",
+    "offlineTip_one": "Copie de l’exemple « {{example}} » : {{names}} fonctionne hors ligne avec des données d’exemple, sans connexion. Pour des données réelles, copiez à nouveau l’exemple et choisissez un serveur MCP.",
+    "offlineTip_other": "Copie de l’exemple « {{example}} » : {{names}} fonctionnent hors ligne avec des données d’exemple, sans connexion. Pour des données réelles, copiez à nouveau l’exemple et choisissez un serveur MCP."
   }
 }

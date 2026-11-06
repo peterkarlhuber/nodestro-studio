@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import type { Settings } from "../api/types";
 import { Field, TextInput } from "../components/ui";
 import { formatMoney, moneyInputText, normalizeMoneyInput } from "../lib/money";
+import { DefaultMark } from "./SettingsDefaults";
 
 export const DECISION_HOURS_MIN = 1;
 export const DECISION_HOURS_MAX = 720;
@@ -47,10 +48,13 @@ export function BudgetPolicyFields({
   form,
   admin,
   onChange,
+  money,
 }: {
   form: Settings;
   admin: boolean;
   onChange: (patch: Pick<Settings, "max_run_budget_usd" | "budget_decision_hours">) => void;
+  /** Shows a money default in the reset action of the "Changed" mark (ST-059). */
+  money?: (value: string | null) => string;
 }) {
   const { t } = useTranslation();
   if (!hasBudgetPolicy(form)) return null;
@@ -62,6 +66,16 @@ export function BudgetPolicyFields({
       <Field
         label={t("budget.settings.maxRunBudget")}
         tip="budget.maxRunBudget"
+        action={
+          <DefaultMark
+            setting="max_run_budget_usd"
+            value={form.max_run_budget_usd}
+            label={t("budget.settings.maxRunBudget")}
+            disabled={!admin}
+            format={money}
+            onReset={(value) => onChange({ max_run_budget_usd: value === null ? null : moneyInputText(value) })}
+          />
+        }
         hint={
           maxInvalid ? (
             <span className="text-danger">{t("budget.settings.invalidMax")}</span>
@@ -86,6 +100,15 @@ export function BudgetPolicyFields({
       <Field
         label={t("budget.settings.decisionHours")}
         tip="budget.decisionHours"
+        action={
+          <DefaultMark
+            setting="budget_decision_hours"
+            value={form.budget_decision_hours}
+            label={t("budget.settings.decisionHours")}
+            disabled={!admin}
+            onReset={(budget_decision_hours) => onChange({ budget_decision_hours })}
+          />
+        }
         hint={hoursInvalid ? <span className="text-danger">{t("budget.settings.invalidHours")}</span> : t("budget.settings.decisionHoursHint")}
       >
         <TextInput

@@ -86,7 +86,7 @@
     "sensitiveNote": "Dieses Beispiel gehört zum Bereich {{field}}. Die Agenten liefern Arbeitshilfen, keine Beratung: Prüfe jedes Ergebnis fachlich, bevor du es verwendest.",
     "costNote": "Vorschau und Kopieren sind kostenlos und rufen kein Modell auf. Kosten entstehen erst, wenn du die Kopie ausführst; dafür braucht es nur den Zugang zu den Anbietern ihrer Modelle.",
     "samples": "Beispieldateien",
-    "samplesNote": "Kleine erfundene Dateien zum Ausprobieren der Datei-Felder. Lade sie herunter und wähle sie beim Ausführen aus.",
+    "samplesNote": "Kleine erfundene Dateien zum Ausprobieren der Datei-Felder. Lade sie hier herunter; eine Kopie bietet sie auch beim Ausführen an.",
     "tests": "Testfälle",
     "copyTests": "Testfälle als Testreihe übernehmen",
     "copyTestsNote": "Legt eine Testreihe mit diesen Fällen an. Nichts wird ausgeführt, kein Zeitplan angelegt und keine API veröffentlicht.",
@@ -104,7 +104,11 @@
     "teamContract": "Liefert: {{names}}",
     "knowledge": "Wissensdateien",
     "knowledgeNote": "Werden beim Übernehmen in deiner Wissensbasis angelegt. Die Dokumente sind erfunden; die Agenten durchsuchen sie und nennen ihre Quellen.",
-    "copyTestsConnected": "Mit Verbindung nicht möglich: Testreihen laufen ohne Person, und MCP-Tools sind dort nicht erlaubt. Wähle den Offline-Modus, um die Testfälle zu übernehmen."
+    "copyTestsConnected": "Mit Verbindung nicht möglich: Testreihen laufen ohne Person, und MCP-Tools sind dort nicht erlaubt. Wähle den Offline-Modus, um die Testfälle zu übernehmen.",
+    "memorySpace": "Memory-Raum der Kopie",
+    "memorySpaceHint": "Ihre Agenten mit dauerhaftem Memory legen ihre Notizen in diesem Raum ab, getrennt von anderen Kopien. Lass das Feld leer, um den Memory-Raum des Beispiels mit allen anderen Kopien zu teilen.",
+    "memorySpaceInvalid": "Verwende bis zu 64 Buchstaben A–Z (ohne Umlaute und Akzente), Ziffern, Leerzeichen, _ . oder -, am Anfang einen Buchstaben oder eine Ziffer.",
+    "memorySpaceShared": "Leer: mit den anderen Kopien geteilt"
   },
   "connect": {
     "title_one": "Optionale Verbindung",
@@ -186,5 +190,10 @@
       "structured": "strukturierte Ausgabe"
     },
     "judge": "Qualitätsprüfung (Judge): {{model}}"
+  },
+  "origin": {
+    "offlineBadge": "Beispieldaten",
+    "offlineTip_one": "Kopie des Beispiels „{{example}}“: {{names}} läuft offline mit Beispieldaten, ohne Verbindung. Für echte Daten kopierst du das Beispiel erneut und wählst einen MCP-Server.",
+    "offlineTip_other": "Kopie des Beispiels „{{example}}“: {{names}} laufen offline mit Beispieldaten, ohne Verbindung. Für echte Daten kopierst du das Beispiel erneut und wählst einen MCP-Server."
   }
 }

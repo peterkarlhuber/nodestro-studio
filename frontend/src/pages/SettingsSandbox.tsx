@@ -10,6 +10,7 @@ import { dockerReasonKey, isDockerReason } from "../api/types";
 import { Badge, Button, Callout, DocLink, HelpTip, Segmented } from "../components/ui";
 import { ErrorText, TechnicalDetails } from "../lib/errors";
 import { formatDate, type Tone } from "../lib/format";
+import { DefaultMark } from "./SettingsDefaults";
 
 const STATE_TONE: Record<SandboxBackendStatus["state"], Tone> = {
   approved: "success",
@@ -415,6 +416,14 @@ export function SandboxPanel({
           <span data-testid="sandbox-docker-badge">
             <Badge tone={settings.docker_available ? "success" : "idle"}>{t(dockerBadgeKey(settings.docker_available, docker))}</Badge>
           </span>
+          <DefaultMark
+            setting="sandbox"
+            value={settings.sandbox}
+            label={t("settings.sandbox.label")}
+            disabled={!admin}
+            format={(value) => modes.find((mode) => mode.value === value)?.label ?? value}
+            onReset={onMode}
+          />
         </div>
       ) : (
         <p className="muted small" data-testid="sandbox-containers-only">

@@ -86,7 +86,7 @@
     "sensitiveNote": "This example belongs to {{field}}. The agents produce working aids, not advice: check every result professionally before you use it.",
     "costNote": "Previewing and copying are free and call no model. Costs only arise when you run the copy; all it needs is access to the providers of its models.",
     "samples": "Sample files",
-    "samplesNote": "Small invented files for trying out the file fields. Download them and pick them when you run the workflow.",
+    "samplesNote": "Small invented files for trying out the file fields. Download them here; a copy also offers them in its run dialog.",
     "tests": "Test cases",
     "copyTests": "Add the test cases as a test series",
     "copyTestsNote": "Creates a test series with these cases. Nothing is run, no schedule is created and no API is published.",
@@ -104,7 +104,11 @@
     "teamContract": "Delivers: {{names}}",
     "knowledge": "Knowledge files",
     "knowledgeNote": "Created in your knowledge base when you copy. The documents are invented; the agents search them and name their sources.",
-    "copyTestsConnected": "Not possible with a connection: test series run without a person, and MCP tools are not allowed there. Choose offline mode to take over the test cases."
+    "copyTestsConnected": "Not possible with a connection: test series run without a person, and MCP tools are not allowed there. Choose offline mode to take over the test cases.",
+    "memorySpace": "Memory space of the copy",
+    "memorySpaceHint": "Its agents with persistent memory keep their notes in this space, apart from other copies. Leave it empty to share the example's memory space with every other copy.",
+    "memorySpaceInvalid": "Use up to 64 letters A–Z (without accents), digits, spaces, _ . or -, starting with a letter or digit.",
+    "memorySpaceShared": "Empty: shared with the other copies"
   },
   "connect": {
     "title_one": "Optional connection",
@@ -186,5 +190,10 @@
       "structured": "structured output"
     },
     "judge": "Quality check (judge): {{model}}"
+  },
+  "origin": {
+    "offlineBadge": "Sample data",
+    "offlineTip_one": "A copy of the example “{{example}}”: {{names}} runs offline on sample data, without a connection. For real data, copy the example again and choose an MCP server.",
+    "offlineTip_other": "A copy of the example “{{example}}”: {{names}} run offline on sample data, without a connection. For real data, copy the example again and choose an MCP server."
   }
 }

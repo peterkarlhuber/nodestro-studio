@@ -292,6 +292,7 @@
     "storage": "Files uploaded for runs, test cases and schedules stay on this computer with their runs and take up disk space. Here you see how much and remove unused or old files. Files of queued, running or paused runs and files that test cases, schedules or batches still need are always kept; a removed file can no longer be opened from its run.",
     "adopt": "Stores chosen content permanently in knowledge, only after your confirmation and with its origin.",
     "proposals": "The agent may propose content for knowledge. Only what you check and confirm is stored.",
-    "received": "Which files the run got and how each agent received them."
+    "received": "Which files the run got and how each agent received them.",
+    "retention": "Files attached in Nodestro Assistant conversations stay until the conversation is deleted. With a number of days, older chat files are removed when files are cleaned up here and, in the desktop app, every hour; the conversation and its messages stay, and a sent message keeps the file's name. Only administrators can change it."
   }
 }

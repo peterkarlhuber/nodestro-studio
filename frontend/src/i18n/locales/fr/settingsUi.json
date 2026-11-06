@@ -35,5 +35,15 @@
   },
   "providers": {
     "unsaved": "Votre saisie pour {{providers}} n’est pas encore enregistrée. Enregistrez-la dans la carte du fournisseur, ou abandonnez-la et quittez la page."
+  },
+  "defaults": {
+    "changed": "Modifié",
+    "changedTip": "Cette valeur diffère de la valeur par défaut ({{value}}).",
+    "reset": "Rétablir",
+    "resetTip": "Revenir à la valeur par défaut : {{value}}",
+    "resetLabel": "Rétablir la valeur par défaut pour {{setting}} ({{value}})",
+    "on": "activé",
+    "off": "désactivé",
+    "none": "aucun"
   }
 }

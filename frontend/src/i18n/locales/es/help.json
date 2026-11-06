@@ -292,6 +292,7 @@
     "storage": "Los archivos subidos para ejecuciones, casos de prueba y programaciones se quedan en este ordenador con sus ejecuciones y ocupan espacio en disco. Aquí ves cuánto y eliminas los archivos sin uso o antiguos. Los archivos de ejecuciones en cola, en curso o en pausa y los que aún necesitan casos de prueba, programaciones o lotes se conservan siempre; un archivo eliminado ya no se puede abrir desde su ejecución.",
     "adopt": "Guarda de forma permanente el contenido elegido en el conocimiento, solo tras tu confirmación y con su procedencia.",
     "proposals": "El agente puede proponer contenido para el conocimiento. Solo se guarda lo que compruebas y confirmas.",
-    "received": "Qué archivos recibió la ejecución y cómo los recibió cada agente."
+    "received": "Qué archivos recibió la ejecución y cómo los recibió cada agente.",
+    "retention": "Los archivos adjuntos en conversaciones con Nodestro Assistant se conservan hasta que se elimina la conversación. Con un número de días, los archivos más antiguos se eliminan al limpiar los archivos aquí y, en la app de escritorio, cada hora; la conversación y sus mensajes se mantienen y un mensaje enviado conserva el nombre del archivo. Solo los administradores pueden cambiarlo."
   }
 }

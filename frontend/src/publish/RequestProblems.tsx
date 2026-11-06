@@ -23,7 +23,10 @@ export function fieldPath(field: string): string {
   return parts.join(".");
 }
 
-const KINDS: [RegExp, string][] = [
+/** What went wrong with a request field, in the interface's words (each has a text in admin.request.kind). */
+export type RequestProblemKind = "missing" | "number" | "boolean" | "text" | "date" | "extra" | "choice" | "list" | "invalid";
+
+const KINDS: [RegExp, RequestProblemKind][] = [
   [/^missing$/, "missing"],
   [/^(int|float|decimal|number)_(parsing|type)$|^(int|float)_from_float$/, "number"],
   [/^bool_(parsing|type)$/, "boolean"],
@@ -34,13 +37,13 @@ const KINDS: [RegExp, string][] = [
   [/^(list_type|too_short|too_long)$/, "list"],
 ];
 
-function kindOf(code: string): string {
+function kindOf(code: string): RequestProblemKind {
   return KINDS.find(([pattern]) => pattern.test(code))?.[1] ?? "invalid";
 }
 
 /** One entry per field: a field that failed for several union branches is reported once, by its first kind. */
-export function collapseFieldErrors(errors: FieldError[]): { path: string; kind: string; message?: string }[] {
-  const seen = new Map<string, { path: string; kind: string; message?: string }>();
+export function collapseFieldErrors(errors: FieldError[]): { path: string; kind: RequestProblemKind; message?: string }[] {
+  const seen = new Map<string, { path: string; kind: RequestProblemKind; message?: string }>();
   for (const error of errors) {
     const path = fieldPath(error.field || "body");
     if (!seen.has(path)) seen.set(path, { path, kind: kindOf(error.code), message: error.message });

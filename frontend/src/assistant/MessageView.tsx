@@ -92,7 +92,12 @@ function HandoverCard({ handover }: { handover: Handover }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const Icon = HANDOVER_ICON[handover.target];
-  const target = handover.target === "workflow_architect" ? `workflow_architect_${handover.mode ?? "create"}` : handover.target;
+  const target =
+    handover.target === "workflow_architect"
+      ? handover.mode === "revise"
+        ? "workflow_architect_revise"
+        : "workflow_architect_create"
+      : handover.target;
   return (
     <div className="handover-card" data-testid="handover-card">
       <div className="handover-card__head">

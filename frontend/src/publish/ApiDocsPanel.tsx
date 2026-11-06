@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
-import type { Publication } from "../api/types";
+import type { ApiCurlExample, ApiResponseExample, Publication } from "../api/types";
 import { Button, Callout, HelpTip, Section, Segmented, Spinner } from "../components/ui";
 import { ErrorText } from "../lib/errors";
 import { CodeBlock, downloadJson } from "./common";
@@ -81,7 +81,7 @@ export function ApiDocsPanel({ publication }: { publication: Publication }) {
         ]}
       />
       {example === "curl"
-        ? Object.entries(examples.curl).map(([name, command]) => (
+        ? (Object.entries(examples.curl) as [ApiCurlExample, string][]).map(([name, command]) => (
             <div key={name} className="stack-sm">
               <strong className="small">{t(`publish.docs.curl.${name}`)}</strong>
               <CodeBlock text={command} />
@@ -107,7 +107,7 @@ export function ApiDocsPanel({ publication }: { publication: Publication }) {
         </div>
       ) : null}
       {example === "responses"
-        ? Object.entries(examples.responses).map(([name, value]) => (
+        ? (Object.entries(examples.responses) as [ApiResponseExample, unknown][]).map(([name, value]) => (
             <div key={name} className="stack-sm">
               <strong className="small">{t(`publish.docs.response.${name}`)}</strong>
               <CodeBlock text={typeof value === "string" ? value : JSON.stringify(value, null, 2)} />

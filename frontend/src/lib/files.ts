@@ -9,6 +9,8 @@ import type { ArchiveEntry, FileFormatInfo, FormatGroup, InputField } from "../a
 
 export const FORMAT_GROUPS: FormatGroup[] = ["text", "data", "document", "image", "archive"];
 
+export const isFormatGroup = (key: string): key is FormatGroup => (FORMAT_GROUPS as string[]).includes(key);
+
 /** The default size limit of a file field in MB (as the backend's DEFAULT_FIELD_MB). */
 export const DEFAULT_FIELD_MB = 20;
 
@@ -148,7 +150,7 @@ export async function filesOfDrop(items: DataTransferItemList | null, fallback: 
 export function fileFieldSummary(t: TFunction, field: InputField, formats: FileFormatInfo[]): string {
   const accept = field.accept ?? [];
   const named = accept.map((key) =>
-    (FORMAT_GROUPS as string[]).includes(key)
+    isFormatGroup(key)
       ? t(`inputs.groups.${key}`)
       : (formats.find((format) => format.key === key)?.extensions[0] ?? key),
   );

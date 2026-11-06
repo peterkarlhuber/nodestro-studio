@@ -35,5 +35,15 @@
   },
   "providers": {
     "unsaved": "Quello che hai inserito per {{providers}} non è ancora salvato. Salvalo nella scheda del provider oppure scartalo ed esci."
+  },
+  "defaults": {
+    "changed": "Modificato",
+    "changedTip": "Questo valore è diverso dal predefinito ({{value}}).",
+    "reset": "Ripristina",
+    "resetTip": "Torna al predefinito: {{value}}",
+    "resetLabel": "Ripristina il valore predefinito di {{setting}} ({{value}})",
+    "on": "attivo",
+    "off": "disattivo",
+    "none": "nessuno"
   }
 }

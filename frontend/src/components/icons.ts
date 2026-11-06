@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 /** Agent icons: the type of an agent is shown by symbol and title, not by colour. */
-export const AGENT_ICONS: Record<string, LucideIcon> = {
+export const AGENT_ICONS = {
   bot: Bot,
   search: Search,
   calculator: Calculator,
@@ -42,6 +42,11 @@ export const AGENT_ICONS: Record<string, LucideIcon> = {
   target: Target,
   idea: Lightbulb,
   sparkles: Sparkles,
-};
+} satisfies Record<string, LucideIcon>;
 
-export const agentIcon = (name: string | undefined): LucideIcon => AGENT_ICONS[name ?? ""] ?? Bot;
+/** The names of the agent icons (each has a text in agent.iconNames). */
+export type AgentIconName = keyof typeof AGENT_ICONS;
+export const AGENT_ICON_NAMES = Object.keys(AGENT_ICONS) as AgentIconName[];
+
+export const agentIcon = (name: string | undefined): LucideIcon =>
+  name && Object.hasOwn(AGENT_ICONS, name) ? AGENT_ICONS[name as AgentIconName] : Bot;

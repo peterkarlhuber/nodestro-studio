@@ -3,7 +3,7 @@
 > Open work for this repository: release blockers, known bugs, security follow-ups, technical debt and planned improvements.
 > GitHub issues are the source of truth for details; this file is the entry point and summary.
 >
-> **Last full review:** 2026-11-06 against master at 58bb17d (TODO abatement round)
+> **Last full review:** 2026-11-06 against master at d19d026 (TODO abatement round)
 
 ## Summary
 
@@ -12,16 +12,16 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 17 |
-| P4 Optional | 6 |
+| P3 Low | 13 |
+| P4 Optional | 4 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
 preview is gated by nodestro-desktop DSK-001 (new candidate and Go/No-Go), not by an item here.
 
 The studio is in a good state after the UX initiative (studio #61 to #80) and UX round 3 (#123, #125): the independent
 final review accepted it with conditions that #79 addressed, and master CI is green. What remains is a backlog of
-usability and accessibility follow-ups, cross-repository gaps that wait for backend fields (failure cause, budgets,
-example origin, settings defaults) and the platforms nobody has tested yet. The portable export dialog (#121)
+usability and accessibility follow-ups, the editor's main-thread cost, a similarity hint that waits for the runtime
+(RT-041) and the platforms nobody has tested yet. The portable export dialog (#121)
 is covered by the independent review tracked in nodestro-api API-054.
 
 ## Priorities and statuses
@@ -59,13 +59,19 @@ None known.
 - **Priority:** P3 Low · **Status:** In progress · **Refs:** #84, final UX review F3,
   `frontend/e2e/perf-editor.mjs` (`npm run perf:editor`)
 - **What:** Opening a 9-node workflow under CPU 4x: mount 1884 → 1335 ms and total blocking time 1557 → 956 ms after
-  UX round 2; still above the 50 ms long-task budget. The TODO round of 2026-11-06 mounts the editor's dialogs only
-  on their first opening (they stay mounted afterwards, so typed text and running requests behave as before) and
-  starts the editor chunk download when the pointer or focus reaches a workflow on the Workflows page (not on page
-  load: the smoke suite keeps the start page free of editor code). Measured on the cloud dev VM (median of 7): mount
-  913 → 949 ms, TBT 535 → 576 ms, within the run-to-run noise, so no gain is shown for this measurement.
-- **Next step:** Profile React Flow's node measuring (110–180 ms at 4x) with `--profile` and reduce it; that is the
-  remaining large long task.
+  UX round 2; still above the 50 ms long-task budget. The first TODO round of 2026-11-06 mounts the editor's dialogs
+  only on their first opening and starts the editor chunk download when the pointer or focus reaches a workflow
+  (mount 913 → 949 ms, TBT 535 → 576 ms, within the noise). The second round profiled the remaining long tasks
+  (`--profile`, unminified build): of 665 ms in long tasks, 574 ms are script (React's first render of the editor
+  and the evaluation of its chunk), layout only 83 ms, and React Flow's node measuring (`checkVisibility` in its
+  resize handler) about 72 ms, so node measuring is no longer the large part. The single largest function was the
+  first `Intl.NumberFormat` of the zoom label (53–60 ms); the number formatters are now created in idle time after
+  the start and after a language change (under 5 ms in the editor's render). Three A/B rounds on a shared, loaded
+  VM (median of 7 each), before → after: mount 809 → 870, 881 → 722, 780 → 716 ms; TBT 442 → 474, 534 → 421,
+  471 → 391 ms; longest task 367 → 400, 431 → 344, 407 → 344 ms. The gain is within the run-to-run noise.
+- **Next step:** Split the editor's first render (inspector, side panels and run views after the canvas is painted,
+  `startTransition` or lazy panels) and measure on a quiet machine; the remaining long task is React render plus
+  chunk evaluation, not node measuring.
 
 ## Features and enhancements
 
@@ -77,51 +83,6 @@ None known.
   stored AI-generated code is not pointed out.
 - **Next step:** Once the runtime offers a similarity check (RT-041), show it as a hint next to the paste warning.
   It never changes the trust class.
-
-### ST-036 · Diff against the previous version in the adoption dialog (R-4)
-
-- **Priority:** P4 Optional · **Status:** Open · **Refs:** ADR-0006 (R-4 amendment), `pages/ToolAdoption.tsx`
-- **What:** The adoption dialog shows the whole code and tests of the version to adopt. When an earlier version of
-  the tool was the person's own (adopted or written in the editor), a diff against it would show what the AI
-  changed.
-- **Next step:** Needs the tool's version history in the API (`GET /api/tools/{name}` returns only the current
-  version); then render a side-by-side or unified diff above the full code.
-
-### ST-007 · "Use sample file" in the run dialog of form examples (OB-13)
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** UX audit OB-13
-- **What:** The prefilled label and the collapsed "more files" area are done; the sample files of an example are still
-  only downloadable in the preview, not offered where the run needs them.
-- **Next step:** Offer the copy's sample files as one-click inputs once the copy knows its source example.
-- **Depends on:** nodestro-runtime RT-055 (origin of an example copy stored on the workflow).
-
-### ST-031 · Offline (sample data) badge on example copies (AD-18)
-
-- **Priority:** P3 Low · **Status:** Blocked · **Refs:** UX audit AD-18, nodestro-examples #39
-- **What:** Copies of examples whose optional connection is missing run on sample data, but only the copy chooser
-  (`frontend/src/library/ExampleSections.tsx`) says so; the editor and run headers show no badge.
-- **Next step:** Show a badge in the workflow and run header once nodestro-examples EX-003 has chosen the marker.
-- **Depends on:** nodestro-examples EX-003 (marker), nodestro-runtime RT-055 (origin of an example copy).
-
-### ST-032 · Technical field names in the editor palette's team hint (ED-17)
-
-- **Priority:** P4 Optional · **Status:** Blocked (needs an API field) · **Refs:** UX audit ED-17
-- **What:** The palette team hint (`frontend/src/editor/Palette.tsx`, `teamHint()`) lists a team's output fields by
-  id. Result labels are fixed since UX round 3 (labels come from the description, also inside collected results;
-  every long example description starts with a short label, enforced in nodestro-examples).
-- **Next step:** Show localized labels once workflow summaries carry the contract descriptions.
-- **Depends on:** nodestro-api API-053 (contract descriptions in workflow summaries).
-
-### ST-059 · "Default" and "changed" markers on settings fields
-
-- **Priority:** P3 Low · **Status:** Blocked (needs nodestro-api API-061 on master) · **Refs:** settings/providers round
-  2026-11-06 (settings UI stream, tooltip audit)
-- **What:** The settings fields do not show whether a value is the default or was changed. The help-text part of the
-  original entry ("about 50 still repeat the label") could not be reproduced in the TODO round of 2026-11-06: the 25
-  settings help texts explain more than their label, and a scan of the settings, local models and model parameter
-  hints found six short hints, each of which adds an example or a range.
-- **Next step:** Once `GET /api/settings/defaults` (API-061) is on master, read it once per settings page and mark
-  each changed field with a "changed" badge and a reset action (older APIs: no badge).
 
 ## Tests and quality assurance
 
@@ -161,15 +122,6 @@ None known.
   `scripts/e2e.sh` (suites `local-models`, `missing-model`) since the TODO round of 2026-11-06.
 - **Next step:** Add an e2e server with a fake Ollama binary (as in nodestro-api `tests/test_local_models_api.py`)
   and a suite for start, download progress, import errors and index build; run it with a real Ollama where CI allows.
-
-### ST-060 · Dynamic translation keys and tooltips: remaining coverage
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (i18n stream, I18N-DYN-1, I18N-E2E-2)
-- **What:** 29 dynamic keys built from free text are covered only by the runtime guard and e2e (`OPEN` in
-  `frontend/src/i18n/dynamicKeys.test.ts`; the local reasons and tasks, settings groups, local build steps and
-  problems and the GPU state are typed now); the raw-key sweep does not open most dialogs or hover tooltips.
-- **Next step:** Type the remaining values (backend codes as unions in `api/types.ts`) so `dynamicKeys.test.ts` checks
-  them; extend the sweep to main dialogs and help tooltips.
 
 ## Platform coverage
 
@@ -397,8 +349,6 @@ None known.
 | ST-052 | all Nodestro repositories | Dependabot policy, branch protection decision, auto-merge prerequisites | Owner entry here; the others point to it |
 | ST-054 | nodestro-sdk, nodestro-desktop, nodestro-server, axentra, axentra-studio | SDK-010, SRV-015, Node.js 24 entries | Owner entry here; move together in Q1 2027 |
 | ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update `products` with the next candidate |
-| ST-007, ST-031 | nodestro-examples, nodestro-runtime | EX-003 (AD-18 marker), RT-055 (copy origin) | Examples and runtime provide the marker; studio shows it |
-| ST-032 | nodestro-api | API-053 (contract descriptions in summaries) | Studio needs the field first |
 | — | nodestro-api | X-03 rest: error responses of published routes and router tags (API-016); X-01 (RT-005, API-018) and the error code list (RT-011) are done | Change lives in api; studio already adapted |
 
 Generated example chapters (`frontend/src/docs/chapters/*/beispiele.md`, between the `examples` markers) come from

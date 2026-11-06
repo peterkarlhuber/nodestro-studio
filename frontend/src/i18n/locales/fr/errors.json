@@ -135,7 +135,8 @@
     "revision_invalid": "L’enregistrement indiquait une version inconnue du workflow. Rechargez la page et enregistrez à nouveau.",
     "conflict": "Le workflow « {{name}} » a été modifié depuis que vous l’avez ouvert. Rechargez-le pour voir la dernière version.",
     "runs_active": "Des exécutions de ce workflow sont encore en cours. Supprimez-le une fois qu’elles sont terminées ou annulées.",
-    "not_found": "Ce workflow n’existe plus ; il a peut-être été supprimé entre-temps. Rechargez la page pour voir les workflows actuels."
+    "not_found": "Ce workflow n’existe plus ; il a peut-être été supprimé entre-temps. Rechargez la page pour voir les workflows actuels.",
+    "not_found_named": "Le workflow « {{display}} » n’existe plus ; il a peut-être été supprimé entre-temps. Rechargez la page pour voir les workflows actuels."
   },
   "run": {
     "failed": "L’étape a échoué.",
@@ -202,7 +203,8 @@
     "value_unverified": "L’indicateur clé {{field}} ({{value}}) n’a pas été calculé avec un outil, même après une correction. L’étape a été arrêtée afin qu’aucune décision ne repose sur un chiffre non vérifié.",
     "local_model_missing": "Le modèle local {{model}} n’est pas installé sur le serveur de modèles.",
     "provider_rejected_messages": "{{provider}} a refusé la conversation de cette étape (statut {{status}}) : l’un de ses messages a une forme que le fournisseur n’accepte pas. Votre workflow et votre saisie ne sont pas en cause.",
-    "provider_context_exceeded": "La conversation de cette étape dépasse la fenêtre de contexte que {{provider}} accorde au modèle."
+    "provider_context_exceeded": "La conversation de cette étape dépasse la fenêtre de contexte que {{provider}} accorde au modèle.",
+    "not_found_named": "L’exécution « {{display}} » n’existe plus ; elle a peut-être été supprimée entre-temps. Rechargez la page pour voir les exécutions actuelles."
   },
   "budget": {
     "not_starter": "Seule la personne qui a lancé l’exécution ou un administrateur peut décider de son budget.",
@@ -650,7 +652,8 @@
     "not_found": "Ce workflow publié n’existe plus ; son API a peut-être été retirée ou supprimée entre-temps. Rechargez la page pour voir les publications actuelles.",
     "dependencies_changed": "Les bibliothèques Python approuvées ont changé depuis la publication ; publiez à nouveau.",
     "dependencies_unavailable": "Les bibliothèques Python de cette API ne sont pas prêtes.",
-    "slug_taken": "Un autre workflow publié utilise déjà le nom {{slug}}. Choisissez un autre nom."
+    "slug_taken": "Un autre workflow publié utilise déjà le nom {{slug}}. Choisissez un autre nom.",
+    "not_found_named": "Le workflow publié « {{display}} » n’existe plus ; son API a peut-être été retirée ou supprimée entre-temps. Rechargez la page pour voir les publications actuelles."
   },
   "limit": {
     "concurrent": "Trop d’exécutions simultanées (limite {{limit}}) ; réessayez quand l’une d’elles est terminée.",
@@ -677,7 +680,8 @@
     "disabled": "L’attente du résultat n’est pas activée pour cette API."
   },
   "idempotency": {
-    "conflict": "Cette Idempotency-Key a été utilisée pour une autre requête."
+    "conflict": "Cette Idempotency-Key a été utilisée pour une autre requête.",
+    "in_progress": "Une requête avec cette Idempotency-Key démarre encore son exécution. Réessayez dans un instant ; la nouvelle tentative renverra alors cette exécution."
   },
   "release": {
     "invalid": "La version publiée ne peut pas s’exécuter ; publiez-la à nouveau."

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useUsage } from "../api/hooks";
-import type { UsageBucket, UsageBudgets, UsageEntry } from "../api/types";
+import type { UsageBucket, UsageBucketSource, UsageBudgets, UsageEntry } from "../api/types";
 import { useModelName } from "../components/ModelPicker";
 import { Badge, Callout, EmptyState, HelpTip, PageHeader, Segmented, Spinner, Stat } from "../components/ui";
 import { ErrorText } from "../lib/errors";
@@ -308,7 +308,7 @@ export function UsagePage() {
               first={t("usage.source")}
               buckets={data.by_source}
               tip="usage.sources"
-              labelOf={(bucket) => t(`usage.sources.${bucket.key}`)}
+              labelOf={(bucket) => t(`usage.sources.${bucket.key as UsageBucketSource}`)}
               countLabel={t("usage.count")}
             />
             <BudgetsCard budgets={data.budgets} />

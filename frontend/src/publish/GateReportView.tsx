@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import type { GateItem, GateItemKind, GateReport } from "../api/types";
 import { HelpTip } from "../components/Tooltip";
 import { Badge, Callout } from "../components/ui";
+import { codeSuffix } from "../lib/codes";
 
 const pct = (value: number | null) => (value === null ? "–" : `${Math.round(value * 100)} %`);
 
@@ -19,7 +20,7 @@ function ItemRow({ item }: { item: GateItem }) {
       {item.passed ? <CheckCircle2 size={14} aria-hidden className="gate-report__ok" /> : <XCircle size={14} aria-hidden className="gate-report__fail" />}
       {item.run_id ? <Link to={`/tests/${encodeURIComponent(item.suite_id)}`}>{name}</Link> : <span>{name}</span>}
       <span className="small">
-        {t(`publish.gate.items.${item.code.replace("gate.", "")}`, {
+        {t(`publish.gate.items.${codeSuffix("gate.", item.code)}`, {
           value: pct(item.value),
           threshold: pct(item.threshold),
           version: item.params.tested_version ?? "–",
