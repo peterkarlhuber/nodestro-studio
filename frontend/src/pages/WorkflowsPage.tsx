@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Copy, Diamond, FilePlus2, FileUp, Network, Plus, Sparkles, Trash2 } from "lucide-react";
-import { type ChangeEvent, useEffect, useRef, useState } from "react";
+import { type ChangeEvent, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -72,8 +72,9 @@ function starterGraph(): Pick<WorkflowIn, "nodes" | "edges"> {
 
 export function WorkflowsPage() {
   const { t } = useTranslation();
-  // Most visits here end in the editor: its code downloads while the browser is idle (ST-004).
-  useEffect(() => preloadEditor(), []);
+  // Pointing at or tabbing to a workflow starts the editor's download, so the click does not wait for it (ST-004).
+  // Not on page load: the start page itself stays free of editor code (checked by e2e/smoke.mjs).
+  const intent = { onPointerOver: preloadEditor, onFocus: preloadEditor };
   const workflows = useWorkflows();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -269,7 +270,9 @@ export function WorkflowsPage() {
           </div>
         ) : null}
         {workflows.data?.length && !shown.length ? <p className="muted">{t("organize.noMatch")}</p> : null}
-        <div className="card-grid">{own.map(card)}</div>
+        <div className="card-grid" {...intent}>
+          {own.map(card)}
+        </div>
         {teams.length ? (
           <Section
             id="workflow-teams"
@@ -280,7 +283,7 @@ export function WorkflowsPage() {
             defaultOpen={!own.length}
           >
             <p className="muted small">{t("workflows.teams.text")}</p>
-            <div className="card-grid" data-testid="workflow-teams">
+            <div className="card-grid" data-testid="workflow-teams" {...intent}>
               {teams.map(card)}
             </div>
           </Section>
