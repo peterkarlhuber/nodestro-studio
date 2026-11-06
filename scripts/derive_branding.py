@@ -39,16 +39,26 @@ import itertools
 import json
 from pathlib import Path
 import sys
+from typing import TypedDict
 
 import numpy as np
 from PIL import Image
+
+RGB = tuple[int, int, int]
+
+
+class Product(TypedDict):
+    tile: RGB
+    lift: float | None
+    name: str
+
 
 #: Colour of the wordmark on dark surfaces.
 REVERSED_WORDMARK = (255, 255, 255)
 
 #: Per product: background of opaque app-icon tiles (home screen, maskable, desktop),
 #: and whether the symbol needs the lifted dark-surface variant.
-PRODUCTS = {
+PRODUCTS: dict[str, Product] = {
     "nodestro": {"tile": (14, 17, 22), "lift": None, "name": "Nodestro"},
     "orkexa": {"tile": (255, 255, 255), "lift": 0.45, "name": "Orkexa"},
     "axentra": {"tile": (255, 255, 255), "lift": None, "name": "Axentra"},
@@ -131,7 +141,7 @@ def lift_dark_tones(arr: np.ndarray, x1: int, floor: float) -> np.ndarray:
 
 def bbox(arr: np.ndarray) -> tuple[int, int, int, int]:
     ys, xs = np.where(arr[..., 3] > 0)
-    return int(xs.min()), int(ys.min()), int(xs.max()) + 1, int(ys.max()) + 1
+    return int(np.min(xs)), int(np.min(ys)), int(np.max(xs)) + 1, int(np.max(ys)) + 1
 
 
 def trim(img: Image.Image, pad_ratio: float = 0.0) -> Image.Image:
@@ -145,13 +155,13 @@ def trim(img: Image.Image, pad_ratio: float = 0.0) -> Image.Image:
     return canvas
 
 
-def square(mark: Image.Image, size: int, fill: float, tile=None, radius: float = 0.0) -> Image.Image:
+def square(mark: Image.Image, size: int, fill: float, tile: RGB | None = None, radius: float = 0.0) -> Image.Image:
     """Centre the trimmed symbol on a square canvas; ``fill`` = share of the edge it spans."""
     mark = trim(mark)
     scale = fill * size / max(mark.size)
     w, h = max(1, round(mark.width * scale)), max(1, round(mark.height * scale))
     # Downscale in steps for crisp small icons.
-    resized = mark.resize((w, h), Image.LANCZOS, reducing_gap=3.0)
+    resized = mark.resize((w, h), Image.Resampling.LANCZOS, reducing_gap=3.0)
     canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     if tile is not None:
         bg = Image.new("RGBA", (size, size), (*tuple(tile), 255))
@@ -162,7 +172,7 @@ def square(mark: Image.Image, size: int, fill: float, tile=None, radius: float =
             ImageDraw.Draw(mask).rounded_rectangle(
                 (0, 0, size * 4 - 1, size * 4 - 1), radius=round(radius * size * 4), fill=255
             )
-            bg.putalpha(mask.resize((size, size), Image.LANCZOS))
+            bg.putalpha(mask.resize((size, size), Image.Resampling.LANCZOS))
         canvas = bg
     canvas.alpha_composite(resized, ((size - w) // 2, (size - h) // 2))
     return canvas
@@ -170,10 +180,10 @@ def square(mark: Image.Image, size: int, fill: float, tile=None, radius: float =
 
 def lockup(img: Image.Image, width: int) -> Image.Image:
     t = trim(img)
-    return t.resize((width, round(t.height * width / t.width)), Image.LANCZOS)
+    return t.resize((width, round(t.height * width / t.width)), Image.Resampling.LANCZOS)
 
 
-def flatten(img: Image.Image, color=(255, 255, 255)) -> Image.Image:
+def flatten(img: Image.Image, color: RGB = (255, 255, 255)) -> Image.Image:
     bg = Image.new("RGBA", img.size, (*tuple(color), 255))
     bg.alpha_composite(img)
     return bg.convert("RGB")

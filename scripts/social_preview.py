@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 import sys
+from typing import TypedDict
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -24,13 +25,25 @@ from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import derive_branding  # vendored next to this file, after the sys.path entry above
 
+RGB = tuple[int, int, int]
+Font = ImageFont.ImageFont | ImageFont.FreeTypeFont | ImageFont.TransposedFont
+
+
+class Theme(TypedDict):
+    top: RGB
+    bottom: RGB
+    glow: RGB
+    strength: float
+    text: RGB
+
+
 SIZE = (1280, 640)
 LOCKUP_WIDTH = 720
 #: Height below the lockup taken by the accent rule and the caption line.
 CAPTION_BLOCK = 46 + 4 + 30 + 30
 
 #: Per brand: background top and bottom, glow colour (the symbol's main hue), caption colour.
-THEMES = {
+THEMES: dict[str, Theme] = {
     "nodestro": {
         "top": (24, 28, 30),
         "bottom": (13, 15, 17),
@@ -55,7 +68,7 @@ THEMES = {
 }
 
 
-def background(theme: dict, glow_center: tuple[float, float]) -> Image.Image:
+def background(theme: Theme, glow_center: tuple[float, float]) -> Image.Image:
     w, h = SIZE
     y = np.linspace(0.0, 1.0, h)[:, None, None]
     top = np.array(theme["top"], dtype=np.float64)
@@ -72,14 +85,16 @@ def background(theme: dict, glow_center: tuple[float, float]) -> Image.Image:
     return Image.fromarray(np.clip(rgb + 0.5, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
 
 
-def spaced_text(draw, xy, text, font, fill, tracking):
+def spaced_text(
+    draw: ImageDraw.ImageDraw, xy: tuple[float, float], text: str, font: Font, fill: RGB, tracking: float
+) -> None:
     x, y = xy
     for ch in text:
         draw.text((x, y), ch, font=font, fill=fill)
         x += draw.textlength(ch, font=font) + tracking
 
 
-def spaced_width(draw, text, font, tracking):
+def spaced_width(draw: ImageDraw.ImageDraw, text: str, font: Font, tracking: float) -> float:
     return sum(draw.textlength(ch, font=font) for ch in text) + tracking * (len(text) - 1)
 
 

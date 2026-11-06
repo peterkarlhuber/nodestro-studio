@@ -27,6 +27,9 @@ dependencies = [
 dev = [
     "httpx>=0.27",
     "mypy>=1.13",
+    # The branding scripts (derive_branding, social_preview) are type-checked; both libraries ship their own types.
+    "numpy>=2",
+    "pillow>=11",
     "pytest>=8",
     "ruff>=0.8",
 ]
@@ -73,13 +76,16 @@ known-local-folder = ["architect_script", "conftest", "check_case_collisions", "
 [tool.mypy]
 python_version = "3.11"
 strict = true
-# derive_branding, docker_smoke, platform_smoke and social_preview are not typed yet (19 errors, API2-16).
 files = [
   "src/nodestro_studio",
   "scripts/check_case_collisions.py",
   "scripts/check_imports.py",
   "scripts/check_versions.py",
   "scripts/checkout_components.py",
+  "scripts/derive_branding.py",
+  "scripts/docker_smoke.py",
   "scripts/docker_test.py",
+  "scripts/platform_smoke.py",
+  "scripts/social_preview.py",
 ]
 mypy_path = "src"

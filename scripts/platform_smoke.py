@@ -17,6 +17,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from typing import Any
 import urllib.error
 import urllib.request
 
@@ -50,7 +51,7 @@ DOCKER_REASONS = frozenset(
 DOCKER_CHECKS = frozenset({"cli", "daemon", "preflight", "image", "self-test"})
 
 
-def check_docker_status(docker: dict) -> None:
+def check_docker_status(docker: dict[str, Any]) -> None:
     """Assert the Docker row's new fields when the runtime reports them (``checks``); older runtimes pass as they are.
 
     Approved only after every check passed, the in-container self-test included; never available otherwise.
