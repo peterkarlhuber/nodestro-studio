@@ -96,6 +96,7 @@
   },
   "failure": {
     "atStep": "Fehlgeschlagen bei {{name}}",
+    "cause": "{{step}}: {{reason}}",
     "more_one": "Ein weiterer Schritt ist fehlgeschlagen.",
     "more_other": "{{count}} weitere Schritte sind fehlgeschlagen.",
     "model": "Modell: {{model}}",
