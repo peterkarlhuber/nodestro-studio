@@ -14,7 +14,8 @@ import "./styles/publications.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { initialLanguage, loadLanguage } from "./i18n";
+import i18n, { initialLanguage, loadLanguage } from "./i18n";
+import { warmNumberFormats, whenIdle } from "./lib/format";
 import { App } from "./App";
 
 function render() {
@@ -23,6 +24,9 @@ function render() {
       <App />
     </StrictMode>,
   );
+  // The locale's number data loads in idle time, not in the first render of the editor (ST-004).
+  whenIdle(warmNumberFormats);
+  i18n.on("languageChanged", () => whenIdle(warmNumberFormats));
 }
 
 // The first render waits for the texts of the interface language, so the page never flashes English first.
