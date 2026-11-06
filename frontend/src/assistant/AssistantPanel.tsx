@@ -25,6 +25,7 @@ import type { AttachRequest, Attachment, Conversation } from "../api/types";
 import { providerList } from "../components/ModelPicker";
 import { toast } from "../components/toast";
 import { Button, Callout, DocLink, Hint, IconButton, Spinner, TextArea, TextInput } from "../components/ui";
+import { withLocalModel } from "../missingModel/store";
 import { ErrorText } from "../lib/errors";
 import { formatCost, relativeTime } from "../lib/format";
 import { missingProviders } from "../lib/providers";
@@ -263,7 +264,10 @@ function ChatView() {
   const send = useMutation({
     mutationFn: async ({ content, fileIds }: { content: string; fileIds: string[] }) => {
       const id = await ensure();
-      return { id, fileIds, sent: await api.sendMessage(id, content, fileIds) };
+      // A local model that is not ready: nothing was stored, the text and files stay in the composer; the message
+      // is sent once (as it is) when the model is ready, or with the model chosen for it.
+      const sent = await withLocalModel((model) => api.sendMessage(id, content, fileIds, model), { action: "assistant" });
+      return { id, fileIds, sent };
     },
     onSuccess: ({ id, fileIds, sent }) => {
       setText("");
@@ -297,7 +301,7 @@ function ChatView() {
   const retry = async (messageId: string) => {
     if (!data) return;
     try {
-      await api.retryMessage(data.id, messageId);
+      await withLocalModel((model) => api.retryMessage(data.id, messageId, model), { action: "assistant" });
       void queryClient.invalidateQueries({ queryKey: keys.conversation(data.id) });
     } catch (error) {
       toast.error(error);

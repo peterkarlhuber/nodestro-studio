@@ -50,6 +50,17 @@ When something fails, the entry says **Action needed**, what happened and what t
 
 Tasks are kept by Nodestro, not by the page: after a reload of the page the running setup and downloads appear again with their progress. If Nodestro is closed while a task runs, the task is listed as interrupted the next time; **Continue** picks it up where it stopped. Only one setup runs at a time, also across several Nodestro windows.
 
+## Required model not installed {#modell-fehlt}
+<!-- keywords: missing model, model not installed, required model, download model, choose another model, model not found, continue, server unreachable, permission, administrator, unattended, schedule, fix -->
+
+When the Workflow Architect, the assistant, an agent's design or test, a run or the knowledge search needs a local model that cannot be used right now, Nodestro does not start the action and opens one dialog instead. It says **why**: the model is not installed (with the download size, the free space of the [model folder](/docs/einstellungen#offline-import) and the memory it needs), the local models are not set up yet, the model server does not start or answer, the disk is too full, the model cannot do what the step needs (tool calls, structured results, images, embeddings), it is probably too large for this computer, or the name is not a local model. It also says **where** the model belongs: this computer, the Local Docker container, a model server you configured, or the Nodestro server.
+
+The dialog offers only what you may do here: **Download model** (also **Continue download** after an interrupted one), **Set up local models**, **Check again**, **Choose another model** or **Copy model name** for an administrator. Without permission to install, on a Nodestro server (its operator installs models) and in the strict offline mode nothing is downloaded, and the dialog says so. If the same model is downloading already, for example in another window, the dialog follows that download; a second one never starts.
+
+Your inputs stay where they are: the description for the Workflow Architect, the message and its files in the assistant, the test input or the run inputs. Once the download is done, Nodestro checks that the model is really there and can do the step; then **Continue** starts the action once with the same inputs. If you tick **Continue automatically when the model is ready**, it continues by itself, once. You can close the dialog while the download runs: it keeps going under **Tasks**. **Choose another model** lists only ready models that can do the step, local ones and cloud models (which may cost); the choice applies to this one action and does not change your settings.
+
+Schedules, batch runs and published APIs never download anything. A run that cannot start reports the missing model (for example in the schedule's last run) with **Fix**, which opens the same dialog without continuing anything by itself.
+
 ## This computer, context window and speed {#lokale-hardware}
 <!-- keywords: hardware, gpu, cpu only, ram, context window, ollama_context_length, speed, tokens per second, measure, cpu saving mode, reasoning reduced -->
 

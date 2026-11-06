@@ -196,7 +196,8 @@
     "provider_rate_limited": "{{provider}} ha segnalato troppe richieste o troppi token in poco tempo (limite di frequenza).",
     "provider_overloaded": "{{provider}} è sovraccarico in questo momento.",
     "provider_auth_aws": "AWS non ha accettato l’accesso per Amazon Bedrock: le credenziali mancano o sono scadute, oppure al ruolo IAM manca un permesso.",
-    "value_unverified": "L'indicatore chiave {{field}} ({{value}}) non è stato calcolato con uno strumento, nemmeno dopo una correzione. Il passo è stato fermato perché nessuna decisione si basi su una cifra non verificata."
+    "value_unverified": "L'indicatore chiave {{field}} ({{value}}) non è stato calcolato con uno strumento, nemmeno dopo una correzione. Il passo è stato fermato perché nessuna decisione si basi su una cifra non verificata.",
+    "local_model_missing": "Il modello locale {{model}} non è installato sul server dei modelli."
   },
   "budget": {
     "not_starter": "Solo la persona che ha avviato l’esecuzione o un amministratore può decidere sul suo budget.",
@@ -661,7 +662,9 @@
     "not_found": "Questa versione non è stata pubblicata."
   },
   "model": {
-    "unavailable": "Nodestro non ha impostazioni per {{provider}}; le esecuzioni non possono partire."
+    "unavailable": "Nodestro non ha impostazioni per {{provider}}; le esecuzioni non possono partire.",
+    "local_unavailable": "Il modello {{model}} non è ancora pronto per l’uso qui.",
+    "choice_invalid": "{{model}} non può essere usato per questa azione qui. Scegli uno dei modelli pronti."
   },
   "sync": {
     "disabled": "L’attesa del risultato non è attivata per questa API."
@@ -937,12 +940,16 @@
       "provider_unreachable": "Controlla la connessione a internet, il firewall o il proxy, poi continua l'esecuzione.",
       "provider_rate_limited": "Aspetta un momento e continua l'esecuzione. Meno esecuzioni contemporanee o un limite più alto presso il provider risolvono a lungo termine.",
       "provider_overloaded": "Non dipende dal tuo workflow. Aspetta qualche minuto, poi continua l'esecuzione.",
-      "provider_auth_aws": "Controlla accesso e permessi in Impostazioni → Provider di IA → Amazon Bedrock con «Verifica connessione»."
+      "provider_auth_aws": "Controlla accesso e permessi in Impostazioni → Provider di IA → Amazon Bedrock con «Verifica connessione».",
+      "local_model_missing": "Installalo con «Risolvi» o in Impostazioni, Modelli locali, poi avvia di nuovo l’esecuzione. Le esecuzioni automatiche non scaricano mai modelli da sole."
     },
     "provider": {
       "aws_access_denied": "Concedi bedrock:InvokeModel e bedrock:InvokeModelWithResponseStream sul modello o sul profilo di inferenza (con «solo UE» anche bedrock:GetInferenceProfile) e abilita il modello nella console AWS.",
       "aws_credentials_missing": "Su questo computer: accedi con «aws sso login» o controlla il profilo, poi usa «Verifica connessione» in Impostazioni → Provider di IA.",
       "data_residency_violation": "Usa una regione UE e un profilo di inferenza UE (eu.…) o un ID di modello di quella regione; i profili globali vengono sempre rifiutati."
+    },
+    "check": {
+      "local_model_missing": "Installalo con «Risolvi» o in Impostazioni, Modelli locali, poi avvia di nuovo l’esecuzione. Le esecuzioni automatiche non scaricano mai modelli da sole."
     }
   },
   "setupProvider": "Configura provider di IA",

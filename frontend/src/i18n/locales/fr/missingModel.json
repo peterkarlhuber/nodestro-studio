@@ -1,0 +1,146 @@
+{
+  "title": {
+    "model_missing": "Modèle requis non installé",
+    "runtime_missing": "Les modèles locaux ne sont pas encore configurés",
+    "server_stopped": "Le serveur de modèles local n’a pas démarré",
+    "server_unreachable": "Le serveur de modèles ne répond pas",
+    "server_missing": "Aucun serveur de modèles local disponible",
+    "model_name_invalid": "Le nom du modèle n’est pas valide",
+    "disk_full": "Espace disque insuffisant pour le modèle",
+    "capability_missing": "Le modèle ne sait pas faire ce qui est nécessaire",
+    "hardware_insufficient": "Le modèle est probablement trop grand pour cet ordinateur"
+  },
+  "cause": {
+    "model_missing": {
+      "this_computer": "Le modèle local {{model}} n’est pas encore disponible sur cet ordinateur.",
+      "container": "Le modèle local {{model}} n’est pas encore disponible dans le conteneur de modèles local.",
+      "remote": "Le modèle local {{model}} n’est pas encore disponible sur le serveur de modèles {{host}}.",
+      "server": "Le modèle local {{model}} n’est pas installé sur ce serveur Nodestro."
+    },
+    "runtime_missing": {
+      "this_computer": "Les modèles locaux ont besoin du moteur de modèles local (Ollama), qui n’est pas encore installé sur cet ordinateur. Nodestro peut le configurer pour vous ; ensuite, {{model}} pourra être téléchargé."
+    },
+    "server_stopped": {
+      "this_computer": "Le serveur de modèles local de cet ordinateur n’a pas pu démarrer : Nodestro ne peut ni vérifier ni utiliser {{model}}."
+    },
+    "server_unreachable": {
+      "this_computer": "Le serveur Ollama que vous avez configuré ne répond pas : Nodestro ne peut ni vérifier ni utiliser {{model}}.",
+      "container": "Le conteneur de modèles local ne répond pas. Vérifiez que Nodestro Local Docker fonctionne entièrement.",
+      "remote": "Le serveur de modèles {{host}} ne répond pas : Nodestro ne peut ni vérifier ni utiliser {{model}}.",
+      "server": "Le serveur de modèles de ce serveur Nodestro ne répond pas. Votre administrateur peut le vérifier."
+    },
+    "server_missing": {
+      "this_computer": "Aucun serveur de modèles local n’est configuré ici : {{model}} ne peut pas fonctionner.",
+      "server": "Ce serveur Nodestro n’a pas de serveur de modèles local. Votre administrateur peut en configurer un."
+    },
+    "model_name_invalid": {
+      "this_computer": "« {{model}} » n’est pas le nom d’un modèle exécuté localement (nom invalide ou modèle cloud d’Ollama). Vérifiez le modèle dans la configuration."
+    },
+    "disk_full": {
+      "this_computer": "{{model}} nécessite environ {{size}}, mais seulement {{free}} sont libres dans le dossier des modèles. Libérez de l’espace ou déplacez le dossier des modèles vers un disque plus grand dans les réglages.",
+      "container": "{{model}} nécessite environ {{size}}, mais seulement {{free}} sont libres dans le dossier des modèles du conteneur. Libérez de l’espace sur le disque, puis vérifiez à nouveau."
+    },
+    "capability_missing": {
+      "this_computer": "{{model}} est installé, mais ne prend pas en charge ce dont cette étape a besoin : {{list}}."
+    },
+    "hardware_insufficient": {
+      "this_computer": "{{model}} n’est pas installé et nécessite probablement plus de mémoire que cet ordinateur n’en possède.",
+      "container": "{{model}} n’est pas installé et nécessite probablement plus de mémoire que cet ordinateur n’en accorde au conteneur."
+    }
+  },
+  "catalog": "Vérifié par Nodestro",
+  "facts": {
+    "size": "Taille du téléchargement : {{size}}",
+    "sizeUnknown": "La taille du téléchargement n’est pas connue à l’avance.",
+    "free": "Espace libre dans le dossier des modèles : {{free}}",
+    "memory": "Nécessite environ {{memory}} de mémoire pour fonctionner",
+    "partial": "Déjà téléchargé : {{size}}. Le téléchargement reprend à cet endroit.",
+    "fitsNo": "Cet ordinateur n’a peut-être pas assez de mémoire pour ce modèle. Il peut fonctionner très lentement, voire pas du tout ; un modèle plus petit est généralement le meilleur choix."
+  },
+  "blocked": {
+    "permission": "Vous n’avez pas le droit d’installer des modèles ici. Demandez à un administrateur d’installer {{model}}.",
+    "operator": "Les modèles de ce serveur Nodestro sont installés par son exploitant, pas sur votre ordinateur. Demandez à votre administrateur d’installer {{model}} sur le serveur.",
+    "offline": "Le mode hors ligne strict est activé : rien n’est téléchargé. Importez le modèle depuis un fichier dans les réglages, ou choisissez un autre modèle."
+  },
+  "why": {
+    "architect": "L’architecte de workflows IA utilise ce modèle pour concevoir votre workflow.",
+    "assistant": "L’assistant utilise ce modèle pour répondre à votre message.",
+    "agent_design": "Nodestro utilise ce modèle pour concevoir ce que vous avez demandé.",
+    "agent_test": "L’agent utilise ce modèle pour le test.",
+    "run": "Un agent de ce workflow utilise ce modèle.",
+    "knowledge_index": "La recherche dans les connaissances utilise ce modèle pour construire l’index sémantique.",
+    "check": "Ce workflow ou cette tâche a besoin de ce modèle."
+  },
+  "keep": {
+    "architect": "Votre nom, votre description et vos options sont conservés. L’architecte de workflows IA démarre avec eux dès que le modèle est prêt.",
+    "assistant": "Votre message et ses fichiers restent dans le champ de saisie. Ils sont envoyés dès que le modèle est prêt.",
+    "agent_design": "Votre description est conservée. Nodestro poursuit avec elle dès que le modèle est prêt.",
+    "agent_test": "Votre saisie de test est conservée. Le test s’exécute dès que le modèle est prêt.",
+    "run": "Vos saisies pour l’exécution sont conservées. L’exécution démarre dès que le modèle est prêt.",
+    "knowledge_index": "L’index sémantique est construit dès que le modèle est prêt.",
+    "check": "Après le téléchargement, relancez l’action."
+  },
+  "continueTo": {
+    "architect": "démarrer l’architecte de workflows IA",
+    "assistant": "envoyer votre message",
+    "agent_design": "poursuivre",
+    "agent_test": "lancer le test",
+    "run": "démarrer l’exécution",
+    "knowledge_index": "construire l’index",
+    "check": "poursuivre"
+  },
+  "actionsLabel": "Ce que vous pouvez faire",
+  "actions": {
+    "download": "Télécharger le modèle",
+    "downloadAnyway": "Télécharger quand même",
+    "resume": "Reprendre le téléchargement",
+    "setup": "Configurer les modèles locaux",
+    "retry": "Vérifier à nouveau",
+    "choose": "Choisir un autre modèle",
+    "copyName": "Copier le nom du modèle",
+    "openSettings": "Ouvrir les réglages des modèles locaux",
+    "close": "Fermer",
+    "continue": "Continuer",
+    "done": "Terminé",
+    "useModel": "Utiliser ce modèle"
+  },
+  "askAdmin": {
+    "copied": "Nom du modèle copié"
+  },
+  "capability": {
+    "tools": "les appels d’outils",
+    "image_input": "les images",
+    "vision": "les images",
+    "structured_output": "les résultats structurés",
+    "reasoning": "le raisonnement",
+    "thinking": "le raisonnement",
+    "completion": "répondre par du texte (c’est un modèle d’embeddings)",
+    "embedding": "les embeddings pour la recherche dans les connaissances (c’est un modèle de chat)"
+  },
+  "choose": {
+    "title": "Modèles prêts dès maintenant",
+    "note": "Le modèle choisi ne sert qu’à cette action. Vos réglages ne changent pas.",
+    "noteAgent": "Le modèle choisi ne sert qu’à ce test. L’agent enregistré garde son modèle.",
+    "back": "Retour",
+    "local": "Modèle local",
+    "cloud": "Fournisseur cloud, des coûts peuvent s’appliquer",
+    "context": "Fenêtre de contexte (tokens) : {{tokens}}",
+    "limited": "Sa sortie maximale est inférieure à ce que demande cette étape ; la limite de sortie est donc abaissée."
+  },
+  "job": {
+    "already": "Ce modèle est déjà en cours de téléchargement. Sa progression s’affiche ici ; aucun second téléchargement n’est lancé.",
+    "background": "Vous pouvez fermer cette boîte de dialogue : le téléchargement continue en arrière-plan (Réglages, Modèles locaux).",
+    "auto": "Continuer automatiquement quand le modèle est prêt",
+    "autoHint": "Nodestro va {{action}} une seule fois, avec vos saisies, dès que le modèle a été vérifié.",
+    "checking": "Vérification du modèle…"
+  },
+  "ready": {
+    "title": "Le modèle est prêt",
+    "text": "{{model}} est installé et a été vérifié. Continuez pour {{action}}.",
+    "fix": "{{model}} est installé et a été vérifié. Relancez l’action quand vous êtes prêt."
+  },
+  "fix": {
+    "button": "Corriger",
+    "label": "Installer ou configurer le modèle {{model}}"
+  }
+}

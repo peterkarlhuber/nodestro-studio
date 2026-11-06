@@ -240,11 +240,13 @@ export const api = {
   detach: (id: string, attachmentId: string) => request<Conversation>("DELETE", `${chatPath(id)}/attachments/${attachmentId}`),
   snapshot: (id: string, snapshotId: string) => request<Snapshot>("GET", `${chatPath(id)}/snapshots/${snapshotId}`),
   /** The assistant answers in the interface language unless the message asks for another. */
-  sendMessage: (id: string, content: string, fileIds: string[] = []) =>
+  /** ``model``: another ready model for this answer only (the missing local model dialog). */
+  sendMessage: (id: string, content: string, fileIds: string[] = [], model?: string) =>
     request<{ user: ChatMessage; assistant: ChatMessage }>("POST", `${chatPath(id)}/messages`, {
       content,
       language: currentLanguage(),
       file_ids: fileIds,
+      ...(model ? { model } : {}),
     }),
   /** Formats and limits of files, and whether the assistant's model reads images and PDFs natively. */
   assistantFileSupport: () => request<AssistantFileSupport>("GET", "/assistant/files/support"),
@@ -258,8 +260,8 @@ export const api = {
   removeAssistantFile: (id: string, fileId: string) => request<Conversation>("DELETE", `${chatPath(id)}/files/${fileId}`),
   assistantFileText: (id: string, fileId: string) => request<FileText>("GET", `${chatPath(id)}/files/${fileId}/text`),
   assistantFileUrl: (id: string, fileId: string) => `/api${chatPath(id)}/files/${fileId}/content`,
-  retryMessage: (id: string, messageId: string) =>
-    request<ChatMessage>("POST", `${chatPath(id)}/messages/${messageId}/retry`, { language: currentLanguage() }),
+  retryMessage: (id: string, messageId: string, model?: string) =>
+    request<ChatMessage>("POST", `${chatPath(id)}/messages/${messageId}/retry`, { language: currentLanguage(), ...(model ? { model } : {}) }),
   cancelMessage: (id: string, messageId: string) => request<ChatMessage>("POST", `${chatPath(id)}/messages/${messageId}/cancel`),
   messageEventsUrl: (id: string, messageId: string) => `/api${chatPath(id)}/messages/${messageId}/events`,
 

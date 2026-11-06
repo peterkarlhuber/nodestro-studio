@@ -15,6 +15,7 @@ import { formatCost } from "../lib/format";
 import { ArchitectProgress, CostMeter } from "./ArchitectProgress";
 import { ArchitectReview } from "./ArchitectReview";
 import { graphDiffers } from "./draftDiff";
+import { askMissingModel } from "../missingModel/store";
 import { useArchitectJob } from "./useArchitectJob";
 
 /** The editor's workflow at this moment, for revising it (unsaved changes included). */
@@ -108,6 +109,8 @@ export function ArchitectDialog({
       jobMode?: ArchitectMode;
       workflowName?: string;
       tools?: boolean;
+      /** Another ready model for this job only (chosen in the missing model dialog). */
+      model?: string;
     } = {},
   ) => {
     const jobMode = overrides.jobMode ?? mode;
@@ -127,12 +130,30 @@ export function ArchitectDialog({
         clarifications: overrides.clarification ? [overrides.clarification] : [],
         skip_questions: overrides.skip ?? false,
         generate_tools: overrides.tools ?? generateTools,
+        ...(overrides.model ? { model: overrides.model } : {}),
       });
       setJob(started);
       setJobId(started.id);
       setConfirmClose(false);
       setAnswer("");
     } catch (failure) {
+      // A local model that is not ready: the shared dialog offers what can be done; the form keeps every input and
+      // the job starts once (with these values) when the model is ready or another one was chosen.
+      const asked = askMissingModel(failure, { action: "architect" });
+      if (asked) {
+        const choice = await asked;
+        if (choice) {
+          setBusy(false);
+          return launch({
+            ...overrides,
+            text,
+            jobMode,
+            workflowName: overrides.workflowName ?? name,
+            tools: overrides.tools ?? generateTools,
+            model: choice.switched ? choice.model : overrides.model,
+          });
+        }
+      }
       setError(failure);
     } finally {
       setBusy(false);

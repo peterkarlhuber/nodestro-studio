@@ -26,6 +26,7 @@ import {
 import type { Settings } from "../api/types";
 import { PermissionNote } from "../components/Access";
 import { toast } from "../components/toast";
+import { withLocalModel } from "../missingModel/store";
 import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatLargeBytes } from "../lib/format";
@@ -722,7 +723,12 @@ export function KnowledgeSearchPanel({
   const overview = useLocalModels();
   const queryClient = useQueryClient();
   const update = (data: KnowledgeIndexStatus) => queryClient.setQueryData(localKeys.index, data);
-  const rebuild = useMutation({ mutationFn: () => localApi.rebuildIndex(), onSuccess: update, onError: toast.error });
+  // An embedding model that is not installed: the shared dialog downloads it, then the index is built.
+  const rebuild = useMutation({
+    mutationFn: () => withLocalModel(() => localApi.rebuildIndex(), { action: "knowledge_index" }),
+    onSuccess: update,
+    onError: toast.error,
+  });
   const cancel = useMutation({ mutationFn: localApi.cancelIndex, onSuccess: update, onError: toast.error });
   const drop = useMutation({ mutationFn: localApi.dropIndex, onSuccess: update, onError: toast.error });
   const mode = settings.knowledge_retrieval ?? "fts";

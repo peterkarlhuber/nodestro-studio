@@ -35,6 +35,7 @@ import { useAssistant } from "../assistant/store";
 import { LoginProblemNotice, ReadOnlyNotice, UserMenu } from "../components/Access";
 import { BrandLogo, BrandMark } from "../components/BrandLogo";
 import { Toaster } from "../components/toast";
+import { MissingModelHost } from "../missingModel/MissingModelDialog";
 import { Hint, Segmented, Tooltip } from "../components/ui";
 import { isLanguage, setLanguage, storedLanguage } from "../i18n";
 import { setDefaultModel } from "../lib/defaults";
@@ -337,6 +338,7 @@ export function AppShell() {
       </main>
       {assistantOpen ? <AssistantPanel /> : null}
       <Toaster />
+      <MissingModelHost />
     </div>
   );
 }

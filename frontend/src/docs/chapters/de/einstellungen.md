@@ -50,6 +50,17 @@ Scheitert etwas, sagt der Eintrag **Aktion erforderlich**, was passiert ist und 
 
 Aufgaben hält Nodestro, nicht die Seite: Nach einem Neuladen der Seite erscheinen die laufende Einrichtung und die Downloads wieder mit ihrem Fortschritt. Wird Nodestro beendet, während eine Aufgabe läuft, steht sie beim nächsten Mal als unterbrochen in der Liste; **Fortsetzen** macht dort weiter, wo sie stehen geblieben ist. Es läuft immer nur eine Einrichtung, auch über mehrere Nodestro-Fenster hinweg.
 
+## Benötigtes Modell nicht installiert {#modell-fehlt}
+<!-- keywords: modell fehlt, modell nicht installiert, benötigtes modell, modell herunterladen, anderes modell wählen, model not found, fortfahren, server nicht erreichbar, berechtigung, administrator, unbeaufsichtigt, zeitplan, beheben -->
+
+Braucht der KI-Architekt, der Assistent, der Entwurf oder Test eines Agenten, eine Ausführung oder die Wissenssuche ein lokales Modell, das gerade nicht nutzbar ist, startet Nodestro die Aktion nicht, sondern öffnet einen Dialog. Er sagt, **warum**: Das Modell ist nicht installiert (mit Downloadgröße, freiem Platz im [Modellordner](/docs/einstellungen#offline-import) und benötigtem Arbeitsspeicher), lokale Modelle sind noch nicht eingerichtet, der Modellserver startet oder antwortet nicht, der Speicher ist zu voll, das Modell kann nicht, was der Schritt braucht (Tool-Aufrufe, strukturierte Ergebnisse, Bilder, Embeddings), es ist für diesen Computer vermutlich zu groß, oder der Name ist kein lokales Modell. Er sagt auch, **wohin** das Modell gehört: auf diesen Computer, in den Local-Docker-Container, auf einen eingetragenen Modellserver oder auf den Nodestro-Server.
+
+Der Dialog bietet nur an, was du hier tun darfst: **Modell herunterladen** (nach einer Unterbrechung **Download fortsetzen**), **Lokale Modelle einrichten**, **Erneut prüfen**, **Anderes Modell wählen** oder **Modellnamen kopieren** für einen Administrator. Ohne Berechtigung zum Installieren, auf einem Nodestro-Server (dort installiert der Betreiber) und im strikten Offline-Modus wird nichts heruntergeladen, und der Dialog sagt das. Lädt dasselbe Modell schon, etwa in einem anderen Fenster, folgt der Dialog diesem Download; ein zweiter startet nie.
+
+Deine Eingaben bleiben, wo sie sind: die Beschreibung für den KI-Architekten, die Nachricht samt Dateien im Assistenten, die Testeingabe oder die Eingaben der Ausführung. Ist der Download fertig, prüft Nodestro, ob das Modell wirklich da ist und den Schritt kann; dann startet **Weiter** die Aktion einmal mit denselben Eingaben. Hakst du **Automatisch weitermachen, sobald das Modell bereit ist** an, geht es von selbst weiter, einmal. Du kannst den Dialog schließen, während der Download läuft: Er läuft unter **Aufgaben** weiter. **Anderes Modell wählen** listet nur bereite Modelle, die den Schritt können, lokale und Cloud-Modelle (die Kosten verursachen können); die Wahl gilt für diese eine Aktion und ändert deine Einstellungen nicht.
+
+Zeitpläne, Stapelausführungen und veröffentlichte APIs laden nie etwas herunter. Eine Ausführung, die nicht starten kann, meldet das fehlende Modell (etwa beim letzten Lauf des Zeitplans) mit **Beheben**, das denselben Dialog öffnet, ohne von selbst etwas fortzusetzen.
+
 ## Dieser Computer, Kontextfenster und Geschwindigkeit {#lokale-hardware}
 <!-- keywords: hardware, gpu, nur cpu, arbeitsspeicher, kontextfenster, ollama_context_length, geschwindigkeit, tokens pro sekunde, messen, cpu-sparmodus, denken verkürzt -->
 

@@ -14,6 +14,7 @@ import { FormFields, fieldErrors, formDefaults } from "../components/FormFields"
 import { ErrorText, LocalError } from "../lib/errors";
 import { formatCost } from "../lib/format";
 import { missingProviders } from "../lib/providers";
+import { withLocalModel } from "../missingModel/store";
 import { CheckList } from "./CheckList";
 import { useEditor } from "./store";
 import { useSettingsHref } from "../lib/settingsLink";
@@ -78,7 +79,8 @@ export function RunDialog({
     mutationFn: async () => {
       const id = await save();
       if (!id) throw new LocalError("workflow.save_failed");
-      return api.startRun(id, input, fileIds, values);
+      // A local model of an agent is not ready: the inputs stay; the run starts once when the models are ready.
+      return withLocalModel(() => api.startRun(id, input, fileIds, values), { action: "run" });
     },
     onSuccess: (result) => {
       onStarted(result);
