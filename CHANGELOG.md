@@ -24,6 +24,8 @@
   shows as its key, and tests check every key built from a value in all six languages.
 - New page "Publications" (Automate & test): every published API with its workflow, status, active version, date
   and export history; "Open API & Export" opens that workflow's dialog, also after a reload.
+- Runs explain a provider's refused conversation and a too-large conversation (`run.provider_rejected_messages`,
+  `run.provider_context_exceeded`) in six languages, with help in the Runs chapter.
 
 ### Product findings of the manual review (2026-11-05)
 
