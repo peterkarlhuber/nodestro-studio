@@ -19,10 +19,12 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
 import type { AssistantStep, AttachmentKind, ChatMessage, ContextRef, Handover } from "../api/types";
+import { ReasoningView } from "../components/ReasoningView";
 import { Button, Callout, Hint } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import { formatTokens } from "../lib/format";
 import { SentFileChips } from "./AssistantFiles";
+import { useThinkingDisplay } from "../lib/thinkingDisplay";
 import { AssistantMarkdown } from "./AssistantMarkdown";
 import { handoverPath } from "./handover";
 import { SnapshotDialog } from "./SnapshotDialog";
@@ -160,6 +162,7 @@ export function MessageView({
   onRetry: () => void;
 }) {
   const { t } = useTranslation();
+  const { display } = useThinkingDisplay(`conversation:${conversationId}`);
   if (message.role === "user") {
     return (
       <div className="chat-message chat-message--user" data-testid="chat-user">
@@ -176,6 +179,7 @@ export function MessageView({
         <Sparkles size={13} />
       </div>
       <div className="chat-answer">
+        <ReasoningView trace={message.reasoning} display={display} testId="chat-reasoning" />
         {message.content ? <AssistantMarkdown text={message.content} /> : null}
         {streaming ? <StepLine step={message.steps[message.steps.length - 1]} /> : null}
         {message.sources.length ? (

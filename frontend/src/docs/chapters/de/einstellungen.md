@@ -254,6 +254,36 @@ Die Sprache betrifft nur die **Oberfläche**: Menüs, Hinweise, Fehlermeldungen,
 
 Oben rechts wechselst du zwischen **Dunkel** und **Hell**. Die Wahl wird im Browser gespeichert. Beide Varianten folgen dem Designsystem *Midnight Citron*. Auf schmalen Bildschirmen ist die Seitenleiste ausgeblendet: Die Menütaste oben links (**Alle Seiten zeigen**) öffnet sie als Bereich, **Esc** schließt ihn wieder.
 
+## Anzeige des Denkens {#denken-anzeige}
+<!-- keywords: denken, thinking, reasoning, zusammenfassung, gedanken, live, status, nicht übertragen, redacted -->
+
+Während ein Modell arbeitet, zeigt Nodestro, was sein Anbieter vom Denken überträgt: im Assistenten, im Chat mit der Teamleitung eines Laufs, in Workflow-Läufen, im Workflow-Architekten und im Agententest. **Nodestro schreibt, ergänzt oder umschreibt nie selbst Denktext.** Behält ein Anbieter das Denken für sich, siehst du nur, dass das Modell nachdenkt, und warum es keinen Text gibt.
+
+Die Anzeige trennt das Denken immer von der Antwort (gestrichelter Rahmen, eigene Beschriftung) und nennt einen dieser Zustände:
+
+| Zustand | Bedeutung |
+|---|---|
+| *Denkt nach…* | Eine Denkphase läuft; es ist (noch) kein Text da, oder der Text ist ausgeblendet. |
+| *Denktext* | Das Denken des Modells, wie es entstand (offene Modelle, etwa über Ollama oder vLLM). |
+| *Zusammenfassung des Denkens* | Eine Zusammenfassung, die der Anbieter über Denken schreibt, das er nicht offenlegt (OpenAI, Gemini, Claude). |
+| *Denken nicht übertragen* | Das Modell hat nachgedacht, der Anbieter hat aber keinen Text gesendet (verschlüsselt, weggelassen oder nicht angefordert). |
+| *Denken nicht offengelegt* | Das Modell denkt nicht nach, oder sein Anbieter sendet das Denken nie. |
+
+**Anzeige in diesem Browser** (Abschnitt *Anzeige des Denkens*): *Live anzeigen* öffnet den Text, während er ankommt, *Eingeklappt* (Standard) zeigt die Aktivität und lässt den Text einen Klick entfernt, *Nur Status* zeigt den Text nie. Der Assistent und der Chat mit der Teamleitung haben je Gespräch eine eigene Wahl (**Denken** unter der Eingabe bzw. der Einleitung); *Standard* folgt der globalen Wahl. Die Wahl bleibt in diesem Browser und ändert keinen Workflow und kein Gespräch.
+
+**Anzeigen ist nicht Einschalten.** Ob und wie viel ein Modell denkt, legst du am Agenten fest ([Denken und Aufwand](/docs/agenten#denken)). Manche Anbieter senden Text nur auf Anfrage:
+
+| Anbieter | Was live ankommt | Wie du Text erhältst |
+|---|---|---|
+| Anthropic (Claude 4 und neuer) | Zusammenfassung | Option *Gedanken anzeigen* des Agenten (*Zusammengefasst anzeigen*) |
+| OpenAI (denkende Modelle) | Zusammenfassung; das Denken selbst nie | **Zusammenfassungen des Denkens anfordern** (Administration; OpenAI verlangt eventuell eine verifizierte Organisation) |
+| OpenAI GPT-4o, GPT-4.1 | nichts: sie denken nicht | – |
+| Gemini 2.5 und neuer | Zusammenfassung (Thought Summaries) | **Zusammenfassungen des Denkens anfordern** |
+| Amazon Bedrock | Claude: Zusammenfassung; andere denkende Modelle: Denktext, wo das Modell ihn sendet | Request-Options des Agenten |
+| Ollama, vLLM, OpenAI-kompatible Server | Denktext, wo der Server ihn abtrennt | Serverkonfiguration (etwa ein Reasoning-Parser) |
+
+Zusammenfassungen anzufordern ändert keine Antwort und keine Kosten: Denk-Tokens berechnet der Anbieter, ob Text übertragen wird oder nicht. Die Denk-Optionen des Agenten zeigen, was sein Modell überträgt (*Denken live: …*).
+
 ## Backup und Wiederherstellung {#backup}
 <!-- keywords: backup, sicherung, wiederherstellen, restore, export, zip, umzug, datensicherung -->
 

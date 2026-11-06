@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 import { api } from "../api/client";
 import { keys } from "../api/hooks";
-import type { ChatMessageIn, ChatTarget, RunChatTargets, RunChatView, RunMessage } from "../api/types";
+import type { ChatMessageIn, ChatTarget, LiveAnswer, RunChatTargets, RunChatView, RunMessage } from "../api/types";
 import { endedWithoutAccess } from "../editor/useRunStream";
 import { hasPendingQuestion, withMessage, withTargets } from "./runChatModel";
 
@@ -66,6 +66,11 @@ export function useRunChatStream(runId: string, live: boolean) {
       const data = parse<RunChatTargets | ChatTarget[]>(event);
       if (Array.isArray(data)) update((view) => withTargets(view, data));
       else if (data && Array.isArray(data.targets)) update((view) => withTargets(view, data.targets, data));
+    });
+    source.addEventListener("answering", (event) => {
+      // {answers}: the answers being written now (their reasoning and text so far), sent while one is live.
+      const data = parse<{ answers?: LiveAnswer[] }>(event);
+      if (data && Array.isArray(data.answers)) update((view) => ({ ...view, answering: data.answers }));
     });
     source.addEventListener("end", (event) => {
       source.close();

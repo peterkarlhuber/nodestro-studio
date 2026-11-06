@@ -25,7 +25,11 @@ export function asNodeRun(result: AgentTestResult): NodeRun {
     prompt: result.prompt,
     output: result.output,
     text: result.text,
-    thinking: "",
+    // The test answers at once: its reasoning is shown with the result (the same fields as a step of a run).
+    thinking: result.reasoning?.text ?? "",
+    thinking_kind: result.reasoning?.kind ?? null,
+    thinking_phases: result.reasoning?.phases ?? 0,
+    thinking_redacted: result.reasoning?.redacted ?? false,
     error: result.error,
     error_code: result.error_code,
     error_params: result.error_params,

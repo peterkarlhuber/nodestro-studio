@@ -254,6 +254,36 @@ El idioma solo afecta a la **interfaz**: menús, avisos, mensajes de error, esta
 
 Arriba a la derecha cambias entre **Oscuro** y **Claro**. La elección se guarda en el navegador. Ambas variantes siguen el sistema de diseño *Midnight Citron*. En pantallas estrechas, la barra lateral se oculta: el botón de menú arriba a la izquierda (**Mostrar todas las páginas**) la abre como panel y **Esc** la vuelve a cerrar.
 
+## Visualización del razonamiento {#denken-anzeige}
+<!-- keywords: razonamiento, thinking, reasoning, resumen, pensamiento, en vivo, estado, no transmitido -->
+
+Mientras un modelo trabaja, Nodestro muestra lo que su proveedor transmite del razonamiento: en el asistente, en el chat con el líder del equipo de una ejecución, en las ejecuciones de flujos, en el Arquitecto de flujos y en la prueba de agentes. **Nodestro nunca escribe, completa ni parafrasea razonamiento por su cuenta.** Si un proveedor se guarda el razonamiento, solo verás que el modelo está pensando y por qué no hay texto.
+
+La visualización siempre separa el razonamiento de la respuesta (marco discontinuo, etiqueta propia) e indica uno de estos estados:
+
+| Estado | Significado |
+|---|---|
+| *Pensando…* | Hay una fase de razonamiento en curso; todavía no ha llegado texto, o el texto está oculto. |
+| *Texto de razonamiento* | El razonamiento del modelo tal como se generó (modelos abiertos, p. ej. con Ollama o vLLM). |
+| *Resumen del razonamiento* | Un resumen que escribe el proveedor de un razonamiento que no expone (OpenAI, Gemini, Claude). |
+| *Razonamiento no transmitido* | El modelo razonó, pero el proveedor no envió texto (cifrado, omitido o no solicitado). |
+| *Razonamiento no expuesto* | El modelo no razona, o su proveedor nunca envía el razonamiento. |
+
+**Visualización en este navegador** (sección *Visualización del razonamiento*): *Mostrar en vivo* abre el texto mientras llega, *Contraído* (predeterminado) muestra la actividad y deja el texto a un clic, *Solo estado* nunca muestra el texto. El asistente y el chat con el líder del equipo tienen su propia opción por conversación (**Razonamiento** bajo la entrada o la introducción); *Predeterminado* sigue la opción global. La opción se queda en este navegador y no cambia ningún flujo ni ninguna conversación.
+
+**Mostrar no es activar.** Si un modelo razona y cuánto se configura en el agente ([Razonamiento y esfuerzo](/docs/agenten#denken)). Algunos proveedores solo envían texto si se pide:
+
+| Proveedor | Qué llega en vivo | Cómo obtener texto |
+|---|---|---|
+| Anthropic (Claude 4 y posteriores) | resumen | la opción del agente para mostrar el razonamiento (*Mostrar resumido*) |
+| OpenAI (modelos que razonan) | resumen; el razonamiento en sí, nunca | **Solicitar resúmenes del razonamiento** (administradores; OpenAI puede exigir una organización verificada) |
+| OpenAI GPT-4o, GPT-4.1 | nada: no razonan | – |
+| Gemini 2.5 y posteriores | resumen (resúmenes de pensamientos) | **Solicitar resúmenes del razonamiento** |
+| Amazon Bedrock | Claude: resumen; otros modelos que razonan: texto de razonamiento cuando el modelo lo envía | las opciones de solicitud del agente |
+| Ollama, vLLM, servidores compatibles con OpenAI | texto de razonamiento cuando el servidor lo separa | la configuración del servidor (p. ej. un analizador de razonamiento) |
+
+Solicitar resúmenes no cambia ninguna respuesta ni ningún coste: el proveedor factura los tokens de razonamiento se transmita texto o no. Las opciones de razonamiento del agente indican lo que transmite su modelo (*Razonamiento en vivo: …*).
+
 ## Copia de seguridad y restauración {#backup}
 <!-- keywords: copia de seguridad, backup, restaurar, exportar, zip, mudanza, respaldo -->
 

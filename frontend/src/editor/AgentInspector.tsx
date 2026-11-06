@@ -35,6 +35,7 @@ import type {
 import { DiscussIcon } from "../assistant/DiscussButton";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
+import { ModelReasoningNote } from "../components/ModelReasoningNote";
 import { CodeEditor } from "../components/CodeEditor";
 import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
 import { HelpTip } from "../components/Tooltip";
@@ -952,6 +953,7 @@ function ThinkingSection({ agent, update, ui }: SectionProps) {
           {budget.available ? null : <OptionReason option="thinking_budget" support={budget} />}
         </Field>
       ) : null}
+      <ModelReasoningNote model={agent.model} />
     </Section>
   );
 }

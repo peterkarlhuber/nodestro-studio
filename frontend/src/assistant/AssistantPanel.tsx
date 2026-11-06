@@ -25,6 +25,7 @@ import type { AttachRequest, Attachment, Conversation } from "../api/types";
 import { providerList } from "../components/ModelPicker";
 import { toast } from "../components/toast";
 import { Button, Callout, DocLink, Hint, IconButton, Spinner, TextArea, TextInput } from "../components/ui";
+import { ScopedThinkingDisplay } from "../components/ReasoningView";
 import { ErrorText } from "../lib/errors";
 import { formatCost, relativeTime } from "../lib/format";
 import { missingProviders } from "../lib/providers";
@@ -396,6 +397,7 @@ function ChatView() {
           </div>
         </div>
         <p className="muted small chat-hint">{t("assistant.composer.hint")}</p>
+        {data ? <ScopedThinkingDisplay scope={`conversation:${data.id}`} testId="assistant-thinking-display" /> : null}
       </div>
       <AttachPicker open={picker} onClose={() => setPicker(false)} onAttach={attach} />
     </>

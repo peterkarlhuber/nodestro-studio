@@ -254,6 +254,36 @@ O idioma afeta apenas a **interface**: menus, avisos, mensagens de erro, esta do
 
 No canto superior direito você alterna entre **Escuro** e **Claro**. A escolha fica salva no navegador. As duas variantes seguem o sistema de design *Midnight Citron*. Em telas estreitas, a barra lateral fica oculta: o botão de menu no canto superior esquerdo (**Mostrar todas as páginas**) a abre como painel, e **Esc** a fecha de novo.
 
+## Exibição do raciocínio {#denken-anzeige}
+<!-- keywords: raciocínio, thinking, reasoning, resumo, pensamento, ao vivo, status, não transmitido -->
+
+Enquanto um modelo trabalha, o Nodestro mostra o que o provedor transmite do raciocínio: no assistente, no chat com o líder da equipe de uma execução, nas execuções de fluxos, no Arquiteto de fluxos e no teste de agente. **O Nodestro nunca escreve, completa ou parafraseia raciocínio por conta própria.** Se um provedor guarda o raciocínio para si, você vê apenas que o modelo está pensando, e por que não há texto.
+
+A exibição sempre separa o raciocínio da resposta (moldura tracejada, rótulo próprio) e indica um destes estados:
+
+| Estado | Significado |
+|---|---|
+| *Pensando…* | Uma fase de raciocínio está em andamento; ainda não chegou texto, ou o texto está oculto. |
+| *Texto do raciocínio* | O raciocínio do modelo como foi gerado (modelos abertos, por exemplo via Ollama ou vLLM). |
+| *Resumo do raciocínio* | Um resumo escrito pelo provedor de um raciocínio que ele não expõe (OpenAI, Gemini, Claude). |
+| *Raciocínio não transmitido* | O modelo raciocinou, mas o provedor não enviou texto (criptografado, omitido ou não solicitado). |
+| *Raciocínio não exposto* | O modelo não raciocina, ou o provedor dele nunca envia o raciocínio. |
+
+**Exibição neste navegador** (seção *Exibição do raciocínio*): *Mostrar ao vivo* abre o texto enquanto ele chega, *Recolhido* (padrão) mostra a atividade e deixa o texto a um clique, *Só status* nunca mostra o texto. O assistente e o chat com o líder da equipe têm uma escolha própria por conversa (**Raciocínio** abaixo da entrada ou da introdução); *Padrão* segue a escolha global. A escolha fica neste navegador e não altera nenhum fluxo nem nenhuma conversa.
+
+**Mostrar não é ativar.** Se e quanto um modelo raciocina é definido no agente ([Raciocínio e esforço](/docs/agenten#denken)). Alguns provedores só enviam texto quando solicitado:
+
+| Provedor | O que chega ao vivo | Como obter texto |
+|---|---|---|
+| Anthropic (Claude 4 e posteriores) | resumo | a opção do agente para mostrar o raciocínio (*Mostrar resumido*) |
+| OpenAI (modelos que raciocinam) | resumo; o raciocínio em si, nunca | **Solicitar resumos do raciocínio** (administradores; a OpenAI pode exigir uma organização verificada) |
+| OpenAI GPT-4o, GPT-4.1 | nada: eles não raciocinam | – |
+| Gemini 2.5 e posteriores | resumo (resumos de pensamentos) | **Solicitar resumos do raciocínio** |
+| Amazon Bedrock | Claude: resumo; outros modelos que raciocinam: texto do raciocínio quando o modelo o envia | as opções de requisição do agente |
+| Ollama, vLLM, servidores compatíveis com a OpenAI | texto do raciocínio quando o servidor o separa | a configuração do servidor (por exemplo, um analisador de raciocínio) |
+
+Solicitar resumos não muda nenhuma resposta nem custo: o provedor cobra os tokens de raciocínio, seja o texto transmitido ou não. As opções de raciocínio do agente mostram o que o modelo dele transmite (*Raciocínio ao vivo: …*).
+
 ## Backup e restauração {#backup}
 <!-- keywords: backup, cópia de segurança, restaurar, exportar, zip, mudança, salvaguarda -->
 

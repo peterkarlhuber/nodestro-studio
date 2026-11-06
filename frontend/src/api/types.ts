@@ -1735,7 +1735,7 @@ export interface ArchitectRequest {
 export interface ArchitectEvent {
   seq: number;
   job_id: string;
-  type: "phase" | "log" | "graph" | "usage" | "finished";
+  type: "phase" | "log" | "graph" | "usage" | "thinking" | "thinking_status" | "finished";
   phase: ArchitectPhase | null;
   code: string | null;
   params: Record<string, unknown>;
@@ -2103,7 +2103,7 @@ export interface Conversation {
 export interface ReplyEvent {
   seq: number;
   message_id: string;
-  type: "step" | "delta" | "source" | "handover" | "usage" | "finished";
+  type: "step" | "delta" | "thinking" | "thinking_status" | "source" | "handover" | "usage" | "finished";
   text: string;
   data: Record<string, unknown>;
 }
@@ -3549,4 +3549,85 @@ export interface ModelProfile {
   max_tokens_limit: number;
   options: Record<"thinking" | "thinking_display" | "thinking_budget" | "cache_control" | "cache_ttl" | "fallbacks", OptionSupport>;
   native_tools: NativeToolSupport[];
+}
+
+// --- think ---
+// Live reasoning (thinking and reasoning summaries) as the provider transmits it; see components/ReasoningView.tsx.
+
+/** "thinking": the model's reasoning text as generated; "summary": the provider's summary of it. */
+export type ReasoningKind = "thinking" | "summary";
+
+/** The reasoning of one answer or step as it arrived (``nodestro_runtime.reasoning.ReasoningTrace``). */
+export interface ReasoningTrace {
+  text: string;
+  kind: ReasoningKind | null;
+  /** Reasoning phases the provider's stream marked, with or without text. */
+  phases: number;
+  /** A phase arrived only encrypted or omitted: the model reasoned, there is no text to show. */
+  redacted: boolean;
+  /** A phase is open right now. */
+  active: boolean;
+}
+
+/** What a model's stream transmits of its reasoning in this workspace (``GET /api/models/capabilities``). */
+export interface ReasoningStreamInfo {
+  text: ReasoningKind | "none" | "unknown";
+  /** Whether the stream marks a reasoning phase even without text. */
+  status: boolean;
+  /** "reasoning_summary" (OpenAI), "include_thoughts" (Gemini), "thinking_display" (Anthropic, per agent). */
+  request_option: string | null;
+  /** Whether the workspace asks for the summaries (setting reasoning_summaries); null where no request applies. */
+  requested: boolean | null;
+  /** Why no text is transmitted (English), when ``text`` is "none". */
+  reason: string;
+}
+
+export interface ModelCapabilities {
+  reasoning?: ReasoningStreamInfo | null;
+}
+
+export interface NodeRun {
+  thinking_kind?: ReasoningKind | null;
+  thinking_phases?: number;
+  thinking_redacted?: boolean;
+  /** Client only: a reasoning phase is open now (from the live ``thinking_status`` events). */
+  thinking_active?: boolean;
+}
+
+export interface ChatMessage {
+  reasoning?: ReasoningTrace | null;
+}
+
+export interface AgentTestResult {
+  reasoning?: ReasoningTrace;
+}
+
+/** The reasoning of one request of an architect job; ``step``: analysis, plan, agent_revision or repair. */
+export interface ArchitectReasoning extends ReasoningTrace {
+  step: string;
+}
+
+export interface ArchitectJob {
+  reasoning?: ArchitectReasoning[];
+}
+
+export interface RunMessage {
+  reasoning?: ReasoningTrace | null;
+}
+
+/** An answer of the live run chat being written: its reasoning and text so far. */
+export interface LiveAnswer {
+  question_id: string;
+  run_id: string;
+  reasoning: ReasoningTrace;
+  text: string;
+}
+
+export interface RunChatView {
+  answering?: LiveAnswer[];
+}
+
+export interface Settings {
+  /** Ask OpenAI and Gemini for reasoning summaries (they send them only on request). */
+  reasoning_summaries?: boolean;
 }

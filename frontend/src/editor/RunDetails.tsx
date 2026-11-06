@@ -18,6 +18,9 @@ import { branchLabel } from "./branches";
 import { OrchestrationView } from "./OrchestrationView";
 import { usageCost } from "../lib/pricing";
 import { ReasoningReducedBadge } from "../components/ReasoningReducedBadge";
+import { ReasoningView } from "../components/ReasoningView";
+import { nodeTrace } from "../lib/reasoningTrace";
+import { useThinkingDisplay } from "../lib/thinkingDisplay";
 
 type RunTab = "result" | "prompt" | "context" | "tools" | "thinking" | "memory";
 
@@ -206,6 +209,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
     ...(state.memory && Object.keys(state.memory).length ? [{ id: "memory" as const, label: t("runs.tabs.memory") }] : []),
   ];
   const live = state.status === "running" ? state.text : null;
+  const { display: thinkingDisplay } = useThinkingDisplay();
   const [adopting, setAdopting] = useState<AdoptSource[] | null>(null);
   return (
     <div className="node-run">
@@ -278,10 +282,12 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
         {tab === "result" ? (
           live !== null ? (
             <div className="live-text">
+              <ReasoningView trace={nodeTrace(state)} display={thinkingDisplay} testId="run-reasoning" />
               <Output value={live || "…"} />
             </div>
           ) : (
             <>
+              <ReasoningView trace={nodeTrace(state)} display={thinkingDisplay} testId="run-reasoning" />
               <Output value={state.output} fields={node.agent?.output?.fields} />
               {run && !run.imported_at && node.agent && state.status === "succeeded" ? (
                 <div className="row-gap">
@@ -306,7 +312,12 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
           </>
         ) : null}
         {tab === "context" && node.agent ? <RunContext node={node} state={state} runFiles={runFiles} /> : null}
-        {tab === "thinking" ? <pre className="code-block code-block--prose">{state.thinking}</pre> : null}
+        {tab === "thinking" ? (
+          <>
+            <p className="muted small">{t(state.thinking_kind === "thinking" ? "reasoning.source.text" : "reasoning.source.summary")}</p>
+            <pre className="code-block code-block--prose">{state.thinking}</pre>
+          </>
+        ) : null}
         {tab === "tools" ? <ToolCalls state={state} /> : null}
         {tab === "memory" && state.memory ? (
           <div className="stack-sm">

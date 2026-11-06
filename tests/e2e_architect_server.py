@@ -34,10 +34,13 @@ from architect_script import (
     revise_plan,
     revision,
     slow,
+    thinking_first,
     tool_proposal,
 )
 
 DELAY = 0.7
+ANALYSIS_THOUGHT = "Eingaben: ein Thema. Ergebnis: ein geprüfter Artikel mit SEO-Hinweisen."
+PLAN_THOUGHT = "Recherche und SEO sind unabhängig und laufen parallel; danach schreibt der Autor."
 # Enough answers for several jobs; a cancelled job may use some of them.
 REPEAT = 20
 
@@ -45,8 +48,15 @@ REPEAT = 20
 def script() -> dict[str, list[Any]]:
     # A revision of the created workflow: keep the SEO analysis, change the writer, add a critic.
     answers: dict[str, list[Any]] = {
-        ANALYST: [analysis()],
-        PLANNER: [create_plan()],
+        # The analysis and the plan reason first (summarized thinking, streamed live like Claude's).
+        ANALYST: [
+            thinking_first(analysis(), "Eingaben: ein Thema. Ergebnis: ein geprüfter Artikel mit SEO-Hinweisen.")
+        ],
+        PLANNER: [
+            thinking_first(
+                create_plan(), "Recherche und SEO sind unabhängig und laufen parallel; danach schreibt der Autor."
+            )
+        ],
         REVISER_PLAN: [revise_plan("node_seo", "node_writer")],
         AGENT_REVISION: [revision()],
         AGENT: [agent_spec()],
@@ -78,6 +88,9 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=8010)
     args = parser.parse_args()
     stand_in_for_docker()
+    import nodestro_runtime.testing as scripted
+
+    scripted.STREAM_DELAY = 0.1  # the reasoning arrives over about a second
     client = ScriptedClient(script())
     config = studio_config(Path(args.data_dir))
     app = create_app(config, client_factory=lambda _provider: client)

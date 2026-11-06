@@ -254,6 +254,36 @@ La langue ne concerne que l’**interface** : menus, remarques, messages d’err
 
 En haut à droite, vous passez de **Sombre** à **Clair**. Le choix est enregistré dans le navigateur. Les deux variantes suivent le système de design *Midnight Citron*. Sur les écrans étroits, la barre latérale est masquée : le bouton de menu en haut à gauche (**Afficher toutes les pages**) l’ouvre en panneau, et **Échap** la referme.
 
+## Affichage de la réflexion {#denken-anzeige}
+<!-- keywords: réflexion, thinking, reasoning, résumé, pensée, en direct, état, non transmise -->
+
+Pendant qu’un modèle travaille, Nodestro affiche ce que son fournisseur transmet de la réflexion : dans l’assistant, dans le chat avec le chef d’équipe d’une exécution, dans les exécutions de workflows, dans l’Architecte de workflows et dans le test d’agent. **Nodestro n’écrit, ne complète et ne reformule jamais de réflexion lui-même.** Si un fournisseur garde la réflexion pour lui, vous voyez seulement que le modèle réfléchit, et pourquoi il n’y a pas de texte.
+
+L’affichage sépare toujours la réflexion de la réponse (cadre en pointillés, libellé propre) et indique l’un de ces états :
+
+| État | Signification |
+|---|---|
+| *Réflexion…* | Une phase de réflexion est en cours ; aucun texte n’est (encore) arrivé, ou le texte est masqué. |
+| *Texte de réflexion* | La réflexion du modèle telle qu’elle a été générée (modèles ouverts, p. ex. via Ollama ou vLLM). |
+| *Résumé de la réflexion* | Un résumé rédigé par le fournisseur d’une réflexion qu’il n’expose pas (OpenAI, Gemini, Claude). |
+| *Réflexion non transmise* | Le modèle a réfléchi, mais le fournisseur n’a envoyé aucun texte (chiffré, omis ou non demandé). |
+| *Réflexion non exposée* | Le modèle ne réfléchit pas, ou son fournisseur n’envoie jamais sa réflexion. |
+
+**Affichage dans ce navigateur** (section *Affichage de la réflexion*) : *Afficher en direct* ouvre le texte pendant qu’il arrive, *Replié* (par défaut) montre l’activité et laisse le texte à un clic, *État seulement* n’affiche jamais le texte. L’assistant et le chat avec le chef d’équipe ont leur propre choix par conversation (**Réflexion** sous la saisie ou l’introduction) ; *Par défaut* suit le choix global. Le choix reste dans ce navigateur et ne modifie aucun workflow ni aucune conversation.
+
+**Afficher n’est pas activer.** Si un modèle réfléchit, et combien, se règle sur l’agent ([Réflexion et effort](/docs/agenten#denken)). Certains fournisseurs n’envoient du texte que sur demande :
+
+| Fournisseur | Ce qui arrive en direct | Comment obtenir du texte |
+|---|---|---|
+| Anthropic (Claude 4 et suivants) | résumé | l’option d’affichage de la réflexion de l’agent (*Afficher en résumé*) |
+| OpenAI (modèles qui réfléchissent) | résumé ; la réflexion elle-même, jamais | **Demander des résumés de la réflexion** (administrateurs ; OpenAI peut exiger une organisation vérifiée) |
+| OpenAI GPT-4o, GPT-4.1 | rien : ils ne réfléchissent pas | – |
+| Gemini 2.5 et suivants | résumé (résumés de pensées) | **Demander des résumés de la réflexion** |
+| Amazon Bedrock | Claude : résumé ; autres modèles qui réfléchissent : texte de réflexion lorsque le modèle l’envoie | les options de requête de l’agent |
+| Ollama, vLLM, serveurs compatibles OpenAI | texte de réflexion lorsque le serveur le sépare | la configuration du serveur (p. ex. un analyseur de raisonnement) |
+
+Demander des résumés ne change aucune réponse ni aucun coût : le fournisseur facture les jetons de réflexion, que du texte soit transmis ou non. Les options de réflexion de l’agent indiquent ce que transmet son modèle (*Réflexion en direct : …*).
+
 ## Sauvegarde et restauration {#backup}
 <!-- keywords: sauvegarde, backup, restaurer, export, zip, déménagement, copie de sécurité -->
 

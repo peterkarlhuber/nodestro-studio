@@ -24,6 +24,7 @@ import { mergeSettingsForm, modelsDirty } from "./settingsModelsForm";
 import { SettingsResizer } from "./SettingsResizer";
 import { SETTINGS_WIDTH, useSettingsWidth } from "./settingsWidth";
 import { KnowledgeSearchPanel, LocalModelsPanel } from "./SettingsLocalModels";
+import { ReasoningDisplayPanel } from "./SettingsReasoning";
 import { SandboxPanel } from "./SettingsSandbox";
 import { OutputLimitsPanel } from "./SettingsOutputLimits";
 import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy, settingsForm } from "./SettingsBudget";
@@ -187,6 +188,8 @@ export function SettingsPage() {
         <ProviderSettings settings={form} />
 
         <LanguagePicker />
+
+        <ReasoningDisplayPanel settings={form} admin={admin} onSave={(change) => save.mutate(change)} />
 
         <section className="panel stack" aria-labelledby="settings-models">
           <h2 className="panel__title" id="settings-models">

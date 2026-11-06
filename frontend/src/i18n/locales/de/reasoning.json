@@ -1,0 +1,54 @@
+{
+  "status": {
+    "active": "Denkt nach…",
+    "done": "Nachgedacht"
+  },
+  "hiddenByPreference": "Text ausgeblendet (Anzeige: nur Status)",
+  "state": {
+    "text": "Denktext",
+    "summary": "Zusammenfassung des Denkens",
+    "notTransmitted": "Denken nicht übertragen",
+    "notExposed": "Denken nicht offengelegt"
+  },
+  "why": {
+    "redacted": "Der Anbieter hat dieses Denken nur verschlüsselt gesendet oder weggelassen, daher gibt es keinen Text.",
+    "thinkingDisplay": "Die Denkanzeige des Agenten lässt den Text weg. Wähle in den Denk-Optionen des Agenten „Zusammengefasst anzeigen“, um ihn zu erhalten.",
+    "notRequested": "Der Anbieter sendet Zusammenfassungen des Denkens nur auf Anfrage. Eine Administratorin oder ein Administrator kann „Zusammenfassungen des Denkens anfordern“ in den Einstellungen einschalten.",
+    "notExposed": "Dieses Modell denkt nicht nach, oder sein Anbieter sendet das Denken nie. Nodestro erfindet nie Denktext.",
+    "noText": "Der Anbieter hat eine Denkphase markiert, aber keinen Text gesendet."
+  },
+  "source": {
+    "text": "Vom Modell beim Nachdenken gesendet. Nicht Teil der Antwort.",
+    "summary": "Eine Zusammenfassung, die der Anbieter über Denken schreibt, das er nicht offenlegt. Nicht Teil der Antwort."
+  },
+  "display": {
+    "label": "Denken",
+    "live": "Live anzeigen",
+    "collapsed": "Eingeklappt",
+    "status": "Nur Status",
+    "default": "Standard ({{value}})"
+  },
+  "answering": "Antwortet…",
+  "steps": {
+    "analysis": "Denken zur Anforderungsanalyse",
+    "plan": "Denken zur Planung",
+    "agent_revision": "Denken zur Agenten-Überarbeitung",
+    "repair": "Denken zur Reparatur"
+  },
+  "settings": {
+    "title": "Anzeige des Denkens",
+    "intro": "Wie das Denken von Modellen gezeigt wird, während sie arbeiten. Gezeigt wird nur, was der Anbieter sendet; Nodestro schreibt nie selbst Denktext.",
+    "display": "Anzeige in diesem Browser",
+    "displayHint": "Gilt für den Assistenten, den Lauf-Chat, Workflow-Läufe, den Workflow-Architekten und den Agententest. Ein Gespräch kann eine eigene Anzeige wählen.",
+    "summaries": "Zusammenfassungen des Denkens anfordern",
+    "summariesHint": "Bittet OpenAI und Gemini bei denkenden Modellen um Zusammenfassungen des Denkens. Ändert keine Antwort und keine Kosten; OpenAI verlangt eventuell eine verifizierte Organisation. Anthropic-Modelle folgen der Denkanzeige des Agenten.",
+    "adminOnly": "Nur Administratorinnen und Administratoren können diese Einstellung ändern."
+  },
+  "model": {
+    "summary": "Denken live: Der Anbieter dieses Modells sendet Zusammenfassungen des Denkens.",
+    "summaryNotRequested": "Denken live: Der Anbieter dieses Modells sendet Zusammenfassungen nur, wenn der Arbeitsbereich sie anfordert (Einstellungen).",
+    "thinking": "Denken live: Dieses Modell sendet seinen Denktext.",
+    "none": "Denken live: Dieses Modell sendet kein Denken.",
+    "unknown": "Denken live: Ob der Server Denken sendet, hängt von seiner Konfiguration ab."
+  }
+}
