@@ -353,7 +353,7 @@ describe("backend codes", () => {
     "local.invalid_package_reason", "knowledge.query_too_long", "knowledge.hits_out_of_range",
     // nodestro-api round 2026-11-06 (API-053, API-055, API-065).
     "assistant.provider_rejected_messages", "input.assistant_file", "export.server_limit", "export.server_limit_plain",
-    "local.task_unknown_allowed",
+    "local.task_unknown_allowed", "lease.lost",
     // Local model setup and downloads with steps: what a job can end with.
     "local.network", "local.disk_full", "local.install_running", "local.interrupted", "local.unavailable", "local.start_failed",
   ];

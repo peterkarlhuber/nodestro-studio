@@ -141,6 +141,7 @@ describe("codes of nodestro-api round 2026-11-06", () => {
     expect(problemText(t, { code: "local.task_unknown", params: { task: "x" } })).toBe("Unknown task.");
     expect(problemText(t, { code: "assistant.provider_rejected_messages", params: { provider: "openai", status: 400 } })).toMatch(/^OpenAI refused this chat/);
     expect(problemText(t, { code: "input.assistant_file", params: { file_id: "in_1" } })).toMatch(/assistant chat cannot be a run input/);
+    expect(problemText(t, { code: "lease.lost", params: { id: "b_1" } })).toMatch(/^Another server process took over this batch/);
   });
 });
 

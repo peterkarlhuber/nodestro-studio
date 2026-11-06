@@ -1078,5 +1078,8 @@
   "settings": {
     "output_limit_unknown": "Unknown steps: {{names}}.",
     "output_limit_invalid": "The output limit of “$t(modelParams.operation.{{operation}})” must be a whole number from {{min}} to {{max}}."
+  },
+  "lease": {
+    "lost": "Another server process took over this batch or test series after this one stopped answering. The work is marked as interrupted; reload the page and continue it."
   }
 }

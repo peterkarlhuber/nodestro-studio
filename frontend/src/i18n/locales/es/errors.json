@@ -1078,5 +1078,8 @@
   "settings": {
     "output_limit_unknown": "Pasos desconocidos: {{names}}.",
     "output_limit_invalid": "El límite de salida de «$t(modelParams.operation.{{operation}})» debe ser un número entero de {{min}} a {{max}}."
+  },
+  "lease": {
+    "lost": "Otro proceso del servidor tomó este lote o esta serie de pruebas porque este dejó de responder. El trabajo está marcado como interrumpido; recarga la página y continúalo."
   }
 }
