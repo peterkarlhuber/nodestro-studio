@@ -6,6 +6,8 @@
 
 - Pins: orkexa 1b61fda (orkexa #55), runtime 3d69702 (#120), examples 82d894b (#77), integrations 1e73e29 (#66),
   api a3bd875 (#93), sdk 7714de0 (#87, version 0.3.0).
+- Pins (round 2): api 56fa762 (#94: idempotency reservation, usage period read, assistant file retention,
+  `params.display`, tool version history, library copy `memory_space`), sdk 1306cbe (#89).
 - Runs list and run comparison show why a run failed as "<step>: <reason>" from the run's cause; the run banner uses
   it when the step's data is not at hand (ST-003, AD-02).
 - Usage page: a "Budgets and limits" card with each published API's cost of the last 24 hours against its daily
