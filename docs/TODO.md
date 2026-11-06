@@ -12,8 +12,8 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 22 |
-| P4 Optional | 11 |
+| P3 Low | 25 |
+| P4 Optional | 15 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
 preview is gated by nodestro-desktop DSK-001 (new candidate and Go/No-Go), not by an item here.
@@ -183,6 +183,36 @@ None known.
 - **Next step:** One status text for unreachable external servers, one CPU sentence, one task name in both places,
   server wording in the tenant view, one size unit (all six languages).
 
+### ST-055 · No upload percentage for large chat files
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (attachments stream)
+- **What:** Each file shows a spinner while it uploads.
+- **Next step:** Show upload progress per file.
+
+### ST-056 · Local models: byte units and a doubled setup call to action
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (local setup stream)
+- **What:** `formatBytes` mixes binary MB and decimal GB; after a failed setup the "Download and install" callout stays next to "Try again".
+- **Next step:** One unit system; hide the callout while the failed setup card is shown.
+
+### ST-057 · Model parameters: remaining polish
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (params stream)
+- **What:** No form for limits declared by an OpenAI-compatible endpoint; effort warnings show only in the validation list; the keys `agent.anthropicOnly` and `bedrock.agent.anthropicOnly` are unused; the label "Server tools from Anthropic" is unchanged.
+- **Next step:** Add the endpoint limits form, inline effort warnings, and remove the unused texts.
+
+### ST-058 · Settings: search and navigation gaps
+
+- **Priority:** P4 Optional · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (settings UI stream)
+- **What:** Ctrl+K does not deep-link into the settings search and lacks the output limits section; the settings search cannot find conditionally rendered content; provider cards do not guard unsaved key or base URL input.
+- **Next step:** Deep link from the global search, add the section to `SETTINGS_GROUPS`, warn before leaving an unsaved provider card.
+
+### ST-059 · About 50 weak settings help texts
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (settings UI stream, tooltip audit)
+- **What:** The tooltip audit rewrote the worst help texts; about 50 still repeat the label (including Local models).
+- **Next step:** Rewrite them in six languages; show "default" or "changed" on every field once API-061 exists.
+
 ## Tests and quality assurance
 
 ### ST-051 · axe-core held at 4.11.0 (WCAG 2.5.3 on the global search trigger)
@@ -230,6 +260,18 @@ None known.
   measurement and the "Reasoning reduced" badge are covered by unit tests and by the runtime and API tests only.
 - **Next step:** Add an e2e server with a fake Ollama binary (as in nodestro-api `tests/test_local_models_api.py`)
   and a suite for start, download progress, import errors and index build; run it with a real Ollama where CI allows.
+
+### ST-060 · Dynamic translation keys and tooltips: remaining coverage
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (i18n stream, I18N-DYN-1, I18N-E2E-2)
+- **What:** 37 dynamic keys built from free text are covered only by the runtime guard and e2e; the raw-key sweep does not open most dialogs or hover tooltips.
+- **Next step:** Type the 37 values so `dynamicKeys.test.ts` checks them; extend the sweep to main dialogs and help tooltips.
+
+### ST-061 · Browser tests not yet in CI
+
+- **Priority:** P3 Low · **Status:** Open · **Refs:** settings/providers round 2026-11-06 (local setup, missing-model and settings UI streams)
+- **What:** `localModels.mjs` (with `LOCAL_E2E_REAL=0`) and `missingModel.mjs` run locally only; Fix on a batch stopped by `check.local_model_missing` has no e2e; settings-ui and a11y run in Chromium only.
+- **Next step:** Add them to CI; add the batch Fix case; run settings-ui and a11y in Firefox and WebKit.
 
 ## Platform coverage
 
