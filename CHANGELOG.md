@@ -4,6 +4,8 @@
 
 ### Settings, attachments and providers (2026-11-06)
 
+- Pins: orkexa 18b2a98 (orkexa #54), runtime b3d4d30 (#119), examples 2812996 (#76), integrations 00ff21a (#65),
+  api 87d98a7 (#92), sdk 61e967d (#86); `platform/versions.json` updated, `check_versions.py` agrees.
 - The assistant chat takes your own files: choose, drop or paste PDFs, documents, tables, text and images. Each
   file shows how the model reads it (natively or as text); use it again in the chat or save it to knowledge.
 - Settings: the content is wider by default (1120 px instead of 760 px) and its right edge can be dragged or moved
