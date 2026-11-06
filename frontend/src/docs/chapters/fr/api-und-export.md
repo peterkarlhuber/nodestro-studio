@@ -23,6 +23,13 @@ Il existe deux voies :
 
 Les deux s’exécutent étape par étape comme dans Nodestro : mêmes agents, outils, branches, validations et formulaires.
 
+## Page Publications {#veroeffentlichungen}
+<!-- keywords: publications, vue d’ensemble, toutes les api, historique des exports, téléchargements, recherche -->
+
+La page **[Publications](/publications)** de la navigation (groupe *Automatiser et tester*) regroupe toutes les API publiées dans cette installation : le nom et l’adresse de l’API, son workflow, le statut (*Active*, *Désactivée* ou *Aucune version active*), la version active avec sa version du workflow, la date de publication de cette version et l’historique des exports avec date, type et un lien de téléchargement pour chaque fichier généré.
+
+Recherchez par nom d’API, adresse ou workflow, filtrez par statut et triez par nom, par dernière publication ou par dernier export. La page affiche seulement ; elle ne modifie rien. Chaque entrée comporte un lien, **Ouvrir API & Export** : il ouvre le workflow dans l’éditeur avec la boîte de dialogue *API & Export* déjà ouverte, où vous publiez, changez de version, gérez les clés et créez des exports comme décrit ci-dessous. Le lien fonctionne aussi comme favori ou après un rechargement de la page.
+
 ## Publier {#veroeffentlichen}
 <!-- keywords: publier, publication, version, figer, vérification, enregistrer, note -->
 

@@ -14,6 +14,7 @@
   "groupAutomate": "Automatisieren & testen",
   "approvals": "Freigaben",
   "batches": "Stapelläufe",
+  "publications": "Veröffentlichungen",
   "tests": "Testreihen",
   "schedules": "Zeitpläne",
   "waiting_one": "{{count}} wartet",

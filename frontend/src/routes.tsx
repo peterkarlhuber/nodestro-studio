@@ -10,6 +10,7 @@ import { ExecutionsPage } from "./pages/ExecutionsPage";
 import { KnowledgePage } from "./pages/KnowledgePage";
 import { MemoryPage } from "./pages/MemoryPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { PublicationsPage } from "./pages/PublicationsPage";
 import { RunComparePage } from "./pages/RunComparePage";
 import { RunDetailPage } from "./pages/RunDetailPage";
 import { SchedulesPage } from "./pages/SchedulesPage";
@@ -64,6 +65,7 @@ export const routes: RouteObject[] = [
       { path: "approvals", element: <ApprovalsPage /> },
       { path: "batches", element: <BatchesPage /> },
       { path: "batches/:id", element: <BatchDetailPage /> },
+      { path: "publications", element: <PublicationsPage /> },
       { path: "tests", element: <TestsPage /> },
       { path: "tests/:id", element: <SuitePage /> },
       { path: "schedules", element: <SchedulesPage /> },

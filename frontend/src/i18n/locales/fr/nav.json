@@ -14,6 +14,7 @@
   "groupAutomate": "Automatiser et tester",
   "approvals": "Validations",
   "batches": "Exécutions par lots",
+  "publications": "Publications",
   "tests": "Séries de tests",
   "schedules": "Planifications",
   "waiting_one": "{{count}} en attente",

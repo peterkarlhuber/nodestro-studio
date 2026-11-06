@@ -23,6 +23,13 @@ Hay dos caminos:
 
 Ambos se ejecutan paso a paso como en Nodestro: los mismos agentes, herramientas, ramas, aprobaciones y formularios.
 
+## Página Publicaciones {#veroeffentlichungen}
+<!-- keywords: publicaciones, resumen, todas las api, historial de exportaciones, descargas, búsqueda -->
+
+La página **[Publicaciones](/publications)** de la navegación (grupo *Automatizar y probar*) reúne todas las API publicadas en esta instalación: el nombre y la dirección de la API, su flujo de trabajo, el estado (*Activa*, *Desactivada* o *Sin versión activa*), la versión activa con su versión del flujo de trabajo, cuándo se publicó esa versión y el historial de exportaciones con fecha, tipo y un enlace de descarga para cada archivo generado.
+
+Busca por nombre de la API, dirección o flujo de trabajo, filtra por estado y ordena por nombre, por la última publicación o por la última exportación. La página solo muestra; no cambia nada. Cada entrada tiene un enlace, **Abrir API y exportación**: abre el flujo de trabajo en el editor con el diálogo *API y exportación* ya abierto, donde publicas, cambias de versión, gestionas claves y creas exportaciones como se describe a continuación. El enlace también funciona como marcador o después de recargar la página.
+
 ## Publicar {#veroeffentlichen}
 <!-- keywords: publicar, publicación, versión, congelar, comprobación, guardar, nota -->
 

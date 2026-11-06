@@ -23,6 +23,13 @@ Es gibt zwei Wege:
 
 Beide Wege laufen Schritt für Schritt wie in Nodestro: dieselben Agenten, Tools, Verzweigungen, Freigaben und Formulare.
 
+## Seite Veröffentlichungen {#veroeffentlichungen}
+<!-- keywords: veröffentlichungen, übersicht, alle apis, exportverlauf, downloads, suche -->
+
+Die Seite **[Veröffentlichungen](/publications)** in der Navigation (Gruppe *Automatisieren & testen*) zeigt alle in dieser Installation veröffentlichten APIs an einem Ort: Name und Adresse der API, ihren Workflow, den Status (*Aktiv*, *Ausgeschaltet* oder *Keine aktive Version*), die aktive Version mit ihrer Workflow-Version, wann diese Version veröffentlicht wurde, und den Exportverlauf mit Datum, Art und einem Download-Link für jede erzeugte Datei.
+
+Suche nach API-Name, Adresse oder Workflow, filtere nach Status und sortiere nach Name, nach der letzten Veröffentlichung oder nach dem letzten Export. Die Seite zeigt nur an; sie ändert nichts. Jeder Eintrag hat einen Link, **API & Export öffnen**: Er öffnet den Workflow im Editor mit bereits geöffnetem Dialog *API & Export*, in dem du wie unten beschrieben veröffentlichst, Versionen wechselst, Schlüssel verwaltest und Exporte erzeugst. Der Link funktioniert auch als Lesezeichen und nach einem Neuladen der Seite.
+
 ## Veröffentlichen {#veroeffentlichen}
 <!-- keywords: veröffentlichen, publish, version, einfrieren, prüfung, check, speichern, notiz -->
 

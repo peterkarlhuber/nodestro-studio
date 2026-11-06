@@ -3633,3 +3633,18 @@ export interface Settings {
   /** Ask OpenAI and Gemini for reasoning summaries (they send them only on request). */
   reasoning_summaries?: boolean;
 }
+
+// --- pubs ---
+/** One publication on the Publications page (GET /api/publication-overview, read only). */
+export interface PublicationOverviewItem extends PublicationListItem {
+  /** The workflow's current name; null when the workflow no longer exists. */
+  workflow_name: string | null;
+  created_at: string;
+  updated_at: string;
+  /** The saved workflow version of the active release. */
+  active_version: number | null;
+  /** When the active release was published. */
+  published_at: string | null;
+  /** The publication's exports, newest first. */
+  exports: ExportRecord[];
+}

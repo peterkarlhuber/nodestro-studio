@@ -1,0 +1,45 @@
+{
+  "description": "Tutte le API pubblicate in questa installazione, con workflow, stato, versione attiva ed esportazioni. Pubblicazione, versioni, chiavi ed esportazioni si gestiscono nel workflow, in API ed esportazione.",
+  "searchLabel": "Cerca pubblicazioni",
+  "searchPlaceholder": "Cerca per API, indirizzo o workflow",
+  "statusLabel": "Filtra per stato",
+  "allStatuses": "Tutti gli stati",
+  "status": {
+    "live": "Attiva",
+    "off": "Disattivata",
+    "noVersion": "Nessuna versione attiva"
+  },
+  "sortLabel": "Ordina",
+  "sort": {
+    "name": "Nome (A–Z)",
+    "published": "Pubblicate di recente",
+    "exported": "Esportate di recente"
+  },
+  "results_one": "{{count}} pubblicazione",
+  "results_other": "{{count}} pubblicazioni",
+  "columns": {
+    "api": "API",
+    "workflow": "Workflow",
+    "status": "Stato",
+    "version": "Versione attiva",
+    "published": "Pubblicata il",
+    "exports": "Cronologia esportazioni",
+    "actions": "Azioni"
+  },
+  "version": "v{{release}}",
+  "workflowVersion": "Versione del workflow {{version}}",
+  "network": "Rete",
+  "workflowMissing": "Workflow eliminato",
+  "exports": {
+    "summary_one": "{{count}} esportazione",
+    "summary_other": "{{count}} esportazioni",
+    "none": "Ancora nessuna esportazione",
+    "download": "Scarica {{file}}"
+  },
+  "open": "Apri API ed esportazione",
+  "openFor": "{{open}}: {{name}}",
+  "empty": "Ancora nessuna API pubblicata",
+  "emptyText": "Apri un workflow e pubblicalo in API ed esportazione. La sua API comparirà qui.",
+  "noMatch": "Nessuna pubblicazione corrisponde al filtro",
+  "clearFilters": "Reimposta filtri"
+}

@@ -110,6 +110,7 @@ import type {
   GateReport,
   Publication,
   PublicationListItem,
+  PublicationOverviewItem,
   ReleaseGate,
   ReleaseSummary,
   AdoptCheck,
@@ -652,6 +653,8 @@ export const api = {
   setReleaseGate: (publicationId: string, gate: ReleaseGate | null) =>
     request<Publication>("PUT", `/publications/${publicationId}/gate`, { gate }),
   publications: () => request<PublicationListItem[]>("GET", "/publications"),
+  /** Every publication with its workflow, active release and exports (the Publications page). */
+  publicationOverview: () => request<PublicationOverviewItem[]>("GET", "/publication-overview"),
   updatePublication: (
     id: string,
     body: { slug?: string; description?: string; limits?: ApiLimits; network?: boolean; mcp_tool?: boolean },

@@ -50,7 +50,7 @@ describe("texts left in English", () => {
       "action", "date", "active", "collection", "collections", "archive", "notes", "source", "strict", "note",
       "interface", "port", "module", "arguments", "service", "classification", "correction", "versions", "guide",
       "instructions", "branches", "robot", "globe", "score", "word", "citations", "format", "standard", "direct", "indirect", "maintenance",
-      "assistant",
+      "assistant", "publication", "publications", "exports",
     ],
     it: ["file", "input", "output", "robot", "database", "provider", "runtime", "standard", "no"],
     "pt-BR": ["status", "manual", "individual", "interface", "loop", "tags"],

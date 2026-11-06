@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui ...]   (default: all)
+# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications ...]   (default: all)
 # The journeys suite writes its report to $JOURNEY_REPORT when set.
 # Needs: the studio installed (pip install -e .), the frontend built (make frontend) and Playwright.
 set -euo pipefail
@@ -63,6 +63,8 @@ run() {  # run SUITE
       (cd frontend && npm run e2e:a11y -- http://127.0.0.1:8095) ;;
     settings-ui) start settings-ui 8097 nodestro --data-dir "$work/settings-ui" --no-browser --port 8097
       (cd frontend && npm run e2e:settings-ui -- http://127.0.0.1:8097 ${E2E_SCREENSHOTS:-}) ;;
+    publications) start publications 8055 python tests/e2e_api_server.py --data-dir "$work/publications" --port 8055
+      (cd frontend && npm run e2e:publications -- http://127.0.0.1:8055 ${E2E_SCREENSHOTS:-}) ;;
     journeys) start journeys 8060 python tests/e2e_journey_server.py --data-dir "$work/journeys" --port 8060
       (cd frontend && npm run e2e:journeys) ;;
     *) echo "unknown suite $1" >&2; return 2 ;;
@@ -71,7 +73,7 @@ run() {  # run SUITE
 
 # The smoke test goes first: it expects an empty start page and copies examples from the gallery.
 suites=("$@")
-[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui)
+[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications)
 for suite in "${suites[@]}"; do
   echo "== e2e: $suite"
   run "$suite"

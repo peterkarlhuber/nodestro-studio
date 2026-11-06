@@ -23,6 +23,13 @@ Ci sono due strade:
 
 Entrambe procedono passo per passo come in Nodestro: stessi agenti, strumenti, rami, approvazioni e moduli.
 
+## Pagina Pubblicazioni {#veroeffentlichungen}
+<!-- keywords: pubblicazioni, panoramica, tutte le api, cronologia esportazioni, download, ricerca -->
+
+La pagina **[Pubblicazioni](/publications)** nella navigazione (gruppo *Automatizza e testa*) riunisce tutte le API pubblicate in questa installazione: nome e indirizzo dell’API, il suo workflow, lo stato (*Attiva*, *Disattivata* o *Nessuna versione attiva*), la versione attiva con la relativa versione del workflow, quando è stata pubblicata e la cronologia delle esportazioni con data, tipo e un link di download per ogni file generato.
+
+Cerca per nome dell’API, indirizzo o workflow, filtra per stato e ordina per nome, per ultima pubblicazione o per ultima esportazione. La pagina mostra soltanto; non modifica nulla. Ogni voce ha un link, **Apri API ed esportazione**: apre il workflow nell’editor con la finestra *API ed esportazione* già aperta, dove pubblichi, cambi versione, gestisci le chiavi e crei esportazioni come descritto sotto. Il link funziona anche come segnalibro o dopo aver ricaricato la pagina.
+
 ## Pubblicare {#veroeffentlichen}
 <!-- keywords: pubblicare, pubblicazione, versione, congelare, verifica, salvare, nota -->
 

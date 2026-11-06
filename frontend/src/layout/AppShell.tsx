@@ -18,6 +18,7 @@ import {
   Orbit,
   PanelLeftClose,
   PanelLeftOpen,
+  Plug,
   Rows3,
   Settings,
   Sparkles,
@@ -71,7 +72,8 @@ const RUN_AND_REVIEW: NavItem[] = [
   { to: "/usage", label: "usage", icon: Activity },
 ];
 
-const AUTOMATE_AND_TEST: NavItem[] = [
+export const AUTOMATE_AND_TEST: NavItem[] = [
+  { to: "/publications", label: "publications", icon: Plug },
   { to: "/tests", label: "tests", icon: FlaskConical },
   { to: "/batches", label: "batches", icon: Layers },
   { to: "/schedules", label: "schedules", icon: CalendarClock },

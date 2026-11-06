@@ -14,6 +14,7 @@
   "groupAutomate": "Automate & test",
   "approvals": "Approvals",
   "batches": "Batch runs",
+  "publications": "Publications",
   "tests": "Test series",
   "schedules": "Schedules",
   "waiting_one": "{{count}} waiting",

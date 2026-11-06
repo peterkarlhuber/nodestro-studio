@@ -1,0 +1,45 @@
+{
+  "description": "Todas as APIs publicadas nesta instalação, com fluxo de trabalho, status, versão ativa e exportações. Publicação, versões, chaves e exportações são gerenciadas no fluxo de trabalho, em API e exportação.",
+  "searchLabel": "Pesquisar publicações",
+  "searchPlaceholder": "Pesquisar por API, endereço ou fluxo de trabalho",
+  "statusLabel": "Filtrar por status",
+  "allStatuses": "Todos os status",
+  "status": {
+    "live": "Ativa",
+    "off": "Desativada",
+    "noVersion": "Sem versão ativa"
+  },
+  "sortLabel": "Ordenar",
+  "sort": {
+    "name": "Nome (A–Z)",
+    "published": "Publicadas recentemente",
+    "exported": "Exportadas recentemente"
+  },
+  "results_one": "{{count}} publicação",
+  "results_other": "{{count}} publicações",
+  "columns": {
+    "api": "API",
+    "workflow": "Fluxo de trabalho",
+    "status": "Status",
+    "version": "Versão ativa",
+    "published": "Publicada em",
+    "exports": "Histórico de exportações",
+    "actions": "Ações"
+  },
+  "version": "v{{release}}",
+  "workflowVersion": "Versão do fluxo de trabalho {{version}}",
+  "network": "Rede",
+  "workflowMissing": "Fluxo de trabalho excluído",
+  "exports": {
+    "summary_one": "{{count}} exportação",
+    "summary_other": "{{count}} exportações",
+    "none": "Nenhuma exportação ainda",
+    "download": "Baixar {{file}}"
+  },
+  "open": "Abrir API e exportação",
+  "openFor": "{{open}}: {{name}}",
+  "empty": "Nenhuma API publicada ainda",
+  "emptyText": "Abra um fluxo de trabalho e publique-o em API e exportação. A API dele aparecerá aqui.",
+  "noMatch": "Nenhuma publicação corresponde ao filtro",
+  "clearFilters": "Redefinir filtros"
+}
