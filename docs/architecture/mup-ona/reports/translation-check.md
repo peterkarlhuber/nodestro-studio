@@ -74,4 +74,6 @@ deviations).
 ## Approval
 
 The English version becomes binding only after the client's explicit approval with reference to this report (plan 8.7
-step 4). Until then the German version is the reference. Approval: **open**.
+step 4). Approval: **granted** by Peter on 2026-11-06 22:23Z (decision card "Englische Planfassung MUP-ONA.md als
+maßgeblich freigeben (Kapitel 8.7)?", option "Freigeben"). From the merge of this file on, only `MUP-ONA.md` is
+binding; the German file is a historical reference and is no longer maintained.
