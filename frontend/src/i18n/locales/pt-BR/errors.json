@@ -180,6 +180,7 @@
       "MaxToolRoundsError": "O agente chamou ferramentas mais vezes do que o limite de rodadas permite.",
       "StructuredOutputError": "O modelo não retornou um resultado no formato de saída exigido.",
       "UnexpectedResponseError": "A resposta do modelo não foi a esperada.",
+      "HistoryConversionError": "Não foi possível preparar a conversa desta etapa para o modelo: uma de suas mensagens tem um formato que este provedor não aceita. Nada foi enviado.",
       "EvaluationFailedError": "O resultado não passou na verificação de qualidade.",
       "ToolExecutionError": "Uma ferramenta do agente parou com um erro."
     },
@@ -196,6 +197,8 @@
     "provider_rate_limited": "{{provider}} informou solicitações ou tokens demais em pouco tempo (limite de taxa).",
     "provider_overloaded": "{{provider}} está sobrecarregado no momento.",
     "provider_auth_aws": "A AWS não aceitou o acesso ao Amazon Bedrock: as credenciais estão faltando ou expiraram, ou falta uma permissão à função do IAM.",
+    "provider_rejected_messages": "{{provider}} recusou a conversa desta etapa (status {{status}}): uma de suas mensagens tem um formato que o provedor não aceita. A causa não é o seu fluxo de trabalho nem a sua entrada.",
+    "provider_context_exceeded": "A conversa desta etapa é maior que a janela de contexto que {{provider}} dá ao modelo.",
     "value_unverified": "O indicador-chave {{field}} ({{value}}) não foi calculado com uma ferramenta, nem depois de uma correção. A etapa foi interrompida para que nenhuma decisão se baseie em um número não verificado."
   },
   "budget": {
@@ -918,6 +921,7 @@
         "MaxToolRoundsError": "Aumente \"Máx. de rodadas de ferramentas\" em \"Avançado\" deste agente ou diga na tarefa quando ele terminou.",
         "StructuredOutputError": "Confira os campos em \"Formato de saída\"; poucos campos bem descritos ajudam. Muitas vezes basta continuar a execução.",
         "UnexpectedResponseError": "Continue a execução. Se acontecer de novo, os detalhes técnicos ajudam o suporte do provedor.",
+        "HistoryConversionError": "Se o agente foi trocado para um modelo de outro provedor, continue com o modelo anterior. Caso contrário, os detalhes técnicos indicam a mensagem para um relatório de erro.",
         "EvaluationFailedError": "Leia a justificativa da verificação na etapa e ajuste a tarefa ou os critérios.",
         "ToolExecutionError": "Os detalhes técnicos indicam a ferramenta e o erro dela. Confira a ferramenta em \"Ferramentas\"."
       },
@@ -937,7 +941,9 @@
       "provider_unreachable": "Confira a conexão com a internet, o firewall ou o proxy e depois continue a execução.",
       "provider_rate_limited": "Aguarde um momento e continue a execução. Menos execuções ao mesmo tempo ou um limite maior no provedor resolvem de vez.",
       "provider_overloaded": "Isso não é causado pelo seu fluxo de trabalho. Aguarde alguns minutos e depois continue a execução.",
-      "provider_auth_aws": "Confira o acesso e as permissões em Configurações → Provedores de IA → Amazon Bedrock com “Verificar conexão”."
+      "provider_auth_aws": "Confira o acesso e as permissões em Configurações → Provedores de IA → Amazon Bedrock com “Verificar conexão”.",
+      "provider_rejected_messages": "Continue a execução: as etapas que já deram certo não são repetidas. Se acontecer de novo, os detalhes técnicos listam as mensagens da conversa (sem o conteúdo) para um relatório de erro.",
+      "provider_context_exceeded": "Encurte a entrada ou o conhecimento do agente, escolha um modelo com uma janela de contexto maior ou aumente o comprimento de contexto do servidor de modelos local."
     },
     "provider": {
       "aws_access_denied": "Conceda bedrock:InvokeModel e bedrock:InvokeModelWithResponseStream no modelo ou perfil de inferência (com “somente na UE”, também bedrock:GetInferenceProfile) e habilite o modelo no console da AWS.",
