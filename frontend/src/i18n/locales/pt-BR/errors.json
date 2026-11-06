@@ -1072,6 +1072,7 @@
     "index_building": "O índice semântico ainda está sendo criado. A busca semântica funciona assim que ele estiver completo.",
     "reindex_running": "O índice semântico já está sendo criado.",
     "reindex_failed": "A criação do índice semântico falhou.",
+    "reindex_interrupted": "A criação do índice semântico parou porque o processo de trabalho do servidor parou. Inicie-a novamente para continuar de onde parou.",
     "reindex_required": "O índice semântico pertence a outro modelo. Reconstrua-o.",
     "vector_incomplete": "Nem todos os trechos foram indexados. Reconstrua o índice para continuar.",
     "vector_unavailable": "O índice semântico não está disponível.",

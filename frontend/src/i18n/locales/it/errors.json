@@ -1072,6 +1072,7 @@
     "index_building": "L’indice semantico è ancora in costruzione. La ricerca semantica funzionerà quando sarà completo.",
     "reindex_running": "L’indice semantico è già in costruzione.",
     "reindex_failed": "La costruzione dell’indice semantico non è riuscita.",
+    "reindex_interrupted": "La creazione dell’indice semantico si è interrotta perché il suo processo di lavoro del server si è fermato. Avviala di nuovo per riprendere da dove si è fermata.",
     "reindex_required": "L’indice semantico appartiene a un altro modello. Ricostruiscilo.",
     "vector_incomplete": "Non tutte le sezioni sono state indicizzate. Ricostruisci l’indice per continuare.",
     "vector_unavailable": "L’indice semantico non è disponibile.",

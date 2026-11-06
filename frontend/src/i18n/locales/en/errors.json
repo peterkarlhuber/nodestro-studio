@@ -1072,6 +1072,7 @@
     "index_building": "The semantic index is still being built. Semantic search works once it is complete.",
     "reindex_running": "The semantic index is already being built.",
     "reindex_failed": "Building the semantic index failed.",
+    "reindex_interrupted": "Building the semantic index stopped because its server worker stopped. Start it again to continue where it stopped.",
     "reindex_required": "The semantic index belongs to another model. Rebuild it.",
     "vector_incomplete": "Not all sections were indexed. Rebuild the index to continue.",
     "vector_unavailable": "The semantic index is not available.",

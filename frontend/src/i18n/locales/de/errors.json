@@ -1072,6 +1072,7 @@
     "index_building": "Der semantische Index wird noch aufgebaut. Die semantische Suche geht, sobald er fertig ist.",
     "reindex_running": "Der semantische Index wird bereits aufgebaut.",
     "reindex_failed": "Der Aufbau des semantischen Index ist fehlgeschlagen.",
+    "reindex_interrupted": "Der Aufbau des semantischen Index wurde unterbrochen, weil sein Server-Worker angehalten hat. Starte ihn erneut, um dort weiterzumachen.",
     "reindex_required": "Der semantische Index gehört zu einem anderen Modell. Baue ihn neu auf.",
     "vector_incomplete": "Nicht alle Abschnitte wurden indiziert. Baue den Index neu auf, um fortzufahren.",
     "vector_unavailable": "Der semantische Index ist nicht verfügbar.",
