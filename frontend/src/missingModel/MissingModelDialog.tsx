@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 import { ApiError } from "../api/client";
 import { type LocalJob, localApi, useLocalJobs } from "../api/localModels";
-import { type ModelAlternative, type ModelProblem, type Readiness, readinessApi } from "../api/modelReadiness";
+import { type ModelAlternative, type ModelProblem, type Readiness, type ReadinessAction, readinessApi } from "../api/modelReadiness";
 import { LiveAnnouncer } from "../components/Progress";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Modal, Spinner } from "../components/ui";
@@ -290,7 +290,7 @@ function ReadyText({ name, fixOnly, action }: { name: string; fixOnly: boolean; 
 }
 
 /** What is missing, where, why the action needs it, what it takes (size, space, memory) and how it continues. */
-function ProblemFacts({ problem, name, action, fixOnly }: { problem: ModelProblem; name: string; action: string; fixOnly: boolean }) {
+function ProblemFacts({ problem, name, action, fixOnly }: { problem: ModelProblem; name: string; action: ReadinessAction; fixOnly: boolean }) {
   const { t } = useTranslation();
   const where = problem.location;
   const values = {
@@ -353,7 +353,7 @@ function ChooseModel({
   alternatives: ModelAlternative[];
   chosen: string;
   onChoose: (model: string) => void;
-  action: string;
+  action: ReadinessAction;
 }) {
   const { t } = useTranslation();
   return (
