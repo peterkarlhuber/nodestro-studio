@@ -180,6 +180,7 @@
       "MaxToolRoundsError": "L'agente ha chiamato gli strumenti più spesso di quanto consenta il suo limite di round.",
       "StructuredOutputError": "Il modello non ha restituito un risultato nel formato di output richiesto.",
       "UnexpectedResponseError": "La risposta del modello non era quella prevista.",
+      "HistoryConversionError": "Non è stato possibile preparare la conversazione di questo passaggio per il modello: uno dei suoi messaggi ha una forma che questo provider non accetta. Non è stato inviato nulla.",
       "EvaluationFailedError": "Il risultato non ha superato il controllo di qualità.",
       "ToolExecutionError": "Uno strumento dell'agente si è interrotto con un errore."
     },
@@ -197,7 +198,9 @@
     "provider_overloaded": "{{provider}} è sovraccarico in questo momento.",
     "provider_auth_aws": "AWS non ha accettato l’accesso per Amazon Bedrock: le credenziali mancano o sono scadute, oppure al ruolo IAM manca un permesso.",
     "value_unverified": "L'indicatore chiave {{field}} ({{value}}) non è stato calcolato con uno strumento, nemmeno dopo una correzione. Il passo è stato fermato perché nessuna decisione si basi su una cifra non verificata.",
-    "local_model_missing": "Il modello locale {{model}} non è installato sul server dei modelli."
+    "local_model_missing": "Il modello locale {{model}} non è installato sul server dei modelli.",
+    "provider_rejected_messages": "{{provider}} ha rifiutato la conversazione di questo passaggio (stato {{status}}): uno dei suoi messaggi ha una forma che il provider non accetta. Non dipende dal tuo workflow né dal tuo input.",
+    "provider_context_exceeded": "La conversazione di questo passaggio supera la finestra di contesto che {{provider}} assegna al modello."
   },
   "budget": {
     "not_starter": "Solo la persona che ha avviato l’esecuzione o un amministratore può decidere sul suo budget.",
@@ -921,6 +924,7 @@
         "MaxToolRoundsError": "Aumenta «Turni di strumenti max.» in «Avanzate» di questo agente, oppure indica nel suo compito quando ha finito.",
         "StructuredOutputError": "Controlla i campi in «Formato di output»; pochi campi ben descritti aiutano. Spesso basta continuare l'esecuzione.",
         "UnexpectedResponseError": "Continua l'esecuzione. Se succede di nuovo, i dettagli tecnici aiutano l'assistenza del provider.",
+        "HistoryConversionError": "Se l'agente è passato a un modello di un altro provider, continua con il modello precedente. Altrimenti i dettagli tecnici indicano il messaggio per una segnalazione di errore.",
         "EvaluationFailedError": "Leggi la motivazione del controllo nel passaggio e adatta il compito o i criteri.",
         "ToolExecutionError": "I dettagli tecnici indicano lo strumento e il suo errore. Controlla lo strumento in «Strumenti»."
       },
@@ -941,7 +945,9 @@
       "provider_rate_limited": "Aspetta un momento e continua l'esecuzione. Meno esecuzioni contemporanee o un limite più alto presso il provider risolvono a lungo termine.",
       "provider_overloaded": "Non dipende dal tuo workflow. Aspetta qualche minuto, poi continua l'esecuzione.",
       "provider_auth_aws": "Controlla accesso e permessi in Impostazioni → Provider di IA → Amazon Bedrock con «Verifica connessione».",
-      "local_model_missing": "Installalo con «Risolvi» o in Impostazioni, Modelli locali, poi avvia di nuovo l’esecuzione. Le esecuzioni automatiche non scaricano mai modelli da sole."
+      "local_model_missing": "Installalo con «Risolvi» o in Impostazioni, Modelli locali, poi avvia di nuovo l’esecuzione. Le esecuzioni automatiche non scaricano mai modelli da sole.",
+      "provider_rejected_messages": "Continua l'esecuzione: i passaggi già riusciti non vengono ripetuti. Se succede di nuovo, i dettagli tecnici elencano i messaggi della conversazione (senza il loro contenuto) per una segnalazione di errore.",
+      "provider_context_exceeded": "Accorcia l'input o la conoscenza dell'agente, scegli un modello con una finestra di contesto più ampia oppure aumenta la lunghezza del contesto del server di modelli locale."
     },
     "provider": {
       "aws_access_denied": "Concedi bedrock:InvokeModel e bedrock:InvokeModelWithResponseStream sul modello o sul profilo di inferenza (con «solo UE» anche bedrock:GetInferenceProfile) e abilita il modello nella console AWS.",
