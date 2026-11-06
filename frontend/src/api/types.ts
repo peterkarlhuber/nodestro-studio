@@ -1723,6 +1723,8 @@ export interface ExampleCopyRequest {
   integrations?: Record<string, string>;
   /** Agent key -> model, chosen by the person in the copy dialog; always wins over the suggestion. */
   models?: Record<string, string>;
+  /** A memory space of the copy's own for its agents with persistent memory (EX-007); missing: the example's. */
+  memory_space?: string;
 }
 
 /** One agent of an example and the local model its copy would get (GET /api/library/{id}/models). */

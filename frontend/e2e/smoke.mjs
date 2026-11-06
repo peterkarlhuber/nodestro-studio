@@ -334,6 +334,36 @@ try {
   await shot("12-editor-light");
   await page.getByRole("radio", { name: "Dunkel" }).click();
 
+  // An example whose agents keep persistent memory: the copy can get a memory space of its own (EX-007), checked on
+  // a phone-sized screen in the dark theme set above.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(base + "/workflows/examples?template=learning-plan");
+  const memoryBox = page.getByTestId("example-memory-space");
+  const spaceInput = memoryBox.getByRole("textbox", { name: "Memory-Raum der Kopie" });
+  await spaceInput.waitFor();
+  const suggested = await spaceInput.inputValue();
+  check(/^[A-Za-z0-9][A-Za-z0-9 _.-]{0,63}$/.test(suggested), `The copy dialog suggests a memory space named after the copy (${suggested})`);
+  await spaceInput.fill("Prüfung");
+  await memoryBox.getByRole("alert").waitFor();
+  check(await page.getByRole("button", { name: "Als Kopie übernehmen" }).isDisabled(), "An invalid memory space name blocks the copy");
+  await spaceInput.fill("Anna 2027");
+  await spaceInput.scrollIntoViewIfNeeded();
+  check(
+    await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+    "The copy dialog with the memory space field fits a 390 px wide screen",
+  );
+  await shot("19-copy-memory-space-dark-390");
+  await page.getByRole("button", { name: "Als Kopie übernehmen" }).click();
+  await page.waitForURL(/\/workflows\/wf_/);
+  const learningId = page.url().match(/\/workflows\/(wf_[^/?#]+)/)[1];
+  const learning = await (await page.request.get(`${base}/api/workflows/${learningId}`)).json();
+  const memorySpaces = learning.nodes.filter((node) => node.agent?.memory?.mode === "persistent").map((node) => node.agent.memory.space);
+  check(
+    memorySpaces.length > 0 && memorySpaces.every((space) => space === "Anna 2027"),
+    "The copy's agents with persistent memory use the memory space chosen in the dialog",
+  );
+  await page.setViewportSize({ width: 1500, height: 940 });
+
   const relevant = errors.filter((text) => !/Failed to load resource/.test(text));
   check(relevant.length === 0, `No console errors${relevant.length ? `: ${relevant.join(" | ")}` : ""}`);
 } finally {

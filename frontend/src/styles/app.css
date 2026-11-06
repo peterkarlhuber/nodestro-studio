@@ -4410,6 +4410,10 @@ kbd {
   margin-bottom: var(--nd-space-3);
 }
 
+.example-preview__memory {
+  max-width: 420px;
+}
+
 .example-preview h3 {
   font-size: var(--nd-font-size-md);
   font-weight: 680;

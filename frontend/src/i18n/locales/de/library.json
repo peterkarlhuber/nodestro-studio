@@ -104,7 +104,11 @@
     "teamContract": "Liefert: {{names}}",
     "knowledge": "Wissensdateien",
     "knowledgeNote": "Werden beim Übernehmen in deiner Wissensbasis angelegt. Die Dokumente sind erfunden; die Agenten durchsuchen sie und nennen ihre Quellen.",
-    "copyTestsConnected": "Mit Verbindung nicht möglich: Testreihen laufen ohne Person, und MCP-Tools sind dort nicht erlaubt. Wähle den Offline-Modus, um die Testfälle zu übernehmen."
+    "copyTestsConnected": "Mit Verbindung nicht möglich: Testreihen laufen ohne Person, und MCP-Tools sind dort nicht erlaubt. Wähle den Offline-Modus, um die Testfälle zu übernehmen.",
+    "memorySpace": "Memory-Raum der Kopie",
+    "memorySpaceHint": "Ihre Agenten mit dauerhaftem Memory legen ihre Notizen in diesem Raum ab, getrennt von anderen Kopien. Lass das Feld leer, um den Memory-Raum des Beispiels mit allen anderen Kopien zu teilen.",
+    "memorySpaceInvalid": "Verwende bis zu 64 Buchstaben A–Z (ohne Umlaute und Akzente), Ziffern, Leerzeichen, _ . oder -, am Anfang einen Buchstaben oder eine Ziffer.",
+    "memorySpaceShared": "Leer: mit den anderen Kopien geteilt"
   },
   "connect": {
     "title_one": "Optionale Verbindung",
