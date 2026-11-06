@@ -4,6 +4,12 @@
 
 ### TODO abatement round (2026-11-06)
 
+- Pins: orkexa 1b61fda (orkexa #55), runtime 3d69702 (#120), examples 82d894b (#77), integrations 1e73e29 (#66),
+  api a3bd875 (#93), sdk 7714de0 (#87, version 0.3.0).
+- Runs list and run comparison show why a run failed as "<step>: <reason>" from the run's cause; the run banner uses
+  it when the step's data is not at hand (ST-003, AD-02).
+- Usage page: a "Budgets and limits" card with each published API's cost of the last 24 hours against its daily
+  limit, and the runs of the period a budget stopped or holds for a decision (ST-014, AD-20).
 - Local catalog models show a localized marker ("(lokal)", "(locale)" …) and their descriptions in every interface
   language; the studio handles runtime labels with and without "(local)".
 - Settings → Local models: "Not reachable" for an external server that does not answer, one CPU saving sentence,

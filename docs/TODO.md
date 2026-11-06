@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 1 |
-| P3 Low | 19 |
+| P3 Low | 17 |
 | P4 Optional | 6 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -47,14 +47,6 @@ and nodestro-api API-054 (portable export, api #85 with the #87 hardening, inclu
 from #121). Both have status `Needs external review`.
 
 ## Bugs and reliability
-
-### ST-003 · Runs list and run banner show only "Failed: <step>" (AD-02)
-
-- **Priority:** P3 Low · **Status:** Blocked (needs a run-level cause from the backend) · **Refs:** #81, UX audit AD-02
-- **What:** The run detail page derives the failure cause from step data, but the Runs list row and run-level banner
-  only know `run.nodes_failed` with step names, so a budget stop or provider failure reads "Failed: Writer".
-- **Next step:** Agree a run-level cause field with runtime/api, then render "<step>: <reason>" in the list and banner.
-- **Depends on:** nodestro-runtime RT-012 (store the cause on the run), nodestro-api API-018 (expose it in run summaries).
 
 ## Architecture and modularity
 
@@ -102,14 +94,6 @@ None known.
   only downloadable in the preview, not offered where the run needs them.
 - **Next step:** Offer the copy's sample files as one-click inputs once the copy knows its source example.
 - **Depends on:** nodestro-runtime RT-055 (origin of an example copy stored on the workflow).
-
-### ST-014 · Budgets and excluded service costs on the Usage page (AD-20)
-
-- **Priority:** P3 Low · **Status:** Blocked (needs an API field) · **Refs:** UX audit AD-20
-- **What:** Usage does not show published-API daily budget use or runs stopped by their budget. (The "not included"
-  note for MCP and service fees is shown since UX round 3; web-search fees are priced by Orkexa and included.)
-- **Next step:** Add a Budgets card once the API reports budget use.
-- **Depends on:** nodestro-api API-017 (budget usage in the usage response).
 
 ### ST-031 · Offline (sample data) badge on example copies (AD-18)
 
@@ -408,8 +392,6 @@ None known.
 |---|---|---|---|
 | (pointer) | nodestro-runtime | RT-001 (independent S-2 review, includes the studio approval surfaces) | Full entry in runtime |
 | (pointer) | nodestro-api | API-054 (independent review of the portable export, api #85/#87, studio #121) | Full entry in api |
-| ST-003 | nodestro-runtime, nodestro-api | RT-012, API-018 (run-level failure cause, AD-02) | Studio needs the field first |
-| ST-014 | nodestro-api | API-017 (budget usage in usage data, AD-20) | Studio needs the field first |
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |
 | ST-028 | nodestro-runtime, nodestro-server | RT-023, SRV-014 (dependency locking, D-05) | One shared decision |
 | ST-052 | all Nodestro repositories | Dependabot policy, branch protection decision, auto-merge prerequisites | Owner entry here; the others point to it |
@@ -417,7 +399,7 @@ None known.
 | ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update `products` with the next candidate |
 | ST-007, ST-031 | nodestro-examples, nodestro-runtime | EX-003 (AD-18 marker), RT-055 (copy origin) | Examples and runtime provide the marker; studio shows it |
 | ST-032 | nodestro-api | API-053 (contract descriptions in summaries) | Studio needs the field first |
-| — | nodestro-runtime, nodestro-api | X-01 decision response still `paused` (RT-005, API-018); X-03 error code list (RT-011, API-016) | Change lives in runtime/api; studio already adapted |
+| — | nodestro-api | X-03 rest: error responses of published routes and router tags (API-016); X-01 (RT-005, API-018) and the error code list (RT-011) are done | Change lives in api; studio already adapted |
 
 Generated example chapters (`frontend/src/docs/chapters/*/beispiele.md`, between the `examples` markers) come from
 nodestro-examples; fix their content there.
