@@ -19,7 +19,8 @@
     "results": "Ajustes que coinciden",
     "found_one": "{{count}} ajuste encontrado – Intro lleva al primero",
     "found_other": "{{count}} ajustes encontrados – Intro lleva al primero",
-    "none": "Ningún ajuste coincide con «{{query}}». Prueba otra palabra o elige una sección."
+    "none": "Ningún ajuste coincide con «{{query}}». Prueba otra palabra o elige una sección.",
+    "conditional": "no se muestra ahora (solo cuando corresponde)"
   },
   "advanced": {
     "badge": "Avanzado",
@@ -31,5 +32,8 @@
     "groupBudget": "Presupuesto por ejecución",
     "groupArchitect": "Arquitecto de flujos de trabajo",
     "unsaved": "Tus cambios en «Modelos y presupuesto» aún no están guardados. Guárdalos, descártalos o sigue editando."
+  },
+  "providers": {
+    "unsaved": "Lo que escribiste para {{providers}} aún no está guardado. Guárdalo en la tarjeta del proveedor o descártalo y sal."
   }
 }

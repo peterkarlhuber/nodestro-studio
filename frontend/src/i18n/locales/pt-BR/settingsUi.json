@@ -19,7 +19,8 @@
     "results": "Configurações correspondentes",
     "found_one": "{{count}} configuração encontrada – Enter leva à primeira",
     "found_other": "{{count}} configurações encontradas – Enter leva à primeira",
-    "none": "Nenhuma configuração corresponde a “{{query}}”. Tente outra palavra ou escolha uma seção."
+    "none": "Nenhuma configuração corresponde a “{{query}}”. Tente outra palavra ou escolha uma seção.",
+    "conditional": "não exibido agora (só quando se aplica)"
   },
   "advanced": {
     "badge": "Avançado",
@@ -31,5 +32,8 @@
     "groupBudget": "Orçamento por execução",
     "groupArchitect": "Arquiteto de fluxos de trabalho",
     "unsaved": "Suas alterações em “Modelos e orçamento” ainda não foram salvas. Salve, descarte ou continue editando."
+  },
+  "providers": {
+    "unsaved": "O que você digitou para {{providers}} ainda não foi salvo. Salve no cartão do provedor ou descarte e saia."
   }
 }

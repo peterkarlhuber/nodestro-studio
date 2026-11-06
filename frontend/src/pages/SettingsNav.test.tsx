@@ -91,6 +91,15 @@ describe("SettingsNav", () => {
     expect(await screen.findByText(/Keine Einstellung passt zu „gibtsnicht“/)).toBeInTheDocument();
   });
 
+  it("starts with the search the global search sent (ST-058)", async () => {
+    show("/settings?search=modellpreise", SECTIONS);
+    const input = await screen.findByRole("combobox", { name: "Einstellungen durchsuchen" });
+    expect(input).toHaveValue("modellpreise");
+    await waitFor(() => expect(document.activeElement).toBe(input));
+    const hits = await screen.findAllByTestId("settings-search-hit");
+    expect(hits[0]).toHaveTextContent("Modellpreise");
+  });
+
   it("offers the standard width only when the width was changed", async () => {
     const reset = vi.fn();
     show("/settings", SECTIONS, reset);

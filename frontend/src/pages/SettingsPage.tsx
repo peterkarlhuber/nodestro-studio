@@ -9,7 +9,7 @@ import { api } from "../api/client";
 import { PermissionNote } from "../components/Access";
 import { keys, useMeta, useSettings } from "../api/hooks";
 import type { Settings } from "../api/types";
-import { ModelPicker, useModelHint } from "../components/ModelPicker";
+import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
 import { Badge, Button, Callout, Field, HelpTip, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
@@ -28,7 +28,7 @@ import { ReasoningDisplayPanel } from "./SettingsReasoning";
 import { SandboxPanel } from "./SettingsSandbox";
 import { OutputLimitsPanel } from "./SettingsOutputLimits";
 import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy, settingsForm } from "./SettingsBudget";
-import { CHECK_KEY, DefaultModelNotice, ProviderSettings } from "./SettingsProviders";
+import { CHECK_KEY, DefaultModelNotice, ProviderSettings, unsavedProviderIds, useUnsavedProviders } from "./SettingsProviders";
 
 const AUTOMATIC = "auto";
 
@@ -129,7 +129,11 @@ export function SettingsPage() {
 
   // "Models and budget" is the one part of the page with a Save button: leaving it with changes asks first.
   const dirty = modelsDirty(form, lastSaved.current);
-  const blocker = useBlocker(({ currentLocation, nextLocation }) => dirty && currentLocation.pathname !== nextLocation.pathname);
+  // So does a provider card with a typed key, address, capabilities or limits that are not saved yet (ST-058).
+  const unsavedProviders = unsavedProviderIds(useUnsavedProviders((state) => state.dirty));
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => (dirty || unsavedProviders.length > 0) && currentLocation.pathname !== nextLocation.pathname,
+  );
 
   const save = useMutation({
     mutationFn: (body: Parameters<typeof api.saveSettings>[0]) => api.saveSettings(body),
@@ -315,13 +319,18 @@ export function SettingsPage() {
         <SettingsResizer host={layout} content={body} nav={nav} width={width.width} onWidth={width.setWidth} onReset={width.reset} />
         <UnsavedChangesModal
           open={blocker.state === "blocked"}
-          text={t("settingsUi.models.unsaved")}
+          text={
+            unsavedProviders.length
+              ? t("settingsUi.providers.unsaved", { providers: unsavedProviders.map((id) => providerLabel(t, id)).join(", ") })
+              : t("settingsUi.models.unsaved")
+          }
           onStay={() => blocker.reset?.()}
           onDiscard={() => {
             if (settings.data) setForm(settingsForm(settings.data));
             blocker.proceed?.();
           }}
-          onSave={admin && !modelsInvalid ? () => saveModels(() => blocker.proceed?.()) : undefined}
+          // Saving first covers "Models and budget" only: a provider's input is saved in its own card.
+          onSave={admin && !modelsInvalid && !unsavedProviders.length ? () => saveModels(() => blocker.proceed?.()) : undefined}
           saving={save.isPending}
         />
         <SettingsNav

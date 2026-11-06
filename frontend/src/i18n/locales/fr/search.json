@@ -20,5 +20,6 @@
   },
   "recentRun": "Exécution",
   "recentWorkflow": "Workflow",
-  "shortcut": "Ctrl+K"
+  "shortcut": "Ctrl+K",
+  "inSettings": "Rechercher « {{query}} » dans les réglages"
 }

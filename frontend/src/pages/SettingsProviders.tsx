@@ -5,6 +5,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Plug, Save, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { create } from "zustand";
 import { Trans, useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
@@ -54,6 +55,20 @@ export function useFollowProvider() {
     },
     onError: toast.error,
   });
+}
+
+/** Provider cards with input that is not saved yet (a typed key, an address, capabilities, limits), by provider id:
+ *  the settings page asks before leaving them (ST-058). */
+export const useUnsavedProviders = create<{ dirty: Record<string, boolean>; mark: (id: string, dirty: boolean) => void }>((set) => ({
+  dirty: {},
+  mark: (id, dirty) => set((state) => (Boolean(state.dirty[id]) === dirty ? state : { dirty: { ...state.dirty, [id]: dirty } })),
+}));
+
+/** The names of the providers with unsaved input. */
+export function unsavedProviderIds(dirty: Record<string, boolean>): string[] {
+  return Object.entries(dirty)
+    .filter(([, value]) => value)
+    .map(([id]) => id);
 }
 
 /** The token limits an endpoint's models may declare (nodestro-runtime providers.LIMIT_NAMES, DECLARED_LIMIT_RANGE). */
@@ -130,6 +145,12 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
     JSON.stringify(capabilities) !== JSON.stringify(status.capabilities) ||
     (info.declare_capabilities && limitsChanged);
   const number = (value: number) => value.toLocaleString(i18n.language);
+  const unsaved = Boolean(apiKey.trim()) || Boolean(changed);
+  const mark = useUnsavedProviders((state) => state.mark);
+  useEffect(() => {
+    mark(info.id, unsaved);
+  }, [info.id, unsaved, mark]);
+  useEffect(() => () => mark(info.id, false), [info.id, mark]);
   return (
     <Section
       id={`provider-${info.id}`}

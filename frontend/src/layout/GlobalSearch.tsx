@@ -95,6 +95,8 @@ const PAGES: { to: string; label: string; within?: string }[] = [
   { to: "/settings#settings-providers", label: "settings.providers.title", within: "nav.settings" },
   { to: "/settings#settings-language", label: "settings.language.title", within: "nav.settings" },
   { to: "/settings#settings-models", label: "settings.models.title", within: "nav.settings" },
+  { to: "/settings#settings-reasoning", label: "reasoning.settings.title", within: "nav.settings" },
+  { to: "/settings#settings-output-limits", label: "modelParams.settings.title", within: "nav.settings" },
   { to: "/settings#settings-prices", label: "pricing.title", within: "nav.settings" },
   { to: "/settings#settings-reconciliation", label: "pricing.reconciliation.title", within: "nav.settings" },
   { to: "/settings#settings-sandbox", label: "settings.sandbox.title", within: "nav.settings" },
@@ -137,6 +139,24 @@ export function pageHits(query: string, translate: (key: string) => string): Hit
     to: page.to,
     favorite: false,
   }));
+}
+
+const SETTINGS_SEARCH_KEY = "page:settings-search";
+
+/** "Search the settings for …": opens the settings page with its own search filled in, which finds single settings
+ *  (fields, switches, help texts), not only sections (ST-058). Offered from three typed characters on. */
+export function settingsSearchHit(query: string, t: Translate): Hit | null {
+  const typed = query.trim();
+  if (typed.length < 3) return null;
+  return {
+    key: SETTINGS_SEARCH_KEY,
+    kind: "page",
+    title: t("search.inSettings", { query: typed }),
+    subtitle: t("nav.settings"),
+    snippet: "",
+    to: `/settings?search=${encodeURIComponent(typed)}`,
+    favorite: false,
+  };
 }
 
 function runHit(run: RunSummary, t: Translate, kind: Kind = "run"): Hit {
@@ -264,6 +284,7 @@ export function GlobalSearch() {
     const all = [
       ...(open && !typed ? recentHits(runs.data, workflows.data, t) : []),
       ...pageHits(typed, t),
+      ...[settingsSearchHit(typed, t)].filter((hit): hit is Hit => hit !== null),
       ...fromServer,
       ...runHits(typed, runs.data, t),
       ...(docs.data ?? []),
@@ -333,7 +354,9 @@ export function GlobalSearch() {
             {loading ? <Spinner /> : null}
           </div>
           {!debounced ? <p className="muted small">{t("search.hint")}</p> : null}
-          {debounced && !loading && !hits.length ? <p className="muted">{t("search.empty", { query: debounced })}</p> : null}
+          {debounced && !loading && !hits.some((hit) => hit.key !== SETTINGS_SEARCH_KEY) ? (
+            <p className="muted">{t("search.empty", { query: debounced })}</p>
+          ) : null}
           <div id="global-search-results" role="listbox" aria-label={t("search.results")}>
             {KINDS.filter((kind) => hits.some((hit) => hit.kind === kind)).map((kind) => {
               const Icon = ICONS[kind];

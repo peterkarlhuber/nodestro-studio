@@ -7,7 +7,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { keys } from "../api/hooks";
 import { Toaster } from "../components/toast";
 import type { Settings } from "../api/types";
-import { CHECK_KEY, DefaultModelNotice, ProviderSettings } from "./SettingsProviders";
+import { CHECK_KEY, DefaultModelNotice, ProviderSettings, unsavedProviderIds, useUnsavedProviders } from "./SettingsProviders";
 
 const status = (id: string, configured: boolean) => ({
   id,
@@ -201,5 +201,36 @@ describe("declared token limits of an endpoint (ST-057)", () => {
     // The maximum output cannot exceed the context window.
     expect(within(card()).getByTestId("provider-limit-error-max_output_tokens")).toHaveTextContent("von 256 bis 32.768");
     expect(save).toBeDisabled();
+  });
+});
+
+describe("unsaved provider input (ST-058)", () => {
+  it("marks a card with a typed key or a changed limit, and clears it when saved or emptied", async () => {
+    useUnsavedProviders.setState({ dirty: {} });
+    serve(settings(["openai"]));
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    client.setQueryData(keys.meta, META);
+    show(<ProviderSettings settings={settings([])} />, client);
+    const card = document.querySelector("[data-provider='openai']") as HTMLElement;
+    const key = within(card).getByLabelText(/openai/i);
+    await userEvent.type(key, "sk-test");
+    expect(unsavedProviderIds(useUnsavedProviders.getState().dirty)).toEqual(["openai"]);
+    await userEvent.clear(key);
+    expect(unsavedProviderIds(useUnsavedProviders.getState().dirty)).toEqual([]);
+    await userEvent.type(key, "sk-test");
+    await userEvent.click(within(card).getByRole("button", { name: "Speichern" }));
+    await waitFor(() => expect(unsavedProviderIds(useUnsavedProviders.getState().dirty)).toEqual([]));
+  });
+
+  it("forgets a card that is no longer shown", async () => {
+    useUnsavedProviders.setState({ dirty: {} });
+    serve(settings([]));
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    client.setQueryData(keys.meta, META);
+    show(<ProviderSettings settings={settings([])} />, client);
+    await userEvent.type(within(document.querySelector("[data-provider='anthropic']") as HTMLElement).getByLabelText(/anthropic/i), "sk");
+    expect(unsavedProviderIds(useUnsavedProviders.getState().dirty)).toEqual(["anthropic"]);
+    cleanup();
+    expect(unsavedProviderIds(useUnsavedProviders.getState().dirty)).toEqual([]);
   });
 });

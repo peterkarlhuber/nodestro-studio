@@ -19,7 +19,8 @@
     "results": "Impostazioni corrispondenti",
     "found_one": "{{count}} impostazione trovata – Invio porta alla prima",
     "found_other": "{{count}} impostazioni trovate – Invio porta alla prima",
-    "none": "Nessuna impostazione corrisponde a «{{query}}». Prova un’altra parola o scegli una sezione."
+    "none": "Nessuna impostazione corrisponde a «{{query}}». Prova un’altra parola o scegli una sezione.",
+    "conditional": "non mostrato ora (solo quando serve)"
   },
   "advanced": {
     "badge": "Avanzate",
@@ -31,5 +32,8 @@
     "groupBudget": "Budget per esecuzione",
     "groupArchitect": "Architetto dei workflow",
     "unsaved": "Le modifiche in «Modelli e budget» non sono ancora salvate. Salvale, scartale o continua a modificare."
+  },
+  "providers": {
+    "unsaved": "Quello che hai inserito per {{providers}} non è ancora salvato. Salvalo nella scheda del provider oppure scartalo ed esci."
   }
 }

@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import i18n, { loadLanguage } from "../i18n";
 import type { RunSummary, WorkflowSummary } from "../api/types";
-import { GlobalSearch, pageHits, recentHits, runHits } from "./GlobalSearch";
+import { GlobalSearch, pageHits, recentHits, runHits, settingsSearchHit } from "./GlobalSearch";
 
 afterEach(() => {
   cleanup();
@@ -66,6 +66,15 @@ describe("pageHits", () => {
     await loadLanguage("fr");
     const french = i18n.getFixedT("fr");
     expect(pageHits("reglages", french).map((hit) => hit.to)).toContain("/settings");
+  });
+
+  it("finds the reasoning and output limit sections, and offers the settings search for any query (ST-058)", () => {
+    expect(pageHits("ausgabe", t).map((hit) => hit.to)).toContain("/settings#settings-output-limits");
+    expect(pageHits(t("reasoning.settings.title"), t).map((hit) => hit.to)).toContain("/settings#settings-reasoning");
+    const hit = settingsSearchHit("  CPU Spar ", t);
+    expect(hit?.to).toBe("/settings?search=CPU%20Spar");
+    expect(hit?.title).toBe("In den Einstellungen nach „CPU Spar“ suchen");
+    expect(settingsSearchHit(" ab ", t)).toBeNull();
   });
 
   it("offers every page, but no settings section, for an empty query", () => {

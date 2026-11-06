@@ -12,8 +12,9 @@
 //
 // Help texts are only rendered when a tooltip opens; the help button names its text with data-help, and the
 // caller passes a function that returns the text for an id. Parts marked [data-settings-search="skip"] (and
-// tooltips) are left out. Content of a closed <details> is found and opened when the hit is shown; content that
-// is not rendered at all (conditional React state) cannot be found, which is why the convention uses <details>.
+// tooltips) are left out. Content of a closed <details> is found and opened when the hit is shown. Content that is
+// not rendered at all (it applies only to some installations) is found through its help text when the caller lists
+// it as a ConditionalSetting: the hit then leads to its section and says that the part is not shown right now.
 
 export interface SettingEntry {
   /** Position in the page, stable while the page does not change. */
@@ -25,6 +26,18 @@ export interface SettingEntry {
   /** Hint, description and help text: searched, and shown as a snippet. */
   text: string;
   element: HTMLElement;
+}
+
+/** A part of a section that is rendered only when it applies (e.g. the import of offline packages). */
+export interface ConditionalSetting {
+  /** The id of its section's heading ("settings-local-models"). */
+  section: string;
+  /** Its help id (data-help of its help button when it is rendered). */
+  help: string;
+  /** Its name in the interface language. */
+  label: string;
+  /** Shown as part of the context: that the part is not on the page right now. */
+  note: string;
 }
 
 export interface SettingHit extends SettingEntry {
@@ -78,7 +91,11 @@ function partOf(element: HTMLElement, section: HTMLElement): string {
 }
 
 /** One entry per setting of the page, in the page's order. */
-export function indexSettings(root: HTMLElement, help: (id: string) => string | undefined = () => undefined): SettingEntry[] {
+export function indexSettings(
+  root: HTMLElement,
+  help: (id: string) => string | undefined = () => undefined,
+  conditional: ConditionalSetting[] = [],
+): SettingEntry[] {
   const entries: SettingEntry[] = [];
   const sections = root.querySelectorAll<HTMLElement>(":scope > section");
   sections.forEach((section, sectionIndex) => {
@@ -131,6 +148,20 @@ export function indexSettings(root: HTMLElement, help: (id: string) => string | 
       });
     });
   });
+  for (const part of conditional) {
+    if (root.querySelector(`[data-help="${CSS.escape(part.help)}"]`)) continue;
+    const heading = root.querySelector<HTMLElement>(`:scope > section > h2.panel__title#${CSS.escape(part.section)}`);
+    const section = heading?.parentElement;
+    if (!heading || !section || section.closest("[data-settings-search=skip]")) continue;
+    entries.push({
+      key: `conditional.${part.help}`,
+      kind: "setting",
+      label: part.label,
+      context: [ownText(heading), part.note].join(" › "),
+      text: distinct(help(part.help) ?? ""),
+      element: section,
+    });
+  }
   return entries;
 }
 
