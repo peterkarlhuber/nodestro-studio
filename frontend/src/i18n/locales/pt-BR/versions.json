@@ -33,5 +33,27 @@
   "restored": "Versão {{number}} restaurada",
   "beforeRestoreNote": "Antes de restaurar a versão {{number}}",
   "saveAndRestore": "Salvar primeiro e restaurar",
-  "restoreDiscard": "Restaurar sem salvar"
+  "restoreDiscard": "Restaurar sem salvar",
+  "fields": {
+    "label": "Nome da etapa",
+    "name": "Nome do agente",
+    "model": "Modelo",
+    "system_prompt": "Prompt de sistema",
+    "task_template": "Tarefa",
+    "tools": "Ferramentas",
+    "server_tools": "Ferramentas do provedor",
+    "fallbacks": "Modelos de reserva",
+    "knowledge": "As configurações de conhecimento são diferentes",
+    "output": "O formato do resultado é diferente",
+    "other": "Outras configurações são diferentes"
+  },
+  "diff": {
+    "value": "{{field}}: {{before}} → {{after}}",
+    "empty": "(vazio)",
+    "added": "seriam adicionados: {{items}}",
+    "removed": "seriam removidos: {{items}}",
+    "order": "a ordem é diferente",
+    "text": "{{field}} é diferente: mostrar as linhas",
+    "direction": "As linhas marcadas como adicionadas vêm da versão; as removidas estão agora no editor."
+  }
 }

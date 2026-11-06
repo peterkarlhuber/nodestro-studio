@@ -3836,6 +3836,28 @@ button.check-list__item:hover {
   color: var(--nd-text-muted);
 }
 
+.version-changes__steps,
+.version-changes__fields {
+  margin: 4px 0;
+  padding-left: 18px;
+}
+
+.version-changes__steps strong {
+  color: var(--nd-text);
+}
+
+.version-changes__text summary {
+  cursor: pointer;
+}
+
+.version-changes__text[open] {
+  margin: 4px 0 8px;
+  color: var(--nd-text);
+  /* Long prompt lines wrap or scroll inside the diff, never the dialog (390px). */
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 /* ---- run comparison ----------------------------------------------------------- */
 
 .table__pick {

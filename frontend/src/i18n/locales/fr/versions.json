@@ -33,5 +33,27 @@
   "restored": "Version {{number}} restaurée",
   "beforeRestoreNote": "Avant la restauration de la version {{number}}",
   "saveAndRestore": "Enregistrer d’abord, puis restaurer",
-  "restoreDiscard": "Restaurer sans enregistrer"
+  "restoreDiscard": "Restaurer sans enregistrer",
+  "fields": {
+    "label": "Nom de l’étape",
+    "name": "Nom de l’agent",
+    "model": "Modèle",
+    "system_prompt": "Prompt système",
+    "task_template": "Tâche",
+    "tools": "Outils",
+    "server_tools": "Outils du fournisseur",
+    "fallbacks": "Modèles de repli",
+    "knowledge": "Les réglages de connaissances diffèrent",
+    "output": "Le format du résultat diffère",
+    "other": "D’autres réglages diffèrent"
+  },
+  "diff": {
+    "value": "{{field}} : {{before}} → {{after}}",
+    "empty": "(vide)",
+    "added": "seraient ajoutés : {{items}}",
+    "removed": "seraient retirés : {{items}}",
+    "order": "l’ordre diffère",
+    "text": "{{field}} diffère : afficher les lignes",
+    "direction": "Les lignes marquées comme ajoutées viennent de la version ; les lignes supprimées sont actuellement dans l’éditeur."
+  }
 }

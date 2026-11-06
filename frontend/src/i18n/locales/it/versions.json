@@ -33,5 +33,27 @@
   "restored": "Versione {{number}} ripristinata",
   "beforeRestoreNote": "Prima di ripristinare la versione {{number}}",
   "saveAndRestore": "Prima salva, poi ripristina",
-  "restoreDiscard": "Ripristina senza salvare"
+  "restoreDiscard": "Ripristina senza salvare",
+  "fields": {
+    "label": "Nome del passaggio",
+    "name": "Nome dell’agente",
+    "model": "Modello",
+    "system_prompt": "Prompt di sistema",
+    "task_template": "Compito",
+    "tools": "Strumenti",
+    "server_tools": "Strumenti del provider",
+    "fallbacks": "Modelli di riserva",
+    "knowledge": "Le impostazioni della conoscenza sono diverse",
+    "output": "Il formato del risultato è diverso",
+    "other": "Altre impostazioni sono diverse"
+  },
+  "diff": {
+    "value": "{{field}}: {{before}} → {{after}}",
+    "empty": "(vuoto)",
+    "added": "verrebbero aggiunti: {{items}}",
+    "removed": "verrebbero tolti: {{items}}",
+    "order": "l’ordine è diverso",
+    "text": "{{field}} è diverso: mostra le righe",
+    "direction": "Le righe segnate come aggiunte vengono dalla versione, quelle rimosse sono ora nell’editor."
+  }
 }

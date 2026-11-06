@@ -33,5 +33,27 @@
   "restored": "Version {{number}} wiederhergestellt",
   "beforeRestoreNote": "Vor dem Wiederherstellen von Version {{number}}",
   "saveAndRestore": "Erst speichern, dann wiederherstellen",
-  "restoreDiscard": "Ohne Speichern wiederherstellen"
+  "restoreDiscard": "Ohne Speichern wiederherstellen",
+  "fields": {
+    "label": "Name des Schritts",
+    "name": "Name des Agenten",
+    "model": "Modell",
+    "system_prompt": "System-Prompt",
+    "task_template": "Aufgabe",
+    "tools": "Tools",
+    "server_tools": "Tools des Anbieters",
+    "fallbacks": "Ausweichmodelle",
+    "knowledge": "Wissenseinstellungen unterscheiden sich",
+    "output": "Ergebnisformat unterscheidet sich",
+    "other": "Weitere Einstellungen unterscheiden sich"
+  },
+  "diff": {
+    "value": "{{field}}: {{before}} → {{after}}",
+    "empty": "(leer)",
+    "added": "kämen hinzu: {{items}}",
+    "removed": "fielen weg: {{items}}",
+    "order": "Reihenfolge unterscheidet sich",
+    "text": "{{field}} unterscheidet sich: Zeilen zeigen",
+    "direction": "Als hinzugefügt markierte Zeilen stammen aus der Version, entfernte stehen jetzt im Editor."
+  }
 }
