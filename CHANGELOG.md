@@ -2,6 +2,29 @@
 
 ## Unreleased
 
+### Settings, attachments and providers (2026-11-06)
+
+- The assistant chat takes your own files: choose, drop or paste PDFs, documents, tables, text and images. Each
+  file shows how the model reads it (natively or as text); use it again in the chat or save it to knowledge.
+- Settings: the content is wider by default (1120 px instead of 760 px) and its right edge can be dragged or moved
+  with the keyboard (remembered, "Standard width" resets); a search finds single settings in every language;
+  "Models and budget" is grouped with "Advanced" parts, and unsaved changes there survive other saves.
+- A gear at the top right opens the settings from every page (also Ctrl+, / ⌘,) and returns where you were; it
+  replaces the sidebar item.
+- Fixed: tooltips in dialogs (for example "Write missing tools as drafts") were hidden behind the dialog; they now
+  show above it and stay in the window. Clearer help texts for budget, Workflow Architect, OCR, backup and more.
+- Agent options follow the model's capabilities, with the reason when one is not available; new section
+  "Model output limits" for the Workflow Architect, assistant and other built-in AI steps.
+- Reasoning is shown live in the assistant, run chat, workflow runs, Workflow Architect and agent test (status,
+  thinking text, summary, not transmitted, not exposed), with a global and a per-conversation display setting.
+- Local model setup and downloads show each step, whether action is needed, measured progress and a remedy; a
+  required local model that is missing opens one dialog to download it or pick another ready model, and the
+  original action continues with your inputs; schedules and checks get "Fix".
+- Fixed: Word and Excel result formats showed raw keys (`flow.files.formats.docx/xlsx`); a missing text now never
+  shows as its key, and tests check every key built from a value in all six languages.
+- New page "Publications" (Automate & test): every published API with its workflow, status, active version, date
+  and export history; "Open API & Export" opens that workflow's dialog, also after a reload.
+
 ### Product findings of the manual review (2026-11-05)
 
 - Texts follow the current behavior in all six languages: an attended run pauses at its budget and waits for a
