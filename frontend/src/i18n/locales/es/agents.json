@@ -13,5 +13,6 @@
   "edit": "Editar plantilla",
   "delete": "Eliminar plantilla",
   "selectHint": "Elige un agente a la izquierda para editarlo.",
-  "unsavedText": "La plantilla «{{name}}» tiene cambios que aún no se han guardado."
+  "unsavedText": "La plantilla «{{name}}» tiene cambios que aún no se han guardado.",
+  "newUnsaved": "Plantilla nueva: se añade a la biblioteca al guardarla."
 }

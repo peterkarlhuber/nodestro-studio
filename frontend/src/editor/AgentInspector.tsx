@@ -21,6 +21,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
+import { TaskTemplateInput } from "./TaskTemplateInput";
 import { keys, useKnowledge, useMemorySpaces, useMeta, useModelOptions, useSettings, useTools } from "../api/hooks";
 import type {
   AgentConfig,
@@ -360,12 +361,7 @@ export function AgentForm({
           />
         }
       >
-        <TextArea
-          id="agent-task"
-          rows={3}
-          value={agent.task_template}
-          onChange={(e) => update({ task_template: e.target.value })}
-        />
+        <TaskTemplateInput id="agent-task" value={agent.task_template} onChange={(task_template) => update({ task_template })} />
         {placeholders.length ? (
           <div className="chip-row" aria-label={t("agent.insertPlaceholder")}>
             <HelpTip id="agent.placeholders" label={t("agent.placeholders")} />

@@ -30,6 +30,9 @@ import { ErrorText } from "../lib/errors";
 import { changedText } from "../lib/format";
 import { useModelName } from "../components/ModelPicker";
 
+/** The id of a template that is being written and not saved yet ("Empty template" saves only on Save, ED-22). */
+const NEW = "__new__";
+
 /** The agent library: reusable agent configurations that appear in the editor's palette. */
 export function AgentsPage() {
   const { t } = useTranslation();
@@ -38,6 +41,8 @@ export function AgentsPage() {
   const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [draft, setDraft] = useState<AgentConfig | null>(null);
+  // The starting point of a new template; it exists only in this form until the first save.
+  const [fresh, setFresh] = useState<AgentConfig | null>(null);
   const [designOpen, setDesignOpen] = useState(false);
   const organize = useOrganize();
   const [filter, setFilter] = useState<OrganizeFilterValue>(NO_FILTER);
@@ -46,7 +51,9 @@ export function AgentsPage() {
   const [params, setParams] = useSearchParams();
   const wanted = params.get("template");
   const selected = templates.data?.find((item) => item.id === selectedId) ?? null;
-  const dirty = Boolean(selected && draft && JSON.stringify(selected.agent) !== JSON.stringify(draft));
+  const isNew = selectedId === NEW && fresh !== null;
+  const base = isNew ? fresh : selected?.agent ?? null;
+  const dirty = Boolean(base && draft && JSON.stringify(base) !== JSON.stringify(draft));
   // Opening another template while this one has unsaved edits asks first (like leaving the workflow editor).
   // ``undefined``: nothing waits; ``null``: close the form.
   const [pendingId, setPendingId] = useState<string | null | undefined>(undefined);
@@ -77,8 +84,8 @@ export function AgentsPage() {
   useContextOffer("agents", offer);
 
   useEffect(() => {
-    setDraft(selected ? structuredClone(selected.agent) : null);
-    // Only reset the draft when another template is opened.
+    setDraft(base ? structuredClone(base) : null);
+    // Only reset the draft when another template (or a new one) is opened.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId, selected?.updated_at]);
 
@@ -87,12 +94,19 @@ export function AgentsPage() {
   const create = useMutation({
     mutationFn: api.createTemplate,
     onSuccess: (template: AgentTemplate) => {
-      void refresh().then(() => choose(template.id));
       toast.success(t("agents.created", { name: template.agent.name }));
     },
     onError: toast.error,
   });
-  const save = useMutation({
+  // A new template from the design dialog opens right away (it is saved already).
+  const createAndOpen = (agent: AgentConfig) =>
+    create.mutate(agent, { onSuccess: (template) => void refresh().then(() => choose(template.id)) });
+  const startNew = () => {
+    if (selectedId === NEW) return;
+    setFresh(defaultAgent({ name: t("agents.newTemplateName") }));
+    choose(NEW);
+  };
+  const saveTemplate = useMutation({
     mutationFn: ({ id, agent }: { id: string; agent: AgentConfig }) => api.saveTemplate(id, agent),
     onSuccess: () => {
       void refresh();
@@ -100,6 +114,19 @@ export function AgentsPage() {
     },
     onError: toast.error,
   });
+  // Saving a new template creates it; ``then`` runs after the save (e.g. the navigation that waited for it).
+  const saveDraft = (then?: () => void) => {
+    if (!draft) return;
+    if (isNew)
+      create.mutate(draft, {
+        onSuccess: (template) => {
+          dirtyRef.current = false;
+          void refresh().then(() => (then ? then() : setSelectedId(template.id)));
+        },
+      });
+    else if (selected) saveTemplate.mutate({ id: selected.id, agent: draft }, { onSuccess: () => then?.() });
+  };
+  const saving = saveTemplate.isPending || (isNew && create.isPending);
   const remove = useMutation({
     mutationFn: api.deleteTemplate,
     onSuccess: () => {
@@ -119,7 +146,7 @@ export function AgentsPage() {
           description={t("agents.description")}
           actions={
             <>
-              <Button icon={Plus} onClick={() => create.mutate(defaultAgent({ name: t("agents.newTemplateName") }))}>
+              <Button icon={Plus} onClick={startNew}>
                 {t("agents.emptyTemplate")}
               </Button>
               <Hint id="agent.design">
@@ -202,34 +229,39 @@ export function AgentsPage() {
         </div>
       </div>
       <aside className="inspector" aria-label={t("agents.edit")}>
-        {selected && draft ? (
+        {(selected || isNew) && draft ? (
           <>
+            {isNew ? <p className="muted small inspector__note">{t("agents.newUnsaved")}</p> : null}
             <AgentForm
-              key={selected.id}
+              key={isNew ? NEW : selected!.id}
               agent={draft}
               onChange={(patch) => setDraft({ ...draft, ...patch })}
               onReplace={setDraft}
               existing={templates.data?.map((item) => item.agent.name)}
               actions={
                 <>
-                  <DiscussIcon offer={offer} />
-                  <FavoriteButton kind="template" id={selected.id} name={selected.agent.name} />
-                  <TagEditor kind="template" id={selected.id} name={selected.agent.name} />
-                  <ConfirmIconButton icon={Trash2} label={t("agents.delete")} busy={remove.isPending} onConfirm={() => remove.mutate(selected.id)} />
+                  {selected ? (
+                    <>
+                      <DiscussIcon offer={offer} />
+                      <FavoriteButton kind="template" id={selected.id} name={selected.agent.name} />
+                      <TagEditor kind="template" id={selected.id} name={selected.agent.name} />
+                      <ConfirmIconButton icon={Trash2} label={t("agents.delete")} busy={remove.isPending} onConfirm={() => remove.mutate(selected.id)} />
+                    </>
+                  ) : null}
                 </>
               }
             />
             <div className="inspector__footer">
-              <Button variant="ghost" icon={Undo2} disabled={!dirty} onClick={() => setDraft(structuredClone(selected.agent))}>
-                {t("common.discard")}
-              </Button>
-              <Button
-                variant="primary"
-                icon={Save}
-                disabled={!dirty}
-                busy={save.isPending}
-                onClick={() => save.mutate({ id: selected.id, agent: draft })}
-              >
+              {isNew ? (
+                <Button variant="ghost" icon={Undo2} onClick={() => setSelectedId(null)}>
+                  {t("common.cancel")}
+                </Button>
+              ) : (
+                <Button variant="ghost" icon={Undo2} disabled={!dirty} onClick={() => setDraft(structuredClone(base!))}>
+                  {t("common.discard")}
+                </Button>
+              )}
+              <Button variant="primary" icon={Save} disabled={!dirty && !isNew} busy={saving} onClick={() => saveDraft()}>
                 {t("common.save")}
               </Button>
             </div>
@@ -243,39 +275,33 @@ export function AgentsPage() {
       </aside>
       <UnsavedChangesModal
         open={pendingId !== undefined || blocker.state === "blocked"}
-        text={t("agents.unsavedText", { name: selected?.agent.name ?? "" })}
-        saving={save.isPending}
+        text={t("agents.unsavedText", { name: draft?.name ?? "" })}
+        saving={saving}
         onStay={() => {
           setPendingId(undefined);
           blocker.reset?.();
         }}
         onDiscard={() => {
-          if (selected) setDraft(structuredClone(selected.agent));
+          if (base) setDraft(structuredClone(base));
           dirtyRef.current = false;
           if (pendingId !== undefined) setSelectedId(pendingId);
           setPendingId(undefined);
           blocker.proceed?.();
         }}
-        onSave={() => {
-          if (!selected || !draft) return;
-          save.mutate(
-            { id: selected.id, agent: draft },
-            {
-              onSuccess: () => {
-                dirtyRef.current = false;
-                if (pendingId !== undefined) setSelectedId(pendingId);
-                setPendingId(undefined);
-                blocker.proceed?.();
-              },
-            },
-          );
-        }}
+        onSave={() =>
+          saveDraft(() => {
+            dirtyRef.current = false;
+            if (pendingId !== undefined) setSelectedId(pendingId);
+            setPendingId(undefined);
+            blocker.proceed?.();
+          })
+        }
       />
       <DesignAgentDialog
         open={designOpen}
         onClose={() => setDesignOpen(false)}
         existing={templates.data?.map((item) => item.agent.name) ?? []}
-        onApply={(config) => create.mutate(config)}
+        onApply={createAndOpen}
       />
     </div>
   );

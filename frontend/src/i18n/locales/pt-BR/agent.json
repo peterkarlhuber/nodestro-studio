@@ -269,5 +269,11 @@
     "examples_other": "{{count}} mensagens de exemplo",
     "requestOptions": "opções de requisição",
     "judge": "juiz: {{model}}"
+  },
+  "taskChip": {
+    "label": "Resultados das etapas anteriores",
+    "text": "O agente trabalha exatamente nisso, sem outras instruções.",
+    "edit": "Escrever a tarefa",
+    "asChip": "Mostrar como marcador"
   }
 }

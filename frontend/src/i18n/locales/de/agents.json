@@ -13,5 +13,6 @@
   "edit": "Vorlage bearbeiten",
   "delete": "Vorlage löschen",
   "selectHint": "Wähle links einen Agenten, um ihn zu bearbeiten.",
-  "unsavedText": "Die Vorlage „{{name}}“ hat Änderungen, die noch nicht gespeichert sind."
+  "unsavedText": "Die Vorlage „{{name}}“ hat Änderungen, die noch nicht gespeichert sind.",
+  "newUnsaved": "Neue Vorlage: Sie kommt beim Speichern in die Bibliothek."
 }

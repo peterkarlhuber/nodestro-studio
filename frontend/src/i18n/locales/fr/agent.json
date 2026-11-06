@@ -269,5 +269,11 @@
     "examples_other": "{{count}} messages d’exemple",
     "requestOptions": "options de requête",
     "judge": "juge : {{model}}"
+  },
+  "taskChip": {
+    "label": "Résultats des étapes précédentes",
+    "text": "L’agent traite exactement cela, sans autre consigne.",
+    "edit": "Rédiger la tâche",
+    "asChip": "Afficher comme espace réservé"
   }
 }

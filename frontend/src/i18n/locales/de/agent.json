@@ -269,5 +269,11 @@
     "examples_other": "{{count}} Beispielnachrichten",
     "requestOptions": "Anfrageoptionen",
     "judge": "Judge: {{model}}"
+  },
+  "taskChip": {
+    "label": "Ergebnisse der vorherigen Schritte",
+    "text": "Der Agent bearbeitet genau das, ohne weitere Anweisung.",
+    "edit": "Aufgabe formulieren",
+    "asChip": "Als Platzhalter zeigen"
   }
 }

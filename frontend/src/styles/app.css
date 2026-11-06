@@ -7734,3 +7734,20 @@ ul.gate-report__list > li.gate-report__item {
   padding-left: 18px;
   overflow-wrap: anywhere;
 }
+
+/* A new agent template that is not saved yet (ED-22). */
+.inspector__note {
+  margin: 0;
+  padding: 12px 18px 0;
+}
+
+/* The task of a new agent as a placeholder chip (ED-22). */
+.task-chip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  padding: 8px 10px;
+  border: 1px dashed var(--nd-border);
+  border-radius: var(--nd-radius-sm);
+}

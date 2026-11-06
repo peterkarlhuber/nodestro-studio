@@ -269,5 +269,11 @@
     "examples_other": "{{count}} mensajes de ejemplo",
     "requestOptions": "opciones de solicitud",
     "judge": "juez: {{model}}"
+  },
+  "taskChip": {
+    "label": "Resultados de los pasos anteriores",
+    "text": "El agente trabaja exactamente sobre esto, sin más instrucciones.",
+    "edit": "Escribir la tarea",
+    "asChip": "Mostrar como marcador"
   }
 }
