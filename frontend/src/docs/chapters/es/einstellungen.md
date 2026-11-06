@@ -2,6 +2,16 @@
 
 Este capítulo describe todos los ajustes, la instalación y el inicio de Nodestro y los atajos de teclado.
 
+## Orientarse en los ajustes {#ueberblick}
+<!-- keywords: ajustes, engranaje, abrir ajustes, buscar ajustes, encontrar un ajuste, ancho, más ancho, cambiar tamaño, navegación, avanzado, ctrl+coma -->
+
+- **Abrir:** el engranaje arriba a la derecha de cada página, o *Ctrl+,* (*⌘,* en Mac). Los ajustes recuerdan de dónde vienes: **Volver** encima de la navegación (o de nuevo *Ctrl+,*) te lleva allí. Una página con cambios sin guardar, como el editor de flujos de trabajo, pregunta antes.
+- **Búsqueda:** *Buscar un ajuste …* encima de la navegación busca en los nombres, explicaciones y textos de ayuda de cada ajuste, en el idioma de la interfaz. Las flechas eligen un resultado e **Intro** salta a él: las partes cerradas se abren, el ajuste se resalta y su campo recibe el foco.
+- **Navegación:** la lista de la derecha muestra las secciones por temas y marca la que estás leyendo. En una ventana estrecha es una barra encima del contenido con la búsqueda e *Ir a la sección*.
+- **Ancho:** arrastra el borde entre el contenido y la navegación para hacer los ajustes más anchos o más estrechos. Con el teclado, pon el foco en el borde (Tab) y usa las flechas (con Mayús en pasos más grandes), Inicio y Fin. Un doble clic en el borde o **Ancho estándar** en la navegación restablece el valor predeterminado. El ancho se guarda en este navegador.
+- **Básico y avanzado:** los ajustes relacionados están juntos bajo un título. Las partes marcadas como *Avanzado* (por ejemplo, lo que pueden hacer los modelos de un endpoint compatible con OpenAI) permanecen cerradas hasta que las necesites; su etiqueta indica cuántos valores difieren del estándar.
+- **Guardar:** la mayoría de los ajustes se aplican al instante. *Modelos y presupuesto* tiene su propio botón **Guardar**; si sales de la página con cambios sin guardar ahí, Nodestro pregunta antes.
+
 ## Modelos locales {#lokale-modelle}
 <!-- keywords: modelo local, ollama, sin conexión, sin clave de api, qwen, descarga, recomendación, hardware, gpu, memoria, servidor de modelos, mistral, europeo, esfuerzo de razonamiento -->
 

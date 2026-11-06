@@ -83,6 +83,10 @@
     "assistant": {
       "keys": "<kbd>Ctrl</kbd>+<kbd>J</kbd>",
       "action": "Abrir ou fechar o Nodestro Assistant"
+    },
+    "settings": {
+      "keys": "<kbd>Ctrl</kbd>+<kbd>,</kbd>",
+      "action": "Abrir as configurações; nas configurações, voltar à página anterior"
     }
   }
 }

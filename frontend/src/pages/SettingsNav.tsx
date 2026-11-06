@@ -7,7 +7,8 @@ import { safeReturnPath } from "../lib/settingsLink";
 import { prefersReducedMotion } from "../lib/motion";
 import { SettingsSearch } from "./SettingsSearch";
 
-/** The groups of the page, in the order of the page; a section the map does not know goes to "more". */
+/** The groups of the page, in the order of the page; a section the map does not know goes to "more".
+ *  How a new section joins the navigation and the search: docs/design/SETTINGS_PAGE.md. */
 export const SETTINGS_GROUPS: Record<string, "setup" | "costs" | "running" | "maintenance"> = {
   "settings-local-models": "setup",
   "settings-providers": "setup",

@@ -2,6 +2,16 @@
 
 Ce chapitre décrit tous les réglages, l’installation et le démarrage de Nodestro ainsi que les raccourcis clavier.
 
+## S’orienter dans les réglages {#ueberblick}
+<!-- keywords: réglages, roue dentée, ouvrir les réglages, rechercher un réglage, trouver un réglage, largeur, plus large, redimensionner, navigation, avancé, ctrl+virgule -->
+
+- **Ouvrir :** la roue dentée en haut à droite de chaque page, ou *Ctrl+,* (*⌘,* sur Mac). Les réglages retiennent d’où vous venez : **Retour** au-dessus de la navigation (ou à nouveau *Ctrl+,*) vous y ramène. Une page avec des modifications non enregistrées, comme l’éditeur de workflows, vous demande d’abord.
+- **Recherche :** *Trouver un réglage …* au-dessus de la navigation cherche dans les noms, les explications et les textes d’aide des réglages, dans la langue de l’interface. Les touches fléchées choisissent un résultat, **Entrée** y mène : les parties fermées s’ouvrent, le réglage est mis en évidence et son champ reçoit le focus.
+- **Navigation :** la liste à droite montre les sections par thème et signale celle que vous lisez. Dans une fenêtre étroite, elle devient une barre au-dessus du contenu avec la recherche et *Aller à la section*.
+- **Largeur :** faites glisser le bord entre le contenu et la navigation pour élargir ou rétrécir les réglages. Au clavier, placez le focus sur le bord (Tab) et utilisez les touches fléchées (avec Maj par pas plus grands), Début et Fin. Un double-clic sur le bord ou **Largeur standard** dans la navigation rétablit la valeur par défaut. La largeur est enregistrée dans ce navigateur.
+- **Base et avancé :** les réglages liés sont regroupés sous un titre. Les parties marquées *Avancé* (par exemple ce que savent faire les modèles d’un point de terminaison compatible OpenAI) restent fermées jusqu’à ce que vous en ayez besoin ; leur badge indique combien de valeurs diffèrent du standard.
+- **Enregistrer :** la plupart des réglages s’appliquent aussitôt. *Modèles et budget* a son propre bouton **Enregistrer** ; si vous quittez la page avec des modifications non enregistrées à cet endroit, Nodestro vous demande d’abord.
+
 ## Modèles locaux {#lokale-modelle}
 <!-- keywords: modèle local, ollama, hors ligne, sans clé d’api, qwen, téléchargement, recommandation, matériel, gpu, mémoire, serveur de modèles, mistral, européen, effort de raisonnement -->
 

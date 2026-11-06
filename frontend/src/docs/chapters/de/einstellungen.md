@@ -2,6 +2,16 @@
 
 Dieses Kapitel beschreibt alle Einstellungen, die Installation und den Start von Nodestro sowie die Tastenkürzel.
 
+## Orientierung in den Einstellungen {#ueberblick}
+<!-- keywords: einstellungen, zahnrad, einstellungen öffnen, einstellungen durchsuchen, einstellung finden, breite, breiter, größe ändern, navigation, erweitert, strg+komma -->
+
+- **Öffnen:** das Zahnrad oben rechts auf jeder Seite oder *Strg+,* (*⌘,* auf dem Mac). Die Einstellungen merken sich, woher du kommst: **Zurück** über der Navigation (oder erneut *Strg+,*) bringt dich dorthin. Eine Seite mit ungespeicherten Änderungen, etwa der Workflow-Editor, fragt vorher nach.
+- **Suche:** *Einstellung finden …* über der Navigation durchsucht Namen, Erklärungen und Hilfetexte einzelner Einstellungen, in der Sprache der Oberfläche. Mit den Pfeiltasten wählst du einen Treffer, **Enter** springt hin: Geschlossene Bereiche öffnen sich, die Einstellung wird hervorgehoben und ihr Feld bekommt den Fokus.
+- **Navigation:** Die Liste rechts zeigt die Abschnitte nach Themen und markiert den, den du gerade liest. In einem schmalen Fenster ist sie eine Leiste über dem Inhalt mit der Suche und *Zum Abschnitt*.
+- **Breite:** Zieh den Rand zwischen Inhalt und Navigation, um die Einstellungen breiter oder schmaler zu machen. Per Tastatur fokussierst du den Rand (Tab) und nutzt die Pfeiltasten (mit Umschalt in größeren Schritten), Pos1 und Ende. Ein Doppelklick auf den Rand oder **Standardbreite** in der Navigation stellt den Standard wieder her. Die Breite wird in diesem Browser gespeichert.
+- **Grundlegend und erweitert:** Zusammengehörige Einstellungen stehen unter einer Überschrift. Als *Erweitert* markierte Bereiche (etwa, was die Modelle eines OpenAI-kompatiblen Endpunkts können) bleiben geschlossen, bis du sie brauchst; ihr Abzeichen sagt, wie viele Werte vom Standard abweichen.
+- **Speichern:** Die meisten Einstellungen wirken sofort. *Modelle und Budget* hat einen eigenen **Speichern**-Button; verlässt du die Seite dort mit ungespeicherten Änderungen, fragt Nodestro vorher nach.
+
 ## Lokale Modelle {#lokale-modelle}
 <!-- keywords: lokales modell, ollama, offline, kein api-schlüssel, qwen, download, empfehlung, hardware, gpu, arbeitsspeicher, modellserver, mistral, europäisch, denkaufwand -->
 

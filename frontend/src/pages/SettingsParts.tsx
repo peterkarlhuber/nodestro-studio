@@ -1,4 +1,4 @@
-// Building blocks for the inside of a settings section (see docs/SETTINGS_PAGE.md for the page's conventions):
+// Building blocks for the inside of a settings section (see docs/design/SETTINGS_PAGE.md for the page's conventions):
 //
 // - SettingsGroup: a titled group of related settings (h3). With `columns` its fields stand side by side where the
 //   section is wide enough, which saves scrolling on large screens and stacks again on narrow ones.

@@ -4,7 +4,7 @@
    the edge. The layout answers to the room the page really has (a container query, so the assistant panel, the
    navigation rail and the browser zoom count too): without room beside the content the navigation stands above it
    as a sticky bar with the search and a "Go to section" select, and the edge is hidden.
-   Conventions for sections inside the page: docs/SETTINGS_PAGE.md. */
+   Conventions for sections inside the page: docs/design/SETTINGS_PAGE.md. */
 
 .settings-page {
   container: settings-page / inline-size;
