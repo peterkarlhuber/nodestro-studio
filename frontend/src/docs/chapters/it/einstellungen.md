@@ -2,6 +2,16 @@
 
 Questo capitolo descrive tutte le impostazioni, l'installazione e l'avvio di Nodestro e le scorciatoie da tastiera.
 
+## Orientarsi nelle impostazioni {#ueberblick}
+<!-- keywords: impostazioni, ingranaggio, aprire le impostazioni, cercare nelle impostazioni, trovare un’impostazione, larghezza, più largo, ridimensionare, navigazione, avanzate, ctrl+virgola -->
+
+- **Aprire:** l’ingranaggio in alto a destra di ogni pagina, oppure *Ctrl+,* (*⌘,* su Mac). Le impostazioni ricordano da dove vieni: **Indietro** sopra la navigazione (o di nuovo *Ctrl+,*) ti riporta lì. Una pagina con modifiche non salvate, come l’editor dei workflow, chiede prima.
+- **Ricerca:** *Trova un’impostazione …* sopra la navigazione cerca nei nomi, nelle spiegazioni e nei testi di aiuto delle singole impostazioni, nella lingua dell’interfaccia. Le frecce scelgono un risultato, **Invio** ci porta: le parti chiuse si aprono, l’impostazione viene evidenziata e il suo campo riceve il focus.
+- **Navigazione:** l’elenco a destra mostra le sezioni per argomento e segnala quella che stai leggendo. In una finestra stretta diventa una barra sopra il contenuto con la ricerca e *Vai alla sezione*.
+- **Larghezza:** trascina il bordo tra il contenuto e la navigazione per allargare o restringere le impostazioni. Da tastiera, porta il focus sul bordo (Tab) e usa le frecce (con Maiusc a passi più grandi), Home e Fine. Un doppio clic sul bordo o **Larghezza standard** nella navigazione ripristina il valore predefinito. La larghezza viene salvata in questo browser.
+- **Base e avanzate:** le impostazioni correlate stanno insieme sotto un titolo. Le parti segnate come *Avanzate* (per esempio cosa sanno fare i modelli di un endpoint compatibile con OpenAI) restano chiuse finché non ti servono; il loro badge indica quanti valori differiscono dallo standard.
+- **Salvare:** la maggior parte delle impostazioni ha effetto subito. *Modelli e budget* ha un proprio pulsante **Salva**; se lasci la pagina con modifiche non salvate lì, Nodestro chiede prima.
+
 ## Modelli locali {#lokale-modelle}
 <!-- keywords: modello locale, ollama, offline, senza chiave api, qwen, download, consiglio, hardware, gpu, memoria, server dei modelli, mistral, europeo, sforzo di ragionamento -->
 

@@ -121,19 +121,19 @@
   "settings": {
     "defaultModel": "Los agentes nuevos y vacíos y los flujos de trabajo nuevos empiezan con este modelo. En los borradores de la IA sirve de sustituto si el modelo propuesto no está disponible.",
     "assistantModel": "Modelo del arquitecto de agentes, del agente de programación y del asistente de memoria. Un modelo potente hace mejores propuestas.",
-    "budget": "Se aplica a todos los flujos de trabajo sin presupuesto propio. Vacío = sin límite (no recomendado).",
+    "budget": "El límite de coste de las ejecuciones cuyo flujo de trabajo no tiene presupuesto propio. Cuando una ejecución lo alcanza, no se hace ninguna solicitud de IA más: una ejecución iniciada por una persona se pausa para una decisión de presupuesto; las de programaciones, lotes, series de pruebas y la API publicada se detienen. Vacío = sin límite, así que esas ejecuciones pueden costar cualquier importe.",
     "sandbox": "Automático (recomendado): las herramientas creadas por IA solo se ejecutan en Docker una vez que supera las comprobaciones de Nodestro; si no, quedan bloqueadas. Sandbox de Linux: opcional, solo Linux; las herramientas creadas por IA se ejecutan en el sandbox de Linux integrado sin paquetes de terceros. Proceso de Python: para las herramientas que escribes tú; las creadas por IA siempre quedan bloqueadas. Docker: cada herramienta se ejecuta en un contenedor sin red y con un sistema de archivos de solo lectura.",
     "language": "El idioma de la interfaz. «Automático» sigue el idioma del navegador (inglés si no es compatible). La elección se aplica al instante y se recuerda. Los contenidos como agentes, prompts y resultados no cambian.",
-    "backup": "Descarga todos los datos excepto las claves de API como archivo ZIP.",
+    "backup": "Guarda todo en un archivo ZIP, para conservarlo de forma segura o pasarlo a otro ordenador. Las claves de API se omiten a propósito, así que una copia se puede compartir; al restaurar se conservan las claves de este ordenador. Restaurar reemplaza todos los datos actuales, pero Nodestro guarda antes el estado actual como copia de seguridad.",
     "restore": "Primero comprueba el archivo por completo y muestra su contenido. Solo se sustituye tras tu confirmación; antes se guarda el estado actual.",
-    "diagnostics": "Comprueba versiones, base de datos, directorios, sandbox y requisitos. Gratis y sin internet.",
-    "connection": "Pide la lista de modelos al proveedor del modelo predeterminado. No usa tokens.",
-    "architectBudget": "Coste estimado máximo de un borrador del arquitecto. El arquitecto se detiene al alcanzarlo.",
-    "architectRepairs": "Limita las solicitudes adicionales a la IA para correcciones. Las correcciones obvias se hacen sin IA.",
+    "diagnostics": "Útil después de una actualización, tras mover la carpeta de datos o cuando algo no funciona: cada comprobación indica si se superó y, si no, por qué. Solo lee: no se cambia ni repara nada, no se usa IA y no se envía nada a internet. Las claves de API nunca aparecen en el resultado, así que puedes pasarlo al soporte.",
+    "connection": "Una solicitud al proveedor del modelo predeterminado para obtener su lista de modelos: muestra si la clave o la dirección funcionan antes de que un agente las necesite y, si no, qué error indica el proveedor. No usa tokens ni cuesta nada; no se ejecuta ningún agente ni flujo de trabajo.",
+    "architectBudget": "Cubre un trabajo completo del arquitecto: el diseño, los borradores de herramientas del Coding Agent y cada corrección. Cuando el coste estimado lo alcanza, el trabajo se detiene sin borrador y lo indica; el coste hasta ese momento sí cuenta. Un límite demasiado bajo hace fallar los flujos de trabajo más grandes; vacío significa sin límite.",
+    "architectRepairs": "Cuando un diseño o un borrador de herramienta no supera las comprobaciones de Nodestro, el arquitecto puede pedir al modelo que lo corrija hasta este número de veces (0 a 5). Cada intento es una solicitud de IA adicional dentro del límite de coste del borrador; 0 ahorra costes pero te deja más problemas por corregir. Las correcciones sin IA se hacen siempre.",
     "providers": "Accesos a los proveedores de IA: claves de API (nunca se muestran; las variables de entorno tienen prioridad), URL base de tus propios servidores y lo que pueden hacer sus modelos. Cada agente usa el proveedor de su modelo; nada cambia a otro proveedor.",
     "prices": "De dónde vienen los precios, con qué frecuencia se comprueban y cómo funcionan los precios individuales y las revisiones.",
     "priceMode": "Estándar avisa de precios desconocidos o antiguos; Estricto rechaza esas solicitudes antes de que cuesten nada.",
-    "reconciliation": "Compara las estimaciones con las facturas de los proveedores. Necesita una clave de administrador de la API de facturación; no se cambia nada.",
+    "reconciliation": "Muestra si las estimaciones de coste de Nodestro coinciden con lo que realmente pagas: lee lo que OpenAI y Anthropic facturaron por día y modelo y avisa de las diferencias grandes, señal de que hay que ajustar precios o presupuestos. Necesita una clave de administrador de la API de facturación del proveedor; solo lee y nunca cambia nada en el proveedor.",
     "localModels": "Los modelos locales funcionan en este ordenador con Ollama: sin clave de API, ningún dato sale del ordenador. Nodestro instala el entorno fijado si lo pides y comprueba cada descarga.",
     "localRecommendations": "Sugerencias según la tarea, la memoria de este ordenador y los modelos instalados. Un modelo instalado que es suficiente va antes que uno mejor que habría que descargar.",
     "localImport": "Para ordenadores sin internet: importa un paquete de modelos sin conexión (comprobado con SHA-256) o un archivo GGUF desde una unidad USB o una carpeta compartida.",
@@ -163,7 +163,7 @@
     "history": "Cada aumento aprobado de esta ejecución: el límite antes y después, quién decidió y cuándo.",
     "runBudget": "El límite de coste de la ejecución. Las ejecuciones atendidas se pausan cuando no alcanza y esperan una decisión; las de programaciones, lotes, series de pruebas y la API publicada se detienen en su lugar.",
     "maxRunBudget": "El límite más alto que puede tener una ejecución de este espacio de trabajo, al inicio o tras aumentos. Vacío significa sin tope.",
-    "decisionHours": "Cuánto tiempo espera una ejecución una decisión de presupuesto antes de terminar con «presupuesto agotado» (de 1 a 720 horas, 24 por defecto).",
+    "decisionHours": "Solo para ejecuciones iniciadas por una persona: cuando se agota su presupuesto se pausan, y alguien puede subir el límite o terminar la ejecución. Si en este tiempo no hay decisión, la ejecución termina con «presupuesto agotado». Las ejecuciones de programaciones, lotes, series de pruebas y la API publicada se detienen enseguida y no esperan. Por defecto 24 horas.",
     "permissions": "Decide la persona que inició la ejecución si tiene el permiso Ejecutar; los administradores pueden decidir en cualquier ejecución."
   },
   "search": {
@@ -183,7 +183,7 @@
   "architect": {
     "open": "Deja que el arquitecto diseñe un flujo nuevo o revise este a partir de una descripción. Revisas el borrador antes de que cambie nada.",
     "create": "Describe el objetivo; el arquitecto planifica, configura y comprueba un flujo completo.",
-    "generateTools": "Si ninguna herramienta existente encaja, el Coding Agent escribe una herramienta de Python como borrador. Solo se ejecuta tras tu aprobación expresa.",
+    "generateTools": "Activado: para cada herramienta que el diseño necesita y que falta en tu biblioteca, el Coding Agent escribe código Python con pruebas. Usa el modelo de los asistentes y cuenta para el límite de coste del borrador. Los borradores no se registran y nunca se ejecutan solos: los agentes que los necesitan solo arrancan cuando hayas probado y aprobado las herramientas (ahora o más tarde en Herramientas); probar código escrito por IA requiere una sandbox como Docker. Desactivado: las herramientas que faltan solo se describen, y tú las creas o las quitas.",
     "log": "Cada línea describe un paso que el arquitecto realizó de verdad o un resultado. No se muestra el razonamiento interno del modelo.",
     "cost": "Coste estimado de la API de todas las solicitudes de este borrador hasta ahora. Aparece en el resumen de uso como arquitecto de flujos.",
     "cancel": "Se detiene de inmediato. No se guarda nada ni cambia ningún flujo; las solicitudes ya enviadas se cuentan.",
@@ -243,7 +243,7 @@
     "sanitize": "Sustituye credenciales y datos personales del archivo por marcadores.",
     "run": "Archivos de esta ejecución. El HTML se muestra sin scripts.",
     "formats": "Word (DOCX) y Excel (XLSX) se convierten a Markdown al subirlos; las fórmulas se muestran, nunca se ejecutan.",
-    "ocr": "Los PDF escaneados sin capa de texto se pueden reconocer localmente con Tesseract. Las palabras dudosas se marcan."
+    "ocr": "Requiere Tesseract y pdftoppm en este ordenador (la etiqueta muestra si están). Activado: las páginas de PDF escaneados sin capa de texto se reconocen localmente al leer el archivo, lo que tarda unos segundos por página; las palabras dudosas se marcan para que puedas revisarlas. Desactivado: esas páginas no aportan texto a los agentes ni a la búsqueda de conocimiento."
   },
   "automation": {
     "batch": "Un flujo de trabajo sobre muchas entradas. Cada fila se convierte en una ejecución propia.",
@@ -272,7 +272,7 @@
     "disable": "Rechaza nuevas ejecuciones con 503 hasta que vuelvas a activar la API.",
     "keyName": "Quién usa la clave, por ejemplo el nombre de la aplicación. Solo se muestra en Nodestro.",
     "scopes": "run inicia y cancela ejecuciones, read lee estado y resultados, approve decide aprobaciones.",
-    "network": "Abre un puerto propio para dispositivos de tu red. Desactivado por defecto; la interfaz de Nodestro nunca está disponible allí.",
+    "network": "Solo hace falta si otros dispositivos deben llamar a tus API publicadas. Cada API también debe estar activada para la red, y cada llamada necesita una clave de API. Revisa tu cortafuegos y usa preferiblemente HTTPS en redes compartidas. La interfaz de Nodestro y sus endpoints internos nunca son accesibles por este puerto.",
     "networkShare": "Solo las API activadas aquí son accesibles por el puerto de red.",
     "validate": "Comprueba el cuerpo de la solicitud exactamente como la API. No se inicia ninguna ejecución ni se cobra nada.",
     "testRun": "Inicia una ejecución real de la versión publicada por el camino de la API; se cobra como cualquier ejecución.",
@@ -289,7 +289,7 @@
     "formats": "Elige grupos o formatos individuales. Nodestro comprueba el contenido real, no solo la extensión.",
     "optional": "Los campos obligatorios deben rellenarse antes de empezar. Los opcionales pueden quedar vacíos; agentes y decisiones lo notan.",
     "delivery": "Cómo reciben los agentes los archivos: como contenido, como resumen con lectura dirigida o automáticamente según el tamaño.",
-    "storage": "Los archivos subidos se guardan con las ejecuciones. Aquí puedes limpiar los no usados y los antiguos.",
+    "storage": "Los archivos subidos para ejecuciones, casos de prueba y programaciones se quedan en este ordenador con sus ejecuciones y ocupan espacio en disco. Aquí ves cuánto y eliminas los archivos sin uso o antiguos. Los archivos de ejecuciones en cola, en curso o en pausa y los que aún necesitan casos de prueba, programaciones o lotes se conservan siempre; un archivo eliminado ya no se puede abrir desde su ejecución.",
     "adopt": "Guarda de forma permanente el contenido elegido en el conocimiento, solo tras tu confirmación y con su procedencia.",
     "proposals": "El agente puede proponer contenido para el conocimiento. Solo se guarda lo que compruebas y confirmas.",
     "received": "Qué archivos recibió la ejecución y cómo los recibió cada agente."

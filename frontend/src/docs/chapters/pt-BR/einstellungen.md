@@ -2,6 +2,16 @@
 
 Este capítulo descreve todas as configurações, a instalação e a inicialização do Nodestro e os atalhos de teclado.
 
+## Como se orientar nas configurações {#ueberblick}
+<!-- keywords: configurações, engrenagem, abrir configurações, pesquisar configurações, encontrar uma configuração, largura, mais largo, redimensionar, navegação, avançado, ctrl+vírgula -->
+
+- **Abrir:** a engrenagem no canto superior direito de cada página, ou *Ctrl+,* (*⌘,* no Mac). As configurações lembram de onde você veio: **Voltar** acima da navegação (ou *Ctrl+,* de novo) leva você até lá. Uma página com alterações não salvas, como o editor de fluxos de trabalho, pergunta antes.
+- **Pesquisa:** *Encontrar uma configuração …* acima da navegação pesquisa nos nomes, explicações e textos de ajuda de cada configuração, no idioma da interface. As setas escolhem um resultado e **Enter** leva até ele: partes fechadas se abrem, a configuração é destacada e o campo dela recebe o foco.
+- **Navegação:** a lista à direita mostra as seções por tema e marca a que você está lendo. Em uma janela estreita ela vira uma barra acima do conteúdo, com a pesquisa e *Ir para a seção*.
+- **Largura:** arraste a borda entre o conteúdo e a navegação para deixar as configurações mais largas ou mais estreitas. Pelo teclado, coloque o foco na borda (Tab) e use as setas (com Shift em passos maiores), Home e End. Um clique duplo na borda ou **Largura padrão** na navegação restaura o padrão. A largura fica salva neste navegador.
+- **Básico e avançado:** configurações relacionadas ficam juntas sob um título. Partes marcadas como *Avançado* (por exemplo, o que os modelos de um endpoint compatível com OpenAI conseguem fazer) ficam fechadas até você precisar delas; o selo delas indica quantos valores diferem do padrão.
+- **Salvar:** a maioria das configurações vale na hora. *Modelos e orçamento* tem seu próprio botão **Salvar**; se você sair da página com alterações não salvas ali, o Nodestro pergunta antes.
+
 ## Modelos locais {#lokale-modelle}
 <!-- keywords: modelo local, ollama, offline, sem chave de api, qwen, download, recomendação, hardware, gpu, memória, servidor de modelos, mistral, europeu, esforço de raciocínio -->
 

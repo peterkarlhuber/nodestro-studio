@@ -1,0 +1,35 @@
+{
+  "entry": {
+    "label": "Settings",
+    "tooltip": "Settings (Ctrl+,): AI providers, local models, budgets, sandbox and more. “Back” on the settings page, or Ctrl+, again, returns you here."
+  },
+  "width": {
+    "label": "Width of the settings content",
+    "hint": "Drag to make the settings wider or narrower. With the keyboard: arrow keys (Shift for larger steps), Home and End. A double-click restores the standard width.",
+    "value": "{{width}} px wide",
+    "reset": "Standard width"
+  },
+  "jump": {
+    "label": "Go to section"
+  },
+  "search": {
+    "label": "Search settings",
+    "placeholder": "Find a setting …",
+    "clear": "Clear the search",
+    "results": "Matching settings",
+    "found_one": "{{count}} setting found – Enter jumps to the first one",
+    "found_other": "{{count}} settings found – Enter jumps to the first one",
+    "none": "No setting matches “{{query}}”. Try another word or pick a section."
+  },
+  "advanced": {
+    "badge": "Advanced",
+    "changed_one": "{{count}} changed",
+    "changed_other": "{{count}} changed"
+  },
+  "models": {
+    "groupModels": "Models",
+    "groupBudget": "Budget per run",
+    "groupArchitect": "Workflow Architect",
+    "unsaved": "Your changes to “Models and budget” are not saved yet. Save them, discard them or keep editing."
+  }
+}

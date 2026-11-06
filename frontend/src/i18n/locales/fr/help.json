@@ -121,19 +121,19 @@
   "settings": {
     "defaultModel": "Les nouveaux agents vides et les nouveaux workflows démarrent avec ce modèle. Pour les brouillons de l’IA, il sert de remplacement si le modèle proposé n’est pas disponible.",
     "assistantModel": "Modèle de l’architecte d’agents, du Coding Agent et de l’assistant mémoire. Un modèle puissant fait de meilleures propositions.",
-    "budget": "S’applique à tous les workflows sans budget propre. Vide = pas de limite (déconseillé).",
+    "budget": "Le plafond de coût des exécutions dont le workflow n’a pas de budget propre. Quand une exécution l’atteint, aucune requête d’IA supplémentaire n’est faite : une exécution lancée par une personne se met en pause pour une décision de budget, celles des planifications, des lots, des séries de tests et de l’API publiée s’arrêtent. Vide = pas de limite, ces exécutions peuvent donc coûter n’importe quel montant.",
     "sandbox": "Automatique (recommandé) : les outils créés par l’IA ne s’exécutent que dans Docker, une fois qu’il a réussi les vérifications de Nodestro ; sinon, ils sont bloqués. Bac à sable Linux : facultatif, Linux uniquement ; les outils créés par l’IA s’exécutent dans le bac à sable Linux intégré, sans paquets tiers. Processus Python : pour les outils que vous écrivez vous-même ; les outils créés par l’IA sont toujours bloqués. Docker : chaque outil s’exécute dans un conteneur sans réseau et avec un système de fichiers en lecture seule.",
     "language": "La langue de l’interface. « Automatique » suit la langue du navigateur (anglais si elle n’est pas prise en charge). Le choix s’applique immédiatement et est mémorisé. Les contenus comme les agents, prompts et résultats restent tels quels.",
-    "backup": "Télécharge toutes les données sauf les clés API sous forme de fichier ZIP.",
+    "backup": "Conserve tout dans un fichier ZIP, à garder en lieu sûr ou pour passer à un autre ordinateur. Les clés d’API sont volontairement exclues, une sauvegarde peut donc être transmise ; la restauration conserve les clés de cet ordinateur. La restauration remplace toutes les données actuelles, mais Nodestro enregistre d’abord l’état actuel dans une sauvegarde de sécurité.",
     "restore": "Vérifiez d’abord entièrement le fichier et affiche son contenu. Le remplacement n’a lieu qu’après votre confirmation ; l’état actuel est sauvegardé avant.",
-    "diagnostics": "Vérifiez les versions, la base de données, les répertoires, la sandbox et les prérequis. Gratuit et sans Internet.",
-    "connection": "Demande la liste des modèles au fournisseur du modèle par défaut. N’utilise aucun token.",
-    "architectBudget": "Coût estimé maximal d’un brouillon de l’architecte. L’architecte s’arrête lorsqu’il est atteint.",
-    "architectRepairs": "Limite les requêtes IA supplémentaires pour les corrections. Les corrections évidentes se font sans IA.",
+    "diagnostics": "Utile après une mise à jour, après le déplacement du dossier de données ou quand quelque chose ne fonctionne pas : chaque vérification indique si elle a réussi et, sinon, pourquoi. Elle ne fait que lire : rien n’est modifié ni réparé, aucune IA n’est utilisée et rien n’est envoyé sur Internet. Les clés d’API n’apparaissent jamais dans le résultat, vous pouvez donc le transmettre au support.",
+    "connection": "Une requête au fournisseur du modèle par défaut pour obtenir sa liste de modèles : elle montre si la clé ou l’adresse fonctionne avant qu’un agent en ait besoin, et sinon quelle erreur le fournisseur signale. N’utilise aucun token et ne coûte rien ; aucun agent ni workflow ne s’exécute.",
+    "architectBudget": "Couvre une tâche entière de l’architecte de workflows : la conception, les brouillons d’outils du Coding Agent et chaque correction. Quand le coût estimé l’atteint, la tâche s’arrête sans brouillon et l’indique ; le coût déjà engagé reste compté. Un plafond trop bas fait échouer les workflows plus grands ; vide signifie aucune limite.",
+    "architectRepairs": "Quand une conception ou un brouillon d’outil échoue aux vérifications de Nodestro, l’architecte peut demander au modèle de le corriger jusqu’à ce nombre de fois (0 à 5). Chaque essai est une requête d’IA de plus, dans le plafond de coût du brouillon ; 0 économise des coûts mais vous laisse davantage de problèmes à corriger. Les corrections sans IA sont toujours faites.",
     "providers": "Accès aux fournisseurs d’IA : clés API (jamais affichées ; les variables d’environnement sont prioritaires), URL de base de vos propres serveurs et ce que leurs modèles savent faire. Chaque agent utilise le fournisseur de son modèle ; rien ne bascule vers un autre fournisseur.",
     "prices": "D’où viennent les prix, à quelle fréquence ils sont vérifiés, et comment fonctionnent les prix individuels et les validations.",
     "priceMode": "Standard avertit pour les prix inconnus ou anciens ; Strict refuse ces requêtes avant qu’elles ne coûtent quoi que ce soit.",
-    "reconciliation": "Compare les estimations avec les factures des fournisseurs. Nécessite une clé d’administration de l’API de facturation ; rien n’est modifié.",
+    "reconciliation": "Indique si les estimations de coût de Nodestro correspondent à ce que vous payez réellement : il lit ce qu’OpenAI et Anthropic ont facturé par jour et par modèle et signale les grands écarts, signe que les prix ou les budgets sont à ajuster. Nécessite une clé d’administration de l’API de facturation du fournisseur ; il ne fait que lire et ne modifie jamais rien chez le fournisseur.",
     "localModels": "Les modèles locaux fonctionnent sur cet ordinateur avec Ollama : sans clé d’API, aucune donnée ne quitte l’ordinateur. Nodestro installe l’environnement fixé à la demande et vérifie chaque téléchargement.",
     "localRecommendations": "Suggestions d’après la tâche, la mémoire de cet ordinateur et les modèles installés. Un modèle installé suffisant passe avant un meilleur modèle qu’il faudrait télécharger.",
     "localImport": "Pour les ordinateurs sans internet : importez un paquet de modèles hors ligne (vérifié par SHA-256) ou un fichier GGUF depuis une clé USB ou un dossier partagé.",
@@ -163,7 +163,7 @@
     "history": "Chaque hausse accordée à cette exécution : le plafond avant et après, qui a décidé et quand.",
     "runBudget": "Le plafond de coût de l’exécution. Les exécutions suivies se mettent en pause quand il ne suffit pas et attendent une décision ; celles issues de planifications, de lots, de séries de tests et de l’API publiée s’arrêtent à la place.",
     "maxRunBudget": "Le plafond le plus élevé qu’une exécution de cet espace de travail peut avoir, au départ ou après des hausses. Vide signifie aucune limite.",
-    "decisionHours": "Combien de temps une exécution attend une décision de budget avant de se terminer avec « budget épuisé » (1 à 720 heures, 24 par défaut).",
+    "decisionHours": "Uniquement pour les exécutions lancées par une personne : quand leur budget est épuisé, elles se mettent en pause, et quelqu’un peut relever la limite ou mettre fin à l’exécution. Sans décision pendant ce délai, l’exécution se termine avec « budget épuisé ». Les exécutions des planifications, des lots, des séries de tests et de l’API publiée s’arrêtent aussitôt sans attendre. 24 heures par défaut.",
     "permissions": "La personne qui a lancé l’exécution décide si elle a l’autorisation Exécuter ; les administrateurs peuvent décider pour toute exécution."
   },
   "search": {
@@ -183,7 +183,7 @@
   "architect": {
     "open": "Laissez l’architecte concevoir un nouveau workflow ou retravailler celui-ci à partir d’une description. Vous examinez le brouillon avant tout changement.",
     "create": "Décrivez l’objectif ; l’architecte planifie, configure et vérifie un workflow complet.",
-    "generateTools": "Si aucun outil existant ne convient, le Coding Agent rédige un outil Python en brouillon. Il ne s’exécute qu’après votre approbation explicite.",
+    "generateTools": "Activé : pour chaque outil dont la conception a besoin et qui manque dans votre bibliothèque, le Coding Agent écrit du code Python avec des tests. Cela utilise le modèle des assistants et compte dans le plafond de coût du brouillon. Les brouillons ne sont pas enregistrés et ne s’exécutent jamais d’eux-mêmes : les agents qui en ont besoin ne démarrent qu’après que vous avez testé et approuvé les outils (maintenant ou plus tard sous Outils) ; tester du code écrit par l’IA nécessite une sandbox comme Docker. Désactivé : les outils manquants sont seulement décrits, vous les créez ou les retirez vous-même.",
     "log": "Chaque ligne décrit une étape réellement effectuée par l’architecte ou un résultat. Le raisonnement interne du modèle n’est pas affiché.",
     "cost": "Coût API estimé de toutes les requêtes de ce brouillon jusqu’ici. Il figure dans l’aperçu de l’utilisation sous Architecte de workflows.",
     "cancel": "S’arrête immédiatement. Rien n’est enregistré, aucun workflow ne change ; les requêtes déjà envoyées sont comptées.",
@@ -243,7 +243,7 @@
     "sanitize": "Remplace les identifiants et données personnelles du fichier par des espaces réservés.",
     "run": "Fichiers de cette exécution. Le HTML est affiché sans scripts.",
     "formats": "Word (DOCX) et Excel (XLSX) sont convertis en Markdown à l’import ; les formules sont affichées, jamais exécutées.",
-    "ocr": "Les PDF scannés sans couche de texte peuvent être reconnus localement avec Tesseract. Les mots incertains sont signalés."
+    "ocr": "Nécessite Tesseract et pdftoppm sur cet ordinateur (le badge indique s’ils sont présents). Activé : les pages de PDF scannés sans couche de texte sont reconnues localement à la lecture du fichier, ce qui prend quelques secondes par page ; les mots incertains sont signalés pour que vous puissiez les vérifier. Désactivé : ces pages ne fournissent aucun texte aux agents ni à la recherche dans les connaissances."
   },
   "automation": {
     "batch": "Un workflow sur de nombreuses entrées. Chaque ligne devient une exécution propre.",
@@ -272,7 +272,7 @@
     "disable": "Refuse les nouvelles exécutions avec 503 jusqu’à la réactivation de l’API.",
     "keyName": "Qui utilise la clé, par exemple le nom de l’application. Visible uniquement dans Nodestro.",
     "scopes": "run lance et annule des exécutions, read lit le statut et les résultats, approve décide des validations.",
-    "network": "Ouvre un port séparé pour les appareils de votre réseau. Désactivé par défaut ; l’interface de Nodestro n’y est jamais accessible.",
+    "network": "Nécessaire seulement si d’autres appareils doivent appeler vos API publiées. Chaque API doit aussi être activée pour le réseau, et chaque appel nécessite une clé d’API. Vérifiez votre pare-feu et préférez HTTPS dans les réseaux partagés. L’interface de Nodestro et ses points de terminaison internes ne sont jamais accessibles par ce port.",
     "networkShare": "Seules les API activées ici sont accessibles par le port réseau.",
     "validate": "Vérifie le corps de la requête exactement comme l’API. Aucune exécution ne démarre, rien n’est facturé.",
     "testRun": "Lance une vraie exécution de la version publiée par le chemin de l’API ; elle est facturée comme toute exécution.",
@@ -289,7 +289,7 @@
     "formats": "Choisissez des groupes ou des formats individuels. Nodestro vérifie le contenu réel, pas seulement l’extension.",
     "optional": "Les champs obligatoires doivent être remplis avant le démarrage. Les champs facultatifs peuvent rester vides ; agents et décisions le remarquent.",
     "delivery": "Comment les agents reçoivent les fichiers : en contenu, en aperçu avec lecture ciblée ou automatiquement selon la taille.",
-    "storage": "Les fichiers envoyés sont conservés avec les exécutions. Nettoyez ici les fichiers inutilisés et anciens.",
+    "storage": "Les fichiers envoyés pour les exécutions, les cas de test et les planifications restent sur cet ordinateur avec leurs exécutions et occupent de l’espace disque. Vous voyez ici combien et vous retirez les fichiers inutilisés ou anciens. Les fichiers des exécutions en attente, en cours ou en pause et ceux dont des cas de test, des planifications ou des lots ont encore besoin sont toujours conservés ; un fichier retiré ne peut plus être ouvert depuis son exécution.",
     "adopt": "Enregistre durablement le contenu choisi dans les connaissances, uniquement après votre confirmation et avec sa provenance.",
     "proposals": "L’agent peut proposer du contenu pour les connaissances. Seul ce que vous vérifiez et confirmez est enregistré.",
     "received": "Quels fichiers l’exécution a reçus et comment chaque agent les a reçus."

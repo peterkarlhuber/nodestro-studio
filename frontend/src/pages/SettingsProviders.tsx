@@ -19,6 +19,7 @@ import { ErrorText } from "../lib/errors";
 import { defaultModelSwitch, providerOf } from "../lib/providers";
 import { BedrockCard } from "./SettingsBedrock";
 import { CheckRow } from "./SettingsMaintenance";
+import { SettingsAdvanced } from "./SettingsParts";
 
 const STATES: CapabilityState[] = ["unknown", "supported", "unsupported"];
 
@@ -159,10 +160,19 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
           </Field>
         ) : null}
         {info.declare_capabilities ? (
-          <Field label={t("settings.providers.capabilities")} hint={t("settings.providers.capabilitiesHint")}>
-            <div className="grid-2">
+          // Progressive disclosure: eleven expert choices, closed until needed; the badge counts the declared ones.
+          <SettingsAdvanced
+            title={t("settings.providers.capabilities")}
+            hint={t("settings.providers.capabilitiesHint")}
+            changed={Object.values(capabilities).filter((state) => state && state !== "unknown").length}
+          >
+            <div className="settings-columns">
               {(meta.data?.capabilities ?? []).map((capability) => (
-                <label key={capability} className="stack-sm small">
+                <label
+                  key={capability}
+                  className="stack-sm small"
+                  data-setting={t(`settings.providers.capability.${capability}`, { defaultValue: capability })}
+                >
                   <span>{t(`settings.providers.capability.${capability}`, { defaultValue: capability })}</span>
                   <Select
                     value={capabilities[capability] ?? "unknown"}
@@ -172,7 +182,7 @@ function ProviderCard({ info, status, settings }: { info: ProviderInfo; status: 
                 </label>
               ))}
             </div>
-          </Field>
+          </SettingsAdvanced>
         ) : null}
         <div className="row-gap">
           {info.base_url || info.declare_capabilities ? (

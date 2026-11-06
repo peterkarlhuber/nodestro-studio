@@ -1,0 +1,35 @@
+{
+  "entry": {
+    "label": "Einstellungen",
+    "tooltip": "Einstellungen (Strg+,): KI-Anbieter, lokale Modelle, Budgets, Sandbox und mehr. „Zurück“ auf der Einstellungsseite oder erneut Strg+, bringt dich hierher zurück."
+  },
+  "width": {
+    "label": "Breite des Einstellungsinhalts",
+    "hint": "Ziehen macht die Einstellungen breiter oder schmaler. Per Tastatur: Pfeiltasten (mit Umschalt in größeren Schritten), Pos1 und Ende. Ein Doppelklick stellt die Standardbreite wieder her.",
+    "value": "{{width}} px breit",
+    "reset": "Standardbreite"
+  },
+  "jump": {
+    "label": "Zum Abschnitt"
+  },
+  "search": {
+    "label": "Einstellungen durchsuchen",
+    "placeholder": "Einstellung finden …",
+    "clear": "Suche leeren",
+    "results": "Passende Einstellungen",
+    "found_one": "{{count}} Einstellung gefunden – Enter springt zur ersten",
+    "found_other": "{{count}} Einstellungen gefunden – Enter springt zur ersten",
+    "none": "Keine Einstellung passt zu „{{query}}“. Versuche ein anderes Wort oder wähle einen Abschnitt."
+  },
+  "advanced": {
+    "badge": "Erweitert",
+    "changed_one": "{{count}} geändert",
+    "changed_other": "{{count}} geändert"
+  },
+  "models": {
+    "groupModels": "Modelle",
+    "groupBudget": "Budget pro Lauf",
+    "groupArchitect": "Workflow-Architekt",
+    "unsaved": "Deine Änderungen unter „Modelle und Budget“ sind noch nicht gespeichert. Speichere sie, verwirf sie oder bearbeite weiter."
+  }
+}

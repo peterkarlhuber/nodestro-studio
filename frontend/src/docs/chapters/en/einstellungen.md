@@ -2,6 +2,16 @@
 
 This chapter describes all settings, how to install and start Nodestro, and the keyboard shortcuts.
 
+## Finding your way in the settings {#ueberblick}
+<!-- keywords: settings, gear, open settings, search settings, find a setting, width, wider, resize, navigation, advanced, ctrl+comma -->
+
+- **Opening:** the gear at the top right of every page, or *Ctrl+,* (*⌘,* on a Mac). The settings remember where you came from: **Back** above the navigation (or *Ctrl+,* again) takes you there. A page with unsaved changes, such as the workflow editor, asks first.
+- **Search:** *Find a setting …* above the navigation searches the names, explanations and help texts of single settings, in the interface language. Arrow keys choose a hit, **Enter** jumps to it: closed parts open, the setting is highlighted and its field gets the focus.
+- **Navigation:** the list on the right shows the sections by topic and marks the one you are reading. In a narrow window it is a bar above the content with the search and *Go to section*.
+- **Width:** drag the edge between the content and the navigation to make the settings wider or narrower. With the keyboard, focus the edge (Tab) and use the arrow keys (with Shift in larger steps), Home and End. A double-click on the edge or **Standard width** in the navigation restores the default. The width is saved in this browser.
+- **Basic and advanced:** related settings stand together under a heading. Parts marked *Advanced* (for example what the models of an OpenAI-compatible endpoint can do) are closed until you need them; their badge says how many values differ from the standard.
+- **Saving:** most settings take effect at once. *Models and budget* has its own **Save** button; if you leave the page with unsaved changes there, Nodestro asks first.
+
 ## Local models {#lokale-modelle}
 <!-- keywords: local model, ollama, offline, no api key, qwen, download, recommendation, hardware, gpu, ram, model server, mistral, european, reasoning effort -->
 

@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Cpu, Languages, Save, ScanText } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import { useBlocker } from "react-router-dom";
 
 import { useAccess } from "../api/access";
 import { api } from "../api/client";
@@ -10,6 +11,7 @@ import { keys, useMeta, useSettings } from "../api/hooks";
 import type { Settings } from "../api/types";
 import { ModelPicker, useModelHint } from "../components/ModelPicker";
 import { toast } from "../components/toast";
+import { UnsavedChangesModal } from "../components/UnsavedChanges";
 import { Badge, Button, Callout, Field, HelpTip, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { LANGUAGES, LANGUAGE_NAMES, type Language, currentLanguage, setLanguage, storedLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
@@ -17,6 +19,10 @@ import { PythonMaintenance } from "../python/PythonMaintenance";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
 import { SettingsNav, useSettingsHash } from "./SettingsNav";
+import { SettingsGroup } from "./SettingsParts";
+import { mergeSettingsForm, modelsDirty } from "./settingsModelsForm";
+import { SettingsResizer } from "./SettingsResizer";
+import { SETTINGS_WIDTH, useSettingsWidth } from "./settingsWidth";
 import { KnowledgeSearchPanel, LocalModelsPanel } from "./SettingsLocalModels";
 import { SandboxPanel } from "./SettingsSandbox";
 import { BudgetPolicyFields, budgetPolicyUpdate, hasBudgetPolicy, settingsForm } from "./SettingsBudget";
@@ -104,11 +110,24 @@ export function SettingsPage() {
   const defaultHint = useModelHint(form?.default_model ?? "");
   const assistantHint = useModelHint(form?.assistant_model ?? "");
   const body = useRef<HTMLDivElement>(null);
+  const layout = useRef<HTMLDivElement>(null);
+  const nav = useRef<HTMLElement>(null);
+  const width = useSettingsWidth();
   useSettingsHash(Boolean(form));
 
+  // New data from the server (another section saved, a refetch) keeps the unsaved edits of "Models and budget".
+  const lastSaved = useRef<Settings | null>(null);
   useEffect(() => {
-    if (settings.data) setForm(settingsForm(settings.data));
+    if (!settings.data) return;
+    const next = settingsForm(settings.data);
+    const previous = lastSaved.current;
+    setForm((current) => mergeSettingsForm(current, previous, next));
+    lastSaved.current = next;
   }, [settings.data]);
+
+  // "Models and budget" is the one part of the page with a Save button: leaving it with changes asks first.
+  const dirty = modelsDirty(form, lastSaved.current);
+  const blocker = useBlocker(({ currentLocation, nextLocation }) => dirty && currentLocation.pathname !== nextLocation.pathname);
 
   const save = useMutation({
     mutationFn: (body: Parameters<typeof api.saveSettings>[0]) => api.saveSettings(body),
@@ -121,6 +140,23 @@ export function SettingsPage() {
     onError: toast.error,
   });
 
+  const modelsInvalid = Boolean(form && hasBudgetPolicy(form) && budgetPolicyUpdate(form).invalid.length > 0);
+  const saveModels = (then?: () => void) => {
+    if (!form) return;
+    save.mutate(
+      {
+        default_model: form.default_model,
+        assistant_model: form.assistant_model,
+        default_budget_usd: form.default_budget_usd,
+        architect_budget_usd: form.architect_budget_usd,
+        architect_max_repairs: form.architect_max_repairs,
+        // BUDGET-1: the budget policy, only where the backend knows it.
+        ...(hasBudgetPolicy(form) ? budgetPolicyUpdate(form).update : {}),
+      },
+      { onSuccess: () => then?.() },
+    );
+  };
+
   if (!form)
     return settings.error ? (
       <Callout tone="danger">
@@ -131,7 +167,7 @@ export function SettingsPage() {
     );
 
   return (
-    <div className="page">
+    <div className="page settings-page">
       <PageHeader
         title={t("settings.title")}
         doc="einstellungen"
@@ -139,8 +175,9 @@ export function SettingsPage() {
           server ? t("admin.settings.serverDescription", { tenant: access.me?.tenant_id ?? "" }) : t("settings.description")
         }
       />
-      <div className="page__body settings-layout">
-        <div className="settings" ref={body}>
+      {/* The content column, its draggable right edge and the navigation (styles/settings.css). */}
+      <div className="page__body settings-layout" ref={layout} style={{ "--settings-width": `${width.width}px` } as CSSProperties}>
+        <div className="settings" id="settings-content" ref={body}>
         <LocalModelsPanel settings={form} admin={admin} onOffline={(strict_offline) => save.mutate({ strict_offline })}
           onEurope={(prefer_european_models) => save.mutate({ prefer_european_models })}
           onReasoning={(local_reasoning) => save.mutate({ local_reasoning })}
@@ -156,71 +193,67 @@ export function SettingsPage() {
             <HelpTip id="settings.defaultModel" label={t("settings.models.title")} />
           </h2>
           {settings.data ? <DefaultModelNotice settings={settings.data} /> : null}
-          <Field label={t("settings.models.defaultModel")} tip="settings.defaultModel" hint={defaultHint ?? t("settings.models.defaultHint")}>
-            <ModelPicker
-              label={t("settings.models.defaultModel")}
-              value={form.default_model}
-              onChange={(value) => setForm({ ...form, default_model: value })}
-            />
-          </Field>
-          <Field
-            label={t("settings.models.assistantModel")}
-            tip="settings.assistantModel"
-            hint={assistantHint ?? t("settings.models.assistantHint")}
-          >
-            <ModelPicker
+          <SettingsGroup title={t("settingsUi.models.groupModels")}>
+            <Field label={t("settings.models.defaultModel")} tip="settings.defaultModel" hint={defaultHint ?? t("settings.models.defaultHint")}>
+              <ModelPicker
+                label={t("settings.models.defaultModel")}
+                value={form.default_model}
+                onChange={(value) => setForm({ ...form, default_model: value })}
+              />
+            </Field>
+            <Field
               label={t("settings.models.assistantModel")}
-              value={form.assistant_model}
-              onChange={(value) => setForm({ ...form, assistant_model: value })}
-            />
-          </Field>
-          <Field label={t("settings.models.budget")} tip="settings.budget" hint={t("settings.models.budgetHint")}>
-            <TextInput
-              type="number"
-              min={0}
-              step={0.5}
-              value={form.default_budget_usd ?? ""}
-              onChange={(e) => setForm({ ...form, default_budget_usd: e.target.value === "" ? null : Number(e.target.value) })}
-            />
-          </Field>
-          <BudgetPolicyFields form={form} admin={admin} onChange={(patch) => setForm({ ...form, ...patch })} />
-          <Field label={t("settings.models.architectBudget")} tip="settings.architectBudget" hint={t("settings.models.architectBudgetHint")}>
-            <TextInput
-              type="number"
-              min={0}
-              step={0.5}
-              value={form.architect_budget_usd ?? ""}
-              onChange={(e) => setForm({ ...form, architect_budget_usd: e.target.value === "" ? null : Number(e.target.value) })}
-            />
-          </Field>
-          <Field label={t("settings.models.architectRepairs")} tip="settings.architectRepairs" hint={t("settings.models.architectRepairsHint")}>
-            <TextInput
-              type="number"
-              min={0}
-              max={5}
-              step={1}
-              value={form.architect_max_repairs}
-              onChange={(e) => setForm({ ...form, architect_max_repairs: Math.min(5, Math.max(0, Math.round(Number(e.target.value) || 0))) })}
-            />
-          </Field>
+              tip="settings.assistantModel"
+              hint={assistantHint ?? t("settings.models.assistantHint")}
+            >
+              <ModelPicker
+                label={t("settings.models.assistantModel")}
+                value={form.assistant_model}
+                onChange={(value) => setForm({ ...form, assistant_model: value })}
+              />
+            </Field>
+          </SettingsGroup>
+          <SettingsGroup title={t("settingsUi.models.groupBudget")} columns>
+            <Field label={t("settings.models.budget")} tip="settings.budget" hint={t("settings.models.budgetHint")}>
+              <TextInput
+                type="number"
+                min={0}
+                step={0.5}
+                value={form.default_budget_usd ?? ""}
+                onChange={(e) => setForm({ ...form, default_budget_usd: e.target.value === "" ? null : Number(e.target.value) })}
+              />
+            </Field>
+            <BudgetPolicyFields form={form} admin={admin} onChange={(patch) => setForm({ ...form, ...patch })} />
+          </SettingsGroup>
+          <SettingsGroup title={t("settingsUi.models.groupArchitect")} columns>
+            <Field label={t("settings.models.architectBudget")} tip="settings.architectBudget" hint={t("settings.models.architectBudgetHint")}>
+              <TextInput
+                type="number"
+                min={0}
+                step={0.5}
+                value={form.architect_budget_usd ?? ""}
+                onChange={(e) => setForm({ ...form, architect_budget_usd: e.target.value === "" ? null : Number(e.target.value) })}
+              />
+            </Field>
+            <Field label={t("settings.models.architectRepairs")} tip="settings.architectRepairs" hint={t("settings.models.architectRepairsHint")}>
+              <TextInput
+                type="number"
+                min={0}
+                max={5}
+                step={1}
+                value={form.architect_max_repairs}
+                onChange={(e) => setForm({ ...form, architect_max_repairs: Math.min(5, Math.max(0, Math.round(Number(e.target.value) || 0))) })}
+              />
+            </Field>
+          </SettingsGroup>
           <PermissionNote permission="admin" access={access} />
           <div>
             <Button
               variant="primary"
               icon={Save}
-              disabled={!admin || (hasBudgetPolicy(form) && budgetPolicyUpdate(form).invalid.length > 0)}
+              disabled={!admin || modelsInvalid}
               busy={save.isPending}
-              onClick={() =>
-                save.mutate({
-                  default_model: form.default_model,
-                  assistant_model: form.assistant_model,
-                  default_budget_usd: form.default_budget_usd,
-                  architect_budget_usd: form.architect_budget_usd,
-                  architect_max_repairs: form.architect_max_repairs,
-                  // BUDGET-1: the budget policy, only where the backend knows it.
-                  ...(hasBudgetPolicy(form) ? budgetPolicyUpdate(form).update : {}),
-                })
-              }
+              onClick={() => saveModels()}
             >
               {t("common.save")}
             </Button>
@@ -273,7 +306,24 @@ export function SettingsPage() {
           </p>
         </section>
         </div>
-        <SettingsNav container={body} />
+        <SettingsResizer host={layout} content={body} nav={nav} width={width.width} onWidth={width.setWidth} onReset={width.reset} />
+        <UnsavedChangesModal
+          open={blocker.state === "blocked"}
+          text={t("settingsUi.models.unsaved")}
+          onStay={() => blocker.reset?.()}
+          onDiscard={() => {
+            if (settings.data) setForm(settingsForm(settings.data));
+            blocker.proceed?.();
+          }}
+          onSave={admin && !modelsInvalid ? () => saveModels(() => blocker.proceed?.()) : undefined}
+          saving={save.isPending}
+        />
+        <SettingsNav
+          container={body}
+          navRef={nav}
+          widthChanged={width.width !== SETTINGS_WIDTH.default}
+          onResetWidth={width.reset}
+        />
       </div>
     </div>
   );

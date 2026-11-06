@@ -1,0 +1,35 @@
+{
+  "entry": {
+    "label": "Impostazioni",
+    "tooltip": "Impostazioni (Ctrl+,): provider di IA, modelli locali, budget, sandbox e altro. «Indietro» nella pagina delle impostazioni, o di nuovo Ctrl+, , ti riporta qui."
+  },
+  "width": {
+    "label": "Larghezza del contenuto delle impostazioni",
+    "hint": "Trascina per allargare o restringere le impostazioni. Da tastiera: frecce (con Maiusc a passi più grandi), Home e Fine. Un doppio clic ripristina la larghezza standard.",
+    "value": "{{width}} px di larghezza",
+    "reset": "Larghezza standard"
+  },
+  "jump": {
+    "label": "Vai alla sezione"
+  },
+  "search": {
+    "label": "Cerca nelle impostazioni",
+    "placeholder": "Trova un’impostazione …",
+    "clear": "Cancella la ricerca",
+    "results": "Impostazioni corrispondenti",
+    "found_one": "{{count}} impostazione trovata – Invio porta alla prima",
+    "found_other": "{{count}} impostazioni trovate – Invio porta alla prima",
+    "none": "Nessuna impostazione corrisponde a «{{query}}». Prova un’altra parola o scegli una sezione."
+  },
+  "advanced": {
+    "badge": "Avanzate",
+    "changed_one": "{{count}} modificata",
+    "changed_other": "{{count}} modificate"
+  },
+  "models": {
+    "groupModels": "Modelli",
+    "groupBudget": "Budget per esecuzione",
+    "groupArchitect": "Architetto dei workflow",
+    "unsaved": "Le modifiche in «Modelli e budget» non sono ancora salvate. Salvale, scartale o continua a modificare."
+  }
+}

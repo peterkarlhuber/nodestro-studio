@@ -1,0 +1,467 @@
+/* ---- Settings page: content column, its draggable edge, navigation, search, groups --------------------------
+   pages/SettingsPage.tsx lays the page out as three columns: the content (as wide as --settings-width allows, set
+   from the stored width), the edge that resizes it (SettingsResizer) and the section navigation, which moves with
+   the edge. The layout answers to the room the page really has (a container query, so the assistant panel, the
+   navigation rail and the browser zoom count too): without room beside the content the navigation stands above it
+   as a sticky bar with the search and a "Go to section" select, and the edge is hidden.
+   Conventions for sections inside the page: docs/design/SETTINGS_PAGE.md. */
+
+.settings-page {
+  container: settings-page / inline-size;
+}
+
+.settings-layout {
+  --settings-width: 1120px;
+  --settings-nav-width: 15rem;
+  display: grid;
+  grid-template-columns: minmax(0, var(--settings-width)) 16px var(--settings-nav-width);
+  column-gap: var(--nd-space-3);
+  align-items: start;
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-4);
+  min-width: 0;
+}
+
+/* A section reached by a link stays clear of the window edge. */
+.settings > section {
+  min-width: 0;
+  scroll-margin-top: var(--nd-space-4);
+}
+
+/* Wide tables scroll inside their section instead of pushing the page wider. */
+.settings > section table {
+  max-width: 100%;
+}
+
+/* ---- the edge between content and navigation ---- */
+
+.settings-resizer {
+  position: relative;
+  align-self: stretch;
+  width: 16px;
+  min-height: 100%;
+  border-radius: var(--nd-radius-sm);
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.settings-resizer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--nd-border);
+  transform: translateX(-50%);
+  transition: background var(--nd-duration-fast);
+}
+
+.settings-resizer__grip {
+  position: sticky;
+  top: calc(50vh - 80px);
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 36px;
+  margin-top: 48px;
+  border: 1px solid var(--nd-border-strong);
+  border-radius: var(--nd-radius-sm);
+  background: var(--nd-surface);
+  color: var(--nd-text-muted);
+}
+
+.settings-resizer:hover::before,
+.settings-resizer:focus-visible::before,
+.is-resizing .settings-resizer::before {
+  background: var(--nd-brand);
+}
+
+.settings-resizer:hover .settings-resizer__grip,
+.settings-resizer:focus-visible .settings-resizer__grip,
+.is-resizing .settings-resizer__grip {
+  border-color: var(--nd-brand);
+  color: var(--nd-brand);
+}
+
+.settings-resizer:focus-visible {
+  outline: 2px solid var(--nd-focus);
+  outline-offset: 2px;
+}
+
+/* ---- the navigation ---- */
+
+.settings-nav {
+  position: sticky;
+  top: var(--nd-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-3);
+  min-width: 0;
+  max-height: calc(100vh - 64px - 2 * var(--nd-space-4));
+  font-size: var(--nd-font-size-sm);
+}
+
+/* A long list on a short window scrolls on its own; the search above it stays in place. */
+.settings-nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-3);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.settings-nav__title,
+.settings-nav__group-title {
+  color: var(--nd-text-muted);
+  font-size: var(--nd-font-size-2xs);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.settings-nav__group-title {
+  letter-spacing: 0.04em;
+}
+
+.settings-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.settings-nav a {
+  display: block;
+  padding: 4px 10px;
+  border-left: 2px solid var(--nd-border);
+  color: var(--nd-text);
+  text-decoration: none;
+}
+
+.settings-nav a:hover {
+  background: var(--nd-surface-hover);
+}
+
+.settings-nav a[aria-current] {
+  border-left-color: var(--nd-brand);
+  color: var(--nd-brand);
+  font-weight: 600;
+}
+
+.settings-nav__jump {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-nav__reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+}
+
+.settings-return {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  font-weight: 600;
+}
+
+/* ---- the search ---- */
+
+.settings-search {
+  position: relative;
+}
+
+.settings-search__box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.settings-search__icon {
+  position: absolute;
+  left: 10px;
+  color: var(--nd-text-muted);
+  pointer-events: none;
+}
+
+.settings-search__input.nd-input {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.settings-search__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.settings-search__clear {
+  position: absolute;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--nd-radius-sm);
+  background: transparent;
+  color: var(--nd-text-muted);
+  cursor: pointer;
+}
+
+.settings-search__clear:hover {
+  background: var(--nd-surface-hover);
+  color: var(--nd-text);
+}
+
+.settings-search__clear:focus-visible {
+  outline: 2px solid var(--nd-focus);
+}
+
+/* The hits lie over the content (leftwards from the navigation), never under it. */
+.settings-search__list {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 30;
+  width: min(30rem, calc(100vw - 32px));
+  max-height: min(60vh, 30rem);
+  margin: 0;
+  padding: 4px;
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--nd-border-strong);
+  border-radius: var(--nd-radius-md);
+  background: var(--nd-surface-raised);
+  box-shadow: var(--nd-shadow-popover);
+}
+
+.settings-search__list[hidden] {
+  display: none;
+}
+
+.settings-search__hit {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: var(--nd-radius-sm);
+  cursor: pointer;
+}
+
+.settings-search__hit[aria-selected="true"] {
+  background: var(--nd-brand-soft);
+  box-shadow: inset 2px 0 0 var(--nd-brand);
+}
+
+.settings-search__label {
+  color: var(--nd-text);
+  font-weight: 620;
+}
+
+.settings-search__context {
+  color: var(--nd-text-muted);
+  font-size: var(--nd-font-size-xs);
+}
+
+.settings-search__snippet {
+  color: var(--nd-text-muted);
+  font-size: var(--nd-font-size-xs);
+  line-height: 1.45;
+}
+
+.settings-search__status {
+  margin: 4px 0 0;
+  color: var(--nd-text-muted);
+  font-size: var(--nd-font-size-xs);
+}
+
+.settings-search__status:empty {
+  display: none;
+}
+
+/* The setting a search (or a link) led to: a short highlight around it. */
+.settings-hit {
+  border-radius: var(--nd-radius-sm);
+  animation: settings-hit 2.4s ease-out;
+}
+
+@keyframes settings-hit {
+  0%,
+  55% {
+    background: var(--nd-brand-soft);
+    box-shadow:
+      0 0 0 6px var(--nd-brand-soft),
+      0 0 0 8px var(--nd-brand);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 6px transparent,
+      0 0 0 8px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-hit {
+    animation: none;
+    outline: 2px solid var(--nd-brand);
+    outline-offset: 4px;
+  }
+}
+
+/* ---- groups and advanced parts inside a section (pages/SettingsParts.tsx) ---- */
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-3);
+  padding-top: var(--nd-space-3);
+  border-top: 1px solid var(--nd-border);
+}
+
+.settings-group__title {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  color: var(--nd-text);
+  font-size: var(--nd-font-size-sm);
+  font-weight: 680;
+  letter-spacing: 0.01em;
+}
+
+/* Related fields side by side where the section is wide enough; one column on narrow ones. */
+.settings-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: var(--nd-space-3) var(--nd-space-6);
+  align-items: start;
+}
+
+.settings-columns > .field {
+  min-width: 0;
+}
+
+.settings-advanced {
+  border-top: 1px solid var(--nd-border);
+}
+
+.settings-advanced > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  list-style: none;
+  cursor: pointer;
+  font-weight: 620;
+}
+
+.settings-advanced > summary::-webkit-details-marker {
+  display: none;
+}
+
+.settings-advanced > summary:focus-visible {
+  outline: 2px solid var(--nd-focus);
+  outline-offset: 2px;
+  border-radius: var(--nd-radius-sm);
+}
+
+.settings-advanced__body {
+  padding: 0 0 var(--nd-space-3) 22px;
+}
+
+/* ---- no room beside the content: navigation on top, as a sticky bar ---- */
+
+@container settings-page (max-width: 940px) {
+  .settings-layout {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--nd-space-4);
+  }
+
+  .settings-resizer {
+    display: none;
+  }
+
+  .settings-nav {
+    top: 0;
+    z-index: 20;
+    order: -1;
+    flex-flow: row wrap;
+    align-items: flex-end;
+    gap: var(--nd-space-2) var(--nd-space-4);
+    max-height: none;
+    margin: calc(-1 * var(--nd-space-2)) calc(-1 * var(--nd-space-2)) 0;
+    padding: var(--nd-space-2);
+    border-bottom: 1px solid var(--nd-border);
+    background: var(--nd-bg);
+  }
+
+  .settings-return {
+    flex-basis: 100%;
+  }
+
+  .settings-search {
+    flex: 1 1 16rem;
+    min-width: 0;
+  }
+
+  .settings-search__list {
+    left: 0;
+    right: auto;
+    width: min(30rem, calc(100vw - 32px));
+  }
+
+  .settings-nav__jump {
+    display: flex;
+    flex: 1 1 14rem;
+    min-width: 0;
+  }
+
+  .settings-nav__list {
+    display: none;
+  }
+}
+
+/* ---- the settings entry in the top bar (layout/AppShell.tsx, SettingsEntry) ---- */
+
+.topbar-settings {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--nd-border);
+  border-radius: 999px;
+  color: var(--nd-text);
+  transition:
+    background var(--nd-duration-fast),
+    border-color var(--nd-duration-fast);
+}
+
+.topbar-settings:hover {
+  background: var(--nd-surface-hover);
+  text-decoration: none;
+}
+
+.topbar-settings.active {
+  border-color: var(--nd-brand);
+  background: var(--nd-brand-soft);
+  color: var(--nd-brand);
+}
+
+.topbar-settings:focus-visible {
+  outline: 2px solid var(--nd-focus);
+  outline-offset: 2px;
+}

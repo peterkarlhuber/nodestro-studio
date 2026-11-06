@@ -126,6 +126,7 @@ const SHORTCUTS = [
   "globalSearch",
   "search",
   "assistant",
+  "settings",
 ] as const;
 
 const KEYS = { kbd: <kbd /> };

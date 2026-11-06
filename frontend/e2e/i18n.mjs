@@ -66,8 +66,9 @@ async function open(options) {
   return { context, page, errors };
 }
 
-async function settingsLabel(page) {
-  return (await page.locator('.sidebar a[href="/settings"]').innerText()).trim();
+// The label of a navigation item tells which language the interface shows (the settings entry is an icon in the top bar).
+async function navLabel(page) {
+  return (await page.locator('.sidebar a[href="/executions"]').innerText()).trim();
 }
 
 /** Text that does not fit its box: horizontal page scroll, or controls whose label is cut off unannounced. */
@@ -102,7 +103,7 @@ try {
     await page.goto(base + "/settings");
     await page.locator(".sidebar").waitFor();
     check((await page.evaluate(() => document.documentElement.lang)) === expected, `browser ${locale} → <html lang="${expected}">`);
-    check((await settingsLabel(page)) === nav[expected].settings, `browser ${locale} → navigation in ${expected}`);
+    check((await navLabel(page)) === nav[expected].executions, `browser ${locale} → navigation in ${expected}`);
     await context.close();
   }
 
@@ -117,7 +118,7 @@ try {
     await page.addInitScript(() => {
       window.__navTexts = [];
       new MutationObserver(() => {
-        const text = document.querySelector('.sidebar a[href="/settings"]')?.textContent?.trim();
+        const text = document.querySelector('.sidebar a[href="/executions"]')?.textContent?.trim();
         if (text && window.__navTexts.at(-1) !== text) window.__navTexts.push(text);
       }).observe(document, { subtree: true, childList: true, characterData: true });
     });
@@ -128,10 +129,10 @@ try {
       await route.continue();
     });
     await page.goto(base + "/");
-    await page.locator('.sidebar a[href="/settings"]', { hasText: nav[expected].settings }).waitFor({ timeout: 10000 });
+    await page.locator('.sidebar a[href="/executions"]', { hasText: nav[expected].executions }).waitFor({ timeout: 10000 });
     const seen = await page.evaluate(() => window.__navTexts);
     check(
-      seen.length > 0 && seen.every((text) => text === nav[expected].settings),
+      seen.length > 0 && seen.every((text) => text === nav[expected].executions),
       `${stored ? `stored ${stored}` : `browser ${locale}`}: the first render is already in ${expected} (seen: ${seen.join(", ")})`,
     );
     check(chunks.length === 1 && chunks[0].includes(`/${expected}-`), `only the ${expected} texts are fetched (${chunks.join(", ")})`);
@@ -144,7 +145,7 @@ try {
     const { context, page, errors } = await open({ locale: "de-DE" });
     await page.goto(base + "/settings");
     await page.locator("#settings-language-select").waitFor();
-    check((await settingsLabel(page)) === nav.de.settings, "German browser starts in German");
+    check((await navLabel(page)) === nav.de.executions, "German browser starts in German");
 
     const writes = [];
     page.on("request", (request) => {
@@ -155,7 +156,7 @@ try {
       if (frame === page.mainFrame()) navigations.push(frame.url());
     });
     await page.locator("#settings-language-select").selectOption("it");
-    await page.locator('.sidebar a[href="/settings"]', { hasText: nav.it.settings }).waitFor({ timeout: 2000 });
+    await page.locator('.sidebar a[href="/executions"]', { hasText: nav.it.executions }).waitFor({ timeout: 2000 });
     check(true, "switching to Italian updates the navigation immediately");
     check((await page.evaluate(() => document.documentElement.lang)) === "it", '<html lang="it"> after switching');
     await page.waitForTimeout(500);
@@ -165,12 +166,12 @@ try {
 
     await page.reload();
     await page.locator(".sidebar").waitFor();
-    check((await settingsLabel(page)) === nav.it.settings, "the choice survives a reload");
+    check((await navLabel(page)) === nav.it.executions, "the choice survives a reload");
     check((await page.locator("#settings-language-select").inputValue()) === "it", "the picker shows the stored choice");
 
     // Back to the browser language.
     await page.locator("#settings-language-select").selectOption({ index: 0 });
-    await page.locator('.sidebar a[href="/settings"]', { hasText: nav.de.settings }).waitFor({ timeout: 2000 });
+    await page.locator('.sidebar a[href="/executions"]', { hasText: nav.de.executions }).waitFor({ timeout: 2000 });
     check(true, "automatic follows the browser language again");
     check(errors.length === 0, `no console errors while switching${errors.length ? `: ${errors.join(" | ")}` : ""}`);
     await context.close();
