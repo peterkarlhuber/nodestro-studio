@@ -19,7 +19,7 @@ import { revealSettingsSection } from "./SettingsNav";
 
 /** The steps orkexa's build_model reports in the job message, in order. */
 export const BUILD_STEPS = ["verify template", "verify weights", "write gguf", "create model", "check reference vectors"] as const;
-const STEP_KEYS: Record<string, string> = {
+const STEP_KEYS: Record<string, "verifyTemplate" | "verifyWeights" | "write" | "create" | "check" | "done"> = {
   "verify template": "verifyTemplate",
   "verify weights": "verifyWeights",
   "write gguf": "write",
@@ -29,14 +29,16 @@ const STEP_KEYS: Record<string, string> = {
 };
 
 /** The error codes of a build that get their own explanation (others use the general error texts). */
-const BUILD_ERRORS = new Set([
-  "local.checksum_mismatch",
-  "local.source_missing",
-  "local.file_missing",
-  "local.invalid_template",
-  "local.invalid_weights",
-  "local.reference_mismatch",
-]);
+const BUILD_ERROR_KEYS = {
+  "local.checksum_mismatch": "checksum_mismatch",
+  // The runtime checks that both paths exist before the job starts (file_missing); orkexa again (source_missing).
+  "local.source_missing": "source_missing",
+  "local.file_missing": "source_missing",
+  "local.invalid_template": "invalid_template",
+  "local.invalid_weights": "invalid_weights",
+  "local.reference_mismatch": "reference_mismatch",
+} as const;
+const BUILD_ERRORS = new Set<string>(Object.keys(BUILD_ERROR_KEYS));
 
 /** The models of the catalog that are built from upstream files. */
 export function buildableModels(catalog: CatalogModel[]): CatalogModel[] {
@@ -63,8 +65,7 @@ export function buildErrorText(t: TFunction, job: LocalJob): { text: string; hin
   if (BUILD_ERRORS.has(code)) {
     const input = failedInput(job);
     const file = t(`localModels.build.inline.${input ?? "either"}`);
-    // The runtime checks that both paths exist before the job starts (file_missing); orkexa again (source_missing).
-    const key = code === "local.file_missing" ? "source_missing" : code.replace(/^local\./, "");
+    const key = BUILD_ERROR_KEYS[code as keyof typeof BUILD_ERROR_KEYS];
     return { text: t(`localModels.build.errors.${key}`, { name: file }), hint: t(`localModels.build.errors.${key}Hint`, { name: file }) };
   }
   const item = { code: job.error_code, message: job.error };

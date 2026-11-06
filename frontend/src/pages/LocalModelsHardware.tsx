@@ -153,7 +153,7 @@ export function MachinePanel({ overview }: { overview: LocalOverview }) {
         ? t("localModels.machine.runtime.missing", { version: status.pinned_version })
         : t("localModels.machine.runtime.stopped");
   const accelerated =
-    status.accelerated === undefined ? null : t(`localModels.machine.accelerated.${status.accelerated === null ? "unknown" : String(status.accelerated)}`);
+    status.accelerated === undefined ? null : t(`localModels.machine.accelerated.${status.accelerated === null ? "unknown" : status.accelerated ? "true" : "false"}`);
   return (
     <div className="stack" data-testid="local-hardware">
       <h3 className="small">
