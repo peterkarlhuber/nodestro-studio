@@ -88,7 +88,10 @@ function ChangesSinceOwn({ tool }: { tool: ToolInfo }) {
         {t("tools.adopt.diff.title", { version: previous.version })}
       </h3>
       <p className="muted small">
-        {t(`tools.adopt.diff.intro.${previous.author}`, { previous: previous.version, version: tool.version })}
+        {t(`tools.adopt.diff.intro.${previous.author === "adopted" ? "adopted" : "editor"}`, {
+          previous: previous.version,
+          version: tool.version,
+        })}
       </p>
       <span className="nd-field-label">{t("tools.codeOfTool")}</span>
       <TextDiff a={previous.code ?? ""} b={tool.code ?? ""} />
