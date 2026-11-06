@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import { keys, useSchedules, useWorkflows } from "../api/hooks";
-import type { Activation, Schedule, ScheduleIn, ScheduleKind } from "../api/types";
+import { type Activation, type Schedule, type ScheduleIn, type ScheduleKind, WEEKDAYS } from "../api/types";
 import { FormFields } from "../components/FormFields";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, IconButton, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
@@ -189,7 +189,7 @@ function ScheduleDialog({ schedule, onClose }: { schedule: Schedule | null; onCl
       {draft.kind === "weekly" ? (
         <fieldset className="weekday-picker">
           <legend className="nd-field-label">{t("automation.schedule.weekdays")}</legend>
-          {[0, 1, 2, 3, 4, 5, 6].map((day) => (
+          {WEEKDAYS.map((day) => (
             <label key={day} className="check-row">
               <input
                 type="checkbox"

@@ -6,7 +6,7 @@ import { BookOpen, Brain, FileText, MessagesSquare, ShieldCheck, Wrench } from "
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
-import type { ExampleMessage, KnowledgeRef, OutputConfig, PromptSegment } from "../api/types";
+import type { ExampleMessage, KnowledgeConfig, KnowledgeRef, OutputConfig, PromptSegment } from "../api/types";
 import { Badge, Chip, Tooltip } from "../components/ui";
 import { problemText } from "../lib/errors";
 import { redact } from "../lib/redact";
@@ -18,7 +18,7 @@ export interface AgentContext {
   examples: ExampleMessage[];
   tools: string[];
   server_tools: string[];
-  knowledge_mode: string;
+  knowledge_mode: KnowledgeConfig["mode"];
   knowledge: KnowledgeRef[];
   run_files: KnowledgeRef[];
   memory_mode: string;

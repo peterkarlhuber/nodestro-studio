@@ -31,7 +31,7 @@ export interface AgentPair {
   a: AgentSide | null;
   b: AgentSide | null;
   /** Which aspects differ (model, status, output, tools, tokens, cost, error, evaluation). */
-  differs: Set<string>;
+  differs: Set<CompareAspect>;
 }
 
 export interface RunComparison {
@@ -92,9 +92,12 @@ function configOf(run: Run): string {
   return JSON.stringify({ nodes: nodes.map(({ position: _position, ...rest }) => rest), edges });
 }
 
-function differences(a: AgentSide | null, b: AgentSide | null): Set<string> {
-  const result = new Set<string>();
-  if (!a || !b) return new Set(["presence"]);
+/** What can differ between two agents of compared runs (each has a text in compare.aspect). */
+export type CompareAspect = "presence" | "model" | "status" | "output" | "tools" | "tokens" | "cost" | "error" | "evaluation";
+
+function differences(a: AgentSide | null, b: AgentSide | null): Set<CompareAspect> {
+  const result = new Set<CompareAspect>();
+  if (!a || !b) return new Set<CompareAspect>(["presence"]);
   if (a.model !== b.model) result.add("model");
   if (a.state?.status !== b.state?.status) result.add("status");
   if (a.output !== b.output) result.add("output");

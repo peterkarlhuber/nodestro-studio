@@ -20,7 +20,7 @@ import { Button, Callout, Field, IconButton, TextInput, Toggle } from "../compon
 import { DefaultMark } from "./SettingsDefaults";
 
 /** The operations by area, in the order of the table. ``assistant``: the request goes to the assistant model. */
-export const OUTPUT_LIMIT_GROUPS: { group: string; operations: { name: OutputLimitOperation; assistant: boolean }[] }[] = [
+export const OUTPUT_LIMIT_GROUPS: { group: "architect" | "assistants" | "runs"; operations: { name: OutputLimitOperation; assistant: boolean }[] }[] = [
   {
     group: "architect",
     operations: [

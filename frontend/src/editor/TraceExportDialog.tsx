@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
-import type { Run, SanitizeReport } from "../api/types";
+import type { Run, SanitizeKind, SanitizeReport } from "../api/types";
 import { toast } from "../components/toast";
 import { Button, Callout, HelpTip, Modal, Segmented, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
@@ -23,7 +23,7 @@ function downloadJson(data: unknown, name: string) {
 
 /** "3 e-mail addresses, 1 API key" in the interface language. */
 export function sanitizeSummary(t: ReturnType<typeof useTranslation>["t"], report: SanitizeReport): string {
-  const parts = Object.entries(report.replaced)
+  const parts = (Object.entries(report.replaced) as [SanitizeKind, number][])
     .filter(([, count]) => count > 0)
     .map(([kind, count]) => t(`export.kind.${kind}`, { count }));
   return parts.length ? parts.join(", ") : t("export.nothingFound");

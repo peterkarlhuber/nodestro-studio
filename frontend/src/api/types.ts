@@ -745,11 +745,14 @@ export interface Run extends RunOrigin {
   sanitized?: SanitizeReport | null;
 }
 
+/** What a sanitized export replaces, by category (nodestro-runtime sanitize.py). */
+export type SanitizeKind = "private_key" | "api_key" | "token" | "secret" | "email" | "iban" | "card" | "phone" | "ip" | "content";
+
 export interface SanitizeReport {
   at: string;
   personal_data: boolean;
   contents: boolean;
-  replaced: Record<string, number>;
+  replaced: Partial<Record<SanitizeKind, number>>;
 }
 
 /**
@@ -1363,6 +1366,9 @@ export type UsageSource =
   | "api_docs"
   | "run_chat";
 
+/** The keys of ``by_source``: the run triggers besides the logged operations (nodestro-api usage report). */
+export type UsageBucketSource = UsageSource | "workflow_run" | "api_run";
+
 export interface UsageEntry {
   id: string;
   at: string;
@@ -1450,7 +1456,8 @@ export interface PreviewInput {
   node_id: string;
   label: string;
   status: "available" | "pending";
-  run_status: string | null;
+  /** The step's status in the earlier run (nodestro-runtime preview.py: the node state's status). */
+  run_status: NodeStatus | null;
   chars: number;
 }
 
@@ -1584,7 +1591,8 @@ export interface BackupInfo {
   library_version: string;
   contents: BackupContents;
   current: BackupContents;
-  notes: string[];
+  /** nodestro-api backup.py: "backup.other_version" when another version wrote the backup. */
+  notes: "backup.other_version"[];
 }
 
 export interface LocalBackup {
@@ -1943,9 +1951,14 @@ export interface EnvChange {
   details: string[];
 }
 
+/** The steps of a dependency installation (nodestro-runtime python_envs.py ``deps.step.*``). */
+export type InstallStep = "deps.step.queued" | "deps.step.create" | "deps.step.install" | "deps.step.verify";
+/** Why packages need an approval (nodestro-runtime python_envs.py). */
+export type DependencyReason = "python" | "new" | "changed" | "other_installation" | "hashes";
+
 export interface InstallState {
   status: "none" | "installing" | "installed" | "failed";
-  step: string | null;
+  step: InstallStep | null;
   error: Problem | null;
   log: string[];
   lock_sha: string | null;
@@ -1962,7 +1975,7 @@ export interface DependencyStatus {
   needed: NeededRequirement[];
   issues: DependencyToolIssue[];
   pending: string[];
-  reasons: string[];
+  reasons: DependencyReason[];
   packages: LockedPackage[];
   approved_at: string | null;
   python_version: string;
@@ -2408,7 +2421,7 @@ export interface CaseOrigin {
   workflow_version: number | null;
   error_code: string | null;
   personal_data: boolean;
-  replaced: Record<string, number>;
+  replaced: Partial<Record<SanitizeKind, number>>;
   proposed_at: string;
 }
 
@@ -2544,8 +2557,19 @@ export interface ModelMeasurement {
   avg_duration_s: number | null;
   new_failures: string[];
   available: boolean;
-  excluded: string[];
+  excluded: ModelExclusion[];
 }
+
+/** Why a measured model is not eligible (nodestro-api model_choice.py). */
+export type ModelExclusion =
+  | "model.unavailable"
+  | "model.pass_rate_low"
+  | "model.new_failures"
+  | "model.cost_unknown"
+  | "model.duration_unknown";
+/** Why a finished test run was not used for the model choice. */
+export type ModelChoiceSkip = "older_record" | "workflow_changed" | "cases_changed" | "other_agents_differ" | "incomplete";
+export type ModelChoiceWarning = "model_choice.few_cases" | "model_choice.ai_judged";
 
 export type ModelChoiceOutcome = "switch" | "keep" | "no_baseline" | "no_measurement";
 
@@ -2560,8 +2584,8 @@ export interface ModelChoice {
   recommended: string | null;
   outcome: ModelChoiceOutcome;
   /** Finished test runs that were not used, by reason. */
-  skipped: Record<string, number>;
-  warnings: string[];
+  skipped: Partial<Record<ModelChoiceSkip, number>>;
+  warnings: ModelChoiceWarning[];
 }
 
 export interface BenchmarkPlan {
@@ -2594,6 +2618,10 @@ export interface BenchmarkComparison {
 
 export type ScheduleKind = "once" | "hourly" | "daily" | "weekly" | "monthly";
 
+/** A day of the week, 0 = Monday. */
+export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export const WEEKDAYS: readonly Weekday[] = [0, 1, 2, 3, 4, 5, 6];
+
 export interface ScheduleIn {
   name: string;
   workflow_id: string;
@@ -2601,7 +2629,7 @@ export interface ScheduleIn {
   at: string;
   start_date: string;
   /** 0 = Monday. */
-  weekdays: number[];
+  weekdays: Weekday[];
   day_of_month: number;
   every_hours: number;
   time_zone: string;
@@ -2689,9 +2717,21 @@ export interface ReleaseGate {
 
 export type GateItemKind = "critical" | "deterministic" | "judge";
 
+/** The checks of a release gate (nodestro-api release_gate.py); errors of the gate itself are other codes. */
+export type GateItemCode =
+  | "gate.tested"
+  | "gate.pass_rate"
+  | "gate.judge_missing"
+  | "gate.judge_score"
+  | "gate.suite_missing"
+  | "gate.suite_untested"
+  | "gate.suite_variant_only"
+  | "gate.suite_outdated"
+  | "gate.suite_changed";
+
 export interface GateItem {
   kind: GateItemKind;
-  code: string;
+  code: GateItemCode;
   passed: boolean;
   suite_id: string;
   suite_name: string;
@@ -2868,16 +2908,37 @@ export interface ApiEndpoint {
   method: string;
   path: string;
   scope: ApiScope;
-  purpose: string;
+  purpose: ApiEndpointPurpose;
 }
+
+/** What each endpoint of a published API is for (nodestro-api api_examples.py). */
+export type ApiEndpointPurpose =
+  | "info"
+  | "start"
+  | "start_version"
+  | "list"
+  | "status"
+  | "result"
+  | "events"
+  | "cancel"
+  | "approvals"
+  | "approve"
+  | "resume"
+  | "files"
+  | "file"
+  | "usage"
+  | "openapi";
+/** The curl examples; upload and sync only for workflows with file fields or a synchronous mode. */
+export type ApiCurlExample = "start" | "status" | "result" | "events" | "approve" | "cancel" | "upload" | "sync";
+export type ApiResponseExample = "started" | "awaiting_approval" | "result" | "invalid" | "unauthorized" | "limited" | "events";
 
 export interface ApiExamples {
   base_url: string;
   endpoints: ApiEndpoint[];
   request: Record<string, unknown>;
-  curl: Record<string, string>;
+  curl: Partial<Record<ApiCurlExample, string>>;
   python: string;
-  responses: Record<string, unknown>;
+  responses: Partial<Record<ApiResponseExample, unknown>>;
 }
 
 export interface ApiDocs {

@@ -4,11 +4,11 @@ import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { api } from "../api/client";
-import type { ApiOverview, GateReport, Publication } from "../api/types";
+import type { ApiOverview, GateItemCode, GateReport, Publication } from "../api/types";
 import { ApiOverviewPanel } from "./ApiOverviewPanel";
 import { GateReportView } from "./GateReportView";
 
-const item = (kind: "critical" | "deterministic" | "judge", code: string, passed: boolean, extra = {}) => ({
+const item = (kind: "critical" | "deterministic" | "judge", code: GateItemCode, passed: boolean, extra = {}) => ({
   kind,
   code,
   passed,

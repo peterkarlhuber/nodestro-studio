@@ -10,6 +10,7 @@ import type { BackupContents, BackupInfo, DiagnosticCheck, DiagnosticStatus } fr
 import { dockerReasonKey } from "../api/types";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, HelpTip, Hint, Modal, Section, Spinner } from "../components/ui";
+import { codeSuffix } from "../lib/codes";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate, formatNumber } from "../lib/format";
 
@@ -264,7 +265,7 @@ export function BackupPanel() {
             </p>
             {info.notes.map((note) => (
               <Callout key={note} tone="warning">
-                {t(`backup.notes.${note.replace("backup.", "")}`)}
+                {t(`backup.notes.${codeSuffix("backup.", note)}`)}
               </Callout>
             ))}
             <ContentsTable info={info} />

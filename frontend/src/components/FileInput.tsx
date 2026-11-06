@@ -509,7 +509,11 @@ function FileTextView({ fileId, path }: { fileId: string; path: string }) {
   );
 }
 
-const REASONS = ["unsafe_path", "link", "special", "encrypted", "duplicate", "too_large", "ratio", "executable"];
+/** The reasons the runtime gives for an archive entry it does not read; any other reads as "other". */
+const REASONS = ["unsafe_path", "link", "special", "encrypted", "duplicate", "too_large", "ratio", "executable"] as const;
+type ArchiveReason = (typeof REASONS)[number];
+const knownReason = (reason: string): ArchiveReason | "other" =>
+  (REASONS as readonly string[]).includes(reason) ? (reason as ArchiveReason) : "other";
 
 interface TreeProps {
   selected: string | null;
@@ -559,7 +563,7 @@ function TreeRow({ node, depth, selected, onSelect, onAdopt }: { node: TreeNode;
   const entry = node.entry;
   const readable = entry.status === "ok";
   const reason = entry.reason
-    ? t(`inputs.archive.reason.${REASONS.includes(entry.reason) ? entry.reason : "other"}`)
+    ? t(`inputs.archive.reason.${knownReason(entry.reason)}`)
     : entry.status === "nested"
       ? t("inputs.archive.nested")
       : entry.status === "unsupported"

@@ -27,39 +27,14 @@ const MAX_COMBINATIONS = 400;
  * check every value.
  */
 const OPEN: Record<string, string> = {
-  // Values from API responses, stored records or lists typed as string: this test cannot enumerate them. A value
-  // without a text is reported by the missing-key guard in ./index.ts (component tests fail, the e2e sweep in
-  // e2e/i18n.mjs fails on key-like text) and reads as words in the app, never as the dotted key.
-  "assistant/MessageView.tsx assistant.handover.${target}.open": "handover targets of the assistant API",
-  "assistant/MessageView.tsx assistant.handover.${target}.title": "handover targets of the assistant API",
-  'automation/ModelChoicePanel.tsx automation.modelChoice.excluded.${code.replace("model.", "")}': "backend codes",
-  "automation/ModelChoicePanel.tsx automation.modelChoice.skipped.${reason}": "backend codes",
-  'automation/ModelChoicePanel.tsx automation.modelChoice.warnings.${code.replace("model_choice.", "")}': "backend codes",
-  'components/FileInput.tsx inputs.archive.reason.${REASONS.includes(entry.reason) ? entry.reason : "other"}':
-    "checked against REASONS, unknown reasons read as other",
-  "editor/AgentInspector.tsx agent.iconNames.${name}": "the names of AGENT_ICONS",
-  "editor/AgentInspector.tsx agent.options.${group}.${value || \"default\"}": "option lists of the agent inspector",
-  "editor/ContextView.tsx context.knowledgeMode.${context.knowledge_mode}": "knowledge modes of the context preview",
-  "editor/InputPreview.tsx status.${input.run_status}.label": "run status of an earlier run",
-  "editor/TraceExportDialog.tsx export.kind.${kind}": "kinds counted by the trace export",
-  "lib/files.ts inputs.groups.${key}": "format groups of the backend",
-  "library/ExampleModels.tsx library.models.reason.${reason}": "reasons of the example model check",
-  "pages/RunComparePage.tsx compare.aspect.${aspect}": "aspects the run comparison names",
-  "pages/SchedulesPage.tsx automation.schedule.weekdaysShort.${day}": "weekday numbers 0 to 6",
-  'pages/SettingsMaintenance.tsx backup.notes.${note.replace("backup.", "")}': "notes of a backup",
+  // Values from API responses that this test cannot enumerate. A value without a text is reported by the
+  // missing-key guard in ./index.ts (component tests fail, the e2e sweep in e2e/i18n.mjs fails on key-like text) and
+  // reads as words in the app, never as the dotted key.
+  // The diagnostics name a check and its outcome; each check has its own codes (pairs, not a product of two sets).
   "pages/SettingsMaintenance.tsx diagnostics.checks.${check.id}.${check.code}": "checks of the diagnostics API",
   "pages/SettingsMaintenance.tsx diagnostics.checks.${check.id}.title": "checks of the diagnostics API",
-  "pages/SettingsOutputLimits.tsx modelParams.settings.group.${group}": "operation groups of the backend",
-  "pages/UsagePage.tsx usage.detail.${entry.detail}": "usage details of the backend",
-  "pages/UsagePage.tsx usage.sources.${bucket.key}": "usage sources of the backend",
-  "publish/ApiDocsPanel.tsx publish.docs.curl.${name}": "examples of the API docs",
-  "publish/ApiDocsPanel.tsx publish.docs.purposes.${endpoint.purpose}": "endpoint purposes of the API docs",
-  "publish/ApiDocsPanel.tsx publish.docs.response.${name}": "examples of the API docs",
-  'publish/GateReportView.tsx publish.gate.items.${item.code.replace("gate.", "")}': "codes of the publication gate",
-  "publish/RequestProblems.tsx admin.request.kind.${item.kind}": "kinds of a request problem",
-  'python/DependencyDialog.tsx python.step.${(state.step ?? "deps.step.queued").replace("deps.step.", "")}':
-    "steps of a dependency job",
-  "python/DependencyPanel.tsx python.reason.${reason}": "reasons of a dependency check",
+  // The detail is free text of many operations; only details with a text are shown (i18n.exists).
+  "pages/UsagePage.tsx usage.detail.${entry.detail}": "usage details of the backend, shown only when a text exists",
 };
 
 function leaves(messages: Messages, prefix = "", into = new Set<string>()): Set<string> {
