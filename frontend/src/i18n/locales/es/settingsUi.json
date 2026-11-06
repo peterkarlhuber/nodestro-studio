@@ -35,5 +35,15 @@
   },
   "providers": {
     "unsaved": "Lo que escribiste para {{providers}} aún no está guardado. Guárdalo en la tarjeta del proveedor o descártalo y sal."
+  },
+  "defaults": {
+    "changed": "Cambiado",
+    "changedTip": "Este valor difiere del predeterminado ({{value}}).",
+    "reset": "Restablecer",
+    "resetTip": "Volver al valor predeterminado: {{value}}",
+    "resetLabel": "Restablecer {{setting}} al valor predeterminado ({{value}})",
+    "on": "activado",
+    "off": "desactivado",
+    "none": "ninguno"
   }
 }

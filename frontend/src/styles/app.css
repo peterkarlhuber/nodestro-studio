@@ -1033,6 +1033,7 @@ ol {
 
 .field__head {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
@@ -6338,6 +6339,26 @@ kbd {
 .upload-drop__actions {
   display: flex;
   gap: var(--nd-space-2);
+}
+
+/* The sample files of the example a copy came from, one click each (ST-007). */
+.upload-samples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nd-space-2);
+  margin-top: var(--nd-space-2);
+}
+
+.upload-samples__label {
+  color: var(--nd-text-subtle);
+  font-size: var(--nd-font-size-sm);
+}
+
+.upload-samples .nd-button {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: start;
 }
 
 .upload-list {

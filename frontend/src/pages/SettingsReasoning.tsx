@@ -9,6 +9,7 @@ import type { Settings, SettingsUpdate } from "../api/types";
 import { ThinkingDisplayPicker } from "../components/ReasoningView";
 import { DocLink, Toggle } from "../components/ui";
 import { useThinkingDisplay } from "../lib/thinkingDisplay";
+import { DefaultMark } from "./SettingsDefaults";
 
 export function ReasoningDisplayPanel({
   settings,
@@ -38,6 +39,15 @@ export function ReasoningDisplayPanel({
         disabled={!admin}
         onChange={(reasoning_summaries) => onSave({ reasoning_summaries })}
         label={t("reasoning.settings.summaries")}
+        action={
+          <DefaultMark
+            setting="reasoning_summaries"
+            value={settings.reasoning_summaries}
+            label={t("reasoning.settings.summaries")}
+            disabled={!admin}
+            onReset={(reasoning_summaries) => onSave({ reasoning_summaries })}
+          />
+        }
         description={admin ? t("reasoning.settings.summariesHint") : `${t("reasoning.settings.summariesHint")} ${t("reasoning.settings.adminOnly")}`}
       />
     </section>

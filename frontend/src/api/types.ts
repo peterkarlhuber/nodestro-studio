@@ -390,6 +390,25 @@ export interface Workflow extends WorkflowIn {
   id: string;
   created_at: string;
   updated_at: string;
+  /** Where the workflow came from when it was made as a copy (nodestro-runtime RT-055), read-only; null or missing
+   * for workflows made otherwise and from older servers. */
+  origin?: WorkflowOrigin | null;
+}
+
+/** The origin of a copy of an example (RT-055): kept by every save, never sent by the interface. */
+export interface WorkflowOrigin {
+  kind: "example";
+  /** The example (template) id, e.g. ``offer-from-inquiry``. */
+  example_id: string;
+  /** The version of the examples package the copy was made from. */
+  version: string;
+  /** The language the copy was made in. */
+  language: string;
+  /** Integrations of the example that run in their offline mode on sample data in this copy. */
+  offline: string[];
+  /** Integrations of the example that were connected to an MCP server. */
+  connected: string[];
+  copied_at: string;
 }
 
 export interface WorkflowSummary {
@@ -402,6 +421,17 @@ export interface WorkflowSummary {
   /** Capability tags and output contract field names (teams); missing from older servers. */
   capabilities?: string[];
   contract?: string[];
+  /** The output contract's fields with their descriptions, in the workflow's language (nodestro-api API-053);
+   * missing from older servers. */
+  contract_fields?: ContractFieldSummary[];
+}
+
+/** A field of a team's output contract as the workflow list describes it (API-053). */
+export interface ContractFieldSummary {
+  name: string;
+  type?: string;
+  description: string;
+  required?: boolean;
 }
 
 export interface AgentTemplate {
@@ -3672,6 +3702,35 @@ export interface RunChatView {
 export interface Settings {
   /** Ask OpenAI and Gemini for reasoning summaries (they send them only on request). */
   reasoning_summaries?: boolean;
+}
+
+// --- settings defaults (ST-059) ---
+/**
+ * GET /api/settings/defaults (nodestro-api API-061): the value each setting has while nobody changed it, so the
+ * settings page can mark a changed field and offer to reset it. Older APIs do not have the route (404): no marks.
+ * The defaults of the output limits are ``Settings.output_limit_defaults``; provider settings have no default.
+ */
+export interface SettingsDefaults {
+  default_model: string;
+  assistant_model: string;
+  default_budget_usd: number | null;
+  sandbox: SandboxMode;
+  /** null: follow the browser. */
+  language: string | null;
+  architect_budget_usd: number | null;
+  architect_max_repairs: number;
+  architect_retry_truncated: boolean;
+  architect_retry_max_tokens: number;
+  ocr_enabled: boolean;
+  price_mode: "standard" | "strict";
+  max_run_budget_usd: MoneyString | null;
+  budget_decision_hours: number;
+  knowledge_retrieval: "fts" | "vector" | "hybrid";
+  embedding_model: string | null;
+  strict_offline: boolean;
+  prefer_european_models: boolean;
+  local_reasoning: "auto" | "full";
+  reasoning_summaries: boolean;
 }
 
 // --- pubs ---

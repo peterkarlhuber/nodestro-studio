@@ -17,6 +17,7 @@ import { useModelProfile } from "../api/modelProfile";
 import type { ModelProfile, OutputLimitOperation, Settings, SettingsUpdate } from "../api/types";
 import { toast } from "../components/toast";
 import { Button, Callout, Field, IconButton, TextInput, Toggle } from "../components/ui";
+import { DefaultMark } from "./SettingsDefaults";
 
 /** The operations by area, in the order of the table. ``assistant``: the request goes to the assistant model. */
 export const OUTPUT_LIMIT_GROUPS: { group: string; operations: { name: OutputLimitOperation; assistant: boolean }[] }[] = [
@@ -222,9 +223,31 @@ export function OutputLimitsPanel({ settings, admin }: { settings: Settings; adm
         checked={retry}
         disabled={!admin}
         onChange={setRetry}
+        action={
+          <DefaultMark
+            setting="architect_retry_truncated"
+            value={retry}
+            label={t("modelParams.settings.retry")}
+            disabled={!admin}
+            onReset={setRetry}
+          />
+        }
       />
       {retry ? (
-        <Field label={t("modelParams.settings.retryMax")} hint={t("modelParams.settings.retryMaxHint")}>
+        <Field
+          label={t("modelParams.settings.retryMax")}
+          hint={t("modelParams.settings.retryMaxHint")}
+          action={
+            <DefaultMark
+              setting="architect_retry_max_tokens"
+              value={retryMax}
+              label={t("modelParams.settings.retryMax")}
+              disabled={!admin}
+              format={number}
+              onReset={(value) => setRetryMax(String(value))}
+            />
+          }
+        >
           <TextInput
             type="number"
             inputMode="numeric"

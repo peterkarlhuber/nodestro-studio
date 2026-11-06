@@ -218,5 +218,10 @@
     "all": "All",
     "none": "No collection",
     "uploadTo": "Upload into collection"
+  },
+  "samples": {
+    "label": "Sample files of the example:",
+    "use": "Use {{name}}",
+    "used": "{{name}} added"
   }
 }

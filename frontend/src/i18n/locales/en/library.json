@@ -86,7 +86,7 @@
     "sensitiveNote": "This example belongs to {{field}}. The agents produce working aids, not advice: check every result professionally before you use it.",
     "costNote": "Previewing and copying are free and call no model. Costs only arise when you run the copy; all it needs is access to the providers of its models.",
     "samples": "Sample files",
-    "samplesNote": "Small invented files for trying out the file fields. Download them and pick them when you run the workflow.",
+    "samplesNote": "Small invented files for trying out the file fields. Download them here; a copy also offers them in its run dialog.",
     "tests": "Test cases",
     "copyTests": "Add the test cases as a test series",
     "copyTestsNote": "Creates a test series with these cases. Nothing is run, no schedule is created and no API is published.",
@@ -186,5 +186,10 @@
       "structured": "structured output"
     },
     "judge": "Quality check (judge): {{model}}"
+  },
+  "origin": {
+    "offlineBadge": "Sample data",
+    "offlineTip_one": "A copy of the example “{{example}}”: {{names}} runs offline on sample data, without a connection. For real data, copy the example again and choose an MCP server.",
+    "offlineTip_other": "A copy of the example “{{example}}”: {{names}} run offline on sample data, without a connection. For real data, copy the example again and choose an MCP server."
   }
 }

@@ -59,6 +59,7 @@ import type {
   SandboxStatus,
   SearchHit,
   Settings,
+  SettingsDefaults,
   SettingsUpdate,
   ToolInfo,
   ToolJob,
@@ -324,6 +325,16 @@ export const api = {
   modelCapabilities: (model: string) => request<ModelCapabilities>("GET", `/models/capabilities${q({ model })}`),
   settings: () => request<Settings>("GET", "/settings"),
   saveSettings: (body: SettingsUpdate) => request<Settings>("PUT", "/settings", body),
+  /** The default of every setting (API-061); null on an API without the route (no "changed" marks then). */
+  settingsDefaults: async (): Promise<SettingsDefaults | null> => {
+    try {
+      const data = await request<SettingsDefaults>("GET", "/settings/defaults");
+      return data && typeof data === "object" && !Array.isArray(data) ? data : null;
+    } catch (error) {
+      if (error instanceof ApiError && (error.status === 404 || error.status === 405)) return null;
+      throw error;
+    }
+  },
   /** Changes one provider's key, endpoint or declared capabilities. */
   saveProvider: (provider: ProviderId, change: ProviderSettingsIn) =>
     request<Settings>("PUT", "/settings", { providers: { [provider]: change } }),
@@ -350,6 +361,28 @@ export const api = {
   copyExample: (id: string, body: ExampleCopyRequest) => request<Workflow>("POST", `/library/${id}/copy`, body),
   exampleSampleUrl: (id: string, sampleId: string, language: string) =>
     `/api/library/${id}/samples/${sampleId}?language=${encodeURIComponent(language)}`,
+  /** A sample file of an example as a File, ready for an upload into a run's file field (ST-007). */
+  exampleSampleFile: async (id: string, sampleId: string, language: string, name: string): Promise<File> => {
+    let response: Response;
+    try {
+      response = await fetch(`/api/library/${encodeURIComponent(id)}/samples/${encodeURIComponent(sampleId)}${q({ language })}`, {
+        headers: { "Accept-Language": currentLanguage() },
+      });
+    } catch (error) {
+      throw new ApiError(error instanceof Error ? error.message : String(error), 0, "network");
+    }
+    if (!response.ok) {
+      let data: unknown = null;
+      try {
+        data = await response.json();
+      } catch {
+        // not JSON
+      }
+      throw failedResponse(response.status, response.statusText, data);
+    }
+    const blob = await response.blob();
+    return new File([blob], name, { type: blob.type || "application/octet-stream" });
+  },
   /** ``workflowId`` names the stored workflow (for its Python environment). */
   checkWorkflow: (body: WorkflowIn, workflowId?: string) =>
     request<WorkflowCheck>("POST", `/workflows/check${q({ workflow_id: workflowId })}`, body),

@@ -86,7 +86,7 @@
     "sensitiveNote": "Questo esempio appartiene all'ambito {{field}}. Gli agenti forniscono strumenti di lavoro, non consulenza: verifica ogni risultato con competenza prima di usarlo.",
     "costNote": "L’anteprima e la copia sono gratuite e non chiamano alcun modello. I costi nascono solo quando esegui la copia; basta l’accesso ai provider dei suoi modelli.",
     "samples": "File di esempio",
-    "samplesNote": "Piccoli file inventati per provare i campi file. Scaricali e selezionali quando esegui il workflow.",
+    "samplesNote": "Piccoli file inventati per provare i campi file. Scaricali qui; una copia li offre anche quando la esegui.",
     "tests": "Casi di test",
     "copyTests": "Aggiungere i casi di test come serie di test",
     "copyTestsNote": "Crea una serie di test con questi casi. Non viene eseguito nulla, non viene creata alcuna pianificazione e non viene pubblicata alcuna API.",
@@ -186,5 +186,10 @@
       "structured": "output strutturato"
     },
     "judge": "Controllo qualità (giudice): {{model}}"
+  },
+  "origin": {
+    "offlineBadge": "Dati di esempio",
+    "offlineTip_one": "Copia dell’esempio «{{example}}»: {{names}} funziona offline con dati di esempio, senza connessione. Per dati reali, copia di nuovo l’esempio e scegli un server MCP.",
+    "offlineTip_other": "Copia dell’esempio «{{example}}»: {{names}} funzionano offline con dati di esempio, senza connessione. Per dati reali, copia di nuovo l’esempio e scegli un server MCP."
   }
 }

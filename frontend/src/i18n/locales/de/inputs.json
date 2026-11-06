@@ -218,5 +218,10 @@
     "all": "Alle",
     "none": "Keine Sammlung",
     "uploadTo": "Hochladen in Sammlung"
+  },
+  "samples": {
+    "label": "Beispieldateien des Beispiels:",
+    "use": "{{name}} verwenden",
+    "used": "{{name}} hinzugefügt"
   }
 }

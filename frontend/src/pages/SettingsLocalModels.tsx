@@ -33,6 +33,7 @@ import { reasonText } from "../lib/localRecommend";
 import { BuildFromFiles, buildableModels } from "./LocalModelBuild";
 import { InlineJobProgress, LocalJobsList, SetupProgress, setupJob, useJobsFinished } from "./LocalModelJobs";
 import { AdviceList, FitBadge, MachinePanel, SpeedCell, catalogFit } from "./LocalModelsHardware";
+import { DefaultMark } from "./SettingsDefaults";
 
 /** The tasks the panel recommends a model for (the runtime knows more; these cover the studio's choices). */
 const SHOWN_TASKS = ["classify", "write", "tool_agent", "analysis", "assistant", "embedding"] as const;
@@ -680,6 +681,15 @@ export function LocalModelsPanel({
           disabled={!admin}
           onChange={onOffline}
           label={t("localModels.offline.label")}
+          action={
+            <DefaultMark
+              setting="strict_offline"
+              value={settings.strict_offline}
+              label={t("localModels.offline.label")}
+              disabled={!admin}
+              onReset={onOffline}
+            />
+          }
           description={data && !data.hardware ? t("localModels.offline.textServer") : t("localModels.offline.text")}
           tip="settings.strictOffline"
         />
@@ -688,6 +698,15 @@ export function LocalModelsPanel({
           disabled={!admin}
           onChange={onEurope}
           label={t("localModels.europe.label")}
+          action={
+            <DefaultMark
+              setting="prefer_european_models"
+              value={settings.prefer_european_models}
+              label={t("localModels.europe.label")}
+              disabled={!admin}
+              onReset={onEurope}
+            />
+          }
           description={t("localModels.europe.text")}
           tip="settings.preferEuropean"
         />
@@ -696,6 +715,16 @@ export function LocalModelsPanel({
           disabled={!admin || !onReasoning}
           onChange={(value) => onReasoning?.(value ? "auto" : "full")}
           label={t("localModels.reasoning.label")}
+          action={
+            <DefaultMark
+              setting="local_reasoning"
+              value={settings.local_reasoning}
+              label={t("localModels.reasoning.label")}
+              disabled={!admin || !onReasoning}
+              format={(value) => t(value === "auto" ? "settingsUi.defaults.on" : "settingsUi.defaults.off")}
+              onReset={onReasoning}
+            />
+          }
           description={reasoningState(t, settings, data)}
           tip="settings.localReasoning"
         />
@@ -760,7 +789,20 @@ export function KnowledgeSearchPanel({
         <HelpTip id="settings.knowledgeSearch" label={t("localModels.search.title")} />
       </h2>
       <p className="muted small">{t("localModels.search.text")}</p>
-      <Field label={t("localModels.search.mode")} hint={t(`localModels.search.modeHint.${mode}`)}>
+      <Field
+        label={t("localModels.search.mode")}
+        hint={t(`localModels.search.modeHint.${mode}`)}
+        action={
+          <DefaultMark
+            setting="knowledge_retrieval"
+            value={settings.knowledge_retrieval}
+            label={t("localModels.search.mode")}
+            disabled={!admin}
+            format={(value) => t(`localModels.search.modes.${value}`)}
+            onReset={(knowledge_retrieval) => onSave({ knowledge_retrieval })}
+          />
+        }
+      >
         <Select
           value={mode}
           disabled={!admin}
@@ -768,7 +810,19 @@ export function KnowledgeSearchPanel({
           options={(["fts", "vector", "hybrid"] as const).map((value) => ({ value, label: t(`localModels.search.modes.${value}`) }))}
         />
       </Field>
-      <Field label={t("localModels.search.embeddingModel")} hint={t("localModels.search.embeddingHint")}>
+      <Field
+        label={t("localModels.search.embeddingModel")}
+        hint={t("localModels.search.embeddingHint")}
+        action={
+          <DefaultMark
+            setting="embedding_model"
+            value={settings.embedding_model}
+            label={t("localModels.search.embeddingModel")}
+            disabled={!admin}
+            onReset={(embedding_model) => onSave({ embedding_model })}
+          />
+        }
+      >
         <Select
           value={settings.embedding_model ?? ""}
           disabled={!admin}

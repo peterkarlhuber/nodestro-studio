@@ -86,7 +86,7 @@
     "sensitiveNote": "Este ejemplo pertenece al ámbito {{field}}. Los agentes ofrecen ayudas de trabajo, no asesoramiento: revisa cada resultado con criterio profesional antes de usarlo.",
     "costNote": "La vista previa y la copia son gratuitas y no llaman a ningún modelo. Solo hay costes cuando ejecutas la copia; solo necesita acceso a los proveedores de sus modelos.",
     "samples": "Archivos de ejemplo",
-    "samplesNote": "Archivos pequeños inventados para probar los campos de archivo. Descárgalos y selecciónalos al ejecutar el flujo de trabajo.",
+    "samplesNote": "Archivos pequeños inventados para probar los campos de archivo. Descárgalos aquí; una copia también los ofrece al ejecutarla.",
     "tests": "Casos de prueba",
     "copyTests": "Añadir los casos de prueba como serie de pruebas",
     "copyTestsNote": "Crea una serie de pruebas con estos casos. No se ejecuta nada, no se crea ninguna programación y no se publica ninguna API.",
@@ -186,5 +186,10 @@
       "structured": "salida estructurada"
     },
     "judge": "Control de calidad (juez): {{model}}"
+  },
+  "origin": {
+    "offlineBadge": "Datos de ejemplo",
+    "offlineTip_one": "Copia del ejemplo «{{example}}»: {{names}} funciona sin conexión con datos de ejemplo. Para datos reales, copia el ejemplo de nuevo y elige un servidor MCP.",
+    "offlineTip_other": "Copia del ejemplo «{{example}}»: {{names}} funcionan sin conexión con datos de ejemplo. Para datos reales, copia el ejemplo de nuevo y elige un servidor MCP."
   }
 }

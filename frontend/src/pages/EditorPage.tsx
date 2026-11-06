@@ -25,6 +25,7 @@ import { Inspector } from "../editor/Inspector";
 import { isTabletEditor, useEditorLayout } from "../editor/layout";
 import { Palette } from "../editor/Palette";
 import { RunDialog } from "../editor/RunDialog";
+import { OfflineBadge } from "../library/exampleOrigin";
 import { PANEL_VARIABLE, PanelSplitter } from "../editor/PanelSplitter";
 import { RunPanel } from "../editor/RunPanel";
 import { useEditor } from "../editor/store";
@@ -433,6 +434,7 @@ export function EditorPage() {
                 {name || t("editor.inspector.workflowTitle")}
               </span>
               <DocLink to="workflows#editor" label={t("editor.page.docs")} />
+              <OfflineBadge origin={workflow.data?.origin} />
             </h1>
             <div className="breadcrumbs">
               <Link to="/">{t("nav.workflows")}</Link> /{" "}
@@ -546,7 +548,14 @@ export function EditorPage() {
       ) : null}
       <Inspector check={check.data} panelRef={inspectorRef} />
       <MountWhenOpened open={runOpen}>
-        <RunDialog open={runOpen} onClose={() => setRunOpen(false)} onStarted={onStarted} save={save} check={check.data} />
+        <RunDialog
+          open={runOpen}
+          onClose={() => setRunOpen(false)}
+          onStarted={onStarted}
+          save={save}
+          check={check.data}
+          origin={workflow.data?.origin}
+        />
       </MountWhenOpened>
       <MountWhenOpened open={apiOpen}>
         <ApiDialog open={apiOpen} onClose={closeApi} workflowId={id} dirty={dirty} save={save} />

@@ -552,6 +552,7 @@ export function Toggle({
   description,
   disabled,
   tip,
+  action,
 }: {
   checked: boolean;
   onChange: (value: boolean) => void;
@@ -559,8 +560,16 @@ export function Toggle({
   description?: ReactNode;
   disabled?: boolean;
   tip?: HelpId;
+  /** Shown under the label (e.g. the settings page's "Changed" mark), never inside it. */
+  action?: ReactNode;
 }) {
   const id = useId();
+  const text = (
+    <label htmlFor={id} className="toggle__label">
+      <span>{label}</span>
+      {description ? <small>{description}</small> : null}
+    </label>
+  );
   return (
     <div className="toggle">
       <button
@@ -574,10 +583,14 @@ export function Toggle({
       >
         <span className="toggle__thumb" />
       </button>
-      <label htmlFor={id} className="toggle__label">
-        <span>{label}</span>
-        {description ? <small>{description}</small> : null}
-      </label>
+      {action ? (
+        <div className="toggle__body">
+          {text}
+          {action}
+        </div>
+      ) : (
+        text
+      )}
       {tip ? <HelpTip id={tip} label={typeof label === "string" ? label : undefined} /> : null}
     </div>
   );
@@ -882,11 +895,14 @@ export function PageHeader({
   crumbs,
   doc,
   documentTitle,
+  badges,
 }: {
   title: string;
   description?: ReactNode;
   actions?: ReactNode;
   crumbs?: ReactNode;
+  /** Shown next to the title, outside the heading (e.g. the sample data badge of an example copy). */
+  badges?: ReactNode;
   /** A documentation chapter ("chapter" or "chapter#section") shown as a help link next to the title. */
   doc?: string;
   /** The name in the browser tab when it should say more than the title (default: the title). */
@@ -900,6 +916,7 @@ export function PageHeader({
         <div className="titlebar__title">
           <h1>{title}</h1>
           {doc ? <DocLink to={doc} label={t("common.docsFor", { title })} /> : null}
+          {badges}
         </div>
         {crumbs ? <div className="breadcrumbs">{crumbs}</div> : null}
         {description ? <p className="titlebar__description">{description}</p> : null}

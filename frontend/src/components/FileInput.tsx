@@ -3,6 +3,8 @@
 //
 // Files are uploaded right away and stored for the run (not in knowledge). The field's value is
 // the list of file ids; refused files stay visible with the reason and never become part of it.
+// A copy of an example offers the example's sample files for the field with one click (`samples`, ST-007): the
+// sample is fetched and then uploaded like a chosen file, with the same checks.
 
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -14,6 +16,7 @@ import {
   File as FileIcon,
   FileSpreadsheet,
   FileText,
+  FlaskConical,
   Folder,
   FolderUp,
   Image as ImageIcon,
@@ -41,7 +44,7 @@ import {
   type TreeNode,
 } from "../lib/files";
 import { formatBytes } from "../lib/format";
-import { Badge, Button, IconButton, Select } from "./ui";
+import { Badge, Button, IconButton, Select, Tooltip } from "./ui";
 
 const GROUP_ICON: Record<FormatGroup, LucideIcon> = {
   text: FileText,
@@ -61,6 +64,14 @@ interface Pending {
 
 export type UploadOrigin = "studio" | "test" | "schedule" | "batch";
 
+/** A file offered as a one-click input (an example's sample file, see library/exampleOrigin.tsx). */
+export interface FileOffer {
+  id: string;
+  fileName: string;
+  description: string;
+  load: () => Promise<File>;
+}
+
 export function FileInput({
   id,
   field,
@@ -69,6 +80,7 @@ export function FileInput({
   onPendingChange,
   origin = "studio",
   invalid,
+  samples,
 }: {
   id: string;
   field: InputField;
@@ -78,6 +90,8 @@ export function FileInput({
   onPendingChange?: (count: number) => void;
   origin?: UploadOrigin;
   invalid?: boolean;
+  /** Files offered with one click (the sample files of the example a copy came from). */
+  samples?: FileOffer[];
 }) {
   const { t } = useTranslation();
   const formats = useInputFormats();
@@ -95,7 +109,11 @@ export function FileInput({
   valueRef.current = value;
   onChangeRef.current = onChange;
 
-  const uploading = pending.filter((item) => item.status === "uploading").length;
+  // The sample being fetched counts as an upload: a run never starts without it.
+  const [sampleBusy, setSampleBusy] = useState<string | null>(null);
+  // Which file of the value each sample became: its button is done while that file is in the field.
+  const [usedSamples, setUsedSamples] = useState<Record<string, string>>({});
+  const uploading = pending.filter((item) => item.status === "uploading").length + (sampleBusy ? 1 : 0);
   const onPendingRef = useRef(onPendingChange);
   onPendingRef.current = onPendingChange;
   useEffect(() => onPendingRef.current?.(uploading), [uploading]);
@@ -104,7 +122,9 @@ export function FileInput({
   const slots = remainingSlots(field, value.length);
   const full = slots === 0;
 
-  async function add(files: { file: File; name: string }[]) {
+  /** Uploads the files; returns the ids of the stored ones. */
+  async function add(files: { file: File; name: string }[]): Promise<string[]> {
+    const added: string[] = [];
     const fresh = files.filter((item) => !(item.name.split("/").pop() ?? "").startsWith("."));
     let free = remainingSlots(field, valueRef.current.length);
     const queue: { file: File; name: string; key: string }[] = [];
@@ -143,6 +163,7 @@ export function FileInput({
         });
         if (result?.file) {
           const stored = result.file;
+          added.push(stored.id);
           setUploaded((current) => ({ ...current, [stored.id]: stored }));
           const next = multiple ? [...valueRef.current.filter((fileId) => fileId !== stored.id), stored.id] : [stored.id];
           valueRef.current = next;
@@ -158,7 +179,23 @@ export function FileInput({
         );
       }
     }
+    return added;
   }
+
+  async function takeSample(sample: FileOffer) {
+    setSampleBusy(sample.id);
+    try {
+      const file = await sample.load();
+      const [stored] = await add([{ file, name: sample.fileName }]);
+      if (stored) setUsedSamples((current) => ({ ...current, [sample.id]: stored }));
+    } catch (error) {
+      const key = `sample-${sample.id}-${Math.random().toString(36).slice(2, 8)}`;
+      setPending((current) => [...current, { key, name: sample.fileName, size: 0, status: "error", problem: codedError(error) }]);
+    } finally {
+      setSampleBusy(null);
+    }
+  }
+  const offered = samples ?? [];
 
   const onDrop = async (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -232,6 +269,29 @@ export function FileInput({
           }}
         />
       </div>
+      {offered.length ? (
+        <div className="upload-samples" role="group" aria-label={t("inputs.samples.label")} data-testid="upload-samples">
+          <span className="upload-samples__label">{t("inputs.samples.label")}</span>
+          {offered.map((sample) => {
+            const used = Boolean(usedSamples[sample.id] && value.includes(usedSamples[sample.id]));
+            return (
+              <Tooltip key={sample.id} content={sample.description || undefined}>
+                <Button
+                  size="sm"
+                  icon={FlaskConical}
+                  // The format list checks the sample like any file: wait for it.
+                  disabled={used || full || !formats.data || (sampleBusy !== null && sampleBusy !== sample.id)}
+                  busy={sampleBusy === sample.id}
+                  onClick={() => void takeSample(sample)}
+                  data-testid={`use-sample-${sample.id}`}
+                >
+                  {used ? t("inputs.samples.used", { name: sample.fileName }) : t("inputs.samples.use", { name: sample.fileName })}
+                </Button>
+              </Tooltip>
+            );
+          })}
+        </div>
+      ) : null}
       {value.length || pending.length ? (
         <ul className="upload-list" aria-label={t("inputs.listLabel")}>
           {value.map((fileId) => (

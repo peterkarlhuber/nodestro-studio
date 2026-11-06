@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -35,7 +36,10 @@ describe("the workspace's budget policy (BUDGET-1)", () => {
 
   it("shows both fields with labels and help for admins, and nothing on older backends", () => {
     const onChange = vi.fn();
-    const view = render(<BudgetPolicyFields form={form({ max_run_budget_usd: "8.00" })} admin onChange={onChange} />);
+    // The "Changed" marks read the settings defaults (ST-059).
+    const view = render(<BudgetPolicyFields form={form({ max_run_budget_usd: "8.00" })} admin onChange={onChange} />, {
+      wrapper: ({ children }) => <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>,
+    });
     expect(screen.getByLabelText("Höchstes Budget pro Lauf (USD)")).toHaveValue("8.00");
     expect(screen.getByLabelText("Frist für Budget-Entscheidungen (Stunden)")).toHaveValue(24);
     expect(screen.getByRole("button", { name: /Höchstes Budget pro Lauf/ })).toBeInTheDocument();
