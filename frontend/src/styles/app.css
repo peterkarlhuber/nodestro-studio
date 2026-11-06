@@ -437,13 +437,6 @@ ol {
   align-items: start;
 }
 
-.settings {
-  display: flex;
-  flex-direction: column;
-  gap: var(--nd-space-4);
-  max-width: 760px;
-}
-
 /* ---- cards and lists ---------------------------------------------------------- */
 
 .card-grid {
@@ -7668,104 +7661,7 @@ ul.gate-report__list > li.gate-report__item {
   }
 }
 
-/* ---- Settings: table of contents and the way back ----------------------------------------------------- */
-
-.settings-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 760px) 220px;
-  gap: var(--nd-space-6);
-  align-items: start;
-}
-
-.settings-nav {
-  position: sticky;
-  top: var(--nd-space-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--nd-space-3);
-  font-size: var(--nd-font-size-sm);
-}
-
-.settings-nav__title,
-.settings-nav__group-title {
-  color: var(--nd-text-muted);
-  font-size: var(--nd-font-size-2xs);
-  font-weight: 650;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.settings-nav__group-title {
-  letter-spacing: 0.04em;
-}
-
-.settings-nav ul {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin: 4px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.settings-nav a {
-  display: block;
-  padding: 4px 10px;
-  border-left: 2px solid var(--nd-border);
-  color: var(--nd-text);
-  text-decoration: none;
-}
-
-.settings-nav a:hover {
-  background: var(--nd-surface-hover);
-}
-
-.settings-nav a[aria-current] {
-  border-left-color: var(--nd-brand);
-  color: var(--nd-brand);
-  font-weight: 600;
-}
-
-.settings-return {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  align-self: flex-start;
-  font-weight: 600;
-}
-
-/* A section reached by a link stays clear of the window edge. */
-.settings > section {
-  scroll-margin-top: var(--nd-space-4);
-}
-
-@media (max-width: 1280px) {
-  .settings-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* Narrower windows: the contents come first, as a compact list of links. */
-  .settings-nav {
-    position: static;
-    order: -1;
-    flex-flow: row wrap;
-    gap: var(--nd-space-2) var(--nd-space-4);
-    max-width: 760px;
-  }
-
-  .settings-nav__title {
-    display: none;
-  }
-
-  .settings-nav ul {
-    flex-flow: row wrap;
-  }
-
-  .settings-nav a {
-    border-left: 0;
-    padding: 2px 6px;
-  }
-}
+/* ---- Settings: layout, table of contents, search and width: see settings.css ---- */
 
 /* ---- Editor on tablets (761-1100 px): the properties lie over the canvas as a drawer (ST-009) ---------- */
 

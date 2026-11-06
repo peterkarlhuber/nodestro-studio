@@ -10,7 +10,7 @@ import { fieldNameProblem } from "../lib/validation";
 
 const FIELD_TYPES: OutputFieldType[] = ["string", "number", "integer", "boolean", "string_list", "number_list"];
 
-function options(t: TFunction, values: readonly string[]) {
+function options(t: TFunction, values: readonly OutputFieldType[]) {
   return values.map((value) => ({ value, label: t(`agent.options.fieldType.${value}`) }));
 }
 

@@ -2,6 +2,16 @@
 
 Questo capitolo descrive tutte le impostazioni, l'installazione e l'avvio di Nodestro e le scorciatoie da tastiera.
 
+## Orientarsi nelle impostazioni {#ueberblick}
+<!-- keywords: impostazioni, ingranaggio, aprire le impostazioni, cercare nelle impostazioni, trovare un’impostazione, larghezza, più largo, ridimensionare, navigazione, avanzate, ctrl+virgola -->
+
+- **Aprire:** l’ingranaggio in alto a destra di ogni pagina, oppure *Ctrl+,* (*⌘,* su Mac). Le impostazioni ricordano da dove vieni: **Indietro** sopra la navigazione (o di nuovo *Ctrl+,*) ti riporta lì. Una pagina con modifiche non salvate, come l’editor dei workflow, chiede prima.
+- **Ricerca:** *Trova un’impostazione …* sopra la navigazione cerca nei nomi, nelle spiegazioni e nei testi di aiuto delle singole impostazioni, nella lingua dell’interfaccia. Le frecce scelgono un risultato, **Invio** ci porta: le parti chiuse si aprono, l’impostazione viene evidenziata e il suo campo riceve il focus.
+- **Navigazione:** l’elenco a destra mostra le sezioni per argomento e segnala quella che stai leggendo. In una finestra stretta diventa una barra sopra il contenuto con la ricerca e *Vai alla sezione*.
+- **Larghezza:** trascina il bordo tra il contenuto e la navigazione per allargare o restringere le impostazioni. Da tastiera, porta il focus sul bordo (Tab) e usa le frecce (con Maiusc a passi più grandi), Home e Fine. Un doppio clic sul bordo o **Larghezza standard** nella navigazione ripristina il valore predefinito. La larghezza viene salvata in questo browser.
+- **Base e avanzate:** le impostazioni correlate stanno insieme sotto un titolo. Le parti segnate come *Avanzate* (per esempio cosa sanno fare i modelli di un endpoint compatibile con OpenAI) restano chiuse finché non ti servono; il loro badge indica quanti valori differiscono dallo standard.
+- **Salvare:** la maggior parte delle impostazioni ha effetto subito. *Modelli e budget* ha un proprio pulsante **Salva**; se lasci la pagina con modifiche non salvate lì, Nodestro chiede prima.
+
 ## Modelli locali {#lokale-modelle}
 <!-- keywords: modello locale, ollama, offline, senza chiave api, qwen, download, consiglio, hardware, gpu, memoria, server dei modelli, mistral, europeo, sforzo di ragionamento -->
 
@@ -12,7 +22,7 @@ Nodestro può far funzionare agenti, assistenti e ricerca nella conoscenza con *
 *Impostazioni → Modelli locali* mostra:
 
 - **Stato:** se il server dei modelli è attivo e chi lo fornisce. Sul desktop Nodestro avvia un proprio server (un processo separato su questo computer, con una propria cartella dei modelli); in Nodestro Local Docker è un container separato; su un server lo fornisce il gestore. Un Ollama che usi già viene adoperato solo se salvi il suo indirizzo per il provider Ollama.
-- **Ambiente:** se manca, **Scarica e installa** recupera una volta la versione fissata e ne verifica lo SHA-256. Senza internet, installalo dal suo archivio di rilascio (vedi [Importazione offline](/docs/einstellungen#offline-import)).
+- **Ambiente:** se manca, **Scarica e installa** recupera una volta la versione fissata e ne verifica lo SHA-256. Senza internet, installalo dal suo archivio di rilascio (vedi [Importazione offline](/docs/einstellungen#offline-import)). Ogni passo e il suo avanzamento vengono mostrati; vedi [Configurazione e download](/docs/einstellungen#lokale-einrichtung).
 - **Consigliati per questo computer:** un modello per compito (smistare, scrivere, agenti con strumenti, analisi, assistente, ricerca semantica) in base alle esigenze del compito, alla memoria di questo computer e ai modelli installati. Un modello installato sufficiente viene prima; *Adatto* e *Limitato* significano che un modello più grande lo farebbe meglio; il motivo è indicato sotto il modello. I suggerimenti non cambiano mai un agente: il suo modello lo scegli nell’editor.
 - **Modelli:** i modelli proposti con dimensione del download, memoria necessaria e licenza; **Verificato** significa che la versione installata è quella verificata da Nodestro.
 
@@ -21,6 +31,35 @@ Nodestro può far funzionare agenti, assistenti e ricerca nella conoscenza con *
 **Sforzo di ragionamento:** i modelli locali in grado di «pensare» lo fanno senza limite a partire dallo sforzo *Medio*, e il ragionamento conta nella lunghezza massima dell’output. Su un computer senza scheda grafica un modello piccolo può impiegarci molti minuti. Per i passaggi rapidi (ordinare, estrarre, brevi risposte strutturate) scegli *Basso*: il modello risponde allora senza pensare. Il server di modelli avviato da Nodestro dà a ogni modello 32.768 token di contesto per prompt, ragionamento e risposta insieme. Avvia un Ollama gestito da te con `OLLAMA_CONTEXT_LENGTH=32768`; il suo valore predefinito di 4.096 token è troppo piccolo per gli agenti.
 
 Costi: i modelli locali **non hanno fatturazione API esterna**. Nodestro non registra i costi di esercizio locali (hardware, energia), quindi le esecuzioni mostrano «locale, nessuna fatturazione API» invece di un totale di 0, e le esecuzioni miste aggiungono al costo il numero di richieste locali.
+
+## Configurazione e download: avanzamento ed errori {#lokale-einrichtung}
+<!-- keywords: configurare, configurazione, installare, avanzamento, passo, avanzamento del download, percentuale, velocità di trasferimento, tempo rimanente, bloccato, annullare, riprendere, continuare, riprovare, disco pieno, spazio insufficiente, errore di rete, proxy, interrotto, ollama personale -->
+
+**Scarica e installa** (e **Avvia**) configurano il server dei modelli come un’unica attività con passi che seguono ciò che Nodestro fa davvero: *controlla il sistema e l’installazione esistente*, *controlla i requisiti* (modalità offline rigorosa, una cartella scrivibile, spazio libero), *scarica Ollama*, *verifica il download (SHA-256)*, *installa Ollama*, *configura il server* (cartella dei modelli, finestra di contesto), *avvia il server*, *controlla che il server risponda*, *rileva la GPU e l’hardware* e *server dei modelli pronto*. Un passo non necessario è indicato come *non necessario* con il motivo, per esempio quando il runtime fa parte dell’app desktop o è già installato. Il passo in corso indica «Passo 3 di 10»; sotto, «Nessuna azione necessaria» significa che puoi continuare a lavorare mentre l’operazione prosegue in background. In Nodestro Local Docker e con il tuo Ollama, **Controlla il server dei modelli** verifica solo che il server risponda e quale hardware usa: Nodestro non avvia, arresta né modifica mai un server del genere. Un Ollama che gestisci tu su questo computer resta intatto anche mentre Nodestro configura il proprio server accanto.
+
+I download dei modelli seguono i passi di Ollama: *controlla lo spazio libero*, *recupera l’elenco dei file del modello*, *scarica i file del modello*, *verifica i file (SHA-256)* e *completa l’installazione*. Ogni modello ha la propria voce in **Attività**, e la sua riga nell’elenco dei modelli mostra il passo in corso al posto del pulsante di download. Più modelli possono scaricarsi contemporaneamente; lo stesso modello si scarica una sola volta.
+
+Ciò che mostra l’avanzamento è misurato, mai stimato:
+
+- **Una percentuale** solo per un passo che conta i byte (un download, il checksum del runtime). Ogni altro passo in corso ha una barra in movimento senza valore.
+- **Quantità di dati:** «400 MB di 1,5 GB». Ollama indica ogni file di un modello solo quando lo inizia, quindi il download di un modello mostra il file corrente («File 2: 225 MB di 525 MB») e quanto scaricato finora; la dimensione totale è nota non appena Ollama verifica i file.
+- **Velocità di trasferimento** dopo alcuni secondi di misurazione, e **tempo rimanente** solo finché la velocità è costante (per un modello: il tempo del file corrente). Se per un po’ non arrivano dati, la voce lo segnala: il download riprova da solo per un po’ prima di fallire.
+- **Ripreso:** ciò che ha lasciato un tentativo precedente interrotto (un download annullato, una connessione persa, un’app chiusa) viene mantenuto e contato; **Continua** o **Riprova** scarica solo il resto.
+
+Se qualcosa non riesce, la voce indica **Serve un intervento**, cosa è successo e cosa fare: controllare la connessione a internet o il proxy, liberare spazio o scegliere un’altra [cartella dei modelli](/docs/einstellungen#offline-import), installare da un archivio di rilascio nella modalità offline rigorosa e così via. Prima di un download Nodestro confronta lo spazio libero della cartella dei modelli con la dimensione del modello e rifiuta subito se non basta. **Dettagli tecnici** mostra i dettagli dei passi (percorsi, versioni, indirizzi), i file di un modello e un registro.
+
+Le attività le conserva Nodestro, non la pagina: dopo aver ricaricato la pagina, la configurazione e i download in corso riappaiono con il loro avanzamento. Se Nodestro viene chiuso mentre un’attività è in corso, la volta successiva compare come interrotta; **Continua** la riprende da dove si era fermata. Si esegue una sola configurazione alla volta, anche tra più finestre di Nodestro.
+
+## Modello richiesto non installato {#modell-fehlt}
+<!-- keywords: modello mancante, modello non installato, modello richiesto, scaricare modello, scegliere un altro modello, model not found, continuare, server non raggiungibile, permesso, amministratore, non presidiato, pianificazione, correggere -->
+
+Quando l’Architetto IA, l’assistente, la progettazione o il test di un agente, un’esecuzione o la ricerca nella conoscenza hanno bisogno di un modello locale che ora non si può usare, Nodestro non avvia l’azione e apre una finestra di dialogo. Ti dice **perché**: il modello non è installato (con la dimensione del download, lo spazio libero nella [cartella dei modelli](/docs/einstellungen#offline-import) e la memoria necessaria), i modelli locali non sono ancora configurati, il server dei modelli non si avvia o non risponde, il disco è troppo pieno, il modello non sa fare ciò che serve al passaggio (chiamate agli strumenti, risultati strutturati, immagini, embedding), probabilmente è troppo grande per questo computer, oppure il nome non è un modello locale. Dice anche **dove** va il modello: su questo computer, nel container Local Docker, su un server dei modelli che hai configurato o sul server Nodestro.
+
+La finestra offre solo ciò che puoi fare qui: **Scarica modello** (dopo un’interruzione, **Riprendi download**), **Configura modelli locali**, **Controlla di nuovo**, **Scegli un altro modello** o **Copia nome del modello** per un amministratore. Senza il permesso di installare, su un server Nodestro (lì installa il gestore) e nella modalità offline rigorosa non si scarica nulla, e la finestra lo dice. Se lo stesso modello si sta già scaricando, per esempio in un’altra finestra, la finestra segue quel download; un secondo non parte mai.
+
+I tuoi dati restano dove sono: la descrizione per l’Architetto IA, il messaggio con i suoi file nell’assistente, l’input del test o gli input dell’esecuzione. Finito il download, Nodestro controlla che il modello ci sia davvero e sappia fare il passaggio; poi **Continua** avvia l’azione una volta con gli stessi dati. Se spunti **Continua automaticamente quando il modello è pronto**, prosegue da sola, una volta. Puoi chiudere la finestra mentre il download è in corso: continua in **Attività**. **Scegli un altro modello** elenca solo modelli pronti che sanno fare il passaggio, locali e nel cloud (che possono avere un costo); la scelta vale per questa sola azione e non cambia le tue impostazioni.
+
+Pianificazioni, esecuzioni in batch e API pubblicate non scaricano mai nulla. Un’esecuzione che non può partire segnala il modello mancante (per esempio nell’ultima esecuzione della pianificazione) con **Risolvi**, che apre la stessa finestra senza proseguire nulla da sola.
 
 ## Questo computer, finestra di contesto e velocità {#lokale-hardware}
 <!-- keywords: hardware, gpu, solo cpu, memoria, finestra di contesto, ollama_context_length, velocità, token al secondo, misurare, modalità risparmio cpu, ragionamento ridotto -->
@@ -154,6 +193,17 @@ Il **budget predefinito per esecuzione** (inizialmente 2 USD) vale per tutti i w
 
 Gli amministratori impostano anche il **Budget massimo per esecuzione** (vuoto: nessun tetto): nessuna esecuzione può partire con un limite più alto né essere aumentata oltre. La **Scadenza delle decisioni sul budget** (da 1 a 720 ore, inizialmente 24) indica quanto un’esecuzione in pausa attende una [decisione sul budget](/docs/workflows#budget-freigabe) prima di fallire. Chi può decidere è spiegato in [Chi può decidere](/docs/workflows#budget-rechte).
 
+## Limiti di output dei modelli {#ausgabelimits}
+<!-- keywords: limite di output, token max., max_tokens, troncato, limite dell’architetto, finestra di contesto -->
+
+I passaggi di IA propri di Nodestro (l’architetto dei workflow, gli assistenti, le domande su un’esecuzione, le decisioni dell’orchestratore e il controllo qualità) non hanno impostazioni di agente proprie. In **Limiti di output dei modelli** imposti con quanti token può rispondere ogni passaggio; un campo vuoto usa il valore predefinito integrato (per esempio 32.000 per il piano del workflow dell’architetto e 8.000 per la sua analisi). Gli agenti mantengono i propri *Token max.* nell’[editor degli agenti](/docs/agenten#limits).
+
+Il valore inviato deriva da tre livelli: la tua impostazione, altrimenti il valore predefinito, al massimo l’output massimo documentato del modello (o metà della sua finestra di contesto per un modello locale il cui massimo non è noto). La tabella mostra il valore inviato al modello dell’assistente e indica quando è stato ridotto; niente viene accorciato in silenzio.
+
+Il limite include il ragionamento del modello. Un limite più alto consente risposte più lunghe, ma non aggira mai un budget: prima di ogni richiesta, il controllo dei costi riserva esattamente questo valore.
+
+**Richiedi di nuovo le risposte troncate:** quando una risposta dell’architetto dei workflow raggiunge il suo limite, viene richiesta una volta con il limite raddoppiato, al massimo il *Limite massimo per un nuovo tentativo* (inizialmente 64.000) e il massimo del modello. Il nuovo tentativo viene inviato solo se il suo costo completo rientra in ciò che resta del budget del lavoro. Altrimenti, o con il nuovo tentativo disattivato, il lavoro si ferma con un messaggio che indica il passaggio e il suo limite.
+
 ## Sandbox {#sandbox}
 <!-- keywords: scegliere la sandbox, automatica, docker, processo python, docker disponibile, sandbox integrata, sandbox linux, macos, windows, bloccato, sperimentale -->
 
@@ -214,6 +264,36 @@ La lingua riguarda solo l'**interfaccia**: menu, avvisi, messaggi di errore, que
 <!-- keywords: tema, scuro, chiaro, modalità scura, modalità chiara, schema di colori, design, midnight citron -->
 
 In alto a destra passi da **Scuro** a **Chiaro**. La scelta viene salvata nel browser. Entrambe le varianti seguono il design system *Midnight Citron*. Sugli schermi stretti la barra laterale è nascosta: il pulsante del menu in alto a sinistra (**Mostra tutte le pagine**) la apre come pannello ed **Esc** la richiude.
+
+## Visualizzazione del ragionamento {#denken-anzeige}
+<!-- keywords: ragionamento, thinking, reasoning, riepilogo, pensiero, in diretta, stato, non trasmesso -->
+
+Mentre un modello lavora, Nodestro mostra ciò che il suo provider trasmette del ragionamento: nell’assistente, nella chat con il team leader di un’esecuzione, nelle esecuzioni dei workflow, nell’Architetto di workflow e nel test dell’agente. **Nodestro non scrive, completa o riformula mai da sé il ragionamento.** Se un provider tiene per sé il ragionamento, vedi solo che il modello sta ragionando, e perché non c’è testo.
+
+La visualizzazione separa sempre il ragionamento dalla risposta (cornice tratteggiata, etichetta propria) e indica uno di questi stati:
+
+| Stato | Significato |
+|---|---|
+| *Sta ragionando…* | È in corso una fase di ragionamento; non è (ancora) arrivato testo, oppure il testo è nascosto. |
+| *Testo del ragionamento* | Il ragionamento del modello così come è stato generato (modelli aperti, ad es. tramite Ollama o vLLM). |
+| *Riepilogo del ragionamento* | Un riepilogo scritto dal provider di un ragionamento che non espone (OpenAI, Gemini, Claude). |
+| *Ragionamento non trasmesso* | Il modello ha ragionato, ma il provider non ha inviato testo (cifrato, omesso o non richiesto). |
+| *Ragionamento non esposto* | Il modello non ragiona, oppure il suo provider non invia mai il ragionamento. |
+
+**Visualizzazione in questo browser** (sezione *Visualizzazione del ragionamento*): *Mostra in diretta* apre il testo mentre arriva, *Compresso* (predefinito) mostra l’attività e lascia il testo a un clic, *Solo stato* non mostra mai il testo. L’assistente e la chat con il team leader hanno una propria scelta per conversazione (**Ragionamento** sotto l’inserimento o l’introduzione); *Predefinito* segue la scelta globale. La scelta resta in questo browser e non modifica alcun workflow né alcuna conversazione.
+
+**Mostrare non è attivare.** Se e quanto un modello ragiona si imposta sull’agente ([Ragionamento e impegno](/docs/agenten#denken)). Alcuni provider inviano testo solo su richiesta:
+
+| Provider | Cosa arriva in diretta | Come ottenere il testo |
+|---|---|---|
+| Anthropic (Claude 4 e successivi) | riepilogo | l’opzione dell’agente per mostrare il ragionamento (*Mostra in sintesi*) |
+| OpenAI (modelli che ragionano) | riepilogo; il ragionamento stesso mai | **Richiedi riepiloghi del ragionamento** (amministratori; OpenAI può richiedere un’organizzazione verificata) |
+| OpenAI GPT-4o, GPT-4.1 | niente: non ragionano | – |
+| Gemini 2.5 e successivi | riepilogo (riepiloghi dei pensieri) | **Richiedi riepiloghi del ragionamento** |
+| Amazon Bedrock | Claude: riepilogo; altri modelli che ragionano: testo del ragionamento quando il modello lo invia | le opzioni di richiesta dell’agente |
+| Ollama, vLLM, server compatibili con OpenAI | testo del ragionamento quando il server lo separa | la configurazione del server (ad es. un parser del ragionamento) |
+
+Richiedere i riepiloghi non cambia alcuna risposta né alcun costo: il provider fattura i token di ragionamento sia che il testo venga trasmesso sia che no. Le opzioni di ragionamento dell’agente indicano ciò che trasmette il suo modello (*Ragionamento in diretta: …*).
 
 ## Backup e ripristino {#backup}
 <!-- keywords: backup, copia di sicurezza, ripristinare, esportare, zip, trasloco, salvataggio dati -->

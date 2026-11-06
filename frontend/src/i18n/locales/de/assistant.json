@@ -36,14 +36,16 @@
     "docs_search": "Dokumentation wird durchsucht: {{detail}}",
     "docs_read": "Abschnitte werden gelesen: {{detail}}",
     "generate": "Antwort wird erstellt …",
-    "handover": "Übergabe wird vorbereitet …"
+    "handover": "Übergabe wird vorbereitet …",
+    "files": "Dateien werden gelesen: {{detail}}"
   },
   "done": {
     "context": "Anhänge verarbeitet: {{detail}}",
     "docs_search": "Dokumentation durchsucht: {{detail}}",
     "docs_read": "Abschnitte gelesen: {{detail}}",
     "generate": "Antwort erstellt",
-    "handover": "Übergabe vorbereitet"
+    "handover": "Übergabe vorbereitet",
+    "files": "Dateien gelesen: {{detail}}"
   },
   "message": {
     "sentWith": "Gesendet mit",

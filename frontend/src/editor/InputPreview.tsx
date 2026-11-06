@@ -84,7 +84,10 @@ export function InputPreview({ node }: { node: WorkflowNode }) {
               </ul>
             ) : null}
             {data.placeholders
-              .filter((item) => item.status === "not_connected" || item.status === "unknown")
+              .filter(
+                (item): item is typeof item & { status: "not_connected" | "unknown" } =>
+                  item.status === "not_connected" || item.status === "unknown",
+              )
               .map((item) => (
                 <Callout key={item.name} tone="warning">
                   {t(`preview.placeholder.${item.status}`, { name: item.name })}

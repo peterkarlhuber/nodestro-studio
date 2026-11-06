@@ -25,6 +25,7 @@ function answer(): ChatMessage {
     status: "streaming",
     error: null,
     context: [],
+    files: [],
     sources: [],
     handovers: [],
     steps: [],
@@ -50,6 +51,7 @@ function conversation(attachments: Partial<Attachment>[] = []): Conversation {
     messages: 0,
     history: [],
     streaming: null,
+    file_states: [],
     attachment_states: attachments.map((item, index) => ({
       id: `att_${index}`,
       kind: "workflow",

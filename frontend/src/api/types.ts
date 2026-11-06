@@ -1730,12 +1730,14 @@ export interface ArchitectRequest {
   skip_questions?: boolean;
   generate_tools?: boolean;
   budget_usd?: number | null;
+  /** Another ready model for this job only (missing local model dialog); the settings stay as they are. */
+  model?: string | null;
 }
 
 export interface ArchitectEvent {
   seq: number;
   job_id: string;
-  type: "phase" | "log" | "graph" | "usage" | "finished";
+  type: "phase" | "log" | "graph" | "usage" | "thinking" | "thinking_status" | "finished";
   phase: ArchitectPhase | null;
   code: string | null;
   params: Record<string, unknown>;
@@ -2040,7 +2042,7 @@ export interface Handover {
   variant: AttachmentVariant | null;
 }
 
-export type AssistantStepKind = "context" | "docs_search" | "docs_read" | "generate" | "handover";
+export type AssistantStepKind = "context" | "files" | "docs_search" | "docs_read" | "generate" | "handover";
 
 export interface AssistantStep {
   kind: AssistantStepKind;
@@ -2059,6 +2061,8 @@ export interface ChatMessage {
   status: ChatStatus;
   error: Problem | null;
   context: ContextRef[];
+  /** User messages: the files sent with it and how the model received them. */
+  files: SentFile[];
   sources: DocSource[];
   handovers: Handover[];
   steps: AssistantStep[];
@@ -2080,6 +2084,7 @@ export interface ConversationSummary {
   messages: number;
   attachments: number;
   cost_usd: number | null;
+  files: number;
 }
 
 export interface Conversation {
@@ -2091,6 +2096,8 @@ export interface Conversation {
   usage: Usage;
   messages: number;
   attachment_states: Attachment[];
+  /** The user's own files of this conversation, with how the current model would receive each. */
+  file_states: AssistantFile[];
   history: ChatMessage[];
   streaming: string | null;
 }
@@ -2098,7 +2105,7 @@ export interface Conversation {
 export interface ReplyEvent {
   seq: number;
   message_id: string;
-  type: "step" | "delta" | "source" | "handover" | "usage" | "finished";
+  type: "step" | "delta" | "thinking" | "thinking_status" | "source" | "handover" | "usage" | "finished";
   text: string;
   data: Record<string, unknown>;
 }
@@ -3402,4 +3409,242 @@ export interface KnowledgeConfig {
 export interface SearchHit {
   /** The hit's rank per method (fts, vector) before they were fused. */
   ranks?: Record<string, number>;
+}
+
+// --- att ---
+// Files the user attaches to a Nodestro Assistant conversation (nodestro_api.assistant_files).
+
+/** How a file reaches the model: natively (document, image), as extracted text, as an overview, or not at all. */
+export type FileDeliveryMode = "text" | "document" | "image" | "ocr_text" | "overview" | "unavailable";
+
+export interface AssistantFile {
+  id: string;
+  name: string;
+  format: string;
+  group: FormatGroup;
+  media_type: string;
+  size: number;
+  info: Record<string, unknown>;
+  notes: string[];
+  outline: string;
+  chars: number;
+  added_at: string;
+  /** When it was last sent with a message; null: it waits for the next message. */
+  sent_at: string | null;
+  mode: FileDeliveryMode;
+  mode_notes: string[];
+  knowledge_ids: string[];
+}
+
+export interface SentFile {
+  file_id: string;
+  name: string;
+  format: string | null;
+  group: FormatGroup | null;
+  size: number;
+  /** null until the answer started. */
+  mode: FileDeliveryMode | null;
+  notes: string[];
+  chars: number;
+}
+
+export interface AssistantFileUpload {
+  name: string;
+  file: AssistantFile | null;
+  problem: Problem | null;
+}
+
+export interface AssistantFileSupport {
+  model: string;
+  max_file_mb: number;
+  max_files_per_message: number;
+  max_files_per_conversation: number;
+  images: boolean;
+  pdfs: boolean;
+  formats: FileFormatInfo[];
+}
+
+// --- params ---
+
+/** The operations of Nodestro's own AI requests that have a configurable output limit (Settings > Model output limits). */
+export type OutputLimitOperation =
+  | "architect_analysis"
+  | "architect_plan"
+  | "architect_agent"
+  | "architect_repair"
+  | "assistant_chat"
+  | "agent_design"
+  | "memory_proposal"
+  | "api_guide"
+  | "run_chat"
+  | "orchestrator"
+  | "quality_judge"
+  | "tool_generation";
+
+export interface Settings {
+  /** Workspace overrides of the output limits (tokens) of Nodestro's own operations; missing: the default applies. A
+   * change sends 0 to remove an override. */
+  output_limits?: Partial<Record<OutputLimitOperation, number>>;
+  /** The built-in output limit of each operation. */
+  output_limit_defaults?: Record<OutputLimitOperation, number>;
+  /** Whether the Workflow Architect asks again with a higher limit when an answer was cut off. */
+  architect_retry_truncated?: boolean;
+  /** The highest output limit such a retry may use. */
+  architect_retry_max_tokens?: number;
+}
+
+/** Declared token limits of an OpenAI-compatible endpoint's models (used only where nothing is documented). */
+export interface DeclaredModelLimits {
+  max_output_tokens?: number;
+  context_window?: number;
+}
+
+export interface ProviderStatus {
+  limits?: DeclaredModelLimits | null;
+}
+
+export interface ProviderSettingsIn {
+  /** Declared limits; an empty object removes them. */
+  limits?: DeclaredModelLimits | null;
+}
+
+export interface AgentConfig {
+  /** Gemini 2.5: the thinking token budget (0 turns thinking off where the model allows it); null: the model's default. */
+  thinking_budget?: number | null;
+}
+
+/** Whether an agent option can be used with a model; ``reason`` is a code (provider, model, automatic, not_mapped, unknown). */
+export interface OptionSupport {
+  available: boolean;
+  reason: string | null;
+  values: string[] | null;
+}
+
+/** A provider-native tool (run by the provider) and whether this model can use it. */
+export interface NativeToolSupport {
+  key: string;
+  available: boolean;
+  /** provider, not_integrated (fees not priced yet) or capability. */
+  reason: string | null;
+}
+
+export interface ModelLimitsInfo {
+  context_window: number | null;
+  max_output_tokens: number | null;
+  efforts: string[] | null;
+  thinking_modes: string[] | null;
+  thinking_budget: boolean | null;
+  /** documented, declared or unknown. */
+  source: string;
+}
+
+/** ``GET /api/models/profile``: capabilities, token limits and model-dependent agent options of one model. */
+export interface ModelProfile {
+  model: string;
+  provider: string | null;
+  /** Why the id cannot be used (an error code), else null. */
+  error: string | null;
+  capabilities: Record<string, CapabilityState>;
+  reasons: Record<string, string>;
+  limits: ModelLimitsInfo;
+  /** The highest max_tokens an agent of this model may use. */
+  max_tokens_limit: number;
+  options: Record<"thinking" | "thinking_display" | "thinking_budget" | "cache_control" | "cache_ttl" | "fallbacks", OptionSupport>;
+  native_tools: NativeToolSupport[];
+}
+
+// --- think ---
+// Live reasoning (thinking and reasoning summaries) as the provider transmits it; see components/ReasoningView.tsx.
+
+/** "thinking": the model's reasoning text as generated; "summary": the provider's summary of it. */
+export type ReasoningKind = "thinking" | "summary";
+
+/** The reasoning of one answer or step as it arrived (``nodestro_runtime.reasoning.ReasoningTrace``). */
+export interface ReasoningTrace {
+  text: string;
+  kind: ReasoningKind | null;
+  /** Reasoning phases the provider's stream marked, with or without text. */
+  phases: number;
+  /** A phase arrived only encrypted or omitted: the model reasoned, there is no text to show. */
+  redacted: boolean;
+  /** A phase is open right now. */
+  active: boolean;
+}
+
+/** What a model's stream transmits of its reasoning in this workspace (``GET /api/models/capabilities``). */
+export interface ReasoningStreamInfo {
+  text: ReasoningKind | "none" | "unknown";
+  /** Whether the stream marks a reasoning phase even without text. */
+  status: boolean;
+  /** "reasoning_summary" (OpenAI), "include_thoughts" (Gemini), "thinking_display" (Anthropic, per agent). */
+  request_option: string | null;
+  /** Whether the workspace asks for the summaries (setting reasoning_summaries); null where no request applies. */
+  requested: boolean | null;
+  /** Why no text is transmitted (English), when ``text`` is "none". */
+  reason: string;
+}
+
+export interface ModelCapabilities {
+  reasoning?: ReasoningStreamInfo | null;
+}
+
+export interface NodeRun {
+  thinking_kind?: ReasoningKind | null;
+  thinking_phases?: number;
+  thinking_redacted?: boolean;
+  /** Client only: a reasoning phase is open now (from the live ``thinking_status`` events). */
+  thinking_active?: boolean;
+}
+
+export interface ChatMessage {
+  reasoning?: ReasoningTrace | null;
+}
+
+export interface AgentTestResult {
+  reasoning?: ReasoningTrace;
+}
+
+/** The reasoning of one request of an architect job; ``step``: analysis, plan, agent_revision or repair. */
+export interface ArchitectReasoning extends ReasoningTrace {
+  step: string;
+}
+
+export interface ArchitectJob {
+  reasoning?: ArchitectReasoning[];
+}
+
+export interface RunMessage {
+  reasoning?: ReasoningTrace | null;
+}
+
+/** An answer of the live run chat being written: its reasoning and text so far. */
+export interface LiveAnswer {
+  question_id: string;
+  run_id: string;
+  reasoning: ReasoningTrace;
+  text: string;
+}
+
+export interface RunChatView {
+  answering?: LiveAnswer[];
+}
+
+export interface Settings {
+  /** Ask OpenAI and Gemini for reasoning summaries (they send them only on request). */
+  reasoning_summaries?: boolean;
+}
+
+// --- pubs ---
+/** One publication on the Publications page (GET /api/publication-overview, read only). */
+export interface PublicationOverviewItem extends PublicationListItem {
+  /** The workflow's current name; null when the workflow no longer exists. */
+  workflow_name: string | null;
+  created_at: string;
+  updated_at: string;
+  /** The saved workflow version of the active release. */
+  active_version: number | null;
+  /** When the active release was published. */
+  published_at: string | null;
+  /** The publication's exports, newest first. */
+  exports: ExportRecord[];
 }

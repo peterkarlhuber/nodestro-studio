@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 
 import type { CheckIssue, ConfigIssue, WorkflowCheck } from "../api/types";
 import { Button } from "../components/ui";
+import { problemModel } from "../api/modelReadiness";
 import { ProblemText, SandboxSetupLink, needsSandboxSetup } from "../lib/errors";
+import { ModelFixButton } from "../missingModel/ModelFixButton";
 import { useEditor } from "./store";
 
 export interface Finding {
@@ -142,6 +144,11 @@ export function CheckList({
               <span className="check-list__item">{content}</span>
             )}
             {fix ? <EffortFix nodeId={fix} /> : null}
+            {problemModel(finding.item) ? (
+              <div className="check-list__fix small">
+                <ModelFixButton item={finding.item} />
+              </div>
+            ) : null}
             {needsSandboxSetup(finding.item) ? (
               <div className="check-list__fix small">
                 <SandboxSetupLink item={finding.item} />

@@ -1,0 +1,54 @@
+{
+  "status": {
+    "active": "Réflexion…",
+    "done": "Réflexion terminée"
+  },
+  "hiddenByPreference": "Texte masqué (affichage : état seulement)",
+  "state": {
+    "text": "Texte de réflexion",
+    "summary": "Résumé de la réflexion",
+    "notTransmitted": "Réflexion non transmise",
+    "notExposed": "Réflexion non exposée"
+  },
+  "why": {
+    "redacted": "Le fournisseur a envoyé cette réflexion uniquement chiffrée ou l’a omise : il n’y a aucun texte à afficher.",
+    "thinkingDisplay": "L’affichage de la réflexion de l’agent omet le texte. Choisissez « Afficher en résumé » dans les options de réflexion de l’agent pour le recevoir.",
+    "notRequested": "Le fournisseur n’envoie des résumés de la réflexion que sur demande. Un administrateur peut activer « Demander des résumés de la réflexion » dans les paramètres.",
+    "notExposed": "Ce modèle ne réfléchit pas, ou son fournisseur n’envoie jamais sa réflexion. Nodestro n’invente jamais de texte de réflexion.",
+    "noText": "Le fournisseur a signalé une phase de réflexion mais n’a envoyé aucun texte."
+  },
+  "source": {
+    "text": "Envoyé par le modèle pendant sa réflexion. Ne fait pas partie de la réponse.",
+    "summary": "Un résumé rédigé par le fournisseur d’une réflexion qu’il n’expose pas. Ne fait pas partie de la réponse."
+  },
+  "display": {
+    "label": "Réflexion",
+    "live": "Afficher en direct",
+    "collapsed": "Replié",
+    "status": "État seulement",
+    "default": "Par défaut ({{value}})"
+  },
+  "answering": "Réponse en cours…",
+  "steps": {
+    "analysis": "Réflexion sur les besoins",
+    "plan": "Réflexion sur la planification",
+    "agent_revision": "Réflexion sur les agents",
+    "repair": "Réflexion sur la réparation"
+  },
+  "settings": {
+    "title": "Affichage de la réflexion",
+    "intro": "Comment la réflexion des modèles s’affiche pendant qu’ils travaillent. Seul ce que le fournisseur envoie est affiché ; Nodestro n’écrit jamais de texte de réflexion lui-même.",
+    "display": "Affichage dans ce navigateur",
+    "displayHint": "S’applique à l’assistant, au chat d’exécution, aux exécutions de workflows, à l’Architecte de workflows et au test d’agent. Chaque conversation peut choisir son propre affichage.",
+    "summaries": "Demander des résumés de la réflexion",
+    "summariesHint": "Demande à OpenAI et Gemini des résumés de la réflexion des modèles qui réfléchissent. Ne change aucune réponse ni aucun coût ; OpenAI peut exiger une organisation vérifiée. Les modèles Anthropic suivent l’affichage de la réflexion de l’agent.",
+    "adminOnly": "Seuls les administrateurs peuvent modifier ce paramètre."
+  },
+  "model": {
+    "summary": "Réflexion en direct : le fournisseur de ce modèle envoie des résumés de la réflexion.",
+    "summaryNotRequested": "Réflexion en direct : le fournisseur de ce modèle n’envoie des résumés que si l’espace de travail les demande (paramètres).",
+    "thinking": "Réflexion en direct : ce modèle envoie son texte de réflexion.",
+    "none": "Réflexion en direct : ce modèle n’envoie aucune réflexion.",
+    "unknown": "Réflexion en direct : l’envoi de la réflexion dépend de la configuration du serveur."
+  }
+}

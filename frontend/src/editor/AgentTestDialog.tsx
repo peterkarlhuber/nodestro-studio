@@ -14,6 +14,7 @@ import { Badge, Button, Callout, Field, Modal, Stat, TextArea, Toggle } from "..
 import { ErrorText } from "../lib/errors";
 import { formatDuration, formatPrice, formatTokens } from "../lib/format";
 import { findModel, missingProviders } from "../lib/providers";
+import { withLocalModel } from "../missingModel/store";
 import { NodeRunDetails } from "./RunDetails";
 import { useEditor } from "./store";
 import { usageCost } from "../lib/pricing";
@@ -25,7 +26,11 @@ export function asNodeRun(result: AgentTestResult): NodeRun {
     prompt: result.prompt,
     output: result.output,
     text: result.text,
-    thinking: "",
+    // The test answers at once: its reasoning is shown with the result (the same fields as a step of a run).
+    thinking: result.reasoning?.text ?? "",
+    thinking_kind: result.reasoning?.kind ?? null,
+    thinking_phases: result.reasoning?.phases ?? 0,
+    thinking_redacted: result.reasoning?.redacted ?? false,
     error: result.error,
     error_code: result.error_code,
     error_params: result.error_params,
@@ -55,7 +60,17 @@ export function AgentTestDialog({
   const settings = useSettings();
   const [input, setInput] = useState(defaultInput);
   const [raw, setRaw] = useState(false);
-  const test = useMutation({ mutationFn: () => api.testAgent(agent, input, raw, useEditor.getState().workflowId ?? undefined) });
+  const test = useMutation({
+    mutationFn: async () => {
+      const workflowId = useEditor.getState().workflowId ?? undefined;
+      // A local model that is not ready: the test input stays; the test runs once when the model is ready, or with
+      // the model chosen for this test (the saved agent keeps its model).
+      return withLocalModel((model) => api.testAgent(model ? { ...agent, model } : agent, input, raw, workflowId), {
+        action: "agent_test",
+        capabilities: agent.tools.length ? ["tools"] : [],
+      });
+    },
+  });
   useEffect(() => {
     if (open) {
       setInput(defaultInput);

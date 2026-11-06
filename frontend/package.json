@@ -15,6 +15,7 @@
     "e2e:architect": "node e2e/architect.mjs",
     "e2e:python": "node e2e/python.mjs",
     "e2e:assistant": "node e2e/assistant.mjs",
+    "e2e:reasoning": "node e2e/reasoning.mjs",
     "e2e:flow": "node e2e/flow.mjs",
     "e2e:panels": "node e2e/panels.mjs",
     "e2e:api": "node e2e/api.mjs",
@@ -26,6 +27,9 @@
     "e2e:journeys": "node e2e/journeys.mjs",
     "e2e:welcome": "node e2e/welcome.mjs",
     "e2e:a11y": "node e2e/a11y.mjs",
+    "e2e:settings-ui": "node e2e/settings-ui.mjs",
+    "e2e:publications": "node e2e/publications.mjs",
+    "e2e:missing-model": "node e2e/missingModel.mjs",
     "perf:editor": "node e2e/perf-editor.mjs"
   },
   "dependencies": {

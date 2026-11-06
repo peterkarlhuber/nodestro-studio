@@ -566,7 +566,20 @@ export const useEditor = create<EditorState>((set, get) => {
           if (node) node.text = (node.text ?? "") + String(data.delta ?? "");
           break;
         case "thinking":
-          if (node) node.thinking = (node.thinking ?? "") + String(data.delta ?? "");
+          if (node) {
+            node.thinking = (node.thinking ?? "") + String(data.delta ?? "");
+            node.thinking_kind = data.reasoning_kind === "thinking" ? "thinking" : "summary";
+            node.thinking_phases = Math.max(node.thinking_phases ?? 0, 1);
+          }
+          break;
+        case "thinking_status":
+          // A reasoning phase opens or closes (also without text: the run shows that the model is thinking).
+          if (node) {
+            const started = data.state === "started";
+            node.thinking_active = started;
+            if (started) node.thinking_phases = (node.thinking_phases ?? 0) + 1;
+            if (data.redacted) node.thinking_redacted = true;
+          }
           break;
         case "reasoning_reduced":
           // The agent answers without the long thinking phase (CPU saving mode); the step shows a badge.

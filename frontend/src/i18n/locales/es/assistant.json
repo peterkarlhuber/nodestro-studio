@@ -36,14 +36,16 @@
     "docs_search": "Buscando en la documentación: {{detail}}",
     "docs_read": "Leyendo secciones: {{detail}}",
     "generate": "Escribiendo la respuesta …",
-    "handover": "Preparando un traspaso …"
+    "handover": "Preparando un traspaso …",
+    "files": "Leyendo archivos: {{detail}}"
   },
   "done": {
     "context": "Adjuntos procesados: {{detail}}",
     "docs_search": "Documentación consultada: {{detail}}",
     "docs_read": "Secciones leídas: {{detail}}",
     "generate": "Respuesta escrita",
-    "handover": "Traspaso preparado"
+    "handover": "Traspaso preparado",
+    "files": "Archivos leídos: {{detail}}"
   },
   "message": {
     "sentWith": "Enviado con",

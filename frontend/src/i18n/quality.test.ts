@@ -50,7 +50,7 @@ describe("texts left in English", () => {
       "action", "date", "active", "collection", "collections", "archive", "notes", "source", "strict", "note",
       "interface", "port", "module", "arguments", "service", "classification", "correction", "versions", "guide",
       "instructions", "branches", "robot", "globe", "score", "word", "citations", "format", "standard", "direct", "indirect", "maintenance",
-      "assistant",
+      "assistant", "publication", "publications", "exports",
     ],
     it: ["file", "input", "output", "robot", "database", "provider", "runtime", "standard", "no"],
     "pt-BR": ["status", "manual", "individual", "interface", "loop", "tags"],
@@ -111,6 +111,16 @@ describe("counted texts", () => {
     "localModels.advice.model_slow",
     "localModels.speed.value",
     "localModels.speed.prompt",
+    // Output limits of models and operations: thousands of tokens (at least 256), never one.
+    "architect.log.architect.limit",
+    "architect.log.architect.limit_reduced",
+    "architect.log.architect.truncated_retry",
+    "errors.draft.max_tokens_reduced",
+    "errors.config.max_tokens_above_model",
+    "errors.config.max_tokens_above_context",
+    "errors.architect.truncated",
+    "errors.architect.truncated_over_budget",
+    "modelParams.limits.contextWindow",
   ]);
 
   it("have plural forms in English", () => {
@@ -341,6 +351,8 @@ describe("backend codes", () => {
     "export.server_too_large", "export.server_too_large_plain", "export.download_needed", "export.download_needed_plain",
     "export.downloads", "export.downloads_plain", "local.invalid_package", "local.invalid_package_path",
     "local.invalid_package_reason", "knowledge.query_too_long", "knowledge.hits_out_of_range",
+    // Local model setup and downloads with steps: what a job can end with.
+    "local.network", "local.disk_full", "local.install_running", "local.interrupted", "local.unavailable", "local.start_failed",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

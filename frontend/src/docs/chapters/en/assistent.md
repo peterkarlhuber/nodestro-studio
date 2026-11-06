@@ -39,6 +39,28 @@ What the assistant receives depends on the kind:
 
 You can attach several objects at once and remove each one with **×**. An attachment stays active until you remove it and goes along with every further message. The attachments are always visible above the input field.
 
+## Your own files {#dateien}
+<!-- keywords: file, upload, pdf, excel, xlsx, csv, word, docx, image, screenshot, drag and drop, attach file, own files, spreadsheet, document -->
+
+You can also give the assistant your own files directly, without creating anything in Nodestro first: PDF, Word (DOCX), Excel (XLSX), CSV, JSON, text, Markdown and code files, images (PNG, JPEG, WebP) and ZIP archives, up to 50 MB per file. Choose them with **Attach files from your computer** (the upload icon next to the paperclip), drag them onto the input field or paste a screenshot. Several files at once are fine; at most 10 go with one message.
+
+Every file appears above the input field with its name, type and size. While Nodestro uploads and reads it, it shows **Uploading and reading…**; a refused file stays visible in red with the reason, for example an unsupported type, an empty, damaged or too large file. **×** removes a file before sending. A message may consist of files alone.
+
+The tag on each file shows how it reaches the model, which depends on the **model for the assistants**:
+
+| Tag | Meaning |
+| --- | --- |
+| Native PDF | the model reads the PDF itself, with its page images |
+| Image | the model sees the image |
+| Extracted text | Nodestro reads text and tables locally (Excel sheets, CSV, Word, PDF text) and the model gets them as text |
+| OCR text | a scanned PDF whose text Nodestro recognized locally, if [text recognition (OCR)](/docs/dateien#ocr) is turned on |
+| Overview | too large to send in full: the model gets the structure and reads the parts it needs |
+| Not readable | the model cannot read it, for example an image for a model without image input; the tag says why |
+
+A line below the files says what the current model reads natively. Below your message, the sent files keep the tag of the path they actually took.
+
+**Files in this chat** lists every file of the conversation. Files stay there until you delete them or the whole chat; in later messages the assistant sees the list and can read parts of them again. **Use again** sends a file in full with your next message, the eye shows what Nodestro read from it, and you can download it. Nothing becomes knowledge by itself: **Save to knowledge** takes a file over into [knowledge](/docs/wissen) only after you confirmed it. For files an agent should always have, use knowledge or the agent's knowledge settings; the assistant itself has no fixed files.
+
 ## Context suggestions {#vorschlaege}
 <!-- keywords: suggestion, suggested, current workflow, automatic, confirm, ignore -->
 
@@ -88,6 +110,8 @@ Only what you write, what you attached and the documentation sections the assist
 API keys, passwords, tokens and similar values are replaced with placeholders before sending, including your stored API key. A note on the attachment shows when something was replaced. To see exactly what was sent, click an attachment or **Sent with**.
 
 Very large objects are shortened; the attachment is then marked **partial**, and the assistant knows that it saw only part of it. Instructions inside attached content, for example in a knowledge file or a tool output, are treated by the assistant as data, not as instructions to itself.
+
+Your own files are data for the assistant, not instructions: whatever a file says, it cannot make the assistant change, run or approve anything, and its content is marked as untrusted data for the model. Files are stored in your Nodestro data folder, are deleted when you delete them or the chat, and are only sent to the model of the message they are attached to (or read again on request in a later message of the same chat). On a server with logins, a chat and its files are visible only to the person who started it.
 
 ## Cost {#kosten}
 <!-- keywords: cost, tokens, usage, price, chat cost, billed -->

@@ -136,7 +136,7 @@ try {
   const agentNode = (await api("GET", `/workflows/${wf}`)).nodes.find((node) => node.type === "agent");
   const routes = [
     "/", "/workflows/examples", `/workflows/${wf}`, ...(agentNode ? [`/workflows/${wf}?node=${agentNode.id}`] : []), "/agents", "/tools", "/knowledge", "/memory", "/executions",
-    "/approvals", "/batches", "/tests", "/schedules", "/usage", "/docs/start", "/settings", "/welcome",
+    "/approvals", "/batches", "/publications", "/tests", "/schedules", "/usage", "/docs/start", "/settings", "/welcome",
   ];
 
   for (const theme of ["dark", "light"]) {

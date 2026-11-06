@@ -39,6 +39,28 @@ O que o assistente recebe depende do tipo:
 
 Você pode anexar vários objetos de uma vez e remover cada um com **×**. Um anexo continua ativo até você removê-lo e vai junto com cada mensagem seguinte. Os anexos ficam sempre visíveis acima do campo de entrada.
 
+## Seus próprios arquivos {#dateien}
+<!-- keywords: arquivo, enviar, upload, pdf, excel, xlsx, csv, word, docx, imagem, captura de tela, arrastar e soltar, anexar arquivo, planilha, documento -->
+
+Você também pode entregar seus próprios arquivos diretamente ao assistente, sem criar nada antes no Nodestro: PDF, Word (DOCX), Excel (XLSX), CSV, JSON, arquivos de texto, Markdown e código, imagens (PNG, JPEG, WebP) e arquivos ZIP, até 50 MB por arquivo. Escolha-os com **Anexar arquivos do seu computador** (o ícone de envio ao lado do clipe), arraste-os para o campo de entrada ou cole uma captura de tela. Vários arquivos de uma vez são possíveis; com uma mensagem vão no máximo 10.
+
+Cada arquivo aparece acima do campo de entrada com nome, tipo e tamanho. Enquanto o Nodestro o envia e lê, aparece **Enviando e lendo…**; um arquivo recusado continua visível em vermelho com o motivo, por exemplo um tipo não suportado ou um arquivo vazio, danificado ou grande demais. **×** remove um arquivo antes do envio. Uma mensagem pode ter apenas arquivos.
+
+A etiqueta de cada arquivo mostra como ele chega ao modelo, o que depende do **modelo dos assistentes**:
+
+| Etiqueta | Significado |
+| --- | --- |
+| PDF nativo | o modelo lê o próprio PDF, com as imagens das páginas |
+| Imagem | o modelo vê a imagem |
+| Texto extraído | o Nodestro lê texto e tabelas localmente (planilhas do Excel, CSV, Word, texto de PDF) e o modelo os recebe como texto |
+| Texto OCR | um PDF digitalizado cujo texto o Nodestro reconheceu localmente, se o [reconhecimento de texto (OCR)](/docs/dateien#ocr) estiver ativado |
+| Visão geral | grande demais para enviar por inteiro: o modelo recebe a estrutura e lê as partes de que precisa |
+| Não legível | o modelo não consegue lê-lo, por exemplo uma imagem com um modelo sem entrada de imagens; a etiqueta informa o motivo |
+
+Uma linha abaixo dos arquivos diz o que o modelo atual lê nativamente. Abaixo da sua mensagem, os arquivos enviados mantêm a etiqueta do caminho que realmente seguiram.
+
+**Arquivos neste chat** lista todos os arquivos da conversa. Eles ficam ali até que você os exclua ou exclua o chat inteiro; em mensagens posteriores o assistente vê a lista e pode ler partes deles de novo. **Usar de novo** envia um arquivo completo com sua próxima mensagem, o olho mostra o que o Nodestro leu dele e você pode baixá-lo. Nada vira conhecimento sozinho: **Salvar no conhecimento** leva um arquivo para o [conhecimento](/docs/wissen) somente depois da sua confirmação. Para arquivos que um agente deve ter sempre, use o conhecimento ou as configurações de conhecimento do agente; o próprio assistente não tem arquivos fixos.
+
 ## Sugestões de contexto {#vorschlaege}
 <!-- keywords: sugestão, sugerido, fluxo atual, automático, confirmar, ignorar -->
 
@@ -88,6 +110,8 @@ Ao modelo só vai o que você escreve, o que anexou e as seções da documentaç
 Chaves de API, senhas, tokens e valores semelhantes são substituídos por marcadores antes do envio, inclusive a sua chave de API cadastrada. Um aviso no anexo mostra quando algo foi substituído. Para ver exatamente o que foi enviado, clique em um anexo ou em **Enviado com**.
 
 Objetos muito grandes são encurtados; o anexo é então marcado como **parcial**, e o assistente sabe que viu apenas uma parte. Instruções dentro do conteúdo anexado, por exemplo em um arquivo de conhecimento ou na saída de uma ferramenta, são tratadas pelo assistente como dados, não como instruções para ele.
+
+Seus próprios arquivos são dados para o assistente, não instruções: diga o que disser um arquivo, ele não consegue fazer o assistente alterar, executar ou aprovar nada, e o conteúdo é marcado para o modelo como dados não confiáveis. Os arquivos ficam na sua pasta de dados do Nodestro, são excluídos quando você os exclui ou exclui o chat e só vão para o modelo com a mensagem à qual estão anexados (ou são lidos de novo, se necessário, em uma mensagem posterior do mesmo chat). Em um servidor com login, um chat e seus arquivos só são visíveis para a pessoa que o iniciou.
 
 ## Custos {#kosten}
 <!-- keywords: custo, tokens, uso, preço, custo do chat, cobrado -->

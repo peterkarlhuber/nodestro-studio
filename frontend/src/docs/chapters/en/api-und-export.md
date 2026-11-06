@@ -23,6 +23,13 @@ There are two ways:
 
 Both run step by step as in Nodestro: the same agents, tools, branches, approvals and forms.
 
+## Publications page {#veroeffentlichungen}
+<!-- keywords: publications, overview, all apis, export history, downloads, search -->
+
+The **[Publications](/publications)** page in the navigation (group *Automate & test*) lists every API published in this installation in one place: the API's name and address, its workflow, the status (*Active*, *Switched off* or *No active version*), the active version with its workflow version, when that version was published, and the export history with date, type and a download link for each generated file.
+
+Search by API name, address or workflow, filter by status and sort by name, by the latest publication or by the latest export. The page only shows; it changes nothing. Each entry has one link, **Open API & Export**: it opens the workflow in the editor with the *API & Export* dialog already open, where you publish, switch versions, manage keys and create exports as described below. The link also works as a bookmark or after reloading the page.
+
 ## Publishing {#veroeffentlichen}
 <!-- keywords: publish, publishing, version, freeze, check, save, note -->
 

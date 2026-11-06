@@ -2,6 +2,16 @@
 
 This chapter describes all settings, how to install and start Nodestro, and the keyboard shortcuts.
 
+## Finding your way in the settings {#ueberblick}
+<!-- keywords: settings, gear, open settings, search settings, find a setting, width, wider, resize, navigation, advanced, ctrl+comma -->
+
+- **Opening:** the gear at the top right of every page, or *Ctrl+,* (*⌘,* on a Mac). The settings remember where you came from: **Back** above the navigation (or *Ctrl+,* again) takes you there. A page with unsaved changes, such as the workflow editor, asks first.
+- **Search:** *Find a setting …* above the navigation searches the names, explanations and help texts of single settings, in the interface language. Arrow keys choose a hit, **Enter** jumps to it: closed parts open, the setting is highlighted and its field gets the focus.
+- **Navigation:** the list on the right shows the sections by topic and marks the one you are reading. In a narrow window it is a bar above the content with the search and *Go to section*.
+- **Width:** drag the edge between the content and the navigation to make the settings wider or narrower. With the keyboard, focus the edge (Tab) and use the arrow keys (with Shift in larger steps), Home and End. A double-click on the edge or **Standard width** in the navigation restores the default. The width is saved in this browser.
+- **Basic and advanced:** related settings stand together under a heading. Parts marked *Advanced* (for example what the models of an OpenAI-compatible endpoint can do) are closed until you need them; their badge says how many values differ from the standard.
+- **Saving:** most settings take effect at once. *Models and budget* has its own **Save** button; if you leave the page with unsaved changes there, Nodestro asks first.
+
 ## Local models {#lokale-modelle}
 <!-- keywords: local model, ollama, offline, no api key, qwen, download, recommendation, hardware, gpu, ram, model server, mistral, european, reasoning effort -->
 
@@ -12,7 +22,7 @@ Nodestro can run agents, assistants and the knowledge search on **local models**
 *Settings → Local models* shows:
 
 - **State:** whether the model server runs and who provides it. On the desktop Nodestro starts its own server (a separate process on this computer, with its own model folder); in Nodestro Local Docker it is a separate container; on a server the operator provides it. An Ollama you already run is used only if you save its address for the Ollama provider.
-- **Runtime:** if it is missing, **Download and install** fetches the pinned version once and checks its SHA-256. Without internet, install it from its release archive (see [Offline import](/docs/einstellungen#offline-import)).
+- **Runtime:** if it is missing, **Download and install** fetches the pinned version once and checks its SHA-256. Without internet, install it from its release archive (see [Offline import](/docs/einstellungen#offline-import)). Each step and its progress is shown; see [Setup and downloads](/docs/einstellungen#lokale-einrichtung).
 - **Recommended for this computer:** a model per task (sorting, writing, agents with tools, analysis, assistant, semantic search) from the task's needs, the memory of this computer and the installed models. An installed model that is good enough comes first; *Suitable* and *Limited* mean a larger model would do better; the reason is shown under the model. Suggestions never change an agent: you choose its model in the editor.
 - **Models:** the suggested models with download size, memory needed and license; **Checked** means the installed build is the one Nodestro verified.
 
@@ -21,6 +31,35 @@ Nodestro can run agents, assistants and the knowledge search on **local models**
 **Reasoning effort:** local models that can “think” do so without a limit from effort *Medium* up, and the thinking counts toward the maximum output length. On a computer without a graphics card a small model can take many minutes for it. For fast steps (sorting, extraction, short structured answers) choose *Low*: the model then answers without thinking. The model server Nodestro starts gives every model 32,768 tokens of context for prompt, thinking and answer together. Start an Ollama you run yourself with `OLLAMA_CONTEXT_LENGTH=32768`; its default of 4,096 tokens is too small for agents.
 
 Costs: local models have **no external API billing**. Nodestro does not record local operating costs (hardware, energy), so runs show “local, no API billing” instead of a total of 0, and mixed runs add the number of local requests to the cost.
+
+## Setup and downloads: progress and errors {#lokale-einrichtung}
+<!-- keywords: set up, setup, install, progress, step, download progress, percent, transfer rate, remaining time, stalled, cancel, resume, continue, retry, disk full, no space, network error, proxy, interrupted, external ollama -->
+
+**Download and install** (and **Start**) set the model server up as one task with steps that follow what Nodestro actually does: *check this system and what is installed*, *check the prerequisites* (strict offline mode, a writable folder, free space), *download Ollama*, *verify the download (SHA-256)*, *install Ollama*, *configure the server* (model folder, context window), *start the server*, *check that the server answers*, *detect the GPU and hardware* and *model server ready*. A step that is not needed is marked *not needed* with the reason, for example when the runtime is part of the desktop app or is installed already. The running step says “Step 3 of 10”; below it, “No action needed” means you can keep working while it continues in the background. In Nodestro Local Docker and for your own Ollama, **Check the model server** only checks that the server answers and which hardware it uses: Nodestro never starts, stops or changes such a server. An Ollama you run yourself on this computer is left alone also while Nodestro sets up its own server next to it.
+
+Model downloads follow Ollama's own steps: *check free space*, *get the model's file list*, *download the model files*, *verify the files (SHA-256)* and *finish the installation*. Each model has its own entry under **Tasks**, and its row in the model list shows the running step instead of the download button. Several models can download at the same time; the same model downloads only once.
+
+What the progress shows is measured, never estimated:
+
+- **A percentage** only for a step that counts bytes (a download, the checksum of the runtime). Any other running step has a moving bar without a value.
+- **Bytes:** “400 MB of 1.5 GB”. Ollama names each file of a model only when it starts it, so a model download shows the current file (“File 2: 225 MB of 525 MB”) and the total downloaded so far; the total size is known once Ollama verifies the files.
+- **Transfer rate** after a few seconds of measurement, and **remaining time** only while the rate is steady (for a model: the time for the current file). When no data arrives for a while, the entry says so: the download retries on its own for a while before it fails.
+- **Continued:** the part an earlier, interrupted attempt left (a canceled download, a lost connection, a closed app) is kept and counted; **Continue** or **Try again** downloads only the rest.
+
+When something fails, the entry says **Action needed**, what happened and what to do: check the internet connection or proxy, free up space or choose another [model folder](/docs/einstellungen#offline-import), install from a release archive in the strict offline mode, and so on. Before a download Nodestro compares the free space of the model folder with the model's size and refuses at once if it does not fit. **Technical details** show the steps' details (paths, versions, addresses), the files of a model and a log.
+
+Tasks are kept by Nodestro, not by the page: after a reload of the page the running setup and downloads appear again with their progress. If Nodestro is closed while a task runs, the task is listed as interrupted the next time; **Continue** picks it up where it stopped. Only one setup runs at a time, also across several Nodestro windows.
+
+## Required model not installed {#modell-fehlt}
+<!-- keywords: missing model, model not installed, required model, download model, choose another model, model not found, continue, server unreachable, permission, administrator, unattended, schedule, fix -->
+
+When the Workflow Architect, the assistant, an agent's design or test, a run or the knowledge search needs a local model that cannot be used right now, Nodestro does not start the action and opens one dialog instead. It says **why**: the model is not installed (with the download size, the free space of the [model folder](/docs/einstellungen#offline-import) and the memory it needs), the local models are not set up yet, the model server does not start or answer, the disk is too full, the model cannot do what the step needs (tool calls, structured results, images, embeddings), it is probably too large for this computer, or the name is not a local model. It also says **where** the model belongs: this computer, the Local Docker container, a model server you configured, or the Nodestro server.
+
+The dialog offers only what you may do here: **Download model** (also **Continue download** after an interrupted one), **Set up local models**, **Check again**, **Choose another model** or **Copy model name** for an administrator. Without permission to install, on a Nodestro server (its operator installs models) and in the strict offline mode nothing is downloaded, and the dialog says so. If the same model is downloading already, for example in another window, the dialog follows that download; a second one never starts.
+
+Your inputs stay where they are: the description for the Workflow Architect, the message and its files in the assistant, the test input or the run inputs. Once the download is done, Nodestro checks that the model is really there and can do the step; then **Continue** starts the action once with the same inputs. If you tick **Continue automatically when the model is ready**, it continues by itself, once. You can close the dialog while the download runs: it keeps going under **Tasks**. **Choose another model** lists only ready models that can do the step, local ones and cloud models (which may cost); the choice applies to this one action and does not change your settings.
+
+Schedules, batch runs and published APIs never download anything. A run that cannot start reports the missing model (for example in the schedule's last run) with **Fix**, which opens the same dialog without continuing anything by itself.
 
 ## This computer, context window and speed {#lokale-hardware}
 <!-- keywords: hardware, gpu, cpu only, ram, context window, ollama_context_length, speed, tokens per second, measure, cpu saving mode, reasoning reduced -->
@@ -154,6 +193,17 @@ The **Default budget per run** (initially 2 USD) applies to all workflows withou
 
 Administrators also set the **Maximum run budget** (empty: no cap): no run may start with or be raised above it. The **Budget decision deadline** (1 to 720 hours, initially 24) says how long a paused run waits for a [budget decision](/docs/workflows#budget-freigabe) before it fails. Who may decide is explained under [Who may decide](/docs/workflows#budget-rechte).
 
+## Model output limits {#ausgabelimits}
+<!-- keywords: output limit, max tokens, max_tokens, truncated, cut off, architect limit, context window -->
+
+Nodestro's own AI steps (the Workflow Architect, the assistants, questions about a run, orchestrator decisions and the quality check) have no agent settings of their own. Under **Model output limits** you set how many tokens each step may answer with; an empty field uses the built-in default (for example 32,000 for the architect's workflow plan and 8,000 for its analysis). Agents keep their own *Max. tokens* in the [agent editor](/docs/agenten#limits).
+
+The value that is sent comes from three levels: your setting, else the default, at most the model's documented maximum output (or half of its context window for a local model whose maximum is not known). The table shows the value sent to the assistant model and says when it was lowered; nothing is shortened silently.
+
+The limit includes the model's thinking. A higher limit allows longer answers but never bypasses a budget: before each request, the cost check reserves exactly this value.
+
+**Retry answers that were cut off:** when an answer of the Workflow Architect reaches its limit, it is asked once more with a doubled limit, at most the *Highest limit for a retry* (initially 64,000) and the model's maximum. The retry is sent only if its full cost fits into what is left of the job's budget. Otherwise, or with the retry switched off, the job stops with a message that names the step and its limit.
+
 ## Sandbox {#sandbox}
 <!-- keywords: choose sandbox, automatic, docker, python process, docker available, built-in sandbox, linux sandbox, macos, windows, blocked, experimental -->
 
@@ -214,6 +264,36 @@ The language only affects the **interface**: menus, notes, error messages, this 
 <!-- keywords: theme, dark, light, dark mode, light mode, colour scheme, design, midnight citron -->
 
 At the top right you switch between **Dark** and **Light**. The choice is saved in the browser. Both variants follow the *Midnight Citron* design system. On narrow screens the sidebar is hidden: the menu button at the top left (**Show all pages**) opens it as a panel, and **Esc** closes it again.
+
+## Reasoning display {#denken-anzeige}
+<!-- keywords: thinking, reasoning, reasoning summary, thoughts, live, status, redacted, not transmitted, summaries -->
+
+While a model works, Nodestro shows what its provider transmits of the reasoning: in the assistant, the team leader chat of a run, workflow runs, the Workflow Architect and the agent test. **Nodestro never writes, completes or paraphrases reasoning itself.** If a provider keeps the reasoning to itself, you only see that the model is thinking, and why there is no text.
+
+The display always keeps reasoning apart from the answer (dashed frame, its own label) and names one of these states:
+
+| State | Meaning |
+|---|---|
+| *Thinking…* | A reasoning phase is running; no text has arrived (yet), or the text is hidden. |
+| *Thinking text* | The model's reasoning as it was generated (open-weight models, e.g. via Ollama or vLLM). |
+| *Reasoning summary* | A summary the provider writes of reasoning it does not expose (OpenAI, Gemini, Claude). |
+| *Reasoning not transmitted* | The model reasoned, but the provider sent no text (encrypted, omitted or not requested). |
+| *Reasoning not exposed* | The model does not reason, or its provider never sends reasoning. |
+
+**Display in this browser** (section *Reasoning display*): *Show live* opens the text while it arrives, *Collapsed* (default) shows the activity and keeps the text one click away, *Status only* never shows the text. The assistant and the team leader chat have their own choice per conversation (**Reasoning** below the input or the introduction); *Default* follows the global choice. The choice stays in this browser and changes no workflow and no conversation.
+
+**Showing is not enabling.** Whether and how much a model reasons is set on the agent ([Thinking and effort](/docs/agenten#denken)). Some providers send text only on request:
+
+| Provider | What arrives live | How to get text |
+|---|---|---|
+| Anthropic (Claude 4 and later) | summary | the agent's *Show thoughts* option (*Show summarized*) |
+| OpenAI (reasoning models) | summary; the reasoning itself never | **Request reasoning summaries** (administrators; OpenAI may require a verified organization) |
+| OpenAI GPT-4o, GPT-4.1 | nothing: they do not reason | – |
+| Gemini 2.5 and later | summary (thought summaries) | **Request reasoning summaries** |
+| Amazon Bedrock | Claude: summary; other reasoning models: thinking text where the model sends it | the agent's request options |
+| Ollama, vLLM, OpenAI-compatible servers | thinking text where the server separates it | server configuration (e.g. a reasoning parser) |
+
+Requesting summaries changes no answer and no cost: reasoning tokens are billed by the provider whether text is transmitted or not. The agent's thinking options show what its model transmits (*Live reasoning: …*).
 
 ## Backup and restore {#backup}
 <!-- keywords: backup, restore, export, zip, move, data backup -->

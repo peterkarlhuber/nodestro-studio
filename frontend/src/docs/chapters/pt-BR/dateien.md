@@ -3,7 +3,7 @@
 Se você quiser, o Nodestro grava os resultados como arquivos (Markdown, JSON, CSV, HTML, PDF, Word ou Excel) e, além de PDFs e textos, também lê arquivos do Word e do Excel. PDFs digitalizados podem, opcionalmente, ficar legíveis com reconhecimento de texto local (OCR). Tudo roda no seu computador, sem contas adicionais.
 
 ## Arquivos de resultado {#ergebnisdateien}
-<!-- keywords: arquivo de resultado, arquivo, exportar, relatório, markdown, json, csv, html, pdf, baixar, higienizar -->
+<!-- keywords: arquivo de resultado, arquivo, exportar, relatório, markdown, json, csv, html, pdf, word, docx, excel, xlsx, baixar, higienizar -->
 
 No inspetor do nó **Resultado**, *Arquivos de resultado* define em quais formatos o resultado é salvo ao final de cada execução. Sem nenhuma entrada, nenhum arquivo é gravado.
 

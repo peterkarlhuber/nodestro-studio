@@ -92,7 +92,7 @@ def user_text(request: dict[str, Any]) -> str:
 
 
 def script(ids: dict[str, str]) -> dict[str, list[Any]]:
-    from nodestro_runtime.testing import Parsed, text
+    from nodestro_runtime.testing import Parsed, text, thinking
 
     def decide(**values: Any) -> Any:
         def respond(request: dict[str, Any]) -> Any:
@@ -117,7 +117,11 @@ def script(ids: dict[str, str]) -> dict[str, list[Any]]:
 
     def reply(request: dict[str, Any]) -> Any:
         snapshot = "ja" if "<<<snapshot" in user_text(request) else "nein"
-        return text(f"Zwei Teams arbeiten noch; die Leitung wartet auf sie. (Stand gelesen: {snapshot})")
+        # The team leader reasons first (summarized thinking, streamed slowly): the browser sees it arrive live.
+        return thinking(
+            "Der Stand zeigt zwei laufende Teams. Ich antworte kurz, ohne eine Entscheidung zu treffen.",
+            f"Zwei Teams arbeiten noch; die Leitung wartet auf sie. (Stand gelesen: {snapshot})",
+        )
 
     return {
         LEAD: [
@@ -148,11 +152,13 @@ def main() -> None:
     args = parser.parse_args()
 
     from nodestro_runtime.schemas import WorkflowIn
+    import nodestro_runtime.testing as scripted
     from nodestro_runtime.testing import ScriptedClient
     import uvicorn
 
     from nodestro_studio.app import create_app, studio_config
 
+    scripted.STREAM_DELAY = 0.15  # thinking arrives over about a second, like a real model's
     ids: dict[str, str] = {}
     client = ScriptedClient(script(ids))
     app = create_app(studio_config(Path(args.data_dir)), client_factory=lambda _provider: client)

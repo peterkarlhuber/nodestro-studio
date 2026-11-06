@@ -25,13 +25,17 @@ import type { AttachRequest, Attachment, Conversation } from "../api/types";
 import { providerList } from "../components/ModelPicker";
 import { toast } from "../components/toast";
 import { Button, Callout, DocLink, Hint, IconButton, Spinner, TextArea, TextInput } from "../components/ui";
+import { ScopedThinkingDisplay } from "../components/ReasoningView";
+import { withLocalModel } from "../missingModel/store";
 import { ErrorText } from "../lib/errors";
 import { formatCost, relativeTime } from "../lib/format";
 import { missingProviders } from "../lib/providers";
+import { AttachFilesButton, ComposerFileChips, ConversationFiles, pastedFiles, useFileDrop } from "./AssistantFiles";
 import { AttachmentBar } from "./AttachmentBar";
 import { AttachPicker } from "./AttachPicker";
 import { MessageView } from "./MessageView";
 import { draftFingerprint, useAssistant } from "./store";
+import { useComposerFiles } from "./useComposerFiles";
 import { useConversation } from "./useConversation";
 
 const EXAMPLES = ["createWorkflow", "knowledgeMemory", "judge", "testAgent", "costs"] as const;
@@ -177,6 +181,17 @@ function ChatView() {
   const data = conversation.data;
   const streaming = data?.streaming ?? null;
   const history = data?.history ?? [];
+  const files = useComposerFiles(data, ensure);
+  const drop = useFileDrop((chosen) => void files.add(chosen));
+  const resetFiles = files.reset;
+
+  // Another conversation: the files chosen for the next message belong to the old one. A new chat that an upload
+  // just created keeps them (its first files are being uploaded, or were refused, right now).
+  const previousConversation = useRef(conversationId);
+  useEffect(() => {
+    if (previousConversation.current !== null && previousConversation.current !== conversationId) resetFiles();
+    previousConversation.current = conversationId;
+  }, [conversationId, resetFiles]);
 
   // A conversation that no longer exists (deleted elsewhere) starts a new one.
   useEffect(() => {
@@ -248,12 +263,16 @@ function ChatView() {
   };
 
   const send = useMutation({
-    mutationFn: async (content: string) => {
+    mutationFn: async ({ content, fileIds }: { content: string; fileIds: string[] }) => {
       const id = await ensure();
-      return { id, sent: await api.sendMessage(id, content) };
+      // A local model that is not ready: nothing was stored, the text and files stay in the composer; the message
+      // is sent once (as it is) when the model is ready, or with the model chosen for it.
+      const sent = await withLocalModel((model) => api.sendMessage(id, content, fileIds, model), { action: "assistant" });
+      return { id, fileIds, sent };
     },
-    onSuccess: ({ id, sent }) => {
+    onSuccess: ({ id, fileIds, sent }) => {
       setText("");
+      files.sent(id, fileIds);
       queryClient.setQueryData<Conversation>(keys.conversation(id), (current) =>
         current ? { ...current, history: [...current.history, sent.user, sent.assistant], streaming: sent.assistant.id } : current,
       );
@@ -263,10 +282,11 @@ function ChatView() {
     onError: (error) => toast.error(error),
   });
 
+  const fileIds = files.selected.map((item) => item.id);
   const submit = () => {
     const content = text.trim();
-    if (!content || streaming || send.isPending) return;
-    send.mutate(content);
+    if ((!content && !fileIds.length) || files.uploading || streaming || send.isPending) return;
+    send.mutate({ content, fileIds });
   };
 
   const cancel = async () => {
@@ -282,7 +302,7 @@ function ChatView() {
   const retry = async (messageId: string) => {
     if (!data) return;
     try {
-      await api.retryMessage(data.id, messageId);
+      await withLocalModel((model) => api.retryMessage(data.id, messageId, model), { action: "assistant" });
       void queryClient.invalidateQueries({ queryKey: keys.conversation(data.id) });
     } catch (error) {
       toast.error(error);
@@ -321,19 +341,32 @@ function ChatView() {
           />
         ))}
       </div>
-      <div className="chat-composer">
+      <div className={`chat-composer ${drop.dragging ? "chat-composer--dropping" : ""}`} {...drop.props} data-testid="assistant-composer">
+        {drop.dragging ? (
+          <div className="chat-composer__drop" aria-hidden>
+            {t("assistantFiles.drop")}
+          </div>
+        ) : null}
         {missingKey ? (
           <Callout tone="warning">
             <KeyRound size={12} aria-hidden /> {t("assistant.noProvider", { provider: providerList(t, missing) })} <Link to="/settings">{t("assistant.openSettings")}</Link>
           </Callout>
         ) : null}
         <AttachmentBar conversation={data} busy={busy} onAttach={(request) => void attach(request)} onRefresh={(item, draft) => void refresh(item, draft)} onDetach={(item) => void detach(item)} />
+        {data ? <ConversationFiles conversationId={data.id} files={files} /> : null}
+        <ComposerFileChips files={files} />
         <div className="chat-input">
           <TextArea
             ref={input}
             value={text}
             onChange={(event) => setText(event.target.value)}
             onKeyDown={onKey}
+            onPaste={(event) => {
+              const pasted = pastedFiles(event);
+              if (!pasted.length) return;
+              event.preventDefault();
+              void files.add(pasted);
+            }}
             placeholder={t("assistant.composer.placeholder")}
             aria-label={t("assistant.composer.label")}
             rows={2}
@@ -341,21 +374,34 @@ function ChatView() {
             data-testid="assistant-input"
           />
           <div className="chat-input__actions">
-            <Hint id="assistant.attach">
-              <IconButton icon={Paperclip} label={t("assistant.composer.attach")} onClick={() => setPicker(true)} data-testid="assistant-attach" />
-            </Hint>
+            <span className="chat-input__tools">
+              <Hint id="assistant.attach">
+                <IconButton icon={Paperclip} label={t("assistant.composer.attach")} onClick={() => setPicker(true)} data-testid="assistant-attach" />
+              </Hint>
+              <AttachFilesButton files={files} />
+            </span>
             {streaming ? (
               <Button size="sm" icon={Square} onClick={() => void cancel()} data-testid="assistant-stop">
                 {t("assistant.composer.stop")}
               </Button>
             ) : (
-              <Button size="sm" variant="primary" icon={Send} busy={send.isPending} disabled={!text.trim()} onClick={submit} data-testid="assistant-send">
+              <Button
+                size="sm"
+                variant="primary"
+                icon={Send}
+                busy={send.isPending}
+                disabled={(!text.trim() && !fileIds.length) || files.uploading}
+                title={files.uploading ? t("assistantFiles.waitUploads") : undefined}
+                onClick={submit}
+                data-testid="assistant-send"
+              >
                 {t("assistant.composer.send")}
               </Button>
             )}
           </div>
         </div>
         <p className="muted small chat-hint">{t("assistant.composer.hint")}</p>
+        {data ? <ScopedThinkingDisplay scope={`conversation:${data.id}`} testId="assistant-thinking-display" /> : null}
       </div>
       <AttachPicker open={picker} onClose={() => setPicker(false)} onAttach={attach} />
     </>

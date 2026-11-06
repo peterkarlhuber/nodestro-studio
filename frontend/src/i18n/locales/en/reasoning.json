@@ -1,0 +1,54 @@
+{
+  "status": {
+    "active": "Thinking…",
+    "done": "Reasoned"
+  },
+  "hiddenByPreference": "Text hidden (display: status only)",
+  "state": {
+    "text": "Thinking text",
+    "summary": "Reasoning summary",
+    "notTransmitted": "Reasoning not transmitted",
+    "notExposed": "Reasoning not exposed"
+  },
+  "why": {
+    "redacted": "The provider sent this reasoning only encrypted or left it out, so there is no text to show.",
+    "thinkingDisplay": "The agent's thinking display leaves the text out. Choose “Show summarized” in the agent's thinking options to receive it.",
+    "notRequested": "The provider sends reasoning summaries only on request. An administrator can turn on “Request reasoning summaries” in the settings.",
+    "notExposed": "This model does not reason, or its provider never sends its reasoning. Nodestro never makes up reasoning text.",
+    "noText": "The provider marked a reasoning phase but sent no text."
+  },
+  "source": {
+    "text": "Sent by the model while it reasoned. Not part of the answer.",
+    "summary": "A summary the provider writes of reasoning it does not expose. Not part of the answer."
+  },
+  "display": {
+    "label": "Reasoning",
+    "live": "Show live",
+    "collapsed": "Collapsed",
+    "status": "Status only",
+    "default": "Default ({{value}})"
+  },
+  "answering": "Answering…",
+  "steps": {
+    "analysis": "Reasoning on the requirements",
+    "plan": "Reasoning on the plan",
+    "agent_revision": "Reasoning on the agents",
+    "repair": "Reasoning on the repair"
+  },
+  "settings": {
+    "title": "Reasoning display",
+    "intro": "How the reasoning of models is shown while they work. Only what the provider sends is shown; Nodestro never writes reasoning text itself.",
+    "display": "Display in this browser",
+    "displayHint": "Applies to the assistant, the run chat, workflow runs, the Workflow Architect and the agent test. A conversation can choose its own display.",
+    "summaries": "Request reasoning summaries",
+    "summariesHint": "Asks OpenAI and Gemini for summaries of the reasoning of models that reason. Changes no answer and no cost; OpenAI may require a verified organization. Anthropic models follow the agent's thinking display.",
+    "adminOnly": "Only administrators can change this setting."
+  },
+  "model": {
+    "summary": "Live reasoning: this model's provider sends reasoning summaries.",
+    "summaryNotRequested": "Live reasoning: this model's provider sends reasoning summaries only when the workspace asks for them (settings).",
+    "thinking": "Live reasoning: this model sends its thinking text.",
+    "none": "Live reasoning: this model does not send any reasoning.",
+    "unknown": "Live reasoning: whether the server sends reasoning depends on its configuration."
+  }
+}

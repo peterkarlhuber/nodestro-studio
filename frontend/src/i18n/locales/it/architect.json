@@ -269,6 +269,11 @@
     },
     "present": {
       "ready": "La bozza è pronta per il tuo controllo."
+    },
+    "architect": {
+      "limit": "Limite di output per «$t(modelParams.operation.{{operation}})»: {{max_tokens}} token.",
+      "limit_reduced": "Limite di output per «$t(modelParams.operation.{{operation}})» ridotto da {{configured}} a {{max_tokens}} token: il modello non consente di più.",
+      "truncated_retry": "La risposta è stata troncata a {{max_tokens}} token; nuova richiesta con fino a {{higher}} token."
     }
   }
 }

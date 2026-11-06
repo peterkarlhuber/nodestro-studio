@@ -1,6 +1,8 @@
 // A thin fetch wrapper for the Nodestro REST API.
 
 import type {
+  AssistantFileSupport,
+  AssistantFileUpload,
   AttachRequest,
   ChatMessageIn,
   RunChatView,
@@ -108,6 +110,7 @@ import type {
   GateReport,
   Publication,
   PublicationListItem,
+  PublicationOverviewItem,
   ReleaseGate,
   ReleaseSummary,
   AdoptCheck,
@@ -238,13 +241,28 @@ export const api = {
   detach: (id: string, attachmentId: string) => request<Conversation>("DELETE", `${chatPath(id)}/attachments/${attachmentId}`),
   snapshot: (id: string, snapshotId: string) => request<Snapshot>("GET", `${chatPath(id)}/snapshots/${snapshotId}`),
   /** The assistant answers in the interface language unless the message asks for another. */
-  sendMessage: (id: string, content: string) =>
+  /** ``model``: another ready model for this answer only (the missing local model dialog). */
+  sendMessage: (id: string, content: string, fileIds: string[] = [], model?: string) =>
     request<{ user: ChatMessage; assistant: ChatMessage }>("POST", `${chatPath(id)}/messages`, {
       content,
       language: currentLanguage(),
+      file_ids: fileIds,
+      ...(model ? { model } : {}),
     }),
-  retryMessage: (id: string, messageId: string) =>
-    request<ChatMessage>("POST", `${chatPath(id)}/messages/${messageId}/retry`, { language: currentLanguage() }),
+  /** Formats and limits of files, and whether the assistant's model reads images and PDFs natively. */
+  assistantFileSupport: () => request<AssistantFileSupport>("GET", "/assistant/files/support"),
+  /** Checks, reads and attaches one file to the conversation; it waits for the next message. */
+  uploadAssistantFile: (id: string, file: File) => {
+    const form = new FormData();
+    form.append("files", file, file.name);
+    return request<AssistantFileUpload[]>("POST", `${chatPath(id)}/files`, form);
+  },
+  /** Removes the file from the conversation and deletes it. */
+  removeAssistantFile: (id: string, fileId: string) => request<Conversation>("DELETE", `${chatPath(id)}/files/${fileId}`),
+  assistantFileText: (id: string, fileId: string) => request<FileText>("GET", `${chatPath(id)}/files/${fileId}/text`),
+  assistantFileUrl: (id: string, fileId: string) => `/api${chatPath(id)}/files/${fileId}/content`,
+  retryMessage: (id: string, messageId: string, model?: string) =>
+    request<ChatMessage>("POST", `${chatPath(id)}/messages/${messageId}/retry`, { language: currentLanguage(), ...(model ? { model } : {}) }),
   cancelMessage: (id: string, messageId: string) => request<ChatMessage>("POST", `${chatPath(id)}/messages/${messageId}/cancel`),
   messageEventsUrl: (id: string, messageId: string) => `/api${chatPath(id)}/messages/${messageId}/events`,
 
@@ -635,6 +653,8 @@ export const api = {
   setReleaseGate: (publicationId: string, gate: ReleaseGate | null) =>
     request<Publication>("PUT", `/publications/${publicationId}/gate`, { gate }),
   publications: () => request<PublicationListItem[]>("GET", "/publications"),
+  /** Every publication with its workflow, active release and exports (the Publications page). */
+  publicationOverview: () => request<PublicationOverviewItem[]>("GET", "/publication-overview"),
   updatePublication: (
     id: string,
     body: { slug?: string; description?: string; limits?: ApiLimits; network?: boolean; mcp_tool?: boolean },

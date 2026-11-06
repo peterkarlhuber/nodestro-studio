@@ -1,0 +1,97 @@
+/* The missing local model dialog (missingModel/MissingModelDialog.tsx) and its fix button next to problems. */
+
+.missing-model__lead {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.missing-model__name {
+  overflow-wrap: anywhere;
+}
+
+.missing-model__facts {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.missing-model__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.missing-model__auto {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.missing-model__auto input {
+  margin-top: 0.2rem;
+}
+
+.missing-model__auto span {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.missing-model__choose {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.missing-model__choose legend {
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 0.25rem;
+}
+
+.missing-model__choose ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.missing-model__option {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--nd-border);
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.missing-model__option:has(input:checked) {
+  border-color: var(--nd-brand);
+  box-shadow: inset 0 0 0 1px var(--nd-brand);
+}
+
+.missing-model__option input {
+  margin-top: 0.2rem;
+}
+
+.missing-model__option code {
+  overflow-wrap: anywhere;
+}
+
+.model-fix {
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
+.missing-model__option-text {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}

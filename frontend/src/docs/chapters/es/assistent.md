@@ -39,6 +39,28 @@ Lo que recibe el asistente depende del tipo:
 
 Puedes adjuntar varios objetos a la vez y quitar cada uno con **×**. Un adjunto sigue activo hasta que lo quitas y se envía con cada mensaje siguiente. Los adjuntos están siempre visibles encima del campo de entrada.
 
+## Tus propios archivos {#dateien}
+<!-- keywords: archivo, subir, pdf, excel, xlsx, csv, word, docx, imagen, captura, arrastrar y soltar, adjuntar archivo, hoja de cálculo, documento -->
+
+También puedes darle al asistente tus propios archivos directamente, sin crear nada antes en Nodestro: PDF, Word (DOCX), Excel (XLSX), CSV, JSON, archivos de texto, Markdown y código, imágenes (PNG, JPEG, WebP) y archivos ZIP, hasta 50 MB por archivo. Elígelos con **Adjuntar archivos desde tu equipo** (el icono de subida junto al clip), arrástralos al campo de entrada o pega una captura de pantalla. Puedes añadir varios a la vez; con un mensaje se envían como máximo 10.
+
+Cada archivo aparece sobre el campo de entrada con su nombre, tipo y tamaño. Mientras Nodestro lo sube y lo lee, muestra **Subiendo y leyendo…**; un archivo rechazado sigue visible en rojo con el motivo, por ejemplo un tipo no compatible o un archivo vacío, dañado o demasiado grande. **×** quita un archivo antes de enviarlo. Un mensaje puede consistir solo en archivos.
+
+La etiqueta de cada archivo indica cómo llega al modelo, lo que depende del **modelo de los asistentes**:
+
+| Etiqueta | Significado |
+| --- | --- |
+| PDF nativo | el modelo lee el PDF directamente, con las imágenes de sus páginas |
+| Imagen | el modelo ve la imagen |
+| Texto extraído | Nodestro lee el texto y las tablas localmente (hojas de Excel, CSV, Word, texto de PDF) y el modelo los recibe como texto |
+| Texto OCR | un PDF escaneado cuyo texto Nodestro reconoció localmente, si el [reconocimiento de texto (OCR)](/docs/dateien#ocr) está activado |
+| Resumen | demasiado grande para enviarlo completo: el modelo recibe la estructura y lee las partes que necesita |
+| No legible | el modelo no puede leerlo, por ejemplo una imagen con un modelo sin entrada de imágenes; la etiqueta indica el motivo |
+
+Una línea debajo de los archivos indica qué lee de forma nativa el modelo actual. Debajo de tu mensaje, los archivos enviados conservan la etiqueta del camino que realmente siguieron.
+
+**Archivos de este chat** muestra todos los archivos de la conversación. Permanecen ahí hasta que los elimines a ellos o el chat completo; en mensajes posteriores el asistente ve la lista y puede volver a leer partes de ellos. **Usar de nuevo** envía un archivo completo con tu próximo mensaje, el ojo muestra lo que Nodestro leyó de él y también puedes descargarlo. Nada pasa al conocimiento por sí solo: **Guardar en el conocimiento** incorpora un archivo al [conocimiento](/docs/wissen) solo después de que lo confirmes. Para archivos que un agente debe tener siempre, usa el conocimiento o los ajustes de conocimiento del agente; el asistente no tiene archivos fijos.
+
 ## Sugerencias de contexto {#vorschlaege}
 <!-- keywords: sugerencia, sugerido, flujo actual, automático, confirmar, ignorar -->
 
@@ -88,6 +110,8 @@ Al modelo solo llega lo que escribes, lo que adjuntaste y las secciones de la do
 Las claves de API, contraseñas, tokens y valores similares se reemplazan por marcadores antes del envío, también tu clave de API guardada. Un aviso en el adjunto indica cuándo se reemplazó algo. Para ver exactamente lo que se envió, haz clic en un adjunto o en **Enviado con**.
 
 Los objetos muy grandes se acortan; el adjunto se marca entonces como **parcial**, y el asistente sabe que solo vio una parte. Las instrucciones dentro del contenido adjunto, por ejemplo en un archivo de conocimiento o en la salida de una herramienta, el asistente las trata como datos, no como instrucciones para sí mismo.
+
+Tus propios archivos son datos para el asistente, no instrucciones: diga lo que diga un archivo, no puede hacer que el asistente cambie, ejecute o apruebe nada, y su contenido se marca para el modelo como datos no fiables. Los archivos se guardan en tu carpeta de datos de Nodestro, se eliminan cuando los eliminas a ellos o el chat, y solo se envían al modelo con el mensaje al que están adjuntos (o se vuelven a leer, si hace falta, en un mensaje posterior del mismo chat). En un servidor con inicio de sesión, un chat y sus archivos solo los ve la persona que lo inició.
 
 ## Coste {#kosten}
 <!-- keywords: coste, costo, tokens, uso, precio, coste del chat, facturado -->

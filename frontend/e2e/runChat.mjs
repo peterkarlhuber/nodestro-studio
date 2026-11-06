@@ -109,8 +109,21 @@ try {
   await page.getByTestId("lrc-input").fill("Was machen die Teams gerade?");
   check((await page.getByTestId("lrc-send").textContent()).includes("Frage stellen"), "The send button names the mode");
   await page.getByTestId("lrc-send").click();
+  // The team leader reasons first: its summarized thinking arrives live, apart from the answer.
+  const liveAnswer = page.getByTestId("lrc-live-answer");
+  await liveAnswer.waitFor({ timeout: 20000 });
+  const liveReasoning = liveAnswer.getByTestId("lrc-reasoning");
+  await liveReasoning.waitFor({ timeout: 20000 });
+  check(["thinking", "summary"].includes(await liveReasoning.getAttribute("data-state")), "The answer being written shows the team leader's reasoning live");
+  await page.getByTestId("lrc-thinking-display").selectOption("live");
+  await until(async () => (await liveAnswer.count()) === 0 || (await liveReasoning.locator(".reasoning__body").count()) === 1, "the live text opens");
+  await shot("runchat-reasoning-live");
   const answer = page.getByTestId("lrc-answer");
   await answer.waitFor({ timeout: 20000 });
+  const keptReasoning = answer.getByTestId("lrc-reasoning");
+  check((await keptReasoning.getAttribute("data-state")) === "summary", "The stored answer keeps its reasoning, labelled as a summary");
+  check((await keptReasoning.textContent()).includes("zwei laufende Teams"), "The reasoning is the text the model sent");
+  check(!(await answer.locator(".lrc-message__text").textContent()).includes("zwei laufende Teams"), "The reasoning is not part of the answer text");
   const answerText = await answer.textContent();
   check(answerText.includes("Chat-Antwort, keine Entscheidung") && answerText.includes("Zwei Teams arbeiten noch"), "The answer arrives live, marked as a chat answer");
   check(answerText.includes("Stand gelesen: ja"), "The answer was written from the run snapshot");

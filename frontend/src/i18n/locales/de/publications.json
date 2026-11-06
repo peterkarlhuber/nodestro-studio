@@ -1,0 +1,45 @@
+{
+  "description": "Alle in dieser Installation veröffentlichten APIs mit Workflow, Status, aktiver Version und Exporten. Veröffentlichen, Versionen, Schlüssel und Exporte verwaltest du im Workflow unter API & Export.",
+  "searchLabel": "Veröffentlichungen durchsuchen",
+  "searchPlaceholder": "Nach API, Adresse oder Workflow suchen",
+  "statusLabel": "Nach Status filtern",
+  "allStatuses": "Alle Status",
+  "status": {
+    "live": "Aktiv",
+    "off": "Ausgeschaltet",
+    "noVersion": "Keine aktive Version"
+  },
+  "sortLabel": "Sortierung",
+  "sort": {
+    "name": "Name (A–Z)",
+    "published": "Zuletzt veröffentlicht",
+    "exported": "Zuletzt exportiert"
+  },
+  "results_one": "{{count}} Veröffentlichung",
+  "results_other": "{{count}} Veröffentlichungen",
+  "columns": {
+    "api": "API",
+    "workflow": "Workflow",
+    "status": "Status",
+    "version": "Aktive Version",
+    "published": "Veröffentlicht am",
+    "exports": "Exportverlauf",
+    "actions": "Aktionen"
+  },
+  "version": "v{{release}}",
+  "workflowVersion": "Workflow-Version {{version}}",
+  "network": "Netzwerk",
+  "workflowMissing": "Workflow gelöscht",
+  "exports": {
+    "summary_one": "{{count}} Export",
+    "summary_other": "{{count}} Exporte",
+    "none": "Noch keine Exporte",
+    "download": "{{file}} herunterladen"
+  },
+  "open": "API & Export öffnen",
+  "openFor": "{{open}}: {{name}}",
+  "empty": "Noch keine API veröffentlicht",
+  "emptyText": "Öffne einen Workflow und veröffentliche ihn unter API & Export. Seine API erscheint dann hier.",
+  "noMatch": "Keine Veröffentlichung passt zum Filter",
+  "clearFilters": "Filter zurücksetzen"
+}

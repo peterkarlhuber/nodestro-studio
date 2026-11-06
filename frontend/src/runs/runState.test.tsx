@@ -156,6 +156,26 @@ describe("failure reasons (ED-05, AD-01)", () => {
     expect(screen.queryByRole("link", { name: /Einstellungen öffnen/ })).toBeNull();
   });
 
+  it("explains a refused conversation as a provider problem, not the workflow's, with retry advice", () => {
+    const technical =
+      "InvalidRequestError: ollama: BadRequestError: Error code: 400 - invalid message content type: <nil> " +
+      "[request messages: #0 user[text] #1 assistant[reasoning,tool_call] #2 user[tool_result] #3 assistant[reasoning] #4 user[text]]";
+    const failed = run(
+      [node("a", "agent", "Stillstandsanalyst", { agent: { name: "Stillstandsanalyst", model: "ollama:qwen3.5:4b" } as WorkflowNode["agent"] })],
+      { a: state("failed", "2026-11-06T09:39:00Z", { error: technical, error_code: "run.provider_rejected_messages", error_params: { status: 400, provider: "ollama" } }) },
+      { error: "Failed: Stillstandsanalyst", error_code: "run.nodes_failed", error_params: { nodes: "Stillstandsanalyst" } },
+    );
+    render(wrap(<RunProblem run={failed} />));
+    const banner = screen.getByTestId("run-failure");
+    expect(banner).toHaveTextContent("Ollama hat den Gesprächsverlauf dieses Schritts abgelehnt (Status 400)");
+    expect(banner).toHaveTextContent("Das liegt nicht an deinem Workflow");
+    expect(banner).toHaveTextContent("Modell: ollama:qwen3.5:4b");
+    expect(screen.getByTestId("problem-hint")).toHaveTextContent("Bereits erfolgreiche Schritte laufen nicht noch einmal");
+    expect(screen.queryByRole("link", { name: /Einstellungen öffnen/ })).toBeNull();
+    const context = { code: "run.provider_context_exceeded", params: { provider: "vllm", status: 400 }, message: "InvalidRequestError" };
+    expect(problemText(t, context)).toContain("Kontextfenster, das vLLM");
+  });
+
   it("has every new text and hint in all six languages", async () => {
     const codes = [
       "run.agent.IncompleteResponseError",
@@ -168,6 +188,9 @@ describe("failure reasons (ED-05, AD-01)", () => {
       "run.provider_unreachable",
       "run.provider_rate_limited",
       "run.provider_overloaded",
+      "run.provider_rejected_messages",
+      "run.provider_context_exceeded",
+      "run.agent.HistoryConversionError",
     ];
     for (const language of LANGUAGES) {
       await loadLanguage(language);

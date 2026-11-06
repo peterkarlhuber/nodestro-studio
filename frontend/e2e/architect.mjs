@@ -65,6 +65,14 @@ try {
   check(true, "The architect shows its steps while it works");
   await dialog.locator(".architect-log__item").first().waitFor();
   check(true, "The activity log fills from real events");
+  const reasoning = dialog.getByTestId("architect-reasoning");
+  await reasoning.waitFor({ timeout: 15000 });
+  check(
+    ["thinking", "summary"].includes(await reasoning.getByTestId("architect-reasoning-view").getAttribute("data-state")),
+    "The architect's reasoning shows live, apart from the activity log",
+  );
+  check(!(await dialog.locator(".architect-log__list").textContent()).includes("Eingaben: ein Thema"), "Reasoning is not written into the activity log");
+  await shot("architect-reasoning");
   await dialog.getByText("Annahme für ein offenes Detail getroffen", { exact: false }).waitFor();
   check(true, "Counted log messages appear in the interface language");
   await dialog.locator(".arch-node").first().waitFor({ timeout: 15000 });

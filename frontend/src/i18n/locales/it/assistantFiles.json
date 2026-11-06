@@ -1,0 +1,55 @@
+{
+  "attach": "Allega file dal tuo computer",
+  "drop": "Rilascia i file per allegarli al messaggio",
+  "composerLabel": "File per il tuo prossimo messaggio",
+  "again": "Di nuovo",
+  "status": {
+    "uploading": "Caricamento e lettura…"
+  },
+  "remove": "Rimuovi {{name}} dal messaggio",
+  "dismiss": "Ignora {{name}}",
+  "sent": "File inviati con questo messaggio",
+  "waitUploads": "Attendi che i file vengano caricati e letti.",
+  "mode": {
+    "document": "PDF nativo",
+    "image": "Immagine",
+    "text": "Testo estratto",
+    "ocr_text": "Testo OCR",
+    "overview": "Panoramica",
+    "unavailable": "Non leggibile"
+  },
+  "modeHelp": {
+    "document": "Il modello legge direttamente il PDF, con il testo e le immagini delle pagine.",
+    "image": "Il modello vede direttamente l'immagine.",
+    "text": "Nodestro estrae testo e tabelle in locale; il modello li riceve come testo.",
+    "ocr_text": "Un PDF scansionato: Nodestro ne ha riconosciuto il testo in locale (OCR). Il testo può contenere errori.",
+    "overview": "Troppo grande per inviarlo per intero: il modello riceve la struttura e legge le parti che gli servono.",
+    "unavailable": "Il modello attuale non può leggere questo file."
+  },
+  "model": {
+    "native": "{{model}} legge PDF e immagini in modo nativo.",
+    "pdfOnly": "{{model}} legge i PDF in modo nativo ma non può vedere le immagini.",
+    "imagesOnly": "{{model}} vede le immagini; i PDF vengono inviati come testo estratto.",
+    "none": "{{model}} riceve i PDF come testo estratto e non può vedere le immagini."
+  },
+  "list": {
+    "toggle_one": "{{count}} file in questa chat",
+    "toggle_other": "{{count}} file in questa chat",
+    "label": "File di questa chat",
+    "hint": "I file restano in questa chat finché non elimini loro o la chat. Nei messaggi successivi l'assistente può rileggerli; «Usa di nuovo» invia un file per intero con il tuo prossimo messaggio. Nulla diventa conoscenza se non lo salvi lì.",
+    "added": "aggiunto {{time}}",
+    "waiting": "Prossimo messaggio",
+    "inKnowledge": "Nella conoscenza",
+    "reuseName": "Usa di nuovo {{name}} nel prossimo messaggio",
+    "reused": "Già allegato al prossimo messaggio",
+    "preview": "Mostra cosa ha letto Nodestro da {{name}}",
+    "download": "Scarica {{name}}",
+    "saveKnowledge": "Salva {{name}} nella conoscenza",
+    "delete": "Elimina {{name}}"
+  },
+  "preview": {
+    "title": "Cosa ha letto Nodestro da {{name}}",
+    "empty": "Nodestro non ha letto alcun testo da questo file (ad esempio un'immagine).",
+    "truncated": "Qui viene mostrato solo l'inizio."
+  }
+}

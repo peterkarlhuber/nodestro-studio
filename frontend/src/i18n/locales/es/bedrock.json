@@ -20,7 +20,7 @@
     "profile": "Perfil de AWS",
     "profileHint": "Un perfil con nombre de tu configuración de AWS (~/.aws/config). Solo se guarda el nombre; las credenciales se quedan en tu configuración de AWS.",
     "operator_role": "Rol asignado por el operador",
-    "operatorHint": "Tu operador dio a este espacio de trabajo su propio rol de AWS. No puedes verlo ni cambiarlo.",
+    "operator_roleHint": "Tu operador dio a este espacio de trabajo su propio rol de AWS. No puedes verlo ni cambiarlo.",
     "notAvailable": "Amazon Bedrock no está disponible en este servidor para este espacio de trabajo. Pide a tu operador que le asigne un rol de AWS."
   },
   "profile": {

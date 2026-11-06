@@ -46,13 +46,18 @@
     "too_many_steps": "Die Antwort brauchte zu viele Arbeitsschritte und wurde beendet. Stelle die Frage enger.",
     "answer_too_long": "Die Antwort wurde zu lang und abgeschnitten. Bitte um eine kürzere Antwort.",
     "refused": "Das Modell hat die Antwort abgelehnt.",
-    "failed": "Die Antwort ist fehlgeschlagen."
+    "failed": "Die Antwort ist fehlgeschlagen.",
+    "too_many_files": "Ein Chat enthält höchstens {{limit}} Dateien. Entferne zuerst Dateien, die du nicht mehr brauchst.",
+    "too_many_message_files": "Mit einer Nachricht können höchstens {{limit}} Dateien gesendet werden.",
+    "file_missing": "Eine Datei gehört nicht mehr zu diesem Chat. Entferne sie aus der Nachricht und versuche es erneut.",
+    "file_removed": "Die Datei wurde aus dem Chat entfernt."
   },
   "draft": {
     "unknown_tool": "Das unbekannte Tool „{{name}}“ wurde weggelassen.",
     "model_unavailable": "Das Modell „{{model}}“ ist nicht verfügbar; gewählt wurde {{chosen}}.",
     "server_tool_provider": "Das Server-Tool „{{name}}“ wurde weggelassen: Es steht nur für Modelle von Anthropic zur Verfügung.",
-    "judge_unsupported": "Das Standardmodell „{{model}}“ kann kein strukturiertes Urteil für eine Qualitätsprüfung liefern. Wähle einen anderen Judge, bevor du die Prüfung einschaltest."
+    "judge_unsupported": "Das Standardmodell „{{model}}“ kann kein strukturiertes Urteil für eine Qualitätsprüfung liefern. Wähle einen anderen Judge, bevor du die Prüfung einschaltest.",
+    "max_tokens_reduced": "Das Antwortlimit wurde auf {{max_tokens}} Tokens gesenkt, die maximale Ausgabe von {{model}}."
   },
   "config": {
     "library": "Die Konfiguration passt nicht zu den Regeln der Agenten-Engine Orkexa.",
@@ -90,7 +95,14 @@
     "model_missing": "Wähle ein Modell.",
     "model_provider_missing": "Das Modell „{{model}}“ hat keinen Anbieter; schreibe es als anbieter:modell, zum Beispiel ollama:{{model}}.",
     "provider_mismatch": "Dieser Zugang gehört zu einem anderen Anbieter und kann kein Modell von {{provider}} ausführen.",
-    "invalid": "Die Einstellung {{name}} muss eine positive Zahl sein, deshalb hat Nodestro sie nicht übernommen. Korrigiere den Wert und starte Nodestro neu."
+    "invalid": "Die Einstellung {{name}} muss eine positive Zahl sein, deshalb hat Nodestro sie nicht übernommen. Korrigiere den Wert und starte Nodestro neu.",
+    "option_unsupported": "„$t(modelParams.optionName.{{option}})“ ist mit diesem Modell nicht nutzbar. Setze die Option zurück oder wähle ein anderes Modell.",
+    "native_tool_unsupported": "Das Anbieter-Werkzeug „{{name}}“ ist mit diesem Modell nicht nutzbar. Entferne es oder wähle ein anderes Modell.",
+    "max_tokens_above_model": "Das Antwortlimit ({{max_tokens}} Tokens) übersteigt die maximale Ausgabe des Modells ({{maximum}} Tokens). Senke es.",
+    "max_tokens_above_context": "Das Antwortlimit ({{max_tokens}} Tokens) lässt im Kontextfenster des Modells ({{window}} Tokens) keinen Platz für den Prompt.",
+    "thinking_budget_with_effort": "Stelle entweder einen Aufwand oder ein Denkbudget ein, nicht beides.",
+    "effort_adjusted": "Das Modell kennt den Aufwand „$t(agent.options.effort.{{effort}})“ nicht; stattdessen wird „$t(agent.options.effort.{{used}})“ verwendet.",
+    "effort_dropped": "Das Modell nimmt keine Aufwand-Einstellung an; „$t(agent.options.effort.{{effort}})“ wird nicht gesendet. Stelle den Aufwand auf die Vorgabe."
   },
   "workflow": {
     "edge_dangling": "Eine Verbindung zeigt auf einen Knoten, den es nicht gibt.",
@@ -168,6 +180,7 @@
       "MaxToolRoundsError": "Der Agent hat öfter Tools aufgerufen, als seine Grenze an Tool-Runden erlaubt.",
       "StructuredOutputError": "Das Modell hat kein Ergebnis im verlangten Ausgabeformat geliefert.",
       "UnexpectedResponseError": "Die Antwort des Modells war anders als erwartet.",
+      "HistoryConversionError": "Der Gesprächsverlauf dieses Schritts ließ sich nicht für das Modell aufbereiten: Eine seiner Nachrichten hat eine Form, die dieser Anbieter nicht annimmt. Es wurde nichts gesendet.",
       "EvaluationFailedError": "Das Ergebnis hat die Qualitätsprüfung nicht bestanden.",
       "ToolExecutionError": "Ein Tool des Agenten ist mit einem Fehler abgebrochen."
     },
@@ -184,7 +197,10 @@
     "provider_rate_limited": "{{provider}} hat zu viele Anfragen oder Tokens in kurzer Zeit gemeldet (Rate-Limit).",
     "provider_overloaded": "{{provider}} ist gerade überlastet.",
     "provider_auth_aws": "AWS hat die Anmeldung für Amazon Bedrock nicht akzeptiert: Zugangsdaten fehlen oder sind abgelaufen, oder der IAM-Rolle fehlt eine Berechtigung.",
-    "value_unverified": "Die Kennzahl {{field}} ({{value}}) wurde auch nach einer Korrektur nicht mit einem Tool berechnet. Der Schritt wurde gestoppt, damit keine Entscheidung auf einer ungeprüften Zahl beruht."
+    "value_unverified": "Die Kennzahl {{field}} ({{value}}) wurde auch nach einer Korrektur nicht mit einem Tool berechnet. Der Schritt wurde gestoppt, damit keine Entscheidung auf einer ungeprüften Zahl beruht.",
+    "local_model_missing": "Das lokale Modell {{model}} ist auf dem Modellserver nicht installiert.",
+    "provider_rejected_messages": "{{provider}} hat den Gesprächsverlauf dieses Schritts abgelehnt (Status {{status}}): Eine seiner Nachrichten hat eine Form, die der Anbieter nicht annimmt. Das liegt nicht an deinem Workflow oder deiner Eingabe.",
+    "provider_context_exceeded": "Der Gesprächsverlauf dieses Schritts ist größer als das Kontextfenster, das {{provider}} dem Modell gibt."
   },
   "budget": {
     "not_starter": "Nur die Person, die den Lauf gestartet hat, oder ein Administrator kann über sein Budget entscheiden.",
@@ -331,7 +347,8 @@
     "local_max_tokens": "Die Antwortgrenze dieses Agenten ({{max_tokens}} Tokens) passt nicht in das Kontextfenster des lokalen Modellservers ({{tokens}} Tokens).",
     "local_reasoning_saving": "Auf diesem Computer ohne Grafikkarte antworten diese Agenten ohne Denkphase (Denkaufwand Mittel): {{nodes}}. Wähle für einen Agenten den Denkaufwand Hoch oder schalte den CPU-Sparmodus in den Einstellungen aus.",
     "value_source_type": "{{field}} soll aus einem Tool stammen, geprüft werden aber nur Zahlen eines strukturierten Ergebnisses.",
-    "value_source_no_tool": "{{field}} soll aus einem Tool stammen, aber weder dieser Agent noch ein Schritt davor hat ein Tool. Füge ein Tool wie den Rechner hinzu."
+    "value_source_no_tool": "{{field}} soll aus einem Tool stammen, aber weder dieser Agent noch ein Schritt davor hat ein Tool. Füge ein Tool wie den Rechner hinzu.",
+    "orchestrator_model_unsupported": "Der Orchestrator „{{name}}“ verwendet {{model}}, das keine strukturierten Entscheidungen liefern kann. Wähle für ihn ein anderes Modell."
   },
   "backup": {
     "not_zip": "Die Datei ist kein Nodestro-Backup (keine ZIP-Datei).",
@@ -360,7 +377,9 @@
     "workflow_missing": "Zum Überarbeiten fehlt der aktuelle Workflow.",
     "not_ready": "Dieser Entwurf kann nicht (mehr) übernommen werden.",
     "agents_capped_one": "{{count}} Agent wurde weggelassen, damit der Workflow überschaubar bleibt.",
-    "agents_capped_other": "{{count}} Agenten wurden weggelassen, damit der Workflow überschaubar bleibt."
+    "agents_capped_other": "{{count}} Agenten wurden weggelassen, damit der Workflow überschaubar bleibt.",
+    "truncated": "Die Antwort des Schritts „$t(modelParams.operation.{{operation}})“ wurde an ihrem Ausgabelimit ({{max_tokens}} Tokens) abgeschnitten. Erhöhe das Limit unter Einstellungen > Ausgabelimits der Modelle oder beschreibe einen kleineren Workflow.",
+    "truncated_over_budget": "Die Antwort des Schritts „$t(modelParams.operation.{{operation}})“ wurde an ihrem Ausgabelimit abgeschnitten. Eine Wiederholung mit bis zu {{max_tokens}} Tokens könnte mehr kosten, als vom Budget des Auftrags ({{budget}} USD) übrig ist, deshalb wurde sie nicht gesendet. Erhöhe das Budget oder das Ausgabelimit des Schritts."
   },
   "tool_draft": {
     "name_taken": "Ein Tool namens {{name}} gibt es bereits.",
@@ -646,7 +665,9 @@
     "not_found": "Diese Version wurde nicht veröffentlicht."
   },
   "model": {
-    "unavailable": "Nodestro hat keine Einstellungen für {{provider}}; Läufe können nicht starten."
+    "unavailable": "Nodestro hat keine Einstellungen für {{provider}}; Läufe können nicht starten.",
+    "local_unavailable": "Das Modell {{model}} ist hier noch nicht einsatzbereit.",
+    "choice_invalid": "{{model}} kann für diese Aktion hier nicht verwendet werden. Wähle eines der Modelle, die bereit sind."
   },
   "sync": {
     "disabled": "Auf das Ergebnis zu warten ist für diese API nicht eingeschaltet."
@@ -745,7 +766,9 @@
     "aws_rate_limited": "AWS hat zu viele Anfragen gemeldet. Versuche es später erneut.",
     "aws_unreachable": "Amazon Bedrock war in dieser Region nicht erreichbar (Netzwerk, Proxy oder Regionsname).",
     "aws_verification_failed": "Die Verbindungsprüfung mit AWS ist fehlgeschlagen.",
-    "model_invalid": "Dieses Modell gehört nicht zu {{provider}}; prüfe nur eine Bedrock-Modell-ID, ein Inferenzprofil oder einen ARN."
+    "model_invalid": "Dieses Modell gehört nicht zu {{provider}}; prüfe nur eine Bedrock-Modell-ID, ein Inferenzprofil oder einen ARN.",
+    "limit_unknown": "Unbekannte Limits: {{names}}.",
+    "limit_invalid": "{{name}} muss eine ganze Zahl von {{min}} bis {{max}} sein."
   },
   "access": {
     "login_required": "Melde dich an, um diesen Teil von Nodestro zu nutzen.",
@@ -901,6 +924,7 @@
         "MaxToolRoundsError": "Erhöhe beim Agenten unter „Erweitert“ die „Max. Tool-Runden“ oder beschreibe im Auftrag, wann er fertig ist.",
         "StructuredOutputError": "Prüfe die Felder unter „Ausgabeformat“; wenige, klar beschriebene Felder helfen. Oft genügt es, den Lauf fortzusetzen.",
         "UnexpectedResponseError": "Setze den Lauf fort. Tritt es wieder auf, helfen die technischen Details beim Anbieter weiter.",
+        "HistoryConversionError": "Wurde der Agent auf ein Modell eines anderen Anbieters umgestellt, setze mit dem bisherigen Modell fort. Sonst nennen die technischen Details die Nachricht für eine Fehlermeldung.",
         "EvaluationFailedError": "Lies beim Schritt die Begründung der Prüfung und passe Auftrag oder Kriterien an.",
         "ToolExecutionError": "Die technischen Details nennen das Tool und seinen Fehler. Prüfe das Tool unter „Tools“."
       },
@@ -920,12 +944,18 @@
       "provider_unreachable": "Prüfe Internetverbindung, Firewall oder Proxy und setze den Lauf dann fort.",
       "provider_rate_limited": "Warte einen Moment und setze den Lauf fort. Weniger gleichzeitige Läufe oder ein höheres Limit beim Anbieter helfen dauerhaft.",
       "provider_overloaded": "Das liegt nicht an deinem Workflow. Warte ein paar Minuten und setze den Lauf dann fort.",
-      "provider_auth_aws": "Prüfe Anmeldung und Berechtigungen unter Einstellungen → KI-Anbieter → Amazon Bedrock mit „Verbindung prüfen“."
+      "provider_auth_aws": "Prüfe Anmeldung und Berechtigungen unter Einstellungen → KI-Anbieter → Amazon Bedrock mit „Verbindung prüfen“.",
+      "local_model_missing": "Installiere es mit „Beheben“ oder unter Einstellungen, Lokale Modelle, und starte den Lauf dann erneut. Automatische Läufe laden nie selbst Modelle herunter.",
+      "provider_rejected_messages": "Setze den Lauf fort: Bereits erfolgreiche Schritte laufen nicht noch einmal. Tritt es wieder auf, listen die technischen Details die Nachrichten des Verlaufs (ohne Inhalt) für eine Fehlermeldung auf.",
+      "provider_context_exceeded": "Kürze die Eingabe oder das Wissen des Agenten, wähle ein Modell mit größerem Kontextfenster oder erhöhe die Kontextlänge des lokalen Modellservers."
     },
     "provider": {
       "aws_access_denied": "Erlaube bedrock:InvokeModel und bedrock:InvokeModelWithResponseStream auf dem Modell oder Inferenzprofil (mit „Nur EU“ auch bedrock:GetInferenceProfile) und aktiviere das Modell in der AWS-Konsole.",
       "aws_credentials_missing": "Auf diesem Computer: Melde dich mit „aws sso login“ an oder prüfe das Profil und nutze dann „Verbindung prüfen“ unter Einstellungen → KI-Anbieter.",
       "data_residency_violation": "Verwende eine EU-Region und ein EU-Inferenzprofil (eu.…) oder eine Modell-ID dieser Region; globale Profile werden immer abgelehnt."
+    },
+    "check": {
+      "local_model_missing": "Installiere es mit „Beheben“ oder unter Einstellungen, Lokale Modelle, und starte den Lauf dann erneut. Automatische Läufe laden nie selbst Modelle herunter."
     }
   },
   "setupProvider": "KI-Anbieter einrichten",
@@ -1013,7 +1043,12 @@
     "not_chat_model": "Das ist kein Sprachmodell; messen lassen sich nur Sprachmodelle.",
     "benchmark_failed": "Die Geschwindigkeit konnte nicht gemessen werden.",
     "invalid_package_path": "{{path}} ist kein Offline-Modellpaket, das Nodestro importieren kann. Wähle den Ordner, der mit orkexa-local export erstellt wurde; er enthält orkexa-models.json.",
-    "invalid_package_reason": "{{path}} kann nicht als Offline-Modellpaket importiert werden. {{reason}} Exportiere das Paket auf dem Quellcomputer erneut."
+    "invalid_package_reason": "{{path}} kann nicht als Offline-Modellpaket importiert werden. {{reason}} Exportiere das Paket auf dem Quellcomputer erneut.",
+    "network": "Das Internet war nicht erreichbar.",
+    "install_running": "Die lokale Modell-Laufzeit wird bereits installiert.",
+    "interrupted": "Nodestro wurde beendet, während das lief.",
+    "unavailable": "Hier ist kein lokaler Modellserver verfügbar.",
+    "start_failed": "Der lokale Modellserver ist nicht gestartet."
   },
   "knowledge": {
     "failed": "Der semantische Index konnte nicht aktualisiert werden.",
@@ -1032,5 +1067,9 @@
     "too_many_inputs": "Zu viele Abschnitte auf einmal für das Embedding-Modell.",
     "query_too_long": "Der Suchtext ist zu lang: Es werden höchstens {{max}} Zeichen durchsucht. Kürze ihn und suche erneut.",
     "hits_out_of_range": "Eine Suche liefert zwischen 1 und {{max}} Treffer. Wähle eine Zahl in diesem Bereich."
+  },
+  "settings": {
+    "output_limit_unknown": "Unbekannte Schritte: {{names}}.",
+    "output_limit_invalid": "Das Ausgabelimit von „$t(modelParams.operation.{{operation}})“ muss eine ganze Zahl von {{min}} bis {{max}} sein."
   }
 }

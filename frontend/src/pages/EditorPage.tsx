@@ -36,6 +36,7 @@ import { problemText } from "../lib/errors";
 import { useDocumentTitle } from "../lib/documentTitle";
 import { crumbLink, parseTrail } from "../lib/trail";
 import { ApiDialog } from "../publish/ApiDialog";
+import { API_DIALOG_PARAM } from "../publish/publicationsList";
 import { countsByNode, findings, startBlock } from "../editor/CheckList";
 import { NotFoundState } from "../components/NotFoundState";
 import { useSettingsHref } from "../lib/settingsLink";
@@ -131,6 +132,25 @@ export function EditorPage() {
     }
     setSearchParams({}, { replace: true });
   }, [focusNode, focusSection, loadedId, id, setSearchParams]);
+
+  // ?api=1 (the Publications page's "Open API & Export") opens the "API & Export" dialog once the workflow is loaded.
+  // The parameter stays while the dialog is open, so a reload opens it again; closing the dialog removes it.
+  const apiParam = searchParams.get(API_DIALOG_PARAM);
+  useEffect(() => {
+    if (apiParam && loadedId === id) setApiOpen(true);
+  }, [apiParam, loadedId, id]);
+  const closeApi = useCallback(() => {
+    setApiOpen(false);
+    if (!apiParam) return;
+    setSearchParams(
+      (current) => {
+        const next = new URLSearchParams(current);
+        next.delete(API_DIALOG_PARAM);
+        return next;
+      },
+      { replace: true },
+    );
+  }, [apiParam, setSearchParams]);
 
   // The open workflow is only offered to the assistant; the user decides whether it is sent.
   const offer: ContextOffer | null =
@@ -525,7 +545,7 @@ export function EditorPage() {
       ) : null}
       <Inspector check={check.data} panelRef={inspectorRef} />
       <RunDialog open={runOpen} onClose={() => setRunOpen(false)} onStarted={onStarted} save={save} check={check.data} />
-      <ApiDialog open={apiOpen} onClose={() => setApiOpen(false)} workflowId={id} dirty={dirty} save={save} />
+      <ApiDialog open={apiOpen} onClose={closeApi} workflowId={id} dirty={dirty} save={save} />
       <VersionsDialog open={versionsOpen} onClose={() => setVersionsOpen(false)} save={save} onRestored={onRestored} />
       <Modal
         title={t("editor.page.discardTitle")}

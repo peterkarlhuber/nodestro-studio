@@ -4,8 +4,9 @@ Usage: python tests/e2e_assistant_server.py --data-dir DIR [--port 8030]
 
 The model decides from the conversation what to do, the way a real one would: look up the
 documentation for a question about Nodestro, describe an attached workflow, propose a
-handover when asked to implement something, write slowly (so the browser can cancel) and fail
-once with a connection error (so the browser can retry). Nothing calls the API.
+handover when asked to implement something, write slowly (so the browser can cancel), fail
+once with a connection error (so the browser can retry) and say which files it received and how
+(a PDF document, extracted text or an image). Nothing calls the API.
 """
 
 from __future__ import annotations
@@ -25,7 +26,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import anthropic
 from e2e_defaults import keep_cloud_defaults
 import httpx
-from nodestro_runtime.testing import text, tool_use
+from nodestro_runtime.testing import text, thinking, tool_use
 import uvicorn
 
 from nodestro_studio.app import create_app, studio_config
@@ -66,6 +67,23 @@ def _last_tool(messages: list[Any]) -> str | None:
     return None
 
 
+def _files(messages: list[Any]) -> list[str]:
+    """The files the last user message carried, as the model receives them: ``name (PDF)``, ``name (Text)``,
+    ``Bild``."""
+    if not messages or _field(messages[-1], "role") != "user":
+        return []
+    found = []
+    for block in _blocks(_field(messages[-1], "content")):
+        kind = _field(block, "type")
+        if kind == "document":
+            source = _field(block, "source") or {}
+            media = _field(source, "media_type")
+            found.append(f"{_field(block, 'title')} ({'PDF' if media == 'application/pdf' else 'Text'})")
+        elif kind == "image":
+            found.append("Bild")
+    return found
+
+
 class _Stream:
     """Streams a scripted answer word by word, like the API."""
 
@@ -84,7 +102,15 @@ class _Stream:
             input_tokens=1200, output_tokens=1, cache_read_input_tokens=0, cache_creation_input_tokens=0
         )
         yield SimpleNamespace(type="message_start", message=SimpleNamespace(model=self.response.model, usage=usage))
-        for block in self.response.content:
+        for index, block in enumerate(self.response.content):
+            if block.type in ("thinking", "redacted_thinking"):
+                # Summarized thinking, as Claude streams it (the browser test of the live reasoning display).
+                yield SimpleNamespace(type="content_block_start", index=index, content_block=block)
+                for piece in re.findall(r"\S+\s*", getattr(block, "thinking", "") or ""):
+                    threading.Event().wait(self.delay)
+                    yield SimpleNamespace(type="thinking", thinking=piece)
+                yield SimpleNamespace(type="content_block_stop", index=index)
+                continue
             if block.type != "text":
                 continue
             for word in re.findall(r"\S+\s*", block.text):
@@ -142,11 +168,23 @@ class AssistantModel:
             return _Stream(
                 text("Ich habe eine Übergabe an den Workflow-Architekten vorbereitet. Geändert wurde nichts.")
             )
+        if "denk nach" in lower:
+            return _Stream(
+                thinking(
+                    "Die Frage betrifft Läufe. Ein Lauf ist eine Ausführung eines Workflows; "
+                    "ich erkläre das kurz und verweise auf die Dokumentation.",
+                    "Ein **Lauf** ist eine Ausführung eines Workflows.",
+                ),
+                delay=0.12,
+            )
         if "ausführlich" in lower:
             return _Stream(text(" ".join(f"Absatz{index}" for index in range(400))), delay=0.08)
         if "verbindung" in lower and not self.failed_once:
             self.failed_once = True
             raise anthropic.APIConnectionError(request=httpx.Request("POST", "https://api.anthropic.com/v1/messages"))
+        files = _files(messages) if tool is None else []
+        if files:
+            return _Stream(text(f"Erhaltene Dateien: {'; '.join(files)}. Ich habe nichts ausgeführt."))
         if headers:
             described = "; ".join(f"{item['kind']} „{item['label']}“ ({item['version']})" for item in headers)
             return _Stream(text(f"Angehängt sehe ich: {described}. Ich habe nichts ausgeführt."))

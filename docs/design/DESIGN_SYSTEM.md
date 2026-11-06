@@ -134,6 +134,12 @@ Rules:
 - **Keyboard:** everything that can be done with the pointer has a keyboard path; on the canvas, steps are connected
   through *Connections* in the inspector.
 - **Touch:** interactive targets are at least 24×24px, and 44px high under `pointer: coarse` where space allows.
+- **Tooltips:** use the shared `Tooltip`/`HelpTip` (components/Tooltip.tsx), never a custom bubble. It renders in
+  the top layer (above modal dialogs), stays inside the window, opens on hover, keyboard focus and tap, closes on
+  Escape without closing a dialog, and never traps the focus. Help text explains effect, prerequisites and
+  consequences instead of repeating the label (see `docs/design/SETTINGS_PAGE.md`).
+- **Resizable areas:** a draggable edge is a focusable `role="separator"` with `aria-valuenow/min/max`, arrow keys
+  (Shift for larger steps), Home/End and a double-click reset (editor panels, settings width).
 
 ## Usage in the frontend
 

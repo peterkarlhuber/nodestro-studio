@@ -4,12 +4,17 @@ import { useEffect, useMemo, useState } from "react";
 import { api } from "../api/client";
 import { keys } from "../api/hooks";
 import type { ChatMessage, Conversation, DocSource, Handover, ReplyEvent, Usage } from "../api/types";
+import { withDelta, withStatus } from "../lib/reasoningTrace";
 
 /** Apply one live event of an answer to the message. */
 export function applyReplyEvent(message: ChatMessage, event: ReplyEvent): ChatMessage {
   switch (event.type) {
     case "delta":
       return { ...message, content: message.content + event.text };
+    case "thinking":
+      return { ...message, reasoning: withDelta(message.reasoning, event.text, event.data.reasoning_kind) };
+    case "thinking_status":
+      return { ...message, reasoning: withStatus(message.reasoning, event.data.state, event.data.redacted) };
     case "step":
       return {
         ...message,

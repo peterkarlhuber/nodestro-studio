@@ -250,6 +250,41 @@ Batch runs (`nodestro_api.batches`), test series (`nodestro_api.benchmarks`) and
 There is only one engine; budget, approvals and usage apply to every run in the same way, and no costs are counted
 twice.
 
+## Progress of long operations
+
+`frontend/src/components/Progress.tsx` is the shared progress vocabulary:
+
+- `ProgressBar` has `role="progressbar"`. It sets `aria-valuenow` only when the progress is measured. Without a
+  measure it is indeterminate: a moving stripe, or a calm track under `prefers-reduced-motion`.
+- `StepList` marks the running step with `aria-current="step"`.
+- `LiveAnnouncer` is a polite live region that announces a new step once.
+- `TechnicalDetails` stays closed until asked for.
+
+`pages/LocalModelJobs.tsx` builds the cards of the local model jobs (setup, downloads, builds) on these components.
+Each card shows the current step, whether action is needed, the bytes, and a percentage only with a known total. It
+shows the rate and the remaining time only when the runtime reports them. A failure comes with a remedy, and a
+retry or resume button where it helps. The backend contract is described in nodestro-runtime
+`docs/local-models.md` ("Setup and download progress"). `frontend/e2e/localModels.mjs` runs a real setup against a
+fresh data folder (download, reload, cancel). It replays recorded states for the indeterminate, the failed and the
+parallel-download cases.
+
+## Missing local models
+
+One mechanism serves every action that needs a local model (`frontend/src/missingModel/`). The server decides the
+cause and the allowed actions (`409 model.local_unavailable`, `src/api/modelReadiness.ts`); the studio never guesses
+them. A surface passes the refused action's error to `askMissingModel()` or wraps its request in `withLocalModel()`;
+`MissingModelHost` (mounted once in the app shell) shows `MissingModelDialog`, and the promise says how to continue:
+with the same model once it is ready, with another ready model chosen for this action only (`switched`), or not at
+all. The surface keeps its own inputs and repeats its own request, so server checks (budget, permissions) apply again
+and nothing is entered twice. The dialog drives the existing jobs (`readinessApi.download` attaches to a running
+download, setup attaches on `local.job_running`) and their `JobCard`, checks readiness once when the job is done,
+and continues once: by **Continue**, or by itself after the explicit opt-in. A new request ends an open one.
+
+Problems reported by unattended starts, runs and checks (`check.local_model_missing`, `run.local_model_missing`,
+also inside `workflow.blocked`) get a **Fix** button (`ModelFixButton`): the same dialog in `fixOnly` mode, which
+continues nothing. The browser test `frontend/e2e/missingModel.mjs` runs against `tests/e2e_missing_model_server.py`
+(a fake managed Ollama whose `/api/pull` writes into the real model folder, scripted answers).
+
 ## Knowledge and memory
 
 - Files live in the `SQLiteFileStore`; texts are additionally stored in sections in the `SQLiteIndex` (FTS5). Through
@@ -327,6 +362,23 @@ tool calls, the export's `Sanitizer`, `preflight()` and the usage log.
   agent, tool, memory, knowledge, run), masks secrets, shortens large texts traceably and computes a fingerprint. Every
   message stores the snapshots it was sent with. *Update context* creates a new snapshot; older messages keep referring
   to theirs. Unsaved editor states come along as a `draft`; the interface detects changes to drafts by fingerprint.
+- **Own files** (`nodestro_api.assistant_files`, UI in `frontend/src/assistant/AssistantFiles.tsx` and
+  `useComposerFiles.ts`): files the user uploads to a conversation (`POST /api/assistant/conversations/{id}/files`,
+  multipart, one file per request from the UI) are workflow input files with `origin="assistant"`
+  (`nodestro_runtime.input_files`: format check by content, local extraction of PDF/Word/Excel/CSV, optional OCR,
+  cached extraction, content-addressed bytes). The conversation document lists them (`files`), so the input-file
+  clean-up keeps them (holder `conversation`); removing a file or deleting the conversation deletes them. Three scopes
+  stay apart: a message carries the files it was sent with in full (`SendRequest.file_ids`, recorded as
+  `ChatMessage.files` with the delivery mode each took); later messages see the conversation's other files as a list
+  and read them with the read-only `input_files` tool; knowledge is only created through the confirmed adoption
+  (`/api/knowledge/adopt`, "Save to knowledge"). How a file reaches the model is the run's delivery
+  (`nodestro_runtime.file_delivery.plan/deliver` with the assistant's own intro and tool wording): PDF as a native
+  document and images as image blocks only when the model's capabilities (`builder.capabilities`) support them,
+  otherwise extracted text, an overview plus the tool, or `unavailable` with a reason. File content is wrapped as
+  untrusted data; the files tool grants nothing. Downloads use `uploaded_file_headers(inline=False)` (attachment,
+  nosniff, sandbox CSP). On a server, a conversation belongs to the user who started it (`Conversation.owner`): every
+  conversation route answers 404 for another user, and `/api/inputs/*` and the adoption refuse another user's
+  assistant files the same way. Limits: 50 MB per file, 10 files per message, 50 per conversation.
 - **Suggestions** of the current view exist only in the browser (`frontend/src/assistant/store.ts`) and are attached
   only through an explicit action.
 - **Handover:** the tool `propose_handover` only creates a card. It opens the Workflow Architect, the agent designer or
@@ -334,7 +386,8 @@ tool calls, the export's `Sanitizer`, `preflight()` and the usage log.
 - **Flow:** one thread per answer; events (step, text, source, handover, usage) arrive through SSE under
   `/api/assistant/conversations/{id}/messages/{mid}/events`. Cancelling closes the stream; the tokens used until then
   are estimated. After a restart, open answers are marked as interrupted.
-- **Storage and costs:** chats, messages and snapshots live in the workspace's document store and in the backup.
+- **Storage and costs:** chats, messages and snapshots live in the workspace's document store and in the backup; the
+  bytes of a chat's files live with the input files (`<data dir>/inputs`).
   Every answer is exactly one entry in the usage log (source `assistant`, with chat and message).
 
 ## Published APIs and export
@@ -372,6 +425,18 @@ fallback language.
   `frontend/src/i18n/locales/<language>/<area>.json`. All languages are built in; nothing is translated or loaded at
   runtime. A test checks that all languages have the same keys, that every key used in the code exists, and that
   components contain no hard-coded sentences.
+- **Keys built from values** (``t(`flow.files.formats.${format}`)``) are checked by `src/i18n/dynamicKeys.test.ts`: it
+  asks the TypeScript compiler for the type of each `${…}` part, and when that is a closed set of literals (a union
+  from `api/types.ts`, an `as const` list) every resulting key must have a text in all six languages. Give such
+  values a literal type rather than `string`. Calls with an open value pass a `defaultValue` or are listed with a
+  reason in the test's `OPEN` table.
+- **Missing-key guard:** a key that exists in no language never reaches the screen as `area.some.key`.
+  `parseMissingKeyHandler` in `src/i18n/index.ts` shows a readable stand-in ("Some key"), logs
+  `Missing interface text: <key>` once in the browser console, and collects the key; every component test fails on a
+  collected key (`src/test/setup.ts`). A call that passes `defaultValue` chose its fallback and is not reported.
+- **Result file formats** are one table, `src/lib/resultFormats.ts` (id, extension, media type, preview), mirroring
+  `nodestro_runtime.reports.REPORT_FORMATS`; `tests/test_result_formats.py` compares both and the six language files.
+  The result node, the run's *Create file* dialog and its file list take options, labels and preview from it.
 - **Choosing the language:** on first start the browser language decides; unsupported languages fall back to English.
   A choice under *Settings* always wins. It is kept in `localStorage` (`nodestro-language`) and additionally in the
   backend settings. Switching only re-renders; it starts no run and no AI request.
@@ -395,7 +460,9 @@ fallback language.
   changes. The example part of the "Examples" documentation chapter is generated from the templates with
   `make example-docs`.
 - **Browser check:** `frontend/e2e/i18n.mjs` checks detection, switching without reload and without further requests,
-  saving, and all pages in all languages for truncated texts and horizontal scrolling.
+  saving, and all pages in all languages for truncated texts and horizontal scrolling. It also sweeps every page and
+  the editor's agent and result inspectors for translation keys shown as text (visible text, option labels, `title`,
+  `aria-label`, `placeholder`), fails on the guard's console message, and checks the result file formats by name.
 
 ## Editor layout
 
@@ -433,5 +500,6 @@ frontend/src/styles/    Midnight Citron tokens and app styles
 frontend/src/i18n/      Language selection and translations
 frontend/src/docs/      Built-in documentation per language
 frontend/e2e/           Playwright: smoke test, languages, Workflow Architect, Python libraries, assistant, flow
-                        (decision, approval, resume, batch, test series, schedule), editor panels and API & Export
+                        (decision, approval, resume, batch, test series, schedule), editor panels and API & Export,
+                        local model setup and download progress (localModels.mjs)
 ```

@@ -35,6 +35,7 @@ import type {
 import { DiscussIcon } from "../assistant/DiscussButton";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
+import { ModelReasoningNote } from "../components/ModelReasoningNote";
 import { CodeEditor } from "../components/CodeEditor";
 import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
 import { HelpTip } from "../components/Tooltip";
@@ -60,6 +61,8 @@ import { DesignAgentDialog } from "./DesignAgentDialog";
 import { InputPreview } from "./InputPreview";
 import { MemoryAssistantDialog } from "./MemoryAssistantDialog";
 import { OutputFieldsEditor } from "./OutputFieldsEditor";
+import { ModelOptionGate, ModelTokenLimits, NativeToolReason, OptionReason, nativeToolSupport, supportOf } from "./ModelOptionGate";
+import { acceptedEfforts, useModelProfile } from "../api/modelProfile";
 import { serverToolDescription, serverToolLabel, toolDescription } from "../lib/catalog";
 import { getDefaultModel } from "../lib/defaults";
 import { findModel, providerOf, sameModel, splitModel } from "../lib/providers";
@@ -469,19 +472,6 @@ interface SectionProps {
   ui: SectionUi;
 }
 
-/** Options only Anthropic offers: for another provider a note instead, unless a value is set (to reset it). */
-function AnthropicOnly({ agent, set, children }: { agent: AgentConfig; set: boolean; children: ReactNode }) {
-  const { t } = useTranslation();
-  const provider = providerOf(agent.model);
-  if (provider === "anthropic" || set) return <>{children}</>;
-  // Claude on Amazon Bedrock is a different provider with the Converse feature set: these options stay refused.
-  return (
-    <p className="field__hint" data-testid="anthropic-only">
-      {provider === "bedrock" ? t("bedrock.agent.anthropicOnly") : t("agent.anthropicOnly")}
-    </p>
-  );
-}
-
 /**
  * Options a Bedrock model may or may not offer (Orkexa's documented capabilities of the model behind the id): shown
  * only when the capability is supported; a value that is set stays visible next to the reason (to reset it). Unknown (a typed id, an application
@@ -548,6 +538,8 @@ function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
   const meta = useMeta();
   const available = (tools.data ?? []).filter((tool) => !agent.tools.includes(tool.name));
   const count = agent.tools.length + agent.server_tools.length;
+  const profile = useModelProfile(agent.model);
+  const provider = providerOf(agent.model);
   return (
     <Section
       {...ui}
@@ -585,23 +577,30 @@ function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
           <span className="nd-field-label">{t("agent.tools.serverTools")}</span>
           <HelpTip id="agent.serverTools" label={t("agent.tools.serverToolsShort")} />
         </span>
-        <AnthropicOnly agent={agent} set={agent.server_tools.length > 0}>
-          {(meta.data?.server_tools ?? []).map((tool) => (
-            <Toggle
-              key={tool.key}
-              label={serverToolLabel(t, tool)}
-              description={serverToolDescription(t, tool)}
-              checked={agent.server_tools.includes(tool.key)}
-              onChange={(on) =>
-                update({
-                  server_tools: on
-                    ? [...agent.server_tools, tool.key]
-                    : agent.server_tools.filter((key) => key !== tool.key),
-                })
-              }
-            />
-          ))}
-        </AnthropicOnly>
+        {(meta.data?.server_tools ?? []).map((tool) => {
+          // Provider-native tools run at the provider: offered where the model can use them, else the reason.
+          const support = nativeToolSupport(profile, tool.key, provider);
+          const checked = agent.server_tools.includes(tool.key);
+          return (
+            <div key={tool.key}>
+              {support.available || checked ? (
+                <Toggle
+                  label={serverToolLabel(t, tool)}
+                  description={serverToolDescription(t, tool)}
+                  checked={checked}
+                  onChange={(on) =>
+                    update({
+                      server_tools: on
+                        ? [...agent.server_tools, tool.key]
+                        : agent.server_tools.filter((key) => key !== tool.key),
+                    })
+                  }
+                />
+              ) : null}
+              {support.available ? null : <NativeToolReason tool={support} label={serverToolLabel(t, tool)} />}
+            </div>
+          );
+        })}
       </div>
       <FieldErrors issues={issues} field="server_tools" />
       <FieldErrors issues={issues} field="tools" />
@@ -892,6 +891,13 @@ function OutputSection({ agent, update, ui }: SectionProps) {
 
 function ThinkingSection({ agent, update, ui }: SectionProps) {
   const { t } = useTranslation();
+  const profile = useModelProfile(agent.model);
+  const provider = providerOf(agent.model);
+  // The effort levels the model accepts (documented); all levels when unknown. A set value stays selectable.
+  const accepted = acceptedEfforts(profile);
+  const efforts = EFFORTS.filter((value) => !value || !accepted || accepted.includes(value) || value === agent.effort);
+  const budget = supportOf(profile, "thinking_budget", provider);
+  const thinkingModes = supportOf(profile, "thinking", provider).values;
   return (
     <Section
       {...ui}
@@ -904,31 +910,50 @@ function ThinkingSection({ agent, update, ui }: SectionProps) {
           <Select
             aria-label={t("agent.thinking.effortShort")}
             value={agent.effort ?? ""}
-            options={options(t, "effort", EFFORTS)}
+            options={options(t, "effort", efforts)}
             onChange={(value) => update({ effort: (value || null) as AgentConfig["effort"] })}
           />
         </BedrockCapability>
       </Field>
       <Field label={t("agent.thinking.thinking")} tip="agent.thinking">
-        <AnthropicOnly agent={agent} set={agent.thinking !== null}>
+        <ModelOptionGate profile={profile} provider={provider} option="thinking" set={agent.thinking !== null}>
           <Select
             aria-label={t("agent.thinking.thinking")}
             value={agent.thinking ?? ""}
-            options={options(t, "thinking", THINKING)}
+            options={options(
+              t,
+              "thinking",
+              THINKING.filter((value) => !value || !thinkingModes || thinkingModes.includes(value) || value === agent.thinking),
+            )}
             onChange={(value) => update({ thinking: (value || null) as AgentConfig["thinking"] })}
           />
-        </AnthropicOnly>
+        </ModelOptionGate>
       </Field>
       <Field label={t("agent.thinking.display")} tip="agent.thinkingDisplay" hint={t("agent.thinking.displayHint")}>
-        <AnthropicOnly agent={agent} set={agent.thinking_display !== null}>
+        <ModelOptionGate profile={profile} provider={provider} option="thinking_display" set={agent.thinking_display !== null}>
           <Select
             aria-label={t("agent.thinking.display")}
             value={agent.thinking_display ?? ""}
             options={options(t, "thinkingDisplay", THINKING_DISPLAY)}
             onChange={(value) => update({ thinking_display: (value || null) as AgentConfig["thinking_display"] })}
           />
-        </AnthropicOnly>
+        </ModelOptionGate>
       </Field>
+      {budget.available || (agent.thinking_budget ?? null) !== null ? (
+        <Field label={t("modelParams.thinkingBudget.label")} hint={t("modelParams.thinkingBudget.hint")}>
+          <TextInput
+            type="number"
+            min={0}
+            step={256}
+            aria-label={t("modelParams.thinkingBudget.label")}
+            placeholder={t("modelParams.thinkingBudget.placeholder")}
+            value={agent.thinking_budget ?? ""}
+            onChange={(e) => update({ thinking_budget: e.target.value === "" ? null : Math.max(0, Math.round(Number(e.target.value))) })}
+          />
+          {budget.available ? null : <OptionReason option="thinking_budget" support={budget} />}
+        </Field>
+      ) : null}
+      <ModelReasoningNote model={agent.model} />
     </Section>
   );
 }
@@ -1063,6 +1088,10 @@ function AdvancedSection({
   // Bedrock: forcing a tool ("any", one tool) only where the model supports it (not e.g. Claude 5.5 on Bedrock).
   const forcingState = useBedrockCapability(agent.model, "forced_tool_choice");
   const forcing = forcingState === null || forcingState === "supported";
+  const profile = useModelProfile(agent.model);
+  const provider = providerOf(agent.model);
+  const maximum = profile?.max_tokens_limit;
+  const cache = supportOf(profile, "cache_control", provider);
   return (
     <Section {...ui} title={t("agent.advanced.title")} icon={SlidersHorizontal} summary={advancedSummary(t, agent)}>
       <div className="grid-2">
@@ -1070,11 +1099,12 @@ function AdvancedSection({
           <TextInput
             type="number"
             min={256}
-            max={128000}
+            max={maximum ?? 1_000_000}
             step={256}
             value={agent.max_tokens}
             onChange={(e) => update({ max_tokens: Number(e.target.value) })}
           />
+          <ModelTokenLimits profile={profile} maxTokens={agent.max_tokens} />
         </Field>
         <Field label={t("agent.advanced.maxToolRounds")} tip="agent.maxToolRounds">
           <TextInput
@@ -1126,7 +1156,7 @@ function AdvancedSection({
         checked={!agent.raise_tool_errors}
         onChange={(on) => update({ raise_tool_errors: !on })}
       />
-      <AnthropicOnly agent={agent} set={!agent.cache_control || agent.cache_ttl !== "5m"}>
+      <ModelOptionGate profile={profile} provider={provider} option="cache_control" set={!agent.cache_control || agent.cache_ttl !== "5m"}>
         <Toggle
           label={t("agent.advanced.caching")}
           description={t("agent.advanced.cachingHint")}
@@ -1134,8 +1164,8 @@ function AdvancedSection({
           checked={agent.cache_control}
           onChange={(cache_control) => update({ cache_control })}
         />
-      </AnthropicOnly>
-      {agent.cache_control && (providerOf(agent.model) === "anthropic" || agent.cache_ttl !== "5m") ? (
+      </ModelOptionGate>
+      {agent.cache_control && (cache.available || agent.cache_ttl !== "5m") ? (
         <div className="row-gap">
           <Segmented
             label={t("agent.advanced.cacheTtl")}
@@ -1165,7 +1195,7 @@ function AdvancedSection({
             </Chip>
           ))}
         </div>
-        <AnthropicOnly agent={agent} set={false}>
+        <ModelOptionGate profile={profile} provider={provider} option="fallbacks" set={false}>
           <Select
             aria-label={t("agent.advanced.addFallback")}
             value=""
@@ -1175,7 +1205,7 @@ function AdvancedSection({
             )}
             onChange={(model) => model && update({ fallbacks: [...agent.fallbacks, model] })}
           />
-        </AnthropicOnly>
+        </ModelOptionGate>
       </Field>
       <Field label={t("agent.advanced.examples")} tip="agent.examples" hint={t("agent.advanced.examplesHint")}>
         <div className="stack-sm">

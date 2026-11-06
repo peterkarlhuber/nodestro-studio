@@ -1,0 +1,11 @@
+{
+  "indeterminate": "In progress, no measurable progress",
+  "details": "Technical details",
+  "state": {
+    "pending": "not started",
+    "running": "running now",
+    "done": "done",
+    "skipped": "not needed",
+    "failed": "failed"
+  }
+}

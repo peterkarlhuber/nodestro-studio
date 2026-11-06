@@ -12,6 +12,7 @@ import { toast } from "../components/toast";
 import { Badge, Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, IconButton, Modal, PageHeader, Select, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
+import { ModelFixButton } from "../missingModel/ModelFixButton";
 import { ToolWarnings, isToolWarning } from "../automation/shared";
 
 const KINDS: ScheduleKind[] = ["once", "hourly", "daily", "weekly", "monthly"];
@@ -336,6 +337,7 @@ export function SchedulesPage() {
                             item={{ code: schedule.last_error_code, params: schedule.last_error_params, message: schedule.last_error }}
                             compact
                           />
+                          <ModelFixButton item={{ code: schedule.last_error_code, params: schedule.last_error_params }} />
                         </div>
                       ) : null}
                       {schedule.missed_total ? (

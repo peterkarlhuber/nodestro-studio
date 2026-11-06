@@ -1,0 +1,109 @@
+/* The Publications page (pages/PublicationsPage.tsx). */
+
+.publications__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nd-space-2);
+}
+
+.publications__filters .nd-input[type="search"] {
+  flex: 1 1 260px;
+}
+
+.publications__filters .nd-select {
+  flex: 0 1 220px;
+}
+
+.publications__table td {
+  vertical-align: top;
+}
+
+.publications__status {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.publications__exports summary {
+  cursor: pointer;
+}
+
+.publications__exports summary:focus-visible {
+  outline: 2px solid var(--nd-focus);
+  outline-offset: 2px;
+  border-radius: var(--nd-radius-sm);
+}
+
+.publications__exports .api-exports {
+  margin-top: var(--nd-space-2);
+  min-width: 200px;
+}
+
+.publications__exports .api-exports a {
+  overflow-wrap: anywhere;
+}
+
+.publications__open {
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  /* Narrow windows and phones: each publication becomes a block: name and address, status, then the details one
+     per line, and the quick link last. The column names move in front of the values. */
+  .publications__table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .publications__table,
+  .publications__table tbody,
+  .publications__table tr {
+    display: block;
+  }
+
+  .publications__table tr {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--nd-border);
+  }
+
+  .publications__table tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .publications__table td,
+  .publications__table tbody tr:last-child td {
+    display: block;
+    padding: 2px 0;
+    border: 0;
+  }
+
+  .publications__table td[data-label]::before {
+    content: attr(data-label) ": ";
+    color: var(--nd-text-subtle);
+  }
+
+  .publications__table td[data-label] > div {
+    display: inline;
+    margin-left: 4px;
+  }
+
+  .publications__exports {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .publications__exports .api-exports {
+    min-width: 0;
+  }
+
+  .publications__open {
+    margin-top: 6px;
+  }
+
+  .publications__filters .nd-select {
+    flex: 1 1 160px;
+  }
+}

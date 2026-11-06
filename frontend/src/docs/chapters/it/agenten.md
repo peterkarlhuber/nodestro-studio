@@ -27,7 +27,7 @@ Il modello determina capacità, velocità e prezzo. Scegli prima il **provider**
 - **Opus 5.5** per ragionamenti impegnativi, pianificazione, codice e compiti lunghi con molti strumenti.
 - **Fable 5.1** per i compiti più difficili, quando la qualità conta più del costo.
 
-Il modello predefinito per i nuovi agenti si imposta nelle [impostazioni](/docs/einstellungen#modelle), gli accessi ai provider in [Provider di IA](/docs/einstellungen#anbieter). Alcune opzioni esistono solo per i modelli di Anthropic: thinking e visualizzazione dei ragionamenti, cache dei prompt, modelli di riserva e strumenti server. Con altri provider l’ispettore le nasconde; se una di esse è ancora impostata, il controllo segnala un errore invece di ometterla in silenzio.
+Il modello predefinito per i nuovi agenti si imposta nelle [impostazioni](/docs/einstellungen#modelle), gli accessi ai provider in [Provider di IA](/docs/einstellungen#anbieter). Alcune opzioni dipendono dal modello, non solo dal provider: thinking e visualizzazione dei ragionamenti, il budget di ragionamento, la cache dei prompt, i modelli di riserva, gli strumenti server e i livelli di impegno. L’ispettore le mostra dove il modello scelto le supporta e altrimenti indica il motivo (per esempio *non disponibile per i modelli di questo provider*, *il provider lo fa automaticamente* o *non documentato per questo modello*). Se un’opzione del genere è ancora impostata dopo un cambio di modello, resta visibile accanto al motivo e il controllo segnala un errore invece di ometterla in silenzio.
 
 **Amazon Bedrock:** gli ID di modello vengono passati esattamente come li scrivi, con due punti e barre: `bedrock:anthropic.claude-sonnet-4-5-20250929-v1:0`, `bedrock:eu.anthropic.claude-sonnet-5-5` o un ARN come `bedrock:arn:aws:bedrock:eu-central-1:111122223333:application-inference-profile/abc`. Solo i primi due punti separano il provider. I modelli dell’elenco sono suggerimenti, non modelli abilitati per il tuo account. Claude su Bedrock è un provider a sé: le opzioni solo Anthropic qui sopra restano disattivate anche per lui, e opzioni come l’output strutturato o lo sforzo di ragionamento seguono ciò che il modello supporta su Bedrock (sconosciuto per un ARN scritto a mano). Vedi [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
 
@@ -57,7 +57,7 @@ Se il compito non contiene segnaposto, l'ispettore lo segnala: i risultati dei p
 
 Nella sezione **Strumenti** scegli dalla libreria degli strumenti quali funzioni può chiamare l'agente. L'elenco è raggruppato in *Integrati*, *Personali* e *Generati dall'IA*; passandoci sopra con il mouse compare la descrizione.
 
-Sotto attivi gli **strumenti server di Anthropic**: *Ricerca web*, *Recupero web* ed *Esecuzione di codice*. Vengono eseguiti sui server di Anthropic (vedi [Strumenti server](/docs/tools#server-tools)). Gli strumenti server sono disponibili solo per i modelli di Anthropic.
+Sotto attivi gli **strumenti server di Anthropic**: *Ricerca web*, *Recupero web* ed *Esecuzione di codice*. Vengono eseguiti sui server di Anthropic (vedi [Strumenti server](/docs/tools#server-tools)). Vengono offerti dove il provider del modello li esegue; oggi sono i modelli di Anthropic. OpenAI e Google Gemini hanno strumenti simili, ma i loro costi non sono ancora nel catalogo prezzi, quindi non si potrebbero stimare né limitare: l’ispettore li mostra come non disponibili con questo motivo.
 
 L'agente decide da solo se e quando chiamare uno strumento, in base al nome e alla descrizione. Quante volte può farlo lo regolano [Turni di strumenti max. e Strumenti in parallelo](/docs/agenten#limits); se è obbligato, lo regola il [Tool choice](/docs/agenten#tool-choice).
 
@@ -143,6 +143,8 @@ I **modelli locali con ragionamento** (Ollama) non hanno livelli di impegno: *Ba
 
 Se non è noto se un modello supporti lo sforzo di ragionamento (server propri, id di modello sconosciuti), uno sforzo impostato porta a un errore. Scegli allora *Predefinito del modello* oppure dichiara la capacità in [Provider di IA](/docs/einstellungen#anbieter). Gli endpoint compatibili con OpenAI (come Ollama o vLLM) non accettano alcuna impostazione dello sforzo; la verifica lo spiega, e **Imposta l’impegno sul predefinito del modello** corregge l’agente con un clic.
 
+**Budget di ragionamento** (solo modelli Gemini 2.5) stabilisce quanti token il modello può usare per ragionare prima di rispondere; vuoto lascia decidere al modello, 0 disattiva il ragionamento dove il modello lo consente. Sostituisce l’impegno: imposta l’impegno su *Predefinito del modello* per usarlo. Se un modello non accetta il livello di impegno scelto (per esempio *Molto alto* con Claude Sonnet 4.6, o qualsiasi livello con Claude Haiku 4.5), il controllo avvisa e indica il livello inviato al suo posto.
+
 ## Controllo qualità {#qualitaet}
 <!-- keywords: controllo qualità, giudice, judge, valutatore, criteri, revisione, refine, llm as a judge, valutazione -->
 
@@ -164,7 +166,7 @@ Il risultato del controllo compare nell'esecuzione accanto all'agente: superato 
 
 | Impostazione | Predefinito | Effetto |
 |---|---|---|
-| **Token max.** | 8.000 | Numero massimo di token di output per risposta, ragionamento compreso (fino a 128.000). Se viene raggiunto, l'agente si interrompe con `IncompleteResponseError`. |
+| **Token max.** | 8.000 | Numero massimo di token di output per risposta, ragionamento compreso (fino al massimo documentato del modello, per es. 128.000 per Claude Opus 5.5 e 64.000 per Claude Haiku 4.5; l’ispettore lo mostra accanto al campo). Se viene raggiunto, l'agente si interrompe con `IncompleteResponseError`. |
 | **Turni di strumenti max.** | 8 | Quanti turni di chiamate agli strumenti l'agente può fare per compito (0–50). Dopo termina con `MaxToolRoundsError`. Con 0 non può chiamare alcuno strumento. |
 | **Strumenti in parallelo** | 1 | Quante chiamate agli strumenti di una risposta vengono eseguite contemporaneamente (1–16). Utile con strumenti lenti e indipendenti come le ricerche web. |
 

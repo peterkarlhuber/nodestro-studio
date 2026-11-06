@@ -348,9 +348,7 @@ function JobRow({
   onDone: () => void;
 }) {
   const { t } = useTranslation();
-  const step = t(`publish.export.portable.step.${job.step}`, {
-    defaultValue: job.step,
-  });
+  const step = job.step ? t(`publish.export.portable.step.${job.step}`, { defaultValue: job.step }) : "";
   if (job.state === "done" && job.export_id) {
     return (
       <Callout tone="brand">

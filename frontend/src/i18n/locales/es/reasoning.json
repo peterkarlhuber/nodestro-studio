@@ -1,0 +1,54 @@
+{
+  "status": {
+    "active": "Pensando…",
+    "done": "Razonado"
+  },
+  "hiddenByPreference": "Texto oculto (vista: solo estado)",
+  "state": {
+    "text": "Texto de razonamiento",
+    "summary": "Resumen del razonamiento",
+    "notTransmitted": "Razonamiento no transmitido",
+    "notExposed": "Razonamiento no expuesto"
+  },
+  "why": {
+    "redacted": "El proveedor envió este razonamiento solo cifrado o lo omitió, así que no hay texto que mostrar.",
+    "thinkingDisplay": "La visualización del razonamiento del agente omite el texto. Elige «Mostrar resumido» en las opciones de razonamiento del agente para recibirlo.",
+    "notRequested": "El proveedor envía resúmenes del razonamiento solo si se piden. Un administrador puede activar «Solicitar resúmenes del razonamiento» en la configuración.",
+    "notExposed": "Este modelo no razona, o su proveedor nunca envía su razonamiento. Nodestro nunca inventa texto de razonamiento.",
+    "noText": "El proveedor marcó una fase de razonamiento pero no envió texto."
+  },
+  "source": {
+    "text": "Enviado por el modelo mientras razonaba. No forma parte de la respuesta.",
+    "summary": "Un resumen que escribe el proveedor de un razonamiento que no expone. No forma parte de la respuesta."
+  },
+  "display": {
+    "label": "Razonamiento",
+    "live": "Mostrar en vivo",
+    "collapsed": "Contraído",
+    "status": "Solo estado",
+    "default": "Predeterminado ({{value}})"
+  },
+  "answering": "Respondiendo…",
+  "steps": {
+    "analysis": "Razonamiento sobre los requisitos",
+    "plan": "Razonamiento sobre la planificación",
+    "agent_revision": "Razonamiento sobre los agentes",
+    "repair": "Razonamiento sobre la reparación"
+  },
+  "settings": {
+    "title": "Visualización del razonamiento",
+    "intro": "Cómo se muestra el razonamiento de los modelos mientras trabajan. Solo se muestra lo que envía el proveedor; Nodestro nunca escribe texto de razonamiento por su cuenta.",
+    "display": "Visualización en este navegador",
+    "displayHint": "Se aplica al asistente, al chat de la ejecución, a las ejecuciones de flujos, al Arquitecto de flujos y a la prueba de agentes. Cada conversación puede elegir su propia visualización.",
+    "summaries": "Solicitar resúmenes del razonamiento",
+    "summariesHint": "Pide a OpenAI y Gemini resúmenes del razonamiento de los modelos que razonan. No cambia ninguna respuesta ni ningún coste; OpenAI puede exigir una organización verificada. Los modelos de Anthropic siguen la visualización del razonamiento del agente.",
+    "adminOnly": "Solo los administradores pueden cambiar esta opción."
+  },
+  "model": {
+    "summary": "Razonamiento en vivo: el proveedor de este modelo envía resúmenes del razonamiento.",
+    "summaryNotRequested": "Razonamiento en vivo: el proveedor de este modelo envía resúmenes solo cuando el espacio de trabajo los pide (configuración).",
+    "thinking": "Razonamiento en vivo: este modelo envía su texto de razonamiento.",
+    "none": "Razonamiento en vivo: este modelo no envía ningún razonamiento.",
+    "unknown": "Razonamiento en vivo: que el servidor envíe razonamiento depende de su configuración."
+  }
+}

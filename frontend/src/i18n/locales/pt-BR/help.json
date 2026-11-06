@@ -121,19 +121,19 @@
   "settings": {
     "defaultModel": "Novos agentes vazios e novos fluxos de trabalho começam com este modelo. Nos rascunhos da IA, ele é usado como substituto se o modelo proposto não estiver disponível.",
     "assistantModel": "Modelo do arquiteto de agentes, do agente de programação e do assistente de memória. Um modelo forte faz propostas melhores.",
-    "budget": "Vale para todos os fluxos de trabalho sem orçamento próprio. Vazio = sem limite (não recomendado).",
+    "budget": "O limite de custo das execuções cujo fluxo de trabalho não tem orçamento próprio. Quando uma execução o atinge, nenhuma outra solicitação de IA é feita: uma execução iniciada por uma pessoa pausa para uma decisão de orçamento; as de agendamentos, lotes, séries de testes e da API publicada param. Vazio = sem limite, então essas execuções podem custar qualquer valor.",
     "sandbox": "Automático (recomendado): ferramentas criadas por IA só rodam no Docker, depois que ele passa nas verificações do Nodestro; caso contrário, ficam bloqueadas. Sandbox Linux: opcional, só Linux; ferramentas criadas por IA rodam no sandbox Linux integrado sem pacotes de terceiros. Processo Python: para as ferramentas que você mesmo escreve; as criadas por IA ficam sempre bloqueadas. Docker: cada ferramenta roda em um contêiner sem rede e com sistema de arquivos somente leitura.",
     "language": "O idioma da interface. “Automático” segue o idioma do navegador (inglês, se ele não for suportado). A escolha vale na hora e fica salva. Conteúdos como agentes, prompts e resultados permanecem como estão.",
-    "backup": "Baixa todos os dados, exceto as chaves de API, como arquivo ZIP.",
+    "backup": "Guarda tudo em um arquivo ZIP, para manter em segurança ou levar para outro computador. As chaves de API ficam de fora de propósito, então um backup pode ser repassado; a restauração mantém as chaves deste computador. Restaurar substitui todos os dados atuais, mas o Nodestro salva antes o estado atual como backup de segurança.",
     "restore": "Primeiro verifica o arquivo por completo e mostra o conteúdo. A substituição só acontece após sua confirmação; antes, o estado atual é salvo.",
-    "diagnostics": "Verifica versões, banco de dados, diretórios, sandbox e requisitos. Gratuito e sem internet.",
-    "connection": "Pede a lista de modelos ao provedor do modelo padrão. Não usa tokens.",
-    "architectBudget": "Custo estimado máximo de um rascunho do arquiteto. O arquiteto para quando é atingido.",
-    "architectRepairs": "Limita as solicitações extras à IA para correções. Correções óbvias são feitas sem IA.",
+    "diagnostics": "Útil depois de uma atualização, depois de mover a pasta de dados ou quando algo não funciona: cada verificação diz se passou e, se não, por quê. Ela só lê: nada é alterado ou reparado, nenhuma IA é usada e nada é enviado à internet. Chaves de API nunca aparecem no resultado, então você pode repassá-lo ao suporte.",
+    "connection": "Uma solicitação ao provedor do modelo padrão pedindo a lista de modelos: mostra se a chave ou o endereço funcionam antes que um agente precise deles e, se não, qual erro o provedor informa. Não usa tokens nem custa nada; nenhum agente ou fluxo de trabalho é executado.",
+    "architectBudget": "Vale para um trabalho inteiro do arquiteto: o projeto, os rascunhos de ferramentas do Coding Agent e cada correção. Quando o custo estimado o atinge, o trabalho para sem rascunho e avisa; o custo até ali continua contando. Um limite baixo demais faz fluxos de trabalho maiores falharem; vazio significa sem limite.",
+    "architectRepairs": "Quando um projeto ou um rascunho de ferramenta não passa nas verificações do Nodestro, o arquiteto pode pedir ao modelo que o corrija até este número de vezes (0 a 5). Cada tentativa é uma solicitação de IA a mais dentro do limite de custo do rascunho; 0 economiza custos, mas deixa mais problemas para você corrigir. Correções sem IA são sempre feitas.",
     "providers": "Acessos aos provedores de IA: chaves de API (nunca exibidas; variáveis de ambiente têm prioridade), URLs base dos seus próprios servidores e o que os modelos deles sabem fazer. Cada agente usa o provedor do seu modelo; nada troca para outro provedor.",
     "prices": "De onde vêm os preços, com que frequência são conferidos e como funcionam os preços individuais e as revisões.",
     "priceMode": "Padrão avisa sobre preços desconhecidos ou antigos; Rigoroso recusa essas solicitações antes que custem algo.",
-    "reconciliation": "Compara as estimativas com as faturas dos provedores. Precisa de uma chave de administrador da API de faturamento; nada é alterado.",
+    "reconciliation": "Mostra se as estimativas de custo do Nodestro batem com o que você realmente paga: lê o que a OpenAI e a Anthropic faturaram por dia e por modelo e avisa sobre diferenças grandes, sinal de que preços ou orçamentos precisam de ajuste. Precisa de uma chave de administrador da API de faturamento do provedor; só lê e nunca altera nada no provedor.",
     "localModels": "Modelos locais rodam neste computador com o Ollama: sem chave de API, nenhum dado sai do computador. O Nodestro instala o ambiente fixado quando você pede e verifica cada download.",
     "localRecommendations": "Sugestões conforme a tarefa, a memória deste computador e os modelos instalados. Um modelo instalado que seja suficiente vem antes de um melhor que precisaria ser baixado.",
     "localImport": "Para computadores sem internet: importe um pacote de modelos offline (verificado por SHA-256) ou um arquivo GGUF de um pendrive ou de uma pasta compartilhada.",
@@ -163,7 +163,7 @@
     "history": "Cada aumento aprovado desta execução: o limite antes e depois, quem decidiu e quando.",
     "runBudget": "O limite de custo da execução. Execuções acompanhadas pausam quando ele não basta e aguardam uma decisão; as de agendamentos, lotes, séries de testes e da API publicada param em vez disso.",
     "maxRunBudget": "O maior limite que uma execução deste espaço de trabalho pode ter, no início ou após aumentos. Vazio significa sem teto.",
-    "decisionHours": "Quanto tempo uma execução aguarda uma decisão de orçamento antes de terminar com “orçamento esgotado” (de 1 a 720 horas, padrão 24).",
+    "decisionHours": "Só para execuções iniciadas por uma pessoa: quando o orçamento acaba, elas pausam, e alguém pode aumentar o limite ou encerrar a execução. Sem decisão nesse prazo, a execução termina com “orçamento esgotado”. Execuções de agendamentos, lotes, séries de testes e da API publicada param na hora e não esperam. Padrão 24 horas.",
     "permissions": "Decide a pessoa que iniciou a execução, se tiver a permissão Executar; administradores podem decidir em qualquer execução."
   },
   "search": {
@@ -183,7 +183,7 @@
   "architect": {
     "open": "Deixe o arquiteto projetar um fluxo novo ou revisar este a partir de uma descrição. Você revisa o rascunho antes de qualquer mudança.",
     "create": "Descreva o objetivo; o arquiteto planeja, configura e verifica um fluxo completo.",
-    "generateTools": "Se nenhuma ferramenta existente servir, o Coding Agent escreve uma ferramenta Python como rascunho. Ela só roda após sua aprovação explícita.",
+    "generateTools": "Ligado: para cada ferramenta de que o projeto precisa e que falta na sua biblioteca, o Coding Agent escreve código Python com testes. Isso usa o modelo dos assistentes e conta no limite de custo do rascunho. Os rascunhos não são registrados e nunca rodam sozinhos: os agentes que precisam deles só iniciam depois que você testar e aprovar as ferramentas (agora ou depois em Ferramentas); testar código escrito por IA exige uma sandbox como o Docker. Desligado: as ferramentas que faltam são apenas descritas, e você mesmo as cria ou remove.",
     "log": "Cada linha descreve uma etapa que o arquiteto realmente executou ou um resultado. O raciocínio interno do modelo não é mostrado.",
     "cost": "Custo estimado da API de todas as solicitações deste rascunho até agora. Aparece na visão de uso como arquiteto de fluxos.",
     "cancel": "Para na hora. Nada é salvo e nenhum fluxo muda; solicitações já enviadas são contabilizadas.",
@@ -239,11 +239,11 @@
     "orchestratorTemplate": "Uma equipe existe só durante a execução. Este botão a transforma em um novo fluxo de trabalho próprio: o mesmo orquestrador com exatamente as equipes que trabalharam, em suas versões. Você pode editá-lo depois; só quem pode editar fluxos de trabalho pode alterá-lo."
   },
   "files": {
-    "output": "Formatos em que o nó de resultado salva o resultado no fim da execução: Markdown, JSON, CSV, HTML ou PDF.",
+    "output": "Formatos em que o nó de resultado salva o resultado no fim da execução: Markdown, JSON, CSV, HTML, PDF, Word (.docx) ou Excel (.xlsx).",
     "sanitize": "Substitui credenciais e dados pessoais no arquivo por marcadores.",
     "run": "Arquivos desta execução. O HTML é exibido sem scripts.",
     "formats": "Word (DOCX) e Excel (XLSX) são convertidos em Markdown no envio; fórmulas são exibidas, nunca executadas.",
-    "ocr": "PDFs digitalizados sem camada de texto podem ser reconhecidos localmente com Tesseract. Palavras incertas são marcadas."
+    "ocr": "Precisa do Tesseract e do pdftoppm neste computador (o selo mostra se estão instalados). Ligado: páginas de PDFs digitalizados sem camada de texto são reconhecidas localmente quando o arquivo é lido, o que leva alguns segundos por página; palavras incertas são marcadas para você conferir. Desligado: essas páginas não fornecem texto aos agentes nem à busca no conhecimento."
   },
   "automation": {
     "batch": "Um fluxo de trabalho sobre muitas entradas. Cada linha vira uma execução própria.",
@@ -272,7 +272,7 @@
     "disable": "Recusa novas execuções com 503 até você ligar a API novamente.",
     "keyName": "Quem usa a chave, por exemplo o nome do aplicativo. Visível apenas no Nodestro.",
     "scopes": "run inicia e cancela execuções, read lê status e resultados, approve decide aprovações.",
-    "network": "Abre uma porta própria para dispositivos da sua rede. Desligado por padrão; a interface do Nodestro nunca fica acessível ali.",
+    "network": "Só é necessário quando outros dispositivos devem chamar suas APIs publicadas. Cada API também precisa estar ligada para a rede, e cada chamada exige uma chave de API. Verifique seu firewall e prefira HTTPS em redes compartilhadas. A interface do Nodestro e seus endpoints internos nunca ficam acessíveis por esta porta.",
     "networkShare": "Somente as APIs ligadas aqui ficam acessíveis pela porta de rede.",
     "validate": "Verifica o corpo da requisição exatamente como a API. Nenhuma execução é iniciada, nada é cobrado.",
     "testRun": "Inicia uma execução real da versão publicada pelo caminho da API; ela é cobrada como qualquer execução.",
@@ -289,7 +289,7 @@
     "formats": "Escolha grupos ou formatos individuais. O Nodestro verifica o conteúdo real, não só a extensão.",
     "optional": "Campos obrigatórios precisam ser preenchidos antes do início. Campos opcionais podem ficar vazios; agentes e decisões percebem isso.",
     "delivery": "Como os agentes recebem os arquivos: como conteúdo, como visão geral com leitura direcionada ou automaticamente conforme o tamanho.",
-    "storage": "Os arquivos enviados ficam com as execuções. Limpe aqui arquivos sem uso e antigos.",
+    "storage": "Arquivos enviados para execuções, casos de teste e agendamentos ficam neste computador junto com suas execuções e ocupam espaço em disco. Aqui você vê quanto e remove arquivos sem uso ou antigos. Arquivos de execuções na fila, em andamento ou pausadas e os que casos de teste, agendamentos ou lotes ainda usam são sempre mantidos; um arquivo removido não pode mais ser aberto a partir da execução.",
     "adopt": "Salva de forma permanente o conteúdo escolhido no conhecimento, só após sua confirmação e com a origem.",
     "proposals": "O agente pode propor conteúdo para o conhecimento. Só é salvo o que você verifica e confirma.",
     "received": "Quais arquivos a execução recebeu e como cada agente os recebeu."

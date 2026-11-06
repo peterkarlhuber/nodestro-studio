@@ -4,7 +4,7 @@
 // without a click, and the strict offline mode refuses every download.
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Database, Download, FolderInput, Hammer, HardDrive, Play, RefreshCw, Search, Square, Trash2, X } from "lucide-react";
+import { Activity, Database, Download, FolderInput, Hammer, HardDrive, Play, RefreshCw, Search, Square, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -26,10 +26,12 @@ import {
 import type { Settings } from "../api/types";
 import { PermissionNote } from "../components/Access";
 import { toast } from "../components/toast";
+import { withLocalModel } from "../missingModel/store";
 import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, Segmented, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatLargeBytes } from "../lib/format";
 import { BuildFromFiles, buildableModels } from "./LocalModelBuild";
+import { InlineJobProgress, LocalJobsList, SetupProgress, setupJob, useJobsFinished } from "./LocalModelJobs";
 import { AdviceList, FitBadge, MachinePanel, SpeedCell, catalogFit } from "./LocalModelsHardware";
 
 /** The tasks the panel recommends a model for (the runtime knows more; these cover the studio's choices). */
@@ -55,74 +57,6 @@ function useRefresh() {
   };
 }
 
-/** A job's progress and outcome, with a cancel button while it runs. */
-function JobRow({ job, onCancel, cancelling }: { job: LocalJob; onCancel: () => void; cancelling: boolean }) {
-  const { t } = useTranslation();
-  const share = job.total ? Math.min(1, job.completed / job.total) : null;
-  return (
-    <li className="stack" data-testid={`local-job-${job.kind}`}>
-      <div className="row-gap">
-        <strong className="small">{t(`localModels.jobs.kind.${job.kind}`, { target: job.target })}</strong>
-        <Badge tone={job.state === "done" ? "success" : job.state === "running" ? "running" : job.state === "failed" ? "danger" : "idle"}>
-          {t(`localModels.jobs.state.${job.state}`)}
-        </Badge>
-        {job.state === "running" ? (
-          <Button
-            size="sm"
-            icon={X}
-            busy={cancelling}
-            onClick={onCancel}
-            aria-label={`${t("common.cancel")}: ${t(`localModels.jobs.kind.${job.kind}`, { target: job.target })}`}
-          >
-            {t("common.cancel")}
-          </Button>
-        ) : null}
-      </div>
-      {job.state === "running" ? (
-        <progress
-          max={1}
-          value={share ?? undefined}
-          aria-label={t(`localModels.jobs.kind.${job.kind}`, { target: job.target })}
-        />
-      ) : null}
-      {job.state === "running" && job.total ? (
-        <span className="muted small">
-          {t("localModels.jobs.progress", { done: formatLargeBytes(job.completed), total: formatLargeBytes(job.total) })}
-        </span>
-      ) : null}
-      {job.state === "failed" ? (
-        <span className="small" role="alert">
-          {problemText(t, { code: job.error_code, message: job.error })}
-        </span>
-      ) : null}
-    </li>
-  );
-}
-
-function Jobs({ enabled, manageable }: { enabled: boolean; manageable: boolean }) {
-  const { t } = useTranslation();
-  const jobs = useLocalJobs(enabled);
-  const refresh = useRefresh();
-  const cancel = useMutation({ mutationFn: localApi.cancelJob, onSuccess: refresh, onError: toast.error });
-  const shown = (jobs.data ?? []).slice(-5).reverse();
-  if (!shown.length) return null;
-  return (
-    <div className="stack">
-      <h3 className="small">{t("localModels.jobs.title")}</h3>
-      <ul className="stack" aria-live="polite">
-        {shown.map((job) => (
-          <JobRow
-            key={job.id}
-            job={job}
-            cancelling={cancel.isPending && cancel.variables === job.id}
-            onCancel={() => manageable && cancel.mutate(job.id)}
-          />
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 function reasonText(t: ReturnType<typeof useTranslation>["t"], item: Recommendation): string {
   return item.reasons
     .filter((reason) => reason !== "installed" && reason !== "needs_download")
@@ -130,7 +64,20 @@ function reasonText(t: ReturnType<typeof useTranslation>["t"], item: Recommendat
     .join(" ");
 }
 
-function Recommendations({ overview, onPull, pulling, canDownload }: { overview: LocalOverview; onPull: (model: string) => void; pulling: string | null; canDownload: boolean }) {
+function Recommendations({
+  overview,
+  onPull,
+  pulling,
+  downloads,
+  canDownload,
+}: {
+  overview: LocalOverview;
+  onPull: (model: string) => void;
+  pulling: string | null;
+  /** The running downloads by model name (their progress replaces the button). */
+  downloads: Map<string, LocalJob>;
+  canDownload: boolean;
+}) {
   const { t } = useTranslation();
   const tasks = new Map(overview.recommendations.map((item) => [item.task, item]));
   // For a server's tenants (no hardware shown) the suggestions are for the server, not for the computer in front of them.
@@ -171,7 +118,9 @@ function Recommendations({ overview, onPull, pulling, canDownload }: { overview:
                     <Badge tone={QUALITY_TONE[item.quality]}>{t(`localModels.quality.${item.quality}`)}</Badge>
                   </td>
                   <td>
-                    {name && !item.installed ? (
+                    {name && downloads.get(name) ? (
+                      <InlineJobProgress job={downloads.get(name)!} />
+                    ) : name && !item.installed ? (
                       <Button
                         size="sm"
                         icon={Download}
@@ -236,12 +185,14 @@ function Catalog({
   overview,
   onPull,
   pulling,
+  downloads,
   canInstall,
   canDownload,
 }: {
   overview: LocalOverview;
   onPull: (model: string) => void;
   pulling: string | null;
+  downloads: Map<string, LocalJob>;
   canInstall: boolean;
   /** Downloads need the running model server as well as the permission. */
   canDownload: boolean;
@@ -303,6 +254,8 @@ function Catalog({
             busy={remove.isPending && remove.variables === model.name}
             onConfirm={() => remove.mutate(model.name)}
           />
+        ) : downloads.get(model.name) ? (
+          <InlineJobProgress job={downloads.get(model.name)!} />
         ) : (
           <div className="row-gap">
             {/* A model built from upstream files: the download is the online way; offline, the files are entered below. */}
@@ -500,13 +453,16 @@ function StorageForm({ overview, canInstall }: { overview: LocalOverview; canIns
   );
 }
 
-/** Without a runtime (desktop): install the pinned version by download, or offline from its release archive. */
-function RuntimeSetup({ overview, canInstall }: { overview: LocalOverview; canInstall: boolean }) {
+/**
+ * Without a runtime (desktop): set the server up, which downloads the pinned version (or installs it offline from its
+ * release archive), starts and checks it, step by step (SetupProgress shows the steps).
+ */
+function RuntimeSetup({ overview, canInstall, busy }: { overview: LocalOverview; canInstall: boolean; busy: boolean }) {
   const { t } = useTranslation();
   const refresh = useRefresh();
   const [archive, setArchive] = useState("");
   const install = useMutation({
-    mutationFn: (source: { archive?: string; download?: boolean }) => localApi.installRuntime(source),
+    mutationFn: (source: { archive?: string; download?: boolean }) => localApi.setup(source),
     onSuccess: refresh,
     onError: toast.error,
   });
@@ -518,9 +474,10 @@ function RuntimeSetup({ overview, canInstall }: { overview: LocalOverview; canIn
           <Button
             variant="primary"
             icon={Download}
-            disabled={!canInstall || overview.status.offline}
+            disabled={!canInstall || overview.status.offline || busy}
             busy={install.isPending && install.variables?.download === true}
             onClick={() => install.mutate({ download: true })}
+            data-testid="local-setup-start"
           >
             {t("localModels.runtime.download")}
           </Button>
@@ -532,7 +489,7 @@ function RuntimeSetup({ overview, canInstall }: { overview: LocalOverview; canIn
         <div>
           <Button
             icon={FolderInput}
-            disabled={!canInstall || !archive.trim()}
+            disabled={!canInstall || !archive.trim() || busy}
             busy={install.isPending && Boolean(install.variables?.archive)}
             onClick={() => install.mutate({ archive: archive.trim() })}
           >
@@ -568,11 +525,21 @@ export function LocalModelsPanel({
     onSuccess: refresh,
     onError: toast.error,
   });
+  // Starting goes through the setup job (its steps: configure, start, reachability, hardware); stopping is immediate.
   const power = useMutation({
-    mutationFn: (on: boolean) => (on ? localApi.start() : localApi.stop()),
+    mutationFn: (on: boolean): Promise<unknown> => (on ? localApi.setup() : localApi.stop()),
     onSuccess: refresh,
     onError: toast.error,
   });
+  const jobs = useLocalJobs(Boolean(overview.data?.manageable));
+  useJobsFinished(jobs.data);
+  const setup = setupJob(jobs.data);
+  const settingUp = setup?.state === "running";
+  const downloads = new Map(
+    (jobs.data ?? [])
+      .filter((job) => job.state === "running" && (job.kind === "pull" || job.kind === "build"))
+      .map((job) => [job.target, job]),
+  );
   const autostart = useMutation({ mutationFn: localApi.setAutostart, onSuccess: refresh, onError: toast.error });
   const data = overview.data;
   const status = data?.status;
@@ -621,12 +588,15 @@ export function LocalModelsPanel({
           {status.detected_external && managed ? (
             <Callout tone="info">{t("localModels.detected", { url: status.detected_external })}</Callout>
           ) : null}
-          {managed && manageable && !status.runtime_installed ? <RuntimeSetup overview={data} canInstall={canInstall} /> : null}
+          {setup && manageable ? <SetupProgress job={setup} canAct={canInstall} /> : null}
+          {managed && manageable && !status.runtime_installed && !settingUp ? (
+            <RuntimeSetup overview={data} canInstall={canInstall} busy={settingUp} />
+          ) : null}
           {managed && manageable && status.runtime_installed ? (
             <div className="row-gap">
               <Button
                 icon={status.running ? Square : Play}
-                disabled={!canInstall}
+                disabled={!canInstall || settingUp}
                 busy={power.isPending}
                 onClick={() => power.mutate(!status.running)}
               >
@@ -640,6 +610,20 @@ export function LocalModelsPanel({
               />
             </div>
           ) : null}
+          {manageable && (status.mode === "container" || status.mode === "external") ? (
+            <div className="row-gap">
+              <Button
+                icon={Activity}
+                disabled={!canInstall || settingUp}
+                busy={power.isPending}
+                onClick={() => power.mutate(true)}
+                data-testid="local-check-server"
+              >
+                {t("localJobs.checkServer")}
+              </Button>
+              <span className="muted small">{t("localJobs.checkServerHint")}</span>
+            </div>
+          ) : null}
           <MachinePanel overview={data} />
           <AdviceList overview={data} />
           {serverNote ? (
@@ -650,6 +634,7 @@ export function LocalModelsPanel({
           <Recommendations
             overview={data}
             canDownload={canInstall && manageable && status.running}
+            downloads={downloads}
             pulling={pull.isPending ? (pull.variables ?? null) : null}
             onPull={(model) => pull.mutate(model)}
           />
@@ -657,10 +642,11 @@ export function LocalModelsPanel({
             overview={data}
             canInstall={canInstall && manageable}
             canDownload={canInstall && manageable && status.running}
+            downloads={downloads}
             pulling={pull.isPending ? (pull.variables ?? null) : null}
             onPull={(model) => pull.mutate(model)}
           />
-          <Jobs enabled={manageable} manageable={manageable} />
+          {manageable ? <LocalJobsList jobs={jobs.data ?? []} catalog={data.catalog} canAct={canInstall} /> : null}
           {manageable && status.mode !== "unavailable" ? <ImportForm canInstall={canInstall && status.running} packages={status.mode === "managed" || status.mode === "container"} /> : null}
           {manageable && status.mode !== "unavailable" && buildableModels(data.catalog).length ? (
             <BuildFromFiles
@@ -737,7 +723,12 @@ export function KnowledgeSearchPanel({
   const overview = useLocalModels();
   const queryClient = useQueryClient();
   const update = (data: KnowledgeIndexStatus) => queryClient.setQueryData(localKeys.index, data);
-  const rebuild = useMutation({ mutationFn: () => localApi.rebuildIndex(), onSuccess: update, onError: toast.error });
+  // An embedding model that is not installed: the shared dialog downloads it, then the index is built.
+  const rebuild = useMutation({
+    mutationFn: () => withLocalModel(() => localApi.rebuildIndex(), { action: "knowledge_index" }),
+    onSuccess: update,
+    onError: toast.error,
+  });
   const cancel = useMutation({ mutationFn: localApi.cancelIndex, onSuccess: update, onError: toast.error });
   const drop = useMutation({ mutationFn: localApi.dropIndex, onSuccess: update, onError: toast.error });
   const mode = settings.knowledge_retrieval ?? "fts";

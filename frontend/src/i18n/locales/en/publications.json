@@ -1,0 +1,45 @@
+{
+  "description": "Every API published in this installation, with its workflow, status, active version and exports. Publishing, versions, keys and exports are managed in the workflow under API & Export.",
+  "searchLabel": "Search publications",
+  "searchPlaceholder": "Search by API, address or workflow",
+  "statusLabel": "Filter by status",
+  "allStatuses": "All statuses",
+  "status": {
+    "live": "Active",
+    "off": "Switched off",
+    "noVersion": "No active version"
+  },
+  "sortLabel": "Sort",
+  "sort": {
+    "name": "Name (A–Z)",
+    "published": "Recently published",
+    "exported": "Recently exported"
+  },
+  "results_one": "{{count}} publication",
+  "results_other": "{{count}} publications",
+  "columns": {
+    "api": "API",
+    "workflow": "Workflow",
+    "status": "Status",
+    "version": "Active version",
+    "published": "Published on",
+    "exports": "Export history",
+    "actions": "Actions"
+  },
+  "version": "v{{release}}",
+  "workflowVersion": "Workflow version {{version}}",
+  "network": "Network",
+  "workflowMissing": "Workflow deleted",
+  "exports": {
+    "summary_one": "{{count}} export",
+    "summary_other": "{{count}} exports",
+    "none": "No exports yet",
+    "download": "Download {{file}}"
+  },
+  "open": "Open API & Export",
+  "openFor": "{{open}}: {{name}}",
+  "empty": "No API published yet",
+  "emptyText": "Open a workflow and publish it under API & Export. Its API then appears here.",
+  "noMatch": "No publication matches the filter",
+  "clearFilters": "Reset filters"
+}

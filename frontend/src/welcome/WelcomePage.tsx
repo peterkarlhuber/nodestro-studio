@@ -39,20 +39,20 @@ export const SLOGAN = ["Connecting", "Intelligence"] as const;
 
 const PROVIDERS = ["Anthropic", "OpenAI", "Google Gemini", "Ollama", "vLLM"];
 
-const CAPABILITIES: { id: string; to: string; icon: LucideIcon }[] = [
+const CAPABILITIES = [
   { id: "workflows", to: "/", icon: Diamond },
   { id: "agents", to: "/agents", icon: Bot },
   { id: "tools", to: "/tools", icon: Command },
   { id: "knowledge", to: "/knowledge", icon: BookOpen },
   { id: "executions", to: "/executions", icon: Rows3 },
   { id: "automation", to: "/tests", icon: CalendarClock },
-];
+] as const satisfies readonly { id: string; to: string; icon: LucideIcon }[];
 
-const PRINCIPLES: { id: string; icon: LucideIcon }[] = [
+const PRINCIPLES = [
   { id: "local", icon: ShieldCheck },
   { id: "providers", icon: Globe2 },
   { id: "integration", icon: Plug },
-];
+] as const satisfies readonly { id: string; icon: LucideIcon }[];
 
 const STAGES = ["design", "run", "trace"] as const;
 

@@ -2,6 +2,16 @@
 
 Dieses Kapitel beschreibt alle Einstellungen, die Installation und den Start von Nodestro sowie die Tastenkürzel.
 
+## Orientierung in den Einstellungen {#ueberblick}
+<!-- keywords: einstellungen, zahnrad, einstellungen öffnen, einstellungen durchsuchen, einstellung finden, breite, breiter, größe ändern, navigation, erweitert, strg+komma -->
+
+- **Öffnen:** das Zahnrad oben rechts auf jeder Seite oder *Strg+,* (*⌘,* auf dem Mac). Die Einstellungen merken sich, woher du kommst: **Zurück** über der Navigation (oder erneut *Strg+,*) bringt dich dorthin. Eine Seite mit ungespeicherten Änderungen, etwa der Workflow-Editor, fragt vorher nach.
+- **Suche:** *Einstellung finden …* über der Navigation durchsucht Namen, Erklärungen und Hilfetexte einzelner Einstellungen, in der Sprache der Oberfläche. Mit den Pfeiltasten wählst du einen Treffer, **Enter** springt hin: Geschlossene Bereiche öffnen sich, die Einstellung wird hervorgehoben und ihr Feld bekommt den Fokus.
+- **Navigation:** Die Liste rechts zeigt die Abschnitte nach Themen und markiert den, den du gerade liest. In einem schmalen Fenster ist sie eine Leiste über dem Inhalt mit der Suche und *Zum Abschnitt*.
+- **Breite:** Zieh den Rand zwischen Inhalt und Navigation, um die Einstellungen breiter oder schmaler zu machen. Per Tastatur fokussierst du den Rand (Tab) und nutzt die Pfeiltasten (mit Umschalt in größeren Schritten), Pos1 und Ende. Ein Doppelklick auf den Rand oder **Standardbreite** in der Navigation stellt den Standard wieder her. Die Breite wird in diesem Browser gespeichert.
+- **Grundlegend und erweitert:** Zusammengehörige Einstellungen stehen unter einer Überschrift. Als *Erweitert* markierte Bereiche (etwa, was die Modelle eines OpenAI-kompatiblen Endpunkts können) bleiben geschlossen, bis du sie brauchst; ihr Abzeichen sagt, wie viele Werte vom Standard abweichen.
+- **Speichern:** Die meisten Einstellungen wirken sofort. *Modelle und Budget* hat einen eigenen **Speichern**-Button; verlässt du die Seite dort mit ungespeicherten Änderungen, fragt Nodestro vorher nach.
+
 ## Lokale Modelle {#lokale-modelle}
 <!-- keywords: lokales modell, ollama, offline, kein api-schlüssel, qwen, download, empfehlung, hardware, gpu, arbeitsspeicher, modellserver, mistral, europäisch, denkaufwand -->
 
@@ -12,7 +22,7 @@ Nodestro kann Agenten, Assistenten und die Wissenssuche mit **lokalen Modellen**
 *Einstellungen → Lokale Modelle* zeigt:
 
 - **Zustand:** ob der Modellserver läuft und wer ihn bereitstellt. Auf dem Desktop startet Nodestro einen eigenen Server (ein eigener Prozess auf diesem Computer mit eigenem Modellordner); in Nodestro Local Docker ist es ein eigener Container; auf einem Server stellt ihn der Betreiber. Ein Ollama, das du schon betreibst, wird nur genutzt, wenn du seine Adresse beim Anbieter Ollama speicherst.
-- **Laufzeit:** Fehlt sie, holt **Herunterladen und installieren** die festgelegte Version einmal und prüft ihre SHA-256-Prüfsumme. Ohne Internet installierst du sie aus ihrem Release-Archiv (siehe [Offline-Import](/docs/einstellungen#offline-import)).
+- **Laufzeit:** Fehlt sie, holt **Herunterladen und installieren** die festgelegte Version einmal und prüft ihre SHA-256-Prüfsumme. Ohne Internet installierst du sie aus ihrem Release-Archiv (siehe [Offline-Import](/docs/einstellungen#offline-import)). Jeder Schritt und sein Fortschritt werden angezeigt; siehe [Einrichtung und Downloads](/docs/einstellungen#lokale-einrichtung).
 - **Empfohlen für diesen Computer:** ein Modell je Aufgabe (Sortieren, Schreiben, Agenten mit Tools, Analyse, Assistent, semantische Suche) aus den Anforderungen der Aufgabe, dem Arbeitsspeicher dieses Computers und den installierten Modellen. Ein installiertes Modell, das gut genug ist, kommt zuerst; Bei *Geeignet* und *Eingeschränkt* könnte ein größeres Modell es besser; der Grund steht unter dem Modell. Vorschläge ändern nie einen Agenten: Sein Modell wählst du im Editor.
 - **Modelle:** die vorgeschlagenen Modelle mit Downloadgröße, Speicherbedarf und Lizenz; **Geprüft** heißt, die installierte Fassung ist die, die Nodestro geprüft hat.
 
@@ -21,6 +31,35 @@ Nodestro kann Agenten, Assistenten und die Wissenssuche mit **lokalen Modellen**
 **Denkaufwand:** Lokale Modelle, die „denken“ können, denken ab dem Denkaufwand *Mittel* ohne Grenze mit, und das Denken zählt zur maximalen Ausgabelänge. Auf einem Computer ohne Grafikkarte kann ein kleines Modell dafür viele Minuten brauchen. Für schnelle Schritte (Sortieren, Extrahieren, kurze strukturierte Antworten) stelle *Niedrig* ein: Dann antwortet das Modell ohne zu denken. Der von Nodestro gestartete Modellserver gibt jedem Modell 32.768 Tokens Kontext für Prompt, Denken und Antwort zusammen. Ein Ollama, das du selbst betreibst, starte mit `OLLAMA_CONTEXT_LENGTH=32768`; sein Standard von 4.096 Tokens ist für Agenten zu klein.
 
 Kosten: Lokale Modelle haben **keine externe API-Abrechnung**. Lokale Betriebskosten (Hardware, Energie) erfasst Nodestro nicht. Ausführungen zeigen deshalb „lokal, keine API-Abrechnung“ statt einer Summe von 0, und gemischte Ausführungen nennen zusätzlich die Zahl der lokalen Anfragen.
+
+## Einrichtung und Downloads: Fortschritt und Fehler {#lokale-einrichtung}
+<!-- keywords: einrichten, einrichtung, installieren, fortschritt, schritt, downloadfortschritt, prozent, übertragungsrate, restzeit, hängt, abbrechen, fortsetzen, erneut versuchen, speicher voll, kein platz, netzwerkfehler, proxy, unterbrochen, eigenes ollama -->
+
+**Herunterladen und installieren** (und **Starten**) richten den Modellserver als eine Aufgabe mit Schritten ein, die dem entsprechen, was Nodestro tatsächlich tut: *System und vorhandene Installation prüfen*, *Voraussetzungen prüfen* (strikter Offline-Modus, beschreibbarer Ordner, freier Speicher), *Ollama herunterladen*, *Download prüfen (SHA-256)*, *Ollama installieren*, *Server konfigurieren* (Modellordner, Kontextfenster), *Server starten*, *Erreichbarkeit prüfen*, *GPU und Hardware ermitteln* und *Modellserver bereit*. Ein Schritt, der nicht nötig ist, heißt *nicht nötig* und nennt den Grund, etwa wenn die Laufzeit Teil der Desktop-App oder schon installiert ist. Der laufende Schritt sagt „Schritt 3 von 10“; darunter bedeutet „Keine Aktion nötig“, dass du weiterarbeiten kannst, während es im Hintergrund weiterläuft. In Nodestro Local Docker und bei deinem eigenen Ollama prüft **Modellserver prüfen** nur, ob der Server antwortet und welche Hardware er nutzt: Nodestro startet, stoppt oder ändert einen solchen Server nie. Ein Ollama, das du selbst auf diesem Computer betreibst, bleibt auch dann unberührt, wenn Nodestro daneben seinen eigenen Server einrichtet.
+
+Modell-Downloads folgen den Schritten von Ollama: *Freien Speicher prüfen*, *Dateiliste des Modells abrufen*, *Modelldateien herunterladen*, *Dateien prüfen (SHA-256)* und *Installation abschließen*. Jedes Modell hat unter **Aufgaben** einen eigenen Eintrag, und seine Zeile in der Modellliste zeigt statt des Download-Buttons den laufenden Schritt. Mehrere Modelle können gleichzeitig laden; dasselbe Modell lädt nur einmal.
+
+Was der Fortschritt zeigt, ist gemessen, nie geschätzt:
+
+- **Eine Prozentzahl** nur für einen Schritt, der Bytes zählt (ein Download, die Prüfsumme der Laufzeit). Jeder andere laufende Schritt hat einen bewegten Balken ohne Wert.
+- **Datenmenge:** „400 MB von 1,5 GB“. Ollama nennt jede Datei eines Modells erst, wenn es sie beginnt; ein Modell-Download zeigt daher die aktuelle Datei („Datei 2: 225 MB von 525 MB“) und die bisher heruntergeladene Menge. Die Gesamtgröße steht fest, sobald Ollama die Dateien prüft.
+- **Übertragungsrate** nach einigen Sekunden Messung und **Restzeit** nur, solange die Rate gleichmäßig ist (bei einem Modell: die Zeit für die aktuelle Datei). Kommen eine Weile keine Daten, sagt der Eintrag das: Der Download versucht es eine Weile selbst erneut, bevor er scheitert.
+- **Fortgesetzt:** Was ein früherer, unterbrochener Versuch hinterlassen hat (ein abgebrochener Download, eine verlorene Verbindung, eine geschlossene App), bleibt erhalten und wird gezählt; **Fortsetzen** oder **Erneut versuchen** lädt nur den Rest.
+
+Scheitert etwas, sagt der Eintrag **Aktion erforderlich**, was passiert ist und was zu tun ist: Internetverbindung oder Proxy prüfen, Platz schaffen oder einen anderen [Modellordner](/docs/einstellungen#offline-import) wählen, im strikten Offline-Modus aus einem Release-Archiv installieren und so weiter. Vor einem Download vergleicht Nodestro den freien Speicher des Modellordners mit der Größe des Modells und lehnt sofort ab, wenn es nicht passt. **Technische Details** zeigen die Details der Schritte (Pfade, Versionen, Adressen), die Dateien eines Modells und ein Protokoll.
+
+Aufgaben hält Nodestro, nicht die Seite: Nach einem Neuladen der Seite erscheinen die laufende Einrichtung und die Downloads wieder mit ihrem Fortschritt. Wird Nodestro beendet, während eine Aufgabe läuft, steht sie beim nächsten Mal als unterbrochen in der Liste; **Fortsetzen** macht dort weiter, wo sie stehen geblieben ist. Es läuft immer nur eine Einrichtung, auch über mehrere Nodestro-Fenster hinweg.
+
+## Benötigtes Modell nicht installiert {#modell-fehlt}
+<!-- keywords: modell fehlt, modell nicht installiert, benötigtes modell, modell herunterladen, anderes modell wählen, model not found, fortfahren, server nicht erreichbar, berechtigung, administrator, unbeaufsichtigt, zeitplan, beheben -->
+
+Braucht der KI-Architekt, der Assistent, der Entwurf oder Test eines Agenten, eine Ausführung oder die Wissenssuche ein lokales Modell, das gerade nicht nutzbar ist, startet Nodestro die Aktion nicht, sondern öffnet einen Dialog. Er sagt, **warum**: Das Modell ist nicht installiert (mit Downloadgröße, freiem Platz im [Modellordner](/docs/einstellungen#offline-import) und benötigtem Arbeitsspeicher), lokale Modelle sind noch nicht eingerichtet, der Modellserver startet oder antwortet nicht, der Speicher ist zu voll, das Modell kann nicht, was der Schritt braucht (Tool-Aufrufe, strukturierte Ergebnisse, Bilder, Embeddings), es ist für diesen Computer vermutlich zu groß, oder der Name ist kein lokales Modell. Er sagt auch, **wohin** das Modell gehört: auf diesen Computer, in den Local-Docker-Container, auf einen eingetragenen Modellserver oder auf den Nodestro-Server.
+
+Der Dialog bietet nur an, was du hier tun darfst: **Modell herunterladen** (nach einer Unterbrechung **Download fortsetzen**), **Lokale Modelle einrichten**, **Erneut prüfen**, **Anderes Modell wählen** oder **Modellnamen kopieren** für einen Administrator. Ohne Berechtigung zum Installieren, auf einem Nodestro-Server (dort installiert der Betreiber) und im strikten Offline-Modus wird nichts heruntergeladen, und der Dialog sagt das. Lädt dasselbe Modell schon, etwa in einem anderen Fenster, folgt der Dialog diesem Download; ein zweiter startet nie.
+
+Deine Eingaben bleiben, wo sie sind: die Beschreibung für den KI-Architekten, die Nachricht samt Dateien im Assistenten, die Testeingabe oder die Eingaben der Ausführung. Ist der Download fertig, prüft Nodestro, ob das Modell wirklich da ist und den Schritt kann; dann startet **Weiter** die Aktion einmal mit denselben Eingaben. Hakst du **Automatisch weitermachen, sobald das Modell bereit ist** an, geht es von selbst weiter, einmal. Du kannst den Dialog schließen, während der Download läuft: Er läuft unter **Aufgaben** weiter. **Anderes Modell wählen** listet nur bereite Modelle, die den Schritt können, lokale und Cloud-Modelle (die Kosten verursachen können); die Wahl gilt für diese eine Aktion und ändert deine Einstellungen nicht.
+
+Zeitpläne, Stapelausführungen und veröffentlichte APIs laden nie etwas herunter. Eine Ausführung, die nicht starten kann, meldet das fehlende Modell (etwa beim letzten Lauf des Zeitplans) mit **Beheben**, das denselben Dialog öffnet, ohne von selbst etwas fortzusetzen.
 
 ## Dieser Computer, Kontextfenster und Geschwindigkeit {#lokale-hardware}
 <!-- keywords: hardware, gpu, nur cpu, arbeitsspeicher, kontextfenster, ollama_context_length, geschwindigkeit, tokens pro sekunde, messen, cpu-sparmodus, denken verkürzt -->
@@ -154,6 +193,17 @@ Das **Standardbudget pro Lauf** (anfangs 2 USD) gilt für alle Workflows ohne ei
 
 Administratoren legen außerdem das **Höchste Budget pro Lauf** fest (leer: keine Obergrenze): Kein Lauf darf damit starten oder darüber hinaus erhöht werden. Die **Frist für Budget-Entscheidungen** (1 bis 720 Stunden, anfangs 24) bestimmt, wie lange ein pausierter Lauf auf eine [Budget-Entscheidung](/docs/workflows#budget-freigabe) wartet, bevor er fehlschlägt. Wer entscheiden darf, steht unter [Wer entscheiden darf](/docs/workflows#budget-rechte).
 
+## Ausgabelimits der Modelle {#ausgabelimits}
+<!-- keywords: Ausgabelimit, max. Tokens, max_tokens, abgeschnitten, Architekt-Limit, Kontextfenster -->
+
+Nodestros eigene KI-Schritte (der Workflow-Architekt, die Assistenten, Fragen zu einem Lauf, Entscheidungen des Orchestrators und die Qualitätsprüfung) haben keine eigenen Agenteneinstellungen. Unter **Ausgabelimits der Modelle** legst du fest, mit wie vielen Tokens jeder Schritt antworten darf; ein leeres Feld verwendet die eingebaute Vorgabe (zum Beispiel 32.000 für den Workflow-Plan des Architekten und 8.000 für seine Analyse). Agenten behalten ihre eigenen *Max. Tokens* im [Agenten-Editor](/docs/agenten#limits).
+
+Der gesendete Wert ergibt sich aus drei Stufen: deiner Einstellung, sonst der Vorgabe, höchstens der dokumentierten maximalen Ausgabe des Modells (oder der Hälfte seines Kontextfensters bei einem lokalen Modell ohne bekanntes Maximum). Die Tabelle zeigt den Wert, der an das Assistenzmodell geht, und sagt, wenn er gesenkt wurde; nichts wird stillschweigend gekürzt.
+
+Das Limit schließt das Denken des Modells ein. Ein höheres Limit erlaubt längere Antworten, umgeht aber nie ein Budget: Vor jeder Anfrage reserviert die Kostenprüfung genau diesen Wert.
+
+**Abgeschnittene Antworten erneut anfordern:** Erreicht eine Antwort des Workflow-Architekten ihr Limit, wird sie einmal mit doppeltem Limit neu angefordert, höchstens mit dem *Höchsten Limit für eine Wiederholung* (anfangs 64.000) und dem Maximum des Modells. Die Wiederholung wird nur gesendet, wenn ihre vollen Kosten in das verbleibende Budget des Auftrags passen. Sonst, oder bei ausgeschalteter Wiederholung, endet der Auftrag mit einer Meldung, die den Schritt und sein Limit nennt.
+
 ## Sandbox {#sandbox}
 <!-- keywords: sandbox wählen, automatisch, docker, python prozess, docker verfügbar, eingebaute sandbox, linux sandbox, macos, windows, gesperrt, experimentell -->
 
@@ -214,6 +264,36 @@ Die Sprache betrifft nur die **Oberfläche**: Menüs, Hinweise, Fehlermeldungen,
 <!-- keywords: theme, dunkel, hell, dark mode, light mode, farbschema, design, midnight citron -->
 
 Oben rechts wechselst du zwischen **Dunkel** und **Hell**. Die Wahl wird im Browser gespeichert. Beide Varianten folgen dem Designsystem *Midnight Citron*. Auf schmalen Bildschirmen ist die Seitenleiste ausgeblendet: Die Menütaste oben links (**Alle Seiten zeigen**) öffnet sie als Bereich, **Esc** schließt ihn wieder.
+
+## Anzeige des Denkens {#denken-anzeige}
+<!-- keywords: denken, thinking, reasoning, zusammenfassung, gedanken, live, status, nicht übertragen, redacted -->
+
+Während ein Modell arbeitet, zeigt Nodestro, was sein Anbieter vom Denken überträgt: im Assistenten, im Chat mit der Teamleitung eines Laufs, in Workflow-Läufen, im Workflow-Architekten und im Agententest. **Nodestro schreibt, ergänzt oder umschreibt nie selbst Denktext.** Behält ein Anbieter das Denken für sich, siehst du nur, dass das Modell nachdenkt, und warum es keinen Text gibt.
+
+Die Anzeige trennt das Denken immer von der Antwort (gestrichelter Rahmen, eigene Beschriftung) und nennt einen dieser Zustände:
+
+| Zustand | Bedeutung |
+|---|---|
+| *Denkt nach…* | Eine Denkphase läuft; es ist (noch) kein Text da, oder der Text ist ausgeblendet. |
+| *Denktext* | Das Denken des Modells, wie es entstand (offene Modelle, etwa über Ollama oder vLLM). |
+| *Zusammenfassung des Denkens* | Eine Zusammenfassung, die der Anbieter über Denken schreibt, das er nicht offenlegt (OpenAI, Gemini, Claude). |
+| *Denken nicht übertragen* | Das Modell hat nachgedacht, der Anbieter hat aber keinen Text gesendet (verschlüsselt, weggelassen oder nicht angefordert). |
+| *Denken nicht offengelegt* | Das Modell denkt nicht nach, oder sein Anbieter sendet das Denken nie. |
+
+**Anzeige in diesem Browser** (Abschnitt *Anzeige des Denkens*): *Live anzeigen* öffnet den Text, während er ankommt, *Eingeklappt* (Standard) zeigt die Aktivität und lässt den Text einen Klick entfernt, *Nur Status* zeigt den Text nie. Der Assistent und der Chat mit der Teamleitung haben je Gespräch eine eigene Wahl (**Denken** unter der Eingabe bzw. der Einleitung); *Standard* folgt der globalen Wahl. Die Wahl bleibt in diesem Browser und ändert keinen Workflow und kein Gespräch.
+
+**Anzeigen ist nicht Einschalten.** Ob und wie viel ein Modell denkt, legst du am Agenten fest ([Denken und Aufwand](/docs/agenten#denken)). Manche Anbieter senden Text nur auf Anfrage:
+
+| Anbieter | Was live ankommt | Wie du Text erhältst |
+|---|---|---|
+| Anthropic (Claude 4 und neuer) | Zusammenfassung | Option *Gedanken anzeigen* des Agenten (*Zusammengefasst anzeigen*) |
+| OpenAI (denkende Modelle) | Zusammenfassung; das Denken selbst nie | **Zusammenfassungen des Denkens anfordern** (Administration; OpenAI verlangt eventuell eine verifizierte Organisation) |
+| OpenAI GPT-4o, GPT-4.1 | nichts: sie denken nicht | – |
+| Gemini 2.5 und neuer | Zusammenfassung (Thought Summaries) | **Zusammenfassungen des Denkens anfordern** |
+| Amazon Bedrock | Claude: Zusammenfassung; andere denkende Modelle: Denktext, wo das Modell ihn sendet | Request-Options des Agenten |
+| Ollama, vLLM, OpenAI-kompatible Server | Denktext, wo der Server ihn abtrennt | Serverkonfiguration (etwa ein Reasoning-Parser) |
+
+Zusammenfassungen anzufordern ändert keine Antwort und keine Kosten: Denk-Tokens berechnet der Anbieter, ob Text übertragen wird oder nicht. Die Denk-Optionen des Agenten zeigen, was sein Modell überträgt (*Denken live: …*).
 
 ## Backup und Wiederherstellung {#backup}
 <!-- keywords: backup, sicherung, wiederherstellen, restore, export, zip, umzug, datensicherung -->

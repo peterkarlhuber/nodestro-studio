@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useInRouterContext } from "react-router-dom";
 
 import { ApiError } from "../api/client";
+import { ModelFixButton } from "../missingModel/ModelFixButton";
 import { dockerReasonKey, isDockerReason } from "../api/types";
 import i18n from "../i18n";
 import { formatLargeBytes } from "./format";
@@ -116,7 +117,7 @@ function codeParams(t: TFunction, code: string | null, params: Record<string, un
   if (code === "export.download_needed" || code === "export.downloads") return { ...params, items: downloadList(t, downloadCodes(params)) };
   if (code === "export.server_too_large")
     return { ...params, size: formatLargeBytes(Number(params.size)), limit: formatLargeBytes(Number(params.limit)) };
-  if (code === "local.invalid_package_reason") return { ...params, reason: t(`errors.local.${String(params.reason)}`) };
+  if (code === "local.invalid_package_reason") return { ...params, reason: t(`errors.local.${String(params.reason)}`, { defaultValue: String(params.reason) }) };
   return null;
 }
 
@@ -139,8 +140,10 @@ function resolved(item: Coded): { code: string | null; params: Record<string, un
 
 /**
  * Provider failures the runtime sorts itself (AD-01): the key (``run.provider_auth``), no answer
- * (``run.provider_unreachable``), too many requests (``run.provider_rate_limited``) and no capacity
- * (``run.provider_overloaded``), with ``params.provider`` and, when the provider answered, ``params.status``.
+ * (``run.provider_unreachable``), too many requests (``run.provider_rate_limited``), no capacity
+ * (``run.provider_overloaded``), a refused conversation (``run.provider_rejected_messages``: a message's form, never
+ * the workflow) and a conversation larger than the context window (``run.provider_context_exceeded``), with
+ * ``params.provider`` and, when the provider answered, ``params.status``.
  */
 export const PROVIDER_FAILURES = new Set([
   "run.provider_auth",
@@ -148,6 +151,8 @@ export const PROVIDER_FAILURES = new Set([
   "run.provider_unreachable",
   "run.provider_rate_limited",
   "run.provider_overloaded",
+  "run.provider_rejected_messages",
+  "run.provider_context_exceeded",
 ]);
 
 /**
@@ -350,6 +355,7 @@ export function ProblemText({ item, compact = false }: { item: Coded; compact?: 
         </span>
       ) : null}
       {technical ? <TechnicalDetails text={technical} /> : null}
+      {compact ? null : <ModelFixButton item={item} />}
     </>
   );
 }

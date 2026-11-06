@@ -229,6 +229,29 @@ describe("AgentForm sections", () => {
   });
 });
 
+/** GET /api/models/profile for a Claude model on Bedrock: the Anthropic-only options are refused by the provider. */
+function bedrockProfile(model: string) {
+  const refused = { available: false, reason: "provider", values: null };
+  return {
+    model,
+    provider: "bedrock",
+    error: null,
+    capabilities: {},
+    reasons: {},
+    limits: { context_window: null, max_output_tokens: null, efforts: null, thinking_modes: [], thinking_budget: false, source: "unknown" },
+    max_tokens_limit: 1_000_000,
+    options: {
+      thinking: refused,
+      thinking_display: refused,
+      thinking_budget: refused,
+      cache_control: { available: false, reason: "not_mapped", values: null },
+      cache_ttl: { available: false, reason: "not_mapped", values: null },
+      fallbacks: refused,
+    },
+    native_tools: [{ key: "web_search", available: false, reason: "provider" }],
+  };
+}
+
 describe("AgentForm with Amazon Bedrock", () => {
   const SUGGESTED = "bedrock:eu.anthropic.claude-sonnet-5-5";
   function stubBedrock(typed: Record<string, string> | null = null) {
@@ -238,6 +261,8 @@ describe("AgentForm with Amazon Bedrock", () => {
         const path = url.replace(/\?.*$/, "");
         const body = path.endsWith("/models/capabilities")
           ? { model: new URL(url, "http://x").searchParams.get("model"), capabilities: typed }
+          : path.endsWith("/models/profile")
+          ? bedrockProfile(new URL(url, "http://x").searchParams.get("model") ?? "")
           : path.endsWith("/meta")
           ? {
               providers: [{ id: "bedrock", label: "Amazon Bedrock (AWS)", auth: "aws", example_model: "" }],
@@ -273,13 +298,13 @@ describe("AgentForm with Amazon Bedrock", () => {
     vi.unstubAllGlobals();
   });
 
-  it("keeps Anthropic-only options off for Claude on Bedrock, with the reason", async () => {
+  it("keeps options the Bedrock provider does not offer off for Claude on Bedrock, with the reason", async () => {
     stubBedrock();
     const { container } = show({ ...defaultAgent(), model: SUGGESTED });
     open(container, "thinking");
-    await waitFor(() => expect(screen.getAllByTestId("anthropic-only").length).toBeGreaterThan(0));
-    for (const hint of screen.getAllByTestId("anthropic-only"))
-      expect(hint).toHaveTextContent("Claude-Modelle auf Amazon Bedrock bieten es ebenfalls nicht");
+    await waitFor(() => expect(screen.getByTestId("option-unavailable-thinking")).toHaveAttribute("data-reason", "provider"));
+    expect(screen.getByTestId("option-unavailable-thinking")).toHaveTextContent("Für Modelle dieses Anbieters nicht verfügbar");
+    expect(screen.getByTestId("option-unavailable-thinking_display")).toHaveAttribute("data-reason", "provider");
   });
 
   it("follows the model's capabilities and turns unknown ones off", async () => {

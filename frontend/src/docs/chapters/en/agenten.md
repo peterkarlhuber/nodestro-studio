@@ -27,7 +27,7 @@ The model determines abilities, speed and price. First choose the **provider**, 
 - **Opus 5.5** for demanding reasoning, planning, code and long tasks with many tools.
 - **Fable 5.1** for the hardest tasks, when quality matters more than cost.
 
-You set the default model for new agents in the [settings](/docs/einstellungen#modelle) and the providers' access under [AI providers](/docs/einstellungen#anbieter). Some options exist only for Anthropic models: thinking and showing thoughts, prompt caching, fallback models and server tools. For other providers the inspector hides them; if one of them is still set, the check reports an error instead of silently leaving it out.
+You set the default model for new agents in the [settings](/docs/einstellungen#modelle) and the providers' access under [AI providers](/docs/einstellungen#anbieter). Some options depend on the model, not just on the provider: thinking and showing thoughts, the thinking budget, prompt caching, fallback models, server tools and the effort levels. The inspector shows them where the chosen model supports them and otherwise names the reason (for example *not available for models of this provider*, *the provider does this automatically* or *not documented for this model*). If such an option is still set after you switch the model, it stays visible next to the reason and the check reports an error instead of silently leaving it out.
 
 **Amazon Bedrock:** model ids are passed on exactly as typed, colons and slashes included: `bedrock:anthropic.claude-sonnet-4-5-20250929-v1:0`, `bedrock:eu.anthropic.claude-sonnet-5-5` or an ARN such as `bedrock:arn:aws:bedrock:eu-central-1:111122223333:application-inference-profile/abc`. Only the first colon separates the provider. Models in the list are suggestions, not models enabled for your account. Claude on Bedrock is a provider of its own: the Anthropic-only options above stay off for it as well, and options such as structured output or reasoning effort follow what the model supports on Bedrock (unknown for a typed ARN). See [Amazon Bedrock (AWS)](/docs/einstellungen#bedrock).
 
@@ -57,7 +57,7 @@ If the task contains no placeholder, the inspector points this out: the results 
 
 In the **Tools** section you choose from the tool library which functions the agent may call. The list is grouped into *Built-in*, *Your own* and *AI-generated*; hovering shows the description.
 
-Below it you switch on the **Server tools from Anthropic**: *Web search*, *Web fetch* and *Code execution*. They run on Anthropic's servers (see [Server tools](/docs/tools#server-tools)). Server tools are available only for Anthropic models.
+Below it you switch on the **Server tools from Anthropic**: *Web search*, *Web fetch* and *Code execution*. They run on Anthropic's servers (see [Server tools](/docs/tools#server-tools)). They are offered where the model's provider runs them; today these are Anthropic models. OpenAI and Google Gemini have similar tools of their own, but their fees are not in the price catalog yet, so costs could not be estimated or limited: the inspector shows them as not available with that reason.
 
 The agent decides by itself whether and when to call a tool, based on its name and description. How often it may do so is controlled by [Max. tool rounds and Parallel tools](/docs/agenten#limits); whether it must is controlled by [Tool choice](/docs/agenten#tool-choice).
 
@@ -143,6 +143,8 @@ Thoughts count as **output tokens** and are billed accordingly.
 
 If it is unknown whether a model supports reasoning effort (your own servers, unknown model ids), a set effort leads to an error. Choose *Model default* then, or declare the capability under [AI providers](/docs/einstellungen#anbieter). OpenAI-compatible endpoints (such as Ollama or vLLM) accept no effort setting at all; the check explains this, and **Set effort to model default** switches the agent with one click.
 
+**Thinking budget** (Gemini 2.5 models only) sets how many tokens the model may spend on thinking before it answers; empty leaves it to the model, 0 turns thinking off where the model allows it. It replaces the effort: set the effort to *Model default* to use it. If a model does not take the chosen effort level (for example *Very high* on Claude Sonnet 4.6, or any level on Claude Haiku 4.5), the check warns and names the level that is sent instead.
+
 ## Quality check {#qualitaet}
 <!-- keywords: quality check, judge, evaluator, criteria, revision, refine, llm as a judge, assessment -->
 
@@ -164,7 +166,7 @@ The result of the check is shown in the execution next to the agent: passed or n
 
 | Setting | Default | Effect |
 |---|---|---|
-| **Max. tokens** | 8,000 | Maximum number of output tokens per answer, including thinking (up to 128,000). When it is reached, the agent stops with `IncompleteResponseError`. |
+| **Max. tokens** | 8,000 | Maximum number of output tokens per answer, including thinking (up to the model's documented maximum, e.g. 128,000 for Claude Opus 5.5 and 64,000 for Claude Haiku 4.5; the inspector shows it next to the field). When it is reached, the agent stops with `IncompleteResponseError`. |
 | **Max. tool rounds** | 8 | How many rounds of tool calls the agent may make per task (0–50). After that it ends with `MaxToolRoundsError`. At 0 it may not call any tools. |
 | **Parallel tools** | 1 | How many tool calls of one answer run at the same time (1–16). Useful for slow, independent tools such as web searches. |
 

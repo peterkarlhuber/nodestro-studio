@@ -3,7 +3,7 @@
 On request Nodestro writes results as files (Markdown, JSON, CSV, HTML, PDF, Word or Excel), and besides PDFs and texts it also reads Word and Excel files. Scanned PDFs can optionally be made readable with local text recognition (OCR). Everything runs on your computer, without extra accounts.
 
 ## Result files {#ergebnisdateien}
-<!-- keywords: result file, file, export, report, markdown, json, csv, html, pdf, download, sanitize -->
+<!-- keywords: result file, file, export, report, markdown, json, csv, html, pdf, word, docx, excel, xlsx, download, sanitize -->
 
 In the inspector of the **Result** node, *Result files* sets the formats in which the result is saved at the end of every run. Without an entry no file is written.
 

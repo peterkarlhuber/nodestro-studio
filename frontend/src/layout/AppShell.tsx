@@ -18,6 +18,7 @@ import {
   Orbit,
   PanelLeftClose,
   PanelLeftOpen,
+  Plug,
   Rows3,
   Settings,
   Sparkles,
@@ -26,7 +27,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { useAccess } from "../api/access";
 import { pendingBudgetRequests, useApprovals, useBudgetRequests, useSettings, useToolApprovals } from "../api/hooks";
@@ -35,18 +36,21 @@ import { useAssistant } from "../assistant/store";
 import { LoginProblemNotice, ReadOnlyNotice, UserMenu } from "../components/Access";
 import { BrandLogo, BrandMark } from "../components/BrandLogo";
 import { Toaster } from "../components/toast";
-import { Hint, Segmented } from "../components/ui";
+import { MissingModelHost } from "../missingModel/MissingModelDialog";
+import { Hint, Segmented, Tooltip } from "../components/ui";
 import { isLanguage, setLanguage, storedLanguage } from "../i18n";
 import { setDefaultModel } from "../lib/defaults";
 import { anyProviderConfigured, missingProviders, providerOf } from "../lib/providers";
 import { useNavRail } from "../lib/navRail";
+import { safeReturnPath, settingsHref } from "../lib/settingsLink";
 import { useTheme } from "../lib/theme";
 import { GlobalSearch } from "./GlobalSearch";
+import type NavTexts from "../i18n/locales/en/nav.json";
 
 interface NavItem {
   to: string;
-  /** Key below "nav." in the language files. */
-  label: string;
+  /** Key below "nav." in the language files (typed by them, so a label without a text does not compile). */
+  label: keyof typeof NavTexts;
   icon: LucideIcon;
   end?: boolean;
   /** A count shown next to the label (e.g. approvals waiting for a decision). */
@@ -68,7 +72,8 @@ const RUN_AND_REVIEW: NavItem[] = [
   { to: "/usage", label: "usage", icon: Activity },
 ];
 
-const AUTOMATE_AND_TEST: NavItem[] = [
+export const AUTOMATE_AND_TEST: NavItem[] = [
+  { to: "/publications", label: "publications", icon: Plug },
   { to: "/tests", label: "tests", icon: FlaskConical },
   { to: "/batches", label: "batches", icon: Layers },
   { to: "/schedules", label: "schedules", icon: CalendarClock },
@@ -129,6 +134,53 @@ function usePhoneNav() {
     };
   }, [open]);
   return { open, setOpen, toggle };
+}
+
+/** Whether a key press is the settings shortcut: Ctrl+, (⌘, on a Mac), as in many desktop apps. */
+export function isSettingsShortcut(event: Pick<KeyboardEvent, "key" | "ctrlKey" | "metaKey" | "altKey" | "shiftKey">): boolean {
+  return (event.ctrlKey || event.metaKey) && !event.altKey && !event.shiftKey && event.key === ",";
+}
+
+/**
+ * The one way into the settings: a gear in the top bar, the same place on every page (also in the editor, the agent
+ * library, runs and with the assistant open). It remembers the page it was used on, so the settings offer the way
+ * back; Ctrl+, opens the settings and, pressed there, goes back. Pages with unsaved changes ask before they are left
+ * (UnsavedChangesModal), as with any other link.
+ */
+function SettingsEntry() {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const here = location.pathname.startsWith("/settings");
+  const from = here ? new URLSearchParams(location.search).get("from") : `${location.pathname}${location.search}`;
+  const href = here ? `${location.pathname}${location.search}${location.hash}` : settingsHref(undefined, from ?? undefined);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (!isSettingsShortcut(event)) return;
+      event.preventDefault();
+      if (!here) navigate(settingsHref(undefined, from ?? undefined));
+      else {
+        const back = safeReturnPath(from);
+        if (back) navigate(back);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [here, from, navigate]);
+  return (
+    <Tooltip content={t("settingsUi.entry.tooltip")}>
+      <Link
+        to={href}
+        className={`topbar-settings ${here ? "active" : ""}`}
+        aria-label={t("settingsUi.entry.label")}
+        aria-current={here ? "page" : undefined}
+        aria-keyshortcuts="Control+Comma Meta+Comma"
+        data-testid="settings-entry"
+      >
+        <Settings size={17} aria-hidden />
+      </Link>
+    </Tooltip>
+  );
 }
 
 export function AppShell() {
@@ -229,6 +281,7 @@ export function AppShell() {
               <span className="assistant-toggle__label">{t("assistant.title")}</span>
             </button>
           </Hint>
+          <SettingsEntry />
           <UserMenu />
           <Segmented
             label={t("shell.theme")}
@@ -267,10 +320,6 @@ export function AppShell() {
             {navRail.rail ? <PanelLeftOpen size={16} aria-hidden /> : <PanelLeftClose size={16} aria-hidden />}
             {navRail.rail ? t("shell.navExpand") : t("shell.navCollapse")}
           </button>
-          <NavLink to="/settings" title={t("nav.settings")} className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
-            <Settings size={16} aria-hidden />
-            {t("nav.settings")}
-          </NavLink>
           {/* "Runs only on your computer" is true for the desktop app only; a server says where the data is instead. */}
           {access.profile === "desktop" ? (
             <div className="sidebar__note">
@@ -292,6 +341,7 @@ export function AppShell() {
       </main>
       {assistantOpen ? <AssistantPanel /> : null}
       <Toaster />
+      <MissingModelHost />
     </div>
   );
 }

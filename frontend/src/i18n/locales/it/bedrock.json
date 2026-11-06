@@ -20,7 +20,7 @@
     "profile": "Profilo AWS",
     "profileHint": "Un profilo con nome della tua configurazione AWS (~/.aws/config). Viene salvato solo il nome; le credenziali restano nella tua configurazione AWS.",
     "operator_role": "Ruolo assegnato dal gestore",
-    "operatorHint": "Il tuo gestore ha dato a quest’area di lavoro un ruolo AWS proprio. Non puoi vederlo né modificarlo.",
+    "operator_roleHint": "Il tuo gestore ha dato a quest’area di lavoro un ruolo AWS proprio. Non puoi vederlo né modificarlo.",
     "notAvailable": "Amazon Bedrock non è disponibile su questo server per quest’area di lavoro. Chiedi al tuo gestore di assegnarle un ruolo AWS."
   },
   "profile": {
