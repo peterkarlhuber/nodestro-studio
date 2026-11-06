@@ -20,7 +20,7 @@
     "profile": "Profil AWS",
     "profileHint": "Un profil nommé de votre configuration AWS (~/.aws/config). Seul le nom est enregistré ; les identifiants restent dans votre configuration AWS.",
     "operator_role": "Rôle attribué par l’exploitant",
-    "operatorHint": "Votre exploitant a attribué à cet espace de travail son propre rôle AWS. Vous ne pouvez ni le voir ni le modifier.",
+    "operator_roleHint": "Votre exploitant a attribué à cet espace de travail son propre rôle AWS. Vous ne pouvez ni le voir ni le modifier.",
     "notAvailable": "Amazon Bedrock n’est pas disponible sur ce serveur pour cet espace de travail. Demandez à votre exploitant de lui attribuer un rôle AWS."
   },
   "profile": {

@@ -239,7 +239,7 @@
     "orchestratorTemplate": "Un team esiste solo durante l'esecuzione. Questo pulsante lo trasforma in un nuovo workflow a sé: lo stesso orchestratore con esattamente i team che hanno lavorato, nelle loro versioni. Puoi modificarlo in seguito; può cambiarlo solo chi può modificare i workflow."
   },
   "files": {
-    "output": "Formati in cui il nodo di risultato salva il suo risultato alla fine dell’esecuzione: Markdown, JSON, CSV, HTML o PDF.",
+    "output": "Formati in cui il nodo di risultato salva il suo risultato alla fine dell’esecuzione: Markdown, JSON, CSV, HTML, PDF, Word (.docx) o Excel (.xlsx).",
     "sanitize": "Sostituisce nel file credenziali e dati personali con segnaposto.",
     "run": "File di questa esecuzione. L’HTML viene mostrato senza script.",
     "formats": "Word (DOCX) ed Excel (XLSX) vengono convertiti in Markdown al caricamento; le formule vengono mostrate, mai eseguite.",

@@ -16,7 +16,6 @@ import type {
   InputField,
   InputFieldType,
   OutputField,
-  ReportFormat,
   ResultFileSpec,
   SubworkflowConfig,
   WorkflowNode,
@@ -37,6 +36,7 @@ import {
 } from "../components/ui";
 import { newField, newRule } from "../lib/defaults";
 import { DEFAULT_FIELD_MB, FORMAT_GROUPS, fileFieldSummary } from "../lib/files";
+import { isResultFormat, resultFormatOptions } from "../lib/resultFormats";
 import { childLink, parseTrail } from "../lib/trail";
 import { branchLabel } from "./branches";
 import { OutputFieldsEditor } from "./OutputFieldsEditor";
@@ -77,7 +77,6 @@ const TEXTUAL = new Set<ConditionOperator>([
 ]);
 
 const FIELD_TYPES: InputFieldType[] = ["text", "textarea", "number", "date", "boolean", "select", "file"];
-const FORMATS: ReportFormat[] = ["md", "json", "csv", "html", "pdf", "docx", "xlsx"];
 
 function move<T>(items: T[], index: number, by: number): T[] {
   const target = index + by;
@@ -707,12 +706,15 @@ export function OutputFilesEditor({ node }: { node: WorkflowNode }) {
       <p className="field__hint">{t("flow.files.hint")}</p>
       {files.map((file, index) => (
         <div key={index} className="flow-item" role="group" aria-label={t("flow.files.file", { n: index + 1 })}>
-          <div className="grid-2">
+          {/* One field per row: format names like "Excel-Arbeitsmappe (.xlsx)" need the inspector's full width. */}
+          <div className="stack-sm">
             <Field label={t("flow.files.format")}>
               <Select
                 value={file.format}
-                onChange={(value) => setFile(index, { format: value as ReportFormat })}
-                options={FORMATS.map((value) => ({ value, label: t(`flow.files.formats.${value}`) }))}
+                onChange={(value) => {
+                  if (isResultFormat(value)) setFile(index, { format: value });
+                }}
+                options={resultFormatOptions(t)}
               />
             </Field>
             <Field label={t("flow.files.name")}>

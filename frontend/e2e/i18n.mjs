@@ -3,10 +3,12 @@
 // Covers browser language detection, switching in the settings (immediately, without a workflow run
 // or AI request), persistence across reloads, and long texts: every page in every language must
 // render without horizontal scrolling and without text that spills out of buttons, tabs or badges, also at
-// phone width (390 px).
+// phone width (390 px). Every page, the editor's inspectors and their dropdowns are also swept for translation
+// keys shown as text (visible text, option labels, title/aria-label/placeholder attributes) and for the
+// "Missing interface text" console message of the missing-key guard (src/i18n/index.ts).
 
 import { createRequire } from "node:module";
-import { mkdirSync, readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -44,6 +46,13 @@ const editor = Object.fromEntries(
   LANGUAGES.map((language) => [language, JSON.parse(readFileSync(join(localeDir, language, "editor.json"), "utf8"))]),
 );
 
+const flow = Object.fromEntries(
+  LANGUAGES.map((language) => [language, JSON.parse(readFileSync(join(localeDir, language, "flow.json"), "utf8"))]),
+);
+// The first part of every key is the name of a language file ("flow", "agent", …): text starting with one of them
+// and two or more further dotted parts is a key that reached the screen ("flow.files.formats.docx").
+const AREAS = readdirSync(join(localeDir, "en")).map((file) => file.replace(/\.json$/, ""));
+
 let failures = 0;
 function check(condition, message) {
   if (condition) console.log(`ok    ${message}`);
@@ -61,6 +70,8 @@ async function open(options) {
   const errors = [];
   page.on("console", (message) => {
     if (message.type() === "error" && !/Failed to load resource/.test(message.text())) errors.push(message.text());
+    // The missing-key guard names a key without a text once (src/i18n/index.ts).
+    if (/^Missing interface text: /.test(message.text())) errors.push(message.text());
   });
   page.on("pageerror", (error) => errors.push(error.message));
   return { context, page, errors };
@@ -90,6 +101,31 @@ async function overflow(page) {
     }
     return [...new Set(problems)];
   });
+}
+
+/** Translation keys shown as text: in visible text, option labels and the title, aria-label and placeholder of elements. */
+async function rawKeys(page) {
+  return page.evaluate((areas) => {
+    const pattern = new RegExp(`\\b(?:${areas.join("|")})(?:\\.[A-Za-z0-9_-]+){2,}\\b`);
+    const found = new Set();
+    const note = (text, where) => {
+      const match = pattern.exec(text ?? "");
+      if (match) found.add(`${where}: ${match[0]}`);
+    };
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      const parent = node.parentElement;
+      // Code and editable content show what the user wrote (an agent's prompt may name a key).
+      if (!parent || parent.closest("code, pre, textarea, [contenteditable=true], .cm-editor, script, style")) continue;
+      note(node.textContent, "text");
+    }
+    for (const option of document.querySelectorAll("option, optgroup")) note(option.label || option.textContent, "option");
+    for (const element of document.querySelectorAll("[title], [aria-label], [placeholder], [alt], [aria-description]")) {
+      for (const name of ["title", "aria-label", "placeholder", "alt", "aria-description"]) note(element.getAttribute(name), name);
+    }
+    note(document.title, "document title");
+    return [...found];
+  }, AREAS);
 }
 
 try {
@@ -221,6 +257,10 @@ try {
         await page.waitForTimeout(250);
         const problems = await overflow(page);
         check(problems.length === 0, `${language} ${viewport.width}px ${path}${problems.length ? `\n        ${problems.join("\n        ")}` : ""}`);
+        if (viewport === VIEWPORTS[0]) {
+          const keys = await rawKeys(page);
+          check(keys.length === 0, `${language} ${path}: no translation keys as text${keys.length ? `\n        ${keys.join("\n        ")}` : ""}`);
+        }
         if (viewport === VIEWPORTS[0] && TITLED[path]) {
           const title = await page.title();
           check(title === `${nav[language][TITLED[path]]} · Nodestro Studio`, `${language} ${path}: the browser tab says "${title}"`);
@@ -256,6 +296,34 @@ try {
             (await named(".run-panel__toggle", labels.hideRunPanel)),
           `${language}: panel buttons and dividers are labelled in the language`,
         );
+      }
+      if (viewport === VIEWPORTS[0]) {
+        const keys = await rawKeys(page);
+        check(keys.length === 0, `${language} editor, agent inspector: no translation keys as text${keys.length ? `\n        ${keys.join("\n        ")}` : ""}`);
+        // Properties → Result → Result files: every format, Word and Excel included, by its name.
+        await page.locator(".react-flow__node-output").first().dispatchEvent("click");
+        await page.locator(".inspector").waitFor();
+        const add = page.getByRole("button", { name: flow[language].files.add, exact: true });
+        if (!(await page.getByRole("combobox", { name: flow[language].files.format, exact: true }).count())) await add.click();
+        const picker = page.getByRole("combobox", { name: flow[language].files.format, exact: true }).first();
+        await picker.waitFor();
+        const labels = await picker.locator("option").allTextContents();
+        const expected = ["md", "json", "csv", "html", "pdf", "docx", "xlsx"].map((id) => flow[language].files.formats[id]);
+        check(
+          JSON.stringify(labels) === JSON.stringify(expected),
+          `${language}: the result file formats read ${labels.join(" | ")}`,
+        );
+        await picker.selectOption("docx");
+        check(
+          (await picker.locator("option:checked").textContent()) === flow[language].files.formats.docx,
+          `${language}: Word is shown as "${flow[language].files.formats.docx}" once chosen`,
+        );
+        const inspectorKeys = await rawKeys(page);
+        check(
+          inspectorKeys.length === 0,
+          `${language} editor, result inspector: no translation keys as text${inspectorKeys.length ? `\n        ${inspectorKeys.join("\n        ")}` : ""}`,
+        );
+        if (shots) await page.locator(".inspector").screenshot({ path: join(shots, `${language}-result-files.png`) });
       }
       const problems = await overflow(page);
       check(problems.length === 0, `${language} ${viewport.width}px editor${problems.length ? `\n        ${problems.join("\n        ")}` : ""}`);

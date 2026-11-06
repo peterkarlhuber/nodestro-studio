@@ -178,7 +178,7 @@ export function BedrockCard({ info, status, settings }: { info: ProviderInfo; st
           {profile === "server" ? (
             status.operator_role ? (
               <p className="small" data-testid="bedrock-operator-role">
-                <ShieldCheck size={13} aria-hidden /> <strong>{t("bedrock.auth.operator_role")}</strong> {t("bedrock.auth.operatorHint")}
+                <ShieldCheck size={13} aria-hidden /> <strong>{t("bedrock.auth.operator_role")}</strong> {t("bedrock.auth.operator_roleHint")}
               </p>
             ) : (
               <Callout tone="warning">

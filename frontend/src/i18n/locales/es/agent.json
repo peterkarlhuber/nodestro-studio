@@ -95,7 +95,8 @@
     "kind": {
       "builtin": "Integradas",
       "custom": "Propias",
-      "generated": "Generadas por IA"
+      "generated": "Generadas por IA",
+      "mcp": "Servicios externos"
     },
     "missingHint": "¿Falta una herramienta? Escríbela tú en la <a>biblioteca de herramientas</a> o pide a la IA que la cree.",
     "serverTools": "Herramientas de servidor de Anthropic",

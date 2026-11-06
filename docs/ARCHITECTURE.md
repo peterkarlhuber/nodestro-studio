@@ -408,6 +408,18 @@ fallback language.
   `frontend/src/i18n/locales/<language>/<area>.json`. All languages are built in; nothing is translated or loaded at
   runtime. A test checks that all languages have the same keys, that every key used in the code exists, and that
   components contain no hard-coded sentences.
+- **Keys built from values** (``t(`flow.files.formats.${format}`)``) are checked by `src/i18n/dynamicKeys.test.ts`: it
+  asks the TypeScript compiler for the type of each `${…}` part, and when that is a closed set of literals (a union
+  from `api/types.ts`, an `as const` list) every resulting key must have a text in all six languages. Give such
+  values a literal type rather than `string`. Calls with an open value pass a `defaultValue` or are listed with a
+  reason in the test's `OPEN` table.
+- **Missing-key guard:** a key that exists in no language never reaches the screen as `area.some.key`.
+  `parseMissingKeyHandler` in `src/i18n/index.ts` shows a readable stand-in ("Some key"), logs
+  `Missing interface text: <key>` once in the browser console, and collects the key; every component test fails on a
+  collected key (`src/test/setup.ts`). A call that passes `defaultValue` chose its fallback and is not reported.
+- **Result file formats** are one table, `src/lib/resultFormats.ts` (id, extension, media type, preview), mirroring
+  `nodestro_runtime.reports.REPORT_FORMATS`; `tests/test_result_formats.py` compares both and the six language files.
+  The result node, the run's *Create file* dialog and its file list take options, labels and preview from it.
 - **Choosing the language:** on first start the browser language decides; unsupported languages fall back to English.
   A choice under *Settings* always wins. It is kept in `localStorage` (`nodestro-language`) and additionally in the
   backend settings. Switching only re-renders; it starts no run and no AI request.
@@ -431,7 +443,9 @@ fallback language.
   changes. The example part of the "Examples" documentation chapter is generated from the templates with
   `make example-docs`.
 - **Browser check:** `frontend/e2e/i18n.mjs` checks detection, switching without reload and without further requests,
-  saving, and all pages in all languages for truncated texts and horizontal scrolling.
+  saving, and all pages in all languages for truncated texts and horizontal scrolling. It also sweeps every page and
+  the editor's agent and result inspectors for translation keys shown as text (visible text, option labels, `title`,
+  `aria-label`, `placeholder`), fails on the guard's console message, and checks the result file formats by name.
 
 ## Editor layout
 

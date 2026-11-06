@@ -126,7 +126,9 @@
       "json": "JSON (.json)",
       "csv": "Tabla CSV (.csv)",
       "html": "Página HTML (.html)",
-      "pdf": "PDF (.pdf)"
+      "pdf": "PDF (.pdf)",
+      "docx": "Documento de Word (.docx)",
+      "xlsx": "Libro de Excel (.xlsx)"
     },
     "name": "Nombre de archivo",
     "namePlaceholder": "Nombre del flujo de trabajo",

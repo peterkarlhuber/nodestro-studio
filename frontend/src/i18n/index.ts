@@ -163,6 +163,45 @@ function applyDocumentLanguage(language: string): void {
   if (typeof document !== "undefined") document.documentElement.lang = language;
 }
 
+/**
+ * Keys the interface asked for that exist in no language, English included. A component test fails on any of
+ * them (src/test/setup.ts), the browser console names each once (e2e/i18n.mjs fails on it), and the interface shows
+ * readableMissingKey() instead of the raw key. Calls that pass a defaultValue are deliberate and not collected.
+ */
+export const missingKeys = new Set<string>();
+
+const KEY_SHAPE = /^[a-zA-Z][\w-]*(\.[\w-]+)+$/;
+/** Last parts of a key that only say which text of a thing it is: "….docx.label" reads as "docx". */
+const GENERIC_PARTS = new Set(["label", "title", "text", "description", "hint", "short", "name", "open", "action"]);
+
+/**
+ * A readable stand-in for a key without a text, never the dotted key itself: "flow.files.formats.docx" → "Docx",
+ * "errors.run.loop_exhausted" → "Loop exhausted", "welcome.nodes.dataRoom.title" → "Data room".
+ */
+export function readableMissingKey(key: string): string {
+  const parts = key.split(".");
+  let last = parts.pop() ?? key;
+  if (GENERIC_PARTS.has(last) && parts.length > 1) last = parts.pop() ?? last;
+  const words = last
+    .replace(/_(zero|one|two|few|many|other)$/, "")
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_-]+/g, " ")
+    .trim()
+    .toLowerCase();
+  return words ? words.charAt(0).toUpperCase() + words.slice(1) : key;
+}
+
+function missingKeyText(key: string, defaultValue: string | undefined): string {
+  if (defaultValue !== undefined) return defaultValue; // the caller chose a fallback
+  if (!KEY_SHAPE.test(key)) return key; // not a key but a text passed through t()
+  if (!missingKeys.has(key)) {
+    missingKeys.add(key);
+    // Once per key, also in production: the browser e2e checks (e2e/i18n.mjs) fail on this message.
+    if (import.meta.env.MODE !== "test") console.warn(`Missing interface text: ${key}`);
+  }
+  return readableMissingKey(key);
+}
+
 void i18n.use(initReactI18next).init({
   // A copy: i18next adds the loaded languages to the object it is given.
   resources: { ...resources },
@@ -176,6 +215,8 @@ void i18n.use(initReactI18next).init({
   load: "currentOnly",
   interpolation: { escapeValue: false }, // React escapes
   returnNull: false,
+  // A key without a text in any language never reaches the screen as "area.some.key" (see missingKeys).
+  parseMissingKeyHandler: (key: string, defaultValue?: string) => missingKeyText(key, defaultValue),
   initAsync: false,
 });
 applyDocumentLanguage(i18n.language);

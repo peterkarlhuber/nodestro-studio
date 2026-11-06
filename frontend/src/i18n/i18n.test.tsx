@@ -16,6 +16,8 @@ import i18n, {
   isLanguageLoaded,
   loadLanguage,
   matchLanguage,
+  missingKeys,
+  readableMissingKey,
   setLanguage,
   storedLanguage,
 } from "./index";
@@ -200,6 +202,37 @@ describe("switching languages", () => {
     await setLanguage("de", false);
     i18n.addResource("en", "translation", "test.onlyEnglish", "Only English");
     expect(i18n.t("test.onlyEnglish")).toBe("Only English");
+  });
+});
+
+describe("a key without a text", () => {
+  afterEach(() => missingKeys.clear());
+
+  it("never shows the dotted key: a readable stand-in instead, and the key is reported", async () => {
+    await setLanguage("de", false);
+    expect(i18n.t("flow.files.formats.odt")).toBe("Odt");
+    expect(i18n.t("errors.run.some_new_problem")).toBe("Some new problem");
+    expect(i18n.t("welcome.nodes.dataRoom.title")).toBe("Data room");
+    expect([...missingKeys]).toEqual(["flow.files.formats.odt", "errors.run.some_new_problem", "welcome.nodes.dataRoom.title"]);
+  });
+
+  it("keeps a deliberate defaultValue and a text that is not a key", () => {
+    expect(i18n.t("diagnostics.version.newPart", { defaultValue: "newPart" })).toBe("newPart");
+    expect(i18n.t("Plain text, not a key")).toBe("Plain text, not a key");
+    expect(missingKeys.size).toBe(0);
+  });
+
+  it("does not report a key that only English has", async () => {
+    await setLanguage("fr", false);
+    i18n.addResource("en", "translation", "test.englishOnly", "English only");
+    expect(i18n.t("test.englishOnly")).toBe("English only");
+    expect(missingKeys.size).toBe(0);
+  });
+
+  it("reads plural and camel case parts as words", () => {
+    expect(readableMissingKey("a.b.itemCount_other")).toBe("Item count");
+    expect(readableMissingKey("a.b.label")).toBe("B");
+    expect(readableMissingKey("x.y-z")).toBe("Y z");
   });
 });
 

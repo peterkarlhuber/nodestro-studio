@@ -95,7 +95,8 @@
     "kind": {
       "builtin": "Built-in",
       "custom": "Your own",
-      "generated": "AI-generated"
+      "generated": "AI-generated",
+      "mcp": "External services"
     },
     "missingHint": "Missing a tool? Write it yourself in the <a>tool library</a> or have the AI create it.",
     "serverTools": "Server tools from Anthropic",

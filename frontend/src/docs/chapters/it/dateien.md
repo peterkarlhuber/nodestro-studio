@@ -3,7 +3,7 @@
 Su richiesta Nodestro salva i risultati come file (Markdown, JSON, CSV, HTML, PDF, Word o Excel) e, oltre a PDF e testi, legge anche file Word ed Excel. I PDF scansionati possono facoltativamente essere resi leggibili con il riconoscimento del testo locale (OCR). Tutto gira sul tuo computer, senza account aggiuntivi.
 
 ## File di risultato {#ergebnisdateien}
-<!-- keywords: file di risultato, file, esportare, report, markdown, json, csv, html, pdf, scaricare, ripulire -->
+<!-- keywords: file di risultato, file, esportare, report, markdown, json, csv, html, pdf, word, docx, excel, xlsx, scaricare, ripulire -->
 
 Nell'inspector del nodo **Risultato**, *File di risultato* stabilisce in quali formati il risultato viene salvato alla fine di ogni esecuzione. Senza voci non viene scritto alcun file.
 
