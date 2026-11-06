@@ -54,6 +54,14 @@ const api = async (path, init) => {
 const json = (method, data) => ({ method, data, headers: { "content-type": "application/json" } });
 
 const panel = page.getByTestId("assistant-panel");
+// The panel's open state is kept across reloads, and Ctrl+J toggles it: wait until the shell is ready, then open
+// the panel only if it is still closed (pressing too early, or on an open panel, would leave it closed).
+async function openPanel() {
+  await page.getByTestId("assistant-toggle").waitFor();
+  await page.waitForLoadState("networkidle").catch(() => {});
+  if (!(await panel.isVisible())) await page.keyboard.press("Control+j");
+  await panel.waitFor();
+}
 const input = page.getByTestId("assistant-input");
 const answers = panel.getByTestId("chat-assistant");
 
@@ -138,22 +146,19 @@ try {
   await section.scrollIntoViewIfNeeded();
   await shot("reasoning-04-settings-dark");
   await page.goto(base);
-  await page.keyboard.press("Control+j");
-  await panel.waitFor();
+  await openPanel();
   await answers.first().getByTestId("chat-reasoning").waitFor();
   await shot("reasoning-04b-dark");
 
   // 5. Light theme, another language and a phone width.
   await page.evaluate(() => localStorage.setItem("nodestro-theme", "light"));
   await page.goto(base);
-  await page.keyboard.press("Control+j");
-  await panel.waitFor();
+  await openPanel();
   await answers.first().getByTestId("chat-reasoning").waitFor();
   await shot("reasoning-05-light");
   await page.evaluate(() => localStorage.setItem("nodestro-language", "fr"));
   await page.reload();
-  await page.keyboard.press("Control+j");
-  await panel.waitFor();
+  await openPanel();
   const french = answers.first().getByTestId("chat-reasoning");
   await french.waitFor();
   check((await french.textContent()).includes("Résumé de la réflexion"), "The display speaks the interface language (French)");
@@ -161,8 +166,7 @@ try {
   await page.evaluate(() => localStorage.setItem("nodestro-language", "en"));
   await page.setViewportSize({ width: 390, height: 820 });
   await page.reload();
-  await page.keyboard.press("Control+j");
-  await panel.waitFor();
+  await openPanel();
   const narrow = answers.first().getByTestId("chat-reasoning");
   await narrow.waitFor();
   check((await page.evaluate(() => document.documentElement.scrollWidth)) <= 390, "At phone width nothing overflows");
