@@ -178,7 +178,7 @@ cd frontend && npm run dev          # user interface with hot reload on :5173
 | `ruff check . && ruff format --check .` | Python style |
 | `mypy` | Types (strict) |
 | `cd frontend && npm run lint && npm run typecheck && npm test` | Frontend |
-| `make e2e` (`scripts/e2e.sh [suite ...]`) | All sixteen browser suites (smoke, i18n, architect, python, assistant, flow, panels, api, mcp, approvals, budget, orchestration, runchat, journeys, welcome, a11y) against Nodestro servers with simulated models and temporary data folders; needs the built user interface and Playwright; `E2E_BROWSER=firefox` or `webkit` runs them in another engine |
+| `make e2e` (`scripts/e2e.sh [suite ...]`) | All 21 browser suites (smoke, i18n, architect, python, assistant, reasoning, flow, panels, api, mcp, approvals, budget, orchestration, runchat, journeys, welcome, a11y, settings-ui, publications, missing-model, local-models) against Nodestro servers with simulated models and temporary data folders; needs the built user interface and Playwright; `E2E_BROWSER=firefox` or `webkit` runs them in another engine (CI runs welcome, a11y and settings-ui in both, not yet as a gate), `E2E_PORT_OFFSET=1400` moves every server port (8000 to 8099) so that parallel runs do not collide |
 | `make check-versions` | The pins of all components against [platform/versions.json](platform/versions.json) |
 | `make check-imports` | The dependency direction of the installed packages, no claude-agent |
 | `python scripts/check_case_collisions.py` | No file or module names that differ only in case (they clash on macOS and Windows) |
