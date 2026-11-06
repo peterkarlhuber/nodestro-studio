@@ -148,9 +148,10 @@ function useTip({ ownEscape = false }: { ownEscape?: boolean } = {}) {
       if (bubbleRef.current?.contains(event.relatedTarget as Node)) return;
       if (!state.pinned) later(close, CLOSE_DELAY);
     },
-    // The bubble is rendered elsewhere in the page: Tab from the anchor leads into its link ("More in the docs").
+    // The bubble is rendered elsewhere in the page: once opened on purpose (click, Enter, Space), Tab from the anchor
+    // leads into its link ("More in the docs"). A tooltip shown only by passing focus keeps the normal Tab order.
     onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => {
-      if (event.key !== "Tab" || event.shiftKey || !state.anchor) return;
+      if (event.key !== "Tab" || event.shiftKey || !state.anchor || !state.pinned) return;
       const link = bubbleRef.current?.querySelector<HTMLElement>("a[href]");
       if (!link) return;
       event.preventDefault();

@@ -5,7 +5,7 @@
 // Covers:
 // - Tooltips inside modal dialogs (the "New workflow" dialog in both modes): every help icon's tooltip is painted on
 //   top of the dialog (elementFromPoint), lies inside the window (also at phone width, i.e. high zoom), Escape closes
-//   only the tooltip, Tab leads into its documentation link and out again (no focus trap), readable in light and dark.
+//   only the tooltip, Enter then Tab leads into its documentation link and out again (no focus trap), readable in light and dark.
 // - The settings width: default clearly wider than before, drag the edge, keyboard (arrows, Shift, Home, End),
 //   double-click and the reset link, kept after a reload, never wider than the window allows, navigation never
 //   overlapping the content, no horizontal scrolling at 1280 px, 800 px and phone width (navigation on top).
@@ -129,7 +129,7 @@ try {
     await page.keyboard.press("Escape");
     await checkDialogTips(page, "Create with AI");
 
-    // Keyboard: focus shows the tooltip, Tab goes into its link and on to the next control (no trap).
+    // Keyboard: focus shows the tooltip, Enter + Tab goes into its link and on to the next control (no trap).
     const help = page.getByRole("button", { name: "Help: Write missing tools as drafts" });
     await page.getByLabel("Describe your goal").click();
     for (let step = 0; step < 6 && !(await help.evaluate((element) => element === document.activeElement)); step += 1) {
@@ -140,6 +140,9 @@ try {
     check(true, "keyboard: focus shows the tooltip");
     const link = page.locator("[role=tooltip] a");
     if (await link.count()) {
+      // A tooltip shown by passing focus keeps the normal Tab order; Enter opens it on purpose and Tab enters its link.
+      await page.keyboard.press("Enter");
+      await page.locator("[role=tooltip]").waitFor();
       await page.keyboard.press("Tab");
       check(await link.evaluate((element) => element === document.activeElement), "keyboard: Tab leads into the tooltip's documentation link");
       await page.keyboard.press("Tab");
