@@ -138,8 +138,38 @@ describe("local models", () => {
     expect(within(table).getByText("qwen3.5:9b")).toBeInTheDocument();
     expect(table).toHaveTextContent("Ohne Grafikkarte sind große Modelle zu langsam.");
     await userEvent.click(within(setup).getByRole("button", { name: "Herunterladen und installieren" }));
-    await waitFor(() => expect(calls.some((call) => call.method === "POST" && call.url === "/api/local-models/runtime")).toBe(true));
-    expect(calls.find((call) => call.url === "/api/local-models/runtime")?.body).toEqual({ download: true });
+    // One job sets the server up step by step (download, verify, install, start, check).
+    await waitFor(() => expect(calls.some((call) => call.method === "POST" && call.url === "/api/local-models/setup")).toBe(true));
+    expect(calls.find((call) => call.url === "/api/local-models/setup")?.body).toEqual({ download: true });
+  });
+
+  it("finds a running setup and running downloads again after a reload", async () => {
+    const step = (id: string, state: string) => ({ id, state });
+    serve({
+      "GET /api/local-models": overview(),
+      "GET /api/local-models/jobs": [
+        {
+          id: "s1", kind: "setup", target: "server", state: "running", completed: 10, total: 100, message: "", error_code: null,
+          error: null, started_at: "2026-11-06T08:00:00Z", finished_at: null, phase: "download", progress_step: "download",
+          steps: [step("check", "done"), step("prerequisites", "done"), step("download", "running"), step("verify", "pending")],
+        },
+        {
+          id: "p1", kind: "pull", target: "qwen3.5:9b", state: "running", completed: 0, total: null, message: "pulling manifest",
+          error_code: null, error: null, started_at: "2026-11-06T08:00:00Z", finished_at: null, phase: "manifest",
+          steps: [step("check", "done"), step("manifest", "running"), step("download", "pending")],
+        },
+      ],
+    });
+    show(<LocalModelsPanel settings={SETTINGS} admin onOffline={() => {}} onEurope={() => {}} />);
+    const progress = await screen.findByTestId("local-setup-progress");
+    expect(progress).toHaveTextContent("Schritt 3 von 4: Ollama herunterladen");
+    expect(within(progress).getByRole("progressbar")).toHaveAttribute("aria-valuenow", "10");
+    // While the setup runs, it is not offered again.
+    expect(screen.queryByTestId("local-runtime-setup")).toBeNull();
+    // The model downloads in the list: its step instead of the button, without a percentage (not measurable yet).
+    const inline = await screen.findByTestId("local-inline-qwen3.5:9b");
+    expect(inline).toHaveTextContent("Dateiliste des Modells abrufen");
+    expect(within(inline).getByRole("progressbar")).not.toHaveAttribute("aria-valuenow");
   });
 
   it("offers downloads only with a running model server and says why", async () => {

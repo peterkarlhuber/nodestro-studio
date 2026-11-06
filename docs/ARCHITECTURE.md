@@ -250,6 +250,24 @@ Batch runs (`nodestro_api.batches`), test series (`nodestro_api.benchmarks`) and
 There is only one engine; budget, approvals and usage apply to every run in the same way, and no costs are counted
 twice.
 
+## Progress of long operations
+
+`frontend/src/components/Progress.tsx` is the shared progress vocabulary:
+
+- `ProgressBar` has `role="progressbar"`. It sets `aria-valuenow` only when the progress is measured. Without a
+  measure it is indeterminate: a moving stripe, or a calm track under `prefers-reduced-motion`.
+- `StepList` marks the running step with `aria-current="step"`.
+- `LiveAnnouncer` is a polite live region that announces a new step once.
+- `TechnicalDetails` stays closed until asked for.
+
+`pages/LocalModelJobs.tsx` builds the cards of the local model jobs (setup, downloads, builds) on these components.
+Each card shows the current step, whether action is needed, the bytes, and a percentage only with a known total. It
+shows the rate and the remaining time only when the runtime reports them. A failure comes with a remedy, and a
+retry or resume button where it helps. The backend contract is described in nodestro-runtime
+`docs/local-models.md` ("Setup and download progress"). `frontend/e2e/localModels.mjs` runs a real setup against a
+fresh data folder (download, reload, cancel). It replays recorded states for the indeterminate, the failed and the
+parallel-download cases.
+
 ## Knowledge and memory
 
 - Files live in the `SQLiteFileStore`; texts are additionally stored in sections in the `SQLiteIndex` (FTS5). Through
@@ -433,5 +451,6 @@ frontend/src/styles/    Midnight Citron tokens and app styles
 frontend/src/i18n/      Language selection and translations
 frontend/src/docs/      Built-in documentation per language
 frontend/e2e/           Playwright: smoke test, languages, Workflow Architect, Python libraries, assistant, flow
-                        (decision, approval, resume, batch, test series, schedule), editor panels and API & Export
+                        (decision, approval, resume, batch, test series, schedule), editor panels and API & Export,
+                        local model setup and download progress (localModels.mjs)
 ```

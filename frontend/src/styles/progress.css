@@ -1,0 +1,215 @@
+/* Progress of long operations (components/Progress.tsx) and the local model jobs (pages/LocalModelJobs.tsx). */
+
+.nd-progress {
+  position: relative;
+  height: 8px;
+  min-width: 80px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--nd-surface-raised);
+  /* The track's edge keeps the bar visible on the panel background in both themes. */
+  box-shadow: inset 0 0 0 1px var(--nd-border);
+}
+
+.nd-progress__bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 999px;
+  background: var(--nd-brand);
+  transition: width 0.3s ease;
+}
+
+.nd-progress--danger .nd-progress__bar {
+  background: var(--nd-danger);
+}
+
+.nd-progress--idle .nd-progress__bar {
+  background: var(--nd-idle);
+}
+
+/* No measurable progress: a stripe that moves, never a value. */
+.nd-progress--indeterminate .nd-progress__bar {
+  width: 35%;
+  animation: nd-progress-slide 1.4s ease-in-out infinite;
+}
+
+@keyframes nd-progress-slide {
+  from {
+    left: -35%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Without motion the indeterminate bar is a calm, half-filled track; the text says that work goes on. */
+  .nd-progress--indeterminate .nd-progress__bar {
+    animation: none;
+    left: 0;
+    width: 100%;
+    opacity: 0.45;
+  }
+}
+
+.nd-steps {
+  display: grid;
+  gap: var(--nd-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nd-steps__item {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: var(--nd-space-2);
+  align-items: start;
+  font-size: var(--nd-font-size-sm);
+  color: var(--nd-text-muted);
+}
+
+.nd-steps__item > svg {
+  margin-top: 2px;
+}
+
+.nd-steps__body {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.nd-steps__label {
+  overflow-wrap: anywhere;
+}
+
+.nd-steps__note {
+  color: var(--nd-text-subtle);
+  font-size: var(--nd-font-size-xs);
+  overflow-wrap: anywhere;
+}
+
+.nd-steps__item--done > svg {
+  color: var(--nd-success);
+}
+
+.nd-steps__item--running {
+  color: var(--nd-text);
+  font-weight: 620;
+}
+
+.nd-steps__item--running > svg {
+  color: var(--nd-running);
+}
+
+.nd-steps__item--failed {
+  color: var(--nd-danger);
+  font-weight: 620;
+}
+
+.nd-steps__item--skipped .nd-steps__label {
+  color: var(--nd-text-subtle);
+}
+
+.nd-tech {
+  font-size: var(--nd-font-size-xs);
+  color: var(--nd-text-muted);
+}
+
+.nd-tech > summary {
+  cursor: pointer;
+  width: fit-content;
+  border-radius: var(--nd-radius-sm);
+}
+
+.nd-tech > summary:focus-visible {
+  outline: 2px solid var(--nd-focus);
+  outline-offset: 2px;
+}
+
+.nd-tech__body {
+  display: grid;
+  gap: var(--nd-space-2);
+  margin-top: var(--nd-space-2);
+  max-height: 260px;
+  overflow: auto;
+  padding: var(--nd-space-2);
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-sm);
+  background: var(--nd-surface-raised);
+}
+
+.nd-tech__body pre,
+.nd-tech__body code {
+  margin: 0;
+  font-size: var(--nd-font-size-xs);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* ---- local model jobs ---- */
+
+.local-job {
+  display: grid;
+  gap: var(--nd-space-2);
+  padding: var(--nd-space-3);
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-md, 8px);
+  background: var(--nd-surface);
+  min-width: 0;
+}
+
+.local-job--failed {
+  border-color: var(--nd-danger);
+}
+
+.local-job__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nd-space-2);
+  align-items: center;
+  min-width: 0;
+}
+
+.local-job__title {
+  font-size: var(--nd-font-size-sm);
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.local-job__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nd-space-2);
+  margin-left: auto;
+}
+
+.local-job__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px var(--nd-space-3);
+  font-size: var(--nd-font-size-xs);
+  color: var(--nd-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.local-job__hint {
+  font-size: var(--nd-font-size-xs);
+  color: var(--nd-text-muted);
+}
+
+.local-jobs {
+  display: grid;
+  gap: var(--nd-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.local-inline-progress {
+  display: grid;
+  gap: 4px;
+  min-width: 120px;
+  font-size: var(--nd-font-size-xs);
+  color: var(--nd-text-muted);
+}

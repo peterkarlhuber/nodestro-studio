@@ -341,6 +341,8 @@ describe("backend codes", () => {
     "export.server_too_large", "export.server_too_large_plain", "export.download_needed", "export.download_needed_plain",
     "export.downloads", "export.downloads_plain", "local.invalid_package", "local.invalid_package_path",
     "local.invalid_package_reason", "knowledge.query_too_long", "knowledge.hits_out_of_range",
+    // Local model setup and downloads with steps: what a job can end with.
+    "local.network", "local.disk_full", "local.install_running", "local.interrupted", "local.unavailable", "local.start_failed",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

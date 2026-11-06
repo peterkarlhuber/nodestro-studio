@@ -12,7 +12,7 @@ Nodestro can run agents, assistants and the knowledge search on **local models**
 *Settings → Local models* shows:
 
 - **State:** whether the model server runs and who provides it. On the desktop Nodestro starts its own server (a separate process on this computer, with its own model folder); in Nodestro Local Docker it is a separate container; on a server the operator provides it. An Ollama you already run is used only if you save its address for the Ollama provider.
-- **Runtime:** if it is missing, **Download and install** fetches the pinned version once and checks its SHA-256. Without internet, install it from its release archive (see [Offline import](/docs/einstellungen#offline-import)).
+- **Runtime:** if it is missing, **Download and install** fetches the pinned version once and checks its SHA-256. Without internet, install it from its release archive (see [Offline import](/docs/einstellungen#offline-import)). Each step and its progress is shown; see [Setup and downloads](/docs/einstellungen#lokale-einrichtung).
 - **Recommended for this computer:** a model per task (sorting, writing, agents with tools, analysis, assistant, semantic search) from the task's needs, the memory of this computer and the installed models. An installed model that is good enough comes first; *Suitable* and *Limited* mean a larger model would do better; the reason is shown under the model. Suggestions never change an agent: you choose its model in the editor.
 - **Models:** the suggested models with download size, memory needed and license; **Checked** means the installed build is the one Nodestro verified.
 
@@ -21,6 +21,24 @@ Nodestro can run agents, assistants and the knowledge search on **local models**
 **Reasoning effort:** local models that can “think” do so without a limit from effort *Medium* up, and the thinking counts toward the maximum output length. On a computer without a graphics card a small model can take many minutes for it. For fast steps (sorting, extraction, short structured answers) choose *Low*: the model then answers without thinking. The model server Nodestro starts gives every model 32,768 tokens of context for prompt, thinking and answer together. Start an Ollama you run yourself with `OLLAMA_CONTEXT_LENGTH=32768`; its default of 4,096 tokens is too small for agents.
 
 Costs: local models have **no external API billing**. Nodestro does not record local operating costs (hardware, energy), so runs show “local, no API billing” instead of a total of 0, and mixed runs add the number of local requests to the cost.
+
+## Setup and downloads: progress and errors {#lokale-einrichtung}
+<!-- keywords: set up, setup, install, progress, step, download progress, percent, transfer rate, remaining time, stalled, cancel, resume, continue, retry, disk full, no space, network error, proxy, interrupted, external ollama -->
+
+**Download and install** (and **Start**) set the model server up as one task with steps that follow what Nodestro actually does: *check this system and what is installed*, *check the prerequisites* (strict offline mode, a writable folder, free space), *download Ollama*, *verify the download (SHA-256)*, *install Ollama*, *configure the server* (model folder, context window), *start the server*, *check that the server answers*, *detect the GPU and hardware* and *model server ready*. A step that is not needed is marked *not needed* with the reason, for example when the runtime is part of the desktop app or is installed already. The running step says “Step 3 of 10”; below it, “No action needed” means you can keep working while it continues in the background. In Nodestro Local Docker and for your own Ollama, **Check the model server** only checks that the server answers and which hardware it uses: Nodestro never starts, stops or changes such a server. An Ollama you run yourself on this computer is left alone also while Nodestro sets up its own server next to it.
+
+Model downloads follow Ollama's own steps: *check free space*, *get the model's file list*, *download the model files*, *verify the files (SHA-256)* and *finish the installation*. Each model has its own entry under **Tasks**, and its row in the model list shows the running step instead of the download button. Several models can download at the same time; the same model downloads only once.
+
+What the progress shows is measured, never estimated:
+
+- **A percentage** only for a step that counts bytes (a download, the checksum of the runtime). Any other running step has a moving bar without a value.
+- **Bytes:** “400 MB of 1.5 GB”. Ollama names each file of a model only when it starts it, so a model download shows the current file (“File 2: 225 MB of 525 MB”) and the total downloaded so far; the total size is known once Ollama verifies the files.
+- **Transfer rate** after a few seconds of measurement, and **remaining time** only while the rate is steady (for a model: the time for the current file). When no data arrives for a while, the entry says so: the download retries on its own for a while before it fails.
+- **Continued:** the part an earlier, interrupted attempt left (a canceled download, a lost connection, a closed app) is kept and counted; **Continue** or **Try again** downloads only the rest.
+
+When something fails, the entry says **Action needed**, what happened and what to do: check the internet connection or proxy, free up space or choose another [model folder](/docs/einstellungen#offline-import), install from a release archive in the strict offline mode, and so on. Before a download Nodestro compares the free space of the model folder with the model's size and refuses at once if it does not fit. **Technical details** show the steps' details (paths, versions, addresses), the files of a model and a log.
+
+Tasks are kept by Nodestro, not by the page: after a reload of the page the running setup and downloads appear again with their progress. If Nodestro is closed while a task runs, the task is listed as interrupted the next time; **Continue** picks it up where it stopped. Only one setup runs at a time, also across several Nodestro windows.
 
 ## This computer, context window and speed {#lokale-hardware}
 <!-- keywords: hardware, gpu, cpu only, ram, context window, ollama_context_length, speed, tokens per second, measure, cpu saving mode, reasoning reduced -->

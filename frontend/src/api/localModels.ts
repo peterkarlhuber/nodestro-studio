@@ -167,11 +167,43 @@ export interface LocalAdvice {
   recommended: number | null;
 }
 
+export type LocalJobKind =
+  | "pull"
+  | "setup"
+  | "install_runtime"
+  | "import_package"
+  | "import_gguf"
+  | "move_models"
+  | "build"
+  | "benchmark";
+
+export type LocalStepState = "pending" | "running" | "done" | "skipped" | "failed";
+
+/** One step of a job as the runtime runs it (setup: check … ready; download: check, manifest, download, verify, finalize). */
+export interface LocalJobStep {
+  id: string;
+  state: LocalStepState;
+  /** A code for the interface's own text (e.g. "bundled", "already_running", "gpu_nvidia"). */
+  note?: string | null;
+  /** Technical detail in English (paths, versions, addresses), shown on request. */
+  detail?: string | null;
+  started_at?: string | null;
+  finished_at?: string | null;
+}
+
+/** One file of a model download as Ollama reports it. */
+export interface LocalJobLayer {
+  digest: string;
+  total: number | null;
+  completed: number;
+}
+
 export interface LocalJob {
   id: string;
-  kind: "pull" | "install_runtime" | "import_package" | "import_gguf" | "move_models" | "build" | "benchmark";
+  kind: LocalJobKind;
   target: string;
   state: LocalJobState;
+  /** Bytes (or items) of the step named by progress_step. */
   completed: number;
   total: number | null;
   message: string;
@@ -179,6 +211,29 @@ export interface LocalJob {
   error: string | null;
   started_at: string;
   finished_at: string | null;
+  // Steps and measured progress (older APIs leave them out).
+  /** The step that runs now. */
+  phase?: string | null;
+  steps?: LocalJobStep[];
+  /** The step completed/total belong to; any other running step has no measurable progress. */
+  progress_step?: string | null;
+  /** Whether total is final (a model download learns each file's size only when Ollama starts it). */
+  total_final?: boolean;
+  /** Measured bytes per second; null while not measured reliably. */
+  rate?: number | null;
+  /** Remaining seconds; null when not reliable. eta_scope: the whole job, or the file that downloads now. */
+  eta_seconds?: number | null;
+  eta_scope?: "job" | "file" | null;
+  /** Seconds without new bytes in a running download (null: data arrives). */
+  stalled_seconds?: number | null;
+  /** Bytes already there when the job started (a download that continues). */
+  resumed_bytes?: number;
+  layers?: LocalJobLayer[];
+  /** Technical lines (English). */
+  log?: string[];
+  /** Whether starting the same job again makes sense now. */
+  retryable?: boolean;
+  updated_at?: string | null;
 }
 
 export interface ReindexJob {
@@ -226,6 +281,8 @@ export const localApi = {
   setAutostart: (enabled: boolean) => request<LocalStatus>("PUT", "/local-models/autostart", { enabled }),
   installRuntime: (source: { archive?: string; download?: boolean }) =>
     request<LocalJob>("POST", "/local-models/runtime", source),
+  /** Sets the server up step by step (one job; a second one is refused while it runs). */
+  setup: (source: { archive?: string; download?: boolean } = {}) => request<LocalJob>("POST", "/local-models/setup", source),
   pull: (model: string) => request<LocalJob>("POST", "/local-models/pull", { model }),
   /** Measures the generation speed of an installed chat model (a short local generation). */
   benchmark: (model: string) => request<LocalJob>("POST", "/local-models/benchmark", { model }),
@@ -250,13 +307,16 @@ export function useLocalModels(enabled = true) {
   return useQuery({ queryKey: localKeys.overview, queryFn: localApi.overview, enabled, staleTime: 5_000 });
 }
 
-/** The jobs; polled while one runs. */
+/**
+ * The local model jobs: polled every second while one runs, and every ten seconds otherwise, so that a job started
+ * elsewhere (another tab, the assistant, another admin) shows up without a reload.
+ */
 export function useLocalJobs(enabled = true) {
   return useQuery({
     queryKey: localKeys.jobs,
     queryFn: localApi.jobs,
     enabled,
-    refetchInterval: (query) => (query.state.data?.some((job) => job.state === "running") ? 1_000 : false),
+    refetchInterval: (query) => (query.state.data?.some((job) => job.state === "running") ? 1_000 : 10_000),
   });
 }
 
