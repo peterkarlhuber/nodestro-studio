@@ -1,6 +1,7 @@
 // Browser test of decisions, approvals, input forms, continued runs, result files, batch runs,
 // test series and schedules against tests/e2e_flow_server.py, whose agents answer from a
-// script (no API key, nothing paid).
+// script (no API key, nothing paid). Section 10: a copy of an example (sample data badge, sample files in the run
+// dialog).
 // Usage: node e2e/flow.mjs [baseUrl] [screenshotDir]
 
 import { createRequire } from "node:module";
@@ -361,6 +362,52 @@ try {
     check(fit <= 0, `${language}: the runs table fits at 1280 px without scrolling (${fit})`);
   }
   await page.evaluate(() => localStorage.setItem("nodestro-language", "de"));
+
+  // ---- 10. a copy of an example: sample data badge (ST-031) and sample files in the run dialog (ST-007) ----------
+  await page.setViewportSize({ width: 1500, height: 940 });
+  const copy = await api("/library/customer-service/copy", "POST", { language: "de" });
+  check(copy.origin?.example_id === "customer-service" && copy.origin.offline.length > 0, "An offline copy of an example records its origin");
+  await page.goto(`${base}/workflows/${copy.id}`);
+  const offline = page.getByTestId("offline-badge");
+  await offline.waitFor();
+  check((await offline.innerText()).includes("Beispieldaten"), "The editor header marks a copy that runs on sample data");
+  await offline.focus();
+  const offlineTip = page.locator("[role=tooltip]");
+  await offlineTip.waitFor();
+  check(/läuft offline|laufen offline/.test(await offlineTip.innerText()), "Its tooltip names the offline connection and how to get real data");
+  await shot("flow-10-offline-badge");
+  await page.keyboard.press("Escape");
+  await page.getByTestId("start-workflow").click();
+  const runDialog = page.getByRole("dialog");
+  const offers = runDialog.getByTestId("upload-samples");
+  await offers.first().waitFor();
+  check((await offers.count()) === 2, "The run dialog offers the example's sample files at both file fields");
+  const orders = runDialog.getByTestId("use-sample-orders");
+  await until(async () => orders.isEnabled(), "sample button ready");
+  await orders.click();
+  await until(async () => /hinzugefügt/.test(await orders.innerText()), "sample uploaded");
+  check(await orders.isDisabled(), "One click uploads the sample into the field; its button then says it was added");
+  check((await runDialog.locator(".upload-row").count()) >= 1, "The uploaded sample is listed in the field like a chosen file");
+  await shot("flow-10-run-samples");
+  await page.setViewportSize({ width: 390, height: 844 });
+  const narrow = await page.evaluate(() => {
+    const dialog = document.querySelector("dialog[open]");
+    const row = dialog?.querySelector("[data-testid=upload-samples]")?.getBoundingClientRect();
+    return Boolean(row && row.left >= 0 && row.right <= window.innerWidth);
+  });
+  check(narrow, "The sample offers fit the run dialog at 390 px");
+  await shot("flow-10-run-samples-390");
+  await page.setViewportSize({ width: 1500, height: 940 });
+  await page.keyboard.press("Escape");
+  const sampleRun = await api(`/workflows/${copy.id}/runs`, "POST", { input: "Wo ist meine Bestellung?", file_ids: [], values: {} });
+  await page.goto(`${base}/executions/${sampleRun.id}`);
+  await page.getByTestId("offline-badge").waitFor();
+  check(true, "The run page header marks a run of a copy on sample data");
+  await shot("flow-10-run-offline-badge");
+  const plain = (await api("/workflows")).find((item) => item.name === "Kurzantwort");
+  await page.goto(`${base}/workflows/${plain.id}`);
+  await page.locator(".titlebar__name").waitFor();
+  check((await page.getByTestId("offline-badge").count()) === 0, "A workflow that is no example copy has no badge");
 
   check(errors.length === 0, `No console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
 } finally {

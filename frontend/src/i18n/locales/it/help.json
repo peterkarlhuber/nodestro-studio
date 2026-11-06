@@ -292,6 +292,7 @@
     "storage": "I file caricati per esecuzioni, casi di test e pianificazioni restano su questo computer insieme alle loro esecuzioni e occupano spazio su disco. Qui vedi quanto e rimuovi i file inutilizzati o vecchi. I file di esecuzioni in coda, in corso o in pausa e quelli che servono ancora a casi di test, pianificazioni o esecuzioni in serie vengono sempre conservati; un file rimosso non si può più aprire dalla sua esecuzione.",
     "adopt": "Salva in modo permanente il contenuto scelto nella conoscenza, solo dopo la tua conferma e con la provenienza.",
     "proposals": "L’agente può proporre contenuti per la conoscenza. Viene salvato solo ciò che verifichi e confermi.",
-    "received": "Quali file ha ricevuto l’esecuzione e come li ha ricevuti ogni agente."
+    "received": "Quali file ha ricevuto l’esecuzione e come li ha ricevuti ogni agente.",
+    "retention": "I file allegati nelle conversazioni con Nodestro Assistant restano finché la conversazione non viene eliminata. Con un numero di giorni, i file più vecchi vengono rimossi durante la pulizia qui e, nell’app desktop, ogni ora; la conversazione e i suoi messaggi restano e un messaggio inviato conserva il nome del file. Solo gli amministratori possono modificarlo."
   }
 }

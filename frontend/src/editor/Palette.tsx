@@ -4,8 +4,9 @@ import { type DragEvent, type Ref, memo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useTemplates, useWorkflows } from "../api/hooks";
-import type { AgentConfig, NodeType } from "../api/types";
+import type { AgentConfig, ContractFieldSummary, NodeType } from "../api/types";
 import { agentIcon } from "../components/icons";
+import { descriptionLabel } from "../components/Markdown";
 import { useModelName } from "../components/ModelPicker";
 import { HelpTip, Tooltip } from "../components/Tooltip";
 import { IconButton, TextInput } from "../components/ui";
@@ -16,13 +17,27 @@ import { useEditor } from "./store";
 import { addVisibleNode } from "./viewport";
 
 /**
- * What a team can do and delivers, in one line. The capability tags are the team's own words (data, matched by
- * orchestrators as written), so they are labelled as such and shown unchanged.
+ * What a team delivers, by label: a field's description gives it (in the workflow's language, like result labels,
+ * see descriptionLabel), a field without one, or a list from an older server without descriptions, keeps its id
+ * (ST-032, ED-17).
  */
-export function teamHint(t: TFunction, capabilities: string[], contract: string[]): string {
+export function contractLabels(contract: string[], fields: ContractFieldSummary[] = []): string[] {
+  const described = new Map(fields.map((field) => [field.name, field.description?.trim() ?? ""]));
+  return contract.map((name) => {
+    const description = described.get(name);
+    return description ? descriptionLabel(description) : name;
+  });
+}
+
+/**
+ * What a team can do and delivers, in one line. The capability tags are the team's own words (data, matched by
+ * orchestrators as written), so they are labelled as such and shown unchanged; the delivered fields are named by
+ * their labels (contractLabels).
+ */
+export function teamHint(t: TFunction, capabilities: string[], contract: string[], fields?: ContractFieldSummary[]): string {
   const parts = [];
   if (capabilities.length) parts.push(t("editor.palette.teamCapabilities", { tags: capabilities.join(", ") }));
-  if (contract.length) parts.push(t("editor.palette.teamDelivers", { fields: contract.join(", ") }));
+  if (contract.length) parts.push(t("editor.palette.teamDelivers", { fields: contractLabels(contract, fields).join(", ") }));
   return parts.join(" · ");
 }
 
@@ -202,7 +217,7 @@ function PaletteView({ onDesign, panelRef }: { onDesign: () => void; panelRef?: 
                   compact={false}
                   icon={Users}
                   label={team.name}
-                  hint={teamHint(t, team.capabilities ?? [], team.contract ?? [])}
+                  hint={teamHint(t, team.capabilities ?? [], team.contract ?? [], team.contract_fields)}
                   payload={{ type: "subworkflow", team: { workflow_id: team.id, name: team.name } }}
                 />
               ))}

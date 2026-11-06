@@ -4,7 +4,7 @@ import type { Workflow, WorkflowCheck } from "../api/types";
 import { newNode } from "../lib/defaults";
 import { countsByNode, startBlock } from "./CheckList";
 import { poolStatus } from "./OrchestratorInspector";
-import { filterTeams, teamHint } from "./Palette";
+import { contractLabels, filterTeams, teamHint } from "./Palette";
 import { connectionProblem, useEditor } from "./store";
 import { OPENING_MAX_ZOOM, READABLE_ZOOM, inView, openingViewport, placeNewNode } from "./viewport";
 import i18n from "../i18n";
@@ -240,5 +240,29 @@ describe("palette teams (ED-17)", () => {
       `${i18n.t("editor.palette.teamCapabilities", { tags: "research" })} · ${i18n.t("editor.palette.teamDelivers", { fields: "summary" })}`,
     );
     expect(teamHint(i18n.t.bind(i18n), ["research"], [])).toContain("research");
+  });
+
+  it("names delivered fields by the labels of their descriptions, else by id (ST-032)", () => {
+    const fields = [
+      { name: "d2_problem", type: "string", description: "D2 Problembeschreibung", required: true },
+      {
+        name: "root_cause",
+        type: "string",
+        description: "Grundursache: die technische Ursache des Fehlers mit Nachweis aus den Messdaten und dem Prüfbericht",
+        required: true,
+      },
+      { name: "notes", type: "string", description: "  ", required: false },
+    ];
+    expect(contractLabels(["d2_problem", "root_cause", "notes", "extra"], fields)).toEqual([
+      "D2 Problembeschreibung",
+      "Grundursache",
+      "notes",
+      "extra",
+    ]);
+    // An older server sends no descriptions: the ids stay.
+    expect(contractLabels(["summary"])).toEqual(["summary"]);
+    expect(teamHint(i18n.t.bind(i18n), [], ["d2_problem"], fields)).toBe(
+      i18n.t("editor.palette.teamDelivers", { fields: "D2 Problembeschreibung" }),
+    );
   });
 });

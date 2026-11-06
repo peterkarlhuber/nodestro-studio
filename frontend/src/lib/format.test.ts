@@ -158,3 +158,21 @@ describe("format", () => {
     expect(outputText(null)).toBe("");
   });
 });
+
+describe("number formats ahead of use (ST-004)", () => {
+  it("creates them when the browser is idle", async () => {
+    const { warmNumberFormats, whenIdle } = await import("./format");
+    let task: (() => void) | null = null;
+    vi.stubGlobal("requestIdleCallback", (callback: () => void) => {
+      task = callback;
+      return 1;
+    });
+    const warm = vi.fn(warmNumberFormats);
+    whenIdle(warm);
+    expect(warm).not.toHaveBeenCalled();
+    task!();
+    expect(warm).toHaveBeenCalledTimes(1);
+    expect(formatNumber(0.5, { style: "percent", maximumFractionDigits: 0 })).toMatch(/50/);
+    vi.unstubAllGlobals();
+  });
+});

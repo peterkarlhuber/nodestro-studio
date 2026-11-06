@@ -5,7 +5,9 @@
 // render without horizontal scrolling and without text that spills out of buttons, tabs or badges, also at
 // phone width (390 px). Every page, the editor's inspectors and their dropdowns are also swept for translation
 // keys shown as text (visible text, option labels, title/aria-label/placeholder attributes) and for the
-// "Missing interface text" console message of the missing-key guard (src/i18n/index.ts).
+// "Missing interface text" console message of the missing-key guard (src/i18n/index.ts). The main dialogs (new
+// workflow in both modes; the editor's API, versions and Workflow Architect dialogs) and the help tooltips of the
+// settings page and of those dialogs are swept the same way (ST-060).
 
 import { createRequire } from "node:module";
 import { mkdirSync, readFileSync, readdirSync } from "node:fs";
@@ -44,6 +46,10 @@ const errors_ = Object.fromEntries(
 );
 const editor = Object.fromEntries(
   LANGUAGES.map((language) => [language, JSON.parse(readFileSync(join(localeDir, language, "editor.json"), "utf8"))]),
+);
+
+const workflows = Object.fromEntries(
+  LANGUAGES.map((language) => [language, JSON.parse(readFileSync(join(localeDir, language, "workflows.json"), "utf8"))]),
 );
 
 const flow = Object.fromEntries(
@@ -126,6 +132,51 @@ async function rawKeys(page) {
     note(document.title, "document title");
     return [...found];
   }, AREAS);
+}
+
+/** Every visible help icon inside ``scope`` shows its tooltip on hover: the translation keys found in the tooltips. */
+async function tipKeys(page, scope) {
+  const pattern = new RegExp(`\\b(?:${AREAS.join("|")})(?:\\.[A-Za-z0-9_-]+){2,}\\b`);
+  const icons = page.locator(`${scope} button.help-tip`);
+  const found = [];
+  const count = await icons.count();
+  let shown = 0;
+  for (let index = 0; index < count; index += 1) {
+    const icon = icons.nth(index);
+    if (!(await icon.isVisible())) continue;
+    await icon.scrollIntoViewIfNeeded();
+    await icon.hover();
+    const tip = page.locator("[role=tooltip]");
+    try {
+      await tip.first().waitFor({ timeout: 3000 });
+    } catch {
+      found.push(`${await icon.getAttribute("aria-label")}: no tooltip`);
+      continue;
+    }
+    shown += 1;
+    const text = await tip.first().innerText();
+    const match = pattern.exec(text);
+    if (match) found.push(`${await icon.getAttribute("aria-label")}: ${match[0]}`);
+    await page.mouse.move(0, 0);
+    await tip.first().waitFor({ state: "detached", timeout: 3000 }).catch(() => null);
+  }
+  return { found, shown };
+}
+
+/** A dialog's texts and its help tooltips: no translation keys. */
+async function checkDialog(page, language, name) {
+  const dialog = page.locator("dialog[open]");
+  await dialog.first().waitFor();
+  await page.waitForTimeout(250);
+  const keys = await rawKeys(page);
+  const tips = await tipKeys(page, "dialog[open]");
+  check(
+    keys.length === 0 && tips.found.length === 0,
+    `${language} dialog "${name}": no translation keys as text or in its ${tips.shown} help tooltip(s)${[...keys, ...tips.found].length ? `\n        ${[...keys, ...tips.found].join("\n        ")}` : ""}`,
+  );
+  if (shots) await page.screenshot({ path: join(shots, `${language}-dialog-${name.replace(/\W+/g, "-")}.png`) });
+  await page.keyboard.press("Escape");
+  await dialog.first().waitFor({ state: "detached" }).catch(() => null);
 }
 
 try {
@@ -329,6 +380,34 @@ try {
       check(problems.length === 0, `${language} ${viewport.width}px editor${problems.length ? `\n        ${problems.join("\n        ")}` : ""}`);
       if (shots && viewport === VIEWPORTS[0]) await page.screenshot({ path: join(shots, `${language}-editor.png`) });
     }
+    // The main dialogs and the help tooltips (ST-060): desktop width.
+    await page.setViewportSize(VIEWPORTS[0]);
+    await page.goto(base + "/");
+    for (const mode of [0, 1]) {
+      await page.getByRole("button", { name: workflows[language].new, exact: true }).first().click();
+      await page.locator("dialog[open]").first().waitFor();
+      await page.locator("dialog[open] [role=radio]").nth(mode).click();
+      await checkDialog(page, language, `new workflow ${mode + 1}`);
+    }
+    await page.locator(".page__body > .card-grid > .card").first().click();
+    await page.locator(".react-flow__node").first().waitFor();
+    await page.getByTestId("open-api").click();
+    await checkDialog(page, language, "API");
+    await page.getByRole("button", { name: editor[language].page.moreActions, exact: true }).click();
+    await page.getByTestId("open-versions").click();
+    await checkDialog(page, language, "versions");
+    if (await page.getByTestId("open-architect").count()) {
+      await page.getByTestId("open-architect").click();
+      await checkDialog(page, language, "Workflow Architect");
+    }
+    await page.goto(base + "/settings");
+    await page.locator("#settings-about").waitFor();
+    const settingsTips = await tipKeys(page, ".settings");
+    check(
+      settingsTips.found.length === 0 && settingsTips.shown > 10,
+      `${language} settings: ${settingsTips.shown} help tooltips without translation keys${settingsTips.found.length ? `\n        ${settingsTips.found.join("\n        ")}` : ""}`,
+    );
+
     check(errors.length === 0, `${language}: no console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
     await context.close();
   }

@@ -35,5 +35,15 @@
   },
   "providers": {
     "unsaved": "Deine Eingaben für {{providers}} sind noch nicht gespeichert. Speichere sie in der Karte des Anbieters oder verwirf sie und verlasse die Seite."
+  },
+  "defaults": {
+    "changed": "Geändert",
+    "changedTip": "Dieser Wert weicht von der Vorgabe ab ({{value}}).",
+    "reset": "Zurücksetzen",
+    "resetTip": "Zurück zur Vorgabe: {{value}}",
+    "resetLabel": "{{setting}} auf die Vorgabe zurücksetzen ({{value}})",
+    "on": "ein",
+    "off": "aus",
+    "none": "keine"
   }
 }

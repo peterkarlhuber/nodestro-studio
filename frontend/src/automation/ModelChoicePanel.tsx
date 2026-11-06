@@ -8,9 +8,10 @@ import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import { keys } from "../api/hooks";
-import type { ModelChoice, ModelMeasurement, ModelObjective, Workflow } from "../api/types";
+import type { ModelChoice, ModelChoiceSkip, ModelMeasurement, ModelObjective, Workflow } from "../api/types";
 import { toast } from "../components/toast";
 import { Badge, Button, Callout, Field, HelpTip, Select, Spinner, TextInput } from "../components/ui";
+import { codeSuffix } from "../lib/codes";
 import { ErrorText } from "../lib/errors";
 import { formatCost, formatDate, formatNumber } from "../lib/format";
 import { agentNodes, nodeName } from "./models";
@@ -114,7 +115,7 @@ export function ModelChoicePanel({ suiteId, workflow }: { suiteId: string; workf
 
 function ChoiceView({ choice, applying, onApply }: { choice: ModelChoice; applying: boolean; onApply: (model: string) => void }) {
   const { t } = useTranslation();
-  const skipped = Object.entries(choice.skipped);
+  const skipped = Object.entries(choice.skipped) as [ModelChoiceSkip, number][];
   return (
     <div className="stack-sm">
       <Callout tone={choice.outcome === "switch" ? "brand" : "info"}>
@@ -135,7 +136,7 @@ function ChoiceView({ choice, applying, onApply }: { choice: ModelChoice; applyi
       </Callout>
       {choice.warnings.map((code) => (
         <p key={code} className="muted small">
-          {t(`automation.modelChoice.warnings.${code.replace("model_choice.", "")}`)}
+          {t(`automation.modelChoice.warnings.${codeSuffix("model_choice.", code)}`)}
         </p>
       ))}
       {choice.measurements.length ? (
@@ -188,7 +189,7 @@ function MeasurementRow({ item, recommended }: { item: ModelMeasurement; recomme
         {recommended ? <Badge tone="success">{t("automation.modelChoice.recommended")}</Badge> : null}
         {item.excluded.map((code) => (
           <div key={code} className="small muted">
-            {t(`automation.modelChoice.excluded.${code.replace("model.", "")}`, { count: item.new_failures.length })}
+            {t(`automation.modelChoice.excluded.${codeSuffix("model.", code)}`, { count: item.new_failures.length })}
           </div>
         ))}
       </td>

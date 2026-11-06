@@ -49,10 +49,15 @@ conventions below. This keeps the page open for sections that other features add
    `pages/settingsModelsForm.ts`) and asks before the page is left (`UnsavedChangesModal`). The provider cards save
    on their own; a card with a typed key, address, capabilities or token limits that are not saved marks itself in
    `useUnsavedProviders`, and leaving the page asks first too.
-7. The global search (Ctrl+K) lists every section of `layout/GlobalSearch.tsx`'s page list and, from three typed
+6. The global search (Ctrl+K) lists every section of `layout/GlobalSearch.tsx`'s page list and, from three typed
    characters on, offers "Search the settings for …", which opens `/settings?search=…` with this page's search
    filled in.
-6. Every visible string exists in all six languages; the search works in whatever language is shown.
+7. Every visible string exists in all six languages; the search works in whatever language is shown.
+8. A setting that `GET /api/settings/defaults` names (nodestro-api API-061) gets a `DefaultMark`
+   (`pages/SettingsDefaults.tsx`) in the `action` of its `Field` or `Toggle`: a "Changed" badge while the shown
+   value differs from the default, and a reset action whose tooltip and accessible name give the default. In a
+   section with its own Save button the reset puts the default into the input; elsewhere it saves at once, like the
+   control itself. An API without the route (404) shows no marks and no error; the mark is skipped by the search.
 
 ## Tooltips
 
@@ -67,9 +72,10 @@ beside it.
 
 ## Tests
 
-- Unit: `pages/settingsWidth.test.ts`, `pages/settingsSearchIndex.test.ts`, `pages/SettingsResizer.test.tsx`,
+- Unit: `pages/SettingsDefaults.test.tsx`, `pages/settingsWidth.test.ts`, `pages/settingsSearchIndex.test.ts`, `pages/SettingsResizer.test.tsx`,
   `pages/SettingsNav.test.tsx`, `pages/SettingsParts.test.tsx`, `pages/settingsModelsForm.test.ts`,
   `components/Tooltip.test.tsx`, `layout/settingsEntry.test.ts`.
 - Browser: `frontend/e2e/settings-ui.mjs` (`scripts/e2e.sh settings-ui`): tooltips inside modal dialogs
   (`elementFromPoint`, window bounds, phone width, dark mode contrast, keyboard), the width (drag, keyboard,
-  persistence, reset, 1280/1920/2560/800/375 px), the search (also in German) and the settings entry.
+  persistence, reset, 1280/1920/2560/800/375 px), the search (also in German), the settings entry and the "Changed"
+  marks (reset into the input and saved at once, keyboard, 390 px light and dark, an API without the defaults route).

@@ -11,6 +11,7 @@ import { keys } from "../api/hooks";
 import type { DependencyPlan, DependencyScope, PythonEnvironment } from "../api/types";
 import { toast } from "../components/toast";
 import { Button, Callout, DocLink, Modal, Spinner } from "../components/ui";
+import { codeSuffix } from "../lib/codes";
 import { ErrorText, ProblemText } from "../lib/errors";
 import { PlanTable } from "./PlanTable";
 
@@ -41,7 +42,7 @@ export function InstallProgress({ env }: { env: PythonEnvironment | undefined })
   return (
     <div className="stack-sm" aria-live="polite" data-testid="install-progress" data-status={state.status}>
       {state.status === "installing" ? (
-        <Spinner label={t(`python.step.${(state.step ?? "deps.step.queued").replace("deps.step.", "")}`)} />
+        <Spinner label={t(`python.step.${codeSuffix("deps.step.", state.step ?? "deps.step.queued")}`)} />
       ) : state.status === "installed" ? (
         <Callout tone="brand">
           <CheckCircle2 size={14} aria-hidden /> {t("python.install.done", { count: env.packages.length })}

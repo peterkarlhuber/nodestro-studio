@@ -27,6 +27,24 @@ function numberFormat(options: Intl.NumberFormatOptions): Intl.NumberFormat {
   return found;
 }
 
+/**
+ * Creates the number formatters of the interface language ahead of use. The first Intl.NumberFormat of a page loads
+ * the locale's number data, about 50 ms at CPU 4x; without this it lands in the editor's first render (the zoom
+ * label, ST-004). Called when the browser is idle after the start and after a language change.
+ */
+export function warmNumberFormats(): void {
+  numberFormat({});
+  numberFormat({ style: "percent", maximumFractionDigits: 0 });
+  numberFormat({ style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+/** Runs ``task`` when the browser is idle (or soon, where requestIdleCallback is missing). */
+export function whenIdle(task: () => void): void {
+  if (typeof window === "undefined") return;
+  if (typeof window.requestIdleCallback === "function") window.requestIdleCallback(() => task(), { timeout: 3000 });
+  else window.setTimeout(task, 200);
+}
+
 export function formatNumber(value: number, options: Intl.NumberFormatOptions = {}): string {
   return numberFormat(options).format(value);
 }

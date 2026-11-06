@@ -10,6 +10,8 @@ export const keys = {
   meta: ["meta"] as const,
   modelCapabilities: (model: string) => ["model-capabilities", model] as const,
   settings: ["settings"] as const,
+  /** Not under "settings": saving the settings never changes the defaults. */
+  settingsDefaults: ["settings-defaults"] as const,
   workflows: ["workflows"] as const,
   workflow: (id: string) => ["workflow", id] as const,
   runs: (workflowId?: string) => ["runs", workflowId ?? "all"] as const,
@@ -54,6 +56,12 @@ export const keys = {
 
 export const useMeta = () => useQuery({ queryKey: keys.meta, queryFn: api.meta, staleTime: Infinity });
 export const useSettings = () => useQuery({ queryKey: keys.settings, queryFn: api.settings });
+/**
+ * The defaults of the settings (API-061), read once per page visit; null on an older API without the route. A failed
+ * read is not retried and shows no error: the page then simply has no "changed" marks.
+ */
+export const useSettingsDefaults = () =>
+  useQuery({ queryKey: keys.settingsDefaults, queryFn: api.settingsDefaults, staleTime: Infinity, retry: false, refetchOnWindowFocus: false });
 export const useWorkflows = () => useQuery({ queryKey: keys.workflows, queryFn: api.workflows });
 export const useTemplates = () => useQuery({ queryKey: keys.templates, queryFn: api.templates });
 export const useTools = () => useQuery({ queryKey: keys.tools, queryFn: api.tools });

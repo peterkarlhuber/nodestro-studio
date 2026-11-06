@@ -9,7 +9,7 @@ import i18n from "../i18n";
 import { problemText } from "../lib/errors";
 import { ExampleCard } from "./ExampleCard";
 import { ExamplePreview } from "./ExamplePreview";
-import { OFFLINE, copyRequest } from "./examples";
+import { OFFLINE, copyRequest, memorySpaceSuggestion, usesMemory, validMemorySpace } from "./examples";
 
 // The read-only canvas needs a real layout; the preview's other parts are what these tests look at.
 vi.mock("@xyflow/react", async (original) => ({
@@ -161,6 +161,36 @@ describe("copyRequest", () => {
   });
 });
 
+describe("memory space of a copy (EX-007)", () => {
+  it("is suggested from the copy's name with the runtime's name rule", () => {
+    expect(memorySpaceSuggestion("Lieferantenangebote vergleichen")).toBe("Lieferantenangebote vergleichen");
+    expect(memorySpaceSuggestion("Lernplan: Größe & Übung")).toBe("Lernplan Grosse Ubung");
+    expect(memorySpaceSuggestion("Straße – Café")).toBe("Strasse Cafe");
+    expect(memorySpaceSuggestion("  ¿Plan de creación?")).toBe("Plan de creacion");
+    expect(memorySpaceSuggestion("学习计划")).toBe("");
+    expect(memorySpaceSuggestion("x".repeat(80))).toHaveLength(64);
+    for (const name of ["Lernplan: Größe & Übung", "--a", "Plan de creación"])
+      expect(validMemorySpace(memorySpaceSuggestion(name))).toBe(true);
+  });
+
+  it("accepts an empty name (the shared space) and refuses what the API would refuse", () => {
+    expect(validMemorySpace("")).toBe(true);
+    expect(validMemorySpace("  Anna 2027 ")).toBe(true);
+    expect(validMemorySpace("-leading")).toBe(false);
+    expect(validMemorySpace("slash/inside")).toBe(false);
+    expect(validMemorySpace("Prüfung")).toBe(false);
+    expect(validMemorySpace("x".repeat(65))).toBe(false);
+  });
+
+  it("is sent only when the copy has memory agents and a name is given", () => {
+    expect(usesMemory(EXAMPLE)).toBe(true);
+    expect(usesMemory({ ...EXAMPLE, agent_details: [], features: [] })).toBe(false);
+    expect(usesMemory({ ...EXAMPLE, agent_details: [], features: ["memory"] })).toBe(true);
+    expect(copyRequest(EXAMPLE, "de", false, {}, {}, " Anna ")).toEqual({ language: "de", tests: false, memory_space: "Anna" });
+    expect(copyRequest(EXAMPLE, "de", false, {}, {}, "  ")).toEqual({ language: "de", tests: false });
+  });
+});
+
 describe("example library errors", () => {
   it("are explained from their code although errors.library is the agent library's sentence", () => {
     expect(problemText(i18n.t, { code: "library.integration_unknown", params: { integration: "crm" } })).toBe(
@@ -229,7 +259,8 @@ describe("ExamplePreview", () => {
       expect(fetch).toHaveBeenCalledWith("/api/library/supplier-comparison/copy", expect.objectContaining({ method: "POST" })),
     );
     const call = fetch.mock.calls.find(([url]) => url === "/api/library/supplier-comparison/copy")!;
-    expect(JSON.parse(String(call[1]!.body))).toEqual({ language: "de", tests: true });
+    // An agent keeps persistent memory: the copy gets a space of its own, named after the copy (EX-007).
+    expect(JSON.parse(String(call[1]!.body))).toEqual({ language: "de", tests: true, memory_space: "Lieferantenangebote vergleichen" });
   });
 
   it("connects a chosen server and switches the test series off with a reason", async () => {
@@ -249,7 +280,12 @@ describe("ExamplePreview", () => {
     await userEvent.click(screen.getByRole("button", { name: "Als Kopie übernehmen" }));
     await waitFor(() => expect(fetch.mock.calls.some(([url]) => url === "/api/library/supplier-comparison/copy")).toBe(true));
     const call = fetch.mock.calls.find(([url]) => url === "/api/library/supplier-comparison/copy")!;
-    expect(JSON.parse(String(call[1]!.body))).toEqual({ language: "de", tests: false, integrations: { erp: "mcp_1" } });
+    expect(JSON.parse(String(call[1]!.body))).toEqual({
+      language: "de",
+      tests: false,
+      integrations: { erp: "mcp_1" },
+      memory_space: "Lieferantenangebote vergleichen",
+    });
   });
 
   it("shows why the server cannot serve the connection", async () => {
@@ -274,6 +310,38 @@ describe("ExamplePreview", () => {
     expect(alert).toHaveTextContent("Der gewählte MCP-Server kann diese Verbindung nicht bedienen");
     expect(alert).toHaveTextContent("Fehlt oder nicht freigegeben: supplier_scorecard");
     expect(alert).not.toHaveTextContent("Nicht als nur lesend freigegeben");
+  });
+
+  it("lets the person name the copy's memory space, or leave it empty to share the example's", async () => {
+    const fetch = serve(routes([SERVER]));
+    renderPreview();
+    const box = await screen.findByTestId("example-memory-space");
+    const input = within(box).getByRole("textbox", { name: i18n.t("library.preview.memorySpace") });
+    expect(input).toHaveValue("Lieferantenangebote vergleichen");
+    expect(input).toHaveAccessibleDescription(i18n.t("library.preview.memorySpaceHint"));
+    const copy = screen.getByRole("button", { name: "Als Kopie übernehmen" });
+
+    await userEvent.clear(input);
+    await userEvent.type(input, "Prüfung");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+    expect(within(box).getByRole("alert")).toHaveTextContent(i18n.t("library.preview.memorySpaceInvalid"));
+    expect(copy).toBeDisabled();
+
+    await userEvent.clear(input);
+    expect(input).toHaveAttribute("placeholder", i18n.t("library.preview.memorySpaceShared"));
+    expect(copy).toBeEnabled();
+    await userEvent.click(copy);
+    await waitFor(() => expect(fetch.mock.calls.some(([url]) => url === "/api/library/supplier-comparison/copy")).toBe(true));
+    const call = fetch.mock.calls.find(([url]) => url === "/api/library/supplier-comparison/copy")!;
+    expect(JSON.parse(String(call[1]!.body))).toEqual({ language: "de", tests: true });
+  });
+
+  it("asks for no memory space when no agent keeps memory", async () => {
+    const plain = { ...EXAMPLE, agent_details: EXAMPLE.agent_details.map((item) => ({ ...item, memory: false })) };
+    serve((method, url, body) => (url === "/api/library/supplier-comparison?language=de" ? plain : routes([SERVER])(method, url, body)));
+    renderPreview();
+    await screen.findByTestId("example-preview");
+    expect(screen.queryByTestId("example-memory-space")).toBeNull();
   });
 
   it("points to the connected services when no MCP server is set up", async () => {
@@ -374,6 +442,7 @@ describe("models of a copy in a local workspace", () => {
       language: "de",
       tests: true,
       models: { "quality-check/qa": "ollama:ministral-3:8b", risk: "ollama:qwen3.5:9b" },
+      memory_space: "Lieferantenangebote vergleichen",
     });
   });
 

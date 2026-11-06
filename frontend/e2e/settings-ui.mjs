@@ -13,6 +13,10 @@
 //   highlights the hit; says when nothing matches.
 // - The settings entry in the top bar: one entry, tooltip, return to the previous page, Ctrl+, there and back,
 //   unsaved "Models and budget" edits ask before they are left.
+// - Retention of assistant chat files (API-056): set, refused, kept after a reload, cleared; phone width in light and dark.
+// - "Changed" marks (ST-059): a value that differs from GET /api/settings/defaults is marked, Reset restores the
+//   default (into the input, or saved at once), keyboard, phone width in light and dark, and no marks and no error on
+//   an API without the route.
 
 import { createRequire } from "node:module";
 import { mkdirSync } from "node:fs";
@@ -389,6 +393,161 @@ try {
     check(await page.getByTestId("settings-entry").isVisible(), "entry: visible in the top bar at phone width");
     await shot(page, "settings-entry-phone");
     await context.close();
+  }
+
+  // ---- 5. "Changed" marks and reset (ST-059, GET /api/settings/defaults) -------------------------------------------
+  {
+    const { context, page } = await open({ viewport: { width: 1440, height: 900 } });
+    await page.goto(`${base}/settings`);
+    await page.locator("#settings-about").waitFor();
+    const budget = page.getByRole("spinbutton", { name: "Default budget per run (USD)" });
+    const budgetMark = page.getByTestId("setting-changed-default_budget_usd");
+    await page.waitForResponse((response) => response.url().endsWith("/api/settings/defaults")).catch(() => null);
+    check((await budgetMark.count()) === 0, "defaults: a setting at its default shows no mark");
+    await budget.fill("3.5");
+    await budgetMark.waitFor();
+    check((await budgetMark.innerText()).includes("Changed"), "defaults: a changed input shows 'Changed' at once");
+    const reset = page.getByTestId("setting-reset-default_budget_usd");
+    check(
+      (await reset.getAttribute("aria-label")) === "Reset Default budget per run (USD) to the default ($2.00)",
+      "defaults: the reset action names the setting and the default",
+    );
+    await reset.hover();
+    await page.locator("[role=tooltip]", { hasText: "Back to the default: $2.00" }).waitFor();
+    check(true, "defaults: the reset action's tooltip shows the default");
+    await shot(page, "settings-defaults-changed");
+    await reset.click();
+    check((await budget.inputValue()) === "2" && (await budgetMark.count()) === 0, "defaults: Reset puts the default into the input");
+
+    // A setting that saves at once: the price mode.
+    const strict = page.getByTestId("pricing-panel").getByRole("radio", { name: "Strict" });
+    await strict.click();
+    const modeMark = page.getByTestId("setting-changed-price_mode");
+    await modeMark.waitFor();
+    await page.reload();
+    await modeMark.waitFor();
+    check(true, "defaults: a saved change stays marked after a reload");
+    await page.getByTestId("setting-reset-price_mode").focus();
+    await page.keyboard.press("Enter");
+    await modeMark.waitFor({ state: "detached" });
+    await page.reload();
+    await page.locator("#settings-about").waitFor();
+    await page.waitForResponse((response) => response.url().endsWith("/api/settings/defaults")).catch(() => null);
+    check(
+      (await modeMark.count()) === 0 && (await page.getByTestId("pricing-panel").getByRole("radio", { name: "Standard" }).getAttribute("aria-checked")) === "true",
+      "defaults: Reset (keyboard) saves the default",
+    );
+    await context.close();
+  }
+  for (const [name, options] of [
+    ["phone, dark", { viewport: { width: 390, height: 844 }, colorScheme: "dark" }],
+    ["phone, light", { viewport: { width: 390, height: 844 }, colorScheme: "light" }],
+  ]) {
+    const { context, page } = await open(options);
+    await page.goto(`${base}/settings`);
+    await page.locator("#settings-about").waitFor();
+    await page.getByRole("spinbutton", { name: "AI corrections per draft" }).fill("4");
+    const mark = page.getByTestId("setting-changed-architect_max_repairs");
+    await mark.scrollIntoViewIfNeeded();
+    const state = await mark.evaluate((element) => {
+      const badge = element.querySelector(".nd-badge");
+      const reset = element.querySelector("button");
+      const box = element.getBoundingClientRect();
+      let background = "rgba(0, 0, 0, 0)";
+      for (let node = badge; node && background === "rgba(0, 0, 0, 0)"; node = node.parentElement) background = getComputedStyle(node).backgroundColor;
+      let page = "rgba(0, 0, 0, 0)";
+      for (let node = reset; node && page === "rgba(0, 0, 0, 0)"; node = node.parentElement) page = getComputedStyle(node).backgroundColor;
+      return {
+        inside: box.left >= 0 && box.right <= window.innerWidth,
+        scroll: document.documentElement.scrollWidth > window.innerWidth,
+        badge: [getComputedStyle(badge).color, background],
+        reset: [getComputedStyle(reset).color, page],
+        height: reset.getBoundingClientRect().height,
+      };
+    });
+    check(state.inside && !state.scroll, `defaults (${name}): the mark fits the window, no horizontal scrolling`);
+    check(contrast(...state.badge) >= 4.5 && contrast(...state.reset) >= 4.5, `defaults (${name}): badge and reset readable (contrast ≥ 4.5)`);
+    check(state.height >= 24, `defaults (${name}): the reset action is at least 24 px high`);
+    await shot(page, `settings-defaults-${name.replace(/\W+/g, "-")}`);
+    await context.close();
+  }
+  {
+    // An API without the route (older backend): no marks, no error.
+    const { context, page } = await open({ viewport: { width: 1440, height: 900 } });
+    const before = errors.length;
+    await page.route("**/api/settings/defaults", (route) =>
+      route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ detail: "Not Found" }) }),
+    );
+    await page.goto(`${base}/settings`);
+    await page.locator("#settings-about").waitFor();
+    await page.getByRole("spinbutton", { name: "Default budget per run (USD)" }).fill("3.5");
+    await page.waitForTimeout(300);
+    check((await page.locator(".settings-changed").count()) === 0, "defaults: an API without the route shows no marks");
+    check((await page.locator(".callout--danger, [role=alert]").count()) === 0, "defaults: and no error");
+    // The browser itself logs the refused request; that is the simulated old API, not a fault of the page.
+    errors.splice(before, errors.length - before, ...errors.slice(before).filter((message) => !message.includes("404")));
+    await context.close();
+  }
+
+  // ---- 6. Retention of assistant chat files (nodestro-api API-056) -------------------------------------------------
+  {
+    const { context, page } = await open({ viewport: { width: 1440, height: 900 } });
+    await page.goto(`${base}/settings`);
+    await page.locator("#settings-about").waitFor();
+    const field = page.getByTestId("assistant-retention");
+    if ((await page.request.get(`${base}/api/assistant/files/retention`)).status() === 404) {
+      check((await field.count()) === 0, "retention: an API without the route shows no field");
+      await context.close();
+    } else {
+      await field.scrollIntoViewIfNeeded();
+      const days = page.getByRole("spinbutton", { name: "Keep assistant chat files (days)" });
+      const save = page.getByTestId("assistant-retention-save");
+      check((await days.inputValue()) === "" && (await save.isDisabled()), "retention: empty (keep with the conversation) and nothing to save");
+      await days.fill("0");
+      await page.getByText("Enter whole days from 1 to 3650, or leave the field empty.").waitFor();
+      check(await save.isDisabled(), "retention: 0 days is refused with a sentence");
+      await days.fill("30");
+      await Promise.all([
+        page.waitForResponse((response) => response.url().endsWith("/api/assistant/files/retention") && response.request().method() === "PUT"),
+        save.click(),
+      ]);
+      await page.reload();
+      await days.waitFor();
+      check((await days.inputValue()) === "30", "retention: a saved period stays after a reload");
+      await days.fill("");
+      await Promise.all([
+        page.waitForResponse((response) => response.url().endsWith("/api/assistant/files/retention") && response.request().method() === "PUT"),
+        save.click(),
+      ]);
+      const stored = await (await page.request.get(`${base}/api/assistant/files/retention`)).json();
+      check(stored.retention_days === null, "retention: clearing the field keeps the files with their conversation again");
+      await context.close();
+      for (const [name, options] of [
+        ["phone, dark", { viewport: { width: 390, height: 844 }, colorScheme: "dark" }],
+        ["phone, light", { viewport: { width: 390, height: 844 }, colorScheme: "light" }],
+      ]) {
+        const phone = await open(options);
+        await phone.page.goto(`${base}/settings`);
+        const box = phone.page.getByTestId("assistant-retention");
+        await box.waitFor();
+        await box.scrollIntoViewIfNeeded();
+        const state = await box.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const hint = element.querySelector(".field__hint, .small, p") ?? element;
+          let background = "rgba(0, 0, 0, 0)";
+          for (let node = hint; node && background === "rgba(0, 0, 0, 0)"; node = node.parentElement) background = getComputedStyle(node).backgroundColor;
+          return {
+            inside: rect.left >= 0 && rect.right <= window.innerWidth,
+            scroll: document.documentElement.scrollWidth > window.innerWidth,
+            text: [getComputedStyle(hint).color, background],
+          };
+        });
+        check(state.inside && !state.scroll, `retention (${name}): the field fits the window, no horizontal scrolling`);
+        check(contrast(...state.text) >= 4.5, `retention (${name}): the hint is readable (contrast ≥ 4.5)`);
+        await shot(phone.page, `settings-retention-${name.replace(/\W+/g, "-")}`);
+        await phone.context.close();
+      }
+    }
   }
 
   check(errors.length === 0, `no browser errors (${errors.join(" | ")})`);

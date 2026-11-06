@@ -35,5 +35,15 @@
   },
   "providers": {
     "unsaved": "O que você digitou para {{providers}} ainda não foi salvo. Salve no cartão do provedor ou descarte e saia."
+  },
+  "defaults": {
+    "changed": "Alterado",
+    "changedTip": "Este valor é diferente do padrão ({{value}}).",
+    "reset": "Restaurar",
+    "resetTip": "Voltar ao padrão: {{value}}",
+    "resetLabel": "Restaurar o padrão de {{setting}} ({{value}})",
+    "on": "ativado",
+    "off": "desativado",
+    "none": "nenhum"
   }
 }

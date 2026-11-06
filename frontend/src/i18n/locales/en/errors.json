@@ -135,7 +135,8 @@
     "revision_invalid": "The save named an unknown version of the workflow. Reload the page and save again.",
     "conflict": "The workflow “{{name}}” was changed since you opened it. Reload it to see the latest version.",
     "runs_active": "Runs of this workflow are still going. Delete it once they have finished or were canceled.",
-    "not_found": "This workflow no longer exists; it may have been deleted in the meantime. Reload the page to see the current workflows."
+    "not_found": "This workflow no longer exists; it may have been deleted in the meantime. Reload the page to see the current workflows.",
+    "not_found_named": "The workflow “{{display}}” no longer exists; it may have been deleted in the meantime. Reload the page to see the current workflows."
   },
   "run": {
     "failed": "The step failed.",
@@ -202,7 +203,8 @@
     "value_unverified": "The key figure {{field}} ({{value}}) was not computed with a tool, even after one correction. The step stopped so that no decision rests on an unchecked number.",
     "local_model_missing": "The local model {{model}} is not installed on the model server.",
     "provider_rejected_messages": "{{provider}} refused the conversation of this step (status {{status}}): one of its messages has a form the provider does not accept. Your workflow and input are not the cause.",
-    "provider_context_exceeded": "The conversation of this step is larger than the context window that {{provider}} gives the model."
+    "provider_context_exceeded": "The conversation of this step is larger than the context window that {{provider}} gives the model.",
+    "not_found_named": "The run “{{display}}” no longer exists; it may have been deleted in the meantime. Reload the page to see the current runs."
   },
   "budget": {
     "not_starter": "Only the person who started the run or an administrator can decide its budget.",
@@ -650,7 +652,8 @@
     "not_found": "This published workflow no longer exists; its API may have been withdrawn or deleted in the meantime. Reload the page to see the current publications.",
     "dependencies_changed": "The approved Python libraries changed since publishing; publish again.",
     "dependencies_unavailable": "The Python libraries of this API are not ready.",
-    "slug_taken": "Another published workflow already uses the name {{slug}}. Choose another name."
+    "slug_taken": "Another published workflow already uses the name {{slug}}. Choose another name.",
+    "not_found_named": "The published workflow “{{display}}” no longer exists; its API may have been withdrawn or deleted in the meantime. Reload the page to see the current publications."
   },
   "limit": {
     "concurrent": "Too many runs at the same time (limit {{limit}}); try again when one has finished.",
@@ -677,7 +680,8 @@
     "disabled": "Waiting for the result is not enabled for this API."
   },
   "idempotency": {
-    "conflict": "This Idempotency-Key was used for a different request."
+    "conflict": "This Idempotency-Key was used for a different request.",
+    "in_progress": "A request with this Idempotency-Key is still starting its run. Try again in a moment; the retry then returns that run."
   },
   "release": {
     "invalid": "The published version cannot run; publish it again."

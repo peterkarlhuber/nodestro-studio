@@ -1,15 +1,17 @@
 // Settings panels for keeping an installation healthy: system diagnosis and backup/restore.
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Activity, Archive, CheckCircle2, Download, Plug, RefreshCw, Upload, XCircle, AlertTriangle } from "lucide-react";
-import { type ChangeEvent, useRef, useState } from "react";
+import { Activity, Archive, CheckCircle2, Download, Plug, RefreshCw, Save, Upload, XCircle, AlertTriangle } from "lucide-react";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useAccess } from "../api/access";
 import { api } from "../api/client";
 import type { BackupContents, BackupInfo, DiagnosticCheck, DiagnosticStatus } from "../api/types";
 import { dockerReasonKey } from "../api/types";
 import { toast } from "../components/toast";
-import { Badge, Button, Callout, HelpTip, Hint, Modal, Section, Spinner } from "../components/ui";
+import { Badge, Button, Callout, Field, HelpTip, Hint, Modal, Section, Spinner, TextInput } from "../components/ui";
+import { codeSuffix } from "../lib/codes";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate, formatNumber } from "../lib/format";
 
@@ -264,7 +266,7 @@ export function BackupPanel() {
             </p>
             {info.notes.map((note) => (
               <Callout key={note} tone="warning">
-                {t(`backup.notes.${note.replace("backup.", "")}`)}
+                {t(`backup.notes.${codeSuffix("backup.", note)}`)}
               </Callout>
             ))}
             <ContentsTable info={info} />
@@ -295,7 +297,9 @@ export function InputStoragePanel() {
   const cleanup = useMutation({
     mutationFn: (olderThan: number | null) => api.cleanupInputs(olderThan),
     onSuccess: (result) => {
-      toast.success(t("inputs.storage.cleaned", { count: result.removed, size: formatBytes(result.freed_bytes) }));
+      const cleaned = t("inputs.storage.cleaned", { count: result.removed, size: formatBytes(result.freed_bytes) });
+      const expired = result.assistant_files_expired ?? 0;
+      toast.success(expired > 0 ? `${cleaned} ${t("inputs.storage.assistantExpired", { count: expired })}` : cleaned);
       void queryClient.invalidateQueries({ queryKey: ["input-storage"] });
     },
     onError: toast.error,
@@ -347,6 +351,81 @@ export function InputStoragePanel() {
         </Button>
       </div>
       <p className="muted small">{t("inputs.storage.safe")}</p>
+      <AssistantFileRetentionField />
     </section>
+  );
+}
+
+/** Whole days from 1 to 3650, or empty (keep the files as long as their conversation). */
+export function retentionInput(text: string): { value: number | null; invalid: boolean } {
+  const trimmed = text.trim();
+  if (!trimmed) return { value: null, invalid: false };
+  const value = Number(trimmed);
+  return Number.isInteger(value) && value >= 1 && value <= 3650 ? { value, invalid: false } : { value: null, invalid: true };
+}
+
+/**
+ * How long assistant chat files are kept (nodestro-api API-056): administrators set it, everybody else reads it.
+ * An API without the route shows nothing.
+ */
+function AssistantFileRetentionField() {
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const admin = useAccess().can("admin");
+  const retention = useQuery({ queryKey: ["assistant-file-retention"], queryFn: api.assistantFileRetention, retry: false });
+  const stored = retention.data?.retention_days ?? null;
+  const [text, setText] = useState("");
+  useEffect(() => setText(stored === null ? "" : String(stored)), [stored]);
+  const save = useMutation({
+    mutationFn: (days: number | null) => api.saveAssistantFileRetention(days),
+    onSuccess: (data) => {
+      queryClient.setQueryData(["assistant-file-retention"], data);
+      toast.success(t("settings.saved"));
+    },
+    onError: toast.error,
+  });
+  if (!retention.data) return null;
+  const current = stored === null ? t("inputs.retention.keep") : t("inputs.retention.days", { count: stored });
+  if (!admin)
+    return (
+      <p className="small" data-testid="assistant-retention-readonly">
+        {t("inputs.retention.readonly", { period: current })}
+      </p>
+    );
+  const parsed = retentionInput(text);
+  const changed = parsed.value !== stored;
+  return (
+    <div className="stack-sm" data-testid="assistant-retention">
+      <Field
+        label={t("inputs.retention.label")}
+        tip="inputs.retention"
+        hint={parsed.invalid ? <span className="text-danger">{t("inputs.retention.invalid")}</span> : t("inputs.retention.hint")}
+      >
+        <TextInput
+          type="number"
+          inputMode="numeric"
+          min={1}
+          max={3650}
+          step={1}
+          style={{ maxWidth: "9rem" }}
+          placeholder={t("inputs.retention.placeholder")}
+          aria-invalid={parsed.invalid || undefined}
+          value={text}
+          onChange={(event) => setText(event.target.value)}
+          data-testid="assistant-retention-days"
+        />
+      </Field>
+      <div>
+        <Button
+          icon={Save}
+          disabled={parsed.invalid || !changed}
+          busy={save.isPending}
+          onClick={() => save.mutate(parsed.value)}
+          data-testid="assistant-retention-save"
+        >
+          {t("common.save")}
+        </Button>
+      </div>
+    </div>
   );
 }

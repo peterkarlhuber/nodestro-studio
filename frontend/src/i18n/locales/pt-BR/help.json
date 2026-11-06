@@ -292,6 +292,7 @@
     "storage": "Arquivos enviados para execuções, casos de teste e agendamentos ficam neste computador junto com suas execuções e ocupam espaço em disco. Aqui você vê quanto e remove arquivos sem uso ou antigos. Arquivos de execuções na fila, em andamento ou pausadas e os que casos de teste, agendamentos ou lotes ainda usam são sempre mantidos; um arquivo removido não pode mais ser aberto a partir da execução.",
     "adopt": "Salva de forma permanente o conteúdo escolhido no conhecimento, só após sua confirmação e com a origem.",
     "proposals": "O agente pode propor conteúdo para o conhecimento. Só é salvo o que você verifica e confirma.",
-    "received": "Quais arquivos a execução recebeu e como cada agente os recebeu."
+    "received": "Quais arquivos a execução recebeu e como cada agente os recebeu.",
+    "retention": "Os arquivos anexados em conversas com o Nodestro Assistant ficam até a conversa ser excluída. Com um número de dias, os arquivos mais antigos são removidos na limpeza aqui e, no app de desktop, a cada hora; a conversa e suas mensagens permanecem, e uma mensagem enviada mantém o nome do arquivo. Só administradores podem alterar isso."
   }
 }

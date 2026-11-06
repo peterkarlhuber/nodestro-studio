@@ -86,7 +86,7 @@
     "sensitiveNote": "Este ejemplo pertenece al ámbito {{field}}. Los agentes ofrecen ayudas de trabajo, no asesoramiento: revisa cada resultado con criterio profesional antes de usarlo.",
     "costNote": "La vista previa y la copia son gratuitas y no llaman a ningún modelo. Solo hay costes cuando ejecutas la copia; solo necesita acceso a los proveedores de sus modelos.",
     "samples": "Archivos de ejemplo",
-    "samplesNote": "Archivos pequeños inventados para probar los campos de archivo. Descárgalos y selecciónalos al ejecutar el flujo de trabajo.",
+    "samplesNote": "Archivos pequeños inventados para probar los campos de archivo. Descárgalos aquí; una copia también los ofrece al ejecutarla.",
     "tests": "Casos de prueba",
     "copyTests": "Añadir los casos de prueba como serie de pruebas",
     "copyTestsNote": "Crea una serie de pruebas con estos casos. No se ejecuta nada, no se crea ninguna programación y no se publica ninguna API.",
@@ -104,7 +104,11 @@
     "teamContract": "Entrega: {{names}}",
     "knowledge": "Archivos de conocimiento",
     "knowledgeNote": "Se crean en tu base de conocimiento al copiar. Los documentos son inventados; los agentes buscan en ellos y citan sus fuentes.",
-    "copyTestsConnected": "No es posible con una conexión: las series de pruebas se ejecutan sin una persona y en ellas no se permiten herramientas MCP. Elige el modo sin conexión para adoptar los casos de prueba."
+    "copyTestsConnected": "No es posible con una conexión: las series de pruebas se ejecutan sin una persona y en ellas no se permiten herramientas MCP. Elige el modo sin conexión para adoptar los casos de prueba.",
+    "memorySpace": "Espacio de memoria de la copia",
+    "memorySpaceHint": "Sus agentes con memoria permanente guardan sus notas en este espacio, separadas de otras copias. Déjalo vacío para compartir el espacio de memoria del ejemplo con todas las demás copias.",
+    "memorySpaceInvalid": "Usa hasta 64 letras A–Z (sin acentos), dígitos, espacios, _ . o -, empezando por una letra o un dígito.",
+    "memorySpaceShared": "Vacío: compartido con las demás copias"
   },
   "connect": {
     "title_one": "Conexión opcional",
@@ -186,5 +190,10 @@
       "structured": "salida estructurada"
     },
     "judge": "Control de calidad (juez): {{model}}"
+  },
+  "origin": {
+    "offlineBadge": "Datos de ejemplo",
+    "offlineTip_one": "Copia del ejemplo «{{example}}»: {{names}} funciona sin conexión con datos de ejemplo. Para datos reales, copia el ejemplo de nuevo y elige un servidor MCP.",
+    "offlineTip_other": "Copia del ejemplo «{{example}}»: {{names}} funcionan sin conexión con datos de ejemplo. Para datos reales, copia el ejemplo de nuevo y elige un servidor MCP."
   }
 }

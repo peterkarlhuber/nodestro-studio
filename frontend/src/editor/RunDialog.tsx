@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import { api } from "../api/client";
 import { useSettings } from "../api/hooks";
-import type { InputField, Run, WorkflowCheck } from "../api/types";
+import type { InputField, Run, WorkflowCheck, WorkflowOrigin } from "../api/types";
 import { FileInput } from "../components/FileInput";
 import { providerList } from "../components/ModelPicker";
 import { Button, Callout, DisabledReason, Field, HelpTip, Modal, TextArea } from "../components/ui";
@@ -14,6 +14,7 @@ import { FormFields, fieldErrors, formDefaults } from "../components/FormFields"
 import { ErrorText, LocalError } from "../lib/errors";
 import { formatCost } from "../lib/format";
 import { missingProviders } from "../lib/providers";
+import { useOriginSamples } from "../library/exampleOrigin";
 import { withLocalModel } from "../missingModel/store";
 import { CheckList } from "./CheckList";
 import { useEditor } from "./store";
@@ -38,6 +39,7 @@ export function RunDialog({
   onStarted,
   save,
   check,
+  origin,
 }: {
   open: boolean;
   onClose: () => void;
@@ -45,6 +47,8 @@ export function RunDialog({
   save: () => Promise<string | null>;
   /** The pre-check of the current graph; errors block the start, warnings are shown. */
   check?: WorkflowCheck;
+  /** Where the stored workflow came from: a copy of an example offers the example's sample files (ST-007). */
+  origin?: WorkflowOrigin | null;
 }) {
   const { t } = useTranslation();
   const nodes = useEditor((s) => s.nodes);
@@ -61,6 +65,7 @@ export function RunDialog({
   const fields = start?.start?.fields ?? [];
   // A form with its own file fields gets the generic attachments folded away: one obvious place for a file.
   const formHasFiles = fields.some((field) => field.type === "file");
+  const samples = useOriginSamples(origin, fields, open);
   const prefilled = Boolean(start?.start?.default_input?.trim());
   const [values, setValues] = useState<Record<string, unknown>>({});
   useEffect(() => {
@@ -147,6 +152,7 @@ export function RunDialog({
               fields={fields}
               values={values}
               onChange={setValues}
+              samples={samples}
               errors={fieldErrors(run.error)}
               onPendingChange={(name, count) => setPending((current) => ({ ...current, [name]: count }))}
             />

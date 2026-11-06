@@ -53,6 +53,37 @@ export const OFFLINE = "";
  * (``OFFLINE`` for none); only real choices are sent, and a connected copy never asks for the test series
  * (test series run without a person, and MCP tools are refused there; the backend refuses the combination).
  */
+/** The runtime's rule for memory space names (nodestro_runtime.memory_spaces.SPACE_PATTERN). */
+export const MEMORY_SPACE_NAME = /^[A-Za-z0-9][A-Za-z0-9 _.-]{0,63}$/;
+
+/** Whether an agent of the example (or of one of its teams) keeps persistent memory. */
+export function usesMemory(example: Pick<ExampleDetail, "features" | "agent_details">): boolean {
+  return example.features.includes("memory") || example.agent_details.some((agent) => agent.memory);
+}
+
+/**
+ * A memory space name made from the copy's name (EX-007): accents dropped, other characters the rule does not allow
+ * turned into spaces, at most 64 characters. Empty when nothing usable is left.
+ */
+export function memorySpaceSuggestion(name: string): string {
+  const plain = name
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ß/g, "ss");
+  const cleaned = plain
+    .replace(/[^A-Za-z0-9 _.-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/^[^A-Za-z0-9]+/, "")
+    .trim();
+  return cleaned.slice(0, 64).trim();
+}
+
+/** Whether ``value`` may be sent as the copy's memory space: empty (the example's shared space) or a valid name. */
+export function validMemorySpace(value: string): boolean {
+  const name = value.trim();
+  return name === "" || MEMORY_SPACE_NAME.test(name);
+}
+
 export function copyRequest(
   example: Pick<ExampleDetail, "tests" | "integrations">,
   language: string,
@@ -60,6 +91,8 @@ export function copyRequest(
   connections: Record<string, string>,
   /** Agent key -> model the person chose in the dialog (only choices that differ from the suggestion). */
   models: Record<string, string> = {},
+  /** The copy's own memory space (EX-007); empty: the example's space, shared by every copy. */
+  memorySpace = "",
 ): ExampleCopyRequest {
   const known = new Set(example.integrations.map((integration) => integration.id));
   const integrations = Object.fromEntries(
@@ -71,6 +104,7 @@ export function copyRequest(
     tests: tests && !connected && example.tests.length > 0,
     ...(connected ? { integrations } : {}),
     ...(Object.keys(models).length ? { models } : {}),
+    ...(memorySpace.trim() ? { memory_space: memorySpace.trim() } : {}),
   };
 }
 

@@ -41,7 +41,7 @@ import { ModelReasoningNote } from "../components/ModelReasoningNote";
 import { CodeEditor } from "../components/CodeEditor";
 import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
 import { HelpTip } from "../components/Tooltip";
-import { AGENT_ICONS } from "../components/icons";
+import { AGENT_ICONS, AGENT_ICON_NAMES, agentIcon } from "../components/icons";
 import { toast } from "../components/toast";
 import {
   Button,
@@ -100,9 +100,28 @@ const SECTION_TITLE: Record<AgentSectionId, string> = {
   advanced: "agent.advanced.title",
 };
 
+/** The values of each option group ("" is the model default). */
+interface OptionValues {
+  effort: (typeof EFFORTS)[number];
+  thinking: (typeof THINKING)[number];
+  thinkingDisplay: (typeof THINKING_DISPLAY)[number];
+  toolChoice: "auto" | "none" | "any" | "tool";
+  refusal: "raise" | "return";
+}
+
+/** One text per group and value, written out so i18n/dynamicKeys.test.ts can check every one (ST-060). */
+const OPTION_LABEL: { [G in keyof OptionValues]: (t: TFunction, value: OptionValues[G]) => string } = {
+  effort: (t, value) => t(`agent.options.effort.${value || "default"}`),
+  thinking: (t, value) => t(`agent.options.thinking.${value || "default"}`),
+  thinkingDisplay: (t, value) => t(`agent.options.thinkingDisplay.${value || "default"}`),
+  toolChoice: (t, value) => t(`agent.options.toolChoice.${value}`),
+  refusal: (t, value) => t(`agent.options.refusal.${value}`),
+};
+
 /** Select options from option values; "" is the model default. */
-function options(t: TFunction, group: string, values: readonly string[]) {
-  return values.map((value) => ({ value, label: t(`agent.options.${group}.${value || "default"}`) }));
+function options<G extends keyof OptionValues>(t: TFunction, group: G, values: readonly OptionValues[G][]) {
+  const label = OPTION_LABEL[group] as (t: TFunction, value: OptionValues[G]) => string;
+  return values.map((value) => ({ value, label: label(t, value) }));
 }
 
 type Retrieval = NonNullable<AgentConfig["knowledge"]["retrieval"]>;
@@ -420,7 +439,7 @@ export function AgentForm({
 function IconPicker({ value, onChange }: { value: string; onChange: (value: string) => void }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const Icon = AGENT_ICONS[value] ?? AGENT_ICONS.bot;
+  const Icon = agentIcon(value);
   return (
     <div className="icon-picker">
       <button
@@ -434,7 +453,7 @@ function IconPicker({ value, onChange }: { value: string; onChange: (value: stri
       </button>
       {open ? (
         <div className="icon-picker__menu" role="listbox" aria-label={t("agent.icons")}>
-          {Object.entries(AGENT_ICONS).map(([name, Item]) => (
+          {AGENT_ICON_NAMES.map((name) => [name, AGENT_ICONS[name]] as const).map(([name, Item]) => (
             <button
               key={name}
               type="button"

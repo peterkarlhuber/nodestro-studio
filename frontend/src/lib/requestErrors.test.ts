@@ -35,3 +35,23 @@ describe("request and routing codes of the API", () => {
     expect(problemText(t, { code: "publication.slug_taken", params: { slug: "offer" } })).toContain("offer");
   });
 });
+
+describe("missing items named by the reference (API-053) and retried starts (API-043)", () => {
+  it("names the missing workflow, run or publication when the API sends params.display", () => {
+    expect(problemText(t, { code: "workflow.not_found", params: { id: "wf_1", display: "Angebot" } })).toBe(
+      "The workflow “Angebot” no longer exists; it may have been deleted in the meantime. Reload the page to see the current workflows.",
+    );
+    expect(problemText(t, { code: "run.not_found", params: { display: "Run of 6 Nov" } })).toContain("“Run of 6 Nov”");
+    expect(problemText(t, { code: "publication.not_found", params: { display: "orders" } })).toContain("“orders”");
+  });
+
+  it("keeps the general sentence without a name", () => {
+    expect(problemText(t, { code: "workflow.not_found", params: { id: "wf_1" } })).toBe(t("errors.workflow.not_found"));
+    expect(problemText(t, { code: "workflow.not_found", params: { display: "  " } })).toBe(t("errors.workflow.not_found"));
+    expect(problemText(t, { code: "tool.not_found", params: { display: "x" } })).not.toContain("“x”");
+  });
+
+  it("explains a retry while the first start is still running", () => {
+    expect(problemText(t, { code: "idempotency.in_progress", params: {} })).toContain("still starting its run");
+  });
+});

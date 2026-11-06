@@ -38,6 +38,7 @@ import { initialStep, stepsInOrder } from "../runs/runSummary";
 import { STATUS_TONE, formatCost, formatDate, formatDuration, formatTokens, tokenBreakdown } from "../lib/format";
 import { formatMoney } from "../lib/money";
 import { NotFoundState } from "../components/NotFoundState";
+import { OfflineBadge } from "../library/exampleOrigin";
 
 /** A waterfall of the agents' run times: where the time went and what ran in parallel. */
 function Trace({ run, selected, onSelect }: { run: Run; selected: string | null; onSelect: (id: string) => void }) {
@@ -145,6 +146,7 @@ export function RunDetailPage() {
     <div className="page">
       <PageHeader
         title={data.workflow_name}
+        badges={<OfflineBadge origin={data.workflow.origin} />}
         documentTitle={`${data.workflow_name} · ${t("nav.executions")}`}
         crumbs={
           <>

@@ -251,6 +251,7 @@ export const HELP_DOCS = {
   "inputs.optional": "datei-eingaben#optionale-felder",
   "inputs.delivery": "datei-eingaben#uebergabe",
   "inputs.storage": "datei-eingaben#speicherung",
+  "inputs.retention": "datei-eingaben#speicherung",
   "inputs.adopt": "datei-eingaben#knowledge-uebernahme",
   "inputs.proposals": "datei-eingaben#vorschlaege",
   "inputs.received": "datei-eingaben#nachvollziehen",

@@ -28,6 +28,7 @@ import {
   usePricingStatus,
 } from "../api/pricing";
 import { AWS_REGION_PATTERN, type Settings } from "../api/types";
+import { DefaultMark } from "./SettingsDefaults";
 import { toast } from "../components/toast";
 import {
   Badge,
@@ -544,7 +545,20 @@ export function PricingPanel({ settings, onMode }: { settings: Settings; onMode:
       ) : status.isLoading ? (
         <Spinner />
       ) : null}
-      <Field label={t("pricing.mode.label")} tip="settings.priceMode" hint={t(`pricing.mode.${mode}Hint`)}>
+      <Field
+        label={t("pricing.mode.label")}
+        tip="settings.priceMode"
+        hint={t(`pricing.mode.${mode}Hint`)}
+        action={
+          <DefaultMark
+            setting="price_mode"
+            value={settings.price_mode}
+            label={t("pricing.mode.label")}
+            format={(value) => t(`pricing.mode.${value}`)}
+            onReset={onMode}
+          />
+        }
+      >
         <Segmented
           label={t("pricing.mode.label")}
           value={mode}

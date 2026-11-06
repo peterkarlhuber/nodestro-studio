@@ -9,16 +9,18 @@ import { api } from "../api/client";
 import { PermissionNote } from "../components/Access";
 import { keys, useMeta, useSettings } from "../api/hooks";
 import type { Settings } from "../api/types";
-import { ModelPicker, providerLabel, useModelHint } from "../components/ModelPicker";
+import { ModelPicker, providerLabel, useModelHint, useModelName } from "../components/ModelPicker";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
 import { Badge, Button, Callout, Field, HelpTip, PageHeader, Select, Spinner, TextInput, Toggle } from "../components/ui";
 import { LANGUAGES, LANGUAGE_NAMES, type Language, currentLanguage, setLanguage, storedLanguage } from "../i18n";
 import { ErrorText } from "../lib/errors";
+import { formatCost } from "../lib/format";
 import { PythonMaintenance } from "../python/PythonMaintenance";
 import { BackupPanel, DiagnosticsPanel, InputStoragePanel } from "./SettingsMaintenance";
 import { PricingPanel, ReconciliationPanel } from "./SettingsPricing";
 import { SettingsNav, useSettingsHash } from "./SettingsNav";
+import { DefaultMark } from "./SettingsDefaults";
 import { SettingsGroup } from "./SettingsParts";
 import { mergeSettingsForm, modelsDirty } from "./settingsModelsForm";
 import { SettingsResizer } from "./SettingsResizer";
@@ -71,6 +73,16 @@ function LanguagePicker() {
       <Field
         label={t("settings.language.label")}
         htmlFor="settings-language-select"
+        action={
+          <DefaultMark
+            setting="language"
+            value={choice === AUTOMATIC ? null : choice}
+            label={t("settings.language.label")}
+            disabled={loading}
+            onReset={() => void change(AUTOMATIC)}
+            format={(value) => (value && value in LANGUAGE_NAMES ? LANGUAGE_NAMES[value as Language] : t("settings.language.automatic"))}
+          />
+        }
         hint={
           loading
             ? t("settings.language.loading")
@@ -111,6 +123,9 @@ export function SettingsPage() {
   const [form, setForm] = useState<Settings | null>(null);
   const defaultHint = useModelHint(form?.default_model ?? "");
   const assistantHint = useModelHint(form?.assistant_model ?? "");
+  const modelName = useModelName();
+  /** A budget default for the reset action's tooltip (null: no limit). */
+  const money = (value: number | string | null) => (value === null ? t("editor.run.unlimited") : formatCost(Number(value)));
   const body = useRef<HTMLDivElement>(null);
   const layout = useRef<HTMLDivElement>(null);
   const nav = useRef<HTMLElement>(null);
@@ -202,7 +217,21 @@ export function SettingsPage() {
           </h2>
           {settings.data ? <DefaultModelNotice settings={settings.data} /> : null}
           <SettingsGroup title={t("settingsUi.models.groupModels")}>
-            <Field label={t("settings.models.defaultModel")} tip="settings.defaultModel" hint={defaultHint ?? t("settings.models.defaultHint")}>
+            <Field
+              label={t("settings.models.defaultModel")}
+              tip="settings.defaultModel"
+              hint={defaultHint ?? t("settings.models.defaultHint")}
+              action={
+                <DefaultMark
+                  setting="default_model"
+                  value={form.default_model}
+                  label={t("settings.models.defaultModel")}
+                  disabled={!admin}
+                  format={modelName}
+                  onReset={(default_model) => setForm({ ...form, default_model })}
+                />
+              }
+            >
               <ModelPicker
                 label={t("settings.models.defaultModel")}
                 value={form.default_model}
@@ -213,6 +242,16 @@ export function SettingsPage() {
               label={t("settings.models.assistantModel")}
               tip="settings.assistantModel"
               hint={assistantHint ?? t("settings.models.assistantHint")}
+              action={
+                <DefaultMark
+                  setting="assistant_model"
+                  value={form.assistant_model}
+                  label={t("settings.models.assistantModel")}
+                  disabled={!admin}
+                  format={modelName}
+                  onReset={(assistant_model) => setForm({ ...form, assistant_model })}
+                />
+              }
             >
               <ModelPicker
                 label={t("settings.models.assistantModel")}
@@ -222,7 +261,21 @@ export function SettingsPage() {
             </Field>
           </SettingsGroup>
           <SettingsGroup title={t("settingsUi.models.groupBudget")} columns>
-            <Field label={t("settings.models.budget")} tip="settings.budget" hint={t("settings.models.budgetHint")}>
+            <Field
+              label={t("settings.models.budget")}
+              tip="settings.budget"
+              hint={t("settings.models.budgetHint")}
+              action={
+                <DefaultMark
+                  setting="default_budget_usd"
+                  value={form.default_budget_usd}
+                  label={t("settings.models.budget")}
+                  disabled={!admin}
+                  format={money}
+                  onReset={(default_budget_usd) => setForm({ ...form, default_budget_usd })}
+                />
+              }
+            >
               <TextInput
                 type="number"
                 min={0}
@@ -231,10 +284,24 @@ export function SettingsPage() {
                 onChange={(e) => setForm({ ...form, default_budget_usd: e.target.value === "" ? null : Number(e.target.value) })}
               />
             </Field>
-            <BudgetPolicyFields form={form} admin={admin} onChange={(patch) => setForm({ ...form, ...patch })} />
+            <BudgetPolicyFields form={form} admin={admin} onChange={(patch) => setForm({ ...form, ...patch })} money={money} />
           </SettingsGroup>
           <SettingsGroup title={t("settingsUi.models.groupArchitect")} columns>
-            <Field label={t("settings.models.architectBudget")} tip="settings.architectBudget" hint={t("settings.models.architectBudgetHint")}>
+            <Field
+              label={t("settings.models.architectBudget")}
+              tip="settings.architectBudget"
+              hint={t("settings.models.architectBudgetHint")}
+              action={
+                <DefaultMark
+                  setting="architect_budget_usd"
+                  value={form.architect_budget_usd}
+                  label={t("settings.models.architectBudget")}
+                  disabled={!admin}
+                  format={money}
+                  onReset={(architect_budget_usd) => setForm({ ...form, architect_budget_usd })}
+                />
+              }
+            >
               <TextInput
                 type="number"
                 min={0}
@@ -243,7 +310,20 @@ export function SettingsPage() {
                 onChange={(e) => setForm({ ...form, architect_budget_usd: e.target.value === "" ? null : Number(e.target.value) })}
               />
             </Field>
-            <Field label={t("settings.models.architectRepairs")} tip="settings.architectRepairs" hint={t("settings.models.architectRepairsHint")}>
+            <Field
+              label={t("settings.models.architectRepairs")}
+              tip="settings.architectRepairs"
+              hint={t("settings.models.architectRepairsHint")}
+              action={
+                <DefaultMark
+                  setting="architect_max_repairs"
+                  value={form.architect_max_repairs}
+                  label={t("settings.models.architectRepairs")}
+                  disabled={!admin}
+                  onReset={(architect_max_repairs) => setForm({ ...form, architect_max_repairs })}
+                />
+              }
+            >
               <TextInput
                 type="number"
                 min={0}
@@ -289,6 +369,15 @@ export function SettingsPage() {
               disabled={!admin || !form.ocr_available}
               onChange={(ocr_enabled) => save.mutate({ ocr_enabled })}
               label={t("settings.ocr.label")}
+              action={
+                <DefaultMark
+                  setting="ocr_enabled"
+                  value={form.ocr_enabled}
+                  label={t("settings.ocr.label")}
+                  disabled={!admin}
+                  onReset={(ocr_enabled) => save.mutate({ ocr_enabled })}
+                />
+              }
             />
             <Badge tone={form.ocr_available ? "success" : "idle"}>
               {form.ocr_available ? t("settings.ocr.available") : t("settings.ocr.missing")}
