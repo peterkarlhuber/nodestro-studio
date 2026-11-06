@@ -8,7 +8,7 @@ import { type KeyboardEvent, type RefObject, useId, useMemo, useState } from "re
 import { useTranslation } from "react-i18next";
 
 import { prefersReducedMotion } from "../lib/motion";
-import { type SettingHit, indexSettings, revealSetting, searchSettings, snippet } from "./settingsSearch";
+import { type SettingHit, indexSettings, revealSetting, searchSettings, snippet } from "./settingsSearchIndex";
 
 export function SettingsSearch({ container }: { container: RefObject<HTMLElement | null> }) {
   const { t, i18n } = useTranslation();

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 
-import { indexSettings, normalize, revealSetting, searchSettings, snippet } from "./settingsSearch";
+import { indexSettings, normalize, revealSetting, searchSettings, snippet } from "./settingsSearchIndex";
 
 /** A page that follows the convention: sections with an h2, fields, toggles, groups, closed parts. */
 function page(): HTMLElement {
