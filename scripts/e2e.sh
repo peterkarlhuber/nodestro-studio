@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server ...]   (default: all)
+# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server|portable ...]   (default: all but portable)
 # The journeys suite writes its report to $JOURNEY_REPORT when set.
 # E2E_PORT_OFFSET (default 0) moves every server port by that amount (8000 to 8099 by default, so parallel runs on
 # one machine do not collide), E2E_BROWSER=firefox|webkit picks another Playwright engine.
 # local-models runs only the recorded part of e2e/localModels.mjs (LOCAL_E2E_REAL=0: nothing is downloaded).
 # local-server runs the local models end to end against a fake Ollama (tests/fake_ollama.py) over HTTP.
+# portable builds a real portable package from the publish dialog; it needs the network on its first run (uv downloads
+# Python and wheels, about a minute) and is not in the default list. E2E_EXPORT_CACHE keeps its download cache.
 # Needs: the studio installed (pip install -e .), the frontend built (make frontend) and Playwright.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -81,6 +83,8 @@ run() {  # run SUITE
       (cd frontend && LOCAL_E2E_REAL=0 npm run e2e:local-models -- "$(url 8025)" ${E2E_SCREENSHOTS:-}) ;;
     local-server) start local-server "$(port 8027)" python tests/e2e_local_models_server.py --data-dir "$work/local-server" --port "$(port 8027)"
       (cd frontend && npm run e2e:local-server -- "$(url 8027)" ${E2E_SCREENSHOTS:-}) ;;
+    portable) start portable "$(port 8087)" python tests/e2e_portable_server.py --data-dir "$work/portable" --port "$(port 8087)"
+      (cd frontend && npm run e2e:portable -- "$(url 8087)" ${E2E_SCREENSHOTS:-}) ;;
     journeys) start journeys "$(port 8060)" python tests/e2e_journey_server.py --data-dir "$work/journeys" --port "$(port 8060)"
       (cd frontend && NODESTRO_URL="$(url 8060)" npm run e2e:journeys) ;;
     *) echo "unknown suite $1" >&2; return 2 ;;
