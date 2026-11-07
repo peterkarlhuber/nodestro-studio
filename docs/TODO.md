@@ -3,7 +3,7 @@
 > Open work for this repository: release blockers, known bugs, security follow-ups, technical debt and planned improvements.
 > GitHub issues are the source of truth for details; this file is the entry point and summary.
 >
-> **Last full review:** 2026-11-06 against master at ee3f378 (TODO abatement round)
+> **Last full review:** 2026-11-07 against master at f69020a (TODO abatement round)
 
 ## Summary
 
@@ -183,9 +183,15 @@ The master implementation plan MUP-ONA ([MUP-ONA.md](https://github.com/peterkar
   nodestro-local-docker entry.
   Its comment says the block is "updated when a product's studio.json moves", which no longer happens (the products
   were re-pinned to newer studio commits without touching it), and `scripts/check_versions.py` does not check the block.
-- **Next step:** With the next candidate (or now), reword the comment to "last release candidate", mark the old
-  candidate withdrawn and add local-docker, or let `check_versions` verify the block; done by the thread that holds
-  the pin slot. (Backend audit 2, integration run.)
+- **Why it cannot track the products:** each product pins a studio commit (`studio.json`; local-docker's
+  `components.json` also pins nodestro-server), so a studio commit can never name the product commits that pin it;
+  on 2026-11-07 desktop, server and local-docker master all pin studio `f69020a`. Nothing reads the block
+  (`scripts/check_versions.py`, `src/` and `tests/` do not), so it can only record release candidates.
+- **Next step:** With the next candidate (or now), reword the comment to "the last built and checked release
+  candidate of each product and the studio commit it was built from; not a pin, not updated when a product's
+  studio.json moves", mark the v0.2.0-preview.1 entries as NO-GO (DSK-001) and add local-docker with its first
+  candidate, or drop the block (owner's choice). The edit belongs to the thread that holds the pin slot, not to a
+  TODO worker (`platform/versions.json` is lead-only). (Backend audit 2, integration run.)
 
 ### ST-028 · Third-party Python dependencies are not locked
 

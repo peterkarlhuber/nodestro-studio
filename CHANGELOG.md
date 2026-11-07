@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### TODO abatement round 5 (2026-11-07)
+
+- Missing local model: when the readiness check read from the model registry, before any download, that a model
+  outside the catalog cannot do what the action needs (`ModelProblem.from_registry`, nodestro-runtime RT-062), the
+  dialog says so ("its entry in the model registry says so, so it was not downloaded") instead of calling the model
+  installed. The missing-model e2e server reads a stand-in registry, so the suite never reaches registry.ollama.ai.
+- Agent test: key figures (`source: "tool"`) that no tool call of the test computed are listed per field with their
+  value and reason (`AgentTestResult.value_warnings`, nodestro-runtime RT-054), with what a workflow run would do;
+  e2e section 11 of the flow suite.
+- Exports: a server's package build that waits for a worker (`ExportJob.queued`, nodestro-api API-048) says
+  "Waiting for a worker" without a progress bar, and Cancel withdraws it; a failed build's text gets the job's
+  `error_params` (size and limit of `export.server_too_large`). In-app docs updated in six languages.
+
 ### TODO abatement round 4 (2026-11-07)
 
 - Pins: nodestro-runtime f26dac4 (runtime #126: a busy sandbox image build stays `checking` (LD-020), Bedrock region
