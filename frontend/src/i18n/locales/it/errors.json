@@ -1093,8 +1093,5 @@
   },
   "lease": {
     "lost": "Un altro processo del server ha preso in carico questo batch o questa serie di test perché questo non rispondeva più. Il lavoro è segnato come interrotto; ricarica la pagina e continualo."
-  },
-  "partition": {
-    "missing": "Una richiesta di conoscenza o memoria non era legata a questo spazio di lavoro ed è stata fermata prima di leggere o modificare qualcosa. Riprova; se succede di nuovo, segnalalo come bug."
   }
 }

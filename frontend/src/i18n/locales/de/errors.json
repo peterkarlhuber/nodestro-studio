@@ -1093,8 +1093,5 @@
   },
   "lease": {
     "lost": "Ein anderer Serverprozess hat diesen Batch oder diese Testreihe übernommen, weil dieser nicht mehr antwortete. Die Arbeit ist als unterbrochen markiert; lade die Seite neu und setze sie fort."
-  },
-  "partition": {
-    "missing": "Eine Anfrage an Wissen oder Gedächtnis war nicht an diesen Arbeitsbereich gebunden und wurde gestoppt, bevor etwas gelesen oder geändert wurde. Versuche es erneut; wenn es wieder passiert, melde es als Fehler."
   }
 }

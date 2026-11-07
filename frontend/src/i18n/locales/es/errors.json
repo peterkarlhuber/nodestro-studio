@@ -1093,8 +1093,5 @@
   },
   "lease": {
     "lost": "Otro proceso del servidor tomó este lote o esta serie de pruebas porque este dejó de responder. El trabajo está marcado como interrumpido; recarga la página y continúalo."
-  },
-  "partition": {
-    "missing": "Una solicitud de conocimiento o memoria no estaba vinculada a este espacio de trabajo y se detuvo antes de leer o cambiar nada. Inténtalo de nuevo; si vuelve a ocurrir, infórmalo como un error."
   }
 }
