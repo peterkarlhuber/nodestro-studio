@@ -185,7 +185,8 @@
       "HistoryConversionError": "Não foi possível preparar a conversa desta etapa para o modelo: uma de suas mensagens tem um formato que este provedor não aceita. Nada foi enviado.",
       "EvaluationFailedError": "O resultado não passou na verificação de qualidade.",
       "ToolExecutionError": "Uma ferramenta do agente parou com um erro.",
-      "MaxToolCallsError": "O modelo pediu em uma só resposta mais chamadas de ferramentas do que o permitido (64 por padrão); nenhuma foi executada."
+      "MaxToolCallsError": "O modelo pediu em uma só resposta mais chamadas de ferramentas do que o permitido (64 por padrão); nenhuma foi executada.",
+      "VectorError": "O modelo de embeddings retornou um vetor que não pode ser usado: ele contém um valor que não é um número ou tem um número de dimensões diferente do índice de conhecimento."
     },
     "api_error_auth": "{{provider}} recusou a chave de API.",
     "api_error_rate_limit": "{{provider}} informou solicitações demais em pouco tempo (limite de taxa).",
@@ -941,7 +942,8 @@
         "HistoryConversionError": "Se o agente foi trocado para um modelo de outro provedor, continue com o modelo anterior. Caso contrário, os detalhes técnicos indicam a mensagem para um relatório de erro.",
         "EvaluationFailedError": "Leia a justificativa da verificação na etapa e ajuste a tarefa ou os critérios.",
         "ToolExecutionError": "Os detalhes técnicos indicam a ferramenta e o erro dela. Confira a ferramenta em \"Ferramentas\".",
-        "MaxToolCallsError": "Dê a este agente menos ferramentas por etapa ou divida a tarefa para que uma resposta precise de menos chamadas."
+        "MaxToolCallsError": "Dê a este agente menos ferramentas por etapa ou divida a tarefa para que uma resposta precise de menos chamadas.",
+        "VectorError": "Se o modelo de embeddings foi trocado, escolha-o em Busca no conhecimento e reconstrua o índice. Caso contrário, tente outro modelo de embeddings."
       },
       "api_error_auth": "Confira a chave em Configurações → Provedores de IA e teste a conexão lá.",
       "api_error_rate_limit": "Aguarde um momento e continue a execução. Menos execuções ao mesmo tempo ou um limite maior no provedor resolvem de vez.",

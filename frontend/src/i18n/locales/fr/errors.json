@@ -185,7 +185,8 @@
       "HistoryConversionError": "La conversation de cette étape n’a pas pu être préparée pour le modèle : l’un de ses messages a une forme que ce fournisseur n’accepte pas. Rien n’a été envoyé.",
       "EvaluationFailedError": "Le résultat n’a pas passé le contrôle qualité.",
       "ToolExecutionError": "Un outil de l’agent s’est arrêté avec une erreur.",
-      "MaxToolCallsError": "Le modèle a demandé dans une seule réponse plus d’appels d’outils que permis (64 par défaut) ; aucun n’a été exécuté."
+      "MaxToolCallsError": "Le modèle a demandé dans une seule réponse plus d’appels d’outils que permis (64 par défaut) ; aucun n’a été exécuté.",
+      "VectorError": "Le modèle d’embeddings a renvoyé un vecteur inutilisable : il contient une valeur qui n’est pas un nombre, ou son nombre de dimensions diffère de celui de l’index des connaissances."
     },
     "api_error_auth": "{{provider}} a refusé la clé API.",
     "api_error_rate_limit": "{{provider}} a signalé trop de requêtes en peu de temps (limite de débit).",
@@ -941,7 +942,8 @@
         "HistoryConversionError": "Si l’agent a été basculé vers un modèle d’un autre fournisseur, reprenez avec le modèle précédent. Sinon, les détails techniques indiquent le message pour un rapport d’erreur.",
         "EvaluationFailedError": "Lisez la justification du contrôle à l’étape et ajustez la tâche ou les critères.",
         "ToolExecutionError": "Les détails techniques nomment l’outil et son erreur. Vérifiez l’outil sous « Outils ».",
-        "MaxToolCallsError": "Donnez à cet agent moins d’outils par étape ou découpez sa tâche pour qu’une réponse demande moins d’appels."
+        "MaxToolCallsError": "Donnez à cet agent moins d’outils par étape ou découpez sa tâche pour qu’une réponse demande moins d’appels.",
+        "VectorError": "Si le modèle d’embeddings a été changé, choisissez-le dans Recherche dans les connaissances et reconstruisez l’index. Sinon, essayez un autre modèle d’embeddings."
       },
       "api_error_auth": "Vérifiez la clé sous Réglages → Fournisseurs d’IA et testez-y la connexion.",
       "api_error_rate_limit": "Attendez un instant et reprenez l’exécution. Moins d’exécutions simultanées ou une limite plus élevée chez le fournisseur règlent le problème durablement.",
