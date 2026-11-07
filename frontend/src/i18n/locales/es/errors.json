@@ -499,7 +499,9 @@
     "ocr_unavailable": "El OCR no está disponible. Necesita Tesseract con datos de idioma para alemán, inglés, español, francés, italiano o portugués, y pdftoppm y pdfinfo (Poppler), instalados localmente.",
     "too_large": "{{name}} ocupa demasiado al descomprimirse.",
     "unreadable": "{{name}} no se puede leer. El archivo está dañado, vacío o no es un documento válido.",
-    "encrypted": "{{name}} está protegido con contraseña y no se puede leer. Sube una versión sin contraseña."
+    "encrypted": "{{name}} está protegido con contraseña y no se puede leer. Sube una versión sin contraseña.",
+    "too_complex": "{{name}} es demasiado grande o complejo para leerlo de forma segura: supera un límite de páginas, texto, tiempo de lectura o memoria. Divide el documento o sube una versión más pequeña.",
+    "limits_invalid": "El límite de PDF {{variable}} no es válido. Pide a la administración que revise la configuración del servidor."
   },
   "batch": {
     "confirm_external": "El flujo de trabajo usa herramientas propias que pueden actuar fuera de Nodestro: {{tools}}. Confírmalo.",
