@@ -10,8 +10,8 @@ of evidence of plan 8.3 on the current default branch.
 |---|---|
 | Plan version | MUP-ONA 1.1; binding version is the English [MUP-ONA.md](MUP-ONA.md) (approved 2026-11-06 22:23Z, plan 8.7); the German file is a historical reference |
 | Last start procedure (S1–S10) | 2026-11-06 22:10Z |
-| Active gate | none (G0 granted; next hold point G1 after B3, auto-continuation granted under plan 7.3) |
-| Lead agent / pin owner | MUP-ONA lead agent (project thread "Implement MUP-ONA architecture plan"); pin slot held by the TODO-abatement thread until its round 3 cascade is merged |
+| Active gate | **G1** (since 2026-11-07 07:15Z): B3 merged; the 7.3 criteria are not met (Overlap@10 limits, [reports/G1-ranking.md](reports/G1-ranking.md) section 5), so G1 and O7 need Peter's decision. B4–B6 do not start; A packages and B2 continue (plan 7.1) |
+| Lead agent / pin owner | MUP-ONA lead agent (project thread "Implement MUP-ONA architecture plan"); pin slot alternates with the TODO-abatement thread (see Pin state) |
 
 ### Default-branch SHAs at the start procedure (S2)
 
@@ -47,25 +47,28 @@ O10, O11 (reject symlink paths with `storage.symlink`), O12, O13. O7 is decided 
 
 ## Packages
 
+State 2026-11-07 07:15Z. "merged" means merged on the default branch with green PR CI; a package becomes
+`accepted` only with all four pieces of evidence of plan 8.3 (including the pin cascade where the plan requires it).
+
 | ID | Status | Branches / PRs | Merge SHAs | CI run of merge commit | Test evidence | Open risks | Next step |
 |---|---|---|---|---|---|---|---|
-| MP-A0 | in progress | `mup/a0-baseline` (studio, runtime, orkexa, api, axentra) | – | – | – | – | PRs |
-| MP-A10 | in progress | `mup/a10-sqlite-robustness` (orkexa) | – | – | – | – | after A0 |
-| MP-A1 | in progress | `mup/a1-pdf` (orkexa; runtime, api, server later) | – | – | – | – | after A10 |
-| MP-A11 | in progress | `mup/a11-checker-ci` (runtime, api) | – | – | – | – | after A0 |
-| MP-A2 | in progress | `mup/a2-a3-a5-api-hardening` (api) | – | – | – | – | after the TODO-abatement api round 3 merge |
-| MP-A3 | in progress | `mup/a2-a3-a5-api-hardening` (api), `mup/a3-proxy` (server) | – | – | – | – | as A2 |
-| MP-A4 | in progress | `mup/a4-a6-axentra` (axentra) | – | – | – | – | after A0 |
-| MP-A5 | in progress | `mup/a2-a3-a5-api-hardening` (api) | – | – | – | – | as A2 |
-| MP-A6 | in progress | `mup/a4-a6-axentra` (axentra), server RUNBOOK | – | – | – | – | after A0 |
-| MP-A7 | in progress | `mup/a7-improvements` (runtime, axentra, axentra-studio) | – | – | – | – | after A0 |
-| MP-A8 | open | – | – | – | – | – | after A4, A7, A11 |
+| MP-A0 | merged | studio #141, orkexa #57, api #95, axentra #51, runtime #122 | studio 422ec43, orkexa 2da5c6c, api 87de853, axentra 683c695, runtime 1e9f7b2 | – | skip expectations per CI job (T-SKIP-1), FX-SQ-0, FX-PG-0/0v, FX-RANK-0 (T-FX-1, T-RANK-0) | – | record merge-commit CI runs |
+| MP-A10 | merged, cascaded | orkexa #58 | a840c39 | – | T-SQL-1 (strict xfail removed), robustness tests | – | – |
+| MP-A1 | merged, cascaded (server open) | orkexa #59; runtime #127; api #103 (includes #102); cascade examples #82, integrations #70, sdk #95, studio #147; server/desktop/local-docker re-pinned by the TODO thread (server #66, desktop #53, local-docker #44) | orkexa f89102c, runtime de56875, api 63af1df, examples cda07c4, integrations cb90fe5, sdk 4596be3, studio 27f8bd4, server 5b0bdab, desktop 5d1f35a, local-docker 8969012 | – | T-PDF-1..7, T-PDF-11..14 on Linux, macOS, Windows (orkexa platforms.yml); T-PDF-8/9 runtime; T-PDF-10 api; studio texts `document.too_complex`, `document.limits_invalid` in six languages | Windows on Arm adds `PROCESSOR_ARCHITECTURE` to every child process (T-PDF-11 accepts it) | server RUNBOOK section for the PDF limits (branch `mup/a1-runbook`, local) |
+| MP-A11 | merged | runtime #123, api #97 | runtime 757ab00, api bec28d2 | – | rule 3: api tenant-sql green with runtime pinned to the checker commit 7d49fbe ([job](https://github.com/peterkarlhuber/nodestro-api/actions/runs/42315728491/job/128227719182)); temporary pins reverted before merge | proposal: make tenant-sql a required check (needs approval) | – |
+| MP-A2 | merged, cascaded | api #98 | 20bebca | – | T-API-ERR-1..5; SDK `make contract` clean, SDK pytest 122 + vitest 89, studio e2e api suite 41 ok against api 77ef8fb | – | – |
+| MP-A3 | merged, cascaded | api #98, server #63 | api 20bebca, server 035170d | – | T-API-PROXY-1..3, server `test_runbook_proxy.py` | – | – |
+| MP-A4 | merged | axentra #52 | 6f73952 | – | T-AX-NET-2 (run 42311515300, Python 3.11/3.12/3.13) | – | – |
+| MP-A5 | merged, cascaded | api #98 | 20bebca | – | T-API-ROUTE-1/2 | – | – |
+| MP-A6 | merged | axentra #52, server #63 | axentra 6f73952, server 035170d | – | axentra role tests | – | – |
+| MP-A7 | merged | runtime #124, axentra #53, axentra-studio #37 | runtime dfc0d0f, axentra 659f7b5, axentra-studio 4f4b762 | – | VB-1..VB-6 tests | axentra-studio CI has no docker build job: the full image build is unverified | – |
+| MP-A8 | merged (Axentra pin open) | api #101, runtime #129, axentra #57 | api 1f99df7, runtime 685fb4b, axentra 60d83b3 | – | shared security vectors (VB-7) in runtime and Axentra, `security-vectors-sync` job; launcher-key test fixed to parse tokens (`parse_token`) | the runtime still pins Axentra 273e675, so the two Axentra fixes of #57 (key/algorithm check, quoted secret redaction) reach Nodestro only with the next Axentra pin; that pin also brings 20 unrelated Axentra commits (other threads), so it needs its own runtime PR and full CI | runtime PR: Axentra pin 60d83b3 or later, then cascade |
 | MP-A9 | open | – | – | – | – | – | after B6 |
-| MP-B0 | in progress | `mup/b0-versioning` (orkexa, axentra), `mup/b0-deps` (runtime, api) | – | – | – | – | after A1 |
-| MP-B1 | open | – | – | – | – | – | after A1, A10 |
-| MP-B2 | open | – | – | – | – | – | after B1 |
-| MP-B3 | open | – | – | – | – | – | after B1 |
-| MP-B4 | open | – | – | – | – | – | after G1 |
+| MP-B0 | merged, cascaded | orkexa #61, axentra #54, runtime #127, api #103 | orkexa 59ea671, axentra 273e675, runtime de56875, api 63af1df | – | T-API-1 snapshot, T-PKG-0 import-linter; release.yml reviewed (publishes only on `release: published` with a protected environment); no tags | – | – |
+| MP-B1 | merged, cascaded | orkexa #62 (contracts), #63 (suite); runtime #130 | orkexa 59f69b1, b3d6fae; runtime 59a2629 | – | T-CONF-1..8, T-SQL-10; runtime conformance jobs green | – | – |
+| MP-B2 | in progress | orkexa `mup/b2-sqlite-backend` (local) | – | – | – | – | orkexa PR, runtime pin-only PR |
+| MP-B3 | merged, cascaded; G1 open | runtime #131 (+ #132 gateway fix found by its CI, + #134 reindex switch fix after the merge) | runtime 099f4d4 (#131), fad507c (#132) | [CI](https://github.com/peterkarlhuber/nodestro-runtime/actions/runs/42346278039) (test, pg-a, pg-b on 3.11/3.13/3.14 with restricted role, tenant-sql-api, docker, builtin-sandbox) | [G1 report](reports/G1-ranking.md); T-RANK-1/2, T-PART-CC, U1-U5, U8; cascade examples #83, integrations #71, api #104, sdk #96, studio #148 | 7.3 Overlap limits not met by design (drifts 3, 4, 6); #134 open | Peter's decision at G1 (O7, start of B4–B6); merge #134 and pin it |
+| MP-B4 | open (G1) | – | – | – | – | – | after G1 |
 | MP-B5 | open | – | – | – | – | – | after B4 |
 | MP-B6 | open | – | – | – | – | – | after B5, G2 |
 | MP-B7 | not started (G4) | – | – | – | – | – | needs separate approval |
@@ -75,9 +78,15 @@ O10, O11 (reject symlink paths with `storage.symlink`), O12, O13. O7 is decided 
 
 | Consumer | Pins | State | Reachability check (plan 9.3) |
 |---|---|---|---|
-| nodestro-runtime | orkexa `1b61fda`, axentra `0a1d1cc` | final (before MUP-ONA) | – |
+| nodestro-runtime | orkexa `b3d6fae`, axentra `273e675` | master `099f4d4` | merge commits on `master` |
+| nodestro-examples, nodestro-integrations | runtime `099f4d4` | examples `b8998b2`, integrations `31b4f8a` | merge commits on `master` |
+| nodestro-api | runtime `099f4d4`, orkexa `b3d6fae`, examples `b8998b2` | master `2685925` | merge commits on `master` |
+| nodestro-sdk | api `2685925` | master `2d866d2` | merge commit on `master` |
+| nodestro-studio | api, runtime, examples, integrations, sdk as above | studio #148 (in CI) | `scripts/check_versions.py`: pins agree |
+| nodestro-server, nodestro-desktop, nodestro-local-docker | studio `27f8bd4` (A1 cascade) | re-pin to the studio #148 merge pending | – |
 
-Who bumps pins now: the TODO-abatement thread (round 3 cascade); handed over to the MUP-ONA lead agent afterwards.
+Who bumps pins now: the MUP-ONA lead agent (B1/B3 cascade); the slot goes back to the TODO-abatement thread after
+studio #148 for the server/desktop/local-docker re-pin (agreed between the threads, 2026-11-07).
 
 ## Rollback needs
 
@@ -90,3 +99,13 @@ None.
 | 1 | Skip expectations live in `tests/ci/skipped-<job>.txt` (MP-A0 field 5) rather than `tests/skip-expectations/<job>.txt` (10.8) | the plan names both; MP-A0 is the more specific instruction; one name in every repository |
 | 2 | The German plan source is not versioned in this repository | repository content is English-only (plan 9.1); `reports/translation-check.md` identifies the German source by SHA-256 and the check script is `scripts/mup_translation_check.py` |
 | 3 | FX-PG-0 contains a zero vector and, where the runtime accepts it, a vector with NaN (5.2 says "NaN-free") | U5 and the G1 report (7.2) count excluded NaN and zero vectors; see `reports/translation-check.md` |
+| 4 | Runtime CI: 19 `tests.test_builtin_sandbox` entries in `tests/ci/skipped-test.txt` | the `ubuntu-latest` runner is Ubuntu 26.04, where the built-in sandbox reports `untested-system`; the dedicated builtin-sandbox jobs run on ubuntu-24.04 and cover these tests (runtime #122) |
+| 5 | Runtime #125 (not a plan package): strict-mode budget tests freeze the pricing clock | runtime master turned red on 2026-11-07 00:00Z because the built-in prices (checked 2026-10-31) became older than `critical_after` (7 days); fixed before A11/A7 could merge |
+| 6 | A11 rule 3 needed a temporary nodestro-examples branch (`mup/tmp-a11-integration`) in addition to the temporary runtime pin | the api installs examples, which pin their own runtime; both temporary pins were reverted before api #97 merged, the examples branch is never merged |
+| 7 | B1 ADR lives in `docs/architecture/decisions/0014-…` in orkexa instead of `docs/adr/` | the repository's existing ADR location (0001–0013) |
+| 8 | B1 item (h): `_pdf_pages` stays an alias without `DeprecationWarning` for now | release rules O3/B0: the warning arrives with the next minor version |
+| 9 | B1 split into two orkexa PRs (contracts, suite) | about 4,270 changed lines, above the plan's 2,500-line threshold (PR split rule of MP-B1) |
+| 10 | Runtime #132 (not a plan package): sandbox gateway keeps each connection task alive | B1/B3 CI's `docker` job failed with installed modules reported missing; asyncio holds tasks weakly, so a garbage collection could drop an attached stream's output; fixed before #130/#131 merged |
+| 11 | B3 reindex switch changed twice after review: bounded unlocked rounds plus a locked switch (#131), then up to 256 chunks at the switch (#134) | T-PART-CC exposed reindex starvation under steady writes (every switch failed `vector_incomplete`, and the knowledge job reported `done`); the first fix still failed under CI load on runtime #133 |
+| 12 | B3 drift 10 returns `PostgresVectorStatus` (subclass) with `excluded` | orkexa's `VectorStatus` has no count field; suggested orkexa follow-up: `excluded: int = 0` on `VectorStatus` |
+| 13 | B3 U4 uses `pgvector_status` instead of `verify_schema` | `verify_schema` comes with MP-B5 |
