@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "comment": "Mandatory checks (S2) per CI-FAST. A PR is ok only if every listed check ran on the PR head SHA and succeeded. Changing this list needs a reason in the PR.",
+  "pull_request": {
+    "ci.yml": [
+      "case-clashes",
+      "backend (3.11)",
+      "backend (3.13)",
+      "frontend",
+      "package",
+      "browser",
+      "browser-portable",
+      "browser-engines (firefox)",
+      "browser-engines (webkit)"
+    ],
+    "docker.yml": [
+      "docker (ubuntu-latest)",
+      "docker (macos-15-intel)",
+      "one command (ubuntu-latest)",
+      "one command (macos-15-intel)",
+      "docker unsuitable (windows-latest)"
+    ],
+    "macos.yml": ["frontend"],
+    "platform.yml": ["pins", "components (3.11)", "components (3.13)", "sdk", "browser"],
+    "platforms.yml": [
+      "start (ubuntu-latest)",
+      "start (macos-latest)",
+      "start (macos-15-intel)",
+      "start (windows-latest)",
+      "start (windows-11-arm)"
+    ]
+  },
+  "nightly": {"nightly.yml": ["report"]}
+}
