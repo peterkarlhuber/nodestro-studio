@@ -14,9 +14,17 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  # CI-FAST AP1: a new push to a pull request cancels the older run of that pull request. Every other run (master
+  # push, schedule, dispatch, and the nightly's workflow_call, where github.workflow is "Nightly") gets its own group
+  # from github.run_id, so it is never cancelled and never waits behind another run.
+  group: macos-${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   frontend:
     runs-on: macos-latest
+    timeout-minutes: 15 # CI-FAST AP1: p99 4.7 min (successful runs 2026-11-01..07)
     defaults:
       run:
         working-directory: frontend

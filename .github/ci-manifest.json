@@ -30,5 +30,29 @@
       "start (windows-11-arm)"
     ]
   },
+  "path_filters": {
+    "docker.yml": {
+      "paths": [
+        ".github/workflows/docker.yml",
+        "scripts/docker_smoke.py",
+        "scripts/docker_test.py",
+        "scripts/mac_docker_test.sh",
+        "pyproject.toml",
+        "platform/versions.json"
+      ]
+    },
+    "macos.yml": {
+      "paths": [
+        "frontend/**",
+        ".github/workflows/macos.yml"
+      ]
+    }
+  },
+  "comment_path_filters": "Copied verbatim from each path-filtered workflow's on.pull_request paths/paths-ignore; ci-ok uses them to decide whether the workflow had to run, and 'ci_ok.py --self-check' reports it when they differ from the workflow file.",
+  "advisory": [
+    "ci.yml/browser-engines (firefox)",
+    "ci.yml/browser-engines (webkit)"
+  ],
+  "comment_advisory": "Jobs with continue-on-error (experimental): ci-ok reports them but they never decide the verdict.",
   "nightly": {"nightly.yml": ["report"]}
 }

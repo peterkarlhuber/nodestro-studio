@@ -129,6 +129,7 @@ jobs:
     needs: [components-at-master]
     if: always()
     runs-on: ubuntu-latest
+    timeout-minutes: 10 # CI-FAST AP1: no run data yet (scheduled only); a short job
     permissions:
       issues: write
     steps:
