@@ -1,6 +1,6 @@
 # A9 RLS evaluation for Nodestro (MP-A9, gate G3)
 
-State 2026-11-07. Execution state: A9 "paper created, decision G3 open". This package is an evaluation only: no
+State 2026-11-07. Execution state: A9 paper delivered; G3 decided on 2026-11-07 18:36Z: option (a), stay with M10 (ADR-0010 accepted). This package is an evaluation only: no
 row-level security (RLS) is introduced, no migration is written, and nothing is merged into any master (E-10). The
 prototype lives on the nodestro-runtime branch `mup/a9-rls-prototype` at `ef5fab1` (not merged, no PR) and ran only on new test
 databases (`a9_rls`, `a9_rls_bench`) on two local test servers.

@@ -1,7 +1,7 @@
 # ADR-0010: Row-level security for Nodestro's PostgreSQL tables
 
-- Status: Proposed (2026-11-07, MUP-ONA MP-A9, gate G3). Accepting the pull request that adds this record decides G3.
-  RLS is not introduced by this record; option (b) or (c) would each need their own approved implementation plan.
+- Status: Accepted (2026-11-07; option (a), decided by the client at MUP-ONA gate G3 on 2026-11-07 18:36Z). RLS is not
+  introduced. Option (b) or (c) would each need a new decision and their own approved implementation plan.
 - Repositories: nodestro-runtime (prototype branch `mup/a9-rls-prototype` at `ef5fab1`, not merged), orkexa (the `ConnectionSource`
   hook, unchanged), nodestro-api and nodestro-server (backup role, unchanged), nodestro-studio (this record and the A9
   report).
@@ -35,7 +35,7 @@ A9 report.
   statements (worker claim, reaper, housekeeping, session lookup by token hash, metrics, operator commands, start
   checks) and turns every document store read into a transaction.
 
-## Decision (proposed)
+## Decision
 
 Option (a): stay with M10 and do not introduce RLS now. Keep the `tenant_setting` hook of `DatabaseSource` and
 `PsycopgSource` (off) and the prototype branch as the documented path to option (b).
