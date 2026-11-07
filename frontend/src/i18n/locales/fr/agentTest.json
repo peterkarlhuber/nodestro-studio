@@ -16,5 +16,17 @@
   "badge": "Test, pas une exécution",
   "memoryIsolated": "Copie de la mémoire",
   "duration": "Durée",
-  "providerMissing": "Pas encore configuré : {{providers}}. Saisissez l’accès dans les réglages pour tester cet agent."
+  "providerMissing": "Pas encore configuré : {{providers}}. Saisissez l’accès dans les réglages pour tester cet agent.",
+  "valueWarnings": {
+    "title_one": "{{count}} indicateur clé n’a pas été calculé avec un outil",
+    "title_other": "{{count}} indicateurs clés n’ont pas été calculés avec un outil",
+    "reason": {
+      "missing": "{{field}} : la valeur manque.",
+      "not_from_tool": "{{field}} = {{value}} n’est pas le résultat d’un appel d’outil dans ce test.",
+      "table_incomplete": "{{field}} = {{value}} : le tableau transmis à l’outil a moins de lignes que l’entrée (transmises : {{passed}}, entrée : {{total}}).",
+      "table_changed": "{{field}} = {{value}} : le tableau transmis à l’outil n’est pas celui de l’entrée (des lignes ont été ajoutées ou modifiées).",
+      "other": "{{field}} = {{value}} n’est appuyé par aucun appel d’outil dans ce test."
+    },
+    "run": "Dans une exécution du workflow, l’agent serait invité une fois à calculer ces valeurs avec un outil, et l’étape échouerait s’il ne le fait pas. Donnez à l’agent un outil de calcul comme la calculatrice et demandez-le dans sa tâche."
+  }
 }

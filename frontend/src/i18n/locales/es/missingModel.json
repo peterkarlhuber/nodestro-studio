@@ -41,7 +41,8 @@
       "container": "{{model}} necesita unos {{size}}, pero solo hay {{free}} libres en la carpeta de modelos del contenedor. Libera espacio en la unidad y vuelve a comprobarlo."
     },
     "capability_missing": {
-      "this_computer": "{{model}} está instalado, pero no admite lo que necesita este paso: {{list}}."
+      "this_computer": "{{model}} está instalado, pero no admite lo que necesita este paso: {{list}}.",
+      "registry": "{{model}} no admite lo que necesita este paso: {{list}}. Así lo indica su entrada en el registro de modelos, por eso no se descargó."
     },
     "hardware_insufficient": {
       "this_computer": "{{model}} no está instalado y probablemente necesita más memoria de la que tiene este equipo.",

@@ -256,7 +256,7 @@ En **Exportación**, elige **Paquete listo para usar** en lugar del proyecto fue
 | **Incluir la interfaz web** | Un formulario para este flujo con progreso en directo, aprobaciones y archivos de resultados, en seis idiomas. |
 | **Carpeta de resultados** | Dónde guarda además la aplicación los archivos de resultados de cada ejecución. El operador puede cambiarla después. |
 
-El paquete se genera en segundo plano; el diálogo muestra el progreso y te deja cancelar. Los modelos grandes lo hacen de varios gigabytes.
+El paquete se genera en segundo plano; el diálogo muestra el progreso y te deja cancelar. Los modelos grandes lo hacen de varios gigabytes. En un servidor de Nodestro, un proceso de trabajo genera los paquetes, uno cada vez para todo el servidor: hasta que uno quede libre, el trabajo indica *Esperando a un proceso de trabajo*, y *Cancelar* lo retira.
 
 El paquete nunca contiene claves. En el ordenador de destino, el operador introduce las claves de los proveedores de IA en la página de ajustes de la interfaz web o con `start.sh configure` (Windows: `start.cmd configure`); se quedan en ese ordenador. Los clientes usan claves de API creadas con `start.sh keys new`. Por defecto la aplicación solo responde en este ordenador; para la red necesita TLS o un proxy inverso. El README del paquete explica inicio, parada, ajustes y solución de problemas. Los paquetes no están firmados: macOS y Windows preguntan una vez antes del primer inicio.
 

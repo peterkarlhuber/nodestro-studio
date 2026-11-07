@@ -41,7 +41,8 @@
       "container": "{{model}} richiede circa {{size}}, ma nella cartella dei modelli del container sono liberi solo {{free}}. Libera spazio sull’unità, poi controlla di nuovo."
     },
     "capability_missing": {
-      "this_computer": "{{model}} è installato, ma non supporta ciò che serve a questo passaggio: {{list}}."
+      "this_computer": "{{model}} è installato, ma non supporta ciò che serve a questo passaggio: {{list}}.",
+      "registry": "{{model}} non supporta ciò che serve a questo passaggio: {{list}}. Lo indica la sua voce nel registro dei modelli, perciò non è stato scaricato."
     },
     "hardware_insufficient": {
       "this_computer": "{{model}} non è installato e probabilmente richiede più memoria di quella di questo computer.",

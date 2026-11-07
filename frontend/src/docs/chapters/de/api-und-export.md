@@ -256,7 +256,7 @@ Wähle unter **Export** statt des Quellprojekts das **startfertige Paket**. Es e
 | **Weboberfläche beilegen** | Ein Formular für diesen Workflow mit Live-Fortschritt, Freigaben und Ergebnisdateien, in sechs Sprachen. |
 | **Ergebnisordner** | Wo die Anwendung die Ergebnisdateien jedes Laufs zusätzlich ablegt. Der Betreiber kann ihn später ändern. |
 
-Das Paket wird im Hintergrund gebaut; der Dialog zeigt den Fortschritt und lässt dich abbrechen. Große Modelle machen es mehrere Gigabyte groß.
+Das Paket wird im Hintergrund gebaut; der Dialog zeigt den Fortschritt und lässt dich abbrechen. Große Modelle machen es mehrere Gigabyte groß. Auf einem Nodestro-Server baut ein Worker die Pakete, eines nach dem anderen für den ganzen Server: Bis einer frei ist, steht beim Auftrag *Wartet auf einen Worker*, und *Abbrechen* zieht ihn zurück.
 
 Das Paket enthält nie Schlüssel. Auf dem Zielrechner trägt der Betreiber die Schlüssel der KI-Anbieter auf der Einstellungsseite der Weboberfläche oder mit `start.sh configure` (Windows: `start.cmd configure`) ein; sie bleiben auf diesem Rechner. Clients nutzen API-Schlüssel, die `start.sh keys new` erzeugt. Standardmäßig antwortet die Anwendung nur auf diesem Rechner; fürs Netzwerk braucht sie TLS oder einen Reverse-Proxy. Die README im Paket erklärt Start, Stopp, Einstellungen und Fehlerbehebung. Pakete sind nicht signiert: macOS und Windows fragen vor dem ersten Start einmal nach.
 

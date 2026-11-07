@@ -9,6 +9,7 @@ import {
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { api } from "../api/client";
+import { type Language, setLanguage } from "../i18n";
 import type { ExportJob, ExportOptions, PortableCheck } from "../api/types";
 import { shownProblems } from "./ApiExport";
 import { ExportJobs, PortableOptions, PortableSummary } from "./PortableExport";
@@ -147,6 +148,73 @@ describe("PortableExport", () => {
     expect(screen.getByRole("progressbar")).toBeTruthy();
     fireEvent.click(screen.getByRole("button"));
     await waitFor(() => expect(cancel).toHaveBeenCalledWith("job_1"));
+  });
+
+  it("shows a job that waits for a server worker, without progress, and withdraws it", async () => {
+    await setLanguage("en", false);
+    const queued = {
+      id: "job_3",
+      state: "running",
+      queued: true,
+      step: "check",
+      progress: 0,
+      message: "",
+      bytes_done: 0,
+      bytes_total: 0,
+      created_at: "2026-11-04T12:00:00Z",
+    } as unknown as ExportJob;
+    const jobs = vi.spyOn(api, "exportJobs").mockResolvedValue([queued]);
+    const cancel = vi
+      .spyOn(api, "cancelExportJob")
+      .mockResolvedValue({ ...queued, queued: false, state: "cancelled" } as never);
+    wrap(<ExportJobs publicationId="pub_1" onDone={() => undefined} />);
+    const row = await screen.findByTestId("api-export-job-queued");
+    expect(row.textContent).toContain("Waiting for a worker");
+    expect(row.textContent).toContain("one package at a time");
+    expect(screen.queryByTestId("api-export-job-running")).toBeNull();
+    expect(screen.queryByRole("progressbar")).toBeNull();
+    // The job list keeps polling while the job waits (its state is running).
+    expect(jobs).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    await waitFor(() => expect(cancel).toHaveBeenCalledWith("job_3"));
+  });
+
+  it("says waiting for a worker in every language", async () => {
+    vi.spyOn(api, "exportJobs").mockResolvedValue([
+      { id: "job_4", state: "running", queued: true, progress: 0, created_at: "2026-11-04T12:00:00Z" } as never,
+    ]);
+    const expected: Record<string, string> = {
+      de: "Wartet auf einen Worker",
+      es: "Esperando a un proceso de trabajo",
+      fr: "En attente d’un processus de travail",
+      it: "In attesa di un processo di lavoro",
+      "pt-BR": "Aguardando um processo de trabalho",
+    };
+    for (const [language, text] of Object.entries(expected)) {
+      await setLanguage(language as Language, false);
+      const view = wrap(<ExportJobs publicationId="pub_1" onDone={() => undefined} />);
+      expect((await screen.findByTestId("api-export-job-queued")).textContent).toContain(text);
+      view.unmount();
+    }
+  });
+
+  it("names the size and the limit of a package the server refused", async () => {
+    await setLanguage("en", false);
+    vi.spyOn(api, "exportJobs").mockResolvedValue([
+      {
+        id: "job_5",
+        state: "failed",
+        progress: 0.2,
+        error_code: "export.server_too_large",
+        error: "too large",
+        error_params: { size: 9_000_000_000, limit: 2_000_000_000 },
+        created_at: "2026-11-04T12:00:00Z",
+      } as never,
+    ]);
+    wrap(<ExportJobs publicationId="pub_1" onDone={() => undefined} />);
+    const jobs = await screen.findByTestId("api-export-jobs");
+    expect(jobs.textContent).toContain("more than this server allows (");
+    expect(jobs.textContent).not.toContain("{{");
   });
 
   it("offers the download of a finished package", async () => {

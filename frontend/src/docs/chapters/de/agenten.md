@@ -265,6 +265,8 @@ Ein Agent aus einer Vorlage ist eine **Kopie**: Spätere Änderungen an der Vorl
 
 Ein Test ist **kein Workflow-Lauf**: Er erscheint nicht unter *Ausführungen* und ändert keine Ergebnisse. Dauerhaftes Memory wird nur gelesen; der Test arbeitet auf einer Kopie. Ein Test ruft den Anbieter des Modells auf und **kann Geld kosten**; der Dialog nennt die Preise des Modells, sofern sie bekannt sind, und die Kosten erscheinen auf der Seite [Nutzung](/docs/nutzung#statistik).
 
+Hat der Agent Ergebnisfelder **aus einem Tool**, prüft der Test auch sie: Ein Feld, dessen Wert kein Tool-Aufruf des Tests berechnet hat, steht als Warnung mit Wert und Grund da (fehlt, ist kein Ergebnis eines Tool-Aufrufs, oder die an das Tool übergebene Tabelle hat weniger oder andere Zeilen als die Eingabe). In einem Workflow-Lauf bekäme der Agent für einen solchen Wert eine Korrektur, danach würde der Schritt stoppen. Ein Test warnt nur, weil in einem Lauf ein früherer Schritt den Wert berechnet haben kann.
+
 ## Validierung und Meldungen {#validierung}
 <!-- keywords: validierung, fehlermeldung, problem, warnung, rot, inspektor meldung -->
 

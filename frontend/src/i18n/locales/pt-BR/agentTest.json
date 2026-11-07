@@ -16,5 +16,17 @@
   "badge": "Teste, não é uma execução",
   "memoryIsolated": "Cópia da memória",
   "duration": "Duração",
-  "providerMissing": "Ainda não configurado: {{providers}}. Informe o acesso nas configurações para testar este agente."
+  "providerMissing": "Ainda não configurado: {{providers}}. Informe o acesso nas configurações para testar este agente.",
+  "valueWarnings": {
+    "title_one": "{{count}} indicador-chave não foi calculado com uma ferramenta",
+    "title_other": "{{count}} indicadores-chave não foram calculados com uma ferramenta",
+    "reason": {
+      "missing": "{{field}}: o valor está faltando.",
+      "not_from_tool": "{{field}} = {{value}} não é o resultado de uma chamada de ferramenta neste teste.",
+      "table_incomplete": "{{field}} = {{value}}: a tabela passada à ferramenta tem menos linhas que a entrada (passadas: {{passed}}, entrada: {{total}}).",
+      "table_changed": "{{field}} = {{value}}: a tabela passada à ferramenta não é a tabela da entrada (linhas foram adicionadas ou alteradas).",
+      "other": "{{field}} = {{value}} não é sustentado por nenhuma chamada de ferramenta neste teste."
+    },
+    "run": "Em uma execução do fluxo de trabalho, o agente seria solicitado uma vez a calcular esses valores com uma ferramenta, e a etapa falharia se ele não o fizer. Dê ao agente uma ferramenta de cálculo, como a calculadora, e peça isso na tarefa."
+  }
 }

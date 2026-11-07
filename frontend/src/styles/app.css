@@ -3796,6 +3796,14 @@ button.check-list__item:hover {
   border-top: 1px solid var(--nd-border);
 }
 
+/* Key figures of a test that no tool call backs: one line per field; long field names and values wrap. */
+.value-warnings {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-wrap: anywhere;
+}
+
 .stats--compact {
   grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
 }

@@ -46,6 +46,9 @@ export interface ModelProblem {
   partial_bytes: number | null;
   fits: boolean | null;
   missing_capabilities: string[];
+  /** ``missing_capabilities`` come from the model registry before a download (a model outside the catalog that is not
+   * installed): the model was not downloaded. Missing from an API before nodestro-runtime RT-062. */
+  from_registry?: boolean;
   /** A download or setup that runs now: followed instead of starting another. */
   job: LocalJob | null;
   /** The last download of this model that stopped: starting it again continues where it stopped. */

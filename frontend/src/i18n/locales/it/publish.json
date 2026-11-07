@@ -305,6 +305,8 @@
       "build": "Crea pacchetto",
       "started": "Il pacchetto viene creato in background. Di solito ci vogliono alcuni minuti, di più con modelli grandi; nel frattempo puoi chiudere questa finestra.",
       "running": "Creazione: {{step}} ({{percent}} %)",
+      "queued": "In attesa di un processo di lavoro",
+      "queuedHint": "Il server crea un pacchetto alla volta; questo inizia appena un processo di lavoro del server è libero. Nel frattempo puoi chiudere questa finestra.",
       "progress": "Avanzamento della creazione del pacchetto",
       "done": "Pacchetto pronto ({{date}}).",
       "downloadZip": "Scarica",

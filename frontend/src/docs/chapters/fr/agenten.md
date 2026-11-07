@@ -265,6 +265,8 @@ Un agent issu d’un modèle est une **copie** : les modifications ultérieures 
 
 Un test **n’est pas une exécution de workflow** : il n’apparaît pas sous *Exécutions* et ne modifie aucun résultat. La mémoire persistante est seulement lue ; le test travaille sur une copie. Un test appelle le fournisseur du modèle et **peut coûter de l’argent** ; la boîte de dialogue indique les prix du modèle lorsqu’ils sont connus, et le coût apparaît sur la page [Utilisation](/docs/nutzung#statistik).
 
+Si l’agent a des champs de résultat **issus d’un outil**, le test les vérifie aussi : un champ dont aucun appel d’outil du test n’a calculé la valeur apparaît comme avertissement, avec sa valeur et la raison (manquante, pas le résultat d’un appel d’outil, ou un tableau transmis à l’outil qui a moins de lignes ou d’autres lignes que l’entrée). Dans une exécution du workflow, l’agent recevrait une correction pour une telle valeur, puis l’étape s’arrêterait. Un test se contente d’avertir, car dans une exécution une étape précédente peut avoir calculé la valeur.
+
 ## Validation et messages {#validierung}
 <!-- keywords: validation, message d’erreur, problème, avertissement, rouge, message de l’inspecteur -->
 
