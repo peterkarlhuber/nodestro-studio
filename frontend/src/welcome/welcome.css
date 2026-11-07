@@ -1189,12 +1189,13 @@
   }
 }
 
+/* No animated filter here: an animated blur on this 3D-transformed layer crashed WebKit's renderer under load
+   (WebKitGTK without a GPU, as in the Linux desktop app; ST-019). */
 @keyframes wl-emerge {
   from {
     opacity: 0;
     scale: 0.86;
     translate: 0 18px;
-    filter: blur(10px);
   }
 }
 

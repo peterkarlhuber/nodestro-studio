@@ -49,6 +49,8 @@ async function open({ person = false, viewport = { width: 1440, height: 900 }, .
     if (message.type() === "error") errors.push(message.text());
   });
   page.on("pageerror", (error) => errors.push(error.message));
+  // A renderer that dies (seen in WebKit on CI, ST-019) otherwise shows up only as "Target page closed" in the next call.
+  page.on("crash", () => console.error(`renderer crashed: ${page.url()}`));
   return { context, page, errors };
 }
 
