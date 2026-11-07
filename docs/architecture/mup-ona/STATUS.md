@@ -113,6 +113,17 @@ picks the fix up.
 
 Who bumps pins now: the MUP-ONA lead agent (the TODO-abatement thread finished its pin work on 2026-11-07).
 
+### Removed temporary branches
+
+The client approved their deletion on 2026-11-07 20:17Z (decision card in the MUP-ONA project thread). None was ever
+merged; each can be restored from its last commit.
+
+| Repository | Branch | Purpose | Last commit |
+|---|---|---|---|
+| nodestro-api | `mup/tmp-b4-checker` | probe PR #106: tenant-sql against the B4 engine branch | `3e1021469d05cbda7ce81c0e335d835fcaab82a7` |
+| nodestro-api | `mup/b6-tenant-sql-probe` | probe PR #110: tenant-sql against the B6 runtime branch | `8d5221e91f5258adf8555c75bdca644d711eb0a7` |
+| nodestro-examples | `mup/tmp-a11-integration` | A11 rule 3 temporary runtime pin (deviation 6) | `58abadd1ff8e1437cf49c3c3ea0596b543433f13` |
+
 ## Rollback needs
 
 None.
