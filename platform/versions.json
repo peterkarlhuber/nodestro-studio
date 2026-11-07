@@ -19,31 +19,31 @@
       "version": "0.1.0"
     },
     "nodestro-runtime": {
-      "commit": "d9c3d6ef6dc93305dd587b9dd4919fb1f0edfa18",
+      "commit": "df4aeb3928b03b47a43d7c49e4c6b1bd10027376",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-examples": {
-      "commit": "a0edd20f236a368f2f2ac0d2afa3caec69e66507",
+      "commit": "c9ef4227fe7fa058ec60b49eb8c90d735560f3f0",
       "version": "0.3.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-integrations": {
-      "commit": "7413f5344360042c23c33f66112b1269ccff41a8",
+      "commit": "fe2fa1268256ead353b620409613b4f764098e98",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-api": {
-      "commit": "44212bc75f3af95f327265c3d0558095de9dab0e",
+      "commit": "e5b52816ea89e2aaddb3151f47a6c79faa59bcef",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-sdk": {
-      "commit": "bda96c1059a5557131eaddfaee07a721179a9f1c",
+      "commit": "d372eee78237d26f5270dcb9d5a847955afc8505",
       "version": "0.3.0",
       "pyproject": "python/pyproject.toml"
     }

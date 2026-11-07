@@ -1093,5 +1093,8 @@
   },
   "lease": {
     "lost": "Outro processo do servidor assumiu este lote ou esta série de testes porque este parou de responder. O trabalho está marcado como interrompido; recarregue a página e continue."
+  },
+  "partition": {
+    "missing": "Uma solicitação de conhecimento ou memória não estava vinculada a este espaço de trabalho e foi interrompida antes de ler ou alterar qualquer coisa. Tente novamente; se acontecer de novo, informe como um erro."
   }
 }
