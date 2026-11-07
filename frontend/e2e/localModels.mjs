@@ -289,7 +289,8 @@ async function realSetup(browser) {
   check((await page.getByTestId("local-setup-start").count()) === 0, "real: setup cannot be started twice while it runs");
   const twice = await page.request.post(`${base}/api/local-models/setup`, { data: { download: true } });
   const refusal = await twice.json();
-  check(twice.status() === 400 && refusal.code === "local.job_running", `real: a second setup is refused (${twice.status()} ${refusal.code})`);
+  // API-062: a job that runs already is a conflict (409; it was 400 before).
+  check(twice.status() === 409 && refusal.code === "local.job_running", `real: a second setup is refused (${twice.status()} ${refusal.code})`);
 
   const dark = await context(browser, { theme: "dark", language: "de", width: 390 });
   const phone = await dark.newPage();

@@ -3,7 +3,7 @@
 > Open work for this repository: release blockers, known bugs, security follow-ups, technical debt and planned improvements.
 > GitHub issues are the source of truth for details; this file is the entry point and summary.
 >
-> **Last full review:** 2026-11-06 against master at 5c0fbd8 (TODO abatement round)
+> **Last full review:** 2026-11-06 against master at ee3f378 (TODO abatement round)
 
 ## Summary
 
@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 4 |
-| P3 Low | 13 |
+| P3 Low | 11 |
 | P4 Optional | 4 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -76,22 +76,22 @@ The master implementation plan MUP-ONA ([MUP-ONA.md](https://github.com/peterkar
 
 ### ST-004 · Editor main-thread cost under CPU throttling (F3)
 
-- **Priority:** P3 Low · **Status:** In progress · **Refs:** #84, final UX review F3,
+- **Priority:** P3 Low · **Status:** Open (needs a quiet machine to measure) · **Refs:** #84, final UX review F3,
   `frontend/e2e/perf-editor.mjs` (`npm run perf:editor`)
 - **What:** Opening a 9-node workflow under CPU 4x: mount 1884 → 1335 ms and total blocking time 1557 → 956 ms after
-  UX round 2; still above the 50 ms long-task budget. The first TODO round of 2026-11-06 mounts the editor's dialogs
-  only on their first opening and starts the editor chunk download when the pointer or focus reaches a workflow
-  (mount 913 → 949 ms, TBT 535 → 576 ms, within the noise). The second round profiled the remaining long tasks
-  (`--profile`, unminified build): of 665 ms in long tasks, 574 ms are script (React's first render of the editor
-  and the evaluation of its chunk), layout only 83 ms, and React Flow's node measuring (`checkVisibility` in its
-  resize handler) about 72 ms, so node measuring is no longer the large part. The single largest function was the
-  first `Intl.NumberFormat` of the zoom label (53–60 ms); the number formatters are now created in idle time after
-  the start and after a language change (under 5 ms in the editor's render). Three A/B rounds on a shared, loaded
-  VM (median of 7 each), before → after: mount 809 → 870, 881 → 722, 780 → 716 ms; TBT 442 → 474, 534 → 421,
-  471 → 391 ms; longest task 367 → 400, 431 → 344, 407 → 344 ms. The gain is within the run-to-run noise.
-- **Next step:** Split the editor's first render (inspector, side panels and run views after the canvas is painted,
-  `startTransition` or lazy panels) and measure on a quiet machine; the remaining long task is React render plus
-  chunk evaluation, not node measuring.
+  UX round 2; still above the 50 ms long-task budget. The TODO rounds of 2026-11-06 mounted the editor's dialogs only
+  on their first opening, preloaded the editor chunk when the pointer or focus reaches a workflow, and moved the
+  number formatters (the first `Intl.NumberFormat`, 53–60 ms) to idle time. A profile (`--profile`, unminified
+  build) puts 574 of 665 ms of long tasks into script (React's first render of the editor and the evaluation of its
+  chunk), 83 ms into layout and about 72 ms into React Flow's node measuring. Every A/B comparison so far (three
+  rounds, median of 7, CPU 4x) moved by less than the run-to-run noise of the shared development VM (mount 716–881
+  ms, TBT 391–534 ms), so a change cannot be shown to help there.
+- **Why open:** the remaining candidate, rendering the inspector, the side panels and the run views after the canvas
+  is painted (`startTransition` or lazy panels), trades blocking time for a visible layout shift of the panels; it
+  is worth it only if a measurement on a quiet machine shows a clear gain.
+- **Next step:** On a quiet machine (no other jobs, fixed CPU frequency): `npm run perf:editor -- --runs 15` on
+  master for a baseline, then with the panels deferred; keep the change only if TBT drops clearly beyond the spread
+  of the baseline runs and the panels do not shift the canvas.
 
 ## Features and enhancements
 
@@ -118,30 +118,6 @@ The master implementation plan MUP-ONA ([MUP-ONA.md](https://github.com/peterkar
   Dependabot ignores the majors of `eslint`, `@eslint/js` and `eslint-plugin-react-hooks` until then.
 - **Next step:** One pull request: eslint-plugin-react-hooks 7, fix or justify each finding with tests, then ESLint
   10 and `@eslint/js` 10 together; remove the three `ignore` rules.
-
-### ST-047 · Portable export dialog: no browser test against a real package build
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** nodestro-api #85, studio #121, `frontend/src/publish/PortableExport.tsx`;
-  security review: nodestro-api API-054
-- **What:** The dialog's portable options, summary, build progress, cancel and download are covered by component
-  tests with a mocked API. The backend build is tested end to end in nodestro-api (offline container, browser E2E
-  of the exported web interface, CI on six platforms), but no studio browser test drives a real build from the
-  dialog (a build downloads Python and wheels and takes minutes).
-- **Next step:** Add a browser test that starts a portable build of a model-free workflow from the dialog against
-  a cached export cache, and downloads the ZIP.
-
-### ST-043 · End-to-end suite for the local models settings with a real model server
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** local models work order (2026-11-03), `pages/SettingsLocalModels.tsx`
-- **What:** The local models and knowledge search sections have unit tests against stubbed answers; the e2e suites keep
-  the cloud defaults (`tests/e2e_defaults.py`). No browser suite installs the runtime, downloads a model, builds the
-  semantic index and runs a local agent end to end. The smoke suite checks the hardware panel and the per-agent model
-  plan of an example copy against the real API (no model server); the mDenseOn build from local files, the speed
-  measurement and the "Reasoning reduced" badge are covered by unit tests and by the runtime and API tests only.
-  The recorded part of `e2e/localModels.mjs` (`LOCAL_E2E_REAL=0`) and `e2e/missingModel.mjs` run in
-  `scripts/e2e.sh` (suites `local-models`, `missing-model`) since the TODO round of 2026-11-06.
-- **Next step:** Add an e2e server with a fake Ollama binary (as in nodestro-api `tests/test_local_models_api.py`)
-  and a suite for start, download progress, import errors and index build; run it with a real Ollama where CI allows.
 
 ## Platform coverage
 
