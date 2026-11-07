@@ -10,6 +10,7 @@ of evidence of plan 8.3 on the current default branch.
 |---|---|
 | Plan version | MUP-ONA 1.1; binding version is the English [MUP-ONA.md](MUP-ONA.md) (approved 2026-11-06 22:23Z, plan 8.7); the German file is a historical reference |
 | Last start procedure (S1–S10) | 2026-11-06 22:10Z |
+| Overall state | technically complete (2026-11-07): MP-A0 to MP-A11 (without A9) and MP-B0 to MP-B6 accepted; MP-A9 closed by the G3 decision; B7/B8 not started (G4) |
 | Active gate | none. G3 decided 2026-11-07 18:36Z: option (a), stay with M10, no RLS ([ADR-0010](../../adr/0010-nodestro-rls.md)). Optional B7/B8 only after a separate G4 |
 | Lead agent / pin owner | MUP-ONA lead agent (project thread "Implement MUP-ONA architecture plan"); the TODO-abatement thread finished its pin work on 2026-11-07, so the slot is the lead agent's |
 
@@ -51,7 +52,7 @@ change stands); O9 after B6 (G3).
 
 ## Packages
 
-State 2026-11-07 20:30Z. "merged" means merged on the default branch with green PR CI; a package becomes
+State 2026-11-07 20:45Z. "merged" means merged on the default branch with green PR CI; a package becomes
 `accepted` only with all four pieces of evidence of plan 8.3 (including the pin cascade where the plan requires it).
 
 | ID | Status | Branches / PRs | Merge SHAs | CI run of merge commit | Test evidence | Open risks | Next step |
@@ -63,8 +64,8 @@ State 2026-11-07 20:30Z. "merged" means merged on the default branch with green 
 | MP-A2 | accepted, cascaded | api #98 | 20bebca | api [20bebca](https://github.com/peterkarlhuber/nodestro-api/commit/20bebca4015796b7f8c29413b3952bd17bd6c01f/checks) 3/3 green | T-API-ERR-1..5; SDK `make contract` clean, SDK pytest 122 + vitest 89, studio e2e api suite 41 ok against api 77ef8fb | – | – |
 | MP-A3 | accepted, cascaded | api #98, server #63 | api 20bebca, server 035170d | server [035170d](https://github.com/peterkarlhuber/nodestro-server/commit/035170d28c289877a94492c8fcd995dac3c63bcb/checks) 3/3 green | T-API-PROXY-1..3, server `test_runbook_proxy.py` | – | – |
 | MP-A4 | accepted | axentra #52 | 6f73952 | axentra [6f73952](https://github.com/peterkarlhuber/axentra/commit/6f73952a2f6ef7de3b6e8e41f509e48adab062a5/checks) 11/11 green | T-AX-NET-2 (run 42311515300, Python 3.11/3.12/3.13) | – | – |
-| MP-A5 | merged, cascaded | api #98 | 20bebca | – | T-API-ROUTE-1/2 | – | – |
-| MP-A6 | merged | axentra #52, server #63 | axentra 6f73952, server 035170d | – | axentra role tests | – | – |
+| MP-A5 | accepted, cascaded | api #98 | 20bebca | api [20bebca](https://github.com/peterkarlhuber/nodestro-api/commit/20bebca4015796b7f8c29413b3952bd17bd6c01f/checks) 3/3 green | T-API-ROUTE-1/2 | – | – |
+| MP-A6 | accepted | axentra #52, server #63 | axentra 6f73952, server 035170d | axentra [6f73952](https://github.com/peterkarlhuber/axentra/commit/6f73952a2f6ef7de3b6e8e41f509e48adab062a5/checks) 11/11 green; server [035170d](https://github.com/peterkarlhuber/nodestro-server/commit/035170d28c289877a94492c8fcd995dac3c63bcb/checks) 3/3 green | axentra role tests | – | – |
 | MP-A7 | accepted | runtime #124, axentra #53, axentra-studio #37 | runtime dfc0d0f, axentra 659f7b5, axentra-studio 4f4b762 | runtime [dfc0d0f](https://github.com/peterkarlhuber/nodestro-runtime/commit/dfc0d0f2f3c11e992ac6190718e9d9bfc030ff70/checks) 12/12 green; axentra [659f7b5](https://github.com/peterkarlhuber/axentra/commit/659f7b548452a707107d82086ea1a9cdb40d73db/checks) 11/11 green; axentra-studio [4f4b762](https://github.com/peterkarlhuber/axentra-studio/commit/4f4b762b4277aab5049abfc62601135b43c79378/checks) 4/4 green | VB-1..VB-6 tests | axentra-studio CI has no docker build job: the full image build is unverified | – |
 | MP-A8 | accepted, cascaded | api #101, runtime #129, axentra #57; Axentra pin runtime #135 | api 1f99df7, runtime 685fb4b, axentra 60d83b3, runtime e789c8a (#135) | api [1f99df7](https://github.com/peterkarlhuber/nodestro-api/commit/1f99df75303f1154b1933ffe886f9e6fb8bbcdfc/checks) 4/4 green; runtime [685fb4b](https://github.com/peterkarlhuber/nodestro-runtime/commit/685fb4b8ca81bfeba617588af37fa3f78d474f46/checks) 14/14 green; axentra [60d83b3](https://github.com/peterkarlhuber/axentra/commit/60d83b31b0bfbd357b88d9e30b2601dfcfa5256e/checks) 11/11 green; runtime [e789c8a](https://github.com/peterkarlhuber/nodestro-runtime/commit/e789c8a015b2c1f95cfc20e11f906d9b3713b407/checks) 19/20, red: test (3.13) (R6) | shared security vectors (VB-7) in runtime and Axentra, `security-vectors-sync` job; launcher-key test fixed to parse tokens (`parse_token`) | – (runtime #135 pins Axentra 60d83b3 with full CI; cascaded through studio #149) | – |
 | MP-A9 | paper delivered; G3 decided: (a) no RLS | prototype branch runtime `mup/a9-rls-prototype` (`ef5fab1`, not merged, no PR); studio #159 (report, ADR-0010 draft) | – | – | [A9 report](reports/A9-rls-evaluation.md): T-RLS-P1 20/20 on FX-PG-0 and FX-PG-0v, T-RLS-P2 benchmark with raw data in the prototype branch; [ADR-0010](../../adr/0010-nodestro-rls.md) (Accepted, option (a)) | recommendation (a) stay with M10; under RLS the GIN full-text index is not used (`@@` is not leakproof) | – (the prototype branch stays unmerged as the documented path to option (b)) |
@@ -87,7 +88,7 @@ have known causes, none in the package's own change, and each is fixed on master
 | Ref | Merge commit, job | Cause | Fix |
 |---|---|---|---|
 | R1 | runtime 1e9f7b2, test 3.11/3.13/3.14 | strict-mode budget tests read the real clock; the built-in prices aged past `critical_after` at 2026-11-07 00:00Z | runtime #125 (deviation 5); later runtime merges green |
-| R2 | studio 422ec43, browser-engines (webkit) | WebKit closed the page during a click in `e2e/welcome.mjs:235` | none in code yet (follow-up: WebKit e2e instability, root cause open); later studio merges incl. c41e3c2 green on WebKit |
+| R2 | studio 422ec43, browser-engines (webkit) | WebKit closed the page during a click in `e2e/welcome.mjs:235` | none in code yet; tracked as the regular studio item ST-019 in `docs/TODO.md`; later studio merges incl. c41e3c2 green on WebKit |
 | R3 | orkexa a840c39, offline suite (macos-15-intel) | `test_cancel_kills_the_container` could stop on the self-test container | orkexa #70 (`5bf139e`) |
 | R4 | orkexa 59ea671, test (Python 3.14) | `_alive` in the managed-server tests read `/proc/<pid>/stat` after an exists check; init reaped the process in between | orkexa #70 (`5bf139e`) |
 | R5 | orkexa b3d6fae, DockerSandbox (colima macOS x86-64) | PyPI read timeout while the job built the sandbox image (infrastructure) | none needed; the same job is green on 028faa1, 49bcc6d, 792a041 |
@@ -111,6 +112,18 @@ picks the fix up.
 | nodestro-local-docker | studio `c41e3c2`, server `89fa4af` | master `7b4c8b6` (#50) | merge commit on `master` |
 
 Who bumps pins now: the MUP-ONA lead agent (the TODO-abatement thread finished its pin work on 2026-11-07).
+
+### Temporary branches approved for deletion
+
+The client approved their deletion on 2026-11-07 20:17Z (decision card in the MUP-ONA project thread). None was ever
+merged; each can be restored from its last commit. The agent's GitHub access cannot delete branches (HTTP 403), so the
+owner deletes them in the GitHub branch view.
+
+| Repository | Branch | Purpose | Last commit |
+|---|---|---|---|
+| nodestro-api | `mup/tmp-b4-checker` | probe PR #106: tenant-sql against the B4 engine branch | `3e1021469d05cbda7ce81c0e335d835fcaab82a7` |
+| nodestro-api | `mup/b6-tenant-sql-probe` | probe PR #110: tenant-sql against the B6 runtime branch | `8d5221e91f5258adf8555c75bdca644d711eb0a7` |
+| nodestro-examples | `mup/tmp-a11-integration` | A11 rule 3 temporary runtime pin (deviation 6) | `58abadd1ff8e1437cf49c3c3ea0596b543433f13` |
 
 ## Rollback needs
 
