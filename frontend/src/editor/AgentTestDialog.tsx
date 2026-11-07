@@ -18,6 +18,7 @@ import { findModel, missingProviders } from "../lib/providers";
 import { withLocalModel } from "../missingModel/store";
 import { NodeRunDetails } from "./RunDetails";
 import { useEditor } from "./store";
+import { ValueWarnings } from "./ValueWarnings";
 import { usageCost } from "../lib/pricing";
 
 /** The test result in the shape of a node of a run, so the run view can show it. */
@@ -143,6 +144,7 @@ export function AgentTestDialog({
             <Stat label={t("runs.stats.cost")} value={usageCost(t, result.usage)} tip="runs.cost" />
             <Stat label={t("agentTest.duration")} value={formatDuration(result.started_at, result.finished_at)} />
           </div>
+          <ValueWarnings warnings={result.value_warnings} />
           <NodeRunDetails node={node} state={asNodeRun(result)} />
         </section>
       ) : null}
