@@ -10,7 +10,7 @@ of evidence of plan 8.3 on the current default branch.
 |---|---|
 | Plan version | MUP-ONA 1.1; binding version is the English [MUP-ONA.md](MUP-ONA.md) (approved 2026-11-06 22:23Z, plan 8.7); the German file is a historical reference |
 | Last start procedure (S1–S10) | 2026-11-06 22:10Z |
-| Active gate | none; G2 approved 2026-11-07 14:02Z (report [reports/G2-integration.md](reports/G2-integration.md)); B6 cascade running. Next gate G3 (RLS decision, MP-A9) |
+| Active gate | none; G2 approved 2026-11-07 14:02Z (report [reports/G2-integration.md](reports/G2-integration.md)); B6 merged and cascaded 2026-11-07. Next: MP-A9, then gate G3 (RLS decision) |
 | Lead agent / pin owner | MUP-ONA lead agent (project thread "Implement MUP-ONA architecture plan"); the TODO-abatement thread finished its pin work on 2026-11-07, so the slot is the lead agent's |
 
 ### Default-branch SHAs at the start procedure (S2)
@@ -50,7 +50,7 @@ change stands); O9 after B6 (G3).
 
 ## Packages
 
-State 2026-11-07 14:10Z. "merged" means merged on the default branch with green PR CI; a package becomes
+State 2026-11-07 17:00Z. "merged" means merged on the default branch with green PR CI; a package becomes
 `accepted` only with all four pieces of evidence of plan 8.3 (including the pin cascade where the plan requires it).
 
 | ID | Status | Branches / PRs | Merge SHAs | CI run of merge commit | Test evidence | Open risks | Next step |
@@ -71,9 +71,9 @@ State 2026-11-07 14:10Z. "merged" means merged on the default branch with green 
 | MP-B1 | merged, cascaded | orkexa #62 (contracts), #63 (suite); runtime #130 | orkexa 59f69b1, b3d6fae; runtime 59a2629 | – | T-CONF-1..8, T-SQL-10; runtime conformance jobs green | – | – |
 | MP-B2 | merged, cascaded | orkexa #64; runtime pin #136; cascade examples #84, integrations #72, api #105, sdk #97, studio #149, server #68, desktop #55, local-docker #45 | orkexa 028faa1, runtime d9c3d6e | – | T-API-1/2, T-PKG-0 (third import contract), T-SQL-11 (private attributes), conformance against the new leaf modules; offline suite on Linux, macOS, Windows incl. windows-11-arm | the SQLite classes' private attributes are an implicit API for Nodestro (runtime RT-069, P4) | – |
 | MP-B3 | merged, cascaded; G1 approved | runtime #131 (+ #132 gateway fix found by its CI, + #134 reindex switch fix after the merge) | runtime 099f4d4 (#131), fad507c (#132), 1cbb9cc (#134) | [CI](https://github.com/peterkarlhuber/nodestro-runtime/actions/runs/42346278039) (test, pg-a, pg-b on 3.11/3.13/3.14 with restricted role, tenant-sql-api, docker, builtin-sandbox) | [G1 report](reports/G1-ranking.md); T-RANK-1/2, T-PART-CC, U1-U5, U8; cascade examples #83, integrations #71, api #104, sdk #96, studio #148 | 7.3 Overlap limits not met by design (drifts 3, 4, 6); accepted by Peter with O7 | – |
-| MP-B4 | merged, cascaded (local-docker #47 open) | runtime #137, #138, #139 (api probe #106, never merged); cascade examples #85/#87, integrations #73/#75, api #107/#108, sdk #99/#101, studio #153, server #70, desktop #57, local-docker #47 | runtime 2ef5b3b, 76f9cb2, df4aeb3 | – | T-SQL-RULES, T-CAT-1..4, T-GUARD-1..3, T-PAR-1/2 (`sql_parity_before.json`, 46 statements); api tenant-sql against the engine branch (#106) | local-docker #47 waits for server #71 (zlib1g CVEs in the base image) | merge #71, re-pin #47 |
-| MP-B5 | merged | orkexa #65 (`orkexa.testing.sqlcheck`), #66 (`orkexa.backends.postgres`, schema v1, `verify_schema`) | orkexa 49bcc6d, 792a041 | – | T-SQLCHECK; T-CONF (PG), T-PART, T-DDL, T-SCH, T-PG in pg-a/pg-b (3.11/3.14, superuser and restricted role); core-no-extras (T-PKG-1/2) | – | cascaded with B6 (the runtime pins orkexa 792a041 in #140) |
-| MP-B6 | merged; G2 approved; cascade running | runtime #140; api #109 (resolves after the cascade); preparation api #111 (d61ad61); tenant-sql probe api #110 (closed unmerged); cascade examples #89, integrations #77 | runtime 81b0f55 (#140) | runtime #140 PR CI 20/20 green | [G2 report](reports/G2-integration.md): U1–U8, T-PAR-3, T-CAT-5, T-PKG-3, T-SMOKE-1 (override build 38/38 FX-PG-0 and FX-PG-0v), studio E2E | faithful image and desktop builds and the local-docker e2e follow on the cascade merge commits | – |
+| MP-B4 | merged, cascaded | runtime #137, #138, #139 (api probe #106, never merged); cascade examples #85/#87, integrations #73/#75, api #107/#108, sdk #99/#101, studio #153, server #70, desktop #57, local-docker #47 | runtime 2ef5b3b, 76f9cb2, df4aeb3; local-docker 8e2f7f4 (#47, with server c488f1d from server #71) | – | T-SQL-RULES, T-CAT-1..4, T-GUARD-1..3, T-PAR-1/2 (`sql_parity_before.json`, 46 statements); api tenant-sql against the engine branch (#106) | – | – |
+| MP-B5 | merged, cascaded (with B6) | orkexa #65 (`orkexa.testing.sqlcheck`), #66 (`orkexa.backends.postgres`, schema v1, `verify_schema`) | orkexa 49bcc6d, 792a041 | – | T-SQLCHECK; T-CONF (PG), T-PART, T-DDL, T-SCH, T-PG in pg-a/pg-b (3.11/3.14, superuser and restricted role); core-no-extras (T-PKG-1/2) | – | – |
+| MP-B6 | merged, cascaded; G2 approved | runtime #140; api #109; preparation api #111; tenant-sql probe api #110 (closed unmerged); cascade examples #89, integrations #77, sdk #104, studio #157, server #74 (pin + RUNBOOK `storage.schema_mismatch`), desktop #60, local-docker #50 | runtime 81b0f55, api 05e0232, examples e063e89, integrations e1e0cd4, sdk ee38fb0, studio c41e3c2, server 89fa4af, desktop f9e788a, local-docker 7b4c8b6 | PR CI on the cascade heads, all green without re-runs: server [e2e, e2e-arm64 with image scan](https://github.com/peterkarlhuber/nodestro-server/actions/runs/42390826330) and [upgrade](https://github.com/peterkarlhuber/nodestro-server/actions/runs/42390826347); desktop [app, Linux systems, macOS test builds](https://github.com/peterkarlhuber/nodestro-desktop/actions/runs/42390830890); local-docker [image amd64/arm64 with e2e and scan, rootless, Windows launcher](https://github.com/peterkarlhuber/nodestro-local-docker/actions/runs/42392191493); studio #157 all 25 jobs incl. WebKit | [G2 report](reports/G2-integration.md): U1–U8, T-PAR-3, T-CAT-5, T-PKG-3, T-SMOKE-1 (override build 38/38 FX-PG-0 and FX-PG-0v), studio E2E; after the merge the faithful builds above (G2 report section 4) | – | – |
 | MP-B7 | not started (G4) | – | – | – | – | – | needs separate approval |
 | MP-B8 | not started (G4) | – | – | – | – | – | needs separate approval |
 
@@ -81,13 +81,13 @@ State 2026-11-07 14:10Z. "merged" means merged on the default branch with green 
 
 | Consumer | Pins | State | Reachability check (plan 9.3) |
 |---|---|---|---|
-| nodestro-runtime | orkexa `028faa1`, axentra `60d83b3` | master `df4aeb3` (orkexa `792a041` only with B6, #140) | merge commits on `master` |
-| nodestro-examples, nodestro-integrations | runtime `df4aeb3` | examples `c9ef422`, integrations `fe2fa12` | merge commits on `master` |
-| nodestro-api | runtime `df4aeb3`, orkexa `028faa1`, examples `c9ef422` | master `d61ad61` (pins from `e5b5281`) | merge commits on `master` |
-| nodestro-sdk | api `e5b5281` | master `d372eee` | merge commit on `master` |
-| nodestro-studio | api, runtime, examples, integrations, sdk as above | master `5318cea` (studio #153) | `scripts/check_versions.py`: pins agree |
-| nodestro-server, nodestro-desktop | studio `5318cea` | server `ff0abb7` (#70), desktop `d4e1d1c` (#57) | merge commits on `master` |
-| nodestro-local-docker | studio `9c0a6bd`, server `a5f3af3` (#47 moves to studio `5318cea`, server after #71) | master `23565a9` (#45) | merge commit on `master` |
+| nodestro-runtime | orkexa `792a041`, axentra `60d83b3` | master `81b0f55` (#140; later CI-only commits by CI-FAST) | merge commits on `master` |
+| nodestro-examples, nodestro-integrations | runtime `81b0f55` | examples `e063e89`, integrations `e1e0cd4` | merge commits on `master` |
+| nodestro-api | runtime `81b0f55`, orkexa `792a041`, examples `e063e89` | master `05e0232` (#109) | merge commits on `master` |
+| nodestro-sdk | api `05e0232` | master `ee38fb0` | merge commit on `master` |
+| nodestro-studio | api, runtime, examples, integrations, sdk as above; `platform/versions.json` also checks orkexa's version (0.2.0.dev0) | master `c41e3c2` (studio #157) | `scripts/check_versions.py`: pins agree |
+| nodestro-server, nodestro-desktop | studio `c41e3c2` | server `89fa4af` (#74), desktop `f9e788a` (#60) | merge commits on `master` |
+| nodestro-local-docker | studio `c41e3c2`, server `89fa4af` | master `7b4c8b6` (#50) | merge commit on `master` |
 
 Who bumps pins now: the MUP-ONA lead agent (the TODO-abatement thread finished its pin work on 2026-11-07).
 
