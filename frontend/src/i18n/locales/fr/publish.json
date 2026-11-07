@@ -305,6 +305,8 @@
       "build": "Générer le paquet",
       "started": "Le paquet est en cours de génération en arrière-plan. Cela prend en général quelques minutes, davantage avec de grands modèles ; vous pouvez fermer cette boîte de dialogue en attendant.",
       "running": "Génération : {{step}} ({{percent}} %)",
+      "queued": "En attente d’un processus de travail",
+      "queuedHint": "Le serveur génère un paquet à la fois ; celui-ci commence dès qu’un processus de travail du serveur est libre. Vous pouvez fermer cette boîte de dialogue en attendant.",
       "progress": "Progression de la génération du paquet",
       "done": "Paquet prêt ({{date}}).",
       "downloadZip": "Télécharger",

@@ -3085,6 +3085,10 @@ export interface ExportJob {
   bytes_total: number;
   error_code: string | null;
   error: string | null;
+  /** The parameters of ``error_code`` (e.g. ``size`` and ``limit`` of ``export.server_too_large``). */
+  error_params?: Record<string, unknown>;
+  /** On a server: the job waits for a worker to take it (``state`` stays ``running``; nodestro-api API-048). */
+  queued?: boolean;
   export_id: string | null;
   created_at: string;
   finished_at: string | null;
