@@ -4,6 +4,11 @@
 
 ### TODO abatement round 4 (2026-11-07)
 
+- Pins: nodestro-runtime 5f8c0f0 (runtime #126: a busy sandbox image build stays `checking` (LD-020), Bedrock region
+  in usage, registry facts before a download, `pgvector_status()`, the price-table date fix of runtime #125),
+  nodestro-examples f0dc69d, nodestro-integrations cde7fcd (integrations #68: OCR parallelism and program memory
+  limits, INT-001/INT-004), nodestro-api c2aedcc (api #99/#100: queued export builds, worker heartbeat) and
+  nodestro-sdk fc90588.
 - Tests: suite `local-server` (`scripts/e2e.sh`) runs the local models end to end against a fake Ollama over HTTP
   (`tests/fake_ollama.py`, `tests/e2e_local_models_server.py`): stop and start, a measured download checked against
   the catalog, a failed download and Try again, the speed measurement, import refusals and real GGUF and offline
