@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### MUP-ONA B2 cascade (2026-11-07)
+
+- Pins nodestro-runtime d9c3d6e (runtime #134 reindex switch embeds what the last round left, #135 Axentra 60d83b3,
+  #136 orkexa 028faa1: MUP-ONA B2 SQLite backends), nodestro-examples a0edd20 (examples #84), nodestro-integrations
+  7413f53 (integrations #72), nodestro-api 44212bc (api #105: `agent.VectorError` answers 422) and nodestro-sdk
+  bda96c1 (sdk #97); `platform/versions.json` names orkexa 028faa1 and Axentra 60d83b3, the commits the runtime pins.
+
 ### MUP-ONA B1/B3 cascade (2026-11-07)
 
 - Pins nodestro-runtime 099f4d4 (runtime #130 B1 orkexa conformance suite, #131 B3 PostgreSQL ranking drift fixes
