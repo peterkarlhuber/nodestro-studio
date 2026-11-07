@@ -7,6 +7,9 @@ memory run on Orkexa's `orkexa.backends.postgres` (MP-B5).
 **Result: technically ready, but the automatic continuation of plan 7.3 does not apply.** Several 7.3 criteria can be
 shown only after the merge, and one needs judgment (section 5). G2 therefore goes to the client.
 
+**Decision: approved by the client on 2026-11-07 14:02Z** (STATUS.md, Approvals). runtime #140 was merged as
+81b0f55; the cascade and the post-merge evidence of section 4 follow.
+
 ## 1. What is merged before G2
 
 | Package | PRs | Merge SHAs |
