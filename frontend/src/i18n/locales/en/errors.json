@@ -1093,8 +1093,5 @@
   },
   "lease": {
     "lost": "Another server process took over this batch or test series after this one stopped answering. The work is marked as interrupted; reload the page and continue it."
-  },
-  "partition": {
-    "missing": "A knowledge or memory request was not tied to this workspace and was stopped before anything was read or changed. Try again; if it happens again, report it as a bug."
   }
 }

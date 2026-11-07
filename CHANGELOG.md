@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### MUP-ONA B6 cascade (2026-11-07)
+
+- Pins nodestro-runtime 81b0f55 (runtime #140: the knowledge base, file store and memory run on orkexa's
+  `orkexa.backends.postgres`; `pg_generic` and `sqlcheck_rules` are removed; a start check refuses a deviating
+  knowledge schema with `storage.schema_mismatch`; no DDL), orkexa 792a041 (orkexa #66), nodestro-examples e063e89
+  (#89), nodestro-integrations e1e0cd4 (#77), nodestro-api 05e0232 (#109: the start check in `check`, `api` and
+  `worker`) and nodestro-sdk ee38fb0 (#104). Axentra is unchanged (60d83b3).
+- `platform/versions.json` names orkexa's pyproject, so `scripts/check_versions.py` now also compares orkexa's
+  version (0.2.0.dev0; it said 0.1.0 before).
+- The six texts for `partition.missing` are removed: the code left the runtime catalog (orkexa raises its own error).
+
 ### MUP-ONA B4 cascade (2026-11-07)
 
 - Pins nodestro-runtime 76f9cb2 (runtime #137: the tenant SQL rule engine as `sqlcheck_rules`; #138: the generic

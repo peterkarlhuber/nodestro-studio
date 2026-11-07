@@ -1093,8 +1093,5 @@
   },
   "lease": {
     "lost": "Un autre processus du serveur a repris ce lot ou cette série de tests, car celui-ci ne répondait plus. Le travail est marqué comme interrompu ; rechargez la page et reprenez-le."
-  },
-  "partition": {
-    "missing": "Une demande de connaissances ou de mémoire n’était pas liée à cet espace de travail et a été arrêtée avant toute lecture ou modification. Réessayez ; si cela se reproduit, signalez-le comme un bogue."
   }
 }
