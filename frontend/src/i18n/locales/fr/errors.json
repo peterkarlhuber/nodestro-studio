@@ -499,7 +499,9 @@
     "ocr_unavailable": "L’OCR n’est pas disponible. Il nécessite Tesseract avec les données de langue pour l’allemand, l’anglais, l’espagnol, le français, l’italien ou le portugais, ainsi que pdftoppm et pdfinfo (Poppler), installés localement.",
     "too_large": "{{name}} est trop volumineux une fois décompressé.",
     "unreadable": "{{name}} est illisible. Le fichier est endommagé, vide ou n’est pas un document valide.",
-    "encrypted": "{{name}} est protégé par un mot de passe et ne peut pas être lu. Importez une version sans mot de passe."
+    "encrypted": "{{name}} est protégé par un mot de passe et ne peut pas être lu. Importez une version sans mot de passe.",
+    "too_complex": "{{name}} est trop volumineux ou trop complexe pour être lu en toute sécurité : il dépasse une limite de pages, de texte, de durée de lecture ou de mémoire. Divisez le document ou importez une version plus petite.",
+    "limits_invalid": "La limite PDF {{variable}} n’est pas valide. Demandez à l’administration de vérifier les paramètres du serveur."
   },
   "batch": {
     "confirm_external": "Le workflow utilise des outils personnels qui peuvent agir hors de Nodestro : {{tools}}. Merci de confirmer.",

@@ -16,5 +16,17 @@
   "badge": "Prueba, no es una ejecución",
   "memoryIsolated": "Copia de la memoria",
   "duration": "Duración",
-  "providerMissing": "Aún sin configurar: {{providers}}. Introduce el acceso en los ajustes para probar este agente."
+  "providerMissing": "Aún sin configurar: {{providers}}. Introduce el acceso en los ajustes para probar este agente.",
+  "valueWarnings": {
+    "title_one": "{{count}} cifra clave no se calculó con una herramienta",
+    "title_other": "{{count}} cifras clave no se calcularon con una herramienta",
+    "reason": {
+      "missing": "{{field}}: falta el valor.",
+      "not_from_tool": "{{field}} = {{value}} no es el resultado de una llamada a una herramienta en esta prueba.",
+      "table_incomplete": "{{field}} = {{value}}: la tabla que se pasó a la herramienta tiene menos filas que la entrada (pasadas: {{passed}}, entrada: {{total}}).",
+      "table_changed": "{{field}} = {{value}}: la tabla que se pasó a la herramienta no es la tabla de la entrada (se añadieron o cambiaron filas).",
+      "other": "{{field}} = {{value}} no está respaldado por ninguna llamada a una herramienta en esta prueba."
+    },
+    "run": "En una ejecución del flujo de trabajo, se pediría una vez al agente que calcule estos valores con una herramienta, y el paso fallaría si no lo hace. Dale al agente una herramienta de cálculo, como la calculadora, y pídele que la use en la tarea."
+  }
 }

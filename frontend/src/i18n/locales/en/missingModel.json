@@ -41,7 +41,8 @@
       "container": "{{model}} needs about {{size}}, but only {{free}} are free in the container’s model folder. Free up space on the drive, then check again."
     },
     "capability_missing": {
-      "this_computer": "{{model}} is installed, but it does not support what this step needs: {{list}}."
+      "this_computer": "{{model}} is installed, but it does not support what this step needs: {{list}}.",
+      "registry": "{{model}} does not support what this step needs: {{list}}. Its entry in the model registry says so, so it was not downloaded."
     },
     "hardware_insufficient": {
       "this_computer": "{{model}} is not installed, and it probably needs more memory than this computer has.",

@@ -41,7 +41,8 @@
       "container": "{{model}} precisa de cerca de {{size}}, mas só há {{free}} livres na pasta de modelos do contêiner. Libere espaço na unidade e verifique de novo."
     },
     "capability_missing": {
-      "this_computer": "{{model}} está instalado, mas não oferece o que esta etapa precisa: {{list}}."
+      "this_computer": "{{model}} está instalado, mas não oferece o que esta etapa precisa: {{list}}.",
+      "registry": "{{model}} não oferece o que esta etapa precisa: {{list}}. É o que diz a entrada dele no registro de modelos, por isso ele não foi baixado."
     },
     "hardware_insufficient": {
       "this_computer": "{{model}} não está instalado e provavelmente precisa de mais memória do que este computador tem.",

@@ -11,12 +11,15 @@ Downloads fail on request (``POST /__e2e/pull`` with ``{"mode": "error" | "disk_
 Model answers come from :mod:`architect_script` through scripted clients (Chat Completions shaped for the local
 models, as Ollama answers); only the readiness check is told to look at the fake server anyway (an injected client
 normally answers for its models itself). ``GET /__e2e/calls`` counts
-the scripted requests, so the test sees that a continued action generated once. Nothing calls the internet.
+the scripted requests, so the test sees that a continued action generated once. Nothing calls the internet: the Ollama
+registry that the readiness check reads before a download (RT-062) is a stand-in too (:func:`fake_registry`), which
+knows ``e2e-notools:1b``, a model outside the catalog whose manifest proves that it cannot call tools.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -26,7 +29,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from nodestro_runtime import local_readiness
+from nodestro_runtime import local_readiness, local_registry
 from nodestro_runtime.testing import ScriptedClient, ScriptedMessages, text
 from pydantic import BaseModel
 import uvicorn
@@ -223,6 +226,44 @@ class LocalChat:
         }
 
 
+#: A model outside the catalog that the stand-in registry knows: its template never uses tools, and it has no parser.
+NO_TOOLS = "e2e-notools:1b"
+
+
+def fake_registry() -> None:
+    """Replaces the registry reads of :mod:`nodestro_runtime.local_registry` (the real code reads the manifest, config
+    and template and decides). Every other model is unknown there, as without internet access (the download sizes of a
+    pull too, so a pull reports Ollama's own progress only)."""
+
+    def layer(body: bytes, media: str) -> dict[str, Any]:
+        return {"mediaType": media, "digest": "sha256:" + hashlib.sha256(body).hexdigest(), "size": len(body)}
+
+    config, template = b'{"model_format": "gguf", "model_family": "llama"}', b"{{ .System }} {{ .Prompt }}"
+    manifest = json.dumps(
+        {
+            "schemaVersion": 2,
+            "config": layer(config, "application/vnd.docker.container.image.v1+json"),
+            "layers": [
+                layer(b"weights", "application/vnd.ollama.image.model"),
+                layer(template, "application/vnd.ollama.image.template"),
+            ],
+        }
+    ).encode()
+    model, _, tag = NO_TOOLS.partition(":")
+    root = f"https://{local_registry.REGISTRY}/v2/library/{model}"
+    files = {f"{root}/manifests/{tag}": manifest}
+    for body in (config, template):
+        files[f"{root}/blobs/sha256:{hashlib.sha256(body).hexdigest()}"] = body
+
+    def get(url: str, _accept: str, _limit: int) -> bytes:
+        if url in files:
+            return files[url]
+        raise local_registry.RegistryError("not known to the test registry (no internet access in this test)")
+
+    local_registry.get = get
+    local_registry.clear_cache()
+
+
 def install_fake_ollama(data_dir: Path) -> Path:
     folder = data_dir / "fake-ollama"
     folder.mkdir(parents=True, exist_ok=True)
@@ -242,6 +283,7 @@ def main() -> None:
     args = parser.parse_args()
     data_dir = Path(args.data_dir)
     control = install_fake_ollama(data_dir)
+    fake_registry()
     client = ScriptedClient(script())
     # The readiness check asks the (fake) managed server although a scripted client answers the models.
     local_readiness._injected = lambda _ws: False  # type: ignore[assignment]
@@ -284,8 +326,6 @@ def main() -> None:
 
 
 def _preinstall(folder: Path, name: str) -> None:
-    import hashlib
-
     model, _, tag = name.partition(":")
     layer = "sha256:" + hashlib.sha256(name.encode()).hexdigest()
     (folder / "blobs").mkdir(parents=True, exist_ok=True)

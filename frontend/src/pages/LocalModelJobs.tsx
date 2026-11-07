@@ -253,14 +253,33 @@ export function useLocalRefresh() {
   };
 }
 
+/** The job ids of one look at the job list: all of them and the running ones. */
+export type JobSnapshot = { all: Set<string>; running: Set<string> };
+
+/**
+ * Whether a job ended between two looks at the job list: one that ran before and runs no longer, or one that is new
+ * and already over (a speed measurement or an import can start and end between two polls, ST-043). The first look
+ * (``before`` null) only remembers: the jobs that ended before the page opened are already in the overview.
+ */
+export function jobsEnded(before: JobSnapshot | null, jobs: LocalJob[]): { ended: boolean; now: JobSnapshot } {
+  const now = {
+    all: new Set(jobs.map((job) => job.id)),
+    running: new Set(jobs.filter((job) => job.state === "running").map((job) => job.id)),
+  };
+  if (before === null) return { ended: false, now };
+  const stopped = [...before.running].some((id) => !now.running.has(id));
+  const quick = jobs.some((job) => job.state !== "running" && !before.all.has(job.id));
+  return { ended: stopped || quick, now };
+}
+
 /** When a running job ends (also one started in another tab), the overview is fetched again. */
 export function useJobsFinished(jobs: LocalJob[] | undefined) {
   const refresh = useLocalRefresh();
-  const running = useRef<Set<string>>(new Set());
+  const seen = useRef<JobSnapshot | null>(null);
   useEffect(() => {
-    const now = new Set((jobs ?? []).filter((job) => job.state === "running").map((job) => job.id));
-    const ended = [...running.current].some((id) => !now.has(id));
-    running.current = now;
+    if (jobs === undefined) return;
+    const { ended, now } = jobsEnded(seen.current, jobs);
+    seen.current = now;
     if (ended) refresh();
     // refresh is a new function each render; the job states decide.
     // eslint-disable-next-line react-hooks/exhaustive-deps

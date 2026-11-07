@@ -2,6 +2,54 @@
 
 ## Unreleased
 
+### MUP-ONA A1 cascade (2026-11-07)
+
+- Security (A1, PS-1): the platform pins carry the PDF limits. The runtime reads PDF text in a separate process with
+  page, character, time and memory limits; an upload with a PDF over a limit is refused with `document.too_complex`
+  (`name`). New texts in six languages for `document.too_complex` and `document.limits_invalid` (`variable`).
+- Pins nodestro-runtime de56875 (runtime #127: A1, B0), nodestro-examples cda07c4 (examples #82),
+  nodestro-integrations cb90fe5 (integrations #70), nodestro-api 63af1df (api #103: A1, B0; includes api #102) and
+  nodestro-sdk 4596be3 (sdk #95); `platform/versions.json` names orkexa f89102c and Axentra 273e675, the commits the
+  runtime pins.
+
+### TODO abatement round 5 (2026-11-07)
+
+- Missing local model: when the readiness check read from the model registry, before any download, that a model
+  outside the catalog cannot do what the action needs (`ModelProblem.from_registry`, nodestro-runtime RT-062), the
+  dialog says so ("its entry in the model registry says so, so it was not downloaded") instead of calling the model
+  installed. The missing-model e2e server reads a stand-in registry, so the suite never reaches registry.ollama.ai.
+- Agent test: key figures (`source: "tool"`) that no tool call of the test computed are listed per field with their
+  value and reason (`AgentTestResult.value_warnings`, nodestro-runtime RT-054), with what a workflow run would do;
+  e2e section 11 of the flow suite.
+- Exports: a server's package build that waits for a worker (`ExportJob.queued`, nodestro-api API-048) says
+  "Waiting for a worker" without a progress bar, and Cancel withdraws it; a failed build's text gets the job's
+  `error_params` (size and limit of `export.server_too_large`). In-app docs updated in six languages.
+
+### TODO abatement round 4 (2026-11-07)
+
+- Welcome page: the logo's intro no longer animates a blur filter. WebKitGTK without a GPU (CI, and the Linux
+  desktop app on such machines) crashed the page's renderer on it in about 1 of 12 loads (ST-019); the welcome
+  suite logs a crashed renderer and CI's `browser-engines` job prints the browser's own output. ST-034 is closed:
+  WebKit opens the welcome page on a desktop-style launch.
+
+- Pins: nodestro-runtime f26dac4 (runtime #126: a busy sandbox image build stays `checking` (LD-020), Bedrock region
+  in usage, registry facts before a download, `pgvector_status()`, the price-table date fix of runtime #125; runtime
+  #128: the legacy fixture restore test skips without psycopg; MUP-ONA A11 runtime #123), nodestro-examples 570ef4f,
+  nodestro-integrations c3623bd (integrations #68: OCR parallelism and program memory limits, INT-001/INT-004),
+  nodestro-api 77f53be (api #99/#100: queued export builds, worker heartbeat) and nodestro-sdk f404cf3.
+- Tests: suite `local-server` (`scripts/e2e.sh`) runs the local models end to end against a fake Ollama over HTTP
+  (`tests/fake_ollama.py`, `tests/e2e_local_models_server.py`): stop and start, a measured download checked against
+  the catalog, a failed download and Try again, the speed measurement, import refusals and real GGUF and offline
+  package imports, the semantic index and a local agent run from the editor, in six languages, both themes, desktop
+  and phone width, with axe (ST-043).
+- Tests: suite `portable` (opt-in, needs the network on a cold cache; CI job `browser-portable`) builds a real
+  portable package from the publish dialog, cancels one build, downloads the ZIP and checks its contents and every
+  SHA256SUMS checksum, and shows the dialog in six languages (ST-047).
+- Settings → Local models: a job that starts and ends between two polls of the job list (a quick speed measurement
+  or import) now refreshes the overview too; before, the measured speed or the imported model appeared only after a
+  reload.
+- `e2e/localModels.mjs` expects 409 for a second setup (API-062).
+
 ### MUP-ONA master implementation plan (2026-11-06)
 
 - docs: the security and database-backend master plan MUP-ONA (Orkexa, Nodestro, Axentra) is versioned in

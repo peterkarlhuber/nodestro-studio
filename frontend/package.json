@@ -31,6 +31,8 @@
     "e2e:publications": "node e2e/publications.mjs",
     "e2e:missing-model": "node e2e/missingModel.mjs",
     "e2e:local-models": "node e2e/localModels.mjs",
+    "e2e:local-server": "node e2e/localModelsServer.mjs",
+    "e2e:portable": "node e2e/portable.mjs",
     "perf:editor": "node e2e/perf-editor.mjs"
   },
   "dependencies": {

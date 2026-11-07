@@ -16,5 +16,17 @@
   "badge": "Test, kein Workflow-Lauf",
   "memoryIsolated": "Memory-Kopie",
   "duration": "Dauer",
-  "providerMissing": "Noch nicht eingerichtet: {{providers}}. Trage den Zugang in den Einstellungen ein, um diesen Agenten zu testen."
+  "providerMissing": "Noch nicht eingerichtet: {{providers}}. Trage den Zugang in den Einstellungen ein, um diesen Agenten zu testen.",
+  "valueWarnings": {
+    "title_one": "{{count}} Kennzahl wurde nicht mit einem Tool berechnet",
+    "title_other": "{{count}} Kennzahlen wurden nicht mit einem Tool berechnet",
+    "reason": {
+      "missing": "{{field}}: Der Wert fehlt.",
+      "not_from_tool": "{{field}} = {{value}} ist in diesem Test nicht das Ergebnis eines Tool-Aufrufs.",
+      "table_incomplete": "{{field}} = {{value}}: Die an das Tool übergebene Tabelle hat weniger Zeilen als die Eingabe (übergeben: {{passed}}, Eingabe: {{total}}).",
+      "table_changed": "{{field}} = {{value}}: Die an das Tool übergebene Tabelle ist nicht die Tabelle der Eingabe (Zeilen wurden hinzugefügt oder geändert).",
+      "other": "{{field}} = {{value}} ist in diesem Test durch keinen Tool-Aufruf belegt."
+    },
+    "run": "In einem Workflow-Lauf würde der Agent einmal gebeten, diese Werte mit einem Tool zu berechnen; tut er es nicht, schlägt der Schritt fehl. Gib dem Agenten ein rechnendes Tool wie den Rechner und verlange es in der Aufgabe."
+  }
 }

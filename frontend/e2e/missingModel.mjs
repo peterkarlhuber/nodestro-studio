@@ -11,20 +11,37 @@
 //   5. a model server that does not answer (a real dead address);
 //   6. a remote model server, missing permission and the operator's server (recorded answers through page.route);
 //   7. an unattended scheduled run never downloads: it reports the problem, and "Fix" opens the same dialog;
-//   8. a batch stops on the missing model (no download), and "Fix" on the batch page opens the same dialog.
+//   8. a batch stops on the missing model (no download), and "Fix" on the batch page opens the same dialog;
+//   9. a model outside the catalog whose registry entry shows that it cannot call tools: the assistant's dialog says
+//      so before any download (a stand-in registry, RT-062), in English (light, axe) and German (dark, phone width).
 // Screenshots: light and dark, English, German and French, phone width.
 
 import { createRequire } from "node:module";
-import { mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 const require = createRequire(import.meta.url);
+const axe = axeSource();
 const browserType = require("playwright")[process.env.E2E_BROWSER ?? "chromium"];
 const base = process.argv[2] ?? process.env.NODESTRO_URL ?? "http://127.0.0.1:9610";
 const shots = process.argv[3] ?? process.env.NODESTRO_SCREENSHOTS;
 if (shots) mkdirSync(shots, { recursive: true });
 
 const MISSING = "ollama:qwen3.5:9b";
+const NO_TOOLS = "ollama:e2e-notools:1b";
+
+function axeSource() {
+  const candidates = [];
+  const fromEnv = process.env.AXE_CORE_PATH;
+  if (fromEnv) candidates.push(existsSync(fromEnv) && statSync(fromEnv).isDirectory() ? join(fromEnv, "axe.min.js") : fromEnv);
+  try {
+    candidates.push(require.resolve("axe-core/axe.min.js"));
+  } catch {
+    // not installed
+  }
+  const found = candidates.find((path) => existsSync(path));
+  return found ? readFileSync(found, "utf8") : null;
+}
 let failures = 0;
 function check(condition, message) {
   if (condition) console.log(`ok   ${message}`);
@@ -112,6 +129,24 @@ async function openAssistant(page) {
 }
 
 const dialog = (page) => page.getByTestId("missing-model");
+
+async function scan(page, label) {
+  if (!axe) {
+    console.log(`skip axe on ${label}: axe-core not found (set AXE_CORE_PATH or run npm install in frontend/)`);
+    return;
+  }
+  await page.evaluate(axe);
+  const violations = await page.evaluate(async () => {
+    const result = await window.axe.run(
+      { include: [["dialog[open]"]] },
+      { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"] }, resultTypes: ["violations"] },
+    );
+    return result.violations
+      .filter((v) => v.impact === "serious" || v.impact === "critical")
+      .map((v) => `${v.id}×${v.nodes.length} (${v.nodes[0]?.target.join(" ")})`);
+  });
+  check(violations.length === 0, `${label}: axe finds no serious or critical violation${violations.length ? `: ${violations.join(", ")}` : ""}`);
+}
 
 try {
   // ---- 1. Workflow Architect: download, continue with the inputs kept, once ----------------------------------------
@@ -379,6 +414,49 @@ try {
   await batchPage.getByTestId("missing-model-cancel").click();
   check((await pullJobs()).length === pullsBefore, "Opening Fix on the batch downloads nothing by itself");
   await batchPage.context().close();
+
+  // ---- 9. The registry says the model cannot call tools: no download, said in plain words -------------------------
+  await api("/api/settings", "PUT", { assistant_model: NO_TOOLS });
+  const pullsBeforeRegistry = (await json("/api/local-models/jobs")).length;
+  const registry = await newPage();
+  await openAssistant(registry);
+  await registry.getByTestId("assistant-input").fill("Which tools can you call?");
+  await registry.getByTestId("assistant-send").click();
+  await dialog(registry).waitFor();
+  check((await dialog(registry).getAttribute("data-cause")) === "capability_missing", "Registry: the cause is the missing capability");
+  const registryCause = registry.getByTestId("missing-model-cause");
+  check((await registryCause.getAttribute("data-from-registry")) === "true", "Registry: the facts are marked as read from the registry");
+  check(
+    (await registryCause.textContent()) ===
+      "e2e-notools:1b does not support what this step needs: tool calls. Its entry in the model registry says so, so it was not downloaded.",
+    "Registry: the dialog says in plain words that the registry entry shows the model cannot call tools",
+  );
+  check(!(await registryCause.textContent()).includes("is installed"), "Registry: it never calls the model installed");
+  check((await registry.getByTestId("missing-model-download").count()) === 0, "Registry: no download is offered");
+  check((await registry.getByTestId("missing-model-choose").count()) === 1, "Registry: another ready model can be chosen");
+  check((await registry.getByRole("dialog", { name: "The model cannot do what is needed" }).count()) === 1, "Registry: the dialog is named by its title");
+  await scan(registry, "Registry dialog (English, light)");
+  await shot(registry, "missing-16-registry-en-light");
+  await registry.getByTestId("missing-model-cancel").click();
+  check((await registry.getByTestId("assistant-input").inputValue()) === "Which tools can you call?", "Registry: cancelling keeps the message");
+  await registry.context().close();
+  const registryDe = await newPage({ theme: "dark", language: "de", width: 390, height: 844 });
+  await openAssistant(registryDe);
+  await registryDe.getByTestId("assistant-input").fill("Welche Tools kannst du aufrufen?");
+  await registryDe.getByTestId("assistant-send").click();
+  await dialog(registryDe).waitFor();
+  check(
+    (await registryDe.getByTestId("missing-model-cause").textContent()).includes("Eintrag in der Modell-Registry"),
+    "Registry: German names the registry entry",
+  );
+  const registryOverflow = await registryDe.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  check(registryOverflow <= 0, "Registry: no horizontal scrolling at phone width in the dark theme");
+  await scan(registryDe, "Registry dialog (German, dark, 390 px)");
+  await shot(registryDe, "missing-17-registry-de-dark-narrow");
+  await registryDe.getByTestId("missing-model-cancel").click();
+  await registryDe.context().close();
+  check((await json("/api/local-models/jobs")).length === pullsBeforeRegistry, "Registry: nothing was downloaded");
+  await api("/api/settings", "PUT", { assistant_model: MISSING });
 } catch (error) {
   failures += 1;
   console.log(`FAIL ${error.stack ?? error}`);

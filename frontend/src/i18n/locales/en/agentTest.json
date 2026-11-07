@@ -16,5 +16,17 @@
   "badge": "Test, not a workflow run",
   "memoryIsolated": "Memory copy",
   "duration": "Duration",
-  "providerMissing": "Not set up yet: {{providers}}. Enter the access in the settings to test this agent."
+  "providerMissing": "Not set up yet: {{providers}}. Enter the access in the settings to test this agent.",
+  "valueWarnings": {
+    "title_one": "{{count}} key figure was not computed with a tool",
+    "title_other": "{{count}} key figures were not computed with a tool",
+    "reason": {
+      "missing": "{{field}}: the value is missing.",
+      "not_from_tool": "{{field}} = {{value}} is not the result of a tool call in this test.",
+      "table_incomplete": "{{field}} = {{value}}: the table passed to the tool has fewer rows than the input (passed: {{passed}}, input: {{total}}).",
+      "table_changed": "{{field}} = {{value}}: the table passed to the tool is not the table of the input (rows were added or changed).",
+      "other": "{{field}} = {{value}} is not backed by a tool call in this test."
+    },
+    "run": "In a workflow run, the agent would be asked once to compute these values with a tool, and the step would fail if it does not. Give the agent a computing tool such as the calculator and ask for it in the task."
+  }
 }

@@ -265,6 +265,8 @@ Un agente creado a partir de una plantilla es una **copia**: los cambios posteri
 
 Una prueba **no es una ejecución del flujo**: no aparece en *Ejecuciones* y no cambia resultados. La memoria persistente solo se lee; la prueba trabaja sobre una copia. Una prueba llama al proveedor del modelo y **puede costar dinero**; el diálogo indica los precios del modelo cuando se conocen, y el coste aparece en la página [Uso](/docs/nutzung#statistik).
 
+Si el agente tiene campos de resultado **de una herramienta**, la prueba también los comprueba: un campo cuyo valor no calculó ninguna llamada a una herramienta de la prueba aparece como advertencia con su valor y el motivo (falta, no es el resultado de una llamada a una herramienta, o la tabla que se pasó a la herramienta tiene menos filas u otras que la entrada). En una ejecución del flujo de trabajo, el agente recibiría una corrección para ese valor y después el paso se detendría. Una prueba solo advierte, porque en una ejecución un paso anterior puede haber calculado el valor.
+
 ## Validación y mensajes {#validierung}
 <!-- keywords: validación, mensaje de error, problema, advertencia, rojo, mensaje del inspector -->
 

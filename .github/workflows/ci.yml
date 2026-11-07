@@ -154,6 +154,34 @@ jobs:
           path: ${{ runner.temp }}/journeys/
           if-no-files-found: ignore
 
+  browser-portable:
+    # A real portable package built from the publish dialog and downloaded by the browser (ST-047). uv downloads
+    # Python and wheels for the runner's platform on each run (about a minute); no model is called.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install
+        run: |
+          pip install -e ".[dev]"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+          npm install --no-save playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - run: scripts/e2e.sh portable
+
   browser-engines:
     # The engine-sensitive suites (start page on app start, accessibility, settings) in Firefox and WebKit. Not a gate
     # yet: CI ran them in Chromium only until this job; a failure here is recorded (nodestro-studio docs/TODO.md).
@@ -188,3 +216,5 @@ jobs:
       - run: scripts/e2e.sh welcome a11y settings-ui
         env:
           E2E_BROWSER: ${{ matrix.browser }}
+          # The browser's own output (its stderr and exit), to find why WebKit's renderer dies in `welcome` (ST-019).
+          DEBUG: pw:browser

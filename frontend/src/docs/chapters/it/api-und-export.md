@@ -256,7 +256,7 @@ In **Esportazione**, scegli **Pacchetto pronto all’uso** invece del progetto s
 | **Includi l’interfaccia web** | Un modulo per questo workflow con avanzamento in diretta, approvazioni e file di risultato, in sei lingue. |
 | **Cartella dei risultati** | Dove l’applicazione salva anche i file di risultato di ogni esecuzione. Il gestore può cambiarla in seguito. |
 
-Il pacchetto viene creato in background; la finestra mostra l’avanzamento e ti permette di annullare. I modelli grandi lo rendono di diversi gigabyte.
+Il pacchetto viene creato in background; la finestra mostra l’avanzamento e ti permette di annullare. I modelli grandi lo rendono di diversi gigabyte. Su un server Nodestro un processo di lavoro crea i pacchetti, uno alla volta per tutto il server: finché non se ne libera uno, il lavoro indica *In attesa di un processo di lavoro*, e *Annulla* lo ritira.
 
 Il pacchetto non contiene mai chiavi. Sul computer di destinazione, il gestore inserisce le chiavi dei fornitori di IA nella pagina delle impostazioni dell’interfaccia web o con `start.sh configure` (Windows: `start.cmd configure`); restano su quel computer. I client usano chiavi API create con `start.sh keys new`. Per impostazione predefinita l’applicazione risponde solo su questo computer; per la rete servono TLS o un reverse proxy. Il README del pacchetto spiega avvio, arresto, impostazioni e risoluzione dei problemi. I pacchetti non sono firmati: macOS e Windows chiedono una volta prima del primo avvio.
 

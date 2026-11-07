@@ -265,6 +265,8 @@ Um agente criado a partir de um modelo é uma **cópia**: alterações posterior
 
 Um teste **não é uma execução do fluxo de trabalho**: ele não aparece em *Execuções* e não altera resultados. A memória persistente só é lida; o teste trabalha sobre uma cópia. Um teste chama o provedor do modelo e **pode custar dinheiro**; o diálogo informa os preços do modelo quando conhecidos, e o custo aparece na página [Uso](/docs/nutzung#statistik).
 
+Se o agente tiver campos de resultado **de uma ferramenta**, o teste também os verifica: um campo cujo valor nenhuma chamada de ferramenta do teste calculou aparece como aviso, com o valor e o motivo (está faltando, não é o resultado de uma chamada de ferramenta, ou a tabela passada à ferramenta tem menos linhas ou linhas diferentes da entrada). Em uma execução do fluxo de trabalho, o agente receberia uma correção para esse valor e depois a etapa pararia. Um teste apenas avisa, porque em uma execução uma etapa anterior pode ter calculado o valor.
+
 ## Validação e mensagens {#validierung}
 <!-- keywords: validação, mensagem de erro, problema, aviso, vermelho, mensagem do inspetor -->
 

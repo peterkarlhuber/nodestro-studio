@@ -9,7 +9,7 @@ import type { LocalJob } from "../api/localModels";
 import type { ModelAlternative, ModelProblem } from "../api/modelReadiness";
 import { problemModel, unavailableModel } from "../api/modelReadiness";
 import { Toaster } from "../components/toast";
-import i18n from "../i18n";
+import i18n, { setLanguage } from "../i18n";
 import { MissingModelHost } from "./MissingModelDialog";
 import { askMissingModel, fixMissingModel, useMissingModel, withLocalModel } from "./store";
 
@@ -213,6 +213,70 @@ describe("the missing model dialog", () => {
     expect(await screen.findByTestId("missing-model-cause")).toHaveTextContent("is not installed on this Nodestro server");
     expect(screen.getByTestId("missing-model-blocked")).toHaveTextContent("not on your computer");
     expect(screen.queryByTestId("missing-model-download")).not.toBeInTheDocument();
+  });
+
+  it("says when the registry entry shows that the model lacks a capability, before any download", async () => {
+    serve();
+    host();
+    const found = problem({
+      cause: "capability_missing",
+      model: "ollama:gemma3:4b",
+      name: "gemma3:4b",
+      catalog: false,
+      download_bytes: null,
+      missing_capabilities: ["tools"],
+      from_registry: true,
+      actions: ["choose_model"],
+    });
+    act(() => {
+      void askMissingModel(refused(found), { action: "agent_test", capabilities: ["tools"] });
+    });
+    const cause = await screen.findByTestId("missing-model-cause");
+    expect(cause).toHaveTextContent(
+      "gemma3:4b does not support what this step needs: tool calls. Its entry in the model registry says so, so it was not downloaded.",
+    );
+    expect(cause).toHaveAttribute("data-from-registry", "true");
+    expect(cause).not.toHaveTextContent("is installed");
+    expect(screen.getByRole("dialog", { name: "The model cannot do what is needed" })).toBeInTheDocument();
+    expect(screen.queryByTestId("missing-model-download")).not.toBeInTheDocument();
+    expect(screen.getByTestId("missing-model-choose")).toBeInTheDocument();
+  });
+
+  it("keeps the installed-model wording when the capabilities come from the installed model", async () => {
+    serve();
+    host();
+    act(() => {
+      void askMissingModel(
+        refused(problem({ cause: "capability_missing", missing_capabilities: ["tools"], from_registry: false, actions: ["choose_model"] })),
+        { action: "agent_test", capabilities: ["tools"] },
+      );
+    });
+    const cause = await screen.findByTestId("missing-model-cause");
+    expect(cause).toHaveTextContent("qwen3.5:9b is installed, but it does not support what this step needs: tool calls.");
+    expect(cause).not.toHaveAttribute("data-from-registry");
+  });
+
+  it("reads the registry wording in every language", async () => {
+    for (const [language, words] of [
+      ["de", "Modell-Registry"],
+      ["es", "registro de modelos"],
+      ["fr", "registre des modèles"],
+      ["it", "registro dei modelli"],
+      ["pt-BR", "registro de modelos"],
+    ] as const) {
+      await setLanguage(language, false);
+      serve();
+      const view = host();
+      act(() => {
+        void askMissingModel(
+          refused(problem({ cause: "capability_missing", missing_capabilities: ["tools"], from_registry: true, actions: ["choose_model"] })),
+          { action: "agent_test", capabilities: ["tools"] },
+        );
+      });
+      expect(await screen.findByTestId("missing-model-cause")).toHaveTextContent(words);
+      act(() => useMissingModel.getState().finish(useMissingModel.getState().request!.id, null));
+      view.unmount();
+    }
   });
 
   it("follows a download of the same model that runs already instead of starting another", async () => {
