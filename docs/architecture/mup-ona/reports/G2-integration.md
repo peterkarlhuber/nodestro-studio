@@ -131,3 +131,31 @@ Criteria 1 and 4 need judgment or come after the merge, so per 7.3 the agent sto
   does not compare orkexa's version.
 - The schema report of `verify_schema` says "version not recorded" for Nodestro databases, because Nodestro keeps its
   own migration runner. This is informational and does not block a start.
+
+## 7. After the merge (2026-11-07)
+
+The merge plan of section 4 ran without a failure, so neither a fix forward nor a rollback was needed.
+
+| Step | PR | Merge SHA |
+|---|---|---|
+| runtime | #140 | 81b0f55 |
+| examples, integrations | #89, #77 | e063e89, e1e0cd4 |
+| api (start check `storage.schema_mismatch`) | #109 | 05e0232 |
+| sdk | #104 | ee38fb0 |
+| studio (pins; orkexa version now checked; `partition.missing` texts removed) | #157 | c41e3c2 |
+| server (pin; RUNBOOK, Upgrade: `storage.schema_mismatch`) | #74 | 89fa4af |
+| desktop | #60 | f9e788a |
+| local-docker | #50 | 7b4c8b6 |
+
+The faithful builds that section 3.6 could not make before the merge ran on the cascade heads. All passed, with no
+re-run:
+- the server image with e2e on amd64 and arm64, the image scan, and the upgrade job:
+  [run 42390826330](https://github.com/peterkarlhuber/nodestro-server/actions/runs/42390826330),
+  [run 42390826347](https://github.com/peterkarlhuber/nodestro-server/actions/runs/42390826347);
+- the desktop app, the Linux system tests (Debian 13, Ubuntu 24.04) and the macOS test builds (arm64, Intel):
+  [run 42390830890](https://github.com/peterkarlhuber/nodestro-desktop/actions/runs/42390830890);
+- the local-docker image on amd64 and arm64 with the e2e suite and the scan, rootless Docker, the Windows launcher,
+  and upgrade: [run 42392191493](https://github.com/peterkarlhuber/nodestro-local-docker/actions/runs/42392191493).
+
+studio #157 passed all 25 jobs, including WebKit. Section 6 still holds two follow-ups: the WebKit e2e error filter
+and the "version not recorded" note of `verify_schema`. The orkexa version mismatch of section 6 is fixed in studio #157.
