@@ -17,6 +17,7 @@ Status values: **Proposed** (under review in a pull request), **Accepted**, **Su
 | [0008](0008-live-run-chat.md) | Live run chat and steering of orchestrators | Proposed (LRC-1) |
 | [0009](0009-cross-platform-sandbox.md) | Cross-platform sandbox architecture | Proposed (2026-11-02) |
 | [0010](0010-nodestro-rls.md) | Row-level security for Nodestro's PostgreSQL tables | Accepted (2026-11-07, option (a): no RLS; MUP-ONA gate G3) |
+| [0011](0011-full-text-search-semantics.md) | Full-text search semantics (addendum to ADR-0002) | Accepted (2026-11-07, MUP-ONA O10) |
 
 The plan these records belong to, with the current-state inventory and the pull request sequence, is in
 [`docs/desktop-server/`](../desktop-server/README.md).

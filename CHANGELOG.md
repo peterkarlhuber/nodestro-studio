@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### MUP-ONA close-out (2026-11-07)
+
+- docs: ADR-0011 records the full-text search semantics as an addendum to ADR-0002 (MUP-ONA O10); ADR-0002 is unchanged.
+- docs: `STATUS.md` marks MP-A5 and MP-A6 accepted with their merge-commit CI and states that MUP-ONA is technically
+  complete; `docs/TODO.md` drops ST-MUP-B3 (G1 report), ST-MUP-O10 (ADR-0011) and ST-MUP-A9 (A9 report, ADR-0010).
+  The WebKit rest stays in ST-019.
+
 ### MUP-ONA B6 cascade (2026-11-07)
 
 - Pins nodestro-runtime 81b0f55 (runtime #140: the knowledge base, file store and memory run on orkexa's
