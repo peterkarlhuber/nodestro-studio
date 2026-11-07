@@ -256,7 +256,7 @@ Sous **Export**, choisissez **Paquet prêt à l’emploi** au lieu du projet sou
 | **Inclure l’interface web** | Un formulaire pour ce workflow avec la progression en direct, les validations et les fichiers de résultats, en six langues. |
 | **Dossier des résultats** | Où l’application enregistre aussi les fichiers de résultats de chaque exécution. L’exploitant peut le changer ensuite. |
 
-Le paquet est généré en arrière-plan ; la boîte de dialogue affiche la progression et vous permet d’annuler. Les grands modèles le font peser plusieurs gigaoctets.
+Le paquet est généré en arrière-plan ; la boîte de dialogue affiche la progression et vous permet d’annuler. Les grands modèles le font peser plusieurs gigaoctets. Sur un serveur Nodestro, un processus de travail génère les paquets, un à la fois pour tout le serveur : tant qu’aucun n’est libre, la tâche indique *En attente d’un processus de travail*, et *Annuler* la retire.
 
 Le paquet ne contient jamais de clés. Sur l’ordinateur cible, l’exploitant saisit les clés des fournisseurs d’IA sur la page des réglages de l’interface web ou avec `start.sh configure` (Windows: `start.cmd configure`) ; elles restent sur cet ordinateur. Les clients utilisent des clés d’API créées avec `start.sh keys new`. Par défaut, l’application ne répond que sur cet ordinateur ; pour le réseau, il lui faut TLS ou un proxy inverse. Le README du paquet explique le démarrage, l’arrêt, les réglages et le dépannage. Les paquets ne sont pas signés : macOS et Windows demandent une fois avant le premier démarrage.
 

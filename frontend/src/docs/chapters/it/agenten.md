@@ -265,6 +265,8 @@ Un agente creato da un modello è una **copia**: le modifiche successive al mode
 
 Un test **non è un’esecuzione del workflow**: non compare in *Esecuzioni* e non cambia risultati. La memoria persistente viene solo letta; il test lavora su una copia. Un test chiama il provider del modello e **può costare denaro**; la finestra indica i prezzi del modello quando sono noti, e il costo compare nella pagina [Utilizzo](/docs/nutzung#statistik).
 
+Se l’agente ha campi del risultato **da uno strumento**, il test controlla anche questi: un campo il cui valore non è stato calcolato da nessuna chiamata a uno strumento del test compare come avviso con il valore e il motivo (manca, non è il risultato di una chiamata a uno strumento, oppure la tabella passata allo strumento ha meno righe o righe diverse dall’input). In un’esecuzione del workflow l’agente riceverebbe una correzione per un tale valore, poi il passo si fermerebbe. Un test avvisa soltanto, perché in un’esecuzione un passo precedente può aver calcolato il valore.
+
 ## Validazione e messaggi {#validierung}
 <!-- keywords: validazione, messaggio di errore, problema, avviso, rosso, messaggio dell'ispettore -->
 

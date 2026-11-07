@@ -256,7 +256,7 @@ Under **Export**, choose **Ready-to-run package** instead of the source project.
 | **Include the web interface** | A form for this workflow with live progress, approvals and result files, in six languages. |
 | **Result folder** | Where the application also stores the result files of every run. The operator can change it later. |
 
-The package is built in the background; the dialog shows the progress and lets you cancel. Large models make it several gigabytes large.
+The package is built in the background; the dialog shows the progress and lets you cancel. Large models make it several gigabytes large. On a Nodestro server a worker builds the packages, one at a time for the whole server: until one is free, the job says *Waiting for a worker*, and *Cancel* withdraws it.
 
 The package never contains keys. On the target computer, the operator enters the keys of the AI providers on the settings page of the web interface or with `start.sh configure` (Windows: `start.cmd configure`); they stay on that computer. Clients use API keys created with `start.sh keys new`. By default the application only answers on this computer; for the network it needs TLS or a reverse proxy. The README in the package explains start, stop, settings and troubleshooting. Packages are not signed: macOS and Windows ask once before the first start.
 
