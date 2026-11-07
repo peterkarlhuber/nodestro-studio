@@ -12,7 +12,7 @@
 
 import { createRequire } from "node:module";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -203,6 +203,7 @@ try {
   const inspected = spawnSync(python, ["-I", inspector, zip], { encoding: "utf8" });
   if (inspected.status !== 0) throw new Error(`inspect.py: ${inspected.stderr}`);
   const report = JSON.parse(inspected.stdout);
+  rmSync(folder, { recursive: true, force: true });
   console.log(`info package ${report.root}: ${report.files} entries, platform ${report.meta.platform ?? JSON.stringify(report.meta).slice(0, 80)}`);
   check(report.python, "The package contains its own Python");
   check(report.start.length >= 1, `The package has its start scripts (${report.start.join(", ")})`);
