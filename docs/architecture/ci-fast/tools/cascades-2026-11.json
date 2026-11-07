@@ -1,0 +1,240 @@
+{
+  "version": 1,
+  "comment": "CI-FAST W0 cascades C1-C8 (2026-11-05..07), as defined in the W0 analysis (ci-fast/daten/cascades.md). Each stage lists the PRs ('<repo>#<number>') that ran in parallel; stage 0 holds the upstream PRs whose first merge is T0. KI ends with the studio PR's merge, VI with the last merge among server, desktop and local-docker.",
+  "cascades": [
+    {
+      "id": "C1",
+      "name": "MUP-ONA B2",
+      "date": "2026-11-07",
+      "stages": [
+        [
+          "orkexa#64"
+        ],
+        [
+          "nodestro-runtime#136"
+        ],
+        [
+          "nodestro-examples#84",
+          "nodestro-integrations#72"
+        ],
+        [
+          "nodestro-api#105"
+        ],
+        [
+          "nodestro-sdk#97"
+        ],
+        [
+          "nodestro-studio#149"
+        ],
+        [
+          "nodestro-server#68",
+          "nodestro-desktop#55"
+        ],
+        [
+          "nodestro-local-docker#45"
+        ]
+      ]
+    },
+    {
+      "id": "C2",
+      "name": "MUP-ONA B1/B3",
+      "date": "2026-11-07",
+      "stages": [
+        [
+          "orkexa#63"
+        ],
+        [
+          "nodestro-runtime#130",
+          "nodestro-runtime#131"
+        ],
+        [
+          "nodestro-examples#83",
+          "nodestro-integrations#71"
+        ],
+        [
+          "nodestro-api#104"
+        ],
+        [
+          "nodestro-sdk#96"
+        ],
+        [
+          "nodestro-studio#148"
+        ],
+        [
+          "nodestro-desktop#54"
+        ]
+      ]
+    },
+    {
+      "id": "C3",
+      "name": "MUP-ONA A1+B0",
+      "date": "2026-11-07",
+      "stages": [
+        [
+          "orkexa#59",
+          "orkexa#61"
+        ],
+        [
+          "nodestro-runtime#127"
+        ],
+        [
+          "nodestro-examples#82",
+          "nodestro-integrations#70"
+        ],
+        [
+          "nodestro-api#103"
+        ],
+        [
+          "nodestro-sdk#95"
+        ],
+        [
+          "nodestro-studio#147"
+        ],
+        [
+          "nodestro-server#66",
+          "nodestro-desktop#53"
+        ],
+        [
+          "nodestro-local-docker#44"
+        ]
+      ]
+    },
+    {
+      "id": "C4",
+      "name": "TODO abatement round 4",
+      "date": "2026-11-07",
+      "stages": [
+        [
+          "nodestro-runtime#126"
+        ],
+        [
+          "nodestro-runtime#128"
+        ],
+        [
+          "nodestro-examples#81",
+          "nodestro-integrations#69"
+        ],
+        [
+          "nodestro-api#100"
+        ],
+        [
+          "nodestro-sdk#94"
+        ],
+        [
+          "nodestro-studio#143"
+        ],
+        [
+          "nodestro-server#65",
+          "nodestro-desktop#51"
+        ],
+        [
+          "nodestro-local-docker#42"
+        ]
+      ]
+    },
+    {
+      "id": "C5",
+      "name": "TODO abatement round 3",
+      "date": "2026-11-06/07",
+      "stages": [
+        [
+          "nodestro-runtime#121",
+          "nodestro-api#96"
+        ],
+        [
+          "nodestro-examples#79",
+          "nodestro-integrations#67",
+          "nodestro-sdk#92"
+        ],
+        [
+          "nodestro-studio#142"
+        ],
+        [
+          "nodestro-server#62",
+          "nodestro-desktop#49"
+        ],
+        [
+          "nodestro-local-docker#40"
+        ]
+      ]
+    },
+    {
+      "id": "C6",
+      "name": "TODO abatement round 2",
+      "date": "2026-11-06",
+      "stages": [
+        [
+          "nodestro-api#94"
+        ],
+        [
+          "nodestro-sdk#89"
+        ],
+        [
+          "nodestro-studio#140"
+        ],
+        [
+          "nodestro-server#61",
+          "nodestro-desktop#48"
+        ],
+        [
+          "nodestro-local-docker#39"
+        ]
+      ]
+    },
+    {
+      "id": "C7",
+      "name": "Settings/attachments round",
+      "date": "2026-11-06",
+      "stages": [
+        [
+          "orkexa#54",
+          "nodestro-runtime#119",
+          "nodestro-examples#76",
+          "nodestro-integrations#65",
+          "nodestro-api#92",
+          "nodestro-sdk#86"
+        ],
+        [
+          "nodestro-studio#135"
+        ],
+        [
+          "nodestro-server#58",
+          "nodestro-desktop#46"
+        ],
+        [
+          "nodestro-local-docker#37"
+        ]
+      ]
+    },
+    {
+      "id": "C8",
+      "name": "Manual-review findings",
+      "date": "2026-11-05",
+      "stages": [
+        [
+          "nodestro-runtime#116"
+        ],
+        [
+          "nodestro-examples#74",
+          "nodestro-integrations#63"
+        ],
+        [
+          "nodestro-api#90"
+        ],
+        [
+          "nodestro-sdk#83"
+        ],
+        [
+          "nodestro-studio#127"
+        ],
+        [
+          "nodestro-server#55",
+          "nodestro-desktop#43"
+        ],
+        [
+          "nodestro-local-docker#35"
+        ]
+      ]
+    }
+  ]
+}
