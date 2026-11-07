@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### MUP-ONA B4 cascade (2026-11-07)
+
+- Pins nodestro-runtime 76f9cb2 (runtime #137: the tenant SQL rule engine as `sqlcheck_rules`; #138: the generic
+  PostgreSQL part `pg_generic` with a statement catalog and a partition guard; behavior unchanged), nodestro-examples
+  647f501 (examples #85), nodestro-integrations 0a1c440 (integrations #73), nodestro-api acf09cd (api #107) and
+  nodestro-sdk 890c032 (sdk #99). Orkexa and Axentra are unchanged (028faa1, 60d83b3).
+- New text in six languages for `partition.missing` (a knowledge or memory request not tied to this workspace is
+  stopped before anything is read or changed).
+
 ### MUP-ONA B2 cascade (2026-11-07)
 
 - Pins nodestro-runtime d9c3d6e (runtime #134 reindex switch embeds what the last round left, #135 Axentra 60d83b3,
