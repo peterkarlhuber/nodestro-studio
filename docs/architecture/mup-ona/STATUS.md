@@ -10,7 +10,7 @@ of evidence of plan 8.3 on the current default branch.
 |---|---|
 | Plan version | MUP-ONA 1.1; binding version is the English [MUP-ONA.md](MUP-ONA.md) (approved 2026-11-06 22:23Z, plan 8.7); the German file is a historical reference |
 | Last start procedure (S1–S10) | 2026-11-06 22:10Z |
-| Active gate | none; G2 approved 2026-11-07 14:02Z (report [reports/G2-integration.md](reports/G2-integration.md)); B6 merged and cascaded 2026-11-07. Next: MP-A9, then gate G3 (RLS decision) |
+| Active gate | none; G2 approved 2026-11-07 14:02Z (report [reports/G2-integration.md](reports/G2-integration.md)); B6 merged and cascaded 2026-11-07. **G3** (RLS decision, MP-A9) with the client since 2026-11-07, report [reports/A9-rls-evaluation.md](reports/A9-rls-evaluation.md) |
 | Lead agent / pin owner | MUP-ONA lead agent (project thread "Implement MUP-ONA architecture plan"); the TODO-abatement thread finished its pin work on 2026-11-07, so the slot is the lead agent's |
 
 ### Default-branch SHAs at the start procedure (S2)
@@ -66,7 +66,7 @@ State 2026-11-07 17:00Z. "merged" means merged on the default branch with green 
 | MP-A6 | merged | axentra #52, server #63 | axentra 6f73952, server 035170d | – | axentra role tests | – | – |
 | MP-A7 | merged | runtime #124, axentra #53, axentra-studio #37 | runtime dfc0d0f, axentra 659f7b5, axentra-studio 4f4b762 | – | VB-1..VB-6 tests | axentra-studio CI has no docker build job: the full image build is unverified | – |
 | MP-A8 | merged, cascaded | api #101, runtime #129, axentra #57; Axentra pin runtime #135 | api 1f99df7, runtime 685fb4b, axentra 60d83b3, runtime e789c8a (#135) | – | shared security vectors (VB-7) in runtime and Axentra, `security-vectors-sync` job; launcher-key test fixed to parse tokens (`parse_token`) | – (runtime #135 pins Axentra 60d83b3 with full CI; cascaded through studio #149) | – |
-| MP-A9 | open | – | – | – | – | – | after B6 |
+| MP-A9 | paper created, decision G3 open | prototype branch runtime `mup/a9-rls-prototype` (`ef5fab1`, not merged, no PR); studio #A9PR (report, ADR-0010 draft) | – | – | [A9 report](reports/A9-rls-evaluation.md): T-RLS-P1 20/20 on FX-PG-0 and FX-PG-0v, T-RLS-P2 benchmark with raw data in the prototype branch; [ADR-0010](../../adr/0010-nodestro-rls.md) (Proposed) | recommendation (a) stay with M10; under RLS the GIN full-text index is not used (`@@` is not leakproof) | Peter decides G3 |
 | MP-B0 | merged, cascaded | orkexa #61, axentra #54, runtime #127, api #103 | orkexa 59ea671, axentra 273e675, runtime de56875, api 63af1df | – | T-API-1 snapshot, T-PKG-0 import-linter; release.yml reviewed (publishes only on `release: published` with a protected environment); no tags | – | – |
 | MP-B1 | merged, cascaded | orkexa #62 (contracts), #63 (suite); runtime #130 | orkexa 59f69b1, b3d6fae; runtime 59a2629 | – | T-CONF-1..8, T-SQL-10; runtime conformance jobs green | – | – |
 | MP-B2 | merged, cascaded | orkexa #64; runtime pin #136; cascade examples #84, integrations #72, api #105, sdk #97, studio #149, server #68, desktop #55, local-docker #45 | orkexa 028faa1, runtime d9c3d6e | – | T-API-1/2, T-PKG-0 (third import contract), T-SQL-11 (private attributes), conformance against the new leaf modules; offline suite on Linux, macOS, Windows incl. windows-11-arm | the SQLite classes' private attributes are an implicit API for Nodestro (runtime RT-069, P4) | – |

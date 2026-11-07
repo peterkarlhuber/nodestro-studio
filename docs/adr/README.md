@@ -16,6 +16,7 @@ Status values: **Proposed** (under review in a pull request), **Accepted**, **Su
 | [0007](0007-mcp-client.md) | MCP client for external tools | Accepted |
 | [0008](0008-live-run-chat.md) | Live run chat and steering of orchestrators | Proposed (LRC-1) |
 | [0009](0009-cross-platform-sandbox.md) | Cross-platform sandbox architecture | Proposed (2026-11-02) |
+| [0010](0010-nodestro-rls.md) | Row-level security for Nodestro's PostgreSQL tables | Proposed (2026-11-07, MUP-ONA MP-A9, gate G3) |
 
 The plan these records belong to, with the current-state inventory and the pull request sequence, is in
 [`docs/desktop-server/`](../desktop-server/README.md).
