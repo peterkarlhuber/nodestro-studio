@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models ...]   (default: all)
+# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server ...]   (default: all)
 # The journeys suite writes its report to $JOURNEY_REPORT when set.
 # E2E_PORT_OFFSET (default 0) moves every server port by that amount (8000 to 8099 by default, so parallel runs on
 # one machine do not collide), E2E_BROWSER=firefox|webkit picks another Playwright engine.
 # local-models runs only the recorded part of e2e/localModels.mjs (LOCAL_E2E_REAL=0: nothing is downloaded).
+# local-server runs the local models end to end against a fake Ollama (tests/fake_ollama.py) over HTTP.
 # Needs: the studio installed (pip install -e .), the frontend built (make frontend) and Playwright.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -78,6 +79,8 @@ run() {  # run SUITE
       (cd frontend && npm run e2e:missing-model -- "$(url 8045)" ${E2E_SCREENSHOTS:-}) ;;
     local-models) start local-models "$(port 8025)" nodestro --data-dir "$work/local-models" --no-browser --port "$(port 8025)"
       (cd frontend && LOCAL_E2E_REAL=0 npm run e2e:local-models -- "$(url 8025)" ${E2E_SCREENSHOTS:-}) ;;
+    local-server) start local-server "$(port 8027)" python tests/e2e_local_models_server.py --data-dir "$work/local-server" --port "$(port 8027)"
+      (cd frontend && npm run e2e:local-server -- "$(url 8027)" ${E2E_SCREENSHOTS:-}) ;;
     journeys) start journeys "$(port 8060)" python tests/e2e_journey_server.py --data-dir "$work/journeys" --port "$(port 8060)"
       (cd frontend && NODESTRO_URL="$(url 8060)" npm run e2e:journeys) ;;
     *) echo "unknown suite $1" >&2; return 2 ;;
@@ -86,7 +89,7 @@ run() {  # run SUITE
 
 # The smoke test goes first: it expects an empty start page and copies examples from the gallery.
 suites=("$@")
-[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models)
+[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models local-server)
 for suite in "${suites[@]}"; do
   echo "== e2e: $suite"
   run "$suite"

@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { LocalJob, LocalJobStep } from "../api/localModels";
 import { Toaster } from "../components/toast";
 import i18n from "../i18n";
-import { JobCard, LocalJobsList, SetupProgress, setupJob } from "./LocalModelJobs";
+import { JobCard, jobsEnded, LocalJobsList, SetupProgress, setupJob } from "./LocalModelJobs";
 
 const MB = 1_000_000; // decimal megabytes, as formatBytes shows them
 const SETUP_STEPS = ["check", "prerequisites", "download", "verify", "install", "configure", "start", "reachable", "hardware", "ready"];
@@ -276,5 +276,32 @@ describe("model downloads", () => {
     );
     expect(screen.getByTestId("local-job-stalled").textContent).toContain("No new data for 12 seconds");
     expect(screen.getByTestId("local-job-facts").textContent).not.toContain("/s");
+  });
+});
+
+describe("finished jobs refresh the overview", () => {
+  it("only remember the jobs of the first look", () => {
+    const { ended, now } = jobsEnded(null, [job({ id: "old", state: "done" }), job({ id: "run" })]);
+    expect(ended).toBe(false);
+    expect([...now.all]).toEqual(["old", "run"]);
+    expect([...now.running]).toEqual(["run"]);
+  });
+
+  it("see a job that ran before and ended", () => {
+    const first = jobsEnded(null, [job({ id: "run" })]).now;
+    expect(jobsEnded(first, [job({ id: "run" })]).ended).toBe(false);
+    expect(jobsEnded(first, [job({ id: "run", state: "done" })]).ended).toBe(true);
+    expect(jobsEnded(first, [job({ id: "run", state: "failed" })]).ended).toBe(true);
+    // A job that left the list (the list keeps the newest) counts as ended too.
+    expect(jobsEnded(first, []).ended).toBe(true);
+  });
+
+  it("see a new job that started and ended between two looks (a quick speed measurement)", () => {
+    const first = jobsEnded(null, [job({ id: "old", state: "done" })]).now;
+    expect(jobsEnded(first, [job({ id: "old", state: "done" }), job({ id: "quick", kind: "benchmark", state: "done" })]).ended).toBe(true);
+    // A new job that still runs is not an end yet.
+    expect(jobsEnded(first, [job({ id: "old", state: "done" }), job({ id: "slow", kind: "pull" })]).ended).toBe(false);
+    // Nothing new, nothing running: no refresh.
+    expect(jobsEnded(first, [job({ id: "old", state: "done" })]).ended).toBe(false);
   });
 });
