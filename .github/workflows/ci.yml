@@ -216,3 +216,5 @@ jobs:
       - run: scripts/e2e.sh welcome a11y settings-ui
         env:
           E2E_BROWSER: ${{ matrix.browser }}
+          # The browser's own output (its stderr and exit), to find why WebKit's renderer dies in `welcome` (ST-019).
+          DEBUG: pw:browser
