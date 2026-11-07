@@ -113,10 +113,11 @@ picks the fix up.
 
 Who bumps pins now: the MUP-ONA lead agent (the TODO-abatement thread finished its pin work on 2026-11-07).
 
-### Removed temporary branches
+### Temporary branches approved for deletion
 
 The client approved their deletion on 2026-11-07 20:17Z (decision card in the MUP-ONA project thread). None was ever
-merged; each can be restored from its last commit.
+merged; each can be restored from its last commit. The agent's GitHub access cannot delete branches (HTTP 403), so the
+owner deletes them in the GitHub branch view.
 
 | Repository | Branch | Purpose | Last commit |
 |---|---|---|---|
