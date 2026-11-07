@@ -265,6 +265,8 @@ An agent from a template is a **copy**: later changes to the template do not aff
 
 A test is **not a workflow run**: it does not appear under *Runs* and changes no results. Persistent memory is only read; the test works on a copy. A test calls the model's provider and **can cost money**; the dialog names the model's prices when they are known, and the cost appears on the [Usage](/docs/nutzung#statistik) page.
 
+If the agent has result fields **from a tool**, the test also checks them: a field whose value no tool call of the test computed is listed as a warning with its value and the reason (missing, not the result of a tool call, or a table passed to the tool that has fewer or other rows than the input). In a workflow run the agent would get one correction for such a value, and then the step would stop. A test only warns, because an earlier step may have computed the value in a run.
+
 ## Validation and messages {#validierung}
 <!-- keywords: validation, error message, problem, warning, red, inspector message -->
 

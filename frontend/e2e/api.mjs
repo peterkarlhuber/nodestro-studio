@@ -1,15 +1,27 @@
 // Browser test of "API & Export": publish a workflow, create a key, call the published API like
 // a client, decide its approval, roll back, validate in the dialog and generate the export,
-// against tests/e2e_api_server.py, whose agents answer from a script (nothing paid).
+// against tests/e2e_api_server.py, whose agents answer from a script (nothing paid). The last section shows a server's
+// export job that waits for a worker (a recorded answer), in English (light, 1280 px) and German (dark, 390 px).
 // Usage: node e2e/api.mjs [baseUrl] [screenshotDir]
 
 import { createRequire } from "node:module";
-import { mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const require = createRequire(import.meta.url);
 // Chromium by default; E2E_BROWSER=firefox or webkit runs the same checks in another engine.
 const browserType = require("playwright")[process.env.E2E_BROWSER ?? "chromium"];
+// axe-core for the dialog of a queued export job (AXE_CORE_PATH or the frontend devDependency).
+const axe = (() => {
+  const candidates = process.env.AXE_CORE_PATH ? [process.env.AXE_CORE_PATH] : [];
+  try {
+    candidates.push(require.resolve("axe-core/axe.min.js"));
+  } catch {
+    // not installed
+  }
+  const found = candidates.find((path) => existsSync(path) && path.endsWith(".js"));
+  return found ? readFileSync(found, "utf8") : null;
+})();
 
 const base = process.argv[2] ?? process.env.NODESTRO_URL ?? "http://127.0.0.1:8050";
 const shots = process.argv[3] ?? process.env.NODESTRO_SCREENSHOTS;
@@ -227,6 +239,83 @@ try {
     check(text.includes(name), `The ZIP contains ${name}`);
   check(!text.includes(token.split("_").slice(2).join("_")), "The ZIP does not contain the key");
   await shot("api-06-export");
+
+  // ---- a server's export job that waits for a worker (nodestro-api ExportJob.queued) -----------------------------
+  // A studio builds packages itself, so the queue of a server is a recorded answer here: the job list says the job
+  // waits for a worker, and withdrawing it answers it cancelled.
+  const queuedJob = {
+    id: "exportjob_e2e",
+    publication_id: publication.id,
+    release_number: 1,
+    options: { kind: "portable" },
+    state: "running",
+    queued: true,
+    step: "check",
+    steps: [],
+    progress: 0,
+    message: "",
+    bytes_done: 0,
+    bytes_total: 0,
+    error_code: null,
+    error: null,
+    error_params: {},
+    export_id: null,
+    created_at: new Date().toISOString(),
+    finished_at: null,
+  };
+  for (const { language, theme, width, waiting, cancel, cancelled } of [
+    { language: "en", theme: "light", width: 1280, waiting: "Waiting for a worker", cancel: "Cancel", cancelled: "The build was canceled." },
+    { language: "de", theme: "dark", width: 390, waiting: "Wartet auf einen Worker", cancel: "Abbrechen", cancelled: "Die Erstellung wurde abgebrochen." },
+  ]) {
+    const ctx = await browser.newContext({ viewport: { width, height: 900 }, locale: "en-US" });
+    await ctx.addInitScript(
+      ([t, l]) => {
+        localStorage.setItem("nodestro-theme", t);
+        localStorage.setItem("nodestro-language", l);
+      },
+      [theme, language],
+    );
+    const recorded = await ctx.newPage();
+    recorded.on("pageerror", (error) => errors.push(error.message));
+    let withdrawn = false;
+    await recorded.route(`**/api/publications/${publication.id}/export-jobs`, (route) =>
+      route.request().method() === "GET"
+        ? route.fulfill({ contentType: "application/json", body: JSON.stringify([withdrawn ? { ...queuedJob, queued: false, state: "cancelled" } : queuedJob]) })
+        : route.continue(),
+    );
+    await recorded.route(`**/api/export-jobs/${queuedJob.id}/cancel`, (route) => {
+      withdrawn = true;
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...queuedJob, queued: false, state: "cancelled" }) });
+    });
+    await recorded.goto(`${base}/workflows/${workflow.id}`);
+    await recorded.getByTestId("open-api").click();
+    const exportDialog = recorded.getByTestId("api-dialog");
+    await exportDialog.getByTestId("api-tab-export").click();
+    const waitingRow = exportDialog.getByTestId("api-export-job-queued");
+    await waitingRow.waitFor();
+    check((await waitingRow.textContent()).includes(waiting), `${language}: a queued export job says it waits for a worker`);
+    check((await exportDialog.getByTestId("api-export-job-running").count()) === 0, `${language}: it shows no build progress while it waits`);
+    check((await exportDialog.locator("[aria-live=polite][data-testid=api-export-jobs]").count()) === 1, `${language}: the job list is a polite live region`);
+    const fits = await recorded.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
+    check(fits, `${language}: no sideways scrolling at ${width} px (${theme})`);
+    if (axe) {
+      await recorded.evaluate(axe);
+      const violations = await recorded.evaluate(async () => {
+        const result = await window.axe.run(
+          { include: [["dialog[open]"]] },
+          { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"] }, resultTypes: ["violations"] },
+        );
+        return result.violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => `${v.id} (${v.nodes[0]?.target.join(" ")})`);
+      });
+      check(violations.length === 0, `${language}: axe finds no serious or critical violation in the dialog${violations.length ? `: ${violations.join(", ")}` : ""}`);
+    } else console.log("skip axe: axe-core not found");
+    await waitingRow.scrollIntoViewIfNeeded();
+    if (shots) await recorded.screenshot({ path: join(shots, `api-07-export-queued-${language}-${theme}-${width}.png`) });
+    await waitingRow.getByRole("button", { name: cancel, exact: true }).click();
+    await exportDialog.getByText(cancelled, { exact: true }).waitFor();
+    check(withdrawn, `${language}: Cancel withdraws the waiting job`);
+    await ctx.close();
+  }
 
   check(errors.length === 0, `No console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
 } finally {

@@ -305,6 +305,8 @@
       "build": "Build package",
       "started": "The package is being built in the background. This usually takes a few minutes, longer with large models; you can close this dialog meanwhile.",
       "running": "Building: {{step}} ({{percent}} %)",
+      "queued": "Waiting for a worker",
+      "queuedHint": "The server builds one package at a time; this one starts as soon as a worker of the server is free. You can close this dialog meanwhile.",
       "progress": "Progress of the package build",
       "done": "Package ready ({{date}}).",
       "downloadZip": "Download",

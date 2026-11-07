@@ -1,7 +1,7 @@
 // Browser test of decisions, approvals, input forms, continued runs, result files, batch runs,
 // test series and schedules against tests/e2e_flow_server.py, whose agents answer from a
 // script (no API key, nothing paid). Section 10: a copy of an example (sample data badge, sample files in the run
-// dialog).
+// dialog). Section 11: the value warnings of an agent test (German and light, English and dark at 390 px).
 // Usage: node e2e/flow.mjs [baseUrl] [screenshotDir]
 
 import { createRequire } from "node:module";
@@ -408,6 +408,69 @@ try {
   await page.goto(`${base}/workflows/${plain.id}`);
   await page.locator(".titlebar__name").waitFor();
   check((await page.getByTestId("offline-badge").count()) === 0, "A workflow that is no example copy has no badge");
+
+  // ---- 11. an agent test warns about a key figure no tool computed (RT-054 value_warnings) ----------------------
+  const keyFigure = await api("/workflows", "POST", {
+    name: "Kennzahlen",
+    nodes: place([
+      start,
+      agent("margin", "Marge", "KEYFIGURE of the case.", {
+        tools: ["calculator"],
+        output: {
+          mode: "structured",
+          name: "Result",
+          fields: [{ name: "margin", type: "number", description: "Marge in Prozent", required: true, source: "tool" }],
+        },
+      }),
+      { id: "out", type: "output" },
+    ]),
+    edges: [edge("start", "margin"), edge("margin", "out")],
+  });
+  const testAgent = async (target, labels) => {
+    await target.goto(`${base}/workflows/${keyFigure.id}`);
+    await target.locator(".react-flow__node-agent").first().click();
+    await target.getByRole("button", { name: labels.button, exact: true }).click();
+    const dialog = target.getByRole("dialog");
+    await dialog.getByRole("textbox", { name: labels.input }).fill("Umsatz 200, Kosten 175");
+    await dialog.getByRole("button", { name: labels.start, exact: true }).click();
+    await dialog.getByTestId("agent-test-result").waitFor({ timeout: 20000 });
+    return dialog;
+  };
+  const tested = await testAgent(page, { button: "Agent testen", input: "Testeingabe", start: "Test starten" });
+  const warnings = tested.getByRole("group", { name: "1 Kennzahl wurde nicht mit einem Tool berechnet" });
+  await warnings.waitFor();
+  const warning = warnings.getByTestId("agent-test-value-warning");
+  check(
+    (await warning.getAttribute("data-reason")) === "not_from_tool" &&
+      (await warning.textContent()) === "margin = 12,5 ist in diesem Test nicht das Ergebnis eines Tool-Aufrufs.",
+    "The agent test names the key figure that no tool computed, with its value",
+  );
+  check((await warnings.textContent()).includes("schlägt der Schritt fehl"), "It says what a workflow run would do with it");
+  await shot("flow-11-agent-test-value-warning");
+  await page.keyboard.press("Escape");
+  // English, dark, at phone width: the warning wraps inside the dialog.
+  const darkContext = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "en-US" });
+  await darkContext.addInitScript(() => {
+    localStorage.setItem("nodestro-theme", "dark");
+    localStorage.setItem("nodestro-language", "en");
+  });
+  const phone = await darkContext.newPage();
+  phone.on("pageerror", (error) => errors.push(error.message));
+  const narrowTest = await testAgent(phone, { button: "Test agent", input: "Test input", start: "Start test" });
+  const narrowWarnings = narrowTest.getByRole("group", { name: "1 key figure was not computed with a tool" });
+  await narrowWarnings.waitFor();
+  check(
+    (await narrowWarnings.getByTestId("agent-test-value-warning").textContent()) === "margin = 12.5 is not the result of a tool call in this test.",
+    "The warning reads in English",
+  );
+  const fits = await narrowWarnings.evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    return box.left >= 0 && box.right <= window.innerWidth && document.documentElement.scrollWidth <= window.innerWidth;
+  });
+  check(fits, "The value warning fits at 390 px in the dark theme without sideways scrolling");
+  await narrowWarnings.scrollIntoViewIfNeeded();
+  if (shots) await phone.screenshot({ path: join(shots, "flow-11-agent-test-value-warning-390-dark.png") });
+  await darkContext.close();
 
   check(errors.length === 0, `No console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
 } finally {

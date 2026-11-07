@@ -3,8 +3,9 @@
 Usage: python tests/e2e_flow_server.py --data-dir DIR [--port 8040]
 
 Agents answer from a script chosen by a keyword in their system prompt: the classifier
-always says ``complaint``, the other agents write a short text, and ``BROKEN`` agents fail. Every answer comes after a
-short pause, so the browser can watch runs, batches and test series progress. Nothing calls
+always says ``complaint``, the other agents write a short text, ``BROKEN`` agents fail, and ``KEYFIGURE`` agents
+answer a structured result with a key figure they never computed with a tool (the value warnings of an agent test).
+Every answer comes after a short pause, so the browser can watch runs, batches and test series progress. Nothing calls
 the API and no key is needed.
 """
 
@@ -19,7 +20,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).parent))
 
 from e2e_defaults import keep_cloud_defaults
-from nodestro_runtime.testing import ScriptedClient, text
+from nodestro_runtime.testing import Parsed, ScriptedClient, text
 import uvicorn
 
 from nodestro_studio.app import create_app, studio_config
@@ -50,9 +51,15 @@ def broken(_request: dict[str, Any]) -> Any:
     return text("…", stop_reason="max_tokens")
 
 
+def keyfigure(request: dict[str, Any]) -> Any:
+    """A structured result whose key figure (``margin``, ``source: tool``) no tool call computed."""
+    time.sleep(DELAY)
+    return Parsed(text("{}"), request["output_format"].model_validate({"margin": 12.5}))
+
+
 def script() -> dict[str, list[Any]]:
     answers = {key: [slow(value) for _ in range(REPEAT)] for key, value in ANSWERS.items()}
-    return {**answers, "BROKEN": [broken] * REPEAT}
+    return {**answers, "BROKEN": [broken] * REPEAT, "KEYFIGURE": [keyfigure] * REPEAT}
 
 
 def main() -> None:

@@ -293,6 +293,8 @@ function ReadyText({ name, fixOnly, action }: { name: string; fixOnly: boolean; 
 function ProblemFacts({ problem, name, action, fixOnly }: { problem: ModelProblem; name: string; action: ReadinessAction; fixOnly: boolean }) {
   const { t } = useTranslation();
   const where = problem.location;
+  // What the model lacks was read from its registry entry before a download: it is not installed and was not downloaded.
+  const registry = problem.cause === "capability_missing" && problem.from_registry === true;
   const values = {
     model: name,
     host: problem.host ?? "",
@@ -309,8 +311,10 @@ function ProblemFacts({ problem, name, action, fixOnly }: { problem: ModelProble
   if (problem.partial_bytes && problem.previous_job) facts.push(t("missingModel.facts.partial", { size: formatLargeBytes(problem.partial_bytes) }));
   return (
     <div className="stack-sm">
-      <p className="missing-model__lead" data-testid="missing-model-cause">
-        {t(`missingModel.cause.${problem.cause}.${where}`, { ...values, defaultValue: t(`missingModel.cause.${problem.cause}.this_computer`, values) })}
+      <p className="missing-model__lead" data-testid="missing-model-cause" data-from-registry={registry || undefined}>
+        {registry
+          ? t("missingModel.cause.capability_missing.registry", values)
+          : t(`missingModel.cause.${problem.cause}.${where}`, { ...values, defaultValue: t(`missingModel.cause.${problem.cause}.this_computer`, values) })}
       </p>
       <p className="small">
         <code className="missing-model__name">{name}</code>

@@ -256,7 +256,7 @@ Em **Exportação**, escolha **Pacote pronto para usar** em vez do projeto-fonte
 | **Incluir a interface web** | Um formulário para este fluxo com progresso ao vivo, aprovações e arquivos de resultado, em seis idiomas. |
 | **Pasta de resultados** | Onde o aplicativo também salva os arquivos de resultado de cada execução. O operador pode mudá-la depois. |
 
-O pacote é gerado em segundo plano; a caixa de diálogo mostra o progresso e permite cancelar. Modelos grandes o deixam com vários gigabytes.
+O pacote é gerado em segundo plano; a caixa de diálogo mostra o progresso e permite cancelar. Modelos grandes o deixam com vários gigabytes. Em um servidor Nodestro, um processo de trabalho gera os pacotes, um por vez para todo o servidor: até que um fique livre, o trabalho mostra *Aguardando um processo de trabalho*, e *Cancelar* o retira.
 
 O pacote nunca contém chaves. No computador de destino, o operador informa as chaves dos provedores de IA na página de configurações da interface web ou com `start.sh configure` (Windows: `start.cmd configure`); elas ficam nesse computador. Os clientes usam chaves de API criadas com `start.sh keys new`. Por padrão o aplicativo só responde neste computador; para a rede ele precisa de TLS ou de um proxy reverso. O README do pacote explica início, parada, configurações e solução de problemas. Os pacotes não são assinados: o macOS e o Windows perguntam uma vez antes da primeira inicialização.
 

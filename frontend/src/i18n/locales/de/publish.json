@@ -305,6 +305,8 @@
       "build": "Paket erstellen",
       "started": "Das Paket wird im Hintergrund erstellt. Das dauert meist einige Minuten, mit großen Modellen länger; du kannst den Dialog währenddessen schließen.",
       "running": "Wird erstellt: {{step}} ({{percent}} %)",
+      "queued": "Wartet auf einen Worker",
+      "queuedHint": "Der Server erstellt ein Paket nach dem anderen; dieses beginnt, sobald ein Worker des Servers frei ist. Du kannst den Dialog währenddessen schließen.",
       "progress": "Fortschritt der Paketerstellung",
       "done": "Paket fertig ({{date}}).",
       "downloadZip": "Herunterladen",

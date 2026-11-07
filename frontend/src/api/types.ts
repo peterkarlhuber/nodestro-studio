@@ -1437,6 +1437,20 @@ export interface UsageReport {
 
 // ---- agent test and context preview -------------------------------------------
 
+/** The reasons of a key figure that a tool does not back (nodestro_runtime.value_checks.Unverified). */
+export const VALUE_WARNING_REASONS = ["missing", "not_from_tool", "table_incomplete", "table_changed"] as const;
+export type ValueWarningReason = (typeof VALUE_WARNING_REASONS)[number];
+
+export interface ValueWarning {
+  field: string;
+  value: unknown;
+  /** One of VALUE_WARNING_REASONS; a newer API may send another. */
+  reason: string;
+  /** ``table_incomplete``: the rows of the table passed to the tool and of the input's table. */
+  rows_passed?: number | null;
+  rows_in_input?: number | null;
+}
+
 export interface AgentTestResult {
   id: string;
   kind: "agent_test";
@@ -1458,6 +1472,9 @@ export interface AgentTestResult {
   finished_at: string | null;
   /** As NodeRun.reasoning_reduced. */
   reasoning_reduced?: string | null;
+  /** Key figures (``source: "tool"``) that no computing tool call of the test backs; missing from an API before
+   * nodestro-runtime RT-054. A workflow run would ask once for a correction and then fail the step. */
+  value_warnings?: ValueWarning[];
 }
 
 export interface PromptSegment {
@@ -3068,6 +3085,10 @@ export interface ExportJob {
   bytes_total: number;
   error_code: string | null;
   error: string | null;
+  /** The parameters of ``error_code`` (e.g. ``size`` and ``limit`` of ``export.server_too_large``). */
+  error_params?: Record<string, unknown>;
+  /** On a server: the job waits for a worker to take it (``state`` stays ``running``; nodestro-api API-048). */
+  queued?: boolean;
   export_id: string | null;
   created_at: string;
   finished_at: string | null;

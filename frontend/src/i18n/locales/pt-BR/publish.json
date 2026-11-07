@@ -305,6 +305,8 @@
       "build": "Gerar pacote",
       "started": "O pacote está sendo gerado em segundo plano. Isso costuma levar alguns minutos, mais com modelos grandes; enquanto isso, você pode fechar esta caixa de diálogo.",
       "running": "Gerando: {{step}} ({{percent}} %)",
+      "queued": "Aguardando um processo de trabalho",
+      "queuedHint": "O servidor gera um pacote por vez; este começa assim que um processo de trabalho do servidor estiver livre. Enquanto isso, você pode fechar esta caixa de diálogo.",
       "progress": "Progresso da geração do pacote",
       "done": "Pacote pronto ({{date}}).",
       "downloadZip": "Baixar",

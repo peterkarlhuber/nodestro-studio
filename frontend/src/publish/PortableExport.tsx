@@ -3,7 +3,7 @@
 // its progress. The package itself is built by the backend (nodestro_api.portable_build) as a job.
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CheckCircle2, Download, PackageOpen, WifiOff, X } from "lucide-react";
+import { CheckCircle2, Clock, Download, PackageOpen, WifiOff, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
@@ -375,10 +375,27 @@ function JobRow({
         {job.state === "failed"
           ? problemText(t, {
               code: job.error_code ?? "export.failed",
+              params: job.error_params ?? {},
               message: job.error ?? "",
             })
           : t("publish.export.portable.cancelled")}
       </Callout>
+    );
+  }
+  // On a server the job may wait for a worker first (one package at a time on the whole server).
+  if (job.queued) {
+    return (
+      <div className="stack-sm" data-testid="api-export-job-queued">
+        <div className="row-gap">
+          <span className="small">
+            <Clock size={13} aria-hidden /> {t("publish.export.portable.queued")}
+          </span>
+          <Button size="sm" variant="ghost" icon={X} busy={cancelling} onClick={onCancel}>
+            {t("common.cancel")}
+          </Button>
+        </div>
+        <span className="muted small">{t("publish.export.portable.queuedHint")}</span>
+      </div>
     );
   }
   return (
