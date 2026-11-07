@@ -1,75 +1,190 @@
-# ci-ok: one manifest-based PR check (CI-FAST W1, report-only)
+# ci-ok: one manifest-based PR check (CI-FAST W1, report-only, v2)
 
 ## What it checks
 
 `ci-ok` answers one question for a pull request: did every mandatory check listed in `.github/ci-manifest.json` run
 on the PR head SHA and succeed?
 
-- Workflow `.github/workflows/ci-ok.yml`, trigger `pull_request` (opened, synchronize, reopened), job and check name
-  `ci-ok`. Script `.github/scripts/ci_ok.py` (standard library only, Python 3.10+), tests
-  `.github/scripts/test_ci_ok.py`, lint settings `.github/scripts/ruff.toml`. All four files are byte-identical in
-  the ten repositories in scope (nodestro-studio, -server, -desktop, -local-docker, -sdk, -examples, -integrations,
-  axentra, axentra-studio, orkexa); this repository holds the canonical copy.
-- **The manifest comes from the PR's base commit** (contents API at `pull_request.base.sha`), so a pull request cannot
-  weaken its own gate. A PR that changes the manifest gets a notice; the change takes effect after the merge. The script
-  itself also runs from the base commit's checkout; only the PR that introduces ci-ok (whose base has no script) runs
-  the PR's copy, with a notice.
+- Workflow `.github/workflows/ci-ok.yml`, script `.github/scripts/ci_ok.py` (standard library only, Python 3.10+),
+  tests `.github/scripts/test_ci_ok.py`, lint settings `.github/scripts/ruff.toml`. Script, tests and lint settings
+  are byte-identical in the ten repositories in scope (nodestro-studio, -server, -desktop, -local-docker, -sdk,
+  -examples, -integrations, axentra, axentra-studio, orkexa); this repository holds the canonical copy. The workflow
+  differs only in its `workflows:` list.
+- **Trigger (v2)**: `on: workflow_run: { workflows: [<names>], types: [completed] }`, where `<names>` is the `name:` of
+  every workflow file in the manifest's `pull_request` (and `pull_request_path_filtered`) section. The job runs only
+  when `github.event.workflow_run.event == 'pull_request'`; completions of push, schedule or dispatch runs skip it,
+  and a skipped job takes no runner.
+- **Nothing comes from the pull request.** GitHub always runs a `workflow_run` workflow from the default branch. The
+  job checks out the default branch's `.github` (the event's `github.sha`, sparse, `persist-credentials: false`) and
+  runs the script and the manifest from there. A PR that changes `ci-ok.yml`, `ci_ok.py` or the manifest gets a notice
+  in the report; the change takes effect after merge.
+- **What is evaluated**: the triggering run's `head_sha` and the PR number(s) in `workflow_run.pull_requests` (one
+  report per PR). That list is empty for fork PRs; ci-ok then evaluates the head SHA alone, says so in the report,
+  counts pull_request runs of any PR on that SHA, and approximates the changed files by comparing the default branch
+  with the head SHA (if that comparison fails, path-filtered workflows without a run count as missing).
+- **One evaluation, no waiting.** Each completion of a listed workflow starts one job of a few seconds that reads the
+  current state once. Verdicts: `OK`, `NOT OK` (any counted row failed, also when others are still running), or
+  `PENDING` (nothing failed, but listed jobs have not finished). Because every listed workflow's completion triggers a
+  new evaluation, the evaluation started by the last completion sees the final state. **The latest completed ci-ok run
+  for a head SHA is the verdict.** Its run name is `ci-ok for <head SHA> after <workflow>`.
 - **Expected jobs**: every name in `pull_request.<workflow file>` and `pull_request_path_filtered.<workflow file>`.
   A job is matched by workflow file (`run.path == .github/workflows/<file>`) and by its exact name (the check-run name,
-  for example `test (3.11)` or `systems / system (ubuntu-24.04)`). Only runs with `event == pull_request` on the PR
-  head SHA count. Several runs of one workflow on one SHA: the newest run wins. A re-run: the jobs endpoint is read with
-  `filter=latest`, so the latest attempt decides (verified on axentra #58, whose attempt 1 failed and attempt 2 passed).
+  for example `test (3.11)` or `systems / system (ubuntu-24.04)`). Only runs with `event == pull_request` on the head
+  SHA count. A re-run: the jobs endpoint is read with `filter=latest`, so the latest attempt decides (verified on
+  axentra #58, whose attempt 1 failed and attempt 2 passed), and the re-run's completion re-evaluates.
+- **Attribution to the PR (review F5)**: when the PR number is known, a run counts only if its `pull_requests` contains
+  that number. Runs that list only other PRs are ignored (and counted in a notice). A run that lists no PR at all is
+  used only when the workflow has no run attributed to this PR, with a note on the row. Among equal candidates the
+  newest run wins (close/reopen).
+  Caveat, observed on studio #152: GitHub fills a run's `pull_requests` from the head branch's currently **open**
+  PRs, not from the PR that triggered the run. Live, the evaluated PR is open, so this works; but two open PRs from
+  the same head branch (for example against `master` and a release branch) both appear on every run of that branch,
+  and the filter cannot separate them. A dry run (`--pr`) of a closed PR therefore attributes by head SHA alone, with
+  a notice.
+- **Duplicate names (F6)**: when several jobs of the newest attempt share a listed name (a reusable workflow called
+  twice, a collapsed matrix name), all of them must succeed; one pending makes the row pending.
 - **Path-filtered workflows** (studio `docker.yml`, `macos.yml`; server and local-docker `upgrade.yml`): the manifest key
   `path_filters` holds a verbatim copy of each workflow's `on.pull_request.paths` (or `paths_ignore`). The script reads
   the PR's changed files (`pulls/{n}/files`, falling back to the compare API, which needs only `contents: read`) and
   evaluates the filters with GitHub's glob semantics (`*` does not cross `/`, `**` does, `?`/`+` quantify the preceding
   character, `[...]` classes, a leading `!` negates and the last matching pattern wins). A workflow that should not have
   run is reported as `not triggered (paths)` and counts as ok; one that should have run but has no run is `missing`.
-  If a path-filtered workflow runs anyway, its jobs are judged normally.
-- **Drift check**: `ci_ok.py --self-check --root <tree>` compares the manifest with the workflow files (a minimal YAML
-  reader for the `on:` block, no PyYAML): every workflow with a `pull_request` trigger must be listed, every listed
-  workflow must exist and run on `pull_request`, `path_filters` must equal the workflow's filter, `advisory` entries
-  must name listed jobs in a workflow that has `continue-on-error`. The ci-ok job runs it on the PR's tree, so a PR that
-  adds a workflow or changes a paths filter without updating the manifest gets a warning.
+  If a path-filtered workflow runs anyway, its jobs are judged normally. A path-filtered workflow without a
+  `path_filters` entry is now NOT ok (F8; it used to count as ok).
 - **Verdicts per expected job**: `success` is ok. `failure`, `cancelled`, `timed_out`, `action_required`, `skipped`,
-  `neutral`, `stale`, `missing` (also `missing (run <conclusion>)` when the run ended without the job) and
-  `timed out (ci-ok)` are NOT ok. `skipped` is NOT ok on purpose: a mandatory check that did not run did not pass.
+  `neutral`, `stale`, `missing` (also `missing (run <conclusion>)` when the run ended without the job) are NOT ok.
+  `skipped` is NOT ok on purpose: a mandatory check that did not run did not pass.
 - **Advisory jobs**: manifest key `advisory: ["<workflow>/<job name>", ...]` for jobs with `continue-on-error`. They
-  are shown but never decide the verdict. Populated after checking `continue-on-error` in the workflow files:
-  studio `ci.yml/browser-engines (firefox|webkit)` (job-level `continue-on-error: true`), sdk
-  `ci.yml/runtimes (macos-latest|windows-latest)` (`continue-on-error: ${{ matrix.os != 'ubuntu-latest' }}`), orkexa
-  `platforms.yml/DockerSandbox (podman rootless is refused|colima macOS x86-64)` (`continue-on-error:
-  ${{ matrix.experimental }}`, the two `experimental: true` entries). Step-level `continue-on-error` (pin-distance
-  warnings in server, desktop, local-docker; the GNOME attempt in desktop `systems.yml`) does not make a job advisory.
-- **Unlisted jobs**: any job of a `pull_request` run on the head SHA that is not in the manifest (ci-ok's own workflow
-  excluded) is reported as `unlisted`, a warning, never a failure. This is how manifest drift becomes visible.
-- **Output**: a markdown table in `$GITHUB_STEP_SUMMARY`, a one-line verdict
-  (`ci-ok: OK (...)` / `ci-ok: NOT OK (...)`), `::warning::` annotations for NOT OK and for unlisted jobs.
-- **Waiting**: polls every 60 s (`CI_OK_POLL_SECONDS`) for at most 90 min (`CI_OK_TIMEOUT_MINUTES`; the job's
-  `timeout-minutes` is 100 so the script reports the timeout itself). A workflow without any run is `pending` for the
-  first 10 min (`CI_OK_GRACE_MINUTES`), then `missing`. Fail-fast: once a counted job has failed the verdict is final
-  and the job ends early (`CI_OK_FAIL_FAST=0` waits for everything). Jobs of completed runs are cached between polls.
-- **Concurrency**: group `ci-ok-<PR number>`, `cancel-in-progress: true`: a new push supersedes the old wait.
+  are shown but never decide the verdict: studio `ci.yml/browser-engines (firefox|webkit)`, sdk
+  `ci.yml/runtimes (macos-latest|windows-latest)`, orkexa
+  `platforms.yml/DockerSandbox (podman rootless is refused|colima macOS x86-64)`. Step-level `continue-on-error` does
+  not make a job advisory.
+- **Unlisted jobs**: any job of a `pull_request` run on the head SHA that is not in the manifest is listed as
+  `unlisted` (a table row and a count in the verdict line), never a failure. In v2 this includes jobs in `ci-ok.yml`
+  itself (F13: the gate's file is no longer a blind spot, because the real gate never runs on `pull_request`).
+- **Impostors (F1, fix 3)**: any `pull_request` job named `ci-ok`, in any workflow file including `ci-ok.yml`, is a
+  counted `impostor` row and makes the verdict NOT OK.
+- **Fail closed (F2, F7, F8)**: no bootstrap fallback any more (no default-branch manifest means `no manifest`, NOT
+  OK). The script runs `--self-check` on the default-branch checkout on every evaluation; each problem is a counted
+  `inconsistent` row. A manifest with no counted job is `no mandatory jobs`, NOT OK. API errors are retried (5xx,
+  network, rate limits; `Retry-After` first, then `x-ratelimit-reset`) within one 180 s deadline
+  (`CI_OK_API_DEADLINE_SECONDS`), then reported as `api error`, NOT OK. Any other exception is reported the same way.
+- **Output**: a markdown table per PR in `$GITHUB_STEP_SUMMARY`, and exactly one annotation per PR: `::notice` for
+  OK and PENDING, `::warning` for NOT OK.
+- **Exit code**: report-only always exits 0, whatever the verdict and also on errors. `CI_OK_ENFORCE=1` makes a
+  verdict other than OK exit 1.
+- **Concurrency**: job-level `group: ci-ok-<head SHA>`, `cancel-in-progress: false`. A running evaluation is never
+  cancelled; GitHub keeps at most one pending job per group and replaces an older pending one with the newer, so only
+  the newest queued evaluation runs next and it starts after every completion that queued it. The group sits on the
+  job, behind the `if:`, so that the skipped evaluation of a push run on the same SHA (a fast-forward or rebase merge)
+  cannot replace a pending PR evaluation. Replaced pending runs show up as cancelled ci-ok runs; that is expected.
 - **Permissions**: top-level `contents: read`; the job has `contents: read` and `actions: read`. No `checks`,
   `statuses` or `pull-requests` permission, no secrets, no new actions (only `actions/checkout` at the SHA every
-  repository already uses).
+  repository already uses). `timeout-minutes: 10`.
+
+### Which workflows trigger it
+
+| Repository | `workflows:` | Not listed |
+|---|---|---|
+| nodestro-studio | `CI`, `Docker`, `macOS frontend`, `Platform`, `Platforms` | `Nightly`, `Components at master` (no `pull_request`) |
+| nodestro-server, nodestro-local-docker | `ci`, `upgrade` | `Nightly` and the other non-PR workflows |
+| nodestro-desktop, -sdk, -examples, -integrations, axentra, axentra-studio | `CI` | `Nightly` and the other non-PR workflows |
+| orkexa | `CI`, `Platforms` | `Nightly` and the other non-PR workflows |
+
+- **Path-filtered workflows are listed.** When they run, their completion must re-evaluate, or a slow path-filtered
+  workflow finishing last would leave a stale PENDING. When their filter excludes a PR they never run, and the other
+  listed workflows' completions decide (`ci.yml` runs on every PR in every repository).
+- **Nightly is not listed.** It never runs on `pull_request`, and the job's `if:` would skip it anyway. Workflows that
+  the nightly calls (`workflow_call`) do not fire `workflow_run` on their own; only the caller does.
+
+### Self-check (F8)
+
+`python3 -I .github/scripts/ci_ok.py --self-check --root .` is a lint with no network access. It exits 1 on any of:
+
+- a workflow with a `pull_request` trigger that is not in the manifest, or a listed workflow that is missing or has
+  no `pull_request` trigger;
+- `path_filters` that differ from the workflow's `on.pull_request` filter, or a path-filtered workflow without a
+  `path_filters` entry;
+- a manifest without any mandatory job;
+- an `advisory` entry that is not a listed job, or whose workflow has no `continue-on-error`;
+- `ci-ok.yml` missing, running on `pull_request` or `pull_request_target`, or with a `workflow_run.workflows` list that
+  differs from the `name:` of the listed workflows (a workflow without `name:` is matched by its path, as GitHub does);
+  several workflow files that share a listed name;
+- any other workflow that defines a job or step named `ci-ok` (impostor).
+
+It is not added to an existing PR job in this wave. A new failing step in an existing mandatory job changes what that
+job enforces, which the W1 rules leave to the lead. Run it locally (or in a later wave's lint job) whenever the
+manifest or a workflow's `name:`, `on:` or job names change. The evaluator runs the same check on the default branch
+on every evaluation, so drift that reaches the default branch shows up as NOT OK.
+
+## Review findings (REVIEW-ci-ok.md) and v2
+
+| Finding | Status in v2 |
+|---|---|
+| F1 PR controls its own gate | Fixed for the evaluation: `workflow_run` runs the default branch's definition, script and manifest, and pull_request jobs named `ci-ok` are flagged as impostors. Not yet a PR check (see below). The mandatory jobs themselves still run from the PR's workflow files (CODEOWNERS, below). |
+| F2 base re-targeting, bootstrap fallback | Fixed: no fallback; the manifest and script always come from the default branch, so re-targeting the base cannot select another gate (see "Re-targeting the base" below). |
+| F3 waiting jobs hold runner slots | Fixed: one short job per completion, no waiting. |
+| F4 stale verdict after re-runs | Fixed: every completion, including re-runs, re-evaluates; the latest ci-ok run is the verdict. |
+| F5 another PR's run on the same SHA | Partly fixed: runs that list only other PRs are ignored when the PR number is known. Two open PRs from the same head branch still cannot be separated (GitHub lists both on each run), and fork PRs (no number) fall back to the head SHA, reported. |
+| F6 duplicate names | Fixed: all must succeed. |
+| F7 API errors crash | Fixed: retried within a deadline, `Retry-After` honored, reported as `api error` NOT OK, exit 0 in report-only. |
+| F8 fail-open manifest states | Fixed: NOT OK in the evaluator, exit 1 in `--self-check`, self-check of the default branch on every evaluation. |
+| F9 two-step manifest changes | Open (unchanged, procedure below). The manifest is now the default branch's current one, not a fixed base SHA. |
+| F10 merge queue, other apps' checks | Open (enforcement precondition). |
+| F11 changed-file caps | Open (unchanged). |
+| F12 glob escapes | Open (unchanged; no filter uses them). |
+| F13 gate's own file is a blind spot | Fixed: `ci-ok.yml`'s pull_request jobs are reported like any other. |
+
+### Re-targeting the base (`edited`)
+
+The v1 gate ran on `pull_request` without `edited`, so a PR first opened against a branch without ci-ok (or with a
+weak manifest) could pick its own script and manifest through the bootstrap fallback, and keep that green check after
+its base was changed to `master`. With `workflow_run` the gate no longer depends on the PR's base at all: the script
+and manifest are always the default branch's, and there is no fallback. Changing the base does not re-run the
+listed workflows (they do not trigger on `edited` either), so the verdict stays the one computed for the head SHA,
+which is the same per-SHA behavior as any native check. Resolved by `workflow_run`.
 
 ## Why report-only
 
 A required check that is wrong blocks every merge in the repository. Before `ci-ok` can be required it must be shown
-to agree with reality: the manifests were written by hand in W0, path filters and re-runs are subtle, and the cost
-below is new. In report-only mode the job exits 0 even when the verdict is NOT OK; the verdict is visible in the job
-summary and as a warning annotation. It is not a required check.
+to agree with reality: the manifests were written by hand in W0, path filters and re-runs are subtle. In report-only
+mode the job exits 0 whatever the verdict; the verdict is the job summary of the latest ci-ok run for the head SHA.
 
-## How to enforce later (after independent review)
+**Where the verdict lives**: a `workflow_run` job's check run is attached to the default branch's commit, not to the
+PR head, so in v2 the verdict does **not** appear in the PR's checks list. Look in Actions, workflow `ci-ok`, the
+newest run named `ci-ok for <head SHA> ...`.
 
-1. Collect evidence: compare ci-ok's verdict with the actual merge decision on real PRs for a while (every NOT OK
-   on a PR that was merged green is either a manifest error or a ci-ok bug).
-2. Set `CI_OK_ENFORCE: "1"` in `ci-ok.yml` (the verdict becomes the exit code; the self-check then also fails on drift).
-3. Make `ci-ok` a required status check in the branch protection / ruleset (a repository setting, done by the owner),
-   and only then consider removing the individual required checks it replaces.
+## What remains before enforcement
 
-## Dry runs (first evidence, 2026-11-07, `--once` against finished PRs, local manifest with the W1 additions)
+1. **Post the verdict to the head SHA.** The `workflow_run` job creates a check run named `ci-ok` on
+   `workflow_run.head_sha` (`POST /repos/{repo}/check-runs`, `checks: write`), updated by each evaluation. `checks:
+   write` is a new permission and needs Peter's approval. (A commit status with `statuses: write` would also work, but
+   any workflow with `statuses: write` could forge it, so a check run is preferred.) The job must still never check out
+   or execute PR code.
+2. **Pin the required check to its app.** In branch protection or the ruleset, require `ci-ok` from the GitHub Actions
+   app only, so that a commit status with the context `ci-ok` or a check from another app cannot satisfy it.
+3. **CODEOWNERS for `.github/**`** with "Require review from Code Owners". This is the only control against a PR
+   that weakens the mandatory jobs themselves (they still run from the PR's workflow files). Also "Require approval for
+   all outside collaborators" for fork runs.
+4. **Merge queue decision (F10).** Either no merge queue (record it as a precondition), or add `merge_group` handling.
+   Inventory the currently required checks per repository, including checks from other apps, before removing any.
+5. **Evidence.** Compare ci-ok's verdict with the actual merge decision on real PRs for a meaningful period (for example
+   two weeks across all ten repositories). Every NOT OK on a PR that was merged green is a manifest error or a bug.
+6. Then set `CI_OK_ENFORCE: "1"`, make `ci-ok` required, and only then consider removing the individual required checks.
+
+Until step 1, under enforcement a PR whose listed workflows never complete (for example a PR that renames a listed
+workflow's `name:`, so that its completions no longer trigger ci-ok) would simply have no verdict. With a required
+check that is "missing", not "green", so this fails closed once step 1 exists.
+
+### Changing the manifest (F9)
+
+Renaming or removing a mandatory job: first merge a PR that changes the manifest (and, if a workflow's `name:` changes,
+the `workflows:` list in `ci-ok.yml`; the self-check enforces both), then the change. A PR that does both at once is
+judged by the default branch's manifest and reports the renamed job as `missing`.
+
+## Dry runs (v1 evidence, 2026-11-07, `--once` against finished PRs, local manifest with the W1 additions)
+
+These ran the v1 script; the verdict logic for these cases is unchanged in v2.
 
 | PR | Head | Verdict | Notes |
 |---|---|---|---|
@@ -85,79 +200,40 @@ summary and as a warning annotation. It is not a required check.
 
 No `unlisted` jobs appeared in any of them; the manifests match what runs today.
 
-## Cost: one runner slot per PR head while CI runs
+## Cost
 
-The job does nothing but wait, yet it holds an `ubuntu-latest` runner the whole time. All ten repositories are
-public, so there is no minute billing; the cost is **concurrency**: the account's 20 concurrent jobs are shared by every
-repository, and a waiting ci-ok job takes one of them.
+v1 held one `ubuntu-latest` runner per PR head for the whole CI span (about 20,600 runner minutes in 14 days across
+the ten repositories, about one of the account's 20 concurrent slots on average, more in peaks). v2 runs one job of
+seconds per completed listed workflow (studio: five per PR push, the other repositories one or two). Runner time per
+push drops from the CI span (4 to 46 minutes) to well under a minute in total, and no job waits.
 
-Measured (CI span = first run created to last job completed on the PR head, from the dry runs above) and the number
-of `pull_request` runs of `ci.yml` in the 14 days before 2026-11-07:
-
-| Repository | CI span (min) | PR pushes in 14 days | ci-ok runner minutes in 14 days (upper bound) |
-|---|---|---|---|
-| nodestro-studio | 20-33 (about 22) | 237 | about 5,200 |
-| axentra | 46 | 65 | about 3,000 |
-| nodestro-desktop | 31 | 89 | about 2,750 |
-| orkexa | 19-27 (about 23) | 101 | about 2,300 |
-| nodestro-server | 26 | 86 | about 2,250 |
-| nodestro-sdk | 15 | 114 | about 1,700 |
-| axentra-studio | 24 | 47 | about 1,150 |
-| nodestro-local-docker | 17 | 60 | about 1,000 |
-| nodestro-examples | 8.5 | 101 | about 850 |
-| nodestro-integrations | 4 | 87 | about 350 |
-| **total** | | **987** | **about 20,600 (about 1,470 per day)** |
-
-That is about one extra slot on average over 24 h, or about 2.5 of the 20 slots during a 10-hour working day. It is an
-upper bound: `cancel-in-progress` ends the wait of a superseded push, and fail-fast ends it at the first failure. The
-real risk is peaks: a wave of PRs across all repositories (for example a pin bump in twelve repositories) adds one
-waiting slot per PR exactly when the queue is already full, and the waiting slots can delay the very jobs they wait for.
-
-API budget: each poll costs one runs call plus one jobs call per run that is not yet completed (studio: at most six per
-minute, about 180 for a 30-minute wait). `GITHUB_TOKEN` allows 1,000 requests per hour per repository, so three or more
-studio PRs waiting at the same time could reach it; the script then pauses until the reset instead of failing.
-
-### Mitigations
-
-- **Starting with a delay does not help** inside the job: a `sleep` holds the runner as well. A delay that does not
-  hold a runner needs an environment with a wait timer (`environment:` on the job), which is a repository setting and
-  creates deployment records on every PR; not done here.
-- **Raise the poll interval** (`CI_OK_POLL_SECONDS`) to reduce API calls; it does not reduce slot time.
-- **`workflow_run` variant (recommended for enforcement)**: trigger on `workflow_run: types: [completed]` of the listed
-  workflows. Each completion starts a short job (seconds, not minutes) that evaluates the same script with `--once`
-  for `workflow_run.head_sha` and the PR found via `workflow_run.pull_requests` (empty for fork PRs; then look the PR up
-  by head SHA). Research result: **this variant cannot report on the PR without a write permission.** A
-  `workflow_run` workflow runs in the context of the default branch; its own check run is attached to the default
-  branch's commit, not to the PR head, so it never shows up as a check on the PR. To appear on the PR it must create a
-  commit status (`statuses: write`, `POST /repos/{repo}/statuses/{head_sha}` with context `ci-ok`) or a check run
-  (`checks: write`). Both are outside what CI-FAST allows in W1. With `statuses: write` it would remove the waiting
-  slot entirely (and works for fork PRs, because `workflow_run` gets a write token while never checking out PR code).
-  Extra care then: a workflow that was skipped by its paths filter never completes, so the evaluation must run on every
-  completion and the last one decides; ci.yml runs on every PR in every repository, so there is always at least one
-  completion. Decision for a later wave.
+API budget per evaluation: one or two runs calls, one jobs call per run on the head SHA, one or more changed-files
+calls (studio: about ten requests). `GITHUB_TOKEN` allows 1,000 requests per hour per repository.
 
 ## Known limits
 
-- Changed files: `pulls/{n}/files` returns at most 3,000 files; the compare fallback (used when the token has no
-  `pull-requests` permission, i.e. in the ci-ok job) returns at most 300. GitHub's own path filtering looks at the first
-  300 changed files too, but the two lists may differ in order for very large PRs.
+- Changed files: `pulls/{n}/files` returns at most 3,000 files; the compare fallback returns at most 300 (F11).
 - The minimal YAML reader handles the `on:` shapes these repositories use (block or flow lists, quoted or plain
   scalars, comments). Anchors, multi-line scalars or `on:` written as a flow mapping are reported as unreadable by
   `--self-check` instead of being guessed.
 - A job whose name is computed at runtime differently from the manifest is `missing` plus `unlisted`, by design.
-- Advisory status is taken from the manifest, not detected: when a job loses `continue-on-error`, remove it from
-  `advisory` (the self-check only verifies that the workflow still has `continue-on-error` somewhere).
-- A job re-run after ci-ok finished does not re-trigger ci-ok; re-run the ci-ok job (or push) to refresh the verdict.
-- Unit tests: run with `python3 -m unittest discover -s .github/scripts -p test_ci_ok.py` (or
+- Advisory status is taken from the manifest, not detected.
+- `workflow_run` starts only once `ci-ok.yml` (v2) is on the default branch; until then nothing runs. A change to it
+  can only be observed after merge.
+- The script's own tests no longer run in CI (v1 ran them in the ci-ok job, from the PR's copy during bootstrap). Run
+  them locally on every change to the script; a later wave can add them to a lint job.
+- The verdict reflects the API at evaluation time. A completion event that arrives before the API shows the run's
+  final job conclusions would give a stale PENDING; the next completion (or a re-run of ci-ok) refreshes it.
+- Unit tests: `python3 -I -m unittest discover -s .github/scripts -p test_ci_ok.py` (or
   `python3 .github/scripts/test_ci_ok.py`). `python3 -m unittest .github/scripts/test_ci_ok.py` does not work, because
-  unittest turns the path into the module name `.github.scripts.test_ci_ok`. The ci-ok job runs the tests before it
-  evaluates; they are not added to studio's backend `pytest` run (pytest skips dot directories).
+  unittest turns the path into the module name `.github.scripts.test_ci_ok`.
 
 ## Local dry run
 
 ```
-GH_TOKEN=$(gh auth token) python3 .github/scripts/ci_ok.py --repo peterkarlhuber/<repo> --pr <n> --once \
-  [--head-sha <sha>] [--manifest-file .github/ci-manifest.json] [--json out.json]
+GH_TOKEN=$(gh auth token) python3 .github/scripts/ci_ok.py --repo peterkarlhuber/<repo> --pr <n> \
+  [--head-sha <sha>] [--root .] [--manifest-file .github/ci-manifest.json] [--json out.json]
 ```
 
-`--once` (alias `--no-wait`) evaluates one snapshot; anything unfinished is `not finished (--once)`.
+It evaluates once, like the workflow. `--head-sha` alone evaluates a SHA without a PR number. `--once` is accepted for
+compatibility with v1 and does nothing.
