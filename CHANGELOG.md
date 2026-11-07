@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### MUP-ONA B1/B3 cascade (2026-11-07)
+
+- Pins nodestro-runtime 099f4d4 (runtime #130 B1 orkexa conformance suite, #131 B3 PostgreSQL ranking drift fixes
+  and bounded reindex switch, #132 sandbox gateway fix), nodestro-examples b8998b2 (examples #83),
+  nodestro-integrations 31b4f8a (integrations #71), nodestro-api 2685925 (api #104) and nodestro-sdk 2d866d2
+  (sdk #96); `platform/versions.json` names orkexa b3d6fae, the commit the runtime pins.
+- New text and hint in six languages for `run.agent.VectorError` (an embedding model returned a vector that cannot
+  be used: not a number, or another number of dimensions than the knowledge index).
+
 ### MUP-ONA A1 cascade (2026-11-07)
 
 - Security (A1, PS-1): the platform pins carry the PDF limits. The runtime reads PDF text in a separate process with
