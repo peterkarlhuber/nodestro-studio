@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### TODO abatement round 4 (2026-11-07)
+
+- Tests: suite `local-server` (`scripts/e2e.sh`) runs the local models end to end against a fake Ollama over HTTP
+  (`tests/fake_ollama.py`, `tests/e2e_local_models_server.py`): stop and start, a measured download checked against
+  the catalog, a failed download and Try again, the speed measurement, import refusals and real GGUF and offline
+  package imports, the semantic index and a local agent run from the editor, in six languages, both themes, desktop
+  and phone width, with axe (ST-043).
+- Tests: suite `portable` (opt-in, needs the network on a cold cache; CI job `browser-portable`) builds a real
+  portable package from the publish dialog, cancels one build, downloads the ZIP and checks its contents and every
+  SHA256SUMS checksum, and shows the dialog in six languages (ST-047).
+- Settings → Local models: a job that starts and ends between two polls of the job list (a quick speed measurement
+  or import) now refreshes the overview too; before, the measured speed or the imported model appeared only after a
+  reload.
+- `e2e/localModels.mjs` expects 409 for a second setup (API-062).
+
 ### MUP-ONA master implementation plan (2026-11-06)
 
 - docs: the security and database-backend master plan MUP-ONA (Orkexa, Nodestro, Axentra) is versioned in
