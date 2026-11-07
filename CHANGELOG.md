@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### MUP-ONA A1 cascade (2026-11-07)
+
+- Security (A1, PS-1): the platform pins carry the PDF limits. The runtime reads PDF text in a separate process with
+  page, character, time and memory limits; an upload with a PDF over a limit is refused with `document.too_complex`
+  (`name`). New texts in six languages for `document.too_complex` and `document.limits_invalid` (`variable`).
+- Pins nodestro-runtime de56875 (runtime #127: A1, B0), nodestro-examples cda07c4 (examples #82),
+  nodestro-integrations cb90fe5 (integrations #70), nodestro-api 63af1df (api #103: A1, B0; includes api #102) and
+  nodestro-sdk 4596be3 (sdk #95); `platform/versions.json` names orkexa f89102c and Axentra 273e675, the commits the
+  runtime pins.
+
 ### TODO abatement round 5 (2026-11-07)
 
 - Missing local model: when the readiness check read from the model registry, before any download, that a model
