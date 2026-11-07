@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 0 |
 | P2 Medium | 4 |
-| P3 Low | 11 |
+| P3 Low | 10 |
 | P4 Optional | 4 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -132,20 +132,13 @@ The master implementation plan MUP-ONA ([MUP-ONA.md](https://github.com/peterkar
   the interface itself has not been used in a browser on macOS or Windows. The `Docker` workflow runs AI-generated
   code in a real engine on Linux and macOS Intel (ST-033).
   Since the TODO round of 2026-11-06 the CI job `browser-engines` (non-blocking) runs `welcome`, `a11y` and
-  `settings-ui` in Firefox and WebKit; it has not run yet (only Chromium is installed in the dev VM).
-- **Next step:** Read the first `browser-engines` results, fix what they find and decide whether the job blocks; run
-  the remaining suites once in Firefox and WebKit.
-
-### ST-034 · Welcome page on app start not checked in WebKit
-
-- **Priority:** P3 Low · **Status:** Open · **Refs:** studio #99, `frontend/src/welcome/startPage.ts`,
-  `docs/design/LANDING.md` §4
-- **What:** Every app start on `/` opens `/welcome`, decided by the Navigation Timing type (`navigate` = start;
-  `reload`/`back_forward` = stay). Verified in Chromium only, including the desktop-style launch page that moves on to
-  `/` with a meta refresh. Unverified: whether WebKit (desktop app on macOS and Linux, Safari) reports that meta
-  refresh as `navigate`. If not, the desktop app opens the Studio directly on start (no error, no loop).
-- **Next step:** Read the WebKit result of the CI job `browser-engines` (runs the `welcome` suite), or start the
-  desktop app on macOS/Linux and confirm the welcome page appears; remove this entry when confirmed.
+  `settings-ui` in Firefox and WebKit. Firefox passes them. WebKit's renderer crashed in `welcome` in about half of the
+  runs: the welcome logo's intro animated a blur filter on a 3D-transformed layer, which WebKitGTK without a GPU (the
+  CI runner, and the Linux desktop app on such machines) crashed on in about 1 of 12 page loads under load; without
+  the animated blur 0 of 180 loads crashed and the suite passed 3 of 3 times on one CPU core. WebKit confirmed that
+  the desktop-style launch (a meta refresh to `/`) opens the welcome page (former ST-034).
+- **Next step:** Make `browser-engines` blocking once it is green on a few PRs in a row; run the remaining suites once
+  in Firefox and WebKit.
 
 ### ST-020 · Assistive technology, zoom, motion and contrast checks
 

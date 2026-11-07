@@ -4,6 +4,11 @@
 
 ### TODO abatement round 4 (2026-11-07)
 
+- Welcome page: the logo's intro no longer animates a blur filter. WebKitGTK without a GPU (CI, and the Linux
+  desktop app on such machines) crashed the page's renderer on it in about 1 of 12 loads (ST-019); the welcome
+  suite logs a crashed renderer and CI's `browser-engines` job prints the browser's own output. ST-034 is closed:
+  WebKit opens the welcome page on a desktop-style launch.
+
 - Pins: nodestro-runtime f26dac4 (runtime #126: a busy sandbox image build stays `checking` (LD-020), Bedrock region
   in usage, registry facts before a download, `pgvector_status()`, the price-table date fix of runtime #125; runtime
   #128: the legacy fixture restore test skips without psycopg; MUP-ONA A11 runtime #123), nodestro-examples 570ef4f,
