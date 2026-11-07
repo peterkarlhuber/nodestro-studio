@@ -194,7 +194,7 @@ jobs:
         run: pytest
 
   report:
-    needs: [ci, docker, macos, platform, platforms, canary, inventory, components-at-master]
+    needs: [ci, docker, macos, platform, platforms, canary, inventory]
     if: always()
     runs-on: ubuntu-latest
     permissions:
@@ -217,5 +217,33 @@ jobs:
             exit 1
           elif [ -n "$number" ]; then
             gh issue comment "$number" --body "Nightly run $RUN_URL is green again (commit $GITHUB_SHA). Closing."
+            gh issue close "$number"
+          fi
+
+  # Early warning only: a component master that breaks the studio is not a studio defect yet (pins still decide).
+  # It gets its own issue and keeps the nightly green, so it cannot hide or fake the S4 result above.
+  drift-report:
+    needs: [components-at-master]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Open, update or close the components-at-master issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NEEDS: ${{ toJSON(needs) }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          title="Nightly: components at master break the studio"
+          failed=$(python3 -c 'import json,os; n=json.loads(os.environ["NEEDS"]); print(" ".join(k for k,v in n.items() if v["result"] not in ("success","skipped")))')
+          number=$(gh issue list --state open --search "in:title \"$title\"" --json number,title --jq "map(select(.title==\"$title\"))[0].number // empty")
+          if [ -n "$failed" ]; then
+            body="Nightly run $RUN_URL failed: $failed (commit $GITHUB_SHA)."
+            if [ -n "$number" ]; then gh issue comment "$number" --body "$body"; else gh issue create --title "$title" --body "$body"; fi
+          elif [ -n "$number" ]; then
+            gh issue comment "$number" --body "Nightly run $RUN_URL is compatible again (commit $GITHUB_SHA). Closing."
             gh issue close "$number"
           fi
