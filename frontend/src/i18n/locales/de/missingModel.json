@@ -41,7 +41,8 @@
       "container": "{{model}} braucht etwa {{size}}, im Modellordner des Containers sind aber nur {{free}} frei. Gib Speicherplatz auf dem Laufwerk frei und prüfe dann erneut."
     },
     "capability_missing": {
-      "this_computer": "{{model}} ist installiert, unterstützt aber nicht, was dieser Schritt braucht: {{list}}."
+      "this_computer": "{{model}} ist installiert, unterstützt aber nicht, was dieser Schritt braucht: {{list}}.",
+      "registry": "{{model}} unterstützt nicht, was dieser Schritt braucht: {{list}}. Das steht in seinem Eintrag in der Modell-Registry, deshalb wurde es nicht heruntergeladen."
     },
     "hardware_insufficient": {
       "this_computer": "{{model}} ist nicht installiert und braucht vermutlich mehr Arbeitsspeicher, als dieser Computer hat.",

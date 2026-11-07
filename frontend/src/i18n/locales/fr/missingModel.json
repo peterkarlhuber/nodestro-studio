@@ -41,7 +41,8 @@
       "container": "{{model}} nécessite environ {{size}}, mais seulement {{free}} sont libres dans le dossier des modèles du conteneur. Libérez de l’espace sur le disque, puis vérifiez à nouveau."
     },
     "capability_missing": {
-      "this_computer": "{{model}} est installé, mais ne prend pas en charge ce dont cette étape a besoin : {{list}}."
+      "this_computer": "{{model}} est installé, mais ne prend pas en charge ce dont cette étape a besoin : {{list}}.",
+      "registry": "{{model}} ne prend pas en charge ce dont cette étape a besoin : {{list}}. C’est ce qu’indique son entrée dans le registre des modèles ; il n’a donc pas été téléchargé."
     },
     "hardware_insufficient": {
       "this_computer": "{{model}} n’est pas installé et nécessite probablement plus de mémoire que cet ordinateur n’en possède.",
