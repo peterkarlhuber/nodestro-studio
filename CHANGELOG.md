@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Pin wave W7, TABRION JQ-4 (2026-11-08)
+
+- Pins nodestro-runtime f5da80d (runtime #143, TABRION JQ-1..JQ-3, RT2-03: writes are never repeated after a lost
+  connection; no schema change, no public signature change), axentra 9c4666f (axentra #61, MIG-AXE-0, B-06-1: values
+  of database errors are redacted from logs, traces and stored errors), nodestro-examples 4d46e22 (#91),
+  nodestro-integrations 2b19279 (#79), nodestro-api 221f9e1 (#113: regression test for a lost export enqueue reply)
+  and nodestro-sdk f97de2f (#105). Orkexa is unchanged (792a041). `scripts/check_versions.py`: pins agree.
+
 ### MUP-ONA close-out (2026-11-07)
 
 - docs: ADR-0011 records the full-text search semantics as an addendum to ADR-0002 (MUP-ONA O10); ADR-0002 is unchanged.
