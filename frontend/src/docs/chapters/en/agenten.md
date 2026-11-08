@@ -166,8 +166,8 @@ The result of the check is shown in the execution next to the agent: passed or n
 
 | Setting | Default | Effect |
 |---|---|---|
-| **Max. tokens** | 8,000 | Maximum number of output tokens per answer, including thinking (up to the model's documented maximum, e.g. 128,000 for Claude Opus 5.5 and 64,000 for Claude Haiku 4.5; the inspector shows it next to the field). When it is reached, the agent stops with `IncompleteResponseError`. |
-| **Max. tool rounds** | 8 | How many rounds of tool calls the agent may make per task (0–50). After that it ends with `MaxToolRoundsError`. At 0 it may not call any tools. |
+| **Max. tokens** | 8,000 | Maximum number of output tokens per answer, including thinking (up to the model's documented maximum, e.g. 128,000 for Claude Opus 5.5 and 64,000 for Claude Haiku 4.5; the inspector shows it next to the field). If a local model's (Ollama) thinking fills the whole limit, Nodestro asks once more without the thinking phase, and the step shows “Answered without thinking”. If the answer itself is longer, the agent stops with `IncompleteResponseError`; the message names the cause. |
+| **Max. tool rounds** | 8 | How many rounds of tool calls the agent may make per task (0–50). In the last round Nodestro asks it to answer with the tool results it has, and the step shows “Answer at the tool-round limit” (not on Amazon Bedrock). If it still calls tools, it ends with `MaxToolRoundsError`. At 0 it may not call any tools. |
 | **Parallel tools** | 1 | How many tool calls of one answer run at the same time (1–16). Useful for slow, independent tools such as web searches. |
 
 Increase *Max. tokens* for long texts or high effort, and *Max. tool rounds* when an agent needs many research steps.

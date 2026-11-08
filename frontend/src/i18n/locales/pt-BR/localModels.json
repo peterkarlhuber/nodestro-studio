@@ -340,6 +340,10 @@
     "inactive": "Inativo aqui: os modelos rodam em uma placa de vídeo.",
     "badge": "Raciocínio reduzido: modo de economia de CPU",
     "badgeTip": "Este agente respondeu sem a longa fase de raciocínio porque este computador não tem placa de vídeo. Para o raciocínio completo, defina o esforço do agente como Alto ou desligue o modo de economia de CPU em Configurações → Modelos locais.",
+    "badgeOutputLimit": "Respondido sem raciocínio: limite de tokens",
+    "badgeOutputLimitTip": "O raciocínio deste agente preencheu todo o seu limite de tokens (Máx. de tokens) antes de ele responder. Em vez de fazer a etapa falhar, o Nodestro reenviou a solicitação uma vez sem a fase de raciocínio. Para o raciocínio completo, aumente o “Máx. de tokens” do agente.",
+    "badgeToolRounds": "Resposta no limite de rodadas de ferramentas",
+    "badgeToolRoundsTip": "Este agente esgotou suas rodadas de ferramentas. Em vez de fazer a etapa falhar, o Nodestro pediu que ele respondesse com os resultados de ferramentas que tinha. Se o agente realmente precisar de mais etapas, aumente o “Máx. de rodadas de ferramentas”; se ele chamar a mesma ferramenta repetidamente, descreva na tarefa quando ele terminou.",
     "activeServer": "Ativo neste servidor."
   },
   "licenseSource": {

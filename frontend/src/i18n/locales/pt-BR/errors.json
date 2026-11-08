@@ -177,9 +177,11 @@
     "agent": {
       "IncompleteResponseError": "A resposta do modelo foi cortada no limite de tokens (máx. de tokens: {{max_tokens}}).",
       "OutputLimitReached": "A resposta do modelo foi cortada no limite de tokens dele.",
+      "ReasoningLimitReached": "O modelo gastou todo o seu limite de tokens (máx. de tokens: {{max_tokens}}) raciocinando e não deu nenhuma resposta, nem em uma segunda tentativa sem raciocínio.",
       "ContextWindowExceeded": "A conversa é maior que a janela de contexto do modelo.",
       "RefusalError": "O modelo recusou a solicitação.",
       "MaxToolRoundsError": "O agente chamou ferramentas mais vezes do que o limite de rodadas permite.",
+      "MaxToolRoundsLoop": "O agente chamou a mesma ferramenta várias vezes com os mesmos dados em vez de responder, até esgotar suas rodadas de ferramentas.",
       "StructuredOutputError": "O modelo não retornou um resultado no formato de saída exigido.",
       "UnexpectedResponseError": "A resposta do modelo não foi a esperada.",
       "HistoryConversionError": "Não foi possível preparar a conversa desta etapa para o modelo: uma de suas mensagens tem um formato que este provedor não aceita. Nada foi enviado.",
@@ -934,9 +936,11 @@
       "agent": {
         "IncompleteResponseError": "Aumente \"Máx. de tokens\" em \"Avançado\" deste agente ou peça uma resposta mais curta na tarefa dele.",
         "OutputLimitReached": "Aumente \"Máx. de tokens\" em \"Avançado\" deste agente ou peça uma resposta mais curta na tarefa dele.",
+        "ReasoningLimitReached": "Aumente “Máx. de tokens” em “Avançado” do agente ou reduza o esforço dele.",
         "ContextWindowExceeded": "Encurte a entrada ou o conhecimento do agente, ou escolha um modelo com uma janela de contexto maior.",
         "RefusalError": "Confira a tarefa e a entrada e descreva o trabalho com mais clareza. Alguns conteúdos o modelo sempre recusa.",
         "MaxToolRoundsError": "Aumente \"Máx. de rodadas de ferramentas\" em \"Avançado\" deste agente ou diga na tarefa quando ele terminou.",
+        "MaxToolRoundsLoop": "Descreva na tarefa quando o agente terminou ou escolha um modelo maior. Mais rodadas de ferramentas raramente ajudam aqui.",
         "StructuredOutputError": "Confira os campos em \"Formato de saída\"; poucos campos bem descritos ajudam. Muitas vezes basta continuar a execução.",
         "UnexpectedResponseError": "Continue a execução. Se acontecer de novo, os detalhes técnicos ajudam o suporte do provedor.",
         "HistoryConversionError": "Se o agente foi trocado para um modelo de outro provedor, continue com o modelo anterior. Caso contrário, os detalhes técnicos indicam a mensagem para um relatório de erro.",

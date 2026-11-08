@@ -166,8 +166,8 @@ Il risultato del controllo compare nell'esecuzione accanto all'agente: superato 
 
 | Impostazione | Predefinito | Effetto |
 |---|---|---|
-| **Token max.** | 8.000 | Numero massimo di token di output per risposta, ragionamento compreso (fino al massimo documentato del modello, per es. 128.000 per Claude Opus 5.5 e 64.000 per Claude Haiku 4.5; l’ispettore lo mostra accanto al campo). Se viene raggiunto, l'agente si interrompe con `IncompleteResponseError`. |
-| **Turni di strumenti max.** | 8 | Quanti turni di chiamate agli strumenti l'agente può fare per compito (0–50). Dopo termina con `MaxToolRoundsError`. Con 0 non può chiamare alcuno strumento. |
+| **Token max.** | 8.000 | Numero massimo di token di output per risposta, ragionamento compreso (fino al massimo documentato del modello, per es. 128.000 per Claude Opus 5.5 e 64.000 per Claude Haiku 4.5; l’ispettore lo mostra accanto al campo). Se il ragionamento di un modello locale (Ollama) riempie tutto il limite, Nodestro chiede ancora una volta senza la fase di ragionamento, e il passaggio mostra «Risposto senza ragionamento». Se la risposta stessa è più lunga, l'agente si interrompe con `IncompleteResponseError`; il messaggio ne indica la causa. |
+| **Turni di strumenti max.** | 8 | Quanti turni di chiamate agli strumenti l'agente può fare per compito (0–50). All'ultimo turno Nodestro gli chiede di rispondere con i risultati degli strumenti che ha, e il passaggio mostra «Risposta al limite dei turni di strumenti» (non su Amazon Bedrock). Se continua a chiamare strumenti, termina con `MaxToolRoundsError`. Con 0 non può chiamare alcuno strumento. |
 | **Strumenti in parallelo** | 1 | Quante chiamate agli strumenti di una risposta vengono eseguite contemporaneamente (1–16). Utile con strumenti lenti e indipendenti come le ricerche web. |
 
 Aumenta *Token max.* per testi lunghi o impegno alto, e *Turni di strumenti max.* quando un agente ha bisogno di molti passaggi di ricerca.

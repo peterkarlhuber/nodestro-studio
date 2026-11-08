@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Limits handled on a step, failure causes in words (RT-067, 2026-11-08)
+
+- A step whose agent answered after its thinking filled the token limit shows "Answered without thinking: token
+  limit" (`reasoning_reduced="output_limit"`), and one that answered at its tool-round limit shows "Answer at the
+  tool-round limit" (`NodeRun.limits_handled`, live via the `limit_handled` event). Both explain in a tooltip what
+  happened and what to change.
+- `run.agent.IncompleteResponseError` is read by its `cause` (since nodestro-runtime RT-067): thinking that used
+  the whole limit gets its own text and hint ("lower the effort or raise Max. tokens"); a full context window and a
+  too long answer keep theirs. A `run.agent.MaxToolRoundsError` whose calls repeated (`looping`) now says that the
+  agent asked the same thing again and that more tool rounds rarely help. Older runs read as before.
+- Help (Agents → Limits) describes the new behavior in all six languages.
+
 ### Pin wave W7, TABRION JQ-4 (2026-11-08)
 
 - Pins nodestro-runtime f5da80d (runtime #143, TABRION JQ-1..JQ-3, RT2-03: writes are never repeated after a lost

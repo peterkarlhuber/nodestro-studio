@@ -340,6 +340,10 @@
     "inactive": "Hier nicht aktiv: Modelle laufen auf einer Grafikkarte.",
     "badge": "Denken verkürzt: CPU-Sparmodus",
     "badgeTip": "Dieser Agent hat ohne die lange Denkphase geantwortet, weil dieser Computer keine Grafikkarte hat. Für volles Denken stelle den Denkaufwand des Agenten auf Hoch oder schalte den CPU-Sparmodus unter Einstellungen → Lokale Modelle aus.",
+    "badgeOutputLimit": "Ohne Denken beantwortet: Token-Grenze",
+    "badgeOutputLimitTip": "Das Denken dieses Agenten hat seine ganze Token-Grenze (Max. Tokens) gefüllt, bevor er geantwortet hat. Statt den Schritt abzubrechen, hat Nodestro die Anfrage einmal ohne Denkphase wiederholt. Soll der Agent vollständig denken, erhöhe beim Agenten „Max. Tokens“.",
+    "badgeToolRounds": "Antwort am Tool-Runden-Limit",
+    "badgeToolRoundsTip": "Dieser Agent hat seine Tool-Runden aufgebraucht. Statt den Schritt abzubrechen, hat Nodestro ihn gebeten, mit den vorhandenen Tool-Ergebnissen zu antworten. Braucht der Agent wirklich mehr Schritte, erhöhe „Max. Tool-Runden“; ruft er dasselbe Tool wiederholt auf, beschreibe im Auftrag, wann er fertig ist.",
     "activeServer": "Auf diesem Server aktiv."
   },
   "licenseSource": {

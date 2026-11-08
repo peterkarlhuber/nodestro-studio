@@ -340,6 +340,10 @@
     "inactive": "Inactif ici : les modèles s’exécutent sur une carte graphique.",
     "badge": "Réflexion réduite : mode économie CPU",
     "badgeTip": "Cet agent a répondu sans la longue phase de réflexion, car cet ordinateur n’a pas de carte graphique. Pour une réflexion complète, réglez l’effort de l’agent sur Élevé ou désactivez le mode économie CPU dans Réglages → Modèles locaux.",
+    "badgeOutputLimit": "Répondu sans réflexion : limite de tokens",
+    "badgeOutputLimitTip": "La réflexion de cet agent a rempli toute sa limite de tokens (Tokens max.) avant qu’il ne réponde. Au lieu de faire échouer l’étape, Nodestro a renvoyé la requête une fois sans phase de réflexion. Pour une réflexion complète, augmentez « Tokens max. » de l’agent.",
+    "badgeToolRounds": "Réponse à la limite de tours d’outils",
+    "badgeToolRoundsTip": "Cet agent a épuisé ses tours d’outils. Au lieu de faire échouer l’étape, Nodestro lui a demandé de répondre avec les résultats d’outils dont il disposait. Si l’agent a vraiment besoin de plus d’étapes, augmentez « Tours d’outils max. » ; s’il appelle sans cesse le même outil, décrivez dans la tâche quand il a terminé.",
     "activeServer": "Actif sur ce serveur."
   },
   "licenseSource": {

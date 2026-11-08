@@ -247,12 +247,17 @@ export function refineProblem(
     return { code: empty ? "run.api_error_invalid" : "run.api_error_status", params };
   }
   if (code === "run.agent.IncompleteResponseError") {
+    // ``cause`` (since nodestro-runtime RT-067) says why; older runs only have the technical text.
     const stop = /stop_reason='([^']*)'/.exec(message)?.[1] ?? "";
-    const limit = /max_tokens=(\d+)/.exec(message)?.[1];
-    if (stop.includes("context")) return { code: "run.agent.ContextWindowExceeded", params };
-    if (limit) return { code, params: { ...params, max_tokens: Number(limit).toLocaleString(i18n.language) } };
+    const limit = params.max_tokens ?? /max_tokens=(\d+)/.exec(message)?.[1];
+    const shown = limit === undefined || limit === null ? null : { ...params, max_tokens: Number(limit).toLocaleString(i18n.language) };
+    if (params.cause === "context_window" || stop.includes("context")) return { code: "run.agent.ContextWindowExceeded", params };
+    if (params.cause === "reasoning" && shown) return { code: "run.agent.ReasoningLimitReached", params: shown };
+    if (shown) return { code, params: shown };
     return { code: "run.agent.OutputLimitReached", params };
   }
+  // The model asked the same tool the same thing again instead of answering (RT-067): more rounds rarely help.
+  if (code === "run.agent.MaxToolRoundsError" && params.looping === true) return { code: "run.agent.MaxToolRoundsLoop", params };
   return { code, params };
 }
 

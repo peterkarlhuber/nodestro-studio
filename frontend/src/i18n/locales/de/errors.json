@@ -177,9 +177,11 @@
     "agent": {
       "IncompleteResponseError": "Die Antwort des Modells wurde an seiner Token-Grenze abgeschnitten (max. Tokens: {{max_tokens}}).",
       "OutputLimitReached": "Die Antwort des Modells wurde an seiner Token-Grenze abgeschnitten.",
+      "ReasoningLimitReached": "Das Modell hat seine ganze Token-Grenze (max. Tokens: {{max_tokens}}) zum Denken verbraucht und keine Antwort geliefert, auch nicht bei einem zweiten Versuch ohne Denken.",
       "ContextWindowExceeded": "Der Gesprächsverlauf ist größer als das Kontextfenster des Modells.",
       "RefusalError": "Das Modell hat die Anfrage abgelehnt.",
       "MaxToolRoundsError": "Der Agent hat öfter Tools aufgerufen, als seine Grenze an Tool-Runden erlaubt.",
+      "MaxToolRoundsLoop": "Der Agent hat dasselbe Tool mehrmals mit denselben Angaben aufgerufen, statt zu antworten, bis seine Tool-Runden aufgebraucht waren.",
       "StructuredOutputError": "Das Modell hat kein Ergebnis im verlangten Ausgabeformat geliefert.",
       "UnexpectedResponseError": "Die Antwort des Modells war anders als erwartet.",
       "HistoryConversionError": "Der Gesprächsverlauf dieses Schritts ließ sich nicht für das Modell aufbereiten: Eine seiner Nachrichten hat eine Form, die dieser Anbieter nicht annimmt. Es wurde nichts gesendet.",
@@ -934,9 +936,11 @@
       "agent": {
         "IncompleteResponseError": "Erhöhe beim Agenten unter „Erweitert“ den Wert „Max. Tokens“ oder bitte im Auftrag um eine kürzere Antwort.",
         "OutputLimitReached": "Erhöhe beim Agenten unter „Erweitert“ den Wert „Max. Tokens“ oder bitte im Auftrag um eine kürzere Antwort.",
+        "ReasoningLimitReached": "Erhöhe beim Agenten unter „Erweitert“ den Wert „Max. Tokens“ oder senke seinen Denkaufwand.",
         "ContextWindowExceeded": "Kürze die Eingabe oder das Wissen des Agenten, oder wähle ein Modell mit größerem Kontextfenster.",
         "RefusalError": "Prüfe Auftrag und Eingabe und beschreibe die Aufgabe eindeutiger. Manche Inhalte lehnt das Modell grundsätzlich ab.",
         "MaxToolRoundsError": "Erhöhe beim Agenten unter „Erweitert“ die „Max. Tool-Runden“ oder beschreibe im Auftrag, wann er fertig ist.",
+        "MaxToolRoundsLoop": "Beschreibe im Auftrag, wann der Agent fertig ist, oder wähle ein größeres Modell. Mehr Tool-Runden helfen hier selten.",
         "StructuredOutputError": "Prüfe die Felder unter „Ausgabeformat“; wenige, klar beschriebene Felder helfen. Oft genügt es, den Lauf fortzusetzen.",
         "UnexpectedResponseError": "Setze den Lauf fort. Tritt es wieder auf, helfen die technischen Details beim Anbieter weiter.",
         "HistoryConversionError": "Wurde der Agent auf ein Modell eines anderen Anbieters umgestellt, setze mit dem bisherigen Modell fort. Sonst nennen die technischen Details die Nachricht für eine Fehlermeldung.",

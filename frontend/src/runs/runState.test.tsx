@@ -71,6 +71,23 @@ describe("failure reasons (ED-05, AD-01)", () => {
     expect(problemCode(context)).toBe("run.agent.ContextWindowExceeded");
   });
 
+  it("names the cause the runtime gives (RT-067): thinking that filled the limit, the context window, a tool loop", () => {
+    const base = { code: "run.agent.IncompleteResponseError", message: "IncompleteResponseError: b: incomplete response." };
+    const reasoning = { ...base, params: { type: "IncompleteResponseError", cause: "reasoning", max_tokens: 8000, output_tokens: 8000 } };
+    expect(problemCode(reasoning)).toBe("run.agent.ReasoningLimitReached");
+    expect(problemText(t, reasoning)).toContain("max. Tokens: 8.000");
+    expect(problemHint(t, reasoning)).toContain("Denkaufwand");
+    const window = { ...base, params: { type: "IncompleteResponseError", cause: "context_window", max_tokens: 8000 } };
+    expect(problemCode(window)).toBe("run.agent.ContextWindowExceeded");
+    const answer = { ...base, params: { type: "IncompleteResponseError", cause: "answer", max_tokens: 8000 } };
+    expect(problemCode(answer)).toBe("run.agent.IncompleteResponseError");
+    expect(problemText(t, answer)).toContain("max. Tokens: 8.000");
+    const loop = { code: "run.agent.MaxToolRoundsError", params: { type: "MaxToolRoundsError", looping: true, rounds: 8 }, message: "" };
+    expect(problemCode(loop)).toBe("run.agent.MaxToolRoundsLoop");
+    expect(problemHint(t, loop)).toContain("wann der Agent fertig ist");
+    expect(problemCode({ ...loop, params: { type: "MaxToolRoundsError", looping: false } })).toBe("run.agent.MaxToolRoundsError");
+  });
+
   it("tells provider failures apart by status and never shows an empty status", () => {
     const provider = (status: unknown, message = "ProviderError") => ({ code: "run.api_error", params: { status, provider: "anthropic" }, message });
     expect(problemCode(provider(401))).toBe("run.api_error_auth");
