@@ -166,8 +166,8 @@ O resultado do controle aparece na execução junto ao agente: aprovado ou não,
 
 | Configuração | Padrão | Efeito |
 |---|---|---|
-| **Máx. de tokens** | 8.000 | Número máximo de tokens de saída por resposta, incluindo o raciocínio (até o máximo documentado do modelo, p. ex. 128.000 no Claude Opus 5.5 e 64.000 no Claude Haiku 4.5; o inspetor o mostra ao lado do campo). Ao atingi-lo, o agente para com `IncompleteResponseError`. |
-| **Máx. de rodadas de ferramentas** | 8 | Quantas rodadas de chamadas de ferramentas o agente pode fazer por tarefa (0–50). Depois disso, ele termina com `MaxToolRoundsError`. Com 0, ele não pode chamar nenhuma ferramenta. |
+| **Máx. de tokens** | 8.000 | Número máximo de tokens de saída por resposta, incluindo o raciocínio (até o máximo documentado do modelo, p. ex. 128.000 no Claude Opus 5.5 e 64.000 no Claude Haiku 4.5; o inspetor o mostra ao lado do campo). Se o raciocínio de um modelo local (Ollama) preencher todo o limite, o Nodestro pergunta mais uma vez sem a fase de raciocínio, e a etapa mostra “Respondido sem raciocínio”. Se a própria resposta for mais longa, o agente para com `IncompleteResponseError`; a mensagem informa a causa. |
+| **Máx. de rodadas de ferramentas** | 8 | Quantas rodadas de chamadas de ferramentas o agente pode fazer por tarefa (0–50). Na última rodada, o Nodestro pede que ele responda com os resultados de ferramentas que tem, e a etapa mostra “Resposta no limite de rodadas de ferramentas” (não no Amazon Bedrock). Se ainda assim ele chamar ferramentas, termina com `MaxToolRoundsError`. Com 0, ele não pode chamar nenhuma ferramenta. |
 | **Ferramentas em paralelo** | 1 | Quantas chamadas de ferramentas de uma resposta rodam ao mesmo tempo (1–16). Útil para ferramentas lentas e independentes, como pesquisas na web. |
 
 Aumente *Máx. de tokens* para textos longos ou esforço alto, e *Máx. de rodadas de ferramentas* quando um agente precisar de muitas etapas de pesquisa.

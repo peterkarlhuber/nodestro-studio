@@ -18,7 +18,7 @@ import { type AgentContext, ContextView } from "./ContextView";
 import { branchLabel } from "./branches";
 import { OrchestrationView } from "./OrchestrationView";
 import { usageCost } from "../lib/pricing";
-import { ReasoningReducedBadge } from "../components/ReasoningReducedBadge";
+import { ReasoningReducedBadge, ToolRoundsBadge } from "../components/ReasoningReducedBadge";
 import { ReasoningView } from "../components/ReasoningView";
 import { nodeTrace } from "../lib/reasoningTrace";
 import { useThinkingDisplay } from "../lib/thinkingDisplay";
@@ -240,6 +240,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
         </div>
         <div className="row-gap">
           <ReasoningReducedBadge reason={state.reasoning_reduced} />
+          <ToolRoundsBadge limits={state.limits_handled} />
           <StatusBadge status={state.status} />
         </div>
       </div>

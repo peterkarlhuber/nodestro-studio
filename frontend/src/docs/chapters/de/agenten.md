@@ -166,8 +166,8 @@ Das Ergebnis der Prüfung steht in der Ausführung beim Agenten: bestanden oder 
 
 | Einstellung | Standard | Wirkung |
 |---|---|---|
-| **Max. Tokens** | 8.000 | Höchstzahl an Ausgabetokens pro Antwort, inklusive Denken (bis zum dokumentierten Maximum des Modells, z. B. 128.000 bei Claude Opus 5.5 und 64.000 bei Claude Haiku 4.5; der Inspektor zeigt es neben dem Feld). Ist sie erreicht, bricht der Agent mit `IncompleteResponseError` ab. |
-| **Max. Tool-Runden** | 8 | Wie viele Runden aus Tool-Aufrufen der Agent pro Aufgabe machen darf (0–50). Danach endet er mit `MaxToolRoundsError`. Bei 0 darf er gar keine Tools aufrufen. |
+| **Max. Tokens** | 8.000 | Höchstzahl an Ausgabetokens pro Antwort, inklusive Denken (bis zum dokumentierten Maximum des Modells, z. B. 128.000 bei Claude Opus 5.5 und 64.000 bei Claude Haiku 4.5; der Inspektor zeigt es neben dem Feld). Füllt das Denken eines lokalen Modells (Ollama) die ganze Grenze, fragt Nodestro einmal ohne Denkphase nach, und der Schritt zeigt „Ohne Denken beantwortet“. Ist die Antwort selbst länger, bricht der Agent mit `IncompleteResponseError` ab; die Meldung nennt die Ursache. |
+| **Max. Tool-Runden** | 8 | Wie viele Runden aus Tool-Aufrufen der Agent pro Aufgabe machen darf (0–50). In der letzten Runde bittet Nodestro ihn, mit den vorhandenen Tool-Ergebnissen zu antworten, und der Schritt zeigt „Antwort am Tool-Runden-Limit“ (nicht bei Amazon Bedrock). Ruft er trotzdem weiter Tools auf, endet er mit `MaxToolRoundsError`. Bei 0 darf er gar keine Tools aufrufen. |
 | **Parallele Tools** | 1 | Wie viele Tool-Aufrufe einer Antwort gleichzeitig ausgeführt werden (1–16). Sinnvoll bei langsamen, unabhängigen Tools wie Websuchen. |
 
 Erhöhe *Max. Tokens* bei langen Texten oder hohem Aufwand, und *Max. Tool-Runden*, wenn ein Agent viele Recherche-Schritte braucht.

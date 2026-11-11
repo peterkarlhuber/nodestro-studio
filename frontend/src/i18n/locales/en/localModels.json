@@ -340,6 +340,10 @@
     "inactive": "Not active here: models run on a graphics card.",
     "badge": "Reasoning reduced: CPU saving mode",
     "badgeTip": "This agent answered without the long thinking phase because this computer has no graphics card. For full thinking, set the agent's effort to High or switch off the CPU saving mode in Settings → Local models.",
+    "badgeOutputLimit": "Answered without thinking: token limit",
+    "badgeOutputLimitTip": "This agent's thinking filled its whole token limit (Max. tokens) before it answered. Instead of failing the step, Nodestro sent the request once more without the thinking phase. For full thinking, increase the agent's “Max. tokens”.",
+    "badgeToolRounds": "Answer at the tool-round limit",
+    "badgeToolRoundsTip": "This agent used up its tool rounds. Instead of failing the step, Nodestro asked it to answer with the tool results it had. If the agent really needs more steps, increase “Max. tool rounds”; if it calls the same tool again and again, describe in the task when it is done.",
     "activeServer": "Active on this server."
   },
   "licenseSource": {

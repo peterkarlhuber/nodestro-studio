@@ -340,6 +340,10 @@
     "inactive": "Non attiva qui: i modelli girano su una scheda grafica.",
     "badge": "Ragionamento ridotto: modalità risparmio CPU",
     "badgeTip": "Questo agente ha risposto senza la lunga fase di ragionamento perché questo computer non ha una scheda grafica. Per il ragionamento completo, imposta l’impegno dell’agente su Alto o disattiva la modalità risparmio CPU in Impostazioni → Modelli locali.",
+    "badgeOutputLimit": "Risposto senza ragionamento: limite di token",
+    "badgeOutputLimitTip": "Il ragionamento di questo agente ha riempito tutto il suo limite di token (Token max.) prima che rispondesse. Invece di far fallire il passaggio, Nodestro ha inviato di nuovo la richiesta una volta senza la fase di ragionamento. Per un ragionamento completo, aumenta «Token max.» dell’agente.",
+    "badgeToolRounds": "Risposta al limite dei turni di strumenti",
+    "badgeToolRoundsTip": "Questo agente ha esaurito i suoi turni di strumenti. Invece di far fallire il passaggio, Nodestro gli ha chiesto di rispondere con i risultati degli strumenti che aveva. Se l’agente ha davvero bisogno di più passaggi, aumenta «Turni di strumenti max.»; se chiama ripetutamente lo stesso strumento, descrivi nel compito quando ha finito.",
     "activeServer": "Attiva su questo server."
   },
   "licenseSource": {
