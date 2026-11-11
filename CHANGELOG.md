@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Dependency policy, TABRION QA-17 (AC-2, edge list K-33) (2026-11-11)
+
+- `platform/dependency-policy.json` is the source of truth for the allowed edges between Levuvo packages (plan 05
+  section 4.2): components with their kind (foundation, library, platform, studio) and the edges
+  `{from, to, kind: required|optional|dev, extra, status: active|pending:<decision>}`. Pending: orkexa -> tabrion in
+  the core (E-ORK-CORE) and nodestro-runtime -> tabrion in the core (K-32).
+- `scripts/check_dependency_policy.py` (standard library only, so libraries can carry it): checks the policy (tabrion
+  depends on nothing, a library only on tabrion, no edge to a studio, a studio only on its own components, no cycle)
+  and every manifest (core, every extra and dependency group) against it, including kind, extra, the target's extras,
+  pending edges and RC-1 (tabrion never by a direct URL). `--pinned` also reads every component of
+  `platform/versions.json` at its pinned commit; `make check-dependency-policy`. The CI step is proposed separately.
+- `tests/test_dependency_policy.py`: the eight negative cases of plan 07 section 7 and the policy rules turn red.
+
 ### Pin wave W7, TABRION JQ-4 (2026-11-08)
 
 - Pins nodestro-runtime f5da80d (runtime #143, TABRION JQ-1..JQ-3, RT2-03: writes are never repeated after a lost

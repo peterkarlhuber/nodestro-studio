@@ -1,4 +1,4 @@
-.PHONY: install frontend dev check test lint e2e example-docs check-versions check-imports platform-local
+.PHONY: install frontend dev check test lint e2e example-docs check-versions check-dependency-policy check-imports platform-local
 
 install: frontend
 	pip install -e ".[dev]"
@@ -37,6 +37,9 @@ check-versions:
 # The same with sibling checkouts (../nodestro-runtime, ...) at the pinned commits.
 platform-local:
 	python scripts/check_versions.py --local ..
+
+check-dependency-policy:
+	python scripts/check_dependency_policy.py
 
 check-imports:
 	python scripts/check_imports.py
