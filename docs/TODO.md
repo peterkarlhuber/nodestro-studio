@@ -11,7 +11,7 @@
 |---|---|
 | P0 Critical | 0 |
 | P1 High | 0 |
-| P2 Medium | 1 |
+| P2 Medium | 2 |
 | P3 Low | 10 |
 | P4 Optional | 4 |
 
@@ -83,6 +83,21 @@ from #121). Both have status `Needs external review`.
   It never changes the trust class.
 
 ## Tests and quality assurance
+
+### ST-061 · Dependency policy K-33: library copies, vendored checker and CI step (TABRION QA-17, AC-2)
+
+- **Priority:** P2 Medium · **Status:** In progress (part 1: studio #168) · **Refs:** `platform/dependency-policy.json`,
+  `scripts/check_dependency_policy.py`, `tests/test_dependency_policy.py`, Tabrion plan 05 section 4.2, 07 section 7,
+  13 section 2.2
+- **What:** Part 1 (this repository) holds the policy, the checker and the eight negative cases of AC-2. Open: (a)
+  each library (tabrion with an empty list, axentra, orkexa, tabrion-studio) and each Nodestro repository carries a
+  copy of its outgoing edges and the vendored checker, with a checksum check against this repository; (b) the CI
+  `lint` step (`python scripts/check_dependency_policy.py --pinned`) here and in each repository, which needs the
+  separate workflow review.
+- **Plan note (for the plan owner):** the edge nodestro-api -> `tabrion[testing,postgres]` (`dev` only, same SHA as
+  the runtime, RC-2) is in the policy as doc 13 section 2.2 and doc 06 RC-2 require; the edge list in doc 05 section
+  4.2 omits it and should list it.
+- **Next step:** Part 2 pull requests per repository after QA-16 is merged.
 
 ### ST-053 · ESLint 10 waits for the React Compiler rules of eslint-plugin-react-hooks 7
 

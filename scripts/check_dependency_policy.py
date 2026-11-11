@@ -15,7 +15,8 @@ The script checks the policy itself:
 and then each manifest (``pyproject.toml``: core dependencies, every extra and every dependency group): each
 requirement of a Levuvo package (a name in one of the policy's namespaces, or a URL into the owner's GitHub) must be
 an active edge of that component with the same kind and extra, and its extras must be ones the edge names. A
-component marked ``no_direct_url`` (tabrion) is only ever required by a version range (RC-1). A package that refers
+library never requires a component marked ``no_direct_url`` (tabrion) by a direct URL, only by a version range
+(RC-1); nodestro-runtime's extras and nodestro-api's ``dev`` may carry its git pin (V-B0, RC-2). A package that refers
 to itself (``axentra[all]`` -> ``axentra[server]``) is not an edge.
 
 Usage::
@@ -74,7 +75,7 @@ def parse_requirement(text: str) -> Requirement | None:
     match = REQUIREMENT.match(text)
     if match is None:
         return None
-    extras = frozenset(normalize(item) for item in (match["extras"] or "").split(",") if item.strip())
+    extras = frozenset(normalize(item.strip()) for item in (match["extras"] or "").split(",") if item.strip())
     rest = match["rest"].split(";", 1)[0].strip()
     url = rest.startswith("@")
     return Requirement(normalize(match["name"]), extras, url, bool(OWNER_URL.search(rest)), text.strip())
@@ -106,7 +107,11 @@ class Policy:
         for name, entry in self.components.items():
             if entry.get("kind") not in KINDS:
                 self.errors.append(f"component {name}: kind must be one of {sorted(KINDS)}")
-            self.distributions[normalize(entry.get("distribution", name))] = name
+            distribution = normalize(entry.get("distribution", name))
+            self.distributions[distribution] = name
+            if not distribution.startswith(self.namespaces):
+                # Otherwise the manifest check would not see the package by its name.
+                self.errors.append(f"component {name}: {distribution} is in none of the namespaces")
         self.edges: list[Edge] = []
         for index, raw in enumerate(data.get("edges", [])):
             edge = self._edge(index, raw)
@@ -214,8 +219,9 @@ class Policy:
         target = self.distributions.get(requirement.name)
         if target is None:
             return "unknown Levuvo package (add it to the policy first)"
-        if requirement.url and self.components[target].get("no_direct_url"):
-            return f"{target} is required by a version range, never by a direct URL (RC-1)"
+        library = self.components[component].get("kind") == "library"
+        if requirement.url and library and self.components[target].get("no_direct_url"):
+            return f"a library requires {target} by a version range, never by a direct URL (RC-1)"
         candidates = [edge for edge in self.edges if edge.source == component and edge.target == target]
         if not candidates:
             return f"no edge {component} -> {target} in the policy (K-33)"

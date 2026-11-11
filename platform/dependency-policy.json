@@ -3,7 +3,7 @@
   "schema": 1,
   "namespaces": ["tabrion", "axentra", "orkexa", "nodestro", "levuvo"],
   "components": {
-    "tabrion": {"kind": "foundation", "no_direct_url": true},
+    "tabrion": {"kind": "foundation", "no_direct_url": true, "comment": "RC-1: libraries require it by a version range; runtime extras and api dev carry the git pin (V-B0, RC-2)"},
     "axentra": {"kind": "library"},
     "orkexa": {"kind": "library"},
     "nodestro-runtime": {"kind": "platform"},
@@ -17,7 +17,7 @@
       "studio_of": ["nodestro-api", "nodestro-runtime", "nodestro-examples", "nodestro-integrations"]
     },
     "tabrion-studio": {"kind": "studio", "studio_of": ["tabrion"]},
-    "axentra-studio": {"kind": "studio", "distribution": "axentra-studio", "studio_of": ["axentra"]}
+    "axentra-studio": {"kind": "studio", "studio_of": ["axentra"]}
   },
   "edges": [
     {"from": "axentra", "to": "tabrion[postgres]", "kind": "required", "extra": null, "status": "active"},
@@ -44,6 +44,7 @@
     {"from": "nodestro-api", "to": "nodestro-examples", "kind": "required", "extra": null, "status": "active"},
     {"from": "nodestro-api", "to": "nodestro-runtime[postgres]", "kind": "optional", "extra": "server", "status": "active"},
     {"from": "nodestro-api", "to": "nodestro-runtime[postgres]", "kind": "dev", "extra": "dev", "status": "active"},
+    {"from": "nodestro-api", "to": "tabrion[testing,postgres]", "kind": "dev", "extra": "dev", "status": "active"},
 
     {"from": "nodestro-sdk", "to": "nodestro-api", "kind": "dev", "extra": "test", "status": "active"},
 

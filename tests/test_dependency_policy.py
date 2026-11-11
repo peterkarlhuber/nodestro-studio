@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 POLICY = json.loads((ROOT / "platform" / "dependency-policy.json").read_text(encoding="utf-8"))
 RUNTIME_URL = "git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + "a" * 40
 ORKEXA_URL = "git+https://github.com/peterkarlhuber/orkexa.git@" + "b" * 40
+TABRION_URL = "git+https://github.com/peterkarlhuber/tabrion.git@" + "d" * 40
 AXENTRA_URL = "git+https://github.com/peterkarlhuber/axentra.git@" + "c" * 40
 
 
@@ -48,6 +49,7 @@ def test_the_policy_holds_the_k33_edges() -> None:
         ("nodestro-runtime", "axentra", "optional", "postgres", "active"),
         ("nodestro-runtime", "tabrion", "optional", "postgres", "active"),
         ("tabrion-studio", "tabrion", "required", None, "active"),
+        ("nodestro-api", "tabrion", "dev", "dev", "active"),  # doc 13 section 2.2, RC-2 (review Q-2)
     } <= edges
 
 
@@ -71,7 +73,7 @@ def test_this_studio_follows_the_policy() -> None:
                     "postgres": [
                         f"orkexa[postgres] @ {ORKEXA_URL}",
                         f"axentra[oidc] @ {AXENTRA_URL}",
-                        "tabrion[postgres]",
+                        f"tabrion[postgres] @ {TABRION_URL}",  # V-B0: the runtime carries the git pin (RC-2)
                     ]
                 },
             ),
@@ -149,10 +151,42 @@ def test_a_pending_edge_is_not_valid_yet() -> None:
     assert len(errors) == 1 and "pending:E-ORK-CORE, not active yet" in errors[0], errors
 
 
-def test_tabrion_is_never_required_by_a_direct_url() -> None:
-    url = "tabrion[postgres] @ git+https://github.com/peterkarlhuber/tabrion.git@" + "d" * 40
-    errors = cdp.Policy(POLICY).check_manifest("axentra", manifest("axentra", [url]))
+@pytest.mark.parametrize(
+    ("component", "pyproject"),
+    [
+        ("axentra", manifest("axentra", [f"tabrion[postgres] @ {TABRION_URL}"])),
+        ("axentra", manifest("axentra", [], {"dev": [f"tabrion[testing,postgres] @ {TABRION_URL}"]})),
+        ("orkexa", manifest("orkexa", [], {"postgres": [f"tabrion[postgres] @ {TABRION_URL}"]})),
+    ],
+)
+def test_a_library_never_requires_tabrion_by_a_direct_url(component: str, pyproject: dict[str, Any]) -> None:
+    errors = cdp.Policy(POLICY).check_manifest(component, pyproject)
     assert len(errors) == 1 and "RC-1" in errors[0], errors
+
+
+@pytest.mark.parametrize(
+    ("component", "pyproject"),
+    [
+        ("nodestro-runtime", manifest("nodestro-runtime", [], {"postgres": [f"tabrion[postgres] @ {TABRION_URL}"]})),
+        ("nodestro-runtime", manifest("nodestro-runtime", [], {"dev": [f"tabrion[testing,postgres] @ {TABRION_URL}"]})),
+        ("nodestro-api", manifest("nodestro-api", [], {"dev": [f"tabrion[testing,postgres] @ {TABRION_URL}"]})),
+    ],
+)
+def test_the_platform_may_carry_the_tabrion_git_pin(component: str, pyproject: dict[str, Any]) -> None:
+    """V-B0 (plan 05 section 4.3, RC-2): runtime extras and api dev pin tabrion by commit."""
+    assert cdp.Policy(POLICY).check_manifest(component, pyproject) == []
+
+
+def test_extras_with_spaces_are_normalized() -> None:
+    pyproject = manifest("axentra", ["tabrion[ postgres ]>=0.1"], {"dev": ["tabrion[testing, postgres]"]})
+    assert cdp.Policy(POLICY).check_manifest("axentra", pyproject) == []
+
+
+def test_every_component_is_in_a_namespace() -> None:
+    data = copy.deepcopy(POLICY)
+    data["namespaces"] = ["tabrion", "axentra", "orkexa"]
+    errors = cdp.Policy(data).errors
+    assert any("nodestro-api is in none of the namespaces" in error for error in errors), errors
 
 
 def test_extras_beyond_the_edge_fail() -> None:
