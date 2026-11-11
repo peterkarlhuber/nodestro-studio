@@ -213,3 +213,41 @@ def test_main_reports_errors(tmp_path: Path, capsys: pytest.CaptureFixture[str])
     assert "no edge tabrion -> axentra" in capsys.readouterr().err
     assert cdp.main([]) == 0
     assert "ok (" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("component", ["tabrion", "axentra", "orkexa", "tabrion-studio", "nodestro-runtime"])
+def test_a_library_copy_holds_only_its_outgoing_edges(component: str) -> None:
+    copy = cdp.policy_copy(POLICY, component)
+    policy = cdp.Policy(copy)
+    assert policy.errors == []
+    assert policy.component == component
+    assert {edge.source for edge in policy.edges} <= {component}
+    assert len(policy.edges) == len([edge for edge in cdp.Policy(POLICY).edges if edge.source == component])
+    assert copy["components"] == POLICY["components"] and copy["namespaces"] == POLICY["namespaces"]
+
+
+def test_the_tabrion_copy_is_empty() -> None:
+    assert cdp.policy_copy(POLICY, "tabrion")["edges"] == []
+
+
+def test_a_copy_with_a_foreign_edge_fails() -> None:
+    copy = cdp.policy_copy(POLICY, "axentra")
+    copy["edges"].append(
+        {"from": "orkexa", "to": "tabrion[postgres]", "kind": "optional", "extra": "postgres", "status": "active"}
+    )
+    assert any("only axentra's outgoing edges" in error for error in cdp.Policy(copy).errors)
+
+
+def test_main_prints_and_checks_a_copy(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    assert cdp.main(["--copy", "axentra"]) == 0
+    printed = capsys.readouterr().out
+    assert json.loads(printed) == cdp.policy_copy(POLICY, "axentra")
+    (tmp_path / "dependency-policy.json").write_text(printed, encoding="utf-8")
+    good = tmp_path / "good.toml"
+    good.write_text('[project]\nname = "axentra"\ndependencies = ["tabrion[postgres]>=0.1,<0.2"]\n', encoding="utf-8")
+    bad = tmp_path / "bad.toml"
+    bad.write_text('[project]\nname = "axentra"\ndependencies = ["orkexa"]\n', encoding="utf-8")
+    policy = str(tmp_path / "dependency-policy.json")
+    assert cdp.main(["--policy", policy, "--manifest", f"axentra={good}"]) == 0
+    assert cdp.main(["--policy", policy, "--manifest", f"axentra={bad}"]) == 1
+    assert "no edge axentra -> orkexa" in capsys.readouterr().err

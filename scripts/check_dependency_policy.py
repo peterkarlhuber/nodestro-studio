@@ -26,7 +26,10 @@ Usage::
     python scripts/check_dependency_policy.py --local DIR        # ... read from sibling checkouts in DIR
     python scripts/check_dependency_policy.py --manifest NAME=PATH [--policy FILE]
 
-Only the standard library is used, so a library can carry this file next to its copy of the policy.
+Only the standard library is used, so a library carries an unchanged copy of this file in ``scripts/`` next to its
+copy of the policy, ``dependency-policy.json`` at its root (``--copy NAME`` prints it: the components, the
+namespaces and only NAME's outgoing edges, with ``"component": NAME``). Without ``platform/dependency-policy.json``
+the script reads that copy and checks the repository's own ``pyproject.toml`` as that component.
 """
 
 from __future__ import annotations
@@ -45,6 +48,8 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "platform" / "dependency-policy.json"
+#: A library's copy of its own outgoing edges.
+LOCAL_POLICY = ROOT / "dependency-policy.json"
 VERSIONS = ROOT / "platform" / "versions.json"
 OWNER = "peterkarlhuber"
 KINDS = {"foundation", "library", "platform", "studio"}
@@ -117,6 +122,13 @@ class Policy:
             edge = self._edge(index, raw)
             if edge is not None:
                 self.edges.append(edge)
+        self.component: str | None = data.get("component")
+        if self.component is not None:
+            if self.component not in self.components:
+                self.errors.append(f"copy for {self.component}: not a component of the policy")
+            for edge in self.edges:
+                if edge.source != self.component:
+                    self.errors.append(f"{edge.describe()}: a copy holds only {self.component}'s outgoing edges")
         self.errors.extend(self._rules())
         self.errors.extend(self._cycles())
 
@@ -242,6 +254,25 @@ def load_policy(path: Path = POLICY) -> Policy:
     return Policy(json.loads(path.read_text(encoding="utf-8")))
 
 
+def policy_copy(data: Mapping[str, Any], component: str) -> dict[str, Any]:
+    """A library's copy: everything but the edges of other components."""
+    if component not in data.get("components", {}):
+        raise SystemExit(f"{component} is not a component of the policy")
+    rest = {key: value for key, value in data.items() if key not in {"comment", "component", "edges"}}
+    return {
+        "comment": f"Copy of nodestro-studio platform/dependency-policy.json for {component} (TABRION K-33, "
+        "QA-17): only its outgoing edges. Never edit by hand; regenerate with "
+        f"python scripts/check_dependency_policy.py --copy {component} in nodestro-studio.",
+        "component": component,
+        **rest,
+        "edges": [edge for edge in data.get("edges", []) if edge.get("from") == component],
+    }
+
+
+def dump(data: Mapping[str, Any]) -> str:
+    return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+
+
 def git(*args: str, cwd: Path | None = None) -> str:
     return subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True, text=True).stdout
 
@@ -263,18 +294,24 @@ def pinned_manifests(local: Path | None) -> dict[str, str]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n", 1)[0])
-    parser.add_argument("--policy", type=Path, default=POLICY)
+    parser.add_argument("--policy", type=Path, help="default: platform/dependency-policy.json or a library's copy")
     parser.add_argument("--pinned", action="store_true", help="also check every component of versions.json")
     parser.add_argument("--local", type=Path, help="read the pinned components from sibling checkouts in DIR")
     parser.add_argument("--manifest", action="append", default=[], metavar="NAME=PATH")
-    parser.add_argument("--no-studio", action="store_true", help="do not check this studio's pyproject.toml")
+    parser.add_argument("--no-studio", action="store_true", help="do not check this repository's pyproject.toml")
+    parser.add_argument("--copy", metavar="NAME", help="print the policy copy for component NAME and exit")
     args = parser.parse_args(argv)
 
-    policy = load_policy(args.policy)
+    path = args.policy or (POLICY if POLICY.is_file() else LOCAL_POLICY)
+    if args.copy:
+        sys.stdout.write(dump(policy_copy(json.loads(path.read_text(encoding="utf-8")), args.copy)))
+        return 0
+    policy = load_policy(path)
     errors = list(policy.errors)
     manifests: dict[str, str] = {}
     if not args.no_studio and not args.manifest and (ROOT / "pyproject.toml").is_file():
-        manifests["nodestro-studio"] = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+        own = policy.component or "nodestro-studio"
+        manifests[own] = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     if args.pinned or args.local:
         manifests.update(pinned_manifests(args.local))
     for item in args.manifest:

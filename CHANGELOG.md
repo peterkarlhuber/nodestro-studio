@@ -13,7 +13,9 @@
   depends on nothing, a library only on tabrion, no edge to a studio, a studio only on its own components, no cycle)
   and every manifest (core, every extra and dependency group) against it, including kind, extra, the target's extras,
   pending edges and RC-1 (a library never requires tabrion by a direct URL; the runtime extras and api `dev` may carry
-  its git pin, V-B0). Every component's distribution must be in one of the policy's namespaces. `--pinned` also reads every component of
+  its git pin, V-B0). Every component's distribution must be in one of the policy's namespaces. `--copy NAME` prints a
+  library's copy (only its outgoing edges, `"component": NAME`); without `platform/dependency-policy.json` the script
+  reads that copy and checks the repository's own `pyproject.toml`, so libraries carry it unchanged. `--pinned` also reads every component of
   `platform/versions.json` at its pinned commit; `make check-dependency-policy`. The CI step is proposed separately.
 - `tests/test_dependency_policy.py`: the eight negative cases of plan 07 section 7 and the policy rules turn red.
   `docs/TODO.md` ST-061 tracks part 2 (library copies, vendored checker, CI step).
