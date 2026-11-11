@@ -2,8 +2,13 @@
 
 ## Unreleased
 
-### Limits handled on a step, failure causes in words (RT-067, 2026-11-08)
+### Limits handled on a step, failure causes in words (RT-067, 2026-11-08..11)
 
+- Pins orkexa 840add4 (orkexa #71: on Ollama only the latest thinking is sent back; the 2026-11-06 o400 fix replayed
+  every one, so tool conversations outgrew the context window and Ollama silently cut the task out of the prompt),
+  nodestro-runtime 2b8690e (runtime #148, RT-067), nodestro-examples 30da3a1 (#92), nodestro-integrations 542a24c
+  (#80), nodestro-api 3817da3 (#115, OpenAPI `NodeRun.limits_handled`) and nodestro-sdk c737829 (#106).
+  `scripts/check_versions.py`: pins agree.
 - A step whose agent answered after its thinking filled the token limit shows "Answered without thinking: token
   limit" (`reasoning_reduced="output_limit"`), and one that answered at its tool-round limit shows "Answer at the
   tool-round limit" (`NodeRun.limits_handled`, live via the `limit_handled` event). Both explain in a tooltip what
