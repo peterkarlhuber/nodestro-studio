@@ -166,8 +166,8 @@ Le résultat du contrôle figure dans l’exécution à côté de l’agent : r�
 
 | Réglage | Par défaut | Effet |
 |---|---|---|
-| **Tokens max.** | 8 000 | Nombre maximal de tokens de sortie par réponse, réflexion comprise (jusqu’au maximum documenté du modèle, par exemple 128 000 pour Claude Opus 5.5 et 64 000 pour Claude Haiku 4.5 ; l’inspecteur l’affiche à côté du champ). S’il est atteint, l’agent s’arrête avec `IncompleteResponseError`. |
-| **Tours d’outils max.** | 8 | Nombre de tours d’appels d’outils que l’agent peut faire par tâche (0 à 50). Ensuite, il se termine avec `MaxToolRoundsError`. À 0, il ne peut appeler aucun outil. |
+| **Tokens max.** | 8 000 | Nombre maximal de tokens de sortie par réponse, réflexion comprise (jusqu’au maximum documenté du modèle, par exemple 128 000 pour Claude Opus 5.5 et 64 000 pour Claude Haiku 4.5 ; l’inspecteur l’affiche à côté du champ). Si la réflexion d’un modèle local (Ollama) remplit toute la limite, Nodestro redemande une fois sans phase de réflexion, et l’étape affiche « Répondu sans réflexion ». Si la réponse elle-même est plus longue, l’agent s’arrête avec `IncompleteResponseError` ; le message en indique la cause. |
+| **Tours d’outils max.** | 8 | Nombre de tours d’appels d’outils que l’agent peut faire par tâche (0 à 50). Au dernier tour, Nodestro lui demande de répondre avec les résultats d’outils dont il dispose, et l’étape affiche « Réponse à la limite de tours d’outils » (pas sur Amazon Bedrock). S’il appelle encore des outils, il se termine avec `MaxToolRoundsError`. À 0, il ne peut appeler aucun outil. |
 | **Outils en parallèle** | 1 | Nombre d’appels d’outils d’une réponse exécutés simultanément (1 à 16). Utile pour les outils lents et indépendants comme les recherches web. |
 
 Augmentez *Tokens max.* pour les textes longs ou un effort élevé, et *Tours d’outils max.* quand un agent a besoin de nombreuses étapes de recherche.

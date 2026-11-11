@@ -112,10 +112,10 @@ def test_the_studio_pins_agree_with_versions_json() -> None:
     pinned = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
     text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     assert check_versions.check_pyproject("nodestro-studio", text, pinned, pinned["platform"]) == []
-    # The orkexa commit nodestro-runtime pins (orkexa #66: MUP-ONA B5, orkexa.backends.postgres), with its own
+    # The orkexa commit nodestro-runtime pins (orkexa #71: reasoning replay bounded on Ollama, RT-067), with its own
     # pyproject so that check_versions.py compares orkexa's version as well.
     orkexa = pinned["components"]["orkexa"]
-    assert orkexa["commit"] == "792a041883c74d613c3af491db51210881d2a453"
+    assert orkexa["commit"] == "840add4bd4172c527dfb9efa7cfcc49574ebba92"
     assert orkexa["pyproject"] == "pyproject.toml"
 
 

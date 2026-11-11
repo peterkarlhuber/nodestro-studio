@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { CatalogModel, Hardware, InstalledModel, LocalOverview } from "../api/localModels";
 import type { Settings } from "../api/types";
-import { ReasoningReducedBadge } from "../components/ReasoningReducedBadge";
+import { ReasoningReducedBadge, ToolRoundsBadge } from "../components/ReasoningReducedBadge";
 import { Toaster } from "../components/toast";
 import { withNodeNames } from "../editor/CheckList";
 import i18n from "../i18n";
@@ -324,6 +324,17 @@ describe("cpu saving mode", () => {
     cleanup();
     show(<ReasoningReducedBadge reason={null} />);
     expect(screen.queryByTestId("reasoning-reduced")).toBeNull();
+  });
+
+  it("marks a step whose limits the runtime handled (RT-067)", async () => {
+    show(<ReasoningReducedBadge reason="output_limit" />);
+    expect(screen.getByTestId("reasoning-reduced")).toHaveTextContent("Ohne Denken beantwortet: Token-Grenze");
+    cleanup();
+    show(<ToolRoundsBadge limits={["reasoning", "tool_rounds"]} />);
+    expect(screen.getByTestId("tool-rounds-limit")).toHaveTextContent("Antwort am Tool-Runden-Limit");
+    cleanup();
+    show(<ToolRoundsBadge limits={["reasoning"]} />);
+    expect(screen.queryByTestId("tool-rounds-limit")).toBeNull();
   });
 });
 

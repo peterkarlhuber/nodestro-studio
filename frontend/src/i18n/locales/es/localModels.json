@@ -340,6 +340,10 @@
     "inactive": "No activo aquí: los modelos se ejecutan en una tarjeta gráfica.",
     "badge": "Razonamiento reducido: modo de ahorro de CPU",
     "badgeTip": "Este agente respondió sin la larga fase de razonamiento porque este ordenador no tiene tarjeta gráfica. Para un razonamiento completo, pon el esfuerzo del agente en Alto o desactiva el modo de ahorro de CPU en Ajustes → Modelos locales.",
+    "badgeOutputLimit": "Respondido sin razonamiento: límite de tokens",
+    "badgeOutputLimitTip": "El razonamiento de este agente llenó todo su límite de tokens (Máx. tokens) antes de responder. En lugar de hacer fallar el paso, Nodestro repitió la solicitud una vez sin la fase de razonamiento. Para un razonamiento completo, aumenta «Máx. tokens» del agente.",
+    "badgeToolRounds": "Respuesta en el límite de rondas de herramientas",
+    "badgeToolRoundsTip": "Este agente agotó sus rondas de herramientas. En lugar de hacer fallar el paso, Nodestro le pidió que respondiera con los resultados de herramientas que tenía. Si el agente realmente necesita más pasos, aumenta «Máx. rondas de herramientas»; si llama una y otra vez a la misma herramienta, describe en la tarea cuándo ha terminado.",
     "activeServer": "Activo en este servidor."
   },
   "licenseSource": {

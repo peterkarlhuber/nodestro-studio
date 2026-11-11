@@ -19,6 +19,7 @@ import { providerOf } from "../lib/providers";
 const ADVANCED_FIX = new Set([
   "run.agent.IncompleteResponseError",
   "run.agent.OutputLimitReached",
+  "run.agent.ReasoningLimitReached",
   "run.agent.MaxToolRoundsError",
   // Orkexa ORK-029: one answer asked for more tool calls than max_tool_calls_per_round (64 by default).
   "run.agent.MaxToolCallsError",

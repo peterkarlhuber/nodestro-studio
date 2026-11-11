@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+### Limits handled on a step, failure causes in words (RT-067, 2026-11-08..11)
+
+- Pins orkexa 840add4 (orkexa #71: on Ollama only the latest thinking is sent back; the 2026-11-06 o400 fix replayed
+  every one, so tool conversations outgrew the context window and Ollama silently cut the task out of the prompt),
+  nodestro-runtime 2b8690e (runtime #148, RT-067), nodestro-examples 30da3a1 (#92), nodestro-integrations 542a24c
+  (#80), nodestro-api 3817da3 (#115, OpenAPI `NodeRun.limits_handled`) and nodestro-sdk c737829 (#106), then
+  nodestro-runtime 979c11c (tests only: #150, botocore 1.44's default retry mode, so the platform components job is
+  green again; #145, rollback snapshot tools) with nodestro-examples 6ef36f3 (#93), nodestro-integrations 7390f83
+  (#81), nodestro-api e584d6f (#116) and nodestro-sdk 5aa0d9a (#107). `scripts/check_versions.py`: pins agree.
+- A step whose agent answered after its thinking filled the token limit shows "Answered without thinking: token
+  limit" (`reasoning_reduced="output_limit"`), and one that answered at its tool-round limit shows "Answer at the
+  tool-round limit" (`NodeRun.limits_handled`, live via the `limit_handled` event). Both explain in a tooltip what
+  happened and what to change.
+- `run.agent.IncompleteResponseError` is read by its `cause` (since nodestro-runtime RT-067): thinking that used
+  the whole limit gets its own text and hint ("lower the effort or raise Max. tokens"); a full context window and a
+  too long answer keep theirs. A `run.agent.MaxToolRoundsError` whose calls repeated (`looping`) now says that the
+  agent asked the same thing again and that more tool rounds rarely help. Older runs read as before.
+- Help (Agents → Limits) describes the new behavior in all six languages.
+
 ### Pin wave W7, TABRION JQ-4 (2026-11-08)
 
 - Pins nodestro-runtime f5da80d (runtime #143, TABRION JQ-1..JQ-3, RT2-03: writes are never repeated after a lost

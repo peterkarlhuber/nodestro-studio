@@ -177,9 +177,11 @@
     "agent": {
       "IncompleteResponseError": "La risposta del modello è stata troncata al suo limite di token (token max: {{max_tokens}}).",
       "OutputLimitReached": "La risposta del modello è stata troncata al suo limite di token.",
+      "ReasoningLimitReached": "Il modello ha usato tutto il suo limite di token (token max.: {{max_tokens}}) per ragionare e non ha dato alcuna risposta, nemmeno in un secondo tentativo senza ragionamento.",
       "ContextWindowExceeded": "La conversazione supera la finestra di contesto del modello.",
       "RefusalError": "Il modello ha rifiutato la richiesta.",
       "MaxToolRoundsError": "L'agente ha chiamato gli strumenti più spesso di quanto consenta il suo limite di round.",
+      "MaxToolRoundsLoop": "L’agente ha chiamato più volte lo stesso strumento con gli stessi dati invece di rispondere, finché i suoi turni di strumenti si sono esauriti.",
       "StructuredOutputError": "Il modello non ha restituito un risultato nel formato di output richiesto.",
       "UnexpectedResponseError": "La risposta del modello non era quella prevista.",
       "HistoryConversionError": "Non è stato possibile preparare la conversazione di questo passaggio per il modello: uno dei suoi messaggi ha una forma che questo provider non accetta. Non è stato inviato nulla.",
@@ -934,9 +936,11 @@
       "agent": {
         "IncompleteResponseError": "Aumenta «Token max.» in «Avanzate» di questo agente, oppure chiedi una risposta più breve nel suo compito.",
         "OutputLimitReached": "Aumenta «Token max.» in «Avanzate» di questo agente, oppure chiedi una risposta più breve nel suo compito.",
+        "ReasoningLimitReached": "Aumenta «Token max.» in «Avanzate» dell’agente o riduci il suo impegno.",
         "ContextWindowExceeded": "Accorcia l'input o la conoscenza dell'agente, oppure scegli un modello con una finestra di contesto più ampia.",
         "RefusalError": "Controlla il compito e l'input e descrivi il lavoro in modo più chiaro. Alcuni contenuti il modello li rifiuta sempre.",
         "MaxToolRoundsError": "Aumenta «Turni di strumenti max.» in «Avanzate» di questo agente, oppure indica nel suo compito quando ha finito.",
+        "MaxToolRoundsLoop": "Descrivi nel compito quando l’agente ha finito, oppure scegli un modello più grande. Più turni di strumenti raramente aiutano in questo caso.",
         "StructuredOutputError": "Controlla i campi in «Formato di output»; pochi campi ben descritti aiutano. Spesso basta continuare l'esecuzione.",
         "UnexpectedResponseError": "Continua l'esecuzione. Se succede di nuovo, i dettagli tecnici aiutano l'assistenza del provider.",
         "HistoryConversionError": "Se l'agente è passato a un modello di un altro provider, continua con il modello precedente. Altrimenti i dettagli tecnici indicano il messaggio per una segnalazione di errore.",

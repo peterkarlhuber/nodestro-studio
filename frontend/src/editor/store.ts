@@ -585,6 +585,14 @@ export const useEditor = create<EditorState>((set, get) => {
           // The agent answers without the long thinking phase (CPU saving mode); the step shows a badge.
           if (node) node.reasoning_reduced = String(data.reason ?? "cpu_saving");
           break;
+        case "limit_handled":
+          // The agent reached a limit and the runtime handled it instead of failing the step (RT-067): it answered
+          // once more without thinking ("reasoning") or answered at its tool-round limit ("tool_rounds").
+          if (node) {
+            const limit = String(data.limit ?? "");
+            if (limit && !(node.limits_handled ?? []).includes(limit)) node.limits_handled = [...(node.limits_handled ?? []), limit];
+          }
+          break;
         case "tool_started":
           if (node) {
             // A call that waited for an approval is already listed (tool_approval_requested): it is the same call.

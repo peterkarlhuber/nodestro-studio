@@ -657,8 +657,11 @@ export interface NodeRun {
   decision_usage?: Usage | null;
   /** Taken over from this earlier run when a failed run was continued. */
   reused_from?: string | null;
-  /** Why the agent answered with less thinking than configured ("cpu_saving": the CPU saving mode). */
+  /** Why the agent answered with less thinking than configured ("cpu_saving": the CPU saving mode; "output_limit": its
+   * thinking filled the answer limit, so it answered once more without thinking). */
   reasoning_reduced?: string | null;
+  /** Limits the runtime handled instead of failing the step ("reasoning", "tool_rounds"; since nodestro-runtime RT-067). */
+  limits_handled?: string[];
   /** The files the agent received, and how. */
   files?: ProvidedFile[];
   /** Content the agent proposed for knowledge (stored only after confirmation). */
