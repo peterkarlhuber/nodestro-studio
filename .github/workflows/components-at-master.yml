@@ -5,7 +5,9 @@ name: Components at master
 # so it lives in its own workflow and its own issue and never changes the result of the nightly S4 run.
 on:
   schedule:
-    - cron: "50 2 * * *"
+    # GitHub starts scheduled runs about 6 h late on this account (measured 2026-11-08..11): the cron sits 6 h
+    # before the night.
+    - cron: "50 20 * * *"
   workflow_dispatch:
 
 permissions:
