@@ -18,6 +18,11 @@ pyproject.toml, versions.json, studio.json and components.json). Two subcommands
 
 Only the SHA in a pin is changed, never a version, an extra or a comment; run ``scripts/check_versions.py`` on the
 result (versions.json versions are not touched).
+
+The third-party packages follow the shared upload cutoff ``platform/uploaded-prior-to`` of the studio (see
+``scripts/pip_cutoff.py`` and docs/PLATFORM.md, "Third-party packages"); this tool does not move it. Move it by hand
+in the studio PR of every pin bundle (at the latest 7 days after the bundle), and immediately, after a green platform
+pipeline, for a security-relevant third-party update.
 """
 
 from __future__ import annotations

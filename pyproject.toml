@@ -81,6 +81,7 @@ files = [
   "scripts/check_case_collisions.py",
   "scripts/check_imports.py",
   "scripts/lock_check.py",
+  "scripts/pip_cutoff.py",
   "scripts/bump_pins.py",
   "scripts/check_versions.py",
   "scripts/check_dependency_policy.py",

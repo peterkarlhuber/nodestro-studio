@@ -136,6 +136,30 @@ If the API contract changes, `python -m nodestro_api.openapi openapi/nodestro-ap
 a test in nodestro-api fails). In the SDK, `make contract` takes it over and regenerates the types; the SDK's CI
 checks that contract and types are up to date.
 
+### Third-party packages: the upload cutoff
+
+The components are pinned by commit; the third-party packages they need are not pinned one by one. Instead every
+install path of the platform installs them as they were uploaded before one shared UTC time,
+[`platform/uploaded-prior-to`](../platform/uploaded-prior-to) (one line, `YYYY-MM-DDTHH:MM:SSZ`), with pip's
+`--uploaded-prior-to` option: the platform workflow (components, SDK and browser jobs), the server image
+(nodestro-server `image/Dockerfile` and `image/install.py`; the Local Docker image is built from the same definition)
+and the desktop backend (nodestro-desktop `scripts/build_backend.sh`). The products read the file of the studio commit
+they build from, so the tested set is the shipped set and a rebuild of the same commits installs the same packages.
+
+- `scripts/pip_cutoff.py` checks the file and the pip of the installing interpreter (pip 26.0 or newer, the first with
+  the option) and prints the cutoff; every path passes it as the command-line option, never as
+  `PIP_UPLOADED_PRIOR_TO`, which an older pip would ignore without a word. A path whose pip is too old fails; it then
+  gets an exact newer pip (`pip==26.2.2`) deliberately, the cutoff is never skipped.
+- What a build installed is kept: the platform workflow uploads `pip freeze` (artifact
+  `pip-freeze-components-<python>`), the server image has `/opt/nodestro/pinned.txt`, the desktop backend
+  `meta/pip-freeze.txt`.
+- **Moving the cutoff:** set it to a recent full hour in UTC (`date -u +%Y-%m-%dT%H:00:00Z`), never in the future.
+  It moves together with every pin bundle (the studio PR that moves `platform/versions.json`), at the latest 7 days
+  after that bundle. For a security-relevant update of a third-party package (pip-audit, an image scan or an advisory)
+  it moves immediately, as soon as the platform pipeline is green with the new cutoff. Then the products take it over
+  with their next studio pin (`studio.json`, `components.json`).
+- Users who install the studio themselves (`pip install .`) are not bound to the cutoff and need no particular pip.
+
 ## CI and access
 
 The repositories and Orkexa are public on GitHub. The CI workflows clone and install them anonymously over https and
@@ -169,8 +193,8 @@ branch deletion; until that is in place, see `docs/TODO.md` ST-052. The next com
 
 1. **Pins:** `scripts/check_versions.py` reads every component at its pinned commit and checks all references against
    `platform/versions.json`.
-2. **Integration:** the studio is installed with all pinned components. `scripts/check_imports.py` checks the
-   dependency direction. Then the test suites of the runtime, examples, integrations and API run at the pinned commit
+2. **Integration:** the studio is installed with all pinned components (third-party packages up to the upload
+   cutoff, see above). `scripts/check_imports.py` checks the dependency direction. Then the test suites of the runtime, examples, integrations and API run at the pinned commit
    against exactly this installation, as do the studio's tests including the upgrade test. Finally
    `scripts/lock_check.py` checks, offline, that every installed component still comes from its pinned repository
    and commit at the pinned version (`direct_url.json`) and that no package declares another commit of a component.

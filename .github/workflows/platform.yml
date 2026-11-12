@@ -55,12 +55,21 @@ jobs:
           cache: pip
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends tesseract-ocr poppler-utils
       # The studio pins every component: this one installation is the platform under test.
+      # Third-party packages as uploaded before the shared cutoff (platform/uploaded-prior-to): the set the server
+      # image and the desktop backend ship. pip_cutoff.py fails unless this pip (>= 26.0) has --uploaded-prior-to.
       - name: Install
         run: |
+          cutoff=$(python -I scripts/pip_cutoff.py)
           # pglast: the runtime's static tenant-isolation check (tests/test_tenant_filters.py, security review SR-01).
-          pip install -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9"
+          pip install --uploaded-prior-to "$cutoff" -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9"
           # CI-FAST AP6: the three longest component suites run on every CPU of the runner (pytest-xdist).
-          pip install pytest-xdist==3.8.0
+          pip install --uploaded-prior-to "$cutoff" pytest-xdist==3.8.0
+          pip freeze > "$RUNNER_TEMP/pip-freeze-components-${{ matrix.python }}.txt"
+      - name: The installed packages (pip freeze)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: pip-freeze-components-${{ matrix.python }}
+          path: ${{ runner.temp }}/pip-freeze-components-${{ matrix.python }}.txt
       - run: python scripts/check_imports.py
       - name: Check out every component at its pinned commit
         run: |
@@ -123,12 +132,14 @@ jobs:
           node-version: 22
       - name: Install
         run: |
-          pip install -e ".[dev]"
+          cutoff=$(python -I scripts/pip_cutoff.py)
+          pip install --uploaded-prior-to "$cutoff" -e ".[dev]"
       # The SDK's test extra pins nodestro-api too: pip refuses if it differs from the studio's.
       - name: Check out and install the pinned SDK
         run: |
+          cutoff=$(python -I scripts/pip_cutoff.py)
           python scripts/checkout_components.py "$RUNNER_TEMP/components" nodestro-sdk
-          pip install "$RUNNER_TEMP/components/nodestro-sdk/python[test]"
+          pip install --uploaded-prior-to "$cutoff" "$RUNNER_TEMP/components/nodestro-sdk/python[test]"
       - name: Python SDK against the API
         run: cd "$RUNNER_TEMP/components/nodestro-sdk/python" && python -m pytest -p no:cacheprovider
       - name: TypeScript SDK against the API
@@ -152,7 +163,8 @@ jobs:
           cache: pip
       - name: Install
         run: |
-          pip install -e ".[dev]"
+          cutoff=$(python -I scripts/pip_cutoff.py)
+          pip install --uploaded-prior-to "$cutoff" -e ".[dev]"
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
