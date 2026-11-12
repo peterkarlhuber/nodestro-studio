@@ -171,7 +171,11 @@ branch deletion; until that is in place, see `docs/TODO.md` ST-052. The next com
    `platform/versions.json`.
 2. **Integration:** the studio is installed with all pinned components. `scripts/check_imports.py` checks the
    dependency direction. Then the test suites of the runtime, examples, integrations and API run at the pinned commit
-   against exactly this installation, as do the studio's tests including the upgrade test.
+   against exactly this installation, as do the studio's tests including the upgrade test. Finally
+   `scripts/lock_check.py` checks, offline, that every installed component still comes from its pinned repository
+   and commit at the pinned version (`direct_url.json`) and that no package declares another commit of a component.
+   The server image build (`image/finalize.sh`) and the desktop backend build (`scripts/build_backend.sh`) run the
+   same script from their studio checkout and fail on a mismatch.
 3. **SDK:** the Python and TypeScript SDKs at the pinned commit against the installed API.
 4. **Browser:** the user interface is built and all nine browser suites run against the installed platform.
 

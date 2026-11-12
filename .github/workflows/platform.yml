@@ -90,17 +90,11 @@ jobs:
           python "$GITHUB_WORKSPACE/scripts/check_test_ids.py" "$RUNNER_TEMP/ids-api.txt" "$RUNNER_TEMP/junit-api.xml"
       - name: nodestro-studio (with the upgrade from 0.1)
         run: pytest
+      # After every suite: each component (and orkexa) is still installed from its pinned repository and commit at
+      # the pinned version, no package declares another commit of a component, and no server extras leaked in. The
+      # same script checks the server image (finalize.sh) and the desktop backend (build_backend.sh).
       - name: Only the pinned packages were imported
-        run: |
-          python - <<'PY'
-          import json, importlib.metadata as m
-          pins = json.load(open("platform/versions.json"))["components"]
-          for name in ("nodestro-runtime", "nodestro-api", "nodestro-examples", "nodestro-integrations"):
-              url = json.loads(m.distribution(name).read_text("direct_url.json") or "{}")
-              commit = url.get("vcs_info", {}).get("commit_id")
-              assert commit == pins[name]["commit"], (name, commit, pins[name]["commit"])
-              print(name, m.version(name), commit)
-          PY
+        run: python -I scripts/lock_check.py --profile studio
       # Known vulnerabilities in the installed dependencies (as orkexa's CI checks them). Blocking: an advisory that
       # was reviewed and cannot be fixed yet goes into PIP_AUDIT_IGNORE (space-separated IDs, with the reason here).
       - name: Dependency audit
