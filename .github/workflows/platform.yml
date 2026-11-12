@@ -59,19 +59,35 @@ jobs:
         run: |
           # pglast: the runtime's static tenant-isolation check (tests/test_tenant_filters.py, security review SR-01).
           pip install -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9"
+          # CI-FAST AP6: the three longest component suites run on every CPU of the runner (pytest-xdist).
+          pip install pytest-xdist==3.8.0
       - run: python scripts/check_imports.py
       - name: Check out every component at its pinned commit
         run: |
           python scripts/checkout_components.py "$RUNNER_TEMP/components"
       # Each suite runs from its checkout but imports the installed (pinned) packages.
+      # CI-FAST AP6: runtime, examples and api in parallel workers; each collects its test IDs first and
+      # scripts/check_test_ids.py fails unless every collected ID is in the suite's report exactly once.
       - name: nodestro-runtime
-        run: cd "$RUNNER_TEMP/components/nodestro-runtime" && python -m pytest -p no:cacheprovider
+        run: |
+          cd "$RUNNER_TEMP/components/nodestro-runtime"
+          python -m pytest -p no:cacheprovider --collect-only -q > "$RUNNER_TEMP/ids-runtime.txt"
+          python -m pytest -p no:cacheprovider -n auto --dist loadfile --junitxml="$RUNNER_TEMP/junit-runtime.xml"
+          python "$GITHUB_WORKSPACE/scripts/check_test_ids.py" "$RUNNER_TEMP/ids-runtime.txt" "$RUNNER_TEMP/junit-runtime.xml"
       - name: nodestro-examples
-        run: cd "$RUNNER_TEMP/components/nodestro-examples" && python -m pytest -p no:cacheprovider
+        run: |
+          cd "$RUNNER_TEMP/components/nodestro-examples"
+          python -m pytest -p no:cacheprovider --collect-only -q > "$RUNNER_TEMP/ids-examples.txt"
+          python -m pytest -p no:cacheprovider -n auto --junitxml="$RUNNER_TEMP/junit-examples.xml"
+          python "$GITHUB_WORKSPACE/scripts/check_test_ids.py" "$RUNNER_TEMP/ids-examples.txt" "$RUNNER_TEMP/junit-examples.xml"
       - name: nodestro-integrations
         run: cd "$RUNNER_TEMP/components/nodestro-integrations" && python -m pytest -p no:cacheprovider
       - name: nodestro-api
-        run: cd "$RUNNER_TEMP/components/nodestro-api" && python -m pytest -p no:cacheprovider
+        run: |
+          cd "$RUNNER_TEMP/components/nodestro-api"
+          python -m pytest -p no:cacheprovider --collect-only -q > "$RUNNER_TEMP/ids-api.txt"
+          python -m pytest -p no:cacheprovider -n auto --junitxml="$RUNNER_TEMP/junit-api.xml"
+          python "$GITHUB_WORKSPACE/scripts/check_test_ids.py" "$RUNNER_TEMP/ids-api.txt" "$RUNNER_TEMP/junit-api.xml"
       - name: nodestro-studio (with the upgrade from 0.1)
         run: pytest
       - name: Only the pinned packages were imported
@@ -154,4 +170,6 @@ jobs:
           npm run build
           npm install --no-save playwright@1.63.0
           npx playwright install --with-deps chromium
-      - run: scripts/e2e.sh
+      # CI-FAST AP6: the default suites in two halves at the same time on this runner; the script fails unless the
+      # halves together are exactly the default list of e2e.sh.
+      - run: scripts/e2e_halves.sh

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server|portable ...]   (default: all but portable)
+# Usage: scripts/e2e.sh --list | [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server|portable ...]   (default: all but portable)
 # The journeys suite writes its report to $JOURNEY_REPORT when set.
 # E2E_PORT_OFFSET (default 0) moves every server port by that amount (8000 to 8099 by default, so parallel runs on
 # one machine do not collide), E2E_BROWSER=firefox|webkit picks another Playwright engine.
@@ -11,6 +11,14 @@
 # Needs: the studio installed (pip install -e .), the frontend built (make frontend) and Playwright.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+
+# The suites a run without arguments runs, in this order. `scripts/e2e.sh --list` prints them (scripts/e2e_halves.sh
+# splits them between two parallel runs and checks that the halves together are exactly this list).
+default_suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models local-server)
+if [ "${1:-}" = "--list" ]; then
+  printf '%s\n' "${default_suites[@]}"
+  exit 0
+fi
 work="$(mktemp -d)"
 pids=()
 cleanup() { for pid in "${pids[@]}"; do kill "$pid" 2>/dev/null || true; done; }
@@ -93,7 +101,7 @@ run() {  # run SUITE
 
 # The smoke test goes first: it expects an empty start page and copies examples from the gallery.
 suites=("$@")
-[ ${#suites[@]} -eq 0 ] && suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models local-server)
+[ ${#suites[@]} -eq 0 ] && suites=("${default_suites[@]}")
 for suite in "${suites[@]}"; do
   echo "== e2e: $suite"
   run "$suite"

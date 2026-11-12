@@ -156,7 +156,9 @@ jobs:
           npm run build
           npm install --no-save playwright@1.63.0
           npx playwright install --with-deps chromium
-      - run: scripts/e2e.sh
+      # CI-FAST AP6: the default suites in two halves at the same time on this runner (about 13 minutes one after the
+      # other, i18n alone 5.5); the script fails unless the halves together are exactly the default list of e2e.sh.
+      - run: scripts/e2e_halves.sh
         env:
           JOURNEY_REPORT: ${{ runner.temp }}/journeys
       # Interface cost of the six user tasks (UX-J); a report, not a gate.
