@@ -142,8 +142,8 @@ def test_cleanup_chooses_only_new_images_of_the_test() -> None:
 
 
 def test_git_dependencies_are_read_from_the_pins() -> None:
-    pyproject = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(encoding="utf-8")
-    urls = docker_test.git_dependencies(pyproject)
+    lock = (Path(__file__).resolve().parents[1] / "platform" / "internal.txt").read_text(encoding="utf-8")
+    urls = docker_test.git_dependencies(lock)
     assert "https://github.com/peterkarlhuber/nodestro-runtime" in urls
     assert all(url.startswith("https://github.com/") and not url.endswith(".git") for url in urls)
 

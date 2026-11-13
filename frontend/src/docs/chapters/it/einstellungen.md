@@ -329,7 +329,7 @@ Requisiti: Python 3.11 o successivo e Node.js 20 o successivo (solo per compilar
 
 ```bash
 cd frontend && npm ci && npm run build && cd ..
-pip install -e .
+pip install -r platform/internal.txt -e .
 nodestro
 ```
 

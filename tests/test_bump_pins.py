@@ -61,9 +61,9 @@ def api_checkout(tmp_path: Path) -> Path:
 def studio_checkout(tmp_path: Path) -> Path:
     d = tmp_path / "nodestro-studio"
     (d / "platform").mkdir(parents=True)
-    (d / "pyproject.toml").write_text(
-        f'[project]\ndependencies = ["nodestro-api @ {URL}/nodestro-api.git@{OLD}"]\n', encoding="utf-8"
-    )
+    (d / "pyproject.toml").write_text('[project]\ndependencies = ["nodestro-api>=0.2.0,<0.3"]\n', encoding="utf-8")
+    for lock in ("internal.txt", "internal-server.txt"):
+        (d / "platform" / lock).write_text(f"# lock\nnodestro-api @ {URL}/nodestro-api.git@{OLD}\n", encoding="utf-8")
     versions = {
         "platform": "0.2.0",
         "legacy": {"commit": OLD},
@@ -99,14 +99,16 @@ def test_versions_json_changes_only_the_component_commit(tmp_path: Path) -> None
     assert versions["components"]["orkexa"]["commit"] == NEW
     assert versions["components"]["nodestro-api"]["commit"] == OLD
     assert versions["legacy"]["commit"] == OLD and versions["products"]["nodestro-server"]["commit"] == OLD
-    # studio's pyproject does not pin orkexa: untouched
-    assert OLD in (d / "pyproject.toml").read_text(encoding="utf-8")
+    # the lock fixture has no orkexa line: untouched
+    assert OLD in (d / "platform" / "internal.txt").read_text(encoding="utf-8")
 
 
-def test_studio_api_moves_in_both_files(tmp_path: Path) -> None:
+def test_studio_api_moves_in_versions_json_and_the_lock(tmp_path: Path) -> None:
     d = studio_checkout(tmp_path)
     assert bump_pins.main(["set", str(d), "--set", f"nodestro-api={NEW}"], FakeRunner()) == 0
-    assert f"nodestro-api.git@{NEW}" in (d / "pyproject.toml").read_text(encoding="utf-8")
+    for lock in ("internal.txt", "internal-server.txt"):
+        assert f"nodestro-api.git@{NEW}" in (d / "platform" / lock).read_text(encoding="utf-8")
+    assert "nodestro-api>=0.2.0,<0.3" in (d / "pyproject.toml").read_text(encoding="utf-8")
     versions = json.loads((d / "platform" / "versions.json").read_text(encoding="utf-8"))
     assert versions["components"]["nodestro-api"]["commit"] == NEW
 
@@ -213,7 +215,7 @@ def test_plan_orders_the_cascade() -> None:
         ["nodestro-local-docker"],
     ]
     studio = dict(stages[4][0][1])
-    assert set(studio) == {"pyproject.toml", "platform/versions.json"}
+    assert set(studio) == {"platform/internal.txt", "platform/internal-server.txt", "platform/versions.json"}
     assert f"orkexa={NEW}" in studio["platform/versions.json"]
 
 

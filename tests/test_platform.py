@@ -21,7 +21,10 @@ B = "b" * 40
 
 
 def versions(**commits: str) -> dict[str, Any]:
-    return {"platform": "0.2.0", "components": {name: {"commit": sha} for name, sha in commits.items()}}
+    return {
+        "platform": "0.2.0",
+        "components": {name: {"commit": sha, "version": "0.2.0"} for name, sha in commits.items()},
+    }
 
 
 def pyproject(*dependencies: str, version: str = "0.2.0") -> str:
@@ -49,6 +52,50 @@ def test_wrong_pins_are_reported(dependency: str, problem: str) -> None:
     assert any(problem in item for item in found), found
 
 
+@pytest.mark.parametrize("dependency", ["nodestro-runtime>=0.2.0,<0.3", "nodestro-runtime[postgres]>=0.2.0.dev0,<0.3"])
+def test_a_range_that_holds_the_locked_version_passes(dependency: str) -> None:
+    pins = versions(**{"nodestro-runtime": A})
+    assert check_versions.check_pyproject("x", pyproject(dependency), pins, None, url_pins_allowed=False) == []
+
+
+def test_a_url_pin_is_refused_once_ranges_are_required() -> None:
+    text = pyproject("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A)
+    found = check_versions.check_pyproject("x", text, versions(**{"nodestro-runtime": A}), None, url_pins_allowed=False)
+    assert len(found) == 1 and "declare a version range" in found[0], found
+
+
+def test_the_lock_files_are_generated_from_versions_json(tmp_path: Path) -> None:
+    pins = versions(**{"nodestro-runtime": A, "orkexa": A, "axentra": B, "tabrion": B, "nodestro-sdk": A})
+    pins["components"]["nodestro-runtime"]["studio_dependency"] = True
+    assert check_versions.check_locks(pins["components"], tmp_path) == [
+        f"platform/{name} does not match versions.json; run scripts/check_versions.py --write-lock"
+        for name in ("internal.txt", "internal-server.txt")
+    ]
+    assert check_versions.check_locks(pins["components"], tmp_path, write=True) == []
+    studio = (tmp_path / "internal.txt").read_text(encoding="utf-8").splitlines()
+    server = (tmp_path / "internal-server.txt").read_text(encoding="utf-8").splitlines()
+    url = "git+https://github.com/peterkarlhuber"
+    assert [line for line in studio if not line.startswith("#")] == [
+        f"nodestro-runtime @ {url}/nodestro-runtime.git@{A}",
+        f"orkexa @ {url}/orkexa.git@{A}",
+    ]
+    assert [line for line in server if not line.startswith("#")] == [
+        f"axentra @ {url}/axentra.git@{B}",
+        f"nodestro-runtime @ {url}/nodestro-runtime.git@{A}",
+        f"orkexa @ {url}/orkexa.git@{A}",
+        f"tabrion @ {url}/tabrion.git@{B}",
+    ]
+    (tmp_path / "internal.txt").write_text("\n".join(studio[:-1]) + "\n", encoding="utf-8")
+    assert check_versions.check_locks(pins["components"], tmp_path) == [
+        "platform/internal.txt does not match versions.json; run scripts/check_versions.py --write-lock"
+    ]
+
+
+def test_the_studio_lock_files_are_current() -> None:
+    pins = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
+    assert check_versions.check_locks(pins["components"], ROOT / "platform") == []
+
+
 CANONICAL = "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A
 
 
@@ -56,9 +103,9 @@ CANONICAL = "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-r
     ("dependency", "problem"),
     [
         # API2-09: every other spelling of a platform component is refused, not skipped.
-        ("nodestro-runtime>=0.2", "not pinned to a commit"),
-        ("Nodestro_Runtime", "not pinned to a commit"),
-        ("nodestro.runtime[postgres]>=0.2", "not pinned to a commit"),
+        ("nodestro-runtime>=0.3", "excludes the locked version 0.2.0"),
+        ("Nodestro_Runtime", "has no version range"),
+        ("nodestro.runtime[postgres]<0.2", "excludes the locked version 0.2.0"),
         ("nodestro-runtime @ git+https://github.com/PeterKarlHuber/nodestro-runtime.git@" + A, "not the canonical"),
         ("nodestro-runtime @ git+https://github.com/someone-else/nodestro-runtime.git@" + A, "not the canonical"),
         ("nodestro-runtime @ git+ssh://git@github.com/peterkarlhuber/nodestro-runtime.git@" + A, "not the canonical"),

@@ -73,7 +73,7 @@ jobs:
           cache: pip
       - name: Install the studio at the pinned commits
         run: |
-          pip install .
+          pip install -r platform/internal.txt .
       # Colima's defaults are larger than a hosted Intel runner (4 CPUs, 14 GB); the Virtualization framework (vz)
       # is tried first, QEMU if it does not start.
       - name: Install Colima (macOS Intel)
@@ -213,6 +213,6 @@ jobs:
           cache: pip
       - name: Install the studio at the pinned commits
         run: |
-          pip install .
+          pip install -r platform/internal.txt .
       - name: Untrusted code is refused without a Linux engine
         run: python scripts/docker_smoke.py --expect-unsuitable

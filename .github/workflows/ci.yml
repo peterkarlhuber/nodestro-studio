@@ -45,7 +45,7 @@ jobs:
           cache: pip
       - name: Install
         run: |
-          pip install -e ".[dev]"
+          pip install -r platform/internal.txt -e ".[dev]"
       - run: ruff check .
       - run: ruff format --check .
       - run: mypy
@@ -117,7 +117,7 @@ jobs:
       - name: Install the wheel into a fresh environment
         run: |
           python -m venv "$RUNNER_TEMP/wheel"
-          "$RUNNER_TEMP/wheel/bin/pip" install dist/*.whl
+          "$RUNNER_TEMP/wheel/bin/pip" install -r platform/internal.txt dist/*.whl
       - name: Start the installed wheel
         run: |
           cd "$RUNNER_TEMP"
@@ -144,7 +144,7 @@ jobs:
           cache: pip
       - name: Install
         run: |
-          pip install -e ".[dev]"
+          pip install -r platform/internal.txt -e ".[dev]"
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
@@ -184,7 +184,7 @@ jobs:
           cache: pip
       - name: Install
         run: |
-          pip install -e ".[dev]"
+          pip install -r platform/internal.txt -e ".[dev]"
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
@@ -218,7 +218,7 @@ jobs:
           cache: pip
       - name: Install
         run: |
-          pip install -e ".[dev]"
+          pip install -r platform/internal.txt -e ".[dev]"
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22

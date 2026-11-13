@@ -116,11 +116,18 @@ A host is refused for untrusted code when:
 
 - **All components have the same version** (0.2.0). A platform version is the set of commits in
   [`platform/versions.json`](../platform/versions.json) that were tested together.
-- **Every reference to another repository is a full commit SHA**, never a branch or a tag:
-  `nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@<sha>`. Orkexa stays at
-  `cbf6df3d6f727b96924f1ae66e60b469eeef58e6` (Orkexa has no tags).
-- **Every component pins only its direct dependencies**; the studio pins all of them. pip aborts when two pins of the
-  same component differ; `scripts/check_versions.py` checks this beforehand and reports exactly which pin differs.
+- **One lock fixes every commit** (CI-FAST P3): `platform/internal.txt` (the studio profile) and
+  `platform/internal-server.txt` (the server profile: also axentra and tabrion) hold one line per internal package,
+  `nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@<sha>`, a full commit SHA, never a
+  branch or a tag. Both are generated from `platform/versions.json` (`python scripts/check_versions.py --write-lock`)
+  and checked by `scripts/check_versions.py`.
+- **Components require each other by a version range**, such as `nodestro-runtime>=0.2.0,<0.3`, never by a URL; the
+  range must contain the locked version. Every install names the lock:
+  `pip install -r platform/internal.txt <target>` (the package names are not registered on a package index, so an
+  install without the lock cannot find them). The studio declares ranges already; the components move from their
+  URL pins to ranges one by one, and `check_versions.py` accepts a URL pin only at the locked commit until all have.
+- **Moving a component is one studio pull request**: `scripts/bump_pins.py set . --set <name>=<sha>` rewrites
+  `versions.json` and the lock; the products then move their studio pin as before.
 - **Merge with a merge commit**, not a squash: the pinned commits come from the pull request branches and stay
   reachable on `master` this way. After a squash merge, the pins have to be moved to the new commits.
 
@@ -239,7 +246,7 @@ In the Python environment where Nodestro 0.1 is installed:
 ```bash
 git clone https://github.com/peterkarlhuber/nodestro-studio.git && cd nodestro-studio
 (cd frontend && npm ci && npm run build)    # the user interface belongs in the package
-pip install -U .                            # or -e . for development
+pip install -U -r platform/internal.txt .   # or -e . for development
 nodestro
 ```
 

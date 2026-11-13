@@ -6,7 +6,8 @@
 1. looks at this computer and its Docker without changing anything: the docker command, whether the engine answers,
    the Docker context and ``DOCKER_HOST``, Linux or Windows containers, cgroup version, memory and CPUs, the Docker
    Desktop version, and what the docker CLI sees with the reduced environment the runtime gives it;
-2. installs the studio of this checkout (``pip install <checkout>``: the components at the commits the checkout pins)
+2. installs the studio of this checkout (``pip install -r platform/internal.txt <checkout>``: the components at the
+   commits of the checkout's lock)
    into its own virtual environment in the work folder (default ``~/nodestro-docker-test``), never into the person's
    Python; the interface is not built, the test does not need it;
 3. runs ``scripts/docker_smoke.py`` with that environment (the real studio, Orkexa's ``DockerSandbox``, only the AI
@@ -434,9 +435,9 @@ def find_docker(environ: Mapping[str, str]) -> str:
 # ---- git access, install ------------------------------------------------------------------------------------------
 
 
-def git_dependencies(pyproject: str) -> list[str]:
-    """The repositories of the studio's git dependencies (``name @ git+https://...git@<commit>``)."""
-    return sorted(set(re.findall(r"git\+(https://[^@\s\"]+?)(?:\.git)?@[0-9a-f]{7,40}", pyproject)))
+def git_dependencies(lock: str) -> list[str]:
+    """The repositories of the studio's git dependencies (the lock's ``name @ git+https://...git@<commit>``)."""
+    return sorted(set(re.findall(r"git\+(https://[^@\s\"]+?)(?:\.git)?@[0-9a-f]{7,40}", lock)))
 
 
 def check_git_access(urls: Iterable[str], environ: Mapping[str, str]) -> list[str]:
@@ -491,7 +492,7 @@ def install(work: Path, environ: Mapping[str, str], state: Mapping[str, Any], lo
     with log.open("w", encoding="utf-8", errors="replace") as output:
         for step in (
             [sys.executable, "-m", "venv", str(venv)],
-            [str(venv_python(venv)), "-m", "pip", "install", str(REPO)],
+            [str(venv_python(venv)), "-m", "pip", "install", "-r", str(REPO / "platform" / "internal.txt"), str(REPO)],
         ):
             output.write(f"$ {' '.join(step)}\n")
             output.flush()
@@ -857,7 +858,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.skip_install:
             python = Path(sys.executable)
         else:
-            missing = check_git_access(git_dependencies((REPO / "pyproject.toml").read_text(encoding="utf-8")), environ)
+            missing = check_git_access(
+                git_dependencies((REPO / "platform" / "internal.txt").read_text(encoding="utf-8")), environ
+            )
             if missing:
                 report["hints"].append(
                     {

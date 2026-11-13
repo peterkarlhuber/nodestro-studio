@@ -118,15 +118,15 @@ cd ..
 # Install the studio with all components (runtime, API, integrations, examples; each at its tested commit)
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
-pip install -e .
+pip install -r platform/internal.txt -e .
 ```
 
 `make install` does both in one step (macOS/Linux). The components and orkexa are public repositories on GitHub; pip
 downloads them from there, so it needs access to github.com.
 
 **Upgrading from 0.1:** the distribution is still called `nodestro`. In the environment where 0.1 is installed, run
-the steps above in a checkout of this repository (build the user interface, then `pip install -U .` or
-`pip install -U -e .`). This replaces 0.1 including the `nodestro` command; the data folder `~/.nodestro` keeps being
+the steps above in a checkout of this repository (build the user interface, then `pip install -U -r platform/internal.txt .` or
+`pip install -U -r platform/internal.txt -e .`). This replaces 0.1 including the `nodestro` command; the data folder `~/.nodestro` keeps being
 used without migration. Details in [docs/PLATFORM.md](docs/PLATFORM.md#upgrading-from-nodestro-01).
 
 ## Running
@@ -163,7 +163,7 @@ therefore not reachable from other computers.
 ## Development
 
 ```bash
-pip install -e ".[dev]"
+pip install -r platform/internal.txt -e ".[dev]"
 cd frontend && npm ci && cd ..
 
 # two terminals:

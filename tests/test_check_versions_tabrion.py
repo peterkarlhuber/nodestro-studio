@@ -335,7 +335,7 @@ def serve(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, files: dict[tuple[str
     monkeypatch.setattr(check_versions.Reader, "exists", lambda self, repo, ref, path: (repo, ref, path) in files)
     monkeypatch.setattr(check_versions, "ROOT", tmp_path)
     (tmp_path / "pyproject.toml").write_text(
-        toml("nodestro", [f"nodestro-api @ {runtime_url('nodestro-api', API)}"], version="0.2.0"), encoding="utf-8"
+        toml("nodestro", ["nodestro-api>=0.2.0,<0.3"], version="0.2.0"), encoding="utf-8"
     )
 
 
@@ -358,6 +358,8 @@ def run_main(tmp_path: Path, pins: dict[str, Any], *args: str) -> int:
         entry["pyproject"] = "pyproject.toml"
     path = tmp_path / "versions.json"
     path.write_text(json.dumps(pins), encoding="utf-8")
+    for profile, name in check_versions.LOCK_FILES.items():
+        (tmp_path / name).write_text(check_versions.lock_text(pins["components"], profile), encoding="utf-8")
     return check_versions.main(["--versions", str(path), *args])
 
 

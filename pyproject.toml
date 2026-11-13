@@ -13,12 +13,13 @@ license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [{ name = "Peter Karlhuber" }]
 dependencies = [
-    # The platform: every component at the exact commit this studio release was tested with
-    # (platform/versions.json; `make check-versions` verifies they agree).
-    "nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@e584d6fc6111bf864facd42d9ff9433af782eff3",
-    "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@979c11c922b4834281381c88d12cf6a74917d4a1",
-    "nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@6ef36f3b6f364a1ad8fcdede86b55ad0db528bed",
-    "nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@7390f83f0598bcd9ddd990495e4cf2092d1b6c4f",
+    # The platform components by compatible version range. The exact commits this studio release was tested with
+    # are in the lock, platform/internal.txt (generated from platform/versions.json; `make check-versions` verifies
+    # they agree): install with `pip install -r platform/internal.txt ...`.
+    "nodestro-api>=0.2.0,<0.3",
+    "nodestro-runtime>=0.2.0,<0.3",
+    "nodestro-examples>=0.3.0,<0.4",
+    "nodestro-integrations>=0.2.0,<0.3",
     "fastapi>=0.115",
     "uvicorn[standard]>=0.30",
 ]

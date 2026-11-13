@@ -57,7 +57,7 @@ jobs:
             echo "cryptography==46.0.3" > "$RUNNER_TEMP/constraints.txt"
             export PIP_CONSTRAINT="$RUNNER_TEMP/constraints.txt"
           fi
-          pip install .
+          pip install -r platform/internal.txt .
       - name: System
         run: python -c "import platform, sys; print(sys.platform, platform.machine(), platform.platform())"
       - name: Start API, runtime and interface
