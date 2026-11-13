@@ -1,7 +1,7 @@
 # The lock of the platform's internal packages, studio profile: generated from platform/versions.json by
 # scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>
-nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@e584d6fc6111bf864facd42d9ff9433af782eff3
-nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@6ef36f3b6f364a1ad8fcdede86b55ad0db528bed
-nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@7390f83f0598bcd9ddd990495e4cf2092d1b6c4f
-nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@979c11c922b4834281381c88d12cf6a74917d4a1
-orkexa @ git+https://github.com/peterkarlhuber/orkexa.git@840add4bd4172c527dfb9efa7cfcc49574ebba92
+nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@d683b9e2b6415581275c78b3dcade1d1841bd750
+nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@b20395a27c32a3ebbdee70013c030bc116d6d76f
+nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@62138e2bfcb2bcd5051e612050433649d6cd3c2a
+nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@e05f51dff441e0b984fef3114696dc7f2274b353
+orkexa @ git+https://github.com/peterkarlhuber/orkexa.git@3165be2d228e490d8508135516c738aeeb141a5e

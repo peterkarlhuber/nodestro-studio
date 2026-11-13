@@ -32,17 +32,20 @@ def pyproject(*dependencies: str, version: str = "0.2.0") -> str:
     return f'[project]\nname = "x"\nversion = "{version}"\ndependencies = [{listed}]\n'
 
 
-def test_matching_pins_pass() -> None:
-    text = pyproject("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A)
+def test_a_matching_range_passes() -> None:
+    text = pyproject("nodestro-runtime>=0.2.0,<0.3")
     assert check_versions.check_pyproject("x", text, versions(**{"nodestro-runtime": A}), "0.2.0") == []
 
 
 @pytest.mark.parametrize(
     ("dependency", "problem"),
     [
-        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + B, "versions.json pins"),
-        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@master", "not pinned"),
-        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@v0.2.0", "not pinned"),
+        (
+            "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A,
+            "declare a version range",
+        ),
+        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@master", "declare a version"),
+        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@v0.2.0", "declare a version"),
         ("other @ git+https://github.com/peterkarlhuber/other.git@" + A, "not in platform/versions.json"),
         ("claude-agent @ git+https://github.com/peterkarlhuber/claude-agent.git@" + A, "claude-agent"),
     ],
@@ -55,12 +58,12 @@ def test_wrong_pins_are_reported(dependency: str, problem: str) -> None:
 @pytest.mark.parametrize("dependency", ["nodestro-runtime>=0.2.0,<0.3", "nodestro-runtime[postgres]>=0.2.0.dev0,<0.3"])
 def test_a_range_that_holds_the_locked_version_passes(dependency: str) -> None:
     pins = versions(**{"nodestro-runtime": A})
-    assert check_versions.check_pyproject("x", pyproject(dependency), pins, None, url_pins_allowed=False) == []
+    assert check_versions.check_pyproject("x", pyproject(dependency), pins, None) == []
 
 
-def test_a_url_pin_is_refused_once_ranges_are_required() -> None:
+def test_a_url_pin_is_refused_even_at_the_locked_commit() -> None:
     text = pyproject("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A)
-    found = check_versions.check_pyproject("x", text, versions(**{"nodestro-runtime": A}), None, url_pins_allowed=False)
+    found = check_versions.check_pyproject("x", text, versions(**{"nodestro-runtime": A}), None)
     assert len(found) == 1 and "declare a version range" in found[0], found
 
 
@@ -96,9 +99,6 @@ def test_the_studio_lock_files_are_current() -> None:
     assert check_versions.check_locks(pins["components"], ROOT / "platform") == []
 
 
-CANONICAL = "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A
-
-
 @pytest.mark.parametrize(
     ("dependency", "problem"),
     [
@@ -106,14 +106,14 @@ CANONICAL = "nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-r
         ("nodestro-runtime>=0.3", "excludes the locked version 0.2.0"),
         ("Nodestro_Runtime", "has no version range"),
         ("nodestro.runtime[postgres]<0.2", "excludes the locked version 0.2.0"),
-        ("nodestro-runtime @ git+https://github.com/PeterKarlHuber/nodestro-runtime.git@" + A, "not the canonical"),
-        ("nodestro-runtime @ git+https://github.com/someone-else/nodestro-runtime.git@" + A, "not the canonical"),
-        ("nodestro-runtime @ git+ssh://git@github.com/peterkarlhuber/nodestro-runtime.git@" + A, "not the canonical"),
-        ("nodestro-runtime @ https://github.com/peterkarlhuber/nodestro-runtime/archive/" + A + ".zip", "canonical"),
-        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime@" + A, "not the canonical"),
-        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + B, "versions.json pins"),
+        ("nodestro-runtime @ git+https://github.com/PeterKarlHuber/nodestro-runtime.git@" + A, "declare a version"),
+        ("nodestro-runtime @ git+https://github.com/someone-else/nodestro-runtime.git@" + A, "declare a version"),
+        ("nodestro-runtime @ git+ssh://git@github.com/peterkarlhuber/nodestro-runtime.git@" + A, "declare a version"),
+        ("nodestro-runtime @ https://github.com/peterkarlhuber/nodestro-runtime/archive/" + A + ".zip", "declare"),
+        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime@" + A, "declare a version range"),
+        ("nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + B, "declare a version"),
         ("runtime-fork @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A, "under another name"),
-        ("nodestro-client @ git+https://github.com/peterkarlhuber/nodestro-sdk.git@" + A, "canonical"),
+        ("nodestro-client @ git+https://github.com/peterkarlhuber/nodestro-sdk.git@" + A, "declare a version range"),
         ("this is not a requirement @@", "not a valid requirement"),
     ],
 )
@@ -123,11 +123,11 @@ def test_other_spellings_of_a_component_are_reported(dependency: str, problem: s
     assert len(found) == 1 and problem in found[0], found
 
 
-def test_canonical_references_and_unrelated_packages_pass() -> None:
+def test_ranges_and_unrelated_packages_pass() -> None:
     pins = versions(**{"nodestro-runtime": A, "nodestro-sdk": A})
-    sdk = "nodestro-client @ git+https://github.com/peterkarlhuber/nodestro-sdk.git@" + A + "#subdirectory=python"
-    extras = "nodestro-runtime[postgres] @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@" + A
-    text = pyproject(CANONICAL, extras, sdk, "fastapi>=0.115", "x[extra]")  # "x" is the package itself
+    sdk = "nodestro-client>=0.2,<0.3"
+    extras = "nodestro-runtime[postgres]>=0.2.0,<0.3"
+    text = pyproject("nodestro-runtime>=0.2,<0.3", extras, sdk, "fastapi>=0.115", "x[extra]")  # "x": the package
     assert check_versions.check_pyproject("x", text, pins, "0.2.0") == []
 
 
@@ -159,10 +159,10 @@ def test_the_studio_pins_agree_with_versions_json() -> None:
     pinned = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
     text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     assert check_versions.check_pyproject("nodestro-studio", text, pinned, pinned["platform"]) == []
-    # The orkexa commit nodestro-runtime pins (orkexa #71: reasoning replay bounded on Ollama, RT-067), with its own
-    # pyproject so that check_versions.py compares orkexa's version as well.
+    # orkexa is locked at a full commit, with its own pyproject so that check_versions.py compares its version as well
+    # (the commit itself moves with every lock bump; scripts/bump_pins.py).
     orkexa = pinned["components"]["orkexa"]
-    assert orkexa["commit"] == "840add4bd4172c527dfb9efa7cfcc49574ebba92"
+    assert check_versions.SHA.match(orkexa["commit"])
     assert orkexa["pyproject"] == "pyproject.toml"
 
 

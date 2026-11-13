@@ -1,27 +1,28 @@
-"""The pins of the platform agree: platform/versions.json, this studio and every pinned component.
+"""The pins of the platform agree: platform/versions.json, its lock (platform/internal*.txt), this studio and every
+pinned component.
 
-Every Nodestro component and orkexa is referenced by an exact commit (no branch, no tag that could
-move). The script checks that
+Every platform component is locked by an exact commit (no branch, no tag that could move) in one place: versions.json
+and the lock generated from it (``--write-lock``). The components require each other only by version range. The
+script checks that
 
-- every commit in platform/versions.json is a full 40-character SHA,
-- every dependency on a platform component in the studio and in each pinned component (its pyproject.toml at the
-  pinned commit) is exactly the canonical reference ``<name> @ git+https://github.com/peterkarlhuber/<repo>.git@<commit
-  versions.json gives>`` (requirements are parsed with ``packaging``, names compared normalised): a plain name
-  (``nodestro-runtime>=0.2``, which would install whatever a package index offers under that name), another owner or
-  spelling, ``git+ssh``, an archive URL or a branch are refused, and so is a URL of a component under another name
-  (API2-09),
+- every commit in platform/versions.json is a full 40-character SHA, and the lock files are exactly what versions.json
+  generates (one ``<name> @ git+https://github.com/peterkarlhuber/<repo>.git@<commit>`` line per component of the
+  profile),
+- every dependency on a platform component in the studio and in each locked component (its pyproject.toml at the
+  locked commit) is a version range that contains the locked version (requirements are parsed with ``packaging``,
+  names compared normalised): a plain name without a range and any URL (a git pin, another owner or spelling,
+  ``git+ssh``, an archive) are refused, and so is a URL of a component under another name (API2-09),
 - each component's version at that commit is the one versions.json gives (a component with a dynamic version,
   such as Axentra, names the file that holds it in ``version_file``: ``__version__ = "..."``),
 - nothing references claude-agent,
-- TABRION VER-1 / QA-15 (AC-6, V-B0): the foundation tabrion (``platform/versions.json`` component ``tabrion``, a
-  final version) is the one tabrion of every installation (see :func:`check_tabrion`): a library (axentra, orkexa;
-  ``kind: library`` in ``platform/dependency-policy.json``) requires it only by a final version range that contains
-  the pinned version, never by a direct URL (RC-1, RC-8); every other component that references it carries exactly
-  the canonical pin of versions.json (nodestro-runtime extras and nodestro-api ``dev``, RC-2), so the installation
-  holds one tabrion commit; the components in ``pinned_by`` must carry that pin (empty until PIN-W1); each library's
-  ``requirements/tabrion.txt`` holds exactly one pin on a commit of a final tabrion version inside the library's
-  range (another final of the same minor is a warning, RC-7); the dependency policy (K-33) holds, every pinned
-  manifest follows it and the graph of the pins has no cycle.
+- TABRION VER-1 / QA-15 (AC-6, K-34): the foundation tabrion (``platform/versions.json`` component ``tabrion``, a
+  final version) is the one tabrion of every installation (see :func:`check_tabrion`): every component requires it
+  only by a minor range ``>=M.N,<M.(N+1)`` with final bounds, no URL, no marker (RC-1, RC-8), all components the same
+  minor (RC-2); the lock holds exactly one tabrion line, the canonical pin of a known final release commit
+  (``releases``) inside that range, and both lock files name the same commit; each library's
+  ``requirements/tabrion.txt`` (its standalone install) holds exactly one pin on a commit of a final tabrion version
+  inside the library's range (another final of the same minor is a warning, RC-7); the dependency policy (K-33)
+  holds, every locked manifest follows it and the graph of the dependencies has no cycle.
 
 ``--drift`` (RC-7, the nightly report) compares ``requirements/tabrion.txt`` on each library's default branch with
 the pinned tabrion commit; it only reports (``::warning::``) and always exits 0.
@@ -45,6 +46,7 @@ import tomllib
 from typing import Any
 
 from packaging.requirements import InvalidRequirement, Requirement
+from packaging.specifiers import SpecifierSet
 from packaging.utils import canonicalize_name
 from packaging.version import InvalidVersion, Version
 
@@ -71,9 +73,6 @@ POLICY = ROOT / "platform" / "dependency-policy.json"
 #: each other by version ranges only; every install names the lock: ``pip install -r platform/internal.txt ...``.
 LOCK_FILES = {"studio": "internal.txt", "server": "internal-server.txt"}
 LOCK = "platform/internal.txt"
-#: The switch from commit pins to ranges: the components may still pin each other by their canonical URL (the studio
-#: may not). Set to False once every component declares ranges.
-COMPONENT_URL_PINS_ALLOWED = True
 LOCK_HEADER = (
     "# The lock of the platform's internal packages, {profile} profile: generated from platform/versions.json by\n"
     "# scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>\n"
@@ -81,6 +80,8 @@ LOCK_HEADER = (
 #: The foundation every installation holds exactly once (K-34) and the file a library installs it from (VER-1).
 TABRION = "tabrion"
 TABRION_REQUIREMENTS = "requirements/tabrion.txt"
+#: The one form of tabrion in the lock: the canonical pin of a full, lowercase commit.
+LOCK_PIN = re.compile(r"tabrion @ git\+https://github\.com/" + OWNER + r"/tabrion\.git@(?P<commit>[0-9a-f]{40})")
 #: pip's inline comment: whitespace, then "#".
 INLINE_COMMENT = re.compile(r"\s+#")
 
@@ -109,14 +110,11 @@ def check_requirement(
     item: str,
     components: dict[str, Any],
     own_name: str = "",
-    ranges: frozenset[str] = frozenset(),
-    url_pins_allowed: bool = True,
 ) -> list[str]:
-    """Problems of one dependency: a platform component is required by a version range that contains the locked
-    version (:func:`check_locked_range`; the commit is in the lock, :data:`LOCK`) or, while ``url_pins_allowed``
-    (the switch from pins to ranges), exactly by :func:`canonical_url` (``own_name``: the package's own name, which
-    its extras may name, as ``axentra[server]``); a component in ``ranges`` (tabrion, for a library) only by a final
-    version range (:func:`check_range`)."""
+    """Problems of one dependency: a platform component is required only by a version range that contains the
+    locked version (:func:`check_locked_range`), never by a URL; the commit is in the lock, :data:`LOCK`
+    (``own_name``: the package's own name, which its extras may name, as ``axentra[server]``); tabrion only by a
+    final minor range (:func:`check_range`)."""
     try:
         requirement = Requirement(item)
     except InvalidRequirement as exc:
@@ -124,12 +122,8 @@ def check_requirement(
     if own_name and canonicalize_name(requirement.name) == canonicalize_name(own_name) and not requirement.url:
         return []
     repo = component_of(requirement.name, components)
-    if repo is not None and repo in ranges:
-        return check_range(owner, requirement, repo, components[repo])
-    if repo == TABRION and requirement.specifier.prereleases:
-        return [f"{owner}: {item!r} names a pre-release; master carries none (RC-8)"]
-    if repo == TABRION and requirement.marker is not None:
-        return [f"{owner}: {item!r}: a tabrion requirement carries no environment marker (it could install nothing)"]
+    if repo == TABRION:
+        return check_range(owner, requirement)
     url = requirement.url or ""
     linked = [found_repo for found_repo, _ref in references([url])]
     if repo is None:
@@ -139,20 +133,9 @@ def check_requirement(
         if linked:
             return [f"{owner}: {linked[0]} is not in platform/versions.json"]
         return []
-    commit = str(components[repo]["commit"])
-    expected = canonical_url(repo, commit)
-    if not url:
-        return check_locked_range(owner, requirement, repo, components[repo])
-    if not url_pins_allowed:
+    if url:
         return [f"{owner}: {requirement.name} @ {url}: declare a version range, the commit belongs in {LOCK}"]
-    if url == expected:
-        return []
-    refs = [ref for found_repo, ref in references([url]) if found_repo == repo.lower()]
-    if refs and refs[0] and not SHA.match(refs[0]):
-        return [f"{owner}: {repo}@{refs[0]} is not pinned to a commit"]
-    if refs and SHA.match(refs[0]) and refs[0] != commit:
-        return [f"{owner}: {repo}@{refs[0][:12]}, versions.json pins {commit[:12]}"]
-    return [f"{owner}: {requirement.name} @ {url} is not the canonical reference {expected}"]
+    return check_locked_range(owner, requirement, repo, components[repo])
 
 
 def check_locked_range(owner: str, requirement: Requirement, repo: str, entry: dict[str, Any]) -> list[str]:
@@ -210,30 +193,35 @@ def is_final(version: str) -> bool:
     return not parsed.is_prerelease and parsed.local is None
 
 
-def check_range(owner: str, requirement: Requirement, repo: str, entry: dict[str, Any]) -> list[str]:
-    """A library's requirement on tabrion: a final range (RC-8) without URL (RC-1) that holds the pinned version
-    (RC-2)."""
+def tabrion_minor(specifier: SpecifierSet) -> tuple[int, int] | None:
+    """``(M, N)`` of a minor range ``>=M.N,<M.(N+1)`` (the lower bound may name a patch, ``>=M.N.P``) with final
+    bounds; None for any other specifier."""
+    clauses = {spec.operator: spec.version for spec in specifier}
+    if len(specifier) != 2 or set(clauses) != {">=", "<"} or not all(map(is_final, clauses.values())):
+        return None
+    lower, upper = Version(clauses[">="]).release, Version(clauses["<"]).release
+    if len(lower) < 2 or len(upper) < 2 or any(upper[2:]) or upper[:2] != (lower[0], lower[1] + 1):
+        return None
+    return lower[0], lower[1]
+
+
+def check_range(owner: str, requirement: Requirement) -> list[str]:
+    """A component's requirement on tabrion: a minor range ``>=M.N,<M.(N+1)`` with final bounds (RC-8), never a URL
+    (RC-1; the commit is in the lock) and no environment marker. That the locked tabrion lies inside the range and
+    that every component names the same minor is :func:`check_tabrion`'s."""
     if requirement.url:
-        return [f"{owner}: a library requires {repo} by a version range, never by a direct URL (RC-1): {requirement}"]
+        return [
+            f"{owner}: {requirement}: tabrion is required by a range, never by a URL; the lock holds the commit (RC-1)"
+        ]
     if requirement.marker is not None:
-        return [f"{owner}: {requirement}: a {repo} requirement carries no environment marker"]
-    if not str(requirement.specifier):
-        return [f"{owner}: {requirement} has no version range; a library requires {repo} by one (RC-1)"]
+        return [
+            f"{owner}: {requirement}: a tabrion requirement carries no environment marker (it could install nothing)"
+        ]
     if requirement.specifier.prereleases:
         return [f"{owner}: {requirement} names a pre-release; master carries only final ranges (RC-8)"]
-    version = str(entry.get("version", ""))
-    if not requirement.specifier.contains(version, prereleases=False):
-        return [f"{owner}: {requirement} does not contain {repo} {version} of versions.json (RC-2)"]
+    if tabrion_minor(requirement.specifier) is None:
+        return [f"{owner}: {requirement}: require tabrion by a minor range >=M.N,<M.(N+1), such as >=0.1,<0.2 (RC-1)"]
     return []
-
-
-def foundation_ranges(repo: str, policy: check_dependency_policy.Policy, components: dict[str, Any]) -> frozenset[str]:
-    """The components ``repo`` requires by range: for a library, every ``no_direct_url`` component (tabrion)."""
-    if policy.components.get(repo, {}).get("kind") != "library":
-        return frozenset()
-    return frozenset(
-        name for name, entry in policy.components.items() if entry.get("no_direct_url") and name in components
-    )
 
 
 def tabrion_requirements(owner: str, text: str, entry: dict[str, Any]) -> tuple[list[str], str | None]:
@@ -348,95 +336,59 @@ def cycles(graph: dict[str, set[str]]) -> list[str]:
     return found
 
 
-def tabrion_pins(text: str, components: dict[str, Any]) -> list[tuple[str, str]]:
-    """``(requirement, commit)`` of every direct reference of a manifest to tabrion (ref empty without a commit)."""
+def lock_tabrion(name: str, text: str) -> tuple[list[str], list[str]]:
+    """``(problems, commits)`` of the tabrion lines of one lock file: at most one line, the canonical pin
+    ``tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@<40 lowercase hex>``."""
+    where = f"platform/{name}"
     found = []
-    for item in dependencies(tomllib.loads(text)):
-        try:
-            requirement = Requirement(item)
-        except InvalidRequirement:
+    for raw in text.splitlines():
+        line = INLINE_COMMENT.split(raw, maxsplit=1)[0].strip()
+        if not line or line.startswith("#"):
             continue
-        refs = [ref for repo, ref in references([requirement.url or ""]) if repo == TABRION]
-        named = component_of(requirement.name, components) == TABRION
-        if requirement.url and (refs or named):
-            found.append((str(requirement), refs[0] if refs else ""))
-    return found
+        requirement = _requirement(line)
+        named = requirement is not None and canonicalize_name(requirement.name) == TABRION
+        if named or any(repo == TABRION for repo, _ref in references([line])):
+            found.append(line)
+    problems, commits = [], []
+    if len(found) > 1:
+        problems.append(f"{where}: {len(found)} tabrion lines, the lock holds exactly one (K-34, RC-2)")
+    for line in found:
+        match = LOCK_PIN.fullmatch(line)
+        if match is None:
+            expected = f"tabrion @ {canonical_url(TABRION, '<40 lowercase hex>')}"
+            problems.append(f"{where}: {line!r} is not the canonical tabrion lock line {expected}")
+        else:
+            commits.append(match["commit"])
+    return problems, commits
 
 
-def parsed_manifests(manifests: dict[str, str]) -> dict[str, tuple[str, list[str], dict[str, list[str]]]]:
-    """repo -> (its distribution name, core requirements, extras)."""
-    out: dict[str, tuple[str, list[str], dict[str, list[str]]]] = {}
-    for repo, text in manifests.items():
-        project = tomllib.loads(text).get("project", {})
-        extras: dict[str, list[str]] = {
-            str(canonicalize_name(name)): list(items)
-            for name, items in project.get("optional-dependencies", {}).items()
-        }
-        out[repo] = (
-            str(canonicalize_name(str(project.get("name", repo)))),
-            list(project.get("dependencies", [])),
-            extras,
-        )
-    return out
-
-
-def tabrion_closure(
-    root: str, extras: frozenset[str], parsed: dict[str, Any], components: dict[str, Any]
-) -> tuple[set[str], bool]:
-    """``(ranged, pinned)`` of installing ``root[extras]`` from the pinned manifests: the components that require
-    tabrion by a range on the way, and whether a git pin of tabrion is on the way (pip then installs that commit)."""
-    ranged: set[str] = set()
-    pinned = False
-    seen: set[tuple[str, frozenset[str]]] = set()
-    todo = [(root, extras)]
-    while todo:
-        node = todo.pop()
-        if node in seen or node[0] not in parsed:
-            continue
-        seen.add(node)
-        repo, wanted = node
-        name, core, optional = parsed[repo]
-        items = core + [item for extra in sorted(wanted) for item in optional.get(extra, [])]
-        for item in items:
-            requirement = _requirement(item)
-            if requirement is None:
-                continue
-            requested = frozenset(canonicalize_name(extra) for extra in requirement.extras)
-            if canonicalize_name(requirement.name) == name and not requirement.url:
-                todo.append((repo, wanted | requested))
-                continue
-            target = component_of(requirement.name, components)
-            if target == TABRION:
-                if requirement.url:
-                    pinned = True
-                else:
-                    ranged.add(repo)
-            elif target is not None:
-                todo.append((target, requested))
-    return ranged, pinned
-
-
-def unpinned_ranges(
-    manifests: dict[str, str], policy: check_dependency_policy.Policy, components: dict[str, Any]
+def check_tabrion_lock(
+    entry: dict[str, Any], locks: dict[str, str], ranged: list[tuple[str, Requirement]]
 ) -> list[str]:
-    """Every install of a non-library component (core, and core with each one extra) that would pull tabrion by a
-    library's range with no tabrion git pin on the way: pip would take tabrion from a package index (a free name
-    there, dependency confusion). Independent of ``pinned_by``: it holds as soon as a pinned library has the range."""
-    parsed = parsed_manifests(manifests)
-    library = set(libraries(policy, components))
-    problems = []
-    for repo in manifests:
-        if repo in library or repo == TABRION:
+    """The lock (file name -> text) holds one tabrion: one line, the same commit in every lock file that carries one,
+    a known final release (``releases``) inside every component's range (``ranged``: (repo, requirement))."""
+    problems: list[str] = []
+    commits: dict[str, set[str]] = {}
+    for name, text in sorted(locks.items()):
+        found, pinned = lock_tabrion(name, text)
+        problems += found
+        for commit in pinned:
+            commits.setdefault(commit, set()).add(name)
+    if not commits and not problems:
+        problems.append(f"the lock ({', '.join(sorted(locks))}) holds no tabrion; it holds exactly one (K-34)")
+    if len(commits) > 1:
+        listed = "; ".join(f"{commit[:12]} ({', '.join(sorted(names))})" for commit, names in sorted(commits.items()))
+        problems.append(f"more than one tabrion commit in the lock (K-34, RC-2): {listed}")
+    for commit in sorted(commits):
+        version = release_of(entry, commit)
+        if version is None:
+            problems.append(f"lock: tabrion@{commit[:12]} is not a known final release (versions.json releases, RC-8)")
             continue
-        for extra in [None, *sorted(parsed[repo][2])]:
-            ranged, pinned = tabrion_closure(repo, frozenset([extra] if extra else []), parsed, components)
-            if ranged and not pinned:
-                where = f"{repo}[{extra}]" if extra else repo
-                problems.append(
-                    f"{where}: pulls tabrion by the range of {', '.join(sorted(ranged))} without a tabrion pin, so "
-                    f"pip would take it from a package index; pin tabrion @ "
-                    f"{canonical_url(TABRION, str(components[TABRION]['commit']))} there (RC-2, K-34)"
-                )
+        outside = [f"{repo}: {item}" for repo, item in ranged if not item.specifier.contains(version)]
+        if outside:
+            problems.append(
+                f"lock: tabrion {version}@{commit[:12]} lies outside the range of {'; '.join(outside)} (RC-2)"
+            )
     return problems
 
 
@@ -446,11 +398,13 @@ def check_tabrion(
     policy: check_dependency_policy.Policy,
     requirements: dict[str, str | None],
     read_tabrion: Any,
+    locks: dict[str, str],
 ) -> tuple[list[str], list[str]]:
     """``(problems, warnings)`` of the one tabrion (AC-6, K-34) across the manifests (repo -> pyproject text at the
-    pinned commit, the studio included), the libraries' ``requirements/tabrion.txt`` (repo -> text, None if the file
-    does not exist) and the dependency policy; ``read_tabrion(commit)`` returns tabrion's version file at a commit
-    (None if it cannot be read). A per-requirement problem (another commit, a range) is check_pyproject's."""
+    locked commit, the studio included), the libraries' ``requirements/tabrion.txt`` (repo -> text, None if the file
+    does not exist), the dependency policy and the lock files (name -> text); ``read_tabrion(commit)`` returns
+    tabrion's version file at a commit (None if it cannot be read). The form of each requirement (a final minor
+    range, no URL) is check_pyproject's (:func:`check_range`)."""
     components: dict[str, Any] = versions["components"]
     problems: list[str] = [f"dependency policy: {error}" for error in policy.errors]
     warnings: list[str] = []
@@ -465,34 +419,37 @@ def check_tabrion(
     if not is_final(version):
         problems.append(f"versions.json: tabrion {version} is not a final version; master pins only finals (RC-8)")
     problems += check_releases(entry)
-    problems += unpinned_ranges(manifests, policy, components)
-    held: dict[str, list[str]] = {}
-    for repo, text in manifests.items():
-        for pin, ref in tabrion_pins(text, components):
-            held.setdefault(ref or "(no commit)", []).append(f"{repo}: {pin}")
-    if len(held) > 1:
-        listed = "; ".join(f"{ref[:12]} ({', '.join(owners)})" for ref, owners in sorted(held.items()))
-        problems.append(f"more than one tabrion in one installation (K-34, RC-2): {listed}")
-    for repo in entry.get("pinned_by", []):
-        if repo not in manifests:
-            problems.append(f"versions.json: tabrion pinned_by names {repo}, which is not a pinned component")
-        elif not tabrion_pins(manifests[repo], components):
-            problems.append(f"{repo}: does not pin tabrion (versions.json pinned_by, RC-2)")
+    ranged = [
+        (repo, requirement)
+        for repo, text in manifests.items()
+        for item in dependencies(tomllib.loads(text))
+        if (requirement := _requirement(item)) is not None
+        and component_of(requirement.name, components) == TABRION
+        and not requirement.url
+    ]
+    minors: dict[tuple[int, int], set[str]] = {}
+    for repo, requirement in ranged:
+        if (minor := tabrion_minor(requirement.specifier)) is not None:
+            minors.setdefault(minor, set()).add(repo)
+    if len(minors) > 1:
+        listed = "; ".join(
+            f">={m}.{n},<{m}.{n + 1} ({', '.join(sorted(repos))})" for (m, n), repos in sorted(minors.items())
+        )
+        problems.append(
+            f"the components require different tabrion ranges, one minor belongs everywhere (RC-2): {listed}"
+        )
+    problems += check_tabrion_lock(entry, locks, ranged)
     for repo, content in requirements.items():
-        ranged = [
-            requirement
-            for item in dependencies(tomllib.loads(manifests.get(repo, "")))
-            if (requirement := _requirement(item)) is not None and component_of(requirement.name, components) == TABRION
-        ]
+        own = [requirement for owner, requirement in ranged if owner == repo]
         owner = f"{repo}@{str(components[repo]['commit'])[:12]}"
         if content is None:
-            if ranged:
+            if own:
                 problems.append(f"{owner}: requires tabrion but has no {TABRION_REQUIREMENTS} (VER-1)")
             continue
         found, commit = tabrion_requirements(owner, content, entry)
         problems += found
         if commit is not None:
-            more, warned = check_tabrion_pin(owner, commit, read_tabrion(commit), entry, ranged)
+            more, warned = check_tabrion_pin(owner, commit, read_tabrion(commit), entry, own)
             problems += more
             warnings += warned
     return problems, warnings
@@ -527,11 +484,8 @@ def check_pyproject(
     versions: dict[str, Any],
     expected_version: str | None,
     version_text: str | None = None,
-    ranges: frozenset[str] = frozenset(),
-    url_pins_allowed: bool = True,
 ) -> list[str]:
-    """Problems of one pyproject; ``version_text`` is the content of a dynamic version's ``version_file``,
-    ``ranges`` the components it requires by a version range (:func:`foundation_ranges`)."""
+    """Problems of one pyproject; ``version_text`` is the content of a dynamic version's ``version_file``."""
     problems: list[str] = []
     if "claude-agent" in text or "claude_agent" in text:
         problems.append(f"{owner}: references claude-agent")
@@ -548,7 +502,7 @@ def check_pyproject(
         problems.append(f"{owner}: version {version}, versions.json says {expected_version}")
     components = versions["components"]
     for item in dependencies(pyproject):
-        problems += check_requirement(owner, item, components, str(project.get("name", "")), ranges, url_pins_allowed)
+        problems += check_requirement(owner, item, components, str(project.get("name", "")))
     return problems
 
 
@@ -698,7 +652,7 @@ def main(argv: list[str] | None = None) -> int:
         if not SHA.match(entry["commit"]):
             problems.append(f"versions.json: {repo} is not pinned to a full commit ({entry['commit']})")
     studio = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    problems += check_pyproject("nodestro-studio", studio, versions, versions["platform"], url_pins_allowed=False)
+    problems += check_pyproject("nodestro-studio", studio, versions, versions["platform"])
     problems += check_locks(components, args.versions.parent, args.write_lock)
     pinned = declared_components(studio, components)
     missing = {repo for repo, entry in components.items() if entry.get("studio_dependency")} - pinned
@@ -722,16 +676,18 @@ def main(argv: list[str] | None = None) -> int:
                 versions,
                 entry.get("version"),
                 reader.pinned(repo, commit, version_file) if version_file else None,
-                foundation_ranges(repo, policy, components),
-                COMPONENT_URL_PINS_ALLOWED,
             )
         for repo in libraries(policy, components):
             if SHA.match(components[repo]["commit"]):
                 requirements[repo] = reader.optional(repo, components[repo]["commit"], TABRION_REQUIREMENTS)
         tabrion = components.get(TABRION, {})
         version_file = str(tabrion.get("version_file", "src/tabrion/_version.py"))
+        locks = {
+            name: path.read_text(encoding="utf-8") if (path := args.versions.parent / name).is_file() else ""
+            for name in LOCK_FILES.values()
+        }
         more, warnings = check_tabrion(
-            versions, manifests, policy, requirements, lambda commit: reader.any(TABRION, commit, version_file)
+            versions, manifests, policy, requirements, lambda commit: reader.any(TABRION, commit, version_file), locks
         )
         problems += more
     for warning in warnings:

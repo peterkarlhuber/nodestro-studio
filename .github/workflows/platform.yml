@@ -62,6 +62,10 @@ jobs:
           cutoff=$(python -I scripts/pip_cutoff.py)
           # pglast: the runtime's static tenant-isolation check (tests/test_tenant_filters.py, security review SR-01).
           pip install --uploaded-prior-to "$cutoff" -r platform/internal.txt -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9"
+          # The components' test suites need tabrion's test fixtures (nodestro-runtime and nodestro-api [dev]): the
+          # locked commit from the server lock, with the extras those suites use.
+          tabrion=$(sed -n 's/^tabrion @ /tabrion[testing,postgres] @ /p' platform/internal-server.txt)
+          pip install --uploaded-prior-to "$cutoff" "$tabrion"
           # CI-FAST AP6: the three longest component suites run on every CPU of the runner (pytest-xdist).
           pip install --uploaded-prior-to "$cutoff" pytest-xdist==3.8.0
           pip freeze > "$RUNNER_TEMP/pip-freeze-components-${{ matrix.python }}.txt"

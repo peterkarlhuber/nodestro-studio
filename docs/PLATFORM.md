@@ -134,31 +134,25 @@ A host is refused for untrusted code when:
 ### One tabrion (TABRION VER-1, AC-6)
 
 The foundation tabrion is the component `tabrion` of `platform/versions.json`: a commit of a **final** version
-(0.1.0 = `d5821faa8742dea012abda3b663549c038d76543`; never a pre-release on master, RC-8). Under V-B0:
+(0.1.0 = `d5821faa8742dea012abda3b663549c038d76543`; never a pre-release on master, RC-8). Under the lock model:
 
-- **Libraries** (axentra, orkexa) require it only by a range, `tabrion[postgres]>=0.1,<0.2`, never by a direct URL
-  (RC-1); the range must contain the pinned version (RC-2). Their standalone install pins it in
-  `requirements/tabrion.txt`, exactly one line `tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@<sha>` on
-  a final version (`pip install -r requirements/tabrion.txt -e ".[dev]"`). An older final of the same minor there is
-  a warning, not an error (RC-7); the nightly job `tabrion-drift` (`check_versions.py --drift`) reports the libraries'
-  default branches.
-- **nodestro-runtime** (extras `postgres` and `dev`) and **nodestro-api** (`dev`) carry exactly that canonical pin, so
-  one installation holds one tabrion commit (K-34, RC-2). `pinned_by` in versions.json lists the components that must
-  carry it (set by PIN-W1); a pin that is present is always checked.
-- Every pinned manifest follows the K-33 edge list (`platform/dependency-policy.json`) and the graph has no cycle.
-
-- **Releases:** `releases` in the versions.json entry maps each final version to its release commit (the master
-  merge commit with that version; tabrion has no tags yet). Only those commits count as finals: another commit that
-  reads the same version (a merge of master into a branch) is refused.
-- **No index fallback:** as soon as a pinned library requires tabrion by its range, every install of a component that
-  pulls that library (core, or core with one extra, such as `nodestro-runtime[postgres]`) must carry the tabrion pin
-  on the way, whatever `pinned_by` says; otherwise pip would take tabrion from a package index.
-- Pins carry no environment marker.
+- **Every component** (axentra, orkexa, nodestro-runtime, nodestro-api) requires it only by the same minor range with
+  final bounds, `tabrion[...]>=0.1,<0.2`: no URL (RC-1), no pre-release or dev bound (RC-8), no environment marker,
+  and one minor everywhere (RC-2).
+- **The lock** holds exactly one tabrion line, `tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@<sha>`
+  (full lowercase commit, `platform/internal-server.txt`); if both lock files carry it, they name the same commit
+  (K-34). The commit is a release commit of `releases` in the versions.json entry (the master merge commit of each
+  final; tabrion has no tags yet), and its version lies inside every component's range.
+- **Libraries' standalone install:** `requirements/tabrion.txt`, exactly one line
+  `tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@<sha>` on a release commit inside the library's range
+  (`pip install -r requirements/tabrion.txt -e ".[dev]"`). An older final of the same minor there is a warning, not an
+  error (RC-7); the nightly job `tabrion-drift` (`check_versions.py --drift`) reports the libraries' default branches.
+- Every locked manifest follows the K-33 edge list (`platform/dependency-policy.json`) and the graph has no cycle.
 
 `python scripts/check_versions.py` then ends with "pins agree, one tabrion <version>@<sha>, graph acyclic, policy
 ok". `--local DIR` (`make platform-local`) needs a checkout of every component, `DIR/tabrion` included, at its
-pinned commit. A tabrion bump changes versions.json, the runtime and api pins and the libraries' `requirements/tabrion.txt`
-together (PIN wave, RC-5).
+locked commit. A tabrion bump changes the versions.json entry (`commit`, `version`, `releases`), the lock
+(`--write-lock`) and the libraries' `requirements/tabrion.txt`; a new minor also moves every component's range.
 
 ### Changing a component
 
