@@ -34,7 +34,7 @@ example-docs:
 check-versions:
 	python scripts/check_versions.py
 
-# The same with sibling checkouts (../nodestro-runtime, ...) at the pinned commits.
+# The same with sibling checkouts (../tabrion, ../axentra, ../orkexa, ../nodestro-runtime, ...) at the pinned commits.
 platform-local:
 	python scripts/check_versions.py --local ..
 

@@ -84,6 +84,27 @@ jobs:
             test-ids.txt
             frontend-test-ids.txt
 
+  # TABRION RC-7 (VER-1): requirements/tabrion.txt on the axentra and orkexa default branches against the tabrion
+  # commit of platform/versions.json (the one nodestro-runtime and nodestro-api pin). Report only: the script always
+  # exits 0 and writes ::warning:: lines and a step summary; the job is not in `report`'s needs, so drift never turns
+  # the night red.
+  tabrion-drift:
+    runs-on: ubuntu-latest
+    # Report only: an unexpected crash (pip, an unreadable repository) must not mark the nightly run failed either.
+    continue-on-error: true
+    timeout-minutes: 10 # CI-FAST AP1: no run data yet (nightly-only); like the pins job (p99 1.7 min)
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Report tabrion drift
+        run: |
+          python -m pip install "packaging>=24"
+          python scripts/check_versions.py --drift
+
   report:
     needs: [ci, docker, macos, platform, platforms, canary, inventory]
     if: always()
