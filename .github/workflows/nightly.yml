@@ -90,6 +90,8 @@ jobs:
   # the night red.
   tabrion-drift:
     runs-on: ubuntu-latest
+    # Report only: an unexpected crash (pip, an unreadable repository) must not mark the nightly run failed either.
+    continue-on-error: true
     timeout-minutes: 10 # CI-FAST AP1: no run data yet (nightly-only); like the pins job (p99 1.7 min)
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

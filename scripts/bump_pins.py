@@ -3,7 +3,8 @@
 Every platform component is pinned by a full commit SHA in the repositories downstream of it. A change in an
 upstream repository travels down this cascade, one pin PR per repository:
 
-    orkexa, axentra -> nodestro-runtime -> nodestro-examples + nodestro-integrations -> nodestro-api
+    tabrion -> orkexa, axentra (requirements/tabrion.txt) -> nodestro-runtime
+    -> nodestro-examples + nodestro-integrations -> nodestro-api
     -> nodestro-sdk (its test extra) -> nodestro-studio (pyproject.toml + platform/versions.json)
     -> nodestro-server + nodestro-desktop (studio.json) -> nodestro-local-docker (components.json)
 
@@ -54,6 +55,9 @@ class PinFile:
 
 
 PINS: dict[str, tuple[PinFile, ...]] = {
+    # TABRION VER-1: the libraries pin tabrion only in their standalone requirements file (pyproject: a range).
+    "axentra": (PinFile("requirements/tabrion.txt", "pyproject", ("tabrion",)),),
+    "orkexa": (PinFile("requirements/tabrion.txt", "pyproject", ("tabrion",)),),
     "nodestro-runtime": (PinFile("pyproject.toml", "pyproject", ("orkexa", "axentra")),),
     "nodestro-examples": (PinFile("pyproject.toml", "pyproject", ("nodestro-runtime",)),),
     "nodestro-integrations": (PinFile("pyproject.toml", "pyproject", ("nodestro-runtime",)),),
@@ -84,9 +88,9 @@ PINS: dict[str, tuple[PinFile, ...]] = {
     "nodestro-desktop": (PinFile("studio.json", "json-key", ("nodestro-studio",)),),
     "nodestro-local-docker": (PinFile("components.json", "json-key", ("nodestro-studio", "nodestro-server")),),
 }
-#: Repositories that are not pinned anywhere downstream as a component but start cascades (tabrion: the studio
-#: versions.json entry only until PIN-W1 adds the runtime and api pins), and every pinned one.
-REPOS = ("tabrion", "orkexa", "axentra", *PINS)
+#: Repositories that start cascades (tabrion: the libraries' requirements/tabrion.txt and the studio versions.json
+#: entry; PIN-W1 adds the runtime and api pyproject pins), and every pinned one.
+REPOS = tuple(dict.fromkeys(("tabrion", "orkexa", "axentra", *PINS)))
 #: Pins that must always equal another repository's pin of the same name (checked by plan, kept by the PRs).
 SAME_AS = {("nodestro-api", "orkexa"): "the orkexa commit that the pinned nodestro-runtime pins (MUP-ONA B0)"}
 

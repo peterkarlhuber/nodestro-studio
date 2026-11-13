@@ -140,8 +140,17 @@ The foundation tabrion is the component `tabrion` of `platform/versions.json`: a
   carry it (set by PIN-W1); a pin that is present is always checked.
 - Every pinned manifest follows the K-33 edge list (`platform/dependency-policy.json`) and the graph has no cycle.
 
+- **Releases:** `releases` in the versions.json entry maps each final version to its release commit (the master
+  merge commit with that version; tabrion has no tags yet). Only those commits count as finals: another commit that
+  reads the same version (a merge of master into a branch) is refused.
+- **No index fallback:** as soon as a pinned library requires tabrion by its range, every install of a component that
+  pulls that library (core, or core with one extra, such as `nodestro-runtime[postgres]`) must carry the tabrion pin
+  on the way, whatever `pinned_by` says; otherwise pip would take tabrion from a package index.
+- Pins carry no environment marker.
+
 `python scripts/check_versions.py` then ends with "pins agree, one tabrion <version>@<sha>, graph acyclic, policy
-ok". A tabrion bump changes versions.json, the runtime and api pins and the libraries' `requirements/tabrion.txt`
+ok". `--local DIR` (`make platform-local`) needs a checkout of every component, `DIR/tabrion` included, at its
+pinned commit. A tabrion bump changes versions.json, the runtime and api pins and the libraries' `requirements/tabrion.txt`
 together (PIN wave, RC-5).
 
 ### Changing a component

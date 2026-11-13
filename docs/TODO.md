@@ -112,7 +112,9 @@ from #121). Both have status `Needs external review`.
   pin, `pinned_by` in versions.json is empty: a pin that is present is checked, a missing one is not yet an error.
 - **Next step:** PIN-W1 (studio step) sets `"pinned_by": ["nodestro-runtime", "nodestro-api"]` in the same PR that
   moves the runtime and api pins to commits with the tabrion pin (MIG-NOD-1), and adds `tabrion` to the runtime and api
-  rows of `scripts/bump_pins.py`. Close this entry then.
+  rows of `scripts/bump_pins.py`. Each new tabrion final adds its release commit to `releases`. Already strict today:
+  once a pinned library requires tabrion outside its dev extra, runtime must pin it in the extra that pulls the
+  library (`postgres`). Close this entry after PIN-W1.
 
 ### ST-053 · ESLint 10 waits for the React Compiler rules of eslint-plugin-react-hooks 7
 

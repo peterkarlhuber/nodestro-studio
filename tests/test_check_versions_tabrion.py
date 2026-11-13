@@ -37,8 +37,14 @@ VERSION_FILES = {
 POLICY_DATA = json.loads((ROOT / "platform" / "dependency-policy.json").read_text(encoding="utf-8"))
 
 
-def versions(version: str = "0.1.0", commit: str = FINAL, pinned_by: list[str] | None = None) -> dict[str, Any]:
-    tabrion = {"commit": commit, "version": version, "version_file": "src/tabrion/_version.py"}
+def versions(
+    version: str = "0.1.0",
+    commit: str = FINAL,
+    pinned_by: list[str] | None = None,
+    releases: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    tabrion: dict[str, Any] = {"commit": commit, "version": version, "version_file": "src/tabrion/_version.py"}
+    tabrion["releases"] = {version: commit} if releases is None else releases
     tabrion["pinned_by"] = pinned_by or []
     return {
         "platform": "0.2.0",
@@ -273,7 +279,7 @@ def test_an_unknown_commit_is_refused() -> None:
 
 def test_an_older_final_of_the_same_minor_is_a_warning_only() -> None:
     """RC-7: a library may stay on an older patch of the minor; the drift is reported, not refused."""
-    pins = versions(version="0.1.1", commit="4" * 40)
+    pins = versions(version="0.1.1", commit="4" * 40, releases={"0.1.0": OLDER, "0.1.1": "4" * 40})
     texts = manifests(runtime_pin="4" * 40, api_pin="4" * 40)
     files = {"axentra": f"tabrion @ {URL}{OLDER}\n", "orkexa": f"tabrion @ {URL}{OLDER}\n"}
     problems, warnings = check(pins, texts, files)
@@ -286,13 +292,14 @@ def test_an_older_final_of_the_same_minor_is_a_warning_only() -> None:
 
 
 def test_a_final_outside_the_range_or_of_another_minor_is_refused() -> None:
-    problems, _ = check(files=requirements(orkexa=f"tabrion @ {URL}{OTHER_MINOR}\n"))
+    releases = {"0.1.0": FINAL, "0.2.0": OTHER_MINOR}
+    problems, _ = check(versions(releases=releases), files=requirements(orkexa=f"tabrion @ {URL}{OTHER_MINOR}\n"))
     assert problems == [
         f"orkexa@{ORKEXA[:12]} requirements/tabrion.txt: tabrion 0.2.0@{OTHER_MINOR[:12]} is outside the library's "
         "range tabrion[postgres]<0.2,>=0.1"
     ]
     texts = manifests(library_range=">=0.1,<0.3")
-    problems, _ = check(texts=texts, files=requirements(orkexa=f"tabrion @ {URL}{OTHER_MINOR}\n"))
+    problems, _ = check(versions(releases=releases), texts, requirements(orkexa=f"tabrion @ {URL}{OTHER_MINOR}\n"))
     assert problems == [
         f"orkexa@{ORKEXA[:12]} requirements/tabrion.txt: tabrion 0.2.0@{OTHER_MINOR[:12]}, versions.json pins 0.1.0 "
         "(another minor)"
@@ -310,6 +317,7 @@ def test_versions_json_declares_the_tabrion_final() -> None:
     tabrion = pinned["components"]["tabrion"]
     assert tabrion["commit"] == FINAL and tabrion["version"] == "0.1.0"
     assert tabrion["version_file"] == "src/tabrion/_version.py" and not tabrion.get("studio_dependency")
+    assert tabrion["releases"] == {"0.1.0": FINAL}
     assert check_versions.is_final(tabrion["version"])
     assert set(tabrion["pinned_by"]) <= {"nodestro-runtime", "nodestro-api"}
 
@@ -324,6 +332,7 @@ def serve(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, files: dict[tuple[str
         return files[repo, commit, path]
 
     monkeypatch.setattr(check_versions, "read_remote", read_remote)
+    monkeypatch.setattr(check_versions.Reader, "exists", lambda self, repo, ref, path: (repo, ref, path) in files)
     monkeypatch.setattr(check_versions, "ROOT", tmp_path)
     (tmp_path / "pyproject.toml").write_text(
         toml("nodestro", [f"nodestro-api @ {runtime_url('nodestro-api', API)}"], version="0.2.0"), encoding="utf-8"
@@ -380,7 +389,7 @@ def test_main_fails_on_two_tabrions(
 def test_drift_only_reports(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    pins = versions(version="0.1.1", commit="4" * 40)
+    pins = versions(version="0.1.1", commit="4" * 40, releases={"0.1.0": OLDER, "0.1.1": "4" * 40})
     pins["components"]["tabrion"]["pyproject"] = None
     summary = tmp_path / "summary.md"
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))
@@ -401,3 +410,124 @@ def test_drift_in_sync(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: 
     serve(monkeypatch, tmp_path, repository(manifests(), pins, axentra=pin, orkexa=pin))
     assert run_main(tmp_path, pins, "--drift") == 0
     assert capsys.readouterr().out.splitlines()[-1] == "tabrion drift: in sync"
+
+
+# Review follow-ups: no index fallback (M-1), release commits (M-2), markers, comments, --local, drift.
+
+
+@pytest.mark.parametrize("pinned_by", [[], ["nodestro-runtime", "nodestro-api"]])
+def test_a_library_range_without_a_pin_on_the_way_is_refused(pinned_by: list[str]) -> None:
+    """Between MIG-*-1 and PIN-W1: axentra requires tabrion, runtime[postgres] pulls axentra without a tabrion pin."""
+    texts = manifests()
+    texts["nodestro-runtime"] = toml(
+        "nodestro-runtime",
+        [f"orkexa @ {runtime_url('orkexa', ORKEXA)}"],
+        postgres=[f"axentra[oidc] @ {runtime_url('axentra', AXENTRA)}"],
+        dev=[f"tabrion[testing,postgres] @ {URL}{FINAL}"],
+    )
+    problems, _ = check(versions(pinned_by=pinned_by), texts)
+    assert problems == [
+        "nodestro-runtime[postgres]: pulls tabrion by the range of axentra without a tabrion pin, so pip would take it "
+        f"from a package index; pin tabrion @ {URL}{FINAL} there (RC-2, K-34)"
+    ]
+
+
+def test_a_pin_further_down_covers_the_range() -> None:
+    """api[server] pulls runtime[postgres], whose own pin covers axentra's range; the dev-only W1 pins are fine while
+    the pinned libraries require tabrion only in their dev extra."""
+    texts = manifests()
+    texts["nodestro-api"] = toml(
+        "nodestro-api",
+        [f"nodestro-runtime @ {runtime_url('nodestro-runtime', RUNTIME)}"],
+        server=[f"nodestro-runtime[postgres] @ {runtime_url('nodestro-runtime', RUNTIME)}"],
+        dev=[f"tabrion[testing,postgres] @ {URL}{FINAL}"],
+    )
+    assert check(texts=texts) == ([], [])
+    w1 = {
+        "axentra": toml("axentra", dev=["tabrion[testing,postgres]>=0.1,<0.2"]),
+        "orkexa": toml("orkexa", dev=["tabrion[testing,postgres]>=0.1,<0.2"]),
+        "nodestro-runtime": toml(
+            "nodestro-runtime",
+            [f"orkexa @ {runtime_url('orkexa', ORKEXA)}"],
+            postgres=[f"axentra[oidc] @ {runtime_url('axentra', AXENTRA)}"],
+            dev=[f"tabrion[testing,postgres] @ {URL}{FINAL}"],
+        ),
+        "nodestro-api": toml(
+            "nodestro-api",
+            [f"nodestro-runtime @ {runtime_url('nodestro-runtime', RUNTIME)}"],
+            dev=[f"tabrion[testing,postgres] @ {URL}{FINAL}"],
+        ),
+    }
+    assert check(texts=w1) == ([], [])
+
+
+def test_a_commit_that_only_reads_the_final_version_is_refused() -> None:
+    """tabrion 433a3056a merges master (0.1.0) into a branch and reads 0.1.0; it is not the release commit."""
+    problems, warnings = check(files=requirements(axentra=f"tabrion @ {URL}{OLDER}\n"))
+    assert warnings == []
+    assert problems == [
+        f"axentra@{AXENTRA[:12]} requirements/tabrion.txt: tabrion@{OLDER[:12]} reads 0.1.0 but is not a release "
+        "commit (versions.json releases); pin the release commit (RC-8)"
+    ]
+
+
+@pytest.mark.parametrize(
+    ("releases", "problem"),
+    [
+        ({}, "versions.json: tabrion needs releases"),
+        ({"0.1.0": OLDER}, "is not the release commit of 0.1.0 in releases"),
+        ({"0.1.0": FINAL, "0.1.1rc1": DEV}, "releases names 0.1.1rc1, not a final version"),
+        ({"0.1.0": FINAL, "0.0.9": FINAL}, "one commit for two versions"),
+        ({"0.1.0": FINAL, "0.0.9": "abc"}, "is not a full commit"),
+    ],
+)
+def test_the_releases_map_is_checked(releases: dict[str, str], problem: str) -> None:
+    problems, _ = check(versions(releases=releases))
+    assert any(problem in p for p in problems), problems
+
+
+def test_a_release_whose_version_file_disagrees_is_refused() -> None:
+    pins = versions(releases={"0.1.0": FINAL, "0.1.1": OLDER})  # OLDER reads 0.1.0
+    problems, _ = check(pins, files=requirements(axentra=f"tabrion @ {URL}{OLDER}\n"))
+    assert problems == [
+        f"axentra@{AXENTRA[:12]} requirements/tabrion.txt: tabrion@{OLDER[:12]} reads 0.1.0, versions.json releases "
+        "says 0.1.1"
+    ]
+
+
+def test_environment_markers_on_tabrion_are_refused() -> None:
+    marker = "; python_version < '3'"
+    problems, _ = check(files=requirements(orkexa=f"tabrion @ {URL}{FINAL} {marker}\n"))
+    assert len(problems) == 1 and "carries no environment marker" in problems[0], problems
+    texts = manifests()
+    texts["nodestro-api"] = toml("nodestro-api", dev=[f"tabrion[testing,postgres] @ {URL}{FINAL} {marker}"])
+    problems, _ = check(texts=texts)
+    assert any(p.startswith("nodestro-api: ") and "carries no environment marker" in p for p in problems), problems
+    texts = manifests(library_range=f">=0.1,<0.2{marker}")
+    problems, _ = check(texts=texts)
+    assert problems and all("carries no environment marker" in p for p in problems), problems
+
+
+def test_a_tab_before_an_inline_comment_is_accepted() -> None:
+    assert check(files=requirements(orkexa=f"tabrion @ {URL}{FINAL}\t# v0.1.0\n")) == ([], [])
+
+
+def test_local_without_a_tabrion_checkout_says_so(tmp_path: Path) -> None:
+    with pytest.raises(SystemExit, match="no checkout of tabrion; --local needs every component"):
+        check_versions.read_local(tmp_path, "tabrion", FINAL, "pyproject.toml", False)
+
+
+def test_drift_tells_unreadable_from_missing(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.delenv("GITHUB_STEP_SUMMARY", raising=False)
+    pins = versions()
+    serve(monkeypatch, tmp_path, repository(manifests(), pins, axentra=f"tabrion @ {URL}{FINAL}\n"))
+    states = {"axentra": True, "orkexa": None}
+    monkeypatch.setattr(check_versions.Reader, "exists", lambda self, repo, ref, path: states[repo])
+    assert run_main(tmp_path, pins, "--drift") == 0
+    out = capsys.readouterr().out
+    assert "::warning::orkexa@HEAD: cannot read orkexa (network or access), drift unknown" in out
+    states["orkexa"] = False
+    assert run_main(tmp_path, pins, "--drift") == 0
+    assert "::warning::orkexa@HEAD: no requirements/tabrion.txt on the default branch" in capsys.readouterr().out
