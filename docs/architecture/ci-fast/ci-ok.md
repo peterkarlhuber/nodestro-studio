@@ -237,6 +237,41 @@ Until step 1, under enforcement a PR whose listed workflows never complete (for 
 workflow's `name:`, so that its completions no longer trigger ci-ok) would simply have no verdict. With a required
 check that is "missing", not "green", so this fails closed once step 1 exists.
 
+### Activation runbook (prepared 2026-11-13)
+
+ci-ok v3 runs report-only in all 12 repositories since 2026-11-13. The pin model switch (studio lock) does not depend
+on it. The steps, in this order:
+
+1. **Observation window, 2026-11-13 to about 2026-11-27 (C6).** Nothing changes in the repositories. At the end,
+   compare every `ci-ok` verdict on a merged PR with the jobs that actually ran (`tools/cifast.py` data plus the
+   check runs). Each NOT OK on a PR that was merged green, and each OK on a PR with a failed mandatory job, is a
+   manifest error or a bug and is fixed before step 3.
+2. **New independent review** of ci-ok v3 on the state after step 1 (REVIEW-ci-ok-v3), by a reviewer that did not
+   write it. Without acceptance, ci-ok stays report-only.
+3. **Repository settings (owner; the session's GitHub access cannot write repository settings).** On
+   2026-11-13 no default branch of the 12 repositories had branch protection or a ruleset. Owner decision 2026-11-13
+   22:23Z: basic protection now, the `ci-ok` requirement later. Per repository, one ruleset `master-basic` on the
+   default branch, empty bypass list (definition and a `gh` script for the owner: project files
+   `ci-fast/ruleset/master-basic.json`, `apply.sh`):
+   - now: restrict deletions, block force pushes, require a pull request before merging (0 approvals, since every PR
+     comes from the owner's account), allowed merge method "Merge" only (the studio lock points at merge commits),
+     no required status checks;
+   - at step 5: add the required status check `ci-ok`, restricted to the GitHub Actions app (step 2 of "What
+     remains"); no merge queue (M3); "Require approval for all outside collaborators" for fork workflow runs.
+4. **CODEOWNERS (C4).** Prepared content for `.github/CODEOWNERS` in each repository:
+
+   ```
+   # CI and workflow definitions, including the ci-ok manifest and evaluator (ci-ok C4).
+   /.github/ @peterkarlhuber
+   ```
+
+   Open point before enabling "Require review from Code Owners": the owner's account is both the code owner and the
+   author of the PRs that Claude opens, and GitHub does not let an author approve their own PR. With one account the
+   rule would block every workflow change. The owner decides at step 3 between a second reviewing account or team as
+   code owner, or CODEOWNERS without the required review (review requests only) plus the recorded residual risk.
+5. **Enforce:** set `CI_OK_ENFORCE: "1"` and make `ci-ok` the required check; only afterwards consider removing
+   individual required checks (W3: AP3, AP5).
+
 ### Changing the manifest (F9)
 
 Renaming or removing a mandatory job: first merge a PR that changes the manifest (and, if a workflow's `name:` changes,
