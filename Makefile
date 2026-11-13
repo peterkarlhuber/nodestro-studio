@@ -1,7 +1,7 @@
 .PHONY: install frontend dev check test lint e2e example-docs check-versions check-dependency-policy check-imports platform-local
 
 install: frontend
-	pip install -e ".[dev]"
+	pip install -r platform/internal.txt -e ".[dev]"
 
 frontend:
 	cd frontend && npm ci && npm run build

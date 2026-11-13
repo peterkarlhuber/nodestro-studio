@@ -1,11 +1,11 @@
-"""Moves the SHA pins of one repository of the platform cascade, and plans a whole cascade (CI-FAST AP8).
+"""Moves the SHA pins of one repository of the platform, and plans a whole bump (CI-FAST AP8, P3).
 
-Every platform component is pinned by a full commit SHA in the repositories downstream of it. A change in an
-upstream repository travels down this cascade, one pin PR per repository:
+The components require each other by version range only; their exact commits live in one place, the studio's
+platform/versions.json and the lock generated from it (platform/internal*.txt). A new commit of a component is one
+studio pull request, then the products follow:
 
-    tabrion -> orkexa, axentra (requirements/tabrion.txt) -> nodestro-runtime
-    -> nodestro-examples + nodestro-integrations -> nodestro-api
-    -> nodestro-sdk (its test extra) -> nodestro-studio (pyproject.toml + platform/versions.json)
+    tabrion -> orkexa, axentra (requirements/tabrion.txt, their standalone tabrion pin)
+    any component -> nodestro-studio (platform/versions.json + the lock)
     -> nodestro-server + nodestro-desktop (studio.json) -> nodestro-local-docker (components.json)
 
 ``PINS`` lists, per repository, exactly the files and the names it pins (read from each repository's
@@ -58,16 +58,26 @@ PINS: dict[str, tuple[PinFile, ...]] = {
     # TABRION VER-1: the libraries pin tabrion only in their standalone requirements file (pyproject: a range).
     "axentra": (PinFile("requirements/tabrion.txt", "pyproject", ("tabrion",)),),
     "orkexa": (PinFile("requirements/tabrion.txt", "pyproject", ("tabrion",)),),
-    "nodestro-runtime": (PinFile("pyproject.toml", "pyproject", ("orkexa", "axentra")),),
-    "nodestro-examples": (PinFile("pyproject.toml", "pyproject", ("nodestro-runtime",)),),
-    "nodestro-integrations": (PinFile("pyproject.toml", "pyproject", ("nodestro-runtime",)),),
-    "nodestro-api": (PinFile("pyproject.toml", "pyproject", ("nodestro-runtime", "orkexa", "nodestro-examples")),),
-    "nodestro-sdk": (PinFile("python/pyproject.toml", "pyproject", ("nodestro-api",)),),
+    # The components require each other by version range only (CI-FAST P3): the studio lock holds every commit.
     "nodestro-studio": (
+        # The lock (generated from versions.json by check_versions.py --write-lock; the same rewrite keeps them equal).
         PinFile(
-            "pyproject.toml",
+            "platform/internal.txt",
             "pyproject",
-            ("nodestro-api", "nodestro-runtime", "nodestro-examples", "nodestro-integrations"),
+            ("nodestro-api", "nodestro-runtime", "nodestro-examples", "nodestro-integrations", "orkexa"),
+        ),
+        PinFile(
+            "platform/internal-server.txt",
+            "pyproject",
+            (
+                "nodestro-api",
+                "nodestro-runtime",
+                "nodestro-examples",
+                "nodestro-integrations",
+                "orkexa",
+                "axentra",
+                "tabrion",
+            ),
         ),
         PinFile(
             "platform/versions.json",
@@ -88,11 +98,24 @@ PINS: dict[str, tuple[PinFile, ...]] = {
     "nodestro-desktop": (PinFile("studio.json", "json-key", ("nodestro-studio",)),),
     "nodestro-local-docker": (PinFile("components.json", "json-key", ("nodestro-studio", "nodestro-server")),),
 }
-#: Repositories that start cascades (tabrion: the libraries' requirements/tabrion.txt and the studio versions.json
-#: entry; PIN-W1 adds the runtime and api pyproject pins), and every pinned one.
-REPOS = tuple(dict.fromkeys(("tabrion", "orkexa", "axentra", *PINS)))
+#: Every component (each can start a bump) and every pinning repository.
+REPOS = tuple(
+    dict.fromkeys(
+        (
+            "tabrion",
+            "orkexa",
+            "axentra",
+            "nodestro-runtime",
+            "nodestro-examples",
+            "nodestro-integrations",
+            "nodestro-api",
+            "nodestro-sdk",
+            *PINS,
+        )
+    )
+)
 #: Pins that must always equal another repository's pin of the same name (checked by plan, kept by the PRs).
-SAME_AS = {("nodestro-api", "orkexa"): "the orkexa commit that the pinned nodestro-runtime pins (MUP-ONA B0)"}
+SAME_AS: dict[tuple[str, str], str] = {}
 
 Runner = Callable[[Sequence[str]], str]
 

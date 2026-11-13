@@ -116,42 +116,43 @@ A host is refused for untrusted code when:
 
 - **All components have the same version** (0.2.0). A platform version is the set of commits in
   [`platform/versions.json`](../platform/versions.json) that were tested together.
-- **Every reference to another repository is a full commit SHA**, never a branch or a tag:
-  `nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@<sha>`. Orkexa stays at
-  `cbf6df3d6f727b96924f1ae66e60b469eeef58e6` (Orkexa has no tags).
-- **Every component pins only its direct dependencies**; the studio pins all of them. pip aborts when two pins of the
-  same component differ; `scripts/check_versions.py` checks this beforehand and reports exactly which pin differs.
+- **One lock fixes every commit** (CI-FAST P3): `platform/internal.txt` (the studio profile) and
+  `platform/internal-server.txt` (the server profile: also axentra and tabrion) hold one line per internal package,
+  `nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@<sha>`, a full commit SHA, never a
+  branch or a tag. Both are generated from `platform/versions.json` (`python scripts/check_versions.py --write-lock`)
+  and checked by `scripts/check_versions.py`.
+- **Components require each other by a version range**, such as `nodestro-runtime>=0.2.0,<0.3`, never by a URL; the
+  range must contain the locked version. Every install names the lock:
+  `pip install -r platform/internal.txt <target>` (the package names are not registered on a package index, so an
+  install without the lock cannot find them). The studio declares ranges already; the components move from their
+  URL pins to ranges one by one, and `check_versions.py` accepts a URL pin only at the locked commit until all have.
+- **Moving a component is one studio pull request**: `scripts/bump_pins.py set . --set <name>=<sha>` rewrites
+  `versions.json` and the lock; the products then move their studio pin as before.
 - **Merge with a merge commit**, not a squash: the pinned commits come from the pull request branches and stay
   reachable on `master` this way. After a squash merge, the pins have to be moved to the new commits.
 
 ### One tabrion (TABRION VER-1, AC-6)
 
 The foundation tabrion is the component `tabrion` of `platform/versions.json`: a commit of a **final** version
-(0.1.0 = `d5821faa8742dea012abda3b663549c038d76543`; never a pre-release on master, RC-8). Under V-B0:
+(0.1.0 = `d5821faa8742dea012abda3b663549c038d76543`; never a pre-release on master, RC-8). Under the lock model:
 
-- **Libraries** (axentra, orkexa) require it only by a range, `tabrion[postgres]>=0.1,<0.2`, never by a direct URL
-  (RC-1); the range must contain the pinned version (RC-2). Their standalone install pins it in
-  `requirements/tabrion.txt`, exactly one line `tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@<sha>` on
-  a final version (`pip install -r requirements/tabrion.txt -e ".[dev]"`). An older final of the same minor there is
-  a warning, not an error (RC-7); the nightly job `tabrion-drift` (`check_versions.py --drift`) reports the libraries'
-  default branches.
-- **nodestro-runtime** (extras `postgres` and `dev`) and **nodestro-api** (`dev`) carry exactly that canonical pin, so
-  one installation holds one tabrion commit (K-34, RC-2). `pinned_by` in versions.json lists the components that must
-  carry it (set by PIN-W1); a pin that is present is always checked.
-- Every pinned manifest follows the K-33 edge list (`platform/dependency-policy.json`) and the graph has no cycle.
-
-- **Releases:** `releases` in the versions.json entry maps each final version to its release commit (the master
-  merge commit with that version; tabrion has no tags yet). Only those commits count as finals: another commit that
-  reads the same version (a merge of master into a branch) is refused.
-- **No index fallback:** as soon as a pinned library requires tabrion by its range, every install of a component that
-  pulls that library (core, or core with one extra, such as `nodestro-runtime[postgres]`) must carry the tabrion pin
-  on the way, whatever `pinned_by` says; otherwise pip would take tabrion from a package index.
-- Pins carry no environment marker.
+- **Every component** (axentra, orkexa, nodestro-runtime, nodestro-api) requires it only by the same minor range with
+  final bounds, `tabrion[...]>=0.1,<0.2`: no URL (RC-1), no pre-release or dev bound (RC-8), no environment marker,
+  and one minor everywhere (RC-2).
+- **The lock** holds exactly one tabrion line, `tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@<sha>`
+  (full lowercase commit, `platform/internal-server.txt`); if both lock files carry it, they name the same commit
+  (K-34). The commit is a release commit of `releases` in the versions.json entry (the master merge commit of each
+  final; tabrion has no tags yet), and its version lies inside every component's range.
+- **Libraries' standalone install:** `requirements/tabrion.txt`, exactly one line
+  `tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@<sha>` on a release commit inside the library's range
+  (`pip install -r requirements/tabrion.txt -e ".[dev]"`). An older final of the same minor there is a warning, not an
+  error (RC-7); the nightly job `tabrion-drift` (`check_versions.py --drift`) reports the libraries' default branches.
+- Every locked manifest follows the K-33 edge list (`platform/dependency-policy.json`) and the graph has no cycle.
 
 `python scripts/check_versions.py` then ends with "pins agree, one tabrion <version>@<sha>, graph acyclic, policy
 ok". `--local DIR` (`make platform-local`) needs a checkout of every component, `DIR/tabrion` included, at its
-pinned commit. A tabrion bump changes versions.json, the runtime and api pins and the libraries' `requirements/tabrion.txt`
-together (PIN wave, RC-5).
+locked commit. A tabrion bump changes the versions.json entry (`commit`, `version`, `releases`), the lock
+(`--write-lock`) and the libraries' `requirements/tabrion.txt`; a new minor also moves every component's range.
 
 ### Changing a component
 
@@ -239,7 +240,7 @@ In the Python environment where Nodestro 0.1 is installed:
 ```bash
 git clone https://github.com/peterkarlhuber/nodestro-studio.git && cd nodestro-studio
 (cd frontend && npm ci && npm run build)    # the user interface belongs in the package
-pip install -U .                            # or -e . for development
+pip install -U -r platform/internal.txt .   # or -e . for development
 nodestro
 ```
 

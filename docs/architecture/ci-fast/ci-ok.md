@@ -24,8 +24,10 @@
   check run that is not its own (own = app `github-actions` and `external_id` `ci-ok-evaluator`), and any commit
   status with the context `ci-ok`, is a counted `impostor` row: NOT OK. This is a scan, not a proof: anything holding
   a `GITHUB_TOKEN` with `checks: write` in the repository could still imitate an own run, or post after the
-  evaluation. Making the check unforgeable (a dedicated GitHub App, or a written acceptance of the residual risk) is
-  review condition C2 and still open.
+  evaluation. Review condition C2 (a dedicated GitHub App, or a written acceptance of the residual risk) is closed by
+  the second option: on 2026-11-13 the owner accepted in writing that any workflow with `checks: write` could imitate
+  the `ci-ok` check run. No GitHub App and no new secret are added; the controls stay the impostor scan, pinning the
+  required check to the GitHub Actions app (step 2 below) and CODEOWNERS for `.github/**` (step 3).
 - **Self-check of the post-merge view (C3, H2).** Besides the default branch's checkout, the evaluator self-checks
   the view after merge: for each file the self-check reads (`.github/ci-manifest.json`, `.github/workflows/*.yml`), the
   PR head's version if the PR changed it (from the PR's changed-files list; a removed or renamed-away file is gone),
