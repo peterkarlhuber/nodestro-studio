@@ -8,7 +8,7 @@
   },
   "components": {
     "tabrion": {
-      "comment": "TABRION VER-1 (K-34): the one tabrion of every installation, a final version (RC-8). Every component (axentra, orkexa, nodestro-runtime, nodestro-api) requires it only by the same minor range, such as >=0.1,<0.2, never by a URL (RC-1, RC-2); the lock (platform/internal-server.txt) holds its one commit. The libraries also pin this commit in requirements/tabrion.txt for their standalone install (RC-7). releases: the authoritative release commit of each final (no tags yet); only these commits count as finals.",
+      "comment": "TABRION VER-1 (K-34): the one tabrion of every installation, a final version (RC-8). Every component (axentra, orkexa, nodestro-runtime, nodestro-api) requires it only by the same minor range, such as >=0.1,<0.2, never by a URL (RC-1, RC-2); the locks (platform/internal.txt and internal-server.txt; the studio profile too since TABRION MIG-NOD-3, K-32) hold its one commit. The libraries also pin this commit in requirements/tabrion.txt for their standalone install (RC-7). releases: the authoritative release commit of each final (no tags yet); only these commits count as finals.",
       "commit": "d5821faa8742dea012abda3b663549c038d76543",
       "version": "0.1.0",
       "pyproject": "pyproject.toml",
