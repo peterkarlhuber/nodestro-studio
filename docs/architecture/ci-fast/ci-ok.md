@@ -1,4 +1,47 @@
-# ci-ok: one manifest-based PR check (CI-FAST W1, report-only, v2)
+# ci-ok: one manifest-based PR check (CI-FAST W1, report-only, v3)
+
+## v3 changes (review REVIEW-ci-ok-v2.md: B1, H1 partly, H2, M1, L1)
+
+- **Where the verdict lives (C1).** Every evaluation posts a check run named exactly `ci-ok` on the PR head SHA
+  (`workflow_run.head_sha`, `POST /repos/{repo}/check-runs` with the job's `GITHUB_TOKEN`): `completed`/`success` for
+  OK, `completed`/`failure` for NOT OK, `in_progress` for PENDING. Its output title and summary hold the verdict table
+  (truncated to the API limits). Each evaluation posts a new check run; GitHub shows (and a required check would use)
+  the newest one of that name from the app, and evaluations of one head SHA never overlap. A `requested` event of a
+  listed workflow (also a re-run) posts `in_progress` without evaluating, so a stale verdict is not shown while it
+  runs (L1). If the check run cannot be posted, the job fails (exit 1) whatever the mode. New permissions on the job:
+  `checks: write` and `statuses: read` (no secrets). Local dry runs (`--pr`, `--head-sha`) never post.
+- **Evaluator job renamed** to `ci-ok evaluate`; its own check run sits on the default branch's commit and never has
+  the name `ci-ok`. `--self-check` fails when `ci-ok.yml` has a job or step named `ci-ok`, lacks a job named
+  `ci-ok evaluate`, lacks `checks: write`, or its `workflow_run.types` lack `completed`.
+- **Impostor rule (H1, partly).** Before posting, the evaluator lists every check run named `ci-ok` on the head SHA,
+  from any app (`GET /commits/{sha}/check-runs?check_name=ci-ok&filter=all`), and every commit status. A `ci-ok`
+  check run that is not its own (own = app `github-actions` and `external_id` `ci-ok-evaluator`), and any commit
+  status with the context `ci-ok`, is a counted `impostor` row: NOT OK. This is a scan, not a proof: anything holding
+  a `GITHUB_TOKEN` with `checks: write` in the repository could still imitate an own run, or post after the
+  evaluation. Making the check unforgeable (a dedicated GitHub App, or a written acceptance of the residual risk) is
+  review condition C2 and still open.
+- **Self-check of the post-merge view (C3, H2).** Besides the default branch's checkout, the evaluator self-checks
+  the view after merge: for each file the self-check reads (`.github/ci-manifest.json`, `.github/workflows/*.yml`), the
+  PR head's version if the PR changed it (from the PR's changed-files list; a removed or renamed-away file is gone),
+  otherwise the default branch's. PR versions are read through the contents API at the head SHA, as data (nothing is
+  checked out or executed). A PR that changes none of these files is not checked at all (no API reads), so a PR based
+  on an older default branch is not blamed for the old files in its tree. Problems are compared by text: introduced
+  by the PR = NOT OK (`self-check (PR)` row); present on the default branch and in the view = NOT OK; present on the
+  default branch but fixed by the PR = an ok `fixed in this PR` row with a note, so a fix such as server #83 is no
+  longer blocked by the drift it repairs. If the changed files are unknown or may be cut by the API caps (3,000 via
+  the PR API, 300 via compare), the raw PR tree is checked instead and the rows say so. Tests replay server #81
+  (NOT OK), #82 (NOT OK) and #83 (OK).
+- **Several PRs on one head SHA (C5, M1).** A check run belongs to the SHA, not to a PR. The evaluator evaluates every
+  PR in the event plus every other open PR that a pull_request run on the SHA lists with that head SHA, and posts the
+  WORST verdict (NOT OK > PENDING > OK), saying so in the summary. Without a PR number (fork PRs) the summary says
+  that attribution is by head SHA alone.
+- **Preconditions for enforcement.** No merge queue: there is no `merge_group` handling, so a merge queue must not be
+  enabled while `ci-ok` is required (M3). CODEOWNERS for `/.github/**` (C4) and about two weeks of report-only
+  operation (C6) are still open. **ci-ok stays report-only** (`CI_OK_ENFORCE` unset, not a required check) until it
+  is re-reviewed.
+
+The rest of this note describes v2; where it says the verdict is only in the job summary, or that the job is named
+`ci-ok`, or that it has no `checks` permission, v3 above replaces it.
 
 ## What it checks
 
@@ -159,13 +202,14 @@ A required check that is wrong blocks every merge in the repository. Before `ci-
 to agree with reality: the manifests were written by hand in W0, path filters and re-runs are subtle. In report-only
 mode the job exits 0 whatever the verdict; the verdict is the job summary of the latest ci-ok run for the head SHA.
 
-**Where the verdict lives**: a `workflow_run` job's check run is attached to the default branch's commit, not to the
-PR head, so in v2 the verdict does **not** appear in the PR's checks list. Look in Actions, workflow `ci-ok`, the
-newest run named `ci-ok for <head SHA> ...`.
+**Where the verdict lives**: in v3, the check run `ci-ok` on the PR head SHA, in the PR's checks list (see "v3
+changes"). The job summary of the newest run named `ci-ok for <head SHA> ...` (job `ci-ok evaluate`) still has the
+same table.
 
 ## What remains before enforcement
 
-1. **Post the verdict to the head SHA.** The `workflow_run` job creates a check run named `ci-ok` on
+1. **Post the verdict to the head SHA.** Done in v3 (still to be proven on a test PR: pending, then NOT OK, then OK).
+   The `workflow_run` job creates a check run named `ci-ok` on
    `workflow_run.head_sha` (`POST /repos/{repo}/check-runs`, `checks: write`), updated by each evaluation. `checks:
    write` is a new permission and needs Peter's approval. (A commit status with `statuses: write` would also work, but
    any workflow with `statuses: write` could forge it, so a check run is preferred.) The job must still never check out
