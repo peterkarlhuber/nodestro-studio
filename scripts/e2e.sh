@@ -8,7 +8,7 @@
 # local-server runs the local models end to end against a fake Ollama (tests/fake_ollama.py) over HTTP.
 # portable builds a real portable package from the publish dialog; it needs the network on its first run (uv downloads
 # Python and wheels, about a minute) and is not in the default list. E2E_EXPORT_CACHE keeps its download cache.
-# Needs: the studio installed (pip install -e .), the frontend built (make frontend) and Playwright.
+# Needs: the studio installed (pip install -r platform/internal.txt -e .), the frontend built (make frontend) and Playwright.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 

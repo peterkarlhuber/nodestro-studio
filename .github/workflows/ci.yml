@@ -117,7 +117,7 @@ jobs:
       - name: Install the wheel into a fresh environment
         run: |
           python -m venv "$RUNNER_TEMP/wheel"
-          "$RUNNER_TEMP/wheel/bin/pip" install dist/*.whl
+          "$RUNNER_TEMP/wheel/bin/pip" install -r platform/internal.txt dist/*.whl
       - name: Start the installed wheel
         run: |
           cd "$RUNNER_TEMP"
