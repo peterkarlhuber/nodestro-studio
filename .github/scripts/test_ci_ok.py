@@ -530,7 +530,9 @@ class Impostors(unittest.TestCase):
     def test_own_posted_check_run_in_a_runs_job_list_is_not_a_job(self):
         # GitHub files the posted verdict into some GitHub Actions check suite on the head SHA, so it can appear in
         # the jobs list of a pull_request run (studio #174). It is neither an impostor nor an unlisted job.
-        routes = routes_for([run(1, "ci.yml"), run(2, "other.yml")], {1: GREEN, 2: [job(9, "ci-ok"), job(10, "helper")]})
+        routes = routes_for(
+            [run(1, "ci.yml"), run(2, "other.yml")], {1: GREEN, 2: [job(9, "ci-ok"), job(10, "helper")]}
+        )
         routes[f"/repos/{REPO}/check-runs/9"] = {
             "id": 9,
             "name": "ci-ok",
