@@ -124,6 +124,26 @@ A host is refused for untrusted code when:
 - **Merge with a merge commit**, not a squash: the pinned commits come from the pull request branches and stay
   reachable on `master` this way. After a squash merge, the pins have to be moved to the new commits.
 
+### One tabrion (TABRION VER-1, AC-6)
+
+The foundation tabrion is the component `tabrion` of `platform/versions.json`: a commit of a **final** version
+(0.1.0 = `d5821faa8742dea012abda3b663549c038d76543`; never a pre-release on master, RC-8). Under V-B0:
+
+- **Libraries** (axentra, orkexa) require it only by a range, `tabrion[postgres]>=0.1,<0.2`, never by a direct URL
+  (RC-1); the range must contain the pinned version (RC-2). Their standalone install pins it in
+  `requirements/tabrion.txt`, exactly one line `tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@<sha>` on
+  a final version (`pip install -r requirements/tabrion.txt -e ".[dev]"`). An older final of the same minor there is
+  a warning, not an error (RC-7); the nightly job `tabrion-drift` (`check_versions.py --drift`) reports the libraries'
+  default branches.
+- **nodestro-runtime** (extras `postgres` and `dev`) and **nodestro-api** (`dev`) carry exactly that canonical pin, so
+  one installation holds one tabrion commit (K-34, RC-2). `pinned_by` in versions.json lists the components that must
+  carry it (set by PIN-W1); a pin that is present is always checked.
+- Every pinned manifest follows the K-33 edge list (`platform/dependency-policy.json`) and the graph has no cycle.
+
+`python scripts/check_versions.py` then ends with "pins agree, one tabrion <version>@<sha>, graph acyclic, policy
+ok". A tabrion bump changes versions.json, the runtime and api pins and the libraries' `requirements/tabrion.txt`
+together (PIN wave, RC-5).
+
 ### Changing a component
 
 1. Change the component's repository, with tests, and merge.
@@ -192,7 +212,7 @@ branch deletion; until that is in place, see `docs/TODO.md` ST-052. The next com
 `.github/workflows/platform.yml` in the studio runs on every push and pull request, weekly and on demand:
 
 1. **Pins:** `scripts/check_versions.py` reads every component at its pinned commit and checks all references against
-   `platform/versions.json`.
+   `platform/versions.json`, and that the installation holds one tabrion (see "One tabrion" below).
 2. **Integration:** the studio is installed with all pinned components (third-party packages up to the upload
    cutoff, see above). `scripts/check_imports.py` checks the dependency direction. Then the test suites of the runtime, examples, integrations and API run at the pinned commit
    against exactly this installation, as do the studio's tests including the upgrade test. Finally

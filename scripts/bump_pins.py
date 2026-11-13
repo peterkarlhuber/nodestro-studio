@@ -69,6 +69,7 @@ PINS: dict[str, tuple[PinFile, ...]] = {
             "platform/versions.json",
             "versions",
             (
+                "tabrion",
                 "axentra",
                 "orkexa",
                 "nodestro-runtime",
@@ -83,8 +84,9 @@ PINS: dict[str, tuple[PinFile, ...]] = {
     "nodestro-desktop": (PinFile("studio.json", "json-key", ("nodestro-studio",)),),
     "nodestro-local-docker": (PinFile("components.json", "json-key", ("nodestro-studio", "nodestro-server")),),
 }
-#: Repositories that are not pinned anywhere downstream as a component but start cascades, and every pinned one.
-REPOS = ("orkexa", "axentra", *PINS)
+#: Repositories that are not pinned anywhere downstream as a component but start cascades (tabrion: the studio
+#: versions.json entry only until PIN-W1 adds the runtime and api pins), and every pinned one.
+REPOS = ("tabrion", "orkexa", "axentra", *PINS)
 #: Pins that must always equal another repository's pin of the same name (checked by plan, kept by the PRs).
 SAME_AS = {("nodestro-api", "orkexa"): "the orkexa commit that the pinned nodestro-runtime pins (MUP-ONA B0)"}
 
