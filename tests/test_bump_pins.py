@@ -43,16 +43,15 @@ class FakeRunner:
         raise AssertionError(f"unexpected command {cmd}")
 
 
-def api_checkout(tmp_path: Path) -> Path:
-    d = tmp_path / "nodestro-api"
-    d.mkdir()
-    (d / "pyproject.toml").write_text(
-        "[project]\ndependencies = [\n"
-        f'    "nodestro-runtime @ {URL}/nodestro-runtime.git@{OLD}",\n'
-        "    # keep this comment\n"
-        f'    "orkexa @ {URL}/orkexa.git@{OTHER}",\n'
-        "]\n[project.optional-dependencies]\n"
-        f'server = ["nodestro-runtime[postgres] @ {URL}/nodestro-runtime.git@{OLD}"]\n',
+def library_checkout(tmp_path: Path) -> Path:
+    """orkexa: its standalone tabrion pin (requirements/tabrion.txt) is the one pin a component still carries."""
+    d = tmp_path / "orkexa"
+    (d / "requirements").mkdir(parents=True)
+    (d / "requirements" / "tabrion.txt").write_text(
+        f"tabrion @ {URL}/tabrion.git@{OLD}\n"
+        "# keep this comment\n"
+        f"axentra @ {URL}/axentra.git@{OTHER}\n"
+        f"tabrion[postgres] @ {URL}/tabrion.git@{OLD}\n",
         encoding="utf-8",
     )
     return d
@@ -78,18 +77,16 @@ def studio_checkout(tmp_path: Path) -> Path:
 
 
 def test_set_rewrites_every_occurrence_and_nothing_else(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
-    d = api_checkout(tmp_path)
+    d = library_checkout(tmp_path)
     runner = FakeRunner()
-    assert bump_pins.main(["set", str(d), "--set", f"runtime={NEW}"], runner) == 0
-    text = (d / "pyproject.toml").read_text(encoding="utf-8")
-    assert text.count(f"nodestro-runtime.git@{NEW}") == 2
+    assert bump_pins.main(["set", str(d), "--set", f"tabrion={NEW}"], runner) == 0
+    text = (d / "requirements" / "tabrion.txt").read_text(encoding="utf-8")
+    assert text.count(f"tabrion.git@{NEW}") == 2
     assert OLD not in text
-    assert f"orkexa.git@{OTHER}" in text and "# keep this comment" in text
+    assert f"axentra.git@{OTHER}" in text and "# keep this comment" in text
     out = capsys.readouterr().out
-    assert f'+    "nodestro-runtime @ {URL}/nodestro-runtime.git@{NEW}",' in out
-    assert ["gh", "api", f"repos/peterkarlhuber/nodestro-runtime/compare/{NEW}...master", "--jq", ".status"] in (
-        runner.calls
-    )
+    assert f"+tabrion @ {URL}/tabrion.git@{NEW}" in out
+    assert ["gh", "api", f"repos/peterkarlhuber/tabrion/compare/{NEW}...master", "--jq", ".status"] in (runner.calls)
 
 
 def test_versions_json_changes_only_the_component_commit(tmp_path: Path) -> None:
@@ -125,35 +122,35 @@ def test_json_key_files(tmp_path: Path) -> None:
 
 
 def test_check_mode_writes_nothing_and_reports(tmp_path: Path) -> None:
-    d = api_checkout(tmp_path)
-    before = (d / "pyproject.toml").read_text(encoding="utf-8")
-    assert bump_pins.main(["set", str(d), "--check", "--set", f"runtime={NEW}"], FakeRunner()) == 1
-    assert (d / "pyproject.toml").read_text(encoding="utf-8") == before
-    assert bump_pins.main(["set", str(d), "--check", "--set", f"runtime={OLD}"], FakeRunner()) == 0
+    d = library_checkout(tmp_path)
+    before = (d / "requirements" / "tabrion.txt").read_text(encoding="utf-8")
+    assert bump_pins.main(["set", str(d), "--check", "--set", f"tabrion={NEW}"], FakeRunner()) == 1
+    assert (d / "requirements" / "tabrion.txt").read_text(encoding="utf-8") == before
+    assert bump_pins.main(["set", str(d), "--check", "--set", f"tabrion={OLD}"], FakeRunner()) == 0
 
 
 def test_dry_run_writes_nothing(tmp_path: Path) -> None:
-    d = api_checkout(tmp_path)
-    before = (d / "pyproject.toml").read_text(encoding="utf-8")
-    assert bump_pins.main(["set", str(d), "--dry-run", "--set", f"runtime={NEW}"], FakeRunner()) == 0
-    assert (d / "pyproject.toml").read_text(encoding="utf-8") == before
+    d = library_checkout(tmp_path)
+    before = (d / "requirements" / "tabrion.txt").read_text(encoding="utf-8")
+    assert bump_pins.main(["set", str(d), "--dry-run", "--set", f"tabrion={NEW}"], FakeRunner()) == 0
+    assert (d / "requirements" / "tabrion.txt").read_text(encoding="utf-8") == before
 
 
 def test_from_master_resolves_with_ls_remote(tmp_path: Path) -> None:
-    d = api_checkout(tmp_path)
+    d = library_checkout(tmp_path)
     runner = FakeRunner(master=NEW)
-    assert bump_pins.main(["set", str(d), "--from-master", "orkexa"], runner) == 0
-    assert f"orkexa.git@{NEW}" in (d / "pyproject.toml").read_text(encoding="utf-8")
+    assert bump_pins.main(["set", str(d), "--from-master", "tabrion"], runner) == 0
+    assert f"tabrion.git@{NEW}" in (d / "requirements" / "tabrion.txt").read_text(encoding="utf-8")
     assert runner.calls[1][:2] == ["git", "ls-remote"]
 
 
 @pytest.mark.parametrize("status", ["behind", "diverged", "404"])
 def test_refuses_a_sha_that_is_not_on_master(tmp_path: Path, status: str) -> None:
-    d = api_checkout(tmp_path)
-    before = (d / "pyproject.toml").read_text(encoding="utf-8")
-    with pytest.raises(SystemExit, match="is not on nodestro-runtime's master"):
-        bump_pins.main(["set", str(d), "--set", f"runtime={NEW}"], FakeRunner(status=status))
-    assert (d / "pyproject.toml").read_text(encoding="utf-8") == before
+    d = library_checkout(tmp_path)
+    before = (d / "requirements" / "tabrion.txt").read_text(encoding="utf-8")
+    with pytest.raises(SystemExit, match="is not on tabrion's master"):
+        bump_pins.main(["set", str(d), "--set", f"tabrion={NEW}"], FakeRunner(status=status))
+    assert (d / "requirements" / "tabrion.txt").read_text(encoding="utf-8") == before
 
 
 def test_identical_counts_as_on_master() -> None:
@@ -176,45 +173,38 @@ def test_git_cache_verification(tmp_path: Path) -> None:
 
 
 def test_refuses_a_name_the_repo_does_not_pin(tmp_path: Path) -> None:
-    d = api_checkout(tmp_path)
+    d = library_checkout(tmp_path)
     with pytest.raises(SystemExit, match="does not pin nodestro-studio"):
         bump_pins.main(["set", str(d), "--set", f"studio={NEW}"], FakeRunner())
 
 
 def test_refuses_a_short_sha(tmp_path: Path) -> None:
     with pytest.raises(SystemExit, match="full 40-character"):
-        bump_pins.main(["set", str(api_checkout(tmp_path)), "--set", "runtime=abc1234"], FakeRunner())
+        bump_pins.main(["set", str(library_checkout(tmp_path)), "--set", "tabrion=abc1234"], FakeRunner())
 
 
 def test_missing_pin_location_is_an_error(tmp_path: Path) -> None:
-    d = api_checkout(tmp_path)
-    (d / "pyproject.toml").write_text("[project]\ndependencies = []\n", encoding="utf-8")
-    with pytest.raises(SystemExit, match="no pin of nodestro-runtime found"):
-        bump_pins.main(["set", str(d), "--set", f"runtime={NEW}"], FakeRunner())
+    d = library_checkout(tmp_path)
+    (d / "requirements" / "tabrion.txt").write_text("# empty\n", encoding="utf-8")
+    with pytest.raises(SystemExit, match="no pin of tabrion found"):
+        bump_pins.main(["set", str(d), "--set", f"tabrion={NEW}"], FakeRunner())
 
 
 def test_repo_from_origin_url(tmp_path: Path) -> None:
     d = tmp_path / "worktree"
     d.mkdir()
-    runner = FakeRunner(origin="https://github.com/peterkarlhuber/nodestro-sdk.git")
-    assert bump_pins.repo_of(d, runner) == "nodestro-sdk"
+    runner = FakeRunner(origin="https://github.com/peterkarlhuber/nodestro-server.git")
+    assert bump_pins.repo_of(d, runner) == "nodestro-server"
     with pytest.raises(SystemExit, match="pins nothing"):
         bump_pins.repo_of(d, FakeRunner())
 
 
-def test_plan_orders_the_cascade() -> None:
+def test_plan_is_one_studio_change_then_the_products() -> None:
     stages = bump_pins.plan("orkexa", NEW)
     names = [[repo for repo, _files in stage] for stage in stages]
-    assert names == [
-        ["nodestro-runtime"],
-        ["nodestro-examples", "nodestro-integrations"],
-        ["nodestro-api"],
-        ["nodestro-sdk"],
-        ["nodestro-studio"],
-        ["nodestro-server", "nodestro-desktop"],
-        ["nodestro-local-docker"],
-    ]
-    studio = dict(stages[4][0][1])
+    # No cascade through the libraries any more (version ranges): one studio change, then the products.
+    assert names == [["nodestro-studio"], ["nodestro-server", "nodestro-desktop"], ["nodestro-local-docker"]]
+    studio = dict(stages[0][0][1])
     assert set(studio) == {"platform/internal.txt", "platform/internal-server.txt", "platform/versions.json"}
     assert f"orkexa={NEW}" in studio["platform/versions.json"]
 

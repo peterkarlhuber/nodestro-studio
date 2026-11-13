@@ -1,15 +1,17 @@
-"""The pins of the platform agree: platform/versions.json, this studio and every pinned component.
+"""The pins of the platform agree: platform/versions.json, its lock (platform/internal*.txt), this studio and every
+pinned component.
 
-Every Nodestro component and orkexa is referenced by an exact commit (no branch, no tag that could
-move). The script checks that
+Every platform component is locked by an exact commit (no branch, no tag that could move) in one place: versions.json
+and the lock generated from it (``--write-lock``). The components require each other only by version range. The
+script checks that
 
-- every commit in platform/versions.json is a full 40-character SHA,
-- every dependency on a platform component in the studio and in each pinned component (its pyproject.toml at the
-  pinned commit) is exactly the canonical reference ``<name> @ git+https://github.com/peterkarlhuber/<repo>.git@<commit
-  versions.json gives>`` (requirements are parsed with ``packaging``, names compared normalised): a plain name
-  (``nodestro-runtime>=0.2``, which would install whatever a package index offers under that name), another owner or
-  spelling, ``git+ssh``, an archive URL or a branch are refused, and so is a URL of a component under another name
-  (API2-09),
+- every commit in platform/versions.json is a full 40-character SHA, and the lock files are exactly what versions.json
+  generates (one ``<name> @ git+https://github.com/peterkarlhuber/<repo>.git@<commit>`` line per component of the
+  profile),
+- every dependency on a platform component in the studio and in each locked component (its pyproject.toml at the
+  locked commit) is a version range that contains the locked version (requirements are parsed with ``packaging``,
+  names compared normalised): a plain name without a range and any URL (a git pin, another owner or spelling,
+  ``git+ssh``, an archive) are refused, and so is a URL of a component under another name (API2-09),
 - each component's version at that commit is the one versions.json gives (a component with a dynamic version,
   such as Axentra, names the file that holds it in ``version_file``: ``__version__ = "..."``),
 - nothing references claude-agent,
@@ -71,9 +73,6 @@ POLICY = ROOT / "platform" / "dependency-policy.json"
 #: each other by version ranges only; every install names the lock: ``pip install -r platform/internal.txt ...``.
 LOCK_FILES = {"studio": "internal.txt", "server": "internal-server.txt"}
 LOCK = "platform/internal.txt"
-#: The switch from commit pins to ranges: the components may still pin each other by their canonical URL (the studio
-#: may not). Set to False once every component declares ranges.
-COMPONENT_URL_PINS_ALLOWED = True
 LOCK_HEADER = (
     "# The lock of the platform's internal packages, {profile} profile: generated from platform/versions.json by\n"
     "# scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>\n"
@@ -110,13 +109,11 @@ def check_requirement(
     components: dict[str, Any],
     own_name: str = "",
     ranges: frozenset[str] = frozenset(),
-    url_pins_allowed: bool = True,
 ) -> list[str]:
-    """Problems of one dependency: a platform component is required by a version range that contains the locked
-    version (:func:`check_locked_range`; the commit is in the lock, :data:`LOCK`) or, while ``url_pins_allowed``
-    (the switch from pins to ranges), exactly by :func:`canonical_url` (``own_name``: the package's own name, which
-    its extras may name, as ``axentra[server]``); a component in ``ranges`` (tabrion, for a library) only by a final
-    version range (:func:`check_range`)."""
+    """Problems of one dependency: a platform component is required only by a version range that contains the
+    locked version (:func:`check_locked_range`), never by a URL; the commit is in the lock, :data:`LOCK`
+    (``own_name``: the package's own name, which its extras may name, as ``axentra[server]``); a component in
+    ``ranges`` (tabrion, for a library) only by a final version range (:func:`check_range`)."""
     try:
         requirement = Requirement(item)
     except InvalidRequirement as exc:
@@ -139,20 +136,9 @@ def check_requirement(
         if linked:
             return [f"{owner}: {linked[0]} is not in platform/versions.json"]
         return []
-    commit = str(components[repo]["commit"])
-    expected = canonical_url(repo, commit)
-    if not url:
-        return check_locked_range(owner, requirement, repo, components[repo])
-    if not url_pins_allowed:
+    if url:
         return [f"{owner}: {requirement.name} @ {url}: declare a version range, the commit belongs in {LOCK}"]
-    if url == expected:
-        return []
-    refs = [ref for found_repo, ref in references([url]) if found_repo == repo.lower()]
-    if refs and refs[0] and not SHA.match(refs[0]):
-        return [f"{owner}: {repo}@{refs[0]} is not pinned to a commit"]
-    if refs and SHA.match(refs[0]) and refs[0] != commit:
-        return [f"{owner}: {repo}@{refs[0][:12]}, versions.json pins {commit[:12]}"]
-    return [f"{owner}: {requirement.name} @ {url} is not the canonical reference {expected}"]
+    return check_locked_range(owner, requirement, repo, components[repo])
 
 
 def check_locked_range(owner: str, requirement: Requirement, repo: str, entry: dict[str, Any]) -> list[str]:
@@ -528,7 +514,6 @@ def check_pyproject(
     expected_version: str | None,
     version_text: str | None = None,
     ranges: frozenset[str] = frozenset(),
-    url_pins_allowed: bool = True,
 ) -> list[str]:
     """Problems of one pyproject; ``version_text`` is the content of a dynamic version's ``version_file``,
     ``ranges`` the components it requires by a version range (:func:`foundation_ranges`)."""
@@ -548,7 +533,7 @@ def check_pyproject(
         problems.append(f"{owner}: version {version}, versions.json says {expected_version}")
     components = versions["components"]
     for item in dependencies(pyproject):
-        problems += check_requirement(owner, item, components, str(project.get("name", "")), ranges, url_pins_allowed)
+        problems += check_requirement(owner, item, components, str(project.get("name", "")), ranges)
     return problems
 
 
@@ -698,7 +683,7 @@ def main(argv: list[str] | None = None) -> int:
         if not SHA.match(entry["commit"]):
             problems.append(f"versions.json: {repo} is not pinned to a full commit ({entry['commit']})")
     studio = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    problems += check_pyproject("nodestro-studio", studio, versions, versions["platform"], url_pins_allowed=False)
+    problems += check_pyproject("nodestro-studio", studio, versions, versions["platform"])
     problems += check_locks(components, args.versions.parent, args.write_lock)
     pinned = declared_components(studio, components)
     missing = {repo for repo, entry in components.items() if entry.get("studio_dependency")} - pinned
@@ -723,7 +708,6 @@ def main(argv: list[str] | None = None) -> int:
                 entry.get("version"),
                 reader.pinned(repo, commit, version_file) if version_file else None,
                 foundation_ranges(repo, policy, components),
-                COMPONENT_URL_PINS_ALLOWED,
             )
         for repo in libraries(policy, components):
             if SHA.match(components[repo]["commit"]):
