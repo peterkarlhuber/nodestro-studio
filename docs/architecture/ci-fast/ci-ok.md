@@ -10,6 +10,12 @@
   listed workflow (also a re-run) posts `in_progress` without evaluating, so a stale verdict is not shown while it
   runs (L1). If the check run cannot be posted, the job fails (exit 1) whatever the mode. New permissions on the job:
   `checks: write` and `statuses: read` (no secrets). Local dry runs (`--pr`, `--head-sha`) never post.
+- **Where GitHub files the posted check run.** A check run posted with `GITHUB_TOKEN` lands in one of the GitHub
+  Actions check suites on the head SHA, so it is listed among the jobs of an unrelated `pull_request` run there (seen
+  on studio #174: the verdicts appeared as jobs named `ci-ok` of the Platform run, which still concluded `success`).
+  The evaluator reads each job named `ci-ok` as a check run and skips it when it is its own (app `github-actions`,
+  `external_id` `ci-ok-evaluator`); any other job named `ci-ok`, or one whose check run cannot be read, stays an
+  impostor. Earlier in-progress check runs stay in progress; the newest one is the verdict.
 - **Evaluator job renamed** to `ci-ok evaluate`; its own check run sits on the default branch's commit and never has
   the name `ci-ok`. `--self-check` fails when `ci-ok.yml` has a job or step named `ci-ok`, lacks a job named
   `ci-ok evaluate`, lacks `checks: write`, or its `workflow_run.types` lack `completed`.
@@ -208,7 +214,7 @@ same table.
 
 ## What remains before enforcement
 
-1. **Post the verdict to the head SHA.** Done in v3 (still to be proven on a test PR: pending, then NOT OK, then OK).
+1. **Post the verdict to the head SHA.** Done in v3 (merged in studio as the pilot; the live proof, pending, then NOT OK, then OK on a test PR, is recorded in STATUS.md).
    The `workflow_run` job creates a check run named `ci-ok` on
    `workflow_run.head_sha` (`POST /repos/{repo}/check-runs`, `checks: write`), updated by each evaluation. `checks:
    write` is a new permission and needs Peter's approval. (A commit status with `statuses: write` would also work, but
