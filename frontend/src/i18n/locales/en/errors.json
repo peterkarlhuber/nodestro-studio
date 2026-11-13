@@ -1112,6 +1112,7 @@
     "address_invalid": "An address of the {{type}} connection cannot be used (for example an internal address, http instead of https, or a password in the address).",
     "check_failed": "The check of the connection failed.",
     "check_unavailable": "This connection cannot be checked here yet.",
+    "id_invalid": "The package names a service connection with an invalid id. Export the workflow again.",
     "in_use_one": "{{count}} agent still uses this connection ({{names}}).",
     "in_use_other": "{{count}} agents still use this connection ({{names}}).",
     "missing_one": "{{count}} service connection is not set up. Set it up with “configure”, then start again.",

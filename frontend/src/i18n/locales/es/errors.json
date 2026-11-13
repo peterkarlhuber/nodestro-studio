@@ -1112,6 +1112,7 @@
     "address_invalid": "No se puede usar una dirección de la conexión ({{type}}) (por ejemplo una dirección interna, http en lugar de https o una contraseña en la dirección).",
     "check_failed": "La comprobación de la conexión falló.",
     "check_unavailable": "Esta conexión todavía no se puede comprobar aquí.",
+    "id_invalid": "El paquete indica una conexión de servicio con un identificador no válido. Vuelve a exportar el flujo de trabajo.",
     "in_use_one": "{{count}} agente todavía usa esta conexión ({{names}}).",
     "in_use_other": "{{count}} agentes todavía usan esta conexión ({{names}}).",
     "missing_one": "{{count}} conexión de servicio no está configurada. Configúrala con «configure» y vuelve a iniciar.",
