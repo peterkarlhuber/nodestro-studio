@@ -300,13 +300,18 @@ def tabrion_pins(text: str, components: dict[str, Any]) -> list[tuple[str, str]]
 
 def parsed_manifests(manifests: dict[str, str]) -> dict[str, tuple[str, list[str], dict[str, list[str]]]]:
     """repo -> (its distribution name, core requirements, extras)."""
-    out = {}
+    out: dict[str, tuple[str, list[str], dict[str, list[str]]]] = {}
     for repo, text in manifests.items():
         project = tomllib.loads(text).get("project", {})
-        extras = {
-            canonicalize_name(name): list(items) for name, items in project.get("optional-dependencies", {}).items()
+        extras: dict[str, list[str]] = {
+            str(canonicalize_name(name)): list(items)
+            for name, items in project.get("optional-dependencies", {}).items()
         }
-        out[repo] = (canonicalize_name(str(project.get("name", repo))), list(project.get("dependencies", [])), extras)
+        out[repo] = (
+            str(canonicalize_name(str(project.get("name", repo)))),
+            list(project.get("dependencies", [])),
+            extras,
+        )
     return out
 
 
@@ -401,8 +406,8 @@ def check_tabrion(
     problems += unpinned_ranges(manifests, policy, components)
     held: dict[str, list[str]] = {}
     for repo, text in manifests.items():
-        for requirement, ref in tabrion_pins(text, components):
-            held.setdefault(ref or "(no commit)", []).append(f"{repo}: {requirement}")
+        for pin, ref in tabrion_pins(text, components):
+            held.setdefault(ref or "(no commit)", []).append(f"{repo}: {pin}")
     if len(held) > 1:
         listed = "; ".join(f"{ref[:12]} ({', '.join(owners)})" for ref, owners in sorted(held.items()))
         problems.append(f"more than one tabrion in one installation (K-34, RC-2): {listed}")
@@ -411,18 +416,18 @@ def check_tabrion(
             problems.append(f"versions.json: tabrion pinned_by names {repo}, which is not a pinned component")
         elif not tabrion_pins(manifests[repo], components):
             problems.append(f"{repo}: does not pin tabrion (versions.json pinned_by, RC-2)")
-    for repo, text in requirements.items():
+    for repo, content in requirements.items():
         ranged = [
             requirement
             for item in dependencies(tomllib.loads(manifests.get(repo, "")))
             if (requirement := _requirement(item)) is not None and component_of(requirement.name, components) == TABRION
         ]
         owner = f"{repo}@{str(components[repo]['commit'])[:12]}"
-        if text is None:
+        if content is None:
             if ranged:
                 problems.append(f"{owner}: requires tabrion but has no {TABRION_REQUIREMENTS} (VER-1)")
             continue
-        found, commit = tabrion_requirements(owner, text, entry)
+        found, commit = tabrion_requirements(owner, content, entry)
         problems += found
         if commit is not None:
             more, warned = check_tabrion_pin(owner, commit, read_tabrion(commit), entry, ranged)
