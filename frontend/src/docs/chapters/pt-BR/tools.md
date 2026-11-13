@@ -33,6 +33,8 @@ Modelos de linguagem erram em contas de cabeça. Dê a `calculator` aos agentes 
 
 A biblioteca mostra as descrições das ferramentas integradas no idioma da interface. O modelo sempre recebe a descrição original em inglês, para que os agentes existentes se comportem igual em todos os idiomas.
 
+Cada ferramenta integrada traz selos na biblioteca: categoria, rede (*Sem rede* ou *Com Internet*), *Funciona offline* e, quando necessário, *Precisa de uma conexão*. Os detalhes mostram o limite de tempo e o máximo de chamadas por execução; uma chamada que demora mais termina com um erro de ferramenta, e a execução continua. Os filtros acima da lista mostram só as ferramentas de uma categoria, sem rede, utilizáveis offline ou as que precisam de uma [conexão](/docs/verbindungen). Uma ferramenta com acesso à Internet é recusada em um fluxo de trabalho offline antes do início.
+
 ## Ferramentas de servidor da Anthropic {#server-tools}
 <!-- keywords: pesquisa na web, web search, busca na web, web fetch, execução de código, code execution, ferramentas de servidor, fontes -->
 

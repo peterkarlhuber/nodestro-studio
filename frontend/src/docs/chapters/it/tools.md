@@ -33,6 +33,8 @@ I modelli linguistici sbagliano facilmente i calcoli a mente. Dai la `calculator
 
 La libreria mostra le descrizioni degli strumenti integrati nella lingua dell'interfaccia. Il modello riceve sempre la descrizione originale in inglese, così gli agenti esistenti si comportano allo stesso modo in ogni lingua.
 
+Ogni strumento integrato porta dei contrassegni nella libreria: categoria, rete (*Senza rete* o *Con Internet*), *Funziona offline* e, se serve, *Richiede una connessione*. I dettagli mostrano il limite di tempo e il numero massimo di chiamate per esecuzione; una chiamata più lunga termina con un errore dello strumento e l’esecuzione continua. I filtri sopra l’elenco mostrano solo gli strumenti di una categoria, senza rete, utilizzabili offline o quelli che richiedono una [connessione](/docs/verbindungen). Uno strumento con accesso a Internet viene rifiutato in un workflow offline prima dell’avvio.
+
 ## Strumenti server di Anthropic {#server-tools}
 <!-- keywords: ricerca web, web search, recupero web, web fetch, esecuzione di codice, code execution, strumenti server, fonti -->
 
