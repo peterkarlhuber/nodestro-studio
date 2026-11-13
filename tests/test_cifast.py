@@ -132,3 +132,10 @@ def test_cascade_file_is_valid() -> None:
 def test_quantile_interpolates() -> None:
     assert cifast.quantile([1, 2, 3, 4], 0.5) == 2.5
     assert cifast.quantile([], 0.5) is None
+
+
+def test_ci_ok_check_runs_listed_as_jobs_are_not_ci_work() -> None:
+    # Since ci-ok v3 the jobs API also lists its verdict check run: name ci-ok, no runner labels, no time.
+    assert cifast.is_ci_ok_check_run({"name": "ci-ok", "labels": []})
+    assert not cifast.is_ci_ok_check_run({"name": "ci-ok", "labels": ["ubuntu-latest"]})
+    assert not cifast.is_ci_ok_check_run({"name": "ci-ok evaluate", "labels": ["ubuntu-latest"]})
