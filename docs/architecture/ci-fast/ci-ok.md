@@ -214,7 +214,7 @@ same table.
 
 ## What remains before enforcement
 
-1. **Post the verdict to the head SHA.** Done in v3 (merged in studio as the pilot; the live proof, pending, then NOT OK, then OK on a test PR, is recorded in STATUS.md).
+1. **Post the verdict to the head SHA.** Done in v3 (merged in studio as the pilot, #173). Live proof on studio #174: the check run `ci-ok` appeared on the head SHA in progress, then NOT OK while jobs were pending; it also exposed the own-check-run defect fixed in #174 (see "Where GitHub files the posted check run"). The OK step follows on the next studio PR and is recorded in STATUS.md.
    The `workflow_run` job creates a check run named `ci-ok` on
    `workflow_run.head_sha` (`POST /repos/{repo}/check-runs`, `checks: write`), updated by each evaluation. `checks:
    write` is a new permission and needs Peter's approval. (A commit status with `statuses: write` would also work, but
