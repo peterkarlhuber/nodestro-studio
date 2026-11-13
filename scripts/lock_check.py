@@ -7,7 +7,9 @@ environment of the interpreter that runs it (or the distributions in ``--path``)
   orkexa; server: also axentra),
 - an installed component (any component of versions.json, also one the profile does not need) was not installed
   from ``https://github.com/peterkarlhuber/<repo>.git`` at the pinned commit (its ``direct_url.json``: a missing file,
-  an editable or local install, another URL or another commit),
+  an editable or local install, another URL or another commit). This detects an accidental install from an index; it
+  is no proof of origin, since a wheel can ship a forged ``direct_url.json``. The proof that a pinned install never
+  consults an index for a component is ``scripts/check_tabrion_source.py`` (DC-NS-2),
 - an installed component's version is not the one versions.json gives,
 - the studio (distribution ``nodestro``) is not installed at the platform version,
 - an installed component or the studio declares another component at a commit other than the pinned one

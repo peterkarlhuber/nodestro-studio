@@ -121,11 +121,12 @@ from #121). Both have status `Needs external review`.
   `.github/workflows/platform.yml` (`tabrion source (poisoned index)`), Tabrion migration inventory DC1 sections 4
   to 6 (owner decision 2026-11-13: no PyPI placeholder)
 - **What:** the canonical negative test: an install must never ask an index for `tabrion` and must install the
-  locked commit. Done here: the script, `lock_check.py --only`, the platform job. Open: (a) the new job joins the
-  mandatory checks in `.github/ci-manifest.json` (CI-FAST owns that file); (b) the `internal.txt` part of DC-NS-1
-  (tabrion in the studio lock, TABRION PIN-W2); (c) `components-at-master.yml` puts tabrion into its overrides once
-  it is in the studio closure.
-- **Next step:** merge; then the consumers' copies (nodestro-runtime DC-NR-1, nodestro-api DC-NA-1, orkexa DC-OR-1)
+  locked commit (zero index requests for it; `direct_url.json` checks only detect an accidental index install). Done
+  here: the script, `lock_check.py --only`, the platform job (listed in `.github/ci-manifest.json`, reported by
+  ci-ok). Open: (a) the `internal.txt` part of DC-NS-1 (tabrion in the studio lock, TABRION PIN-W2); (b)
+  `components-at-master.yml` puts tabrion into its overrides once it is in the studio closure.
+- **Next step:** merge; then the consumers' copies (nodestro-runtime DC-NR-1, nodestro-api DC-NA-1, orkexa DC-OR-1,
+  tabrion-studio DC-TS-1)
   update their pinned origin commit to the merged one. Residual risk (a foreign `tabrion` on PyPI reaches only a bare
   install by hand): Tabrion migration inventory DC1 section 6.
 

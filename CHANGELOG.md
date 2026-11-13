@@ -5,13 +5,19 @@
 ### Dependency confusion: a poisoned index in CI, TABRION DC-NS-1/DC-NS-2 (2026-11-13)
 
 - `scripts/check_tabrion_source.py` (standard library only; the canonical copy for nodestro-runtime, nodestro-api and
-  orkexa, pinned there by SHA-256): serves a poisoned index on 127.0.0.1 with a `tabrion` 0.1.99 wheel (its `.pth`
-  writes a marker at startup) and an sdist (its build writes the marker and fails), redirects every other name to
-  PyPI, runs an install command with `PIP_INDEX_URL`/`UV_INDEX_URL` set to it, and fails unless the index got no
-  request for `tabrion`, no marker exists and the installed `tabrion`'s `direct_url.json` names the lock's URL and
-  commit. A positive control first shows that `pip install tabrion` would take the poisoned release.
+  orkexa, pinned there by SHA-256): serves a poisoned index on 127.0.0.1 with a `tabrion` 0.1.0 wheel (it ships a
+  forged `direct_url.json` naming the lock's URL and commit, and its `.pth` writes a marker at startup) and an sdist
+  (its build writes the marker and fails), redirects every other name to PyPI, and runs an install command with
+  `PIP_INDEX_URL`/`UV_INDEX_URL` set to it. It fails when the command or a requirements/constraints file it reads
+  passes an index option (`--index-url`, `--extra-index-url`, `--find-links`, `--no-index`, ...) or an index
+  variable is set, when the command made no index request at all, when the index got any request for `tabrion`, when
+  a marker exists, or when the installed `tabrion`'s `direct_url.json` does not name the lock's URL and commit. A
+  positive control first shows that `pip install tabrion` would take the poisoned release. The zero-request assertion
+  is the proof: `direct_url.json` (here and in `lock_check.py`) detects an accidental index install but can be forged
+  by a wheel; the protection is the direct-URL pin in the install command plus this job.
 - `.github/workflows/platform.yml`: new job `tabrion source (poisoned index)` runs the components install under the
-  poisoned index, then `lock_check.py --only tabrion`. The components job sets `NODESTRO_STUDIO_LOCK` to
+  poisoned index, then `lock_check.py --only tabrion`; `.github/ci-manifest.json` lists it, so ci-ok reports it. The
+  components job sets `NODESTRO_STUDIO_LOCK` to
   `platform/internal-server.txt` for the runtime's and the API's installed-commit test (DC-NR-1, DC-NA-1).
 - `scripts/lock_check.py --only NAME[,NAME...]`: checks just those components (each must be installed), neither the
   profile nor the studio.
