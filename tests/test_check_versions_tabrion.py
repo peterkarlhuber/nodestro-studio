@@ -239,7 +239,7 @@ def test_the_same_commit_in_both_lock_files_passes() -> None:
 
 
 def test_a_lock_without_tabrion_is_refused() -> None:
-    problems, _ = check(lock=locks(internal_server=""))
+    problems, _ = check(lock=locks(internal="", internal_server=""))
     assert problems == ["the lock (internal-server.txt, internal.txt) holds no tabrion; it holds exactly one (K-34)"]
 
 
@@ -268,7 +268,10 @@ def test_a_non_canonical_lock_line_is_refused(line: str) -> None:
 
 def test_a_locked_version_outside_the_range_is_refused() -> None:
     pins = versions(releases={"0.1.0": FINAL, "0.2.0": OTHER_MINOR})
-    problems, _ = check(pins, lock=locks(pins, internal_server=f"tabrion @ {URL}{OTHER_MINOR}\n"))
+    problems, _ = check(
+        pins,
+        lock=locks(pins, internal=f"tabrion @ {URL}{OTHER_MINOR}\n", internal_server=f"tabrion @ {URL}{OTHER_MINOR}\n"),
+    )
     assert problems == [
         f"lock: tabrion 0.2.0@{OTHER_MINOR[:12]} lies outside the range of "
         + "; ".join(
@@ -289,7 +292,7 @@ def test_a_locked_version_outside_the_range_is_refused() -> None:
 @pytest.mark.parametrize("commit", ["9" * 40, OLDER])
 def test_an_unknown_lock_commit_is_refused(commit: str) -> None:
     """An unknown commit, or one that only reads 0.1.0 (a merge of master into a branch), is no known release."""
-    problems, _ = check(lock=locks(internal_server=f"tabrion @ {URL}{commit}\n"))
+    problems, _ = check(lock=locks(internal=f"tabrion @ {URL}{commit}\n", internal_server=f"tabrion @ {URL}{commit}\n"))
     assert problems == [f"lock: tabrion@{commit[:12]} is not a known final release (versions.json releases, RC-8)"]
 
 
@@ -529,7 +532,9 @@ def test_main_fails_on_a_url_and_a_second_lock_commit(
     assert "never by a URL; the lock holds the commit (RC-1)" in out
     assert "::error::more than one tabrion commit in the lock (K-34, RC-2)" in out
     assert "::error::platform/internal.txt does not match versions.json" in out
-    assert out.splitlines()[-1] == "3 problems"
+    # The studio lock holds tabrion too since TABRION MIG-NOD-3 (K-32): the appended line is a second one there.
+    assert "::error::platform/internal.txt: 2 tabrion lines, the lock holds exactly one (K-34, RC-2)" in out
+    assert out.splitlines()[-1] == "4 problems"
 
 
 def test_drift_only_reports(
