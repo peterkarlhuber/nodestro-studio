@@ -40,8 +40,9 @@ STUDIO = "nodestro"
 #: (as in check_versions.py).
 DISTRIBUTIONS = {"nodestro-sdk": "nodestro-client"}
 SUBDIRECTORIES = {"nodestro-sdk": "python"}
-#: Components every profile needs besides the studio's direct dependencies (``studio_dependency`` in versions.json).
-STUDIO_PROFILE_EXTRA = ("orkexa",)
+#: Components every profile needs besides the studio's direct dependencies (``studio_dependency`` in versions.json):
+#: orkexa, and the foundation tabrion, a base dependency of nodestro-runtime since TABRION MIG-NOD-3 (K-32, doc 06 N-1).
+STUDIO_PROFILE_EXTRA = ("orkexa", "tabrion")
 #: Components only the server profile contains (nodestro-runtime[postgres]); the studio profile must not.
 SERVER_ONLY = ("axentra",)
 PROFILES = ("studio", "server")

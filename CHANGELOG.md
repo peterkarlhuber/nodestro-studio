@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Tabrion in the studio profile, TABRION PIN-W2 (MIG-NOD-3, K-32) (2026-11-13)
+
+- nodestro-runtime requires the stdlib-only `tabrion` core (MIG-NOD-3), so every profile holds tabrion:
+  `scripts/lock_check.py` lists it in `STUDIO_PROFILE_EXTRA`, `check_versions.py` drops its server-only special case,
+  and `platform/internal.txt` gains the tabrion line (0.1.0, `d5821fa`). The policy edge nodestro-runtime -> tabrion
+  (required) is active (K-32).
+
 ### One tabrion in the lock model, TABRION VER-1 (CI-FAST P3 step 4) (2026-11-13)
 
 - `scripts/check_versions.py` checks tabrion under the lock model: every component (axentra, orkexa,

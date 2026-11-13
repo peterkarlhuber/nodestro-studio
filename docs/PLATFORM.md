@@ -116,10 +116,10 @@ A host is refused for untrusted code when:
 
 - **All components have the same version** (0.2.0). A platform version is the set of commits in
   [`platform/versions.json`](../platform/versions.json) that were tested together.
-- **One lock fixes every commit** (CI-FAST P3): `platform/internal.txt` (the studio profile) and
-  `platform/internal-server.txt` (the server profile: also axentra and tabrion) hold one line per internal package,
-  `nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@<sha>`, a full commit SHA, never a
-  branch or a tag. Both are generated from `platform/versions.json` (`python scripts/check_versions.py --write-lock`)
+- **One lock fixes every commit** (CI-FAST P3): `platform/internal.txt` (the studio profile, with tabrion since
+  TABRION MIG-NOD-3) and `platform/internal-server.txt` (the server profile: also axentra) hold one line per internal
+  package, `nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@<sha>`, a full commit SHA,
+  never a branch or a tag. Both are generated from `platform/versions.json` (`python scripts/check_versions.py --write-lock`)
   and checked by `scripts/check_versions.py`.
 - **Components require each other by a version range**, such as `nodestro-runtime>=0.2.0,<0.3`, never by a URL; the
   range must contain the locked version. Every install names the lock:

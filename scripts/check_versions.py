@@ -154,12 +154,9 @@ def check_locked_range(owner: str, requirement: Requirement, repo: str, entry: d
 
 
 def lock_components(components: dict[str, Any], profile: str) -> list[str]:
-    """The components (repositories) of a profile's lock: the studio's dependencies and orkexa; the server profile
-    also the server-only components (axentra) and the foundation tabrion they build on."""
-    names = lock_check.required(components, profile)
-    if profile == "server" and TABRION in components:
-        names.append(TABRION)
-    return sorted(set(names))
+    """The components (repositories) of a profile's lock: the studio's dependencies, orkexa and the foundation tabrion
+    (every profile since TABRION MIG-NOD-3); the server profile also the server-only components (axentra)."""
+    return lock_check.required(components, profile)
 
 
 def lock_text(components: dict[str, Any], profile: str) -> str:

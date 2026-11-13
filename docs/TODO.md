@@ -110,6 +110,9 @@ from #121). Both have status `Needs external review`.
   the lock holds exactly one canonical tabrion line on a release commit of `releases` inside that range, one
   `requirements/tabrion.txt` pin per library on a final commit (an older final of the same minor is a warning, RC-7),
   the K-33 policy for every locked manifest and no cycle (AC-6).
+- **PIN-W2 (TABRION MIG-NOD-3, K-32):** nodestro-runtime requires the stdlib-only `tabrion` core, so the studio
+  profile (`scripts/lock_check.py` `STUDIO_PROFILE_EXTRA`) and `platform/internal.txt` hold tabrion too, and the
+  policy edge nodestro-runtime -> tabrion (required) is active.
 - **Next step:** goes in with CI-FAST step 4, after nodestro-runtime #159 and nodestro-api #126 (their tabrion dev
   requirement as a range) are merged and locked. Each new tabrion final adds its release commit to `releases`. Close
   this entry then.
