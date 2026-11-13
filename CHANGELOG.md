@@ -2,6 +2,35 @@
 
 ## Unreleased
 
+### One tabrion per installation, TABRION VER-1 and QA-15 (AC-6, RC-1/RC-2/RC-7/RC-8) (2026-11-13)
+
+- `platform/versions.json` has the component `tabrion` at the 0.1.0 final, `d5821faa8742dea012abda3b663549c038d76543`
+  (version read from `src/tabrion/_version.py`), with `releases` (the authoritative release commit of each final;
+  tabrion has no tags) and `pinned_by` (empty until PIN-W1; then nodestro-runtime and nodestro-api must carry the pin).
+- `scripts/check_versions.py` checks the one tabrion of the installation: a library (`kind: library` in
+  `platform/dependency-policy.json`) requires tabrion only by a final version range without URL that contains the
+  pinned version (RC-1, RC-2, RC-8); every other reference is the canonical pin of versions.json, so runtime and api
+  hold one commit (K-34); no pre-release specifier or pin and versions.json pins a final version (RC-8); each
+  library's `requirements/tabrion.txt` holds exactly one canonical pin on a commit of a final version inside its range
+  (an older or other final of the same minor is a `::warning::`, RC-7; a library that requires tabrion needs the
+  file); only a release commit of `releases` counts as a final (a commit that merely reads 0.1.0, such as a merge of
+  master into a branch, is refused); as soon as a pinned library requires tabrion by its range, every install of a
+  component that pulls it (core, or core with one extra) must carry the tabrion pin on the way, whatever `pinned_by`
+  says (no package-index fallback); tabrion pins and ranges carry no environment marker; the K-33 policy holds for every pinned manifest and neither the policy nor the pinned graph has a cycle.
+  It now ends with "pins agree, one tabrion 0.1.0@d5821faa8742, graph acyclic, policy ok". `--policy FILE` selects
+  the policy. A `--local DIR` run (`make platform-local`) now also needs `DIR/tabrion` at the pinned commit and says
+  so when a checkout is missing.
+- `--drift` (RC-7, report only, always exit 0): `requirements/tabrion.txt` on the axentra and orkexa default branches
+  against the pinned tabrion, as warnings and a step summary ("missing" and "cannot read" are told apart); the nightly
+  runs it in the job `tabrion-drift` (`continue-on-error`), which is not in the nightly result.
+- `scripts/bump_pins.py` knows tabrion as the start of a cascade: the libraries' `requirements/tabrion.txt`, then
+  the usual cascade down to the studio versions.json entry.
+- `tests/test_check_versions_tabrion.py`: the negative cases of VER-1 and AC-6 (direct URL in a library manifest,
+  different tabrion commits in runtime and api, a cycle in the policy and in the pinned graph, pre-release specifiers
+  and pins, two pins, a commit of a non-final version, an unknown commit, a range without the pinned version, another
+  minor, a commit outside `releases`, a library range with no pin on the way, environment markers) turn red; an older
+  final of the same minor only warns. `docs/TODO.md` ST-062 tracks the strict step (PIN-W1).
+
 ### Dependency policy, TABRION QA-17 (AC-2, edge list K-33) (2026-11-11)
 
 - `platform/dependency-policy.json` is the source of truth for the allowed edges between Levuvo packages (plan 05

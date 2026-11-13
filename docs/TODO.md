@@ -11,7 +11,7 @@
 |---|---|
 | P0 Critical | 0 |
 | P1 High | 0 |
-| P2 Medium | 2 |
+| P2 Medium | 3 |
 | P3 Low | 10 |
 | P4 Optional | 4 |
 
@@ -98,6 +98,23 @@ from #121). Both have status `Needs external review`.
   the runtime, RC-2) is in the policy as doc 13 section 2.2 and doc 06 RC-2 require; the edge list in doc 05 section
   4.2 omits it and should list it.
 - **Next step:** Part 2 pull requests per repository after QA-16 is merged.
+
+### ST-062 · One tabrion per installation: the checker turns strict with PIN-W1 (TABRION VER-1, QA-15, AC-6)
+
+- **Priority:** P2 Medium · **Status:** In progress (checker and drift report: branch
+  `claude/project-thread-bjlq25-chk`) · **Refs:** `scripts/check_versions.py`, `platform/versions.json` (component
+  `tabrion`), `tests/test_check_versions_tabrion.py`, `.github/workflows/nightly.yml` (`tabrion-drift`), Tabrion plan
+  06 section 6.4 (RC-1, RC-2, RC-7, RC-8), 07 AC-6, 09 VER-1/QA-15
+- **What:** `check_versions.py` holds tabrion 0.1.0 final (`d5821fa`) as the one tabrion of every installation:
+  libraries by a final range that contains it (RC-1, RC-8), runtime extras and api `dev` on exactly its canonical pin
+  (RC-2), one `requirements/tabrion.txt` pin per library on a final commit (an older final of the same minor is a
+  warning, RC-7), the K-33 policy for every pinned manifest and no cycle (AC-6). Until the runtime and api carry the
+  pin, `pinned_by` in versions.json is empty: a pin that is present is checked, a missing one is not yet an error.
+- **Next step:** PIN-W1 (studio step) sets `"pinned_by": ["nodestro-runtime", "nodestro-api"]` in the same PR that
+  moves the runtime and api pins to commits with the tabrion pin (MIG-NOD-1), and adds `tabrion` to the runtime and api
+  rows of `scripts/bump_pins.py`. Each new tabrion final adds its release commit to `releases`. Already strict today:
+  once a pinned library requires tabrion outside its dev extra, runtime must pin it in the extra that pulls the
+  library (`postgres`). Close this entry after PIN-W1.
 
 ### ST-053 · ESLint 10 waits for the React Compiler rules of eslint-plugin-react-hooks 7
 
