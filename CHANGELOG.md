@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### One tabrion in the lock model, TABRION VER-1 (CI-FAST P3 step 4) (2026-11-13)
+
+- `scripts/check_versions.py` checks tabrion under the lock model: every component (axentra, orkexa,
+  nodestro-runtime, nodestro-api, any other) requires tabrion only by a minor range `>=M.N,<M.(N+1)` with final bounds,
+  without URL or environment marker (RC-1, RC-8), and all components name the same minor (RC-2); the lock
+  (`platform/internal*.txt`) holds exactly one tabrion line, the canonical
+  `tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@<40 lowercase hex>`, on a release commit of
+  `releases` whose version lies inside every component's range, and both lock files name the same commit (K-34).
+  `pinned_by`, the per-component pin and commit checks and the "no index fallback" closure are gone (the lock holds
+  the commit). The libraries' `requirements/tabrion.txt` checks and `--drift` stay.
+- `platform/versions.json`: the tabrion entry drops `pinned_by`.
+- `tests/test_check_versions_tabrion.py`: fixtures on ranges and the lock; negative tests for a URL in a component,
+  a range that is not one minor, a pre-release bound, different ranges, two lines or two commits in the lock, a
+  non-canonical lock line, a lock without tabrion, a locked version outside the range and an unknown commit.
+
 ### One tabrion per installation, TABRION VER-1 and QA-15 (AC-6, RC-1/RC-2/RC-7/RC-8) (2026-11-13)
 
 - `platform/versions.json` has the component `tabrion` at the 0.1.0 final, `d5821faa8742dea012abda3b663549c038d76543`
