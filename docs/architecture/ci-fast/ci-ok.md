@@ -31,7 +31,9 @@ on the PR head SHA and succeed?
   A job is matched by workflow file (`run.path == .github/workflows/<file>`) and by its exact name (the check-run name,
   for example `test (3.11)` or `systems / system (ubuntu-24.04)`). Only runs with `event == pull_request` on the head
   SHA count. A re-run: the jobs endpoint is read with `filter=latest`, so the latest attempt decides (verified on
-  axentra #58, whose attempt 1 failed and attempt 2 passed), and the re-run's completion re-evaluates.
+  axentra #58, whose attempt 1 failed and attempt 2 passed), and the re-run's completion re-evaluates. After "re-run
+  failed jobs" GitHub copies the jobs that were not re-run into the new attempt (same timestamps, new ids), so
+  `filter=latest` still lists every job (checked on 19 re-run PR runs in all 12 repositories, 2026-11-13).
 - **Attribution to the PR (review F5)**: when the PR number is known, a run counts only if its `pull_requests` contains
   that number. Runs that list only other PRs are ignored (and counted in a notice). A run that lists no PR at all is
   used only when the workflow has no run attributed to this PR, with a note on the row. Among equal candidates the
@@ -41,6 +43,13 @@ on the PR head SHA and succeed?
   the same head branch (for example against `master` and a release branch) both appear on every run of that branch,
   and the filter cannot separate them. A dry run (`--pr`) of a closed PR therefore attributes by head SHA alone, with
   a notice.
+  Same head branch (observed on nodestro-server #81, 2026-11-13): #81 was merged, #82 was opened from the same branch,
+  and the queued ci-ok evaluation of #81 then found both runs listing #82, ignored them and reported every check as
+  missing. A run therefore also counts as the PR's when the run's head branch and head repository id equal the
+  triggering run's (`workflow_run.head_branch`, `head_repository.id`) and every PR it lists has that same head. This
+  covers a closed or merged PR (its runs list no PR, or a follow-up PR from the same branch) without an extra API
+  call. A run that lists a PR from another branch, or from a fork's branch of the same name, is still ignored; without
+  the head branch in the event the rule is off (fail closed).
 - **Duplicate names (F6)**: when several jobs of the newest attempt share a listed name (a reusable workflow called
   twice, a collapsed matrix name), all of them must succeed; one pending makes the row pending.
 - **Path-filtered workflows** (studio `docker.yml`, `macos.yml`; server and local-docker `upgrade.yml`): the manifest key
@@ -125,7 +134,7 @@ on every evaluation, so drift that reaches the default branch shows up as NOT OK
 | F2 base re-targeting, bootstrap fallback | Fixed: no fallback; the manifest and script always come from the default branch, so re-targeting the base cannot select another gate (see "Re-targeting the base" below). |
 | F3 waiting jobs hold runner slots | Fixed: one short job per completion, no waiting. |
 | F4 stale verdict after re-runs | Fixed: every completion, including re-runs, re-evaluates; the latest ci-ok run is the verdict. |
-| F5 another PR's run on the same SHA | Partly fixed: runs that list only other PRs are ignored when the PR number is known. Two open PRs from the same head branch still cannot be separated (GitHub lists both on each run), and fork PRs (no number) fall back to the head SHA, reported. |
+| F5 another PR's run on the same SHA | Partly fixed: runs that list only other PRs are ignored when the PR number is known, except PRs from the triggering run's own head branch and repository (closed PR, same-branch follow-up PR). Two open PRs from the same head branch still cannot be separated (GitHub lists both on each run), and fork PRs (no number) fall back to the head SHA, reported. |
 | F6 duplicate names | Fixed: all must succeed. |
 | F7 API errors crash | Fixed: retried within a deadline, `Retry-After` honored, reported as `api error` NOT OK, exit 0 in report-only. |
 | F8 fail-open manifest states | Fixed: NOT OK in the evaluator, exit 1 in `--self-check`, self-check of the default branch on every evaluation. |
