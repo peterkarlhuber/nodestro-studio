@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Dependency confusion: a poisoned index in CI, TABRION DC-NS-1/DC-NS-2 (2026-11-13)
+
+- `scripts/check_tabrion_source.py` (standard library only; the canonical copy for nodestro-runtime, nodestro-api and
+  orkexa, pinned there by SHA-256): serves a poisoned index on 127.0.0.1 with a `tabrion` 0.1.99 wheel (its `.pth`
+  writes a marker at startup) and an sdist (its build writes the marker and fails), redirects every other name to
+  PyPI, runs an install command with `PIP_INDEX_URL`/`UV_INDEX_URL` set to it, and fails unless the index got no
+  request for `tabrion`, no marker exists and the installed `tabrion`'s `direct_url.json` names the lock's URL and
+  commit. A positive control first shows that `pip install tabrion` would take the poisoned release.
+- `.github/workflows/platform.yml`: new job `tabrion source (poisoned index)` runs the components install under the
+  poisoned index, then `lock_check.py --only tabrion`. The components job sets `NODESTRO_STUDIO_LOCK` to
+  `platform/internal-server.txt` for the runtime's and the API's installed-commit test (DC-NR-1, DC-NA-1).
+- `scripts/lock_check.py --only NAME[,NAME...]`: checks just those components (each must be installed), neither the
+  profile nor the studio.
+- `.gitattributes`: LF for the shared script, so its SHA-256 is the same in every checkout.
+
 ### One tabrion in the lock model, TABRION VER-1 (CI-FAST P3 step 4) (2026-11-13)
 
 - `scripts/check_versions.py` checks tabrion under the lock model: every component (axentra, orkexa,

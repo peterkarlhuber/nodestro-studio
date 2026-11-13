@@ -1,0 +1,3 @@
+# The dependency-confusion check is copied unchanged into nodestro-runtime, nodestro-api and orkexa, whose tests pin
+# its SHA-256 (TABRION DC-NS-2): keep LF on every platform so the hash is the same in each checkout.
+scripts/check_tabrion_source.py text eol=lf

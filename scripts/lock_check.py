@@ -14,6 +14,10 @@ environment of the interpreter that runs it (or the distributions in ``--path``)
   (``Requires-Dist``, every extra; ``pip check`` compares versions only and cannot see this),
 - the studio profile contains a server-only component (axentra: the server extras leaked into it).
 
+``--only NAME[,NAME...]`` checks just those components (each must be installed; origin, commit, version and what it
+declares) and neither a profile nor the studio: the consumers' negative dependency-confusion tests use
+``--only tabrion`` (TABRION DC-NS-1).
+
 Stdlib only: it also runs in the image build after the environment's pip is gone, and in the desktop bundle, which
 has no ``packaging``. Every problem is one line ``lock_check: FAIL ...``; the last line says GREEN or RED.
 Used by the platform workflow (components job), nodestro-server's image/finalize.sh and nodestro-desktop's
@@ -23,7 +27,7 @@ scripts/build_backend.sh.
 from __future__ import annotations
 
 import argparse
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from importlib import metadata
 import json
@@ -146,14 +150,28 @@ def check_declared(owner: str, requires: Iterable[str], components: Mapping[str,
     return problems
 
 
-def check(versions: Mapping[str, Any], installed: Mapping[str, Installed], profile: str) -> tuple[list[str], list[str]]:
-    """``(ok lines, problems)`` of an environment (``installed``: normalised distribution name -> what is installed)."""
+def check(
+    versions: Mapping[str, Any],
+    installed: Mapping[str, Installed],
+    profile: str,
+    only: Sequence[str] | None = None,
+) -> tuple[list[str], list[str]]:
+    """``(ok lines, problems)`` of an environment (``installed``: normalised distribution name -> what is installed).
+
+    With ``only`` (repository names), just those components are checked, each must be installed, and neither the
+    profile nor the studio is.
+    """
     if profile not in PROFILES:
         raise ValueError(f"unknown profile {profile!r} (one of {', '.join(PROFILES)})")
     components: Mapping[str, Any] = versions["components"]
-    needed = required(components, profile)
     ok: list[str] = []
     problems: list[str] = []
+    if only is not None:
+        problems += [f"{repo}: not a component of versions.json" for repo in sorted(set(only) - set(components))]
+        components = {repo: entry for repo, entry in components.items() if repo in only}
+        needed = sorted(components)
+    else:
+        needed = required(components, profile)
     for repo, entry in sorted(components.items()):
         commit = str(entry.get("commit", ""))
         if not SHA.match(commit):
@@ -162,14 +180,17 @@ def check(versions: Mapping[str, Any], installed: Mapping[str, Installed], profi
         found = installed.get(distribution_name(repo))
         if found is None:
             if repo in needed:
-                problems.append(f"{repo}: not installed, the {profile} profile needs it at {commit[:12]}")
+                scope = "--only" if only is not None else f"the {profile} profile"
+                problems.append(f"{repo}: not installed, {scope} needs it at {commit[:12]}")
             continue
         found_problems = check_source(repo, entry, found) + check_declared(repo, found.requires, components)
-        if profile != "server" and repo in SERVER_ONLY:
+        if only is None and profile != "server" and repo in SERVER_ONLY:
             found_problems.append(f"{repo} {found.version}: installed, but only the server profile contains it")
         problems += found_problems
         if not found_problems:
             ok.append(f"{repo} {found.version} @ {commit[:12]}")
+    if only is not None:
+        return ok, problems
     studio = installed.get(STUDIO)
     platform = str(versions.get("platform", ""))
     if studio is None:
@@ -208,7 +229,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--path", action="append", help="read the distributions in this directory (repeatable) instead of sys.path"
     )
+    parser.add_argument(
+        "--only",
+        action="append",
+        metavar="NAME[,NAME...]",
+        help="check only these components (each must be installed), not the profile or the studio",
+    )
     args = parser.parse_args(argv)
+    only = [name.strip() for value in args.only for name in value.split(",") if name.strip()] if args.only else None
     try:
         versions = json.loads(args.versions.read_text(encoding="utf-8"))
         if not isinstance(versions, dict) or not isinstance(versions.get("components"), dict):
@@ -216,14 +244,15 @@ def main(argv: list[str] | None = None) -> int:
     except (OSError, ValueError) as exc:
         print(f"lock_check: FAIL cannot read {args.versions}: {exc!r}")
         return 1
-    ok, problems = check(versions, read_installed(args.path), args.profile)
+    ok, problems = check(versions, read_installed(args.path), args.profile, only)
     for line in ok:
         print(f"lock_check: ok   {line}")
     for line in problems:
         print(f"lock_check: FAIL {line}")
     verdict = "RED" if problems else "GREEN"
+    scope = f"only {', '.join(only)}" if only is not None else f"{args.profile} profile"
     print(
-        f"lock_check: {verdict} ({args.profile} profile, platform {versions.get('platform')}, {len(ok)} ok, "
+        f"lock_check: {verdict} ({scope}, platform {versions.get('platform')}, {len(ok)} ok, "
         f"{len(problems)} problem(s) against {args.versions})"
     )
     return 1 if problems else 0

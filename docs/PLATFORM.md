@@ -230,8 +230,13 @@ branch deletion; until that is in place, see `docs/TODO.md` ST-052. The next com
    and commit at the pinned version (`direct_url.json`) and that no package declares another commit of a component.
    The server image build (`image/finalize.sh`) and the desktop backend build (`scripts/build_backend.sh`) run the
    same script from their studio checkout and fail on a mismatch.
-3. **SDK:** the Python and TypeScript SDKs at the pinned commit against the installed API.
-4. **Browser:** the user interface is built and all nine browser suites run against the installed platform.
+3. **Tabrion source (poisoned index):** the same install with every installer's index replaced by a poisoned one
+   that serves `tabrion` 0.1.99 and redirects every other name to PyPI (`scripts/check_tabrion_source.py`). It fails
+   when pip asks that index for `tabrion` at all, when poisoned code ran or when the installed `tabrion` is not the
+   lock's commit (`lock_check.py --only tabrion`): the pins, not a PyPI placeholder, keep a foreign `tabrion` out.
+   nodestro-runtime, nodestro-api and orkexa run an unchanged copy of the script against their own install.
+4. **SDK:** the Python and TypeScript SDKs at the pinned commit against the installed API.
+5. **Browser:** the user interface is built and all nine browser suites run against the installed platform.
 
 ## Upgrading from Nodestro 0.1
 

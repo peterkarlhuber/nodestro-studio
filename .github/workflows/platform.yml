@@ -45,6 +45,10 @@ jobs:
       fail-fast: false
       matrix:
         python: ["3.11", "3.13"]
+    env:
+      # DC-NR-1/DC-NA-1: the runtime's and the API's tests/test_tabrion_pin.py compare the installed tabrion's commit
+      # with this lock's.
+      NODESTRO_STUDIO_LOCK: ${{ github.workspace }}/platform/internal-server.txt
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -118,6 +122,34 @@ jobs:
           pip install pip-audit==2.10.1
           args=(); for id in $PIP_AUDIT_IGNORE; do args+=(--ignore-vuln "$id"); done
           pip-audit --skip-editable --progress-spinner off "${args[@]}"
+
+  # DC-NS-2 (dependency confusion): the components job's install, with every installer's index replaced by a poisoned
+  # one (scripts/check_tabrion_source.py). It serves tabrion 0.1.99 (a wheel and an sdist that run code) and redirects
+  # every other name to PyPI. Red when pip asks that index for tabrion at all, when poisoned code ran, or when the
+  # installed tabrion is not the commit of platform/internal-server.txt; the script's positive control first shows
+  # that a plain "pip install tabrion" would take the poisoned release. No pip cache: every request reaches the index.
+  tabrion-source:
+    name: tabrion source (poisoned index)
+    needs: pins
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Install with a poisoned index
+        run: |
+          cutoff=$(python -I scripts/pip_cutoff.py)
+          tabrion=$(sed -n 's/^tabrion @ /tabrion[testing,postgres] @ /p' platform/internal-server.txt)
+          python -I scripts/check_tabrion_source.py --lock platform/internal-server.txt -- bash -euo pipefail -c '
+            python -m pip install --no-cache-dir --uploaded-prior-to "$1" -r platform/internal.txt -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9"
+            python -m pip install --no-cache-dir --uploaded-prior-to "$1" "$2"
+          ' install "$cutoff" "$tabrion"
+      - name: The installed tabrion is the locked one
+        run: python -I scripts/lock_check.py --only tabrion
 
   sdk:
     needs: pins
