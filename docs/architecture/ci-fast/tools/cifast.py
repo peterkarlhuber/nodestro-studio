@@ -189,6 +189,11 @@ def cmd_collect(args: argparse.Namespace) -> int:
 # ------------------------------------------------------------------------------------------------------------ kpis
 
 
+def is_ci_ok_check_run(job: dict[str, Any]) -> bool:
+    """ci-ok v3's verdict: a check run the jobs API also lists as a job (no runner labels, no time), not CI work."""
+    return job.get("name") == "ci-ok" and not job.get("labels")
+
+
 def load(data: Path, repos: list[str], start: date, end: date) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """Runs created in the window and their jobs (flattened, with run fields), from a raw data directory."""
     lo = datetime.combine(start, datetime.min.time(), UTC)
@@ -211,6 +216,8 @@ def load(data: Path, repos: list[str], start: date, end: date) -> tuple[list[dic
             if not jf.exists():
                 continue
             for job in json.loads(jf.read_text(encoding="utf-8")):
+                if is_ci_ok_check_run(job):
+                    continue
                 c, s, e = ts(job.get("created_at")), ts(job.get("started_at")), ts(job.get("completed_at"))
                 if not (c and s and e) or e < s:
                     continue
