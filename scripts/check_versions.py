@@ -49,6 +49,8 @@ from packaging.utils import canonicalize_name
 from packaging.version import InvalidVersion, Version
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import lock_check  # the profiles of an installation (standard library only)
+
 import check_dependency_policy  # the K-33 policy (standard library only)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -65,6 +67,17 @@ REFERENCE = re.compile(
 DISTRIBUTIONS = {"nodestro-client": "nodestro-sdk"}
 SUBDIRECTORIES = {"nodestro-sdk": "python"}
 POLICY = ROOT / "platform" / "dependency-policy.json"
+#: The lock: the exact commit of every internal package, one file per installation profile. The libraries require
+#: each other by version ranges only; every install names the lock: ``pip install -r platform/internal.txt ...``.
+LOCK_FILES = {"studio": "internal.txt", "server": "internal-server.txt"}
+LOCK = "platform/internal.txt"
+#: The switch from commit pins to ranges: the components may still pin each other by their canonical URL (the studio
+#: may not). Set to False once every component declares ranges.
+COMPONENT_URL_PINS_ALLOWED = True
+LOCK_HEADER = (
+    "# The lock of the platform's internal packages, {profile} profile: generated from platform/versions.json by\n"
+    "# scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>\n"
+)
 #: The foundation every installation holds exactly once (K-34) and the file a library installs it from (VER-1).
 TABRION = "tabrion"
 TABRION_REQUIREMENTS = "requirements/tabrion.txt"
@@ -92,11 +105,18 @@ def references(dependencies: list[str]) -> list[tuple[str, str]]:
 
 
 def check_requirement(
-    owner: str, item: str, components: dict[str, Any], own_name: str = "", ranges: frozenset[str] = frozenset()
+    owner: str,
+    item: str,
+    components: dict[str, Any],
+    own_name: str = "",
+    ranges: frozenset[str] = frozenset(),
+    url_pins_allowed: bool = True,
 ) -> list[str]:
-    """Problems of one dependency: a platform component must be referenced exactly by :func:`canonical_url`
-    (``own_name``: the package's own name, which its extras may name, as ``axentra[server]``); a component in
-    ``ranges`` (tabrion, for a library) only by a final version range instead (:func:`check_range`)."""
+    """Problems of one dependency: a platform component is required by a version range that contains the locked
+    version (:func:`check_locked_range`; the commit is in the lock, :data:`LOCK`) or, while ``url_pins_allowed``
+    (the switch from pins to ranges), exactly by :func:`canonical_url` (``own_name``: the package's own name, which
+    its extras may name, as ``axentra[server]``); a component in ``ranges`` (tabrion, for a library) only by a final
+    version range (:func:`check_range`)."""
     try:
         requirement = Requirement(item)
     except InvalidRequirement as exc:
@@ -106,7 +126,7 @@ def check_requirement(
     repo = component_of(requirement.name, components)
     if repo is not None and repo in ranges:
         return check_range(owner, requirement, repo, components[repo])
-    if repo is not None and requirement.specifier.prereleases:
+    if repo == TABRION and requirement.specifier.prereleases:
         return [f"{owner}: {item!r} names a pre-release; master carries none (RC-8)"]
     if repo == TABRION and requirement.marker is not None:
         return [f"{owner}: {item!r}: a tabrion requirement carries no environment marker (it could install nothing)"]
@@ -121,19 +141,64 @@ def check_requirement(
         return []
     commit = str(components[repo]["commit"])
     expected = canonical_url(repo, commit)
+    if not url:
+        return check_locked_range(owner, requirement, repo, components[repo])
+    if not url_pins_allowed:
+        return [f"{owner}: {requirement.name} @ {url}: declare a version range, the commit belongs in {LOCK}"]
     if url == expected:
         return []
-    if not url:
-        return [
-            f"{owner}: {requirement.name} is not pinned to a commit (a plain name installs whatever a package index "
-            f"offers under it); use {expected}"
-        ]
     refs = [ref for found_repo, ref in references([url]) if found_repo == repo.lower()]
     if refs and refs[0] and not SHA.match(refs[0]):
         return [f"{owner}: {repo}@{refs[0]} is not pinned to a commit"]
     if refs and SHA.match(refs[0]) and refs[0] != commit:
         return [f"{owner}: {repo}@{refs[0][:12]}, versions.json pins {commit[:12]}"]
     return [f"{owner}: {requirement.name} @ {url} is not the canonical reference {expected}"]
+
+
+def check_locked_range(owner: str, requirement: Requirement, repo: str, entry: dict[str, Any]) -> list[str]:
+    """A platform component required by name: a version range (a plain name would accept any version a package
+    index offers) that contains the version versions.json locks (pip refuses the lock otherwise)."""
+    if not requirement.specifier:
+        return [f"{owner}: {requirement.name} has no version range (such as >=X.Y,<X.Y+1)"]
+    locked = str(entry.get("version", ""))
+    try:
+        contained = requirement.specifier.contains(locked, prereleases=True)
+    except InvalidVersion:
+        contained = False
+    if not contained:
+        return [f"{owner}: {requirement.name}{requirement.specifier} excludes the locked version {locked}"]
+    return []
+
+
+def lock_components(components: dict[str, Any], profile: str) -> list[str]:
+    """The components (repositories) of a profile's lock: the studio's dependencies and orkexa; the server profile
+    also the server-only components (axentra) and the foundation tabrion they build on."""
+    names = lock_check.required(components, profile)
+    if profile == "server" and TABRION in components:
+        names.append(TABRION)
+    return sorted(set(names))
+
+
+def lock_text(components: dict[str, Any], profile: str) -> str:
+    """The content of a profile's lock file (:data:`LOCK_FILES`), generated from versions.json."""
+    lines = [
+        f"{lock_check.distribution_name(repo)} @ {canonical_url(repo, str(components[repo]['commit']))}"
+        for repo in lock_components(components, profile)
+    ]
+    return LOCK_HEADER.format(profile=profile) + "".join(f"{line}\n" for line in lines)
+
+
+def check_locks(components: dict[str, Any], platform: Path, write: bool = False) -> list[str]:
+    """Each lock file is exactly :func:`lock_text` (``write``: make it so)."""
+    problems: list[str] = []
+    for profile, name in LOCK_FILES.items():
+        path = platform / name
+        expected = lock_text(components, profile)
+        if write:
+            path.write_text(expected, encoding="utf-8")
+        elif not path.is_file() or path.read_text(encoding="utf-8") != expected:
+            problems.append(f"platform/{name} does not match versions.json; run scripts/check_versions.py --write-lock")
+    return problems
 
 
 def is_final(version: str) -> bool:
@@ -391,10 +456,7 @@ def check_tabrion(
     warnings: list[str] = []
     for repo, text in manifests.items():
         problems += [f"dependency policy: {error}" for error in policy.check_manifest(repo, tomllib.loads(text))]
-    graph = {
-        repo: {found for found, _ref in references(dependencies(tomllib.loads(text))) if found in components} - {repo}
-        for repo, text in manifests.items()
-    }
+    graph = {repo: declared_components(text, components) - {repo} for repo, text in manifests.items()}
     problems += [f"cycle in the pinned dependency graph: {cycle} (P5, AC-6)" for cycle in cycles(graph)]
     entry = components.get(TABRION)
     if entry is None:
@@ -443,6 +505,14 @@ def _requirement(item: str) -> Requirement | None:
         return None
 
 
+def declared_components(text: str, components: dict[str, Any]) -> set[str]:
+    """The platform components a pyproject requires (by range or by URL), every extra included."""
+    found = (_requirement(item) for item in dependencies(tomllib.loads(text)))
+    return {
+        repo for requirement in found if requirement for repo in [component_of(requirement.name, components)] if repo
+    }
+
+
 def dependencies(pyproject: dict[str, Any]) -> list[str]:
     project = pyproject.get("project", {})
     found = list(project.get("dependencies", []))
@@ -458,6 +528,7 @@ def check_pyproject(
     expected_version: str | None,
     version_text: str | None = None,
     ranges: frozenset[str] = frozenset(),
+    url_pins_allowed: bool = True,
 ) -> list[str]:
     """Problems of one pyproject; ``version_text`` is the content of a dynamic version's ``version_file``,
     ``ranges`` the components it requires by a version range (:func:`foundation_ranges`)."""
@@ -477,7 +548,7 @@ def check_pyproject(
         problems.append(f"{owner}: version {version}, versions.json says {expected_version}")
     components = versions["components"]
     for item in dependencies(pyproject):
-        problems += check_requirement(owner, item, components, str(project.get("name", "")), ranges)
+        problems += check_requirement(owner, item, components, str(project.get("name", "")), ranges, url_pins_allowed)
     return problems
 
 
@@ -605,6 +676,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--versions", type=Path, default=VERSIONS)
     parser.add_argument("--policy", type=Path, default=POLICY, help="default: platform/dependency-policy.json")
     parser.add_argument("--drift", action="store_true", help="RC-7 report: the libraries' default branches (exit 0)")
+    parser.add_argument("--write-lock", action="store_true", help="write the lock files from versions.json, then check")
     args = parser.parse_args(argv)
     versions = json.loads(args.versions.read_text(encoding="utf-8"))
     policy = check_dependency_policy.load_policy(args.policy)
@@ -626,8 +698,9 @@ def main(argv: list[str] | None = None) -> int:
         if not SHA.match(entry["commit"]):
             problems.append(f"versions.json: {repo} is not pinned to a full commit ({entry['commit']})")
     studio = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    problems += check_pyproject("nodestro-studio", studio, versions, versions["platform"])
-    pinned = {repo for repo, _ref in references(dependencies(tomllib.loads(studio)))}
+    problems += check_pyproject("nodestro-studio", studio, versions, versions["platform"], url_pins_allowed=False)
+    problems += check_locks(components, args.versions.parent, args.write_lock)
+    pinned = declared_components(studio, components)
     missing = {repo for repo, entry in components.items() if entry.get("studio_dependency")} - pinned
     problems += [f"nodestro-studio: does not depend on {repo}" for repo in sorted(missing)]
     manifests = {"nodestro-studio": studio}
@@ -650,6 +723,7 @@ def main(argv: list[str] | None = None) -> int:
                 entry.get("version"),
                 reader.pinned(repo, commit, version_file) if version_file else None,
                 foundation_ranges(repo, policy, components),
+                COMPONENT_URL_PINS_ALLOWED,
             )
         for repo in libraries(policy, components):
             if SHA.match(components[repo]["commit"]):

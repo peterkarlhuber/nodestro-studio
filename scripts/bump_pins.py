@@ -5,8 +5,12 @@ upstream repository travels down this cascade, one pin PR per repository:
 
     tabrion -> orkexa, axentra (requirements/tabrion.txt) -> nodestro-runtime
     -> nodestro-examples + nodestro-integrations -> nodestro-api
-    -> nodestro-sdk (its test extra) -> nodestro-studio (pyproject.toml + platform/versions.json)
+    -> nodestro-sdk (its test extra) -> nodestro-studio (platform/versions.json + the lock, platform/internal*.txt)
     -> nodestro-server + nodestro-desktop (studio.json) -> nodestro-local-docker (components.json)
+
+The switch to version ranges (CI-FAST P3) ends this cascade: once a component requires the others by a version
+range only, its stage drops out, and a new commit of any component is one studio PR (versions.json plus the lock)
+followed by the products' studio pins.
 
 ``PINS`` lists, per repository, exactly the files and the names it pins (read from each repository's
 pyproject.toml, versions.json, studio.json and components.json). Two subcommands:
@@ -64,10 +68,24 @@ PINS: dict[str, tuple[PinFile, ...]] = {
     "nodestro-api": (PinFile("pyproject.toml", "pyproject", ("nodestro-runtime", "orkexa", "nodestro-examples")),),
     "nodestro-sdk": (PinFile("python/pyproject.toml", "pyproject", ("nodestro-api",)),),
     "nodestro-studio": (
+        # The lock (generated from versions.json by check_versions.py --write-lock; the same rewrite keeps them equal).
         PinFile(
-            "pyproject.toml",
+            "platform/internal.txt",
             "pyproject",
-            ("nodestro-api", "nodestro-runtime", "nodestro-examples", "nodestro-integrations"),
+            ("nodestro-api", "nodestro-runtime", "nodestro-examples", "nodestro-integrations", "orkexa"),
+        ),
+        PinFile(
+            "platform/internal-server.txt",
+            "pyproject",
+            (
+                "nodestro-api",
+                "nodestro-runtime",
+                "nodestro-examples",
+                "nodestro-integrations",
+                "orkexa",
+                "axentra",
+                "tabrion",
+            ),
         ),
         PinFile(
             "platform/versions.json",
