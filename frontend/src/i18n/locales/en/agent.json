@@ -100,7 +100,10 @@
     },
     "missingHint": "Missing a tool? Write it yourself in the <a>tool library</a> or have the AI create it.",
     "serverTools": "Server tools of the model's provider",
-    "serverToolsShort": "Server tools"
+    "serverToolsShort": "Server tools",
+    "connection": "Connection for {{tool}}",
+    "noConnection": "No connection chosen",
+    "connectionNone": "No {{type}} connection yet. Add one under <a>Tools → Connections</a>."
   },
   "knowledge": {
     "title": "Knowledge",

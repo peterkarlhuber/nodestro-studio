@@ -274,7 +274,12 @@
     "adoption_forbidden": "Nur der Besitzer dieses Rechners oder ein Administrator darf von KI erstellten Code übernehmen.",
     "adoption_stale": "Das Tool hat sich geändert, nachdem es angezeigt wurde (jetzt Version {{version}}). Sieh es dir erneut an, bevor du es übernimmst.",
     "adoption_not_needed": "Dieses Tool gilt bereits als dein eigener Code; es muss nicht übernommen werden.",
-    "adoption_not_applicable": "Dieses Tool hat keinen eigenen Code, der übernommen werden könnte."
+    "adoption_not_applicable": "Dieses Tool hat keinen eigenen Code, der übernommen werden könnte.",
+    "settings_invalid": "Die Einstellungen von {{name}} sind ungültig ({{at}}).",
+    "settings_unsupported": "{{name}} hat keine Einstellungen.",
+    "settings_unused": "Es gibt Einstellungen für {{name}}, aber der Agent nutzt dieses Tool nicht.",
+    "timeout": "Das Tool ist nicht innerhalb seines Zeitlimits fertig geworden.",
+    "call_limit": "Das Tool hat seine Höchstzahl an Aufrufen für diese Ausführung erreicht."
   },
   "job": {
     "writing": "Der Coding Agent schreibt Code und Tests …",
@@ -355,7 +360,11 @@
     "local_reasoning_saving": "Auf diesem Computer ohne Grafikkarte antworten diese Agenten ohne Denkphase (Denkaufwand Mittel): {{nodes}}. Wähle für einen Agenten den Denkaufwand Hoch oder schalte den CPU-Sparmodus in den Einstellungen aus.",
     "value_source_type": "{{field}} soll aus einem Tool stammen, geprüft werden aber nur Zahlen eines strukturierten Ergebnisses.",
     "value_source_no_tool": "{{field}} soll aus einem Tool stammen, aber weder dieser Agent noch ein Schritt davor hat ein Tool. Füge ein Tool wie den Rechner hinzu.",
-    "orchestrator_model_unsupported": "Der Orchestrator „{{name}}“ verwendet {{model}}, das keine strukturierten Entscheidungen liefern kann. Wähle für ihn ein anderes Modell."
+    "orchestrator_model_unsupported": "Der Orchestrator „{{name}}“ verwendet {{model}}, das keine strukturierten Entscheidungen liefern kann. Wähle für ihn ein anderes Modell.",
+    "connection_missing": "{{name}} braucht eine Verbindung der Art {{type}}. Wähl sie bei den Tools des Agenten.",
+    "connection_unchecked": "Die Verbindung {{connection}} von {{name}} wurde noch nicht erfolgreich geprüft.",
+    "offline_tool": "Der strenge Offline-Modus erlaubt keine Tools, die das Internet brauchen ({{names}}).",
+    "tool_mode_unsupported": "{{name}} ist in dieser Installation nicht verfügbar ({{mode}})."
   },
   "backup": {
     "not_zip": "Die Datei ist kein Nodestro-Backup (keine ZIP-Datei).",
@@ -823,7 +832,8 @@
     "owner_required": "Nur ein Eigentümer dieses Arbeitsbereichs kann die Eigentümerrolle vergeben, entziehen oder ändern; es wurde nichts geändert."
   },
   "secrets": {
-    "unreadable": "Ein gespeicherter Schlüssel kann nicht mehr gelesen werden. Trag ihn in den Einstellungen bitte neu ein."
+    "unreadable": "Ein gespeicherter Schlüssel kann nicht mehr gelesen werden. Trag ihn in den Einstellungen bitte neu ein.",
+    "vault_unavailable": "Es gibt keinen sicheren Schlüsselspeicher, daher kann das Geheimnis nicht dauerhaft gespeichert werden."
   },
   "pricing": {
     "reference_read_only": "Die Referenzpreise dieses Servers verwaltet sein Betreiber.",
@@ -1097,5 +1107,31 @@
   },
   "lease": {
     "lost": "Ein anderer Serverprozess hat diesen Batch oder diese Testreihe übernommen, weil dieser nicht mehr antwortete. Die Arbeit ist als unterbrochen markiert; lade die Seite neu und setze sie fort."
+  },
+  "connection": {
+    "address_invalid": "Eine Adresse der Verbindung ({{type}}) kann nicht verwendet werden (zum Beispiel eine interne Adresse, http statt https oder ein Passwort in der Adresse).",
+    "check_failed": "Die Prüfung der Verbindung ist fehlgeschlagen.",
+    "check_unavailable": "Diese Verbindung kann hier noch nicht geprüft werden.",
+    "in_use_one": "{{count}} Agent nutzt diese Verbindung noch ({{names}}).",
+    "in_use_other": "{{count}} Agenten nutzen diese Verbindung noch ({{names}}).",
+    "missing_one": "{{count}} Verbindung zu einem Dienst ist nicht eingerichtet. Richte sie mit „configure“ ein und starte dann neu.",
+    "missing_other": "{{count}} Verbindungen zu Diensten sind nicht eingerichtet. Richte sie mit „configure“ ein und starte dann neu.",
+    "mode_unsupported": "Verbindungen der Art {{type}} können in dieser Installation nicht genutzt werden.",
+    "name_taken": "Eine Verbindung namens „{{name}}“ gibt es schon.",
+    "not_found": "Diese Verbindung gibt es nicht mehr.",
+    "provider_invalid": "„{{provider}}“ ist kein gültiger Anbietername.",
+    "provider_unknown": "Verbindungen der Art {{type}} bieten den Anbieter „{{provider}}“ nicht an.",
+    "secret_invalid": "Das Geheimnis kann nicht verwendet werden (zum Beispiel enthält es einen Zeilenumbruch).",
+    "secret_missing": "Die Verbindung hat noch kein Geheimnis. Setz es in den Details der Verbindung.",
+    "secret_too_long": "Das Geheimnis ist zu lang (höchstens {{limit}} Zeichen).",
+    "secret_unreadable": "Das gespeicherte Geheimnis der Verbindung kann nicht mehr gelesen werden. Gib es neu ein.",
+    "settings_invalid": "Die Einstellungen der Verbindung ({{type}}) sind ungültig.",
+    "type_mismatch": "Das Tool braucht eine Verbindung der Art {{expected}}, nicht {{type}}.",
+    "type_unavailable": "Verbindungen der Art {{type}} sind noch nicht verfügbar.",
+    "type_unknown": "Eine Verbindungsart „{{type}}“ gibt es nicht.",
+    "unavailable": "Die Verbindung kann gerade nicht genutzt werden."
+  },
+  "extension": {
+    "tool_spec": "Eine Erweiterung beschreibt ihr Tool {{name}} so, dass Nodestro es nicht verwenden kann."
   }
 }

@@ -100,7 +100,10 @@
     },
     "missingHint": "Il manque un outil ? Écrivez-le vous-même dans la <a>bibliothèque d’outils</a> ou faites-le créer par l’IA.",
     "serverTools": "Outils serveur du fournisseur du modèle",
-    "serverToolsShort": "Outils serveur"
+    "serverToolsShort": "Outils serveur",
+    "connection": "Connexion pour {{tool}}",
+    "noConnection": "Aucune connexion choisie",
+    "connectionNone": "Aucune connexion de type {{type}} pour l’instant. Ajoutez-en une sous <a>Outils → Connexions</a>."
   },
   "knowledge": {
     "title": "Connaissances",

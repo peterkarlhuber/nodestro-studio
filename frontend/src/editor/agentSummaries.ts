@@ -24,6 +24,7 @@ export const SECTION_OF_FIELD: Record<string, AgentSectionId> = {
 export const CORE_FIELDS: ReadonlySet<string> = new Set(["task_template"]);
 
 export function sectionOf(issue: ConfigIssue): AgentSectionId | null {
+  if (issue.field?.startsWith("tool_settings.")) return "tools"; // a built-in tool's binding (NAL-A1)
   return issue.field ? (SECTION_OF_FIELD[issue.field] ?? null) : null;
 }
 

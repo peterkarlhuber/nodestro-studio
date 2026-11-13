@@ -5,7 +5,8 @@
     "library": "Library",
     "write": "Write it yourself",
     "generate": "Create with AI",
-    "services": "Connected services"
+    "services": "Connected services",
+    "connections": "Connections"
   },
   "sandbox": "Sandbox",
   "sandboxNote": "Sandbox for testing and running your own tools: {{sandbox}} (can be changed in the settings).",
@@ -305,6 +306,115 @@
       "none": "No earlier version of this tool was your own, so there is nothing to compare: read the whole code below.",
       "loading": "Looking for your previous version…",
       "unavailable": "The earlier versions could not be loaded; read the whole code below."
+    }
+  },
+  "filter": {
+    "label": "Filter built-in tools",
+    "needsConnection": "Needs a connection"
+  },
+  "spec": {
+    "category": {
+      "compute": "Compute",
+      "data": "Data",
+      "files": "Files",
+      "web": "Web",
+      "communication": "Communication"
+    },
+    "network": {
+      "none": "No network",
+      "external": "Internet"
+    },
+    "offline": "Works offline",
+    "connection": "Needs a connection: {{type}}",
+    "timeout_one": "Time limit {{count}} second",
+    "timeout_other": "Time limit {{count}} seconds",
+    "calls_one": "At most {{count}} call per run",
+    "calls_other": "At most {{count}} calls per run"
+  },
+  "connections": {
+    "intro": "Service connections give built-in tools access to an outside service, such as a web search, a mail server or a webhook. You assign a connection to a tool in the agent's inspector.",
+    "noVault": "No secure key store: secrets are kept for this session only and must be entered again after a restart.",
+    "title": "Connections",
+    "add": "Add connection",
+    "addTitle": "New connection",
+    "editTitle": "Edit “{{name}}”",
+    "empty": "No connections yet",
+    "emptyText": "Built-in tools that need an outside service use a connection. Add one when a tool asks for it.",
+    "connection": "Connection {{name}}",
+    "edit": "Edit connection",
+    "remove": "Delete connection",
+    "removeConfirm": "Delete?",
+    "removeAnyway": "Delete anyway",
+    "removed": "Connection “{{name}}” deleted.",
+    "saved": "Connection “{{name}}” saved.",
+    "type": "Type",
+    "provider": "Provider",
+    "name": "Name",
+    "description": "Description",
+    "secretLater": "You set the secret (key or password) after saving, in the connection's details.",
+    "egress": "May reach: {{hosts}}",
+    "noEgress": "Reaches no outside address.",
+    "usedBy": "Used by: {{names}}",
+    "unused": "No agent uses this connection.",
+    "checkButton": "Check connection",
+    "checked": "checked {{when}}",
+    "events": "Changes",
+    "noEvents": "No changes recorded yet.",
+    "types": {
+      "search": "Web search",
+      "smtp": "Mail server (SMTP)",
+      "webhook": "Webhook (HTTP call)",
+      "database": "Database"
+    },
+    "field": {
+      "endpoint": "Own endpoint (URL)",
+      "price_per_request_usd": "Price per request (USD)",
+      "host": "Server address",
+      "port": "Port",
+      "security": "Encryption",
+      "username": "User name",
+      "from_address": "Sender address",
+      "auth": "Sign-in method",
+      "url": "Address (URL)",
+      "method": "HTTP method"
+    },
+    "check": {
+      "unchecked": "Not checked",
+      "ok": "Works",
+      "failed": "Check failed"
+    },
+    "checkKind": {
+      "configuration": "(settings checked)",
+      "service": "(service answered)"
+    },
+    "secretLabel": {
+      "api_key": "API key",
+      "password": "Password",
+      "signing_key": "Signing key",
+      "connection_string": "Connection string"
+    },
+    "secretSet": "Secret set",
+    "noSecret": "No secret",
+    "secretRequired": "This connection needs a secret before tools can use it.",
+    "secretVault": "Stored encrypted and never shown again.",
+    "secretSession": "No secure key store: the secret is kept for this session only.",
+    "secretSave": "Save secret",
+    "secretReplace": "Replace secret",
+    "secretRemove": "Remove secret",
+    "secretSaved": "Secret saved.",
+    "secretRemoved": "Secret removed.",
+    "storage": {
+      "none": "no secret",
+      "vault": "stored encrypted",
+      "session": "for this session only"
+    },
+    "event": {
+      "created": "Created",
+      "updated": "Changed",
+      "deleted": "Deleted",
+      "secret_set": "Secret set",
+      "secret_cleared": "Secret removed",
+      "checked": "Checked"
     }
   }
 }

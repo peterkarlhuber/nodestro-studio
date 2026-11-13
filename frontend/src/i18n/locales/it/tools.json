@@ -5,7 +5,8 @@
     "library": "Libreria",
     "write": "Scrivi tu",
     "generate": "Crea con l’IA",
-    "services": "Servizi collegati"
+    "services": "Servizi collegati",
+    "connections": "Connessioni"
   },
   "sandbox": "Sandbox",
   "sandboxNote": "Sandbox per testare ed eseguire gli strumenti personali: {{sandbox}} (modificabile nelle impostazioni).",
@@ -305,6 +306,115 @@
       "none": "Nessuna versione precedente di questo strumento era tuo codice, quindi non c’è niente da confrontare: leggi qui sotto tutto il codice.",
       "loading": "Ricerca della tua versione precedente…",
       "unavailable": "Non è stato possibile caricare le versioni precedenti; leggi qui sotto tutto il codice."
+    }
+  },
+  "filter": {
+    "label": "Filtra gli strumenti integrati",
+    "needsConnection": "Richiede una connessione"
+  },
+  "spec": {
+    "category": {
+      "compute": "Calcolo",
+      "data": "Dati",
+      "files": "Documenti",
+      "web": "Internet",
+      "communication": "Comunicazione"
+    },
+    "network": {
+      "none": "Senza rete",
+      "external": "Con Internet"
+    },
+    "offline": "Funziona offline",
+    "connection": "Richiede una connessione: {{type}}",
+    "timeout_one": "Limite di tempo {{count}} secondo",
+    "timeout_other": "Limite di tempo {{count}} secondi",
+    "calls_one": "Al massimo {{count}} chiamata per esecuzione",
+    "calls_other": "Al massimo {{count}} chiamate per esecuzione"
+  },
+  "connections": {
+    "intro": "Le connessioni ai servizi danno agli strumenti integrati l’accesso a un servizio esterno, ad esempio una ricerca web, un server di posta o un webhook. Assegni una connessione a uno strumento nell’ispettore dell’agente.",
+    "noVault": "Nessun archivio sicuro per le chiavi: i segreti valgono solo per questa sessione e vanno reinseriti dopo un riavvio.",
+    "title": "Connessioni",
+    "add": "Aggiungi connessione",
+    "addTitle": "Nuova connessione",
+    "editTitle": "Modifica «{{name}}»",
+    "empty": "Ancora nessuna connessione",
+    "emptyText": "Gli strumenti integrati che hanno bisogno di un servizio esterno usano una connessione. Aggiungine una quando uno strumento la chiede.",
+    "connection": "Connessione {{name}}",
+    "edit": "Modifica connessione",
+    "remove": "Elimina connessione",
+    "removeConfirm": "Eliminare?",
+    "removeAnyway": "Elimina comunque",
+    "removed": "Connessione «{{name}}» eliminata.",
+    "saved": "Connessione «{{name}}» salvata.",
+    "type": "Tipo",
+    "provider": "Fornitore",
+    "name": "Nome",
+    "description": "Descrizione",
+    "secretLater": "Il segreto (chiave o password) lo imposti dopo il salvataggio, nei dettagli della connessione.",
+    "egress": "Può raggiungere: {{hosts}}",
+    "noEgress": "Non raggiunge alcun indirizzo esterno.",
+    "usedBy": "Usata da: {{names}}",
+    "unused": "Nessun agente usa questa connessione.",
+    "checkButton": "Verifica connessione",
+    "checked": "verificata {{when}}",
+    "events": "Modifiche",
+    "noEvents": "Ancora nessuna modifica registrata.",
+    "types": {
+      "search": "Ricerca web",
+      "smtp": "Server di posta (SMTP)",
+      "webhook": "Webhook (chiamata HTTP)",
+      "database": "Banca dati"
+    },
+    "field": {
+      "endpoint": "Endpoint proprio (URL)",
+      "price_per_request_usd": "Prezzo per richiesta (USD)",
+      "host": "Indirizzo del server",
+      "port": "Porta",
+      "security": "Cifratura",
+      "username": "Nome utente",
+      "from_address": "Indirizzo del mittente",
+      "auth": "Metodo di accesso",
+      "url": "Indirizzo (URL)",
+      "method": "Metodo HTTP"
+    },
+    "check": {
+      "unchecked": "Non verificata",
+      "ok": "Funziona",
+      "failed": "Verifica non riuscita"
+    },
+    "checkKind": {
+      "configuration": "(impostazioni verificate)",
+      "service": "(il servizio ha risposto)"
+    },
+    "secretLabel": {
+      "api_key": "Chiave API",
+      "password": "Password di accesso",
+      "signing_key": "Chiave di firma",
+      "connection_string": "Stringa di connessione"
+    },
+    "secretSet": "Segreto impostato",
+    "noSecret": "Nessun segreto",
+    "secretRequired": "Questa connessione ha bisogno di un segreto prima che gli strumenti possano usarla.",
+    "secretVault": "Salvato cifrato e mai più mostrato.",
+    "secretSession": "Nessun archivio sicuro per le chiavi: il segreto vale solo per questa sessione.",
+    "secretSave": "Salva segreto",
+    "secretReplace": "Sostituisci segreto",
+    "secretRemove": "Rimuovi segreto",
+    "secretSaved": "Segreto salvato.",
+    "secretRemoved": "Segreto rimosso.",
+    "storage": {
+      "none": "nessun segreto",
+      "vault": "salvato cifrato",
+      "session": "solo per questa sessione"
+    },
+    "event": {
+      "created": "Creata",
+      "updated": "Modificata",
+      "deleted": "Eliminata",
+      "secret_set": "Segreto impostato",
+      "secret_cleared": "Segreto rimosso",
+      "checked": "Verificata"
     }
   }
 }

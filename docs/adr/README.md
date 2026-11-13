@@ -19,5 +19,11 @@ Status values: **Proposed** (under review in a pull request), **Accepted**, **Su
 | [0010](0010-nodestro-rls.md) | Row-level security for Nodestro's PostgreSQL tables | Accepted (2026-11-07, option (a): no RLS; MUP-ONA gate G3) |
 | [0011](0011-full-text-search-semantics.md) | Full-text search semantics (addendum to ADR-0002) | Accepted (2026-11-07, MUP-ONA O10) |
 
+Records kept in other repositories, listed here because they shape the studio:
+
+| ADR | Title | Status |
+| --- | --- | --- |
+| [Runtime ADR-0001](https://github.com/peterkarlhuber/nodestro-runtime/blob/master/docs/adr/0001-tool-specs-and-service-connections.md) | Built-in tool specs and service connections (NAL-A1; the studio shows the tool catalog, manages connections and binds them in the agent inspector) | Accepted (nodestro-runtime) |
+
 The plan these records belong to, with the current-state inventory and the pull request sequence, is in
 [`docs/desktop-server/`](../desktop-server/README.md).

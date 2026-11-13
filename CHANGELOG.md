@@ -17,6 +17,24 @@
   a range that is not one minor, a pre-release bound, different ranges, two lines or two commits in the lock, a
   non-canonical lock line, a lock without tabrion, a locked version outside the range and an unknown commit.
 
+### Tool catalog and service connections, studio UI (NAL-A1, 2026-11-13)
+
+- Tools page: the built-in tools carry badges from their spec (category, network, works offline, needed connection;
+  time and call limits in the detail) and filter chips for category, network, "works offline" and "needs a
+  connection" (`GET /api/tools/builtin`). Without the route (an older API) the page looks as before.
+- New tab *Tools → Connections* (`frontend/src/pages/ToolsConnections.tsx`, client `frontend/src/api/connections.ts`):
+  list, create and edit service connections with a settings form built from the type's JSON schema, delete with the
+  in-use refusal (`connection.in_use`) and "Delete anyway", a write-only secret (set, replace, remove; only "secret
+  set" and vault/session storage are shown, never the value), the check with status and error code, and the
+  administration events. Write actions need `admin`.
+- Agent inspector: a built-in tool whose spec names a `connection_type` gets a connection picker that writes
+  `tool_settings[tool].connection_id`; removing the tool drops its binding, and `tool_settings.*` problems show in the
+  Tools section.
+- Texts for the new `connection.*`, `tool.settings_*`, `tool.timeout`, `tool.call_limit`, `check.connection_*`,
+  `check.offline_tool`, `check.tool_mode_unsupported`, `extension.tool_spec` and `secrets.vault_unavailable` codes,
+  and a help chapter "Service connections" (`verbindungen`), in all six languages; `docs/adr/README.md` links the
+  runtime's ADR-0001.
+
 ### One tabrion per installation, TABRION VER-1 and QA-15 (AC-6, RC-1/RC-2/RC-7/RC-8) (2026-11-13)
 
 - `platform/versions.json` has the component `tabrion` at the 0.1.0 final, `d5821faa8742dea012abda3b663549c038d76543`
