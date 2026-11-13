@@ -5,7 +5,8 @@
     "library": "Bibliothek",
     "write": "Selbst schreiben",
     "generate": "Von KI erstellen",
-    "services": "Verbundene Dienste"
+    "services": "Verbundene Dienste",
+    "connections": "Verbindungen"
   },
   "sandbox": "Sandbox",
   "sandboxNote": "Sandbox für Tests und Ausführung eigener Tools: {{sandbox}} (in den Einstellungen änderbar).",
@@ -305,6 +306,115 @@
       "none": "Keine frühere Version dieses Tools war dein eigener Code, daher gibt es nichts zu vergleichen: Lies unten den ganzen Code.",
       "loading": "Deine vorherige Version wird gesucht …",
       "unavailable": "Die früheren Versionen konnten nicht geladen werden; lies unten den ganzen Code."
+    }
+  },
+  "filter": {
+    "label": "Eingebaute Tools filtern",
+    "needsConnection": "Braucht eine Verbindung"
+  },
+  "spec": {
+    "category": {
+      "compute": "Rechnen",
+      "data": "Daten",
+      "files": "Dateien",
+      "web": "Internet",
+      "communication": "Kommunikation"
+    },
+    "network": {
+      "none": "Kein Netzwerk",
+      "external": "Mit Internet"
+    },
+    "offline": "Funktioniert offline",
+    "connection": "Braucht eine Verbindung: {{type}}",
+    "timeout_one": "Zeitlimit {{count}} Sekunde",
+    "timeout_other": "Zeitlimit {{count}} Sekunden",
+    "calls_one": "Höchstens {{count}} Aufruf pro Ausführung",
+    "calls_other": "Höchstens {{count}} Aufrufe pro Ausführung"
+  },
+  "connections": {
+    "intro": "Verbindungen geben eingebauten Tools Zugang zu einem externen Dienst, etwa einer Websuche, einem Mailserver oder einem Webhook. Welche Verbindung ein Tool nutzt, legst du im Inspektor des Agenten fest.",
+    "noVault": "Kein sicherer Schlüsselspeicher: Geheimnisse gelten nur für diese Sitzung und müssen nach einem Neustart neu eingegeben werden.",
+    "title": "Verbindungen",
+    "add": "Verbindung hinzufügen",
+    "addTitle": "Neue Verbindung",
+    "editTitle": "„{{name}}“ bearbeiten",
+    "empty": "Noch keine Verbindungen",
+    "emptyText": "Eingebaute Tools, die einen externen Dienst brauchen, nutzen eine Verbindung. Leg eine an, wenn ein Tool danach fragt.",
+    "connection": "Verbindung {{name}}",
+    "edit": "Verbindung bearbeiten",
+    "remove": "Verbindung löschen",
+    "removeConfirm": "Löschen?",
+    "removeAnyway": "Trotzdem löschen",
+    "removed": "Verbindung „{{name}}“ gelöscht.",
+    "saved": "Verbindung „{{name}}“ gespeichert.",
+    "type": "Art",
+    "provider": "Anbieter",
+    "name": "Name",
+    "description": "Beschreibung",
+    "secretLater": "Das Geheimnis (Schlüssel oder Passwort) setzt du nach dem Speichern in den Details der Verbindung.",
+    "egress": "Darf erreichen: {{hosts}}",
+    "noEgress": "Erreicht keine externe Adresse.",
+    "usedBy": "Genutzt von: {{names}}",
+    "unused": "Kein Agent nutzt diese Verbindung.",
+    "checkButton": "Verbindung prüfen",
+    "checked": "geprüft {{when}}",
+    "events": "Änderungen",
+    "noEvents": "Noch keine Änderungen aufgezeichnet.",
+    "types": {
+      "search": "Websuche",
+      "smtp": "Mailserver (SMTP)",
+      "webhook": "Webhook (HTTP-Aufruf)",
+      "database": "Datenbank"
+    },
+    "field": {
+      "endpoint": "Eigener Endpunkt (URL)",
+      "price_per_request_usd": "Preis pro Anfrage (USD)",
+      "host": "Serveradresse",
+      "port": "Port",
+      "security": "Verschlüsselung",
+      "username": "Benutzername",
+      "from_address": "Absenderadresse",
+      "auth": "Anmeldeverfahren",
+      "url": "Adresse (URL)",
+      "method": "HTTP-Methode"
+    },
+    "check": {
+      "unchecked": "Nicht geprüft",
+      "ok": "Funktioniert",
+      "failed": "Prüfung fehlgeschlagen"
+    },
+    "checkKind": {
+      "configuration": "(Einstellungen geprüft)",
+      "service": "(Dienst hat geantwortet)"
+    },
+    "secretLabel": {
+      "api_key": "API-Schlüssel",
+      "password": "Passwort",
+      "signing_key": "Signaturschlüssel",
+      "connection_string": "Verbindungszeichenfolge"
+    },
+    "secretSet": "Geheimnis gesetzt",
+    "noSecret": "Kein Geheimnis",
+    "secretRequired": "Diese Verbindung braucht ein Geheimnis, bevor Tools sie nutzen können.",
+    "secretVault": "Wird verschlüsselt gespeichert und nie wieder angezeigt.",
+    "secretSession": "Kein sicherer Schlüsselspeicher: Das Geheimnis gilt nur für diese Sitzung.",
+    "secretSave": "Geheimnis speichern",
+    "secretReplace": "Geheimnis ersetzen",
+    "secretRemove": "Geheimnis entfernen",
+    "secretSaved": "Geheimnis gespeichert.",
+    "secretRemoved": "Geheimnis entfernt.",
+    "storage": {
+      "none": "kein Geheimnis",
+      "vault": "verschlüsselt gespeichert",
+      "session": "nur für diese Sitzung"
+    },
+    "event": {
+      "created": "Angelegt",
+      "updated": "Geändert",
+      "deleted": "Gelöscht",
+      "secret_set": "Geheimnis gesetzt",
+      "secret_cleared": "Geheimnis entfernt",
+      "checked": "Geprüft"
     }
   }
 }

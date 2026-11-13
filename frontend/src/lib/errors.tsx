@@ -128,6 +128,11 @@ function codeParams(t: TFunction, code: string | null, params: Record<string, un
   if (code === "export.server_limit" && Number(params.limit) > 0) return { ...params, limit: formatLargeBytes(Number(params.limit)) };
   if (code === "local.task_unknown_allowed" && Array.isArray(params.allowed))
     return { ...params, allowed: params.allowed.map((task) => t(`localModels.tasks.${String(task)}`, { defaultValue: String(task) })).join(", ") };
+  if ((code?.startsWith("connection.") || code === "check.connection_missing") && typeof params.type === "string") {
+    // Connection types come as ids ("smtp"); the sentence names them (NAL-A1).
+    const label = (type: unknown) => (typeof type === "string" ? t(`tools.connections.types.${type}`, { defaultValue: type }) : type);
+    return { ...params, type: label(params.type), expected: label(params.expected) };
+  }
   if (code === "local.invalid_package_reason") return { ...params, reason: t(`errors.local.${String(params.reason)}`, { defaultValue: String(params.reason) }) };
   return null;
 }

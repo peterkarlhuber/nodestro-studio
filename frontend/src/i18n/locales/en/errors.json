@@ -274,7 +274,12 @@
     "adoption_forbidden": "Only the owner of this computer or an administrator may adopt AI-created code.",
     "adoption_stale": "The tool changed after it was shown (now version {{version}}). Look at it again before you adopt it.",
     "adoption_not_needed": "This tool already counts as your own code; it needs no adoption.",
-    "adoption_not_applicable": "This tool has no code of its own that could be adopted."
+    "adoption_not_applicable": "This tool has no code of its own that could be adopted.",
+    "settings_invalid": "The settings of {{name}} are not valid ({{at}}).",
+    "settings_unsupported": "{{name}} takes no settings.",
+    "settings_unused": "There are settings for {{name}}, but the agent does not use this tool.",
+    "timeout": "The tool did not finish within its time limit.",
+    "call_limit": "The tool reached its limit of calls for this run."
   },
   "job": {
     "writing": "The Coding Agent is writing code and tests …",
@@ -355,7 +360,11 @@
     "local_reasoning_saving": "On this computer without a graphics card, these agents answer without the thinking phase (effort Medium): {{nodes}}. Choose effort High for an agent, or switch off the CPU saving mode in Settings.",
     "value_source_type": "{{field}} must come from a tool, but only numbers of a structured result are checked.",
     "value_source_no_tool": "{{field}} must come from a tool, but neither this agent nor a step before it has a tool. Add a tool such as the calculator.",
-    "orchestrator_model_unsupported": "The orchestrator “{{name}}” uses {{model}}, which cannot return structured decisions. Choose another model for it."
+    "orchestrator_model_unsupported": "The orchestrator “{{name}}” uses {{model}}, which cannot return structured decisions. Choose another model for it.",
+    "connection_missing": "{{name}} needs a {{type}} connection. Choose one in the agent's tools.",
+    "connection_unchecked": "The connection {{connection}} of {{name}} has not been checked successfully yet.",
+    "offline_tool": "The strict offline mode allows no tools that need the internet ({{names}}).",
+    "tool_mode_unsupported": "{{name}} is not available in this installation ({{mode}})."
   },
   "backup": {
     "not_zip": "The file is not a Nodestro backup (no ZIP file).",
@@ -823,7 +832,8 @@
     "owner_required": "Only an owner of this workspace can give, take or change the owner role, so nothing was changed."
   },
   "secrets": {
-    "unreadable": "A stored key can no longer be read. Please enter it again in the settings."
+    "unreadable": "A stored key can no longer be read. Please enter it again in the settings.",
+    "vault_unavailable": "No secure key store is available, so the secret cannot be stored permanently."
   },
   "pricing": {
     "reference_read_only": "The reference prices of this server are managed by its operator.",
@@ -1097,5 +1107,31 @@
   },
   "lease": {
     "lost": "Another server process took over this batch or test series after this one stopped answering. The work is marked as interrupted; reload the page and continue it."
+  },
+  "connection": {
+    "address_invalid": "An address of the {{type}} connection cannot be used (for example an internal address, http instead of https, or a password in the address).",
+    "check_failed": "The check of the connection failed.",
+    "check_unavailable": "This connection cannot be checked here yet.",
+    "in_use_one": "{{count}} agent still uses this connection ({{names}}).",
+    "in_use_other": "{{count}} agents still use this connection ({{names}}).",
+    "missing_one": "{{count}} service connection is not set up. Set it up with “configure”, then start again.",
+    "missing_other": "{{count}} service connections are not set up. Set them up with “configure”, then start again.",
+    "mode_unsupported": "{{type}} connections cannot be used in this installation.",
+    "name_taken": "A connection called “{{name}}” already exists.",
+    "not_found": "This connection no longer exists.",
+    "provider_invalid": "“{{provider}}” is not a valid provider name.",
+    "provider_unknown": "{{type}} connections do not offer the provider “{{provider}}”.",
+    "secret_invalid": "The secret cannot be used (for example it contains a line break).",
+    "secret_missing": "The connection has no secret yet. Set it in the connection's details.",
+    "secret_too_long": "The secret is too long (at most {{limit}} characters).",
+    "secret_unreadable": "The stored secret of the connection can no longer be read. Enter it again.",
+    "settings_invalid": "The settings of the {{type}} connection are not valid.",
+    "type_mismatch": "The tool needs a {{expected}} connection, not a {{type}} connection.",
+    "type_unavailable": "{{type}} connections are not available yet.",
+    "type_unknown": "There is no connection type “{{type}}”.",
+    "unavailable": "The connection cannot be used right now."
+  },
+  "extension": {
+    "tool_spec": "An extension describes its tool {{name}} in a way Nodestro cannot use."
   }
 }

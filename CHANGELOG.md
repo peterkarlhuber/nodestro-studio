@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+### Tool catalog and service connections, studio UI (NAL-A1, 2026-11-13)
+
+- Tools page: the built-in tools carry badges from their spec (category, network, works offline, needed connection;
+  time and call limits in the detail) and filter chips for category, network, "works offline" and "needs a
+  connection" (`GET /api/tools/builtin`). Without the route (an older API) the page looks as before.
+- New tab *Tools → Connections* (`frontend/src/pages/ToolsConnections.tsx`, client `frontend/src/api/connections.ts`):
+  list, create and edit service connections with a settings form built from the type's JSON schema, delete with the
+  in-use refusal (`connection.in_use`) and "Delete anyway", a write-only secret (set, replace, remove; only "secret
+  set" and vault/session storage are shown, never the value), the check with status and error code, and the
+  administration events. Write actions need `admin`.
+- Agent inspector: a built-in tool whose spec names a `connection_type` gets a connection picker that writes
+  `tool_settings[tool].connection_id`; removing the tool drops its binding, and `tool_settings.*` problems show in the
+  Tools section.
+- Texts for the new `connection.*`, `tool.settings_*`, `tool.timeout`, `tool.call_limit`, `check.connection_*`,
+  `check.offline_tool`, `check.tool_mode_unsupported`, `extension.tool_spec` and `secrets.vault_unavailable` codes,
+  and a help chapter "Service connections" (`verbindungen`), in all six languages; `docs/adr/README.md` links the
+  runtime's ADR-0001.
+
 ### Dependency policy, TABRION QA-17 (AC-2, edge list K-33) (2026-11-11)
 
 - `platform/dependency-policy.json` is the source of truth for the allowed edges between Levuvo packages (plan 05

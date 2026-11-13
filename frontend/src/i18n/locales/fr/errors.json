@@ -274,7 +274,12 @@
     "adoption_forbidden": "Seul le propriétaire de cet ordinateur ou un administrateur peut adopter du code créé par l’IA.",
     "adoption_stale": "L’outil a changé après son affichage (désormais version {{version}}). Examinez-le de nouveau avant de l’adopter.",
     "adoption_not_needed": "Cet outil est déjà considéré comme votre propre code ; aucune adoption n’est nécessaire.",
-    "adoption_not_applicable": "Cet outil n’a pas de code propre qui pourrait être adopté."
+    "adoption_not_applicable": "Cet outil n’a pas de code propre qui pourrait être adopté.",
+    "settings_invalid": "Les paramètres de {{name}} ne sont pas valides ({{at}}).",
+    "settings_unsupported": "{{name}} n’accepte aucun paramètre.",
+    "settings_unused": "Il existe des paramètres pour {{name}}, mais l’agent n’utilise pas cet outil.",
+    "timeout": "L’outil ne s’est pas terminé dans son délai maximal.",
+    "call_limit": "L’outil a atteint son nombre maximal d’appels pour cette exécution."
   },
   "job": {
     "writing": "Le Coding Agent écrit le code et les tests …",
@@ -355,7 +360,11 @@
     "local_reasoning_saving": "Sur cet ordinateur sans carte graphique, ces agents répondent sans phase de réflexion (effort Moyen) : {{nodes}}. Choisissez l’effort Élevé pour un agent, ou désactivez le mode économie CPU dans les réglages.",
     "value_source_type": "{{field}} doit provenir d’un outil, mais seuls les nombres d’un résultat structuré sont vérifiés.",
     "value_source_no_tool": "{{field}} doit provenir d’un outil, mais ni cet agent ni une étape précédente n’a d’outil. Ajoutez un outil comme la calculatrice.",
-    "orchestrator_model_unsupported": "L’orchestrateur « {{name}} » utilise {{model}}, qui ne peut pas fournir de décisions structurées. Choisissez-lui un autre modèle."
+    "orchestrator_model_unsupported": "L’orchestrateur « {{name}} » utilise {{model}}, qui ne peut pas fournir de décisions structurées. Choisissez-lui un autre modèle.",
+    "connection_missing": "{{name}} a besoin d’une connexion de type {{type}}. Choisissez-la dans les outils de l’agent.",
+    "connection_unchecked": "La connexion {{connection}} de {{name}} n’a pas encore été vérifiée avec succès.",
+    "offline_tool": "Le mode hors ligne strict n’autorise aucun outil qui a besoin d’Internet ({{names}}).",
+    "tool_mode_unsupported": "{{name}} n’est pas disponible dans cette installation ({{mode}})."
   },
   "backup": {
     "not_zip": "Le fichier n’est pas une sauvegarde Nodestro (pas de fichier ZIP).",
@@ -823,7 +832,8 @@
     "owner_required": "Seul un propriétaire de cet espace de travail peut attribuer, retirer ou modifier le rôle de propriétaire ; rien n’a été modifié."
   },
   "secrets": {
-    "unreadable": "Une clé enregistrée ne peut plus être lue. Saisissez-la de nouveau dans les paramètres."
+    "unreadable": "Une clé enregistrée ne peut plus être lue. Saisissez-la de nouveau dans les paramètres.",
+    "vault_unavailable": "Aucun stockage sécurisé de clés n’est disponible : le secret ne peut pas être enregistré durablement."
   },
   "pricing": {
     "reference_read_only": "Les prix de référence de ce serveur sont gérés par son exploitant.",
@@ -1097,5 +1107,31 @@
   },
   "lease": {
     "lost": "Un autre processus du serveur a repris ce lot ou cette série de tests, car celui-ci ne répondait plus. Le travail est marqué comme interrompu ; rechargez la page et reprenez-le."
+  },
+  "connection": {
+    "address_invalid": "Une adresse de la connexion ({{type}}) ne peut pas être utilisée (par exemple une adresse interne, http au lieu de https ou un mot de passe dans l’adresse).",
+    "check_failed": "La vérification de la connexion a échoué.",
+    "check_unavailable": "Cette connexion ne peut pas encore être vérifiée ici.",
+    "in_use_one": "{{count}} agent utilise encore cette connexion ({{names}}).",
+    "in_use_other": "{{count}} agents utilisent encore cette connexion ({{names}}).",
+    "missing_one": "{{count}} connexion de service n’est pas configurée. Configurez-la avec « configure », puis redémarrez.",
+    "missing_other": "{{count}} connexions de service ne sont pas configurées. Configurez-les avec « configure », puis redémarrez.",
+    "mode_unsupported": "Les connexions de type {{type}} ne peuvent pas être utilisées dans cette installation.",
+    "name_taken": "Une connexion nommée « {{name}} » existe déjà.",
+    "not_found": "Cette connexion n’existe plus.",
+    "provider_invalid": "« {{provider}} » n’est pas un nom de fournisseur valide.",
+    "provider_unknown": "Les connexions de type {{type}} ne proposent pas le fournisseur « {{provider}} ».",
+    "secret_invalid": "Le secret ne peut pas être utilisé (par exemple il contient un saut de ligne).",
+    "secret_missing": "La connexion n’a pas encore de secret. Définissez-le dans les détails de la connexion.",
+    "secret_too_long": "Le secret est trop long ({{limit}} caractères au maximum).",
+    "secret_unreadable": "Le secret enregistré de la connexion ne peut plus être lu. Saisissez-le de nouveau.",
+    "settings_invalid": "Les paramètres de la connexion ({{type}}) ne sont pas valides.",
+    "type_mismatch": "L’outil a besoin d’une connexion de type {{expected}}, pas {{type}}.",
+    "type_unavailable": "Les connexions de type {{type}} ne sont pas encore disponibles.",
+    "type_unknown": "Il n’existe pas de type de connexion « {{type}} ».",
+    "unavailable": "La connexion ne peut pas être utilisée pour le moment."
+  },
+  "extension": {
+    "tool_spec": "Une extension décrit son outil {{name}} d’une manière que Nodestro ne peut pas utiliser."
   }
 }

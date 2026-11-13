@@ -100,7 +100,10 @@
     },
     "missingHint": "Falta uma ferramenta? Escreva-a você mesmo na <a>biblioteca de ferramentas</a> ou peça para a IA criá-la.",
     "serverTools": "Ferramentas de servidor do provedor do modelo",
-    "serverToolsShort": "Ferramentas de servidor"
+    "serverToolsShort": "Ferramentas de servidor",
+    "connection": "Conexão para {{tool}}",
+    "noConnection": "Nenhuma conexão escolhida",
+    "connectionNone": "Ainda não há conexão do tipo {{type}}. Adicione uma em <a>Ferramentas → Conexões</a>."
   },
   "knowledge": {
     "title": "Conhecimento",

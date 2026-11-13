@@ -5,7 +5,8 @@
     "library": "Bibliothèque",
     "write": "Écrire soi-même",
     "generate": "Créer avec l’IA",
-    "services": "Services connectés"
+    "services": "Services connectés",
+    "connections": "Connexions"
   },
   "sandbox": "Bac à sable",
   "sandboxNote": "Bac à sable pour tester et exécuter les outils personnels : {{sandbox}} (modifiable dans les réglages).",
@@ -305,6 +306,115 @@
       "none": "Aucune version antérieure de cet outil n’était votre propre code ; il n’y a donc rien à comparer : lisez ci-dessous l’intégralité du code.",
       "loading": "Recherche de votre version précédente…",
       "unavailable": "Les versions antérieures n’ont pas pu être chargées ; lisez ci-dessous l’intégralité du code."
+    }
+  },
+  "filter": {
+    "label": "Filtrer les outils intégrés",
+    "needsConnection": "Exige une connexion"
+  },
+  "spec": {
+    "category": {
+      "compute": "Calcul",
+      "data": "Données",
+      "files": "Fichiers",
+      "web": "Internet",
+      "communication": "Communications"
+    },
+    "network": {
+      "none": "Sans réseau",
+      "external": "Avec Internet"
+    },
+    "offline": "Fonctionne hors ligne",
+    "connection": "Exige une connexion : {{type}}",
+    "timeout_one": "Délai maximal {{count}} seconde",
+    "timeout_other": "Délai maximal {{count}} secondes",
+    "calls_one": "Au plus {{count}} appel par exécution",
+    "calls_other": "Au plus {{count}} appels par exécution"
+  },
+  "connections": {
+    "intro": "Les connexions de service donnent aux outils intégrés l’accès à un service externe, par exemple une recherche web, un serveur de messagerie ou un webhook. Vous attribuez une connexion à un outil dans l’inspecteur de l’agent.",
+    "noVault": "Aucun stockage sécurisé de clés : les secrets sont conservés pour cette session uniquement et doivent être saisis de nouveau après un redémarrage.",
+    "title": "Connexions",
+    "add": "Ajouter une connexion",
+    "addTitle": "Nouvelle connexion",
+    "editTitle": "Modifier « {{name}} »",
+    "empty": "Aucune connexion pour l’instant",
+    "emptyText": "Les outils intégrés qui ont besoin d’un service externe utilisent une connexion. Ajoutez-en une quand un outil la demande.",
+    "connection": "Connexion {{name}}",
+    "edit": "Modifier la connexion",
+    "remove": "Supprimer la connexion",
+    "removeConfirm": "Supprimer ?",
+    "removeAnyway": "Supprimer quand même",
+    "removed": "Connexion « {{name}} » supprimée.",
+    "saved": "Connexion « {{name}} » enregistrée.",
+    "type": "Genre",
+    "provider": "Fournisseur",
+    "name": "Nom",
+    "description": "Description",
+    "secretLater": "Vous définissez le secret (clé ou mot de passe) après l’enregistrement, dans les détails de la connexion.",
+    "egress": "Peut joindre : {{hosts}}",
+    "noEgress": "Ne joint aucune adresse externe.",
+    "usedBy": "Utilisée par : {{names}}",
+    "unused": "Aucun agent n’utilise cette connexion.",
+    "checkButton": "Vérifier la connexion",
+    "checked": "vérifiée {{when}}",
+    "events": "Modifications",
+    "noEvents": "Aucune modification enregistrée pour l’instant.",
+    "types": {
+      "search": "Recherche web",
+      "smtp": "Serveur de messagerie (SMTP)",
+      "webhook": "Webhook (appel HTTP)",
+      "database": "Base de données"
+    },
+    "field": {
+      "endpoint": "Point d’accès propre (URL)",
+      "price_per_request_usd": "Prix par requête (USD)",
+      "host": "Adresse du serveur",
+      "port": "Port",
+      "security": "Chiffrement",
+      "username": "Nom d’utilisateur",
+      "from_address": "Adresse de l’expéditeur",
+      "auth": "Méthode de connexion",
+      "url": "Adresse (URL)",
+      "method": "Méthode HTTP"
+    },
+    "check": {
+      "unchecked": "Non vérifiée",
+      "ok": "Fonctionne",
+      "failed": "Échec de la vérification"
+    },
+    "checkKind": {
+      "configuration": "(paramètres vérifiés)",
+      "service": "(le service a répondu)"
+    },
+    "secretLabel": {
+      "api_key": "Clé d’API",
+      "password": "Mot de passe",
+      "signing_key": "Clé de signature",
+      "connection_string": "Chaîne de connexion"
+    },
+    "secretSet": "Secret défini",
+    "noSecret": "Aucun secret",
+    "secretRequired": "Cette connexion a besoin d’un secret avant que les outils puissent l’utiliser.",
+    "secretVault": "Enregistré chiffré et jamais réaffiché.",
+    "secretSession": "Aucun stockage sécurisé de clés : le secret est conservé pour cette session uniquement.",
+    "secretSave": "Enregistrer le secret",
+    "secretReplace": "Remplacer le secret",
+    "secretRemove": "Retirer le secret",
+    "secretSaved": "Secret enregistré.",
+    "secretRemoved": "Secret retiré.",
+    "storage": {
+      "none": "aucun secret",
+      "vault": "enregistré chiffré",
+      "session": "pour cette session uniquement"
+    },
+    "event": {
+      "created": "Créée",
+      "updated": "Modifiée",
+      "deleted": "Supprimée",
+      "secret_set": "Secret défini",
+      "secret_cleared": "Secret retiré",
+      "checked": "Vérifiée"
     }
   }
 }

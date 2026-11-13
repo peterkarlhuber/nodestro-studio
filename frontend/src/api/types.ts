@@ -84,6 +84,12 @@ export interface KnowledgeProposalConfig {
   content_kind: ContentKind;
 }
 
+/** How an agent binds one built-in tool (NAL-A1): its service connection and binding parameters; never shown to the model. */
+export interface ToolSettings {
+  connection_id: string | null;
+  params: Record<string, unknown>;
+}
+
 export interface AgentConfig {
   name: string;
   description: string;
@@ -94,6 +100,8 @@ export interface AgentConfig {
   messages: ExampleMessage[];
   tools: string[];
   server_tools: string[];
+  /** Per built-in tool name; missing in configurations stored before NAL-A1. */
+  tool_settings?: Record<string, ToolSettings>;
   knowledge: KnowledgeConfig;
   /** The agent may propose its result for knowledge; a person confirms every proposal. */
   knowledge_proposals?: KnowledgeProposalConfig;

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  Cable,
   Check,
   CheckCircle2,
   Code2,
@@ -49,8 +50,17 @@ import { formatCost, relativeTime } from "../lib/format";
 import { ToolOutputProblem } from "../runs/ToolOutputProblem";
 import { AdoptTool, AdoptedNote, PastedCodeWarning } from "./ToolAdoption";
 import { ServicesTab } from "./ToolsServices";
+import { ConnectionsTab, useTypeLabel } from "./ToolsConnections";
+import {
+  TOOL_CATEGORIES,
+  TOOL_NETWORKS,
+  type ToolCategory,
+  type ToolNetwork,
+  type ToolSpec,
+  useBuiltinTools,
+} from "../api/connections";
 
-type Tab = "library" | "services" | "write" | "generate";
+type Tab = "library" | "services" | "connections" | "write" | "generate";
 
 export function ToolsPage() {
   const { t } = useTranslation();
@@ -61,7 +71,7 @@ export function ToolsPage() {
   const settings = useSettings();
   // The sandbox note is about Nodestro's own tools; a connected service runs elsewhere (AD-12).
   const [shownKind, setShownKind] = useState<string | null>(null);
-  const sandboxNote = tab !== "services" && !(tab === "library" && shownKind === "mcp");
+  const sandboxNote = tab !== "services" && tab !== "connections" && !(tab === "library" && shownKind === "mcp");
   return (
     <div className="page">
       <PageHeader
@@ -80,6 +90,7 @@ export function ToolsPage() {
                 icon: Wrench,
               },
               { value: "services", label: t("tools.tabs.services"), icon: PlugZap },
+              { value: "connections", label: t("tools.tabs.connections"), icon: Cable },
               { value: "write", label: t("tools.tabs.write"), icon: Code2 },
               {
                 value: "generate",
@@ -94,6 +105,7 @@ export function ToolsPage() {
         <PendingDrafts />
         {tab === "library" ? <Library onShownKind={setShownKind} /> : null}
         {tab === "services" ? <ServicesTab /> : null}
+        {tab === "connections" ? <ConnectionsTab /> : null}
         {tab === "write" ? (
           <WriteTool onSaved={() => setTab("library")} />
         ) : null}
@@ -146,6 +158,8 @@ function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void 
   const organize = useOrganize();
   const [params, setParams] = useSearchParams();
   const [filter, setFilter] = useState<OrganizeFilterValue>(NO_FILTER);
+  const [specFilter, setSpecFilter] = useState<SpecFilterValue>(NO_SPEC_FILTER);
+  const specs = useSpecs();
   // ?tool=<name> (from the global search) opens that tool.
   const [selected, setSelected] = useState<string | null>(() =>
     params.get("tool"),
@@ -155,6 +169,7 @@ function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void 
     if (!wanted) return;
     setSelected(wanted);
     setFilter(NO_FILTER);
+    setSpecFilter(NO_SPEC_FILTER);
     setParams({}, { replace: true });
   }, [wanted, setParams]);
   const shown = applyOrganize(
@@ -163,7 +178,7 @@ function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void 
     (item) => item.name,
     filter,
     organize.data,
-  );
+  ).filter((item) => matchesSpec(specs.get(item.name), specFilter));
   const tool =
     tools.data?.find((item) => item.name === selected) ?? shown[0] ?? null;
   const shownKind = tool?.kind ?? null;
@@ -180,6 +195,7 @@ function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void 
   return (
     <div className="stack-sm">
       <OrganizeFilter kind="tool" value={filter} onChange={setFilter} />
+      {specs.size ? <SpecFilter value={specFilter} onChange={setSpecFilter} /> : null}
       <div className="master-detail">
         <ul className="list" aria-label={t("nav.tools")}>
           {!shown.length ? (
@@ -209,6 +225,7 @@ function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void 
                   </Badge>
                 </span>
                 <span className="list__text">{toolDescription(t, item)}</span>
+                <SpecBadges spec={specs.get(item.name)} />
                 <TagChips kind="tool" id={item.name} />
               </button>
             </li>
@@ -218,11 +235,99 @@ function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void 
           <ToolDetail
             key={tool.name}
             tool={tool}
+            spec={specs.get(tool.name)}
             onDeleted={() => setSelected(null)}
           />
         ) : null}
       </div>
     </div>
+  );
+}
+
+/** The built-in tools' specs by name (empty when the API has no catalog yet). */
+function useSpecs(): Map<string, ToolSpec> {
+  const catalog = useBuiltinTools();
+  return new Map((catalog.data ?? []).flatMap((item) => (item.spec ? [[item.name, item.spec] as const] : [])));
+}
+
+interface SpecFilterValue {
+  category: ToolCategory | null;
+  network: ToolNetwork | null;
+  offline: boolean;
+  connection: boolean;
+}
+
+const NO_SPEC_FILTER: SpecFilterValue = { category: null, network: null, offline: false, connection: false };
+
+/** Whether a tool passes the spec filter; any active filter shows only built-in tools with a spec. */
+export function matchesSpec(spec: ToolSpec | undefined, filter: SpecFilterValue): boolean {
+  const active = filter.category || filter.network || filter.offline || filter.connection;
+  if (!active) return true;
+  if (!spec) return false;
+  if (filter.category && spec.category !== filter.category) return false;
+  if (filter.network && spec.network !== filter.network) return false;
+  if (filter.offline && !spec.offline) return false;
+  if (filter.connection && !spec.connection_type) return false;
+  return true;
+}
+
+/** Filter chips for built-in tools: category, network, usable offline, needs a connection. */
+function SpecFilter({ value, onChange }: { value: SpecFilterValue; onChange: (value: SpecFilterValue) => void }) {
+  const { t } = useTranslation();
+  const chip = (key: string, label: string, on: boolean, toggle: () => void) => (
+    <button
+      key={key}
+      type="button"
+      className={`chip chip--button ${on ? "chip--on" : ""}`}
+      aria-pressed={on}
+      onClick={toggle}
+    >
+      {label}
+    </button>
+  );
+  return (
+    <div className="chip-row" role="group" aria-label={t("tools.filter.label")} data-testid="tool-spec-filter">
+      {TOOL_CATEGORIES.map((category) =>
+        chip(category, t(`tools.spec.category.${category}`), value.category === category, () =>
+          onChange({ ...value, category: value.category === category ? null : category }),
+        ),
+      )}
+      {TOOL_NETWORKS.map((network) =>
+        chip(network, t(`tools.spec.network.${network}`), value.network === network, () =>
+          onChange({ ...value, network: value.network === network ? null : network }),
+        ),
+      )}
+      {chip("offline", t("tools.spec.offline"), value.offline, () => onChange({ ...value, offline: !value.offline }))}
+      {chip("connection", t("tools.filter.needsConnection"), value.connection, () =>
+        onChange({ ...value, connection: !value.connection }),
+      )}
+    </div>
+  );
+}
+
+/** What a built-in tool's spec says: category, network, offline, connection; in the detail also its limits. */
+function SpecBadges({ spec, detail }: { spec: ToolSpec | undefined; detail?: boolean }) {
+  const { t } = useTranslation();
+  const typeLabel = useTypeLabel();
+  if (!spec) return null;
+  return (
+    <span className="row-gap" data-testid={`tool-spec-${spec.id}`}>
+      <Badge tone="idle">{t(`tools.spec.category.${spec.category}`)}</Badge>
+      <Badge tone={spec.network === "external" ? "warning" : "idle"}>{t(`tools.spec.network.${spec.network}`)}</Badge>
+      {spec.offline ? <Badge tone="success">{t("tools.spec.offline")}</Badge> : null}
+      {spec.connection_type ? (
+        <Badge tone="running" icon={Cable}>
+          {t("tools.spec.connection", { type: typeLabel(spec.connection_type) })}
+        </Badge>
+      ) : null}
+      {detail ? (
+        <span className="muted small">
+          {t("tools.spec.timeout", { count: spec.timeout_seconds })}
+          {spec.max_calls_per_run ? ` · ${t("tools.spec.calls", { count: spec.max_calls_per_run })}` : ""}
+          {` · ${spec.ref}`}
+        </span>
+      ) : null}
+    </span>
   );
 }
 
@@ -289,9 +394,11 @@ function exampleInput(schema: Record<string, unknown> | null): string {
 
 function ToolDetail({
   tool,
+  spec,
   onDeleted,
 }: {
   tool: ToolInfo;
+  spec?: ToolSpec;
   onDeleted: () => void;
 }) {
   const { t } = useTranslation();
@@ -370,6 +477,7 @@ function ToolDetail({
       </div>
       <TagChips kind="tool" id={tool.name} />
       <p>{toolDescription(t, tool)}</p>
+      {spec ? <SpecBadges spec={spec} detail /> : null}
       <UsedByList users={users} loaded={usedBy.loaded} />
       <TrustNote tool={tool} />
       <AdoptTool tool={tool} />

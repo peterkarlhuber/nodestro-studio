@@ -274,7 +274,12 @@
     "adoption_forbidden": "Solo el propietario de este equipo o un administrador puede adoptar código creado por IA.",
     "adoption_stale": "La herramienta cambió después de mostrarse (ahora versión {{version}}). Vuelve a revisarla antes de adoptarla.",
     "adoption_not_needed": "Esta herramienta ya cuenta como tu propio código; no necesita adopción.",
-    "adoption_not_applicable": "Esta herramienta no tiene código propio que pueda adoptarse."
+    "adoption_not_applicable": "Esta herramienta no tiene código propio que pueda adoptarse.",
+    "settings_invalid": "La configuración de {{name}} no es válida ({{at}}).",
+    "settings_unsupported": "{{name}} no admite configuración.",
+    "settings_unused": "Hay configuración para {{name}}, pero el agente no usa esta herramienta.",
+    "timeout": "La herramienta no terminó dentro de su límite de tiempo.",
+    "call_limit": "La herramienta alcanzó su límite de llamadas para esta ejecución."
   },
   "job": {
     "writing": "El agente de programación está escribiendo código y pruebas …",
@@ -355,7 +360,11 @@
     "local_reasoning_saving": "En este ordenador sin tarjeta gráfica, estos agentes responden sin fase de razonamiento (esfuerzo Medio): {{nodes}}. Elige el esfuerzo Alto para un agente o desactiva el modo de ahorro de CPU en los ajustes.",
     "value_source_type": "{{field}} debe proceder de una herramienta, pero solo se comprueban números de un resultado estructurado.",
     "value_source_no_tool": "{{field}} debe proceder de una herramienta, pero ni este agente ni un paso anterior tiene una herramienta. Añade una herramienta como la calculadora.",
-    "orchestrator_model_unsupported": "El orquestador «{{name}}» usa {{model}}, que no puede devolver decisiones estructuradas. Elige otro modelo para él."
+    "orchestrator_model_unsupported": "El orquestador «{{name}}» usa {{model}}, que no puede devolver decisiones estructuradas. Elige otro modelo para él.",
+    "connection_missing": "{{name}} necesita una conexión de tipo {{type}}. Elígela en las herramientas del agente.",
+    "connection_unchecked": "La conexión {{connection}} de {{name}} todavía no se ha comprobado con éxito.",
+    "offline_tool": "El modo sin conexión estricto no permite herramientas que necesitan Internet ({{names}}).",
+    "tool_mode_unsupported": "{{name}} no está disponible en esta instalación ({{mode}})."
   },
   "backup": {
     "not_zip": "El archivo no es una copia de seguridad de Nodestro (no es un ZIP).",
@@ -823,7 +832,8 @@
     "owner_required": "Solo un propietario de este espacio de trabajo puede dar, quitar o cambiar el rol de propietario, así que no se cambió nada."
   },
   "secrets": {
-    "unreadable": "Una clave guardada ya no se puede leer. Vuelve a introducirla en la configuración."
+    "unreadable": "Una clave guardada ya no se puede leer. Vuelve a introducirla en la configuración.",
+    "vault_unavailable": "No hay un almacén de claves seguro, así que el secreto no se puede guardar de forma permanente."
   },
   "pricing": {
     "reference_read_only": "Los precios de referencia de este servidor los gestiona su operador.",
@@ -1097,5 +1107,31 @@
   },
   "lease": {
     "lost": "Otro proceso del servidor tomó este lote o esta serie de pruebas porque este dejó de responder. El trabajo está marcado como interrumpido; recarga la página y continúalo."
+  },
+  "connection": {
+    "address_invalid": "No se puede usar una dirección de la conexión ({{type}}) (por ejemplo una dirección interna, http en lugar de https o una contraseña en la dirección).",
+    "check_failed": "La comprobación de la conexión falló.",
+    "check_unavailable": "Esta conexión todavía no se puede comprobar aquí.",
+    "in_use_one": "{{count}} agente todavía usa esta conexión ({{names}}).",
+    "in_use_other": "{{count}} agentes todavía usan esta conexión ({{names}}).",
+    "missing_one": "{{count}} conexión de servicio no está configurada. Configúrala con «configure» y vuelve a iniciar.",
+    "missing_other": "{{count}} conexiones de servicio no están configuradas. Configúralas con «configure» y vuelve a iniciar.",
+    "mode_unsupported": "Las conexiones de tipo {{type}} no se pueden usar en esta instalación.",
+    "name_taken": "Ya existe una conexión llamada «{{name}}».",
+    "not_found": "Esta conexión ya no existe.",
+    "provider_invalid": "«{{provider}}» no es un nombre de proveedor válido.",
+    "provider_unknown": "Las conexiones de tipo {{type}} no ofrecen el proveedor «{{provider}}».",
+    "secret_invalid": "El secreto no se puede usar (por ejemplo contiene un salto de línea).",
+    "secret_missing": "La conexión todavía no tiene secreto. Defínelo en los detalles de la conexión.",
+    "secret_too_long": "El secreto es demasiado largo (como máximo {{limit}} caracteres).",
+    "secret_unreadable": "El secreto guardado de la conexión ya no se puede leer. Vuelve a introducirlo.",
+    "settings_invalid": "La configuración de la conexión ({{type}}) no es válida.",
+    "type_mismatch": "La herramienta necesita una conexión de tipo {{expected}}, no {{type}}.",
+    "type_unavailable": "Las conexiones de tipo {{type}} todavía no están disponibles.",
+    "type_unknown": "No existe el tipo de conexión «{{type}}».",
+    "unavailable": "La conexión no se puede usar en este momento."
+  },
+  "extension": {
+    "tool_spec": "Una extensión describe su herramienta {{name}} de una forma que Nodestro no puede usar."
   }
 }
