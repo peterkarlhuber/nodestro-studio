@@ -135,6 +135,33 @@
       }
     }
   },
+  "skills": {
+    "title": "Skill",
+    "assigned_one": "{{count}} assegnata",
+    "assigned_other": "{{count}} assegnate",
+    "intro": "Le skill sono istruzioni che l’agente carica quando gli servono. Ogni skill vale in una sola versione; una versione più recente viene usata solo se la scegli tu.",
+    "version": "Versione {{version}}",
+    "status": {
+      "active": "Attiva",
+      "disabled": "Disattivata",
+      "archived": "Archiviata"
+    },
+    "imported": "Importata: controlla il contenuto",
+    "mode": "Caricamento",
+    "modes": {
+      "on_demand": "Quando serve",
+      "always": "Sempre"
+    },
+    "newer": "È disponibile la versione {{version}}.",
+    "useNewer": "Usa la versione {{version}}",
+    "noneYet": "Ancora nessuna skill.",
+    "add": "Aggiungi skill",
+    "addPlaceholder": "Aggiungi una skill …",
+    "limit_one": "Un agente può avere al massimo {{count}} skill.",
+    "limit_other": "Un agente può avere al massimo {{count}} skill.",
+    "manage": "Gestisci le skill",
+    "library": "Skill della libreria"
+  },
   "knowledge": {
     "title": "Conoscenza",
     "files_one": "{{count}} file",

@@ -45,6 +45,7 @@ Rules that apply to every language:
 | Interface assistant | Assistant (button), Nodestro Assistant (product) | |
 | Orchestrator in the live run chat; its two input modes; the editor setting | team leader; "Ask a question" / "Give an instruction"; Live steering | supervisor, command |
 | What happened to an instruction | included ("Included in decision N") | done, carried out, executed |
+| Instructions in the Agent Skills format; a part shown in the library | skill; building block | ability, plugin; part |
 
 ## German (de)
 
@@ -61,6 +62,7 @@ Rules that apply to every language:
 | Interface assistant | Assistant (button), Nodestro Assistant | Assistent as a label |
 | Orchestrator im Live-Chat eines Laufs; die zwei Eingabearten; die Editor-Einstellung | Teamleitung; „Frage stellen“ / „Anweisung geben“; Live-Steuerung | Teamleiter, Befehl |
 | Was mit einer Anweisung geschah | einbezogen („In Entscheidung N einbezogen“); berücksichtigen for the next decision | erledigt, ausgeführt, umgesetzt |
+| Anleitung im Agent-Skills-Format; ein Teil-Workflow als Bibliothekseintrag | Skill (plural Skills); Baustein | Fähigkeit, Fertigkeit; Teil |
 
 "Freigabe" means one thing in the interface: a person lets something through (a run step, a tool call, a package).
 The release gate is a check, so it is a "Prüfung", not a "Freigabe".
@@ -78,6 +80,7 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 | Interface assistant | Asistente | Assistant |
 | Orchestrator in the live run chat; input modes; editor setting | líder de equipo; «Hacer una pregunta» / «Dar una instrucción»; Dirección en vivo | supervisor, orden |
 | What happened to an instruction | incluida ("Incluida en la decisión N") | hecha, ejecutada |
+| Instrucciones en formato Agent Skills; parte mostrada en la biblioteca | skill; bloque | habilidad; parte |
 
 ## French (fr)
 
@@ -93,6 +96,7 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 | Interface assistant | Assistant | |
 | Orchestrator in the live run chat; input modes; editor setting | chef d’équipe; « Poser une question » / « Donner une consigne »; Pilotage en direct | superviseur, ordre, instruction (for the message) |
 | What happened to an instruction | intégrée ("Intégrée à la décision N") | faite, exécutée |
+| Instructions au format Agent Skills ; partie montrée dans la bibliothèque | skill ; brique | compétence ; partie |
 
 ## Italian (it)
 
@@ -107,6 +111,7 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 | Interface assistant | Assistente | Assistant |
 | Orchestrator in the live run chat; input modes; editor setting | responsabile del team; «Fai una domanda» / «Dai un’istruzione»; Guida in diretta | team leader, capo, comando |
 | What happened to an instruction | inclusa ("Inclusa nella decisione N") | fatta, eseguita |
+| Istruzioni nel formato Agent Skills; parte mostrata nella libreria | skill; blocco | abilità; parte |
 
 ## Portuguese, Brazil (pt-BR)
 
@@ -120,3 +125,4 @@ The release gate is a check, so it is a "Prüfung", not a "Freigabe".
 | Interface assistant | Assistente | Assistant |
 | Orchestrator in the live run chat; input modes; editor setting | líder da equipe; “Fazer uma pergunta” / “Dar uma instrução”; Direção ao vivo | supervisor, comando |
 | What happened to an instruction | incluída ("Incluída na decisão N") | feita, executada |
+| Instruções no formato Agent Skills; parte mostrada na biblioteca | skill; bloco | habilidade; parte |

@@ -9,6 +9,8 @@ La galleria si trova nella pagina **Workflow**, sotto i tuoi workflow e chiarame
 
 Nella galleria completa cerchi per nome, ambito, descrizione, blocco o livello e filtri per categoria e per **Livello**. Gli esempi sono ordinati per livello, i più semplici per primi; il più semplice porta **Inizia qui**. Ricerca, filtri e un’anteprima aperta fanno parte dell’indirizzo, così *Indietro* riporta alla stessa selezione. Ogni scheda mostra ambito, nome, descrizione, numero di agenti, livello e schema. Gli esempi degli ambiti sensibili hanno il badge **Richiede verifica esperta**. Anche la [ricerca](/docs/start#suche) trova gli esempi.
 
+In cima alla galleria completa scegli il tipo di voci: **Esempi** (i workflow di questo capitolo), **Blocchi** (i piccoli workflow che gli esempi usano come team o sotto-workflow), **Agenti** (i modelli di agente inclusi, vedi [Agenti](/docs/agenten)) e **Skill** (istruzioni nel formato Agent Skills, vedi [Skill](/docs/skills)). **Adotta come workflow** crea un blocco come workflow proprio, che poi compare come team nella palette dell’editor; **Adotta come skill** aggiunge una skill all’area di lavoro. L’anteprima non costa nulla e non salva nulla.
+
 ## Anteprima e copia {#uebernehmen}
 <!-- keywords: anteprima, copiare, copia, modello, invariato, gratuito -->
 

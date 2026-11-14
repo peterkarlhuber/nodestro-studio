@@ -123,5 +123,9 @@
     "hint": "Ogni risultato di ricerca e ogni pagina che gli strumenti web degli agenti hanno visto in questa esecuzione. Un campo del risultato che cita fonti le indica con questi identificativi. I titoli provengono dalle pagine web.",
     "fetched": "Letta",
     "search": "Solo risultato"
+  },
+  "skills": {
+    "title": "Skill usate",
+    "version": "versione {{version}}"
   }
 }

@@ -12,6 +12,7 @@ import type { AgentSectionId } from "./agentSummaries";
 
 export const AGENT_SECTIONS: readonly AgentSectionId[] = [
   "tools",
+  "skills",
   "knowledge",
   "memory",
   "output",

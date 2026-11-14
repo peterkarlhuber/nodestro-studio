@@ -123,5 +123,9 @@
     "hint": "Chaque résultat de recherche et chaque page que les outils web des agents ont vus pendant cette exécution. Un champ de résultat qui cite des sources les désigne par ces identifiants. Les titres proviennent des pages web.",
     "fetched": "Lue",
     "search": "Résultat seul"
+  },
+  "skills": {
+    "title": "Skills utilisées",
+    "version": "version {{version}}"
   }
 }

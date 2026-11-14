@@ -9,6 +9,8 @@ A galeria fica na página **Fluxos de trabalho**, abaixo dos seus próprios flux
 
 Na galeria completa você busca por nome, área, descrição, bloco ou nível e filtra por categoria e por **Nível**. Os exemplos são ordenados por nível, os mais simples primeiro; o mais simples leva **Comece aqui**. Busca, filtros e uma prévia aberta fazem parte do endereço, então *Voltar* leva à mesma seleção. Cada cartão mostra a área, o nome, a descrição, o número de agentes, o nível e o padrão. Exemplos de áreas sensíveis têm o selo **Exige revisão especializada**. A [busca](/docs/start#suche) também encontra exemplos.
 
+No topo da galeria completa você escolhe o tipo de entradas: **Exemplos** (os fluxos deste capítulo), **Blocos** (os pequenos fluxos que os exemplos usam como equipe ou subfluxo), **Agentes** (os modelos de agente incluídos, veja [Agentes](/docs/agenten)) e **Skills** (instruções no formato Agent Skills, veja [Skills](/docs/skills)). **Adotar como fluxo** cria um bloco como fluxo próprio, que depois aparece como equipe na paleta do editor; **Adotar como skill** adiciona uma skill ao espaço de trabalho. A pré-visualização não custa nada e não salva nada.
+
 ## Prévia e cópia {#uebernehmen}
 <!-- keywords: prévia, copiar, cópia, modelo, inalterado, gratuito -->
 

@@ -205,5 +205,33 @@
     "notNow": "Choose later",
     "setUpSearch": "Set up search service",
     "setUp": "Set up a connection"
+  },
+  "kinds": {
+    "label": "Kind",
+    "examples": "Examples",
+    "parts": "Building blocks",
+    "agents": "Agents",
+    "skills": "Skills",
+    "searchPlaceholder": "Name, description or capability …",
+    "searchLabel": "Search the library",
+    "partsIntro": "Building blocks are small workflows that examples use as a team or sub-workflow. Taken over as a workflow of your own, they are offered as a team in the editor's palette.",
+    "partsResults_one": "{{count}} building block",
+    "partsResults_other": "{{count}} building blocks",
+    "noMatch": "Nothing matches the search.",
+    "usedIn": "Used in: {{names}}",
+    "useAsWorkflow": "Use as workflow",
+    "capabilities": "Capabilities",
+    "steps": "Steps",
+    "partCopyNote": "The copy is a workflow of your own that you can change freely; the building block itself stays unchanged. Building blocks it uses are taken over too.",
+    "skillsIntro": "Skills are instructions in the open Agent Skills format. An agent loads a skill when its task needs it. Scripts inside skills are never run.",
+    "skillsResults_one": "{{count}} skill",
+    "skillsResults_other": "{{count}} skills",
+    "files_one": "{{count}} file",
+    "files_other": "{{count}} files",
+    "useAsSkill": "Use as skill",
+    "skillCopied": "Skill “{{name}}” added",
+    "instructions": "Instructions",
+    "fileList": "Files",
+    "skillCopyNote": "Version {{version}}. Taking it over creates a skill of your own that you can assign to agents and change; a newer Nodestro version never changes it."
   }
 }

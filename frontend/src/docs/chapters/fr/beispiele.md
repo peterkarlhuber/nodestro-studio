@@ -9,6 +9,8 @@ La galerie se trouve sur la page **Workflows**, sous vos propres workflows et cl
 
 Dans la galerie complète, vous recherchez par nom, domaine, description, bloc ou niveau et filtrez par catégorie et par **Niveau**. Les exemples sont classés par niveau, les plus simples en premier ; le plus simple porte **Commencez ici**. La recherche, les filtres et un aperçu ouvert font partie de l’adresse, si bien que *Retour* ramène à la même sélection. Chaque carte indique le domaine, le nom, la description, le nombre d'agents, le niveau et le schéma. Les exemples des domaines sensibles portent le badge **Vérification experte**. La [recherche](/docs/start#suche) trouve aussi les exemples.
 
+En haut de la galerie complète, vous choisissez le type d’entrées : **Exemples** (les workflows de ce chapitre), **Briques** (les petits workflows que les exemples utilisent comme équipe ou sous-workflow), **Agents** (les modèles d’agent fournis, voir [Agents](/docs/agenten)) et **Skills** (des instructions au format Agent Skills, voir [Skills](/docs/skills)). **Reprendre comme workflow** crée une brique comme workflow personnel, proposé ensuite comme équipe dans la palette de l’éditeur ; **Reprendre comme skill** ajoute une skill à l’espace de travail. L’aperçu ne coûte rien et n’enregistre rien.
+
 ## Aperçu et copie {#uebernehmen}
 <!-- keywords: aperçu, copier, copie, modèle, inchangé, gratuit -->
 

@@ -205,5 +205,33 @@
     "notNow": "Scegli più tardi",
     "setUpSearch": "Configura servizio di ricerca",
     "setUp": "Configura una connessione"
+  },
+  "kinds": {
+    "label": "Tipo",
+    "examples": "Esempi",
+    "parts": "Blocchi",
+    "agents": "Agenti",
+    "skills": "Skill",
+    "searchPlaceholder": "Nome, descrizione o capacità …",
+    "searchLabel": "Cerca nella libreria",
+    "partsIntro": "I blocchi sono piccoli workflow che gli esempi usano come team o sotto-workflow. Adottati come workflow proprio, compaiono come team nella palette dell’editor.",
+    "partsResults_one": "{{count}} blocco",
+    "partsResults_other": "{{count}} blocchi",
+    "noMatch": "Nessun elemento corrisponde alla ricerca.",
+    "usedIn": "Usato in: {{names}}",
+    "useAsWorkflow": "Adotta come workflow",
+    "capabilities": "Capacità",
+    "steps": "Passi",
+    "partCopyNote": "La copia è un workflow proprio che puoi modificare liberamente; il blocco resta invariato. Anche i blocchi che usa vengono adottati.",
+    "skillsIntro": "Le skill sono istruzioni nel formato aperto Agent Skills. Un agente carica una skill quando il suo compito ne ha bisogno. Gli script nelle skill non vengono mai eseguiti.",
+    "skillsResults_one": "{{count}} skill",
+    "skillsResults_other": "{{count}} skill",
+    "files_one": "{{count}} file",
+    "files_other": "{{count}} file",
+    "useAsSkill": "Adotta come skill",
+    "skillCopied": "Skill «{{name}}» adottata",
+    "instructions": "Istruzioni",
+    "fileList": "File",
+    "skillCopyNote": "Versione {{version}}. L’adozione crea una skill propria che puoi assegnare agli agenti e modificare; una versione più recente di Nodestro non la cambia mai."
   }
 }

@@ -9,6 +9,8 @@ The gallery is on the **Workflows** page below your own workflows, clearly separ
 
 In the full gallery you search by name, field, description, building block or level and filter by category and **Level**. The examples are ordered by level, the easiest first; the easiest one carries **Start here**. The search, the filters and an open preview are part of the address, so *Back* leads to the same selection. Each card shows the field, name, description, number of agents, level and pattern. Examples from sensitive fields carry the badge **Needs expert check**. The [search](/docs/start#suche) finds examples too.
 
+At the top of the full gallery you choose the kind of entries: **Examples** (the workflows of this chapter), **Building blocks** (the small workflows that examples use as a team or sub-workflow), **Agents** (the shipped agent templates, see [Agents](/docs/agenten)) and **Skills** (instructions in the Agent Skills format, see [Skills](/docs/skills)). **Use as workflow** creates a building block as a workflow of your own, which the editor's palette then offers as a team; **Use as skill** adds a skill to the workspace. The preview costs nothing and stores nothing.
+
 ## Preview and copy {#uebernehmen}
 <!-- keywords: preview, copy, template, unchanged, free -->
 

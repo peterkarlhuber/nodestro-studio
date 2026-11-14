@@ -1,0 +1,52 @@
+/* The Skills page (pages/SkillsPage.tsx, skills/*). The instructions use .skill-body in app.css. */
+
+.skill-facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 6px 14px;
+  margin: 0;
+  font-size: var(--nd-font-size-sm);
+}
+
+.skill-facts dt {
+  color: var(--nd-text-muted);
+}
+
+.skill-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.skill-issues {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-issues__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--nd-space-2);
+  overflow-wrap: anywhere;
+}
+
+.skill-issues__item svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+.skill-issues__item--error svg {
+  color: var(--nd-danger);
+}
+
+.skill-issues__item--warning svg {
+  color: var(--nd-warning);
+}
+
+.skills__filters .nd-input[type="search"] {
+  flex: 1 1 260px;
+  max-width: 480px;
+}

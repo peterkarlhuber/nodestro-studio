@@ -7857,3 +7857,14 @@ ul.gate-report__list > li.gate-report__item {
   min-width: 0;
   overflow-wrap: anywhere;
 }
+
+/* The instructions of a skill (NAL-B3): shown as plain text, never rendered as HTML. */
+.skill-body {
+  max-height: 22rem;
+  overflow: auto;
+  padding: var(--space-3, 12px);
+  border: 1px solid var(--border, #ddd);
+  border-radius: var(--radius, 6px);
+  white-space: pre-wrap;
+  font-size: 0.85rem;
+}

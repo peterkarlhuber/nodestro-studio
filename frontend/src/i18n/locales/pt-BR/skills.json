@@ -1,0 +1,103 @@
+{
+  "description": "Instruções no formato Agent Skills que os agentes carregam quando a tarefa precisa delas. Uma skill nunca concede ferramentas, e os scripts dela nunca são executados.",
+  "search": "Pesquisar skills",
+  "searchPlaceholder": "Pesquisar por nome ou descrição",
+  "noMatch": "Nenhuma skill corresponde à sua pesquisa.",
+  "emptyTitle": "Ainda não há skills",
+  "emptyText": "Importe uma skill como arquivo ZIP ou como um único arquivo SKILL.md. Depois, os agentes a usam em uma versão fixa.",
+  "import": "Importar skill",
+  "version": "Versão {{version}}",
+  "status": {
+    "active": "Ativa",
+    "disabled": "Desativada",
+    "archived": "Arquivada"
+  },
+  "origin": {
+    "user": "Própria",
+    "import": "Importada",
+    "builtin": "Incluída"
+  },
+  "scripts": "Contém scripts (nunca executados)",
+  "severity": {
+    "error": "Erro",
+    "warning": "Aviso"
+  },
+  "detailTitle": "Detalhes da skill",
+  "selectHint": "Escolha uma skill para ver as instruções, os arquivos e as versões dela e onde ela é usada.",
+  "actions": "Ações da skill",
+  "viewing": "Você está vendo a versão {{version}}. A versão atual é a {{latest}}.",
+  "showLatest": "Mostrar a versão atual",
+  "edit": "Editar SKILL.md",
+  "copy": "Copiar",
+  "activate": "Ativar",
+  "disable": "Desativar",
+  "archive": "Arquivar",
+  "export": "Exportar ZIP",
+  "delete": "Excluir skill",
+  "activated": "“{{name}}” está ativa de novo.",
+  "disabled": "“{{name}}” está desativada. Os agentes que a usam não podem ser executados até você ativá-la de novo.",
+  "archived": "“{{name}}” está arquivada.",
+  "deleted": "Skill excluída.",
+  "frontMatter": "Cabeçalho (front matter)",
+  "fields": {
+    "name": "Nome",
+    "description": "Descrição",
+    "license": "Licença",
+    "compatibility": "Compatibilidade",
+    "allowedTools": "Ferramentas permitidas (apenas mostradas, nunca concedidas)",
+    "created": "Criada em"
+  },
+  "body": "Instruções",
+  "emptyBody": "Esta skill não tem instruções.",
+  "files": "Arquivos",
+  "fileCount_one": "{{count}} arquivo",
+  "fileCount_other": "{{count}} arquivos",
+  "fileScript": "Script, nunca executado",
+  "fileNotText": "Apenas listado",
+  "showFile": "Mostrar {{path}}",
+  "truncated": "O arquivo é longo: só o início dele é mostrado.",
+  "versions": "Versões",
+  "current": "Atual",
+  "show": "Mostrar",
+  "usage": "Usada por",
+  "usageNone": "Nenhum agente usa esta skill.",
+  "usageItem": "{{kind}} · agente “{{agent}}” · versão {{version}}",
+  "usageKind": {
+    "workflow": "Fluxo de trabalho",
+    "template": "Modelo de agente"
+  },
+  "importDialog": {
+    "title": "Importar skill",
+    "securityTitle": "Skills de origem desconhecida",
+    "security": "Skills importadas vêm de uma fonte desconhecida. As instruções delas são passadas ao modelo como conteúdo não confiável, e os scripts delas nunca são executados. Confira o conteúdo antes de usar a skill com ferramentas que gravam ou alteram dados.",
+    "choose": "Escolher arquivo",
+    "fileHint": "Um arquivo ZIP com uma pasta de skill ou um único arquivo SKILL.md. Nada é salvo antes de você confirmar.",
+    "checking": "Verificando o arquivo …",
+    "report": "Relatório de validação",
+    "errors_one": "{{count}} erro impede a importação. Corrija-o no arquivo e escolha-o de novo.",
+    "errors_other": "{{count}} erros impedem a importação. Corrija-os no arquivo e escolha-o de novo.",
+    "warnings_one": "{{count}} aviso. A skill pode ser importada mesmo assim.",
+    "warnings_other": "{{count}} avisos. A skill pode ser importada mesmo assim.",
+    "valid": "Nenhum problema encontrado.",
+    "existing": "Já existe uma skill chamada “{{name}}” (versão {{version}}). A importação salva este arquivo como a próxima versão dela.",
+    "submit": "Importar",
+    "submitVersion": "Salvar como nova versão de {{name}}",
+    "imported": "Skill “{{name}}” importada.",
+    "importedVersion": "“{{name}}” salva como versão {{version}}.",
+    "preview": "Pré-visualização"
+  },
+  "editDialog": {
+    "title": "Editar SKILL.md de {{name}}",
+    "hint": "Salvar cria uma nova versão com este SKILL.md; todos os outros arquivos continuam iguais. O nome não pode ser mudado aqui: copie a skill com um novo nome.",
+    "note": "Nota para esta versão (opcional)",
+    "truncated": "O SKILL.md é longo demais para ser editado aqui. Edite o arquivo fora do Nodestro e importe-o como nova versão.",
+    "saved": "Salva como versão {{version}}.",
+    "unchanged": "Nada mudou: continua na versão {{version}}."
+  },
+  "copyDialog": {
+    "title": "Copiar {{name}}",
+    "name": "Nome da cópia",
+    "nameHint": "Letras minúsculas, dígitos e hifens isolados.",
+    "copied": "Copiada como “{{name}}”."
+  }
+}

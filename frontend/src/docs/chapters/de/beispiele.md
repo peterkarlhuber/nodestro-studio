@@ -9,6 +9,8 @@ Die Galerie steht auf der Seite **Workflows** unter deinen eigenen Workflows, kl
 
 In der vollständigen Galerie suchst du nach Name, Fachgebiet, Beschreibung, Baustein oder Niveau und filterst nach Kategorie und **Niveau**. Die Beispiele sind nach Niveau geordnet, die einfachsten zuerst; das einfachste trägt **Hier starten**. Suche, Filter und eine geöffnete Vorschau stehen in der Adresse, sodass *Zurück* zur selben Auswahl führt. Jede Karte zeigt Fachgebiet, Name, Beschreibung, die Zahl der Agenten, das Niveau und das Muster. Beispiele aus sensiblen Bereichen tragen das Abzeichen **Fachlich prüfen**. Auch die [Suche](/docs/start#suche) findet Beispiele.
 
+Oben in der vollständigen Galerie wählst du die Art der Einträge: **Beispiele** (die Workflows dieses Kapitels), **Bausteine** (die kleinen Workflows, die Beispiele als Team oder Unterworkflow nutzen), **Agenten** (die mitgelieferten Agentenvorlagen, siehe [Agenten](/docs/agenten)) und **Skills** (Anleitungen im Agent-Skills-Format, siehe [Skills](/docs/skills)). **Als Workflow übernehmen** legt einen Baustein als eigenen Workflow an, der danach in der Palette des Editors als Team bereitsteht; **Als Skill übernehmen** legt einen Skill im Arbeitsbereich an. Die Vorschau kostet nichts und speichert nichts.
+
 ## Vorschau und Übernehmen {#uebernehmen}
 <!-- keywords: vorschau, übernehmen, kopie, kopieren, vorlage, unverändert, kostenlos -->
 

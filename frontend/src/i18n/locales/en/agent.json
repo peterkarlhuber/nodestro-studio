@@ -135,6 +135,33 @@
       }
     }
   },
+  "skills": {
+    "title": "Skills",
+    "assigned_one": "{{count}} assigned",
+    "assigned_other": "{{count}} assigned",
+    "intro": "Skills are instructions the agent loads when it needs them. Each skill applies in exactly one version; a newer version is used only when you choose it.",
+    "version": "Version {{version}}",
+    "status": {
+      "active": "Active",
+      "disabled": "Disabled",
+      "archived": "Archived"
+    },
+    "imported": "Imported – check the content",
+    "mode": "Load",
+    "modes": {
+      "on_demand": "When needed",
+      "always": "Always"
+    },
+    "newer": "Version {{version}} is available.",
+    "useNewer": "Use version {{version}}",
+    "noneYet": "No skills yet.",
+    "add": "Add skill",
+    "addPlaceholder": "Add a skill …",
+    "limit_one": "An agent can have at most {{count}} skill.",
+    "limit_other": "An agent can have at most {{count}} skills.",
+    "manage": "Manage skills",
+    "library": "Skills in the library"
+  },
   "knowledge": {
     "title": "Knowledge",
     "files_one": "{{count}} file",

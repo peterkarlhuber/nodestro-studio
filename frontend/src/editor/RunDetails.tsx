@@ -1,4 +1,4 @@
-import { AlertTriangle, BookOpen, Brain, ChevronRight, ExternalLink, History, ShieldCheck, Wrench } from "lucide-react";
+import { AlertTriangle, BookMarked, BookOpen, Brain, ChevronRight, ExternalLink, History, ShieldCheck, Wrench } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -292,6 +292,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
               <ReasoningView trace={nodeTrace(state)} display={thinkingDisplay} testId="run-reasoning" />
               <Output value={state.output} fields={node.agent?.output?.fields} />
               {node.agent ? <UsedSources state={state} /> : null}
+              {node.agent ? <UsedSkills state={state} /> : null}
               {run && !run.imported_at && node.agent && state.status === "succeeded" ? (
                 <div className="row-gap">
                   <Button
@@ -409,6 +410,39 @@ function UsedSources({ state }: { state: NodeRun }) {
         ))}
       </ul>
       <span className="muted">{t("runs.sources.hint")}</span>
+    </section>
+  );
+}
+
+/** The skills this step loaded and the files of them it read (NAL-B3), each skill once with its version. */
+export function usedSkills(state: Pick<NodeRun, "skills">): { name: string; version: number; files: string[] }[] {
+  const found = new Map<string, { name: string; version: number; files: string[] }>();
+  for (const use of state.skills ?? []) {
+    const key = `${use.skill_id}@${use.version}`;
+    const entry = found.get(key) ?? { name: use.name, version: use.version, files: [] };
+    if (use.path && !entry.files.includes(use.path)) entry.files.push(use.path);
+    found.set(key, entry);
+  }
+  return [...found.values()];
+}
+
+function UsedSkills({ state }: { state: NodeRun }) {
+  const { t } = useTranslation();
+  const skills = usedSkills(state);
+  if (!skills.length) return null;
+  return (
+    <section className="used-sources small" aria-label={t("runs.skills.title")} data-testid="used-skills">
+      <span className="used-sources__title">
+        <BookMarked size={13} aria-hidden /> {t("runs.skills.title")}
+      </span>
+      <ul className="used-sources__list">
+        {skills.map((item) => (
+          <li key={`${item.name}@${item.version}`}>
+            {item.name} <span className="muted">{t("runs.skills.version", { version: item.version })}</span>
+            {item.files.length ? <span className="muted"> · {item.files.join(", ")}</span> : null}
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
