@@ -36,6 +36,7 @@
   },
   "origin": {
     "teamRun": "Team run of {{name}} (decision {{n}}).",
-    "teamRunPlain": "Team run of an orchestrator."
+    "teamRunPlain": "Team run of an orchestrator.",
+    "recommendedSkills": "Skills recommended by the orchestrator: {{names}}"
   }
 }

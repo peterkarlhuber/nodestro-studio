@@ -820,6 +820,8 @@ export interface Run extends RunOrigin {
   cause?: RunCause | null;
   output: unknown;
   nodes: Record<string, NodeRun>;
+  /** Skills the orchestrator recommended to this team run (NAL-B4). */
+  recommended_skills?: string[];
   /** The run's source ledger (NAL-A2): every web source its tools saw; runs of earlier versions have none. */
   sources?: SourceEntry[];
   usage: Usage;
@@ -1324,6 +1326,8 @@ export interface ToolInfo {
   content_hash?: string | null;
   /** Set while an AI-created tool counts as the person's own because they adopted it on the desktop (R-4). */
   adoption?: ToolAdoption | null;
+  /** Where the tool came from, e.g. ``skill:units@1/scripts/convert.py`` for a skill script (NAL-B4). */
+  origin?: string | null;
 }
 
 /** One stored version of a tool and who wrote it (GET /api/tools/{name}/versions, ST-036). */
@@ -1398,6 +1402,8 @@ export interface ToolJob {
   dependency_plan: DependencyPlan | null;
   dependencies: string[];
   tool_name: string | null;
+  /** Where the requirement came from, e.g. ``skill:units@1/scripts/convert.py`` (NAL-B4). */
+  origin?: string | null;
   error: string | null;
   cost_usd: number | null;
   created_at: string;
@@ -3805,7 +3811,7 @@ export interface ProviderSettingsIn {
 }
 
 export interface AgentConfig {
-  /** Skills of the agent, each in one fixed version (NAL-B3); at most 20. */
+  /** Skills of the agent, each in one fixed version (NAL-B3); at most 100 (NAL-B4). */
   skills?: import("./skills").SkillBinding[];
   /** Gemini 2.5: the thinking token budget (0 turns thinking off where the model allows it); null: the model's default. */
   thinking_budget?: number | null;
@@ -3889,6 +3895,8 @@ export interface ModelCapabilities {
 export interface NodeRun {
   /** Skills the agent loaded and their files it read in this step (NAL-B3). */
   skills?: { skill_id: string; name: string; version: number; path: string | null }[];
+  /** Which skills the step offered its agent and why (NAL-B4); null for steps without skills or older runs. */
+  skill_selection?: import("./skills").SkillSelection | null;
   thinking_kind?: ReasoningKind | null;
   thinking_phases?: number;
   thinking_redacted?: boolean;

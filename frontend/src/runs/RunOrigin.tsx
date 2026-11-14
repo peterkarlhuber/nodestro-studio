@@ -1,6 +1,6 @@
 // Where a run came from: a schedule, a batch, a test series, a parent workflow or a failed run it continues.
 
-import { CalendarClock, FlaskConical, History, Layers, Plug, Workflow } from "lucide-react";
+import { BookMarked, CalendarClock, FlaskConical, History, Layers, Plug, Workflow } from "lucide-react";
 import type { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -48,6 +48,13 @@ export function RunOrigin({ run }: { run: Run }) {
             : t("orchestration.origin.teamRunPlain")
           : t("flow.origin.subworkflow")}{" "}
         <Link to={`/executions/${run.parent_run_id}`}>{t("flow.origin.openParent")}</Link>
+      </span>,
+    );
+  // The skills the orchestrator recommended to this team run (NAL-B4); its agents are always offered them.
+  if (run.recommended_skills?.length)
+    parts.push(
+      <span key="skills" data-testid="run-recommended-skills">
+        <BookMarked size={13} aria-hidden /> {t("orchestration.origin.recommendedSkills", { names: run.recommended_skills.join(", ") })}
       </span>,
     );
   if (run.resumed_from)

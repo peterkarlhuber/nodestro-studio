@@ -127,5 +127,20 @@
   "skills": {
     "title": "Verwendete Skills",
     "version": "Version {{version}}"
+  },
+  "skillChoice": {
+    "title": "Skill-Auswahl",
+    "method": {
+      "all": "Keine Vorauswahl: Der Schritt bot alle Skills des Agenten an ({{count}}).",
+      "bm25": "Vorauswahl: Der Schritt bot die am besten passenden Skills an (angeboten: {{count}}, zugewiesen: {{assigned}})."
+    },
+    "offered": "Angebotene Skills",
+    "recommended": "Empfohlen",
+    "none": "Es wurde kein Skill angeboten.",
+    "ignored": "Empfohlen, aber dem Agenten nicht zugewiesen: {{names}}",
+    "candidates": "Bewertungen der Vorauswahl ({{count}})",
+    "skill": "Skill",
+    "score": "Bewertung",
+    "chosen": "Angeboten"
   }
 }

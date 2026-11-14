@@ -99,5 +99,63 @@
     "name": "Nombre de la copia",
     "nameHint": "Minúsculas, dígitos y guiones sueltos.",
     "copied": "Copiada como «{{name}}»."
+  },
+  "views": {
+    "label": "Vista",
+    "skills": "Skills",
+    "groups": "Grupos",
+    "usage": "Uso"
+  },
+  "groups": {
+    "intro": "Un grupo añade varias skills a un agente en un solo paso. Después, cada skill queda asignada por separado, en su versión actual.",
+    "new": "Nuevo grupo",
+    "create": "Crear grupo",
+    "emptyTitle": "Todavía no hay grupos",
+    "emptyText": "Reúne en un grupo las skills que suelen usarse juntas, por ejemplo todas las skills de un departamento.",
+    "group": "Grupo {{name}}",
+    "edit": "Editar",
+    "delete": "Eliminar el grupo {{name}}",
+    "members_one": "{{count}} skill",
+    "members_other": "{{count}} skills",
+    "missing": "Skill eliminada",
+    "deleted": "Grupo «{{name}}» eliminado.",
+    "saved": "Grupo «{{name}}» guardado.",
+    "newTitle": "Nuevo grupo de skills",
+    "editTitle": "Editar el grupo {{name}}",
+    "name": "Nombre",
+    "description": "Descripción (opcional)",
+    "chosen": "Skills del grupo: {{count}}"
+  },
+  "stats": {
+    "days": "Periodo",
+    "lastDays_one": "Último día",
+    "lastDays_other": "Últimos {{count}} días",
+    "indication": "Estas cifras son un indicio, no una prueba: una skill cargada en una ejecución correcta no causó necesariamente el éxito. Las comprobaciones son los controles de calidad de los pasos que cargaron la skill.",
+    "empty_one": "En el último día no se ofreció ni se cargó ninguna skill.",
+    "empty_other": "En los últimos {{count}} días no se ofreció ni se cargó ninguna skill.",
+    "skill": "Skill",
+    "offered": "Ofrecida",
+    "loaded": "Cargada",
+    "runs": "Ejecuciones",
+    "success": "Tasa de éxito",
+    "checks": "Comprobaciones superadas",
+    "recommended": "Recomendada",
+    "lastUsed": "Último uso",
+    "versions": "versiones {{versions}}"
+  },
+  "scriptTool": {
+    "open": "Usar como herramienta …",
+    "openFor": "Usar {{path}} como herramienta",
+    "title": "Usar {{path}} como herramienta",
+    "intro": "Nodestro no ejecuta este script. En su lugar, se crea a partir de él una herramienta en estos pasos:",
+    "stepWrite": "El agente de programación escribe una herramienta con pruebas a partir del script.",
+    "stepTest": "Las pruebas se ejecutan solo en el sandbox aislado de Docker.",
+    "stepReview": "Una persona revisa el código y las pruebas y aprueba la herramienta.",
+    "neverRun": "Hasta entonces, ningún agente puede usar la herramienta. El script en sí nunca se ejecuta.",
+    "note": "Nota para el agente de programación (opcional)",
+    "noteHint": "Por ejemplo, qué debe devolver la herramienta o qué entradas necesita.",
+    "submit": "Encargar la herramienta",
+    "started": "El encargo de la herramienta está en marcha. Síguelo y aprueba la herramienta en la página Herramientas.",
+    "openJob": "Abrir los encargos de herramientas"
   }
 }

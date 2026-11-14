@@ -127,5 +127,20 @@
   "skills": {
     "title": "Skills utilisées",
     "version": "version {{version}}"
+  },
+  "skillChoice": {
+    "title": "Choix des skills",
+    "method": {
+      "all": "Pas de présélection : l’étape a proposé toutes les skills de l’agent ({{count}}).",
+      "bm25": "Présélection : l’étape a proposé les skills les plus pertinentes (proposées : {{count}}, attribuées : {{assigned}})."
+    },
+    "offered": "Skills proposées",
+    "recommended": "Recommandée",
+    "none": "Aucune skill n’a été proposée.",
+    "ignored": "Recommandées, mais non attribuées à l’agent : {{names}}",
+    "candidates": "Scores de la présélection ({{count}})",
+    "skill": "Skill",
+    "score": "Score",
+    "chosen": "Proposée"
   }
 }

@@ -36,6 +36,7 @@
   },
   "origin": {
     "teamRun": "Exécution d’équipe de {{name}} (décision {{n}}).",
-    "teamRunPlain": "Exécution d’équipe d’un orchestrateur."
+    "teamRunPlain": "Exécution d’équipe d’un orchestrateur.",
+    "recommendedSkills": "Skills recommandées par l’orchestrateur : {{names}}"
   }
 }

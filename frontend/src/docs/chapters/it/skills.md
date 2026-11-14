@@ -27,3 +27,32 @@ Il nome di una skill non si può cambiare modificandola: copia invece la skill c
 <!-- keywords: sicurezza, non attendibile, script, allowed-tools, credenziali, prompt injection -->
 
 Una skill importata proviene da una fonte sconosciuta. Nodestro passa le sue istruzioni al modello come contenuto non attendibile, e gli script di una skill non vengono **mai eseguiti**. Una skill non concede mai strumenti: il campo `allowed-tools` viene mostrato ma ignorato, e gli strumenti vengono solo dalle impostazioni dell’agente. Controlla il contenuto di una skill importata prima di usarla con strumenti che scrivono o modificano dati. Se un file sembra contenere credenziali, il rapporto di validazione ti avvisa; rimuovile prima di condividere o esportare la skill.
+
+## Gruppi di skill {#gruppen}
+<!-- keywords: gruppo, gruppo di skill, aggiungi gruppo, membri, reparto -->
+
+Un gruppo riunisce skill usate spesso insieme, per esempio tutte le skill di un reparto. Nella pagina [Skill](/skills) passa a **Gruppi** per creare, modificare ed eliminare gruppi e scegliere le loro skill.
+
+Nelle impostazioni di un agente, **Aggiungi gruppo** aggiunge ogni skill attiva del gruppo che l’agente non ha ancora: ciascuna nella sua versione attuale e caricata quando serve. Le skill disattivate o archiviate e quelle che l’agente ha già vengono saltate. Il gruppo è solo un’etichetta: ogni skill resta assegnata singolarmente, e una modifica successiva del gruppo non cambia l’agente.
+
+## Molte skill: preselezione {#vorauswahl}
+<!-- keywords: preselezione, molte skill, limite, 100, più adatte, punteggio, BM25 -->
+
+Un agente può avere fino a 100 skill. Finché al massimo 20 di esse vengono caricate quando serve, ogni passaggio le offre tutte all’agente. Con più di 20, ogni passaggio offre solo le 8 skill più adatte al compito, più ogni skill impostata su **Sempre** e ogni skill consigliata da un orchestratore. Nodestro confronta il compito con il nome e la descrizione di ogni skill, quindi una descrizione chiara aiuta.
+
+Nei dettagli di un’esecuzione, **Scelta delle skill** mostra per ogni passaggio quali skill sono state offerte e se c’è stata una preselezione. In caso di preselezione mostra anche il punteggio di ogni skill.
+
+## Consigli dell’orchestratore {#empfehlungen}
+<!-- keywords: orchestratore, consiglio, skill consigliate, team, esecuzione del team -->
+
+Un orchestratore può consigliare skill quando avvia un team. Agli agenti del team vengono allora sempre offerte queste skill, se le hanno. Un consiglio non assegna mai una skill: una skill consigliata che un agente non ha compare come non assegnata nella scelta delle skill. I dettagli di un’esecuzione del team mostrano in alto le skill consigliate.
+
+## Utilizzo {#nutzung}
+<!-- keywords: utilizzo, statistiche, caricata, offerta, tasso di successo, controlli, ultimo utilizzo -->
+
+Nella pagina [Skill](/skills), **Utilizzo** mostra per gli ultimi 7, 30 o 90 giorni quante volte ogni skill è stata offerta e caricata, in quante esecuzioni, quante di queste esecuzioni sono riuscite, quanti controlli di qualità sono stati superati e quando la skill è stata usata l’ultima volta. I numeri sono un indizio, non una prova: una skill caricata in un’esecuzione riuscita non ha per forza causato il successo.
+
+## Trasformare gli script in strumenti {#skripte}
+<!-- keywords: script, strumento, Coding Agent, sandbox, Docker, approvare, controllare, origine -->
+
+Gli script di una skill non vengono mai eseguiti. Per usarne comunque uno, scegli **Usa come strumento …** accanto al file in `scripts/`. Il Coding Agent scrive allora uno strumento con i test partendo dallo script. I test vengono eseguiti solo nella sandbox Docker isolata; senza di essa non parte nulla. Poi una persona controlla codice e test nella pagina [Strumenti](/tools) e approva lo strumento. Fino ad allora nessun agente può usarlo. Lo strumento mostra da quale script di skill proviene.

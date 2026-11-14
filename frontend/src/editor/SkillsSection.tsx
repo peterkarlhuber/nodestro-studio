@@ -1,18 +1,23 @@
 // The skills of an agent (NAL-B3): each in one fixed version, loaded on demand or always. A newer version of a skill
 // is offered, never used automatically. The runtime checks every rule (skill.* problems in the field "skills").
+// NAL-B4: a group adds all its skills at once; above 20 on-demand skills each step offers only the best-fitting ones.
 
-import { BookMarked, RefreshCw } from "lucide-react";
+import { BookMarked, FolderPlus, RefreshCw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { isImported, useSkills, type Skill, type SkillBinding, type SkillMode } from "../api/skills";
+import { isImported, useSkillGroups, useSkills, type Skill, type SkillBinding, type SkillGroup, type SkillMode } from "../api/skills";
 import type { AgentConfig, ConfigIssue } from "../api/types";
 import { Badge, Button, Callout, Chip, Section, type SectionStatus, Segmented, Select } from "../components/ui";
 import { ProblemText } from "../lib/errors";
 import type { AgentSectionId } from "./agentSummaries";
 
 /** The most skills one agent may have (runtime ``MAX_AGENT_SKILLS``). */
-export const MAX_AGENT_SKILLS = 20;
+export const MAX_AGENT_SKILLS = 100;
+/** Above this many on-demand skills a step offers only a preselection (runtime, NAL-B4). */
+export const PRESELECTION_THRESHOLD = 20;
+/** How many on-demand skills the preselection offers, besides "always" and recommended ones. */
+export const PRESELECTED_SKILLS = 8;
 
 const MODES: SkillMode[] = ["on_demand", "always"];
 
@@ -25,6 +30,24 @@ export function changeBinding(bindings: SkillBinding[], skillId: string, change:
 export function assignable(skills: Skill[], bindings: SkillBinding[]): Skill[] {
   const taken = new Set(bindings.map((binding) => binding.skill_id));
   return skills.filter((skill) => skill.status === "active" && !taken.has(skill.id)).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * The bindings with every active skill of the group added that is not assigned yet: each in its current version,
+ * loaded on demand and labeled with the group. Stops at ``MAX_AGENT_SKILLS``.
+ */
+export function addGroup(skills: Skill[], bindings: SkillBinding[], group: SkillGroup): SkillBinding[] {
+  const byId = new Map(skills.map((skill) => [skill.id, skill]));
+  const taken = new Set(bindings.map((binding) => binding.skill_id));
+  const added: SkillBinding[] = [];
+  for (const id of group.skill_ids) {
+    const skill = byId.get(id);
+    if (!skill || skill.status !== "active" || taken.has(id)) continue;
+    if (bindings.length + added.length >= MAX_AGENT_SKILLS) break;
+    taken.add(id);
+    added.push({ skill_id: id, version: skill.version, mode: "on_demand", group_id: group.id });
+  }
+  return [...bindings, ...added];
 }
 
 export function SkillsSection({
@@ -43,6 +66,11 @@ export function SkillsSection({
   const bindings = agent.skills ?? [];
   const byId = new Map((skills.data ?? []).map((skill) => [skill.id, skill]));
   const free = assignable(skills.data ?? [], bindings);
+  const groups = useSkillGroups();
+  const groupById = new Map((groups.data ?? []).map((group) => [group.id, group]));
+  // Groups with at least one skill that can still be added.
+  const addableGroups = (groups.data ?? []).filter((group) => addGroup(skills.data ?? [], bindings, group).length > bindings.length);
+  const onDemand = bindings.filter((binding) => binding.mode === "on_demand").length;
   const set = (next: SkillBinding[]) => update({ skills: next });
   const problems = issues.filter((issue) => issue.field === "skills" && issue.level !== "info");
   return (
@@ -68,6 +96,9 @@ export function SkillsSection({
                   <span className="muted small">{t("agent.skills.version", { version: binding.version })}</span>
                   {skill && skill.status !== "active" ? <Badge tone="warning">{t(`agent.skills.status.${skill.status}`)}</Badge> : null}
                   {skill && isImported(skill.origin) ? <Badge tone="warning">{t("agent.skills.imported")}</Badge> : null}
+                  {binding.group_id && groupById.has(binding.group_id) ? (
+                    <Badge>{t("agent.skills.group", { name: groupById.get(binding.group_id)!.name })}</Badge>
+                  ) : null}
                 </div>
                 <Segmented<SkillMode>
                   label={t("agent.skills.mode")}
@@ -90,17 +121,43 @@ export function SkillsSection({
       ) : (
         <span className="muted small">{t("agent.skills.noneYet")}</span>
       )}
+      {onDemand > PRESELECTION_THRESHOLD ? (
+        <p className="field__hint" data-testid="skills-preselection">
+          {t("agent.skills.preselection", { count: onDemand, best: PRESELECTED_SKILLS })}
+        </p>
+      ) : null}
       {bindings.length < MAX_AGENT_SKILLS ? (
-        <Select
-          aria-label={t("agent.skills.add")}
-          value=""
-          placeholder={t("agent.skills.addPlaceholder")}
-          options={free.map((skill) => ({ value: skill.id, label: skill.name, hint: skill.description }))}
-          onChange={(id) => {
-            const skill = byId.get(id);
-            if (skill) set([...bindings, { skill_id: skill.id, version: skill.version, mode: "on_demand" }]);
-          }}
-        />
+        <>
+          <Select
+            aria-label={t("agent.skills.add")}
+            value=""
+            placeholder={t("agent.skills.addPlaceholder")}
+            options={free.map((skill) => ({ value: skill.id, label: skill.name, hint: skill.description }))}
+            onChange={(id) => {
+              const skill = byId.get(id);
+              if (skill) set([...bindings, { skill_id: skill.id, version: skill.version, mode: "on_demand" }]);
+            }}
+          />
+          {addableGroups.length ? (
+            <div className="row-gap">
+              <FolderPlus size={14} aria-hidden />
+              <Select
+                aria-label={t("agent.skills.addGroup")}
+                value=""
+                placeholder={t("agent.skills.addGroupPlaceholder")}
+                options={addableGroups.map((group) => ({
+                  value: group.id,
+                  label: t("agent.skills.groupOption", { name: group.name, count: group.skill_ids.length }),
+                  hint: group.description,
+                }))}
+                onChange={(id) => {
+                  const group = groupById.get(id);
+                  if (group) set(addGroup(skills.data ?? [], bindings, group));
+                }}
+              />
+            </div>
+          ) : null}
+        </>
       ) : (
         <p className="field__hint">{t("agent.skills.limit", { count: MAX_AGENT_SKILLS })}</p>
       )}

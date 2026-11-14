@@ -99,5 +99,63 @@
     "name": "Nom de la copie",
     "nameHint": "Lettres minuscules, chiffres et traits d’union isolés.",
     "copied": "Copiée sous le nom « {{name}} »."
+  },
+  "views": {
+    "label": "Vue",
+    "skills": "Skills",
+    "groups": "Groupes",
+    "usage": "Utilisation"
+  },
+  "groups": {
+    "intro": "Un groupe ajoute plusieurs skills à un agent en une seule étape. Chaque skill est ensuite attribuée séparément, dans sa version actuelle.",
+    "new": "Nouveau groupe",
+    "create": "Créer le groupe",
+    "emptyTitle": "Aucun groupe pour l’instant",
+    "emptyText": "Réunissez dans un groupe les skills souvent utilisées ensemble, par exemple toutes les skills d’un service.",
+    "group": "Groupe {{name}}",
+    "edit": "Modifier",
+    "delete": "Supprimer le groupe {{name}}",
+    "members_one": "{{count}} skill",
+    "members_other": "{{count}} skills",
+    "missing": "Skill supprimée",
+    "deleted": "Groupe « {{name}} » supprimé.",
+    "saved": "Groupe « {{name}} » enregistré.",
+    "newTitle": "Nouveau groupe de skills",
+    "editTitle": "Modifier le groupe {{name}}",
+    "name": "Nom",
+    "description": "Description (facultative)",
+    "chosen": "Skills du groupe : {{count}}"
+  },
+  "stats": {
+    "days": "Période",
+    "lastDays_one": "Dernier jour",
+    "lastDays_other": "{{count}} derniers jours",
+    "indication": "Ces chiffres sont un indice, pas une preuve : une skill chargée dans une exécution réussie n’a pas forcément causé ce succès. Les contrôles sont les contrôles qualité des étapes qui ont chargé la skill.",
+    "empty_one": "Aucune skill n’a été proposée ni chargée le dernier jour.",
+    "empty_other": "Aucune skill n’a été proposée ni chargée au cours des {{count}} derniers jours.",
+    "skill": "Skill",
+    "offered": "Proposée",
+    "loaded": "Chargée",
+    "runs": "Exécutions",
+    "success": "Taux de réussite",
+    "checks": "Contrôles réussis",
+    "recommended": "Recommandée",
+    "lastUsed": "Dernière utilisation",
+    "versions": "versions {{versions}}"
+  },
+  "scriptTool": {
+    "open": "Utiliser comme outil …",
+    "openFor": "Utiliser {{path}} comme outil",
+    "title": "Utiliser {{path}} comme outil",
+    "intro": "Nodestro n’exécute pas ce script. Un outil est créé à partir de celui-ci en plusieurs étapes :",
+    "stepWrite": "Le Coding Agent écrit un outil avec des tests à partir du script.",
+    "stepTest": "Les tests s’exécutent uniquement dans le bac à sable Docker isolé.",
+    "stepReview": "Une personne vérifie le code et les tests, puis approuve l’outil.",
+    "neverRun": "D’ici là, aucun agent ne peut utiliser l’outil. Le script lui-même n’est jamais exécuté.",
+    "note": "Remarque pour le Coding Agent (facultative)",
+    "noteHint": "Par exemple, ce que l’outil doit renvoyer ou les entrées dont il a besoin.",
+    "submit": "Faire écrire l’outil",
+    "started": "La tâche de création de l’outil a démarré. Suivez-la et approuvez l’outil sur la page Outils.",
+    "openJob": "Ouvrir les tâches d’outils"
   }
 }
