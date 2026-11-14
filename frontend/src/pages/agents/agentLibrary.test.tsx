@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { AgentConfig, AgentTemplate, AgentTemplateVersion, LibraryAgentSummary } from "../../api/types";
+import type { AgentConfig, AgentTemplate, AgentTemplateVersion, LibraryAgentSummary, TemplateMeta } from "../../api/types";
 import { useToasts } from "../../components/toast";
 import { defaultAgent } from "../../lib/defaults";
 import { AgentsPage } from "../AgentsPage";
@@ -14,7 +14,7 @@ import { differences, originOf } from "./TemplateHistory";
 
 vi.mock("../../components/CodeEditor", () => ({ CodeEditor: () => null }));
 
-const META = {
+const META: TemplateMeta = {
   category: "text",
   summary: "Fasst Texte zusammen",
   requirements: { capabilities: [], min_tier: "fast", tools: [], services: [], offline_capable: true },
@@ -22,7 +22,7 @@ const META = {
   examples: ["Fasse diesen Bericht zusammen"],
   tests: [{ name: "kurz", input: "x", expectations: ["kurz"] }],
   locale: "de",
-} as const;
+};
 
 const LIBRARY: LibraryAgentSummary[] = [
   {
@@ -33,7 +33,7 @@ const LIBRARY: LibraryAgentSummary[] = [
     description: "Fasst zusammen",
     icon: "bot",
     version: "0.3.0+r1",
-    meta: { ...META, requirements: { ...META.requirements, capabilities: [], tools: [], services: [] }, examples: [...META.examples], tests: [...META.tests] },
+    meta: META,
   },
 ];
 
