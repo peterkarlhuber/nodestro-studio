@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### TABRION 0.2.1 switch (2026-11-14)
+
+- The lock moves tabrion to the final 0.2.1 (`af0458d`), together with axentra, orkexa, nodestro-runtime and
+  nodestro-api, which now require `tabrion>=0.2,<0.3`. `platform/versions.json` records the 0.2.0 and 0.2.1 release
+  commits as known finals (RC-8).
+
 ### Repairing the database's permissions with the user's confirmation, TABRION MIG-NOD-9 (2026-11-14)
 
 - Recovery mode (decision E-NOD-PERM, option B): when the backend runs in recovery mode (`GET /api/health` answers
