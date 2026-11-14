@@ -72,7 +72,9 @@ describe("RecoveryScreen", () => {
   it("shows the old and new modes and repairs only after the explicit confirmation", async () => {
     const calls = backend({
       [GET_PLAN]: [json(PLAN)],
-      [REPAIR]: [json({ repaired: true, restart: true, files: [{ ...PLAN.files[0], status: "changed" }] })],
+      [REPAIR]: [
+        json({ outcome: "repaired", repaired: true, restart: true, files: [{ ...PLAN.files[0], status: "changed" }] }),
+      ],
     });
     render(<RecoveryScreen />);
     const rows = await screen.findByTestId("recovery-files");
@@ -103,6 +105,117 @@ describe("RecoveryScreen", () => {
     expect(calls.every((call) => call.method === "GET")).toBe(true);
     await userEvent.click(screen.getByRole("button", { name: i18n.t("recovery.showAgain") }));
     expect(await screen.findByTestId("recovery-repair")).toBeDisabled();
+  });
+
+  it("returns to the studio unchanged on cancel when the diagnosis asked for the repair", async () => {
+    const calls = backend({
+      [GET_PLAN]: [json({ ...PLAN, origin: "requested" })],
+      [REPAIR]: [json({ outcome: "returned", repaired: false, restart: true, files: [] })],
+    });
+    render(<RecoveryScreen />);
+    await screen.findByTestId("recovery-files");
+    await userEvent.click(screen.getByTestId("recovery-cancel"));
+    expect(await screen.findByTestId("recovery-done")).toHaveTextContent(i18n.t("recovery.returning"));
+    expect(calls.filter((call) => call.method === "POST")).toEqual([
+      { method: "POST", path: "/api/recovery/database-permissions/repair", body: { action: "return", confirm: false } },
+    ]);
+  });
+
+  it("only restarts when the files are private already (repaired by hand)", async () => {
+    const calls = backend({
+      [GET_PLAN]: [
+        json({
+          ...PLAN,
+          repairable: false,
+          private: true,
+          command: null,
+          files: [{ ...PLAN.files[0], status: "unchanged", old_mode: "0600" }],
+        }),
+      ],
+      [REPAIR]: [json({ outcome: "already_private", repaired: false, restart: true, files: [] })],
+    });
+    render(<RecoveryScreen />);
+    expect(await screen.findByTestId("recovery-private")).toHaveTextContent(i18n.t("recovery.alreadyPrivate"));
+    expect(screen.queryByTestId("recovery-repair")).toBeNull();
+    expect(screen.queryByText(i18n.t("recovery.notRepairable"))).toBeNull();
+    await userEvent.click(screen.getByTestId("recovery-continue"));
+    expect(await screen.findByTestId("recovery-done")).toHaveTextContent(i18n.t("recovery.alreadyPrivateRestarting"));
+    expect(calls.filter((call) => call.method === "POST")[0].body).toEqual({ confirm: true, plan: PLAN.plan });
+  });
+
+  it("is a page region whose heading takes the focus, not a modal dialog", async () => {
+    backend({ [GET_PLAN]: [json(PLAN)] });
+    render(<RecoveryScreen />);
+    await screen.findByTestId("recovery-files");
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(screen.getByRole("region", { name: i18n.t("recovery.title") })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1 })).toHaveFocus();
+  });
+
+  it("names a generic manual command when the files cannot be checked", async () => {
+    backend({ [GET_PLAN]: [json({ code: "internal", detail: "boom", params: {} }, 500)] });
+    render(<RecoveryScreen />);
+    expect(await screen.findByTestId("recovery-manual")).toHaveTextContent('chmod 600 "DATA_FOLDER"/nodestro.db*');
+    expect(screen.getByText(i18n.t("recovery.genericManual"))).toBeInTheDocument();
+  });
+
+  it("names the files whose old permissions could not be set back", async () => {
+    backend({
+      [GET_PLAN]: [json(PLAN)],
+      [REPAIR]: [
+        json(
+          {
+            code: "recovery.repair_failed",
+            detail: "failed",
+            params: {
+              reason: "not_changed",
+              not_restored: ["nodestro.db"],
+              command: "chmod 600 /data/nodestro.db",
+              files: [{ ...PLAN.files[0], status: "rollback_failed", reason: "Operation not permitted" }],
+            },
+          },
+          500,
+        ),
+      ],
+    });
+    render(<RecoveryScreen />);
+    await userEvent.click(await screen.findByTestId("recovery-confirm"));
+    await userEvent.click(screen.getByTestId("recovery-repair"));
+    expect(await screen.findByTestId("recovery-error")).toHaveTextContent(
+      i18n.t("recovery.failedNotRestored", { files: "nodestro.db" }),
+    );
+    expect(screen.getByTestId("recovery-files").textContent).toContain(
+      i18n.t("recovery.notSetBack", { mode: "0600", reason: "Operation not permitted" }),
+    );
+  });
+
+  it("says nothing was changed when the repaired database did not open and the modes were set back", async () => {
+    backend({
+      [GET_PLAN]: [json(PLAN)],
+      [REPAIR]: [
+        json(
+          {
+            code: "recovery.repair_failed",
+            detail: "failed",
+            params: {
+              reason: "does_not_open",
+              cause: "storage.damaged",
+              not_restored: [],
+              command: "chmod 600 /data/nodestro.db",
+              files: [{ ...PLAN.files[0], status: "restored", new_mode: "0664" }],
+            },
+          },
+          500,
+        ),
+      ],
+    });
+    render(<RecoveryScreen />);
+    await userEvent.click(await screen.findByTestId("recovery-confirm"));
+    await userEvent.click(screen.getByTestId("recovery-repair"));
+    expect(await screen.findByTestId("recovery-error")).toHaveTextContent(
+      i18n.t("recovery.failedDoesNotOpen", { cause: "storage.damaged" }),
+    );
+    expect(screen.getByTestId("recovery-files").textContent).toContain(i18n.t("recovery.setBack"));
   });
 
   it("shows the files again when they changed since they were shown", async () => {

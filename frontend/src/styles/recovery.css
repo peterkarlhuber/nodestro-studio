@@ -86,3 +86,8 @@
   justify-content: flex-end;
   gap: var(--nd-space-2);
 }
+
+/* The heading takes the focus when the page opens (for screen readers); it is not a control, so no focus ring. */
+.recovery__title:focus {
+  outline: none;
+}

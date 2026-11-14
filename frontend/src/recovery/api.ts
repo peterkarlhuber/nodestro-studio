@@ -4,7 +4,15 @@
 
 import { request } from "../api/client";
 
-export type RecoveryFileStatus = "changed" | "unchanged" | "not_confirmed" | "skipped" | "failed";
+export type RecoveryFileStatus =
+  | "changed"
+  | "unchanged"
+  | "not_confirmed"
+  | "skipped"
+  | "failed"
+  | "rolled_back"
+  | "rollback_failed"
+  | "restored";
 
 /** One file of the database as the runtime reports it; modes in octal ("0664"). */
 export interface RecoveryFile {
@@ -13,7 +21,8 @@ export interface RecoveryFile {
   status: RecoveryFileStatus;
   old_mode: string | null;
   new_mode: string | null;
-  /** Why a file is left alone or failed: symlink, hard_link, other_owner, not_a_file, changed_during_repair, … */
+  /** Why a file is left alone or failed: symlink, hard_link, other_owner, not_a_file, changed_during_repair,
+   * other_file_refused (another file stopped the repair: all or nothing), or the system's reason. */
   reason: string | null;
 }
 
@@ -22,6 +31,8 @@ export interface RepairPlan {
   origin: "refused" | "requested";
   files: RecoveryFile[];
   repairable: boolean;
+  /** Only this user can access the files already (e.g. repaired by hand): confirming only restarts. */
+  private?: boolean;
   /** The fingerprint of the files shown; the repair is refused when the files changed since. */
   plan: string;
   /** The manual alternative, quoted for a shell. */
@@ -29,6 +40,8 @@ export interface RepairPlan {
 }
 
 export interface RepairResult {
+  /** repaired; already_private (nothing to change); returned (cancelled from the diagnosis, nothing changed). */
+  outcome: "repaired" | "already_private" | "returned";
   repaired: boolean;
   files: RecoveryFile[];
   restart: boolean;
@@ -39,10 +52,16 @@ export const recoveryApi = {
   /** The repair the user confirmed for exactly the files of ``plan``. */
   repair: (plan: string) =>
     request<RepairResult>("POST", "/recovery/database-permissions/repair", { confirm: true, plan }),
+  /** Cancel a recovery mode the diagnosis asked for: nothing changes and the regular studio starts again. */
+  leave: () =>
+    request<RepairResult>("POST", "/recovery/database-permissions/repair", { action: "return", confirm: false }),
   /** From the diagnosis: restart into recovery mode, where the user confirms the repair itself. */
   restartIntoRecovery: () =>
     request<{ restart: boolean }>("POST", "/diagnostics/database-permissions/recovery", { confirm: true }),
 };
+
+/** The manual alternative when the files could not be checked: the user puts in the data folder. */
+export const GENERIC_COMMAND = 'chmod 600 "DATA_FOLDER"/nodestro.db*';
 
 export type StartMode = "recovery" | "normal" | "down";
 

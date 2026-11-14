@@ -91,8 +91,9 @@ run() {  # run SUITE
       (cd frontend && LOCAL_E2E_REAL=0 npm run e2e:local-models -- "$(url 8025)" ${E2E_SCREENSHOTS:-}) ;;
     local-server) start local-server "$(port 8027)" python tests/e2e_local_models_server.py --data-dir "$work/local-server" --port "$(port 8027)"
       (cd frontend && npm run e2e:local-server -- "$(url 8027)" ${E2E_SCREENSHOTS:-}) ;;
-    recovery) E2E_READY=/api/health start recovery "$(port 8089)" python tests/e2e_recovery_server.py --data-dir "$work/recovery" --port "$(port 8089)"
-      (cd frontend && npm run e2e:recovery -- "$(url 8089)" ${E2E_SCREENSHOTS:-}) ;;
+    recovery) secret="e2e-recovery-$(python -c "import secrets; print(secrets.token_hex(24))")"
+      E2E_READY=/api/health start recovery "$(port 8089)" python tests/e2e_recovery_server.py --data-dir "$work/recovery" --port "$(port 8089)" --launch-secret "$secret"
+      (cd frontend && NODESTRO_E2E_SECRET="$secret" NODESTRO_E2E_DATA="$work/recovery" npm run e2e:recovery -- "$(url 8089)" ${E2E_SCREENSHOTS:-}) ;;
     portable) start portable "$(port 8087)" python tests/e2e_portable_server.py --data-dir "$work/portable" --port "$(port 8087)"
       (cd frontend && npm run e2e:portable -- "$(url 8087)" ${E2E_SCREENSHOTS:-}) ;;
     journeys) start journeys "$(port 8060)" python tests/e2e_journey_server.py --data-dir "$work/journeys" --port "$(port 8060)"

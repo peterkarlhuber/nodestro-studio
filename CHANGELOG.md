@@ -17,8 +17,20 @@
   running studio. Texts in all six languages, a help paragraph in the settings chapter, unit tests and a browser
   suite (`scripts/e2e.sh recovery`, `tests/e2e_recovery_server.py` stands in for the desktop shell's restarts;
   `E2E_READY` names the path a suite's server answers when it is up).
-- Lock (CI only, repinned to merge commits before this merges): nodestro-runtime `5c2f81c` (runtime #176, branch
-  `claude/project-thread-bjlq25-nod9`) and nodestro-api at its branch `claude/project-thread-bjlq25-nod9ui`.
+- Review (2026-11-14): the repair page is a page region whose heading takes the focus (no modal dialog), status
+  messages are announced (`role="status"`), and when the files cannot be checked a generic manual command is shown.
+  Files already private (repaired by hand) only restart (**Continue**); cancel in a recovery mode the diagnosis asked
+  for returns to the studio unchanged (`{"action": "return"}`), after a refused start it stays locked and names the
+  way back (repair by hand, then close and restart Nodestro). A failed repair says that nothing was changed (the
+  runtime repairs all or nothing and the API restores the changed modes), or names the files that could not be set
+  back; the new file statuses (`rolled_back`, `rollback_failed`, `restored`, `other_file_refused`) in six languages.
+  The browser suite runs in the desktop app's launch session and covers both new ways; a test checks that recovery
+  mode serves the interface and no other API route or websocket.
+- Lock (CI only, repinned to merge commits before this merges): nodestro-runtime `186a1a6` (runtime #176, branch
+  `claude/project-thread-bjlq25-nod9`) and nodestro-api at its branch `claude/project-thread-bjlq25-nod9ui`. The lock
+  keeps nodestro-examples at `b20395a`: the api branch contains NAL-B2 (api #135), which needs examples `9d3a8e0`, so
+  copying a library template answers 500 in this branch's browser suites until the lead bumps examples (studio master
+  pins api `c6b9104`, before NAL-B2, and is not affected).
 
 ### Wave W3 in the lock, TABRION PIN-W3 (2026-11-14)
 
