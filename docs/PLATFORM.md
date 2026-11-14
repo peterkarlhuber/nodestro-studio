@@ -176,8 +176,8 @@ install path of the platform installs them as they were uploaded before one shar
 and the desktop backend (nodestro-desktop `scripts/build_backend.sh`). The products read the file of the studio commit
 they build from, so the tested set is the shipped set and a rebuild of the same commits installs the same packages.
 
-- `scripts/pip_cutoff.py` checks the file and the pip of the installing interpreter (pip 26.0 or newer, the first with
-  the option) and prints the cutoff; every path passes it as the command-line option, never as
+- `scripts/pip_cutoff.py` checks the file and the pip of the installing interpreter (pip 26.1 or newer, the
+  [pip floor](#pip-floor)) and prints the cutoff; every path passes it as the command-line option, never as
   `PIP_UPLOADED_PRIOR_TO`, which an older pip would ignore without a word. A path whose pip is too old fails; it then
   gets an exact newer pip (`pip==26.2.2`) deliberately, the cutoff is never skipped.
 - What a build installed is kept: the platform workflow uploads `pip freeze` (artifact
@@ -189,6 +189,24 @@ they build from, so the tested set is the shipped set and a rebuild of the same 
   it moves immediately, as soon as the platform pipeline is green with the new cutoff. Then the products take it over
   with their next studio pin (`studio.json`, `components.json`).
 - Users who install the studio themselves (`pip install .`) are not bound to the cutoff and need no particular pip.
+
+### pip floor
+
+Nodestro requires **pip 26.1 or later** on every install path (owner decision 2026-11-14): pip 26.0 brought
+`--uploaded-prior-to`, and 26.1 is the first pip that applies the lock's direct Git references as constraints
+(`pip install -c <lock> "nodestro-api[server]"`); pip 26.0 and older fail there with "No matching distribution found"
+or ask the index for the internal names. axentra and orkexa are not bound by it: they keep their tested compatibility
+with pip 25.0 (nodestro-studio `tabrion-compat.yml`, cells a and c).
+
+- Refused early, with what to do: `scripts/pip_cutoff.py` fails every scripted path (platform workflow, server image,
+  desktop backend) before pip runs; `make install` and the manual steps in the README run
+  `python -I scripts/pip_cutoff.py --pip-only` first. The message names the pip found, the floor and the command
+  `python -m pip install "pip>=26.1"`.
+- CI: every Nodestro workflow installs `"pip>=26.1"` before the lock (nodestro-runtime, nodestro-api,
+  nodestro-integrations, nodestro-examples, nodestro-sdk and this repository).
+- The component READMEs name the floor next to the lock.
+- Raising the floor is an owner decision; it changes `MINIMUM_PIP` in `scripts/pip_cutoff.py`, this section and the
+  READMEs together.
 
 ## CI and access
 

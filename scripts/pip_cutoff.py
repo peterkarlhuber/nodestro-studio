@@ -12,9 +12,11 @@ line ``pip_cutoff: FAIL ...`` on stderr, nothing on stdout) when
 
 - the file is missing or is not exactly one timestamp ``YYYY-MM-DDTHH:MM:SSZ``,
 - the cutoff lies in the future (it would not be reproducible),
-- this interpreter's pip is missing or older than 26.0, the first pip with ``--uploaded-prior-to``. Older pip would
-  reject the option; an environment variable instead of the option would be ignored silently, so the paths never use
-  ``PIP_UPLOADED_PRIOR_TO``.
+- this interpreter's pip is missing or older than 26.1, Nodestro's pip floor (owner decision 2026-11-14,
+  docs/PLATFORM.md "pip floor"). pip 26.0 is the first pip with ``--uploaded-prior-to``; 26.1 is the first that
+  applies the lock's direct git references as constraints (``-c``), and older pip fails on them with "No matching
+  distribution found" or asks the index. An environment variable instead of the option would be ignored silently,
+  so the paths never use ``PIP_UPLOADED_PRIOR_TO``.
 
 Moving the cutoff (docs/PLATFORM.md, "Third-party packages"): together with every pin bundle (at the latest 7 days
 after it) and, for a security-relevant third-party update, immediately after a successful check of the new set.
@@ -33,8 +35,12 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 CUTOFF_FILE = ROOT / "platform" / "uploaded-prior-to"
 CUTOFF = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
-#: The first pip with --uploaded-prior-to (and that passes it on to the isolated build environments).
-MINIMUM_PIP = (26, 0)
+#: Nodestro's pip floor: 26.0 brought --uploaded-prior-to (and passes it on to the isolated build environments), 26.1
+#: applies direct git references in constraints files (the lock as ``-c``). axentra and orkexa keep pip 25.0.
+MINIMUM_PIP = (26, 1)
+MINIMUM_PIP_TEXT = ".".join(map(str, MINIMUM_PIP))
+#: What to do about a too old pip, in every message.
+UPGRADE_HINT = 'run `python -m pip install "pip>=26.1"` with this interpreter first'
 
 
 class CutoffError(Exception):
@@ -69,20 +75,27 @@ def pip_version() -> str | None:
 
 def check_pip(version: str | None) -> None:
     if version is None:
-        raise CutoffError(f"{sys.executable} has no pip; the cutoff needs pip >= 26.0")
+        raise CutoffError(f"{sys.executable} has no pip; Nodestro needs pip >= {MINIMUM_PIP_TEXT}")
     found = re.match(r"^(\d+)\.(\d+)", version)
     if not found or (int(found[1]), int(found[2])) < MINIMUM_PIP:
         raise CutoffError(
-            f"pip {version} of {sys.executable} has no --uploaded-prior-to; pip >= 26.0 is needed "
-            "(install an exact pip, e.g. pip==26.2.2, in this path first)"
+            f"pip {version} of {sys.executable} is too old: Nodestro needs pip >= {MINIMUM_PIP_TEXT} "
+            f"(--uploaded-prior-to and the lock's git references as constraints); {UPGRADE_HINT}"
         )
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0] if __doc__ else None)
     parser.add_argument("--file", type=Path, default=CUTOFF_FILE, help="default: platform/uploaded-prior-to")
+    parser.add_argument(
+        "--pip-only", action="store_true", help="check only this interpreter's pip (manual installs); print nothing"
+    )
     args = parser.parse_args(argv)
     try:
+        if args.pip_only:
+            check_pip(pip_version())
+            print(f"pip_cutoff: pip {pip_version()} meets Nodestro's floor {MINIMUM_PIP_TEXT}", file=sys.stderr)
+            return 0
         cutoff = read_cutoff(args.file)
         check_pip(pip_version())
     except CutoffError as exc:
