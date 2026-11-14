@@ -7800,3 +7800,36 @@ ul.gate-report__list > li.gate-report__item {
   align-items: center;
   gap: 4px 8px;
 }
+
+/* Set up search service (NAL-A2): one card per provider, none chosen in advance. */
+.search-providers {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.search-provider {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--nd-border);
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.search-provider:has(input:checked) {
+  border-color: var(--nd-brand);
+  box-shadow: inset 0 0 0 1px var(--nd-brand);
+}
+
+.search-provider input {
+  margin-top: 0.2rem;
+}
+
+.search-provider__text {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}

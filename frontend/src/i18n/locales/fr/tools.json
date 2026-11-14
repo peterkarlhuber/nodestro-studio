@@ -415,6 +415,30 @@
       "secret_set": "Secret défini",
       "secret_cleared": "Secret retiré",
       "checked": "Vérifiée"
+    },
+    "search": {
+      "open": "Configurer un service de recherche",
+      "title": "Configurer un service de recherche",
+      "intro": "Choisissez le service avec lequel vos agents cherchent sur le web. Rien n’est présélectionné : lisez les remarques et choisissez celui qui convient. Vous pouvez modifier ou supprimer la connexion plus tard.",
+      "choose": "Service de recherche",
+      "needsKey": "Clé requise",
+      "noKey": "Sans clé",
+      "testName": "Fournisseur de test",
+      "note": {
+        "ddgs": "Gratuit, sans clé et sans aucune garantie : il utilise d’autres moteurs de recherche, qui peuvent le bloquer ou changer à tout moment.",
+        "brave": "Nécessite une clé d’API. Les résultats ne doivent pas être enregistrés. Environ 5 USD pour 1000 requêtes.",
+        "tavily": "Nécessite une clé d’API. Indiquez le prix par requête de votre offre.",
+        "mojeek": "Nécessite une clé d’API. Exploité en Europe. Indiquez le prix par requête de votre offre.",
+        "searxng": "Votre propre serveur : indiquez son adresse. Une clé n’est nécessaire que si votre serveur en demande une.",
+        "test": "Fournisseur de test hors ligne pour essayer : il renvoie des résultats inventés et n’accède jamais à internet."
+      },
+      "endpoint": "Adresse de votre serveur",
+      "endpointHint": "Par exemple https://search.example.org. Les adresses internes sont refusées.",
+      "price": "Prix par requête (USD)",
+      "priceHint": "Selon votre offre, par exemple 0.008. Il compte dans le budget de l’exécution.",
+      "create": "Configurer",
+      "done": "Service de recherche « {{name}} » configuré.",
+      "none": "Aucun service de recherche ne peut être configuré dans cette installation."
     }
   }
 }

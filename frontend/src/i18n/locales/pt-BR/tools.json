@@ -415,6 +415,30 @@
       "secret_set": "Segredo definido",
       "secret_cleared": "Segredo removido",
       "checked": "Verificada"
+    },
+    "search": {
+      "open": "Configurar serviço de busca",
+      "title": "Configurar um serviço de busca",
+      "intro": "Escolha o serviço com que seus agentes buscam na web. Nada vem pré-selecionado: leia as observações e escolha o que servir. Você pode alterar ou excluir a conexão depois.",
+      "choose": "Serviço de busca",
+      "needsKey": "Exige chave",
+      "noKey": "Sem chave",
+      "testName": "Provedor de teste",
+      "note": {
+        "ddgs": "Gratuito, sem chave e sem nenhuma garantia: usa outros mecanismos de busca, que podem bloqueá-lo ou mudar a qualquer momento.",
+        "brave": "Exige uma chave de API. Os resultados não podem ser armazenados. Cerca de 5 USD a cada 1000 solicitações.",
+        "tavily": "Exige uma chave de API. Informe o preço por solicitação do seu plano.",
+        "mojeek": "Exige uma chave de API. Operado na Europa. Informe o preço por solicitação do seu plano.",
+        "searxng": "Seu próprio servidor: informe o endereço dele. Uma chave só é necessária se o seu servidor pedir.",
+        "test": "Provedor de teste offline para experimentar: devolve resultados inventados e nunca acessa a internet."
+      },
+      "endpoint": "Endereço do seu servidor",
+      "endpointHint": "Por exemplo https://search.example.org. Endereços internos são recusados.",
+      "price": "Preço por solicitação (USD)",
+      "priceHint": "Do seu plano, por exemplo 0.008. Conta para o orçamento da execução.",
+      "create": "Configurar",
+      "done": "Serviço de busca “{{name}}” configurado.",
+      "none": "Nenhum serviço de busca pode ser configurado nesta instalação."
     }
   }
 }
