@@ -364,6 +364,7 @@ from #121). Both have status `Needs external review`.
 
 | This repo item | Other repo | Other item | Relation |
 |---|---|---|---|
+| (open, TABRION MIG-NOD-9) | nodestro-runtime, nodestro-api, nodestro-desktop | runtime #176, api and desktop branch `claude/project-thread-bjlq25-nod9ui` | Recovery mode dialog and the diagnosis' repair button; the lock pins runtime `edc3c60` and the api branch head for CI only: repin both to their merge commits before merging |
 | (pointer) | nodestro-runtime | RT-001 (independent S-2 review, includes the studio approval surfaces) | Full entry in runtime |
 | (pointer) | nodestro-api | API-054 (independent review of the portable export, api #85/#87, studio #121) | Full entry in api |
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |

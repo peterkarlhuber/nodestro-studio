@@ -42,6 +42,16 @@
         "no_fts": "Knowledge search then finds less. Install a Python with complete SQLite (e.g. from python.org)."
       }
     },
+    "database_permissions": {
+      "title": "Database permissions",
+      "ok": "Only your user can access the database files.",
+      "not_private": "Other users of this computer can read the database files: {{files}}.",
+      "not_repairable": "Other users of this computer can access the database files, and Nodestro cannot repair them itself: {{files}}.",
+      "fix": {
+        "not_private": "Restrict the files to your user. Nodestro restarts in repair mode and shows the change before anything changes.",
+        "not_repairable": "Repair the files by hand (command below), then start Nodestro again."
+      }
+    },
     "data_dir": {
       "title": "Data directory",
       "ok": "Writable: {{path}}",
@@ -136,5 +146,13 @@
         "missing": "Enter its access above under “AI providers”. Without it these models do not run."
       }
     }
+  },
+  "databasePermissions": {
+    "repair": "Repair permissions…",
+    "busy": "Available once no runs are active.",
+    "restartTitle": "Restart in repair mode?",
+    "restartText": "Nodestro ends the current session and starts again in repair mode. There you see exactly which files change and confirm the repair. Nothing changes before that.",
+    "restartNow": "Restart in repair mode",
+    "restarting": "Nodestro restarts in repair mode…"
   }
 }

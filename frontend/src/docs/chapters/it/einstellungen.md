@@ -322,6 +322,8 @@ Le **chiavi API** dei provider di IA non finiscono mai nel backup, e nemmeno gli
 
 La diagnosi è gratuita e non invia nulla a internet. **Verifica connessione** chiede inoltre l’elenco dei modelli al provider del modello predefinito; nella sezione di ogni provider in [Provider di IA](/docs/einstellungen#anbieter) lo verifichi singolarmente. Non usa token e non costa nulla. Le chiavi API e le altre credenziali non vengono mai mostrate.
 
+**Permessi del database** (app desktop): se altri utenti di questo computer possono leggere i file del database, la diagnosi lo segnala e offre **Ripara i permessi…** (quando non ci sono esecuzioni attive). Nodestro si riavvia allora in modalità di riparazione, mostra ogni file con i permessi attuali e quelli nuovi e li modifica solo dopo la tua conferma; cambiano solo i permessi, mai il contenuto. Se altri utenti possono perfino modificare il database, Nodestro apre da solo questa modalità di riparazione all’avvio, e nient’altro, finché non è riparato o lo ripari a mano con il comando `chmod 600 …` mostrato lì. I collegamenti simbolici, i file con un altro nome (collegamenti fisici) e i file di altri utenti non vengono mai modificati.
+
 ## Installazione e avvio {#installation}
 <!-- keywords: installazione, avvio, riga di comando, cli, porta, host, data-dir, no-browser, reload, python, node -->
 

@@ -1155,5 +1155,14 @@
   "fetch": {
     "unsupported_type": "Ce type de fichier ne peut pas être lu ; seuls les pages web, le texte et le PDF le peuvent.",
     "too_large": "Le document est trop volumineux pour être lu."
+  },
+  "recovery": {
+    "not_confirmed": "La réparation n’a pas été confirmée ; rien n’a été modifié.",
+    "plan_changed": "Les fichiers de la base de données ont changé depuis leur affichage ; rien n’a été modifié. Vérifiez-les à nouveau.",
+    "not_repairable": "Ces fichiers de la base de données ne peuvent pas être réparés ici ; rien n’a été modifié.",
+    "repair_failed": "Les droits d’accès de la base de données n’ont pas pu être entièrement réparés.",
+    "restarting": "Les droits d’accès ont été réparés ; Nodestro redémarre.",
+    "busy": "Des exécutions ou d’autres travaux sont en cours. Redémarrez en mode réparation une fois qu’ils sont terminés.",
+    "unavailable": "Seule l’application de bureau peut redémarrer en mode réparation. Restreignez plutôt les droits d’accès à la main."
   }
 }

@@ -322,6 +322,8 @@ As **chaves de API** dos provedores de IA nunca vão para o backup, nem URLs bas
 
 O diagnóstico é gratuito e não envia nada para a internet. **Testar conexão** pede também a lista de modelos ao provedor do modelo padrão; na seção de cada provedor em [Provedores de IA](/docs/einstellungen#anbieter) você o testa individualmente. Isso não usa tokens e não custa nada. Chaves de API e outras credenciais nunca são exibidas.
 
+**Permissões do banco de dados** (aplicativo de desktop): se outros usuários deste computador puderem ler os arquivos do banco de dados, o diagnóstico informa e oferece **Reparar permissões…** (quando não houver execuções ativas). O Nodestro reinicia então no modo de reparo, mostra cada arquivo com as permissões atuais e as novas e só as altera depois que você confirmar; mudam apenas as permissões, nunca o conteúdo. Se outros usuários puderem até alterar o banco de dados, o Nodestro abre sozinho esse modo de reparo ao iniciar, e nada mais, até que ele seja reparado ou você o repare manualmente com o comando `chmod 600 …` mostrado ali. Links simbólicos, arquivos com outro nome (links físicos) e arquivos de outros usuários nunca são alterados.
+
 ## Instalação e inicialização {#installation}
 <!-- keywords: instalação, inicialização, linha de comando, cli, porta, host, data-dir, no-browser, reload, python, node -->
 

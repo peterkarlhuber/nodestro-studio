@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+### Repairing the database's permissions with the user's confirmation, TABRION MIG-NOD-9 (2026-11-14)
+
+- Recovery mode (decision E-NOD-PERM, option B): when the backend runs in recovery mode (`GET /api/health` answers
+  `"mode": "recovery"`, nodestro-api `recovery.py`), the interface shows only the repair dialog
+  (`src/recovery/RecoveryScreen.tsx`): every database file with its current and its new mode as the runtime reports
+  them (`rw-rw-r-- (0664)` -> `rw------- (0600)`), files left alone with the reason (symbolic link, hard link, another
+  owner), the manual `chmod 600 ...` command with a copy button, and the repair only after an explicit confirmation
+  (checkbox and button). Cancel and errors change nothing and keep Nodestro locked; a file that changed since the dry
+  run shows the dialog again. After the repair the backend restarts; started from a terminal, the page reloads once a
+  backend answers again.
+- Diagnosis: the check `database_permissions` (readable by other users) with **Repair permissions...** (desktop app
+  only, disabled while runs are active) that restarts into recovery mode after a confirmation; it never repairs in the
+  running studio. Texts in all six languages, a help paragraph in the settings chapter, unit tests and a browser
+  suite (`scripts/e2e.sh recovery`, `tests/e2e_recovery_server.py` stands in for the desktop shell's restarts;
+  `E2E_READY` names the path a suite's server answers when it is up).
+- Lock (CI only, repinned to merge commits before this merges): nodestro-runtime `edc3c60` (runtime #176, branch
+  `claude/project-thread-bjlq25-nod9`) and nodestro-api at its branch `claude/project-thread-bjlq25-nod9ui`.
+
 ### Wave W3 in the lock, TABRION PIN-W3 (2026-11-14)
 
 - The lock moves to axentra `410269c` (MIG-AXE-4/5: session settings and advisory locks through

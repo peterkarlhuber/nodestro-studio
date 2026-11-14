@@ -1155,5 +1155,14 @@
   "fetch": {
     "unsupported_type": "Este tipo de arquivo não pode ser lido; apenas páginas web, texto e PDF.",
     "too_large": "O documento é grande demais para ser lido."
+  },
+  "recovery": {
+    "not_confirmed": "O reparo não foi confirmado; nada foi alterado.",
+    "plan_changed": "Os arquivos do banco de dados mudaram desde que foram exibidos; nada foi alterado. Confira-os novamente.",
+    "not_repairable": "Estes arquivos do banco de dados não podem ser reparados aqui; nada foi alterado.",
+    "repair_failed": "Não foi possível reparar por completo as permissões do banco de dados.",
+    "restarting": "As permissões foram reparadas; o Nodestro está reiniciando.",
+    "busy": "Há execuções ou outros trabalhos ativos. Reinicie no modo de reparo quando terminarem.",
+    "unavailable": "Só o aplicativo de desktop pode reiniciar no modo de reparo. Restrinja as permissões manualmente."
   }
 }

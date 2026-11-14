@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh --list | [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server|portable ...]   (default: all but portable)
+# Usage: scripts/e2e.sh --list | [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server|recovery|portable ...]   (default: all but portable)
 # The journeys suite writes its report to $JOURNEY_REPORT when set.
 # E2E_PORT_OFFSET (default 0) moves every server port by that amount (8000 to 8099 by default, so parallel runs on
 # one machine do not collide), E2E_BROWSER=firefox|webkit picks another Playwright engine.
@@ -14,7 +14,7 @@ cd "$(dirname "$0")/.."
 
 # The suites a run without arguments runs, in this order. `scripts/e2e.sh --list` prints them (scripts/e2e_halves.sh
 # splits them between two parallel runs and checks that the halves together are exactly this list).
-default_suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models local-server)
+default_suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models local-server recovery)
 if [ "${1:-}" = "--list" ]; then
   printf '%s\n' "${default_suites[@]}"
   exit 0
@@ -28,14 +28,14 @@ offset=${E2E_PORT_OFFSET:-0}
 port() { echo $(($1 + offset)); }
 url() { echo "http://127.0.0.1:$(port "$1")"; }
 
-start() {  # start NAME PORT COMMAND...
-  local name=$1 port=$2; shift 2
+start() {  # start NAME PORT COMMAND...   (E2E_READY: the path that answers once it is up, default /api/meta)
+  local name=$1 port=$2 ready=${E2E_READY:-/api/meta}; shift 2
   # Every suite runs on "a computer without Docker" (CI runners have one): the automatic sandbox mode would
   # otherwise run AI-created tools there, and the suites check the blocked state. Doubles stand in where needed.
   DOCKER_HOST=unix:///nonexistent/docker.sock "$@" > "$work/$name.log" 2>&1 &
   pids+=($!)
   for _ in $(seq 1 60); do
-    curl -sf "http://127.0.0.1:$port/api/meta" > /dev/null && return 0
+    curl -sf "http://127.0.0.1:$port$ready" > /dev/null && return 0
     sleep 1
   done
   cat "$work/$name.log"; return 1
@@ -91,6 +91,8 @@ run() {  # run SUITE
       (cd frontend && LOCAL_E2E_REAL=0 npm run e2e:local-models -- "$(url 8025)" ${E2E_SCREENSHOTS:-}) ;;
     local-server) start local-server "$(port 8027)" python tests/e2e_local_models_server.py --data-dir "$work/local-server" --port "$(port 8027)"
       (cd frontend && npm run e2e:local-server -- "$(url 8027)" ${E2E_SCREENSHOTS:-}) ;;
+    recovery) E2E_READY=/api/health start recovery "$(port 8089)" python tests/e2e_recovery_server.py --data-dir "$work/recovery" --port "$(port 8089)"
+      (cd frontend && npm run e2e:recovery -- "$(url 8089)" ${E2E_SCREENSHOTS:-}) ;;
     portable) start portable "$(port 8087)" python tests/e2e_portable_server.py --data-dir "$work/portable" --port "$(port 8087)"
       (cd frontend && npm run e2e:portable -- "$(url 8087)" ${E2E_SCREENSHOTS:-}) ;;
     journeys) start journeys "$(port 8060)" python tests/e2e_journey_server.py --data-dir "$work/journeys" --port "$(port 8060)"

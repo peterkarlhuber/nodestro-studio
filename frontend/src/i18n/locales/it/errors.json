@@ -1155,5 +1155,14 @@
   "fetch": {
     "unsupported_type": "Questo tipo di file non può essere letto; solo pagine web, testo e PDF.",
     "too_large": "Il documento è troppo grande per essere letto."
+  },
+  "recovery": {
+    "not_confirmed": "La riparazione non è stata confermata; non è stato modificato nulla.",
+    "plan_changed": "I file del database sono cambiati da quando sono stati mostrati; non è stato modificato nulla. Controllali di nuovo.",
+    "not_repairable": "Questi file del database non si possono riparare qui; non è stato modificato nulla.",
+    "repair_failed": "Non è stato possibile riparare completamente i permessi del database.",
+    "restarting": "I permessi sono stati riparati; Nodestro si sta riavviando.",
+    "busy": "Sono attive esecuzioni o altre attività. Riavvia in modalità di riparazione quando sono terminate.",
+    "unavailable": "Solo l’app desktop può riavviarsi in modalità di riparazione. Limita invece i permessi a mano."
   }
 }

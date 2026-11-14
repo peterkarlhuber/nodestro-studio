@@ -322,6 +322,8 @@ Les **clés API** des fournisseurs d’IA ne sont jamais écrites dans la sauveg
 
 Le diagnostic est gratuit et n’envoie rien sur Internet. **Tester la connexion** demande en plus la liste des modèles au fournisseur du modèle par défaut ; dans la section de chaque fournisseur sous [Fournisseurs d’IA](/docs/einstellungen#anbieter), vous le testez individuellement. Cela n’utilise aucun token et ne coûte rien. Les clés API et autres identifiants ne sont jamais affichés.
 
+**Droits d’accès de la base de données** (application de bureau) : si d’autres utilisateurs de cet ordinateur peuvent lire les fichiers de la base de données, le diagnostic le signale et propose **Réparer les droits d’accès…** (dès qu’aucune exécution n’est active). Nodestro redémarre alors en mode réparation, affiche chaque fichier avec ses droits actuels et ses nouveaux droits, et ne les modifie qu’après votre confirmation ; seuls les droits changent, jamais le contenu. Si d’autres utilisateurs peuvent même modifier la base de données, Nodestro ouvre de lui-même ce mode réparation au démarrage, et rien d’autre, jusqu’à ce qu’elle soit réparée ou que vous la répariez à la main avec la commande `chmod 600 …` affichée. Les liens symboliques, les fichiers ayant un autre nom (liens physiques) et les fichiers d’autres utilisateurs ne sont jamais modifiés.
+
 ## Installation et démarrage {#installation}
 <!-- keywords: installation, démarrage, ligne de commande, cli, port, host, data-dir, no-browser, reload, python, node -->
 
