@@ -57,10 +57,10 @@ try {
   check(early.length === 0, `The start page loads no editor, canvas, Markdown or docs code${early.length ? `: ${early.join(", ")}` : ""}`);
   await shot("01-workflows");
 
-  await gallery.getByRole("link", { name: /Alle 24 Beispiele/ }).click();
+  await gallery.getByRole("link", { name: /Alle 25 Beispiele/ }).click();
   await page.waitForURL(/\/workflows\/examples/);
-  await page.waitForFunction(() => document.querySelectorAll(".example-card").length === 24, null, { timeout: 10000 });
-  check(true, "The full gallery lists all 24 examples");
+  await page.waitForFunction(() => document.querySelectorAll(".example-card").length === 25, null, { timeout: 10000 });
+  check(true, "The full gallery lists all 25 examples");
   await page.getByRole("searchbox", { name: "Beispiele durchsuchen" }).fill("8D");
   await page.waitForFunction(() => document.querySelectorAll(".example-card").length === 1);
   check(true, "Gallery search narrows the examples");
