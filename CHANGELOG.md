@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+### Web search and reading web pages, studio UI (NAL-A2, 2026-11-14)
+
+Codes against the runtime's NAL-A2 contract (`search_web`, `fetch_web_page`, source ledger; runtime branch not yet
+merged). Older APIs without the new fields look as before.
+
+- *Tools → Connections → Set up search service* (`frontend/src/pages/SearchSetup.tsx`): one card per search provider
+  (DDGS, Brave Search, Tavily, Mojeek, SearXNG, offline test provider) with an honest note on key, cost and limits;
+  no provider is preselected (owner decision E-3 open) and none is recommended. Providers whose `provider_modes`
+  exclude the installation's mode are hidden (DDGS on a server). It creates a normal `search` connection, asks Tavily
+  and Mojeek for `price_per_request_usd`, SearXNG for its `endpoint`, and sets the key of providers that need one
+  (`keyless_providers`). `ConnectionTypeInfo` gains the optional `keyless_providers` and `provider_modes`.
+- Agent inspector (`frontend/src/editor/ToolBindings.tsx`, moved out of `AgentInspector.tsx`): assigned built-in
+  tools that need a connection, reach the internet or have binding parameters show the "Internet" network badge, the
+  connection picker (search_web) and an "Advanced" area built from the spec's `params_schema` (search_web: results,
+  region, language, time range, allowed/blocked domains, calls; fetch_web_page: domains, characters, calls). Only
+  values the schema accepts are written to `tool_settings[tool].params`.
+- Output fields: an agent's text and text list fields offer "Cites web sources" (`source: "ledger"`).
+- Run detail page: a "Web sources" panel lists `run.sources` (id, title, domain, time, "Read" or "Hit only"). Titles
+  are plain text; only http(s) addresses become links, opened in a new tab with `rel="noopener noreferrer"`. Hidden
+  without sources.
+- Texts for `check.ledger_source_no_tool`, `check.ledger_source_type`, `output.unknown_source`,
+  `connection.provider_unsupported_mode`, `connection.endpoint_missing` and the web tools' result codes
+  (`search.unavailable`, `search.rate_limited`, `search.auth_failed`, `search.price_unknown`, `web.address_refused`,
+  `fetch.unsupported_type`, `fetch.too_large`, `tool.mode_unsupported`) in all six languages; `codedToolOutput` also
+  reads a built-in tool's `Error: ... (code)` sentence.
+- Help chapter "Web search and reading web pages" (`websuche`) in all six languages, linked from the connections and
+  tools chapters.
+
 ### Dependency confusion: a poisoned index in CI, TABRION DC-NS-1/DC-NS-2 (2026-11-13)
 
 - `scripts/check_tabrion_source.py` (standard library only; the canonical copy for nodestro-runtime, nodestro-api and
