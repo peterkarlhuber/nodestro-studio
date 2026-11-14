@@ -168,7 +168,8 @@ def _orkexa_calls(work: Path) -> str:
 
 
 def _axentra_calls() -> str:
-    from axentra.data.migrations import split_statements  # re-exported from tabrion.sql
+    # By name: the studio itself never installs axentra (server profile only), so mypy cannot see it here.
+    split_statements = importlib.import_module("axentra.data.migrations").split_statements  # from tabrion.sql
 
     importlib.import_module("axentra.core.db_errors")
     importlib.import_module("axentra.data.database")
