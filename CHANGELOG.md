@@ -4,8 +4,11 @@
 
 ### Web search and reading web pages, studio UI (NAL-A2, 2026-11-14)
 
-Codes against the runtime's NAL-A2 contract (`search_web`, `fetch_web_page`, source ledger; runtime branch not yet
-merged). Older APIs without the new fields look as before.
+Codes against the runtime's NAL-A2 contract (`search_web`, `fetch_web_page`, source ledger). Until the runtime with
+the web tools is in the lock, the API offers no web providers and the new parts stay hidden; older APIs look as before.
+
+- Lock: orkexa moves to `e59f199` (orkexa #95: the web layer with the egress guard, search adapters and the isolated
+  HTML worker), which nodestro-runtime's web tools need. Nothing else in the lock changes.
 
 - *Tools → Connections → Set up search service* (`frontend/src/pages/SearchSetup.tsx`): one card per search provider
   (DDGS, Brave Search, Tavily, Mojeek, SearXNG, offline test provider) with an honest note on key, cost and limits;
@@ -29,6 +32,16 @@ merged). Older APIs without the new fields look as before.
   reads a built-in tool's `Error: ... (code)` sentence.
 - Help chapter "Web search and reading web pages" (`websuche`) in all six languages, linked from the connections and
   tools chapters.
+
+### Tabrion in the studio profile, TABRION PIN-W2 (MIG-NOD-3, K-32) (2026-11-14)
+
+- nodestro-runtime requires the stdlib-only `tabrion` core (MIG-NOD-3), so every profile holds tabrion:
+  `scripts/lock_check.py` lists it in `STUDIO_PROFILE_EXTRA`, `check_versions.py` drops its server-only special case,
+  and `platform/internal.txt` gains the tabrion line (0.1.0, `d5821fa`). The policy edge nodestro-runtime -> tabrion
+  (required) is active (K-32).
+- The lock moves to nodestro-runtime `9e0a73d` (MIG-NOD-3: value-free storage error texts through `tabrion.errors`)
+  and nodestro-api `97b1ca1` (api #132: the export names tabrion by its Git commit and counts
+  `nodestro_runtime.error_texts` from the installed runtime).
 
 ### Dependency confusion: a poisoned index in CI, TABRION DC-NS-1/DC-NS-2 (2026-11-13)
 

@@ -81,6 +81,7 @@ def test_the_lock_files_are_generated_from_versions_json(tmp_path: Path) -> None
     assert [line for line in studio if not line.startswith("#")] == [
         f"nodestro-runtime @ {url}/nodestro-runtime.git@{A}",
         f"orkexa @ {url}/orkexa.git@{A}",
+        f"tabrion @ {url}/tabrion.git@{B}",  # every profile since TABRION MIG-NOD-3 (K-32)
     ]
     assert [line for line in server if not line.startswith("#")] == [
         f"axentra @ {url}/axentra.git@{B}",
