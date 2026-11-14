@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Lock: TABRION PIN-W4, MCP guard, NAL-B2 runtime, SDK discovery (2026-11-14)
+
+- TABRION PIN-W4: runtime `52451df` (MIG-NOD-7), axentra `3868634` (MIG-AXE-2).
+- The same runtime also holds the MCP network guard on Orkexa's shared egress guard (runtime #172, behavior
+  unchanged, parity test) and result fields filled from the run's source ledger (NAL-B2, runtime #173:
+  `ledger_cited`, `ledger_list`, `ledger_range`).
+- nodestro-sdk `bf2aed1` (sdk #119): `discover()` and contract version negotiation for the app API (NAL-C1).
+
 ### Wave W3 in the lock, TABRION PIN-W3 (2026-11-14)
 
 - The lock moves to axentra `410269c` (MIG-AXE-4/5: session settings and advisory locks through
