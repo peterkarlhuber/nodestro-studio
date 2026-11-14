@@ -1112,6 +1112,7 @@
     "address_invalid": "Eine Adresse der Verbindung ({{type}}) kann nicht verwendet werden (zum Beispiel eine interne Adresse, http statt https oder ein Passwort in der Adresse).",
     "check_failed": "Die Prüfung der Verbindung ist fehlgeschlagen.",
     "check_unavailable": "Diese Verbindung kann hier noch nicht geprüft werden.",
+    "id_invalid": "Das Paket nennt eine Dienstverbindung mit ungültiger Kennung. Exportiere den Workflow neu.",
     "in_use_one": "{{count}} Agent nutzt diese Verbindung noch ({{names}}).",
     "in_use_other": "{{count}} Agenten nutzen diese Verbindung noch ({{names}}).",
     "missing_one": "{{count}} Verbindung zu einem Dienst ist nicht eingerichtet. Richte sie mit „configure“ ein und starte dann neu.",

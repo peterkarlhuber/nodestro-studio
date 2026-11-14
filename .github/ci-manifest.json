@@ -21,7 +21,7 @@
       "docker unsuitable (windows-latest)"
     ],
     "macos.yml": ["frontend"],
-    "platform.yml": ["pins", "components (3.11)", "components (3.13)", "sdk", "browser"],
+    "platform.yml": ["pins", "components (3.11)", "components (3.13)", "tabrion source (poisoned index)", "sdk", "browser"],
     "platforms.yml": [
       "start (ubuntu-latest)",
       "start (macos-latest)",

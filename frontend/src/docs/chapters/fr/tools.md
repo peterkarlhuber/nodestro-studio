@@ -33,6 +33,8 @@ Les modèles de langage se trompent facilement en calcul mental. Donnez la `calc
 
 La bibliothèque affiche les descriptions des outils intégrés dans la langue de l’interface. Le modèle reçoit toujours la description originale en anglais, pour que les agents existants se comportent de la même façon dans toutes les langues.
 
+Chaque outil intégré porte des badges dans la bibliothèque : catégorie, réseau (*Sans réseau* ou *Avec Internet*), *Fonctionne hors ligne* et, si besoin, *Exige une connexion*. Les détails indiquent le délai maximal et le nombre maximal d’appels par exécution ; un appel plus long se termine par une erreur d’outil et l’exécution continue. Les filtres au-dessus de la liste n’affichent que les outils d’une catégorie, sans réseau, utilisables hors ligne ou ceux qui exigent une [connexion](/docs/verbindungen). Un outil avec accès à Internet est refusé dans un workflow hors ligne avant le démarrage.
+
 ## Outils serveur d’Anthropic {#server-tools}
 <!-- keywords: recherche web, web search, récupération web, web fetch, exécution de code, code execution, outils serveur, sources -->
 

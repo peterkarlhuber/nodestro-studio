@@ -33,6 +33,8 @@ Los modelos de lenguaje se equivocan al calcular de cabeza. Da la `calculator` a
 
 La biblioteca muestra las descripciones de las herramientas integradas en el idioma de la interfaz. El modelo recibe siempre la descripción original en inglés, para que los agentes existentes se comporten igual en todos los idiomas.
 
+Cada herramienta integrada lleva distintivos en la biblioteca: categoría, red (*Sin red* o *Con Internet*), *Funciona sin conexión* y, si hace falta, *Necesita una conexión*. Los detalles muestran el límite de tiempo y el máximo de llamadas por ejecución; una llamada que tarda más termina con un error de herramienta y la ejecución continúa. Los filtros sobre la lista muestran solo las herramientas de una categoría, sin red, usables sin conexión o las que necesitan una [conexión](/docs/verbindungen). Una herramienta con acceso a Internet se rechaza en un flujo de trabajo sin conexión antes del inicio.
+
 ## Herramientas de servidor de Anthropic {#server-tools}
 <!-- keywords: búsqueda web, web search, obtención web, web fetch, ejecución de código, code execution, herramientas de servidor, fuentes -->
 

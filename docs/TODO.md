@@ -11,7 +11,7 @@
 |---|---|
 | P0 Critical | 0 |
 | P1 High | 0 |
-| P2 Medium | 3 |
+| P2 Medium | 4 |
 | P3 Low | 10 |
 | P4 Optional | 4 |
 
@@ -113,6 +113,22 @@ from #121). Both have status `Needs external review`.
 - **Next step:** goes in with CI-FAST step 4, after nodestro-runtime #159 and nodestro-api #126 (their tabrion dev
   requirement as a range) are merged and locked. Each new tabrion final adds its release commit to `releases`. Close
   this entry then.
+
+### ST-063 · Dependency confusion: poisoned-index tests in every consumer (TABRION DC-NS-1, DC-NS-2)
+
+- **Priority:** P2 Medium · **Status:** In progress (branch `claude/project-thread-bjlq25-dcns`) · **Refs:**
+  `scripts/check_tabrion_source.py`, `tests/test_check_tabrion_source.py`, `scripts/lock_check.py` (`--only`),
+  `.github/workflows/platform.yml` (`tabrion source (poisoned index)`), Tabrion migration inventory DC1 sections 4
+  to 6 (owner decision 2026-11-13: no PyPI placeholder)
+- **What:** the canonical negative test: an install must never ask an index for `tabrion` and must install the
+  locked commit (zero index requests for it; `direct_url.json` checks only detect an accidental index install). Done
+  here: the script, `lock_check.py --only`, the platform job (listed in `.github/ci-manifest.json`, reported by
+  ci-ok). Open: (a) the `internal.txt` part of DC-NS-1 (tabrion in the studio lock, TABRION PIN-W2); (b)
+  `components-at-master.yml` puts tabrion into its overrides once it is in the studio closure.
+- **Next step:** merge; then the consumers' copies (nodestro-runtime DC-NR-1, nodestro-api DC-NA-1, orkexa DC-OR-1,
+  tabrion-studio DC-TS-1)
+  update their pinned origin commit to the merged one. Residual risk (a foreign `tabrion` on PyPI reaches only a bare
+  install by hand): Tabrion migration inventory DC1 section 6.
 
 ### ST-053 · ESLint 10 waits for the React Compiler rules of eslint-plugin-react-hooks 7
 
