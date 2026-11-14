@@ -33,6 +33,8 @@ Language models make mistakes in mental arithmetic. Give agents that work with n
 
 The library shows the descriptions of built-in tools in the interface language. The model always gets the original English description, so existing agents behave the same in every language.
 
+Every built-in tool carries badges in the library: category, network (*No network* or *Internet*), *Works offline* and, where needed, *Needs a connection*. The details show the time limit and the most calls per run; a call that takes longer ends with a tool error, and the run goes on. The filters above the list show only the tools of one category, without network, usable offline, or those that need a [connection](/docs/verbindungen). A tool with internet access is refused in an offline workflow before the start.
+
 ## Server tools from Anthropic {#server-tools}
 <!-- keywords: web search, web fetch, code execution, server tools, sources -->
 

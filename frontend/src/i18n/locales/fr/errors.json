@@ -1112,6 +1112,7 @@
     "address_invalid": "Une adresse de la connexion ({{type}}) ne peut pas être utilisée (par exemple une adresse interne, http au lieu de https ou un mot de passe dans l’adresse).",
     "check_failed": "La vérification de la connexion a échoué.",
     "check_unavailable": "Cette connexion ne peut pas encore être vérifiée ici.",
+    "id_invalid": "Le paquet indique une connexion de service avec un identifiant non valide. Exportez à nouveau le workflow.",
     "in_use_one": "{{count}} agent utilise encore cette connexion ({{names}}).",
     "in_use_other": "{{count}} agents utilisent encore cette connexion ({{names}}).",
     "missing_one": "{{count}} connexion de service n’est pas configurée. Configurez-la avec « configure », puis redémarrez.",
