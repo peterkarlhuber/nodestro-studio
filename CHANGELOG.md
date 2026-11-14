@@ -8,7 +8,9 @@ Codes against the runtime's NAL-A2 contract (`search_web`, `fetch_web_page`, sou
 the web tools is in the lock, the API offers no web providers and the new parts stay hidden; older APIs look as before.
 
 - Lock: orkexa moves to `e59f199` (orkexa #95: the web layer with the egress guard, search adapters and the isolated
-  HTML worker), which nodestro-runtime's web tools need. Nothing else in the lock changes.
+  HTML worker) together with nodestro-runtime's web tools (runtime #170): runtime's error code list names orkexa's
+  error classes, so the two move in one step. The dependency policy allows nodestro-runtime -> `orkexa[...,web]`
+  (required), `orkexa[web-ddgs]` (optional extra `web-ddgs`; DDGS is never a default) and `web-ddgs` in its dev extra.
 
 - *Tools → Connections → Set up search service* (`frontend/src/pages/SearchSetup.tsx`): one card per search provider
   (DDGS, Brave Search, Tavily, Mojeek, SearXNG, offline test provider) with an honest note on key, cost and limits;
