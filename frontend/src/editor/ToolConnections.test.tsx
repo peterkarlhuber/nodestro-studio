@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { AgentConfig } from "../api/types";
 import { defaultAgent } from "../lib/defaults";
 import { AgentForm } from "./AgentInspector";
+import { paramValue } from "./ToolBindings";
 import { useAgentSections } from "./sectionState";
 
 vi.mock("../components/CodeEditor", () => ({ CodeEditor: () => null }));
@@ -28,13 +29,52 @@ const spec = (id: string, connection_type: string | null) => ({
   i18n_key: `tools.builtin.${id}`,
 });
 
+const HOSTS = { type: "array", items: { type: "string", minLength: 1, maxLength: 253 }, maxItems: 100 };
+// The binding parameters of the runtime's SEARCH_WEB_SPEC and FETCH_WEB_PAGE_SPEC (NAL-A2).
+const SEARCH_PARAMS = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    max_results: { type: "integer", minimum: 1, maximum: 20 },
+    region: { type: "string", pattern: "^[A-Za-z]{2}$" },
+    language: { type: "string", pattern: "^[A-Za-z]{2}$" },
+    time_range: { enum: ["day", "week", "month", "year"] },
+    allow_hosts: HOSTS,
+    deny_hosts: HOSTS,
+    max_calls: { type: "integer", minimum: 1, maximum: 10 },
+  },
+};
+const FETCH_PARAMS = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    allow_hosts: HOSTS,
+    deny_hosts: HOSTS,
+    max_chars: { type: "integer", minimum: 500, maximum: 50000 },
+    max_calls: { type: "integer", minimum: 1, maximum: 20 },
+  },
+};
+const web = (id: string, connection_type: string | null, params_schema: unknown) => ({
+  ...spec(id, connection_type),
+  category: "web",
+  network: "external",
+  offline: false,
+  params_schema,
+});
+
 const CATALOG = [
   { name: "calculator", description: "", origin: "nodestro", spec: spec("calculator", null) },
   { name: "send_mail", description: "", origin: "integration", spec: spec("send_mail", "smtp") },
+  { name: "search_web", description: "", origin: "nodestro", spec: web("search_web", "search", SEARCH_PARAMS) },
+  { name: "fetch_web_page", description: "", origin: "nodestro", spec: web("fetch_web_page", null, FETCH_PARAMS) },
 ];
 
 const connection = (id: string, type: string, name: string) => ({ id, type, name, provider: "generic", check: { status: "ok" } });
-const CONNECTIONS = [connection("conn_mail", "smtp", "Office mail"), connection("conn_hook", "webhook", "Alerts hook")];
+const CONNECTIONS = [
+  connection("conn_mail", "smtp", "Office mail"),
+  connection("conn_hook", "webhook", "Alerts hook"),
+  connection("conn_search", "search", "Brave"),
+];
 
 function stubApi(connections: unknown[] = CONNECTIONS) {
   vi.stubGlobal(
@@ -101,5 +141,69 @@ describe("connection picker of a built-in tool", () => {
     expect(link).toHaveAttribute("href", "/tools?tab=connections");
     await userEvent.click(screen.getByRole("button", { name: /send_mail.*entfernen/i }));
     expect(onChange).toHaveBeenLastCalledWith({ tools: [], tool_settings: {} });
+  });
+});
+
+describe("web tools in the inspector (NAL-A2)", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    useAgentSections.setState({ open: {} });
+  });
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
+
+  it("marks both web tools with the Internet badge; only search_web picks a connection", async () => {
+    stubApi();
+    show({ ...defaultAgent(), tools: ["search_web", "fetch_web_page"] }, vi.fn());
+    const search = within(await screen.findByTestId("tool-binding-search_web"));
+    const fetch = within(screen.getByTestId("tool-binding-fetch_web_page"));
+    expect(search.getByText("Mit Internet")).toBeInTheDocument();
+    expect(fetch.getByText("Mit Internet")).toBeInTheDocument();
+    const select = search.getByLabelText("Verbindung für search_web");
+    await within(select).findByRole("option", { name: "Brave" });
+    expect(within(select).getAllByRole("option").map((option) => option.textContent)).toEqual(["Keine Verbindung gewählt", "Brave"]);
+    expect(fetch.queryByLabelText(/Verbindung für/)).not.toBeInTheDocument();
+  });
+
+  it("writes valid search_web parameters and keeps the connection", async () => {
+    stubApi();
+    const onChange = vi.fn();
+    const base = { ...defaultAgent(), tools: ["search_web"], tool_settings: { search_web: { connection_id: "conn_search", params: {} } } };
+    show(base, onChange);
+    const params = within(await screen.findByTestId("tool-params-search_web"));
+    await userEvent.type(params.getByLabelText("Höchstens Treffer pro Suche"), "5");
+    expect(onChange).toHaveBeenLastCalledWith({ tool_settings: { search_web: { connection_id: "conn_search", params: { max_results: 5 } } } });
+    await userEvent.selectOptions(params.getByLabelText("Zeitraum"), "week");
+    expect(onChange).toHaveBeenLastCalledWith({ tool_settings: { search_web: { connection_id: "conn_search", params: { time_range: "week" } } } });
+    await userEvent.type(params.getByLabelText("Gesperrte Domains"), "spam.example, ads.example");
+    expect(onChange).toHaveBeenLastCalledWith({
+      tool_settings: { search_web: { connection_id: "conn_search", params: { deny_hosts: ["spam.example", "ads.example"] } } },
+    });
+  });
+
+  it("does not write a value the schema refuses", async () => {
+    stubApi();
+    const onChange = vi.fn();
+    show({ ...defaultAgent(), tools: ["fetch_web_page"] }, onChange);
+    const params = within(await screen.findByTestId("tool-params-fetch_web_page"));
+    await userEvent.type(params.getByLabelText("Höchstens Zeichen pro Seite"), "100");
+    // 1, 10 and 100 are below the minimum of 500: nothing is written, and the field says so.
+    expect(onChange).not.toHaveBeenCalled();
+    expect(params.getByText("Kein gültiger Wert; er wird nicht gespeichert.")).toBeInTheDocument();
+    await userEvent.type(params.getByLabelText("Höchstens Zeichen pro Seite"), "0");
+    expect(onChange).toHaveBeenLastCalledWith({ tool_settings: { fetch_web_page: { connection_id: null, params: { max_chars: 1000 } } } });
+  });
+
+  it("checks values against the params schema", () => {
+    const { properties } = SEARCH_PARAMS;
+    expect(paramValue(properties.max_results, "21")).toBeNull();
+    expect(paramValue(properties.max_results, "2.5")).toBeNull();
+    expect(paramValue(properties.max_results, "")).toBeUndefined();
+    expect(paramValue(properties.region, "AT")).toBe("AT");
+    expect(paramValue(properties.region, "AUT")).toBeNull();
+    expect(paramValue(properties.time_range, "decade")).toBeNull();
+    expect(paramValue(properties.allow_hosts, "a.example\nb.example")).toEqual(["a.example", "b.example"]);
   });
 });

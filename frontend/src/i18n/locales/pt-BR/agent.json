@@ -103,7 +103,37 @@
     "serverToolsShort": "Ferramentas de servidor",
     "connection": "Conexão para {{tool}}",
     "noConnection": "Nenhuma conexão escolhida",
-    "connectionNone": "Ainda não há conexão do tipo {{type}}. Adicione uma em <a>Ferramentas → Conexões</a>."
+    "connectionNone": "Ainda não há conexão do tipo {{type}}. Adicione uma em <a>Ferramentas → Conexões</a>.",
+    "params": {
+      "advanced": "Avançado: limites de {{tool}}",
+      "default": "Padrão",
+      "invalid": "Não é um valor válido; ele não é salvo.",
+      "name": {
+        "max_results": "Máximo de resultados por busca",
+        "region": "Região",
+        "language": "Idioma",
+        "time_range": "Período",
+        "allow_hosts": "Domínios permitidos",
+        "deny_hosts": "Domínios bloqueados",
+        "max_calls": "Máximo de chamadas por execução",
+        "max_chars": "Máximo de caracteres por página"
+      },
+      "hint": {
+        "max_results": "De {{min}} a {{max}}. O modelo pode pedir menos, nunca mais.",
+        "region": "Código de país de duas letras, por exemplo AT. Usado quando o modelo não informa nenhum.",
+        "language": "Código de idioma de duas letras, por exemplo de. Usado quando o modelo não informa nenhum.",
+        "allow_hosts": "Somente estes domínios e seus subdomínios, separados por vírgulas. Vazio: qualquer domínio.",
+        "deny_hosts": "Nunca estes domínios nem seus subdomínios, separados por vírgulas.",
+        "max_calls": "De {{min}} a {{max}}.",
+        "max_chars": "De {{min}} a {{max}}. Páginas mais longas são cortadas."
+      },
+      "option": {
+        "day": "Último dia",
+        "week": "Última semana",
+        "month": "Último mês",
+        "year": "Último ano"
+      }
+    }
   },
   "knowledge": {
     "title": "Conhecimento",

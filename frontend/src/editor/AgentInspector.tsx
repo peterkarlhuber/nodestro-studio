@@ -23,6 +23,7 @@ import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import { LocalModelSuggestion } from "./LocalModelSuggestion";
 import { TaskTemplateInput } from "./TaskTemplateInput";
+import { ToolBindings } from "./ToolBindings";
 import { keys, useKnowledge, useMemorySpaces, useMeta, useModelOptions, useSettings, useTools } from "../api/hooks";
 import type {
   AgentConfig,
@@ -65,7 +66,6 @@ import { MemoryAssistantDialog } from "./MemoryAssistantDialog";
 import { OutputFieldsEditor } from "./OutputFieldsEditor";
 import { ModelOptionGate, ModelTokenLimits, NativeToolReason, OptionReason, nativeToolSupport, supportOf } from "./ModelOptionGate";
 import { acceptedEfforts, useModelProfile } from "../api/modelProfile";
-import { useBuiltinTools, useConnections } from "../api/connections";
 import { serverToolDescription, serverToolLabel, toolDescription } from "../lib/catalog";
 import { getDefaultModel } from "../lib/defaults";
 import { findModel, providerOf, sameModel, splitModel } from "../lib/providers";
@@ -590,7 +590,7 @@ function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
       <p className="field__hint">
         <Trans i18nKey="agent.tools.missingHint" components={{ a: <Link to="/tools" /> }} />
       </p>
-      <ToolConnections agent={agent} update={update} />
+      <ToolBindings agent={agent} update={update} />
       <div className="stack-sm">
         <span className="field__label">
           <span className="nd-field-label">{t("agent.tools.serverTools")}</span>
@@ -639,50 +639,6 @@ function withoutTool(agent: AgentConfig, name: string): Partial<AgentConfig> {
     patch.tool_settings = rest;
   }
   return patch;
-}
-
-/** A connection picker for every assigned built-in tool whose spec needs a service connection (NAL-A1). */
-function ToolConnections({ agent, update }: Pick<SectionProps, "agent" | "update">) {
-  const { t } = useTranslation();
-  const catalog = useBuiltinTools();
-  const needing = (catalog.data ?? []).filter((item) => item.spec?.connection_type && agent.tools.includes(item.name));
-  const connections = useConnections(needing.length > 0);
-  if (!needing.length) return null;
-  return (
-    <div className="stack-sm" data-testid="tool-connections">
-      {needing.map((item) => {
-        const type = item.spec!.connection_type!;
-        const settings = agent.tool_settings?.[item.name];
-        const options = (connections.data ?? []).filter((connection) => connection.type === type);
-        const typeLabel = t(`tools.connections.types.${type}`, { defaultValue: type });
-        return (
-          <Field
-            key={item.name}
-            label={t("agent.tools.connection", { tool: item.name })}
-            hint={
-              connections.data && !options.length ? (
-                <Trans i18nKey="agent.tools.connectionNone" values={{ type: typeLabel }} components={{ a: <Link to="/tools?tab=connections" /> }} />
-              ) : undefined
-            }
-          >
-            <Select
-              value={settings?.connection_id ?? ""}
-              placeholder={t("agent.tools.noConnection")}
-              options={options.map((connection) => ({ value: connection.id, label: connection.name }))}
-              onChange={(id) =>
-                update({
-                  tool_settings: {
-                    ...agent.tool_settings,
-                    [item.name]: { connection_id: id || null, params: settings?.params ?? {} },
-                  },
-                })
-              }
-            />
-          </Field>
-        );
-      })}
-    </div>
-  );
 }
 
 function KnowledgeSection({ agent, update, issues = [], ui }: SectionProps) {

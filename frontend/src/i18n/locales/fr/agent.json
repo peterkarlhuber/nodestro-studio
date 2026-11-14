@@ -103,7 +103,37 @@
     "serverToolsShort": "Outils serveur",
     "connection": "Connexion pour {{tool}}",
     "noConnection": "Aucune connexion choisie",
-    "connectionNone": "Aucune connexion de type {{type}} pour l’instant. Ajoutez-en une sous <a>Outils → Connexions</a>."
+    "connectionNone": "Aucune connexion de type {{type}} pour l’instant. Ajoutez-en une sous <a>Outils → Connexions</a>.",
+    "params": {
+      "advanced": "Avancé : limites de {{tool}}",
+      "default": "Par défaut",
+      "invalid": "Valeur non valide ; elle n’est pas enregistrée.",
+      "name": {
+        "max_results": "Nombre maximal de résultats par recherche",
+        "region": "Région",
+        "language": "Langue",
+        "time_range": "Période",
+        "allow_hosts": "Domaines autorisés",
+        "deny_hosts": "Domaines bloqués",
+        "max_calls": "Nombre maximal d’appels par exécution",
+        "max_chars": "Nombre maximal de caractères par page"
+      },
+      "hint": {
+        "max_results": "De {{min}} à {{max}}. Le modèle peut en demander moins, jamais plus.",
+        "region": "Code pays à deux lettres, par exemple AT. Utilisé quand le modèle n’en indique aucun.",
+        "language": "Code de langue à deux lettres, par exemple de. Utilisé quand le modèle n’en indique aucun.",
+        "allow_hosts": "Uniquement ces domaines et leurs sous-domaines, séparés par des virgules. Vide : tous les domaines.",
+        "deny_hosts": "Jamais ces domaines ni leurs sous-domaines, séparés par des virgules.",
+        "max_calls": "De {{min}} à {{max}}.",
+        "max_chars": "De {{min}} à {{max}}. Les pages plus longues sont tronquées."
+      },
+      "option": {
+        "day": "Dernier jour",
+        "week": "Dernière semaine",
+        "month": "Dernier mois",
+        "year": "Dernière année"
+      }
+    }
   },
   "knowledge": {
     "title": "Connaissances",
