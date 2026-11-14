@@ -12,7 +12,9 @@
     "integration_unavailable": "Le serveur MCP choisi ne peut pas assurer cette connexion : il doit proposer chaque outil dont l’exemple a besoin, approuvé en lecture seule. Rien n’a été copié.",
     "integration_unknown": "L’exemple n’a pas de connexion « {{integration}} ». Rechargez la page et réessayez.",
     "tests_need_offline": "Les séries de tests s’exécutent sans personne et ne peuvent pas utiliser d’outils MCP. Copiez l’exemple en mode hors ligne pour reprendre ses cas de test.",
-    "agent_unknown": "Cet exemple n’a pas d’agent « {{key}} ». Rechargez la page et réessayez."
+    "agent_unknown": "Cet exemple n’a pas d’agent « {{key}} ». Rechargez la page et réessayez.",
+    "service_unknown": "Cet exemple n’a besoin d’aucune connexion « {{service}} ». Rechargez la page et réessayez. Rien n’a été copié.",
+    "service_type": "La connexion choisie est de type « {{type}} », mais « {{service}} » est nécessaire. Choisissez une connexion adaptée. Rien n’a été copié."
   },
   "agentFailed": "L’agent s’est arrêté sur une erreur ({{type}}).",
   "file": {
@@ -1155,5 +1157,10 @@
   "fetch": {
     "unsupported_type": "Ce type de fichier ne peut pas être lu ; seuls les pages web, le texte et le PDF le peuvent.",
     "too_large": "Le document est trop volumineux pour être lu."
+  },
+  "template": {
+    "import_too_large": "Le fichier est trop volumineux. Un modèle d’agent peut faire au plus {{limit}} Mo.",
+    "import_invalid": "Le fichier n’est pas un modèle d’agent exporté ou il est endommagé. Rien n’a été importé.",
+    "service_missing": "Le modèle a besoin d’une connexion « {{service}} ». Configurez-la sous Outils → Connexions et choisissez-la dans l’agent."
   }
 }

@@ -80,7 +80,7 @@ Die Abschnitte unten nennen für jedes Beispiel konkrete Anpassungen.
 
 <!-- examples:start -->
 
-## Alle 24 Beispiele auf einen Blick {#uebersicht}
+## Alle 25 Beispiele auf einen Blick {#uebersicht}
 
 Jedes Beispiel steht in der Galerie und hat unten einen eigenen Abschnitt.
 
@@ -110,6 +110,7 @@ Jedes Beispiel steht in der Galerie und hat unten einen eigenen Abschnitt.
 | 22 | Vereinsfest planen | Vereine | 4 | parallel |
 | 23 | Spendenkampagne entwickeln | Gemeinnützige Organisationen | 3 | verzweigt |
 | 24 | Bürgeranfrage beantworten | Öffentliche Einrichtungen | 3 | sequenziell |
+| 25 | Web-Recherche mit Quellen | Wissensarbeit – Recherche | 2 | verzweigt |
 
 ## 1 · Maschinenstillstände analysieren {#production-downtime}
 <!-- keywords: produktion und industrie, stillstandsanalyst, ursachenanalyst, maßnahmenplaner -->
@@ -860,5 +861,31 @@ Bürgeranfragen enthalten oft mehrere Anliegen und müssen korrekt, verständlic
 **Wissensdateien (synthetisch, werden beim Kopieren angelegt):** Regeln_Gemeinde_Musterstadt: Erfundene Regeln der Gemeinde Musterstadt zu Nebengebäuden, Bebauungsplan Nr. 17, Straßenbeleuchtung, Sperrmüll, Bäumen und zur Bearbeitung von Anfragen.
 
 **Anpassen:** Ersetze die erfundenen Regeln in der Wissenssammlung durch eure Satzungen, Merkblätter und Zuständigkeitslisten; klare Überschriften und Nummern machen die Zitate genau. Briefkopf und Grußformel ergänzt du im System-Prompt des Antwortentwurfs. Viele Anfragen auf einmal bearbeitest du mit der Stapelverarbeitung.
+
+## 25 · Web-Recherche mit Quellen {#web-research}
+<!-- keywords: wissensarbeit – recherche, web-rechercheur, web-rechercheur (gründlich) -->
+
+**Bereich:** Wissensarbeit – Recherche · **Agenten:** 2 · **Muster:** verzweigt · **Niveau:** Einsteiger · **Bausteine:** Entscheidung, Eingabeformular, Ergebnisdateien, Budget und Grenzen
+
+Antworten aus dem Gedächtnis eines Sprachmodells sind oft veraltet und lassen sich nicht prüfen. Eine Web-Recherche beantwortet eine Frage aus aktuellen Seiten und sagt bei jeder Aussage, woher sie stammt, damit du sie nachprüfen kannst.
+
+**So arbeiten die Agenten zusammen:** Das Eingabeformular nimmt die Frage, die Rechercheintensität, optional die Sprache der Quellen und optional einen Zeitraum auf. Ein Entscheidungsknoten wählt die Intensität: Der schnelle Web-Rechercheur darf dreimal suchen und vier Seiten lesen, der gründliche acht Suchen und zwölf Seiten. Der Rechercheur plant seine Suchen, liest die vielversprechendsten Seiten, bevorzugt Primärquellen und schreibt Befunde, die jeweils ihre Quellen nennen. Eine Qualitätsprüfung kontrolliert Belege, Unabhängigkeit und benannte Unsicherheit. Nach dem Schritt füllt Nodestro Quellenliste und Abrufzeitraum selbst aus dem Quellenverzeichnis des Laufs.
+
+| Agent | Aufgabe | Bekommt |
+|---|---|---|
+| **Web-Rechercheur** | Sucht im Web, liest Quellen und antwortet mit belegten Aussagen (bis zu 3 Suchen und 4 Seitenabrufe). (mit Qualitätsprüfung; strukturierte Ausgabe; Tools: `search_web`, `fetch_web_page`) | Gründlich? |
+| **Web-Rechercheur (gründlich)** | Recherchiert wie der Web-Rechercheur mit bis zu 8 Suchen und 12 Seitenabrufen, für Fragen mit vielen Aspekten. (mit Qualitätsprüfung; strukturierte Ausgabe; Tools: `search_web`, `fetch_web_page`) | Gründlich? |
+
+**Eingabe:** Eine Frage oder eine kurze Liste zusammenhängender Fragen; optional die Sprache der Quellen (Zwei-Buchstaben-Code wie de oder en) und ein Zeitraum.
+
+**Testfälle:** Schnelle Antwort auf die voreingestellte Frage; Gründliche Recherche zu einer umstrittenen Frage; Deutschsprachige Quellen
+
+**Ergebnis:** Eine kurze Antwort in Markdown, Befunde mit Quellennummern wie [S1], Widersprüche zwischen Quellen, Lücken (was nicht gefunden oder nicht geprüft werden konnte), die zitierten Quellen mit Titel, Adresse und Abrufzeit sowie der Abrufzeitraum, auch als Markdown-Datei.
+
+**Was automatisch entschieden wird und wann ein Mensch eingreift:** Automatisch: Der Entscheidungsknoten liest das Formularfeld „Gründliche Recherche“ und lässt genau einen der beiden Rechercheure laufen; deren Tool-Einstellungen begrenzen Suchen und Seitenabrufe je Lauf (3 und 4 oder 8 und 12), und der Lauf stoppt bei einem Budget von 1 USD. Jede Aussage muss Quellennummern nennen, die die Tools in diesem Lauf tatsächlich geliefert haben; ein Befund ohne Quelle oder mit unbekannter Nummer geht einmal zurück und stoppt sonst den Schritt, sodass nie eine erfundene Quelle ausgeliefert wird. Quellenliste und Abrufzeitraum schreibt nicht das Modell, sie werden aus dem Quellenverzeichnis des Laufs gefüllt. Eine Qualitätsprüfung durch ein zweites Modell prüft drei Kriterien und lässt den Rechercheur einmal überarbeiten. Kein Schritt wartet auf eine Person, und der Agent hat kein Tool, das außerhalb des Laufs etwas ändert: Er sucht und liest nur.
+
+**Warum diese Architektur:** Recherche ist iterativ: Was als Nächstes gesucht wird, hängt vom Gefundenen ab. Deshalb passt ein Agent mit Suche und Seitenabruf besser als eine feste Schrittfolge oder mehrere Agenten, die bei einfachen Fragen mehr kosten, ohne besser zu werden. Die Intensität ist ein Entscheidungsknoten mit zwei konfigurierten Rechercheuren, weil eine Grenze im Prompt übergangen werden kann, eine Tool-Grenze nicht. Quellen und Abrufzeiten kommen aus dem Quellenverzeichnis des Laufs und nicht vom Modell, weil erfundene Belege die typische Schwäche von Sprachmodellen sind. Die eigene Websuche eines Anbieters (ein Server-Tool) wurde bewusst nicht verwendet: Sie funktioniert nur mit einem Anbieter, und ihre Quellen lassen sich nicht mit dem Quellenverzeichnis des Laufs abgleichen.
+
+**Anpassen:** Richte vor dem ersten Lauf unter Tools → Verbindungen einen Suchdienst ein und wähle ihn bei beiden Rechercheuren im Tool search_web aus; ohne Suchdienst nennt die Prüfung vor dem Start die fehlende Verbindung. Gib deine Frage ein und hake „Gründliche Recherche“ bei Fragen mit vielen Aspekten oder umstrittenen Fakten an. Für mehr oder weniger Suchen änderst du die Tool-Einstellungen der beiden Rechercheure; um die Recherche auf bestimmte Websites zu beschränken, trägst du dort erlaubte oder gesperrte Hosts ein.
 
 <!-- examples:end -->

@@ -1,6 +1,6 @@
 {
   "title": "Fluxos de trabalho de exemplo",
-  "description": "24 fluxos de trabalho multiagente prontos para tarefas típicas do trabalho e do dia a dia. A prévia não custa nada; “Copiar para meus fluxos de trabalho” cria um fluxo de trabalho seu, que você pode editar livremente.",
+  "description": "Fluxos de trabalho multiagente prontos para tarefas típicas do trabalho e do dia a dia. A prévia não custa nada; “Copiar para meus fluxos de trabalho” cria um fluxo de trabalho seu, que você pode editar livremente.",
   "galleryTitle": "Fluxos de trabalho de exemplo",
   "galleryText": "Fluxos de trabalho multiagente prontos, com uma tarefa de teste para experimentar e adaptar. Os modelos em si nunca mudam.",
   "showAll_one": "Ver {{count}} exemplo",
@@ -195,5 +195,15 @@
     "offlineBadge": "Dados de exemplo",
     "offlineTip_one": "Cópia do exemplo “{{example}}”: {{names}} funciona offline com dados de exemplo, sem conexão. Para dados reais, copie o exemplo de novo e escolha um servidor MCP.",
     "offlineTip_other": "Cópia do exemplo “{{example}}”: {{names}} funcionam offline com dados de exemplo, sem conexão. Para dados reais, copie o exemplo de novo e escolha um servidor MCP."
+  },
+  "services": {
+    "title": "Serviços para as ferramentas",
+    "intro": "Os agentes deste exemplo pesquisam na web. Escolha para isso uma das suas conexões de serviço de busca. Nada vem pré-selecionado: você decide qual provedor recebe suas buscas.",
+    "choose": "Conexão: {{type}}",
+    "none": "Você ainda não tem nenhuma conexão “{{type}}”. Configure uma agora ou depois em Ferramentas → Conexões.",
+    "later": "Sem escolha, a cópia é criada mesmo assim; a verificação antes da execução lembra você de escolher uma conexão no agente.",
+    "notNow": "Escolher depois",
+    "setUpSearch": "Configurar serviço de busca",
+    "setUp": "Configurar uma conexão"
   }
 }

@@ -215,7 +215,15 @@
       "duplicate": "Este nome aparece mais de uma vez."
     },
     "fromTool": "De uma ferramenta",
-    "fromSources": "Cita fontes da web"
+    "sources": {
+      "label": "Fontes da web para “{{name}}”",
+      "model": "Sem fontes da web",
+      "tool": "De uma ferramenta",
+      "ledger": "Cita fontes da web",
+      "ledger_cited": "Uma fonte por afirmação [S1]",
+      "ledger_list": "Lista de fontes (automática)",
+      "ledger_range": "Período de consulta (automático)"
+    }
   },
   "thinking": {
     "title": "Raciocínio e esforço",

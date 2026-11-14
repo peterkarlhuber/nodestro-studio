@@ -1,0 +1,26 @@
+{
+  "title": "Agentes incluídos",
+  "count_one": "{{count}} agente",
+  "count_other": "{{count}} agentes",
+  "intro": "Agentes individuais prontos para testar. Adote um como modelo próprio e adapte-o; versões futuras do Nodestro não mudam sua cópia.",
+  "category": {
+    "research": "Pesquisa",
+    "text": "Texto",
+    "analysis": "Análise"
+  },
+  "needsInternet": "Precisa de internet",
+  "use": "Usar como meu modelo",
+  "copied": "“{{name}}” agora é um dos seus modelos",
+  "examples": "Pedidos de exemplo",
+  "needs": "Do que o agente precisa",
+  "tier": "Modelo: pelo menos o nível “{{tier}}”",
+  "tools": "Ferramentas: {{tools}}",
+  "offline": "Funciona sem internet",
+  "online": "Precisa de conexão com a internet e de uma conexão de busca",
+  "tiers": {
+    "fast": "rápido",
+    "standard": "padrão",
+    "strong": "forte"
+  },
+  "versionNote": "Versão {{version}} · {{tests}} casos de teste para verificar as respostas"
+}

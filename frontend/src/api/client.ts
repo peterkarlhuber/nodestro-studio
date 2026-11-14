@@ -30,6 +30,12 @@ import type {
   VersionSummary,
   WorkflowVersion,
   AgentTemplate,
+  AgentImportResult,
+  AgentTemplateVersion,
+  LibraryAgentCopyRequest,
+  LibraryAgentDetail,
+  LibraryAgentSummary,
+  TemplateCheck,
   CheckResult,
   ConfigIssue,
   DependencyPlan,
@@ -503,6 +509,15 @@ export const api = {
   createTemplate: (agent: AgentConfig) => request<AgentTemplate>("POST", "/agents/templates", { agent }),
   saveTemplate: (id: string, agent: AgentConfig) => request<AgentTemplate>("PUT", `/agents/templates/${id}`, { agent }),
   deleteTemplate: (id: string) => request<void>("DELETE", `/agents/templates/${id}`),
+  templateVersions: (id: string) => request<AgentTemplateVersion[]>("GET", `/agents/templates/${encodeURIComponent(id)}/versions`),
+  templateCheck: (id: string) => request<TemplateCheck>("GET", `/agents/templates/${encodeURIComponent(id)}/check`),
+  exportTemplate: (id: string) => request<Record<string, unknown>>("GET", `/agents/templates/${encodeURIComponent(id)}/export`),
+  importTemplate: (document: unknown) => request<AgentImportResult>("POST", "/agents/templates/import", document),
+  libraryAgents: (language: string) => request<LibraryAgentSummary[]>("GET", `/library/agents${q({ language })}`),
+  libraryAgent: (id: string, language: string) =>
+    request<LibraryAgentDetail>("GET", `/library/agents/${encodeURIComponent(id)}${q({ language })}`),
+  copyLibraryAgent: (id: string, body: LibraryAgentCopyRequest) =>
+    request<AgentTemplate>("POST", `/library/agents/${encodeURIComponent(id)}/copy`, body),
 
   tools: () => request<ToolInfo[]>("GET", "/tools"),
   tool: (name: string) => request<ToolInfo>("GET", `/tools/${encodeURIComponent(name)}`),

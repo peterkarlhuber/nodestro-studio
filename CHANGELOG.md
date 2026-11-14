@@ -2,10 +2,50 @@
 
 ## Unreleased
 
+### NAL-B1: agent templates with versions, the shipped agents, export and import (2026-11-14)
+
+- Agents page: **Shipped agents** lists the agent templates of nodestro-examples (web research, summary, document
+  analysis, text editing, data analysis) with help, example requests and needs; **Use as my template** copies one,
+  choosing a search connection where the agent needs one (no preset provider, E-3).
+- **Origin and versions** in the template form: an origin badge (own, from the library with its version, imported),
+  every saved version, **Compare** against the form and **Load into the form** (saving makes a new version).
+- **Export template** and **Import template** (`nodestro-agent/1`); the import reports what it left out for safety
+  (tool approval rules, service connections, knowledge files) and what the template still needs.
+- Lock: nodestro-examples `aa3d464` (examples #103, five agent templates), nodestro-api `bbe9e2a` (api #137, template
+  versions, check, export, import, agent library), nodestro-sdk `2601056` (sdk #121); runtime `f04e212` holds #175.
+- Texts in six languages, error texts for `template.import_too_large`, `template.import_invalid` and
+  `template.service_missing`, and the help sections `agenten#mitgelieferte-agenten` and `agenten#versionen`.
 ### Orkexa core may require Tabrion, E-ORK-CORE (2026-11-14)
 
 - `platform/dependency-policy.json`: the edge orkexa -> `tabrion` (required, core) moves from `pending:E-ORK-CORE` to
   `active` (owner decision E-ORK-CORE; TABRION MIG-ORK-3, orkexa #97). The pending-edge test now uses a probe status.
+
+### Lock: TABRION PIN-W4/PIN-W5, MCP guard, NAL-B2, SDK discovery (2026-11-14)
+
+- TABRION PIN-W4: runtime `52451df` (MIG-NOD-7), axentra `3868634` (MIG-AXE-2).
+- The same runtime also holds the MCP network guard on Orkexa's shared egress guard (runtime #172, behavior
+  unchanged, parity test) and result fields filled from the run's source ledger (NAL-B2, runtime #173:
+  `ledger_cited`, `ledger_list`, `ledger_range`).
+- nodestro-sdk `bf2aed1` (sdk #119): `discover()` and contract version negotiation for the app API (NAL-C1).
+- TABRION PIN-W5: runtime `213a6e4` (MIG-NOD-5, runtime #169, plus #174: the optional `tabrion.postgres` names
+  are defined without the postgres extra), axentra `6c6fe1b` (MIG-AXE-6, axentra #87).
+- Runtime `f04e212`: PIN-W5 plus runtime #177 (the role errors come from `tabrion.errors`, so they stay exception
+  classes without psycopg_pool) and runtime #175 (NAL-B1 agent template versions, additive schemas).
+- NAL-B2: nodestro-examples `9d3a8e0` (examples #102, example 25 `web-research`), nodestro-api `21a67b7` (api #135,
+  `LibraryCopy.services`), nodestro-sdk `d3a907a` (sdk #120, regenerated types).
+
+### Web research example in the studio (NAL-B2, 2026-11-14)
+
+- The lock adds the web research example (nodestro-examples, example 25) and the copy route's `services`
+  (nodestro-api), with the SDK contract regenerated.
+- Copy dialog: an example whose built-in tools need a service connection shows **Services for the tools** with the
+  person's connections of that kind (nothing preselected, owner decision E-3) and **Set up search service**; the
+  choice goes into the copy as `services`, and a copy without one still works (the check names it).
+- Output format of an agent: text fields choose their web sources (**No web sources**, **Cites web sources**, **Cites
+  a source per statement [S1]**, **Source list (filled in)**, **Retrieval time (filled in)**) instead of the single
+  switch, matching the runtime's `ledger`, `ledger_cited`, `ledger_list` and `ledger_range`.
+- Help: the web search chapter describes the example and the new field sources; the example chapter is regenerated
+  (25 examples); the start chapter and the examples page no longer name a fixed number. All six languages.
 
 ### Wave W3 in the lock, TABRION PIN-W3 (2026-11-14)
 

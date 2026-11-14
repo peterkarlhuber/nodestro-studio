@@ -45,6 +45,13 @@ Jeder Suchtreffer und jede Seite, die die Web-Tools sehen, wird in der Ausführu
 
 Du kannst verlangen, dass ein Agent seine Quellen nennt: Schalte in einem strukturierten Ergebnis bei einem Text- oder Listenfeld **Nennt Webquellen** ein (siehe [Ausgabeformat](/docs/agenten#ausgabeformat)). Jeder Wert muss dann eine festgehaltene Quelle mit Kennung oder Adresse nennen. Nennt der Agent eine Quelle, die er nicht gefunden hat, bekommt er eine Korrektur; tut er es danach noch immer, schlägt der Schritt fehl, damit nie eine erfundene Quelle geliefert wird.
 
+## Das Beispiel Web-Recherche {#beispiel}
+<!-- keywords: web-recherche, beispiel, recherche-agent, belegte antwort, quellenliste, stand, gründlich -->
+
+Das Beispiel **Web-Recherche mit Quellen** unter den [Beispiel-Workflows](/docs/beispiele) beantwortet eine Frage mit Quellen. Beim Übernehmen wählst du unter **Dienste für die Werkzeuge** einen deiner Suchdienste oder richtest mit **Suchdienst einrichten** einen ein; vorausgewählt ist nichts. Ohne Auswahl wird die Kopie trotzdem angelegt, und die Prüfung vor dem Start erinnert dich daran, im Agenten eine Verbindung zu wählen.
+
+Das Ergebnis enthält die Antwort, die Befunde und Widersprüche mit Quellenkennungen wie `[S1]`, die Lücken, die **Quellenliste** und den **Stand**. Quellenliste und Stand schreibt Nodestro nach dem Schritt aus den festgehaltenen Quellen, nicht das Modell. Im Agenten stellst du das bei jedem Textfeld unter **Webquellen** ein: **Nennt Webquellen**, **Belegt jede Aussage [S1]**, **Quellenliste (automatisch)** oder **Abrufzeitraum (automatisch)**. Mit **Gründliche Recherche** im Startformular sucht und liest der Agent mehr (8 Suchen und 12 Seiten statt 3 und 4).
+
 ## Seitentext ist Datenmaterial {#sicherheit}
 <!-- keywords: sicherheit, prompt injection, manipulation, externe inhalte, nicht vertrauenswürdig -->
 

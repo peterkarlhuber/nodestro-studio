@@ -17,6 +17,7 @@ import { modelName } from "../components/ModelPicker";
 import { ExampleNeeds, copiedModel } from "./ExampleNeeds";
 import { ExampleModelPlan, modelOverrides, partNames, useExampleModels, usesLocalModels } from "./ExampleModels";
 import { ExampleConnections, KnowledgeList, TeamList } from "./ExampleSections";
+import { ExampleServices } from "./ExampleServices";
 import { OFFLINE, PATTERN_ICONS, copyRequest, memorySpaceSuggestion, usesMemory, validMemorySpace } from "./examples";
 
 function PatternLabel({ pattern }: { pattern: ExampleDetail["pattern"] }) {
@@ -138,6 +139,8 @@ export function ExamplePreview({
   const [models, setModels] = useState<Record<string, string>>({});
   const plan = useExampleModels(id, language, usesLocalModels(settings.data?.default_model));
   const connected = Object.values(connections).some((server) => server !== OFFLINE);
+  /** Kind of service connection -> the person's connection for the copy's built-in tools (NAL-B2). */
+  const [services, setServices] = useState<Record<string, string>>({});
   /** The copy's own memory space as the person typed it; null: the suggestion made from the copy's name. */
   const [space, setSpace] = useState<string | null>(null);
   const memory = example.data ? usesMemory(example.data) : false;
@@ -153,6 +156,7 @@ export function ExamplePreview({
           connections,
           modelOverrides(plan.data, models),
           memorySpace,
+          services,
         ),
       ),
     onSuccess: (workflow) => {
@@ -285,6 +289,14 @@ export function ExamplePreview({
             </section>
           ))}
           {data.knowledge.length ? <KnowledgeList files={data.knowledge} /> : null}
+          <ExampleServices
+            example={data}
+            value={services}
+            onChange={(value) => {
+              setServices(value);
+              copy.reset();
+            }}
+          />
           {data.integrations.length ? (
             <ExampleConnections
               example={data}

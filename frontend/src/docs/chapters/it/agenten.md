@@ -255,6 +255,20 @@ Nella pagina **Libreria di agenti** gestisci modelli di agenti riutilizzabili:
 
 Un agente creato da un modello è una **copia**: le modifiche successive al modello non influiscono sugli agenti già inseriti.
 
+## Agenti inclusi {#mitgelieferte-agenten}
+<!-- keywords: inclusi, agenti pronti, galleria, ricerca, riassunto, usare -->
+
+In **Agenti inclusi** trovi agenti singoli pronti all'uso, ad esempio per ricerca web, riassunti, analisi di documenti, revisione di testi e analisi di dati. Un clic mostra a cosa serve l'agente, richieste di esempio e di cosa ha bisogno: il livello di modello, i suoi strumenti e se funziona senza internet.
+
+**Usa come mio modello** crea una copia nella tua libreria. Se l'agente ha bisogno di una connessione di ricerca, la scegli lì o la configuri; non c'è alcun fornitore di ricerca predefinito. La copia è tua: puoi modificarla liberamente e una versione più recente di Nodestro non la cambia mai. Il badge **Dalla libreria** indica la versione da cui proviene.
+
+## Versioni, esportazione e importazione {#versionen}
+<!-- keywords: versione, cronologia, confrontare, ripristinare, esportare, importare, file, condividere -->
+
+Ogni salvataggio che modifica un modello crea una nuova **versione**; le versioni precedenti restano invariate. In **Origine e versioni** nel modulo vedi tutte le versioni. **Confronta** mostra i campi in cui una versione differisce dal modulo, e **Carica nel modulo** la carica per continuare a lavorare; diventa una nuova versione solo al salvataggio.
+
+**Esporta modello** salva il modello in un file che puoi condividere. Il file non contiene segreti, connessioni di servizio, file di conoscenza né regole di approvazione degli strumenti. **Importa modello** crea un nuovo modello da un file del genere. Un file importato è trattato come contenuto estraneo: le regole di approvazione tornano ai valori predefiniti, le connessioni e i file di conoscenza vengono rimossi e Nodestro ti indica di cosa ha ancora bisogno il modello qui.
+
 ## Testare un agente {#agent-testen}
 <!-- keywords: testare, test, provare, testa agente, prova, eseguire da solo -->
 

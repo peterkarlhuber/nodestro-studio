@@ -378,7 +378,7 @@ try {
     // The navigation names the main areas in this language (a sample of labels).
     for (const key of ["nav.workflows", "nav.knowledge", "nav.tests"]) await navLink(key).waitFor();
     check(true, "J1 the navigation shows Workflows, Knowledge and Tests in the interface language");
-    await click(page.getByTestId("example-gallery").getByRole("link", { name: TRe("library.showAll", { count: 24 }) }));
+    await click(page.getByTestId("example-gallery").getByRole("link", { name: TRe("library.showAll", { count: 25 }) }));
     await fill(page.getByRole("searchbox", { name: T("library.searchLabel") }), contractName);
     await screen("examples-search");
     await click(page.getByTestId("example-contract-review").getByRole("button").first());

@@ -1,0 +1,26 @@
+{
+  "title": "Shipped agents",
+  "count_one": "{{count}} agent",
+  "count_other": "{{count}} agents",
+  "intro": "Ready-made single agents to try out. Take one over as your own template and adapt it; later Nodestro versions never change your copy.",
+  "category": {
+    "research": "Research",
+    "text": "Text",
+    "analysis": "Analysis"
+  },
+  "needsInternet": "Needs internet",
+  "use": "Use as my template",
+  "copied": "“{{name}}” is now one of your templates",
+  "examples": "Example requests",
+  "needs": "What the agent needs",
+  "tier": "Model: at least tier “{{tier}}”",
+  "tools": "Tools: {{tools}}",
+  "offline": "Works without internet",
+  "online": "Needs an internet connection and a search connection",
+  "tiers": {
+    "fast": "fast",
+    "standard": "standard",
+    "strong": "strong"
+  },
+  "versionNote": "Version {{version}} · {{tests}} test cases to check the answers"
+}

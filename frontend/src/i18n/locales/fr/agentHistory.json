@@ -1,0 +1,41 @@
+{
+  "title": "Origine et versions",
+  "count_one": "{{count}} version",
+  "count_other": "{{count}} versions",
+  "origin": {
+    "user": "Modèle personnel",
+    "builtin": "De la bibliothèque ({{version}})",
+    "import": "Importé"
+  },
+  "version": "Version {{version}}",
+  "current": "Actuelle",
+  "compare": "Comparer",
+  "compareTitle": "Comparer la version {{version}} avec le formulaire",
+  "same": "Cette version ne diffère pas du formulaire.",
+  "field": "Champ",
+  "form": "Formulaire",
+  "fields": {
+    "name": "Nom",
+    "description": "Description",
+    "model": "Modèle",
+    "system_prompt": "Prompt système",
+    "task_template": "Tâche",
+    "tools": "Outils",
+    "output": "Sortie",
+    "quality": "Contrôle qualité"
+  },
+  "restore": "Charger dans le formulaire",
+  "restoreHint": "La version est chargée dans le formulaire. Elle ne devient une nouvelle version qu’à l’enregistrement ; aucune version n’est perdue.",
+  "export": "Exporter le modèle",
+  "import": "Importer un modèle",
+  "importNotJson": "Le fichier n’est pas un JSON valide.",
+  "imported": "« {{name}} » importé",
+  "importedRemoved": "« {{name}} » importé. Non repris par sécurité : {{removed}}",
+  "importNeeds_one": "Le modèle a encore besoin d’une chose ici. Ouvrez-le pour voir l’indication.",
+  "importNeeds_other": "Le modèle a encore besoin de {{count}} choses ici. Ouvrez-le pour voir les indications.",
+  "removed": {
+    "tool_policies": "règles d’approbation des outils",
+    "connections": "connexions de service",
+    "knowledge": "fichiers de connaissances"
+  }
+}

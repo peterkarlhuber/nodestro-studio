@@ -215,7 +215,15 @@
       "duplicate": "This name is used more than once."
     },
     "fromTool": "From a tool",
-    "fromSources": "Cites web sources"
+    "sources": {
+      "label": "Web sources for “{{name}}”",
+      "model": "No web sources",
+      "tool": "From a tool",
+      "ledger": "Cites web sources",
+      "ledger_cited": "Cites a source per statement [S1]",
+      "ledger_list": "Source list (filled in)",
+      "ledger_range": "Retrieval time (filled in)"
+    }
   },
   "thinking": {
     "title": "Thinking and effort",

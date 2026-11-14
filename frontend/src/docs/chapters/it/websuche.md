@@ -45,6 +45,13 @@ Ogni risultato di ricerca e ogni pagina che gli strumenti web vedono vengono reg
 
 Puoi richiedere che un agente citi le sue fonti: in un risultato strutturato attiva **Cita fonti web** per un campo di testo o di elenco (vedi [Formato di output](/docs/agenten#ausgabeformat)). Ogni valore deve allora indicare una fonte registrata con il suo identificativo o il suo indirizzo. Se l'agente cita una fonte che non ha trovato, riceve una correzione; se lo fa di nuovo, il passo fallisce, così non viene mai consegnata una fonte inventata.
 
+## L’esempio Ricerca web {#beispiel}
+<!-- keywords: ricerca web, esempio, agente di ricerca, risposta con fonti, elenco delle fonti, consultazione, approfondita -->
+
+L’esempio **Ricerca web con fonti** tra i [workflow di esempio](/docs/beispiele) risponde a una domanda con fonti. Quando lo copi, scegli uno dei tuoi servizi di ricerca in **Servizi per gli strumenti** oppure configurane uno con **Configura servizio di ricerca**; nulla è preselezionato. Senza scelta la copia viene comunque creata, e il controllo prima dell’esecuzione ti ricorda di scegliere una connessione nell’agente.
+
+Il risultato contiene la risposta, i risultati e le contraddizioni con identificativi di fonte come `[S1]`, le lacune, l’**elenco delle fonti** e il **periodo di consultazione**. L’elenco delle fonti e il periodo di consultazione li scrive Nodestro dopo il passaggio a partire dalle fonti registrate, non il modello. Nell’agente lo imposti per ogni campo di testo in **Fonti web**: **Cita fonti web**, **Una fonte per ogni affermazione [S1]**, **Elenco delle fonti (automatico)** o **Periodo di consultazione (automatico)**. Con **Ricerca approfondita** nel modulo di avvio l’agente cerca e legge di più (8 ricerche e 12 pagine invece di 3 e 4).
+
 ## Il testo delle pagine è un dato {#sicherheit}
 <!-- keywords: sicurezza, prompt injection, manipolazione, contenuto esterno, non attendibile -->
 

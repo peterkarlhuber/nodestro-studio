@@ -80,7 +80,7 @@ Le sezioni seguenti indicano adattamenti concreti per ogni esempio.
 
 <!-- examples:start -->
 
-## I 24 esempi in sintesi {#uebersicht}
+## I 25 esempi in sintesi {#uebersicht}
 
 Ogni esempio si trova nella galleria e ha una propria sezione qui sotto.
 
@@ -110,6 +110,7 @@ Ogni esempio si trova nella galleria e ha una propria sezione qui sotto.
 | 22 | Organizzare la festa di un'associazione | Associazioni | 4 | parallelo |
 | 23 | Sviluppare una campagna di raccolta fondi | Organizzazioni non profit | 3 | con diramazioni |
 | 24 | Rispondere a una richiesta di un cittadino | Enti pubblici | 3 | sequenziale |
+| 25 | Ricerca web con fonti | Lavoro della conoscenza – ricerca | 2 | con diramazioni |
 
 ## 1 · Analizzare i fermi macchina {#production-downtime}
 <!-- keywords: produzione e industria, analista dei fermi, analista delle cause, pianificatore delle azioni -->
@@ -860,5 +861,31 @@ Le richieste dei cittadini contengono spesso più questioni e vanno risposte in 
 **File di conoscenza (sintetici, creati durante la copia):** Regole_comune_Citta_Esempio: Regole fittizie del Comune di Città Esempio su fabbricati accessori, piano urbanistico n. 17, illuminazione pubblica, rifiuti ingombranti, alberi e gestione delle richieste.
 
 **Come adattarlo:** Sostituisci le regole fittizie nella raccolta di conoscenza con i vostri regolamenti, schede informative ed elenchi di competenze; titoli e numeri chiari rendono precise le citazioni. Carta intestata e formula di saluto si aggiungono nel prompt di sistema della bozza di risposta. Per molte richieste insieme usa l'elaborazione in batch.
+
+## 25 · Ricerca web con fonti {#web-research}
+<!-- keywords: lavoro della conoscenza – ricerca, ricercatore web, ricercatore web (approfondito) -->
+
+**Ambito:** Lavoro della conoscenza – ricerca · **Agenti:** 2 · **Schema:** con diramazioni · **Livello:** Principiante · **Elementi:** decisione, modulo di input, file di risultato, budget e limiti
+
+Le risposte tratte dalla memoria di un modello linguistico sono spesso superate e non verificabili. Una ricerca web risponde a una domanda partendo da pagine attuali e indica per ogni affermazione da dove proviene, così puoi verificarla.
+
+**Come collaborano gli agenti:** Il modulo raccoglie la domanda, la profondità della ricerca, facoltativamente la lingua delle fonti e facoltativamente un periodo. Un nodo decisionale sceglie la profondità: il ricercatore web rapido può cercare tre volte e leggere quattro pagine, quello approfondito otto ricerche e dodici pagine. Il ricercatore pianifica le ricerche, legge le pagine più promettenti, preferisce le fonti primarie e scrive risultati che citano ciascuno le proprie fonti. Un controllo di qualità verifica le fonti, la loro indipendenza e l'incertezza dichiarata. Dopo il passo, Nodestro compila da sé l'elenco delle fonti e il periodo di consultazione a partire dal registro delle fonti dell'esecuzione.
+
+| Agente | Compito | Riceve |
+|---|---|---|
+| **Ricercatore web** | Cerca nel web, legge le fonti e risponde con affermazioni documentate (fino a 3 ricerche e 4 letture di pagine). (con controllo qualità; output strutturato; Strumenti: `search_web`, `fetch_web_page`) | Approfondita? |
+| **Ricercatore web (approfondito)** | Ricerca come il ricercatore web con fino a 8 ricerche e 12 letture di pagine, per domande con molti aspetti. (con controllo qualità; output strutturato; Strumenti: `search_web`, `fetch_web_page`) | Approfondita? |
+
+**Input:** Una domanda o un breve elenco di domande collegate; facoltativamente la lingua delle fonti (codice di due lettere come it o en) e un periodo.
+
+**Casi di test:** Risposta rapida alla domanda predefinita; Ricerca approfondita su una domanda controversa; Fonti in tedesco
+
+**Risultato:** Una risposta breve in Markdown, risultati con numeri di fonte come [S1], contraddizioni tra le fonti, lacune (ciò che non è stato trovato o non si è potuto verificare), le fonti citate con titolo, indirizzo e ora di consultazione e il periodo di consultazione, anche come file Markdown.
+
+**Che cosa viene deciso automaticamente e quando interviene una persona:** Automatico: il nodo decisionale legge il campo "Ricerca approfondita" ed esegue esattamente uno dei due ricercatori; le loro impostazioni dello strumento limitano ricerche e letture di pagine per esecuzione (3 e 4, oppure 8 e 12) e l'esecuzione si ferma con un budget di 1 USD. Ogni affermazione deve citare numeri di fonte che gli strumenti hanno davvero restituito in questa esecuzione; un risultato senza fonte o con un numero sconosciuto viene rimandato una volta, altrimenti il passo si ferma, così non viene mai consegnata una fonte inventata. L'elenco delle fonti e il periodo di consultazione non li scrive il modello: vengono compilati dal registro delle fonti dell'esecuzione. Un controllo di qualità con un secondo modello verifica tre criteri e consente al ricercatore una revisione. Nessun passo attende una persona e l'agente non ha alcuno strumento che modifichi qualcosa fuori dall'esecuzione: cerca e legge soltanto.
+
+**Perché questa architettura:** La ricerca è iterativa: cosa cercare dopo dipende da ciò che si è trovato, perciò un agente con ricerca e lettura delle pagine è più adatto di una sequenza fissa di passi o di più agenti, che costerebbero di più senza migliorare le domande semplici. La profondità è un nodo decisionale con due ricercatori configurati perché un limite nel prompt può essere ignorato, un limite dello strumento no. Fonti e orari di consultazione provengono dal registro delle fonti dell'esecuzione e non dal modello, perché i riferimenti inventati sono la debolezza tipica dei modelli linguistici. La ricerca web propria di un fornitore (uno strumento server) è stata esclusa di proposito: funziona con un solo fornitore e le sue fonti non si possono confrontare con il registro delle fonti dell'esecuzione.
+
+**Come adattarlo:** Prima della prima esecuzione, configura un servizio di ricerca in Strumenti → Connessioni e sceglilo per entrambi i ricercatori nello strumento search_web; senza servizio, il controllo prima dell'avvio indica la connessione mancante. Inserisci la tua domanda e spunta "Ricerca approfondita" per domande con molti aspetti o fatti controversi. Per consentire più o meno ricerche, modifica le impostazioni dello strumento dei due ricercatori; per limitare la ricerca a determinati siti, indica lì gli host consentiti o bloccati.
 
 <!-- examples:end -->

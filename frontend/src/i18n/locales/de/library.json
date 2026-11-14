@@ -1,6 +1,6 @@
 {
   "title": "Beispiel-Workflows",
-  "description": "24 fertige Multi-Agenten-Workflows für typische Aufgaben aus Beruf und Alltag. Die Vorschau kostet nichts; „Als Kopie übernehmen“ legt einen eigenen Workflow an, den du frei bearbeiten kannst.",
+  "description": "Fertige Multi-Agenten-Workflows für typische Aufgaben aus Beruf und Alltag. Die Vorschau kostet nichts; „Als Kopie übernehmen“ legt einen eigenen Workflow an, den du frei bearbeiten kannst.",
   "galleryTitle": "Beispiel-Workflows",
   "galleryText": "Fertige Multi-Agenten-Workflows mit Testaufgabe zum Ausprobieren und Anpassen. Die Vorlagen selbst bleiben unverändert.",
   "showAll_one": "{{count}} Beispiel ansehen",
@@ -195,5 +195,15 @@
     "offlineBadge": "Beispieldaten",
     "offlineTip_one": "Kopie des Beispiels „{{example}}“: {{names}} läuft offline mit Beispieldaten, ohne Verbindung. Für echte Daten kopierst du das Beispiel erneut und wählst einen MCP-Server.",
     "offlineTip_other": "Kopie des Beispiels „{{example}}“: {{names}} laufen offline mit Beispieldaten, ohne Verbindung. Für echte Daten kopierst du das Beispiel erneut und wählst einen MCP-Server."
+  },
+  "services": {
+    "title": "Dienste für die Werkzeuge",
+    "intro": "Die Agenten dieses Beispiels suchen im Web. Wähle dafür eine deiner Suchdienst-Verbindungen. Es ist nichts vorausgewählt: Du entscheidest, welcher Anbieter deine Suchanfragen bekommt.",
+    "choose": "Verbindung: {{type}}",
+    "none": "Du hast noch keine Verbindung „{{type}}“. Richte jetzt eine ein oder später unter Tools → Verbindungen.",
+    "later": "Ohne Auswahl wird die Kopie trotzdem angelegt; die Prüfung vor dem Start erinnert dich daran, im Agenten eine Verbindung zu wählen.",
+    "notNow": "Später wählen",
+    "setUpSearch": "Suchdienst einrichten",
+    "setUp": "Verbindung einrichten"
   }
 }

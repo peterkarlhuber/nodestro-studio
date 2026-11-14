@@ -45,6 +45,13 @@ Every search hit and every page the web tools see is recorded in the run with an
 
 An agent can be required to cite its sources: in a structured result, switch on **Cites web sources** for a text or list field (see [Output format](/docs/agenten#ausgabeformat)). Every value must then name a recorded source by its id or address. If the agent names a source it did not find, it gets one correction; if it still does, the step fails, so a made-up source is never delivered.
 
+## The web research example {#beispiel}
+<!-- keywords: web research, example, research agent, answer with sources, source list, retrieved, thorough -->
+
+The **Web research with sources** example among the [example workflows](/docs/beispiele) answers a question with sources. When you copy it, choose one of your search services under **Services for the tools**, or set one up with **Set up search service**; nothing is preselected. Without a choice the copy is still created, and the check before a run reminds you to choose a connection in the agent.
+
+The result holds the answer, the findings and contradictions with source ids such as `[S1]`, the gaps, the **source list** and the **retrieval time**. Nodestro writes the source list and the retrieval time after the step from the recorded sources, not the model. In the agent you set this for each text field under **Web sources**: **Cites web sources**, **Cites a source per statement [S1]**, **Source list (filled in)** or **Retrieval time (filled in)**. With **Thorough research** on the start form the agent searches and reads more (8 searches and 12 pages instead of 3 and 4).
+
 ## Page text is data {#sicherheit}
 <!-- keywords: security, prompt injection, manipulation, external content, untrusted -->
 

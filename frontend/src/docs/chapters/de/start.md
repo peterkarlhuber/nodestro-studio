@@ -45,7 +45,7 @@ So erstellst du in wenigen Minuten deinen ersten Workflow:
 5. **Zusehen.** In der *Ausführungsübersicht* unter der Arbeitsfläche siehst du live, was der Agent schreibt, welche Tools er aufruft, wie viele Tokens er verbraucht und was es kostet.
 6. **Nachvollziehen.** Über **Details** gelangst du zur vollständigen Ausführung mit zeitlichem Ablauf.
 
-> **Tipp:** Unter deinen Workflows findest du die Galerie mit 24 [Beispiel-Workflows](/docs/beispiele) für typische Aufgaben, zum Beispiel **Finanzanalyse** und **Blogartikel**. Eine Vorschau ist kostenlos; übernommene Beispiele sind eigene Kopien, die du frei ändern kannst.
+> **Tipp:** Unter deinen Workflows findest du die Galerie mit fertigen [Beispiel-Workflows](/docs/beispiele) für typische Aufgaben, zum Beispiel **Finanzanalyse** und **Blogartikel**. Eine Vorschau ist kostenlos; übernommene Beispiele sind eigene Kopien, die du frei ändern kannst.
 
 ## Die Oberfläche {#oberflaeche}
 <!-- keywords: navigation, seitenleiste, menü, theme, dunkel, hell, layout -->

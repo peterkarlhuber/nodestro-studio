@@ -12,7 +12,9 @@
     "integration_unavailable": "O servidor MCP escolhido não consegue atender esta conexão: ele precisa oferecer cada ferramenta de que o exemplo precisa, aprovada como somente leitura. Nada foi copiado.",
     "integration_unknown": "O exemplo não tem a conexão “{{integration}}”. Recarregue a página e tente de novo.",
     "tests_need_offline": "Séries de testes rodam sem uma pessoa e não podem usar ferramentas MCP. Copie o exemplo no modo offline para adotar os casos de teste.",
-    "agent_unknown": "Este exemplo não tem o agente “{{key}}”. Recarregue a página e tente de novo."
+    "agent_unknown": "Este exemplo não tem o agente “{{key}}”. Recarregue a página e tente de novo.",
+    "service_unknown": "Este exemplo não precisa de nenhuma conexão “{{service}}”. Recarregue a página e tente de novo. Nada foi copiado.",
+    "service_type": "A conexão escolhida é do tipo “{{type}}”, mas é necessário “{{service}}”. Escolha uma conexão adequada. Nada foi copiado."
   },
   "agentFailed": "O agente parou com um erro ({{type}}).",
   "file": {
@@ -1155,5 +1157,10 @@
   "fetch": {
     "unsupported_type": "Este tipo de arquivo não pode ser lido; apenas páginas web, texto e PDF.",
     "too_large": "O documento é grande demais para ser lido."
+  },
+  "template": {
+    "import_too_large": "O arquivo é grande demais. Um modelo de agente pode ter no máximo {{limit}} MB.",
+    "import_invalid": "O arquivo não é um modelo de agente exportado ou está danificado. Nada foi importado.",
+    "service_missing": "O modelo precisa de uma conexão “{{service}}”. Configure-a em Ferramentas → Conexões e escolha-a no agente."
   }
 }

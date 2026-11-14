@@ -1,6 +1,6 @@
 {
   "title": "Workflow di esempio",
-  "description": "24 workflow multi-agente pronti per attività tipiche del lavoro e della vita quotidiana. L'anteprima non costa nulla; “Copia nei miei workflow” crea un workflow tuo che puoi modificare liberamente.",
+  "description": "Workflow multi-agente pronti per attività tipiche del lavoro e della vita quotidiana. L'anteprima non costa nulla; “Copia nei miei workflow” crea un workflow tuo che puoi modificare liberamente.",
   "galleryTitle": "Workflow di esempio",
   "galleryText": "Workflow multi-agente pronti, con un compito di prova da provare e adattare. I modelli stessi non cambiano mai.",
   "showAll_one": "Vedi {{count}} esempio",
@@ -195,5 +195,15 @@
     "offlineBadge": "Dati di esempio",
     "offlineTip_one": "Copia dell’esempio «{{example}}»: {{names}} funziona offline con dati di esempio, senza connessione. Per dati reali, copia di nuovo l’esempio e scegli un server MCP.",
     "offlineTip_other": "Copia dell’esempio «{{example}}»: {{names}} funzionano offline con dati di esempio, senza connessione. Per dati reali, copia di nuovo l’esempio e scegli un server MCP."
+  },
+  "services": {
+    "title": "Servizi per gli strumenti",
+    "intro": "Gli agenti di questo esempio cercano sul web. Scegli a questo scopo una delle tue connessioni al servizio di ricerca. Nulla è preselezionato: decidi tu quale fornitore riceve le tue ricerche.",
+    "choose": "Connessione: {{type}}",
+    "none": "Non hai ancora una connessione «{{type}}». Configurane una ora o più tardi in Strumenti → Connessioni.",
+    "later": "Senza scelta la copia viene comunque creata; il controllo prima dell’esecuzione ti ricorda di scegliere una connessione nell’agente.",
+    "notNow": "Scegli più tardi",
+    "setUpSearch": "Configura servizio di ricerca",
+    "setUp": "Configura una connessione"
   }
 }
