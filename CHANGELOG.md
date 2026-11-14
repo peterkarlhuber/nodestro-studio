@@ -26,7 +26,7 @@
   back; the new file statuses (`rolled_back`, `rollback_failed`, `restored`, `other_file_refused`) in six languages.
   The browser suite runs in the desktop app's launch session and covers both new ways; a test checks that recovery
   mode serves the interface and no other API route or websocket.
-- Lock (CI only, repinned to merge commits before this merges): nodestro-runtime `186a1a6` (runtime #176, branch
+- Lock (CI only, repinned to merge commits before this merges): nodestro-runtime `7099cfa` (runtime #176, branch
   `claude/project-thread-bjlq25-nod9`) and nodestro-api at its branch `claude/project-thread-bjlq25-nod9ui`. The lock
   keeps nodestro-examples at `b20395a`: the api branch contains NAL-B2 (api #135), which needs examples `9d3a8e0`, so
   copying a library template answers 500 in this branch's browser suites until the lead bumps examples (studio master
