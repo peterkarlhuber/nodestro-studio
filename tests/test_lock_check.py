@@ -178,7 +178,14 @@ def test_a_versions_json_entry_without_a_full_commit_fails() -> None:
 def test_the_profiles_follow_versions_json() -> None:
     components = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))["components"]
     studio = lock_check.required(components, "studio")
-    assert studio == ["nodestro-api", "nodestro-examples", "nodestro-integrations", "nodestro-runtime", "orkexa"]
+    assert studio == [
+        "nodestro-api",
+        "nodestro-examples",
+        "nodestro-integrations",
+        "nodestro-runtime",
+        "orkexa",
+        "tabrion",
+    ]
     assert lock_check.required(components, "server") == sorted([*studio, "axentra"])
 
 

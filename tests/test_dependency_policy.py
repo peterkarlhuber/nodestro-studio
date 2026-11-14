@@ -48,6 +48,7 @@ def test_the_policy_holds_the_k33_edges() -> None:
         ("nodestro-runtime", "orkexa", "required", None, "active"),
         ("nodestro-runtime", "axentra", "optional", "postgres", "active"),
         ("nodestro-runtime", "tabrion", "optional", "postgres", "active"),
+        ("nodestro-runtime", "tabrion", "required", None, "active"),  # K-32, TABRION MIG-NOD-3 (doc 06 N-1)
         ("tabrion-studio", "tabrion", "required", None, "active"),
         ("nodestro-api", "tabrion", "dev", "dev", "active"),  # doc 13 section 2.2, RC-2 (review Q-2)
     } <= edges
