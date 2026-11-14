@@ -1,0 +1,41 @@
+{
+  "title": "Origin and versions",
+  "count_one": "{{count}} version",
+  "count_other": "{{count}} versions",
+  "origin": {
+    "user": "Own template",
+    "builtin": "From the library ({{version}})",
+    "import": "Imported"
+  },
+  "version": "Version {{version}}",
+  "current": "Current",
+  "compare": "Compare",
+  "compareTitle": "Compare version {{version}} with the form",
+  "same": "This version does not differ from the form.",
+  "field": "Field",
+  "form": "Form",
+  "fields": {
+    "name": "Name",
+    "description": "Description",
+    "model": "Model",
+    "system_prompt": "System prompt",
+    "task_template": "Task",
+    "tools": "Tools",
+    "output": "Output",
+    "quality": "Quality check"
+  },
+  "restore": "Load into the form",
+  "restoreHint": "The version is loaded into the form. Only saving makes it a new version; no version is lost.",
+  "export": "Export template",
+  "import": "Import template",
+  "importNotJson": "The file is not valid JSON.",
+  "imported": "“{{name}}” imported",
+  "importedRemoved": "“{{name}}” imported. Left out for safety: {{removed}}",
+  "importNeeds_one": "The template still needs one thing here. Open it to see the note.",
+  "importNeeds_other": "The template still needs {{count}} things here. Open it to see the notes.",
+  "removed": {
+    "tool_policies": "tool approval rules",
+    "connections": "service connections",
+    "knowledge": "knowledge files"
+  }
+}

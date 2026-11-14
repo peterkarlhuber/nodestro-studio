@@ -12,7 +12,9 @@
     "integration_unavailable": "The chosen MCP server cannot serve this connection: it must offer every tool the example needs, approved as read-only. Nothing was copied.",
     "integration_unknown": "The example has no connection “{{integration}}”. Reload the page and try again.",
     "tests_need_offline": "Test series run without a person and cannot use MCP tools. Copy the example in offline mode to take over its test cases.",
-    "agent_unknown": "This example has no agent “{{key}}”. Reload the page and try again."
+    "agent_unknown": "This example has no agent “{{key}}”. Reload the page and try again.",
+    "service_unknown": "This example needs no “{{service}}” connection. Reload the page and try again. Nothing was copied.",
+    "service_type": "The chosen connection is of type “{{type}}”, but “{{service}}” is needed. Choose a matching connection. Nothing was copied."
   },
   "agentFailed": "The agent stopped with an error ({{type}}).",
   "file": {
@@ -1167,5 +1169,10 @@
     "unprotected": "The repair is offered only in the desktop app's window. Restrict the permissions by hand instead.",
     "locked": "Nodestro opens only once the permissions of the database are repaired; nothing was changed.",
     "nothing_to_repair": "Only your user can access the database files already; there is nothing to repair."
+  },
+  "template": {
+    "import_too_large": "The file is too large. An agent template may have at most {{limit}} MB.",
+    "import_invalid": "The file is not an exported agent template or is damaged. Nothing was imported.",
+    "service_missing": "The template needs a “{{service}}” connection. Set one up under Tools → Connections and choose it in the agent."
   }
 }

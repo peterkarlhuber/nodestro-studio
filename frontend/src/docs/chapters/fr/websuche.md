@@ -45,6 +45,13 @@ Chaque résultat de recherche et chaque page que voient les outils web sont cons
 
 Vous pouvez exiger qu’un agent cite ses sources : dans un résultat structuré, activez **Cite des sources web** pour un champ texte ou liste (voir [Format de sortie](/docs/agenten#ausgabeformat)). Chaque valeur doit alors désigner une source consignée par son identifiant ou son adresse. Si l’agent cite une source qu’il n’a pas trouvée, il reçoit une correction ; s’il recommence, l’étape échoue, afin qu’aucune source inventée ne soit jamais livrée.
 
+## L’exemple Recherche web {#beispiel}
+<!-- keywords: recherche web, exemple, agent de recherche, réponse sourcée, liste des sources, consultation, approfondie -->
+
+L’exemple **Recherche web avec sources** parmi les [workflows d’exemple](/docs/beispiele) répond à une question avec des sources. Lorsque vous le copiez, choisissez l’un de vos services de recherche sous **Services pour les outils**, ou configurez-en un avec **Configurer le service de recherche** ; rien n’est présélectionné. Sans choix, la copie est quand même créée, et la vérification avant l’exécution vous rappelle de choisir une connexion dans l’agent.
+
+Le résultat contient la réponse, les constats et les contradictions avec des identifiants de source comme `[S1]`, les lacunes, la **liste des sources** et la **période de consultation**. La liste des sources et la période de consultation sont écrites par Nodestro après l’étape à partir des sources enregistrées, et non par le modèle. Dans l’agent, vous le réglez pour chaque champ texte sous **Sources web** : **Cite des sources web**, **Source pour chaque affirmation [S1]**, **Liste des sources (automatique)** ou **Période de consultation (automatique)**. Avec **Recherche approfondie** dans le formulaire de départ, l’agent cherche et lit davantage (8 recherches et 12 pages au lieu de 3 et 4).
+
 ## Le texte des pages est une donnée {#sicherheit}
 <!-- keywords: sécurité, injection de prompt, manipulation, contenu externe, non fiable -->
 

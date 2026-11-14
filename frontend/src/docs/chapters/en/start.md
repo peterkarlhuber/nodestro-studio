@@ -45,7 +45,7 @@ Create your first workflow in a few minutes:
 5. **Watch.** The *Run overview* below the canvas shows live what the agent writes, which tools it calls, how many tokens it uses and what it costs.
 6. **Trace it.** **Details** takes you to the complete run with its timeline.
 
-> **Tip:** Below your workflows you find the gallery with 24 [example workflows](/docs/beispiele) for typical tasks, for example **Financial analysis** and **Blog article**. A preview is free; copied examples are your own copies that you can change freely.
+> **Tip:** Below your workflows you find the gallery with ready-made [example workflows](/docs/beispiele) for typical tasks, for example **Financial analysis** and **Blog article**. A preview is free; copied examples are your own copies that you can change freely.
 
 ## The interface {#oberflaeche}
 <!-- keywords: navigation, sidebar, menu, theme, dark, light, layout -->

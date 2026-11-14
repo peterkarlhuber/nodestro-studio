@@ -215,7 +215,15 @@
       "duplicate": "Dieser Name kommt mehrfach vor."
     },
     "fromTool": "Aus einem Tool",
-    "fromSources": "Nennt Webquellen"
+    "sources": {
+      "label": "Webquellen für „{{name}}“",
+      "model": "Ohne Webquellen",
+      "tool": "Aus einem Tool",
+      "ledger": "Nennt Webquellen",
+      "ledger_cited": "Belegt jede Aussage [S1]",
+      "ledger_list": "Quellenliste (automatisch)",
+      "ledger_range": "Abrufzeitraum (automatisch)"
+    }
   },
   "thinking": {
     "title": "Denken und Aufwand",

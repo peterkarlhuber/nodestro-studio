@@ -45,7 +45,7 @@ Crea il tuo primo workflow in pochi minuti:
 5. **Osserva.** Nella *Panoramica dell'esecuzione* sotto l'area di lavoro vedi in diretta cosa scrive l'agente, quali strumenti chiama, quanti token consuma e quanto costa.
 6. **Ricostruisci.** Con **Dettagli** arrivi all'esecuzione completa con la sua cronologia.
 
-> **Suggerimento:** Sotto i tuoi workflow trovi la galleria con 24 [workflow di esempio](/docs/beispiele) per attività tipiche, per esempio **Analisi finanziaria** e **Articolo per il blog**. L’anteprima è gratuita; gli esempi copiati sono copie tue che puoi modificare liberamente.
+> **Suggerimento:** Sotto i tuoi workflow trovi la galleria con [workflow di esempio](/docs/beispiele) per attività tipiche, per esempio **Analisi finanziaria** e **Articolo per il blog**. L’anteprima è gratuita; gli esempi copiati sono copie tue che puoi modificare liberamente.
 
 ## L'interfaccia {#oberflaeche}
 <!-- keywords: navigazione, barra laterale, menu, tema, scuro, chiaro, layout -->

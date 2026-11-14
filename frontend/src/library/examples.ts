@@ -85,7 +85,7 @@ export function validMemorySpace(value: string): boolean {
 }
 
 export function copyRequest(
-  example: Pick<ExampleDetail, "tests" | "integrations">,
+  example: Pick<ExampleDetail, "tests" | "integrations" | "services">,
   language: string,
   tests: boolean,
   connections: Record<string, string>,
@@ -93,6 +93,8 @@ export function copyRequest(
   models: Record<string, string> = {},
   /** The copy's own memory space (EX-007); empty: the example's space, shared by every copy. */
   memorySpace = "",
+  /** Kind -> service connection chosen in the dialog (NAL-B2); kinds without a choice stay open. */
+  services: Record<string, string> = {},
 ): ExampleCopyRequest {
   const known = new Set(example.integrations.map((integration) => integration.id));
   const integrations = Object.fromEntries(
@@ -105,7 +107,14 @@ export function copyRequest(
     ...(connected ? { integrations } : {}),
     ...(Object.keys(models).length ? { models } : {}),
     ...(memorySpace.trim() ? { memory_space: memorySpace.trim() } : {}),
+    ...(chosenServices(example.services ?? [], services)),
   };
+}
+
+/** The chosen service connections the example needs, as the copy request takes them (nothing when none). */
+function chosenServices(needed: string[], chosen: Record<string, string>): Pick<ExampleCopyRequest, "services"> {
+  const services = Object.fromEntries(needed.filter((kind) => chosen[kind]).map((kind) => [kind, chosen[kind]!]));
+  return Object.keys(services).length ? { services } : {};
 }
 
 export function isCategory(value: string | null): value is ExampleCategory {

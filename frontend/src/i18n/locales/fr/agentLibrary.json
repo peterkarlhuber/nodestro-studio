@@ -1,0 +1,26 @@
+{
+  "title": "Agents fournis",
+  "count_one": "{{count}} agent",
+  "count_other": "{{count}} agents",
+  "intro": "Des agents individuels prêts à essayer. Reprenez-en un comme modèle personnel et adaptez-le ; les versions ultérieures de Nodestro ne modifient pas votre copie.",
+  "category": {
+    "research": "Recherche",
+    "text": "Texte",
+    "analysis": "Analyse"
+  },
+  "needsInternet": "Nécessite Internet",
+  "use": "Utiliser comme mon modèle",
+  "copied": "« {{name}} » fait maintenant partie de vos modèles",
+  "examples": "Exemples de demandes",
+  "needs": "Ce dont l’agent a besoin",
+  "tier": "Modèle : au moins le niveau « {{tier}} »",
+  "tools": "Outils : {{tools}}",
+  "offline": "Fonctionne sans Internet",
+  "online": "Nécessite une connexion Internet et une connexion de recherche",
+  "tiers": {
+    "fast": "rapide",
+    "standard": "standard",
+    "strong": "puissant"
+  },
+  "versionNote": "Version {{version}} · {{tests}} cas de test pour vérifier les réponses"
+}

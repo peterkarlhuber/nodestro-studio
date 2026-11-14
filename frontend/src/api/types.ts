@@ -42,14 +42,19 @@ export interface MemoryConfig {
 
 export type OutputFieldType = "string" | "number" | "integer" | "boolean" | "string_list" | "number_list";
 
+export type OutputFieldSource = "model" | "tool" | "ledger" | "ledger_cited" | "ledger_list" | "ledger_range";
+
 export interface OutputField {
   name: string;
   type: OutputFieldType;
   description: string;
   required: boolean;
-  /** "tool": a key figure that is accepted only as the result of a tool call (checked by the runtime). "ledger" (a
-   * string or string_list field, NAL-A2): every value must name a web source of the run (S3 or its address). */
-  source?: "model" | "tool" | "ledger";
+  /** "tool": a key figure that is accepted only as the result of a tool call (checked by the runtime). Text fields
+   * (string, string_list) and the run's source ledger: "ledger" (NAL-A2) every value names a web source of the run
+   * (S3 or its address); "ledger_cited" (NAL-B2) every statement cites sources inline ([S1] or [S1, S3]);
+   * "ledger_list" and "ledger_range" are filled by the runtime after the step with the cited sources and when they
+   * were retrieved, never by the model. */
+  source?: OutputFieldSource;
 }
 
 export interface OutputConfig {
@@ -94,6 +99,10 @@ export interface ToolSettings {
 export interface AgentConfig {
   name: string;
   description: string;
+  /** The task profile of an agent from a template (NAL-B1); null for agents written by hand. */
+  task?: string | null;
+  /** The template version a workflow agent was inserted from (NAL-B1). */
+  origin?: { template_id: string; version: number } | null;
   icon: string;
   model: string;
   system_prompt: string;
@@ -446,8 +455,83 @@ export interface ContractFieldSummary {
 export interface AgentTemplate {
   id: string;
   agent: AgentConfig;
+  /** The description of the template and where it comes from (NAL-B1). */
+  meta?: TemplateMeta;
+  /** The number of the latest version; every changed save adds one (NAL-B1). */
+  version?: number;
   created_at: string;
   updated_at: string;
+}
+
+/** What a template needs: model capabilities, tier, tools, kinds of service connection (NAL-B1). */
+export interface TemplateRequirements {
+  capabilities: ("tools" | "vision" | "structured_output" | "long_context")[];
+  min_tier: "fast" | "standard" | "strong" | null;
+  tools: string[];
+  services: string[];
+  offline_capable: boolean;
+}
+
+export interface TemplateTest {
+  name: string;
+  input: string;
+  expectations: string[];
+}
+
+/** ``origin``: ``user``, ``builtin:<package>@<version>/<id>`` or ``import:<sha256>``; set by the server only. */
+export interface TemplateMeta {
+  category: string | null;
+  summary: string;
+  requirements: TemplateRequirements;
+  origin: string;
+  examples: string[];
+  tests: TemplateTest[];
+  locale: string | null;
+}
+
+/** One saved version of an agent template; never changed afterwards. */
+export interface AgentTemplateVersion {
+  template_id: string;
+  version: number;
+  agent: AgentConfig;
+  meta: TemplateMeta;
+  note: string;
+  created_at: string;
+  created_by: string;
+}
+
+export interface TemplateCheck {
+  issues: ConfigIssue[];
+}
+
+export interface AgentImportResult {
+  template: AgentTemplate;
+  check: TemplateCheck;
+  /** What the import left out of the file. */
+  removed: ("tool_policies" | "connections" | "knowledge")[];
+}
+
+/** A shipped agent template of the library (``GET /api/library/agents``). */
+export interface LibraryAgentSummary {
+  id: string;
+  number: number;
+  category: "research" | "text" | "analysis";
+  name: string;
+  description: string;
+  icon: string;
+  version: string;
+  meta: TemplateMeta;
+}
+
+export interface LibraryAgentDetail extends LibraryAgentSummary {
+  help: string;
+  agent: AgentConfig;
+}
+
+export interface LibraryAgentCopyRequest {
+  language?: string | null;
+  model?: string | null;
+  services?: Record<string, string>;
 }
 
 export interface Usage {
@@ -1798,6 +1882,8 @@ export interface ExampleDetail extends ExampleSummary {
   knowledge: ExampleKnowledge[];
   /** The copy's budget per run in US dollars, if the example sets one. */
   budget_usd: number | null;
+  /** Kinds of service connection the built-in tools need (`search`, NAL-B2); chosen when copying. Older APIs: missing. */
+  services?: string[];
 }
 
 /** POST /api/library/{id}/copy. */
@@ -1811,6 +1897,8 @@ export interface ExampleCopyRequest {
   models?: Record<string, string>;
   /** A memory space of the copy's own for its agents with persistent memory (EX-007); missing: the example's. */
   memory_space?: string;
+  /** Kind -> service connection id for the built-in tools (NAL-B2); a kind left out stays open in the copy. */
+  services?: Record<string, string>;
 }
 
 /** One agent of an example and the local model its copy would get (GET /api/library/{id}/models). */

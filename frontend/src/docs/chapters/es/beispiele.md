@@ -80,7 +80,7 @@ Las secciones siguientes indican adaptaciones concretas para cada ejemplo.
 
 <!-- examples:start -->
 
-## Los 24 ejemplos de un vistazo {#uebersicht}
+## Los 25 ejemplos de un vistazo {#uebersicht}
 
 Cada ejemplo está en la galería y tiene su propia sección más abajo.
 
@@ -110,6 +110,7 @@ Cada ejemplo está en la galería y tiene su propia sección más abajo.
 | 22 | Planificar la fiesta del club | Asociaciones y clubes | 4 | paralelo |
 | 23 | Desarrollar una campaña de donaciones | Organizaciones sin ánimo de lucro | 3 | con ramas |
 | 24 | Responder una consulta ciudadana | Instituciones públicas | 3 | secuencial |
+| 25 | Investigación web con fuentes | Trabajo del conocimiento – investigación | 2 | con ramas |
 
 ## 1 · Analizar paradas de máquina {#production-downtime}
 <!-- keywords: producción e industria, analista de paradas, analista de causas, planificador de medidas -->
@@ -860,5 +861,31 @@ Las consultas ciudadanas suelen contener varios asuntos y deben responderse de f
 **Archivos de conocimiento (sintéticos, se crean al copiar):** Normas_municipio_Villamuestra: Normas inventadas del municipio de Villamuestra sobre construcciones auxiliares, el plan parcial n.º 17, alumbrado público, enseres voluminosos, árboles y la tramitación de consultas.
 
 **Cómo adaptarlo:** Sustituye las normas inventadas de la colección de conocimiento por vuestras ordenanzas, hojas informativas y listas de competencias; títulos y números claros hacen precisas las citas. El membrete y la despedida se añaden en el prompt de sistema del borrador de respuesta. Para muchas consultas a la vez, usa el procesamiento por lotes.
+
+## 25 · Investigación web con fuentes {#web-research}
+<!-- keywords: trabajo del conocimiento – investigación, investigador web, investigador web (exhaustivo) -->
+
+**Ámbito:** Trabajo del conocimiento – investigación · **Agentes:** 2 · **Patrón:** con ramas · **Nivel:** Principiante · **Elementos:** decisión, formulario de entrada, archivos de resultado, presupuesto y límites
+
+Las respuestas de la memoria de un modelo de lenguaje suelen estar desactualizadas y no se pueden comprobar. Una investigación web responde a una pregunta con páginas actuales e indica en cada afirmación de dónde procede, para que puedas verificarla.
+
+**Cómo colaboran los agentes:** El formulario recoge la pregunta, la profundidad de la investigación, opcionalmente el idioma de las fuentes y opcionalmente un periodo. Un nodo de decisión elige la profundidad: el investigador web rápido puede buscar tres veces y leer cuatro páginas; el exhaustivo, ocho búsquedas y doce páginas. El investigador planifica sus búsquedas, lee las páginas más prometedoras, prefiere fuentes primarias y redacta hallazgos que citan cada uno sus fuentes. Un control de calidad verifica las fuentes, su independencia y la incertidumbre declarada. Después del paso, Nodestro rellena por sí mismo la lista de fuentes y el periodo de consulta a partir del registro de fuentes de la ejecución.
+
+| Agente | Tarea | Recibe |
+|---|---|---|
+| **Investigador web** | Busca en la web, lee fuentes y responde con afirmaciones respaldadas (hasta 3 búsquedas y 4 lecturas de páginas). (con control de calidad; salida estructurada; Herramientas: `search_web`, `fetch_web_page`) | ¿Exhaustiva? |
+| **Investigador web (exhaustivo)** | Investiga como el investigador web con hasta 8 búsquedas y 12 lecturas de páginas, para preguntas con muchos aspectos. (con control de calidad; salida estructurada; Herramientas: `search_web`, `fetch_web_page`) | ¿Exhaustiva? |
+
+**Entrada:** Una pregunta o una lista breve de preguntas relacionadas; opcionalmente el idioma de las fuentes (código de dos letras como es o en) y un periodo.
+
+**Casos de prueba:** Respuesta rápida a la pregunta predefinida; Investigación exhaustiva sobre una pregunta discutida; Fuentes en alemán
+
+**Resultado:** Una respuesta breve en Markdown, hallazgos con números de fuente como [S1], contradicciones entre fuentes, lagunas (lo que no se encontró o no se pudo comprobar), las fuentes citadas con título, dirección y hora de consulta, y el periodo de consulta, también como archivo Markdown.
+
+**Qué se decide automáticamente y cuándo interviene una persona:** Automático: el nodo de decisión lee el campo «Investigación exhaustiva» y ejecuta exactamente uno de los dos investigadores; sus ajustes de herramienta limitan las búsquedas y las lecturas de páginas por ejecución (3 y 4, u 8 y 12), y la ejecución se detiene con un presupuesto de 1 USD. Cada afirmación debe citar números de fuente que las herramientas hayan devuelto realmente en esta ejecución; un hallazgo sin fuente o con un número desconocido se devuelve una vez y, si no, detiene el paso, de modo que nunca se entrega una fuente inventada. La lista de fuentes y el periodo de consulta no los escribe el modelo: se rellenan a partir del registro de fuentes de la ejecución. Un control de calidad con un segundo modelo comprueba tres criterios y permite al investigador revisar una vez. Ningún paso espera a una persona, y el agente no tiene ninguna herramienta que cambie algo fuera de la ejecución: solo busca y lee.
+
+**Por qué esta arquitectura:** Investigar es iterativo: qué buscar a continuación depende de lo encontrado, así que un agente con búsqueda y lectura de páginas encaja mejor que una secuencia fija de pasos o varios agentes, que costarían más sin mejorar las preguntas sencillas. La profundidad es un nodo de decisión con dos investigadores configurados porque un límite en el prompt se puede pasar por alto, uno de herramienta no. Las fuentes y las horas de consulta proceden del registro de fuentes de la ejecución y no del modelo, porque las referencias inventadas son la debilidad típica de los modelos de lenguaje. Se descartó a propósito la búsqueda web propia de un proveedor (una herramienta de servidor): solo funciona con un proveedor y sus fuentes no se pueden contrastar con el registro de fuentes de la ejecución.
+
+**Cómo adaptarlo:** Antes de la primera ejecución, configura un servicio de búsqueda en Herramientas → Conexiones y elígelo para los dos investigadores en la herramienta search_web; sin él, la comprobación previa al inicio indica la conexión que falta. Escribe tu pregunta y marca «Investigación exhaustiva» para preguntas con muchos aspectos o hechos discutidos. Para permitir más o menos búsquedas, cambia los ajustes de herramienta de los dos investigadores; para limitar la investigación a ciertos sitios web, indica allí los hosts permitidos o bloqueados.
 
 <!-- examples:end -->

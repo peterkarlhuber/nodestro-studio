@@ -45,6 +45,13 @@ Cada resultado de búsqueda y cada página que ven las herramientas web quedan r
 
 Puedes exigir que un agente cite sus fuentes: en un resultado estructurado, activa **Cita fuentes web** en un campo de texto o de lista (consulta [Formato de salida](/docs/agenten#ausgabeformat)). Cada valor debe nombrar entonces una fuente registrada por su identificador o su dirección. Si el agente nombra una fuente que no encontró, recibe una corrección; si lo vuelve a hacer, el paso falla, de modo que nunca se entrega una fuente inventada.
 
+## El ejemplo Investigación web {#beispiel}
+<!-- keywords: investigación web, ejemplo, agente de investigación, respuesta con fuentes, lista de fuentes, consulta, a fondo -->
+
+El ejemplo **Investigación web con fuentes** entre los [flujos de trabajo de ejemplo](/docs/beispiele) responde a una pregunta con fuentes. Al copiarlo, elige uno de tus servicios de búsqueda en **Servicios para las herramientas** o configura uno con **Configurar servicio de búsqueda**; no hay nada preseleccionado. Sin elegir, la copia se crea igualmente, y la comprobación antes de ejecutar te recuerda elegir una conexión en el agente.
+
+El resultado contiene la respuesta, los hallazgos y las contradicciones con identificadores de fuente como `[S1]`, las lagunas, la **lista de fuentes** y el **momento de consulta**. La lista de fuentes y el momento de consulta los escribe Nodestro después del paso a partir de las fuentes registradas, no el modelo. En el agente lo configuras para cada campo de texto en **Fuentes web**: **Cita fuentes web**, **Cita una fuente por afirmación [S1]**, **Lista de fuentes (automática)** o **Momento de consulta (automático)**. Con **Investigación exhaustiva** en el formulario de inicio, el agente busca y lee más (8 búsquedas y 12 páginas en lugar de 3 y 4).
+
 ## El texto de las páginas son datos {#sicherheit}
 <!-- keywords: seguridad, inyección de prompt, manipulación, contenido externo, no fiable -->
 

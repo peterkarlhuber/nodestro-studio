@@ -1,0 +1,26 @@
+{
+  "title": "Mitgelieferte Agenten",
+  "count_one": "{{count}} Agent",
+  "count_other": "{{count}} Agenten",
+  "intro": "Fertige Einzelagenten zum Ausprobieren. Übernimm einen als eigene Vorlage und passe ihn an; spätere Nodestro-Versionen ändern deine Kopie nicht.",
+  "category": {
+    "research": "Recherche",
+    "text": "Text",
+    "analysis": "Analyse"
+  },
+  "needsInternet": "Braucht Internet",
+  "use": "Als eigene Vorlage übernehmen",
+  "copied": "„{{name}}“ ist jetzt eine deiner Vorlagen",
+  "examples": "Beispielanfragen",
+  "needs": "Was der Agent braucht",
+  "tier": "Modell: mindestens Stufe „{{tier}}“",
+  "tools": "Tools: {{tools}}",
+  "offline": "Funktioniert ohne Internet",
+  "online": "Braucht eine Internetverbindung und eine Suchverbindung",
+  "tiers": {
+    "fast": "schnell",
+    "standard": "standard",
+    "strong": "stark"
+  },
+  "versionNote": "Version {{version}} · {{tests}} Testfälle zum Prüfen der Antworten"
+}

@@ -80,7 +80,7 @@ Les sections ci-dessous indiquent des adaptations concrètes pour chaque exemple
 
 <!-- examples:start -->
 
-## Les 24 exemples en un coup d'œil {#uebersicht}
+## Les 25 exemples en un coup d'œil {#uebersicht}
 
 Chaque exemple se trouve dans la galerie et a sa propre section ci-dessous.
 
@@ -110,6 +110,7 @@ Chaque exemple se trouve dans la galerie et a sa propre section ci-dessous.
 | 22 | Organiser la fête d’une association | Associations | 4 | parallèle |
 | 23 | Développer une campagne de dons | Organisations à but non lucratif | 3 | avec branches |
 | 24 | Répondre à une demande d’un administré | Institutions publiques | 3 | séquentiel |
+| 25 | Recherche web avec sources | Travail intellectuel – recherche | 2 | avec branches |
 
 ## 1 · Analyser les arrêts machine {#production-downtime}
 <!-- keywords: production et industrie, analyste des arrêts, analyste des causes, planificateur d’actions -->
@@ -860,5 +861,31 @@ Les demandes des administrés contiennent souvent plusieurs sujets et doivent re
 **Fichiers de connaissances (synthétiques, créés lors de la copie) :** Regles_commune_Villexemple : Règles fictives de la commune de Villexemple sur les annexes, le plan local d’urbanisme n° 17, l’éclairage public, les encombrants, les arbres et le traitement des demandes.
 
 **L'adapter :** Remplacez les règles fictives de la collection de connaissances par vos règlements, fiches pratiques et listes de compétences ; des titres et des numéros clairs rendent les citations précises. Ajoutez en-tête et formule de politesse dans le prompt système du projet de réponse. Pour traiter de nombreuses demandes à la fois, utilisez le traitement par lots.
+
+## 25 · Recherche web avec sources {#web-research}
+<!-- keywords: travail intellectuel – recherche, chercheur web, chercheur web (approfondi) -->
+
+**Domaine :** Travail intellectuel – recherche · **Agents :** 2 · **Schéma :** avec branches · **Niveau :** Débutant · **Éléments :** décision, formulaire de saisie, fichiers de résultat, budget et limites
+
+Les réponses tirées de la mémoire d’un modèle de langage sont souvent dépassées et invérifiables. Une recherche web répond à une question à partir de pages actuelles et indique pour chaque affirmation d’où elle vient, afin que vous puissiez la vérifier.
+
+**Comment les agents collaborent :** Le formulaire recueille la question, la profondeur de recherche, éventuellement la langue des sources et éventuellement une période. Un nœud de décision choisit la profondeur : le chercheur web rapide peut faire trois recherches et lire quatre pages, l’approfondi huit recherches et douze pages. Le chercheur planifie ses recherches, lit les pages les plus prometteuses, privilégie les sources primaires et rédige des constats qui citent chacun leurs sources. Un contrôle qualité vérifie les sources, leur indépendance et l’incertitude exprimée. Après l’étape, Nodestro remplit lui-même la liste des sources et la période de consultation à partir du registre des sources de l’exécution.
+
+| Agent | Tâche | Reçoit |
+|---|---|---|
+| **Chercheur web** | Cherche sur le web, lit les sources et répond avec des affirmations étayées (jusqu’à 3 recherches et 4 lectures de pages). (avec contrôle qualité; sortie structurée; Outils : `search_web`, `fetch_web_page`) | Approfondie ? |
+| **Chercheur web (approfondi)** | Cherche comme le chercheur web avec jusqu’à 8 recherches et 12 lectures de pages, pour les questions à nombreux aspects. (avec contrôle qualité; sortie structurée; Outils : `search_web`, `fetch_web_page`) | Approfondie ? |
+
+**Entrée :** Une question ou une courte liste de questions liées ; éventuellement la langue des sources (code à deux lettres comme fr ou en) et une période.
+
+**Cas de test :** Réponse rapide à la question prédéfinie; Recherche approfondie sur une question débattue; Sources en allemand
+
+**Résultat :** Une réponse courte en Markdown, des constats avec des numéros de source comme [S1], les contradictions entre sources, les lacunes (ce qui n’a pas été trouvé ou n’a pas pu être vérifié), les sources citées avec titre, adresse et heure de consultation, et la période de consultation, aussi sous forme de fichier Markdown.
+
+**Ce qui est décidé automatiquement et quand une personne intervient :** Automatique : le nœud de décision lit le champ « Recherche approfondie » et exécute exactement l’un des deux chercheurs ; leurs réglages d’outil limitent les recherches et les lectures de pages par exécution (3 et 4, ou 8 et 12), et l’exécution s’arrête à un budget de 1 USD. Chaque affirmation doit citer des numéros de source que les outils ont réellement renvoyés dans cette exécution ; un constat sans source ou avec un numéro inconnu est renvoyé une fois, sinon l’étape s’arrête, de sorte qu’aucune source inventée n’est jamais livrée. La liste des sources et la période de consultation ne sont pas écrites par le modèle mais remplies à partir du registre des sources de l’exécution. Un contrôle qualité par un second modèle vérifie trois critères et laisse le chercheur réviser une fois. Aucune étape n’attend une personne, et l’agent n’a aucun outil qui modifie quoi que ce soit hors de l’exécution : il cherche et lit seulement.
+
+**Pourquoi cette architecture :** La recherche est itérative : ce qu’on cherche ensuite dépend de ce qu’on a trouvé. Un agent avec recherche et lecture de pages convient donc mieux qu’une suite d’étapes fixe ou plusieurs agents, qui coûteraient plus sans améliorer les questions simples. La profondeur est un nœud de décision avec deux chercheurs configurés, car une limite dans le prompt peut être ignorée, une limite d’outil non. Les sources et les heures de consultation viennent du registre des sources de l’exécution et non du modèle, car les références inventées sont la faiblesse typique des modèles de langage. La recherche web propre à un fournisseur (un outil serveur) a été écartée délibérément : elle ne fonctionne qu’avec un seul fournisseur et ses sources ne peuvent pas être rapprochées du registre des sources de l’exécution.
+
+**L'adapter :** Avant la première exécution, configurez un service de recherche dans Outils → Connexions et choisissez-le pour les deux chercheurs dans l’outil search_web ; sans service, la vérification avant le démarrage signale la connexion manquante. Saisissez votre question et cochez « Recherche approfondie » pour les questions à nombreux aspects ou aux faits contestés. Pour autoriser plus ou moins de recherches, modifiez les réglages d’outil des deux chercheurs ; pour limiter la recherche à certains sites, indiquez-y les hôtes autorisés ou bloqués.
 
 <!-- examples:end -->

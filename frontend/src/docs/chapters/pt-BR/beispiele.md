@@ -80,7 +80,7 @@ As seções abaixo indicam adaptações concretas para cada exemplo.
 
 <!-- examples:start -->
 
-## Os 24 exemplos em resumo {#uebersicht}
+## Os 25 exemplos em resumo {#uebersicht}
 
 Cada exemplo está na galeria e tem sua própria seção abaixo.
 
@@ -110,6 +110,7 @@ Cada exemplo está na galeria e tem sua própria seção abaixo.
 | 22 | Planejar a festa de uma associação | Associações e clubes | 4 | paralelo |
 | 23 | Desenvolver uma campanha de doações | Organizações sem fins lucrativos | 3 | com ramificações |
 | 24 | Responder a uma solicitação de cidadão | Instituições públicas | 3 | sequencial |
+| 25 | Pesquisa na web com fontes | Trabalho do conhecimento – pesquisa | 2 | com ramificações |
 
 ## 1 · Analisar paradas de máquina {#production-downtime}
 <!-- keywords: produção e indústria, analista de paradas, analista de causas, planejador de ações -->
@@ -860,5 +861,31 @@ Solicitações de cidadãos muitas vezes contêm vários assuntos e precisam ser
 **Arquivos de conhecimento (sintéticos, criados ao copiar):** Regras_municipio_Cidade_Exemplo: Regras fictícias do município de Cidade Exemplo sobre anexos, o plano de zoneamento nº 17, iluminação pública, resíduos volumosos, árvores e o atendimento de solicitações.
 
 **Como adaptar:** Substitua as regras fictícias da coleção de conhecimento pelos seus regulamentos, folhetos e listas de responsabilidades; títulos e números claros tornam as citações precisas. Papel timbrado e despedida vão no prompt de sistema do rascunho de resposta. Para muitas solicitações de uma vez, use o processamento em lote.
+
+## 25 · Pesquisa na web com fontes {#web-research}
+<!-- keywords: trabalho do conhecimento – pesquisa, pesquisador web, pesquisador web (detalhado) -->
+
+**Área:** Trabalho do conhecimento – pesquisa · **Agentes:** 2 · **Padrão:** com ramificações · **Nível:** Iniciante · **Elementos:** decisão, formulário de entrada, arquivos de resultado, orçamento e limites
+
+Respostas da memória de um modelo de linguagem costumam estar desatualizadas e não podem ser verificadas. Uma pesquisa na web responde a uma pergunta com páginas atuais e diz, para cada afirmação, de onde ela vem, para que você possa conferir.
+
+**Como os agentes trabalham juntos:** O formulário recebe a pergunta, a profundidade da pesquisa, opcionalmente o idioma das fontes e opcionalmente um período. Um nó de decisão escolhe a profundidade: o pesquisador web rápido pode buscar três vezes e ler quatro páginas; o detalhado, oito buscas e doze páginas. O pesquisador planeja as buscas, lê as páginas mais promissoras, prefere fontes primárias e escreve constatações que citam, cada uma, suas fontes. Um controle de qualidade verifica as fontes, sua independência e a incerteza declarada. Depois da etapa, o Nodestro preenche sozinho a lista de fontes e o período de consulta a partir do registro de fontes da execução.
+
+| Agente | Tarefa | Recebe |
+|---|---|---|
+| **Pesquisador web** | Busca na web, lê fontes e responde com afirmações comprovadas (até 3 buscas e 4 leituras de páginas). (com verificação de qualidade; saída estruturada; Ferramentas: `search_web`, `fetch_web_page`) | Detalhada? |
+| **Pesquisador web (detalhado)** | Pesquisa como o pesquisador web com até 8 buscas e 12 leituras de páginas, para perguntas com muitos aspectos. (com verificação de qualidade; saída estruturada; Ferramentas: `search_web`, `fetch_web_page`) | Detalhada? |
+
+**Entrada:** Uma pergunta ou uma lista curta de perguntas relacionadas; opcionalmente o idioma das fontes (código de duas letras como pt ou en) e um período.
+
+**Casos de teste:** Resposta rápida à pergunta predefinida; Pesquisa detalhada sobre uma pergunta controversa; Fontes em alemão
+
+**Resultado:** Uma resposta curta em Markdown, constatações com números de fonte como [S1], contradições entre fontes, lacunas (o que não foi encontrado ou não pôde ser verificado), as fontes citadas com título, endereço e horário de consulta e o período de consulta, também como arquivo Markdown.
+
+**O que é decidido automaticamente e quando uma pessoa intervém:** Automático: o nó de decisão lê o campo "Pesquisa detalhada" e executa exatamente um dos dois pesquisadores; as configurações de ferramenta deles limitam buscas e leituras de páginas por execução (3 e 4, ou 8 e 12), e a execução para com um orçamento de 1 USD. Cada afirmação precisa citar números de fonte que as ferramentas realmente retornaram nesta execução; uma constatação sem fonte ou com número desconhecido é devolvida uma vez e, caso contrário, interrompe a etapa, de modo que nunca é entregue uma fonte inventada. A lista de fontes e o período de consulta não são escritos pelo modelo, mas preenchidos a partir do registro de fontes da execução. Um controle de qualidade com um segundo modelo verifica três critérios e permite ao pesquisador uma revisão. Nenhuma etapa espera por uma pessoa, e o agente não tem nenhuma ferramenta que altere algo fora da execução: ele apenas busca e lê.
+
+**Por que esta arquitetura:** Pesquisar é iterativo: o que buscar em seguida depende do que foi encontrado, por isso um agente com busca e leitura de páginas funciona melhor do que uma sequência fixa de etapas ou vários agentes, que custariam mais sem melhorar perguntas simples. A profundidade é um nó de decisão com dois pesquisadores configurados porque um limite no prompt pode ser ignorado, um limite de ferramenta não. Fontes e horários de consulta vêm do registro de fontes da execução e não do modelo, porque referências inventadas são a fraqueza típica dos modelos de linguagem. A busca na web própria de um fornecedor (uma ferramenta de servidor) foi deixada de fora de propósito: ela só funciona com um fornecedor e suas fontes não podem ser conferidas com o registro de fontes da execução.
+
+**Como adaptar:** Antes da primeira execução, configure um serviço de busca em Ferramentas → Conexões e escolha-o para os dois pesquisadores na ferramenta search_web; sem ele, a verificação antes do início aponta a conexão que falta. Digite sua pergunta e marque "Pesquisa detalhada" para perguntas com muitos aspectos ou fatos controversos. Para permitir mais ou menos buscas, altere as configurações de ferramenta dos dois pesquisadores; para limitar a pesquisa a certos sites, informe ali os hosts permitidos ou bloqueados.
 
 <!-- examples:end -->
