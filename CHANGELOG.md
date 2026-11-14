@@ -9,7 +9,7 @@
   unchanged, parity test) and result fields filled from the run's source ledger (NAL-B2, runtime #173:
   `ledger_cited`, `ledger_list`, `ledger_range`).
 - nodestro-sdk `bf2aed1` (sdk #119): `discover()` and contract version negotiation for the app API (NAL-C1).
-- TABRION PIN-W5: runtime `RUNTIME_SHA` (MIG-NOD-5, runtime #169, plus #174: the optional `tabrion.postgres` names
+- TABRION PIN-W5: runtime `213a6e4` (MIG-NOD-5, runtime #169, plus #174: the optional `tabrion.postgres` names
   are defined without the postgres extra), axentra `6c6fe1b` (MIG-AXE-6, axentra #87).
 - NAL-B2: nodestro-examples `9d3a8e0` (examples #102, example 25 `web-research`), nodestro-api `21a67b7` (api #135,
   `LibraryCopy.services`), nodestro-sdk `d3a907a` (sdk #120, regenerated types).
