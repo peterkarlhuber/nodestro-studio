@@ -1161,7 +1161,7 @@
     "plan_changed": "The database files changed since they were shown; nothing was changed. Check them again.",
     "not_repairable": "These database files cannot be repaired here; nothing was changed.",
     "repair_failed": "The permissions of the database could not be repaired; the changed permissions were set back.",
-    "restarting": "The permissions were repaired; Nodestro is restarting.",
+    "restarting": "Nodestro is restarting.",
     "busy": "Runs or other work are active. Restart in repair mode once they have finished.",
     "unavailable": "Only the desktop app can restart in repair mode. Restrict the permissions by hand instead.",
     "unprotected": "The repair is offered only in the desktop app's window. Restrict the permissions by hand instead.",

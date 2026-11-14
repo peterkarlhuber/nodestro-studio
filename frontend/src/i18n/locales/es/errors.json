@@ -1161,7 +1161,7 @@
     "plan_changed": "Los archivos de la base de datos cambiaron desde que se mostraron; no se ha cambiado nada. Revísalos de nuevo.",
     "not_repairable": "Estos archivos de la base de datos no se pueden reparar aquí; no se ha cambiado nada.",
     "repair_failed": "No se pudieron reparar los permisos de la base de datos; se restauraron los permisos cambiados.",
-    "restarting": "Los permisos se repararon; Nodestro se está reiniciando.",
+    "restarting": "Nodestro se está reiniciando.",
     "busy": "Hay ejecuciones u otros trabajos activos. Reinicia en modo de reparación cuando hayan terminado.",
     "unavailable": "Solo la aplicación de escritorio puede reiniciarse en modo de reparación. Restringe los permisos a mano.",
     "unprotected": "La reparación solo está disponible en la ventana de la aplicación de escritorio. Restringe los permisos a mano.",

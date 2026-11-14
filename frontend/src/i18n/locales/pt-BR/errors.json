@@ -1161,7 +1161,7 @@
     "plan_changed": "Os arquivos do banco de dados mudaram desde que foram exibidos; nada foi alterado. Confira-os novamente.",
     "not_repairable": "Estes arquivos do banco de dados não podem ser reparados aqui; nada foi alterado.",
     "repair_failed": "Não foi possível reparar as permissões do banco de dados; as permissões alteradas foram restauradas.",
-    "restarting": "As permissões foram reparadas; o Nodestro está reiniciando.",
+    "restarting": "O Nodestro está reiniciando.",
     "busy": "Há execuções ou outros trabalhos ativos. Reinicie no modo de reparo quando terminarem.",
     "unavailable": "Só o aplicativo de desktop pode reiniciar no modo de reparo. Restrinja as permissões manualmente.",
     "unprotected": "O reparo só é oferecido na janela do aplicativo de desktop. Restrinja as permissões manualmente.",
