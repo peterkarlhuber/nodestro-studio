@@ -4,7 +4,7 @@
 
 ### QA-19/QA-20: Tabrion compatibility workflow (2026-11-14)
 
-- New workflow `.github/workflows/tabrion-compat.yml` (nightly and `workflow_dispatch` with a Tabrion ref; report
+- New workflow `.github/workflows/tabrion-compat.yml` (`workflow_dispatch` only, with a Tabrion ref; report
   only, not a required check). QA-20: Axentra, Orkexa[postgres], the Nodestro runtime core and the Nodestro server
   (nodestro-api[server] + nodestro-runtime[postgres]) run their own test suites with PostgreSQL 17 against Tabrion
   master, resolved to one commit per run; only the lock's `tabrion` line changes. A red run blocks a Tabrion tag of

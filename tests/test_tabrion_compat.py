@@ -116,7 +116,8 @@ def test_the_negative_cases_with_the_bundled_pip(tmp_path: Path) -> None:
 def test_the_workflow_is_report_only_and_pinned() -> None:
     text = WORKFLOW.read_text(encoding="utf-8")
     on_block = text.split("\non:\n", 1)[1].split("\npermissions:", 1)[0]
-    assert "workflow_dispatch:" in on_block and "schedule:" in on_block and "tabrion_ref:" in on_block
+    assert "workflow_dispatch:" in on_block and "tabrion_ref:" in on_block
+    assert "schedule:" not in on_block and "issues: write" not in text  # manual only, no issue automation
     assert "pull_request" not in on_block and "push:" not in on_block
     assert "\npermissions:\n  contents: read\n" in text
     for line in re.findall(r"uses:\s*(\S+)", text):

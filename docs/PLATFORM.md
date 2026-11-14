@@ -242,7 +242,7 @@ branch deletion; until that is in place, see `docs/TODO.md` ST-052. The next com
 4. **SDK:** the Python and TypeScript SDKs at the pinned commit against the installed API.
 5. **Browser:** the user interface is built and all nine browser suites run against the installed platform.
 
-**Tabrion compatibility (report only):** `.github/workflows/tabrion-compat.yml` runs nightly and on demand. QA-20 runs
+**Tabrion compatibility (report only):** `.github/workflows/tabrion-compat.yml` runs on demand (`workflow_dispatch`). QA-20 runs
 the test suites of Axentra, Orkexa[postgres], the Nodestro runtime core and the Nodestro server, at their locked
 commits, against Tabrion master (only the lock's `tabrion` line changes); a red run blocks a Tabrion tag of that
 commit. QA-19 installs the locked Tabrion the way each consumer documents it (pip 25.0 and the latest pip where the

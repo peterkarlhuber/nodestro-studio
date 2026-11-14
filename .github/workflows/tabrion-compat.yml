@@ -18,10 +18,10 @@ name: Tabrion compatibility
 # Tabrion's nightly "downstream" job (scripts/downstream.py there): that one runs the consumers' MASTER branches,
 # their database tests only, through uv --override; this one runs the consumers at the studio's LOCKED commits, their
 # whole suites, through the studio lock with pip, as the platform's components job installs them.
+#
+# Manual only (workflow_dispatch): no schedule and no issue automation, by the owner's rule of 2026-11-14 against new
+# automatic monitors. Run it before a Tabrion tag and after a Tabrion change that consumers should see.
 on:
-  schedule:
-    # Staggered after the other nightlies (CI-FAST W0; GitHub starts scheduled runs about 5-6 h late on this account).
-    - cron: "5 22 * * *"
   workflow_dispatch:
     inputs:
       tabrion_ref:
@@ -33,7 +33,7 @@ permissions:
   contents: read
 
 concurrency:
-  # As platform.yml: every run (schedule, dispatch) gets its own group from github.run_id, so none is cancelled.
+  # As platform.yml: every run gets its own group from github.run_id, so none is cancelled.
   group: tabrion-compat-${{ github.workflow }}-${{ github.run_id }}
   cancel-in-progress: false
 
@@ -327,20 +327,12 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    permissions:
-      issues: write
     steps:
-      - name: Verdict, and the QA-20 issue
+      - name: Verdict
         env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
           NEEDS: ${{ toJSON(needs) }}
           SHA: ${{ needs.resolve.outputs.sha }}
           REF: ${{ needs.resolve.outputs.ref }}
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          # Only the scheduled run against master (on the default branch) keeps the issue; a dispatch of another ref
-          # or from another branch reports in its summary only.
-          TRACK: ${{ github.event_name == 'schedule' }}
         run: |
           set -euo pipefail
           result() { python3 -c 'import json,os,sys; print(json.loads(os.environ["NEEDS"])[sys.argv[1]]["result"])' "$1"; }
@@ -357,13 +349,3 @@ jobs:
             echo "| QA-19 cells (locked tabrion) | $cells |"
             echo "| QA-19 negative resolution | $negative |"
           } >> "$GITHUB_STEP_SUMMARY"
-          [ "$TRACK" = true ] || exit 0
-          title="Nightly: Tabrion master breaks a consumer (QA-20)"
-          number=$(gh issue list --state open --search "in:title \"$title\"" --json number,title --jq "map(select(.title==\"$title\"))[0].number // empty")
-          if [ "$gate" = RED ]; then
-            body="Run $RUN_URL: QA-20 is $qa20 for Tabrion master \`${SHA:-?}\` (resolve: $resolve). Do not tag Tabrion at this commit."
-            if [ -n "$number" ]; then gh issue comment "$number" --body "$body"; else gh issue create --title "$title" --body "$body"; fi
-          elif [ -n "$number" ]; then
-            gh issue comment "$number" --body "Run $RUN_URL: QA-20 is green again for Tabrion master \`$SHA\`. Closing."
-            gh issue close "$number"
-          fi

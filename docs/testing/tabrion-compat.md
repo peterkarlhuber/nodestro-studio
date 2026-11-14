@@ -9,20 +9,17 @@ foundation every internal package uses:
 - **QA-19 (AC-4): does the locked Tabrion install the way each consumer documents it, and does pip refuse what the
   lock rules forbid?**
 
-It runs every night (cron `5 22 * * *` UTC; GitHub starts scheduled runs on this account about 5 to 6 hours late) and
-on demand (`workflow_dispatch`, input `tabrion_ref`: a branch, tag or full commit SHA of Tabrion, default `master`).
+It runs on demand only (`workflow_dispatch`, input `tabrion_ref`: a branch, tag or full commit SHA of Tabrion, default `master`); there is
+no schedule and no issue automation (owner rule of 2026-11-14 against new automatic monitors).
 It is report only: it has no `pull_request` trigger, is not in `.github/ci-manifest.json` and is never a required
 check.
 
 ## The gate before a Tabrion tag
 
 **A red QA-20 result blocks a Tabrion tag of that commit.** Before tagging Tabrion, check that the latest run of this
-workflow for the commit to be tagged is green (dispatch it with `tabrion_ref` set to the commit if the nightly run is
-older). This is a rule of the release flow, not automation: the workflow blocks, tags and publishes nothing. Tabrion
+workflow for the commit to be tagged is green (dispatch it with `tabrion_ref` set to that commit). This is a rule of the release flow, not automation: the workflow blocks, tags and publishes nothing. Tabrion
 tags are locked at the moment anyway. The `report` job writes the verdict ("Tabrion tag gate (QA-20): GREEN/RED")
-into the run summary. The scheduled run also keeps one issue, "Nightly: Tabrion master breaks a consumer (QA-20)":
-opened (or commented on) when QA-20 is red, closed by the next green night. Dispatched runs report in their summary
-only.
+into the run summary.
 
 ## QA-20: consumers against Tabrion master
 
