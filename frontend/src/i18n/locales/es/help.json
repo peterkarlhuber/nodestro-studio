@@ -277,7 +277,7 @@
     "validate": "Comprueba el cuerpo de la solicitud exactamente como la API. No se inicia ninguna ejecución ni se cobra nada.",
     "testRun": "Inicia una ejecución real de la versión publicada por el camino de la API; se cobra como cualquier ejecución.",
     "sync": "Permite a los clientes esperar el resultado en una sola solicitud (?wait=<seconds>), hasta el límite de tiempo.",
-    "library": "Cómo obtiene Orkexa el proyecto exportado: desde su repositorio Git o como código fuente incluido (licencia MIT).",
+    "library": "Cómo obtiene Orkexa el proyecto exportado: desde su repositorio Git o como código fuente incluido (licencia propietaria de Levuvo).",
     "export": "Genera el proyecto como ZIP: runtime, versión del flujo, pruebas, ejemplos y README. No se envía nada a ningún sitio.",
     "gate": "Exige un resultado de pruebas actual antes de cada nueva versión. Las comprobaciones obligatorias siempre bloquean; los resultados más débiles se pueden publicar con un motivo.",
     "gateOverride": "El motivo se guarda con la versión y en el historial de la API. Las comprobaciones obligatorias nunca se pueden omitir.",

@@ -593,7 +593,7 @@
     "memory_included": "Memoria {{space}}: il contenuto attuale diventa la memoria iniziale.",
     "memory_empty": "La memoria {{space}} parte vuota nell’esportazione.",
     "distribution_unconfirmed": "Conferma di poter cedere il codice sorgente di Orkexa, oppure scegli il riferimento Git.",
-    "bundled_library": "Il codice sorgente di Orkexa viene copiato nel progetto (licenza MIT inclusa).",
+    "bundled_library": "Il codice sorgente di Orkexa viene copiato nel progetto (licenza inclusa).",
     "runtime_differs": "Questa versione è stata pubblicata con {{published}}; l’esportazione contiene il runtime attuale {{current}}.",
     "tool_libraries": "Le librerie approvate degli strumenti vengono installate con il progetto: {{packages}}.",
     "sandbox_process": "L’esportazione esegue in un processo separato solo gli strumenti che hai scritto tu; gli strumenti creati dall’IA richiedono TOOL_SANDBOX=docker (vedi il README dell’esportazione).",

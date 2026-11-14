@@ -593,7 +593,7 @@
     "memory_included": "Memory {{space}}: der aktuelle Inhalt wird zum Startinhalt.",
     "memory_empty": "Memory {{space}} startet im Export leer.",
     "distribution_unconfirmed": "Bestätige, dass du den Quellcode von Orkexa weitergeben darfst, oder wähle die Git-Referenz.",
-    "bundled_library": "Der Quellcode von Orkexa wird ins Projekt kopiert (MIT-Lizenz liegt bei).",
+    "bundled_library": "Der Quellcode von Orkexa wird ins Projekt kopiert (Lizenz liegt bei).",
     "runtime_differs": "Diese Version wurde mit {{published}} veröffentlicht; der Export enthält die aktuelle Runtime {{current}}.",
     "tool_libraries": "Die freigegebenen Tool-Bibliotheken werden mit dem Projekt installiert: {{packages}}.",
     "sandbox_process": "Der Export führt nur Tools, die du selbst geschrieben hast, in einem eigenen Prozess aus; KI-erstellte Tools brauchen TOOL_SANDBOX=docker (siehe README des Exports).",

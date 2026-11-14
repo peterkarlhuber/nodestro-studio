@@ -410,8 +410,8 @@ A workflow becomes a web API without a second engine. Everything runs through th
   `/health`, never the studio API. It is off by default and is switched off after a restore.
 - **Export** (`nodestro_api.exporter`, `nodestro_api.standalone`): the runtime modules are determined from their
   imports and copied byte for byte into the project (checksums in `RUNTIME.json`). `standalone.create_app()` builds the
-  same API from them without the studio. The ZIP is deterministic; `orkexa` comes as a Git reference or bundled (MIT,
-  with confirmation). Knowledge and memory are included only when explicitly selected, keys and settings never.
+  same API from them without the studio. The ZIP is deterministic; `orkexa` comes as a Git reference or bundled (proprietary Levuvo
+  license, with confirmation). Knowledge and memory are included only when explicitly selected, keys and settings never.
 - **Studio endpoints** (`nodestro_api.api_publish`): overview, check, publish, versions, keys, network, test, export.
   The optional AI guide (`nodestro_api.api_guide`) only receives the generated documentation, is recorded in the usage
   log (source `api_docs`) and only enters the export after the user accepts it.

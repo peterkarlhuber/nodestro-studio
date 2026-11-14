@@ -261,12 +261,12 @@ El paquete se genera en segundo plano; el diálogo muestra el progreso y te deja
 El paquete nunca contiene claves. En el ordenador de destino, el operador introduce las claves de los proveedores de IA en la página de ajustes de la interfaz web o con `start.sh configure` (Windows: `start.cmd configure`); se quedan en ese ordenador. Los clientes usan claves de API creadas con `start.sh keys new`. Por defecto la aplicación solo responde en este ordenador; para la red necesita TLS o un proxy inverso. El README del paquete explica inicio, parada, ajustes y solución de problemas. Los paquetes no están firmados: macOS y Windows preguntan una vez antes del primer inicio.
 
 ## La biblioteca Orkexa {#orkexa}
-<!-- keywords: orkexa, biblioteca, repositorio, licencia, mit, vendor, incluir, git, acceso -->
+<!-- keywords: orkexa, biblioteca, repositorio, licencia, levuvo, vendor, incluir, git, acceso -->
 
-Nodestro ejecuta los agentes con la biblioteca **Orkexa**, que habla con todos los proveedores admitidos. No está en PyPI; su código fuente está en un repositorio público de GitHub, con licencia MIT. Por eso la exportación ofrece dos caminos:
+Nodestro ejecuta los agentes con la biblioteca **Orkexa**, que habla con todos los proveedores admitidos. No está en PyPI; su código fuente está en un repositorio público de GitHub, con la licencia propietaria de Levuvo. Por eso la exportación ofrece dos caminos:
 
 - **Referencia Git** (predeterminada): `pyproject.toml` apunta al commit exacto. Al instalar el proyecto, la biblioteca se descarga de GitHub, así que hace falta acceso a github.com.
-- **Incluir el código fuente:** el código va a `vendor/orkexa/` y el proyecto se instala sin acceso al repositorio. La biblioteca tiene licencia MIT. Confirma que puedes cederla antes de dar este proyecto a otras personas.
+- **Incluir el código fuente:** el código va a `vendor/orkexa/` y el proyecto se instala sin acceso al repositorio. La biblioteca tiene la licencia propietaria de Levuvo. Confirma que puedes cederla antes de dar este proyecto a otras personas.
 
 Sin uno de los dos el proyecto no se puede instalar. El README indica el camino elegido.
 
