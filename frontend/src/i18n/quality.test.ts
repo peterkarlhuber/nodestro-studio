@@ -356,6 +356,10 @@ describe("backend codes", () => {
     "local.task_unknown_allowed", "lease.lost",
     // Local model setup and downloads with steps: what a job can end with.
     "local.network", "local.disk_full", "local.install_running", "local.interrupted", "local.unavailable", "local.start_failed",
+    // Web search and reading web pages (NAL-A2): workflow check, step outcome, connections and the web tools' results.
+    "check.ledger_source_no_tool", "check.ledger_source_type", "output.unknown_source", "connection.provider_unsupported_mode",
+    "connection.endpoint_missing", "search.unavailable", "search.rate_limited", "search.auth_failed", "search.price_unknown",
+    "web.address_refused", "fetch.unsupported_type", "fetch.too_large", "tool.mode_unsupported",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

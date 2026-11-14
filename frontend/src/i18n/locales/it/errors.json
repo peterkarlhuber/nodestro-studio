@@ -279,7 +279,8 @@
     "settings_unsupported": "{{name}} non accetta impostazioni.",
     "settings_unused": "Ci sono impostazioni per {{name}}, ma l’agente non usa questo strumento.",
     "timeout": "Lo strumento non ha finito entro il suo limite di tempo.",
-    "call_limit": "Lo strumento ha raggiunto il suo limite di chiamate per questa esecuzione."
+    "call_limit": "Lo strumento ha raggiunto il suo limite di chiamate per questa esecuzione.",
+    "mode_unsupported": "Questo strumento non è offerto in questa installazione."
   },
   "job": {
     "writing": "Il Coding Agent sta scrivendo codice e test …",
@@ -364,7 +365,9 @@
     "connection_missing": "{{name}} richiede una connessione di tipo {{type}}. Sceglila negli strumenti dell’agente.",
     "connection_unchecked": "La connessione {{connection}} di {{name}} non è ancora stata verificata con successo.",
     "offline_tool": "La modalità offline rigorosa non consente strumenti che richiedono Internet ({{names}}).",
-    "tool_mode_unsupported": "{{name}} non è disponibile in questa installazione ({{mode}})."
+    "tool_mode_unsupported": "{{name}} non è disponibile in questa installazione ({{mode}}).",
+    "ledger_source_type": "{{field}} deve citare fonti, ma vengono controllati solo i campi di testo di un risultato strutturato.",
+    "ledger_source_no_tool": "{{field}} deve citare fonti, ma né questo agente né un passo precedente ha uno strumento web che le trovi. Aggiungi search_web o fetch_web_page."
   },
   "backup": {
     "not_zip": "Il file non è un backup di Nodestro (non è un file ZIP).",
@@ -1130,9 +1133,27 @@
     "type_mismatch": "Lo strumento richiede una connessione di tipo {{expected}}, non {{type}}.",
     "type_unavailable": "Le connessioni di tipo {{type}} non sono ancora disponibili.",
     "type_unknown": "Non esiste il tipo di connessione «{{type}}».",
-    "unavailable": "La connessione non può essere usata in questo momento."
+    "unavailable": "La connessione non può essere usata in questo momento.",
+    "provider_unsupported_mode": "Il provider “{{provider}}” delle connessioni di tipo {{type}} non è offerto in questa installazione ({{mode}}).",
+    "endpoint_missing": "Questa connessione ha bisogno dell'indirizzo del tuo server."
   },
   "extension": {
     "tool_spec": "Un’estensione descrive il suo strumento {{name}} in un modo che Nodestro non può usare."
+  },
+  "output": {
+    "unknown_source": "{{field}} cita una fonte che questa esecuzione non ha trovato, nemmeno dopo una correzione. Il passo è stato fermato perché non venga consegnata nessuna fonte inventata."
+  },
+  "search": {
+    "unavailable": "Il servizio di ricerca non è raggiungibile in questo momento.",
+    "rate_limited": "Il servizio di ricerca limita o blocca le richieste in questo momento. Riprova più tardi.",
+    "auth_failed": "Il servizio di ricerca ha rifiutato la chiave della connessione. Controlla la chiave in Strumenti → Connessioni.",
+    "price_unknown": "Il prezzo di questo servizio di ricerca non è noto. Inserisci il prezzo per richiesta nella connessione."
+  },
+  "web": {
+    "address_refused": "Questo indirizzo web non può essere letto (un indirizzo di rete interna o un host rifiutato)."
+  },
+  "fetch": {
+    "unsupported_type": "Questo tipo di file non può essere letto; solo pagine web, testo e PDF.",
+    "too_large": "Il documento è troppo grande per essere letto."
   }
 }

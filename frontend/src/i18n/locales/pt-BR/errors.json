@@ -279,7 +279,8 @@
     "settings_unsupported": "{{name}} não aceita configurações.",
     "settings_unused": "Há configurações para {{name}}, mas o agente não usa esta ferramenta.",
     "timeout": "A ferramenta não terminou dentro do seu limite de tempo.",
-    "call_limit": "A ferramenta atingiu seu limite de chamadas nesta execução."
+    "call_limit": "A ferramenta atingiu seu limite de chamadas nesta execução.",
+    "mode_unsupported": "Esta ferramenta não é oferecida nesta instalação."
   },
   "job": {
     "writing": "O agente de programação está escrevendo código e testes …",
@@ -364,7 +365,9 @@
     "connection_missing": "{{name}} precisa de uma conexão do tipo {{type}}. Escolha-a nas ferramentas do agente.",
     "connection_unchecked": "A conexão {{connection}} de {{name}} ainda não foi verificada com sucesso.",
     "offline_tool": "O modo offline estrito não permite ferramentas que precisam de Internet ({{names}}).",
-    "tool_mode_unsupported": "{{name}} não está disponível nesta instalação ({{mode}})."
+    "tool_mode_unsupported": "{{name}} não está disponível nesta instalação ({{mode}}).",
+    "ledger_source_type": "{{field}} deve citar fontes, mas apenas campos de texto de um resultado estruturado são verificados.",
+    "ledger_source_no_tool": "{{field}} deve citar fontes, mas nem este agente nem uma etapa anterior tem uma ferramenta web que as encontre. Adicione search_web ou fetch_web_page."
   },
   "backup": {
     "not_zip": "O arquivo não é um backup do Nodestro (não é um ZIP).",
@@ -1130,9 +1133,27 @@
     "type_mismatch": "A ferramenta precisa de uma conexão do tipo {{expected}}, não {{type}}.",
     "type_unavailable": "Conexões do tipo {{type}} ainda não estão disponíveis.",
     "type_unknown": "Não existe o tipo de conexão “{{type}}”.",
-    "unavailable": "A conexão não pode ser usada agora."
+    "unavailable": "A conexão não pode ser usada agora.",
+    "provider_unsupported_mode": "O provedor “{{provider}}” das conexões do tipo {{type}} não é oferecido nesta instalação ({{mode}}).",
+    "endpoint_missing": "Esta conexão precisa do endereço do seu próprio servidor."
   },
   "extension": {
     "tool_spec": "Uma extensão descreve sua ferramenta {{name}} de um jeito que o Nodestro não consegue usar."
+  },
+  "output": {
+    "unknown_source": "{{field}} cita uma fonte que esta execução não encontrou, nem depois de uma correção. A etapa foi interrompida para que nenhuma fonte inventada seja entregue."
+  },
+  "search": {
+    "unavailable": "O serviço de busca não está acessível no momento.",
+    "rate_limited": "O serviço de busca está limitando ou bloqueando solicitações no momento. Tente novamente mais tarde.",
+    "auth_failed": "O serviço de busca recusou a chave da conexão. Verifique a chave em Ferramentas → Conexões.",
+    "price_unknown": "O preço deste serviço de busca não é conhecido. Informe o preço por solicitação na conexão."
+  },
+  "web": {
+    "address_refused": "Este endereço web não pode ser lido (um endereço de rede interna ou um host recusado)."
+  },
+  "fetch": {
+    "unsupported_type": "Este tipo de arquivo não pode ser lido; apenas páginas web, texto e PDF.",
+    "too_large": "O documento é grande demais para ser lido."
   }
 }
