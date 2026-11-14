@@ -23,12 +23,12 @@
       "version_file": "src/axentra/_version.py"
     },
     "orkexa": {
-      "commit": "3d2aef53a7431cc1fb15cb03e19f43ce7699667f",
+      "commit": "44921544df825c233a3f32b53e5a4c5481207ed5",
       "version": "0.2.0.dev0",
       "pyproject": "pyproject.toml"
     },
     "nodestro-runtime": {
-      "commit": "8ee7ecafd5365c2cfdc72685ab30809787191dc9",
+      "commit": "2135812568d8863f3d3b957c37f0780a7a9c415d",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
