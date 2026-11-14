@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### NAL-B4: skill groups, preselection, recommendations, usage and script tools (2026-11-14)
+
+- Skills page: a switch between Skills, Groups and Usage. Groups (create, edit, delete; members from a searchable
+  list) are a library convenience: adding a group to an agent adds its active members in their current version, on
+  demand, with the group noted on each binding. Agents may have up to 100 skills; above 20 on-demand skills the
+  inspector explains the preselection.
+- Usage: offered, loaded, files read, runs, success rate and quality checks per skill over 7, 30 or 90 days,
+  labelled as an indication, not proof.
+- Run details: a "Skill choice" block per agent step (all or preselected, offered skills, recommended and ignored
+  recommendations, scores); team runs show the skills their team leader recommended.
+- "Use as tool" for files under `scripts/` (run permission): starts a tool draft through the existing tool chain
+  (isolating sandbox, a person approves); tools and tool jobs from a skill script show their origin.
+- Help: five new sections in the skills chapter in all six languages.
+
 ### QA-19/QA-20: Tabrion compatibility workflow (2026-11-14)
 
 - New workflow `.github/workflows/tabrion-compat.yml` (`workflow_dispatch` only, with a Tabrion ref; report
