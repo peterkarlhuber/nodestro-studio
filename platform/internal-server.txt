@@ -2,8 +2,8 @@
 # scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>
 axentra @ git+https://github.com/peterkarlhuber/axentra.git@3b80af1c4a03f7926bec768238fda73cc5da9bad
 nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@b4f41ae84697996f0d19d1779783f033540174db
-nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@aa3d4644bfae0befa7a3ca3a3b54aae8c4ba1f8e
+nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@7e5bb3af3267cdfeddd22f9357f3d1e3816b76d9
 nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@62138e2bfcb2bcd5051e612050433649d6cd3c2a
 nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@c4e5f136571dc767b064068a8dce82635a4a9cbe
-orkexa @ git+https://github.com/peterkarlhuber/orkexa.git@1b1c988f1c1045fbe4467cd30f9947867c02f2df
+orkexa @ git+https://github.com/peterkarlhuber/orkexa.git@46c19d8763cb16da3a3ebe512115848fd7643a28
 tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@af0458d54467571abfc1afdd44d76e1f4d727c06
