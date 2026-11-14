@@ -76,8 +76,8 @@ Packaging of the desktop is [ADR-0005](../adr/0005-desktop-packaging.md).
 | `nodestro-api` | master `74d151f`, pinned `43595a7` | new `identity.py`, `permissions.py`, `worker.py`; changed `context.py` (`AppConfig.profile`), `app.py`, `cli.py`, every `api*.py` router (permission per route), `backup.py`, `diagnostics.py`, `schedules.py`, `network.py`, `serving.py` (tenant-bound keys), `openapi/nodestro-api.json` |
 | `nodestro-studio` | master `06c7859` | this documentation; later `platform/versions.json` (desktop/server entries), `scripts/check_versions.py`, `scripts/check_imports.py`, login/401 handling in `frontend/src/api/client.ts`, settings page (sandbox policy), docs chapters in six languages |
 | `nodestro-sdk` | master `4cecc1f` | contract regeneration when the OpenAPI changes; session-free (keys only) |
-| `nodestro-desktop` | only `LICENSE` (MIT), no CI | host shell, build scripts, CI for builds and smoke tests, release workflow |
-| `nodestro-server` | only `LICENSE` (MIT), no CI | container images, compose/Helm for development, operator runbooks, backup/restore scripts |
+| `nodestro-desktop` | only `LICENSE`, no CI | host shell, build scripts, CI for builds and smoke tests, release workflow |
+| `nodestro-server` | only `LICENSE`, no CI | container images, compose/Helm for development, operator runbooks, backup/restore scripts |
 | `orkexa` | `cbf6df3` | none planned; only if the sandbox image hook (ADR-0006, point 5) cannot be done by subclassing |
 | `nodestro-examples`, `nodestro-integrations` | unchanged | none (pins bump only) |
 

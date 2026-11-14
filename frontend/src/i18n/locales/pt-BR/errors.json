@@ -590,7 +590,7 @@
     "memory_included": "Memória {{space}}: o conteúdo atual será a memória inicial.",
     "memory_empty": "A memória {{space}} começa vazia na exportação.",
     "distribution_unconfirmed": "Confirme que você pode repassar o código-fonte do Orkexa, ou escolha a referência Git.",
-    "bundled_library": "O código-fonte do Orkexa é copiado para o projeto (licença MIT incluída).",
+    "bundled_library": "O código-fonte do Orkexa é copiado para o projeto (licença incluída).",
     "runtime_differs": "Esta versão foi publicada com {{published}}; a exportação contém o runtime atual {{current}}.",
     "tool_libraries": "As bibliotecas aprovadas das ferramentas são instaladas com o projeto: {{packages}}.",
     "sandbox_process": "A exportação executa em um processo separado apenas as ferramentas que você mesmo escreveu; ferramentas criadas por IA precisam de TOOL_SANDBOX=docker (veja o README da exportação).",

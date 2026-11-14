@@ -197,4 +197,4 @@ Open work (known bugs, follow-ups, technical debt) is listed in [docs/TODO.md](d
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+Proprietary: Copyright (c) 2026 Levuvo. All rights reserved. See [LICENSE](LICENSE).
