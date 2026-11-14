@@ -72,7 +72,7 @@ select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
 force-sort-within-sections = true
 known-first-party = ["nodestro_studio"]
 known-third-party = ["nodestro_runtime", "nodestro_api", "nodestro_examples", "nodestro_integrations"]
-known-local-folder = ["architect_script", "conftest", "check_case_collisions", "check_imports", "check_versions", "check_dependency_policy"]
+known-local-folder = ["architect_script", "conftest", "check_case_collisions", "check_imports", "check_versions", "check_dependency_policy", "check_tabrion_source"]
 
 [tool.mypy]
 python_version = "3.11"
@@ -86,6 +86,7 @@ files = [
   "scripts/bump_pins.py",
   "scripts/check_versions.py",
   "scripts/check_dependency_policy.py",
+  "scripts/check_tabrion_source.py",
   "scripts/checkout_components.py",
   "scripts/mup_translation_check.py",
   "scripts/derive_branding.py",

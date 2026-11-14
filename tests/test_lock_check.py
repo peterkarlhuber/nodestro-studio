@@ -229,3 +229,31 @@ def test_the_command_fails_on_an_unreadable_versions_file(tmp_path: Path) -> Non
     result = cli("--versions", str(tmp_path / "missing.json"), "--path", str(tmp_path))
     assert result.returncode == 1
     assert result.stdout.startswith("lock_check: FAIL cannot read ")
+
+
+def test_only_checks_the_named_components_and_requires_them() -> None:
+    """DC-NS-1: ``--only tabrion`` for the consumers' poisoned-index jobs: no profile, no studio."""
+    versions = copy.deepcopy(VERSIONS)
+    versions["components"]["tabrion"] = {"commit": F, "version": "0.1.0"}
+    tabrion = {"tabrion": Installed("0.1.0", vcs("tabrion", F))}
+    assert lock_check.check(versions, tabrion, "studio", ["tabrion"]) == (["tabrion 0.1.0 @ ffffffffffff"], [])
+    ok, problems = lock_check.check(versions, {"tabrion": Installed("0.1.99", None)}, "studio", ["tabrion"])
+    assert ok == []
+    assert problems[0].startswith("tabrion 0.1.99: not installed from a pinned commit (no direct_url.json")
+    assert problems[1] == "tabrion: installed version 0.1.99, versions.json says 0.1.0"
+    assert lock_check.check(versions, {}, "studio", ["tabrion", "nope"])[1] == [
+        "nope: not a component of versions.json",
+        f"tabrion: not installed, --only needs it at {F[:12]}",
+    ]
+
+
+def test_the_command_with_only(tmp_path: Path) -> None:
+    versions = copy.deepcopy(VERSIONS)
+    versions["components"]["tabrion"] = {"commit": F, "version": "0.1.0"}
+    path = tmp_path / "versions.json"
+    path.write_text(json.dumps(versions), encoding="utf-8")
+    site = site_from({"tabrion": Installed("0.1.0", vcs("tabrion", F))}, tmp_path / "site")
+    result = cli("--versions", str(path), "--path", str(site), "--only", "tabrion")
+    assert result.returncode == 0, result.stdout
+    assert result.stdout.splitlines()[-1].startswith("lock_check: GREEN (only tabrion, platform 0.2.0, 1 ok, 0 problem")
+    assert cli("--versions", str(path), "--path", str(site), "--only", "tabrion,axentra").returncode == 1
