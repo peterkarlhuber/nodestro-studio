@@ -1,15 +1,18 @@
-// A tool's error output that starts with a backend code ("mcp.unreachable: Docs cannot be reached"): the code lets
-// the interface say it in the current language (AD-12). Anything else is the tool's own text and stays as it is.
+// A tool's error output that starts with a backend code ("mcp.unreachable: Docs cannot be reached"), or a built-in
+// tool's "Error: ..." sentence that ends with its code in parentheses ("Error: the page cannot be read: the file type
+// is not supported (fetch.unsupported_type, HTTP 200)", NAL-A1/A2): the code lets the interface say it in the current
+// language (AD-12). Anything else is the tool's own text and stays as it is.
 
 import i18n from "../i18n";
 import type { Coded } from "./errors";
 
 const CODED = /^([a-z][a-z0-9_]*(?:\.[a-z0-9_]+)+): ?([\s\S]*)$/;
+const TRAILING = /^Error: [\s\S]*\(([a-z][a-z0-9_]*(?:\.[a-z0-9_]+)+)(?:, [^()]*)?\)\.?$/;
 
 /** The coded problem in a tool's output, or null when the output carries no code the interface knows. */
 export function codedToolOutput(output: string | null | undefined): Coded | null {
   if (!output) return null;
-  const match = CODED.exec(output.trim());
+  const match = CODED.exec(output.trim()) ?? TRAILING.exec(output.trim());
   if (!match) return null;
   const code = match[1];
   if (!i18n.exists(`errors.${code}`)) return null;

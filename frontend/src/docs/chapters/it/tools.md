@@ -31,6 +31,8 @@ Gli strumenti della libreria si assegnano nell'ispettore di un agente, dove si a
 
 I modelli linguistici sbagliano facilmente i calcoli a mente. Dai la `calculator` agli agenti che lavorano con i numeri e chiedi nel prompt di sistema di usarla. Per totali e quote di una tabella, `table_totals` è più sicuro, perché conta ogni riga.
 
+Gli strumenti web `search_web` e `fetch_web_page` sono descritti in [Ricerca web e lettura di pagine web](/docs/websuche).
+
 La libreria mostra le descrizioni degli strumenti integrati nella lingua dell'interfaccia. Il modello riceve sempre la descrizione originale in inglese, così gli agenti esistenti si comportano allo stesso modo in ogni lingua.
 
 Ogni strumento integrato porta dei contrassegni nella libreria: categoria, rete (*Senza rete* o *Con Internet*), *Funziona offline* e, se serve, *Richiede una connessione*. I dettagli mostrano il limite di tempo e il numero massimo di chiamate per esecuzione; una chiamata più lunga termina con un errore dello strumento e l’esecuzione continua. I filtri sopra l’elenco mostrano solo gli strumenti di una categoria, senza rete, utilizzabili offline o quelli che richiedono una [connessione](/docs/verbindungen). Uno strumento con accesso a Internet viene rifiutato in un workflow offline prima dell’avvio.

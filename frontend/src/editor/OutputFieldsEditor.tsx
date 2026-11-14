@@ -24,7 +24,8 @@ export function OutputFieldsEditor({
   fields: OutputField[];
   onChange: (fields: OutputField[]) => void;
   idPrefix: string;
-  /** Agents' results: number fields can be marked as key figures that must come from a tool. */
+  /** Agents' results: number fields can be marked as key figures that must come from a tool, text fields as cited
+   * web sources that must be in the run's source ledger. */
   checkable?: boolean;
 }) {
   const { t } = useTranslation();
@@ -118,6 +119,16 @@ export function OutputFieldsEditor({
                     {t("agent.output.fromTool")}
                   </label>
                 </Tooltip>
+              ) : null}
+              {checkable && (field.type === "string" || field.type === "string_list") ? (
+                <label className="checkbox output-field__source">
+                  <input
+                    type="checkbox"
+                    checked={field.source === "ledger"}
+                    onChange={(e) => setField(index, { source: e.target.checked ? "ledger" : "model" })}
+                  />
+                  {t("agent.output.fromSources")}
+                </label>
               ) : null}
             </div>
           );

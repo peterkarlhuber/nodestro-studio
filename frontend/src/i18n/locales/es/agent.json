@@ -103,7 +103,37 @@
     "serverToolsShort": "Herramientas de servidor",
     "connection": "Conexión para {{tool}}",
     "noConnection": "Ninguna conexión elegida",
-    "connectionNone": "Todavía no hay ninguna conexión de tipo {{type}}. Añade una en <a>Herramientas → Conexiones</a>."
+    "connectionNone": "Todavía no hay ninguna conexión de tipo {{type}}. Añade una en <a>Herramientas → Conexiones</a>.",
+    "params": {
+      "advanced": "Avanzado: límites de {{tool}}",
+      "default": "Predeterminado",
+      "invalid": "No es un valor válido; no se guarda.",
+      "name": {
+        "max_results": "Máximo de resultados por búsqueda",
+        "region": "Región",
+        "language": "Idioma",
+        "time_range": "Periodo",
+        "allow_hosts": "Dominios permitidos",
+        "deny_hosts": "Dominios bloqueados",
+        "max_calls": "Máximo de llamadas por ejecución",
+        "max_chars": "Máximo de caracteres por página"
+      },
+      "hint": {
+        "max_results": "De {{min}} a {{max}}. El modelo puede pedir menos, nunca más.",
+        "region": "Código de país de dos letras, por ejemplo AT. Se usa cuando el modelo no indica ninguno.",
+        "language": "Código de idioma de dos letras, por ejemplo de. Se usa cuando el modelo no indica ninguno.",
+        "allow_hosts": "Solo estos dominios y sus subdominios, separados por comas. Vacío: cualquier dominio.",
+        "deny_hosts": "Nunca estos dominios ni sus subdominios, separados por comas.",
+        "max_calls": "De {{min}} a {{max}}.",
+        "max_chars": "De {{min}} a {{max}}. Las páginas más largas se recortan."
+      },
+      "option": {
+        "day": "Último día",
+        "week": "Última semana",
+        "month": "Último mes",
+        "year": "Último año"
+      }
+    }
   },
   "knowledge": {
     "title": "Conocimiento",
@@ -184,7 +214,8 @@
       "digit": "Solo letras, cifras y _; no puede empezar por una cifra.",
       "duplicate": "Este nombre aparece más de una vez."
     },
-    "fromTool": "De una herramienta"
+    "fromTool": "De una herramienta",
+    "fromSources": "Cita fuentes web"
   },
   "thinking": {
     "title": "Razonamiento y esfuerzo",

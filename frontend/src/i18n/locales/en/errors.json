@@ -279,7 +279,8 @@
     "settings_unsupported": "{{name}} takes no settings.",
     "settings_unused": "There are settings for {{name}}, but the agent does not use this tool.",
     "timeout": "The tool did not finish within its time limit.",
-    "call_limit": "The tool reached its limit of calls for this run."
+    "call_limit": "The tool reached its limit of calls for this run.",
+    "mode_unsupported": "This tool is not offered in this installation."
   },
   "job": {
     "writing": "The Coding Agent is writing code and tests …",
@@ -364,7 +365,9 @@
     "connection_missing": "{{name}} needs a {{type}} connection. Choose one in the agent's tools.",
     "connection_unchecked": "The connection {{connection}} of {{name}} has not been checked successfully yet.",
     "offline_tool": "The strict offline mode allows no tools that need the internet ({{names}}).",
-    "tool_mode_unsupported": "{{name}} is not available in this installation ({{mode}})."
+    "tool_mode_unsupported": "{{name}} is not available in this installation ({{mode}}).",
+    "ledger_source_type": "{{field}} must name sources, but only text fields of a structured result are checked.",
+    "ledger_source_no_tool": "{{field}} must name sources, but neither this agent nor a step before it has a web tool that finds them. Add search_web or fetch_web_page."
   },
   "backup": {
     "not_zip": "The file is not a Nodestro backup (no ZIP file).",
@@ -1130,9 +1133,27 @@
     "type_mismatch": "The tool needs a {{expected}} connection, not a {{type}} connection.",
     "type_unavailable": "{{type}} connections are not available yet.",
     "type_unknown": "There is no connection type “{{type}}”.",
-    "unavailable": "The connection cannot be used right now."
+    "unavailable": "The connection cannot be used right now.",
+    "provider_unsupported_mode": "The provider “{{provider}}” of {{type}} connections is not offered in this installation ({{mode}}).",
+    "endpoint_missing": "This connection needs the address of your own server."
   },
   "extension": {
     "tool_spec": "An extension describes its tool {{name}} in a way Nodestro cannot use."
+  },
+  "output": {
+    "unknown_source": "{{field}} names a source this run did not find, even after one correction. The step stopped so that no made-up source is delivered."
+  },
+  "search": {
+    "unavailable": "The search service cannot be reached right now.",
+    "rate_limited": "The search service limits or blocks requests right now. Try again later.",
+    "auth_failed": "The search service refused the key of the connection. Check the key under Tools → Connections.",
+    "price_unknown": "The price of this search service is not known. Enter the price per request in the connection."
+  },
+  "web": {
+    "address_refused": "This web address may not be read (an internal network address or a refused host)."
+  },
+  "fetch": {
+    "unsupported_type": "This kind of file cannot be read; only web pages, text and PDF can.",
+    "too_large": "The document is too large to be read."
   }
 }

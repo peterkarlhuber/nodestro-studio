@@ -106,6 +106,23 @@ describe("coded tool output (AD-12)", () => {
     expect(codedToolOutput("ValueError: bad input")).toBeNull();
     expect(codedToolOutput("foo.bar: something")).toBeNull();
   });
+
+  it("reads the code at the end of a built-in tool's error sentence (NAL-A2)", () => {
+    expect(codedToolOutput("Error: brave search failed: the provider limits requests now (search.rate_limited)")?.code).toBe(
+      "search.rate_limited",
+    );
+    expect(codedToolOutput("Error: the page cannot be read: the address is not allowed (web.address_refused, private)")?.code).toBe(
+      "web.address_refused",
+    );
+    expect(codedToolOutput("Error: the page cannot be read: unsupported (fetch.unsupported_type, HTTP 200)")?.code).toBe(
+      "fetch.unsupported_type",
+    );
+    expect(codedToolOutput("Error: search_web is not offered here (tool.mode_unsupported)")?.code).toBe("tool.mode_unsupported");
+    // Not at the end, or an unknown code: the tool's own text stays.
+    expect(codedToolOutput("Error: the call limit of x is reached (10 per run, tool.call_limit); answer with what you have")).toBeNull();
+    expect(codedToolOutput("Error: something (foo.bar)")).toBeNull();
+    expect(codedToolOutput("Note (search.unavailable)")).toBeNull();
+  });
 });
 
 describe("interrupted runs (AD-10)", () => {

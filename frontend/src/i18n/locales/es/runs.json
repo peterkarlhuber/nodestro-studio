@@ -117,5 +117,11 @@
     "passages_one": "({{count}} fragmento)",
     "passages_other": "({{count}} fragmentos)",
     "hint": "Encontradas por la búsqueda de conocimiento del agente; la pestaña Herramientas muestra los fragmentos."
+  },
+  "webSources": {
+    "title": "Fuentes web",
+    "hint": "Cada resultado de búsqueda y cada página que vieron las herramientas web de los agentes en esta ejecución. Un campo de resultado que cita fuentes las nombra por estos identificadores. Los títulos proceden de las páginas web.",
+    "fetched": "Leída",
+    "search": "Solo resultado"
   }
 }

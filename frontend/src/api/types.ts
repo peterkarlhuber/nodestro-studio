@@ -47,8 +47,9 @@ export interface OutputField {
   type: OutputFieldType;
   description: string;
   required: boolean;
-  /** "tool": a key figure that is accepted only as the result of a tool call (checked by the runtime). */
-  source?: "model" | "tool";
+  /** "tool": a key figure that is accepted only as the result of a tool call (checked by the runtime). "ledger" (a
+   * string or string_list field, NAL-A2): every value must name a web source of the run (S3 or its address). */
+  source?: "model" | "tool" | "ledger";
 }
 
 export interface OutputConfig {
@@ -735,6 +736,8 @@ export interface Run extends RunOrigin {
   cause?: RunCause | null;
   output: unknown;
   nodes: Record<string, NodeRun>;
+  /** The run's source ledger (NAL-A2): every web source its tools saw; runs of earlier versions have none. */
+  sources?: SourceEntry[];
   usage: Usage;
   /** The budget the run started with (null: no limit, or a run of an earlier version). */
   budget_usd?: number | null;
@@ -754,6 +757,23 @@ export interface Run extends RunOrigin {
   source_run_id?: string | null;
   /** Set when the trace came from a sanitized export. */
   sanitized?: SanitizeReport | null;
+}
+
+/** One web source of a run (runtime schemas.SourceEntry): a search hit or a page that was read; never the page text. */
+export interface SourceEntry {
+  /** S1, S2 ... in the order the run first saw the source. */
+  id: string;
+  url: string;
+  /** The address after redirects, when the page was read. */
+  final_url?: string | null;
+  /** From the web page or the search provider: shown as plain text only. */
+  title: string;
+  /** search: only a search hit; fetched: the page was read. */
+  origin: "search" | "fetched";
+  provider?: string | null;
+  retrieved_at: string;
+  sha256?: string | null;
+  node_id?: string | null;
 }
 
 /** What a sanitized export replaces, by category (nodestro-runtime sanitize.py). */

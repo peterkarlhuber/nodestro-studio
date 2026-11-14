@@ -279,7 +279,8 @@
     "settings_unsupported": "{{name}} hat keine Einstellungen.",
     "settings_unused": "Es gibt Einstellungen für {{name}}, aber der Agent nutzt dieses Tool nicht.",
     "timeout": "Das Tool ist nicht innerhalb seines Zeitlimits fertig geworden.",
-    "call_limit": "Das Tool hat seine Höchstzahl an Aufrufen für diese Ausführung erreicht."
+    "call_limit": "Das Tool hat seine Höchstzahl an Aufrufen für diese Ausführung erreicht.",
+    "mode_unsupported": "Dieses Tool wird in dieser Installation nicht angeboten."
   },
   "job": {
     "writing": "Der Coding Agent schreibt Code und Tests …",
@@ -364,7 +365,9 @@
     "connection_missing": "{{name}} braucht eine Verbindung der Art {{type}}. Wähl sie bei den Tools des Agenten.",
     "connection_unchecked": "Die Verbindung {{connection}} von {{name}} wurde noch nicht erfolgreich geprüft.",
     "offline_tool": "Der strenge Offline-Modus erlaubt keine Tools, die das Internet brauchen ({{names}}).",
-    "tool_mode_unsupported": "{{name}} ist in dieser Installation nicht verfügbar ({{mode}})."
+    "tool_mode_unsupported": "{{name}} ist in dieser Installation nicht verfügbar ({{mode}}).",
+    "ledger_source_type": "{{field}} soll Quellen nennen, aber nur Textfelder eines strukturierten Ergebnisses werden geprüft.",
+    "ledger_source_no_tool": "{{field}} soll Quellen nennen, aber weder dieser Agent noch ein Schritt davor hat ein Web-Tool, das sie findet. Füge search_web oder fetch_web_page hinzu."
   },
   "backup": {
     "not_zip": "Die Datei ist kein Nodestro-Backup (keine ZIP-Datei).",
@@ -1130,9 +1133,27 @@
     "type_mismatch": "Das Tool braucht eine Verbindung der Art {{expected}}, nicht {{type}}.",
     "type_unavailable": "Verbindungen der Art {{type}} sind noch nicht verfügbar.",
     "type_unknown": "Eine Verbindungsart „{{type}}“ gibt es nicht.",
-    "unavailable": "Die Verbindung kann gerade nicht genutzt werden."
+    "unavailable": "Die Verbindung kann gerade nicht genutzt werden.",
+    "provider_unsupported_mode": "Der Anbieter „{{provider}}“ für Verbindungen der Art {{type}} wird in dieser Installation nicht angeboten ({{mode}}).",
+    "endpoint_missing": "Diese Verbindung braucht die Adresse deines eigenen Servers."
   },
   "extension": {
     "tool_spec": "Eine Erweiterung beschreibt ihr Tool {{name}} so, dass Nodestro es nicht verwenden kann."
+  },
+  "output": {
+    "unknown_source": "{{field}} nennt eine Quelle, die diese Ausführung nicht gefunden hat, auch nach einer Korrektur. Der Schritt wurde gestoppt, damit keine erfundene Quelle geliefert wird."
+  },
+  "search": {
+    "unavailable": "Der Suchdienst ist gerade nicht erreichbar.",
+    "rate_limited": "Der Suchdienst begrenzt oder sperrt Anfragen gerade. Versuche es später noch einmal.",
+    "auth_failed": "Der Suchdienst hat den Schlüssel der Verbindung abgelehnt. Prüfe den Schlüssel unter Tools → Verbindungen.",
+    "price_unknown": "Der Preis dieses Suchdienstes ist nicht bekannt. Trage in der Verbindung den Preis pro Anfrage ein."
+  },
+  "web": {
+    "address_refused": "Diese Webadresse darf nicht gelesen werden (eine interne Netzwerkadresse oder ein abgelehnter Host)."
+  },
+  "fetch": {
+    "unsupported_type": "Diese Art von Datei kann nicht gelesen werden; nur Webseiten, Text und PDF.",
+    "too_large": "Das Dokument ist zu groß zum Lesen."
   }
 }

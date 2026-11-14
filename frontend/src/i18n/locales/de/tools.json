@@ -415,6 +415,30 @@
       "secret_set": "Geheimnis gesetzt",
       "secret_cleared": "Geheimnis entfernt",
       "checked": "Geprüft"
+    },
+    "search": {
+      "open": "Suchdienst einrichten",
+      "title": "Suchdienst einrichten",
+      "intro": "Wähle den Dienst, über den deine Agenten im Web suchen. Nichts ist vorausgewählt: Lies die Hinweise und nimm den, der passt. Du kannst die Verbindung später ändern oder löschen.",
+      "choose": "Suchdienst",
+      "needsKey": "Schlüssel nötig",
+      "noKey": "Kein Schlüssel",
+      "testName": "Test-Anbieter",
+      "note": {
+        "ddgs": "Kostenlos, ohne Schlüssel und ohne Gewähr: Er nutzt andere Suchmaschinen, die ihn jederzeit sperren oder sich ändern können.",
+        "brave": "Braucht einen API-Schlüssel. Ergebnisse dürfen nicht gespeichert werden. Etwa 5 USD pro 1000 Anfragen.",
+        "tavily": "Braucht einen API-Schlüssel. Trage den Preis pro Anfrage deines Tarifs ein.",
+        "mojeek": "Braucht einen API-Schlüssel. Betrieben in Europa. Trage den Preis pro Anfrage deines Tarifs ein.",
+        "searxng": "Dein eigener Server: Trage seine Adresse ein. Ein Schlüssel ist nur nötig, wenn dein Server einen verlangt.",
+        "test": "Offline-Test-Anbieter zum Ausprobieren: Er liefert erfundene Treffer, geht nie ins Internet und nimmt jeden Schlüssel an."
+      },
+      "endpoint": "Adresse deines Servers",
+      "endpointHint": "Zum Beispiel https://search.example.org. Interne Adressen werden abgelehnt.",
+      "price": "Preis pro Anfrage (USD)",
+      "priceHint": "Aus deinem Tarif, zum Beispiel 0.008. Er zählt zum Budget der Ausführung.",
+      "create": "Einrichten",
+      "done": "Suchdienst „{{name}}“ eingerichtet.",
+      "none": "In dieser Installation kann kein Suchdienst eingerichtet werden."
     }
   }
 }

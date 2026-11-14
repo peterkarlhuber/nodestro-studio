@@ -31,6 +31,8 @@ Les outils de la bibliothèque s’attribuent dans l’inspecteur d’un agent, 
 
 Les modèles de langage se trompent facilement en calcul mental. Donnez la `calculator` aux agents qui manipulent des chiffres et demandez-leur dans le prompt système de l’utiliser. Pour les totaux et les parts d’un tableau, `table_totals` est plus sûr, car il compte chaque ligne.
 
+Les outils web `search_web` et `fetch_web_page` sont décrits dans [Recherche web et lecture de pages web](/docs/websuche).
+
 La bibliothèque affiche les descriptions des outils intégrés dans la langue de l’interface. Le modèle reçoit toujours la description originale en anglais, pour que les agents existants se comportent de la même façon dans toutes les langues.
 
 Chaque outil intégré porte des badges dans la bibliothèque : catégorie, réseau (*Sans réseau* ou *Avec Internet*), *Fonctionne hors ligne* et, si besoin, *Exige une connexion*. Les détails indiquent le délai maximal et le nombre maximal d’appels par exécution ; un appel plus long se termine par une erreur d’outil et l’exécution continue. Les filtres au-dessus de la liste n’affichent que les outils d’une catégorie, sans réseau, utilisables hors ligne ou ceux qui exigent une [connexion](/docs/verbindungen). Un outil avec accès à Internet est refusé dans un workflow hors ligne avant le démarrage.

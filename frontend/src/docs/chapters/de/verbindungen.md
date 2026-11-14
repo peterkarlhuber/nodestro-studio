@@ -16,6 +16,8 @@ Verbindungen verwaltest du unter *Tools → Verbindungen*. **Verbindung hinzufü
 
 Jede Verbindung zeigt die Adressen, die sie erreichen darf (aus ihren Einstellungen abgeleitet), und die Agenten, die sie nutzen. Nur Administratoren können Verbindungen anlegen, ändern, prüfen oder löschen; alle anderen sehen sie nur. Nodestro zeichnet auf, wer welche Verbindung geändert hat, nie die Werte.
 
+Für eine Websuche bietet **Suchdienst einrichten** die Suchdienste mit ehrlichen Hinweisen zu Schlüssel, Kosten und Grenzen an; siehe [Websuche und Webseiten lesen](/docs/websuche).
+
 Eine Verbindung, die Agenten noch nutzen, wird nicht sofort gelöscht: Nodestro nennt die Agenten und bietet **Trotzdem löschen** an. Ihre Prüfung meldet dann die fehlende Verbindung.
 
 ## Das Geheimnis {#geheimnis}

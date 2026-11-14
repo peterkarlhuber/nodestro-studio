@@ -117,5 +117,11 @@
     "passages_one": "({{count}} extrait)",
     "passages_other": "({{count}} extraits)",
     "hint": "Trouvées par la recherche de connaissances de l’agent ; l’onglet Outils affiche les extraits."
+  },
+  "webSources": {
+    "title": "Sources web",
+    "hint": "Chaque résultat de recherche et chaque page que les outils web des agents ont vus pendant cette exécution. Un champ de résultat qui cite des sources les désigne par ces identifiants. Les titres proviennent des pages web.",
+    "fetched": "Lue",
+    "search": "Résultat seul"
   }
 }

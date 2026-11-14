@@ -2,6 +2,40 @@
 
 ## Unreleased
 
+### Web search and reading web pages, studio UI (NAL-A2, 2026-11-14)
+
+Codes against the runtime's NAL-A2 contract (`search_web`, `fetch_web_page`, source ledger). Until the runtime with
+the web tools is in the lock, the API offers no web providers and the new parts stay hidden; older APIs look as before.
+
+- Lock: orkexa moves to `e59f199` (orkexa #95: the web layer with the egress guard, search adapters and the isolated
+  HTML worker) together with nodestro-runtime `65114cf` (runtime #170, the web tools, with MIG-NOD-4/8 #167),
+  nodestro-api `c6b9104` (api #134: NAL-C1 app contract and the NAL-A2 api part) and nodestro-sdk `4ca099e` (sdk #118:
+  the new contract): runtime's error code list names orkexa's error classes, so they move in one step. The dependency policy allows nodestro-runtime -> `orkexa[...,web]`
+  (required), `orkexa[web-ddgs]` (optional extra `web-ddgs`; DDGS is never a default) and `web-ddgs` in its dev extra.
+
+- *Tools → Connections → Set up search service* (`frontend/src/pages/SearchSetup.tsx`): one card per search provider
+  (DDGS, Brave Search, Tavily, Mojeek, SearXNG, offline test provider) with an honest note on key, cost and limits;
+  no provider is preselected (owner decision E-3 open) and none is recommended. Providers whose `provider_modes`
+  exclude the installation's mode are hidden (DDGS on a server). It creates a normal `search` connection, asks Tavily
+  and Mojeek for `price_per_request_usd`, SearXNG for its `endpoint`, and sets the key of providers that need one
+  (`keyless_providers`). `ConnectionTypeInfo` gains the optional `keyless_providers` and `provider_modes`.
+- Agent inspector (`frontend/src/editor/ToolBindings.tsx`, moved out of `AgentInspector.tsx`): assigned built-in
+  tools that need a connection, reach the internet or have binding parameters show the "Internet" network badge, the
+  connection picker (search_web) and an "Advanced" area built from the spec's `params_schema` (search_web: results,
+  region, language, time range, allowed/blocked domains, calls; fetch_web_page: domains, characters, calls). Only
+  values the schema accepts are written to `tool_settings[tool].params`.
+- Output fields: an agent's text and text list fields offer "Cites web sources" (`source: "ledger"`).
+- Run detail page: a "Web sources" panel lists `run.sources` (id, title, domain, time, "Read" or "Hit only"). Titles
+  are plain text; only http(s) addresses become links, opened in a new tab with `rel="noopener noreferrer"`. Hidden
+  without sources.
+- Texts for `check.ledger_source_no_tool`, `check.ledger_source_type`, `output.unknown_source`,
+  `connection.provider_unsupported_mode`, `connection.endpoint_missing` and the web tools' result codes
+  (`search.unavailable`, `search.rate_limited`, `search.auth_failed`, `search.price_unknown`, `web.address_refused`,
+  `fetch.unsupported_type`, `fetch.too_large`, `tool.mode_unsupported`) in all six languages; `codedToolOutput` also
+  reads a built-in tool's `Error: ... (code)` sentence.
+- Help chapter "Web search and reading web pages" (`websuche`) in all six languages, linked from the connections and
+  tools chapters.
+
 ### Tabrion in the studio profile, TABRION PIN-W2 (MIG-NOD-3, K-32) (2026-11-14)
 
 - nodestro-runtime requires the stdlib-only `tabrion` core (MIG-NOD-3), so every profile holds tabrion:

@@ -103,7 +103,37 @@
     "serverToolsShort": "Server tools",
     "connection": "Connection for {{tool}}",
     "noConnection": "No connection chosen",
-    "connectionNone": "No {{type}} connection yet. Add one under <a>Tools → Connections</a>."
+    "connectionNone": "No {{type}} connection yet. Add one under <a>Tools → Connections</a>.",
+    "params": {
+      "advanced": "Advanced: limits of {{tool}}",
+      "default": "Default",
+      "invalid": "Not a valid value; it is not saved.",
+      "name": {
+        "max_results": "Maximum results per search",
+        "region": "Region",
+        "language": "Language",
+        "time_range": "Time range",
+        "allow_hosts": "Allowed domains",
+        "deny_hosts": "Blocked domains",
+        "max_calls": "Maximum calls per run",
+        "max_chars": "Maximum characters per page"
+      },
+      "hint": {
+        "max_results": "{{min}} to {{max}}. The model may ask for fewer, never for more.",
+        "region": "Two-letter country code, for example AT. Used when the model names none.",
+        "language": "Two-letter language code, for example de. Used when the model names none.",
+        "allow_hosts": "Only these domains and their subdomains, separated by commas. Empty: every domain.",
+        "deny_hosts": "Never these domains and their subdomains, separated by commas.",
+        "max_calls": "{{min}} to {{max}}.",
+        "max_chars": "{{min}} to {{max}}. Longer pages are cut off."
+      },
+      "option": {
+        "day": "Last day",
+        "week": "Last week",
+        "month": "Last month",
+        "year": "Last year"
+      }
+    }
   },
   "knowledge": {
     "title": "Knowledge",
@@ -184,7 +214,8 @@
       "digit": "Letters, digits and _ only; must not start with a digit.",
       "duplicate": "This name is used more than once."
     },
-    "fromTool": "From a tool"
+    "fromTool": "From a tool",
+    "fromSources": "Cites web sources"
   },
   "thinking": {
     "title": "Thinking and effort",

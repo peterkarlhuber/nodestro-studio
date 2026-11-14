@@ -31,6 +31,8 @@ Tools aus der Bibliothek weist du im Inspektor eines Agenten zu, Server-Tools sc
 
 Sprachmodelle rechnen im Kopf fehleranfällig. Gib Agenten, die mit Zahlen arbeiten, den `calculator` und weise im System-Prompt an, ihn zu benutzen. Für Summen und Anteile aus einer Tabelle ist `table_totals` sicherer, weil es jede Zeile mitzählt.
 
+Die Web-Tools `search_web` und `fetch_web_page` beschreibt [Websuche und Webseiten lesen](/docs/websuche).
+
 Die Bibliothek zeigt die Beschreibungen eingebauter Tools in der Sprache der Oberfläche. Das Modell erhält immer die englische Originalbeschreibung, damit sich bestehende Agenten in jeder Sprache gleich verhalten.
 
 Jedes eingebaute Tool trägt in der Bibliothek Kennzeichen: Kategorie, Netzwerk (*Kein Netzwerk* oder *Mit Internet*), *Funktioniert offline* und, falls nötig, *Braucht eine Verbindung*. In den Details stehen Zeitlimit und die höchste Zahl an Aufrufen je Lauf; ein Aufruf, der länger dauert, endet mit einem Tool-Fehler, der Lauf läuft weiter. Mit den Filtern über der Liste zeigst du nur Tools einer Kategorie, ohne Netzwerk, offline nutzbare oder solche, die eine [Verbindung](/docs/verbindungen) brauchen. Ein Tool mit Internetzugang wird in einem Offline-Workflow schon vor dem Start abgelehnt.

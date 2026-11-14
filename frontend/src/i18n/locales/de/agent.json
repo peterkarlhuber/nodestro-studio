@@ -103,7 +103,37 @@
     "serverToolsShort": "Server-Tools",
     "connection": "Verbindung für {{tool}}",
     "noConnection": "Keine Verbindung gewählt",
-    "connectionNone": "Noch keine Verbindung der Art {{type}}. Leg eine unter <a>Tools → Verbindungen</a> an."
+    "connectionNone": "Noch keine Verbindung der Art {{type}}. Leg eine unter <a>Tools → Verbindungen</a> an.",
+    "params": {
+      "advanced": "Erweitert: Grenzen von {{tool}}",
+      "default": "Standard",
+      "invalid": "Kein gültiger Wert; er wird nicht gespeichert.",
+      "name": {
+        "max_results": "Höchstens Treffer pro Suche",
+        "region": "Land",
+        "language": "Sprache",
+        "time_range": "Zeitraum",
+        "allow_hosts": "Erlaubte Domains",
+        "deny_hosts": "Gesperrte Domains",
+        "max_calls": "Höchstens Aufrufe pro Ausführung",
+        "max_chars": "Höchstens Zeichen pro Seite"
+      },
+      "hint": {
+        "max_results": "{{min}} bis {{max}}. Das Modell darf weniger verlangen, nie mehr.",
+        "region": "Ländercode aus zwei Buchstaben, zum Beispiel AT. Gilt, wenn das Modell keinen nennt.",
+        "language": "Sprachcode aus zwei Buchstaben, zum Beispiel de. Gilt, wenn das Modell keinen nennt.",
+        "allow_hosts": "Nur diese Domains und ihre Subdomains, durch Kommas getrennt. Leer: jede Domain.",
+        "deny_hosts": "Nie diese Domains und ihre Subdomains, durch Kommas getrennt.",
+        "max_calls": "{{min}} bis {{max}}.",
+        "max_chars": "{{min}} bis {{max}}. Längere Seiten werden abgeschnitten."
+      },
+      "option": {
+        "day": "Letzter Tag",
+        "week": "Letzte Woche",
+        "month": "Letzter Monat",
+        "year": "Letztes Jahr"
+      }
+    }
   },
   "knowledge": {
     "title": "Wissen",
@@ -184,7 +214,8 @@
       "digit": "Nur Buchstaben, Ziffern und _; darf nicht mit einer Ziffer beginnen.",
       "duplicate": "Dieser Name kommt mehrfach vor."
     },
-    "fromTool": "Aus einem Tool"
+    "fromTool": "Aus einem Tool",
+    "fromSources": "Nennt Webquellen"
   },
   "thinking": {
     "title": "Denken und Aufwand",

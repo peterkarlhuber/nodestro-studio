@@ -3,7 +3,7 @@
 // gets it back, it only shows whether one is set and where it is kept. The runtime enforces every rule.
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Cable, CheckCircle2, History, KeyRound, Pencil, Plus, Trash2 } from "lucide-react";
+import { Cable, CheckCircle2, History, KeyRound, Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -42,6 +42,7 @@ import {
 } from "../components/ui";
 import { ErrorText, ProblemText, codedError } from "../lib/errors";
 import { type Tone, formatDate, relativeTime } from "../lib/format";
+import { SearchSetupDialog } from "./SearchSetup";
 
 const CHECK_TONE: Record<CheckStatus, Tone> = { unchecked: "idle", ok: "success", failed: "danger" };
 
@@ -65,6 +66,7 @@ export function ConnectionsTab() {
   const typeLabel = useTypeLabel();
   const [selected, setSelected] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
+  const [settingUpSearch, setSettingUpSearch] = useState(false);
   if (connections.isLoading || status.isLoading || types.isLoading) return <Spinner />;
   const failed = connections.error ?? status.error ?? types.error;
   if (failed)
@@ -76,6 +78,7 @@ export function ConnectionsTab() {
   const list = connections.data ?? [];
   const current = list.find((item) => item.id === selected) ?? list[0] ?? null;
   const typeOf = (name: string) => types.data?.find((item) => item.name === name);
+  const searchType = typeOf("search");
   return (
     <div className="stack" data-testid="connections">
       <p className="muted small">{t("tools.connections.intro")}</p>
@@ -84,9 +87,16 @@ export function ConnectionsTab() {
       <div className="row-between">
         <h2 className="panel__title">{t("tools.connections.title")}</h2>
         {admin ? (
-          <Button icon={Plus} onClick={() => setAdding(true)} disabled={!types.data?.length}>
-            {t("tools.connections.add")}
-          </Button>
+          <div className="row-gap">
+            {searchType ? (
+              <Button icon={Search} onClick={() => setSettingUpSearch(true)}>
+                {t("tools.connections.search.open")}
+              </Button>
+            ) : null}
+            <Button icon={Plus} onClick={() => setAdding(true)} disabled={!types.data?.length}>
+              {t("tools.connections.add")}
+            </Button>
+          </div>
         ) : null}
       </div>
       {!list.length ? (
@@ -127,6 +137,17 @@ export function ConnectionsTab() {
         </div>
       )}
       {admin ? <EventsSection /> : null}
+      {settingUpSearch && searchType && status.data ? (
+        <SearchSetupDialog
+          type={searchType}
+          status={status.data}
+          onClose={() => setSettingUpSearch(false)}
+          onSaved={(saved) => {
+            setSettingUpSearch(false);
+            setSelected(saved.id);
+          }}
+        />
+      ) : null}
       {adding && types.data ? (
         <ConnectionForm
           types={types.data}

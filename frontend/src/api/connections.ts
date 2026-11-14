@@ -34,6 +34,10 @@ export interface ConnectionTypeInfo {
   settings_schema: Record<string, unknown>;
   modes: string[];
   checkable: boolean;
+  /** Providers that work without a secret although the type needs one (NAL-A2: ddgs, searxng); older APIs omit it. */
+  keyless_providers?: string[];
+  /** Providers offered only in some modes (NAL-A2: ddgs never on a server); others follow ``modes``. */
+  provider_modes?: Record<string, string[]>;
 }
 
 export interface ConnectionCheck {
@@ -158,6 +162,17 @@ export const useConnectionEvents = (enabled: boolean) =>
 /** The built-in tools with their specs; an older API without the route leaves it empty (no filters, no pickers). */
 export const useBuiltinTools = () =>
   useQuery({ queryKey: connectionKeys.builtinTools, queryFn: connectionsApi.builtinTools, retry: false, staleTime: 60_000 });
+
+/** Whether ``provider`` of ``type`` may be used in ``mode`` (the runtime's ConnectionType.offers). */
+export function offersProvider(type: ConnectionTypeInfo, provider: string, mode: string): boolean {
+  const modes = type.provider_modes?.[provider] ?? type.modes;
+  return type.modes.includes(mode) && modes.includes(mode);
+}
+
+/** Whether a connection of ``provider`` needs a secret before it can be used (the runtime's needs_secret). */
+export function needsSecret(type: ConnectionTypeInfo, provider: string): boolean {
+  return type.secret_required && !(type.keyless_providers ?? []).includes(provider);
+}
 
 // ---- the settings form -------------------------------------------------------------------------------------------
 

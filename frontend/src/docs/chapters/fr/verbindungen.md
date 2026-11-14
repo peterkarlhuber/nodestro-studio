@@ -16,6 +16,8 @@ Vous gérez les connexions sous *Outils → Connexions*. **Ajouter une connexion
 
 Chaque connexion indique les hôtes qu’elle peut joindre, déduits de ses paramètres, et les agents qui l’utilisent. Seuls les administrateurs peuvent ajouter, modifier, vérifier ou supprimer des connexions ; les autres les voient en lecture seule. Nodestro enregistre qui a modifié quelle connexion, jamais les valeurs.
 
+Pour une recherche web, **Configurer un service de recherche** propose les services de recherche avec des remarques honnêtes sur la clé, les coûts et les limites ; voir [Recherche web et lecture de pages web](/docs/websuche).
+
 Une connexion que des agents utilisent encore n’est pas supprimée tout de suite : Nodestro nomme les agents et propose **Supprimer quand même**. Leur vérification signale ensuite la connexion manquante.
 
 ## Le secret {#geheimnis}

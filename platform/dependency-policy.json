@@ -27,12 +27,13 @@
     {"from": "orkexa", "to": "tabrion", "kind": "required", "extra": null, "status": "pending:E-ORK-CORE"},
     {"from": "orkexa", "to": "tabrion[testing,postgres]", "kind": "dev", "extra": "dev", "status": "active"},
 
-    {"from": "nodestro-runtime", "to": "orkexa[all,pdf,local,convert]", "kind": "required", "extra": null, "status": "active"},
+    {"from": "nodestro-runtime", "to": "orkexa[all,pdf,local,convert,web]", "kind": "required", "extra": null, "status": "active"},
     {"from": "nodestro-runtime", "to": "orkexa[postgres]", "kind": "optional", "extra": "postgres", "status": "active"},
+    {"from": "nodestro-runtime", "to": "orkexa[web-ddgs]", "kind": "optional", "extra": "web-ddgs", "status": "active"},
     {"from": "nodestro-runtime", "to": "axentra[oidc]", "kind": "optional", "extra": "postgres", "status": "active"},
     {"from": "nodestro-runtime", "to": "tabrion[postgres]", "kind": "optional", "extra": "postgres", "status": "active"},
     {"from": "nodestro-runtime", "to": "tabrion", "kind": "required", "extra": null, "status": "active"},
-    {"from": "nodestro-runtime", "to": "orkexa[postgres,sqlcheck]", "kind": "dev", "extra": "dev", "status": "active"},
+    {"from": "nodestro-runtime", "to": "orkexa[postgres,sqlcheck,web-ddgs]", "kind": "dev", "extra": "dev", "status": "active"},
     {"from": "nodestro-runtime", "to": "axentra[oidc]", "kind": "dev", "extra": "dev", "status": "active"},
     {"from": "nodestro-runtime", "to": "tabrion[testing,postgres]", "kind": "dev", "extra": "dev", "status": "active"},
 

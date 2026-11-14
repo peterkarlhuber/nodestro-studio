@@ -22,6 +22,7 @@ import { TraceExportDialog, sanitizeSummary } from "../editor/TraceExportDialog"
 import { RunApprovals } from "../runs/ApprovalCard";
 import { BudgetRaiseHistory, RunBudgetDecision } from "../runs/BudgetDecisionCard";
 import { RunToolApprovals } from "../runs/ToolApprovalCard";
+import { WebSources } from "../runs/WebSources";
 import { ResultFiles } from "../runs/ResultFiles";
 import { CancelRunButton } from "../runs/CancelRunButton";
 import { RunProblem } from "../runs/RunProblem";
@@ -316,6 +317,7 @@ export function RunDetailPage() {
                 <NodeRunDetails node={node} state={data.nodes[node.id]} runFiles={startFiles(data, node.id)} run={data} />
               </section>
             ) : null}
+            <WebSources run={data} />
             <ResultFiles run={data} />
             {data.budget?.raises?.length && !runWaitsForBudget(data) ? (
               <section className="panel" aria-label={t("budget.history.title")}>

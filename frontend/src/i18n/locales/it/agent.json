@@ -103,7 +103,37 @@
     "serverToolsShort": "Strumenti server",
     "connection": "Connessione per {{tool}}",
     "noConnection": "Nessuna connessione scelta",
-    "connectionNone": "Ancora nessuna connessione di tipo {{type}}. Aggiungine una in <a>Strumenti → Connessioni</a>."
+    "connectionNone": "Ancora nessuna connessione di tipo {{type}}. Aggiungine una in <a>Strumenti → Connessioni</a>.",
+    "params": {
+      "advanced": "Avanzate: limiti di {{tool}}",
+      "default": "Predefinito",
+      "invalid": "Valore non valido; non viene salvato.",
+      "name": {
+        "max_results": "Numero massimo di risultati per ricerca",
+        "region": "Regione",
+        "language": "Lingua",
+        "time_range": "Periodo",
+        "allow_hosts": "Domini consentiti",
+        "deny_hosts": "Domini bloccati",
+        "max_calls": "Numero massimo di chiamate per esecuzione",
+        "max_chars": "Numero massimo di caratteri per pagina"
+      },
+      "hint": {
+        "max_results": "Da {{min}} a {{max}}. Il modello può chiederne meno, mai di più.",
+        "region": "Codice paese di due lettere, ad esempio AT. Si usa quando il modello non ne indica uno.",
+        "language": "Codice lingua di due lettere, ad esempio de. Si usa quando il modello non ne indica uno.",
+        "allow_hosts": "Solo questi domini e i loro sottodomini, separati da virgole. Vuoto: qualsiasi dominio.",
+        "deny_hosts": "Mai questi domini né i loro sottodomini, separati da virgole.",
+        "max_calls": "Da {{min}} a {{max}}.",
+        "max_chars": "Da {{min}} a {{max}}. Le pagine più lunghe vengono troncate."
+      },
+      "option": {
+        "day": "Ultimo giorno",
+        "week": "Ultima settimana",
+        "month": "Ultimo mese",
+        "year": "Ultimo anno"
+      }
+    }
   },
   "knowledge": {
     "title": "Conoscenza",
@@ -184,7 +214,8 @@
       "digit": "Solo lettere, cifre e _; non può iniziare con una cifra.",
       "duplicate": "Questo nome compare più volte."
     },
-    "fromTool": "Da uno strumento"
+    "fromTool": "Da uno strumento",
+    "fromSources": "Cita fonti web"
   },
   "thinking": {
     "title": "Ragionamento e impegno",

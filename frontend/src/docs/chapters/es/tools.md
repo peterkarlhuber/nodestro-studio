@@ -31,6 +31,8 @@ Las herramientas de la biblioteca se asignan en el inspector de un agente, y all
 
 Los modelos de lenguaje se equivocan al calcular de cabeza. Da la `calculator` a los agentes que trabajan con números e indícales en el prompt de sistema que la usen. Para sumas y porcentajes de una tabla, `table_totals` es más seguro, porque cuenta cada fila.
 
+Las herramientas web `search_web` y `fetch_web_page` se describen en [Búsqueda web y lectura de páginas web](/docs/websuche).
+
 La biblioteca muestra las descripciones de las herramientas integradas en el idioma de la interfaz. El modelo recibe siempre la descripción original en inglés, para que los agentes existentes se comporten igual en todos los idiomas.
 
 Cada herramienta integrada lleva distintivos en la biblioteca: categoría, red (*Sin red* o *Con Internet*), *Funciona sin conexión* y, si hace falta, *Necesita una conexión*. Los detalles muestran el límite de tiempo y el máximo de llamadas por ejecución; una llamada que tarda más termina con un error de herramienta y la ejecución continúa. Los filtros sobre la lista muestran solo las herramientas de una categoría, sin red, usables sin conexión o las que necesitan una [conexión](/docs/verbindungen). Una herramienta con acceso a Internet se rechaza en un flujo de trabajo sin conexión antes del inicio.

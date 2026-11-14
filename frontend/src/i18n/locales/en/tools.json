@@ -415,6 +415,30 @@
       "secret_set": "Secret set",
       "secret_cleared": "Secret removed",
       "checked": "Checked"
+    },
+    "search": {
+      "open": "Set up search service",
+      "title": "Set up a search service",
+      "intro": "Choose the service that runs your agents' web searches. Nothing is chosen for you: read the notes and pick the one that fits. You can change or delete the connection later.",
+      "choose": "Search service",
+      "needsKey": "Key needed",
+      "noKey": "No key",
+      "testName": "Test provider",
+      "note": {
+        "ddgs": "Free, without a key and without any guarantee: it uses other search engines, which may block it or change at any time.",
+        "brave": "Needs an API key. Results must not be stored. About 5 USD per 1000 requests.",
+        "tavily": "Needs an API key. Enter the price per request of your plan.",
+        "mojeek": "Needs an API key. Operated in Europe. Enter the price per request of your plan.",
+        "searxng": "Your own server: enter its address. A key is only needed if your server asks for one.",
+        "test": "Offline test provider for trying things out: it returns made-up hits, never reaches the internet and accepts any key."
+      },
+      "endpoint": "Address of your server",
+      "endpointHint": "For example https://search.example.org. Internal addresses are refused.",
+      "price": "Price per request (USD)",
+      "priceHint": "From your plan, for example 0.008. It counts toward the run's budget.",
+      "create": "Set up",
+      "done": "Search service “{{name}}” set up.",
+      "none": "No search service can be set up in this installation."
     }
   }
 }

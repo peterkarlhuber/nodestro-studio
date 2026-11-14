@@ -415,6 +415,30 @@
       "secret_set": "Segreto impostato",
       "secret_cleared": "Segreto rimosso",
       "checked": "Verificata"
+    },
+    "search": {
+      "open": "Configura servizio di ricerca",
+      "title": "Configura un servizio di ricerca",
+      "intro": "Scegli il servizio con cui i tuoi agenti cercano sul web. Nulla è preselezionato: leggi le note e scegli quello adatto. Puoi modificare o eliminare la connessione in seguito.",
+      "choose": "Servizio di ricerca",
+      "needsKey": "Chiave necessaria",
+      "noKey": "Senza chiave",
+      "testName": "Provider di prova",
+      "note": {
+        "ddgs": "Gratuito, senza chiave e senza alcuna garanzia: usa altri motori di ricerca, che possono bloccarlo o cambiare in qualsiasi momento.",
+        "brave": "Richiede una chiave API. I risultati non possono essere salvati. Circa 5 USD ogni 1000 richieste.",
+        "tavily": "Richiede una chiave API. Inserisci il prezzo per richiesta del tuo piano.",
+        "mojeek": "Richiede una chiave API. Gestito in Europa. Inserisci il prezzo per richiesta del tuo piano.",
+        "searxng": "Il tuo server: inserisci il suo indirizzo. Una chiave serve solo se il tuo server la richiede.",
+        "test": "Provider di prova offline per fare esperimenti: restituisce risultati inventati, non accede mai a internet e accetta qualsiasi chiave."
+      },
+      "endpoint": "Indirizzo del tuo server",
+      "endpointHint": "Ad esempio https://search.example.org. Gli indirizzi interni vengono rifiutati.",
+      "price": "Prezzo per richiesta (USD)",
+      "priceHint": "Dal tuo piano, ad esempio 0.008. Conta per il budget dell’esecuzione.",
+      "create": "Configura",
+      "done": "Servizio di ricerca “{{name}}” configurato.",
+      "none": "In questa installazione non è possibile configurare alcun servizio di ricerca."
     }
   }
 }

@@ -31,6 +31,8 @@ You assign tools from the library in an agent's inspector, and switch on server 
 
 Language models make mistakes in mental arithmetic. Give agents that work with numbers the `calculator` and tell them in the system prompt to use it. For totals and shares of a table, `table_totals` is safer, because it counts every row.
 
+The web tools `search_web` and `fetch_web_page` are described in [Web search and reading web pages](/docs/websuche).
+
 The library shows the descriptions of built-in tools in the interface language. The model always gets the original English description, so existing agents behave the same in every language.
 
 Every built-in tool carries badges in the library: category, network (*No network* or *Internet*), *Works offline* and, where needed, *Needs a connection*. The details show the time limit and the most calls per run; a call that takes longer ends with a tool error, and the run goes on. The filters above the list show only the tools of one category, without network, usable offline, or those that need a [connection](/docs/verbindungen). A tool with internet access is refused in an offline workflow before the start.
