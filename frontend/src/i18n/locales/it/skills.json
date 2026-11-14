@@ -99,5 +99,63 @@
     "name": "Nome della copia",
     "nameHint": "Lettere minuscole, cifre e trattini singoli.",
     "copied": "Copiata come «{{name}}»."
+  },
+  "views": {
+    "label": "Vista",
+    "skills": "Skill",
+    "groups": "Gruppi",
+    "usage": "Utilizzo"
+  },
+  "groups": {
+    "intro": "Un gruppo aggiunge più skill a un agente in un solo passaggio. Ogni skill viene poi assegnata singolarmente, nella sua versione attuale.",
+    "new": "Nuovo gruppo",
+    "create": "Crea gruppo",
+    "emptyTitle": "Ancora nessun gruppo",
+    "emptyText": "Riunisci in un gruppo le skill usate spesso insieme, per esempio tutte le skill di un reparto.",
+    "group": "Gruppo {{name}}",
+    "edit": "Modifica",
+    "delete": "Elimina il gruppo {{name}}",
+    "members_one": "{{count}} skill",
+    "members_other": "{{count}} skill",
+    "missing": "Skill eliminata",
+    "deleted": "Gruppo «{{name}}» eliminato.",
+    "saved": "Gruppo «{{name}}» salvato.",
+    "newTitle": "Nuovo gruppo di skill",
+    "editTitle": "Modifica il gruppo {{name}}",
+    "name": "Nome",
+    "description": "Descrizione (facoltativa)",
+    "chosen": "Skill nel gruppo: {{count}}"
+  },
+  "stats": {
+    "days": "Periodo",
+    "lastDays_one": "Ultimo giorno",
+    "lastDays_other": "Ultimi {{count}} giorni",
+    "indication": "Questi numeri sono un indizio, non una prova: una skill caricata in un’esecuzione riuscita non ha per forza causato il successo. I controlli sono i controlli di qualità dei passaggi che hanno caricato la skill.",
+    "empty_one": "Nell’ultimo giorno nessuna skill è stata offerta o caricata.",
+    "empty_other": "Negli ultimi {{count}} giorni nessuna skill è stata offerta o caricata.",
+    "skill": "Skill",
+    "offered": "Offerta",
+    "loaded": "Caricata",
+    "runs": "Esecuzioni",
+    "success": "Tasso di successo",
+    "checks": "Controlli superati",
+    "recommended": "Consigliata",
+    "lastUsed": "Ultimo utilizzo",
+    "versions": "versioni {{versions}}"
+  },
+  "scriptTool": {
+    "open": "Usa come strumento …",
+    "openFor": "Usa {{path}} come strumento",
+    "title": "Usa {{path}} come strumento",
+    "intro": "Nodestro non esegue questo script. Al suo posto ne ricava uno strumento in questi passaggi:",
+    "stepWrite": "Il Coding Agent scrive uno strumento con i test, partendo dallo script.",
+    "stepTest": "I test vengono eseguiti solo nella sandbox Docker isolata.",
+    "stepReview": "Una persona controlla codice e test e approva lo strumento.",
+    "neverRun": "Fino ad allora nessun agente può usare lo strumento. Lo script stesso non viene mai eseguito.",
+    "note": "Nota per il Coding Agent (facoltativa)",
+    "noteHint": "Per esempio che cosa deve restituire lo strumento o di quali input ha bisogno.",
+    "submit": "Fai scrivere lo strumento",
+    "started": "Il lavoro per lo strumento è partito. Seguilo e approva lo strumento nella pagina Strumenti.",
+    "openJob": "Apri i lavori sugli strumenti"
   }
 }

@@ -99,5 +99,63 @@
     "name": "Name der Kopie",
     "nameHint": "Kleinbuchstaben, Ziffern und einzelne Bindestriche.",
     "copied": "Als „{{name}}“ kopiert."
+  },
+  "views": {
+    "label": "Ansicht",
+    "skills": "Skills",
+    "groups": "Gruppen",
+    "usage": "Nutzung"
+  },
+  "groups": {
+    "intro": "Eine Gruppe fügt einem Agenten mehrere Skills in einem Schritt hinzu. Jeder Skill ist danach einzeln zugewiesen, in seiner aktuellen Version.",
+    "new": "Neue Gruppe",
+    "create": "Gruppe anlegen",
+    "emptyTitle": "Noch keine Gruppen",
+    "emptyText": "Fasse Skills, die oft zusammen gebraucht werden, zu einer Gruppe zusammen, etwa alle Skills einer Abteilung.",
+    "group": "Gruppe {{name}}",
+    "edit": "Bearbeiten",
+    "delete": "Gruppe {{name}} löschen",
+    "members_one": "{{count}} Skill",
+    "members_other": "{{count}} Skills",
+    "missing": "Gelöschter Skill",
+    "deleted": "Gruppe „{{name}}“ gelöscht.",
+    "saved": "Gruppe „{{name}}“ gespeichert.",
+    "newTitle": "Neue Skill-Gruppe",
+    "editTitle": "Gruppe {{name}} bearbeiten",
+    "name": "Name",
+    "description": "Beschreibung (optional)",
+    "chosen": "Skills in der Gruppe: {{count}}"
+  },
+  "stats": {
+    "days": "Zeitraum",
+    "lastDays_one": "Letzter Tag",
+    "lastDays_other": "Letzte {{count}} Tage",
+    "indication": "Diese Zahlen sind ein Hinweis, kein Beweis: Ein Skill, der in einem erfolgreichen Lauf geladen wurde, hat den Erfolg nicht unbedingt bewirkt. Prüfungen sind die Qualitätsprüfungen der Schritte, die den Skill geladen haben.",
+    "empty_one": "Am letzten Tag wurde kein Skill angeboten oder geladen.",
+    "empty_other": "In den letzten {{count}} Tagen wurde kein Skill angeboten oder geladen.",
+    "skill": "Skill",
+    "offered": "Angeboten",
+    "loaded": "Geladen",
+    "runs": "Läufe",
+    "success": "Erfolgsquote",
+    "checks": "Prüfungen bestanden",
+    "recommended": "Empfohlen",
+    "lastUsed": "Zuletzt genutzt",
+    "versions": "Versionen {{versions}}"
+  },
+  "scriptTool": {
+    "open": "Als Tool nutzen …",
+    "openFor": "{{path}} als Tool nutzen",
+    "title": "{{path}} als Tool nutzen",
+    "intro": "Nodestro führt dieses Skript nicht aus. Stattdessen entsteht daraus in diesen Schritten ein Tool:",
+    "stepWrite": "Der Coding Agent schreibt auf Grundlage des Skripts ein Tool mit Tests.",
+    "stepTest": "Die Tests laufen nur in der isolierenden Docker-Sandbox.",
+    "stepReview": "Eine Person prüft Code und Tests und gibt das Tool frei.",
+    "neverRun": "Bis dahin kann kein Agent das Tool nutzen. Das Skript selbst wird nie ausgeführt.",
+    "note": "Hinweis für den Coding Agent (optional)",
+    "noteHint": "Zum Beispiel, was das Tool zurückgeben soll oder welche Eingaben es braucht.",
+    "submit": "Tool schreiben lassen",
+    "started": "Der Tool-Auftrag läuft. Verfolge ihn auf der Seite Tools und gib das Tool dort frei.",
+    "openJob": "Tool-Aufträge öffnen"
   }
 }

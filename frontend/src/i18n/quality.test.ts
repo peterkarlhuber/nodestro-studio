@@ -365,6 +365,8 @@ describe("backend codes", () => {
     "skill.name_taken", "skill.in_use", "skill.not_found", "skill.inactive", "skill.unavailable",
     "skill.duplicate_name", "skill.too_large", "skill.zip_invalid", "skill.rename_unsupported", "skill.library_not_found",
     "skill.name_invalid", "skill.secret_suspected", "skill.scripts_not_run", "skill.allowed_tools_ignored",
+    // Skill groups and script drafts (NAL-B4).
+    "skill.group_name_taken", "skill.group_not_found", "skill.script_not_found", "skill.script_too_large", "skill.file_not_text",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

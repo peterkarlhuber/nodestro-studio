@@ -36,6 +36,7 @@
   },
   "origin": {
     "teamRun": "Teamlauf von {{name}} (Entscheidung {{n}}).",
-    "teamRunPlain": "Teamlauf eines Orchestrators."
+    "teamRunPlain": "Teamlauf eines Orchestrators.",
+    "recommendedSkills": "Vom Orchestrator empfohlene Skills: {{names}}"
   }
 }

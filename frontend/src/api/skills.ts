@@ -2,11 +2,12 @@
 // optional files, imported, versioned and assigned to agents in one fixed version. The runtime enforces every rule
 // (nodestro-api: nodestro_api/api_skills.py; nodestro-runtime: skills.py); scripts inside a skill are never run.
 // Also the library's building blocks (parts) as gallery entries of their own.
+// NAL-B4: skill groups, usage statistics and script drafts (a script becomes a tool only through a reviewed tool job).
 
 import { useQuery } from "@tanstack/react-query";
 
 import { request } from "./client";
-import type { WorkflowIn } from "./types";
+import type { ToolJob, WorkflowIn } from "./types";
 
 export type SkillStatus = "active" | "disabled" | "archived";
 export type SkillMode = "always" | "on_demand";
@@ -16,6 +17,61 @@ export interface SkillBinding {
   skill_id: string;
   version: number;
   mode: SkillMode;
+  /** The group the skill was added with (NAL-B4); a label only, the binding stays on its own. */
+  group_id?: string | null;
+}
+
+/** A named set of skills that is added to an agent in one step (NAL-B4). */
+export interface SkillGroup {
+  id: string;
+  name: string;
+  description: string;
+  skill_ids: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SkillGroupIn {
+  name: string;
+  description: string;
+  skill_ids: string[];
+}
+
+/** How often a skill was offered, loaded and how the runs that loaded it ended (GET /api/skill-stats). */
+export interface SkillStats {
+  name: string;
+  offered: number;
+  loaded: number;
+  files_read: number;
+  runs: number;
+  succeeded: number;
+  failed: number;
+  checks_passed: number;
+  checks: number;
+  /** How often an orchestrator recommended the skill to a team. */
+  recommended: number;
+  versions: number[];
+  last_used: string | null;
+}
+
+/** One skill the preselection scored for a step (BM25 over name and description). */
+export interface SkillCandidate {
+  name: string;
+  score: number;
+  chosen: boolean;
+}
+
+/** Which skills a step offered its agent (NAL-B4): all of them, or a preselection above 20 on-demand skills. */
+export interface SkillSelection {
+  method: "all" | "bm25";
+  /** How many skills the agent has. */
+  assigned: number;
+  offered: string[];
+  /** Skills an orchestrator recommended; they are always offered. */
+  recommended: string[];
+  /** Recommendations the agent does not have. */
+  ignored: string[];
+  candidates: SkillCandidate[];
 }
 
 /** A skill of the workspace in its latest version. */
@@ -211,6 +267,14 @@ export const skillsApi = {
     request<PartSummary[]>("GET", `/library/parts${lang(language)}`),
   part: (id: string, language?: string) =>
     request<PartDetail>("GET", `/library/parts/${enc(id)}${lang(language)}`),
+  /** A tool job in which the Coding Agent writes a tool from a script of the skill; the script itself is never run. */
+  scriptDraft: (id: string, version: number, path: string, note = "") =>
+    request<ToolJob>("POST", `/skills/${enc(id)}/versions/${version}/script-draft`, { path, note }),
+  groups: () => request<SkillGroup[]>("GET", "/skill-groups"),
+  createGroup: (group: SkillGroupIn) => request<SkillGroup>("POST", "/skill-groups", group),
+  updateGroup: (id: string, group: SkillGroupIn) => request<SkillGroup>("PUT", `/skill-groups/${enc(id)}`, group),
+  removeGroup: (id: string) => request<void>("DELETE", `/skill-groups/${enc(id)}`),
+  stats: (days: number) => request<SkillStats[]>("GET", `/skill-stats?days=${days}`),
   copyPart: (id: string, language?: string) =>
     request<{ id: string; name: string }>(
       "POST",
@@ -225,6 +289,8 @@ export const skillKeys = {
     ["skills", id, version ?? "latest"] as const,
   versions: (id: string) => ["skills", id, "versions"] as const,
   usage: (id: string) => ["skills", id, "usage"] as const,
+  groups: ["skill-groups"] as const,
+  stats: (days: number) => ["skill-stats", days] as const,
   library: (language: string) => ["library-skills", language] as const,
   parts: (language: string) => ["library-parts", language] as const,
 };
@@ -249,6 +315,9 @@ export const useSkillUsage = (id: string | null) =>
     queryFn: () => skillsApi.usage(id!),
     enabled: Boolean(id),
   });
+export const useSkillGroups = () => useQuery({ queryKey: skillKeys.groups, queryFn: skillsApi.groups });
+export const useSkillStats = (days: number) =>
+  useQuery({ queryKey: skillKeys.stats(days), queryFn: () => skillsApi.stats(days) });
 export const useLibrarySkills = (language: string) =>
   useQuery({
     queryKey: skillKeys.library(language),
@@ -265,3 +334,11 @@ export const useLibraryParts = (language: string) =>
 /** Whether a skill's origin says it came from a file of unknown origin (the import warns about it). */
 export const isImported = (origin: string) => origin.startsWith("import:");
 export const isBuiltin = (origin: string) => origin.startsWith("builtin:");
+
+/** A file of the skill's scripts/ folder: it can be turned into a tool by a reviewed tool job (NAL-B4). */
+export const isScriptFile = (path: string) => path.startsWith("scripts/");
+
+/** The skill script a tool or tool job was written from (``skill:<name>@<version>/<path>``), else null. */
+export function skillScriptOf(origin: string | null | undefined): string | null {
+  return origin?.startsWith("skill:") ? origin.slice("skill:".length) : null;
+}

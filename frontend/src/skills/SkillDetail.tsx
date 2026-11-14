@@ -3,7 +3,7 @@
 // shown as plain text and never rendered as HTML (an imported skill is content of unknown origin).
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Archive, Copy, Download, Eye, FileText, History, Pencil, Power, PowerOff, Trash2, Users } from "lucide-react";
+import { Archive, Copy, Download, Eye, FileText, History, Pencil, Power, PowerOff, Trash2, Users, Wrench } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ import {
   type Skill,
   type SkillFileInfo,
   type SkillUser,
+  isScriptFile,
   skillKeys,
   skillsApi,
   useSkill,
@@ -29,6 +30,7 @@ import { SkillBadges } from "./SkillBadges";
 import { SkillCopyDialog } from "./SkillCopyDialog";
 import { SkillEditDialog } from "./SkillEditDialog";
 import { SkillIssues } from "./SkillIssues";
+import { ScriptToolDialog } from "./ScriptToolDialog";
 
 export function SkillDetail({ skillId, onSelect, onDeleted }: { skillId: string; onSelect: (id: string) => void; onDeleted: () => void }) {
   const { t } = useTranslation();
@@ -183,7 +185,7 @@ export function SkillDetail({ skillId, onSelect, onDeleted }: { skillId: string;
           {body || t("skills.emptyBody")}
         </pre>
       </Section>
-      <SkillFiles skillId={skill.id} version={shown.version} files={detail.data.files} />
+      <SkillFiles skillId={skill.id} version={shown.version} files={detail.data.files} canRun={access.can("run")} />
       <SkillVersions skill={skill} shown={shown.version} onShow={(item) => setVersion(item === skill.version ? undefined : item)} />
       <SkillUsage skillId={skill.id} />
 
@@ -202,9 +204,11 @@ function FactRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function SkillFiles({ skillId, version, files }: { skillId: string; version: number; files: SkillFileInfo[] }) {
+function SkillFiles({ skillId, version, files, canRun }: { skillId: string; version: number; files: SkillFileInfo[]; canRun: boolean }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState<string | null>(null);
+  // A script that a tool job should turn into a tool (NAL-B4).
+  const [asTool, setAsTool] = useState<string | null>(null);
   return (
     <Section id="skill-files" title={t("skills.files")} summary={<span className="muted small">{t("skills.fileCount", { count: files.length })}</span>}>
       <ul className="stack-sm">
@@ -218,10 +222,16 @@ function SkillFiles({ skillId, version, files }: { skillId: string; version: num
             ) : (
               <span className="muted small">{t("skills.fileNotText")}</span>
             )}
+            {canRun && isScriptFile(item.path) ? (
+              <Button size="sm" variant="ghost" icon={Wrench} onClick={() => setAsTool(item.path)} aria-label={t("skills.scriptTool.openFor", { path: item.path })}>
+                {t("skills.scriptTool.open")}
+              </Button>
+            ) : null}
           </li>
         ))}
       </ul>
       {open ? <FilePreview skillId={skillId} version={version} path={open} onClose={() => setOpen(null)} /> : null}
+      {asTool ? <ScriptToolDialog skillId={skillId} version={version} path={asTool} onClose={() => setAsTool(null)} /> : null}
     </Section>
   );
 }

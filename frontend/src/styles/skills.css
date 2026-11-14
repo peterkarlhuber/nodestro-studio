@@ -50,3 +50,35 @@
   flex: 1 1 260px;
   max-width: 480px;
 }
+
+/* Skill groups (NAL-B4): the members of a group and the member list of the group dialog. */
+.skill-group__members {
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-group__picker {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.skill-group__options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: var(--nd-space-2);
+  border: 1px solid var(--nd-border);
+  border-radius: 8px;
+}
+
+/* The usage of skills (NAL-B4). */
+.skill-stats td.num,
+.skill-stats th.num {
+  text-align: right;
+  white-space: nowrap;
+}

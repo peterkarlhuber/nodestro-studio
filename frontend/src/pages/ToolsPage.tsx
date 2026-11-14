@@ -4,6 +4,7 @@ import {
   Check,
   CheckCircle2,
   Code2,
+  FileCode,
   FlaskConical,
   Play,
   PlugZap,
@@ -21,6 +22,7 @@ import { useSearchParams } from "react-router-dom";
 
 import { api } from "../api/client";
 import { withLocalModel } from "../missingModel/store";
+import { skillScriptOf } from "../api/skills";
 import { keys, useOrganize, useSettings, useToolDrafts, useTools } from "../api/hooks";
 import { ToolDraftPanel } from "../architect/ToolDraftPanel";
 import { DiscussIcon } from "../assistant/DiscussButton";
@@ -223,6 +225,7 @@ function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void 
                   >
                     {t(`tools.kind.${item.kind}`)}
                   </Badge>
+                  {skillScriptOf(item.origin) ? <Badge icon={FileCode}>{t("tools.origin.skillBadge")}</Badge> : null}
                 </span>
                 <span className="list__text">{toolDescription(t, item)}</span>
                 <SpecBadges spec={specs.get(item.name)} />
@@ -477,6 +480,7 @@ function ToolDetail({
       </div>
       <TagChips kind="tool" id={tool.name} />
       <p>{toolDescription(t, tool)}</p>
+      <ToolOrigin origin={tool.origin} />
       {spec ? <SpecBadges spec={spec} detail /> : null}
       <UsedByList users={users} loaded={usedBy.loaded} />
       <TrustNote tool={tool} />
@@ -702,6 +706,18 @@ function WriteTool({ onSaved }: { onSaved: () => void }) {
   );
 }
 
+/** Where a tool came from, when it was not written here: e.g. "From skill script: units@1/scripts/convert.py". */
+function ToolOrigin({ origin }: { origin: string | null | undefined }) {
+  const { t } = useTranslation();
+  if (!origin) return null;
+  const script = skillScriptOf(origin);
+  return (
+    <p className="muted small" data-testid="tool-origin">
+      <FileCode size={12} aria-hidden /> {script ? t("tools.origin.skill") : t("tools.origin.other")} <code>{script ?? origin}</code>
+    </p>
+  );
+}
+
 const JOB_TONE: Record<
   ToolJob["status"],
   "running" | "warning" | "success" | "danger" | "idle"
@@ -835,6 +851,7 @@ function GenerateTool() {
               </Badge>
             </div>
             <p className="small">{job.requirement}</p>
+            <ToolOrigin origin={job.origin} />
             <div className="muted small" aria-live="polite">
               {job.status === "running" ? (
                 <Spinner label={jobMessage} />

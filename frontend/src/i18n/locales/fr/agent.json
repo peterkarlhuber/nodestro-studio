@@ -160,7 +160,13 @@
     "limit_one": "Un agent peut avoir au plus {{count}} skill.",
     "limit_other": "Un agent peut avoir au plus {{count}} skills.",
     "manage": "Gérer les skills",
-    "library": "Skills de la bibliothèque"
+    "library": "Skills de la bibliothèque",
+    "group": "Groupe : {{name}}",
+    "addGroup": "Ajouter un groupe",
+    "addGroupPlaceholder": "Ajouter un groupe …",
+    "groupOption": "{{name}} ({{count}})",
+    "preselection_one": "{{count}} skill est chargée au besoin. Chaque étape ne propose que les {{best}} plus pertinentes, plus les skills réglées sur « Toujours » et celles qu’un orchestrateur recommande.",
+    "preselection_other": "{{count}} skills sont chargées au besoin. Chaque étape ne propose que les {{best}} plus pertinentes, plus les skills réglées sur « Toujours » et celles qu’un orchestrateur recommande."
   },
   "knowledge": {
     "title": "Connaissances",

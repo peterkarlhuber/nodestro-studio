@@ -32,6 +32,11 @@ describe("RunOrigin (NJR-11)", () => {
     expect(screen.queryByTestId("run-version")).toBeNull();
   });
 
+  it("names the skills the orchestrator recommended to a team run (NAL-B4)", () => {
+    show({ recommended_skills: ["units", "glossary"] });
+    expect(screen.getByTestId("run-recommended-skills")).toHaveTextContent("Vom Orchestrator empfohlene Skills: units, glossary");
+  });
+
   it("shows nothing without origin and version", () => {
     const { container } = show({ workflow_version: null });
     expect(container).toBeEmptyDOMElement();
