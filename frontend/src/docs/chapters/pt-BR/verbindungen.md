@@ -16,6 +16,8 @@ Você gerencia as conexões em *Ferramentas → Conexões*. **Adicionar conexão
 
 Cada conexão mostra os hosts que pode acessar, derivados das suas configurações, e os agentes que a usam. Só administradores podem adicionar, alterar, verificar ou excluir conexões; os demais apenas as veem. O Nodestro registra quem alterou qual conexão, nunca os valores.
 
+Para uma busca na web, **Configurar serviço de busca** oferece os serviços de busca com observações honestas sobre chave, custos e limites; veja [Busca na web e leitura de páginas web](/docs/websuche).
+
 Uma conexão que agentes ainda usam não é excluída na hora: o Nodestro cita os agentes e oferece **Excluir mesmo assim**. A verificação deles passa então a apontar a conexão que falta.
 
 ## O segredo {#geheimnis}

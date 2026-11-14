@@ -430,7 +430,7 @@
         "tavily": "Nécessite une clé d’API. Indiquez le prix par requête de votre offre.",
         "mojeek": "Nécessite une clé d’API. Exploité en Europe. Indiquez le prix par requête de votre offre.",
         "searxng": "Votre propre serveur : indiquez son adresse. Une clé n’est nécessaire que si votre serveur en demande une.",
-        "test": "Fournisseur de test hors ligne pour essayer : il renvoie des résultats inventés et n’accède jamais à internet."
+        "test": "Fournisseur de test hors ligne pour essayer : il renvoie des résultats inventés, n’accède jamais à internet et accepte n’importe quelle clé."
       },
       "endpoint": "Adresse de votre serveur",
       "endpointHint": "Par exemple https://search.example.org. Les adresses internes sont refusées.",

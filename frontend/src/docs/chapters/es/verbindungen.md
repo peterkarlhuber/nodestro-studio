@@ -16,6 +16,8 @@ Gestionas las conexiones en *Herramientas → Conexiones*. **Añadir conexión**
 
 Cada conexión muestra los hosts a los que puede acceder, derivados de su configuración, y los agentes que la usan. Solo los administradores pueden añadir, modificar, comprobar o eliminar conexiones; los demás solo las ven. Nodestro registra quién modificó qué conexión, nunca los valores.
 
+Para una búsqueda web, **Configurar servicio de búsqueda** ofrece los servicios de búsqueda con notas honestas sobre clave, costes y límites; consulta [Búsqueda web y lectura de páginas web](/docs/websuche).
+
 Una conexión que los agentes todavía usan no se elimina enseguida: Nodestro nombra los agentes y ofrece **Eliminar de todos modos**. Su comprobación avisa después de la conexión que falta.
 
 ## El secreto {#geheimnis}

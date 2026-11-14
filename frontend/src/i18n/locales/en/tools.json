@@ -430,7 +430,7 @@
         "tavily": "Needs an API key. Enter the price per request of your plan.",
         "mojeek": "Needs an API key. Operated in Europe. Enter the price per request of your plan.",
         "searxng": "Your own server: enter its address. A key is only needed if your server asks for one.",
-        "test": "Offline test provider for trying things out: it returns made-up hits and never reaches the internet."
+        "test": "Offline test provider for trying things out: it returns made-up hits, never reaches the internet and accepts any key."
       },
       "endpoint": "Address of your server",
       "endpointHint": "For example https://search.example.org. Internal addresses are refused.",

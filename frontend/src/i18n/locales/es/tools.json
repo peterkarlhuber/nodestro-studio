@@ -430,7 +430,7 @@
         "tavily": "Requiere una clave de API. Indica el precio por solicitud de tu plan.",
         "mojeek": "Requiere una clave de API. Operado en Europa. Indica el precio por solicitud de tu plan.",
         "searxng": "Tu propio servidor: indica su dirección. Solo hace falta una clave si tu servidor la pide.",
-        "test": "Proveedor de prueba sin conexión para probar: devuelve resultados inventados y nunca accede a internet."
+        "test": "Proveedor de prueba sin conexión para probar: devuelve resultados inventados, nunca accede a internet y acepta cualquier clave."
       },
       "endpoint": "Dirección de tu servidor",
       "endpointHint": "Por ejemplo https://search.example.org. Las direcciones internas se rechazan.",

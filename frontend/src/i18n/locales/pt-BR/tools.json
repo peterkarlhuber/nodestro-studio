@@ -430,7 +430,7 @@
         "tavily": "Exige uma chave de API. Informe o preço por solicitação do seu plano.",
         "mojeek": "Exige uma chave de API. Operado na Europa. Informe o preço por solicitação do seu plano.",
         "searxng": "Seu próprio servidor: informe o endereço dele. Uma chave só é necessária se o seu servidor pedir.",
-        "test": "Provedor de teste offline para experimentar: devolve resultados inventados e nunca acessa a internet."
+        "test": "Provedor de teste offline para experimentar: devolve resultados inventados, nunca acessa a internet e aceita qualquer chave."
       },
       "endpoint": "Endereço do seu servidor",
       "endpointHint": "Por exemplo https://search.example.org. Endereços internos são recusados.",

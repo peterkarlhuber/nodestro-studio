@@ -16,6 +16,8 @@ You manage connections under *Tools → Connections*. **Add connection** asks fo
 
 Every connection shows the hosts it may reach, derived from its settings, and the agents that use it. Only administrators can add, change, check or delete connections; everyone else sees them read-only. Nodestro records who changed which connection, never the values.
 
+For a web search, **Set up search service** offers the search services with honest notes on key, cost and limits; see [Web search and reading web pages](/docs/websuche).
+
 A connection that agents still use is not deleted right away: Nodestro names the agents and offers **Delete anyway**. Their check then reports the missing connection.
 
 ## The secret {#geheimnis}
