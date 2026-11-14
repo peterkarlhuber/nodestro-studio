@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### NAL-A3: internal notifications (2026-11-14)
+
+- A bell in the top bar with the number of unread notifications (its accessible name includes the count) opens a
+  panel: failed runs, steps waiting for approval, budget decisions, failed quality checks, finished runs and
+  messages from agents, each with the workflow, the time and a link to the run; mark one or all as read, load
+  more, Escape returns to the bell, and new unread notifications are announced politely. The count is read about
+  once a minute while the window is visible. An API without notifications shows no bell.
+- Messages an agent writes with the new tool "Message to me" (`notify_user`) are shown as plain text only (no HTML,
+  Markdown or links) and marked "From an agent".
+- Workflow settings: a Notifications section with one checkbox per event and the recipients (everyone with access,
+  or only the person who started the run), saved with the workflow; the default is failed runs and steps waiting
+  for approval. A note says that notifications stay inside Nodestro and no e-mail is sent.
+- A help chapter "Notifications" (`benachrichtigungen`), texts in all six languages and the errors `notify.limit`,
+  `notify.empty_title` and `notifications.invalid_cursor`.
+
 ### NAL-B4: skill groups, preselection, recommendations, usage and script tools (2026-11-14)
 
 - Skills page: a switch between Skills, Groups and Usage. Groups (create, edit, delete; members from a searchable

@@ -1,0 +1,82 @@
+{
+  "bell": "Benachrichtigungen",
+  "bellUnread_one": "Benachrichtigungen, {{count}} ungelesen",
+  "bellUnread_other": "Benachrichtigungen, {{count}} ungelesen",
+  "announce_one": "{{count}} neue Benachrichtigung",
+  "announce_other": "{{count}} neue Benachrichtigungen",
+  "title": "Benachrichtigungen",
+  "markAllRead": "Alle als gelesen markieren",
+  "markRead": "Als gelesen markieren",
+  "unread": "Ungelesen:",
+  "openRun": "Lauf öffnen",
+  "loadMore": "Mehr laden",
+  "empty": "Keine Benachrichtigungen",
+  "emptyText": "Hier erscheinen fehlgeschlagene Läufe und Schritte, die auf eine Freigabe warten. Welche Ereignisse benachrichtigen, legt jeder Workflow in seinen Einstellungen fest.",
+  "insideOnly": "Benachrichtigungen bleiben in Nodestro. Es wird keine E-Mail verschickt.",
+  "fromAgent": "Von einem Agenten",
+  "agentMessage": "Nachricht von einem Agenten",
+  "untitled": "Benachrichtigung",
+  "event": {
+    "run_failed": {
+      "title": "Lauf fehlgeschlagen"
+    },
+    "approval_pending": {
+      "title": "Wartet auf Freigabe",
+      "step": "Der Schritt „{{node}}“ wartet auf eine Entscheidung."
+    },
+    "budget_pending": {
+      "title": "Wartet auf Budget-Entscheidung",
+      "text": "Das Budget des Laufs ist aufgebraucht. Erhöhe es oder beende den Lauf."
+    },
+    "quality_failed": {
+      "title": "Qualitätsprüfung nicht bestanden",
+      "text": "Ein Ergebnis hat seine Qualitätsprüfung nicht bestanden."
+    },
+    "run_finished": {
+      "title": "Lauf beendet",
+      "status": {
+        "succeeded": "Der Lauf wurde erfolgreich beendet.",
+        "failed": "Der Lauf endete mit einem Fehler.",
+        "cancelled": "Der Lauf wurde abgebrochen."
+      }
+    }
+  },
+  "settings": {
+    "title": "Benachrichtigungen",
+    "events": "Benachrichtigen, wenn",
+    "event": {
+      "run_failed": {
+        "label": "ein Lauf fehlschlägt",
+        "hint": "Der Lauf endet mit einem Fehler."
+      },
+      "approval_pending": {
+        "label": "ein Schritt auf Freigabe wartet",
+        "hint": "Ein Freigabeschritt wartet auf die Entscheidung einer Person."
+      },
+      "budget_pending": {
+        "label": "ein Lauf auf eine Budget-Entscheidung wartet",
+        "hint": "Das Budget ist aufgebraucht; jemand muss es erhöhen oder den Lauf beenden."
+      },
+      "quality_failed": {
+        "label": "eine Qualitätsprüfung nicht besteht",
+        "hint": "Ein Ergebnis besteht seine Prüfung nicht, etwa durch einen Judge."
+      },
+      "run_finished": {
+        "label": "ein Lauf endet",
+        "hint": "Jeder beendete Lauf, auch erfolgreiche. Das können viele sein."
+      }
+    },
+    "recipients": "Wer benachrichtigt wird",
+    "recipient": {
+      "members": {
+        "label": "Alle mit Zugriff",
+        "hint": "Alle, die diesen Workflow sehen dürfen."
+      },
+      "starter": {
+        "label": "Nur die Person, die den Lauf gestartet hat",
+        "hint": "Andere mit Zugriff werden nicht benachrichtigt."
+      }
+    },
+    "insideOnly": "Benachrichtigungen erscheinen an der Glocke in der oberen Leiste und bleiben in Nodestro. Es wird keine E-Mail verschickt."
+  }
+}

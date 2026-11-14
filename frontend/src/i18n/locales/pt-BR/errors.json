@@ -1216,5 +1216,12 @@
     "group_not_found": "Este grupo de skills não existe mais. Recarregue a página.",
     "script_not_found": "A skill não tem o script {{path}} nesta versão.",
     "script_too_large": "O script {{path}} é grande demais para virar uma ferramenta."
+  },
+  "notify": {
+    "limit": "Um agente tentou enviar mais de 3 mensagens ao sino em uma execução. As mensagens seguintes não foram enviadas.",
+    "empty_title": "Uma mensagem ao sino precisa de um título. O agente enviou uma sem título."
+  },
+  "notifications": {
+    "invalid_cursor": "Não foi possível continuar a lista de notificações. Feche as notificações e abra-as de novo."
   }
 }

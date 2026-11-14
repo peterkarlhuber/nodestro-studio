@@ -1,0 +1,82 @@
+{
+  "bell": "Notifiche",
+  "bellUnread_one": "Notifiche, {{count}} non letta",
+  "bellUnread_other": "Notifiche, {{count}} non lette",
+  "announce_one": "{{count}} nuova notifica",
+  "announce_other": "{{count}} nuove notifiche",
+  "title": "Notifiche",
+  "markAllRead": "Segna tutte come lette",
+  "markRead": "Segna come letta",
+  "unread": "Non letta:",
+  "openRun": "Apri l’esecuzione",
+  "loadMore": "Carica altre",
+  "empty": "Nessuna notifica",
+  "emptyText": "Qui compaiono le esecuzioni non riuscite e i passaggi in attesa di approvazione. Ogni workflow stabilisce nelle sue impostazioni quali eventi notificano.",
+  "insideOnly": "Le notifiche restano dentro Nodestro. Non viene inviata nessuna e-mail.",
+  "fromAgent": "Da un agente",
+  "agentMessage": "Messaggio di un agente",
+  "untitled": "Notifica",
+  "event": {
+    "run_failed": {
+      "title": "Esecuzione non riuscita"
+    },
+    "approval_pending": {
+      "title": "In attesa di approvazione",
+      "step": "Il passaggio «{{node}}» attende una decisione."
+    },
+    "budget_pending": {
+      "title": "In attesa di una decisione sul budget",
+      "text": "Il budget dell’esecuzione è esaurito. Aumentalo o termina l’esecuzione."
+    },
+    "quality_failed": {
+      "title": "Controllo qualità non superato",
+      "text": "Un risultato non ha superato il suo controllo qualità."
+    },
+    "run_finished": {
+      "title": "Esecuzione terminata",
+      "status": {
+        "succeeded": "L’esecuzione è terminata correttamente.",
+        "failed": "L’esecuzione è terminata con un errore.",
+        "cancelled": "L’esecuzione è stata annullata."
+      }
+    }
+  },
+  "settings": {
+    "title": "Notifiche",
+    "events": "Notifica quando",
+    "event": {
+      "run_failed": {
+        "label": "un’esecuzione non riesce",
+        "hint": "L’esecuzione termina con un errore."
+      },
+      "approval_pending": {
+        "label": "un passaggio attende l’approvazione",
+        "hint": "Un passaggio di approvazione attende la decisione di una persona."
+      },
+      "budget_pending": {
+        "label": "un’esecuzione attende una decisione sul budget",
+        "hint": "Il budget è esaurito; qualcuno deve aumentarlo o terminare l’esecuzione."
+      },
+      "quality_failed": {
+        "label": "un controllo qualità non viene superato",
+        "hint": "Un risultato non supera il suo controllo, per esempio quello di un giudice."
+      },
+      "run_finished": {
+        "label": "un’esecuzione termina",
+        "hint": "Ogni esecuzione terminata, anche quelle riuscite. Possono essere molte."
+      }
+    },
+    "recipients": "Chi riceve la notifica",
+    "recipient": {
+      "members": {
+        "label": "Tutti con accesso",
+        "hint": "Tutte le persone che possono vedere questo workflow."
+      },
+      "starter": {
+        "label": "Solo chi ha avviato l’esecuzione",
+        "hint": "Le altre persone con accesso non ricevono notifiche."
+      }
+    },
+    "insideOnly": "Le notifiche compaiono sulla campanella nella barra superiore e restano dentro Nodestro. Non viene inviata nessuna e-mail."
+  }
+}

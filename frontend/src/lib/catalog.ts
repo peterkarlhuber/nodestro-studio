@@ -40,8 +40,18 @@ export function serverToolDescription(t: TFunction, tool: ServerToolInfo): strin
   return translated(t, `catalog.serverTools.${tool.key}.description`, tool.description);
 }
 
-/** A built-in tool's description in the interface language; other tools keep their own. */
+/**
+ * A built-in tool's description in the interface language; other tools keep their own. Newer tools have their texts
+ * under the catalog's ``i18n_key`` (``tools.builtin.<id>``), older ones under ``catalog.builtinTools.<id>``.
+ */
 export function toolDescription(t: TFunction, tool: Pick<ToolInfo, "name" | "kind" | "description">): string {
   if (tool.kind !== "builtin") return tool.description;
-  return translated(t, `catalog.builtinTools.${tool.name}`, tool.description);
+  const own = `tools.builtin.${tool.name}.description`;
+  return i18n.exists(own) ? t(own) : translated(t, `catalog.builtinTools.${tool.name}`, tool.description);
+}
+
+/** The display name of a built-in tool that has one (``tools.builtin.<id>.name``, e.g. "Message to me"), else null. */
+export function toolDisplayName(t: TFunction, tool: Pick<ToolInfo, "name" | "kind">): string | null {
+  const key = `tools.builtin.${tool.name}.name`;
+  return tool.kind === "builtin" && i18n.exists(key) ? t(key) : null;
 }
