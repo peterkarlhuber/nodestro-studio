@@ -1,0 +1,41 @@
+{
+  "title": "Origem e versões",
+  "count_one": "{{count}} versão",
+  "count_other": "{{count}} versões",
+  "origin": {
+    "user": "Modelo próprio",
+    "builtin": "Da biblioteca ({{version}})",
+    "import": "Importado"
+  },
+  "version": "Versão {{version}}",
+  "current": "Atual",
+  "compare": "Comparar",
+  "compareTitle": "Comparar a versão {{version}} com o formulário",
+  "same": "Esta versão não difere do formulário.",
+  "field": "Campo",
+  "form": "Formulário",
+  "fields": {
+    "name": "Nome",
+    "description": "Descrição",
+    "model": "Modelo",
+    "system_prompt": "Prompt do sistema",
+    "task_template": "Tarefa",
+    "tools": "Ferramentas",
+    "output": "Saída",
+    "quality": "Verificação de qualidade"
+  },
+  "restore": "Carregar no formulário",
+  "restoreHint": "A versão é carregada no formulário. Só ao salvar ela vira uma nova versão; nenhuma versão se perde.",
+  "export": "Exportar modelo",
+  "import": "Importar modelo",
+  "importNotJson": "O arquivo não é um JSON válido.",
+  "imported": "“{{name}}” importado",
+  "importedRemoved": "“{{name}}” importado. Não adotado por segurança: {{removed}}",
+  "importNeeds_one": "O modelo ainda precisa de uma coisa aqui. Abra-o para ver o aviso.",
+  "importNeeds_other": "O modelo ainda precisa de {{count}} coisas aqui. Abra-o para ver os avisos.",
+  "removed": {
+    "tool_policies": "regras de aprovação de ferramentas",
+    "connections": "conexões de serviço",
+    "knowledge": "arquivos de conhecimento"
+  }
+}

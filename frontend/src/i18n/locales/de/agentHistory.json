@@ -1,0 +1,41 @@
+{
+  "title": "Herkunft und Versionen",
+  "count_one": "{{count}} Version",
+  "count_other": "{{count}} Versionen",
+  "origin": {
+    "user": "Eigene Vorlage",
+    "builtin": "Aus der Bibliothek ({{version}})",
+    "import": "Importiert"
+  },
+  "version": "Version {{version}}",
+  "current": "Aktuell",
+  "compare": "Vergleichen",
+  "compareTitle": "Version {{version}} mit dem Formular vergleichen",
+  "same": "Diese Version unterscheidet sich nicht vom Formular.",
+  "field": "Feld",
+  "form": "Formular",
+  "fields": {
+    "name": "Name",
+    "description": "Beschreibung",
+    "model": "Modell",
+    "system_prompt": "Systemprompt",
+    "task_template": "Aufgabe",
+    "tools": "Tools",
+    "output": "Ausgabe",
+    "quality": "Qualitätsprüfung"
+  },
+  "restore": "In das Formular übernehmen",
+  "restoreHint": "Die Version kommt ins Formular. Erst beim Speichern entsteht daraus eine neue Version; keine Version geht verloren.",
+  "export": "Vorlage exportieren",
+  "import": "Vorlage importieren",
+  "importNotJson": "Die Datei ist kein gültiges JSON.",
+  "imported": "„{{name}}“ importiert",
+  "importedRemoved": "„{{name}}“ importiert. Aus Sicherheitsgründen nicht übernommen: {{removed}}",
+  "importNeeds_one": "Die Vorlage braucht hier noch eine Sache. Öffne sie, um den Hinweis zu sehen.",
+  "importNeeds_other": "Die Vorlage braucht hier noch {{count}} Dinge. Öffne sie, um die Hinweise zu sehen.",
+  "removed": {
+    "tool_policies": "Freigaberegeln für Tools",
+    "connections": "Dienstverbindungen",
+    "knowledge": "Wissensdateien"
+  }
+}

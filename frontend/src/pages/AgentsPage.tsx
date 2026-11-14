@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Bot, Plus, Save, Sparkles, Trash2, Undo2 } from "lucide-react";
+import { Bot, Download, Plus, Save, Sparkles, Trash2, Undo2, Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useBlocker, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
 import { keys, useOrganize, useTemplates } from "../api/hooks";
-import type { AgentConfig, AgentTemplate } from "../api/types";
+import type { AgentConfig, AgentImportResult, AgentTemplate } from "../api/types";
 import { DiscussIcon } from "../assistant/DiscussButton";
 import type { ContextOffer } from "../assistant/store";
 import { useContextOffer } from "../assistant/useContextOffer";
@@ -22,13 +22,15 @@ import {
 } from "../components/Organize";
 import { toast } from "../components/toast";
 import { UnsavedChangesModal } from "../components/UnsavedChanges";
-import { Button, Callout, ConfirmIconButton, EmptyState, Hint, PageHeader, Spinner } from "../components/ui";
+import { Button, Callout, ConfirmIconButton, EmptyState, Hint, IconButton, PageHeader, Spinner } from "../components/ui";
 import { AgentForm } from "../editor/AgentInspector";
 import { DesignAgentDialog } from "../editor/DesignAgentDialog";
 import { defaultAgent } from "../lib/defaults";
 import { ErrorText } from "../lib/errors";
 import { changedText } from "../lib/format";
 import { useModelName } from "../components/ModelPicker";
+import { LibraryAgents } from "./agents/LibraryAgents";
+import { OriginBadge, TemplateHistory } from "./agents/TemplateHistory";
 
 /** The id of a template that is being written and not saved yet ("Empty template" saves only on Save, ED-22). */
 const NEW = "__new__";
@@ -89,7 +91,11 @@ export function AgentsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId, selected?.updated_at]);
 
-  const refresh = () => queryClient.invalidateQueries({ queryKey: keys.templates });
+  const refresh = () =>
+    Promise.all([
+      queryClient.invalidateQueries({ queryKey: keys.templates }),
+      queryClient.invalidateQueries({ queryKey: ["template-versions"] }),
+    ]);
 
   const create = useMutation({
     mutationFn: api.createTemplate,
@@ -127,6 +133,44 @@ export function AgentsPage() {
     else if (selected) saveTemplate.mutate({ id: selected.id, agent: draft }, { onSuccess: () => then?.() });
   };
   const saving = saveTemplate.isPending || (isNew && create.isPending);
+  // Export: the latest version as a file (no connections, knowledge files or approval rules, NAL-B1).
+  const exportTemplate = useMutation({
+    mutationFn: async (template: AgentTemplate) => {
+      const document = await api.exportTemplate(template.id);
+      const name = template.agent.name.replace(/[^\p{L}\p{N}_-]+/gu, "-").replace(/^-+|-+$/g, "") || "agent";
+      const url = URL.createObjectURL(new Blob([JSON.stringify(document, null, 2)], { type: "application/json" }));
+      const link = window.document.createElement("a");
+      link.href = url;
+      link.download = `${name}.nodestro-agent.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    },
+    onError: toast.error,
+  });
+  // Import: the file is untrusted; the server resets approval rules and drops connections and knowledge files.
+  const fileInput = useRef<HTMLInputElement>(null);
+  const importTemplate = useMutation({
+    mutationFn: async (file: File) => {
+      let document: unknown;
+      try {
+        document = JSON.parse(await file.text());
+      } catch {
+        throw new Error(t("agentHistory.importNotJson"));
+      }
+      return api.importTemplate(document);
+    },
+    onSuccess: (result: AgentImportResult) => {
+      const removed = result.removed.map((item) => t(`agentHistory.removed.${item}`)).join(", ");
+      toast.success(
+        removed
+          ? t("agentHistory.importedRemoved", { name: result.template.agent.name, removed })
+          : t("agentHistory.imported", { name: result.template.agent.name }),
+      );
+      if (result.check.issues.length) toast.info(t("agentHistory.importNeeds", { count: result.check.issues.length }));
+      void refresh().then(() => choose(result.template.id));
+    },
+    onError: toast.error,
+  });
   const remove = useMutation({
     mutationFn: api.deleteTemplate,
     onSuccess: () => {
@@ -146,6 +190,21 @@ export function AgentsPage() {
           description={t("agents.description")}
           actions={
             <>
+              <input
+                ref={fileInput}
+                type="file"
+                accept=".json,application/json"
+                hidden
+                data-testid="template-import-file"
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+                  event.target.value = "";
+                  if (file) importTemplate.mutate(file);
+                }}
+              />
+              <Button icon={Upload} busy={importTemplate.isPending} onClick={() => fileInput.current?.click()}>
+                {t("agentHistory.import")}
+              </Button>
               <Button icon={Plus} onClick={startNew}>
                 {t("agents.emptyTemplate")}
               </Button>
@@ -183,6 +242,7 @@ export function AgentsPage() {
             </div>
           ) : null}
           {templates.data?.length && !shown.length ? <p className="muted">{t("organize.noMatch")}</p> : null}
+          <LibraryAgents onCopied={(template) => void refresh().then(() => choose(template.id))} />
           <div className="card-grid">
             {shown.map((template) => {
               const Icon = agentIcon(template.agent.icon);
@@ -220,6 +280,7 @@ export function AgentsPage() {
                     <span className="muted small">
                       {changedText(t, template.updated_at)}
                     </span>
+                    {template.meta && template.meta.origin !== "user" ? <OriginBadge template={template} /> : null}
                   </button>
                   <TagChips kind="template" id={template.id} />
                 </article>
@@ -245,12 +306,19 @@ export function AgentsPage() {
                       <DiscussIcon offer={offer} />
                       <FavoriteButton kind="template" id={selected.id} name={selected.agent.name} />
                       <TagEditor kind="template" id={selected.id} name={selected.agent.name} />
+                      <IconButton
+                        icon={Download}
+                        label={t("agentHistory.export")}
+                        disabled={exportTemplate.isPending}
+                        onClick={() => exportTemplate.mutate(selected)}
+                      />
                       <ConfirmIconButton icon={Trash2} label={t("agents.delete")} busy={remove.isPending} onConfirm={() => remove.mutate(selected.id)} />
                     </>
                   ) : null}
                 </>
               }
             />
+            {selected && !isNew ? <TemplateHistory template={selected} draft={draft} onRestore={setDraft} /> : null}
             <div className="inspector__footer">
               {isNew ? (
                 <Button variant="ghost" icon={Undo2} onClick={() => setSelectedId(null)}>

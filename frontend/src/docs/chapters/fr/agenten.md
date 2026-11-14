@@ -255,6 +255,20 @@ Sur la page **Bibliothèque d’agents**, vous gérez des modèles d’agents r�
 
 Un agent issu d’un modèle est une **copie** : les modifications ultérieures du modèle n’affectent pas les agents déjà insérés.
 
+## Agents fournis {#mitgelieferte-agenten}
+<!-- keywords: fournis, agents prêts, galerie, recherche, résumé, utiliser -->
+
+Sous **Agents fournis**, vous trouvez des agents individuels prêts à l’emploi, par exemple pour la recherche web, les résumés, l’analyse de documents, la révision de textes et l’analyse de données. Un clic montre à quoi sert l’agent, des exemples de demandes et ce dont il a besoin : le niveau de modèle, ses outils et s’il fonctionne sans Internet.
+
+**Utiliser comme mon modèle** crée une copie dans votre bibliothèque. Si l’agent a besoin d’une connexion de recherche, vous la choisissez à ce moment-là ou vous la configurez ; aucun fournisseur de recherche n’est prédéfini. La copie vous appartient : vous pouvez la modifier librement, et une version plus récente de Nodestro ne la modifie jamais. Le badge **De la bibliothèque** indique la version dont elle provient.
+
+## Versions, export et import {#versionen}
+<!-- keywords: version, historique, comparer, restaurer, export, import, fichier, partager -->
+
+Chaque enregistrement qui modifie un modèle crée une nouvelle **version** ; les versions plus anciennes sont conservées telles quelles. Sous **Origine et versions** dans le formulaire, vous voyez toutes les versions. **Comparer** montre les champs dans lesquels une version diffère du formulaire, et **Charger dans le formulaire** la charge pour continuer à travailler ; elle ne devient une nouvelle version qu’à l’enregistrement.
+
+**Exporter le modèle** enregistre le modèle dans un fichier que vous pouvez transmettre. Le fichier ne contient ni secrets, ni connexions de service, ni fichiers de connaissances, ni règles d’approbation des outils. **Importer un modèle** crée un nouveau modèle à partir d’un tel fichier. Un fichier importé est traité comme un contenu étranger : les règles d’approbation reviennent aux valeurs par défaut, les connexions et les fichiers de connaissances sont retirés, et Nodestro vous indique ce dont le modèle a encore besoin ici.
+
 ## Tester un agent {#agent-testen}
 <!-- keywords: tester, test, essayer, tester l’agent, essai, exécuter seul -->
 

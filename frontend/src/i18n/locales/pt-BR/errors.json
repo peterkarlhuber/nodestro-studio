@@ -1157,5 +1157,10 @@
   "fetch": {
     "unsupported_type": "Este tipo de arquivo não pode ser lido; apenas páginas web, texto e PDF.",
     "too_large": "O documento é grande demais para ser lido."
+  },
+  "template": {
+    "import_too_large": "O arquivo é grande demais. Um modelo de agente pode ter no máximo {{limit}} MB.",
+    "import_invalid": "O arquivo não é um modelo de agente exportado ou está danificado. Nada foi importado.",
+    "service_missing": "O modelo precisa de uma conexão “{{service}}”. Configure-a em Ferramentas → Conexões e escolha-a no agente."
   }
 }

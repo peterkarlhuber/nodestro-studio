@@ -1157,5 +1157,10 @@
   "fetch": {
     "unsupported_type": "Ce type de fichier ne peut pas être lu ; seuls les pages web, le texte et le PDF le peuvent.",
     "too_large": "Le document est trop volumineux pour être lu."
+  },
+  "template": {
+    "import_too_large": "Le fichier est trop volumineux. Un modèle d’agent peut faire au plus {{limit}} Mo.",
+    "import_invalid": "Le fichier n’est pas un modèle d’agent exporté ou il est endommagé. Rien n’a été importé.",
+    "service_missing": "Le modèle a besoin d’une connexion « {{service}} ». Configurez-la sous Outils → Connexions et choisissez-la dans l’agent."
   }
 }

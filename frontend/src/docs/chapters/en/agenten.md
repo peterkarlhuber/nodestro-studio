@@ -255,6 +255,20 @@ On the **Agent library** page you manage reusable agent templates:
 
 An agent from a template is a **copy**: later changes to the template do not affect agents already inserted.
 
+## Shipped agents {#mitgelieferte-agenten}
+<!-- keywords: shipped, ready-made agents, gallery, research, summary, use -->
+
+Under **Shipped agents** you find ready-made single agents, for example for web research, summaries, document analysis, text editing and data analysis. A click shows what the agent is for, example requests and what it needs: the model tier, its tools and whether it works without internet.
+
+**Use as my template** puts a copy into your library. If the agent needs a search connection, you choose it there or set one up; there is no preset search provider. The copy is yours: you can change it freely, and a newer Nodestro version never changes it. The **From the library** badge names the version it came from.
+
+## Versions, export and import {#versionen}
+<!-- keywords: version, history, compare, restore, export, import, file, share -->
+
+Every save that changes a template creates a new **version**; older versions are kept unchanged. Under **Origin and versions** in the form you see all versions. **Compare** shows the fields in which a version differs from the form, and **Load into the form** loads it to continue working; only saving makes it a new version.
+
+**Export template** saves the template as a file you can pass on. The file contains no secrets, no service connections, no knowledge files and no tool approval rules. **Import template** creates a new template from such a file. An imported file is treated as foreign content: approval rules are reset to the defaults, connections and knowledge files are removed, and Nodestro tells you what the template still needs here.
+
 ## Testing an agent {#agent-testen}
 <!-- keywords: test, try, test agent, trial run, run alone -->
 

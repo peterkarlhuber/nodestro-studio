@@ -1157,5 +1157,10 @@
   "fetch": {
     "unsupported_type": "This kind of file cannot be read; only web pages, text and PDF can.",
     "too_large": "The document is too large to be read."
+  },
+  "template": {
+    "import_too_large": "The file is too large. An agent template may have at most {{limit}} MB.",
+    "import_invalid": "The file is not an exported agent template or is damaged. Nothing was imported.",
+    "service_missing": "The template needs a “{{service}}” connection. Set one up under Tools → Connections and choose it in the agent."
   }
 }
