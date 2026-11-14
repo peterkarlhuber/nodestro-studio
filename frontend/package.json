@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && node -e \"require('fs').rmSync('../src/nodestro_studio/static/assets',{recursive:true,force:true})\" && vite build",
+    "build": "tsc -b && node -e \"require('fs').rmSync('../src/nodestro_studio/static/assets',{recursive:true,force:true})\" && vite build && node scripts/third-party-notices.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
