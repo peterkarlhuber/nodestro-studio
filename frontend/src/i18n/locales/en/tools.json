@@ -440,5 +440,10 @@
       "done": "Search service “{{name}}” set up.",
       "none": "No search service can be set up in this installation."
     }
+  },
+  "origin": {
+    "skill": "From skill script:",
+    "skillBadge": "From a skill",
+    "other": "Origin:"
   }
 }

@@ -127,5 +127,20 @@
   "skills": {
     "title": "Skills used",
     "version": "version {{version}}"
+  },
+  "skillChoice": {
+    "title": "Skill choice",
+    "method": {
+      "all": "No preselection: the step offered all skills of the agent ({{count}}).",
+      "bm25": "Preselection: the step offered the best-fitting skills (offered: {{count}}, assigned: {{assigned}})."
+    },
+    "offered": "Offered skills",
+    "recommended": "Recommended",
+    "none": "No skill was offered.",
+    "ignored": "Recommended, but not assigned to the agent: {{names}}",
+    "candidates": "Scores of the preselection ({{count}})",
+    "skill": "Skill",
+    "score": "Score",
+    "chosen": "Offered"
   }
 }

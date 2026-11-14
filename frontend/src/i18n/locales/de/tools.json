@@ -440,5 +440,10 @@
       "done": "Suchdienst „{{name}}“ eingerichtet.",
       "none": "In dieser Installation kann kein Suchdienst eingerichtet werden."
     }
+  },
+  "origin": {
+    "skill": "Aus Skill-Skript:",
+    "skillBadge": "Aus einem Skill",
+    "other": "Herkunft:"
   }
 }

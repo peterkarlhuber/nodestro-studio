@@ -27,3 +27,32 @@ The name of a skill cannot be changed by editing: copy the skill under a new nam
 <!-- keywords: security, untrusted, scripts, allowed-tools, credentials, prompt injection -->
 
 An imported skill comes from an unknown source. Nodestro gives its instructions to the model as untrusted content, and scripts in a skill are **never run**. A skill never grants tools: the `allowed-tools` field is shown but ignored, and tools come only from the agent's settings. Check the content of an imported skill before you use it with tools that write or change data. If a file seems to contain a credential, the validation report warns you; remove it before you share or export the skill.
+
+## Skill groups {#gruppen}
+<!-- keywords: group, skill group, add group, members, department -->
+
+A group bundles skills that are often used together, for example all skills of one department. On the [Skills](/skills) page, switch to **Groups** to create, edit and delete groups and to choose their skills.
+
+In the settings of an agent, **Add group** adds every active skill of the group that the agent does not have yet: each in its current version and loaded when needed. Disabled and archived skills and skills the agent already has are skipped. The group is only a label: each skill stays assigned on its own, and a later change to the group does not change the agent.
+
+## Many skills: preselection {#vorauswahl}
+<!-- keywords: preselection, many skills, limit, 100, best fit, score, BM25 -->
+
+An agent can have up to 100 skills. As long as at most 20 of them load when needed, each step offers the agent all of them. With more than 20, each step offers only the 8 skills that fit the task best, plus every skill set to **Always** and every skill an orchestrator recommended. Nodestro compares the task with the name and description of each skill, so a clear description helps.
+
+In the details of a run, **Skill choice** shows for each step which skills were offered and whether there was a preselection. For a preselection, it also lists the score of every skill.
+
+## Recommendations by the orchestrator {#empfehlungen}
+<!-- keywords: orchestrator, recommendation, recommended skills, team, team run -->
+
+An orchestrator can recommend skills when it starts a team. The agents of the team are then always offered these skills, if they have them. A recommendation never assigns a skill: a recommended skill that an agent does not have is listed as not assigned in the skill choice. The details of a team run show the recommended skills at the top.
+
+## Usage {#nutzung}
+<!-- keywords: usage, statistics, loaded, offered, success rate, checks, last used -->
+
+On the [Skills](/skills) page, **Usage** shows for the last 7, 30 or 90 days how often each skill was offered and loaded, in how many runs, how many of these runs succeeded, how many quality checks passed and when the skill was last used. The numbers are an indication, not proof: a skill that was loaded in a successful run did not necessarily cause the success.
+
+## Turning scripts into tools {#skripte}
+<!-- keywords: script, tool, Coding Agent, sandbox, Docker, approve, review, origin -->
+
+Scripts in a skill are never run. To use one anyway, choose **Use as tool …** next to the file in `scripts/`. The Coding Agent then writes a tool with tests based on the script. The tests run only in the isolating Docker sandbox; without it, nothing starts. A person then reviews code and tests on the [Tools](/tools) page and approves the tool. Until then, no agent can use it. The tool shows which skill script it came from.

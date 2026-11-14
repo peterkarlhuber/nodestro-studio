@@ -99,5 +99,63 @@
     "name": "Name of the copy",
     "nameHint": "Lowercase letters, digits and single hyphens.",
     "copied": "Copied as “{{name}}”."
+  },
+  "views": {
+    "label": "View",
+    "skills": "Skills",
+    "groups": "Groups",
+    "usage": "Usage"
+  },
+  "groups": {
+    "intro": "A group adds several skills to an agent in one step. Each skill is then assigned on its own, in its current version.",
+    "new": "New group",
+    "create": "Create group",
+    "emptyTitle": "No groups yet",
+    "emptyText": "Put skills that are often used together into a group, for example all skills for one department.",
+    "group": "Group {{name}}",
+    "edit": "Edit",
+    "delete": "Delete group {{name}}",
+    "members_one": "{{count}} skill",
+    "members_other": "{{count}} skills",
+    "missing": "Deleted skill",
+    "deleted": "Group “{{name}}” deleted.",
+    "saved": "Group “{{name}}” saved.",
+    "newTitle": "New skill group",
+    "editTitle": "Edit group {{name}}",
+    "name": "Name",
+    "description": "Description (optional)",
+    "chosen": "Skills in the group: {{count}}"
+  },
+  "stats": {
+    "days": "Period",
+    "lastDays_one": "Last {{count}} day",
+    "lastDays_other": "Last {{count}} days",
+    "indication": "These numbers are an indication, not proof: a skill loaded in a successful run did not necessarily cause the success. Checks are the quality checks of the steps that loaded the skill.",
+    "empty_one": "No skill was offered or loaded in the last {{count}} day.",
+    "empty_other": "No skill was offered or loaded in the last {{count}} days.",
+    "skill": "Skill",
+    "offered": "Offered",
+    "loaded": "Loaded",
+    "runs": "Runs",
+    "success": "Success rate",
+    "checks": "Checks passed",
+    "recommended": "Recommended",
+    "lastUsed": "Last used",
+    "versions": "versions {{versions}}"
+  },
+  "scriptTool": {
+    "open": "Use as tool …",
+    "openFor": "Use {{path}} as a tool",
+    "title": "Use {{path}} as a tool",
+    "intro": "Nodestro does not run this script. Instead, a tool is created from it in these steps:",
+    "stepWrite": "The Coding Agent writes a tool with tests, based on the script.",
+    "stepTest": "The tests run only in the isolating Docker sandbox.",
+    "stepReview": "A person reviews code and tests and approves the tool.",
+    "neverRun": "Until then, no agent can use the tool. The script itself is never run.",
+    "note": "Note for the Coding Agent (optional)",
+    "noteHint": "For example, what the tool should return or which inputs it needs.",
+    "submit": "Have the tool written",
+    "started": "The tool job has started. Follow it and approve the tool on the Tools page.",
+    "openJob": "Open tool jobs"
   }
 }

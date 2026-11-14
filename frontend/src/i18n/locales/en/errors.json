@@ -1211,6 +1211,10 @@
     "file_invalid": "The file {{path}} has no valid content.",
     "imported_with_write_tools": "Imported skills ({{names}}) are instructions from an unknown source. Check them before you combine them with tools that change data.",
     "newer_version": "The skill “{{name}}” has a newer version {{version}}. The agent keeps its assigned version until you choose the new one.",
-    "always_large": "Skills always in the prompt, in tokens: about {{tokens}} (recommended: at most {{limit}}). Load some of them on demand."
+    "always_large": "Skills always in the prompt, in tokens: about {{tokens}} (recommended: at most {{limit}}). Load some of them on demand.",
+    "group_name_taken": "A skill group named “{{name}}” already exists. Choose another name.",
+    "group_not_found": "This skill group no longer exists. Reload the page.",
+    "script_not_found": "The skill has no script {{path}} in this version.",
+    "script_too_large": "The script {{path}} is too large to be turned into a tool."
   }
 }

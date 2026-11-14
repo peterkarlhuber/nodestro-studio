@@ -440,5 +440,10 @@
       "done": "Servicio de búsqueda «{{name}}» configurado.",
       "none": "En esta instalación no se puede configurar ningún servicio de búsqueda."
     }
+  },
+  "origin": {
+    "skill": "Del script de una skill:",
+    "skillBadge": "De una skill",
+    "other": "Origen:"
   }
 }

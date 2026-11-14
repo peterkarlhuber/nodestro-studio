@@ -1,9 +1,21 @@
-import { AlertTriangle, BookMarked, BookOpen, Brain, ChevronRight, ExternalLink, History, ShieldCheck, Wrench } from "lucide-react";
+import {
+  AlertTriangle,
+  BookMarked,
+  BookOpen,
+  Brain,
+  ChevronRight,
+  ExternalLink,
+  History,
+  ListFilter,
+  ShieldCheck,
+  Wrench,
+} from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { useKnowledge } from "../api/hooks";
+import type { SkillSelection } from "../api/skills";
 import type { AdoptSource, KnowledgeProposal, KnowledgeRef, NodeRun, Run, WorkflowNode } from "../api/types";
 import { AdoptDialog } from "../components/AdoptDialog";
 import { Output, outputFieldsOf, stepFieldsOf } from "../components/Markdown";
@@ -293,6 +305,7 @@ function NodeRoundDetails({ node, state, runFiles = [], run }: NodeRunDetailsPro
               <Output value={state.output} fields={node.agent?.output?.fields} />
               {node.agent ? <UsedSources state={state} /> : null}
               {node.agent ? <UsedSkills state={state} /> : null}
+              {node.agent && state.skill_selection ? <SkillChoice selection={state.skill_selection} /> : null}
               {run && !run.imported_at && node.agent && state.status === "succeeded" ? (
                 <div className="row-gap">
                   <Button
@@ -443,6 +456,65 @@ function UsedSkills({ state }: { state: NodeRun }) {
           </li>
         ))}
       </ul>
+    </section>
+  );
+}
+
+/**
+ * Which skills the step offered its agent (NAL-B4): all of them, or above 20 on-demand skills a preselection of the
+ * best-fitting ones plus "always" and recommended skills. Recommendations the agent does not have are named.
+ */
+export function SkillChoice({ selection }: { selection: SkillSelection }) {
+  const { t } = useTranslation();
+  const recommended = new Set(selection.recommended);
+  const candidates = [...selection.candidates].sort((a, b) => b.score - a.score);
+  return (
+    <section className="used-sources small" aria-label={t("runs.skillChoice.title")} data-testid="skill-choice">
+      <span className="used-sources__title">
+        <ListFilter size={13} aria-hidden /> {t("runs.skillChoice.title")}
+      </span>
+      <span>
+        {t(`runs.skillChoice.method.${selection.method}`, { count: selection.offered.length, assigned: selection.assigned })}
+      </span>
+      {selection.offered.length ? (
+        <ul className="used-sources__list" aria-label={t("runs.skillChoice.offered")}>
+          {selection.offered.map((name) => (
+            <li key={name}>
+              {name} {recommended.has(name) ? <Badge tone="running">{t("runs.skillChoice.recommended")}</Badge> : null}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <span className="muted">{t("runs.skillChoice.none")}</span>
+      )}
+      {selection.ignored.length ? (
+        <span className="muted" data-testid="skill-choice-ignored">
+          {t("runs.skillChoice.ignored", { names: selection.ignored.join(", ") })}
+        </span>
+      ) : null}
+      {selection.method === "bm25" && candidates.length ? (
+        <details>
+          <summary>{t("runs.skillChoice.candidates", { count: candidates.length })}</summary>
+          <table className="table table--compact" data-testid="skill-choice-candidates">
+            <thead>
+              <tr>
+                <th scope="col">{t("runs.skillChoice.skill")}</th>
+                <th scope="col">{t("runs.skillChoice.score")}</th>
+                <th scope="col">{t("runs.skillChoice.chosen")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {candidates.map((item) => (
+                <tr key={item.name}>
+                  <td>{item.name}</td>
+                  <td>{formatNumber(item.score, { maximumFractionDigits: 2 })}</td>
+                  <td>{item.chosen ? t("common.yes") : t("common.no")}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </details>
+      ) : null}
     </section>
   );
 }
