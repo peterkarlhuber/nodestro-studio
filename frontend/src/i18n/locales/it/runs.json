@@ -117,5 +117,11 @@
     "passages_one": "({{count}} passaggio)",
     "passages_other": "({{count}} passaggi)",
     "hint": "Trovate dalla ricerca nella conoscenza dell’agente; la scheda Strumenti mostra i passaggi."
+  },
+  "webSources": {
+    "title": "Fonti web",
+    "hint": "Ogni risultato di ricerca e ogni pagina che gli strumenti web degli agenti hanno visto in questa esecuzione. Un campo del risultato che cita fonti le indica con questi identificativi. I titoli provengono dalle pagine web.",
+    "fetched": "Letta",
+    "search": "Solo risultato"
   }
 }

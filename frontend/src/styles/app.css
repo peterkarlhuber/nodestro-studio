@@ -7833,3 +7833,27 @@ ul.gate-report__list > li.gate-report__item {
   gap: 0.15rem;
   min-width: 0;
 }
+
+/* The web sources of a run (NAL-A2). */
+.web-sources {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.web-sources__item {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.web-sources__text {
+  display: grid;
+  gap: 0.1rem;
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
