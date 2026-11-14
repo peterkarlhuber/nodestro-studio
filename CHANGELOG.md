@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Wave W3 in the lock, TABRION PIN-W3 (2026-11-14)
+
+- The lock moves to axentra `410269c` (MIG-AXE-4/5: session settings and advisory locks through
+  `tabrion.postgres`, plus DC-AX-1 and the pre-release security fixes) and orkexa `2474d12` (MIG-ORK-2: session
+  settings and `ping` for `PsycopgSource` through `tabrion[postgres]`). nodestro-runtime stays at `65114cf`, which
+  already holds MIG-NOD-4/8. Tabrion stays at 0.1.0 (`d5821fa`).
+
 ### Web search and reading web pages, studio UI (NAL-A2, 2026-11-14)
 
 Codes against the runtime's NAL-A2 contract (`search_web`, `fetch_web_page`, source ledger). Until the runtime with
