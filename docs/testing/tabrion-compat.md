@@ -65,7 +65,7 @@ call through Tabrion (`scripts/tabrion_compat.py smoke`: `safe_url`, `split_stat
 | Cell | Install | pip |
 | --- | --- | --- |
 | a) `orkexa-postgres` | `-r requirements/tabrion.txt` (orkexa's, at its locked commit) `"orkexa[postgres] @ git+...@<locked>"` | 25.0, latest |
-| b) `nodestro-api-server` | `--uploaded-prior-to <cutoff> -r platform/internal-server.txt "nodestro-api[server]"` | latest only (deviation) |
+| b) `nodestro-api-server` | `--uploaded-prior-to <cutoff> -r platform/internal-server.txt "nodestro-api[server]"` | latest only ([pip floor](../PLATFORM.md#pip-floor) 26.1) |
 | c) `axentra-orkexa` | both libraries' `requirements/tabrion.txt` (they must agree) and both packages from Git, in one environment | 25.0, latest |
 
 ### d) Negative resolution cases

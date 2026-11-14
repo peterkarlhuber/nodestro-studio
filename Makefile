@@ -1,6 +1,7 @@
 .PHONY: install frontend dev check test lint e2e example-docs check-versions check-dependency-policy check-imports platform-local
 
 install: frontend
+	python -I scripts/pip_cutoff.py --pip-only
 	pip install -r platform/internal.txt -e ".[dev]"
 
 frontend:

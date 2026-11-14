@@ -118,8 +118,13 @@ cd ..
 # Install the studio with all components (runtime, API, integrations, examples; each at its tested commit)
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
+python -m pip install "pip>=26.1"
+python -I scripts/pip_cutoff.py --pip-only   # refuses an older pip with what to do
 pip install -r platform/internal.txt -e .
 ```
+
+Nodestro needs **pip 26.1 or later** ([docs/PLATFORM.md](docs/PLATFORM.md#pip-floor)); an older pip fails on the
+lock's Git references with "No matching distribution found".
 
 `make install` does both in one step (macOS/Linux). The components and orkexa are public repositories on GitHub; pip
 downloads them from there, so it needs access to github.com.
@@ -163,6 +168,7 @@ therefore not reachable from other computers.
 ## Development
 
 ```bash
+python -m pip install "pip>=26.1"
 pip install -r platform/internal.txt -e ".[dev]"
 cd frontend && npm ci && cd ..
 
