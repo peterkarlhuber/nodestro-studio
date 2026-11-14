@@ -445,5 +445,11 @@
     "skill": "Issu du script d’une skill :",
     "skillBadge": "Issu d’une skill",
     "other": "Origine :"
+  },
+  "builtin": {
+    "notify_user": {
+      "name": "Message pour moi",
+      "description": "Envoie un court message de l’agent à la cloche de la barre supérieure de Nodestro : un titre, le texte et un niveau (info, succès, avertissement ou erreur). Au plus 3 messages par exécution, affichés en texte brut et marqués comme venant d’un agent. Rien n’est envoyé hors de Nodestro : ni e-mail, ni webhook."
+    }
   }
 }

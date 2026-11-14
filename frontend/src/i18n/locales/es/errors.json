@@ -1216,5 +1216,12 @@
     "group_not_found": "Este grupo de skills ya no existe. Recarga la página.",
     "script_not_found": "La skill no tiene el script {{path}} en esta versión.",
     "script_too_large": "El script {{path}} es demasiado grande para convertirlo en una herramienta."
+  },
+  "notify": {
+    "limit": "Un agente intentó enviar más de 3 mensajes a la campana en una ejecución. Los mensajes siguientes no se enviaron.",
+    "empty_title": "Un mensaje a la campana necesita un título. El agente envió uno sin título."
+  },
+  "notifications": {
+    "invalid_cursor": "No se pudo continuar la lista de notificaciones. Cierra las notificaciones y vuelve a abrirlas."
   }
 }

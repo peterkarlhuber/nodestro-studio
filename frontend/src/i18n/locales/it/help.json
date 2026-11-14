@@ -4,6 +4,7 @@
     "limits": "Limita quanti passaggi di un'esecuzione lavorano contemporaneamente, per quanto tempo un'esecuzione può lavorare attivamente e quanti passaggi esegue in totale. Al limite di tempo i passaggi in corso vengono annullati; una richiesta già inviata viene completata.",
     "contract": "I campi che il workflow promette come risultato. Se il risultato non corrisponde, l'esecuzione fallisce invece di passare qualcosa di non verificato.",
     "capabilities": "Parole chiave su cosa sa fare il workflow come team. Aiutano a trovare un team adatto e non concedono permessi.",
+    "notifications": "Quali eventi delle esecuzioni di questo workflow inviano una notifica, e a chi. Per impostazione predefinita le esecuzioni non riuscite e i passaggi in attesa di approvazione notificano tutte le persone con accesso. Le notifiche compaiono sulla campanella e restano dentro Nodestro; non viene inviata nessuna e-mail.",
     "problems": "Questi punti impediscono l’avvio. Vengono ricontrollati a ogni modifica.",
     "import": "Carica un file di workflow esportato (.nodestro.json) come nuova copia. I workflow esistenti restano invariati.",
     "export": "Salva il workflow con tutte le impostazioni degli agenti come file JSON. File di conoscenza, memoria e strumenti personali non sono inclusi.",

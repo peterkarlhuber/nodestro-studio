@@ -18,6 +18,7 @@ import { ConnectionInspector } from "./ConnectionInspector";
 import { addCapabilities } from "../lib/capabilities";
 import { useEditorLayout } from "./layout";
 import { NodeConnections } from "./NodeConnections";
+import { NotificationSettings } from "./NotificationSettings";
 import { OrchestratorInspector } from "./OrchestratorInspector";
 import { ApprovalInspector, ConditionInspector, FormEditor, OutputContractEditor, OutputFilesEditor, SubworkflowInspector } from "./FlowInspectors";
 import { useEditor } from "./store";
@@ -239,6 +240,7 @@ function WorkflowInspector({ check }: { check: WorkflowCheck | undefined }) {
       </Field>
       <LimitFields />
       <CapabilityField />
+      <NotificationSettings />
       {workflowId ? <WorkflowDependencies workflowId={workflowId} workflow={toWorkflow()} /> : null}
       <div className="help-box">
         <strong>

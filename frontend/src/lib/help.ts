@@ -22,6 +22,7 @@ export const HELP_DOCS = {
   "workflow.limits": "workflows#limits",
   "workflow.contract": "verzweigungen#teams",
   "workflow.capabilities": "verzweigungen#teams",
+  "workflow.notifications": "benachrichtigungen#regeln",
   "workflow.loop": "verzweigungen#schleifen",
   "workflow.problems": "workflows#pruefung",
   "workflow.import": "workflows#import-export",

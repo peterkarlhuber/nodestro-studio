@@ -13,8 +13,8 @@ export type ConflictChoice = "reload" | "overwrite" | "copy" | "cancel";
 
 /** The parts of a workflow a save would change (ids and timestamps aside). */
 function content(workflow: WorkflowIn): string {
-  const { name, description, budget_usd, limits, capabilities, nodes, edges } = workflow;
-  return JSON.stringify({ name, description, budget_usd, limits, capabilities: capabilities ?? [], nodes, edges });
+  const { name, description, budget_usd, limits, capabilities, notifications, nodes, edges } = workflow;
+  return JSON.stringify({ name, description, budget_usd, limits, capabilities: capabilities ?? [], notifications: notifications ?? null, nodes, edges });
 }
 
 /**

@@ -9,6 +9,7 @@
 
 import {
   Activity,
+  Bell,
   BookOpen,
   Bot,
   Cable,
@@ -62,6 +63,7 @@ export const CHAPTER_IDS: [string, LucideIcon][] = [
   ["memory", Brain],
   ["ausfuehrungen", Rows3],
   ["automatisierung", Repeat],
+  ["benachrichtigungen", Bell],
   ["api-und-export", Plug],
   ["nutzung", Activity],
   ["einstellungen", Settings],

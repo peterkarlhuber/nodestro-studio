@@ -44,7 +44,7 @@ import {
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
 import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
-import { toolDescription } from "../lib/catalog";
+import { toolDescription, toolDisplayName } from "../lib/catalog";
 import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
 import { ErrorText, LocalError, ProblemText, SandboxSetupLink, problemText } from "../lib/errors";
@@ -213,6 +213,7 @@ function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void 
                 aria-current={tool?.name === item.name || undefined}
               >
                 <span className="list__title">
+                  {toolDisplayName(t, item) ? <span>{toolDisplayName(t, item)}</span> : null}
                   <code>{item.name}</code>
                   <Badge
                     tone={
@@ -446,6 +447,7 @@ function ToolDetail({
       <div className="row-between">
         <div>
           <h2 className="panel__title">
+            {toolDisplayName(t, tool) ? <>{toolDisplayName(t, tool)} </> : null}
             <code>{tool.name}</code>
           </h2>
           <p className="muted small">

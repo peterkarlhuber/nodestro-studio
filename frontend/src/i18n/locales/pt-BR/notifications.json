@@ -1,0 +1,82 @@
+{
+  "bell": "Notificações",
+  "bellUnread_one": "Notificações, {{count}} não lida",
+  "bellUnread_other": "Notificações, {{count}} não lidas",
+  "announce_one": "{{count}} nova notificação",
+  "announce_other": "{{count}} novas notificações",
+  "title": "Notificações",
+  "markAllRead": "Marcar todas como lidas",
+  "markRead": "Marcar como lida",
+  "unread": "Não lida:",
+  "openRun": "Abrir execução",
+  "loadMore": "Carregar mais",
+  "empty": "Nenhuma notificação",
+  "emptyText": "Aqui aparecem as execuções com falha e as etapas que aguardam aprovação. Cada fluxo de trabalho define nas configurações quais eventos notificam.",
+  "insideOnly": "As notificações ficam dentro do Nodestro. Nenhum e-mail é enviado.",
+  "fromAgent": "De um agente",
+  "agentMessage": "Mensagem de um agente",
+  "untitled": "Notificação",
+  "event": {
+    "run_failed": {
+      "title": "Execução com falha"
+    },
+    "approval_pending": {
+      "title": "Aguardando aprovação",
+      "step": "A etapa “{{node}}” aguarda uma decisão."
+    },
+    "budget_pending": {
+      "title": "Aguardando decisão de orçamento",
+      "text": "O orçamento da execução acabou. Aumente-o ou encerre a execução."
+    },
+    "quality_failed": {
+      "title": "Controle de qualidade não aprovado",
+      "text": "Um resultado não passou no controle de qualidade."
+    },
+    "run_finished": {
+      "title": "Execução concluída",
+      "status": {
+        "succeeded": "A execução foi concluída com sucesso.",
+        "failed": "A execução terminou com um erro.",
+        "cancelled": "A execução foi cancelada."
+      }
+    }
+  },
+  "settings": {
+    "title": "Notificações",
+    "events": "Notificar quando",
+    "event": {
+      "run_failed": {
+        "label": "uma execução falha",
+        "hint": "A execução termina com um erro."
+      },
+      "approval_pending": {
+        "label": "uma etapa aguarda aprovação",
+        "hint": "Uma etapa de aprovação aguarda a decisão de uma pessoa."
+      },
+      "budget_pending": {
+        "label": "uma execução aguarda uma decisão de orçamento",
+        "hint": "O orçamento acabou; alguém precisa aumentá-lo ou encerrar a execução."
+      },
+      "quality_failed": {
+        "label": "um controle de qualidade não é aprovado",
+        "hint": "Um resultado não passa no controle, por exemplo o de um juiz."
+      },
+      "run_finished": {
+        "label": "uma execução termina",
+        "hint": "Toda execução concluída, inclusive as bem-sucedidas. Podem ser muitas."
+      }
+    },
+    "recipients": "Quem é notificado",
+    "recipient": {
+      "members": {
+        "label": "Todas as pessoas com acesso",
+        "hint": "Todas as pessoas que podem ver este fluxo de trabalho."
+      },
+      "starter": {
+        "label": "Só a pessoa que iniciou a execução",
+        "hint": "As outras pessoas com acesso não são notificadas."
+      }
+    },
+    "insideOnly": "As notificações aparecem no sino da barra superior e ficam dentro do Nodestro. Nenhum e-mail é enviado."
+  }
+}

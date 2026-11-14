@@ -4,6 +4,7 @@
     "limits": "Limite le nombre d’étapes d’une exécution qui travaillent en même temps, la durée de travail actif d’une exécution et le nombre total d’étapes. À la limite de temps, les étapes en cours sont annulées ; une requête déjà envoyée va à son terme.",
     "contract": "Les champs que le workflow promet comme résultat. Si le résultat ne convient pas, l’exécution échoue au lieu de transmettre quelque chose de non vérifié.",
     "capabilities": "Mots-clés sur ce que le workflow sait faire en équipe. Ils aident à trouver une équipe adaptée et n’accordent aucun droit.",
+    "notifications": "Quels événements des exécutions de ce workflow notifient, et qui. Par défaut, les exécutions en échec et les étapes en attente de validation notifient toutes les personnes ayant accès. Les notifications apparaissent sur la cloche et restent dans Nodestro ; aucun e-mail n’est envoyé.",
     "problems": "Ces points empêchent le démarrage. Ils sont revérifiés à chaque modification.",
     "import": "Charge un fichier de workflow exporté (.nodestro.json) comme nouvelle copie. Les workflows existants restent inchangés.",
     "export": "Enregistre le workflow avec tous les réglages des agents dans un fichier JSON. Les fichiers de connaissances, la mémoire et les outils personnels ne sont pas inclus.",

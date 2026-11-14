@@ -67,7 +67,7 @@ import { MemoryAssistantDialog } from "./MemoryAssistantDialog";
 import { OutputFieldsEditor } from "./OutputFieldsEditor";
 import { ModelOptionGate, ModelTokenLimits, NativeToolReason, OptionReason, nativeToolSupport, supportOf } from "./ModelOptionGate";
 import { acceptedEfforts, useModelProfile } from "../api/modelProfile";
-import { serverToolDescription, serverToolLabel, toolDescription } from "../lib/catalog";
+import { serverToolDescription, serverToolLabel, toolDescription, toolDisplayName } from "../lib/catalog";
 import { getDefaultModel } from "../lib/defaults";
 import { findModel, providerOf, sameModel, splitModel } from "../lib/providers";
 import { ProblemText } from "../lib/errors";
@@ -582,12 +582,15 @@ function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
         aria-label={t("agent.tools.add")}
         value=""
         placeholder={t("agent.tools.addPlaceholder")}
-        options={available.map((tool) => ({
-          value: tool.name,
-          label: tool.name,
-          hint: toolDescription(t, tool),
-          group: t(`agent.tools.kind.${tool.kind}`),
-        }))}
+        options={available.map((tool) => {
+          const display = toolDisplayName(t, tool);
+          return {
+            value: tool.name,
+            label: display ? `${display} (${tool.name})` : tool.name,
+            hint: toolDescription(t, tool),
+            group: t(`agent.tools.kind.${tool.kind}`),
+          };
+        })}
         onChange={(name) => name && update({ tools: [...agent.tools, name] })}
       />
       <p className="field__hint">

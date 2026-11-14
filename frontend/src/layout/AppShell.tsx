@@ -46,6 +46,7 @@ import { useNavRail } from "../lib/navRail";
 import { safeReturnPath, settingsHref } from "../lib/settingsLink";
 import { useTheme } from "../lib/theme";
 import { GlobalSearch } from "./GlobalSearch";
+import { NotificationBell } from "./NotificationBell";
 import type NavTexts from "../i18n/locales/en/nav.json";
 
 interface NavItem {
@@ -283,6 +284,7 @@ export function AppShell() {
               <span className="assistant-toggle__label">{t("assistant.title")}</span>
             </button>
           </Hint>
+          <NotificationBell />
           <SettingsEntry />
           <UserMenu />
           <Segmented

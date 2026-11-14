@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { modelName } from "../components/ModelPicker";
 import i18n, { loadLanguage } from "../i18n";
 import type { ModelInfo } from "../api/types";
-import { modelDescription, modelLabel } from "./catalog";
+import { modelDescription, modelLabel, toolDescription, toolDisplayName } from "./catalog";
 
 const t = i18n.t.bind(i18n);
 
@@ -64,5 +64,16 @@ describe("local model descriptions", () => {
   it("fall back to the runtime's text for a model the interface does not know", () => {
     const unknown = { ...local("gemma9:2b", "Gemma 9 2B"), description: "A new model" };
     expect(modelDescription(t, unknown)).toBe("A new model");
+  });
+});
+
+describe("built-in tool texts", () => {
+  it("name the notify_user tool and say that nothing leaves Nodestro (NAL-A3)", () => {
+    const tool = { name: "notify_user", kind: "builtin" as const, description: "Send a message to the user." };
+    expect(toolDisplayName(t, tool)).toBe("Nachricht an mich");
+    expect(toolDescription(t, tool)).toContain("nichts außerhalb von Nodestro");
+    expect(toolDisplayName(t, { name: "calculator", kind: "builtin" })).toBeNull();
+    expect(toolDisplayName(t, { name: "notify_user", kind: "custom" })).toBeNull();
+    expect(toolDescription(t, { name: "calculator", kind: "builtin", description: "x" })).toBe(t("catalog.builtinTools.calculator"));
   });
 });

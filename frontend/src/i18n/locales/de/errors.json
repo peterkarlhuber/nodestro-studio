@@ -1216,5 +1216,12 @@
     "group_not_found": "Diese Skill-Gruppe existiert nicht mehr. Lade die Seite neu.",
     "script_not_found": "Der Skill hat in dieser Version kein Skript {{path}}.",
     "script_too_large": "Das Skript {{path}} ist zu groß, um daraus ein Tool zu machen."
+  },
+  "notify": {
+    "limit": "Ein Agent wollte in einem Lauf mehr als 3 Nachrichten an die Glocke schicken. Weitere Nachrichten wurden nicht verschickt.",
+    "empty_title": "Eine Nachricht an die Glocke braucht einen Titel. Der Agent hat eine ohne Titel geschickt."
+  },
+  "notifications": {
+    "invalid_cursor": "Die Liste der Benachrichtigungen konnte nicht fortgesetzt werden. Schließe die Benachrichtigungen und öffne sie erneut."
   }
 }
