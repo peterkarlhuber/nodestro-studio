@@ -214,7 +214,8 @@
       "digit": "Nur Buchstaben, Ziffern und _; darf nicht mit einer Ziffer beginnen.",
       "duplicate": "Dieser Name kommt mehrfach vor."
     },
-    "fromTool": "Aus einem Tool"
+    "fromTool": "Aus einem Tool",
+    "fromSources": "Nennt Webquellen"
   },
   "thinking": {
     "title": "Denken und Aufwand",

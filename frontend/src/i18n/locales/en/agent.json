@@ -214,7 +214,8 @@
       "digit": "Letters, digits and _ only; must not start with a digit.",
       "duplicate": "This name is used more than once."
     },
-    "fromTool": "From a tool"
+    "fromTool": "From a tool",
+    "fromSources": "Cites web sources"
   },
   "thinking": {
     "title": "Thinking and effort",

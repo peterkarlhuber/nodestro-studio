@@ -214,7 +214,8 @@
       "digit": "Lettres, chiffres et _ uniquement ; ne doit pas commencer par un chiffre.",
       "duplicate": "Ce nom apparaît plusieurs fois."
     },
-    "fromTool": "Issu d’un outil"
+    "fromTool": "Issu d’un outil",
+    "fromSources": "Cite des sources web"
   },
   "thinking": {
     "title": "Réflexion et effort",

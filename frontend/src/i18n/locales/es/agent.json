@@ -214,7 +214,8 @@
       "digit": "Solo letras, cifras y _; no puede empezar por una cifra.",
       "duplicate": "Este nombre aparece más de una vez."
     },
-    "fromTool": "De una herramienta"
+    "fromTool": "De una herramienta",
+    "fromSources": "Cita fuentes web"
   },
   "thinking": {
     "title": "Razonamiento y esfuerzo",

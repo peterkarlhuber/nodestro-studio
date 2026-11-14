@@ -214,7 +214,8 @@
       "digit": "Solo lettere, cifre e _; non può iniziare con una cifra.",
       "duplicate": "Questo nome compare più volte."
     },
-    "fromTool": "Da uno strumento"
+    "fromTool": "Da uno strumento",
+    "fromSources": "Cita fonti web"
   },
   "thinking": {
     "title": "Ragionamento e impegno",

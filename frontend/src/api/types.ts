@@ -47,8 +47,9 @@ export interface OutputField {
   type: OutputFieldType;
   description: string;
   required: boolean;
-  /** "tool": a key figure that is accepted only as the result of a tool call (checked by the runtime). */
-  source?: "model" | "tool";
+  /** "tool": a key figure that is accepted only as the result of a tool call (checked by the runtime). "ledger" (a
+   * string or string_list field, NAL-A2): every value must name a web source of the run (S3 or its address). */
+  source?: "model" | "tool" | "ledger";
 }
 
 export interface OutputConfig {
