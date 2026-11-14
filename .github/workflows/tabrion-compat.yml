@@ -1,0 +1,352 @@
+name: Tabrion compatibility
+
+# TABRION QA-20 (AC-5) and the missing cells of QA-19 (AC-4). Design note: docs/testing/tabrion-compat.md.
+#
+# QA-20, the gate before any Tabrion tag: Axentra, Orkexa[postgres], the Nodestro runtime core and the Nodestro server
+# (nodestro-api[server] + nodestro-runtime[postgres]), each at its commit of the studio lock, run their own test
+# suites (PostgreSQL 17 service) against Tabrion MASTER (or the dispatched ref). The master SHA is read once per run;
+# the lock (platform/internal-server.txt) is copied with only its tabrion line changed. A RED RUN BLOCKS TABRION TAGS:
+# whoever tags Tabrion checks the latest run of this workflow for the commit to be tagged first (Tabrion's release
+# flow, docs/development/api-stability.md step 2). That is a rule, not automation: nothing here blocks, tags or
+# publishes anything (and Tabrion tags are locked at the moment anyway).
+#
+# QA-19, against the LOCKED tabrion (af0458d, 0.2.1): fresh virtual environments, a smoke import and one small call,
+# with pip 25.0 and the latest pip where the install path supports pip 25.0; and the negative resolution cases, which
+# pass only when a real pip install fails for the expected reason (local artifacts only, never an index for tabrion).
+#
+# Report only: not in .github/ci-manifest.json (no pull_request trigger), never a required check. Not the same as
+# Tabrion's nightly "downstream" job (scripts/downstream.py there): that one runs the consumers' MASTER branches,
+# their database tests only, through uv --override; this one runs the consumers at the studio's LOCKED commits, their
+# whole suites, through the studio lock with pip, as the platform's components job installs them.
+#
+# Manual only (workflow_dispatch): no schedule and no issue automation, by the owner's rule of 2026-11-14 against new
+# automatic monitors. Run it before a Tabrion tag and after a Tabrion change that consumers should see.
+on:
+  workflow_dispatch:
+    inputs:
+      tabrion_ref:
+        description: "Tabrion branch, tag or full commit SHA for QA-20 (default: master)"
+        type: string
+        default: master
+
+permissions:
+  contents: read
+
+concurrency:
+  # As platform.yml: every run gets its own group from github.run_id, so none is cancelled.
+  group: tabrion-compat-${{ github.workflow }}-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    name: resolve tabrion ref
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      sha: ${{ steps.ref.outputs.sha }}
+      ref: ${{ steps.ref.outputs.ref }}
+      locked: ${{ steps.ref.outputs.locked }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # One SHA per run, read once: every QA-20 job installs this very commit even if master moves during the run.
+      - name: Resolve the Tabrion ref to one commit
+        id: ref
+        env:
+          REF: ${{ inputs.tabrion_ref || 'master' }}
+        run: |
+          set -euo pipefail
+          [[ "$REF" =~ ^[A-Za-z0-9][A-Za-z0-9._/-]{0,99}$ ]] || { echo "::error::Not a branch, tag or commit: $REF"; exit 1; }
+          url=https://github.com/peterkarlhuber/tabrion.git
+          if [[ "$REF" =~ ^[0-9a-f]{40}$ ]]; then
+            sha=$REF
+          else
+            refs=$(git ls-remote "$url" "refs/heads/$REF" "refs/tags/$REF" "refs/tags/$REF^{}")
+            # A peeled annotated tag (^{}) names the commit; else the branch or lightweight tag.
+            sha=$(printf '%s\n' "$refs" | awk '$2 ~ /\^\{\}$/ {print $1; exit}')
+            sha=${sha:-$(printf '%s\n' "$refs" | awk 'NF {print $1; exit}')}
+          fi
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::No Tabrion commit for $REF"; exit 1; }
+          locked=$(sed -n 's|^tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@\([0-9a-f]\{40\}\)$|\1|p' platform/internal-server.txt)
+          {
+            echo "sha=$sha"
+            echo "ref=$REF"
+            echo "locked=$locked"
+          } >> "$GITHUB_OUTPUT"
+          {
+            echo "### Tabrion under test (QA-20)"
+            echo
+            echo "| Ref | Commit | Locked commit (platform/internal-server.txt) |"
+            echo "|---|---|---|"
+            echo "| \`$REF\` | \`$sha\` | \`$locked\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # QA-20 (AC-5): each consumer at its locked commit, its own test suite, Tabrion at the resolved commit. Installed as
+  # the Nodestro components' CI does (pip >= 26.1, `-c <studio lock minus the consumer's own line>
+  # -e "<checkout>[extras]"`, the third-party cutoff of platform/uploaded-prior-to), with the lock's tabrion line
+  # replaced by scripts/tabrion_compat.py lock; for axentra and orkexa this lock takes the place of their
+  # requirements/tabrion.txt. Every suite runs even if another fails (fail-fast: false).
+  tabrion-at-ref:
+    name: QA-20 ${{ matrix.consumer }} (tabrion ${{ needs.resolve.outputs.ref }})
+    needs: resolve
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - consumer: axentra
+            repo: axentra
+            install: '-e "$CHECKOUT[dev]"'
+          - consumer: orkexa[postgres]
+            repo: orkexa
+            install: '-e "$CHECKOUT[postgres,dev]"'
+          - consumer: nodestro-runtime core
+            repo: nodestro-runtime
+            install: '-e "$CHECKOUT[dev]"'
+          - consumer: nodestro-server
+            repo: nodestro-api
+            install: '-e "$CHECKOUT[server,dev]" "nodestro-runtime[postgres]"'
+    services:
+      postgres:
+        image: postgres@sha256:748a18a54d3842d43bc156f0840d78029b8d349e0feca98c12b9c4ce3404a6b3 # postgres:17
+        env:
+          POSTGRES_PASSWORD: tabrion-compat
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 30
+    env:
+      TABRION_SHA: ${{ needs.resolve.outputs.sha }}
+      REPO: ${{ matrix.repo }}
+      NODESTRO_TEST_POSTGRES: host=127.0.0.1 port=5432 user=postgres password=tabrion-compat dbname=postgres
+      NODESTRO_REQUIRE_POSTGRES: "1"
+      ORKEXA_TEST_POSTGRES: host=127.0.0.1 port=5432 user=postgres password=tabrion-compat dbname=postgres
+      ORKEXA_REQUIRE_POSTGRES: "1"
+      AXENTRA_TEST_DATABASE_URL: postgresql://postgres:tabrion-compat@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+          # No pip cache: this job runs code of the dispatched Tabrion ref, and its cache key would be the one the
+          # required platform jobs restore (review of #194, C-1).
+      - name: The studio lock with tabrion at ${{ needs.resolve.outputs.sha }}
+        run: |
+          python -I scripts/tabrion_compat.py lock --commit "$TABRION_SHA" --out "$RUNNER_TEMP/lock-all.txt"
+          grep -v "^$REPO " "$RUNNER_TEMP/lock-all.txt" > "$RUNNER_TEMP/lock.txt"
+          cat "$RUNNER_TEMP/lock.txt"
+          {
+            echo "CHECKOUT=$RUNNER_TEMP/components/$REPO"
+            # The runtime's tests/test_tabrion_pin.py compares the installed tabrion with this lock (the at-ref copy).
+            echo "NODESTRO_STUDIO_LOCK=$RUNNER_TEMP/lock-all.txt"
+          } >> "$GITHUB_ENV"
+      - name: Check out ${{ matrix.repo }} at its locked commit
+        run: python scripts/checkout_components.py "$RUNNER_TEMP/components" "$REPO"
+      # axentra's backup/restore test needs pg_dump/pg_restore of the server's major version (as axentra's CI).
+      - name: PostgreSQL 17 client
+        if: matrix.repo == 'axentra'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q postgresql-common
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y -q postgresql-client-17
+          echo "AXENTRA_TEST_PG_BINDIR=/usr/lib/postgresql/17/bin" >> "$GITHUB_ENV"
+      - name: Install
+        run: |
+          # pip >= 26.1: `-c` with a URL and extras (as the components' CI; older pips reject or crash on it).
+          python -m pip install "pip>=26.1"
+          cutoff=$(python -I scripts/pip_cutoff.py)
+          pip install --uploaded-prior-to "$cutoff" -c "$RUNNER_TEMP/lock.txt" ${{ matrix.install }} pytest-xdist==3.8.0
+          pip check
+          pip freeze > "$RUNNER_TEMP/pip-freeze.txt"
+      - name: The installed tabrion is ${{ needs.resolve.outputs.sha }}
+        run: python -I scripts/tabrion_compat.py installed --commit "$TABRION_SHA"
+      # The core install of the runtime (no extras): a fresh environment, no psycopg, no axentra.
+      - name: Runtime core install (no extras, fresh environment)
+        if: matrix.repo == 'nodestro-runtime'
+        run: |
+          python -m venv "$RUNNER_TEMP/core"
+          "$RUNNER_TEMP/core/bin/python" -m pip install "pip>=26.1"
+          cutoff=$("$RUNNER_TEMP/core/bin/python" -I scripts/pip_cutoff.py)
+          "$RUNNER_TEMP/core/bin/python" -m pip install --uploaded-prior-to "$cutoff" -c "$RUNNER_TEMP/lock-all.txt" nodestro-runtime
+          "$RUNNER_TEMP/core/bin/python" -I scripts/tabrion_compat.py installed --commit "$TABRION_SHA"
+          "$RUNNER_TEMP/core/bin/python" -I scripts/tabrion_compat.py smoke runtime-core
+      # Deselected in every suite: the tests that assert the installation IS the pin (the installed tabrion is the
+      # commit of requirements/tabrion.txt, a final version, the portable package's pin). They are red by design when
+      # tabrion is not the locked commit and say nothing about compatibility. Everything else runs.
+      - name: axentra test suite
+        if: matrix.repo == 'axentra'
+        working-directory: ${{ runner.temp }}/components/axentra
+        run: >-
+          python -m pytest -ra -p no:cacheprovider
+          --deselect tests/unit/test_tabrion_requirements.py::test_installed_tabrion_is_the_pin
+      - name: orkexa test suite (without PostgreSQL)
+        if: matrix.repo == 'orkexa'
+        working-directory: ${{ runner.temp }}/components/orkexa
+        env:
+          ORKEXA_CONFORMANCE_JOB: test
+        run: >-
+          python -m pytest -m "not postgres" -rs -p no:cacheprovider
+          --deselect tests/architecture/test_tabrion_requirements.py::test_the_installed_tabrion_is_the_pin
+      - name: orkexa test suite (PostgreSQL)
+        if: ${{ !cancelled() && matrix.repo == 'orkexa' }}
+        working-directory: ${{ runner.temp }}/components/orkexa
+        env:
+          ORKEXA_CONFORMANCE_JOB: pg-a
+        run: python -m pytest -rs -p no:cacheprovider tests/backends/postgres tests/conformance/test_postgres_conformance.py
+      - name: nodestro-runtime test suite
+        if: matrix.repo == 'nodestro-runtime'
+        working-directory: ${{ runner.temp }}/components/nodestro-runtime
+        run: >-
+          python -m pytest -p no:cacheprovider -n auto --dist loadfile
+          --deselect tests/test_tabrion_pin.py::test_the_installed_tabrion_is_a_final_version_inside_the_range
+      - name: nodestro-api test suite (server profile)
+        if: matrix.repo == 'nodestro-api'
+        working-directory: ${{ runner.temp }}/components/nodestro-api
+        run: >-
+          python -m pytest -rs -p no:cacheprovider -n auto
+          --deselect tests/test_portable_tabrion.py::test_the_pin_is_the_commit_of_the_installed_tabrion
+      - name: The installed packages (pip freeze)
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: pip-freeze-qa20-${{ matrix.repo }}
+          path: ${{ runner.temp }}/pip-freeze.txt
+          if-no-files-found: ignore
+
+  # QA-19 (AC-4 a-c): the locked tabrion in fresh virtual environments, one per cell, no pip cache. Each cell installs,
+  # runs `pip check`, checks every installed component against platform/versions.json (lock_check.py --only), imports
+  # the packages and makes one small call through Tabrion (scripts/tabrion_compat.py smoke).
+  #   a) orkexa[postgres] standalone: -r orkexa's requirements/tabrion.txt (at orkexa's locked commit) + orkexa from Git
+  #   b) nodestro-api[server] through the studio lock: -r platform/internal-server.txt "nodestro-api[server]"
+  #   c) axentra + orkexa together: both requirements/tabrion.txt files (they must agree) + both packages from Git
+  # DEVIATION (pip floor): cell b runs the latest pip only. The Nodestro install paths need pip >= 26.1: the
+  # components' CI installs with `-c` and a URL with extras (crashes on pip 25.0 to 26.0), and the studio's installs
+  # pass the third-party cutoff with --uploaded-prior-to (pip >= 26.0, scripts/pip_cutoff.py). Cells a and c follow
+  # the libraries' documented install (pip 25.0 or newer, no cutoff) and run with pip 25.0 and the latest pip.
+  qa19-cells:
+    name: QA-19 ${{ matrix.cell }} (pip ${{ matrix.pip }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        cell: [orkexa-postgres, axentra-orkexa]
+        pip: ["25.0", latest]
+        include:
+          - cell: nodestro-api-server
+            pip: latest
+    env:
+      CELL: ${{ matrix.cell }}
+      PIP_VERSION: ${{ matrix.pip }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Fresh virtual environment with pip ${{ matrix.pip }}
+        run: |
+          python -m venv "$RUNNER_TEMP/cell"
+          if [ "$PIP_VERSION" = latest ]; then spec="pip"; else spec="pip==$PIP_VERSION"; fi
+          "$RUNNER_TEMP/cell/bin/python" -m pip install --upgrade "$spec"
+          "$RUNNER_TEMP/cell/bin/python" -m pip --version
+      - name: Install (${{ matrix.cell }})
+        run: |
+          set -euo pipefail
+          py="$RUNNER_TEMP/cell/bin/python"
+          commit() { python -c 'import json,sys; print(json.load(open("platform/versions.json"))["components"][sys.argv[1]]["commit"])' "$1"; }
+          pins() {  # pins NAME: that library's requirements/tabrion.txt at its locked commit
+            curl -fsSL "https://raw.githubusercontent.com/peterkarlhuber/$1/$(commit "$1")/requirements/tabrion.txt" -o "$RUNNER_TEMP/$1-tabrion.txt"
+            grep -v '^#' "$RUNNER_TEMP/$1-tabrion.txt"
+          }
+          git_req() { echo "$1$2 @ git+https://github.com/peterkarlhuber/$1.git@$(commit "$1")"; }
+          case "$CELL" in
+            orkexa-postgres)
+              pins orkexa
+              "$py" -m pip install --no-cache-dir -r "$RUNNER_TEMP/orkexa-tabrion.txt" "$(git_req orkexa '[postgres]')"
+              echo "ONLY=orkexa,tabrion" >> "$GITHUB_ENV"; echo "SMOKE=orkexa" >> "$GITHUB_ENV" ;;
+            axentra-orkexa)
+              pins axentra; pins orkexa
+              "$py" -m pip install --no-cache-dir -r "$RUNNER_TEMP/axentra-tabrion.txt" -r "$RUNNER_TEMP/orkexa-tabrion.txt" \
+                "$(git_req axentra '')" "$(git_req orkexa '[postgres]')"
+              echo "ONLY=axentra,orkexa,tabrion" >> "$GITHUB_ENV"; echo "SMOKE=axentra-orkexa" >> "$GITHUB_ENV" ;;
+            nodestro-api-server)
+              cutoff=$("$py" -I scripts/pip_cutoff.py)
+              "$py" -m pip install --no-cache-dir --uploaded-prior-to "$cutoff" -r platform/internal-server.txt "nodestro-api[server]"
+              echo "ONLY=nodestro-api,nodestro-runtime,nodestro-examples,nodestro-integrations,orkexa,axentra,tabrion" >> "$GITHUB_ENV"
+              echo "SMOKE=server" >> "$GITHUB_ENV" ;;
+            *) echo "::error::unknown cell $CELL"; exit 1 ;;
+          esac
+      - name: Consistent, and every component at its locked commit
+        run: |
+          "$RUNNER_TEMP/cell/bin/python" -m pip check
+          "$RUNNER_TEMP/cell/bin/python" -I scripts/lock_check.py --only "$ONLY"
+      - name: Smoke import and call
+        run: |
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/cell/bin/python" -I "$GITHUB_WORKSPACE/scripts/tabrion_compat.py" smoke "$SMOKE"
+
+  # QA-19 (AC-4 d): installs pip must refuse, each a real `pip install --no-index` in a fresh virtual environment with
+  # synthetic local wheels (scripts/tabrion_compat.py negative): two tabrion pins in one install, a pre-release
+  # (0.2.2.dev0) and an alpha (0.3.0a1) against the final range >=0.2,<0.3; plus controls that must install. A case
+  # passes only when pip fails and its output names the expected reason. DEVIATION (pip >= 26.0): when only a
+  # pre-release satisfies the range, pip 26 installs it; the case asserts that behavior and a second case shows that
+  # `--only-final tabrion` refuses it (see docs/testing/tabrion-compat.md).
+  qa19-negative:
+    name: QA-19 negative resolution (pip ${{ matrix.pip }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        pip: ["25.0", latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Negative cases with pip ${{ matrix.pip }}
+        env:
+          PIP_VERSION: ${{ matrix.pip }}
+        run: |
+          if [ "$PIP_VERSION" = latest ]; then spec="pip"; else spec="pip==$PIP_VERSION"; fi
+          python -I scripts/tabrion_compat.py negative --pip "$spec" --work "$RUNNER_TEMP/negative" --summary "$GITHUB_STEP_SUMMARY"
+
+  report:
+    needs: [resolve, tabrion-at-ref, qa19-cells, qa19-negative]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Verdict
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+          SHA: ${{ needs.resolve.outputs.sha }}
+          REF: ${{ needs.resolve.outputs.ref }}
+        run: |
+          set -euo pipefail
+          result() { python3 -c 'import json,os,sys; print(json.loads(os.environ["NEEDS"])[sys.argv[1]]["result"])' "$1"; }
+          qa20=$(result tabrion-at-ref); cells=$(result qa19-cells); negative=$(result qa19-negative); resolve=$(result resolve)
+          gate=RED; [ "$resolve" = success ] && [ "$qa20" = success ] && gate=GREEN
+          {
+            echo "### Tabrion tag gate (QA-20): $gate"
+            echo
+            echo "Tabrion \`${REF:-?}\` at \`${SHA:-?}\`. A red QA-20 result blocks a Tabrion tag of this commit (rule, no automation)."
+            echo
+            echo "| Job | Result |"
+            echo "|---|---|"
+            echo "| QA-20 consumers against tabrion \`${REF:-?}\` | $qa20 |"
+            echo "| QA-19 cells (locked tabrion) | $cells |"
+            echo "| QA-19 negative resolution | $negative |"
+          } >> "$GITHUB_STEP_SUMMARY"

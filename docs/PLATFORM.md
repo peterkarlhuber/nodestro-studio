@@ -242,6 +242,14 @@ branch deletion; until that is in place, see `docs/TODO.md` ST-052. The next com
 4. **SDK:** the Python and TypeScript SDKs at the pinned commit against the installed API.
 5. **Browser:** the user interface is built and all nine browser suites run against the installed platform.
 
+**Tabrion compatibility (report only):** `.github/workflows/tabrion-compat.yml` runs on demand (`workflow_dispatch`). QA-20 runs
+the test suites of Axentra, Orkexa[postgres], the Nodestro runtime core and the Nodestro server, at their locked
+commits, against Tabrion master (only the lock's `tabrion` line changes); a red run blocks a Tabrion tag of that
+commit. QA-19 installs the locked Tabrion the way each consumer documents it (pip 25.0 and the latest pip where the
+path allows it) and proves that pip refuses two Tabrion pins and pre-releases against the final range (on pip >= 26.0 a
+pre-release-only index needs `--only-final tabrion`). Cells,
+deviations and the tag rule: [testing/tabrion-compat.md](testing/tabrion-compat.md).
+
 ## Upgrading from Nodestro 0.1
 
 In the Python environment where Nodestro 0.1 is installed:
