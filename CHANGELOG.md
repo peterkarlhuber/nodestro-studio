@@ -17,7 +17,7 @@
   running studio. Texts in all six languages, a help paragraph in the settings chapter, unit tests and a browser
   suite (`scripts/e2e.sh recovery`, `tests/e2e_recovery_server.py` stands in for the desktop shell's restarts;
   `E2E_READY` names the path a suite's server answers when it is up).
-- Lock (CI only, repinned to merge commits before this merges): nodestro-runtime `edc3c60` (runtime #176, branch
+- Lock (CI only, repinned to merge commits before this merges): nodestro-runtime `5c2f81c` (runtime #176, branch
   `claude/project-thread-bjlq25-nod9`) and nodestro-api at its branch `claude/project-thread-bjlq25-nod9ui`.
 
 ### Wave W3 in the lock, TABRION PIN-W3 (2026-11-14)
