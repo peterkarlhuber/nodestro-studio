@@ -19,6 +19,8 @@ export const keys = {
   runChat: (runId: string) => ["run-chat", runId] as const,
   usage: (days: number) => ["usage", days] as const,
   templates: ["templates"] as const,
+  templateVersions: (id: string) => ["template-versions", id] as const,
+  libraryAgents: (language: string) => ["library-agents", language] as const,
   tools: ["tools"] as const,
   toolJobs: ["tool-jobs"] as const,
   toolDrafts: ["tool-drafts"] as const,
@@ -64,6 +66,12 @@ export const useSettingsDefaults = () =>
   useQuery({ queryKey: keys.settingsDefaults, queryFn: api.settingsDefaults, staleTime: Infinity, retry: false, refetchOnWindowFocus: false });
 export const useWorkflows = () => useQuery({ queryKey: keys.workflows, queryFn: api.workflows });
 export const useTemplates = () => useQuery({ queryKey: keys.templates, queryFn: api.templates });
+/** The saved versions of an agent template, newest first (NAL-B1). */
+export const useTemplateVersions = (id: string | null) =>
+  useQuery({ queryKey: keys.templateVersions(id ?? ""), queryFn: () => api.templateVersions(id!), enabled: Boolean(id) });
+/** The shipped agent templates (NAL-B1). */
+export const useLibraryAgents = (language: string) =>
+  useQuery({ queryKey: keys.libraryAgents(language), queryFn: () => api.libraryAgents(language), staleTime: Infinity });
 export const useTools = () => useQuery({ queryKey: keys.tools, queryFn: api.tools });
 export const useKnowledge = (query?: string) =>
   useQuery({ queryKey: keys.knowledge(query), queryFn: () => api.knowledge(query) });

@@ -99,6 +99,10 @@ export interface ToolSettings {
 export interface AgentConfig {
   name: string;
   description: string;
+  /** The task profile of an agent from a template (NAL-B1); null for agents written by hand. */
+  task?: string | null;
+  /** The template version a workflow agent was inserted from (NAL-B1). */
+  origin?: { template_id: string; version: number } | null;
   icon: string;
   model: string;
   system_prompt: string;
@@ -451,8 +455,83 @@ export interface ContractFieldSummary {
 export interface AgentTemplate {
   id: string;
   agent: AgentConfig;
+  /** The description of the template and where it comes from (NAL-B1). */
+  meta?: TemplateMeta;
+  /** The number of the latest version; every changed save adds one (NAL-B1). */
+  version?: number;
   created_at: string;
   updated_at: string;
+}
+
+/** What a template needs: model capabilities, tier, tools, kinds of service connection (NAL-B1). */
+export interface TemplateRequirements {
+  capabilities: ("tools" | "vision" | "structured_output" | "long_context")[];
+  min_tier: "fast" | "standard" | "strong" | null;
+  tools: string[];
+  services: string[];
+  offline_capable: boolean;
+}
+
+export interface TemplateTest {
+  name: string;
+  input: string;
+  expectations: string[];
+}
+
+/** ``origin``: ``user``, ``builtin:<package>@<version>/<id>`` or ``import:<sha256>``; set by the server only. */
+export interface TemplateMeta {
+  category: string | null;
+  summary: string;
+  requirements: TemplateRequirements;
+  origin: string;
+  examples: string[];
+  tests: TemplateTest[];
+  locale: string | null;
+}
+
+/** One saved version of an agent template; never changed afterwards. */
+export interface AgentTemplateVersion {
+  template_id: string;
+  version: number;
+  agent: AgentConfig;
+  meta: TemplateMeta;
+  note: string;
+  created_at: string;
+  created_by: string;
+}
+
+export interface TemplateCheck {
+  issues: ConfigIssue[];
+}
+
+export interface AgentImportResult {
+  template: AgentTemplate;
+  check: TemplateCheck;
+  /** What the import left out of the file. */
+  removed: ("tool_policies" | "connections" | "knowledge")[];
+}
+
+/** A shipped agent template of the library (``GET /api/library/agents``). */
+export interface LibraryAgentSummary {
+  id: string;
+  number: number;
+  category: "research" | "text" | "analysis";
+  name: string;
+  description: string;
+  icon: string;
+  version: string;
+  meta: TemplateMeta;
+}
+
+export interface LibraryAgentDetail extends LibraryAgentSummary {
+  help: string;
+  agent: AgentConfig;
+}
+
+export interface LibraryAgentCopyRequest {
+  language?: string | null;
+  model?: string | null;
+  services?: Record<string, string>;
 }
 
 export interface Usage {

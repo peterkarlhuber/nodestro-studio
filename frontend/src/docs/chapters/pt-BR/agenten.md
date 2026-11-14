@@ -255,6 +255,20 @@ Na página **Biblioteca de agentes** você gerencia modelos de agentes reutiliz�
 
 Um agente criado a partir de um modelo é uma **cópia**: alterações posteriores no modelo não afetam os agentes já inseridos.
 
+## Agentes incluídos {#mitgelieferte-agenten}
+<!-- keywords: incluídos, agentes prontos, galeria, pesquisa, resumo, usar -->
+
+Em **Agentes incluídos** você encontra agentes individuais prontos, por exemplo para pesquisa na web, resumos, análise de documentos, revisão de textos e análise de dados. Um clique mostra para que serve o agente, pedidos de exemplo e do que ele precisa: o nível de modelo, suas ferramentas e se funciona sem internet.
+
+**Usar como meu modelo** cria uma cópia na sua biblioteca. Se o agente precisa de uma conexão de busca, você a escolhe ali ou a configura; não há nenhum provedor de busca predefinido. A cópia é sua: você pode alterá-la livremente, e uma versão mais nova do Nodestro nunca a altera. O selo **Da biblioteca** indica a versão de origem.
+
+## Versões, exportação e importação {#versionen}
+<!-- keywords: versão, histórico, comparar, restaurar, exportar, importar, arquivo, compartilhar -->
+
+Cada salvamento que altera um modelo cria uma nova **versão**; as versões anteriores são mantidas sem alterações. Em **Origem e versões** no formulário você vê todas as versões. **Comparar** mostra os campos em que uma versão difere do formulário, e **Carregar no formulário** a carrega para continuar trabalhando; só ao salvar ela vira uma nova versão.
+
+**Exportar modelo** salva o modelo como um arquivo que você pode compartilhar. O arquivo não contém segredos, conexões de serviço, arquivos de conhecimento nem regras de aprovação de ferramentas. **Importar modelo** cria um novo modelo a partir de um arquivo assim. Um arquivo importado é tratado como conteúdo externo: as regras de aprovação voltam ao padrão, as conexões e os arquivos de conhecimento são removidos, e o Nodestro informa o que o modelo ainda precisa aqui.
+
 ## Testar um agente {#agent-testen}
 <!-- keywords: testar, teste, experimentar, testar agente, execução de teste, executar sozinho -->
 

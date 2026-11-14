@@ -1,6 +1,7 @@
 // The service connections an example's built-in tools need (NAL-B2: the web research example's `search`). The person
-// picks one of their own connections or sets one up here; nothing is preselected (owner decision E-3 is open), and a
-// copy without one still works: its workflow check names the missing connection until one is chosen in the agent.
+// picks one of their own connections or sets one up here; nothing is preselected (owner decision E-3: there is no
+// default search provider, the person chooses), and a copy without one still works: its workflow check names the
+// missing connection until one is chosen in the agent.
 
 import { Globe } from "lucide-react";
 import { useState } from "react";

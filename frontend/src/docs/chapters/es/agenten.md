@@ -255,6 +255,20 @@ En la página **Biblioteca de agentes** gestionas plantillas de agentes reutiliz
 
 Un agente creado a partir de una plantilla es una **copia**: los cambios posteriores en la plantilla no afectan a los agentes ya insertados.
 
+## Agentes incluidos {#mitgelieferte-agenten}
+<!-- keywords: incluidos, agentes listos, galería, investigación, resumen, usar -->
+
+En **Agentes incluidos** encuentras agentes individuales listos para usar, por ejemplo para investigación web, resúmenes, análisis de documentos, edición de textos y análisis de datos. Un clic muestra para qué sirve el agente, peticiones de ejemplo y lo que necesita: el nivel de modelo, sus herramientas y si funciona sin internet.
+
+**Usar como mi plantilla** crea una copia en tu biblioteca. Si el agente necesita una conexión de búsqueda, la eliges ahí o la configuras; no hay ningún proveedor de búsqueda predeterminado. La copia es tuya: puedes cambiarla libremente y una versión más nueva de Nodestro nunca la cambia. La insignia **De la biblioteca** indica la versión de la que procede.
+
+## Versiones, exportación e importación {#versionen}
+<!-- keywords: versión, historial, comparar, restaurar, exportar, importar, archivo, compartir -->
+
+Cada guardado que cambia una plantilla crea una nueva **versión**; las versiones anteriores se conservan sin cambios. En **Origen y versiones** del formulario ves todas las versiones. **Comparar** muestra los campos en los que una versión se diferencia del formulario, y **Cargar en el formulario** la carga para seguir trabajando; solo al guardar se convierte en una nueva versión.
+
+**Exportar plantilla** guarda la plantilla como un archivo que puedes compartir. El archivo no contiene secretos, conexiones de servicio, archivos de conocimiento ni reglas de aprobación de herramientas. **Importar plantilla** crea una plantilla nueva a partir de ese archivo. Un archivo importado se trata como contenido ajeno: las reglas de aprobación vuelven a los valores predeterminados, las conexiones y los archivos de conocimiento se eliminan y Nodestro te indica qué necesita aún la plantilla aquí.
+
 ## Probar un agente {#agent-testen}
 <!-- keywords: probar, prueba, probar agente, ejecución de prueba, ejecutar solo -->
 

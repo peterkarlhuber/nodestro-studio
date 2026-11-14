@@ -1157,5 +1157,10 @@
   "fetch": {
     "unsupported_type": "Este tipo de archivo no se puede leer; solo páginas web, texto y PDF.",
     "too_large": "El documento es demasiado grande para leerlo."
+  },
+  "template": {
+    "import_too_large": "El archivo es demasiado grande. Una plantilla de agente puede tener como máximo {{limit}} MB.",
+    "import_invalid": "El archivo no es una plantilla de agente exportada o está dañado. No se ha importado nada.",
+    "service_missing": "La plantilla necesita una conexión «{{service}}». Configúrala en Herramientas → Conexiones y elígela en el agente."
   }
 }

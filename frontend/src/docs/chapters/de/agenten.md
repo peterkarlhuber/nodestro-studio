@@ -255,6 +255,20 @@ Auf der Seite **Agentenbibliothek** verwaltest du wiederverwendbare Agenten-Vorl
 
 Ein Agent aus einer Vorlage ist eine **Kopie**: Spätere Änderungen an der Vorlage wirken nicht auf bereits eingefügte Agenten.
 
+## Mitgelieferte Agenten {#mitgelieferte-agenten}
+<!-- keywords: mitgeliefert, fertige agenten, galerie, recherche, zusammenfassung, übernehmen -->
+
+Unter **Mitgelieferte Agenten** findest du fertige Einzelagenten, etwa für Webrecherche, Zusammenfassungen, Dokumentanalyse, Textüberarbeitung und Datenanalyse. Ein Klick zeigt, wofür der Agent gedacht ist, Beispielanfragen und was er braucht: die Modellstufe, seine Tools und ob er ohne Internet arbeitet.
+
+**Als eigene Vorlage übernehmen** legt eine Kopie in deiner Bibliothek an. Braucht der Agent eine Suchverbindung, wählst du sie dabei aus oder richtest sie ein; es gibt keinen voreingestellten Suchanbieter. Die Kopie gehört dir: Du kannst sie frei ändern, und eine neuere Nodestro-Version ändert sie nie. Das Abzeichen **Aus der Bibliothek** nennt die Version, aus der sie stammt.
+
+## Versionen, Export und Import {#versionen}
+<!-- keywords: version, verlauf, vergleichen, wiederherstellen, export, import, datei, teilen -->
+
+Jedes Speichern, das eine Vorlage ändert, legt eine neue **Version** an; ältere Versionen bleiben unverändert erhalten. Unter **Herkunft und Versionen** im Formular siehst du alle Versionen. **Vergleichen** zeigt die Felder, in denen sich eine Version vom Formular unterscheidet, und **In das Formular übernehmen** lädt sie zum Weiterarbeiten; erst beim Speichern entsteht daraus eine neue Version.
+
+**Vorlage exportieren** speichert die Vorlage als Datei, die du weitergeben kannst. Die Datei enthält keine Geheimnisse, keine Dienstverbindungen, keine Wissensdateien und keine Freigaberegeln für Tools. **Vorlage importieren** legt aus einer solchen Datei eine neue Vorlage an. Eine importierte Datei gilt als fremder Inhalt: Freigaberegeln werden auf die Standardwerte zurückgesetzt, Verbindungen und Wissensdateien entfernt, und Nodestro nennt dir, was die Vorlage hier noch braucht.
+
 ## Agent testen {#agent-testen}
 <!-- keywords: testen, test, ausprobieren, agent testen, probelauf, einzeln ausführen -->
 

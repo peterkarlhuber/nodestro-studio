@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### NAL-B1: agent templates with versions, the shipped agents, export and import (2026-11-14)
+
+- Agents page: **Shipped agents** lists the agent templates of nodestro-examples (web research, summary, document
+  analysis, text editing, data analysis) with help, example requests and needs; **Use as my template** copies one,
+  choosing a search connection where the agent needs one (no preset provider, E-3).
+- **Origin and versions** in the template form: an origin badge (own, from the library with its version, imported),
+  every saved version, **Compare** against the form and **Load into the form** (saving makes a new version).
+- **Export template** and **Import template** (`nodestro-agent/1`); the import reports what it left out for safety
+  (tool approval rules, service connections, knowledge files) and what the template still needs.
+- Lock (CI-only until the components merge): nodestro-examples `a1b6e1c` (examples #103, five agent templates),
+  nodestro-api `bab1410` (template versions, check, export, import, agent library), nodestro-sdk `243608d`.
+- Texts in six languages, error texts for `template.import_too_large`, `template.import_invalid` and
+  `template.service_missing`, and the help sections `agenten#mitgelieferte-agenten` and `agenten#versionen`.
 ### Orkexa core may require Tabrion, E-ORK-CORE (2026-11-14)
 
 - `platform/dependency-policy.json`: the edge orkexa -> `tabrion` (required, core) moves from `pending:E-ORK-CORE` to

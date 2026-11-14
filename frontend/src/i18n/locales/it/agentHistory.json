@@ -1,0 +1,41 @@
+{
+  "title": "Origine e versioni",
+  "count_one": "{{count}} versione",
+  "count_other": "{{count}} versioni",
+  "origin": {
+    "user": "Modello proprio",
+    "builtin": "Dalla libreria ({{version}})",
+    "import": "Importato"
+  },
+  "version": "Versione {{version}}",
+  "current": "Attuale",
+  "compare": "Confronta",
+  "compareTitle": "Confronta la versione {{version}} con il modulo",
+  "same": "Questa versione non differisce dal modulo.",
+  "field": "Campo",
+  "form": "Modulo",
+  "fields": {
+    "name": "Nome",
+    "description": "Descrizione",
+    "model": "Modello",
+    "system_prompt": "Prompt di sistema",
+    "task_template": "Compito",
+    "tools": "Strumenti",
+    "output": "Output",
+    "quality": "Controllo qualità"
+  },
+  "restore": "Carica nel modulo",
+  "restoreHint": "La versione viene caricata nel modulo. Diventa una nuova versione solo al salvataggio; nessuna versione va persa.",
+  "export": "Esporta modello",
+  "import": "Importa modello",
+  "importNotJson": "Il file non è un JSON valido.",
+  "imported": "«{{name}}» importato",
+  "importedRemoved": "«{{name}}» importato. Non adottato per sicurezza: {{removed}}",
+  "importNeeds_one": "Il modello ha ancora bisogno di una cosa qui. Aprilo per vedere l’indicazione.",
+  "importNeeds_other": "Il modello ha ancora bisogno di {{count}} cose qui. Aprilo per vedere le indicazioni.",
+  "removed": {
+    "tool_policies": "regole di approvazione degli strumenti",
+    "connections": "connessioni di servizio",
+    "knowledge": "file di conoscenza"
+  }
+}

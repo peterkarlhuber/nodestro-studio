@@ -1157,5 +1157,10 @@
   "fetch": {
     "unsupported_type": "Diese Art von Datei kann nicht gelesen werden; nur Webseiten, Text und PDF.",
     "too_large": "Das Dokument ist zu groß zum Lesen."
+  },
+  "template": {
+    "import_too_large": "Die Datei ist zu groß. Eine Agentenvorlage darf höchstens {{limit}} MB haben.",
+    "import_invalid": "Die Datei ist keine exportierte Agentenvorlage oder ist beschädigt. Es wurde nichts importiert.",
+    "service_missing": "Die Vorlage braucht eine Verbindung vom Typ „{{service}}“. Richte sie unter Tools → Verbindungen ein und wähle sie im Agenten."
   }
 }
