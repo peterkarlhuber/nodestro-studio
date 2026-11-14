@@ -16,6 +16,26 @@
   (isolating sandbox, a person approves); tools and tool jobs from a skill script show their origin.
 - Help: five new sections in the skills chapter in all six languages.
 
+### pip floor 26.1 for Nodestro (2026-11-14)
+
+- Owner decision 2026-11-14: pip 26.1 or later is binding for every Nodestro install path (docs/PLATFORM.md,
+  "pip floor"). `scripts/pip_cutoff.py` now refuses pip older than 26.1 (was 26.0) with the pip found, the floor and
+  `python -m pip install "pip>=26.1"`; the platform workflow, the server image and the desktop backend build fail
+  there before pip runs. New `--pip-only` for manual installs; `make install` and the README run it first.
+  axentra and orkexa keep pip 25.0 (tabrion-compat cells a and c).
+
+### Dependency confusion: the poisoned release inside the consumers' range, TABRION DC-NS-2 follow-up (2026-11-14)
+
+- `scripts/check_tabrion_source.py`: the poisoned `tabrion` is now 0.2.99 (`POISON_VERSION`, was 0.1.0). Since the
+  Tabrion 0.2.1 switch every consumer requires `tabrion>=0.2,<0.3`, so 0.1.0 was outside the range: a misconfigured
+  install still asked the index (RED through the zero-request assertion) but never took the poisoned release. 0.2.99
+  is inside the range and above the locked 0.2.1, so an install by range picks it, as documented. New SHA-256
+  `f1edfc71b5da4986547abe0824833fb73bba532cb5e6a00e202c9ff317747456`; the copies in nodestro-runtime, axentra, orkexa
+  and tabrion-studio follow.
+- `tests/test_check_tabrion_source.py`: `POISON_VERSION` must have the major.minor of the tabrion in
+  `platform/versions.json` and be greater than it, so a tabrion 0.3 lock forces a new value; the range-install case
+  derives `>=M.N,<M.(N+1)` from the lock instead of naming `>=0.1,<0.2`.
+
 ### QA-19/QA-20: Tabrion compatibility workflow (2026-11-14)
 
 - New workflow `.github/workflows/tabrion-compat.yml` (`workflow_dispatch` only, with a Tabrion ref; report

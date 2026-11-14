@@ -33,9 +33,15 @@ import check_tabrion_source as cts
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "check_tabrion_source.py"
-#: SHA-256 of the canonical script. The consumers' copies (nodestro-runtime, nodestro-api, orkexa) pin the same
-#: hash, so a change here means new copies there (see the script's docstring).
-SCRIPT_SHA256 = "8496bd63327dbee897966bd9d99296d479e2c1c0c55baa9018ee8dba50ab177f"
+#: SHA-256 of the canonical script. The consumers' copies (nodestro-runtime, axentra, orkexa, tabrion-studio) pin
+#: the same hash, so a change here means new copies there (see the script's docstring).
+SCRIPT_SHA256 = "f1edfc71b5da4986547abe0824833fb73bba532cb5e6a00e202c9ff317747456"
+#: The tabrion of the lock and the range every consumer requires (the same minor, RC-1).
+VERSIONS = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
+LOCKED = VERSIONS["components"]["tabrion"]["version"]
+MAJOR, MINOR = (int(part) for part in LOCKED.split(".")[:2])
+RANGE = f"tabrion>={MAJOR}.{MINOR},<{MAJOR}.{MINOR + 1}"
+POISON = cts.POISON_VERSION
 SHA = "d5821faa8742dea012abda3b663549c038d76543"
 URL = "https://github.com/peterkarlhuber/tabrion.git"
 LOCK = f"""# a lock
@@ -50,6 +56,16 @@ needs_pip = pytest.mark.skipif(
 
 def test_the_script_is_the_canonical_copy() -> None:
     assert hashlib.sha256(SCRIPT.read_bytes()).hexdigest() == SCRIPT_SHA256
+
+
+def test_the_poisoned_version_is_inside_the_consumers_range_and_above_the_lock() -> None:
+    """An install by range must pick the poisoned release over the real one: a new tabrion minor needs a new value."""
+
+    def release(version: str) -> tuple[int, ...]:
+        return tuple(int(part) for part in version.split("."))
+
+    assert release(POISON)[:2] == (MAJOR, MINOR), f"POISON_VERSION {POISON} is outside {RANGE}"
+    assert release(POISON) > release(LOCKED), f"POISON_VERSION {POISON} is not above the locked {LOCKED}"
 
 
 def test_the_pins_come_from_name_at_git_url_at_full_commit_lines() -> None:
@@ -89,19 +105,19 @@ def test_the_pinned_commit_passes_in_any_url_spelling(url: str) -> None:
 def test_the_poisoned_wheel_is_valid_and_runs_code_at_startup(tmp_path: Path) -> None:
     marker = tmp_path / "marker"
     wheel = cts.build_wheel("tabrion-studio", marker, tmp_path, cts.Pin(URL, SHA))
-    assert wheel.name == "tabrion_studio-0.1.0-py3-none-any.whl"
+    assert wheel.name == f"tabrion_studio-{POISON}-py3-none-any.whl"
     with zipfile.ZipFile(wheel) as archive:
-        record = archive.read("tabrion_studio-0.1.0.dist-info/RECORD").decode().splitlines()
+        record = archive.read(f"tabrion_studio-{POISON}.dist-info/RECORD").decode().splitlines()
         for line in record:
             path, digest, _size = line.split(",")
             if digest:
                 data = archive.read(path)
                 expected = base64.urlsafe_b64encode(hashlib.sha256(data).digest()).rstrip(b"=").decode()
                 assert digest == f"sha256={expected}", path
-        metadata = archive.read("tabrion_studio-0.1.0.dist-info/METADATA").decode()
-        forged = json.loads(archive.read("tabrion_studio-0.1.0.dist-info/direct_url.json"))
+        metadata = archive.read(f"tabrion_studio-{POISON}.dist-info/METADATA").decode()
+        forged = json.loads(archive.read(f"tabrion_studio-{POISON}.dist-info/direct_url.json"))
         pth = archive.read("tabrion_studio_poison.pth").decode()
-    assert "Version: 0.1.0" in metadata
+    assert f"Version: {POISON}" in metadata
     assert forged == {"url": URL, "vcs_info": {"vcs": "git", "commit_id": SHA}}  # what pip writes for the pin
     assert "Provides-Extra: testing" in metadata
     assert pth.startswith("import ")
@@ -116,7 +132,7 @@ def test_the_poisoned_sdist_writes_the_marker_when_built(tmp_path: Path) -> None
     sdist = cts.build_sdist("tabrion", marker, tmp_path)
     with tarfile.open(sdist) as archive:
         archive.extractall(tmp_path / "src", filter="data")
-    tree = tmp_path / "src" / "tabrion-0.1.0"
+    tree = tmp_path / "src" / f"tabrion-{POISON}"
     assert 'build-backend = "poison_backend"' in (tree / "pyproject.toml").read_text(encoding="utf-8")
     code = "import poison_backend; poison_backend.build_wheel('.')"
     result = subprocess.run([sys.executable, "-c", code], cwd=tree, capture_output=True, text=True, check=False)
@@ -148,8 +164,8 @@ def test_the_index_serves_and_logs_the_poisoned_name_and_redirects_every_other(t
     with cts.PoisonedIndex(files, "https://upstream.invalid/simple/") as index:
         status, body, _ = get(f"{index.url}/Tabrion/")
         assert status == 200
-        assert b"tabrion-0.1.0-py3-none-any.whl#sha256=" in body
-        assert b"tabrion-0.1.0.tar.gz#sha256=" in body
+        assert f"tabrion-{POISON}-py3-none-any.whl#sha256=".encode() in body
+        assert f"tabrion-{POISON}.tar.gz#sha256=".encode() in body
         status, body, content_type = get(f"{index.url}/tabrion/", "application/vnd.pypi.simple.v1+json")
         assert content_type == "application/vnd.pypi.simple.v1+json"
         page = json.loads(body)
@@ -159,7 +175,7 @@ def test_the_index_serves_and_logs_the_poisoned_name_and_redirects_every_other(t
         assert index.hits == [
             "GET /simple/Tabrion/",
             "GET /simple/tabrion/",
-            "GET /files/tabrion-0.1.0-py3-none-any.whl",
+            f"GET /files/tabrion-{POISON}-py3-none-any.whl",
         ]
         index.reset()
         assert get(f"{index.url}/Pytest_Asyncio/") == (302, b"", "https://upstream.invalid/simple/Pytest_Asyncio/")
@@ -193,14 +209,12 @@ def pip_target(target: Path, *args: str) -> list[str]:
 @needs_pip
 def test_an_install_by_range_takes_the_forged_wheel_and_only_the_zero_request_assertion_is_red(tmp_path: Path) -> None:
     target = tmp_path / "site"
-    result = cli(
-        "--lock", str(lock_file(tmp_path)), "--path", str(target), "--", *pip_target(target, "tabrion>=0.1,<0.2")
-    )
+    result = cli("--lock", str(lock_file(tmp_path)), "--path", str(target), "--", *pip_target(target, RANGE))
     assert result.returncode == 1, result.stdout
     out = result.stdout
-    assert "check_tabrion_source: ok   control: pip install --dry-run tabrion chooses the poisoned 0.1.0" in out
+    assert f"check_tabrion_source: ok   control: pip install --dry-run tabrion chooses the poisoned {POISON}" in out
     # pip kept the wheel's forged direct_url.json: the origin check passes, it is detection, not proof.
-    assert f"check_tabrion_source: ok   tabrion 0.1.0: direct_url.json names {URL}@{SHA[:12]}" in out
+    assert f"check_tabrion_source: ok   tabrion {POISON}: direct_url.json names {URL}@{SHA[:12]}" in out
     assert "check_tabrion_source: FAIL the index was asked for a poisoned name: GET /simple/tabrion/" in out
     assert out.splitlines()[-1] == "check_tabrion_source: RED (2 problem(s))"  # the page and the wheel
 
@@ -216,28 +230,28 @@ def test_building_the_poisoned_sdist_leaves_the_marker_and_is_red(tmp_path: Path
 
 
 def benign_tabrion_repository(tmp_path: Path) -> tuple[Path, str]:
-    """A git repository whose in-tree backend 'builds' a benign tabrion 0.1.0 wheel (no network, no build deps)."""
+    """A git repository whose in-tree backend 'builds' a benign tabrion wheel (no network, no build deps)."""
     repo = tmp_path / "tabrion-repo"
     repo.mkdir()
     wheel_dir = tmp_path / "benign"
     wheel_dir.mkdir()
     built = cts.build_wheel("tabrion", tmp_path / "unused", wheel_dir)
-    benign = repo / "tabrion-0.1.0-py3-none-any.whl"
+    benign = repo / f"tabrion-{POISON}-py3-none-any.whl"
     with zipfile.ZipFile(built) as source, zipfile.ZipFile(benign, "w") as wheel:
         for item in source.namelist():
             if item.endswith(".pth") or item.endswith("RECORD"):
                 continue
             data = b"POISONED = False\n" if item.endswith("__init__.py") else source.read(item)
             wheel.writestr(item, data)
-        wheel.writestr("tabrion-0.1.0.dist-info/RECORD", "")
+        wheel.writestr(f"tabrion-{POISON}.dist-info/RECORD", "")
     (repo / "pyproject.toml").write_text(
         '[build-system]\nrequires = []\nbuild-backend = "backend"\nbackend-path = ["."]\n', encoding="utf-8"
     )
     (repo / "backend.py").write_text(
         "import pathlib, shutil\n"
         "def build_wheel(wheel_directory, config_settings=None, metadata_directory=None):\n"
-        "    shutil.copy(pathlib.Path(__file__).with_name('tabrion-0.1.0-py3-none-any.whl'), wheel_directory)\n"
-        "    return 'tabrion-0.1.0-py3-none-any.whl'\n",
+        f"    shutil.copy(pathlib.Path(__file__).with_name('tabrion-{POISON}-py3-none-any.whl'), wheel_directory)\n"
+        f"    return 'tabrion-{POISON}-py3-none-any.whl'\n",
         encoding="utf-8",
     )
 
@@ -299,7 +313,7 @@ def test_an_install_from_the_pinned_commit_never_asks_the_index_for_it_and_is_gr
         result.stdout
     )
     assert "check_tabrion_source: ok   no request for tabrion reached the index (1 other request(s))" in result.stdout
-    assert f"ok   tabrion 0.1.0: direct_url.json names {repo.as_uri()}@{commit[:12]}" in result.stdout
+    assert f"ok   tabrion {POISON}: direct_url.json names {repo.as_uri()}@{commit[:12]}" in result.stdout
     assert result.stdout.splitlines()[-1] == "check_tabrion_source: GREEN (0 problem(s))"
 
 

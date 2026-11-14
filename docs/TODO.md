@@ -132,6 +132,10 @@ from #121). Both have status `Needs external review`.
   tabrion-studio DC-TS-1)
   update their pinned origin commit to the merged one. Residual risk (a foreign `tabrion` on PyPI reaches only a bare
   install by hand): Tabrion migration inventory DC1 section 6.
+- **Follow-up (done, [#198](https://github.com/peterkarlhuber/nodestro-studio/pull/198)):** the poisoned release is
+  0.2.99 (was 0.1.0, outside every consumer's `>=0.2,<0.3` since the Tabrion 0.2.1 switch), so an install by range
+  picks it; a test ties `POISON_VERSION` to the locked tabrion's minor (and above it). The copies in
+  nodestro-runtime, axentra, orkexa and tabrion-studio follow with the new SHA-256.
 
 ### ST-053 · ESLint 10 waits for the React Compiler rules of eslint-plugin-react-hooks 7
 
