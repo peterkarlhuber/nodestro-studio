@@ -11,8 +11,8 @@
   every saved version, **Compare** against the form and **Load into the form** (saving makes a new version).
 - **Export template** and **Import template** (`nodestro-agent/1`); the import reports what it left out for safety
   (tool approval rules, service connections, knowledge files) and what the template still needs.
-- Lock (CI-only until the components merge): nodestro-examples `a1b6e1c` (examples #103, five agent templates),
-  nodestro-api `bab1410` (template versions, check, export, import, agent library), nodestro-sdk `243608d`.
+- Lock: nodestro-examples `aa3d464` (examples #103, five agent templates), nodestro-api `bbe9e2a` (api #137, template
+  versions, check, export, import, agent library), nodestro-sdk `2601056` (sdk #121); runtime `f04e212` holds #175.
 - Texts in six languages, error texts for `template.import_too_large`, `template.import_invalid` and
   `template.service_missing`, and the help sections `agenten#mitgelieferte-agenten` and `agenten#versionen`.
 ### Orkexa core may require Tabrion, E-ORK-CORE (2026-11-14)
