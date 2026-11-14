@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### QA-19/QA-20: Tabrion compatibility workflow (2026-11-14)
+
+- New workflow `.github/workflows/tabrion-compat.yml` (nightly and `workflow_dispatch` with a Tabrion ref; report
+  only, not a required check). QA-20: Axentra, Orkexa[postgres], the Nodestro runtime core and the Nodestro server
+  (nodestro-api[server] + nodestro-runtime[postgres]) run their own test suites with PostgreSQL 17 against Tabrion
+  master, resolved to one commit per run; only the lock's `tabrion` line changes. A red run blocks a Tabrion tag of
+  that commit (a release-flow rule, no automation). QA-19: the locked Tabrion in fresh environments (orkexa[postgres]
+  standalone, nodestro-api[server] through the lock, axentra + orkexa together) with pip 25.0 and the latest pip, and
+  negative resolution cases with local wheels only (two Tabrion pins, 0.2.2.dev0 and 0.3.0a1 against
+  `>=0.2,<0.3`). Helpers and tests: `scripts/tabrion_compat.py`, `tests/test_tabrion_compat.py`.
+- Deviations (docs/testing/tabrion-compat.md): the Nodestro cells run the latest pip only (pip >= 26.1 floor); since
+  pip 26.0 a pre-release-only index satisfies the final range unless `--only-final tabrion` is given, which the
+  workflow asserts instead of a refusal.
+
 ### TABRION 0.2.1 switch (2026-11-14)
 
 - The lock moves tabrion to the final 0.2.1 (`af0458d`), together with axentra, orkexa, nodestro-runtime and
