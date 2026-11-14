@@ -261,12 +261,12 @@ The package is built in the background; the dialog shows the progress and lets y
 The package never contains keys. On the target computer, the operator enters the keys of the AI providers on the settings page of the web interface or with `start.sh configure` (Windows: `start.cmd configure`); they stay on that computer. Clients use API keys created with `start.sh keys new`. By default the application only answers on this computer; for the network it needs TLS or a reverse proxy. The README in the package explains start, stop, settings and troubleshooting. Packages are not signed: macOS and Windows ask once before the first start.
 
 ## The Orkexa library {#orkexa}
-<!-- keywords: orkexa, library, repository, license, mit, vendor, include, git, access -->
+<!-- keywords: orkexa, library, repository, license, levuvo, vendor, include, git, access -->
 
-Nodestro runs agents with the **Orkexa** library, which talks to all supported providers. It is not on PyPI; its source is in a public repository on GitHub, under the MIT license. The export therefore offers two ways:
+Nodestro runs agents with the **Orkexa** library, which talks to all supported providers. It is not on PyPI; its source is in a public repository on GitHub, under Levuvo's proprietary license. The export therefore offers two ways:
 
 - **Git reference** (default): `pyproject.toml` points to the exact commit. Installing the project downloads the library from GitHub, so it needs access to github.com.
-- **Include source:** the source goes to `vendor/orkexa/` and the project installs without access to the repository. The library is under the MIT license. Confirm that you may pass it on before giving this project to others.
+- **Include source:** the source goes to `vendor/orkexa/` and the project installs without access to the repository. The library is under Levuvo's proprietary license. Confirm that you may pass it on before giving this project to others.
 
 Without one of the two the project cannot be installed. The README names the chosen way.
 
