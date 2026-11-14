@@ -261,12 +261,12 @@ Le paquet est généré en arrière-plan ; la boîte de dialogue affiche la prog
 Le paquet ne contient jamais de clés. Sur l’ordinateur cible, l’exploitant saisit les clés des fournisseurs d’IA sur la page des réglages de l’interface web ou avec `start.sh configure` (Windows: `start.cmd configure`) ; elles restent sur cet ordinateur. Les clients utilisent des clés d’API créées avec `start.sh keys new`. Par défaut, l’application ne répond que sur cet ordinateur ; pour le réseau, il lui faut TLS ou un proxy inverse. Le README du paquet explique le démarrage, l’arrêt, les réglages et le dépannage. Les paquets ne sont pas signés : macOS et Windows demandent une fois avant le premier démarrage.
 
 ## La bibliothèque Orkexa {#orkexa}
-<!-- keywords: orkexa, bibliothèque, dépôt, licence, mit, vendor, inclure, git, accès -->
+<!-- keywords: orkexa, bibliothèque, dépôt, licence, levuvo, vendor, inclure, git, accès -->
 
-Nodestro exécute les agents avec la bibliothèque **Orkexa**, qui dialogue avec tous les fournisseurs pris en charge. Elle n’est pas sur PyPI ; son code source se trouve dans un dépôt public sur GitHub, sous licence MIT. L’export propose donc deux voies :
+Nodestro exécute les agents avec la bibliothèque **Orkexa**, qui dialogue avec tous les fournisseurs pris en charge. Elle n’est pas sur PyPI ; son code source se trouve dans un dépôt public sur GitHub, sous la licence propriétaire de Levuvo. L’export propose donc deux voies :
 
 - **Référence Git** (par défaut) : `pyproject.toml` pointe vers le commit exact. L’installation du projet télécharge la bibliothèque depuis GitHub ; elle nécessite donc un accès à github.com.
-- **Inclure le code source :** le code va dans `vendor/orkexa/` et le projet s’installe sans accès au dépôt. La bibliothèque est sous licence MIT. Confirmez que vous pouvez la transmettre avant de donner ce projet à d’autres.
+- **Inclure le code source :** le code va dans `vendor/orkexa/` et le projet s’installe sans accès au dépôt. La bibliothèque est sous la licence propriétaire de Levuvo. Confirmez que vous pouvez la transmettre avant de donner ce projet à d’autres.
 
 Sans l’une des deux, le projet ne peut pas être installé. Le README indique la voie choisie.
 

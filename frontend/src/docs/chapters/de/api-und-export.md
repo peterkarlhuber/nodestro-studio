@@ -261,12 +261,12 @@ Das Paket wird im Hintergrund gebaut; der Dialog zeigt den Fortschritt und läss
 Das Paket enthält nie Schlüssel. Auf dem Zielrechner trägt der Betreiber die Schlüssel der KI-Anbieter auf der Einstellungsseite der Weboberfläche oder mit `start.sh configure` (Windows: `start.cmd configure`) ein; sie bleiben auf diesem Rechner. Clients nutzen API-Schlüssel, die `start.sh keys new` erzeugt. Standardmäßig antwortet die Anwendung nur auf diesem Rechner; fürs Netzwerk braucht sie TLS oder einen Reverse-Proxy. Die README im Paket erklärt Start, Stopp, Einstellungen und Fehlerbehebung. Pakete sind nicht signiert: macOS und Windows fragen vor dem ersten Start einmal nach.
 
 ## Die Bibliothek Orkexa {#orkexa}
-<!-- keywords: orkexa, bibliothek, repository, lizenz, mit, vendor, mitliefern, git, zugriff -->
+<!-- keywords: orkexa, bibliothek, repository, lizenz, levuvo, vendor, mitliefern, git, zugriff -->
 
-Nodestro führt Agenten mit der Bibliothek **Orkexa** aus, die alle unterstützten Anbieter anspricht. Sie ist nicht auf PyPI; ihr Quellcode liegt in einem öffentlichen Repository auf GitHub, unter der MIT-Lizenz. Der Export bietet deshalb zwei Wege:
+Nodestro führt Agenten mit der Bibliothek **Orkexa** aus, die alle unterstützten Anbieter anspricht. Sie ist nicht auf PyPI; ihr Quellcode liegt in einem öffentlichen Repository auf GitHub, unter der proprietären Lizenz von Levuvo. Der Export bietet deshalb zwei Wege:
 
 - **Git-Referenz** (Standard): `pyproject.toml` verweist auf den genauen Commit. Beim Installieren wird die Bibliothek von GitHub geladen; dafür ist Zugang zu github.com nötig.
-- **Quellcode beilegen:** Der Quellcode kommt nach `vendor/orkexa/` und das Projekt installiert sich ohne Zugriff auf das Repository. Die Bibliothek steht unter der MIT-Lizenz. Bestätige, dass du sie weitergeben darfst, bevor du dieses Projekt anderen gibst.
+- **Quellcode beilegen:** Der Quellcode kommt nach `vendor/orkexa/` und das Projekt installiert sich ohne Zugriff auf das Repository. Die Bibliothek steht unter der proprietären Lizenz von Levuvo. Bestätige, dass du sie weitergeben darfst, bevor du dieses Projekt anderen gibst.
 
 Ohne eines von beiden lässt sich das Projekt nicht installieren. Das README nennt den gewählten Weg.
 

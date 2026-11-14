@@ -277,7 +277,7 @@
     "validate": "Prüft die Anfrage genau wie die API. Es startet kein Lauf, nichts wird berechnet.",
     "testRun": "Startet einen echten Lauf der veröffentlichten Version über den Weg der API; er kostet wie jeder Lauf.",
     "sync": "Clients können in einer Anfrage auf das Ergebnis warten (?wait=<seconds>), bis zum Zeitlimit.",
-    "library": "Wie das exportierte Projekt Orkexa bekommt: aus dem Git-Repository oder als beigelegter Quellcode (MIT-Lizenz).",
+    "library": "Wie das exportierte Projekt Orkexa bekommt: aus dem Git-Repository oder als beigelegter Quellcode (proprietäre Lizenz von Levuvo).",
     "export": "Erzeugt das Projekt als ZIP: Runtime, Workflow-Version, Tests, Beispiele und README. Nichts wird irgendwohin gesendet.",
     "gate": "Verlangt vor jeder neuen Version ein aktuelles Testergebnis. Pflichtprüfungen blockieren immer; bei schwächeren Ergebnissen kannst du mit Begründung trotzdem veröffentlichen.",
     "gateOverride": "Die Begründung wird mit der Version und im Verlauf der API gespeichert. Pflichtprüfungen lassen sich nie übergehen.",

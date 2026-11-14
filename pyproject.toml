@@ -8,7 +8,7 @@ name = "nodestro"
 version = "0.2.0"
 description = "Nodestro Studio – a visual studio for multi-agent workflows built on Orkexa (complete local application)."
 readme = "README.md"
-license = "MIT"
+license = "LicenseRef-Proprietary"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [{ name = "Peter Karlhuber" }]
