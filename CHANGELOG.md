@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### pip floor 26.1 for Nodestro (2026-11-14)
+
+- Owner decision 2026-11-14: pip 26.1 or later is binding for every Nodestro install path (docs/PLATFORM.md,
+  "pip floor"). `scripts/pip_cutoff.py` now refuses pip older than 26.1 (was 26.0) with the pip found, the floor and
+  `python -m pip install "pip>=26.1"`; the platform workflow, the server image and the desktop backend build fail
+  there before pip runs. New `--pip-only` for manual installs; `make install` and the README run it first.
+  axentra and orkexa keep pip 25.0 (tabrion-compat cells a and c).
+
 ### Dependency confusion: the poisoned release inside the consumers' range, TABRION DC-NS-2 follow-up (2026-11-14)
 
 - `scripts/check_tabrion_source.py`: the poisoned `tabrion` is now 0.2.99 (`POISON_VERSION`, was 0.1.0). Since the
