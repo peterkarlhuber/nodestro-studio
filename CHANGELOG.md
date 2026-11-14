@@ -10,6 +10,19 @@
   `ledger_cited`, `ledger_list`, `ledger_range`).
 - nodestro-sdk `bf2aed1` (sdk #119): `discover()` and contract version negotiation for the app API (NAL-C1).
 
+### Web research example in the studio (NAL-B2, 2026-11-14)
+
+- The lock adds the web research example (nodestro-examples, example 25) and the copy route's `services`
+  (nodestro-api), with the SDK contract regenerated.
+- Copy dialog: an example whose built-in tools need a service connection shows **Services for the tools** with the
+  person's connections of that kind (nothing preselected, owner decision E-3) and **Set up search service**; the
+  choice goes into the copy as `services`, and a copy without one still works (the check names it).
+- Output format of an agent: text fields choose their web sources (**No web sources**, **Cites web sources**, **Cites
+  a source per statement [S1]**, **Source list (filled in)**, **Retrieval time (filled in)**) instead of the single
+  switch, matching the runtime's `ledger`, `ledger_cited`, `ledger_list` and `ledger_range`.
+- Help: the web search chapter describes the example and the new field sources; the example chapter is regenerated
+  (25 examples); the start chapter and the examples page no longer name a fixed number. All six languages.
+
 ### Wave W3 in the lock, TABRION PIN-W3 (2026-11-14)
 
 - The lock moves to axentra `410269c` (MIG-AXE-4/5: session settings and advisory locks through

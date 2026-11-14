@@ -80,7 +80,7 @@ The sections below name concrete adjustments for each example.
 
 <!-- examples:start -->
 
-## All 24 examples at a glance {#uebersicht}
+## All 25 examples at a glance {#uebersicht}
 
 Every example is in the gallery and has its own section below.
 
@@ -110,6 +110,7 @@ Every example is in the gallery and has its own section below.
 | 22 | Plan a club festival | Clubs and associations | 4 | parallel |
 | 23 | Develop a fundraising campaign | Non-profit organisations | 3 | branching |
 | 24 | Answer a citizen enquiry | Public institutions | 3 | sequential |
+| 25 | Web research with sources | Knowledge work – research | 2 | branching |
 
 ## 1 · Analyse machine downtime {#production-downtime}
 <!-- keywords: manufacturing and industry, downtime analyst, root-cause analyst, action planner -->
@@ -860,5 +861,31 @@ Citizen enquiries often contain several concerns and must be answered correctly,
 **Knowledge files (synthetic, created when copying):** Rules_municipality_Sampletown: Fictional rules of the municipality of Sampletown on outbuildings, development plan no. 17, street lighting, bulky waste, trees and the handling of enquiries.
 
 **Adapting it:** Replace the fictional rules in the knowledge collection with your by-laws, guidance notes and lists of responsibilities; clear headings and section numbers make the citations precise. Add letterhead and sign-off in the system prompt of the draft reply. Use batch processing to handle many enquiries at once.
+
+## 25 · Web research with sources {#web-research}
+<!-- keywords: knowledge work – research, web researcher, web researcher (thorough) -->
+
+**Field:** Knowledge work – research · **Agents:** 2 · **Pattern:** branching · **Level:** Beginner · **Building blocks:** decision, input form, result files, budget and limits
+
+Answers from a language model's memory are often outdated and cannot be checked. A web research answers a question from current pages and says for every statement where it comes from, so you can verify it.
+
+**How the agents work together:** The input form takes the question, the research depth, an optional source language and an optional time range. A decision node chooses the depth: the quick web researcher may search three times and read four pages, the thorough one eight searches and twelve pages. The researcher plans its searches, reads the most promising pages, prefers primary sources and writes findings that each cite their sources. A quality check verifies sources, independence and stated uncertainty. After the step, Nodestro fills the source list and the retrieval period from the run's source list itself.
+
+| Agent | Task | Receives |
+|---|---|---|
+| **Web researcher** | Searches the web, reads sources and answers with cited evidence (up to 3 searches and 4 page reads). (with quality check; structured output; Tools: `search_web`, `fetch_web_page`) | Thorough? |
+| **Web researcher (thorough)** | Researches like the web researcher with up to 8 searches and 12 page reads, for questions with many aspects. (with quality check; structured output; Tools: `search_web`, `fetch_web_page`) | Thorough? |
+
+**Input:** A question, or a short list of related questions; optionally the language of the sources (two-letter code such as en or de) and a time range.
+
+**Test cases:** Quick answer to the preset question; Thorough research on a disputed question; Sources in German
+
+**Result:** A short answer in Markdown, findings with source numbers such as [S1], contradictions between sources, gaps (what was not found or could not be checked), the cited sources with title, address and retrieval time, and the retrieval period, also as a Markdown file.
+
+**What is decided automatically and when a person steps in:** Automatic: the decision node reads the form field "Thorough research" and runs exactly one of the two researchers; their tool settings limit searches and page reads per run (3 and 4, or 8 and 12), and the run stops at a budget of USD 1. Every statement must cite source numbers that the tools actually returned in this run; a finding without a source or with an unknown number is sent back once and otherwise stops the step, so an invented source is never delivered. The source list and the retrieval period are not written by the model but filled from the run's source list. A quality check by a second model checks three criteria and lets the researcher revise once. No step waits for a person, and the agent has no tool that changes anything outside the run: it only searches and reads.
+
+**Why this architecture:** Research is iterative: what to search next depends on what was found, so one agent with search and page reading fits better than a fixed chain of steps or several agents, which would cost more without improving simple questions. The depth is a decision node with two configured researchers because a limit in the prompt can be ignored, while a tool limit cannot. Sources and retrieval times come from the run's source list, not from the model, because made-up references are the typical weakness of language models. The provider's own web search (a server tool) was deliberately not used: it works with one provider only and its sources cannot be checked against the run's source list.
+
+**Adapting it:** Before the first run, set up a search service under Tools → Connections and choose it for both researchers in the tool search_web; without one, the check before the start names the missing connection. Enter your question and tick "Thorough research" for questions with many aspects or disputed facts. To allow more or fewer searches, change the tool settings of the two researchers; to restrict the research to certain websites, set allowed or blocked hosts there.
 
 <!-- examples:end -->

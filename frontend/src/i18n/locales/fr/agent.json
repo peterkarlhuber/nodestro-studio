@@ -215,7 +215,15 @@
       "duplicate": "Ce nom apparaît plusieurs fois."
     },
     "fromTool": "Issu d’un outil",
-    "fromSources": "Cite des sources web"
+    "sources": {
+      "label": "Sources web pour « {{name}} »",
+      "model": "Sans sources web",
+      "tool": "Issu d’un outil",
+      "ledger": "Cite des sources web",
+      "ledger_cited": "Source pour chaque affirmation [S1]",
+      "ledger_list": "Liste des sources (automatique)",
+      "ledger_range": "Période de consultation (automatique)"
+    }
   },
   "thinking": {
     "title": "Réflexion et effort",

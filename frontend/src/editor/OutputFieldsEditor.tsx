@@ -2,11 +2,14 @@ import type { TFunction } from "i18next";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-import type { OutputField, OutputFieldType } from "../api/types";
+import type { OutputField, OutputFieldSource, OutputFieldType } from "../api/types";
 import { HelpTip, Tooltip } from "../components/Tooltip";
 import { Button, IconButton, Select, TextInput } from "../components/ui";
 import { helpEntry } from "../lib/help";
 import { fieldNameProblem } from "../lib/validation";
+
+/** How a text field relates to the run's source ledger (NAL-A2, NAL-B2); the runtime checks or fills it. */
+const LEDGER_SOURCES: OutputFieldSource[] = ["ledger", "ledger_cited", "ledger_list", "ledger_range"];
 
 const FIELD_TYPES: OutputFieldType[] = ["string", "number", "integer", "boolean", "string_list", "number_list"];
 
@@ -121,13 +124,16 @@ export function OutputFieldsEditor({
                 </Tooltip>
               ) : null}
               {checkable && (field.type === "string" || field.type === "string_list") ? (
-                <label className="checkbox output-field__source">
-                  <input
-                    type="checkbox"
-                    checked={field.source === "ledger"}
-                    onChange={(e) => setField(index, { source: e.target.checked ? "ledger" : "model" })}
+                <label className="output-field__source">
+                  <span className="sr-only">{t("agent.output.sources.label", { name: field.name })}</span>
+                  <Select
+                    value={LEDGER_SOURCES.includes(field.source ?? "model") ? (field.source ?? "model") : "model"}
+                    onChange={(value) => setField(index, { source: value as OutputFieldSource })}
+                    options={(["model", ...LEDGER_SOURCES] as OutputFieldSource[]).map((value) => ({
+                      value,
+                      label: t(`agent.output.sources.${value}`),
+                    }))}
                   />
-                  {t("agent.output.fromSources")}
                 </label>
               ) : null}
             </div>

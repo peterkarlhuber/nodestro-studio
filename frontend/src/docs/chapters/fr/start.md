@@ -45,7 +45,7 @@ Créez votre premier workflow en quelques minutes :
 5. **Observez.** La *Vue d’ensemble de l’exécution* sous le canevas montre en direct ce que l’agent écrit, quels outils il appelle, combien de tokens il consomme et ce que cela coûte.
 6. **Analysez.** **Détails** vous mène à l’exécution complète avec sa chronologie.
 
-> **Astuce :** Sous vos workflows se trouve la galerie de 24 [workflows d’exemple](/docs/beispiele) pour des tâches courantes, par exemple **Analyse financière** et **Article de blog**. L’aperçu est gratuit ; les exemples copiés sont vos propres copies, librement modifiables.
+> **Astuce :** Sous vos workflows se trouve la galerie de [workflows d’exemple](/docs/beispiele) pour des tâches courantes, par exemple **Analyse financière** et **Article de blog**. L’aperçu est gratuit ; les exemples copiés sont vos propres copies, librement modifiables.
 
 ## L’interface {#oberflaeche}
 <!-- keywords: navigation, barre latérale, menu, thème, sombre, clair, mise en page -->

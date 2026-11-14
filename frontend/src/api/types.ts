@@ -42,14 +42,19 @@ export interface MemoryConfig {
 
 export type OutputFieldType = "string" | "number" | "integer" | "boolean" | "string_list" | "number_list";
 
+export type OutputFieldSource = "model" | "tool" | "ledger" | "ledger_cited" | "ledger_list" | "ledger_range";
+
 export interface OutputField {
   name: string;
   type: OutputFieldType;
   description: string;
   required: boolean;
-  /** "tool": a key figure that is accepted only as the result of a tool call (checked by the runtime). "ledger" (a
-   * string or string_list field, NAL-A2): every value must name a web source of the run (S3 or its address). */
-  source?: "model" | "tool" | "ledger";
+  /** "tool": a key figure that is accepted only as the result of a tool call (checked by the runtime). Text fields
+   * (string, string_list) and the run's source ledger: "ledger" (NAL-A2) every value names a web source of the run
+   * (S3 or its address); "ledger_cited" (NAL-B2) every statement cites sources inline ([S1] or [S1, S3]);
+   * "ledger_list" and "ledger_range" are filled by the runtime after the step with the cited sources and when they
+   * were retrieved, never by the model. */
+  source?: OutputFieldSource;
 }
 
 export interface OutputConfig {
@@ -1798,6 +1803,8 @@ export interface ExampleDetail extends ExampleSummary {
   knowledge: ExampleKnowledge[];
   /** The copy's budget per run in US dollars, if the example sets one. */
   budget_usd: number | null;
+  /** Kinds of service connection the built-in tools need (`search`, NAL-B2); chosen when copying. Older APIs: missing. */
+  services?: string[];
 }
 
 /** POST /api/library/{id}/copy. */
@@ -1811,6 +1818,8 @@ export interface ExampleCopyRequest {
   models?: Record<string, string>;
   /** A memory space of the copy's own for its agents with persistent memory (EX-007); missing: the example's. */
   memory_space?: string;
+  /** Kind -> service connection id for the built-in tools (NAL-B2); a kind left out stays open in the copy. */
+  services?: Record<string, string>;
 }
 
 /** One agent of an example and the local model its copy would get (GET /api/library/{id}/models). */

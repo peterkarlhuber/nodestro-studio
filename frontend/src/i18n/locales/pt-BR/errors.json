@@ -12,7 +12,9 @@
     "integration_unavailable": "O servidor MCP escolhido não consegue atender esta conexão: ele precisa oferecer cada ferramenta de que o exemplo precisa, aprovada como somente leitura. Nada foi copiado.",
     "integration_unknown": "O exemplo não tem a conexão “{{integration}}”. Recarregue a página e tente de novo.",
     "tests_need_offline": "Séries de testes rodam sem uma pessoa e não podem usar ferramentas MCP. Copie o exemplo no modo offline para adotar os casos de teste.",
-    "agent_unknown": "Este exemplo não tem o agente “{{key}}”. Recarregue a página e tente de novo."
+    "agent_unknown": "Este exemplo não tem o agente “{{key}}”. Recarregue a página e tente de novo.",
+    "service_unknown": "Este exemplo não precisa de nenhuma conexão “{{service}}”. Recarregue a página e tente de novo. Nada foi copiado.",
+    "service_type": "A conexão escolhida é do tipo “{{type}}”, mas é necessário “{{service}}”. Escolha uma conexão adequada. Nada foi copiado."
   },
   "agentFailed": "O agente parou com um erro ({{type}}).",
   "file": {

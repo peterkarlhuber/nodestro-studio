@@ -215,7 +215,15 @@
       "duplicate": "Questo nome compare più volte."
     },
     "fromTool": "Da uno strumento",
-    "fromSources": "Cita fonti web"
+    "sources": {
+      "label": "Fonti web per «{{name}}»",
+      "model": "Senza fonti web",
+      "tool": "Da uno strumento",
+      "ledger": "Cita fonti web",
+      "ledger_cited": "Una fonte per ogni affermazione [S1]",
+      "ledger_list": "Elenco delle fonti (automatico)",
+      "ledger_range": "Periodo di consultazione (automatico)"
+    }
   },
   "thinking": {
     "title": "Ragionamento e impegno",

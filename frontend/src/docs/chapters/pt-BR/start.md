@@ -45,7 +45,7 @@ Crie seu primeiro fluxo de trabalho em poucos minutos:
 5. **Acompanhe.** Na *Visão geral da execução*, abaixo da tela, você vê ao vivo o que o agente escreve, quais ferramentas chama, quantos tokens usa e quanto custa.
 6. **Analise.** Em **Detalhes** você chega à execução completa com sua linha do tempo.
 
-> **Dica:** Abaixo dos seus fluxos de trabalho fica a galeria com 24 [fluxos de trabalho de exemplo](/docs/beispiele) para tarefas típicas, por exemplo **Análise financeira** e **Artigo de blog**. A prévia é gratuita; exemplos copiados são cópias suas, que você pode mudar livremente.
+> **Dica:** Abaixo dos seus fluxos de trabalho fica a galeria com [fluxos de trabalho de exemplo](/docs/beispiele) para tarefas típicas, por exemplo **Análise financeira** e **Artigo de blog**. A prévia é gratuita; exemplos copiados são cópias suas, que você pode mudar livremente.
 
 ## A interface {#oberflaeche}
 <!-- keywords: navegação, barra lateral, menu, tema, escuro, claro, layout -->
