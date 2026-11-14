@@ -44,7 +44,7 @@ def test_the_policy_holds_the_k33_edges() -> None:
     assert {
         ("axentra", "tabrion", "required", None, "active"),
         ("orkexa", "tabrion", "optional", "postgres", "active"),
-        ("orkexa", "tabrion", "required", None, "pending:E-ORK-CORE"),
+        ("orkexa", "tabrion", "required", None, "active"),  # E-ORK-CORE, TABRION MIG-ORK-3
         ("nodestro-runtime", "orkexa", "required", None, "active"),
         ("nodestro-runtime", "axentra", "optional", "postgres", "active"),
         ("nodestro-runtime", "tabrion", "optional", "postgres", "active"),
@@ -148,8 +148,17 @@ def test_policy_rules_turn_red(edge: dict[str, Any], message: str) -> None:
 
 
 def test_a_pending_edge_is_not_valid_yet() -> None:
-    errors = cdp.Policy(POLICY).check_manifest("orkexa", manifest("orkexa", ["tabrion>=0.1,<0.2"]))
-    assert len(errors) == 1 and "pending:E-ORK-CORE, not active yet" in errors[0], errors
+    data = copy.deepcopy(POLICY)
+    for edge in data["edges"]:
+        if (edge["from"], edge["to"], edge["kind"]) == ("orkexa", "tabrion", "required"):
+            edge["status"] = "pending:E-PROBE"
+    errors = cdp.Policy(data).check_manifest("orkexa", manifest("orkexa", ["tabrion>=0.1,<0.2"]))
+    assert len(errors) == 1 and "pending:E-PROBE, not active yet" in errors[0], errors
+
+
+def test_the_orkexa_core_may_require_tabrion() -> None:
+    """E-ORK-CORE (owner decision) and TABRION MIG-ORK-3: orkexa's core requires the stdlib-only tabrion."""
+    assert cdp.Policy(POLICY).check_manifest("orkexa", manifest("orkexa", ["tabrion>=0.1,<0.2"])) == []
 
 
 @pytest.mark.parametrize(

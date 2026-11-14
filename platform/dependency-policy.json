@@ -24,7 +24,7 @@
     {"from": "axentra", "to": "tabrion[testing,postgres]", "kind": "dev", "extra": "dev", "status": "active"},
 
     {"from": "orkexa", "to": "tabrion[postgres]", "kind": "optional", "extra": "postgres", "status": "active"},
-    {"from": "orkexa", "to": "tabrion", "kind": "required", "extra": null, "status": "pending:E-ORK-CORE"},
+    {"from": "orkexa", "to": "tabrion", "kind": "required", "extra": null, "status": "active"},
     {"from": "orkexa", "to": "tabrion[testing,postgres]", "kind": "dev", "extra": "dev", "status": "active"},
 
     {"from": "nodestro-runtime", "to": "orkexa[all,pdf,local,convert,web]", "kind": "required", "extra": null, "status": "active"},

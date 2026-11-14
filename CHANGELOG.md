@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Orkexa core may require Tabrion, E-ORK-CORE (2026-11-14)
+
+- `platform/dependency-policy.json`: the edge orkexa -> `tabrion` (required, core) moves from `pending:E-ORK-CORE` to
+  `active` (owner decision E-ORK-CORE; TABRION MIG-ORK-3, orkexa #97). The pending-edge test now uses a probe status.
+
 ### Lock: TABRION PIN-W4/PIN-W5, MCP guard, NAL-B2, SDK discovery (2026-11-14)
 
 - TABRION PIN-W4: runtime `52451df` (MIG-NOD-7), axentra `3868634` (MIG-AXE-2).
