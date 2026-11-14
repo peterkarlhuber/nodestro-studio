@@ -3,6 +3,6 @@
 nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@21a67b70aaa64242dfbd3425d0d2b9944dd4f974
 nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@9d3a8e0351bcb1c8f5ce345f7ffb6214295e2dad
 nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@62138e2bfcb2bcd5051e612050433649d6cd3c2a
-nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@213a6e4a0cfbeb9e0489e29380735005a4f33f55
+nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@f04e2125e69893c37e679d4bf029503f9096f697
 orkexa @ git+https://github.com/peterkarlhuber/orkexa.git@2474d12f5ccab2920fa984f66184158e0c83e0ef
 tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@d5821faa8742dea012abda3b663549c038d76543
