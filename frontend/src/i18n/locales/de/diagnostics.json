@@ -42,6 +42,16 @@
         "no_fts": "Die Wissenssuche findet dann weniger. Installiere ein Python mit vollständigem SQLite (z. B. von python.org)."
       }
     },
+    "database_permissions": {
+      "title": "Zugriffsrechte der Datenbank",
+      "ok": "Nur dein Benutzer kann auf die Datenbankdateien zugreifen.",
+      "not_private": "Andere Benutzer dieses Computers können die Datenbankdateien lesen: {{files}}.",
+      "not_repairable": "Andere Benutzer dieses Computers können auf die Datenbankdateien zugreifen, und Nodestro kann sie nicht selbst reparieren: {{files}}.",
+      "fix": {
+        "not_private": "Beschränke die Dateien auf deinen Benutzer. Nodestro startet dafür im Reparaturmodus neu und zeigt die Änderung, bevor sich etwas ändert.",
+        "not_repairable": "Repariere die Dateien von Hand (Befehl unten) und starte Nodestro dann neu."
+      }
+    },
     "data_dir": {
       "title": "Datenverzeichnis",
       "ok": "Beschreibbar: {{path}}",
@@ -136,5 +146,13 @@
         "missing": "Trage den Zugang oben unter „KI-Anbieter“ ein. Ohne ihn laufen diese Modelle nicht."
       }
     }
+  },
+  "databasePermissions": {
+    "repair": "Zugriffsrechte reparieren …",
+    "busy": "Verfügbar, sobald keine Läufe aktiv sind.",
+    "restartTitle": "Im Reparaturmodus neu starten?",
+    "restartText": "Nodestro beendet die aktuelle Sitzung und startet im Reparaturmodus neu. Dort siehst du genau, welche Dateien sich ändern, und bestätigst die Reparatur. Vorher ändert sich nichts.",
+    "restartNow": "Im Reparaturmodus neu starten",
+    "restarting": "Nodestro startet im Reparaturmodus neu …"
   }
 }

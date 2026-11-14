@@ -322,6 +322,8 @@ Die **API-Schlüssel** der KI-Anbieter werden nie ins Backup geschrieben, ebenso
 
 Die Diagnose ist kostenlos und sendet nichts ins Internet. **Verbindung testen** fragt zusätzlich beim Anbieter des Standardmodells die Modellliste ab; im Abschnitt jedes Anbieters unter [KI-Anbieter](/docs/einstellungen#anbieter) testest du ihn einzeln. Das verbraucht keine Tokens und kostet nichts. API-Schlüssel und andere Zugangsdaten werden nie angezeigt.
 
+**Zugriffsrechte der Datenbank** (Desktop-App): Dürfen andere Benutzer dieses Computers die Datenbankdateien lesen, meldet die Diagnose das und bietet **Zugriffsrechte reparieren …** an (sobald keine Läufe aktiv sind). Nodestro startet dann im Reparaturmodus neu, zeigt jede Datei mit ihren jetzigen und neuen Rechten und ändert sie erst, wenn du bestätigst; geändert werden nur die Rechte, nie der Inhalt. Dürfen andere Benutzer die Datenbank sogar ändern, öffnet Nodestro beim Start von selbst diesen Reparaturmodus und sonst nichts, bis sie repariert ist oder du sie mit dem dort angezeigten Befehl `chmod 600 …` von Hand reparierst. Symbolische Links, Dateien mit weiterem Namen (Hardlinks) und Dateien anderer Benutzer werden nie geändert.
+
 ## Installation und Start {#installation}
 <!-- keywords: installation, start, kommandozeile, cli, port, host, data-dir, no-browser, reload, python, node -->
 

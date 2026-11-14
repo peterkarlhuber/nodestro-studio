@@ -42,6 +42,16 @@
         "no_fts": "A busca no conhecimento encontrará menos. Instale um Python com SQLite completo (por exemplo, de python.org)."
       }
     },
+    "database_permissions": {
+      "title": "Permissões do banco de dados",
+      "ok": "Só o seu usuário pode acessar os arquivos do banco de dados.",
+      "not_private": "Outros usuários deste computador podem ler os arquivos do banco de dados: {{files}}.",
+      "not_repairable": "Outros usuários deste computador podem acessar os arquivos do banco de dados, e o Nodestro não consegue repará-los sozinho: {{files}}.",
+      "fix": {
+        "not_private": "Restrinja os arquivos ao seu usuário. O Nodestro reinicia no modo de reparo e mostra a alteração antes de mudar qualquer coisa.",
+        "not_repairable": "Repare os arquivos manualmente (comando abaixo) e inicie o Nodestro novamente."
+      }
+    },
     "data_dir": {
       "title": "Diretório de dados",
       "ok": "Gravável: {{path}}",
@@ -136,5 +146,13 @@
         "missing": "Informe o acesso acima em “Provedores de IA”. Sem ele esses modelos não rodam."
       }
     }
+  },
+  "databasePermissions": {
+    "repair": "Reparar permissões…",
+    "busy": "Disponível quando não houver execuções ativas.",
+    "restartTitle": "Reiniciar no modo de reparo?",
+    "restartText": "O Nodestro encerra a sessão atual e inicia novamente no modo de reparo. Lá você vê exatamente quais arquivos mudam e confirma o reparo. Nada muda antes disso.",
+    "restartNow": "Reiniciar no modo de reparo",
+    "restarting": "O Nodestro está reiniciando no modo de reparo…"
   }
 }

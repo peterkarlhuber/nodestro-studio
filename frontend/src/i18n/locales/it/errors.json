@@ -1158,6 +1158,18 @@
     "unsupported_type": "Questo tipo di file non può essere letto; solo pagine web, testo e PDF.",
     "too_large": "Il documento è troppo grande per essere letto."
   },
+  "recovery": {
+    "not_confirmed": "La riparazione non è stata confermata; non è stato modificato nulla.",
+    "plan_changed": "I file del database sono cambiati da quando sono stati mostrati; non è stato modificato nulla. Controllali di nuovo.",
+    "not_repairable": "Questi file del database non si possono riparare qui; non è stato modificato nulla.",
+    "repair_failed": "Non è stato possibile riparare i permessi del database; i permessi modificati sono stati ripristinati.",
+    "restarting": "Nodestro si sta riavviando.",
+    "busy": "Sono attive esecuzioni o altre attività. Riavvia in modalità di riparazione quando sono terminate.",
+    "unavailable": "Solo l’app desktop può riavviarsi in modalità di riparazione. Limita invece i permessi a mano.",
+    "unprotected": "La riparazione è disponibile solo nella finestra dell’app desktop. Limita invece i permessi a mano.",
+    "locked": "Nodestro si apre solo quando i permessi del database sono riparati; non è stato modificato nulla.",
+    "nothing_to_repair": "Solo il tuo utente può già accedere ai file del database; non c’è nulla da riparare."
+  },
   "template": {
     "import_too_large": "Il file è troppo grande. Un modello di agente può avere al massimo {{limit}} MB.",
     "import_invalid": "Il file non è un modello di agente esportato o è danneggiato. Non è stato importato nulla.",

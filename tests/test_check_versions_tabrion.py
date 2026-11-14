@@ -24,6 +24,8 @@ import check_versions
 
 ROOT = Path(__file__).resolve().parents[1]
 FINAL = "d5821faa8742dea012abda3b663549c038d76543"
+FINAL_0_2_0 = "52353daee6cd6e37a7efc45b74061a48beb2b280"
+CURRENT = "af0458d54467571abfc1afdd44d76e1f4d727c06"  # the locked final (TABRION 0.2.1 switch)
 OLDER = "1" * 40  # tabrion 0.1.0 is the first final; tests pretend 0.1.1 is pinned and 0.1.0 is older
 DEV = "2" * 40
 OTHER_MINOR = "3" * 40
@@ -352,9 +354,9 @@ def test_the_releases_map_is_checked(releases: dict[str, str], problem: str) -> 
 def test_versions_json_declares_the_tabrion_final() -> None:
     pinned = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
     tabrion = pinned["components"]["tabrion"]
-    assert tabrion["commit"] == FINAL and tabrion["version"] == "0.1.0"
+    assert tabrion["commit"] == CURRENT and tabrion["version"] == "0.2.1"
     assert tabrion["version_file"] == "src/tabrion/_version.py" and not tabrion.get("studio_dependency")
-    assert tabrion["releases"] == {"0.1.0": FINAL}
+    assert tabrion["releases"] == {"0.1.0": FINAL, "0.2.0": FINAL_0_2_0, "0.2.1": CURRENT}
     assert check_versions.is_final(tabrion["version"])
     assert "pinned_by" not in tabrion
 

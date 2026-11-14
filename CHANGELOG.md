@@ -2,6 +2,41 @@
 
 ## Unreleased
 
+### TABRION 0.2.1 switch (2026-11-14)
+
+- The lock moves tabrion to the final 0.2.1 (`af0458d`), together with axentra, orkexa, nodestro-runtime and
+  nodestro-api, which now require `tabrion>=0.2,<0.3`. `platform/versions.json` records the 0.2.0 and 0.2.1 release
+  commits as known finals (RC-8).
+
+### Repairing the database's permissions with the user's confirmation, TABRION MIG-NOD-9 (2026-11-14)
+
+- Recovery mode (decision E-NOD-PERM, option B): when the backend runs in recovery mode (`GET /api/health` answers
+  `"mode": "recovery"`, nodestro-api `recovery.py`), the interface shows only the repair dialog
+  (`src/recovery/RecoveryScreen.tsx`): every database file with its current and its new mode as the runtime reports
+  them (`rw-rw-r-- (0664)` -> `rw------- (0600)`), files left alone with the reason (symbolic link, hard link, another
+  owner), the manual `chmod 600 ...` command with a copy button, and the repair only after an explicit confirmation
+  (checkbox and button). Cancel and errors change nothing and keep Nodestro locked; a file that changed since the dry
+  run shows the dialog again. After the repair the backend restarts; started from a terminal, the page reloads once a
+  backend answers again.
+- Diagnosis: the check `database_permissions` (readable by other users) with **Repair permissions...** (desktop app
+  only, disabled while runs are active) that restarts into recovery mode after a confirmation; it never repairs in the
+  running studio. Texts in all six languages, a help paragraph in the settings chapter, unit tests and a browser
+  suite (`scripts/e2e.sh recovery`, `tests/e2e_recovery_server.py` stands in for the desktop shell's restarts;
+  `E2E_READY` names the path a suite's server answers when it is up).
+- Review (2026-11-14): the repair page is a page region whose heading takes the focus (no modal dialog), status
+  messages are announced (`role="status"`), and when the files cannot be checked a generic manual command is shown.
+  Files already private (repaired by hand) only restart (**Continue**); cancel in a recovery mode the diagnosis asked
+  for returns to the studio unchanged (`{"action": "return"}`), after a refused start it stays locked and names the
+  way back (repair by hand, then close and restart Nodestro). A failed repair says that nothing was changed (the
+  runtime repairs all or nothing and the API restores the changed modes), or names the files that could not be set
+  back; the new file statuses (`rolled_back`, `rollback_failed`, `restored`, `other_file_refused`) in six languages.
+  The browser suite runs in the desktop app's launch session and covers both new ways; a test checks that recovery
+  mode serves the interface and no other API route or websocket.
+- Lock (CI only, repinned to merge commits before this merges): nodestro-runtime `7099cfa` (runtime #176, branch
+  `claude/project-thread-bjlq25-nod9`) and nodestro-api at its branch `claude/project-thread-bjlq25-nod9ui`. The lock
+  keeps nodestro-examples at `b20395a`: the api branch contains NAL-B2 (api #135), which needs examples `9d3a8e0`, so
+  copying a library template answers 500 in this branch's browser suites until the lead bumps examples (studio master
+  pins api `c6b9104`, before NAL-B2, and is not affected).
 ### NAL-B1: agent templates with versions, the shipped agents, export and import (2026-11-14)
 
 - Agents page: **Shipped agents** lists the agent templates of nodestro-examples (web research, summary, document

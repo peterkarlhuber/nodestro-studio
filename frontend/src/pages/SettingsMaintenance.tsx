@@ -14,6 +14,7 @@ import { Badge, Button, Callout, Field, HelpTip, Hint, Modal, Section, Spinner, 
 import { codeSuffix } from "../lib/codes";
 import { ErrorText } from "../lib/errors";
 import { formatBytes, formatDate, formatNumber } from "../lib/format";
+import { DatabasePermissionsAction } from "../recovery/DatabasePermissionsAction";
 
 const STATUS_ICON = { ok: CheckCircle2, warning: AlertTriangle, error: XCircle };
 const STATUS_TONE = { ok: "success", warning: "warning", error: "danger" } as const;
@@ -23,6 +24,11 @@ function displayParams(params: Record<string, unknown>): Record<string, unknown>
   const result: Record<string, unknown> = { ...params };
   for (const key of ["size", "free"])
     if (typeof result[key] === "number") result[key] = formatBytes(result[key] as number);
+  // The database files of the permissions check: names with their current mode.
+  if (Array.isArray(result.files))
+    result.files = (result.files as { name?: string; old_mode?: string | null }[])
+      .map((file) => `${file.name ?? ""} (${file.old_mode ?? "?"})`)
+      .join(", ");
   return result;
 }
 
@@ -45,6 +51,7 @@ export function CheckRow({ check }: { check: DiagnosticCheck }) {
         <span>{t(`diagnostics.checks.${check.id}.${check.code}`, params)}</span>
         {reasonKey ? <span data-testid="diagnostic-reason"> {t(reasonKey)}</span> : null}
         {fix ? <div className="small diagnostic__fix">{fix}</div> : null}
+        {check.id === "database_permissions" && check.status !== "ok" ? <DatabasePermissionsAction check={check} /> : null}
         {check.status !== "ok" && check.message ? (
           <details className="small">
             <summary>{t("diagnostics.details")}</summary>
