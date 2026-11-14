@@ -249,7 +249,8 @@ branch deletion; until that is in place, see `docs/TODO.md` ST-052. The next com
    The server image build (`image/finalize.sh`) and the desktop backend build (`scripts/build_backend.sh`) run the
    same script from their studio checkout and fail on a mismatch.
 3. **Tabrion source (poisoned index):** the same install with every installer's index replaced by a poisoned one
-   that serves `tabrion` 0.1.0 (with a forged `direct_url.json` that names the locked commit) and redirects every
+   that serves `tabrion` 0.2.99 (inside every consumer's range `>=0.2,<0.3` and above the locked 0.2.1, so an
+   install by range would pick it; with a forged `direct_url.json` that names the locked commit) and redirects every
    other name to PyPI (`scripts/check_tabrion_source.py`). It fails when pip asks that index for `tabrion` at all,
    when the install never used the index, when an index option or variable would bypass it, when poisoned code ran,
    or when the installed `tabrion`'s `direct_url.json` is not the lock's (`lock_check.py --only tabrion`). Only the
