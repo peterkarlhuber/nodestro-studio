@@ -123,5 +123,9 @@
     "hint": "Every search hit and every page the agents' web tools saw in this run. A result field that cites sources names them by these ids. The titles come from the web pages.",
     "fetched": "Read",
     "search": "Hit only"
+  },
+  "skills": {
+    "title": "Skills used",
+    "version": "version {{version}}"
   }
 }

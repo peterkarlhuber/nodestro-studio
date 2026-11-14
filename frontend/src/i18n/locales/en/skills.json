@@ -1,0 +1,103 @@
+{
+  "description": "Instructions in the Agent Skills format that agents load when their task needs them. A skill never grants tools, and scripts in it are never run.",
+  "search": "Search skills",
+  "searchPlaceholder": "Search by name or description",
+  "noMatch": "No skill matches your search.",
+  "emptyTitle": "No skills yet",
+  "emptyText": "Import a skill as a ZIP file or as a single SKILL.md file. Agents then use it in a fixed version.",
+  "import": "Import skill",
+  "version": "Version {{version}}",
+  "status": {
+    "active": "Active",
+    "disabled": "Disabled",
+    "archived": "Archived"
+  },
+  "origin": {
+    "user": "Own",
+    "import": "Imported",
+    "builtin": "Shipped"
+  },
+  "scripts": "Contains scripts (never run)",
+  "severity": {
+    "error": "Error",
+    "warning": "Warning"
+  },
+  "detailTitle": "Skill details",
+  "selectHint": "Select a skill to see its instructions, files and versions and where it is used.",
+  "actions": "Skill actions",
+  "viewing": "You are looking at version {{version}}. The current version is {{latest}}.",
+  "showLatest": "Show current version",
+  "edit": "Edit SKILL.md",
+  "copy": "Copy",
+  "activate": "Activate",
+  "disable": "Disable",
+  "archive": "Archive",
+  "export": "Export ZIP",
+  "delete": "Delete skill",
+  "activated": "“{{name}}” is active again.",
+  "disabled": "“{{name}}” is disabled. Agents that use it cannot run until you activate it again.",
+  "archived": "“{{name}}” is archived.",
+  "deleted": "Skill deleted.",
+  "frontMatter": "Front matter",
+  "fields": {
+    "name": "Name",
+    "description": "Description",
+    "license": "License",
+    "compatibility": "Compatibility",
+    "allowedTools": "Allowed tools (shown only, never granted)",
+    "created": "Created"
+  },
+  "body": "Instructions",
+  "emptyBody": "This skill has no instructions.",
+  "files": "Files",
+  "fileCount_one": "{{count}} file",
+  "fileCount_other": "{{count}} files",
+  "fileScript": "Script, never run",
+  "fileNotText": "Listed only",
+  "showFile": "Show {{path}}",
+  "truncated": "The file is long: only its beginning is shown.",
+  "versions": "Versions",
+  "current": "Current",
+  "show": "Show",
+  "usage": "Used by",
+  "usageNone": "No agent uses this skill.",
+  "usageItem": "{{kind}} · agent “{{agent}}” · version {{version}}",
+  "usageKind": {
+    "workflow": "Workflow",
+    "template": "Agent template"
+  },
+  "importDialog": {
+    "title": "Import skill",
+    "securityTitle": "Skills from an unknown source",
+    "security": "Imported skills come from an unknown source. Their instructions are given to the model as untrusted content, and scripts in them are never run. Check the content before you use the skill with tools that write or change data.",
+    "choose": "Choose file",
+    "fileHint": "A ZIP file with one skill folder, or a single SKILL.md file. Nothing is stored before you confirm.",
+    "checking": "Checking the file …",
+    "report": "Validation report",
+    "errors_one": "{{count}} error prevents the import. Fix it in the file and choose it again.",
+    "errors_other": "{{count}} errors prevent the import. Fix them in the file and choose it again.",
+    "warnings_one": "{{count}} warning. The skill can be imported anyway.",
+    "warnings_other": "{{count}} warnings. The skill can be imported anyway.",
+    "valid": "No problems found.",
+    "existing": "A skill named “{{name}}” already exists (version {{version}}). The import stores this file as its next version.",
+    "submit": "Import",
+    "submitVersion": "Store as new version of {{name}}",
+    "imported": "Skill “{{name}}” imported.",
+    "importedVersion": "“{{name}}” stored as version {{version}}.",
+    "preview": "Preview"
+  },
+  "editDialog": {
+    "title": "Edit SKILL.md of {{name}}",
+    "hint": "Saving stores a new version with this SKILL.md; all other files stay as they are. The name cannot change here: copy the skill under a new name instead.",
+    "note": "Note for this version (optional)",
+    "truncated": "SKILL.md is too long to be edited here. Edit the file outside Nodestro and import it as a new version.",
+    "saved": "Saved as version {{version}}.",
+    "unchanged": "Nothing changed: it stays version {{version}}."
+  },
+  "copyDialog": {
+    "title": "Copy {{name}}",
+    "name": "Name of the copy",
+    "nameHint": "Lowercase letters, digits and single hyphens.",
+    "copied": "Copied as “{{name}}”."
+  }
+}

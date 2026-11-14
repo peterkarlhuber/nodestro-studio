@@ -19,6 +19,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Plug,
+  Puzzle,
   Rows3,
   Settings,
   Sparkles,
@@ -61,6 +62,7 @@ interface NavItem {
 const BUILD: NavItem[] = [
   { to: "/", label: "workflows", icon: Diamond, end: true },
   { to: "/agents", label: "agents", icon: Bot },
+  { to: "/skills", label: "skills", icon: Puzzle },
   { to: "/tools", label: "tools", icon: Command },
   { to: "/knowledge", label: "knowledge", icon: BookOpen },
   { to: "/memory", label: "memory", icon: Brain },

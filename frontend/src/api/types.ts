@@ -3805,6 +3805,8 @@ export interface ProviderSettingsIn {
 }
 
 export interface AgentConfig {
+  /** Skills of the agent, each in one fixed version (NAL-B3); at most 20. */
+  skills?: import("./skills").SkillBinding[];
   /** Gemini 2.5: the thinking token budget (0 turns thinking off where the model allows it); null: the model's default. */
   thinking_budget?: number | null;
 }
@@ -3885,6 +3887,8 @@ export interface ModelCapabilities {
 }
 
 export interface NodeRun {
+  /** Skills the agent loaded and their files it read in this step (NAL-B3). */
+  skills?: { skill_id: string; name: string; version: number; path: string | null }[];
   thinking_kind?: ReasoningKind | null;
   thinking_phases?: number;
   thinking_redacted?: boolean;

@@ -8,12 +8,13 @@ import type { AgentConfig, ConfigIssue } from "../api/types";
 import type { SectionStatus } from "../components/ui";
 import { defaultAgent } from "../lib/defaults";
 
-export type AgentSectionId = "tools" | "knowledge" | "memory" | "output" | "thinking" | "quality" | "advanced";
+export type AgentSectionId = "tools" | "skills" | "knowledge" | "memory" | "output" | "thinking" | "quality" | "advanced";
 
 /** The section that shows the problems of a configuration field (`ConfigIssue.field` from the runtime). */
 export const SECTION_OF_FIELD: Record<string, AgentSectionId> = {
   tools: "tools",
   server_tools: "tools",
+  skills: "skills", // skill.* problems (NAL-B3)
   knowledge: "knowledge",
   quality: "quality",
   // config.effort_adjusted / config.effort_dropped: shown at the effort field (ST-057).

@@ -9,6 +9,8 @@ La galería está en la página **Flujos de trabajo**, debajo de tus propios flu
 
 En la galería completa buscas por nombre, ámbito, descripción, bloque o nivel y filtras por categoría y por **Nivel**. Los ejemplos están ordenados por nivel, los más sencillos primero; el más sencillo lleva **Empieza aquí**. La búsqueda, los filtros y una vista previa abierta forman parte de la dirección, así que *Atrás* te lleva a la misma selección. Cada tarjeta muestra el ámbito, el nombre, la descripción, el número de agentes, el nivel y el patrón. Los ejemplos de ámbitos sensibles llevan la insignia **Requiere revisión experta**. La [búsqueda](/docs/start#suche) también encuentra ejemplos.
 
+En la parte superior de la galería completa eliges el tipo de entradas: **Ejemplos** (los flujos de este capítulo), **Bloques** (los pequeños flujos que los ejemplos usan como equipo o subflujo), **Agentes** (las plantillas de agente incluidas, ver [Agentes](/docs/agenten)) y **Skills** (instrucciones en formato Agent Skills, ver [Skills](/docs/skills)). **Adoptar como flujo** crea un bloque como flujo propio, que luego aparece como equipo en la paleta del editor; **Adoptar como skill** añade una skill al espacio de trabajo. La vista previa no cuesta nada y no guarda nada.
+
 ## Vista previa y copia {#uebernehmen}
 <!-- keywords: vista previa, copiar, copia, plantilla, sin cambios, gratis -->
 

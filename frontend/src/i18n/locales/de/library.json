@@ -205,5 +205,33 @@
     "notNow": "Später wählen",
     "setUpSearch": "Suchdienst einrichten",
     "setUp": "Verbindung einrichten"
+  },
+  "kinds": {
+    "label": "Art",
+    "examples": "Beispiele",
+    "parts": "Bausteine",
+    "agents": "Agenten",
+    "skills": "Skills",
+    "searchPlaceholder": "Name, Beschreibung oder Fähigkeit …",
+    "searchLabel": "Bibliothek durchsuchen",
+    "partsIntro": "Bausteine sind kleine Workflows, die Beispiele als Team oder Teil-Workflow nutzen. Als eigener Workflow übernommen, stehen sie in der Palette des Editors als Team bereit.",
+    "partsResults_one": "{{count}} Baustein",
+    "partsResults_other": "{{count}} Bausteine",
+    "noMatch": "Kein Eintrag passt zur Suche.",
+    "usedIn": "Genutzt in: {{names}}",
+    "useAsWorkflow": "Als Workflow übernehmen",
+    "capabilities": "Fähigkeiten",
+    "steps": "Schritte",
+    "partCopyNote": "Die Kopie ist ein eigener Workflow, den du frei bearbeiten kannst; der Baustein selbst bleibt unverändert. Bausteine, die er nutzt, werden mit übernommen.",
+    "skillsIntro": "Skills sind Anleitungen im offenen Agent-Skills-Format. Ein Agent lädt einen Skill, wenn seine Aufgabe ihn braucht. Skripte in Skills werden nie ausgeführt.",
+    "skillsResults_one": "{{count}} Skill",
+    "skillsResults_other": "{{count}} Skills",
+    "files_one": "{{count}} Datei",
+    "files_other": "{{count}} Dateien",
+    "useAsSkill": "Als Skill übernehmen",
+    "skillCopied": "Skill „{{name}}“ übernommen",
+    "instructions": "Anleitung",
+    "fileList": "Dateien",
+    "skillCopyNote": "Version {{version}}. Die Übernahme legt einen eigenen Skill an, den du Agenten zuweisen und ändern kannst; eine neuere Nodestro-Version ändert ihn nie."
   }
 }

@@ -24,11 +24,11 @@ if (shots) mkdirSync(shots, { recursive: true });
 
 const LANGUAGES = ["de", "en", "es", "fr", "pt-BR", "it"];
 const PAGES = [
-  "/", "/workflows/examples", "/workflows/examples?template=financial-analysis", "/agents", "/tools", "/tools?tab=write", "/knowledge",
+  "/", "/workflows/examples", "/workflows/examples?template=financial-analysis", "/agents", "/skills", "/tools", "/tools?tab=write", "/knowledge",
   "/memory", "/executions", "/approvals", "/batches", "/publications", "/tests", "/schedules", "/usage", "/docs", "/settings",
 ];
 // Pages named in the navigation: the browser tab names them too ("Approvals · Nodestro Studio").
-const TITLED = { "/agents": "agents", "/tools": "tools", "/knowledge": "knowledge", "/memory": "memory", "/executions": "executions",
+const TITLED = { "/agents": "agents", "/skills": "skills", "/tools": "tools", "/knowledge": "knowledge", "/memory": "memory", "/executions": "executions",
   "/approvals": "approvals", "/batches": "batches", "/publications": "publications", "/tests": "tests", "/schedules": "schedules", "/usage": "usage", "/settings": "settings" };
 const VIEWPORTS = [
   { width: 1500, height: 940 },

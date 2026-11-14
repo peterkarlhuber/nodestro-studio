@@ -123,5 +123,9 @@
     "hint": "Jeder Suchtreffer und jede Seite, die die Web-Tools der Agenten in dieser Ausführung gesehen haben. Ein Ergebnisfeld, das Quellen nennt, verweist auf diese Kennungen. Die Titel stammen von den Webseiten.",
     "fetched": "Gelesen",
     "search": "Nur Treffer"
+  },
+  "skills": {
+    "title": "Verwendete Skills",
+    "version": "Version {{version}}"
   }
 }

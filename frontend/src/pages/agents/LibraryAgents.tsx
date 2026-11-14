@@ -17,7 +17,8 @@ import { currentLanguage } from "../../i18n";
 import { ErrorText } from "../../lib/errors";
 import { ExampleServices } from "../../library/ExampleServices";
 
-export function LibraryAgents({ onCopied }: { onCopied: (template: AgentTemplate) => void }) {
+/** ``defaultOpen``: the library gallery's "Agents" filter shows the list open (NAL-B3); the agents page keeps it closed. */
+export function LibraryAgents({ onCopied, defaultOpen = false }: { onCopied: (template: AgentTemplate) => void; defaultOpen?: boolean }) {
   const { t, i18n } = useTranslation();
   const language = i18n.language || currentLanguage();
   const agents = useLibraryAgents(language);
@@ -26,6 +27,7 @@ export function LibraryAgents({ onCopied }: { onCopied: (template: AgentTemplate
   return (
     <Section
       id="library-agents"
+      defaultOpen={defaultOpen}
       title={t("agentLibrary.title")}
       icon={BookOpen}
       summary={<span className="muted small">{t("agentLibrary.count", { count: all.length })}</span>}

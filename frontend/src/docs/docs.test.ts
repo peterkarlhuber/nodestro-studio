@@ -41,7 +41,7 @@ describe("documentation content", () => {
   });
 
   it("links into the app only to its pages and settings sections (TX-11)", () => {
-    const PAGES = ["/", "/workflows/examples", "/agents", "/tools", "/knowledge", "/memory", "/executions", "/approvals", "/usage", "/publications", "/tests", "/batches", "/schedules", "/settings"];
+    const PAGES = ["/", "/workflows/examples", "/agents", "/skills", "/tools", "/knowledge", "/memory", "/executions", "/approvals", "/usage", "/publications", "/tests", "/batches", "/schedules", "/settings"];
     const links = CHAPTERS.flatMap((chapter) =>
       chapter.sections.flatMap((section) => [...section.body.matchAll(/\]\((\/(?!docs\/)[^)\s]*)\)/g)].map((match) => match[1])),
     );

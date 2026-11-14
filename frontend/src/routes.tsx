@@ -15,6 +15,7 @@ import { RunComparePage } from "./pages/RunComparePage";
 import { RunDetailPage } from "./pages/RunDetailPage";
 import { SchedulesPage } from "./pages/SchedulesPage";
 import { SettingsPage } from "./pages/SettingsPage";
+import { SkillsPage } from "./pages/SkillsPage";
 import { SuitePage, TestsPage } from "./pages/TestsPage";
 import { ToolsPage } from "./pages/ToolsPage";
 import { UsagePage } from "./pages/UsagePage";
@@ -57,6 +58,7 @@ export const routes: RouteObject[] = [
       { path: "workflows/examples", element: <ExamplesPage /> },
       { path: "workflows/:id", lazy: loadEditorPage },
       { path: "agents", element: <AgentsPage /> },
+      { path: "skills", element: <SkillsPage /> },
       { path: "tools", element: <ToolsPage /> },
       { path: "knowledge", element: <KnowledgePage /> },
       { path: "memory", element: <MemoryPage /> },

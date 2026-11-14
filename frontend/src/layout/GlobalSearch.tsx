@@ -82,6 +82,7 @@ const PAGES: { to: string; label: string; within?: string }[] = [
   { to: "/", label: "nav.workflows" },
   { to: "/workflows/examples", label: "library.title" },
   { to: "/agents", label: "nav.agents" },
+  { to: "/skills", label: "nav.skills" },
   { to: "/tools", label: "nav.tools" },
   { to: "/knowledge", label: "nav.knowledge" },
   { to: "/memory", label: "nav.memory" },

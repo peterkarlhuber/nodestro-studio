@@ -35,6 +35,7 @@ describe("texts left in English", () => {
     "intelligence", "oauth", "ollama", "orkexa", "pdf", "python", "sandbox", "sdk", "streaming", "token", "tokens", "uv",
     "version", "workflow", "workflows", "max", "ok", "orchestrator", "teams", "team", "tools", "tool", "tests", "sqlite",
     "openai", "vllm", "https", "ctrl", "esc", "amazon", "bedrock", "aws", "nova", "claude", "eu", "central", "linux", "macos", "windows",
+    "skill", "skills", // the Agent Skills format keeps its name in every language (NAL-B3)
   ];
   const ALLOWED: Record<string, string[]> = {
     de: [
@@ -360,6 +361,10 @@ describe("backend codes", () => {
     "check.ledger_source_no_tool", "check.ledger_source_type", "output.unknown_source", "connection.provider_unsupported_mode",
     "connection.endpoint_missing", "search.unavailable", "search.rate_limited", "search.auth_failed", "search.price_unknown",
     "web.address_refused", "fetch.unsupported_type", "fetch.too_large", "tool.mode_unsupported",
+    // Skills (NAL-B3): refusals of the skill API, the runtime's checks and the issues of a validation report.
+    "skill.name_taken", "skill.in_use", "skill.not_found", "skill.inactive", "skill.unavailable",
+    "skill.duplicate_name", "skill.too_large", "skill.zip_invalid", "skill.rename_unsupported", "skill.library_not_found",
+    "skill.name_invalid", "skill.secret_suspected", "skill.scripts_not_run", "skill.allowed_tools_ignored",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

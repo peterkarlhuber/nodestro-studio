@@ -205,5 +205,33 @@
     "notNow": "Choisir plus tard",
     "setUpSearch": "Configurer le service de recherche",
     "setUp": "Configurer une connexion"
+  },
+  "kinds": {
+    "label": "Type",
+    "examples": "Exemples",
+    "parts": "Briques",
+    "agents": "Agents",
+    "skills": "Skills",
+    "searchPlaceholder": "Nom, description ou capacité …",
+    "searchLabel": "Rechercher dans la bibliothèque",
+    "partsIntro": "Les briques sont de petits workflows que les exemples utilisent comme équipe ou sous-workflow. Reprises comme workflow personnel, elles sont proposées comme équipe dans la palette de l’éditeur.",
+    "partsResults_one": "{{count}} brique",
+    "partsResults_other": "{{count}} briques",
+    "noMatch": "Rien ne correspond à la recherche.",
+    "usedIn": "Utilisée dans : {{names}}",
+    "useAsWorkflow": "Reprendre comme workflow",
+    "capabilities": "Capacités",
+    "steps": "Étapes",
+    "partCopyNote": "La copie est un workflow personnel que vous pouvez modifier librement ; la brique elle-même reste inchangée. Les briques qu’elle utilise sont reprises aussi.",
+    "skillsIntro": "Les skills sont des instructions au format ouvert Agent Skills. Un agent charge une skill lorsque sa tâche en a besoin. Les scripts des skills ne sont jamais exécutés.",
+    "skillsResults_one": "{{count}} skill",
+    "skillsResults_other": "{{count}} skills",
+    "files_one": "{{count}} fichier",
+    "files_other": "{{count}} fichiers",
+    "useAsSkill": "Reprendre comme skill",
+    "skillCopied": "Skill « {{name}} » reprise",
+    "instructions": "Instructions",
+    "fileList": "Fichiers",
+    "skillCopyNote": "Version {{version}}. La reprise crée une skill personnelle que vous pouvez attribuer à des agents et modifier ; une version plus récente de Nodestro ne la modifie jamais."
   }
 }

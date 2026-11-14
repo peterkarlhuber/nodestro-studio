@@ -23,6 +23,7 @@ import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import { LocalModelSuggestion } from "./LocalModelSuggestion";
 import { TaskTemplateInput } from "./TaskTemplateInput";
+import { SkillsSection } from "./SkillsSection";
 import { ToolBindings } from "./ToolBindings";
 import { keys, useKnowledge, useMemorySpaces, useMeta, useModelOptions, useSettings, useTools } from "../api/hooks";
 import type {
@@ -90,9 +91,10 @@ const THINKING = ["", "adaptive", "between_tools", "disabled"] as const;
 const THINKING_DISPLAY = ["", "summarized", "updates", "omitted"] as const;
 
 /** The sections in the order of the form, with their titles (for the problem links at the top). */
-const SECTION_ORDER: AgentSectionId[] = ["tools", "knowledge", "memory", "output", "thinking", "quality", "advanced"];
+const SECTION_ORDER: AgentSectionId[] = ["tools", "skills", "knowledge", "memory", "output", "thinking", "quality", "advanced"];
 const SECTION_TITLE: Record<AgentSectionId, string> = {
   tools: "agent.tools.title",
+  skills: "agent.skills.title",
   knowledge: "agent.knowledge.title",
   memory: "agent.memory.title",
   output: "agent.output.title",
@@ -404,6 +406,7 @@ export function AgentForm({
       {preview}
 
       <ToolsSection agent={agent} update={update} issues={issues} ui={ui("tools")} />
+      <SkillsSection agent={agent} update={update} issues={issues} ui={ui("skills")} />
       <KnowledgeSection agent={agent} update={update} issues={issues} ui={ui("knowledge")} />
       <MemorySection agent={agent} update={update} onAssistant={() => setMemoryOpen(true)} ui={ui("memory")} />
       <OutputSection agent={agent} update={update} ui={ui("output")} />
