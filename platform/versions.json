@@ -52,7 +52,7 @@
       "studio_dependency": true
     },
     "nodestro-sdk": {
-      "commit": "897170e74e5e7801efce7f2ff634a5126252d712",
+      "commit": "08d9179b5ba6d08c0bb9a06dea6d75428b7fe335",
       "version": "0.3.0",
       "pyproject": "python/pyproject.toml"
     }
