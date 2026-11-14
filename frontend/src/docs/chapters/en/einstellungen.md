@@ -322,6 +322,8 @@ The **API keys** of the AI providers are never written into the backup, nor are 
 
 The diagnosis is free and sends nothing to the internet. **Test connection** additionally asks the provider of the default model for its list of models; in each provider's section under [AI providers](/docs/einstellungen#anbieter) you test it on its own. This uses no tokens and costs nothing. API keys and other credentials are never shown.
 
+**Database permissions** (desktop app): when other users of this computer may read the database files, the diagnosis says so and offers **Repair permissions…** (available once no runs are active). Nodestro then restarts in repair mode, shows every file with its current and its new permissions and changes them only after you confirm; only the permissions change, never the content. When other users may even change the database, Nodestro opens this repair mode by itself at start and nothing else until it is repaired or you repair it by hand with the `chmod 600 …` command shown there. Symbolic links, files with another name (hard links) and files of other users are never changed.
+
 ## Installation and start {#installation}
 <!-- keywords: installation, start, command line, cli, port, host, data-dir, no-browser, reload, python, node -->
 

@@ -10,6 +10,7 @@ import "./styles/progress.css";
 import "./styles/reasoning.css";
 import "./styles/missing-model.css";
 import "./styles/publications.css";
+import "./styles/recovery.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -17,12 +18,17 @@ import { createRoot } from "react-dom/client";
 import i18n, { initialLanguage, loadLanguage } from "./i18n";
 import { warmNumberFormats, whenIdle } from "./lib/format";
 import { App } from "./App";
+import { startMode } from "./recovery/api";
+import { RecoveryScreen } from "./recovery/RecoveryScreen";
 
-function render() {
+// The backend in recovery mode (TABRION MIG-NOD-9) offers only the repair of the database's permissions: the
+// interface shows that dialog and nothing else.
+const mode = startMode();
+
+async function render() {
+  const recovery = (await mode) === "recovery";
   createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-      <App />
-    </StrictMode>,
+    <StrictMode>{recovery ? <RecoveryScreen /> : <App />}</StrictMode>,
   );
   // The locale's number data loads in idle time, not in the first render of the editor (ST-004).
   whenIdle(warmNumberFormats);
@@ -33,5 +39,5 @@ function render() {
 // When they cannot be fetched the interface starts in English (the fallback) instead of not at all.
 loadLanguage(initialLanguage()).then(render, (error: unknown) => {
   console.error("Could not load the interface language", error);
-  render();
+  void render();
 });

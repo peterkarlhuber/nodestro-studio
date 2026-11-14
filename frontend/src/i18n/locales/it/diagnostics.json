@@ -42,6 +42,16 @@
         "no_fts": "La ricerca nella conoscenza troverà meno. Installa un Python con SQLite completo (per esempio da python.org)."
       }
     },
+    "database_permissions": {
+      "title": "Permessi del database",
+      "ok": "Solo il tuo utente può accedere ai file del database.",
+      "not_private": "Altri utenti di questo computer possono leggere i file del database: {{files}}.",
+      "not_repairable": "Altri utenti di questo computer possono accedere ai file del database e Nodestro non può ripararli da solo: {{files}}.",
+      "fix": {
+        "not_private": "Limita i file al tuo utente. Nodestro si riavvia in modalità di riparazione e mostra la modifica prima di cambiare qualcosa.",
+        "not_repairable": "Ripara i file a mano (comando qui sotto), poi avvia di nuovo Nodestro."
+      }
+    },
     "data_dir": {
       "title": "Cartella dei dati",
       "ok": "Scrivibile: {{path}}",
@@ -136,5 +146,13 @@
         "missing": "Inserisci l’accesso qui sopra in «Provider di IA». Senza di esso questi modelli non funzionano."
       }
     }
+  },
+  "databasePermissions": {
+    "repair": "Ripara i permessi…",
+    "busy": "Disponibile quando non ci sono esecuzioni attive.",
+    "restartTitle": "Riavviare in modalità di riparazione?",
+    "restartText": "Nodestro chiude la sessione corrente e si riavvia in modalità di riparazione. Lì vedi esattamente quali file cambiano e confermi la riparazione. Prima non cambia nulla.",
+    "restartNow": "Riavvia in modalità di riparazione",
+    "restarting": "Nodestro si riavvia in modalità di riparazione…"
   }
 }

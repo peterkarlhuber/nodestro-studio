@@ -42,6 +42,16 @@
         "no_fts": "La recherche dans les connaissances trouvera moins. Installez un Python avec un SQLite complet (par ex. depuis python.org)."
       }
     },
+    "database_permissions": {
+      "title": "Droits d’accès de la base de données",
+      "ok": "Seul votre utilisateur peut accéder aux fichiers de la base de données.",
+      "not_private": "D’autres utilisateurs de cet ordinateur peuvent lire les fichiers de la base de données : {{files}}.",
+      "not_repairable": "D’autres utilisateurs de cet ordinateur peuvent accéder aux fichiers de la base de données, et Nodestro ne peut pas les réparer lui-même : {{files}}.",
+      "fix": {
+        "not_private": "Réservez les fichiers à votre utilisateur. Nodestro redémarre en mode réparation et affiche la modification avant tout changement.",
+        "not_repairable": "Réparez les fichiers à la main (commande ci-dessous), puis redémarrez Nodestro."
+      }
+    },
     "data_dir": {
       "title": "Répertoire de données",
       "ok": "Modifiable : {{path}}",
@@ -136,5 +146,13 @@
         "missing": "Saisissez son accès ci-dessus sous « Fournisseurs d’IA ». Sans lui, ces modèles ne fonctionnent pas."
       }
     }
+  },
+  "databasePermissions": {
+    "repair": "Réparer les droits d’accès…",
+    "busy": "Disponible dès qu’aucune exécution n’est active.",
+    "restartTitle": "Redémarrer en mode réparation ?",
+    "restartText": "Nodestro met fin à la session en cours et redémarre en mode réparation. Vous y voyez exactement quels fichiers changent et vous confirmez la réparation. Rien ne change avant.",
+    "restartNow": "Redémarrer en mode réparation",
+    "restarting": "Nodestro redémarre en mode réparation…"
   }
 }

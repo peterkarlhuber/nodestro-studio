@@ -1158,6 +1158,18 @@
     "unsupported_type": "Diese Art von Datei kann nicht gelesen werden; nur Webseiten, Text und PDF.",
     "too_large": "Das Dokument ist zu groß zum Lesen."
   },
+  "recovery": {
+    "not_confirmed": "Die Reparatur wurde nicht bestätigt; es wurde nichts geändert.",
+    "plan_changed": "Die Datenbankdateien haben sich seit der Anzeige geändert; es wurde nichts geändert. Prüfe sie erneut.",
+    "not_repairable": "Diese Datenbankdateien können hier nicht repariert werden; es wurde nichts geändert.",
+    "repair_failed": "Die Zugriffsrechte der Datenbank konnten nicht repariert werden; die geänderten Zugriffsrechte wurden zurückgesetzt.",
+    "restarting": "Nodestro startet neu.",
+    "busy": "Läufe oder andere Arbeiten sind aktiv. Starte im Reparaturmodus neu, sobald sie beendet sind.",
+    "unavailable": "Nur die Desktop-App kann im Reparaturmodus neu starten. Beschränke die Zugriffsrechte stattdessen von Hand.",
+    "unprotected": "Die Reparatur gibt es nur im Fenster der Desktop-App. Beschränke die Zugriffsrechte stattdessen von Hand.",
+    "locked": "Nodestro öffnet sich erst, wenn die Zugriffsrechte der Datenbank repariert sind; es wurde nichts geändert.",
+    "nothing_to_repair": "Nur dein Benutzer kann bereits auf die Datenbankdateien zugreifen; es gibt nichts zu reparieren."
+  },
   "template": {
     "import_too_large": "Die Datei ist zu groß. Eine Agentenvorlage darf höchstens {{limit}} MB haben.",
     "import_invalid": "Die Datei ist keine exportierte Agentenvorlage oder ist beschädigt. Es wurde nichts importiert.",
