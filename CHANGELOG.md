@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### NAL-C4: pairing a browser with a portable package (2026-11-15)
+
+- The lock pins nodestro-api `2a0f4cf` (nodestro-api #149: pairing by a one-time code behind `NODESTRO_PAIRING`,
+  off by default; device rights; self-issued TLS certificate with fingerprint comparison; embedded nodestro-app-ui
+  `a347521`) and nodestro-sdk with the OpenAPI document of that commit.
+
 ### NAL-C3: operating portable packages (2026-11-15)
 
 - Export dialog: the choice "With the standard interface (recommended)" / "API only (for your own programs)"
