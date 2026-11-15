@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### NAL-C5: the standard interface on another origin (2026-11-15)
+
+- The lock pins nodestro-api `790271b` (nodestro-api #150: token profile, allowed origins and CORS for the standalone
+  interface behind `NODESTRO_CROSS_ORIGIN`, which needs `NODESTRO_PAIRING` too; both off by default; embedded
+  nodestro-app-ui `cf264b4`) and nodestro-sdk `758331b` (nodestro-sdk #130: `AuthMethod` gains `token`).
+
 ### NAL-C4: pairing a browser with a portable package (2026-11-15)
 
 - The lock pins nodestro-api `2a0f4cf` (nodestro-api #149: pairing by a one-time code behind `NODESTRO_PAIRING`,
