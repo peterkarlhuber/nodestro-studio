@@ -64,6 +64,9 @@ async function newPage({ theme = "light", language = "en", width = 1280, height 
   const page = await ctx.newPage();
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(`${base}/api/launch?token=${encodeURIComponent(secret)}`);
+  // The launch answer moves on to "/" by a meta refresh after it loaded: wait for that navigation, or it can
+  // interrupt the next goto ("interrupted by another navigation").
+  await page.waitForURL(`${base}/`);
   await page.goto(base + path);
   return page;
 }
