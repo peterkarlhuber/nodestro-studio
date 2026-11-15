@@ -6,7 +6,7 @@
 
 - The lock pins nodestro-api `2a0f4cf` (nodestro-api #149: pairing by a one-time code behind `NODESTRO_PAIRING`,
   off by default; device rights; self-issued TLS certificate with fingerprint comparison; embedded nodestro-app-ui
-  `a347521`) and nodestro-sdk with the OpenAPI document of that commit.
+  `a347521`) and nodestro-sdk `ddce5ef` (nodestro-sdk #129: the OpenAPI document of that commit).
 
 ### NAL-C3: operating portable packages (2026-11-15)
 
