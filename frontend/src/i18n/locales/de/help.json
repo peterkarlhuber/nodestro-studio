@@ -85,7 +85,8 @@
     "services": "Externe Dienste über MCP: Du verbindest einen Server, testest die Verbindung und gibst jedes Tool nach Prüfung einzeln frei. Ändert der Dienst ein Tool, wird es gesperrt, bis du die Änderung prüfst.",
     "callApproval": "Eine Person entscheidet über jeden Aufruf dieses Tools, mit den genauen Argumenten. Ohne Entscheidung innerhalb der Frist gilt der Aufruf als abgelehnt.",
     "servicesLocal": "Ein lokaler MCP-Server läuft in einem isolierten Container. Seine Pakete werden geprüft und freigegeben wie die Bibliotheken eines Tools.",
-    "servicesOAuth": "Manche Dienste verlangen eine Anmeldung. Nodestro öffnet ihre Anmeldeseite und bewahrt den Zugang verschlüsselt auf."
+    "servicesOAuth": "Manche Dienste verlangen eine Anmeldung. Nodestro öffnet ihre Anmeldeseite und bewahrt den Zugang verschlüsselt auf.",
+    "testSend": "Schickt eine feste Testnachricht: an die Testadresse einer Mailserver-Verbindung oder an die Adresse eines Webhooks. Du verschickst sie selbst; höchstens 5 pro Verbindung und Stunde, jede wird aufgezeichnet."
   },
   "knowledge": {
     "upload": "PDFs, Bilder (PNG, JPEG, GIF, WebP) und Textformate. Bilder bis 5 MB, Dokumente bis 20 MB. Texte und PDFs werden für die Suche indexiert.",
@@ -244,7 +245,8 @@
     "sanitize": "Ersetzt Zugangsdaten und persönliche Daten in der Datei durch Platzhalter.",
     "run": "Dateien dieses Laufs. HTML wird ohne Skripte angezeigt.",
     "formats": "Word (DOCX) und Excel (XLSX) werden beim Hochladen in Markdown umgewandelt; Formeln werden angezeigt, nie ausgeführt.",
-    "ocr": "Braucht Tesseract und pdftoppm auf diesem Computer (das Abzeichen zeigt, ob sie da sind). An: Seiten gescannter PDFs ohne Textebene werden beim Einlesen der Datei lokal erkannt, das dauert einige Sekunden pro Seite; unsichere Wörter werden markiert, damit du sie prüfen kannst. Aus: Solche Seiten liefern Agenten und der Wissenssuche keinen Text."
+    "ocr": "Braucht Tesseract und pdftoppm auf diesem Computer (das Abzeichen zeigt, ob sie da sind). An: Seiten gescannter PDFs ohne Textebene werden beim Einlesen der Datei lokal erkannt, das dauert einige Sekunden pro Seite; unsichere Wörter werden markiert, damit du sie prüfen kannst. Aus: Solche Seiten liefern Agenten und der Wissenssuche keinen Text.",
+    "drafts": "Entwürfe, die ein Agent mit „E-Mail-Entwurf“ oder „Webhook-Entwurf“ vorbereitet hat. Es wurde nichts verschickt: Lade die Datei herunter, prüfe sie und verschicke sie selbst."
   },
   "automation": {
     "batch": "Ein Workflow über viele Eingaben. Jede Zeile wird ein eigener Lauf.",

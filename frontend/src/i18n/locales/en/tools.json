@@ -376,7 +376,8 @@
       "from_address": "Sender address",
       "auth": "Sign-in method",
       "url": "Address (URL)",
-      "method": "HTTP method"
+      "method": "HTTP method",
+      "test_address": "Test address"
     },
     "check": {
       "unchecked": "Not checked",
@@ -414,7 +415,8 @@
       "deleted": "Deleted",
       "secret_set": "Secret set",
       "secret_cleared": "Secret removed",
-      "checked": "Checked"
+      "checked": "Checked",
+      "test_sent": "Test send"
     },
     "search": {
       "open": "Set up search service",
@@ -439,6 +441,9 @@
       "create": "Set up",
       "done": "Search service “{{name}}” set up.",
       "none": "No search service can be set up in this installation."
+    },
+    "fieldHint": {
+      "test_address": "Your own e-mail address. “Send test” sends a test e-mail to this address and nowhere else."
     }
   },
   "origin": {
@@ -450,6 +455,14 @@
     "notify_user": {
       "name": "Message to me",
       "description": "Sends a short message from the agent to the bell in Nodestro’s top bar: a title, the text and a level (info, success, warning or error). At most 3 messages per run, shown as plain text and marked as coming from an agent. It does not send anything outside Nodestro: no e-mail, no webhook."
+    },
+    "draft_email": {
+      "name": "E-mail draft",
+      "description": "Prepares an e-mail as a draft file (.eml) in the run's result files: recipients, subject, text, an optional HTML version and attachments from the run's own files. It sends nothing: a person opens the draft in a mail program, checks it and sends it. At most 10 drafts per run; works offline."
+    },
+    "draft_webhook": {
+      "name": "Webhook draft",
+      "description": "Prepares the JSON payload of a webhook call as a draft file in the run's result files, checked against a JSON Schema if you set one in the agent. It calls no webhook: a person checks the payload and sends it. At most 10 drafts per run; works offline."
     }
   }
 }

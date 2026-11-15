@@ -147,7 +147,8 @@
     "sanitized": "sanitized",
     "source": {
       "output": "from the result node",
-      "manual": "created afterwards"
+      "manual": "created afterwards",
+      "tool": "draft from an agent"
     },
     "view": "View {{name}}",
     "download": "Download {{name}}",

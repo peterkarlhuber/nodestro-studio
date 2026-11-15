@@ -1,0 +1,43 @@
+{
+  "noSend": "Non invia",
+  "noSendHint": "Prepara solo una bozza. Non viene inviato nulla: una persona controlla la bozza e la invia.",
+  "card": {
+    "email": "Bozza di e-mail",
+    "webhook": "Bozza di webhook",
+    "notSent": "Non inviato",
+    "notSentEmail": "Non è stato inviato nulla. Un agente ha preparato questa e-mail; scaricala, controllala nel tuo programma di posta e inviala tu.",
+    "notSentWebhook": "Non è stato inviato nulla. Un agente ha preparato questi dati del webhook; scaricali, controllali e inviali tu.",
+    "help": "Bozze",
+    "from": "Da",
+    "fromUnset": "non impostato; il tuo programma di posta inserisce il mittente",
+    "to": "A",
+    "cc": "Cc",
+    "subject": "Oggetto",
+    "html": "Versione HTML",
+    "yes": "sì",
+    "no": "no",
+    "none": "nessuno",
+    "attachments": "Allegati",
+    "schema": "Verificato con uno schema",
+    "size": "Dimensione",
+    "created": "Creato",
+    "bodyHidden": "Il testo dell’e-mail non viene mostrato qui. Apri il file per leggerlo.",
+    "downloadEml": "Scarica .eml",
+    "downloadJson": "Scarica .json",
+    "openInMail": "Apri nel programma di posta",
+    "openInMailHint": "Scarica il file .eml. Aprilo con il tuo programma di posta (per esempio con un doppio clic); molti programmi lo aprono come nuovo messaggio pronto da inviare. Nodestro non invia nulla."
+  },
+  "testSend": {
+    "button": "Invia test",
+    "title": "Inviare un test tramite «{{name}}»",
+    "toAddress": "Nodestro invia una breve e-mail di prova tramite questo server di posta all’indirizzo di prova:",
+    "toUrl": "Nodestro invia una chiamata di prova ({{method}}) con pochi dati JSON all’indirizzo del webhook:",
+    "byYou": "Invii tu stesso questo test, che viene registrato con il tuo nome. Non sono coinvolti agenti né workflow.",
+    "limit": "Al massimo 5 invii di prova per connessione e ora.",
+    "noAddress": "Questa connessione non ha un indirizzo di prova. Inserisci prima il tuo indirizzo e-mail come «Indirizzo di prova» nelle sue impostazioni.",
+    "confirm": "Invia il test ora",
+    "sent": "Test inviato.",
+    "sentStatus": "Test inviato. Il webhook ha risposto con HTTP {{status}}.",
+    "close": "Chiudi"
+  }
+}

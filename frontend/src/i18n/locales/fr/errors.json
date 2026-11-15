@@ -1137,7 +1137,27 @@
     "type_unknown": "Il n’existe pas de type de connexion « {{type}} ».",
     "unavailable": "La connexion ne peut pas être utilisée pour le moment.",
     "provider_unsupported_mode": "Le fournisseur « {{provider}} » des connexions de type {{type}} n’est pas proposé dans cette installation ({{mode}}).",
-    "endpoint_missing": "Cette connexion a besoin de l’adresse de votre propre serveur."
+    "endpoint_missing": "Cette connexion a besoin de l’adresse de votre propre serveur.",
+    "address_refused": "L’adresse du service est refusée, par exemple parce que c’est une adresse interne ou réservée.",
+    "auth_failed": "Le serveur a refusé la connexion. Vérifiez le nom d’utilisateur et le mot de passe.",
+    "auth_unsupported": "Cette méthode de connexion n’est pas encore prise en charge. Utilisez un mot de passe.",
+    "dns_failed": "Le nom du serveur n’a pas pu être résolu. Vérifiez l’adresse.",
+    "http_status": "Le webhook a répondu avec le statut HTTP {{status}} au lieu d’un succès (2xx).",
+    "http_status_plain": "Le webhook n’a pas répondu avec un succès (2xx).",
+    "port_refused": "Le port {{port}} n’est pas autorisé pour les serveurs de messagerie sur ce serveur. Utilisez 25, 465, 587 ou 2525.",
+    "port_refused_plain": "Ce port n’est pas autorisé pour les serveurs de messagerie sur ce serveur. Utilisez 25, 465, 587 ou 2525.",
+    "recipient_refused": "Le serveur de messagerie a refusé le destinataire du test.",
+    "redirect_refused": "Le webhook a répondu par une redirection (HTTP {{status}}). Les redirections ne sont pas suivies ; saisissez l’adresse finale.",
+    "redirect_refused_plain": "Le webhook a répondu par une redirection. Les redirections ne sont pas suivies ; saisissez l’adresse finale.",
+    "send_failed": "Le test n’a pas pu être envoyé.",
+    "sender_refused": "Le serveur de messagerie a refusé l’adresse de l’expéditeur. Vérifiez l’adresse de l’expéditeur de la connexion.",
+    "test_address_missing": "La connexion n’a pas d’adresse de test. Saisissez votre propre adresse comme « Adresse de test » dans ses paramètres.",
+    "test_send_limit": "Au maximum {{limit}} envois de test par connexion et par heure. Réessayez plus tard.",
+    "test_send_unsupported": "Les connexions {{type}} ne peuvent pas envoyer de test.",
+    "timeout": "Le service n’a pas répondu à temps.",
+    "tls_failed": "Aucune connexion sécurisée n’a pu être établie, par exemple à cause d’un certificat non valide.",
+    "tls_required": "Le serveur ne propose pas de chiffrement (STARTTLS). Nodestro se connecte uniquement de manière chiffrée.",
+    "unreachable": "Le service est injoignable. Vérifiez l’adresse et le port."
   },
   "extension": {
     "tool_spec": "Une extension décrit son outil {{name}} d’une manière que Nodestro ne peut pas utiliser."
@@ -1223,5 +1243,23 @@
   },
   "notifications": {
     "invalid_cursor": "La liste des notifications n’a pas pu être poursuivie. Fermez les notifications et rouvrez-les."
+  },
+  "mail": {
+    "address_invalid": "Une adresse du brouillon d’e-mail n’est pas une adresse e-mail simple comme name@example.com.",
+    "empty": "Un brouillon d’e-mail a besoin d’un texte ou d’une version HTML.",
+    "html_too_large": "La version HTML du brouillon d’e-mail est trop volumineuse (2 Mo au maximum).",
+    "no_recipient": "Un brouillon d’e-mail a besoin d’au moins un destinataire dans « À ».",
+    "subject_invalid": "L’objet du brouillon d’e-mail doit tenir sur une ligne, sans caractères de contrôle.",
+    "subject_too_long": "L’objet du brouillon d’e-mail est trop long ({{limit}} caractères au maximum).",
+    "text_too_long": "Le texte du brouillon d’e-mail est trop long ({{limit}} caractères au maximum).",
+    "too_large": "Le brouillon d’e-mail avec ses pièces jointes dépasse 10 Mo.",
+    "too_many_attachments": "Un brouillon d’e-mail peut avoir au maximum {{limit}} pièces jointes.",
+    "too_many_recipients": "Un brouillon d’e-mail peut avoir au maximum {{limit}} destinataires (À et Cc ensemble)."
+  },
+  "webhook": {
+    "payload_invalid": "Les données du webhook ne sont pas un JSON valide (un objet ou une liste).",
+    "payload_too_large": "Les données du webhook dépassent 256 Ko.",
+    "schema_invalid": "Le schéma des données n’est pas utilisable à {{at}} : il utilise un mot-clé que Nodestro ne vérifie pas. Utilisez uniquement les mots-clés que l’aide cite.",
+    "schema_mismatch": "Les données du webhook ne correspondent pas au schéma : {{problems}}."
   }
 }

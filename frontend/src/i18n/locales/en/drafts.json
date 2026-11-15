@@ -1,0 +1,43 @@
+{
+  "noSend": "Does not send",
+  "noSendHint": "Prepares a draft only. Nothing is sent: a person checks the draft and sends it.",
+  "card": {
+    "email": "E-mail draft",
+    "webhook": "Webhook draft",
+    "notSent": "Not sent",
+    "notSentEmail": "Nothing was sent. An agent prepared this e-mail; download it, check it in your mail program and send it yourself.",
+    "notSentWebhook": "Nothing was sent. An agent prepared this webhook payload; download it, check it and send it yourself.",
+    "help": "Drafts",
+    "from": "From",
+    "fromUnset": "not set; your mail program fills in the sender",
+    "to": "To",
+    "cc": "Cc",
+    "subject": "Subject",
+    "html": "HTML version",
+    "yes": "yes",
+    "no": "no",
+    "none": "none",
+    "attachments": "Attachments",
+    "schema": "Checked against a schema",
+    "size": "Size",
+    "created": "Created",
+    "bodyHidden": "The text of the e-mail is not shown here. Open the file to read it.",
+    "downloadEml": "Download .eml",
+    "downloadJson": "Download .json",
+    "openInMail": "Open in mail program",
+    "openInMailHint": "This downloads the .eml file. Open it with your mail program (for example by double-clicking it); many mail programs open it as a new message ready to send. Nodestro sends nothing."
+  },
+  "testSend": {
+    "button": "Send test",
+    "title": "Send a test through “{{name}}”",
+    "toAddress": "Nodestro sends a short test e-mail through this mail server to the test address:",
+    "toUrl": "Nodestro sends a test call ({{method}}) with a small JSON payload to the webhook address:",
+    "byYou": "You send this test yourself, and it is recorded with your name. No agent and no workflow is involved.",
+    "limit": "At most 5 test sends per connection and hour.",
+    "noAddress": "This connection has no test address. First enter your own e-mail address as “Test address” in its settings.",
+    "confirm": "Send test now",
+    "sent": "Test sent.",
+    "sentStatus": "Test sent. The webhook answered with HTTP {{status}}.",
+    "close": "Close"
+  }
+}

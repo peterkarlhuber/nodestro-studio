@@ -1,14 +1,15 @@
 // The result file formats, in one place: the editor's result node, the "Create file" dialog of a run and the file
 // list take their options, labels, extensions and the preview from here. This mirrors the runtime's table
 // (nodestro_runtime.reports.REPORT_FORMATS); tests/test_result_formats.py compares both, so a format added there
-// cannot be missing here. The ids are stored in workflows and runs and never change.
+// cannot be missing here. The ids are stored in workflows and runs and never change. Formats only tools write (the
+// e-mail draft, NAL-A4) are in TOOL_FORMATS: a run lists such files, but no picker offers them and none is shown inline.
 
 import type { TFunction } from "i18next";
 
-import type { ReportFormat } from "../api/types";
+import type { FileFormat, ReportFormat } from "../api/types";
 
 export interface ResultFormatInfo {
-  id: ReportFormat;
+  id: FileFormat;
   /** The file name extension, without dot. */
   extension: string;
   /** The Content-Type the backend sends. */
@@ -37,10 +38,19 @@ export const RESULT_FORMATS = [
   },
 ] as const satisfies readonly ResultFormatInfo[];
 
+/** Formats only tools write (nodestro_runtime.reports.TOOL_FORMATS): never offered, never shown in the page. */
+export const TOOL_FORMATS = [
+  { id: "eml", extension: "eml", mediaType: "message/rfc822", preview: false },
+] as const satisfies readonly ResultFormatInfo[];
+
 // Every ReportFormat of the API types has an entry, and no entry is unknown to it (a compile error otherwise).
 type Listed = (typeof RESULT_FORMATS)[number]["id"];
 const EXHAUSTIVE: [ReportFormat] extends [Listed] ? ([Listed] extends [ReportFormat] ? true : never) : never = true;
 void EXHAUSTIVE;
+// The tool formats are exactly the other file formats.
+type ToolListed = (typeof TOOL_FORMATS)[number]["id"];
+const TOOL_EXHAUSTIVE: [Exclude<FileFormat, ReportFormat>] extends [ToolListed] ? ([ToolListed] extends [Exclude<FileFormat, ReportFormat>] ? true : never) : never = true;
+void TOOL_EXHAUSTIVE;
 
 export const RESULT_FORMAT_IDS: readonly ReportFormat[] = RESULT_FORMATS.map((format) => format.id);
 
@@ -48,8 +58,9 @@ export function isResultFormat(value: unknown): value is ReportFormat {
   return typeof value === "string" && (RESULT_FORMAT_IDS as readonly string[]).includes(value);
 }
 
+/** The entry of any file format, including the tool formats. */
 export function resultFormat(id: string): ResultFormatInfo | undefined {
-  return RESULT_FORMATS.find((format) => format.id === id);
+  return [...RESULT_FORMATS, ...TOOL_FORMATS].find((format) => format.id === id);
 }
 
 /** "Word document (.docx)": the name of a format in the interface language. */

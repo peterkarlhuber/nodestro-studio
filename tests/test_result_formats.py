@@ -12,16 +12,17 @@ from pathlib import Path
 import re
 from typing import get_args
 
-from nodestro_runtime.reports import REPORT_FORMATS
+from nodestro_runtime.reports import REPORT_FORMATS, TOOL_FORMATS
 from nodestro_runtime.schemas import ReportFormat
 
 FRONTEND = Path(__file__).resolve().parents[1] / "frontend" / "src"
 LANGUAGES = ["de", "en", "es", "fr", "it", "pt-BR"]
 
 
-def studio_formats() -> list[dict[str, object]]:
+def studio_formats(table_name: str = "RESULT_FORMATS") -> list[dict[str, object]]:
     source = (FRONTEND / "lib" / "resultFormats.ts").read_text(encoding="utf-8")
-    table = source[source.index("export const RESULT_FORMATS = [") : source.index("] as const satisfies")]
+    start = source.index(f"export const {table_name} = [")
+    table = source[start : source.index("] as const satisfies", start)]
     entries = re.findall(
         r'\{\s*id: "(\w+)",\s*extension: "(\w+)",\s*mediaType: "([^"]+)",\s*preview: (true|false),?\s*\}', table
     )
@@ -38,6 +39,15 @@ def test_the_interface_offers_exactly_the_runtime_formats_in_its_order() -> None
     ]
     assert studio_formats() == runtime
     assert [entry["id"] for entry in runtime] == list(get_args(ReportFormat))
+
+
+def test_the_tool_formats_are_mirrored_apart_from_the_offered_ones() -> None:
+    runtime = [
+        {"id": info.id, "extension": info.extension, "media_type": info.media_type, "inline": info.inline}
+        for info in TOOL_FORMATS.values()
+    ]
+    assert studio_formats("TOOL_FORMATS") == runtime
+    assert not set(TOOL_FORMATS) & set(REPORT_FORMATS)
 
 
 def test_the_api_types_name_the_same_formats() -> None:

@@ -1137,7 +1137,27 @@
     "type_unknown": "Non esiste il tipo di connessione «{{type}}».",
     "unavailable": "La connessione non può essere usata in questo momento.",
     "provider_unsupported_mode": "Il provider “{{provider}}” delle connessioni di tipo {{type}} non è offerto in questa installazione ({{mode}}).",
-    "endpoint_missing": "Questa connessione ha bisogno dell'indirizzo del tuo server."
+    "endpoint_missing": "Questa connessione ha bisogno dell'indirizzo del tuo server.",
+    "address_refused": "L’indirizzo del servizio viene rifiutato, per esempio perché è un indirizzo interno o riservato.",
+    "auth_failed": "Il server ha rifiutato l’accesso. Controlla nome utente e password.",
+    "auth_unsupported": "Questo metodo di accesso non è ancora supportato. Usa una password.",
+    "dns_failed": "Non è stato possibile risolvere il nome del server. Controlla l’indirizzo.",
+    "http_status": "Il webhook ha risposto con lo stato HTTP {{status}} invece di un successo (2xx).",
+    "http_status_plain": "Il webhook non ha risposto con un successo (2xx).",
+    "port_refused": "La porta {{port}} non è consentita per i server di posta su questo server. Usa 25, 465, 587 o 2525.",
+    "port_refused_plain": "Questa porta non è consentita per i server di posta su questo server. Usa 25, 465, 587 o 2525.",
+    "recipient_refused": "Il server di posta ha rifiutato il destinatario del test.",
+    "redirect_refused": "Il webhook ha risposto con un reindirizzamento (HTTP {{status}}). I reindirizzamenti non vengono seguiti; inserisci l’indirizzo finale.",
+    "redirect_refused_plain": "Il webhook ha risposto con un reindirizzamento. I reindirizzamenti non vengono seguiti; inserisci l’indirizzo finale.",
+    "send_failed": "Non è stato possibile inviare il test.",
+    "sender_refused": "Il server di posta ha rifiutato l’indirizzo del mittente. Controlla l’indirizzo del mittente della connessione.",
+    "test_address_missing": "La connessione non ha un indirizzo di prova. Inserisci il tuo indirizzo come «Indirizzo di prova» nelle sue impostazioni.",
+    "test_send_limit": "Al massimo {{limit}} invii di prova per connessione e ora. Riprova più tardi.",
+    "test_send_unsupported": "Le connessioni {{type}} non possono inviare un test.",
+    "timeout": "Il servizio non ha risposto in tempo.",
+    "tls_failed": "Non è stato possibile stabilire una connessione sicura, per esempio per un certificato non valido.",
+    "tls_required": "Il server non offre la crittografia (STARTTLS). Nodestro si connette solo in modo cifrato.",
+    "unreachable": "Il servizio non è raggiungibile. Controlla indirizzo e porta."
   },
   "extension": {
     "tool_spec": "Un’estensione descrive il suo strumento {{name}} in un modo che Nodestro non può usare."
@@ -1223,5 +1243,23 @@
   },
   "notifications": {
     "invalid_cursor": "Non è stato possibile continuare l’elenco delle notifiche. Chiudi le notifiche e riaprile."
+  },
+  "mail": {
+    "address_invalid": "Un indirizzo della bozza di e-mail non è un semplice indirizzo e-mail come name@example.com.",
+    "empty": "Una bozza di e-mail ha bisogno di un testo o di una versione HTML.",
+    "html_too_large": "La versione HTML della bozza di e-mail è troppo grande (al massimo 2 MB).",
+    "no_recipient": "Una bozza di e-mail ha bisogno di almeno un destinatario in «A».",
+    "subject_invalid": "L’oggetto della bozza di e-mail deve essere una sola riga senza caratteri di controllo.",
+    "subject_too_long": "L’oggetto della bozza di e-mail è troppo lungo (al massimo {{limit}} caratteri).",
+    "text_too_long": "Il testo della bozza di e-mail è troppo lungo (al massimo {{limit}} caratteri).",
+    "too_large": "La bozza di e-mail con i suoi allegati supera i 10 MB.",
+    "too_many_attachments": "Una bozza di e-mail può avere al massimo {{limit}} allegati.",
+    "too_many_recipients": "Una bozza di e-mail può avere al massimo {{limit}} destinatari (A e Cc insieme)."
+  },
+  "webhook": {
+    "payload_invalid": "I dati del webhook non sono JSON valido (un oggetto o un elenco).",
+    "payload_too_large": "I dati del webhook superano i 256 KB.",
+    "schema_invalid": "Lo schema dei dati non è utilizzabile in {{at}}: usa una parola chiave che Nodestro non verifica. Usa solo le parole chiave indicate nella guida.",
+    "schema_mismatch": "I dati del webhook non corrispondono allo schema: {{problems}}."
   }
 }

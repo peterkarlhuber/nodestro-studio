@@ -1137,7 +1137,27 @@
     "type_unknown": "There is no connection type “{{type}}”.",
     "unavailable": "The connection cannot be used right now.",
     "provider_unsupported_mode": "The provider “{{provider}}” of {{type}} connections is not offered in this installation ({{mode}}).",
-    "endpoint_missing": "This connection needs the address of your own server."
+    "endpoint_missing": "This connection needs the address of your own server.",
+    "address_refused": "The address of the service is refused, for example because it is an internal or reserved address.",
+    "auth_failed": "The server refused the sign-in. Check the user name and the password.",
+    "auth_unsupported": "This sign-in method is not supported yet. Use a password.",
+    "dns_failed": "The name of the server could not be resolved. Check the address.",
+    "http_status": "The webhook answered with HTTP status {{status}} instead of a success (2xx).",
+    "http_status_plain": "The webhook did not answer with a success (2xx).",
+    "port_refused": "Port {{port}} is not allowed for mail servers on this server. Use 25, 465, 587 or 2525.",
+    "port_refused_plain": "This port is not allowed for mail servers on this server. Use 25, 465, 587 or 2525.",
+    "recipient_refused": "The mail server refused the recipient of the test.",
+    "redirect_refused": "The webhook answered with a redirect (HTTP {{status}}). Redirects are not followed; enter the final address.",
+    "redirect_refused_plain": "The webhook answered with a redirect. Redirects are not followed; enter the final address.",
+    "send_failed": "The test could not be sent.",
+    "sender_refused": "The mail server refused the sender address. Check the sender address of the connection.",
+    "test_address_missing": "The connection has no test address. Enter your own address as “Test address” in its settings.",
+    "test_send_limit": "At most {{limit}} test sends per connection and hour. Try again later.",
+    "test_send_unsupported": "{{type}} connections cannot send a test.",
+    "timeout": "The service did not answer in time.",
+    "tls_failed": "No secure connection could be established, for example because of an invalid certificate.",
+    "tls_required": "The server offers no encryption (STARTTLS). Nodestro connects only encrypted.",
+    "unreachable": "The service cannot be reached. Check the address and the port."
   },
   "extension": {
     "tool_spec": "An extension describes its tool {{name}} in a way Nodestro cannot use."
@@ -1223,5 +1243,23 @@
   },
   "notifications": {
     "invalid_cursor": "The list of notifications could not be continued. Close the notifications and open them again."
+  },
+  "mail": {
+    "address_invalid": "An address of the e-mail draft is not a plain e-mail address such as name@example.com.",
+    "empty": "An e-mail draft needs a text or an HTML version.",
+    "html_too_large": "The HTML version of the e-mail draft is too large (at most 2 MB).",
+    "no_recipient": "An e-mail draft needs at least one recipient in “To”.",
+    "subject_invalid": "The subject of the e-mail draft must be one line without control characters.",
+    "subject_too_long": "The subject of the e-mail draft is too long (at most {{limit}} characters).",
+    "text_too_long": "The text of the e-mail draft is too long (at most {{limit}} characters).",
+    "too_large": "The e-mail draft with its attachments is larger than 10 MB.",
+    "too_many_attachments": "An e-mail draft can have at most {{limit}} attachments.",
+    "too_many_recipients": "An e-mail draft can have at most {{limit}} recipients (To and Cc together)."
+  },
+  "webhook": {
+    "payload_invalid": "The webhook payload is not valid JSON (an object or an array).",
+    "payload_too_large": "The webhook payload is larger than 256 KB.",
+    "schema_invalid": "The payload schema cannot be used at {{at}}: it uses a keyword Nodestro does not check. Use only the keywords the help names.",
+    "schema_mismatch": "The webhook payload does not match the schema: {{problems}}."
   }
 }

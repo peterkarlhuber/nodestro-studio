@@ -116,7 +116,9 @@
         "allow_hosts": "Allowed domains",
         "deny_hosts": "Blocked domains",
         "max_calls": "Maximum calls per run",
-        "max_chars": "Maximum characters per page"
+        "max_chars": "Maximum characters per page",
+        "from_address": "Sender address",
+        "payload_schema": "Payload schema (JSON Schema)"
       },
       "hint": {
         "max_results": "{{min}} to {{max}}. The model may ask for fewer, never for more.",
@@ -125,7 +127,9 @@
         "allow_hosts": "Only these domains and their subdomains, separated by commas. Empty: every domain.",
         "deny_hosts": "Never these domains and their subdomains, separated by commas.",
         "max_calls": "{{min}} to {{max}}.",
-        "max_chars": "{{min}} to {{max}}. Longer pages are cut off."
+        "max_chars": "{{min}} to {{max}}. Longer pages are cut off.",
+        "from_address": "Written into every e-mail draft as the sender. Empty: the mail program fills it in.",
+        "payload_schema": "A JSON object the payload must match. Supported: type, properties, required, additionalProperties, items, enum, const, minLength, maxLength, minimum, maximum, minItems and maxItems. Empty: no check."
       },
       "option": {
         "day": "Last day",

@@ -85,7 +85,8 @@
     "services": "Servizi esterni tramite MCP: colleghi un server, provi la connessione e approvi ogni strumento dopo averlo esaminato. Se il servizio modifica uno strumento, questo resta bloccato finché non esamini la modifica.",
     "callApproval": "Una persona decide su ogni chiamata di questo strumento, con gli argomenti esatti. Senza decisione entro il termine, la chiamata conta come rifiutata.",
     "servicesLocal": "Un server MCP locale gira in un container isolato. I suoi pacchetti vengono controllati e approvati come le librerie di uno strumento.",
-    "servicesOAuth": "Alcuni servizi richiedono un accesso. Nodestro apre la loro pagina di accesso e conserva l'accesso cifrato."
+    "servicesOAuth": "Alcuni servizi richiedono un accesso. Nodestro apre la loro pagina di accesso e conserva l'accesso cifrato.",
+    "testSend": "Invia un messaggio di prova fisso: all’indirizzo di prova di una connessione a un server di posta o all’indirizzo di un webhook. Lo invii tu stesso; al massimo 5 per connessione e ora, ognuno viene registrato."
   },
   "knowledge": {
     "upload": "PDF, immagini (PNG, JPEG, GIF, WebP) e formati di testo. Immagini fino a 5 MB, documenti fino a 20 MB. Testi e PDF vengono indicizzati per la ricerca.",
@@ -244,7 +245,8 @@
     "sanitize": "Sostituisce nel file credenziali e dati personali con segnaposto.",
     "run": "File di questa esecuzione. L’HTML viene mostrato senza script.",
     "formats": "Word (DOCX) ed Excel (XLSX) vengono convertiti in Markdown al caricamento; le formule vengono mostrate, mai eseguite.",
-    "ocr": "Richiede Tesseract e pdftoppm su questo computer (il badge mostra se ci sono). Attivo: le pagine dei PDF scansionati senza livello di testo vengono riconosciute localmente quando il file viene letto, il che richiede alcuni secondi per pagina; le parole incerte sono segnalate così puoi controllarle. Disattivo: queste pagine non forniscono testo agli agenti né alla ricerca nella conoscenza."
+    "ocr": "Richiede Tesseract e pdftoppm su questo computer (il badge mostra se ci sono). Attivo: le pagine dei PDF scansionati senza livello di testo vengono riconosciute localmente quando il file viene letto, il che richiede alcuni secondi per pagina; le parole incerte sono segnalate così puoi controllarle. Disattivo: queste pagine non forniscono testo agli agenti né alla ricerca nella conoscenza.",
+    "drafts": "Bozze che un agente ha preparato con «Bozza di e-mail» o «Bozza di webhook». Non è stato inviato nulla: scarica il file, controllalo e invialo tu."
   },
   "automation": {
     "batch": "Un workflow su molti input. Ogni riga diventa un’esecuzione a sé.",

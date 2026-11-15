@@ -332,6 +332,8 @@ export interface OrchestrationRecord {
 }
 
 export type ReportFormat = "md" | "json" | "csv" | "html" | "pdf" | "docx" | "xlsx";
+/** Formats of result files: the report formats and the e-mail draft (``eml``, written only by ``draft_email``). */
+export type FileFormat = ReportFormat | "eml";
 
 export interface ResultFileSpec {
   format: ReportFormat;
@@ -2437,16 +2439,41 @@ export interface ResultFile {
   id: string;
   run_id: string;
   name: string;
-  format: ReportFormat;
+  format: FileFormat;
   media_type: string;
   size: number;
   created_at: string;
-  source: "output" | "manual";
+  /** output: the result node; manual: created afterwards; tool: a draft tool of the run (NAL-A4). */
+  source: "output" | "manual" | "tool";
   node_id: string | null;
   sanitized: boolean;
   error_code: string | null;
   error: string | null;
   error_params: Record<string, unknown>;
+  /** What a draft contains (``EmailDraftPreview`` or ``WebhookDraftPreview``), never its body; older APIs omit it. */
+  preview?: Record<string, unknown>;
+}
+
+/** The preview of an e-mail draft (``draft_email``): recipients, subject and attachments, never the body. */
+export interface EmailDraftPreview {
+  kind: "email";
+  /** The sender from the tool's binding; null: the mail program fills it in. */
+  from: string | null;
+  to: string[];
+  cc: string[];
+  subject: string;
+  /** Whether the message has an HTML version besides the text. */
+  html: boolean;
+  attachments: { name: string; media_type: string; size: number }[];
+  size: number;
+}
+
+/** The preview of a webhook payload draft (``draft_webhook``). */
+export interface WebhookDraftPreview {
+  kind: "webhook";
+  size: number;
+  /** Whether the payload was checked against the binding's schema. */
+  schema: boolean;
 }
 
 export interface FileRequest {

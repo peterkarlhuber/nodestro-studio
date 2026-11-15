@@ -1,0 +1,43 @@
+{
+  "noSend": "No envía",
+  "noSendHint": "Solo prepara un borrador. No se envía nada: una persona revisa el borrador y lo envía.",
+  "card": {
+    "email": "Borrador de correo",
+    "webhook": "Borrador de webhook",
+    "notSent": "No enviado",
+    "notSentEmail": "No se ha enviado nada. Un agente preparó este correo; descárgalo, revísalo en tu programa de correo y envíalo tú mismo.",
+    "notSentWebhook": "No se ha enviado nada. Un agente preparó estos datos de webhook; descárgalos, revísalos y envíalos tú mismo.",
+    "help": "Borradores",
+    "from": "De",
+    "fromUnset": "sin definir; tu programa de correo pone el remitente",
+    "to": "Para",
+    "cc": "CC",
+    "subject": "Asunto",
+    "html": "Versión HTML",
+    "yes": "sí",
+    "no": "no",
+    "none": "ninguno",
+    "attachments": "Adjuntos",
+    "schema": "Comprobado con un esquema",
+    "size": "Tamaño",
+    "created": "Creado",
+    "bodyHidden": "El texto del correo no se muestra aquí. Abre el archivo para leerlo.",
+    "downloadEml": "Descargar .eml",
+    "downloadJson": "Descargar .json",
+    "openInMail": "Abrir en el programa de correo",
+    "openInMailHint": "Descarga el archivo .eml. Ábrelo con tu programa de correo (por ejemplo, con doble clic); muchos programas lo abren como un mensaje nuevo listo para enviar. Nodestro no envía nada."
+  },
+  "testSend": {
+    "button": "Enviar prueba",
+    "title": "Enviar una prueba con «{{name}}»",
+    "toAddress": "Nodestro envía un breve correo de prueba a través de este servidor de correo a la dirección de prueba:",
+    "toUrl": "Nodestro envía una llamada de prueba ({{method}}) con unos pocos datos JSON a la dirección del webhook:",
+    "byYou": "Envías esta prueba tú mismo y queda registrada con tu nombre. No interviene ningún agente ni ningún flujo de trabajo.",
+    "limit": "Como máximo 5 envíos de prueba por conexión y hora.",
+    "noAddress": "Esta conexión no tiene dirección de prueba. Primero introduce tu propia dirección de correo como «Dirección de prueba» en su configuración.",
+    "confirm": "Enviar prueba ahora",
+    "sent": "Prueba enviada.",
+    "sentStatus": "Prueba enviada. El webhook respondió con HTTP {{status}}.",
+    "close": "Cerrar"
+  }
+}

@@ -85,7 +85,8 @@
     "services": "External services through MCP: you connect a server, test the connection and approve each tool after reviewing it. When the service changes a tool, it is blocked until you review the change.",
     "callApproval": "A person decides about each call of this tool, with the exact arguments. Without a decision within the time limit, the call counts as rejected.",
     "servicesLocal": "A local MCP server runs in an isolated container. Its packages are reviewed and approved like a tool's libraries.",
-    "servicesOAuth": "Some services require a sign-in. Nodestro opens their sign-in page and keeps the access encrypted."
+    "servicesOAuth": "Some services require a sign-in. Nodestro opens their sign-in page and keeps the access encrypted.",
+    "testSend": "Sends one fixed test message: to the test address of a mail server connection or to the address of a webhook. You send it yourself; at most 5 per connection and hour, each one recorded."
   },
   "knowledge": {
     "upload": "PDFs, images (PNG, JPEG, GIF, WebP) and text formats. Images up to 5 MB, documents up to 20 MB. Texts and PDFs are indexed for search.",
@@ -244,7 +245,8 @@
     "sanitize": "Replaces credentials and personal data in the file with placeholders.",
     "run": "Files of this run. HTML is shown without scripts.",
     "formats": "Word (DOCX) and Excel (XLSX) are converted to Markdown on upload; formulas are shown, never run.",
-    "ocr": "Needs Tesseract and pdftoppm on this computer (the badge shows whether they are there). On: pages of scanned PDFs without a text layer are recognized locally when the file is read, which takes some seconds per page; uncertain words are marked so you can check them. Off: such pages give agents and the knowledge search no text."
+    "ocr": "Needs Tesseract and pdftoppm on this computer (the badge shows whether they are there). On: pages of scanned PDFs without a text layer are recognized locally when the file is read, which takes some seconds per page; uncertain words are marked so you can check them. Off: such pages give agents and the knowledge search no text.",
+    "drafts": "Drafts an agent prepared with “E-mail draft” or “Webhook draft”. Nothing was sent: download the file, check it and send it yourself."
   },
   "automation": {
     "batch": "One workflow over many inputs. Every row becomes a run of its own.",

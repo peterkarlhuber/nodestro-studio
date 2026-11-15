@@ -1137,7 +1137,27 @@
     "type_unknown": "Não existe o tipo de conexão “{{type}}”.",
     "unavailable": "A conexão não pode ser usada agora.",
     "provider_unsupported_mode": "O provedor “{{provider}}” das conexões do tipo {{type}} não é oferecido nesta instalação ({{mode}}).",
-    "endpoint_missing": "Esta conexão precisa do endereço do seu próprio servidor."
+    "endpoint_missing": "Esta conexão precisa do endereço do seu próprio servidor.",
+    "address_refused": "O endereço do serviço é recusado, por exemplo porque é um endereço interno ou reservado.",
+    "auth_failed": "O servidor recusou o login. Confira o nome de usuário e a senha.",
+    "auth_unsupported": "Este método de login ainda não é suportado. Use uma senha.",
+    "dns_failed": "Não foi possível resolver o nome do servidor. Confira o endereço.",
+    "http_status": "O webhook respondeu com o status HTTP {{status}} em vez de um sucesso (2xx).",
+    "http_status_plain": "O webhook não respondeu com um sucesso (2xx).",
+    "port_refused": "A porta {{port}} não é permitida para servidores de e-mail neste servidor. Use 25, 465, 587 ou 2525.",
+    "port_refused_plain": "Esta porta não é permitida para servidores de e-mail neste servidor. Use 25, 465, 587 ou 2525.",
+    "recipient_refused": "O servidor de e-mail recusou o destinatário do teste.",
+    "redirect_refused": "O webhook respondeu com um redirecionamento (HTTP {{status}}). Redirecionamentos não são seguidos; informe o endereço final.",
+    "redirect_refused_plain": "O webhook respondeu com um redirecionamento. Redirecionamentos não são seguidos; informe o endereço final.",
+    "send_failed": "Não foi possível enviar o teste.",
+    "sender_refused": "O servidor de e-mail recusou o endereço do remetente. Confira o endereço do remetente da conexão.",
+    "test_address_missing": "A conexão não tem endereço de teste. Informe o seu próprio endereço como “Endereço de teste” nas configurações dela.",
+    "test_send_limit": "No máximo {{limit}} envios de teste por conexão e hora. Tente de novo mais tarde.",
+    "test_send_unsupported": "Conexões {{type}} não podem enviar um teste.",
+    "timeout": "O serviço não respondeu a tempo.",
+    "tls_failed": "Não foi possível estabelecer uma conexão segura, por exemplo por causa de um certificado inválido.",
+    "tls_required": "O servidor não oferece criptografia (STARTTLS). O Nodestro só se conecta de forma criptografada.",
+    "unreachable": "O serviço não pode ser alcançado. Confira o endereço e a porta."
   },
   "extension": {
     "tool_spec": "Uma extensão descreve sua ferramenta {{name}} de um jeito que o Nodestro não consegue usar."
@@ -1223,5 +1243,23 @@
   },
   "notifications": {
     "invalid_cursor": "Não foi possível continuar a lista de notificações. Feche as notificações e abra-as de novo."
+  },
+  "mail": {
+    "address_invalid": "Um endereço do rascunho de e-mail não é um endereço de e-mail simples como name@example.com.",
+    "empty": "Um rascunho de e-mail precisa de um texto ou de uma versão HTML.",
+    "html_too_large": "A versão HTML do rascunho de e-mail é grande demais (no máximo 2 MB).",
+    "no_recipient": "Um rascunho de e-mail precisa de pelo menos um destinatário em “Para”.",
+    "subject_invalid": "O assunto do rascunho de e-mail deve ser uma só linha, sem caracteres de controle.",
+    "subject_too_long": "O assunto do rascunho de e-mail é longo demais (no máximo {{limit}} caracteres).",
+    "text_too_long": "O texto do rascunho de e-mail é longo demais (no máximo {{limit}} caracteres).",
+    "too_large": "O rascunho de e-mail com os anexos passa de 10 MB.",
+    "too_many_attachments": "Um rascunho de e-mail pode ter no máximo {{limit}} anexos.",
+    "too_many_recipients": "Um rascunho de e-mail pode ter no máximo {{limit}} destinatários (Para e Cc juntos)."
+  },
+  "webhook": {
+    "payload_invalid": "Os dados do webhook não são um JSON válido (um objeto ou uma lista).",
+    "payload_too_large": "Os dados do webhook passam de 256 KB.",
+    "schema_invalid": "O esquema dos dados não pode ser usado em {{at}}: ele usa uma palavra-chave que o Nodestro não confere. Use só as palavras-chave citadas na ajuda.",
+    "schema_mismatch": "Os dados do webhook não correspondem ao esquema: {{problems}}."
   }
 }

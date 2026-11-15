@@ -128,3 +128,41 @@ describe("Tools page filters from the tool specs", () => {
     expect(matchesSpec(spec("calculator"), { ...none, connection: true })).toBe(false);
   });
 });
+
+describe("draft tools on the Tools page (NAL-A4)", () => {
+  it("show their name and the badge “Does not send” in the list and the detail", async () => {
+    const draft = { name: "draft_email", description: "Prepare an e-mail.", origin: "nodestro", spec: spec("draft_email", { category: "communication" }) };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        const answer =
+          url === "/api/tools"
+            ? [tool("calculator", "builtin"), tool("draft_email", "builtin")]
+            : url === "/api/tools/builtin"
+              ? [CATALOG[0], draft]
+              : url === "/api/tools/drafts"
+                ? []
+                : null;
+        return answer === null
+          ? new Response(JSON.stringify({ detail: "not here" }), { status: 404, headers: { "Content-Type": "application/json" } })
+          : new Response(JSON.stringify(answer), { status: 200, headers: { "Content-Type": "application/json" } });
+      }),
+    );
+    render(
+      <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+        <MemoryRouter>
+          <ToolsPage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+    const list = within(await screen.findByRole("list", { name: "Tools" }));
+    const item = (await list.findByText("draft_email")).closest("button") as HTMLElement;
+    expect(within(item).getByText("E-Mail-Entwurf")).toBeInTheDocument();
+    expect(within(item).getByText("Versendet nicht")).toBeInTheDocument();
+    const calculator = list.getByText("calculator").closest("button") as HTMLElement;
+    expect(within(calculator).queryByText("Versendet nicht")).not.toBeInTheDocument();
+    await userEvent.click(item);
+    const detail = within(await screen.findByRole("region", { name: /draft_email/ }));
+    expect(detail.getByRole("heading", { name: /E-Mail-Entwurf draft_email Versendet nicht/ })).toBeInTheDocument();
+  });
+});

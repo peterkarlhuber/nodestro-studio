@@ -376,7 +376,8 @@
       "from_address": "Absenderadresse",
       "auth": "Anmeldeverfahren",
       "url": "Adresse (URL)",
-      "method": "HTTP-Methode"
+      "method": "HTTP-Methode",
+      "test_address": "Testadresse"
     },
     "check": {
       "unchecked": "Nicht geprüft",
@@ -414,7 +415,8 @@
       "deleted": "Gelöscht",
       "secret_set": "Geheimnis gesetzt",
       "secret_cleared": "Geheimnis entfernt",
-      "checked": "Geprüft"
+      "checked": "Geprüft",
+      "test_sent": "Testsendung"
     },
     "search": {
       "open": "Suchdienst einrichten",
@@ -439,6 +441,9 @@
       "create": "Einrichten",
       "done": "Suchdienst „{{name}}“ eingerichtet.",
       "none": "In dieser Installation kann kein Suchdienst eingerichtet werden."
+    },
+    "fieldHint": {
+      "test_address": "Deine eigene E-Mail-Adresse. „Test senden“ schickt eine Test-E-Mail an diese Adresse und an keine andere."
     }
   },
   "origin": {
@@ -450,6 +455,14 @@
     "notify_user": {
       "name": "Nachricht an mich",
       "description": "Schickt eine kurze Nachricht des Agenten an die Glocke in der oberen Leiste von Nodestro: Titel, Text und eine Stufe (Info, Erfolg, Warnung oder Fehler). Höchstens 3 Nachrichten pro Lauf, angezeigt als reiner Text und als Nachricht eines Agenten markiert. Es wird nichts außerhalb von Nodestro verschickt: keine E-Mail, kein Webhook."
+    },
+    "draft_email": {
+      "name": "E-Mail-Entwurf",
+      "description": "Bereitet eine E-Mail als Entwurfsdatei (.eml) in den Ergebnisdateien des Laufs vor: Empfänger, Betreff, Text, auf Wunsch eine HTML-Fassung und Anhänge aus den Dateien des Laufs. Es verschickt nichts: Eine Person öffnet den Entwurf in einem Mailprogramm, prüft ihn und verschickt ihn. Höchstens 10 Entwürfe pro Lauf; funktioniert offline."
+    },
+    "draft_webhook": {
+      "name": "Webhook-Entwurf",
+      "description": "Bereitet die JSON-Daten eines Webhook-Aufrufs als Entwurfsdatei in den Ergebnisdateien des Laufs vor, geprüft gegen ein JSON Schema, wenn du im Agenten eines festlegst. Es ruft keinen Webhook auf: Eine Person prüft die Daten und verschickt sie. Höchstens 10 Entwürfe pro Lauf; funktioniert offline."
     }
   }
 }

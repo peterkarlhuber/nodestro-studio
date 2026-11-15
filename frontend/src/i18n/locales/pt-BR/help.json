@@ -85,7 +85,8 @@
     "services": "Serviços externos via MCP: você conecta um servidor, testa a conexão e aprova cada ferramenta depois de revisá-la. Se o serviço alterar uma ferramenta, ela fica bloqueada até você revisar a alteração.",
     "callApproval": "Uma pessoa decide sobre cada chamada desta ferramenta, com os argumentos exatos. Sem decisão dentro do prazo, a chamada conta como rejeitada.",
     "servicesLocal": "Um servidor MCP local roda em um contêiner isolado. Os pacotes dele são revisados e aprovados como as bibliotecas de uma ferramenta.",
-    "servicesOAuth": "Alguns serviços exigem login. O Nodestro abre a página de login deles e guarda o acesso criptografado."
+    "servicesOAuth": "Alguns serviços exigem login. O Nodestro abre a página de login deles e guarda o acesso criptografado.",
+    "testSend": "Envia uma mensagem de teste fixa: para o endereço de teste de uma conexão de servidor de e-mail ou para o endereço de um webhook. Você mesmo envia; no máximo 5 por conexão e hora, e cada um é registrado."
   },
   "knowledge": {
     "upload": "PDFs, imagens (PNG, JPEG, GIF, WebP) e formatos de texto. Imagens de até 5 MB, documentos de até 20 MB. Textos e PDFs são indexados para a pesquisa.",
@@ -244,7 +245,8 @@
     "sanitize": "Substitui credenciais e dados pessoais no arquivo por marcadores.",
     "run": "Arquivos desta execução. O HTML é exibido sem scripts.",
     "formats": "Word (DOCX) e Excel (XLSX) são convertidos em Markdown no envio; fórmulas são exibidas, nunca executadas.",
-    "ocr": "Precisa do Tesseract e do pdftoppm neste computador (o selo mostra se estão instalados). Ligado: páginas de PDFs digitalizados sem camada de texto são reconhecidas localmente quando o arquivo é lido, o que leva alguns segundos por página; palavras incertas são marcadas para você conferir. Desligado: essas páginas não fornecem texto aos agentes nem à busca no conhecimento."
+    "ocr": "Precisa do Tesseract e do pdftoppm neste computador (o selo mostra se estão instalados). Ligado: páginas de PDFs digitalizados sem camada de texto são reconhecidas localmente quando o arquivo é lido, o que leva alguns segundos por página; palavras incertas são marcadas para você conferir. Desligado: essas páginas não fornecem texto aos agentes nem à busca no conhecimento.",
+    "drafts": "Rascunhos que um agente preparou com “Rascunho de e-mail” ou “Rascunho de webhook”. Nada foi enviado: baixe o arquivo, confira e envie você mesmo."
   },
   "automation": {
     "batch": "Um fluxo de trabalho sobre muitas entradas. Cada linha vira uma execução própria.",

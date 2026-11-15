@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -62,11 +62,28 @@ const web = (id: string, connection_type: string | null, params_schema: unknown)
   params_schema,
 });
 
+// The draft tools of NAL-A4: no network, no connection, one binding parameter each (DRAFT_EMAIL_SPEC, DRAFT_WEBHOOK_SPEC).
+const EMAIL_PARAMS = {
+  type: "object",
+  additionalProperties: false,
+  properties: { from_address: { type: "string", minLength: 3, maxLength: 254 } },
+};
+const WEBHOOK_PARAMS = { type: "object", additionalProperties: false, properties: { payload_schema: { type: "object" } } };
+const draft = (id: string, params_schema: unknown) => ({
+  ...spec(id, null),
+  category: "communication",
+  capability: { access: "write", reach: "internal", source: "nodestro" },
+  max_calls_per_run: 10,
+  params_schema,
+});
+
 const CATALOG = [
   { name: "calculator", description: "", origin: "nodestro", spec: spec("calculator", null) },
   { name: "send_mail", description: "", origin: "integration", spec: spec("send_mail", "smtp") },
   { name: "search_web", description: "", origin: "nodestro", spec: web("search_web", "search", SEARCH_PARAMS) },
   { name: "fetch_web_page", description: "", origin: "nodestro", spec: web("fetch_web_page", null, FETCH_PARAMS) },
+  { name: "draft_email", description: "", origin: "nodestro", spec: draft("draft_email", EMAIL_PARAMS) },
+  { name: "draft_webhook", description: "", origin: "nodestro", spec: draft("draft_webhook", WEBHOOK_PARAMS) },
 ];
 
 const connection = (id: string, type: string, name: string) => ({ id, type, name, provider: "generic", check: { status: "ok" } });
@@ -205,5 +222,77 @@ describe("web tools in the inspector (NAL-A2)", () => {
     expect(paramValue(properties.region, "AUT")).toBeNull();
     expect(paramValue(properties.time_range, "decade")).toBeNull();
     expect(paramValue(properties.allow_hosts, "a.example\nb.example")).toEqual(["a.example", "b.example"]);
+  });
+});
+
+describe("draft tools in the inspector (NAL-A4)", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    useAgentSections.setState({ open: {} });
+  });
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
+
+  it("marks both draft tools as not sending, without the Internet badge or a connection", async () => {
+    stubApi();
+    show({ ...defaultAgent(), tools: ["draft_email", "draft_webhook"] }, vi.fn());
+    for (const name of ["draft_email", "draft_webhook"]) {
+      const binding = within(await screen.findByTestId(`tool-binding-${name}`));
+      expect(binding.getByText("Versendet nicht")).toBeInTheDocument();
+      expect(binding.queryByText("Mit Internet")).not.toBeInTheDocument();
+      expect(binding.queryByLabelText(/Verbindung für/)).not.toBeInTheDocument();
+    }
+  });
+
+  it("writes the sender address of draft_email", async () => {
+    stubApi();
+    const onChange = vi.fn();
+    show({ ...defaultAgent(), tools: ["draft_email"] }, onChange);
+    const params = within(await screen.findByTestId("tool-params-draft_email"));
+    await userEvent.type(params.getByLabelText("Absenderadresse"), "ab");
+    expect(onChange).not.toHaveBeenCalled(); // shorter than three characters
+    await userEvent.type(params.getByLabelText("Absenderadresse"), "@example.com");
+    expect(onChange).toHaveBeenLastCalledWith({
+      tool_settings: { draft_email: { connection_id: null, params: { from_address: "ab@example.com" } } },
+    });
+  });
+
+  it("writes the payload schema of draft_webhook as a JSON object and refuses anything else", async () => {
+    stubApi();
+    const onChange = vi.fn();
+    show({ ...defaultAgent(), tools: ["draft_webhook"] }, onChange);
+    const params = within(await screen.findByTestId("tool-params-draft_webhook"));
+    const field = params.getByLabelText("Schema der Daten (JSON Schema)");
+    fireEvent.change(field, { target: { value: "[1, 2]" } });
+    fireEvent.change(field, { target: { value: '{"type": ' } });
+    expect(onChange).not.toHaveBeenCalled();
+    expect(params.getByText("Kein gültiger Wert; er wird nicht gespeichert.")).toBeInTheDocument();
+    fireEvent.change(field, { target: { value: '{"type": "object", "required": ["id"]}' } });
+    expect(onChange).toHaveBeenLastCalledWith({
+      tool_settings: { draft_webhook: { connection_id: null, params: { payload_schema: { type: "object", required: ["id"] } } } },
+    });
+  });
+
+  it("shows a stored schema as formatted JSON", async () => {
+    stubApi();
+    show(
+      { ...defaultAgent(), tools: ["draft_webhook"], tool_settings: { draft_webhook: { connection_id: null, params: { payload_schema: { type: "object" } } } } },
+      vi.fn(),
+    );
+    const params = within(await screen.findByTestId("tool-params-draft_webhook"));
+    expect(params.getByLabelText("Schema der Daten (JSON Schema)")).toHaveValue('{\n  "type": "object"\n}');
+  });
+
+  it("checks objects and text lengths against the params schema", () => {
+    expect(paramValue({ type: "object" }, '{"a": 1}')).toEqual({ a: 1 });
+    expect(paramValue({ type: "object" }, "[]")).toBeNull();
+    expect(paramValue({ type: "object" }, "null")).toBeNull();
+    expect(paramValue({ type: "object" }, "{")).toBeNull();
+    expect(paramValue({ type: "object" }, "  ")).toBeUndefined();
+    expect(paramValue(EMAIL_PARAMS.properties.from_address, "a@")).toBeNull();
+    expect(paramValue(EMAIL_PARAMS.properties.from_address, "x".repeat(255))).toBeNull();
+    expect(paramValue(EMAIL_PARAMS.properties.from_address, "a@b.example")).toBe("a@b.example");
   });
 });

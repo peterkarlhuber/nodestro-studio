@@ -116,7 +116,9 @@
         "allow_hosts": "Dominios permitidos",
         "deny_hosts": "Dominios bloqueados",
         "max_calls": "Máximo de llamadas por ejecución",
-        "max_chars": "Máximo de caracteres por página"
+        "max_chars": "Máximo de caracteres por página",
+        "from_address": "Dirección del remitente",
+        "payload_schema": "Esquema de los datos (JSON Schema)"
       },
       "hint": {
         "max_results": "De {{min}} a {{max}}. El modelo puede pedir menos, nunca más.",
@@ -125,7 +127,9 @@
         "allow_hosts": "Solo estos dominios y sus subdominios, separados por comas. Vacío: cualquier dominio.",
         "deny_hosts": "Nunca estos dominios ni sus subdominios, separados por comas.",
         "max_calls": "De {{min}} a {{max}}.",
-        "max_chars": "De {{min}} a {{max}}. Las páginas más largas se recortan."
+        "max_chars": "De {{min}} a {{max}}. Las páginas más largas se recortan.",
+        "from_address": "Se escribe en cada borrador de correo como remitente. Vacío: lo pone el programa de correo.",
+        "payload_schema": "Un objeto JSON al que deben ajustarse los datos. Compatibles: type, properties, required, additionalProperties, items, enum, const, minLength, maxLength, minimum, maximum, minItems y maxItems. Vacío: sin comprobación."
       },
       "option": {
         "day": "Último día",
