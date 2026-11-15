@@ -12,6 +12,7 @@ import "./styles/missing-model.css";
 import "./styles/publications.css";
 import "./styles/skills.css";
 import "./styles/recovery.css";
+import "./styles/notifications.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

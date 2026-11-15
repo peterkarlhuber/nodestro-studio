@@ -445,5 +445,11 @@
     "skill": "Aus Skill-Skript:",
     "skillBadge": "Aus einem Skill",
     "other": "Herkunft:"
+  },
+  "builtin": {
+    "notify_user": {
+      "name": "Nachricht an mich",
+      "description": "Schickt eine kurze Nachricht des Agenten an die Glocke in der oberen Leiste von Nodestro: Titel, Text und eine Stufe (Info, Erfolg, Warnung oder Fehler). Höchstens 3 Nachrichten pro Lauf, angezeigt als reiner Text und als Nachricht eines Agenten markiert. Es wird nichts außerhalb von Nodestro verschickt: keine E-Mail, kein Webhook."
+    }
   }
 }

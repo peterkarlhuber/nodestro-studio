@@ -52,6 +52,7 @@ describe("texts left in English", () => {
       "interface", "port", "module", "arguments", "service", "classification", "correction", "versions", "guide",
       "instructions", "branches", "robot", "globe", "score", "word", "citations", "format", "standard", "direct", "indirect", "maintenance",
       "assistant", "publication", "publications", "exports", "local",
+      "notification", "notifications",
     ],
     it: ["file", "input", "output", "robot", "database", "provider", "runtime", "standard", "no"],
     "pt-BR": ["status", "manual", "individual", "interface", "loop", "tags", "local"],
@@ -367,6 +368,8 @@ describe("backend codes", () => {
     "skill.name_invalid", "skill.secret_suspected", "skill.scripts_not_run", "skill.allowed_tools_ignored",
     // Skill groups and script drafts (NAL-B4).
     "skill.group_name_taken", "skill.group_not_found", "skill.script_not_found", "skill.script_too_large", "skill.file_not_text",
+    // Internal notifications (NAL-A3): the tool notify_user and the inbox API.
+    "notify.limit", "notify.empty_title", "notifications.invalid_cursor",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

@@ -1,0 +1,82 @@
+{
+  "bell": "Notifications",
+  "bellUnread_one": "Notifications, {{count}} unread",
+  "bellUnread_other": "Notifications, {{count}} unread",
+  "announce_one": "{{count}} new notification",
+  "announce_other": "{{count}} new notifications",
+  "title": "Notifications",
+  "markAllRead": "Mark all as read",
+  "markRead": "Mark as read",
+  "unread": "Unread:",
+  "openRun": "Open run",
+  "loadMore": "Load more",
+  "empty": "No notifications",
+  "emptyText": "Failed runs and steps waiting for approval show up here. Each workflow sets in its settings which events notify.",
+  "insideOnly": "Notifications stay inside Nodestro. No e-mail is sent.",
+  "fromAgent": "From an agent",
+  "agentMessage": "Message from an agent",
+  "untitled": "Notification",
+  "event": {
+    "run_failed": {
+      "title": "Run failed"
+    },
+    "approval_pending": {
+      "title": "Waiting for approval",
+      "step": "The step “{{node}}” waits for a decision."
+    },
+    "budget_pending": {
+      "title": "Waiting for a budget decision",
+      "text": "The run’s budget is used up. Raise it or end the run."
+    },
+    "quality_failed": {
+      "title": "Quality check failed",
+      "text": "A result did not pass its quality check."
+    },
+    "run_finished": {
+      "title": "Run finished",
+      "status": {
+        "succeeded": "The run finished successfully.",
+        "failed": "The run ended with an error.",
+        "cancelled": "The run was canceled."
+      }
+    }
+  },
+  "settings": {
+    "title": "Notifications",
+    "events": "Notify when",
+    "event": {
+      "run_failed": {
+        "label": "A run fails",
+        "hint": "The run ends with an error."
+      },
+      "approval_pending": {
+        "label": "A step waits for approval",
+        "hint": "An approval step waits for a person’s decision."
+      },
+      "budget_pending": {
+        "label": "A run waits for a budget decision",
+        "hint": "The budget is used up; someone has to raise it or end the run."
+      },
+      "quality_failed": {
+        "label": "A quality check fails",
+        "hint": "A result does not pass its check, for example by a judge."
+      },
+      "run_finished": {
+        "label": "A run finishes",
+        "hint": "Every finished run, successful ones too. This can be many."
+      }
+    },
+    "recipients": "Who is notified",
+    "recipient": {
+      "members": {
+        "label": "Everyone with access",
+        "hint": "Everyone who may see this workflow."
+      },
+      "starter": {
+        "label": "Only the person who started the run",
+        "hint": "Others with access are not notified."
+      }
+    },
+    "insideOnly": "Notifications appear at the bell in the top bar and stay inside Nodestro. No e-mail is sent."
+  }
+}

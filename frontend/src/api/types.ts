@@ -1,5 +1,7 @@
 // Types mirroring the backend's Pydantic models (nodestro-api / nodestro-runtime: nodestro_runtime/schemas.py, OpenAPI /api/openapi.json).
 
+import type { WorkflowNotifications } from "./notifications";
+
 export type Effort = "low" | "medium" | "high" | "xhigh" | "max";
 export type ThinkingMode = "adaptive" | "between_tools" | "disabled";
 export type ThinkingDisplay = "summarized" | "omitted" | "updates";
@@ -402,6 +404,8 @@ export interface WorkflowIn {
   limits?: WorkflowLimits;
   /** What the workflow can do as a team (up to MAX_CAPABILITIES short tags); they grant nothing. */
   capabilities?: string[];
+  /** Which events of its runs notify whom (NAL-A3); missing from older servers, which notify nobody. */
+  notifications?: WorkflowNotifications;
 }
 
 export interface Workflow extends WorkflowIn {

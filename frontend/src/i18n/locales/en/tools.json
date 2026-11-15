@@ -445,5 +445,11 @@
     "skill": "From skill script:",
     "skillBadge": "From a skill",
     "other": "Origin:"
+  },
+  "builtin": {
+    "notify_user": {
+      "name": "Message to me",
+      "description": "Sends a short message from the agent to the bell in Nodestro’s top bar: a title, the text and a level (info, success, warning or error). At most 3 messages per run, shown as plain text and marked as coming from an agent. It does not send anything outside Nodestro: no e-mail, no webhook."
+    }
   }
 }

@@ -1,0 +1,305 @@
+/* Internal notifications (NAL-A3): the bell in the top bar, its panel and the workflow's notification rules. */
+
+.notify {
+  position: relative;
+  flex: none;
+}
+
+.notify-bell {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--nd-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--nd-text);
+  cursor: pointer;
+  transition:
+    background var(--nd-duration-fast),
+    border-color var(--nd-duration-fast);
+}
+
+.notify-bell:hover {
+  background: var(--nd-surface-hover);
+}
+
+.notify-bell.active {
+  border-color: var(--nd-brand);
+  background: var(--nd-brand-soft);
+  color: var(--nd-brand);
+}
+
+.notify-bell:focus-visible {
+  outline: 2px solid var(--nd-focus);
+  outline-offset: 2px;
+}
+
+.notify-bell__badge {
+  position: absolute;
+  top: -5px;
+  right: -6px;
+  min-width: 18px;
+  padding: 0 5px;
+  border: 2px solid var(--nd-topbar);
+  border-radius: 999px;
+  background: var(--nd-brand);
+  color: var(--nd-brand-on);
+  font-size: var(--nd-font-size-xs);
+  font-weight: 700;
+  line-height: 14px;
+  text-align: center;
+}
+
+.notify-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  width: min(400px, calc(100vw - 32px));
+  max-height: min(560px, calc(100vh - 90px));
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-md);
+  background: var(--nd-surface-raised);
+  box-shadow: var(--nd-shadow-popover);
+}
+
+.notify-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nd-space-2);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--nd-border);
+}
+
+.notify-panel__title {
+  margin: 0;
+  font-size: var(--nd-font-size-base);
+}
+
+.notify-panel__title:focus {
+  outline: none;
+}
+
+.notify-panel__title:focus-visible {
+  outline: 2px solid var(--nd-focus);
+  outline-offset: 2px;
+}
+
+.notify-panel__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 16px;
+  color: var(--nd-text-muted);
+  text-align: center;
+}
+
+.notify-panel__empty p {
+  margin: 0;
+}
+
+.notify-panel__error,
+.notify-panel__more {
+  padding: 8px 12px;
+}
+
+.notify-panel__more {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--nd-border);
+}
+
+.notify-panel__foot {
+  margin: 0;
+  padding: 8px 12px;
+  border-top: 1px solid var(--nd-border);
+}
+
+.notify-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.notify-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--nd-border);
+}
+
+.notify-item:last-child {
+  border-bottom: 0;
+}
+
+.notify-item--unread {
+  background: var(--nd-brand-soft);
+}
+
+.notify-item__icon {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--nd-idle-soft);
+  color: var(--nd-idle);
+}
+
+.notify-item--success .notify-item__icon {
+  background: var(--nd-success-soft);
+  color: var(--nd-success);
+}
+
+.notify-item--warning .notify-item__icon {
+  background: var(--nd-warning-soft);
+  color: var(--nd-warning);
+}
+
+.notify-item--error .notify-item__icon {
+  background: var(--nd-danger-soft);
+  color: var(--nd-danger);
+}
+
+.notify-item__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.notify-item__title {
+  font-weight: 650;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.notify-item:not(.notify-item--unread) .notify-item__title {
+  font-weight: 520;
+}
+
+/* An agent's message is plain text: line breaks are kept, nothing is formatted or linked. */
+.notify-item__text {
+  margin: 0;
+  color: var(--nd-text);
+  font-size: var(--nd-font-size-sm);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.notify-item__agent {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--nd-running-soft);
+  color: var(--nd-running);
+  font-size: var(--nd-font-size-xs);
+  font-weight: 650;
+}
+
+.notify-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+}
+
+.notify-item__workflow {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notify-item__link {
+  align-self: flex-start;
+}
+
+/* Phones: the panel spans the screen below the top bar. */
+@media (max-width: 760px) {
+  .notify-panel {
+    position: fixed;
+    top: 60px;
+    right: 8px;
+    left: 8px;
+    width: auto;
+    max-height: calc(100vh - 76px);
+  }
+}
+
+/* Narrow phones: slimmer header controls, so the bell fits next to the others on a 390 px screen. */
+@media (max-width: 420px) {
+  .notify-bell {
+    width: 32px;
+    height: 32px;
+  }
+
+  .topbar .segmented button {
+    padding: 4px 7px;
+  }
+
+  .topbar .search-trigger {
+    margin-left: 6px;
+  }
+}
+
+/* ---- the workflow's notification rules (editor inspector) ---- */
+
+.notify-settings {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.notify-settings__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: var(--nd-font-size-sm);
+}
+
+.notify-settings fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.notify-settings legend {
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+.notify-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.notify-option input {
+  margin-top: 3px;
+}
+
+.notify-option__text {
+  display: flex;
+  flex-direction: column;
+}
