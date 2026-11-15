@@ -260,6 +260,8 @@ The package is built in the background; the dialog shows the progress and lets y
 
 The package never contains keys. On the target computer, the operator enters the keys of the AI providers on the settings page of the web interface or with `start.sh configure` (Windows: `start.cmd configure`); they stay on that computer. Clients use API keys created with `start.sh keys new`. By default the application only answers on this computer; for the network it needs TLS or a reverse proxy. The README in the package explains start, stop, settings and troubleshooting. Packages are not signed: macOS and Windows ask once before the first start.
 
+In the top right corner the web interface shows the state of the connection, such as "Connected to Office server". Clicking it opens **About this app** with the interface version, the backend ID and the versions. If the connection drops, a started run continues on the computer; the interface retries by itself and offers **Try again**. If the interface does not match the application's version, it says so instead of working incorrectly.
+
 ## The Orkexa library {#orkexa}
 <!-- keywords: orkexa, library, repository, license, levuvo, vendor, include, git, access -->
 

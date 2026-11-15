@@ -260,6 +260,8 @@ Il pacchetto viene creato in background; la finestra mostra l’avanzamento e ti
 
 Il pacchetto non contiene mai chiavi. Sul computer di destinazione, il gestore inserisce le chiavi dei fornitori di IA nella pagina delle impostazioni dell’interfaccia web o con `start.sh configure` (Windows: `start.cmd configure`); restano su quel computer. I client usano chiavi API create con `start.sh keys new`. Per impostazione predefinita l’applicazione risponde solo su questo computer; per la rete servono TLS o un reverse proxy. Il README del pacchetto spiega avvio, arresto, impostazioni e risoluzione dei problemi. I pacchetti non sono firmati: macOS e Windows chiedono una volta prima del primo avvio.
 
+In alto a destra l’interfaccia web mostra lo stato della connessione, ad esempio «Connesso a Server ufficio». Un clic apre **Informazioni su questa app** con la versione dell’interfaccia, l’ID del backend e le versioni. Se la connessione si interrompe, un’esecuzione avviata prosegue sul computer; l’interfaccia riprova da sola e offre **Riprova**. Se l’interfaccia non corrisponde alla versione dell’applicazione, lo segnala invece di funzionare in modo errato.
+
 ## La libreria Orkexa {#orkexa}
 <!-- keywords: orkexa, libreria, repository, licenza, levuvo, vendor, includere, git, accesso -->
 

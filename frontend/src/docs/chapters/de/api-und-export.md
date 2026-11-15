@@ -260,6 +260,8 @@ Das Paket wird im Hintergrund gebaut; der Dialog zeigt den Fortschritt und läss
 
 Das Paket enthält nie Schlüssel. Auf dem Zielrechner trägt der Betreiber die Schlüssel der KI-Anbieter auf der Einstellungsseite der Weboberfläche oder mit `start.sh configure` (Windows: `start.cmd configure`) ein; sie bleiben auf diesem Rechner. Clients nutzen API-Schlüssel, die `start.sh keys new` erzeugt. Standardmäßig antwortet die Anwendung nur auf diesem Rechner; fürs Netzwerk braucht sie TLS oder einen Reverse-Proxy. Die README im Paket erklärt Start, Stopp, Einstellungen und Fehlerbehebung. Pakete sind nicht signiert: macOS und Windows fragen vor dem ersten Start einmal nach.
 
+Oben rechts zeigt die Weboberfläche den Zustand der Verbindung, etwa „Verbunden mit Büro-Server“. Ein Klick darauf öffnet **Über diese App** mit der Version der Oberfläche, der Backend-ID und den Versionen. Reißt die Verbindung ab, läuft ein gestarteter Lauf auf dem Rechner weiter; die Oberfläche versucht es selbst erneut und bietet **Erneut versuchen** an. Passt die Oberfläche nicht zur Version der Anwendung, sagt sie das, statt falsch zu arbeiten.
+
 ## Die Bibliothek Orkexa {#orkexa}
 <!-- keywords: orkexa, bibliothek, repository, lizenz, levuvo, vendor, mitliefern, git, zugriff -->
 
