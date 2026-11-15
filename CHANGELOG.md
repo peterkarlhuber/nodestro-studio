@@ -15,6 +15,18 @@
   a self-issued certificate with the fingerprint comparison and its "restricted trust" mark, or an SSH tunnel;
   pairing by code is prepared but off until the independent security review. Six languages.
 
+### Tabrion 0.2.2 pin (2026-11-15)
+
+- The lock moves tabrion to the final 0.2.2 (`5bc690e`, tabrion #83, untagged), which carries security fixes:
+  `grant_runtime_role` refuses members of predefined roles (`predefined_role`), roles that can still write a
+  protected table (`protected_writable`) and CREATEROLE roles before PostgreSQL 16 (`createrole`); `tabrion.check`
+  adds TAB-PG-013/014; `tabrion.profilefile` refuses more host values. No public name is added or removed.
+  `platform/versions.json` records 0.2.2 as a known final (RC-8).
+- The lock also catches up with the components' current masters: axentra `e519405` (axentra #100, Tabrion 0.2.2 pin),
+  orkexa `7ee9977` (orkexa #104), nodestro-api `50dadbd` (nodestro-api #148: portable lock on 0.2.2; it also carries
+  NAL-C3 #147 and DC-NA-1 #130), nodestro-runtime `f5f602c`, nodestro-examples `39c8afa`, nodestro-integrations
+  `2db82e7`, nodestro-sdk `4176c9f` (sdk #128: OpenAPI document and types synced with api `50dadbd`).
+
 ### NAL-A4: e-mail and webhook drafts (2026-11-15)
 
 - Tools: the built-in tools "E-mail draft" (`draft_email`) and "Webhook draft" (`draft_webhook`) get names and
