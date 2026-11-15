@@ -11,6 +11,9 @@
   packages are named before anything is built. Six languages.
 - Help "API and export": the platform badges and the pre-check, and how to operate a package (`verify`, `backup`,
   `restore`, `update`, `rollback`, `adopt`, `ui install`), in six languages.
+- Help "API and export": using a package from another computer (NAL-C4): own certificate or TLS proxy (recommended),
+  a self-issued certificate with the fingerprint comparison and its "restricted trust" mark, or an SSH tunnel;
+  pairing by code is prepared but off until the independent security review. Six languages.
 
 ### NAL-A4: e-mail and webhook drafts (2026-11-15)
 
