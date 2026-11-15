@@ -17,13 +17,13 @@
     },
     "axentra": {
       "comment": "Generic SaaS backend library, server profile only (the nodestro-runtime[postgres] extra); the studio never depends on it.",
-      "commit": "0e2979ad8f4113b16eaceecdf37767e9c2d6391e",
+      "commit": "e519405d3d17262d0652fd496b0cf0aa6b169e3f",
       "version": "0.1.0.dev0",
       "pyproject": "pyproject.toml",
       "version_file": "src/axentra/_version.py"
     },
     "orkexa": {
-      "commit": "ab1c0882349cc8a65add465a1bf45540438c42de",
+      "commit": "7ee9977605ada72a2df404bc31fed4a43eaad9f0",
       "version": "0.2.0.dev0",
       "pyproject": "pyproject.toml"
     },
@@ -46,7 +46,7 @@
       "studio_dependency": true
     },
     "nodestro-api": {
-      "commit": "e1eee59c480b6a0eae232252cbacbad3b5045e28",
+      "commit": "50dadbd38bf292677b96b212082bb025e94809d9",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true

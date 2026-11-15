@@ -9,10 +9,10 @@
   protected table (`protected_writable`) and CREATEROLE roles before PostgreSQL 16 (`createrole`); `tabrion.check`
   adds TAB-PG-013/014; `tabrion.profilefile` refuses more host values. No public name is added or removed.
   `platform/versions.json` records 0.2.2 as a known final (RC-8).
-- The lock also catches up with the components' current masters: axentra `0e2979a`, orkexa `ab1c088`,
-  nodestro-runtime `f5f602c`, nodestro-examples `39c8afa`, nodestro-integrations `2db82e7`. nodestro-api
-  (`e1eee59`) and nodestro-sdk are unchanged. The axentra, orkexa and nodestro-api pull requests of the 0.2.2 pin
-  (branch `claude/project-thread-bjlq25-tab022`) move their own pins; this lock follows their merge commits.
+- The lock also catches up with the components' current masters: axentra `e519405` (axentra #100, Tabrion 0.2.2 pin),
+  orkexa `7ee9977` (orkexa #104), nodestro-api `50dadbd` (nodestro-api #148: portable lock on 0.2.2; it also carries
+  NAL-C3 #147 and DC-NA-1 #130), nodestro-runtime `f5f602c`, nodestro-examples `39c8afa`, nodestro-integrations
+  `2db82e7`. nodestro-sdk is unchanged.
 
 ### NAL-A4: e-mail and webhook drafts (2026-11-15)
 
