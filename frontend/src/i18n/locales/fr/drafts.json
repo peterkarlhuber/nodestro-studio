@@ -1,0 +1,43 @@
+{
+  "noSend": "N’envoie rien",
+  "noSendHint": "Prépare seulement un brouillon. Rien n’est envoyé : une personne vérifie le brouillon et l’envoie.",
+  "card": {
+    "email": "Brouillon d’e-mail",
+    "webhook": "Brouillon de webhook",
+    "notSent": "Non envoyé",
+    "notSentEmail": "Rien n’a été envoyé. Un agent a préparé cet e-mail ; téléchargez-le, vérifiez-le dans votre messagerie et envoyez-le vous-même.",
+    "notSentWebhook": "Rien n’a été envoyé. Un agent a préparé ces données de webhook ; téléchargez-les, vérifiez-les et envoyez-les vous-même.",
+    "help": "Brouillons",
+    "from": "De",
+    "fromUnset": "non défini ; votre messagerie indique l’expéditeur",
+    "to": "À",
+    "cc": "Cc",
+    "subject": "Objet",
+    "html": "Version HTML",
+    "yes": "oui",
+    "no": "non",
+    "none": "aucune",
+    "attachments": "Pièces jointes",
+    "schema": "Vérifié selon un schéma",
+    "size": "Taille",
+    "created": "Créé",
+    "bodyHidden": "Le texte de l’e-mail n’est pas affiché ici. Ouvrez le fichier pour le lire.",
+    "downloadEml": "Télécharger le .eml",
+    "downloadJson": "Télécharger le .json",
+    "openInMail": "Ouvrir dans la messagerie",
+    "openInMailHint": "Télécharge le fichier .eml. Ouvrez-le avec votre logiciel de messagerie (par exemple par un double-clic) ; beaucoup de logiciels l’ouvrent comme un nouveau message prêt à envoyer. Nodestro n’envoie rien."
+  },
+  "testSend": {
+    "button": "Envoyer un test",
+    "title": "Envoyer un test via « {{name}} »",
+    "toAddress": "Nodestro envoie un court e-mail de test via ce serveur de messagerie à l’adresse de test :",
+    "toUrl": "Nodestro envoie un appel de test ({{method}}) avec quelques données JSON à l’adresse du webhook :",
+    "byYou": "Vous envoyez ce test vous-même, et il est enregistré à votre nom. Aucun agent ni aucun workflow n’intervient.",
+    "limit": "Au maximum 5 envois de test par connexion et par heure.",
+    "noAddress": "Cette connexion n’a pas d’adresse de test. Saisissez d’abord votre propre adresse e-mail comme « Adresse de test » dans ses paramètres.",
+    "confirm": "Envoyer le test maintenant",
+    "sent": "Test envoyé.",
+    "sentStatus": "Test envoyé. Le webhook a répondu avec HTTP {{status}}.",
+    "close": "Fermer"
+  }
+}

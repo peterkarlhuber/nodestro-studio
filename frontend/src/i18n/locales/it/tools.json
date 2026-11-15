@@ -376,7 +376,8 @@
       "from_address": "Indirizzo del mittente",
       "auth": "Metodo di accesso",
       "url": "Indirizzo (URL)",
-      "method": "Metodo HTTP"
+      "method": "Metodo HTTP",
+      "test_address": "Indirizzo di prova"
     },
     "check": {
       "unchecked": "Non verificata",
@@ -414,7 +415,8 @@
       "deleted": "Eliminata",
       "secret_set": "Segreto impostato",
       "secret_cleared": "Segreto rimosso",
-      "checked": "Verificata"
+      "checked": "Verificata",
+      "test_sent": "Invio di prova"
     },
     "search": {
       "open": "Configura servizio di ricerca",
@@ -439,6 +441,9 @@
       "create": "Configura",
       "done": "Servizio di ricerca “{{name}}” configurato.",
       "none": "In questa installazione non è possibile configurare alcun servizio di ricerca."
+    },
+    "fieldHint": {
+      "test_address": "Il tuo indirizzo e-mail. «Invia test» manda un’e-mail di prova solo a questo indirizzo."
     }
   },
   "origin": {
@@ -450,6 +455,14 @@
     "notify_user": {
       "name": "Messaggio per me",
       "description": "Invia un breve messaggio dell’agente alla campanella nella barra superiore di Nodestro: un titolo, il testo e un livello (info, successo, avviso o errore). Al massimo 3 messaggi per esecuzione, mostrati come testo semplice e contrassegnati come provenienti da un agente. Non invia nulla fuori da Nodestro: nessuna e-mail, nessun webhook."
+    },
+    "draft_email": {
+      "name": "Bozza di e-mail",
+      "description": "Prepara un’e-mail come file di bozza (.eml) nei file di risultato dell’esecuzione: destinatari, oggetto, testo, una versione HTML facoltativa e allegati presi dai file dell’esecuzione. Non invia nulla: una persona apre la bozza in un programma di posta, la controlla e la invia. Al massimo 10 bozze per esecuzione; funziona offline."
+    },
+    "draft_webhook": {
+      "name": "Bozza di webhook",
+      "description": "Prepara i dati JSON di una chiamata webhook come file di bozza nei file di risultato dell’esecuzione, verificati con un JSON Schema se ne imposti uno nell’agente. Non chiama nessun webhook: una persona controlla i dati e li invia. Al massimo 10 bozze per esecuzione; funziona offline."
     }
   }
 }

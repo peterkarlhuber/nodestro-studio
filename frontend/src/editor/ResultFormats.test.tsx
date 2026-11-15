@@ -12,7 +12,7 @@ import { api } from "../api/client";
 import type { ReportFormat, ResultFile, Run, Workflow } from "../api/types";
 import i18n, { LANGUAGES, setLanguage } from "../i18n";
 import { newNode } from "../lib/defaults";
-import { RESULT_FORMATS, RESULT_FORMAT_IDS, canPreview, isResultFormat, resultFormatLabel } from "../lib/resultFormats";
+import { RESULT_FORMATS, RESULT_FORMAT_IDS, TOOL_FORMATS, canPreview, isResultFormat, resultFormat, resultFormatLabel, resultFormatOptions } from "../lib/resultFormats";
 import { ResultFiles } from "../runs/ResultFiles";
 import { bundles } from "../test/locales";
 import { OutputFilesEditor } from "./FlowInspectors";
@@ -63,6 +63,15 @@ describe("the format table", () => {
     expect(isResultFormat("DOCX")).toBe(false);
     expect(isResultFormat("doc")).toBe(false);
     expect(canPreview("unknown")).toBe(false);
+  });
+
+  it("keeps the e-mail draft (eml) apart: listed, never offered, never shown in the page (NAL-A4)", () => {
+    expect(TOOL_FORMATS.map((format) => format.id)).toEqual(["eml"]);
+    expect(resultFormat("eml")).toEqual({ id: "eml", extension: "eml", mediaType: "message/rfc822", preview: false });
+    expect(RESULT_FORMAT_IDS).not.toContain("eml");
+    expect(isResultFormat("eml")).toBe(false);
+    expect(canPreview("eml")).toBe(false);
+    expect(resultFormatOptions(i18n.t.bind(i18n)).map((option) => option.value)).not.toContain("eml");
   });
 
   it.each(LANGUAGES)("names every format with its extension in %s", async (language) => {

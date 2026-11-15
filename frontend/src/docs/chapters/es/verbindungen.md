@@ -30,7 +30,7 @@ Los secretos se guardan cifrados, como los tokens de acceso de los servicios con
 ## Comprobar una conexión {#pruefen}
 <!-- keywords: comprobar, estado, funciona, la comprobación falló, código de error -->
 
-**Comprobar conexión** prueba la conexión y muestra el resultado: *Funciona*, *La comprobación falló* o *Sin comprobar*, con la hora de la comprobación y, si falla, el código de error. Por ahora, en los servidores de correo y los webhooks solo se comprueba la configuración; todavía no se contacta con el servicio. Si cambias la configuración, el proveedor o el secreto, el estado vuelve a *Sin comprobar*. Una conexión que todavía no se ha comprobado con éxito aparece como advertencia en la comprobación previa a una ejecución.
+**Comprobar conexión** prueba la conexión y muestra el resultado: *Funciona*, *La comprobación falló* o *Sin comprobar*, con la hora de la comprobación y, si falla, el código de error. En los servidores de correo y los webhooks, Nodestro contacta con el servicio: inicia sesión cifrada en el servidor de correo y la cierra, o consulta la dirección del webhook, sin enviar nada. **Enviar prueba** envía después, tras tu confirmación, un mensaje de prueba fijo a tu dirección de prueba o al webhook (ver [Envío de prueba de una conexión](/docs/entwuerfe#testversand)). Si cambias la configuración, el proveedor o el secreto, el estado vuelve a *Sin comprobar*. Una conexión que todavía no se ha comprobado con éxito aparece como advertencia en la comprobación previa a una ejecución.
 
 ## Usar una conexión en un agente {#zuweisen}
 <!-- keywords: agente, inspector, configuración de la herramienta, selección de conexión -->

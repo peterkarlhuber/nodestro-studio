@@ -260,6 +260,8 @@ Le paquet est généré en arrière-plan ; la boîte de dialogue affiche la prog
 
 Le paquet ne contient jamais de clés. Sur l’ordinateur cible, l’exploitant saisit les clés des fournisseurs d’IA sur la page des réglages de l’interface web ou avec `start.sh configure` (Windows: `start.cmd configure`) ; elles restent sur cet ordinateur. Les clients utilisent des clés d’API créées avec `start.sh keys new`. Par défaut, l’application ne répond que sur cet ordinateur ; pour le réseau, il lui faut TLS ou un proxy inverse. Le README du paquet explique le démarrage, l’arrêt, les réglages et le dépannage. Les paquets ne sont pas signés : macOS et Windows demandent une fois avant le premier démarrage.
 
+En haut à droite, l’interface web affiche l’état de la connexion, par exemple « Connecté à Serveur du bureau ». Un clic ouvre **À propos de cette app** avec la version de l’interface, l’ID du backend et les versions. Si la connexion est coupée, une exécution lancée continue sur l’ordinateur ; l’interface réessaie d’elle-même et propose **Réessayer**. Si l’interface ne correspond pas à la version de l’application, elle le signale au lieu de mal fonctionner.
+
 ## La bibliothèque Orkexa {#orkexa}
 <!-- keywords: orkexa, bibliothèque, dépôt, licence, levuvo, vendor, inclure, git, accès -->
 

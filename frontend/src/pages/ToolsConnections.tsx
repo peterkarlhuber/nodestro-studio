@@ -14,6 +14,7 @@ import {
   type Connection,
   type ConnectionStatus,
   type ConnectionTypeInfo,
+  TEST_SEND_TYPES,
   connectionKeys,
   connectionsApi,
   settingsFields,
@@ -42,6 +43,7 @@ import {
 } from "../components/ui";
 import { ErrorText, ProblemText, codedError } from "../lib/errors";
 import { type Tone, formatDate, relativeTime } from "../lib/format";
+import { TestSendButton } from "./ConnectionTestSend";
 import { SearchSetupDialog } from "./SearchSetup";
 
 const CHECK_TONE: Record<CheckStatus, Tone> = { unchecked: "idle", ok: "success", failed: "danger" };
@@ -274,11 +276,14 @@ function ConnectionDetail({
             <code className="small">{result.code}</code>
           </Callout>
         ) : null}
-        {admin && type?.checkable !== false ? (
-          <div>
-            <Button icon={CheckCircle2} busy={check.isPending} onClick={() => check.mutate()}>
-              {t("tools.connections.checkButton")}
-            </Button>
+        {admin ? (
+          <div className="row-gap">
+            {type?.checkable !== false ? (
+              <Button icon={CheckCircle2} busy={check.isPending} onClick={() => check.mutate()}>
+                {t("tools.connections.checkButton")}
+              </Button>
+            ) : null}
+            {TEST_SEND_TYPES.includes(connection.type) ? <TestSendButton connection={connection} /> : null}
           </div>
         ) : null}
       </div>
@@ -463,7 +468,12 @@ function ConnectionForm({
           const label = t(`tools.connections.field.${field.name}`, { defaultValue: field.title });
           const set = (value: string) => setValues((current) => ({ ...current, [field.name]: value }));
           return (
-            <Field key={field.name} label={field.required ? `${label} *` : label} htmlFor={id}>
+            <Field
+              key={field.name}
+              label={field.required ? `${label} *` : label}
+              htmlFor={id}
+              hint={t(`tools.connections.fieldHint.${field.name}`, { defaultValue: "" }) || undefined}
+            >
               {field.kind === "enum" ? (
                 <Select
                   id={id}

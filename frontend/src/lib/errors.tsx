@@ -220,6 +220,10 @@ export function refineProblem(
   // agent library's reason has a sentence of its own (a damaged manifest, an invalid model name).
   if (code === "local.invalid_package" && typeof params.path === "string" && params.path)
     return { code: PACKAGE_REASONS.has(params.reason as string) ? "local.invalid_package_reason" : "local.invalid_package_path", params };
+  // A failed connection check stores only its code; a test send's answer also names the HTTP status or port (NAL-A4).
+  if ((code === "connection.http_status" || code === "connection.redirect_refused") && params.status == null)
+    return { code: `${code}_plain`, params };
+  if (code === "connection.port_refused" && params.port == null) return { code: "connection.port_refused_plain", params };
   // A server's size limit for packages as information (nodestro-api API-053); without the limit the sentence is general.
   if (code === "export.server_limit" && !(Number(params.limit) > 0)) return { code: "export.server_limit_plain", params };
   // An unknown task profile of the local model recommendation; newer APIs name the known ones (API-053).

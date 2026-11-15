@@ -260,6 +260,8 @@ O pacote é gerado em segundo plano; a caixa de diálogo mostra o progresso e pe
 
 O pacote nunca contém chaves. No computador de destino, o operador informa as chaves dos provedores de IA na página de configurações da interface web ou com `start.sh configure` (Windows: `start.cmd configure`); elas ficam nesse computador. Os clientes usam chaves de API criadas com `start.sh keys new`. Por padrão o aplicativo só responde neste computador; para a rede ele precisa de TLS ou de um proxy reverso. O README do pacote explica início, parada, configurações e solução de problemas. Os pacotes não são assinados: o macOS e o Windows perguntam uma vez antes da primeira inicialização.
 
+No canto superior direito, a interface web mostra o estado da conexão, por exemplo “Conectado a Servidor do escritório”. Um clique abre **Sobre este app** com a versão da interface, o ID do backend e as versões. Se a conexão cair, uma execução iniciada continua no computador; a interface tenta de novo sozinha e oferece **Tentar novamente**. Se a interface não corresponder à versão da aplicação, ela avisa em vez de funcionar de forma errada.
+
 ## A biblioteca Orkexa {#orkexa}
 <!-- keywords: orkexa, biblioteca, repositório, licença, levuvo, vendor, incluir, git, acesso -->
 

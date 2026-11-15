@@ -41,10 +41,11 @@ import {
   TagEditor,
   applyOrganize,
 } from "../components/Organize";
+import { NoSendBadge } from "../components/NoSendBadge";
 import { toast } from "../components/toast";
 import { DeleteUsed, UsedByList, useUsedBy } from "../components/UsedBy";
 import { Badge, Button, Callout, EmptyState, Field, HelpTip, Hint, PageHeader, Section, Segmented, Spinner, TextArea, TextInput } from "../components/ui";
-import { toolDescription, toolDisplayName } from "../lib/catalog";
+import { isDraftTool, toolDescription, toolDisplayName } from "../lib/catalog";
 import { ToolDependencies } from "../python/DependencyPanel";
 import { PlanTable } from "../python/PlanTable";
 import { ErrorText, LocalError, ProblemText, SandboxSetupLink, problemText } from "../lib/errors";
@@ -227,6 +228,7 @@ function Library({ onShownKind }: { onShownKind?: (kind: string | null) => void 
                     {t(`tools.kind.${item.kind}`)}
                   </Badge>
                   {skillScriptOf(item.origin) ? <Badge icon={FileCode}>{t("tools.origin.skillBadge")}</Badge> : null}
+                  {isDraftTool(item) ? <NoSendBadge /> : null}
                 </span>
                 <span className="list__text">{toolDescription(t, item)}</span>
                 <SpecBadges spec={specs.get(item.name)} />
@@ -448,7 +450,7 @@ function ToolDetail({
         <div>
           <h2 className="panel__title">
             {toolDisplayName(t, tool) ? <>{toolDisplayName(t, tool)} </> : null}
-            <code>{tool.name}</code>
+            <code>{tool.name}</code> {isDraftTool(tool) ? <NoSendBadge /> : null}
           </h2>
           <p className="muted small">
             <HelpTip id="tools.kind" label={t("tools.kindLabel")} />{" "}

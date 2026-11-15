@@ -85,7 +85,8 @@
     "services": "Servicios externos mediante MCP: conectas un servidor, pruebas la conexión y apruebas cada herramienta tras revisarla. Si el servicio modifica una herramienta, queda bloqueada hasta que revises el cambio.",
     "callApproval": "Una persona decide sobre cada llamada a esta herramienta, con los argumentos exactos. Sin decisión dentro del plazo, la llamada cuenta como rechazada.",
     "servicesLocal": "Un servidor MCP local se ejecuta en un contenedor aislado. Sus paquetes se revisan y aprueban como las bibliotecas de una herramienta.",
-    "servicesOAuth": "Algunos servicios exigen iniciar sesión. Nodestro abre su página de inicio de sesión y guarda el acceso cifrado."
+    "servicesOAuth": "Algunos servicios exigen iniciar sesión. Nodestro abre su página de inicio de sesión y guarda el acceso cifrado.",
+    "testSend": "Envía un mensaje de prueba fijo: a la dirección de prueba de una conexión de servidor de correo o a la dirección de un webhook. Lo envías tú mismo; como máximo 5 por conexión y hora, y cada uno queda registrado."
   },
   "knowledge": {
     "upload": "PDF, imágenes (PNG, JPEG, GIF, WebP) y formatos de texto. Imágenes de hasta 5 MB, documentos de hasta 20 MB. Los textos y los PDF se indexan para la búsqueda.",
@@ -244,7 +245,8 @@
     "sanitize": "Sustituye credenciales y datos personales del archivo por marcadores.",
     "run": "Archivos de esta ejecución. El HTML se muestra sin scripts.",
     "formats": "Word (DOCX) y Excel (XLSX) se convierten a Markdown al subirlos; las fórmulas se muestran, nunca se ejecutan.",
-    "ocr": "Requiere Tesseract y pdftoppm en este ordenador (la etiqueta muestra si están). Activado: las páginas de PDF escaneados sin capa de texto se reconocen localmente al leer el archivo, lo que tarda unos segundos por página; las palabras dudosas se marcan para que puedas revisarlas. Desactivado: esas páginas no aportan texto a los agentes ni a la búsqueda de conocimiento."
+    "ocr": "Requiere Tesseract y pdftoppm en este ordenador (la etiqueta muestra si están). Activado: las páginas de PDF escaneados sin capa de texto se reconocen localmente al leer el archivo, lo que tarda unos segundos por página; las palabras dudosas se marcan para que puedas revisarlas. Desactivado: esas páginas no aportan texto a los agentes ni a la búsqueda de conocimiento.",
+    "drafts": "Borradores que un agente preparó con «Borrador de correo» o «Borrador de webhook». No se ha enviado nada: descarga el archivo, revísalo y envíalo tú mismo."
   },
   "automation": {
     "batch": "Un flujo de trabajo sobre muchas entradas. Cada fila se convierte en una ejecución propia.",

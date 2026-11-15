@@ -30,7 +30,7 @@ Geheimnisse werden verschlüsselt gespeichert, wie die Zugangstokens verbundener
 ## Eine Verbindung prüfen {#pruefen}
 <!-- keywords: prüfen, status, funktioniert, prüfung fehlgeschlagen, fehlercode -->
 
-**Verbindung prüfen** testet die Verbindung und zeigt das Ergebnis: *Funktioniert*, *Prüfung fehlgeschlagen* oder *Nicht geprüft*, mit dem Zeitpunkt der Prüfung und bei einem Fehler dem Fehlercode. Bei Mailservern und Webhooks prüft Nodestro vorerst nur die Einstellungen und kontaktiert den Dienst noch nicht. Ändern sich Einstellungen, Anbieter oder Geheimnis, steht der Status wieder auf *Nicht geprüft*. Eine Verbindung, die noch nicht erfolgreich geprüft wurde, erscheint in der Prüfung vor einer Ausführung als Warnung.
+**Verbindung prüfen** testet die Verbindung und zeigt das Ergebnis: *Funktioniert*, *Prüfung fehlgeschlagen* oder *Nicht geprüft*, mit dem Zeitpunkt der Prüfung und bei einem Fehler dem Fehlercode. Bei Mailservern und Webhooks kontaktiert Nodestro den Dienst: Es meldet sich beim Mailserver verschlüsselt an und wieder ab oder fragt die Adresse des Webhooks an, ohne etwas zu verschicken. **Test senden** verschickt danach auf deine Bestätigung eine feste Testnachricht an deine Testadresse oder den Webhook (siehe [Testversand einer Verbindung](/docs/entwuerfe#testversand)). Ändern sich Einstellungen, Anbieter oder Geheimnis, steht der Status wieder auf *Nicht geprüft*. Eine Verbindung, die noch nicht erfolgreich geprüft wurde, erscheint in der Prüfung vor einer Ausführung als Warnung.
 
 ## Eine Verbindung im Agenten nutzen {#zuweisen}
 <!-- keywords: agent, inspektor, tool-einstellungen, verbindungsauswahl -->

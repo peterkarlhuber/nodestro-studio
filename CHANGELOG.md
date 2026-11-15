@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+### NAL-A4: e-mail and webhook drafts (2026-11-15)
+
+- Tools: the built-in tools "E-mail draft" (`draft_email`) and "Webhook draft" (`draft_webhook`) get names and
+  descriptions and the badge "Does not send" in the tool list, the tool detail, the agent's tool picker and the
+  agent's tool settings. Their binding parameters are edited there: the sender address of `draft_email` and the
+  payload schema of `draft_webhook` (a JSON object, written only when it parses as one).
+- Runs: result files a draft tool wrote (`source: "tool"`) show as a draft card marked "Not sent". An e-mail card
+  shows sender, recipients, Cc, subject, HTML yes/no and the attachments with their sizes, never the body, with
+  "Download .eml" and "Open in mail program" (the same download; its tooltip and hint say so). A webhook card shows
+  the size and whether a schema checked the payload, with "Download .json". Long values wrap at 390 px.
+- `resultFormats.ts` mirrors the runtime's `TOOL_FORMATS` (`eml`, `message/rfc822`) apart from the offered formats:
+  no picker offers it and it is never shown inline; `tests/test_result_formats.py` compares both tables.
+- Connections: mail server connections get the field "Test address"; mail server and webhook connections get
+  "Send test" for administrators, with a confirmation that names the test address or the webhook address and the
+  method, says that the person sends it and states the limit of 5 per connection and hour, then calls
+  `POST /api/connections/{id}/test-send` with `{"confirm": "SEND"}` and shows the result or the error. The event
+  list names test sends. The help on checking connections now says that the check contacts the service.
+- A help chapter "E-mail and webhook drafts" (`entwuerfe`) with the drafts, the run's draft cards, the test send and
+  its limits and why nothing is sent automatically yet; texts in all six languages and error texts for the new
+  `mail.*`, `webhook.*` and `connection.*` codes (the check and test send failures).
+
 ### NAL-A3: internal notifications (2026-11-14)
 
 - A bell in the top bar with the number of unread notifications (its accessible name includes the count) opens a

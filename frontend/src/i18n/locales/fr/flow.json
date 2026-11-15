@@ -147,7 +147,8 @@
     "sanitized": "nettoyé",
     "source": {
       "output": "du nœud de résultat",
-      "manual": "créé après coup"
+      "manual": "créé après coup",
+      "tool": "brouillon d’un agent"
     },
     "view": "Afficher {{name}}",
     "download": "Télécharger {{name}}",

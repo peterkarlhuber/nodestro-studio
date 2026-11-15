@@ -376,7 +376,8 @@
       "from_address": "Endereço do remetente",
       "auth": "Método de login",
       "url": "Endereço (URL)",
-      "method": "Método HTTP"
+      "method": "Método HTTP",
+      "test_address": "Endereço de teste"
     },
     "check": {
       "unchecked": "Não verificada",
@@ -414,7 +415,8 @@
       "deleted": "Excluída",
       "secret_set": "Segredo definido",
       "secret_cleared": "Segredo removido",
-      "checked": "Verificada"
+      "checked": "Verificada",
+      "test_sent": "Envio de teste"
     },
     "search": {
       "open": "Configurar serviço de busca",
@@ -439,6 +441,9 @@
       "create": "Configurar",
       "done": "Serviço de busca “{{name}}” configurado.",
       "none": "Nenhum serviço de busca pode ser configurado nesta instalação."
+    },
+    "fieldHint": {
+      "test_address": "O seu próprio endereço de e-mail. “Enviar teste” envia um e-mail de teste só para este endereço."
     }
   },
   "origin": {
@@ -450,6 +455,14 @@
     "notify_user": {
       "name": "Mensagem para mim",
       "description": "Envia uma mensagem curta do agente para o sino na barra superior do Nodestro: um título, o texto e um nível (informação, sucesso, aviso ou erro). No máximo 3 mensagens por execução, mostradas como texto simples e marcadas como vindas de um agente. Não envia nada para fora do Nodestro: nenhum e-mail, nenhum webhook."
+    },
+    "draft_email": {
+      "name": "Rascunho de e-mail",
+      "description": "Prepara um e-mail como arquivo de rascunho (.eml) nos arquivos de resultado da execução: destinatários, assunto, texto, uma versão HTML opcional e anexos dos próprios arquivos da execução. Não envia nada: uma pessoa abre o rascunho em um programa de e-mail, confere e envia. No máximo 10 rascunhos por execução; funciona offline."
+    },
+    "draft_webhook": {
+      "name": "Rascunho de webhook",
+      "description": "Prepara os dados JSON de uma chamada de webhook como arquivo de rascunho nos arquivos de resultado da execução, conferidos com um JSON Schema se você definir um no agente. Não chama nenhum webhook: uma pessoa confere os dados e os envia. No máximo 10 rascunhos por execução; funciona offline."
     }
   }
 }

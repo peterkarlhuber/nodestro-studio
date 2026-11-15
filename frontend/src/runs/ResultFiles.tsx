@@ -1,4 +1,5 @@
-// The result files of a run: written by its result nodes, or created here afterwards.
+// The result files of a run: written by its result nodes, created here afterwards, or drafts an agent prepared with
+// draft_email or draft_webhook (NAL-A4), which show as a draft card.
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { BookOpen, Download, Eye, FilePlus2, FileText, Trash2 } from "lucide-react";
@@ -14,6 +15,7 @@ import { Badge, Button, Callout, ConfirmIconButton, Field, HelpTip, IconButton, 
 import { ErrorText, ProblemText } from "../lib/errors";
 import { formatBytes, formatDate } from "../lib/format";
 import { canPreview, isResultFormat, resultFormatOptions } from "../lib/resultFormats";
+import { DraftCard, draftPreview } from "./DraftCard";
 
 export function ResultFiles({ run }: { run: Run }) {
   const { t } = useTranslation();
@@ -42,45 +44,54 @@ export function ResultFiles({ run }: { run: Run }) {
       </div>
       {!list.length ? <p className="muted small">{finished ? t("flow.files.none") : t("flow.files.afterRun")}</p> : null}
       <ul className="file-list">
-        {list.map((file) => (
-          <li key={file.id}>
-            <span className="row-gap">
-              <FileText size={14} aria-hidden />
-              <strong>{file.name}</strong>
-              <Badge>{file.format.toUpperCase()}</Badge>
-              {file.sanitized ? <Badge tone="success">{t("flow.files.sanitized")}</Badge> : null}
-              <span className="muted small">
-                {file.error_code ? null : `${formatBytes(file.size)} · `}
-                {formatDate(file.created_at)} · {t(`flow.files.source.${file.source}`)}
-              </span>
-            </span>
-            {file.error_code ? (
-              <span className="text-warning small">
-                <ProblemText item={{ code: file.error_code, params: file.error_params, message: file.error }} compact />
-              </span>
-            ) : (
+        {list.map((file) => {
+          const draft = draftPreview(file);
+          if (draft)
+            return (
+              <li key={file.id} className="file-list__draft">
+                <DraftCard file={file} preview={draft} onDelete={() => remove.mutate(file)} />
+              </li>
+            );
+          return (
+            <li key={file.id}>
               <span className="row-gap">
-                {canPreview(file.format) ? (
-                  <IconButton icon={Eye} label={t("flow.files.view", { name: file.name })} onClick={() => setPreview(file)} />
-                ) : null}
-                <a
-                  className="nd-button nd-button--ghost nd-button--sm"
-                  href={api.resultFileUrl(run.id, file.id)}
-                  download={file.name}
-                  aria-label={t("flow.files.download", { name: file.name })}
-                >
-                  <Download size={14} aria-hidden />
-                </a>
-                <IconButton
-                  icon={BookOpen}
-                  label={t("inputs.adopt.resultFile", { name: file.name })}
-                  onClick={() => setAdopting([{ kind: "result_file", run_id: run.id, file_id: file.id }])}
-                />
-                <ConfirmIconButton icon={Trash2} label={t("flow.files.delete", { name: file.name })} onConfirm={() => remove.mutate(file)} />
+                <FileText size={14} aria-hidden />
+                <strong>{file.name}</strong>
+                <Badge>{file.format.toUpperCase()}</Badge>
+                {file.sanitized ? <Badge tone="success">{t("flow.files.sanitized")}</Badge> : null}
+                <span className="muted small">
+                  {file.error_code ? null : `${formatBytes(file.size)} · `}
+                  {formatDate(file.created_at)} · {t(`flow.files.source.${file.source}`)}
+                </span>
               </span>
-            )}
-          </li>
-        ))}
+              {file.error_code ? (
+                <span className="text-warning small">
+                  <ProblemText item={{ code: file.error_code, params: file.error_params, message: file.error }} compact />
+                </span>
+              ) : (
+                <span className="row-gap">
+                  {canPreview(file.format) ? (
+                    <IconButton icon={Eye} label={t("flow.files.view", { name: file.name })} onClick={() => setPreview(file)} />
+                  ) : null}
+                  <a
+                    className="nd-button nd-button--ghost nd-button--sm"
+                    href={api.resultFileUrl(run.id, file.id)}
+                    download={file.name}
+                    aria-label={t("flow.files.download", { name: file.name })}
+                  >
+                    <Download size={14} aria-hidden />
+                  </a>
+                  <IconButton
+                    icon={BookOpen}
+                    label={t("inputs.adopt.resultFile", { name: file.name })}
+                    onClick={() => setAdopting([{ kind: "result_file", run_id: run.id, file_id: file.id }])}
+                  />
+                  <ConfirmIconButton icon={Trash2} label={t("flow.files.delete", { name: file.name })} onConfirm={() => remove.mutate(file)} />
+                </span>
+              )}
+            </li>
+          );
+        })}
       </ul>
       <CreateFileDialog run={run} open={creating} onClose={() => setCreating(false)} />
       <AdoptDialog open={adopting !== null} onClose={() => setAdopting(null)} sources={adopting ?? []} />

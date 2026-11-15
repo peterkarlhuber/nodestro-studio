@@ -67,7 +67,7 @@ import { MemoryAssistantDialog } from "./MemoryAssistantDialog";
 import { OutputFieldsEditor } from "./OutputFieldsEditor";
 import { ModelOptionGate, ModelTokenLimits, NativeToolReason, OptionReason, nativeToolSupport, supportOf } from "./ModelOptionGate";
 import { acceptedEfforts, useModelProfile } from "../api/modelProfile";
-import { serverToolDescription, serverToolLabel, toolDescription, toolDisplayName } from "../lib/catalog";
+import { isDraftTool, serverToolDescription, serverToolLabel, toolDescription, toolDisplayName } from "../lib/catalog";
 import { getDefaultModel } from "../lib/defaults";
 import { findModel, providerOf, sameModel, splitModel } from "../lib/providers";
 import { ProblemText } from "../lib/errors";
@@ -584,9 +584,11 @@ function ToolsSection({ agent, update, issues = [], ui }: SectionProps) {
         placeholder={t("agent.tools.addPlaceholder")}
         options={available.map((tool) => {
           const display = toolDisplayName(t, tool);
+          const name = display ? `${display} (${tool.name})` : tool.name;
           return {
             value: tool.name,
-            label: display ? `${display} (${tool.name})` : tool.name,
+            // A draft tool says in the picker that it sends nothing (NAL-A4).
+            label: isDraftTool(tool) ? `${name} · ${t("drafts.noSend")}` : name,
             hint: toolDescription(t, tool),
             group: t(`agent.tools.kind.${tool.kind}`),
           };

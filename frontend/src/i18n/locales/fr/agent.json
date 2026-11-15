@@ -116,7 +116,9 @@
         "allow_hosts": "Domaines autorisés",
         "deny_hosts": "Domaines bloqués",
         "max_calls": "Nombre maximal d’appels par exécution",
-        "max_chars": "Nombre maximal de caractères par page"
+        "max_chars": "Nombre maximal de caractères par page",
+        "from_address": "Adresse de l’expéditeur",
+        "payload_schema": "Schéma des données (JSON Schema)"
       },
       "hint": {
         "max_results": "De {{min}} à {{max}}. Le modèle peut en demander moins, jamais plus.",
@@ -125,7 +127,9 @@
         "allow_hosts": "Uniquement ces domaines et leurs sous-domaines, séparés par des virgules. Vide : tous les domaines.",
         "deny_hosts": "Jamais ces domaines ni leurs sous-domaines, séparés par des virgules.",
         "max_calls": "De {{min}} à {{max}}.",
-        "max_chars": "De {{min}} à {{max}}. Les pages plus longues sont tronquées."
+        "max_chars": "De {{min}} à {{max}}. Les pages plus longues sont tronquées.",
+        "from_address": "Écrite dans chaque brouillon d’e-mail comme expéditeur. Vide : le logiciel de messagerie l’indique.",
+        "payload_schema": "Un objet JSON auquel les données doivent correspondre. Pris en charge : type, properties, required, additionalProperties, items, enum, const, minLength, maxLength, minimum, maximum, minItems et maxItems. Vide : aucune vérification."
       },
       "option": {
         "day": "Dernier jour",
