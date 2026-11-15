@@ -12,7 +12,7 @@
 - The lock also catches up with the components' current masters: axentra `e519405` (axentra #100, Tabrion 0.2.2 pin),
   orkexa `7ee9977` (orkexa #104), nodestro-api `50dadbd` (nodestro-api #148: portable lock on 0.2.2; it also carries
   NAL-C3 #147 and DC-NA-1 #130), nodestro-runtime `f5f602c`, nodestro-examples `39c8afa`, nodestro-integrations
-  `2db82e7`. nodestro-sdk is unchanged.
+  `2db82e7`, nodestro-sdk `4176c9f` (sdk #128: OpenAPI document and types synced with api `50dadbd`).
 
 ### NAL-A4: e-mail and webhook drafts (2026-11-15)
 
