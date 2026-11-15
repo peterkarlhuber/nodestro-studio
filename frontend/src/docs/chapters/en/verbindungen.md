@@ -30,7 +30,7 @@ Secrets are stored encrypted, like the access tokens of connected services: on t
 ## Checking a connection {#pruefen}
 <!-- keywords: check, status, works, check failed, error code -->
 
-**Check connection** tests the connection and shows the result: *Works*, *Check failed* or *Not checked*, with the time of the check and, on failure, the error code. For now the check of mail servers and webhooks only checks the settings; it does not contact the service yet. Changing the settings, the provider or the secret resets the status to *Not checked*. A connection that has not been checked successfully shows a warning in the check before a run.
+**Check connection** tests the connection and shows the result: *Works*, *Check failed* or *Not checked*, with the time of the check and, on failure, the error code. For mail servers and webhooks Nodestro contacts the service: it signs in to the mail server encrypted and signs out again, or asks the webhook's address, without sending anything. **Send test** then sends, after your confirmation, a fixed test message to your test address or the webhook (see [Test send of a connection](/docs/entwuerfe#testversand)). Changing the settings, the provider or the secret resets the status to *Not checked*. A connection that has not been checked successfully shows a warning in the check before a run.
 
 ## Using a connection in an agent {#zuweisen}
 <!-- keywords: agent, inspector, tool settings, connection picker -->
