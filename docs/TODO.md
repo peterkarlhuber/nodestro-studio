@@ -10,9 +10,9 @@
 | Priority | Count |
 |---|---|
 | P0 Critical | 0 |
-| P1 High | 0 |
+| P1 High | 1 |
 | P2 Medium | 4 |
-| P3 Low | 10 |
+| P3 Low | 11 |
 | P4 Optional | 4 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -46,7 +46,28 @@ nodestro-runtime RT-001 (tool approvals, `NODESTRO_TOOL_APPROVALS` stays off; in
 and nodestro-api API-054 (portable export, api #85 with the #87 hardening, including this repository's export dialog
 from #121). Both have status `Needs external review`.
 
+### ST-064 · NAL review packages P-Web, P-Import, P-Pair (D1, RT-077)
+
+- **Priority:** P1 · **Status:** Needs external review (not commissioned; the owner decides, a paid review needs the
+  owner's consent)
+- **What:** the attack surface of the NAL packages, bundled into three briefs in [docs/security/nal/](security/nal/README.md):
+  P-Web (web search, page fetch, egress guard), P-Import (skill packages, agent template import, `restore`, `update`
+  and `ui install` of portable packages) and P-Pair (pairing and the interface on another origin, together with
+  API-054). P-Send (A5) is attached to RT-001; A5 stays locked until RT-001 is accepted.
+- **Until then:** `NODESTRO_WEB_TOOLS_SERVER`, `NODESTRO_PAIRING`, `NODESTRO_CROSS_ORIGIN` and `NODESTRO_SEND_TOOLS`
+  stay off. Internal reviews of every package found no open critical or high finding.
+
 ## Bugs and reliability
+
+### ST-065 · Browser test `runchat`: the live reasoning is sometimes not seen
+
+- **Priority:** P3 · **Status:** Open
+- **What:** `frontend/e2e/runChat.mjs` waits up to 20 s for `lrc-reasoning` inside `lrc-live-answer` and timed out
+  twice (studio #196, #205); the rerun was green both times. The live answer element appeared, its reasoning did
+  not. The scripted model streams its thinking in about 0.6 s (`STREAM_DELAY = 0.15` in
+  `tests/e2e_run_chat_server.py`) while the chat stream polls every 1 s until an answer is live (api
+  `api_run_chat.py`, `POLL_SECONDS`, then `LIVE_POLL_SECONDS`), so the live phase is shorter than one idle poll.
+  Not yet reproduced locally; find the exact interleaving before changing the timing, and never weaken the check.
 
 ## Architecture and modularity
 
@@ -368,7 +389,7 @@ from #121). Both have status `Needs external review`.
 
 | This repo item | Other repo | Other item | Relation |
 |---|---|---|---|
-| (open, TABRION MIG-NOD-9) | nodestro-runtime, nodestro-api, nodestro-desktop | runtime #176, api and desktop branch `claude/project-thread-bjlq25-nod9ui` | Recovery mode dialog and the diagnosis' repair button; the lock pins runtime `7099cfa` and the api branch head for CI only: repin both to their merge commits before merging |
+| ST-064 | nodestro-runtime, nodestro-api | RT-001 (P-Send), API-054 (P-Pair) | NAL review packages bundled with the open reviews |
 | (pointer) | nodestro-runtime | RT-001 (independent S-2 review, includes the studio approval surfaces) | Full entry in runtime |
 | (pointer) | nodestro-api | API-054 (independent review of the portable export, api #85/#87, studio #121) | Full entry in api |
 | ST-021 | nodestro-server | Development stack | Used for the browser pass |

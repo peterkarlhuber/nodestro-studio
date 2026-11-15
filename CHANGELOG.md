@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### NAL-D1: review briefs (2026-11-15)
+
+- `docs/security/nal/`: the briefs for the independent review of the NAL packages (P-Web, P-Import, P-Pair; P-Send
+  stays with RT-001), with scope, review goals, tests and internal findings. Prepared, not commissioned; the switches
+  they guard stay off. TODO: ST-064 (the review), ST-065 (the `runchat` browser test).
+- The lock pins nodestro-api `34b5171` (#151: embedded nodestro-app-ui `640a95a`, accepted file extensions with one
+  dot; TODO), nodestro-runtime `84038b2` (#188: the role test accepts Tabrion 0.2.2's own refusal of writable schema
+  versions, which had turned `pg-a`/`pg-b` red; TODO) and orkexa `e251983` (#105: TODO).
+
 ### NAL-C5: the standard interface on another origin (2026-11-15)
 
 - The lock pins nodestro-api `790271b` (nodestro-api #150: token profile, allowed origins and CORS for the standalone
