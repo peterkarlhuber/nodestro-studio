@@ -335,7 +335,8 @@
         "limit": {
           "unsigned": "Nicht signiert: Gatekeeper (macOS) oder SmartScreen (Windows) fragt beim ersten Start einmal nach.",
           "gemini": "Kein Paket, wenn die Veröffentlichung Gemini nutzt (Googles Bibliothek gibt es hier nicht fertig gebaut).",
-          "vector_search": "Die semantische Wissenssuche fällt auf Volltextsuche zurück (sqlite-vec fehlt hier)."
+          "vector_search": "Die semantische Wissenssuche fällt auf Volltextsuche zurück (sqlite-vec fehlt hier).",
+          "self_signed_tls": "Kein selbst ausgestelltes Zertifikat für die Kopplung (cryptography fehlt hier): Im Netzwerk braucht es ein eigenes Zertifikat oder einen TLS-Proxy."
         },
         "libraries": {
           "checking": "Bibliotheken werden für diese Plattform geprüft …",

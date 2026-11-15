@@ -335,7 +335,8 @@
         "limit": {
           "unsigned": "Non firmato: Gatekeeper (macOS) o SmartScreen (Windows) chiede una volta al primo avvio.",
           "gemini": "Nessun pacchetto se la pubblicazione usa Gemini (la libreria di Google non ha un pacchetto pronto qui).",
-          "vector_search": "La ricerca semantica nella conoscenza ripiega sulla ricerca a testo pieno (qui manca sqlite-vec)."
+          "vector_search": "La ricerca semantica nella conoscenza ripiega sulla ricerca a testo pieno (qui manca sqlite-vec).",
+          "self_signed_tls": "Nessun certificato autoemesso per l’abbinamento (qui manca cryptography): in rete serve un certificato proprio o un proxy TLS."
         },
         "libraries": {
           "checking": "Verifica delle librerie per questa piattaforma …",

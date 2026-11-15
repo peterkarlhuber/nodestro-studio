@@ -3217,7 +3217,7 @@ export interface PlatformSupport {
   ci: "built_and_started" | "none";
   local_models: "checked" | "unchecked";
   human: boolean;
-  limits: ("unsigned" | "gemini" | "vector_search")[];
+  limits: ("unsigned" | "gemini" | "vector_search" | "self_signed_tls")[];
 }
 
 /** The platform pre-check of a portable package's libraries (NAL-C3). */
