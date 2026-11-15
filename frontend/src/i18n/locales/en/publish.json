@@ -244,7 +244,6 @@
     "kindPortable": "Ready-to-run package",
     "standardHint": "The FastAPI project as source code: whoever runs it installs Python and the libraries.",
     "portableHint": "Unzip, double-click the start file, use it: with its own Python, every library, a start program and, optionally, the local models. Nothing needs to be installed on the target computer.",
-    "webUi": "Include the web interface",
     "webUiHint": "A form for this workflow with live progress, approvals and result files, in six languages. It runs in the export itself; no keys reach the browser.",
     "portable": {
       "platform": "Target platform",
@@ -321,10 +320,37 @@
         "models": "models",
         "archive": "ZIP file",
         "done": "done"
+      },
+      "support": {
+        "ci": {
+          "built_and_started": "Built and started in CI",
+          "none": "Not checked in CI"
+        },
+        "localModels": {
+          "checked": "Local models checked",
+          "unchecked": "Local models not checked"
+        },
+        "human": "Checked by people on real hardware",
+        "noHuman": "Not yet checked by people on real hardware",
+        "limit": {
+          "unsigned": "Not signed: Gatekeeper (macOS) or SmartScreen (Windows) asks once at the first start.",
+          "gemini": "No package when the release uses Gemini (Google's library has no ready-built package here).",
+          "vector_search": "Semantic knowledge search falls back to full-text search (no sqlite-vec here)."
+        },
+        "libraries": {
+          "checking": "Checking the libraries for this platform …",
+          "ok": "Every library is available for this platform",
+          "unavailable": "No ready-built packages for this platform: {{libraries}}",
+          "unchecked": "The libraries are checked when the package is built (no pre-check possible here)."
+        }
       }
     },
     "delete": "Delete {{file}}",
-    "deleted": "The export was deleted."
+    "deleted": "The export was deleted.",
+    "ui": "Interface",
+    "uiEmbedded": "With the standard interface (recommended)",
+    "uiNone": "API only (for your own programs)",
+    "uiNoneHint": "Without a web interface: the backend offers only the app contract, the published API and /health, for your own programs or your own interface."
   },
   "guide": {
     "title": "Integration guide with AI (optional)",

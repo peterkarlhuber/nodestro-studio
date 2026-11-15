@@ -30,7 +30,6 @@ import {
   Segmented,
   Select,
   Spinner,
-  Toggle,
 } from "../components/ui";
 import { currentLanguage, LANGUAGE_NAMES, LANGUAGES } from "../i18n";
 import { ErrorText } from "../lib/errors";
@@ -84,6 +83,25 @@ export function ApiExport({
   });
   // The answer shown belongs to other options until the new check is back: nothing is built from it.
   const current = checked === options && !check.isPlaceholderData;
+  // The platform pre-check (NAL-C3) resolves the libraries for the target once the check has not seen an answer for
+  // them; the backend remembers it, so the check asked again reports it (and refuses a platform without them).
+  const canEdit = useAccess().can("edit");
+  const unchecked =
+    portable && current && check.data?.portable?.libraries?.status === "unchecked";
+  const libraries = useQuery({
+    queryKey: ["api", "export-libraries", publication.id, number, checked],
+    queryFn: async () => {
+      const answer = await api.exportLibraries(publication.id, checked, number);
+      if (answer.status !== "unchecked")
+        void queryClient.invalidateQueries({
+          queryKey: ["api", "export-check", publication.id],
+        });
+      return answer;
+    },
+    enabled: unchecked && canEdit,
+    staleTime: Infinity,
+    retry: false,
+  });
   const history = useQuery({
     queryKey: ["api", "exports", publication.id],
     queryFn: () => api.exports(publication.id),
@@ -102,7 +120,6 @@ export function ApiExport({
     },
     onError: (error) => toast.error(error),
   });
-  const canEdit = useAccess().can("edit");
   const remove = useMutation({
     mutationFn: (exportId: string) => api.deleteExport(exportId),
     onSuccess: () => {
@@ -198,6 +215,8 @@ export function ApiExport({
             setOptions({
               ...options,
               kind,
+              // A ready-to-run package recommends the standard interface; the choice stays the person's.
+              web_ui: kind === "portable" ? true : options.web_ui,
               confirm_distribution: false,
               orkexa: kind === "portable" ? "bundle" : options.orkexa,
             })
@@ -221,17 +240,39 @@ export function ApiExport({
           ? t("publish.export.portableHint")
           : t("publish.export.standardHint")}
       </p>
-      <Toggle
-        checked={options.web_ui}
-        onChange={(web_ui) => setOptions({ ...options, web_ui })}
-        label={t("publish.export.webUi")}
-        description={t("publish.export.webUiHint")}
-      />
+      <Field label={t("publish.export.ui")}>
+        <Segmented<"embedded" | "none">
+          label={t("publish.export.ui")}
+          value={options.web_ui ? "embedded" : "none"}
+          onChange={(choice) =>
+            setOptions({ ...options, web_ui: choice === "embedded" })
+          }
+          options={[
+            {
+              value: "embedded",
+              label: t("publish.export.uiEmbedded"),
+              testId: "api-export-ui-embedded",
+            },
+            {
+              value: "none",
+              label: t("publish.export.uiNone"),
+              testId: "api-export-ui-none",
+            },
+          ]}
+        />
+      </Field>
+      <p className="muted small">
+        {options.web_ui
+          ? t("publish.export.webUiHint")
+          : t("publish.export.uiNoneHint")}
+      </p>
       {portable ? (
         <PortableOptions
           options={options}
           setOptions={setOptions}
           portable={check.data?.portable}
+          libraries={libraries.data ?? check.data?.portable?.libraries}
+          checking={libraries.isFetching}
         />
       ) : null}
 

@@ -250,10 +250,10 @@ Sous **Export**, choisissez **Paquet prêt à l’emploi** au lieu du projet sou
 
 | Option | Effet |
 |---|---|
-| **Plateforme cible** | Windows, macOS ou Linux, chacun pour son processeur. Le paquet ne fonctionne que là. |
+| **Plateforme cible** | Windows, macOS ou Linux, chacun pour son processeur. Le paquet ne fonctionne que là. Des badges indiquent ce qui est vérifié pour la plateforme (construit et démarré en CI, modèles locaux, vrai matériel) et ses limites connues. Avant toute construction, Nodestro vérifie que chaque bibliothèque a un paquet prêt pour la plateforme et nomme celles qui manquent. |
 | **Inclure les modèles locaux** | Les modèles et Ollama entrent dans le paquet, vérifiés par SHA-256. Le résumé indique la taille, la mémoire nécessaire et la licence de chaque modèle. |
 | **Doit fonctionner entièrement hors ligne** | Refuse l’export si quelque chose a besoin du réseau : modèles cloud, recherche web, services MCP, outils créés par l’IA. Active aussi *Inclure les modèles locaux*. |
-| **Inclure l’interface web** | Un formulaire pour ce workflow avec la progression en direct, les validations et les fichiers de résultats, en six langues. |
+| **Interface** | *Avec l’interface standard (recommandé)* : un formulaire pour ce workflow avec progression en direct, validations et fichiers de résultat, en six langues. *API seulement* : pas d’interface web, seulement le contrat d’app, l’API publiée et `/health`, pour vos propres programmes. |
 | **Dossier des résultats** | Où l’application enregistre aussi les fichiers de résultats de chaque exécution. L’exploitant peut le changer ensuite. |
 
 Le paquet est généré en arrière-plan ; la boîte de dialogue affiche la progression et vous permet d’annuler. Les grands modèles le font peser plusieurs gigaoctets. Sur un serveur Nodestro, un processus de travail génère les paquets, un à la fois pour tout le serveur : tant qu’aucun n’est libre, la tâche indique *En attente d’un processus de travail*, et *Annuler* la retire.
@@ -261,6 +261,8 @@ Le paquet est généré en arrière-plan ; la boîte de dialogue affiche la prog
 Le paquet ne contient jamais de clés. Sur l’ordinateur cible, l’exploitant saisit les clés des fournisseurs d’IA sur la page des réglages de l’interface web ou avec `start.sh configure` (Windows: `start.cmd configure`) ; elles restent sur cet ordinateur. Les clients utilisent des clés d’API créées avec `start.sh keys new`. Par défaut, l’application ne répond que sur cet ordinateur ; pour le réseau, il lui faut TLS ou un proxy inverse. Le README du paquet explique le démarrage, l’arrêt, les réglages et le dépannage. Les paquets ne sont pas signés : macOS et Windows demandent une fois avant le premier démarrage.
 
 En haut à droite, l’interface web affiche l’état de la connexion, par exemple « Connecté à Serveur du bureau ». Un clic ouvre **À propos de cette app** avec la version de l’interface, l’ID du backend et les versions. Si la connexion est coupée, une exécution lancée continue sur l’ordinateur ; l’interface réessaie d’elle-même et propose **Réessayer**. Si l’interface ne correspond pas à la version de l’application, elle le signale au lieu de mal fonctionner.
+
+**Exploiter un paquet.** Le paquet sépare le programme immuable (`program/`) des données (`data/`, résultats, journaux). Chaque démarrage vérifie `program/` avec ses sommes de contrôle et ne démarre pas si un fichier a été modifié. Application arrêtée, il y a : `verify` (vérifier le programme), `backup <cible.zip>` (sauvegarder exécutions et réglages, clés seulement avec `--include-secrets`), `restore <sauvegarde.zip>`, `update <nouveau-paquet.zip>` (remplace seulement le programme, sauvegarde d’abord et garde l’ancien pour `rollback`), `adopt <ancien-dossier>` (reprend les données d’un paquet à l’ancienne structure de dossiers) et `ui install <interface.tgz> --sha256 <valeur>` (une interface standard plus récente sans nouvel export). Le README du paquet décrit tout en six langues.
 
 ## La bibliothèque Orkexa {#orkexa}
 <!-- keywords: orkexa, bibliothèque, dépôt, licence, levuvo, vendor, inclure, git, accès -->

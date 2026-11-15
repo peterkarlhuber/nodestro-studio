@@ -250,10 +250,10 @@ Em **Exportação**, escolha **Pacote pronto para usar** em vez do projeto-fonte
 
 | Opção | Efeito |
 |---|---|
-| **Plataforma de destino** | Windows, macOS ou Linux, cada um para o seu processador. O pacote só funciona lá. |
+| **Plataforma de destino** | Windows, macOS ou Linux, cada um para o seu processador. O pacote só funciona lá. Selos mostram o que está verificado para a plataforma (compilado e iniciado na CI, modelos locais, hardware real) e os limites conhecidos. Antes de compilar qualquer coisa, o Nodestro verifica se cada biblioteca tem um pacote pronto para a plataforma e indica as que faltam. |
 | **Incluir os modelos locais** | Os modelos e o Ollama entram no pacote, verificados por SHA-256. O resumo mostra tamanho, memória necessária e licença de cada modelo. |
 | **Deve funcionar totalmente offline** | Recusa a exportação se algo precisar de rede: modelos na nuvem, busca na web, serviços MCP, ferramentas criadas por IA. Também ativa *Incluir os modelos locais*. |
-| **Incluir a interface web** | Um formulário para este fluxo com progresso ao vivo, aprovações e arquivos de resultado, em seis idiomas. |
+| **Interface** | *Com a interface padrão (recomendado)*: um formulário para este fluxo com progresso ao vivo, aprovações e arquivos de resultado, em seis idiomas. *Somente API*: sem interface web, apenas o contrato do app, a API publicada e `/health`, para seus próprios programas. |
 | **Pasta de resultados** | Onde o aplicativo também salva os arquivos de resultado de cada execução. O operador pode mudá-la depois. |
 
 O pacote é gerado em segundo plano; a caixa de diálogo mostra o progresso e permite cancelar. Modelos grandes o deixam com vários gigabytes. Em um servidor Nodestro, um processo de trabalho gera os pacotes, um por vez para todo o servidor: até que um fique livre, o trabalho mostra *Aguardando um processo de trabalho*, e *Cancelar* o retira.
@@ -261,6 +261,8 @@ O pacote é gerado em segundo plano; a caixa de diálogo mostra o progresso e pe
 O pacote nunca contém chaves. No computador de destino, o operador informa as chaves dos provedores de IA na página de configurações da interface web ou com `start.sh configure` (Windows: `start.cmd configure`); elas ficam nesse computador. Os clientes usam chaves de API criadas com `start.sh keys new`. Por padrão o aplicativo só responde neste computador; para a rede ele precisa de TLS ou de um proxy reverso. O README do pacote explica início, parada, configurações e solução de problemas. Os pacotes não são assinados: o macOS e o Windows perguntam uma vez antes da primeira inicialização.
 
 No canto superior direito, a interface web mostra o estado da conexão, por exemplo “Conectado a Servidor do escritório”. Um clique abre **Sobre este app** com a versão da interface, o ID do backend e as versões. Se a conexão cair, uma execução iniciada continua no computador; a interface tenta de novo sozinha e oferece **Tentar novamente**. Se a interface não corresponder à versão da aplicação, ela avisa em vez de funcionar de forma errada.
+
+**Operar um pacote.** O pacote separa o programa imutável (`program/`) dos dados (`data/`, resultados, logs). Cada inicialização verifica `program/` com suas somas de verificação e não inicia se um arquivo foi alterado. Com o aplicativo parado, há: `verify` (verificar o programa), `backup <destino.zip>` (fazer backup de execuções e configurações, chaves só com `--include-secrets`), `restore <backup.zip>`, `update <pacote-novo.zip>` (substitui só o programa, faz backup antes e guarda o antigo para `rollback`), `adopt <pasta-antiga>` (assume os dados de um pacote na estrutura de pastas antiga) e `ui install <interface.tgz> --sha256 <valor>` (uma interface padrão mais nova sem nova exportação). O README do pacote descreve tudo em seis idiomas.
 
 ## A biblioteca Orkexa {#orkexa}
 <!-- keywords: orkexa, biblioteca, repositório, licença, levuvo, vendor, incluir, git, acesso -->

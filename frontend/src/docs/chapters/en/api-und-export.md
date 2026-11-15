@@ -250,10 +250,10 @@ Under **Export**, choose **Ready-to-run package** instead of the source project.
 
 | Option | Effect |
 |---|---|
-| **Target platform** | Windows, macOS or Linux, each for its processor. The package only runs there. |
+| **Target platform** | Windows, macOS or Linux, each for its processor. The package only runs there. Badges show what is checked for the platform (built and started in CI, local models, real hardware) and its known limits. Before anything is built, Nodestro checks that every library has a ready-built package for the platform and names the missing ones. |
 | **Include the local models** | The models and Ollama go into the package, checked by SHA-256. The summary shows size, memory need and license of every model. |
 | **Must work fully offline** | Refuses the export when anything needs a network: cloud models, web search, MCP services, AI-created tools. Also turns on *Include the local models*. |
-| **Include the web interface** | A form for this workflow with live progress, approvals and result files, in six languages. |
+| **Interface** | *With the standard interface (recommended)*: a form for this workflow with live progress, approvals and result files, in six languages. *API only*: no web interface, only the app contract, the published API and `/health`, for your own programs. |
 | **Result folder** | Where the application also stores the result files of every run. The operator can change it later. |
 
 The package is built in the background; the dialog shows the progress and lets you cancel. Large models make it several gigabytes large. On a Nodestro server a worker builds the packages, one at a time for the whole server: until one is free, the job says *Waiting for a worker*, and *Cancel* withdraws it.
@@ -261,6 +261,8 @@ The package is built in the background; the dialog shows the progress and lets y
 The package never contains keys. On the target computer, the operator enters the keys of the AI providers on the settings page of the web interface or with `start.sh configure` (Windows: `start.cmd configure`); they stay on that computer. Clients use API keys created with `start.sh keys new`. By default the application only answers on this computer; for the network it needs TLS or a reverse proxy. The README in the package explains start, stop, settings and troubleshooting. Packages are not signed: macOS and Windows ask once before the first start.
 
 In the top right corner the web interface shows the state of the connection, such as "Connected to Office server". Clicking it opens **About this app** with the interface version, the backend ID and the versions. If the connection drops, a started run continues on the computer; the interface retries by itself and offers **Try again**. If the interface does not match the application's version, it says so instead of working incorrectly.
+
+**Operating a package.** The package keeps the unchangeable program (`program/`) apart from the data (`data/`, results, logs). Each start checks `program/` against its checksums and does not start when a file was changed. While the application is stopped there are: `verify` (check the program), `backup <target.zip>` (back up runs and settings, keys only with `--include-secrets`), `restore <backup.zip>`, `update <new-package.zip>` (replaces only the program, backs up first, keeps the old one for `rollback`), `adopt <old-folder>` (takes over the data of a package in the old folder layout) and `ui install <interface.tgz> --sha256 <value>` (a newer standard interface without a new export). The README in the package describes everything in six languages.
 
 ## The Orkexa library {#orkexa}
 <!-- keywords: orkexa, library, repository, license, levuvo, vendor, include, git, access -->

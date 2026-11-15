@@ -244,7 +244,6 @@
     "kindPortable": "Paquet prêt à l’emploi",
     "standardHint": "Le projet FastAPI sous forme de code source : qui l’exécute installe Python et les bibliothèques.",
     "portableHint": "Décompressez, double-cliquez sur le fichier de démarrage, utilisez-le : avec son propre Python, toutes les bibliothèques, un programme de démarrage et, en option, les modèles locaux. Rien à installer sur l’ordinateur cible.",
-    "webUi": "Inclure l’interface web",
     "webUiHint": "Un formulaire pour ce workflow avec suivi en direct, validations et fichiers de résultats, en six langues. Il s’exécute dans l’export lui-même ; aucune clé n’atteint le navigateur.",
     "portable": {
       "platform": "Plateforme cible",
@@ -321,10 +320,37 @@
         "models": "modèles",
         "archive": "fichier ZIP",
         "done": "terminé"
+      },
+      "support": {
+        "ci": {
+          "built_and_started": "Construit et démarré en CI",
+          "none": "Non vérifié en CI"
+        },
+        "localModels": {
+          "checked": "Modèles locaux vérifiés",
+          "unchecked": "Modèles locaux non vérifiés"
+        },
+        "human": "Vérifié par des personnes sur du vrai matériel",
+        "noHuman": "Pas encore vérifié par des personnes sur du vrai matériel",
+        "limit": {
+          "unsigned": "Non signé : Gatekeeper (macOS) ou SmartScreen (Windows) demande une fois au premier démarrage.",
+          "gemini": "Pas de paquet si la publication utilise Gemini (la bibliothèque de Google n’a pas de paquet prêt ici).",
+          "vector_search": "La recherche sémantique de connaissances se replie sur la recherche plein texte (pas de sqlite-vec ici)."
+        },
+        "libraries": {
+          "checking": "Vérification des bibliothèques pour cette plateforme …",
+          "ok": "Toutes les bibliothèques sont disponibles pour cette plateforme",
+          "unavailable": "Paquets prêts manquants pour cette plateforme : {{libraries}}",
+          "unchecked": "Les bibliothèques sont vérifiées à la construction du paquet (pas de vérification préalable possible ici)."
+        }
       }
     },
     "delete": "Supprimer {{file}}",
-    "deleted": "L’export a été supprimé."
+    "deleted": "L’export a été supprimé.",
+    "ui": "Interface",
+    "uiEmbedded": "Avec l’interface standard (recommandé)",
+    "uiNone": "API seulement (pour vos propres programmes)",
+    "uiNoneHint": "Sans interface web : le backend n’offre que le contrat d’app, l’API publiée et /health, pour vos propres programmes ou votre propre interface."
   },
   "guide": {
     "title": "Guide d’intégration avec l’IA (facultatif)",

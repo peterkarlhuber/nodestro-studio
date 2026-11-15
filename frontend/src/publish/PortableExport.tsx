@@ -3,11 +3,26 @@
 // its progress. The package itself is built by the backend (nodestro_api.portable_build) as a job.
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CheckCircle2, Clock, Download, PackageOpen, WifiOff, X } from "lucide-react";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
+  Download,
+  Loader2,
+  PackageOpen,
+  WifiOff,
+  X,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { api } from "../api/client";
-import type { ExportJob, ExportOptions, PortableCheck } from "../api/types";
+import type {
+  ExportJob,
+  ExportOptions,
+  LibraryCheck,
+  PlatformSupport,
+  PortableCheck,
+} from "../api/types";
 import { ProgressBar } from "../automation/shared";
 import { toast } from "../components/toast";
 import {
@@ -24,20 +39,85 @@ import { providerLabel } from "../components/ModelPicker";
 import { downloadList, problemText } from "../lib/errors";
 import { formatDate, formatLargeBytes } from "../lib/format";
 
+/** What is known about a platform (support matrix) and whether its libraries are available (pre-check), NAL-C3. */
+export function PlatformStatus({
+  support,
+  libraries,
+  checking,
+}: {
+  support: PlatformSupport | null | undefined;
+  libraries: LibraryCheck | null | undefined;
+  checking: boolean;
+}) {
+  const { t } = useTranslation();
+  const key = "publish.export.portable.support";
+  return (
+    <div className="stack-sm" data-testid="api-export-platform-status" aria-live="polite">
+      {support ? (
+        <p className="row-gap small">
+          <Badge tone={support.ci === "built_and_started" ? "success" : "warning"}>
+            {t(`${key}.ci.${support.ci}`)}
+          </Badge>
+          <Badge tone={support.local_models === "checked" ? "success" : "idle"}>
+            {t(`${key}.localModels.${support.local_models}`)}
+          </Badge>
+          <Badge tone={support.human ? "success" : "idle"}>
+            {t(support.human ? `${key}.human` : `${key}.noHuman`)}
+          </Badge>
+        </p>
+      ) : null}
+      {support?.limits.length ? (
+        <ul className="small muted">
+          {support.limits.map((limit) => (
+            <li key={limit}>{t(`${key}.limit.${limit}`)}</li>
+          ))}
+        </ul>
+      ) : null}
+      <p className="small" data-testid="api-export-libraries">
+        {checking ? (
+          <span className="muted">
+            <Loader2 size={13} className="spin" aria-hidden /> {t(`${key}.libraries.checking`)}
+          </span>
+        ) : libraries?.status === "ok" ? (
+          <Badge tone="success" icon={CheckCircle2}>
+            {t(`${key}.libraries.ok`)}
+          </Badge>
+        ) : libraries?.status === "unavailable" ? (
+          <Badge tone="danger" icon={AlertTriangle}>
+            {t(`${key}.libraries.unavailable`, {
+              libraries: libraries.libraries.join(", ") || "–",
+            })}
+          </Badge>
+        ) : (
+          <span className="muted">{t(`${key}.libraries.unchecked`)}</span>
+        )}
+      </p>
+    </div>
+  );
+}
+
 export function PortableOptions({
   options,
   setOptions,
   portable,
+  libraries,
+  checking = false,
 }: {
   options: ExportOptions;
   setOptions: (options: ExportOptions) => void;
   portable: PortableCheck | null | undefined;
+  libraries?: LibraryCheck | null;
+  checking?: boolean;
 }) {
   const { t } = useTranslation();
   const unknownLicense = (portable?.local_models ?? []).some(
     (item) => item.redistribution !== "permitted",
   );
   const platforms = portable?.platforms ?? [];
+  const chosen = options.platform ?? portable?.platform ?? "";
+  const support = platforms.find((item) => item.id === chosen)?.support;
+  // A remembered answer belongs to one platform: another choice waits for its own.
+  const forPlatform = libraries?.platform === chosen ? libraries : null;
   return (
     <div className="stack-sm" data-testid="api-export-portable">
       <div className="grid-2">
@@ -73,6 +153,9 @@ export function PortableOptions({
           />
         </Field>
       </div>
+      {chosen ? (
+        <PlatformStatus support={support} libraries={forPlatform} checking={checking} />
+      ) : null}
       <Toggle
         checked={options.local_models}
         // Offline needs the models in the package: the offline switch turns this on and keeps it on.

@@ -70,6 +70,79 @@ describe("PortableExport", () => {
     vi.restoreAllMocks();
   });
 
+  it("shows the support of the chosen platform and the pre-check of its libraries (NAL-C3)", async () => {
+    await setLanguage("de");
+    const portable = {
+      ...PORTABLE,
+      platforms: [
+        {
+          id: "linux-x86_64",
+          label: "Linux x86-64",
+          support: { ci: "built_and_started", local_models: "checked", human: false, limits: [] },
+        },
+        {
+          id: "windows-arm64",
+          label: "Windows ARM64",
+          support: {
+            ci: "built_and_started",
+            local_models: "unchecked",
+            human: false,
+            limits: ["unsigned", "gemini", "vector_search"],
+          },
+        },
+      ],
+    } as PortableCheck;
+    const view = wrap(
+      <PortableOptions
+        options={{ ...OPTIONS, platform: "windows-arm64" }}
+        setOptions={vi.fn()}
+        portable={portable}
+        libraries={{
+          platform: "windows-arm64",
+          status: "unavailable",
+          libraries: ["cryptography"],
+          detail: "",
+        }}
+      />,
+    );
+    const status = screen.getByTestId("api-export-platform-status");
+    expect(status.textContent).toContain("In CI gebaut und gestartet");
+    expect(status.textContent).toContain("Lokale Modelle nicht geprüft");
+    expect(status.textContent).toContain("sqlite-vec");
+    expect(screen.getByTestId("api-export-libraries").textContent).toContain(
+      "Für diese Plattform fehlen fertige Pakete: cryptography",
+    );
+    // An answer for another platform is not shown as this platform's.
+    view.rerender(
+      <QueryClientProvider client={new QueryClient()}>
+        <PortableOptions
+          options={{ ...OPTIONS, platform: "linux-x86_64" }}
+          setOptions={vi.fn()}
+          portable={portable}
+          libraries={{ platform: "windows-arm64", status: "ok", libraries: [], detail: "" }}
+          checking={false}
+        />
+      </QueryClientProvider>,
+    );
+    expect(screen.getByTestId("api-export-libraries").textContent).toContain(
+      "beim Erstellen geprüft",
+    );
+    view.rerender(
+      <QueryClientProvider client={new QueryClient()}>
+        <PortableOptions
+          options={{ ...OPTIONS, platform: "linux-x86_64" }}
+          setOptions={vi.fn()}
+          portable={portable}
+          checking
+        />
+      </QueryClientProvider>,
+    );
+    expect(screen.getByTestId("api-export-libraries").textContent).toContain(
+      "werden für diese Plattform geprüft",
+    );
+    await setLanguage("en" as Language);
+  });
+
   it("asks for the license confirmation only when a model's license is not confirmed", () => {
     const set = vi.fn();
     wrap(

@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### NAL-C3: operating portable packages (2026-11-15)
+
+- Export dialog: the choice "With the standard interface (recommended)" / "API only (for your own programs)"
+  replaces the switch "Include the web interface"; a ready-to-run package starts with the interface. The chosen
+  platform shows its row of the support matrix (built and started in CI, local models, real hardware, known limits)
+  and the platform pre-check of its libraries (nodestro-api `POST .../export/libraries`): missing ready-built
+  packages are named before anything is built. Six languages.
+- Help "API and export": the platform badges and the pre-check, and how to operate a package (`verify`, `backup`,
+  `restore`, `update`, `rollback`, `adopt`, `ui install`), in six languages.
+
 ### NAL-A4: e-mail and webhook drafts (2026-11-15)
 
 - Tools: the built-in tools "E-mail draft" (`draft_email`) and "Webhook draft" (`draft_webhook`) get names and
