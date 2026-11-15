@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Tabrion 0.2.2 pin (2026-11-15)
+
+- The lock moves tabrion to the final 0.2.2 (`5bc690e`, tabrion #83, untagged), which carries security fixes:
+  `grant_runtime_role` refuses members of predefined roles (`predefined_role`), roles that can still write a
+  protected table (`protected_writable`) and CREATEROLE roles before PostgreSQL 16 (`createrole`); `tabrion.check`
+  adds TAB-PG-013/014; `tabrion.profilefile` refuses more host values. No public name is added or removed.
+  `platform/versions.json` records 0.2.2 as a known final (RC-8).
+- The lock also catches up with the components' current masters: axentra `0e2979a`, orkexa `ab1c088`,
+  nodestro-runtime `f5f602c`, nodestro-examples `39c8afa`, nodestro-integrations `2db82e7`. nodestro-api
+  (`e1eee59`) and nodestro-sdk are unchanged. The axentra, orkexa and nodestro-api pull requests of the 0.2.2 pin
+  (branch `claude/project-thread-bjlq25-tab022`) move their own pins; this lock follows their merge commits.
+
 ### NAL-A4: e-mail and webhook drafts (2026-11-15)
 
 - Tools: the built-in tools "E-mail draft" (`draft_email`) and "Webhook draft" (`draft_webhook`) get names and
