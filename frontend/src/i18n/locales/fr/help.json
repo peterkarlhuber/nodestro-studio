@@ -85,7 +85,8 @@
     "services": "Services externes via MCP : vous connectez un serveur, testez la connexion et approuvez chaque outil après l’avoir examiné. Si le service modifie un outil, celui-ci est bloqué jusqu’à ce que vous examiniez la modification.",
     "callApproval": "Une personne décide de chaque appel de cet outil, avec les arguments exacts. Sans décision dans le délai, l’appel compte comme refusé.",
     "servicesLocal": "Un serveur MCP local s’exécute dans un conteneur isolé. Ses paquets sont vérifiés et approuvés comme les bibliothèques d’un outil.",
-    "servicesOAuth": "Certains services exigent une connexion. Nodestro ouvre leur page de connexion et conserve l’accès chiffré."
+    "servicesOAuth": "Certains services exigent une connexion. Nodestro ouvre leur page de connexion et conserve l’accès chiffré.",
+    "testSend": "Envoie un message de test fixe : à l’adresse de test d’une connexion de serveur de messagerie ou à l’adresse d’un webhook. Vous l’envoyez vous-même ; au maximum 5 par connexion et par heure, chacun est enregistré."
   },
   "knowledge": {
     "upload": "PDF, images (PNG, JPEG, GIF, WebP) et formats texte. Images jusqu’à 5 Mo, documents jusqu’à 20 Mo. Les textes et les PDF sont indexés pour la recherche.",
@@ -244,7 +245,8 @@
     "sanitize": "Remplace les identifiants et données personnelles du fichier par des espaces réservés.",
     "run": "Fichiers de cette exécution. Le HTML est affiché sans scripts.",
     "formats": "Word (DOCX) et Excel (XLSX) sont convertis en Markdown à l’import ; les formules sont affichées, jamais exécutées.",
-    "ocr": "Nécessite Tesseract et pdftoppm sur cet ordinateur (le badge indique s’ils sont présents). Activé : les pages de PDF scannés sans couche de texte sont reconnues localement à la lecture du fichier, ce qui prend quelques secondes par page ; les mots incertains sont signalés pour que vous puissiez les vérifier. Désactivé : ces pages ne fournissent aucun texte aux agents ni à la recherche dans les connaissances."
+    "ocr": "Nécessite Tesseract et pdftoppm sur cet ordinateur (le badge indique s’ils sont présents). Activé : les pages de PDF scannés sans couche de texte sont reconnues localement à la lecture du fichier, ce qui prend quelques secondes par page ; les mots incertains sont signalés pour que vous puissiez les vérifier. Désactivé : ces pages ne fournissent aucun texte aux agents ni à la recherche dans les connaissances.",
+    "drafts": "Brouillons qu’un agent a préparés avec « Brouillon d’e-mail » ou « Brouillon de webhook ». Rien n’a été envoyé : téléchargez le fichier, vérifiez-le et envoyez-le vous-même."
   },
   "automation": {
     "batch": "Un workflow sur de nombreuses entrées. Chaque ligne devient une exécution propre.",

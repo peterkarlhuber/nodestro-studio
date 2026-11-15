@@ -1,8 +1,8 @@
 // How an agent binds its built-in tools (NAL-A1, NAL-A2): the service connection of a tool whose spec needs one, an
 // "Internet" badge for tools that reach outside, and the binding parameters of the spec's params_schema under
 // "Advanced" (search_web: result count, region, language, time range, domains, calls; fetch_web_page: domains,
-// characters, calls). Values go to tool_settings[tool].params and are only written when the schema accepts them;
-// the runtime checks them again.
+// characters, calls; draft_email: the sender; draft_webhook: the payload's JSON Schema). Values go to
+// tool_settings[tool].params and are only written when the schema accepts them; the runtime checks them again.
 
 import { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -10,7 +10,9 @@ import { Link } from "react-router-dom";
 
 import { type BuiltinTool, useBuiltinTools, useConnections } from "../api/connections";
 import type { AgentConfig, ToolSettings } from "../api/types";
-import { Badge, Field, Select, TextInput } from "../components/ui";
+import { NoSendBadge } from "../components/NoSendBadge";
+import { Badge, Field, Select, TextArea, TextInput } from "../components/ui";
+import { DRAFT_TOOLS } from "../lib/catalog";
 
 /** One property of a params_schema, as far as the form uses it. */
 interface ParamSchema {
@@ -19,6 +21,8 @@ interface ParamSchema {
   minimum?: number;
   maximum?: number;
   pattern?: string;
+  minLength?: number;
+  maxLength?: number;
   items?: { maxLength?: number };
   maxItems?: number;
 }
@@ -36,6 +40,15 @@ const hostList = (text: string) => text.split(/[\s,]+/).filter(Boolean);
 export function paramValue(schema: ParamSchema, text: string): unknown {
   const value = text.trim();
   if (!value) return undefined;
+  if (schema.type === "object") {
+    // A JSON object as typed (draft_webhook: the payload's schema); anything else is refused.
+    try {
+      const parsed: unknown = JSON.parse(value);
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
   if (schema.type === "array") {
     const items = hostList(value);
     const longest = schema.items?.maxLength ?? Infinity;
@@ -50,10 +63,18 @@ export function paramValue(schema: ParamSchema, text: string): unknown {
   }
   if (Array.isArray(schema.enum)) return schema.enum.map(String).includes(value) ? value : null;
   if (schema.pattern && !new RegExp(schema.pattern).test(value)) return null;
+  if (value.length < (schema.minLength ?? 0) || value.length > (schema.maxLength ?? Infinity)) return null;
   return value;
 }
 
-const shown = (value: unknown) => (Array.isArray(value) ? value.join(", ") : value === undefined || value === null ? "" : String(value));
+const shown = (value: unknown) =>
+  Array.isArray(value)
+    ? value.join(", ")
+    : value === undefined || value === null
+      ? ""
+      : typeof value === "object"
+        ? JSON.stringify(value, null, 2)
+        : String(value);
 
 /** Bindings of every assigned built-in tool that needs a connection, reaches the internet or has parameters. */
 export function ToolBindings({ agent, update }: { agent: AgentConfig; update: (patch: Partial<AgentConfig>) => void }) {
@@ -82,6 +103,7 @@ export function ToolBindings({ agent, update }: { agent: AgentConfig; update: (p
             <span className="small">
               <code>{item.name}</code>{" "}
               {spec.network === "external" ? <Badge tone="warning">{t("tools.spec.network.external")}</Badge> : null}
+              {DRAFT_TOOLS.includes(item.name) ? <NoSendBadge /> : null}
             </span>
             {type ? (
               <Field
@@ -167,6 +189,20 @@ function ParamField({
             label: t(`agent.tools.params.option.${String(option)}`, { defaultValue: String(option) }),
           }))}
           onChange={set}
+        />
+      </Field>
+    );
+  if (schema.type === "object")
+    return (
+      <Field label={label} hint={hint || undefined}>
+        <TextArea
+          rows={6}
+          spellCheck={false}
+          className="mono"
+          placeholder={t("agent.tools.params.default")}
+          aria-invalid={invalid || undefined}
+          value={text}
+          onChange={(event) => set(event.target.value)}
         />
       </Field>
     );

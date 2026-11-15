@@ -147,7 +147,8 @@
     "sanitized": "bereinigt",
     "source": {
       "output": "vom Ergebnis-Knoten",
-      "manual": "nachträglich erstellt"
+      "manual": "nachträglich erstellt",
+      "tool": "Entwurf eines Agenten"
     },
     "view": "{{name}} ansehen",
     "download": "{{name}} herunterladen",

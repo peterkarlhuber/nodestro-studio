@@ -376,7 +376,8 @@
       "from_address": "Adresse de l’expéditeur",
       "auth": "Méthode de connexion",
       "url": "Adresse (URL)",
-      "method": "Méthode HTTP"
+      "method": "Méthode HTTP",
+      "test_address": "Adresse de test"
     },
     "check": {
       "unchecked": "Non vérifiée",
@@ -414,7 +415,8 @@
       "deleted": "Supprimée",
       "secret_set": "Secret défini",
       "secret_cleared": "Secret retiré",
-      "checked": "Vérifiée"
+      "checked": "Vérifiée",
+      "test_sent": "Envoi de test"
     },
     "search": {
       "open": "Configurer un service de recherche",
@@ -439,6 +441,9 @@
       "create": "Configurer",
       "done": "Service de recherche « {{name}} » configuré.",
       "none": "Aucun service de recherche ne peut être configuré dans cette installation."
+    },
+    "fieldHint": {
+      "test_address": "Votre propre adresse e-mail. « Envoyer un test » envoie un e-mail de test à cette adresse et à aucune autre."
     }
   },
   "origin": {
@@ -450,6 +455,14 @@
     "notify_user": {
       "name": "Message pour moi",
       "description": "Envoie un court message de l’agent à la cloche de la barre supérieure de Nodestro : un titre, le texte et un niveau (info, succès, avertissement ou erreur). Au plus 3 messages par exécution, affichés en texte brut et marqués comme venant d’un agent. Rien n’est envoyé hors de Nodestro : ni e-mail, ni webhook."
+    },
+    "draft_email": {
+      "name": "Brouillon d’e-mail",
+      "description": "Prépare un e-mail sous forme de fichier brouillon (.eml) dans les fichiers de résultat de l’exécution : destinataires, objet, texte, une version HTML facultative et des pièces jointes tirées des fichiers de l’exécution. Il n’envoie rien : une personne ouvre le brouillon dans un logiciel de messagerie, le vérifie et l’envoie. Au maximum 10 brouillons par exécution ; fonctionne hors ligne."
+    },
+    "draft_webhook": {
+      "name": "Brouillon de webhook",
+      "description": "Prépare les données JSON d’un appel de webhook sous forme de fichier brouillon dans les fichiers de résultat de l’exécution, vérifiées selon un JSON Schema si vous en définissez un dans l’agent. Il n’appelle aucun webhook : une personne vérifie les données et les envoie. Au maximum 10 brouillons par exécution ; fonctionne hors ligne."
     }
   }
 }

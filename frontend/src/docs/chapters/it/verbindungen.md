@@ -30,7 +30,7 @@ I segreti vengono salvati cifrati, come i token di accesso dei servizi collegati
 ## Verificare una connessione {#pruefen}
 <!-- keywords: verifica, stato, funziona, verifica non riuscita, codice di errore -->
 
-**Verifica connessione** prova la connessione e mostra il risultato: *Funziona*, *Verifica non riuscita* o *Non verificata*, con l’ora della verifica e, in caso di errore, il codice di errore. Per ora, per i server di posta e i webhook vengono controllate solo le impostazioni; il servizio non viene ancora contattato. Se cambi le impostazioni, il fornitore o il segreto, lo stato torna a *Non verificata*. Una connessione non ancora verificata con successo compare come avviso nel controllo prima di un’esecuzione.
+**Verifica connessione** prova la connessione e mostra il risultato: *Funziona*, *Verifica non riuscita* o *Non verificata*, con l’ora della verifica e, in caso di errore, il codice di errore. Per i server di posta e i webhook Nodestro contatta il servizio: accede al server di posta in modo cifrato e si disconnette, oppure interroga l’indirizzo del webhook, senza inviare nulla. **Invia test** invia poi, dopo la tua conferma, un messaggio di prova fisso al tuo indirizzo di prova o al webhook (vedi [Invio di prova di una connessione](/docs/entwuerfe#testversand)). Se cambi le impostazioni, il fornitore o il segreto, lo stato torna a *Non verificata*. Una connessione non ancora verificata con successo compare come avviso nel controllo prima di un’esecuzione.
 
 ## Usare una connessione in un agente {#zuweisen}
 <!-- keywords: agente, ispettore, impostazioni dello strumento, scelta della connessione -->

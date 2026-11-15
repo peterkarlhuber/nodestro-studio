@@ -30,7 +30,7 @@ Les secrets sont enregistrés chiffrés, comme les jetons d’accès des service
 ## Vérifier une connexion {#pruefen}
 <!-- keywords: vérifier, statut, fonctionne, échec de la vérification, code d’erreur -->
 
-**Vérifier la connexion** teste la connexion et affiche le résultat : *Fonctionne*, *Échec de la vérification* ou *Non vérifiée*, avec l’heure de la vérification et, en cas d’échec, le code d’erreur. Pour l’instant, la vérification des serveurs de messagerie et des webhooks contrôle seulement les paramètres et ne contacte pas encore le service. Une modification des paramètres, du fournisseur ou du secret remet le statut à *Non vérifiée*. Une connexion qui n’a pas encore été vérifiée avec succès apparaît comme avertissement dans la vérification avant une exécution.
+**Vérifier la connexion** teste la connexion et affiche le résultat : *Fonctionne*, *Échec de la vérification* ou *Non vérifiée*, avec l’heure de la vérification et, en cas d’échec, le code d’erreur. Pour les serveurs de messagerie et les webhooks, Nodestro contacte le service : il se connecte de manière chiffrée au serveur de messagerie puis se déconnecte, ou interroge l’adresse du webhook, sans rien envoyer. **Envoyer un test** envoie ensuite, après votre confirmation, un message de test fixe à votre adresse de test ou au webhook (voir [Envoi de test d’une connexion](/docs/entwuerfe#testversand)). Une modification des paramètres, du fournisseur ou du secret remet le statut à *Non vérifiée*. Une connexion qui n’a pas encore été vérifiée avec succès apparaît comme avertissement dans la vérification avant une exécution.
 
 ## Utiliser une connexion dans un agent {#zuweisen}
 <!-- keywords: agent, inspecteur, paramètres de l’outil, choix de la connexion -->

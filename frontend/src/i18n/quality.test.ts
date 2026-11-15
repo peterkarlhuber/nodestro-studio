@@ -36,6 +36,7 @@ describe("texts left in English", () => {
     "version", "workflow", "workflows", "max", "ok", "orchestrator", "teams", "team", "tools", "tool", "tests", "sqlite",
     "openai", "vllm", "https", "ctrl", "esc", "amazon", "bedrock", "aws", "nova", "claude", "eu", "central", "linux", "macos", "windows",
     "skill", "skills", // the Agent Skills format keeps its name in every language (NAL-B3)
+    "cc", // the copy recipients of an e-mail (NAL-A4)
   ];
   const ALLOWED: Record<string, string[]> = {
     de: [
@@ -370,6 +371,15 @@ describe("backend codes", () => {
     "skill.group_name_taken", "skill.group_not_found", "skill.script_not_found", "skill.script_too_large", "skill.file_not_text",
     // Internal notifications (NAL-A3): the tool notify_user and the inbox API.
     "notify.limit", "notify.empty_title", "notifications.invalid_cursor",
+    // E-mail and webhook drafts, the real connection check and the test send (NAL-A4).
+    "mail.address_invalid", "mail.empty", "mail.html_too_large", "mail.no_recipient", "mail.subject_invalid",
+    "mail.subject_too_long", "mail.text_too_long", "mail.too_large", "mail.too_many_attachments", "mail.too_many_recipients",
+    "webhook.payload_invalid", "webhook.payload_too_large", "webhook.schema_invalid", "webhook.schema_mismatch",
+    "connection.address_refused", "connection.auth_failed", "connection.auth_unsupported", "connection.dns_failed",
+    "connection.http_status", "connection.port_refused", "connection.recipient_refused", "connection.redirect_refused",
+    "connection.send_failed", "connection.sender_refused", "connection.test_address_missing", "connection.test_send_limit",
+    "connection.test_send_unsupported", "connection.timeout", "connection.tls_failed", "connection.tls_required",
+    "connection.unreachable",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

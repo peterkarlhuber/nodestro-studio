@@ -1,0 +1,43 @@
+{
+  "noSend": "Não envia",
+  "noSendHint": "Só prepara um rascunho. Nada é enviado: uma pessoa confere o rascunho e o envia.",
+  "card": {
+    "email": "Rascunho de e-mail",
+    "webhook": "Rascunho de webhook",
+    "notSent": "Não enviado",
+    "notSentEmail": "Nada foi enviado. Um agente preparou este e-mail; baixe-o, confira-o no seu programa de e-mail e envie-o você mesmo.",
+    "notSentWebhook": "Nada foi enviado. Um agente preparou estes dados de webhook; baixe-os, confira-os e envie-os você mesmo.",
+    "help": "Rascunhos",
+    "from": "De",
+    "fromUnset": "não definido; seu programa de e-mail preenche o remetente",
+    "to": "Para",
+    "cc": "Cc",
+    "subject": "Assunto",
+    "html": "Versão HTML",
+    "yes": "sim",
+    "no": "não",
+    "none": "nenhum",
+    "attachments": "Anexos",
+    "schema": "Conferido com um esquema",
+    "size": "Tamanho",
+    "created": "Criado",
+    "bodyHidden": "O texto do e-mail não é mostrado aqui. Abra o arquivo para lê-lo.",
+    "downloadEml": "Baixar .eml",
+    "downloadJson": "Baixar .json",
+    "openInMail": "Abrir no programa de e-mail",
+    "openInMailHint": "Baixa o arquivo .eml. Abra-o com seu programa de e-mail (por exemplo, com um clique duplo); muitos programas o abrem como uma nova mensagem pronta para enviar. O Nodestro não envia nada."
+  },
+  "testSend": {
+    "button": "Enviar teste",
+    "title": "Enviar um teste por “{{name}}”",
+    "toAddress": "O Nodestro envia um breve e-mail de teste por este servidor de e-mail para o endereço de teste:",
+    "toUrl": "O Nodestro envia uma chamada de teste ({{method}}) com poucos dados JSON para o endereço do webhook:",
+    "byYou": "Você mesmo envia este teste, e ele é registrado com o seu nome. Nenhum agente e nenhum fluxo de trabalho participa.",
+    "limit": "No máximo 5 envios de teste por conexão e hora.",
+    "noAddress": "Esta conexão não tem endereço de teste. Primeiro informe o seu próprio endereço de e-mail como “Endereço de teste” nas configurações dela.",
+    "confirm": "Enviar teste agora",
+    "sent": "Teste enviado.",
+    "sentStatus": "Teste enviado. O webhook respondeu com HTTP {{status}}.",
+    "close": "Fechar"
+  }
+}

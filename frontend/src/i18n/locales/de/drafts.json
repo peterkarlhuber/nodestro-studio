@@ -1,0 +1,43 @@
+{
+  "noSend": "Versendet nicht",
+  "noSendHint": "Bereitet nur einen Entwurf vor. Es wird nichts verschickt: Eine Person prüft den Entwurf und verschickt ihn.",
+  "card": {
+    "email": "E-Mail-Entwurf",
+    "webhook": "Webhook-Entwurf",
+    "notSent": "Nicht verschickt",
+    "notSentEmail": "Es wurde nichts verschickt. Ein Agent hat diese E-Mail vorbereitet; lade sie herunter, prüfe sie in deinem Mailprogramm und verschicke sie selbst.",
+    "notSentWebhook": "Es wurde nichts verschickt. Ein Agent hat diese Webhook-Daten vorbereitet; lade sie herunter, prüfe sie und verschicke sie selbst.",
+    "help": "Entwürfe",
+    "from": "Von",
+    "fromUnset": "nicht gesetzt; dein Mailprogramm trägt den Absender ein",
+    "to": "An",
+    "cc": "Cc",
+    "subject": "Betreff",
+    "html": "HTML-Fassung",
+    "yes": "ja",
+    "no": "nein",
+    "none": "keine",
+    "attachments": "Anhänge",
+    "schema": "Gegen ein Schema geprüft",
+    "size": "Größe",
+    "created": "Erstellt",
+    "bodyHidden": "Der Text der E-Mail wird hier nicht angezeigt. Öffne die Datei, um ihn zu lesen.",
+    "downloadEml": ".eml herunterladen",
+    "downloadJson": ".json herunterladen",
+    "openInMail": "Im Mailprogramm öffnen",
+    "openInMailHint": "Lädt die .eml-Datei herunter. Öffne sie mit deinem Mailprogramm (etwa per Doppelklick); viele Mailprogramme öffnen sie als neue Nachricht, bereit zum Senden. Nodestro verschickt nichts."
+  },
+  "testSend": {
+    "button": "Test senden",
+    "title": "Test über „{{name}}“ senden",
+    "toAddress": "Nodestro schickt über diesen Mailserver eine kurze Test-E-Mail an die Testadresse:",
+    "toUrl": "Nodestro schickt einen Testaufruf ({{method}}) mit kleinen JSON-Daten an die Webhook-Adresse:",
+    "byYou": "Du verschickst diesen Test selbst, und er wird mit deinem Namen aufgezeichnet. Kein Agent und kein Workflow ist beteiligt.",
+    "limit": "Höchstens 5 Testsendungen pro Verbindung und Stunde.",
+    "noAddress": "Diese Verbindung hat keine Testadresse. Trag zuerst deine eigene E-Mail-Adresse als „Testadresse“ in ihren Einstellungen ein.",
+    "confirm": "Test jetzt senden",
+    "sent": "Test verschickt.",
+    "sentStatus": "Test verschickt. Der Webhook hat mit HTTP {{status}} geantwortet.",
+    "close": "Schließen"
+  }
+}

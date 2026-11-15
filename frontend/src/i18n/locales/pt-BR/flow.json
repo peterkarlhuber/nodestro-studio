@@ -147,7 +147,8 @@
     "sanitized": "higienizado",
     "source": {
       "output": "do nó de resultado",
-      "manual": "criado depois"
+      "manual": "criado depois",
+      "tool": "rascunho de um agente"
     },
     "view": "Ver {{name}}",
     "download": "Baixar {{name}}",

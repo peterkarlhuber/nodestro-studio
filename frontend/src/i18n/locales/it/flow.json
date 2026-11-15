@@ -147,7 +147,8 @@
     "sanitized": "ripulito",
     "source": {
       "output": "dal nodo di risultato",
-      "manual": "creato in seguito"
+      "manual": "creato in seguito",
+      "tool": "bozza di un agente"
     },
     "view": "Mostra {{name}}",
     "download": "Scarica {{name}}",

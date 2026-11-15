@@ -10,7 +10,7 @@ import type { ToolCapabilityStatement } from "./types";
 /** none: no secret; vault: sealed with the keychain or server key; session: kept in memory until the app closes. */
 export type SecretStorage = "none" | "vault" | "session";
 export type CheckStatus = "unchecked" | "ok" | "failed";
-export type ConnectionEventKind = "created" | "updated" | "deleted" | "secret_set" | "secret_cleared" | "checked";
+export type ConnectionEventKind = "created" | "updated" | "deleted" | "secret_set" | "secret_cleared" | "checked" | "test_sent";
 export type ToolCategory = "compute" | "data" | "files" | "web" | "communication";
 export type ToolNetwork = "none" | "external";
 
@@ -96,6 +96,16 @@ export interface ConnectionEvent {
   details: Record<string, unknown>;
 }
 
+/** The answer of a test send (NAL-A4): ``status`` is the webhook's HTTP status, ``size`` the bytes sent. */
+export interface SendTestOut {
+  ok: boolean;
+  status?: number | null;
+  size?: number | null;
+}
+
+/** Connection types a person can send a test through (NAL-A4). */
+export const TEST_SEND_TYPES: readonly string[] = ["smtp", "webhook"];
+
 /** A built-in tool's catalog entry (ToolSpec.catalog()). */
 export interface ToolSpec {
   id: string;
@@ -140,6 +150,8 @@ export const connectionsApi = {
   /** Write-only: "" removes the secret; the answer only says secret_set. */
   setSecret: (id: string, secret: string) => request<Connection>("PUT", `${one(id)}/secret`, { secret }),
   check: (id: string) => request<Connection>("POST", `${one(id)}/check`),
+  /** Sends one test (to the smtp connection's test address or to the webhook); only after the person confirmed it. */
+  testSend: (id: string) => request<SendTestOut>("POST", `${one(id)}/test-send`, { confirm: "SEND" }),
   events: (limit = 200) => request<ConnectionEvent[]>("GET", `/connections/events?limit=${limit}`),
   builtinTools: () => request<BuiltinTool[]>("GET", "/tools/builtin"),
 };

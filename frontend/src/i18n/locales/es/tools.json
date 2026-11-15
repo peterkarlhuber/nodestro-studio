@@ -376,7 +376,8 @@
       "from_address": "Dirección del remitente",
       "auth": "Método de inicio de sesión",
       "url": "Dirección (URL)",
-      "method": "Método HTTP"
+      "method": "Método HTTP",
+      "test_address": "Dirección de prueba"
     },
     "check": {
       "unchecked": "Sin comprobar",
@@ -414,7 +415,8 @@
       "deleted": "Eliminada",
       "secret_set": "Secreto definido",
       "secret_cleared": "Secreto quitado",
-      "checked": "Comprobada"
+      "checked": "Comprobada",
+      "test_sent": "Envío de prueba"
     },
     "search": {
       "open": "Configurar servicio de búsqueda",
@@ -439,6 +441,9 @@
       "create": "Configurar",
       "done": "Servicio de búsqueda «{{name}}» configurado.",
       "none": "En esta instalación no se puede configurar ningún servicio de búsqueda."
+    },
+    "fieldHint": {
+      "test_address": "Tu propia dirección de correo. «Enviar prueba» envía un correo de prueba solo a esta dirección."
     }
   },
   "origin": {
@@ -450,6 +455,14 @@
     "notify_user": {
       "name": "Mensaje para mí",
       "description": "Envía un mensaje corto del agente a la campana de la barra superior de Nodestro: un título, el texto y un nivel (información, éxito, advertencia o error). Como máximo 3 mensajes por ejecución, mostrados como texto sin formato y marcados como procedentes de un agente. No envía nada fuera de Nodestro: ni correo electrónico ni webhook."
+    },
+    "draft_email": {
+      "name": "Borrador de correo",
+      "description": "Prepara un correo como archivo de borrador (.eml) en los archivos de resultado de la ejecución: destinatarios, asunto, texto, una versión HTML opcional y adjuntos de los propios archivos de la ejecución. No envía nada: una persona abre el borrador en un programa de correo, lo revisa y lo envía. Como máximo 10 borradores por ejecución; funciona sin conexión."
+    },
+    "draft_webhook": {
+      "name": "Borrador de webhook",
+      "description": "Prepara los datos JSON de una llamada de webhook como archivo de borrador en los archivos de resultado de la ejecución, comprobados con un JSON Schema si defines uno en el agente. No llama a ningún webhook: una persona revisa los datos y los envía. Como máximo 10 borradores por ejecución; funciona sin conexión."
     }
   }
 }

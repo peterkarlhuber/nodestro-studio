@@ -275,3 +275,104 @@ describe("ConnectionsTab", () => {
     expect(screen.queryByLabelText("Passwort")).not.toBeInTheDocument();
   });
 });
+
+describe("test send (NAL-A4)", () => {
+  const MAIL = { ...CONNECTION, settings: { ...(CONNECTION.settings as object), test_address: "me@example.com" } };
+  const HOOK = {
+    ...CONNECTION,
+    id: "conn_2",
+    type: "webhook",
+    name: "Orders hook",
+    settings: { url: "https://hooks.example.com/orders", method: "PUT", auth: "hmac-sha256" },
+    egress: ["hooks.example.com:443"],
+  };
+
+  it("names the test address and the person, sends only after the confirmation and shows the result", async () => {
+    const fetch = serve(
+      routes({
+        connections: [MAIL],
+        route: (method, url) => (method === "POST" && url === "/api/connections/conn_1/test-send" ? { ok: true, size: 512 } : undefined),
+      }),
+    );
+    renderTab();
+    await userEvent.click(await screen.findByRole("button", { name: "Test senden" }));
+    const dialog = within(await screen.findByRole("dialog"));
+    expect(dialog.getByText("me@example.com")).toBeInTheDocument();
+    expect(dialog.getByText(/an die Testadresse/)).toBeInTheDocument();
+    expect(dialog.getByText(/Du verschickst diesen Test selbst/)).toBeInTheDocument();
+    expect(dialog.getByText("Höchstens 5 Testsendungen pro Verbindung und Stunde.")).toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalledWith("/api/connections/conn_1/test-send", expect.anything());
+    await userEvent.click(dialog.getByRole("button", { name: "Test jetzt senden" }));
+    expect(await dialog.findByText("Test verschickt.")).toBeInTheDocument();
+    expect(fetch).toHaveBeenCalledWith(
+      "/api/connections/conn_1/test-send",
+      expect.objectContaining({ method: "POST", body: JSON.stringify({ confirm: "SEND" }) }),
+    );
+    expect(dialog.queryByRole("button", { name: "Test jetzt senden" })).not.toBeInTheDocument();
+  });
+
+  it("names the webhook address and method and the HTTP status of the answer", async () => {
+    serve(
+      routes({
+        connections: [HOOK],
+        route: (method, url) => (method === "POST" && url === "/api/connections/conn_2/test-send" ? { ok: true, status: 204, size: 90 } : undefined),
+      }),
+    );
+    renderTab();
+    await userEvent.click(await screen.findByRole("button", { name: "Test senden" }));
+    const dialog = within(await screen.findByRole("dialog"));
+    expect(dialog.getByText("https://hooks.example.com/orders")).toBeInTheDocument();
+    expect(dialog.getByText(/Testaufruf \(PUT\)/)).toBeInTheDocument();
+    await userEvent.click(dialog.getByRole("button", { name: "Test jetzt senden" }));
+    expect(await dialog.findByText("Test verschickt. Der Webhook hat mit HTTP 204 geantwortet.")).toBeInTheDocument();
+  });
+
+  it("shows the limit as a sentence when the service refuses another test", async () => {
+    serve(
+      routes({
+        connections: [MAIL],
+        route: (method, url) =>
+          method === "POST" && url === "/api/connections/conn_1/test-send"
+            ? json({ detail: "limit", code: "connection.test_send_limit", params: { limit: 5 } }, 429)
+            : undefined,
+      }),
+    );
+    renderTab();
+    await userEvent.click(await screen.findByRole("button", { name: "Test senden" }));
+    const dialog = within(await screen.findByRole("dialog"));
+    await userEvent.click(dialog.getByRole("button", { name: "Test jetzt senden" }));
+    expect(await dialog.findByText(/Höchstens 5 Testsendungen pro Verbindung und Stunde\. Versuch es später/)).toBeInTheDocument();
+  });
+
+  it("does not send without a test address and asks for one", async () => {
+    serve(routes());
+    renderTab();
+    await userEvent.click(await screen.findByRole("button", { name: "Test senden" }));
+    const dialog = within(await screen.findByRole("dialog"));
+    expect(dialog.getByText(/Diese Verbindung hat keine Testadresse/)).toBeInTheDocument();
+    expect(dialog.getByRole("button", { name: "Test jetzt senden" })).toBeDisabled();
+  });
+
+  it("explains the test address field in the form", async () => {
+    serve(routes());
+    const schema = { ...SMTP_SCHEMA, properties: { ...SMTP_SCHEMA.properties, test_address: { anyOf: [{ type: "string" }, { type: "null" }], default: null } } };
+    const original = TYPES[1].settings_schema;
+    TYPES[1].settings_schema = schema;
+    try {
+      renderTab();
+      await userEvent.click(await screen.findByRole("button", { name: "Verbindung hinzufügen" }));
+      const dialog = within(await screen.findByRole("dialog"));
+      await userEvent.selectOptions(dialog.getByLabelText("Art"), "smtp");
+      expect(dialog.getByLabelText("Testadresse")).toHaveAccessibleDescription(/an diese Adresse und an keine andere/);
+    } finally {
+      TYPES[1].settings_schema = original;
+    }
+  });
+
+  it("is offered to administrators only", async () => {
+    serve(routes({ me: { user_id: "u1", tenant_id: "t1", role: "viewer", permissions: ["read"], tenants: { t1: "viewer" } } }));
+    renderTab();
+    expect(await screen.findByTestId("connection-secret")).toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByRole("button", { name: "Test senden" })).not.toBeInTheDocument());
+  });
+});

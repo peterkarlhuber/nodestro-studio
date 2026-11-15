@@ -55,3 +55,10 @@ export function toolDisplayName(t: TFunction, tool: Pick<ToolInfo, "name" | "kin
   const key = `tools.builtin.${tool.name}.name`;
   return tool.kind === "builtin" && i18n.exists(key) ? t(key) : null;
 }
+
+/** Built-in tools that only prepare a draft in the run and never send it (NAL-A4); shown with "Does not send". */
+export const DRAFT_TOOLS: readonly string[] = ["draft_email", "draft_webhook"];
+
+export function isDraftTool(tool: Pick<ToolInfo, "name" | "kind">): boolean {
+  return tool.kind === "builtin" && DRAFT_TOOLS.includes(tool.name);
+}

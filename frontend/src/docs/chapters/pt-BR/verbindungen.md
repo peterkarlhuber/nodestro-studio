@@ -30,7 +30,7 @@ Os segredos são salvos criptografados, como os tokens de acesso dos serviços c
 ## Verificar uma conexão {#pruefen}
 <!-- keywords: verificar, status, funciona, a verificação falhou, código de erro -->
 
-**Verificar conexão** testa a conexão e mostra o resultado: *Funciona*, *A verificação falhou* ou *Não verificada*, com o horário da verificação e, em caso de falha, o código de erro. Por enquanto, em servidores de e-mail e webhooks só as configurações são verificadas; o serviço ainda não é contatado. Ao mudar as configurações, o provedor ou o segredo, o status volta para *Não verificada*. Uma conexão ainda não verificada com sucesso aparece como aviso na verificação antes de uma execução.
+**Verificar conexão** testa a conexão e mostra o resultado: *Funciona*, *A verificação falhou* ou *Não verificada*, com o horário da verificação e, em caso de falha, o código de erro. Em servidores de e-mail e webhooks, o Nodestro contata o serviço: faz login criptografado no servidor de e-mail e sai, ou consulta o endereço do webhook, sem enviar nada. **Enviar teste** envia depois, com a sua confirmação, uma mensagem de teste fixa para o seu endereço de teste ou para o webhook (veja [Envio de teste de uma conexão](/docs/entwuerfe#testversand)). Ao mudar as configurações, o provedor ou o segredo, o status volta para *Não verificada*. Uma conexão ainda não verificada com sucesso aparece como aviso na verificação antes de uma execução.
 
 ## Usar uma conexão em um agente {#zuweisen}
 <!-- keywords: agente, inspetor, configurações da ferramenta, escolha da conexão -->

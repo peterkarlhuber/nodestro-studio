@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { modelName } from "../components/ModelPicker";
 import i18n, { loadLanguage } from "../i18n";
 import type { ModelInfo } from "../api/types";
-import { modelDescription, modelLabel, toolDescription, toolDisplayName } from "./catalog";
+import { isDraftTool, modelDescription, modelLabel, toolDescription, toolDisplayName } from "./catalog";
 
 const t = i18n.t.bind(i18n);
 
@@ -75,5 +75,20 @@ describe("built-in tool texts", () => {
     expect(toolDisplayName(t, { name: "calculator", kind: "builtin" })).toBeNull();
     expect(toolDisplayName(t, { name: "notify_user", kind: "custom" })).toBeNull();
     expect(toolDescription(t, { name: "calculator", kind: "builtin", description: "x" })).toBe(t("catalog.builtinTools.calculator"));
+  });
+});
+
+describe("draft tools (NAL-A4)", () => {
+  it("name both tools, say that they send nothing and are marked as such", () => {
+    const email = { name: "draft_email", kind: "builtin" as const, description: "Prepare an e-mail as a draft file." };
+    const webhook = { name: "draft_webhook", kind: "builtin" as const, description: "Prepare a webhook payload." };
+    expect(toolDisplayName(t, email)).toBe("E-Mail-Entwurf");
+    expect(toolDisplayName(t, webhook)).toBe("Webhook-Entwurf");
+    expect(toolDescription(t, email)).toContain("Es verschickt nichts");
+    expect(toolDescription(t, webhook)).toContain("Es ruft keinen Webhook auf");
+    expect(isDraftTool(email)).toBe(true);
+    expect(isDraftTool(webhook)).toBe(true);
+    expect(isDraftTool({ name: "notify_user", kind: "builtin" })).toBe(false);
+    expect(isDraftTool({ name: "draft_email", kind: "custom" })).toBe(false);
   });
 });
