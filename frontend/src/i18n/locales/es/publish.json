@@ -244,7 +244,6 @@
     "kindPortable": "Paquete listo para usar",
     "standardHint": "El proyecto FastAPI como código fuente: quien lo ejecute instala Python y las bibliotecas.",
     "portableHint": "Descomprime, haz doble clic en el archivo de inicio y úsalo: con su propio Python, todas las bibliotecas, un programa de inicio y, si quieres, los modelos locales. No hay que instalar nada en el equipo de destino.",
-    "webUi": "Incluir la interfaz web",
     "webUiHint": "Un formulario para este flujo de trabajo con progreso en directo, aprobaciones y archivos de resultados, en seis idiomas. Se ejecuta en la propia exportación; ninguna clave llega al navegador.",
     "portable": {
       "platform": "Plataforma de destino",
@@ -321,10 +320,38 @@
         "models": "modelos",
         "archive": "archivo ZIP",
         "done": "listo"
+      },
+      "support": {
+        "ci": {
+          "built_and_started": "Compilado e iniciado en CI",
+          "none": "No comprobado en CI"
+        },
+        "localModels": {
+          "checked": "Modelos locales comprobados",
+          "unchecked": "Modelos locales no comprobados"
+        },
+        "human": "Comprobado por personas en hardware real",
+        "noHuman": "Aún no comprobado por personas en hardware real",
+        "limit": {
+          "unsigned": "Sin firma: Gatekeeper (macOS) o SmartScreen (Windows) pregunta una vez en el primer inicio.",
+          "gemini": "No hay paquete si la publicación usa Gemini (la biblioteca de Google no tiene un paquete precompilado aquí).",
+          "vector_search": "La búsqueda semántica de conocimiento pasa a búsqueda de texto completo (aquí no hay sqlite-vec).",
+          "self_signed_tls": "Sin certificado autoemitido para el emparejamiento (aquí no hay cryptography): en la red hace falta un certificado propio o un proxy TLS."
+        },
+        "libraries": {
+          "checking": "Comprobando las bibliotecas para esta plataforma …",
+          "ok": "Todas las bibliotecas están disponibles para esta plataforma",
+          "unavailable": "Faltan paquetes precompilados para esta plataforma: {{libraries}}",
+          "unchecked": "Las bibliotecas se comprueban al crear el paquete (aquí no es posible una comprobación previa)."
+        }
       }
     },
     "delete": "Eliminar {{file}}",
-    "deleted": "Se eliminó la exportación."
+    "deleted": "Se eliminó la exportación.",
+    "ui": "Interfaz",
+    "uiEmbedded": "Con la interfaz estándar (recomendado)",
+    "uiNone": "Solo API (para tus propios programas)",
+    "uiNoneHint": "Sin interfaz web: el backend ofrece solo el contrato de la app, la API publicada y /health, para tus propios programas o tu propia interfaz."
   },
   "guide": {
     "title": "Guía de integración con IA (opcional)",

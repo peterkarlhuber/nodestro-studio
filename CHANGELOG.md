@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+### NAL-C4: pairing a browser with a portable package (2026-11-15)
+
+- The lock pins nodestro-api `2a0f4cf` (nodestro-api #149: pairing by a one-time code behind `NODESTRO_PAIRING`,
+  off by default; device rights; self-issued TLS certificate with fingerprint comparison; embedded nodestro-app-ui
+  `a347521`) and nodestro-sdk `ddce5ef` (nodestro-sdk #129: the OpenAPI document of that commit).
+
+### NAL-C3: operating portable packages (2026-11-15)
+
+- Export dialog: the choice "With the standard interface (recommended)" / "API only (for your own programs)"
+  replaces the switch "Include the web interface"; a ready-to-run package starts with the interface. The chosen
+  platform shows its row of the support matrix (built and started in CI, local models, real hardware, known limits)
+  and the platform pre-check of its libraries (nodestro-api `POST .../export/libraries`): missing ready-built
+  packages are named before anything is built. Six languages.
+- Help "API and export": the platform badges and the pre-check, and how to operate a package (`verify`, `backup`,
+  `restore`, `update`, `rollback`, `adopt`, `ui install`), in six languages.
+- Help "API and export": using a package from another computer (NAL-C4): own certificate or TLS proxy (recommended),
+  a self-issued certificate with the fingerprint comparison and its "restricted trust" mark, or an SSH tunnel;
+  pairing by code is prepared but off until the independent security review. Six languages.
+
 ### Tabrion 0.2.2 pin (2026-11-15)
 
 - The lock moves tabrion to the final 0.2.2 (`5bc690e`, tabrion #83, untagged), which carries security fixes:

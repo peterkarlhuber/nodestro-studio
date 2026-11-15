@@ -244,7 +244,6 @@
     "kindPortable": "Startfertiges Paket",
     "standardHint": "Das FastAPI-Projekt als Quellcode: Wer es betreibt, installiert Python und die Bibliotheken.",
     "portableHint": "Entpacken, Startdatei doppelklicken, loslegen: mit eigenem Python, allen Bibliotheken, einem Startprogramm und auf Wunsch den lokalen Modellen. Auf dem Zielrechner muss nichts installiert werden.",
-    "webUi": "Weboberfläche beilegen",
     "webUiHint": "Ein Formular für diesen Workflow mit Live-Fortschritt, Freigaben und Ergebnisdateien, in sechs Sprachen. Es läuft im Export selbst; keine Schlüssel gelangen in den Browser.",
     "portable": {
       "platform": "Zielplattform",
@@ -321,10 +320,38 @@
         "models": "Modelle",
         "archive": "ZIP-Datei",
         "done": "fertig"
+      },
+      "support": {
+        "ci": {
+          "built_and_started": "In CI gebaut und gestartet",
+          "none": "Nicht in CI geprüft"
+        },
+        "localModels": {
+          "checked": "Lokale Modelle geprüft",
+          "unchecked": "Lokale Modelle nicht geprüft"
+        },
+        "human": "Von Menschen auf echter Hardware geprüft",
+        "noHuman": "Noch nicht von Menschen auf echter Hardware geprüft",
+        "limit": {
+          "unsigned": "Nicht signiert: Gatekeeper (macOS) oder SmartScreen (Windows) fragt beim ersten Start einmal nach.",
+          "gemini": "Kein Paket, wenn die Veröffentlichung Gemini nutzt (Googles Bibliothek gibt es hier nicht fertig gebaut).",
+          "vector_search": "Die semantische Wissenssuche fällt auf Volltextsuche zurück (sqlite-vec fehlt hier).",
+          "self_signed_tls": "Kein selbst ausgestelltes Zertifikat für die Kopplung (cryptography fehlt hier): Im Netzwerk braucht es ein eigenes Zertifikat oder einen TLS-Proxy."
+        },
+        "libraries": {
+          "checking": "Bibliotheken werden für diese Plattform geprüft …",
+          "ok": "Alle Bibliotheken für diese Plattform verfügbar",
+          "unavailable": "Für diese Plattform fehlen fertige Pakete: {{libraries}}",
+          "unchecked": "Die Bibliotheken werden beim Erstellen geprüft (Vorprüfung hier nicht möglich)."
+        }
       }
     },
     "delete": "{{file}} löschen",
-    "deleted": "Der Export wurde gelöscht."
+    "deleted": "Der Export wurde gelöscht.",
+    "ui": "Oberfläche",
+    "uiEmbedded": "Mit Standard-Oberfläche (empfohlen)",
+    "uiNone": "Nur API (für eigene Programme)",
+    "uiNoneHint": "Ohne Weboberfläche: Das Backend bietet nur den App-Vertrag, die veröffentlichte API und /health, etwa für eigene Programme oder eine eigene Oberfläche."
   },
   "guide": {
     "title": "Integrationsleitfaden mit KI (optional)",

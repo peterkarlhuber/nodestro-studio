@@ -110,6 +110,7 @@ import type {
   ApiScope,
   ApiValidation,
   ExportCheck,
+  LibraryCheck,
   ExportJob,
   ExportOptions,
   ExportRecord,
@@ -774,6 +775,9 @@ export const api = {
     request<ApiValidation | ApiRunStatus>("POST", `/publications/${id}/test`, { body, dry_run: dryRun, number: number ?? null }),
   exportCheck: (id: string, options: ExportOptions, number?: number | null) =>
     request<ExportCheck>("POST", `/publications/${id}/export/check`, { options, number: number ?? null }),
+  /** The platform pre-check of a portable package (NAL-C3): resolves its libraries for the target platform once. */
+  exportLibraries: (id: string, options: ExportOptions, number?: number | null) =>
+    request<LibraryCheck>("POST", `/publications/${id}/export/libraries`, { options, number: number ?? null }),
   createExport: (id: string, options: ExportOptions, number?: number | null) =>
     request<ExportRecord>("POST", `/publications/${id}/exports`, { options, number: number ?? null }),
   exports: (id: string) => request<ExportRecord[]>("GET", `/publications/${id}/exports`),

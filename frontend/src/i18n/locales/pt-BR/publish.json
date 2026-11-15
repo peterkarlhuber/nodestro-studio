@@ -244,7 +244,6 @@
     "kindPortable": "Pacote pronto para usar",
     "standardHint": "O projeto FastAPI como código-fonte: quem o executa instala o Python e as bibliotecas.",
     "portableHint": "Descompacte, clique duas vezes no arquivo de início e use: com Python próprio, todas as bibliotecas, um programa de início e, opcionalmente, os modelos locais. Nada precisa ser instalado no computador de destino.",
-    "webUi": "Incluir a interface web",
     "webUiHint": "Um formulário para este fluxo de trabalho com progresso ao vivo, aprovações e arquivos de resultado, em seis idiomas. Ele roda na própria exportação; nenhuma chave chega ao navegador.",
     "portable": {
       "platform": "Plataforma de destino",
@@ -321,10 +320,38 @@
         "models": "modelos",
         "archive": "arquivo ZIP",
         "done": "concluído"
+      },
+      "support": {
+        "ci": {
+          "built_and_started": "Compilado e iniciado na CI",
+          "none": "Não verificado na CI"
+        },
+        "localModels": {
+          "checked": "Modelos locais verificados",
+          "unchecked": "Modelos locais não verificados"
+        },
+        "human": "Verificado por pessoas em hardware real",
+        "noHuman": "Ainda não verificado por pessoas em hardware real",
+        "limit": {
+          "unsigned": "Sem assinatura: o Gatekeeper (macOS) ou o SmartScreen (Windows) pergunta uma vez na primeira inicialização.",
+          "gemini": "Nenhum pacote quando a publicação usa Gemini (a biblioteca do Google não tem pacote pronto aqui).",
+          "vector_search": "A busca semântica de conhecimento recorre à busca de texto completo (sem sqlite-vec aqui).",
+          "self_signed_tls": "Sem certificado autoemitido para o pareamento (sem cryptography aqui): na rede é preciso um certificado próprio ou um proxy TLS."
+        },
+        "libraries": {
+          "checking": "Verificando as bibliotecas para esta plataforma …",
+          "ok": "Todas as bibliotecas estão disponíveis para esta plataforma",
+          "unavailable": "Faltam pacotes prontos para esta plataforma: {{libraries}}",
+          "unchecked": "As bibliotecas são verificadas ao criar o pacote (aqui não é possível uma verificação prévia)."
+        }
       }
     },
     "delete": "Excluir {{file}}",
-    "deleted": "A exportação foi excluída."
+    "deleted": "A exportação foi excluída.",
+    "ui": "Interface",
+    "uiEmbedded": "Com a interface padrão (recomendado)",
+    "uiNone": "Somente API (para seus próprios programas)",
+    "uiNoneHint": "Sem interface web: o backend oferece apenas o contrato do app, a API publicada e /health, para seus próprios programas ou sua própria interface."
   },
   "guide": {
     "title": "Guia de integração com IA (opcional)",

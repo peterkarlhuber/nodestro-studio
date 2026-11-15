@@ -3212,9 +3212,26 @@ export interface ExportNetworkNeed {
   used_by: string[];
 }
 
+/** One row of the support matrix of portable packages (nodestro-api platform-support.json, NAL-C3). */
+export interface PlatformSupport {
+  ci: "built_and_started" | "none";
+  local_models: "checked" | "unchecked";
+  human: boolean;
+  limits: ("unsigned" | "gemini" | "vector_search" | "self_signed_tls")[];
+}
+
+/** The platform pre-check of a portable package's libraries (NAL-C3). */
+export interface LibraryCheck {
+  platform: string;
+  status: "ok" | "unavailable" | "unchecked";
+  libraries: string[];
+  detail: string;
+}
+
 export interface PortableCheck {
   platform: string;
-  platforms: { id: string; label: string }[];
+  platforms: { id: string; label: string; support?: PlatformSupport | null }[];
+  libraries?: LibraryCheck | null;
   providers: string[];
   models: ExportModelUse[];
   local_models: ExportLocalModel[];
