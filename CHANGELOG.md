@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Security fixes N-03 and N-07 (2026-11-19)
+
+- The lock pins nodestro-runtime (#191) and nodestro-api (#152). N-03: with the keychain key that the desktop app
+  hands over, or `NODESTRO_VAULT_KEY`, provider API keys are stored only encrypted, plain keys of earlier releases are
+  encrypted when the workspace opens, and connection secrets are sealed with the same key. N-07: the comment of a
+  person who rejects a tool call is no longer passed to the model (decision E-P-4).
+- `docs/architecture/mup-ona/MUP-ONA.md`: risk AR-3 is reduced to the case without a key store.
+
 ### NAL-D1: review briefs (2026-11-15)
 
 - `docs/security/nal/`: the briefs for the independent review of the NAL packages (P-Web, P-Import, P-Pair; P-Send
