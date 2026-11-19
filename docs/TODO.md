@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 1 |
 | P2 Medium | 4 |
-| P3 Low | 11 |
+| P3 Low | 12 |
 | P4 Optional | 4 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -56,6 +56,18 @@ from #121). Both have status `Needs external review`.
   API-054). P-Send (A5) is attached to RT-001; A5 stays locked until RT-001 is accepted.
 - **Until then:** `NODESTRO_WEB_TOOLS_SERVER`, `NODESTRO_PAIRING`, `NODESTRO_CROSS_ORIGIN` and `NODESTRO_SEND_TOOLS`
   stay off. Internal reviews of every package found no open critical or high finding.
+
+### ST-066 · Security fixes N-03 and N-07: independent review and Local Docker key store
+
+- **Priority:** P3 Low · **Status:** Needs external review · **Refs:** nodestro-runtime RT-081 (#191, #192),
+  nodestro-api #152, this repository #207, MUP-ONA AR-3, owner decisions E-P-4, E-P-5, E-P-6 (2026-11-19)
+- **What:** the lock carries N-03 (provider keys sealed with the desktop's keychain key, plain keys of earlier releases
+  sealed on start, `cryptography` a declared base dependency) and N-07 (a rejection comment never reaches the model).
+  Internal tests pass, including the desktop bundle's restart test (nodestro-desktop `provider_key_check`). They do
+  not replace the independent review, which is bundled with the others (E-P-5; a paid order needs the owner's consent;
+  done before any public deployment). Residual risk AR-3: without a key store provider keys stay in plain text in the
+  user-only database file; Local Docker has no key store today (no `NODESTRO_VAULT_KEY`, nodestro-local-docker TODO).
+- **Next step:** include both fixes in the next bundled review brief; decide whether Local Docker gets a key store.
 
 ## Bugs and reliability
 

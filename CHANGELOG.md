@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### N-03 follow-up: cryptography declared (2026-11-19)
+
+- The lock pins nodestro-runtime `1a661be` (#192: `cryptography` is a declared base dependency, so the desktop and
+  Local Docker do not get the secret store's library only through another package). `docs/TODO.md`: ST-066 tracks
+  the independent review of N-03 and N-07 and the Local Docker key store.
+
 ### Security fixes N-03 and N-07 (2026-11-19)
 
 - The lock pins nodestro-runtime `10dd28e` (#191) and nodestro-api `e7c6ce8` (#152). N-03: with the keychain key that the desktop app
