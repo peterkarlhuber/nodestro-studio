@@ -4,7 +4,7 @@
 
 ### LD-020: Local Docker's key file on the host (2026-11-19)
 
-- The lock pins nodestro-runtime and nodestro-api with LD-020: `nodestro_runtime.local_vault` (the workspace refuses a
+- The lock pins nodestro-runtime `454a1a6` (#193) and nodestro-api `e6411ab` (#153) with LD-020: `nodestro_runtime.local_vault` (the workspace refuses a
   missing key and one that does not fit the sealed secrets; rotation and the explicit answer to a lost key) and
   `nodestro-local boot` (reads the host's key file as root, drops to the studio's user, hands the key over through a
   pipe). MUP-ONA AR-3 and ST-066 updated: Local Docker no longer stores secrets unencrypted.
