@@ -837,7 +837,15 @@
     "owner_required": "Somente um proprietário deste espaço de trabalho pode dar, retirar ou alterar a função de proprietário, por isso nada foi alterado."
   },
   "secrets": {
+    "boot_not_root": "O Nodestro Local Docker não conseguiu ler seu arquivo de chave: inicie-o com o inicializador (./nodestro start).",
+    "boot_privileges": "O Nodestro Local Docker parou porque não conseguiu abrir mão dos privilégios de inicialização com segurança.",
+    "serve_as_root": "O Nodestro Local Docker não é executado como administrador. Inicie-o com o inicializador.",
     "unreadable": "Uma chave salva não pode mais ser lida. Informe-a novamente nas configurações.",
+    "vault_key_file": "O arquivo de chave dos seus segredos está ausente ou é inválido. Inicie o Nodestro com o inicializador ou coloque de volta sua cópia do arquivo de chave.",
+    "vault_key_invalid": "A chave dos seus segredos é inválida.",
+    "vault_key_mismatch": "O arquivo de chave não corresponde a estes dados ({{sealed}} segredos criptografados). Coloque de volta sua cópia do arquivo de chave anterior ou remova os segredos com accept-new-vault-key --yes.",
+    "vault_key_missing": "Não há nenhuma chave disponível para seus segredos, e eles nunca são salvos sem criptografia. Inicie o Nodestro com o inicializador.",
+    "vault_key_unreadable": "{{unreadable}} segredos salvos não abrem com nenhuma das duas chaves. Nada foi alterado.",
     "vault_unavailable": "Não há armazenamento seguro de chaves, então o segredo não pode ser salvo de forma permanente."
   },
   "pricing": {

@@ -1,9 +1,9 @@
 # The lock of the platform's internal packages, server profile: generated from platform/versions.json by
 # scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>
 axentra @ git+https://github.com/peterkarlhuber/axentra.git@e519405d3d17262d0652fd496b0cf0aa6b169e3f
-nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@a4407810d419ea4d3d49ba76d25b84341970d487
+nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@75ed75d1d7fc9c114c01cf989f41fd17e3a82dcc
 nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@39c8afa2187e0f426e98a4960797fdb0ddc06bf2
 nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@2db82e77ed3402173bd2fb260e017f4f49e1a85d
-nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@f5cd892555badf1cd975055ea4c70c35562b470f
+nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@8c529c39daf494390f2ef90043e2a162d67556c1
 orkexa @ git+https://github.com/peterkarlhuber/orkexa.git@e2519836b2019ea6a7acfa4521162b3bb9eb1524
 tabrion @ git+https://github.com/peterkarlhuber/tabrion.git@5bc690e2de74a92cd44bb4522cf2533cc2c8d14f

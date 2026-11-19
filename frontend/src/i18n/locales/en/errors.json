@@ -837,7 +837,15 @@
     "owner_required": "Only an owner of this workspace can give, take or change the owner role, so nothing was changed."
   },
   "secrets": {
+    "boot_not_root": "Nodestro Local Docker could not read its key file: start it with its launcher (./nodestro start).",
+    "boot_privileges": "Nodestro Local Docker stopped because it could not give up its start privileges safely.",
+    "serve_as_root": "Nodestro Local Docker does not run as an administrator. Start it with its launcher.",
     "unreadable": "A stored key can no longer be read. Please enter it again in the settings.",
+    "vault_key_file": "The key file for your secrets is missing or invalid. Start Nodestro with its launcher, or put your copy of the key file back.",
+    "vault_key_invalid": "The key for your secrets is invalid.",
+    "vault_key_mismatch": "The key file does not fit this data ({{sealed}} encrypted secrets). Put your copy of the earlier key file back, or remove the secrets with accept-new-vault-key --yes.",
+    "vault_key_missing": "No key is available for your secrets, and they are never stored unencrypted. Start Nodestro with its launcher.",
+    "vault_key_unreadable": "{{unreadable}} stored secrets open with neither key. Nothing was changed.",
     "vault_unavailable": "No secure key store is available, so the secret cannot be stored permanently."
   },
   "pricing": {

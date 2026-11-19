@@ -837,7 +837,15 @@
     "owner_required": "Seul un propriétaire de cet espace de travail peut attribuer, retirer ou modifier le rôle de propriétaire ; rien n’a été modifié."
   },
   "secrets": {
+    "boot_not_root": "Nodestro Local Docker n’a pas pu lire son fichier de clé : démarrez-le avec son lanceur (./nodestro start).",
+    "boot_privileges": "Nodestro Local Docker s’est arrêté, car il n’a pas pu abandonner ses privilèges de démarrage en toute sécurité.",
+    "serve_as_root": "Nodestro Local Docker ne s’exécute pas en tant qu’administrateur. Démarrez-le avec son lanceur.",
     "unreadable": "Une clé enregistrée ne peut plus être lue. Saisissez-la de nouveau dans les paramètres.",
+    "vault_key_file": "Le fichier de clé de vos secrets est absent ou invalide. Démarrez Nodestro avec son lanceur ou remettez votre copie du fichier de clé en place.",
+    "vault_key_invalid": "La clé de vos secrets est invalide.",
+    "vault_key_mismatch": "Le fichier de clé ne correspond pas à ces données ({{sealed}} secrets chiffrés). Remettez votre copie de l’ancien fichier de clé en place ou supprimez les secrets avec accept-new-vault-key --yes.",
+    "vault_key_missing": "Aucune clé n’est disponible pour vos secrets, et ils ne sont jamais enregistrés sans chiffrement. Démarrez Nodestro avec son lanceur.",
+    "vault_key_unreadable": "{{unreadable}} secrets enregistrés ne s’ouvrent avec aucune des deux clés. Rien n’a été modifié.",
     "vault_unavailable": "Aucun stockage sécurisé de clés n’est disponible : le secret ne peut pas être enregistré durablement."
   },
   "pricing": {

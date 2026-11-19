@@ -837,7 +837,15 @@
     "owner_required": "Nur ein Eigentümer dieses Arbeitsbereichs kann die Eigentümerrolle vergeben, entziehen oder ändern; es wurde nichts geändert."
   },
   "secrets": {
+    "boot_not_root": "Nodestro Local Docker konnte seine Schlüsseldatei nicht lesen: Starte es mit seinem Startprogramm (./nodestro start).",
+    "boot_privileges": "Nodestro Local Docker wurde angehalten, weil es seine Startrechte nicht sicher abgeben konnte.",
+    "serve_as_root": "Nodestro Local Docker läuft nicht als Administrator. Starte es mit seinem Startprogramm.",
     "unreadable": "Ein gespeicherter Schlüssel kann nicht mehr gelesen werden. Trag ihn in den Einstellungen bitte neu ein.",
+    "vault_key_file": "Die Schlüsseldatei für deine Geheimnisse fehlt oder ist ungültig. Starte Nodestro mit seinem Startprogramm oder lege deine Kopie der Schlüsseldatei zurück.",
+    "vault_key_invalid": "Der Schlüssel für deine Geheimnisse ist ungültig.",
+    "vault_key_mismatch": "Die Schlüsseldatei passt nicht zu diesen Daten ({{sealed}} verschlüsselte Geheimnisse). Lege deine Kopie der früheren Schlüsseldatei zurück oder entferne die Geheimnisse mit accept-new-vault-key --yes.",
+    "vault_key_missing": "Für deine Geheimnisse ist kein Schlüssel verfügbar, und sie werden nie unverschlüsselt gespeichert. Starte Nodestro mit seinem Startprogramm.",
+    "vault_key_unreadable": "{{unreadable}} gespeicherte Geheimnisse lassen sich mit keinem der beiden Schlüssel öffnen. Es wurde nichts geändert.",
     "vault_unavailable": "Es gibt keinen sicheren Schlüsselspeicher, daher kann das Geheimnis nicht dauerhaft gespeichert werden."
   },
   "pricing": {
