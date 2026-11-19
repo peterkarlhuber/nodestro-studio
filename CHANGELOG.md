@@ -4,7 +4,7 @@
 
 ### Security fixes N-03 and N-07 (2026-11-19)
 
-- The lock pins nodestro-runtime `10dd28e` (#191) and nodestro-api (#152). N-03: with the keychain key that the desktop app
+- The lock pins nodestro-runtime `10dd28e` (#191) and nodestro-api `e7c6ce8` (#152). N-03: with the keychain key that the desktop app
   hands over, or `NODESTRO_VAULT_KEY`, provider API keys are stored only encrypted, plain keys of earlier releases are
   encrypted when the workspace opens, and connection secrets are sealed with the same key. N-07: the comment of a
   person who rejects a tool call is no longer passed to the model (decision E-P-4).
