@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### LD-020 follow-up: plain keys leave the write-ahead log at once (2026-11-20)
+
+- The lock pins nodestro-runtime `6390dd9` (#194): sealing plain provider keys on opening ends with a WAL checkpoint,
+  so the plain keys do not stay in the write-ahead log or the database file's old page until SQLite's next automatic
+  checkpoint (found by nodestro-local-docker's upgrade test).
+
 ### LD-020: Local Docker's key file on the host (2026-11-19)
 
 - The lock pins nodestro-runtime `454a1a6` (#193) and nodestro-api `e6411ab` (#153) with LD-020: `nodestro_runtime.local_vault` (the workspace refuses a
