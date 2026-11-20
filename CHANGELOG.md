@@ -16,7 +16,7 @@
   - revoke, with a confirmation;
   - the fixed safety limits.
 - Texts in de, en, es, fr, it and pt-BR, including `access.grants_disabled`.
-- The lock pins nodestro-runtime fd6b711 (runtime #203) and nodestro-api 670297b (api #161).
+- The lock pins the merges of runtime #203 (bf8a0ad), api #161 (d818560) and sdk #136 (273d446).
 
 ### E-0R-1 A: the note to the agent at approvals (2026-11-20)
 
