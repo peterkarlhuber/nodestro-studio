@@ -55,6 +55,13 @@
       "commit": "50cb0de32d290a608855b2f1cdc81d0736e59e0f",
       "version": "0.3.0",
       "pyproject": "python/pyproject.toml"
+    },
+    "nodestro-session": {
+      "comment": "N-02: the shared protection of the local session; nodestro-api requires it by a version range, every lock holds its commit (lock_check.STUDIO_PROFILE_EXTRA).",
+      "commit": "c0a85db521b95c98c3ac4e509930cf96a7965072",
+      "version": "0.1.0.dev0",
+      "pyproject": "pyproject.toml",
+      "version_file": "src/nodestro_session/_version.py"
     }
   },
   "products": {

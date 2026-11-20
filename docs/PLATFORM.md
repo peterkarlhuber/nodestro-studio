@@ -12,6 +12,7 @@ own CI. Together they form the same application as Nodestro 0.1: the same `nodes
 | [nodestro-studio](https://github.com/peterkarlhuber/nodestro-studio) | `nodestro` (`nodestro_studio`) | The application: React user interface, built-in documentation, the `nodestro` command, browser tests, the upgrade test and the platform pipeline. |
 | [nodestro-sdk](https://github.com/peterkarlhuber/nodestro-sdk) | `nodestro-client` (`nodestro_client`), `@nodestro/client` | Clients for Python and TypeScript, generated from the OpenAPI contract. They only speak HTTP. |
 | [nodestro-integrations](https://github.com/peterkarlhuber/nodestro-integrations) | `nodestro-integrations` (`nodestro_integrations`) | Extensions through the runtime's contract. Currently: local OCR with poppler and tesseract. |
+| [nodestro-session](https://github.com/peterkarlhuber/nodestro-session) | `nodestro-session` (`nodestro_session`) | The protection of a single-user app on loopback (N-02): launch tokens, sessions with CSRF values, Host and Origin checks, private state files. Standard library only; nodestro-api uses it under its launch and access guards. |
 | [nodestro-examples](https://github.com/peterkarlhuber/nodestro-examples) | `nodestro-examples` (`nodestro_examples`) | The 24 example workflows in six languages with sample files and test cases. |
 
 The former `nodestro` repository is preserved unchanged as `nodestro-legacy` (state 15e2076, version 0.1).

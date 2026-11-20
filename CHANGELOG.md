@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### N-02: the shared library for the local session (2026-11-20)
+
+- New component `nodestro-session` (K-33 decision, wave 2): `kind: library` in `platform/dependency-policy.json`
+  with the edge `nodestro-api -> nodestro-session` (required); `components.nodestro-session` in
+  `platform/versions.json`; a line in both locks (`internal.txt`, `internal-server.txt`), since every profile installs
+  nodestro-api (`lock_check.STUDIO_PROFILE_EXTRA`); `scripts/bump_pins.py` knows the repository, so
+  `bump_pins.py set . --set nodestro-session=<sha>` moves it. The studio itself does not depend on it directly.
+
 ### N-04: conversations with own agents (off by default; 2026-11-20)
 
 - No new interface. The error texts of the new conversation routes (`conversation.*`: switched off, not found, agent

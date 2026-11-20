@@ -64,7 +64,14 @@ PINS: dict[str, tuple[PinFile, ...]] = {
         PinFile(
             "platform/internal.txt",
             "pyproject",
-            ("nodestro-api", "nodestro-runtime", "nodestro-examples", "nodestro-integrations", "orkexa"),
+            (
+                "nodestro-api",
+                "nodestro-runtime",
+                "nodestro-examples",
+                "nodestro-integrations",
+                "orkexa",
+                "nodestro-session",
+            ),
         ),
         PinFile(
             "platform/internal-server.txt",
@@ -77,6 +84,7 @@ PINS: dict[str, tuple[PinFile, ...]] = {
                 "orkexa",
                 "axentra",
                 "tabrion",
+                "nodestro-session",
             ),
         ),
         PinFile(
@@ -91,6 +99,7 @@ PINS: dict[str, tuple[PinFile, ...]] = {
                 "nodestro-integrations",
                 "nodestro-api",
                 "nodestro-sdk",
+                "nodestro-session",
             ),
         ),
     ),
@@ -110,6 +119,7 @@ REPOS = tuple(
             "nodestro-integrations",
             "nodestro-api",
             "nodestro-sdk",
+            "nodestro-session",
             *PINS,
         )
     )
