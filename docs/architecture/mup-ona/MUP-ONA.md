@@ -1711,7 +1711,7 @@ In total about 30–40 PRs excluding pure pin bumps, 3–4 pin cascades across t
 | PS-10 | Checker anchoring: API scan skipped in runtime CI; API only with pinned checker; `ANY(%s)` | A11 |
 | AR-1 | Nodestro without RLS; tenant separation via static checker (M10, SR-01) | A9 (evaluation) |
 | AR-2 | Rate limits and idempotency per process (Nodestro; Axentra now optionally DB-backed) | accepted |
-| AR-3 | Desktop provider keys in plain text (0600) | reduced by N-03 (2026-11-19): with the keychain key (desktop app, or `NODESTRO_VAULT_KEY`) provider keys are stored only encrypted and earlier plain keys are encrypted on opening; without a key store (command line, Local Docker without the variable) the plain storage stays, accepted |
+| AR-3 | Desktop provider keys in plain text (0600) | reduced by N-03 (2026-11-19): with the keychain key (desktop app, or `NODESTRO_VAULT_KEY`) provider keys are stored only encrypted and earlier plain keys are encrypted on opening; Local Docker has its own key file on the host since LD-020 (2026-11-19) and never stores secrets unencrypted; without a key store (command line) the plain storage stays, accepted |
 | AR-4 | `SecretBox` v1 without rotation (api #52) | accepted, out of scope |
 | AR-5 | Tool approvals off by default, external review open (RT-001) | accepted, out of scope |
 | AR-6 | External sign-off of the server migration open (RT-030) | accepted, out of scope |

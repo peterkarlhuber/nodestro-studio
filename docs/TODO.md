@@ -57,7 +57,7 @@ from #121). Both have status `Needs external review`.
 - **Until then:** `NODESTRO_WEB_TOOLS_SERVER`, `NODESTRO_PAIRING`, `NODESTRO_CROSS_ORIGIN` and `NODESTRO_SEND_TOOLS`
   stay off. Internal reviews of every package found no open critical or high finding.
 
-### ST-066 · Security fixes N-03 and N-07: independent review and Local Docker key store
+### ST-066 · Security fixes N-03, N-07 and LD-020: independent review
 
 - **Priority:** P3 Low · **Status:** Needs external review · **Refs:** nodestro-runtime RT-081 (#191, #192),
   nodestro-api #152, this repository #207, MUP-ONA AR-3, owner decisions E-P-4, E-P-5, E-P-6 (2026-11-19)
@@ -66,8 +66,10 @@ from #121). Both have status `Needs external review`.
   Internal tests pass, including the desktop bundle's restart test (nodestro-desktop `provider_key_check`). They do
   not replace the independent review, which is bundled with the others (E-P-5; a paid order needs the owner's consent;
   done before any public deployment). Residual risk AR-3: without a key store provider keys stay in plain text in the
-  user-only database file; Local Docker has no key store today (no `NODESTRO_VAULT_KEY`, nodestro-local-docker TODO).
-- **Next step:** include both fixes in the next bundled review brief; decide whether Local Docker gets a key store.
+  user-only database file on the command line. Local Docker keeps its key in a file on the host since LD-020
+  (owner decision 2026-11-19; nodestro-runtime RT-082, nodestro-api API-070, nodestro-local-docker LD-020): the lock
+  carries `local_vault` (key check, rotation, key loss) and `nodestro-local boot`.
+- **Next step:** include both fixes and LD-020 in the next bundled review brief.
 
 ## Bugs and reliability
 
