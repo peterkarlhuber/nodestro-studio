@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### LD-020 follow-up 2: no plain key next to its sealed form (2026-11-20)
+
+- The lock pins nodestro-runtime `a7ac2e3` (#195): sealing plain provider keys also seals them in the data
+  directory's copies from before a schema migration (`backups/*.db`) and rewrites the database once without the free
+  pages that releases without `secure_delete` left behind (found by nodestro-local-docker's upgrade test).
+
 ### LD-020 follow-up: plain keys leave the write-ahead log at once (2026-11-20)
 
 - The lock pins nodestro-runtime `6390dd9` (#194): sealing plain provider keys on opening ends with a WAL checkpoint,
