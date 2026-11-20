@@ -1292,5 +1292,17 @@
     "payload_too_large": "Les données du webhook dépassent 256 Ko.",
     "schema_invalid": "Le schéma des données n’est pas utilisable à {{at}} : il utilise un mot-clé que Nodestro ne vérifie pas. Utilisez uniquement les mots-clés que l’aide cite.",
     "schema_mismatch": "Les données du webhook ne correspondent pas au schéma : {{problems}}."
+  },
+  "conversation": {
+    "agent_not_found": "Cet agent ou sa version n’existe plus. Choisissez un autre agent.",
+    "answer_running": "Attendez la fin de la réponse en cours ou annulez-la.",
+    "budget_exhausted": "Le budget de cette conversation est épuisé. Augmentez-le pour continuer.",
+    "disabled": "Les conversations avec vos propres agents ne sont pas activées pour cette application.",
+    "empty_message": "Écrivez un message ou joignez un fichier.",
+    "model_required": "Choisissez un modèle. Un modèle cloud n’est jamais choisi à votre place, et ni le modèle de l’agent ni le modèle par défaut n’est un modèle local.",
+    "not_found": "Cette conversation n’existe pas ou ne vous appartient pas.",
+    "offline_cloud_model": "Cette conversation est hors ligne : seul un modèle local peut répondre. Choisissez un modèle local ou désactivez le mode hors ligne.",
+    "run_missing": "L’exécution de cette réponse n’existe plus.",
+    "too_many_files": "Cette conversation contient déjà autant de fichiers que possible. Retirez-en d’abord."
   }
 }

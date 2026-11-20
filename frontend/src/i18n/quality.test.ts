@@ -389,6 +389,10 @@ describe("backend codes", () => {
     "access.grant_destructive", "access.in_tool_call", "access.invalid", "access.missing_grant", "access.not_found",
     "access.person_required", "access.safety_limit", "access.tool_facts_required", "access.unattended_expiry",
     "access.unattended_scope", "access.unattended_too_long", "tool.unattended_access_denied", "tool.unattended_safety_limit",
+    // Conversations with own agents (N-04, switched off by default): refused requests and an answer without its run.
+    "conversation.agent_not_found", "conversation.answer_running", "conversation.budget_exhausted", "conversation.disabled",
+    "conversation.empty_message", "conversation.model_required", "conversation.not_found", "conversation.offline_cloud_model",
+    "conversation.run_missing", "conversation.too_many_files",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

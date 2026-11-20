@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### N-04: conversations with own agents (off by default; 2026-11-20)
+
+- No new interface. The error texts of the new conversation routes (`conversation.*`: switched off, not found, agent
+  not found, model required, offline with a cloud model, empty message, an answer still running, budget used up, too
+  many files, an answer without its run) are in six languages.
+- The lock pins the N-04 branches of nodestro-runtime (#204) and nodestro-api while they are in review. The routes
+  answer only where the installation switches on `NODESTRO_CONVERSATIONS`.
+
 ### N-06 review lows: permissions on the approval card, help section (2026-11-20)
 
 - Approving an MCP tool or a tool that deletes for good is never remembered as a permission (L-2), and the card says

@@ -1292,5 +1292,17 @@
     "payload_too_large": "The webhook payload is larger than 256 KB.",
     "schema_invalid": "The payload schema cannot be used at {{at}}: it uses a keyword Nodestro does not check. Use only the keywords the help names.",
     "schema_mismatch": "The webhook payload does not match the schema: {{problems}}."
+  },
+  "conversation": {
+    "agent_not_found": "This agent or its version no longer exists. Choose another agent.",
+    "answer_running": "Wait until the current answer is finished, or cancel it.",
+    "budget_exhausted": "The budget of this conversation is used up. Raise it to continue.",
+    "disabled": "Conversations with your own agents are not switched on for this application.",
+    "empty_message": "Write a message or attach a file.",
+    "model_required": "Choose a model. A cloud model is never chosen for you, and neither the agent nor the default model is a local model.",
+    "not_found": "This conversation does not exist, or it is not yours.",
+    "offline_cloud_model": "This conversation is offline, so only a local model can answer. Choose a local model or switch off offline.",
+    "run_missing": "The run of this answer no longer exists.",
+    "too_many_files": "This conversation holds as many files as it can. Remove some first."
   }
 }
