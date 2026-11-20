@@ -11,7 +11,8 @@
     "subworkflow": "da un sotto-workflow",
     "resume": "da una continuazione",
     "manual": "avviata manualmente",
-    "api": "dall’API pubblicata"
+    "api": "dall’API pubblicata",
+    "conversation": "da una conversazione"
   },
   "nothingToShow": "Qui non arrivano risultati; la verifica riguarda il processo stesso.",
   "comment": "Commento (facoltativo)",

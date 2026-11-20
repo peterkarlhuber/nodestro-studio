@@ -1297,6 +1297,7 @@
     "agent_not_found": "Este agente ou a versão dele não existe mais. Escolha outro agente.",
     "answer_running": "Aguarde até a resposta atual terminar ou cancele-a.",
     "budget_exhausted": "O orçamento desta conversa acabou. Aumente-o para continuar.",
+    "cloud_model_not_chosen": "A resposta usaria um modelo na nuvem que ninguém escolheu para esta conversa, por exemplo um modelo que verifica o resultado. Escolha o modelo você mesmo ou mude a verificação do agente para um modelo local.",
     "disabled": "As conversas com seus próprios agentes não estão ativadas neste aplicativo.",
     "empty_message": "Escreva uma mensagem ou anexe um arquivo.",
     "model_required": "Escolha um modelo. Um modelo na nuvem nunca é escolhido por você, e nem o modelo do agente nem o modelo padrão é local.",

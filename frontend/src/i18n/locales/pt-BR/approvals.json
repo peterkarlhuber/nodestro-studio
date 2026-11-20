@@ -11,7 +11,8 @@
     "subworkflow": "de um subfluxo",
     "resume": "de uma continuação",
     "manual": "iniciada manualmente",
-    "api": "da API publicada"
+    "api": "da API publicada",
+    "conversation": "de uma conversa"
   },
   "nothingToShow": "Nenhum resultado chega aqui; a revisão é sobre o próprio processo.",
   "comment": "Comentário (opcional)",

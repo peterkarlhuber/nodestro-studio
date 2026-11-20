@@ -11,7 +11,8 @@
     "subworkflow": "d’un sous-workflow",
     "resume": "d’une reprise",
     "manual": "lancée manuellement",
-    "api": "depuis l’API publiée"
+    "api": "depuis l’API publiée",
+    "conversation": "d’une conversation"
   },
   "nothingToShow": "Aucun résultat n’arrive ici ; la vérification porte sur le déroulement lui-même.",
   "comment": "Commentaire (facultatif)",

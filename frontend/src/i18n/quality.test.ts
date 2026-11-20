@@ -47,7 +47,7 @@ describe("texts left in English", () => {
     ],
     es: ["error", "robot", "manual", "individual", "no", "local"],
     fr: [
-      "message", "messages", "minute", "minutes", "section", "sections", "page", "pages", "documents", "documentation",
+      "conversation", "message", "messages", "minute", "minutes", "section", "sections", "page", "pages", "documents", "documentation",
       "description", "type", "effort", "image", "images", "structure", "validation", "sources", "suggestion", "actions",
       "action", "date", "active", "collection", "collections", "archive", "notes", "source", "strict", "note",
       "interface", "port", "module", "arguments", "service", "classification", "correction", "versions", "guide",
@@ -390,7 +390,8 @@ describe("backend codes", () => {
     "access.person_required", "access.safety_limit", "access.tool_facts_required", "access.unattended_expiry",
     "access.unattended_scope", "access.unattended_too_long", "tool.unattended_access_denied", "tool.unattended_safety_limit",
     // Conversations with own agents (N-04, switched off by default): refused requests and an answer without its run.
-    "conversation.agent_not_found", "conversation.answer_running", "conversation.budget_exhausted", "conversation.disabled",
+    "conversation.agent_not_found", "conversation.answer_running", "conversation.budget_exhausted",
+    "conversation.cloud_model_not_chosen", "conversation.disabled",
     "conversation.empty_message", "conversation.model_required", "conversation.not_found", "conversation.offline_cloud_model",
     "conversation.run_missing", "conversation.too_many_files",
   ];

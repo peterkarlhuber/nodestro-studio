@@ -1297,6 +1297,7 @@
     "agent_not_found": "This agent or its version no longer exists. Choose another agent.",
     "answer_running": "Wait until the current answer is finished, or cancel it.",
     "budget_exhausted": "The budget of this conversation is used up. Raise it to continue.",
+    "cloud_model_not_chosen": "The answer would use a cloud model that nobody chose for this conversation, for example a cloud model that checks the result. Choose the model yourself or switch the agent's check to a local model.",
     "disabled": "Conversations with your own agents are not switched on for this application.",
     "empty_message": "Write a message or attach a file.",
     "model_required": "Choose a model. A cloud model is never chosen for you, and neither the agent nor the default model is a local model.",

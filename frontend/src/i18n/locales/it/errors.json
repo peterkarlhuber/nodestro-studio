@@ -1297,6 +1297,7 @@
     "agent_not_found": "Questo agente o la sua versione non esiste più. Scegli un altro agente.",
     "answer_running": "Attendi che la risposta attuale sia terminata oppure annullala.",
     "budget_exhausted": "Il budget di questa conversazione è esaurito. Aumentalo per continuare.",
+    "cloud_model_not_chosen": "La risposta userebbe un modello cloud che nessuno ha scelto per questa conversazione, ad esempio un modello cloud che verifica il risultato. Scegli tu il modello o passa la verifica dell’agente a un modello locale.",
     "disabled": "Le conversazioni con i tuoi agenti non sono attivate per questa applicazione.",
     "empty_message": "Scrivi un messaggio o allega un file.",
     "model_required": "Scegli un modello. Un modello cloud non viene mai scelto al posto tuo, e né il modello dell’agente né quello predefinito è un modello locale.",

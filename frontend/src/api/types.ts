@@ -24,7 +24,8 @@ export type NodeStatus =
   /** The step's next model request waits for a person to raise the run's budget or end the run (BUDGET-1). */
   | "awaiting_budget"
   | "cancelled";
-export type RunTrigger = "manual" | "schedule" | "batch" | "benchmark" | "subworkflow" | "resume" | "api";
+/** `conversation`: an answer in a conversation with an own agent (N-04; `trigger_ref` is the conversation). */
+export type RunTrigger = "manual" | "schedule" | "batch" | "benchmark" | "subworkflow" | "resume" | "api" | "conversation";
 
 export interface ExampleMessage {
   role: "user" | "assistant";

@@ -11,7 +11,8 @@
     "subworkflow": "from a sub-workflow",
     "resume": "from a continuation",
     "manual": "started manually",
-    "api": "from the published API"
+    "api": "from the published API",
+    "conversation": "from a conversation"
   },
   "nothingToShow": "No results arrive here; the review is about the process itself.",
   "comment": "Comment (optional)",

@@ -11,7 +11,8 @@
     "subworkflow": "aus einem Unterworkflow",
     "resume": "aus einer Fortsetzung",
     "manual": "manuell gestartet",
-    "api": "aus der veröffentlichten API"
+    "api": "aus der veröffentlichten API",
+    "conversation": "aus einem Gespräch"
   },
   "nothingToShow": "Es kommen keine Ergebnisse an; geprüft wird der Ablauf selbst.",
   "comment": "Kommentar (optional)",
