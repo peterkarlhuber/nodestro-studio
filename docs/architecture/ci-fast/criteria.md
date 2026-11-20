@@ -74,3 +74,6 @@ python3 docs/architecture/ci-fast/tools/cifast.py kpis --since <first day> --unt
 `kpis` gives M3, the queue, runner minutes per day and the master red rate. Runner minutes per green head and K4's
 lock-lag split are not in the tool yet. Until then, count a red master push as lock lag only when the run's lock step
 names a paired studio branch (`scripts/studio_lock.sh`, "Lock lag") or the nightly of the same day is green.
+The lock step asks GitHub with the workflow token (read-only) whether the paired bump is still open. When GitHub cannot
+answer, the step uses the studio master's lock and shows a "Lock lag unknown" warning with the HTTP status; such a red
+push counts as lock lag only when the same commit is green once the paired bump is merged.
