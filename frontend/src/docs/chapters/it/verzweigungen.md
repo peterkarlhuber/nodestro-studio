@@ -84,6 +84,22 @@ Le approvazioni per **singole chiamate di strumenti** non sono attivate in quest
 
 Se una persona deve controllare i risultati prima che l’esecuzione prosegua, usa un’[approvazione](/docs/verzweigungen#freigabe). Per limitare ciò che un agente può fare, assegnagli solo gli strumenti di cui ha bisogno (vedi [Assegnare strumenti](/docs/agenten#tools)).
 
+## Permessi e blocchi {#erlaubnisse}
+<!-- keywords: permesso, blocco, ricorda decisione, chi può cosa, limiti di sicurezza, revoca -->
+
+Permessi e blocchi **non sono attivati**, a meno che chi gestisce Nodestro non li attivi insieme alle approvazioni delle chiamate agli strumenti. Finché sono disattivati, nulla di questa sezione si applica e nulla viene mostrato.
+
+Quando sono attivi, un amministratore può **ricordare una decisione** su una chiamata:
+
+- **Per quanto tempo**: solo questa chiamata (l’impostazione predefinita), fino alla revoca o fino a una data.
+- **Per chi**: l’agente che ha chiesto o tutti gli agenti.
+
+Approvare salva allora un **permesso** per lo strumento, rifiutare salva un **blocco**. Un blocco vince sempre su un permesso. Un permesso per uno strumento termina appena lo strumento cambia (nuova versione, altra classificazione o altra definizione MCP). Se lo strumento è cambiato dopo che la scheda è stata mostrata, il permesso viene rifiutato e si riguarda la chiamata.
+
+Alcune chiamate non si possono permettere in anticipo. Gli strumenti che eliminano definitivamente richiedono ogni volta una conferma, e gli strumenti MCP mantengono le proprie regole. Per loro si può ricordare solo il rifiuto.
+
+La pagina **Permessi e blocchi** (collegata da **Approvazioni**) elenca ogni permesso e blocco con chi l’ha dato, per chi, fino a quando e il suo stato; ognuno si può revocare. Una revoca vale dal prossimo accesso. La pagina indica anche i **limiti di sicurezza** fissi, come la modalità offline o la cartella dei dati di Nodestro. Nessun permesso li rimuove.
+
 ## Sotto-workflow {#unterworkflow}
 <!-- keywords: sotto-workflow, subworkflow, annidare, riutilizzare, blocco, versione, esecuzione figlia -->
 

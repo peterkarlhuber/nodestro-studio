@@ -84,6 +84,22 @@ Les validations d’**appels d’outils individuels** ne sont pas activées dans
 
 Pour qu’une personne vérifie les résultats avant que l’exécution continue, utilisez une [validation](/docs/verzweigungen#freigabe). Pour limiter ce qu’un agent peut faire, attribuez-lui uniquement les outils dont il a besoin (voir [Attribuer des outils](/docs/agenten#tools)).
 
+## Autorisations et blocages {#erlaubnisse}
+<!-- keywords: autorisation, blocage, retenir la décision, qui peut quoi, limites de sécurité, révoquer -->
+
+Les autorisations et blocages ne sont **pas activés**, sauf si la personne qui exploite Nodestro les active avec les approbations des appels d’outils. Tant qu’ils sont désactivés, rien de cette section ne s’applique et rien n’en est affiché.
+
+Quand ils sont activés, un administrateur peut **retenir une décision** sur un appel :
+
+- **Pour combien de temps** : seulement cet appel (par défaut), jusqu’à révocation ou jusqu’à une date.
+- **Pour qui** : l’agent qui a demandé, ou tous les agents.
+
+Approuver enregistre alors une **autorisation** pour l’outil, refuser enregistre un **blocage**. Un blocage l’emporte toujours sur une autorisation. Une autorisation pour un outil prend fin dès que l’outil change (nouvelle version, autre classification ou autre définition MCP). Si l’outil a changé depuis l’affichage de la carte, l’autorisation est refusée et vous revoyez l’appel.
+
+Certains appels ne peuvent pas être autorisés à l’avance. Les outils qui suppriment définitivement demandent une confirmation à chaque fois, et les outils MCP gardent leurs propres règles. Pour eux, seul le refus peut être retenu.
+
+La page **Autorisations et blocages** (liée depuis **Approbations**) liste chaque autorisation et chaque blocage avec qui l’a donné, pour qui, jusqu’à quand et son état ; chacun peut être révoqué. Une révocation s’applique dès le prochain accès. La page nomme aussi les **limites de sécurité** fixes, comme le mode hors ligne ou le dossier de données de Nodestro. Aucune autorisation ne les lève.
+
 ## Sous-workflows {#unterworkflow}
 <!-- keywords: sous-workflow, subworkflow, imbriquer, réutiliser, brique, version, exécution enfant -->
 

@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### N-06 review lows: permissions on the approval card, help section (2026-11-20)
+
+- Approving an MCP tool or a tool that deletes for good is never remembered as a permission (L-2), and the card says
+  why. Rejecting can still be remembered as a block.
+- A permission from the card names the tool as it was shown (`expected`: version and MCP definition hash). When the
+  tool changed in the meantime, the API refuses it (`access.tool_changed`, L-1), and the card explains this in six
+  languages.
+- New help section **Permissions and blocks** (`/docs/verzweigungen#erlaubnisse`) in six languages, linked from the
+  page of the same name.
+
 ### N-06: permissions and blocks (access model v2, off by default; 2026-11-20)
 
 - Everything below shows only while the installation switches on `NODESTRO_ACCESS_GRANTS` together with tool

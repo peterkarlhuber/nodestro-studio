@@ -84,6 +84,22 @@ Aprovações de **chamadas individuais de ferramentas** não estão ativadas nes
 
 Para que uma pessoa confira os resultados antes de a execução continuar, use uma [aprovação](/docs/verzweigungen#freigabe). Para limitar o que um agente pode fazer, atribua a ele só as ferramentas de que precisa (veja [Atribuir ferramentas](/docs/agenten#tools)).
 
+## Permissões e bloqueios {#erlaubnisse}
+<!-- keywords: permissão, bloqueio, lembrar decisão, quem pode o quê, limites de segurança, revogar -->
+
+Permissões e bloqueios **não estão ativados**, a menos que quem opera o Nodestro os ative junto com as aprovações de chamadas de ferramentas. Enquanto estiverem desativados, nada desta seção se aplica e nada deles é mostrado.
+
+Quando estão ativados, um administrador pode **lembrar uma decisão** sobre uma chamada:
+
+- **Por quanto tempo**: só esta chamada (o padrão), até ser revogado ou até uma data.
+- **Para quem**: o agente que perguntou ou todos os agentes.
+
+Aprovar salva então uma **permissão** para a ferramenta, e rejeitar salva um **bloqueio**. Um bloqueio sempre vence uma permissão. Uma permissão para uma ferramenta termina assim que a ferramenta muda (nova versão, outra classificação ou outra definição MCP). Se a ferramenta mudou depois que o cartão foi mostrado, a permissão é recusada e você revisa a chamada.
+
+Algumas chamadas não podem ser permitidas com antecedência. Ferramentas que excluem definitivamente precisam de confirmação a cada vez, e ferramentas MCP mantêm suas próprias regras. Para elas, só a rejeição pode ser lembrada.
+
+A página **Permissões e bloqueios** (com link em **Aprovações**) lista cada permissão e bloqueio com quem deu, para quem, até quando e o estado, e cada um pode ser revogado. Uma revogação vale a partir do próximo acesso. A página também nomeia os **limites de segurança** fixos, como o modo offline ou a pasta de dados do Nodestro. Nenhuma permissão os remove.
+
 ## Subfluxos {#unterworkflow}
 <!-- keywords: subworkflow, sub-workflow, aninhar, reutilizar, bloco, versão, execução filha -->
 

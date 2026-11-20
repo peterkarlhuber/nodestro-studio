@@ -84,6 +84,22 @@ Freigaben für **einzelne Tool-Aufrufe** sind in dieser Version nicht aktiviert.
 
 Soll eine Person Ergebnisse prüfen, bevor der Lauf weitergeht, nimm eine [Freigabe](/docs/verzweigungen#freigabe). Um einzuschränken, was ein Agent tun kann, weise ihm nur die Tools zu, die er braucht (siehe [Tools zuweisen](/docs/agenten#tools)).
 
+## Erlaubnisse und Sperren {#erlaubnisse}
+<!-- keywords: erlaubnis, sperre, entscheidung merken, wer darf was, sicherheitsgrenzen, widerrufen -->
+
+Erlaubnisse und Sperren sind **nicht eingeschaltet**, solange die Person, die Nodestro betreibt, sie nicht zusammen mit den Freigaben für Tool-Aufrufe einschaltet. Solange sie aus sind, gilt nichts von diesem Abschnitt, und es wird nichts davon angezeigt.
+
+Sind sie an, kann eine Administratorin oder ein Administrator **eine Entscheidung merken** lassen:
+
+- **Wie lange**: nur dieser Aufruf (Standard), bis zum Widerruf oder bis zu einem Datum.
+- **Für wen**: der Agent, der gefragt hat, oder alle Agenten.
+
+Freigeben speichert dann eine **Erlaubnis** für das Tool, Ablehnen eine **Sperre**. Eine Sperre gewinnt immer gegen eine Erlaubnis. Eine Erlaubnis für ein Tool endet, sobald sich das Tool ändert (neue Version, andere Einstufung oder andere MCP-Definition). Hat sich das Tool geändert, nachdem die Karte angezeigt wurde, wird die Erlaubnis abgelehnt, und du siehst dir den Aufruf noch einmal an.
+
+Manche Aufrufe lassen sich nicht vorab erlauben. Tools, die endgültig löschen, brauchen jedes Mal eine Bestätigung, und MCP-Tools behalten ihre eigenen Regeln. Bei ihnen lässt sich nur das Ablehnen merken.
+
+Die Seite **Erlaubnisse und Sperren** (verlinkt auf **Freigaben**) zeigt jede Erlaubnis und Sperre mit wer sie gegeben hat, für wen, bis wann und ihrem Zustand; jede lässt sich widerrufen. Ein Widerruf gilt ab dem nächsten Zugriff. Die Seite nennt auch die festen **Sicherheitsgrenzen**, etwa den Offline-Modus oder den eigenen Datenordner von Nodestro. Keine Erlaubnis hebt sie auf.
+
 ## Unterworkflows {#unterworkflow}
 <!-- keywords: unterworkflow, subworkflow, verschachteln, wiederverwenden, baustein, version, kindlauf -->
 

@@ -81,7 +81,9 @@
       "hint": "Aprobar guarda un permiso para esta herramienta; rechazar guarda un bloqueo. Ambos aparecen en Permisos y bloqueos, donde se pueden revocar.",
       "grantedToast": "Permiso guardado",
       "deniedToast": "Bloqueo guardado",
-      "failed": "La decisión se guardó, pero el permiso o el bloqueo no:"
+      "failed": "La decisión se guardó, pero el permiso o el bloqueo no:",
+      "onlyRejectDestructive": "Aprobar decide solo esta llamada: eliminar definitivamente necesita una confirmación cada vez. El rechazo se puede recordar como bloqueo.",
+      "onlyRejectMcp": "Aprobar decide solo esta llamada: las herramientas MCP mantienen sus propias reglas. El rechazo se puede recordar como bloqueo."
     }
   },
   "rules": {

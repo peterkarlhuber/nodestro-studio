@@ -84,6 +84,22 @@ Las aprobaciones de **llamadas individuales a herramientas** no están activadas
 
 Si una persona debe revisar los resultados antes de que la ejecución continúe, usa una [aprobación](/docs/verzweigungen#freigabe). Para limitar lo que puede hacer un agente, asígnale solo las herramientas que necesita (consulta [Asignar herramientas](/docs/agenten#tools)).
 
+## Permisos y bloqueos {#erlaubnisse}
+<!-- keywords: permiso, bloqueo, recordar decisión, quién puede qué, límites de seguridad, revocar -->
+
+Los permisos y bloqueos **no están activados** a menos que quien opera Nodestro los active junto con las aprobaciones de llamadas a herramientas. Mientras están desactivados, nada de esta sección se aplica y no se muestra nada de ellos.
+
+Cuando están activados, un administrador puede **recordar una decisión** sobre una llamada:
+
+- **Cuánto tiempo**: solo esta llamada (lo predeterminado), hasta que se revoque o hasta una fecha.
+- **Para quién**: el agente que preguntó o todos los agentes.
+
+Aprobar guarda entonces un **permiso** para la herramienta, y rechazar guarda un **bloqueo**. Un bloqueo siempre gana sobre un permiso. Un permiso para una herramienta termina en cuanto la herramienta cambia (una versión nueva, otra clasificación u otra definición MCP). Si la herramienta cambió después de mostrarse la tarjeta, el permiso se rechaza y vuelves a revisar la llamada.
+
+Algunas llamadas no se pueden permitir por adelantado. Las herramientas que eliminan definitivamente necesitan una confirmación cada vez, y las herramientas MCP mantienen sus propias reglas. Para ellas solo se puede recordar el rechazo.
+
+La página **Permisos y bloqueos** (enlazada desde **Aprobaciones**) muestra cada permiso y bloqueo con quién lo dio, para quién, hasta cuándo y su estado, y cada uno se puede revocar. Una revocación se aplica desde el próximo acceso. La página también nombra los **límites de seguridad** fijos, como el modo sin conexión o la carpeta de datos de Nodestro. Ningún permiso los levanta.
+
 ## Subflujos {#unterworkflow}
 <!-- keywords: subflujo, sub-workflow, anidar, reutilizar, bloque, versión, ejecución hija -->
 

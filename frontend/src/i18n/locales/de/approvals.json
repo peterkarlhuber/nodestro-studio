@@ -81,7 +81,9 @@
       "hint": "Freigeben speichert eine Erlaubnis für dieses Tool, Ablehnen eine Sperre. Beide stehen unter Erlaubnisse und Sperren und lassen sich dort widerrufen.",
       "grantedToast": "Erlaubnis gespeichert",
       "deniedToast": "Sperre gespeichert",
-      "failed": "Die Entscheidung ist gespeichert, die Erlaubnis oder Sperre aber nicht:"
+      "failed": "Die Entscheidung ist gespeichert, die Erlaubnis oder Sperre aber nicht:",
+      "onlyRejectDestructive": "Freigeben entscheidet nur diesen Aufruf: Endgültiges Löschen braucht jedes Mal eine Bestätigung. Ablehnen lässt sich als Sperre merken.",
+      "onlyRejectMcp": "Freigeben entscheidet nur diesen Aufruf: MCP-Tools behalten ihre eigenen Regeln. Ablehnen lässt sich als Sperre merken."
     }
   },
   "rules": {

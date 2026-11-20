@@ -829,7 +829,8 @@
     "unattended_expiry": "A permission beyond reading for runs nobody watches must end on a date or hold for one use.",
     "unattended_scope": "A permission beyond reading for runs nobody watches must name its agents.",
     "unattended_too_long": "A permission beyond reading for runs nobody watches may last at most {{days}} days.",
-    "grants_disabled": "Permissions and blocks are not switched on for this installation."
+    "grants_disabled": "Permissions and blocks are not switched on for this installation.",
+    "tool_changed": "The tool changed since it was shown, so no permission was saved. Look at the call again."
   },
   "sandbox": {
     "isolation_required": "AI-created code and tools of unknown origin run only isolated (in Docker, or in the built-in Linux sandbox if it was chosen); none is available, so nothing was run. Settings → Sandbox shows why.",

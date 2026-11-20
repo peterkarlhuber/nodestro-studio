@@ -829,7 +829,8 @@
     "unattended_expiry": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht muss an einem Datum enden oder für eine Verwendung gelten.",
     "unattended_scope": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht muss ihre Agenten nennen.",
     "unattended_too_long": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht gilt höchstens {{days}} Tage.",
-    "grants_disabled": "Erlaubnisse und Sperren sind in dieser Installation nicht eingeschaltet."
+    "grants_disabled": "Erlaubnisse und Sperren sind in dieser Installation nicht eingeschaltet.",
+    "tool_changed": "Das Tool hat sich seit der Anzeige geändert, deshalb wurde keine Erlaubnis gespeichert. Sieh dir den Aufruf noch einmal an."
   },
   "sandbox": {
     "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur isoliert (in Docker oder, wenn gewählt, in der eingebauten Linux-Sandbox); nichts davon ist verfügbar, daher wurde nichts ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",

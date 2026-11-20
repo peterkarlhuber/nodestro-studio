@@ -62,6 +62,15 @@ export interface RememberChoice {
 }
 
 /**
+ * Whether approving can be remembered as a grant (L-2): never for a tool that deletes for good (each such call needs a
+ * confirmation; the API refuses it too) or an MCP tool (its own rules decide; a grant would not count). Rejecting can
+ * always be remembered as a deny. An MCP tool's request names its definition hash.
+ */
+export function grantable(request: Pick<ToolApprovalRequest, "capability" | "definition_hash">): boolean {
+  return request.capability.access !== "destructive" && !request.definition_hash;
+}
+
+/**
  * The grant (approved) or deny (rejected) a decision on the card also stores, or null for "this call only". The agent
  * is named like the runtime names it: ``<workflow id>/<node id>``. Always for supervised use: a person watches here.
  */
@@ -133,6 +142,11 @@ function RememberDecision({
         ) : null}
       </div>
       <p className="muted small">{t("approvals.tool.remember.hint")}</p>
+      {choice.duration !== "call" && !grantable(request) ? (
+        <p className="small" data-testid="tool-approval-remember-reject-only">
+          {request.capability.access === "destructive" ? t("approvals.tool.remember.onlyRejectDestructive") : t("approvals.tool.remember.onlyRejectMcp")}
+        </p>
+      ) : null}
     </fieldset>
   );
 }
@@ -172,7 +186,9 @@ export function ToolApprovalForm({ request, showContext = false }: { request: To
     { decision: "approved" | "rejected"; rule: NonNullable<ReturnType<typeof rememberedRule>> }
   >({
     mutationFn: ({ decision, rule }) => {
-      if (decision === "approved") return api.grantAccess(rule);
+      // L-1: the tool as the person saw it; the API refuses the grant when the library holds another one now.
+      if (decision === "approved")
+        return api.grantAccess({ ...rule, expected: { version: request.version, definition_hash: request.definition_hash } });
       // A deny from the card blocks in both modes (no ``mode``): what a person refuses here stays refused unattended.
       const { resource_type, resource_id, actions, scope, agents, expires_at, duration } = rule;
       return api.denyAccess({ resource_type, resource_id, actions, scope, agents, expires_at, duration });
@@ -188,7 +204,7 @@ export function ToolApprovalForm({ request, showContext = false }: { request: To
       api.decideToolApproval(request.run_id, request.id, decision, request.arguments_hash, comment),
     onSuccess: (_answer, decision) => {
       toast.success(decision === "approved" ? t("approvals.tool.approvedToast") : t("approvals.tool.rejectedToast"));
-      const rule = canRemember ? rememberedRule(request, workflowId, choice) : null;
+      const rule = canRemember && (decision === "rejected" || grantable(request)) ? rememberedRule(request, workflowId, choice) : null;
       if (rule) remember.mutate({ decision, rule });
       refresh();
     },
@@ -251,7 +267,7 @@ export function ToolApprovalForm({ request, showContext = false }: { request: To
           variant="primary"
           icon={Check}
           busy={decide.isPending && decide.variables === "approved"}
-          disabled={decide.isPending || expired || incomplete}
+          disabled={decide.isPending || expired || (incomplete && grantable(request))}
           onClick={() => decide.mutate("approved")}
         >
           {t("approvals.tool.approve")}

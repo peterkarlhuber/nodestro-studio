@@ -829,7 +829,8 @@
     "unattended_expiry": "Un permiso más allá de la lectura para ejecuciones sin supervisión debe terminar en una fecha o valer para un solo uso.",
     "unattended_scope": "Un permiso más allá de la lectura para ejecuciones sin supervisión debe indicar sus agentes.",
     "unattended_too_long": "Un permiso más allá de la lectura para ejecuciones sin supervisión puede durar como máximo {{days}} días.",
-    "grants_disabled": "Los permisos y bloqueos no están activados en esta instalación."
+    "grants_disabled": "Los permisos y bloqueos no están activados en esta instalación.",
+    "tool_changed": "La herramienta cambió desde que se mostró, así que no se guardó ningún permiso. Revisa la llamada de nuevo."
   },
   "sandbox": {
     "isolation_required": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan aislados (en Docker o, si se eligió, en el sandbox de Linux integrado); nada de esto está disponible, así que no se ejecutó nada. Ajustes → Sandbox muestra el motivo.",

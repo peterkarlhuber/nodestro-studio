@@ -81,7 +81,9 @@
       "hint": "Approving saves a permission for this tool, rejecting saves a block. Both are listed under Permissions and blocks, where they can be revoked.",
       "grantedToast": "Permission saved",
       "deniedToast": "Block saved",
-      "failed": "The decision was saved, but the permission or block was not:"
+      "failed": "The decision was saved, but the permission or block was not:",
+      "onlyRejectDestructive": "Approving decides only this call: deleting for good needs a confirmation each time. Rejecting can be remembered as a block.",
+      "onlyRejectMcp": "Approving decides only this call: MCP tools keep their own rules. Rejecting can be remembered as a block."
     }
   },
   "rules": {

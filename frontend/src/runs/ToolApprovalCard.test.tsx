@@ -199,6 +199,8 @@ describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
           agents: ["wf_1/writer"],
           mode: "supervised",
           expires_at: null,
+          // L-1: the tool as it was shown; the API refuses the grant when the library holds another one now.
+          expected: { version: 2, definition_hash: null },
         },
       ]),
     );
@@ -220,6 +222,44 @@ describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
     expect(deny).not.toHaveProperty("mode");
     expect(new Date(deny.expires_at).getFullYear()).toBe(2030);
     expect(posted(fetch, "/api/access/grants")).toEqual([]);
+  });
+
+  it.each([
+    ["an MCP tool", { definition_hash: "sha-mcp" }, "MCP-Tools behalten ihre eigenen Regeln"],
+    ["a tool that deletes for good", { capability: { access: "destructive", reach: "internal", source: "declared" } }, "Endgültiges Löschen"],
+  ] as const)("never remembers approving %s, but remembers rejecting it (L-2)", async (_kind, overrides, note) => {
+    const fetch = serveAccess(true);
+    const shown = request(overrides as Partial<ToolApprovalRequest>);
+    const { unmount } = render(wrap(<ToolApprovalForm request={shown} />));
+    await screen.findByTestId("tool-approval-remember");
+    await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
+    expect(screen.getByTestId("tool-approval-remember-reject-only")).toHaveTextContent(note);
+    await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" });
+    await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
+    await waitFor(() => expect(posted(fetch, "/api/runs/run_1/tool-approvals/tap_1")).toHaveLength(1));
+    expect(posted(fetch, "/api/access/grants")).toEqual([]);
+    unmount();
+    render(wrap(<ToolApprovalForm request={shown} />));
+    await screen.findByTestId("tool-approval-remember");
+    await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
+    await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" });
+    await userEvent.click(screen.getByRole("button", { name: "Ablehnen" }));
+    await waitFor(() => expect(posted(fetch, "/api/access/denies")).toHaveLength(1));
+  });
+
+  it("explains a grant refused because the tool changed since it was shown (L-1)", async () => {
+    serve((url) => {
+      if (url === "/api/access/state") return json({ enabled: true, safety_limits: {} });
+      if (url === "/api/runs/run_1") return json(RUN);
+      if (url === "/api/access/grants") return json({ detail: "x", code: "access.tool_changed", params: { tool: "mailer" } }, 409);
+      return json(request({ status: "approved" }));
+    });
+    render(wrap(<ToolApprovalForm request={request()} />));
+    await screen.findByTestId("tool-approval-remember");
+    await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
+    await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" });
+    await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
+    expect(await screen.findByText(/seit der Anzeige geändert, deshalb wurde keine Erlaubnis gespeichert/)).toBeInTheDocument();
   });
 
   it("reports a grant that could not be stored while the decision stands", async () => {

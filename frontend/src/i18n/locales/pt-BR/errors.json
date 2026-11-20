@@ -829,7 +829,8 @@
     "unattended_expiry": "Uma permissão além da leitura para execuções sem acompanhamento precisa terminar em uma data ou valer para um só uso.",
     "unattended_scope": "Uma permissão além da leitura para execuções sem acompanhamento precisa indicar seus agentes.",
     "unattended_too_long": "Uma permissão além da leitura para execuções sem acompanhamento dura no máximo {{days}} dias.",
-    "grants_disabled": "Permissões e bloqueios não estão ativados nesta instalação."
+    "grants_disabled": "Permissões e bloqueios não estão ativados nesta instalação.",
+    "tool_changed": "A ferramenta mudou desde que foi mostrada, então nenhuma permissão foi salva. Revise a chamada."
   },
   "sandbox": {
     "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados isolados (no Docker ou, se escolhido, no sandbox Linux integrado); nada disso está disponível, então nada foi executado. Configurações → Sandbox mostra o motivo.",

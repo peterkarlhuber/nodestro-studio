@@ -722,6 +722,8 @@ export interface AccessGrantIn {
   mode?: AccessMode;
   expires_at?: string | null;
   conversation_id?: string | null;
+  /** For a tool: the version and MCP definition the person saw (409 ``access.tool_changed`` when it differs now). */
+  expected?: { version: number | null; definition_hash: string | null };
 }
 
 /** The body of POST /api/access/denies. */
