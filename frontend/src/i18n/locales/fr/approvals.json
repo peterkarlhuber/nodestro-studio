@@ -81,7 +81,9 @@
       "hint": "Approuver enregistre une autorisation pour cet outil, refuser enregistre un blocage. Les deux figurent sous Autorisations et blocages, où vous pouvez les révoquer.",
       "grantedToast": "Autorisation enregistrée",
       "deniedToast": "Blocage enregistré",
-      "failed": "La décision est enregistrée, mais pas l’autorisation ou le blocage :"
+      "failed": "La décision est enregistrée, mais pas l’autorisation ou le blocage :",
+      "onlyRejectDestructive": "Approuver ne décide que cet appel : une suppression définitive demande une confirmation à chaque fois. Le refus peut être retenu comme blocage.",
+      "onlyRejectMcp": "Approuver ne décide que cet appel : les outils MCP gardent leurs propres règles. Le refus peut être retenu comme blocage."
     }
   },
   "rules": {

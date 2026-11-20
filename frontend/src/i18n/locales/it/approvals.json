@@ -81,7 +81,9 @@
       "hint": "Approvare salva un permesso per questo strumento, rifiutare salva un blocco. Entrambi compaiono in Permessi e blocchi, dove si possono revocare.",
       "grantedToast": "Permesso salvato",
       "deniedToast": "Blocco salvato",
-      "failed": "La decisione è stata salvata, ma il permesso o il blocco no:"
+      "failed": "La decisione è stata salvata, ma il permesso o il blocco no:",
+      "onlyRejectDestructive": "Approvare decide solo questa chiamata: l’eliminazione definitiva richiede ogni volta una conferma. Il rifiuto si può ricordare come blocco.",
+      "onlyRejectMcp": "Approvare decide solo questa chiamata: gli strumenti MCP mantengono le proprie regole. Il rifiuto si può ricordare come blocco."
     }
   },
   "rules": {

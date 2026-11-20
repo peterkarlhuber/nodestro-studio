@@ -84,6 +84,22 @@ Approvals for **single tool calls** are not enabled in this version. Tools an ag
 
 To have a person check results before the run goes on, use an [approval](/docs/verzweigungen#freigabe). To limit what an agent can do, assign it only the tools it needs (see [Assigning tools](/docs/agenten#tools)).
 
+## Permissions and blocks {#erlaubnisse}
+<!-- keywords: permission, block, grant, deny, remember decision, who may, safety limits, revoke -->
+
+Permissions and blocks are **not enabled** unless the person who runs Nodestro switches them on together with approvals for tool calls. While they are off, nothing on this page applies and nothing about them is shown.
+
+When they are on, an administrator can **remember a decision** on a tool call:
+
+- **How long**: only this call (the default), until revoked, or until a date.
+- **For whom**: the agent that asked, or all agents.
+
+Approving then saves a **permission** for the tool, and rejecting saves a **block**. A block always wins over a permission. A permission for a tool ends as soon as the tool changes (a new version, another classification or another MCP definition). If the tool changed after the card was shown, the permission is refused, and you look at the call again.
+
+Some calls cannot be permitted in advance. Tools that delete for good need a confirmation each time, and MCP tools keep their own rules. For them, only rejecting can be remembered.
+
+The page **Permissions and blocks** (linked from **Approvals**) lists every permission and block with who gave it, for whom, until when and its state, and you can revoke each one. A revocation applies from the next access on. The page also names the fixed **safety limits**, such as the offline mode or Nodestro's own data folder. No permission lifts them.
+
 ## Sub-workflows {#unterworkflow}
 <!-- keywords: sub-workflow, subworkflow, nesting, reuse, building block, version, child run -->
 

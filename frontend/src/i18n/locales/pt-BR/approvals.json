@@ -81,7 +81,9 @@
       "hint": "Aprovar salva uma permissão para esta ferramenta; rejeitar salva um bloqueio. Ambos aparecem em Permissões e bloqueios, onde podem ser revogados.",
       "grantedToast": "Permissão salva",
       "deniedToast": "Bloqueio salvo",
-      "failed": "A decisão foi salva, mas a permissão ou o bloqueio não:"
+      "failed": "A decisão foi salva, mas a permissão ou o bloqueio não:",
+      "onlyRejectDestructive": "Aprovar decide só esta chamada: excluir definitivamente precisa de confirmação a cada vez. A rejeição pode ser lembrada como bloqueio.",
+      "onlyRejectMcp": "Aprovar decide só esta chamada: ferramentas MCP mantêm suas próprias regras. A rejeição pode ser lembrada como bloqueio."
     }
   },
   "rules": {

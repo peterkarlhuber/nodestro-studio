@@ -829,7 +829,8 @@
     "unattended_expiry": "Une autorisation au-delà de la lecture pour des exécutions sans surveillance doit se terminer à une date ou valoir pour une seule utilisation.",
     "unattended_scope": "Une autorisation au-delà de la lecture pour des exécutions sans surveillance doit nommer ses agents.",
     "unattended_too_long": "Une autorisation au-delà de la lecture pour des exécutions sans surveillance dure au plus {{days}} jours.",
-    "grants_disabled": "Les autorisations et blocages ne sont pas activés pour cette installation."
+    "grants_disabled": "Les autorisations et blocages ne sont pas activés pour cette installation.",
+    "tool_changed": "L’outil a changé depuis son affichage, aucune autorisation n’a donc été enregistrée. Revoyez l’appel."
   },
   "sandbox": {
     "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent qu’isolés (dans Docker ou, s’il a été choisi, dans le bac à sable Linux intégré) ; rien de cela n’est disponible, rien n’a donc été exécuté. Réglages → Bac à sable indique pourquoi.",

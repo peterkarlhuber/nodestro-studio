@@ -33,7 +33,7 @@ export function AccessRulesPage() {
   const admin = useAccess().can("admin");
   return (
     <div className="page">
-      <PageHeader title={t("approvals.access.title")} description={t("approvals.access.description")} />
+      <PageHeader title={t("approvals.access.title")} doc="verzweigungen#erlaubnisse" description={t("approvals.access.description")} />
       <div className="page__body stack">
         <p className="small">
           <Link to="/approvals">{t("approvals.access.back")}</Link>
