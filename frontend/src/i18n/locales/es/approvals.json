@@ -63,7 +63,26 @@
     },
     "preGranted": "aprobada de antemano",
     "decidedBy": "por {{name}}, {{time}}",
-    "comment": "comentario: {{comment}}"
+    "comment": "comentario: {{comment}}",
+    "remember": {
+      "title": "Recordar esta decisión",
+      "duration": "Cuánto tiempo",
+      "durations": {
+        "call": "Solo esta llamada",
+        "until_revoked": "Hasta que se revoque",
+        "until": "Hasta una fecha"
+      },
+      "scope": "Para quién",
+      "scopes": {
+        "agent": "Este agente ({{agent}})",
+        "all": "Todos los agentes"
+      },
+      "until": "Termina el",
+      "hint": "Aprobar guarda un permiso para esta herramienta; rechazar guarda un bloqueo. Ambos aparecen en Permisos y bloqueos, donde se pueden revocar.",
+      "grantedToast": "Permiso guardado",
+      "deniedToast": "Bloqueo guardado",
+      "failed": "La decisión se guardó, pero el permiso o el bloqueo no:"
+    }
   },
   "rules": {
     "title": "Reglas para llamadas a herramientas",
@@ -144,5 +163,57 @@
     "ranAt": "Marcado el {{time}} por {{name}}. El paso se ejecuta una sola vez: las asignaciones posteriores se preguntan.",
     "stampFinish": "Terminar de marcar las API publicadas",
     "stampRepeated": "Repetido: no se marcó nada"
+  },
+  "access": {
+    "title": "Permisos y bloqueos",
+    "description": "Quién puede hacer qué: los permisos y bloqueos que dieron las personas, y los límites de seguridad fijos.",
+    "back": "Volver a Aprobaciones",
+    "off": "Los permisos y bloqueos no están activados en esta instalación.",
+    "limitsTitle": "Límites de seguridad",
+    "limitsText": "Estos límites son fijos. Ningún permiso los levanta.",
+    "grantsTitle": "Permisos",
+    "grantsText": "Lo que los agentes pueden hacer sin preguntar cada vez. Un permiso para una herramienta termina cuando la herramienta cambia.",
+    "grantsNone": "Todavía no hay permisos.",
+    "deniesTitle": "Bloqueos",
+    "deniesText": "Lo que sigue rechazado, se permita lo que se permita.",
+    "deniesNone": "Todavía no hay bloqueos.",
+    "resource": "Qué",
+    "actions": "Acciones",
+    "forWhom": "Para quién",
+    "by": "Dado por",
+    "state": "Estado",
+    "resourceTypes": {
+      "tool": "Herramienta",
+      "folder": "Carpeta",
+      "workflow": "Flujo de trabajo",
+      "mcp_server": "Servicio MCP",
+      "connection": "Conexión",
+      "cloud_provider": "Proveedor de modelos en la nube"
+    },
+    "actionNames": {
+      "read": "leer",
+      "write": "escribir",
+      "move": "mover",
+      "trash": "mover a la papelera",
+      "delete": "eliminar definitivamente",
+      "execute": "ejecutar",
+      "send": "enviar",
+      "submit": "entregar contenido"
+    },
+    "allAgents": "Todos los agentes",
+    "byLine": "{{name}}, {{time}}",
+    "states": {
+      "active": "Activo",
+      "used": "Usado",
+      "revoked": "Revocado",
+      "expired": "Caducado"
+    },
+    "revokedBy": "Revocado por {{name}}, {{time}}",
+    "expires": "Termina {{time}}",
+    "untilRevoked": "Hasta que se revoque",
+    "revoke": "Revocar",
+    "revokeConfirm": "Revocar ahora",
+    "revoked": "Revocado. Deja de aplicarse desde el próximo acceso.",
+    "link": "Permisos y bloqueos"
   }
 }

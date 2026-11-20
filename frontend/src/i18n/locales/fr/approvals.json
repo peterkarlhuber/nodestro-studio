@@ -63,7 +63,26 @@
     },
     "preGranted": "validé à l’avance",
     "decidedBy": "par {{name}}, {{time}}",
-    "comment": "commentaire : {{comment}}"
+    "comment": "commentaire : {{comment}}",
+    "remember": {
+      "title": "Retenir cette décision",
+      "duration": "Pour combien de temps",
+      "durations": {
+        "call": "Seulement cet appel",
+        "until_revoked": "Jusqu’à révocation",
+        "until": "Jusqu’à une date"
+      },
+      "scope": "Pour qui",
+      "scopes": {
+        "agent": "Cet agent ({{agent}})",
+        "all": "Tous les agents"
+      },
+      "until": "Prend fin le",
+      "hint": "Approuver enregistre une autorisation pour cet outil, refuser enregistre un blocage. Les deux figurent sous Autorisations et blocages, où vous pouvez les révoquer.",
+      "grantedToast": "Autorisation enregistrée",
+      "deniedToast": "Blocage enregistré",
+      "failed": "La décision est enregistrée, mais pas l’autorisation ou le blocage :"
+    }
   },
   "rules": {
     "title": "Règles des appels d’outils",
@@ -144,5 +163,57 @@
     "ranAt": "Marqué le {{time}} par {{name}}. L’étape ne s’exécute qu’une fois : les attributions faites ensuite sont soumises à la question.",
     "stampFinish": "Terminer le marquage des API publiées",
     "stampRepeated": "Répété : rien de marqué"
+  },
+  "access": {
+    "title": "Autorisations et blocages",
+    "description": "Qui peut faire quoi : les autorisations et blocages donnés par des personnes, et les limites de sécurité fixes.",
+    "back": "Retour aux approbations",
+    "off": "Les autorisations et blocages ne sont pas activés pour cette installation.",
+    "limitsTitle": "Limites de sécurité",
+    "limitsText": "Ces limites sont fixes. Aucune autorisation ne les lève.",
+    "grantsTitle": "Autorisations",
+    "grantsText": "Ce que les agents peuvent faire sans demander à chaque fois. Une autorisation pour un outil prend fin quand l’outil change.",
+    "grantsNone": "Aucune autorisation pour l’instant.",
+    "deniesTitle": "Blocages",
+    "deniesText": "Ce qui reste refusé, quoi qu’il soit autorisé.",
+    "deniesNone": "Aucun blocage pour l’instant.",
+    "resource": "Quoi",
+    "actions": "Opérations",
+    "forWhom": "Pour qui",
+    "by": "Donné par",
+    "state": "État",
+    "resourceTypes": {
+      "tool": "Outil",
+      "folder": "Dossier",
+      "workflow": "Workflow",
+      "mcp_server": "Service MCP",
+      "connection": "Connexion",
+      "cloud_provider": "Fournisseur de modèles cloud"
+    },
+    "actionNames": {
+      "read": "lire",
+      "write": "écrire",
+      "move": "déplacer",
+      "trash": "mettre à la corbeille",
+      "delete": "supprimer définitivement",
+      "execute": "exécuter",
+      "send": "envoyer",
+      "submit": "transmettre du contenu"
+    },
+    "allAgents": "Tous les agents",
+    "byLine": "{{name}}, {{time}}",
+    "states": {
+      "active": "En vigueur",
+      "used": "Utilisée",
+      "revoked": "Révoquée",
+      "expired": "Expirée"
+    },
+    "revokedBy": "Révoquée par {{name}}, {{time}}",
+    "expires": "Prend fin {{time}}",
+    "untilRevoked": "Jusqu’à révocation",
+    "revoke": "Révoquer",
+    "revokeConfirm": "Révoquer maintenant",
+    "revoked": "Révoquée. Elle ne s’applique plus dès le prochain accès.",
+    "link": "Autorisations et blocages"
   }
 }

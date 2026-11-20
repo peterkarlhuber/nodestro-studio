@@ -63,7 +63,26 @@
     },
     "preGranted": "approvata in anticipo",
     "decidedBy": "da {{name}}, {{time}}",
-    "comment": "commento: {{comment}}"
+    "comment": "commento: {{comment}}",
+    "remember": {
+      "title": "Ricorda questa decisione",
+      "duration": "Per quanto tempo",
+      "durations": {
+        "call": "Solo questa chiamata",
+        "until_revoked": "Fino alla revoca",
+        "until": "Fino a una data"
+      },
+      "scope": "Per chi",
+      "scopes": {
+        "agent": "Questo agente ({{agent}})",
+        "all": "Tutti gli agenti"
+      },
+      "until": "Termina il",
+      "hint": "Approvare salva un permesso per questo strumento, rifiutare salva un blocco. Entrambi compaiono in Permessi e blocchi, dove si possono revocare.",
+      "grantedToast": "Permesso salvato",
+      "deniedToast": "Blocco salvato",
+      "failed": "La decisione è stata salvata, ma il permesso o il blocco no:"
+    }
   },
   "rules": {
     "title": "Regole per le chiamate di strumenti",
@@ -144,5 +163,57 @@
     "ranAt": "Marcato il {{time}} da {{name}}. Il passo viene eseguito una sola volta: le assegnazioni successive vengono chieste.",
     "stampFinish": "Completa la marcatura delle API pubblicate",
     "stampRepeated": "Ripetuto: nulla marcato"
+  },
+  "access": {
+    "title": "Permessi e blocchi",
+    "description": "Chi può fare cosa: i permessi e i blocchi dati dalle persone, e i limiti di sicurezza fissi.",
+    "back": "Torna alle approvazioni",
+    "off": "Permessi e blocchi non sono attivati in questa installazione.",
+    "limitsTitle": "Limiti di sicurezza",
+    "limitsText": "Questi limiti sono fissi. Nessun permesso li rimuove.",
+    "grantsTitle": "Permessi",
+    "grantsText": "Ciò che gli agenti possono fare senza chiedere ogni volta. Un permesso per uno strumento termina quando lo strumento cambia.",
+    "grantsNone": "Ancora nessun permesso.",
+    "deniesTitle": "Blocchi",
+    "deniesText": "Ciò che resta rifiutato, qualunque cosa sia permessa.",
+    "deniesNone": "Ancora nessun blocco.",
+    "resource": "Cosa",
+    "actions": "Azioni",
+    "forWhom": "Per chi",
+    "by": "Dato da",
+    "state": "Stato",
+    "resourceTypes": {
+      "tool": "Strumento",
+      "folder": "Cartella",
+      "workflow": "Workflow",
+      "mcp_server": "Servizio MCP",
+      "connection": "Connessione",
+      "cloud_provider": "Fornitore di modelli cloud"
+    },
+    "actionNames": {
+      "read": "leggere",
+      "write": "scrivere",
+      "move": "spostare",
+      "trash": "spostare nel cestino",
+      "delete": "eliminare definitivamente",
+      "execute": "eseguire",
+      "send": "inviare",
+      "submit": "consegnare contenuti"
+    },
+    "allAgents": "Tutti gli agenti",
+    "byLine": "{{name}}, {{time}}",
+    "states": {
+      "active": "Attivo",
+      "used": "Usato",
+      "revoked": "Revocato",
+      "expired": "Scaduto"
+    },
+    "revokedBy": "Revocato da {{name}}, {{time}}",
+    "expires": "Termina {{time}}",
+    "untilRevoked": "Fino alla revoca",
+    "revoke": "Revoca",
+    "revokeConfirm": "Revoca ora",
+    "revoked": "Revocato. Non vale più dal prossimo accesso.",
+    "link": "Permessi e blocchi"
   }
 }

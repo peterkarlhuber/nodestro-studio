@@ -8,6 +8,7 @@ import { ApprovalForm } from "../runs/ApprovalCard";
 import { BudgetRequestCard } from "../runs/BudgetDecisionCard";
 import { ToolApprovalForm } from "../runs/ToolApprovalCard";
 import { ToolApprovalRules } from "../runs/ToolApprovalRules";
+import { AccessRulesLink } from "./AccessRulesPage";
 
 /** Every approval waiting for a person, oldest first; they survive restarts of Nodestro. Tool calls that wait for a
  * decision (per-call approvals) come first: they have a deadline. */
@@ -55,6 +56,7 @@ export function ApprovalsPage() {
           ))}
         </div>
         <ToolApprovalRules />
+        <AccessRulesLink />
       </div>
     </div>
   );

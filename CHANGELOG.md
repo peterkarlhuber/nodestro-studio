@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+### N-06: permissions and blocks (access model v2, off by default; 2026-11-20)
+
+- Everything below shows only while the installation switches on `NODESTRO_ACCESS_GRANTS` together with tool
+  approvals, and only to administrators. Otherwise the interface is unchanged.
+- The tool approval card offers **Remember this decision**:
+  - how long it holds: only this call (the default), until revoked, or until a date;
+  - for whom: this agent (`<workflow id>/<node id>`, as the runtime names it) or all agents.
+  - Approving saves a permission (grant) for the tool, and rejecting saves a block (deny). The decision on the call
+    stands even if the rule cannot be stored, and the card then says so.
+- New page **Permissions and blocks** (`/approvals/access`, linked from Approvals):
+  - every grant and deny with who gave it, for whom, until when and its state;
+  - revoke, with a confirmation;
+  - the fixed safety limits.
+- Texts in de, en, es, fr, it and pt-BR, including `access.grants_disabled`.
+- The lock pins nodestro-runtime 68bc0d2 (runtime #203) and nodestro-api 670297b (api #161).
+
 ### E-0R-1 A: the note to the agent at approvals (2026-11-20)
 
 - An approval's comment is for people only; no model reads it. The approval card (run panel, run view, Approvals

@@ -8,10 +8,11 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
+import { useAccess } from "../api/access";
 import { ApiError, api } from "../api/client";
-import { keys, useToolApprovals } from "../api/hooks";
-import type { Run, ToolApprovalRequest, ToolCallApproval } from "../api/types";
-import { Badge, Button, Callout, Field, HelpTip, TextArea } from "../components/ui";
+import { keys, useAccessGrantsEnabled, useToolApprovals } from "../api/hooks";
+import type { AccessDeny, AccessGrant, Run, ToolApprovalRequest, ToolCallApproval } from "../api/types";
+import { Badge, Button, Callout, Field, HelpTip, Select, TextArea, TextInput } from "../components/ui";
 import { toast } from "../components/toast";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -48,21 +49,147 @@ export function ToolApprovalContext({ request }: { request: Pick<ToolApprovalReq
 /** Codes of a decision that came too late or about another call: the list is reloaded to show what is current. */
 const CONFLICTS = new Set(["tool.approval_stale", "tool.approval_expired", "tool.approval_decided"]);
 
+/** How long a decision on the card holds (access model v2, N-06): this call only, or as a grant or deny. */
+export type RememberFor = "call" | "until_revoked" | "until";
+/** For whom it holds: the agent that asked, or every agent. */
+export type RememberScope = "agent" | "all";
+
+export interface RememberChoice {
+  duration: RememberFor;
+  scope: RememberScope;
+  /** ``until``: the end, as a datetime-local value. */
+  until: string;
+}
+
+/**
+ * The grant (approved) or deny (rejected) a decision on the card also stores, or null for "this call only". The agent
+ * is named like the runtime names it: ``<workflow id>/<node id>``. Always for supervised use: a person watches here.
+ */
+export function rememberedRule(request: Pick<ToolApprovalRequest, "tool" | "node_id">, workflowId: string | undefined, choice: RememberChoice) {
+  if (choice.duration === "call") return null;
+  // Never wider than chosen: without the workflow (its run not loaded yet) there is no agent to name.
+  if (choice.scope === "agent" && !workflowId) return null;
+  const agents = choice.scope === "agent" ? [`${workflowId}/${request.node_id}`] : [];
+  const expires = choice.duration === "until" && choice.until ? new Date(choice.until).toISOString() : null;
+  return {
+    resource_type: "tool" as const,
+    resource_id: request.tool,
+    actions: ["execute" as const],
+    duration: choice.duration,
+    scope: agents.length ? ("agent" as const) : ("all" as const),
+    agents,
+    mode: "supervised" as const,
+    expires_at: expires,
+  };
+}
+
+/**
+ * Scope and duration of a decision, shown only while grants and denies are on and to someone who may write them
+ * (``admin``); hidden otherwise, so the card stays as before.
+ */
+function RememberDecision({
+  request,
+  workflowId,
+  choice,
+  onChange,
+}: {
+  request: ToolApprovalRequest;
+  workflowId: string | undefined;
+  choice: RememberChoice;
+  onChange: (choice: RememberChoice) => void;
+}) {
+  const { t } = useTranslation();
+  const agent = workflowId ? `${workflowId}/${request.node_id}` : request.node_id;
+  return (
+    <fieldset className="stack-sm" data-testid="tool-approval-remember">
+      <legend className="nd-field-label">{t("approvals.tool.remember.title")}</legend>
+      <div className="row-gap">
+        <Field label={t("approvals.tool.remember.duration")}>
+          <Select
+            value={choice.duration}
+            onChange={(value) => onChange({ ...choice, duration: value as RememberFor })}
+            options={(["call", "until_revoked", "until"] as const).map((value) => ({
+              value,
+              label: t(`approvals.tool.remember.durations.${value}`),
+            }))}
+          />
+        </Field>
+        {choice.duration !== "call" ? (
+          <Field label={t("approvals.tool.remember.scope")}>
+            <Select
+              value={choice.scope}
+              onChange={(value) => onChange({ ...choice, scope: value as RememberScope })}
+              options={[
+                { value: "agent", label: t("approvals.tool.remember.scopes.agent", { agent }) },
+                { value: "all", label: t("approvals.tool.remember.scopes.all") },
+              ]}
+            />
+          </Field>
+        ) : null}
+        {choice.duration === "until" ? (
+          <Field label={t("approvals.tool.remember.until")}>
+            <TextInput type="datetime-local" value={choice.until} onChange={(event) => onChange({ ...choice, until: event.target.value })} />
+          </Field>
+        ) : null}
+      </div>
+      <p className="muted small">{t("approvals.tool.remember.hint")}</p>
+    </fieldset>
+  );
+}
+
 export function ToolApprovalForm({ request, showContext = false }: { request: ToolApprovalRequest; showContext?: boolean }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [comment, setComment] = useState("");
+  const [choice, setChoice] = useState<RememberChoice>({ duration: "call", scope: "agent", until: "" });
+  // Scope and duration only while grants and denies are on (N-06) and for someone who may write them.
+  const accessOn = useAccessGrantsEnabled();
+  const admin = useAccess().can("admin");
+  const canRemember = accessOn && admin;
+  const run = useQuery({
+    queryKey: keys.run(request.run_id),
+    queryFn: () => api.run(request.run_id),
+    staleTime: 60_000,
+    retry: false,
+    enabled: canRemember,
+  });
+  const workflowId = run.data?.workflow_id;
+  // A chosen grant or deny must be complete before deciding: a date for "until", the agent's workflow for "agent".
+  const incomplete =
+    canRemember &&
+    choice.duration !== "call" &&
+    ((choice.duration === "until" && !choice.until) || (choice.scope === "agent" && !workflowId));
   const secondsLeft = useSecondsLeft(request.deadline);
   const expired = secondsLeft <= 0;
   const refresh = () => {
     void queryClient.invalidateQueries({ queryKey: keys.toolApprovals });
     void queryClient.invalidateQueries({ queryKey: keys.run(request.run_id) });
   };
+  // The decision of this call stands on its own; a grant or deny that cannot be stored is reported separately.
+  const remember = useMutation<
+    AccessGrant | AccessDeny,
+    Error,
+    { decision: "approved" | "rejected"; rule: NonNullable<ReturnType<typeof rememberedRule>> }
+  >({
+    mutationFn: ({ decision, rule }) => {
+      if (decision === "approved") return api.grantAccess(rule);
+      // A deny from the card blocks in both modes (no ``mode``): what a person refuses here stays refused unattended.
+      const { resource_type, resource_id, actions, scope, agents, expires_at, duration } = rule;
+      return api.denyAccess({ resource_type, resource_id, actions, scope, agents, expires_at, duration });
+    },
+    onSuccess: (_answer, { decision }) => {
+      toast.success(decision === "approved" ? t("approvals.tool.remember.grantedToast") : t("approvals.tool.remember.deniedToast"));
+      void queryClient.invalidateQueries({ queryKey: keys.accessGrants });
+      void queryClient.invalidateQueries({ queryKey: keys.accessDenies });
+    },
+  });
   const decide = useMutation({
     mutationFn: (decision: "approved" | "rejected") =>
       api.decideToolApproval(request.run_id, request.id, decision, request.arguments_hash, comment),
     onSuccess: (_answer, decision) => {
       toast.success(decision === "approved" ? t("approvals.tool.approvedToast") : t("approvals.tool.rejectedToast"));
+      const rule = canRemember ? rememberedRule(request, workflowId, choice) : null;
+      if (rule) remember.mutate({ decision, rule });
       refresh();
     },
     onError: (error) => {
@@ -107,10 +234,16 @@ export function ToolApprovalForm({ request, showContext = false }: { request: To
       <Field label={t("approvals.comment")} hint={t("approvals.tool.commentHint")}>
         <TextArea rows={2} value={comment} maxLength={4000} onChange={(e) => setComment(e.target.value)} />
       </Field>
+      {canRemember ? <RememberDecision request={request} workflowId={workflowId} choice={choice} onChange={setChoice} /> : null}
       <p className="muted small">{t("approvals.tool.rejectHint")}</p>
       {decide.error ? (
         <Callout tone="danger">
           <ErrorText error={decide.error} />
+        </Callout>
+      ) : null}
+      {remember.error ? (
+        <Callout tone="danger">
+          <strong>{t("approvals.tool.remember.failed")}</strong> <ErrorText error={remember.error} />
         </Callout>
       ) : null}
       <div className="row-gap">
@@ -118,7 +251,7 @@ export function ToolApprovalForm({ request, showContext = false }: { request: To
           variant="primary"
           icon={Check}
           busy={decide.isPending && decide.variables === "approved"}
-          disabled={decide.isPending || expired}
+          disabled={decide.isPending || expired || incomplete}
           onClick={() => decide.mutate("approved")}
         >
           {t("approvals.tool.approve")}
@@ -127,7 +260,7 @@ export function ToolApprovalForm({ request, showContext = false }: { request: To
           variant="danger"
           icon={X}
           busy={decide.isPending && decide.variables === "rejected"}
-          disabled={decide.isPending || expired}
+          disabled={decide.isPending || expired || incomplete}
           onClick={() => decide.mutate("rejected")}
         >
           {t("approvals.reject")}

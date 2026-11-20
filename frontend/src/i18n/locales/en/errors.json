@@ -828,7 +828,8 @@
     "tool_facts_required": "A permission for a tool must name the tool as it was approved; other permissions must not name a tool.",
     "unattended_expiry": "A permission beyond reading for runs nobody watches must end on a date or hold for one use.",
     "unattended_scope": "A permission beyond reading for runs nobody watches must name its agents.",
-    "unattended_too_long": "A permission beyond reading for runs nobody watches may last at most {{days}} days."
+    "unattended_too_long": "A permission beyond reading for runs nobody watches may last at most {{days}} days.",
+    "grants_disabled": "Permissions and blocks are not switched on for this installation."
   },
   "sandbox": {
     "isolation_required": "AI-created code and tools of unknown origin run only isolated (in Docker, or in the built-in Linux sandbox if it was chosen); none is available, so nothing was run. Settings → Sandbox shows why.",

@@ -63,7 +63,26 @@
     },
     "preGranted": "approved in advance",
     "decidedBy": "by {{name}}, {{time}}",
-    "comment": "comment: {{comment}}"
+    "comment": "comment: {{comment}}",
+    "remember": {
+      "title": "Remember this decision",
+      "duration": "How long",
+      "durations": {
+        "call": "Only this call",
+        "until_revoked": "Until revoked",
+        "until": "Until a date"
+      },
+      "scope": "For whom",
+      "scopes": {
+        "agent": "This agent ({{agent}})",
+        "all": "All agents"
+      },
+      "until": "Ends on",
+      "hint": "Approving saves a permission for this tool, rejecting saves a block. Both are listed under Permissions and blocks, where they can be revoked.",
+      "grantedToast": "Permission saved",
+      "deniedToast": "Block saved",
+      "failed": "The decision was saved, but the permission or block was not:"
+    }
   },
   "rules": {
     "title": "Rules for tool calls",
@@ -144,5 +163,57 @@
     "ranAt": "Marked on {{time}} by {{name}}. The step runs once: assignments made afterwards are asked about.",
     "stampFinish": "Finish marking published APIs",
     "stampRepeated": "Repeated: nothing marked"
+  },
+  "access": {
+    "title": "Permissions and blocks",
+    "description": "Who may do what: the permissions and blocks people gave, and the fixed safety limits.",
+    "back": "Back to Approvals",
+    "off": "Permissions and blocks are not switched on for this installation.",
+    "limitsTitle": "Safety limits",
+    "limitsText": "These limits are fixed. No permission lifts them.",
+    "grantsTitle": "Permissions",
+    "grantsText": "What agents may do without being asked each time. A permission for a tool ends when the tool changes.",
+    "grantsNone": "No permissions yet.",
+    "deniesTitle": "Blocks",
+    "deniesText": "What stays refused, whatever is permitted.",
+    "deniesNone": "No blocks yet.",
+    "resource": "What",
+    "actions": "Actions",
+    "forWhom": "For whom",
+    "by": "Given by",
+    "state": "State",
+    "resourceTypes": {
+      "tool": "Tool",
+      "folder": "Folder",
+      "workflow": "Workflow",
+      "mcp_server": "MCP service",
+      "connection": "Connection",
+      "cloud_provider": "Cloud model provider"
+    },
+    "actionNames": {
+      "read": "read",
+      "write": "write",
+      "move": "move",
+      "trash": "move to trash",
+      "delete": "delete for good",
+      "execute": "run",
+      "send": "send",
+      "submit": "send content"
+    },
+    "allAgents": "All agents",
+    "byLine": "{{name}}, {{time}}",
+    "states": {
+      "active": "Active",
+      "used": "Used",
+      "revoked": "Revoked",
+      "expired": "Expired"
+    },
+    "revokedBy": "Revoked by {{name}}, {{time}}",
+    "expires": "Ends {{time}}",
+    "untilRevoked": "Until revoked",
+    "revoke": "Revoke",
+    "revokeConfirm": "Revoke now",
+    "revoked": "Revoked. It no longer applies from the next access on.",
+    "link": "Permissions and blocks"
   }
 }

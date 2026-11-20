@@ -136,6 +136,11 @@ import type {
   UploadResult,
   ToolApprovalRequest,
   ToolApprovalsState,
+  AccessDeny,
+  AccessDenyIn,
+  AccessGrant,
+  AccessGrantIn,
+  AccessState,
   ToolApprovalEvent,
   ToolPreGrant,
   BudgetDecisionIn,
@@ -472,6 +477,16 @@ export const api = {
       "DELETE",
       `/tool-pre-grants/${grant.scope}/${encodeURIComponent(grant.scope_id)}/${encodeURIComponent(grant.id)}`,
     ),
+  /** Whether grants and denies (access model v2, N-06) are on; always answers, so it can decide what is shown. */
+  accessState: () => request<AccessState>("GET", "/access/state"),
+  /** Every grant and deny of the tenant, newest first (``admin``; 404 while the access model is off). */
+  accessGrants: () => request<AccessGrant[]>("GET", "/access/grants"),
+  accessDenies: () => request<AccessDeny[]>("GET", "/access/denies"),
+  /** Only a signed-in person writes grants and denies; the server records who and, for a tool, its current facts. */
+  grantAccess: (body: AccessGrantIn) => request<AccessGrant>("POST", "/access/grants", body),
+  denyAccess: (body: AccessDenyIn) => request<AccessDeny>("POST", "/access/denies", body),
+  revokeAccessGrant: (id: string) => request<AccessGrant>("DELETE", `/access/grants/${encodeURIComponent(id)}`),
+  revokeAccessDeny: (id: string) => request<AccessDeny>("DELETE", `/access/denies/${encodeURIComponent(id)}`),
   resultFiles: (runId: string) => request<ResultFile[]>("GET", `/runs/${runId}/files`),
   createResultFile: (runId: string, body: FileRequest) => request<ResultFile>("POST", `/runs/${runId}/files`, body),
   deleteResultFile: (runId: string, fileId: string) => request<void>("DELETE", `/runs/${runId}/files/${fileId}`),
