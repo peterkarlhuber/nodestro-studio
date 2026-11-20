@@ -28,7 +28,7 @@
       "pyproject": "pyproject.toml"
     },
     "nodestro-runtime": {
-      "commit": "42ad38789f51451f7bdde1dcf7c31f67d26528c4",
+      "commit": "bf8a0adf77f1e30a84f886c595464b33d3a88bea",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
@@ -46,13 +46,13 @@
       "studio_dependency": true
     },
     "nodestro-api": {
-      "commit": "7ab66f1c47d5f07d443ec85e22f33c324f0742a9",
+      "commit": "d8185601ecfc4bac5daa84f77c7dbe28e8532c23",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-sdk": {
-      "commit": "55b12cbadd86c56a79c7ed690d984ac496926102",
+      "commit": "273d446508553b819af9168a714a1fb46adcdd27",
       "version": "0.3.0",
       "pyproject": "python/pyproject.toml"
     }

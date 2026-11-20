@@ -828,7 +828,8 @@
     "tool_facts_required": "Eine Freigabe für ein Tool muss das Tool so nennen, wie es geprüft wurde; andere Freigaben nennen kein Tool.",
     "unattended_expiry": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht muss an einem Datum enden oder für eine Verwendung gelten.",
     "unattended_scope": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht muss ihre Agenten nennen.",
-    "unattended_too_long": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht gilt höchstens {{days}} Tage."
+    "unattended_too_long": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht gilt höchstens {{days}} Tage.",
+    "grants_disabled": "Erlaubnisse und Sperren sind in dieser Installation nicht eingeschaltet."
   },
   "sandbox": {
     "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur isoliert (in Docker oder, wenn gewählt, in der eingebauten Linux-Sandbox); nichts davon ist verfügbar, daher wurde nichts ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",

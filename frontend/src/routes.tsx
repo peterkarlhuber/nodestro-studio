@@ -3,6 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import { currentLanguage } from "./i18n";
 import { AppShell } from "./layout/AppShell";
 import { AgentsPage } from "./pages/AgentsPage";
+import { AccessRulesPage } from "./pages/AccessRulesPage";
 import { ApprovalsPage } from "./pages/ApprovalsPage";
 import { BatchDetailPage, BatchesPage } from "./pages/BatchesPage";
 import { ExamplesPage } from "./pages/ExamplesPage";
@@ -66,6 +67,7 @@ export const routes: RouteObject[] = [
       { path: "executions/compare", element: <RunComparePage /> },
       { path: "executions/:id", element: <RunDetailPage /> },
       { path: "approvals", element: <ApprovalsPage /> },
+      { path: "approvals/access", element: <AccessRulesPage /> },
       { path: "batches", element: <BatchesPage /> },
       { path: "batches/:id", element: <BatchDetailPage /> },
       { path: "publications", element: <PublicationsPage /> },

@@ -146,3 +146,94 @@ describe("ToolApprovalForm context (AD-11)", () => {
     expect(await screen.findByTestId("tool-approval-context")).toHaveTextContent("Angebot versenden · Schritt Texter");
   });
 });
+
+describe("ToolApprovalForm scope and duration (access model v2, N-06)", () => {
+  const RUN = { id: "run_1", workflow_id: "wf_1", workflow_name: "Angebot", workflow: { nodes: [], edges: [] } };
+
+  function serveAccess(enabled: boolean) {
+    return serve((url, body) => {
+      if (url === "/api/access/state") return json({ enabled, safety_limits: { strict_offline: "x" } });
+      if (url === "/api/runs/run_1") return json(RUN);
+      if (url === "/api/access/grants" || url === "/api/access/denies") return json({ id: "agr_1", ...(body as object) }, 201);
+      return json(request({ status: "approved" }));
+    });
+  }
+
+  const posted = (fetch: ReturnType<typeof serve>, url: string) =>
+    fetch.mock.calls.filter(([called, init]) => called === url && init?.method === "POST").map(([, init]) => JSON.parse(String(init?.body)));
+
+  it("stays hidden while the access model is off", async () => {
+    const fetch = serveAccess(false);
+    render(wrap(<ToolApprovalForm request={request()} />));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith("/api/access/state", expect.anything()));
+    expect(screen.queryByTestId("tool-approval-remember")).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
+    await waitFor(() => expect(posted(fetch, "/api/runs/run_1/tool-approvals/tap_1")).toHaveLength(1));
+    expect(posted(fetch, "/api/access/grants")).toEqual([]);
+  });
+
+  it("decides only this call by default", async () => {
+    const fetch = serveAccess(true);
+    render(wrap(<ToolApprovalForm request={request()} />));
+    expect(await screen.findByTestId("tool-approval-remember")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
+    await waitFor(() => expect(posted(fetch, "/api/runs/run_1/tool-approvals/tap_1")).toHaveLength(1));
+    expect(posted(fetch, "/api/access/grants")).toEqual([]);
+  });
+
+  it("saves a grant for the asking agent until revoked when approving", async () => {
+    const fetch = serveAccess(true);
+    render(wrap(<ToolApprovalForm request={request()} />));
+    await screen.findByTestId("tool-approval-remember");
+    await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
+    expect(await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" })).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
+    await waitFor(() =>
+      expect(posted(fetch, "/api/access/grants")).toEqual([
+        {
+          resource_type: "tool",
+          resource_id: "mailer",
+          actions: ["execute"],
+          duration: "until_revoked",
+          scope: "agent",
+          agents: ["wf_1/writer"],
+          mode: "supervised",
+          expires_at: null,
+        },
+      ]),
+    );
+    expect(posted(fetch, "/api/runs/run_1/tool-approvals/tap_1")[0]).toMatchObject({ decision: "approved" });
+  });
+
+  it("saves a deny for every agent until a date when rejecting, and needs the date first", async () => {
+    const fetch = serveAccess(true);
+    render(wrap(<ToolApprovalForm request={request()} />));
+    await screen.findByTestId("tool-approval-remember");
+    await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until");
+    await userEvent.selectOptions(screen.getByLabelText("Für wen"), "all");
+    expect(screen.getByRole("button", { name: "Ablehnen" })).toBeDisabled();
+    await userEvent.type(screen.getByLabelText("Endet am"), "2030-01-31T12:00");
+    await userEvent.click(screen.getByRole("button", { name: "Ablehnen" }));
+    await waitFor(() => expect(posted(fetch, "/api/access/denies")).toHaveLength(1));
+    const deny = posted(fetch, "/api/access/denies")[0];
+    expect(deny).toMatchObject({ resource_type: "tool", resource_id: "mailer", actions: ["execute"], scope: "all", agents: [], duration: "until" });
+    expect(deny).not.toHaveProperty("mode");
+    expect(new Date(deny.expires_at).getFullYear()).toBe(2030);
+    expect(posted(fetch, "/api/access/grants")).toEqual([]);
+  });
+
+  it("reports a grant that could not be stored while the decision stands", async () => {
+    serve((url) => {
+      if (url === "/api/access/state") return json({ enabled: true, safety_limits: {} });
+      if (url === "/api/runs/run_1") return json(RUN);
+      if (url === "/api/access/grants") return json({ detail: "x", code: "access.person_required", params: {} }, 403);
+      return json(request({ status: "approved" }));
+    });
+    render(wrap(<ToolApprovalForm request={request()} />));
+    await screen.findByTestId("tool-approval-remember");
+    await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until_revoked");
+    await screen.findByRole("option", { name: "Dieser Agent (wf_1/writer)" });
+    await userEvent.click(screen.getByRole("button", { name: "Diesen Aufruf erlauben" }));
+    expect(await screen.findByText(/die Erlaubnis oder Sperre aber nicht/)).toBeInTheDocument();
+  });
+});

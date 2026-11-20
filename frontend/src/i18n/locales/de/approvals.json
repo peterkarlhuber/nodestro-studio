@@ -63,7 +63,26 @@
     },
     "preGranted": "vorab freigegeben",
     "decidedBy": "von {{name}}, {{time}}",
-    "comment": "Kommentar: {{comment}}"
+    "comment": "Kommentar: {{comment}}",
+    "remember": {
+      "title": "Diese Entscheidung merken",
+      "duration": "Wie lange",
+      "durations": {
+        "call": "Nur dieser Aufruf",
+        "until_revoked": "Bis zum Widerruf",
+        "until": "Bis zu einem Datum"
+      },
+      "scope": "Für wen",
+      "scopes": {
+        "agent": "Dieser Agent ({{agent}})",
+        "all": "Alle Agenten"
+      },
+      "until": "Endet am",
+      "hint": "Freigeben speichert eine Erlaubnis für dieses Tool, Ablehnen eine Sperre. Beide stehen unter Erlaubnisse und Sperren und lassen sich dort widerrufen.",
+      "grantedToast": "Erlaubnis gespeichert",
+      "deniedToast": "Sperre gespeichert",
+      "failed": "Die Entscheidung ist gespeichert, die Erlaubnis oder Sperre aber nicht:"
+    }
   },
   "rules": {
     "title": "Regeln für Tool-Aufrufe",
@@ -144,5 +163,57 @@
     "ranAt": "Markiert am {{time}} von {{name}}. Der Schritt läuft nur einmal: Später erstellte Zuweisungen werden abgefragt.",
     "stampFinish": "Markieren der veröffentlichten APIs abschließen",
     "stampRepeated": "Wiederholt: nichts markiert"
+  },
+  "access": {
+    "title": "Erlaubnisse und Sperren",
+    "description": "Wer was darf: die Erlaubnisse und Sperren, die Personen gegeben haben, und die festen Sicherheitsgrenzen.",
+    "back": "Zurück zu Freigaben",
+    "off": "Erlaubnisse und Sperren sind in dieser Installation nicht eingeschaltet.",
+    "limitsTitle": "Sicherheitsgrenzen",
+    "limitsText": "Diese Grenzen stehen fest. Keine Erlaubnis hebt sie auf.",
+    "grantsTitle": "Erlaubnisse",
+    "grantsText": "Was Agenten dürfen, ohne jedes Mal zu fragen. Eine Erlaubnis für ein Tool endet, wenn sich das Tool ändert.",
+    "grantsNone": "Noch keine Erlaubnisse.",
+    "deniesTitle": "Sperren",
+    "deniesText": "Was abgelehnt bleibt, egal was erlaubt ist.",
+    "deniesNone": "Noch keine Sperren.",
+    "resource": "Was",
+    "actions": "Aktionen",
+    "forWhom": "Für wen",
+    "by": "Gegeben von",
+    "state": "Zustand",
+    "resourceTypes": {
+      "tool": "Tool",
+      "folder": "Ordner",
+      "workflow": "Workflow",
+      "mcp_server": "MCP-Dienst",
+      "connection": "Verbindung",
+      "cloud_provider": "Anbieter von Cloud-Modellen"
+    },
+    "actionNames": {
+      "read": "lesen",
+      "write": "schreiben",
+      "move": "verschieben",
+      "trash": "in den Papierkorb",
+      "delete": "endgültig löschen",
+      "execute": "ausführen",
+      "send": "senden",
+      "submit": "Inhalte übergeben"
+    },
+    "allAgents": "Alle Agenten",
+    "byLine": "{{name}}, {{time}}",
+    "states": {
+      "active": "Aktiv",
+      "used": "Verbraucht",
+      "revoked": "Widerrufen",
+      "expired": "Abgelaufen"
+    },
+    "revokedBy": "Widerrufen von {{name}}, {{time}}",
+    "expires": "Endet {{time}}",
+    "untilRevoked": "Bis zum Widerruf",
+    "revoke": "Widerrufen",
+    "revokeConfirm": "Jetzt widerrufen",
+    "revoked": "Widerrufen. Gilt ab dem nächsten Zugriff nicht mehr.",
+    "link": "Erlaubnisse und Sperren"
   }
 }

@@ -666,6 +666,76 @@ export interface ToolPreGrant {
   revoked_by: string | null;
 }
 
+/** What grants and denies of the access model v2 address (N-06, nodestro_runtime.tool_policy). */
+export type AccessResourceType = "tool" | "folder" | "workflow" | "mcp_server" | "connection" | "cloud_provider";
+export type AccessAction = "read" | "write" | "move" | "trash" | "delete" | "execute" | "send" | "submit";
+/** For which agents a record holds: one agent, a list of agents, or every agent. */
+export type AccessScope = "agent" | "agents" | "all";
+export type AccessMode = "supervised" | "unattended";
+export type AccessGrantDuration = "once" | "conversation" | "until" | "until_revoked";
+
+/** GET /api/access/state: whether grants and denies take part in the decisions, and the safety limits. */
+export interface AccessState {
+  enabled: boolean;
+  safety_limits: Record<string, string>;
+}
+
+interface AccessRecord {
+  id: string;
+  resource: { type: AccessResourceType; id: string };
+  actions: AccessAction[];
+  scope: AccessScope;
+  agents: string[];
+  created_at: string;
+  expires_at: string | null;
+  revoked_at: string | null;
+  revoked_by: string | null;
+}
+
+/** A person's permission (written only by a signed-in person, never by a model). */
+export interface AccessGrant extends AccessRecord {
+  duration: AccessGrantDuration;
+  mode: AccessMode;
+  conversation_id: string | null;
+  status: "active" | "used" | "revoked";
+  /** For a tool: the tool as it was granted (a new version or classification ends the grant). */
+  tool: { version: number | null; access: string; reach: string; definition_hash?: string | null } | null;
+  granted_by: string;
+}
+
+/** An explicit block; it wins over every grant. ``mode`` null blocks in both modes. */
+export interface AccessDeny extends AccessRecord {
+  duration: "until" | "until_revoked";
+  mode: AccessMode | null;
+  status: "active" | "revoked";
+  denied_by: string;
+}
+
+/** The body of POST /api/access/grants (the server fills in who, when and the tool's facts). */
+export interface AccessGrantIn {
+  resource_type: AccessResourceType;
+  resource_id: string;
+  actions: AccessAction[];
+  duration: AccessGrantDuration;
+  scope?: AccessScope;
+  agents?: string[];
+  mode?: AccessMode;
+  expires_at?: string | null;
+  conversation_id?: string | null;
+}
+
+/** The body of POST /api/access/denies. */
+export interface AccessDenyIn {
+  resource_type: AccessResourceType;
+  resource_id: string;
+  actions: AccessAction[];
+  scope?: AccessScope;
+  agents?: string[];
+  mode?: AccessMode | null;
+  duration?: "until" | "until_revoked";
+  expires_at?: string | null;
+}
+
 /** One entry of the approval audit trail (never the arguments, only their hash). */
 export interface ToolApprovalEvent {
   id: string;

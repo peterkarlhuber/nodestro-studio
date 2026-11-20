@@ -40,6 +40,9 @@ export const keys = {
   toolApprovalsState: ["tool-approvals", "state"] as const,
   toolApprovalAudit: ["tool-approvals", "audit"] as const,
   toolPreGrants: ["tool-pre-grants"] as const,
+  accessState: ["access", "state"] as const,
+  accessGrants: ["access", "grants"] as const,
+  accessDenies: ["access", "denies"] as const,
   resultFiles: (runId: string) => ["result-files", runId] as const,
   batches: ["batches"] as const,
   batch: (id: string) => ["batch", id] as const,
@@ -141,6 +144,14 @@ export const useApprovals = () =>
 /** Tool calls waiting for a person (per-call approvals); polled like the approvals. Empty while approvals are off. */
 export const useToolApprovals = () =>
   useQuery({ queryKey: keys.toolApprovals, queryFn: api.toolApprovals, refetchInterval: 5000, retry: false });
+/**
+ * Whether grants and denies of the access model v2 are on (N-06). While it is off (the default) or unknown (still
+ * loading, an older backend without the route), everything about it stays hidden: only ``true`` shows it.
+ */
+export function useAccessGrantsEnabled(): boolean {
+  const state = useQuery({ queryKey: keys.accessState, queryFn: api.accessState, retry: false, staleTime: 60_000 });
+  return state.data?.enabled === true;
+}
 /** How often a pending budget decision is read again: someone may decide it elsewhere, or its deadline may pass. */
 export const BUDGET_POLL_MS = 5000;
 

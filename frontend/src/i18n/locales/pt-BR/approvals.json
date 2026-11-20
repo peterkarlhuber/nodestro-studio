@@ -63,7 +63,26 @@
     },
     "preGranted": "aprovada antecipadamente",
     "decidedBy": "por {{name}}, {{time}}",
-    "comment": "comentário: {{comment}}"
+    "comment": "comentário: {{comment}}",
+    "remember": {
+      "title": "Lembrar esta decisão",
+      "duration": "Por quanto tempo",
+      "durations": {
+        "call": "Só esta chamada",
+        "until_revoked": "Até ser revogado",
+        "until": "Até uma data"
+      },
+      "scope": "Para quem",
+      "scopes": {
+        "agent": "Este agente ({{agent}})",
+        "all": "Todos os agentes"
+      },
+      "until": "Termina em",
+      "hint": "Aprovar salva uma permissão para esta ferramenta; rejeitar salva um bloqueio. Ambos aparecem em Permissões e bloqueios, onde podem ser revogados.",
+      "grantedToast": "Permissão salva",
+      "deniedToast": "Bloqueio salvo",
+      "failed": "A decisão foi salva, mas a permissão ou o bloqueio não:"
+    }
   },
   "rules": {
     "title": "Regras para chamadas de ferramentas",
@@ -144,5 +163,57 @@
     "ranAt": "Marcado em {{time}} por {{name}}. A etapa roda uma única vez: atribuições feitas depois são perguntadas.",
     "stampFinish": "Concluir a marcação das APIs publicadas",
     "stampRepeated": "Repetido: nada marcado"
+  },
+  "access": {
+    "title": "Permissões e bloqueios",
+    "description": "Quem pode fazer o quê: as permissões e bloqueios dados por pessoas, e os limites de segurança fixos.",
+    "back": "Voltar para Aprovações",
+    "off": "Permissões e bloqueios não estão ativados nesta instalação.",
+    "limitsTitle": "Limites de segurança",
+    "limitsText": "Estes limites são fixos. Nenhuma permissão os remove.",
+    "grantsTitle": "Permissões",
+    "grantsText": "O que os agentes podem fazer sem perguntar toda vez. Uma permissão para uma ferramenta termina quando a ferramenta muda.",
+    "grantsNone": "Ainda não há permissões.",
+    "deniesTitle": "Bloqueios",
+    "deniesText": "O que continua recusado, seja o que for permitido.",
+    "deniesNone": "Ainda não há bloqueios.",
+    "resource": "O quê",
+    "actions": "Ações",
+    "forWhom": "Para quem",
+    "by": "Dado por",
+    "state": "Estado",
+    "resourceTypes": {
+      "tool": "Ferramenta",
+      "folder": "Pasta",
+      "workflow": "Fluxo de trabalho",
+      "mcp_server": "Serviço MCP",
+      "connection": "Conexão",
+      "cloud_provider": "Provedor de modelos na nuvem"
+    },
+    "actionNames": {
+      "read": "ler",
+      "write": "escrever",
+      "move": "mover",
+      "trash": "mover para a lixeira",
+      "delete": "excluir definitivamente",
+      "execute": "executar",
+      "send": "enviar",
+      "submit": "entregar conteúdo"
+    },
+    "allAgents": "Todos os agentes",
+    "byLine": "{{name}}, {{time}}",
+    "states": {
+      "active": "Ativo",
+      "used": "Usado",
+      "revoked": "Revogado",
+      "expired": "Expirado"
+    },
+    "revokedBy": "Revogado por {{name}}, {{time}}",
+    "expires": "Termina {{time}}",
+    "untilRevoked": "Até ser revogado",
+    "revoke": "Revogar",
+    "revokeConfirm": "Revogar agora",
+    "revoked": "Revogado. Deixa de valer a partir do próximo acesso.",
+    "link": "Permissões e bloqueios"
   }
 }
