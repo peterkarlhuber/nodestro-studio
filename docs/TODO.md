@@ -68,8 +68,10 @@ from #121). Both have status `Needs external review`.
   done before any public deployment). Residual risk AR-3: without a key store provider keys stay in plain text in the
   user-only database file on the command line. Local Docker keeps its key in a file on the host since LD-020
   (owner decision 2026-11-19; nodestro-runtime RT-082, nodestro-api API-071, nodestro-local-docker LD-020): the lock
-  carries `local_vault` (key check, rotation, key loss) and `nodestro-local boot`.
-- **Next step:** include both fixes and LD-020 in the next bundled review brief.
+  carries `local_vault` (key check, rotation, key loss) and `nodestro-local boot`. Since Welle 0 (2026-11-20) the lock
+  also carries W0-2 (installed extension tools locked, capability floor `UNKNOWN`) and W0-3 (orkexa `Denial`, MCP error
+  texts and team member results framed as untrusted data).
+- **Next step:** include both fixes, LD-020, W0-2 and W0-3 in the next bundled review brief.
 
 ## Bugs and reliability
 
