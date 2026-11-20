@@ -1,4 +1,4 @@
-// Browser test of decisions, approvals, input forms, continued runs, result files, batch runs,
+// Browser test of decisions, approvals (with the note to the agent), input forms, continued runs, result files, batch runs,
 // test series and schedules against tests/e2e_flow_server.py, whose agents answer from a
 // script (no API key, nothing paid). Section 10: a copy of an example (sample data badge, sample files in the run
 // dialog). Section 11: the value warnings of an agent test (German and light, English and dark at 390 px).
@@ -105,7 +105,14 @@ try {
         type: "approval",
         label: "Antwort freigeben",
         position: { x: 0, y: 0 },
-        approval: { instructions: "Ton und Zusage prüfen.", show: [], allow_comment: true, require_comment_on_reject: true, on_reject: "branch" },
+        approval: {
+          instructions: "Ton und Zusage prüfen.",
+          show: [],
+          allow_comment: true,
+          require_comment_on_reject: true,
+          on_reject: "branch",
+          allow_agent_note: true,
+        },
       },
       agent("summary", "Zusammenfassung", "SUMMARY of the case."),
       { id: "out", type: "output", position: { x: 0, y: 0 }, output: { files: [{ format: "md", name: "", sanitize: false }, { format: "json", name: "", sanitize: false }] } },
@@ -142,6 +149,11 @@ try {
     (await page.locator(".react-flow__node", { hasText: "Antwort freigeben" }).getByText("Freigegeben").count()) > 0,
     "The approval shows its approved branch",
   );
+  await page.locator(".react-flow__node", { hasText: "Antwort freigeben" }).click();
+  check(
+    await page.getByRole("switch", { name: /Notiz an den Agenten erlauben/ }).isChecked(),
+    "The approval node allows a note to the agent",
+  );
   await shot("flow-01-editor");
 
   // ---- 2. the input form checks values before the run starts -------------------------------
@@ -167,7 +179,16 @@ try {
   const card = page.locator(".approval-card").first();
   await card.getByText("Ton und Zusage prüfen.").waitFor();
   check(await card.getByText("Es tut uns leid", { exact: false }).isVisible(), "The reviewer sees the result to approve");
-  await card.getByRole("textbox").fill("Zusage passt.");
+  check(
+    await card.getByText("Nur für Menschen: der Lauf, die nächste Prüfung und das Protokoll. Kein Agent liest ihn.").isVisible(),
+    "The card says the comment is only for people",
+  );
+  await card.getByLabel("Kommentar (bei Ablehnung Pflicht)").fill("Zusage passt.");
+  const note = card.getByTestId("approval-agent-note");
+  check((await note.getAttribute("maxlength")) === "2000", "The note to the agent is limited to 2,000 characters");
+  await note.fill("Zusage im Abschluss wiederholen.");
+  await card.getByText("Zeichen: 32 von 2.000").waitFor();
+  await shot("flow-02b-agent-note");
   await card.getByRole("button", { name: "Freigeben" }).click();
   await page.getByText("Freigegeben. Der Lauf geht weiter.").waitFor();
   check(true, "Approving continues the run");
@@ -177,6 +198,7 @@ try {
   }, "run after approval");
   check(done.nodes.general.status === "skipped", "The branch that was not chosen is skipped");
   check(done.nodes.check.approval.comment === "Zusage passt.", "The decision and its comment are stored");
+  check(done.nodes.check.approval.agent_note === "Zusage im Abschluss wiederholen.", "The note to the agent is stored apart from the comment");
 
   // ---- 4. the run shows the decision and writes result files --------------------------------
   await page.goto(`${base}/executions/${first.id}`);

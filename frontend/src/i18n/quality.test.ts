@@ -380,6 +380,8 @@ describe("backend codes", () => {
     "connection.send_failed", "connection.sender_refused", "connection.test_address_missing", "connection.test_send_limit",
     "connection.test_send_unsupported", "connection.timeout", "connection.tls_failed", "connection.tls_required",
     "connection.unreachable",
+    // The note to the agent at approvals (E-0R-1 A): refused decisions and the workflow check after the change.
+    "approval.agent_note_too_long", "approval.agent_note_disabled", "check.approval_comment_not_forwarded",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

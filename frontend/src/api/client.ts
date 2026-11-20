@@ -436,8 +436,13 @@ export const api = {
   resumeRun: (id: string, mode: "continue" | "restart", confirmSideEffects: boolean) =>
     request<Run>("POST", `/runs/${id}/resume`, { mode, confirm_side_effects: confirmSideEffects }),
   approvals: () => request<PendingApproval[]>("GET", "/approvals"),
-  decideApproval: (runId: string, nodeId: string, decision: "approved" | "rejected", comment: string) =>
-    request<Run>("POST", `/runs/${runId}/approvals/${encodeURIComponent(nodeId)}`, { decision, comment }),
+  /** ``comment`` is for people only; ``agentNote`` (the note to the agent) is sent only when it holds text. */
+  decideApproval: (runId: string, nodeId: string, decision: "approved" | "rejected", comment: string, agentNote = "") =>
+    request<Run>("POST", `/runs/${runId}/approvals/${encodeURIComponent(nodeId)}`, {
+      decision,
+      comment,
+      ...(agentNote.trim() ? { agent_note: agentNote } : {}),
+    }),
   /** Tool calls waiting for a person, of every run, oldest first. */
   toolApprovals: () => request<ToolApprovalRequest[]>("GET", "/tool-approvals"),
   runToolApprovals: (runId: string) => request<ToolApprovalRequest[]>("GET", `/runs/${runId}/tool-approvals`),

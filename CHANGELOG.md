@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### E-0R-1 A: the note to the agent at approvals (2026-11-20)
+
+- An approval's comment is for people only; no model reads it. The approval card (run panel, run view, Approvals
+  page) offers a separate **Note to the agent** (at most 2,000 characters, with a counter) when the approval allows
+  it, and sends `agent_note` only when it holds text. The run's details show a stored note next to the comment.
+- The approval node has the setting **Allow a note to the agent** (`allow_agent_note`). New approval nodes allow it;
+  approvals saved before the note existed (`null`) show as allowed, and saving the workflow writes the explicit value,
+  which ends the check warning `check.approval_comment_not_forwarded`.
+- Texts in all six languages for `approval.agent_note_too_long`, `approval.agent_note_disabled` and
+  `check.approval_comment_not_forwarded`; the comment hints no longer say that agents read the comment. Help chapters
+  *Branches and approvals* and *API and export* describe the comment for people and the note to the agent.
+
 ### LD-020 follow-up 2: no plain key next to its sealed form (2026-11-20)
 
 - The lock pins nodestro-runtime `a7ac2e3` (#195): sealing plain provider keys also seals them in the data

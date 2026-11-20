@@ -50,19 +50,20 @@ A **loop** runs steps again until a result fits, for example *Draft → Review �
 - **Creating one:** drag a connection from a **branch** of a decision or approval back to an earlier step. Nodestro creates it as a loop (dashed, with "↻ max. 3×") and opens it in the inspector. A connection back from an agent is not possible: every round ends with a decision or approval.
 - **Limit:** *Maximum rounds* (2 to 20) includes the first run. Every round costs tokens again; the [budget](/docs/workflows#budget) applies to the whole run.
 - **When the limit is reached:** the run ends as failed ("The loop … ran … times without reaching its goal"), or it follows the decision's other branches. If none is followed, the steps behind it are skipped.
-- **Placeholders:** in the task of a step in the loop, `{{iteration}}` is the round (from 1), `{{previous}}` its own result of the round before and `{{feedback}}` what came back over the loop (for example the reviewer's reasoning or the comment of a rejected approval). In the first round both read "-".
+- **Placeholders:** in the task of a step in the loop, `{{iteration}}` is the round (from 1), `{{previous}}` its own result of the round before and `{{feedback}}` what came back over the loop (for example the reviewer's reasoning or the note to the agent of a rejected approval; never its comment). In the first round both read "-".
 - **Approvals in loops:** a rejected approval can lead back to a revision over its *Rejected* branch; the next round then waits for a decision again.
 
 During a run every step shows its **round**; in the details you pick between the results of all rounds. Loops may be nested but must not overlap. When a failed run is [continued](#fortsetzen), a loop always runs again completely.
 
 ## Approvals {#freigabe}
-<!-- keywords: approval, sign-off, human in the loop, review, reject, comment, pause -->
+<!-- keywords: approval, sign-off, human in the loop, review, reject, comment, note to the agent, agent note, pause -->
 
 An **approval** holds the run until a person **approves** or **rejects** the results. Nothing is ever approved automatically, not even in schedules, batch runs or test series.
 
 - **Note for the reviewer:** what to pay attention to.
 - **Results shown:** which results the reviewer sees; with nothing selected, everything that arrives.
-- **Comment:** optional, or required on rejection. Later agents read it under the name of the approval; result nodes, result files and decisions do not receive it. It stays stored with the approval in the run.
+- **Comment:** optional, or required on rejection. The comment is only for people: it stays stored with the approval in the run and shows in the run's view and the audit trail. No agent, sub-workflow or orchestrator reads it.
+- **Allow a note to the agent:** the reviewer can add a **note to the agent** (at most 2,000 characters). It is the only text of the decision that later agents read, under the name of the approval (`{{<approval name>}}`, or with the inputs); without a note they read "-". Result nodes, result files and decisions do not receive it. Useful in revise loops, where the note says what to change; turn it off for approvals that stop the run when rejected. New approvals allow it. Approvals saved before the note existed are treated as allowing it, and the workflow check points this out once until you save the workflow.
 - **When rejected:** follow the **Rejected** branch or end the run. If nothing is connected to *Rejected*, that path simply ends.
 
 While the run waits, it has the status **Paused**, the approval **Awaiting approval**. You can decide in the editor's run overview, in the run's detail view or on the **Approvals** page. The run then continues where it stopped. Open approvals survive a restart of Nodestro.
@@ -72,7 +73,7 @@ While the run waits, it has the status **Paused**, the approval **Awaiting appro
 
 The **Approvals** page (navigation, group *Run & review*) lists every open approval, oldest first, with workflow, origin (manual, schedule, batch, test series) and waiting time. The number next to the menu entry shows how many are waiting.
 
-Each card shows the note, the results to review (structured results as labeled fields, the JSON one click away), a comment box and the buttons *Approve* and *Reject*; the buttons stay in view even with long results. Approvals inside sub-workflows appear here too, with the path to the parent run. Cards for [tool calls](/docs/verzweigungen#tool-freigabe) name the workflow and the step ("*workflow* · step *name*").
+Each card shows the note, the results to review (structured results as labeled fields, the JSON one click away), a comment box (for people only), the box *Note to the agent* if the approval allows it, and the buttons *Approve* and *Reject*; the buttons stay in view even with long results. Approvals inside sub-workflows appear here too, with the path to the parent run. Cards for [tool calls](/docs/verzweigungen#tool-freigabe) name the workflow and the step ("*workflow* · step *name*").
 
 Runs that wait for a [budget decision](/docs/workflows#budget-freigabe) appear in their own section **Budget decisions** at the top, with a link to the run.
 

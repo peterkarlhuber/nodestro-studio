@@ -318,6 +318,7 @@
     "api_key_missing": "Aucune clé API pour {{provider}}. Saisissez-la dans les réglages.",
     "approval_no_approved": "Rien ne suit la validation {{name}}.",
     "approval_rejected_ends": "Après un refus à {{name}}, le chemin s’arrête simplement.",
+    "approval_comment_not_forwarded": "{{name}} ne reçoit plus le commentaire de la relecture de {{approval}} : le commentaire est uniquement pour les personnes. Les agents suivants ne lisent que la note à l’agent. Ouvrez {{approval}}, choisissez si une note à l’agent est autorisée et enregistrez le workflow.",
     "branch_unconnected": "La branche {{branch}} de {{name}} ne mène nulle part.",
     "default_unconnected": "La branche « sinon » de {{name}} ne mène nulle part ; si aucune règle n’est vérifiée, le chemin s’arrête ici.",
     "form_field_unknown": "« {{placeholder}} » ne désigne aucun champ du formulaire d’entrée.",
@@ -459,6 +460,8 @@
   },
   "approval": {
     "comment_required": "Indiquez une raison au refus.",
+    "agent_note_too_long": "La note à l’agent est trop longue ({{limit}} caractères au maximum).",
+    "agent_note_disabled": "Cette validation n’accepte pas de note à l’agent. Laissez la note vide.",
     "invalid": "Décidez : valider ou refuser.",
     "not_pending": "Cette validation n’attend pas (ou plus) de décision.",
     "already_decided": "Cette validation a déjà été décidée.",

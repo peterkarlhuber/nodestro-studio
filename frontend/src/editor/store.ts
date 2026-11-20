@@ -167,6 +167,23 @@ export function selection(ids: string[]): Pick<EditorState, "selectedId" | "sele
 }
 
 /** Whether two states hold the same workflow (snapshots share their arrays, so references are enough). */
+/** The nodes as they are saved: an approval saved before the note to the agent existed (``allow_agent_note`` missing
+ * or ``null``) is written with the note allowed, as the runtime already treats it, so the workflow check's warning
+ * (``check.approval_comment_not_forwarded``) ends with the next save. Unchanged nodes keep their identity, and the
+ * same nodes always give the same array. */
+const explicitNotes = new WeakMap<WorkflowNode[], WorkflowNode[]>();
+
+export function withExplicitAgentNote(nodes: WorkflowNode[]): WorkflowNode[] {
+  const known = explicitNotes.get(nodes);
+  if (known) return known;
+  const open = (node: WorkflowNode) => node.type === "approval" && node.approval && node.approval.allow_agent_note == null;
+  const result = nodes.some(open)
+    ? nodes.map((node) => (open(node) ? { ...node, approval: { ...node.approval!, allow_agent_note: true } } : node))
+    : nodes;
+  explicitNotes.set(nodes, result);
+  return result;
+}
+
 function sameState(a: Snapshot, b: Snapshot | null): boolean {
   if (!b) return false;
   return (
@@ -325,7 +342,8 @@ export const useEditor = create<EditorState>((set, get) => {
           sent.capabilities === capabilities &&
           (sent.notifications ?? null) === notifications);
       if (unchanged) {
-        set({ dirty: false, workflowId: workflow.id, name: workflow.name, pendingNote: null });
+        // What was saved: approvals from before the note to the agent are now explicit (withExplicitAgentNote).
+        set({ dirty: false, workflowId: workflow.id, name: workflow.name, pendingNote: null, nodes: withExplicitAgentNote(nodes) });
         set({ saved: snapshot() });
       } else set({ workflowId: workflow.id, pendingNote: null });
     },
@@ -701,6 +719,7 @@ export const useEditor = create<EditorState>((set, get) => {
             node.approval = {
               decision: data.decision as "approved" | "rejected",
               comment: String(data.comment ?? ""),
+              agent_note: String(data.agent_note ?? ""),
               decided_at: event.at,
               decided_by: "local",
               reused_from: null,

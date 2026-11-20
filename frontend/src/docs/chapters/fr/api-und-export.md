@@ -130,7 +130,7 @@ Par défaut, chaque API est asynchrone. Sous **Limites**, vous pouvez activer **
 Quand une exécution atteint une étape de validation, elle passe à `awaiting_approval`. Vous pouvez décider à deux endroits, et la première décision compte :
 
 - dans Nodestro sur la page Validations (voir [La page Validations](/docs/verzweigungen#freigaben-seite)), avec la mention « depuis l’API publiée »,
-- via `POST /runs/<id>/approve` avec `{"decision": "approved"}` ou `"rejected"` et un commentaire facultatif. Il faut une clé avec la permission `approve`.
+- via `POST /runs/<id>/approve` avec `{"decision": "approved"}` ou `"rejected"` un `comment` facultatif (uniquement pour les personnes) et une `agent_note` facultative (la note à l’agent, 2 000 caractères au maximum ; refusée avec `422` si la validation ne l’autorise pas). Il faut une clé avec la permission `approve`.
 
 Les validations en attente survivent à un redémarrage de Nodestro. Une exécution échouée peut être reprise avec `POST /runs/<id>/resume`. Les étapes réussies sont réutilisées. Les étapes qui ont appelé des outils ne sont relancées qu’avec `confirm_side_effects: true`.
 

@@ -318,6 +318,7 @@
     "api_key_missing": "Kein API-Schlüssel für {{provider}}. Trage ihn in den Einstellungen ein.",
     "approval_no_approved": "Nach der Freigabe {{name}} folgt nichts.",
     "approval_rejected_ends": "Nach einer Ablehnung bei {{name}} endet der Pfad einfach.",
+    "approval_comment_not_forwarded": "{{name}} erhält den Kommentar der Prüfung von {{approval}} nicht mehr: Der Kommentar ist nur für Menschen. Nachfolgende Agenten lesen nur die Notiz an den Agenten. Öffne {{approval}}, lege fest, ob eine Notiz an den Agenten erlaubt ist, und speichere den Workflow.",
     "branch_unconnected": "Der Zweig {{branch}} von {{name}} führt nirgendwohin.",
     "default_unconnected": "Der Sonst-Zweig von {{name}} führt nirgendwohin; trifft keine Regel zu, endet der Pfad hier.",
     "form_field_unknown": "„{{placeholder}}“ nennt kein Feld des Eingabeformulars.",
@@ -459,6 +460,8 @@
   },
   "approval": {
     "comment_required": "Bitte gib einen Grund für die Ablehnung an.",
+    "agent_note_too_long": "Die Notiz an den Agenten ist zu lang (höchstens {{limit}} Zeichen).",
+    "agent_note_disabled": "Diese Freigabe nimmt keine Notiz an den Agenten an. Lass die Notiz leer.",
     "invalid": "Entscheide mit Freigeben oder Ablehnen.",
     "not_pending": "Diese Freigabe wartet nicht (mehr) auf eine Entscheidung.",
     "already_decided": "Über diese Freigabe wurde bereits entschieden.",

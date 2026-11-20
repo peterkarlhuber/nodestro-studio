@@ -121,6 +121,7 @@ export function newNode(type: NodeType, position = { x: 0, y: 0 }, agent?: Parti
         allow_comment: true,
         require_comment_on_reject: false,
         on_reject: "branch",
+        allow_agent_note: true,
       },
     };
   }

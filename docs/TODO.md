@@ -423,6 +423,7 @@ from #121). Both have status `Needs external review`.
 | ST-052 | all Nodestro repositories | Dependabot policy, branch protection decision, auto-merge prerequisites | Owner entry here; the others point to it |
 | ST-054 | nodestro-sdk, nodestro-desktop, nodestro-server, axentra, axentra-studio | SDK-010, SRV-015, Node.js 24 entries | Owner entry here; move together in Q1 2027 |
 | ST-027 | nodestro-desktop | DSK-001 (new candidate and Go/No-Go) | Update `products` with the next candidate |
+| — | nodestro-runtime, nodestro-api, nodestro-examples | E-0R-1 A: the approval comment is for people only; the note to the agent (`agent_note`, `allow_agent_note`) is the only decision text a model reads | Change lives in runtime and api; studio adapted (approval card, node toggle, texts, help). Old workflows warn with `check.approval_comment_not_forwarded` until saved once |
 | — | nodestro-api | X-03 rest: error responses of published routes and router tags (API-016); X-01 (RT-005, API-018) and the error code list (RT-011) are done | Change lives in api; studio already adapted |
 
 Generated example chapters (`frontend/src/docs/chapters/*/beispiele.md`, between the `examples` markers) come from

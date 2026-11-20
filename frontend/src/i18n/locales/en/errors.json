@@ -318,6 +318,7 @@
     "api_key_missing": "No API key for {{provider}}. Enter it in the settings.",
     "approval_no_approved": "Nothing follows the approval {{name}}.",
     "approval_rejected_ends": "After a rejection at {{name}} the path simply ends.",
+    "approval_comment_not_forwarded": "{{name}} no longer receives the reviewer's comment from {{approval}}: the comment is only for people. Later agents read only the note to the agent. Open {{approval}}, choose whether a note to the agent is allowed and save the workflow.",
     "branch_unconnected": "Branch {{branch}} of {{name}} leads nowhere.",
     "default_unconnected": "The otherwise branch of {{name}} leads nowhere; when no rule holds, the path ends here.",
     "form_field_unknown": "“{{placeholder}}” names no field of the input form.",
@@ -459,6 +460,8 @@
   },
   "approval": {
     "comment_required": "Please give a reason for the rejection.",
+    "agent_note_too_long": "The note to the agent is too long (at most {{limit}} characters).",
+    "agent_note_disabled": "This approval takes no note to the agent. Leave the note empty.",
     "invalid": "Decide with approve or reject.",
     "not_pending": "This approval is not (or no longer) waiting for a decision.",
     "already_decided": "This approval was already decided.",

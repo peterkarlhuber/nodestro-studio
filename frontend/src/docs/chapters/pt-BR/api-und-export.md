@@ -130,7 +130,7 @@ Por padrão, toda API é assíncrona. Em **Limites** você pode ligar **Permitir
 Quando uma execução chega a uma etapa de aprovação, ela passa para `awaiting_approval`. Você pode decidir em dois lugares, e vale a primeira decisão:
 
 - no Nodestro, na página Aprovações (veja [A página Aprovações](/docs/verzweigungen#freigaben-seite)), com a indicação “da API publicada”,
-- por `POST /runs/<id>/approve` com `{"decision": "approved"}` ou `"rejected"` e um comentário opcional. É preciso uma chave com a permissão `approve`.
+- por `POST /runs/<id>/approve` com `{"decision": "approved"}` ou `"rejected"` um `comment` opcional (só para pessoas) e uma `agent_note` opcional (a nota para o agente, no máximo 2.000 caracteres; recusada com `422` se a aprovação não a permitir). É preciso uma chave com a permissão `approve`.
 
 Aprovações pendentes sobrevivem a um reinício do Nodestro. Uma execução com falha pode ser retomada com `POST /runs/<id>/resume`. Etapas bem-sucedidas são reutilizadas. Etapas que chamaram ferramentas só rodam de novo com `confirm_side_effects: true`.
 

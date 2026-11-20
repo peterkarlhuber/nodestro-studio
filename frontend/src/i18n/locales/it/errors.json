@@ -318,6 +318,7 @@
     "api_key_missing": "Nessuna chiave API per {{provider}}. Inseriscila nelle impostazioni.",
     "approval_no_approved": "Dopo l’approvazione {{name}} non segue nulla.",
     "approval_rejected_ends": "Dopo un rifiuto in {{name}} il percorso semplicemente termina.",
+    "approval_comment_not_forwarded": "{{name}} non riceve più il commento della revisione di {{approval}}: il commento è solo per le persone. Gli agenti successivi leggono solo la nota per l'agente. Apri {{approval}}, scegli se è consentita una nota per l'agente e salva il workflow.",
     "branch_unconnected": "Il ramo {{branch}} di {{name}} non porta da nessuna parte.",
     "default_unconnected": "Il ramo «altrimenti» di {{name}} non porta da nessuna parte; se nessuna regola è valida, il percorso termina qui.",
     "form_field_unknown": "«{{placeholder}}» non indica alcun campo del modulo di input.",
@@ -459,6 +460,8 @@
   },
   "approval": {
     "comment_required": "Motiva il rifiuto.",
+    "agent_note_too_long": "La nota per l'agente è troppo lunga (al massimo {{limit}} caratteri).",
+    "agent_note_disabled": "Questa approvazione non accetta una nota per l'agente. Lascia vuota la nota.",
     "invalid": "Decidi con approva o rifiuta.",
     "not_pending": "Questa approvazione non attende (più) una decisione.",
     "already_decided": "Su questa approvazione è già stato deciso.",
