@@ -282,7 +282,9 @@
     "settings_unused": "Hay configuración para {{name}}, pero el agente no usa esta herramienta.",
     "timeout": "La herramienta no terminó dentro de su límite de tiempo.",
     "call_limit": "La herramienta alcanzó su límite de llamadas para esta ejecución.",
-    "mode_unsupported": "Esta herramienta no se ofrece en esta instalación."
+    "mode_unsupported": "Esta herramienta no se ofrece en esta instalación.",
+    "unattended_access_denied": "{{node}} ({{workflow}}): una persona bloqueó las llamadas de {{tool}}, así que se rechazarían en estas ejecuciones. Quita el bloqueo si la herramienta puede ejecutarse.",
+    "unattended_safety_limit": "{{node}} ({{workflow}}): un límite de seguridad fijo rechaza las llamadas de {{tool}} en estas ejecuciones, por ejemplo el modo sin conexión o borrar sin nadie supervisando. Ningún permiso puede levantarlo; inicia el flujo de trabajo a mano o usa otra herramienta."
   },
   "job": {
     "writing": "El agente de programación está escribiendo código y pruebas …",
@@ -810,7 +812,23 @@
     "launch_used": "El enlace de inicio ya se usó. Reinicie la aplicación de escritorio para abrir una ventana nueva.",
     "launch_invalid": "El enlace de inicio no es válido. Inicie Nodestro desde la aplicación de escritorio.",
     "cross_site": "Este cambio venía de otro sitio web y se rechazó. Usa Nodestro directamente.",
-    "network_needs_login": "Nodestro Studio solo se ofrece en este ordenador porque no tiene inicio de sesión propio. Inícialo sin dirección de red ni nombres de host adicionales; para ofrecer flujos de trabajo en la red, activa el acceso de red de las API publicadas."
+    "network_needs_login": "Nodestro Studio solo se ofrece en este ordenador porque no tiene inicio de sesión propio. Inícialo sin dirección de red ni nombres de host adicionales; para ofrecer flujos de trabajo en la red, activa el acceso de red de las API publicadas.",
+    "conversation_required": "Un permiso para una conversación debe indicar esa conversación, y solo esa duración indica una.",
+    "denied": "Una persona bloqueó este acceso. Seguirá rechazado hasta que se quite el bloqueo.",
+    "deny_not_enforced": "{{tool}} pertenece a la propia ejecución y nunca se comprueba con permisos, así que no se puede bloquear.",
+    "expiry": "El fin del permiso no es válido. Un permiso hasta una fecha necesita una fecha y hora futuras con zona horaria; las demás duraciones no llevan ninguna.",
+    "folder_path": "Indica la carpeta como ruta completa.",
+    "grant_destructive": "Borrar definitivamente no se puede permitir de antemano. Una persona confirma cada llamada de ese tipo.",
+    "in_tool_call": "Solo una persona puede cambiar los permisos, nunca mientras se ejecuta una herramienta.",
+    "invalid": "Este permiso no es válido. Revisa los agentes y los demás ajustes.",
+    "missing_grant": "Ningún permiso cubre todavía este acceso. Una persona puede permitirlo.",
+    "not_found": "Este permiso o bloqueo ya no existe.",
+    "person_required": "Solo una persona puede conceder o retirar permisos.",
+    "safety_limit": "Un límite de seguridad fijo rechaza este acceso, por ejemplo el modo sin conexión, una carpeta protegida o borrar sin nadie supervisando. Ningún permiso puede levantarlo.",
+    "tool_facts_required": "Un permiso para una herramienta debe indicar la herramienta tal como se aprobó; los demás permisos no indican ninguna herramienta.",
+    "unattended_expiry": "Un permiso más allá de la lectura para ejecuciones sin supervisión debe terminar en una fecha o valer para un solo uso.",
+    "unattended_scope": "Un permiso más allá de la lectura para ejecuciones sin supervisión debe indicar sus agentes.",
+    "unattended_too_long": "Un permiso más allá de la lectura para ejecuciones sin supervisión puede durar como máximo {{days}} días."
   },
   "sandbox": {
     "isolation_required": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan aislados (en Docker o, si se eligió, en el sandbox de Linux integrado); nada de esto está disponible, así que no se ejecutó nada. Ajustes → Sandbox muestra el motivo.",

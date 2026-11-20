@@ -282,7 +282,9 @@
     "settings_unused": "There are settings for {{name}}, but the agent does not use this tool.",
     "timeout": "The tool did not finish within its time limit.",
     "call_limit": "The tool reached its limit of calls for this run.",
-    "mode_unsupported": "This tool is not offered in this installation."
+    "mode_unsupported": "This tool is not offered in this installation.",
+    "unattended_access_denied": "{{node}} ({{workflow}}): a person blocked calls of {{tool}}, so they would be refused in these runs. Lift the block if the tool may run.",
+    "unattended_safety_limit": "{{node}} ({{workflow}}): a fixed safety limit refuses calls of {{tool}} in these runs, for example offline mode or deleting with nobody watching. No permission can lift it; start the workflow by hand or use another tool."
   },
   "job": {
     "writing": "The Coding Agent is writing code and tests …",
@@ -810,7 +812,23 @@
     "launch_used": "The launch link was already used. Restart the desktop app to open a new window.",
     "launch_invalid": "The launch link is not valid. Start Nodestro from the desktop app.",
     "cross_site": "This change came from another website and was refused. Use Nodestro directly.",
-    "network_needs_login": "Nodestro Studio is only offered on this computer, because it has no sign-in of its own. Start it without a network address or extra host names; to offer workflows on the network, switch on network access for published APIs."
+    "network_needs_login": "Nodestro Studio is only offered on this computer, because it has no sign-in of its own. Start it without a network address or extra host names; to offer workflows on the network, switch on network access for published APIs.",
+    "conversation_required": "A permission for one conversation must name that conversation, and only that duration names one.",
+    "denied": "A person blocked this access. It stays refused until the block is lifted.",
+    "deny_not_enforced": "{{tool}} belongs to the run itself and is never checked against permissions, so it cannot be blocked.",
+    "expiry": "The end of the permission is not valid. A permission until a date needs a future date and time with a time zone; other durations take none.",
+    "folder_path": "Give the folder as a full path.",
+    "grant_destructive": "Deleting for good cannot be permitted in advance. A person confirms each such call.",
+    "in_tool_call": "Permissions can only be changed by a person, never while a tool runs.",
+    "invalid": "This permission is not valid. Check the agents and the other settings.",
+    "missing_grant": "No permission covers this access yet. A person can allow it.",
+    "not_found": "This permission or block no longer exists.",
+    "person_required": "Only a person can give or withdraw permissions.",
+    "safety_limit": "A fixed safety limit refuses this access, for example offline mode, a protected folder or deleting with nobody watching. No permission can lift it.",
+    "tool_facts_required": "A permission for a tool must name the tool as it was approved; other permissions must not name a tool.",
+    "unattended_expiry": "A permission beyond reading for runs nobody watches must end on a date or hold for one use.",
+    "unattended_scope": "A permission beyond reading for runs nobody watches must name its agents.",
+    "unattended_too_long": "A permission beyond reading for runs nobody watches may last at most {{days}} days."
   },
   "sandbox": {
     "isolation_required": "AI-created code and tools of unknown origin run only isolated (in Docker, or in the built-in Linux sandbox if it was chosen); none is available, so nothing was run. Settings → Sandbox shows why.",

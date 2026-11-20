@@ -282,7 +282,9 @@
     "settings_unused": "Es gibt Einstellungen für {{name}}, aber der Agent nutzt dieses Tool nicht.",
     "timeout": "Das Tool ist nicht innerhalb seines Zeitlimits fertig geworden.",
     "call_limit": "Das Tool hat seine Höchstzahl an Aufrufen für diese Ausführung erreicht.",
-    "mode_unsupported": "Dieses Tool wird in dieser Installation nicht angeboten."
+    "mode_unsupported": "Dieses Tool wird in dieser Installation nicht angeboten.",
+    "unattended_access_denied": "{{node}} ({{workflow}}): Eine Person hat Aufrufe von {{tool}} gesperrt. Sie würden in diesen Ausführungen daher verweigert. Hebe die Sperre auf, wenn das Tool laufen darf.",
+    "unattended_safety_limit": "{{node}} ({{workflow}}): Eine feste Sicherheitsgrenze verweigert Aufrufe von {{tool}} in diesen Ausführungen, etwa der Offline-Modus oder Löschen ohne Aufsicht. Keine Freigabe kann sie aufheben; starte den Workflow von Hand oder nutze ein anderes Tool."
   },
   "job": {
     "writing": "Der Coding Agent schreibt Code und Tests …",
@@ -810,7 +812,23 @@
     "launch_used": "Der Startlink wurde bereits verwendet. Starte die Desktop-App neu, um ein neues Fenster zu öffnen.",
     "launch_invalid": "Der Startlink ist ungültig. Starte Nodestro über die Desktop-App.",
     "cross_site": "Diese Änderung kam von einer anderen Website und wurde abgelehnt. Nutze Nodestro direkt.",
-    "network_needs_login": "Nodestro Studio wird nur auf diesem Computer angeboten, weil es keine eigene Anmeldung hat. Starte es ohne Netzwerkadresse und ohne zusätzliche Hostnamen; um Workflows im Netzwerk anzubieten, schalte den Netzwerkzugang für veröffentlichte APIs ein."
+    "network_needs_login": "Nodestro Studio wird nur auf diesem Computer angeboten, weil es keine eigene Anmeldung hat. Starte es ohne Netzwerkadresse und ohne zusätzliche Hostnamen; um Workflows im Netzwerk anzubieten, schalte den Netzwerkzugang für veröffentlichte APIs ein.",
+    "conversation_required": "Eine Freigabe für ein Gespräch muss dieses Gespräch nennen, und nur diese Dauer nennt eines.",
+    "denied": "Eine Person hat diesen Zugriff gesperrt. Er bleibt verweigert, bis die Sperre aufgehoben ist.",
+    "deny_not_enforced": "{{tool}} gehört zur Ausführung selbst und wird nie gegen Freigaben geprüft, daher kann es nicht gesperrt werden.",
+    "expiry": "Das Ende der Freigabe ist ungültig. Eine Freigabe bis zu einem Datum braucht ein künftiges Datum mit Uhrzeit und Zeitzone; andere Dauern haben keines.",
+    "folder_path": "Gib den Ordner als vollständigen Pfad an.",
+    "grant_destructive": "Endgültiges Löschen kann nicht vorab freigegeben werden. Eine Person bestätigt jeden solchen Aufruf.",
+    "in_tool_call": "Freigaben kann nur eine Person ändern, nie während ein Tool läuft.",
+    "invalid": "Diese Freigabe ist ungültig. Prüfe die Agenten und die übrigen Einstellungen.",
+    "missing_grant": "Noch keine Freigabe deckt diesen Zugriff ab. Eine Person kann ihn erlauben.",
+    "not_found": "Diese Freigabe oder Sperre gibt es nicht mehr.",
+    "person_required": "Nur eine Person kann Freigaben erteilen oder zurücknehmen.",
+    "safety_limit": "Eine feste Sicherheitsgrenze verweigert diesen Zugriff, etwa der Offline-Modus, ein geschützter Ordner oder Löschen ohne Aufsicht. Keine Freigabe kann sie aufheben.",
+    "tool_facts_required": "Eine Freigabe für ein Tool muss das Tool so nennen, wie es geprüft wurde; andere Freigaben nennen kein Tool.",
+    "unattended_expiry": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht muss an einem Datum enden oder für eine Verwendung gelten.",
+    "unattended_scope": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht muss ihre Agenten nennen.",
+    "unattended_too_long": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht gilt höchstens {{days}} Tage."
   },
   "sandbox": {
     "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur isoliert (in Docker oder, wenn gewählt, in der eingebauten Linux-Sandbox); nichts davon ist verfügbar, daher wurde nichts ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",

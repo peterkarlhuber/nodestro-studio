@@ -13,6 +13,9 @@
 - Texts in all six languages for `approval.agent_note_too_long`, `approval.agent_note_disabled` and
   `check.approval_comment_not_forwarded`; the comment hints no longer say that agents read the comment. Help chapters
   *Branches and approvals* and *API and export* describe the comment for people and the note to the agent.
+- Texts in all six languages for the 18 codes of the access grants (N-06, runtime `42ad387`, switched off by default):
+  `access.*` (refused permissions and blocks, missing permission, safety limit) and the unattended pre-check codes
+  `tool.unattended_access_denied` and `tool.unattended_safety_limit`.
 
 ### LD-020 follow-up 2: no plain key next to its sealed form (2026-11-20)
 

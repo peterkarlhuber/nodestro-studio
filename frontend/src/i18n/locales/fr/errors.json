@@ -282,7 +282,9 @@
     "settings_unused": "Il existe des paramètres pour {{name}}, mais l’agent n’utilise pas cet outil.",
     "timeout": "L’outil ne s’est pas terminé dans son délai maximal.",
     "call_limit": "L’outil a atteint son nombre maximal d’appels pour cette exécution.",
-    "mode_unsupported": "Cet outil n’est pas proposé dans cette installation."
+    "mode_unsupported": "Cet outil n’est pas proposé dans cette installation.",
+    "unattended_access_denied": "{{node}} ({{workflow}}) : une personne a bloqué les appels de {{tool}} ; ils seraient donc refusés dans ces exécutions. Levez le blocage si l’outil peut s’exécuter.",
+    "unattended_safety_limit": "{{node}} ({{workflow}}) : une limite de sécurité fixe refuse les appels de {{tool}} dans ces exécutions, par exemple le mode hors ligne ou une suppression sans surveillance. Aucune autorisation ne peut la lever ; démarrez le workflow à la main ou utilisez un autre outil."
   },
   "job": {
     "writing": "Le Coding Agent écrit le code et les tests …",
@@ -810,7 +812,23 @@
     "launch_used": "Le lien de démarrage a déjà été utilisé. Redémarrez l’application de bureau pour ouvrir une nouvelle fenêtre.",
     "launch_invalid": "Le lien de démarrage n’est pas valide. Démarrez Nodestro depuis l’application de bureau.",
     "cross_site": "Cette modification venait d’un autre site web et a été refusée. Utilisez Nodestro directement.",
-    "network_needs_login": "Nodestro Studio n’est proposé que sur cet ordinateur, car il n’a pas de connexion propre. Démarrez-le sans adresse réseau ni noms d’hôte supplémentaires ; pour proposer des workflows sur le réseau, activez l’accès réseau des API publiées."
+    "network_needs_login": "Nodestro Studio n’est proposé que sur cet ordinateur, car il n’a pas de connexion propre. Démarrez-le sans adresse réseau ni noms d’hôte supplémentaires ; pour proposer des workflows sur le réseau, activez l’accès réseau des API publiées.",
+    "conversation_required": "Une autorisation pour une conversation doit nommer cette conversation, et seule cette durée en nomme une.",
+    "denied": "Une personne a bloqué cet accès. Il reste refusé jusqu’à la levée du blocage.",
+    "deny_not_enforced": "{{tool}} fait partie de l’exécution elle-même et n’est jamais vérifié par rapport aux autorisations ; il ne peut donc pas être bloqué.",
+    "expiry": "La fin de l’autorisation n’est pas valide. Une autorisation jusqu’à une date demande une date et une heure futures avec un fuseau horaire ; les autres durées n’en ont pas.",
+    "folder_path": "Indiquez le dossier sous forme de chemin complet.",
+    "grant_destructive": "La suppression définitive ne peut pas être autorisée à l’avance. Une personne confirme chacun de ces appels.",
+    "in_tool_call": "Seule une personne peut modifier les autorisations, jamais pendant l’exécution d’un outil.",
+    "invalid": "Cette autorisation n’est pas valide. Vérifiez les agents et les autres paramètres.",
+    "missing_grant": "Aucune autorisation ne couvre encore cet accès. Une personne peut l’autoriser.",
+    "not_found": "Cette autorisation ou ce blocage n’existe plus.",
+    "person_required": "Seule une personne peut accorder ou retirer des autorisations.",
+    "safety_limit": "Une limite de sécurité fixe refuse cet accès, par exemple le mode hors ligne, un dossier protégé ou une suppression sans surveillance. Aucune autorisation ne peut la lever.",
+    "tool_facts_required": "Une autorisation pour un outil doit nommer l’outil tel qu’il a été validé ; les autres autorisations ne nomment pas d’outil.",
+    "unattended_expiry": "Une autorisation au-delà de la lecture pour des exécutions sans surveillance doit se terminer à une date ou valoir pour une seule utilisation.",
+    "unattended_scope": "Une autorisation au-delà de la lecture pour des exécutions sans surveillance doit nommer ses agents.",
+    "unattended_too_long": "Une autorisation au-delà de la lecture pour des exécutions sans surveillance dure au plus {{days}} jours."
   },
   "sandbox": {
     "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent qu’isolés (dans Docker ou, s’il a été choisi, dans le bac à sable Linux intégré) ; rien de cela n’est disponible, rien n’a donc été exécuté. Réglages → Bac à sable indique pourquoi.",

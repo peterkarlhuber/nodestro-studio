@@ -124,6 +124,8 @@ describe("counted texts", () => {
     "errors.architect.truncated",
     "errors.architect.truncated_over_budget",
     "modelParams.limits.contextWindow",
+    // The longest unattended access grant: a fixed number of days (30), never one.
+    "errors.access.unattended_too_long",
   ]);
 
   it("have plural forms in English", () => {
@@ -382,6 +384,11 @@ describe("backend codes", () => {
     "connection.unreachable",
     // The note to the agent at approvals (E-0R-1 A): refused decisions and the workflow check after the change.
     "approval.agent_note_too_long", "approval.agent_note_disabled", "check.approval_comment_not_forwarded",
+    // Access grants (N-06, switched off by default): refused records, refused accesses and the unattended pre-check.
+    "access.conversation_required", "access.denied", "access.deny_not_enforced", "access.expiry", "access.folder_path",
+    "access.grant_destructive", "access.in_tool_call", "access.invalid", "access.missing_grant", "access.not_found",
+    "access.person_required", "access.safety_limit", "access.tool_facts_required", "access.unattended_expiry",
+    "access.unattended_scope", "access.unattended_too_long", "tool.unattended_access_denied", "tool.unattended_safety_limit",
   ];
 
   it.each(LANGUAGES)("have their own sentence in %s", (language) => {

@@ -282,7 +282,9 @@
     "settings_unused": "Há configurações para {{name}}, mas o agente não usa esta ferramenta.",
     "timeout": "A ferramenta não terminou dentro do seu limite de tempo.",
     "call_limit": "A ferramenta atingiu seu limite de chamadas nesta execução.",
-    "mode_unsupported": "Esta ferramenta não é oferecida nesta instalação."
+    "mode_unsupported": "Esta ferramenta não é oferecida nesta instalação.",
+    "unattended_access_denied": "{{node}} ({{workflow}}): uma pessoa bloqueou as chamadas de {{tool}}, por isso elas seriam recusadas nestas execuções. Remova o bloqueio se a ferramenta puder ser executada.",
+    "unattended_safety_limit": "{{node}} ({{workflow}}): um limite de segurança fixo recusa as chamadas de {{tool}} nestas execuções, por exemplo o modo offline ou excluir sem ninguém acompanhando. Nenhuma permissão pode removê-lo; inicie o fluxo de trabalho manualmente ou use outra ferramenta."
   },
   "job": {
     "writing": "O agente de programação está escrevendo código e testes …",
@@ -810,7 +812,23 @@
     "launch_used": "O link de início já foi usado. Reinicie o aplicativo de desktop para abrir uma nova janela.",
     "launch_invalid": "O link de início não é válido. Inicie o Nodestro pelo aplicativo de desktop.",
     "cross_site": "Esta alteração veio de outro site e foi recusada. Use o Nodestro diretamente.",
-    "network_needs_login": "O Nodestro Studio só é oferecido neste computador, porque não tem login próprio. Inicie-o sem endereço de rede nem nomes de host extras; para oferecer fluxos de trabalho na rede, ative o acesso de rede das APIs publicadas."
+    "network_needs_login": "O Nodestro Studio só é oferecido neste computador, porque não tem login próprio. Inicie-o sem endereço de rede nem nomes de host extras; para oferecer fluxos de trabalho na rede, ative o acesso de rede das APIs publicadas.",
+    "conversation_required": "Uma permissão para uma conversa precisa indicar essa conversa, e só essa duração indica uma.",
+    "denied": "Uma pessoa bloqueou este acesso. Ele continua recusado até o bloqueio ser removido.",
+    "deny_not_enforced": "{{tool}} faz parte da própria execução e nunca é verificada contra permissões, por isso não pode ser bloqueada.",
+    "expiry": "O fim da permissão não é válido. Uma permissão até uma data precisa de data e hora futuras com fuso horário; as outras durações não têm.",
+    "folder_path": "Informe a pasta como caminho completo.",
+    "grant_destructive": "Excluir definitivamente não pode ser permitido com antecedência. Uma pessoa confirma cada chamada desse tipo.",
+    "in_tool_call": "Só uma pessoa pode alterar permissões, nunca enquanto uma ferramenta é executada.",
+    "invalid": "Esta permissão não é válida. Verifique os agentes e as outras configurações.",
+    "missing_grant": "Nenhuma permissão cobre este acesso ainda. Uma pessoa pode permiti-lo.",
+    "not_found": "Esta permissão ou bloqueio não existe mais.",
+    "person_required": "Só uma pessoa pode conceder ou retirar permissões.",
+    "safety_limit": "Um limite de segurança fixo recusa este acesso, por exemplo o modo offline, uma pasta protegida ou excluir sem ninguém acompanhando. Nenhuma permissão pode removê-lo.",
+    "tool_facts_required": "Uma permissão para uma ferramenta precisa indicar a ferramenta como foi aprovada; as outras permissões não indicam ferramenta.",
+    "unattended_expiry": "Uma permissão além da leitura para execuções sem acompanhamento precisa terminar em uma data ou valer para um só uso.",
+    "unattended_scope": "Uma permissão além da leitura para execuções sem acompanhamento precisa indicar seus agentes.",
+    "unattended_too_long": "Uma permissão além da leitura para execuções sem acompanhamento dura no máximo {{days}} dias."
   },
   "sandbox": {
     "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados isolados (no Docker ou, se escolhido, no sandbox Linux integrado); nada disso está disponível, então nada foi executado. Configurações → Sandbox mostra o motivo.",
