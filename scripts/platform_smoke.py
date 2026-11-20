@@ -9,9 +9,11 @@ sandbox the settings must say so (reason ``platform``) instead of the start fail
 
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 from pathlib import Path
+import signal
 import socket
 import subprocess
 import sys
@@ -104,6 +106,9 @@ def main() -> int:
                 stdout=output,
                 stderr=subprocess.STDOUT,
                 env=env,
+                # Its own process group: helpers the server started (e.g. a Python environment build writing to
+                # data/python/cache) end with it, before the data directory is removed.
+                start_new_session=os.name == "posix",
             )
             try:
                 deadline = time.monotonic() + 180
@@ -172,6 +177,10 @@ def main() -> int:
                     server.wait(30)
                 except subprocess.TimeoutExpired:
                     server.kill()
+                    server.wait(30)
+                if os.name == "posix":
+                    with contextlib.suppress(ProcessLookupError):  # no helper outlived the server
+                        os.killpg(server.pid, signal.SIGKILL)
     print("platform smoke test passed on", sys.platform)
     return 0
 
