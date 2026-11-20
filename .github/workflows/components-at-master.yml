@@ -103,8 +103,9 @@ jobs:
         run: |
           pip install uv==0.11.32
           # pglast: the runtime's static tenant-isolation check (tests/test_tenant_filters.py, security review SR-01).
+          # psycopg: nodestro-api's dev extra, for its database error-text tests (tests/test_db_error_texts.py).
           uv pip install --system --override "$RUNNER_TEMP/overrides.txt" \
-            -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9"
+            -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9" "psycopg[binary,pool]>=3.2"
       - name: Only the master commits (and the other locked packages at their lock commit) were installed
         id: installed
         run: |
