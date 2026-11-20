@@ -11,7 +11,7 @@
 |---|---|
 | P0 Critical | 0 |
 | P1 High | 1 |
-| P2 Medium | 4 |
+| P2 Medium | 5 |
 | P3 Low | 12 |
 | P4 Optional | 4 |
 
@@ -67,7 +67,7 @@ from #121). Both have status `Needs external review`.
   not replace the independent review, which is bundled with the others (E-P-5; a paid order needs the owner's consent;
   done before any public deployment). Residual risk AR-3: without a key store provider keys stay in plain text in the
   user-only database file on the command line. Local Docker keeps its key in a file on the host since LD-020
-  (owner decision 2026-11-19; nodestro-runtime RT-082, nodestro-api API-070, nodestro-local-docker LD-020): the lock
+  (owner decision 2026-11-19; nodestro-runtime RT-082, nodestro-api API-071, nodestro-local-docker LD-020): the lock
   carries `local_vault` (key check, rotation, key loss) and `nodestro-local boot`.
 - **Next step:** include both fixes and LD-020 in the next bundled review brief.
 
@@ -161,8 +161,9 @@ from #121). Both have status `Needs external review`.
 - **What:** the canonical negative test: an install must never ask an index for `tabrion` and must install the
   locked commit (zero index requests for it; `direct_url.json` checks only detect an accidental index install). Done
   here: the script, `lock_check.py --only`, the platform job (listed in `.github/ci-manifest.json`, reported by
-  ci-ok). Open: (a) the `internal.txt` part of DC-NS-1 (tabrion in the studio lock, TABRION PIN-W2); (b)
-  `components-at-master.yml` puts tabrion into its overrides once it is in the studio closure.
+  ci-ok). Open: (a) the `internal.txt` part of DC-NS-1 (tabrion in the studio lock, TABRION PIN-W2). Done: (b)
+  `components-at-master.yml` installs every other locked package (tabrion) at its lock commit (W0-1, 2026-11-20;
+  the workflow had been red since 2026-11-14, issue #186).
 - **Next step:** merge; then the consumers' copies (nodestro-runtime DC-NR-1, nodestro-api DC-NA-1, orkexa DC-OR-1,
   tabrion-studio DC-TS-1)
   update their pinned origin commit to the merged one. Residual risk (a foreign `tabrion` on PyPI reaches only a bare
@@ -184,6 +185,15 @@ from #121). Both have status `Needs external review`.
   Dependabot ignores the majors of `eslint`, `@eslint/js` and `eslint-plugin-react-hooks` until then.
 - **Next step:** One pull request: eslint-plugin-react-hooks 7, fix or justify each finding with tests, then ESLint
   10 and `@eslint/js` 10 together; remove the three `ignore` rules.
+
+### ST-067 · Weekly CI criteria K1 to K9 (Locria Phase N-A)
+
+- **Priority:** P2 Medium · **Status:** Open (recurring, by hand) · **Refs:** `docs/architecture/ci-fast/criteria.md`,
+  `docs/architecture/ci-fast/tools/cifast.py`, owner decision 2026-11-20 (Phase 0R, K1 to K9 binding)
+- **What:** every week of Phase N-A, measure the last 7 days with `cifast.py kpis` against the baseline of
+  2026-11-14..20 and name each breach in the report of the thread that caused it. A breach of K1, K2 or K5 stops further
+  CI additions in that repository until it is explained or fixed. No scheduled job or monitor (owner rule).
+- **Next step:** first measurement for 2026-11-21..27.
 
 ## Platform coverage
 

@@ -73,7 +73,15 @@ jobs:
           temp = Path(os.environ["RUNNER_TEMP"])
           master = dict(line.split() for line in (temp / "master.txt").read_text().splitlines())
           norm = lambda name: re.sub(r"[-_.]+", "-", name).lower()
-          extras: dict[str, set[str]] = {name: set() for name in master}
+          # Every other locked package (tabrion, a final release that no registry offers) at its lock commit: without
+          # it the resolver finds no tabrion for the components' version range and nothing is tested.
+          locked = {}
+          for line in Path("platform/internal.txt").read_text().splitlines():
+              match = re.match(r"([A-Za-z0-9._-]+) @ git\+(\S+)@([0-9a-f]{40})$", line.strip())
+              if match and norm(match[1]) not in master:
+                  locked[norm(match[1])] = (match[2], match[3])
+          (temp / "locked.txt").write_text("".join(f"{name} {sha}\n" for name, (_, sha) in locked.items()))
+          extras: dict[str, set[str]] = {name: set() for name in [*master, *locked]}
           pyprojects = [Path("pyproject.toml")]
           pyprojects += [temp / "components" / name / "pyproject.toml" for name in os.environ["COMPONENTS"].split()]
           for pyproject in pyprojects:
@@ -85,6 +93,9 @@ jobs:
           for name, sha in master.items():
               extra = f"[{','.join(sorted(extras[name]))}]" if extras[name] else ""
               lines.append(f"{name}{extra} @ git+https://github.com/peterkarlhuber/{name}.git@{sha}")
+          for name, (url, sha) in locked.items():
+              extra = f"[{','.join(sorted(extras[name]))}]" if extras[name] else ""
+              lines.append(f"{name}{extra} @ git+{url}@{sha}")
           (temp / "overrides.txt").write_text("\n".join(lines) + "\n")
           print("\n".join(lines))
           PY
@@ -94,14 +105,16 @@ jobs:
           # pglast: the runtime's static tenant-isolation check (tests/test_tenant_filters.py, security review SR-01).
           uv pip install --system --override "$RUNNER_TEMP/overrides.txt" \
             -e ".[dev]" pytest-asyncio httpx "pglast>=7,<9"
-      - name: Only the master commits were installed
+      - name: Only the master commits (and the other locked packages at their lock commit) were installed
         id: installed
         run: |
           python - <<'PY'
           import json, os, importlib.metadata as m
           from pathlib import Path
 
-          master = dict(line.split() for line in (Path(os.environ["RUNNER_TEMP"]) / "master.txt").read_text().splitlines())
+          temp = Path(os.environ["RUNNER_TEMP"])
+          master = dict(line.split() for line in (temp / "master.txt").read_text().splitlines())
+          master |= dict(line.split() for line in (temp / "locked.txt").read_text().splitlines())  # at the lock commit
           for name, sha in master.items():
               url = json.loads(m.distribution(name).read_text("direct_url.json") or "{}")
               commit = url.get("vcs_info", {}).get("commit_id")
