@@ -130,7 +130,7 @@ By default every API is asynchronous. Under **Limits** you can switch on **Allow
 When a run reaches an approval step, it changes to `awaiting_approval`. You can decide in two places, and the first decision counts:
 
 - in Nodestro on the Approvals page (see [The Approvals page](/docs/verzweigungen#freigaben-seite)), marked “from the published API”,
-- through `POST /runs/<id>/approve` with `{"decision": "approved"}` or `"rejected"` and an optional comment. This needs a key with the `approve` permission.
+- through `POST /runs/<id>/approve` with `{"decision": "approved"}` or `"rejected"` an optional `comment` (for people only) and an optional `agent_note` (the note to the agent, at most 2,000 characters; refused with `422` when the approval does not allow it). This needs a key with the `approve` permission.
 
 Waiting approvals survive a restart of Nodestro. A failed run can be continued with `POST /runs/<id>/resume`. Successful steps are reused. Steps that called tools run again only with `confirm_side_effects: true`.
 

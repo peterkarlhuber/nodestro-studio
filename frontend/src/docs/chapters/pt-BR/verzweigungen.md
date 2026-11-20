@@ -50,19 +50,20 @@ Um **laço** roda etapas de novo até um resultado servir, por exemplo *Rascunho
 - **Criar:** arraste uma conexão de uma **ramificação** de uma decisão ou aprovação de volta para uma etapa anterior. O Nodestro a cria como laço (tracejada, com “↻ máx. 3×”) e a abre no inspetor. Não é possível voltar a partir de um agente: cada rodada termina com uma decisão ou aprovação.
 - **Limite:** *Máximo de rodadas* (de 2 a 20) inclui a primeira execução. Cada rodada consome tokens de novo; o [orçamento](/docs/workflows#budget) vale para a execução inteira.
 - **Quando o limite for atingido:** a execução termina como falha (“O laço … rodou … vezes sem atingir seu objetivo”) ou segue as outras ramificações da decisão. Se nenhum for seguido, as etapas seguintes são ignoradas.
-- **Marcadores:** na tarefa de uma etapa do laço, `{{iteration}}` é a rodada (a partir de 1), `{{previous}}` o próprio resultado da rodada anterior e `{{feedback}}` o que voltou pelo laço (por exemplo, a justificativa da revisão ou o comentário de uma aprovação rejeitada). Na primeira rodada, ambos valem “-”.
+- **Marcadores:** na tarefa de uma etapa do laço, `{{iteration}}` é a rodada (a partir de 1), `{{previous}}` o próprio resultado da rodada anterior e `{{feedback}}` o que voltou pelo laço (por exemplo, a justificativa da revisão ou a nota para o agente de uma aprovação rejeitada, nunca o comentário dela). Na primeira rodada, ambos valem “-”.
 - **Aprovações em laços:** uma aprovação rejeitada pode voltar para uma revisão pela ramificação *Rejeitado*; a rodada seguinte espera de novo uma decisão.
 
 Durante uma execução, cada etapa mostra sua **rodada**; nos detalhes, você escolhe entre os resultados de todas as rodadas. Laços podem ficar um dentro do outro, mas não se sobrepor. Ao [continuar](#fortsetzen) uma execução com falha, um laço sempre roda de novo por inteiro.
 
 ## Aprovações {#freigabe}
-<!-- keywords: aprovação, liberação, human in the loop, revisar, rejeitar, comentário, pausa -->
+<!-- keywords: aprovação, liberação, human in the loop, revisar, rejeitar, comentário, nota para o agente, agent note, pausa -->
 
 Uma **aprovação** segura a execução até que uma pessoa **aprove** ou **rejeite** os resultados. Nada é aprovado automaticamente, nem em agendamentos, execuções em lote ou séries de testes.
 
 - **Orientação para quem revisa:** no que prestar atenção.
 - **Resultados exibidos:** quais resultados a pessoa vê; sem seleção, tudo o que chega.
-- **Comentário:** opcional ou obrigatório ao rejeitar. Agentes posteriores o leem com o nome da aprovação; nós de resultado, arquivos de resultado e decisões não o recebem. Ele fica salvo com a aprovação na execução.
+- **Comentário:** opcional ou obrigatório ao rejeitar. O comentário é só para pessoas: ele fica salvo com a aprovação na execução e aparece na visão da execução e no registro. Nenhum agente, subfluxo ou orquestrador o lê.
+- **Permitir uma nota para o agente:** quem revisa pode escrever uma **nota para o agente** (no máximo 2.000 caracteres). É o único texto da decisão que agentes posteriores leem, com o nome da aprovação (`{{<nome da aprovação>}}` ou junto com as entradas); sem nota, eles leem “-”. Nós de resultado, arquivos de resultado e decisões não a recebem. Útil em laços de revisão, em que a nota diz o que mudar; desative-a em aprovações que encerram a execução ao rejeitar. Aprovações novas a permitem. Aprovações salvas antes de a nota existir contam como permitidas, e a verificação do fluxo de trabalho avisa uma vez até você salvar o fluxo de trabalho.
 - **Ao rejeitar:** seguir a ramificação **Rejeitado** ou encerrar a execução. Se nada estiver conectado a *Rejeitado*, esse caminho simplesmente termina.
 
 Enquanto espera, a execução fica com o status **Pausado** e a aprovação **Aguardando aprovação**. Você pode decidir na visão geral da execução no editor, na visão detalhada da execução ou na página **Aprovações**. Depois, a execução continua de onde parou. Aprovações abertas sobrevivem a um reinício do Nodestro.
@@ -72,7 +73,7 @@ Enquanto espera, a execução fica com o status **Pausado** e a aprovação **Ag
 
 A página **Aprovações** (navegação, grupo *Executar e revisar*) lista todas as aprovações abertas, da mais antiga para a mais nova, com fluxo de trabalho, origem (manual, agendamento, lote, série de testes) e tempo de espera. O número ao lado do item de menu mostra quantas estão esperando.
 
-Cada cartão mostra a orientação, os resultados a revisar (resultados estruturados como campos com rótulo, o JSON a um clique), um campo de comentário e os botões *Aprovar* e *Rejeitar*; os botões continuam visíveis mesmo com resultados longos. Aprovações dentro de subfluxos também aparecem aqui, com o caminho até a execução principal. Cartões de [chamadas de ferramentas](/docs/verzweigungen#tool-freigabe) indicam o fluxo de trabalho e a etapa ("*fluxo* · etapa *nome*").
+Cada cartão mostra a orientação, os resultados a revisar (resultados estruturados como campos com rótulo, o JSON a um clique), um campo de comentário (só para pessoas), o campo *Nota para o agente* se a aprovação a permitir e os botões *Aprovar* e *Rejeitar*; os botões continuam visíveis mesmo com resultados longos. Aprovações dentro de subfluxos também aparecem aqui, com o caminho até a execução principal. Cartões de [chamadas de ferramentas](/docs/verzweigungen#tool-freigabe) indicam o fluxo de trabalho e a etapa ("*fluxo* · etapa *nome*").
 
 Execuções que aguardam uma [decisão de orçamento](/docs/workflows#budget-freigabe) aparecem no topo em uma seção própria **Decisões de orçamento**, com um link para a execução.
 

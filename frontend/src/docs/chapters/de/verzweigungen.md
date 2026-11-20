@@ -50,19 +50,20 @@ Eine **Schleife** lässt Schritte erneut laufen, bis ein Ergebnis passt, zum Bei
 - **Anlegen:** Ziehe eine Verbindung von einem **Zweig** einer Entscheidung oder Freigabe zurück zu einem früheren Schritt. Nodestro legt sie als Schleife an (gestrichelt, mit „↻ max. 3×“) und öffnet sie im Inspektor. Von einem Agenten aus ist keine Verbindung zurück möglich: Jede Runde endet mit einer Entscheidung oder Freigabe.
 - **Limit:** *Höchstens Runden* (2 bis 20) zählt den ersten Durchlauf mit. Jede Runde kostet erneut Tokens; das [Budget](/docs/workflows#budget) gilt für den ganzen Lauf.
 - **Wenn das Limit erreicht ist:** Der Lauf endet als fehlgeschlagen („Die Schleife lief … mal, ohne ihr Ziel zu erreichen“), oder er folgt den anderen Zweigen der Entscheidung. Folgt keiner, werden die Schritte dahinter übersprungen.
-- **Platzhalter:** In der Aufgabe eines Schritts in der Schleife ist `{{iteration}}` die Runde (ab 1), `{{previous}}` sein eigenes Ergebnis der Runde davor und `{{feedback}}`, was über die Schleife zurückkam (etwa die Begründung der Prüfung oder der Kommentar einer abgelehnten Freigabe). In der ersten Runde stehen beide für „-“.
+- **Platzhalter:** In der Aufgabe eines Schritts in der Schleife ist `{{iteration}}` die Runde (ab 1), `{{previous}}` sein eigenes Ergebnis der Runde davor und `{{feedback}}`, was über die Schleife zurückkam (etwa die Begründung der Prüfung oder die Notiz an den Agenten einer abgelehnten Freigabe, nie ihr Kommentar). In der ersten Runde stehen beide für „-“.
 - **Freigaben in Schleifen:** Eine abgelehnte Freigabe kann über ihren Zweig *Abgelehnt* zurück zur Überarbeitung führen; die nächste Runde wartet dann wieder auf eine Entscheidung.
 
 Im Lauf zeigt jeder Schritt seine **Runde**; in den Details wählst du zwischen den Ergebnissen aller Runden. Schleifen dürfen ineinander liegen, sich aber nicht überschneiden. Wird ein fehlgeschlagener Lauf [fortgesetzt](#fortsetzen), läuft eine Schleife immer ganz neu.
 
 ## Freigaben {#freigabe}
-<!-- keywords: freigabe, genehmigung, approval, human in the loop, prüfen, ablehnen, kommentar, pause -->
+<!-- keywords: freigabe, genehmigung, approval, human in the loop, prüfen, ablehnen, kommentar, notiz an den agenten, agent note, pause -->
 
 Eine **Freigabe** hält den Lauf an, bis eine Person die Ergebnisse **freigibt** oder **ablehnt**. Nichts wird je automatisch freigegeben, auch nicht bei Zeitplänen, Stapelläufen oder Testreihen.
 
 - **Hinweis für die prüfende Person:** worauf sie achten soll.
 - **Angezeigte Ergebnisse:** welche Ergebnisse sie sieht; ohne Auswahl alles, was ankommt.
-- **Kommentar:** optional oder bei Ablehnung Pflicht. Spätere Agenten lesen ihn unter dem Namen der Freigabe; Ergebnisknoten, Ergebnisdateien und Entscheidungen erhalten ihn nicht. Er bleibt bei der Freigabe im Lauf gespeichert.
+- **Kommentar:** optional oder bei Ablehnung Pflicht. Der Kommentar ist nur für Menschen: Er bleibt bei der Freigabe im Lauf gespeichert und erscheint in der Ansicht des Laufs und im Protokoll. Kein Agent, Unterworkflow oder Orchestrator liest ihn.
+- **Notiz an den Agenten erlauben:** Die prüfende Person kann eine **Notiz an den Agenten** schreiben (höchstens 2.000 Zeichen). Sie ist der einzige Text der Entscheidung, den spätere Agenten lesen, unter dem Namen der Freigabe (`{{<Name der Freigabe>}}` oder bei den Eingaben); ohne Notiz lesen sie „-“. Ergebnisknoten, Ergebnisdateien und Entscheidungen erhalten sie nicht. Sinnvoll in Überarbeitungsschleifen, in denen die Notiz sagt, was zu ändern ist; schalte sie bei Freigaben aus, die den Lauf bei Ablehnung beenden. Neue Freigaben erlauben sie. Freigaben, die vor der Notiz gespeichert wurden, gelten als erlaubt, und die Workflow-Prüfung weist einmal darauf hin, bis du den Workflow speicherst.
 - **Bei Ablehnung:** dem Zweig **Abgelehnt** folgen oder den Lauf beenden. Ist am Zweig *Abgelehnt* nichts verbunden, endet dieser Weg einfach.
 
 Während der Lauf wartet, hat er den Status **Pausiert**, die Freigabe **Wartet auf Freigabe**. Entscheiden kannst du in der Ausführungsübersicht des Editors, in der Detailansicht des Laufs oder auf der Seite **Freigaben**. Danach läuft der Lauf an derselben Stelle weiter. Offene Freigaben überstehen einen Neustart von Nodestro.
@@ -72,7 +73,7 @@ Während der Lauf wartet, hat er den Status **Pausiert**, die Freigabe **Wartet 
 
 Die Seite **Freigaben** (Navigation, Gruppe *Ausführen & prüfen*) listet alle offenen Freigaben, die älteste zuerst, mit Workflow, Herkunft (manuell, Zeitplan, Stapel, Testreihe) und Wartezeit. Die Zahl neben dem Menüeintrag zeigt, wie viele warten.
 
-Jede Karte zeigt den Hinweis, die zu prüfenden Ergebnisse (strukturierte Ergebnisse als beschriftete Felder, das JSON einen Klick entfernt), ein Kommentarfeld und die Knöpfe *Freigeben* und *Ablehnen*; die Knöpfe bleiben auch bei langen Ergebnissen im Blick. Freigaben in Unterworkflows erscheinen hier ebenfalls, mit dem Pfad zum übergeordneten Lauf. Karten für [Tool-Aufrufe](/docs/verzweigungen#tool-freigabe) nennen Workflow und Schritt („*Workflow* · Schritt *Name*“).
+Jede Karte zeigt den Hinweis, die zu prüfenden Ergebnisse (strukturierte Ergebnisse als beschriftete Felder, das JSON einen Klick entfernt), ein Kommentarfeld (nur für Menschen), das Feld *Notiz an den Agenten*, wenn die Freigabe sie erlaubt, und die Knöpfe *Freigeben* und *Ablehnen*; die Knöpfe bleiben auch bei langen Ergebnissen im Blick. Freigaben in Unterworkflows erscheinen hier ebenfalls, mit dem Pfad zum übergeordneten Lauf. Karten für [Tool-Aufrufe](/docs/verzweigungen#tool-freigabe) nennen Workflow und Schritt („*Workflow* · Schritt *Name*“).
 
 Läufe, die auf eine [Budget-Entscheidung](/docs/workflows#budget-freigabe) warten, stehen oben in einem eigenen Abschnitt **Budget-Entscheidungen**, mit einem Link zum Lauf.
 

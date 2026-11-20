@@ -282,7 +282,9 @@
     "settings_unused": "Ci sono impostazioni per {{name}}, ma l’agente non usa questo strumento.",
     "timeout": "Lo strumento non ha finito entro il suo limite di tempo.",
     "call_limit": "Lo strumento ha raggiunto il suo limite di chiamate per questa esecuzione.",
-    "mode_unsupported": "Questo strumento non è offerto in questa installazione."
+    "mode_unsupported": "Questo strumento non è offerto in questa installazione.",
+    "unattended_access_denied": "{{node}} ({{workflow}}): una persona ha bloccato le chiamate di {{tool}}, quindi verrebbero rifiutate in queste esecuzioni. Togli il blocco se lo strumento può essere eseguito.",
+    "unattended_safety_limit": "{{node}} ({{workflow}}): un limite di sicurezza fisso rifiuta le chiamate di {{tool}} in queste esecuzioni, per esempio la modalità offline o un’eliminazione senza supervisione. Nessuna autorizzazione può toglierlo; avvia il workflow a mano o usa un altro strumento."
   },
   "job": {
     "writing": "Il Coding Agent sta scrivendo codice e test …",
@@ -318,6 +320,7 @@
     "api_key_missing": "Nessuna chiave API per {{provider}}. Inseriscila nelle impostazioni.",
     "approval_no_approved": "Dopo l’approvazione {{name}} non segue nulla.",
     "approval_rejected_ends": "Dopo un rifiuto in {{name}} il percorso semplicemente termina.",
+    "approval_comment_not_forwarded": "{{name}} non riceve più il commento della revisione di {{approval}}: il commento è solo per le persone. Gli agenti successivi leggono solo la nota per l'agente. Apri {{approval}}, scegli se è consentita una nota per l'agente e salva il workflow.",
     "branch_unconnected": "Il ramo {{branch}} di {{name}} non porta da nessuna parte.",
     "default_unconnected": "Il ramo «altrimenti» di {{name}} non porta da nessuna parte; se nessuna regola è valida, il percorso termina qui.",
     "form_field_unknown": "«{{placeholder}}» non indica alcun campo del modulo di input.",
@@ -459,6 +462,8 @@
   },
   "approval": {
     "comment_required": "Motiva il rifiuto.",
+    "agent_note_too_long": "La nota per l'agente è troppo lunga (al massimo {{limit}} caratteri).",
+    "agent_note_disabled": "Questa approvazione non accetta una nota per l'agente. Lascia vuota la nota.",
     "invalid": "Decidi con approva o rifiuta.",
     "not_pending": "Questa approvazione non attende (più) una decisione.",
     "already_decided": "Su questa approvazione è già stato deciso.",
@@ -807,7 +812,23 @@
     "launch_used": "Il link di avvio è già stato usato. Riavviare l’app desktop per aprire una nuova finestra.",
     "launch_invalid": "Il link di avvio non è valido. Avviare Nodestro dall’app desktop.",
     "cross_site": "Questa modifica proveniva da un altro sito web ed è stata rifiutata. Usa Nodestro direttamente.",
-    "network_needs_login": "Nodestro Studio è offerto solo su questo computer, perché non ha un accesso proprio. Avvialo senza indirizzo di rete né nomi host aggiuntivi; per offrire workflow in rete, attiva l’accesso di rete per le API pubblicate."
+    "network_needs_login": "Nodestro Studio è offerto solo su questo computer, perché non ha un accesso proprio. Avvialo senza indirizzo di rete né nomi host aggiuntivi; per offrire workflow in rete, attiva l’accesso di rete per le API pubblicate.",
+    "conversation_required": "Un’autorizzazione per una conversazione deve indicare quella conversazione, e solo questa durata ne indica una.",
+    "denied": "Una persona ha bloccato questo accesso. Resta rifiutato finché il blocco non viene tolto.",
+    "deny_not_enforced": "{{tool}} fa parte dell’esecuzione stessa e non viene mai verificato rispetto alle autorizzazioni, quindi non si può bloccare.",
+    "expiry": "La fine dell’autorizzazione non è valida. Un’autorizzazione fino a una data richiede data e ora future con fuso orario; le altre durate non ne hanno.",
+    "folder_path": "Indica la cartella come percorso completo.",
+    "grant_destructive": "L’eliminazione definitiva non si può autorizzare in anticipo. Una persona conferma ogni chiamata di questo tipo.",
+    "in_tool_call": "Solo una persona può modificare le autorizzazioni, mai mentre è in esecuzione uno strumento.",
+    "invalid": "Questa autorizzazione non è valida. Controlla gli agenti e le altre impostazioni.",
+    "missing_grant": "Nessuna autorizzazione copre ancora questo accesso. Una persona può consentirlo.",
+    "not_found": "Questa autorizzazione o questo blocco non esiste più.",
+    "person_required": "Solo una persona può concedere o revocare autorizzazioni.",
+    "safety_limit": "Un limite di sicurezza fisso rifiuta questo accesso, per esempio la modalità offline, una cartella protetta o un’eliminazione senza supervisione. Nessuna autorizzazione può toglierlo.",
+    "tool_facts_required": "Un’autorizzazione per uno strumento deve indicare lo strumento come è stato approvato; le altre autorizzazioni non indicano strumenti.",
+    "unattended_expiry": "Un’autorizzazione oltre la lettura per esecuzioni senza supervisione deve finire a una data o valere per un solo uso.",
+    "unattended_scope": "Un’autorizzazione oltre la lettura per esecuzioni senza supervisione deve indicare i suoi agenti.",
+    "unattended_too_long": "Un’autorizzazione oltre la lettura per esecuzioni senza supervisione dura al massimo {{days}} giorni."
   },
   "sandbox": {
     "isolation_required": "Il codice creato dall’IA e gli strumenti di origine sconosciuta vengono eseguiti solo isolati (in Docker oppure, se scelta, nella sandbox Linux integrata); niente di questo è disponibile, quindi non è stato eseguito nulla. Impostazioni → Sandbox mostra il motivo.",

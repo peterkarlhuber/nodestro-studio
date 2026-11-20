@@ -28,7 +28,7 @@ import { RunDialog } from "../editor/RunDialog";
 import { OfflineBadge } from "../library/exampleOrigin";
 import { PANEL_VARIABLE, PanelSplitter } from "../editor/PanelSplitter";
 import { RunPanel } from "../editor/RunPanel";
-import { useEditor } from "../editor/store";
+import { useEditor, withExplicitAgentNote } from "../editor/store";
 import { useFollowRun } from "../editor/useRunStream";
 import type { AgentSectionId } from "../editor/agentSummaries";
 import { AGENT_SECTIONS, useAgentSections } from "../editor/sectionState";
@@ -319,16 +319,18 @@ export function EditorPage() {
             overwrite = true;
           }
           const sent = state.toWorkflow();
+          // Saving writes an explicit choice for approvals from before the note to the agent (shown as allowed).
+          const body = { ...sent, nodes: withExplicitAgentNote(sent.nodes) };
           const savedNote = note ?? state.pendingNote ?? undefined;
           let saved: Workflow;
           try {
             // If-Match with the revision the edit started from: the server refuses a stale save with 409.
-            saved = await api.saveWorkflow(state.workflowId, sent, savedNote, overwrite ? undefined : baseRef.current?.updated_at);
+            saved = await api.saveWorkflow(state.workflowId, body, savedNote, overwrite ? undefined : baseRef.current?.updated_at);
           } catch (error) {
             if (!(error instanceof ApiError && error.status === 409 && error.code === "workflow.conflict")) throw error;
             const latest = await api.workflow(state.workflowId);
             if (!(await settle(latest))) return null;
-            saved = await api.saveWorkflow(state.workflowId, sent, savedNote);
+            saved = await api.saveWorkflow(state.workflowId, body, savedNote);
           }
           useEditor.getState().markSaved(saved, sent);
           baseRef.current = saved;

@@ -130,7 +130,7 @@ Standardmäßig ist jede API asynchron. Unter **Limits** kannst du **Warten auf 
 Erreicht ein Lauf einen Freigabeschritt, wechselt er auf `awaiting_approval`. Entscheiden kannst du an zwei Stellen, und es zählt die erste Entscheidung:
 
 - in Nodestro auf der Seite Freigaben (siehe [Die Seite Freigaben](/docs/verzweigungen#freigaben-seite)), mit dem Hinweis „aus der veröffentlichten API“,
-- über `POST /runs/<id>/approve` mit `{"decision": "approved"}` oder `"rejected"` und optional einem Kommentar. Das braucht einen Schlüssel mit dem Recht `approve`.
+- über `POST /runs/<id>/approve` mit `{"decision": "approved"}` oder `"rejected"` optional einem `comment` (nur für Menschen) und optional einer `agent_note` (der Notiz an den Agenten, höchstens 2.000 Zeichen; mit `422` abgelehnt, wenn die Freigabe sie nicht erlaubt). Das braucht einen Schlüssel mit dem Recht `approve`.
 
 Wartende Freigaben überstehen einen Neustart von Nodestro. Ein fehlgeschlagener Lauf lässt sich mit `POST /runs/<id>/resume` fortsetzen. Erfolgreiche Schritte werden dabei wiederverwendet. Schritte, die Tools aufgerufen haben, laufen nur mit `confirm_side_effects: true` erneut.
 

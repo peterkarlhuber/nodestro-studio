@@ -210,6 +210,9 @@ export interface ApprovalConfig {
   allow_comment: boolean;
   require_comment_on_reject: boolean;
   on_reject: "branch" | "stop";
+  /** Whether the person may write a note to the later agents (the comment is for people only). ``null``: saved
+   * before the note existed; the runtime treats it as allowed and the workflow check warns once. */
+  allow_agent_note?: boolean | null;
 }
 
 export interface SubworkflowConfig {
@@ -722,7 +725,10 @@ export interface DecisionRecord {
 
 export interface ApprovalRecord {
   decision: "approved" | "rejected";
+  /** For people only; no model reads it. */
   comment: string;
+  /** The note to the agent: the only text of the decision later agents read. */
+  agent_note?: string;
   decided_at: string;
   decided_by: string;
   reused_from: string | null;
@@ -2401,6 +2407,8 @@ export interface PendingApproval {
   instructions: string;
   allow_comment: boolean;
   require_comment_on_reject: boolean;
+  /** Whether the person may write a note to the later agents (``agent_note``). */
+  allow_agent_note: boolean;
   on_reject: "branch" | "stop";
   has_rejected_branch: boolean;
   has_approved_branch: boolean;

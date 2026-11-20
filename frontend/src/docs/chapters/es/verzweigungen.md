@@ -50,19 +50,20 @@ Un **bucle** vuelve a ejecutar pasos hasta que un resultado encaja, por ejemplo 
 - **Crearlo:** arrastra una conexión desde una **rama** de una decisión o aprobación hacia un paso anterior. Nodestro la crea como bucle (discontinua, con «↻ máx. 3×») y la abre en el inspector. No es posible volver desde un agente: cada ronda termina con una decisión o aprobación.
 - **Límite:** *Rondas como máximo* (de 2 a 20) incluye la primera ejecución. Cada ronda vuelve a consumir tokens; el [presupuesto](/docs/workflows#budget) se aplica a toda la ejecución.
 - **Al alcanzar el límite:** la ejecución termina como fallida («El bucle … se ejecutó … veces sin alcanzar su objetivo») o sigue las otras ramas de la decisión. Si no se sigue ninguna, los pasos posteriores se omiten.
-- **Marcadores:** en la tarea de un paso del bucle, `{{iteration}}` es la ronda (desde 1), `{{previous}}` su propio resultado de la ronda anterior y `{{feedback}}` lo que volvió por el bucle (por ejemplo, la justificación de la revisión o el comentario de una aprobación rechazada). En la primera ronda ambos valen «-».
+- **Marcadores:** en la tarea de un paso del bucle, `{{iteration}}` es la ronda (desde 1), `{{previous}}` su propio resultado de la ronda anterior y `{{feedback}}` lo que volvió por el bucle (por ejemplo, la justificación de la revisión o la nota para el agente de una aprobación rechazada, nunca su comentario). En la primera ronda ambos valen «-».
 - **Aprobaciones en bucles:** una aprobación rechazada puede volver a una revisión por su rama *Rechazado*; la siguiente ronda vuelve a esperar una decisión.
 
 Durante una ejecución, cada paso muestra su **ronda**; en los detalles eliges entre los resultados de todas las rondas. Los bucles pueden anidarse, pero no solaparse. Al [continuar](#fortsetzen) una ejecución fallida, un bucle siempre se repite por completo.
 
 ## Aprobaciones {#freigabe}
-<!-- keywords: aprobación, visto bueno, human in the loop, revisar, rechazar, comentario, pausa -->
+<!-- keywords: aprobación, visto bueno, human in the loop, revisar, rechazar, comentario, nota para el agente, agent note, pausa -->
 
 Una **aprobación** detiene la ejecución hasta que una persona **aprueba** o **rechaza** los resultados. Nunca se aprueba nada automáticamente, tampoco en programaciones, ejecuciones por lotes o series de pruebas.
 
 - **Indicación para quien revisa:** en qué debe fijarse.
 - **Resultados mostrados:** qué resultados ve esa persona; sin selección, todo lo que llega.
-- **Comentario:** opcional u obligatorio al rechazar. Los agentes posteriores lo leen con el nombre de la aprobación; los nodos de resultado, los archivos de resultado y las decisiones no lo reciben. Queda guardado con la aprobación en la ejecución.
+- **Comentario:** opcional u obligatorio al rechazar. El comentario es solo para personas: queda guardado con la aprobación en la ejecución y aparece en la vista de la ejecución y en el registro. Ningún agente, subflujo ni orquestador lo lee.
+- **Permitir una nota para el agente:** quien revisa puede escribir una **nota para el agente** (como máximo 2.000 caracteres). Es el único texto de la decisión que leen los agentes posteriores, con el nombre de la aprobación (`{{<nombre de la aprobación>}}` o junto con las entradas); sin nota leen «-». Los nodos de resultado, los archivos de resultado y las decisiones no la reciben. Útil en bucles de revisión, donde la nota dice qué cambiar; desactívala en aprobaciones que detienen la ejecución al rechazar. Las aprobaciones nuevas la permiten. Las aprobaciones guardadas antes de que existiera la nota cuentan como permitidas, y la comprobación del flujo de trabajo lo indica una vez hasta que guardes el flujo de trabajo.
 - **Al rechazar:** seguir la rama **Rechazado** o terminar la ejecución. Si no hay nada conectado a *Rechazado*, ese camino simplemente termina.
 
 Mientras espera, la ejecución tiene el estado **En pausa** y la aprobación **Pendiente de aprobación**. Puedes decidir en el resumen de ejecución del editor, en la vista de detalle de la ejecución o en la página **Aprobaciones**. Después la ejecución continúa donde se detuvo. Las aprobaciones abiertas sobreviven a un reinicio de Nodestro.
@@ -72,7 +73,7 @@ Mientras espera, la ejecución tiene el estado **En pausa** y la aprobación **P
 
 La página **Aprobaciones** (navegación, grupo *Ejecutar y revisar*) lista todas las aprobaciones abiertas, la más antigua primero, con flujo de trabajo, origen (manual, programación, lote, serie de pruebas) y tiempo de espera. El número junto a la entrada del menú indica cuántas esperan.
 
-Cada tarjeta muestra la indicación, los resultados que revisar (los resultados estructurados como campos con etiqueta y el JSON a un clic), un campo de comentario y los botones *Aprobar* y *Rechazar*; los botones siguen a la vista aunque los resultados sean largos. Las aprobaciones dentro de subflujos también aparecen aquí, con la ruta hasta la ejecución principal. Las tarjetas de [llamadas a herramientas](/docs/verzweigungen#tool-freigabe) indican el flujo de trabajo y el paso («*flujo* · paso *nombre*»).
+Cada tarjeta muestra la indicación, los resultados que revisar (los resultados estructurados como campos con etiqueta y el JSON a un clic), un campo de comentario (solo para personas), el campo *Nota para el agente* si la aprobación la permite y los botones *Aprobar* y *Rechazar*; los botones siguen a la vista aunque los resultados sean largos. Las aprobaciones dentro de subflujos también aparecen aquí, con la ruta hasta la ejecución principal. Las tarjetas de [llamadas a herramientas](/docs/verzweigungen#tool-freigabe) indican el flujo de trabajo y el paso («*flujo* · paso *nombre*»).
 
 Las ejecuciones que esperan una [decisión de presupuesto](/docs/workflows#budget-freigabe) aparecen arriba en una sección propia **Decisiones de presupuesto**, con un enlace a la ejecución.
 

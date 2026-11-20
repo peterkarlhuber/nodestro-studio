@@ -50,19 +50,20 @@ Une **boucle** réexécute des étapes jusqu’à ce qu’un résultat convienne
 - **Créer une boucle :** tirez une connexion depuis une **branche** d’une décision ou d’une validation vers une étape antérieure. Nodestro la crée comme boucle (en pointillés, avec « ↻ max. 3× ») et l’ouvre dans l’inspecteur. Revenir depuis un agent n’est pas possible : chaque tour se termine par une décision ou une validation.
 - **Limite :** *Nombre maximal de tours* (de 2 à 20) inclut la première exécution. Chaque tour consomme à nouveau des tokens ; le [budget](/docs/workflows#budget) vaut pour toute l’exécution.
 - **Quand la limite est atteinte :** l’exécution se termine en échec (« La boucle … a tourné … fois sans atteindre son objectif ») ou suit les autres branches de la décision. Si aucune n’est suivie, les étapes suivantes sont ignorées.
-- **Espaces réservés :** dans la tâche d’une étape de la boucle, `{{iteration}}` est le tour (à partir de 1), `{{previous}}` son propre résultat du tour précédent et `{{feedback}}` ce qui est revenu par la boucle (par exemple la justification de la relecture ou le commentaire d’une validation refusée). Au premier tour, les deux valent « - ».
+- **Espaces réservés :** dans la tâche d’une étape de la boucle, `{{iteration}}` est le tour (à partir de 1), `{{previous}}` son propre résultat du tour précédent et `{{feedback}}` ce qui est revenu par la boucle (par exemple la justification de la relecture ou la note à l’agent d’une validation refusée, jamais son commentaire). Au premier tour, les deux valent « - ».
 - **Validations dans une boucle :** une validation refusée peut revenir vers une révision par sa branche *Refusé* ; le tour suivant attend alors de nouveau une décision.
 
 Pendant une exécution, chaque étape affiche son **tour** ; dans les détails, vous choisissez parmi les résultats de tous les tours. Les boucles peuvent être imbriquées, mais pas se chevaucher. Lorsqu’une exécution en échec est [reprise](#fortsetzen), une boucle est toujours entièrement réexécutée.
 
 ## Validations {#freigabe}
-<!-- keywords: validation, approbation, human in the loop, vérifier, refuser, commentaire, pause -->
+<!-- keywords: validation, approbation, human in the loop, vérifier, refuser, commentaire, note à l’agent, agent note, pause -->
 
 Une **validation** arrête l’exécution jusqu’à ce qu’une personne **valide** ou **refuse** les résultats. Rien n’est jamais validé automatiquement, pas même dans les planifications, les exécutions par lots ou les séries de tests.
 
 - **Consigne pour la personne qui vérifie :** ce à quoi elle doit faire attention.
 - **Résultats affichés :** quels résultats elle voit ; sans sélection, tout ce qui arrive.
-- **Commentaire :** facultatif, ou obligatoire en cas de refus. Les agents suivants le lisent sous le nom de la validation ; les nœuds de résultat, les fichiers de résultat et les décisions ne le reçoivent pas. Il reste enregistré avec la validation dans l’exécution.
+- **Commentaire :** facultatif, ou obligatoire en cas de refus. Le commentaire est uniquement pour les personnes : il reste enregistré avec la validation dans l’exécution et apparaît dans la vue de l’exécution et dans le journal. Aucun agent, sous-workflow ni orchestrateur ne le lit.
+- **Autoriser une note à l’agent :** la personne qui vérifie peut écrire une **note à l’agent** (2 000 caractères au maximum). C’est le seul texte de la décision que lisent les agents suivants, sous le nom de la validation (`{{<nom de la validation>}}`, ou avec les entrées) ; sans note, ils lisent « - ». Les nœuds de résultat, les fichiers de résultat et les décisions ne la reçoivent pas. Utile dans les boucles de révision, où la note dit quoi changer ; désactivez-la pour les validations qui arrêtent l’exécution en cas de refus. Les nouvelles validations l’autorisent. Les validations enregistrées avant l’existence de la note comptent comme l’autorisant, et la vérification du workflow le signale une fois jusqu’à ce que vous enregistriez le workflow.
 - **En cas de refus :** suivre la branche **Refusé** ou terminer l’exécution. Si rien n’est relié à *Refusé*, ce chemin s’arrête simplement.
 
 Pendant l’attente, l’exécution a le statut **En pause** et la validation **En attente de validation**. Vous pouvez décider dans la vue d’ensemble de l’exécution de l’éditeur, dans la vue détaillée de l’exécution ou sur la page **Validations**. L’exécution reprend ensuite là où elle s’était arrêtée. Les validations ouvertes survivent à un redémarrage de Nodestro.
@@ -72,7 +73,7 @@ Pendant l’attente, l’exécution a le statut **En pause** et la validation **
 
 La page **Validations** (navigation, groupe *Exécuter et vérifier*) liste toutes les validations ouvertes, la plus ancienne d’abord, avec le workflow, l’origine (manuelle, planification, lot, série de tests) et le temps d’attente. Le nombre à côté de l’entrée du menu indique combien attendent.
 
-Chaque carte montre la consigne, les résultats à vérifier (les résultats structurés sous forme de champs avec libellé, le JSON à un clic), un champ de commentaire et les boutons *Valider* et *Refuser* ; les boutons restent visibles même avec de longs résultats. Les validations à l’intérieur de sous-workflows apparaissent aussi ici, avec le chemin vers l’exécution parente. Les cartes d’[appels d’outils](/docs/verzweigungen#tool-freigabe) nomment le workflow et l’étape (« *workflow* · étape *nom* »).
+Chaque carte montre la consigne, les résultats à vérifier (les résultats structurés sous forme de champs avec libellé, le JSON à un clic), un champ de commentaire (uniquement pour les personnes), le champ *Note à l’agent* si la validation l’autorise, et les boutons *Valider* et *Refuser* ; les boutons restent visibles même avec de longs résultats. Les validations à l’intérieur de sous-workflows apparaissent aussi ici, avec le chemin vers l’exécution parente. Les cartes d’[appels d’outils](/docs/verzweigungen#tool-freigabe) nomment le workflow et l’étape (« *workflow* · étape *nom* »).
 
 Les exécutions qui attendent une [décision de budget](/docs/workflows#budget-freigabe) apparaissent en haut dans une section propre **Décisions de budget**, avec un lien vers l’exécution.
 

@@ -6002,9 +6002,28 @@ kbd {
   padding-left: 18px;
 }
 
+/* the note to the agent with its character count under the box */
+.approval-card__note {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-1);
+}
+
+.approval-card__count {
+  align-self: flex-end;
+}
+
 .approval-card__instructions {
   margin: 0;
   white-space: pre-wrap;
+}
+
+.approval-note {
+  margin-top: 6px;
+}
+
+.approval-note .approval-comment {
+  margin-top: 2px;
 }
 
 .approval-comment {

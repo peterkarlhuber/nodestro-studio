@@ -357,6 +357,14 @@ export function ApprovalInspector({ node }: { node: WorkflowNode }) {
         onChange={(value) => set({ require_comment_on_reject: value })}
         label={t("flow.approval.requireComment")}
       />
+      {/* An approval saved before the note existed (null) works as if the note were allowed; the toggle shows that,
+          and any change of this node then saves an explicit value (see normalizeApproval in the store). */}
+      <Toggle
+        checked={config.allow_agent_note !== false}
+        onChange={(value) => set({ allow_agent_note: value })}
+        label={t("flow.approval.allowAgentNote")}
+        description={t("flow.approval.allowAgentNoteHint")}
+      />
       <Field label={t("flow.approval.onReject")} tip="flow.approvalReject">
         <Segmented
           label={t("flow.approval.onReject")}

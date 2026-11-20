@@ -50,19 +50,20 @@ Un **ciclo** riesegue dei passi finché un risultato va bene, per esempio *Bozza
 - **Crearlo:** trascina un collegamento da un **ramo** di una decisione o di un’approvazione verso un passo precedente. Nodestro lo crea come ciclo (tratteggiato, con «↻ max. 3×») e lo apre nell’ispettore. Non si può tornare indietro da un agente: ogni giro termina con una decisione o un’approvazione.
 - **Limite:** *Giri al massimo* (da 2 a 20) include la prima esecuzione. Ogni giro consuma di nuovo token; il [budget](/docs/workflows#budget) vale per l’intera esecuzione.
 - **Quando il limite è raggiunto:** l’esecuzione termina come non riuscita («Il ciclo … è stato eseguito … volte senza raggiungere il suo obiettivo») oppure segue gli altri rami della decisione. Se nessuno viene seguito, i passi successivi vengono saltati.
-- **Segnaposto:** nel compito di un passo del ciclo, `{{iteration}}` è il giro (da 1), `{{previous}}` il suo risultato del giro precedente e `{{feedback}}` ciò che è tornato attraverso il ciclo (per esempio la motivazione della revisione o il commento di un’approvazione rifiutata). Al primo giro entrambi valgono «-».
+- **Segnaposto:** nel compito di un passo del ciclo, `{{iteration}}` è il giro (da 1), `{{previous}}` il suo risultato del giro precedente e `{{feedback}}` ciò che è tornato attraverso il ciclo (per esempio la motivazione della revisione o la nota per l'agente di un’approvazione rifiutata, mai il suo commento). Al primo giro entrambi valgono «-».
 - **Approvazioni nei cicli:** un’approvazione rifiutata può tornare a una revisione tramite il ramo *Rifiutato*; il giro successivo attende di nuovo una decisione.
 
 Durante un’esecuzione ogni passo mostra il suo **giro**; nei dettagli scegli tra i risultati di tutti i giri. I cicli possono essere annidati ma non sovrapporsi. Quando un’esecuzione non riuscita viene [ripresa](#fortsetzen), un ciclo viene sempre rieseguito per intero.
 
 ## Approvazioni {#freigabe}
-<!-- keywords: approvazione, via libera, human in the loop, verificare, rifiutare, commento, pausa -->
+<!-- keywords: approvazione, via libera, human in the loop, verificare, rifiutare, commento, nota per l'agente, agent note, pausa -->
 
 Un'**approvazione** ferma l'esecuzione finché una persona **approva** o **rifiuta** i risultati. Niente viene mai approvato automaticamente, nemmeno in pianificazioni, esecuzioni in serie o serie di test.
 
 - **Nota per chi verifica:** a cosa fare attenzione.
 - **Risultati mostrati:** quali risultati vede chi verifica; senza selezione, tutto ciò che arriva.
-- **Commento:** facoltativo oppure obbligatorio in caso di rifiuto. Gli agenti successivi lo leggono con il nome dell'approvazione; nodi di risultato, file di risultato e decisioni non lo ricevono. Resta salvato con l'approvazione nell'esecuzione.
+- **Commento:** facoltativo oppure obbligatorio in caso di rifiuto. Il commento è solo per le persone: resta salvato con l'approvazione nell'esecuzione e compare nella vista dell'esecuzione e nel registro. Nessun agente, sotto-workflow od orchestratore lo legge.
+- **Consenti una nota per l'agente:** chi verifica può scrivere una **nota per l'agente** (al massimo 2.000 caratteri). È l'unico testo della decisione che gli agenti successivi leggono, con il nome dell'approvazione (`{{<nome dell'approvazione>}}` o insieme agli input); senza nota leggono «-». Nodi di risultato, file di risultato e decisioni non la ricevono. Utile nei cicli di revisione, dove la nota dice cosa cambiare; disattivala per le approvazioni che fermano l'esecuzione in caso di rifiuto. Le nuove approvazioni la consentono. Le approvazioni salvate prima che la nota esistesse valgono come consentite, e la verifica del workflow lo segnala una volta finché non salvi il workflow.
 - **In caso di rifiuto:** seguire il ramo **Rifiutato** o terminare l'esecuzione. Se a *Rifiutato* non è collegato nulla, quel percorso semplicemente termina.
 
 Mentre attende, l'esecuzione ha lo stato **In pausa** e l'approvazione **In attesa di approvazione**. Puoi decidere nella panoramica dell'esecuzione dell'editor, nella vista di dettaglio dell'esecuzione o nella pagina **Approvazioni**. Poi l'esecuzione riprende dove si era fermata. Le approvazioni aperte sopravvivono a un riavvio di Nodestro.
@@ -72,7 +73,7 @@ Mentre attende, l'esecuzione ha lo stato **In pausa** e l'approvazione **In atte
 
 La pagina **Approvazioni** (navigazione, gruppo *Esegui e verifica*) elenca tutte le approvazioni aperte, dalla più vecchia, con workflow, origine (manuale, pianificazione, serie, serie di test) e tempo di attesa. Il numero accanto alla voce di menu indica quante sono in attesa.
 
-Ogni scheda mostra la nota, i risultati da verificare (i risultati strutturati come campi con etichetta, il JSON a un clic), un campo per il commento e i pulsanti *Approva* e *Rifiuta*; i pulsanti restano visibili anche con risultati lunghi. Anche le approvazioni dentro i sotto-workflow compaiono qui, con il percorso fino all'esecuzione principale. Le schede delle [chiamate di strumenti](/docs/verzweigungen#tool-freigabe) indicano workflow e passaggio («*workflow* · passo *nome*»).
+Ogni scheda mostra la nota, i risultati da verificare (i risultati strutturati come campi con etichetta, il JSON a un clic), un campo per il commento (solo per le persone), il campo *Nota per l'agente* se l'approvazione la consente e i pulsanti *Approva* e *Rifiuta*; i pulsanti restano visibili anche con risultati lunghi. Anche le approvazioni dentro i sotto-workflow compaiono qui, con il percorso fino all'esecuzione principale. Le schede delle [chiamate di strumenti](/docs/verzweigungen#tool-freigabe) indicano workflow e passaggio («*workflow* · passo *nome*»).
 
 Le esecuzioni che attendono una [decisione sul budget](/docs/workflows#budget-freigabe) compaiono in alto in una sezione propria **Decisioni sul budget**, con un link all’esecuzione.
 

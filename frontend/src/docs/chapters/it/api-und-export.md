@@ -130,7 +130,7 @@ Per impostazione predefinita ogni API è asincrona. In **Limiti** puoi attivare 
 Quando un’esecuzione raggiunge un passaggio di approvazione, passa a `awaiting_approval`. Puoi decidere in due punti, e conta la prima decisione:
 
 - in Nodestro nella pagina Approvazioni (vedi [La pagina Approvazioni](/docs/verzweigungen#freigaben-seite)), con l’indicazione “dall’API pubblicata”,
-- con `POST /runs/<id>/approve` e `{"decision": "approved"}` oppure `"rejected"` e un commento facoltativo. Serve una chiave con il permesso `approve`.
+- con `POST /runs/<id>/approve` e `{"decision": "approved"}` oppure `"rejected"` un `comment` facoltativo (solo per le persone) e una `agent_note` facoltativa (la nota per l'agente, al massimo 2.000 caratteri; rifiutata con `422` se l'approvazione non la consente). Serve una chiave con il permesso `approve`.
 
 Le approvazioni in attesa sopravvivono a un riavvio di Nodestro. Un’esecuzione fallita può riprendere con `POST /runs/<id>/resume`. I passaggi riusciti vengono riutilizzati. I passaggi che hanno chiamato strumenti vengono ripetuti solo con `confirm_side_effects: true`.
 

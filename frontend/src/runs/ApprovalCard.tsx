@@ -1,4 +1,5 @@
-// A pending approval: what the person reviews, an optional comment, and approve or reject.
+// A pending approval: what the person reviews, an optional comment (for people only), an optional note to the agent
+// (the only text of the decision later agents read), and approve or reject.
 // Nothing is ever approved automatically; the run waits until someone decides here.
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -15,7 +16,10 @@ import { Button, Callout, DisabledReason, Field, HelpTip, Section, TextArea } fr
 import { toast } from "../components/toast";
 import { useEditor } from "../editor/store";
 import { ErrorText } from "../lib/errors";
-import { formatDate } from "../lib/format";
+import { formatDate, formatNumber } from "../lib/format";
+
+/** The longest note to the agent the runtime accepts (``approval.agent_note_too_long`` beyond it). */
+export const AGENT_NOTE_MAX_CHARS = 2000;
 
 /** When the pages that show a decided run read it again (it continues a moment after the decision). */
 const FOLLOW_UP_MS = [700, 2000];
@@ -37,11 +41,12 @@ export function ApprovalForm({ approval, showContext = false }: { approval: Pend
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [comment, setComment] = useState("");
+  const [agentNote, setAgentNote] = useState("");
   // The run's workflow names the fields of a structured result; the card works without it as well.
   const waitingRun = useQuery({ queryKey: keys.run(approval.run_id), queryFn: () => api.run(approval.run_id), staleTime: 60_000 });
   const decide = useMutation({
     mutationFn: (decision: "approved" | "rejected") =>
-      api.decideApproval(approval.run_id, approval.node_id, decision, comment),
+      api.decideApproval(approval.run_id, approval.node_id, decision, comment, approval.allow_agent_note ? agentNote : ""),
     onSuccess: (run: Run, decision) => {
       toast.success(decision === "approved" ? t("approvals.approvedToast") : t("approvals.rejectedToast"));
       // The answer is the run as it was when the decision was taken (still paused: it continues right after).
@@ -118,6 +123,25 @@ export function ApprovalForm({ approval, showContext = false }: { approval: Pend
         >
           <TextArea rows={3} value={comment} maxLength={4000} onChange={(e) => setComment(e.target.value)} />
         </Field>
+      ) : null}
+      {approval.allow_agent_note ? (
+        <div className="approval-card__note">
+          <Field label={t("approvals.agentNote")} hint={t("approvals.agentNoteHint")}>
+            <TextArea
+              rows={3}
+              value={agentNote}
+              maxLength={AGENT_NOTE_MAX_CHARS}
+              onChange={(e) => setAgentNote(e.target.value)}
+              data-testid="approval-agent-note"
+            />
+          </Field>
+          <span
+            className={`small approval-card__count ${agentNote.length >= AGENT_NOTE_MAX_CHARS ? "text-warning" : "muted"}`}
+            aria-live="polite"
+          >
+            {t("approvals.agentNoteCount", { used: formatNumber(agentNote.length), max: formatNumber(AGENT_NOTE_MAX_CHARS) })}
+          </span>
+        </div>
       ) : null}
       <p className="muted small">{rejectHint}</p>
       {decide.error ? (

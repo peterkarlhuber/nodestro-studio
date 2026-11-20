@@ -148,6 +148,12 @@ export function FlowNodeDetails({ run, node, state }: { run?: Run; node: Workflo
           · {formatTime(state.approval.decided_at)} · {t("flow.run.decidedBy")}
           {state.approval.reused_from ? ` · ${t("flow.run.decisionReused")}` : ""}
           {state.approval.comment ? <blockquote className="approval-comment">{state.approval.comment}</blockquote> : null}
+          {state.approval.agent_note ? (
+            <div className="approval-note" data-testid="approval-agent-note-record">
+              <span className="small">{t("flow.run.agentNote")}</span>
+              <blockquote className="approval-comment">{state.approval.agent_note}</blockquote>
+            </div>
+          ) : null}
         </Callout>
       ) : null}
       {node.type === "approval" && state.status === "awaiting_approval" && run ? (
