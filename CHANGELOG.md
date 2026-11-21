@@ -4,7 +4,7 @@
 
 ### N-10: granted folders and read-only file tools (switch off; 2026-11-21)
 
-- The lock pins orkexa 7eb4287, nodestro-runtime 86d30ba, nodestro-api 97cfa58 and nodestro-sdk da0e25a (branches
+- The lock pins orkexa 25baac8, nodestro-runtime 87b38cb, nodestro-api 97cfa58 and nodestro-sdk da0e25a (branches
   `claude/w3-n10`). A person grants a folder for reading (`/api/folders`, admins only). Agents read it with the
   read-only tools `list_folder`, `read_file` and `search_files` through the path guard `orkexa.fs.SafeRoot`. Every
   call is checked against the access model and logged. Off by default (`NODESTRO_FOLDER_GRANTS`), never on a server
