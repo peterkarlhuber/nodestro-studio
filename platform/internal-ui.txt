@@ -2,7 +2,7 @@
 # <package> <version> nodestro-ui@<commit> <tarball> sha256=<hex>
 # Written by frontend/scripts/vendor-ui.mjs; checked by frontend/scripts/check-vendor.mjs before every npm ci.
 # scripts/bump_pins.py moves the commit (pin kind npm-tarball); vendor-ui.mjs then makes files and hashes follow.
-@nodestro/ui-ai 0.1.1 nodestro-ui@a1c92a1ed6a51563a900b5b28061b3c8d4c5c94f frontend/vendor/nodestro-ui-ai-0.1.1.tgz sha256=6c150ac36aaea430f098b394201cb743fcc3ae856576fd691753948c84c2face
-@nodestro/ui-core 0.1.1 nodestro-ui@a1c92a1ed6a51563a900b5b28061b3c8d4c5c94f frontend/vendor/nodestro-ui-core-0.1.1.tgz sha256=a6f37cc2c13162e4574c918d74b1ed468265055c56be0dfbe0dbaabb637fe745
-@nodestro/ui-themes 0.1.0 nodestro-ui@a1c92a1ed6a51563a900b5b28061b3c8d4c5c94f frontend/vendor/nodestro-ui-themes-0.1.0.tgz sha256=c20f8e3acf68eaec2b13809925952cf01a546e0d1f607f00226a4cf493f2df27
-@nodestro/ui-tokens 0.1.0 nodestro-ui@a1c92a1ed6a51563a900b5b28061b3c8d4c5c94f frontend/vendor/nodestro-ui-tokens-0.1.0.tgz sha256=22ab7c10d45c37bc1154c4d760b78c6328b761800f34605d798ef0c0d601008f
+@nodestro/ui-ai 0.1.1 nodestro-ui@85990fcc4984f2c73569046082beccd35a4be390 frontend/vendor/nodestro-ui-ai-0.1.1.tgz sha256=6c150ac36aaea430f098b394201cb743fcc3ae856576fd691753948c84c2face
+@nodestro/ui-core 0.1.1 nodestro-ui@85990fcc4984f2c73569046082beccd35a4be390 frontend/vendor/nodestro-ui-core-0.1.1.tgz sha256=a6f37cc2c13162e4574c918d74b1ed468265055c56be0dfbe0dbaabb637fe745
+@nodestro/ui-themes 0.1.0 nodestro-ui@85990fcc4984f2c73569046082beccd35a4be390 frontend/vendor/nodestro-ui-themes-0.1.0.tgz sha256=c20f8e3acf68eaec2b13809925952cf01a546e0d1f607f00226a4cf493f2df27
+@nodestro/ui-tokens 0.1.0 nodestro-ui@85990fcc4984f2c73569046082beccd35a4be390 frontend/vendor/nodestro-ui-tokens-0.1.0.tgz sha256=22ab7c10d45c37bc1154c4d760b78c6328b761800f34605d798ef0c0d601008f
