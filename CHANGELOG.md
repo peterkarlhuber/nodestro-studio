@@ -4,12 +4,20 @@
 
 ### N-09: offline per agent and per conversation (2026-11-21)
 
-- The lock pins nodestro-runtime 66979b7, nodestro-api 1519f03 and nodestro-sdk 56a10c3 (branches `claude/w3-n09`): `AgentConfig.offline`
-  applies the strict offline mode's rules to one agent, and a conversation's `offline` flag to every call of its
+- The lock pins nodestro-runtime 66979b7, nodestro-api 1519f03 and nodestro-sdk 56a10c3 (branches `claude/w3-n09`):
+  `AgentConfig.offline` applies the strict offline mode's rules to one agent, and a conversation's `offline` flag to every call of its
   answers, checked at every call (runtime `docs/offline.md`).
 - Agent editor, Advanced: the switch "Work offline" (`agent.advanced.offline`, `offlineHint`) sets `offline`; an agent
   without the field shows it off. Error texts for `offline.cloud_model`, `offline.remote_endpoint`,
   `offline.server_tools` and `offline.tool_unavailable`. All in six languages.
+
+### NS-003: Tabrion Studio uses nodestro-session (K-33 decision, wave 3; 2026-11-21)
+
+- `platform/dependency-policy.json`: the new edge `tabrion-studio -> nodestro-session` (required) and
+  `nodestro-session` in `components.tabrion-studio.studio_of`, so that Tabrion Studio may take its local-session
+  protection from the shared library instead of its own copy. tabrion-studio carries the regenerated copy
+  (`check_dependency_policy.py --copy tabrion-studio`). No pin or lock changes here: the studio's own locks do not
+  install Tabrion Studio.
 
 ### N-02: the shared library for the local session (2026-11-20)
 
