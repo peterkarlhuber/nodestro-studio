@@ -22,7 +22,8 @@
   download, rename, phone width, delete.
 - The lock pins nodestro-runtime 34680c4 (#210: RT-089 runs of deleted conversations are deleted once they stop,
   earlier files of the conversation are offered to later answers of the owner) and nodestro-api b194506 (#168:
-  `Meta.features`) while they are in review (paired branch `claude/w3-conv-ui`).
+  `Meta.features`), and `platform/versions.json` the sdk d85cbda (#141: the synced contract), while they are in
+  review (paired branch `claude/w3-conv-ui`).
 
 ### NS-003: Tabrion Studio uses nodestro-session (K-33 decision, wave 3; 2026-11-21)
 
