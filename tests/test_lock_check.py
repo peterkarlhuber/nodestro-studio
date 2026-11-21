@@ -183,6 +183,7 @@ def test_the_profiles_follow_versions_json() -> None:
         "nodestro-examples",
         "nodestro-integrations",
         "nodestro-runtime",
+        "nodestro-session",  # N-02: a base dependency of nodestro-api
         "orkexa",
         "tabrion",
     ]

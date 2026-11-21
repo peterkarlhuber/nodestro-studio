@@ -11,6 +11,7 @@
     "nodestro-integrations": {"kind": "platform"},
     "nodestro-api": {"kind": "platform"},
     "nodestro-sdk": {"kind": "platform", "distribution": "nodestro-client"},
+    "nodestro-session": {"kind": "library", "comment": "N-02: the shared protection of the local session (standard library only)"},
     "nodestro-studio": {
       "kind": "studio",
       "distribution": "nodestro",
@@ -43,6 +44,7 @@
     {"from": "nodestro-api", "to": "nodestro-runtime", "kind": "required", "extra": null, "status": "active"},
     {"from": "nodestro-api", "to": "orkexa", "kind": "required", "extra": null, "status": "active"},
     {"from": "nodestro-api", "to": "nodestro-examples", "kind": "required", "extra": null, "status": "active"},
+    {"from": "nodestro-api", "to": "nodestro-session", "kind": "required", "extra": null, "status": "active"},
     {"from": "nodestro-api", "to": "nodestro-runtime[postgres]", "kind": "optional", "extra": "server", "status": "active"},
     {"from": "nodestro-api", "to": "nodestro-runtime[postgres]", "kind": "dev", "extra": "dev", "status": "active"},
     {"from": "nodestro-api", "to": "tabrion[testing,postgres]", "kind": "dev", "extra": "dev", "status": "active"},

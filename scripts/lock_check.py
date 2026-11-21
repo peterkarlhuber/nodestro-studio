@@ -4,7 +4,7 @@
 environment of the interpreter that runs it (or the distributions in ``--path``), offline, and fails (exit 1) when
 
 - a component the profile needs is not installed (studio: nodestro-api, -runtime, -examples, -integrations and
-  orkexa; server: also axentra),
+  orkexa, tabrion and nodestro-session; server: also axentra),
 - an installed component (any component of versions.json, also one the profile does not need) was not installed
   from ``https://github.com/peterkarlhuber/<repo>.git`` at the pinned commit (its ``direct_url.json``: a missing file,
   an editable or local install, another URL or another commit). This detects an accidental install from an index; it
@@ -47,8 +47,9 @@ STUDIO = "nodestro"
 DISTRIBUTIONS = {"nodestro-sdk": "nodestro-client"}
 SUBDIRECTORIES = {"nodestro-sdk": "python"}
 #: Components every profile needs besides the studio's direct dependencies (``studio_dependency`` in versions.json):
-#: orkexa, and the foundation tabrion, a base dependency of nodestro-runtime since TABRION MIG-NOD-3 (K-32, doc 06 N-1).
-STUDIO_PROFILE_EXTRA = ("orkexa", "tabrion")
+#: orkexa, the foundation tabrion, a base dependency of nodestro-runtime since TABRION MIG-NOD-3 (K-32, doc 06 N-1), and
+#: nodestro-session, a base dependency of nodestro-api since N-02.
+STUDIO_PROFILE_EXTRA = ("orkexa", "tabrion", "nodestro-session")
 #: Components only the server profile contains (nodestro-runtime[postgres]); the studio profile must not.
 SERVER_ONLY = ("axentra",)
 PROFILES = ("studio", "server")
