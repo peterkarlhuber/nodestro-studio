@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### N-09: offline per agent and per conversation (2026-11-21)
+
+- The lock pins nodestro-runtime 66979b7 and nodestro-api 635e267 (branches `claude/w3-n09`): `AgentConfig.offline`
+  applies the strict offline mode's rules to one agent, and a conversation's `offline` flag to every call of its
+  answers, checked at every call (runtime `docs/offline.md`).
+- Agent editor, Advanced: the switch "Work offline" (`agent.advanced.offline`, `offlineHint`) sets `offline`; an agent
+  without the field shows it off. Error texts for `offline.cloud_model`, `offline.remote_endpoint`,
+  `offline.server_tools` and `offline.tool_unavailable`. All in six languages.
+
 ### N-02: the shared library for the local session (2026-11-20)
 
 - New component `nodestro-session` (K-33 decision, wave 2): `kind: library` in `platform/dependency-policy.json`

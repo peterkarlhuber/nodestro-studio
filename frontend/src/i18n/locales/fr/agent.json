@@ -301,6 +301,8 @@
     "chooseTool": "Choisir un outil …",
     "toolErrors": "Renvoyer les erreurs d’outils au modèle",
     "toolErrorsHint": "Au lieu de s’arrêter, l’agent voit le message d’erreur et peut réagir.",
+    "offline": "Hors ligne",
+    "offlineHint": "Modèles locaux uniquement. Les outils qui ont besoin d’Internet ne sont pas disponibles pour cet agent.",
     "caching": "Cache de prompt",
     "cachingHint": "Les parties répétées du prompt sont lues à moindre coût.",
     "cacheTtl": "Durée du cache",

@@ -301,6 +301,8 @@
     "chooseTool": "Choose a tool …",
     "toolErrors": "Return tool errors to the model",
     "toolErrorsHint": "Instead of stopping, the agent sees the error message and can react.",
+    "offline": "Work offline",
+    "offlineHint": "Only local models. Tools that need the internet are not available to this agent.",
     "caching": "Prompt caching",
     "cachingHint": "Repeated parts of the prompt are read at a lower price.",
     "cacheTtl": "Cache duration",

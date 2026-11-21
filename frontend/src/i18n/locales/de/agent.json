@@ -301,6 +301,8 @@
     "chooseTool": "Tool wählen …",
     "toolErrors": "Tool-Fehler an das Modell zurückgeben",
     "toolErrorsHint": "Statt abzubrechen, sieht der Agent die Fehlermeldung und kann reagieren.",
+    "offline": "Offline arbeiten",
+    "offlineHint": "Nur lokale Modelle. Tools, die das Internet brauchen, stehen diesem Agenten nicht zur Verfügung.",
     "caching": "Prompt-Caching",
     "cachingHint": "Wiederholte Teile des Prompts werden günstiger gelesen.",
     "cacheTtl": "Cache-Dauer",

@@ -1198,6 +1198,12 @@ function AdvancedSection({
         checked={!agent.raise_tool_errors}
         onChange={(on) => update({ raise_tool_errors: !on })}
       />
+      <Toggle
+        label={t("agent.advanced.offline")}
+        description={t("agent.advanced.offlineHint")}
+        checked={agent.offline ?? false}
+        onChange={(offline) => update({ offline })}
+      />
       <ModelOptionGate profile={profile} provider={provider} option="cache_control" set={!agent.cache_control || agent.cache_ttl !== "5m"}>
         <Toggle
           label={t("agent.advanced.caching")}

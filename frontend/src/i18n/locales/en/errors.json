@@ -1305,5 +1305,11 @@
     "offline_cloud_model": "This conversation is offline, so only a local model can answer. Choose a local model or switch off offline.",
     "run_missing": "The run of this answer no longer exists.",
     "too_many_files": "This conversation holds as many files as it can. Remove some first."
+  },
+  "offline": {
+    "cloud_model": "Offline is on for this agent or conversation, so only local models can be used, not {{model}}.",
+    "remote_endpoint": "Offline is on for this agent or conversation, and the local model server is not on this computer.",
+    "server_tools": "Offline is on for this agent or conversation, so server tools cannot be used ({{names}}).",
+    "tool_unavailable": "{{name}} is not available offline."
   }
 }
