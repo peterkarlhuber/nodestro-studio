@@ -175,8 +175,10 @@ registry: their tarballs, built reproducibly from one nodestro-ui commit, live i
 tarball's integrity in `package-lock.json`, but a warm npm cache can install a stale copy without noticing, so every
 `npm ci` of the frontend runs after `node scripts/check-vendor.mjs` (pins, files, hashes, package.json and lockfile
 agree) and is followed by `node scripts/check-vendor.mjs --installed` (`node_modules` holds exactly the tarballs'
-files, none changed, missing or added); `tests/test_ui_vendor_ci.py` keeps the workflows and the Makefile so. To move
-the packages:
+files, none changed, missing or added); `tests/test_ui_vendor_ci.py` keeps the workflows and the Makefile so. The
+frontend CI job also runs `node scripts/verify-ui-pin.mjs`: it reads nodestro-ui's `artifacts/manifest.json` at the
+pinned commit (raw.githubusercontent.com, no token) and compares version, file and SHA-256 of every pin. To move the
+packages:
 
 ```sh
 python scripts/bump_pins.py set . --set nodestro-ui=<sha>              # moves the commit (pin kind npm-tarball)

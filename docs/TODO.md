@@ -125,8 +125,8 @@ from #121). Both have status `Needs external review`.
   `platform/internal-ui.txt`
 - **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`; core and ai 0.1.1) are vendored as
   tarballs in `frontend/vendor/`, pinned with their SHA-256 in `platform/internal-ui.txt`, checked by
-  `frontend/scripts/check-vendor.mjs` before every `npm ci` (and against `node_modules` after it in the frontend job),
-  moved with `scripts/bump_pins.py` (pin kind `npm-tarball`) plus `frontend/scripts/vendor-ui.mjs`. The studio loads
+  `frontend/scripts/check-vendor.mjs` before every `npm ci` and against `node_modules` after it, compared in CI with
+  nodestro-ui's `artifacts/manifest.json` at the pinned commit (`frontend/scripts/verify-ui-pin.mjs`), moved with `scripts/bump_pins.py` (pin kind `npm-tarball`) plus `frontend/scripts/vendor-ui.mjs`. The studio loads
   the tokens, the `nodestro` brand theme and the component styles (`src/main.tsx`); the first component in use is the
   package's `RememberOptions` in the tool approval card, with the studio's own texts. Contract tests:
   `src/runs/uiPackages.contract.test.tsx`, `scripts/ui-vendor.test.mjs`.

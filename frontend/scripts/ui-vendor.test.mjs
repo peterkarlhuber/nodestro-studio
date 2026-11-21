@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
-import { PIN_FILE, checkInstalled, checkVendor, readPins, untar } from "./ui-vendor-lib.mjs";
+import { PIN_FILE, checkInstalled, checkVendor, compareManifest, manifestUrl, readPins, untar } from "./ui-vendor-lib.mjs";
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const scratch = mkdtempSync(join(tmpdir(), "ui-vendor-test-"));
@@ -94,5 +94,40 @@ describe("vendored UI packages", () => {
         `${pin.name}: dist/deep/more.js in node_modules is not in ${pin.file}`,
       ].sort(),
     );
+  });
+
+  describe("against nodestro-ui's manifest at the pinned commit", () => {
+    const { pins } = readPins(repo);
+    /** The manifest nodestro-ui writes, made from the pins (the CI step fetches the real one). */
+    const manifest = () => ({
+      format: 1,
+      packages: pins.map((p) => ({ name: p.name, version: p.version, file: p.file.slice("frontend/vendor/".length), sha256: p.sha256 })),
+    });
+
+    it("accept the pins when the manifest lists the same versions, files and SHA-256", () => {
+      expect(compareManifest(pins, manifest())).toEqual([]);
+    });
+
+    it("refuse a different SHA-256, version or file, and a package the manifest does not list", () => {
+      const m = manifest();
+      const [a, b, c, d] = m.packages;
+      a.sha256 = "0".repeat(64);
+      b.version = "9.9.9";
+      c.file = "other.tgz";
+      m.packages = m.packages.filter((p) => p !== d);
+      const problems = compareManifest(pins, m);
+      expect(problems).toHaveLength(4);
+      expect(problems[0]).toContain(`${a.name}: manifest SHA-256 ${"0".repeat(64)}`);
+      expect(problems.join("\n")).toContain(`${b.name}: manifest version 9.9.9`);
+      expect(problems.join("\n")).toContain(`${c.name}: manifest file other.tgz`);
+      expect(problems.join("\n")).toContain(`${d.name}: not in nodestro-ui's manifest`);
+      expect(compareManifest(pins, { format: 2, packages: [] })).toEqual(["manifest.json: unknown format"]);
+    });
+
+    it("read the manifest only from nodestro-ui's raw file at a full commit", () => {
+      expect(manifestUrl(pins[0].commit)).toBe(`https://raw.githubusercontent.com/peterkarlhuber/nodestro-ui/${pins[0].commit}/artifacts/manifest.json`);
+      expect(() => manifestUrl("master")).toThrow();
+      expect(() => manifestUrl("../evil")).toThrow();
+    });
   });
 });

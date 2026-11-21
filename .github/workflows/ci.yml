@@ -79,6 +79,9 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       # N-16: the vendored UI tarballs must match platform/internal-ui.txt before npm runs (a warm npm cache can
       # install a stale copy without noticing), and node_modules must hold exactly their content afterwards.
+      # The pinned SHA-256s are the ones nodestro-ui recorded for that commit (artifacts/manifest.json, read-only over
+      # raw.githubusercontent.com, no token).
+      - run: node scripts/verify-ui-pin.mjs
       - run: node scripts/check-vendor.mjs
       - run: npm ci
       - run: node scripts/check-vendor.mjs --installed

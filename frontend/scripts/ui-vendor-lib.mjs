@@ -129,3 +129,29 @@ export function checkInstalled(repo) {
   }
   return problems;
 }
+
+/** Where nodestro-ui publishes the manifest of a commit's tarballs: read-only, no token, public repository. */
+export const manifestUrl = (commit) => {
+  if (!/^[0-9a-f]{40}$/.test(commit)) throw new Error(`not a commit: ${commit}`);
+  return `https://raw.githubusercontent.com/peterkarlhuber/nodestro-ui/${commit}/artifacts/manifest.json`;
+};
+
+/**
+ * The pins against nodestro-ui's artifacts/manifest.json at the pinned commit: each pinned package must be listed
+ * there with the same version, file name and SHA-256, so the vendored tarballs are the ones nodestro-ui built.
+ */
+export function compareManifest(pins, manifest) {
+  const problems = [];
+  if (manifest?.format !== 1 || !Array.isArray(manifest.packages)) return ["manifest.json: unknown format"];
+  for (const pin of pins) {
+    const entry = manifest.packages.find((p) => p.name === pin.name);
+    if (!entry) {
+      problems.push(`${pin.name}: not in nodestro-ui's manifest at ${pin.commit}`);
+      continue;
+    }
+    if (entry.version !== pin.version) problems.push(`${pin.name}: manifest version ${entry.version}, the pin ${pin.version}`);
+    if (`frontend/vendor/${entry.file}` !== pin.file) problems.push(`${pin.name}: manifest file ${entry.file}, the pin ${pin.file}`);
+    if (entry.sha256 !== pin.sha256) problems.push(`${pin.name}: manifest SHA-256 ${entry.sha256}, the pin ${pin.sha256}`);
+  }
+  return problems;
+}
