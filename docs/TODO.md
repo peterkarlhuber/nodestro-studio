@@ -123,7 +123,7 @@ from #121). Both have status `Needs external review`.
 
 - **Priority:** P3 Low · **Status:** Open (first step done) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
   `platform/internal-ui.txt`
-- **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`, all 0.1.0) are vendored as
+- **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`; core and ai 0.1.1) are vendored as
   tarballs in `frontend/vendor/`, pinned with their SHA-256 in `platform/internal-ui.txt`, checked by
   `frontend/scripts/check-vendor.mjs` before every `npm ci` (and against `node_modules` after it in the frontend job),
   moved with `scripts/bump_pins.py` (pin kind `npm-tarball`) plus `frontend/scripts/vendor-ui.mjs`. The studio loads

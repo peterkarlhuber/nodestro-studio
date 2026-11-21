@@ -2,8 +2,8 @@
 // exists and behaves as the studio expects. A version bump of the vendored tarballs that renames a key, drops a prop
 // or changes the remember options fails here (and in the type check), not unnoticed in the product.
 
-import { RememberOptions, aiMessages, type RememberChoice } from "@nodestro/ui-ai";
-import { LOCALES, UiTextProvider } from "@nodestro/ui-core";
+import { RememberOptions, aiMessages, safeHref, type RememberChoice } from "@nodestro/ui-ai";
+import { LOCALES, UiTextProvider, isInAppPath, safeHelpHref } from "@nodestro/ui-core";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -37,5 +37,14 @@ describe("@nodestro/ui-ai as the studio uses it", () => {
     expect(screen.getByRole("option", { name: "Agent wf/a" })).toBeInTheDocument();
     await userEvent.selectOptions(screen.getByLabelText("Wie lange"), "until");
     expect(onChange).toHaveBeenCalledWith({ duration: "until", scope: "agent", until: "" });
+  });
+
+  it("never links outside the site from a path (0.1.1: backslash, control characters, //host)", () => {
+    for (const href of ["//evil.example", "/\\evil.example", "/\t/evil.example"]) {
+      expect(safeHref(href, true)).toBeNull();
+      expect(safeHelpHref(href)).toBeUndefined();
+      expect(isInAppPath(href)).toBe(false);
+    }
+    expect(safeHref("/files/1", true)).toBe("/files/1");
   });
 });
