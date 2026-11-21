@@ -1305,5 +1305,11 @@
     "offline_cloud_model": "Esta conversa está offline, então só um modelo local pode responder. Escolha um modelo local ou desative o modo offline.",
     "run_missing": "A execução desta resposta não existe mais.",
     "too_many_files": "Esta conversa já tem o máximo de arquivos. Remova alguns primeiro."
+  },
+  "offline": {
+    "cloud_model": "Este agente ou esta conversa está offline, então só modelos locais podem ser usados, não {{model}}.",
+    "remote_endpoint": "Este agente ou esta conversa está offline, e o servidor de modelos locais não está neste computador.",
+    "server_tools": "Este agente ou esta conversa está offline, então ferramentas de servidor não podem ser usadas ({{names}}).",
+    "tool_unavailable": "{{name}} não está disponível offline."
   }
 }

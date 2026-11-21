@@ -301,6 +301,8 @@
     "chooseTool": "Elegir herramienta …",
     "toolErrors": "Devolver al modelo los errores de herramientas",
     "toolErrorsHint": "En lugar de detenerse, el agente ve el mensaje de error y puede reaccionar.",
+    "offline": "Sin conexión",
+    "offlineHint": "Solo modelos locales. Las herramientas que necesitan Internet no están disponibles para este agente.",
     "caching": "Caché de prompts",
     "cachingHint": "Las partes repetidas del prompt se leen a menor coste.",
     "cacheTtl": "Duración de la caché",
