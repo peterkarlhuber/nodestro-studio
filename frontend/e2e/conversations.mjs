@@ -67,7 +67,8 @@ try {
   await page.goto(`${base}/executions`);
   await page.getByRole("link", { name: "Conversations" }).click();
   await page.waitForURL(/\/conversations$/);
-  check(await page.getByRole("heading", { name: "Choose a conversation" }).isVisible(), "The empty area asks to choose a conversation");
+  await page.getByRole("heading", { name: "Choose a conversation" }).waitFor();
+  check(true, "The empty area asks to choose a conversation");
   await page.getByTestId("conversation-new").click();
   await page.getByTestId("conversation-new-agent").selectOption({ label: "Reiseberater" });
   await page.getByRole("switch", { name: /Choose a model/ }).click();
