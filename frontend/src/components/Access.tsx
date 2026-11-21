@@ -6,8 +6,9 @@ import { Lock, LogOut, UserRound } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { type Access, type Permission, logout, useAccess } from "../api/access";
+import { type Access, type Permission, logout, logoutDesktop, useAccess } from "../api/access";
 import { request, startLogin } from "../api/client";
+import { launchSession, markSignedOut } from "../api/session";
 import { problemText } from "../lib/errors";
 import { toast } from "./toast";
 import { Button, Select } from "./ui";
@@ -108,6 +109,40 @@ export function UserMenu() {
         </Button>
       </div>
     </details>
+  );
+}
+
+/**
+ * The sign-out of the desktop app's window (NS-002, NODESTRO_DESKTOP_LOGOUT): offered only when the backend's launch
+ * page said so. Afterwards this window has no access any more; the desktop app opens a new one after a restart.
+ */
+export function DesktopSignOut() {
+  const { t } = useTranslation();
+  const access = useAccess();
+  const [busy, setBusy] = useState(false);
+  if (access.profile !== "desktop" || !launchSession().logout) return null;
+  const signOut = async () => {
+    setBusy(true);
+    try {
+      await logoutDesktop();
+      markSignedOut();
+    } catch (error) {
+      setBusy(false);
+      toast.error(error);
+    }
+  };
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      icon={LogOut}
+      busy={busy}
+      title={t("admin.desktop.signOutHint")}
+      onClick={() => void signOut()}
+      data-testid="desktop-sign-out"
+    >
+      {t("admin.user.logout")}
+    </Button>
   );
 }
 

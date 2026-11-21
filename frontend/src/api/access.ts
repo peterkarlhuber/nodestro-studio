@@ -51,6 +51,11 @@ export function logout(): Promise<void> {
   return request<void>("POST", "/auth/logout");
 }
 
+/** Ends the desktop window's launch session (NODESTRO_DESKTOP_LOGOUT of nodestro-api; offered only when it is on). */
+export function logoutDesktop(): Promise<{ ended: number }> {
+  return request<{ ended: number }>("POST", "/logout");
+}
+
 export interface Access {
   profile: Profile;
   /** The signed-in user on a server; null on the desktop and while unknown. */

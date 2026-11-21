@@ -671,7 +671,9 @@
     "forwarded_not_allowed": "Von einem Proxy weitergeleitete Anfragen werden nicht angenommen: Nodestro antwortet nur diesem Rechner.",
     "invalid_plain": "Die Anfrage passt nicht zur erwarteten Eingabe.",
     "too_large_limit": "Die Anfrage ist zu groß: Angenommen werden höchstens {{limit_mb}} MB.",
-    "malformed": "Die Anfrage kann nicht gelesen werden. Lade die Seite neu und versuche es noch einmal."
+    "malformed": "Die Anfrage kann nicht gelesen werden. Lade die Seite neu und versuche es noch einmal.",
+    "origin_required": "Diese Änderung nennt nicht die Seite, von der sie kommt, und wurde abgelehnt. Verwende Nodestro selbst.",
+    "json_only": "Diese Änderung muss als JSON (oder als Formular mit Dateien) gesendet werden und wurde abgelehnt."
   },
   "publication": {
     "disabled": "Diese API ist ausgeschaltet.",
@@ -830,7 +832,10 @@
     "unattended_scope": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht muss ihre Agenten nennen.",
     "unattended_too_long": "Eine Freigabe über das Lesen hinaus für Ausführungen ohne Aufsicht gilt höchstens {{days}} Tage.",
     "grants_disabled": "Erlaubnisse und Sperren sind in dieser Installation nicht eingeschaltet.",
-    "tool_changed": "Das Tool hat sich seit der Anzeige geändert, deshalb wurde keine Erlaubnis gespeichert. Sieh dir den Aufruf noch einmal an."
+    "tool_changed": "Das Tool hat sich seit der Anzeige geändert, deshalb wurde keine Erlaubnis gespeichert. Sieh dir den Aufruf noch einmal an.",
+    "csrf_invalid": "Diese Änderung wurde abgelehnt, weil ihr der Sicherheitswert der Sitzung fehlt. Lade Nodestro aus der Desktop-App neu.",
+    "launch_expired": "Der Startlink ist abgelaufen. Starte die Desktop-App neu, um ein neues Fenster zu öffnen.",
+    "launch_ttl_invalid": "Die Gültigkeit des Startlinks muss eine Zahl von 1 bis 3600 Sekunden sein."
   },
   "sandbox": {
     "isolation_required": "KI-erstellter Code und Tools unbekannter Herkunft laufen nur isoliert (in Docker oder, wenn gewählt, in der eingebauten Linux-Sandbox); nichts davon ist verfügbar, daher wurde nichts ausgeführt. Den Grund zeigt Einstellungen → Sandbox.",

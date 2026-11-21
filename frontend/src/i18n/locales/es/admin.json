@@ -136,5 +136,10 @@
     "changed": "{{name}} ahora es {{role}}.",
     "removed": "{{name}} ya no tiene acceso a este espacio de trabajo.",
     "empty": "Este espacio de trabajo aún no tiene miembros."
+  },
+  "desktop": {
+    "signOutHint": "Termina la sesión de esta ventana. Para continuar, reinicie la aplicación de escritorio.",
+    "signedOutTitle": "Ha cerrado la sesión",
+    "signedOutText": "Esta ventana ya no tiene acceso a Nodestro. Ciérrela e inicie de nuevo la aplicación de escritorio para continuar."
   }
 }
