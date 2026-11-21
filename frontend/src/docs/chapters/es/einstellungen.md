@@ -351,6 +351,8 @@ Se detiene con **Ctrl+C**. Las ejecuciones en curso se cancelan.
 
 > **Seguridad:** Nodestro aún no tiene gestión de usuarios, por eso solo responde a este equipo. `--host 0.0.0.0`, otras direcciones de red o nombres de red en `NODESTRO_ALLOWED_HOSTS` detienen el inicio, y Nodestro no puede ponerse detrás de un proxy inverso. Para que otros dispositivos usen un flujo de trabajo, publícalo como API: las API publicadas usan claves de API y tienen su propio acceso de red (ver *API y exportación*).
 
+> **Enlace de inicio y cierre de sesión:** Nodestro puede protegerse con un enlace de inicio de un solo uso. El comando `nodestro` abre entonces el navegador mediante un archivo privado y muestra el enlace una vez en el terminal: ningún otro programa de este equipo puede usar Nodestro, y el enlace no funciona una segunda vez. Si la barra superior muestra **Cerrar sesión**, termina la sesión de esta ventana; Nodestro solo vuelve a abrirse tras un reinicio. Ambas cosas están desactivadas en esta versión, salvo que su instalación las active.
+
 ## Nodestro en un servidor {#server}
 <!-- keywords: servidor, iniciar sesión, inicio de sesión, cerrar sesión, rol, roles, permiso, permisos, espacio de trabajo, tenant, solo lectura, miembros, nodestro-server, set-role, remove-member, revoke-sessions, sesión caducada -->
 

@@ -136,5 +136,10 @@
     "changed": "{{name}} est maintenant {{role}}.",
     "removed": "{{name}} n’a plus accès à cet espace de travail.",
     "empty": "Cet espace de travail n’a encore aucun membre."
+  },
+  "desktop": {
+    "signOutHint": "Met fin à la session de cette fenêtre. Pour continuer, redémarrez l’application de bureau.",
+    "signedOutTitle": "Vous êtes déconnecté",
+    "signedOutText": "Cette fenêtre n’a plus accès à Nodestro. Fermez-la et relancez l’application de bureau pour continuer."
   }
 }

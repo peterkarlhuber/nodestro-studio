@@ -671,7 +671,9 @@
     "forwarded_not_allowed": "Le richieste inoltrate da un proxy non sono accettate: Nodestro risponde solo a questo computer.",
     "invalid_plain": "La richiesta non corrisponde all’input previsto.",
     "too_large_limit": "La richiesta è troppo grande: sono accettati al massimo {{limit_mb}} MB.",
-    "malformed": "Non è possibile leggere la richiesta. Ricarica la pagina e riprova."
+    "malformed": "Non è possibile leggere la richiesta. Ricarica la pagina e riprova.",
+    "origin_required": "Questa modifica non indica la pagina da cui proviene ed è stata rifiutata. Usa Nodestro direttamente.",
+    "json_only": "Questa modifica deve essere inviata come JSON (o come modulo con file) ed è stata rifiutata."
   },
   "publication": {
     "disabled": "Questa API è disattivata.",
@@ -830,7 +832,10 @@
     "unattended_scope": "Un’autorizzazione oltre la lettura per esecuzioni senza supervisione deve indicare i suoi agenti.",
     "unattended_too_long": "Un’autorizzazione oltre la lettura per esecuzioni senza supervisione dura al massimo {{days}} giorni.",
     "grants_disabled": "Permessi e blocchi non sono attivati in questa installazione.",
-    "tool_changed": "Lo strumento è cambiato da quando è stato mostrato, quindi non è stato salvato alcun permesso. Riguarda la chiamata."
+    "tool_changed": "Lo strumento è cambiato da quando è stato mostrato, quindi non è stato salvato alcun permesso. Riguarda la chiamata.",
+    "csrf_invalid": "Questa modifica è stata rifiutata perché manca il valore di sicurezza della sessione. Riapri Nodestro dall’app desktop.",
+    "launch_expired": "Il link di avvio è scaduto. Riavvia l’app desktop per aprire una nuova finestra.",
+    "launch_ttl_invalid": "La validità del link di avvio deve essere un numero di secondi da 1 a 3600."
   },
   "sandbox": {
     "isolation_required": "Il codice creato dall’IA e gli strumenti di origine sconosciuta vengono eseguiti solo isolati (in Docker oppure, se scelta, nella sandbox Linux integrata); niente di questo è disponibile, quindi non è stato eseguito nulla. Impostazioni → Sandbox mostra il motivo.",

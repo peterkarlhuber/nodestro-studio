@@ -153,3 +153,22 @@
   min-width: 9rem;
   max-width: 100%;
 }
+
+/* The window after the desktop sign-out (components/SignedOut.tsx). */
+.signed-out {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nd-space-2);
+  min-height: 100vh;
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: var(--nd-space-4);
+  text-align: center;
+}
+
+.signed-out h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}

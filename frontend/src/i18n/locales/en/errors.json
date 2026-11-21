@@ -671,7 +671,9 @@
     "forwarded_not_allowed": "Requests forwarded by a proxy are not accepted: Nodestro only answers this computer.",
     "invalid_plain": "The request does not fit the expected input.",
     "too_large_limit": "The request is too large: at most {{limit_mb}} MB are accepted.",
-    "malformed": "The request cannot be read. Reload the page and try again."
+    "malformed": "The request cannot be read. Reload the page and try again.",
+    "origin_required": "This change does not say which page sent it and was refused. Use Nodestro itself.",
+    "json_only": "This change must be sent as JSON (or as a form with files) and was refused."
   },
   "publication": {
     "disabled": "This API is switched off.",
@@ -830,7 +832,10 @@
     "unattended_scope": "A permission beyond reading for runs nobody watches must name its agents.",
     "unattended_too_long": "A permission beyond reading for runs nobody watches may last at most {{days}} days.",
     "grants_disabled": "Permissions and blocks are not switched on for this installation.",
-    "tool_changed": "The tool changed since it was shown, so no permission was saved. Look at the call again."
+    "tool_changed": "The tool changed since it was shown, so no permission was saved. Look at the call again.",
+    "csrf_invalid": "This change was refused because it lacks the session's security value. Reload Nodestro from the desktop app.",
+    "launch_expired": "The launch link has expired. Restart the desktop app to open a new window.",
+    "launch_ttl_invalid": "The validity of the launch link must be a number of seconds from 1 to 3600."
   },
   "sandbox": {
     "isolation_required": "AI-created code and tools of unknown origin run only isolated (in Docker, or in the built-in Linux sandbox if it was chosen); none is available, so nothing was run. Settings → Sandbox shows why.",
