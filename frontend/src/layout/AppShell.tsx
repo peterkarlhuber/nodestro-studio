@@ -34,7 +34,7 @@ import { useAccess } from "../api/access";
 import { pendingBudgetRequests, useApprovals, useBudgetRequests, useSettings, useToolApprovals } from "../api/hooks";
 import { AssistantPanel } from "../assistant/AssistantPanel";
 import { useAssistant } from "../assistant/store";
-import { LoginProblemNotice, ReadOnlyNotice, UserMenu } from "../components/Access";
+import { DesktopSignOut, LoginProblemNotice, ReadOnlyNotice, UserMenu } from "../components/Access";
 import { BrandLogo, BrandMark } from "../components/BrandLogo";
 import { Toaster } from "../components/toast";
 import { MissingModelHost } from "../missingModel/MissingModelDialog";
@@ -287,6 +287,7 @@ export function AppShell() {
           <NotificationBell />
           <SettingsEntry />
           <UserMenu />
+          <DesktopSignOut />
           <Segmented
             label={t("shell.theme")}
             value={theme}

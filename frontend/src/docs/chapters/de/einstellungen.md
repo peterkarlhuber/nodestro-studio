@@ -351,6 +351,8 @@ Beenden mit **Strg+C**. Laufende Läufe werden dabei abgebrochen.
 
 > **Sicherheit:** Nodestro hat noch keine Benutzerverwaltung und antwortet deshalb nur diesem Rechner. `--host 0.0.0.0`, andere Netzwerkadressen oder Netzwerknamen in `NODESTRO_ALLOWED_HOSTS` brechen den Start ab, und Nodestro lässt sich nicht hinter einen Reverse Proxy stellen. Damit andere Geräte einen Workflow nutzen können, veröffentliche ihn als API: Veröffentlichte APIs nutzen API-Schlüssel und haben einen eigenen Netzwerkzugang (siehe *API und Export*).
 
+> **Startlink und Abmelden:** Nodestro kann mit einem einmaligen Startlink geschützt werden. Der Befehl `nodestro` öffnet den Browser dann über eine private Datei und zeigt den Link einmal im Terminal: Kein anderes Programm auf diesem Rechner kann Nodestro verwenden, und der Link funktioniert kein zweites Mal. Zeigt die obere Leiste **Abmelden**, beendet es die Sitzung dieses Fensters; Nodestro öffnet sich erst nach einem Neustart wieder. Beides ist in dieser Version aus, solange deine Installation es nicht einschaltet.
+
 ## Nodestro auf einem Server {#server}
 <!-- keywords: server, anmelden, anmeldung, abmelden, rolle, rollen, berechtigung, berechtigungen, arbeitsbereich, mandant, tenant, nur lesen, mitglieder, nodestro-server, set-role, remove-member, revoke-sessions, sitzung abgelaufen -->
 

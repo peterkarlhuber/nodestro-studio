@@ -134,5 +134,10 @@
     "changed": "{{name}} ist jetzt {{role}}.",
     "removed": "{{name}} hat keinen Zugriff mehr auf diesen Arbeitsbereich.",
     "empty": "Dieser Arbeitsbereich hat noch keine Mitglieder."
+  },
+  "desktop": {
+    "signOutHint": "Beendet die Sitzung dieses Fensters. Zum Weiterarbeiten startest du die Desktop-App neu.",
+    "signedOutTitle": "Du bist abgemeldet",
+    "signedOutText": "Dieses Fenster hat keinen Zugriff mehr auf Nodestro. Schließe es und starte die Desktop-App neu, um weiterzuarbeiten."
   }
 }
