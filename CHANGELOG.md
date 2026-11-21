@@ -4,7 +4,7 @@
 
 ### N-09: offline per agent and per conversation (2026-11-21)
 
-- The lock pins nodestro-runtime 66979b7 and nodestro-api 635e267 (branches `claude/w3-n09`): `AgentConfig.offline`
+- The lock pins nodestro-runtime 66979b7, nodestro-api e6339f8 and nodestro-sdk 56a10c3 (branches `claude/w3-n09`): `AgentConfig.offline`
   applies the strict offline mode's rules to one agent, and a conversation's `offline` flag to every call of its
   answers, checked at every call (runtime `docs/offline.md`).
 - Agent editor, Advanced: the switch "Work offline" (`agent.advanced.offline`, `offlineHint`) sets `offline`; an agent
