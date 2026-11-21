@@ -27,7 +27,8 @@ import time
 from typing import Any
 
 OWNER = "peterkarlhuber"
-#: The 12 repositories of the CI-FAST scope (levuvo-nextcloud-mcp is out of scope).
+#: The 12 repositories of the CI-FAST scope plus the two library repositories of Phase N-A
+#: (nodestro-session, nodestro-ui; added 2026-11-21). levuvo-nextcloud-mcp is out of scope.
 REPOS = [
     "orkexa",
     "axentra",
@@ -41,6 +42,8 @@ REPOS = [
     "nodestro-server",
     "nodestro-desktop",
     "nodestro-local-docker",
+    "nodestro-session",
+    "nodestro-ui",
 ]
 PRODUCTS = ("nodestro-server", "nodestro-desktop", "nodestro-local-docker")
 STUDIO = "nodestro-studio"
@@ -543,7 +546,7 @@ def main(argv: list[str] | None = None) -> int:
     def window(p: argparse.ArgumentParser) -> None:
         p.add_argument("--since", type=parse_day, required=True, help="first day (UTC), YYYY-MM-DD")
         p.add_argument("--until", type=parse_day, required=True, help="last day (UTC, inclusive), YYYY-MM-DD")
-        p.add_argument("--repos", nargs="+", default=REPOS, help="repositories (default: the 12 CI-FAST repos)")
+        p.add_argument("--repos", nargs="+", default=REPOS, help="repositories (default: the 14 measured repos)")
 
     p = sub.add_parser("collect", help="fetch runs and jobs with gh api")
     window(p)
