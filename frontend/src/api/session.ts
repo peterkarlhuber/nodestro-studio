@@ -4,6 +4,7 @@
 // window's sessionStorage (scoped to the origin, port included) before it moves on to the studio:
 // - csrf: sent in X-Nodestro-CSRF with every change. Another program on another local port receives the session
 //   cookie from the browser (cookies are not port-scoped), but never this value, so it cannot change anything.
+//   Reads need no CSRF value: such a program can still read with the cookie alone.
 // - logout: whether the backend offers the sign-out of this window (POST /api/logout).
 // Without these switches nothing is stored, no header is sent and no sign-out is offered: the studio works as before.
 
