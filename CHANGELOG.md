@@ -10,7 +10,8 @@
   nodestro-api (`lock_check.STUDIO_PROFILE_EXTRA`); `scripts/bump_pins.py` knows the repository, so
   `bump_pins.py set . --set nodestro-session=<sha>` moves it. The studio itself does not depend on it directly.
 - The lock pins nodestro-session 2d06f0a (#1 after the independent review, with the review Lows, #2, and the
-  re-check leftovers, #3) and nodestro-api 6783a52 (#164). No behavior change: paths, codes, texts and cookie names of the local session stay as they were.
+  re-check leftovers, #3) and nodestro-api 6783a52 (#164). No behavior change: paths, codes, texts and cookie names of
+  the local session stay as they were.
 
 ### N-04: conversations with own agents (off by default; 2026-11-20)
 
