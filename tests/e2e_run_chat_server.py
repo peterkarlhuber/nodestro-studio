@@ -30,6 +30,23 @@ ANSWER = "You answer a person's question about a workflow run"
 INSTRUCTION = "Bitte nur eine kurze Antwort"
 #: How long a team waits at most for the release (seconds); afterwards it finishes anyway.
 WAIT_S = 120
+#: Seconds between the team leader's thinking deltas (``nodestro_runtime.testing.STREAM_DELAY``).
+STREAM_DELAY = 0.15
+#: The team leader's thinking before its answer. It is long on purpose (ST-065): the chat's event stream looks for a
+#: live answer only once a second while none is shown (nodestro_api ``POLL_SECONDS``), and the one read of the view
+#: after sending can come before the thinking starts. A thinking phase shorter than one poll could end between
+#: them, and the browser would never see it live. ``main`` checks that it lasts at least ``THINKING_POLLS`` polls.
+THOUGHT = (
+    "Der Stand zeigt zwei laufende Teams. Ich antworte kurz, ohne eine Entscheidung zu treffen. "
+    "Langsam arbeitet noch an seiner Aufgabe und hat kein Ergebnis gemeldet. "
+    "Das Unterteam hat die Recherche beauftragt; seine eigene Leitung wartet auf deren Fakten. "
+    "Die erste Entscheidung der Leitung hat beide Teams gleichzeitig gestartet, eine zweite gibt es noch nicht. "
+    "Ein Ergebnis kann ich daher nicht nennen, nur den Stand: beide Teams laufen, die Leitung wartet auf sie. "
+    "Eine Vermutung über die Ergebnisse gehört nicht in die Antwort, und eine Frage ändert den Lauf nie. "
+    "Also nenne ich die beiden Teams, sage, dass sie noch arbeiten, und schreibe, dass die Leitung wartet. "
+    "Mehr verlangt die Frage nicht, und eine kurze Antwort ist hier die richtige."
+)
+THINKING_POLLS = 4
 
 release = threading.Event()
 
@@ -119,7 +136,7 @@ def script(ids: dict[str, str]) -> dict[str, list[Any]]:
         snapshot = "ja" if "<<<snapshot" in user_text(request) else "nein"
         # The team leader reasons first (summarized thinking, streamed slowly): the browser sees it arrive live.
         return thinking(
-            "Der Stand zeigt zwei laufende Teams. Ich antworte kurz, ohne eine Entscheidung zu treffen.",
+            THOUGHT,
             f"Zwei Teams arbeiten noch; die Leitung wartet auf sie. (Stand gelesen: {snapshot})",
         )
 
@@ -151,6 +168,7 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=8110)
     args = parser.parse_args()
 
+    from nodestro_api.api_run_chat import POLL_SECONDS
     from nodestro_runtime.schemas import WorkflowIn
     import nodestro_runtime.testing as scripted
     from nodestro_runtime.testing import ScriptedClient
@@ -158,7 +176,10 @@ def main() -> None:
 
     from nodestro_studio.app import create_app, studio_config
 
-    scripted.STREAM_DELAY = 0.15  # thinking arrives over about a second, like a real model's
+    deltas = -(-len(THOUGHT) // 24)  # nodestro_runtime.testing streams thinking in pieces of 24 characters
+    if deltas * STREAM_DELAY < THINKING_POLLS * POLL_SECONDS:  # ST-065: the browser must see the thinking live
+        raise SystemExit(f"The thinking lasts {deltas * STREAM_DELAY:.1f} s, under {THINKING_POLLS} chat polls")
+    scripted.STREAM_DELAY = STREAM_DELAY  # the thinking arrives over several seconds, delta by delta
     ids: dict[str, str] = {}
     client = ScriptedClient(script(ids))
     app = create_app(studio_config(Path(args.data_dir)), client_factory=lambda _provider: client)
