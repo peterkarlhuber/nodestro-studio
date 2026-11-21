@@ -1292,5 +1292,18 @@
     "payload_too_large": "Os dados do webhook passam de 256 KB.",
     "schema_invalid": "O esquema dos dados não pode ser usado em {{at}}: ele usa uma palavra-chave que o Nodestro não confere. Use só as palavras-chave citadas na ajuda.",
     "schema_mismatch": "Os dados do webhook não correspondem ao esquema: {{problems}}."
+  },
+  "conversation": {
+    "agent_not_found": "Este agente ou a versão dele não existe mais. Escolha outro agente.",
+    "answer_running": "Aguarde até a resposta atual terminar ou cancele-a.",
+    "budget_exhausted": "O orçamento desta conversa acabou. Aumente-o para continuar.",
+    "cloud_model_not_chosen": "A resposta usaria um modelo na nuvem que ninguém escolheu para esta conversa, por exemplo um modelo que verifica o resultado. Escolha o modelo você mesmo ou mude a verificação do agente para um modelo local.",
+    "disabled": "As conversas com seus próprios agentes não estão ativadas neste aplicativo.",
+    "empty_message": "Escreva uma mensagem ou anexe um arquivo.",
+    "model_required": "Escolha um modelo. Um modelo na nuvem nunca é escolhido por você, e nem o modelo do agente nem o modelo padrão é local.",
+    "not_found": "Esta conversa não existe ou não é sua.",
+    "offline_cloud_model": "Esta conversa está offline, então só um modelo local pode responder. Escolha um modelo local ou desative o modo offline.",
+    "run_missing": "A execução desta resposta não existe mais.",
+    "too_many_files": "Esta conversa já tem o máximo de arquivos. Remova alguns primeiro."
   }
 }

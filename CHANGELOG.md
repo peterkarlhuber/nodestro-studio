@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### N-04: conversations with own agents (off by default; 2026-11-20)
+
+- No new interface. The error texts of the new conversation routes (`conversation.*`: switched off, not found, agent
+  not found, model required, offline with a cloud model, empty message, an answer still running, budget used up, too
+  many files, an answer without its run) are in six languages.
+- Runs started by a conversation show the trigger **Conversation** in the run list and on approval cards (`RunTrigger`
+  `conversation`, six languages). The new code `conversation.cloud_model_not_chosen` has its text.
+- The lock pins the N-04 branches of nodestro-runtime (#204), nodestro-api (#163) and nodestro-sdk (#138), with the
+  review fixes, while they are in review. The routes answer only where the installation switches on
+  `NODESTRO_CONVERSATIONS`.
+
 ### N-06 review lows: permissions on the approval card, help section (2026-11-20)
 
 - Approving an MCP tool or a tool that deletes for good is never remembered as a permission (L-2), and the card says

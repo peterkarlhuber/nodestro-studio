@@ -198,7 +198,8 @@
     "benchmark": "Série de testes",
     "subworkflow": "Subfluxo",
     "resume": "Continuação",
-    "api": "API"
+    "api": "API",
+    "conversation": "Conversa"
   },
   "resume": {
     "button": "Continuar",
