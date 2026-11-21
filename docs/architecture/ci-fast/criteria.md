@@ -1,4 +1,4 @@
-# CI criteria K1 to K9 (Locria Phase N-A)
+# CI criteria K1 to K9 (platform plan phase N-A)
 
 The owner made these criteria binding on 2026-11-20 (Phase 0R). They protect the CI-FAST speedups while the platform
 grows new libraries (`nodestro-session`, `nodestro-ui`) and new security, contract and UI tests. They do not replace

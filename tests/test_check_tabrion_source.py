@@ -35,7 +35,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "check_tabrion_source.py"
 #: SHA-256 of the canonical script. The consumers' copies (nodestro-runtime, axentra, orkexa, tabrion-studio) pin
 #: the same hash, so a change here means new copies there (see the script's docstring).
-SCRIPT_SHA256 = "f1edfc71b5da4986547abe0824833fb73bba532cb5e6a00e202c9ff317747456"
+SCRIPT_SHA256 = "57de9fbf513f32a6a1e80b6cf4197f0c2463f9debba395ab602702e9302b683d"
 #: The tabrion of the lock and the range every consumer requires (the same minor, RC-1).
 VERSIONS = json.loads((ROOT / "platform" / "versions.json").read_text(encoding="utf-8"))
 LOCKED = VERSIONS["components"]["tabrion"]["version"]
@@ -66,6 +66,14 @@ def test_the_poisoned_version_is_inside_the_consumers_range_and_above_the_lock()
 
     assert release(POISON)[:2] == (MAJOR, MINOR), f"POISON_VERSION {POISON} is outside {RANGE}"
     assert release(POISON) > release(LOCKED), f"POISON_VERSION {POISON} is not above the locked {LOCKED}"
+
+
+def test_each_pinned_name_has_its_own_poisoned_version() -> None:
+    """NS-003: nodestro-session is poisoned inside its own range (``<0.2``), not at tabrion's 0.2.99."""
+    assert cts.POISON_VERSIONS == {"tabrion": POISON, "nodestro-session": "0.1.99"}
+    assert cts.poison_version("nodestro_session") == "0.1.99"
+    assert cts.poison_version("tabrion") == POISON
+    assert cts.poison_version("tabrion-studio") == POISON
 
 
 def test_the_pins_come_from_name_at_git_url_at_full_commit_lines() -> None:
