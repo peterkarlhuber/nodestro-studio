@@ -330,7 +330,7 @@ Le diagnostic est gratuit et n’envoie rien sur Internet. **Tester la connexion
 Prérequis : Python 3.11 ou plus récent et Node.js 20 ou plus récent (uniquement pour compiler l’interface), Docker en option.
 
 ```bash
-cd frontend && npm ci && npm run build && cd ..
+cd frontend && node scripts/check-vendor.mjs && npm ci && node scripts/check-vendor.mjs --installed && npm run build && cd ..
 pip install -r platform/internal.txt -e .
 nodestro
 ```

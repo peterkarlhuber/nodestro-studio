@@ -330,7 +330,7 @@ The diagnosis is free and sends nothing to the internet. **Test connection** add
 Requirements: Python 3.11 or newer and Node.js 20 or newer (only for building the interface), optionally Docker.
 
 ```bash
-cd frontend && npm ci && npm run build && cd ..
+cd frontend && node scripts/check-vendor.mjs && npm ci && node scripts/check-vendor.mjs --installed && npm run build && cd ..
 pip install -r platform/internal.txt -e .
 nodestro
 ```
