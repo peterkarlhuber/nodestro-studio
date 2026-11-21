@@ -1315,6 +1315,7 @@
     "cloud_model": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, deshalb gehen nur lokale Modelle, nicht {{model}}.",
     "remote_endpoint": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, und der lokale Modellserver ist nicht auf diesem Computer.",
     "server_tools": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, deshalb gehen keine Server-Tools ({{names}}).",
+    "shared_memory": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, deshalb gibt es nur Laufgedächtnis: keinen gemeinsamen Gedächtnisbereich und keine Wissensvorschläge.",
     "tool_unavailable": "{{name}} ist offline nicht verfügbar."
   }
 }

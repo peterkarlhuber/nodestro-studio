@@ -1315,6 +1315,7 @@
     "cloud_model": "Este agente ou esta conversa está offline, então só modelos locais podem ser usados, não {{model}}.",
     "remote_endpoint": "Este agente ou esta conversa está offline, e o servidor de modelos locais não está neste computador.",
     "server_tools": "Este agente ou esta conversa está offline, então ferramentas de servidor não podem ser usadas ({{names}}).",
+    "shared_memory": "Este agente ou esta conversa está offline, então usa apenas a memória da execução: nenhum espaço de memória compartilhado e nenhuma proposta de conhecimento.",
     "tool_unavailable": "{{name}} não está disponível offline."
   }
 }
