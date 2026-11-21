@@ -73,6 +73,7 @@ jobs:
         run: |
           node scripts/check-vendor.mjs
           npm ci
+          node scripts/check-vendor.mjs --installed
           npx vitest list > ../frontend-test-ids.txt || true
           count=$(grep -c . ../frontend-test-ids.txt || true)
           if [ "$count" -lt 1 ]; then echo "::error::No interface test IDs collected"; exit 1; fi

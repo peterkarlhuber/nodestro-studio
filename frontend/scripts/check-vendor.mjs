@@ -1,4 +1,5 @@
-// Checks the vendored nodestro-ui tarballs. Run it BEFORE `npm ci` (CI does, in every job that installs the frontend):
+// Checks the vendored nodestro-ui tarballs. Run it before `npm ci` and with --installed after it (CI does, in every job
+// that installs the frontend; tests/test_ui_vendor_ci.py holds the workflows and the Makefile to that):
 //   node scripts/check-vendor.mjs              pins, SHA-256, package.json and package-lock.json agree
 //   node scripts/check-vendor.mjs --installed  also: node_modules holds exactly the tarballs' content (after npm ci)
 // See scripts/ui-vendor-lib.mjs for why npm's own integrity check is not enough.
