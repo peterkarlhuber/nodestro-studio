@@ -379,7 +379,9 @@ tool calls, the export's `Sanitizer`, `preflight()` and the usage log.
   nosniff, sandbox CSP). On a server, a conversation belongs to the user who started it (`Conversation.owner`): every
   conversation route answers 404 for another user, and `/api/inputs/*` and the adoption refuse another user's
   assistant files the same way. A principal without a role on a server (no member of the tenant) sees no
-  conversation and starts none; only the desktop's single person sees every one (W3-S1, nodestro-api
+  conversation and starts none; a conversation without an owner (from before owners were recorded) is nobody's on a
+  server until the operator assigns a member with `nodestro-server assistant backfill-owners` (audited); only the
+  desktop's single person sees every one (W3-S1, nodestro-api
   `docs/conversations.md`, which applies the same rule to conversations with own agents). Limits: 50 MB per file, 10 files per message, 50 per conversation.
 - **Suggestions** of the current view exist only in the browser (`frontend/src/assistant/store.ts`) and are attached
   only through an explicit action.
