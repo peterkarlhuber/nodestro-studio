@@ -6,7 +6,7 @@
 // tarball without noticing that the file in vendor/ changed (P0-6, npm 10.9.9). The SHA-256 of the pin is checked
 // against the file before npm runs; after the install, the installed files can be compared with the tarball.
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, lstatSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { gunzipSync } from "node:zlib";
 
@@ -94,7 +94,20 @@ export function untar(tgz) {
   return files;
 }
 
-/** After the install: node_modules holds exactly the content of each pinned tarball (catches a stale npm cache). */
+/** Every entry below `dir` as a relative path ("/"-separated); directories are walked, anything else is listed. */
+function listFiles(dir, prefix = "") {
+  return readdirSync(dir).flatMap((name) => {
+    const path = join(dir, name);
+    const rel = prefix ? `${prefix}/${name}` : name;
+    const stat = lstatSync(path);
+    return stat.isDirectory() ? listFiles(path, rel) : [rel];
+  });
+}
+
+/**
+ * After the install: node_modules holds exactly the content of each pinned tarball, no file less, no file different
+ * and no file more (catches a stale or poisoned npm cache).
+ */
 export function checkInstalled(repo) {
   const { pins, problems } = readPins(repo);
   for (const pin of pins) {
@@ -103,10 +116,15 @@ export function checkInstalled(repo) {
       problems.push(`${pin.name}: not installed`);
       continue;
     }
-    for (const [path, data] of untar(readFileSync(join(repo, pin.file)))) {
+    const shipped = untar(readFileSync(join(repo, pin.file)));
+    for (const [path, data] of shipped) {
       const installed = join(dir, path);
       if (!existsSync(installed)) problems.push(`${pin.name}: ${path} is missing in node_modules`);
-      else if (!readFileSync(installed).equals(data)) problems.push(`${pin.name}: ${path} in node_modules differs from ${pin.file}`);
+      else if (!lstatSync(installed).isFile() || !readFileSync(installed).equals(data))
+        problems.push(`${pin.name}: ${path} in node_modules differs from ${pin.file}`);
+    }
+    for (const path of listFiles(dir)) {
+      if (!shipped.has(path)) problems.push(`${pin.name}: ${path} in node_modules is not in ${pin.file}`);
     }
   }
   return problems;

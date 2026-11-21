@@ -70,4 +70,29 @@ describe("vendored UI packages", () => {
     expect(problems).toMatch(/nodestro-ui-extra-0\.1\.0\.tgz is not pinned/);
     expect(problems).toMatch(/@nodestro\/ui-admin.* is not pinned/);
   });
+
+  it("refuse an installed package that differs from its tarball: a changed, a missing or an extra file", () => {
+    const dir = copy("installed");
+    const pin = readPins(dir).pins.find((p) => p.name === "@nodestro/ui-ai");
+    const installed = join(dir, "frontend", "node_modules", pin.name);
+    for (const [path, data] of untar(readFileSync(join(dir, pin.file)))) {
+      mkdirSync(dirname(join(installed, path)), { recursive: true });
+      writeFileSync(join(installed, path), data);
+    }
+    const own = (problems) => problems.filter((p) => p.startsWith(pin.name));
+    expect(own(checkInstalled(dir))).toEqual([]);
+    writeFileSync(join(installed, "dist", "extra.js"), "globalThis.pwned = true;\n");
+    mkdirSync(join(installed, "dist", "deep"), { recursive: true });
+    writeFileSync(join(installed, "dist", "deep", "more.js"), "x");
+    writeFileSync(join(installed, "dist", "index.js"), "export {};\n");
+    rmSync(join(installed, "README.md"));
+    expect(own(checkInstalled(dir)).sort()).toEqual(
+      [
+        `${pin.name}: README.md is missing in node_modules`,
+        `${pin.name}: dist/index.js in node_modules differs from ${pin.file}`,
+        `${pin.name}: dist/extra.js in node_modules is not in ${pin.file}`,
+        `${pin.name}: dist/deep/more.js in node_modules is not in ${pin.file}`,
+      ].sort(),
+    );
+  });
 });
