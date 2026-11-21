@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 1 |
 | P2 Medium | 5 |
-| P3 Low | 12 |
+| P3 Low | 13 |
 | P4 Optional | 4 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -118,6 +118,28 @@ from #121). Both have status `Needs external review`.
   stored AI-generated code is not pointed out.
 - **Next step:** Once the runtime offers a similarity check (RT-041), show it as a hint next to the paste warning.
   It never changes the trust class.
+
+### ST-068 · Shared UI library: move the studio's components to @nodestro/ui-* step by step (N-16)
+
+- **Priority:** P3 Low · **Status:** Open (first step done) · **Refs:** N-16, N-17, nodestro-ui `docs/TODO.md`,
+  `platform/internal-ui.txt`
+- **Done:** the nodestro-ui packages (`ui-tokens`, `ui-themes`, `ui-core`, `ui-ai`, all 0.1.0) are vendored as
+  tarballs in `frontend/vendor/`, pinned with their SHA-256 in `platform/internal-ui.txt`, checked by
+  `frontend/scripts/check-vendor.mjs` before every `npm ci` (and against `node_modules` after it in the frontend job),
+  moved with `scripts/bump_pins.py` (pin kind `npm-tarball`) plus `frontend/scripts/vendor-ui.mjs`. The studio loads
+  the tokens, the `nodestro` brand theme and the component styles (`src/main.tsx`); the first component in use is the
+  package's `RememberOptions` in the tool approval card, with the studio's own texts. Contract tests:
+  `src/runs/uiPackages.contract.test.tsx`, `scripts/ui-vendor.test.mjs`.
+- **Next steps, in order:** (1) re-pin to the nodestro-ui merge commit of its pull request #2 (same tarballs, only the
+  commit moves); (2) the step approval card (`runs/ApprovalCard.tsx`) and the tool approval card
+  (`runs/ToolApprovalCard.tsx`) onto `ApprovalCard`, keeping the data hooks here; (3) the budget decision card
+  (`runs/BudgetDecisionCard.tsx`); (4) tool call rows, chat messages (`assistant/MessageView.tsx`) and web sources
+  (`runs/WebSources.tsx` onto `SourceList`); (5) `HelpTip` onto the package's HelpTip with the studio's help registry
+  and the error-code coverage test (N-17); (6) buttons, fields, dialogs and sections from `components/ui.tsx`; (7) an
+  alias layer `--nd-*: var(--ui-*)` and a codemod, then drop `midnight-citron.css`. Each step keeps the existing
+  tests and browser suites unchanged.
+- **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a
+  studio checkout without the SHA-256 check; add `node scripts/check-vendor.mjs` there.
 
 ## Tests and quality assurance
 

@@ -1,4 +1,10 @@
 import "@xyflow/react/dist/base.css";
+// The shared UI packages (N-16): neutral tokens, the studio's brand theme, then the component styles. Before the
+// studio's own sheets, so these keep the last word wherever both set the same thing (color-scheme).
+import "@nodestro/ui-tokens/tokens.css";
+import "@nodestro/ui-themes/nodestro.css";
+import "@nodestro/ui-core/styles.css";
+import "@nodestro/ui-ai/styles.css";
 import "./styles/midnight-citron.css";
 import "./styles/app.css";
 import "./styles/tooltip.css";

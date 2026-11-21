@@ -71,6 +71,7 @@ jobs:
       - name: Collect the interface test IDs
         working-directory: frontend
         run: |
+          node scripts/check-vendor.mjs
           npm ci
           npx vitest list > ../frontend-test-ids.txt || true
           count=$(grep -c . ../frontend-test-ids.txt || true)

@@ -47,7 +47,9 @@ class PinFile:
     """One file of a repository and the components it pins.
 
     ``kind``: ``pyproject`` (every ``github.com/<owner>/<name>.git@<sha>`` reference in the file), ``versions``
-    (``components.<name>.commit`` of platform/versions.json) or ``json-key`` (the top-level ``"<name>": "<sha>"``)."""
+    (``components.<name>.commit`` of platform/versions.json), ``json-key`` (the top-level ``"<name>": "<sha>"``) or
+    ``npm-tarball`` (every `` <name>@<sha> `` of platform/internal-ui.txt, the vendored UI packages: the tarballs and
+    their SHA-256 then follow with ``frontend/scripts/vendor-ui.mjs --from <checkout at that commit>``)."""
 
     path: str
     kind: str
@@ -87,6 +89,8 @@ PINS: dict[str, tuple[PinFile, ...]] = {
                 "nodestro-session",
             ),
         ),
+        # The vendored UI packages of the frontend (N-16): one commit of nodestro-ui for every tarball.
+        PinFile("platform/internal-ui.txt", "npm-tarball", ("nodestro-ui",)),
         PinFile(
             "platform/versions.json",
             "versions",
@@ -120,6 +124,7 @@ REPOS = tuple(
             "nodestro-api",
             "nodestro-sdk",
             "nodestro-session",
+            "nodestro-ui",
             *PINS,
         )
     )
@@ -159,7 +164,17 @@ def json_key_pattern(name: str) -> re.Pattern[str]:
     return re.compile(r'("' + re.escape(name) + r'"\s*:\s*")([0-9a-f]{40})(")')
 
 
-PATTERNS = {"pyproject": pyproject_pattern, "versions": versions_pattern, "json-key": json_key_pattern}
+def npm_tarball_pattern(name: str) -> re.Pattern[str]:
+    # One pin per line, never in a comment line: "<package> <version> <name>@<sha> <tarball> sha256=<hex>".
+    return re.compile(r"(^(?![ \t]*#)[^\n]*?[ \t]" + re.escape(name) + r"@)([0-9a-f]{40})(?=[ \t])", re.MULTILINE)
+
+
+PATTERNS = {
+    "pyproject": pyproject_pattern,
+    "versions": versions_pattern,
+    "json-key": json_key_pattern,
+    "npm-tarball": npm_tarball_pattern,
+}
 
 
 def current_pins(text: str, pin: PinFile) -> dict[str, list[str]]:
@@ -289,11 +304,13 @@ def bump(
     diff: list[str] = []
     seen: set[str] = set()
     for pin in PINS[repo]:
+        if not set(updates) & set(pin.names):
+            continue  # a file this bump does not touch (it may not exist in an older checkout)
         path = directory / pin.path
         old = path.read_text(encoding="utf-8")
         new, found = rewrite(old, pin, updates)
         seen |= set(found)
-        if pin.kind != "pyproject":
+        if pin.kind in ("versions", "json-key"):
             check_json_change(pin.path, old, new, pin, {n: s for n, s in updates.items() if n in pin.names})
         if new != old:
             diff += difflib.unified_diff(
@@ -327,12 +344,20 @@ def cmd_set(args: argparse.Namespace, runner: Runner = run) -> int:
         return 1 if changed else 0
     verb = "would set" if args.dry_run else "set"
     print(f"{repo}: {verb} {targets}" if changed else f"{repo}: already at {targets}")
+    if changed and "nodestro-ui" in updates:
+        print(
+            "nodestro-ui moved: vendor its tarballs at that commit (the hashes follow): "
+            "cd frontend && node scripts/vendor-ui.mjs --from <nodestro-ui checkout> && npm install --ignore-scripts"
+        )
     return 0
 
 
 def cmd_pins(args: argparse.Namespace, runner: Runner = run) -> int:
     repo = canonical(args.repo) if args.repo else repo_of(args.dir, runner)
     for pin in PINS[repo]:
+        if not (args.dir / pin.path).exists():
+            print(f"{pin.path}: (missing)")
+            continue
         text = (args.dir / pin.path).read_text(encoding="utf-8")
         for name, shas in current_pins(text, pin).items():
             print(f"{pin.path}: {name} {' '.join(sorted(set(shas))) or '(none)'}")
