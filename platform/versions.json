@@ -46,7 +46,7 @@
       "studio_dependency": true
     },
     "nodestro-api": {
-      "commit": "10163731a8544837e09a437a2026ebdffb3def45",
+      "commit": "6783a527db2f95f3839418d13ac7dd1d41898b05",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
@@ -58,7 +58,7 @@
     },
     "nodestro-session": {
       "comment": "N-02: the shared protection of the local session; nodestro-api requires it by a version range, every lock holds its commit (lock_check.STUDIO_PROFILE_EXTRA).",
-      "commit": "8ee2a62ac8238d80dd82d1f056b9df4db55eae25",
+      "commit": "dd9670460a544e4c96004976444ba8b830d69b5e",
       "version": "0.1.0.dev0",
       "pyproject": "pyproject.toml",
       "version_file": "src/nodestro_session/_version.py"

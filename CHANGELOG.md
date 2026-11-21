@@ -9,8 +9,8 @@
   `platform/versions.json`; a line in both locks (`internal.txt`, `internal-server.txt`), since every profile installs
   nodestro-api (`lock_check.STUDIO_PROFILE_EXTRA`); `scripts/bump_pins.py` knows the repository, so
   `bump_pins.py set . --set nodestro-session=<sha>` moves it. The studio itself does not depend on it directly.
-- The lock pins the N-02 branches of nodestro-session (#1) and nodestro-api while they are in review. No behavior
-  change: paths, codes, texts and cookie names of the local session stay as they were.
+- The lock pins the merges of nodestro-session #1 (dd96704) and nodestro-api #164 (6783a52), after the independent
+  review. No behavior change: paths, codes, texts and cookie names of the local session stay as they were.
 
 ### N-04: conversations with own agents (off by default; 2026-11-20)
 
