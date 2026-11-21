@@ -211,7 +211,7 @@ from #121). Both have status `Needs external review`.
 - **Next step:** One pull request: eslint-plugin-react-hooks 7, fix or justify each finding with tests, then ESLint
   10 and `@eslint/js` 10 together; remove the three `ignore` rules.
 
-### ST-067 · Weekly CI criteria K1 to K9 (Locria Phase N-A)
+### ST-067 · Weekly CI criteria K1 to K9 (platform plan phase N-A)
 
 - **Priority:** P2 Medium · **Status:** Open (recurring, by hand) · **Refs:** `docs/architecture/ci-fast/criteria.md`,
   `docs/architecture/ci-fast/tools/cifast.py`, owner decision 2026-11-20 (Phase 0R, K1 to K9 binding)
