@@ -1,15 +1,15 @@
 # CI-FAST measurement tool
 
-`cifast.py` measures the CI-FAST KPIs for the 12 repositories of Nodestro, Orkexa and Axentra. It is the versioned
-form of the W0 analysis scripts (collect, analyze, conc, prwork/casc). It uses the Python standard library only and
-reads GitHub with `gh api` only. Pagination is done by hand with `&page=N`, because `gh api --paginate` fails behind
-the agent proxy.
+`cifast.py` measures the CI-FAST KPIs for the 12 repositories of Nodestro, Orkexa and Axentra plus the library
+repositories nodestro-session and nodestro-ui. It is the versioned form of the W0 analysis scripts (collect, analyze,
+conc, prwork/casc). It uses the Python standard library only and reads GitHub with `gh api` only. Pagination is done
+by hand with `&page=N`, because `gh api --paginate` fails behind the agent proxy.
 
 The baseline that this tool measured is in [`../BASELINE.md`](../BASELINE.md).
 
 ## Run it
 
-All days are UTC. `--until` is inclusive. `--repos` defaults to the 12 CI-FAST repositories.
+All days are UTC. `--until` is inclusive. `--repos` defaults to these 14 repositories.
 
 ```sh
 # 1. Raw data: runs (one query per day, because a filtered listing stops at 1000 results) and the jobs of every run
