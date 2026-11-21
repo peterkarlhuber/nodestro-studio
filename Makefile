@@ -5,7 +5,7 @@ install: frontend
 	pip install -r platform/internal.txt -e ".[dev]"
 
 frontend:
-	cd frontend && npm ci && npm run build
+	cd frontend && node scripts/check-vendor.mjs && npm ci && node scripts/check-vendor.mjs --installed && npm run build
 
 dev:
 	@echo "API:        nodestro --reload --no-browser"

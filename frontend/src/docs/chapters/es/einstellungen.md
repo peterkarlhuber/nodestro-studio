@@ -330,7 +330,7 @@ El diagnóstico es gratuito y no envía nada a internet. **Probar conexión** pi
 Requisitos: Python 3.11 o posterior y Node.js 20 o posterior (solo para compilar la interfaz); Docker es opcional.
 
 ```bash
-cd frontend && npm ci && npm run build && cd ..
+cd frontend && node scripts/check-vendor.mjs && npm ci && node scripts/check-vendor.mjs --installed && npm run build && cd ..
 pip install -r platform/internal.txt -e .
 nodestro
 ```

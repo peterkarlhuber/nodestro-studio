@@ -22,6 +22,8 @@ const lock = JSON.parse(readFileSync(join(root, 'package-lock.json'), 'utf8'));
 const shipped = new Map();
 for (const [path, meta] of Object.entries(lock.packages ?? {})) {
   if (!path.startsWith('node_modules/') || meta.dev || meta.link) continue;
+  // The vendored nodestro-ui packages (file:vendor/*.tgz) are our own, covered by LICENSE.txt, not third-party.
+  if (String(meta.resolved ?? '').startsWith('file:vendor/')) continue;
   const name = path.slice(path.lastIndexOf('node_modules/') + 'node_modules/'.length);
   shipped.set(`${name}@${meta.version}`, { name, version: meta.version, path });
 }
