@@ -1310,5 +1310,12 @@
     "offline_cloud_model": "Questa conversazione è offline, quindi può rispondere solo un modello locale. Scegli un modello locale o disattiva la modalità offline.",
     "run_missing": "L’esecuzione di questa risposta non esiste più.",
     "too_many_files": "Questa conversazione contiene già il numero massimo di file. Rimuovine prima alcuni."
+  },
+  "offline": {
+    "cloud_model": "Questo agente o questa conversazione è offline, quindi si possono usare solo modelli locali, non {{model}}.",
+    "remote_endpoint": "Questo agente o questa conversazione è offline, e il server dei modelli locali non è su questo computer.",
+    "server_tools": "Questo agente o questa conversazione è offline, quindi non si possono usare strumenti del server ({{names}}).",
+    "shared_memory": "Questo agente o questa conversazione è offline, quindi usa solo la memoria dell’esecuzione: nessuno spazio di memoria condiviso e nessuna proposta di conoscenza.",
+    "tool_unavailable": "{{name}} non è disponibile offline."
   }
 }

@@ -1310,5 +1310,12 @@
     "offline_cloud_model": "Cette conversation est hors ligne : seul un modèle local peut répondre. Choisissez un modèle local ou désactivez le mode hors ligne.",
     "run_missing": "L’exécution de cette réponse n’existe plus.",
     "too_many_files": "Cette conversation contient déjà autant de fichiers que possible. Retirez-en d’abord."
+  },
+  "offline": {
+    "cloud_model": "Cet agent ou cette conversation est hors ligne : seuls les modèles locaux peuvent être utilisés, pas {{model}}.",
+    "remote_endpoint": "Cet agent ou cette conversation est hors ligne, et le serveur de modèles locaux n’est pas sur cet ordinateur.",
+    "server_tools": "Cet agent ou cette conversation est hors ligne : les outils serveur ne peuvent pas être utilisés ({{names}}).",
+    "shared_memory": "Cet agent ou cette conversation est hors ligne : seule la mémoire de l’exécution est utilisée, sans espace de mémoire partagé ni propositions de connaissances.",
+    "tool_unavailable": "{{name}} n’est pas disponible hors ligne."
   }
 }
