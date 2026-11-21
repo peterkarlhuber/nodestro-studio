@@ -15,7 +15,7 @@
   redirect file, the terminal shows the link once.
 - Browser suite `launch` (default list, second half): fragment link, CSRF value, JSON only, sign-out and TTL against
   `nodestro` with the switches on.
-- The lock pins nodestro-api at the NS-002 branch head (paired branch `claude/w3-ns002`).
+- The lock pins nodestro-api at the NS-002 branch head 0f71f04 (paired branch `claude/w3-ns002`).
 
 ### N-02: the shared library for the local session (2026-11-20)
 
