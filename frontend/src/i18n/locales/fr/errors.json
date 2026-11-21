@@ -671,7 +671,9 @@
     "forwarded_not_allowed": "Les requêtes transmises par un proxy ne sont pas acceptées : Nodestro ne répond qu’à cet ordinateur.",
     "invalid_plain": "La requête ne correspond pas à l’entrée attendue.",
     "too_large_limit": "La requête est trop volumineuse : {{limit_mb}} Mo au maximum sont acceptés.",
-    "malformed": "La requête ne peut pas être lue. Rechargez la page et réessayez."
+    "malformed": "La requête ne peut pas être lue. Rechargez la page et réessayez.",
+    "origin_required": "Cette modification n’indique pas la page qui l’a envoyée et a été refusée. Utilisez Nodestro directement.",
+    "json_only": "Cette modification doit être envoyée en JSON (ou sous forme de formulaire avec des fichiers) et a été refusée."
   },
   "publication": {
     "disabled": "Cette API est désactivée.",
@@ -830,7 +832,10 @@
     "unattended_scope": "Une autorisation au-delà de la lecture pour des exécutions sans surveillance doit nommer ses agents.",
     "unattended_too_long": "Une autorisation au-delà de la lecture pour des exécutions sans surveillance dure au plus {{days}} jours.",
     "grants_disabled": "Les autorisations et blocages ne sont pas activés pour cette installation.",
-    "tool_changed": "L’outil a changé depuis son affichage, aucune autorisation n’a donc été enregistrée. Revoyez l’appel."
+    "tool_changed": "L’outil a changé depuis son affichage, aucune autorisation n’a donc été enregistrée. Revoyez l’appel.",
+    "csrf_invalid": "Cette modification a été refusée, car il lui manque la valeur de sécurité de la session. Rouvrez Nodestro depuis l’application de bureau.",
+    "launch_expired": "Le lien de démarrage a expiré. Redémarrez l’application de bureau pour ouvrir une nouvelle fenêtre.",
+    "launch_ttl_invalid": "La validité du lien de démarrage doit être un nombre de secondes de 1 à 3600."
   },
   "sandbox": {
     "isolation_required": "Le code créé par l’IA et les outils d’origine inconnue ne s’exécutent qu’isolés (dans Docker ou, s’il a été choisi, dans le bac à sable Linux intégré) ; rien de cela n’est disponible, rien n’a donc été exécuté. Réglages → Bac à sable indique pourquoi.",

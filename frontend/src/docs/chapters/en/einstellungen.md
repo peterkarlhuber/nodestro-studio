@@ -351,6 +351,8 @@ Stop with **Ctrl+C**. Running runs are canceled.
 
 > **Security:** Nodestro has no user management yet, so it only answers this computer. `--host 0.0.0.0`, other network addresses or network names in `NODESTRO_ALLOWED_HOSTS` stop the start, and Nodestro cannot be put behind a reverse proxy. To let other devices use a workflow, publish it as an API: published APIs use API keys and have their own network access (see *API and export*).
 
+> **Launch link and sign-out:** Nodestro can be protected with a one-time launch link. The `nodestro` command then opens the browser through a private file and prints the link once in the terminal: no other program on this computer can use Nodestro, and the link does not work a second time. If the top bar shows **Sign out**, it ends the session of this window; Nodestro opens again only after a restart. Both are off in this version unless your installation switches them on.
+
 ## Nodestro on a server {#server}
 <!-- keywords: server, sign in, sign-in, sign out, role, roles, permission, permissions, workspace, tenant, read only, members, nodestro-server, set-role, remove-member, revoke-sessions, session expired -->
 

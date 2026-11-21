@@ -27,6 +27,7 @@ import { createRoot } from "react-dom/client";
 import i18n, { initialLanguage, loadLanguage } from "./i18n";
 import { warmNumberFormats, whenIdle } from "./lib/format";
 import { App } from "./App";
+import { SessionGate } from "./components/SignedOut";
 import { startMode } from "./recovery/api";
 import { RecoveryScreen } from "./recovery/RecoveryScreen";
 
@@ -37,7 +38,15 @@ const mode = startMode();
 async function render() {
   const recovery = (await mode) === "recovery";
   createRoot(document.getElementById("root")!).render(
-    <StrictMode>{recovery ? <RecoveryScreen /> : <App />}</StrictMode>,
+    <StrictMode>
+      {recovery ? (
+        <RecoveryScreen />
+      ) : (
+        <SessionGate>
+          <App />
+        </SessionGate>
+      )}
+    </StrictMode>,
   );
   // The locale's number data loads in idle time, not in the first render of the editor (ST-004).
   whenIdle(warmNumberFormats);

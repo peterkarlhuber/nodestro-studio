@@ -671,7 +671,9 @@
     "forwarded_not_allowed": "Solicitações encaminhadas por um proxy não são aceitas: o Nodestro responde só a este computador.",
     "invalid_plain": "A requisição não corresponde à entrada esperada.",
     "too_large_limit": "A requisição é grande demais: são aceitos no máximo {{limit_mb}} MB.",
-    "malformed": "Não é possível ler a requisição. Recarregue a página e tente de novo."
+    "malformed": "Não é possível ler a requisição. Recarregue a página e tente de novo.",
+    "origin_required": "Esta alteração não informa qual página a enviou e foi recusada. Use o próprio Nodestro.",
+    "json_only": "Esta alteração deve ser enviada como JSON (ou como formulário com arquivos) e foi recusada."
   },
   "publication": {
     "disabled": "Esta API está desligada.",
@@ -830,7 +832,10 @@
     "unattended_scope": "Uma permissão além da leitura para execuções sem acompanhamento precisa indicar seus agentes.",
     "unattended_too_long": "Uma permissão além da leitura para execuções sem acompanhamento dura no máximo {{days}} dias.",
     "grants_disabled": "Permissões e bloqueios não estão ativados nesta instalação.",
-    "tool_changed": "A ferramenta mudou desde que foi mostrada, então nenhuma permissão foi salva. Revise a chamada."
+    "tool_changed": "A ferramenta mudou desde que foi mostrada, então nenhuma permissão foi salva. Revise a chamada.",
+    "csrf_invalid": "Esta alteração foi recusada porque falta o valor de segurança da sessão. Abra o Nodestro novamente pelo aplicativo de desktop.",
+    "launch_expired": "O link de início expirou. Reinicie o aplicativo de desktop para abrir uma nova janela.",
+    "launch_ttl_invalid": "A validade do link de início deve ser um número de segundos de 1 a 3600."
   },
   "sandbox": {
     "isolation_required": "Código criado por IA e ferramentas de origem desconhecida só são executados isolados (no Docker ou, se escolhido, no sandbox Linux integrado); nada disso está disponível, então nada foi executado. Configurações → Sandbox mostra o motivo.",

@@ -108,3 +108,73 @@ def test_running_and_the_browser_wait_for_the_server(
     calls[0]()  # the server listens now
     assert "Nodestro is running at" in capsys.readouterr().out
     assert opened.wait(5)
+
+
+class _Now:
+    """``threading.Thread`` that runs its target at ``start()`` (the browser is opened in a thread)."""
+
+    def __init__(self, target: Any, args: tuple[Any, ...] = (), **_: Any) -> None:
+        self.target, self.args = target, args
+
+    def start(self) -> None:
+        self.target(*self.args)
+
+
+def _ready(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, *argv: str, **env: str) -> tuple[list[Any], Any]:
+    from nodestro_api import launch
+
+    opened: list[Any] = []
+    readies: list[Any] = []
+    monkeypatch.setattr(cli, "serve", lambda factory, args, ready=None: readies.append(ready))
+    monkeypatch.setattr(cli.webbrowser, "open", opened.append)
+    monkeypatch.setattr(cli.threading, "Thread", _Now)
+    monkeypatch.setattr(launch, "_taken", launch._UNSET)
+    for key in ("NODESTRO_PROFILE", "NODESTRO_HOST", "NODESTRO_DATA_DIR", launch.ENV_VAR, launch.TERMINAL_ENV):
+        monkeypatch.delenv(key, raising=False)
+    for key, value in env.items():
+        monkeypatch.setenv(key, value)
+    monkeypatch.chdir(tmp_path)
+    cli.main(["--data-dir", str(tmp_path / "d"), "--port", "8123", *argv])
+    readies[0]()
+    return opened, launch
+
+
+def test_without_the_terminal_switch_the_browser_opens_the_studio(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    opened, launch = _ready(monkeypatch, tmp_path)
+    assert opened == ["http://localhost:8123"]
+    assert launch.launch_secret_from_env() is None
+    assert "link" not in capsys.readouterr().out
+
+
+def test_the_terminal_switch_opens_a_launch_file_never_the_link(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """NS-002, NODESTRO_TERMINAL_LAUNCH: the browser's command line gets a file:// path, the terminal the link."""
+    opened, launch = _ready(monkeypatch, tmp_path, NODESTRO_TERMINAL_LAUNCH="1")
+    try:
+        secret = launch.launch_secret_from_env()
+        assert secret is not None
+        assert len(opened) == 1 and opened[0].startswith("file://") and secret not in opened[0]
+        from urllib.parse import urlsplit
+        from urllib.request import url2pathname
+
+        launch_file = Path(url2pathname(urlsplit(opened[0]).path))
+        assert launch_file.parent.resolve() == (tmp_path / "d" / "launch").resolve()
+        assert f"http://localhost:8123/api/launch?token={secret}" in launch_file.read_text(encoding="utf-8")
+        assert f"once with this link: http://localhost:8123/api/launch?token={secret}" in capsys.readouterr().out
+    finally:
+        launch.reset_terminal_secret()
+
+
+def test_the_terminal_switch_without_a_browser_only_prints_the_link(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    opened, launch = _ready(monkeypatch, tmp_path, "--no-browser", NODESTRO_TERMINAL_LAUNCH="1")
+    try:
+        assert opened == []
+        assert not (tmp_path / "d" / "launch").exists()
+        assert "once with this link: http://localhost:8123/api/launch?token=" in capsys.readouterr().out
+    finally:
+        launch.reset_terminal_secret()

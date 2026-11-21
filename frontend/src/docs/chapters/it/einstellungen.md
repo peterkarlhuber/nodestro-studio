@@ -351,6 +351,8 @@ Si chiude con **Ctrl+C**. Le esecuzioni in corso vengono annullate.
 
 > **Sicurezza:** Nodestro non ha ancora una gestione degli utenti, quindi risponde solo a questo computer. `--host 0.0.0.0`, altri indirizzi di rete o nomi di rete in `NODESTRO_ALLOWED_HOSTS` interrompono l’avvio, e Nodestro non può essere messo dietro un reverse proxy. Per far usare un workflow ad altri dispositivi, pubblicalo come API: le API pubblicate usano chiavi API e hanno un proprio accesso di rete (vedi *API ed esportazione*).
 
+> **Link di avvio e disconnessione:** Nodestro può essere protetto con un link di avvio monouso. Il comando `nodestro` apre allora il browser tramite un file privato e mostra il link una volta nel terminale: nessun altro programma di questo computer può usare Nodestro, e il link non funziona una seconda volta. Se la barra superiore mostra **Esci**, termina la sessione di questa finestra; Nodestro si riapre solo dopo un riavvio. Entrambi sono disattivati in questa versione, a meno che la tua installazione non li attivi.
+
 ## Nodestro su un server {#server}
 <!-- keywords: server, accedere, accesso, login, uscire, ruolo, ruoli, permesso, permessi, area di lavoro, tenant, sola lettura, membri, nodestro-server, set-role, remove-member, revoke-sessions, sessione scaduta -->
 
