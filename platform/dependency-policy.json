@@ -17,7 +17,7 @@
       "distribution": "nodestro",
       "studio_of": ["nodestro-api", "nodestro-runtime", "nodestro-examples", "nodestro-integrations"]
     },
-    "tabrion-studio": {"kind": "studio", "studio_of": ["tabrion"]},
+    "tabrion-studio": {"kind": "studio", "studio_of": ["tabrion", "nodestro-session"]},
     "axentra-studio": {"kind": "studio", "studio_of": ["axentra"]}
   },
   "edges": [
@@ -56,6 +56,7 @@
     {"from": "nodestro-studio", "to": "nodestro-examples", "kind": "required", "extra": null, "status": "active"},
     {"from": "nodestro-studio", "to": "nodestro-integrations", "kind": "required", "extra": null, "status": "active"},
 
-    {"from": "tabrion-studio", "to": "tabrion[postgres,sqlalchemy,migrations]", "kind": "required", "extra": null, "status": "active"}
+    {"from": "tabrion-studio", "to": "tabrion[postgres,sqlalchemy,migrations]", "kind": "required", "extra": null, "status": "active"},
+    {"from": "tabrion-studio", "to": "nodestro-session", "kind": "required", "extra": null, "status": "active"}
   ]
 }
