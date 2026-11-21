@@ -167,6 +167,25 @@ If the API contract changes, `python -m nodestro_api.openapi openapi/nodestro-ap
 a test in nodestro-api fails). In the SDK, `make contract` takes it over and regenerates the types; the SDK's CI
 checks that contract and types are up to date.
 
+### The shared UI packages (N-16)
+
+The frontend uses the npm packages of nodestro-ui (`@nodestro/ui-tokens`, `-themes`, `-core`, `-ai`) without a
+registry: their tarballs, built reproducibly from one nodestro-ui commit, live in `frontend/vendor/` and are pinned in
+`platform/internal-ui.txt` (`<package> <version> nodestro-ui@<commit> <tarball> sha256=<hex>`). npm records each
+tarball's integrity in `package-lock.json`, but a warm npm cache can install a stale copy without noticing, so every
+`npm ci` of the frontend runs after `node scripts/check-vendor.mjs` (pins, files, hashes, package.json and lockfile
+agree) and is followed by `node scripts/check-vendor.mjs --installed` (`node_modules` holds exactly the tarballs'
+files, none changed, missing or added); `tests/test_ui_vendor_ci.py` keeps the workflows and the Makefile so. The
+frontend CI job also runs `node scripts/verify-ui-pin.mjs`: it reads nodestro-ui's `artifacts/manifest.json` at the
+pinned commit (raw.githubusercontent.com, no token) and compares version, file and SHA-256 of every pin. To move the
+packages:
+
+```sh
+python scripts/bump_pins.py set . --set nodestro-ui=<sha>              # moves the commit (pin kind npm-tarball)
+cd frontend && node scripts/vendor-ui.mjs --from <nodestro-ui checkout at that sha>   # tarballs and hashes follow
+npm install --ignore-scripts && node scripts/check-vendor.mjs
+```
+
 ### Third-party packages: the upload cutoff
 
 The components are pinned by commit; the third-party packages they need are not pinned one by one. Instead every
@@ -276,7 +295,7 @@ In the Python environment where Nodestro 0.1 is installed:
 
 ```bash
 git clone https://github.com/peterkarlhuber/nodestro-studio.git && cd nodestro-studio
-(cd frontend && npm ci && npm run build)    # the user interface belongs in the package
+(cd frontend && node scripts/check-vendor.mjs && npm ci && node scripts/check-vendor.mjs --installed && npm run build)    # the interface belongs in the package
 pip install -U -r platform/internal.txt .   # or -e . for development
 nodestro
 ```

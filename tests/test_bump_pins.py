@@ -225,3 +225,59 @@ def test_pin_table_matches_check_versions() -> None:
     components = json.loads((root / "platform" / "versions.json").read_text(encoding="utf-8"))["components"]
     studio_versions = next(p for p in bump_pins.PINS["nodestro-studio"] if p.kind == "versions")
     assert set(studio_versions.names) == set(components)
+
+
+def ui_pins(commit: str) -> str:
+    return (
+        "# The nodestro-ui packages the frontend vendors (N-16).\n"
+        f"# a comment that names nodestro-ui@{OTHER} is not a pin\n"
+        f"@nodestro/ui-ai 0.1.0 nodestro-ui@{commit} frontend/vendor/nodestro-ui-ai-0.1.0.tgz sha256={'d' * 64}\n"
+        f"@nodestro/ui-core 0.1.0 nodestro-ui@{commit} frontend/vendor/nodestro-ui-core-0.1.0.tgz sha256={'e' * 64}\n"
+    )
+
+
+def test_npm_tarball_pins_move_the_ui_commit_only(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    """N-16: the vendored UI packages are pinned by one nodestro-ui commit; a bump moves it in every line and nothing
+    else (the tarball hashes follow with frontend/scripts/vendor-ui.mjs, which the command names)."""
+    d = studio_checkout(tmp_path)
+    (d / "platform" / "internal-ui.txt").write_text(ui_pins(OLD), encoding="utf-8")
+    locks = {
+        lock: (d / "platform" / lock).read_text(encoding="utf-8") for lock in ("internal.txt", "internal-server.txt")
+    }
+    assert bump_pins.main(["set", str(d), "--repo", "studio", "--set", f"nodestro-ui={NEW}"], FakeRunner()) == 0
+    after = (d / "platform" / "internal-ui.txt").read_text(encoding="utf-8")
+    expected = ui_pins(NEW).replace(f"names nodestro-ui@{NEW}", f"names nodestro-ui@{OTHER}")
+    assert after == expected
+    assert "vendor-ui.mjs" in capsys.readouterr().out
+    for lock, text in locks.items():
+        assert (d / "platform" / lock).read_text(encoding="utf-8") == text
+    assert (
+        bump_pins.main(["set", str(d), "--repo", "studio", "--check", "--set", f"nodestro-ui={NEW}"], FakeRunner()) == 0
+    )
+
+
+def test_npm_tarball_pin_file_is_required_for_a_ui_bump(tmp_path: Path) -> None:
+    d = studio_checkout(tmp_path)
+    with pytest.raises(FileNotFoundError):
+        bump_pins.main(["set", str(d), "--repo", "studio", "--set", f"nodestro-ui={NEW}"], FakeRunner())
+
+
+def test_plan_for_the_ui_library_is_the_studio_then_the_products() -> None:
+    stages = bump_pins.plan("nodestro-ui", NEW)
+    assert [[repo for repo, _files in stage] for stage in stages] == [
+        ["nodestro-studio"],
+        ["nodestro-server", "nodestro-desktop"],
+        ["nodestro-local-docker"],
+    ]
+    assert dict(stages[0][0][1]) == {"platform/internal-ui.txt": [f"nodestro-ui={NEW}"]}
+
+
+def test_the_studio_ui_pin_file_is_well_formed() -> None:
+    """The committed platform/internal-ui.txt: one pin line per package, all at one commit, found by the pattern."""
+    root = Path(__file__).resolve().parents[1]
+    text = (root / "platform" / "internal-ui.txt").read_text(encoding="utf-8")
+    pin = next(p for p in bump_pins.PINS["nodestro-studio"] if p.kind == "npm-tarball")
+    shas = bump_pins.current_pins(text, pin)["nodestro-ui"]
+    lines = [line for line in text.splitlines() if line and not line.startswith("#")]
+    assert len(shas) == len(lines) >= 4
+    assert len(set(shas)) == 1

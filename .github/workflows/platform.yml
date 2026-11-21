@@ -210,7 +210,9 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - working-directory: frontend
         run: |
+          node scripts/check-vendor.mjs
           npm ci
+          node scripts/check-vendor.mjs --installed
           npm run build
           npm install --no-save playwright@1.63.0
           npx playwright install --with-deps chromium
