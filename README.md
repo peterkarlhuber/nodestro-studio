@@ -109,9 +109,12 @@ The Docker sandbox on Docker Desktop (macOS, Windows) is checked by hand with on
 git clone https://github.com/peterkarlhuber/nodestro-studio.git
 cd nodestro-studio
 
-# Build the user interface (written to src/nodestro_studio/static)
+# Build the user interface (written to src/nodestro_studio/static); check-vendor checks the vendored
+# nodestro-ui packages before the install and node_modules after it
 cd frontend
+node scripts/check-vendor.mjs
 npm ci
+node scripts/check-vendor.mjs --installed
 npm run build
 cd ..
 
@@ -170,7 +173,7 @@ therefore not reachable from other computers.
 ```bash
 python -m pip install "pip>=26.1"
 pip install -r platform/internal.txt -e ".[dev]"
-cd frontend && npm ci && cd ..
+cd frontend && node scripts/check-vendor.mjs && npm ci && node scripts/check-vendor.mjs --installed && cd ..
 
 # two terminals:
 nodestro --reload --no-browser      # API on :8000, API reference at /api/docs

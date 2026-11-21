@@ -2,9 +2,11 @@
 // will be sent, the time left, an optional comment, and approve or reject. Nothing is approved automatically;
 // a question nobody answers in time counts as rejected, and a decision about a changed call is refused.
 
+import { RememberOptions } from "@nodestro/ui-ai";
+import { UiTextProvider, type Translate } from "@nodestro/ui-core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, ShieldQuestion, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -12,7 +14,7 @@ import { useAccess } from "../api/access";
 import { ApiError, api } from "../api/client";
 import { keys, useAccessGrantsEnabled, useToolApprovals } from "../api/hooks";
 import type { AccessDeny, AccessGrant, Run, ToolApprovalRequest, ToolCallApproval } from "../api/types";
-import { Badge, Button, Callout, Field, HelpTip, Select, TextArea, TextInput } from "../components/ui";
+import { Badge, Button, Callout, Field, HelpTip, TextArea } from "../components/ui";
 import { toast } from "../components/toast";
 import { ErrorText, problemText } from "../lib/errors";
 import { formatDate } from "../lib/format";
@@ -93,8 +95,27 @@ export function rememberedRule(request: Pick<ToolApprovalRequest, "tool" | "node
 }
 
 /**
+ * The keys of the package's remember options, answered with the studio's own texts (the wording stays as it was before
+ * the card used the package).
+ */
+export const REMEMBER_TEXTS = {
+  "ai.remember.title": "approvals.tool.remember.title",
+  "ai.remember.duration": "approvals.tool.remember.duration",
+  "ai.remember.durations.call": "approvals.tool.remember.durations.call",
+  "ai.remember.durations.until_revoked": "approvals.tool.remember.durations.until_revoked",
+  "ai.remember.durations.until": "approvals.tool.remember.durations.until",
+  "ai.remember.scope": "approvals.tool.remember.scope",
+  "ai.remember.scopes.agent": "approvals.tool.remember.scopes.agent",
+  "ai.remember.scopes.all": "approvals.tool.remember.scopes.all",
+  "ai.remember.until": "approvals.tool.remember.until",
+  "ai.remember.hint": "approvals.tool.remember.hint",
+} as const;
+type RememberText = keyof typeof REMEMBER_TEXTS;
+
+/**
  * Scope and duration of a decision, shown only while grants and denies are on and to someone who may write them
- * (``admin``); hidden otherwise, so the card stays as before.
+ * (``admin``); hidden otherwise, so the card stays as before. The fields are the shared package's (N-16,
+ * @nodestro/ui-ai RememberOptions) with the studio's texts; what is stored stays the studio's decision.
  */
 function RememberDecision({
   request,
@@ -107,47 +128,26 @@ function RememberDecision({
   choice: RememberChoice;
   onChange: (choice: RememberChoice) => void;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const agent = workflowId ? `${workflowId}/${request.node_id}` : request.node_id;
+  const translate = useCallback<Translate>(
+    (key, values) => {
+      if (!(key in REMEMBER_TEXTS)) return undefined;
+      const studioKey = REMEMBER_TEXTS[key as RememberText];
+      return t(studioKey, values);
+    },
+    [t],
+  );
   return (
-    <fieldset className="stack-sm" data-testid="tool-approval-remember">
-      <legend className="nd-field-label">{t("approvals.tool.remember.title")}</legend>
-      <div className="row-gap">
-        <Field label={t("approvals.tool.remember.duration")}>
-          <Select
-            value={choice.duration}
-            onChange={(value) => onChange({ ...choice, duration: value as RememberFor })}
-            options={(["call", "until_revoked", "until"] as const).map((value) => ({
-              value,
-              label: t(`approvals.tool.remember.durations.${value}`),
-            }))}
-          />
-        </Field>
-        {choice.duration !== "call" ? (
-          <Field label={t("approvals.tool.remember.scope")}>
-            <Select
-              value={choice.scope}
-              onChange={(value) => onChange({ ...choice, scope: value as RememberScope })}
-              options={[
-                { value: "agent", label: t("approvals.tool.remember.scopes.agent", { agent }) },
-                { value: "all", label: t("approvals.tool.remember.scopes.all") },
-              ]}
-            />
-          </Field>
+    <UiTextProvider locale={i18n.language} translate={translate}>
+      <RememberOptions value={choice} onChange={onChange} agent={agent} data-testid="tool-approval-remember">
+        {choice.duration !== "call" && !grantable(request) ? (
+          <p className="small" data-testid="tool-approval-remember-reject-only">
+            {request.capability.access === "destructive" ? t("approvals.tool.remember.onlyRejectDestructive") : t("approvals.tool.remember.onlyRejectMcp")}
+          </p>
         ) : null}
-        {choice.duration === "until" ? (
-          <Field label={t("approvals.tool.remember.until")}>
-            <TextInput type="datetime-local" value={choice.until} onChange={(event) => onChange({ ...choice, until: event.target.value })} />
-          </Field>
-        ) : null}
-      </div>
-      <p className="muted small">{t("approvals.tool.remember.hint")}</p>
-      {choice.duration !== "call" && !grantable(request) ? (
-        <p className="small" data-testid="tool-approval-remember-reject-only">
-          {request.capability.access === "destructive" ? t("approvals.tool.remember.onlyRejectDestructive") : t("approvals.tool.remember.onlyRejectMcp")}
-        </p>
-      ) : null}
-    </fieldset>
+      </RememberOptions>
+    </UiTextProvider>
   );
 }
 
