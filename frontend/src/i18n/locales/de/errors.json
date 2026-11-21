@@ -1310,5 +1310,12 @@
     "offline_cloud_model": "Dieses Gespräch ist offline, deshalb kann nur ein lokales Modell antworten. Wähle ein lokales Modell oder schalte offline aus.",
     "run_missing": "Den Lauf dieser Antwort gibt es nicht mehr.",
     "too_many_files": "Dieses Gespräch enthält schon so viele Dateien wie möglich. Entferne zuerst einige."
+  },
+  "offline": {
+    "cloud_model": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, deshalb gehen nur lokale Modelle, nicht {{model}}.",
+    "remote_endpoint": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, und der lokale Modellserver ist nicht auf diesem Computer.",
+    "server_tools": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, deshalb gehen keine Server-Tools ({{names}}).",
+    "shared_memory": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, deshalb gibt es nur Laufgedächtnis: keinen gemeinsamen Gedächtnisbereich und keine Wissensvorschläge.",
+    "tool_unavailable": "{{name}} ist offline nicht verfügbar."
   }
 }
