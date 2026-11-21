@@ -54,6 +54,7 @@ describe("texts left in English", () => {
       "instructions", "branches", "robot", "globe", "score", "word", "citations", "format", "standard", "direct", "indirect", "maintenance",
       "assistant", "publication", "publications", "exports", "local",
       "notification", "notifications",
+      "conversations", "document", // French words like their English twins (conversations with own agents, N-04)
     ],
     it: ["file", "input", "output", "robot", "database", "provider", "runtime", "standard", "no"],
     "pt-BR": ["status", "manual", "individual", "interface", "loop", "tags", "local"],

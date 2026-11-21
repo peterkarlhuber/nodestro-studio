@@ -1165,6 +1165,8 @@ export interface Meta {
   models: ModelInfo[];
   server_tools: ServerToolInfo[];
   efforts: Effort[];
+  /** Off-by-default areas the server serves right now, e.g. ``conversations`` (missing on older servers). */
+  features?: string[];
 }
 
 /** A change of the settings (only the given values change). */

@@ -291,3 +291,18 @@ The inspector checks every change against the library's rules without calling th
 - **Gray notes** inform you, for example that inputs are appended because the task contains no placeholder.
 
 Common messages and their solutions are under [Common errors](/docs/faq#haeufige-fehler).
+
+## Conversations with an agent {#gespraeche}
+<!-- keywords: conversation, conversations, chat, agent, message, answer, file, attachment, approval, offline, sources, cost, export -->
+
+You can hold a conversation with an agent from the agent library. The **Conversations** area in the navigation exists only when your installation has conversations switched on; otherwise it is not there at all.
+
+- **Choosing an agent**: At the top left you choose an agent; the list then shows only its conversations. **New conversation** starts one with the chosen agent in its current version.
+- **Model**: Without a choice, the agent's local model or the local default model answers. A cloud model is never chosen automatically: switch on **Choose a model** and pick it yourself. **Offline** lets only local models answer; you can switch it per conversation.
+- **Messages**: Enter sends, Shift+Enter adds a line. The answer appears live. Every answer is a run of the agent with its tools; below the answer are the model, tokens, cost and a link to the run. **Stop answer** cancels it.
+- **Files**: **Attach files** uploads files (or drag them onto the input field); they go with the next message. Below your message you see how the model received each file, and a click downloads it. Files from earlier messages reach later answers as an overview, and the agent reads only what it needs from them.
+- **Tools and approvals**: Every tool call shows its arguments, result and duration. When a call waits for your approval, the approval card appears right in the answer.
+- **Sources**: When a tool saw web pages, they are listed below the answer as sources.
+- **Rename, export, delete**: The pencil renames the conversation, **Export** downloads it as Markdown, and the trash can deletes it with its files and runs.
+
+Only you see your conversation: other members see neither the conversation nor its files or runs, administrators included.

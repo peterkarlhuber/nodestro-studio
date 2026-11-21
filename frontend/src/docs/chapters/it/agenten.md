@@ -291,3 +291,18 @@ L'ispettore verifica ogni modifica con le regole della libreria, senza chiamare 
 - Le **note grigie** informano, per esempio, che vengono aggiunti input perché il compito non contiene segnaposto.
 
 I messaggi frequenti e le loro soluzioni sono in [Errori frequenti](/docs/faq#haeufige-fehler).
+
+## Conversazioni con un agente {#gespraeche}
+<!-- keywords: conversazione, conversazioni, chat, agente, messaggio, risposta, file, allegato, approvazione, offline, fonti, costo, esporta -->
+
+Puoi tenere una conversazione con un agente della libreria di agenti. L’area **Conversazioni** nella navigazione esiste solo se la tua installazione ha attivato le conversazioni; altrimenti non compare.
+
+- **Scegliere un agente**: in alto a sinistra scegli un agente; l’elenco mostra allora solo le sue conversazioni. **Nuova conversazione** ne inizia una con l’agente scelto nella sua versione attuale.
+- **Modello**: senza una scelta risponde il modello locale dell’agente o il modello locale predefinito. Un modello cloud non viene mai scelto automaticamente: attiva **Scegli un modello** e sceglilo tu. **Solo locale** fa rispondere solo modelli locali; puoi cambiarlo per ogni conversazione.
+- **Messaggi**: Invio invia, Maiusc+Invio aggiunge una riga. La risposta appare in diretta. Ogni risposta è un’esecuzione dell’agente con i suoi strumenti; sotto la risposta ci sono il modello, i token, il costo e un link all’esecuzione. **Ferma la risposta** la annulla.
+- **File**: **Allega file** carica file (oppure trascinali sul campo di inserimento); partono con il prossimo messaggio. Sotto il tuo messaggio vedi come il modello ha ricevuto ogni file, e un clic lo scarica. I file dei messaggi precedenti arrivano alle risposte successive come panoramica, e l’agente ne legge solo ciò che gli serve.
+- **Strumenti e approvazioni**: ogni chiamata a uno strumento mostra argomenti, risultato e durata. Se una chiamata attende la tua approvazione, la scheda di approvazione compare direttamente nella risposta.
+- **Fonti**: se uno strumento ha visto pagine web, compaiono sotto la risposta come fonti.
+- **Rinominare, esportare, eliminare**: la matita rinomina la conversazione, **Esporta** la scarica come Markdown e il cestino la elimina con i suoi file e le sue esecuzioni.
+
+Solo tu vedi la tua conversazione: gli altri membri non vedono né la conversazione né i suoi file né le sue esecuzioni, amministratori compresi.

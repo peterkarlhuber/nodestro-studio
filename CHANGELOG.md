@@ -2,6 +2,28 @@
 
 ## Unreleased
 
+### N-04 follow-up: the Conversations area and RT-089 (off by default; wave 3; 2026-11-21)
+
+- New area **Conversations** (`/conversations`, `/conversations/:id`), shown in the navigation and reachable only
+  while the server serves conversations: `/api/meta` now names them in `features` (nodestro-api). Elsewhere the
+  pages answer as not found, and every request is still checked by the API (only the owner sees a conversation).
+- Pick an agent template (filter), list, start (agent, title, an explicitly chosen model or the API's local
+  default, offline), rename and delete conversations. The message stream follows the answer's event stream live
+  (text, tool calls with arguments, result and duration, usage); Stop cancels an open answer. Tool calls that wait
+  for a person show the existing approval card inside the answer. Web sources, model, tokens, cost and a link to
+  the run show with every answer.
+- Files: attach (button or drop) before a message; they go with the next message and show how the model received
+  them; sent files download again. Export as a file, per-conversation offline switch.
+- Texts in six languages (`conversations.*`, `nav.conversations`) and a help section "Conversations"
+  (`agenten#gespraeche`) in the six help chapters.
+- Tests: `src/conversations/conversations.test.tsx` (vitest) and the browser suite `conversations`
+  (`e2e/conversations.mjs` against `tests/e2e_conversations_server.py`, the only server with
+  `NODESTRO_CONVERSATIONS=1`; default list, port 8083): create, send by keyboard, a gated streamed answer, attach,
+  download, rename, phone width, delete.
+- The lock pins nodestro-runtime 32e6cf0 (#210: RT-089 runs of deleted conversations are deleted once they stop,
+  earlier files of the conversation are offered to later answers of the owner) and nodestro-api b194506 (#168:
+  `Meta.features`) while they are in review (paired branch `claude/w3-conv-ui`).
+
 ### NS-003: Tabrion Studio uses nodestro-session (K-33 decision, wave 3; 2026-11-21)
 
 - `platform/dependency-policy.json`: the new edge `tabrion-studio -> nodestro-session` (required) and

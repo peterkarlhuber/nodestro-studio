@@ -291,3 +291,18 @@ Der Inspektor prüft jede Änderung mit den Regeln der Library, ohne die API auf
 - **Graue Hinweise** informieren, z. B. dass Eingaben angehängt werden, weil die Aufgabe keinen Platzhalter enthält.
 
 Häufige Meldungen und ihre Lösung stehen unter [Häufige Fehler](/docs/faq#haeufige-fehler).
+
+## Gespräche mit einem Agenten {#gespraeche}
+<!-- keywords: gespräch, gespräche, chat, unterhaltung, agent, nachricht, antwort, datei, anhang, freigabe, offline, quellen, kosten, export -->
+
+Mit einem Agenten aus der Agentenbibliothek kannst du ein Gespräch führen. Den Bereich **Gespräche** in der Navigation gibt es nur, wenn deine Installation Gespräche eingeschaltet hat; sonst fehlt er ganz.
+
+- **Agent wählen**: Oben links wählst du einen Agenten; die Liste zeigt dann nur seine Gespräche. **Neues Gespräch** beginnt eines mit dem gewählten Agenten in seiner aktuellen Version.
+- **Modell**: Ohne Auswahl antwortet das lokale Modell des Agenten oder das lokale Standardmodell. Ein Cloud-Modell wird nie automatisch gewählt: Schalte **Modell wählen** ein und wähle es selbst. **Nur lokal** lässt ausschließlich lokale Modelle antworten; du kannst es je Gespräch umschalten.
+- **Nachrichten**: Enter sendet, Umschalt+Enter fügt eine Zeile ein. Die Antwort erscheint live. Jede Antwort ist eine Ausführung des Agenten mit seinen Tools; unter der Antwort stehen Modell, Tokens, Kosten und ein Link zur Ausführung. **Antwort stoppen** bricht sie ab.
+- **Dateien**: **Dateien anhängen** lädt Dateien hoch (oder zieh sie auf das Eingabefeld); sie gehen mit der nächsten Nachricht. Unter deiner Nachricht steht, wie das Modell jede Datei bekommen hat, und ein Klick lädt sie herunter. Dateien aus früheren Nachrichten bekommt der Agent bei späteren Antworten als Überblick und liest daraus nur, was er braucht.
+- **Tools und Freigaben**: Jeder Tool-Aufruf zeigt Argumente, Ergebnis und Dauer. Wartet ein Aufruf auf deine Freigabe, erscheint die Freigabekarte direkt in der Antwort.
+- **Quellen**: Hat ein Tool Webseiten gesehen, stehen sie unter der Antwort als Quellen.
+- **Umbenennen, exportieren, löschen**: Der Stift benennt das Gespräch um, **Exportieren** lädt es als Markdown herunter, und der Papierkorb löscht es mit seinen Dateien und Ausführungen.
+
+Ein Gespräch siehst nur du: Andere Mitglieder sehen weder das Gespräch noch seine Dateien oder Ausführungen, auch Administratoren nicht.

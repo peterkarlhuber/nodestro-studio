@@ -31,7 +31,8 @@ function domainOf(source: SourceEntry): string {
   }
 }
 
-export function WebSources({ run }: { run: Run }) {
+/** The sources of a run, or of anything that lists them the same way (an answer of a conversation). */
+export function WebSources({ run }: { run: Pick<Run, "sources"> }) {
   const { t } = useTranslation();
   const sources = run.sources ?? [];
   if (!sources.length) return null;

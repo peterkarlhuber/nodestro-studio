@@ -291,3 +291,18 @@ L’inspecteur vérifie chaque modification selon les règles de la bibliothèqu
 - Les **notes grises** informent, par exemple que des entrées sont ajoutées parce que la tâche ne contient aucun espace réservé.
 
 Les messages fréquents et leurs solutions se trouvent dans [Erreurs fréquentes](/docs/faq#haeufige-fehler).
+
+## Conversations avec un agent {#gespraeche}
+<!-- keywords: conversation, conversations, chat, agent, message, réponse, fichier, pièce jointe, approbation, hors ligne, sources, coût, export -->
+
+Vous pouvez mener une conversation avec un agent de la bibliothèque d’agents. L’espace **Conversations** de la navigation n’existe que si votre installation a activé les conversations ; sinon, il n’apparaît pas.
+
+- **Choisir un agent** : en haut à gauche, vous choisissez un agent ; la liste ne montre alors que ses conversations. **Nouvelle conversation** en commence une avec l’agent choisi dans sa version actuelle.
+- **Modèle** : sans choix, le modèle local de l’agent ou le modèle local par défaut répond. Un modèle cloud n’est jamais choisi automatiquement : activez **Choisir un modèle** et choisissez-le vous-même. **Hors ligne** ne laisse répondre que des modèles locaux ; vous pouvez le changer pour chaque conversation.
+- **Messages** : Entrée envoie, Maj+Entrée ajoute une ligne. La réponse apparaît en direct. Chaque réponse est une exécution de l’agent avec ses outils ; sous la réponse figurent le modèle, les jetons, le coût et un lien vers l’exécution. **Arrêter la réponse** l’annule.
+- **Fichiers** : **Joindre des fichiers** envoie des fichiers (ou faites-les glisser sur le champ de saisie) ; ils partent avec le prochain message. Sous votre message, vous voyez comment le modèle a reçu chaque fichier, et un clic le télécharge. Les fichiers des messages précédents parviennent aux réponses suivantes sous forme d’aperçu, et l’agent n’en lit que ce dont il a besoin.
+- **Outils et approbations** : chaque appel d’outil montre ses arguments, son résultat et sa durée. Quand un appel attend votre approbation, la carte d’approbation apparaît directement dans la réponse.
+- **Sources** : quand un outil a vu des pages web, elles sont listées sous la réponse comme sources.
+- **Renommer, exporter, supprimer** : le crayon renomme la conversation, **Exporter** la télécharge en Markdown et la corbeille la supprime avec ses fichiers et ses exécutions.
+
+Vous seul voyez votre conversation : les autres membres ne voient ni la conversation ni ses fichiers ni ses exécutions, administrateurs compris.
