@@ -20,10 +20,15 @@
   (`e2e/conversations.mjs` against `tests/e2e_conversations_server.py`, the only server with
   `NODESTRO_CONVERSATIONS=1`; default list, port 8083): create, send by keyboard, a gated streamed answer, attach,
   download, rename, phone width, delete.
-- The lock pins nodestro-runtime 34680c4 (#210: RT-089 runs of deleted conversations are deleted once they stop,
-  earlier files of the conversation are offered to later answers of the owner) and nodestro-api b194506 (#168:
-  `Meta.features`), and `platform/versions.json` the sdk d85cbda (#141: the synced contract), while they are in
+- The lock pins nodestro-runtime c89da63 (#210: RT-089 runs of deleted conversations are deleted once they stop,
+  earlier files of the conversation are offered to later answers of the owner) and nodestro-api 75a14ac (#168:
+  `Meta.features`), and `platform/versions.json` the sdk 3aac8f9 (#141: the synced contract), while they are in
   review (paired branch `claude/w3-conv-ui`).
+- W3-P4a review fixes (paired): the error text of the new code `run.imported` (an imported run is only shown and
+  never runs) in six languages; the lock pins the runtime and api commits that close M-1 (an imported trace never
+  runs or reaches another member's conversation file) and the lows (framed and capped overviews, events of a deleted
+  answer's run, the server worker's sweep of runs of deleted conversations), merged with N-09.
+
 ### N-09: offline per agent and per conversation (2026-11-21)
 
 - The lock pins nodestro-runtime df77adb, nodestro-api 735d957 and nodestro-sdk 4cbe1fe (branches `claude/w3-n09`):

@@ -158,6 +158,7 @@
     "blocked": "Não executado porque uma etapa anterior não teve sucesso.",
     "approval_rejected": "Rejeitado em {{node}}; a execução foi encerrada.",
     "interrupted": "O Nodestro foi encerrado durante esta execução.",
+    "imported": "Uma execução importada é apenas exibida; ela nunca é executada, então suas aprovações não podem ser decididas e ela não pode continuar.",
     "not_paused": "Só uma execução pausada pode continuar.",
     "subworkflow_failed": "O subfluxo {{name}} falhou.",
     "subworkflow_missing": "O fluxo de trabalho de {{node}} não existe mais.",
