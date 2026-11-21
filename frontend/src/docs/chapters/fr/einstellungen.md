@@ -351,6 +351,8 @@ Arrêt avec **Ctrl+C**. Les exécutions en cours sont annulées.
 
 > **Sécurité :** Nodestro n’a pas encore de gestion des utilisateurs, il ne répond donc qu’à cet ordinateur. `--host 0.0.0.0`, d’autres adresses réseau ou des noms réseau dans `NODESTRO_ALLOWED_HOSTS` arrêtent le démarrage, et Nodestro ne peut pas être placé derrière un proxy inverse. Pour que d’autres appareils utilisent un workflow, publiez-le comme API : les API publiées utilisent des clés API et ont leur propre accès réseau (voir *API et export*).
 
+> **Lien de démarrage et déconnexion :** Nodestro peut être protégé par un lien de démarrage à usage unique. La commande `nodestro` ouvre alors le navigateur via un fichier privé et affiche le lien une fois dans le terminal : aucun autre programme de cet ordinateur ne peut utiliser Nodestro, et le lien ne fonctionne pas une deuxième fois. Si la barre supérieure affiche **Se déconnecter**, cela met fin à la session de cette fenêtre ; Nodestro ne s’ouvre à nouveau qu’après un redémarrage. Les deux sont désactivés dans cette version, sauf si votre installation les active.
+
 ## Nodestro sur un serveur {#server}
 <!-- keywords: serveur, se connecter, connexion, se déconnecter, rôle, rôles, autorisation, autorisations, espace de travail, tenant, lecture seule, membres, nodestro-server, set-role, remove-member, revoke-sessions, session expirée -->
 

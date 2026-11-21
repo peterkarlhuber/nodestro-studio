@@ -134,5 +134,10 @@
     "changed": "{{name}} is now {{role}}.",
     "removed": "{{name}} no longer has access to this workspace.",
     "empty": "This workspace has no members yet."
+  },
+  "desktop": {
+    "signOutHint": "End this window's session. To continue, restart the desktop app.",
+    "signedOutTitle": "You are signed out",
+    "signedOutText": "This window no longer has access to Nodestro. Close it and start the desktop app again to continue."
   }
 }

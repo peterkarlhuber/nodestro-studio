@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh --list | [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server|recovery|portable ...]   (default: all but portable)
+# Usage: scripts/e2e.sh --list | [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server|recovery|launch|portable ...]   (default: all but portable)
 # The journeys suite writes its report to $JOURNEY_REPORT when set.
 # E2E_PORT_OFFSET (default 0) moves every server port by that amount (8000 to 8099 by default, so parallel runs on
 # one machine do not collide), E2E_BROWSER=firefox|webkit picks another Playwright engine.
@@ -14,7 +14,7 @@ cd "$(dirname "$0")/.."
 
 # The suites a run without arguments runs, in this order. `scripts/e2e.sh --list` prints them (scripts/e2e_halves.sh
 # splits them between two parallel runs and checks that the halves together are exactly this list).
-default_suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models local-server recovery)
+default_suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models local-server recovery launch)
 if [ "${1:-}" = "--list" ]; then
   printf '%s\n' "${default_suites[@]}"
   exit 0
@@ -94,6 +94,12 @@ run() {  # run SUITE
     recovery) secret="e2e-recovery-$(python -c "import secrets; print(secrets.token_hex(24))")"
       E2E_READY=/api/health start recovery "$(port 8089)" python tests/e2e_recovery_server.py --data-dir "$work/recovery" --port "$(port 8089)" --launch-secret "$secret"
       (cd frontend && NODESTRO_E2E_SECRET="$secret" NODESTRO_E2E_DATA="$work/recovery" npm run e2e:recovery -- "$(url 8089)" ${E2E_SCREENSHOTS:-}) ;;
+    launch) secret="e2e-launch-$(python -c "import secrets; print(secrets.token_hex(24))")"
+      # The NS-002 switches of nodestro-api (all off by default) on, against the desktop's launch secret.
+      NODESTRO_LAUNCH_SECRET="$secret" NODESTRO_LAUNCH_FRAGMENT=1 NODESTRO_LAUNCH_CSRF=1 NODESTRO_DESKTOP_LOGOUT=1 \
+        NODESTRO_LAUNCH_TTL=600 E2E_READY=/api/health start launch "$(port 8093)" \
+        nodestro --data-dir "$work/launch" --no-browser --port "$(port 8093)"
+      (cd frontend && NODESTRO_E2E_SECRET="$secret" npm run e2e:launch -- "$(url 8093)" ${E2E_SCREENSHOTS:-}) ;;
     portable) start portable "$(port 8087)" python tests/e2e_portable_server.py --data-dir "$work/portable" --port "$(port 8087)"
       (cd frontend && npm run e2e:portable -- "$(url 8087)" ${E2E_SCREENSHOTS:-}) ;;
     journeys) start journeys "$(port 8060)" python tests/e2e_journey_server.py --data-dir "$work/journeys" --port "$(port 8060)"

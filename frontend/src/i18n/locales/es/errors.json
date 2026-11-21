@@ -671,7 +671,9 @@
     "forwarded_not_allowed": "No se aceptan solicitudes reenviadas por un proxy: Nodestro solo responde a este equipo.",
     "invalid_plain": "La solicitud no se ajusta a la entrada esperada.",
     "too_large_limit": "La solicitud es demasiado grande: se aceptan como máximo {{limit_mb}} MB.",
-    "malformed": "No se puede leer la solicitud. Recarga la página e inténtalo de nuevo."
+    "malformed": "No se puede leer la solicitud. Recarga la página e inténtalo de nuevo.",
+    "origin_required": "Este cambio no indica qué página lo envió y se rechazó. Use Nodestro directamente.",
+    "json_only": "Este cambio debe enviarse como JSON (o como formulario con archivos) y se rechazó."
   },
   "publication": {
     "disabled": "Esta API está desactivada.",
@@ -830,7 +832,10 @@
     "unattended_scope": "Un permiso más allá de la lectura para ejecuciones sin supervisión debe indicar sus agentes.",
     "unattended_too_long": "Un permiso más allá de la lectura para ejecuciones sin supervisión puede durar como máximo {{days}} días.",
     "grants_disabled": "Los permisos y bloqueos no están activados en esta instalación.",
-    "tool_changed": "La herramienta cambió desde que se mostró, así que no se guardó ningún permiso. Revisa la llamada de nuevo."
+    "tool_changed": "La herramienta cambió desde que se mostró, así que no se guardó ningún permiso. Revisa la llamada de nuevo.",
+    "csrf_invalid": "Este cambio se rechazó porque le falta el valor de seguridad de la sesión. Vuelva a abrir Nodestro desde la aplicación de escritorio.",
+    "launch_expired": "El enlace de inicio ha caducado. Reinicie la aplicación de escritorio para abrir una ventana nueva.",
+    "launch_ttl_invalid": "La validez del enlace de inicio debe ser un número de segundos entre 1 y 3600."
   },
   "sandbox": {
     "isolation_required": "El código creado por IA y las herramientas de origen desconocido solo se ejecutan aislados (en Docker o, si se eligió, en el sandbox de Linux integrado); nada de esto está disponible, así que no se ejecutó nada. Ajustes → Sandbox muestra el motivo.",

@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### NS-002: the studio side of the desktop launch hardening (switches off by default; Welle 3)
+
+- The API client sends the launch session's CSRF value in `X-Nodestro-CSRF` with every change (`POST`, `PUT`,
+  `PATCH`, `DELETE`, uploads included) when nodestro-api's launch page left one in `sessionStorage`
+  (`NODESTRO_LAUNCH_CSRF`); the trace import is sent as JSON. Without the switch nothing is stored or sent.
+- **Sign out** in the top bar on the desktop when the launch page offers it (`NODESTRO_DESKTOP_LOGOUT`); afterwards a
+  signed-out page replaces the studio. New texts in six languages (`admin.desktop.*`, the error texts of
+  `access.csrf_invalid`, `access.launch_expired`, `access.launch_ttl_invalid`, `request.origin_required`,
+  `request.json_only`) and a help paragraph in the installation section.
+- `nodestro` with `NODESTRO_TERMINAL_LAUNCH=1` (no secret given): the browser opens the `file://` path of a 0600
+  redirect file, the terminal shows the link once.
+- Browser suite `launch` (default list, second half): fragment link, CSRF value, JSON only, sign-out and TTL against
+  `nodestro` with the switches on.
+- The lock pins nodestro-api at the NS-002 branch head 0f71f04 (paired branch `claude/w3-ns002`).
+
 ### N-02: the shared library for the local session (2026-11-20)
 
 - New component `nodestro-session` (K-33 decision, wave 2): `kind: library` in `platform/dependency-policy.json`

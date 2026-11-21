@@ -148,6 +148,7 @@ import type {
   RunBudgetOut,
 } from "./types";
 import { currentLanguage } from "../i18n";
+import { csrfHeaders } from "./session";
 
 /**
  * An error response of the API. ``message`` is the technical text (English); ``code`` and
@@ -190,7 +191,8 @@ export async function requestWithHeaders<T>(
   extraHeaders?: Record<string, string>,
 ): Promise<{ data: T; headers: Headers }> {
   // The interface language: the backend names new copies and the first examples in it.
-  const headers: Record<string, string> = { "Accept-Language": currentLanguage(), ...extraHeaders };
+  // A change carries the launch session's CSRF value when the desktop backend asks for it (./session).
+  const headers: Record<string, string> = { "Accept-Language": currentLanguage(), ...csrfHeaders(method), ...extraHeaders };
   const init: RequestInit = { method, headers };
   if (body instanceof FormData || body instanceof Blob) {
     init.body = body;
@@ -246,6 +248,7 @@ export function uploadForm<T>(path: string, form: FormData, onProgress?: (share:
     const xhr = new XMLHttpRequest();
     xhr.open("POST", `/api${path}`);
     xhr.setRequestHeader("Accept-Language", currentLanguage());
+    for (const [name, value] of Object.entries(csrfHeaders("POST"))) xhr.setRequestHeader(name, value);
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable && event.total > 0) onProgress(Math.min(1, event.loaded / event.total));
     };
@@ -502,7 +505,8 @@ export const api = {
   cancelRun: (id: string) => request<{ cancelled: boolean }>("POST", `/runs/${id}/cancel`),
   deleteRun: (id: string) => request<void>("DELETE", `/runs/${id}`),
   /** Store an exported trace file for viewing; nothing is executed. */
-  importTrace: (file: Blob) => request<TraceImport>("POST", "/runs/import", file),
+  // A trace is JSON whatever type the file system gives the file (a desktop backend may accept only JSON bodies).
+  importTrace: (file: Blob) => request<TraceImport>("POST", "/runs/import", file, { "Content-Type": "application/json" }),
   /** A run as a trace file; ``sanitized`` changes only the exported copy. */
   exportRun: (id: string, options: { sanitized: boolean; personalData: boolean; contents: boolean }) =>
     request<Run>(
