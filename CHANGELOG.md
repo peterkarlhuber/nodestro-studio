@@ -4,12 +4,17 @@
 
 ### N-09: offline per agent and per conversation (2026-11-21)
 
-- The lock pins nodestro-runtime 66979b7, nodestro-api 1519f03 and nodestro-sdk 56a10c3 (branches `claude/w3-n09`):
+- The lock pins nodestro-runtime 2e95918, nodestro-api eb418d2 and nodestro-sdk 4cbe1fe (branches `claude/w3-n09`):
   `AgentConfig.offline` applies the strict offline mode's rules to one agent, and a conversation's `offline` flag to every call of its
   answers, checked at every call (runtime `docs/offline.md`).
 - Agent editor, Advanced: the switch "Work offline" (`agent.advanced.offline`, `offlineHint`) sets `offline`; an agent
   without the field shows it off. Error texts for `offline.cloud_model`, `offline.remote_endpoint`,
   `offline.server_tools` and `offline.tool_unavailable`. All in six languages.
+- Review fixes (security) in the pinned libraries: only `localhost` and loopback addresses count as this computer;
+  an MCP server over HTTP is not available offline; an own tool is judged by the sandbox of its call; a run of an
+  offline agent or conversation reaches no cloud model through the Nodestro Assistant (attaching it is refused with
+  `offline.cloud_model` while the assistant model is a cloud model; translated already) or a test series' judge.
+  `Snapshot.offline` in `api/types.ts`.
 
 ### NS-003: Tabrion Studio uses nodestro-session (K-33 decision, wave 3; 2026-11-21)
 

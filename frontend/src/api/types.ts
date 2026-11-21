@@ -2454,6 +2454,8 @@ export interface Snapshot {
   chars: number;
   truncated: boolean;
   secrets: number;
+  /** A run of an offline agent or conversation (N-09): the conversation's answers use local models only. */
+  offline?: "agent" | "conversation";
 }
 
 // ---- decisions, approvals, continuing runs, result files -----------------------------
