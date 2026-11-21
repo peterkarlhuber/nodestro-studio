@@ -1310,5 +1310,12 @@
     "offline_cloud_model": "Esta conversación está sin conexión, así que solo puede responder un modelo local. Elige un modelo local o desactiva el modo sin conexión.",
     "run_missing": "La ejecución de esta respuesta ya no existe.",
     "too_many_files": "Esta conversación ya tiene tantos archivos como admite. Quita algunos primero."
+  },
+  "offline": {
+    "cloud_model": "Este agente o esta conversación está sin conexión, así que solo se pueden usar modelos locales, no {{model}}.",
+    "remote_endpoint": "Este agente o esta conversación está sin conexión, y el servidor de modelos locales no está en este equipo.",
+    "server_tools": "Este agente o esta conversación está sin conexión, así que no se pueden usar herramientas de servidor ({{names}}).",
+    "shared_memory": "Este agente o esta conversación está sin conexión, así que solo usa memoria de la ejecución: ningún espacio de memoria compartido ni propuestas de conocimiento.",
+    "tool_unavailable": "{{name}} no está disponible sin conexión."
   }
 }

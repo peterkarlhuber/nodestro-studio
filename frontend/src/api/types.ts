@@ -134,6 +134,8 @@ export interface AgentConfig {
   fallbacks: string[];
   on_refusal: "raise" | "return";
   request_options: Record<string, unknown>;
+  /** N-09: local models only, and no tool that needs the internet (checked at every call); missing means off. */
+  offline?: boolean;
 }
 
 export interface Position {
@@ -2454,6 +2456,8 @@ export interface Snapshot {
   chars: number;
   truncated: boolean;
   secrets: number;
+  /** A run of an offline agent or conversation (N-09): the conversation's answers use local models only. */
+  offline?: "agent" | "conversation";
 }
 
 // ---- decisions, approvals, continuing runs, result files -----------------------------
