@@ -295,7 +295,7 @@ In the Python environment where Nodestro 0.1 is installed:
 
 ```bash
 git clone https://github.com/peterkarlhuber/nodestro-studio.git && cd nodestro-studio
-(cd frontend && npm ci && npm run build)    # the user interface belongs in the package
+(cd frontend && node scripts/check-vendor.mjs && npm ci && node scripts/check-vendor.mjs --installed && npm run build)    # the interface belongs in the package
 pip install -U -r platform/internal.txt .   # or -e . for development
 nodestro
 ```

@@ -2,7 +2,8 @@
 
 `node scripts/check-vendor.mjs` must run right before it (pins, hashes, package.json and lockfile agree) and
 `node scripts/check-vendor.mjs --installed` right after it (node_modules holds exactly the vendored tarballs), in every
-workflow and in the Makefile. The only other `npm ci` is the one of the TypeScript SDK, which has no vendored packages.
+workflow, in the Makefile and in the shell blocks of the documentation (README, docs/, the in-app help in all
+languages). The only other `npm ci` is the one of the TypeScript SDK, which has no vendored packages.
 """
 
 from __future__ import annotations
@@ -72,3 +73,37 @@ def test_the_rule_covers_every_known_install() -> None:
 )
 def test_the_rule_itself(text: str, expected: int) -> None:
     assert len(problems(text)) == expected
+
+
+def code_blocks(markdown: str) -> str:
+    """The lines inside the fenced code blocks of a Markdown text."""
+    lines: list[str] = []
+    inside = False
+    for line in markdown.splitlines():
+        if line.lstrip().startswith("```"):
+            inside = not inside
+            lines.append("")  # a block boundary: commands never pair across blocks
+        elif inside:
+            lines.append(line)
+    return "\n".join(lines)
+
+
+DOCS = sorted({ROOT / "README.md", *(ROOT / "docs").rglob("*.md"), *(ROOT / "frontend" / "src" / "docs").rglob("*.md")})
+
+
+@pytest.mark.parametrize("path", DOCS, ids=lambda p: str(p.relative_to(ROOT)))
+def test_the_documented_installs_check_before_and_after(path: Path) -> None:
+    assert problems(code_blocks(path.read_text(encoding="utf-8"))) == []
+
+
+def test_the_documented_installs_are_covered() -> None:
+    documented = [p for p in DOCS if AFTER in code_blocks(p.read_text(encoding="utf-8"))]
+    names = {str(p.relative_to(ROOT)) for p in documented}
+    assert {"README.md", "docs/PLATFORM.md"} <= names
+    assert len([n for n in names if n.endswith("/einstellungen.md")]) == 6
+
+
+def test_code_blocks_only_reads_fenced_code() -> None:
+    text = "`npm ci` in prose\n```bash\ncd frontend && npm ci && npm run build\n```\nnpm ci\n"
+    assert problems(code_blocks(text)) != []
+    assert problems(code_blocks("prose only: npm ci\n")) == []

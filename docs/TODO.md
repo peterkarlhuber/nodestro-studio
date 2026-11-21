@@ -139,7 +139,8 @@ from #121). Both have status `Needs external review`.
   alias layer `--nd-*: var(--ui-*)` and a codemod, then drop `midnight-citron.css`. Each step keeps the existing
   tests and browser suites unchanged.
 - **Also:** nodestro-server (`image/Dockerfile`) and nodestro-desktop (`scripts/build_backend.sh`) run `npm ci` on a
-  studio checkout without the SHA-256 check; add `node scripts/check-vendor.mjs` there.
+  studio checkout without the SHA-256 check; add `node scripts/check-vendor.mjs` before it and
+  `node scripts/check-vendor.mjs --installed` after it there, as the studio's workflows, Makefile and docs do.
 
 ## Tests and quality assurance
 
