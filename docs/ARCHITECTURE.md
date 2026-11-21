@@ -378,7 +378,9 @@ tool calls, the export's `Sanitizer`, `preflight()` and the usage log.
   untrusted data; the files tool grants nothing. Downloads use `uploaded_file_headers(inline=False)` (attachment,
   nosniff, sandbox CSP). On a server, a conversation belongs to the user who started it (`Conversation.owner`): every
   conversation route answers 404 for another user, and `/api/inputs/*` and the adoption refuse another user's
-  assistant files the same way. Limits: 50 MB per file, 10 files per message, 50 per conversation.
+  assistant files the same way. A principal without a role on a server (no member of the tenant) sees no
+  conversation and starts none; only the desktop's single person sees every one (W3-S1, nodestro-api
+  `docs/conversations.md`, which applies the same rule to conversations with own agents). Limits: 50 MB per file, 10 files per message, 50 per conversation.
 - **Suggestions** of the current view exist only in the browser (`frontend/src/assistant/store.ts`) and are attached
   only through an explicit action.
 - **Handover:** the tool `propose_handover` only creates a card. It opens the Workflow Architect, the agent designer or
