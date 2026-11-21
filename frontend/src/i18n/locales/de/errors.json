@@ -1317,5 +1317,28 @@
     "server_tools": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, deshalb gehen keine Server-Tools ({{names}}).",
     "shared_memory": "Für diesen Agenten oder dieses Gespräch ist offline eingeschaltet, deshalb gibt es nur Laufgedächtnis: keinen gemeinsamen Gedächtnisbereich und keine Wissensvorschläge.",
     "tool_unavailable": "{{name}} ist offline nicht verfügbar."
+  },
+  "folder": {
+    "disabled": "Ordnerfreigaben sind für diese Installation nicht eingeschaltet.",
+    "failed": "Der Ordner konnte nicht gelesen werden. Versuche es später erneut.",
+    "invalid_name": "Ein Ordnername hat 1 bis 80 Zeichen und keinen Schrägstrich.",
+    "invalid_pattern": "Ein Einschluss- oder Ausschlussmuster ist ungültig.",
+    "invalid_query": "Suche nach 1 bis 200 Zeichen.",
+    "name_taken": "Ein anderer freigegebener Ordner hat bereits diesen Namen.",
+    "not_found": "Diese Ordnerfreigabe gibt es nicht mehr.",
+    "not_grantable": "Dieser Ordner kann nicht freigegeben werden. Systemordner, der Benutzerordner, Ordner mit Schlüsseln oder Passwörtern und die eigenen Daten von Nodestro sind für Agenten nie offen.",
+    "unavailable": "Hier sind keine Ordner freigegeben.",
+    "unknown": "Kein freigegebener Ordner hat diesen Namen."
+  },
+  "fs": {
+    "hard_link": "Dateien mit mehreren harten Links werden nicht gelesen, weil sie zu einem anderen Ordner gehören können.",
+    "link": "Verknüpfungen werden nie verfolgt.",
+    "network_path": "Netzwerkordner können nicht freigegeben werden.",
+    "not_a_directory": "Das ist eine Datei, kein Ordner.",
+    "not_found": "Diese Datei oder dieser Ordner existiert nicht.",
+    "protected_root": "Dieser Ordner ist geschützt und kann nie freigegeben werden.",
+    "too_complex": "Die Datei ist zu komplex, um sie innerhalb der Grenzen zu lesen.",
+    "too_large": "Die Datei ist größer als die Grenze dieses Ordners. Wähle eine kleinere Datei oder erhöhe die Grenze.",
+    "unsupported_type": "Diese Art von Datei kann nicht als Text gelesen werden ({{path}})."
   }
 }

@@ -463,6 +463,18 @@
     "draft_webhook": {
       "name": "Webhook-Entwurf",
       "description": "Bereitet die JSON-Daten eines Webhook-Aufrufs als Entwurfsdatei in den Ergebnisdateien des Laufs vor, geprüft gegen ein JSON Schema, wenn du im Agenten eines festlegst. Es ruft keinen Webhook auf: Eine Person prüft die Daten und verschickt sie. Höchstens 10 Entwürfe pro Lauf; funktioniert offline."
+    },
+    "list_folder": {
+      "name": "Ordner auflisten",
+      "description": "Listet die Ordner, die eine Person für Agenten freigegeben hat, oder die Dateien und Unterordner in einem davon. Nur lesend: Es ändert nie eine Datei, und Verknüpfungen werden angezeigt, aber nie verfolgt. Funktioniert offline."
+    },
+    "read_file": {
+      "name": "Datei lesen",
+      "description": "Liest den Text einer Text- oder PDF-Datei in einem freigegebenen Ordner, innerhalb der Grenzen des Ordners. Nur lesend; die Antwort nennt die Datei als Quelle. Jedes Lesen steht im Zugriffsprotokoll des Ordners. Funktioniert offline."
+    },
+    "search_files": {
+      "name": "Dateien durchsuchen",
+      "description": "Findet Dateien in einem freigegebenen Ordner, deren Name oder Text ein Wort oder eine Wendung enthält. Nur lesend; PDFs werden über den Namen gefunden. Funktioniert offline."
     }
   }
 }

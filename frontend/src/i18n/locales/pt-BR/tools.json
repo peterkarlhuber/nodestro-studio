@@ -463,6 +463,18 @@
     "draft_webhook": {
       "name": "Rascunho de webhook",
       "description": "Prepara os dados JSON de uma chamada de webhook como arquivo de rascunho nos arquivos de resultado da execução, conferidos com um JSON Schema se você definir um no agente. Não chama nenhum webhook: uma pessoa confere os dados e os envia. No máximo 10 rascunhos por execução; funciona offline."
+    },
+    "list_folder": {
+      "name": "Listar pasta",
+      "description": "Lista as pastas que uma pessoa compartilhou com os agentes, ou os arquivos e subpastas de uma delas. Somente leitura: nunca altera um arquivo, e links são mostrados, mas nunca seguidos. Funciona offline."
+    },
+    "read_file": {
+      "name": "Ler arquivo",
+      "description": "Lê o texto de um arquivo de texto ou PDF em uma pasta compartilhada, dentro dos limites da pasta. Somente leitura; a resposta cita o arquivo como fonte. Cada leitura fica no registro de acessos da pasta. Funciona offline."
+    },
+    "search_files": {
+      "name": "Pesquisar arquivos",
+      "description": "Encontra arquivos em uma pasta compartilhada cujo nome ou texto contém uma palavra ou frase. Somente leitura; PDFs são encontrados pelo nome. Funciona offline."
     }
   }
 }

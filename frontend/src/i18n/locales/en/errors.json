@@ -1317,5 +1317,28 @@
     "server_tools": "Offline is on for this agent or conversation, so server tools cannot be used ({{names}}).",
     "shared_memory": "Offline is on for this agent or conversation, so it uses run memory only: no shared memory space and no knowledge proposals.",
     "tool_unavailable": "{{name}} is not available offline."
+  },
+  "folder": {
+    "disabled": "Folder grants are not switched on for this installation.",
+    "failed": "Reading the folder failed. Try again later.",
+    "invalid_name": "A folder name has 1 to 80 characters and no slash.",
+    "invalid_pattern": "An include or exclude pattern is not valid.",
+    "invalid_query": "Search for 1 to 200 characters.",
+    "name_taken": "Another granted folder already has this name.",
+    "not_found": "This folder grant no longer exists.",
+    "not_grantable": "This folder cannot be granted. System folders, the home folder, folders with keys or passwords and Nodestro's own data are never open to agents.",
+    "unavailable": "No folders are granted here.",
+    "unknown": "No granted folder has this name."
+  },
+  "fs": {
+    "hard_link": "Files with several hard links are not read, since they can belong to another folder.",
+    "link": "Links are never followed.",
+    "network_path": "Network folders cannot be granted.",
+    "not_a_directory": "This is a file, not a folder.",
+    "not_found": "This file or folder does not exist.",
+    "protected_root": "This folder is protected and can never be granted.",
+    "too_complex": "The file is too complex to read within the limits.",
+    "too_large": "The file is larger than this folder's limit. Choose a smaller file or raise the limit.",
+    "unsupported_type": "This kind of file cannot be read as text ({{path}})."
   }
 }

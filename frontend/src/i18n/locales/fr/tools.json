@@ -463,6 +463,18 @@
     "draft_webhook": {
       "name": "Brouillon de webhook",
       "description": "Prépare les données JSON d’un appel de webhook sous forme de fichier brouillon dans les fichiers de résultat de l’exécution, vérifiées selon un JSON Schema si vous en définissez un dans l’agent. Il n’appelle aucun webhook : une personne vérifie les données et les envoie. Au maximum 10 brouillons par exécution ; fonctionne hors ligne."
+    },
+    "list_folder": {
+      "name": "Lister un dossier",
+      "description": "Liste les dossiers qu’une personne a partagés avec les agents, ou les fichiers et sous-dossiers de l’un d’eux. Lecture seule : il ne modifie jamais un fichier, et les liens sont affichés mais jamais suivis. Fonctionne hors ligne."
+    },
+    "read_file": {
+      "name": "Lire un fichier",
+      "description": "Lit le texte d’un fichier texte ou PDF dans un dossier partagé, dans les limites du dossier. Lecture seule ; la réponse cite le fichier comme source. Chaque lecture figure dans le journal d’accès du dossier. Fonctionne hors ligne."
+    },
+    "search_files": {
+      "name": "Rechercher des fichiers",
+      "description": "Trouve les fichiers d’un dossier partagé dont le nom ou le texte contient un mot ou une expression. Lecture seule ; les PDF sont trouvés par leur nom. Fonctionne hors ligne."
     }
   }
 }
