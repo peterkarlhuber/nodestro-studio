@@ -1327,7 +1327,7 @@
     "invalid_query": "Pesquise de 1 a 200 caracteres.",
     "name_taken": "Outra pasta compartilhada já tem este nome.",
     "not_found": "Este acesso à pasta não existe mais.",
-    "not_grantable": "Esta pasta não pode ser compartilhada. Pastas do sistema, a pasta pessoal, pastas com chaves ou senhas e os dados do próprio Nodestro nunca ficam abertos aos agentes.",
+    "not_grantable": "Esta pasta não pode ser compartilhada. Pastas do sistema, a pasta pessoal, a própria pasta temporária compartilhada, pastas com chaves ou senhas e os dados próprios do Nodestro nunca ficam abertos aos agentes.",
     "unavailable": "Nenhuma pasta está compartilhada aqui.",
     "unknown": "Nenhuma pasta compartilhada tem este nome."
   },
@@ -1338,6 +1338,7 @@
     "not_a_directory": "Isto é um arquivo, não uma pasta.",
     "not_found": "Este arquivo ou pasta não existe.",
     "protected_root": "Esta pasta é protegida e nunca pode ser compartilhada.",
+    "root_changed": "A pasta compartilhada foi movida ou substituída por outra pasta. Compartilhe-a novamente.",
     "too_complex": "O arquivo é complexo demais para ser lido dentro dos limites.",
     "too_large": "O arquivo é maior que o limite desta pasta. Escolha um arquivo menor ou aumente o limite.",
     "unsupported_type": "Este tipo de arquivo não pode ser lido como texto ({{path}})."

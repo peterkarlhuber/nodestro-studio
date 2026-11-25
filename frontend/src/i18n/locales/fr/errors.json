@@ -1327,7 +1327,7 @@
     "invalid_query": "Recherchez de 1 à 200 caractères.",
     "name_taken": "Un autre dossier partagé porte déjà ce nom.",
     "not_found": "Cet accès au dossier n’existe plus.",
-    "not_grantable": "Ce dossier ne peut pas être partagé. Les dossiers système, le dossier personnel, les dossiers contenant des clés ou des mots de passe et les données propres de Nodestro ne sont jamais ouverts aux agents.",
+    "not_grantable": "Ce dossier ne peut pas être partagé. Les dossiers système, le dossier personnel, le dossier temporaire partagé lui-même, les dossiers contenant des clés ou des mots de passe et les données propres de Nodestro ne sont jamais ouverts aux agents.",
     "unavailable": "Aucun dossier n’est partagé ici.",
     "unknown": "Aucun dossier partagé ne porte ce nom."
   },
@@ -1338,6 +1338,7 @@
     "not_a_directory": "Il s’agit d’un fichier, pas d’un dossier.",
     "not_found": "Ce fichier ou ce dossier n’existe pas.",
     "protected_root": "Ce dossier est protégé et ne peut jamais être partagé.",
+    "root_changed": "Le dossier partagé a été déplacé ou remplacé par un autre dossier. Partagez-le à nouveau.",
     "too_complex": "Le fichier est trop complexe pour être lu dans les limites.",
     "too_large": "Le fichier dépasse la limite de ce dossier. Choisissez un fichier plus petit ou relevez la limite.",
     "unsupported_type": "Ce type de fichier ne peut pas être lu comme texte ({{path}})."

@@ -1327,7 +1327,7 @@
     "invalid_query": "Busca de 1 a 200 caracteres.",
     "name_taken": "Otra carpeta compartida ya tiene este nombre.",
     "not_found": "Este acceso a la carpeta ya no existe.",
-    "not_grantable": "Esta carpeta no se puede compartir. Las carpetas del sistema, la carpeta personal, las carpetas con claves o contraseñas y los datos propios de Nodestro nunca están abiertos a los agentes.",
+    "not_grantable": "Esta carpeta no se puede compartir. Las carpetas del sistema, la carpeta personal, la propia carpeta temporal compartida, las carpetas con claves o contraseñas y los datos propios de Nodestro nunca están abiertos a los agentes.",
     "unavailable": "Aquí no hay carpetas compartidas.",
     "unknown": "Ninguna carpeta compartida tiene este nombre."
   },
@@ -1338,6 +1338,7 @@
     "not_a_directory": "Esto es un archivo, no una carpeta.",
     "not_found": "Este archivo o carpeta no existe.",
     "protected_root": "Esta carpeta está protegida y nunca se puede compartir.",
+    "root_changed": "La carpeta compartida se movió o se reemplazó por otra carpeta. Compártela de nuevo.",
     "too_complex": "El archivo es demasiado complejo para leerlo dentro de los límites.",
     "too_large": "El archivo supera el límite de esta carpeta. Elige un archivo más pequeño o aumenta el límite.",
     "unsupported_type": "Este tipo de archivo no se puede leer como texto ({{path}})."
