@@ -291,3 +291,18 @@ O inspetor verifica cada alteração com as regras da biblioteca, sem chamar a A
 - **Notas cinzas** informam, por exemplo, que entradas são acrescentadas porque a tarefa não contém nenhum marcador.
 
 Mensagens comuns e suas soluções estão em [Erros comuns](/docs/faq#haeufige-fehler).
+
+## Conversas com um agente {#gespraeche}
+<!-- keywords: conversa, conversas, chat, agente, mensagem, resposta, arquivo, anexo, aprovação, offline, fontes, custo, exportar -->
+
+Você pode conversar com um agente da biblioteca de agentes. A área **Conversas** da navegação só existe quando a sua instalação ativou as conversas; caso contrário, ela não aparece.
+
+- **Escolher um agente**: no canto superior esquerdo você escolhe um agente; a lista passa a mostrar só as conversas dele. **Nova conversa** começa uma com o agente escolhido na versão atual.
+- **Modelo**: sem escolha, responde o modelo local do agente ou o modelo local padrão. Um modelo na nuvem nunca é escolhido automaticamente: ative **Escolher um modelo** e escolha você mesmo. **Somente local** deixa responder só modelos locais; você pode mudar isso em cada conversa.
+- **Mensagens**: Enter envia, Shift+Enter adiciona uma linha. A resposta aparece ao vivo. Cada resposta é uma execução do agente com suas ferramentas; abaixo da resposta ficam o modelo, os tokens, o custo e um link para a execução. **Parar resposta** a cancela.
+- **Arquivos**: **Anexar arquivos** envia arquivos (ou arraste-os para o campo de entrada); eles vão com a próxima mensagem. Abaixo da sua mensagem você vê como o modelo recebeu cada arquivo, e um clique o baixa. Os arquivos de mensagens anteriores chegam às respostas seguintes como visão geral, e o agente lê deles só o que precisa.
+- **Ferramentas e aprovações**: cada chamada de ferramenta mostra argumentos, resultado e duração. Quando uma chamada aguarda sua aprovação, o cartão de aprovação aparece direto na resposta.
+- **Fontes**: quando uma ferramenta viu páginas da web, elas aparecem abaixo da resposta como fontes.
+- **Renomear, exportar, excluir**: o lápis renomeia a conversa, **Exportar** a baixa como Markdown e a lixeira a exclui com seus arquivos e execuções.
+
+Só você vê a sua conversa: os outros membros não veem a conversa, nem seus arquivos ou execuções, nem mesmo os administradores.

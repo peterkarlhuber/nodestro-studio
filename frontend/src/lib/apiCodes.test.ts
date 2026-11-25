@@ -151,3 +151,15 @@ describe("codes of nodestro-api round 2026-11-06", () => {
   });
 });
 
+
+describe("imported runs (W3-P4a M-1)", () => {
+  it("explains run.imported in every language", () => {
+    for (const language of LANGUAGES) {
+      const fixed = i18n.getFixedT(language);
+      const text = problemText(fixed, { code: "run.imported", params: {} });
+      expect(text).not.toBe(fixed("errors.unknown"));
+      expect(text).not.toContain("{{");
+    }
+    expect(problemText(t, { code: "run.imported", params: {} })).toMatch(/only shown; it never runs/);
+  });
+});

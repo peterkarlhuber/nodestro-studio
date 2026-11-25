@@ -158,6 +158,7 @@
     "blocked": "Nicht ausgeführt, weil ein Vorgänger nicht erfolgreich war.",
     "approval_rejected": "Bei {{node}} abgelehnt; der Lauf wurde beendet.",
     "interrupted": "Nodestro wurde beendet, während dieser Lauf lief.",
+    "imported": "Ein importierter Lauf wird nur angezeigt; er läuft nie, deshalb lassen sich seine Freigaben nicht entscheiden und er kann nicht fortgesetzt werden.",
     "not_paused": "Nur ein pausierter Lauf kann weitergehen.",
     "subworkflow_failed": "Der Unterworkflow {{name}} ist fehlgeschlagen.",
     "subworkflow_missing": "Den Workflow von {{node}} gibt es nicht mehr.",
