@@ -4,7 +4,7 @@
 
 ### N-08: egress protection by content provenance (switch off; 2026-11-25)
 
-- The lock pins orkexa 49f38d4, nodestro-runtime 4b5c624, nodestro-api c274fe5 and nodestro-sdk f44b9da (branches
+- The lock pins orkexa f8579ca, nodestro-runtime 4b5c624, nodestro-api c274fe5 and nodestro-sdk f44b9da (branches
   `claude/w3-n08`, based on `claude/w3-n10`). A run or conversation that read a granted folder, knowledge,
   persistent memory or an attached file is marked; from then on every outbound tool call, cloud model request and
   server tool needs a permission (N-06 grant). A person who watches is asked with the existing approval card, which
