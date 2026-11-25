@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### N-08: egress protection by content provenance (switch off; 2026-11-25)
+
+- The lock pins orkexa 49f38d4, nodestro-runtime 4b5c624, nodestro-api c274fe5 and nodestro-sdk f44b9da (branches
+  `claude/w3-n08`, based on `claude/w3-n10`). A run or conversation that read a granted folder, knowledge,
+  persistent memory or an attached file is marked; from then on every outbound tool call, cloud model request and
+  server tool needs a permission (N-06 grant). A person who watches is asked with the existing approval card, which
+  shows the call's arguments (for a web search, the query) before anything is sent; unattended runs are refused with
+  `access.missing_grant`. Off by default (`NODESTRO_CONTENT_PROVENANCE`, only together with the access model v2;
+  runtime `docs/content-provenance.md`).
+- No new texts: refusals use the existing `errors.access.missing_grant` in six languages, and the approval card shows
+  the runtime's reason. The type `Run` gains `granted_content`; a notice in the run details is a later step.
+
 ### N-10: granted folders and read-only file tools (switch off; 2026-11-21)
 
 - The lock pins orkexa 25baac8, nodestro-runtime 87b38cb, nodestro-api f637695 and nodestro-sdk da0e25a (branches

@@ -930,6 +930,8 @@ export interface Run extends RunOrigin {
   source_run_id?: string | null;
   /** Set when the trace came from a sanitized export. */
   sanitized?: SanitizeReport | null;
+  /** N-08: the run read content of a granted source (folder, knowledge, memory, attachment); missing means no. */
+  granted_content?: boolean;
 }
 
 /** One web source of a run (runtime schemas.SourceEntry): a search hit or a page that was read; never the page text. */
