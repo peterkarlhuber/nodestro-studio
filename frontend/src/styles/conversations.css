@@ -1,0 +1,112 @@
+/* Conversations with own agents (N-04): the list on the left, the open conversation on the right. */
+
+.conversation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nd-space-4);
+  min-width: 0;
+}
+
+.conversation__head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: var(--nd-space-3);
+  border-bottom: 1px solid var(--nd-border);
+}
+
+.conversation__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.conversation__title h2 {
+  margin: 0;
+  font-size: var(--nd-font-size-lg);
+  overflow-wrap: anywhere;
+}
+
+.conversation__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+
+.conversation__actions {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.conversation__messages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.conversation__attachments,
+.conversation__calls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.conversation__attachments {
+  justify-content: flex-end;
+}
+
+.conversation__calls {
+  flex-direction: column;
+}
+
+.conversation__call {
+  padding: 6px 10px;
+  border: 1px solid var(--nd-border);
+  border-radius: var(--nd-radius-sm);
+  background: var(--nd-surface);
+}
+
+.conversation__call summary {
+  cursor: pointer;
+}
+
+.conversation__call pre {
+  max-height: 240px;
+  overflow: auto;
+}
+
+.conversation__meta {
+  margin: 0;
+}
+
+.conversation__composer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: sticky;
+  bottom: 0;
+  padding: var(--nd-space-3) 0;
+  background: var(--nd-bg);
+}
+
+.conversation__files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.conversation__composer-actions {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.conversation__composer-actions > .muted {
+  flex: 1;
+}

@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+### N-04 follow-up: the Conversations area and RT-089 (off by default; wave 3; 2026-11-21)
+
+- New area **Conversations** (`/conversations`, `/conversations/:id`), shown in the navigation and reachable only
+  while the server serves conversations: `/api/meta` now names them in `features` (nodestro-api). Elsewhere the
+  pages answer as not found, and every request is still checked by the API (only the owner sees a conversation).
+- Pick an agent template (filter), list, start (agent, title, an explicitly chosen model or the API's local
+  default, offline), rename and delete conversations. The message stream follows the answer's event stream live
+  (text, tool calls with arguments, result and duration, usage); Stop cancels an open answer. Tool calls that wait
+  for a person show the existing approval card inside the answer. Web sources, model, tokens, cost and a link to
+  the run show with every answer.
+- Files: attach (button or drop) before a message; they go with the next message and show how the model received
+  them; sent files download again. Export as a file, per-conversation offline switch.
+- Texts in six languages (`conversations.*`, `nav.conversations`) and a help section "Conversations"
+  (`agenten#gespraeche`) in the six help chapters.
+- Tests: `src/conversations/conversations.test.tsx` (vitest) and the browser suite `conversations`
+  (`e2e/conversations.mjs` against `tests/e2e_conversations_server.py`, the only server with
+  `NODESTRO_CONVERSATIONS=1`; default list, port 8083): create, send by keyboard, a gated streamed answer, attach,
+  download, rename, phone width, delete.
+- The lock pins nodestro-runtime 9eaf6b7 (#210: RT-089 runs of deleted conversations are deleted once they stop,
+  earlier files of the conversation are offered to later answers of the owner) and nodestro-api addc60a (#168:
+  `Meta.features`), and `platform/versions.json` the sdk 3a0a6e2 (#141: the synced contract), while they are in
+  review (paired branch `claude/w3-conv-ui`).
+- W3-P4a review fixes (paired): the error text of the new code `run.imported` (an imported run is only shown and
+  never runs) in six languages; the lock pins the runtime and api commits that close M-1 (an imported trace never
+  runs or reaches another member's conversation file) and the lows (framed and capped overviews, events of a deleted
+  answer's run, the server worker's sweep of runs of deleted conversations), merged with N-09 and N-05 (orkexa
+  c4498fb, which the merged runtime needs; summary runs go with a deleted conversation too).
+
 ### ST-065: the browser test `runchat` sees the live reasoning reliably (2026-11-21)
 
 - Root cause of the flaky wait for `lrc-reasoning` in `frontend/e2e/runChat.mjs`: the scripted team leader thought

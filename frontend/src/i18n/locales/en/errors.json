@@ -158,6 +158,7 @@
     "blocked": "Not run because a predecessor did not succeed.",
     "approval_rejected": "Rejected at {{node}}; the run ended.",
     "interrupted": "Nodestro stopped while this run was running.",
+    "imported": "An imported run is only shown; it never runs, so its approvals cannot be decided and it cannot be continued.",
     "not_paused": "Only a paused run can continue.",
     "subworkflow_failed": "The sub-workflow {{name}} failed.",
     "subworkflow_missing": "The workflow of {{node}} no longer exists.",

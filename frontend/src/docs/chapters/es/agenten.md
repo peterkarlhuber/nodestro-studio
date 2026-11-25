@@ -291,3 +291,18 @@ El inspector comprueba cada cambio con las reglas de la biblioteca, sin llamar a
 - Las **notas grises** informan, por ejemplo, de que se añaden entradas porque la tarea no contiene ningún marcador.
 
 Los mensajes frecuentes y su solución están en [Errores frecuentes](/docs/faq#haeufige-fehler).
+
+## Conversaciones con un agente {#gespraeche}
+<!-- keywords: conversación, conversaciones, chat, agente, mensaje, respuesta, archivo, adjunto, aprobación, sin conexión, fuentes, costo, exportar -->
+
+Puedes mantener una conversación con un agente de la biblioteca de agentes. El área **Conversaciones** de la navegación solo existe si tu instalación tiene las conversaciones activadas; si no, no aparece.
+
+- **Elegir un agente**: Arriba a la izquierda eliges un agente; la lista muestra entonces solo sus conversaciones. **Nueva conversación** empieza una con el agente elegido en su versión actual.
+- **Modelo**: Sin elegir, responde el modelo local del agente o el modelo local predeterminado. Un modelo en la nube nunca se elige automáticamente: activa **Elegir un modelo** y elígelo tú. **Sin conexión** hace que solo respondan modelos locales; puedes cambiarlo en cada conversación.
+- **Mensajes**: Enter envía, Mayús+Enter añade una línea. La respuesta aparece en vivo. Cada respuesta es una ejecución del agente con sus herramientas; debajo de la respuesta están el modelo, los tokens, el costo y un enlace a la ejecución. **Detener respuesta** la cancela.
+- **Archivos**: **Adjuntar archivos** sube archivos (o arrástralos al campo de entrada); van con el próximo mensaje. Debajo de tu mensaje ves cómo recibió el modelo cada archivo, y un clic lo descarga. Los archivos de mensajes anteriores llegan a las respuestas posteriores como resumen, y el agente lee de ellos solo lo que necesita.
+- **Herramientas y aprobaciones**: Cada llamada a una herramienta muestra sus argumentos, su resultado y su duración. Si una llamada espera tu aprobación, la tarjeta de aprobación aparece directamente en la respuesta.
+- **Fuentes**: Si una herramienta vio páginas web, aparecen debajo de la respuesta como fuentes.
+- **Cambiar nombre, exportar, eliminar**: El lápiz cambia el nombre de la conversación, **Exportar** la descarga como Markdown y la papelera la elimina con sus archivos y ejecuciones.
+
+Solo tú ves tu conversación: los demás miembros no ven ni la conversación ni sus archivos ni sus ejecuciones, tampoco los administradores.

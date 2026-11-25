@@ -6,6 +6,7 @@ import { AgentsPage } from "./pages/AgentsPage";
 import { AccessRulesPage } from "./pages/AccessRulesPage";
 import { ApprovalsPage } from "./pages/ApprovalsPage";
 import { BatchDetailPage, BatchesPage } from "./pages/BatchesPage";
+import { ConversationsPage } from "./conversations/ConversationsPage";
 import { ExamplesPage } from "./pages/ExamplesPage";
 import { ExecutionsPage } from "./pages/ExecutionsPage";
 import { KnowledgePage } from "./pages/KnowledgePage";
@@ -63,6 +64,9 @@ export const routes: RouteObject[] = [
       { path: "tools", element: <ToolsPage /> },
       { path: "knowledge", element: <KnowledgePage /> },
       { path: "memory", element: <MemoryPage /> },
+      // Conversations with own agents (N-04): the page shows "not found" unless the server serves them.
+      { path: "conversations", element: <ConversationsPage /> },
+      { path: "conversations/:id", element: <ConversationsPage /> },
       { path: "executions", element: <ExecutionsPage /> },
       { path: "executions/compare", element: <RunComparePage /> },
       { path: "executions/:id", element: <RunDetailPage /> },
