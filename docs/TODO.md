@@ -12,7 +12,7 @@
 | P0 Critical | 0 |
 | P1 High | 1 |
 | P2 Medium | 5 |
-| P3 Low | 13 |
+| P3 Low | 12 |
 | P4 Optional | 4 |
 
 **Release blockers:** None for this repository; every entry below is not a release blocker. The next desktop
@@ -74,16 +74,6 @@ from #121). Both have status `Needs external review`.
 - **Next step:** include both fixes, LD-020, W0-2 and W0-3 in the next bundled review brief.
 
 ## Bugs and reliability
-
-### ST-065 · Browser test `runchat`: the live reasoning is sometimes not seen
-
-- **Priority:** P3 · **Status:** Open
-- **What:** `frontend/e2e/runChat.mjs` waits up to 20 s for `lrc-reasoning` inside `lrc-live-answer` and timed out
-  twice (studio #196, #205); the rerun was green both times. The live answer element appeared, its reasoning did
-  not. The scripted model streams its thinking in about 0.6 s (`STREAM_DELAY = 0.15` in
-  `tests/e2e_run_chat_server.py`) while the chat stream polls every 1 s until an answer is live (api
-  `api_run_chat.py`, `POLL_SECONDS`, then `LIVE_POLL_SECONDS`), so the live phase is shorter than one idle poll.
-  Not yet reproduced locally; find the exact interleaving before changing the timing, and never weaken the check.
 
 ## Architecture and modularity
 
