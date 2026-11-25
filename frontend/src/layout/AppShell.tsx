@@ -13,6 +13,7 @@ import {
   Layers,
   type LucideIcon,
   Menu,
+  MessagesSquare,
   Monitor,
   Moon,
   Orbit,
@@ -31,6 +32,7 @@ import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { useAccess } from "../api/access";
+import { useConversationsEnabled } from "../api/conversations";
 import { pendingBudgetRequests, useApprovals, useBudgetRequests, useSettings, useToolApprovals } from "../api/hooks";
 import { AssistantPanel } from "../assistant/AssistantPanel";
 import { useAssistant } from "../assistant/store";
@@ -68,6 +70,9 @@ const BUILD: NavItem[] = [
   { to: "/knowledge", label: "knowledge", icon: BookOpen },
   { to: "/memory", label: "memory", icon: Brain },
 ];
+
+/** Conversations with own agents (N-04): listed only while the server serves them (``features`` of /api/meta). */
+const CONVERSATIONS: NavItem = { to: "/conversations", label: "conversations", icon: MessagesSquare };
 
 const RUN_AND_REVIEW: NavItem[] = [
   { to: "/executions", label: "executions", icon: Rows3 },
@@ -193,6 +198,7 @@ export function AppShell() {
   const [theme, setTheme] = useTheme();
   const settings = useSettings();
   const access = useAccess();
+  const conversationsOn = useConversationsEnabled();
   const approvals = useApprovals();
   const toolApprovals = useToolApprovals();
   const budgetRequests = useBudgetRequests();
@@ -308,7 +314,9 @@ export function AppShell() {
         <NavGroup title={t("nav.groupBuild")} items={BUILD} />
         <NavGroup
           title={t("nav.groupRun")}
-          items={RUN_AND_REVIEW.map((item) => (item.label === "approvals" ? { ...item, badge: waiting || undefined } : item))}
+          items={[...(conversationsOn ? [CONVERSATIONS] : []), ...RUN_AND_REVIEW].map((item) =>
+            item.label === "approvals" ? { ...item, badge: waiting || undefined } : item,
+          )}
         />
         <NavGroup title={t("nav.groupAutomate")} items={AUTOMATE_AND_TEST} />
         <NavGroup title={t("nav.groupHelp")} items={HELP_ITEMS} />

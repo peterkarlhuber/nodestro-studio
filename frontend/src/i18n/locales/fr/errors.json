@@ -158,6 +158,7 @@
     "blocked": "Non exécuté, car une étape précédente n’a pas réussi.",
     "approval_rejected": "Refusé à {{node}} ; l’exécution s’est terminée.",
     "interrupted": "Nodestro s’est arrêté pendant cette exécution.",
+    "imported": "Une exécution importée est seulement affichée ; elle ne s’exécute jamais, ses validations ne peuvent donc pas être décidées et elle ne peut pas être poursuivie.",
     "not_paused": "Seule une exécution en pause peut reprendre.",
     "subworkflow_failed": "Le sous-workflow {{name}} a échoué.",
     "subworkflow_missing": "Le workflow de {{node}} n’existe plus.",

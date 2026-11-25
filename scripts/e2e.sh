@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Browser tests of the complete application, each against its own Nodestro with simulated models.
-# Usage: scripts/e2e.sh --list | [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server|recovery|launch|portable ...]   (default: all but portable)
+# Usage: scripts/e2e.sh --list | [smoke|i18n|architect|python|assistant|reasoning|flow|panels|api|mcp|approvals|budget|conversations|orchestration|runchat|journeys|welcome|a11y|settings-ui|publications|missing-model|local-models|local-server|recovery|launch|portable ...]   (default: all but portable)
 # The journeys suite writes its report to $JOURNEY_REPORT when set.
 # E2E_PORT_OFFSET (default 0) moves every server port by that amount (8000 to 8099 by default, so parallel runs on
 # one machine do not collide), E2E_BROWSER=firefox|webkit picks another Playwright engine.
@@ -14,7 +14,7 @@ cd "$(dirname "$0")/.."
 
 # The suites a run without arguments runs, in this order. `scripts/e2e.sh --list` prints them (scripts/e2e_halves.sh
 # splits them between two parallel runs and checks that the halves together are exactly this list).
-default_suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models local-server recovery launch)
+default_suites=(smoke i18n architect python assistant reasoning flow panels api mcp approvals budget conversations orchestration runchat journeys welcome a11y settings-ui publications missing-model local-models local-server recovery launch)
 if [ "${1:-}" = "--list" ]; then
   printf '%s\n' "${default_suites[@]}"
   exit 0
@@ -73,6 +73,9 @@ run() {  # run SUITE
       (cd frontend && NODESTRO_URL="$(url 8080)" npm run e2e:approvals) ;;
     budget) start budget "$(port 8085)" python tests/e2e_budget_server.py --data-dir "$work/budget" --port "$(port 8085)"
       (cd frontend && NODESTRO_URL="$(url 8085)" npm run e2e:budget) ;;
+    conversations) # The only suite with NODESTRO_CONVERSATIONS=1 (set by its server for itself); every other one keeps it off.
+      start conversations "$(port 8083)" python tests/e2e_conversations_server.py --data-dir "$work/conversations" --port "$(port 8083)"
+      (cd frontend && npm run e2e:conversations -- "$(url 8083)" ${E2E_SCREENSHOTS:-}) ;;
     orchestration) start orchestration "$(port 8065)" python tests/e2e_orchestration_server.py --data-dir "$work/orchestration" --port "$(port 8065)"
       (cd frontend && NODESTRO_URL="$(url 8065)" npm run e2e:orchestration) ;;
     runchat) start runchat "$(port 8075)" python tests/e2e_run_chat_server.py --data-dir "$work/runchat" --port "$(port 8075)"
