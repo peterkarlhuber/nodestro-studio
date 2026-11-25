@@ -23,12 +23,12 @@
       "version_file": "src/axentra/_version.py"
     },
     "orkexa": {
-      "commit": "25baac85d078c852748a0e23a9f9ef7492fa0b75",
+      "commit": "c4498fb446d152c5928b134f426e11fc6ef9cd0b",
       "version": "0.2.0.dev0",
       "pyproject": "pyproject.toml"
     },
     "nodestro-runtime": {
-      "commit": "87b38cbed1d3e7c9040cc52f7cd62217fc49c0c4",
+      "commit": "6b65b2edba66815e793a4f28395990143063ae2f",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
@@ -46,13 +46,13 @@
       "studio_dependency": true
     },
     "nodestro-api": {
-      "commit": "f63769529a3c377112491da0264620daaff449bd",
+      "commit": "178a5436d4e22779e49ad5780ce614554c923f1e",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true
     },
     "nodestro-sdk": {
-      "commit": "da0e25a39b88f23c3642ed4a237a1d82d62b53da",
+      "commit": "593a523854b968879e96676bed55010b311e6d65",
       "version": "0.3.0",
       "pyproject": "python/pyproject.toml"
     },
