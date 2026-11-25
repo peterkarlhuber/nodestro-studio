@@ -1327,7 +1327,7 @@
     "invalid_query": "Suche nach 1 bis 200 Zeichen.",
     "name_taken": "Ein anderer freigegebener Ordner hat bereits diesen Namen.",
     "not_found": "Diese Ordnerfreigabe gibt es nicht mehr.",
-    "not_grantable": "Dieser Ordner kann nicht freigegeben werden. Systemordner, der Benutzerordner, Ordner mit Schlüsseln oder Passwörtern und die eigenen Daten von Nodestro sind für Agenten nie offen.",
+    "not_grantable": "Dieser Ordner kann nicht freigegeben werden. Systemordner, der Benutzerordner, der gemeinsame temporäre Ordner selbst, Ordner mit Schlüsseln oder Passwörtern und die eigenen Daten von Nodestro sind für Agenten nie offen.",
     "unavailable": "Hier sind keine Ordner freigegeben.",
     "unknown": "Kein freigegebener Ordner hat diesen Namen."
   },
@@ -1338,6 +1338,7 @@
     "not_a_directory": "Das ist eine Datei, kein Ordner.",
     "not_found": "Diese Datei oder dieser Ordner existiert nicht.",
     "protected_root": "Dieser Ordner ist geschützt und kann nie freigegeben werden.",
+    "root_changed": "Der freigegebene Ordner wurde verschoben oder durch einen anderen Ordner ersetzt. Gib ihn erneut frei.",
     "too_complex": "Die Datei ist zu komplex, um sie innerhalb der Grenzen zu lesen.",
     "too_large": "Die Datei ist größer als die Grenze dieses Ordners. Wähle eine kleinere Datei oder erhöhe die Grenze.",
     "unsupported_type": "Diese Art von Datei kann nicht als Text gelesen werden ({{path}})."

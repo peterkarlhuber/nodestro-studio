@@ -4,7 +4,7 @@
 
 ### N-08: egress protection by content provenance (switch off; 2026-11-25)
 
-- The lock pins orkexa f8579ca, nodestro-runtime 4b5c624, nodestro-api c274fe5 and nodestro-sdk f44b9da (branches
+- The lock pins orkexa 48f5a10, nodestro-runtime 3a29dab, nodestro-api 0016406 and nodestro-sdk 2eaa575 (branches
   `claude/w3-n08`, based on `claude/w3-n10`). A run or conversation that read a granted folder, knowledge,
   persistent memory or an attached file is marked; from then on every outbound tool call, cloud model request and
   server tool needs a permission (N-06 grant). A person who watches is asked with the existing approval card, which
@@ -16,13 +16,15 @@
 
 ### N-10: granted folders and read-only file tools (switch off; 2026-11-21)
 
-- The lock pins orkexa 25baac8, nodestro-runtime 87b38cb, nodestro-api f637695 and nodestro-sdk da0e25a (branches
-  `claude/w3-n10`). A person grants a folder for reading (`/api/folders`, admins only). Agents read it with the
+- The lock pins orkexa 6b79a2f, nodestro-runtime 1193824, nodestro-api 7b83fb1 and nodestro-sdk 346511d (branches
+  `claude/w3-n10`, with the fixes of the independent N-10 review and merged with the current masters). A person grants a folder for reading (`/api/folders`, admins only). Agents read it with the
   read-only tools `list_folder`, `read_file` and `search_files` through the path guard `orkexa.fs.SafeRoot`. Every
   call is checked against the access model and logged. Off by default (`NODESTRO_FOLDER_GRANTS`), never on a server
   (runtime `docs/folders.md`). orkexa adds the folder grant conformance cases (N-63).
 - Texts for the new `folder.*` and `fs.*` codes and for the three tools (`tools.builtin.*`), in six languages. The
   folders page itself is a later step.
+- Review fixes: the text of `fs.root_changed` (a granted folder that was moved or replaced) and a `folder.not_grantable`
+  text that also names the shared temporary folder (new runtime reason `temp_root`), in six languages.
 
 ### N-04 follow-up: the Conversations area and RT-089 (off by default; wave 3; 2026-11-21)
 

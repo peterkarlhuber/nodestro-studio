@@ -1327,7 +1327,7 @@
     "invalid_query": "Search for 1 to 200 characters.",
     "name_taken": "Another granted folder already has this name.",
     "not_found": "This folder grant no longer exists.",
-    "not_grantable": "This folder cannot be granted. System folders, the home folder, folders with keys or passwords and Nodestro's own data are never open to agents.",
+    "not_grantable": "This folder cannot be granted. System folders, the home folder, the shared temporary folder itself, folders with keys or passwords and Nodestro's own data are never open to agents.",
     "unavailable": "No folders are granted here.",
     "unknown": "No granted folder has this name."
   },
@@ -1338,6 +1338,7 @@
     "not_a_directory": "This is a file, not a folder.",
     "not_found": "This file or folder does not exist.",
     "protected_root": "This folder is protected and can never be granted.",
+    "root_changed": "The granted folder was moved or replaced by another folder. Grant it again.",
     "too_complex": "The file is too complex to read within the limits.",
     "too_large": "The file is larger than this folder's limit. Choose a smaller file or raise the limit.",
     "unsupported_type": "This kind of file cannot be read as text ({{path}})."
