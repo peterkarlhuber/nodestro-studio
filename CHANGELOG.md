@@ -4,7 +4,7 @@
 
 ### N-08: egress protection by content provenance (switch off; 2026-11-25)
 
-- The lock pins orkexa dfdfd9a, nodestro-runtime 3a29dab, nodestro-api 0016406 and nodestro-sdk 2eaa575 (branches
+- The lock pins orkexa d7f307c, nodestro-runtime 6eaa89b, nodestro-api 9ed306d and nodestro-sdk 2eaa575 (branches
   `claude/w3-n08`, based on `claude/w3-n10`). A run or conversation that read a granted folder, knowledge,
   persistent memory or an attached file is marked; from then on every outbound tool call, cloud model request and
   server tool needs a permission (N-06 grant). A person who watches is asked with the existing approval card, which
@@ -13,10 +13,12 @@
   runtime `docs/content-provenance.md`).
 - No new texts: refusals use the existing `errors.access.missing_grant` in six languages, and the approval card shows
   the runtime's reason. The type `Run` gains `granted_content`; a notice in the run details is a later step.
+- Review fixes in the pinned libraries (no studio change): the quality judge checks its own model before each request,
+  the agent test's memory copy marks the test, and a local model server elsewhere counts as outside the computer.
 
 ### N-10: granted folders and read-only file tools (switch off; 2026-11-21)
 
-- The lock pins orkexa b1df3e8, nodestro-runtime 1193824, nodestro-api 7b83fb1 and nodestro-sdk 346511d (branches
+- The lock pins orkexa 4cb82a5, nodestro-runtime 75ceb3f, nodestro-api cdf8f45 and nodestro-sdk 346511d (branches
   `claude/w3-n10`, with the fixes of the independent N-10 review and merged with the current masters). A person grants a folder for reading (`/api/folders`, admins only). Agents read it with the
   read-only tools `list_folder`, `read_file` and `search_files` through the path guard `orkexa.fs.SafeRoot`. Every
   call is checked against the access model and logged. Off by default (`NODESTRO_FOLDER_GRANTS`), never on a server
