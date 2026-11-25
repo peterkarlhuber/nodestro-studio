@@ -23,7 +23,7 @@
       "version_file": "src/axentra/_version.py"
     },
     "orkexa": {
-      "commit": "f2863a892cec03fb667af3d6fd248bf4365a3ded",
+      "commit": "ad8dd52c403f1e852b1c773327d616e893a832c3",
       "version": "0.2.0.dev0",
       "pyproject": "pyproject.toml"
     },
