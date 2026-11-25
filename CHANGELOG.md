@@ -30,6 +30,16 @@
   answer's run, the server worker's sweep of runs of deleted conversations), merged with N-09 and N-05 (orkexa
   c4498fb, which the merged runtime needs; summary runs go with a deleted conversation too).
 
+### ST-065: the browser test `runchat` sees the live reasoning reliably (2026-11-21)
+
+- Root cause of the flaky wait for `lrc-reasoning` in `frontend/e2e/runChat.mjs`: the scripted team leader thought
+  for about 0.6 s (four deltas of 0.15 s), shorter than one poll of the chat's event stream while no answer is live
+  (nodestro-api `POLL_SECONDS`, 1 s). When the one read of the view after sending came before the thinking started,
+  the browser showed the live answer without reasoning, and the next poll found the answer already finished, so the
+  reasoning was never seen live. Reproduced locally by delaying the answer's setup by 0.4 s.
+- `tests/e2e_run_chat_server.py`: the team leader now thinks for about 4.6 s (`THOUGHT`), and the server refuses to
+  start when the thinking lasts fewer than four polls (`THINKING_POLLS`). The test's checks are unchanged.
+
 ### N-09: offline per agent and per conversation (2026-11-21)
 
 - The lock pins nodestro-runtime df77adb, nodestro-api 735d957 and nodestro-sdk 4cbe1fe (branches `claude/w3-n09`):
