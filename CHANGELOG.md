@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### N-08: egress protection by content provenance (switch off; 2026-11-25)
+
+- The lock pins orkexa d554e79, nodestro-runtime 29b3c3e, nodestro-api 5b7fc00 and nodestro-sdk 1b28f5a (branches
+  `claude/w3-n08`, merged with the masters that hold N-10: orkexa 8e72de5, runtime b756cd7, api 830cd7f, sdk 1f6760a). A run or conversation that read a granted folder, knowledge,
+  persistent memory or an attached file is marked; from then on every outbound tool call, cloud model request and
+  server tool needs a permission (N-06 grant). A person who watches is asked with the existing approval card, which
+  shows the call's arguments (for a web search, the query) before anything is sent; unattended runs are refused with
+  `access.missing_grant`. Off by default (`NODESTRO_CONTENT_PROVENANCE`, only together with the access model v2;
+  runtime `docs/content-provenance.md`).
+- No new texts: refusals use the existing `errors.access.missing_grant` in six languages, and the approval card shows
+  the runtime's reason. The type `Run` gains `granted_content`; a notice in the run details is a later step.
+- Review fixes in the pinned libraries (no studio change): the quality judge checks its own model before each request,
+  the agent test's memory copy marks the test, and a local model server elsewhere counts as outside the computer.
+
 ### N-10: granted folders and read-only file tools (switch off; 2026-11-21)
 
 - The lock pins orkexa ad8dd52, nodestro-runtime 75ceb3f, nodestro-api cdf8f45 and nodestro-sdk 346511d (branches
@@ -13,6 +27,7 @@
   folders page itself is a later step.
 - Review fixes: the text of `fs.root_changed` (a granted folder that was moved or replaced) and a `folder.not_grantable`
   text that also names the shared temporary folder (new runtime reason `temp_root`), in six languages.
+
 ### N-04 follow-up: the Conversations area and RT-089 (off by default; wave 3; 2026-11-21)
 
 - New area **Conversations** (`/conversations`, `/conversations/:id`), shown in the navigation and reachable only
