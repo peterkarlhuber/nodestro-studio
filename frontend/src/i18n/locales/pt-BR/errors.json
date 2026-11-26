@@ -1318,5 +1318,29 @@
     "server_tools": "Este agente ou esta conversa está offline, então ferramentas de servidor não podem ser usadas ({{names}}).",
     "shared_memory": "Este agente ou esta conversa está offline, então usa apenas a memória da execução: nenhum espaço de memória compartilhado e nenhuma proposta de conhecimento.",
     "tool_unavailable": "{{name}} não está disponível offline."
+  },
+  "folder": {
+    "disabled": "O acesso a pastas não está ativado nesta instalação.",
+    "failed": "Não foi possível ler a pasta. Tente novamente mais tarde.",
+    "invalid_name": "O nome de uma pasta tem de 1 a 80 caracteres e nenhuma barra.",
+    "invalid_pattern": "Um padrão de inclusão ou exclusão não é válido.",
+    "invalid_query": "Pesquise de 1 a 200 caracteres.",
+    "name_taken": "Outra pasta compartilhada já tem este nome.",
+    "not_found": "Este acesso à pasta não existe mais.",
+    "not_grantable": "Esta pasta não pode ser compartilhada. Pastas do sistema, a pasta pessoal, a própria pasta temporária compartilhada, pastas com chaves ou senhas e os dados próprios do Nodestro nunca ficam abertos aos agentes.",
+    "unavailable": "Nenhuma pasta está compartilhada aqui.",
+    "unknown": "Nenhuma pasta compartilhada tem este nome."
+  },
+  "fs": {
+    "hard_link": "Arquivos com vários links físicos não são lidos, pois podem pertencer a outra pasta.",
+    "link": "Links nunca são seguidos.",
+    "network_path": "Pastas de rede não podem ser compartilhadas.",
+    "not_a_directory": "Isto é um arquivo, não uma pasta.",
+    "not_found": "Este arquivo ou pasta não existe.",
+    "protected_root": "Esta pasta é protegida e nunca pode ser compartilhada.",
+    "root_changed": "A pasta compartilhada foi movida ou substituída por outra pasta. Compartilhe-a novamente.",
+    "too_complex": "O arquivo é complexo demais para ser lido dentro dos limites.",
+    "too_large": "O arquivo é maior que o limite desta pasta. Escolha um arquivo menor ou aumente o limite.",
+    "unsupported_type": "Este tipo de arquivo não pode ser lido como texto ({{path}})."
   }
 }

@@ -463,6 +463,18 @@
     "draft_webhook": {
       "name": "Webhook draft",
       "description": "Prepares the JSON payload of a webhook call as a draft file in the run's result files, checked against a JSON Schema if you set one in the agent. It calls no webhook: a person checks the payload and sends it. At most 10 drafts per run; works offline."
+    },
+    "list_folder": {
+      "name": "List folder",
+      "description": "Lists the folders a person granted to agents, or the files and subfolders in one of them. Read-only: it never changes a file, and links are shown but never followed. Works offline."
+    },
+    "read_file": {
+      "name": "Read file",
+      "description": "Reads the text of a text file or PDF in a granted folder, within the folder's limits. Read-only; the answer names the file as its source. Every read is in the folder's access log. Works offline."
+    },
+    "search_files": {
+      "name": "Search files",
+      "description": "Finds files in a granted folder whose name or text contains a word or phrase. Read-only; PDFs are found by name. Works offline."
     }
   }
 }

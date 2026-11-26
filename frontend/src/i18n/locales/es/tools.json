@@ -463,6 +463,18 @@
     "draft_webhook": {
       "name": "Borrador de webhook",
       "description": "Prepara los datos JSON de una llamada de webhook como archivo de borrador en los archivos de resultado de la ejecución, comprobados con un JSON Schema si defines uno en el agente. No llama a ningún webhook: una persona revisa los datos y los envía. Como máximo 10 borradores por ejecución; funciona sin conexión."
+    },
+    "list_folder": {
+      "name": "Listar carpeta",
+      "description": "Lista las carpetas que una persona compartió con los agentes, o los archivos y subcarpetas de una de ellas. Solo lectura: nunca cambia un archivo, y los enlaces se muestran pero nunca se siguen. Funciona sin conexión."
+    },
+    "read_file": {
+      "name": "Leer archivo",
+      "description": "Lee el texto de un archivo de texto o PDF en una carpeta compartida, dentro de los límites de la carpeta. Solo lectura; la respuesta nombra el archivo como fuente. Cada lectura queda en el registro de accesos de la carpeta. Funciona sin conexión."
+    },
+    "search_files": {
+      "name": "Buscar archivos",
+      "description": "Encuentra archivos en una carpeta compartida cuyo nombre o texto contiene una palabra o frase. Solo lectura; los PDF se encuentran por el nombre. Funciona sin conexión."
     }
   }
 }

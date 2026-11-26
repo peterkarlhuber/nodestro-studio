@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### N-10: granted folders and read-only file tools (switch off; 2026-11-21)
+
+- The lock pins orkexa ad8dd52, nodestro-runtime 75ceb3f, nodestro-api cdf8f45 and nodestro-sdk 346511d (branches
+  `claude/w3-n10`, with the fixes of the independent N-10 review and merged with the current masters). A person grants a folder for reading (`/api/folders`, admins only). Agents read it with the
+  read-only tools `list_folder`, `read_file` and `search_files` through the path guard `orkexa.fs.SafeRoot`. Every
+  call is checked against the access model and logged. Off by default (`NODESTRO_FOLDER_GRANTS`), never on a server
+  (runtime `docs/folders.md`). orkexa adds the folder grant conformance cases (N-63).
+- Texts for the new `folder.*` and `fs.*` codes and for the three tools (`tools.builtin.*`), in six languages. The
+  folders page itself is a later step.
+- Review fixes: the text of `fs.root_changed` (a granted folder that was moved or replaced) and a `folder.not_grantable`
+  text that also names the shared temporary folder (new runtime reason `temp_root`), in six languages.
 ### N-04 follow-up: the Conversations area and RT-089 (off by default; wave 3; 2026-11-21)
 
 - New area **Conversations** (`/conversations`, `/conversations/:id`), shown in the navigation and reachable only

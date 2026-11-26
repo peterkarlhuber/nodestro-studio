@@ -463,6 +463,18 @@
     "draft_webhook": {
       "name": "Bozza di webhook",
       "description": "Prepara i dati JSON di una chiamata webhook come file di bozza nei file di risultato dell’esecuzione, verificati con un JSON Schema se ne imposti uno nell’agente. Non chiama nessun webhook: una persona controlla i dati e li invia. Al massimo 10 bozze per esecuzione; funziona offline."
+    },
+    "list_folder": {
+      "name": "Elenca cartella",
+      "description": "Elenca le cartelle che una persona ha condiviso con gli agenti, oppure i file e le sottocartelle di una di esse. Sola lettura: non modifica mai un file, e i collegamenti sono mostrati ma mai seguiti. Funziona offline."
+    },
+    "read_file": {
+      "name": "Leggi file",
+      "description": "Legge il testo di un file di testo o PDF in una cartella condivisa, entro i limiti della cartella. Sola lettura; la risposta cita il file come fonte. Ogni lettura è nel registro degli accessi della cartella. Funziona offline."
+    },
+    "search_files": {
+      "name": "Cerca file",
+      "description": "Trova i file in una cartella condivisa il cui nome o testo contiene una parola o una frase. Sola lettura; i PDF vengono trovati per nome. Funziona offline."
     }
   }
 }

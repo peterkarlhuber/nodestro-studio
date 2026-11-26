@@ -1318,5 +1318,29 @@
     "server_tools": "Este agente o esta conversación está sin conexión, así que no se pueden usar herramientas de servidor ({{names}}).",
     "shared_memory": "Este agente o esta conversación está sin conexión, así que solo usa memoria de la ejecución: ningún espacio de memoria compartido ni propuestas de conocimiento.",
     "tool_unavailable": "{{name}} no está disponible sin conexión."
+  },
+  "folder": {
+    "disabled": "El acceso a carpetas no está activado en esta instalación.",
+    "failed": "No se pudo leer la carpeta. Inténtalo de nuevo más tarde.",
+    "invalid_name": "El nombre de una carpeta tiene de 1 a 80 caracteres y ninguna barra.",
+    "invalid_pattern": "Un patrón de inclusión o exclusión no es válido.",
+    "invalid_query": "Busca de 1 a 200 caracteres.",
+    "name_taken": "Otra carpeta compartida ya tiene este nombre.",
+    "not_found": "Este acceso a la carpeta ya no existe.",
+    "not_grantable": "Esta carpeta no se puede compartir. Las carpetas del sistema, la carpeta personal, la propia carpeta temporal compartida, las carpetas con claves o contraseñas y los datos propios de Nodestro nunca están abiertos a los agentes.",
+    "unavailable": "Aquí no hay carpetas compartidas.",
+    "unknown": "Ninguna carpeta compartida tiene este nombre."
+  },
+  "fs": {
+    "hard_link": "Los archivos con varios enlaces físicos no se leen, porque pueden pertenecer a otra carpeta.",
+    "link": "Los enlaces nunca se siguen.",
+    "network_path": "Las carpetas de red no se pueden compartir.",
+    "not_a_directory": "Esto es un archivo, no una carpeta.",
+    "not_found": "Este archivo o carpeta no existe.",
+    "protected_root": "Esta carpeta está protegida y nunca se puede compartir.",
+    "root_changed": "La carpeta compartida se movió o se reemplazó por otra carpeta. Compártela de nuevo.",
+    "too_complex": "El archivo es demasiado complejo para leerlo dentro de los límites.",
+    "too_large": "El archivo supera el límite de esta carpeta. Elige un archivo más pequeño o aumenta el límite.",
+    "unsupported_type": "Este tipo de archivo no se puede leer como texto ({{path}})."
   }
 }
