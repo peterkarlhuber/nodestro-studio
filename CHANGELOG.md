@@ -4,7 +4,7 @@
 
 ### RT-089c: memory spaces have an owner on a server (2026-11-26)
 
-- The lock pins nodestro-runtime 8fc0642, nodestro-api 813a707 and nodestro-sdk 259ed2c (branches `claude/w3s-rt089c`). On a server only a
+- The lock pins nodestro-runtime dcce80f, nodestro-api 479844f and nodestro-sdk 39b0b87 (branches `claude/w3s-rt089c`, with the review fixes: exports and runs that used a memory space are its owner's alone). On a server only a
   memory space's owner (its first writer) uses it; another member, a space without an owner and a run for nobody
   get `memory.space_not_found`, which now has an error text in six languages. Pin the merges once they are merged.
 
