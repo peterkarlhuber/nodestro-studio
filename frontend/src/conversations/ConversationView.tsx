@@ -17,6 +17,7 @@ import {
   useAgentConversation,
 } from "../api/conversations";
 import { useTemplates } from "../api/hooks";
+import { GrantedContentBadge, GrantedContentNotice } from "../components/GrantedContent";
 import { toast } from "../components/toast";
 import { Button, Callout, Chip, ConfirmIconButton, IconButton, Spinner, TextArea, TextInput, Toggle } from "../components/ui";
 import { ErrorText } from "../lib/errors";
@@ -114,6 +115,8 @@ function ConversationHeader({
     onError: toast.error,
   });
   const cost = conversation.usage.estimated_cost_usd;
+  // N-08: the conversation holds content of a granted source (never cleared once set).
+  const marked = conversation.provenance === "granted_content";
   return (
     <header className="conversation__head">
       <div className="conversation__title">
@@ -169,7 +172,9 @@ function ConversationHeader({
         </span>
         <span>{t("conversations.withModel", { model: conversation.model })}</span>
         <span data-testid="conversation-cost">{t("conversations.cost", { cost: formatCost(cost) })}</span>
+        {marked ? <GrantedContentBadge kind="conversation" /> : null}
       </div>
+      {marked ? <GrantedContentNotice kind="conversation" /> : null}
       <div className="row-gap conversation__actions">
         <Toggle
           checked={conversation.offline}

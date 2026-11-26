@@ -218,5 +218,60 @@
     "revokeConfirm": "Révoquer maintenant",
     "revoked": "Révoquée. Elle ne s’applique plus dès le prochain accès.",
     "link": "Autorisations et blocages"
+  },
+  "folders": {
+    "title": "Dossiers partagés",
+    "description": "Les dossiers de cet ordinateur que les agents peuvent lire : qui les a partagés, pour qui, jusqu’à quand, et ce que les agents ont lu.",
+    "offTitle": "Les dossiers partagés sont désactivés.",
+    "off": "Ils ne sont pas activés pour cette installation : aucun agent ne peut donc lire un dossier de cet ordinateur. La personne qui gère cette installation décide de les activer.",
+    "grant": "Partager un dossier",
+    "grantTitle": "Partager un dossier en lecture",
+    "grantText": "Les agents peuvent lister, lire et parcourir les fichiers de ce dossier, jamais les modifier. Ils voient son nom, jamais son chemin.",
+    "name": "Nom",
+    "nameHint": "Le nom sous lequel les agents connaissent le dossier : 1 à 80 caractères, sans barre oblique.",
+    "path": "Dossier",
+    "pathHint": "Le chemin complet du dossier sur cet ordinateur. Il est vérifié au partage : les dossiers système, le dossier personnel et les dossiers contenant des clés ou des mots de passe sont refusés.",
+    "pathPlaceholder": "/Users/claire/Documents/Contrats",
+    "include": "Seulement ces fichiers",
+    "includeHint": "Facultatif. Un motif par ligne, par exemple *.pdf ou rapports/**. Vide : tous les fichiers.",
+    "exclude": "Exclure",
+    "excludeHint": "Facultatif. Un motif par ligne, par exemple brouillons/**.",
+    "scope": "Pour qui",
+    "someAgents": "Seulement ces agents",
+    "agents": "Agents",
+    "agentsHint": "Un agent par ligne : l’ID du workflow, une barre oblique et l’ID du nœud de l’agent, par exemple wf_1/writer.",
+    "mode": "Quelles exécutions",
+    "modes": {
+      "supervised": "Exécutions suivies par une personne",
+      "unattended": "Aussi les exécutions sans surveillance"
+    },
+    "expires": "Fin",
+    "expiresHint": "Facultatif. Vide : jusqu’à ce que vous le révoquiez.",
+    "defaultExcludes": "Exclure les fichiers secrets",
+    "defaultExcludesHint": "Les fichiers comme .env, les clés, les clés SSH et les bases de mots de passe ne sont jamais lus. Désactivez cette option seulement si les agents en ont vraiment besoin.",
+    "grantSubmit": "Partager le dossier",
+    "granted": "{{name}} est partagé. Les agents peuvent le lire dès leur prochaine étape.",
+    "listTitle": "Dossiers",
+    "listText": "Tous les partages de dossiers, le plus récent d’abord, y compris ceux qui ont pris fin. Une révocation s’applique dès le prochain accès.",
+    "none": "Aucun dossier partagé pour l’instant.",
+    "actions": "Actions",
+    "log": "Journal des accès",
+    "logOf": "Journal des accès de {{name}}",
+    "logNone": "Aucun agent n’a encore lu ce dossier.",
+    "actionNames": {
+      "folder": {
+        "listed": "A listé le dossier",
+        "read": "A lu un fichier",
+        "searched": "A parcouru le dossier"
+      }
+    },
+    "outcomes": {
+      "success": "Fait",
+      "failure": "Échec",
+      "denied": "Refusé"
+    },
+    "openRun": "Ouvrir l’exécution",
+    "openConversation": "Ouvrir la conversation",
+    "link": "Dossiers partagés"
   }
 }

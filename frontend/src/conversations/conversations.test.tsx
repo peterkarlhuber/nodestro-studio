@@ -206,6 +206,19 @@ describe("the conversation area", () => {
     expect(calls.some((call) => call.method === "DELETE" && call.path === "/conversations/conv_1")).toBe(true);
   });
 
+  it("marks a conversation that holds content of a granted source, and only such a one", async () => {
+    stored = conversation({ provenance: "granted_content" });
+    show("/conversations/conv_1");
+    expect(await screen.findByTestId("granted-content-badge-conversation")).toHaveTextContent("Geschützter Inhalt");
+    expect(screen.getByTestId("granted-content-notice-conversation")).toHaveTextContent("Cloud-Modell");
+    cleanup();
+    stored = conversation();
+    show("/conversations/conv_1");
+    await screen.findByTestId("conversation-title");
+    expect(screen.queryByTestId("granted-content-badge-conversation")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("granted-content-notice-conversation")).not.toBeInTheDocument();
+  });
+
   it("sends a message with Enter together with the files waiting for it", async () => {
     stored = conversation({ files: [{ id: "in_1", name: "plan.txt", format: "txt", media_type: "text/plain", size: 12, added_at: "" }] });
     show("/conversations/conv_1");

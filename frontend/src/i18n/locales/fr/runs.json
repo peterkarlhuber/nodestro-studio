@@ -142,5 +142,13 @@
     "skill": "Skill",
     "score": "Score",
     "chosen": "Proposée"
+  },
+  "grantedContent": {
+    "badge": "Contenu protégé",
+    "title": "Contenu protégé.",
+    "run": "Cette exécution a lu du contenu d’une source partagée : un dossier, des connaissances, une mémoire ou un fichier joint.",
+    "conversation": "Cette conversation contient du contenu d’une source partagée : un dossier, des connaissances, une mémoire ou un fichier joint.",
+    "egress": "L’envoyer hors de cet ordinateur nécessite une autorisation : chaque requête à un modèle cloud et chaque outil qui communique avec l’extérieur est soumis à validation ou refusé jusqu’à ce qu’une personne l’autorise. Le marquage reste.",
+    "permissions": "Autorisations et blocages"
   }
 }

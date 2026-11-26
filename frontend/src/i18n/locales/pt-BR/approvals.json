@@ -218,5 +218,60 @@
     "revokeConfirm": "Revogar agora",
     "revoked": "Revogado. Deixa de valer a partir do próximo acesso.",
     "link": "Permissões e bloqueios"
+  },
+  "folders": {
+    "title": "Pastas compartilhadas",
+    "description": "As pastas deste computador que os agentes podem ler: quem as compartilhou, para quem, até quando e o que os agentes leram.",
+    "offTitle": "As pastas compartilhadas estão desativadas.",
+    "off": "Elas não estão ativadas nesta instalação, então nenhum agente pode ler uma pasta deste computador. Quem administra esta instalação decide se as ativa.",
+    "grant": "Compartilhar uma pasta",
+    "grantTitle": "Compartilhar uma pasta para leitura",
+    "grantText": "Os agentes podem listar, ler e pesquisar os arquivos desta pasta, nunca alterá-los. Eles veem o nome dela, nunca o caminho.",
+    "name": "Nome",
+    "nameHint": "O nome pelo qual os agentes conhecem a pasta: de 1 a 80 caracteres, sem barra.",
+    "path": "Pasta",
+    "pathHint": "O caminho completo da pasta neste computador. Ele é verificado ao compartilhar: pastas do sistema, a pasta pessoal e pastas com chaves ou senhas são recusadas.",
+    "pathPlaceholder": "/Users/ana/Documentos/Contratos",
+    "include": "Somente estes arquivos",
+    "includeHint": "Opcional. Um padrão por linha, por exemplo *.pdf ou relatorios/**. Vazio: todos os arquivos.",
+    "exclude": "Deixar de fora",
+    "excludeHint": "Opcional. Um padrão por linha, por exemplo rascunhos/**.",
+    "scope": "Para quem",
+    "someAgents": "Somente estes agentes",
+    "agents": "Agentes",
+    "agentsHint": "Um agente por linha: o ID do fluxo de trabalho, uma barra e o ID do nó do agente, por exemplo wf_1/writer.",
+    "mode": "Quais execuções",
+    "modes": {
+      "supervised": "Execuções que uma pessoa acompanha",
+      "unattended": "Também execuções sem supervisão"
+    },
+    "expires": "Termina",
+    "expiresHint": "Opcional. Vazio: até você revogar.",
+    "defaultExcludes": "Deixar de fora arquivos secretos",
+    "defaultExcludesHint": "Arquivos como .env, chaves, chaves SSH e bancos de senhas nunca são lidos. Desative isso só se os agentes realmente precisarem deles.",
+    "grantSubmit": "Compartilhar pasta",
+    "granted": "{{name}} está compartilhada. Os agentes podem lê-la a partir da próxima etapa.",
+    "listTitle": "Pastas",
+    "listText": "Todas as pastas compartilhadas, a mais recente primeiro, incluindo as encerradas. Revogar vale a partir do próximo acesso.",
+    "none": "Nenhuma pasta compartilhada ainda.",
+    "actions": "Ações",
+    "log": "Registro de acessos",
+    "logOf": "Registro de acessos de {{name}}",
+    "logNone": "Nenhum agente leu esta pasta ainda.",
+    "actionNames": {
+      "folder": {
+        "listed": "Listou a pasta",
+        "read": "Leu um arquivo",
+        "searched": "Pesquisou na pasta"
+      }
+    },
+    "outcomes": {
+      "success": "Concluído",
+      "failure": "Falhou",
+      "denied": "Recusado"
+    },
+    "openRun": "Abrir execução",
+    "openConversation": "Abrir conversa",
+    "link": "Pastas compartilhadas"
   }
 }

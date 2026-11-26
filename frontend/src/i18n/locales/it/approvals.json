@@ -218,5 +218,60 @@
     "revokeConfirm": "Revoca ora",
     "revoked": "Revocato. Non vale più dal prossimo accesso.",
     "link": "Permessi e blocchi"
+  },
+  "folders": {
+    "title": "Cartelle condivise",
+    "description": "Le cartelle di questo computer che gli agenti possono leggere: chi le ha condivise, per chi, fino a quando e cosa hanno letto gli agenti.",
+    "offTitle": "Le cartelle condivise sono disattivate.",
+    "off": "Non sono attivate per questa installazione, quindi nessun agente può leggere una cartella di questo computer. Decide la persona che gestisce questa installazione se attivarle.",
+    "grant": "Condividi una cartella",
+    "grantTitle": "Condividi una cartella in lettura",
+    "grantText": "Gli agenti possono elencare, leggere e cercare i file di questa cartella, mai modificarli. Vedono il suo nome, mai il suo percorso.",
+    "name": "Nome",
+    "nameHint": "Il nome con cui gli agenti conoscono la cartella: da 1 a 80 caratteri, senza barra.",
+    "path": "Cartella",
+    "pathHint": "Il percorso completo della cartella su questo computer. Viene verificato alla condivisione: le cartelle di sistema, la cartella home e le cartelle con chiavi o password vengono rifiutate.",
+    "pathPlaceholder": "/Users/giulia/Documenti/Contratti",
+    "include": "Solo questi file",
+    "includeHint": "Facoltativo. Un modello per riga, per esempio *.pdf o rapporti/**. Vuoto: tutti i file.",
+    "exclude": "Escludi",
+    "excludeHint": "Facoltativo. Un modello per riga, per esempio bozze/**.",
+    "scope": "Per chi",
+    "someAgents": "Solo questi agenti",
+    "agents": "Agenti",
+    "agentsHint": "Un agente per riga: l’ID del workflow, una barra e l’ID del nodo dell’agente, per esempio wf_1/writer.",
+    "mode": "Quali esecuzioni",
+    "modes": {
+      "supervised": "Esecuzioni seguite da una persona",
+      "unattended": "Anche esecuzioni senza supervisione"
+    },
+    "expires": "Termina",
+    "expiresHint": "Facoltativo. Vuoto: finché non la revochi.",
+    "defaultExcludes": "Escludi i file segreti",
+    "defaultExcludesHint": "File come .env, chiavi, chiavi SSH e database di password non vengono mai letti. Disattivalo solo se gli agenti ne hanno davvero bisogno.",
+    "grantSubmit": "Condividi cartella",
+    "granted": "{{name}} è condivisa. Gli agenti possono leggerla dal loro prossimo passaggio.",
+    "listTitle": "Cartelle",
+    "listText": "Tutte le cartelle condivise, la più recente per prima, anche quelle terminate. La revoca vale dal prossimo accesso.",
+    "none": "Ancora nessuna cartella condivisa.",
+    "actions": "Azioni",
+    "log": "Registro degli accessi",
+    "logOf": "Registro degli accessi di {{name}}",
+    "logNone": "Nessun agente ha ancora letto questa cartella.",
+    "actionNames": {
+      "folder": {
+        "listed": "Ha elencato la cartella",
+        "read": "Ha letto un file",
+        "searched": "Ha cercato nella cartella"
+      }
+    },
+    "outcomes": {
+      "success": "Fatto",
+      "failure": "Non riuscito",
+      "denied": "Rifiutato"
+    },
+    "openRun": "Apri l’esecuzione",
+    "openConversation": "Apri la conversazione",
+    "link": "Cartelle condivise"
   }
 }

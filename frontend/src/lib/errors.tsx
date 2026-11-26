@@ -44,6 +44,9 @@ export function legacyCode(text: string): { code: string; params: Record<string,
   return null;
 }
 
+/** Reasons of ``folder.not_grantable`` that are the file system's own codes (``fs.<reason>``). */
+const FOLDER_FS_REASONS = new Set(["protected_root", "network_path", "not_found", "not_a_directory", "link"]);
+
 /** Generic sentences for codes the interface does not know (yet), by area. */
 const FALLBACKS: [string, string][] = [
   ["run.agent.", "errors.run.agentFailed"],
@@ -203,6 +206,13 @@ export function refineProblem(
           .filter((name): name is string => typeof name === "string" && name !== "")
       : [];
     return names.length ? { code, params: { ...params, errors: undefined, fields: names.join(", ") } } : { code: "request.invalid_plain", params };
+  }
+  // A folder that cannot be granted (N-10) names why: the file system's reasons have a sentence of their own, a
+  // relative or empty path asks for a full path; the others (a safety limit, a shared temporary folder) keep the
+  // general sentence, which names them.
+  if (code === "folder.not_grantable" && typeof params.reason === "string") {
+    if (FOLDER_FS_REASONS.has(params.reason)) return { code: `fs.${params.reason}`, params };
+    if (params.reason === "invalid_path") return { code: "access.folder_path", params };
   }
   // A size limit, when the server names it.
   if (code === "request.too_large" && params.limit_mb != null) return { code: "request.too_large_limit", params };

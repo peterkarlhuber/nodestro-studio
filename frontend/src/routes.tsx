@@ -9,6 +9,7 @@ import { BatchDetailPage, BatchesPage } from "./pages/BatchesPage";
 import { ConversationsPage } from "./conversations/ConversationsPage";
 import { ExamplesPage } from "./pages/ExamplesPage";
 import { ExecutionsPage } from "./pages/ExecutionsPage";
+import { FoldersPage } from "./pages/FoldersPage";
 import { KnowledgePage } from "./pages/KnowledgePage";
 import { MemoryPage } from "./pages/MemoryPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -72,6 +73,8 @@ export const routes: RouteObject[] = [
       { path: "executions/:id", element: <RunDetailPage /> },
       { path: "approvals", element: <ApprovalsPage /> },
       { path: "approvals/access", element: <AccessRulesPage /> },
+      // Granted folders (N-10): the page says so while they are off (the default) and never switches them on.
+      { path: "approvals/folders", element: <FoldersPage /> },
       { path: "batches", element: <BatchesPage /> },
       { path: "batches/:id", element: <BatchDetailPage /> },
       { path: "publications", element: <PublicationsPage /> },
