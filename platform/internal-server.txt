@@ -1,7 +1,7 @@
 # The lock of the platform's internal packages, server profile: generated from platform/versions.json by
 # scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>
 axentra @ git+https://github.com/peterkarlhuber/axentra.git@e519405d3d17262d0652fd496b0cf0aa6b169e3f
-nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@cc980b239fb7f3ef50b16f40aa4863767f047b95
+nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@68967470734eb9ff04f6433acd336e0b2128f2b0
 nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@c5f466244c48db105e6588bbe709bba83509fcae
 nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@2a17fbe0fb6277d3591ef6896928e5e8fedb810e
 nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@7370f4c64dcc75a0500a614f26ab6fae239db39d
