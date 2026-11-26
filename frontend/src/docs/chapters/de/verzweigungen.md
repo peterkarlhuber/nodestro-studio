@@ -100,6 +100,20 @@ Manche Aufrufe lassen sich nicht vorab erlauben. Tools, die endgültig löschen,
 
 Die Seite **Erlaubnisse und Sperren** (verlinkt auf **Freigaben**) zeigt jede Erlaubnis und Sperre mit wer sie gegeben hat, für wen, bis wann und ihrem Zustand; jede lässt sich widerrufen. Ein Widerruf gilt ab dem nächsten Zugriff. Die Seite nennt auch die festen **Sicherheitsgrenzen**, etwa den Offline-Modus oder den eigenen Datenordner von Nodestro. Keine Erlaubnis hebt sie auf.
 
+## Freigegebene Ordner {#ordner}
+<!-- keywords: ordner, freigegebener ordner, dateien lesen, lokale dateien, zugriffsprotokoll, widerrufen, geschützter inhalt -->
+
+Freigegebene Ordner sind **nicht eingeschaltet**, solange die Person, die Nodestro betreibt, sie nicht einschaltet. Auf einem Server gibt es sie nie. Solange sie aus sind, sagt die Seite **Freigegebene Ordner** (verlinkt auf **Freigaben**) nur das, und kein Agent kann einen Ordner dieses Computers lesen.
+
+Sind sie an, gibt eine Administratorin oder ein Administrator einen Ordner **zum Lesen** frei: ein Name, der vollständige Pfad des Ordners, optional welche Dateien dazugehören oder ausgelassen werden, für welche Agenten, für welche Ausführungen und bis wann. Geheime Dateien wie `.env`, Schlüssel und Passwortdatenbanken bleiben ausgelassen, außer du schaltest das aus. Nodestro prüft den Pfad beim Freigeben und sagt, warum ein Ordner abgelehnt wird: Systemordner, der Benutzerordner und Ordner mit Schlüsseln oder Passwörtern werden nie freigegeben. Agenten sehen den Namen, nie den Pfad, und können die Dateien auflisten, lesen und durchsuchen, aber nie ändern.
+
+Die Seite zeigt jede Freigabe mit wer sie gegeben hat und ihrem Zustand. Das **Zugriffsprotokoll** einer Freigabe zeigt, welcher Agent was in welcher Ausführung gelesen hat und ob es erlaubt war. **Widerrufen** beendet eine Freigabe ab dem nächsten Zugriff.
+
+## Geschützter Inhalt {#geschuetzte-inhalte}
+<!-- keywords: geschützter inhalt, freigegebene quelle, herkunft, cloud-modell, erlaubnis, abfluss -->
+
+Ist der Inhaltsschutz eingeschaltet, wird eine Ausführung, die einen freigegebenen Ordner, Wissen, Memory oder eine angehängte Datei liest, als **Geschützter Inhalt** markiert, ebenso das Gespräch, in dem sie antwortet. Die Markierung bleibt. Ab dann braucht es eine [Erlaubnis](/docs/verzweigungen#erlaubnisse), diesen Inhalt außerhalb dieses Computers zu senden: Jede Anfrage an ein Cloud-Modell und jedes Tool, das nach außen reicht, wird nachgefragt oder abgelehnt, bis eine Person es erlaubt. Das gilt auch, wenn du eine solche Ausführung mit dem Assistenten besprichst oder ein KI-Bewerter sie bewertet. Die Details der Ausführung und der Kopf des Gesprächs zeigen die Markierung und sagen das.
+
 ## Unterworkflows {#unterworkflow}
 <!-- keywords: unterworkflow, subworkflow, verschachteln, wiederverwenden, baustein, version, kindlauf -->
 

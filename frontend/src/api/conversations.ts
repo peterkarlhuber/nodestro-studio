@@ -102,6 +102,8 @@ export interface AgentConversation {
   usage: Usage;
   /** The answer being written right now. */
   answering?: string | null;
+  /** N-08: ``granted_content`` once the conversation holds content of a granted source; never cleared. */
+  provenance?: "unchecked" | "granted_content";
 }
 
 export interface AgentConversationIn {

@@ -142,5 +142,13 @@
     "skill": "Skill",
     "score": "Bewertung",
     "chosen": "Angeboten"
+  },
+  "grantedContent": {
+    "badge": "Geschützter Inhalt",
+    "title": "Geschützter Inhalt.",
+    "run": "Diese Ausführung hat Inhalt aus einer freigegebenen Quelle gelesen: einem Ordner, Wissen, Memory oder einer angehängten Datei.",
+    "conversation": "Dieses Gespräch enthält Inhalt aus einer freigegebenen Quelle: einem Ordner, Wissen, Memory oder einer angehängten Datei.",
+    "egress": "Ihn außerhalb dieses Computers zu senden, braucht eine Erlaubnis: Jede Anfrage an ein Cloud-Modell und jedes Tool, das nach außen reicht, wird nachgefragt oder abgelehnt, bis eine Person es erlaubt. Die Markierung bleibt.",
+    "permissions": "Erlaubnisse und Sperren"
   }
 }

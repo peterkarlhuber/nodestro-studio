@@ -2,6 +2,24 @@
 
 ## Unreleased
 
+### N-10 and N-08 in the studio: granted folders page and the protected-content mark (2026-11-26)
+
+- New page **Granted folders** (`/approvals/folders`, linked from Approvals for administrators, not on a server):
+  grant a folder for reading (name, typed full path, include and exclude patterns, for whom, which runs, until
+  when, secret files left out by default), list every grant with who gave it and its state, show its access log
+  (agent, run or conversation, outcome) and revoke it. Uses the existing `/api/folders` routes only. While the
+  switch is off (the default) the page only says so and offers nothing that switches it on. The server checks the
+  path; a refusal (`folder.not_grantable`) names its reason with the existing `fs.*` texts. Editing a grant has no
+  API, so a change is a revoke and a new grant; a folder browser is a later step (N-11, hook left in
+  `FolderPathField`).
+- A run with `granted_content` and a conversation with `provenance: granted_content` show a **Protected content**
+  badge (words and a symbol, explained on focus) and a notice that sending the content outside this computer (a
+  cloud model, a tool that reaches outside) needs a permission, with a link to Permissions and blocks for
+  administrators. Only set while the provenance switch is on (off by default).
+- Texts in six languages, the in-app docs (`verzweigungen#ordner`, `#geschuetzte-inhalte`), unit tests
+  (`FoldersPage.test.tsx`, `GrantedContent.test.tsx`, conversations) and the folders page in the a11y sweep. No lock
+  change: the pinned api 7dee177 already holds api #170 and #172.
+
 ### RT-089c: memory spaces have an owner on a server (2026-11-26)
 
 - The lock pins nodestro-runtime dcce80f, nodestro-api 479844f and nodestro-sdk 39b0b87 (branches `claude/w3s-rt089c`, with the review fixes: exports and runs that used a memory space are its owner's alone). On a server only a

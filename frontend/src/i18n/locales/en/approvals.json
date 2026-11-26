@@ -218,5 +218,60 @@
     "revokeConfirm": "Revoke now",
     "revoked": "Revoked. It no longer applies from the next access on.",
     "link": "Permissions and blocks"
+  },
+  "folders": {
+    "title": "Granted folders",
+    "description": "Folders of this computer that agents may read: who granted them, for whom, until when, and what agents read.",
+    "offTitle": "Granted folders are off.",
+    "off": "They are not switched on for this installation, so no agent can read a folder of this computer. The person who runs this installation decides whether to switch them on.",
+    "grant": "Grant a folder",
+    "grantTitle": "Grant a folder for reading",
+    "grantText": "Agents can list, read and search the files of this folder, never change them. They see its name, never its path.",
+    "name": "Name",
+    "nameHint": "The name agents use for the folder: 1 to 80 characters, no slash.",
+    "path": "Folder",
+    "pathHint": "The full path of the folder on this computer. It is checked when you grant it: system folders, the home folder and folders with keys or passwords are refused.",
+    "pathPlaceholder": "/Users/alex/Documents/Contracts",
+    "include": "Only these files",
+    "includeHint": "Optional. One pattern per line, for example *.pdf or reports/**. Empty: every file.",
+    "exclude": "Leave out",
+    "excludeHint": "Optional. One pattern per line, for example drafts/**.",
+    "scope": "For whom",
+    "someAgents": "Only these agents",
+    "agents": "Agents",
+    "agentsHint": "One agent per line: the workflow ID, a slash and the agent's node ID, for example wf_1/writer.",
+    "mode": "Which runs",
+    "modes": {
+      "supervised": "Runs a person watches",
+      "unattended": "Also runs nobody watches"
+    },
+    "expires": "Ends",
+    "expiresHint": "Optional. Empty: until you revoke it.",
+    "defaultExcludes": "Leave out secret files",
+    "defaultExcludesHint": "Files such as .env, keys, SSH keys and password databases are never read. Turn this off only if agents really need them.",
+    "grantSubmit": "Grant folder",
+    "granted": "{{name}} is granted. Agents can read it from their next step on.",
+    "listTitle": "Folders",
+    "listText": "Every folder grant, newest first, ended ones included. Revoking applies from the next access on.",
+    "none": "No folders granted yet.",
+    "actions": "Actions",
+    "log": "Access log",
+    "logOf": "Access log of {{name}}",
+    "logNone": "No agent has read this folder yet.",
+    "actionNames": {
+      "folder": {
+        "listed": "Listed the folder",
+        "read": "Read a file",
+        "searched": "Searched the folder"
+      }
+    },
+    "outcomes": {
+      "success": "Done",
+      "failure": "Failed",
+      "denied": "Refused"
+    },
+    "openRun": "Open run",
+    "openConversation": "Open conversation",
+    "link": "Granted folders"
   }
 }

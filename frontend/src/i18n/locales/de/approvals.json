@@ -218,5 +218,60 @@
     "revokeConfirm": "Jetzt widerrufen",
     "revoked": "Widerrufen. Gilt ab dem nächsten Zugriff nicht mehr.",
     "link": "Erlaubnisse und Sperren"
+  },
+  "folders": {
+    "title": "Freigegebene Ordner",
+    "description": "Ordner dieses Computers, die Agenten lesen dürfen: wer sie freigegeben hat, für wen, bis wann, und was Agenten gelesen haben.",
+    "offTitle": "Freigegebene Ordner sind aus.",
+    "off": "Sie sind für diese Installation nicht eingeschaltet, deshalb kann kein Agent einen Ordner dieses Computers lesen. Ob sie eingeschaltet werden, entscheidet die Person, die diese Installation betreibt.",
+    "grant": "Ordner freigeben",
+    "grantTitle": "Ordner zum Lesen freigeben",
+    "grantText": "Agenten können die Dateien dieses Ordners auflisten, lesen und durchsuchen, aber nie ändern. Sie sehen seinen Namen, nie seinen Pfad.",
+    "name": "Name",
+    "nameHint": "Der Name, unter dem Agenten den Ordner kennen: 1 bis 80 Zeichen, kein Schrägstrich.",
+    "path": "Ordner",
+    "pathHint": "Der vollständige Pfad des Ordners auf diesem Computer. Er wird beim Freigeben geprüft: Systemordner, der Benutzerordner und Ordner mit Schlüsseln oder Passwörtern werden abgelehnt.",
+    "pathPlaceholder": "/Users/alex/Dokumente/Verträge",
+    "include": "Nur diese Dateien",
+    "includeHint": "Optional. Ein Muster pro Zeile, zum Beispiel *.pdf oder berichte/**. Leer: alle Dateien.",
+    "exclude": "Auslassen",
+    "excludeHint": "Optional. Ein Muster pro Zeile, zum Beispiel entwuerfe/**.",
+    "scope": "Für wen",
+    "someAgents": "Nur diese Agenten",
+    "agents": "Agenten",
+    "agentsHint": "Ein Agent pro Zeile: die ID des Workflows, ein Schrägstrich und die Knoten-ID des Agenten, zum Beispiel wf_1/writer.",
+    "mode": "Welche Ausführungen",
+    "modes": {
+      "supervised": "Ausführungen, die eine Person verfolgt",
+      "unattended": "Auch Ausführungen ohne Aufsicht"
+    },
+    "expires": "Endet",
+    "expiresHint": "Optional. Leer: bis du sie widerrufst.",
+    "defaultExcludes": "Geheime Dateien auslassen",
+    "defaultExcludesHint": "Dateien wie .env, Schlüssel, SSH-Schlüssel und Passwortdatenbanken werden nie gelesen. Schalte das nur aus, wenn Agenten sie wirklich brauchen.",
+    "grantSubmit": "Ordner freigeben",
+    "granted": "{{name}} ist freigegeben. Agenten können ihn ab ihrem nächsten Schritt lesen.",
+    "listTitle": "Ordner",
+    "listText": "Alle Ordnerfreigaben, die neueste zuerst, auch beendete. Ein Widerruf gilt ab dem nächsten Zugriff.",
+    "none": "Noch keine Ordner freigegeben.",
+    "actions": "Aktionen",
+    "log": "Zugriffsprotokoll",
+    "logOf": "Zugriffsprotokoll von {{name}}",
+    "logNone": "Noch kein Agent hat diesen Ordner gelesen.",
+    "actionNames": {
+      "folder": {
+        "listed": "Ordner aufgelistet",
+        "read": "Datei gelesen",
+        "searched": "Ordner durchsucht"
+      }
+    },
+    "outcomes": {
+      "success": "Erledigt",
+      "failure": "Fehlgeschlagen",
+      "denied": "Abgelehnt"
+    },
+    "openRun": "Ausführung öffnen",
+    "openConversation": "Gespräch öffnen",
+    "link": "Freigegebene Ordner"
   }
 }

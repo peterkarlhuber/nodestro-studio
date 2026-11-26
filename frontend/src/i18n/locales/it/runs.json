@@ -142,5 +142,13 @@
     "skill": "Skill",
     "score": "Punteggio",
     "chosen": "Offerta"
+  },
+  "grantedContent": {
+    "badge": "Contenuto protetto",
+    "title": "Contenuto protetto.",
+    "run": "Questa esecuzione ha letto contenuto da una fonte condivisa: una cartella, conoscenza, memoria o un file allegato.",
+    "conversation": "Questa conversazione contiene contenuto da una fonte condivisa: una cartella, conoscenza, memoria o un file allegato.",
+    "egress": "Inviarlo fuori da questo computer richiede un permesso: ogni richiesta a un modello cloud e ogni strumento che comunica con l’esterno viene chiesto o rifiutato finché una persona non lo consente. Il contrassegno resta.",
+    "permissions": "Permessi e blocchi"
   }
 }

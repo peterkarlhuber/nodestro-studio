@@ -141,6 +141,10 @@ import type {
   AccessGrant,
   AccessGrantIn,
   AccessState,
+  FolderAccessEntry,
+  FolderGrantIn,
+  FolderGrantView,
+  FolderState,
   ToolApprovalEvent,
   ToolPreGrant,
   BudgetDecisionIn,
@@ -490,6 +494,15 @@ export const api = {
   denyAccess: (body: AccessDenyIn) => request<AccessDeny>("POST", "/access/denies", body),
   revokeAccessGrant: (id: string) => request<AccessGrant>("DELETE", `/access/grants/${encodeURIComponent(id)}`),
   revokeAccessDeny: (id: string) => request<AccessDeny>("DELETE", `/access/denies/${encodeURIComponent(id)}`),
+  /** Whether granted folders (N-10) are on here; always answers, so the folders page can say when they are off. */
+  folderState: () => request<FolderState>("GET", "/folders/state"),
+  /** Every folder grant, newest first, ended ones included (``admin``; 404 ``folder.disabled`` while off). */
+  folders: () => request<FolderGrantView[]>("GET", "/folders"),
+  /** Grants a folder for reading; the server checks the path (``folder.not_grantable`` with ``reason``). */
+  grantFolder: (body: FolderGrantIn) => request<FolderGrantView>("POST", "/folders", body),
+  revokeFolder: (id: string) => request<FolderGrantView>("DELETE", `/folders/${encodeURIComponent(id)}`),
+  /** The access log of a folder grant, newest first: agent, run, outcome and code, never a path. */
+  folderAccesses: (id: string) => request<FolderAccessEntry[]>("GET", `/folders/${encodeURIComponent(id)}/accesses`),
   resultFiles: (runId: string) => request<ResultFile[]>("GET", `/runs/${runId}/files`),
   createResultFile: (runId: string, body: FileRequest) => request<ResultFile>("POST", `/runs/${runId}/files`, body),
   deleteResultFile: (runId: string, fileId: string) => request<void>("DELETE", `/runs/${runId}/files/${fileId}`),

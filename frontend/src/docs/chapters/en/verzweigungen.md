@@ -100,6 +100,20 @@ Some calls cannot be permitted in advance. Tools that delete for good need a con
 
 The page **Permissions and blocks** (linked from **Approvals**) lists every permission and block with who gave it, for whom, until when and its state, and you can revoke each one. A revocation applies from the next access on. The page also names the fixed **safety limits**, such as the offline mode or Nodestro's own data folder. No permission lifts them.
 
+## Granted folders {#ordner}
+<!-- keywords: folder, granted folder, read files, local files, access log, revoke, protected content -->
+
+Granted folders are **not enabled** unless the person who runs Nodestro switches them on. They never exist on a server. While they are off, the page **Granted folders** (linked from **Approvals**) only says so, and no agent can read a folder of this computer.
+
+When they are on, an administrator grants a folder **for reading**: a name, the folder's full path, optionally which files to include or leave out, for which agents, for which runs and until when. Secret files such as `.env`, keys and password databases are left out unless you turn that off. Nodestro checks the path when you grant it and says why a folder is refused: system folders, the home folder and folders with keys or passwords are never granted. Agents see the name, never the path, and can list, read and search the files, never change them.
+
+The page lists every grant with who gave it and its state. The **access log** of a grant shows which agent read what, in which run, and whether it was allowed. **Revoke** ends a grant from the next access on.
+
+## Protected content {#geschuetzte-inhalte}
+<!-- keywords: protected content, granted source, provenance, cloud model, permission, egress -->
+
+When content protection is switched on, a run that reads a granted folder, knowledge, memory or an attached file is marked **Protected content**, and so is the conversation it answers in. The mark stays. From then on, sending that content outside this computer needs a [permission](/docs/verzweigungen#erlaubnisse): every request to a cloud model and every tool that reaches outside is asked or refused until a person allows it. This also applies when you discuss such a run with the assistant or when an AI judge rates it. The run details and the conversation header show the mark and say this.
+
 ## Sub-workflows {#unterworkflow}
 <!-- keywords: sub-workflow, subworkflow, nesting, reuse, building block, version, child run -->
 

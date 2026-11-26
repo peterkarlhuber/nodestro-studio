@@ -100,6 +100,20 @@ Alcune chiamate non si possono permettere in anticipo. Gli strumenti che elimina
 
 La pagina **Permessi e blocchi** (collegata da **Approvazioni**) elenca ogni permesso e blocco con chi l’ha dato, per chi, fino a quando e il suo stato; ognuno si può revocare. Una revoca vale dal prossimo accesso. La pagina indica anche i **limiti di sicurezza** fissi, come la modalità offline o la cartella dei dati di Nodestro. Nessun permesso li rimuove.
 
+## Cartelle condivise {#ordner}
+<!-- keywords: cartella, cartella condivisa, leggere file, file locali, registro degli accessi, revocare, contenuto protetto -->
+
+Le cartelle condivise **non sono attivate** finché la persona che gestisce Nodestro non le attiva. Su un server non esistono mai. Finché sono disattivate, la pagina **Cartelle condivise** (collegata da **Approvazioni**) lo dice soltanto, e nessun agente può leggere una cartella di questo computer.
+
+Quando sono attivate, un amministratore condivide una cartella **in lettura**: un nome, il percorso completo della cartella, facoltativamente quali file includere o escludere, per quali agenti, per quali esecuzioni e fino a quando. I file segreti come `.env`, chiavi e database di password restano esclusi, a meno che tu non lo disattivi. Nodestro verifica il percorso alla condivisione e dice perché una cartella viene rifiutata: le cartelle di sistema, la cartella home e le cartelle con chiavi o password non vengono mai condivise. Gli agenti vedono il nome, mai il percorso, e possono elencare, leggere e cercare i file, mai modificarli.
+
+La pagina mostra ogni condivisione con chi l’ha data e il suo stato. Il **registro degli accessi** mostra quale agente ha letto cosa, in quale esecuzione e se era consentito. **Revoca** termina una condivisione dal prossimo accesso.
+
+## Contenuto protetto {#geschuetzte-inhalte}
+<!-- keywords: contenuto protetto, fonte condivisa, provenienza, modello cloud, permesso, uscita -->
+
+Quando la protezione dei contenuti è attivata, un’esecuzione che legge una cartella condivisa, conoscenza, memoria o un file allegato viene contrassegnata come **Contenuto protetto**, così come la conversazione in cui risponde. Il contrassegno resta. Da quel momento, inviare quel contenuto fuori da questo computer richiede un [permesso](/docs/verzweigungen#erlaubnisse): ogni richiesta a un modello cloud e ogni strumento che comunica con l’esterno viene chiesto o rifiutato finché una persona non lo consente. Vale anche quando discuti un’esecuzione del genere con l’assistente o quando un giudice IA la valuta. I dettagli dell’esecuzione e l’intestazione della conversazione mostrano il contrassegno e lo spiegano.
+
 ## Sotto-workflow {#unterworkflow}
 <!-- keywords: sotto-workflow, subworkflow, annidare, riutilizzare, blocco, versione, esecuzione figlia -->
 

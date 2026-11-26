@@ -683,6 +683,81 @@ export interface AccessState {
   safety_limits: Record<string, string>;
 }
 
+/** What one call of the folder tools may read (nodestro_runtime.folders.FolderLimits). */
+export interface FolderLimits {
+  max_file_bytes: number;
+  max_entries: number;
+  max_search_files: number;
+  max_results: number;
+  max_chars: number;
+  pdf_pages: number;
+  pdf_seconds: number;
+  pdf_memory_mb: number;
+}
+
+/** GET /api/folders/state: whether granted folders (N-10) are on here, the default limits and their bounds. */
+export interface FolderState {
+  enabled: boolean;
+  limits: FolderLimits;
+  bounds: Record<string, { lowest: number; highest: number }>;
+}
+
+/** A folder granted for reading (nodestro_runtime.folders.FolderGrant). Agents see its name, never its path. */
+export interface FolderGrant {
+  id: string;
+  name: string;
+  path: string;
+  access: "read";
+  include: string[];
+  exclude: string[];
+  limits: FolderLimits;
+  default_excludes: boolean;
+  index: boolean;
+  grant_id: string;
+  created_by: string;
+  created_at: string;
+}
+
+/** A folder grant with the state of its access grant (nodestro_runtime.folder_grants.FolderGrantView). */
+export interface FolderGrantView {
+  folder: FolderGrant;
+  status: "active" | "revoked" | "expired";
+  scope: AccessScope;
+  agents: string[];
+  mode: AccessMode;
+  expires_at?: string | null;
+  revoked_at?: string | null;
+  revoked_by?: string | null;
+}
+
+/** The body of POST /api/folders; the server fills in who and when, and checks the path. */
+export interface FolderGrantIn {
+  name: string;
+  /** The folder's absolute path on this computer. */
+  path: string;
+  include?: string[];
+  exclude?: string[];
+  limits?: FolderLimits | null;
+  default_excludes?: boolean;
+  scope?: "all" | "agents";
+  /** ``<workflow id>/<node id>`` of each agent, with scope ``agents``. */
+  agents?: string[];
+  mode?: AccessMode;
+  expires_at?: string | null;
+}
+
+/** One call of the folder tools on a granted folder (its access log; never a path). */
+export interface FolderAccessEntry {
+  at: string;
+  action: string;
+  actor?: string | null;
+  agent?: string | null;
+  outcome: string;
+  code?: string | null;
+  run_id?: string | null;
+  conversation_id?: string | null;
+}
+
 interface AccessRecord {
   id: string;
   resource: { type: AccessResourceType; id: string };

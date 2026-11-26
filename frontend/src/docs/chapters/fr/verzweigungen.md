@@ -100,6 +100,20 @@ Certains appels ne peuvent pas être autorisés à l’avance. Les outils qui su
 
 La page **Autorisations et blocages** (liée depuis **Approbations**) liste chaque autorisation et chaque blocage avec qui l’a donné, pour qui, jusqu’à quand et son état ; chacun peut être révoqué. Une révocation s’applique dès le prochain accès. La page nomme aussi les **limites de sécurité** fixes, comme le mode hors ligne ou le dossier de données de Nodestro. Aucune autorisation ne les lève.
 
+## Dossiers partagés {#ordner}
+<!-- keywords: dossier, dossier partagé, lire des fichiers, fichiers locaux, journal des accès, révoquer, contenu protégé -->
+
+Les dossiers partagés ne sont **pas activés** tant que la personne qui gère Nodestro ne les active pas. Ils n’existent jamais sur un serveur. Tant qu’ils sont désactivés, la page **Dossiers partagés** (accessible depuis **Validations**) l’indique seulement, et aucun agent ne peut lire un dossier de cet ordinateur.
+
+Lorsqu’ils sont activés, un administrateur partage un dossier **en lecture** : un nom, le chemin complet du dossier, éventuellement les fichiers à inclure ou à exclure, pour quels agents, pour quelles exécutions et jusqu’à quand. Les fichiers secrets comme `.env`, les clés et les bases de mots de passe restent exclus, sauf si vous désactivez cette option. Nodestro vérifie le chemin au partage et indique pourquoi un dossier est refusé : les dossiers système, le dossier personnel et les dossiers contenant des clés ou des mots de passe ne sont jamais partagés. Les agents voient le nom, jamais le chemin, et peuvent lister, lire et parcourir les fichiers, jamais les modifier.
+
+La page affiche chaque partage avec la personne qui l’a donné et son état. Le **journal des accès** montre quel agent a lu quoi, dans quelle exécution, et si c’était autorisé. **Révoquer** met fin à un partage dès le prochain accès.
+
+## Contenu protégé {#geschuetzte-inhalte}
+<!-- keywords: contenu protégé, source partagée, provenance, modèle cloud, autorisation, sortie -->
+
+Lorsque la protection du contenu est activée, une exécution qui lit un dossier partagé, des connaissances, une mémoire ou un fichier joint est marquée **Contenu protégé**, tout comme la conversation dans laquelle elle répond. Le marquage reste. Dès lors, envoyer ce contenu hors de cet ordinateur nécessite une [autorisation](/docs/verzweigungen#erlaubnisse) : chaque requête à un modèle cloud et chaque outil qui communique avec l’extérieur est soumis à validation ou refusé jusqu’à ce qu’une personne l’autorise. Cela vaut aussi lorsque vous discutez d’une telle exécution avec l’assistant ou qu’un juge IA l’évalue. Les détails de l’exécution et l’en-tête de la conversation affichent le marquage et l’expliquent.
+
 ## Sous-workflows {#unterworkflow}
 <!-- keywords: sous-workflow, subworkflow, imbriquer, réutiliser, brique, version, exécution enfant -->
 

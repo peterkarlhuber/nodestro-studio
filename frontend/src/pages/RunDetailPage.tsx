@@ -40,6 +40,7 @@ import { STATUS_TONE, formatCost, formatDate, formatDuration, formatTokens, toke
 import { formatMoney } from "../lib/money";
 import { NotFoundState } from "../components/NotFoundState";
 import { OfflineBadge } from "../library/exampleOrigin";
+import { GrantedContentBadge, GrantedContentNotice } from "../components/GrantedContent";
 
 /** A waterfall of the agents' run times: where the time went and what ran in parallel. */
 function Trace({ run, selected, onSelect }: { run: Run; selected: string | null; onSelect: (id: string) => void }) {
@@ -147,7 +148,12 @@ export function RunDetailPage() {
     <div className="page">
       <PageHeader
         title={data.workflow_name}
-        badges={<OfflineBadge origin={data.workflow.origin} />}
+        badges={
+          <>
+            <OfflineBadge origin={data.workflow.origin} />
+            {data.granted_content ? <GrantedContentBadge kind="run" /> : null}
+          </>
+        }
         documentTitle={`${data.workflow_name} · ${t("nav.executions")}`}
         crumbs={
           <>
@@ -234,6 +240,8 @@ export function RunDetailPage() {
             </div>
           </Callout>
         ) : null}
+        {/* N-08: the run read content of a granted source; sending it outside needs a permission. */}
+        {data.granted_content ? <GrantedContentNotice kind="run" /> : null}
         <RunOrigin run={data} />
         {imported ? null : <RunBudgetDecision run={data} />}
         {paused && !runWaitsForBudget(data) ? <RunApprovals run={data} /> : null}
