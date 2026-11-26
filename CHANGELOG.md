@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### RT-089d: the owner's consent for private memory spaces (2026-11-26)
+
+- Pins the runtime (and, once it is pushed, the api and sdk) of RT-089d: a workflow or agent test uses a person's
+  memory space on a server only with that person's consent for exactly its content, and private runs notify their
+  owner only.
+- Error texts in all six languages for `memory.consent_required`, `memory.consent_stale`,
+  `memory.consent_too_large`, `memory.consent_unavailable` and `notify.private`. A page to review, grant and revoke
+  consents (`/api/memory-consents`) is not built yet (nodestro-runtime docs/TODO.md RT-089d).
+
 ### N-10 and N-08 in the studio: granted folders page and the protected-content mark (2026-11-26)
 
 - New page **Granted folders** (`/approvals/folders`, linked from Approvals for administrators, not on a server):

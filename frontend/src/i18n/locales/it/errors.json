@@ -232,7 +232,11 @@
   },
   "memory": {
     "space_name": "Uno spazio di memoria richiede un nome composto da lettere, cifre, spazi, _ . e -.",
-    "space_not_found": "Non esiste alcuno spazio di memoria «{{name}}» che puoi usare."
+    "space_not_found": "Non esiste alcuno spazio di memoria «{{name}}» che puoi usare.",
+    "consent_required": "Questo workflow o agente può usare lo spazio di memoria «{{space}}» solo dopo che il suo proprietario ha consentito esattamente questa versione.",
+    "consent_stale": "Il workflow è cambiato dopo che ti è stato mostrato. Controllalo di nuovo prima di consentirgli «{{space}}».",
+    "consent_too_large": "Un consenso copre al massimo {{limit}} workflow (un workflow con tutti quelli che avvia).",
+    "consent_unavailable": "I consensi per gli spazi di memoria esistono solo per i membri di un server."
   },
   "tool": {
     "failed": "C’è qualcosa che non va nello strumento.",
@@ -1277,7 +1281,8 @@
   },
   "notify": {
     "limit": "Un agente ha provato a inviare più di 3 messaggi alla campanella in un’esecuzione. I messaggi successivi non sono stati inviati.",
-    "empty_title": "Un messaggio alla campanella ha bisogno di un titolo. L’agente ne ha inviato uno senza titolo."
+    "empty_title": "Un messaggio alla campanella ha bisogno di un titolo. L’agente ne ha inviato uno senza titolo.",
+    "private": "Un’esecuzione che non agisce per nessuna persona non lascia messaggi alla campanella."
   },
   "notifications": {
     "invalid_cursor": "Non è stato possibile continuare l’elenco delle notifiche. Chiudi le notifiche e riaprile."

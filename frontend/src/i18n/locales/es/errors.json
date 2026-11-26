@@ -232,7 +232,11 @@
   },
   "memory": {
     "space_name": "Un espacio de memoria necesita un nombre con letras, cifras, espacios, _ . y -.",
-    "space_not_found": "No hay ningún espacio de memoria «{{name}}» que puedas usar."
+    "space_not_found": "No hay ningún espacio de memoria «{{name}}» que puedas usar.",
+    "consent_required": "Este flujo de trabajo o agente solo puede usar el espacio de memoria «{{space}}» después de que su propietario haya permitido exactamente esta versión.",
+    "consent_stale": "El flujo de trabajo cambió después de mostrártelo. Revísalo de nuevo antes de permitirle usar «{{space}}».",
+    "consent_too_large": "Un permiso cubre como máximo {{limit}} flujos de trabajo (un flujo de trabajo con todos los que inicia).",
+    "consent_unavailable": "Los permisos para espacios de memoria solo existen para los miembros de un servidor."
   },
   "tool": {
     "failed": "Algo no funciona en la herramienta.",
@@ -1277,7 +1281,8 @@
   },
   "notify": {
     "limit": "Un agente intentó enviar más de 3 mensajes a la campana en una ejecución. Los mensajes siguientes no se enviaron.",
-    "empty_title": "Un mensaje a la campana necesita un título. El agente envió uno sin título."
+    "empty_title": "Un mensaje a la campana necesita un título. El agente envió uno sin título.",
+    "private": "Una ejecución que no actúa en nombre de ninguna persona no deja mensajes en la campana."
   },
   "notifications": {
     "invalid_cursor": "No se pudo continuar la lista de notificaciones. Cierra las notificaciones y vuelve a abrirlas."

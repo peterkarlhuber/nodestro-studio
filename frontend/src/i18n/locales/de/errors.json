@@ -232,7 +232,11 @@
   },
   "memory": {
     "space_name": "Ein Memory-Raum braucht einen Namen aus Buchstaben, Ziffern, Leerzeichen, _ . und -.",
-    "space_not_found": "Es gibt keinen Memory-Raum „{{name}}“, den du verwenden kannst."
+    "space_not_found": "Es gibt keinen Memory-Raum „{{name}}“, den du verwenden kannst.",
+    "consent_required": "Dieser Workflow oder Agent darf den Memory-Raum „{{space}}“ erst verwenden, nachdem die Person, der er gehört, genau diese Version erlaubt hat.",
+    "consent_stale": "Der Workflow wurde geändert, nachdem er dir gezeigt wurde. Prüfe ihn erneut, bevor du ihm „{{space}}“ erlaubst.",
+    "consent_too_large": "Eine Erlaubnis umfasst höchstens {{limit}} Workflows (einen Workflow mit allen Workflows, die er startet).",
+    "consent_unavailable": "Erlaubnisse für Memory-Räume gibt es nur für Mitglieder eines Servers."
   },
   "tool": {
     "failed": "Mit dem Tool stimmt etwas nicht.",
@@ -1277,7 +1281,8 @@
   },
   "notify": {
     "limit": "Ein Agent wollte in einem Lauf mehr als 3 Nachrichten an die Glocke schicken. Weitere Nachrichten wurden nicht verschickt.",
-    "empty_title": "Eine Nachricht an die Glocke braucht einen Titel. Der Agent hat eine ohne Titel geschickt."
+    "empty_title": "Eine Nachricht an die Glocke braucht einen Titel. Der Agent hat eine ohne Titel geschickt.",
+    "private": "Ein Lauf, der für keine Person läuft, hinterlässt keine Nachrichten an der Glocke."
   },
   "notifications": {
     "invalid_cursor": "Die Liste der Benachrichtigungen konnte nicht fortgesetzt werden. Schließe die Benachrichtigungen und öffne sie erneut."

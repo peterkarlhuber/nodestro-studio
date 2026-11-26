@@ -28,7 +28,7 @@
       "pyproject": "pyproject.toml"
     },
     "nodestro-runtime": {
-      "commit": "15f03323060f1918e56fae3b189c998ec3d72f4c",
+      "commit": "fd841309106118f7035e7c0c46a846d21ed37b49",
       "version": "0.2.0",
       "pyproject": "pyproject.toml",
       "studio_dependency": true

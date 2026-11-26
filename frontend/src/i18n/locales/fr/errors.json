@@ -232,7 +232,11 @@
   },
   "memory": {
     "space_name": "Un espace mémoire doit porter un nom composé de lettres, chiffres, espaces, _ . et -.",
-    "space_not_found": "Il n’existe aucun espace mémoire « {{name}} » que vous pouvez utiliser."
+    "space_not_found": "Il n’existe aucun espace mémoire « {{name}} » que vous pouvez utiliser.",
+    "consent_required": "Ce workflow ou cet agent ne peut utiliser l’espace mémoire « {{space}} » qu’après que son propriétaire a autorisé exactement cette version.",
+    "consent_stale": "Le workflow a changé depuis qu’il vous a été montré. Vérifiez-le à nouveau avant de lui autoriser « {{space}} ».",
+    "consent_too_large": "Une autorisation couvre au plus {{limit}} workflows (un workflow avec tous ceux qu’il lance).",
+    "consent_unavailable": "Les autorisations pour les espaces mémoire n’existent que pour les membres d’un serveur."
   },
   "tool": {
     "failed": "Quelque chose ne va pas avec l’outil.",
@@ -1277,7 +1281,8 @@
   },
   "notify": {
     "limit": "Un agent a tenté d’envoyer plus de 3 messages à la cloche en une exécution. Les messages suivants n’ont pas été envoyés.",
-    "empty_title": "Un message à la cloche doit avoir un titre. L’agent en a envoyé un sans titre."
+    "empty_title": "Un message à la cloche doit avoir un titre. L’agent en a envoyé un sans titre.",
+    "private": "Une exécution qui n’agit pour personne ne laisse aucun message à la cloche."
   },
   "notifications": {
     "invalid_cursor": "La liste des notifications n’a pas pu être poursuivie. Fermez les notifications et rouvrez-les."

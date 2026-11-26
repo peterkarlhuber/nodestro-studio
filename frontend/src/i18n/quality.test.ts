@@ -373,7 +373,9 @@ describe("backend codes", () => {
     // Skill groups and script drafts (NAL-B4).
     "skill.group_name_taken", "skill.group_not_found", "skill.script_not_found", "skill.script_too_large", "skill.file_not_text",
     // Internal notifications (NAL-A3): the tool notify_user and the inbox API.
-    "notify.limit", "notify.empty_title", "notifications.invalid_cursor",
+    "notify.limit", "notify.empty_title", "notify.private", "notifications.invalid_cursor",
+    // The owner's consent before a workflow or agent uses a private memory space (RT-089d).
+    "memory.consent_required", "memory.consent_stale", "memory.consent_too_large", "memory.consent_unavailable",
     // E-mail and webhook drafts, the real connection check and the test send (NAL-A4).
     "mail.address_invalid", "mail.empty", "mail.html_too_large", "mail.no_recipient", "mail.subject_invalid",
     "mail.subject_too_long", "mail.text_too_long", "mail.too_large", "mail.too_many_attachments", "mail.too_many_recipients",

@@ -232,7 +232,11 @@
   },
   "memory": {
     "space_name": "Um espaço de memória precisa de um nome com letras, dígitos, espaços, _ . e -.",
-    "space_not_found": "Não existe um espaço de memória “{{name}}” que você possa usar."
+    "space_not_found": "Não existe um espaço de memória “{{name}}” que você possa usar.",
+    "consent_required": "Este fluxo de trabalho ou agente só pode usar o espaço de memória “{{space}}” depois que o proprietário permitir exatamente esta versão.",
+    "consent_stale": "O fluxo de trabalho mudou depois de ser mostrado a você. Revise-o novamente antes de permitir que ele use “{{space}}”.",
+    "consent_too_large": "Uma permissão cobre no máximo {{limit}} fluxos de trabalho (um fluxo de trabalho com todos os que ele inicia).",
+    "consent_unavailable": "Permissões para espaços de memória existem apenas para membros de um servidor."
   },
   "tool": {
     "failed": "Há algo errado com a ferramenta.",
@@ -1277,7 +1281,8 @@
   },
   "notify": {
     "limit": "Um agente tentou enviar mais de 3 mensagens ao sino em uma execução. As mensagens seguintes não foram enviadas.",
-    "empty_title": "Uma mensagem ao sino precisa de um título. O agente enviou uma sem título."
+    "empty_title": "Uma mensagem ao sino precisa de um título. O agente enviou uma sem título.",
+    "private": "Uma execução que não age por nenhuma pessoa não deixa mensagens no sino."
   },
   "notifications": {
     "invalid_cursor": "Não foi possível continuar a lista de notificações. Feche as notificações e abra-as de novo."
