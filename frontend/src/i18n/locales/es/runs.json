@@ -142,5 +142,13 @@
     "skill": "Skill",
     "score": "Puntuación",
     "chosen": "Ofrecida"
+  },
+  "grantedContent": {
+    "badge": "Contenido protegido",
+    "title": "Contenido protegido.",
+    "run": "Esta ejecución leyó contenido de una fuente compartida: una carpeta, conocimiento, memoria o un archivo adjunto.",
+    "conversation": "Esta conversación contiene contenido de una fuente compartida: una carpeta, conocimiento, memoria o un archivo adjunto.",
+    "egress": "Enviarlo fuera de este equipo necesita un permiso: cada solicitud a un modelo en la nube y cada herramienta que llega al exterior se consulta o se rechaza hasta que una persona lo permita. La marca se mantiene.",
+    "permissions": "Permisos y bloqueos"
   }
 }

@@ -100,6 +100,20 @@ Algunas llamadas no se pueden permitir por adelantado. Las herramientas que elim
 
 La página **Permisos y bloqueos** (enlazada desde **Aprobaciones**) muestra cada permiso y bloqueo con quién lo dio, para quién, hasta cuándo y su estado, y cada uno se puede revocar. Una revocación se aplica desde el próximo acceso. La página también nombra los **límites de seguridad** fijos, como el modo sin conexión o la carpeta de datos de Nodestro. Ningún permiso los levanta.
 
+## Carpetas compartidas {#ordner}
+<!-- keywords: carpeta, carpeta compartida, leer archivos, archivos locales, registro de accesos, revocar, contenido protegido -->
+
+Las carpetas compartidas **no están activadas** salvo que la persona que administra Nodestro las active. En un servidor no existen nunca. Mientras están desactivadas, la página **Carpetas compartidas** (enlazada desde **Aprobaciones**) solo lo indica, y ningún agente puede leer una carpeta de este equipo.
+
+Cuando están activadas, un administrador comparte una carpeta **para lectura**: un nombre, la ruta completa de la carpeta, opcionalmente qué archivos incluir o excluir, para qué agentes, para qué ejecuciones y hasta cuándo. Los archivos secretos como `.env`, claves y bases de datos de contraseñas quedan excluidos salvo que lo desactives. Nodestro comprueba la ruta al compartirla e indica por qué se rechaza una carpeta: las carpetas del sistema, la carpeta personal y las carpetas con claves o contraseñas nunca se comparten. Los agentes ven el nombre, nunca la ruta, y pueden listar, leer y buscar los archivos, nunca modificarlos.
+
+La página muestra cada carpeta compartida con quién la compartió y su estado. El **registro de accesos** muestra qué agente leyó qué, en qué ejecución y si estaba permitido. **Revocar** termina el permiso desde el próximo acceso.
+
+## Contenido protegido {#geschuetzte-inhalte}
+<!-- keywords: contenido protegido, fuente compartida, procedencia, modelo en la nube, permiso, salida -->
+
+Cuando la protección de contenido está activada, una ejecución que lee una carpeta compartida, conocimiento, memoria o un archivo adjunto se marca como **Contenido protegido**, igual que la conversación en la que responde. La marca se mantiene. A partir de ahí, enviar ese contenido fuera de este equipo necesita un [permiso](/docs/verzweigungen#erlaubnisse): cada solicitud a un modelo en la nube y cada herramienta que llega al exterior se consulta o se rechaza hasta que una persona lo permita. Esto también se aplica cuando comentas una ejecución así con el asistente o cuando un juez de IA la evalúa. Los detalles de la ejecución y la cabecera de la conversación muestran la marca y lo explican.
+
 ## Subflujos {#unterworkflow}
 <!-- keywords: subflujo, sub-workflow, anidar, reutilizar, bloque, versión, ejecución hija -->
 

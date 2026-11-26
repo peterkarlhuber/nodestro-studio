@@ -142,5 +142,13 @@
     "skill": "Skill",
     "score": "Score",
     "chosen": "Offered"
+  },
+  "grantedContent": {
+    "badge": "Protected content",
+    "title": "Protected content.",
+    "run": "This run read content from a granted source: a folder, knowledge, memory or an attached file.",
+    "conversation": "This conversation holds content from a granted source: a folder, knowledge, memory or an attached file.",
+    "egress": "Sending it outside this computer needs a permission: every request to a cloud model and every tool that reaches outside is asked or refused until a person allows it. The mark stays.",
+    "permissions": "Permissions and blocks"
   }
 }

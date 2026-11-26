@@ -100,6 +100,20 @@ Algumas chamadas não podem ser permitidas com antecedência. Ferramentas que ex
 
 A página **Permissões e bloqueios** (com link em **Aprovações**) lista cada permissão e bloqueio com quem deu, para quem, até quando e o estado, e cada um pode ser revogado. Uma revogação vale a partir do próximo acesso. A página também nomeia os **limites de segurança** fixos, como o modo offline ou a pasta de dados do Nodestro. Nenhuma permissão os remove.
 
+## Pastas compartilhadas {#ordner}
+<!-- keywords: pasta, pasta compartilhada, ler arquivos, arquivos locais, registro de acessos, revogar, conteúdo protegido -->
+
+As pastas compartilhadas **não estão ativadas** a menos que a pessoa que administra o Nodestro as ative. Elas nunca existem em um servidor. Enquanto estão desativadas, a página **Pastas compartilhadas** (com link em **Aprovações**) apenas informa isso, e nenhum agente pode ler uma pasta deste computador.
+
+Quando estão ativadas, um administrador compartilha uma pasta **para leitura**: um nome, o caminho completo da pasta, opcionalmente quais arquivos incluir ou deixar de fora, para quais agentes, para quais execuções e até quando. Arquivos secretos como `.env`, chaves e bancos de senhas ficam de fora, a menos que você desative isso. O Nodestro verifica o caminho ao compartilhar e diz por que uma pasta é recusada: pastas do sistema, a pasta pessoal e pastas com chaves ou senhas nunca são compartilhadas. Os agentes veem o nome, nunca o caminho, e podem listar, ler e pesquisar os arquivos, nunca alterá-los.
+
+A página mostra cada compartilhamento com quem o deu e o seu estado. O **registro de acessos** mostra qual agente leu o quê, em qual execução e se era permitido. **Revogar** encerra um compartilhamento a partir do próximo acesso.
+
+## Conteúdo protegido {#geschuetzte-inhalte}
+<!-- keywords: conteúdo protegido, fonte compartilhada, procedência, modelo na nuvem, permissão, saída -->
+
+Quando a proteção de conteúdo está ativada, uma execução que lê uma pasta compartilhada, conhecimento, memória ou um arquivo anexado é marcada como **Conteúdo protegido**, assim como a conversa em que ela responde. A marcação permanece. A partir daí, enviar esse conteúdo para fora deste computador exige uma [permissão](/docs/verzweigungen#erlaubnisse): cada solicitação a um modelo na nuvem e cada ferramenta que acessa o exterior é consultada ou recusada até que uma pessoa a permita. Isso também vale quando você discute uma execução assim com o assistente ou quando um juiz de IA a avalia. Os detalhes da execução e o cabeçalho da conversa mostram a marcação e explicam isso.
+
 ## Subfluxos {#unterworkflow}
 <!-- keywords: subworkflow, sub-workflow, aninhar, reutilizar, bloco, versão, execução filha -->
 

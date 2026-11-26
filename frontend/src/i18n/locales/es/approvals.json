@@ -218,5 +218,60 @@
     "revokeConfirm": "Revocar ahora",
     "revoked": "Revocado. Deja de aplicarse desde el próximo acceso.",
     "link": "Permisos y bloqueos"
+  },
+  "folders": {
+    "title": "Carpetas compartidas",
+    "description": "Carpetas de este equipo que los agentes pueden leer: quién las compartió, para quién, hasta cuándo y qué leyeron los agentes.",
+    "offTitle": "Las carpetas compartidas están desactivadas.",
+    "off": "No están activadas en esta instalación, así que ningún agente puede leer una carpeta de este equipo. Quien administra esta instalación decide si se activan.",
+    "grant": "Compartir una carpeta",
+    "grantTitle": "Compartir una carpeta para lectura",
+    "grantText": "Los agentes pueden listar, leer y buscar los archivos de esta carpeta, nunca modificarlos. Ven su nombre, nunca su ruta.",
+    "name": "Nombre",
+    "nameHint": "El nombre con el que los agentes conocen la carpeta: de 1 a 80 caracteres, sin barra.",
+    "path": "Carpeta",
+    "pathHint": "La ruta completa de la carpeta en este equipo. Se comprueba al compartirla: las carpetas del sistema, la carpeta personal y las carpetas con claves o contraseñas se rechazan.",
+    "pathPlaceholder": "/Users/ana/Documentos/Contratos",
+    "include": "Solo estos archivos",
+    "includeHint": "Opcional. Un patrón por línea, por ejemplo *.pdf o informes/**. Vacío: todos los archivos.",
+    "exclude": "Excluir",
+    "excludeHint": "Opcional. Un patrón por línea, por ejemplo borradores/**.",
+    "scope": "Para quién",
+    "someAgents": "Solo estos agentes",
+    "agents": "Agentes",
+    "agentsHint": "Un agente por línea: el ID del flujo de trabajo, una barra y el ID del nodo del agente, por ejemplo wf_1/writer.",
+    "mode": "Qué ejecuciones",
+    "modes": {
+      "supervised": "Ejecuciones que una persona sigue",
+      "unattended": "También ejecuciones sin supervisión"
+    },
+    "expires": "Termina",
+    "expiresHint": "Opcional. Vacío: hasta que la revoques.",
+    "defaultExcludes": "Excluir archivos secretos",
+    "defaultExcludesHint": "Archivos como .env, claves, claves SSH y bases de datos de contraseñas nunca se leen. Desactívalo solo si los agentes de verdad los necesitan.",
+    "grantSubmit": "Compartir carpeta",
+    "granted": "{{name}} está compartida. Los agentes pueden leerla desde su próximo paso.",
+    "listTitle": "Carpetas",
+    "listText": "Todas las carpetas compartidas, la más reciente primero, también las terminadas. Revocar se aplica desde el próximo acceso.",
+    "none": "Aún no hay carpetas compartidas.",
+    "actions": "Acciones",
+    "log": "Registro de accesos",
+    "logOf": "Registro de accesos de {{name}}",
+    "logNone": "Ningún agente ha leído esta carpeta todavía.",
+    "actionNames": {
+      "folder": {
+        "listed": "Listó la carpeta",
+        "read": "Leyó un archivo",
+        "searched": "Buscó en la carpeta"
+      }
+    },
+    "outcomes": {
+      "success": "Hecho",
+      "failure": "Falló",
+      "denied": "Rechazado"
+    },
+    "openRun": "Abrir ejecución",
+    "openConversation": "Abrir conversación",
+    "link": "Carpetas compartidas"
   }
 }
