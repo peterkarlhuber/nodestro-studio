@@ -232,7 +232,11 @@
   },
   "memory": {
     "space_name": "A memory space needs a name made of letters, digits, spaces, _ . and -.",
-    "space_not_found": "There is no memory space “{{name}}” that you can use."
+    "space_not_found": "There is no memory space “{{name}}” that you can use.",
+    "consent_required": "This workflow or agent may use the memory space “{{space}}” only after its owner allowed exactly this version of it.",
+    "consent_stale": "The workflow changed after it was shown to you. Review it again before you allow it to use “{{space}}”.",
+    "consent_too_large": "A consent covers at most {{limit}} workflows (a workflow with every workflow it starts).",
+    "consent_unavailable": "Consents for memory spaces exist only for the members of a server."
   },
   "tool": {
     "failed": "Something is wrong with the tool.",
@@ -1277,7 +1281,8 @@
   },
   "notify": {
     "limit": "An agent tried to send more than 3 messages to the bell in one run. Further messages were not sent.",
-    "empty_title": "A message to the bell needs a title. The agent sent one without a title."
+    "empty_title": "A message to the bell needs a title. The agent sent one without a title.",
+    "private": "A run that acts for no person leaves no messages in the bell."
   },
   "notifications": {
     "invalid_cursor": "The list of notifications could not be continued. Close the notifications and open them again."
