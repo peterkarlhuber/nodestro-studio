@@ -231,7 +231,8 @@
     "unfinished": "Unvollständiger Trace: Der Lauf war beim Export noch nicht beendet."
   },
   "memory": {
-    "space_name": "Ein Memory-Raum braucht einen Namen aus Buchstaben, Ziffern, Leerzeichen, _ . und -."
+    "space_name": "Ein Memory-Raum braucht einen Namen aus Buchstaben, Ziffern, Leerzeichen, _ . und -.",
+    "space_not_found": "Es gibt keinen Memory-Raum „{{name}}“, den du verwenden kannst."
   },
   "tool": {
     "failed": "Mit dem Tool stimmt etwas nicht.",

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### RT-089c: memory spaces have an owner on a server (2026-11-26)
+
+- The lock pins nodestro-runtime 8fc0642 and nodestro-api 813a707 (branches `claude/w3s-rt089c`). On a server only a
+  memory space's owner (its first writer) uses it; another member, a space without an owner and a run for nobody
+  get `memory.space_not_found`, which now has an error text in six languages. Pin the merges once they are merged.
+
 ### N-08: egress protection by content provenance (switch off; 2026-11-25)
 
 - The lock pins orkexa d554e79, nodestro-runtime 29b3c3e, nodestro-api 5b7fc00 and nodestro-sdk 1b28f5a (branches
