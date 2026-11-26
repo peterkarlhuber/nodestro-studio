@@ -231,7 +231,8 @@
     "unfinished": "Trace incomplète : l’exécution n’était pas terminée lors de l’export."
   },
   "memory": {
-    "space_name": "Un espace mémoire doit porter un nom composé de lettres, chiffres, espaces, _ . et -."
+    "space_name": "Un espace mémoire doit porter un nom composé de lettres, chiffres, espaces, _ . et -.",
+    "space_not_found": "Il n’existe aucun espace mémoire « {{name}} » que vous pouvez utiliser."
   },
   "tool": {
     "failed": "Quelque chose ne va pas avec l’outil.",

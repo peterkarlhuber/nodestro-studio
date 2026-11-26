@@ -231,7 +231,8 @@
     "unfinished": "Traccia incompleta: l’esecuzione non era ancora terminata al momento dell’esportazione."
   },
   "memory": {
-    "space_name": "Uno spazio di memoria richiede un nome composto da lettere, cifre, spazi, _ . e -."
+    "space_name": "Uno spazio di memoria richiede un nome composto da lettere, cifre, spazi, _ . e -.",
+    "space_not_found": "Non esiste alcuno spazio di memoria «{{name}}» che puoi usare."
   },
   "tool": {
     "failed": "C’è qualcosa che non va nello strumento.",

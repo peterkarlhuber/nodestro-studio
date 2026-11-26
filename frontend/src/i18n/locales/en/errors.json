@@ -231,7 +231,8 @@
     "unfinished": "Incomplete trace: the run had not finished when it was exported."
   },
   "memory": {
-    "space_name": "A memory space needs a name made of letters, digits, spaces, _ . and -."
+    "space_name": "A memory space needs a name made of letters, digits, spaces, _ . and -.",
+    "space_not_found": "There is no memory space “{{name}}” that you can use."
   },
   "tool": {
     "failed": "Something is wrong with the tool.",
