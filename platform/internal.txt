@@ -2,7 +2,7 @@
 # scripts/check_versions.py --write-lock (do not edit). Install with: pip install -r <this file> <target>
 nodestro-api @ git+https://github.com/peterkarlhuber/nodestro-api.git@170170d2079690bf66472500ea448d464fd6a251
 nodestro-examples @ git+https://github.com/peterkarlhuber/nodestro-examples.git@c5f466244c48db105e6588bbe709bba83509fcae
-nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@f82ea014ba2d41bbd8617c49a9c64373daa55a17
+nodestro-integrations @ git+https://github.com/peterkarlhuber/nodestro-integrations.git@3b1a14e3dd79c21cb759a86451f5b4ff06588ed0
 nodestro-runtime @ git+https://github.com/peterkarlhuber/nodestro-runtime.git@f6b44c5e8196acd45c0e96b3e37c8ed270c81670
 nodestro-session @ git+https://github.com/peterkarlhuber/nodestro-session.git@4d500285581fdea5d8cd6752cf225077e100dfca
 orkexa @ git+https://github.com/peterkarlhuber/orkexa.git@3294190d0bce517977cf9bed3d9538a3036897c4
