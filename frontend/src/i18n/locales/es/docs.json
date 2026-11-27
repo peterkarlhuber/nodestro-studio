@@ -88,5 +88,9 @@
       "keys": "<kbd>Ctrl</kbd>+<kbd>,</kbd>",
       "action": "Abrir los ajustes; en los ajustes, volver a la página anterior"
     }
+  },
+  "errorHelp": {
+    "title": "Ayuda sobre mensajes de error",
+    "label": "Buscar ayuda sobre un mensaje de error (también sirve un código de error)"
   }
 }

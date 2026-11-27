@@ -6,6 +6,7 @@
 // Runs stored before codes existed carry German texts only; they are recognised here, so old
 // runs read in the current language too.
 
+import { HelpTip as PlatformHelpTip, helpIdForError, useHelpRegistry } from "@nodestro/ui-core";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { Link, useInRouterContext } from "react-router-dom";
@@ -396,9 +397,13 @@ export function ProblemText({ item, compact = false }: { item: Coded; compact?: 
   const text = problemText(t, item);
   const technical = compact ? null : technicalText(t, item);
   const hint = compact ? null : problemHint(t, item);
+  // The shared explanation of the code's family (@nodestro/ui-help), when the page has the platform help.
+  const registry = useHelpRegistry();
+  const helpId = compact || !item.code ? null : helpIdForError(registry, item.code);
   return (
     <>
       <span>{text}</span>
+      {helpId ? <PlatformHelpTip id={helpId} className="problem-help" /> : null}
       {hint ? (
         <span className="problem-hint" data-testid="problem-hint">
           {hint}

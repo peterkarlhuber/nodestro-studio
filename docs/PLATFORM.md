@@ -169,7 +169,7 @@ checks that contract and types are up to date.
 
 ### The shared UI packages (N-16)
 
-The frontend uses the npm packages of nodestro-ui (`@nodestro/ui-tokens`, `-themes`, `-core`, `-ai`) without a
+The frontend uses the npm packages of nodestro-ui (`@nodestro/ui-tokens`, `-themes`, `-core`, `-ai`, `-help`) without a
 registry: their tarballs, built reproducibly from one nodestro-ui commit, live in `frontend/vendor/` and are pinned in
 `platform/internal-ui.txt` (`<package> <version> nodestro-ui@<commit> <tarball> sha256=<hex>`). npm records each
 tarball's integrity in `package-lock.json`, but a warm npm cache can install a stale copy without noticing, so every

@@ -24,10 +24,10 @@ function copy(name) {
 }
 
 describe("vendored UI packages", () => {
-  it("pin core, ai, tokens and the themes from one nodestro-ui commit, and everything agrees", () => {
+  it("pin core, ai, help, tokens and the themes from one nodestro-ui commit, and everything agrees", () => {
     const { pins, problems } = checkVendor(repo);
     expect(problems).toEqual([]);
-    expect(pins.map((p) => p.name).sort()).toEqual(["@nodestro/ui-ai", "@nodestro/ui-core", "@nodestro/ui-themes", "@nodestro/ui-tokens"]);
+    expect(pins.map((p) => p.name).sort()).toEqual(["@nodestro/ui-ai", "@nodestro/ui-core", "@nodestro/ui-help", "@nodestro/ui-themes", "@nodestro/ui-tokens"]);
   });
 
   it("are installed exactly as vendored", () => {

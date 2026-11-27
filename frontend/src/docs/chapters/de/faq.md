@@ -5,6 +5,8 @@ Hier findest du Lösungen für häufige Meldungen und Antworten auf typische Fra
 ## Häufige Fehler {#haeufige-fehler}
 <!-- keywords: fehler, problem, lösung, meldung, troubleshooting, geht nicht, funktioniert nicht -->
 
+Neben vielen Fehlermeldungen steht ein **?**: Es erklärt in ein, zwei Sätzen, was die Art von Fehler bedeutet und was zu tun ist, und führt mit „Mehr erfahren“ zum passenden Kapitel. Auf der Übersicht der Dokumentation findet die Suche **Hilfe zu Fehlermeldungen** diese Erklärungen auch über einen eingefügten Fehlercode (zum Beispiel `approval.expired`); sie sucht offline, im Browser.
+
 | Meldung oder Symptom | Ursache | Lösung |
 |---|---|---|
 | „Kein API-Schlüssel für …“ | Der Anbieter des Modells ist nicht eingerichtet. | Schlüssel unter *Einstellungen → KI-Anbieter* eintragen oder die Umgebungsvariable des Anbieters setzen, z. B. `ANTHROPIC_API_KEY`. |

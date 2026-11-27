@@ -2,6 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { currentLanguage } from "./i18n";
 import { AppShell } from "./layout/AppShell";
+import { PlatformHelp } from "./lib/platformHelp";
 import { AgentsPage } from "./pages/AgentsPage";
 import { AccessRulesPage } from "./pages/AccessRulesPage";
 import { ApprovalsPage } from "./pages/ApprovalsPage";
@@ -52,7 +53,11 @@ async function loadWelcomePage() {
 export const routes: RouteObject[] = [
   { path: "welcome", lazy: loadWelcomePage, HydrateFallback: () => null },
   {
-    element: <AppShell />,
+    element: (
+      <PlatformHelp>
+        <AppShell />
+      </PlatformHelp>
+    ),
     // Sends every app start on the bare start page to /welcome (never in-app navigation).
     loader: studioLoader,
     HydrateFallback: () => null,

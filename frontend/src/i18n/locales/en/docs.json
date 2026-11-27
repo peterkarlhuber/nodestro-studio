@@ -88,5 +88,9 @@
       "keys": "<kbd>Ctrl</kbd>+<kbd>,</kbd>",
       "action": "Open the settings; pressed in the settings, back to the previous page"
     }
+  },
+  "errorHelp": {
+    "title": "Help on error messages",
+    "label": "Search help on an error message (an error code works too)"
   }
 }
