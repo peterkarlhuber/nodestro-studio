@@ -56,7 +56,7 @@ export function rememberedSecretsToReenter(): string[] {
 }
 
 /** The secrets to enter again, each with a link to the place where it is entered. Never shows a secret value. */
-export function SecretsToReenter({ labels, onDone }: { labels: string[]; onDone?: () => void }) {
+export function SecretsToReenter({ labels, onDone, text }: { labels: string[]; onDone?: () => void; text?: string }) {
   const { t } = useTranslation();
   const items = labels.map(secretToReenter).filter((item): item is SecretToReenter => item !== null);
   if (!items.length) return null;
@@ -66,7 +66,7 @@ export function SecretsToReenter({ labels, onDone }: { labels: string[]; onDone?
         <strong>
           <KeyRound size={14} aria-hidden /> {t("backup.reenter.title", { count: items.length })}
         </strong>
-        <span>{t("backup.reenter.text")}</span>
+        <span>{text ?? t("backup.reenter.text")}</span>
         <ul className="stack-sm">
           {items.map((item) => (
             <li key={`${item.kind}:${item.id}`} data-testid={`reenter-${item.kind}-${item.id}`}>

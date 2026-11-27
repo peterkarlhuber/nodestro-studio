@@ -103,6 +103,11 @@ Le raccolte raggruppano i file della conoscenza, ad es. «Contratti» o «Dati p
 
 I contenuti delle esecuzioni (file caricati, file di risultato, risultati e proposte degli agenti) entrano nella conoscenza solo dopo la tua conferma, vedi [Inserire nella conoscenza](/docs/datei-eingaben#knowledge-uebernahme). Questi file mostrano in *Provenienza* da quale workflow, passaggio ed esecuzione provengono e se il contenuto è estratto, generato o un’ipotesi.
 
+## Raccolte come file {#sammlung-austausch}
+<!-- keywords: raccolta, esportare, importare, zip, nodestro-collection, spostare, altro spazio di lavoro -->
+
+Seleziona una raccolta con il suo chip e fai clic su **Esporta raccolta**: Nodestro salva i suoi documenti con le impostazioni di ricerca in un file ZIP (`nodestro-collection/1`). **Importa…** porta un file di questo tipo in un altro spazio di lavoro come nuova raccolta; puoi darle un altro nome. L'anteprima elenca i documenti, rifiuta un file danneggiato o non sicuro e avvisa quando la raccolta contiene già dei file. I documenti vengono indicizzati di nuovo con il modello di embedding di questo spazio di lavoro; l'indice di ricerca e i dati di provenienza del file non vengono mai ripresi, e le impostazioni di questo spazio di lavoro restano invariate.
+
 ## Gestire i file {#verwalten}
 <!-- keywords: modificare descrizione, eliminare, gestire, rimuovere -->
 

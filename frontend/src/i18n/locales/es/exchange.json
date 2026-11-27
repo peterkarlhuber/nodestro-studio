@@ -1,0 +1,59 @@
+{
+  "import": "Importar…",
+  "export": "Exportar",
+  "exportCollection": "Exportar colección",
+  "choose": "Elegir archivo",
+  "apply": "Importar",
+  "recheck": "Comprobar de nuevo",
+  "done": "Listo",
+  "entries": "Entradas del archivo",
+  "needsSecret": "Secreto por introducir",
+  "title": {
+    "mcp": "Importar servicios MCP",
+    "connections": "Importar conexiones de servicio",
+    "collection": "Importar una colección de conocimiento"
+  },
+  "intro": {
+    "mcp": "Elige un archivo {{format}}. Nodestro muestra primero lo que contiene; no se guarda nada hasta que lo confirmes. Los servicios importados quedan desactivados, sin token y sin herramientas aprobadas.",
+    "connections": "Elige un archivo {{format}}. Nodestro muestra primero lo que contiene; no se guarda nada hasta que lo confirmes. Las conexiones importadas no tienen secreto y aún no están comprobadas.",
+    "collection": "Elige un archivo {{format}} (ZIP). Nodestro lo comprueba primero y muestra sus documentos; no se guarda nada hasta que lo confirmes. Los documentos se indexan de nuevo aquí; los ajustes de este espacio de trabajo no cambian."
+  },
+  "status": {
+    "ready": "Listo",
+    "refused": "Rechazado",
+    "created": "Importado",
+    "exists": "Ya existe"
+  },
+  "preview": {
+    "summary_one": "El archivo contiene {{count}} entrada, {{refused}} rechazadas.",
+    "summary_other": "El archivo contiene {{count}} entradas, {{refused}} rechazadas.",
+    "empty": "El archivo no contiene entradas.",
+    "refused_one": "{{count}} entrada no se puede importar. Una importación guarda todas las entradas o ninguna: corrige el archivo y elígelo de nuevo.",
+    "refused_other": "{{count}} entradas no se pueden importar. Una importación guarda todas las entradas o ninguna: corrige el archivo y elígelo de nuevo.",
+    "secrets": "Los secretos nunca forman parte del archivo. Tras la importación, introdúcelos de nuevo donde se necesiten."
+  },
+  "result": {
+    "summary_one": "{{count}} entrada importada.",
+    "summary_other": "{{count}} entradas importadas."
+  },
+  "collection": {
+    "name": "Colección",
+    "nameHint": "La colección a la que van los documentos; vacío: el nombre del archivo.",
+    "exists": "La colección {{name}} ya tiene archivos. Elige otro nombre y comprueba de nuevo.",
+    "embeddingSame": "El archivo se indexó con el mismo modelo de embeddings; aun así, los documentos se indexan de nuevo aquí.",
+    "embeddingOther": "Los documentos se indexan de nuevo con el modelo de embeddings de este espacio de trabajo."
+  },
+  "leftOut": {
+    "title": "Nunca se adopta:",
+    "enabled": "activado",
+    "tool_approvals": "aprobaciones de herramientas",
+    "secrets": "secretos",
+    "vectors": "índice de búsqueda",
+    "provenance": "datos de origen"
+  },
+  "reenter": "Las entradas importadas nunca traen sus secretos. Introdúcelos de nuevo donde se necesiten; hasta entonces, las entradas no funcionan.",
+  "help": {
+    "title": "Archivos de intercambio",
+    "summary": "Los archivos de intercambio llevan servicios MCP, conexiones de servicio, colecciones de conocimiento y flujos de trabajo de un espacio de trabajo a otro. Nunca contienen secretos, y una importación muestra una vista previa antes de guardar nada."
+  }
+}

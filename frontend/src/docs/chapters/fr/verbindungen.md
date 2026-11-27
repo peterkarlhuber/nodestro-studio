@@ -36,3 +36,13 @@ Les secrets sont enregistrés chiffrés, comme les jetons d’accès des service
 <!-- keywords: agent, inspecteur, paramètres de l’outil, choix de la connexion -->
 
 Quand vous attribuez un outil intégré qui exige une connexion, l’inspecteur de l’agent affiche sous les outils un choix avec les connexions du bon type (voir [Attribuer des outils](/docs/agenten#tools)). Sans connexion choisie, la vérification de l’agent signale une erreur. Le modèle ne voit jamais la connexion, ses paramètres ni son secret ; il voit seulement l’outil.
+
+## Fichiers d’échange {#austausch}
+<!-- keywords: échange, importer, exporter, fichier, nodestro-mcp, nodestro-connection, déplacer, autre espace de travail, aperçu -->
+
+**Exporter** sous *Outils → Services connectés* et *Outils → Connexions* enregistre tous les services MCP ou toutes les connexions dans un fichier (`nodestro-mcp/1`, `nodestro-connection/1`) ; **Importer…** apporte un tel fichier dans un autre espace de travail. Les deux nécessitent des droits d’administration.
+
+- Un import affiche d’abord un **aperçu** : chaque entrée du fichier, si elle peut être importée et, sinon, pourquoi. Rien n’est enregistré avant que vous cliquiez sur **Importer**. Un import enregistre toutes les entrées ou aucune.
+- **Les secrets ne font jamais partie du fichier** : ni jetons, ni connexions de compte, ni mots de passe, ni clés. Un export qui en contiendrait un est refusé et indique le champ de paramètres. Après un import, la boîte de dialogue liste les entrées dont vous devez saisir à nouveau le secret, chacune avec un lien.
+- Les services importés sont désactivés et n’ont aucun outil approuvé ; examinez leurs outils comme pour un nouveau service. Les connexions importées ne sont pas encore vérifiées.
+- Un fichier d’une version plus récente de Nodestro est refusé ; mettez d’abord Nodestro à jour.

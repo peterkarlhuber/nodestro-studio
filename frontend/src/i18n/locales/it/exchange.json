@@ -1,0 +1,59 @@
+{
+  "import": "Importa…",
+  "export": "Esporta",
+  "exportCollection": "Esporta raccolta",
+  "choose": "Scegli file",
+  "apply": "Importa",
+  "recheck": "Controlla di nuovo",
+  "done": "Fatto",
+  "entries": "Voci del file",
+  "needsSecret": "Segreto da inserire",
+  "title": {
+    "mcp": "Importa servizi MCP",
+    "connections": "Importa connessioni ai servizi",
+    "collection": "Importa una raccolta di conoscenza"
+  },
+  "intro": {
+    "mcp": "Scegli un file {{format}}. Nodestro mostra prima che cosa contiene; non viene salvato nulla prima della tua conferma. I servizi importati sono disattivati, senza token e senza strumenti approvati.",
+    "connections": "Scegli un file {{format}}. Nodestro mostra prima che cosa contiene; non viene salvato nulla prima della tua conferma. Le connessioni importate non hanno segreti e non sono ancora verificate.",
+    "collection": "Scegli un file {{format}} (ZIP). Nodestro lo controlla prima e mostra i suoi documenti; non viene salvato nulla prima della tua conferma. I documenti vengono indicizzati di nuovo qui; le impostazioni di questo spazio di lavoro restano invariate."
+  },
+  "status": {
+    "ready": "Pronto",
+    "refused": "Rifiutato",
+    "created": "Importato",
+    "exists": "Già presente"
+  },
+  "preview": {
+    "summary_one": "Il file contiene {{count}} voce, di cui {{refused}} rifiutate.",
+    "summary_other": "Il file contiene {{count}} voci, di cui {{refused}} rifiutate.",
+    "empty": "Il file non contiene voci.",
+    "refused_one": "{{count}} voce non può essere importata. Un'importazione salva tutte le voci o nessuna: correggi il file e sceglilo di nuovo.",
+    "refused_other": "{{count}} voci non possono essere importate. Un'importazione salva tutte le voci o nessuna: correggi il file e sceglilo di nuovo.",
+    "secrets": "I segreti non fanno mai parte del file. Dopo l'importazione, inseriscili di nuovo dove servono."
+  },
+  "result": {
+    "summary_one": "{{count}} voce importata.",
+    "summary_other": "{{count}} voci importate."
+  },
+  "collection": {
+    "name": "Raccolta",
+    "nameHint": "La raccolta in cui vanno i documenti; vuoto: il nome contenuto nel file.",
+    "exists": "La raccolta {{name}} contiene già dei file. Scegli un altro nome, poi controlla di nuovo.",
+    "embeddingSame": "Il file è stato indicizzato con lo stesso modello di embedding; i documenti vengono comunque indicizzati di nuovo qui.",
+    "embeddingOther": "I documenti vengono indicizzati di nuovo con il modello di embedding di questo spazio di lavoro."
+  },
+  "leftOut": {
+    "title": "Mai ripreso:",
+    "enabled": "attivato",
+    "tool_approvals": "approvazioni degli strumenti",
+    "secrets": "segreti",
+    "vectors": "indice di ricerca",
+    "provenance": "dati di provenienza"
+  },
+  "reenter": "Le voci importate non portano mai con sé i loro segreti. Inseriscili di nuovo dove servono; fino ad allora le voci non funzionano.",
+  "help": {
+    "title": "File di scambio",
+    "summary": "I file di scambio portano servizi MCP, connessioni ai servizi, raccolte di conoscenza e workflow da uno spazio di lavoro all'altro. Non contengono mai segreti, e un'importazione mostra un'anteprima prima di salvare qualcosa."
+  }
+}

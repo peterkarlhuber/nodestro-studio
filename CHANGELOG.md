@@ -8,6 +8,24 @@
   directories (`chmod go-w`; they are writable by every user there), because the runtime now imports the OCR
   integration only on a closed import path. About one second per job; no new job.
 
+### Welle 6: import dialogs for the exchange formats, the workflow file format, help coverage (N-14, ST-068)
+
+- **Exchange files** (N-14, nodestro-api `docs/exchange.md`): **Export** and **Import…** for MCP services
+  (`nodestro-mcp/1`, admin), service connections (`nodestro-connection/1`, admin) and a knowledge collection
+  (`nodestro-collection/1`, ZIP; export of the selected collection, import with `edit`). An import always previews
+  first (dry run): every entry with its state, the reason of a refused entry in words, what is never taken over, for a
+  collection the target name (checked again after a rename), an existing collection and the embedding note. Only after
+  **Import** is it applied, all entries or none; afterwards the secrets to enter again are listed by label with a link
+  (never a value). `exchange.*` codes have sentences of their own. `components/ExchangeDialog.tsx`, `api/exchange.ts`.
+- Workflow export writes `"format": "nodestro-workflow/1"` first; files of earlier releases without it still import.
+- ST-068 step 5 (partly): the shared help gets the studio's entry `studio.exchange` and the families the package does
+  not map yet (`exchange`, `axentra`, `connect`, `validate`, `data`); the exchange dialogs use the package's `HelpTip`.
+  `lib/helpCoverage.test.ts` checks that every code of the API's error catalog has a help entry in all six languages,
+  against `lib/apiErrorCodes.json`, a copy of the pinned nodestro-api's list (`scripts/api_error_codes.py`;
+  `tests/test_api_error_codes.py` fails when it is out of date).
+- Texts in six languages, in-app docs (`verbindungen#austausch`, `wissen#sammlung-austausch`,
+  `workflows#import-export`), unit tests and an export/import step in the `mcp` browser suite. No CI change.
+
 ### Welle 5 lock: exchange formats, extension isolation and the PDF fix (2026-11-27)
 
 - Lock: nodestro-runtime fb5ef1a (N-14 exchange formats #222, N-22 extension isolation #221 and #224), nodestro-api

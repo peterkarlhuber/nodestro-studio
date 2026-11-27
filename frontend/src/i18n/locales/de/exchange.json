@@ -1,0 +1,59 @@
+{
+  "import": "Importieren…",
+  "export": "Exportieren",
+  "exportCollection": "Sammlung exportieren",
+  "choose": "Datei wählen",
+  "apply": "Importieren",
+  "recheck": "Erneut prüfen",
+  "done": "Fertig",
+  "entries": "Einträge der Datei",
+  "needsSecret": "Geheimnis eingeben",
+  "title": {
+    "mcp": "MCP-Dienste importieren",
+    "connections": "Dienstverbindungen importieren",
+    "collection": "Wissenssammlung importieren"
+  },
+  "intro": {
+    "mcp": "Wähle eine {{format}}-Datei. Nodestro zeigt zuerst, was sie enthält; gespeichert wird erst nach deiner Bestätigung. Importierte Dienste sind ausgeschaltet, haben kein Token und keine freigegebenen Tools.",
+    "connections": "Wähle eine {{format}}-Datei. Nodestro zeigt zuerst, was sie enthält; gespeichert wird erst nach deiner Bestätigung. Importierte Verbindungen haben kein Geheimnis und sind noch nicht geprüft.",
+    "collection": "Wähle eine {{format}}-Datei (ZIP). Nodestro prüft sie zuerst und zeigt ihre Dokumente; gespeichert wird erst nach deiner Bestätigung. Die Dokumente werden hier neu indexiert; die Einstellungen dieses Arbeitsbereichs bleiben, wie sie sind."
+  },
+  "status": {
+    "ready": "Bereit",
+    "refused": "Abgelehnt",
+    "created": "Importiert",
+    "exists": "Schon vorhanden"
+  },
+  "preview": {
+    "summary_one": "Die Datei enthält {{count}} Eintrag, davon {{refused}} abgelehnt.",
+    "summary_other": "Die Datei enthält {{count}} Einträge, davon {{refused}} abgelehnt.",
+    "empty": "Die Datei enthält keine Einträge.",
+    "refused_one": "{{count}} Eintrag kann nicht importiert werden. Ein Import speichert alle Einträge oder keinen: Korrigiere die Datei und wähle sie erneut.",
+    "refused_other": "{{count}} Einträge können nicht importiert werden. Ein Import speichert alle Einträge oder keinen: Korrigiere die Datei und wähle sie erneut.",
+    "secrets": "Geheimnisse sind nie Teil der Datei. Gib sie nach dem Import dort neu ein, wo sie gebraucht werden."
+  },
+  "result": {
+    "summary_one": "{{count}} Eintrag importiert.",
+    "summary_other": "{{count}} Einträge importiert."
+  },
+  "collection": {
+    "name": "Sammlung",
+    "nameHint": "Die Sammlung, in die die Dokumente kommen; leer: der Name aus der Datei.",
+    "exists": "Die Sammlung {{name}} enthält bereits Dateien. Wähle einen anderen Namen und prüfe erneut.",
+    "embeddingSame": "Die Datei wurde mit demselben Embedding-Modell indexiert; die Dokumente werden hier trotzdem neu indexiert.",
+    "embeddingOther": "Die Dokumente werden mit dem Embedding-Modell dieses Arbeitsbereichs neu indexiert."
+  },
+  "leftOut": {
+    "title": "Nie übernommen:",
+    "enabled": "eingeschaltet",
+    "tool_approvals": "Tool-Freigaben",
+    "secrets": "Geheimnisse",
+    "vectors": "Suchindex",
+    "provenance": "Herkunftsangaben"
+  },
+  "reenter": "Importierte Einträge bringen ihre Geheimnisse nie mit. Gib sie dort neu ein, wo sie gebraucht werden; bis dahin funktionieren die Einträge nicht.",
+  "help": {
+    "title": "Austauschdateien",
+    "summary": "Austauschdateien bringen MCP-Dienste, Dienstverbindungen, Wissenssammlungen und Workflows von einem Arbeitsbereich in einen anderen. Sie enthalten nie Geheimnisse, und ein Import zeigt zuerst eine Vorschau, bevor etwas gespeichert wird."
+  }
+}

@@ -6,7 +6,7 @@ import { changedOnServer } from "../editor/SaveConflictDialog";
 import { initialAccess, isDowngrade, urlProblem } from "../pages/ToolsServices";
 import { collapseFieldErrors, fieldLabels, fieldPath } from "../publish/RequestProblems";
 import { baseUrlFrom, pythonLiteral, pythonSdk, typescriptSdk } from "../publish/sdkSnippets";
-import { nameFromFile, workflowFileProblem } from "./workflowFile";
+import { WORKFLOW_FORMAT, nameFromFile, workflowExport, workflowFileProblem } from "./workflowFile";
 
 describe("workflow import check (AD-08)", () => {
   it("refuses what is not a workflow export and accepts an export", () => {
@@ -16,6 +16,16 @@ describe("workflow import check (AD-08)", () => {
     expect(workflowFileProblem({ nodes: [{ id: "a", type: "agent" }], edges: {} })).toEqual({ code: "edges_invalid" });
     expect(workflowFileProblem({ nodes: [{ id: "a", type: "agent" }], edges: [{ source: "a" }] })).toEqual({ code: "edge_invalid", index: 1 });
     expect(workflowFileProblem({ name: "X", nodes: [{ id: "a", type: "start" }], edges: [{ id: "e", source: "a", target: "a" }] })).toBeNull();
+  });
+
+  it("writes the exchange format first and still imports files of earlier releases (N-14)", () => {
+    const file = workflowExport({ name: "X", nodes: [{ id: "a", type: "start" }], edges: [] });
+    expect(Object.keys(file)[0]).toBe("format");
+    expect(file.format).toBe("nodestro-workflow/1");
+    expect(WORKFLOW_FORMAT).toBe("nodestro-workflow/1");
+    expect(workflowFileProblem(JSON.parse(JSON.stringify(file)))).toBeNull();
+    // A file without "format" (an export of an earlier release) is still a workflow export.
+    expect(workflowFileProblem({ name: "Old", nodes: [{ id: "a", type: "start" }] })).toBeNull();
   });
 
   it("names a workflow without a name after its file", () => {

@@ -103,6 +103,11 @@ Las colecciones agrupan archivos de conocimiento, p. ej. «Contratos» o «Datos
 
 El contenido de ejecuciones (archivos subidos, archivos de resultado, resultados y propuestas de agentes) solo llega al conocimiento tras tu confirmación, ver [Incorporar al conocimiento](/docs/datei-eingaben#knowledge-uebernahme). Esos archivos muestran en *Procedencia* de qué flujo de trabajo, paso y ejecución proceden y si el contenido fue extraído, generado o es una suposición.
 
+## Colecciones como archivo {#sammlung-austausch}
+<!-- keywords: colección, exportar, importar, zip, nodestro-collection, mover, otro espacio de trabajo -->
+
+Selecciona una colección con su chip y haz clic en **Exportar colección**: Nodestro guarda sus documentos con los ajustes de búsqueda como archivo ZIP (`nodestro-collection/1`). **Importar…** lleva ese archivo a otro espacio de trabajo como colección nueva; puedes darle otro nombre. La vista previa lista los documentos, rechaza un archivo dañado o no seguro y avisa si la colección ya tiene archivos. Los documentos se indexan de nuevo con el modelo de embeddings de este espacio de trabajo; el índice de búsqueda y los datos de origen del archivo nunca se adoptan, y los ajustes de este espacio de trabajo no cambian.
+
 ## Gestionar archivos {#verwalten}
 <!-- keywords: editar descripción, eliminar, gestionar, quitar -->
 

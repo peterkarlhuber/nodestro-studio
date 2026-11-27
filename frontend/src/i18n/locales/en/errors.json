@@ -1368,5 +1368,28 @@
     "busy": "Runs or other background work are still active. Wait until they have finished, then delete again.",
     "deleting": "All data is being deleted right now, so nothing can start. Start it again afterwards.",
     "not_confirmed": "Deleting all data must be confirmed with the exact text."
+  },
+  "exchange": {
+    "checksum": "{{name}} in the file is damaged (its checksum does not match). Export the collection again.",
+    "collection_exists": "The collection {{name}} already has files. Choose another name for the import.",
+    "collection_name_invalid": "This collection name cannot be used. Choose another name.",
+    "collection_not_found": "There is no collection {{name}} with files to export.",
+    "content_invalid": "The content of the file is not valid: {{problems}}.",
+    "content_invalid_plain": "The content of the file is not valid.",
+    "format_invalid": "This is not a Nodestro exchange file of the expected kind ({{expected}}).",
+    "format_mismatch": "This file holds {{found}}, not {{expected}}. Import it in the matching place.",
+    "incomplete": "The file is incomplete: a document it lists is missing.",
+    "invalid_json": "The file is not valid JSON.",
+    "items_refused": "Entries of the file cannot be imported (refused: {{refused}}), so nothing was stored. The preview names them and why.",
+    "items_refused_plain": "Entries of the file cannot be imported, so nothing was stored. The preview names them.",
+    "secret_detected": "The export would contain a secret ({{places}}), so it was not written. Remove the secret from these settings and export again.",
+    "too_large": "The file is too large (at most {{limit}}).",
+    "too_large_plain": "The file is too large.",
+    "too_many_entries": "The file has too many entries (at most {{limit}}).",
+    "unexpected_file": "The file contains an unexpected entry ({{name}}) and is not used.",
+    "unsafe_path": "The file contains an unsafe path ({{name}}) and is not used.",
+    "version_newer": "The file comes from a newer Nodestro version (version {{version}}; this one reads up to version {{supported}}). Update Nodestro first.",
+    "zip_bomb": "{{name}} in the file would unpack to far more than its size, so the file is not used.",
+    "zip_invalid": "The file is not a readable ZIP file."
   }
 }
