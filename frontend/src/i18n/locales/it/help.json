@@ -100,6 +100,7 @@
     "space": "Uno spazio di memoria è un file system a sé in /memories. Gli agenti con memoria «Permanente» e questo spazio leggono e scrivono qui.",
     "clear": "Elimina definitivamente tutti i file dello spazio. In seguito gli agenti ripartono senza ricordi.",
     "newFile": "Crea un file vuoto in /memories, ad es. clienti/preferenze.md. Gli agenti lo trovano all’esecuzione successiva.",
+    "origin": "Ogni voce mostra la dimensione, chi l’ha scritta per ultimo e quando: un agente (il suo strumento di memoria), tu (salvato qui) o un’importazione. Le voci più vecchie non hanno un’origine. Qui puoi correggere o eliminare qualsiasi voce.",
     "consents": "Su un server, un workflow condiviso può usare il tuo spazio di memoria solo dopo che hai consentito esattamente il suo contenuto attuale: il workflow e ogni workflow che avvia. Se uno di essi cambia, serve di nuovo il tuo consenso. Puoi ritirare un consenso in qualsiasi momento."
   },
   "runs": {

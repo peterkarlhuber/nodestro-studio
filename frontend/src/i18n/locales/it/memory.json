@@ -18,6 +18,14 @@
   "clearText": "Tutti i file di «{{name}}» verranno eliminati. In seguito gli agenti ripartono senza ricordi.",
   "deleteFile": "Elimina file",
   "contentOf": "Contenuto di {{path}}",
+  "entries": "Voci",
+  "origin": {
+    "label": "Origine",
+    "tool": "scritto da un agente",
+    "user": "scritto da te",
+    "import": "importato",
+    "unknown": "origine sconosciuta"
+  },
   "consents": {
     "title": "Consensi per workflow condivisi",
     "intro": "I workflow che usano uno dei tuoi spazi di memoria hanno bisogno del tuo consenso per esattamente il loro contenuto attuale. Un workflow modificato ha bisogno di un nuovo consenso.",

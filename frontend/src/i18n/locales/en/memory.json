@@ -18,6 +18,14 @@
   "clearText": "All files in “{{name}}” will be deleted. Agents then start without memories.",
   "deleteFile": "Delete file",
   "contentOf": "Content of {{path}}",
+  "entries": "Entries",
+  "origin": {
+    "label": "Origin",
+    "tool": "written by an agent",
+    "user": "written by you",
+    "import": "imported",
+    "unknown": "origin unknown"
+  },
   "consents": {
     "title": "Consents for shared workflows",
     "intro": "Workflows that use one of your memory spaces need your consent for exactly their current content. A changed workflow needs a new consent.",

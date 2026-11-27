@@ -41,6 +41,7 @@ La page **Mémoire** affiche tous les espaces avec le nombre et la taille de leu
 
 - **Voir et modifier un fichier :** choisissez le fichier, modifiez le texte, **Enregistrer**.
 - **Créer un fichier :** saisissez un chemin (par exemple `clients/preferences.md`) ; il est créé sous `/memories`.
+- **Origine et heure :** chaque fichier indique qui l’a écrit en dernier et quand : un agent (avec son outil de mémoire), vous (enregistré sur cette page) ou une importation. Les fichiers antérieurs affichent « origine inconnue ». Si vous enregistrez un fichier ici, vous en êtes l’origine ; les agents n’écrivent jamais en votre nom.
 - **Supprimer un fichier :** symbole de corbeille à côté du chemin.
 - **Vider un espace :** supprime définitivement tous les fichiers de l’espace après confirmation. Au-dessus des fichiers, **Utilisé dans** indique quels agents et API publiées utilisent l’espace ; la confirmation les cite aussi.
 

@@ -41,6 +41,7 @@ La pagina **Memoria** mostra tutti gli spazi con numero e dimensione dei file. S
 
 - **Vedere e modificare un file:** scegli il file, modifica il testo, **Salva**.
 - **Creare un file:** inserisci un percorso (per esempio `clienti/preferenze.md`); viene creato in `/memories`.
+- **Origine e ora:** ogni file mostra chi l’ha scritto per ultimo e quando: un agente (con il suo strumento di memoria), tu (salvato in questa pagina) o un’importazione. I file precedenti mostrano “origine sconosciuta”. Se salvi un file qui, l’origine sei tu; gli agenti non scrivono mai a tuo nome.
 - **Eliminare un file:** simbolo del cestino accanto al percorso.
 - **Svuotare uno spazio:** elimina definitivamente tutti i file dello spazio dopo conferma. Sopra i file, **Usato in** mostra quali agenti e API pubblicate usano lo spazio; anche la conferma li indica.
 

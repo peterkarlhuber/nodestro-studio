@@ -18,6 +18,14 @@
   "clearText": "Tous les fichiers de « {{name}} » seront supprimés. Les agents repartent ensuite sans souvenirs.",
   "deleteFile": "Supprimer le fichier",
   "contentOf": "Contenu de {{path}}",
+  "entries": "Entrées",
+  "origin": {
+    "label": "Origine",
+    "tool": "écrit par un agent",
+    "user": "écrit par vous",
+    "import": "importé",
+    "unknown": "origine inconnue"
+  },
   "consents": {
     "title": "Consentements pour les workflows partagés",
     "intro": "Les workflows qui utilisent l’un de vos espaces de mémoire ont besoin de votre consentement pour exactement leur contenu actuel. Un workflow modifié a besoin d’un nouveau consentement.",
