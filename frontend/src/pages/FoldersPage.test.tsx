@@ -184,6 +184,54 @@ describe("FoldersPage", () => {
     expect(screen.getByTestId("folder-path")).toHaveValue("/Users/alex/Contracts");
   });
 
+  it("shows the state of each grant's search index, never a file name", async () => {
+    const indexed = (id: string, index_state: FolderGrantView["index_state"]): FolderGrantView => ({
+      ...VIEW,
+      folder: { ...VIEW.folder, id, name: `Folder ${id}`, index: true },
+      index_state,
+    });
+    serve(true, (url, init) =>
+      url === "/api/folders" && (init?.method ?? "GET") === "GET"
+        ? json([
+            VIEW,
+            indexed("fld_r", { state: "ready", files: 12, chunks: 40, skipped: 1, last_indexed_at: "2026-11-27T08:00:00Z", code: null }),
+            indexed("fld_i", { state: "indexing", files: 0, chunks: 0, skipped: 0, last_indexed_at: null, code: null }),
+            indexed("fld_b", { state: "budget_exceeded", files: 2000, chunks: 50000, skipped: 0, last_indexed_at: "2026-11-27T08:00:00Z", code: null }),
+            indexed("fld_f", { state: "failed", files: 0, chunks: 0, skipped: 0, last_indexed_at: null, code: "fs.root_changed" }),
+            { ...indexed("fld_x", { state: "off" }), status: "revoked" },
+          ])
+        : undefined,
+    );
+    show(<FoldersPage />);
+    const ready = await screen.findByTestId("folder-index-fld_r");
+    expect(ready).toHaveTextContent("Index bereit");
+    expect(ready).toHaveTextContent("12 Dateien indexiert (40 Abschnitte)");
+    expect(ready).toHaveTextContent("1 Datei übersprungen");
+    expect(screen.getByTestId("folder-index-fld_i")).toHaveTextContent("Wird indexiert");
+    expect(screen.getByTestId("folder-index-fld_b")).toHaveTextContent("Index unvollständig");
+    expect(screen.getByTestId("folder-index-fld_b")).toHaveTextContent("an einer Grenze ausgelassen");
+    expect(screen.getByTestId("folder-index-fld_f")).toHaveTextContent("Index fehlgeschlagen");
+    expect(screen.getByTestId("folder-index-fld_f")).toHaveTextContent("verschoben oder durch einen anderen Ordner ersetzt");
+    expect(screen.getByTestId("folder-index-fld_x")).toHaveTextContent("Kein Index");
+    // A grant without an index shows nothing about one.
+    expect(screen.queryByTestId("folder-index-fld_1")).not.toBeInTheDocument();
+  });
+
+  it("grants a folder with a search index only when it is turned on", async () => {
+    const fetch = serve(true, (url, init) => (url === "/api/folders" && init?.method === "POST" ? json(VIEW, 201) : undefined));
+    show(<FoldersPage />);
+    await userEvent.click(await screen.findByTestId("folder-grant-open"));
+    const index = screen.getByRole("switch", { name: /Suchindex anlegen/ });
+    expect(index).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(index);
+    await userEvent.type(screen.getByTestId("folder-name"), "Contracts");
+    await userEvent.type(screen.getByTestId("folder-path"), "/Users/alex/Contracts");
+    await userEvent.click(screen.getByTestId("folder-grant-submit"));
+    await waitFor(() => expect(fetch.mock.calls.some(([url, init]) => url === "/api/folders" && init?.method === "POST")).toBe(true));
+    const posted = fetch.mock.calls.find(([url, init]) => url === "/api/folders" && init?.method === "POST");
+    expect(JSON.parse(String(posted?.[1]?.body)).index).toBe(true);
+  });
+
   it("revokes an active grant after a confirmation", async () => {
     const fetch = serve(true);
     show(<FoldersPage />);
@@ -238,7 +286,7 @@ describe("FoldersLink", () => {
 describe("grantBody", () => {
   it("sends one pattern or agent per line and names agents only for that scope", () => {
     expect(lines(" *.pdf \n\nreports/**\n")).toEqual(["*.pdf", "reports/**"]);
-    expect(grantBody({ ...EMPTY_DRAFT, name: " A ", path: " /x ", agents: "wf_1/a" })).toMatchObject({ name: "A", path: "/x", agents: [], expires_at: null });
+    expect(grantBody({ ...EMPTY_DRAFT, name: " A ", path: " /x ", agents: "wf_1/a" })).toMatchObject({ name: "A", path: "/x", agents: [], expires_at: null, index: false });
     expect(grantBody({ ...EMPTY_DRAFT, scope: "agents", agents: "wf_1/a\nwf_2/b" }).agents).toEqual(["wf_1/a", "wf_2/b"]);
     expect(grantBody({ ...EMPTY_DRAFT, expires: "2030-01-02T03:04" }).expires_at).toMatch(/^2030-01-0[12]T\d\d:04:00\.000Z$/);
   });

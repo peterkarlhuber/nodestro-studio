@@ -292,6 +292,25 @@
       "link": "(atalho)",
       "empty": "Esta pasta não tem subpastas.",
       "truncated": "Nem todas as pastas são mostradas. Abra uma subpasta ou digite o caminho."
+    },
+    "index": {
+      "toggle": "Manter um índice de busca",
+      "toggleHint": "Os agentes então buscam nos arquivos de texto e PDF da pasta pelo significado, não só pelas palavras. O índice é criado em segundo plano e removido assim que o compartilhamento termina.",
+      "states": {
+        "off": "Sem índice",
+        "indexing": "Indexando …",
+        "ready": "Índice pronto",
+        "budget_exceeded": "Índice incompleto",
+        "failed": "Falha no índice"
+      },
+      "counts_one": "{{count}} arquivo indexado ({{chunks}} trechos)",
+      "counts_other": "{{count}} arquivos indexados ({{chunks}} trechos)",
+      "skipped_one": "{{count}} arquivo ignorado",
+      "skipped_other": "{{count}} arquivos ignorados",
+      "at": "atualizado por último {{time}}",
+      "budget": "Alguns arquivos foram deixados de fora em um limite (o limite de arquivos do compartilhamento ou o limite de tamanho do índice). Uma busca só encontra o que está indexado.",
+      "failed": "Não foi possível ler a pasta.",
+      "offEnded": "O compartilhamento terminou, por isso o índice foi removido."
     }
   }
 }

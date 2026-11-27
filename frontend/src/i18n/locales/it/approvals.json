@@ -292,6 +292,25 @@
       "link": "(collegamento)",
       "empty": "Questa cartella non ha sottocartelle.",
       "truncated": "Non vengono mostrate tutte le cartelle. Apri una sottocartella o scrivi il percorso."
+    },
+    "index": {
+      "toggle": "Mantieni un indice di ricerca",
+      "toggleHint": "Gli agenti cercano allora nei file di testo e PDF della cartella per significato, non solo per parole. L’indice viene creato in background e rimosso appena la condivisione termina.",
+      "states": {
+        "off": "Nessun indice",
+        "indexing": "Indicizzazione …",
+        "ready": "Indice pronto",
+        "budget_exceeded": "Indice incompleto",
+        "failed": "Indice non riuscito"
+      },
+      "counts_one": "{{count}} file indicizzato ({{chunks}} passaggi)",
+      "counts_other": "{{count}} file indicizzati ({{chunks}} passaggi)",
+      "skipped_one": "{{count}} file saltato",
+      "skipped_other": "{{count}} file saltati",
+      "at": "ultimo aggiornamento {{time}}",
+      "budget": "Alcuni file sono stati esclusi a un limite (il limite di file della condivisione o il limite di dimensione dell’indice). Una ricerca trova solo ciò che è indicizzato.",
+      "failed": "Non è stato possibile leggere la cartella.",
+      "offEnded": "La condivisione è terminata, quindi il suo indice è stato rimosso."
     }
   }
 }

@@ -109,6 +109,8 @@ Quando sono attivate, un amministratore condivide una cartella **in lettura**: u
 
 La pagina mostra ogni condivisione con chi l’ha data e il suo stato. Il **registro degli accessi** mostra quale agente ha letto cosa, in quale esecuzione e se era consentito. **Revoca** termina una condivisione dal prossimo accesso.
 
+Con **Mantieni un indice di ricerca** (disattivato finché non lo attivi), Nodestro mantiene un indice dei file di testo e PDF della cartella, in cui gli agenti cercano per significato. L’elenco ne mostra lo stato: **Indicizzazione …**, **Indice pronto** con il numero di file e l’ora dell’ultimo aggiornamento, **Indice incompleto** se alcuni file sono stati esclusi a un limite, oppure **Indice non riuscito** con il motivo. Non nomina mai un file. Quando la condivisione termina, il suo indice viene rimosso.
+
 ## Contenuto protetto {#geschuetzte-inhalte}
 <!-- keywords: contenuto protetto, fonte condivisa, provenienza, modello cloud, permesso, uscita -->
 

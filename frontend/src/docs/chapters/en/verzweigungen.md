@@ -109,6 +109,8 @@ When they are on, an administrator grants a folder **for reading**: a name, the 
 
 The page lists every grant with who gave it and its state. The **access log** of a grant shows which agent read what, in which run, and whether it was allowed. **Revoke** ends a grant from the next access on.
 
+With **Keep a search index** (off unless you turn it on), Nodestro keeps a search index of the folder's text and PDF files that agents search by meaning. The list shows its state: **Indexing …**, **Index ready** with the number of files and the time of the last update, **Index incomplete** when files were left out at a limit, or **Index failed** with the reason. It never names a file. When the grant ends, its index is removed.
+
 ## Protected content {#geschuetzte-inhalte}
 <!-- keywords: protected content, granted source, provenance, cloud model, permission, egress -->
 

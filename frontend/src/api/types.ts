@@ -718,8 +718,24 @@ export interface FolderGrant {
   created_at: string;
 }
 
+/**
+ * The search index of a folder grant (N-12, nodestro-api FolderIndexInfo): its state and counts, never a file name.
+ * ``off``: no index, or the grant ended; ``budget_exceeded``: ready, but files were left out at a limit.
+ */
+export interface FolderIndexInfo {
+  state: "off" | "indexing" | "ready" | "failed" | "budget_exceeded";
+  files?: number;
+  chunks?: number;
+  skipped?: number;
+  last_indexed_at?: string | null;
+  /** Why it failed (an ``fs.*`` or ``folder.*`` code). */
+  code?: string | null;
+}
+
 /** A folder grant with the state of its access grant (nodestro_runtime.folder_grants.FolderGrantView). */
 export interface FolderGrantView {
+  /** The state of its search index; older APIs leave it out. */
+  index_state?: FolderIndexInfo;
   folder: FolderGrant;
   status: "active" | "revoked" | "expired";
   scope: AccessScope;
@@ -751,6 +767,8 @@ export interface FolderGrantIn {
   include?: string[];
   exclude?: string[];
   limits?: FolderLimits | null;
+  /** Keep a search index of the folder (N-12); ``search_files`` then searches it. */
+  index?: boolean;
   default_excludes?: boolean;
   scope?: "all" | "agents";
   /** ``<workflow id>/<node id>`` of each agent, with scope ``agents``. */

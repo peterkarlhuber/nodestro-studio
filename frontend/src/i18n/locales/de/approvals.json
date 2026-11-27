@@ -292,6 +292,25 @@
       "link": "(Verknüpfung)",
       "empty": "Dieser Ordner hat keine Unterordner.",
       "truncated": "Nicht alle Ordner werden gezeigt. Öffne einen Unterordner oder gib den Pfad ein."
+    },
+    "index": {
+      "toggle": "Suchindex anlegen",
+      "toggleHint": "Agenten durchsuchen die Text- und PDF-Dateien des Ordners dann nach Bedeutung, nicht nur nach Wörtern. Der Index entsteht im Hintergrund und wird entfernt, sobald die Freigabe endet.",
+      "states": {
+        "off": "Kein Index",
+        "indexing": "Wird indexiert …",
+        "ready": "Index bereit",
+        "budget_exceeded": "Index unvollständig",
+        "failed": "Index fehlgeschlagen"
+      },
+      "counts_one": "{{count}} Datei indexiert ({{chunks}} Abschnitte)",
+      "counts_other": "{{count}} Dateien indexiert ({{chunks}} Abschnitte)",
+      "skipped_one": "{{count}} Datei übersprungen",
+      "skipped_other": "{{count}} Dateien übersprungen",
+      "at": "zuletzt aktualisiert {{time}}",
+      "budget": "Einige Dateien wurden an einer Grenze ausgelassen (der Dateigrenze der Freigabe oder der Größengrenze des Index). Eine Suche findet nur, was indexiert ist.",
+      "failed": "Der Ordner ließ sich nicht lesen.",
+      "offEnded": "Die Freigabe ist beendet, deshalb wurde ihr Index entfernt."
     }
   }
 }

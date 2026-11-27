@@ -44,6 +44,8 @@ export interface GrantDraft {
   /** A local date and time from the input, or empty: until revoked. */
   expires: string;
   defaultExcludes: boolean;
+  /** Keep a search index of the folder (N-12); off unless the person turns it on. */
+  index: boolean;
 }
 
 export const EMPTY_DRAFT: GrantDraft = {
@@ -56,6 +58,7 @@ export const EMPTY_DRAFT: GrantDraft = {
   mode: "supervised",
   expires: "",
   defaultExcludes: true,
+  index: false,
 };
 
 /** The request body of a draft. The server checks the path, the patterns and the expiry. */
@@ -70,6 +73,7 @@ export function grantBody(draft: GrantDraft): FolderGrantIn {
     mode: draft.mode,
     expires_at: draft.expires ? new Date(draft.expires).toISOString() : null,
     default_excludes: draft.defaultExcludes,
+    index: draft.index,
   };
 }
 
@@ -214,6 +218,12 @@ function GrantForm() {
             <TextInput type="datetime-local" value={draft.expires} onChange={(event) => set("expires", event.target.value)} />
           </Field>
         </div>
+        <Toggle
+          checked={draft.index}
+          onChange={(value) => set("index", value)}
+          label={t("approvals.folders.index.toggle")}
+          description={t("approvals.folders.index.toggleHint")}
+        />
         <Toggle
           checked={draft.defaultExcludes}
           onChange={(value) => set("defaultExcludes", value)}
@@ -365,7 +375,13 @@ function FolderList() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [shown, setShown] = useState<string | null>(null);
-  const folders = useQuery({ queryKey: keys.folders, queryFn: api.folders, retry: false });
+  // While an index is being built, its state is read again every few seconds.
+  const folders = useQuery({
+    queryKey: keys.folders,
+    queryFn: api.folders,
+    retry: false,
+    refetchInterval: (query) => (query.state.data?.some((view) => view.index_state?.state === "indexing") ? 5_000 : false),
+  });
   const revoke = useMutation<FolderGrantView, Error, string>({
     mutationFn: (id) => api.revokeFolder(id),
     onSuccess: () => {
@@ -422,6 +438,7 @@ function FolderList() {
                             ? t("approvals.access.expires", { time: formatDate(view.expires_at) })
                             : t("approvals.access.untilRevoked")}
                       </span>
+                      <IndexState view={view} />
                     </td>
                     <td>
                       <div className="row-gap">
@@ -469,6 +486,31 @@ function FolderList() {
         </Callout>
       ) : null}
     </section>
+  );
+}
+
+const INDEX_TONE = { indexing: "running", ready: "success", budget_exceeded: "warning", failed: "danger", off: "idle" } as const;
+
+/** The state of a grant's search index (N-12): counts and an error code from the API, never a file name. */
+export function IndexState({ view }: { view: FolderGrantView }) {
+  const { t } = useTranslation();
+  const index = view.index_state;
+  // Without an index (or from an API that does not tell) nothing is shown; a grant with one that ended says "off".
+  if (!index || (index.state === "off" && !view.folder.index)) return null;
+  return (
+    <div className="small" data-testid={`folder-index-${view.folder.id}`} data-state={index.state}>
+      <Badge tone={INDEX_TONE[index.state]}>{t(`approvals.folders.index.states.${index.state}`)}</Badge>{" "}
+      {index.state === "ready" || index.state === "budget_exceeded" ? (
+        <span className="muted">
+          {t("approvals.folders.index.counts", { count: index.files ?? 0, chunks: index.chunks ?? 0 })}
+          {index.skipped ? ` · ${t("approvals.folders.index.skipped", { count: index.skipped })}` : ""}
+          {index.last_indexed_at ? ` · ${t("approvals.folders.index.at", { time: formatDate(index.last_indexed_at) })}` : ""}
+        </span>
+      ) : null}
+      {index.state === "budget_exceeded" ? <div className="muted">{t("approvals.folders.index.budget")}</div> : null}
+      {index.state === "failed" ? <div className="muted">{index.code ? problemText(t, { code: index.code }) : t("approvals.folders.index.failed")}</div> : null}
+      {index.state === "off" ? <div className="muted">{t("approvals.folders.index.offEnded")}</div> : null}
+    </div>
   );
 }
 

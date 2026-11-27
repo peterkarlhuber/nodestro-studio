@@ -109,6 +109,8 @@ Quando estão ativadas, um administrador compartilha uma pasta **para leitura**:
 
 A página mostra cada compartilhamento com quem o deu e o seu estado. O **registro de acessos** mostra qual agente leu o quê, em qual execução e se era permitido. **Revogar** encerra um compartilhamento a partir do próximo acesso.
 
+Com **Manter um índice de busca** (desligado até você ligar), o Nodestro mantém um índice dos arquivos de texto e PDF da pasta, no qual os agentes buscam pelo significado. A lista mostra o estado dele: **Indexando …**, **Índice pronto** com o número de arquivos e a hora da última atualização, **Índice incompleto** quando arquivos foram deixados de fora em um limite, ou **Falha no índice** com o motivo. Ela nunca nomeia um arquivo. Quando o compartilhamento termina, o índice é removido.
+
 ## Conteúdo protegido {#geschuetzte-inhalte}
 <!-- keywords: conteúdo protegido, fonte compartilhada, procedência, modelo na nuvem, permissão, saída -->
 

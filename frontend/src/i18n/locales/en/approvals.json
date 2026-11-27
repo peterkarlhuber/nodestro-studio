@@ -292,6 +292,25 @@
       "link": "(link)",
       "empty": "This folder has no sub-folders.",
       "truncated": "Not every folder is shown. Open a sub-folder or type the path."
+    },
+    "index": {
+      "toggle": "Keep a search index",
+      "toggleHint": "Agents then search the folder's text and PDF files by meaning, not only by words. The index is built in the background and removed as soon as the grant ends.",
+      "states": {
+        "off": "No index",
+        "indexing": "Indexing …",
+        "ready": "Index ready",
+        "budget_exceeded": "Index incomplete",
+        "failed": "Index failed"
+      },
+      "counts_one": "{{count}} file indexed ({{chunks}} passages)",
+      "counts_other": "{{count}} files indexed ({{chunks}} passages)",
+      "skipped_one": "{{count}} file skipped",
+      "skipped_other": "{{count}} files skipped",
+      "at": "last updated {{time}}",
+      "budget": "Some files were left out at a limit (the grant's file limit or the size limit of the index). A search finds only what is indexed.",
+      "failed": "The folder could not be read.",
+      "offEnded": "The grant ended, so its index was removed."
     }
   }
 }

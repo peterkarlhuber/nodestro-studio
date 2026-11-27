@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Welle 5: the search index state of granted folders (N-12 follow-up, 2026-11-27)
+
+- Paired lock: nodestro-api `claude/w5-index-state` (c108071, api #182: `FolderGrantView.index_state`) and the SDK sync
+  (067d874, sdk #151); re-pin to the merge commits once they are merged.
+- Granted folders: **Keep a search index** when granting (off by default; sends `index: true`), and each grant shows
+  its index state from `index_state`: indexing (the list reads it again every 5 seconds while one is being built),
+  ready with files, passages, skipped files and the last update, incomplete (`budget_exceeded`) with what that means,
+  failed with the reason's sentence (its `fs.*` or `folder.*` code), and "no index" once the grant ended. Never a file
+  name. Texts in six languages, the in-app docs (`verzweigungen#ordner`), unit tests (`FoldersPage.test.tsx`) and the
+  `launch` browser test (a grant with an index becomes ready).
+
 ### Welle 5 studio UIs: memory consents, export and delete everything, secrets to re-enter, folder browser (2026-11-27)
 
 - **Consents for shared workflows** (RT-089d, api #179) on the Memory page, only for a member of a server (the

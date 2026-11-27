@@ -109,6 +109,8 @@ Sind sie an, gibt eine Administratorin oder ein Administrator einen Ordner **zum
 
 Die Seite zeigt jede Freigabe mit wer sie gegeben hat und ihrem Zustand. Das **Zugriffsprotokoll** einer Freigabe zeigt, welcher Agent was in welcher Ausführung gelesen hat und ob es erlaubt war. **Widerrufen** beendet eine Freigabe ab dem nächsten Zugriff.
 
+Mit **Suchindex anlegen** (aus, solange du es nicht einschaltest) hält Nodestro einen Suchindex der Text- und PDF-Dateien des Ordners, den Agenten nach Bedeutung durchsuchen. Die Liste zeigt seinen Zustand: **Wird indexiert …**, **Index bereit** mit der Zahl der Dateien und dem Zeitpunkt der letzten Aktualisierung, **Index unvollständig**, wenn Dateien an einer Grenze ausgelassen wurden, oder **Index fehlgeschlagen** mit dem Grund. Sie nennt nie eine Datei. Endet die Freigabe, wird ihr Index entfernt.
+
 ## Geschützter Inhalt {#geschuetzte-inhalte}
 <!-- keywords: geschützter inhalt, freigegebene quelle, herkunft, cloud-modell, erlaubnis, abfluss -->
 

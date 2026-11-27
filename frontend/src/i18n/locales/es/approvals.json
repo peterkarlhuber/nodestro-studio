@@ -292,6 +292,25 @@
       "link": "(enlace)",
       "empty": "Esta carpeta no tiene subcarpetas.",
       "truncated": "No se muestran todas las carpetas. Abre una subcarpeta o escribe la ruta."
+    },
+    "index": {
+      "toggle": "Mantener un índice de búsqueda",
+      "toggleHint": "Los agentes buscan entonces en los archivos de texto y PDF de la carpeta por significado, no solo por palabras. El índice se crea en segundo plano y se elimina en cuanto termina el uso compartido.",
+      "states": {
+        "off": "Sin índice",
+        "indexing": "Indexando …",
+        "ready": "Índice listo",
+        "budget_exceeded": "Índice incompleto",
+        "failed": "Índice fallido"
+      },
+      "counts_one": "{{count}} archivo indexado ({{chunks}} fragmentos)",
+      "counts_other": "{{count}} archivos indexados ({{chunks}} fragmentos)",
+      "skipped_one": "{{count}} archivo omitido",
+      "skipped_other": "{{count}} archivos omitidos",
+      "at": "actualizado por última vez {{time}}",
+      "budget": "Algunos archivos se omitieron al llegar a un límite (el límite de archivos del uso compartido o el límite de tamaño del índice). Una búsqueda solo encuentra lo indexado.",
+      "failed": "No se pudo leer la carpeta.",
+      "offEnded": "El uso compartido terminó, así que su índice se eliminó."
     }
   }
 }

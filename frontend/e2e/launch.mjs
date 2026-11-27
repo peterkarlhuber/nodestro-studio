@@ -8,8 +8,9 @@
 //   2. the studio sends the session's CSRF value with every change (copying an example works), reads need none;
 //   3. a request with the window's cookie but without the CSRF value changes nothing (another local program on
 //      another port gets the cookie from the browser, never the value);
-//   4. granted folders (N-10, N-11; NODESTRO_FOLDER_GRANTS=1 for this suite only): the folder browser lists the
-//      sub-folders of the home folder through the window's session, a chosen folder fills the path and is granted;
+//   4. granted folders (N-10, N-11, N-12; NODESTRO_FOLDER_GRANTS=1 for this suite only): the folder browser lists the
+//      sub-folders of the home folder through the window's session, a chosen folder fills the path and is granted
+//      with a search index, whose state the list shows until it is ready;
 //   5. the sign-out ends the window's session: the signed-out page replaces the studio and the API refuses the cookie;
 //      the launch link stays used.
 // Every other browser suite runs with the switches off: the studio works there as before.
@@ -117,9 +118,16 @@ try {
   const chosen = await page.getByTestId("folder-path").inputValue();
   check(chosen.endsWith(join(sharedName, "Vertraege")), `the chosen folder fills the path (${chosen})`);
   await page.getByTestId("folder-name").fill("Verträge");
+  await page.getByRole("switch", { name: /Suchindex anlegen/ }).click();
   await page.getByTestId("folder-grant-submit").click();
   await page.getByTestId("folders-list").getByText("Verträge", { exact: true }).waitFor();
   check(true, "the chosen folder is granted and listed");
+  // N-12: the list follows the index until it is ready (it reads the state again while one is being built).
+  const index = page.locator('[data-testid^="folder-index-"][data-state="ready"]');
+  await index.waitFor({ timeout: 60_000 });
+  check((await index.textContent()).includes("1 Datei indexiert"), `the search index is ready (${await index.textContent()})`);
+  check(!(await index.textContent()).includes("plan.txt"), "the index state names no file");
+  await shot(page, "1c-folder-index");
   check(changes.some((item) => item.path === "/api/folders/browse"), "browsing went through the window's session");
   check(changes.every((item) => item.csrf === stored.csrf), "browsing and granting carried the CSRF value");
 

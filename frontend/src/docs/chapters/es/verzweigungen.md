@@ -109,6 +109,8 @@ Cuando están activadas, un administrador comparte una carpeta **para lectura**:
 
 La página muestra cada carpeta compartida con quién la compartió y su estado. El **registro de accesos** muestra qué agente leyó qué, en qué ejecución y si estaba permitido. **Revocar** termina el permiso desde el próximo acceso.
 
+Con **Mantener un índice de búsqueda** (desactivado hasta que lo activas), Nodestro mantiene un índice de los archivos de texto y PDF de la carpeta, en el que los agentes buscan por significado. La lista muestra su estado: **Indexando …**, **Índice listo** con el número de archivos y la hora de la última actualización, **Índice incompleto** si se omitieron archivos al llegar a un límite, o **Índice fallido** con el motivo. Nunca nombra un archivo. Cuando termina el uso compartido, su índice se elimina.
+
 ## Contenido protegido {#geschuetzte-inhalte}
 <!-- keywords: contenido protegido, fuente compartida, procedencia, modelo en la nube, permiso, salida -->
 

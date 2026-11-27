@@ -109,6 +109,8 @@ Lorsqu’ils sont activés, un administrateur partage un dossier **en lecture** 
 
 La page affiche chaque partage avec la personne qui l’a donné et son état. Le **journal des accès** montre quel agent a lu quoi, dans quelle exécution, et si c’était autorisé. **Révoquer** met fin à un partage dès le prochain accès.
 
+Avec **Tenir un index de recherche** (désactivé tant que vous ne l’activez pas), Nodestro tient un index des fichiers texte et PDF du dossier, dans lequel les agents cherchent selon le sens. La liste affiche son état : **Indexation …**, **Index prêt** avec le nombre de fichiers et l’heure de la dernière mise à jour, **Index incomplet** si des fichiers ont été laissés de côté à une limite, ou **Échec de l’index** avec la raison. Elle ne nomme jamais de fichier. Quand le partage prend fin, son index est supprimé.
+
 ## Contenu protégé {#geschuetzte-inhalte}
 <!-- keywords: contenu protégé, source partagée, provenance, modèle cloud, autorisation, sortie -->
 
