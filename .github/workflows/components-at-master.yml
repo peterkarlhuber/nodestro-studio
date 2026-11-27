@@ -112,9 +112,9 @@ jobs:
       - name: Close the interpreter directories
         run: |
           prefix=$(python -I -c 'import sys; print(sys.base_prefix)')
-          chmod -R go-w "$prefix"
+          sudo chmod -R go-w "$prefix"
           parent=$(dirname "$prefix")
-          while [ "$parent" != / ]; do if [ -O "$parent" ]; then chmod go-w "$parent"; fi; parent=$(dirname "$parent"); done
+          while [ "$parent" != / ]; do sudo chmod go-w "$parent"; parent=$(dirname "$parent"); done
       - name: Only the master commits (and the other locked packages at their lock commit) were installed
         id: installed
         run: |

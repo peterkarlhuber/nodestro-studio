@@ -79,9 +79,9 @@ jobs:
       - name: Close the interpreter directories
         run: |
           prefix=$(python -I -c 'import sys; print(sys.base_prefix)')
-          chmod -R go-w "$prefix"
+          sudo chmod -R go-w "$prefix"
           parent=$(dirname "$prefix")
-          while [ "$parent" != / ]; do if [ -O "$parent" ]; then chmod go-w "$parent"; fi; parent=$(dirname "$parent"); done
+          while [ "$parent" != / ]; do sudo chmod go-w "$parent"; parent=$(dirname "$parent"); done
       - name: The installed packages (pip freeze)
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
