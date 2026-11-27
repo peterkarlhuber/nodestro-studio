@@ -109,6 +109,7 @@ const PAGES: { to: string; label: string; within?: string }[] = [
   { to: "/settings#settings-inputs", label: "inputs.storage.title", within: "nav.settings" },
   { to: "/settings#settings-python", label: "python.maintenance.title", within: "nav.settings" },
   { to: "/settings#settings-backup", label: "backup.title", within: "nav.settings" },
+  { to: "/settings#settings-data", label: "backup.data.title", within: "nav.settings" },
   { to: "/settings#settings-diagnostics", label: "diagnostics.title", within: "nav.settings" },
   { to: "/settings#settings-about", label: "settings.about.title", within: "nav.settings" },
 ];

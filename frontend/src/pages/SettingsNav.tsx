@@ -27,6 +27,7 @@ export const SETTINGS_GROUPS: Record<string, Exclude<SettingsGroup, "more">> = {
   "settings-inputs": "running",
   "settings-python": "running",
   "settings-backup": "maintenance",
+  "settings-data": "maintenance",
   "settings-diagnostics": "maintenance",
   "settings-about": "maintenance",
 };

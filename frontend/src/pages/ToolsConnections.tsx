@@ -45,6 +45,7 @@ import { ErrorText, ProblemText, codedError } from "../lib/errors";
 import { type Tone, formatDate, relativeTime } from "../lib/format";
 import { TestSendButton } from "./ConnectionTestSend";
 import { SearchSetupDialog } from "./SearchSetup";
+import { useSearchParams } from "react-router-dom";
 
 const CHECK_TONE: Record<CheckStatus, Tone> = { unchecked: "idle", ok: "success", failed: "danger" };
 
@@ -66,7 +67,9 @@ export function ConnectionsTab() {
   const connections = useConnections();
   const admin = useAccess().can("admin");
   const typeLabel = useTypeLabel();
-  const [selected, setSelected] = useState<string | null>(null);
+  // ?connection=<id> opens that connection, e.g. to enter its secret again after a restore (N-15).
+  const [params] = useSearchParams();
+  const [selected, setSelected] = useState<string | null>(params.get("connection"));
   const [adding, setAdding] = useState(false);
   const [settingUpSearch, setSettingUpSearch] = useState(false);
   if (connections.isLoading || status.isLoading || types.isLoading) return <Spinner />;

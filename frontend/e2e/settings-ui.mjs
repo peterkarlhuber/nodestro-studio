@@ -17,6 +17,10 @@
 // - "Changed" marks (ST-059): a value that differs from GET /api/settings/defaults is marked, Reset restores the
 //   default (into the input, or saved at once), keyboard, phone width in light and dark, and no marks and no error on
 //   an API without the route.
+// - Export and delete everything (N-15): the export downloads a ZIP file; deleting needs the exact typed confirmation
+//   (nothing is deleted here).
+// - Consents for private memory spaces (RT-089d) as a member of a server sees them (the server's answers simulated):
+//   a stale review is explained and reviewed again, then the consent is listed.
 
 import { createRequire } from "node:module";
 import { mkdirSync } from "node:fs";
@@ -548,6 +552,72 @@ try {
         await phone.context.close();
       }
     }
+  }
+
+  // ---- 7. Export and delete everything (N-15) ------------------------------------------------------------------------
+  {
+    const { context, page } = await open({ viewport: { width: 1440, height: 900 } });
+    await page.goto(`${base}/settings#settings-data`);
+    const panel = page.getByTestId("data");
+    await panel.waitFor();
+    const exported = await page.request.get(new URL(await page.getByTestId("data-export").getAttribute("href"), base).href);
+    check(exported.ok() && (exported.headers()["content-type"] ?? "").includes("zip"), "data: the export link downloads a ZIP file");
+    await page.getByTestId("data-delete-open").click();
+    const confirm = page.getByTestId("data-delete-confirm");
+    const submit = page.getByTestId("data-delete-submit");
+    check(await submit.isDisabled(), "data: deleting is disabled before the confirmation is typed");
+    await confirm.fill("delete all");
+    check(await submit.isDisabled(), "data: a partial confirmation does not enable it");
+    await confirm.fill("delete all data");
+    check(await submit.isEnabled(), "data: the exact confirmation enables it");
+    await shot(page, "settings-data-delete");
+    // Nothing is deleted here (the suite goes on with this data): Cancel closes the dialog.
+    await page.getByRole("dialog").getByRole("button", { name: "Cancel" }).click();
+    check((await page.getByTestId("data-delete-confirm").count()) === 0, "data: Cancel closes the dialog");
+    check((await page.request.get(`${base}/api/workflows`)).ok(), "data: and nothing was deleted");
+    await context.close();
+  }
+
+  // ---- 8. Consents for private memory spaces (RT-089d), as a member of a server sees them ----------------------------
+  {
+    // This suite runs the desktop, which has no consents: the server's answers are simulated in the browser.
+    const { context, page } = await open({ viewport: { width: 1440, height: 900 } });
+    const before = errors.length;
+    const space = "e2e-consents";
+    check((await page.request.put(`${base}/api/memory/${space}/file`, { data: { path: "/memories/notes.md", content: "# Notes\n" } })).ok(), "consents: a memory space exists");
+    const workflow = await (await page.request.post(`${base}/api/workflows`, { data: { name: "Consent e2e", nodes: [], edges: [] } })).json();
+    const fulfil = (route, body, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify(body) });
+    await page.route("**/api/meta", async (route) => fulfil(route, { ...(await (await route.fetch()).json()), profile: "server" }));
+    await page.route("**/api/auth/me", (route) =>
+      fulfil(route, { user_id: "usr_ana", tenant_id: "acme", role: "member", permissions: ["read", "edit", "run"], tenants: { acme: "member" } }),
+    );
+    let consents = [];
+    let stale = true;
+    const target = (digest) => ({ workflow_id: workflow.id, digest, targets: [{ workflow_id: workflow.id, name: workflow.name, version: 1, digest }] });
+    await page.route((url) => url.pathname === "/api/memory-consents/preview", (route) => fulfil(route, target(stale ? "a".repeat(64) : "b".repeat(64))));
+    await page.route((url) => url.pathname === "/api/memory-consents", (route) => {
+      if (route.request().method() === "GET") return fulfil(route, consents);
+      if (stale) return fulfil(route, { detail: "changed", code: "memory.consent_stale", params: { space } }, 409);
+      consents = [{ id: "mcs_1", space, owner: "usr_ana", subject: "workflow", digest: "b".repeat(64), workflow_id: workflow.id, workflow_version: 1, workflow_name: workflow.name, at: new Date().toISOString() }];
+      return fulfil(route, consents, 201);
+    });
+    await page.goto(`${base}/memory?space=${space}`);
+    const section = page.getByTestId("memory-consents");
+    await section.waitFor();
+    await section.getByTestId("consent-workflow").selectOption(workflow.id);
+    await section.getByTestId("consent-review").click();
+    await section.getByTestId("consent-allow").click();
+    await section.getByTestId("consent-stale").waitFor();
+    check(true, "consents: a changed workflow is explained, not allowed");
+    stale = false;
+    await section.getByTestId("consent-review-again").click();
+    await section.getByTestId("consent-allow").click();
+    await section.getByTestId("consent-list").getByText(workflow.name).waitFor();
+    check(true, "consents: after a new review the consent is given and listed");
+    await shot(page, "memory-consents");
+    // The browser logs the simulated refusal (409) itself; that is the point of the step, not a fault of the page.
+    errors.splice(before, errors.length - before, ...errors.slice(before).filter((message) => !message.includes("status of 409")));
+    await context.close();
   }
 
   check(errors.length === 0, `no browser errors (${errors.join(" | ")})`);

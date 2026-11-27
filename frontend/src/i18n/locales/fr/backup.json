@@ -34,5 +34,38 @@
   "safetyNote": "Une sauvegarde de l’état actuel est d’abord créée automatiquement ; vous la retrouvez ensuite dans la liste des sauvegardes.",
   "confirm": "J’ai compris que mes données actuelles seront remplacées.",
   "restoreNow": "Restaurer maintenant",
-  "restored": "Sauvegarde restaurée. L’état précédent se trouve dans « {{name}} ». La page se recharge."
+  "restored": "Sauvegarde restaurée. L’état précédent se trouve dans « {{name}} ». La page se recharge.",
+  "reenter": {
+    "title_one": "{{count}} secret à saisir de nouveau",
+    "title_other": "{{count}} secrets à saisir de nouveau",
+    "text": "Une sauvegarde ne contient jamais de clés, de jetons ni de mots de passe. Saisissez-les de nouveau là où ils sont utilisés ; d’ici là, ce qui en a besoin ne fonctionne pas.",
+    "kinds": {
+      "provider": "Fournisseur d’IA",
+      "mcp": "Service MCP",
+      "connection": "Connexion de service"
+    },
+    "open": "Saisir de nouveau",
+    "done": "Terminé, masquer la liste"
+  },
+  "data": {
+    "title": "Exporter et supprimer les données",
+    "intro": "Emportez toutes vos données sous forme de fichiers lisibles, ou supprimez tout sur cet ordinateur.",
+    "export": "Tout exporter",
+    "exportNote": "L’export est un fichier ZIP de fichiers lisibles (workflows, exécutions, modèles d’agents, outils, connaissances, mémoire, conversations et paramètres), sans clés, jetons ni autres secrets. Il ne peut pas être restauré ; utilisez une sauvegarde pour cela.",
+    "delete": "Supprimer toutes les données …",
+    "deleteTitle": "Supprimer toutes les données",
+    "deleteWarning": "Cela supprime tous les workflows, exécutions, modèles d’agents, outils, fichiers de connaissances, la mémoire, les conversations, les paramètres et les secrets de cet ordinateur.",
+    "deleteNoUndo": "Cette action est irréversible.",
+    "deleteNoBackup": "Aucune sauvegarde de sécurité n’est conservée. Téléchargez d’abord une sauvegarde ou un export si vous voulez garder quelque chose.",
+    "deleteRuns": "La suppression ne commence que lorsque rien ne s’exécute, et aucune exécution ne peut démarrer pendant qu’elle a lieu.",
+    "backupFirst": "Télécharger d’abord une sauvegarde",
+    "typeLabel": "Saisie de confirmation",
+    "typeHint": "Saisissez exactement « {{phrase}} » (en anglais) pour confirmer.",
+    "deleteNow": "Tout supprimer",
+    "deletedTitle": "Données supprimées",
+    "deleted": "Tout a été supprimé. Cette installation repart maintenant comme une nouvelle.",
+    "deletedPartly_one": "Presque tout a été supprimé, mais {{count}} entrée n’a pas pu être retirée (par exemple un fichier en cours d’utilisation). Supprimez de nouveau pour retirer le reste.",
+    "deletedPartly_other": "Presque tout a été supprimé, mais {{count}} entrées n’ont pas pu être retirées (par exemple des fichiers en cours d’utilisation). Supprimez de nouveau pour retirer le reste.",
+    "restart": "Recommencer"
+  }
 }
