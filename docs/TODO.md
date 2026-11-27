@@ -147,6 +147,13 @@ from #121). Both have status `Needs external review`.
 
 ## Tests and quality assurance
 
+Fixed 2026-11-27 (no entry left): `e2e/settings-ui.mjs:147` ("keyboard: focus shows the tooltip") timed out now and
+then (PR #249 head cf514c4, run 46054954121). The click into "Describe your goal" moved the mouse off the help icon
+and queued a close in 140 ms; Tab reached the icon before it ran, focus opened the tooltip and the old timer closed it,
+with nothing to open it again. `useTip.show` now cancels a pending timer. Probe of the e2e steps in Chromium: before,
+30 of 30 runs closed the tooltip again and 16 of 30 at 4x CPU throttle never let `waitFor` see it; after, 90 of 90
+passed (1x, 4x, 8x).
+
 ### ST-061 · Dependency policy K-33: library copies, vendored checker and CI step (TABRION QA-17, AC-2)
 
 - **Priority:** P2 Medium · **Status:** In progress (part 1: studio #168) · **Refs:** `platform/dependency-policy.json`,
