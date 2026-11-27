@@ -36,3 +36,13 @@ Secrets are stored encrypted, like the access tokens of connected services: on t
 <!-- keywords: agent, inspector, tool settings, connection picker -->
 
 When you assign a built-in tool that needs a connection, the agent's inspector shows a picker below the tools with the connections of the right type (see [Assigning tools](/docs/agenten#tools)). Without a chosen connection the agent check shows an error. The model never sees the connection, its settings or its secret; it only sees the tool.
+
+## Exchange files {#austausch}
+<!-- keywords: exchange, import, export, file, nodestro-mcp, nodestro-connection, move, another workspace, preview -->
+
+**Export** under *Tools → Connected services* and *Tools → Connections* saves all MCP services or all connections as a file (`nodestro-mcp/1`, `nodestro-connection/1`); **Import…** brings such a file into another workspace. Both need administration rights.
+
+- An import first shows a **preview**: every entry of the file, whether it can be imported and, if not, why. Nothing is stored before you click **Import**. An import stores all entries or none.
+- **Secrets are never part of the file**: no tokens, sign-ins, passwords or keys. An export that would contain one is refused and names the settings field. After an import, the dialog lists the entries whose secret you enter again, each with a link.
+- Imported services are switched off and have no approved tools; review their tools as for a new service. Imported connections are not checked yet.
+- A file of a newer Nodestro version is refused; update Nodestro first.

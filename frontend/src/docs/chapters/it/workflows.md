@@ -299,6 +299,8 @@ Le versioni sono indipendenti da annulla/ripeti, che vale solo all’interno di 
 - **Esporta come file** (nell'editor, sotto **Altre azioni**) salva il workflow come `<Nome>.nodestro.json`: tutti i nodi, collegamenti, posizioni e impostazioni degli agenti, oltre al budget.
 - **Importa** (nella pagina *Workflow*) carica un file di questo tipo come **nuova copia** con un nuovo ID. I workflow esistenti non vengono mai sovrascritti. Se il file non ha un nome, il workflow prende il nome del file.
 
+Il file indica per primo il suo formato (`"format": "nodestro-workflow/1"`); un file di una versione più recente di Nodestro viene rifiutato. I file delle versioni precedenti senza questo campo vengono ancora importati.
+
 Nodestro controlla il file prima di creare qualcosa. Se non è l’esportazione di un workflow (per esempio un altro file JSON, un file senza passi o con collegamenti rotti), non viene importato nulla e il messaggio ne spiega il motivo, per esempio *Questo file non è un workflow Nodestro: non ha passi ("nodes").*
 
 **Non sono inclusi** file di conoscenza, spazi di memoria e strumenti propri; il file fa solo riferimento ai loro ID e nomi. Su un altro computer devono esistere lì, altrimenti la verifica segnala per esempio «Strumenti sconosciuti».

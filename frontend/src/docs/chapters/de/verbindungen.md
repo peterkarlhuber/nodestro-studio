@@ -36,3 +36,13 @@ Geheimnisse werden verschlüsselt gespeichert, wie die Zugangstokens verbundener
 <!-- keywords: agent, inspektor, tool-einstellungen, verbindungsauswahl -->
 
 Weist du ein eingebautes Tool zu, das eine Verbindung braucht, zeigt der Inspektor des Agenten unter den Tools eine Auswahl mit den Verbindungen der passenden Art (siehe [Tools zuweisen](/docs/agenten#tools)). Ohne gewählte Verbindung meldet die Prüfung des Agenten einen Fehler. Das Modell sieht nie die Verbindung, ihre Einstellungen oder ihr Geheimnis, sondern nur das Tool.
+
+## Austauschdateien {#austausch}
+<!-- keywords: austausch, import, export, datei, nodestro-mcp, nodestro-connection, umziehen, anderer arbeitsbereich, vorschau -->
+
+**Exportieren** unter *Tools → Verbundene Dienste* und *Tools → Verbindungen* speichert alle MCP-Dienste bzw. alle Verbindungen als Datei (`nodestro-mcp/1`, `nodestro-connection/1`); **Importieren…** bringt eine solche Datei in einen anderen Arbeitsbereich. Beides braucht Administrationsrechte.
+
+- Ein Import zeigt zuerst eine **Vorschau**: jeden Eintrag der Datei, ob er importiert werden kann und, falls nicht, warum. Gespeichert wird erst, wenn du auf **Importieren** klickst. Ein Import speichert alle Einträge oder keinen.
+- **Geheimnisse sind nie Teil der Datei**: keine Tokens, Anmeldungen, Passwörter oder Schlüssel. Ein Export, der eines enthielte, wird abgelehnt und nennt das Einstellungsfeld. Nach einem Import listet der Dialog die Einträge, deren Geheimnis du neu eingibst, jeweils mit Link.
+- Importierte Dienste sind ausgeschaltet und haben keine freigegebenen Tools; prüfe ihre Tools wie bei einem neuen Dienst. Importierte Verbindungen sind noch nicht geprüft.
+- Eine Datei einer neueren Nodestro-Version wird abgelehnt; aktualisiere zuerst Nodestro.

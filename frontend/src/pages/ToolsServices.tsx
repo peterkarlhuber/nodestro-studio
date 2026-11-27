@@ -11,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 import { useAccess } from "../api/access";
 import { keys } from "../api/hooks";
 import { PermissionNote } from "../components/Access";
+import { ExportButton, ImportButton } from "../components/ExchangeDialog";
 import {
   type McpAccess,
   RESOURCE_TOOL,
@@ -106,6 +107,7 @@ export function ServicesTab() {
   const [selected, setSelected] = useState<string | null>(params.get("server"));
   const [adding, setAdding] = useState(false);
   const admin = useAccess().can("admin");
+  const queryClient = useQueryClient();
   useOAuthReturn(setSelected);
   if (servers.isLoading || status.isLoading) return <Spinner />;
   if (servers.error) return <Callout tone="danger"><ErrorText error={servers.error} /></Callout>;
@@ -120,9 +122,15 @@ export function ServicesTab() {
       <PermissionNote permission="admin" />
       <div className="row-between">
         <h2 className="panel__title">{t("tools.services.title")}</h2>
-        <Button icon={Plus} onClick={() => setAdding(true)} disabled={!admin || status.data?.endpoint_list?.length === 0}>
-          {t("tools.services.add")}
-        </Button>
+        <div className="row-gap">
+          {admin ? <ExportButton kind="mcp" disabled={!list.length} /> : null}
+          {admin ? (
+            <ImportButton kind="mcp" onImported={() => void queryClient.invalidateQueries({ queryKey: mcpKeys.all })} />
+          ) : null}
+          <Button icon={Plus} onClick={() => setAdding(true)} disabled={!admin || status.data?.endpoint_list?.length === 0}>
+            {t("tools.services.add")}
+          </Button>
+        </div>
       </div>
       {!list.length ? (
         <EmptyState icon={PlugZap} title={t("tools.services.empty")}>

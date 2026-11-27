@@ -103,6 +103,11 @@ Sammlungen ordnen Wissensdateien, etwa „Verträge“ oder „Produktdaten“. 
 
 Inhalte aus Läufen (hochgeladene Dateien, Ergebnisdateien, Ergebnisse und Vorschläge von Agenten) kommen nur nach deiner Bestätigung ins Wissen, siehe [Ins Wissen übernehmen](/docs/datei-eingaben#knowledge-uebernahme). Solche Dateien zeigen unter *Herkunft*, aus welchem Workflow, Schritt und Lauf sie stammen und ob der Inhalt entnommen, erzeugt oder eine Annahme ist.
 
+## Sammlungen als Datei {#sammlung-austausch}
+<!-- keywords: sammlung, export, import, zip, nodestro-collection, umziehen, anderer arbeitsbereich -->
+
+Wähle eine Sammlung über ihren Chip und klicke auf **Sammlung exportieren**: Nodestro speichert ihre Dokumente mit den Sucheinstellungen als ZIP-Datei (`nodestro-collection/1`). **Importieren…** bringt eine solche Datei als neue Sammlung in einen anderen Arbeitsbereich; du kannst ihr einen anderen Namen geben. Die Vorschau listet die Dokumente, lehnt eine beschädigte oder unsichere Datei ab und warnt, wenn die Sammlung bereits Dateien enthält. Die Dokumente werden mit dem Embedding-Modell dieses Arbeitsbereichs neu indexiert; Suchindex und Herkunftsangaben der Datei werden nie übernommen, und die Einstellungen dieses Arbeitsbereichs bleiben, wie sie sind.
+
 ## Dateien verwalten {#verwalten}
 <!-- keywords: beschreibung bearbeiten, löschen, verwalten, entfernen -->
 
