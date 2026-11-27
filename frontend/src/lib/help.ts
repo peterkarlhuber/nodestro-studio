@@ -125,6 +125,7 @@ export const HELP_DOCS = {
   "memory.space": "memory#dauerhaft",
   "memory.clear": undefined,
   "memory.newFile": "memory#browser",
+  "memory.origin": "memory#browser",
   "memory.consents": "memory#zustimmungen",
   "runs.importTrace": "ausfuehrungen#trace-import",
   "runs.exportTrace": "ausfuehrungen#trace-export",

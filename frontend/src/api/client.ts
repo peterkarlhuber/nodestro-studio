@@ -759,8 +759,13 @@ export const api = {
       "GET",
       `/memory/${encodeURIComponent(space)}/file${q({ path })}`,
     ),
-  writeMemory: (space: string, path: string, content: string) =>
-    request<{ path: string; content: string }>("PUT", `/memory/${encodeURIComponent(space)}/file`, { path, content }),
+  /** `proposed`: the text comes from the memory assistant's proposal; the server records it as the assistant's (N-24). */
+  writeMemory: (space: string, path: string, content: string, options: { proposed?: boolean } = {}) =>
+    request<{ path: string; content: string }>(
+      "PUT",
+      `/memory/${encodeURIComponent(space)}/file${q({ proposed: options.proposed ? "true" : undefined })}`,
+      { path, content },
+    ),
   deleteMemoryFile: (space: string, path: string) =>
     request<void>("DELETE", `/memory/${encodeURIComponent(space)}/file${q({ path })}`),
   clearMemory: (space: string) => request<void>("DELETE", `/memory/${encodeURIComponent(space)}`),

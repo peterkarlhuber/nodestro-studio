@@ -13,7 +13,8 @@ import { toast } from "../components/toast";
 import { UsedByList, UsedByWarning, useUsedBy } from "../components/UsedBy";
 import { Button, Callout, ConfirmIconButton, EmptyState, Field, HelpTip, Hint, IconButton, Modal, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
 import { ErrorText } from "../lib/errors";
-import { formatBytes } from "../lib/format";
+import { formatBytes, formatDate } from "../lib/format";
+import type { MemoryFile } from "../api/types";
 import { MemoryConsents } from "./MemoryConsents";
 
 /** Persistent memory spaces: what agents remember across runs, readable and editable. */
@@ -163,6 +164,9 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
       <UsedByList users={users} loaded={usedBy.loaded} />
       <div className="memory-files">
         <div className="stack-sm">
+          <span className="muted small">
+            {t("memory.entries")} <HelpTip id="memory.origin" label={t("memory.origin.label")} />
+          </span>
           {files.data?.map((file) => (
             <button
               key={file.path}
@@ -171,7 +175,10 @@ function SpaceDetail({ space, onCleared }: { space: string; onCleared: () => voi
               onClick={() => setPath(file.path)}
             >
               <code>{file.path}</code>
-              <span className="muted small">{formatBytes(file.size)}</span>
+              <span className="muted small">
+                {formatBytes(file.size)} · {originLabel(t, file)}
+                {file.updated_at ? ` · ${formatDate(file.updated_at)}` : ""}
+              </span>
             </button>
           ))}
           <form
@@ -260,4 +267,20 @@ function MemoryFileEditor({
       <TextArea className="mono" rows={18} value={content} onChange={(e) => setContent(e.target.value)} aria-label={t("memory.contentOf", { path })} />
     </div>
   );
+}
+
+/** Who wrote a memory entry last (N-24), as a short label. */
+function originLabel(t: (key: string) => string, file: MemoryFile): string {
+  switch (file.origin) {
+    case "tool":
+      return t("memory.origin.tool");
+    case "user":
+      return t("memory.origin.user");
+    case "import":
+      return t("memory.origin.import");
+    case "assistant":
+      return t("memory.origin.assistant");
+    default:
+      return t("memory.origin.unknown");
+  }
 }

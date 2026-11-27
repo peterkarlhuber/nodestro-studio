@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Welle 6: memory entries with their origin and time (N-24)
+
+- The **Memory** page shows for every file who wrote it last (an agent with its memory tool, you, the memory
+  assistant's proposal you saved, an import, or unknown for files from before) and when; saving a file here is your explicit entry. Help tip and the memory
+  chapter's "memory browser" section in all six languages. The lock pins orkexa, nodestro-runtime and nodestro-api of
+  `claude/w6-n24` (Orkexa `MemoryBackend.list_entries`, PostgreSQL migration `0011_memory_origin`).
+
 ### Welle 6: import dialogs for the exchange formats, the workflow file format, help coverage (N-14, ST-068)
 
 - **Exchange files** (N-14, nodestro-api `docs/exchange.md`): **Export** and **Import…** for MCP services
