@@ -2,11 +2,14 @@
 
 ## Unreleased
 
-### Welle 5 lock: exchange formats, extension isolation and the PDF fix (2026-11-27)
+### N-22 R1 paired CI (2026-11-27)
 
 - CI (N-22 R1): the component jobs (`platform`, `components-at-master`) close the hosted runner's interpreter
   directories (`chmod go-w`; they are writable by every user there), because the runtime now imports the OCR
   integration only on a closed import path. About one second per job; no new job.
+
+### Welle 5 lock: exchange formats, extension isolation and the PDF fix (2026-11-27)
+
 - Lock: nodestro-runtime fb5ef1a (N-14 exchange formats #222, N-22 extension isolation #221 and #224), nodestro-api
   8ad5b53 (N-14 import and export routes #181, the approval race test #180), nodestro-sdk 3b6f213 (#150), orkexa
   3294190 (damaged PDF objects refused under pypdf 7.2 #118, faster tests #119) and nodestro-integrations f29a377
